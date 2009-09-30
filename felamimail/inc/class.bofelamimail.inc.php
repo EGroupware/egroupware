@@ -463,11 +463,17 @@
 				// decode winmail.dat
 				if ( !file_exists( "$dir/winmail.dat" ) )
 				{
-					mkdir( $dir, 0700, true );
+					@mkdir( $dir, 0700, true );
 					file_put_contents( "$dir/winmail.dat", $attachment['attachment'] );
+				}
+				if (exec("which tnef")) // use tnef if exsting, as it gives better results..
+				{
+					exec( "cd $dir && tnef --save-body --overwrite -C $dir -f ./winmail.dat" );
+				} 
+				elseif (exec("which ytnef"))
+				{
 					exec( "cd $dir && ytnef -f . winmail.dat" );
 				}
-
 				// list contents
 				$files = scandir( $dir );
 				foreach ( $files as $num => $file )
@@ -477,7 +483,7 @@
 					$type = $mime->filename2mime($file);
 					$attachments[] = array(
 						'is_winmail' => $num,
-						'name' => $file,
+						'name' => self::decode_header($file),
 						'size' => filesize( "$dir/$file"),
 						'partID' => $_partID,
 						'mimeType' => $type,
@@ -487,7 +493,7 @@
 					unlink($dir."/".$file);
 				}
 				if (file_exists($dir."/winmail.dat")) unlink($dir."/winmail.dat");
-				if (file_exists($dir)) rmdir($dir);
+				if (file_exists($dir)) @rmdir($dir);
 				return $_filenumber > 0 ? $attachments[0] : $attachments;
 			}
 			return false;
