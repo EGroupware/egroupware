@@ -256,7 +256,7 @@ class etemplate extends boetemplate
 		}
 
 		$html = $this->include_java_script(1).
-				$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,self::$name_vars);
+				$this->show(self::complete_array_merge($content,$changes),$sel_options,$readonlys,self::$name_vars);
 
 		self::$request->java_script = self::$java_script;
 		self::$request->java_script_from_flags = $GLOBALS['egw_info']['flags']['java_script'];
@@ -469,8 +469,8 @@ class etemplate extends boetemplate
 		}
 
 		//echo "process_exec($this->name) process_show(content) ="; _debug_array($content);
-		//echo "process_exec($this->name) session_data[changes] ="; _debug_array(self::$request->changes']);
-		$content = $this->complete_array_merge(self::$request->changes,$content);
+		//echo "process_exec($this->name) session_data[changes] ="; _debug_array(self::$request->changes);
+		$content = self::complete_array_merge(self::$request->changes,$content);
 		//echo "process_exec($this->name) merge(changes,content) ="; _debug_array($content);
 
 		if (self::$loop && $type == 'regular')	// only loop for regular (not ajax_submit) requests
@@ -499,19 +499,19 @@ class etemplate extends boetemplate
 			if (is_array(self::$request->java_script_files))
 			{
 				$GLOBALS['egw']->js->files = !is_array($GLOBALS['egw']->js->files) ? self::$request->java_script_files :
-					$this->complete_array_merge($GLOBALS['egw']->js->files,self::$request->java_script_files);
+					self::complete_array_merge($GLOBALS['egw']->js->files,self::$request->java_script_files);
 			}
 
-			//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
-			return $this->exec(self::$request->method,self::$request->content,self::$request->sel_options,
-				self::$request->readonlys,self::$request->preserv,self::$request->output_mode,
-				self::$request->ignore_validation,$content);
+			//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array(self::complete_array_merge(self::$request->content,$content));
+			return $this->exec(self::$request->method,self::complete_array_merge(self::$request->content,$content),
+				self::$request->sel_options,self::$request->readonlys,self::$request->preserv,
+				self::$request->output_mode,self::$request->ignore_validation,$content);
 		}
 		else
 		{
 			//echo "<p>process_exec($this->name): calling ".($type == 'regular' ? self::$request->method : $_GET['menuaction'])."</p>\n";
 			return ExecMethod($type == 'regular' ? self::$request->method : $_GET['menuaction'],
-				$this->complete_array_merge(self::$request->preserv,$content));
+				self::complete_array_merge(self::$request->preserv,$content));
 		}
 	}
 
@@ -538,7 +538,7 @@ class etemplate extends boetemplate
 		}
 		$this->process_show($content,$request->to_process,self::$name_vars);
 
-		return $this->complete_array_merge($request->preserv,$content);
+		return self::complete_array_merge($request->preserv,$content);
 	}
 
 	/**
@@ -1979,7 +1979,7 @@ class etemplate extends boetemplate
 			{
 				$value = '';	// blur-values is equal to emtpy
 			}
-			//echo "<p>process_show($this->name) loop was ".self::$loop.", $type: $form_name = '$value'</p>\n";
+			//echo "<p>process_show($this->name) loop was ".self::$loop.", $type: $form_name = ".array2string($value)."</p>\n";
 			list($type,$sub) = explode('-',$type);
 			switch ($type)
 			{
