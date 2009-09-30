@@ -321,7 +321,7 @@ class nextmatch_widget
 		if (!$value['no_columnselection'])
 		{
 			// presetting the options for selectcols empty, so the get_rows function can set it
-			$value['options-selectcols'] = array();
+			$value['options-selectcols'] = is_array($value['options-selectcols']) ? $value['options-selectcols'] : array();
 		}
 		$rows = array();
 		if(is_callable($method))	// php5.3+ call
