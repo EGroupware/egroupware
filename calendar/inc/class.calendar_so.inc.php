@@ -884,8 +884,8 @@ ORDER BY cal_user_type, cal_usre_id
 			),$where,__LINE__,__FILE__,'calendar');
 		}
 		$ret = $this->db->affected_rows();
-		error_log(__METHOD__."($cal_id,$user_type,$user_id,$status,$recur_date) = $ret");
-		return $this->db->affected_rows();
+		//error_log(__METHOD__."($cal_id,$user_type,$user_id,$status,$recur_date) = $ret");
+		return $ret;
 	}
 
 	/**
