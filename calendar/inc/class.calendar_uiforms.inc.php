@@ -433,27 +433,19 @@ class calendar_uiforms extends calendar_ui
 		case 'apply':
 			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
 			{
-				if ($button == 'mail')	// just mail without edit-rights is ok
+				switch ($button)
 				{
-					$js = $this->custom_mail($event,false);
-					break;
-				}
-				$msg = lang('Permission denied');
-				break;
-			}
-
-			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
-			{
-				if ($button == 'print')	// just print without edit-rights is ok
-				{
-					$js = $this->custom_print($event,false);
-					break;
+					case 'mail':	// just mail without edit-rights is ok
+						$js = $this->custom_mail($event,false);
+						break 2;
+					case 'print':	// just print without edit-rights is ok
+						$js = $this->custom_print($event,false);
+						break 2;
 				}
 				$msg = lang('Permission denied');
 				$button = '';
 				break;
 			}
-
 			if ($event['start'] > $event['end'])
 			{
 				$msg = lang('Error: Starttime has to be before the endtime !!!');
