@@ -419,7 +419,25 @@ abstract class bo_merge
 		if (array_key_exists('$$'.$param[4].'$$',$this->replacements)) $param[4] = $this->replacements['$$'.$param[4].'$$'];
 		if (array_key_exists('$$'.$param[3].'$$',$this->replacements)) $param[3] = $this->replacements['$$'.$param[3].'$$'];
 		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
-		$LF = '}\par \pard\plain{';  //RTF Only
+
+		switch($this->mimetype)
+			{
+				case 'application/rtf':
+				case 'text/rtf':
+					$LF = '}\par \pard\plain{';
+					break;
+				case 'application/vnd.oasis.opendocument.text':
+				case 'application/vnd.oasis.opendocument.spreadsheet':
+					$LF ='</text:p><text:p>';
+					break;
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
+					$LF ='</w:r></w:p><w:r><w:t>';
+					break;
+			}
+
 		if (strpos($param[0],'$$NELF') === 0)
 		{	//sets a Pagebreak and value, only if the field has a value
 			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF.$this->replacements['$$'.$param[1].'$$'];
