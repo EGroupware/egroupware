@@ -99,6 +99,16 @@ class timesheet_ui extends timesheet_bo
 		{
 			//echo "<p>ts_start=$content[ts_start], start_time=$content[start_time], end_time=$content[end_time], ts_duration=$content[ts_duration], ts_quantity=$content[ts_quantity]</p>\n";
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
+			if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) && $content['ts_status'])
+			{
+				if ($this->status_labels_config[$content['ts_status']]['admin'])
+				{
+					$view = true;  //only admin can edit with this status
+					$only_admin_edit = true;
+					$msg = lang('only Admin can edit this status');
+				}
+			}
+
 			if ($content['start_time'])		// start-time specified
 			{
 				$content['ts_start'] += $content['start_time'];
@@ -124,7 +134,7 @@ class timesheet_ui extends timesheet_bo
 			switch($button)
 			{
 				case 'edit':
-					if ($this->check_acl(EGW_ACL_EDIT) && $only_admin_edit) $view = false;
+					if ($this->check_acl(EGW_ACL_EDIT) && !$only_admin_edit) $view = false;
 					break;
 
 				case 'save':
@@ -446,7 +456,7 @@ class timesheet_ui extends timesheet_bo
 		{
 			//$query['col_filter']['ts_id'] = egw_link::get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
 			$query['col_filter']['ts_id'] = $this->get_ts_links($query['col_filter']['pm_id']);
-			if (empty($query['col_filter']['ts_id'])) $query['col_filter']['ts_id'] = -1;	
+			if (empty($query['col_filter']['ts_id'])) $query['col_filter']['ts_id'] = -1;
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
 		if ((string)$query['col_filter']['pm_id'] != '' && (string)$query['col_filter']['pm_id'] == '0')

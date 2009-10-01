@@ -55,12 +55,14 @@ links	timesheet	en	Links
 max length of the input [, length of the inputfield (optional)]	timesheet	en	max length of the input [, length of the inputfield (optional)]
 modify the status of the timesheet	timesheet	en	Modify the Status of the Timesheet
 new ticket submitted by %1 at %2	timesheet	en	New ticket submitted by %1 at %2
+new timesheet submitted by %1 at %2	timesheet	en	New timesheet submitted by %1 at %2
 no details	timesheet	en	no details
 no project	timesheet	en	No project
 no status	timesheet	en	No status
 none: use only free project-names	admin	en	None: use only free project-names
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	number of row for a multiline inputfield or line of a multi-select-box
 only admin	timesheet	en	Only Admin
+only admin can edit this status	timesheet	en	only Admin can edit this status
 or endtime	timesheet	en	or Endtime
 order	timesheet	en	Order
 parent	timesheet	en	Parent
@@ -95,6 +97,7 @@ this year	timesheet	en	This year
 ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2
 timesheet	common	en	TimeSheet
 timesheet csv export	timesheet	en	Timesheet CSV export
+timesheet modified by %1 at %2	timesheet	en	Timesheet modified by %1 at %2
 timesheet openoffice export	timesheet	en	Timesheet OpenOffice export
 timesheet status-%1 '%2' added.	timesheet	en	Timesheet Status-%1 '%2' added.
 timesheet-%1 '%2' updated.	timesheet	en	Timesheet-%1 '%2' updated.
