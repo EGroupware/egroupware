@@ -809,7 +809,7 @@ class calendar_ical extends calendar_boupdate
 			$event_info = $this->get_event_info($event);
 
 			// common adjustments for new events
-			if(!isset($event['id']))
+			if(!is_array($event_info['stored_event']))
 			{
 				// set non blocking all day depending on the user setting
 				if($this->isWholeDay($event) && $this->nonBlockingAllday)
@@ -834,7 +834,7 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// common adjustments for existing events
-			if (isset($event['id']) && is_array($event_info['stored_event']))
+			if (is_array($event_info['stored_event']))
 			{
 				if ($merge)
 				{
@@ -933,6 +933,7 @@ class calendar_ical extends calendar_boupdate
 					break;
 						
 				case 'SERIES-EXCEPTION':
+				case 'SERIES-EXCEPTION-PROPAGATE':
 					Horde::logMessage('importVCAL event SERIES-EXCEPTION',__FILE__, __LINE__, PEAR_LOG_DEBUG);
 						
 					// update event
@@ -999,6 +1000,7 @@ class calendar_ical extends calendar_boupdate
 				case 'SINGLE':
 				case 'SERIES-MASTER':
 				case 'SERIES-EXCEPTION':
+				case 'SERIES-EXCEPTION-PROPAGATE':
 					if(is_array($event_info['stored_event'])) // status update requires a stored event
 					{
 						if($event_info['acl_edit'])
@@ -1016,12 +1018,12 @@ class calendar_ical extends calendar_boupdate
 					break;
 			
 				case 'SERIES-EXCEPTION-STATUS':
-					if(is_array($event_info['stored_event'])) // status update requires a stored master event
+					if(is_array($event_info['master_event'])) // status update requires a stored master event
 					{
 						if($event_info['acl_edit'])
 						{
 							// update all participants if we have the right to do that
-							$this->update_status($event, $event_info['stored_event'], $event['recurrence']);
+							$this->update_status($event, $event_info['master_event'], $event['recurrence']);
 						}
 						elseif(isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
 						{
@@ -1043,6 +1045,7 @@ class calendar_ical extends calendar_boupdate
 					case 'SINGLE':
 					case 'SERIES-MASTER':
 					case 'SERIES-EXCEPTION':
+					case 'SERIES-EXCEPTION-PROPAGATE':
 						// delete old alarms
 						if(count($event_info['stored_event']['alarm']) > 0)
 						{
@@ -1093,6 +1096,20 @@ class calendar_ical extends calendar_boupdate
 			
 				case 'SERIES-EXCEPTION-STATUS':
 					$return_id = is_array($event_info['master_event']) ? $event_info['master_event']['id'] . ':' . $event['recurrence'] : false;
+					break;
+					
+				case 'SERIES-EXCEPTION-PROPAGATE':
+					if($event_info['acl_edit'] && is_array($event_info['stored_event']))
+					{
+						// we had sufficient rights to propagate the status only exception to a real one
+						$return_id = $event_info['stored_event']['id'];
+					}
+					else
+					{
+						// we did not have sufficient rights to propagate the status only exception to a real one
+						// we have to keep the SERIES-EXCEPTION-STATUS id and keep the event untouched
+						$return_id = $event_info['master_event']['id'] . ':' . $event['recurrence'];
+					}
 					break;
 			}
 
@@ -2138,8 +2155,11 @@ class calendar_ical extends calendar_boupdate
      * 		SERIES-MASTER the series master
      * 		SERIES-EXCEPTION event is a real exception
 	  * 		SERIES-EXCEPTION-STATUS event is a status only exception
+	  * 		SERIES-EXCEPTION-PROPAGATE event was a status only exception in the past and is now a real exception
 	  * 	stored_event => if event already exists in the database array with event data or false
-	  * 	master_event => if event is of type SERIES-EXCEPTION or SERIES-EXCEPTION-STATUS the corresponding series master event array
+	  * 	master_event => for event type SERIES-EXCEPTION, SERIES-EXCEPTION-STATUS or SERIES-EXCEPTION-PROPAGATE
+	  * 		the corresponding series master event array
+	  * 		NOTE: this param is false if event is of type SERIES-MASTER
      */
     private function get_event_info($event)
     {
@@ -2170,22 +2190,35 @@ class calendar_ical extends calendar_boupdate
 					
 					if(isset($event['id']) && $master_event['id'] != $event['id'])
 					{
-						$type = 'SERIES-EXCEPTION'; //event is already a real exception
+						$type = 'SERIES-EXCEPTION'; // this is an existing exception
 					}
 					else
 					{
 						$type = 'SERIES-EXCEPTION-STATUS'; // default if we cannot find a proof for a fundamental change
-						$recurrence_event = $this->read($master_event['id'],$event['recurrence']);
+						// the recurrence_event is the master event with start and end adjusted to the recurrence
+						$recurrence_event = $master_event;
+						$recurrence_event['start'] = $event['recurrence'];
+						$recurrence_event['end'] = $event['recurrence'] + ($master_event['end'] - $master_event['start']);
 						// check for changed data
 						foreach (array('start','end','uid','owner','title','description',
 							'location','priority','public','special','non_blocking') as $key)
 						{
 							if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
 							{
-								$type = 'SERIES-EXCEPTION';
+								if(isset($event['id']))
+								{
+									$type = 'SERIES-EXCEPTION-PROPAGATE';
+								}
+								else
+								{
+									$type = 'SERIES-EXCEPTION'; // this is a new exception
+								}
 								break;
 							}
 						}
+						// the event id here is always the id of the master event
+						// unset it to prevent confusion of stored event and master event
+						unset($event['id']); 
 					}
 				}
 				else
@@ -2195,14 +2228,32 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 			
+			// read existing event
 			if(isset($event['id']))
 			{
 				$stored_event = $this->read($event['id']);
 			}
 			
+			// check ACL
+			if($return_master)
+			{
+				$acl_edit = $this->check_perms(EGW_ACL_EDIT, $master_event['id']);
+			}
+			else
+			{
+				if(is_array($stored_event))
+				{
+					$acl_edit = $this->check_perms(EGW_ACL_EDIT, $stored_event['id']);
+				}
+				else
+				{
+					$acl_edit = true; // new event
+				}
+			}
+			
 			return array(
 				'type' => $type,
-				'acl_edit' => is_array($stored_event) ? $this->check_perms(EGW_ACL_EDIT, $stored_event) : true,
+				'acl_edit' => $acl_edit,
 				'stored_event' => is_array($stored_event) ? $stored_event : false,
 				'master_event' => $return_master ? $master_event : false,
 			);
