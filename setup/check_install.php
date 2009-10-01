@@ -190,12 +190,13 @@ $checks = array(
 		'func' => 'pear_check',
 		'from' => 'WebDAV',
 	),
-	'.' => array(
+	realpath('..') => array(
 		'func' => 'permission_check',
 		'is_world_writable' => False,
+		'only_if_exists' => true,	// quitens "file does not exist" for doc symlinks in Debian to files outside open_basedir
 		'recursiv' => True
 	),
-	'header.inc.php' => array(
+	realpath('../header.inc.php') => array(
 		'func' => 'permission_check',
 		'is_world_readable' => False,
 		'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
@@ -207,7 +208,7 @@ $checks = array(
 );
 if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = session_save_path()))
 {
-	$checks[$session_path] = array(
+	$checks[realpath($session_path)] = array(
 		'func' => 'permission_check',
 		'is_writable' => true,
 		'msg' => lang("Checking if php.ini setting session.save_path='%1' is writable by the webserver",session_save_path()),
@@ -532,6 +533,7 @@ function permission_check($name,$args,$verbose=True)
 	{
 		$name = '../'.$name;
 	}
+
 	if (!file_exists($name) && isset($args['only_if_exists']) && $args['only_if_exists'])
 	{
 		return True;
