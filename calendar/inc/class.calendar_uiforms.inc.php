@@ -450,12 +450,19 @@ class calendar_uiforms extends calendar_ui
 					break;
 				}
 				$msg = lang('Permission denied');
+				$button = '';
 				break;
 			}
 
 			if ($event['start'] > $event['end'])
 			{
 				$msg = lang('Error: Starttime has to be before the endtime !!!');
+				$button = '';
+				break;
+			}
+			if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'] && $event['start'] > $event['recur_enddate'])
+			{
+				$msg = lang('repetition').': '.lang('Error: Starttime has to be before the endtime !!!');
 				$button = '';
 				break;
 			}
