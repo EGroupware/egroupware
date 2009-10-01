@@ -254,7 +254,10 @@
 						}
 						$cell['type'] = 'html';
 						$cell['size'] = '';	// is interpreted as link otherwise
-						$GLOBALS['egw_info']['etemplate']['to_process'][$name] = 'select';
+						$GLOBALS['egw_info']['etemplate']['to_process'][$name] = array(
+							'type' => 'select',
+							'needed' => $cell['needed'],
+						);
 						break;
 					}
 					$cell['no_lang'] = True;
