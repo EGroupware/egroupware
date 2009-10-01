@@ -1938,6 +1938,12 @@ $readonlys['button[vcard]'] = true;
 				} else if (selbox.value == "cat_add") {
 					win=window.open("'.egw::link('/etemplate/process_exec.php','menuaction=addressbook.addressbook_ui.cat_add').'","_blank","width=300,height=400,left=100,top=200");
 					win.focus();
+				} else if (selbox.value == "remove_from_list") {
+					if (confirm("'.lang('Remove selected contacts from distribution list').'")) selbox.form.submit();
+				} else if (selbox.value == "delete_list") {
+					if (confirm("'.lang('Delete selected distribution list!').'")) selbox.form.submit();
+				} else if (selbox.value == "delete") {
+					if (confirm("'.lang('Delete').'")) selbox.form.submit();
 				} else {
 					selbox.form.submit();
 				}
