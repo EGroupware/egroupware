@@ -21,7 +21,7 @@ $GLOBALS['egw_info'] = array(
 );
 include('./header.inc.php');
 
-$GLOBALS['sessionid'] = egw_session::get_sessionid('sessionid');
+$GLOBALS['sessionid'] = egw_session::get_sessionid();
 $GLOBALS['kp3']       = egw_session::get_request('kp3');
 
 $verified = $GLOBALS['egw']->session->verify();
