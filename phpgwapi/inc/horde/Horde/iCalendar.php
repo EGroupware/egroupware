@@ -924,7 +924,7 @@ class Horde_iCalendar {
     function _exportDateTime($value)
     {
         $temp = array();
-        if (!is_object($value) || is_array($value)) {
+        if (!is_object($value) && !is_array($value)) {
             $TZOffset  = 3600 * substr(date('O',$value), 0, 3);
             $TZOffset += 60 * substr(date('O',$value), 3, 2);
             $value -= $TZOffset;
