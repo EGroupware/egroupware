@@ -663,7 +663,7 @@
 
 			$filter['filterName']	= lang('Quicksearch');
 			$filter['type']		= $_searchType;
-			$filter['string']	= $_searchString;
+			$filter['string']	= str_replace('"','\"', str_replace('\\','\\\\',$_searchString));
 			$filter['status']	= $_status;
 
 			$this->sessionData['messageFilter'] = $filter;
