@@ -13,7 +13,7 @@ $setup_info['egw-pear']['name']		= 'egw-pear';
 $setup_info['egw-pear']['title']	= 'egw-pear';
 $setup_info['egw-pear']['version']	= '1.4.000';
 $setup_info['egw-pear']['app_order']	= 99;
-$setup_info['egw-pear']['enable']	= 2;
+$setup_info['egw-pear']['enable']	= 0;	// no need to show anywhere in EGroupware
 
 $setup_info['egw-pear']['author'] = array(
 	'name' => 'PEAR - PHP Extension and Application Repository',
