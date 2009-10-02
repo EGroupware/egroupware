@@ -24,4 +24,4 @@ php_flag session.use_trans_sid Off
 php_value session.gc_probability 1
 php_value session.gc_divisor 10
 # multibyte extension: needed for utf-8
-php_admin_value mbstring.func_overload 7
+php_value mbstring.func_overload 7
