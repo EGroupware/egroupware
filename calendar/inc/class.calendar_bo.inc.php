@@ -278,8 +278,9 @@ class calendar_bo
 	 *  order column-names plus optional DESC|ASC separted by comma
 	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
-	 *  cols string|array columns to select, if set the recordset/iterator will be returned
+	 *  cols string|array columns to select, if set an iterator will be returned
 	 *  append string to append to the query, eg. GROUP BY
+	 *  cfs array if set, query given custom fields or all for empty array, none are returned, if not set (default)
 	 * @return iterator|array|boolean array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
 	 *	or false if there are no read-grants from _any_ of the requested users or iterator/recordset if cols are given
 	 */
@@ -383,7 +384,7 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$params['sql_filter'],$params['cols'],$params['append']);
+			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$params['sql_filter'],$params['cols'],$params['append'],$params['cfs']);
 
 		if (isset($params['cols']))
 		{

@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -82,7 +82,7 @@ class calendar_uilist extends calendar_ui
 			'multiple'   => 0,
 			'view'       => $this->bo->cal_prefs['defaultcalendar'],
 		));
-		$GLOBALS['egw']->session->appsession('calendar_list','calendar','');	// in case there's already something set
+		egw_session::appsession('calendar_list','calendar','');	// in case there's already something set
 
 		return $this->listview(null,'',true);
 	}
@@ -95,7 +95,7 @@ class calendar_uilist extends calendar_ui
 		if ($_GET['msg']) $msg .= $_GET['msg'];
 		if ($this->group_warning) $msg .= $this->group_warning;
 
-		$etpl =& CreateObject('etemplate.etemplate','calendar.list');
+		$etpl = new etemplate('calendar.list');
 
 		if (is_array($content) && $content['nm']['rows']['delete'])
 		{
@@ -120,7 +120,7 @@ class calendar_uilist extends calendar_ui
 			}
 		}
 		$content = array(
-			'nm'  => $GLOBALS['egw']->session->appsession('calendar_list','calendar'),
+			'nm'  => egw_session::appsession('calendar_list','calendar'),
 			'msg' => $msg,
 		);
 		if (!is_array($content['nm']))
@@ -201,7 +201,7 @@ class calendar_uilist extends calendar_ui
 				$this->manage_states(array('date' => $this->bo->date2string($params['startdate'])));
 			}
 		}
-		$old_params = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+		$old_params = egw_session::appsession('calendar_list','calendar');
 		if ($old_params['filter'] && $old_params['filter'] != $params['filter'])	// filter changed => order accordingly
 		{
 			$params['order'] = 'cal_start';
@@ -211,14 +211,25 @@ class calendar_uilist extends calendar_ui
 		{
 			$this->adjust_for_search($params['search'],$params);
 		}
-		$GLOBALS['egw']->session->appsession('calendar_list','calendar',$params);
+		egw_session::appsession('calendar_list','calendar',$params);
 
+		// do we need to query custom fields and which
+		$select_cols = explode(',',$params['selectcols']);
+		if (in_array('cfs',$select_cols))
+		{
+			$cfs = array();
+			foreach($select_cols as $col)
+			{
+				if ($col[0] == '#') $cfs[] = substr($col,1);
+			}
+		}
 		$search_params = array(
 			'cat_id'  => $this->cat_id,
 			'filter'  => $this->filter,
 			'query'   => $params['search'],
 			'offset'  => (int) $params['start'],
 			'order'   => $params['order'] ? $params['order'].' '.$params['sort'] : 'cal_start',
+			'cfs'     => $cfs,
 		);
 		switch($params['filter'])
 		{
@@ -293,6 +304,7 @@ class calendar_uilist extends calendar_ui
 			$event['date'] = $this->bo->date2string($event['start']);
 			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
 			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
+
 			$rows[] = $event;
 		}
 		$wv=0;
@@ -309,7 +321,7 @@ class calendar_uilist extends calendar_ui
             $rows['format'] = '16';
 			$dv=1;
         }
-		if ($wv&&$dv)
+		if ($wv && $dv)
 		{
 			$rows['format'] = '64';
 		}

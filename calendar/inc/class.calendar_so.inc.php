@@ -276,14 +276,15 @@ class calendar_so
 	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @param string $order='cal_start' column-names plus optional DESC|ASC separted by comma
 	 * @param string $sql_filter='' sql to be and'ed into query (fully quoted)
-	 * @param string|array $_cols=null what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date"
-	 *                     if specified an iterator for the rows is returned
+	 * @param string|array $_cols=null what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+	 * 						if specified and not false an iterator for the rows is returned
 	 * @param string $append='' SQL to append to the query before $order, eg. for a GROUP BY clause
+	 * @param array $cfs=null custom fields to query, null = none, array() = all, or array with cfs names
 	 * @return array of cal_ids, or false if error in the parameters
 	 *
 	 * ToDo: search custom-fields too
 	 */
-	function &search($start,$end,$users,$cat_id=0,$filter='all',$query='',$offset=False,$num_rows=0,$order='cal_start',$sql_filter='',$_cols=null,$append='')
+	function &search($start,$end,$users,$cat_id=0,$filter='all',$query='',$offset=False,$num_rows=0,$order='cal_start',$sql_filter='',$_cols=null,$append='',$cfs=null)
 	{
 		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append)</p>\n";
 
@@ -439,6 +440,7 @@ class calendar_so
 			{
 				$id = $row['cal_id'];
 				if ($row['cal_recur_date']) $id .= '-'.$row['cal_recur_date'];
+				$recur_ids[$row['cal_id']][] = $id;
 
 				if (!isset($events[$id])) continue;		// not needed first entry of recuring event
 
@@ -446,21 +448,21 @@ class calendar_so
 				$events[$id]['participants'][self::combine_user($row['cal_user_type'],$row['cal_user_id'])] =
 					self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
 			}
-/*			custom fields are not shown in the regular views, so we can ignore them here for the moment
-			foreach($this->db->select($this->extra_table,'*',array('cal_id'=>$ids),__LINE__,__FILE__,false,'','calendar') as $row)
+			//custom fields are not shown in the regular views, so we only query them, if explicitly required
+			if (!is_null($cfs))
 			{
-				$set_ids = array($row['cal_id']);
-				if (isset($recur_ids[$row['cal_id']])) $set_ids += $recur_ids[$row['cal_id']];
-
-				foreach($set_ids as $id)
+				foreach($this->db->select($this->extra_table,'*',array('cal_id' => $ids,'cal_extra_name' => $cfs),
+					__LINE__,__FILE__,false,'','calendar') as $row)
 				{
-					if (isset($events[$cal_id]))
+					foreach((array)$recur_ids[$row['cal_id']] as $id)
 					{
-						$events[$id]['#'.$row['cal_extra_name']] = $row['cal_extra_value'];
+						if (isset($events[$id]))
+						{
+							$events[$id]['#'.$row['cal_extra_name']] = $row['cal_extra_value'];
+						}
 					}
 				}
 			}
-*/
 			// alarms, atm. we read all alarms in the system, as this can be done in a single query
 			foreach((array)$this->async->read('cal'.(is_array($ids) ? '' : ':'.(int)$ids).':%') as $id => $job)
 			{
