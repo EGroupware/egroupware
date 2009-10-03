@@ -1,15 +1,13 @@
 <?php
 /**
- * eGroupWare: GroupDAV access
- *
- * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
+ * eGroupWare: CalDAV/CardDAV/GroupDAV access
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -18,7 +16,21 @@ require_once('HTTP/WebDAV/Server.php');
 /**
  * eGroupWare: GroupDAV access
  *
- * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
+ * Using a modified PEAR HTTP/WebDAV/Server class from egw-pear!
+ *
+ * One can use the following url's releative (!) to http://domain.com/egroupware/groupdav.php
+ *
+ * - /addressbook/ all addressbooks current user has rights to
+ * - /calendar/    calendar of current user
+ * - /infolog/     infologs of current user
+ * - /             base of the above, only certain clients (KDE, Apple) can autodetect folders from there
+ * - /<username>/addressbook/ addressbook of user or group <username> given the user has rights to view it
+ * - /<username>/calendar/    calendar of user <username> given the user has rights to view it
+ * - /<username>/infolog/     InfoLog's of user <username> given the user has rights to view it
+ * - /<username>/             base of the above, only certain clients (KDE, Apple) can autodetect folders from there
+ *
+ * Calling one of the above collections with a GET request / regular browser generates an automatic index
+ * from the data of a allprop PROPFIND, allow to browse CalDAV/CardDAV/GroupDAV tree with a regular browser.
  *
  * @link http://www.groupdav.org GroupDAV spec
  */
@@ -151,55 +163,59 @@ class groupdav extends HTTP_WebDAV_Server
 		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options,true).')');
 
 		// parse path in form [/account_lid]/app[/more]
-		if (!self::_parse_path($options['path'],$id,$app,$user) && $app && !$user)
+		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user)
 		{
 			if ($this->debug > 1) error_log(__CLASS__."::$method: user=$user, app=$app, id=$id: 404 not found!");
 			return '404 Not Found';
-
-
 		}
 		if ($this->debug > 1) error_log(__CLASS__."::$method: user=$user, app='$app', id=$id");
 
 		$files = array('files' => array());
 
+error_log(__METHOD__."($options[path],,$method) app=$app, user=$user, id=$id, user_prefix=$user_prefix");
 		if (!$app)	// root folder containing apps
 		{
 			// self url
 			$files['files'][] = array(
-				'path'  => '/',
+				'path'  => $user_prefix.'/',
 				'props' => array(
 					self::mkprop('displayname','EGroupware (Cal|Card|Group)DAV server'),
 					self::mkprop('resourcetype','collection'),
 					// adding the calendar extra property (calendar-home-set, etc.) here, allows apple iCal to "autodetect" the URL
 					self::mkprop(groupdav::CALDAV,'calendar-home-set',$this->base_uri.'/calendar/'),
+					self::mkprop('current-user-principal',array(self::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
 				),
 			);
 			if ($options['depth'])
 			{
-				// principals collection
-				$files['files'][] = array(
-	            	'path'  => '/principals/',
-	            	'props' => array(
-	            		self::mkprop('displayname',lang('Accounts')),
-	            		self::mkprop('resourcetype','collection'),
-					),
-	            );
-				// groups collection
-				$files['files'][] = array(
-	            	'path'  => '/groups/',
-	            	'props' => array(
-	            		self::mkprop('displayname',lang('Groups')),
-	            		self::mkprop('resourcetype','collection'),
-					),
-	            );
-
+				if (empty($user_prefix))
+				{
+					// principals collection
+					$files['files'][] = array(
+		            	'path'  => '/principals/',
+		            	'props' => array(
+		            		self::mkprop('displayname',lang('Accounts')),
+		            		self::mkprop('resourcetype','collection'),
+							self::mkprop('current-user-principal',array(self::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
+						),
+		            );
+					// groups collection
+					$files['files'][] = array(
+		            	'path'  => '/groups/',
+		            	'props' => array(
+		            		self::mkprop('displayname',lang('Groups')),
+		            		self::mkprop('resourcetype','collection'),
+							self::mkprop('current-user-principal',array(self::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
+						),
+		            );
+				}
 				foreach($this->root as $app => $data)
 				{
 					if (!$GLOBALS['egw_info']['user']['apps'][$app]) continue;	// no rights for the given app
 
 					$files['files'][] = array(
-		            	'path'  => '/'.$app.'/',
-		            	'props' => $this->_properties($app),
+		            	'path'  => $user_prefix.'/'.$app.'/',
+		            	'props' => $this->_properties($app,false,$user),
 		            );
 				}
 			}
@@ -234,14 +250,18 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @param string $app
 	 * @param boolean $no_extra_types=false should the GroupDAV and CalDAV types be added (KAddressbook has problems with it in self URL)
+	 * @param int $user=null owner of the collection, default current user
 	 * @return array of DAV properties
 	 */
-	function _properties($app,$no_extra_types=false)
+	function _properties($app,$no_extra_types=false,$user=null)
 	{
+		if (!$user) $user = $GLOBALS['egw_info']['user']['account_fullname'];
+
 		$props = array(
-    		self::mkprop('displayname',$this->translation->convert(lang($app),$this->egw_charset,'utf-8')),
+    		self::mkprop('displayname',$this->translation->convert(lang($app).' '.common::grab_owner_name($user),$this->egw_charset,'utf-8')),
+			self::mkprop('current-user-principal',array(self::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
  		);
-		foreach($this->root[$app] as $prop => $values)
+		foreach((array)$this->root[$app] as $prop => $values)
 		{
 			if ($prop == 'resourcetype')
 			{
@@ -308,7 +328,7 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
-		if (!$this->_parse_path($options['path'],$id,$app,$user))
+		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
 			return $this->autoindex($options);
 
@@ -354,6 +374,7 @@ class groupdav extends HTTP_WebDAV_Server
 			echo html::a_href(htmlspecialchars($name.'/'),$path.($n ? '/' : ''));
 		}
 		echo "</h1>\n";
+
 		$collection_props = self::props2array($files['files'][0]['props']);
 		echo '<h3>'.lang('Collection listing').': '.htmlspecialchars($collection_props['DAV:displayname'])."</h3>\n";
 		//_debug_array($files['files']);
@@ -634,22 +655,28 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @param int &$id
 	 * @param string &$app addressbook, calendar, infolog (=infolog)
 	 * @param int &$user
+	 * @param string &$user_prefix=null
 	 * @return boolean true on success, false on error
 	 */
-	function _parse_path($path,&$id,&$app,&$user)
+	function _parse_path($path,&$id,&$app,&$user,&$user_prefix=null)
 	{
 		if ($this->debug) error_log(__METHOD__." called with ('$path') id=$id, app='$app', user=$user");
 		$parts = explode('/',$path);
-		list($id) = explode('.',array_pop($parts));		// remove evtl. .ics extension
 
+		if (count($parts) > 3 || !$GLOBALS['egw']->accounts->name2id($parts[1]))
+		{
+			list($id) = explode('.',array_pop($parts));		// remove evtl. .ics extension
+		}
 		$app = array_pop($parts);
 
 		if (($user = array_pop($parts)))
 		{
+			$user_prefix = '/'.$user;
 			$user = $GLOBALS['egw']->accounts->name2id($user,'account_lid',$app != 'addressbook' ? 'u' : null);
 		}
 		else
 		{
+			$user_prefix = '';
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 		}
 		if (!($ok = $id && in_array($app,array('addressbook','calendar','infolog','principals','groups')) && $user))
