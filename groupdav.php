@@ -33,6 +33,7 @@ function check_access(&$account)
 			($GLOBALS['egw']->session->reason ? ': '.$GLOBALS['egw']->session->reason : '').'"');
 		header('HTTP/1.1 401 Unauthorized');
 		header('X-WebDAV-Status: 401 Unauthorized', true);
+		echo "<html>\n<head>\n<title>401 Unauthorized</title>\n<body>\nAuthorization failed.\n</body>\n</html>\n";
 		exit;
 	}
 	return $sessionid;
