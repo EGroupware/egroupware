@@ -875,7 +875,8 @@ class Horde_iCalendar {
         // VERSION is not allowed for entries enclosed in VCALENDAR/ICALENDAR,
         // as it is part of the enclosing VCALENDAR/ICALENDAR. See rfc2445
         if ($base !== 'VEVENT' && $base !== 'VTODO' && $base !== 'VALARM' &&
-            $base !== 'VJOURNAL' && $base !== 'VFREEBUSY') {
+            $base !== 'VJOURNAL' && $base !== 'VFREEBUSY' &&
+            $base !== 'VTIMEZONE' && $base !== 'STANDARD' && $base != 'DAYLIGHT') {
             // Ensure that version is the first attribute.
             $result .= 'VERSION:' . $this->_version . $this->_newline;
         }
