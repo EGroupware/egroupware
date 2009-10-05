@@ -294,7 +294,7 @@ function add_upload(upload)
 	parent.insertBefore(newUpload,upload);
 	var br = document.createElement('br');
 	parent.insertBefore(br,upload);
-	upload.id += parent.childNodes.length;
 	newUpload.value = '';
+	newUpload.id += parent.childNodes.length;
 	parent.insertBefore(upload,newUpload);
 }
