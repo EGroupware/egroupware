@@ -192,14 +192,6 @@ class calendar_ical extends calendar_boupdate
 			$version = '2.0';
 		}
 
-		$servertime = false;
-		$date_format = 'server';
-		if (strpos($this->productName, "palmos") )
-		{
-			$servertime = true;
-			$date_format = 'ts';
-		}
-
 		$vcal = new Horde_iCalendar;
 		$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
@@ -210,10 +202,18 @@ class calendar_ical extends calendar_boupdate
 
 		while (($event = array_pop($events)))
 		{
+			if (strpos($this->productName, 'palmos'))
+			{
+				$servertime = true;
+				$date_format = 'ts';
+			}
+			else
+			{
+				$servertime = false;
+			}
 			if (!is_array($event)
 				&& !($event = $this->read($event, $recur_date, false, $date_format)))
 			{
-				// server = timestamp in server-time(!)
 				return false;	// no permission to read $cal_id
 			}
 			if ($recur_date)
@@ -225,17 +225,25 @@ class calendar_ical extends calendar_boupdate
 				}
 				$event['recur_type'] = MCAL_RECUR_NONE;
 			}
-			//_debug_array($event);
 
-			// correct daylight saving time
-			/* causes times wrong by one hour, if exporting events with DST different from the current date,
-			which this fix is suppost to fix. Maybe the problem has been fixed in the horde code too.
-			$currentDST = date('I', mktime());
-			$eventDST = date('I', $event['start']);
-			$DSTCorrection = ($currentDST - $eventDST) * 3600;
-			$event['start']	= $event['start'] + $DSTCorrection;
-			$event['end']	= $event['end'] + $DSTCorrection;
-			*/
+			if ($this->log) error_log(__FILE__.'('.__LINE__.'): '.__METHOD__.' '.array2string($event)."\n",3,$this->logfile);
+
+			if (!$servertime && $event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				if ($event['recur_enddate'])
+				{
+					$startDST = date('I', $event['start']);
+					$finalDST = date('I', $event['recur_enddate']);
+					// Different DST or more than half a year?
+					if ($startDST != $finalDST ||
+						($event['recur_enddate'] - $event['start']) > 15778800)
+					{
+						$servertime = true;
+						// read the event again with timestamps
+						$event = $this->read($event['id'], 0, false, 'ts');
+					}
+				}
+			}
 
 			if ($this->productManufacturer != 'file' && $this->uidExtension)
 			{
@@ -247,6 +255,15 @@ class calendar_ical extends calendar_boupdate
 
 			$vevent = Horde_iCalendar::newComponent('VEVENT', $vcal);
 			$parameters = $attributes = $values = array();
+
+			if ($servertime)
+			{
+				$serverTZ = $this->generate_vtimezone($event['start'], $vevent);
+			}
+			else
+			{
+				$serverTZ = null;
+			}
 
 			if ($this->productManufacturer == 'sonyericsson')
 			{
@@ -324,6 +341,7 @@ class calendar_ical extends calendar_boupdate
 						if ($servertime)
 						{
 							$attributes['DTSTART'] = date('Ymd\THis', $event['start']);
+							if ($serverTZ) $parameters['DTSTART']['TZID'] = $serverTZ;
 						}
 						else
 						{
@@ -349,6 +367,7 @@ class calendar_ical extends calendar_boupdate
 							if ($servertime)
 							{
 								$attributes['DTEND'] = date('Ymd\THis', $event['end']);
+								if ($serverTZ) $parameters['DTEND']['TZID'] = $serverTZ;
 							}
 							else
 							{
@@ -388,14 +407,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								$recur_enddate = (int)$event['recur_enddate'];
 								$recur_enddate += 24 * 60 * 60 - 1;
-								if ($servertime)
-								{
-									$rrule['UNTIL'] = date('Ymd\THis', $recur_enddate);
-								}
-								else
-								{
-									$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
-								}
+								$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
 							}
 							else
 							{
@@ -440,14 +452,7 @@ class calendar_ical extends calendar_boupdate
 								}
 								else
 								{
-									if ($servertime)
-									{
-										$rrule['UNTIL'] = date('Ymd\THis', $recur_enddate);
-									}
-									else
-									{
-										$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
-									}
+									$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
 								}
 							}
 							// no idea how to get the Horde parser to produce a standard conformant
@@ -528,6 +533,7 @@ class calendar_ical extends calendar_boupdate
 							}
 							$attributes['EXDATE'] = '';
 							$values['EXDATE'] = $days;
+							if ($serverTZ) $parameters['EXDATE']['TZID'] = $serverTZ;
 							$parameters['EXDATE']['VALUE'] = $value_type;
 						}
 						break;
@@ -571,6 +577,7 @@ class calendar_ical extends calendar_boupdate
 								if ($servertime)
 								{
 									$attributes['RECURRENCE-ID'] = date('Ymd\THis', $recur_date);
+									if ($serverTZ) $parameters['RECURRENCE-ID']['TZID'] = $serverTZ;
 								}
 								else
 								{
@@ -598,6 +605,7 @@ class calendar_ical extends calendar_boupdate
 								if ($servertime)
 								{
 									$attributes['RECURRENCE-ID'] = date('Ymd\THis', $event['recurrence']);
+									if ($serverTZ) $parameters['RECURRENCE-ID']['TZID'] = $serverTZ;
 								}
 								else
 								{
@@ -655,35 +663,14 @@ class calendar_ical extends calendar_boupdate
 			if (!$created && !$modified) $created = $event['modified'];
 			if ($created)
 			{
-				if ($servertime)
-				{
-					$attributes['CREATED'] = date('Ymd\THis', $created);
-				}
-				else
-				{
-					$attributes['CREATED'] = $created;
-				}
+				$attributes['CREATED'] = $created;
 			}
 			if (!$modified) $modified = $event['modified'];
 			if ($modified)
 			{
-				if ($servertime)
-				{
-					$attributes['LAST-MODIFIED'] = date('Ymd\THis', $modified);
-				}
-				else
-				{
-					$attributes['LAST-MODIFIED'] = $modified;
-				}
+				$attributes['LAST-MODIFIED'] = $modified;
 			}
-			if ($servertime)
-			{
-				$attributes['DTSTAMP'] = date('Ymd\THis', time());
-			}
-			else
-			{
-				$attributes['DTSTAMP'] = time();
-			}
+			$attributes['DTSTAMP'] = time();
 			foreach($event['alarm'] as $alarmID => $alarmData)
 			{
 				// skip alarms being set for all users or alarms owned by other users
@@ -691,13 +678,15 @@ class calendar_ical extends calendar_boupdate
 				{
 					continue;
 				}
-				
+
 				if ($version == '1.0')
 				{
 					if ($servertime)
 					{
 						$attributes['DALARM'] = date('Ymd\THis', $alarmData['time']);
+						if ($serverTZ) $parameters['DALARM']['TZID'] = $serverTZ;
 						$attributes['AALARM'] = date('Ymd\THis', $alarmData['time']);
+						if ($serverTZ) $parameters['AALARM']['TZID'] = $serverTZ;
 					}
 					else
 					{
@@ -719,6 +708,12 @@ class calendar_ical extends calendar_boupdate
 					// RFC requires DESCRIPTION for DISPLAY
 					if (!$event['title'] && !$description) continue;
 
+					if ($this->isWholeDay($event) && $alarmData['offset'])
+					{
+						$alarmData['time'] = $event['start'] - $alarmData['offset'];
+						$alarmData['offset'] = false;
+					}
+
 					$valarm = Horde_iCalendar::newComponent('VALARM',$vevent);
 					if ($alarmData['offset'])
 					{
@@ -727,15 +722,17 @@ class calendar_ical extends calendar_boupdate
 					}
 					else
 					{
+						$params = array('VALUE' => 'DATE-TIME');
 						if ($servertime)
 						{
 							$value = date('Ymd\THis', $alarmData['time']);
+							if ($serverTZ) $params['TZID'] = $serverTZ;
 						}
 						else
 						{
 							$value = $alarmData['time'];
 						}
-						$valarm->setAttribute('TRIGGER', $value, array('VALUE' => 'DATE-TIME'));
+						$valarm->setAttribute('TRIGGER', $value, $params);
 					}
 
 					$valarm->setAttribute('ACTION','DISPLAY');
@@ -824,7 +821,7 @@ class calendar_ical extends calendar_boupdate
 				{
 					$event['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 				}
-				
+
 				// add ourself to new events as participant
 				if(!isset($this->supportedFields['participants'])
 					||!isset($event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
@@ -896,7 +893,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				case 'SINGLE':
 					Horde::logMessage('importVCAL event SINGLE',__FILE__, __LINE__, PEAR_LOG_DEBUG);
-					
+
 					// update the event
 					if($event_info['acl_edit'])
 					{
@@ -905,10 +902,10 @@ class calendar_ical extends calendar_boupdate
 						unset($event_to_store);
 					}
 					break;
-						
+
 				case 'SERIES-MASTER':
 					Horde::logMessage('importVCAL event SERIES-MASTER',__FILE__, __LINE__, PEAR_LOG_DEBUG);
-					
+
 					// remove all known "status only" exceptions and update the event
 					if($event_info['acl_edit'])
 					{
@@ -925,17 +922,17 @@ class calendar_ical extends calendar_boupdate
 							}
 							$event['recur_exception'] = $recur_exceptions;
 						}
-						
+
 						$event_to_store = $event; // prevent $event from being changed by the update method
 						$updated_id = $this->update($event_to_store, true);
 						unset($event_to_store);
 					}
 					break;
-						
+
 				case 'SERIES-EXCEPTION':
 				case 'SERIES-EXCEPTION-PROPAGATE':
 					Horde::logMessage('importVCAL event SERIES-EXCEPTION',__FILE__, __LINE__, PEAR_LOG_DEBUG);
-						
+
 					// update event
 					if($event_info['acl_edit'])
 					{
@@ -956,16 +953,16 @@ class calendar_ical extends calendar_boupdate
 							$event['reference'] = $event_info['master_event']['id'];
 							$event['category'] = $event_info['master_event']['category'];
 						}
-						
+
 						$event_to_store = $event; // prevent $event from being changed by update method
 						$updated_id = $this->update($event_to_store, true);
 						unset($event_to_store);
 					}
 					break;
-			
+
 				case 'SERIES-EXCEPTION-STATUS':
 					Horde::logMessage('importVCAL event SERIES-EXCEPTION-STATUS',__FILE__, __LINE__, PEAR_LOG_DEBUG);
-			
+
 					if($event_info['acl_edit'])
 					{
 						// truncate the status only exception from the series master
@@ -978,22 +975,22 @@ class calendar_ical extends calendar_boupdate
 							}
 						}
 						$event_info['master_event']['recur_exception'] = $recur_exceptions;
-						
+
 						// save the series master with the adjusted exceptions
 						$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
 						$updated_id = $this->update($event_to_store, true);
 						unset($event_to_store);
 					}
-					
+
 					break;
 			}
-			
+
 			// read stored event into info array for fresh stored (new) events
 			if(!is_array($event_info['stored_event']) && $updated_id > 0)
 			{
 				$event_info['stored_event'] = $this->read($updated_id);
 			}
-			
+
 			// update status depending on the given event type
 			switch($event_info['type'])
 			{
@@ -1016,7 +1013,7 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 					break;
-			
+
 				case 'SERIES-EXCEPTION-STATUS':
 					if(is_array($event_info['master_event'])) // status update requires a stored master event
 					{
@@ -1034,9 +1031,9 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 			}
-			
+
 			// update alarms depending on the given event type
-			if(isset($this->supportedFields['alarm']) 
+			if(isset($this->supportedFields['alarm'])
 				&& is_array($event_info['stored_event']) // alarm update requires a stored event
 			)
 			{
@@ -1078,7 +1075,7 @@ class calendar_ical extends calendar_boupdate
 							}
 						}
 						break;
-			
+
 					case 'SERIES-EXCEPTION-STATUS':
 						// nothing to do here
 						break;
@@ -1093,11 +1090,11 @@ class calendar_ical extends calendar_boupdate
 				case 'SERIES-EXCEPTION':
 					$return_id = is_array($event_info['stored_event']) ? $event_info['stored_event']['id'] : false;
 					break;
-			
+
 				case 'SERIES-EXCEPTION-STATUS':
 					$return_id = is_array($event_info['master_event']) ? $event_info['master_event']['id'] . ':' . $event['recurrence'] : false;
 					break;
-					
+
 				case 'SERIES-EXCEPTION-PROPAGATE':
 					if($event_info['acl_edit'] && is_array($event_info['stored_event']))
 					{
@@ -1119,7 +1116,7 @@ class calendar_ical extends calendar_boupdate
 				error_log(__LINE__.__METHOD__.__FILE__.array2string($egw_event)."\n",3,$this->logfile);
 			}
 		}
-		
+
 		return $return_id;
 	}
 
@@ -1425,7 +1422,7 @@ class calendar_ical extends calendar_boupdate
  						// No reference or RECURRENCE-ID for the series master
  						$event['reference'] = $event['recurrence'] = 0;
  					}
- 					
+
  					// handle the alarms
  					$alarms = $event['alarm'];
 					foreach ($component->getComponents() as $valarm)
@@ -1436,12 +1433,12 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 					$event['alarm'] = $alarms;
-					
+
 					$events[] = $event;
 				}
 			}
 		}
-		
+
 		// decide what to return
 		if(count($events) == 1)
 		{
@@ -1449,7 +1446,7 @@ class calendar_ical extends calendar_boupdate
 			if($cal_id > 0) $event['id'] = $cal_id;
 			if(!is_null($etag)) $event['etag'] = $etag;
 			if($recur_date) $event['recurrence'] = $recur_date;
-			
+
 			return array($event);
 		}
 		else if($count($events) == 0 || $cal_id > 0 || !is_null($etag) || $recur_date)
@@ -2024,7 +2021,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				$event = array_shift($events);
 				return $this->find_event($event, $relax);
-			}		
+			}
 		}
 		return false;
 	}
@@ -2139,16 +2136,16 @@ class calendar_ical extends calendar_boupdate
 			$this->set_status($old_event, $userid, $status, $recur_date, true);
    	}
     }
-    
+
     /**
      * classifies an incoming event from the eGW point-of-view
-     * 
+     *
      * exceptions: unlike other calendar apps eGW does not create an event exception
      * if just the participant state changes - therefore we have to distinguish between
      * real exceptions and status only exceptions
-     * 
+     *
      * @param array $event the event to check
-     * 
+     *
      * @return array
      * 	type =>
      * 		SINGLE a single event
@@ -2165,7 +2162,7 @@ class calendar_ical extends calendar_boupdate
     {
 			$type = 'SINGLE'; // default
 			$return_master = false; //default
-			
+
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$type = 'SERIES-MASTER';
@@ -2187,7 +2184,7 @@ class calendar_ical extends calendar_boupdate
 				{
 					// SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
 					$return_master = true; // we have a valid master and can return it
-					
+
 					if(isset($event['id']) && $master_event['id'] != $event['id'])
 					{
 						$type = 'SERIES-EXCEPTION'; // this is an existing exception
@@ -2218,7 +2215,7 @@ class calendar_ical extends calendar_boupdate
 						}
 						// the event id here is always the id of the master event
 						// unset it to prevent confusion of stored event and master event
-						unset($event['id']); 
+						unset($event['id']);
 					}
 				}
 				else
@@ -2227,13 +2224,13 @@ class calendar_ical extends calendar_boupdate
 					$type = 'SINGLE';
 				}
 			}
-			
+
 			// read existing event
 			if(isset($event['id']))
 			{
 				$stored_event = $this->read($event['id']);
 			}
-			
+
 			// check ACL
 			if($return_master)
 			{
@@ -2250,7 +2247,7 @@ class calendar_ical extends calendar_boupdate
 					$acl_edit = true; // new event
 				}
 			}
-			
+
 			return array(
 				'type' => $type,
 				'acl_edit' => $acl_edit,
@@ -2258,4 +2255,297 @@ class calendar_ical extends calendar_boupdate
 				'master_event' => $return_master ? $master_event : false,
 			);
     }
+
+    /**
+	 * generate and insert a VTIMEZONE entry for an event
+	 *
+	 * @param int $ts timestamp to evaluate the local timezone and year
+	 * @param array $vevent VEVENT representation of the event
+	 * @return string local timezone name (e.g. 'CET/CEST')
+	 */
+	function generate_vtimezone($ts, &$vevent)
+	{
+		$utc = array('UTC',null,0,0,"",0,0,0,0,0,0,0,0,0,0);
+		$dayofweek = array('SU','MO','TU','WE','TH','FR','SA');
+		$tbl_tz = array(
+			array("Afghanistan","Asia/Kabul",270,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("AKST/AKDT","America/Anchorage",-540,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("AKST/AKDT","America/Anchorage",-540,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("AKST/AKDT","America/Anchorage",-540,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("HNY/NAY","America/Anchorage",-540,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("HNY/NAY","America/Anchorage",-540,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("HNY/NAY","America/Anchorage",-540,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Alaskan","America/Anchorage",-540,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("Alaskan","America/Anchorage",-540,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("Alaskan","America/Anchorage",-540,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Arab","Asia/Riyadh",180,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Arabian","Asia/Dubai",240,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Arabic","Asia/Baghdad",180,60,"",4,0,1,3,0,10,0,1,4,0),
+			array("AST/ADT","America/Halifax",-240,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("AST/ADT","America/Halifax",-240,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("AST/ADT","America/Halifax",-240,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("HNA/HAA","America/Halifax",-240,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("HNA/HAA","America/Halifax",-240,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("HNA/HAA","America/Halifax",-240,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Atlantic","America/Halifax",-240,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("Atlantic","America/Halifax",-240,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("Atlantic","America/Halifax",-240,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("AUS_Central","Australia/Darwin",570,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("AUS_Eastern","Australia/Sydney",600,60,"",10,0,5,2,0,3,0,5,3,0),
+			array("Azerbaijan","Asia/Baku",240,60,"",3,0,5,4,0,10,0,5,5,0),
+			array("Azores","Atlantic/Azores",-60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("Canada_Central","America/Regina",-360,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Cape_Verde","Atlantic/Cape_Verde",-60,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Caucasus","Asia/Tbilisi",240,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("ACST/ACDT","Australia/Adelaide",570,60,"",10,0,5,2,0,3,0,5,3,0),
+			array("Central_Australia","Australia/Adelaide",570,60,"",10,0,5,2,0,3,0,5,3,0),
+			array("Central_America","America/Guatemala",-360,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Central_Asia","Asia/Dhaka",360,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Central_Brazilian","America/Manaus",-240,60,"",11,0,1,0,0,2,0,5,0,0),
+			array("Central_Brazilian","America/Manaus",-240,60,"2006",11,0,1,0,0,2,0,2,2,0),
+			array("Central_Brazilian","America/Manaus",-240,60,"2007",11,0,1,0,0,2,0,5,0,0),
+			array("CET/CEST","Europe/Zurich",60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("MEZ/MESZ","Europe/Berlin",60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("Central_Europe","Europe/Budapest",60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("Central_European","Europe/Warsaw",60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("Central_Pacific","Pacific/Guadalcanal",660,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("CST/CDT","America/Chicago",-360,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("CST/CDT","America/Chicago",-360,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("CST/CDT","America/Chicago",-360,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("HNC/HAC","America/Chicago",-360,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("HNC/HAC","America/Chicago",-360,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("HNC/HAC","America/Chicago",-360,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Central","America/Chicago",-360,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("Central","America/Chicago",-360,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("Central","America/Chicago",-360,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Central_Mexico","America/Mexico_City",-360,60,"",4,0,1,2,0,10,0,5,2,0),
+			array("China","Asia/Shanghai",480,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Dateline","Etc/GMT+12",-720,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("East_Africa","Africa/Nairobi",180,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("AEST/AEDT","Australia/Brisbane",600,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("East_Australia","Australia/Brisbane",600,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("EET/EEST","Europe/Minsk",120,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("East_Europe","Europe/Minsk",120,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("East_South_America","America/Sao_Paulo",-180,60,"",11,0,1,0,0,2,0,5,0,0),
+			array("East_South_America","America/Sao_Paulo",-180,60,"2006",11,0,1,0,0,2,0,2,2,0),
+			array("East_South_America","America/Sao_Paulo",-180,60,"2007",11,0,1,0,0,2,0,5,0,0),
+			array("EST/EDT","America/New_York",-300,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("EST/EDT","America/New_York",-300,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("EST/EDT","America/New_York",-300,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("HNE/HAE","America/New_York",-300,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("HNE/HAE","America/New_York",-300,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("HNE/HAE","America/New_York",-300,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Eastern","America/New_York",-300,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("Eastern","America/New_York",-300,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("Eastern","America/New_York",-300,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Egypt","Africa/Cairo",120,60,"",4,4,5,23,59,9,4,5,23,59),
+			array("Ekaterinburg","Asia/Yekaterinburg",300,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("Fiji","Pacific/Fiji",720,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("FLE","Europe/Kiev",120,60,"",3,0,5,3,0,10,0,5,4,0),
+			array("Georgian","Etc/GMT-3",180,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("GMT","Europe/London",0,60,"",3,0,5,1,0,10,0,5,2,0),
+			array("Greenland","America/Godthab",-180,60,"",4,0,1,2,0,10,0,5,2,0),
+			array("Greenwich","Africa/Casablanca",0,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("GTB","Europe/Istanbul",120,60,"",3,0,5,3,0,10,0,5,4,0),
+			array("HAST/HADT","Pacific/Honolulu",-600,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Hawaiian","Pacific/Honolulu",-600,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("India","Asia/Calcutta",330,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Iran","Asia/Tehran",210,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Iran","Asia/Tehran",210,60,"2005",3,0,1,2,0,9,2,4,2,0),
+			array("Iran","Asia/Tehran",210,0,"2006",0,0,0,0,0,0,0,0,0,0),
+			array("Israel","Asia/Jerusalem",120,60,"",3,5,5,2,0,9,0,3,2,0),
+			array("Israel","Asia/Jerusalem",120,0,"2004",0,0,0,0,0,0,0,0,0,0),
+			array("Israel","Asia/Jerusalem",120,60,"2005",4,-1,1,2,0,10,-1,9,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2006",3,-1,31,2,0,10,-1,1,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2007",3,-1,30,2,0,9,-1,16,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2008",3,-1,28,2,0,10,-1,5,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2009",3,-1,27,2,0,9,-1,27,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2010",3,-1,26,2,0,9,-1,12,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2011",4,-1,1,2,0,10,-1,2,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2012",3,-1,30,2,0,9,-1,23,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2013",3,-1,29,2,0,9,-1,8,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2014",3,-1,28,2,0,9,-1,28,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2015",3,-1,27,2,0,9,-1,20,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2016",4,-1,1,2,0,10,-1,9,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2017",3,-1,31,2,0,9,-1,24,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2018",3,-1,30,2,0,9,-1,16,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2019",3,-1,29,2,0,10,-1,6,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2020",3,-1,27,2,0,9,-1,27,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2021",3,-1,26,2,0,9,-1,12,2,0),
+			array("Israel","Asia/Jerusalem",120,60,"2022",4,-1,1,2,0,10,-1,2,2,0),
+			array("Israel","Asia/Jerusalem",120,0,"2023",0,0,0,0,0,0,0,0,0,0),
+			array("Jordan","Asia/Amman",120,60,"",3,4,5,0,0,9,5,5,1,0),
+			array("Korea","Asia/Seoul",540,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Mexico","America/Mexico_City",-360,60,"",4,0,1,2,0,10,0,5,2,0),
+			array("Mexico_2","America/Chihuahua",-420,60,"",4,0,1,2,0,10,0,5,2,0),
+			array("Mid_Atlantic","Atlantic/South_Georgia",-120,60,"",3,0,5,2,0,9,0,5,2,0),
+			array("Middle_East","Asia/Beirut",120,60,"",3,0,5,0,0,10,6,5,23,59),
+			array("Montevideo","America/Montevideo",-180,60,"",10,0,1,2,0,3,0,2,2,0),
+			array("MST/MDT","America/Denver",-420,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("MST/MDT","America/Denver",-420,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("MST/MDT","America/Denver",-420,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("HNR/HAR","America/Denver",-420,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("HNR/HAR","America/Denver",-420,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("HNR/HAR","America/Denver",-420,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Mountain","America/Denver",-420,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("Mountain","America/Denver",-420,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("Mountain","America/Denver",-420,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Mountain_Mexico","America/Chihuahua",-420,60,"",4,0,1,2,0,10,0,5,2,0),
+			array("Myanmar","Asia/Rangoon",390,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("North_Central_Asia","Asia/Novosibirsk",360,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("Namibia","Africa/Windhoek",120,-60,"",4,0,1,2,0,9,0,1,2,0),
+			array("Nepal","Asia/Katmandu",345,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("New_Zealand","Pacific/Auckland",720,60,"",10,0,1,2,0,3,0,3,3,0),
+			array("NST/NDT","America/St_Johns",-210,60,"",3,0,2,0,1,11,0,1,0,1),
+			array("NST/NDT","America/St_Johns",-210,60,"2006",4,0,1,0,1,10,0,5,0,0),
+			array("NST/NDT","America/St_Johns",-210,60,"2007",3,0,2,0,1,11,0,1,0,0),
+			array("HNT/HAT","America/St_Johns",-210,60,"",3,0,2,0,1,11,0,1,0,1),
+			array("HNT/HAT","America/St_Johns",-210,60,"2006",4,0,1,0,1,10,0,5,0,0),
+			array("HNT/HAT","America/St_Johns",-210,60,"2007",3,0,2,0,1,11,0,1,0,0),
+			array("Newfoundland","America/St_Johns",-210,60,"",3,0,2,0,1,11,0,1,0,1),
+			array("Newfoundland","America/St_Johns",-210,60,"2006",4,0,1,0,1,10,0,5,0,0),
+			array("Newfoundland","America/St_Johns",-210,60,"2007",3,0,2,0,1,11,0,1,0,0),
+			array("North_Asia_East","Asia/Irkutsk",480,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("North_Asia","Asia/Krasnoyarsk",420,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("Pacific_SA","America/Santiago",-240,60,"",10,6,2,23,59,3,6,2,23,59),
+			array("PST/PDT","America/Los_Angeles",-480,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("PST/PDT","America/Los_Angeles",-480,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("PST/PDT","America/Los_Angeles",-480,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("HNP/HAP","America/Los_Angeles",-480,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("HNP/HAP","America/Los_Angeles",-480,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("HNP/HAP","America/Los_Angeles",-480,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Pacific","America/Los_Angeles",-480,60,"",3,0,2,2,0,11,0,1,2,0),
+			array("Pacific","America/Los_Angeles",-480,60,"2006",4,0,1,2,0,10,0,5,2,0),
+			array("Pacific","America/Los_Angeles",-480,60,"2007",3,0,2,2,0,11,0,1,2,0),
+			array("Pacific_Mexico","America/Tijuana",-480,60,"",4,0,1,2,0,10,0,5,2,0),
+			array("Romance","Europe/Paris",60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("Russian","Europe/Moscow",180,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("SA_Eastern","Etc/GMT+3",-180,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("SA_Pacific","America/Bogota",-300,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("SA_Western","America/La_Paz",-240,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Samoa","Pacific/Apia",-660,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("SE_Asia","Asia/Bangkok",420,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Singapore","Asia/Singapore",480,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("South_Africa","Africa/Johannesburg",120,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Sri_Lanka","Asia/Colombo",330,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Taipei","Asia/Taipei",480,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Tasmania","Australia/Hobart",600,60,"",10,0,1,2,0,3,0,5,3,0),
+			array("Tokyo","Asia/Tokyo",540,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Tonga","Pacific/Tongatapu",780,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("US_Eastern","Etc/GMT+5",-300,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("US_Mountain","America/Phoenix",-420,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Vladivostok","Asia/Vladivostok",600,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("West_Australia","Australia/Perth",480,60,"",10,0,5,2,0,3,0,5,3,0),
+			array("West_Australia","Australia/Perth",480,0,"2005",0,0,0,0,0,0,0,0,0,0),
+			array("West_Australia","Australia/Perth",480,60,"2006",12,-1,1,2,0,1,-1,1,0,0),
+			array("West_Australia","Australia/Perth",480,60,"2007",10,0,5,2,0,3,0,5,3,0),
+			array("West_Central_Africa","Africa/Lagos",60,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("WET/WEST","Europe/Berlin",60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("West_Europe","Europe/Berlin",60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("West_Asia","Asia/Karachi",300,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("West_Pacific","Pacific/Port_Moresby",600,0,"",0,0,0,0,0,0,0,0,0,0),
+			array("Yakutsk","Asia/Yakutsk",540,60,"",3,0,5,2,0,10,0,5,3,0),
+		);
+
+		$serverTZ = date('e', $ts);
+		$year = date('Y', $ts);
+		$i = 0;
+		$row =& $utc;
+		do
+		{
+			$tbl_tz_row =& $tbl_tz[$i];
+			if ($row[0] != 'UTC' && $row[0] != $tbl_tz_row[0]) break;
+			if ($tbl_tz_row[1] == $serverTZ
+				&& ($tbl_tz_row[4] != "" || $year >= (int) $tbl_tz_row[4]))
+			{
+				$row =& $tbl_tz[$i];
+			}
+			$i++;
+		}
+		while (is_array($tbl_tz[$i]));
+		if (preg_match('/(.+)\/(.+)/', $row[0], $matches))
+		{
+			$stdname = $matches[1];
+			$dstname = $matches[2];
+		}
+		else
+		{
+			$stdname = $dstname = $row[0];
+		}
+		$container = false;
+		$vtimezone = Horde_iCalendar::newComponent('VTIMEZONE', $container);
+		$vtimezone->setAttribute('TZID', $row[1]);
+		$minutes = $row[2] + $row[3];
+		$value1['ahead'] = ($minutes > 0);
+		$minutes = abs($minutes);
+		$value1['hour'] = (int)$minutes / 60;
+		$value1['minute'] = $minutes % 60;
+		$minutes = $row[2];
+		$value2['ahead'] = ($minutes > 0);
+		$minutes = abs($minutes);
+		$value2['hour'] = (int)$minutes / 60;
+		$value2['minute'] = $minutes % 60;
+
+		$daylight = Horde_iCalendar::newComponent('DAYLIGHT', $container);
+		$dtstart = $this->calc_dtstart($row[4], $row[5], $row[6], $row[7], $row[8], $row[9]);
+		$daylight->setAttribute('DTSTART', $dtstart);
+		$byday = ($row[7] == 5 ? '-1' : $row[7]) . $dayofweek[$row[6]];
+		$daylight->setAttribute('RRULE', '', array('FREQ' => 'YEARLY', 'BYMONTH' => $row[5], 'BYDAY' => $byday));
+		$daylight->setAttribute('TZNAME', $dstname);
+		$daylight->setAttribute('TZOFFSETFROM', $value2);
+		$daylight->setAttribute('TZOFFSETTO', $value1);
+
+		$standard = Horde_iCalendar::newComponent('STANDARD', $container);
+		$dtstart = $this->calc_dtstart($year, $row[10], $row[11], $row[12], $row[13], $row[14]);
+		$standard->setAttribute('DTSTART', $dtstart);
+		$byday = ($row[12] == 5 ? '-1' : $row[12]) . $dayofweek[$row[11]];
+		$standard->setAttribute('RRULE', '', array('FREQ' => 'YEARLY', 'BYMONTH' => $row[10], 'BYDAY' => $byday));
+		$standard->setAttribute('TZNAME', $stdname);
+		$standard->setAttribute('TZOFFSETFROM', $value1);
+		$standard->setAttribute('TZOFFSETTO', $value2);
+
+		$vtimezone->addComponent($daylight);
+		$vtimezone->addComponent($standard);
+		$vevent->addComponent($vtimezone);
+
+		return $row[1];
+	}
+
+	/**
+	 * calculate the DTSTART value for a given timezone switch occurrence
+	 *
+	 * @param int $wYear
+	 * @param int $wMonth
+	 * @param int $wDayOfWeek
+	 * @param int $wNth        n-th day of week (5 last occurrence)
+	 * @param int $wHour
+	 * @param int $wMinute
+	 * @return string DTSTART entry
+	 */
+	function calc_dtstart($wYear, $wMonth, $wDayOfWeek, $wNth, $wHour, $wMinute)
+	{
+		if (!$wYear) $wYear = 1981;
+		if ($wNth < 5)
+		{
+			$ts =  mktime($wHour, $wMinute, 0, $wMonth, 1, $wYear);
+			$day = $wDayOfWeek - date('w', $ts);
+			if ($day < 0) $day += 7;
+			$day += 7 * ($wNth - 1) + 1;
+			$ts =  mktime($wHour, $wMinute, 0, $wMonth, $day, $wYear);
+		}
+		else
+		{
+			$ts =  mktime($wHour, $wMinute, 0, $wMonth, 31, $wYear);
+			$day = $wDayOfWeek - date('w', $ts);
+			if ($day > 0) $day -= 7;
+			$day += 31;
+			do
+			{
+				$ts =  mktime($wHour, $wMinute, 0, $wMonth, $day, $wYear);
+				$day -= 7;
+			} while ($wMonth < date('n', $ts));
+		}
+		$dtstart = date('Ymd\T', $ts) . sprintf("%'02u%'02u00", $wHour, $wMinute);
+		return $dtstart;
+	}
 }
