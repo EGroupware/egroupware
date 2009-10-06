@@ -382,14 +382,14 @@ else
 		}
 		#print 'LANG:' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'] . '<br>';
 
-		$GLOBALS['egw']->translation->init();	// this will set the language according to the (new) set prefs
-		$GLOBALS['egw']->translation->add_app('login');
-		$GLOBALS['egw']->translation->add_app('loginscreen');
-		if($GLOBALS['egw']->translation->translate('loginscreen_message',false,'') == 'loginscreen_message')
+		translation::init();	// this will set the language according to the (new) set prefs
+		translation::add_app('login');
+		translation::add_app('loginscreen');
+		if(translation::translate('loginscreen_message',false,'') == 'loginscreen_message')
 		{
-		   $GLOBALS['egw']->translation->add_app('loginscreen','en');	// trying the en one
+		   translation::add_app('loginscreen','en');	// trying the en one
 		}
-		if($GLOBALS['egw']->translation->translate('loginscreen_message',false,'') != 'loginscreen_message')
+		if(translation::translate('loginscreen_message',false,'') != 'loginscreen_message')
 		{
 		   // for now store login message in globals so it is available for the login.inc.php
 		   $GLOBALS['loginscreenmessage']=stripslashes(lang('loginscreen_message'));
