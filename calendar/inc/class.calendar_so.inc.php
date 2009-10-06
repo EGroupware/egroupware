@@ -964,7 +964,8 @@ ORDER BY cal_user_type, cal_usre_id
 						'cal_user_id'   => $ids,
 					));
 				}
-				$this->db->delete($this->user_table,$where + array('('.implode(' OR ',$to_or).')'),__LINE__,__FILE__,'calendar');
+				$where[] = '('.implode(' OR ',$to_or).')';
+				$this->db->delete($this->user_table,$where,__LINE__,__FILE__,'calendar');
 			}
 		}
 
