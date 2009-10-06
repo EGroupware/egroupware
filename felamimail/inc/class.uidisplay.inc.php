@@ -629,6 +629,7 @@
 						case 'IMAGE/JPEG':
 						case 'IMAGE/PNG':
 						case 'IMAGE/GIF':
+						case 'IMAGE/BMP':
 						case 'APPLICATION/PDF':
 						case 'TEXT/PLAIN':
 						case 'TEXT/HTML':
@@ -1320,7 +1321,7 @@
 					$this->t->set_var('size',$value['size']);
 					$this->t->set_var('attachment_number',$key);
 
-					switch($value['mimeType'])
+					switch(strtolower($value['mimeType']))
 					{
 						case 'message/rfc822':
 							$linkData = array
@@ -1336,6 +1337,7 @@
 						case 'image/jpeg':
 						case 'image/png':
 						case 'image/gif':
+						case 'image/bmp':
 						#case 'application/pdf':
 							$linkData = array
 							(
