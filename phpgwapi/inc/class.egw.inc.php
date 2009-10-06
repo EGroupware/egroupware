@@ -204,11 +204,21 @@ class egw extends egw_minimal
 		// init the translation class, necessary as own wakeup would run before our's
 		translation::init();
 
+		$this->unset_datetime();
+
 		// verify the session
 		$GLOBALS['egw']->verify_session();
 		$GLOBALS['egw']->check_app_rights();
 
 		$this->load_optional_classes();
+	}
+
+	/**
+	 * Unsetting datetime object, so time gets updated
+	 */
+	function unset_datetime()
+	{
+		unset($this->datetime);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare API - Preferences
- * 
+ *
  * @link http://www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org>
  * @author Mark Peters <skeeter@phpgroupware.org>
@@ -15,7 +15,7 @@
 /**
  * preferences class used for setting application preferences
  *
- * the prefs are read into 4 arrays: 
+ * the prefs are read into 4 arrays:
  * 	 $data the effective prefs used everywhere in phpgw, they are merged from the other 3 arrays
  * 	 $user the stored user prefs, only used for manipulating and storeing the user prefs
  * 	 $default the default preferences, always used when the user has no own preference set
@@ -34,17 +34,17 @@ class preferences
 	 */
 	var $account_type;
 	/**
-	 * effectiv user prefs, used by all apps 
+	 * effectiv user prefs, used by all apps
 	 * @var array
 	 */
 	var $data = array();
 	/**
-	 * set user prefs for saveing (no defaults/forced prefs merged) 
+	 * set user prefs for saveing (no defaults/forced prefs merged)
 	 * @var array
 	 */
 	var $user = array();
 	/**
-	 * default prefs 
+	 * default prefs
 	 * @var array
 	 */
 	var $default = array();
@@ -59,7 +59,7 @@ class preferences
 	 */
 	var $session = array();
 	/**
-	 * @var egw_db 
+	 * @var egw_db
 	 */
 	var $db;
 	/**
@@ -116,7 +116,7 @@ class preferences
 		}
 		return str_replace($replace,$with,$msg);
 	}
-	
+
 	/**
 	 * replaces the english key's with translated ones, or if $un_lang the opposite
 	 *
@@ -313,9 +313,34 @@ class preferences
 			echo 'user<pre>';     print_r($this->user); echo "</pre>\n";
 			echo 'forced<pre>';   print_r($this->forced); echo "</pre>\n";
 			echo 'default<pre>';  print_r($this->default); echo "</pre>\n";
-			echo 'effectiv<pre>'; print_r($this->data); echo "</pre>\n"; 
+			echo 'effectiv<pre>'; print_r($this->data); echo "</pre>\n";
 		}
+		$this->check_set_tz_offset();
+
 		return $this->data;
+	}
+
+	/**
+	 * Checking new timezoen ('tz') pref and setting old tz_offset pref from it
+	 *
+	 */
+	function check_set_tz_offset()
+	{
+		$prefs =& $this->data['common'];
+
+		if (isset($prefs['tz']))
+		{
+			$GLOBALS['egw']->datetimezone = new DateTimeZone($prefs['tz']);
+			$server_offset = date('Z');
+			$GLOBALS['egw']->datetime_now = new DateTime('now',$GLOBALS['egw']->datetimezone);
+			$utc_offset = $GLOBALS['egw']->datetime_now->getOffset();
+			$user_now = $GLOBALS['egw']->datetime_now->format('Y-m-d H:i:s e (T)');
+			$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] = $prefs['tz_offset'] = ($utc_offset - $server_offset)/3600;
+
+			//echo "<p>".__METHOD__."() tz='{$prefs['tz']}'=$utc_offset=$user_now, server=date('Z')=$server_offset --> $prefs[tz_offset]</p>\n";
+
+			$GLOBALS['egw']->unset_datetime();	// to force an update
+		}
 	}
 
 	/**
@@ -452,7 +477,7 @@ class preferences
 		reset ($this->data);
 		return $this->data;
 	}
-	
+
 	/**
 	 * delete all prefs of a given user
 	 *
@@ -653,41 +678,41 @@ class preferences
 			$GLOBALS['egw_info']['user']['preferences'] = array();
 		}
 		/* This takes care of new users who don't have proper default prefs setup */
-		if (!isset($GLOBALS['egw_info']['flags']['nocommon_preferences']) || 
+		if (!isset($GLOBALS['egw_info']['flags']['nocommon_preferences']) ||
 			!$GLOBALS['egw_info']['flags']['nocommon_preferences'])
 		{
 			$preferences_update = False;
-			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) || 
+			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) ||
 				!$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])
 			{
 				$this->add('common','maxmatchs',15);
 				$preferences_update = True;
 			}
-			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['theme']) || 
+			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['theme']) ||
 				!$GLOBALS['egw_info']['user']['preferences']['common']['theme'])
 			{
 				$this->add('common','theme','default');
 				$preferences_update = True;
 			}
-			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) || 
+			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) ||
 				!$GLOBALS['egw_info']['user']['preferences']['common']['template_set'])
 			{
 				$this->add('common','template_set','default');
 				$preferences_update = True;
 			}
-			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']) || 
+			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']) ||
 				!$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'])
 			{
 				$this->add('common','dateformat','m/d/Y');
 				$preferences_update = True;
 			}
-			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']) || 
+			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']) ||
 				!$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'])
 			{
 				$this->add('common','timeformat',12);
 				$preferences_update = True;
 			}
-			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['lang']) || 
+			if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['lang']) ||
 				!$GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{
 				$this->add('common','lang',$GLOBALS['egw']->common->getPreferredLanguage());
@@ -712,8 +737,8 @@ class preferences
 	 * mail server of type pop3, pop3s, imap, imaps users value from
 	 * $phpgw_info['user']['preferences']['email']['mail_port'].
 	 * if that value is not set, it generates a default port for the given $server_type.
-	 * Someday, this *MAY* be 
-	 * (a) a se4rver wide admin setting, or 
+	 * Someday, this *MAY* be
+	 * (a) a se4rver wide admin setting, or
 	 * (b)user custom preference
 	 * Until then, simply set the port number based on the mail_server_type, thereof
 	 * ONLY call this function AFTER ['email']['mail_server_type'] has been set.
@@ -757,7 +782,7 @@ class preferences
 					$port_number = 993;
 					break;
 				case 'imap':
-					// IMAP normal connection, No SSL 
+					// IMAP normal connection, No SSL
 				default:
 					// UNKNOWN SERVER in Preferences, return a
 					// default value that is likely to work
@@ -794,8 +819,8 @@ class preferences
 	/**
 	 * returns the custom email-address (if set) or generates a default one
 	 *
-	 * This will generate the appropriate email address used as the "From:" 
-	 * email address when the user sends email, the localpert * part. The "personal" 
+	 * This will generate the appropriate email address used as the "From:"
+	 * email address when the user sends email, the localpert * part. The "personal"
 	 * part is generated elsewhere.
 	 * In the absence of a custom ['email']['address'], this function should be used to set it.
 	 *
@@ -836,9 +861,9 @@ class preferences
 	 * 	$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->create_email_preferences();
 	 * which fills an array based at:
 	 * 	$GLOBALS['egw_info']['user']['preferences']['email'][prefs_are_elements_here]
-	 * Reading the raw preference DB data and comparing to the email preference schema defined in 
-	 * /email/class.bopreferences.inc.php (see discussion there and below) to create default preference values 
-	 * for the  in the ['email'][] pref data array in cases where the user has not supplied 
+	 * Reading the raw preference DB data and comparing to the email preference schema defined in
+	 * /email/class.bopreferences.inc.php (see discussion there and below) to create default preference values
+	 * for the  in the ['email'][] pref data array in cases where the user has not supplied
 	 * a preference value for any particular preference item available to the user.
 	 * @access Public
 	 */
@@ -878,7 +903,7 @@ class preferences
 			// prefs are actually a sub-element of the main email prefs
 			// at location [email][ex_accounts][X][...pref names] => pref values
 			// make this look like "prefs[email] so the code below code below will do its job transparently
-			
+
 			// obtain the desired sub-array of extra account prefs
 			$sub_prefs = array();
 			$sub_prefs['email'] = $prefs['email']['ex_accounts'][$acctnum];
@@ -893,7 +918,7 @@ class preferences
 		// Default Preferences info that is:
 		// (a) not controlled by email prefs itself (mostly api and/or server level stuff)
 		// (b) too complicated to be described in the email prefs data array instructions
-		
+
 		// ---  [server][mail_server_type]  ---
 		// Set API Level Server Mail Type if not defined
 		// if for some reason the API didnot have a mail server type set during initialization
@@ -960,11 +985,11 @@ class preferences
 
 		// --- make the schema-based pref data for this user ---
 		// user defined values and/or user specified custom email prefs are read from the
-		// prefs DB with mininal manipulation of the data. Currently the only change to 
+		// prefs DB with mininal manipulation of the data. Currently the only change to
 		// users raw data is related to reversing the encoding of "database un-friendly" chars
-		// which itself may become unnecessary if and when the database handlers can reliably 
+		// which itself may become unnecessary if and when the database handlers can reliably
 		// take care of this for us. Of course, password data requires special decoding,
-		// but the password in the array [email][paswd] should be left in encrypted form 
+		// but the password in the array [email][paswd] should be left in encrypted form
 		// and only decrypted seperately when used to login in to an email server.
 
 		// --- generating a default value if necessary ---
@@ -983,7 +1008,7 @@ class preferences
 		// default value for a particular preference if one is needed (i.e. if no user custom
 		// email preference exists that should override that default value, in which case we
 		// do not even need to obtain such a default value as described in ['init_default'] anyway).
-		
+
 		// --- loop thru $avail_pref_array and process each pref item ---
 		$c_prefs = count($avail_pref_array);
 		for($i=0;$i<$c_prefs;$i++)
@@ -994,7 +1019,7 @@ class preferences
 
 			// --- is there a value in the DB for this preference item ---
 			// if the prefs DB has no value for this defined available preference, we must make one.
-			// This occurs if (a) this is user's first login, or (b) this is a custom pref which the user 
+			// This occurs if (a) this is user's first login, or (b) this is a custom pref which the user
 			// has not overriden, do a default (non-custom) value is needed.
 			if (!isset($prefs['email'][$this_avail_pref['id']]))
 			{
@@ -1034,7 +1059,7 @@ class preferences
 					}
 					else
 					{
-						// opposite of boolean not_set  = string "True" which simply sets a 
+						// opposite of boolean not_set  = string "True" which simply sets a
 						// value it exists in the users session [email][] preference array
 						$prefs['email'][$this_avail_pref['id']] = 'True';
 					}
@@ -1058,7 +1083,7 @@ class preferences
 				// INIT_NO_FILL
 				elseif ($set_proc[0] == 'init_no_fill')
 				{
-					// we have an available preference item that we may NOT fill with a default 
+					// we have an available preference item that we may NOT fill with a default
 					// value. Only the user may supply a value for this pref item.
 					print_debug('* handle "init_no_fill" set_proc:', serialize($set_proc),'api');
 					// we are FORBADE from filling this at this time!
@@ -1066,7 +1091,7 @@ class preferences
 				// varEVAL
 				elseif ($set_proc[0] == 'varEVAL')
 				{
-					// similar to "function" but used for array references, the string in $set_proc[1] 
+					// similar to "function" but used for array references, the string in $set_proc[1]
 					// represents code which typically is an array referencing a system/api property
 					print_debug('* handle "GLOBALS" set_proc:', serialize($set_proc),'api');
 					$evaled = '';
@@ -1092,8 +1117,8 @@ class preferences
 				/// here until the next OFFICIAL submit email prefs function, where it
 				// will again get this preparation before being written to the database.
 
-				// NOTE: if database de-fanging is eventually handled deeper in the 
-				// preferences class, then the following code would become depreciated 
+				// NOTE: if database de-fanging is eventually handled deeper in the
+				// preferences class, then the following code would become depreciated
 				// and should be removed in that case.
 				if (($this_avail_pref['type'] == 'user_string') &&
 					(stristr($this_avail_pref['write_props'], 'no_db_defang') == False))
@@ -1107,7 +1132,7 @@ class preferences
 		}
 		// users preferences are now established to known structured values...
 
-		// SANITY CHECK 
+		// SANITY CHECK
 		// ---  [email][use_trash_folder]  ---
 		// ---  [email][use_sent_folder]  ---
 		// is it possible to use Trash and Sent folders - i.e. using IMAP server
@@ -1127,7 +1152,7 @@ class preferences
 
 		// DEBUG : force some settings to test stuff
 		//$prefs['email']['p_persistent'] = 'True';
-		
+
 		print_debug('class.preferences: $acctnum: ['.$acctnum.'] ; create_email_preferences: $prefs[email]', $prefs['email'],'api');
 		print_debug('class.preferences: create_email_preferences: LEAVING', 'messageonly','api');
 		return $prefs;
