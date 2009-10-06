@@ -240,6 +240,7 @@ class calendar_ical extends calendar_boupdate
 						($event['recur_enddate'] - $event['start']) > 15778800)
 					{
 						$servertime = true;
+						$date_format = 'ts';
 						// read the event again with timestamps
 						$event = $this->read($event['id'], 0, false, 'ts');
 					}
