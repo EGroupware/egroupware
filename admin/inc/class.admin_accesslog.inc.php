@@ -67,7 +67,15 @@ class admin_accesslog
 
 		foreach($rows as &$row)
 		{
-			if ($row['lo']) $row['total'] = ($row['lo'] - $row['li']) / 60;
+			$row['sessionstatus'] = lang('success');
+			if (stripos($row['sessionid'],'blocked') !== False || stripos($row['sessionid'],'bad login') !== False)
+			{
+				$row['sessionstatus'] = $row['sessionid'];
+			}
+			if ($row['lo']) {
+				$row['total'] = ($row['lo'] - $row['li']) / 60;
+				$row['sessionstatus'] = lang('logged out');
+			}
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('View Access Log').
 			($query['col_filter']['account_id'] ? ': '.common::grab_owner_name($query['col_filter']['account_id']) : '');

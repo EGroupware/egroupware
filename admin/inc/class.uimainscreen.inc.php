@@ -17,7 +17,6 @@
 
 		function index()
 		{
-
 			$html =& CreateObject('phpgwapi.html');
 			$section     = $_POST['section'];
 			$select_lang = $_POST['select_lang'];
@@ -121,12 +120,16 @@
 				if($_POST['htmlarea'] || strlen($current_message) > strlen(strip_tags($current_message)))
 				{
 					 $text_or_htmlarea=$html->htmlarea('message',$current_message,'advanced');
-					 $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WYSIWYG-editor').'">';
+					 $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['egw']->link('/index.php',
+						'menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WYSIWYG-editor').'">';
 				}
 				else
 				{
-					 $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' . $html->htmlspecialchars($current_message) . '</textarea>';
-					 $htmlarea_button='<input type="submit" name="htmlarea" onclick="self.location.href=\''.$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('activate WYSIWYG-editor').'">';
+					 $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' . 
+						$html->htmlspecialchars($current_message) . '</textarea>';
+					 $htmlarea_button='<input type="submit" name="htmlarea" onclick="self.location.href=\''.
+						$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.
+						lang('activate WYSIWYG-editor').'">';
 
 				}			   
 
