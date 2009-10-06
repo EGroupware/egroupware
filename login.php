@@ -247,6 +247,10 @@ else
 		//conference - for strings like vinicius@thyamad.com@default , allows
 		//that user have a login that is his e-mail. (viniciuscb)
 		$login_parts = explode('@',$login);
+		// remove blanks
+		$login_parts = array_map('trim',$login_parts);
+		$login = implode('@',$login_parts);
+
 		$got_login = false;
 		if (count($login_parts) > 1)
 		{
