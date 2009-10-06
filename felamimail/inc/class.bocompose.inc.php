@@ -111,21 +111,28 @@
 				}
 				elseif (is_uploaded_file($_formData['file']))
 				{
+					//error_log(__METHOD__." Uploaded File:".$_formData['file']." with filesize:".filesize($_formData['file']));
 					move_uploaded_file($_formData['file'],$tmpFileName);	// requirement for safe_mode!
+					//error_log(__METHOD__." copy to :".$tmpFileName." with filesize:".filesize($tmpFileName));
 				}
 				else
 				{
 					rename($_formData['file'],$tmpFileName);
 				}
-				$attachmentID = $this->getRandomString();
-
-				$this->sessionData['attachments'][$attachmentID]=array
+				//$attachmentID = $this->getRandomString();
+				//error_log(__METHOD__." add Attachment with ID (random String):".$attachmentID);
+				$buffer=array
 				(
 					'name'	=> $_formData['name'],
 					'type'	=> $_formData['type'],
 					'file'	=> $tmpFileName,
 					'size'	=> $_formData['size']
 				);
+				// trying diiferent ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
+				$attachmentID = md5(time().serialize($buffer));
+				//error_log(__METHOD__." add Attachment with ID:".$attachmentID." (md5 of serialized array)");
+				$this->sessionData['attachments'][$attachmentID] = $buffer;
+				unset($buffer);
 			}
 
 			$this->saveSessionData();
