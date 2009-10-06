@@ -242,8 +242,15 @@ class calendar_ical extends calendar_boupdate
 						$servertime = true;
 						$date_format = 'ts';
 						// read the event again with timestamps
-						$event = $this->read($event['id'], 0, false, 'ts');
+						$event = $this->read($event['id'], 0, false, $date_format);
 					}
+				}
+				else
+				{
+					$servertime = true;
+					$date_format = 'ts';
+					// read the event again with timestamps
+					$event = $this->read($event['id'], 0, false, $date_format);
 				}
 			}
 
