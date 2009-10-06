@@ -164,8 +164,12 @@ class addressbook_vcal extends addressbook_bo
 
 		$sysCharSet = $GLOBALS['egw']->translation->charset();
 
-		// KAddressbook always requires non-ascii chars to be qprint encoded.
-		if ($this->productName == 'kde') $extra_charset_attribute = true;
+		// KAddressbook and Funambol4BlackBerry always requires non-ascii chars to be qprint encoded.
+		if ($this->productName == 'kde' ||
+			($this->productManufacturer == 'funambol' && $this->productName == 'blackberry plug-in'))
+		{
+			$extra_charset_attribute = true;
+		}
 
 		if (!($entry = $this->read($_id)))
 		{
@@ -278,7 +282,8 @@ class addressbook_vcal extends addressbook_bo
 							{
 								$options['CHARSET'] = $_charset;
 								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
-								if ($this->productName == 'kde')
+								if ($this->productName == 'kde' ||
+									($this->productManufacturer == 'funambol' && $this->productName == 'blackberry plug-in'))
 								{
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
@@ -328,7 +333,8 @@ class addressbook_vcal extends addressbook_bo
 								{
 									$options['CHARSET'] = $_charset;
 									// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
-									if ($this->productName == 'kde')
+									if ($this->productName == 'kde' ||
+										($this->productManufacturer == 'funambol' && $this->productName == 'blackberry plug-in'))
 									{
 										$options['ENCODING'] = 'QUOTED-PRINTABLE';
 									}
