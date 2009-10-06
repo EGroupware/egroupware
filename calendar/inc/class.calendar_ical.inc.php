@@ -210,6 +210,7 @@ class calendar_ical extends calendar_boupdate
 			else
 			{
 				$servertime = false;
+				$date_format = 'server';
 			}
 			if (!is_array($event)
 				&& !($event = $this->read($event, $recur_date, false, $date_format)))
