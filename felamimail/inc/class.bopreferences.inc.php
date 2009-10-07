@@ -191,20 +191,37 @@
 					
 						// replace the global defined identity
 						if(is_a($accountData['identity'],'ea_identity')) {
+							//_debug_array($profileData);
+							$rememberIdentities = $profileData->identities;
 							$profileData->setIdentity($accountData['identity'],0);
 							$rememberID = $accountData['identity']->id;
 						}
 					}
 				}
-				if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['felamimail']) {
+				if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['felamimail']) 
+				{
 					$allUserIdentities = $this->getUserDefinedIdentities();
-					if (is_array($allUserIdentities)) {
+					if (is_array($allUserIdentities)) 
+					{
 						$i=count($allUserIdentities);
+						$y=-1;
 						foreach ($allUserIdentities as $tmpkey => $id)
 						{
-							if ($id->id != $rememberID) {
+							if ($id->id != $rememberID) 
+							{
 								$profileData->setIdentity($id,$i);
 								$i++;
+							}
+							else
+							{	
+								foreach ($rememberIdentities as $adkey => $ident)
+								{
+									$profileData->setIdentity($ident,$i);
+									$profileData->identities[$i]->default = false;
+									$profileData->identities[$i]->id = $y;
+									$i++;
+									$y--;
+								}
 							}
 						}
 					}
