@@ -315,6 +315,10 @@ abstract class bo_merge
 			{
 				$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$this->contacts->prefs['csv_charset']);
 			}
+			if (substr($document,0,6) == 'zip://')	// zip'ed xml document (eg. OO) --> need to encode &,<,> to not mess up xml
+			{
+				$replacements = str_replace(array('&amp;','&','<','>'),array('&amp;','&amp;','&lt;','&gt;'),$replacements);
+			}
 			$content = str_replace(array_keys($replacements),array_values($replacements),$content);
 			if (strpos($content,'$$IF'))
 			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
