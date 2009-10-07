@@ -615,15 +615,15 @@ class preferences
 				),__LINE__,__FILE__);
 			}
 			$this->db->transaction_commit();
+
+			if ($invalid_cache && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			{
+				$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
+			}
 		}
 		else
 		{
-			$GLOBALS['egw_info']['user']['preferences'] = $this->data;
-			$GLOBALS['egw']->session->save_repositories();
-		}
-		if ($invalid_cache && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
-		{
-			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
+			$_SESSION[egw_session::EGW_INFO_CACHE]['user']['preferences'] = $GLOBALS['egw_info']['user']['preferences'] = $this->data;
 		}
 		return $this->data;
 	}
