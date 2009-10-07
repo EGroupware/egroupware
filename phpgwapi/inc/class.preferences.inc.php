@@ -321,7 +321,7 @@ class preferences
 	}
 
 	/**
-	 * Checking new timezoen ('tz') pref and setting old tz_offset pref from it
+	 * Checking new timezone ('tz') pref and setting old tz_offset pref from it
 	 *
 	 */
 	function check_set_tz_offset()
