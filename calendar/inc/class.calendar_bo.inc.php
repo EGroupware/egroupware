@@ -638,11 +638,14 @@ class calendar_bo
 	 */
 	function date2usertime($ts,$date_format='ts')
 	{
-		if (empty($ts)) return $ts;
+		if (empty($ts) || $date_format == 'server') return $ts;
 
+		return egw_time::server2user($ts,$date_format);
+/*
 		switch ($date_format)
 		{
 			case 'ts':
+				return egw_time::server2user($ts,'int');
 				return $ts + $this->tz_offset_s;
 
 			case 'server':
@@ -655,6 +658,7 @@ class calendar_bo
 				return $this->date2string($ts,true);
 		}
 		return $this->date2string($ts,true,$date_format);
+*/
 	}
 
 	/**
@@ -1080,8 +1084,10 @@ class calendar_bo
 	 *	array with keys 'second', 'minute', 'hour', 'day' or 'mday' (depricated !), 'month' and 'year'
 	 * @param boolean $user2server_time conversation between user- and server-time default False == Off
 	 */
-	function date2ts($date,$user2server=False)
+	static function date2ts($date,$user2server=False)
 	{
+		return $user2server ? egw_time::user2server($date,'ts') : egw_time::to($date,'ts');
+/*
 		$date_in = $date;
 
 		switch(gettype($date))
@@ -1150,6 +1156,7 @@ class calendar_bo
 			$this->debug_message('bocal::date2ts(%1,user2server=%2)=%3)',False,$date_in,$user2server,$date);
 		}
 		return $date;
+*/
 	}
 
 	/**
@@ -1159,8 +1166,10 @@ class calendar_bo
 	 * @param boolean $server2user_time conversation between user- and server-time default False == Off
 	 * @return array with keys 'second', 'minute', 'hour', 'day', 'month', 'year', 'raw' (timestamp) and 'full' (Ymd-string)
 	 */
-	function date2array($date,$server2user=False)
+	static function date2array($date,$server2user=False)
 	{
+		return $server2user ? egw_time::server2user($date,'array') : egw_time::to($date,'array');
+/*
 		$date_called = $date;
 
 		if (!is_array($date) || count($date) < 8 || $server2user)	// do we need a conversation
@@ -1185,6 +1194,7 @@ class calendar_bo
 			$this->debug_message('bocal::date2array(%1,server2user=%2)=%3)',False,$date_called,$server2user,$arr);
 		}
 		return $arr;
+*/
 	}
 
 	/**
@@ -1195,8 +1205,10 @@ class calendar_bo
 	 * @param string $format='Ymd' format of the date to return, eg. 'Y-m-d\TH:i:sO' (2005-11-01T15:30:00+0100)
 	 * @return string date formatted according to $format
 	 */
-	function date2string($date,$server2user=False,$format='Ymd')
+	static function date2string($date,$server2user=False,$format='Ymd')
 	{
+		return $server2user ? egw_time::server2user($date,$format) : egw_time::to($date,$format);
+/*
 		$date_in = $date;
 
 		if (!$format) $format = 'Ymd';
@@ -1230,6 +1242,7 @@ class calendar_bo
 			$this->debug_message('bocal::date2string(%1,server2user=%2,format=%3)=%4)',False,$date_in,$server2user,$format,$date);
 		}
 		return $date;
+*/
 	}
 
 	/**
@@ -1239,8 +1252,10 @@ class calendar_bo
 	 * @param string|boolean $format='' default common_prefs[dateformat], common_prefs[timeformat], false=time only, true=date only
 	 * @return string the formated date (incl. time)
 	 */
-	function format_date($date,$format='')
+	static function format_date($date,$format='')
 	{
+		return egw_time::to($date,$format);
+/*
 		$timeformat = $this->common_prefs['timeformat'] != '12' ? 'H:i' : 'h:i a';
 		if ($format === '')		// date+time wanted
 		{
@@ -1255,6 +1270,7 @@ class calendar_bo
 			$format = $this->common_prefs['dateformat'];
 		}
 		return adodb_date($format,$this->date2ts($date,False));
+*/
 	}
 
 	/**
