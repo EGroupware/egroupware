@@ -111,15 +111,16 @@ class so_sql_cf extends so_sql
 	 * @param string $extra_id='_id' column name for cf id column (will be prefixed with colum prefix, if starting with _)
 	 * @param egw_db $db=null database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param boolean $no_clone=true can we avoid to clone the db-object, default yes (different from so_sql!)
-	 * @param boolean $allow_multiple_values=false should we allow AND store multiple values (1:N relations)
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
+	 * @param boolean $allow_multiple_values=false should we allow AND store multiple values (1:N relations)
+	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects
 	 */
 	function __construct($app,$table,$extra_table,$column_prefix='',
 		$extra_key='_name',$extra_value='_value',$extra_id='_id',
-		$db=null,$no_clone=true,$allow_multiple_values=false)
+		$db=null,$no_clone=true,$allow_multiple_values=false,$timestamp_type=null)
 	{
 		// calling the so_sql constructor
-		parent::__construct($app,$table,$db,$column_prefix,$no_clone);
+		parent::__construct($app,$table,$db,$column_prefix,$no_clone,$timestamp_type);
 
 		$this->allow_multiple_values = $allow_multiple_values;
 		$this->extra_table = $extra_table;

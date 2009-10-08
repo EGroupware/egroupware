@@ -59,7 +59,7 @@ class so_sql
 	/**
 	 * total number of entries of last search with start != false
 	 *
-	 * @var int/boolean
+	 * @var int|boolean
 	 */
 	var $total = false;
 	/**
@@ -115,16 +115,28 @@ class so_sql
 	 */
 	var $timestamps = array();
 	/**
+	 * Type of timestamps returned by this class (read and search methods), default null means leave them unchanged
+	 *
+	 * Possible values:
+	 * - 'ts'|'integer' convert every timestamp to an integer unix timestamp
+	 * - 'string' convert every timestamp to a 'Y-m-d H:i:s' string
+	 * - 'object' convert every timestamp to a egw_time object
+	 *
+	 * @var string
+	 */
+	public $timestamp_type;
+	/**
 	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time
 	 * or substracted from a user-time to get the server-time
 	 *
 	 * @var int
+	 * @deprecated use egw_time methods instead, as the offset between user and server time is only valid for current time
 	 */
 	var $tz_offset_s;
 	/**
-	 * Current time as timestamp in user-time
+	 * Current time in user timezone
 	 *
-	 * @var int
+	 * @var int|string|DateTime format depends on $this->timestamp_type
 	 */
 	var $now;
 	/**
@@ -147,10 +159,11 @@ class so_sql
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
+	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects
 	 *
 	 * @return so_sql
 	 */
-	function __construct($app='',$table='',$db=null,$column_prefix='',$no_clone=false)
+	function __construct($app='',$table='',$db=null,$column_prefix='',$no_clone=false,$timestamp_type=null)
 	{
 		if ($no_clone)
 		{
@@ -177,8 +190,19 @@ class so_sql
 			echo "<p>so_sql('$app','$table')</p>\n";
 			_debug_array($this);
 		}
-		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
-		$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
+		// set timestampt type and current time
+		switch(($this->timestamp_type = $timestamp_type))
+		{
+			case 'object':
+				$this->now = new egw_time('now');
+				break;
+			case 'string':
+				$this->now = egw_time::to('now',egw_time::DATABASE);
+				break;
+			default:
+				$this->now = egw_time::to('now','ts');
+		}
+		$this->tz_offset_s = egw_time::tz_offset_s();
 	}
 
 	/**
@@ -319,20 +343,13 @@ class so_sql
 		{
 			$data = &$this->data;
 		}
-		if ($this->tz_offset_s && $this->timestamps)
+		if ($this->timestamps)
 		{
 			foreach($this->timestamps as $name)
 			{
 				if (isset($data[$name]) && $data[$name])
 				{
-					if (is_numeric($data[$name]))
-					{
-						$data[$name] += $this->tz_offset_s;
-					}
-					elseif (($ts = strtotime($data[$name])) !== false)
-					{
-						$data[$name] = date('Y-m-d H:i:s',$ts + $this->tz_offset_s);
-					}
+					$data[$name] = egw_time::server2user($data[$name],$this->timestamp_type);
 				}
 			}
 		}
@@ -366,20 +383,13 @@ class so_sql
 		{
 			$data = &$this->data;
 		}
-		if ($this->tz_offset_s && $this->timestamps)
+		if ($this->timestamps)
 		{
 			foreach($this->timestamps as $name)
 			{
 				if (isset($data[$name]) && $data[$name])
 				{
-					if (is_numeric($data[$name]))	// we check for numeric, as timestamps are allowed (get converted by egw_db::quote)
-					{
-						$data[$name] -= $this->tz_offset_s;
-					}
-					elseif (($ts = strtotime($data[$name])) !== false)
-					{
-						$data[$name] = date('Y-m-d H:i:s',$ts - $this->tz_offset_s);
-					}
+					$data[$name] = egw_time::user2server($data[$name],$this->timestamp_type);
 				}
 			}
 		}
@@ -565,7 +575,7 @@ class so_sql
 				{
 					continue;	// no need to write that (unset) column
 				}
-				$data[$db_col] = (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
+				$data[$db_col] = !is_object($this->data[$col]) && (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 			}
 			// allow to add direct sql updates, eg. "etag=etag+1" with int keys
 			if (is_array($keys) && isset($keys[0]))
