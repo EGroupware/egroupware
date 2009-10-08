@@ -39,6 +39,10 @@
 class egw_time extends DateTime
 {
 	/**
+	 * Database timestamp format: Y-m-d H:i:s
+	 */
+	const DATABASE = 'Y-m-d H:i:s';
+	/**
 	 * DateTimeZone of server, read via date_default_timezone_get(), set by self::init()
 	 *
 	 * @var DateTimeZone
@@ -46,25 +50,25 @@ class egw_time extends DateTime
 	static public $server_timezone;
 
 	/**
-	 * DateTimeZone of user, read from user prefs, set by self::init()
+	 * DateTimeZone of user, read from user prefs, set by self::init() or self::setUserPrefs()
 	 *
 	 * @var DateTimeZone
 	 */
 	static public $user_timezone;
 
 	/**
-	 * Time format from user prefs, set by self::init()
+	 * Time format from user prefs, set by self::setUserPrefs()
 	 *
 	 * @var string
 	 */
-	static public $user_time_format = 'H:i';
+	static public $user_timeformat = 'H:i';
 
 	/**
-	 * Date format from user prefs, set by self::init()
+	 * Date format from user prefs, set by self::setUserPrefs()
 	 *
 	 * @var string
 	 */
-	static public $user_date_format = 'Y-m-d';
+	static public $user_dateformat = 'Y-m-d';
 
 	/**
 	 * Constructor
@@ -77,11 +81,8 @@ class egw_time extends DateTime
 	 */
 	public function __construct($time='now',DateTimeZone $tz=null,&$type=null)
 	{
-		if (is_null($tz))
-		{
-			if (is_null(self::$user_timezone)) self::init();
-			$tz = self::$user_timezone;
-		}
+		if (is_null($tz)) $tz = self::$user_timezone;	// default user timezone
+
 		switch(($type = gettype($time)))
 		{
 			case 'NULL':
@@ -114,6 +115,17 @@ class egw_time extends DateTime
 
 			case 'array':
 				parent::__construct('now',$tz);
+				if (isset($time['Y']))	// array format used in eTemplate
+				{
+					$time = array(
+						'year'   => $time['Y'],
+						'month'  => $time['m'],
+						'day'    => $time['d'],
+						'hour'   => $time['H'],
+						'minute' => $time['i'],
+						'second' => $time['s'],
+					);
+				}
 				if (!empty($time['full']) && empty($time['year']))
 				{
 					$time['year']  = (int)substr($time['full'],0,4);
@@ -144,8 +156,6 @@ class egw_time extends DateTime
 	 */
 	public function setUser()
 	{
-		if (is_null(self::$user_timezone)) self::init();
-
 		$this->setTimezone(self::$user_timezone);
 	}
 
@@ -156,8 +166,6 @@ class egw_time extends DateTime
 	 */
 	public function setServer()
 	{
-		if (is_null(self::$server_timezone)) self::init();
-
 		$this->setTimezone(self::$server_timezone);
 	}
 
@@ -178,15 +186,17 @@ class egw_time extends DateTime
 			case '1':	// boolean true:  date as in user prefs
 				if (is_bool($type))
 				{
-					$type = $type ? self::$user_date_format : self::$user_time_format;
+					$type = $type ? self::$user_dateformat : self::$user_timeformat;
 				}
 				else
 				{
-					$type = self::$user_date_format.', '.self::$user_time_format;
+					$type = self::$user_dateformat.', '.self::$user_timeformat;
 				}
-				// fall through
+				break;
+
 			case 'string':
-				return parent::format('Y-m-d H:i:s');
+				$type = self::DATABASE;
+				break;
 
 			case 'server':	// timestamp in servertime
 				$this->setServer();
@@ -199,7 +209,7 @@ class egw_time extends DateTime
 			case 'object':
 			case 'datetime':
 			case 'egw_time':
-				return $this;
+				return clone($this);
 
 			case 'array':
 				$arr = array(
@@ -213,9 +223,36 @@ class egw_time extends DateTime
 				);
 				$arr['raw'] = mktime($arr['hour'],$arr['minute'],$arr['second'],$arr['month'],$arr['day'],$arr['year']);
 				return $arr;
+
+			case 'date_array':	// array with short keys used by date: Y, m, d, H, i, s (used in eTemplate)
+				return array(
+					'Y' => (int)parent::format('Y'),
+					'm' => (int)parent::format('m'),
+					'd' => (int)parent::format('d'),
+					'H' => (int)parent::format('H'),
+					'i' => (int)parent::format('i'),
+					's' => (int)parent::format('s'),
+				);
 		}
 		// default $type contains string with format
 		return parent::format($type);
+	}
+
+	/**
+	 * Cast object to a string
+	 *
+	 * @return string
+	 */
+	public function __toString()
+	{
+		$tz = $this->getTimezone();
+		if (!$tz)
+		{
+			ob_start();
+			debug_print_backtrace();
+			error_log(ob_get_clean());
+		}
+		return $this->format(self::DATABASE);
 	}
 
 	/**
@@ -227,14 +264,12 @@ class egw_time extends DateTime
 	 */
 	public static function server2user($time,$type=null)
 	{
-		if (is_null(self::$user_timezone)) self::init();
-
 		if (!is_a($time,$typeof='egw_time')) $time = new egw_time($time,self::$server_timezone,$typeof);
 		$time->setUser();
 
 		if (is_null($type)) $type = $typeof;
 
-		//echo "<p>".__METHOD__."($time,$type) = ".print_r($datetime->format($type),true)."</p>\n";
+		//echo "<p>".__METHOD__."($time,$type) = ".print_r($format->format($type),true)."</p>\n";
 		return $time->format($type);
 	}
 
@@ -247,13 +282,12 @@ class egw_time extends DateTime
 	 */
 	public static function user2server($time,$type=null)
 	{
-		if (is_null(self::$user_timezone)) self::init();
-
 		if (!is_a($time,$typeof='egw_time')) $time = new egw_time($time,self::$user_timezone,$typeof);
 		$time->setServer();
 
 		if (is_null($type)) $type = $typeof;
 
+		//echo "<p>".__METHOD__."($time,$type) = ".print_r($format->format($type),true)."</p>\n";
 		return $time->format($type);
 	}
 
@@ -274,26 +308,78 @@ class egw_time extends DateTime
 	}
 
 	/**
+	 * Setter for user timezone, should be called after reading user preferences
+	 *
+	 * @param string $tz timezone, eg. 'Europe/Berlin' or 'UTC'
+	 * @param string $dateformat eg. 'Y-m-d' or 'd.m.Y'
+	 * @param string|int $timeformat integer 12, 24, or format string eg. 'H:i'
+	 * @throws egw_exception_wrong_userinput if invalid $tz parameter
+	 * @return DateTimeZone
+	 */
+	public static function setUserPrefs($tz,$dateformat,$timeformat)
+	{
+		if (!empty($dateformat)) self::$user_dateformat = $dateformat;
+
+		switch($timeformat)
+		{
+			case '24':
+			case '':
+				self::$user_timeformat = 'H:i';
+				break;
+			case '12':
+				self::$user_timeformat = 'h:i a';
+				break;
+			default:
+				self::$user_timeformat = $timeformat;
+				break;
+		}
+		try {
+			self::$user_timezone = new DateTimeZone($tz);
+		}
+		catch(Exception $e)
+		{
+			throw new egw_exception_wrong_userinput(lang('You need to %1set your timezone preference%2.','<a href="'.egw::link('/index.php',array(
+				'menuaction' => 'preferences.uisettings.index',
+				'appname'    => 'preferences')).'">','</a>'));
+		}
+		return self::$user_timezone;
+	}
+
+	/**
+	 * Get offset in seconds between user and server time at given time $time
+	 *
+	 * Compatibility method for old code. It is only valid for the given time, because of possible daylight saving changes!
+	 *
+	 * @param int|string|DateTime $time='now'
+	 * @return int difference in seconds between user and server time (for the given time!)
+	 */
+	public static function tz_offset_s($time='now')
+	{
+		if (!is_a($time,'DateTime')) $time = new egw_time($time);
+
+		return egw_time::$user_timezone->getOffset($time) - egw_time::$server_timezone->getOffset($time);
+	}
+
+	/**
 	 * Init static variables, reading user prefs
 	 */
-	private static function init()
+	public static function init()
 	{
-		if (is_null(self::$server_timezone))
+		self::$server_timezone = new DateTimeZone(date_default_timezone_get());
+		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
 		{
-			self::$server_timezone = new DateTimeZone(date_default_timezone_get());
+			self::setUserPrefs($GLOBALS['egw_info']['user']['preferences']['common']['tz'],
+				$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
+				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat']);
 		}
-		if (is_null(self::$user_timezone) && isset($GLOBALS['egw_info']['user']['preferences']['common']))
+		else
 		{
-			if (empty($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
-			{
-				throw new egw_exception_wrong_userinput(lang('You need to %1set your timezone preference%2.','<a href="'.egw::link('/index.php',array(
-					'menuaction' => 'preferences.uisettings.index',
-					'appname'    => 'preferences')).'">','</a>'));
-			}
-			self::$user_timezone = new DateTimeZone($GLOBALS['egw_info']['user']['preferences']['common']['tz']);
+			self::$user_timezone = clone(self::$server_timezone);
 		}
 	}
 }
+egw_time::init();
+
 /*
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
 {

@@ -328,19 +328,28 @@ class preferences
 	{
 		$prefs =& $this->data['common'];
 
-		if (isset($prefs['tz']))
+		if (!empty($prefs['tz']))
 		{
-			$GLOBALS['egw']->datetimezone = new DateTimeZone($prefs['tz']);
-			$server_offset = date('Z');
-			$GLOBALS['egw']->datetime_now = new DateTime('now',$GLOBALS['egw']->datetimezone);
-			$utc_offset = $GLOBALS['egw']->datetime_now->getOffset();
-			$user_now = $GLOBALS['egw']->datetime_now->format('Y-m-d H:i:s e (T)');
-			$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] = $prefs['tz_offset'] = ($utc_offset - $server_offset)/3600;
+			egw_time::setUserPrefs($prefs['tz'],$prefs['date_format'],$prefs['time_format']);
+			// set the old preference for compatibilty with old code
+			$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] = egw_time::tz_offset_s()/3600;
+			//echo "<p>".__METHOD__."() tz=$prefs[tz] --> tz_offset={$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']}</p>\n";
 
-			//echo "<p>".__METHOD__."() tz='{$prefs['tz']}'=$utc_offset=$user_now, server=date('Z')=$server_offset --> $prefs[tz_offset]</p>\n";
-
-			$GLOBALS['egw']->unset_datetime();	// to force an update
+			// ToDo: get rid of that
+			if (isset($GLOBALS['egw']) && is_object($GLOBALS['egw']))
+			{
+				$GLOBALS['egw']->unset_datetime();	// to force an update
+			}
 		}
+	}
+
+	/**
+	 * Set user timezone, if we get restored from session
+	 *
+	 */
+	function __wakeup()
+	{
+		$this->check_set_tz_offset();
 	}
 
 	/**
