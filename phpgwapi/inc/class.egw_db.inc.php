@@ -1351,6 +1351,11 @@ class egw_db
 		switch($type)
 		{
 			case 'int':
+				// if DateTime object given, convert it to a unix timestamp (NOT converting the timezone!)
+				if (is_object($value) && is_a($value,'DateTime'))
+				{
+					return is_a($value,'egw_time') ? $value->format('ts') : egw_time::to($value,'ts');
+				}
 			case 'auto':
 				// atm. (php5.2) php has only 32bit integers, it converts everything else to float.
 				// Casting it to int gives a negative number instead of the big 64bit integer!
@@ -1382,8 +1387,18 @@ class egw_db
 				}
 				break;	// handled like strings
 			case 'date':
+				// if DateTime object given, convert it (NOT converting the timezone!)
+				if (is_object($value) && is_a($value,'DateTime'))
+				{
+					return $this->Link_ID->qstr($value->format('Y-m-d'));
+				}
 				return $this->Link_ID->DBDate($value);
 			case 'timestamp':
+				// if DateTime object given, convert it (NOT converting the timezone!)
+				if (is_object($value) && is_a($value,'DateTime'))
+				{
+					return $this->Link_ID->qstr($value->format('Y-m-d H:i:s'));
+				}
 				return $this->Link_ID->DBTimeStamp($value);
 		}
 		if (is_array($value))
