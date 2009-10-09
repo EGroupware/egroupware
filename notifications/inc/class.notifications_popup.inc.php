@@ -154,7 +154,8 @@ class notifications_popup implements notifications_iface {
 			if(!$link->popup) { $link->view['no_popup'] = 1; }
 
 			$url = html::link('/index.php', $link->view);
-			
+			// do not expose sensitive data 	 
+			$url = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$url);
 			// extract application-icon from menuaction
 			if($link->view['menuaction']) {
 				$menuaction_arr = explode('.',$link->view['menuaction']);
