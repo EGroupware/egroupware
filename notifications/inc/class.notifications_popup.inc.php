@@ -129,7 +129,7 @@ class notifications_popup implements notifications_iface {
 	 */
 	private function save( $_message, array $_user_sessions ) {
 		foreach ($_user_sessions as $user_session) {
-			$result =& $this->db->insert( self::_notification_table, array(
+			$result = $this->db->insert( self::_notification_table, array(
 				'account_id'	=> $this->recipient->account_id,
 				'session_id'	=> $user_session,
 				'message'		=> $_message
