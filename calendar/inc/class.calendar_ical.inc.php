@@ -197,6 +197,7 @@ class calendar_ical extends calendar_boupdate
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION', $version);
 		$vcal->setAttribute('METHOD', $method);
+		$serverTZ = false;
 
 		if (!is_array($events)) $events = array($events);
 
@@ -229,7 +230,9 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log) error_log(__FILE__.'('.__LINE__.'): '.__METHOD__.' '.array2string($event)."\n",3,$this->logfile);
 
-			if (!$servertime && $event['recur_type'] != MCAL_RECUR_NONE)
+			if (!$servertime
+				&& $event['recur_type'] != MCAL_RECUR_NONE
+				&& date('e', $event['start']) != 'UTC')
 			{
 				if ($event['recur_enddate'])
 				{
@@ -265,13 +268,9 @@ class calendar_ical extends calendar_boupdate
 			$vevent = Horde_iCalendar::newComponent('VEVENT', $vcal);
 			$parameters = $attributes = $values = array();
 
-			if ($servertime)
+			if (!$serverTZ && $servertime)
 			{
-				$serverTZ = $this->generate_vtimezone($event['start'], $vevent);
-			}
-			else
-			{
-				$serverTZ = null;
+				$serverTZ = $this->generate_vtimezone($event['start'], $vcal);
 			}
 
 			if ($this->productManufacturer == 'sonyericsson')
@@ -2266,13 +2265,13 @@ class calendar_ical extends calendar_boupdate
     }
 
     /**
-	 * generate and insert a VTIMEZONE entry for an event
+	 * generate and insert a VTIMEZONE entry to a vcalendar
 	 *
 	 * @param int $ts timestamp to evaluate the local timezone and year
 	 * @param array $vevent VEVENT representation of the event
 	 * @return string local timezone name (e.g. 'CET/CEST')
 	 */
-	function generate_vtimezone($ts, &$vevent)
+	function generate_vtimezone($ts, &$vcal)
 	{
 		$utc = array('UTC',null,0,0,"",0,0,0,0,0,0,0,0,0,0);
 		$dayofweek = array('SU','MO','TU','WE','TH','FR','SA');
@@ -2334,6 +2333,7 @@ class calendar_ical extends calendar_boupdate
 			array("AEST/AEDT","Australia/Brisbane",600,0,"",0,0,0,0,0,0,0,0,0,0),
 			array("East_Australia","Australia/Brisbane",600,0,"",0,0,0,0,0,0,0,0,0,0),
 			array("EET/EEST","Europe/Minsk",120,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("EET/EEST","Europe/Helsinki",120,60,"",3,0,5,2,0,10,0,5,3,0),
 			array("East_Europe","Europe/Minsk",120,60,"",3,0,5,2,0,10,0,5,3,0),
 			array("East_South_America","America/Sao_Paulo",-180,60,"",11,0,1,0,0,2,0,5,0,0),
 			array("East_South_America","America/Sao_Paulo",-180,60,"2006",11,0,1,0,0,2,0,2,2,0),
@@ -2481,41 +2481,45 @@ class calendar_ical extends calendar_boupdate
 		{
 			$stdname = $dstname = $row[0];
 		}
-		$container = false;
-		$vtimezone = Horde_iCalendar::newComponent('VTIMEZONE', $container);
-		$vtimezone->setAttribute('TZID', $row[1]);
-		$minutes = $row[2] + $row[3];
-		$value1['ahead'] = ($minutes > 0);
-		$minutes = abs($minutes);
-		$value1['hour'] = (int)$minutes / 60;
-		$value1['minute'] = $minutes % 60;
-		$minutes = $row[2];
-		$value2['ahead'] = ($minutes > 0);
-		$minutes = abs($minutes);
-		$value2['hour'] = (int)$minutes / 60;
-		$value2['minute'] = $minutes % 60;
 
-		$daylight = Horde_iCalendar::newComponent('DAYLIGHT', $container);
-		$dtstart = $this->calc_dtstart($row[4], $row[5], $row[6], $row[7], $row[8], $row[9]);
-		$daylight->setAttribute('DTSTART', $dtstart);
-		$byday = ($row[7] == 5 ? '-1' : $row[7]) . $dayofweek[$row[6]];
-		$daylight->setAttribute('RRULE', '', array('FREQ' => 'YEARLY', 'BYMONTH' => $row[5], 'BYDAY' => $byday));
-		$daylight->setAttribute('TZNAME', $dstname);
-		$daylight->setAttribute('TZOFFSETFROM', $value2);
-		$daylight->setAttribute('TZOFFSETTO', $value1);
+		if($row[1]) // UTC does not need a VTIMEZONE component
+		{
+			$container = false;
+			$vtimezone = Horde_iCalendar::newComponent('VTIMEZONE', $container);
+			$vtimezone->setAttribute('TZID', $row[1]);
+			$minutes = $row[2] + $row[3];
+			$value1['ahead'] = ($minutes > 0);
+			$minutes = abs($minutes);
+			$value1['hour'] = (int)$minutes / 60;
+			$value1['minute'] = $minutes % 60;
+			$minutes = $row[2];
+			$value2['ahead'] = ($minutes > 0);
+			$minutes = abs($minutes);
+			$value2['hour'] = (int)$minutes / 60;
+			$value2['minute'] = $minutes % 60;
 
-		$standard = Horde_iCalendar::newComponent('STANDARD', $container);
-		$dtstart = $this->calc_dtstart($year, $row[10], $row[11], $row[12], $row[13], $row[14]);
-		$standard->setAttribute('DTSTART', $dtstart);
-		$byday = ($row[12] == 5 ? '-1' : $row[12]) . $dayofweek[$row[11]];
-		$standard->setAttribute('RRULE', '', array('FREQ' => 'YEARLY', 'BYMONTH' => $row[10], 'BYDAY' => $byday));
-		$standard->setAttribute('TZNAME', $stdname);
-		$standard->setAttribute('TZOFFSETFROM', $value1);
-		$standard->setAttribute('TZOFFSETTO', $value2);
+			$daylight = Horde_iCalendar::newComponent('DAYLIGHT', $container);
+			$dtstart = $this->calc_dtstart($row[4], $row[5], $row[6], $row[7], $row[8], $row[9]);
+			$daylight->setAttribute('DTSTART', $dtstart);
+			$byday = ($row[7] == 5 ? '-1' : $row[7]) . $dayofweek[$row[6]];
+			$daylight->setAttribute('RRULE', '', array('FREQ' => 'YEARLY', 'BYMONTH' => $row[5], 'BYDAY' => $byday));
+			$daylight->setAttribute('TZNAME', $dstname);
+			$daylight->setAttribute('TZOFFSETFROM', $value2);
+			$daylight->setAttribute('TZOFFSETTO', $value1);
 
-		$vtimezone->addComponent($daylight);
-		$vtimezone->addComponent($standard);
-		$vevent->addComponent($vtimezone);
+			$standard = Horde_iCalendar::newComponent('STANDARD', $container);
+			$dtstart = $this->calc_dtstart($year, $row[10], $row[11], $row[12], $row[13], $row[14]);
+			$standard->setAttribute('DTSTART', $dtstart);
+			$byday = ($row[12] == 5 ? '-1' : $row[12]) . $dayofweek[$row[11]];
+			$standard->setAttribute('RRULE', '', array('FREQ' => 'YEARLY', 'BYMONTH' => $row[10], 'BYDAY' => $byday));
+			$standard->setAttribute('TZNAME', $stdname);
+			$standard->setAttribute('TZOFFSETFROM', $value1);
+			$standard->setAttribute('TZOFFSETTO', $value2);
+
+			$vtimezone->addComponent($daylight);
+			$vtimezone->addComponent($standard);
+			$vcal->addComponent($vtimezone);
+		}
 
 		return $row[1];
 	}
