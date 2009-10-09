@@ -411,7 +411,7 @@
 						$convertAtEnd = true;
 					}
 				}
-				if ($convertAtEnd) $newString = $this->decode_header($newString,self::$displayCharset);
+				if ($convertAtEnd) $newString = self::decode_header($newString,self::$displayCharset);
 				return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
 			} elseif(function_exists(mb_decode_mimeheader)) {
 				$string = $_string;
@@ -1889,7 +1889,7 @@
 							$retValue['header'][$sortOrder[$uid]]['sender_address'] = $headerObject['FROM'][0]['MAILBOX_NAME'];
 						}
 						if($headerObject['FROM'][0]['PERSONAL_NAME'] != 'NIL') {
-							$retValue['header'][$sortOrder[$uid]]['sender_name'] = $this->decode_header($headerObject['FROM'][0]['PERSONAL_NAME']);
+							$retValue['header'][$sortOrder[$uid]]['sender_name'] = self::decode_header($headerObject['FROM'][0]['PERSONAL_NAME']);
 						}
 
 					}
@@ -1901,7 +1901,7 @@
 							$retValue['header'][$sortOrder[$uid]]['to_address'] = $headerObject['TO'][0]['MAILBOX_NAME'];
 						}
 						if($headerObject['TO'][0]['PERSONAL_NAME'] != 'NIL') {
-							$retValue['header'][$sortOrder[$uid]]['to_name'] = $this->decode_header($headerObject['TO'][0]['PERSONAL_NAME']);
+							$retValue['header'][$sortOrder[$uid]]['to_name'] = self::decode_header($headerObject['TO'][0]['PERSONAL_NAME']);
 						}
 
 					}
