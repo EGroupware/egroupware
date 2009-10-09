@@ -311,9 +311,23 @@ abstract class bo_merge
 			$replacements['$$datetime$$'] = $this->format_datetime($now);
 			$replacements['$$time$$'] = $this->format_datetime($now,$GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i a':'H:i');
 
-			if ($this->contacts->prefs['csv_charset'])	// if we have an export-charset defined, use it here to
+			switch($mimetype)
 			{
-				$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$this->contacts->prefs['csv_charset']);
+				case 'application/vnd.oasis.opendocument.text':		// open office
+				case 'application/vnd.oasis.opendocument.spreadsheet':
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+					$charset = 'utf-8';	// xml files --> always use utf-8
+					break;
+				default:	// div. text files --> use our export-charset, defined in addressbook prefs
+					$charset = $this->contacts->prefs['csv_charset'];
+					break;
+			}
+			//error_log(__METHOD__."('$document', ... ,$mimetype) --> $charset (egw=".$GLOBALS['egw']->translation->charset().', export='.$this->contacts->prefs['csv_charset'].')');
+			// do we need to convert charset
+			if ($charset && $charset != $GLOBALS['egw']->translation->charset())
+			{
+				$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$charset);
 			}
 			if (substr($document,0,6) == 'zip://')	// zip'ed xml document (eg. OO) --> need to encode &,<,> to not mess up xml
 			{
@@ -375,9 +389,7 @@ abstract class bo_merge
 					// todo OO writer files
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
 					// todo ms word xml files
 					break;
@@ -400,9 +412,7 @@ abstract class bo_merge
 					return $contentstart.implode('',$contentrep).$contentend;
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
 					break;
 			}
@@ -435,9 +445,7 @@ abstract class bo_merge
 					$LF ='</text:p><text:p>';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 					$LF ='</w:r></w:p><w:r><w:t>';
 					break;
 			}
@@ -463,17 +471,17 @@ abstract class bo_merge
 	public function download($document,$ids)
 	{
 		$content_url = egw_vfs::PREFIX.$document;
-		switch (($mime_type = egw_vfs::mime_content_type($document)))
+		switch (($mimetype = egw_vfs::mime_content_type($document)))
 		{
 			case 'application/vnd.oasis.opendocument.text':
 			case 'application/vnd.oasis.opendocument.spreadsheet':
-				$ext = $mime_type == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
+				$ext = $mimetype == 'application/vnd.oasis.opendocument.text' ? '.odt' : '.ods';
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,$ext).'-').$ext;
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'content.xml');
 				break;
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.d':	// mimetypes in vfs are limited to 64 chars
-				$mime_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+				$mimetype = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.dotx').'-').'.dotx';
 				copy($content_url,$archive);
@@ -492,14 +500,14 @@ abstract class bo_merge
 				);
 				break;
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
-				$mime_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+				$mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.xlsx').'-').'.xlsx';
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'xl/sharedStrings.xml');
 				break;
 		}
-		if (!($merged =& $this->merge($content_url,$ids,$err,$mime_type,$fix)))
+		if (!($merged =& $this->merge($content_url,$ids,$err,$mimetype,$fix)))
 		{
 			return $err;
 		}
@@ -515,12 +523,12 @@ abstract class bo_merge
 			{
 				exec('/usr/bin/zip -F '.escapeshellarg($archive));
 			}
-			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mime_type);
+			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mimetype);
 			readfile($archive,'r');
 		}
 		else
 		{
-			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mime_type);
+			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mimetype);
 			echo $merged;
 		}
 		common::egw_exit();
