@@ -137,7 +137,8 @@ class notifications_email implements notifications_iface {
 				$url = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
 					($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$url;
 			}
-			$rendered_links[] = $_render_html ? html::a_href($link->text, $url, false, 'target="_blank"') : $url;
+			$a_href = '<a href="'.$url.'" target="_blank">'.$link->text.'</a>';
+			$rendered_links[] = $_render_html ? $a_href : $url;
 		}
 
 		return $hruler.$newline.lang('Linked entries:').$newline.implode($newline,$rendered_links);
