@@ -1881,7 +1881,7 @@
 							$retValue['header'][$sortOrder[$uid]]['sender_address'] = $headerObject['FROM'][0]['MAILBOX_NAME'];
 						}
 						if($headerObject['FROM'][0]['PERSONAL_NAME'] != 'NIL') {
-							$retValue['header'][$sortOrder[$uid]]['sender_name'] = $this->decode_header($headerObject['FROM'][0]['PERSONAL_NAME']);
+							$retValue['header'][$sortOrder[$uid]]['sender_name'] = self::decode_header($headerObject['FROM'][0]['PERSONAL_NAME']);
 						}
 
 					}
@@ -1893,7 +1893,7 @@
 							$retValue['header'][$sortOrder[$uid]]['to_address'] = $headerObject['TO'][0]['MAILBOX_NAME'];
 						}
 						if($headerObject['TO'][0]['PERSONAL_NAME'] != 'NIL') {
-							$retValue['header'][$sortOrder[$uid]]['to_name'] = $this->decode_header($headerObject['TO'][0]['PERSONAL_NAME']);
+							$retValue['header'][$sortOrder[$uid]]['to_name'] = self::decode_header($headerObject['TO'][0]['PERSONAL_NAME']);
 						}
 
 					}
