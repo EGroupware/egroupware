@@ -69,7 +69,7 @@ class nextmatch_widget
 	 * exported methods of this class
 	 * @var array
 	 */
-	var $public_functions = array(
+	public $public_functions = array(
 		'pre_process' => True,
 		'post_process' => True,
 	);
@@ -77,7 +77,7 @@ class nextmatch_widget
 	 * availible extensions and there names for the editor
 	 * @var array
 	 */
-	var $human_name = array(
+	public $human_name = array(
 		'nextmatch'               => 'Nextmatch',
 		'nextmatch-sortheader'    => 'Nextmatch Sortheader',
 		'nextmatch-filterheader'  => 'Nextmatch Filterheader',
@@ -92,7 +92,7 @@ class nextmatch_widget
 	 *
 	 * @var boolean
 	 */
-	var $debug = false;
+	public $debug = false;
 
 	/**
 	 * Vars used to comunicated for the custom field header
@@ -108,7 +108,7 @@ class nextmatch_widget
 	 *
 	 * @param string $ui '' for html
 	 */
-	function nextmatch_widget($ui)
+	public function __construct($ui)
 	{
 	}
 
@@ -170,7 +170,7 @@ class nextmatch_widget
 	 * @param etemplate &$tmpl reference to the template we belong too
 	 * @return boolean true if extra label is allowed, false otherwise
 	 */
-	function pre_process($name,&$value,array &$cell,&$readonlys,&$extension_data,etemplate &$tmpl)
+	public function pre_process($name,&$value,array &$cell,&$readonlys,&$extension_data,etemplate &$tmpl)
 	{
 		$nm_global =& self::get_nm_global($name,$cell['type']);
 		//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): value = "; _debug_array($value);
@@ -240,11 +240,11 @@ class nextmatch_widget
 				return True;
 
 			case 'nextmatch-customfields':
-				$extra_label = $this->_pre_process_cf_header($cell,$tmpl, $value, $nm_global);
+				$extra_label = $this->pre_process_cf_header($cell,$tmpl, $value, $nm_global);
 				$extension_data['old_value'] = $value;
 				return $extra_label;
 		}
-		// does NOT work with php5.2.6 ...
+		// does NOT work with php5.2.6+
 		if (version_compare(PHP_VERSION,'5.2.6','>='))
 		{
 			$value['bottom_too'] = false;
@@ -270,7 +270,7 @@ class nextmatch_widget
 
 		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 		if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
-
+/*
 		// allow static callbacks
 		if(strpos($method=$value['get_rows'],'::') !== false)
 		{
@@ -296,6 +296,7 @@ class nextmatch_widget
 				$obj =& CreateObject($app.'.'.$class);
 			}
 		}
+*/
 		if (!isset($value['cat_app'])) $value['cat_app'] = $app;	// if no cat_app set, use the app from the get_rows func
 
 		if (!($max = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $max = 15;
@@ -324,6 +325,12 @@ class nextmatch_widget
 			$value['options-selectcols'] = is_array($value['options-selectcols']) ? $value['options-selectcols'] : array();
 		}
 		$rows = array();
+		if (($total = $extension_data['total'] = $value['total'] = self::call_get_rows($value,$rows,$readonlys['rows'])) === false)
+		{
+			//error_log(__METHOD__."() etemplate::set_validation_error('$name') '$value[get_rows]' is no valid method!!!");
+			etemplate::set_validation_error($name,__METHOD__."($cell[name]): '$value[get_rows]' is no valid method !!!");
+		}
+/*
 		if(is_callable($method))	// php5.3+ call
 		{
 			$total = $extension_data['total'] = $value['total'] = $method($value['get_rows'],$value,$rows,$readonlys['rows']);
@@ -349,6 +356,7 @@ class nextmatch_widget
 				$total = $extension_data['total'] = $value['total'] = $method($value['get_rows'],$value,$rows,$readonlys['rows']);
 			}
 		}
+*/
 		// allow the get_rows function to override / set sel_options
 		if (isset($rows['sel_options']) && is_array($rows['sel_options']))
 		{
@@ -467,7 +475,7 @@ class nextmatch_widget
 			if (isset($value['columnselection_pref'])) $name = $value['columnselection_pref'];
 			$this->selectcols = $value['selectcols'] = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-'.$name];
 			// fetching column-names & -labels from the template
-			if($this->_cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows'],$value['selectcols']))
+			if($this->cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows'],$value['selectcols']))
 			{
 				//_debug_array($name2col);
 				//_debug_array($value['options-selectcols']);
@@ -530,11 +538,75 @@ class nextmatch_widget
 	}
 
 	/**
+	 * Calling our callback
+	 *
+	 * @param array &$value
+	 * @param array &$rows=null
+	 * @param array &$readonlys=null
+	 * @param object $obj=null (internal)
+	 * @param string|array $method=null (internal)
+	 * @return int|boolean total items found of false on error ($value['get_rows'] not callable)
+	 */
+	private static function call_get_rows(array &$value,array &$rows=null,array &$readonlys=null,$obj=null,$method=null)
+	{
+		if (is_null($method)) $method = $value['get_rows'];
+
+		if (is_null($obj))
+		{
+			// allow static callbacks
+			if(strpos($method,'::') !== false)
+			{
+				//  workaround for php < 5.3: do NOT call it static, but allow application code to specify static callbacks
+				if (version_compare(PHP_VERSION,'5.3','<')) list($class,$method) = explode('::',$method);
+			}
+			else
+			{
+				list($app,$class,$method) = explode('.',$value['get_rows']);
+			}
+			if ($class)
+			{
+				if (!$app && !is_object($GLOBALS[$class]))
+				{
+					$GLOBALS[$class] = new $class();
+				}
+				if (is_object($GLOBALS[$class]))	// use existing instance (put there by a previous CreateObject)
+				{
+					$obj = $GLOBALS[$class];
+				}
+				else
+				{
+					$obj = CreateObject($app.'.'.$class);
+				}
+			}
+		}
+		if(is_callable($method))	// php5.3+ call
+		{
+			$total = $method($value,$rows,$readonlys);
+		}
+		elseif(is_object($obj) && method_exists($obj,$method))
+		{
+			if (!is_array($readonlys)) $readonlys = array();
+			$total = $obj->$method($value,$rows,$readonlys);
+		}
+		else
+		{
+			$total = false;	// method not callable
+		}
+		if ($method && $total && $value['start'] >= $total)
+		{
+			$value['start'] = 0;
+			$total = self::call_get_rows($value,$rows,$readonlys,$obj,$method);
+		}
+		error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
+		return $total;
+	}
+
+	/**
 	 * Preprocess for the custom fields header
 	 *
 	 * @param array &$cell
 	 */
-	private function _pre_process_cf_header(array &$cell,etemplate $tmpl, &$value, $nm_global)
+	private function pre_process_cf_header(array &$cell,etemplate $tmpl, &$value, $nm_global)
 	{
 		//echo __CLASS__.'::'.__METHOD__."() selectcols=$this->selectcols\n";
 		if (is_null($this->cfs))
@@ -620,12 +692,12 @@ class nextmatch_widget
 	 * @param array $selectcols selected colums
 	 * @return int columns found, count($cols)
 	 */
-	function _cols_from_tpl(etemplate $tmpl,&$cols,&$name2col,&$content,$selectcols)
+	private function cols_from_tpl(etemplate $tmpl,&$cols,&$name2col,&$content,$selectcols)
 	{
 		//_debug_array($cols);
 		// fetching column-names & -labels from the template
 		$cols['__content__'] =& $content;
-		$tmpl->widget_tree_walk(array($this,'_cols_from_tpl_walker'),$cols);
+		$tmpl->widget_tree_walk(array($this,'cols_from_tpl_walker'),$cols);
 		unset($cols['__content__']);
 		$col2names = is_array($cols['col2names']) ? $cols['col2names'] : array(); unset($cols['col2names']);
 		//_debug_array($col2names);
@@ -678,7 +750,7 @@ class nextmatch_widget
 	 * @param array &$cols here we add the column-name/-label
 	 * @param string $path
 	 */
-	function _cols_from_tpl_walker(&$widget,&$cols,$path)
+	function cols_from_tpl_walker(&$widget,&$cols,$path)
 	{
 		list($type,$subtype) = explode('-',$widget['type']);
 
@@ -740,7 +812,7 @@ class nextmatch_widget
 	 * @param mixed &value_in the posted values (already striped of magic-quotes)
 	 * @return boolean true if $value has valid content, on false no content will be returned!
 	 */
-	function post_process($name,&$value,&$extension_data,&$loop,etemplate &$tmpl,$value_in)
+	public function post_process($name,&$value,&$extension_data,&$loop,etemplate &$tmpl,$value_in)
 	{
 		$nm_global =& self::get_nm_global($name,$extension_data['type']);
 
@@ -760,7 +832,7 @@ class nextmatch_widget
 				return False;	// dont report value back, as it's in the wrong location (rows)
 
 			case 'nextmatch-customfields':
-				$this->_post_process_cf_header($value, $extension_data, $tmpl, $value_in, $nm_global);
+				$this->post_process_cf_header($value, $extension_data, $tmpl, $value_in, $nm_global);
 				return False;   // dont report value back, as it's in the wrong location (rows)
 			case 'link-entry':	// allways return app:id, if an entry got selected, otherwise null
 				if (is_array($value_in) && !empty($value_in['id']))
@@ -918,7 +990,7 @@ class nextmatch_widget
 		}
 		if ($value['export'])
 		{
-			$this->_csv_export($extension_data);
+			self::csv_export($extension_data);
 		}
 		return True;
 	}
@@ -928,7 +1000,7 @@ class nextmatch_widget
 	 *
 	 * @param array &$cell
 	 */
-	private function _post_process_cf_header(&$value, $extension_data, $tmpl, $value_in, &$nm_global)
+	private function post_process_cf_header(&$value, $extension_data, $tmpl, $value_in, &$nm_global)
 	{
 		if (is_null($this->cfs))
 		{
@@ -946,48 +1018,28 @@ class nextmatch_widget
 		}
 	}
 
-	var $separator = ';';
-	var $charset_out;
-	var $charset;
-
 	/**
 	 * Export the list as csv file download
 	 *
-	 * @param array $value content of the nextmatch widget
+	 * @param array $value array('get_rows' => $method), further values see nextmatch widget $query parameter
+	 * @param string $separator=';'
 	 * @return boolean false=error, eg. get_rows callback does not exits, true=nothing to export, otherwise we do NOT return!
 	 */
-	function _csv_export(&$value)
+	static public function csv_export(&$value,$separator=';')
 	{
 		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
-			//if (isset($value['export_limit'])) $export_limit = $value['export_limit']; 
+			//if (isset($value['export_limit'])) $export_limit = $value['export_limit'];
 		}
-		list($app,$class,$method) = explode('.',$value['get_rows']);
-		if ($app && $class)
-		{
-			if (is_object($GLOBALS[$class]))	// use existing instance (put there by a previous CreateObject)
-			{
-				$obj =& $GLOBALS[$class];
-			}
-			else
-			{
-				$obj =& CreateObject($app.'.'.$class);
-			}
-		}
-		if (!is_object($obj) || !method_exists($obj,$method))
-		{
-			etemplate::set_validation_error($name,"nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!");
-			return false;
-		}
-		$this->charset = $this->charset_out = $GLOBALS['egw']->translation->charset();
+		$charset = $charset_out = translation::charset();
 		if (isset($value['csv_charset']))
 		{
-			$this->charset_out = $value['csv_charset'];
+			$charset_out = $value['csv_charset'];
 		}
 		elseif ($GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'])
 		{
-			$this->charset_out = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
+			$charset_out = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 		}
 		$backup_start = $value['start'];
 		$backup_num_rows = $value['num_rows'];
@@ -997,7 +1049,7 @@ class nextmatch_widget
 		$value['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 		do
 		{
-			if (!($total = $obj->$method($value,$rows,$readonlys=array())))
+			if (!($total = self::call_get_rows($value,$rows)))
 			{
 				break;	// nothing to export
 			}
@@ -1011,13 +1063,13 @@ class nextmatch_widget
 			//echo "<p>start=$value[start], num_rows=$value[num_rows]: total=$total, count(\$rows)=".count($rows)."</p>\n";
 			if (!$value['start'])	// send the neccessary headers
 			{
-				$fp = $this->_csv_open($rows[0],$value['csv_fields'],$app);
+				// use last row for header detection, as first row(s) might be empty to skip header row(s) of template
+				$fp = self::csv_open($rows[count($rows)-1],$value['csv_fields'],$app);
 			}
-			//_debug_array($rows);
 			foreach($rows as $key => $row)
 			{
-				if (!is_numeric($key)) continue;	// not a real rows
-				fwrite($fp,$this->_csv_encode($row,$value['csv_fields'],true,$rows['sel_options'])."\n");
+				if (!is_numeric($key) || !$row) continue;	// not a real rows
+				fwrite($fp,self::csv_encode($row,$value['csv_fields'],true,$rows['sel_options'],$charset_out,$charset,$separator)."\n");
 			}
 			$value['start'] += $value['num_rows'];
 
@@ -1030,12 +1082,12 @@ class nextmatch_widget
 		$value['num_rows'] = $backup_num_rows;
 		if ($value['no_csv_support'])	// we need to call the get_rows method in case start&num_rows are stored in the session
 		{
-			$obj->$method($value,$rows,$readonlys=array());
+			self::call_get_rows($value);
 		}
 		if ($fp)
 		{
 			fclose($fp);
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_exit();
 		}
 		return true;
 	}
@@ -1048,14 +1100,13 @@ class nextmatch_widget
 	 * @param string $app app-name
 	 * @return FILE
 	 */
-	function _csv_open($row0,&$fields,$app)
+	private static function csv_open($row0,&$fields,$app)
 	{
 		if (!is_array($fields) || !count($fields))
 		{
-			$fields = $this->_autodetect_fields($row0,$app);
+			$fields = self::autodetect_fields($row0,$app);
 		}
-		$browser =& CreateObject('phpgwapi.browser');
-		$browser->content_header('export.csv','text/comma-separated-values');
+		html::content_header('export.csv','text/comma-separated-values');
 		//echo "<pre>";
 
 		if (($fp = fopen('php://output','w')))
@@ -1066,7 +1117,7 @@ class nextmatch_widget
 				if (is_array($label)) $label = $label['label'];
 				$labels[$field] = $label ? $label : $field;
 			}
-			fwrite($fp,$this->_csv_encode($labels,$fields,false)."\n");
+			fwrite($fp,self::csv_encode($labels,$fields,false)."\n");
 		}
 		return $fp;
 	}
@@ -1078,16 +1129,13 @@ class nextmatch_widget
 	 * @param array $fields
 	 * @param boolean $use_type=true
 	 * @param array $extra_sel_options=null
+	 * @param string $charset_out=null output charset
+	 * @param string $charset data charset
+	 * @param string $separator=';'
 	 * @return string
 	 */
-	function _csv_encode($data,$fields,$use_type=true,$extra_sel_options=null)
+	private static function csv_encode($data,$fields,$use_type=true,$extra_sel_options=null,$charset_out=null,$charset=null,$separator=';')
 	{
-		static $date_format,$time_format;
-		if (is_null($date_format))
-		{
-			$time_format = $date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
-			$time_format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:ia' : 'H:i');
-		}
 		$sel_options =& boetemplate::$request->sel_options;
 
 		$out = array();
@@ -1102,7 +1150,7 @@ class nextmatch_widget
 					switch($label['type'])
 					{
 						case 'select-account':
-							if ($val) $value[$key] = $GLOBALS['egw']->common->grab_owner_name($val);
+							if ($val) $value[$key] = common::grab_owner_name($val);
 							break;
 						case 'select-cat':
 							if ($val)
@@ -1116,10 +1164,16 @@ class nextmatch_widget
 							}
 							break;
 						case 'date-time':
-							if ($val) $value[$key] = date($time_format,!is_numeric($val) ? strtotime($val) : $val);
-							break;
 						case 'date':
-							if ($val) $value[$key] = date($date_format,!is_numeric($val) ? strtotime($val) : $val);
+							if ($val)
+							{
+								try {
+									$value[$key] = egw_time::to($val,$label['type'] == 'date' ? true : '');
+								}
+								catch (Exception $e) {
+									// ignore conversation errors, leave value unchanged (might be a wrongly as date(time) detected field
+								}
+							}
 							break;
 						case 'select':
 							if (isset($sel_options[$field]))
@@ -1144,17 +1198,17 @@ class nextmatch_widget
 			}
 			$value = implode(', ',$value);
 
-			if (strpos($value,$this->separator) !== false || strpos($value,"\n") !== false || strpos($value,"\r") !== false)
+			if (strpos($value,$separator) !== false || strpos($value,"\n") !== false || strpos($value,"\r") !== false)
 			{
 				$value = '"'.str_replace(array('\\','"'),array('\\\\','\\"'),$value).'"';
 			}
 			$out[] = $value;
 		}
-		$out = implode($this->separator,$out);
+		$out = implode($separator,$out);
 
-		if ($this->charset_out && $this->charset != $this->charset_out)
+		if ($charset_out && $charset != $charset_out)
 		{
-			$out = $GLOBALS['egw']->translation->convert($out,$this->charset,$this->charset_out);
+			$out = translation::convert($out,$charset,$charset_out);
 		}
 		return $out;
 	}
@@ -1165,7 +1219,7 @@ class nextmatch_widget
 	 * @param array $row0 first data-row
 	 * @param string $app
 	 */
-	function _autodetect_fields($row0,$app)
+	private static function autodetect_fields($row0,$app)
 	{
 		$fields = array_combine(array_keys($row0),array_keys($row0));
 
@@ -1192,11 +1246,8 @@ class nextmatch_widget
 		}
 		if ($app)
 		{
-			include_once(EGW_API_INC.'/class.config.inc.php');
-			$config = new config($app);
-			$config->read_repository();
+			$customfields = config::get_customfields($app);
 
-			$customfields = isset($config->config_data['customfields']) ? $config->config_data['customfields'] : $config->config_data['custom_fields'];
 			if (is_array($customfields))
 			{
 				foreach($customfields as $name => $data)
