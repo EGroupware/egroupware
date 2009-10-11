@@ -1,291 +1,206 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - Browser detect functions                                *
-  * This file written by Miles Lott <milosch@groupwhere.org>                 *
-  * Majority of code borrowed from Sourceforge 2.5                           *
-  * Copyright 1999-2000 (c) The SourceForge Crew - http://sourceforge.net    *
-  * Browser detection functions for eGroupWare developers                    *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+/**
+ * eGroupWare API - Browser detect functions
+ *
+ * This file written by Miles Lott <milosch@groupwhere.org>
+ * Majority of code borrowed from Sourceforge 2.5
+ * Copyright 1999-2000 (c) The SourceForge Crew - http://sourceforge.net
+ *
+ * @link http://www.egroupware.org
+ * @author Miles Lott <milosch@groupwhere.org>
+ * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
+ * @package api
+ * @subpackage html
+ * @version $Id$
+ */
 
-  /* $Id$ */
+/**
+ * Dusty old browser detection functions (all static now)
+ *
+ * @deprecated use html::content_header(), html::$user_agent and html::$ua_version
+ */
+class browser
+{
+	public static $agent;
+	public static $version;
+	public static $platform;
+	public static $br;
+	public static $p;
 
-	class browser
+	/**
+	 * Init our static properties
+	 */
+	public static function init_static()
 	{
-		var $BROWSER_AGENT;
-		var $BROWSER_VER;
-		var $BROWSER_PLATFORM;
-		var $br;
-		var $p;
-		var $data;
-
-		function browser()
+		$HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
+		/*
+			Determine browser and version
+		*/
+		if(preg_match('/MSIE ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
 		{
-			$HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
-			/*
-				Determine browser and version
-			*/
-			if(preg_match('/MSIE ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
-			{
-				$this->BROWSER_VER = $log_version[1];
-				$this->BROWSER_AGENT = 'IE';
-			}
-			elseif(preg_match('/Opera ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version) ||
-				preg_match('/Opera\\/([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
-			{
-				$this->BROWSER_VER   = $log_version[1];
-				$this->BROWSER_AGENT = 'OPERA';
-			}
-			elseif(preg_match('/iCab ([0-9].[0-9a-zA-Z]{1,4})/i',$HTTP_USER_AGENT,$log_version) ||
-				preg_match('/iCab\\/([0-9].[0-9a-zA-Z]{1,4})/i',$HTTP_USER_AGENT,$log_version))
-			{
-				$this->BROWSER_VER   = $log_version[1];
-				$this->BROWSER_AGENT = 'iCab';
-			} 
-			elseif(strpos($HTTP_USER_AGENT,'Gecko') !== false)
-			{
-				$this->BROWSER_VER   = $log_version[1];
-				$this->BROWSER_AGENT = 'MOZILLA';
-			}
-			elseif(preg_match('/Konqueror\\/([0-9].[0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version) ||
-				preg_match('/Konqueror\\/([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
-			{
-				$this->BROWSER_VER=$log_version[1];
-				$this->BROWSER_AGENT='Konqueror';
-			}
-			else
-			{
-				$this->BROWSER_VER=0;
-				$this->BROWSER_AGENT='OTHER';
-			}
-
-			/*
-				Determine platform
-			*/
-			if(strpos($HTTP_USER_AGENT,'Win') !== false)
-			{
-				$this->BROWSER_PLATFORM='Win';
-			}
-			elseif(strpos($HTTP_USER_AGENT,'Mac') !== false)
-			{
-				$this->BROWSER_PLATFORM='Mac';
-			}
-			elseif(strpos($HTTP_USER_AGENT,'Linux') !== false)
-			{
-				$this->BROWSER_PLATFORM='Linux';
-			}
-			elseif(strpos($HTTP_USER_AGENT,'Unix') !== false)
-			{
-				$this->BROWSER_PLATFORM='Unix';
-			}
-			elseif(strpos($HTTP_USER_AGENT,'Beos') !== false)
-			{
-				$this->BROWSER_PLATFORM='Beos';
-			}
-			else
-			{
-				$this->BROWSER_PLATFORM='Other';
-			}
-
-			/*
-			echo "\n\nAgent: $HTTP_USER_AGENT";
-			echo "\nIE: ".browser_is_ie();
-			echo "\nMac: ".browser_is_mac();
-			echo "\nWindows: ".browser_is_windows();
-			echo "\nPlatform: ".browser_get_platform();
-			echo "\nVersion: ".browser_get_version();
-			echo "\nAgent: ".browser_get_agent();
-			*/
-
-			// The br and p functions are supposed to return the correct
-			// value for tags that do not need to be closed.  This is
-			// per the xhmtl spec, so we need to fix this to include
-			// all compliant browsers we know of.
-			if($this->BROWSER_AGENT == 'IE')
-			{
-				$this->br = '<br/>';
-				$this->p = '<p/>';
-			}
-			else
-			{
-				$this->br = '<br>';
-				$this->p = '<p>';
-			}
+			self::$version = $log_version[1];
+			self::$agent = 'IE';
+		}
+		elseif(preg_match('/Opera ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version) ||
+			preg_match('/Opera\\/([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
+		{
+			self::$version   = $log_version[1];
+			self::$agent = 'OPERA';
+		}
+		elseif(preg_match('/iCab ([0-9].[0-9a-zA-Z]{1,4})/i',$HTTP_USER_AGENT,$log_version) ||
+			preg_match('/iCab\\/([0-9].[0-9a-zA-Z]{1,4})/i',$HTTP_USER_AGENT,$log_version))
+		{
+			self::$version   = $log_version[1];
+			self::$agent = 'iCab';
+		}
+		elseif(strpos($HTTP_USER_AGENT,'Gecko') !== false)
+		{
+			self::$version   = $log_version[1];
+			self::$agent = 'MOZILLA';
+		}
+		elseif(preg_match('/Konqueror\\/([0-9].[0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version) ||
+			preg_match('/Konqueror\\/([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
+		{
+			self::$version=$log_version[1];
+			self::$agent='Konqueror';
+		}
+		else
+		{
+			self::$version=0;
+			self::$agent='OTHER';
 		}
 
-		function return_array()
+		/*
+			Determine platform
+		*/
+		if(strpos($HTTP_USER_AGENT,'Win') !== false)
 		{
-			$this->data = array(
-				'agent'    => $this->get_agent(),
-				'version'  => $this->get_version(),
-				'platform' => $this->get_platform()
-			);
-
-			return $this->data;
+			self::$platform='Win';
+		}
+		elseif(strpos($HTTP_USER_AGENT,'Mac') !== false)
+		{
+			self::$platform='Mac';
+		}
+		elseif(strpos($HTTP_USER_AGENT,'Linux') !== false)
+		{
+			self::$platform='Linux';
+		}
+		elseif(strpos($HTTP_USER_AGENT,'Unix') !== false)
+		{
+			self::$platform='Unix';
+		}
+		elseif(strpos($HTTP_USER_AGENT,'Beos') !== false)
+		{
+			self::$platform='Beos';
+		}
+		else
+		{
+			self::$platform='Other';
 		}
 
-		function get_agent()
+		/*
+		echo "\n\nAgent: $HTTP_USER_AGENT";
+		echo "\nIE: ".browser_is_ie();
+		echo "\nMac: ".browser_is_mac();
+		echo "\nWindows: ".browser_is_windows();
+		echo "\nPlatform: ".browser_get_platform();
+		echo "\nVersion: ".browser_get_version();
+		echo "\nAgent: ".browser_get_agent();
+		*/
+
+		// The br and p functions are supposed to return the correct
+		// value for tags that do not need to be closed.  This is
+		// per the xhmtl spec, so we need to fix this to include
+		// all compliant browsers we know of.
+		if(self::$agent == 'IE')
 		{
-			return $this->BROWSER_AGENT;
+			self::$br = '<br/>';
+			self::$p = '<p/>';
 		}
-
-		function get_version()
+		else
 		{
-			return $this->BROWSER_VER;
+			self::$br = '<br>';
+			self::$p = '<p>';
 		}
-
-		function get_platform()
-		{
-			return $this->BROWSER_PLATFORM;
-		}
-
-		function is_linux()
-		{
-			if($this->get_platform()=='Linux')
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		function is_unix()
-		{
-			if($this->get_platform()=='Unix')
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		function is_beos()
-		{
-			if($this->get_platform()=='Beos')
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		function is_mac()
-		{
-			if($this->get_platform()=='Mac')
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		function is_windows()
-		{
-			if($this->get_platform()=='Win')
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		function is_ie()
-		{
-			if($this->get_agent()=='IE')
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		function is_netscape()
-		{
-			if($this->get_agent()=='MOZILLA')
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		function is_opera()
-		{
-			if($this->get_agent()=='OPERA')
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		// Echo content headers for file downloads
-		function content_header($fn='',$mime='',$length='',$nocache=True)
-		{
-			// if no mime-type is given or it's the default binary-type, guess it from the extension
-			if(empty($mime) || $mime == 'application/octet-stream')
-			{
-				$mime_magic = createObject('phpgwapi.mime_magic');
-				$mime = $mime_magic->filename2mime($fn);
-			}
-			if($fn)
-			{
-				if($this->get_agent() == 'IE') // && browser_get_version() == "5.5")
-				{
-					$attachment = '';
-				}
-				else
-				{
-					$attachment = ' attachment;';
-				}
-
-				// Show this for all
-				header('Content-disposition:'.$attachment.' filename="'.$fn.'"');
-				header('Content-type: '.$mime);
-
-				if($length)
-				{
-					header('Content-length: '.$length);
-				}
-
-				if($nocache)
-				{
-					header('Pragma: no-cache');
-					header('Pragma: public');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-				}
-			}
-		}
+		error_log(__METHOD__."() $_SERVER[HTTP_USER_AGENT] --> agent=".self::$agent.', version='.self::$version.', platform='.self::$platform);
 	}
-?>
+
+	public static function return_array()
+	{
+		return array(
+			'agent'    => self::$agent,
+			'version'  => self::$version,
+			'platform' => self::$platform,
+		);
+	}
+
+	public static function get_agent()
+	{
+		return self::$agent;
+	}
+
+	public static function get_version()
+	{
+		return self::$version;
+	}
+
+	public static function get_platform()
+	{
+		return self::$platform;
+	}
+
+	public static function is_linux()
+	{
+		return $platform == 'Linux';
+	}
+
+	public static function is_unix()
+	{
+		return $platform() == 'Unix';
+	}
+
+	public static function is_beos()
+	{
+		return $platform == 'Beos';
+	}
+
+	public static function is_mac()
+	{
+		return $platform == 'Mac';
+	}
+
+	public static function is_windows()
+	{
+		return $platform == 'Win';
+	}
+
+	public static function is_ie()
+	{
+		return $agent == 'IE';
+	}
+
+	public static function is_netscape()
+	{
+		return $agent == 'MOZILLA';
+	}
+
+	public static function is_opera()
+	{
+		return $agent == 'OPERA';
+	}
+
+	/**
+	 * Output content headers for file downloads
+	 *
+	 * @param string $fn filename
+	 * @param string $mime='' mimetype or '' (default) to detect it from filename, using mime_magic::filename2mime()
+	 * @param int $length=0 content length, default 0 = skip that header
+	 * @param boolean $nocache=true send headers to disallow browser/proxies to cache the download
+	 * @deprecated use html::content_header() direct
+	 */
+	public static function content_header($fn,$mime='',$length=0,$nocache=True)
+	{
+		html::content_header($fn,$mime,$length,$nocache);
+	}
+}
+browser::init_static();

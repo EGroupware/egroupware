@@ -524,7 +524,7 @@ abstract class bo_merge
 			{
 				exec('/usr/bin/zip -F '.escapeshellarg($archive));
 			}
-			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mimetype);
+			html::content_header(basename($document),$mimetype,filesize($archive));
 			readfile($archive,'r');
 		}
 		else

@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and earlier modifications
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker-AT-outdoor-training.de
- * @copyright 2001-2008 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2009 by RalfBecker@outdoor-training.de
  * @package api
  * @subpackage html
  * @version $Id$
@@ -15,13 +15,12 @@
 /**
  * Generates html with methods representing html-tags or higher widgets
  *
- * The class has only static methods now, so there's no need to instanciate the object anymore!
- *
+ * The class has only static methods now, so there's no need to instanciate as object anymore!
  */
 class html
 {
 	/**
-	 * user-agent: 'mozilla','msie','konqueror', 'safari', 'opera'
+	 * user-agent: 'firefox', 'msie', 'safari' (incl. iPhone, Chrome), 'opera', 'konqueror', 'mozilla'
 	 * @var string
 	 */
 	static $user_agent;
@@ -58,17 +57,17 @@ class html
 	static function _init_static()
 	{
 		// should be Ok for all HTML 4 compatible browsers
-		if (!preg_match('/(Safari)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts) &&
-			!preg_match('/compatible; ([a-z_]+)[\/ ]+([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts))
+		if(!preg_match('/compatible; ([a-z]+)[\/ ]+([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts))
 		{
-			preg_match('/^([a-z_]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts);
+			preg_match_all('/([a-z]+)\/([0-9.]+)/i',$_SERVER['HTTP_USER_AGENT'],$parts,PREG_SET_ORDER);
+			$parts = array_pop($parts);
 		}
 		list(,self::$user_agent,self::$ua_version) = $parts;
-		self::$user_agent = strtolower(self::$user_agent);
+		if ((self::$user_agent = strtolower(self::$user_agent)) == 'version') self::$user_agent = 'opera';
 
 		self::$netscape4 = self::$user_agent == 'mozilla' && self::$ua_version < 5;
 		self::$prefered_img_title = self::$netscape4 ? 'alt' : 'title';
-		//echo "<p>HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: 'self::$user_agent', Version: 'self::$ua_version', img_title: 'self::$prefered_img_title'</p>\n";
+		//echo "<p>HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '".self::$user_agent."', Version: '".self::$ua_version."', img_title: '".self::$prefered_img_title."'</p>\n";
 
 		if ($GLOBALS['egw']->translation)
 		{
@@ -1280,6 +1279,52 @@ class html
 			$purifier = new HTMLPurifier($config);
 		}
     	return $purifier->purify( $html );
+	}
+
+	/**
+	 * Output content headers for file downloads
+	 *
+	 * @author Miles Lott originally in browser class
+	 * @param string $fn filename
+	 * @param string $mime='' mimetype or '' (default) to detect it from filename, using mime_magic::filename2mime()
+	 * @param int $length=0 content length, default 0 = skip that header
+	 * @param boolean $nocache=true send headers to disallow browser/proxies to cache the download
+	 */
+	public static function content_header($fn,$mime='',$length=0,$nocache=True)
+	{
+		// if no mime-type is given or it's the default binary-type, guess it from the extension
+		if(empty($mime) || $mime == 'application/octet-stream')
+		{
+			$mime = mime_magic::filename2mime($fn);
+		}
+		if($fn)
+		{
+			if(self::$user_agent == 'msie') // && self::$ua_version == '5.5')
+			{
+				$attachment = '';
+			}
+			else
+			{
+				$attachment = ' attachment;';
+			}
+
+			// Show this for all
+			header('Content-disposition:'.$attachment.' filename="'.$fn.'"');
+			header('Content-type: '.$mime);
+
+			if($length)
+			{
+				header('Content-length: '.$length);
+			}
+
+			if($nocache)
+			{
+				header('Pragma: no-cache');
+				header('Pragma: public');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			}
+		}
 	}
 }
 html::_init_static();
