@@ -1381,8 +1381,15 @@ class HTTP_WebDAV_Server
         // check RFC 2518 Section 9.2, last paragraph
         if (isset($this->_SERVER["HTTP_DEPTH"])) {
             if ($this->_SERVER["HTTP_DEPTH"] != "infinity") {
-                $this->http_status("400 Bad Request");
-                return;
+				if (stripos($_SERVER['HTTP_USER_AGENT'],'webdrive') !== false)
+				{
+					// pretend we didnt see it, as webdrive does not handle the depth parameter correctly while deleting collections
+				}
+				else
+				{
+                	$this->http_status("400 Bad Request");
+                	return;
+				}
             }
         }
 
