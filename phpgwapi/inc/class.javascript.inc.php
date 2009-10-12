@@ -2,10 +2,10 @@
 	/**************************************************************************\
 	* eGroupWare API - JavaScript                                              *
 	* Written by Dave Hall skwashd at phpgroupware.org                         *
-	* Copyright (C) 2003 Free Software Foundation Inc                          *		
+	* Copyright (C) 2003 Free Software Foundation Inc                          *
 	* -------------------------------------------------------------------------*
 	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org/api                                            * 
+	* http://www.egroupware.org/api                                            *
 	* ------------------------------------------------------------------------ *
 	*  This program is Free Software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -27,7 +27,7 @@
 	 * </code>
 	 *
 	 * This way a theme can see if this is a defined object and include the data,
-	 * while the is_object() wrapper prevents whiping out existing data held in 
+	 * while the is_object() wrapper prevents whiping out existing data held in
 	 * this instance variables, primarily the $files variable.
 	 *
 	 * Note: The package argument is the subdirectory of js - all js should live in subdirectories
@@ -62,7 +62,7 @@
 		* @var boolean Load JS API ?
 		*/
 		var $js_api;
-		
+
 		/**
 		* Constructor
 		*
@@ -73,7 +73,7 @@
 			//$this->t =& CreateObject('phpgwapi.Template', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir','phpgwapi'));
 		}
 
-		
+
 		/**
 		* Returns the javascript required for displaying a popup message box
 		*
@@ -113,7 +113,7 @@
 		{
 			return 'return confirm("'.lang($msg).'");';
 		}
-		
+
 		/**
 		* Used for generating the list of external js files to be included in the head of a page
 		*
@@ -139,7 +139,7 @@
 								{
 									$pkg = $pkg == '.' ? '' : $pkg.'/';
 									$browser = $browser == '.' ? '' : $browser.'/';
-									
+
 									$f = "/$app/js/$pkg$browser$file" . '.js?'. filectime(EGW_INCLUDE_ROOT."/$app/js/$pkg$browser$file.js") .'">';
 									$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $f. "</script>\n";
 								}
@@ -224,9 +224,10 @@
 			}
 			else
 			{
-				$browser_folder = '.'; 
+				$browser_folder = '.';
 			}
-			
+			//echo "<p>".__METHOD__."($package,$file,$app,$browser) --> ".EGW_INCLUDE_ROOT ."/$app/js/$package/$browser_folder/$file.js</p>\n";
+
 			if ($this->included_files[$app][$package][$file]) return true;
 
 			if(is_readable(EGW_INCLUDE_ROOT ."/$app/js/$package/$browser_folder/$file.js"))
@@ -246,7 +247,7 @@
 					$this->files['phpgwapi'][$package][$file] = $browser_folder;
 					return True;
 				}
-				elseif(is_readable(EGW_INCLUDE_ROOT ."phpgwapi/js/$package/$file.js"))
+				elseif(is_readable(EGW_INCLUDE_ROOT ."/phpgwapi/js/$package/$file.js"))
 				{
 					$this->files['phpgwapi'][$package][$file] = '.';
 					return True;
@@ -284,14 +285,14 @@
 			$this->validate_file('jsolait','init');
 			return true;
 		}
-		
+
 		function get_javascript_globals()
 		{
 			/* Default Global Messages */
 			$GLOBALS['egw_info']['flags']['java_script_globals']['messages']['jsapi']['parseError'] = lang('Failed to Contact Server or Invalid Response from Server. Try to relogin. Contact Admin in case of faliure.');
 			$GLOBALS['egw_info']['flags']['java_script_globals']['messages']['jsapi']['serverTimeout'] = lang('Could not contact server. Operation Timed Out!');
 			$GLOBALS['egw_info']['flags']['java_script_globals']['messages']['jsapi']['dataSourceStartup'] = lang('Starting Up...');
-			
+
 			$GLOBALS['egw_info']['flags']['java_script_globals']['messages']['jsapi']['connector_1'] = lang('Contacting Server...');
 			$GLOBALS['egw_info']['flags']['java_script_globals']['messages']['jsapi']['connector_2'] = lang('Server Contacted. Waiting for response...');
 			$GLOBALS['egw_info']['flags']['java_script_globals']['messages']['jsapi']['connector_3'] = lang('Server answered. Processing response...');
@@ -341,7 +342,7 @@
 			}
 
 			$jsCode .= $this->convert_phparray_jsarray("GLOBALS", $GLOBALS['egw_info']['flags']['java_script_globals'], false);
-				
+
 			if (EGW_UNCOMPRESSED_THYAPI)
 			{
 				$jsCode .= "\ndynapi.library.setPath(GLOBALS['serverRoot']+'/phpgwapi/js/dynapi/');\n".
@@ -352,14 +353,14 @@
 			// Enable Debug?
 			$config =& CreateObject('phpgwapi.config', 'phpgwapi');
 			$config_values = $config->read_repository();
-			
+
 			if ($config_values['js_debug'])
 			{
 				$jsCode .= "if (dynapi.ua.gecko) dynapi.library.include('dynapi.debug')\n";
 			}
-			
+
 			$jsCode .= '</script>'."\n";
-	
+
 			return $jsCode;
 		}
 
@@ -369,7 +370,7 @@
 			{
 				return '';
 			}
-			
+
 			if ($new)
 			{
 				$jsCode = "$name = new Object();\n";
@@ -408,7 +409,7 @@
 					default:
 						$value = 'null';
 				}
-				
+
 				$jsCode .= $name."['".$index."'] = ".$value.";\n";
 			}
 
