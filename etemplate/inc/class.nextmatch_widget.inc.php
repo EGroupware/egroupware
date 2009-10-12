@@ -270,33 +270,6 @@ class nextmatch_widget
 
 		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 		if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
-/*
-		// allow static callbacks
-		if(strpos($method=$value['get_rows'],'::') !== false)
-		{
-			//  workaround for php < 5.3: do NOT call it static, but allow application code to specify static callbacks
-			if (version_compare(PHP_VERSION,'5.3','<')) list($class,$method) = explode('::',$method);
-		}
-		else
-		{
-			list($app,$class,$method) = explode('.',$value['get_rows']);
-		}
-		if ($class)
-		{
-			if (!$app && !is_object($GLOBALS[$class]))
-			{
-				$GLOBALS[$class] = new $class();
-			}
-			if (is_object($GLOBALS[$class]))	// use existing instance (put there by a previous CreateObject)
-			{
-				$obj =& $GLOBALS[$class];
-			}
-			else
-			{
-				$obj =& CreateObject($app.'.'.$class);
-			}
-		}
-*/
 		if (!isset($value['cat_app'])) $value['cat_app'] = $app;	// if no cat_app set, use the app from the get_rows func
 
 		if (!($max = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $max = 15;
@@ -330,33 +303,6 @@ class nextmatch_widget
 			//error_log(__METHOD__."() etemplate::set_validation_error('$name') '$value[get_rows]' is no valid method!!!");
 			etemplate::set_validation_error($name,__METHOD__."($cell[name]): '$value[get_rows]' is no valid method !!!");
 		}
-/*
-		if(is_callable($method))	// php5.3+ call
-		{
-			$total = $extension_data['total'] = $value['total'] = $method($value['get_rows'],$value,$rows,$readonlys['rows']);
-		}
-		elseif(is_object($obj) && method_exists($obj,$method))
-		{
-			if (!is_array($readonlys)) $readonlys = array();
-			$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$rows,$readonlys['rows']);
-		}
-		else
-		{
-			etemplate::set_validation_error($name,"nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!");
-		}
-		if ($method && $total && $value['start'] >= $total)
-		{
-			$value['start'] = 0;
-			if (is_object($obj))
-			{
-				$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$rows,$readonlys['rows']);
-			}
-			else
-			{
-				$total = $extension_data['total'] = $value['total'] = $method($value['get_rows'],$value,$rows,$readonlys['rows']);
-			}
-		}
-*/
 		// allow the get_rows function to override / set sel_options
 		if (isset($rows['sel_options']) && is_array($rows['sel_options']))
 		{
@@ -597,7 +543,7 @@ class nextmatch_widget
 			$value['start'] = 0;
 			$total = self::call_get_rows($value,$rows,$readonlys,$obj,$method);
 		}
-		error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
+		//error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
 		return $total;
 	}
 
