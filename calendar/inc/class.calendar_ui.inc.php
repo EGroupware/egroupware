@@ -381,9 +381,12 @@ class calendar_ui
 		// save defined states into the user-prefs
 		if(!empty($states) && is_array($states))
 		{
-			$saved_states = array_intersect_key($states,array_flip($this->states_to_save));
-			$GLOBALS['egw']->preferences->add('calendar','saved_states',serialize($saved_states));
-			$GLOBALS['egw']->preferences->save_repository(false,'user',false);
+			$saved_states = serialize(array_intersect_key($states,array_flip($this->states_to_save)));
+			if ($saved_states != $this->cal_prefs['saved_states'])
+			{
+				$GLOBALS['egw']->preferences->add('calendar','saved_states',$saved_states);
+				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
+			}
 		}
 	}
 
