@@ -66,6 +66,11 @@ class Horde_iCalendar_vtimezone extends Horde_iCalendar {
             return $result;
         }
 
+        $switch_year = date("Y", $switch_time);
+        if ( $switch_year > $year ) {
+	        return false;
+        }
+
         $rrules = explode(';', $rrules);
         foreach ($rrules as $rrule) {
             $t = explode('=', $rrule);
@@ -81,6 +86,12 @@ class Horde_iCalendar_vtimezone extends Horde_iCalendar {
                     return false;
                 }
                 break;
+
+            case 'COUNT':
+	            if ($switch_year + intval($t[1]) < intval($year)) {
+		            return false;
+	            }
+	            break;
 
             case 'BYMONTH':
                 $month = intval($t[1]);
