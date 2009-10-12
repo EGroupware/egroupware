@@ -222,7 +222,8 @@ function phpgwapi_upgrade1_5_004()
 	$accounts = new accounts();
 
 	egw_vfs::$is_root = true;	// we need root rights to set the extended acl, without being the owner
-
+	sqlfs_stream_wrapper::$extra_columns = '';	// no fs_link column, as it gets created in 1.7.002
+	
 	foreach($GLOBALS['egw_setup']->db->select('egw_acl','*',array(
 		'acl_appname' => 'filemanager',
 		"acl_location != 'run'",
