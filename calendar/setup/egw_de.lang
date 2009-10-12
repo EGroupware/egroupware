@@ -50,7 +50,9 @@ calendar-fieldname	calendar	de	Kalender Feldname
 can't add alarms in the past !!!	calendar	de	Kann keine Alarme in der Vergangenheit setzen !!!
 can't aquire lock!	calendar	de	Kann Termin nicht sperren!
 canceled	calendar	de	Abgesagt
+chair	calendar	de	Vorsitz
 charset of file	calendar	de	Zeichensatz der Datei
+check all	calendar	de	Alle auswählen
 close the window	calendar	de	Schließt das Fenster
 compose a mail to all participants after the event is saved	calendar	de	Schreibe eine Mail an alle Teilnehmer nachdem der Termin gespeichert wurde
 conflict	calendar	de	Konflikt
@@ -79,6 +81,7 @@ default length of newly created events. the length is in minutes, eg. 60 for 1 h
 default type of resources application selected in the calendar particpants research form.	calendar	de	Vorgabe für die gewählte Anwendung bei der Ressourcensuche im Kartenreiter Teilnehmer
 default type of resources selection	calendar	de	Vorgabe für die Ressourcensuche
 default week view	calendar	de	Vorgabe Wochenansicht
+delete selected events	calendar	de	Ausgewählte Termine löschen
 delete series	calendar	de	Serie löschen
 delete this alarm	calendar	de	Diesen Alarm löschen
 delete this event	calendar	de	Diesen Termin löschen
@@ -228,6 +231,7 @@ one week	calendar	de	eine Woche
 one year	calendar	de	ein Jahr
 only the initial date of that recuring event is checked!	calendar	de	Nur das Startdatum diese wiederholenden Termins wird geprüft!
 open todo's:	calendar	de	unerledigte Aufgaben:
+optional	calendar	de	Optional
 overlap holiday	calendar	de	überlappender Feiertag
 owner too	calendar	de	Auch Besitzer
 participants	calendar	de	Teilnehmer
@@ -258,10 +262,12 @@ repeating event information	calendar	de	Informationen zu sich wiederholenden Ere
 repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsintervall, zB. 2 für jeder zweite Woche
 repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
+requested	calendar	de	Erforderlich
 reset	calendar	de	Zurücksetzen
 resources	calendar	de	Ressourcen
 resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
 resources with conflict detection	calendar	de	Ressourcen mit bereits gebuchten
+role	calendar	de	Rolle
 rule	calendar	de	Regel
 sat	calendar	de	Sa
 saves the changes made	calendar	de	Speichert die Änderungen
@@ -269,6 +275,7 @@ saves the event ignoring the conflict	calendar	de	Speichert den Konflikt ignorie
 scheduling conflict	calendar	de	Terminüberschneidung
 select a %1	calendar	de	%1 auswählen
 select a time	calendar	de	eine Zeit auswählen
+select multiple contacts for a further action	calendar	de	Mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum

@@ -129,13 +129,9 @@ class calendar_uiforms extends calendar_ui
 			{
 				$res_data = $this->bo->resources[$uid[0]];
 				list($id,$quantity) = explode(':',substr($uid,1));
-				$participants[$uid] = $participant_types[$uid[0]][$id] = ($res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U').
-					((int) $quantity > 1 ? (int)$quantity : '');
-				// if new_status == 'x', resource is not bookable
-				if(strpos($participant_types[$uid[0]][$id],'x') !== false)
+				if (($status = $res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U'))
 				{
-					unset($participant_types[$uid[0]][$id]);
-					unset($participants[$uid]);
+					$participants[$uid] = $participant_types[$uid[0]][$id] = $status.((int) $quantity > 1 ? (int)$quantity : '');
 				}
 			}
 		}
@@ -233,12 +229,14 @@ class calendar_uiforms extends calendar_ui
 				$event['recur_data'] = 1 << (int)date('w',$event['start']);
 			}
 			$event['participants'] = $event['participant_types'] = array();
+_debug_array($content['participants']);
 			foreach($content['participants'] as $key => $data)
 			{
 				switch($key)
 				{
 					case 'delete':		// handled in default
 					case 'quantity':	// handled in new_resource
+					case 'role':		// handled in add, account or resource
 					case 'cal_resources':
 						break;
 
@@ -248,21 +246,22 @@ class calendar_uiforms extends calendar_ui
 						if (($email = $_POST['exec']['participants']['resource']['query']) &&
 							(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
 						{
+							$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
 							// check if email belongs to account or contact --> prefer them over just emails
 							if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')))
 							{
-								$event['participants'][$data] = $event['participant_types']['u'][$data] = 'U';
+								$event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
 							}
 							elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
 								'email' => $matches[2],
 								'email_home' => $matches[2],
 							),true,'','','',false,'OR')))
 							{
-								$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = 'U';
+								$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = $status;
 							}
 							else
 							{
-								$event['participants']['e'.$email] = $event['participant_types']['e'][$email] = 'U';
+								$event['participants']['e'.$email] = $event['participant_types']['e'][$email] = $status;
 							}
 						}
 						elseif (!$content['participants']['account'] && !$content['participants']['resource'])
@@ -282,37 +281,21 @@ class calendar_uiforms extends calendar_ui
 						}
 						foreach($this->bo->resources as $type => $data) if ($data['app'] == $app) break;
 						$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
-						// check if new entry is no contact or no account
+						// check if new entry is no account (or contact entry of an account)
 						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')))
 						{
-							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
-							if ($app == "resources" && !empty($id)) {
-								$bores = CreateObject('resources.bo_resources');
-								$selectedres = $bores->read($id);
-								$cats = $bores->acl->get_cats(EGW_ACL_DIRECT_BOOKING);
-								if (is_array($cats) && $selectedres['bookable'] == 1 &&
-									$selectedres['cat_id'] && array_key_exists($selectedres['cat_id'],$cats))
-								{
-									if ($selectedres['quantity'] && $selectedres['quantity'] < $quantity) {
-										$msg .= lang('You requested more than available for the selected resource:').$selectedres['name']." ".lang('quantity').":".$selectedres['quantity']." < $quantity";
-										break;
-									}
-									// to do: Test for overbooking/maybe this is handled sufficient by the conflict handling of dates
-									#$msg = lang('The resource you selected is already overbooked:').$selectedres['name'];
-								} else {
-									// you are not allowed to book, or the resource is overbooked already
-									$msg .= lang('You are not allowed to book the resource selected:').$selectedres['name'];
-									break;
-								}
-							}
 							if ($uid && $id)
 							{
 								$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
-								$event['participants'][$uid] = $event['participant_types'][$type][$id] = $status.((int) $quantity > 1 ? (int)$quantity : '');
-							}
-							else
-							{
-								unset($quantity);
+								if ($status)
+								{
+									$event['participants'][$uid] = $event['participant_types'][$type][$id] =
+										calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+								}
+								else
+								{
+									$msg .= lang('Permission denied!');
+								}
 							}
 							break;
 						}
@@ -321,7 +304,7 @@ class calendar_uiforms extends calendar_ui
 						foreach(is_array($data) ? $data : explode(',',$data) as $uid)
 						{
 							if ($uid) $event['participants'][$uid] = $event['participant_types']['u'][$uid] =
-								$uid == $this->bo->user ? 'A' : 'U';
+								calendar_so::combine_status($uid == $this->bo->user ? 'A' : 'U',1,$content['participants']['role']);
 						}
 						break;
 
@@ -387,6 +370,7 @@ class calendar_uiforms extends calendar_ui
 						break;
 				}
 			}
+_debug_array($event['participants']);
 		}
 		$preserv = array(
 			'view'			=> $view,
@@ -633,7 +617,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			$js .= 'window.close();';
 			echo "<html><body onload=\"$js\"></body></html>\n";
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_exit();
 		}
 		return $this->edit($event,$preserv,$msg,$js,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
 	}
@@ -772,6 +756,7 @@ class calendar_uiforms extends calendar_ui
 			'recur_type' => &$this->bo->recur_types,
 			'status'     => $this->bo->verbose_status,
 			'duration'   => $this->durations,
+			'role'       => $this->bo->roles,
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
@@ -799,7 +784,7 @@ class calendar_uiforms extends calendar_ui
 					else
 					{
 						$GLOBALS['egw']->framework->render('<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n",null,true);
-						$GLOBALS['egw']->common->egw_exit();
+						common::egw_exit();
 					}
 				}
 				$event =& $this->default_add_event();
@@ -840,7 +825,6 @@ class calendar_uiforms extends calendar_ui
 		}
 		$view = $preserv['view'] = $preserv['view'] || $event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 		//echo "view=$view, event="; _debug_array($event);
-
 		// shared locking of entries to edit
 		if (!$view && ($locktime = $GLOBALS['egw_info']['server']['Lock_Time_Calender']) && $event['id'])
 		{
@@ -855,7 +839,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				$msg .= ' '.lang('This entry is currently opened by %1!',
 					(($lock_uid = $GLOBALS['egw']->accounts->name2id(substr($lock['owner'],7),'account_email')) ?
-					$GLOBALS['egw']->common->grab_owner_name($lock_uid) : $lock['owner']));
+					common::grab_owner_name($lock_uid) : $lock['owner']));
 			}
 			elseif($lock)
 			{
@@ -898,20 +882,36 @@ class calendar_uiforms extends calendar_ui
 			foreach($participants as $id => $status)
 			{
 				$uid = $type == 'u' ? $id : $type.$id;
+				calendar_so::split_status($status,$quantity,$role);
 				$preserv['participants'][$row] = $content['participants'][$row] = array(
 					'app'      => $name == 'accounts' ? ($GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'Group' : 'User') : $name,
 					'uid'      => $uid,
-					'status'   => $status[0],
-					'old_status' => $status[0],
-					'quantity' => substr($status,1),
+					'status'   => $status,
+					'old_status' => $status,
+					'quantity' => $quantity > 1 || $uid[0] == 'r' ? $quantity : '',	// only display quantity for resources or if > 1
+					'role'     => $role,
 				);
-				$readonlys[$row.'[quantity]'] = $type == 'u' || !isset($this->bo->resources[$type]['max_quantity']);
+				// replace iCal roles with a nicer label and remove regular REQ-PARTICIPANT
+				if (isset($this->bo->roles[$role]))
+				{
+					$content['participants'][$row]['role'] = lang($this->bo->roles[$role]);
+				}
+				// allow third party apps to use categories for roles
+				elseif(substr($role,0,6) == 'X-CAT-')
+				{
+					$content['participants'][$row]['role'] = $GLOBALS['egw']->categories->id2name(substr($role,6));
+				}
+				else
+				{
+					$content['participants'][$row]['role'] = lang(str_replace('X-','',$role));
+				}
+				//echo "<p>$uid ($quantity): $role --> {$content['participants'][$row]['role']}</p>\n";
 				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
 				$readonlys["delete[$uid]"] = $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 				// todo: make the participants available as links with email as title
 				if ($name == 'accounts')
 				{
-					$content['participants'][$row++]['title'] = $GLOBALS['egw']->common->grab_owner_name($id);
+					$content['participants'][$row++]['title'] = common::grab_owner_name($id);
 				}
 				elseif (($info = $this->bo->resource_info($uid)))
 				{
@@ -944,7 +944,7 @@ class calendar_uiforms extends calendar_ui
 							{
 								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
 							}
-							$content['participants'][$row++]['title'] = $GLOBALS['egw']->common->grab_owner_name($member);
+							$content['participants'][$row++]['title'] = common::grab_owner_name($member);
 						}
 					}
 				}
@@ -1515,7 +1515,6 @@ class calendar_uiforms extends calendar_ui
 		#error_log(__METHOD__.print_r($content,true));
 		if (is_numeric($cal_id = $content ? $content : $_REQUEST['cal_id']))
 		{
-			#if (!($ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$cal_id,'2.0','PUBLISH',false)))
 			if (!($ical =& $boical->exportVCal(array($cal_id),'2.0','PUBLISH',false)))
 			{
 				$msg = lang('Permission denied');
@@ -1524,9 +1523,9 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				$GLOBALS['egw']->browser->content_header('event.ics','text/calendar',bytes($ical));
+				html::content_header('event.ics','text/calendar',bytes($ical));
 				echo $ical;
-				$GLOBALS['egw']->common->egw_exit();
+				common::egw_exit();
 			}
 		}
 		if (is_array($content))
@@ -1546,10 +1545,9 @@ class calendar_uiforms extends calendar_ui
 			else
 			{
 				$ical =& $boical->exportVCal($events,'2.0','PUBLISH',false);
-				#$ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$events,'2.0'/*$content['version']*/,'PUBLISH',false);
-				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
+				html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
-				$GLOBALS['egw']->common->egw_exit();
+				common::egw_exit();
 			}
 		}
 		if (!is_array($content))
@@ -1566,8 +1564,7 @@ class calendar_uiforms extends calendar_ui
 		$content['msg'] = $msg;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Export');
-		$etpl = CreateObject('etemplate.etemplate','calendar.export');
-
+		$etpl = new etemplate('calendar.export');
 		$etpl->exec('calendar.calendar_uiforms.export',$content);
 	}
 

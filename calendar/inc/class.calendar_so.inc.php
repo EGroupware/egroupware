@@ -888,7 +888,7 @@ ORDER BY cal_user_type, cal_usre_id
 		if (strlen($status) > 1 && preg_match('/^.([0-9]*)(.*)$/',$status,$matches))
 		{
 			if ((int)$matches[1] > 0) $quantity = (int)$matches[1];
-			$role = $matches[2];
+			if ($matches[2]) $role = $matches[2];
 			$status = $status[0];
 		}
 	}

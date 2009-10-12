@@ -147,13 +147,15 @@ class bo_resources
 	 */
 	function read($res_id)
 	{
-		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$res_id),EGW_ACL_READ))
+		if (!($data = $this->so->read(array('res_id' => $res_id))))
 		{
-			echo lang('You are not permitted to get information about this resource!') . '<br>';
-			echo lang('Notify your administrator to correct this situation') . '<br>';
-			return false;
+			return null;	// not found
 		}
-		return $this->so->read(array('res_id' => $res_id));
+		if (!$this->acl->is_permitted($data['cat_id'],EGW_ACL_READ))
+		{
+			return false;	// permission denied
+		}
+		return $data;
 	}
 
 	/**
@@ -322,13 +324,15 @@ class bo_resources
 	 * returns status for a new calendar entry depending on resources ACL
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $res_id single id
-	 * @return array
+	 * @return string|boolean false if resource not found, no read rights or not bookable, else A if user has direkt booking rights or U if no dirket booking
 	 */
 	function get_calendar_new_status($res_id)
 	{
-		$data = $this->so->search(array('res_id' => $res_id),'res_id,cat_id,bookable');
-		if($data[0]['bookable'] == 0) return 'x';
-		return $this->acl->is_permitted($data[0]['cat_id'],EGW_ACL_DIRECT_BOOKING) ? A : U;
+		if (!($data = $this->read($res_id)) || !$data['bookable'])
+		{
+			return false;
+		}
+		return $this->acl->is_permitted($data['cat_id'],EGW_ACL_DIRECT_BOOKING) ? A : U;
 	}
 
 	/**
@@ -478,16 +482,18 @@ class bo_resources
 	 *
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int|array $resource
-	 * @return string/boolean string with title, null if resource does not exist or false if no perms to view it
+	 * @return string|boolean string with title, null if resource does not exist or false if no perms to view it
 	 */
 	function link_title( $resource )
 	{
 		if (!is_array($resource))
 		{
-			if (!($resource  = $this->so->read(array('res_id' => $resource)))) return null;
+			if (!($resource  = $this->read(array('res_id' => $resource)))) return $resource;
 		}
-		if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_READ)) return false;
-
+		elseif (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_READ))
+		{
+			return false;
+		}
 		return $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 	}
 

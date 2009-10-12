@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.list.rows" template="" lang="" group="0" version="1.7.002">
-		<grid width="100%">
+		<grid width="100%" height="200" overflow="auto">
 			<columns>
 				<column/>
 				<column width="40%"/>
@@ -99,7 +99,7 @@
 				</row>
 				<row>
 					<hbox label="Check all" id="check_all" statustext="Check all" needed="1" align="right">
-						<button id="deleteall" image="delete" label="Delete" statustext="Delete selected Envents" onclick="return confirm('Delete selected Envents?');"/>
+						<button id="deleteall" image="delete" label="Delete" statustext="Delete selected events" onclick="return confirm('Delete selected events?');"/>
 						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" class="checkAllArrow"/>
 					</hbox>
 				</row>

@@ -123,6 +123,17 @@ class calendar_bo
 		MCAL_M_SUNDAY    => 'Sunday',
 	);
 	/**
+	 * Standard iCal attendee roles
+	 *
+	 * @var array
+	 */
+	var $roles = array(
+		'REQ-PARTICIPANT' => 'Requested',
+		'CHAIR'           => 'Chair',
+		'OPT-PARTICIPANT' => 'Optional',
+		'NON-PARTICIPANT' => 'None',
+	);
+	/**
 	 * @var array $resources registered scheduling resources of the calendar (gets chached in the session for performance reasons)
 	 */
 	var $resources;
@@ -1547,8 +1558,12 @@ class calendar_bo
 			// add role, if not a regular participant
 			if ($role != 'REQ-PARTICIPANT')
 			{
+				if (isset($this->roles[$role]))
+				{
+					$role = $this->roles[$role];
+				}
 				// allow to use cats as roles (beside regular iCal ones)
-				if (substr($role,0,6) == 'X-CAT-' && ($cat_id = (int)substr($role,6)) > 0)
+				elseif (substr($role,0,6) == 'X-CAT-' && ($cat_id = (int)substr($role,6)) > 0)
 				{
 					$role = $GLOBALS['egw']->categories->id2name($cat_id);
 				}

@@ -50,7 +50,9 @@ calendar-fieldname	calendar	en	calendar-Fieldname
 can't add alarms in the past !!!	calendar	en	Can't add alarms in the past !!!
 can't aquire lock!	calendar	en	Can't aquire lock!
 canceled	calendar	en	Canceled
+chair	calendar	en	Chair
 charset of file	calendar	en	Charset of file
+check all	calendar	en	Check all
 close the window	calendar	en	Close the window
 compose a mail to all participants after the event is saved	calendar	en	compose a mail to all participants after the event is saved
 conflict	calendar	en	Conflict
@@ -79,6 +81,7 @@ default length of newly created events. the length is in minutes, eg. 60 for 1 h
 default type of resources application selected in the calendar particpants research form.	calendar	en	Default type of resources application selected in the calendar particpants research form.
 default type of resources selection	calendar	en	Default type of resources selection
 default week view	calendar	en	default week view
+delete selected events	calendar	en	Delete selected events
 delete series	calendar	en	Delete series
 delete this alarm	calendar	en	Delete this alarm
 delete this event	calendar	en	Delete this event
@@ -228,6 +231,7 @@ one week	calendar	en	one week
 one year	calendar	en	one year
 only the initial date of that recuring event is checked!	calendar	en	Only the initial date of that recuring event is checked!
 open todo's:	calendar	en	open ToDo's:
+optional	calendar	en	Optional
 overlap holiday	calendar	en	overlap holiday
 owner too	calendar	en	Owner too
 participants	calendar	en	Participants
@@ -258,10 +262,12 @@ repeating event information	calendar	en	Repeating Event Information
 repeating interval, eg. 2 to repeat every second week	calendar	en	repeating interval, eg. 2 to repeat every second week
 repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetitiondetails (or empty)
+requested	calendar	en	Requested
 reset	calendar	en	Reset
 resources	calendar	en	Resources
 resources except conflicting ones	calendar	en	Resources except conflicting ones
 resources with conflict detection	calendar	en	Resources with conflict detection
+role	calendar	en	Role
 rule	calendar	en	Rule
 sat	calendar	en	Sat
 saves the changes made	calendar	en	saves the changes made
@@ -269,6 +275,7 @@ saves the event ignoring the conflict	calendar	en	Saves the event ignoring the c
 scheduling conflict	calendar	en	Scheduling conflict
 select a %1	calendar	en	select a %1
 select a time	calendar	en	select a time
+select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
 select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
