@@ -237,7 +237,10 @@ class db_backup
 			}
 			return $f;
 		}
-		if(!($f = fopen("compress.bzip2://$name.bz2", $mode)))
+		if(!($f = fopen("compress.bzip2://$name.bz2", $mode)) &&
+	 		!($f = fopen("compress.zlib://$name.gz",$mode)) &&
+ 		 	!($f = fopen($name,$mode))
+		)
 		{
 			//echo '-> !($f = fopen("compress.bzip2://$name.bz2", $mode))<br>';	// !
 			$lang_mode = $reading ? lang("reading") : lang("writing");
