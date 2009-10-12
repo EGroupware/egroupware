@@ -229,7 +229,7 @@ class calendar_uiforms extends calendar_ui
 				$event['recur_data'] = 1 << (int)date('w',$event['start']);
 			}
 			$event['participants'] = $event['participant_types'] = array();
-_debug_array($content['participants']);
+
 			foreach($content['participants'] as $key => $data)
 			{
 				switch($key)
@@ -370,7 +370,6 @@ _debug_array($content['participants']);
 						break;
 				}
 			}
-_debug_array($event['participants']);
 		}
 		$preserv = array(
 			'view'			=> $view,
@@ -894,16 +893,16 @@ _debug_array($event['participants']);
 				// replace iCal roles with a nicer label and remove regular REQ-PARTICIPANT
 				if (isset($this->bo->roles[$role]))
 				{
-					$content['participants'][$row]['role'] = lang($this->bo->roles[$role]);
+					$content['participants'][$row]['role_label'] = lang($this->bo->roles[$role]);
 				}
 				// allow third party apps to use categories for roles
 				elseif(substr($role,0,6) == 'X-CAT-')
 				{
-					$content['participants'][$row]['role'] = $GLOBALS['egw']->categories->id2name(substr($role,6));
+					$content['participants'][$row]['role_label'] = $GLOBALS['egw']->categories->id2name(substr($role,6));
 				}
 				else
 				{
-					$content['participants'][$row]['role'] = lang(str_replace('X-','',$role));
+					$content['participants'][$row]['role_label'] = lang(str_replace('X-','',$role));
 				}
 				//echo "<p>$uid ($quantity): $role --> {$content['participants'][$row]['role']}</p>\n";
 				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
