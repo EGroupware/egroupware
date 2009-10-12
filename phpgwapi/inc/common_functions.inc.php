@@ -1242,7 +1242,7 @@ function function_backtrace($remove=0)
 		{
 			if ($remove-- < 0)
 			{
-				$ret[] = (isset($level['class'])?$level['class'].'::':'').$level['function'].
+				$ret[] = (isset($level['class'])?$level['class'].$level['type']:'').$level['function'].
 					(!$level['class'] && !is_object($level['args'][0]) && $level['function'] != 'unserialize' ?
 					'('.substr(str_replace(EGW_SERVER_ROOT,'',$level['args'][0]),0,64).')' : '');
 			}
@@ -1277,6 +1277,7 @@ function _check_script_tag(&$var,$name='')
 				if (preg_match('/<\/?[^>]*(iframe|script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
 				{
 					//echo "<p>*** _check_script_tag($name): unset(${name}[$key]) ***</p>\n";
+					error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
 					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] =& $var[$key];
 					unset($var[$key]);
 				}
