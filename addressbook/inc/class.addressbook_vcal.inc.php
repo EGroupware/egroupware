@@ -422,9 +422,9 @@ class addressbook_vcal extends addressbook_bo
 
 
 		$databaseFields = array(
-			'ADR;WORK'			=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+			'ADR;WORK'			=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
 									'adr_one_postalcode','adr_one_countryname'),
-			'ADR;HOME'			=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+			'ADR;HOME'			=> array('','adr_two_street2','adr_two_street','adr_two_locality','adr_two_region',
 									'adr_two_postalcode','adr_two_countryname'),
 			'BDAY'				=> array('bday'),
 			'X-CLASS'			=> array('private'),
