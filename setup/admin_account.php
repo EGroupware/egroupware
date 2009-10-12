@@ -147,7 +147,7 @@ else
 				'template_set'  => 'idots',
 				'theme'         => 'idots',
 				'navbar_format' => 'icons',
-				'tz_offset'     => 0,
+				'tz'            => date_default_timezone_get(),
 				'dateformat'    => $lang == 'en' ? 'Y/m/d' : 'd.m.Y',
 				'timeformat'    => '24',
 				'lang'          => $lang,

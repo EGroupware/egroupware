@@ -223,7 +223,7 @@ class setup_process
 			$current_config['webserver_url'] = '/egroupware';
 			$egroupwareDirName = 'egroupware';
 		}
-		if(!$is_windows) 
+		if(!$is_windows)
 		{
 			if(@is_dir('/tmp'))
 			{
@@ -249,10 +249,6 @@ class setup_process
 			$current_config['files_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
 			$current_config['backup_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
 		}
-		$datetime =& CreateObject('phpgwapi.egw_datetime');
-		$current_config['tz_offset'] = $datetime->getbestguess();
-		unset($datetime);
-
 		// RalfBecker: php.net recommend this for security reasons, it should be our default too
 		$current_config['usecookies'] = 'True';
 
