@@ -23,7 +23,7 @@ if (function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime())
 	set_magic_quotes_runtime(false);
 }
 
-$egw_min_php_version = '5.1';
+$egw_min_php_version = '5.2';
 if (!function_exists('version_compare') || version_compare(PHP_VERSION,$egw_min_php_version) < 0)
 {
 	die("eGroupWare requires PHP $egw_min_php_version or greater.<br />Please contact your System Administrator to upgrade PHP!");
