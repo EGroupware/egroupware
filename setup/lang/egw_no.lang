@@ -7,35 +7,36 @@
 13 (ntp)	setup	no	13 (ntp)
 80 (http)	setup	no	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	no	<b>tegntabell som skal anvendes</b> (anvend utf-8 om du skal ha støtte for språk med ulike tegntabeller)
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	no	<b>Dette vil skape en (1) adminkonto og tre demokonti</b><br />Brukernavn/Passord er demo/guest, demo2/guest og demo3/guest.
-accounts existing	setup	no	Eksisterende konti
-actions	setup	no	Aksjoner
-add a domain	setup	no	Legg til domene
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	no	legg til automatiskt skapte brukere til denne gruppen ('Default' kommer til å benyttes om denne er tom)
-additional settings	setup	no	Øvrige innstillinger
-admin first name	setup	no	Admin. fornavn
-admin last name	setup	no	Admin. etternavn
-admin password	setup	no	Admin. passord
-admin password to header manager	setup	no	Admin.passord til header hanager
-admin user for header manager	setup	no	Admin.konto for header manager
-admin username	setup	no	Admin. brukernavn
+accounts existing	setup	no	Kontoer eksisterer
+actions	setup	no	Handlinger
+activate safe password check	setup	no	Aktiver sikker passord kontroll
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	no	Legg til automatisk opprettede brukere til denne gruppen ('Standard' kommer til å benyttes om denne er tom)
+add new database instance (egw domain)	setup	no	Legg til ny database instans (eGW domene)
+additional settings	setup	no	Tilleggs innstillinger
+admin account successful created.	setup	no	Admin konto opprettet.
+admin email address	setup	no	Admin e-post adresse
+admin first name	setup	no	Admin fornavn
+admin last name	setup	no	Admin etternavn
+admin password	setup	no	Admin passord
+admin password to header manager	setup	no	Admin passord til overskrifts behandler
+admin user for header manager	setup	no	Admin bruker for overskrifts behandler
+admin username	setup	no	Admin brukernavn
 admins	setup	no	Administratorer
-after backing up your tables first.	setup	no	etter å ha tatt backup av dine tabeller
+after backing up your tables first.	setup	no	Etter å ha tatt backup av dine tabeller.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	no	Når du har hentet filen, lagre den som header.inc.php Trykk deretter "Fortsett"
 all applications	setup	no	Samtlige programmer
-all core tables and the admin and preferences applications	setup	no	Alla hovedtabeller samt "admin" og "alternativ"-programmene
-all languages (incl. not listed ones)	setup	no	Alle språk (inkl. de som ikke er listet)
+all core tables and the admin and preferences applications	setup	no	Alle hoved tabeller samt admin og innstillinger programmene
+all languages (incl. not listed ones)	setup	no	Alle språk (inklusiv de som ikke er listet)
 all users	setup	no	Alle brukere
-analysis	setup	no	Analyse
-and reload your webserver, so the above changes take effect !!!	setup	no	Og start nettstedstjeneren på nytt slik at forandringene trer i kraft!
-app details	setup	no	Programdetaljer
+and reload your webserver, so the above changes take effect !!!	setup	no	Og start nettsteds serveren på nytt slik at forandringene trer i kraft!
+app details	setup	no	Program detaljer
 app install/remove/upgrade	setup	no	Installere/oppgradere/avinstallere programmer
 app process	setup	no	Prg.-prosess
-application data	setup	no	Programdata
-application list	setup	no	Programliste
-application management	setup	no	Programhåndtering
-application name and status	setup	no	Programnavn og status
-application name and status information	setup	no	Programnavn og statusinformation
+application data	setup	no	Program data
+application list	setup	no	Program liste
+application management	setup	no	Program håndtering
+application name and status	setup	no	Program navn og status
+application name and status information	setup	no	Program navn og statusinformation
 application title	setup	no	Programtitell
 application: %1, file: %2, line: "%3"	setup	no	Program: %1, fil: %2, linje "%3"
 are you sure you want to delete your existing tables and data?	setup	no	Ønsker du virkelig å slette dine eksisterende tabeller og alle dets data?
@@ -75,7 +76,6 @@ because the enable flag for this app is set to 0, or is undefined	setup	no	efter
 bottom	setup	no	bunn
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	no	Men vi <u> rekommenderar starkt att du backar upp</u> dina tabeller utifall att installationen skulle råka förstöra data. <br /> <strong>Dessa automatiserade skript kan med lätthet förstöra data i dina tabeller!</strong>
 cancel	setup	no	Avbryt
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	no	Kan inte skapa header.inc.php-filen på grund av bristande behörighet.<br />Istället kan du %1 filen.
 change system-charset	setup	no	Ändra system-teckentabell
 charset	setup	no	utf-8
 charset to convert to	setup	no	Teckentabell att konvertera till
@@ -117,12 +117,10 @@ create your header.inc.php	setup	no	Opprett din header.inc.php
 created	setup	no	Opprettet
 created header.inc.php!	setup	no	Opprettet din header.inc.php!
 creating tables	setup	no	Oppretter tabeller
-current system-charset	setup	no	Nåværende system-karaktersett
-current system-charset is %1, click %2here%3 to change it.	setup	no	Nuvarande system-teckentabell är %1, klicka %2här%3 för att ändra
+current system-charset	setup	no	Nåværende system-tegnsett
 current version	setup	no	Aktuell versjon
 currently installed languages: %1 <br />	setup	no	Installerte språk: %1 <br />
 database successfully converted from '%1' to '%2'	setup	no	Database konvertert fra '%1' till '%2'
-datebase	setup	no	Database
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	no	Datetime-port.<br />Om du använder port 13, sätt brandväggsreglerna korrekt innan du trycker på Klar<br />(Port: 13 / Host 129.6.15.28)
 day	setup	no	dag
 day of week<br />(0-6, 0=sunday)	setup	no	ukedag<br />(0-6, 0=søndag)
@@ -162,12 +160,13 @@ edit your existing header.inc.php	setup	no	Rediger din eksisterende header.inc.p
 edit your header.inc.php	setup	no	Rediger din header.inc.php
 egroupware administration manual	setup	no	eGroupWare administrasjonsmanual
 enable for extra debug-messages	setup	no	visa extra debug-meddelanden
-enable ldap version 3	setup	no	Muliggjør LDAP version 3
 enable mcrypt	setup	no	Muliggjør MCrypt
 enter some random text for app session encryption	setup	no	Skriv in lite slumpmässig text för kryptering av sessionsinformation
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	no	Skriv in lite slumpmässig text för<br />kryptering av sessionsinformation (kräver MCrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	no	Ange fullständig sökväg för temp-filer <br />T ex: /tmp, c:\temp
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	no	Ange fullständig sökväg för temp-filer <br />T ex: /tmp, c:\temp
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	no	Ange fullständig sökväg för användar- och gruppfiler <br />T ex: /files, e:\files
+enter the full path for users and group files.<br />examples: /files, e:files	setup	no	Ange fullständig sökväg för användar- och gruppfiler <br />T ex: /files, e:\files
 enter the full path to the backup directory.<br />if empty: files directory	setup	no	Ange fullständig sökväg för backupkatalog <br />om tomt: samma som användarfiler
 enter the hostname of the machine on which this server is running	setup	no	Ange hostnamn för maskinen som kör denna server
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	no	Ange eGroupWare:s URL.<br />T ex: http://www.doman.com/egroupware  eller  /egroupware<br /><b>Ingen avslutande slash</b>
@@ -181,16 +180,11 @@ enter your http proxy server port	setup	no	Ange potnummer till din HTTP-proxy
 enter your http proxy server username	setup	no	Ange Användarnamn till din HTTP-proxy
 error in admin-creation !!!	setup	no	Fel vid skapande av Admin-konto
 error in group-creation !!!	setup	no	Fel vid skapande av grupp
-export egroupware accounts from sql to ldap	setup	no	Exportera eGroupWare-konton från SQL till LDAP
-export has been completed!  you will need to set the user passwords manually.	setup	no	Exporten slutförd! Du måste manuellt sätta användarnas lösnord
-export sql users to ldap	setup	no	Exportera användarkonton från SQL till LDAP
 false	setup	no	Falsk
 file	setup	no	Fil
 file type, size, version, etc.	setup	no	Filtyp, storlek, version, etc.
 filename	setup	no	Filnavn
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	no	För nyinstallation, välj import. Vör att konvertera existerande SQL-konton till LDAP, välj Export
 force selectbox	setup	no	Listerute
-found existing configuration file. loading settings from the file...	setup	no	Fann existerande konfigurationsfil. Läser in intällningar från filen.
 go back	setup	no	Tilbake
 go to	setup	no	Gå till
 grant access	setup	no	Gi tilgang
@@ -218,11 +212,7 @@ if you did not receive any errors, your tables have been	setup	no	Om du inte så
 if you running this the first time, don't forget to manualy %1 !!!	setup	no	Om du kör detta fö första gången, glöm inte att manuellt %1!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	no	Om du bara använder språk med samma teckentabell behöver du inte ställa in systemteckentabell
 image type selection order	setup	no	Ordning för bildtypsval
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	no	Impotera konton från LDAP till din eGroupWare tabell (för nya installationer som skall använda SQL-baserade konton
-import has been completed!	setup	no	Importen hav slutförts
-import ldap users/groups	setup	no	Import av LDAP användare/grupper
-importing old settings into the new format....	setup	no	Importerar gamla inställningar till nytt format
-include root (this should be the same as server root unless you know what you are doing)	setup	no	Inkludera root (detta bör vara samma som Server Root, om du nu inte vet vad du gör)
+import has been completed!	setup	no	Importen er fullført
 include_path need to contain "." - the current directory	setup	no	iclude_path måste innehålla "." (current directory)
 install	setup	no	Installere
 install all	setup	no	Installer alle
@@ -237,20 +227,15 @@ is broken	setup	no	er brutt
 is disabled	setup	no	er avslått
 is in the webservers docroot	setup	no	är i webserverns dokumentrot
 is not writeable by the webserver	setup	no	är inte skrivbar av webservern
-ldap account import/export	setup	no	Import/export av LDAP konton
 ldap accounts configuration	setup	no	LDAP kontokonfigurasjon
 ldap accounts context	setup	no	LDAP-kontekst för konti
 ldap config	setup	no	LDAP-konfigurasjon
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	no	LDAP default hemkatalogsprefix (dvs /home för /home/username)
 ldap default shell (e.g. /bin/bash)	setup	no	LDAP default skal (dvs /bin/bash)
 ldap encryption type	setup	no	LDAP krypteringstyp
-ldap export	setup	no	LDAP eksport
-ldap export users	setup	no	LDAP användarexport
 ldap groups context	setup	no	LDAP Gruppekontekst
 ldap host	setup	no	LDAP tjener (server)
 ldap import	setup	no	LDAP import
-ldap import users	setup	no	LDAP användarimport
-ldap modify	setup	no	LDAP modifisering
 ldap root password	setup	no	LDAP root passord
 ldap rootdn	setup	no	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	no	LDAP sökfilter för konton, default: "(uid=%user)", %domain=eGW-domain
@@ -267,13 +252,11 @@ mcrypt algorithm (default tripledes)	setup	no	Algoritme for MCrypt (default 3DES
 mcrypt initialization vector	setup	no	MCrypt initialisasjonsvektor
 mcrypt mode (default cbc)	setup	no	MCrypt-läge (Default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	no	MCryptinställningar (kräver mcrypt PHP extension)
-mcrypt version	setup	no	MCrypt-versjon
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	no	memory_limit är satt till mindre än %1B. En del applikationer i eGroupWare kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
 minimum account id (e.g. 500 or 100, etc.)	setup	no	Minimum kontoID (dvs 500 eller 100 t ex)
 minute	setup	no	Minutt
 modifications have been completed!	setup	no	Förändringarna genomförda
 modify	setup	no	Förändra
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	no	Modifiera en existerande LDAP kontolagring för användning med eGroupWare (för nyinstalation av eGroupWare med LDAP)
 month	setup	no	måned
 multi-language support setup	setup	no	Multispråksstöd
 name of database	setup	no	Navn på database
@@ -306,13 +289,11 @@ or %1continue to the header admin%2	setup	no	eller %1fortsätt till Header Admin
 or http://webdav.domain.com (webdav)	setup	no	eller http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	no	Eller kan vi försöka skapa databasen åt dig:
 or you can install a previous backup.	setup	no	Eller installera en tidigare gjord backup
-password needed for configuration	setup	no	Lösenord behövs för konfiguration
 password of db user	setup	no	Lösenord för DB användaren
 passwords did not match, please re-enter	setup	no	Lösenorden var inte identiska, försök igen
 path information	setup	no	Søkestisinformasjon
 path to user and group files has to be outside of the webservers document-root!!!	setup	no	Sökväg till användar- och gruppfiler MÅSTE LIGGA UTANFÖR webserverns dokumentrot.
 persistent connections	setup	no	Ständig koppling (Persistent connections)
-php plus restore	setup	no	PHP Plus tilbakekopiering
 please check for sql scripts within the application's directory	setup	no	Vänligen leta efter sql-skript inom applikationskatalogen
 please check read/write permissions on directories, or back up and use another option.	setup	no	Var vänlig kontrollera läs/skrivrättighet på katalogerna, eller ta backup och använd ett annat alternativ
 please configure egroupware for your environment	setup	no	Var vänlig och konfigurera eGroupWare för din miljö
@@ -336,7 +317,6 @@ re-enter password	setup	no	Skriv inn passord igen
 read translations from	setup	no	Läs översättningar från
 readable by the webserver	setup	no	läsbar av webservern
 really uninstall all applications	setup	no	Vill du verkligen avinstallera samtliga installationer
-recommended: filesystem	setup	no	Anbefalt: Filsystem
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	no	register_globals är PÅslagen, eGroupWare kräver inte det och det är säkrare med det AVslaget.
 registered	setup	no	registrert
 rejected lines	setup	no	Ej godtagna rader
@@ -354,7 +334,6 @@ restoring a backup will delete/replace all content in your database. are you sur
 return to setup	setup	no	Gå tilbake til Setup
 run installation tests	setup	no	Start installasjonstester
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	no	safe_mode är PÅslaget, vilket generellt är bra eftersom det gör installationen säkrare.
-sample configuration not found. using built in defaults	setup	no	demo-konfiguration ej hittad, använder inbyggda defaults
 save	setup	no	Lagre
 save this text as contents of your header.inc.php	setup	no	Spara denna text som innehållet i din header.inc.php
 schedule	setup	no	Planlegg
@@ -364,10 +343,7 @@ select one...	setup	no	Velg en...
 select the default applications to which your users will have access	setup	no	Välj vilka applikationer användare skall ha access till default
 select the desired action(s) from the available choices	setup	no	Välj återgärder från listan nedan
 select to download file	setup	no	Velg for å laste ned en fil
-select where you want to store/retrieve file contents	setup	no	Välj hur du vill lagra filinnehåll
-select where you want to store/retrieve filesystem information	setup	no	välj hur du vill lagra filsystemsinformation
 select where you want to store/retrieve user accounts	setup	no	Välje hur du vill lagra användarkonton
-select which group(s) will be exported (group membership will be maintained)	setup	no	Välj vilka grupper som skall exporteras (gruppmedlemsskap bibehålls)
 select which group(s) will be imported (group membership will be maintained)	setup	no	Väljvilka grupper som skall importeras (gruppmedlemsskap bibehålls)
 select which group(s) will be modified (group membership will be maintained)	setup	no	Välj vilka grupper som skall ändras (gruppmedlemsskap bibehålls)
 select which languages you would like to use	setup	no	Velg hvilke språk som skal være tilgjengelige
@@ -381,13 +357,10 @@ select which user(s) will have admin privileges	setup	no	Välj vilka användare 
 select your old version	setup	no	Välj den gamla versionen
 selectbox	setup	no	Listerute
 server root	setup	no	Server root
-sessions type	setup	no	Sessionstype
 set	setup	no	ställ in
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	no	sätt denna till Äldre för versioner < 2.4, annars den exakta versionen av mcrypt du har.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	no	Sättande av systemteckentabell till UTF-8(Unicode) tillåter samexeistens av data med flera olika språk.
 settings	setup	no	Innstillinger
 setup	setup	no	Oppsett
-setup demo accounts in ldap	setup	no	Installera demokonton till LDAP
 setup main menu	setup	no	Oppsett hovedmeny
 setup the database	setup	no	Databasekonfigurasjon
 setup/config admin login	setup	no	Sätt upp/Konfigurera Admin login
@@ -416,7 +389,6 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	no	filen
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	no	Det första steget i en installation av eGroupWare är att försäkra sig att allt är rätt inställt för eGroupWare
 the following applications need to be upgraded:	setup	no	Följande applikationer behöver uppgraderas:
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	no	imap-utökningen behövs av de två mailapplikationerna (även om du tänker använda pop3)
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	no	mbstring-utökningen behövs för att fullt ut kunna stödja Unicode (UTF-8) eller andra multi-byte teckenuppsättningar
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	no	mbstring.func_overload = 7 behövs för att fullt ut kunna stödja Unicode (UTF-8) eller andra multi-byte teckenuppsättningar
 the table definition was correct, and the tables were installed	setup	no	Tabelldefinitionen var korrekt och tabellerna installerades
@@ -428,9 +400,6 @@ this might take a while, please wait ...	setup	no	Dette kan ta sin tid, vennligs
 this program lets you backup your database, schedule a backup or restore it.	setup	no	Detta program låter dig backa upp din databas, schemalägga en backup eller återställa en backup.
 this program will convert your database to a new system-charset.	setup	no	Detta program låter dig konvertera din databas till en ny systemteckentabell
 this program will help you upgrade or install different languages for egroupware	setup	no	Detta program hjälper dig att installera eller uppgradera de språk du vill använda i eGroupWare
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	no	Denna sektion hjälper dig exportera användare och grupper från eGroupWares tabeller till ett LDAP-träd
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	no	Denna sektion hjälper dig att importera användare och grupper från ditt LDAP-träd till eGroupWares tabeller
-this section will help you setup your ldap accounts for use with egroupware	setup	no	Denna sektion hjälper dig ställa in dina LDAP-konton för användning i eGroupWare
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	no	Detta bör vara ca 30 bytes i längd. <br />Not: Default är slumpmässigt genererat.
 this stage is completed<br />	setup	no	Dette stadiet er klart
 to a version it does not know about	setup	no	til en ukjent versjon
@@ -473,14 +442,12 @@ would you like egroupware to cache the phpgw info array ?	setup	no	Vill du att e
 would you like egroupware to check for a new version<br />when admins login ?	setup	no	Vill du att eGroupWare skall kontrollera om det finns nya versioner<br />när admin loggar in?
 would you like to show each application's upgrade status ?	setup	no	Vill du visa varje applikations uppgraderingsstatus?
 writable by the webserver	setup	no	Skrivbar av nettstedstjeneren
-write config	setup	no	Skriv konfigurasjon
 year	setup	no	år
 yes	setup	no	Ja
 yes, with lowercase usernames	setup	no	Ja, med brukernavn i små bokstaver
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	no	Du verkar köra en pre-beta version av eGroupWare.<br />Dessa versioner stöds inte längre och det finns ingen uppgraderingsväg via setup.<br />Du måste först uppgradera till 0.9.10(sista versionen som stödde detta)<br /> och sedan uppgradera igen med denna version.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	no	Du verkar köra en äldre version av PHP.<br />Det är rekommenderat att du uppgraderar till en nyare version.<br />Äldre versioner av PHP kanske inte kör eGroupWare korrekt, om alls.<br /><br />Du rekommenderas starkt att uppgradera till åtminstone version %1
 you appear to be running version %1 of egroupware	setup	no	Du verkar köra version %1 av eGroupWare
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	no	Du verkar köra en äldre version av PHP än 4.1.0. eGroupWare kräver PHP 4.1.0 eller senare.
 you appear to have %1 support.	setup	no	Du synes å ha %1 support
 you appear to have xml support enabled	setup	no	Du synes å ha støtte for XML aktivert
 you are ready for this stage, but this stage is not yet written.<br />	setup	no	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.<br />
@@ -492,22 +459,23 @@ you do not have any languages installed. please install one now <br />	setup	no	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	no	Du har inte skapat din header.php.inc ännu!<br />Du kan skapa den nu.
 you have successfully logged out	setup	no	Du har nu loggat ut.
 you must enter a username for the admin	setup	no	Du måste ange ett lösenord för admin
-you need to add some domains to your header.inc.php.	setup	no	Du måste lägga till några domäner till din header.inc.php
 you need to select your current charset!	setup	no	Du må velge tegnsett!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	no	Du måste antingen avinstallera och installera om, eller reparera manuellt.
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	no	Du behöver ladda ett korrekt schema i din LDAP-server - se <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
-you're using an old configuration file format...	setup	no	Du använder ett äldre konfigurationsfilformat...
-you're using an old header.inc.php version...	setup	no	Du använder en gammal header.inc.php version...
-your applications are current	setup	no	Dina applikationer är aktuella
-your backup directory '%1' %2	setup	no	Din backupkatalog '%1' %2
+you're using an old configuration file format...	setup	no	Du bruker et eldre konfigurasjons fil format...
+your applications are current	setup	no	Dine programmer er oppdatert
+your backup directory '%1' %2	setup	no	Din sikkerhets kopi mape '%1' %2
 your database does not exist	setup	no	Databasen din finnes ikke
 your database is not working!	setup	no	Databasen din fungerer ikke!
 your database is working, but you dont have any applications installed	setup	no	Din database fungerer men du har ingen installerte program.
-your files directory '%1' %2	setup	no	din filkatalog '%1' %2
-your header admin password is not set. please set it now!	setup	no	Ditt header admin-lösenord är inte satt. Skriv in det nu!
+your egroupware api is current	setup	no	Din eGroupWare API er oppdatert
+your files directory '%1' %2	setup	no	Din fil mappe '%1' %2
+your header admin password is not set. please set it now!	setup	no	Ditt header admin-passord er ikke satt. Vennligst sett det nå!
 your header.inc.php needs upgrading.	setup	no	Din header.inc.php må oppgraderes.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	no	Din header.inc.php behöver uppgraderas<br /><blink><b class="msg">VARNING!</b></blink><br /><b>TA BACKUP!</b>
-your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	no	Din PHP-installation saknar korrekt GD-stöd. Du behöver GD-library version 1.8 eller bättre om du vill använda Gantt-diagram i Projekt
-your tables are current	setup	no	Dina tabeller är aktuella
-your tables will be dropped and you will lose data	setup	no	Dina tabeller kommer att tas bort och du förlorar data!!
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	no	Din header.inc.php trenger oppgradering<br /><blink><b class="msg">ADVARSEL!</b></blink><br /><b>TA SIKKERHETSKOPI!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	no	Din installerte versjon av %1 er %2, minst %3 er påkrevd, vennligs kjør:
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	no	Din PHP installasjon mangler riktig GD støtte. Du trenger gd library versjon 1.8 eller nyere for å se Gantt grafer i projekter.
+your tables are current	setup	no	Dine tabeller er oppdatert
+your tables will be dropped and you will lose data	setup	no	Dine tabeller vil slettes og du vil tape data !!
 your temporary directory '%1' %2	setup	no	Din temporære katalog '%1' %2
+{db | php(default) | php-restore}	setup	no	{db | php(standard) | php-gjenopprett}
+{off(default) | on}	setup	no	{av(standard) | på}

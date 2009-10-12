@@ -1,6 +1,5 @@
+displays home	home	no	Viser startside
+egroupware	home	no	eGroupWare
 home	home	no	Hjem
-Home	home	no	Hjem
-egroupware	home	no	egroupware
-eGroupware	home	no	eGroupware
-eGroupWare	home	no	eGroupWare
-Displays home	home	no	Viser startside
+mainscreen_message	home	no	hovedside_melding
+there is a new version of egroupware available	home	no	Det er en ny versjon av eGroupWare tilgjengelig

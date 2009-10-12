@@ -1,3 +1,4 @@
+$label	preferences	no	$etikett
 %1 - preferences	preferences	no	%1 - Preferanser
 %1 hours	preferences	no	%1 timer
 12 hour	preferences	no	12 timer
@@ -23,6 +24,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	no	endre egendefinerte felter
 enter your new password	preferences	no	Skriv inn ditt nye passord
 enter your old password	preferences	no	Skriv inn ditt gamle passord
+error: there was a problem finding the preference file for %1 in %2	preferences	no	Feil: Kan ikke finne preferansefil for %1 i %2
 failed to change password.  please contact your administrator.	preferences	no	Passordet kunne ikke endres.  Ta kontakt med EDB-ansvarlig.
 forced preferences	preferences	no	Overstyrte preferanser
 help off	preferences	no	Hjelp av
@@ -57,7 +59,7 @@ show helpmessages by default	preferences	no	Vis hjelpemeldinger som standard
 show navigation bar as	preferences	no	Vis navigasjonslinje som
 show number of current users	preferences	no	Vis antall pålogget brukere
 show text on navigation icons	preferences	no	Vis tekst på navigasjonsikoner
-show_more_apps	common	no	Vis flere programmer
+show_more_apps	preferences	no	Vis flere programmer
 text only	preferences	no	Kun tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	no	Standard programmet startes når du starter eGroupWare eller klikker på hjemmeside ikonet.<b>Du kan ellers vise flere programmer på hjemmesiden så lenge du ikke velger spesifikt program her (må konfigureres i preferansene til det enkelte program).
 the old password is not correct	preferences	no	Det gamle passordet er ikke korrekt

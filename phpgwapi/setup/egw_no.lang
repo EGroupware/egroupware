@@ -1,4 +1,4 @@
-%1 email addresses inserted	common	no	%1 email adresser lagt til
+%1 email addresses inserted	phpgwapi	no	%1 email adresser lagt til
 %1 is not executable by the webserver !!!	common	no	%1 er ikke eksekverbar på webtjener !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	no	%1eGroupWare%2 er en flerbruker, web-basert gruppevare skrevet i %3PHP%4.
 (shift-)click or drag to change value	jscalendar	no	(Shift-)klikk eller dra for å endre verdi
@@ -481,7 +481,6 @@ save	common	no	Lagre
 search	common	no	Søk
 search %1 '%2'	common	no	Søk %1 '%2'
 search or select accounts	common	no	Søk eller velg konti
-search or select multiple accounts	common	no	SSøk eller velg flere konti
 section	common	no	Avsnitt
 select	common	no	Velg
 select all %1 %2 for %3	common	no	Velg alle %1 %2 for %3
@@ -513,6 +512,7 @@ showing %1	common	no	viser %1
 showing %1 - %2 of %3	common	no	viser %1 - %2 of %3
 sierra leone	common	no	SIERRA LEONE
 singapore	common	no	SINGAPORE
+site configuration	common	no	Konfigurasjon av nettsted
 slovakia	common	no	SLOVAKIA
 slovenia	common	no	SLOVENIA
 solomon islands	common	no	SOLOMON ØYENE
@@ -558,7 +558,6 @@ time zone offset	common	no	Tidsforskjell
 title	common	no	Tittel
 to	common	no	Til
 to correct this error for the future you will need to properly set the	common	no	For å unngå denne feilen i framtiden må du sette
-to go back to the msg list, click <a href= %1?sessionid=36fd5dd75a4d144ab9a930c30210bdb5 >here</a>	common	no	For å gå tilbake til meldingslisten, klikk <a hre="%1?sessionid=36fd5dd75a4d144ab9a930c30210bdb5">her</a>
 today	common	no	Idag
 todays date, eg. "%1"	common	no	Dagens dato, f.eks: "%1"
 toggle first day of week	jscalendar	no	Velg føste ukedag
@@ -609,31 +608,29 @@ wallis and futuna	common	no	WALLIS OG FUTUNA ØYENE
 wednesday	common	no	Onsdag
 welcome	common	no	Velkommen
 western sahara	common	no	VEST-SAHARA
-which groups	common	no	Hvilke grupper
-width	common	no	Bredde
-wk	jscalendar	no	wk
-work email	common	no	arbeids-epost
-written by:	common	no	Skrevet av:
-year	common	no	År
-yemen	common	no	JEMEN
-yes	common	no	Ja
-you are required to change your password during your first login	common	no	Du må endre passord etter din første innlogging
-you have been successfully logged out	login	no	Du har nå logget ut
-you have not entered a title	common	no	Du har ikke tastet inn en tittel
-you have not entered a valid date	common	no	Du har ikke tastet inn en gyldig dato
-you have not entered a valid time of day	common	no	Du har ikke tastet inn et gyldig tidspunkt
-you have not entered participants	common	no	Du har ikke tastet inn deltagere
-you have selected an invalid date	common	no	Du har valgt en ugyldig dato !
-you have selected an invalid main category	common	no	Du har valgt en ugyldig hovedkategori !
-you have successfully logged out	common	no	Du har logget ut
-you need to add the webserver user '%1' to the group '%2'.	common	no	Du må melde brukeren '%1' inn i '%2' gruppen på webtjener.
-your message could <b>not</b> be sent!<br>	common	no	Meldingen kunne <b>ikke</b> sendes!<br>
-your message has been sent	common	no	Din melding har blitt sent
-your search returned %1 matchs	common	no	ditt søk gav %1 treff
-your search returned 1 match	common	no	ditt søk gav 1 treff
-your session could not be verified.	login	no	Din sesjon kunne ikke bekreftes
-your settings have been updated	common	no	Dine innstillinger har blitt oppdatert
-yugoslavia	common	no	JUGOSLAVIA
-zambia	common	no	ZAMBIA
-zimbabwe	common	no	ZIMBABWE
-site configuration	common	no	Konfigurasjon av nettsted
+which groups	phpgwapi	no	Hvilke grupper
+width	phpgwapi	no	Bredde
+wk	phpgwapi	no	wk
+work email	phpgwapi	no	arbeids-epost
+written by:	phpgwapi	no	Skrevet av:
+year	phpgwapi	no	År
+yemen	phpgwapi	no	JEMEN
+yes	phpgwapi	no	Ja
+you are required to change your password during your first login	phpgwapi	no	Du må endre passord etter din første innlogging
+you have been successfully logged out	phpgwapi	no	Du har nå logget ut
+you have not entered a title	phpgwapi	no	Du har ikke tastet inn en tittel
+you have not entered a valid date	phpgwapi	no	Du har ikke tastet inn en gyldig dato
+you have not entered a valid time of day	phpgwapi	no	Du har ikke tastet inn et gyldig tidspunkt
+you have not entered participants	phpgwapi	no	Du har ikke tastet inn deltagere
+you have selected an invalid date	phpgwapi	no	Du har valgt en ugyldig dato !
+you have selected an invalid main category	phpgwapi	no	Du har valgt en ugyldig hovedkategori !
+you have successfully logged out	phpgwapi	no	Du har logget ut
+you need to add the webserver user '%1' to the group '%2'.	phpgwapi	no	Du må melde brukeren '%1' inn i '%2' gruppen på webtjener.
+your message could <b>not</b> be sent!<br>	phpgwapi	no	Meldingen kunne <b>ikke</b> sendes!<br>
+your message has been sent	phpgwapi	no	Din melding har blitt sent
+your search returned %1 matchs	phpgwapi	no	ditt søk gav %1 treff
+your search returned 1 match	phpgwapi	no	ditt søk gav 1 treff
+your session could not be verified.	phpgwapi	no	Din sesjon kunne ikke bekreftes
+your settings have been updated	phpgwapi	no	Dine innstillinger har blitt oppdatert
+zambia	phpgwapi	no	ZAMBIA
+zimbabwe	phpgwapi	no	ZIMBABWE

@@ -1,46 +1,66 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	no	%1 (%2 nye) meldinger skrevet for program '%3' og språk '%4'
-%1 etemplates deleted	etemplate	no	%1 eMaler slettet
-%1 etemplates for application '%2' dumped to '%3'	etemplate	no	%1 eMaler for program '%2' overført til '%3'
-%1 etemplates found	etemplate	no	%1 eMaler funnet
-%1 matches on search criteria	etemplate	no	%1 treff for søkekriteria
-%1 new etemplates imported for application '%2'	etemplate	no	%1 nye eMaler importert for program '%2'
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	no	%1 (%2 nye) Meldinger skrevet for Program '%3' og Språk '%4'
+%1 etemplates deleted	etemplate	no	%1 E-Maler slettet
+%1 etemplates for application '%2' dumped to '%3'	etemplate	no	%1 E-Maler for Program '%2' dumpet til '%3'
+%1 etemplates found	etemplate	no	%1 E-Maler funnet
+%1 matches on search criteria	etemplate	no	%1 stemmer med søke kriteriet
+%1 more...	etemplate	no	%1 mer...
+%1 new etemplates imported for application '%2'	etemplate	no	%1 nye E-Maler importert for program '%2'
 %s disabled	etemplate	no	%s ikke aktivt
-%s needed	etemplate	no	%s nødvendig
+%s needed	etemplate	no	%s trengs
 %s notranslation	etemplate	no	%s Ikke oversett
 %s onchange	etemplate	no	%s ved endring
 %s readonly	etemplate	no	%s kun lesbar
 '%1' has an invalid format !!!	etemplate	no	'%1' har feil format!
+'%1' is no php file in the egw server root (%2)!	etemplate	no	%1 er ikke en php fil i eGW server root (%2)!
 '%1' is not a valid date !!!	etemplate	no	'%1' er ikke en gyldig dato
 '%1' is not a valid floatingpoint number !!!	etemplate	no	'%1' er ikke et gyldig flyttalls nummer
 '%1' is not a valid integer !!!	etemplate	no	'%1' er ikke et gyldig heltall!
-a pattern to be searched for	etemplate	no	en streng å søke med
+'%1' is not allowed ('%2')!	etemplate	no	%1' er IKKE tillatt ('%2')!
+a pattern to be searched for	etemplate	no	et mønster å søke etter
+accesskey	etemplate	no	Tilgangs nøkkel
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	no	Tilgangs nøkkel kan også bli spesifisert men en & i etiketten (f.eks. &Navn
+account contactdata	etemplate	no	Konto kontakt data
 add a new column (after the existing ones)	etemplate	no	Legg til en ny kolonne (etter den eksisterende)
+add a new entry of the selected application	etemplate	no	Legg til en ny post av valgte program
 add a new multi-column index	etemplate	no	Legg til en ny multikolonne indeks
 add column	etemplate	no	Legg til kolonne
 add index	etemplate	no	Legg til innholdsfortegnelse
+add new	etemplate	no	Legg til ny
 add table	etemplate	no	Legg til tabell
 advanced search	etemplate	no	Avansert søk
 align	etemplate	no	Juster
+alignment of label and input-field in table-cell	etemplate	no	justering av teikett og inntastings-felt i tabell-celle
+alignment of the v/hbox containing table-cell	etemplate	no	Justering av V/HBoksen med tabell-celle
 all days	etemplate	no	alle dager
 all operations save the template!	etemplate	no	alle operasjoner lagrer malen!
 am	etemplate	no	er
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	no	en indeksert kolonne øker hastigheten på spørringer som benytter kolonnen(tar plass på disk!)
 application	etemplate	no	Program
-application name needed to write a langfile or dump the etemplates !!!	etemplate	no	Programnavnet må skrives til en språkfil eller fjern eMalene!
+application name needed to write a langfile or dump the etemplates !!!	etemplate	no	Programnavnet må skrives til en språkfil eller fjern E-Malene!
 applies the changes made	etemplate	no	lagre utførte endringer
 applies the changes to the given version of the template	etemplate	no	lagre utførte endringer til en gitt versjon av malen
+as default	etemplate	no	som standard
 attach	etemplate	no	Tilknytt
 attach file	etemplate	no	Tilknytt fil
 baseline	etemplate	no	Grunnlinje
-border	etemplate	no	Rammebredde
+blurtext	etemplate	no	tåkelegg Tekst
+border	etemplate	no	Ramme
+border-line-thickness for the table-tag	etemplate	no	Ramme-linje-tykkelse for tabell-overskrift
 bottom	etemplate	no	Bunn
 box	etemplate	no	Boks
 box...	etemplate	no	Boks..
 can not have special sql-value null	etemplate	no	Kan ikke være reservert SQL-verdi NULL
 cancel	etemplate	no	Kanseller
+cant delete a single widget from a grid !!!	etemplate	no	kan ikke slette en enslig dings fra et rutenett !!!
+cant delete the only column of a grid !!!	etemplate	no	kan ikke slette den eneste kolonnen i et rutenett !!!
+cant delete the only row in a grid !!!	etemplate	no	kan ikke slette den eneste raden i et rutenett !!!
 category	etemplate	no	Kategori
+category tree	etemplate	no	Katekori tre
+cellpadding for the table-tag	etemplate	no	Celle fyll for tabell-overskrift
 cells	etemplate	no	Celler
-center	etemplate	no	Sentrer
+cellspacing for the table-tag	etemplate	no	Celle plass for tabell-overskrift
+center	etemplate	no	Senter
+changed	etemplate	no	Endret
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	no	Kryss av dersom innholdet kun skal vises og ikke endres(innholdet sendes da ikke tilbake!)
 check if field has to be filled by user	etemplate	no	kryss av om feltet skal fylles ut av bruker
 checkbox	etemplate	no	Sjekkboks
@@ -53,8 +73,8 @@ click here to upload the file	etemplate	no	Klikk her for å laste opp filen
 click to order after that criteria	etemplate	no	klikk for å sortere etter disse kriteria
 clickable path	etemplate	no	klikkbar sti
 closes the window without saving the changes	etemplate	no	lukker vinduet uten å lagre endringene
-column...	etemplate	no	Kolonne..
-columnname	etemplate	no	Kolonnenavn
+column...	etemplate	no	Kolonne...
+columnname	etemplate	no	Kolonne navn
 comment	etemplate	no	Kommentar
 confirm	etemplate	no	Bekreft
 create a new table for the application	etemplate	no	Lag en ny tabell for programmet
@@ -70,16 +90,16 @@ days	etemplate	no	dager
 db-tools	etemplate	no	DB-Verktøy
 default	etemplate	no	Standard
 delete a single entry by passing the id.	etemplate	no	Slette en enkel oppføring ved å skrive inn id.
-delete all selected etemplates, without further inquiry	etemplate	no	Slett alle valgte eMaler UTEN videre advarsler
+delete all selected etemplates, without further inquiry	etemplate	no	Slett alle valgte E-Maler UTEN videre advarsler
 delete and cut save the template!	etemplate	no	slett og lagre malen til utklippstavlen
 delete column	etemplate	no	Slett kolonne
 delete index	etemplate	no	Slett indeks
-delete the spezified etemplate	etemplate	no	Slette den angitte eMalen
+delete the spezified etemplate	etemplate	no	Slette den angitte E-Malen
 delete this column	etemplate	no	slett denne kolonnen
-delete this etemplate	etemplate	no	slett denne eMalen
+delete this etemplate	etemplate	no	slett denne E-Malen
 delete this row	etemplate	no	slett denne raden
 delete whole column (can not be undone!!!)	etemplate	no	slett hele kolonnen (dette kan IKKE angres!)
-deletes the etemplate spez. above	etemplate	no	sletter eMalene spesifisert ovenfor
+deletes the etemplate spez. above	etemplate	no	sletter E-Malene spesifisert ovenfor
 deletes this column	etemplate	no	Slett denne kolonnen
 deletes this index	etemplate	no	Slett denne indeksen
 discard changes	etemplate	no	opphev endringer
@@ -88,7 +108,7 @@ drop a table - this can not be undone	etemplate	no	Slette en tabell - dette kan 
 drop table	etemplate	no	Slett tabell
 duration	etemplate	no	Varighet
 edit	etemplate	no	Rediger
-edit the etemplate spez. above	etemplate	no	Rediger eMal-spesifikasjonene ovenfor
+edit the etemplate spez. above	etemplate	no	Rediger E-Mal-spesifikasjonene ovenfor
 edit...	etemplate	no	Rediger...
 editable templates - db-tools	etemplate	no	Editerbare Maler - DB-Verktøy
 editable templates - delete template	etemplate	no	Editerbare Maler - Slett mal
@@ -100,19 +120,19 @@ entry saved	etemplate	no	Registrering lagret
 error: template not found !!!	etemplate	no	Feil: Malen ble ikke funnet !
 error: webserver is not allowed to write into '%1' !!!	etemplate	no	Feil: Nettstedstjeneren kan ikke skrive til '%1'!
 error: while saving !!!	etemplate	no	Feil: Under lagring !
-etemplate	common	no	eMal
-etemplate '%1' written to '%2'	etemplate	no	eMal '%1' ble skrevet til '%2'
-etemplate editor	etemplate	no	eMal tekstbehandler
-etemplate reference	etemplate	no	eMal referanse
-etemplate tutorial	etemplate	no	eMal opplæring
+etemplate	etemplate	no	E-Mal
+etemplate '%1' written to '%2'	etemplate	no	E-Mal '%1' ble skrevet til '%2'
+etemplate editor	etemplate	no	E-Mal tekstbehandler
+etemplate reference	etemplate	no	E-Mal referanse
+etemplate tutorial	etemplate	no	E-Mal opplæring
 exchange this row with the one above	etemplate	no	Bytt om linjen med den ovenfor
 exchange this two columns	etemplate	no	Bytt om disse to kolonnene
-export the loaded etemplate into a xml-file	etemplate	no	eksporter gjeldende emal til en xml-fil
+export the loaded etemplate into a xml-file	etemplate	no	eksporter gjeldende E-Mal til en xml-fil
 export xml	etemplate	no	Eksporter XML
 extensions loaded:	etemplate	no	Tillegg som er lastet:
 field must not be empty !!!	etemplate	no	Feltet kan ikke være tomt!
 file	etemplate	no	Fil
-file contains more than one etemplate, last one is shown !!!	etemplate	no	Filen inneholder mer enn en eMal. Den siste vises !
+file contains more than one etemplate, last one is shown !!!	etemplate	no	Filen inneholder mer enn en E-Mal. Den siste vises !
 file writen	etemplate	no	Fil skrevet
 fileupload	etemplate	no	Fil lastet opp
 first	etemplate	no	Første
@@ -138,7 +158,7 @@ hours	etemplate	no	timer
 html	etemplate	no	Html
 image	etemplate	no	Bilde
 import	etemplate	no	Importer
-import an etemplate from a xml-file	etemplate	no	Importer en eMal fra en xml-fil
+import an etemplate from a xml-file	etemplate	no	Importer en E-Mal fra en xml-fil
 import table-definitions from existing db-table	etemplate	no	Importer en tabelldefinisjon fra en eksisterende tabell
 import xml	etemplate	no	Importer XML
 increment version to not overwrite the existing template	etemplate	no	Øk versjonsnummeret for ikke å overskrive en eksisterende mal
@@ -167,7 +187,7 @@ minute	etemplate	no	Minutt
 month	etemplate	no	Måned
 name	etemplate	no	Navn
 name of table to add	etemplate	no	Navn på tabell som skal legges til
-new search	common	no	Nytt søk
+new search	etemplate	no	Nytt søk
 new table created	etemplate	no	Ny tabell opprettet
 newer version '%1' exists !!!	etemplate	no	nyere versjon '%1' eksisterer!
 nextmatch	etemplate	no	Neste treff
@@ -247,7 +267,7 @@ text	etemplate	no	Tekst
 textarea	etemplate	no	Tekstområde
 time	etemplate	no	Tid
 to start the db-tools	etemplate	no	starte DB-verktøyene
-to start the etemplate editor	etemplate	no	starte eMal-tekstbehandleren
+to start the etemplate editor	etemplate	no	starte E-Mal-tekstbehandleren
 to start the search	etemplate	no	starte søket
 today	etemplate	no	Idag
 top	etemplate	no	Topp
@@ -262,7 +282,7 @@ value has to be at least '%1' !!!	etemplate	no	Verdien må minst være '%1' !
 value has to be at maximum '%1' !!!	etemplate	no	Verdien kan maks være '%1' !
 vbox	etemplate	no	vBoks
 version	etemplate	no	Versjon
-view this etemplate	etemplate	no	vis denne eMalen
+view this etemplate	etemplate	no	vis denne E-Malen
 weekend	etemplate	no	Helg
 width	etemplate	no	Bredde
 width of column (in % or pixel)	etemplate	no	bredde på kolonne (i % eller piksler)
@@ -273,3 +293,5 @@ write tables	etemplate	no	Lagre tabeller
 xml-file to import	etemplate	no	xml-fil som skal importeres
 xslt template	etemplate	no	XSLT Mal
 year	etemplate	no	År
+you are not allowed to export more then %1 entries!	etemplate	no	Du har ikke tillatelse til å eksportere mer enn %1 poster!
+you can respond by visiting:	etemplate	no	Du kan svare ved å besøke:

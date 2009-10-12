@@ -2,16 +2,21 @@
 2 years ago	timesheet	no	2 år siden
 3 years ago	timesheet	no	3 år siden
 actions	timesheet	no	Handlinger
+all projects	timesheet	no	Alle projekter
 by	timesheet	no	av
 create new links	timesheet	no	Opprett nye lenker
-delete this entry	timesheet	no	Slett denne forekomsten
-edit this entry	timesheet	no	Endre denne forekonsten
+creating new entry	timesheet	no	oppretter ny post
+delete this entry	timesheet	no	Slett denne posten
+edit this entry	timesheet	no	Endre denne posten
 empty if identical to duration	timesheet	no	blankt dersom det samme som varighet
+end	timesheet	no	Slutt
 entry deleted	timesheet	no	Forekomst slettet
 entry saved	timesheet	no	Forekomst lagret
 error deleting the entry!!!	timesheet	no	Feil ved sletting av forekomst!
 error saving the entry!!!	timesheet	no	Feil ved lagring av forekomst!
 existing links	timesheet	no	Eksisterende lenker
+export to openoffice spreadsheet	timesheet	no	Eksporterer til OpenOffice Regneark
+field must not be empty !!!	timesheet	no	Feltet kan ikke være tomt !!!
 general	timesheet	no	Generell
 last modified	timesheet	no	Sist endret
 last month	timesheet	no	Siste måned
@@ -20,6 +25,8 @@ last year	timesheet	no	Siste år
 leave it empty for a full week	timesheet	no	La stå tom for en full uke
 links	timesheet	no	Lenker
 no details	timesheet	no	Ingen detaljer
+no project	timesheet	no	Ingen projekt
+or endtime	timesheet	no	eller Slutt tid
 permission denied!!!	timesheet	no	Adgang nektes!
 price	timesheet	no	Pris
 quantity	timesheet	no	Antall
@@ -28,11 +35,18 @@ saves the changes made	timesheet	no	Lagre endringene
 saves this entry and add a new one	timesheet	no	Lagre denne forekomsten og opprette en ny
 select a price	timesheet	no	Velg en pris
 select a project	timesheet	no	Velg et prosjekt
+start	timesheet	no	Start
+starttime	timesheet	no	Start tid
+starttime has to be before endtime !!!	timesheet	no	Start tid må være før slutt tid !!!
+sum %1:	timesheet	no	Sum %1:
 this month	timesheet	no	Denne måneden
 this week	timesheet	no	Denne uken
 this year	timesheet	no	Dette året
 timesheet	common	no	Timeregistrering
+timesheet csv export	timesheet	no	Timeregistrering CSV eksport
+timesheet openoffice export	timesheet	no	Timeregistrering OpenOffice eksport
 unitprice	timesheet	no	Enhetspris
 view this entry	timesheet	no	Vis denne forekomsten
+week	timesheet	no	Uke
 yesterday	timesheet	no	I går
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	no	Din databse er ikke oppdatert (%1 vs. %2), kjør %3setup%4 for å oppgradere databasen.

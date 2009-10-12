@@ -1,115 +1,164 @@
 %1 already exists as a file	filemanager	no	%1 finnes allerede som en fil
-application	filemanager	no	Applikasjon
-back to file manager	filemanager	no	Tilbake til filbehandler
+%1 directories and %2 files copied.	filemanager	no	%1 mapper og %2 filer kopiert.
+%1 directories and %2 files deleted.	filemanager	no	%1 mapper og %2 filer slettet.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	no	%1 feil under kopiering (%2 mapper og %3 filer kopiert)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	no	% feil under sletting (%2 mapper og %3 filer slettet)!
+%1 errors moving (%2 files moved)!	filemanager	no	%1 feil under flytting (%2 filer flyttet)!
+%1 failed, %2 succeded	filemanager	no	%1 feilet, %2 vellykket
+%1 files copied.	filemanager	no	%1 filer kopiert.
+%1 files deleted.	filemanager	no	%1 filer slettet.
+%1 files moved.	filemanager	no	%1 filer flyttet.
+%1 starts with '%2'	filemanager	no	%1 starter med '%2'
+%1 the following files into current directory	filemanager	no	%1 følgende filer inn i gjeldende mappe
+%1 urls %2 to clipboard.	filemanager	no	%1 URLer %2 til utklippstavle
+accessrights	filemanager	no	Tilgangs rettigheter
+acl added.	filemanager	no	ACL lagt til.
+acl deleted.	filemanager	no	ACL slettet.
+actions	filemanager	no	Handlinger
+allow a maximum of the above configured folderlinks to be configured in settings	filemanager	no	tillat et maksimum av de over konfigurerte mappe koblingene å bli konfigurert i instillinger
+and all it's childeren	filemanager	no	og alle dens barn
+basedirectory	filemanager	no	Base mappe
 cancel editing %1 without saving	filemanager	no	Avbryt redigering %1 uten å lagre
 cannot create directory because it begins or ends in a space	filemanager	no	Kan ikke opprette mappe fordi den begynner eller slutter med mellomrom
-cannot replace %1 because it is a directory	filemanager	no	Kan ikke erstatte %1 fordi det er en mappe
-command sucessfully run	filemanager	no	Kommando vellykket
+check all	filemanager	no	Velg alle
+clear search	filemanager	no	slett søk
 comment	filemanager	no	Kommentar
 comments cannot contain "%1"	filemanager	no	Kommentar kan ikke inneholde %1
+copied	filemanager	no	kopiert
 copied %1 to %2	filemanager	no	Kopiert %1 til %2
 copy to	filemanager	no	Kopier til
-copy to:	filemanager	no	Kopier til:
+copy to clipboard	filemanager	no	Koper til utklippstavle
 could not copy %1 to %2	filemanager	no	Kunne ikke kopiere %1 til %2
 could not copy file because no destination directory is given	filemanager	no	Kunne ikke kopiere fil fordi destinasjon ikke er oppgitt
 could not create %1	filemanager	no	Kunne ikke opprette %1
-could not create directory %1	filemanager	no	Kunne ikke opprette mappe %1
 could not delete %1	filemanager	no	Kunne ikke slette %1
 could not move %1 to %2	filemanager	no	Kunne ikke flytte %1 til %2
 could not move file because no destination directory is given	filemanager	no	Kunne ikke flytte fil fordi mål ikke er oppgitt
 could not rename %1 to %2	filemanager	no	Kunne ikke gi %1 nytt navn til %2
 could not save %1	filemanager	no	Kunne ikke lagre %1
+create directory	filemanager	no	Opprett mappe
 create file	filemanager	no	Opprett fil
 create folder	filemanager	no	Opprett mappe
 created	filemanager	no	Opprettet
-created %1	filemanager	no	Opprettet %1
 created %1,%2	filemanager	no	Opprettet %1, %2
-created by	filemanager	no	Opprettet av
+created between	filemanager	no	opprettet mellom
 created directory %1	filemanager	no	Opprettet mappe %1
-date	filemanager	no	Dato
-default number of upload fields to show	filemanager	no	Standard antall av opplastingsfiler å vise
-delete	filemanager	no	Slett
+current directory	filemanager	no	Gjeldende mappe
+cut	filemanager	no	klipp
+cut to clipboard	filemanager	no	Klipp til utklippstavle
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	no	Standard oppførsel er NEI. Linken vil ikke bli vist, men du har fortsatt mulighet til å navigere til denne siden, eller konfigurere denne lokasjonen som en start mappe eller mappe kobling.
+delete this file or directory	filemanager	no	Slett denne filen eller mappen
 deleted %1	filemanager	no	Slettet %1
+directories sorted in	filemanager	no	Mapper sortert i
 directory	filemanager	no	Mappe
 directory %1 already exists	filemanager	no	Mappe %1 finnes allerede
 directory %1 does not exist	filemanager	no	Mappe %1 finnes ikke
 directory names cannot contain "%1"	filemanager	no	Mappens navn kan ikke inneholde %1
-display attributes	filemanager	no	Vis attributter
+directory not found or no permission to access it!	filemanager	no	Mappen ikke funnet eller ingen rettigheter til å aksessere den!
+display and modification of content	filemanager	no	Visning og endring av innhold
+display of content	filemanager	no	Visning av innhold
 download	filemanager	no	Last ned
-edit	filemanager	no	Rediger
 edit comments	filemanager	no	Rediger kommentarer
-error running command	filemanager	no	Feil ved utføring av kommando
-execute	filemanager	no	Utfør
-failed to create directory	filemanager	no	feilet ved opprettelse av mappe
-fake base dir did not exist, egroupware created a new one.	filemanager	no	Fake basekatalog eksisterte ikke.  EgroupWare opprettet en ny.
+edit settings	filemanager	no	Rediger instillinger
+enter setup user and password	filemanager	no	Skriv inn install bruker og passord
+enter setup user and password to get root rights	filemanager	no	Skriv inn install bruker og passord for å få rot rettigheter
+enter the complete vfs path to specify a fast access link to a folder	filemanager	no	Skriv inn den full VFS sti for å spesifisere en hurtig kobling til en mappe
+enter the complete vfs path to specify your desired start folder.	filemanager	no	Skriv inn den full VFS sti for å spesifisere din ønsket start mappe.
+error adding the acl!	filemanager	no	Feil ved innlegging av ACL!
+error deleting the acl entry!	filemanager	no	Feil ved sletting av ACL posten!
+error uploading file!	filemanager	no	Feil ved opplasting av filen!
+executable	filemanager	no	Kjørbar
+extended access control list	filemanager	no	Utvid tilgangs kontroll liste
+extended acl	filemanager	no	Utvid ACL
+failed to change permissions of %1!	filemanager	no	Klarte ikke å endre rettigheter på %1!
+failed to create directory!	filemanager	no	Klarte ikke å opprette mappen!
 file	filemanager	no	Fil
 file %1 already exists. please edit it or delete it first.	filemanager	no	Filen %1 finnes allerede. Vennligst rediger eller slett den først
 file %1 could not be created.	filemanager	no	Filen %1 kunne ikke opprettes
-file name	filemanager	no	Filnavn
+file %1 may be too big. contact your systemadministrator for further info	filemanager	no	Fil %1 kan være for stor. Kontakt din system administrator for videre informasjon
+file deleted.	filemanager	no	Fil slettet.
 file names cannot contain "%1"	filemanager	no	Filnavn kan ikke inneholde "%1"
-file names cannot contain \ or /	filemanager	no	Filnavn kan ikke inneholde \ eller /
-filemanager	common	no	Filhåndterer
-filemanager preferences	filemanager	no	Filhåndterer preferanser
-files	filemanager	no	Filer
+file or directory not found!	filemanager	no	Fil eller mappe ikke funnet
+file successful uploaded.	filemanager	no	Fil opplastet
+filemanager	filemanager	no	Filbehandler
+filemanager configuration	filemanager	no	filbehandler konfigurasjon
+files from subdirectories	filemanager	no	Filer fra under mapper
 files in this directory	filemanager	no	Filer i denne mappen
-folder	filemanager	no	Mappe
 folder up	filemanager	no	Mappe opp
+general	filemanager	no	Generelt
 go home	filemanager	no	gå hjem
 go to	filemanager	no	Gå til
-go to %1	filemanager	no	Gå til %1
 go to your home directory	filemanager	no	Gå til hjemmemappe
-go to:	filemanager	no	Gå til:
 go up	filemanager	no	gå opp
-home	filemanager	no	Hjem
+id	filemanager	no	Id
+inherited	filemanager	no	Arvet
+link %1: %2	filemanager	no	Link %1: %2
 location	filemanager	no	Lokasjon
-locked	filemanager	no	Låst
-mime type	filemanager	no	MIME type
-modified	filemanager	no	Endret
-modified by	filemanager	no	Endret av
+log out as superuser	filemanager	no	Logg ut som superbruker
+max folderlinks	admin	no	maks mappe linker
+maximum size for uploads	filemanager	no	Maksimal størrelse for opplasting
+mime type	filemanager	no	mime type
+modified	filemanager	no	endret
+modified between	filemanager	no	endret mellom
+modify all subdirectories and their content	filemanager	no	Endre alle Under mapper og deres inhold
+move	filemanager	no	Flytt
 move to	filemanager	no	Flytt til
-move to:	filemanager	no	Flytt til:
 moved %1 to %2	filemanager	no	Flyttet %1 til %2
+no access	filemanager	no	Ingen tilgang
 no files in this directory.	filemanager	no	Ingen filer i mappen
+no preview available	filemanager	no	Ingen forhåndsvisning tilgjengelig
 no version history for this file/directory	filemanager	no	Ingen versjon for denne filen/mappen
+only owner can rename or delete the content	filemanager	no	Bare eier kan endre navn eller slette inholdet
 operation	filemanager	no	Operasjon
-other settings	filemanager	no	Andre innstillinger
-owner	filemanager	no	Eier
+permission denied!	filemanager	no	Tilgang nektet!
+permissions	filemanager	no	Tilganger
+permissions of %1 changed.	filemanager	no	Tilganger på %1 endret.
 please select a file to delete.	filemanager	no	Vennligst velg en fil å slette
+preview	filemanager	no	Forhåndsvis
 preview %1	filemanager	no	Forhåndsvis %1
 preview of %1	filemanager	no	Forhåndsvining av %1
-quick jump to	filemanager	no	Hurtighopp til
-reload	filemanager	no	Last på nytt
-rename	filemanager	no	Gi nytt navn
-renamed %1 to %2	filemanager	no	Ga %1 nytt navn til %2
+properties saved.	filemanager	no	Alternativer lagret
+quick jump to	filemanager	no	Hurtig hopp til
+read & write access	filemanager	no	Les & skriv tilgang
+read access only	filemanager	no	Kun les tilgang
+reload	filemanager	no	last på nytt
+rename of %1 to %2 failed!	filemanager	no	Endre navn på %1 til %2 feilet!
+rename, change permissions or ownership	filemanager	no	Endre navn, endre rettigheter og eierskap
+renamed %1 to %2	filemanager	no	Endret navn på %1 til %2
+renamed %1 to %2.	filemanager	no	Endret navn på %1 til %2.
 replaced %1	filemanager	no	Erstattet %1
+rights	filemanager	no	Rettigheter
+root access granted.	filemanager	no	Rot tilgang gitt.
+root access stoped.	filemanager	no	Rot tilgang stoppet.
 save %1	filemanager	no	Lagret %1
 save %1, and go back to file listing	filemanager	no	Lagre %1, og gå tilbake til filliste
-save all	filemanager	no	Lagre alle
 save changes	filemanager	no	Lagre endringer
 saved %1	filemanager	no	Lagret %1
+saving properties failed!	filemanager	no	Lagring av alternativer feilet!
+search for '%1'	filemanager	no	Søk etter '%1'
+searchstring	filemanager	no	søkestreng
+select action...	filemanager	no	Velg handling...
+select file to upload in current directory	filemanager	no	Velg fil for opplasting til gjeldende mappe
 show	filemanager	no	Vis
-show ..	filemanager	no	Vis...
-show .files	filemanager	no	Vis .filer
-show command line (experimental. dangerous.)	filemanager	no	Vis kommandolinje (Eksperimentell. Farlig)
-show help	filemanager	no	Vis hjelp
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	no	Vis link til filbehandlers base mappe (/) i side boks menyen
 size	filemanager	no	Størrelse
-sort by:	filemanager	no	Sorter etter:
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	no	Den fremtidige filbehandleren, nå bare for uttesting.  Vennligts innrapporter feil!
+start search	filemanager	no	start søk
+superuser	filemanager	no	Superbruker
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	no	Standard start mappe er din personlige Mappe. Standarden er brukt, hvis du lar denne være tom, stien finnes ikke eller du mangler nødvendige tilgangs rettigheter
+the requested path %1 is not available.	filemanager	no	Ønsket sti %1 er ikke tilgjengelig.
+there's already a file with that name!	filemanager	no	Det er allerede en fil med det navnet!
+to overwrite the existing file store again.	filemanager	no	For å overskrive eksisterende fil, lagre om igjen.
 total files	filemanager	no	Totalt antall filer
-unknown mime-type defaults to text/plain when viewing	filemanager	no	Ukjent MIME-type blir text/plain ved visning
 unused space	filemanager	no	Ubrukt område
 up	filemanager	no	Opp
-update	filemanager	no	Oppdater
 updated comment for %1	filemanager	no	Oppdatert kommentar for %1
-upload	filemanager	no	Last opp
-upload fields	filemanager	no	last opp felter
-upload files	filemanager	no	Last opp filer
-use new experimental filemanager?	filemanager	no	Bruk den eksperimentelle Filhåndtereren
 used space	filemanager	no	Brukt område
-users	filemanager	no	Brukere
-version	filemanager	no	Versjon
-view documents in new window	filemanager	no	Vis dokumenter i vindu
-view documents on server (if available)	filemanager	no	Vis dokumenter på tjener (hvis tilgjengelig)
-who	filemanager	no	Hvem
+users and groups	filemanager	no	Brukere og grupper
+wrong username or password!	filemanager	no	Feil brukernavn eller passord!
 you do not have access to %1	filemanager	no	Du har ikke adgang til %1
+you need to select an owner!	filemanager	no	Du må velge en eier!
+you need to select some files first!	filemanager	no	Du må velge noen filer først!
+you will be redirected to your home directory.	filemanager	no	Du vil bli viderekoblet til din Hjemme Mappe.
+you will be redirected to your start folder.	filemanager	no	Du vil bli viderekoblet til din Start Mappe.
 your home dir did not exist, egroupware created a new one.	filemanager	no	Din hjemmemappe fantes ikke, eGroupWare opprettet en ny.
+your home directory	filemanager	no	Din hjemme mappe

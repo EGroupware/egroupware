@@ -1,68 +1,139 @@
+account '%1' not found !!!	emailadmin	no	Konto '%1' ikke funnet !!!
+add new email address:	emailadmin	no	Legg til ny e-post adresse
 add profile	emailadmin	no	Legg til profil
 admin dn	emailadmin	no	Admin dn
 admin password	emailadmin	no	Admin passord
 admin username	emailadmin	no	Admin brukernavn
-advanced options	emailadmin	no	Avanserte valg
-alternate email address	emailadmin	no	Alternativ e-mailadresse
-cyrus imap server	emailadmin	no	Cyrus IMAP tjener
-cyrus imap server administration	emailadmin	no	Cyrys IMAP tjeneradministrasjon
+advanced options	emailadmin	no	Avanserte alternativer
+alternate email address	emailadmin	no	Alternativ e-post adresse
+any application	emailadmin	no	Hvilken som helst program
+any group	emailadmin	no	Hvilken som helst gruppe
+any user	emailadmin	no	hvilken som helst bruker
+back to admin/grouplist	emailadmin	no	Tilbake til Admin/Gruppe liste
+back to admin/userlist	emailadmin	no	Tilbake til Admin/Bruker liste
+bad login name or password.	emailadmin	no	Feil bruker navn eller passord.
+bad or malformed request. server responded: %s	emailadmin	no	Feil eller feilformet ønske. Serveren Svarte: %s
+bad request: %s	emailadmin	no	Feil ønske: %s
+can be used by application	emailadmin	no	Kan brukes av programmer
+can be used by group	emailadmin	no	Kan brukes av gruppe
+can be used by user	emailadmin	no	kan brukes av bruker
+connection dropped by imap server.	emailadmin	no	Tilkoblingen avbrutt av IMAP serveren.
+could not complete request. reason given: %s	emailadmin	no	Klarte ikke fullføre forespørselen: Grunn Gitt: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	no	Klarte ikke sikre forbindelsen til IMAP serveren. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	no	CRAM-MD5 eller DIGEST-MD5 krever Auth_SASL pakken installert.
+cyrus imap server	emailadmin	no	Cyrus IMAP server
+cyrus imap server administration	emailadmin	no	Cyrys IMAP server administrasjon
 default	emailadmin	no	standard
 deliver extern	emailadmin	no	lever eksternt
+do not validate certificate	emailadmin	no	ikke godkjenn sertifikat
 do you really want to delete this profile	emailadmin	no	Ønsker du virkelig å slette denne profilen
+do you really want to reset the filter for the profile listing	emailadmin	no	Ønsker du virkelig å nullstille filtrene for Profil listing
 domainname	emailadmin	no	Domenenavn
 edit email settings	emailadmin	no	Rediger e-mail oppsett
 email account active	emailadmin	no	E-mailkonto aktiv
 email address	emailadmin	no	E-mailadresse
-enable cyrus imap server administration	emailadmin	no	Tillat Cyrus IMAP-tjener administrasjon
+email settings	emailadmin	no	E-post instillinger
+emailadmin	emailadmin	no	E-Post Admin
+emailadmin: group assigned profile	emailadmin	no	E-Post Admin: Gruppe tildelt Profil
+emailadmin: user assigned profile	emailadmin	no	E-Post Admin: Bruker tildelt profil
+enable cyrus imap server administration	emailadmin	no	Tillat Cyrus IMAP-server administrasjon
 enable sieve	emailadmin	no	Tillat Sieve
+encrypted connection	emailadmin	no	kryptert tilkobling
+encryption settings	emailadmin	no	Krypterings instillinger
 enter your default mail domain (from: user@domain)	emailadmin	no	Registrer ditt standard Emaildomene (fra: bruker@domene)
+error connecting to imap server. %s : %s.	emailadmin	no	Feil ved tilkobling til IMAP server. %s : %s
+error connecting to imap server: [%s] %s.	emailadmin	no	Feil ved tilkobling til IMAP server: [%s] %s
+filtered by account	emailadmin	no	filtrert etter Konto
+filtered by group	emailadmin	no	filtrert etter Gruppe
 forward also to	emailadmin	no	videresend også til
 forward email's to	emailadmin	no	videresend e-mailer til
 forward only	emailadmin	no	bare videresending
-imap admin password	admin	no	IMAP Administrasjonspassord
-imap admin user	admin	no	IMAP Administrasjonsbruker
+global options	emailadmin	no	Globale instillinger
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	no	Ved bruk av SSL eller TLS, må du ha PHP openssl tillegget lastet.
+imap admin password	emailadmin	no	IMAP Administrasjonspassord
+imap admin user	emailadmin	no	IMAP Administrasjonsbruker
 imap c-client version < 2001	emailadmin	no	IMAP C-klient versjon < 2001
-imap server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for IMAP tjener
-imap server logintyp	emailadmin	no	IMAP Tjener påloggingstype
-imap server port	emailadmin	no	IMAP Tjenerport
-imap/pop3 server name	emailadmin	no	IMAP/POP3 tjenernavn
+imap server closed the connection.	emailadmin	no	IMAP serveren brøt forbindelsen.
+imap server closed the connection. server responded: %s	emailadmin	no	IMAP Serveren brøt forbindelsen. Serveren Svarte: %s
+imap server hostname or ip address	emailadmin	no	IMAP servers vertsnavn eller ip adresse
+imap server logintyp	emailadmin	no	IMAP server påloggings type
+imap server name	emailadmin	no	imap server navn
+imap server port	emailadmin	no	IMAP server port
+imap/pop3 server name	emailadmin	no	IMAP/POP3 server navn
 in mbyte	emailadmin	no	i MByte
+inactive	emailadmin	no	ikke aktiv
 ldap basedn	emailadmin	no	LDAP basedn
-ldap server	emailadmin	no	LDAP Tjener
-ldap server accounts dn	emailadmin	no	LDAP Tjenerkonti DN
-ldap server admin dn	emailadmin	no	LDAP Tjeneradmin. DN
-ldap server admin password	emailadmin	no	LDAP Tjeneradmin. passord
-ldap server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for LDAP tjener
-ldap settings	emailadmin	no	LDAP Instillinger
-leave empty for no quota	emailadmin	no	La stå tomt for ingen begrensning.
-mail settings	admin	no	E-post innstillinger
+ldap server	emailadmin	no	LDAP server
+ldap server accounts dn	emailadmin	no	LDAP server konti DN
+ldap server admin dn	emailadmin	no	LDAP server admin. DN
+ldap server admin password	emailadmin	no	LDAP server admin. passord
+ldap server hostname or ip address	emailadmin	no	LDAP servers vertsnavn eller ip adresse
+ldap settings	emailadmin	no	LDAP innstillinger
+leave empty for no quota	emailadmin	no	la stå tomt for ingen begrensning
+mail settings	emailadmin	no	E-post innstillinger
 name of organisation	emailadmin	no	Navn på organisasjon
-no alternate email address	emailadmin	no	ingen alternativ e-mailadresse
-no forwarding email address	emailadmin	no	ingen e-mailadresse for videresending
-pop3 server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for POP3 tjener
-pop3 server port	emailadmin	no	POP3 Tjenerport
+no alternate email address	emailadmin	no	ingen alternativ e-post adresse
+no encryption	emailadmin	no	ingen kryptering
+no forwarding email address	emailadmin	no	ingen e-post adresse for videresending
+no message returned.	emailadmin	no	Ingen meldinger returnert.
+no supported imap authentication method could be found.	emailadmin	no	Ingen støttet IMAP autentiserings metode ble funnet.
+order	emailadmin	no	Rekkefølge
+organisation	emailadmin	no	Organisasjon
+plesk can't rename users --> request ignored	emailadmin	no	Plesk kan ikke endre navn på brukere --> ønske ignorert
+plesk imap server (courier)	emailadmin	no	Plesk IMAP Server (Courier)
+plesk mail script '%1' not found !!!	emailadmin	no	Plesk e-post skript '%1' ikke funnet !!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	no	Plesk krever passord med minst 5 tegn og ikke inneholde konto navnet --> passordet IKKE satt!!!
+plesk smtp-server (qmail)	emailadmin	no	Plesk SMTP-Server (Qmail)
+pop3 server hostname or ip address	emailadmin	no	POP3 servers vertsnavn eller ip adresse
+pop3 server port	emailadmin	no	POP3 server
 postfix with ldap	emailadmin	no	Postfix med LDAP
+profile access rights	emailadmin	no	profil tilgangs rettigheter
+profile is active	emailadmin	no	profilen er aktiv
 profile list	emailadmin	no	Profilliste
 profile name	emailadmin	no	Profilnavn
 qmaildotmode	emailadmin	no	qmaildotmodus
 qouta size in mbyte	emailadmin	no	Grense Str. i Mbyte
 quota settings	emailadmin	no	Grenseinstillinger
 remove	emailadmin	no	fjern
-select type of imap/pop3 server	emailadmin	no	Velg type for IMAP/POP3 Tjener
-select type of smtp server	emailadmin	no	Velg type SMTP Tjener
-sieve server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for Sieve-tjener
-sieve server port	emailadmin	no	Sieve tjenerport
+reset filter	emailadmin	no	nullstill filter
+select type of imap server	emailadmin	no	velg type IMAP server
+select type of imap/pop3 server	emailadmin	no	Velg type IMAP/POP3 server
+select type of smtp server	emailadmin	no	Velg type SMTP server
+send using this email-address	emailadmin	no	send med denne e-post adressen
+server settings	emailadmin	no	Server instillinger
+sieve server hostname or ip address	emailadmin	no	Sieve server vertsnavn eller ip adresse
+sieve server port	emailadmin	no	Sieve server port
 sieve settings	emailadmin	no	Sieve innstillinger
-smtp server name	emailadmin	no	SMTP Tjenernavn
-smtp-server hostname or ip address	emailadmin	no	Tjenernavn eller IP-Adresse for SMTP-Tjener
-smtp-server port	emailadmin	no	SMTP Tjenerport
-standard	emailadmin	no	standard
-standard imap server	emailadmin	no	Standard IMAP tjener
-standard pop3 server	emailadmin	no	Standard POP3 tjener
-standard smtp-server	emailadmin	no	Standard SMTP tjener
+smtp authentication	emailadmin	no	SMTP autentisering
+smtp options	emailadmin	no	SMTP alternativer
+smtp server name	emailadmin	no	SMTP server navn
+smtp settings	emailadmin	no	SMTP instillinger
+smtp-server hostname or ip address	emailadmin	no	SMTP server vertsnavn eller IP adresse
+smtp-server port	emailadmin	no	SMTP server port
+standard	emailadmin	no	Standard
+standard imap server	emailadmin	no	Standard IMAP server
+standard pop3 server	emailadmin	no	Standard POP3 server
+standard smtp-server	emailadmin	no	Standard SMTP server
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	no	IMAP serveren ser ikke ut til å støtte autentiserings metoden valgt. Vennligst kontatk din system administrator.
+this php has no imap support compiled in!!	emailadmin	no	Denne PHP har ingen IMAP støtte kompilert in!!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	no	For å bruke en TLS forbindelse, må du kjøre en versjon av PHP 5.1.0 eller høyere.
+unexpected response from server to authenticate command.	emailadmin	no	Uventet svar fra server til AUTENTISER kommandoen.
+unexpected response from server to digest-md5 response.	emailadmin	no	Uventet svar fra server til Digest-MD5 svar.
+unexpected response from server to login command.	emailadmin	no	Uventet svar fra serveren til LOGGINN kommandoen.
+unknown imap response from the server. server responded: %s	emailadmin	no	Ukjent IMAP svar fra server. Serveren Svarte: %s
+unsupported action '%1' !!!	emailadmin	no	Ustøttet handling '%1' !!!
+update current email address:	emailadmin	no	Oppdater gjeldende e-post adresse:
 use ldap defaults	emailadmin	no	Bruk LDAP standaroppsett
+use predefined username and password defined below	emailadmin	no	Bruk forhåndsdefinert bruker navn og passord definert under
 use smtp auth	emailadmin	no	Bruk SMTP autentisering
 use tls authentication	emailadmin	no	Bruk TLS autentisering
 use tls encryption	emailadmin	no	Bruk TLS kryptering
+user can edit forwarding address	emailadmin	no	Bruker kan redigere videresendings adresse
+username (standard)	emailadmin	no	brukernavn(standard)
+username/password defined by admin	emailadmin	no	Bruker navn/Passord definert av admin
+username@domainname (virtual mail manager)	emailadmin	no	bruker navn@domene navn (Virtual MAIL Manager)
 users can define their own emailaccounts	emailadmin	no	Brukere kan definere egne e-post kontoer
+users can define their own identities	emailadmin	no	brukere kan definere egne identiteter
+users can define their own signatures	emailadmin	no	brukere kan definere egne signaturer
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	no	Ferie meldinger med start- og slutt-dato krever en admin konto for aktivering!
 virtual mail manager	emailadmin	no	Virtuell Mail Manager
