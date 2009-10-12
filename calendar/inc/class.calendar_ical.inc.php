@@ -550,7 +550,7 @@ class calendar_ical extends calendar_boupdate
 							$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
 							break;
 
-						case 'TRANSP':
+					case 'TRANSP':
 						if ($version == '1.0') {
 							$attributes['TRANSP'] = ($event['non_blocking'] ? 1 : 0);
 						} else {
@@ -1457,7 +1457,7 @@ class calendar_ical extends calendar_boupdate
 
 			return array($event);
 		}
-		else if($count($events) == 0 || $cal_id > 0 || !is_null($etag) || $recur_date)
+		else if(count($events) == 0 || $cal_id > 0 || !is_null($etag) || $recur_date)
 		{
 			// no events to return
 			// or not allowed N:1 relation with params just meant for a single event
