@@ -311,19 +311,21 @@ class egw_time extends DateTime
 	 * Setter for user timezone, should be called after reading user preferences
 	 *
 	 * @param string $tz timezone, eg. 'Europe/Berlin' or 'UTC'
-	 * @param string $dateformat eg. 'Y-m-d' or 'd.m.Y'
-	 * @param string|int $timeformat integer 12, 24, or format string eg. 'H:i'
+	 * @param string $dateformat='' eg. 'Y-m-d' or 'd.m.Y'
+	 * @param string|int $timeformat='' integer 12, 24, or format string eg. 'H:i'
 	 * @throws egw_exception_wrong_userinput if invalid $tz parameter
 	 * @return DateTimeZone
 	 */
-	public static function setUserPrefs($tz,$dateformat,$timeformat)
+	public static function setUserPrefs($tz,$dateformat='',$timeformat='')
 	{
+		//echo "<p>".__METHOD__."('$tz','$dateformat','$timeformat') ".function_backtrace()."</p>\n";
 		if (!empty($dateformat)) self::$user_dateformat = $dateformat;
 
 		switch($timeformat)
 		{
-			case '24':
 			case '':
+				break;
+			case '24':
 				self::$user_timeformat = 'H:i';
 				break;
 			case '12':
@@ -376,6 +378,54 @@ class egw_time extends DateTime
 		{
 			self::$user_timezone = clone(self::$server_timezone);
 		}
+	}
+
+	/**
+	 * Return "beautified" timezone list:
+	 * - no depricated timezones
+	 * - return UTC and oceans at the end
+	 * - if (user lang is a european language), move Europe to top
+	 *
+	 * @return array continent|ocean => array(tz-name => tz-label incl. current time)
+	 */
+	public static function getTimezones()
+	{
+		// prepare list of timezones from php, ignoring depricated ones and sort as follows
+		$tzs = array(
+			'Africa'     => array(),	// Contients
+			'America'    => array(),
+			'Asia'       => array(),
+			'Australia'  => array(),
+			'Europe'     => array(),
+			'Atlantic'   => array(),	// Oceans
+			'Pacific'    => array(),
+			'Indian'     => array(),
+			'Antarctica' => array(),	// Poles
+			'Arctic'     => array(),
+			'UTC'        => array('UTC' => 'UTC'),
+		);
+		foreach(DateTimeZone::listIdentifiers() as $name)
+		{
+			list($continent,$rest) = explode('/',$name,2);
+			if (!isset($tzs[$continent])) continue;	// old depricated timezones
+			$datetime = new egw_time('now',new DateTimeZone($name));
+			$tzs[$continent][$name] = str_replace(array('_','/'),array(' ',' / '),$name).' &nbsp; '.$datetime->format();
+			unset($datetime);
+		}
+		foreach($tzs as $continent => &$data)
+		{
+			natcasesort($data);	// sort cities
+		}
+		unset($data);
+
+		// if user lang or installed langs contain a european language --> move Europe to top of tz list
+		$langs = $GLOBALS['egw']->translation->get_installed_langs();
+		if (array_intersect(array($GLOBALS['egw_info']['user']['preferences']['common']['lang'])+array_keys($langs),
+			array('de','fr','it','nl','bg','ca','cs','da','el','es-es','et','eu','fi','hr','hu','lt','no','pl','pt','sk','sl','sv','tr','uk')))
+		{
+			$tzs = array_merge(array('Europe' => $tzs['Europe']),$tzs);
+		}
+		return $tzs;
 	}
 }
 egw_time::init();

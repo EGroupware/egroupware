@@ -23,10 +23,10 @@
  *  e) footer
  * It replaces several methods in the common class and the diverse templates.
  *
- * Existing apps either set $GLOBALS['egw_info']['flags']['noheader'] and call $GLOBALS['egw']->common->egw_header() and
+ * Existing apps either set $GLOBALS['egw_info']['flags']['noheader'] and call common::egw_header() and
  * (if $GLOBALS['egw_info']['flags']['nonavbar'] is true) parse_navbar() or it's done by the header.inc.php include.
  * The app's hook_sidebox then calls the public function display_sidebox().
- * And the app calls $GLOBALS['egw']->common->egw_footer().
+ * And the app calls common::egw_footer().
  *
  * This are the authors (and their copyrights) of the original egw_header, egw_footer methods of the common class:
  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>
@@ -247,7 +247,7 @@ abstract class egw_framework
 		}
 		else
 		{
-			$var['favicon_file'] = $GLOBALS['egw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['favicon_file']?$GLOBALS['egw_info']['server']['favicon_file']:'favicon.ico');
+			$var['favicon_file'] = common::image('phpgwapi',$GLOBALS['egw_info']['server']['favicon_file']?$GLOBALS['egw_info']['server']['favicon_file']:'favicon.ico');
 		}
 
 		return $this->_get_css()+array(
@@ -259,7 +259,7 @@ abstract class egw_framework
 			'slider_effects'	=> $slider_effects,
 			'simple_show_hide'	=> $simple_show_hide,
 			'lang_code'			=> $lang_code,
-			'charset'       	=> $GLOBALS['egw']->translation->charset(),
+			'charset'       	=> translation::charset(),
 			'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),
 			'body_tags'     	=> self::_get_body_attribs(),
 			'java_script'   	=> self::_get_js(),
@@ -298,7 +298,7 @@ abstract class egw_framework
 		if($GLOBALS['egw_info']['user']['lastpasswd_change'] == 0)
 		{
 			$api_messages = lang('You are required to change your password during your first login').'<br />'.
-				lang('Click this image on the navbar: %1','<img src="'.$GLOBALS['egw']->common->image('preferences','navbar.gif').'">');
+				lang('Click this image on the navbar: %1','<img src="'.common::image('preferences','navbar.gif').'">');
 		}
 		elseif($GLOBALS['egw_info']['user']['lastpasswd_change'] < time() - (86400*30))
 		{
@@ -317,7 +317,7 @@ abstract class egw_framework
 		}
 		else
 		{
-			$var['logo_file'] = $GLOBALS['egw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
+			$var['logo_file'] = common::image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
 		}
 		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
 
@@ -337,12 +337,23 @@ abstract class egw_framework
 	 */
 	protected static function _user_time_info()
 	{
-	   $now = time();
-	   $user_info = '<b>'.$GLOBALS['egw']->common->display_fullname() .'</b>'. ' - '
-	   . lang($GLOBALS['egw']->common->show_date($now,'l')) . ' '
-	   . $GLOBALS['egw']->common->show_date($now,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+		$now = new egw_time();
+		$user_info = '<b>'.common::display_fullname() .'</b>'. ' - ' . lang($now->format('l')) . ' ' . $now->format(true);
 
-	   return $user_info;
+		$tz = explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['tz']);
+		$tz_selection = explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['tz_selection']);
+		if (count($tz_selection) > 1)
+		{
+			if (!in_array($tz,$tz_selection)) $tz_selection = array_merge((array)$tz,$tz_selection);
+			$tz_selection = array_combine($tz_selection,$tz_selection);
+			foreach($tz_selection as $name => &$label)
+			{
+				$label = str_replace(array('_','/'),array(' ',' / '),$label);
+			}
+			$user_info .= html::form(html::select('tz',$tz,$tz_selection,true,' onchange="this.form.submit();"'),array(),
+				'/index.php','','tz_selection',' style="display: inline;"','GET');
+		}
+		return $user_info;
 	}
 
 	/**
@@ -354,7 +365,7 @@ abstract class egw_framework
 	{
 	   if( $GLOBALS['egw_info']['user']['apps']['admin'] && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
 	   {
-		  $current_users = '<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' .
+		  $current_users = '<a href="' . egw::link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' .
 		  	lang('Current users') . ': ' . $GLOBALS['egw']->session->session_count() . '</a>';
 		  return $current_users;
 	   }
@@ -373,7 +384,7 @@ abstract class egw_framework
 		$options = array(lang('Add').' ...');
 		foreach($apps as $app => $label)
 		{
-			$link = $GLOBALS['egw']->link('/index.php',egw_link::add($app,$GLOBALS['egw_info']['flags']['currentapp'],$GLOBALS['egw_info']['flags']['currentid'])+
+			$link = egw::link('/index.php',egw_link::add($app,$GLOBALS['egw_info']['flags']['currentapp'],$GLOBALS['egw_info']['flags']['currentid'])+
 				(is_array($GLOBALS['egw_info']['flags']['quick_add']) ? $GLOBALS['egw_info']['flags']['quick_add'] : array()));
 			if (($popup = egw_link::is_popup($app,'add')))
 			{
@@ -432,7 +443,7 @@ abstract class egw_framework
 				$index = '/index.php?menuaction='.$data['index'];
 			}
 		}
-		return $GLOBALS['egw']->link($index,$GLOBALS['egw_info']['flags']['params'][$app]);
+		return egw::link($index,$GLOBALS['egw_info']['flags']['params'][$app]);
 	}
 
 	/**
@@ -496,13 +507,13 @@ abstract class egw_framework
 				$icon_app = isset($data['icon_app']) ? $data['icon_app'] : $app;
 				if ($app != $GLOBALS['egw_info']['flags']['currentapp'])
 				{
-					$apps[$app]['icon']  = $GLOBALS['egw']->common->image($icon_app,Array($icon,'nonav'));
-					$apps[$app]['icon_hover']  = $GLOBALS['egw']->common->image_on($icon_app,Array($icon,'nonav'),'-over');
+					$apps[$app]['icon']  = common::image($icon_app,Array($icon,'nonav'));
+					$apps[$app]['icon_hover']  = common::image_on($icon_app,Array($icon,'nonav'),'-over');
 				}
 				else
 				{
-					$apps[$app]['icon']  = $GLOBALS['egw']->common->image_on($icon_app,Array($icon,'nonav'),'-over');
-					$apps[$app]['icon_hover']  = $GLOBALS['egw']->common->image($icon_app,Array($icon,'nonav'));
+					$apps[$app]['icon']  = common::image_on($icon_app,Array($icon,'nonav'),'-over');
+					$apps[$app]['icon_hover']  = common::image($icon_app,Array($icon,'nonav'));
 				}
 			}
 		}
@@ -526,14 +537,14 @@ abstract class egw_framework
 		// We handle this here becuase its special
 		$apps['about']['title'] = lang('About %1',$app_title);
 
-		$apps['about']['url']   = $GLOBALS['egw']->link('/about.php','app='.$app);
-		$apps['about']['icon']  = $GLOBALS['egw']->common->image('phpgwapi',Array('about','nonav'));
-		$apps['about']['icon_hover']  = $GLOBALS['egw']->common->image_on('phpgwapi',Array('about','nonav'),'-over');
+		$apps['about']['url']   = egw::link('/about.php','app='.$app);
+		$apps['about']['icon']  = common::image('phpgwapi',Array('about','nonav'));
+		$apps['about']['icon_hover']  = common::image_on('phpgwapi',Array('about','nonav'),'-over');
 
 		$apps['logout']['title'] = lang('Logout');
-		$apps['logout']['url']   = $GLOBALS['egw']->link('/logout.php');
-		$apps['logout']['icon']  = $GLOBALS['egw']->common->image('phpgwapi',Array('logout','nonav'));
-		$apps['logout']['icon_hover']  = $GLOBALS['egw']->common->image_on('phpgwapi',Array('logout','nonav'),'-over');
+		$apps['logout']['url']   = egw::link('/logout.php');
+		$apps['logout']['icon']  = common::image('phpgwapi',Array('logout','nonav'));
+		$apps['logout']['icon_hover']  = common::image_on('phpgwapi',Array('logout','nonav'),'-over');
 
 		return $apps;
 	}
@@ -651,7 +662,7 @@ abstract class egw_framework
 		{
 			require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/xajax.inc.php');
 
-			$xajax = new xajax($GLOBALS['egw']->link('/xajax.php'), 'xajax_', $GLOBALS['egw']->translation->charset());
+			$xajax = new xajax(egw::link('/xajax.php'), 'xajax_', translation::charset());
 			$xajax->waitCursorOff();
 			$xajax->registerFunction("doXMLHTTP");
 
