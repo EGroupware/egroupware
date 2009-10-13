@@ -123,7 +123,8 @@ class calendar_uiforms extends calendar_ui
 
 			if (is_numeric($uid))
 			{
-				$participants[$uid] = $participant_types['u'][$uid] = $uid == $this->user ? 'A' : 'U';
+				$participants[$uid] = $participant_types['u'][$uid] =
+					calendar_so::combine_status($uid == $this->user ? 'A' : 'U',1,$uid == $this->user ? 'CHAIR' : 'REQ-PARTICIPANT');
 			}
 			elseif (is_array($this->bo->resources[$uid[0]]))
 			{
@@ -131,7 +132,8 @@ class calendar_uiforms extends calendar_ui
 				list($id,$quantity) = explode(':',substr($uid,1));
 				if (($status = $res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U'))
 				{
-					$participants[$uid] = $participant_types[$uid[0]][$id] = $status.((int) $quantity > 1 ? (int)$quantity : '');
+					$participants[$uid] = $participant_types[$uid[0]][$id] =
+						calendar_so::combine_status($status,$quantity,'REQ-PARTICIPANT');
 				}
 			}
 		}
@@ -309,7 +311,7 @@ class calendar_uiforms extends calendar_ui
 						break;
 
 					default:		// existing participant row
-						foreach(array('uid','status','quantity') as $name)
+						foreach(array('uid','status','quantity','role') as $name)
 						{
 							$$name = $data[$name];
 						}
@@ -364,7 +366,7 @@ class calendar_uiforms extends calendar_ui
 							if ($uid && $status != 'G')
 							{
 								$event['participants'][$uid] = $event['participant_types'][$type][$id] =
-									$status.((int) $quantity > 1 ? (int)$quantity : '');
+									calendar_so::combine_status($status,$quantity,$role);
 							}
 						}
 						break;
