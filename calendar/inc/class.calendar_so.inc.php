@@ -861,11 +861,11 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Combine status, quantity and role into one value
 	 *
 	 * @param string $status
-	 * @param int $quantity
-	 * @param string $role
+	 * @param int $quantity=1
+	 * @param string $role='REQ-PARTICIPANT'
 	 * @return string
 	 */
-	static function combine_status($status,$quantity,$role)
+	static function combine_status($status,$quantity=1,$role='REQ-PARTICIPANT')
 	{
 		if ((int)$quantity > 1) $status .= (int)$quantity;
 		if ($role != 'REQ-PARTICIPANT') $status .= $role;
