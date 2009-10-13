@@ -101,9 +101,7 @@
 
 				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
 					SEP.
-					$GLOBALS['egw_info']['user']['account_id'].
-					$this->composeID.
-					basename($_formData['file']);
+					md5(time().$GLOBALS['egw_info']['user']['account_id'].$this->composeID.basename($_formData['file']));
 
 				if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
 				{
