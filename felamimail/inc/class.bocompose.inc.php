@@ -96,9 +96,7 @@
 				
 				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
 					SEP.
-					$GLOBALS['egw_info']['user']['account_id'].
-					$this->composeID.
-					basename($_formData['file']);
+					md5(time().$GLOBALS['egw_info']['user']['account_id'].$this->composeID.basename($_formData['file']));
 				
 				if (is_uploaded_file($_formData['file']))
 				{
