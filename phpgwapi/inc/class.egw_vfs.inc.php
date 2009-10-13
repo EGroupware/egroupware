@@ -479,6 +479,7 @@ class egw_vfs extends vfs_stream_wrapper
 		if (isset($options['name_preg']) && !preg_match($options['name_preg'],$stat['name']) ||
 			isset($options['path_preg']) && !preg_match($options['path_preg'],$path))
 		{
+			//echo "<p>!preg_match('{$options['name_preg']}','{$stat['name']}')</p>\n";
 			return;	// wrong name or path
 		}
 		if (isset($options['gid']) && $stat['gid'] != $options['gid'] ||
@@ -1022,6 +1023,12 @@ class egw_vfs extends vfs_stream_wrapper
 	static protected $lock_cache;
 
 	/**
+	 * Log (to error log) all calls to lock(), unlock() or checkLock()
+	 *
+	 */
+	const LOCK_DEBUG = false;
+
+	/**
 	 * lock a ressource/path
 	 *
 	 * @param string $path path or url
@@ -1054,7 +1061,7 @@ class egw_vfs extends vfs_stream_wrapper
 			if (($ret = (boolean)($row = self::$db->select(self::LOCK_TABLE,array('lock_owner','lock_exclusive','lock_write'),array(
 				'lock_path' => $path,
 				'lock_token' => $token,
-			)))))
+			),__LINE__,__FILE__)->fetch())))
 			{
 				$owner = $row['lock_owner'];
 				$scope = egw_db::from_bool($row['lock_exclusive']) ? 'exclusive' : 'shared';
@@ -1064,8 +1071,8 @@ class egw_vfs extends vfs_stream_wrapper
 					'lock_expires' => $timeout,
 					'lock_modified' => time(),
 				),array(
-					'path' => $path,
-					'token' => $token,
+					'lock_path' => $path,
+					'lock_token' => $token,
 				),__LINE__,__FILE__);
 			}
 		}
@@ -1103,7 +1110,7 @@ class egw_vfs extends vfs_stream_wrapper
 				$ret = false;	// there's already a lock
 			}
 		}
-		//error_log(__METHOD__."($path,$token,$timeout,$owner,$scope,$type,$update,$check_writable) returns ".($ret ? 'true' : 'false'));
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($path,$token,$timeout,$owner,$scope,$type,update=$update,check_writable=$check_writable) returns ".($ret ? 'true' : 'false'));
 		return $ret;
 	}
 
@@ -1130,7 +1137,7 @@ class egw_vfs extends vfs_stream_wrapper
         	// remove the lock from the cache too
         	unset(self::$lock_cache[$path]);
         }
-		//error_log(__METHOD__."($path,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($path,$token,$check_writable) returns ".($ret ? 'true' : 'false'));
 		return $ret;
     }
 
@@ -1144,7 +1151,7 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		if (isset(self::$lock_cache[$path]))
 		{
-			//error_log(__METHOD__."($path) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$path],true)));
+			if (self::LOCK_DEBUG) error_log(__METHOD__."($path) returns from CACHE ".str_replace(array("\n",'    '),'',print_r(self::$lock_cache[$path],true)));
 			return self::$lock_cache[$path];
 		}
 		$where = 'lock_path='.self::$db->quote($path);
@@ -1165,10 +1172,10 @@ class egw_vfs extends vfs_stream_wrapper
 	        	'lock_token' => $result['token'],
 	        ),__LINE__,__FILE__);
 
-		//error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
+			if (self::LOCK_DEBUG) error_log(__METHOD__."($path) lock is expired at ".date('Y-m-d H:i:s',$result['expires'])." --> removed");
 	        $result = false;
 		}
-		//error_log(__METHOD__."($path) returns ".($result?array2string($result):'false'));
+		if (self::LOCK_DEBUG) error_log(__METHOD__."($path) returns ".($result?array2string($result):'false'));
 		return self::$lock_cache[$path] = $result;
 	}
 
