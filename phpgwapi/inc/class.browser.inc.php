@@ -122,7 +122,7 @@ class browser
 			self::$br = '<br>';
 			self::$p = '<p>';
 		}
-		error_log(__METHOD__."() $_SERVER[HTTP_USER_AGENT] --> agent=".self::$agent.', version='.self::$version.', platform='.self::$platform);
+		//error_log(__METHOD__."() $_SERVER[HTTP_USER_AGENT] --> agent=".self::$agent.', version='.self::$version.', platform='.self::$platform);
 	}
 
 	public static function return_array()
