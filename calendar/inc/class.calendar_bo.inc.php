@@ -1560,7 +1560,7 @@ class calendar_bo
 			{
 				if (isset($this->roles[$role]))
 				{
-					$role = $this->roles[$role];
+					$role = lang($this->roles[$role]);
 				}
 				// allow to use cats as roles (beside regular iCal ones)
 				elseif (substr($role,0,6) == 'X-CAT-' && ($cat_id = (int)substr($role,6)) > 0)
