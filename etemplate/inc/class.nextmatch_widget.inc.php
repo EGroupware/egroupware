@@ -298,6 +298,7 @@ class nextmatch_widget
 			$value['options-selectcols'] = is_array($value['options-selectcols']) ? $value['options-selectcols'] : array();
 		}
 		$rows = array();
+		if (!is_array($readonlys)) $readonlys = array();
 		if (($total = $extension_data['total'] = $value['total'] = self::call_get_rows($value,$rows,$readonlys['rows'])) === false)
 		{
 			//error_log(__METHOD__."() etemplate::set_validation_error('$name') '$value[get_rows]' is no valid method!!!");
