@@ -84,7 +84,9 @@ class historylog_widget
 					$value = explode(bo_tracking::ONE2N_SEPERATOR,$value);
 					foreach($type as $n => $t)
 					{
-						$child = etemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true));
+						$opt = '';
+						list($t,$opt) = explode(':',$t);
+						$child = etemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true,'size' => $opt));
 						etemplate::add_child($cell,$child);
 						unset($child);
 					}
