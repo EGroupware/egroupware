@@ -37,6 +37,17 @@ abstract class bo_merge
 	var $mimetype;
 
 	/**
+	 * Plugins registered by extending class to create a table with multiple rows
+	 *
+	 * $$table/$plugin$$ ... $$endtable$$
+	 *
+	 * Callback returns replacements for row $n (stringing with 0) or null if no further rows
+	 *
+	 * @var array $plugin => array callback($plugin,$id,$n)
+	 */
+	var $table_plugins = array();
+
+	/**
 	 * Constructor
 	 *
 	 * @return bo_merge
@@ -311,29 +322,28 @@ abstract class bo_merge
 			$replacements['$$datetime$$'] = $this->format_datetime($now);
 			$replacements['$$time$$'] = $this->format_datetime($now,$GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i a':'H:i');
 
-			switch($mimetype)
+			// does our extending class registered table-plugins AND document contains table tags
+			if ($this->table_plugins && preg_match_all('/\\$\\$table\\/([A-Za-z0-9_]+)\\$\\$(.*?)\\$\\$endtable\\$\\$/s',$content,$matches,PREG_SET_ORDER))
 			{
-				case 'application/vnd.oasis.opendocument.text':		// open office
-				case 'application/vnd.oasis.opendocument.spreadsheet':
-				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
-				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-					$charset = 'utf-8';	// xml files --> always use utf-8
-					break;
-				default:	// div. text files --> use our export-charset, defined in addressbook prefs
-					$charset = $this->contacts->prefs['csv_charset'];
-					break;
+				// process each table
+				foreach($matches as $match)
+				{
+					$plugin   = $match[1];	// plugin name
+					$callback = $this->table_plugins[$plugin];
+					$repeat   = $match[2];	// line to repeat
+					$repeats = '';
+					if (isset($callback))
+					{
+						for($n = 0; ($row_replacements = ExecMethod2($callback,$plugin,$id,$n)); ++$n)
+						{
+							$repeats .= $this->replace($repeat,$row_replacements,$mimetype);
+						}
+					}
+					$content = str_replace($match[0],$repeats,$content);
+				}
 			}
-			//error_log(__METHOD__."('$document', ... ,$mimetype) --> $charset (egw=".$GLOBALS['egw']->translation->charset().', export='.$this->contacts->prefs['csv_charset'].')');
-			// do we need to convert charset
-			if ($charset && $charset != $GLOBALS['egw']->translation->charset())
-			{
-				$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$charset);
-			}
-			if (substr($document,0,6) == 'zip://')	// zip'ed xml document (eg. OO) --> need to encode &,<,> to not mess up xml
-			{
-				$replacements = str_replace(array('&amp;','&','<','>'),array('&amp;','&amp;','&lt;','&gt;'),$replacements);
-			}
-			$content = str_replace(array_keys($replacements),array_values($replacements),$content);
+			$content = $this->replace($content,$replacements,$mimetype);
+
 			if (strpos($content,'$$IF'))
 			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
 				$this->replacements =& $replacements;
@@ -420,6 +430,47 @@ abstract class bo_merge
 			return false;
 		}
 		return $content;
+	}
+
+	/**
+	 * Replace placeholders in $content of $mimetype with $replacements
+	 *
+	 * @param string $content
+	 * @param array $replacements name => replacement pairs
+	 * @param string $mimetype mimetype of content
+	 * @return string
+	 */
+	protected function replace($content,array $replacements,$mimetype)
+	{
+		switch($mimetype)
+		{
+			case 'application/vnd.oasis.opendocument.text':		// open office
+			case 'application/vnd.oasis.opendocument.spreadsheet':
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'text/xml':
+				$is_xml = true;
+				$charset = 'utf-8';	// xml files --> always use utf-8
+				break;
+
+			case 'text/html':
+				$is_xml = true;
+				// fall through
+			default:	// div. text files --> use our export-charset, defined in addressbook prefs
+				$charset = $this->contacts->prefs['csv_charset'];
+				break;
+		}
+		//error_log(__METHOD__."('$document', ... ,$mimetype) --> $charset (egw=".$GLOBALS['egw']->translation->charset().', export='.$this->contacts->prefs['csv_charset'].')');
+		// do we need to convert charset
+		if ($charset && $charset != $GLOBALS['egw']->translation->charset())
+		{
+			$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$charset);
+		}
+		if ($is_xml)	// zip'ed xml document (eg. OO) --> need to encode &,<,> to not mess up xml
+		{
+			$replacements = str_replace(array('&amp;','&','<','>'),array('&amp;','&amp;','&lt;','&gt;'),$replacements);
+		}
+		return str_replace(array_keys($replacements),array_values($replacements),$content);
 	}
 
 	/**
