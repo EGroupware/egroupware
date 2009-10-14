@@ -266,11 +266,12 @@ abstract class bo_tracking
 			{
 				self::compact_1_N_relation($data[$name],$status);
 				self::compact_1_N_relation($old[$name],$status);
-				$added = array_diff($data[$name],$old[$name]);
-				$removed = array_diff($old[$name],$data[$name]);
+				$added = array_values(array_diff($data[$name],$old[$name]));
+				$removed = array_values(array_diff($old[$name],$data[$name]));
 				$n = max(array(count($added),count($removed)));
 				for($i = 0; $i < $n; ++$i)
 				{
+					//error_log(__METHOD__."() $i: historylog->add('$name',data['$this->id_field']={$data[$this->id_field]},".array2string($added[$i]).','.array2string($removed[$i]));
 					$this->historylog->add($name,$data[$this->id_field],$added[$i],$removed[$i]);
 				}
 			}
@@ -322,6 +323,7 @@ abstract class bo_tracking
 				$changed_fields[] = $name;
 			}
 		}
+		//error_log(__METHOD__."() changed_fields=".array2string($changed_fields));
 		return $changed_fields;
 	}
 
