@@ -947,7 +947,7 @@ class addressbook_ui extends addressbook_bo
 			if (!$id_only && $rows)
 			{
 				$show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->customfields;
-				$show_calendar = !$columselection || in_array('calendar',$columselection);
+				$show_calendar = !$columselection || in_array('calendar_calendar',$columselection);
 				$show_distributionlist = !$columselection || in_array('distrib_lists',$columselection) ||count($available_distib_lists);
 				if ($show_calendar || $show_custom_fields || $show_distributionlist)
 				{
