@@ -128,7 +128,7 @@ default	addressbook	de	Standard
 default address format	addressbook	de	Vorgabe für Format der Adresse
 default addressbook for adding contacts	addressbook	de	Vorgabe Adressbuch beim Hinzufügen von Kontakten
 default document to insert contacts	addressbook	de	Standarddokument zum Einfügen von Kontakten
-default file as format	addressbook	de	Vorgage für eigene Sortierung
+default file as format	addressbook	de	Vorgabe für eigene Sortierung
 default filter	addressbook	de	Standardfilter
 default format for fileas, eg. for new entries.	addressbook	de	Vorgegebenes Format für eigene Sortierung, z.B. für neue Einträge
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	de	Legt fest, welche E-Mailadresse (geschäftlich oder privat) für Verteilerlisten in Mail bevorzugt benutzt werden soll.
