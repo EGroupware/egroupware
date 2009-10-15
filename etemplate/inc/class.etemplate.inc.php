@@ -1012,8 +1012,11 @@ class etemplate extends boetemplate
 				$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
 			if (!$ext_type) $ext_type = $type;
-			// if readonlys[__ALL__] is set, also set readonlys[$name] (but only then as for extensions (eg. tabs) $readonlys[$name] can be an array!)
-			if ($readonlys['__ALL__']) $readonlys[$name] = true;
+			// if readonlys[__ALL__] is set, also set readonlys[$name] (extensions can mark themselfs as 'noReadonlysALL', eg. tab-widget!)
+			if ($readonlys['__ALL__'] && !$this->haveExtension($type,'noReadonlysALL'))
+			{
+				$readonlys[$name] = true;
+			}
 			$extra_label = $this->extensionPreProcess($type,$form_name,$value,$cell,$readonlys[$name]);
 
 			$readonly = $cell['readonly'] !== false && ($readonly || $cell['readonly']);	// might be set or unset (===false) by extension

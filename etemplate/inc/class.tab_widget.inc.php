@@ -25,7 +25,8 @@
 		 */
 		var $public_functions = array(
 			'pre_process' => True,
-			'post_process' => True
+			'post_process' => True,
+			'noReadonlysALL' => true,	// mark extension as not to set readonly for $readonlys['__ALL__']
 		);
 		/**
 		 * availible extensions and there names for the editor
@@ -57,7 +58,7 @@
 		 */
 		function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			//echo "<p>tab_widget::pre_process('$form_name',$value,,$extension_data)</p>\n";
+			//echo "<p>tab_widget::pre_process('$form_name',".array2string($value).','.array2string($readonlys).','.array2string($extension_data).")</p>\n";
 
 			if (!$cell['onchange'])	// onchange allows to use the old behavior (submit for each new tab)
 			{
