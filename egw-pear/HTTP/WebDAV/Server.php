@@ -598,118 +598,111 @@ class HTTP_WebDAV_Server
         // Microsoft Clients need this special namespace for date and time values
         $ns_defs = "xmlns:ns0=\"urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/\"";
 
-        // now we loop over all returned file entries
-        foreach ($files["files"] as $filekey => $file) {
-
-            // nothing to do if no properties were returend for a file
-            if (!isset($file["props"]) || !is_array($file["props"])) {
-                continue;
-            }
-
-            // now loop over all returned properties
-            foreach ($file["props"] as $key => $prop) {
-                // as a convenience feature we do not require that user handlers
-                // restrict returned properties to the requested ones
-                // here we strip all unrequested entries out of the response
-
-            	// this can happen if we have allprop and prop in one propfind:
-            	// <allprop /><prop><blah /></prop>, eg. blah is not automatic returned by allprop
-                switch(is_array($options['props']) ? $options['props'][0] : $options['props']) {
-                case "all":
-                    // nothing to remove
-                    break;
-
-                case "names":
-                    // only the names of all existing properties were requested
-                    // so we remove all values
-                    unset($files["files"][$filekey]["props"][$key]["val"]);
-                    break;
-
-                default:
-                    $found = false;
-
-                    // search property name in requested properties
-                    foreach ((array)$options["props"] as $reqprop) {
-                        if (   $reqprop["name"]  == $prop["name"]
-                               && @$reqprop["xmlns"] == $prop["ns"]) {
-                            $found = true;
-                            break;
-                        }
-                    }
-
-                    // unset property and continue with next one if not found/requested
-                    if (!$found) {
-                        $files["files"][$filekey]["props"][$key]="";
-                        continue(2);
-                    }
-                    break;
-                }
-
-                // namespace handling
-                if (empty($prop["ns"])) continue; // no namespace
-                $ns = $prop["ns"];
-                if ($ns == "DAV:") continue; // default namespace
-                if (isset($ns_hash[$ns])) continue; // already known
-
-                // register namespace
-                $ns_name = "ns".(count($ns_hash) + 1);
-                $ns_hash[$ns] = $ns_name;
-                $ns_defs .= " xmlns:$ns_name=\"$ns\"";
-            }
-
-            // we also need to add empty entries for properties that were requested
-            // but for which no values where returned by the user handler
-            if (is_array($options['props'])) {
-                foreach ($options["props"] as $reqprop) {
-                    if (!is_array($reqprop) || $reqprop['name']=="") continue; // skip empty entries, or 'all' if <allprop /> used together with <prop>
-
-                    $found = false;
-
-                    // check if property exists in result
-                    foreach ($file["props"] as $prop) {
-                        if (   $reqprop["name"]  == $prop["name"]
-                               && @$reqprop["xmlns"] == $prop["ns"]) {
-                            $found = true;
-                            break;
-                        }
-                    }
-
-                    if (!$found) {
-                        if ($reqprop["xmlns"]==="DAV:" && $reqprop["name"]==="lockdiscovery") {
-                            // lockdiscovery is handled by the base class
-                            $files["files"][$filekey]["props"][]
-                                = $this->mkprop("DAV:",
-                                                "lockdiscovery",
-                                                $this->lockdiscovery($files["files"][$filekey]['path']));
-                        } else {
-                            // add empty value for this property
-                            $files["files"][$filekey]["noprops"][] =
-                                $this->mkprop($reqprop["xmlns"], $reqprop["name"], "");
-
-                            // register property namespace if not known yet
-                            if ($reqprop["xmlns"] != "DAV:" && !isset($ns_hash[$reqprop["xmlns"]])) {
-                                $ns_name = "ns".(count($ns_hash) + 1);
-                                $ns_hash[$reqprop["xmlns"]] = $ns_name;
-                                $ns_defs .= " xmlns:$ns_name=\"$reqprop[xmlns]\"";
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         // now we generate the reply header ...
         $this->http_status("207 Multi-Status");
         header('Content-Type: text/xml; charset="utf-8"');
-
-        // we buffer the output to be able to send a Content-Length header, as some clients dont understand chunked encoding
-        ob_start();
 
         // ... and payload
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         echo "<D:multistatus xmlns:D=\"DAV:\">\n";
 
-        foreach ($files["files"] as $file) {
+        // now we loop over all returned file entries
+        foreach ($files["files"] as $filekey => &$file) {
+
+            // nothing to do if no properties were returend for a file
+			if (isset($file["props"]) && is_array($file["props"])) {
+
+	            // now loop over all returned properties
+	            foreach ($file["props"] as $key => &$prop) {
+	                // as a convenience feature we do not require that user handlers
+	                // restrict returned properties to the requested ones
+	                // here we strip all unrequested entries out of the response
+
+	            	// this can happen if we have allprop and prop in one propfind:
+	            	// <allprop /><prop><blah /></prop>, eg. blah is not automatic returned by allprop
+	                switch(is_array($options['props']) ? $options['props'][0] : $options['props']) {
+	                case "all":
+	                    // nothing to remove
+	                    break;
+
+	                case "names":
+	                    // only the names of all existing properties were requested
+	                    // so we remove all values
+	                    unset($file[$filekey]["props"][$key]["val"]);
+	                    break;
+
+	                default:
+	                    $found = false;
+
+	                    // search property name in requested properties
+	                    foreach ((array)$options["props"] as $reqprop) {
+	                        if (   $reqprop["name"]  == $prop["name"]
+	                               && @$reqprop["xmlns"] == $prop["ns"]) {
+	                            $found = true;
+	                            break;
+	                        }
+	                    }
+
+	                    // unset property and continue with next one if not found/requested
+	                    if (!$found) {
+	                        $file[$filekey]["props"][$key]="";
+	                        continue(2);
+	                    }
+	                    break;
+	                }
+
+	                // namespace handling
+	                if (empty($prop["ns"])) continue; // no namespace
+	                $ns = $prop["ns"];
+	                if ($ns == "DAV:") continue; // default namespace
+	                if (isset($ns_hash[$ns])) continue; // already known
+
+	                // register namespace
+	                $ns_name = "ns".(count($ns_hash) + 1);
+	                $ns_hash[$ns] = $ns_name;
+	                $ns_defs .= " xmlns:$ns_name=\"$ns\"";
+	            }
+
+	            // we also need to add empty entries for properties that were requested
+	            // but for which no values where returned by the user handler
+	            if (is_array($options['props'])) {
+	                foreach ($options["props"] as $reqprop) {
+	                    if (!is_array($reqprop) || $reqprop['name']=="") continue; // skip empty entries, or 'all' if <allprop /> used together with <prop>
+
+	                    $found = false;
+
+	                    // check if property exists in result
+	                    foreach ($file["props"] as &$prop) {
+	                        if (   $reqprop["name"]  == $prop["name"]
+	                               && @$reqprop["xmlns"] == $prop["ns"]) {
+	                            $found = true;
+	                            break;
+	                        }
+	                    }
+
+	                    if (!$found) {
+	                        if ($reqprop["xmlns"]==="DAV:" && $reqprop["name"]==="lockdiscovery") {
+	                            // lockdiscovery is handled by the base class
+	                            $file[$filekey]["props"][]
+	                                = $this->mkprop("DAV:",
+	                                                "lockdiscovery",
+	                                                $this->lockdiscovery($file[$filekey]['path']));
+	                        } else {
+	                            // add empty value for this property
+	                            $file[$filekey]["noprops"][] =
+	                                $this->mkprop($reqprop["xmlns"], $reqprop["name"], "");
+
+	                            // register property namespace if not known yet
+	                            if ($reqprop["xmlns"] != "DAV:" && !isset($ns_hash[$reqprop["xmlns"]])) {
+	                                $ns_name = "ns".(count($ns_hash) + 1);
+	                                $ns_hash[$reqprop["xmlns"]] = $ns_name;
+	                                $ns_defs .= " xmlns:$ns_name=\"$reqprop[xmlns]\"";
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
             // ignore empty or incomplete entries
             if (!is_array($file) || empty($file) || !isset($file["path"])) continue;
             $path = $file['path'];
@@ -721,7 +714,6 @@ class HTTP_WebDAV_Server
              collections end in a slash, this should be done in here
              by checking the resource attribute */
             // path needs to be urlencoded (only basic version of this class!)
-			//$href = $this->_mergePathes($this->base_uri, $path);
 			$href = $this->_urlencode($this->_mergePathes($this->base_uri, $path));
 
             echo "  <D:href>$href</D:href>\n";
@@ -731,7 +723,7 @@ class HTTP_WebDAV_Server
                 echo "   <D:propstat>\n";
                 echo "    <D:prop>\n";
 
-                foreach ($file["props"] as $key => $prop) {
+                foreach ($file["props"] as $key => &$prop) {
 
                     if (!is_array($prop)) continue;
                     if (!isset($prop["name"])) continue;
@@ -869,7 +861,7 @@ class HTTP_WebDAV_Server
                 echo "   <D:propstat>\n";
                 echo "    <D:prop>\n";
 
-                foreach ($file["noprops"] as $key => $prop) {
+                foreach ($file["noprops"] as $key => &$prop) {
                     if ($prop["ns"] == "DAV:") {
                         echo "     <D:$prop[name]/>\n";
                     } else if ($prop["ns"] == "") {
@@ -888,10 +880,6 @@ class HTTP_WebDAV_Server
         }
 
         echo "</D:multistatus>\n";
-
-        // sending the Content-Lenght header, before flushing the buffer
-        header('Content-Length: '.ob_get_length());
-        ob_end_flush();
     }
 
 
