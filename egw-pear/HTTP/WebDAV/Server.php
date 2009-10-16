@@ -592,12 +592,6 @@ class HTTP_WebDAV_Server
             }
         }
 
-        // collect namespaces here
-        $ns_hash = array();
-
-        // Microsoft Clients need this special namespace for date and time values
-        $ns_defs = "xmlns:ns0=\"urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/\"";
-
         // now we generate the reply header ...
         $this->http_status("207 Multi-Status");
         header('Content-Type: text/xml; charset="utf-8"');
@@ -607,13 +601,19 @@ class HTTP_WebDAV_Server
         echo "<D:multistatus xmlns:D=\"DAV:\">\n";
 
         // now we loop over all returned file entries
-        foreach ($files["files"] as $filekey => &$file) {
+        foreach ($files["files"] as &$file) {
+
+	        // collect namespaces here
+	        $ns_hash = array();
+
+	        // Microsoft Clients need this special namespace for date and time values
+	        $ns_defs = "xmlns:ns0=\"urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/\"";
 
             // nothing to do if no properties were returend for a file
 			if (isset($file["props"]) && is_array($file["props"])) {
 
 	            // now loop over all returned properties
-	            foreach ($file["props"] as $key => &$prop) {
+	            foreach ($file["props"] as &$prop) {
 	                // as a convenience feature we do not require that user handlers
 	                // restrict returned properties to the requested ones
 	                // here we strip all unrequested entries out of the response
@@ -628,7 +628,7 @@ class HTTP_WebDAV_Server
 	                case "names":
 	                    // only the names of all existing properties were requested
 	                    // so we remove all values
-	                    unset($file[$filekey]["props"][$key]["val"]);
+	                    unset($prop["val"]);
 	                    break;
 
 	                default:
@@ -645,7 +645,7 @@ class HTTP_WebDAV_Server
 
 	                    // unset property and continue with next one if not found/requested
 	                    if (!$found) {
-	                        $file[$filekey]["props"][$key]="";
+	                        $prop="";
 	                        continue(2);
 	                    }
 	                    break;
@@ -683,13 +683,13 @@ class HTTP_WebDAV_Server
 	                    if (!$found) {
 	                        if ($reqprop["xmlns"]==="DAV:" && $reqprop["name"]==="lockdiscovery") {
 	                            // lockdiscovery is handled by the base class
-	                            $file[$filekey]["props"][]
+	                            $file["props"][]
 	                                = $this->mkprop("DAV:",
 	                                                "lockdiscovery",
-	                                                $this->lockdiscovery($file[$filekey]['path']));
+	                                                $this->lockdiscovery($file['path']));
 	                        } else {
 	                            // add empty value for this property
-	                            $file[$filekey]["noprops"][] =
+	                            $file["noprops"][] =
 	                                $this->mkprop($reqprop["xmlns"], $reqprop["name"], "");
 
 	                            // register property namespace if not known yet
@@ -723,7 +723,7 @@ class HTTP_WebDAV_Server
                 echo "   <D:propstat>\n";
                 echo "    <D:prop>\n";
 
-                foreach ($file["props"] as $key => &$prop) {
+                foreach ($file["props"] as &$prop) {
 
                     if (!is_array($prop)) continue;
                     if (!isset($prop["name"])) continue;
@@ -789,6 +789,7 @@ class HTTP_WebDAV_Server
                             echo "     </D:lockdiscovery>\n";
                             break;
                         default:
+                        	if (is_array($prop['val'])) error_log($file['path'].': '.$prop['name'].'='.array2string($prop['val']));
                             echo "     <D:$prop[name]>"
                                 . $this->_prop_encode(htmlspecialchars($prop['val']))
                                 .     "</D:$prop[name]>\n";
@@ -861,7 +862,7 @@ class HTTP_WebDAV_Server
                 echo "   <D:propstat>\n";
                 echo "    <D:prop>\n";
 
-                foreach ($file["noprops"] as $key => &$prop) {
+                foreach ($file["noprops"] as &$prop) {
                     if ($prop["ns"] == "DAV:") {
                         echo "     <D:$prop[name]/>\n";
                     } else if ($prop["ns"] == "") {
