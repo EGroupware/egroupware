@@ -79,8 +79,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		//$starttime = microtime(true);
-
+		$starttime = microtime(true);
 		$filter = array();
 		// show addressbook of a single user?
 		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
@@ -143,8 +142,7 @@ class addressbook_groupdav extends groupdav_handler
 				);
 			}
 		}
-
-		//$endtime = microtime(true) - $starttime; error_log(__METHOD__."($path) elapsed time : $endtime, returning ".count($files['files']).' contacts');
+		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files['files']).' items');
 		return true;
 	}
 

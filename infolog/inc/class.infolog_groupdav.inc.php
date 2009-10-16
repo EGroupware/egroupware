@@ -7,7 +7,7 @@
  * @package infolog
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -22,7 +22,7 @@ class infolog_groupdav extends groupdav_handler
 	 * @var infolog_bo
 	 */
 	var $bo;
-	static $debugInfo = 0; // sometimes debuging is quite handy, to see things. check with the error log to see results
+
 	/**
 	 * Constructor
 	 *
@@ -32,10 +32,8 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function __construct($app,$debug=null,$base_uri=null)
 	{
-		if (self::$debugInfo) $debug = self::$debugInfo;
-		if (self::$debugInfo) error_log(__METHOD__." called ");
 		parent::__construct($app,$debug,$base_uri);
-		if (self::$debugInfo) error_log(__METHOD__." parent constructed with $app,$debug,$base_uri; initializing infolog_bo ");
+
 		$this->bo = new infolog_bo();
 	}
 
@@ -49,7 +47,6 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	static function get_path($info)
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called with".print_r($info,true));
 		if (is_numeric($info) && self::PATH_ATTRIBUTE == 'info_id')
 		{
 			$name = $info;
@@ -57,7 +54,6 @@ class infolog_groupdav extends groupdav_handler
 		else
 		{
 			if (!is_array($info)) $info = $this->bo->read($info);
-			if (self::$debugInfo) error_log(__METHOD__." returning info on ".print_r( $info,true));
 			$name = $info[self::PATH_ATTRIBUTE];
 		}
 		return '/infolog/'.$name.'.ics';
@@ -74,7 +70,8 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called ");
+		$starttime = microtime(true);
+
 		// todo add a filter to limit how far back entries from the past get synced
 		$filter = array(
 			'info_type'	=> 'task',
@@ -82,7 +79,7 @@ class infolog_groupdav extends groupdav_handler
 		if ($id) $filter['info_id'] = $id;	// propfind on a single id
 
 		// ToDo: add parameter to only return id & etag
-		if (($tasks = $this->bo->search($params=array(
+		if (($tasks =& $this->bo->search($params=array(
 			'order'		=> 'info_datemodified',
 			'sort'		=> 'DESC',
 			'filter'    => 'own',	// filter my: entries user is responsible for,
@@ -90,7 +87,7 @@ class infolog_groupdav extends groupdav_handler
 			'col_filter'	=> $filter,
 		))))
 		{
-			foreach($tasks as $task)
+			foreach($tasks as &$task)
 			{
 				$files['files'][] = array(
 	            	'path'  => self::get_path($task),
@@ -105,6 +102,7 @@ class infolog_groupdav extends groupdav_handler
 				);
 			}
 		}
+		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files['files']).' items');
 		return true;
 	}
 
@@ -117,7 +115,6 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function get(&$options,$id)
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called ");
 		if (!is_array($task = $this->_common_get_put_delete('GET',$options,$id)))
 		{
 			return $task;
@@ -140,7 +137,6 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function put(&$options,$id,$user=null)
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called ");
 		$ok = $this->_common_get_put_delete('PUT',$options,$id);
 		if (!is_null($ok) && !is_array($ok))
 		{
@@ -149,7 +145,7 @@ class infolog_groupdav extends groupdav_handler
 		$handler = $this->_get_handler();
 		if (!($info_id = $handler->importVTODO($options['content'],is_numeric($id) ? $id : -1)))
 		{
-			if ($this->debug ) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
+			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
 			return '403 Forbidden';
 		}
 		header('ETag: '.$this->get_etag($info_id));
@@ -170,7 +166,6 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function delete(&$options,$id)
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called ");
 		if (!is_array($task = $this->_common_get_put_delete('DELETE',$options,$id)))
 		{
 			return $task;
@@ -186,7 +181,6 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called ");
 		return $this->bo->read($id,false);
 	}
 
@@ -199,7 +193,6 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function check_access($acl,$task)
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called ");
 		return $this->bo->check_access($task,$acl);
 	}
 
@@ -211,7 +204,6 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function get_etag($info)
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called ");
 		if (!is_array($info))
 		{
 			$info = $this->bo->read($info);
@@ -230,11 +222,9 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	private function _get_handler()
 	{
-		if (self::$debugInfo) error_log(__METHOD__." called ");
 		$handler = new infolog_ical();
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 
 		return $handler;
 	}
 }
-

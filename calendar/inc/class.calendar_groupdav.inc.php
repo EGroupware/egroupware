@@ -7,7 +7,7 @@
  * @package calendar
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -85,10 +85,9 @@ class calendar_groupdav extends groupdav_handler
 	function propfind($path,$options,&$files,$user,$id='')
 	{
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
-		 //error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");//njv:
+		$starttime = microtime(true);
+
 		// ToDo: add parameter to only return id & etag
-		//error_log( __FILE__ . __METHOD__ ."  :$user ". print_r($options,true));
-		$st = microtime(true);
 		$cal_filters = array(
 			'users' => $user,
 			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync  recurrences
@@ -98,7 +97,7 @@ class calendar_groupdav extends groupdav_handler
 			'date_format' => 'server',
 		);
 		if ($this->debug > 1) error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));
-		//error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));//njv
+		//error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$cal_filters,$id))
 		{
@@ -116,10 +115,9 @@ class calendar_groupdav extends groupdav_handler
 				}
 			}
 		}
-		//error_log(__FILE__ . __METHOD__ ."Filters:" .print_r($cal_filters,true));
-		if (($events = $this->bo->search($cal_filters)))
+		if (($events =& $this->bo->search($cal_filters)))
 		{
-			foreach($events as $event)
+			foreach($events as &$event)
 			{
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
@@ -148,8 +146,7 @@ class calendar_groupdav extends groupdav_handler
 				);
 			}
 		}
-		$end = microtime(true) - $st;
-		if ($this->debug) error_log(__FILE__ . __METHOD__ . "Function took : $end");
+		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files['files']).' items');
 		return true;
 	}
 
