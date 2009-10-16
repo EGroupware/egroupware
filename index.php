@@ -55,6 +55,20 @@ $GLOBALS['egw_info'] = array(
 );
 include('./header.inc.php');
 
+// user changed timezone
+if (isset($_GET['tz']))
+{
+	egw_time::setUserPrefs($_GET['tz']);	// throws exception, if tz is invalid
+
+	$GLOBALS['egw']->preferences->add('common','tz',$_GET['tz']);
+	$GLOBALS['egw']->preferences->save_repository();
+
+	if (($referer = common::get_referer()))
+	{
+		egw::redirect_link($referer);
+	}
+}
+
 // 	Check if we are using windows or normal webpage
 $windowed = false;
 $tpl_info = EGW_SERVER_ROOT . '/phpgwapi/templates/' . basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
