@@ -91,7 +91,7 @@ class egw_time extends DateTime
 				$type = 'string';
 				// fall through
 			case 'string':
-				if (!(is_numeric($time) && $time > 21000000))
+				if (!(is_numeric($time) && ($time > 21000000 || $time < 19000000)))
 				{
 					if (is_numeric($time) && strlen($time) == 8) $time .= 'T000000';	// 'Ymd' string used in calendar to represent a date
 					// $time ending in a Z (Zulu or UTC time), is unterstood by DateTime class itself
@@ -430,9 +430,21 @@ class egw_time extends DateTime
 }
 egw_time::init();
 
-/*
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
 {
+	// test timestamps/dates before 1970
+	foreach(array('19690811',-3600,'-119322000') as $ts)
+	{
+		try {
+			echo "<p>egw_time::to($ts,'Y-m-d H:i:s')=".egw_time::to($ts,'Y-m-d H:i:s')."</p>\n";
+			$et = new egw_time($ts);
+			echo "<p>egw_time($ts)->format('Y-m-d H:i:s')=".$et->format('Y-m-d H:i:s')."</p>\n";
+			$dt = new DateTime($ts);
+			echo "<p>DateTime($ts)->format('Y-m-d H:i:s')=".$dt->format('Y-m-d H:i:s')."</p>\n";
+		} catch(Exception $e) {
+			echo "<p><b>Exception</b>: ".$e->getMessage()."</p>\n";
+		}
+	}
 	// user time is UTC
 	echo "<p>user timezone = ".($GLOBALS['egw_info']['user']['preferences']['common']['tz'] = 'UTC').", server timezone = ".date_default_timezone_get()."</p>\n";
 
@@ -447,4 +459,4 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 	$ts = egw_time::to(array('full' => '20090627', 'hour' => 10, 'minute' => 0),'ts');
 	echo "<p>2009-06-27 10h UTC timestamp=$ts --> server time = ".egw_time::user2server($ts,'')." --> user time = ".egw_time::server2user(egw_time::user2server($ts),'')."</p>\n";
 }
-*/
+
