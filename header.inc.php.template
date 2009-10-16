@@ -96,7 +96,7 @@ $GLOBALS['egw_info']['server']['versions']['header'] = '1.29';
 
 if(!isset($GLOBALS['egw_info']['flags']['noapi']) || !$GLOBALS['egw_info']['flags']['noapi'])
 {
-	if (substr($_SERVER['SCRIPT_NAME'],-10) != 'webdav.php')	// dont do it for webdav, as we can not savely switch it off again
+	if (substr($_SERVER['SCRIPT_NAME'],-7) != 'dav.php')	// dont do it for webdav/groupdav, as we can not savely switch it off again
 	{
 		ob_start();	// to prevent error messages to be send before our headers
 	}
