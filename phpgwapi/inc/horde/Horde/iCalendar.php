@@ -1039,7 +1039,14 @@ class Horde_iCalendar {
 
             // Recurrence fields.
             case 'EXRULE':
+            	break;
+
             case 'RRULE':
+                if (!empty($params_str) &&  $params_str[0] == ';')
+                {
+                	// The standard requires a double colon RRULE:...
+                	 $params_str[0] = ':';
+                }
                 break;
 
             case 'PHOTO':
@@ -1100,7 +1107,6 @@ class Horde_iCalendar {
                     }
                     $value = preg_replace('/\r?\n/', "\n", $value);
                 }
-                break;
             }
 
             if (!empty($params['ENCODING']) && strlen(trim($value))) {
