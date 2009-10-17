@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare: GroupDAV access: addressbook handler
+ * EGroupware: GroupDAV access: addressbook handler
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -12,7 +12,10 @@
  */
 
 /**
- * eGroupWare: GroupDAV access: addressbook handler
+ * EGroupware: GroupDAV access: addressbook handler
+ *
+ * Propfind now uses a groupdav_propfind_iterator with a callback to query huge addressbooks in chunk,
+ * without getting into problems with memory_limit.
  */
 class addressbook_groupdav extends groupdav_handler
 {
@@ -79,7 +82,6 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		$starttime = microtime(true);
 		$filter = array();
 		// show addressbook of a single user?
 		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
@@ -94,27 +96,44 @@ class addressbook_groupdav extends groupdav_handler
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id) filter=".array2string($filter));
 
 		// check if we have to return the full calendar data or just the etag's
-		if (!($address_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CARDDAV) && is_array($options['props']))
+		if (!($filter['address_data'] = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CARDDAV) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
 				if ($prop['name'] == 'address-data')
 				{
-					$address_data = true;
+					$filter['address_data'] = true;
 					break;
 				}
 			}
 		}
-		if ($address_data)
+		// return iterator, calling ourself to return result in chunks
+		$files['files'] = new groupdav_propfind_iterator($this,$filter,$files['files']);
+
+		return true;
+	}
+
+	/**
+	 * Callback for profind interator
+	 *
+	 * @param array $filter
+	 * @param array|boolean $start=false false=return all or array(start,num)
+	 * @return array with "files" array with values for keys path and props
+	 */
+	function &propfind_callback(array $filter,$start=false)
+	{
+		$starttime = microtime(true);
+
+		if (($address_data = $filter['address_data']))
 		{
 			$handler = self::_get_handler();
 		}
-		$start = false;
-		//$start = array(0,7000);	// limit the number of contacts to return
+		unset($filter['address_data']);
+
+		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
 		if (($contacts =& $this->bo->search(array(),$address_data ? false : array('id','uid','etag','modified'),'contact_id','','',False,'AND',$start,$filter)))
 		{
-			//$icount= 0;
 			foreach($contacts as &$contact)
 			{
 				$props = array(
@@ -125,10 +144,7 @@ class addressbook_groupdav extends groupdav_handler
 				);
 				if ($address_data)
 				{
- 					//$sta = microtime(true);
 					$content = $handler->getVCard($contact,$this->charset,false);
-					//$en = microtime(true) - $sta;
-					//error_log("getVCard took : $en");
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content);
 				}
@@ -136,14 +152,14 @@ class addressbook_groupdav extends groupdav_handler
 				{
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
-				$files['files'][] = array(
+				$files[] = array(
 	            	'path'  => self::get_path($contact),
 	            	'props' => $props,
 				);
 			}
 		}
-		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files['files']).' items');
-		return true;
+		if ($this->debug) error_log(__METHOD__.'('.array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
+		return $files;
 	}
 
 	/**

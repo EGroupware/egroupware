@@ -1,18 +1,18 @@
 <?php
 /**
- * eGroupWare: GroupDAV access: abstract baseclass for groupdav/caldav/carddav handlers
+ * EGroupware: GroupDAV access: abstract baseclass for groupdav/caldav/carddav handlers
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 /**
- * eGroupWare: GroupDAV access: abstract baseclass for groupdav/caldav/carddav handlers
+ * EGroupware: GroupDAV access: abstract baseclass for groupdav/caldav/carddav handlers
  */
 abstract class groupdav_handler
 {
@@ -86,7 +86,7 @@ abstract class groupdav_handler
 		#if (!is_null($debug)) $this->debug = $debug = 3;
 		$this->base_uri = is_null($base_uri) ? $base_uri : $_SERVER['SCRIPT_NAME'];
 		$this->agent = self::get_agent();
-		
+
 		$this->translation =& $GLOBALS['egw']->translation;
 		$this->egw_charset = $this->translation->charset();
 	}
@@ -101,6 +101,16 @@ abstract class groupdav_handler
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
 	abstract function propfind($path,$options,&$files,$user);
+
+	/**
+	 * Propfind callback, if interator is used
+	 *
+	 * @param array $filter
+	 * @param array|boolean $start false=return all or array(start,num)
+	 * @param int &$total
+	 * @return array with "files" array with values for keys path and props
+	 */
+	function &propfind_callback(array $filter,$start,&$total) { }
 
 	/**
 	 * Handle get request for an applications entry
@@ -306,3 +316,134 @@ abstract class groupdav_handler
 	}
 }
 
+/**
+ * Iterator for propfinds using propfind callback of a groupdav_handler to query results in chunks
+ *
+ * The propfind method just computes a filter and then returns an instance of this iterator instead of the files:
+ *
+ *	function propfind($path,$options,&$files,$user,$id='')
+ *	{
+ *		$filter = array();
+ * 		// compute filter from path, options, ...
+ *
+ * 		$files['files'] = new groupdav_propfind_iterator($this,$filter,$files['files']);
+ *
+ * 		return true;
+ * 	}
+ */
+class groupdav_propfind_iterator implements Iterator
+{
+	/**
+	 * Handler to call for entries
+	 *
+	 * @var groupdav_handler
+	 */
+	protected $handler;
+
+	/**
+	 * Filter of propfind call
+	 *
+	 * @var array
+	 */
+	protected $filter;
+
+	/**
+	 * Extra responses to return too
+	 *
+	 * @var array
+	 */
+	protected $files;
+
+	/**
+	 * Start value for callback
+	 *
+	 * @var int
+	 */
+	protected $start=0;
+
+	/**
+	 * Number of entries queried from callback in one call
+	 *
+	 */
+	const CHUNK_SIZE = 100;
+
+	/**
+	 * Constructor
+	 *
+	 * @param groupdav_handler $handler
+	 * @param array $filter filter for propfind call
+	 * @param array $files=null extra files/responses to return too
+	 */
+	public function __construct(groupdav_handler $handler,array $filter,array &$files=null)
+	{
+		$this->handler = $handler;
+		$this->filter  = $filter;
+		$this->files   = $files;
+		reset($this->files);
+	}
+
+	/**
+	 * Return the current element
+	 *
+	 * @return array
+	 */
+	public function current()
+	{
+		return current($this->files);
+	}
+
+	/**
+	 * Return the key of the current element
+	 *
+	 * @return int|string
+	 */
+	public function key()
+	{
+		$current = $this->current();
+
+		return $current['path'];	// we return path as key
+	}
+
+	/**
+	 * Move forward to next element (called after each foreach loop)
+	 */
+	public function next()
+	{
+		if (next($this->files) !== false)
+		{
+			return true;
+		}
+		if (!$this->handler)
+		{
+			return false;	// no further entries
+		}
+		// try query further files via propfind callback of handler and store result in $this->files
+		$this->files = $this->handler->propfind_callback($this->filter,array($this->start,self::CHUNK_SIZE));
+		$this->start += self::CHUNK_SIZE;
+		reset($this->files);
+
+		if (count($this->files) < self::CHUNK_SIZE)	// less entries then asked --> no further available
+		{
+			unset($this->handler);
+		}
+		return current($this->files) !== false;
+	}
+
+	/**
+	 * Rewind the Iterator to the first element (called at beginning of foreach loop)
+	 */
+	public function rewind()
+	{
+
+	}
+
+	/**
+	 * Checks if current position is valid
+	 *
+	 * @return boolean
+	 */
+	public function valid ()
+	{
+		return current($this->files) !== false;
+	}
+}
