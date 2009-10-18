@@ -24,6 +24,15 @@
 class preferences
 {
 	/**
+	 * account_id for default prefs
+	 */
+	const DEFAULT_ID = -2;
+	/**
+	 * account_id for forced prefs
+	 */
+	const FORCED_ID = -1;
+
+	/**
 	 * account the class is instanciated for
 	 * @var int
 	 */
@@ -69,11 +78,14 @@ class preferences
 	var $table = 'egw_preferences';
 
 	var $values,$vars;	// standard notify substitues, will be set by standard_substitues()
-	#var $debug = false;
+
 	/**
-	 * Standard constructor for setting $this->account_id
+	 * Contstructor
+	 *
+	 * @param int|string $account_id=''
+	 * @return preferences
 	 */
-	function preferences($account_id = '')
+	function __construct($account_id = '')
 	{
 		if (is_object($GLOBALS['egw']->db))
 		{
@@ -85,6 +97,18 @@ class preferences
 			$this->table = $GLOBALS['egw_setup']->prefs_table;
 		}
 		$this->account_id = get_account_id($account_id);
+	}
+
+	/**
+	 * Old PHP4 contstructor
+	 *
+	 * @param int|string $account_id=''
+	 * @return preferences
+	 * @deprecated
+	 */
+	function preferences($account_id = '')
+	{
+		self::__construct();
 	}
 
 	/**************************************************************************\
@@ -255,10 +279,10 @@ class preferences
 			}
 			switch($row['preference_owner'])
 			{
-				case -1:	// forced
+				case self::FORCED_ID:
 					$this->forced[$app] = $value;
 					break;
-				case -2:	// default
+				case self::DEFAULT_ID:
 					$this->default[$app] = $value;
 					break;
 				default:	// user
@@ -589,11 +613,11 @@ class preferences
 		switch($type)
 		{
 			case 'forced':
-				$account_id = -1;
+				$account_id = self::FORCED_ID;
 				$prefs = &$this->forced;
 				break;
 			case 'default':
-				$account_id = -2;
+				$account_id = self::DEFAULT_ID;
 				$prefs = &$this->default;
 				break;
 			default:
