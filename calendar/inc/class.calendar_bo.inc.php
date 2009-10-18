@@ -269,7 +269,7 @@ class calendar_bo
 	/**
 	 * Searches / lists calendar entries, including repeating ones
 	 *
-	 * @param params array with the following keys
+	 * @param array $params array with the following keys
 	 *	start date startdate of the search/list, defaults to today
 	 *	end   date enddate of the search/list, defaults to start + one day
 	 *	users  mixed integer user-id or array of user-id's to use, defaults to the current user

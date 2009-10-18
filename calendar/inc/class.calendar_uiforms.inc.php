@@ -46,9 +46,9 @@ class calendar_uiforms extends calendar_ui
 	var $tabs = 'general|description|participants|recurrence|custom|links|alarms';
 
 	/**
-	 * default timelock for entries, that are opened by another user
+	 * default locking time for entries, that are opened by another user
 	 *
-	 * @var time in secomdas
+	 * @var locktime in seconds
 	 */
 	var $locktime_default=1;
 
