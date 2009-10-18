@@ -560,7 +560,18 @@ class calendar_boupdate extends calendar_bo
 
 				switch($part_prefs['calendar']['update_format'])
 				{
-					case  'extended':
+					case 'ical':
+						if ($method == 'REQUEST')
+						{
+							$ics = ExecMethod2('calendar.calendar_ical.exportVCal',$event['id'],'2.0',$method);
+							$attachment = array(	'string' => $ics,
+													'filename' => 'cal.ics',
+													'encoding' => '8bit',
+													'type' => 'text/calendar; method='.$method,
+													);
+						}
+						// fall through
+					case 'extended':
 						$body .= "\n\n".lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
 						{
@@ -575,18 +586,6 @@ class calendar_boupdate extends calendar_bo
 										break;
 							 	}
 							}
-						}
-						break;
-
-					case  'ical':
-						$ics = ExecMethod2('calendar.calendar_ical.exportVCal',$event['id'],'2.0',$method);
-						if ($method == 'REQUEST')
-						{
-							$attachment = array(	'string' => $ics,
-													'filename' => 'cal.ics',
-													'encoding' => '8bit',
-													'type' => 'text/calendar; method='.$method,
-													);
 						}
 						break;
 				}
