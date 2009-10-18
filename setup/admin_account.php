@@ -134,59 +134,6 @@ else
 	}
 	$GLOBALS['egw_setup']->add_acl($apps,'run',$admingroupid);
 
-	// give admin access to default apps, not yet set for the default group
-	function insert_default_prefs($accountid)
-	{
-		$lang = get_var('ConfigLang',Array('POST','COOKIE'),'en');
-		list(,$country) = explode('-',$lang);
-		if (empty($country)) $country = $lang;
-
-		$defaultprefs = array(
-			'common' => array(
-				'maxmatchs'     => 15,
-				'template_set'  => 'idots',
-				'theme'         => 'idots',
-				'navbar_format' => 'icons',
-				'tz'            => date_default_timezone_get(),
-				'dateformat'    => $lang == 'en' ? 'Y/m/d' : 'd.m.Y',
-				'timeformat'    => '24',
-				'lang'          => $lang,
-				'spellchecker_lang' => $lang,
-				'country'       => strtoupper($country),
-				'default_app'   => 'calendar',
-				'currency'      => $lang == 'en' ? '$' : 'EUR',
-				'show_help'     => True,
-				'max_icons'		=> 12,
-			),
-			'calendar' => array(
-				'workdaystarts' => 9,
-				'workdayends'   => 17,
-				'weekdaystarts' => 'Monday',
-				'defaultcalendar' => 'day',
-				'planner_start_with_group' => $GLOBALS['defaultgroupid'],
-			),
-		);
-
-		foreach ($defaultprefs as $app => $prefs)
-		{
-			// only insert them, if they not already exist
-			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->prefs_table,'*',array(
-				'preference_owner' => $accountid,
-				'preference_app'   => $app,
-			),__LINE__,__FILE__);
-			if (!$GLOBALS['egw_setup']->db->next_record())
-			{
-				$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->prefs_table,array(
-					'preference_value' => serialize($prefs)
-				),array(
-					'preference_owner' => $accountid,
-					'preference_app'   => $app,
-				),__LINE__,__FILE__);
-			}
-		}
-	}
-	insert_default_prefs(-2);	// -2 = default prefs
-
 	/* Creation of the demo accounts is optional - the checkbox is on by default. */
 	if(get_var('create_demo',Array('POST')))
 	{

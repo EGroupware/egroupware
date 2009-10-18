@@ -366,6 +366,7 @@ class setup_process
 					{
 						$GLOBALS['egw_setup']->register_app($appname);
 						$GLOBALS['egw_setup']->register_hooks($appname);
+						$GLOBALS['egw_setup']->set_default_preferences($appname);
 					}
 					// Update the array values for return below
 					$appdata['status'] = 'C';
@@ -398,6 +399,7 @@ class setup_process
 				{
 					$GLOBALS['egw_setup']->register_app($appname,$enabled);
 					$GLOBALS['egw_setup']->register_hooks($appname);
+					$GLOBALS['egw_setup']->set_default_preferences($appname);
 				}
 				$appdata['status'] = 'C';
 			}

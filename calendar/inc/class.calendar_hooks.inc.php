@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -135,11 +135,15 @@ class calendar_hooks
 
 	/**
 	 * Calendar preferences
+	 *
+	 * @param array $hook_data
 	 */
-	static function settings()
+	static function settings($hook_data)
 	{
-		ExecMethod('calendar.calendar_bo.check_set_default_prefs');
-
+		if (!$hook_data['setup'])	// does not work on setup time
+		{
+			ExecMethod('calendar.calendar_bo.check_set_default_prefs');
+		}
 		$default = array(
 			'day'          => lang('Dayview'),
 			'day4'         => lang('Four days view'),
@@ -161,20 +165,10 @@ class calendar_hooks
 			'5' => lang('Weekview without weekend'),
 			'7' => lang('Weekview with weekend'),
 		);
-
 		$mainpage = array(
 			'1' => lang('Yes'),
 			'0' => lang('No'),
 		);
-	/*
-		$summary = array(
-			'no'     => lang('Never'),
-			'daily'  => lang('Daily'),
-			'weekly' => lang('Weekly')
-		);
-		create_select_box('Receive summary of appointments','summary',$summary,
-			'Do you want to receive a regulary summary of your appointsments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summarys.<br>It is only sent when you have any appointments on that day or week.');
-	*/
 		$updates = array(
 			'no'             => lang('Never'),
 			'add_cancel'     => lang('on invitation / cancelation only'),
@@ -186,7 +180,7 @@ class calendar_hooks
 		$update_formats = array(
 			'none'     => lang('None'),
 			'extended' => lang('Extended'),
-			'ical'     => lang('iCal / rfc2445')
+			'ical'     => lang('iCal / rfc2445'),
 		);
 		$event_details = array(
 			'to-fullname' => lang('Fullname of person to notify'),
@@ -238,19 +232,22 @@ class calendar_hooks
 			'resources'     => lang('resources'),
 			'addressbook'   => lang('addressbook')
 		);
-		$groups = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']);
-		$options = array('0' => lang('none'));
-		if (is_array($groups))
+		if (!$hook_data['setup'])	// does not working on setup time
 		{
-			foreach($groups as $group)
+			$groups = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']);
+			$options = array('0' => lang('none'));
+			if (is_array($groups))
 			{
-				$options[$group['account_id']] = $GLOBALS['egw']->common->grab_owner_name($group['account_id']);
+				foreach($groups as $group)
+				{
+					$options[$group['account_id']] = $GLOBALS['egw']->common->grab_owner_name($group['account_id']);
+				}
 			}
+			$freebusy_url = calendar_bo::freebusy_url($GLOBALS['egw_info']['user']['account_lid'],$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw']);
+			$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.','<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>');
 		}
-		$freebusy_url = calendar_bo::freebusy_url($GLOBALS['egw_info']['user']['account_lid'],$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw']);
-		$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.','<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>');
 
-		$GLOBALS['settings'] = array(
+		return array(
 			'defaultcalendar' => array(
 				'type'   => 'select',
 				'label'  => 'default calendar view',
@@ -258,7 +255,8 @@ class calendar_hooks
 				'values' => $default,
 				'help'   => 'Which of calendar view do you want to see, when you start calendar ?',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'week',
 			),
 			'days_in_weekview' => array(
 				'type'   => 'select',
@@ -267,7 +265,8 @@ class calendar_hooks
 				'values' => $week_view,
 				'help'   => 'Do you want a weekview with or without weekend?',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> '7',
 			),
 			'multiple_weeks' => array(
 				'type'   => 'select',
@@ -276,7 +275,8 @@ class calendar_hooks
 				'values' => $muliple_weeks,
 				'help'   => 'How many weeks should the multiple week view show?',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'forced'=> 3,
 			),
 			'mainscreen_showevents' => array(
 				'type'   => 'select',
@@ -285,16 +285,18 @@ class calendar_hooks
 				'values' => $mainpage,
 				'help'   => 'Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> true,
 			),
 			'weekdaystarts' => array(
 				'type'   => 'select',
 				'label'  => 'weekday starts on',
 				'name'   => 'weekdaystarts',
-				'values' => $weekdaystarts,
+				'values' => 'Monday',
 				'help'   => 'This day is shown as first day in the week or month view.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'forced' => 'Monday',
 			),
 			'workdaystarts' => array(
 				'type'   => 'select',
@@ -303,7 +305,8 @@ class calendar_hooks
 				'values' => $times,
 				'help'   => 'This defines the start of your dayview. Events before this time, are shown above the dayview.<br>This time is also used as a default starttime for new events.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 9,
 			),
 			'workdayends' => array(
 				'type'   => 'select',
@@ -312,7 +315,8 @@ class calendar_hooks
 				'values' => $times,
 				'help'   => 'This defines the end of your dayview. Events after this time, are shown below the dayview.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 17,
 			),
 			'use_time_grid' => array(
 				'type'   => 'select',
@@ -321,7 +325,8 @@ class calendar_hooks
 				'values' => $grid_views,
 				'help'   => 'For which views should calendar show distinct lines with a fixed time interval.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'forced' => 'all',
 			),
 			'interval' => array(
 				'type'   => 'select',
@@ -330,7 +335,8 @@ class calendar_hooks
 				'values' => $intervals,
 				'help'   => 'How many minutes should each interval last?',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'interval'=> 30,
 			),
 			'defaultlength' => array(
 				'type'    => 'input',
@@ -340,7 +346,8 @@ class calendar_hooks
 				'default' => '',
 				'size'    => 3,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 60,
 			),
 			'defaultresource_sel' => array(
 				'type'		=> 'select',
@@ -350,6 +357,7 @@ class calendar_hooks
 				'help'		=> 'Default type of resources application selected in the calendar particpants research form.',
 				'xmlrpc'	=> True,
 				'admin'		=> False,
+				'forced'    => 'addressbook',
 			),
 			'planner_start_with_group' => array(
 				'type'   => 'select',
@@ -358,7 +366,7 @@ class calendar_hooks
 				'values' => $options,
 				'help'   => 'This group that is preselected when you enter the planner. You can change it in the planner anytime you want.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'planner_show_empty_rows' => array(
 				'type'   => 'select',
@@ -372,7 +380,8 @@ class calendar_hooks
 				),
 				'help'   => 'Should the planner display an empty row for users or categories without any appointment.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'forced' => 'user',
 			),
 			'default_private' => array(
 				'type'  => 'check',
@@ -380,7 +389,8 @@ class calendar_hooks
 				'name'  => 'default_private',
 				'help'  => 'Should new events created as private by default ?',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'forced' => '0',
 			),
 			'receive_updates' => array(
 				'type'   => 'select',
@@ -389,7 +399,8 @@ class calendar_hooks
 				'values' => $updates,
 				'help'   => "Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.",
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'time_change',
 			),
 			'update_format' => array(
 				'type'   => 'select',
@@ -398,7 +409,8 @@ class calendar_hooks
 				'values' => $update_formats,
 				'help'   => 'Extended updates always include the complete event-details. iCal\'s can be imported by certain other calendar-applications.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'forced' => 'ical',
 			),
 			'notifyAdded' => array(
 				'type'   => 'notify',
@@ -410,7 +422,7 @@ class calendar_hooks
 				'default' => '',
 				'values' => $event_details,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'notifyCanceled' => array(
 				'type'   => 'notify',
@@ -423,7 +435,7 @@ class calendar_hooks
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'notifyModified' => array(
 				'type'   => 'notify',
@@ -436,7 +448,7 @@ class calendar_hooks
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'notifyDisinvited' => array(
 				'type'   => 'notify',
@@ -449,7 +461,7 @@ class calendar_hooks
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'notifyResponse' => array(
 				'type'   => 'notify',
@@ -462,7 +474,7 @@ class calendar_hooks
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'notifyAlarm' => array(
 				'type'   => 'notify',
@@ -475,7 +487,7 @@ class calendar_hooks
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'freebusy' => array(
 				'type'  => 'check',
@@ -494,9 +506,8 @@ class calendar_hooks
 				'name'  => 'freebusy_pw',
 				'help'  => 'If you dont set a password here, the information is available to everyone, who knows the URL!!!',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			)
 		);
-		return true;
 	}
 }

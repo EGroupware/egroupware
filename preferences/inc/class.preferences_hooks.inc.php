@@ -84,7 +84,7 @@ class preferences_hooks
 		);
 
 		$user_apps = array();
-		foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
+		foreach((array)$GLOBALS['egw_info']['user']['apps'] as $app => $data)
 		{
 			if($GLOBALS['egw_info']['apps'][$app]['status'] != 2 && $app)
 			{
@@ -110,6 +110,12 @@ class preferences_hooks
 			'all'       => '['.lang('username').'] '.lang('Lastname').','.lang('Firstname'),
 		);
 
+		if ($hook_data['setup'])	// called via setup
+		{
+			$lang = get_var('ConfigLang',Array('POST','COOKIE'),'en');
+			list(,$country) = explode('-',$lang);
+			if (empty($country)) $country = $lang;
+		}
 		// Settings array for this app
 		$settings = array(
 			'maxmatchs' => array(
@@ -119,7 +125,8 @@ class preferences_hooks
 				'help'  => 'Any listing in eGW will show you this number of entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.',
 				'size'  => 3,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default' => 15,
 			),
 			'template_set' => array(
 				'type'   => 'select',
@@ -128,7 +135,8 @@ class preferences_hooks
 				'values' => $_templates,
 				'help'   => 'A template defines the layout of eGroupWare and it contains icons for each application.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default' => 'idots',
 			),
 			'theme' => array(
 				'type'   => 'select',
@@ -137,7 +145,8 @@ class preferences_hooks
 				'values' => $_themes,
 				'help'   => 'A theme defines the colors and fonts used by the template.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default' => 'idots',
 			),
 			'navbar_format' => array(
 				'type'   => 'select',
@@ -146,7 +155,8 @@ class preferences_hooks
 				'values' => $navbar_format,
 				'help'   => 'You can show the applications as icons only, icons with app-name or both.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'icons_and_text',
 			),
 			'link_list_format' => array(
 				'type'		=>	'select',
@@ -155,7 +165,7 @@ class preferences_hooks
 				'values'	=>	$link_list_format,
 				'help'		=>	'You can show the linked entries with icons only, icons with app-name or both.',
 				'xmlrpc'	=>	True,
-				'admin'		=>	False
+				'admin'		=>	False,
 			),
 			'link_list_thumbnail' => array(
 				'type'		=>	'select',
@@ -167,7 +177,7 @@ class preferences_hooks
 				),
 				'help'		=>	'Images linked to an entry can be displayed as thumbnails.  You can turn this off to speed up page display.',
 				'xmlrpc'	=>	True,
-				'admin'		=>	False
+				'admin'		=>	False,
 			),
 			'tz' => array(
 				'type'   => 'select',
@@ -176,7 +186,8 @@ class preferences_hooks
 				'values' => $tzs,
 				'help'   => 'Please select your timezone.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> date_default_timezone_get(),
 			),
 			'tz_selection' => array(
 				'type'   => 'multiselect',
@@ -185,7 +196,7 @@ class preferences_hooks
 				'values' => call_user_func_array('array_merge',$tzs),	// only flat arrays supported
 				'help'   => 'Please select timezones, you want to be able to quickly switch between. Switch is NOT shown, if less then two are selected.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'dateformat' => array(
 				'type'   => 'select',
@@ -194,7 +205,8 @@ class preferences_hooks
 				'values' => $date_formats,
 				'help'   => 'How should eGroupWare display dates for you.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> $lang == 'en' ? 'Y/m/d' : 'd.m.Y',
 			),
 			'timeformat' => array(
 				'type'   => 'select',
@@ -203,7 +215,8 @@ class preferences_hooks
 				'values' => $time_formats,
 				'help'   => 'Do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 24,
 			),
 			'country' => array(
 				'type'   => 'select',
@@ -212,7 +225,8 @@ class preferences_hooks
 				'values' => ExecMethod('phpgwapi.country.countries'),
 				'help'   => 'In which country are you. This is used to set certain defaults for you.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> strtoupper($country),
 			),
 			'lang' => array(
 				'type'   => 'select',
@@ -221,7 +235,8 @@ class preferences_hooks
 				'values' => $langs,
 				'help'   => 'Select the language of texts and messages within eGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> $lang,
 			),
 			'spellchecker_lang' => array(
 				'type'   => 'select',
@@ -230,7 +245,8 @@ class preferences_hooks
 				'values' => $langs,
 				'help'   => 'Select the language of the spellchecker integrated into the rich text editor.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> $lang,
 			),
 			'rte_enter_mode' => array(
 				'type'   => 'select',
@@ -239,7 +255,8 @@ class preferences_hooks
 				'values' => $html_enter_mode,
 				'help'   => 'Select how the rich text editor will generate the enter (linebreak) tag.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'br',
 			),
 			'rte_skin' => array(
 				'type'   => 'select',
@@ -248,7 +265,8 @@ class preferences_hooks
 				'values' => $rich_text_editor_skins,
 				'help'   => 'Select the theme (visualization) of the rich text editor.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'office2003',
 			),
 			'show_currentusers' => array(
 				'type'  => 'check',
@@ -256,7 +274,7 @@ class preferences_hooks
 				'name'  => 'show_currentusers',
 				'help'  => 'Should the number of active sessions be displayed for you all the time.',
 				'xmlrpc' => False,
-				'admin'  => True
+				'admin'  => True,
 			),
 			'default_app' => array(
 				'type'   => 'select',
@@ -265,7 +283,8 @@ class preferences_hooks
 				'values' => $user_apps,
 				'help'   => "The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).",
 				'xmlrpc' => False,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'calendar',
 			),
 			'currency' => array(
 				'type'  => 'input',
@@ -273,7 +292,8 @@ class preferences_hooks
 				'name'  => 'currency',
 				'help'  => 'Which currency symbol or name should be used in eGroupWare.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> $lang == 'en' ? '$' : 'EUR',
 			),
 			'account_selection' => array(
 				'type'   => 'select',
@@ -284,7 +304,7 @@ class preferences_hooks
 					lang('The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.'),
 				'run_lang' => false,
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'account_display' => array(
 				'type'   => 'select',
@@ -293,7 +313,7 @@ class preferences_hooks
 				'values' => $account_display,
 				'help'   => 'Set this to your convenience. For security reasons, you might not want to show your Loginname in public.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'show_help' => array(
 				'type'   => 'check',
@@ -301,7 +321,8 @@ class preferences_hooks
 				'name'   => 'show_help',
 				'help'   => 'Should this help messages shown up always, when you enter the preferences or only on request.',
 				'xmlrpc' => False,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> True,
 			),
 			'enable_dragdrop' => array(
 				'type'   => 'check',
@@ -310,7 +331,7 @@ class preferences_hooks
 				'help'   => 'Enables or disables drag and drop functions in all applications. If the browser does not support '.
 					    'drag and drop, it will be disabled automatically. This feature is experimental at the moment.',
 				'xmlrpc' => False,
-				'admin'  => False
+				'admin'  => False,
 			),
 			'csv_charset' => array(
 				'type'   => 'select',
