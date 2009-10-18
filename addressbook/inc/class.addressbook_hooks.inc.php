@@ -106,9 +106,10 @@ class addressbook_hooks
 	/**
 	 * populates $settings for the preferences
 	 *
+	 * @param array|string $hook_data
 	 * @return array
 	 */
-	static function settings()
+	static function settings($hook_data)
 	{
 		$settings = array();
 		$settings['add_default'] = array(
@@ -116,7 +117,7 @@ class addressbook_hooks
 			'label'  => 'Default addressbook for adding contacts',
 			'name'   => 'add_default',
 			'help'   => 'Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.',
-			'values' => ExecMethod('addressbook.addressbook_ui.get_addressbooks',EGW_ACL_ADD),
+			'values' => !$hook_data['setup'] ? ExecMethod('addressbook.addressbook_ui.get_addressbooks',EGW_ACL_ADD) : array(),
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
@@ -164,7 +165,7 @@ class addressbook_hooks
 			'type'   => 'select',
 			'label'  => 'Charset for the CSV export',
 			'name'   => 'csv_charset',
-			'values' => $GLOBALS['egw']->translation->get_installed_charsets()+array('utf-8' => 'utf-8 (Unicode)'),
+			'values' => translation::get_installed_charsets(),
 			'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
 			'xmlrpc' => True,
 			'admin'  => false,
