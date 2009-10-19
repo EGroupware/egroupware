@@ -270,7 +270,7 @@ class calendar_ical extends calendar_boupdate
 
 			if (!$serverTZ && $servertime)
 			{
-				$serverTZ = $this->generate_vtimezone($event['start'], $vcal);
+				$serverTZ = $this->generate_vtimezone($event, $vcal);
 			}
 
 			if ($this->productManufacturer == 'sonyericsson')
@@ -421,9 +421,9 @@ class calendar_ical extends calendar_boupdate
 							{
 								$rrule['UNTIL'] = '#0';
 							}
-
-							$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
-						} else {
+						}
+						else
+						{
 							$rrule = array('FREQ' => $this->recur_egw2ical_2_0[$event['recur_type']]);
 							switch ($event['recur_type'])
 							{
@@ -463,15 +463,9 @@ class calendar_ical extends calendar_boupdate
 									$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
 								}
 							}
-							// no idea how to get the Horde parser to produce a standard conformant
-							// RRULE:FREQ=... (note the double colon after RRULE, we cant use the $parameter array)
-							// so we create one value manual ;-)
-							foreach($rrule as $name => $value)
-							{
-								$attributes['RRULE'][] = $name . '=' . $value;
-							}
-							$attributes['RRULE'] = implode(';',$attributes['RRULE']);
 						}
+						$attributes['RRULE'] = '';
+						$parameters['RRULE'] = $rrule;
 						break;
 
 					case 'EXDATE':
@@ -2264,16 +2258,15 @@ class calendar_ical extends calendar_boupdate
 			);
     }
 
-    /**
+	/**
 	 * generate and insert a VTIMEZONE entry to a vcalendar
 	 *
-	 * @param int $ts timestamp to evaluate the local timezone and year
-	 * @param array $vevent VEVENT representation of the event
+	 * @param array $event
+	 * @param array $vcal VCALENDAR entry
 	 * @return string local timezone name (e.g. 'CET/CEST')
 	 */
-	function generate_vtimezone($ts, &$vcal)
+	function generate_vtimezone($event, &$vcal)
 	{
-		$utc = array('UTC',null,0,0,"",0,0,0,0,0,0,0,0,0,0);
 		$dayofweek = array('SU','MO','TU','WE','TH','FR','SA');
 		$tbl_tz = array(
 			array("Afghanistan","Asia/Kabul",270,0,"",0,0,0,0,0,0,0,0,0,0),
@@ -2313,6 +2306,7 @@ class calendar_ical extends calendar_boupdate
 			array("Central_Brazilian","America/Manaus",-240,60,"2006",11,0,1,0,0,2,0,2,2,0),
 			array("Central_Brazilian","America/Manaus",-240,60,"2007",11,0,1,0,0,2,0,5,0,0),
 			array("CET/CEST","Europe/Zurich",60,60,"",3,0,5,2,0,10,0,5,3,0),
+			array("CET/CEST","Europe/Vienna",60,60,"",3,0,5,2,0,10,0,5,3,0),
 			array("MEZ/MESZ","Europe/Berlin",60,60,"",3,0,5,2,0,10,0,5,3,0),
 			array("Central_Europe","Europe/Budapest",60,60,"",3,0,5,2,0,10,0,5,3,0),
 			array("Central_European","Europe/Warsaw",60,60,"",3,0,5,2,0,10,0,5,3,0),
@@ -2456,72 +2450,112 @@ class calendar_ical extends calendar_boupdate
 			array("Yakutsk","Asia/Yakutsk",540,60,"",3,0,5,2,0,10,0,5,3,0),
 		);
 
-		$serverTZ = date('e', $ts);
-		$year = date('Y', $ts);
+		$serverTZ = date('e', $event['start']);
+		$year = date('Y', $event['start']);
 		$i = 0;
-		$row =& $utc;
+		$row = false;
 		do
 		{
 			$tbl_tz_row =& $tbl_tz[$i];
-			if ($row[0] != 'UTC' && $row[0] != $tbl_tz_row[0]) break;
-			if ($tbl_tz_row[1] == $serverTZ
-				&& ($tbl_tz_row[4] != "" || $year >= (int) $tbl_tz_row[4]))
+			if ($tbl_tz_row[1] == $serverTZ)
 			{
-				$row =& $tbl_tz[$i];
+				if ($tbl_tz_row[4] == '' || $year >= (int) $tbl_tz_row[4])
+				{
+					$row = $i;
+				}
+				else if ($row !== false) break;
+				else if ($tbl_tz_row[4] != '' && $year < (int) $tbl_tz_row[4])
+				{
+					// First DST starts at this year
+					$year = (int) $tbl_tz_row[4];
+					if (empty($event['recur_enddate'])
+						|| $year <= date('Y', $event['recur_enddate']))
+					{
+						$row = $i;
+					}
+					break;
+				}
 			}
-			$i++;
+			else if ($row !== false) break;
 		}
-		while (is_array($tbl_tz[$i]));
-		if (preg_match('/(.+)\/(.+)/', $row[0], $matches))
+		while (is_array($tbl_tz[++$i]));
+
+		if ($row === false) return $serverTZ; // UTC or unkown TZ
+
+		$tbl_tz_row =& $tbl_tz[$row];
+
+		if (preg_match('/(.+)\/(.+)/', $tbl_tz_row[0], $matches))
 		{
 			$stdname = $matches[1];
 			$dstname = $matches[2];
 		}
 		else
 		{
-			$stdname = $dstname = $row[0];
+			$stdname = $dstname = $tbl_tz_row[0];
 		}
 
-		if($row[1]) // UTC does not need a VTIMEZONE component
-		{
-			$container = false;
-			$vtimezone = Horde_iCalendar::newComponent('VTIMEZONE', $container);
-			$vtimezone->setAttribute('TZID', $row[1]);
-			$minutes = $row[2] + $row[3];
-			$value1['ahead'] = ($minutes > 0);
+		$container = false;
+		$vtimezone = Horde_iCalendar::newComponent('VTIMEZONE', $container);
+		$vtimezone->setAttribute('TZID', $tbl_tz_row[1]);
+		do {
+			if (is_array($tbl_tz[++$row]))
+			{
+				$tbl_next_row =& $tbl_tz[$row];
+				if ($tbl_next_row[1] != $serverTZ) $tbl_next_row = false;
+			}
+			else $tbl_next_row = false;
+
+			$minutes = $tbl_tz_row[2] + $tbl_tz_row[3];
+			$value1['ahead'] = ($minutes >= 0);
 			$minutes = abs($minutes);
 			$value1['hour'] = (int)$minutes / 60;
 			$value1['minute'] = $minutes % 60;
-			$minutes = $row[2];
+			$minutes = $tbl_tz_row[2];
 			$value2['ahead'] = ($minutes > 0);
 			$minutes = abs($minutes);
 			$value2['hour'] = (int)$minutes / 60;
 			$value2['minute'] = $minutes % 60;
 
 			$daylight = Horde_iCalendar::newComponent('DAYLIGHT', $container);
-			$dtstart = $this->calc_dtstart($row[4], $row[5], $row[6], $row[7], $row[8], $row[9]);
+			$dtstart = $this->calc_dtstart($year, $tbl_tz_row[5],
+				$tbl_tz_row[6], $tbl_tz_row[7], $tbl_tz_row[8], $tbl_tz_row[9]);
 			$daylight->setAttribute('DTSTART', $dtstart);
-			$byday = ($row[7] == 5 ? '-1' : $row[7]) . $dayofweek[$row[6]];
-			$daylight->setAttribute('RRULE', '', array('FREQ' => 'YEARLY', 'BYMONTH' => $row[5], 'BYDAY' => $byday));
+			$byday = ($tbl_tz_row[7] == 5 ? '-1' : $tbl_tz_row[7]) . $dayofweek[$tbl_tz_row[6]];
+			$rrule = array('FREQ' => 'YEARLY', 'BYMONTH' => $tbl_tz_row[5], 'BYDAY' => $byday);
+			if ($tbl_next_row)
+			{
+				$rrule['UNTIL'] =  $tbl_next_row[4] . '0101T000000Z';
+			}
+			$daylight->setAttribute('RRULE', '', $rrule);
 			$daylight->setAttribute('TZNAME', $dstname);
 			$daylight->setAttribute('TZOFFSETFROM', $value2);
 			$daylight->setAttribute('TZOFFSETTO', $value1);
 
 			$standard = Horde_iCalendar::newComponent('STANDARD', $container);
-			$dtstart = $this->calc_dtstart($year, $row[10], $row[11], $row[12], $row[13], $row[14]);
+			$dtstart = $this->calc_dtstart($year, $tbl_tz_row[10], $tbl_tz_row[11],
+				$tbl_tz_row[12], $tbl_tz_row[13], $tbl_tz_row[14]);
 			$standard->setAttribute('DTSTART', $dtstart);
-			$byday = ($row[12] == 5 ? '-1' : $row[12]) . $dayofweek[$row[11]];
-			$standard->setAttribute('RRULE', '', array('FREQ' => 'YEARLY', 'BYMONTH' => $row[10], 'BYDAY' => $byday));
+			$byday = ($tbl_tz_row[12] == 5 ? '-1' : $tbl_tz_row[12]) . $dayofweek[$tbl_tz_row[11]];
+			$rrule['BYMONTH'] = $tbl_tz_row[10];
+			$rrule['BYDAY'] = $byday;
+			$standard->setAttribute('RRULE', '', $rrule);
 			$standard->setAttribute('TZNAME', $stdname);
 			$standard->setAttribute('TZOFFSETFROM', $value1);
 			$standard->setAttribute('TZOFFSETTO', $value2);
 
 			$vtimezone->addComponent($daylight);
 			$vtimezone->addComponent($standard);
-			$vcal->addComponent($vtimezone);
-		}
+			if ($tbl_next_row)
+			{
+				$tbl_tz_row = $tbl_next_row;
+				$year = (int) $tbl_tz_row[4];
+			}
+		} while ($tbl_next_row && (empty($event['recur_enddate']) ||
+			$year <= date('Y', $event['recur_enddate'])));
 
-		return $row[1];
+		$vcal->addComponent($vtimezone);
+
+		return $serverTZ;
 	}
 
 	/**
