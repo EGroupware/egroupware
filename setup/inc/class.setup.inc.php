@@ -674,6 +674,76 @@ class setup
 	}
 
 	/**
+	 * Setup default and forced preferences, when an application gets installed
+	 *
+	 * @param string $appname
+	 * @return boolean false app not found or no hook settings, true settings found and defaull & forced prefs stored, if there are any defined
+	 */
+	function set_default_preferences($appname)
+	{
+		$setup_info = $GLOBALS['setup_info'][$appname];
+
+		if (!isset($setup_info) || !isset($setup_info['hooks']))
+		{
+			return false;	// app not found or no hook
+		}
+		$GLOBALS['settings'] = array();
+		if (isset($setup_info['hooks']['settings']))
+		{
+			$settings = ExecMethod($setup_info['hooks']['settings'],array('location' => 'settings','setup' => true));
+		}
+		elseif(in_array('settings',$setup_info['hooks']) && file_exists($file = EGW_INCLUDE_ROOT.'/'.$appname.'/inc/hook_settings.inc.php'))
+		{
+			include_once($file);
+		}
+		if (!isset($settings) || !is_array($settings))
+		{
+			$settings = $GLOBALS['settings'];	// old file hook or not updated new hook
+		}
+		if (!is_array($settings) || !count($settings))
+		{
+			return false;
+		}
+		// include idots template prefs for (common) preferences
+		if ($appname == 'preferences' && file_exists($file = EGW_INCLUDE_ROOT.'/phpgwapi/templates/idots/hook_settings.inc.php'))
+		{
+			$GLOBALS['settings'] = array();
+			include_once($file);
+			if ($GLOBALS['settings']) $settings = array_merge($settings,$GLOBALS['settings']);
+		}
+		$default = $forced = array();
+		foreach($settings as $name => $setting)
+		{
+			if (isset($setting['default']))
+			{
+				$default[$name] = (string)$setting['default'];
+			}
+			if (isset($setting['forced']))
+			{
+				$forced[$name] = (string)$setting['forced'];
+			}
+		}
+		// store default/forced preferences, if any found
+		foreach(array(
+			preferences::DEFAULT_ID => $default,
+			preferences::FORCED_ID  => $forced,
+		) as $owner => $prefs)
+		{
+			if ($prefs)
+			{
+				$this->db->insert($this->prefs_table,array(
+					'preference_value' => serialize($prefs),
+				),array(
+					'preference_owner' => $owner,
+					'preference_app'   => $appname == 'preferences' ? 'common' : $appname,
+				),__LINE__,__FILE__);
+				//error_log(__METHOD__."('$appname') storing ".($owner==preferences::DEFAULT_ID?'default':'forced')." prefs=".array2string($prefs));
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Update an application's hooks
 	 *
 	 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice

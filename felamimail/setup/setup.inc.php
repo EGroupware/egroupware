@@ -26,11 +26,10 @@ $setup_info['felamimail']['maintainer_email'] 	= 'kl@leithoff.net';
 $setup_info['felamimail']['tables']    = array('egw_felamimail_displayfilter','egw_felamimail_accounts','egw_felamimail_signatures');
 
 /* The hooks this app includes, needed for hooks registration */
-$setup_info['felamimail']['hooks'][] = 'preferences';
-#$setup_info['felamimail']['hooks'][] = 'admin';
-$setup_info['felamimail']['hooks'][] = 'settings';
+$setup_info['felamimail']['hooks']['preferences'] = 'felamimail_hooks::preferences';
+$setup_info['felamimail']['hooks']['settings'] = 'felamimail_hooks::settings';
 $setup_info['felamimail']['hooks'][] = 'home';
-$setup_info['felamimail']['hooks'][] = 'sidebox_menu';
+$setup_info['felamimail']['hooks']['sidebox_menu'] = 'felamimail_hooks::sidebox_menu';
 $setup_info['felamimail']['hooks'][] = 'notifywindow';
 $setup_info['felamimail']['hooks']['addaccount']	= 'felamimail.bofelamimail.addAccount';
 $setup_info['felamimail']['hooks']['deleteaccount']	= 'felamimail.bofelamimail.deleteAccount';

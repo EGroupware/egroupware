@@ -113,15 +113,8 @@ class filemanager_hooks
 		$config = config::read(self::$appname);
 		if (!empty($config['max_folderlinks'])) self::$foldercount = (int)$config['max_folderlinks'];
 
-		$upload_boxes = array(
-			'1'  => '1',
-			'5'  => '5',
-			'10' => '10',
-			'20' => '20',
-			'30' => '30'
-		);
 		$yes_no = array(
-			'no'	=> lang('No'),
+			'no'  => lang('No'),
 			'yes' => lang('Yes')
 		);
 
@@ -133,17 +126,17 @@ class filemanager_hooks
 				'label' 	=> lang('Show link to filemanagers basedirectory (/) in side box menu?'),
 				'help'		=> lang('Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.'),
 				'xmlrpc'	=> True,
-				'amin'		=> False
+				'admin'		=> False,
+				'default'   => 'no',
 			),
 			'startfolder'	=> array(
 				'type'		=> 'input',
 				'name'		=> 'startfolder',
 				'size'		=> 60,
-				'default'	=> '',
 				'label' 	=> lang('Enter the complete VFS path to specify your desired start folder.'),
 				'help'		=> lang('The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.'),
 				'xmlrpc'	=> True,
-				'amin'		=> False
+				'admin'		=> False,
 			),
 		);
 		for ($i=1; $i <= self::$foldercount; $i++)
@@ -155,7 +148,7 @@ class filemanager_hooks
 				'default'	=> '',
 				'label' 	=> lang('Enter the complete VFS path to specify a fast access link to a folder').' ('.$i.').',
 				'xmlrpc'	=> True,
-				'amin'		=> False
+				'admin'		=> False
 			);
 		}
 		return $settings;

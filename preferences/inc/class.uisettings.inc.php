@@ -208,6 +208,7 @@
 						continue;
 					}
 				}
+				unset($valarray['default']);	// not longer used as default, since we have default prefs
 				switch($valarray['type'])
 				{
 					case 'section':
