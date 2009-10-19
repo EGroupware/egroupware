@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare: CalDAV/CardDAV/GroupDAV access
+ * EGroupware: CalDAV/CardDAV/GroupDAV access
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -14,7 +14,7 @@
 require_once('HTTP/WebDAV/Server.php');
 
 /**
- * eGroupWare: GroupDAV access
+ * EGroupware: GroupDAV access
  *
  * Using a modified PEAR HTTP/WebDAV/Server class from egw-pear!
  *
@@ -172,7 +172,6 @@ class groupdav extends HTTP_WebDAV_Server
 
 		$files = array('files' => array());
 
-error_log(__METHOD__."($options[path],,$method) app=$app, user=$user, id=$id, user_prefix=$user_prefix");
 		if (!$app)	// root folder containing apps
 		{
 			// self url
@@ -375,41 +374,44 @@ error_log(__METHOD__."($options[path],,$method) app=$app, user=$user, id=$id, us
 		}
 		echo "</h1>\n";
 
-		$collection_props = self::props2array($files['files'][0]['props']);
-		echo '<h3>'.lang('Collection listing').': '.htmlspecialchars($collection_props['DAV:displayname'])."</h3>\n";
-		//_debug_array($files['files']);
-
-		if (count($files['files']) <= 1)
+		$n = 0;
+		foreach($files['files'] as $file)
+		{
+			if (!isset($collection_props))
+			{
+				$collection_props = self::props2array($file['props']);
+				echo '<h3>'.lang('Collection listing').': '.htmlspecialchars($collection_props['DAV:displayname'])."</h3>\n";
+				continue;	// own entry --> displaying properies later
+			}
+			if(!$n++)
+			{
+				echo "<table>\n\t<tr class='th'><th>#</th><th>".lang('Name')."</th><th>".lang('Size')."</th><th>".lang('Last modified')."</th><th>".
+					lang('ETag')."</th><th>".lang('Content type')."</th><th>".lang('Resource type')."</th></tr>\n";
+			}
+			$props = self::props2array($file['props']);
+			//echo $file['path']; _debug_array($props);
+			$class = $class == 'row_on' ? 'row_off' : 'row_on';
+			if (substr($file['path'],-1) == '/')
+			{
+				$name = basename(substr($file['path'],0,-1)).'/';
+			}
+			else
+			{
+				$name = basename($file['path']);
+			}
+			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".html::a_href(htmlspecialchars($name),'/groupdav.php'.$file['path'])."</td>\n";
+			echo "\t\t<td>".$props['DAV:getcontentlength']."</td>\n";
+			echo "\t\t<td>".(!empty($props['DAV:getlastmodified']) ? date('Y-m-d H:i:s',$props['DAV:getlastmodified']) : '')."</td>\n";
+			echo "\t\t<td>".$props['DAV:getetag']."</td>\n";
+			echo "\t\t<td>".htmlspecialchars($props['DAV:getcontenttype'])."</td>\n";
+			echo "\t\t<td>".self::prop_value($props['DAV:resourcetype'])."</td>\n\t</tr>\n";
+		}
+		if (!$n)
 		{
 			echo '<p>'.lang('Collection empty.')."</p>\n";
 		}
 		else
 		{
-			echo "<table>\n\t<tr class='th'><th>".lang('Name')."</th><th>".lang('Size')."</th><th>".lang('Last modified')."</th><th>".
-				lang('ETag')."</th><th>".lang('Content type')."</th><th>".lang('Resource type')."</th></tr>\n";
-
-			foreach($files['files'] as $n => $file)
-			{
-				if (!$n) continue;	// own entry --> displaying properies later
-
-				$props = self::props2array($file['props']);
-				//echo $file['path']; _debug_array($props);
-				$class = $class == 'row_on' ? 'row_off' : 'row_on';
-				if (substr($file['path'],-1) == '/')
-				{
-					$name = basename(substr($file['path'],0,-1)).'/';
-				}
-				else
-				{
-					$name = basename($file['path']);
-				}
-				echo "\t<tr class='$class'>\n\t\t<td>".html::a_href(htmlspecialchars($name),'/groupdav.php'.$file['path'])."</td>\n";
-				echo "\t\t<td>".$props['DAV:getcontentlength']."</td>\n";
-				echo "\t\t<td>".(!empty($props['DAV:getlastmodified']) ? date('Y-m-d H:i:s',$props['DAV:getlastmodified']) : '')."</td>\n";
-				echo "\t\t<td>".$props['DAV:getetag']."</td>\n";
-				echo "\t\t<td>".htmlspecialchars($props['DAV:getcontenttype'])."</td>\n";
-				echo "\t\t<td>".self::prop_value($props['DAV:resourcetype'])."</td>\n\t</tr>\n";
-			}
 			echo "</table>\n";
 		}
 		echo '<h3>'.lang('Properties')."</h3>\n";

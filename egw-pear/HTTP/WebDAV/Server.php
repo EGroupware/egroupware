@@ -600,8 +600,14 @@ class HTTP_WebDAV_Server
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         echo "<D:multistatus xmlns:D=\"DAV:\">\n";
 
+        // using an ArrayIterator to prevent foreach from copying the array,
+        // as we cant loop by reference, when an iterator is given in $files['files']
+        if (is_array($files['files']))
+        {
+        	$files['files'] = new ArrayIterator($files['files']);
+        }
         // now we loop over all returned file entries
-        foreach ($files["files"] as &$file) {
+        foreach ($files['files'] as $file) {
 
 	        // collect namespaces here
 	        $ns_hash = array();
@@ -687,7 +693,8 @@ class HTTP_WebDAV_Server
 	                                = $this->mkprop("DAV:",
 	                                                "lockdiscovery",
 	                                                $this->lockdiscovery($file['path']));
-	                        } else {
+	                        // only collect $file['noprops'] if we have NO Brief: t HTTP Header
+	                        } elseif (!isset($this->_SERVER['HTTP_BRIEF']) || $this->_SERVER['HTTP_BRIEF'] != 't') {
 	                            // add empty value for this property
 	                            $file["noprops"][] =
 	                                $this->mkprop($reqprop["xmlns"], $reqprop["name"], "");
