@@ -108,7 +108,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
 
     /**
      * Defined in SyncML Representation Protocol, version 1.1.  Must
-     * be 1.0 (0) or 1.1 (1).
+     * be 1.0 (0), 1.1 (1) or 1.2(2).
      *
      * @var string $_version
      */
@@ -150,7 +150,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
     {
         // Remove any existing session since we'll be contructing a
         // custom session id.
-		session_regenerate_id();
+		//session_regenerate_id();
         session_destroy();
 
 		// we need to (re-)load the eGW session-handler, as session_destroy unloads custom session-handlers
@@ -667,8 +667,8 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 					            			// e.g. Mozilla plugin uses this range
 					            			$swversion = $swversion * 10;
 				            			}
-				            			if($swversion < 7.0) {
-					            			// We wait for a ALERT_NEXT_MESSAGE from Funambol clients
+				            			if (3.0 < $swversion && $swversion < 7.0) {
+					            			// We wait for a ALERT_NEXT_MESSAGE from Funambol old clients
 					            			Horde::logMessage('SyncML['. session_id()
 						            			. "]: Special treatment for Funambol version $swversion activated",
 												__FILE__, __LINE__, PEAR_LOG_DEBUG);
