@@ -297,16 +297,17 @@ abstract class bo_tracking
 	public function changed_fields(array $data,array $old=null)
 	{
 		if (is_null($old)) return array_keys($data);
-
 		$changed_fields = array();
 		foreach($this->field2history as $name => $status)
 		{
+			if (!$old[$name] && !$data[$name]) continue;	// treat all sorts of empty equally
+
 			if (is_array($status))	// 1:N relation
 			{
 				self::compact_1_N_relation($data[$name],$status);
 				self::compact_1_N_relation($old[$name],$status);
 			}
-			if ($old[$name] != $data[$name] && !(!$old[$name] && !$data[$name]))
+			if ($old[$name] != $data[$name])
 			{
 				// normalize arrays, we do NOT care for the order of multiselections
 				if (is_array($data[$name]) || is_array($old[$name]))
@@ -321,6 +322,7 @@ abstract class bo_tracking
 					}
 				}
 				$changed_fields[] = $name;
+				//echo "<p>$name: ".array2string($data[$name]).' != '.array2string($old[$name])."</p>\n";
 			}
 		}
 		//error_log(__METHOD__."() changed_fields=".array2string($changed_fields));
@@ -330,25 +332,26 @@ abstract class bo_tracking
 	/**
 	 * Compact (spezified) fields of a 1:N relation into an array of strings
 	 *
-	 * @param array $rows rows of the 1:N relation
+	 * @param array &$rows rows of the 1:N relation
 	 * @param array $cols field names as values
 	 */
-	private static function compact_1_N_relation(array &$rows,array $cols)
+	private static function compact_1_N_relation(&$rows,array $cols)
 	{
-		if (empty($rows)) $rows = array();
-
-		if (!is_array($rows))
+		if (is_array($rows))
 		{
-			throw new egw_exception_assertion_failed(__METHOD__.'('.array2string($rows).','.array2string($cols).') $rows is NO array!');
-		}
-		foreach($rows as $key => &$row)
-		{
-			$values = array();
-			foreach($cols as $col)
+			foreach($rows as $key => &$row)
 			{
-				$values[] = $row[$col];
+				$values = array();
+				foreach($cols as $col)
+				{
+					$values[] = $row[$col];
+				}
+				$row = implode(self::ONE2N_SEPERATOR,$values);
 			}
-			$row = implode(self::ONE2N_SEPERATOR,$values);
+		}
+		else
+		{
+			$rows = array();
 		}
 	}
 
