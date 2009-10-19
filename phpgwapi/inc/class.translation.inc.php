@@ -197,8 +197,6 @@ class translation
 	 */
 	static function translate($key, $vars=false, $not_found='*' )
 	{
-		static $placeholders = array('%1','%2','%3','%4','%5','%6','%7','%8','%9','%10');
-
 		if (!self::$lang_arr)
 		{
 			self::init();
@@ -224,6 +222,10 @@ class translation
 		{
 			if (count($vars) > 1)
 			{
+				static $placeholders = array('%2','%1','|%2|','%3','%4','%5','%6','%7','%8','%9','%10');
+				// to cope with $vars[0] containing '%2' (eg. an urlencoded path like a referer),
+				// we first replace '%2' in $ret with '|%2|' and then use that as 2. placeholder
+				array_unshift($vars,'|%2|');	// push '|%2|' as first replacement on $vars
 				$ret = str_replace($placeholders,$vars,$ret);
 			}
 			else
@@ -967,7 +969,7 @@ class translation
 					$convertAtEnd = true;
 				}
 			}
-			if ($convertAtEnd) $newString = self::decodeMailHeader($newString,$displayCharset); 
+			if ($convertAtEnd) $newString = self::decodeMailHeader($newString,$displayCharset);
 			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$newString);
 		}
 		elseif(function_exists(mb_decode_mimeheader))
