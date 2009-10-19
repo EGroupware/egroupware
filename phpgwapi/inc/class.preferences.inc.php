@@ -272,6 +272,11 @@ class preferences
 			// The following replacement is required for PostgreSQL to work
 			$app = trim($row['preference_app']);
 			$value = unserialize($row['preference_value']);
+			if($value === false)
+			{
+				// manually retrieve the string lengths of the serialized array if unserialize failed
+				$value = unserialize(preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.mb_strlen('$2','8bit').':\"$2\";'", $row['preference_value']));
+			}
 			$this->unquote($value);
 			if (!is_array($value))
 			{
