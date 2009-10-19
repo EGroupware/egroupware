@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.1.20090920
+Version: 9.1.20091003
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -244,6 +244,7 @@ AutoReqProv: no
 Requires: egw-core >= %{version}
 Requires: %{name}-emailadmin >= %{version}
 Requires: %{name}-egw-pear >= %{version}
+Requires: tnef
 Obsoletes: %{egw_packagename}-felamimail
 %description felamimail
 The Email application for EGroupware.
@@ -687,7 +688,11 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 #%{egwdir}/workflow
 
 %changelog
-* Sun Sep 20 2009 Ralf Becker <rb@stylite.de> 9.1.20090902
+* Sat Oct 3 2009 Ralf Becker <rb@stylite.de> 9.1.20090903
+- using new tnef requirement for decoding winmail.dat
+- divers bugfixes
+
+* Sun Sep 20 2009 Ralf Becker <rb@stylite.de> 9.1.20090920
 - emailadmin allows to use email address as mailbox name
 - divers bugfixes
 
