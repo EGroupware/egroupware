@@ -286,7 +286,7 @@ class calendar_hooks
 				'help'   => 'Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> true,
+				'default'=> '1',
 			),
 			'weekdaystarts' => array(
 				'type'   => 'select',
@@ -316,7 +316,7 @@ class calendar_hooks
 				'help'   => 'This defines the end of your dayview. Events after this time, are shown below the dayview.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 17,
+				'default'=> 18,
 			),
 			'use_time_grid' => array(
 				'type'   => 'select',
@@ -336,7 +336,7 @@ class calendar_hooks
 				'help'   => 'How many minutes should each interval last?',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'interval'=> 30,
+				'default'=> 30,
 			),
 			'defaultlength' => array(
 				'type'    => 'input',
@@ -457,7 +457,6 @@ class calendar_hooks
 				'rows'   => 5,
 				'cols'   => 50,
 				'help'   => 'This message is sent to disinvited participants.',
-				'default' => '',
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
@@ -470,7 +469,6 @@ class calendar_hooks
 				'rows'   => 5,
 				'cols'   => 50,
 				'help'   => 'This message is sent when you accept, tentative accept or reject an event.',
-				'default' => '',
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
@@ -483,7 +481,6 @@ class calendar_hooks
 				'rows'   => 5,
 				'cols'   => 50,
 				'help'   => 'This message is sent when you set an Alarm for a certain event. Include all information you might need.',
-				'default' => '',
 				'values' => $event_details,
 				'subst_help' => False,
 				'xmlrpc' => True,
@@ -495,10 +492,10 @@ class calendar_hooks
 				'name'  => 'freebusy',
 				'help'  => $freebusy_help,
 				'run_lang' => false,
-				'default' => '',
 				'subst_help' => False,
 				'xmlrpc' => True,
 				'admin'  => False,
+				'forced' => false,
 			),
 			'freebusy_pw' => array(
 				'type'  => 'input',
@@ -507,6 +504,7 @@ class calendar_hooks
 				'help'  => 'If you dont set a password here, the information is available to everyone, who knows the URL!!!',
 				'xmlrpc' => True,
 				'admin'  => False,
+				'forced' => 'no'
 			)
 		);
 	}

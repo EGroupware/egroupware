@@ -126,7 +126,7 @@ class preferences_hooks
 				'size'  => 3,
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => 15,
+				'default' => 20,
 			),
 			'template_set' => array(
 				'type'   => 'select',
@@ -136,7 +136,7 @@ class preferences_hooks
 				'help'   => 'A template defines the layout of eGroupWare and it contains icons for each application.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => 'idots',
+				'forced' => 'idots',
 			),
 			'theme' => array(
 				'type'   => 'select',
@@ -146,7 +146,7 @@ class preferences_hooks
 				'help'   => 'A theme defines the colors and fonts used by the template.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => 'idots',
+				'forced' => 'idots',
 			),
 			'navbar_format' => array(
 				'type'   => 'select',
@@ -166,6 +166,7 @@ class preferences_hooks
 				'help'		=>	'You can show the linked entries with icons only, icons with app-name or both.',
 				'xmlrpc'	=>	True,
 				'admin'		=>	False,
+				'forced'    =>  'icons',
 			),
 			'link_list_thumbnail' => array(
 				'type'		=>	'select',
@@ -178,6 +179,7 @@ class preferences_hooks
 				'help'		=>	'Images linked to an entry can be displayed as thumbnails.  You can turn this off to speed up page display.',
 				'xmlrpc'	=>	True,
 				'admin'		=>	False,
+				'forced'    =>  '1',
 			),
 			'tz' => array(
 				'type'   => 'select',
@@ -197,6 +199,7 @@ class preferences_hooks
 				'help'   => 'Please select timezones, you want to be able to quickly switch between. Switch is NOT shown, if less then two are selected.',
 				'xmlrpc' => True,
 				'admin'  => False,
+				'forced' => date_default_timezone_get(),
 			),
 			'dateformat' => array(
 				'type'   => 'select',
@@ -256,7 +259,7 @@ class preferences_hooks
 				'help'   => 'Select how the rich text editor will generate the enter (linebreak) tag.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 'br',
+				'forced' => 'br',
 			),
 			'rte_skin' => array(
 				'type'   => 'select',
@@ -266,7 +269,7 @@ class preferences_hooks
 				'help'   => 'Select the theme (visualization) of the rich text editor.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 'office2003',
+				'forced' => 'office2003',
 			),
 			'show_currentusers' => array(
 				'type'  => 'check',
@@ -275,6 +278,7 @@ class preferences_hooks
 				'help'  => 'Should the number of active sessions be displayed for you all the time.',
 				'xmlrpc' => False,
 				'admin'  => True,
+				'forced' => true,
 			),
 			'default_app' => array(
 				'type'   => 'select',
@@ -284,7 +288,7 @@ class preferences_hooks
 				'help'   => "The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).",
 				'xmlrpc' => False,
 				'admin'  => False,
-				'default'=> 'calendar',
+				'default'=> '',
 			),
 			'currency' => array(
 				'type'  => 'input',
@@ -305,6 +309,7 @@ class preferences_hooks
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
+				'default'=> 'primary_group'
 			),
 			'account_display' => array(
 				'type'   => 'select',
@@ -314,6 +319,7 @@ class preferences_hooks
 				'help'   => 'Set this to your convenience. For security reasons, you might not want to show your Loginname in public.',
 				'xmlrpc' => True,
 				'admin'  => False,
+				'default'=> 'lastname',
 			),
 			'show_help' => array(
 				'type'   => 'check',
@@ -332,15 +338,17 @@ class preferences_hooks
 					    'drag and drop, it will be disabled automatically. This feature is experimental at the moment.',
 				'xmlrpc' => False,
 				'admin'  => False,
+				'forced' => true,
 			),
 			'csv_charset' => array(
 				'type'   => 'select',
 				'label'  => 'Charset for the CSV export',
 				'name'   => 'csv_charset',
-				'values' => translation::get_installed_charsets()+array('utf-8' => 'utf-8 (Unicode)'),
+				'values' => translation::get_installed_charsets(),
 				'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
 				'xmlrpc' => True,
 				'admin'  => false,
+				'default'=> 'iso-8859-1',
 			),
 		);
 		// disable thumbnails, if no size configured by admin

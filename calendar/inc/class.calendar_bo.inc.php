@@ -1847,41 +1847,32 @@ class calendar_bo
 		$GLOBALS['egw']->session->appsession('default_prefs_set','calendar','set');
 
 		$default_prefs =& $GLOBALS['egw']->preferences->default['calendar'];
+		$forced_prefs  =& $GLOBALS['egw']->preferences->forced['calendar'];
 
 		if (!($planner_start_with_group = $GLOBALS['egw']->accounts->name2id('Default')))
 		{
 			$planner_start_with_group = '0';
 		}
 		$subject = lang('Calendar Event') . ' - $$action$$: $$startdate$$ $$title$$'."\n";
-		$defaults = array(
-			'defaultcalendar' => 'week',
-			'mainscreen_showevents' => '0',
-			'summary'         => 'no',
-			'receive_updates' => 'no',
-			'update_format'   => 'extended',
+		$values = array(
 			'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
 			'notifyCanceled'  => $subject . lang ('Your meeting scheduled for %1 has been canceled','$$startdate$$'),
 			'notifyModified'  => $subject . lang ('Your meeting that had been scheduled for %1 has been rescheduled to %2','$$olddate$$','$$startdate$$'),
 			'notifyDisinvited'=> $subject . lang ('You have been disinvited from the meeting at %1','$$startdate$$'),
 			'notifyResponse'  => $subject . lang ('On %1 %2 %3 your meeting request for %4','$$date$$','$$fullname$$','$$action$$','$$startdate$$'),
 			'notifyAlarm'     => lang('Alarm for %1 at %2 in %3','$$title$$','$$startdate$$','$$location$$')."\n".lang ('Here is your requested alarm.'),
-			'show_rejected'   => '0',
-			'display_status'  => '1',
-			'weekdaystarts'   => 'Monday',
-			'workdaystarts'   => '9',
-			'workdayends'     => '17',
-			'interval'        => '30',
-			'defaultlength'   => '60',
 			'planner_start_with_group' => $planner_start_with_group,
-			'defaultfilter'   => 'all',
-			'default_private' => '0',
-			'defaultresource_sel' => 'resources',
+			'interval'        => 30,
 		);
-		foreach($defaults as $var => $default)
+		foreach($values as $var => $default)
 		{
-			if (!isset($default_prefs[$var]) || (string)$default_prefs[$var] == '')
+			$type = substr($var,0,6) == 'notify' ? 'forced' : 'default';
+
+			// only set, if neither default nor forced pref exists
+			if ((!isset($default_prefs[$var]) || (string)$default_prefs[$var] === '') && (!isset($forced_prefs[$var]) || (string)$forced_prefs[$var] === ''))
 			{
-				$GLOBALS['egw']->preferences->add('calendar',$var,$default,'default');
+				$GLOBALS['egw']->preferences->add('calendar',$var,$default,'default');	// always store default, even if we have a forced too
+				if ($type == 'forced') $GLOBALS['egw']->preferences->add('calendar',$var,$default,'forced');
 				$this->cal_prefs[$var] = $default;
 				$need_save = True;
 			}
@@ -1889,6 +1880,7 @@ class calendar_bo
 		if ($need_save)
 		{
 			$GLOBALS['egw']->preferences->save_repository(False,'default');
+			$GLOBALS['egw']->preferences->save_repository(False,'forced');
 		}
 	}
 

@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -21,6 +21,13 @@ if (!defined('TIMESHEET_APP'))
  */
 class timesheet_hooks
 {
+	/**
+	 * Instance of timesheet_bo class
+	 *
+	 * @var timesheet_bo
+	 */
+	static $timesheet_bo;
+
 	/**
 	 * Hook called by link-class to include timesheet in the appregistry of the linkage
 	 *
@@ -101,6 +108,10 @@ class timesheet_hooks
 				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
 				'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
+			// until we have more then one preference
+			if (is_null(self::$timesheet_bo)) self::$timesheet_bo = new timesheet_bo();
+			if (!self::$timesheet_bo->status_labels) unset($file['Preferences']);
+
 			if ($location == 'preferences')
 			{
 				display_section($appname,$file);
@@ -138,51 +149,18 @@ class timesheet_hooks
 	 */
 	static function settings()
 	{
-		self::check_set_default_prefs();
+		if (is_null(self::$timesheet_bo)) self::$timesheet_bo = new timesheet_bo();
 
-		$timesheet = new timesheet_bo();  //nedd Status from timesheet
-
-		$GLOBALS['settings']['predefined_status'] = array(
-			'type'   => 'select',
-			'label'  => 'Status of created timesheets',
-			'name'   => 'predefined_status',
-			'values' => $timesheet->status_labels,
-			'help'   => 'Select the predefined status, whan creating a new timesheet ',
-			'xmlrpc' => True,
-			'admin'  => False,
+		return array(
+			'predefined_status' => array(
+				'type'   => 'select',
+				'label'  => 'Status of created timesheets',
+				'name'   => 'predefined_status',
+				'values' => self::$timesheet_bo->status_labels,
+				'help'   => 'Select the predefined status, when creating a new timesheet ',
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
 		);
-
-		return true;	// otherwise prefs say it cant find the file ;-)
-	}
-
-	/**
-	 * Check if reasonable default preferences are set and set them if not
-	 *
-	 * It sets a flag in the app-session-data to be called only once per session
-	 */
-	static function check_set_default_prefs()
-	{
-		if ($GLOBALS['egw']->session->appsession('default_prefs_set',TIMESHEET_APP))
-		{
-			return;
-		}
-		$GLOBALS['egw']->session->appsession('default_prefs_set',TIMESHEET_APP,'set');
-
-		$default_prefs =& $GLOBALS['egw']->preferences->default[TIMESHEET_APP];
-
-		$defaults = array(
-		);
-		foreach($defaults as $var => $default)
-		{
-			if (!isset($default_prefs[$var]) || $default_prefs[$var] === '')
-			{
-				$GLOBALS['egw']->preferences->add(TIMESHEET_APP,$var,$default,'default');
-				$need_save = True;
-			}
-		}
-		if ($need_save)
-		{
-			$GLOBALS['egw']->preferences->save_repository(False,'default');
-		}
 	}
 }

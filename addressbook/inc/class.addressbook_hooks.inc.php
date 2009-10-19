@@ -121,7 +121,7 @@ class addressbook_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
+		if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')	// calendar config
 		{
 			$settings['mainscreen_showbirthdays'] = array(
 				'type'   => 'select',
@@ -137,6 +137,7 @@ class addressbook_hooks
 				),
 				'xmlrpc' => True,
 				'admin'  => False,
+				'default'=> 3,
 			);
 		}
 		$settings['no_auto_hide'] = array(
@@ -146,6 +147,7 @@ class addressbook_hooks
 			'help'   => 'Should the columns photo and home address always be displayed, even if they are empty.',
 			'xmlrpc' => True,
 			'admin'  => false,
+			'forced' => false,
 		);
 		// CSV Export
 		$settings['csv_fields'] = array(
@@ -160,6 +162,7 @@ class addressbook_hooks
 			'help'   => 'Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.',
 			'xmlrpc' => True,
 			'admin'  => false,
+			'default'=> 'business',
 		);
 		$settings['csv_charset'] = array(
 			'type'   => 'select',
@@ -169,6 +172,7 @@ class addressbook_hooks
 			'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
 			'xmlrpc' => True,
 			'admin'  => false,
+			'default'=> 'iso-8859-1',
 		);
 
 		if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
@@ -180,6 +184,7 @@ class addressbook_hooks
 				'help'   => 'Do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?',
 				'xmlrpc' => True,
 				'admin'  => False,
+				'forced' => false,
 			);
 		}
 		$settings['link_title'] = array(
@@ -196,6 +201,7 @@ class addressbook_hooks
 			'help'   => 'What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!',
 			'xmlrpc' => True,
 			'admin'  => false,
+			'default'=> 'org_name: n_family, n_given',
 		);
 		$settings['addr_format'] = array(
 			'type'   => 'select',
@@ -208,6 +214,7 @@ class addressbook_hooks
 			'help'   => 'Which address format should the addressbook use for countries it does not know the address format. If the address format of a country is known, it uses it independent of this setting.',
 			'xmlrpc' => True,
 			'admin'  => false,
+			'default'=> 'postcode_city',
 		);
 		$settings['fileas_default'] = array(
 			'type'   => 'select',
@@ -217,6 +224,7 @@ class addressbook_hooks
 			'help'   => 'Default format for fileas, eg. for new entries.',
 			'xmlrpc' => True,
 			'admin'  => false,
+			'default'=> 'org_name: n_family, n_given',
 		);
 		$settings['hide_accounts'] = array(
 			'type'   => 'check',
@@ -225,6 +233,7 @@ class addressbook_hooks
 			'help'   => 'Hides accounts completly from the adressbook.',
 			'xmlrpc' => True,
 			'admin'  => false,
+			'default'=> false,
 		);
 		$settings['distributionListPreferredMail'] = array(
 			'type'   => 'select',
@@ -236,7 +245,8 @@ class addressbook_hooks
 			),
 			'help'   => 'Defines which email address (business or home) to use as the preferred one for distribution lists in mail.',
 			'xmlrpc' => True,
-			'admin'  => False
+			'admin'  => False,
+			'forced'=> 'email',
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
