@@ -137,7 +137,7 @@ class addressbook_groupdav extends groupdav_handler
 
 		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
-		if (($contacts =& $this->bo->search(array(),$address_data ? false : array('id','uid','etag','modified'),'contact_id','','',False,'AND',false,$filter)))
+		if (($contacts =& $this->bo->search(array(),$address_data ? false : array('id','uid','etag','modified'),'contact_id','','',False,'AND',$start,$filter)))
 		{
 			foreach($contacts as $contact)
 			{
