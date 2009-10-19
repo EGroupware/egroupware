@@ -49,8 +49,9 @@ class preferences_hooks
 		if (!$hook_data['setup'])
 		{
 			$langs = translation::get_installed_langs();
+
+			$tzs = egw_time::getTimezones();
 		}
-		$tzs = egw_time::getTimezones();
 
 		$date_formats = array(
 			'd.m.Y' => 'd.m.Y',
