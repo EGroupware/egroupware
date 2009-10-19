@@ -61,9 +61,6 @@ class translation
 	 */
 	function translation($warnings = False)
 	{
-		for ($i = 1; $i <= 9; $i++) {
-			$this->placeholders[] = '%'.$i;
-		}
 		$this->db = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 
 		if (!isset($GLOBALS['egw_setup'])) {
@@ -190,7 +187,11 @@ class translation
 		{
 			if (count($vars) > 1)
 			{
-				$ret = str_replace($this->placeholders,$vars,$ret);
+				static $placeholders = array('%2','%1','|%2|','%3','%4','%5','%6','%7','%8','%9','%10');
+				// to cope with $vars[0] containing '%2' (eg. an urlencoded path like a referer),
+				// we first replace '%2' in $ret with '|%2|' and then use that as 2. placeholder
+				array_unshift($vars,'|%2|');	// push '|%2|' as first replacement on $vars
+				$ret = str_replace($placeholders,$vars,$ret);
 			}
 			else
 			{
