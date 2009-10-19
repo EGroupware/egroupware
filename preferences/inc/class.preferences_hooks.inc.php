@@ -46,8 +46,10 @@ class preferences_hooks
 			'text'           => lang('Text only')
 		);
 
-		$langs = translation::get_installed_langs();
-
+		if (!$hook_data['setup'])
+		{
+			$langs = translation::get_installed_langs();
+		}
 		$tzs = egw_time::getTimezones();
 
 		$date_formats = array(
