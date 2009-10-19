@@ -365,7 +365,7 @@ class groupdav_propfind_iterator implements Iterator
 	 * Number of entries queried from callback in one call
 	 *
 	 */
-	const CHUNK_SIZE = 100;
+	const CHUNK_SIZE = 500;
 
 	/**
 	 * Constructor
