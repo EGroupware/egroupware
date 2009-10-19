@@ -920,7 +920,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if ((int) $change_since)
 		{
-			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')';
+			$where[0] = '(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')';
 		}
 
 		if ($change_since !== false)	// update existing entries
