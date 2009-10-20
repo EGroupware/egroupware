@@ -73,7 +73,7 @@ class hooks
 	/**
 	 * executes all the hooks (the user has rights to) for a given location
 	 *
-	 * @param string/array $args location-name as string or array with keys location, order and
+	 * @param string|array $args location-name as string or array with keys location, order and
 	 *	further data to be passed to the hook, if its a new method-hook
 	 * @param array $order appnames (as value), which should be executes first
 	 * @param boolean $no_permission_check if True execute all hooks, not only the ones a user has rights to
@@ -125,7 +125,7 @@ class hooks
 	/**
 	 * executes a single hook of a given location and application
 	 *
-	 * @param string/array $args location-name as string or array with keys location, appname and
+	 * @param string|array $args location-name as string or array with keys location, appname and
 	 *	further data to be passed to the hook, if its a new method-hook
 	 * @param string $appname name of the app, which's hook to execute, if empty the current app is used
 	 * @param boolean $no_permission_check if True execute all hooks, not only the ones a user has rights to
@@ -135,15 +135,10 @@ class hooks
 	 */
 	function single($args, $appname = '', $no_permission_check = False,$try_unregistered = False)
 	{
-		//echo "<p>hooks::single("; print_r($args); echo ",'$appname','$no_permission_check','$try_unregistered')</p>\n";
-		if (is_array($args))
-		{
-			$location = $args['location'];
-		}
-		else
-		{
-			$location = $args;
-		}
+		//echo "<p>hooks::single(".array2string($args).",'$appname','$no_permission_check','$try_unregistered')</p>\n";
+		if (!is_array($args)) $args = array('location' => $args);
+		$location = $args['location'];
+
 		if (!$appname)
 		{
 			$appname = is_array($args) && isset($args['appname']) ? $args['appname'] : $GLOBALS['egw_info']['flags']['currentapp'];
@@ -160,30 +155,20 @@ class hooks
 				// new style hook with method string or static method (eg. 'class::method')
 				return ExecMethod($method,$args);
 			}
-			else
+			// old style hook, with an include file
+			if ($try_unregistered && empty($method))
 			{
-				// old style hook, with an include file
-				if ($try_unregistered && empty($method))
-				{
-					$method = 'hook_'.$location.'.inc.php';
-				}
-				$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $method;
-				if (file_exists($f) &&
-					( $GLOBALS['egw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
-				{
-					include($f);
-					return True;
-				}
-				else
-				{
-					return False;
-				}
+				$method = 'hook_'.$location.'.inc.php';
+			}
+			$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . $method;
+			if (file_exists($f) &&
+				( $GLOBALS['egw_info']['user']['apps'][$appname] || (($no_permission_check || $location == 'config' || $appname == 'phpgwapi') && $appname)) )
+			{
+				include($f);
+				return True;
 			}
 		}
-		else
-		{
-			return False;
-		}
+		return False;
 	}
 
 	/**
