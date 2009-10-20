@@ -24,18 +24,18 @@ class felamimail_hooks
 		{
 			$folderList = array();
 
-			$this->bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			if($this->bofelamimail->openConnection()) {
-				$folderObjects = $this->bofelamimail->getFolderObjects(true, false);
+			$bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			if($bofelamimail->openConnection()) {
+				$folderObjects = $bofelamimail->getFolderObjects(true, false);
 				foreach($folderObjects as $folderName => $folderInfo) {
 					#_debug_array($folderData);
 					$folderList[$folderName] = $folderInfo->displayName;
 				}
-				$this->bofelamimail->closeConnection();
+				$bofelamimail->closeConnection();
 			}
 
 			$availableAutoFolders['none'] = lang('none, create all');
-			foreach($this->bofelamimail->autoFolders as $aname) {
+			foreach($bofelamimail->autoFolders as $aname) {
 				$availableAutoFolders[$aname] = lang($aname);
 			}
 
