@@ -142,7 +142,7 @@ class vfs_widget
 				{
 					//echo $path; _debug_array($files);
 					$upload = $cell;
-					$cell = etemplate::empty_cell('box','',array('size' => ',,0,0'));
+					$cell = etemplate::empty_cell('vbox','',array('size' => ',,0,0'));
 					$extension_data['files'] = $files;
 					$value = array();
 					foreach($files as $file)
