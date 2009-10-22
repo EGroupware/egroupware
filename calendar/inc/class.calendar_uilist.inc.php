@@ -218,6 +218,7 @@ class calendar_uilist extends calendar_ui
 			'filter'  => $this->filter,
 			'query'   => $params['search'],
 			'offset'  => (int) $params['start'],
+			'num_rows'=> $params['num_rows'],
 			'order'   => $params['order'] ? $params['order'].' '.$params['sort'] : 'cal_start',
 		);
 		switch($params['filter'])
@@ -288,7 +289,7 @@ class calendar_uilist extends calendar_ui
 			$readonlys['view['.$event['id'].']'] = !($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event));
 			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event);
 
-			$event['parts'] = implode(",\n",$this->bo->participants($event));
+			$event['parts'] = implode(",\n",$this->bo->participants($event,true));
 			$event['recure'] = $this->bo->recure2string($event);
 			$event['date'] = $this->bo->date2string($event['start']);
 			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
