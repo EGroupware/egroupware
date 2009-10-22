@@ -423,7 +423,7 @@
 		{
 			$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
 
-			return $this->display_fullname($lid,$fname,$lname,$accountid);
+			return self::display_fullname($lid,$fname,$lname,$accountid);
 		}
 
 		/**
