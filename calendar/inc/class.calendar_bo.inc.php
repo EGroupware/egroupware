@@ -1049,7 +1049,7 @@ class calendar_bo
 					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite READ and PRIVAT grant
-						$grants |= EGW_ACL_READ;
+						$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
 						break;
 					}
 					elseif ($this->grants[$uid] & EGW_ACL_READ)
@@ -1065,10 +1065,6 @@ class calendar_bo
 						$grants |= $resource['rights'];
 					}
 				}
-			}
-			else
-			{
-				error_log(__METHOD__." no participants for event:".print_r($event,true));
 			}
 		}
 		if ($GLOBALS['egw']->accounts->get_type($owner) == 'g' && $needed == EGW_ACL_ADD)
