@@ -537,7 +537,7 @@ abstract class bo_tracking
 	 * @todo implement timezone handling via 'tz' pref
 	 * @return string
 	 */
-	protected function datetime($timestamp,$do_time=true)
+	public function datetime($timestamp,$do_time=true)
 	{
 		if (is_null($do_time))
 		{
