@@ -104,7 +104,7 @@ class notifications_popup implements notifications_iface {
 	 * @param array $_attachments
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
-		$sessions = egw_session::session_list(0, 'asc', 'session_dla');
+		$sessions = egw_session::session_list(0, 'asc', 'session_dla', true);
 		$user_sessions = array();
 		foreach ($sessions as $session) {
 			if ($session['session_lid'] == $this->recipient->account_lid. '@'. $GLOBALS['egw_info']['user']['domain']) {

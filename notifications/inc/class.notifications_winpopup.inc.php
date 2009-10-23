@@ -102,7 +102,7 @@ class notifications_winpopup implements notifications_iface {
 	 */
 	public function send(array $_messages, $_subject = false, $_links = false, $_attachments = false) {
 		$user_sessions = array();
-		foreach (egw_session::session_list(0) as $session) {
+		foreach (egw_session::session_list(0, 'asc', 'session_dla', true) as $session) {
 			if ($session['session_lid'] == $this->recipient->account_lid. '@'. $GLOBALS['egw_info']['user']['domain']) {
 				if($this->valid_ip($session['session_ip'])) {
 					$user_sessions[] = $session['session_ip'];

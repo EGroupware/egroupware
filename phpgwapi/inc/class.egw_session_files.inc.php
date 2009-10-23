@@ -34,9 +34,10 @@ class egw_session_files
 	 * @param int $start
 	 * @param string $sort='session_dla' session_lid, session_id, session_started, session_logintime, session_action, or (default) session_dla
 	 * @param string $order='DESC' ASC or DESC
+	 * @param boolean $all_no_sort=False skip sorting and limiting to maxmatchs if set to true
 	 * @return array with sessions (values for keys as in $sort) or array() if not supported by session-handler
 	 */
-	public static function session_list($start,$sort='DESC',$order='session_dla',$all_no_sort = False)
+	public static function session_list($start,$sort='DESC',$order='session_dla',$all_no_sort=False)
 	{
 		if (session_module_name() != 'files')
 		{
