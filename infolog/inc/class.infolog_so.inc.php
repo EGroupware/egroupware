@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -697,18 +697,24 @@ class infolog_so
 				if (substr($col,0,5) != 'info_' && substr($col,0,1)!='#') $col = 'info_'.$col;
 				if (!empty($data) && preg_match('/^[a-z_0-9]+$/i',$col))
 				{
-					if ($col == 'info_responsible')
+					switch ($col)
 					{
-						$data = (int) $data;
-						if (!$data) continue;
-						$filtermethod .= " AND (".$this->responsible_filter($data)." OR info_responsible='0' AND ".
-							$this->db->expression($this->info_table,array(
-								'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
-							)).')';
-					}
-					else
-					{
-						$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
+						case 'info_responsible':
+							$data = (int) $data;
+							if (!$data) continue;
+							$filtermethod .= ' AND ('.$this->responsible_filter($data)." OR info_responsible='0' AND ".
+								$this->db->expression($this->info_table,array(
+									'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
+								)).')';
+							break;
+
+						case 'info_id':	// info_id itself is ambigous
+							$filtermethod .= ' AND '.$this->db->expression($this->info_table,'main.',array('info_id' => $data));
+							break;
+
+						default:
+							$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
+							break;
 					}
 				}
 				if ($col[0] == '#' &&  $query['custom_fields'] && $data)
