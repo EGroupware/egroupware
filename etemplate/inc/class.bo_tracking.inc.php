@@ -463,7 +463,7 @@ abstract class bo_tracking
 	 * @param boolean $assignment_changed=true the assignment of the user $user_or_lang changed
 	 * @return boolean true on success or false on error (error-message is in $this->errors)
 	 */
-	protected function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true)
+	public function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true)
 	{
 		//error_log("bo_trackering::send_notification(,,'$email',$user_or_lang,$check)");
 		if (!$email) return false;
