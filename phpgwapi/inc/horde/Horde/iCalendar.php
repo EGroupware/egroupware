@@ -691,6 +691,7 @@ class Horde_iCalendar {
                 case 'AALARM':
                 case 'DALARM':
                 case 'RECURRENCE-ID':
+                case 'X-RECURRENCE-ID':
                     // types like AALARM may contain additional data after a ;
                     // ignore these.
                     $ts = explode(';', $value);
@@ -930,6 +931,7 @@ class Horde_iCalendar {
             case 'AALARM':
             case 'DALARM':
             case 'RECURRENCE-ID':
+            case 'X-RECURRENCE-ID':
                 if (isset($params['VALUE'])) {
                     if ($params['VALUE'] == 'DATE') {
                         // VCALENDAR 1.0 uses T000000 - T235959 for all day events:
