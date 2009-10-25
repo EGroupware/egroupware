@@ -145,7 +145,7 @@ class calendar_so
 		}
 		else
 		{
-			// We only what the parents to match
+			// We want only the parents to match
 			$where['cal_uid'] = $ids;
 			$where['cal_reference'] = 0;
 		}
