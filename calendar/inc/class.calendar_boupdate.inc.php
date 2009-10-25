@@ -75,10 +75,11 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $ignore_conflicts=false just ignore conflicts or do a conflict check and return the conflicting events
 	 * @param boolean $touch_modified=true touch modificatin time and set modifing user, default true=yes
 	 * @param boolean $ignore_acl=false should we ignore the acl
+	 * @param boolean $updateTS=true update the content history of the event
 	 * @return mixed on success: int $cal_id > 0, on error false or array with conflicting events (only if $check_conflicts)
 	 * 		Please note: the events are not garantied to be readable by the user (no read grant or private)!
 	 */
-	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false)
+	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true)
 	{
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 		if ($this->debug > 1 || $this->debug == 'update')
@@ -132,7 +133,7 @@ class calendar_boupdate extends calendar_bo
 			foreach($event['participants'] as $uid => $status)
 			{
 				calendar_so::split_status($status,$q,$r);
-				if ($status == 'R') continue;	// ignore rejected participants
+				if ($status[0] == 'R') continue;	// ignore rejected participants
 
 				if ($uid < 0)	// group, check it's members too
 				{
@@ -263,7 +264,7 @@ class calendar_boupdate extends calendar_bo
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
 
-		if (!($cal_id = $this->save($event, $ignore_acl)))
+		if (!($cal_id = $this->save($event, $ignore_acl, $updateTS)))
 		{
 			return $cal_id;
 		}
@@ -673,9 +674,10 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $event
 	 * @param boolean $ignore_acl=false should we ignore the acl
+	 * @param boolean $updateTS=true update the content history of the event
 	 * @return int|boolean $cal_id > 0 or false on error (eg. permission denied)
 	 */
-	function save($event, $ignore_acl=false)
+	function save($event,$ignore_acl=false,$updateTS=true)
 	{
 		//echo '<p>'.__METHOD__.'('.array2string($event).",$ignore_acl)</p>\n";
 		//error_log(__METHOD__.'('.array2string($event).",$etag)");
@@ -722,7 +724,7 @@ class calendar_boupdate extends calendar_bo
 			unset($save_event['participants']);
 			$this->set_recurrences($save_event, $set_recurrences_start);
 		}
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,$event['id'] ? 'modify' : 'add',time());
+		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,$event['id'] ? 'modify' : 'add',time());
 
 		return $cal_id;
 	}
@@ -762,9 +764,10 @@ class calendar_boupdate extends calendar_bo
 	 * @param int|char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
 	 * @param int $recur_date=0 date to change, or 0 = all since now
 	 * @param boolean $ignore_acl=false do not check the permisions for the $uid, if true
+	 * @param boolean $updateTS=true update the content history of the event
 	 * @return int number of changed recurrences
 	 */
-	function set_status($event,$uid,$status,$recur_date=0, $ignore_acl=false)
+	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true)
 	{
 		$cal_id = is_array($event) ? $event['id'] : $event;
 		//echo "<p>calendar_boupdate::set_status($cal_id,$uid,$status,$recur_date)</p>\n";
@@ -774,7 +777,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0)))
 		{
-			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
+			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
 
 			static $status2msg = array(
 				'R' => MSG_REJECTED,
