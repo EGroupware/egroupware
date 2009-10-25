@@ -149,7 +149,7 @@ class calendar_ical extends calendar_boupdate
 	function __construct(&$_clientProperties = array())
 	{
 		parent::__construct();
-		if($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
+		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
 		$this->vCalendar = new Horde_iCalendar;
 	}
@@ -183,6 +183,7 @@ class calendar_ical extends calendar_boupdate
 			'CATEGORIES'	=> 'category',
 			'UID'			=> 'uid',
 			'RECURRENCE-ID' => 'recurrence',
+			'SEQUENCE'		=> 'etag',
 		);
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
@@ -226,6 +227,11 @@ class calendar_ical extends calendar_boupdate
 					unset($event[$name]);
 				}
 				$event['recur_type'] = MCAL_RECUR_NONE;
+			}
+			elseif ($event['recur_enddate'])
+			{
+				$recur_enddate = (int)$event['recur_enddate'];
+				$recur_enddate += 24 * 60 * 60 - 1;
 			}
 
 			if ($this->log) error_log(__FILE__.'('.__LINE__.'): '.__METHOD__.' '.array2string($event)."\n",3,$this->logfile);
@@ -282,14 +288,14 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			foreach($egwSupportedFields as $icalFieldName => $egwFieldName)
+			foreach ($egwSupportedFields as $icalFieldName => $egwFieldName)
 			{
 				$values[$icalFieldName] = array();
-				switch($icalFieldName)
+				switch ($icalFieldName)
 				{
 					case 'ATTENDEE':
 						//if (count($event['participants']) == 1 && isset($event['participants'][$this->user])) break;
-						foreach((array)$event['participants'] as $uid => $status)
+						foreach ((array)$event['participants'] as $uid => $status)
 						{
 							if (!($info = $this->resource_info($uid))) continue;
 							if ($uid == $event['owner']) continue; // Organizer
@@ -335,15 +341,14 @@ class calendar_ical extends calendar_boupdate
 						break;
 
     				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-    					//if ($event['owner'] != $this->user)
-    					//if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
-    					//{
-							$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
-							$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
-							$parameters['ORGANIZER']['CN'] = '"'.trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
-								$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')).'"';
-    					//}
-						break;
+	    				if ($event['owner'] != $this->user || $this->productManufacturer != 'groupdav')
+	    				{
+		    				$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+		    				$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
+		    				$parameters['ORGANIZER']['CN'] = '"'.trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
+			    				$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')).'"';
+	    				}
+	    				break;
 
 					case 'DTSTART':
 						if ($servertime)
@@ -362,7 +367,7 @@ class calendar_ical extends calendar_boupdate
 						if ($this->isWholeDay($event))
 						{
 							$event['end-nextday'] = $event['end'] + 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
-							foreach(array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
+							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
 								$arr = $this->date2array($event[$f]);
 								$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
@@ -386,14 +391,15 @@ class calendar_ical extends calendar_boupdate
 
 					case 'RRULE':
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
-						if ($version == '1.0') {
+						if ($version == '1.0')
+						{
 							$interval = ($event['recur_interval'] > 1) ? $event['recur_interval'] : 1;
 							$rrule = array('FREQ' => $this->recur_egw2ical_1_0[$event['recur_type']].$interval);
 							switch ($event['recur_type'])
 							{
 								case MCAL_RECUR_WEEKLY:
 									$days = array();
-									foreach($this->recur_days_1_0 as $id => $day)
+									foreach ($this->recur_days_1_0 as $id => $day)
 									{
 										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
 									}
@@ -413,8 +419,6 @@ class calendar_ical extends calendar_boupdate
 
 							if ($event['recur_enddate'])
 							{
-								$recur_enddate = (int)$event['recur_enddate'];
-								$recur_enddate += 24 * 60 * 60 - 1;
 								$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
 							}
 							else
@@ -429,7 +433,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								case MCAL_RECUR_WEEKLY:
 									$days = array();
-									foreach($this->recur_days as $id => $day)
+									foreach ($this->recur_days as $id => $day)
 									{
 										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
 									}
@@ -451,17 +455,8 @@ class calendar_ical extends calendar_boupdate
 							}
 							if ($event['recur_enddate'])
 							{
-								// We use end of day in vCal
-								$recur_enddate = (int)$event['recur_enddate'];
-								$recur_enddate += 24 * 60 * 60 - 1;
-								if ($this->isWholeDay($event))
-								{
-									$rrule['UNTIL'] = date('Ymd', $recur_enddate);
-								}
-								else
-								{
-									$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
-								}
+								// UNTIL should be a UTC timestamp
+								$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
 							}
 						}
 						$attributes['RRULE'] = '';
@@ -511,7 +506,7 @@ class calendar_ical extends calendar_boupdate
 							if ($this->isWholeDay($event))
 							{
 								$value_type = 'DATE';
-								foreach($days as $id => $timestamp)
+								foreach ($days as $id => $timestamp)
 								{
 									$arr = $this->date2array($timestamp);
 									$days[$id] = array(
@@ -526,7 +521,7 @@ class calendar_ical extends calendar_boupdate
 								$value_type = 'DATE-TIME';
 								if ($servertime)
 								{
-									foreach($days as $id => $timestamp)
+									foreach ($days as $id => $timestamp)
 									{
 										$days[$id] = date('Ymd\THis', $timestamp);
 
@@ -545,9 +540,12 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 					case 'TRANSP':
-						if ($version == '1.0') {
+						if ($version == '1.0')
+						{
 							$attributes['TRANSP'] = ($event['non_blocking'] ? 1 : 0);
-						} else {
+						}
+						else
+						{
 							$attributes['TRANSP'] = ($event['non_blocking'] ? 'TRANSPARENT' : 'OPAQUE');
 						}
 						break;
@@ -561,13 +559,17 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'RECURRENCE-ID':
+						if ($version == '1.0')
+						{
+								$icalFieldName = 'X-RECURRENCE-ID';
+						}
 						if ($recur_date)
 						{
 							// We handle a status only exception
 							if ($this->isWholeDay($event))
 							{
 								$arr = $this->date2array($recur_date);
-								$vevent->setAttribute('RECURRENCE-ID', array(
+								$vevent->setAttribute($icalFieldName, array(
 									'year' => $arr['year'],
 									'month' => $arr['month'],
 									'mday' => $arr['day']),
@@ -578,12 +580,12 @@ class calendar_ical extends calendar_boupdate
 							{
 								if ($servertime)
 								{
-									$attributes['RECURRENCE-ID'] = date('Ymd\THis', $recur_date);
-									if ($serverTZ) $parameters['RECURRENCE-ID']['TZID'] = $serverTZ;
+									$attributes[$icalFieldName] = date('Ymd\THis', $recur_date);
+									if ($serverTZ) $parameters[$icalFieldName]['TZID'] = $serverTZ;
 								}
 								else
 								{
-									$attributes['RECURRENCE-ID'] = $recur_date;
+									$attributes[$icalFieldName] = $recur_date;
 								}
 							}
 						}
@@ -595,7 +597,7 @@ class calendar_ical extends calendar_boupdate
 							if ($this->isWholeDay($revent))
 							{
 								$arr = $this->date2array($event['recurrence']);
-								$vevent->setAttribute('RECURRENCE-ID', array(
+								$vevent->setAttribute($icalFieldName, array(
 									'year' => $arr['year'],
 									'month' => $arr['month'],
 									'mday' => $arr['day']),
@@ -606,12 +608,12 @@ class calendar_ical extends calendar_boupdate
 							{
 								if ($servertime)
 								{
-									$attributes['RECURRENCE-ID'] = date('Ymd\THis', $event['recurrence']);
-									if ($serverTZ) $parameters['RECURRENCE-ID']['TZID'] = $serverTZ;
+									$attributes[$icalFieldName] = date('Ymd\THis', $event['recurrence']);
+									if ($serverTZ) $parameters[$icalFieldName]['TZID'] = $serverTZ;
 								}
 								else
 								{
-									$attributes['RECURRENCE-ID'] = $event['recurrence'];
+									$attributes[$icalFieldName] = $event['recurrence'];
 								}
 							}
 							unset($revent);
@@ -619,19 +621,24 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					default:
-						if (isset($this->clientProperties[$icalFieldName]['Size'])) {
+						if (isset($this->clientProperties[$icalFieldName]['Size']))
+						{
 							$size = $this->clientProperties[$icalFieldName]['Size'];
 							$noTruncate = $this->clientProperties[$icalFieldName]['NoTruncate'];
 							#Horde::logMessage("vCalendar $icalFieldName Size: $size, NoTruncate: " .
 							#	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-						} else {
+						}
+						else
+						{
 							$size = -1;
 							$noTruncate = false;
 						}
 						$value = $event[$egwFieldName];
 						$cursize = strlen($value);
-						if (($size > 0) && $cursize > $size) {
-							if ($noTruncate) {
+						if ($size > 0 && $cursize > $size)
+						{
+							if ($noTruncate)
+							{
 								Horde::logMessage("vCalendar $icalFieldName omitted due to maximum size $size",
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
 								continue; // skip field
@@ -641,21 +648,27 @@ class calendar_ical extends calendar_boupdate
 							Horde::logMessage("vCalendar $icalFieldName truncated to maximum size $size",
 								__FILE__, __LINE__, PEAR_LOG_INFO);
 						}
-						if (!empty($value) || ($size >= 0 && !$noTruncate)) {
+						if (!empty($value) || ($size >= 0 && !$noTruncate))
+						{
 							$attributes[$icalFieldName] = $value;
 						}
 					break;
 				}
 			}
 
-			if($this->productManufacturer == 'nokia') {
-				if($event['special'] == '1') {
+			if ($this->productManufacturer == 'nokia')
+			{
+				if ($event['special'] == '1')
+				{
 					$attributes['X-EPOCAGENDAENTRYTYPE'] = 'ANNIVERSARY';
 					$attributes['DTEND'] = $attributes['DTSTART'];
 				}
-				elseif ($event['special'] == '2') {
+				elseif ($event['special'] == '2')
+				{
 					$attributes['X-EPOCAGENDAENTRYTYPE'] = 'EVENT';
-				} else {
+				}
+				else
+				{
 					$attributes['X-EPOCAGENDAENTRYTYPE'] = 'APPOINTMENT';
 				}
 			}
@@ -673,10 +686,10 @@ class calendar_ical extends calendar_boupdate
 				$attributes['LAST-MODIFIED'] = $modified;
 			}
 			$attributes['DTSTAMP'] = time();
-			foreach($event['alarm'] as $alarmID => $alarmData)
+			foreach ($event['alarm'] as $alarmID => $alarmData)
 			{
 				// skip alarms being set for all users or alarms owned by other users
-				if($alarmData['all'] == true || $alarmData['owner'] != $GLOBALS['egw_info']['user']['account_id'])
+				if ($alarmData['all'] == true || $alarmData['owner'] != $this->user)
 				{
 					continue;
 				}
@@ -743,9 +756,9 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			foreach($attributes as $key => $value)
+			foreach ($attributes as $key => $value)
 			{
-				foreach(is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
+				foreach (is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
 				{
 					$valueData = $GLOBALS['egw']->translation->convert($valueData,$GLOBALS['egw']->translation->charset(),'UTF-8');
                     $paramData = (array) $GLOBALS['egw']->translation->convert(is_array($value) ?
@@ -766,7 +779,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					if (preg_match('/([\000-\012])/', $valueData))
 					{
-						if($this->log)error_log(__LINE__.__METHOD__.__FILE__." Has invalid XML data: $valueData",3,$this->logfile);
+						if ($this->log) error_log(__LINE__.__METHOD__.__FILE__." Has invalid XML data: $valueData",3,$this->logfile);
 					}
 					$vevent->setParameter($key, $options);
 				}
@@ -775,7 +788,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$retval = $vcal->exportvCalendar();
- 		if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($retval)."\n",3,$this->logfile);
+ 		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__.array2string($retval)."\n",3,$this->logfile);
 		return $retval;
 
 	}
@@ -793,9 +806,9 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0)
 	{
-		if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($_vcalData)."\n",3,$this->logfile);
+		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__.array2string($_vcalData)."\n",3,$this->logfile);
 
-		if(!$events = $this->icaltoegw($_vcalData,$cal_id,$etag,$recur_date))
+		if (!($events = $this->icaltoegw($_vcalData,$cal_id,$etag,$recur_date)))
 		{
 			return false;
 		}
@@ -808,27 +821,27 @@ class calendar_ical extends calendar_boupdate
 			$event_info = $this->get_event_info($event);
 
 			// common adjustments for new events
-			if(!is_array($event_info['stored_event']))
+			if (!is_array($event_info['stored_event']))
 			{
 				// set non blocking all day depending on the user setting
-				if($this->isWholeDay($event) && $this->nonBlockingAllday)
+				if ($this->isWholeDay($event) && $this->nonBlockingAllday)
 				{
 					$event['non_blocking'] = 1;
 				}
 
 				// check if an owner is set and the current user has add rights
 				// for that owners calendar; if not set the current user
-				if(!isset($event['owner'])
-					|| !$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
+				if (!isset($event['owner'])
+					|| !$this->check_perms(EGW_ACL_ADD, 0, $event['owner']))
 				{
-					$event['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+					$event['owner'] = $this->user;
 				}
 
 				// add ourself to new events as participant
-				if(!isset($this->supportedFields['participants'])
-					||!isset($event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
+				if (!isset($this->supportedFields['participants'])
+					||!isset($event['participants'][$this->user]))
  				{
-					$event['participants'][$GLOBALS['egw_info']['user']['account_id']] = 'A';
+					$event['participants'][$this->user] = 'A';
  				}
 			}
 
@@ -891,13 +904,13 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// save event depending on the given event type
-			switch($event_info['type'])
+			switch ($event_info['type'])
 			{
 				case 'SINGLE':
 					Horde::logMessage('importVCAL event SINGLE',__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// update the event
-					if($event_info['acl_edit'])
+					if ($event_info['acl_edit'])
 					{
 						$event_to_store = $event; // prevent $event from being changed by the update method
 						$updated_id = $this->update($event_to_store, true);
@@ -909,15 +922,15 @@ class calendar_ical extends calendar_boupdate
 					Horde::logMessage('importVCAL event SERIES-MASTER',__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// remove all known "status only" exceptions and update the event
-					if($event_info['acl_edit'])
+					if ($event_info['acl_edit'])
 					{
 						$days = $this->so->get_recurrence_exceptions($event);
-						if(is_array($days))
+						if (is_array($days))
 						{
 							$recur_exceptions = array();
-							foreach($event['recur_exception'] as $recur_exception)
+							foreach ($event['recur_exception'] as $recur_exception)
 							{
-								if(!in_array($recur_exception, $days))
+								if (!in_array($recur_exception, $days))
 								{
 									$recur_exceptions[] = $recur_exception;
 								}
@@ -936,9 +949,9 @@ class calendar_ical extends calendar_boupdate
 					Horde::logMessage('importVCAL event SERIES-EXCEPTION',__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// update event
-					if($event_info['acl_edit'])
+					if ($event_info['acl_edit'])
 					{
-						if(isset($event_info['stored_event']['id']))
+						if (isset($event_info['stored_event']['id']))
 						{
 							// We update an existing exception
 							$event['id'] = $event_info['stored_event']['id'];
@@ -957,7 +970,7 @@ class calendar_ical extends calendar_boupdate
 						}
 
 						$event_to_store = $event; // prevent $event from being changed by update method
-						$updated_id = $this->update($event_to_store, true);
+						$updated_id = $this->update($event_to_store, true, true, false, false);
 						unset($event_to_store);
 					}
 					break;
@@ -965,7 +978,7 @@ class calendar_ical extends calendar_boupdate
 				case 'SERIES-EXCEPTION-STATUS':
 					Horde::logMessage('importVCAL event SERIES-EXCEPTION-STATUS',__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-					if($event_info['acl_edit'])
+					if ($event_info['acl_edit'])
 					{
 						// truncate the status only exception from the series master
 						$recur_exceptions = array();
@@ -980,7 +993,7 @@ class calendar_ical extends calendar_boupdate
 
 						// save the series master with the adjusted exceptions
 						$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
-						$updated_id = $this->update($event_to_store, true);
+						$updated_id = $this->update($event_to_store, true, true, false, false);
 						unset($event_to_store);
 					}
 
@@ -988,26 +1001,26 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// read stored event into info array for fresh stored (new) events
-			if(!is_array($event_info['stored_event']) && $updated_id > 0)
+			if (!is_array($event_info['stored_event']) && $updated_id > 0)
 			{
 				$event_info['stored_event'] = $this->read($updated_id);
 			}
 
 			// update status depending on the given event type
-			switch($event_info['type'])
+			switch ($event_info['type'])
 			{
 				case 'SINGLE':
 				case 'SERIES-MASTER':
 				case 'SERIES-EXCEPTION':
 				case 'SERIES-EXCEPTION-PROPAGATE':
-					if(is_array($event_info['stored_event'])) // status update requires a stored event
+					if (is_array($event_info['stored_event'])) // status update requires a stored event
 					{
-						if($event_info['acl_edit'])
+						if ($event_info['acl_edit'])
 						{
 							// update all participants if we have the right to do that
 							$this->update_status($event, $event_info['stored_event']);
 						}
-						elseif(isset($event['participants'][$this->user]) || isset($event_info['stored_event']['participants'][$this->user]))
+						elseif (isset($event['participants'][$this->user]) || isset($event_info['stored_event']['participants'][$this->user]))
 						{
 							// update the users status only
 							$this->set_status($event_info['stored_event']['id'], $this->user,
@@ -1017,14 +1030,14 @@ class calendar_ical extends calendar_boupdate
 					break;
 
 				case 'SERIES-EXCEPTION-STATUS':
-					if(is_array($event_info['master_event'])) // status update requires a stored master event
+					if (is_array($event_info['master_event'])) // status update requires a stored master event
 					{
-						if($event_info['acl_edit'])
+						if ($event_info['acl_edit'])
 						{
 							// update all participants if we have the right to do that
 							$this->update_status($event, $event_info['master_event'], $event['recurrence']);
 						}
-						elseif(isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
+						elseif (isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
 						{
 							// update the users status only
 							$this->set_status($event_info['master_event']['id'], $this->user,
@@ -1035,23 +1048,23 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// update alarms depending on the given event type
-			if(isset($this->supportedFields['alarm'])
+			if (isset($this->supportedFields['alarm'])
 				&& is_array($event_info['stored_event']) // alarm update requires a stored event
 			)
 			{
-				switch($event_info['type'])
+				switch ($event_info['type'])
 				{
 					case 'SINGLE':
 					case 'SERIES-MASTER':
 					case 'SERIES-EXCEPTION':
 					case 'SERIES-EXCEPTION-PROPAGATE':
 						// delete old alarms
-						if(count($event_info['stored_event']['alarm']) > 0)
+						if (count($event_info['stored_event']['alarm']) > 0)
 						{
 							foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
 							{
 								// only touch own alarms
-								if($alarm_data['all'] == false && $alarm_data['owner'] == $GLOBALS['egw_info']['user']['account_id'])
+								if ($alarm_data['all'] == false && $alarm_data['owner'] == $this->user)
 								{
 									$this->delete_alarm($alarm_id);
 								}
@@ -1059,19 +1072,19 @@ class calendar_ical extends calendar_boupdate
 						}
 
 						// save given alarms
-						if(count($event['alarm']) > 0)
+						if (count($event['alarm']) > 0)
 						{
 							foreach ($event['alarm'] as $alarm)
 							{
-								if(!isset($alarm['offset']) && isset($alarm['time']))
+								if (!isset($alarm['offset']) && isset($alarm['time']))
 								{
 									$alarm['offset'] = $event['start'] - $alarm['time'];
 								}
-								if(!isset($alarm['time']) && isset($alarm['offset']))
+								if (!isset($alarm['time']) && isset($alarm['offset']))
 								{
 									$alarm['time'] = $event['start'] - $alarm['offset'];
 								}
-								$alarm['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+								$alarm['owner'] = $this->user;
 								$alarm['all'] = false;
 								$this->save_alarm($event_info['stored_event']['id'], $alarm);
 							}
@@ -1085,7 +1098,7 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// choose which id to return to the client
-			switch($event_info['type'])
+			switch ($event_info['type'])
 			{
 				case 'SINGLE':
 				case 'SERIES-MASTER':
@@ -1098,7 +1111,7 @@ class calendar_ical extends calendar_boupdate
 					break;
 
 				case 'SERIES-EXCEPTION-PROPAGATE':
-					if($event_info['acl_edit'] && is_array($event_info['stored_event']))
+					if ($event_info['acl_edit'] && is_array($event_info['stored_event']))
 					{
 						// we had sufficient rights to propagate the status only exception to a real one
 						$return_id = $event_info['stored_event']['id'];
@@ -1112,7 +1125,7 @@ class calendar_ical extends calendar_boupdate
 					break;
 			}
 
-			if($this->log)
+			if ($this->log)
 			{
 				$egw_event = $this->read($event['id']);
 				error_log(__LINE__.__METHOD__.__FILE__.array2string($egw_event)."\n",3,$this->logfile);
@@ -1132,7 +1145,7 @@ class calendar_ical extends calendar_boupdate
 	 */
 	static function _get_attribute($components,$name,$what='value')
 	{
-		foreach($components as $attribute)
+		foreach ($components as $attribute)
 		{
 			if ($attribute['name'] == $name)
 			{
@@ -1145,9 +1158,9 @@ class calendar_ical extends calendar_boupdate
 	static function valarm2egw(&$alarms, &$valarm)
 	{
 		$count = 0;
-		foreach($valarm->_attributes as $vattr)
+		foreach ($valarm->_attributes as $vattr)
 		{
-			switch($vattr['name'])
+			switch ($vattr['name'])
 			{
 				case 'TRIGGER':
 					$vtype = (isset($vattr['params']['VALUE']))
@@ -1194,31 +1207,38 @@ class calendar_ical extends calendar_boupdate
 	function setSupportedFields($_productManufacturer='', $_productName='')
 	{
 		$state = &$_SESSION['SyncML.state'];
-		if (isset($state)) {
+		if (isset($state))
+		{
 			$deviceInfo = $state->getClientDeviceInfo();
 		}
 
 		// store product manufacturer and name, to be able to use it elsewhere
-		if ($_productManufacturer) {
+		if ($_productManufacturer)
+		{
 				$this->productManufacturer = strtolower($_productManufacturer);
 				$this->productName = strtolower($_productName);
 		}
 
-		if(isset($deviceInfo) && is_array($deviceInfo)) {
-			if(isset($deviceInfo['uidExtension']) &&
-				$deviceInfo['uidExtension']){
-					$this->uidExtension = true;
-				}
-			if(isset($deviceInfo['nonBlockingAllday']) &&
-				$deviceInfo['nonBlockingAllday']){
-					$this->nonBlockingAllday = true;
-				}
-			if(!isset($this->productManufacturer) ||
+		if (isset($deviceInfo) && is_array($deviceInfo))
+		{
+			if (isset($deviceInfo['uidExtension']) &&
+				$deviceInfo['uidExtension'])
+			{
+				$this->uidExtension = true;
+			}
+			if (isset($deviceInfo['nonBlockingAllday']) &&
+				$deviceInfo['nonBlockingAllday'])
+			{
+				$this->nonBlockingAllday = true;
+			}
+			if (!isset($this->productManufacturer) ||
 				 $this->productManufacturer == '' ||
-				 $this->productManufacturer == 'file') {
+				 $this->productManufacturer == 'file')
+			{
 				$this->productManufacturer = strtolower($deviceInfo['manufacturer']);
 			}
-			if(!isset($this->productName) || $this->productName == '') {
+			if (!isset($this->productName) || $this->productName == '')
+			{
 				$this->productName = strtolower($deviceInfo['model']);
 			}
 		}
@@ -1262,6 +1282,7 @@ class calendar_ical extends calendar_boupdate
 			'non_blocking'		=> 'non_blocking',
 			'uid'				=> 'uid',
 			'recurrence'		=> 'recurrence',
+			'etag'				=> 'etag',
 		);
 
 		$defaultFields['evolution'] = $defaultFields['basic'] + array(
@@ -1278,14 +1299,15 @@ class calendar_ical extends calendar_boupdate
 			'non_blocking'		=> 'non_blocking',
 			'uid'				=> 'uid',
 			'recurrence'		=> 'recurrence',
+			'etag'				=> 'etag',
 		);
 
 
-		switch($this->productManufacturer)
+		switch ($this->productManufacturer)
 		{
 			case 'nexthaus corporation':
 			case 'nexthaus corp':
-				switch($this->productName)
+				switch ($this->productName)
 				{
 					default:
 						$this->supportedFields = $defaultFields['nexthaus'];
@@ -1296,7 +1318,7 @@ class calendar_ical extends calendar_boupdate
 			// multisync does not provide anymore information then the manufacturer
 			// we suppose multisync with evolution
 			case 'the multisync project':
-				switch($this->productName)
+				switch ($this->productName)
 				{
 					default:
 						$this->supportedFields = $defaultFields['basic'];
@@ -1305,7 +1327,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'siemens':
-				switch($this->productName)
+				switch ($this->productName)
 				{
 					case 'sx1':
 						$this->supportedFields = $defaultFields['minimal'];
@@ -1318,7 +1340,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'nokia':
-				switch($this->productName)
+				switch ($this->productName)
 				{
 					case 'e61':
 						$this->supportedFields = $defaultFields['minimal'];
@@ -1340,7 +1362,7 @@ class calendar_ical extends calendar_boupdate
 
 			case 'sonyericsson':
 			case 'sony ericsson':
-				switch($this->productName)
+				switch ($this->productName)
 				{
 					case 'd750i':
 					case 'p910i':
@@ -1355,7 +1377,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'synthesis ag':
-				switch($this->productName)
+				switch ($this->productName)
 				{
 					case 'sysync client pocketpc std':
 					case 'sysync client pocketpc pro':
@@ -1382,7 +1404,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'groupdav':		// all GroupDAV access goes through here
-				switch($this->productName)
+				switch ($this->productName)
 				{
 					default:
 						$this->supportedFields = $defaultFields['full'];
@@ -1442,25 +1464,22 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		// decide what to return
-		if(count($events) == 1)
+		if (count($events) == 1)
 		{
 			$event = array_shift($events);
-			if($cal_id > 0) $event['id'] = $cal_id;
-			if(!is_null($etag)) $event['etag'] = $etag;
-			if($recur_date) $event['recurrence'] = $recur_date;
+			if ($cal_id > 0) $event['id'] = $cal_id;
+			if (!is_null($etag)) $event['etag'] = $etag;
+			if ($recur_date) $event['recurrence'] = $recur_date;
 
 			return array($event);
 		}
-		else if(count($events) == 0 || $cal_id > 0 || !is_null($etag) || $recur_date)
+		elseif (count($events) == 0 || $cal_id > 0 || !is_null($etag) || $recur_date)
 		{
 			// no events to return
 			// or not allowed N:1 relation with params just meant for a single event
 			return false;
 		}
-		else
-		{
-			return $events;
-		}
+		else return $events;
 	}
 
 	/**
@@ -1485,23 +1504,34 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$isDate = false;
+		$hasOrganizer = false;
 		$event		= array();
 		$alarms		= array();
 		$vcardData	= array(
 			'recur_type'		=> MCAL_RECUR_NONE,
 			'recur_exception'	=> array(),
 		);
-		// we parse DTSTART first
+		// we parse DTSTART and DTEND first
 		foreach ($component->_attributes as $attributes)
 		{
-			if ($attributes['name'] == 'DTSTART')
+			switch ($attributes['name'])
 			{
-				if (isset($attributes['params']['VALUE'])
-						&& $attributes['params']['VALUE'] == 'DATE')
-				{
-					$isDate = true;
-				}
-				$vcardData['start']		= $attributes['value'];
+				case 'DTSTART':
+					if (isset($attributes['params']['VALUE'])
+							&& $attributes['params']['VALUE'] == 'DATE')
+					{
+						$isDate = true;
+					}
+					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
+					$vcardData['start']	= $dtstart_ts;
+					break;
+				case 'DTEND':
+					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
+					if (date('H:i:s',$dtend_ts) == '00:00:00')
+					{
+						$dtend_ts -= 60;
+					}
+					$vcardData['end']	= $dtend_ts;
 			}
 		}
 		if (!isset($vcardData['start'])) return false; // not a valid entry
@@ -1523,26 +1553,17 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'DESCRIPTION':
 					$vcardData['description']	= $attributes['value'];
-					if (preg_match('/\s*\[UID:(.+)?\]/Usm', $attributes['value'], $matches)) {
+					if (preg_match('/\s*\[UID:(.+)?\]/Usm', $attributes['value'], $matches))
+					{
 						if (!isset($vCardData['uid'])
-								&& strlen($matches[1]) >= $minimum_uid_length) {
+								&& strlen($matches[1]) >= $minimum_uid_length)
+						{
 							$vcardData['uid'] = $matches[1];
 						}
 					}
 					break;
-				case 'DTEND':
-					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
-					if(date('H:i:s',$dtend_ts) == '00:00:00') {
-						$dtend_ts -= 60;
-					}
-					$vcardData['end']		= $dtend_ts;
-					break;
 				case 'RECURRENCE-ID':
-					// ToDo or check:
-					// - do we need to set reference (cal_id of orginal series)
-					// - do we need to add that recurrence as recure exception to the original series
-					// --> original series should be found by searching for a series with same UID (backend)
-					// Joerg's answers: All this is handled within importVCal() for SyncML.
+				case 'X-RECURRENCE-ID':
 					$vcardData['recurrence'] = $attributes['value'];
 					break;
 				case 'LOCATION':
@@ -1565,23 +1586,32 @@ class calendar_ical extends calendar_boupdate
 						// 1 is invalid,, egw uses 0 for interval
 						$vcardData['recur_interval'] = (int) $matches[1] != 0 ? (int) $matches[1] : 0;
 					}
-					if (!isset($vcardData['start']))	// it might not yet be set, because the RRULE is before it
-					{
-						$vcardData['start'] = self::_get_attribute($component->_attributes,'DTSTART');
-						$vcardData['end'] = self::_get_attribute($component->_attributes,'DTEND');
-					}
 					$vcardData['recur_data'] = 0;
 					switch($type)
 					{
 						case 'W':
 						case 'WEEKLY':
 							$days = array();
-							if(preg_match('/W(\d+) (.*) (.*)/',$recurence, $recurenceMatches))		// 1.0
+							if (preg_match('/W(\d+) ([^ ]*)( ([^ ]*))?$/',$recurence, $recurenceMatches))		// 1.0
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$days = explode(' ',trim($recurenceMatches[2]));
-								if($recurenceMatches[3] != '#0')
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[3]);
+								if (empty($recurenceMatches[4]))
+								{
+									if ($recurenceMatches[2] != '#0')
+									{
+										$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
+									}
+									$days[0] = strtoupper(substr(date('D', $vcardData['start']),0,2));
+								}
+								else
+								{
+									$days = explode(' ',trim($recurenceMatches[2]));
+
+									if ($recurenceMatches[4] != '#0')
+									{
+										$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[4]);
+									}
+								}
 								$recur_days = $this->recur_days_1_0;
 							}
 							elseif (preg_match('/BYDAY=([^;: ]+)/',$recurence,$recurenceMatches))	// 2.0
@@ -1596,8 +1626,10 @@ class calendar_ical extends calendar_boupdate
 							}
 							if ($days)
 							{
-								foreach($recur_days as $id => $day) {
-									if (in_array(strtoupper(substr($day,0,2)),$days)) {
+								foreach ($recur_days as $id => $day)
+								{
+									if (in_array(strtoupper(substr($day,0,2)),$days))
+									{
 										$vcardData['recur_data'] |= $id;
 									}
 								}
@@ -1614,9 +1646,11 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'D':	// 1.0
-							if(preg_match('/D(\d+) #(.\d)/', $recurence, $recurenceMatches)) {
+							if (preg_match('/D(\d+) #(.\d)/', $recurence, $recurenceMatches))
+							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if($recurenceMatches[2] > 0 && $vcardData['end']) {
+								if ($recurenceMatches[2] > 0 && $vcardData['end'])
+								{
 									$vcardData['recur_enddate'] = mktime(
 										date('H', $vcardData['end']),
 										date('i', $vcardData['end']),
@@ -1626,14 +1660,17 @@ class calendar_ical extends calendar_boupdate
 										date('Y', $vcardData['end'])
 									);
 								}
-							} elseif(preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches)) {
+							}
+							elseif (preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches))
+							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if($recurenceMatches[2] != '#0') {
+								if ($recurenceMatches[2] != '#0')
+								{
 									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 								}
-							} else {
-								break;
 							}
+							else break;
+
 							// fall-through
 						case 'DAILY':	// 2.0
 							$vcardData['recur_type'] = MCAL_RECUR_DAILY;
@@ -1648,10 +1685,12 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'M':
-							if (preg_match('/MD(\d+) #(.\d)/', $recurence, $recurenceMatches)) {
+							if (preg_match('/MD(\d+) #(.\d)/', $recurence, $recurenceMatches))
+							{
 								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if($recurenceMatches[2] > 0 && $vcardData['end']) {
+								if ($recurenceMatches[2] > 0 && $vcardData['end'])
+								{
 									$vcardData['recur_enddate'] = mktime(
 										date('H', $vcardData['end']),
 										date('i', $vcardData['end']),
@@ -1665,11 +1704,11 @@ class calendar_ical extends calendar_boupdate
 							elseif (preg_match('/MD(\d+) (.*)/',$recurence, $recurenceMatches))
 							{
 								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
-								if($recurenceMatches[1] > 1)
+								if ($recurenceMatches[1] > 1)
 								{
 									$vcardData['recur_interval'] = $recurenceMatches[1];
 								}
-								if($recurenceMatches[2] != '#0')
+								if ($recurenceMatches[2] != '#0')
 								{
 									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 								}
@@ -1719,7 +1758,8 @@ class calendar_ical extends calendar_boupdate
 							elseif (preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if($recurenceMatches[2] != '#0') {
+								if ($recurenceMatches[2] != '#0')
+								{
 									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 								}
 							} else break;
@@ -1819,16 +1859,17 @@ class calendar_ical extends calendar_boupdate
 					}
 					$cn = '';
 					if (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
-						$attributes['value'],$matches)) {
+						$attributes['value'],$matches))
+					{
 						$email = $matches[1] ? $matches[1] : $matches[3];
 						$cn = isset($matches[2]) ? $matches[2]: '';
 					}
 					elseif (preg_match('/"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches))
-						{
+					{
 						$cn = $matches[1];
 						$email = $matches[2];
-						}
+					}
 					elseif (strpos($attributes['value'],'@') !== false)
 					{
 						$email = $attributes['value'];
@@ -1881,13 +1922,13 @@ class calendar_ical extends calendar_boupdate
 					}
 					elseif ($attributes['value'] == 'Unknown')
 					{
-						$uid = $GLOBALS['egw_info']['user']['account_id'];
+						$uid = $this->user;
 					}
 					elseif ($email && ($uid = $GLOBALS['egw']->accounts->name2id($email,'account_email')))
 					{
 						// we use the account we found
 					}
-					elseif(!$searcharray)
+					elseif (!$searcharray)
 					{
 						continue;	// participants without email AND CN --> ignore it
 					}
@@ -1915,10 +1956,14 @@ class calendar_ical extends calendar_boupdate
 							{
 								$event['participants'][$uid] = ($uid == $event['owner'] ? 'A' : 'U');
 							}
-							// add quantity and role
-							$event['participants'][$uid] = calendar_so::combine_status($status,$attributes['params']['X-EGROUPWARE-QUANTITY'],$attributes['params']['ROLE']);
-							break;
+							if (!isset($attributes['params']['ROLE']) || $attributes['params']['ROLE'] != 'ORGANIZER')
+							{
+								// add quantity and role
+								$event['participants'][$uid] = calendar_so::combine_status($status,$attributes['params']['X-EGROUPWARE-QUANTITY'],$attributes['params']['ROLE']);
+								break;
+							}
 						case 'ORGANIZER':
+							$hasOrganizer = true;
 							if (is_numeric($uid))
 							{
 								$event['owner'] = $uid;
@@ -1941,6 +1986,13 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 
+		if (!$hasOrganizer && $this->productManufacturer == 'groupdav'
+			&& !isset($event['participants'][$this->user]))
+		{
+			// according to iCalendar standard, ORGANIZER not used for events in the own calendar
+			$event['participants'][$this->user] = 'A';
+		}
+
 		// check if the entry is a birthday
 		// this field is only set from NOKIA clients
 		$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
@@ -1953,7 +2005,7 @@ class calendar_ical extends calendar_boupdate
 				// make it a whole day event for eGW
 				$vcardData['end'] = $vcardData['start'] + 86399;
 			}
-			elseif(strtolower($agendaEntryType) == 'event')
+			elseif (strtolower($agendaEntryType) == 'event')
 			{
 				$event['special'] = '2';
 				$event['non_blocking'] = 1;
@@ -1977,7 +2029,7 @@ class calendar_ical extends calendar_boupdate
 		// we merge that data with the information we have about the device
 		while (($fieldName = array_shift($supportedFields)))
 		{
-			switch($fieldName)
+			switch ($fieldName)
 			{
 				case 'recur_interval':
 				case 'recur_enddate':
@@ -1991,9 +2043,9 @@ class calendar_ical extends calendar_boupdate
 					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
 						$event['reference'] = 0;
-						foreach(array('recur_interval','recur_enddate','recur_data','recur_exception') as $r)
+						foreach (array('recur_interval','recur_enddate','recur_data','recur_exception') as $r)
 						{
-							if(isset($vcardData[$r]))
+							if (isset($vcardData[$r]))
 							{
 								$event[$r] = $vcardData[$r];
 							}
@@ -2016,10 +2068,10 @@ class calendar_ical extends calendar_boupdate
 
 	function search($_vcalData, $contentID=null, $relax=false)
 	{
-		if($events = $this->icaltoegw($_vcalData,!is_null($contentID) ? $contentID : -1))
+		if (($events = $this->icaltoegw($_vcalData,!is_null($contentID) ? $contentID : -1)))
 		{
 			// this function only supports searching a single event
-			if(count($events) == 1)
+			if (count($events) == 1)
 			{
 				$event = array_shift($events);
 				return $this->find_event($event, $relax);
@@ -2054,7 +2106,7 @@ class calendar_ical extends calendar_boupdate
 		);
 		if ($servertime)
 		{
-			foreach(array(
+			foreach (array(
 				'URL' => $this->freebusy_url($user),
 				'DTSTART' => date('Ymd\THis',$this->date2ts($this->now_su,true)),	// true = server-time
 				'DTEND' => date('Ymd\THis',$this->date2ts($end,true)),	// true = server-time
@@ -2067,7 +2119,7 @@ class calendar_ical extends calendar_boupdate
 		}
 		else
 		{
-			foreach(array(
+			foreach (array(
 				'URL' => $this->freebusy_url($user),
 				'DTSTART' => $this->date2ts($this->now_su,true),	// true = server-time
 				'DTEND' => $this->date2ts($end,true),	// true = server-time
@@ -2120,23 +2172,25 @@ class calendar_ical extends calendar_boupdate
 	 * @param int $recur_date=0 date to change, or 0 = all since now
 	 */
 	function update_status($new_event, $old_event , $recur_date=0)
-   {
+	{
 		// check the old list against the new list
 		foreach ($old_event['participants'] as $userid => $status)
   		{
-            if(!isset($new_event['participants'][$userid])){
+            if (!isset($new_event['participants'][$userid])){
             	// Attendee will be deleted this way
             	$new_event['participants'][$userid] = 'G';
-            } elseif ($new_event['participants'][$userid] == $status){
+            }
+            elseif ($new_event['participants'][$userid] == $status)
+            {
             	// Same status -- nothing to do.
             	unset($new_event['participants'][$userid]);
             }
 		}
-      // write the changes
-      foreach ($new_event['participants'] as $userid => $status)
-      {
-			$this->set_status($old_event, $userid, $status, $recur_date, true);
-   	}
+		// write the changes
+		foreach ($new_event['participants'] as $userid => $status)
+		{
+			$this->set_status($old_event, $userid, $status, $recur_date, true, false);
+		}
     }
 
     /**
@@ -2165,29 +2219,28 @@ class calendar_ical extends calendar_boupdate
 			$type = 'SINGLE'; // default
 			$return_master = false; //default
 
-			if($event['recur_type'] != MCAL_RECUR_NONE)
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$type = 'SERIES-MASTER';
 			}
 			else
 			{
 				// SINGLE, SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
-				if(empty($event['uid']) && $event['id'] > 0 && ($stored_event = $this->read($event['id'])))
+				if (empty($event['uid']) && $event['id'] > 0 && ($stored_event = $this->read($event['id'])))
 				{
 					$event['uid'] = $stored_event['uid']; // restore the UID if it was not delivered
 				}
 
-				if(isset($event['uid'])
+				if (isset($event['uid'])
 					&& $event['recurrence']
 					&& ($master_event = $this->read($event['uid']))
 					&& isset($master_event['recur_type'])
-					&& $master_event['recur_type'] != MCAL_RECUR_NONE
-				)
+					&& $master_event['recur_type'] != MCAL_RECUR_NONE)
 				{
 					// SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
 					$return_master = true; // we have a valid master and can return it
 
-					if(isset($event['id']) && $master_event['id'] != $event['id'])
+					if (isset($event['id']) && $master_event['id'] != $event['id'])
 					{
 						$type = 'SERIES-EXCEPTION'; // this is an existing exception
 					}
@@ -2204,7 +2257,7 @@ class calendar_ical extends calendar_boupdate
 						{
 							if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
 							{
-								if(isset($event['id']))
+								if (isset($event['id']))
 								{
 									$type = 'SERIES-EXCEPTION-PROPAGATE';
 								}
@@ -2228,19 +2281,19 @@ class calendar_ical extends calendar_boupdate
 			}
 
 			// read existing event
-			if(isset($event['id']))
+			if (isset($event['id']))
 			{
 				$stored_event = $this->read($event['id']);
 			}
 
 			// check ACL
-			if($return_master)
+			if ($return_master)
 			{
 				$acl_edit = $this->check_perms(EGW_ACL_EDIT, $master_event['id']);
 			}
 			else
 			{
-				if(is_array($stored_event))
+				if (is_array($stored_event))
 				{
 					$acl_edit = $this->check_perms(EGW_ACL_EDIT, $stored_event['id']);
 				}
@@ -2463,8 +2516,8 @@ class calendar_ical extends calendar_boupdate
 				{
 					$row = $i;
 				}
-				else if ($row !== false) break;
-				else if ($tbl_tz_row[4] != '' && $year < (int) $tbl_tz_row[4])
+				elseif ($row !== false) break;
+				elseif ($tbl_tz_row[4] != '' && $year < (int) $tbl_tz_row[4])
 				{
 					// First DST starts at this year
 					$year = (int) $tbl_tz_row[4];
@@ -2476,7 +2529,7 @@ class calendar_ical extends calendar_boupdate
 					break;
 				}
 			}
-			else if ($row !== false) break;
+			elseif ($row !== false) break;
 		}
 		while (is_array($tbl_tz[++$i]));
 
