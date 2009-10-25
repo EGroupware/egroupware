@@ -78,9 +78,9 @@ catch (egw_exception_no_permission_app $e)
 	{
 		$GLOBALS['egw_info']['currentapp'] = 'filemanager';
 	}
-	elseif (isset($GLOBALS['egw_info']['user']['apps']['sitemgr-site']))
+	elseif (isset($GLOBALS['egw_info']['user']['apps']['sitemgr-link']))
 	{
-		$GLOBALS['egw_info']['currentapp'] = 'sitemgr-site';
+		$GLOBALS['egw_info']['currentapp'] = 'sitemgr-link';
 	}
 	else
 	{
