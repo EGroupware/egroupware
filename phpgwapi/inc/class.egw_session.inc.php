@@ -749,7 +749,7 @@ class egw_session
 		{
 			$sessionid = false;
 		}
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() returning '.array2string($sessionid));
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() returning '.print_r($sessionid,true));
 		return $sessionid;
 	}
 
@@ -942,22 +942,6 @@ class egw_session
 				$GLOBALS['egw']->log->commit();
 			}
 			//echo 'DEBUG: Sessions: account_id is empty!<br>'."\n";
-			return false;
-		}
-		// if user is anonymous and enters a not allowed application its session will be destroyed inmediatly.
-		$_current_app=$GLOBALS['egw_info']['flags']['currentapp'];
-		if($this->session_flags=='A' && !$GLOBALS['egw_info']['user']['apps'][$_current_app])
-		{
-			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) anon user entering not allowed app");
-			$this->destroy($sessionid,$kp3);
-
-			/* Overwrite Cookie with empty user. For 2 weeks */
-			self::egw_setcookie(self::EGW_SESSION_NAME,'');
-			self::egw_setcookie('kp3','');
-			self::egw_setcookie('domain','');
-			self::egw_setcookie('last_domain','');
-			self::egw_setcookie('last_loginid', '');
-
 			return false;
 		}
 		if (self::ERROR_LOG_DEBUG) error_log("--> session::verify($sessionid) SUCCESS");
