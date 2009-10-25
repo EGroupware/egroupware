@@ -68,7 +68,25 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 // if you move this file somewhere else, you need to adapt the path to the header!
-include(dirname(__FILE__).'/header.inc.php');
+try
+{
+	include(dirname(__FILE__).'/header.inc.php');
+}
+catch (egw_exception_no_permission_app $e)
+{
+	if (isset($GLOBALS['egw_info']['user']['apps']['filemanager']))
+	{
+		$GLOBALS['egw_info']['currentapp'] = 'filemanager';
+	}
+	elseif (isset($GLOBALS['egw_info']['user']['apps']['sitemgr-link']))
+	{
+		$GLOBALS['egw_info']['currentapp'] = 'sitemgr-link';
+	}
+	else
+	{
+		throw $e;
+	}
+}
 
 $headertime = microtime(true);
 
