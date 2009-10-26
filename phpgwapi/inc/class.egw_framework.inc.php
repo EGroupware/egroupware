@@ -410,7 +410,7 @@ abstract class egw_framework
 		return html::div(
 			html::a_href(
 				html::image('notifications','notificationbell',lang('notifications')),
-				'javascript: notificationwindow_display();'
+				'javascript: egwpopup_display();'
 			),
 			'id="notificationbell"', // options
 			'', // class
