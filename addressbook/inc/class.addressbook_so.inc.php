@@ -750,12 +750,12 @@ class addressbook_so
 	 * @param int $owner=null account_id of owner or 0 for accounts
 	 * @return object
 	 */
-	function &get_backend($contact_id=null,$owner=null)
+	function get_backend($contact_id=null,$owner=null)
 	{
 		if ($owner === '') $owner = null;
 
 		if ($this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
-			(!is_null($owner) && !$owner || !is_null($contact_id) &&
+			(!is_null($owner) && !$owner || is_array($contact_id) && $contact_id['account_id'] || !is_null($contact_id) &&
 			($this->contact_repository == 'sql' && (!is_numeric($contact_id) && !is_array($contact_id) )||
 			 $this->contact_repository == 'ldap' && is_numeric($contact_id))))
 		{
