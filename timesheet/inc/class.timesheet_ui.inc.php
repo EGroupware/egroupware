@@ -78,7 +78,7 @@ class timesheet_ui extends timesheet_bo
 			{
 				$this->data = array(
 					'ts_start' => $this->today,
-					'end_time' => $this->now - $this->today,
+					'end_time' => egw_time::to($this->now,'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id'   => (int) $_REQUEST['cat_id'],
 				);
@@ -98,7 +98,6 @@ class timesheet_ui extends timesheet_bo
 		else
 		{
 			//echo "<p>ts_start=$content[ts_start], start_time=$content[start_time], end_time=$content[end_time], ts_duration=$content[ts_duration], ts_quantity=$content[ts_quantity]</p>\n";
-			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
 			if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) && $content['ts_status'])
 			{
 				if ($this->status_labels_config[$content['ts_status']]['admin'])
@@ -109,17 +108,30 @@ class timesheet_ui extends timesheet_bo
 				}
 			}
 
-			if ($content['start_time'])		// start-time specified
+			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
+			if ($content['start_time'] != '00:00')		// start-time specified
 			{
-				$content['ts_start'] += $content['start_time'];
+				//$content['ts_start'] += $content['start_time'];
+				$start = new egw_time($content['ts_start']);
+				$start_time = explode(':',$content['start_time']);
+				$start->setTime($start_time[0],$start_time[1]);
+				$content['ts_start'] = $start->format('ts');
 			}
-			if ($content['end_time'] && $content['start_time'])	// start- & end-time --> calculate the duration
+			if ($content['end_time'] != '00:00')		// end-time specified
 			{
-				$content['ts_duration'] = ($content['end_time'] - $content['start_time']) / 60;
+				$end = new egw_time($content['ts_start']);
+				$end_time = explode(':',$content['end_time']);
+				$end->setTime($end_time[0],$end_time[1]);
 			}
-			elseif ($content['ts_duration'] && $content['end_time'])	// no start, calculate from end and duration
+			if ($end && $start)	// start- & end-time --> calculate the duration
 			{
-				$content['ts_start'] += $content['end_time'] - 60*$content['ts_duration'];
+				$content['ts_duration'] = ($end->format('ts') - $start->format('ts')) / 60;
+				//echo "<p>end_time=$content[end_time], start_time=$content[start_time] --> duration=$content[ts_duration]</p>\n";
+			}
+			elseif ($content['ts_duration'] && $end)	// no start, calculate from end and duration
+			{
+				$content['ts_start'] = $end->format('ts') - 60*$content['ts_duration'];
+				//echo "<p>end_time=$content[end_time], duration=$content[ts_duration] --> ts_start=$content[ts_start]=".egw_time::to($content['ts_start'])."</p>\n";
 			}
 			if ($content['ts_duration'] > 0) unset($content['end_time']);
 			// now we only deal with start (date+time) and duration
@@ -262,7 +274,7 @@ class timesheet_ui extends timesheet_bo
 			),
 			'js' => "<script>\n$js\n</script>\n",
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
-			'start_time' => $this->datetime2time($this->data['ts_start']),
+			'start_time' => egw_time::to($this->data['ts_start'],'H:i'),
 			'pm_integration' => $this->pm_integration,
 			'ts_status' => ($preserv['ts_status'] !='')? $preserv['ts_status'] : $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
 		));

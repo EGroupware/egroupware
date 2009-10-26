@@ -51,19 +51,6 @@ class timesheet_bo extends so_sql_cf
 		'ts_start','ts_modified'
 	);
 	/**
-	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time
-	 * or substracted from a user-time to get the server-time
-	 *
-	 * @var int
-	 */
-	var $tz_offset_s;
-	/**
-	 * Current time as timestamp in user-time
-	 *
-	 * @var int
-	 */
-	var $now;
-	/**
 	 * Start of today in user-time
 	 *
 	 * @var int
@@ -128,13 +115,15 @@ class timesheet_bo extends so_sql_cf
 	 */
 	var $status_labels_substatus = array();
 	/**
-	 * Name of the timesheet table storing custom fields
-	 */
-	var $historylog;
-	/**
 	 * Instance of the timesheet_tracking object
 	 *
 	 * @var timesheet_tracking
+	 */
+	var $tracking;
+	/**
+	 * Translates field / acl-names to labels
+	 *
+	 * @var array
 	 */
 	var $field2label = array(
 		'ts_project'     => 'Project',
@@ -154,21 +143,13 @@ class timesheet_bo extends so_sql_cf
 		'customfields'   => 'Custom fields',
 	);
 	/**
-	 * Translates field / acl-names to labels
+	 * setting field-name from DB to history status
 	 *
 	 * @var array
 	 */
 	var $field2history = array();
 	/**
-	 * setting field-name from DB to history status
-	 *
-	 * @var array
-	 */
-	var $tracking;
-	/**
-	 * Names of all config vars
-	 *
-	 * @var array
+	 * Name of the timesheet table storing custom fields
 	 */
 	const EXTRA_TABLE = 'egw_timesheet_extra';
 
@@ -220,8 +201,6 @@ class timesheet_bo extends so_sql_cf
 				}
 			}
 		}
-		$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
-		$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
 		$this->today = mktime(0,0,0,date('m',$this->now),date('d',$this->now),date('Y',$this->now));
 
 		// save us in $GLOBALS['timesheet_bo'] for ExecMethod used in hooks
@@ -232,9 +211,8 @@ class timesheet_bo extends so_sql_cf
 		$this->grants = $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
 		//set fields for tracking
 		$this->field2history = array_keys($this->db_cols);
-			$this->field2history = array_diff(array_combine($this->field2history,$this->field2history),
-		array('ts_modified'));
-		$this->field2history = $this->field2history +array('customfields'   => '#c');  //add custom fields for history
+		$this->field2history = array_diff(array_combine($this->field2history,$this->field2history),array('ts_modified'));
+		$this->field2history += array('customfields'   => '#c');  //add custom fields for history
 	}
 
 	/**
@@ -617,50 +595,6 @@ class timesheet_bo extends so_sql_cf
 	}
 
 	/**
-	 * changes the data from the db-format to your work-format
-	 *
-	 * reimplemented to adjust the timezone of the timestamps (adding $this->tz_offset_s to get user-time)
-	 * Please note, we do NOT call the method of the parent so_sql !!!
-	 *
-	 * @param array $data if given works on that array and returns result, else works on internal data-array
-	 * @return array with changed data
-	 */
-	function db2data($data=null)
-	{
-		if (!is_array($data))
-		{
-			$data = &$this->data;
-		}
-		foreach($this->timestamps as $name)
-		{
-			if (isset($data[$name]) && $data[$name]) $data[$name] += $this->tz_offset_s;
-		}
-		return $data;
-	}
-
-	/**
-	 * changes the data from your work-format to the db-format
-	 *
-	 * reimplemented to adjust the timezone of the timestamps (subtraction $this->tz_offset_s to get server-time)
-	 * Please note, we do NOT call the method of the parent so_sql !!!
-	 *
-	 * @param array $data if given works on that array and returns result, else works on internal data-array
-	 * @return array with changed data
-	 */
-	function data2db($data=null)
-	{
-		if ($intern = !is_array($data))
-		{
-			$data = &$this->data;
-		}
-		foreach($this->timestamps as $name)
-		{
-			if (isset($data[$name]) && $data[$name]) $data[$name] -= $this->tz_offset_s;
-		}
-		return $data;
-	}
-
-	/**
 	 * Get the time- and pricesum for the given timesheet entries
 	 *
 	 * @param array $ids array of timesheet id's
@@ -807,6 +741,4 @@ class timesheet_bo extends so_sql_cf
 		}
 		return array();
 	}
-
-
 }

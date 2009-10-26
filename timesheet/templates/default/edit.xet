@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.001">
-		<grid width="100%" height="250" overflow="auto">
+	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.7.002">
+		<grid width="100%" height="150">
 			<columns>
 				<column width="95"/>
 				<column width="120"/>
@@ -32,13 +32,13 @@
 					<description options=",,,ts_start" value="Date"/>
 					<date id="ts_start" needed="1" options=",8"/>
 					<description value="Starttime"/>
-					<date-timeonly id="start_time"/>
+					<date-timeonly id="start_time" options="H:i"/>
 				</row>
 				<row class="row">
 					<description options=",,,ts_duration" value="Duration"/>
 					<date-duration id="ts_duration" options=",hm"/>
 					<description value="or endtime" class="noWrap"/>
-					<date-timeonly id="end_time"/>
+					<date-timeonly id="end_time" options="H:i"/>
 				</row>
 				<row class="row" disabled="@ts_viewtype">
 					<description options=",,,ts_quantity" value="Quantity"/>
@@ -56,7 +56,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.notes" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="450" overflow="auto">
+		<grid width="100%" height="150">
 			<columns>
 				<column/>
 			</columns>
@@ -68,7 +68,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.links" template="" lang="" group="0" version="0.1.001">
-		<grid width="100%" height="150">
+		<grid width="100%" height="150" overflow="auto">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -90,7 +90,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
-		<grid width="100%" height="150">
+		<grid width="100%" height="150" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
