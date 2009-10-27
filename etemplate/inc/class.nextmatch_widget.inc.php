@@ -1011,7 +1011,7 @@ class nextmatch_widget
 			if (!$value['start'])	// send the neccessary headers
 			{
 				// use last row for header detection, as first row(s) might be empty to skip header row(s) of template
-				$fp = self::csv_open($rows[count($rows)-1],$value['csv_fields'],$app);
+				$fp = self::csv_open($rows[count($rows)-1],$value['csv_fields'],$app,$charset_out,$charset,$separator);
 			}
 			foreach($rows as $key => $row)
 			{
@@ -1045,9 +1045,12 @@ class nextmatch_widget
 	 * @param array $row0 first row to guess the available fields
 	 * @param array $fields name=>label or name=>array('lable'=>label,'type'=>type) pairs
 	 * @param string $app app-name
+	 * @param string $charset_out=null output charset
+	 * @param string $charset data charset
+	 * @param string $separator=';'
 	 * @return FILE
 	 */
-	private static function csv_open($row0,&$fields,$app)
+	private static function csv_open($row0,&$fields,$app,$charset_out=null,$charset=null,$separator=';')
 	{
 		if (!is_array($fields) || !count($fields))
 		{
@@ -1064,7 +1067,7 @@ class nextmatch_widget
 				if (is_array($label)) $label = $label['label'];
 				$labels[$field] = $label ? $label : $field;
 			}
-			fwrite($fp,self::csv_encode($labels,$fields,false)."\n");
+			fwrite($fp,self::csv_encode($labels,$fields,false,null,$charset_out,$charset,$separator)."\n");
 		}
 		return $fp;
 	}
