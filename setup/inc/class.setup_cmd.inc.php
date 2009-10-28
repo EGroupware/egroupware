@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -310,7 +310,7 @@ abstract class setup_cmd extends admin_cmd
 					$apps_to_install = array();
 					foreach($setup_info as $app => $data)
 					{
-						if ($data['currentver'] && $data['version'] && $data['version'] != $data['currentver'])
+						if ($data['currentver'] && $data['version'] && $data['version'] != 'deleted' && $data['version'] != $data['currentver'])
 						{
 							$apps_to_upgrade[] = $app;
 						}
