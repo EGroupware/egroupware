@@ -253,7 +253,6 @@ class felamimail_hooks
 				'values' => $selectOptions,
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> '2',
 			),
 			'mainscreen_showfolders' => array(
 				'type'   => 'multiselect',
