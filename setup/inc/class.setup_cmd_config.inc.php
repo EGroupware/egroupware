@@ -83,6 +83,8 @@ class setup_cmd_config extends setup_cmd
 		{
 			if ($save_ea_profile) $this->_save_ea_profile();
 
+			$this->restore_db();
+
 			return lang('Configuration changed.');
 		}
 		$this->restore_db();
@@ -359,6 +361,8 @@ class setup_cmd_config extends setup_cmd
 		$defaults['mail_suffix'] = '$domain';
 		$defaults['imapAdminUsername'] = 'cyrus@$domain';
 		$defaults['imapAdminPW'] = self::randomstring();
+		$defaults['imapType'] = 2;	// standard IMAP
+		$defaults['smtpType'] = 1;	// standard SMTP
 
 		return $defaults;
 	}
