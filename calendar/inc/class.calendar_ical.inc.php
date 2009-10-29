@@ -249,17 +249,13 @@ class calendar_ical extends calendar_boupdate
 						($event['recur_enddate'] - $event['start']) > 15778800)
 					{
 						$servertime = true;
-						$date_format = 'ts';
-						// read the event again with timestamps
-						$event = $this->read($event['id'], 0, false, $date_format);
+						$serverTZ = true;
 					}
 				}
 				else
 				{
 					$servertime = true;
-					$date_format = 'ts';
-					// read the event again with timestamps
-					$event = $this->read($event['id'], 0, false, $date_format);
+					$serverTZ = true;
 				}
 			}
 
@@ -274,7 +270,7 @@ class calendar_ical extends calendar_boupdate
 			$vevent = Horde_iCalendar::newComponent('VEVENT', $vcal);
 			$parameters = $attributes = $values = array();
 
-			if (!$serverTZ && $servertime)
+			if ($serverTZ)
 			{
 				$serverTZ = $this->generate_vtimezone($event, $vcal);
 			}
@@ -425,8 +421,9 @@ class calendar_ical extends calendar_boupdate
 							{
 								$rrule['UNTIL'] = '#0';
 							}
+							$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
 						}
-						else
+						else // $version == '2.0'
 						{
 							$rrule = array('FREQ' => $this->recur_egw2ical_2_0[$event['recur_type']]);
 							switch ($event['recur_type'])
@@ -458,9 +455,9 @@ class calendar_ical extends calendar_boupdate
 								// UNTIL should be a UTC timestamp
 								$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
 							}
+							$attributes['RRULE'] = '';
+							$parameters['RRULE'] = $rrule;
 						}
-						$attributes['RRULE'] = '';
-						$parameters['RRULE'] = $rrule;
 						break;
 
 					case 'EXDATE':
