@@ -224,12 +224,13 @@ class calendar_boupdate extends calendar_bo
 			{
 				foreach($conflicts as $key => $conflict)
 				{
+					$conflict['participants'] = array_intersect_key($conflict['participants'],$event['participants']);
 					if (!$this->check_perms(EGW_ACL_READ,$conflict))
 					{
 						$conflicts[$key] = array(
 							'id'    => $conflict['id'],
 							'title' => lang('busy'),
-							'participants' => array_intersect_key($conflict['participants'],$event['participants']),
+							'participants' => $conflict['participants'],
 							'start' => $conflict['start'],
 							'end'   => $conflict['end'],
 						);
