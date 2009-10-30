@@ -257,6 +257,11 @@ class calendar_ical extends calendar_boupdate
 					$servertime = true;
 					$serverTZ = true;
 				}
+				if ($serverTZ)
+				{
+					// Add only one instance
+					$serverTZ = $this->generate_vtimezone($event, $vcal);
+				}
 			}
 
 			if ($this->productManufacturer != 'file' && $this->uidExtension)
@@ -269,11 +274,6 @@ class calendar_ical extends calendar_boupdate
 
 			$vevent = Horde_iCalendar::newComponent('VEVENT', $vcal);
 			$parameters = $attributes = $values = array();
-
-			if ($serverTZ)
-			{
-				$serverTZ = $this->generate_vtimezone($event, $vcal);
-			}
 
 			if ($this->productManufacturer == 'sonyericsson')
 			{
@@ -685,8 +685,8 @@ class calendar_ical extends calendar_boupdate
 			$attributes['DTSTAMP'] = time();
 			foreach ($event['alarm'] as $alarmID => $alarmData)
 			{
-				// skip alarms being set for all users or alarms owned by other users
-				if ($alarmData['all'] == true || $alarmData['owner'] != $this->user)
+				// skip alarms not being set for all users and alarms owned by other users
+				if ($alarmData['all'] != true && $alarmData['owner'] != $this->user)
 				{
 					continue;
 				}
