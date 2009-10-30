@@ -762,7 +762,7 @@ class addressbook_ui extends addressbook_bo
 		$do_email = $query['do_email'];
 		$what = $query['sitemgr_display'] ? $query['sitemgr_display'] : ($do_email ? 'email' : 'index');
 
-		if (!$id_only)
+		if (!$id_only && !$query['csv_export'])	// do NOT store state for csv_export or querying id's (no regular view)
 		{
 			$old_state = $GLOBALS['egw']->session->appsession($what,'addressbook',$query);
 		}
@@ -880,12 +880,14 @@ class addressbook_ui extends addressbook_bo
 			if ($query['sitemgr_display'])
 			{
 				$query['template'] = $query['sitemgr_display'].'.rows';
-			} else {
+			}
+			else
+			{
 				$query['template'] = $do_email ? 'addressbook.email.rows' : 'addressbook.index.rows';
 			}
 			if ($query['org_view'])	// view the contacts of one organisation only
 			{
-				if (strpos($query['org_view'],'*AND*')!== false) $query['org_view'] = str_replace('*AND*','&',$query['org_view']);
+				if (strpos($query['org_view'],'*AND*') !== false) $query['org_view'] = str_replace('*AND*','&',$query['org_view']);
 				foreach(explode('|||',$query['org_view']) as $part)
 				{
 					list($name,$value) = explode(':',$part,2);
@@ -941,14 +943,15 @@ class addressbook_ui extends addressbook_bo
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 
 			// do we need to read the custom fields, depends on the column is enabled and customfields exist
+			// $query['csv_export'] allways needs to read ALL cf's
 			$columselection = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
 			$available_distib_lists=$this->get_lists(EGW_ACL_READ);
-			$columselection = $columselection ? explode(',',$columselection) : array();
+			$columselection = $columselection && !$query['csv_export'] ? explode(',',$columselection) : array();
 			if (!$id_only && $rows)
 			{
-				$show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->customfields;
+				$show_custom_fields = (!$columselection || in_array('customfields',$columselection) || $query['csv_export']) && $this->customfields;
 				$show_calendar = !$columselection || in_array('calendar_calendar',$columselection);
-				$show_distributionlist = !$columselection || in_array('distrib_lists',$columselection) ||count($available_distib_lists);
+				$show_distributionlist = !$columselection || in_array('distrib_lists',$columselection) || count($available_distib_lists);
 				if ($show_calendar || $show_custom_fields || $show_distributionlist)
 				{
 					foreach($rows as $val)
