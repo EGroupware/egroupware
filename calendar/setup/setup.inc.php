@@ -10,7 +10,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '1.7.002';
+$setup_info['calendar']['version'] = '1.7.003';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index';
@@ -31,6 +31,7 @@ $setup_info['calendar']['tables'][] = 'egw_cal_repeats';
 $setup_info['calendar']['tables'][] = 'egw_cal_user';
 $setup_info['calendar']['tables'][] = 'egw_cal_extra';
 $setup_info['calendar']['tables'][] = 'egw_cal_dates';
+$setup_info['calendar']['tables'][] = 'egw_cal_timezones';
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['calendar']['hooks']['admin'] = 'calendar_hooks::admin';
@@ -58,6 +59,12 @@ $setup_info['calendar']['check_install'] = array(
 		'func' => 'pear_check',
 		'from' => 'Calendar (iCal import+export)',
 	),
+	// check if PDO SQLite support is available
+	'pdo_sqlite' => array(
+		'func' => 'extension_check',
+		'from' => 'Calendar',
+	),
 );
+
 
 

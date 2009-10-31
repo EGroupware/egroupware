@@ -1703,3 +1703,26 @@ function calendar_upgrade1_7_001()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.002';
 }
 
+
+function calendar_upgrade1_7_002()
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_cal_timezones',array(
+		'fd' => array(
+			'tz_id' => array('type' => 'auto','nullable' => False),
+			'tz_tzid' => array('type' => 'varchar','precision' => '128','nullable' => False),
+			'tz_alias' => array('type' => 'int','precision' => '4','comment' => 'tz_id for data'),
+			'tz_latitude' => array('type' => 'int','precision' => '4'),
+			'tz_longitude' => array('type' => 'int','precision' => '4'),
+			'tz_component' => array('type' => 'text','comment' => 'iCal VTIMEZONE component')
+		),
+		'pk' => array('tz_id'),
+		'fk' => array(),
+		'ix' => array('tz_alias'),
+		'uc' => array('tz_tzid')
+	));
+	// import timezone data, throw exception if no PDO sqlite support
+	calendar_timezones::import_sqlite();
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.003';
+}
+

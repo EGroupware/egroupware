@@ -102,5 +102,19 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array(),
 		'uc' => array()
+	),
+	'egw_cal_timezones' => array(
+		'fd' => array(
+			'tz_id' => array('type' => 'auto','nullable' => False),
+			'tz_tzid' => array('type' => 'varchar','precision' => '128','nullable' => False),
+			'tz_alias' => array('type' => 'int','precision' => '4','comment' => 'tz_id for data'),
+			'tz_latitude' => array('type' => 'int','precision' => '4'),
+			'tz_longitude' => array('type' => 'int','precision' => '4'),
+			'tz_component' => array('type' => 'text','comment' => 'iCal VTIMEZONE component')
+		),
+		'pk' => array('tz_id'),
+		'fk' => array(),
+		'ix' => array('tz_alias'),
+		'uc' => array('tz_tzid')
 	)
 );
