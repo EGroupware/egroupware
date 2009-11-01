@@ -340,17 +340,11 @@ abstract class egw_framework
 		$now = new egw_time();
 		$user_info = '<b>'.common::display_fullname() .'</b>'. ' - ' . lang($now->format('l')) . ' ' . $now->format(true);
 
-		$tz = explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['tz']);
-		$tz_selection = explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['tz_selection']);
-		if (count($tz_selection) > 1)
+		$user_tzs = egw_time::getUserTimezones();
+		if (count($user_tzs) > 1)
 		{
-			if (!in_array($tz,$tz_selection)) $tz_selection = array_merge((array)$tz,$tz_selection);
-			$tz_selection = array_combine($tz_selection,$tz_selection);
-			foreach($tz_selection as $name => &$label)
-			{
-				$label = str_replace(array('_','/'),array(' ',' / '),$label);
-			}
-			$user_info .= html::form(html::select('tz',$tz,$tz_selection,true,' onchange="this.form.submit();"'),array(),
+			$tz = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
+			$user_info .= html::form(html::select('tz',$tz,$user_tzs,true,' onchange="this.form.submit();"'),array(),
 				'/index.php','','tz_selection',' style="display: inline;"','GET');
 		}
 		return $user_info;

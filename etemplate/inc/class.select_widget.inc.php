@@ -49,6 +49,7 @@ class select_widget
 		'select-app'      => 'Select Application',
 		'select-lang'     => 'Select Language',
 		'select-bool'     => 'Select yes or no',
+		'select-timezone' => 'Select timezone',	// select timezone
 	);
 	/**
 	 * @var array
@@ -432,10 +433,15 @@ class select_widget
 					$cell['sel_options'][$app] = $apps[$app];
 				}
 				break;
+
 			case 'select-lang':
-				$cell['sel_options'] = $GLOBALS['egw']->translation->list_langs();
+				$cell['sel_options'] = translation::list_langs();
 				$cell['no_lang'] = True;
-			break;
+				break;
+
+			case 'select-timezone':	// options: #rows,$type
+				$cell['sel_options'] = $type ? egw_time::getTimezones() : egw_time::getUserTimezones($value);
+				break;
 		}
 		if ($rows > 1)
 		{

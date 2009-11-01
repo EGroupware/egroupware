@@ -33,6 +33,9 @@
  * keys: ('year', 'month', 'day') or 'full' plus 'hour', 'minute' and optional 'second' or a DateTime object as parameter.
  * It defaults to user-time, not server time as DateTime!
  *
+ * The constructor itself throws an Exception in that case (to be precise it does not handle the one thrown by DateTime constructor).
+ * Static methods server2user, user2server and to return NULL, if given time could not be parsed.
+ *
  * @link http://www.php.net/manual/en/class.datetime.php
  * @link http://www.php.net/manual/en/class.datetimezone.php
  */
@@ -77,6 +80,7 @@ class egw_time extends DateTime
 	 * 	array with values for keys('year','month','day') or 'full' plus 'hour','minute' and optional 'second'
 	 * @param DateTimeZone $tz=null timezone, default user time (PHP DateTime default to server time!)
 	 * @param string &$type=null on return type of $time (optional)
+	 * @throws Exception if $time can NOT be parsed
 	 * @return egw_time
 	 */
 	public function __construct($time='now',DateTimeZone $tz=null,&$type=null)
@@ -245,13 +249,6 @@ class egw_time extends DateTime
 	 */
 	public function __toString()
 	{
-		$tz = $this->getTimezone();
-		if (!$tz)
-		{
-			ob_start();
-			debug_print_backtrace();
-			error_log(ob_get_clean());
-		}
 		return $this->format(self::DATABASE);
 	}
 
@@ -260,11 +257,21 @@ class egw_time extends DateTime
 	 *
 	 * @param int|string|array|DateTime $time
 	 * @param string $type=null type or return-value, default (null) same as $time
-	 * @return int|string|array|datetime
+	 * @return int|string|array|datetime null if time could not be parsed
 	 */
 	public static function server2user($time,$type=null)
 	{
-		if (!is_a($time,$typeof='egw_time')) $time = new egw_time($time,self::$server_timezone,$typeof);
+		if (!is_a($time,$typeof='egw_time'))
+		{
+			try
+			{
+				$time = new egw_time($time,self::$server_timezone,$typeof);
+			}
+			catch(Exception $e)
+			{
+				return null;	// time could not be parsed
+			}
+		}
 		$time->setUser();
 
 		if (is_null($type)) $type = $typeof;
@@ -278,11 +285,21 @@ class egw_time extends DateTime
 	 *
 	 * @param int|string|array|datetime $time
 	 * @param string $type=null type or return-value, default (null) same as $time
-	 * @return int|string|array|datetime
+	 * @return int|string|array|datetime null if time could not be parsed
 	 */
 	public static function user2server($time,$type=null)
 	{
-		if (!is_a($time,$typeof='egw_time')) $time = new egw_time($time,self::$user_timezone,$typeof);
+		if (!is_a($time,$typeof='egw_time'))
+		{
+			try
+			{
+				$time = new egw_time($time,self::$user_timezone,$typeof);
+			}
+			catch(Exception $e)
+			{
+				return null;	// time could not be parsed
+			}
+		}
 		$time->setServer();
 
 		if (is_null($type)) $type = $typeof;
@@ -298,12 +315,21 @@ class egw_time extends DateTime
 	 * @param string $type='' 'integer'|'ts'=timestamp, 'server'=timestamp in servertime, 'string'='Y-m-d H:i:s', 'object'=DateTime,
 	 * 		'array'=array with values for keys ('year','month','day','hour','minute','second','full','raw') or string with format
 	 * 		true = date only, false = time only as in user prefs, '' = date+time as in user prefs
-	 * @return int|string|array|datetime see $type
+	 * @return int|string|array|datetime see $type, null if time could not be parsed
 	 */
 	public static function to($time='now',$type='')
 	{
-		if (!is_a($time,'egw_time')) $time = new egw_time($time);
-
+		if (!is_a($time,'egw_time'))
+		{
+			try
+			{
+				$time = new egw_time($time);
+			}
+			catch(Exception $e)
+			{
+				return null;	// time could not be parsed
+			}
+		}
 		return $time->format($type);
 	}
 
@@ -419,7 +445,7 @@ class egw_time extends DateTime
 		unset($data);
 
 		// if user lang or installed langs contain a european language --> move Europe to top of tz list
-		$langs = $GLOBALS['egw']->translation->get_installed_langs();
+		$langs = translation::get_installed_langs();
 		if (array_intersect(array($GLOBALS['egw_info']['user']['preferences']['common']['lang'])+array_keys($langs),
 			array('de','fr','it','nl','bg','ca','cs','da','el','es-es','et','eu','fi','hr','hu','lt','no','pl','pt','sk','sl','sv','tr','uk')))
 		{
@@ -427,9 +453,45 @@ class egw_time extends DateTime
 		}
 		return $tzs;
 	}
+
+	/**
+	 * Get user timezones (the ones user selected in his prefs), plus evtl. an extra one
+	 *
+	 * @param string $extra extra timezone to add, if not already included in user timezones
+	 * @return array tzid => label
+	 */
+	public static function getUserTimezones($extra=null)
+	{
+		$tz = $GLOBALS['egw_info']['user']['preferences']['common']['tz'];
+		$user_tzs = explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['tz_selection']);
+		if (count($user_tzs) <= 1)
+		{
+			$user_tzs = $tz ? array($tz) : array();
+		}
+		if ($tz && !in_array($tz,$user_tzs))
+		{
+			$user_tzs = array_merge(array($tz),$user_tzs);
+		}
+		if (!$user_tzs)	// if we have no user timezones, eg. user set no pref --> use server default
+		{
+			$user_tzs = array(date_default_timezone_get());
+		}
+		if ($extra && !in_array($extra,$user_tzs))
+		{
+			$user_tzs = array_merge(array($extra),$user_tzs);
+		}
+		$user_tzs = array_combine($user_tzs,$user_tzs);
+		foreach($user_tzs as $name => &$label)
+		{
+			$label = str_replace(array('_','/'),array(' ',' / '),$label);
+		}
+		//_debug_array($user_tzs);
+		return $user_tzs;
+	}
 }
 egw_time::init();
 
+/*
 if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
 {
 	// test timestamps/dates before 1970
@@ -459,4 +521,4 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 	$ts = egw_time::to(array('full' => '20090627', 'hour' => 10, 'minute' => 0),'ts');
 	echo "<p>2009-06-27 10h UTC timestamp=$ts --> server time = ".egw_time::user2server($ts,'')." --> user time = ".egw_time::server2user(egw_time::user2server($ts),'')."</p>\n";
 }
-
+*/
