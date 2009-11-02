@@ -1274,9 +1274,9 @@ function _check_script_tag(&$var,$name='')
 			}
 			else
 			{
-				if (preg_match('/<\/?[^>]*(iframe|script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
+				if (preg_match('/<\/?[^>]*(iframe|script\b|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
 				{
-					//echo "<p>*** _check_script_tag($name): unset(${name}[$key]) ***</p>\n";
+					error_log("*** _check_script_tag($name): unset(${name}[$key]) with value $val***");
 					error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
 					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] =& $var[$key];
 					unset($var[$key]);
