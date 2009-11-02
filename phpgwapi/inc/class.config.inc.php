@@ -218,7 +218,12 @@ class config
 				$value = $row['config_value'];
 
 				$test = @unserialize($value);
-
+				if($test === false)
+				{
+					// manually retrieve the string lengths of the serialized array if unserialize failed
+					$test = @unserialize(preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.mb_strlen('$2','8bit').':\"$2\";'", $value));
+				}
+ 
 				$config[$name] = is_array($test) ? $test : $value;
 			}
 		}
