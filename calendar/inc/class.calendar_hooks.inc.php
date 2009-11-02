@@ -298,7 +298,7 @@ class calendar_hooks
 				'type'   => 'select',
 				'label'  => 'weekday starts on',
 				'name'   => 'weekdaystarts',
-				'values' => 'Monday',
+				'values' => $weekdaystarts,
 				'help'   => 'This day is shown as first day in the week or month view.',
 				'xmlrpc' => True,
 				'admin'  => False,
