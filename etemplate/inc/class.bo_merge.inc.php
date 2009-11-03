@@ -450,6 +450,7 @@ abstract class bo_merge
 			case 'application/vnd.oasis.opendocument.spreadsheet':
 			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms office 2007
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+			case 'application/xml':
 			case 'text/xml':
 				$is_xml = true;
 				$charset = 'utf-8';	// xml files --> always use utf-8
