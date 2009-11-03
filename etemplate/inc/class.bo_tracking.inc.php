@@ -331,11 +331,9 @@ abstract class bo_tracking
 
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
 		{
-			if ($user_or_lang != $this->user)
-			{
-				$GLOBALS['egw']->preferences->preferences($user_or_lang);
-				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-			}
+			$GLOBALS['egw']->preferences->preferences($user_or_lang);
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+
 			if ($check && $this->check2pref) $check = $this->check2pref[$check];
 			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$check])
 			{

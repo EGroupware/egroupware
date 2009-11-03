@@ -1007,7 +1007,12 @@ class nextmatch_widget
 						case 'select-cat':
 							if ($val)
 							{
-								$value[$key] = $GLOBALS['egw']->categories->id2name($val);
+								$cats = array();
+								foreach(is_array($val) ? $val : explode(',',$val) as $cat_id)
+								{
+									$cats[] = $GLOBALS['egw']->categories->id2name($cat_id);
+								}
+								$value[$key] = implode('; ',$cats);
 							}
 							break;
 						case 'date-time':
