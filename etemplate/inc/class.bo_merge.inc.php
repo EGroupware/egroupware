@@ -582,6 +582,10 @@ abstract class bo_merge
 		}
 		else
 		{
+			if ($mimetype == 'application/xml' && strpos($merged,'<?mso-application progid="Word.Document"?>') !== false)
+			{
+				$mimetype = 'application/msword';	// to open it automatically in word or oowriter
+			}
 			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mimetype);
 			echo $merged;
 		}
