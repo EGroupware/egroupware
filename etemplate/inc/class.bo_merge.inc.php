@@ -104,6 +104,8 @@ abstract class bo_merge
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 				if (!$zip_available) break;
 				return true;	// ms word xml format
+			case 'application/xml':
+				return true;	// alias for text/xml, eg. ms office 2003 word format
 			default:
 				if (substr($mimetype,0,5) == 'text/')
 				{
