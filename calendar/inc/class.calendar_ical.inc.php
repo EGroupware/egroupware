@@ -900,6 +900,66 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
+			// update alarms depending on the given event type
+			if (count($event['alarm']) > 0 || isset($this->supportedFields['alarm']))
+			{
+				switch ($event_info['type'])
+				{
+					case 'SINGLE':
+					case 'SERIES-MASTER':
+					case 'SERIES-EXCEPTION':
+					case 'SERIES-EXCEPTION-PROPAGATE':
+						if (count($event['alarm']) > 0)
+						{
+							foreach ($event['alarm'] as $newid => &$alarm)
+							{
+								if (!isset($alarm['offset']) && isset($alarm['time']))
+								{
+									$alarm['offset'] = $event['start'] - $alarm['time'];
+								}
+								if (!isset($alarm['time']) && isset($alarm['offset']))
+								{
+									$alarm['time'] = $event['start'] - $alarm['offset'];
+								}
+								$alarm['owner'] = $this->user;
+								$alarm['all'] = false;
+
+								if (is_array($event_info['stored_event'])
+										&& count($event_info['stored_event']['alarm']) > 0)
+								{
+									foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
+									{
+										if ($alarm['time'] == $alarm_data['time'] &&
+											($alarm_data['all'] || $alarm_data['owner'] == $this->user))
+										{
+											unset($event['alarm'][$newid]);
+											unset($event_info['stored_event']['alarm'][$alarm_id]);
+											continue;
+										}
+									}
+								}
+							}
+						}
+						break;
+
+					case 'SERIES-EXCEPTION-STATUS':
+						// nothing to do here
+						break;
+				}
+				if (is_array($event_info['stored_event'])
+						&& count($event_info['stored_event']['alarm']) > 0)
+				{
+					foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
+					{
+						// only touch own alarms
+						if ($alarm_data['all'] == false && $alarm_data['owner'] == $this->user)
+						{
+							$this->delete_alarm($alarm_id);
+						}
+					}
+				}
+			}
+
 			// save event depending on the given event type
 			switch ($event_info['type'])
 			{
@@ -1042,56 +1102,6 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 					break;
-			}
-
-			// update alarms depending on the given event type
-			if (isset($this->supportedFields['alarm'])
-				&& is_array($event_info['stored_event']) // alarm update requires a stored event
-			)
-			{
-				switch ($event_info['type'])
-				{
-					case 'SINGLE':
-					case 'SERIES-MASTER':
-					case 'SERIES-EXCEPTION':
-					case 'SERIES-EXCEPTION-PROPAGATE':
-						// delete old alarms
-						if (count($event_info['stored_event']['alarm']) > 0)
-						{
-							foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
-							{
-								// only touch own alarms
-								if ($alarm_data['all'] == false && $alarm_data['owner'] == $this->user)
-								{
-									$this->delete_alarm($alarm_id);
-								}
-							}
-						}
-
-						// save given alarms
-						if (count($event['alarm']) > 0)
-						{
-							foreach ($event['alarm'] as $alarm)
-							{
-								if (!isset($alarm['offset']) && isset($alarm['time']))
-								{
-									$alarm['offset'] = $event['start'] - $alarm['time'];
-								}
-								if (!isset($alarm['time']) && isset($alarm['offset']))
-								{
-									$alarm['time'] = $event['start'] - $alarm['offset'];
-								}
-								$alarm['owner'] = $this->user;
-								$alarm['all'] = false;
-								$this->save_alarm($event_info['stored_event']['id'], $alarm);
-							}
-						}
-						break;
-
-					case 'SERIES-EXCEPTION-STATUS':
-						// nothing to do here
-						break;
-				}
 			}
 
 			// choose which id to return to the client
