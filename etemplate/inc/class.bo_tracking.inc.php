@@ -443,9 +443,9 @@ abstract class bo_tracking
 
 		// restore the user enviroment
 		if ($this->save_prefs) $GLOBALS['egw_info']['user'] = $this->save_prefs; unset($this->save_prefs);
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != $GLOBALS['egw']->translation->userlang)
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != translation::$userlang)
 		{
-			$GLOBALS['egw']->translation->init();
+			translation::init();
 		}
 		return !count($this->errors);
 	}
@@ -472,11 +472,9 @@ abstract class bo_tracking
 
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
 		{
-			if ($user_or_lang != $this->user)
-			{
-				$GLOBALS['egw']->preferences->preferences($user_or_lang);
-				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-			}
+			$GLOBALS['egw']->preferences->__construct($user_or_lang);
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+
 			if ($check && $this->check2pref) $check = $this->check2pref[$check];
 			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$check])
 			{
@@ -497,9 +495,9 @@ abstract class bo_tracking
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->default;
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $user_or_lang;
 		}
-		if ($lang != $GLOBALS['egw']->translation->userlang)	// load the right language if needed
+		if ($lang != translation::$userlang)	// load the right language if needed
 		{
-			$GLOBALS['egw']->translation->init();
+			translation::init();
 		}
 
 		// send over notification_app
