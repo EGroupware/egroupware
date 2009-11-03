@@ -286,7 +286,7 @@ class calendar_so
 	 */
 	function &search($start,$end,$users,$cat_id=0,$filter='all',$query='',$offset=False,$num_rows=0,$order='cal_start',$sql_filter='',$_cols=null,$append='',$cfs=null)
 	{
-		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append)</p>\n";
+		echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append,".array2string($cfs).")</p>\n";
 
 		$cols = !is_null($_cols) ? $_cols : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
 
@@ -440,7 +440,7 @@ class calendar_so
 			{
 				$id = $row['cal_id'];
 				if ($row['cal_recur_date']) $id .= '-'.$row['cal_recur_date'];
-				$recur_ids[$row['cal_id']][] = $id;
+				if (!in_array($id,(array)$recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
 
 				if (!isset($events[$id])) continue;		// not needed first entry of recuring event
 
@@ -451,7 +451,9 @@ class calendar_so
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
 			if (!is_null($cfs))
 			{
-				foreach($this->db->select($this->extra_table,'*',array('cal_id' => $ids,'cal_extra_name' => $cfs),
+				$where = array('cal_id' => $ids);
+				if ($cfs) $where['cal_extra_name'] = $cfs;
+				foreach($this->db->select($this->extra_table,'*',$where,
 					__LINE__,__FILE__,false,'','calendar') as $row)
 				{
 					foreach((array)$recur_ids[$row['cal_id']] as $id)
