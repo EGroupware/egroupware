@@ -59,12 +59,6 @@ class calendar_bo
 	var $debug=false;
 
 	/**
-	 * @var int $tz_offset_s offset in secconds between user and server-time,
-	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
-	 */
-	var $tz_offset_s;
-
-	/**
 	 * @var int $now_su timestamp of actual user-time
 	 */
 	var $now_su;
@@ -173,9 +167,7 @@ class calendar_bo
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
 
-		$this->tz_offset_s = $this->datetime->tz_offset;
-
-		$this->now_su = time() + $this->tz_offset_s;
+		$this->now_su = egw_time::to('now','ts');
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
@@ -557,7 +549,7 @@ class calendar_bo
 					$this->debug_message('bocal::check_move_horizont(%1): calling set_recurrences(%2,%3)',true,$new_horizont,$event,$old_horizont);
 				}
 				// insert everything behind max(cal_start), which can be less then $old_horizont because of bugs in the past
-				$this->set_recurrences($event,$recuring[$cal_id]+1+$this->tz_offset_s);	// set_recurences operates in user-time!
+				$this->set_recurrences($event,egw_time::server2user($recuring[$cal_id]+1));	// set_recurences operates in user-time!
 			}
 		}
 		// update the horizont
@@ -613,29 +605,35 @@ class calendar_bo
 	function db2data(&$events,$date_format='ts')
 	{
 		if (!is_array($events)) echo "<p>bocal::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
-		foreach($events as $id => $event)
+		foreach($events as $id => &$event)
 		{
+			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
+			unset($event_timezone);
+			if (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id'])))
+			{
+				$event['tzid'] = egw_time::$server_timezone->getName();
+			}
 			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
 			foreach(array('start','end','modified','created','recur_enddate','recurrence') as $ts)
 			{
 				if (empty($event[$ts])) continue;
 
-				$events[$id][$ts] = $this->date2usertime($event[$ts],$date_format);
+				$event[$ts] = $this->date2usertime($event[$ts],$date_format);
 			}
 			// same with the recur exceptions
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 			{
-				foreach($event['recur_exception'] as $n => $date)
+				foreach($event['recur_exception'] as $n => &$date)
 				{
-					$events[$id]['recur_exception'][$n] = $this->date2usertime($date,$date_format);
+					$date = $this->date2usertime($date,$date_format);
 				}
 			}
 			// same with the alarms
 			if (isset($event['alarm']) && is_array($event['alarm']))
 			{
-				foreach($event['alarm'] as $n => $alarm)
+				foreach($event['alarm'] as $n => &$alarm)
 				{
-					$events[$id]['alarm'][$n]['time'] = $this->date2usertime($alarm['time'],$date_format);
+					$alarm['time'] = $this->date2usertime($alarm['time'],$date_format);
 				}
 			}
 		}
@@ -646,30 +644,13 @@ class calendar_bo
 	 *
 	 * @param int $date timestamp in server-time
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
+	 * @return mixed depending of $date_format
 	 */
 	function date2usertime($ts,$date_format='ts')
 	{
 		if (empty($ts) || $date_format == 'server') return $ts;
 
 		return egw_time::server2user($ts,$date_format);
-/*
-		switch ($date_format)
-		{
-			case 'ts':
-				return egw_time::server2user($ts,'int');
-				return $ts + $this->tz_offset_s;
-
-			case 'server':
-				return $ts;
-
-			case 'array':
-				return $this->date2array((int) $ts,true);
-
-			case 'string':
-				return $this->date2string($ts,true);
-		}
-		return $this->date2string($ts,true,$date_format);
-*/
 	}
 
 	/**
@@ -1094,76 +1075,6 @@ class calendar_bo
 	static function date2ts($date,$user2server=False)
 	{
 		return $user2server ? egw_time::user2server($date,'ts') : egw_time::to($date,'ts');
-/*
-		$date_in = $date;
-
-		switch(gettype($date))
-		{
-			case 'string':	// YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss[Z|[+-]hh:mm] string
-				if (is_numeric($date) && $date > 21000000)
-				{
-					$date = (int) $date;	// this is already as timestamp
-					break;
-				}
-				// evaluate evtl. added timezone
-				if (strlen($date) > 12)
-				{
-					if (substr($date,-1) == 'Z')
-					{
-						$time_offset = date('Z');
-					}
-					elseif(preg_match('/([+-]{1})([0-9]{2}):?([0-9]{2})$/',$date,$matches))
-					{
-						$time_offset = date('Z')-($matches[1] == '+' ? 1 : -1)*(3600*$matches[2]+60*$matches[3]);
-					}
-				}
-				// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
-				$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
-				$date = array(
-					'year'   => (int) substr($date,0,4),
-					'month'  => (int) substr($date,4,2),
-					'day'    => (int) substr($date,6,2),
-					'hour'   => (int) substr($date,8,2),
-					'minute' => (int) substr($date,10,2),
-					'second' => (int) substr($date,12,2),
-				);
-				// fall-through
-			case 'array':	// day, month and year keys
-				if (isset($date['raw']) && $date['raw'])	// we already have a timestamp
-				{
-					$date = $date['raw'];
-					break;
-				}
-				if (!isset($date['year']) && isset($date['full']))
-				{
-					$date['year']  = (int) substr($date['full'],0,4);
-					$date['month'] = (int) substr($date['full'],4,2);
-					$date['day']   = (int) substr($date['full'],6,2);
-				}
-				$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],
-				(int) (isset($date['day']) ? $date['day'] : $date['mday']),(int)$date['year']);
-				break;
-			case 'integer':		// already a timestamp
-				break;
-			default:		// eg. boolean, means now in user-time (!)
-				$date = $this->now_su;
-				break;
-		}
-		if ($time_offset)
-		{
-			$date += $time_offset;
-			if (!$user2server) $date += $this->tz_offset_s;	// we have to return user time!
-		}
-		if ($user2server)
-		{
-			$date -= $this->tz_offset_s;
-		}
-		if ($this->debug && ($this->debug > 3 || $this->debug == 'date2ts'))
-		{
-			$this->debug_message('bocal::date2ts(%1,user2server=%2)=%3)',False,$date_in,$user2server,$date);
-		}
-		return $date;
-*/
 	}
 
 	/**
@@ -1176,32 +1087,6 @@ class calendar_bo
 	static function date2array($date,$server2user=False)
 	{
 		return $server2user ? egw_time::server2user($date,'array') : egw_time::to($date,'array');
-/*
-		$date_called = $date;
-
-		if (!is_array($date) || count($date) < 8 || $server2user)	// do we need a conversation
-		{
-			if (!is_int($date))
-			{
-				$date = $this->date2ts($date);
-			}
-			if ($server2user)
-			{
-				$date += $this->tz_offset_s;
-			}
-			$arr = array();
-			foreach(array('second'=>'s','minute'=>'i','hour'=>'H','day'=>'d','month'=>'m','year'=>'Y','full'=>'Ymd') as $key => $frmt)
-			{
-				$arr[$key] = (int) adodb_date($frmt,$date);
-			}
-			$arr['raw'] = $date;
-		}
-		if ($this->debug && ($this->debug > 3 || $this->debug == 'date2array'))
-		{
-			$this->debug_message('bocal::date2array(%1,server2user=%2)=%3)',False,$date_called,$server2user,$arr);
-		}
-		return $arr;
-*/
 	}
 
 	/**
@@ -1215,41 +1100,6 @@ class calendar_bo
 	static function date2string($date,$server2user=False,$format='Ymd')
 	{
 		return $server2user ? egw_time::server2user($date,$format) : egw_time::to($date,$format);
-/*
-		$date_in = $date;
-
-		if (!$format) $format = 'Ymd';
-
-		if (is_array($date) && isset($date['full']) && !$server2user && $format == 'Ymd')
-		{
-			$date = $date['full'];
-		}
-		else
-		{
-			$date = $this->date2ts($date,False);
-
-			// if timezone is requested, we dont need to convert to user-time
-			if (($tz_used = substr($format,-1)) == 'O' || $tz_used == 'Z') $server2user = false;
-
-			if ($server2user && substr($format,-1) )
-			{
-				$date += $this->tz_offset_s;
-			}
-			if (substr($format,-2) == '\\Z')	// GMT aka. Zulu time
-			{
-				$date = adodb_gmdate($format,$date);
-			}
-			else
-			{
-				$date = adodb_date($format,$date);
-			}
-		}
-		if ($this->debug && ($this->debug > 3 || $this->debug == 'date2string'))
-		{
-			$this->debug_message('bocal::date2string(%1,server2user=%2,format=%3)=%4)',False,$date_in,$server2user,$format,$date);
-		}
-		return $date;
-*/
 	}
 
 	/**
@@ -1262,22 +1112,6 @@ class calendar_bo
 	static function format_date($date,$format='')
 	{
 		return egw_time::to($date,$format);
-/*
-		$timeformat = $this->common_prefs['timeformat'] != '12' ? 'H:i' : 'h:i a';
-		if ($format === '')		// date+time wanted
-		{
-			$format = $this->common_prefs['dateformat'].', '.$timeformat;
-		}
-		elseif ($format === false)	// time wanted
-		{
-			$format = $timeformat;
-		}
-		elseif ($format === true)
-		{
-			$format = $this->common_prefs['dateformat'];
-		}
-		return adodb_date($format,$this->date2ts($date,False));
-*/
 	}
 
 	/**

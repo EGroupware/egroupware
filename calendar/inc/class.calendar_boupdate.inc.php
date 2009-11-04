@@ -639,7 +639,7 @@ class calendar_boupdate extends calendar_bo
 		//echo "<p>bocalendar::send_alarm("; print_r($alarm); echo ")</p>\n";
 		$GLOBALS['egw_info']['user']['account_id'] = $this->owner = $alarm['owner'];
 
-		$event_time_user = $alarm['time'] + $alarm['offset'] + $this->tz_offset_s;	// alarm[time] is in server-time, read requires user-time
+		$event_time_user = egw_time::server2user($alarm['time'] + $alarm['offset']);	// alarm[time] is in server-time, read requires user-time
 		if (!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'],$event_time_user)))
 		{
 			return False;	// event not found
@@ -699,6 +699,11 @@ class calendar_boupdate extends calendar_bo
 		{
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
+		}
+		// convert tzid name to integer tz_id, of set user default
+		if (empty($event['tzid']) || !($event['tz_id'] = calendar_timezones::tz2id($event['tzid'])))
+		{
+			$event['tz_id'] = calendar_timezones::tz2id($event['tzid'] = egw_time::$user_timezone->getName());
 		}
 		// same with the recur exceptions
 		if (isset($event['recur_exception']) && is_array($event['recur_exception']))

@@ -119,7 +119,7 @@
 			.selectRole select { width: 100%; }
 		</styles>
 	</template>
-	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.7.001">
+	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.7.002">
 		<grid>
 			<columns>
 				<column width="95"/>
@@ -152,7 +152,11 @@
 				</row>
 				<row class="row" height="12">
 					<description options=",,,recur_enddate" value="End date"/>
-					<date id="recur_enddate" statustext="repeat the event until which date (empty means unlimited)" span="all"/>
+					<date id="recur_enddate" statustext="repeat the event until which date (empty means unlimited)"/>
+					<description options=",,,tzid" value="Timezone"/>
+					<menulist>
+						<menupopup type="select-timezone" id="tzid" statustext="Timezone in which recurrences have identical time"/>
+					</menulist>
 				</row>
 				<row class="row" valign="top">
 					<description options=",,,recur_data" value="Repeat days"/>

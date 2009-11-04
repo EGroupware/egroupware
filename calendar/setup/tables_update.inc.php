@@ -1630,7 +1630,11 @@ function calendar_upgrade1_5_002()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.6';
 }
 
-
+/**
+ * Adding column for recurrence time of master event to improve iCal handling of exceptions
+ *
+ * @return string
+ */
 function calendar_upgrade1_6()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_creator',array(
@@ -1691,7 +1695,11 @@ function calendar_upgrade1_6()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.001';
 }
 
-
+/**
+ * Adding participant roles table to improve iCal support
+ *
+ * @return string
+ */
 function calendar_upgrade1_7_001()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal_user','cal_role',array(
@@ -1703,7 +1711,11 @@ function calendar_upgrade1_7_001()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.002';
 }
 
-
+/**
+ * Adding timezones table egw_cal_timezones
+ *
+ * @return string
+ */
 function calendar_upgrade1_7_002()
 {
 	$GLOBALS['egw_setup']->oProc->CreateTable('egw_cal_timezones',array(
@@ -1724,5 +1736,85 @@ function calendar_upgrade1_7_002()
 	calendar_timezones::import_sqlite();
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.003';
+}
+
+/**
+ * Adding automatic timestamp for participant table, maximum can be used as part of a ctag for CalDAV
+ *
+ * @return string
+ */
+function calendar_upgrade1_7_003()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_user_type',array(
+		'type' => 'varchar',
+		'precision' => '1',
+		'nullable' => False,
+		'default' => 'u',
+		'comment' => 'u=user, g=group, c=contact, r=resource, e=email'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_user_id',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'nullable' => False,
+		'comment' => 'id or email-address for type=e'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_status',array(
+		'type' => 'char',
+		'precision' => '1',
+		'default' => 'A',
+		'comment' => 'U=unknown, A=accepted, R=rejected, T=tentative'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_quantity',array(
+		'type' => 'int',
+		'precision' => '4',
+		'default' => '1',
+		'comment' => 'only for certain types (eg. resources)'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_user','cal_role',array(
+		'type' => 'varchar',
+		'precision' => '64',
+		'default' => 'REQ-PARTICIPANT',
+		'comment' => 'CHAIR, REQ-PARTICIPANT, OPT-PARTICIPANT, NON-PARTICIPANT, X-CAT-$cat_id'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal_user','cal_user_modified',array(
+		'type' => 'timestamp',
+		'default' => 'current_timestamp',
+		'comment' => 'automatic timestamp of last update'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.004';
+}
+
+/**
+ * Adding timezone id column, to fully support timezones in calendar
+ *
+ * @return string
+ */
+function calendar_upgrade1_7_004()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_dates','cal_start',array(
+		'type' => 'int',
+		'precision' => '8',
+		'nullable' => False,
+		'comment' => 'starttime in server time'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_dates','cal_end',array(
+		'type' => 'int',
+		'precision' => '8',
+		'nullable' => False,
+		'comment' => 'endtime in server time'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','tz_id',array(
+		'type' => 'int',
+		'precision' => '4',
+		'comment' => 'key into egw_cal_timezones'
+	));
+
+	// set id of server timezone for existing events, as that's the timezone their recurrences are using
+	if (($tzid = date_default_timezone_get()) && ($tz_id = calendar_timezones::tz2id($tzid)))
+	{
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET tz_id='.(int)$tz_id,__LINE__,__FILE__);
+	}
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.005';
 }
 

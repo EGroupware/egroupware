@@ -29,7 +29,8 @@ $phpgw_baseline = array(
 			'cal_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag for optimistic locking'),
 			'cal_creator' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'creating user'),
 			'cal_created' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'creation time of event'),
-			'cal_recurrence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception')
+			'cal_recurrence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception'),
+			'tz_id' => array('type' => 'int','precision' => '4','comment' => 'key into egw_cal_timezones')
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
@@ -70,11 +71,12 @@ $phpgw_baseline = array(
 		'fd' => array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
 			'cal_recur_date' => array('type' => 'int','precision' => '8','default' => '0'),
-			'cal_user_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u'),
-			'cal_user_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
-			'cal_status' => array('type' => 'char','precision' => '1','default' => 'A'),
-			'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1'),
-			'cal_role' => array('type' => 'varchar','precision' => '64','default' => 'REQ-PARTICIPANT')
+			'cal_user_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u','comment' => 'u=user, g=group, c=contact, r=resource, e=email'),
+			'cal_user_id' => array('type' => 'varchar','precision' => '128','nullable' => False,'comment' => 'id or email-address for type=e'),
+			'cal_status' => array('type' => 'char','precision' => '1','default' => 'A','comment' => 'U=unknown, A=accepted, R=rejected, T=tentative'),
+			'cal_quantity' => array('type' => 'int','precision' => '4','default' => '1','comment' => 'only for certain types (eg. resources)'),
+			'cal_role' => array('type' => 'varchar','precision' => '64','default' => 'REQ-PARTICIPANT','comment' => 'CHAIR, REQ-PARTICIPANT, OPT-PARTICIPANT, NON-PARTICIPANT, X-CAT-$cat_id'),
+			'cal_user_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'automatic timestamp of last update')
 		),
 		'pk' => array('cal_id','cal_recur_date','cal_user_type','cal_user_id'),
 		'fk' => array(),
@@ -95,8 +97,8 @@ $phpgw_baseline = array(
 	'egw_cal_dates' => array(
 		'fd' => array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
-			'cal_start' => array('type' => 'int','precision' => '8','nullable' => False),
-			'cal_end' => array('type' => 'int','precision' => '8','nullable' => False)
+			'cal_start' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'starttime in server time'),
+			'cal_end' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'endtime in server time')
 		),
 		'pk' => array('cal_id','cal_start'),
 		'fk' => array(),

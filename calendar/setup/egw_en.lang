@@ -325,6 +325,8 @@ thu	calendar	en	Thu
 til	calendar	en	til
 timeframe	calendar	en	Timeframe
 timeframe to search	calendar	en	Timeframe to search
+timezone	calendar	en	Timezone
+timezone in which recurrences have identical time	calendar	en	Timezone in which recurrences have identical time
 title of the event	calendar	en	Title of the event
 to many might exceed your execution-time-limit	calendar	en	to many might exceed your execution-time-limit
 translation	calendar	en	Translation
