@@ -5,6 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Christian Binder <christian-AT-jaytraxx.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -154,7 +155,7 @@ class calendar_so
 			$where[] = 'cal_start >= '.(int)$recur_date;
 		}
 		$events = array();
-		foreach($this->db->select($this->cal_table,"$this->repeats_table.*,$this->cal_table.*,MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end",
+		foreach($this->db->select($this->cal_table,"$this->repeats_table.*,$this->cal_table.*,MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end,tz_id",
 			$where,__LINE__,__FILE__,false,'GROUP BY '.$group_by_cols,'calendar',0,
 			",$this->dates_table LEFT JOIN $this->repeats_table ON $this->dates_table.cal_id=$this->repeats_table.cal_id".
 			" WHERE $this->cal_table.cal_id=$this->dates_table.cal_id") as $row)
@@ -286,7 +287,7 @@ class calendar_so
 	 */
 	function &search($start,$end,$users,$cat_id=0,$filter='all',$query='',$offset=False,$num_rows=0,$order='cal_start',$sql_filter='',$_cols=null,$append='',$cfs=null)
 	{
-		echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append,".array2string($cfs).")</p>\n";
+		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append,".array2string($cfs).")</p>\n";
 
 		$cols = !is_null($_cols) ? $_cols : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
 
@@ -557,7 +558,7 @@ ORDER BY cal_user_type, cal_usre_id
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
 		foreach($event as $col => $val)
 		{
-			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && $col != 'alarm')
+			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && $col != 'alarm' && $col != 'tz_id')
 			{
 				$event['cal_'.$col] = $val;
 				unset($event[$col]);
@@ -702,7 +703,7 @@ ORDER BY cal_user_type, cal_usre_id
 		// update start- and endtime if present in the event-array, evtl. we need to move all recurrences
 		if (isset($event['cal_start']) && isset($event['cal_end']))
 		{
-			$this->move($cal_id,$event['cal_start'],$event['cal_end'],!$cal_id ? false : $change_since);
+			$this->move($cal_id,$event['cal_start'],$event['cal_end'],$event['tz_id'],!$cal_id ? false : $change_since);
 		}
 		// update participants if present in the event-array
 		if (isset($event['cal_participants']))
@@ -771,12 +772,14 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int $cal_id
 	 * @param int $start new starttime
 	 * @param int $end new endtime
+	 * @param int $tz_id timezone id to set
 	 * @param int|boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
 	 * @param int $old_start=0 old starttime or (default) 0, to query it from the db
 	 * @param int $old_end=0 old starttime or (default) 0
+	 * @todo Recalculate recurrences, if timezone changes
 	 * @return int|boolean number of moved recurrences or false on error
 	 */
-	function move($cal_id,$start,$end,$change_since=0,$old_start=0,$old_end=0)
+	function move($cal_id,$start,$end,$tz_id,$change_since=0,$old_start=0,$old_end=0)
 	{
 		//echo "<p>socal::move($cal_id,$start,$end,$change_since,$old_start,$old_end)</p>\n";
 
@@ -793,6 +796,7 @@ ORDER BY cal_user_type, cal_usre_id
 					'cal_id'    => $cal_id,
 					'cal_start' => $start,
 					'cal_end'   => $end,
+					'tz_id'     => $tz_id,
 				),false,__LINE__,__FILE__,'calendar');
 
 				return 1;
@@ -816,7 +820,7 @@ ORDER BY cal_user_type, cal_usre_id
 		if ($move_start || $move_end)
 		{
 			// move the event and it's recurrences
-			$this->db->query("UPDATE $this->dates_table SET cal_start=cal_start+$move_start,cal_end=cal_end+$move_end WHERE $where".
+			$this->db->query("UPDATE $this->dates_table SET cal_start=cal_start+$move_start,cal_end=cal_end+$move_end,tz_id=".(int)$tz_id." WHERE $where".
 				((int) $change_since ? ' AND cal_start >= '.(int) $change_since : ''),__LINE__,__FILE__);
 		}
 		return $this->db->affected_rows();
