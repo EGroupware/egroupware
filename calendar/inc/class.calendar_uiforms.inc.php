@@ -980,7 +980,7 @@ class calendar_uiforms extends calendar_ui
 			$content['alarm'] = array(false);
 			foreach(array_values($event['alarm']) as $id => $alarm)
 			{
-				if (!$alarm['all'] && !$this->bo->check_perms(EGW_ACL_READALARM,0,$alarm['owner']))
+				if (!$alarm['all'] && !$this->bo->check_perms(EGW_ACL_READ,0,$alarm['owner']))
 				{
 					continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
 				}
