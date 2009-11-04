@@ -697,7 +697,7 @@ class accounts_ldap
 				$order = $propertyMap[$param['order']] ? $propertyMap[$param['order']] : 'uid';
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid', $order));
 				$fullSet = array();
-				foreach (ldap_get_entries($this->ds, $sri) as $key => $entry)
+				foreach ((array)ldap_get_entries($this->ds, $sri) as $key => $entry)
 				{
 					if ($key !== 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
 				}
@@ -933,7 +933,7 @@ class accounts_ldap
 
 		$sri = ldap_search($this->ds,$this->group_context,'(&(objectClass=posixGroup)(memberuid='.ldap::quote($account_lid).'))',array('cn','gidnumber'));
 		$memberships = array();
-		foreach(ldap_get_entries($this->ds, $sri) as $key => $data)
+		foreach((array)ldap_get_entries($this->ds, $sri) as $key => $data)
 		{
 			if ($key === 'count') continue;
 
@@ -951,7 +951,12 @@ class accounts_ldap
 	 */
 	function members($gid)
 	{
-		if (!is_numeric($gid)) return false;
+		if (!is_numeric($gid)) 
+		{
+			// try to recover
+			$gid = $this->name2id($gid,'account_lid','g');
+			if (!is_numeric($gid)) return false;
+		}
 
 		$gid = abs($gid);	// our gid is negative!
 
