@@ -90,6 +90,11 @@ class timesheet_ui extends timesheet_bo
 		{
 			//echo "<p>ts_start=$content[ts_start], start_time=$content[start_time], end_time=$content[end_time], ts_duration=$content[ts_duration], ts_quantity=$content[ts_quantity]</p>\n";
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
+			if($this->ts_viewtype == 'short')
+			{
+				unset($content['start_time']);
+				unset($content['end_time']);
+			}
 			if ($content['start_time'])		// start-time specified
 			{
 				$content['ts_start'] += $content['start_time'];
