@@ -642,7 +642,7 @@ class calendar_bo
 	/**
 	 * convert a date from server to user-time
 	 *
-	 * @param int $date timestamp in server-time
+	 * @param int $ts timestamp in server-time
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
 	 * @return mixed depending of $date_format
 	 */
