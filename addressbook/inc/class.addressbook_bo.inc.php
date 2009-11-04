@@ -1529,7 +1529,7 @@ class addressbook_bo extends addressbook_so
 		$columns_to_search = array('contact_id',
 					   'n_family', 'n_given', 'n_middle', 'n_prefix', 'n_suffix',
 						'bday', 'org_name', 'org_unit', 'title', 'role',
-						'email', 'email_home', 'url', 'url_home');
+						'email', 'email_home');
 		$tolerance_fields = array('contact_id',
 					  'n_middle', 'n_prefix', 'n_suffix',
 					  'org_unit', 'role',
