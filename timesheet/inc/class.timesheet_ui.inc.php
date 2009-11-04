@@ -107,7 +107,10 @@ class timesheet_ui extends timesheet_bo
 					$msg = lang('only Admin can edit this status');
 				}
 			}
-
+			if ($this->ts_viewtype == 'short')
+			{
+				$content['start_time']=$content['end_time']='00:00';
+			}		
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
 			if ($content['start_time'] != '00:00')		// start-time specified
 			{
