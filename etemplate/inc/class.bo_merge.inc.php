@@ -262,6 +262,10 @@ abstract class bo_merge
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
 		}
+		// alternative syntax using double curly brackets (eg. {{cat_id}} instead $$cat_id$$),
+		// agressivly removing all xml-tags eg. Word adds within placeholders
+		$content = preg_replace_callback('/{{[^}]+}}/i',create_function('$p','return \'$$\'.strip_tags(substr($p[0],2,-2)).\'$$\';'),$content);
+
 		// make currently processed mimetype available to class methods;
 		$this->mimetype = $mimetype;
 
