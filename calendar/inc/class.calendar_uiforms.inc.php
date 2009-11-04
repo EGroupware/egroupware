@@ -143,6 +143,7 @@ class calendar_uiforms extends calendar_ui
 			'owner' => $owner,
 			'start' => $start,
 			'end'   => $start + (int) $this->bo->cal_prefs['defaultlength']*60,
+			'tzid'  => $this->bo->common_prefs['tz'],
 			'priority' => 2,	// normal
 			'public'=> $this->cal_prefs['default_private'] ? 0 : 1,
 			'alarm' => array(),
