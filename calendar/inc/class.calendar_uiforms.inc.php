@@ -997,6 +997,10 @@ class calendar_uiforms extends calendar_ui
 
 				$readonlys['delete_alarm['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
 			}
+			if (count($content['alarm']) == 1)
+			{
+				$content['alarm'] = false; // no alarms added to content array
+			}
 		}
 		else
 		{
