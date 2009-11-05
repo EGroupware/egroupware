@@ -143,9 +143,7 @@ class html
 	static function activate_links($content)
 	{
 		if (!$content || strlen($content) < 20) return $content;	// performance
-		// this seems to be needed as the preg_replace to match things beginning with http:// (or other protocols) 
-		// seems to be throwing out &amp; and leaving &; - which is breaking links.
-		$content = htmlspecialchars_decode($content);
+		
 		// Exclude everything which is already a link
 		$NotAnchor = '(?<!"|href=|href\s=\s|href=\s|href\s=)';
 
