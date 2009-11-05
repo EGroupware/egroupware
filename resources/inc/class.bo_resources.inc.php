@@ -27,6 +27,16 @@ class bo_resources
 	 * @var so_resources
 	 */
 	var $so;
+	/**
+	 * Instance of resources acl class
+	 *
+	 * @var bo_acl
+	 */
+	var $acl;
+	/**
+	 * Instance of categories class for resources
+	 */
+	var $cats;
 
 	function bo_resources()
 	{
@@ -48,6 +58,16 @@ class bo_resources
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
+		if ($query['store_state'])	// request to store state in session and filter in prefs?
+		{
+			egw_cache::setSession('resources',$query['store_state'],$query);
+			//echo "<p>".__METHOD__."() query[filter]=$query[filter], prefs[resources][filter]={$GLOBALS['egw_info']['user']['preferences']['resources']['filter']}</p>\n";
+			if ($query['filter'] != $GLOBALS['egw_info']['user']['preferences']['resources']['filter'])
+			{
+				$GLOBALS['egw']->preferences->add('resources','filter',$query['filter'],'user');
+				$GLOBALS['egw']->preferences->save_repository();
+			}
+		}
 		if ($this->debug) _debug_array($query);
 		$criteria = array('name' => $query['search'], 'short_description' => $query['search'], 'inventory_number' => $query['search']);
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';

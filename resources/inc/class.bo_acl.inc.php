@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - resources
+ * EGroupWare - resources
  *
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
  * @package resources
@@ -11,15 +11,12 @@
 /**
  * ACL business object for resources
  *
- * @package resources
+ * Category rights and admins get inherited from parent categories.
+ * Current rights and the ones inherited from parents get ORed together,
+ * while for admins the "closest" cat-admin will be used.
  */
 class bo_acl
 {
-	/**
-	* @var $permissions Holds alls permissions for resources of user
-	*/
-	var $permissions;
-
 	var $acl;
 	var $start = 0;
 	var $query = '';
@@ -37,13 +34,17 @@ class bo_acl
 	 */
 	var $egw_cats;
 
-	function bo_acl($session=False)
+	/**
+	 * Constructor
+	 *
+	 * @param boolean $session
+	 */
+	function __construct($session=False)
 	{
 		define('EGW_ACL_CAT_ADMIN',64);
 		define('EGW_ACL_DIRECT_BOOKING',128);
 		define('EGW_ACL_CALREAD',256);
 
-		$this->permissions = $GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw_info']['user']['account_id'],'resources',true);
 		$this->egw_cats = new categories('','resources');
 		$this->debug = False;
 
@@ -66,6 +67,18 @@ class bo_acl
 			$this->save_sessiondata();
 			$this->cats = $this->egw_cats->return_sorted_array(0,false,'','','',true);
 		}
+	}
+
+	/**
+	 * PHP4 constructor
+	 *
+	 * @param boolean $session
+	 * @deprecated use __construct()
+	 * @return bo_acl
+	 */
+	function bo_acl($session=False)
+	{
+		self::__construct($session);
 	}
 
 	/**
@@ -106,9 +119,9 @@ class bo_acl
 	* @param int $cat_id
 	* @return mixed name of category
 	*/
-	function get_cat_name($cat_id)
+	static public function get_cat_name($cat_id)
 	{
-		return $this->egw_cats->id2name($cat_id);
+		return $GLOBALS['egw']->categories->id2name($cat_id);
 	}
 
 	/**
@@ -118,9 +131,9 @@ class bo_acl
 	* @param int $cat_id
 	* @return int userid of cat admin
 	*/
-	function get_cat_admin($cat_id)
+	static public function get_cat_admin($cat_id)
 	{
-		$cat_rights = $this->get_rights($cat_id);
+		$cat_rights = self::get_rights($cat_id);
 		foreach ($cat_rights as $userid => $right)
 		{
 			if ($right & EGW_ACL_CAT_ADMIN)
@@ -128,21 +141,63 @@ class bo_acl
 				return $userid;
 			}
 		}
+		// check for an inherited cat admin
+		if (($parent = $GLOBALS['egw']->categories->id2name($cat_id,'parent')))
+		{
+			return self::get_cat_admin($parent);
+		}
 		return lang('none');
 	}
 
 	/**
-	* cheks one of the following rights for current user:
-	*
-	* EGW_ACL_READ, EGW_ACL_ADD, EGW_ACL_EDIT, EGW_ACL_DELETE, EGW_ACL_DIRECT_BOOKING
-	*
-	* @param int $cat_id
-	* @param int $right
-	* @return bool user is permitted or not for right
-	*/
-	function is_permitted($cat_id,$right)
+	 * Permissions including inherited ones
+	 *
+	 * @var array cat_id => rights
+	 */
+	static private $permissions;
+	static private $resource_acl;
+
+	/**
+	 * Get permissions of current user on a given category
+	 *
+	 * @param int $cat_id
+	 * @return int
+	 */
+	static public function get_permissions($cat_id)
 	{
-		return $this->permissions['L'.$cat_id] & $right;
+		if (!isset(self::$permissions[$cat_id]))
+		{
+			if (is_null(self::$resource_acl))
+			{
+				self::$resource_acl = $GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw_info']['user']['account_id'],'resources',true);
+			}
+			self::$permissions[$cat_id] = (int)self::$resource_acl['L'.$cat_id];
+			if (($parent = $GLOBALS['egw']->categories->id2name($cat_id,'parent')))
+			{
+				self::$permissions[$cat_id] |= self::get_permissions($parent);
+			}
+		}
+		//echo "<p>".__METHOD__."($cat_id) = ".self::$permissions[$cat_id]."</p>\n";
+		return self::$permissions[$cat_id];
+	}
+
+	/**
+	 * checks one of the following rights for current user:
+	 *
+	 * EGW_ACL_READ, EGW_ACL_ADD, EGW_ACL_EDIT, EGW_ACL_DELETE, EGW_ACL_DIRECT_BOOKING
+	 *
+	 * @param int $cat_id
+	 * @param int $right
+	 * @return boolean user is permitted or not for right
+	 */
+	static public function is_permitted($cat_id,$right)
+	{
+		if (!isset(self::$permissions[$cat_id]))
+		{
+			self::get_permissions($cat_id);
+		}
+		//echo "<p>".__METHOD__."($cat_id,$right) = ".self::$permissions[$cat_id]." & $right = ".(self::$permissions[$cat_id] & $right)."</p>\n";
+		return (boolean) (self::$permissions[$cat_id] & $right);
 	}
 
 	/**
@@ -151,7 +206,7 @@ class bo_acl
 	* @param int $cat_id
 	* @return array userid => right
 	*/
-	function get_rights($cat_id)
+	static public function get_rights($cat_id)
 	{
 		return $GLOBALS['egw']->acl->get_all_rights('L'.$cat_id,'resources');
 	}

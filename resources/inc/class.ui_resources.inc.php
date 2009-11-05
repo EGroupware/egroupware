@@ -26,16 +26,25 @@ class ui_resources
 		);
 
 	/**
-	 * constructor of class ui_resources
+	 * Constructor
 	 *
 	 */
-	function ui_resources()
+	function __construct()
 	{
 // 		print_r($GLOBALS['egw_info']); die();
 		$this->tmpl	= new etemplate('resources.show');
 		$this->bo	=& CreateObject('resources.bo_resources');
 // 		$this->calui	= CreateObject('resources.ui_calviews');
 
+	}
+	/**
+	 * PHP4 constructor
+	 *
+	 * @deprecated use __construct();
+	 */
+	function ui_resources()
+	{
+		self::__construct();
 	}
 
 	/**
@@ -436,20 +445,25 @@ class ui_resources
 
 		if (!is_array($content))
 		{
-			$content['nm'] = array(
-				'header_left'   => 'resources.resource_select.header',
-				'show_bookable' => true,
-				'get_rows' 	    => 'resources.bo_resources.get_rows',
-				'filter_label'	=> 'Category',
-				'filter_help'	=> lang('Select a category'),
-				'options-filter'=> array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ),
-				'no_filter2'	=> true,
-				'filter_no_lang'=> true,
-				'no_cat'	    => true,
-				'rows'          => array('js_id' => 1),
-				'csv_fields'    => false,
-				'default_cols'  => 'name,cat_id,quantity',	// I  columns to use if there's no user or default pref
-			);
+			if (!($content['nm'] = egw_cache::getSession('resources','get_rows')))
+			{
+				$content['nm'] = array(
+					'header_left'   => 'resources.resource_select.header',
+					'show_bookable' => true,
+					'get_rows' 	    => 'resources.bo_resources.get_rows',
+					'filter_label'	=> 'Category',
+					'filter_help'	=> lang('Select a category'),
+					'options-filter'=> array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ),
+					'no_filter2'	=> true,
+					'filter_no_lang'=> true,
+					'no_cat'	    => true,
+					'rows'          => array('js_id' => 1),
+					'csv_fields'    => false,
+					'default_cols'  => 'name,cat_id,quantity',	// I  columns to use if there's no user or default pref
+					'store_state' => 'get_rows',	// store in session as for location get_rows
+				);
+				$content['nm']['filter'] = $GLOBALS['egw_info']['user']['preferences']['resources']['filter'];
+			}
 		}
 		$sel_options = array();
 		$no_button = array();
