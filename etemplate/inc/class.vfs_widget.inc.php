@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @copyright 2008 by RalfBecker@outdoor-training.de
+ * @copyright 2008/9 by RalfBecker@outdoor-training.de
  * @package etemplate
  * @subpackage extensions
  * @version $Id$
@@ -455,8 +455,7 @@ class vfs_widget
 		// handle file upload
 		$name = preg_replace('/^exec\[([^]]+)\](.*)$/','\\1\\2',$name);	// remove exec prefix
 
-		$filename = etemplate::get_array($_FILES['exec']['name'],$name);
-		if (empty($filename))
+		if (!is_array($_FILES['exec']) || !($filename = etemplate::get_array($_FILES['exec']['name'],$name)))
 		{
 			return false;	// no file attached
 		}
