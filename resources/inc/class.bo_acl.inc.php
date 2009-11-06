@@ -100,7 +100,7 @@ class bo_acl
 			#_debug_array($cat)."hier<br>";
 			if($this->is_permitted($cat['id'],$perm_type))
 			{
-				$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
+				$s = str_repeat('&nbsp; ',$cat['level']) . stripslashes($cat['name']);
 				if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 				{
 					$s .= ' &#9830;';
