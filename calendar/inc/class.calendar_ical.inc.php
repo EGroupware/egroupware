@@ -206,12 +206,12 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (strpos($this->productName, 'palmos'))
 			{
-				$servertime = true;
+				$utc = false;
 				$date_format = 'ts';
 			}
 			else
 			{
-				$servertime = false;
+				$utc = true;
 				$date_format = 'server';
 			}
 			if (!is_array($event)
@@ -236,7 +236,7 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log) error_log(__FILE__.'('.__LINE__.'): '.__METHOD__.' '.array2string($event)."\n",3,$this->logfile);
 
-			if (!$servertime
+			if (!$serverTZ
 				&& $event['recur_type'] != MCAL_RECUR_NONE
 				&& date('e', $event['start']) != 'UTC')
 			{
@@ -248,13 +248,13 @@ class calendar_ical extends calendar_boupdate
 					if ($startDST != $finalDST ||
 						($event['recur_enddate'] - $event['start']) > 15778800)
 					{
-						$servertime = true;
+						$utc = false;
 						$serverTZ = true;
 					}
 				}
 				else
 				{
-					$servertime = true;
+					$utc = false;
 					$serverTZ = true;
 				}
 				if ($serverTZ)
@@ -347,14 +347,14 @@ class calendar_ical extends calendar_boupdate
 	    				break;
 
 					case 'DTSTART':
-						if ($servertime)
+						if ($utc)
 						{
-							$attributes['DTSTART'] = date('Ymd\THis', $event['start']);
-							if ($serverTZ) $parameters['DTSTART']['TZID'] = $serverTZ;
+							$attributes['DTSTART'] = $event['start'];
 						}
 						else
 						{
-							$attributes['DTSTART'] = $event['start'];
+							$attributes['DTSTART'] = date('Ymd\THis', $event['start']);
+							if ($serverTZ) $parameters['DTSTART']['TZID'] = $serverTZ;
 						}
 						break;
 
@@ -373,14 +373,14 @@ class calendar_ical extends calendar_boupdate
 						}
 						else
 						{
-							if ($servertime)
+							if ($utc)
 							{
-								$attributes['DTEND'] = date('Ymd\THis', $event['end']);
-								if ($serverTZ) $parameters['DTEND']['TZID'] = $serverTZ;
+								$attributes['DTEND'] = $event['end'];
 							}
 							else
 							{
-								$attributes['DTEND'] = $event['end'];
+								$attributes['DTEND'] = date('Ymd\THis', $event['end']);
+								if ($serverTZ) $parameters['DTEND']['TZID'] = $serverTZ;
 							}
 						}
 						break;
@@ -516,7 +516,7 @@ class calendar_ical extends calendar_boupdate
 							else
 							{
 								$value_type = 'DATE-TIME';
-								if ($servertime)
+								if (!$utc)
 								{
 									foreach ($days as $id => $timestamp)
 									{
@@ -575,14 +575,14 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								if ($servertime)
+								if ($utc)
 								{
-									$attributes[$icalFieldName] = date('Ymd\THis', $recur_date);
-									if ($serverTZ) $parameters[$icalFieldName]['TZID'] = $serverTZ;
+									$attributes[$icalFieldName] = $recur_date;
 								}
 								else
 								{
-									$attributes[$icalFieldName] = $recur_date;
+									$attributes[$icalFieldName] = date('Ymd\THis', $recur_date);
+									if ($serverTZ) $parameters[$icalFieldName]['TZID'] = $serverTZ;
 								}
 							}
 						}
@@ -603,14 +603,14 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								if ($servertime)
+								if ($utc)
 								{
-									$attributes[$icalFieldName] = date('Ymd\THis', $event['recurrence']);
-									if ($serverTZ) $parameters[$icalFieldName]['TZID'] = $serverTZ;
+									$attributes[$icalFieldName] = $event['recurrence'];
 								}
 								else
 								{
-									$attributes[$icalFieldName] = $event['recurrence'];
+									$attributes[$icalFieldName] = date('Ymd\THis', $event['recurrence']);
+									if ($serverTZ) $parameters[$icalFieldName]['TZID'] = $serverTZ;
 								}
 							}
 							unset($revent);
@@ -693,17 +693,17 @@ class calendar_ical extends calendar_boupdate
 
 				if ($version == '1.0')
 				{
-					if ($servertime)
+					if ($utc)
+					{
+						$attributes['DALARM'] = $alarmData['time'];
+						$attributes['AALARM'] = $alarmData['time'];
+					}
+					else
 					{
 						$attributes['DALARM'] = date('Ymd\THis', $alarmData['time']);
 						if ($serverTZ) $parameters['DALARM']['TZID'] = $serverTZ;
 						$attributes['AALARM'] = date('Ymd\THis', $alarmData['time']);
 						if ($serverTZ) $parameters['AALARM']['TZID'] = $serverTZ;
-					}
-					else
-					{
-						$attributes['DALARM'] = $alarmData['time'];
-						$attributes['AALARM'] = $alarmData['time'];
 					}
 					// lets take only the first alarm
 					break;
@@ -735,14 +735,14 @@ class calendar_ical extends calendar_boupdate
 					else
 					{
 						$params = array('VALUE' => 'DATE-TIME');
-						if ($servertime)
+						if ($utc)
 						{
-							$value = date('Ymd\THis', $alarmData['time']);
-							if ($serverTZ) $params['TZID'] = $serverTZ;
+							$value = $alarmData['time'];
 						}
 						else
 						{
-							$value = $alarmData['time'];
+							$value = date('Ymd\THis', $alarmData['time']);
+							if ($serverTZ) $params['TZID'] = $serverTZ;
 						}
 						$valarm->setAttribute('TRIGGER', $value, $params);
 					}
@@ -2092,10 +2092,10 @@ class calendar_ical extends calendar_boupdate
 	 *
 	 * @param int $user account_id
 	 * @param mixed $end=null end-date, default now+1 month
-	 * @param boolean $servertime=false if true, use severtime for dates
+	 * @param boolean $utc=true if false, use severtime for dates
 	 * @return string
 	 */
-	function freebusy($user,$end=null,$servertime=false)
+	function freebusy($user,$end=null,$utc=true)
 	{
 		if (!$end) $end = $this->now_su + 100*DAY_s;	// default next 100 days
 
@@ -2111,14 +2111,14 @@ class calendar_ical extends calendar_boupdate
 				$GLOBALS['egw']->accounts->id2name($user,'account_lastname'),
 				$GLOBALS['egw']->translation->charset(),'utf-8'),
 		);
-		if ($servertime)
+		if ($utc)
 		{
 			foreach (array(
 				'URL' => $this->freebusy_url($user),
-				'DTSTART' => date('Ymd\THis',$this->date2ts($this->now_su,true)),	// true = server-time
-				'DTEND' => date('Ymd\THis',$this->date2ts($end,true)),	// true = server-time
+				'DTSTART' => $this->date2ts($this->now_su,true),	// true = server-time
+				'DTEND' => $this->date2ts($end,true),	// true = server-time
 		  		'ORGANIZER' => $GLOBALS['egw']->accounts->id2name($user,'account_email'),
-				'DTSTAMP' => date('Ymd\THis',time()),
+				'DTSTAMP' => time(),
 			) as $attr => $value)
 			{
 				$vfreebusy->setAttribute($attr, $value);
@@ -2128,10 +2128,10 @@ class calendar_ical extends calendar_boupdate
 		{
 			foreach (array(
 				'URL' => $this->freebusy_url($user),
-				'DTSTART' => $this->date2ts($this->now_su,true),	// true = server-time
-				'DTEND' => $this->date2ts($end,true),	// true = server-time
+				'DTSTART' => date('Ymd\THis',$this->date2ts($this->now_su,true)),	// true = server-time
+				'DTEND' => date('Ymd\THis',$this->date2ts($end,true)),	// true = server-time
 		  		'ORGANIZER' => $GLOBALS['egw']->accounts->id2name($user,'account_email'),
-				'DTSTAMP' => time(),
+				'DTSTAMP' => date('Ymd\THis',time()),
 			) as $attr => $value)
 			{
 				$vfreebusy->setAttribute($attr, $value);
@@ -2150,18 +2150,18 @@ class calendar_ical extends calendar_boupdate
 			{
 				if ($event['non_blocking']) continue;
 
-				if ($servertime)
+				if ($utc)
 				{
 					$vfreebusy->setAttribute('FREEBUSY',array(array(
-						'start' => date('Ymd\THis',$event['start']),
-						'end' => date('Ymd\THis',$event['end']),
+						'start' => $event['start'],
+						'end' => $event['end'],
 					)));
 				}
 				else
 				{
 					$vfreebusy->setAttribute('FREEBUSY',array(array(
-						'start' => $event['start'],
-						'end' => $event['end'],
+						'start' => date('Ymd\THis',$event['start']),
+						'end' => date('Ymd\THis',$event['end']),
 					)));
 				}
 			}
