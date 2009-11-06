@@ -1532,14 +1532,12 @@ class addressbook_bo extends addressbook_so
 						'email', 'email_home');
 		$tolerance_fields = array('contact_id',
 					  'n_middle', 'n_prefix', 'n_suffix',
-					  'org_unit', 'role',
-					  'bday',
-					  'email', 'email_home',
-					  'url', 'url_home');
-		$addr_one_fields = array('adr_one_street', 'adr_one_street2',
+					  'bday', 'org_unit', 'title', 'role',
+					  'email', 'email_home');
+		$addr_one_fields = array('adr_one_street',
 					 'adr_one_locality', 'adr_one_region',
 					 'adr_one_postalcode', 'adr_one_countryname');
-		$addr_two_fields = array('adr_two_street', 'adr_two_street2',
+		$addr_two_fields = array('adr_two_street',
 					 'adr_two_locality', 'adr_two_region',
 					 'adr_two_postalcode', 'adr_two_countryname');
 		$no_addr_one = array();
