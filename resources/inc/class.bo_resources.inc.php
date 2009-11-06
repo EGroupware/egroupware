@@ -86,12 +86,14 @@ class bo_resources
 				$filter['cat_id'] = $query['filter'];
 			}
 		}
-		else
+		elseif (($readcats = $this->acl->get_cats(EGW_ACL_READ)))
 		{
-			$readcats = array_flip((array)$this->acl->get_cats(EGW_ACL_READ));
-			if($readcats) $filter = $filter + array('cat_id' => $readcats);
+			$filter['cat_id'] = array_keys($readcats);
 		}
-		if($query['show_bookable']) $filter = $filter + array('bookable' => true);
+		if ($query['show_bookable'])
+		{
+			$filter['bookable'] = true;
+		}
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
 
