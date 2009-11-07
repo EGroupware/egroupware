@@ -412,6 +412,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
 	{
+		//echo "<p>".__METHOD__."($msg_type,".array2string($to_notify).",,$new_event[title],$user)</p>\n";
 		if (!is_array($to_notify))
 		{
 			$to_notify = array();
@@ -438,7 +439,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		if ($GLOBALS['egw']->preferences->account_id != $user)
 		{
-			$GLOBALS['egw']->preferences->preferences($user);
+			$GLOBALS['egw']->preferences->__construct($user);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		}
 		$senderid = $GLOBALS['egw_info']['user']['account_id'];
@@ -612,10 +613,14 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
-		// restore the enviroment
+		// restore the enviroment (preferences->read_repository() sets the timezone!)
 		$GLOBALS['egw_info']['user'] = $temp_user;
-		$GLOBALS['egw']->datetime->tz_offset = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-
+		if ($GLOBALS['egw']->preferences->account_id != $temp_user['account_id'] || isset($preferences))
+		{
+			$GLOBALS['egw']->preferences->__construct($temp_user['account_id']);
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+			//echo "<p>".__METHOD__."() restored enviroment of #$temp_user[account_id] $temp_user[account_fullname]: tz={$GLOBALS['egw_info']['user']['preferences']['common']['tz']}</p>\n";
+		}
 		return true;
 	}
 
