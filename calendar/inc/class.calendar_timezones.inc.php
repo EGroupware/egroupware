@@ -111,7 +111,7 @@ class calendar_timezones
 		// if not tzid queried, resolve aliases automatically
 		if ($data && $data['alias'] && $what != 'tzid' && $what != 'alias')
 		{
-			$data = self::is2tz($data['alias'],null);
+			$data = self::id2tz($data['alias'],null);
 		}
 		return !$data ? $data : ($what ? $data[$what] : $data);
 	}
@@ -206,4 +206,36 @@ class calendar_timezones
 		$GLOBALS['egw']->framework->render('<h3>'.self::import_sqlite()."</h3>\n",lang('Update timezones'),true);
 	}
 }
+/*
+if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
+{
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => 'calendar',
+		)
+	);
+	include('../../header.inc.php');
+	calendar_timezones::init_static();
+
+//	echo "<h3>Testing availability of VTIMEZONE data for each tzid supported by PHP</h3>\n";
+//	foreach(DateTimeZone::listIdentifiers() as $tz)
+	echo "<h3>Testing availability of VTIMEZONE data for each TZID supported by EGroupware</h3>\n";
+	foreach(call_user_func_array('array_merge',egw_time::getTimezones()) as $tz => $label)
+	{
+		if (($id = calendar_timezones::tz2id($tz,'component')) || $tz == 'UTC')	// UTC is always supported
+		{
+			$found[] = $tz;
+			//if (substr($tz,0,10) == 'Australia/') echo "$tz: found<br />\n";
+		}
+		else
+		{
+			$not_found[] = $tz;
+			echo "$tz: <b>NOT</b> found<br />\n";
+		}
+	}
+	echo '<h3>'.count($found).' found, '.count($not_found)." <b>NOT</b> found</h3>\n";
+
+	if ($not_found) echo "<pre>\n\$no_vtimezone = array(\n\t'".implode("',\n\t'",$not_found)."',\n);\n</pre>\n";
+}
+else*/
 calendar_timezones::init_static();

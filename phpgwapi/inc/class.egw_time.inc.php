@@ -430,8 +430,51 @@ class egw_time extends DateTime
 			'Arctic'     => array(),
 			'UTC'        => array('UTC' => 'UTC'),
 		);
+		// no VTIMEZONE available in calendar_timezones --> do NOT return them
+		static $no_vtimezone = array(
+			'Europe/Tiraspol',
+			'America/Atka',
+			'America/Buenos_Aires',
+			'America/Catamarca',
+			'America/Coral_Harbour',
+			'America/Cordoba',
+			'America/Ensenada',
+			'America/Fort_Wayne',
+			'America/Indianapolis',
+			'America/Jujuy',
+			'America/Knox_IN',
+			'America/Mendoza',
+			'America/Porto_Acre',
+			'America/Rosario',
+			'America/Virgin',
+			'Asia/Ashkhabad',
+			'Asia/Beijing',
+			'Asia/Chungking',
+			'Asia/Dacca',
+			'Asia/Macao',
+			'Asia/Riyadh87',
+			'Asia/Riyadh88',
+			'Asia/Riyadh89',
+			'Asia/Tel_Aviv',
+			'Asia/Thimbu',
+			'Asia/Ujung_Pandang',
+			'Asia/Ulan_Bator',
+			'Australia/ACT',
+			'Australia/Canberra',
+			'Australia/LHI',
+			'Australia/North',
+			'Australia/NSW',
+			'Australia/Queensland',
+			'Australia/South',
+			'Australia/Tasmania',
+			'Australia/Victoria',
+			'Australia/West',
+			'Australia/Yancowinna',
+			'Pacific/Samoa',
+		);
 		foreach(DateTimeZone::listIdentifiers() as $name)
 		{
+			if (in_array($name,$no_vtimezone)) continue;	// do NOT allow to set in EGroupware, as we have not VTIMEZONE component for it
 			list($continent,$rest) = explode('/',$name,2);
 			if (!isset($tzs[$continent])) continue;	// old depricated timezones
 			$datetime = new egw_time('now',new DateTimeZone($name));
