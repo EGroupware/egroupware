@@ -299,15 +299,13 @@ class addressbook_ui extends addressbook_bo
 		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
 
 		// dont show tid-selection if we have only one content_type
-		if (count($this->content_types) <= 1)
+		// be a bit more sophisticated asbout it
+		$content['nm']['header_right'] = 'addressbook.index.right_add';
+		$availabletypes = array_keys($this->content_types);
+		if (!isset($content['nm']['col_filter']['tid'])) $content['nm']['col_filter']['tid'] = $availabletypes[0];
+		if (count($this->content_types) > 1)
 		{
-			$content['nm']['col_filter']['tid'] = 'n';
-			$content['nm']['header_right'] = 'addressbook.index.right_add';
-		}
-		else
-		{
-			if (!isset($content['nm']['col_filter']['tid'])) $content['nm']['col_filter']['tid'] = 'n';
-			$content['nm']['header_right'] = 'addressbook.index.right';
+			$content['nm']['header_right'] = 'addressbook.index.right_addplus';
 			foreach($this->content_types as $tid => $data)
 			{
 				$sel_options['col_filter[tid]'][$tid] = $data['name'];
