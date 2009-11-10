@@ -56,6 +56,24 @@ class calendar_timezones
 	protected static $tz2id = array();
 
 	/**
+	 * Get DateTimeZone object for a given TZID
+	 *
+	 * We use our database to replace eg. Windows timezones not understood by PHP with their standard TZID
+	 *
+	 * @param string $tzid
+	 * @return DateTimeZone
+	 * @throws Exception if called with an unknown TZID
+	 */
+	public function DateTimeZone($tzid)
+	{
+		if (($id = self::tz2id($tzid,'alias')))
+		{
+			$tzid = self::id2tz($id);
+		}
+		return new DateTimeZone($tzid);
+	}
+
+	/**
 	 * Get the nummeric id (or other data) for a given TZID
 	 *
 	 * Examples:
@@ -242,6 +260,36 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 	echo '<h3>'.count($found).' found, '.count($not_found)." <b>NOT</b> found</h3>\n";
 
 	if ($not_found) echo "<pre>\n\$no_vtimezone = array(\n\t'".implode("',\n\t'",$not_found)."',\n);\n</pre>\n";
+
+	echo "<h3>Testing availability of PHP support for each TZID supported by EGroupware's timezone database:</h3>\n";
+	foreach($GLOBALS['egw']->db->select('egw_cal_timezones','*',false,__LINE__,__FILE__,false,'','calendar') as $row)
+	{
+		try
+		{
+			$timezone = new DateTimeZone($row['tz_tzid']);
+			//$timezone = calendar_timezones::DateTimeZone($row['tz_tzid']);
+			echo $row['tz_tzid'].": available<br />\n";
+		}
+		catch(Exception $e)
+		{
+			if (($id = calendar_timezones::tz2id($row['tz_tzid'],'alias')) &&
+				($alias = calendar_timezones::id2tz($id)))
+			{
+
+				try
+				{
+					$timezone = new DateTimeZone($alias);
+					echo $row['tz_tzid']."='$alias': available through <b>alias</b><br />\n";
+					unset($e);
+				}
+				catch(Exception $e)
+				{
+					// ignore
+				}
+			}
+			if (isset($e)) echo $row['tz_tzid'].": <b>NOT</b> available<br />\n";
+		}
+	}
 }
 else*/
 calendar_timezones::init_static();

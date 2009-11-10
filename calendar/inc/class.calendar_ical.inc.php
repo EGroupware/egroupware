@@ -752,7 +752,7 @@ class calendar_ical extends calendar_boupdate
 		static $timezone_tzid;
 		if (is_null($timezone) || $timezone_tzid != $tzid)
 		{
-			$timezone = new DateTimeZone($timezone_tzid = $tzid);
+			$timezone = calendar_timezones::DateTimeZone($timezone_tzid = $tzid);
 		}
 		$time->setTimezone($timezone);
 		$params['TZID'] = $tzid;
@@ -1507,7 +1507,7 @@ class calendar_ical extends calendar_boupdate
 					{
 						try
 						{
-							$tz = new DateTimeZone($attributes['params']['TZID']);
+							$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
 							$event['tzid'] = $tz->getName();
 						}
 						catch(Exception $e)
