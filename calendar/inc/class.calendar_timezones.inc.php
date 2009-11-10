@@ -18,6 +18,12 @@
  * This class serves two purposes:
  * - convert between TZID strings and nummeric tz_id's stored in database
  * - get iCal VTIMEZONE component for a TZID (data from Lighting extension)
+ *
+ * Recommendations about timezone handling in calendars:
+ * @link http://www.calconnect.org/publications/icalendartimezoneproblemsandrecommendationsv1.0.pdf
+ *
+ * Mapping Windows timezone to standard TZID's:
+ * @link http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/windows_tzid.html
  */
 class calendar_timezones
 {
