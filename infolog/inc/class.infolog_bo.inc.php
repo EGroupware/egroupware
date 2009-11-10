@@ -119,6 +119,7 @@ class infolog_bo
 		'open-today'               => 'open',
 		'open-overdue'             => 'overdue',
 		'upcoming'                 => 'upcoming',
+		'bydate'                   => 'startdate',
 	);
 
 	/**

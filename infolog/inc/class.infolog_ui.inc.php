@@ -286,6 +286,25 @@ class infolog_ui
 	 */
 	function get_rows(&$query,&$rows,&$readonlys)
 	{
+		$orginal_colfilter = $query['col_filter'];
+		if ($query['filter'] == 'bydate')
+		{
+			$query['header_left'] = 'infolog.index.dates';
+			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
+			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_startdate > '.$GLOBALS['egw']->db->quote($query['startdate']);	
+			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_startdate < '.$GLOBALS['egw']->db->quote($query['enddate']); 
+			//unset($query['startdate']);
+			//unset($query['enddate']);
+		}
+		else
+		{
+			unset($query['header_left']);
+			unset($query['startdate']);
+			unset($query['enddate']);
+		}
+//_debug_array($query);
+//_debug_array($query['col_filter']);
+
 		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
@@ -343,6 +362,7 @@ class infolog_ui
 		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection));
 
 		$infos = $this->bo->search($query);
+		$query['col_filter'] = $orginal_colfilter;
 		if (!is_array($infos))
 		{
 			$infos = array( );
@@ -599,7 +619,6 @@ class infolog_ui
 		$readonlys['cancel'] = $action != 'sp';
 
 		$this->tmpl->read('infolog.index');
-
 		if ($colfilter) $values['nm']['col_filter'] = $persist['col_filter'] = $colfilter;
 		$values['nm']['options-filter'] = $this->filters;
 		$values['nm']['get_rows'] = 'infolog.infolog_ui.get_rows';
@@ -628,9 +647,15 @@ class infolog_ui
 			}
 		}
 		$values['nm']['header_right'] = 'infolog.index.header_right';
-		if ($extra_app_header)
+		if ($extra_app_header && $values['nm']['filter']!='bydate')
 		{
 			$values['nm']['header_left'] = 'infolog.index.header_left';
+		}
+		if ($values['nm']['filter']=='bydate')
+		{
+			foreach (array_keys($values['nm']['col_filter']) as $colfk) if (is_int($colfk)) unset($values['nm']['col_filter']);
+			$values['nm']['header_left'] = 'infolog.index.dates';
+			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
 		}
 		$values['nm']['bottom_too'] = True;
 		$values['nm']['never_hide'] = isset($this->prefs['never_hide']) ?
