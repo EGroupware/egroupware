@@ -163,8 +163,8 @@ class addressbook_merge extends bo_merge
 			'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
 			'labelplacement' => lang('Tag to mark positions for address labels'),
 			'IF fieldname' => lang('Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
-			'IFNELF' => lang('Example $$NELF role$$ - if field role is not empty, you will get a new line with the value of field role'),
-			'IFNENVLF' => lang('Example $$NELFNV role$$ - if field role is not empty, set a LF without any value of the field'),
+			'NELF' => lang('Example $$NELF role$$ - if field role is not empty, you will get a new line with the value of field role'),
+			'NENVLF' => lang('Example $$NELFNV role$$ - if field role is not empty, set a LF without any value of the field'),
 			) as $name => $label)
 		{
 			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";
