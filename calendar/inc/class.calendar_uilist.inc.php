@@ -211,7 +211,7 @@ class calendar_uilist extends calendar_ui
 		{
 			$this->adjust_for_search($params['search'],$params);
 		}
-		egw_session::appsession('calendar_list','calendar',$params);
+		if (!$params['csv_export']) egw_session::appsession('calendar_list','calendar',$params);
 
 		// do we need to query custom fields and which
 		$select_cols = explode(',',$params['selectcols']);
@@ -230,7 +230,7 @@ class calendar_uilist extends calendar_ui
 			'offset'  => (int) $params['start'],
 			'num_rows'=> $params['num_rows'],
 			'order'   => $params['order'] ? $params['order'].' '.$params['sort'] : 'cal_start',
-			'cfs'     => $cfs,
+			'cfs'     => $params['csv_explort'] ? array() : $cfs,
 		);
 		switch($params['filter'])
 		{
@@ -300,9 +300,16 @@ class calendar_uilist extends calendar_ui
 			$readonlys['view['.$event['id'].']'] = !($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event));
 			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event);
 
-			$event['parts'] = implode(",\n",$this->bo->participants($event,true));
 			$event['recure'] = $this->bo->recure2string($event);
-			$event['date'] = $this->bo->date2string($event['start']);
+			if ($params['csv_export'])
+			{
+				$event['participants'] = implode(",\n",$this->bo->participants($event,true));
+			}
+			else
+			{
+				$event['parts'] = implode(",\n",$this->bo->participants($event,true));
+				$event['date'] = $this->bo->date2string($event['start']);
+			}
 			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
 			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
 
