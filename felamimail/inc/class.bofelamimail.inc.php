@@ -376,8 +376,8 @@
 			switch ($_encoding)
 			{
 				case 'BASE64':
-					// use imap_base64 to decode
-					return imap_base64($_mimeMessage);
+					// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
+					return base64_decode($_mimeMessage); //imap_base64($_mimeMessage);
 					break;
 				case 'QUOTED-PRINTABLE':
 					// use imap_qprint to decode

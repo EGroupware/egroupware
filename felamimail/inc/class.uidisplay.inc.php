@@ -1038,9 +1038,11 @@
 
 				if($singleBodyPart['mimeType'] == 'text/plain')
 				{
-					$newBody	= $singleBodyPart['body'];
+					//$newBody	= $singleBodyPart['body'];
 
 					$newBody	= @htmlentities($singleBodyPart['body'],ENT_QUOTES, strtoupper($this->displayCharset));
+					// if empty and charset is utf8 try sanitizing the string in question
+					if (empty($newBody) && strtolower($singleBodyPart['charSet'])=='utf-8') $newBody = @htmlentities(iconv('utf-8', 'utf-8', $singleBodyPart['body']),ENT_QUOTES, strtoupper($this->displayCharset));
 					// if the conversion to htmlentities fails somehow, try without specifying the charset, which defaults to iso-
 					if (empty($newBody)) $newBody    = htmlentities($singleBodyPart['body'],ENT_QUOTES);
 					#$newBody	= $this->bofelamimail->wordwrap($newBody, 90, "\n");
