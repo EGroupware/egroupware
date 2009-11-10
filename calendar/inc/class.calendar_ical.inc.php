@@ -198,20 +198,18 @@ class calendar_ical extends calendar_boupdate
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION', $version);
 		$vcal->setAttribute('METHOD', $method);
-		$serverTZ = false;
 
 		if (!is_array($events)) $events = array($events);
 
-		while (($event = array_pop($events)))
+		$vtimezones_added = array();
+		foreach($events as $event)
 		{
-			if (strpos($this->productName, 'palmos'))
+			if (strpos($this->productName, 'palmos') !== false)
 			{
-				$utc = false;
 				$date_format = 'ts';
 			}
 			else
 			{
-				$utc = true;
 				$date_format = 'server';
 			}
 			if (!is_array($event)
@@ -236,34 +234,31 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log) error_log(__FILE__.'('.__LINE__.'): '.__METHOD__.' '.array2string($event)."\n",3,$this->logfile);
 
-			if (!$serverTZ
-				&& $event['recur_type'] != MCAL_RECUR_NONE
-				&& date('e', $event['start']) != 'UTC')
+			// for palmos we have to use user-time and NO timezone
+			if (strpos($this->productName, 'palmos') !== false)
 			{
-				if ($event['recur_enddate'])
+				$tzid = null;
+			}
+			// check if tzid of event (not only recuring ones) is already added to export
+			elseif (($tzid = $event['tzid']) && $tzid != 'UTC' && !in_array($tzid,$vtimezones_added))
+			{
+				// check if we have vtimezone component data for tzid of event, if not default to user timezone (default to server tz)
+				if (!($vtimezone = calendar_timezones::tz2id($tzid,'component')))
 				{
-					$startDST = date('I', $event['start']);
-					$finalDST = date('I', $event['recur_enddate']);
-					// Different DST or more than half a year?
-					if ($startDST != $finalDST ||
-						($event['recur_enddate'] - $event['start']) > 15778800)
-					{
-						$utc = false;
-						$serverTZ = true;
-					}
+					error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
+					$vtimezone = calendar_timezones::tz2id($tzid=egw_time::$user_timezone->getName(),'component');
 				}
-				else
+				//error_log("in_array('$tzid',\$vtimezones_added)=".array2string(in_array($tzid,$vtimezones_added)).", component=$vtimezone");;
+				if (!in_array($tzid,$vtimezones_added))
 				{
-					$utc = false;
-					$serverTZ = true;
-				}
-				if ($serverTZ)
-				{
-					// Add only one instance
-					$serverTZ = $this->generate_vtimezone($event, $vcal);
+					// $vtimezone is a string with a single VTIMEZONE component, afaik Horde_iCalendar can not add it directly
+					// --> we have to parse it and let Horde_iCalendar add it again
+					$horde_vtimezone = Horde_iCalendar::newComponent('VTIMEZONE',$container=false);
+					$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
+					$vcal->addComponent($horde_vtimezone);
+					$vtimezones_added[] = $tzid;
 				}
 			}
-
 			if ($this->productManufacturer != 'file' && $this->uidExtension)
 			{
 				// Append UID to DESCRIPTION
@@ -347,15 +342,7 @@ class calendar_ical extends calendar_boupdate
 	    				break;
 
 					case 'DTSTART':
-						if ($utc)
-						{
-							$attributes['DTSTART'] = $event['start'];
-						}
-						else
-						{
-							$attributes['DTSTART'] = date('Ymd\THis', $event['start']);
-							if ($serverTZ) $parameters['DTSTART']['TZID'] = $serverTZ;
-						}
+						$attributes['DTSTART'] = self::getDateTime($event['start'],$tzid,$parameters['DTSTART']);
 						break;
 
 					case 'DTEND':
@@ -373,15 +360,7 @@ class calendar_ical extends calendar_boupdate
 						}
 						else
 						{
-							if ($utc)
-							{
-								$attributes['DTEND'] = $event['end'];
-							}
-							else
-							{
-								$attributes['DTEND'] = date('Ymd\THis', $event['end']);
-								if ($serverTZ) $parameters['DTEND']['TZID'] = $serverTZ;
-							}
+							$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
 						}
 						break;
 
@@ -516,18 +495,13 @@ class calendar_ical extends calendar_boupdate
 							else
 							{
 								$value_type = 'DATE-TIME';
-								if (!$utc)
+								foreach ($days as &$timestamp)
 								{
-									foreach ($days as $id => $timestamp)
-									{
-										$days[$id] = date('Ymd\THis', $timestamp);
-
-									}
+									$timestamp = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
 								}
 							}
 							$attributes['EXDATE'] = '';
 							$values['EXDATE'] = $days;
-							if ($serverTZ) $parameters['EXDATE']['TZID'] = $serverTZ;
 							$parameters['EXDATE']['VALUE'] = $value_type;
 						}
 						break;
@@ -575,15 +549,7 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								if ($utc)
-								{
-									$attributes[$icalFieldName] = $recur_date;
-								}
-								else
-								{
-									$attributes[$icalFieldName] = date('Ymd\THis', $recur_date);
-									if ($serverTZ) $parameters[$icalFieldName]['TZID'] = $serverTZ;
-								}
+								$attributes[$icalFieldName] = self::getDateTime($recur_date,$tzid,$parameters[$icalFieldName]);
 							}
 						}
 						elseif ($event['recurrence'] && $event['reference'])
@@ -603,15 +569,7 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								if ($utc)
-								{
-									$attributes[$icalFieldName] = $event['recurrence'];
-								}
-								else
-								{
-									$attributes[$icalFieldName] = date('Ymd\THis', $event['recurrence']);
-									if ($serverTZ) $parameters[$icalFieldName]['TZID'] = $serverTZ;
-								}
+								$attributes[$icalFieldName] = self::getDateTime($recur_date,$tzid,$parameters[$icalFieldName]);
 							}
 							unset($revent);
 						}
@@ -693,18 +651,8 @@ class calendar_ical extends calendar_boupdate
 
 				if ($version == '1.0')
 				{
-					if ($utc)
-					{
-						$attributes['DALARM'] = $alarmData['time'];
-						$attributes['AALARM'] = $alarmData['time'];
-					}
-					else
-					{
-						$attributes['DALARM'] = date('Ymd\THis', $alarmData['time']);
-						if ($serverTZ) $parameters['DALARM']['TZID'] = $serverTZ;
-						$attributes['AALARM'] = date('Ymd\THis', $alarmData['time']);
-						if ($serverTZ) $parameters['AALARM']['TZID'] = $serverTZ;
-					}
+					$attributes['DALARM'] = self::getDateTime($alarmData['time'],$tzid,$parameters['DALARM']);
+					$attributes['AALARM'] = self::getDateTime($alarmData['time'],$tzid,$parameters['AALARM']);
 					// lets take only the first alarm
 					break;
 				}
@@ -735,15 +683,7 @@ class calendar_ical extends calendar_boupdate
 					else
 					{
 						$params = array('VALUE' => 'DATE-TIME');
-						if ($utc)
-						{
-							$value = $alarmData['time'];
-						}
-						else
-						{
-							$value = date('Ymd\THis', $alarmData['time']);
-							if ($serverTZ) $params['TZID'] = $serverTZ;
-						}
+						$value = self::getDateTime($alarmData['time'],$tzid,$params);
 						$valarm->setAttribute('TRIGGER', $value, $params);
 					}
 
@@ -788,6 +728,36 @@ class calendar_ical extends calendar_boupdate
  		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__.array2string($retval)."\n",3,$this->logfile);
 		return $retval;
 
+	}
+
+	/**
+	 * Get DateTime value for a given time and timezone
+	 *
+	 * @param int|string|DateTime $time in server-time as returned by calendar_bo for $data_format='server'
+	 * @param string $tzid TZID of event or 'UTC' or NULL for palmos timestamps in usertime
+	 * @param array &$params=null parameter array to set TZID
+	 * @return mixed attribute value to set: integer timestamp if $tzid == 'UTC' otherwise Ymd\THis string IN $tzid
+	 */
+	static function getDateTime($time,$tzid,array &$params=null)
+	{
+		if (empty($tzid) || $tzid == 'UTC')
+		{
+			return egw_time::to($time,'ts');
+		}
+		if (!is_a($time,'DateTime'))
+		{
+			$time = new egw_time($time,egw_time::$server_timezone);
+		}
+		static $timezone;
+		static $timezone_tzid;
+		if (is_null($timezone) || $timezone_tzid != $tzid)
+		{
+			$timezone = new DateTimeZone($timezone_tzid = $tzid);
+		}
+		$time->setTimezone($timezone);
+		$params['TZID'] = $tzid;
+
+		return $time->format('Ymd\THis');
 	}
 
 	/**
@@ -1531,6 +1501,21 @@ class calendar_ical extends calendar_boupdate
 					}
 					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 					$vcardData['start']	= $dtstart_ts;
+
+					// import TZID, if PHP understands it (we only care about TZID of starttime, as we store only a TZID for the whole event)
+					if (!empty($attributes['params']['TZID']))
+					{
+						try
+						{
+							$tz = new DateTimeZone($attributes['params']['TZID']);
+							$event['tzid'] = $tz->getName();
+						}
+						catch(Exception $e)
+						{
+							error_log(__METHOD__."() unknown TZID='{$attributes['params']['TZID']}', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
+							$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
+						}
+					}
 					break;
 				case 'DTEND':
 					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
@@ -2317,342 +2302,4 @@ class calendar_ical extends calendar_boupdate
 				'master_event' => $return_master ? $master_event : false,
 			);
     }
-
-	/**
-	 * generate and insert a VTIMEZONE entry to a vcalendar
-	 *
-	 * @param array $event
-	 * @param array $vcal VCALENDAR entry
-	 * @return string local timezone name (e.g. 'CET/CEST')
-	 */
-	function generate_vtimezone($event, &$vcal)
-	{
-		$dayofweek = array('SU','MO','TU','WE','TH','FR','SA');
-		$tbl_tz = array(
-			array("Afghanistan","Asia/Kabul",270,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("AKST/AKDT","America/Anchorage",-540,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("AKST/AKDT","America/Anchorage",-540,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("AKST/AKDT","America/Anchorage",-540,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("HNY/NAY","America/Anchorage",-540,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("HNY/NAY","America/Anchorage",-540,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("HNY/NAY","America/Anchorage",-540,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Alaskan","America/Anchorage",-540,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("Alaskan","America/Anchorage",-540,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("Alaskan","America/Anchorage",-540,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Arab","Asia/Riyadh",180,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Arabian","Asia/Dubai",240,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Arabic","Asia/Baghdad",180,60,"",4,0,1,3,0,10,0,1,4,0),
-			array("AST/ADT","America/Halifax",-240,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("AST/ADT","America/Halifax",-240,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("AST/ADT","America/Halifax",-240,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("HNA/HAA","America/Halifax",-240,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("HNA/HAA","America/Halifax",-240,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("HNA/HAA","America/Halifax",-240,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Atlantic","America/Halifax",-240,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("Atlantic","America/Halifax",-240,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("Atlantic","America/Halifax",-240,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("AUS_Central","Australia/Darwin",570,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("AUS_Eastern","Australia/Sydney",600,60,"",10,0,5,2,0,3,0,5,3,0),
-			array("Azerbaijan","Asia/Baku",240,60,"",3,0,5,4,0,10,0,5,5,0),
-			array("Azores","Atlantic/Azores",-60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("Canada_Central","America/Regina",-360,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Cape_Verde","Atlantic/Cape_Verde",-60,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Caucasus","Asia/Tbilisi",240,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("ACST/ACDT","Australia/Adelaide",570,60,"",10,0,5,2,0,3,0,5,3,0),
-			array("Central_Australia","Australia/Adelaide",570,60,"",10,0,5,2,0,3,0,5,3,0),
-			array("Central_America","America/Guatemala",-360,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Central_Asia","Asia/Dhaka",360,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Central_Brazilian","America/Manaus",-240,60,"",11,0,1,0,0,2,0,5,0,0),
-			array("Central_Brazilian","America/Manaus",-240,60,"2006",11,0,1,0,0,2,0,2,2,0),
-			array("Central_Brazilian","America/Manaus",-240,60,"2007",11,0,1,0,0,2,0,5,0,0),
-			array("CET/CEST","Europe/Zurich",60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("CET/CEST","Europe/Vienna",60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("MEZ/MESZ","Europe/Berlin",60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("Central_Europe","Europe/Budapest",60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("Central_European","Europe/Warsaw",60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("Central_Pacific","Pacific/Guadalcanal",660,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("CST/CDT","America/Chicago",-360,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("CST/CDT","America/Chicago",-360,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("CST/CDT","America/Chicago",-360,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("HNC/HAC","America/Chicago",-360,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("HNC/HAC","America/Chicago",-360,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("HNC/HAC","America/Chicago",-360,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Central","America/Chicago",-360,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("Central","America/Chicago",-360,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("Central","America/Chicago",-360,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Central_Mexico","America/Mexico_City",-360,60,"",4,0,1,2,0,10,0,5,2,0),
-			array("China","Asia/Shanghai",480,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Dateline","Etc/GMT+12",-720,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("East_Africa","Africa/Nairobi",180,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("AEST/AEDT","Australia/Brisbane",600,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("East_Australia","Australia/Brisbane",600,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("EET/EEST","Europe/Minsk",120,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("EET/EEST","Europe/Helsinki",120,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("East_Europe","Europe/Minsk",120,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("East_South_America","America/Sao_Paulo",-180,60,"",11,0,1,0,0,2,0,5,0,0),
-			array("East_South_America","America/Sao_Paulo",-180,60,"2006",11,0,1,0,0,2,0,2,2,0),
-			array("East_South_America","America/Sao_Paulo",-180,60,"2007",11,0,1,0,0,2,0,5,0,0),
-			array("EST/EDT","America/New_York",-300,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("EST/EDT","America/New_York",-300,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("EST/EDT","America/New_York",-300,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("HNE/HAE","America/New_York",-300,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("HNE/HAE","America/New_York",-300,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("HNE/HAE","America/New_York",-300,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Eastern","America/New_York",-300,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("Eastern","America/New_York",-300,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("Eastern","America/New_York",-300,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Egypt","Africa/Cairo",120,60,"",4,4,5,23,59,9,4,5,23,59),
-			array("Ekaterinburg","Asia/Yekaterinburg",300,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("Fiji","Pacific/Fiji",720,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("FLE","Europe/Kiev",120,60,"",3,0,5,3,0,10,0,5,4,0),
-			array("Georgian","Etc/GMT-3",180,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("GMT","Europe/London",0,60,"",3,0,5,1,0,10,0,5,2,0),
-			array("Greenland","America/Godthab",-180,60,"",4,0,1,2,0,10,0,5,2,0),
-			array("Greenwich","Africa/Casablanca",0,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("GTB","Europe/Istanbul",120,60,"",3,0,5,3,0,10,0,5,4,0),
-			array("HAST/HADT","Pacific/Honolulu",-600,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Hawaiian","Pacific/Honolulu",-600,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("India","Asia/Calcutta",330,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Iran","Asia/Tehran",210,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Iran","Asia/Tehran",210,60,"2005",3,0,1,2,0,9,2,4,2,0),
-			array("Iran","Asia/Tehran",210,0,"2006",0,0,0,0,0,0,0,0,0,0),
-			array("Israel","Asia/Jerusalem",120,60,"",3,5,5,2,0,9,0,3,2,0),
-			array("Israel","Asia/Jerusalem",120,0,"2004",0,0,0,0,0,0,0,0,0,0),
-			array("Israel","Asia/Jerusalem",120,60,"2005",4,-1,1,2,0,10,-1,9,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2006",3,-1,31,2,0,10,-1,1,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2007",3,-1,30,2,0,9,-1,16,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2008",3,-1,28,2,0,10,-1,5,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2009",3,-1,27,2,0,9,-1,27,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2010",3,-1,26,2,0,9,-1,12,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2011",4,-1,1,2,0,10,-1,2,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2012",3,-1,30,2,0,9,-1,23,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2013",3,-1,29,2,0,9,-1,8,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2014",3,-1,28,2,0,9,-1,28,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2015",3,-1,27,2,0,9,-1,20,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2016",4,-1,1,2,0,10,-1,9,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2017",3,-1,31,2,0,9,-1,24,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2018",3,-1,30,2,0,9,-1,16,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2019",3,-1,29,2,0,10,-1,6,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2020",3,-1,27,2,0,9,-1,27,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2021",3,-1,26,2,0,9,-1,12,2,0),
-			array("Israel","Asia/Jerusalem",120,60,"2022",4,-1,1,2,0,10,-1,2,2,0),
-			array("Israel","Asia/Jerusalem",120,0,"2023",0,0,0,0,0,0,0,0,0,0),
-			array("Jordan","Asia/Amman",120,60,"",3,4,5,0,0,9,5,5,1,0),
-			array("Korea","Asia/Seoul",540,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Mexico","America/Mexico_City",-360,60,"",4,0,1,2,0,10,0,5,2,0),
-			array("Mexico_2","America/Chihuahua",-420,60,"",4,0,1,2,0,10,0,5,2,0),
-			array("Mid_Atlantic","Atlantic/South_Georgia",-120,60,"",3,0,5,2,0,9,0,5,2,0),
-			array("Middle_East","Asia/Beirut",120,60,"",3,0,5,0,0,10,6,5,23,59),
-			array("Montevideo","America/Montevideo",-180,60,"",10,0,1,2,0,3,0,2,2,0),
-			array("MST/MDT","America/Denver",-420,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("MST/MDT","America/Denver",-420,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("MST/MDT","America/Denver",-420,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("HNR/HAR","America/Denver",-420,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("HNR/HAR","America/Denver",-420,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("HNR/HAR","America/Denver",-420,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Mountain","America/Denver",-420,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("Mountain","America/Denver",-420,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("Mountain","America/Denver",-420,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Mountain_Mexico","America/Chihuahua",-420,60,"",4,0,1,2,0,10,0,5,2,0),
-			array("Myanmar","Asia/Rangoon",390,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("North_Central_Asia","Asia/Novosibirsk",360,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("Namibia","Africa/Windhoek",120,-60,"",4,0,1,2,0,9,0,1,2,0),
-			array("Nepal","Asia/Katmandu",345,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("New_Zealand","Pacific/Auckland",720,60,"",10,0,1,2,0,3,0,3,3,0),
-			array("NST/NDT","America/St_Johns",-210,60,"",3,0,2,0,1,11,0,1,0,1),
-			array("NST/NDT","America/St_Johns",-210,60,"2006",4,0,1,0,1,10,0,5,0,0),
-			array("NST/NDT","America/St_Johns",-210,60,"2007",3,0,2,0,1,11,0,1,0,0),
-			array("HNT/HAT","America/St_Johns",-210,60,"",3,0,2,0,1,11,0,1,0,1),
-			array("HNT/HAT","America/St_Johns",-210,60,"2006",4,0,1,0,1,10,0,5,0,0),
-			array("HNT/HAT","America/St_Johns",-210,60,"2007",3,0,2,0,1,11,0,1,0,0),
-			array("Newfoundland","America/St_Johns",-210,60,"",3,0,2,0,1,11,0,1,0,1),
-			array("Newfoundland","America/St_Johns",-210,60,"2006",4,0,1,0,1,10,0,5,0,0),
-			array("Newfoundland","America/St_Johns",-210,60,"2007",3,0,2,0,1,11,0,1,0,0),
-			array("North_Asia_East","Asia/Irkutsk",480,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("North_Asia","Asia/Krasnoyarsk",420,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("Pacific_SA","America/Santiago",-240,60,"",10,6,2,23,59,3,6,2,23,59),
-			array("PST/PDT","America/Los_Angeles",-480,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("PST/PDT","America/Los_Angeles",-480,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("PST/PDT","America/Los_Angeles",-480,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("HNP/HAP","America/Los_Angeles",-480,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("HNP/HAP","America/Los_Angeles",-480,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("HNP/HAP","America/Los_Angeles",-480,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Pacific","America/Los_Angeles",-480,60,"",3,0,2,2,0,11,0,1,2,0),
-			array("Pacific","America/Los_Angeles",-480,60,"2006",4,0,1,2,0,10,0,5,2,0),
-			array("Pacific","America/Los_Angeles",-480,60,"2007",3,0,2,2,0,11,0,1,2,0),
-			array("Pacific_Mexico","America/Tijuana",-480,60,"",4,0,1,2,0,10,0,5,2,0),
-			array("Romance","Europe/Paris",60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("Russian","Europe/Moscow",180,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("SA_Eastern","Etc/GMT+3",-180,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("SA_Pacific","America/Bogota",-300,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("SA_Western","America/La_Paz",-240,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Samoa","Pacific/Apia",-660,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("SE_Asia","Asia/Bangkok",420,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Singapore","Asia/Singapore",480,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("South_Africa","Africa/Johannesburg",120,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Sri_Lanka","Asia/Colombo",330,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Taipei","Asia/Taipei",480,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Tasmania","Australia/Hobart",600,60,"",10,0,1,2,0,3,0,5,3,0),
-			array("Tokyo","Asia/Tokyo",540,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Tonga","Pacific/Tongatapu",780,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("US_Eastern","Etc/GMT+5",-300,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("US_Mountain","America/Phoenix",-420,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Vladivostok","Asia/Vladivostok",600,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("West_Australia","Australia/Perth",480,60,"",10,0,5,2,0,3,0,5,3,0),
-			array("West_Australia","Australia/Perth",480,0,"2005",0,0,0,0,0,0,0,0,0,0),
-			array("West_Australia","Australia/Perth",480,60,"2006",12,-1,1,2,0,1,-1,1,0,0),
-			array("West_Australia","Australia/Perth",480,60,"2007",10,0,5,2,0,3,0,5,3,0),
-			array("West_Central_Africa","Africa/Lagos",60,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("WET/WEST","Europe/Berlin",60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("West_Europe","Europe/Berlin",60,60,"",3,0,5,2,0,10,0,5,3,0),
-			array("West_Asia","Asia/Karachi",300,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("West_Pacific","Pacific/Port_Moresby",600,0,"",0,0,0,0,0,0,0,0,0,0),
-			array("Yakutsk","Asia/Yakutsk",540,60,"",3,0,5,2,0,10,0,5,3,0),
-		);
-
-		$serverTZ = date('e', $event['start']);
-		$year = date('Y', $event['start']);
-		$i = 0;
-		$row = false;
-		do
-		{
-			$tbl_tz_row =& $tbl_tz[$i];
-			if ($tbl_tz_row[1] == $serverTZ)
-			{
-				if ($tbl_tz_row[4] == '' || $year >= (int) $tbl_tz_row[4])
-				{
-					$row = $i;
-				}
-				elseif ($row !== false) break;
-				elseif ($tbl_tz_row[4] != '' && $year < (int) $tbl_tz_row[4])
-				{
-					// First DST starts at this year
-					$year = (int) $tbl_tz_row[4];
-					if (empty($event['recur_enddate'])
-						|| $year <= date('Y', $event['recur_enddate']))
-					{
-						$row = $i;
-					}
-					break;
-				}
-			}
-			elseif ($row !== false) break;
-		}
-		while (is_array($tbl_tz[++$i]));
-
-		if ($row === false) return $serverTZ; // UTC or unkown TZ
-
-		$tbl_tz_row =& $tbl_tz[$row];
-
-		if (preg_match('/(.+)\/(.+)/', $tbl_tz_row[0], $matches))
-		{
-			$stdname = $matches[1];
-			$dstname = $matches[2];
-		}
-		else
-		{
-			$stdname = $dstname = $tbl_tz_row[0];
-		}
-
-		$container = false;
-		$vtimezone = Horde_iCalendar::newComponent('VTIMEZONE', $container);
-		$vtimezone->setAttribute('TZID', $tbl_tz_row[1]);
-		do {
-			if (is_array($tbl_tz[++$row]))
-			{
-				$tbl_next_row =& $tbl_tz[$row];
-				if ($tbl_next_row[1] != $serverTZ) $tbl_next_row = false;
-			}
-			else $tbl_next_row = false;
-
-			$minutes = $tbl_tz_row[2] + $tbl_tz_row[3];
-			$value1['ahead'] = ($minutes >= 0);
-			$minutes = abs($minutes);
-			$value1['hour'] = (int)$minutes / 60;
-			$value1['minute'] = $minutes % 60;
-			$minutes = $tbl_tz_row[2];
-			$value2['ahead'] = ($minutes > 0);
-			$minutes = abs($minutes);
-			$value2['hour'] = (int)$minutes / 60;
-			$value2['minute'] = $minutes % 60;
-
-			$daylight = Horde_iCalendar::newComponent('DAYLIGHT', $container);
-			$dtstart = $this->calc_dtstart($year, $tbl_tz_row[5],
-				$tbl_tz_row[6], $tbl_tz_row[7], $tbl_tz_row[8], $tbl_tz_row[9]);
-			$daylight->setAttribute('DTSTART', $dtstart);
-			$byday = ($tbl_tz_row[7] == 5 ? '-1' : $tbl_tz_row[7]) . $dayofweek[$tbl_tz_row[6]];
-			$rrule = array('FREQ' => 'YEARLY', 'BYMONTH' => $tbl_tz_row[5], 'BYDAY' => $byday);
-			if ($tbl_next_row)
-			{
-				$rrule['UNTIL'] =  $tbl_next_row[4] . '0101T000000Z';
-			}
-			$daylight->setAttribute('RRULE', '', $rrule);
-			$daylight->setAttribute('TZNAME', $dstname);
-			$daylight->setAttribute('TZOFFSETFROM', $value2);
-			$daylight->setAttribute('TZOFFSETTO', $value1);
-
-			$standard = Horde_iCalendar::newComponent('STANDARD', $container);
-			$dtstart = $this->calc_dtstart($year, $tbl_tz_row[10], $tbl_tz_row[11],
-				$tbl_tz_row[12], $tbl_tz_row[13], $tbl_tz_row[14]);
-			$standard->setAttribute('DTSTART', $dtstart);
-			$byday = ($tbl_tz_row[12] == 5 ? '-1' : $tbl_tz_row[12]) . $dayofweek[$tbl_tz_row[11]];
-			$rrule['BYMONTH'] = $tbl_tz_row[10];
-			$rrule['BYDAY'] = $byday;
-			$standard->setAttribute('RRULE', '', $rrule);
-			$standard->setAttribute('TZNAME', $stdname);
-			$standard->setAttribute('TZOFFSETFROM', $value1);
-			$standard->setAttribute('TZOFFSETTO', $value2);
-
-			$vtimezone->addComponent($daylight);
-			$vtimezone->addComponent($standard);
-			if ($tbl_next_row)
-			{
-				$tbl_tz_row = $tbl_next_row;
-				$year = (int) $tbl_tz_row[4];
-			}
-		} while ($tbl_next_row && (empty($event['recur_enddate']) ||
-			$year <= date('Y', $event['recur_enddate'])));
-
-		$vcal->addComponent($vtimezone);
-
-		return $serverTZ;
-	}
-
-	/**
-	 * calculate the DTSTART value for a given timezone switch occurrence
-	 *
-	 * @param int $wYear
-	 * @param int $wMonth
-	 * @param int $wDayOfWeek
-	 * @param int $wNth        n-th day of week (5 last occurrence)
-	 * @param int $wHour
-	 * @param int $wMinute
-	 * @return string DTSTART entry
-	 */
-	function calc_dtstart($wYear, $wMonth, $wDayOfWeek, $wNth, $wHour, $wMinute)
-	{
-		if (!$wYear) $wYear = 1981;
-		if ($wNth < 5)
-		{
-			$ts =  mktime($wHour, $wMinute, 0, $wMonth, 1, $wYear);
-			$day = $wDayOfWeek - date('w', $ts);
-			if ($day < 0) $day += 7;
-			$day += 7 * ($wNth - 1) + 1;
-			$ts =  mktime($wHour, $wMinute, 0, $wMonth, $day, $wYear);
-		}
-		else
-		{
-			$ts =  mktime($wHour, $wMinute, 0, $wMonth, 31, $wYear);
-			$day = $wDayOfWeek - date('w', $ts);
-			if ($day > 0) $day -= 7;
-			$day += 31;
-			do
-			{
-				$ts =  mktime($wHour, $wMinute, 0, $wMonth, $day, $wYear);
-				$day -= 7;
-			} while ($wMonth < date('n', $ts));
-		}
-		$dtstart = date('Ymd\T', $ts) . sprintf("%'02u%'02u00", $wHour, $wMinute);
-		return $dtstart;
-	}
 }
