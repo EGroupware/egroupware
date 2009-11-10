@@ -24,6 +24,9 @@
  *
  * Mapping Windows timezone to standard TZID's:
  * @link http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/windows_tzid.html
+ *
+ * UTC is treated specially: it's implicitly mapped to tz_id=-1 (to be able to store it for events),
+ * but calendar_ical creates NO VTIMEZONE component for it.
  */
 class calendar_timezones
 {
@@ -149,6 +152,16 @@ class calendar_timezones
 	{
 		self::$tz_cache =& egw_cache::getSession(__CLASS__,'tz_cache');
 		self::$tz2id =& egw_cache::getSession(__CLASS__,'tz2id');
+
+		// init cache with mapping UTC <--> -1, as UTC is no real timezone, but we need to be able to use it in calendar
+		if (!is_array(self::$tz2id))
+		{
+			self::$tz_cache = array('-1' => array(
+				'tzid' => 'UTC',
+				'id' => -1,
+			));
+			self::$tz2id = array('UTC' => -1);
+		}
 	}
 
 	/**
