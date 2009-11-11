@@ -299,6 +299,9 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
 			if(strpos($this->_locName,'@') === False) {
 				$this->_locName .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
+			} else {
+				$parts = explode('@',$this->_locName);
+				$GLOBALS['egw_info']['user']['domain'] = array_pop($parts);
 			}
 
 			#Horde::logMessage('SyncML: authenticate with username: ' . $this->_locName . ' and password: ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
