@@ -35,6 +35,7 @@ class Horde_iCalendar_vtimezone extends Horde_iCalendar {
     {
         // Make sure 'time' key is first for sort().
         $result['time'] = 0;
+        $rrule_interval = 0; // 0 undefined, 1 yearly, 12 monthly
 
         $t = $child->getAttribute('TZOFFSETFROM');
         if (is_a($t, 'PEAR_Error')) {
@@ -76,14 +77,31 @@ class Horde_iCalendar_vtimezone extends Horde_iCalendar {
             $t = explode('=', $rrule);
             switch ($t[0]) {
             case 'FREQ':
-                if ($t[1] != 'YEARLY') {
-                    return false;
-                }
+            	switch($t[1]) {
+            		case 'YEARLY':
+            			if ($rrule_interval == 12) {
+                    		return false;
+                		}
+                		$rrule_interval = 1;
+                		break;
+                	case 'MONTHLY':
+                		if ($rrule_interval == 1) {
+                    		return false;
+                		}
+                		$rrule_interval = 12;
+                		break;
+                	default:
+                		return false;
+            	}
                 break;
 
             case 'INTERVAL':
-                if ($t[1] != '1') {
+                if ($rrule_interval && $t[1] != $rrule_interval) {
                     return false;
+                }
+                $rrule_interval = intval($t[1]);
+                if ($rrule_interval != 1 && $rrule_interval != 12) {
+                	return false;
                 }
                 break;
 
@@ -123,6 +141,10 @@ class Horde_iCalendar_vtimezone extends Horde_iCalendar {
                 break;
             }
         }
+
+		if ($rrule_interval == 12) {
+			$month = date("n", $switch_time);
+		}
 
         if (empty($month) || !isset($weekday)) {
             return false;
