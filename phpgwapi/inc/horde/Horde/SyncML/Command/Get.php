@@ -110,6 +110,8 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
                                    array('text/x-vcalendar' => '1.0'));
             $this->_writeDataStore('./calendar', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));
+            $this->_writeDataStore('./events', 'text/calendar', '2.0', $output,
+                                   array('text/x-vcalendar' => '1.0'));
             $this->_writeDataStore('./caltasks', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));
             $output->endElement($state->getURIDevInf() , 'DevInf', $attrs);
