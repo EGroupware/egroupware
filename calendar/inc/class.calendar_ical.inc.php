@@ -119,6 +119,20 @@ class calendar_ical extends calendar_boupdate
 	var $uidExtension = false;
 
 	/**
+	 * Original timezone
+	 *
+	 * @var string
+	 */
+	var $original_tz;
+
+	/**
+	 * user preference: Use this timezone for import from and export to device
+	 *
+	 * @var string
+	 */
+	var $tzid = null;
+
+	/**
 	 * Device CTCap Properties
 	 *
 	 * @var array
@@ -152,6 +166,7 @@ class calendar_ical extends calendar_boupdate
 		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
 		$this->vCalendar = new Horde_iCalendar;
+		$this->original_tz = date_default_timezone_get();
 	}
 
 
@@ -232,15 +247,22 @@ class calendar_ical extends calendar_boupdate
 				$recur_enddate += 24 * 60 * 60 - 1;
 			}
 
-			if ($this->log) error_log(__FILE__.'('.__LINE__.'): '.__METHOD__.' '.array2string($event)."\n",3,$this->logfile);
+			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
 
-			// for palmos we have to use user-time and NO timezone
-			if (strpos($this->productName, 'palmos') !== false)
+			if ($this->tzid === false)
 			{
 				$tzid = null;
 			}
+			elseif ($this->tzid)
+			{
+				$tzid = $this->tzid;
+			}
+			else
+			{
+				$tzid = $event['tzid'];
+			}
 			// check if tzid of event (not only recuring ones) is already added to export
-			elseif (($tzid = $event['tzid']) && $tzid != 'UTC' && !in_array($tzid,$vtimezones_added))
+			if ($tzid && $tzid != 'UTC' && !in_array($tzid,$vtimezones_added))
 			{
 				// check if we have vtimezone component data for tzid of event, if not default to user timezone (default to server tz)
 				if (!($vtimezone = calendar_timezones::tz2id($tzid,'component')))
@@ -281,6 +303,8 @@ class calendar_ical extends calendar_boupdate
 
 			foreach ($egwSupportedFields as $icalFieldName => $egwFieldName)
 			{
+				if (!isset($this->supportedFields[$egwFieldName])) continue;
+
 				$values[$icalFieldName] = array();
 				switch ($icalFieldName)
 				{
@@ -716,7 +740,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					if (preg_match('/([\000-\012])/', $valueData))
 					{
-						if ($this->log) error_log(__LINE__.__METHOD__.__FILE__." Has invalid XML data: $valueData",3,$this->logfile);
+						if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."() Has invalid XML data: $valueData",3,$this->logfile);
 					}
 					$vevent->setParameter($key, $options);
 				}
@@ -725,7 +749,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$retval = $vcal->exportvCalendar();
- 		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__.array2string($retval)."\n",3,$this->logfile);
+ 		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($retval)."\n",3,$this->logfile);
 		return $retval;
 
 	}
@@ -773,7 +797,7 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0)
 	{
-		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__.array2string($_vcalData)."\n",3,$this->logfile);
+		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($_vcalData)."\n",3,$this->logfile);
 
 		if (!($events = $this->icaltoegw($_vcalData,$cal_id,$etag,$recur_date)))
 		{
@@ -1105,7 +1129,7 @@ class calendar_ical extends calendar_boupdate
 			if ($this->log)
 			{
 				$egw_event = $this->read($event['id']);
-				error_log(__LINE__.__METHOD__.__FILE__.array2string($egw_event)."\n",3,$this->logfile);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($egw_event)."\n",3,$this->logfile);
 			}
 		}
 
@@ -1207,6 +1231,11 @@ class calendar_ical extends calendar_boupdate
 				$deviceInfo['nonBlockingAllday'])
 			{
 				$this->nonBlockingAllday = true;
+			}
+			if (isset($deviceInfo['tzid']) &&
+				$deviceInfo['tzid'])
+			{
+				$this->tzid = $deviceInfo['tzid'];
 			}
 			if (!isset($this->productManufacturer) ||
 				 $this->productManufacturer == '' ||
@@ -1394,14 +1423,31 @@ class calendar_ical extends calendar_boupdate
 				$this->supportedFields = $defaultFields['synthesis'];
 				break;
 		}
+		// for palmos we have to use user-time and NO timezone
+		if (strpos($this->productName, 'palmos') !== false)
+		{
+			$this->tzid = false;
+		}
 	}
 
 	function icaltoegw($_vcalData, $cal_id=-1, $etag=null, $recur_date=0)
 	{
 		$events = array();
 
+		if ($this->tzid)
+		{
+			date_default_timezone_set($this->tzid);
+		}
+
 		$vcal = new Horde_iCalendar;
-		if (!$vcal->parsevCalendar($_vcalData)) return false;
+		if (!$vcal->parsevCalendar($_vcalData))
+		{
+			if ($this->tzid)
+			{
+				date_default_timezone_set($this->original_tz);
+			}
+			return false;
+		}
 		$version = $vcal->getAttribute('VERSION');
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
@@ -1438,6 +1484,11 @@ class calendar_ical extends calendar_boupdate
 					$events[] = $event;
 				}
 			}
+		}
+
+		if ($this->tzid)
+		{
+			date_default_timezone_set($this->original_tz);
 		}
 
 		// decide what to return
@@ -1515,6 +1566,10 @@ class calendar_ical extends calendar_boupdate
 							error_log(__METHOD__."() unknown TZID='{$attributes['params']['TZID']}', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
 							$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
 						}
+					}
+					elseif ($this->tzid)
+					{
+						$event['tzid'] = $this->tzid;
 					}
 					break;
 				case 'DTEND':
