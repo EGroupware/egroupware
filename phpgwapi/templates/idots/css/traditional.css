@@ -175,8 +175,9 @@ input[type=image]
 
 .divSidebox
 {
-   position:relative;
-   border: #9c9c9c 1px solid;
+	position:relative;
+  	border: #9c9c9c 1px solid;
+	overflow:auto;
 }
 
 .divSideboxHeader,.divLoginboxHeader
@@ -210,6 +211,7 @@ a.textSidebox
 	padding-top:3px;
 	padding-bottom:3px;
 	border-top: solid #aaaaaa 1px;
+	overflow: auto;
 }
 
 .sideboxSpace

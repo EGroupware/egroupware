@@ -188,6 +188,7 @@ input[type=image]
 	position: relative; 
 	border: 0px solid #9f9f9f;
 	background-color: white;
+	overflow:auto;
 }
 
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
@@ -288,6 +289,7 @@ a.textSidebox
 	height:18px;
 	padding-left: 2px;
 	border-top: 1px solid #e1e1e1;
+	overflow: auto;
 }
 
 .textSideboxHover

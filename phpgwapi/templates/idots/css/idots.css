@@ -24,6 +24,7 @@
 
 .divSidebox,.textSidebox {
 	border: none;
+	overflow: auto;
 }
 
 .textSidebox {
