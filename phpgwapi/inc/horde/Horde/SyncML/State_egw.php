@@ -178,6 +178,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				$deviceMaxEntries = 'maxEntries-' . $this->_sourceURI;
 				$deviceUIDExtension = 'uidExtension-' . $this->_sourceURI;
 				$deviceNonBlockingAllday = 'nonBlockingAllday-' . $this->_sourceURI;
+				$deviceTimezone = 'tzid-' . $this->_sourceURI;
 				$syncml_prefs = $GLOBALS['egw_info']['user']['preferences']['syncml'];
 				$this->_clientDeviceInfo = array (
 					'DTDVersion'				=> $row['dev_dtdversion'],
@@ -195,6 +196,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 					'maxEntries'        		=> $syncml_prefs[$deviceMaxEntries],
 					'uidExtension'        		=> $syncml_prefs[$deviceUIDExtension],
 					'nonBlockingAllday'			=> $syncml_prefs[$deviceNonBlockingAllday],
+					'tzid'						=> $syncml_prefs[$deviceTimezone],
 					'dataStore'					=> unserialize($row['dev_datastore']),
 				);
 				return $this->_clientDeviceInfo;
