@@ -871,7 +871,9 @@ class Horde_iCalendar {
      */
     function _exportvData($base = 'VCALENDAR')
     {
-        $result = 'BEGIN:' . String::upper($base) . $this->_newline;
+    	$base = String::upper($base);
+
+        $result = 'BEGIN:' . $base . $this->_newline;
 
         // VERSION is not allowed for entries enclosed in VCALENDAR/ICALENDAR,
         // as it is part of the enclosing VCALENDAR/ICALENDAR. See rfc2445
@@ -893,7 +895,8 @@ class Horde_iCalendar {
             if ($params) {
                 foreach ($params as $param_name => $param_value) {
                     /* Skip CHARSET for iCalendar 2.0 data, not allowed. */
-                    if ($param_name == 'CHARSET' && (!$this->isOldFormat() || empty($param_value))) {
+                    if ($param_name == 'CHARSET'
+                    		&& (!$this->isOldFormat() || empty($param_value))) {
                         continue;
                     }
                     if ($param_name == 'ENCODING' && empty($param_value)) {
@@ -904,7 +907,10 @@ class Horde_iCalendar {
                         $param_name == 'VALUE' && $param_value == 'DATE') {
                         continue;
                     }
-
+                    /* Skip TZID for iCalendar 1.0 data, not supported. */
+					if ($this->isOldFormat() && $param_name == 'TZID') {
+                        continue;
+                    }
                     if ($param_value === null) {
                         $params_str .= ";$param_name";
                     } else {
@@ -1147,6 +1153,10 @@ class Horde_iCalendar {
         }
 
         foreach ($this->_components as $component) {
+            if ($this->isOldFormat() &&  $component->getType() == 'vTimeZone') {
+    			// Not supported
+				continue;
+        	}
             $result .= $component->exportvCalendar();
         }
 
