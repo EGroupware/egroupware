@@ -433,7 +433,93 @@ class addressbook_bo extends addressbook_so
 		}
 		return $updated;
 	}
-
+	
+	/**
+	 * Cleanup all contacts db fields of all users  (called by Admin >> Addressbook >> Site configuration (Admin only)
+	 * 
+	 * Cleanup means to truncate all unnecessary chars like whitespaces or tabs,
+	 * remove unneeded carriage returns or set empty fields to NULL
+	 *
+	 * @param int &$errors=null on return number of errors
+	 * @return int|boolean number of contacts updated
+	 */
+	function set_all_cleanup(&$errors=null,$ignore_acl=false)
+	{
+		if ($ignore_acl)
+		{
+			unset($this->somain->grants);	// to NOT limit search to contacts readable by current user
+		}
+		
+		// fields that must not be touched
+		$fields_exclude = array(
+			'id'				=> true,
+			'tid'				=> true,
+			'owner'			=> true,
+			'private'		=> true,
+			'created'		=> true,
+			'creator'		=> true,
+			'modified'		=> true,
+			'modifier'		=> true,
+			'account_id'	=> true,
+			'etag'			=> true,
+			'uid'				=> true,
+			'freebusy_uri'	=> true,
+			'calendar_uri' => true,
+			'photo'			=> true,
+		);
+		
+		// to be able to work on huge contact repositories we read the contacts in chunks of 100
+		for($n = $updated = $errors = 0; ($contacts = parent::search(array(),false,'','','',false,'OR',array($n*100,100))); ++$n)
+		{
+			foreach($contacts as $contact)
+			{
+				$fields_to_update = array();
+				foreach($contact as $field_name => $field_value)
+				{
+					if($fields_exclude[$field_name] === true) continue; // dont touch specified field
+					
+					if (is_string($field_value) && $field_name != 'pubkey' && $field_name != 'jpegphoto')
+					{
+						// check if field has to be trimmed
+						if (strlen($field_value) != strlen(trim($field_value)))
+						{
+							$fields_to_update[$field_name] = $field_value = trim($field_value);
+						}
+						// check if field contains a carriage return - exclude notes
+						if ($field_name != 'note' && strpos($field_value,"\x0D\x0A") !== false)
+						{
+							$fields_to_update[$field_name] = $field_value = str_replace("\x0D\x0A"," ",$field_value);;
+						}
+					}
+					// check if a field contains an empty string
+					if (is_string($field_value) && strlen($field_value) == 0)
+					{
+						$fields_to_update[$field_name] = $field_value = null;
+					}
+				}
+				
+				if(count($fields_to_update) > 0)
+				{
+					$contact_to_save = array(
+						'id' => $contact['id'],
+						'owner' => $contact['owner'],
+						'private' => $contact['private'],
+						'account_id' => $contact['account_id'],
+						'uid' => $contact['uid']) + $fields_to_update;
+					
+					if ($this->save($contact_to_save,$ignore_acl))
+					{
+						$updated++;
+					}
+					else
+					{
+						$errors++;
+					}
+				}
+			}
+		}
+		return $updated;
+	}
 
 	/**
 	 * get full name from the name-parts

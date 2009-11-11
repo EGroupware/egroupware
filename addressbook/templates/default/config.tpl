@@ -77,6 +77,12 @@
      <input type="button" onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&all=1&type='+this.form.fileas.value;" value="{lang_All}" />
      <input type="button" onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_fileas&type='+this.form.fileas.value;" value="{lang_Empty}" />
     </td>
+   </tr> 
+   <tr class="row_on">
+    <td>&nbsp;{lang_Cleanup_addressbook_fields_(apply_if_synchronization_creates_duplicates)}:</td>
+    <td>
+     <input type="button" onclick="document.location.href='index.php?menuaction=addressbook.addressbook_ui.admin_set_all_cleanup'" value="{lang_Start}" />
+    </td>
    </tr>
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Contact_repository}</b></td>

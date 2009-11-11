@@ -88,6 +88,7 @@ choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der import
 choose seperator and charset	addressbook	de	Wählen Sie ein Trennzeichen und den Zeichensatz
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
 city	common	de	Stadt
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	de	Bereinige Adressbuch Felder (anwenden wenn die Synchronisation Duplikate erzeugt)
 company	common	de	Firma
 company name	addressbook	de	Firmenname
 configuration	common	de	Konfiguration

@@ -88,6 +88,7 @@ choose owner of imported data	addressbook	en	Choose owner of imported data
 choose seperator and charset	addressbook	en	Choose seperator and charset
 chosse an etemplate for this contact type	admin	en	Chosse an eTemplate for this contact type
 city	common	en	City
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	en	Cleanup addressbook fields (apply if synchronization creates duplicates)
 company	common	en	Company
 company name	addressbook	en	company name
 configuration	common	en	Configuration

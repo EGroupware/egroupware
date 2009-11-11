@@ -26,6 +26,7 @@ class addressbook_ui extends addressbook_bo
 		'emailpopup'=> True,
 		'migrate2ldap' => True,
 		'admin_set_fileas' => True,
+		'admin_set_all_cleanup' => True,
 		'cat_add' => True,
 	);
 	/**
@@ -1997,6 +1998,30 @@ $readonlys['button[vcard]'] = true;
 		else
 		{
 			$updated = parent::set_all_fileas($_GET['type'],(boolean)$_GET['all'],$errors,true);	// true = ignore acl
+			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
+		}
+		$GLOBALS['egw']->common->egw_footer();
+	}
+	
+	/**
+	 * Cleanup all contacts of all users (called by Admin >> Addressbook >> Site configuration (Admin only)
+	 *
+	 */
+	function admin_set_all_cleanup()
+	{
+		translation::add_app('admin');
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Contact maintenance');
+		$GLOBALS['egw']->common->egw_header();
+		parse_navbar();
+
+		// check if user has admin rights (Security)
+		if (!$this->is_admin())
+		{
+			echo '<h1>'.lang('Permission denied !!!')."</h1>\n";
+		}
+		else
+		{
+			$updated = parent::set_all_cleanup($errors,true);	// true = ignore acl
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
 		$GLOBALS['egw']->common->egw_footer();
