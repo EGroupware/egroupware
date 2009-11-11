@@ -82,20 +82,10 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		$adds = & $state->getAddedItems($syncType);
 		$conflicts = & $state->getConflictItems($syncType);
 
-		// manage the conflict items
-		foreach ( $conflicts as $refresh) {
-			if (preg_match('/^!D(.*)/', $refresh, $matches)) {
-				// delete locuri
-				$remoteDeletes[] = $matches[1];
-			} else {
-				$adds[] = $refresh;
-			}
-		}
-
 		Horde :: logMessage('SyncML: ' . count($changes) . ' changed items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		Horde :: logMessage('SyncML: ' . count($deletes) . ' deleted items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		Horde :: logMessage('SyncML: ' . count($remoteDeletes) . ' items to delete on client found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		Horde :: logMessage('SyncML: ' . count($adds) . ' added items (' . count($refresh) . ' refreshs) found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		Horde :: logMessage('SyncML: ' . count($conflicts) . ' items to delete on client found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		Horde :: logMessage('SyncML: ' . count($adds) . ' added items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		// handle changes
 		if (is_array($changes)) {
@@ -254,8 +244,8 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		}
 
 		// handle remote deletes due to conflicts
-		if (count($remoteDeletes) > 0) {
-			while ($locid = array_shift($remoteDeletes)) {
+		if (count($conflicts) > 0) {
+			while ($locid = array_shift($conflicts)) {
 				$currentSize = $output->getOutputSize();
 				// return if we have to much data
 				if (($maxEntries && ($state->getNumberOfElements() >= $maxEntries)
@@ -264,7 +254,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 					|| ($maxMsgSize
 						&& (($currentSize +MIN_MSG_LEFT * 2) > $maxMsgSize))) {
 					// put the item back in the queue
-					$remoteDeletes[] = $locid;
+					$conflicts[] = $locid;
 					$state->maxNumberOfElements();
 					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 					return $currentCmdID;
@@ -420,7 +410,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			'type' => $syncType,
 			'filter' => $this->_filterExpression
 		)));
-		$state->setChangedItems($syncType, $registry->call($hordeType . '/listBy', array (
+		$state->mergeChangedItems($syncType, $registry->call($hordeType . '/listBy', array (
 			'action' => 'modify',
 			'timestamp' => $refts,
 			'type' => $syncType,
@@ -442,7 +432,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			'type' => $syncType,
 			'filter' => $this->_filterExpression
 		)));
-		$state->setAddedItems($syncType, $registry->call($hordeType . '/listBy', array (
+		$state->mergeAddedItems($syncType, $registry->call($hordeType . '/listBy', array (
 			'action' => 'add',
 			'timestamp' => $refts,
 			'type' => $syncType,
@@ -451,6 +441,6 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 
 		$this->_syncDataLoaded = TRUE;
 
-		return count($state->getChangedItems($syncType)) - $delta_mod +count($state->getDeletedItems($syncType)) + count($state->getAddedItems($syncType)) - $delta_add +count($state->getConflictItems($syncType));
+		return count($state->getChangedItems($syncType)) - $delta_mod + count($state->getDeletedItems($syncType)) + count($state->getAddedItems($syncType)) - $delta_add +count($state->getConflictItems($syncType));
 	}
 }

@@ -235,7 +235,7 @@ class Horde_SyncML_Sync {
 						Horde::logMessage('SyncML: Server RO! REMOVE '
 							. $syncItem->getLocURI() . ' from client',
 							__FILE__, __LINE__, PEAR_LOG_WARNING);
-						$state->addConflictItem($type, '!D' . $syncItem->getLocURI());
+						$state->addConflictItem($type, $syncItem->getLocURI());
 					} else {
 						Horde::logMessage('SyncML: Server RO! '
 							. 'REJECT all client changes',
@@ -275,7 +275,7 @@ class Horde_SyncML_Sync {
 						Horde::logMessage('SyncML: Server RO! ADD '
 							. $guid . ' to client again',
 							__FILE__, __LINE__, PEAR_LOG_WARNING);
-						// $state->addConflictItem($type, $guid);
+						$state->pushAddedItem($type, $guid);
 					} else {
 						Horde::logMessage('SyncML: '.
 							'Server RO! REJECT all client changes',
@@ -298,7 +298,7 @@ class Horde_SyncML_Sync {
 					Horde::logMessage('SyncML: Server Merge Only: ADD '
 							. $guid . ' to client again',
 							__FILE__, __LINE__, PEAR_LOG_WARNING);
-					// $state->addConflictItem($type, $guid);
+					$state->pushAddedItem($type, $guid);
 					$state->log('Client-DeleteIgnored');
 					continue;
 				}
@@ -368,7 +368,7 @@ class Horde_SyncML_Sync {
 								Horde::logMessage('SyncML: Server RO! UNDO client change for locuri ' .
 									$syncItem->getLocURI() . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
-								$state->addConflictItem($type, $guid);
+								$state->pushChangedItem($type, $guid);
 								$ok = true;
 								$replace = false;
 						}
@@ -421,7 +421,7 @@ class Horde_SyncML_Sync {
 							// delete this item from client
 							Horde::logMessage('SyncML: Server RO! REMOVE ' . $syncItem->getLocURI() . ' from client',
 								__FILE__, __LINE__, PEAR_LOG_WARNING);
-							$state->addConflictItem($type, '!D' . $syncItem->getLocURI());
+							$state->addConflictItem($type, $syncItem->getLocURI());
 						} else {
 							Horde::logMessage('SyncML: Server RO! REJECT all client changes',
 								__FILE__, __LINE__, PEAR_LOG_WARNING);

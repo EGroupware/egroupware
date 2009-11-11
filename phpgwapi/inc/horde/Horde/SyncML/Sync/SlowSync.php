@@ -226,7 +226,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 					// delete this item from client
 					Horde::logMessage('SyncML: Server RO! REMOVE ' . $syncItem->getLocURI()
 					. ' from client', __FILE__, __LINE__, PEAR_LOG_WARNING);
-					$state->addConflictItem($type, '!D' . $syncItem->getLocURI());
+					$state->addConflictItem($type, $syncItem->getLocURI());
 				} else {
 					Horde::logMessage('SyncML: Server RO! REJECT all client changes',
 						__FILE__, __LINE__, PEAR_LOG_WARNING);
@@ -274,7 +274,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 					'timestamp' => $future,
 					'type' => $syncType,
 					'filter' => $this->_filterExpression)));
-		$state->setAddedItems($syncType, $registry->call($hordeType. '/list', array('filter' => $this->_filterExpression)));
+		$state->mergeAddedItems($syncType, $registry->call($hordeType. '/list', array('filter' => $this->_filterExpression)));
 		$this->_syncDataLoaded = TRUE;
 
 		return count($state->getAddedItems($syncType)) - $delta_add;

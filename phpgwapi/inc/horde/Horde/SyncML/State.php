@@ -417,14 +417,37 @@ class Horde_SyncML_State {
     	$this->_addedItems[$_type] = $_addedItems;
     }
 
-    function pushAddedItem($_type, $_addedItems)
+    function mergeAddedItems($_type, $_addedItems)
     {
-    	$this->_addedItems[$_type] = $_addedItems;
+    	if (is_array($this->_addedItems[$_type])) {
+    		$this->_addedItems[$_type] = array_merge($this->_addedItems[$_type], $_addedItems);
+    	} else {
+    		$this->_addedItems[$_type] = $_addedItems;
+    	}
+    }
+
+    function pushAddedItem($_type, $_addedItem)
+    {
+    	$this->_addedItems[$_type][] = $_addedItem;
     }
 
     function setChangedItems($_type, $_changedItems)
     {
     	$this->_changedItems[$_type] = $_changedItems;
+    }
+
+    function mergeChangedItems($_type, $_changedItems)
+    {
+    	if (is_array($this->_changedItems[$_type])) {
+    		$this->_changedItems[$_type] = array_merge($this->_changedItems[$_type], $_changedItems);
+    	} else {
+    		$this->_changedItems[$_type] = $_changedItems;
+    	}
+    }
+
+    function pushChangedItem($_type, $_changedItem)
+    {
+    	$this->_changedItems[$_type][] = $_changedItem;
     }
 
     function setClientDeviceInfo($clientDeviceInfo)
