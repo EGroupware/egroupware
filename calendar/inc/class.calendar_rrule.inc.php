@@ -214,9 +214,9 @@ class calendar_rrule implements Iterator
 			}
 		}
 
-		if (!is_numeric($interval) || $interval < 1)
+		if ((int)$interval < 1)
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__."($time,$type,$interval,$enddate,$data,...) interval $interval is NOT valid!");
+			$interval = 1;	// calendar stores no (extra) interval as null, so using default 1 here
 		}
 		$this->interval = (int)$interval;
 
@@ -479,9 +479,9 @@ class calendar_rrule implements Iterator
 		$time = is_a($event['start'],'DateTime') ? $event['start'] : new egw_time($event['start'],$timestamp_tz);
 		$time->setTimezone(new DateTimeZone($event['tzid']));
 
-		if ($event['enddate'])
+		if ($event['recur_enddate'])
 		{
-			$enddate = is_a($event['enddate'],'DateTime') ? $event['enddate'] : new egw_time($event['enddate'],$timestamp_tz);
+			$enddate = is_a($event['recur_enddate'],'DateTime') ? $event['recur_enddate'] : new egw_time($event['recur_enddate'],$timestamp_tz);
 		}
 		foreach($event['recur_exception'] as $exception)
 		{
