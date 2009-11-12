@@ -243,13 +243,13 @@ class egw_time extends DateTime
 	}
 
 	/**
-	 * Cast object to a string
+	 * Cast object to string
 	 *
-	 * @return string
+	 * @return string eg. "Wednesday, 2009-11-11 11:11:11 (Europe/Berlin)"
 	 */
 	public function __toString()
 	{
-		return $this->format(self::DATABASE);
+		return $this->format('l, '.self::DATABASE).' ('.$this->getTimezone()->getName().')';
 	}
 
 	/**
@@ -488,7 +488,7 @@ class egw_time extends DateTime
 		unset($data);
 
 		// if user lang or installed langs contain a european language --> move Europe to top of tz list
-		$langs = translation::get_installed_langs();
+		$langs = class_exists('translation') ? translation::get_installed_langs() : array();
 		if (array_intersect(array($GLOBALS['egw_info']['user']['preferences']['common']['lang'])+array_keys($langs),
 			array('de','fr','it','nl','bg','ca','cs','da','el','es-es','et','eu','fi','hr','hu','lt','no','pl','pt','sk','sl','sv','tr','uk')))
 		{
