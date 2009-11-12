@@ -104,7 +104,7 @@ class calendar_rrule implements Iterator
 	public $interval = 1;
 
 	/**
-	 * Number for monthly byday: 1, ..., 5, -1=last workday of month
+	 * Number for monthly byday: 1, ..., 5, -1=last weekday of month
 	 *
 	 * EGroupware Calendar does NOT explicitly store it, it's only implicitly defined by series start date
 	 *
@@ -208,8 +208,7 @@ class calendar_rrule implements Iterator
 	 */
 	public function __construct(DateTime $time,$type,$interval=1,DateTime $enddate=null,$weekdays=0,array $exceptions=null)
 	{
-		$weekdaystarts = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'];
-		switch($weekdaystarts)
+		switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
 		{
 			case 'Sunday':
 				$this->lastdayofweek = self::SATURDAY;
@@ -453,11 +452,6 @@ class calendar_rrule implements Iterator
 			list($str) = explode(' (',lang(self::$types[$this->type]));	// remove (by day/date) from Monthly
 
 			$str_extra = array();
-			if ($this->enddate)
-			{
-				if ($this->enddate->getTimezone() != egw_time::$user_timezone) $this->enddate->setTimezone(egw_time::$user_timezone);
-				$str_extra[] = lang('ends').': '.lang($this->enddate->format('l')).', '.$this->enddate->format(egw_time::$user_dateformat);
-			}
 			switch ($this->type)
 			{
 				case self::MONTHLY_MDAY:
@@ -500,7 +494,18 @@ class calendar_rrule implements Iterator
 			{
 				$str_extra[] = lang('Interval').': '.$this->interval;
 			}
-
+			if ($this->enddate)
+			{
+				if ($this->enddate->getTimezone()->getName() != egw_time::$user_timezone->getName())
+				{
+					$this->enddate->setTimezone(egw_time::$user_timezone);
+				}
+				$str_extra[] = lang('ends').': '.lang($this->enddate->format('l')).', '.$this->enddate->format(egw_time::$user_dateformat);
+			}
+			if ($this->time->getTimezone()->getName() != egw_time::$user_timezone->getName())
+			{
+				$str_extra[] = $this->time->getTimezone()->getName();
+			}
 			if(count($str_extra))
 			{
 				$str .= ' ('.implode(', ',$str_extra).')';
