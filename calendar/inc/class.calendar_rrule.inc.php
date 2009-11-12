@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Calendar recurance rules
+ * eGroupWare - Calendar recurrence rules
  *
  * @link http://www.egroupware.org
  * @package calendar
@@ -11,7 +11,7 @@
  */
 
 /**
- * Recurance rule iterator
+ * Recurrence rule iterator
  *
  * The constructor accepts times only as DateTime (or decendents like egw_date) to work timezone-correct.
  * The timezone of the event is determined by timezone of the startime, other times get converted to that timezone.
@@ -23,7 +23,7 @@
  *
  * There's an interactive test-form, if the class get's called directly: http://localhost/egroupware/calendar/inc/class.calendar_rrule.inc.php
  *
- * @todo Integrate iCal import and export, so all recurence code resides just in this class
+ * @todo Integrate iCal import and export, so all recurrence code resides just in this class
  * @todo Implement COUNT, can be stored in enddate assuming counts are far smaller then timestamps (eg. < 1000 is a count)
  * @todo Implement WKST (week start day), currently WKST=SU is used (this is not stored in current DB schema, it's a user preference)
  */
@@ -68,6 +68,28 @@ class calendar_rrule implements Iterator
 	);
 
 	/**
+	 * @var array $recur_egw2ical_2_0 converstaion of egw recur-type => ical FREQ
+	 */
+	static private $recur_egw2ical_2_0 = array(
+		self::DAILY        => 'DAILY',
+		self::WEEKLY       => 'WEEKLY',
+		self::MONTHLY_WDAY => 'MONTHLY',	// BYDAY={1..7, -1}{MO..SO, last workday}
+		self::MONTHLY_MDAY => 'MONTHLY',	// BYMONHTDAY={1..31, -1 for last day of month}
+		self::YEARLY       => 'YEARLY',
+	);
+
+	/**
+	 * @var array $recur_egw2ical_1_0 converstaion of egw recur-type => ical FREQ
+	 */
+	static private $recur_egw2ical_1_0 = array(
+		self::DAILY        => 'D',
+		self::WEEKLY       => 'W',
+		self::MONTHLY_WDAY => 'MP',	// BYDAY={1..7,-1}{MO..SO, last workday}
+		self::MONTHLY_MDAY => 'MD',	// BYMONHTDAY={1..31,-1}
+		self::YEARLY       => 'YM',
+	);
+
+	/**
 	 * RRule type: NONE, DAILY, WEEKLY, MONTHLY_MDAY, MONTHLY_WDAY, YEARLY
 	 *
 	 * @var int
@@ -82,7 +104,7 @@ class calendar_rrule implements Iterator
 	public $interval = 1;
 
 	/**
-	 * Number for monthly byday: 1, ..., 5, -1=last weekday of month
+	 * Number for monthly byday: 1, ..., 5, -1=last workday of month
 	 *
 	 * EGroupware Calendar does NOT explicitly store it, it's only implicitly defined by series start date
 	 *
@@ -164,6 +186,14 @@ class calendar_rrule implements Iterator
 	public $current;
 
 	/**
+	 * Last day of the week according to user preferences
+	 *
+	 * @var int
+	 */
+	protected $lastdayofweek;
+
+
+	/**
 	 * Constructor
 	 *
 	 * The constructor accepts on DateTime (or decendents like egw_date) for all times, to work timezone-correct.
@@ -178,6 +208,19 @@ class calendar_rrule implements Iterator
 	 */
 	public function __construct(DateTime $time,$type,$interval=1,DateTime $enddate=null,$weekdays=0,array $exceptions=null)
 	{
+		$weekdaystarts = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'];
+		switch($weekdaystarts)
+		{
+			case 'Sunday':
+				$this->lastdayofweek = self::SATURDAY;
+				break;
+			case 'Saturday':
+				$this->lastdayofweek = self::FRIDAY;
+				break;
+			default: // Monday
+				$this->lastdayofweek = self::SUNDAY;
+		}
+
 		$this->time = $time;
 
 		if (!in_array($type,array(self::NONE, self::DAILY, self::WEEKLY, self::MONTHLY_MDAY, self::MONTHLY_WDAY, self::YEARLY)))
@@ -306,8 +349,8 @@ class calendar_rrule implements Iterator
 				do
 				{
 					// interval in weekly means event runs on valid days eg. each 2. week
-					// --> on saturday we have to additionally advance interval-1 weeks
-					if ($this->interval > 1 && self::getWeekday($this->current) == self::SATURDAY)
+					// --> on the last day of the week we have to additionally advance interval-1 weeks
+					if ($this->interval > 1 && self::getWeekday($this->current) == $this->lastdayofweek)
 					{
 						$this->current->modify(($this->interval-1).' week');
 					}
@@ -464,6 +507,96 @@ class calendar_rrule implements Iterator
 			}
 		}
 		return $str;
+	}
+
+	/**
+	 * Generate a VEVENT RRULE
+	 * @param string $version='1.0' could be '2.0', too
+	 */
+	public function generate_rrule($version='1.0')
+	{
+		static $utc;
+		$repeat_days = array();
+		$rrule = array();
+
+		if (is_null($utc))
+		{
+			$utc = calendar_timezones::DateTimeZone('UTC');
+		}
+
+		if ($this->type == self::NONE) return false;	// no recuring event
+
+		if ($version == '1.0')
+		{
+			$rrule['FREQ'] = self::$recur_egw2ical_1_0[$this->type] . $this->interval;
+			switch ($this->type)
+			{
+				case self::WEEKLY:
+					foreach (self::$days as $mask => $label)
+					{
+						if ($this->weekdays & $mask)
+						{
+							$repeat_days[] = strtoupper(substr($label,0,2));
+						}
+					}
+					$rrule['BYDAY'] = implode(' ', $repeat_days);
+					$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
+					break;
+
+				case self::MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+					break;
+
+				case self::MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+					$rrule['BYDAY'] = $this->monthly_byday_num .
+						strtoupper(substr($this->time->format('l'),0,2));
+					$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
+					break;
+			}
+
+			if (!$this->enddate)
+			{
+				$rrule['UNTIL'] = '#0';
+			}
+		}
+		else // $version == '2.0'
+		{
+			$rrule['FREQ'] = self::$recur_egw2ical_2_0[$this->type];
+			switch ($this->type)
+			{
+				case self::WEEKLY:
+					foreach (self::$days as $mask => $label)
+					{
+						if ($this->weekdays & $mask)
+						{
+							$repeat_days[] = strtoupper(substr($label,0,2));
+						}
+					}
+					$rrule['BYDAY'] = implode(',', $repeat_days);
+					break;
+
+				case self::MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+					$rrule['BYMONTHDAY'] = $this->monthly_bymonthday;
+					break;
+
+				case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+					$rrule['BYDAY'] = $this->monthly_byday_num .
+						strtoupper(substr($this->time->format('l'),0,2));
+					break;
+			}
+			if ($this->interval > 1)
+			{
+				$rrule['INTERVAL'] = $this->interval;
+			}
+		}
+
+		if ($this->enddate)
+		{
+			$enddate = clone $this->enddate;
+			$enddate->setTimezone($utc);
+			$rrule['UNTIL'] = $enddate->format('Ymd\THis\Z');
+		}
+
+		return $rrule;
 	}
 
 	/**
