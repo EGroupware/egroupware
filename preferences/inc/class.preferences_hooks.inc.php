@@ -353,6 +353,23 @@ class preferences_hooks
 				'admin'  => false,
 				'default'=> 'iso-8859-1',
 			),
+			'number_format' => array(
+				'type'   => 'select',
+				'label'  => 'Number format',
+				'name'   => 'number_format',
+				'values' => array(
+					'.'  => '1234.56',
+					','  => '1234,56',
+					'.,' => '1,234.56',
+					',.' => '1.234,56',
+					'. ' => '1 234.56',
+					', ' => '1 234,56',
+				),
+				'help'   => 'Thousands separator is only used for displaying and not for editing numbers.',
+				'xmlrpc' => True,
+				'admin'  => false,
+				'default'=> '.',
+			),
 		);
 		// disable thumbnails, if no size configured by admin
 		if (!$GLOBALS['egw_info']['server']['link_list_thumbnail']) unset($settings['link_list_thumbnail']);

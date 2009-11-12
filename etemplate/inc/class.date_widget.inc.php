@@ -89,6 +89,7 @@ class date_widget
 	 */
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
+		//echo "<p>".__METHOD__."($name,$value=".egw_time::to($value).",".array2string($cell).")</p>\n";
 		$type = $cell['type'];
 		switch ($type)
 		{
@@ -123,7 +124,7 @@ class date_widget
 				'i' => '',
 			);
 		}
-		elseif ($data_format != '')
+		elseif (!is_object($value) && $data_format != '')	// we ignore format for objects
 		{
 			$date = preg_split('/[- \\/.:,]/',$value);
 			//echo "date=<pre>"; print_r($date); echo "</pre>";
@@ -155,15 +156,9 @@ class date_widget
 		else
 		{
 			// for the timeformats we use only seconds, no timezone conversation between server-time and UTC
-			if (substr($type,-4) == 'only') $value -= adodb_date('Z',0);
+			if (substr($type,-4) == 'only' && is_numeric($value)) $value -= adodb_date('Z',0);
 
-			$value = array(
-				'Y' => (int) adodb_date('Y',$value),
-				'm' => (int) adodb_date('m',$value),
-				'd' => (int) adodb_date('d',$value),
-				'H' => (int) adodb_date('H',$value),
-				'i' => (int) adodb_date('i',$value)
-			);
+			$value = egw_time::to($value,'date_array');
 		}
 		if ($type == 'date-since')
 		{
@@ -416,6 +411,11 @@ class date_widget
 		$value = $empty_not_0 && (string) $value === '' || !$empty_not_0 && !$value ? '' :
 			($unit == 'm' ? (int) $value : round($value / 60 / ($unit == 'd' ? $hours_per_day : 1),3));
 
+		// use decimal separator from user prefs
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0] != '.')
+		{
+			$value = str_replace('.',$GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0],$value);
+		}
 		if (!$readonly && strlen($input_format) > 1) // selectbox to switch between hours and days
 		{
 			$value = array(

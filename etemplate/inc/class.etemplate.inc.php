@@ -1144,8 +1144,7 @@ class etemplate extends boetemplate
 				}
 				if (($type == 'float' || !is_numeric($pre)) && $value && $pre)
 				{
-					$value = str_replace(array(' ',','),array('','.'),$value);
-					$value = is_numeric($pre) ? number_format($value,$pre,'.','') : sprintf($pre,$value);
+					$value = is_numeric($pre) ? self::number_format($value,$pre,$readonly) : sprintf($pre,$value);
 				}
 				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
 				// fall-through
@@ -1788,6 +1787,28 @@ class etemplate extends boetemplate
 			return html::div($html,' ondblclick="'.$handler.'"','clickWidgetToEdit');
 		}
 		return $html;
+	}
+
+	/**
+	 * Format a number according to user prefs with decimal and thousands separator (later only for readonly)
+	 *
+	 * @param int|float|string $number
+	 * @param int $num_decimal_places=2
+	 * @param boolean $readonly=true
+	 * @return string
+	 */
+	static public function number_format($number,$num_decimal_places=2,$readonly=true)
+	{
+		static $dec_separator,$thousands_separator;
+		if (is_null($dec_separator))
+		{
+			$dec_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0];
+			if (empty($dec_separator)) $dec_separator = '.';
+			$thousands_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][1];
+		}
+		if ((string)$number === '') return '';
+
+		return number_format(str_replace(' ','',$number),$num_decimal_places,$dec_separator,$readonly ? $thousands_separator : '');
 	}
 
 	/**
