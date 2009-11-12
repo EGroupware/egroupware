@@ -539,7 +539,7 @@ class calendar_bo
 		$old_horizont = $this->config['horizont'];
 		$this->config['horizont'] = $new_horizont;
 
-		// create further recurances for all recuring and not yet (at the old horizont) ended events
+		// create further recurrences for all recuring and not yet (at the old horizont) ended events
 		if (($recuring = $this->so->unfinished_recuring($old_horizont)))
 		{
 			foreach($this->read(array_keys($recuring)) as $cal_id => $event)
@@ -560,10 +560,12 @@ class calendar_bo
 	}
 
 	/**
-	 * set all recurances for an event til the defined horizont $this->config['horizont']
+	 * set all recurrences for an event until defined horizont $this->config['horizont']
+	 *
+	 * This methods operates in usertime, while $this->config['horizont'] is in servertime!
 	 *
 	 * @param array $event
-	 * @param mixed $start=0 minimum start-time for new recurances or !$start = since the start of the event
+	 * @param mixed $start=0 minimum start-time for new recurrences or !$start = since the start of the event
 	 */
 	function set_recurrences($event,$start=0)
 	{
@@ -580,19 +582,19 @@ class calendar_bo
 		if (!$start) $start = $event['start'];
 
 		$events = array();
-		$this->insert_all_repetitions($event,$start,$this->date2ts($this->config['horizont'],true),$events,null);
-		$days = $this->so->get_recurrence_exceptions($event);
-		$days = is_array($days) ? $days : array();
-		//error_log('set_recurrences: days' . print_r($days, true) );
+		$this->insert_all_recurrences($event,$start,$this->date2usertime($this->config['horizont']),$events);
+
+		$days = $this->so->get_recurrence_exceptions($event);	// content of array is in server-time!
+		//error_log('set_recurrences: days=' . array2string($days) );
 		foreach($events as $event)
 		{
-			//error_log('set_recurrences: start = ' . $event['start'] );
-			if (in_array($event['start'], $days))
+			$start_servertime = $this->date2ts($event['start'],true);
+			if (in_array($start_servertime, (array)$days))
 			{
 				// we don't change the stati of recurrence exceptions
 				$event['participants'] = array();
 			}
-			$this->so->recurrence($event['id'],$this->date2ts($event['start'],true),$this->date2ts($event['end'],true),$event['participants']);
+			$this->so->recurrence($event['id'],$start_servertime,$this->date2ts($event['end'],true),$event['participants']);
 		}
 	}
 
@@ -706,194 +708,54 @@ class calendar_bo
 	/**
 	 * Inserts all repetions of $event in the timespan between $start and $end into $events
 	 *
-	 * As events can have recur-exceptions, only those event-date not having one, should get inserted.
-	 * The caller supplies an array with the already inserted exceptions.
+	 * The new entries are just appended to $events, so $events is no longer sorted by startdate !!!
 	 *
-	 * The new entries are just appended to $entries, so $events is no longer sorted by startdate !!!
-	 * Unlike the old code the start- and end-date of the events should be adapted here !!!
-	 *
-	 * TODO: This code is mainly copied from bocalendar and need to be rewritten for the changed algorithm:
-	 *	We insert now all repetions of one event in one go. It should be possible to calculate the time-difference
-	 *	of the used recur-type and add all events in one simple for-loop. Daylightsaving changes need to be taken into Account.
+	 * Recurrences get calculated by rrule iterator implemented in calendar_rrule class.
 	 *
 	 * @param array $event repeating event whos repetions should be inserted
 	 * @param mixed $start start-date
 	 * @param mixed $end end-date
 	 * @param array $events where the repetions get inserted
-	 * @param array $recur_exceptions with date (in Ymd) as key (and True as values)
+	 * @param array $recur_exceptions with date (in Ymd) as key (and True as values), seems not to be used anymore
 	 */
-	function insert_all_repetitions($event,$start,$end,&$events,$recur_exceptions)
+	function insert_all_recurrences($event,$start,$end,&$events)
 	{
-		if ((int) $this->debug >= 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions')
+		if ((int) $this->debug >= 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_recurrences')
 		{
-			$this->debug_message('bocal::insert_all_repitions(%1,%2,%3,&$event,%4)',true,$event,$start,$end,$recur_exceptions);
+			$this->debug_message(__METHOD__.'(%1,%2,%3,&$event)',true,$event,$start,$end);
 		}
 		$start_in = $start; $end_in = $end;
 
 		$start = $this->date2ts($start);
-		$end   = $this->date2ts($end);
 		$event_start_ts = $this->date2ts($event['start']);
-		$event_end_ts   = $this->date2ts($event['end']);
+		$event_length = $this->date2ts($event['end']) - $event_start_ts;	// we use a constant event-length, NOT a constant end-time!
 
-		if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
+		// if $end is before recur_enddate, use it instead
+		if (!$event['recur_enddate'] || $this->date2ts($event['recur_enddate']) > $this->date2ts($end))
 		{
-			$this->debug_message('bocal::insert_all_repetions(%1,start=%2,end=%3,,%4) starting...',True,$event,$start_in,$end_in,$recur_exceptions);
+			//echo "<p>recur_enddate={$event['recur_enddate']}=".egw_time::to($event['recur_enddate'])." > end=$end=".egw_time::to($end)." --> using end instead of recur_enddate</p>\n";
+			$event['recur_enddate'] = $end;
 		}
-		$id = $event['id'];
-		$event_start_arr = $this->date2array($event['start']);
-		// to be able to calculate the repetitions as difference to the start-date,
-		// both need to be calculated without daylight saving: mktime(,,,,,,0)
-		$event_start_daybegin_ts = adodb_mktime(0,0,0,$event_start_arr['month'],$event_start_arr['day'],$event_start_arr['year'],0);
-
-		if($event['recur_enddate'])
+		// loop over all recurrences and insert them, if they are after $start
+		$rrule = calendar_rrule::event2rrule($event,true);	// true = we operate in usertime, like the rest of calendar_bo
+		foreach($rrule as $time)
 		{
-			$recur_end_ymd = $this->date2string($event['recur_enddate']);
+			$time->setUser();	// $time is in timezone of event, convert it to usertime used here
+			if (($ts = $this->date2ts($time)) < $start-$event_length)
+			{
+				//echo "<p>".$time." --> ignored as $ts < $start-$event_length</p>\n";
+				continue;	// to early or original event (returned by interator too)
+			}
+			//echo "<p>".$time." --> adding recurrence</p>\n";
+			$event['start'] = $ts;
+			$event['end'] = $ts + $event_length;
+			$events[] = $event;
 		}
-		else
+		if ($this->debug && ((int) $this->debug > 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_recurrences'))
 		{
-			$recur_end_ymd = $this->date2string(adodb_mktime(0,0,0,1,1,5+adodb_date('Y')));	// go max. 5 years from now
-		}
-
-		// We only need to compute the intersection between our reported time-span and the live-time of the event
-		// To catch all multiday repeated events (eg. second days), we need to start the length of the even earlier
-		// then our original report-starttime
-		$event_length = $event_end_ts - $event_start_ts;
-		$start_ts = max($event_start_ts,$start-$event_length);
-		// we need to add 26*60*60-1 to the recur_enddate as its hour+minute are 0
-		$end_ts   = $event['recur_enddate'] ? min($this->date2ts($event['recur_enddate'])+DAY_s-1,$end) : $end;
-
-		for($ts = $start_ts; $ts < $end_ts; $ts += DAY_s)
-		{
-			$search_date_ymd = (int)$this->date2string($ts);
-
-			//error_log('insert_all_repetitions search_date = ' . $search_date_ymd . ' => ' . print_r($recur_exceptions, true));
-
-			$have_exception = !is_null($recur_exceptions) && isset($recur_exceptions[$search_date_ymd]);
-
-			if (!$have_exception)	// no execption by an edited event => check the deleted ones
-			{
-				foreach((array)$event['recur_exception'] as $exception_ts)
-				{
-					if (($have_exception = $search_date_ymd == (int)$this->date2string($exception_ts))) break;
-				}
-			}
-			if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
-			{
-				$this->debug_message('bocal::insert_all_repetions(...,%1) checking recur_exceptions[%2] and event[recur_exceptions]=%3 ==> %4',False,
-					$recur_exceptions,$search_date_ymd,$event['recur_exception'],$have_exception);
-			}
-			if ($have_exception)
-			{
-				continue;	// we already have an exception for that date
-			}
-			$search_date_year = adodb_date('Y',$ts);
-			$search_date_month = adodb_date('m',$ts);
-			$search_date_day = adodb_date('d',$ts);
-			$search_date_dow = adodb_date('w',$ts);
-			// to be able to calculate the repetitions as difference to the start-date,
-			// both need to be calculated without daylight saving: mktime(,,,,,,0)
-			$search_beg_day = adodb_mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year,0);
-
-			if ($search_date_ymd == $event_start_arr['full'])	// first occurence
-			{
-				$this->add_adjusted_event($events,$event,$search_date_ymd);
-				continue;
-			}
-			$freq = $event['recur_interval'] ? $event['recur_interval'] : 1;
-			$type = $event['recur_type'];
-			switch($type)
-			{
-				case MCAL_RECUR_DAILY:
-					if($this->debug > 4)
-					{
-						echo '<!-- check_repeating_events - MCAL_RECUR_DAILY - '.$id.' -->'."\n";
-					}
-					if ($freq == 1 && $event['recur_enddate'] && $search_date_ymd <= $recur_end_ymd)
-					{
-						$this->add_adjusted_event($events,$event,$search_date_ymd);
-					}
-					elseif (floor(($search_beg_day - $event_start_daybegin_ts)/DAY_s) % $freq)
-					{
-						continue;
-					}
-					else
-					{
-						$this->add_adjusted_event($events,$event,$search_date_ymd);
-					}
-					break;
-				case MCAL_RECUR_WEEKLY:
-					// we use round(,1) to deal with changing daylight saving
-					if (floor(round(($search_beg_day - $event_start_daybegin_ts)/WEEK_s,1)) % $freq)
-					{
-						continue;
-					}
-					$check = 0;
-					switch($search_date_dow)
-					{
-						case 0:
-							$check = MCAL_M_SUNDAY;
-							break;
-						case 1:
-							$check = MCAL_M_MONDAY;
-							break;
-						case 2:
-							$check = MCAL_M_TUESDAY;
-							break;
-						case 3:
-							$check = MCAL_M_WEDNESDAY;
-							break;
-						case 4:
-							$check = MCAL_M_THURSDAY;
-							break;
-						case 5:
-							$check = MCAL_M_FRIDAY;
-							break;
-						case 6:
-							$check = MCAL_M_SATURDAY;
-							break;
-					}
-					if ($event['recur_data'] & $check)
-					{
-						$this->add_adjusted_event($events,$event,$search_date_ymd);
-					}
-					break;
-				case MCAL_RECUR_MONTHLY_WDAY:
-					if ((($search_date_year - $event_start_arr['year']) * 12 + $search_date_month - $event_start_arr['month']) % $freq)
-					{
-						continue;
-					}
-
-					if (($GLOBALS['egw']->datetime->day_of_week($event_start_arr['year'],$event_start_arr['month'],$event_start_arr['day']) == $GLOBALS['egw']->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
-						(ceil($event_start_arr['day']/7) == ceil($search_date_day/7)))
-					{
-						$this->add_adjusted_event($events,$event,$search_date_ymd);
-					}
-					break;
-				case MCAL_RECUR_MONTHLY_MDAY:
-					if ((($search_date_year - $event_start_arr['year']) * 12 + $search_date_month - $event_start_arr['month']) % $freq)
-					{
-						continue;
-					}
-					if ($search_date_day == $event_start_arr['day'])
-					{
-						$this->add_adjusted_event($events,$event,$search_date_ymd);
-					}
-					break;
-				case MCAL_RECUR_YEARLY:
-					if (($search_date_year - $event_start_arr['year']) % $freq)
-					{
-						continue;
-					}
-					if (adodb_date('dm',$ts) == adodb_date('dm',$event_start_daybegin_ts))
-					{
-						$this->add_adjusted_event($events,$event,$search_date_ymd);
-					}
-					break;
-			} // switch(recur-type)
-		} // for($date = ...)
-		if ($this->debug && ((int) $this->debug > 2 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
-		{
-			$this->debug_message('bocal::insert_all_repetions(%1,start=%2,end=%3,events,exections=%4) events=%5',True,$event,$start_in,$end_in,$recur_exceptions,$events);
+			$event['start'] = $event_start_ts;
+			$event['end'] = $event_start_ts + $event_length;
+			$this->debug_message(__METHOD__.'(%1,start=%2,end=%3,events) events=%5',True,$event,$start_in,$end_in,$events);
 		}
 	}
 
@@ -1166,6 +1028,12 @@ class calendar_bo
 						{
 							$param = "'$param'";
 						}
+						break;
+					case 'egw_time':
+					case 'datetime':
+						$p = $param;
+						unset($param);
+						$param = $p->format('l, Y-m-d H:i:s').' ('.$p->getTimeZone()->getName().')';
 						break;
 					case 'array':
 					case 'object':
@@ -1498,51 +1366,14 @@ class calendar_bo
 	}
 
 	/**
-	 * Convert the recure-information of an event, into a human readable string
+	 * Convert the recurrence-information of an event, into a human readable string
 	 *
 	 * @param array $event
 	 * @return string
 	 */
 	function recure2string($event)
 	{
-		$str = '';
-		// Repeated Events
-		if($event['recur_type'] != MCAL_RECUR_NONE)
-		{
-			$str = lang($this->recur_types[$event['recur_type']]);
-
-			$str_extra = array();
-			if ($event['recur_enddate'])
-			{
-				$str_extra[] = lang('ends').': '.lang($this->format_date($event['recur_enddate'],'l')).', '.$this->long_date($event['recur_enddate']).' ';
-			}
-			// only weekly uses the recur-data (days) !!!
-			if($event['recur_type'] == MCAL_RECUR_WEEKLY)
-			{
-				$repeat_days = array();
-				foreach ($this->recur_days as $mcal_mask => $dayname)
-				{
-					if ($event['recur_data'] & $mcal_mask)
-					{
-						$repeat_days[] = lang($dayname);
-					}
-				}
-				if(count($repeat_days))
-				{
-					$str_extra[] = lang('days repeated').': '.implode(', ',$repeat_days);
-				}
-			}
-			if($event['recur_interval'] > 1)
-			{
-				$str_extra[] = lang('Interval').': '.$event['recur_interval'];
-			}
-
-			if(count($str_extra))
-			{
-				$str .= ' ('.implode(', ',$str_extra).')';
-			}
-		}
-		return $str;
+		return (string)calendar_rrule::event2rrule($event);
 	}
 
 	/**
