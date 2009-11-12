@@ -569,6 +569,11 @@ ORDER BY cal_user_type, cal_usre_id
 		if ($cal_id)
 		{
 			$where = array('cal_id' => $cal_id);
+			// read only timezone id, to check if it is changed
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$old_tz_id = $this->db->select($this->cal_table,'tz_id',$where,__LINE__,__FILE__,'calendar')->fetchColumn();
+			}
 			if (!is_null($etag)) $where['cal_etag'] = $etag;
 
 			unset($event['cal_etag']);
@@ -619,7 +624,7 @@ ORDER BY cal_user_type, cal_usre_id
 			{
 				$set_recurrences = (isset($event['cal_start']) && (int)$old_min != (int) $event['cal_start']) ||
 				    $event['recur_type'] != $old_repeats['recur_type'] || $event['recur_data'] != $old_repeats['recur_data'] ||
-					(int)$event['recur_interval'] != (int)$old_repeats['recur_interval'];
+					(int)$event['recur_interval'] != (int)$old_repeats['recur_interval'] || $event['tz_id'] != $old_tz_id;
 			}
 
 			if ($set_recurrences)
