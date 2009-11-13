@@ -147,10 +147,7 @@ class categories
 		// load the grants
 		if ($this->account_id != -1 && is_null($this->grants))
 		{
-			// resolving the group members/grants is very slow with ldap accounts backend
-			// let's skip it for the addressbook, if we are using the ldap accounts backend
-			$this->grants = $GLOBALS['egw']->acl->get_grants($app_name,
-				$app_name != 'addressbook' || $GLOBALS['egw_info']['server']['account_repository'] != 'ldap');
+			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name);
 		}
 		$cats = array();
 		foreach(self::$cache as $cat_id => $cat)
