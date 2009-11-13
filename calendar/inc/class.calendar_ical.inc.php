@@ -358,7 +358,7 @@ class calendar_ical extends calendar_boupdate
 
 					case 'RRULE':
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
-						$rriter = calendar_rrule::event2rrule($event,true);	// true = we operate in usertime, like the rest of calendar_bo
+						$rriter = calendar_rrule::event2rrule($event,$date_format != 'server');
 						$rrule = $rriter->generate_rrule($version);
 						if ($version == '1.0')
 						{
