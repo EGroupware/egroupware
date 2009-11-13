@@ -1176,8 +1176,8 @@ class addressbook_ui extends addressbook_bo
 	* Edit a contact
 	*
 	* @param array $content=null submitted content
-	* @param int $_GET['contact_id'] contact_id manly for popup use
-	* @param bool $_GET['makecp'] ture if you want do copy the contact given by $_GET['contact_id']
+	* @param int $_GET['contact_id'] contact_id mainly for popup use
+	* @param bool $_GET['makecp'] true if you want to copy the contact given by $_GET['contact_id']
 	*/
 	function edit($content=null)
 	{
