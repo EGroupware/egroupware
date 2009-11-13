@@ -412,9 +412,9 @@ class date_widget
 			($unit == 'm' ? (int) $value : round($value / 60 / ($unit == 'd' ? $hours_per_day : 1),3));
 
 		// use decimal separator from user prefs
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0] != '.')
+		if (($sep = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0]) && $sep != '.')
 		{
-			$value = str_replace('.',$GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0],$value);
+			$value = str_replace('.',$sep,$value);
 		}
 		if (!$readonly && strlen($input_format) > 1) // selectbox to switch between hours and days
 		{
