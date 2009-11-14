@@ -198,7 +198,7 @@ class preferences_hooks
 				'type'   => 'multiselect',
 				'label'  => 'Permanent time zone selection',
 				'name'   => 'tz_selection',
-				'values' => call_user_func_array('array_merge',$tzs),	// only flat arrays supported
+				'values' => $tzs ? call_user_func_array('array_merge',$tzs) : null,	// only flat arrays supported
 				'help'   => 'Please select timezones, you want to be able to quickly switch between. Switch is NOT shown, if less then two are selected.',
 				'xmlrpc' => True,
 				'admin'  => False,
