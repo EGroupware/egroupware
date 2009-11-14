@@ -587,9 +587,16 @@ abstract class bo_merge
 		}
 		else
 		{
-			if ($mimetype == 'application/xml' && strpos($merged,'<?mso-application progid="Word.Document"?>') !== false)
+			if ($mimetype == 'application/xml')
 			{
-				$mimetype = 'application/msword';	// to open it automatically in word or oowriter
+				if (strpos($merged,'<?mso-application progid="Word.Document"?>') !== false)
+				{
+					$mimetype = 'application/msword';	// to open it automatically in word or oowriter
+				}
+				elseif (strpos($merged,'<?mso-application progid="Excel.Sheet"?>') !== false)
+				{
+					$mimetype = 'application/vnd.ms-excel';	// to open it automatically in excel or oocalc
+				}
 			}
 			ExecMethod2('phpgwapi.browser.content_header',basename($document),$mimetype);
 			echo $merged;
