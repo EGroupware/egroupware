@@ -1010,8 +1010,12 @@ class nextmatch_widget
 			//echo "<p>start=$value[start], num_rows=$value[num_rows]: total=$total, count(\$rows)=".count($rows)."</p>\n";
 			if (!$value['start'])	// send the neccessary headers
 			{
-				// use last row for header detection, as first row(s) might be empty to skip header row(s) of template
-				$fp = self::csv_open($rows[count($rows)-1],$value['csv_fields'],$app,$charset_out,$charset,$separator);
+				// skip empty data row(s) used to adjust to number of header-lines
+				foreach($rows as $row0)
+				{
+					if (is_array($row0) && count($row0) > 1) break;
+				}
+				$fp = self::csv_open($row0,$value['csv_fields'],$app,$charset_out,$charset,$separator);
 			}
 			foreach($rows as $key => $row)
 			{
