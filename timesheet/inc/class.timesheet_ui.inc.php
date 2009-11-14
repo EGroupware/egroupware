@@ -110,7 +110,7 @@ class timesheet_ui extends timesheet_bo
 			if ($this->ts_viewtype == 'short')
 			{
 				$content['start_time']=$content['end_time']='00:00';
-			}		
+			}
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
 			if ($content['start_time'] != '00:00')		// start-time specified
 			{
@@ -279,7 +279,7 @@ class timesheet_ui extends timesheet_bo
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
 			'start_time' => egw_time::to($this->data['ts_start'],'H:i'),
 			'pm_integration' => $this->pm_integration,
-			'ts_status' => ($preserv['ts_status'] !='')? $preserv['ts_status'] : $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
+			'ts_status' => ($preserv['ts_id'])? $preserv['ts_status'] : $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
