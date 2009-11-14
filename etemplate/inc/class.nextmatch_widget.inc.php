@@ -422,7 +422,7 @@ class nextmatch_widget
 			if (isset($value['columnselection_pref'])) $name = $value['columnselection_pref'];
 			$this->selectcols = $value['selectcols'] = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-'.$name];
 			// fetching column-names & -labels from the template
-			if($this->cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows'],$value['selectcols']))
+			if ($this->cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows'],$value['selectcols']))
 			{
 				//_debug_array($name2col);
 				//_debug_array($value['options-selectcols']);
@@ -444,7 +444,7 @@ class nextmatch_widget
 					$this->selectcols = $value['selectcols'];
 				}
 				if (!is_array($value['selectcols'])) $value['selectcols'] = explode(',',$value['selectcols']);
-				foreach(array_keys($value['options-selectcols']) as $name)
+				foreach(array_unique(array_keys($value['options-selectcols']+$name2col)) as $name)
 				{
 					// set 'no_'.$col for each column-name to true, if the column is not selected
 					// (and the value is not set be the get_rows function / programmer!)
