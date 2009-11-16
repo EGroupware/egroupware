@@ -61,7 +61,7 @@
 
 		function render_html($cell,$form_name,$value,$readonly,&$tmpl)
 		{
-			list($app,$file) = split('\\.',$cell['size'],2);
+			list($app,$file) = preg_split('/\\./',$cell['size'],2);
 			$pref_templ = $GLOBALS['egw_info']['server']['template_set'];
 			$path = "$app/templates/$pref_templ/$file";
 			if (!file_exists(EGW_SERVER_ROOT.'/'.$path.'.xsl'))

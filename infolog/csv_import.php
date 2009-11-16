@@ -429,8 +429,8 @@ case 'import':
 				{
 					if (ereg((string) $pattern,$val))
 					{
-						// echo "<p>csv_idx='$csv_idx',info='$info',trans_csv=".print_r($trans_csv).",ereg_replace('$pattern','$replace','$val') = ";
-						$val = ereg_replace((string) $pattern,str_replace($VPre,'\\',$replace),(string) $val);
+						// echo "<p>csv_idx='$csv_idx',info='$info',trans_csv=".print_r($trans_csv).",preg_replace('/$pattern/','$replace','$val') = ";
+						$val = preg_replace('/'.(string) $pattern.'/',str_replace($VPre,'\\',$replace),(string) $val);
 						// echo "'$val'</p>";
 
 						$reg = $CPreReg.'([a-zA-Z_0-9]+)'.$CPosReg;
@@ -485,7 +485,7 @@ case 'import':
 		{
 			$responsible = $values['responsible'];
 			$values['responsible'] = array();
-			foreach(split('[,;]',$responsible) as $user)
+			foreach(preg_split('/[,;]/',$responsible) as $user)
 			{
 				if (preg_match('/\[([^\]]+)\]/',$user,$matches)) $user = $matches[1];
 				if ($user && !is_numeric($user)) $user = $GLOBALS['egw']->accounts->name2id($user);

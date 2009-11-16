@@ -516,7 +516,7 @@ class addressbook_sql extends so_sql
 		if ($this->db->select($this->lists_table,'list_id',array(
 			'list_name' => $name,
 			'list_owner' => $owner,
-		),__LINE__,__FILE__)->fetchSingle())
+		),__LINE__,__FILE__)->fetchColumn())
 		{
 			return true;	// return existing list-id
 		}
@@ -551,7 +551,7 @@ class addressbook_sql extends so_sql
 		if ($this->db->select($this->ab2list_table,'list_id',array(
 			'contact_id' => $contact,
 			'list_id' => $list,
-		),__LINE__,__FILE__)->fetchSingle())
+		),__LINE__,__FILE__)->fetchColumn())
 		{
 			return true;	// no need to insert it, would give sql error
 		}

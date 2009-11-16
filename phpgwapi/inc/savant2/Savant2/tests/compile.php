@@ -26,11 +26,11 @@ $conf = array(
 	'restrict' => true // adding path restrictions!
 );
 
-$savant =& new Savant2($conf);
+$savant = new Savant2($conf);
 
 // instantiate a compiler...
 require_once 'Savant2/Savant2_Compiler_basic.php';
-$compiler =& new Savant2_Compiler_basic();
+$compiler = new Savant2_Compiler_basic();
 $compiler->compileDir = '/tmp/';
 $compiler->forceCompile = true;
 

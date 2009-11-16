@@ -885,7 +885,7 @@
 		}
 
 		if ($this->_queryID === true) { // return simplified recordset for inserts/updates/deletes with lower overhead
-			$rs =& new ADORecordSet_empty();
+			$rs = new ADORecordSet_empty();
 			return $rs;
 		}
 
@@ -1853,7 +1853,7 @@
 
 		if (empty($this->_metars)) {
 			$rsclass = $this->rsPrefix.$this->databaseType;
-			$this->_metars =& new $rsclass(false,$this->fetchMode);
+			$this->_metars = new $rsclass(false,$this->fetchMode);
 		}
 
 		return $this->_metars->MetaType($t,$len,$fieldobj);

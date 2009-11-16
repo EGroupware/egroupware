@@ -108,7 +108,7 @@
 						}
 					}
 					/* don't erase passwords, since we also don't print them */
-					elseif(!ereg('passwd',$key) && !ereg('password',$key) && !ereg('root_pw',$key))
+					elseif(strpos($key,'passwd') === false && strpos($key,'password') === false && strpos($key,'root_pw') === false)
 					{
 						unset($c->config_data[$key]);
 					}
@@ -181,7 +181,7 @@
 					case 'value':
 						$newval = str_replace(' ','_',$newval);
 						/* Don't show passwords in the form */
-						if(ereg('passwd',$value) || ereg('password',$value) || ereg('root_pw',$value))
+						if(strpos($value,'passwd') !== false || strpos($value,'password') !== false || strpos($value,'root_pw') !== false)
 						{
 							$t->set_var($value,'');
 						}

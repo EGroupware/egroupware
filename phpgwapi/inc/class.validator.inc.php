@@ -50,7 +50,7 @@
 		/* strips all whitespace from a string */
 		function strip_space($text)
 		{
-			return ereg_replace("( |\n|\t|\r)+", '', $text);
+			return preg_replace('/'."( |\n|\t|\r)+".'/', '', $text);
 		}
 
 		function is_allnumbers($text)
@@ -196,7 +196,7 @@
 				foreach($segs as $seg)
 				{
 					//echo "Checking $seg<br>";
-					if(eregi("[a-z0-9\-]{0,62}",$seg))
+					if(preg_match('/'."[a-z0-9\-]{0,62}".'/i',$seg))
 					{
 						$return = True;
 					}

@@ -60,7 +60,7 @@ class infolog_widget
 	function infolog_widget($ui)
 	{
 		$this->ui = $ui;
-		$this->infolog =& new infolog_bo();
+		$this->infolog = new infolog_bo();
 	}
 
 	/**

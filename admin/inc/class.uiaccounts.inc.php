@@ -1577,7 +1577,7 @@
 
 		function ajax_check_account_email($first,$last,$account_lid,$account_id,$email,$id)
 		{
-			$response =& new xajaxResponse();
+			$response = new xajaxResponse();
 			if (!$email)
 			{
 				$response->addAssign('email','value',$GLOBALS['egw']->common->email_address($first,$last,$account_lid));

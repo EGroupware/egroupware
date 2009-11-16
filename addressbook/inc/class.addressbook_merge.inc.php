@@ -35,7 +35,7 @@ class addressbook_merge	// extends bo_merge
 	 */
 	function __construct()
 	{
-		$this->contacts =& new addressbook_bo();
+		$this->contacts = new addressbook_bo();
 	}
 
 	/**
@@ -159,7 +159,7 @@ class addressbook_merge	// extends bo_merge
 	function calendar_replacements($id,$last_event_too=false)
 	{
 		require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_boupdate.inc.php');
-		$calendar =& new calendar_boupdate();
+		$calendar = new calendar_boupdate();
 
 		// next events
 		$events = $calendar->search(array(

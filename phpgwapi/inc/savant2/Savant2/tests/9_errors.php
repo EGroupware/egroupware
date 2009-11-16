@@ -12,7 +12,7 @@ error_reporting(E_ALL);
 
 require_once 'Savant2.php';
 
-$savant =& new Savant2();
+$savant = new Savant2();
 
 require_once 'PEAR.php';
 PEAR::setErrorHandling(PEAR_ERROR_PRINT);

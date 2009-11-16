@@ -81,7 +81,7 @@ class tree_widget
 				}
 				else	// we need to instanciate a new cat object for the correct application
 				{
-					$categories =& new categories('',$type3);
+					$categories = new categories('',$type3);
 				}
 				$accountId = $GLOBALS['egw_info']['user']['account_id'];
 				$cat2path=array();

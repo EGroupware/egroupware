@@ -1486,7 +1486,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$GLOBALS['egw_info']['server']['files_dir'] = $GLOBALS['egw_setup']->db->select('egw_config','config_value',array(
 					'config_name' => 'files_dir',
 					'config_app' => 'phpgwapi',
-				),__LINE__,__FILE__)->fetchSingle();
+				),__LINE__,__FILE__)->fetchColumn();
 			}
 		}
 		if (!$GLOBALS['egw_info']['server']['files_dir'])

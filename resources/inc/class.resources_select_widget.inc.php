@@ -70,7 +70,7 @@ class resources_select_widget
 			$cell['label'] = 'no resources';
 			return false;
 		}
-		$tpl =& new etemplate('resources.resource_selectbox');
+		$tpl = new etemplate('resources.resource_selectbox');
 		// keep the editor away from the generated tmpls
 		$tpl->no_onclick = true;			
 		

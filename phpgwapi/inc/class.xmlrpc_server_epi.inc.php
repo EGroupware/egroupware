@@ -161,7 +161,7 @@
 			$syscall = 0;
 
 			/* Setup dispatch map based on the function, if this is a system call */
-			if(ereg('^system\.', $methName))
+			if(preg_match('/^system\./', $methName))
 			{
 				foreach($GLOBALS['_xmlrpcs_dmap'] as $meth => $dat)
 				{
@@ -170,8 +170,8 @@
 				$sysCall = 1;
 				$dmap = $this->dmap;
 			}
-			elseif(ereg('^examples\.',$methName) ||
-				ereg('^validator1\.',$methName) ||
+			elseif(preg_match('/^examples\./',$methName) ||
+				preg_match('/^validator1\./',$methName) ||
 				ereg('^interopEchoTests\.', $methName)
 			)
 			{

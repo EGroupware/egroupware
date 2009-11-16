@@ -51,7 +51,7 @@ class setup_cmd_header extends setup_cmd
 		// header is 2 levels lower then this command in setup/inc
 		$this->header_path = realpath(dirname(__FILE__).'/../../header.inc.php');
 
-		$this->setup_header =& new setup_header();
+		$this->setup_header = new setup_header();
 	}
 
 	/**

@@ -230,7 +230,7 @@ class customfields
 			{
 				foreach(explode("\n",$field['values']) as $line)
 				{
-					list($var,$value) = split('=',trim($line),2);
+					list($var,$value) = explode('=',trim($line),2);
 					$var = trim($var);
 					$values[$var] = empty($value) ? $var : $value;
 				}

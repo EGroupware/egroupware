@@ -4,7 +4,7 @@
 
 <p>{$varivari; $this->$varivari}</p>
 <p>{$this->variable1; global $_SERVER;}</p>
-<p>{$this->variable2; $obj =& new StdClass;}</p>
+<p>{$this->variable2; $obj = new StdClass;}</p>
 <p>{$this->variable3; eval("echo 'bad guy!';")}</p>
 <p>{$this->key0; print_r($this->_compiler);}</p>
 <p>{$this->key1; File::read('/etc/passwd');}</p>

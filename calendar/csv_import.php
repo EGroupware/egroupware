@@ -102,7 +102,7 @@ function cat_id($cats)
 		return '';
 	}
 
-	foreach(split('[,;]',$cats) as $cat)
+	foreach(preg_split('/[,;]/',$cats) as $cat)
 	{
 		if (isset($cat2id[$cat]))
 		{
@@ -374,8 +374,8 @@ case 'import':
 				{
 					if (ereg((string) $pattern,$val))
 					{
-						//echo "<p>csv_idx='$csv_idx',info='$info',trans_csv=".print_r($trans_csv).",ereg_replace('$pattern','$replace','$val') = ";
-						$val = ereg_replace((string) $pattern,str_replace($VPre,'\\',$replace),(string) $val);
+						//echo "<p>csv_idx='$csv_idx',info='$info',trans_csv=".print_r($trans_csv).",preg_replace('/$pattern/','$replace','$val') = ";
+						$val = preg_replace('/'.(string) $pattern.'/',str_replace($VPre,'\\',$replace),(string) $val);
 						//echo "'$val'";
 
 						$reg = $CPreReg.'([a-zA-Z_0-9 ]+)'.$CPosReg;
@@ -440,14 +440,14 @@ case 'import':
 				if (isset($values[$date]) && !is_numeric($date))
 				{
 					// convert german DD.MM.YYYY format into ISO YYYY-MM-DD format
-					$values[$date] = ereg_replace('([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})','\3-\2-\1',$values[$date]);
+					$values[$date] = preg_replace('/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/','\3-\2-\1',$values[$date]);
 					// remove fractures of seconds if present at the end of the string
 					if (ereg('(.*)\.[0-9]+',$values[$date],$parts)) $values[$date] = $parts[1];
 					$values[$date] = strtotime($values[$date]);
 				}
 			}
 			// convert participants-names to user-id's
-			$parts = $values['participants'] ? split('[,;]',$values['participants']) : array();
+			$parts = $values['participants'] ? preg_split('/[,;]/',$values['participants']) : array();
 			$values['participants'] = array();
 			foreach($parts as $part_status)
 			{

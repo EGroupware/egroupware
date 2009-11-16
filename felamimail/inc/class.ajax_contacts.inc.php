@@ -60,7 +60,7 @@
 					), $_searchString, 'tid=n', '', 'fn');
 				}
 			}
-			$response =& new xajaxResponse();
+			$response = new xajaxResponse();
 
 			if(is_array($contacts)) {
 				$innerHTML	= '';

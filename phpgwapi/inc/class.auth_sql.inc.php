@@ -130,7 +130,7 @@ class auth_
 			'account_id'     => $account_id,
 			'account_type'   => 'u',
 			'account_status' => 'A',
-		),__LINE__,__FILE__)->fetchSingle()) === false)
+		),__LINE__,__FILE__)->fetchColumn()) === false)
 		{
 			return false;	// account not found
 		}

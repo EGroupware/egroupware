@@ -44,7 +44,7 @@ class infolog_datasource extends datasource
 		// we use $GLOBALS['infolog_bo'] as an already running instance might be availible there
 		if (!is_object($GLOBALS['infolog_bo']))
 		{
-			$GLOBALS['infolog_bo'] =& new infolog_bo();
+			$GLOBALS['infolog_bo'] = new infolog_bo();
 		}
 		$this->infolog_bo =& $GLOBALS['infolog_bo'];
 	}
@@ -150,7 +150,7 @@ class infolog_datasource extends datasource
 		if (!is_object($GLOBALS['infolog_bo']))
 		{
 			include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_bo.inc.php');
-			$GLOBALS['infolog_bo'] =& new infolog_bo();
+			$GLOBALS['infolog_bo'] = new infolog_bo();
 		}
 		// dont delete infolog, which are linked to other elements, but their project
 		if (count(egw_link::get_links('infolog',$id)) > 1)

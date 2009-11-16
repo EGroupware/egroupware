@@ -167,7 +167,7 @@ class uiexport {
 		elseif(class_exists('xajaxResponse'))
 		{
 			//error_log(__LINE__.__FILE__.'$_content: '.print_r($_content,true));
-			$response =& new xajaxResponse();
+			$response = new xajaxResponse();
 			
 			if ($_content['defintion'] == 'expert') {
 				$definition = new definition();

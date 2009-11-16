@@ -39,7 +39,7 @@
  * egw_db allows to use exceptions to catch sql-erros, not existing tables or failure to connect to the database, eg.:
  *		try {
  *			$this->db->connect();
- *			$num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle();
+ *			$num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
  *		}
  *		catch(Exception $e) {
  *			echo "Connection to DB failed (".$e->getMessage().")!\n";

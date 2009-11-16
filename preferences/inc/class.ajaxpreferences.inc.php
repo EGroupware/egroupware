@@ -25,7 +25,7 @@
 	  */
 	  function storeEGWPref($repository,$key,$value)
 	  {
-		 $response =& new xajaxResponse();
+		 $response = new xajaxResponse();
 		 $GLOBALS['egw']->preferences->read_repository();
 		 $GLOBALS['egw']->preferences->change($repository,$key,$value);
 		 $GLOBALS['egw']->preferences->save_repository(True);

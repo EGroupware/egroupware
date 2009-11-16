@@ -380,7 +380,7 @@ class Script {
 						$if[] = 'address :contains ["To","TO","Cc","CC"] "'.$addr.'"';
 					}
 					$newscriptbody .= 'if anyof ('.implode(', ',$if).") {\n";
-					foreach(split(', ?',$vacation['forwards']) as $addr) {
+					foreach(preg_split('/, ?/',$vacation['forwards']) as $addr) {
 						$newscriptbody .= "\tredirect \"".$addr."\";\n";
 					}
 					$newscriptbody .= "\tkeep;\n}\n";

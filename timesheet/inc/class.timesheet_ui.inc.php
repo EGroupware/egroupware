@@ -58,7 +58,7 @@ class timesheet_ui extends timesheet_bo
 	function edit($content = null,$view = false)
 	{
 		$tabs = 'general|notes|links|customfields';
-		$etpl =& new etemplate('timesheet.edit');
+		$etpl = new etemplate('timesheet.edit');
 
 		if (!is_array($content))
 		{
@@ -638,7 +638,7 @@ class timesheet_ui extends timesheet_bo
 	 */
 	function index($content = null,$msg='')
 	{
-		$etpl =& new etemplate('timesheet.index');
+		$etpl = new etemplate('timesheet.index');
 
 		if ($_GET['msg']) $msg = $_GET['msg'];
 

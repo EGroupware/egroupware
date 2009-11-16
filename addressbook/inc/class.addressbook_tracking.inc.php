@@ -92,7 +92,7 @@ class addressbook_tracking extends bo_tracking
 			case 'copy':
 				if ($data['is_contactform'])
 				{
-					return split(', ?',$data['email_contactform']);
+					return preg_split('/, ?/',$data['email_contactform']);
 				}
 				break;
 

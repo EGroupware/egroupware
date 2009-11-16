@@ -44,7 +44,7 @@
 			settype($headers,'array');
 			foreach($_SERVER as $h => $v)
 			{
-				if(ereg('HTTP_(.+)',$h,$hp))
+				if(preg_match('/HTTP_(.+)/',$h,$hp))
 				{
 					$headers[$hp[1]] = $v;
 				}
@@ -60,7 +60,7 @@
 		$tmp = str_replace(' ','',$tmp);
 		$tmp = str_replace('Basic','',$tmp);
 		$auth = base64_decode(trim($tmp));
-		list($sessionid,$kp3) = split(':',$auth);
+		list($sessionid,$kp3) = explode(':',$auth);
 
 		if($GLOBALS['egw']->session->verify($sessionid,$kp3))
 		{

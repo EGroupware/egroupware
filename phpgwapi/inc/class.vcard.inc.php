@@ -123,7 +123,7 @@
 			$fp = fopen($filename,'r');
 			while($data = fgets($fp,8000))
 			{
-				list($name,$value,$extra) = split(':', $data);
+				list($name,$value,$extra) = explode(':', $data);
 				if(substr($value,0,5) == 'http')
 				{
 					$value = $value . ':'.$extra;
@@ -216,12 +216,12 @@
 			settype($buffer,'array');
 			foreach($buffer as $name => $value)
 			{
-				$field  = split(';',$name);
-				$field[0] = ereg_replace("A\.",'',$field[0]);
-				$field[0] = ereg_replace("B\.",'',$field[0]);
-				$field[0] = ereg_replace("C\.",'',$field[0]);
-				$field[0] = ereg_replace("D\.",'',$field[0]);
-				$values = split(';',$value);
+				$field  = explode(';',$name);
+				$field[0] = preg_replace('/'."A\.".'/','',$field[0]);
+				$field[0] = preg_replace('/'."B\.".'/','',$field[0]);
+				$field[0] = preg_replace('/'."C\.".'/','',$field[0]);
+				$field[0] = preg_replace('/'."D\.".'/','',$field[0]);
+				$values = explode(';',$value);
 				if($field[1])
 				{
 					//echo $field[0];
@@ -594,7 +594,7 @@
 							}
 							else
 							{
-								$tmp = split('-',$values[0]);
+								$tmp = explode('-',$values[0]);
 								if($tmp[0])
 								{
 									$entry['bday'] = $tmp[1] . '/' . $tmp[2] . '/' . $tmp[0];
@@ -612,7 +612,7 @@
 			$entry['adr_one_type'] = substr($buffer['adr_one_type'],0,-1);
 			$entry['adr_two_type'] = substr($buffer['adr_two_type'],0,-1);
 
-			if(count($street = split("\r*\n",$buffer['adr_one_street'],3)) > 1)
+			if(count($street = preg_split("/\r*\n/",$buffer['adr_one_street'],3)) > 1)
 			{
 				$entry['adr_one_street'] = $street[0];	// RB 2001/05/08 added for Lotus Organizer to split multiline adresses
 				$entry['address2'] = $street[1];
@@ -650,7 +650,7 @@
 						}
 						elseif($value == 'BDAY')
 						{
-							$tmp = split('/',$buffer[$value]); # 12/31/1969 -> 1969-12-31
+							$tmp = explode('/',$buffer[$value]); # 12/31/1969 -> 1969-12-31
 							if($tmp[0])
 							{
 								if(strlen($tmp[0]) == 1) { $tmp[0] = '0'.$tmp[0]; }

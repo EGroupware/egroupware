@@ -61,14 +61,14 @@ class historylog_widget
 		$status_widgets = is_array($value) && isset($value['status-widgets']) ? $value['status-widgets'] : null;
 		$id = is_array($value) ? $value['id'] : $value;
 
-		$historylog =& new historylog($app);
+		$historylog = new historylog($app);
 		if (!$id || method_exists($historylog,'search'))
 		{
 			$value = $id ? $historylog->search($id) : false;
 		}
 		unset($historylog);
 
-		$tpl =& new etemplate;
+		$tpl = new etemplate;
 		$tpl->init('*** generated fields for historylog','','',0,'',0,0);	// make an empty template
 		// keep the editor away from the generated tmpls
 		$tpl->no_onclick = true;

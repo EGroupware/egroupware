@@ -34,7 +34,7 @@ class infolog_groupdav extends groupdav_handler
 	{
 		parent::__construct($app,$debug,$base_uri);
 
-		$this->bo =& new infolog_bo();
+		$this->bo = new infolog_bo();
 	}
 
 	const PATH_ATTRIBUTE = 'info_id';
@@ -219,7 +219,7 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	private function _get_handler()
 	{
-		$handler =& new infolog_ical();
+		$handler = new infolog_ical();
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 
 		return $handler;

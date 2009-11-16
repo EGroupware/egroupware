@@ -84,9 +84,9 @@ class egw extends egw_minimal
 		// check if eGW is already setup, if not redirect to setup/
 		try {
 			$this->db->connect();
-			if (!($num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle()))
+			if (!($num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn()))
 			{
-				$phpgw_config = $this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchSingle();
+				$phpgw_config = $this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
 			}
 		}
 		catch(Exception $e) {
@@ -113,7 +113,7 @@ class egw extends egw_minimal
 		$system_charset = $this->db->select(config::TABLE,'config_value',array(
 			'config_app'  => 'phpgwapi',
 			'config_name' => 'system_charset',
-		),__LINE__,__FILE__)->fetchSingle();
+		),__LINE__,__FILE__)->fetchColumn();
 		if ($system_charset)
 		{
 			$this->db->Link_ID->SetCharSet($system_charset);

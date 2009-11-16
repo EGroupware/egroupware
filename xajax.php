@@ -25,7 +25,7 @@ function xajax_redirect(&$anon_account)
 	$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
 	define('XAJAX_DEFAULT_CHAR_ENCODING',$GLOBALS['egw']->translation->charset());
 
-	$response =& new xajaxResponse();
+	$response = new xajaxResponse();
 	$response->addScript("location.href='".$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10'."';");
 
 	header('Content-type: text/xml; charset='.$GLOBALS['egw']->translation->charset());
@@ -42,7 +42,7 @@ function xajax_redirect(&$anon_account)
  */
 function ajax_exception_handler(Exception $e)
 {
-	$response =& new xajaxResponse();
+	$response = new xajaxResponse();
 	$response->addAlert($e->getMessage()."\n\n".$e->getTraceAsString());
 	header('Content-type: text/xml; charset='.(is_object($GLOBALS['egw'])?$GLOBALS['egw']->translation->charset():'utf-8'));
 	echo $response->getXML();

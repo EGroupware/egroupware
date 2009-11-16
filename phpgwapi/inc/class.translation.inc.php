@@ -102,7 +102,7 @@ class translation
 					'lang'		=> $lang,
 					'message_id'=> 'charset',
 					'app_name'	=> 'common',
-				),__LINE__,__FILE__)->fetchSingle()))
+				),__LINE__,__FILE__)->fetchColumn()))
 				{
 					$this->charsets[$lang] = 'iso-8859-1';
 				}
@@ -309,7 +309,7 @@ class translation
 		{
 			return $this->langs[$lang];
 		}
-		return $this->db->select($this->languages_table,'lang_name',array('lang_id' => $lang),__LINE__,__FILE__)->fetchSingle();
+		return $this->db->select($this->languages_table,'lang_name',array('lang_id' => $lang),__LINE__,__FILE__)->fetchColumn();
 	}
 
 	/**
@@ -511,7 +511,7 @@ class translation
 			if (($ctimes = $this->db->select($this->config_table,'config_value',array(
 				'config_app'	=> 'phpgwapi',
 				'config_name'	=> 'lang_ctimes',
-			),__LINE__,__FILE__)->fetchSingle()))
+			),__LINE__,__FILE__)->fetchColumn()))
 			{
 				$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize(stripslashes($ctimes));
 			}
@@ -539,7 +539,7 @@ class translation
 				//echo "<br>Test: addonlynew - select count(*) from egw_lang where lang='".$lang."'";
 				if (!$this->db->select($this->lang_table,'COUNT(*)',array(
 					'lang' => $lang,
-				),__LINE__,__FILE__)->fetchSingle())
+				),__LINE__,__FILE__)->fetchColumn())
 				{
 					//echo '<br>Test: addonlynew - True';
 					$addlang = True;
@@ -747,7 +747,7 @@ class translation
 		}
 		if ($this->db->select($this->lang_table,'COUNT(*)',array(
 			'app_name' => $appname
-		),__LINE__,__FILE__)->fetchSingle())
+		),__LINE__,__FILE__)->fetchColumn())
 		{
 			$this->db->delete($this->lang_table,array(
 				'app_name' => $appname
@@ -820,7 +820,7 @@ class translation
 			'lang' => $lang,
 			'app_name' => $app_name,
 			'message_id' => $message_id,
-		),__LINE__,__FILE__)->fetchSingle();
+		),__LINE__,__FILE__)->fetchColumn();
 	}
 	
 	/**
@@ -838,6 +838,6 @@ class translation
 		if ($app) $where['app_name'] = $app;
 		if ($lang) $where['lang'] = $lang;
 		
-		return $this->db->select($this->lang_table,'message_id',$where,__LINE__,__FILE__)->fetchSingle();
+		return $this->db->select($this->lang_table,'message_id',$where,__LINE__,__FILE__)->fetchColumn();
 	}
 }

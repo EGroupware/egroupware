@@ -31,7 +31,7 @@
 
 		function authenticate($username, $passwd)
 		{
-			if (ereg('[()|&=*,<>!~]',$username))
+			if (preg_match('/[()|&=*,<>!~]/',$username))
 			{
 				return False;
 			}

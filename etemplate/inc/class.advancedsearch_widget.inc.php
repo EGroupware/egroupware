@@ -76,7 +76,7 @@
 				(is_array($GLOBALS['egw']->session->appsession('advanced_search_query',$GLOBALS['egw_info']['flags']['currentapp'])) ? 
 				$GLOBALS['egw']->session->appsession('advanced_search_query',$GLOBALS['egw_info']['flags']['currentapp']) : $value);
 			
-			$tpl =& new etemplate;
+			$tpl = new etemplate;
 			$tpl->init('*** generated advanced search widget','','',0,'',0,0);	// make an empty template
 
 			if($extension_data['message'])
@@ -96,7 +96,7 @@
 // 					'width' => '800px',
 				)));
 
-				$result_rows_tpl =& new etemplate;
+				$result_rows_tpl = new etemplate;
 				$result_rows_tpl->init('*** generated rows template for advanced search results','','',0,'',0,0);
 				$grid =& $result_rows_tpl->children[0];
 				foreach((array)$extension_data['colums_to_present'] as $field => $label)

@@ -257,7 +257,7 @@
 
 			if ($_vacation['forwards'])
 			{
-				foreach(split(', ?',$_vacation['forwards']) as $addr)
+				foreach(preg_split('/, ?/',$_vacation['forwards']) as $addr)
 				{
 					if (!preg_match($regexp,$addr))
 					{
@@ -522,7 +522,7 @@
 				// store text as default
 				if (isset($_POST['set_as_default']))
 				{
-					$config =& new config('felamimail');
+					$config = new config('felamimail');
 					$config->save_value('default_vacation_text',$_POST['vacation_text'],'felamimail');
 				}
 				$this->t->set_var('set_as_default','<input type="submit" name="set_as_default" value="'.htmlspecialchars(lang('Set as default')).'" />');
@@ -581,7 +581,7 @@
 
 			// vacation text
 			if (empty($vacation['text'])) {
-				$config =& new config('felamimail');
+				$config = new config('felamimail');
 				$config = $config->read_repository();
 				$vacation['text'] = $config['default_vacation_text'];
 			}

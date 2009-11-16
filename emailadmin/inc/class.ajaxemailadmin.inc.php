@@ -53,7 +53,7 @@
 			{
 				$acl = implode('',(array)$_aclData['acl']);
 				$data = $this->bofelamimail->addACL($this->sessionDataAjax['folderName'], $_accountName, $acl);
-				#$response =& new xajaxResponse();
+				#$response = new xajaxResponse();
 				#$response->addScript("window.close();");
 				#$response->addAssign("accountName", "value", $this->sessionDataAjax['folderName'].'-'.$_accountName.'-'.$acl);
 				#return $response->getXML();
@@ -65,7 +65,7 @@
 		{
 			$folderACL = $this->bofelamimail->getIMAPACL($this->sessionDataAjax['folderName']);
 			
-			$response =& new xajaxResponse();
+			$response = new xajaxResponse();
 			$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
 			return $response->getXML();
 		}

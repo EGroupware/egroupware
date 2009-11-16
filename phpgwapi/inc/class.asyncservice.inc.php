@@ -604,7 +604,7 @@ class asyncservice
 			while ($line = fgets($crontab,256))
 			{
 				if ($this->debug) echo 'line '.++$n.": $line<br>\n";
-				$parts = split(' ',$line,6);
+				$parts = explode(' ',$line,6);
 
 				if ($line{0} == '#' || count($parts) < 6 || ($parts[5]{0} != '/' && substr($parts[5],0,3) != 'php'))
 				{

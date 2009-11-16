@@ -94,7 +94,7 @@ class categories
 			case 'mains':		$where = 'cat_parent = 0'; break;
 			default:			return False;
 		}
-		return $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchSingle();
+		return $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchColumn();
 	}
 
 	/**
@@ -190,7 +190,7 @@ class categories
 		$where = '(cat_appname=' . $this->db->quote($this->app_name) . ' AND ' . $grant_cats . $global_cats . ')'
 			. $parent_filter . $querymethod . $filter;
 
-		$this->total_records = $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchSingle();
+		$this->total_records = $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchColumn();
 
 		if (!$this->total_records) return false;
 
@@ -731,7 +731,7 @@ class categories
 			}
 		}
 		$where[] = $grant_cats . ")";
-		return $cache[$type][$cat_name][$cat_id][$private] = $this->db->select($this->table,'cat_id',$where,__LINE__,__FILE__)->fetchSingle();
+		return $cache[$type][$cat_name][$cat_id][$private] = $this->db->select($this->table,'cat_id',$where,__LINE__,__FILE__)->fetchColumn();
 	}
 
 	/**

@@ -21,14 +21,14 @@ class ADODB_Encrypt_MD5 {
 	/**
 	 */
 	function write($data, $key) {
-		$md5crypt =& new MD5Crypt();
+		$md5crypt = new MD5Crypt();
 		return $md5crypt->encrypt($data, $key);
 	}
 
 	/**
 	 */
 	function read($data, $key) {
-		$md5crypt =& new MD5Crypt();
+		$md5crypt = new MD5Crypt();
 		return $md5crypt->decrypt($data, $key);
 	}
 

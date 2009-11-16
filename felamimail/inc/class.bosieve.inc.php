@@ -126,7 +126,7 @@
 				
 				// setting up an async job to enable/disable the vacation message
 				include_once(EGW_API_INC.'/class.asyncservice.inc.php');
-				$async =& new asyncservice();
+				$async = new asyncservice();
 				$user = $GLOBALS['egw_info']['user']['account_id'];
 				$async->delete($async_id ="felamimail-vacation-$user");
 				$end_date = $_vacation['end_date'] + 24*3600;	// end-date is inclusive, so we have to add 24h

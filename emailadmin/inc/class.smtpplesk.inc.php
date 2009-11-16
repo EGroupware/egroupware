@@ -49,7 +49,7 @@ class smtpplesk extends defaultsmtp
 		static $plesk;
 		if (!is_object($plesk))
 		{
-			$plesk =& new pleskimap(null);
+			$plesk = new pleskimap(null);
 			$this->error =& $plesk->error;
 		}
 		return $plesk->plesk_mail($action,$account,$password,$aliases,$forward,$keepLocalCopy,$quota_kb);

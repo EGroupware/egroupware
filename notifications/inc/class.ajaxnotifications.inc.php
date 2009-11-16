@@ -76,7 +76,7 @@ class ajaxnotifications {
 	 * @return xajax response
 	 */
 	public function get_popup_notifications() {
-		$response =& new xajaxResponse();
+		$response = new xajaxResponse();
 		$session_id = $GLOBALS['egw_info']['user']['sessionid'];
 		$message = '';
 		$rs = $this->db->select(self::_notification_table, 

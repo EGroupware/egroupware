@@ -59,7 +59,7 @@ class uidefinitions
 		$GLOBALS['egw_info']['flags']['currentapp'] = self::_appname;
 
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		$this->etpl =& new etemplate();
+		$this->etpl = new etemplate();
 		$this->clock = html::image(self::_appname,'clock');
 		$this->steps = array(
 			'wizzard_step10' => lang('Choose an application'),
@@ -112,7 +112,7 @@ class uidefinitions
 			}
 
 		}
-		$etpl =& new etemplate(self::_appname.'.definition_index');
+		$etpl = new etemplate(self::_appname.'.definition_index');
 
 		// we need an offset because of autocontinued rows in etemplate ...
 		$definitions = array('row0');
@@ -213,7 +213,7 @@ class uidefinitions
 
 		if(class_exists('xajaxResponse'))
 		{
-			$this->response =& new xajaxResponse();
+			$this->response = new xajaxResponse();
 
 			if ($content['closewindow'])
 			{
@@ -245,7 +245,7 @@ class uidefinitions
 			// adding a manual icon to every popup
 			if ($GLOBALS['egw_info']['user']['apps']['manual'])
 			{
-				$manual =& new etemplate('etemplate.popup.manual');
+				$manual = new etemplate('etemplate.popup.manual');
 				echo $manual->exec(self::_appname.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
 				unset($manual);
 			}
@@ -271,7 +271,7 @@ class uidefinitions
 		/*if($content['plugin'] && $content['application']&& !is_object($this->plugin))
 		{
 			$plugin_definition =  $this->plugins[$content['application']][$content['plugin']]['definition'];
-			if($plugin_definition) $this->plugin =& new $plugin_definition;
+			if($plugin_definition) $this->plugin = new $plugin_definition;
 		}*/
 		if(is_object($this->plugin))
 		{
@@ -446,7 +446,7 @@ class uidefinitions
 		}
 		else
 		{
-			$etpl =& new etemplate(self::_appname.'.import_definition');
+			$etpl = new etemplate(self::_appname.'.import_definition');
 			return $etpl->exec(self::_appname.'.uidefinitions.import_definition',$content,array(),$readonlys,$preserv);
 		}
 	}

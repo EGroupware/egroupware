@@ -423,7 +423,7 @@ class pleskimap extends defaultimap
 		while(!feof($fp))
 		{
 			$line = trim(fgets($fp));
-			list($name,$value) = split(': *',$line,2);
+			list($name,$value) = preg_split('/: */',$line,2);
 			if (!is_null($value) && strpos($name,'An error occured') === false && $name)
 			{
 				$values[$name] = $value;

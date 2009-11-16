@@ -795,7 +795,7 @@ abstract class admin_cmd
 			return admin_cmd::run_queued_jobs();
 		}
 		include_once(EGW_API_INC.'/class.asyncservice.inc.php');
-		$async =& new asyncservice();
+		$async = new asyncservice();
 		
 		// we cant use this class as callback, as it's abstract and ExecMethod used by the async service instanciated the class!
 		list($app) = explode('_',$class=$next['type']);

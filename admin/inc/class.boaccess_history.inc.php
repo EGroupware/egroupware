@@ -56,7 +56,7 @@
 
 				if (ereg('@',$record['loginid']))
 				{
-					$t = split('@',$record['loginid']);
+					$t = explode('@',$record['loginid']);
 					$record['loginid'] = $t[0];
 				}
 
