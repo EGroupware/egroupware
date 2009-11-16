@@ -117,7 +117,7 @@ class addressbook_merge	// extends bo_merge
 			switch($field['type'])
 			{
 				case 'select-account':
-					if ($value) $value = $GLOBALS['egw']->common->grab_owner_name($value);
+					if ($value) $value = common::grab_owner_name($value);
 					break;
 
 				case 'select':
@@ -139,8 +139,8 @@ class addressbook_merge	// extends bo_merge
 					{
 						$format = $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
 						$date = array_combine(preg_split('/[\\/. :-]/',$format),preg_split('/[\\/. :-]/',$value));
-						$value = $GLOBALS['egw']->common->dateformatorder($date['Y'],$date['m'],$date['d'],true);
-						if (isset($date['H'])) $value .= ' '.$GLOBALS['egw']->common->formattime($date['H'],$date['i']);
+						$value = common::dateformatorder($date['Y'],$date['m'],$date['d'],true);
+						if (isset($date['H'])) $value .= ' '.common::formattime($date['H'],$date['i']);
 					}
 					break;
 			}

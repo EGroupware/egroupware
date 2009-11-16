@@ -148,11 +148,11 @@ class categories
 
 		if (!empty($order) && preg_match('/^[a-zA-Z_(), ]+$/',$order) && (empty($sort) || preg_match('/^(ASC|DESC|asc|desc)$/',$sort)))
 		{
-			$ordermethod = 'ORDER BY '.$order.' '.$sort;
+			$ordermethod = 'ORDER BY '.$order.' '.$sort . ', cat_access ASC';
 		}
 		else
 		{
-			$ordermethod = 'ORDER BY cat_main, cat_level, cat_name ASC';
+			$ordermethod = 'ORDER BY cat_main, cat_level, cat_name, cat_access ASC';
 		}
 
 		if ($this->account_id == '-1')
@@ -167,7 +167,7 @@ class categories
 			}
 			else
 			{
-				$grant_cats = ' cat_owner=' . $this->account_id . ' OR cat_owner=-1 ';
+				$grant_cats = ' (cat_owner=' . $this->account_id . ' OR cat_owner=-1) ';
 			}
 		}
 
@@ -235,11 +235,11 @@ class categories
 
 		if (!empty($order) && preg_match('/^[a-zA-Z_, ]+$/',$order) && (empty($sort) || preg_match('/^(ASC|DESC|asc|desc)$/',$sort)))
 		{
-			$ordermethod = 'ORDER BY '.$order.' '.$sort;
+			$ordermethod = 'ORDER BY '.$order.' '.$sort . ', cat_access ASC';
 		}
 		else
 		{
-			$ordermethod = ' ORDER BY cat_name ASC';
+			$ordermethod = ' ORDER BY cat_name ASC, cat_access ASC';
 		}
 
 		if ($this->account_id == '-1')
@@ -254,7 +254,7 @@ class categories
 			}
 			else
 			{
-				$grant_cats = " cat_owner='" . $this->account_id . "' OR cat_owner='-1' ";
+				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_owner='-1') ";
 			}
 		}
 		$parent_select = ' AND cat_parent=' . (int)$parent_id;
@@ -403,6 +403,14 @@ class categories
 					{
 						$s .= ' &#9830;';
 					}
+					elseif ($cat['owner'] != $this->account_id)
+					{
+						$s .= '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+					}
+					elseif ($cat['access'] == 'private')
+					{
+						$s .= ' &#9829;';
+					}
 					$s .= '</option>' . "\n";
 				}
 				break;
@@ -494,6 +502,7 @@ class categories
 		if ($modify_subs)
 		{
 			$new_parent = $this->id2name($cat_id,'parent');
+			$new_main = 0;
 
 			foreach ((array) $this->return_sorted_array('',False,'','','',False, $cat_id) as $cat)
 			{
@@ -683,17 +692,18 @@ class categories
 	/**
 	 * check if a category id and/or name exists, if id AND name are given the check is for a category with same name and different id (!)
 	 *
-	 * @param string $type subs or mains
-	 * @param string $cat_name='' category name
-	 * @param int $cat_id=0 category id
-	 * @param int $parent=0 category id of parent
+	 * @param string  $type subs or mains
+	 * @param string  $cat_name='' category name
+	 * @param int     $cat_id=0 category id
+	 * @param int     $parent=0 category id of parent
+	 * @param boolean $private=false limit to private categories
 	 * @return int/boolean cat_id or false if cat not exists
 	 */
-	function exists($type,$cat_name = '',$cat_id = 0,$parent = 0)
+	function exists($type,$cat_name = '',$cat_id = 0,$parent = 0, $private = false)
 	{
 		static $cache = array();	// a litle bit of caching
 
-		if (isset($cache[$type][$cat_name][$cat_id])) return $cache[$type][$cat_name][$cat_id];
+		if (isset($cache[$type][$cat_name][$cat_id][$private])) return $cache[$type][$cat_name][$cat_id][$private];
 
 		$where = array($this->filter($type));
 
@@ -707,9 +717,21 @@ class categories
 		{
 			$where['cat_id'] = $cat_id;
 		}
-		if ($parent) $where['cat_parent'] = $parent;
-
-		return $cache[$type][$cat_name][$cat_id] = $this->db->select($this->table,'cat_id',$where,__LINE__,__FILE__)->fetchSingle();
+		if ($parent){
+			$where['cat_parent'] = $parent;
+		}
+		$grant_cats = "(";
+		if ($private) {
+			$grant_cats .= "cat_owner='" . $this->account_id . "' AND cat_access='private'";
+		} else {
+			$grant_cats .= "cat_owner='" . $this->account_id
+				. "' OR cat_owner='-1' OR cat_access='public'";
+			if (is_array($this->grants)) {
+				$grant_cats .= " AND cat_owner IN (" . implode(',',array_keys($this->grants)) . ")";
+			}
+		}
+		$where[] = $grant_cats . ")";
+		return $cache[$type][$cat_name][$cat_id][$private] = $this->db->select($this->table,'cat_id',$where,__LINE__,__FILE__)->fetchSingle();
 	}
 
 	/**

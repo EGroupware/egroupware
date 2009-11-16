@@ -5,6 +5,7 @@
  * @link http://www.egroupware.org
  * @author Lars Kneschke <lkneschke@egroupware.org>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @package addressbook
  * @subpackage export
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -94,6 +95,10 @@ class addressbook_sif extends addressbook_bo
 		'Folder'			=> '',
 	);
 
+	// standard headers
+	const xml_decl = '<?xml version="1.0" encoding="UTF-8"?>';
+	const SIF_decl = '<SIFVersion>1.1</SIFVersion>';
+
 	function startElement($_parser, $_tag, $_attributes) {
 	}
 
@@ -108,13 +113,12 @@ class addressbook_sif extends addressbook_bo
 		$this->sifData .= $_data;
 	}
 
-	function siftoegw($_sifdata) {
-		$sifData	= base64_decode($_sifdata);
+	function siftoegw($sifData) {
 
 		#$tmpfname = tempnam('/tmp/sync/contents','sifc_');
 
 		#$handle = fopen($tmpfname, "w");
-		#fwrite($handle, $sifdata);
+		#fwrite($handle, $sifData);
 		#fclose($handle);
 
 		$this->xml_parser = xml_parser_create('UTF-8');
@@ -131,6 +135,7 @@ class addressbook_sif extends addressbook_bo
 		}
 
 		foreach($this->contact as $key => $value) {
+			$value = preg_replace('/<\!\[CDATA\[(.+)\]\]>/Usim', '$1', $value);
 			$value = $GLOBALS['egw']->translation->convert($value, 'utf-8');
 			switch($key) {
 				case 'cat_id':
@@ -164,25 +169,17 @@ class addressbook_sif extends addressbook_bo
 	 * @param string $_sifdata
 	 * @return boolean/int/string contact-id or false, if not found
 	 */
-	function search($_sifdata,$contentID=null)
+	function search($_sifdata, $contentID=null, $relax=false)
 	{
-		if(!$contact = $this->siftoegw($_sifdata))
-		{
-			return false;
-		}
-		if ($contentID) {
-			$contact['contact_id'] = $contentID;
-		}
-		// patch from Di Guest says: we need to ignore the n_fileas
-		unset($contact['n_fileas']);
-		// we probably need to ignore even more as we do in vcaladdressbook
+	  	$result = false;
 
-		if(($foundContacts = addressbook_bo::search($contact)))
-		{
-			error_log(print_r($foundContacts,true));
-			return $foundContacts[0]['id'];
+		if($contact = $this->siftoegw($_sifdata)) {
+		        if ($contentID) {
+			        $contact['contact_id'] = $contentID;
+			}
+			$result = $this->find_contact($contact, $relax);
 		}
-		return false;
+		return $result;
 	}
 
 	/**
@@ -191,8 +188,9 @@ class addressbook_sif extends addressbook_bo
 	* @return int contact id
 	* @param string	$_vcard		the vcard
 	* @param int/string	$_abID=null		the internal addressbook id or !$_abID for a new enty
+	* @param boolean $merge=false	merge data with existing entry
 	*/
-	function addSIF($_sifdata, $_abID=null)
+	function addSIF($_sifdata, $_abID=null, $merge=false)
 	{
 		#error_log('ABID: '.$_abID);
 		#error_log(base64_decode($_sifdata));
@@ -209,24 +207,25 @@ class addressbook_sif extends addressbook_bo
 	}
 
 	/**
-	* return a vcard
+	* return a sifc
 	*
 	* @param int	$_id		the id of the contact
-	* @param int	$_vcardProfile	profile id for mapping from vcard values to egw addressbook
 	* @return string containing the vcard
 	*/
 	function getSIF($_id)
 	{
+		$sysCharSet	= $GLOBALS['egw']->translation->charset();
+
 		$fields = array_unique(array_values($this->sifMapping));
 		sort($fields);
 
-		if(!($entry = $this->read($_id)))
-		{
+		if(!($entry = $this->read($_id))) {
 			return false;
 		}
-		$sifContact = '<contact>';
+
+		$sifContact = self::xml_decl . "\n<contact>" . self::SIF_decl;
+
 		#error_log(print_r($entry,true));
-		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
 		// fillup some defaults such as n_fn and n_fileas is needed
 		$this->fixup_contact($entry);
@@ -242,15 +241,6 @@ class addressbook_sif extends addressbook_bo
 
 			switch($sifField)
 			{
-				// TODO handle multiple categories
-				case 'Categories':
-					if(!empty($value)) {
-						$value = implode("; ", $this->get_categories($value));
-						$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
-					}
-					$sifContact .= "<$sifField>$value</$sifField>";
-					break;
-
 				case 'Sensitivity':
 					$value = 2 * $value;	// eGW private is 0 (public) or 1 (private)
 					$sifContact .= "<$sifField>$value</$sifField>";
@@ -261,13 +251,22 @@ class addressbook_sif extends addressbook_bo
 					#$sifContact .= "<$sifField>/</$sifField>";
 					break;
 
+				case 'Categories':
+					if(!empty($value)) {
+						$value = implode("; ", $this->get_categories($value));
+						$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
+					} else {
+						break;
+					}
+
 				default:
-					$sifContact .= "<$sifField>".trim($value)."</$sifField>";
+					$value = @htmlspecialchars(trim($value), ENT_QUOTES, 'utf-8');
+					$sifContact .= "<$sifField>$value</$sifField>";
 					break;
 			}
 		}
 		$sifContact .= "</contact>";
 
-		return base64_encode($sifContact);
+		return $sifContact;
 	}
 }

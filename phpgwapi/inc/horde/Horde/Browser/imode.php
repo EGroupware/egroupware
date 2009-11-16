@@ -289,14 +289,13 @@ class Browser_imode {
     var $_manufacturer;
     var $_httpversion;
     var $_cache = 5;
-    var $_extra;
 
     /**
      * Does not handle bogus user_agents or most of the other error
      * situation properly yet.
      *
      * Example usage:
-     *   $ua = &new Browser_imode($_SERVEr['HTTP_USER_AGENT']);
+     *   $ua = new Browser_imode($_SERVEr['HTTP_USER_AGENT']);
      *
      * @param string $input  The user agent to match.
      */

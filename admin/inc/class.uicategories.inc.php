@@ -183,6 +183,8 @@
 			$this->template->set_var('sort_name',$this->nextmatchs->show_sort_order($this->sort,'cat_name',$this->order,'/index.php',lang('Name'),$link_data));
 			$this->template->set_var('sort_description',$this->nextmatchs->show_sort_order($this->sort,'cat_description',$this->order,'/index.php',lang('Description'),$link_data));
 
+			$accountId = $GLOBALS['egw_info']['user']['account_id'];
+
 			foreach($cats as $cat)
 			{
 				$data = unserialize($cat['data']);
@@ -192,8 +194,6 @@
 					$this->template->set_var('td_color',$data['color']);
 					$gray = (hexdec(substr($data['color'],1,2))+hexdec(substr($data['color'],3,2))+hexdec(substr($data['color'],5,2)))/3;
 				}
-				
-
 				else
 				{
 					$this->template->set_var('td_color','');
@@ -206,7 +206,7 @@
 					$this->nextmatchs->template_alternate_row_color($this->template);
 					$gray = 255;
 				// }
-				
+
 				$this->template->set_var('color',$gray < 128 ? 'style="color: white;"' : '');
 
 				$id = $cat['id'];
@@ -232,6 +232,10 @@
 				if ($this->appname && $cat['app_name'] == 'phpgw')
 				{
 					$appendix = '&lt;' . lang('Global') . '&gt;';
+				}
+				elseif ($cat['owner'] != $accountId)
+				{
+					$appendix = '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
 				}
 				else
 				{
@@ -291,7 +295,7 @@
 				$data = unserialize($cat['data']);
 				$icon = $data['icon'];
 				$dir_img = $GLOBALS['egw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'images' . SEP;
-				
+
 				if (strlen($icon) > 0)
 						$this->template->set_var('icon', "<img src='". $dir_img . $icon  ."'>");
 				else
@@ -318,7 +322,7 @@
 			$cat_description	= $_POST['cat_description'];
 			$cat_data			= $_POST['cat_data'];
 			$old_parent			= (int)$_POST['old_parent'];
-			
+
 			if ($new_parent)
 			{
 				$cat_parent = $new_parent;
@@ -396,7 +400,7 @@
 				'<input type="hidden" name="old_parent" value="' . $cat['parent'] . '">' . "\n";
 
 			$link_data['menuaction']	= 'admin.uicategories.edit';
-			$link_data['cat_id']		= $this->cat_id; 
+			$link_data['cat_id']		= $this->cat_id;
 			$this->template->set_var('action_url',$GLOBALS['egw']->link('/index.php',$link_data));
 
 			if ($this->acl_delete)
@@ -518,7 +522,7 @@
 
 			$cats = $this->bo->cats->return_single($this->cat_id);
 			$this->template->set_var('cat_name',$cat['name']);
-			
+
 			if ($apps_cats)
 			{
 				$this->template->set_block('category_delete','delete','deletehandle');

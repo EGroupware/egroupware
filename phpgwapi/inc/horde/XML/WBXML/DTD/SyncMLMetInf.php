@@ -3,16 +3,17 @@
 include_once 'XML/WBXML/DTD.php';
 
 /**
- * $Horde: framework/XML_WBXML/WBXML/DTD/SyncMLMetInf.php,v 1.9 2006/01/01 21:10:26 jan Exp $
- *
- * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
- *
  * From Binary XML Content Format Specification Version 1.3, 25 July 2001
  * found at http://www.wapforum.org
  *
- * See the enclosed file COPYING for license information (LGPL).  If you
+ * $Horde: framework/XML_WBXML/WBXML/DTD/SyncMLMetInf.php,v 1.4.12.8 2008/01/02 11:31:03 jan Exp $
+ *
+ * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
+ *
+ * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
+ * @author  Anthony Mills <amills@pyramid6.com>
  * @package XML_WBXML
  */
 class XML_WBXML_DTD_SyncMLMetInf extends XML_WBXML_DTD {
@@ -43,17 +44,22 @@ class XML_WBXML_DTD_SyncMLMetInf extends XML_WBXML_DTD {
         $this->setTag(0x12, "Size"); // 0x01
         $this->setTag(0x13, "Type"); // 0x01
         $this->setTag(0x14, "Version"); // 0x01
+        $this->setTag(0x15, "MaxObjSize"); // 0x01
+        $this->setTag(0x16, "FieldLevel"); // 0x01
 
-        if ($this->version == 0) {
-            #$this->setCodePage(0, '-//SYNCML//DTD SyncML 1.0//EN', 'syncml:SYNCML1.0');
-            $this->setCodePage(0, '-//SYNCML//DTD SyncML 1.0//EN', 'syncml:syncml1.0');
-            $this->setCodePage(1, '-//SYNCML//DTD MetInf 1.0//EN', 'syncml:metinf');
-            $this->setURI('syncml:metinf');
-        } else {
-            $this->setCodePage(0, '-//SYNCML//DTD SyncML 1.1//EN', 'syncml:syncml1.1');
-            $this->setCodePage(1, '-//SYNCML//DTD MetInf 1.1//EN', 'syncml:metinf1.1');
+        if ($this->version == 1) {
+            $this->setCodePage(0, DPI_DTD_SYNCML_1_1, 'syncml:syncml1.1');
+            $this->setCodePage(1, DPI_DTD_METINF_1_1, 'syncml:metinf1.1');
             $this->setURI('syncml:metinf1.1');
             //$this->setURI('syncml:metinf'); // for some funny reason, libwbxml produces no :metinf1.1 here
+        } elseif ($this->version == 2) {
+            $this->setCodePage(0, DPI_DTD_SYNCML_1_2, 'syncml:syncml1.2');
+            $this->setCodePage(1, DPI_DTD_METINF_1_2, 'syncml:metinf1.2');
+            $this->setURI('syncml:metinf1.2');
+        } else {
+            $this->setCodePage(0, DPI_DTD_SYNCML_1_0, 'syncml:syncml1.0');
+            $this->setCodePage(1, DPI_DTD_METINF_1_0, 'syncml:metinf1.0');
+            $this->setURI('syncml:metinf1.0');
         }
     }
 

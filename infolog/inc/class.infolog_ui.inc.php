@@ -65,7 +65,8 @@ class infolog_ui
 			'edit'      => 'edit.gif',      'edit_alt'      => 'Edit',
 			'addfile'   => 'addfile.gif',   'addfile_alt'   => 'Add a file',
 			'delete'    => 'delete.gif',    'delete_alt'    => 'Delete',
-			'close'     => 'done.gif',      'close_alt'     => 'Close' ),
+			'close'     => 'done.gif',      'close_alt'     => 'Close' ,
+			'close_all' => 'done_all.gif',  'close_all_alt' => 'Close' ),
 		'status' => array(
 			'billed'    => 'billed.gif',    'billed_alt'    => 'billed',
 			'done'      => 'done.gif',      'done_alt'      => 'done',
@@ -74,25 +75,7 @@ class infolog_ui
 			'ongoing'   => 'ongoing.gif',   'ongoing_alt'   => 'ongoing',
 			'offer'     => 'offer.gif',     'offer_alt'     => 'offer' )
 	);
-	var $filters = array(
-		'none'                     => 'no Filter',
-		'done'                     => 'done',
-		'responsible'              => 'responsible',
-		'responsible-open-today'   => 'responsible open',
-		'responsible-open-overdue' => 'responsible overdue',
-		'responsible-upcoming'     => 'responsible upcoming',
-		'delegated'                => 'delegated',
-		'delegated-open-today'     => 'delegated open',
-		'delegated-open-overdue'   => 'delegated overdue',
-		'delegated-upcoming'       => 'delegated upcomming',
-		'own'                      => 'own',
-		'own-open-today'           => 'own open',
-		'own-open-overdue'         => 'own overdue',
-		'own-upcoming'             => 'own upcoming',
-		'open-today'               => 'open',
-		'open-overdue'             => 'overdue',
-		'upcoming'                 => 'upcoming',
-	);
+	var $filters;
 	var $messages = array(
 		'edit'    => 'InfoLog - Edit',
 		'add'     => 'InfoLog - New',
@@ -109,7 +92,7 @@ class infolog_ui
 	function __construct()
 	{
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') $GLOBALS['egw']->translation->add_app('infolog');
-		$this->bo =& new infolog_bo();
+		$this->bo = new infolog_bo();
 
 		$this->tmpl = new etemplate();
 
@@ -124,6 +107,7 @@ class infolog_ui
 			$this->duration_format = str_replace(',','',$pm_config['duration_units']).','.$pm_config['hours_per_workday'];
 			unset($pm_config);
 		}
+		$this->filters =& $this->bo->filters;
 		/* these are just for testing of the notifications
 		for($i = -1; $i <= 3; ++$i)
 		{
@@ -163,7 +147,10 @@ class infolog_ui
 			$info = $this->bo->read($info);
 		}
 		$id = $info['info_id'];
-		$done = $info['info_status'] == 'done' || $info['info_status'] == 'billed';
+		$done = $info['info_status'] == 'done' || $info['info_status'] == 'billed' || $info['info_status'] == 'cancelled'; //cancelled is regarded as a completed status as well in bo
+		// regard an infolog as done/billed/cancelled if its percentage is 100% when there is to status like the above for that type
+		if (!$done && !isset($this->bo->status[$info['info_type']]['done']) && !isset($this->bo->status[$info['info_type']]['billed']) &&
+			!isset($this->bo->status[$info['info_type']]['cancelled']) && (int)$info['info_percent']==100) $done = true ;
 		$info['sub_class'] = $this->bo->enums['priority'][$info['info_priority']] . ($done ? '_done' : '');
 		if (!$done && $info['info_enddate'] < $this->bo->user_time_now)
 		{
@@ -172,13 +159,18 @@ class infolog_ui
 		if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 		$info['info_percent'] = (int) $info['info_percent'].'%';
-
-		$readonlys["edit[$id]"] = !($this->bo->check_access($info,EGW_ACL_EDIT) || // edit rights or more then standard responsible rights
-			$this->bo->is_responsible($info) && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')));
+		$editrights = $this->bo->check_access($info,EGW_ACL_EDIT);
+		$isresposible = $this->bo->is_responsible($info);
+		$readonlys["edit[$id]"] = !($editrights || // edit rights or more then standard responsible rights
+			$isresposible && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')));
 		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] =
-			!($this->bo->check_access($info,EGW_ACL_EDIT) || $this->bo->is_responsible($info)));
+			!($editrights || $isresposible));
+		$readonlys["close_all[$id]"] = ($done) || !$info['info_anz_subs'] || ($readonlys["edit_status[$id]"] =
+			!($editrights || $isresposible)); // this one is supressed, when you are not allowed to edit, or not responsible, or the entry is closed
+			// and has no children. If you want that this one is shown if there are children regardless of the status of the current or its childs,
+			// then modify ($done) to ($done && !$info['info_anz_subs'])
 		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] =
-			!$this->bo->check_access($info,EGW_ACL_EDIT) && !$this->bo->is_responsible($info) &&
+			!$editrights && !$isresposible &&
 			!$this->bo->check_access($info,EGW_ACL_UNDELETE);	// undelete is handled like status edit
 		$readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE);
 		$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
@@ -187,6 +179,7 @@ class infolog_ui
 		$readonlys["timesheet[$id]"] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 
 		if (!$show_links) $show_links = $this->prefs['show_links'];
+
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
 			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
 			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id']))))
@@ -310,7 +303,7 @@ class infolog_ui
 		unset($query['custom_fields']);
 		if ($query['col_filter']['info_type'])
 		{
-			$tpl =& new etemplate;
+			$tpl = new etemplate;
 			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type']))
 			{
 				$query['template'] =& $tpl;
@@ -320,7 +313,7 @@ class infolog_ui
 		}
 		// do we need to read the custom fields, depends on the column is enabled and customfields exist, prefs are filter specific
 		// so we have to check that as well
-        $details = $query['filter2'] == 'all';
+		$details = $query['filter2'] == 'all';
 		$columselection = $this->prefs['nextmatch-infolog.index.rows'.($details?'-details':'')];
 		//_debug_array($columselection);
 		if ($columselection)
@@ -345,15 +338,15 @@ class infolog_ui
 		if ($details)
 		{
 			$query['columnselection_pref'] = (is_object($query['template'])?$query['template']->name:'infolog.index.rows').'-details';
-			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time_info_replanned_time,info_id';
+			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
 		else
 		{
 			$query['columnselection_pref'] = 'infolog.index.rows';
-			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time_info_replanned_time,info_id';
+			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
-		// set old show_times pref, that get_info calculates the cumulated time of the timesheets (we only check used&planned to work for both time cols)
-		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
+		// set old show_times pref, that get_info calculates the cumulated time of the timesheets
+		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time_info_replanned_time') !== false;
 
 		// query all links and sub counts in one go
 		if ($infos && !$query['csv_export'])
@@ -428,6 +421,9 @@ class infolog_ui
 				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
 			}
 		}
+		// disable filemanager icon, if user has no access to it
+		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
+
 		return $query['total'];
 	}
 
@@ -553,7 +549,9 @@ class infolog_ui
 						}
 						break;
 					case 'close':
-						$this->close($do_id,$called_as);
+						$closesingle=true;
+					case 'close_all':
+						$this->close($do_id,$called_as,$closesingle);
 						break;
 					case 'sp':
 						return $this->edit(0,'sp',$do_id,'',$called_as);
@@ -639,6 +637,13 @@ class infolog_ui
 		{
 			$values['css'] = '<style type="text/css">@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/infolog/templates/default/app.css);'."</style>";
 		}
+		// add scrollbar to long describtion, if user choose so in his prefs
+		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
+		{
+			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  max-height: '.
+				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	// dono why em is not real lines
+				'em; overflow: auto; }}</style>';
+		}
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,array(
 			'info_type'     => $this->bo->enums['type'],
 		),$readonlys,$persist,$return_html ? -1 : 0);
@@ -649,29 +654,45 @@ class infolog_ui
 	 *
 	 * @param int|array $values=0 info_id (default _GET[info_id])
 	 * @param string $referer=''
+	 * @param boolean $closesingle=false
 	 */
-	function close($values=0,$referer='')
+	function close($values=0,$referer='',$closesingle=false)
 	{
-		//echo "<p>".__METHOD__."($values,$referer)</p>\n";
+		//echo "<p>".__METHOD__."($values,$referer,$closeall)</p>\n";
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
 		$referer = is_array($values) ? $values['referer'] : $referer;
 
 		if ($info_id)
 		{
+			$info = $this->bo->read($info_id);
+			#_debug_array($info);
+			$status = $info['info_status'];
+			// closed stati assumed array('done','billed','cancelled')
+			if (isset($this->bo->status[$info['info_type']]['done'])) {
+				$status ='done';
+			} elseif (isset($this->bo->status[$info['info_type']]['billed'])) {
+				$status ='billed';
+			} elseif (isset($this->bo->status[$info['info_type']]['cancelled'])) {
+				$status ='cancelled';
+			}
+			#_debug_array($status);
 			$values = array(
 				'info_id'     => $info_id,
-				'info_status' => 'done',
+				'info_type'   => $info['info_type'],
+				'info_status' => $status,
 				'info_percent'=> 100,
 				'info_datecompleted' => $this->bo->now_su,
 			);
 			$this->bo->write($values);
 
 			$query = array('action'=>'sp','action_id'=>$info_id);
-			foreach((array)$this->bo->search($query) as $info)
-			{
-				if ($info['info_id_parent'] == $info_id)	// search also returns linked entries!
+			if (!$closesingle) {
+				foreach((array)$this->bo->search($query) as $info)
 				{
-					$this->close($info['info_id'],$referer);	// we call ourselfs recursive to process subs from subs too
+					if ($info['info_id_parent'] == $info_id)	// search also returns linked entries!
+					{
+						$this->close($info['info_id'],$referer,$closeall);	// we call ourselfs recursive to process subs from subs too
+					}
 				}
 			}
 		}
@@ -953,6 +974,7 @@ class infolog_ui
 				}
 				$parent = $this->bo->so->data;
 				$content['info_id'] = $info_id = 0;
+				$content['info_uid'] = ''; // ensure that we have our own UID
 				$content['info_owner'] = $this->user;
 				$content['info_id_parent'] = $parent['info_id'];
 				/*
@@ -1281,10 +1303,9 @@ class infolog_ui
 
 			if ($_POST['responsible_edit'])
 			{
-				$extra = array_intersect((array)$_POST['responsible_edit'],array_keys($fields));
-				$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
+				$extra = array_intersect($_POST['responsible_edit'],array_keys($fields));
+				config::save_value('responsible_edit',$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra),'infolog');
 			}
-			config::save_value('responsible_edit',$this->bo->responsible_edit,'infolog');
 			config::save_value('implicit_rights',$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
 			config::save_value('history',$this->bo->history = $_POST['history'],'infolog');
 		}
@@ -1413,7 +1434,6 @@ class infolog_ui
 						#continue;
 					}
 					$message .= $bofelamimail->wordwrap($value,75,"\n");
-					#$message .= $bodyAppend;
 				}
 			}
 
@@ -1496,7 +1516,7 @@ class infolog_ui
 
 		$GLOBALS['egw']->translation->add_app('infolog');
 
-		$GLOBALS['egw_info']['etemplate']['hooked'] = True;
+        $GLOBALS['egw_info']['etemplate']['hooked'] = true;
 		$this->index(0,$app,$args[$view_id],array(
 			'menuaction' => $view,
 			isset($view_id2) ? $view_id2 : $view_id => $args[$view_id]

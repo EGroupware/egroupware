@@ -15,7 +15,7 @@
  */
 class tree_widget
 {
-	/** 
+	/**
 	 * exported methods of this class
 	 * @var array
 	 */
@@ -49,7 +49,7 @@ class tree_widget
 	 *
 	 * @param string $name form-name of the control
 	 * @param mixed &$value value / existing content, can be modified
-	 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+	 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 	 * @param array &$readonlys names of widgets as key, to be made readonly
 	 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 	 * @param etemplate &$tmpl reference to the template we belong too
@@ -83,6 +83,7 @@ class tree_widget
 				{
 					$categories =& new categories('',$type3);
 				}
+				$accountId = $GLOBALS['egw_info']['user']['account_id'];
 				$cat2path=array();
 				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type) as $cat)
 				{
@@ -91,6 +92,13 @@ class tree_widget
 					if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 					{
 						$s .= ' &#9830;';
+					}
+					elseif ($cat['owner'] != $accountId)
+					{
+						$s .= '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+					}
+					elseif ($cat['access'] == 'private') {
+						$s .= ' &#9829;';
 					}
 					$cat2path[$cat['id']] = $path = ($cat['parent'] ? $cat2path[$cat['parent']].'/' : '').(string)$cat['id'];
 					$cell['sel_options'][$path] = $s;
@@ -134,10 +142,10 @@ class tree_widget
 			$onCheck = 'onCheck_'.$tree_id;
 			$script .= "
 	function $onCheck(id) {
-		document.getElementsByName('$name')[0].value=$tree_id.getAllChecked(); 
+		document.getElementsByName('$name')[0].value=$tree_id.getAllChecked();
 		$onclick;
 	}
-	function $onNodeSelect(id) { 
+	function $onNodeSelect(id) {
 		$tree_id.setCheck(id,$tree_id.isItemChecked(id) ? 0 : 1);
 		$onCheck(id);
 	}
@@ -146,7 +154,7 @@ class tree_widget
 		else	// single selection
 		{
 			$script .= "
-	function $onNodeSelect(id) { 
+	function $onNodeSelect(id) {
 		document.getElementsByName('$name')[0].value=id;
 		$onclick;
 	}
@@ -161,7 +169,7 @@ class tree_widget
 
 		return True;	// extra Label Ok
 	}
-	
+
 	/**
 	 * postprocessing method, called after the submission of the form
 	 *
@@ -182,7 +190,7 @@ class tree_widget
 	function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 	{
 		//echo "value_in"; _debug_array($value_in);
-		
+
 		if (!preg_match('/^[0-9\\/'.($extension_data['multiple']?',':'').']*$/',$value_in)) return false;	// guard against xss and other malious content
 
 		$value = $extension_data['multiple'] ? explode(',',$value_in) : $value_in;

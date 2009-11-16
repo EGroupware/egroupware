@@ -91,13 +91,13 @@ class infolog_so
 			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
 			$user_and_memberships[] = $this->user;
 		}
-		return $info['info_responsible'] && array_intersect($info['info_responsible'],$user_and_memberships);
+		return $info['info_responsible'] && array_intersect((array)$info['info_responsible'],$user_and_memberships);
 	}
 
 	/**
 	 * checks if user has the $required_rights to access $info_id (private access is handled too)
 	 *
-	 * @param array/int $info data or info_id of InfoLog entry
+	 * @param array|int $info data or info_id of InfoLog entry
 	 * @param int $required_rights EGW_ACL_xyz anded together
 	 * @param boolean $implicit_edit=false responsible has only implicit read and add rigths, unless this is set to true
 	 * @return boolean True if access is granted else False
@@ -284,7 +284,7 @@ class infolog_so
 		preg_match('/(upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$filter,$vars);
 		$filter = $vars[1];
 
-		if (isset($vars[2]) && !empty($vars[2]) && ($date = split('[-/.]',$vars[2])))
+		if (isset($vars[2]) && !empty($vars[2]) && ($date = preg_split('/[-\\/.]/',$vars[2])))
 		{
 			$today = mktime(-$this->tz_offset,0,0,intval($date[1]),intval($date[2]),intval($date[0]));
 			$tomorrow = mktime(-$this->tz_offset,0,0,intval($date[1]),intval($date[2])+1,intval($date[0]));
@@ -339,11 +339,17 @@ class infolog_so
 	 *
 	 * some cacheing is done to prevent multiple reads of the same entry
 	 *
-	 * @param $info_id id or uid of entry
-	 * @return array/boolean the entry as array or False on error (eg. entry not found)
+	 * @param int|string $info_id id or uid of entry
+	 * @return array|boolean the entry as array or False on error (eg. entry not found)
 	 */
 	function read($info_id)		// did _not_ ensure ACL
 	{
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+		} else {
+			$minimum_uid_length = 8;
+		}
+
 		//echo "<p>read($info_id) ".function_backtrace()."</p>\n";
 		if ($info_id && ((int)$info_id == $this->data['info_id'] || $info_id == $this->data['info_uid']))
 		{
@@ -355,6 +361,14 @@ class infolog_so
 		{
 			$this->init( );
 			return False;
+		}
+		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length) {
+		// entry without uid --> create one based on our info_id and save it
+
+			$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog', $info_id);
+			$this->db->update($this->info_table,
+				array('info_uid' => $this->data['info_uid']),
+				array('info_id' => $this->data['info_id']), __LINE__,__FILE__);
 		}
 		if (!is_array($this->data['info_responsible']))
 		{
@@ -399,7 +413,7 @@ class infolog_so
 	 * delete InfoLog entry $info_id AND the links to it
 	 *
 	 * @param int $info_id id of log-entry
-	 * @param bool $delete_children delete the children, if not set there parent-id to $new_parent
+	 * @param boolean $delete_children delete the children, if not set there parent-id to $new_parent
 	 * @param int $new_parent new parent-id to set for subs
 	 */
 	function delete($info_id,$delete_children=True,$new_parent=0)  // did _not_ ensure ACL
@@ -495,10 +509,16 @@ class infolog_so
 	 *
 	 * @param array $values with the data of the log-entry
 	 * @param int $check_modified=0 old modification date to check before update (include in WHERE)
-	 * @return int/boolean info_id, false on error or 0 if the entry has been updated in the meantime
+	 * @return int|boolean info_id, false on error or 0 if the entry has been updated in the meantime
 	 */
 	function write($values,$check_modified=0)  // did _not_ ensure ACL
 	{
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+		} else {
+			$minimum_uid_length = 8;
+		}
+
 		//echo "soinfolog::write(,$check_modified) values="; _debug_array($values);
 		$info_id = (int) $values['info_id'];
 
@@ -540,12 +560,17 @@ class infolog_so
 			$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
 			$info_id = $this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
 
-			if (!$this->data['info_uid'])		// new entry without uid --> create one based on our info_id and save it
-			{
-				$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog',$info_id);
-				$this->db->update($this->info_table,array('info_uid'=>$this->data['info_uid']),array('info_id'=>$info_id),__LINE__,__FILE__);
-			}
 		}
+
+		if (!$this->data['info_uid'] || strlen($this->data['info_uid']) < $minimum_uid_length) {
+			// entry without uid --> create one based on our info_id and save it
+
+			$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog', $info_id);
+			$this->db->update($this->info_table,
+				array('info_uid' => $this->data['info_uid']),
+				array('info_id' => $info_id), __LINE__,__FILE__);
+		}
+
 		//echo "<p>soinfolog.write values= "; _debug_array($values);
 
 		// write customfields now
@@ -616,17 +641,19 @@ class infolog_so
 	/**
 	 * searches InfoLog for a certain pattern in $query
 	 *
-	 * @param $query[order] column-name to sort after
-	 * @param $query[sort] sort-order DESC or ASC
-	 * @param $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
-	 * @param $query[cat_id] category to use or 0 or unset
-	 * @param $query[search] pattern to search, search is done in info_from, info_subject and info_des
-	 * @param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
-	 * @param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
-	 * @param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
-	 * @param $query[subs] boolean return subs or not, if unset the user preference is used
-	 * @param $query[num_rows] number of rows to return if $query[start] is set, default is to use the value from the general prefs
-	 * @return array with id's as key of the matching log-entries
+	 * @param string $query[order] column-name to sort after
+	 * @param string $query[sort] sort-order DESC or ASC
+	 * @param string $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
+	 * @param int $query[cat_id] category to use or 0 or unset
+	 * @param string $query[search] pattern to search, search is done in info_from, info_subject and info_des
+	 * @param string $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
+	 * @param int &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
+	 * @param array $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+	 * @param boolean $query[subs] return subs or not, if unset the user preference is used
+	 * @param int $query[num_rows] number of rows to return if $query[start] is set, default is to use the value from the general prefs
+	 * @param string|array $query[cols]=null what to query, if set the recordset / iterator get's returned
+	 * @param string $query[append]=null get's appended to sql query, eg. for GROUP BY
+	 * @return array|iterator with id's as key of the matching log-entries or recordset/iterator if cols is set
 	 */
 	function search(&$query)
 	{
@@ -661,7 +688,9 @@ class infolog_so
 				}
 				else
 				{
-					$val = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
+					static $table_def;
+					if (is_null($table_def)) $table_def = $this->db->get_table_definitions('infolog',$this->info_table);
+					if (substr($val,0,5) != 'info_' && isset($table_def['fd']['info_'.$val])) $val = 'info_'.$val;
 					if ($val == 'info_des' && $this->db->capabilities['order_on_text'] !== true)
 					{
 						if (!$this->db->capabilities['order_on_text']) continue;
@@ -685,6 +714,11 @@ class infolog_so
 		{
 			foreach($query['col_filter'] as $col => $data)
 			{
+				if (is_int($col))
+				{
+					$filtermethod .= ' AND '.$data;
+					continue;
+				}
 				if (substr($col,0,5) != 'info_' && substr($col,0,1)!='#') $col = 'info_'.$col;
 				if (!empty($data) && preg_match('/^[a-z_0-9]+$/i',$col))
 				{
@@ -766,6 +800,7 @@ class infolog_so
 		if ($action == '' || $action == 'sp' || count($links))
 		{
 			$sql_query = "FROM $this->info_table main $join WHERE ($filtermethod $pid $sql_query) $link_extra";
+			#error_log("infolog.so.search:\n" . print_r($sql_query, true));
 
 			if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
 			{
@@ -788,7 +823,9 @@ class infolog_so
 				{
 					$query['start'] = 0;
 				}
-				$rs = $this->db->query($sql="SELECT $mysql_calc_rows $distinct main.* $info_customfield $sql_query $ordermethod",__LINE__,__FILE__,
+				$cols = isset($query['cols']) ? $query['cols'] : 'main.*';
+				if (is_array($cols)) $cols = implode(',',$cols);
+				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.$query['append'].' '.$ordermethod,__LINE__,__FILE__,
 					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1,false,egw_db::FETCH_ASSOC);
 				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 
@@ -800,6 +837,10 @@ class infolog_so
 			// check if start is behind total --> loop to set start=0
 			while (isset($query['start']) && $query['start'] > $query['total']);
 
+			if (isset($query['cols']))
+			{
+				return $rs;
+			}
 			foreach($rs as $info)
 			{
 				$info['info_responsible'] = $info['info_responsible'] ? explode(',',$info['info_responsible']) : array();

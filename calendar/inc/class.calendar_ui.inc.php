@@ -123,7 +123,7 @@ class calendar_ui
 	/**
 	 * @var array $states_to_save all states that will be saved to the user prefs
 	 */
-	var $states_to_save = array('owner');
+	var $states_to_save = array('owner','filter');
 
 	/**
 	 * Constructor
@@ -188,13 +188,13 @@ class calendar_ui
 				foreach($GLOBALS['egw']->accounts->member($owner) as $member)
 				{
 					$member = $member['account_id'];
-					if (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$member))
+					if (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$member))
 					{
 						$no_access_group[$member] = $this->bo->participant_name($member);
 					}
 				}
 			}
-			elseif (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$owner))
+			elseif (!$this->bo->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$owner))
 			{
 				$no_access[$owner] = $this->bo->participant_name($owner);
 			}
@@ -247,7 +247,7 @@ class calendar_ui
 	 *	- filter: the used filter: all or hideprivate
 	 *	- sortby: category or user of planner
 	 *	- view: the actual view, where dialogs should return to or which they refresh
-	 * @param set_states array to manualy set / change one of the states, default NULL = use $_REQUEST
+	 * @param array $set_states array to manualy set / change one of the states, default NULL = use $_REQUEST
 	 */
 	function manage_states($set_states=NULL)
 	{
@@ -381,16 +381,19 @@ class calendar_ui
 		// save defined states into the user-prefs
 		if(!empty($states) && is_array($states))
 		{
-			$saved_states = array_intersect_key($states,array_flip($this->states_to_save));
-			$GLOBALS['egw']->preferences->add('calendar','saved_states',serialize($saved_states));
-			$GLOBALS['egw']->preferences->save_repository(false,'user',false);
+			$saved_states = serialize(array_intersect_key($states,array_flip($this->states_to_save)));
+			if ($saved_states != $this->cal_prefs['saved_states'])
+			{
+				$GLOBALS['egw']->preferences->add('calendar','saved_states',$saved_states);
+				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
+			}
 		}
 	}
 
 	/**
 	* gets the icons displayed for a given event
 	*
-	* @param $event array
+	* @param array $event
 	* @return array of 'img' / 'title' pairs
 	*/
 	function event_icons($event)
@@ -509,8 +512,8 @@ class calendar_ui
 	function popup($link,$target='_blank',$width=750,$height=410,$Link_confirm_abort='',$Link_confirm_text='')
  	{
 		//Handle Exception for Calandar
-		if (($Link_confirm_abort) && ($Link_confirm_text))
-			{
+		if ($Link_confirm_abort && $Link_confirm_text)
+		{
 			$returnvalue = 'javascript:var check=confirm(\''.$Link_confirm_text.'\');';
 			$returnvalue .=' if (check==true) {';
 			// open confirm =0kay
@@ -524,14 +527,9 @@ class calendar_ui
 			$returnvalue .= '}';
 
 			return $returnvalue;
-			}
-
-		else {
-
-			return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-
 		}
+		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
+			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
  	}
 
 	/**
@@ -692,10 +690,21 @@ class calendar_ui
 		$this->cats->formatted_list('select','all',$this->cat_id,'True'),$baseurl ? $baseurl.'&cat_id=' : '');
 
 		// Filter all or hideprivate
-		$file[] = $this->_select_box('Filter','filter',
-			'<option value="all"'.($this->filter=='all'?' selected="selected"':'').'>'.lang('No filter').'</option>'."\n".
-			'<option value="hideprivate"'.($this->filter=='hideprivate'?' selected="selected"':'').'>'.lang('Hide private infos').'</option>'."\n",
-			$baseurl ? $baseurl.'&filter=' : '');
+		$options = '';
+		foreach(array(
+			'default'     => lang('Not rejected'),
+			'accepted'    => lang('Accepted'),
+			'unknown'     => lang('Invitations'),
+			'tentative'   => lang('Tentative'),
+			'rejected'    => lang('Rejected'),
+			'owner'       => lang('Owner too'),
+			'all'         => lang('All incl. rejected'),
+			'hideprivate' => lang('Hide private infos'),
+		) as $value => $label)
+		{
+			$options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').'>'.$label.'</options>'."\n";
+		}
+		$file[] = $this->_select_box('Filter','filter',$options,$baseurl ? $baseurl.'&filter=' : '');
 
 		// Calendarselection: User or Group
 		if(count($this->bo->grants) > 0 && $this->accountsel->account_selection != 'none')

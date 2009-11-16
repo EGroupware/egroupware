@@ -7,7 +7,7 @@
  * @package calendar
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -33,7 +33,7 @@ class calendar_groupdav extends groupdav_handler
 		//'RDATE' => 'cal_start',
 		//'EXRULE'
 		//'EXDATE'
-		//'RECURRENCE-ID'
+		'RECURRENCE-ID' => 'cal_reference',
 	);
 
 	/**
@@ -43,11 +43,11 @@ class calendar_groupdav extends groupdav_handler
 	 * @param int $debug=null debug-level to set
 	 * @param string $base_uri=null base url of handler
 	 */
-	function __construct($app,$debug=null,$base_uri=null)
+	function __construct($app,$debug=null, $base_uri=null)
 	{
 		parent::__construct($app,$debug,$base_uri);
 
-		$this->bo =& new calendar_boupdate();
+		$this->bo = new calendar_boupdate();
 	}
 
 	const PATH_ATTRIBUTE = 'id';
@@ -85,18 +85,20 @@ class calendar_groupdav extends groupdav_handler
 	function propfind($path,$options,&$files,$user,$id='')
 	{
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
-
+		 //error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");//njv:
 		// ToDo: add parameter to only return id & etag
+		//error_log( __FILE__ . __METHOD__ ."  :$user ". print_r($options,true));
+		$st = microtime(true);
 		$cal_filters = array(
 			'users' => $user,
-			'start' => time()-30*24*3600,	// default one month back
-			'end' => time()+365*24*3600,	// default one year into the future
+			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync  recurrences
+			'end' => time()+365*24*3600,	// default one year into the future +365
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
 		);
 		if ($this->debug > 1) error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));
-
+		//error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));//njv
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$cal_filters,$id))
 		{
@@ -114,6 +116,7 @@ class calendar_groupdav extends groupdav_handler
 				}
 			}
 		}
+		//error_log(__FILE__ . __METHOD__ ."Filters:" .print_r($cal_filters,true));
 		if (($events = $this->bo->search($cal_filters)))
 		{
 			foreach($events as $event)
@@ -127,6 +130,7 @@ class calendar_groupdav extends groupdav_handler
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
 					HTTP_WebDAV_Server::mkprop('resourcetype',''),	// iPhone requires that attribute!
 				);
+				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
 					if (is_null($handler)) $handler = $this->_get_handler();
@@ -144,6 +148,8 @@ class calendar_groupdav extends groupdav_handler
 				);
 			}
 		}
+		$end = microtime(true) - $st;
+		if ($this->debug) error_log(__FILE__ . __METHOD__ . "Function took : $end");
 		return true;
 	}
 
@@ -170,6 +176,7 @@ class calendar_groupdav extends groupdav_handler
 				{
 					case 'comp-filter':
 						if ($this->debug > 1) error_log(__METHOD__."($path,...) comp-filter='{$filter['attrs']['name']}'");
+
 						switch($filter['attrs']['name'])
 						{
 							case 'VTODO':
@@ -178,7 +185,7 @@ class calendar_groupdav extends groupdav_handler
 								$infolog_handler = new groupdav_infolog();
 								return $infolog_handler->propfind($path,$options,$files,$user,$method);
 							case 'VCALENDAR':
-							CASE 'VEVENT':
+							case 'VEVENT':
 								break;			// that's our default anyway
 						}
 						break;
@@ -202,7 +209,7 @@ class calendar_groupdav extends groupdav_handler
 						if ($this->debug) error_log(__METHOD__."($path,...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'time-range':
-						if ($this->debug > 1) error_log(__METHOD__."($path,...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
+				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($path,...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
 						$cal_filters['start'] = $filter['attrs']['start'];
 						$cal_filters['end']   = $filter['attrs']['end'];
 						break;
@@ -218,6 +225,7 @@ class calendar_groupdav extends groupdav_handler
 			}
 		}
 		// multiget or propfind on a given id
+		//error_log(__FILE__ . __METHOD__ . "multiget of propfind:");
 		if ($options['root']['name'] == 'calendar-multiget' || $id)
 		{
 			// no standard time-range!
@@ -253,7 +261,8 @@ class calendar_groupdav extends groupdav_handler
 			{
 				$cal_filters['query'][] = 'egw_cal.cal_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
 			}
-			if ($this->debug) error_log(__METHOD__."($path,,,$user,$id) calendar-multiget: ids=".implode(',',$ids));
+
+			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($path,,,$user,$id) calendar-multiget: ids=".implode(',',$ids));
 		}
 		return true;
 	}
@@ -289,10 +298,13 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function put(&$options,$id,$user=null)
 	{
+		if($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 		$return_no_access=true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$event = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
+
 		if (!is_null($event) && !is_array($event))
 		{
+			if ($this->debug) error_log(__METHOD__.print_r($event,true).function_backtrace());
 			return $event;
 		}
 		$handler = $this->_get_handler();
@@ -347,6 +359,8 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
+		//$cal_read = $this->bo->read($id,null,false,'server');//njv: do we actually get anything
+		if ($this->debug > 1) error_log("bo-ical read  :$id:");//njv:
 		return $this->bo->read($id,null,false,'server');
 	}
 
@@ -363,12 +377,15 @@ class calendar_groupdav extends groupdav_handler
 		{
 			$entry = $this->read($entry);
 		}
-		if (!$entry['id'] || !isset($entry['etag']) || !isset($entry['participants'])) error_log(__METHOD__."($e_in): id=$entry[id], etag=$entry[etag], isset(participants)=".(int)isset($entry['participants']).", title=$entry[title]: id, etag or participants not set!!!");
+		if (!$entry['id'] || !isset($entry['etag']) || !isset($entry['participants']))
+		{
+			if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($e_in): id=$entry[id], etag=$entry[etag], isset(participants)=".(int)isset($entry['participants']).", title=$entry[title]: id, etag or participants not set!!!");
+		}
 		$etag = $entry['id'].':'.$entry['etag'];
 		// add a hash over the participants and their stati
 		ksort($entry['participants']);	// create a defined order
 		$etag .= ':'.md5(serialize($entry['participants']));
-		//error_log(__METHOD__."($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
+		//error_log(__FILE__ .__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
 		return $etag;
 	}
 
@@ -412,9 +429,10 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	private function _get_handler()
 	{
-		$handler =& new calendar_ical();
+		$handler = new calendar_ical();
 		$handler->setSupportedFields('GroupDAV',$this->agent);
-
+		if ($this->debug > 1) error_log("ical Handler called:" . $this->agent);
 		return $handler;
 	}
 }
+

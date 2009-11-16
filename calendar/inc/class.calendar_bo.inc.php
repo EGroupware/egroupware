@@ -5,6 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -21,9 +22,10 @@ define('WEEK_s',7*DAY_s);
 
 /**
  * Gives read access to the calendar, but all events the user is not participating are private!
- * Used be the addressbook.
+ * Used by addressbook.
  */
 define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
+define('EGW_ACL_FREEBUSY',EGW_ACL_CUSTOM_2);
 
 /**
  * Required (!) include, as we use the MCAL_* constants, BEFORE instanciating (and therefore autoloading) the class
@@ -61,7 +63,7 @@ class calendar_bo
 	var $debug=false;
 
 	/**
-	 * @var int $tz_offset_s offset in secconds between user and server-time,
+	 * @var int $tz_offset_s offset in seconds between user and server-time,
 	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
 	 */
 	var $tz_offset_s;
@@ -125,6 +127,17 @@ class calendar_bo
 		MCAL_M_SUNDAY    => 'Sunday',
 	);
 	/**
+	 * Standard iCal attendee roles
+	 *
+	 * @var array
+	 */
+	var $roles = array(
+		'REQ-PARTICIPANT' => 'Requested',
+		'CHAIR'           => 'Chair',
+		'OPT-PARTICIPANT' => 'Optional',
+		'NON-PARTICIPANT' => 'None',
+	);
+	/**
 	 * @var array $resources registered scheduling resources of the calendar (gets chached in the session for performance reasons)
 	 */
 	var $resources;
@@ -133,6 +146,7 @@ class calendar_bo
 	 */
 	protected static $cached_event = array();
 	protected static $cached_event_date_format = false;
+	protected static $cached_event_date = 0;
 	/**
 	 * @var array $cached_holidays holidays plus birthdays (gets cached in the session for performance reasons)
 	 */
@@ -140,7 +154,7 @@ class calendar_bo
 	/**
 	 * Instance of the socal class
 	 *
-	 * @var socal
+	 * @var calendar_so
 	 */
 	var $so;
 	/**
@@ -200,7 +214,7 @@ class calendar_bo
 	/**
 	 * returns info about email addresses as participants
 	 *
-	 * @param int/array $ids single contact-id or array of id's
+	 * @param int|array $ids single contact-id or array of id's
 	 * @return array
 	 */
 	static function email_info($ids)
@@ -259,13 +273,13 @@ class calendar_bo
 	/**
 	 * Searches / lists calendar entries, including repeating ones
 	 *
-	 * @param params array with the following keys
+	 * @param array $params array with the following keys
 	 *	start date startdate of the search/list, defaults to today
 	 *	end   date enddate of the search/list, defaults to start + one day
 	 *	users  mixed integer user-id or array of user-id's to use, defaults to the current user
 	 *	cat_id mixed category-id or array of cat-id's, defaults to all if unset, 0 or False
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
-	 *	filter string filter-name, atm. 'all' or 'hideprivate'
+	 *  filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 *	dayswise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
@@ -277,15 +291,28 @@ class calendar_bo
 	 *		otherwise the original recuring event (with the first start- + enddate) is returned
 	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
 	 *  order column-names plus optional DESC|ASC separted by comma
-	 *  show_rejected if set rejected invitation are shown only when true, otherwise it depends on the cal-pref or a running query
 	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
-	 * @return array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
-	 *	or false if there are no read-grants from _any_ of the requested users
+	 *  cols string|array columns to select, if set an iterator will be returned
+	 *  append string to append to the query, eg. GROUP BY
+	 *  cfs array if set, query given custom fields or all for empty array, none are returned, if not set (default)
+	 * @return iterator|array|boolean array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
+	 *	or false if there are no read-grants from _any_ of the requested users or iterator/recordset if cols are given
 	 */
 	function &search($params)
 	{
 		$params_in = $params;
+
+		unset($params['sql_filter']);	// dont allow to set it via UI or xmlrpc
+
+		// check if any resource wants to hook into
+		foreach($this->resources as $app => $data)
+		{
+			if (isset($data['search_filter']))
+			{
+				$params = ExecMethod($data['search_filter'],$params);
+			}
+		}
 
 		if (!isset($params['users']) || !$params['users'] ||
 			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
@@ -301,7 +328,7 @@ class calendar_bo
 		$users = array();
 		foreach($params['users'] as $user)
 		{
-			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$user))
+			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?
 				{
@@ -325,7 +352,7 @@ class calendar_bo
 					{
 						// use only members which gave the user a read-grant
 						if (!in_array($member['account_id'],$users) &&
-							($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$member['account_id'])))
+							($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY,0,$member['account_id'])))
 						{
 							$users[] = $member['account_id'];
 						}
@@ -373,7 +400,12 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
+		$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append'],$params['cfs']);
+
+		if (isset($params['cols']))
+		{
+			return $events;
+		}
 		$this->total = $this->so->total;
 		$this->db2data($events,isset($params['date_format']) ? $params['date_format'] : 'ts');
 
@@ -484,8 +516,8 @@ class calendar_bo
 			'title' => lang('private'),
 			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
 			'public'=> 0,
- 			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
- 			'non_blocking' => $event['non_blocking'],
+			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
+			'non_blocking' => $event['non_blocking'],
 		);
 	}
 
@@ -534,7 +566,7 @@ class calendar_bo
 			}
 		}
 		// update the horizont
-		$config =& CreateObject('phpgwapi.config','calendar');
+		$config = CreateObject('phpgwapi.config','calendar');
 		$config->save_value('horizont',$this->config['horizont'],'calendar');
 
 		if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) new horizont=%2, exiting',true,$new_horizont,$this->config['horizont']);
@@ -562,10 +594,18 @@ class calendar_bo
 
 		$events = array();
 		$this->insert_all_repetitions($event,$start,$this->date2ts($this->config['horizont'],true),$events,null);
-
+		$days = $this->so->get_recurrence_exceptions($event);	// content of array is in server-time!
+		$days = is_array($days) ? $days : array();
+		//error_log('set_recurrences: days=' . array2string($days) );
 		foreach($events as $event)
 		{
-			$this->so->recurrence($event['id'],$this->date2ts($event['start'],true),$this->date2ts($event['end'],true),$event['participants']);
+			$start_servertime = $this->date2ts($event['start'],true);
+			if (in_array($start_servertime, (array)$days))
+			{
+				// we don't change the stati of recurrence exceptions
+				$event['participants'] = array();
+			}
+			$this->so->recurrence($event['id'],$start_servertime,$this->date2ts($event['end'],true),$event['participants']);
 		}
 	}
 
@@ -578,29 +618,29 @@ class calendar_bo
 	function db2data(&$events,$date_format='ts')
 	{
 		if (!is_array($events)) echo "<p>bocal::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
-		foreach($events as $id => $event)
+		foreach($events as &$event)
 		{
 			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
-			foreach(array('start','end','modified','recur_enddate') as $ts)
+			foreach(array('start','end','modified','recur_enddate','reference') as $ts)
 			{
 				if (empty($event[$ts])) continue;
 
-				$events[$id][$ts] = $this->date2usertime($event[$ts],$date_format);
+				$event[$ts] = $this->date2usertime($event[$ts],$date_format);
 			}
 			// same with the recur exceptions
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 			{
-				foreach($event['recur_exception'] as $n => $date)
+				foreach($event['recur_exception'] as &$date)
 				{
-					$events[$id]['recur_exception'][$n] = $this->date2usertime($date,$date_format);
+					$date = $this->date2usertime($date,$date_format);
 				}
 			}
 			// same with the alarms
 			if (isset($event['alarm']) && is_array($event['alarm']))
 			{
-				foreach($event['alarm'] as $n => $alarm)
+				foreach($event['alarm'] as &$alarm)
 				{
-					$events[$id]['alarm'][$n]['time'] = $this->date2usertime($alarm['time'],$date_format);
+					$alarm['time'] = $this->date2usertime($alarm['time'],$date_format);
 				}
 			}
 		}
@@ -650,7 +690,7 @@ class calendar_bo
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
 				self::$cached_event_date_format != $date_format ||
-				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && (!$date || self::$cached_event['start'] < $date))
+				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && self::$cached_event_date != $date || (!$date || self::$cached_event['start'] < $date))
 			{
 				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
 
@@ -666,6 +706,7 @@ class calendar_bo
 					{
 						self::$cached_event = array_shift($events);
 						self::$cached_event_date_format = $date_format;
+						self::$cached_event_date = $date;
 						$return =& self::$cached_event;
 					}
 				}
@@ -744,6 +785,8 @@ class calendar_bo
 		for($ts = $start_ts; $ts < $end_ts; $ts += DAY_s)
 		{
 			$search_date_ymd = (int)$this->date2string($ts);
+
+			//error_log('insert_all_repetitions search_date = ' . $search_date_ymd . ' => ' . print_r($recur_exceptions, true));
 
 			$have_exception = !is_null($recur_exceptions) && isset($recur_exceptions[$search_date_ymd]);
 
@@ -910,7 +953,7 @@ class calendar_bo
 	 * We do some caching here, as the resource itself might not do it.
 	 *
 	 * @param string $uid string with one-letter resource-type and numerical resource-id, eg. "r19"
-	 * @return array/boolean array with keys res_id,cat_id,name,useable (name definied by max_quantity in $this->resources),rights,responsible or false if $uid is not found
+	 * @return array|boolean array with keys res_id,cat_id,name,useable (name definied by max_quantity in $this->resources),rights,responsible or false if $uid is not found
 	 */
 	function resource_info($uid)
 	{
@@ -924,7 +967,7 @@ class calendar_bo
 					'res_id'    => $uid,
 					'email' => $GLOBALS['egw']->accounts->id2name($uid,'account_email'),
 					'name'  => trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
-									$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
+					$GLOBALS['egw']->accounts->id2name($uid,'account_lastname')),
 					'type'  => $GLOBALS['egw']->accounts->get_type($uid),
 				);
 			}
@@ -970,7 +1013,6 @@ class calendar_bo
 		if ($other && !is_numeric($other))
 		{
 			$resource = $this->resource_info($other);
-
 			return $needed & $resource['rights'];
 		}
 		if (is_int($event) && $event == 0)
@@ -981,7 +1023,7 @@ class calendar_bo
 		{
 			if (!is_array($event))
 			{
-				$event = $this->read($event,$date_to_read,True,$date_format);	// = no ACL check !!!
+				$event = $this->read($event,$date_to_read,true,$date_format);	// = no ACL check !!!
 			}
 			if (!is_array($event))
 			{
@@ -994,9 +1036,7 @@ class calendar_bo
 			$owner = $event['owner'];
 			$private = !$event['public'];
 		}
-		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$grants = $this->grants[$owner];
-
 		if (is_array($event) && $needed == EGW_ACL_READ)
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
@@ -1006,7 +1046,7 @@ class calendar_bo
 			{
 				foreach($event['participants'] as $uid => $accept)
 				{
-					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
+					if ($uid == $this->user || $uid < 0 && in_array($this->user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite READ and PRIVAT grant
 						$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
@@ -1031,14 +1071,13 @@ class calendar_bo
 				error_log(__METHOD__." no participants for event:".print_r($event,true));
 			}
 		}
-
 		if ($GLOBALS['egw']->accounts->get_type($owner) == 'g' && $needed == EGW_ACL_ADD)
 		{
-			$access = False;	// a group can't be the owner of an event
+			$access = false;	// a group can't be the owner of an event
 		}
 		else
 		{
-			$access = $user == $owner || $grants & $needed && (!$private || $grants & EGW_ACL_PRIVATE);
+			$access = ($this->user == $owner) || $grants & $needed && (!$private || $grants & EGW_ACL_PRIVATE);
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'check_perms'))
 		{
@@ -1063,54 +1102,54 @@ class calendar_bo
 		switch(gettype($date))
 		{
 			case 'string':	// YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss[Z|[+-]hh:mm] string
-				if (is_numeric($date) && $date > 21000000)
+			if (is_numeric($date) && $date > 21000000)
+			{
+				$date = (int) $date;	// this is already as timestamp
+				break;
+			}
+			// evaluate evtl. added timezone
+			if (strlen($date) > 12)
+			{
+				if (substr($date,-1) == 'Z')
 				{
-					$date = (int) $date;	// this is already as timestamp
-					break;
+					$time_offset = date('Z');
 				}
-				// evaluate evtl. added timezone
-				if (strlen($date) > 12)
+				elseif(preg_match('/([+-]{1})([0-9]{2}):?([0-9]{2})$/',$date,$matches))
 				{
-					if (substr($date,-1) == 'Z')
-					{
-						$time_offset = date('Z');
-					}
-					elseif(preg_match('/([+-]{1})([0-9]{2}):?([0-9]{2})$/',$date,$matches))
-					{
-						$time_offset = date('Z')-($matches[1] == '+' ? 1 : -1)*(3600*$matches[2]+60*$matches[3]);
-					}
+					$time_offset = date('Z')-($matches[1] == '+' ? 1 : -1)*(3600*$matches[2]+60*$matches[3]);
 				}
-				// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
-				$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
-				$date = array(
-					'year'   => (int) substr($date,0,4),
-					'month'  => (int) substr($date,4,2),
-					'day'    => (int) substr($date,6,2),
-					'hour'   => (int) substr($date,8,2),
-					'minute' => (int) substr($date,10,2),
-					'second' => (int) substr($date,12,2),
-				);
-				// fall-through
+			}
+			// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
+			$date = str_replace(array('-',':','T','Z',' ','+'),'',$date);
+			$date = array(
+				'year'   => (int) substr($date,0,4),
+				'month'  => (int) substr($date,4,2),
+				'day'    => (int) substr($date,6,2),
+				'hour'   => (int) substr($date,8,2),
+				'minute' => (int) substr($date,10,2),
+				'second' => (int) substr($date,12,2),
+			);
+			// fall-through
 			case 'array':	// day, month and year keys
-				if (isset($date['raw']) && $date['raw'])	// we already have a timestamp
-				{
-					$date = $date['raw'];
-					break;
-				}
-				if (!isset($date['year']) && isset($date['full']))
-				{
-					$date['year']  = (int) substr($date['full'],0,4);
-					$date['month'] = (int) substr($date['full'],4,2);
-					$date['day']   = (int) substr($date['full'],6,2);
-				}
-				$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],
-					(int) (isset($date['day']) ? $date['day'] : $date['mday']),(int)$date['year']);
+			if (isset($date['raw']) && $date['raw'])	// we already have a timestamp
+			{
+				$date = $date['raw'];
 				break;
+			}
+			if (!isset($date['year']) && isset($date['full']))
+			{
+				$date['year']  = (int) substr($date['full'],0,4);
+				$date['month'] = (int) substr($date['full'],4,2);
+				$date['day']   = (int) substr($date['full'],6,2);
+			}
+			$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],
+			(int) (isset($date['day']) ? $date['day'] : $date['mday']),(int)$date['year']);
+			break;
 			case 'integer':		// already a timestamp
-				break;
+			break;
 			default:		// eg. boolean, means now in user-time (!)
-				$date = $this->now_su;
-				break;
+			$date = $this->now_su;
+			break;
 		}
 		if ($time_offset)
 		{
@@ -1261,6 +1300,7 @@ class calendar_bo
 			EGW_ACL_EDIT    => 'ACL_EDIT',
 			EGW_ACL_DELETE  => 'ACL_DELETE',
 			EGW_ACL_PRIVATE => 'ACL_PRIVATE',
+			EGW_ACL_FREEBUSY => 'ACL_FREEBUSY',
 		);
 		for($i = 2; $i < func_num_args(); ++$i)
 		{
@@ -1430,7 +1470,7 @@ class calendar_bo
 	/**
 	* Converts a participant into a (readable) user- or resource-name
 	*
-	* @param $id string/int id of user or resource
+	* @param $id string|int id of user or resource
 	* @return string with name
 	*/
 	function participant_name($id,$use_type=false)
@@ -1471,11 +1511,13 @@ class calendar_bo
 		$names = array();
 		foreach($event['participants'] as $id => $status)
 		{
+			calendar_so::split_status($status,$quantity,$role);
+
 			if ($status == 'G' && !$show_group_invitation) continue;	// dont show group-invitation
 
 			if (!$long_status)
 			{
-				switch($status)
+				switch($status[0])
 				{
 					case 'A':	// accepted
 						$status = html::image('calendar','agt_action_success',$this->verbose_status[$status]);
@@ -1499,7 +1541,26 @@ class calendar_bo
 			{
 				$status = '('.$this->verbose_status[$status].')';
 			}
-			$names[$id] = $this->participant_name($id).' '.$status;
+			$names[$id] = $this->participant_name($id).($quantity > 1 ? ' ('.$quantity.')' : '').' '.$status;
+
+			// add role, if not a regular participant
+			if ($role != 'REQ-PARTICIPANT')
+			{
+				if (isset($this->roles[$role]))
+				{
+					$role = lang($this->roles[$role]);
+				}
+				// allow to use cats as roles (beside regular iCal ones)
+				elseif (substr($role,0,6) == 'X-CAT-' && ($cat_id = (int)substr($role,6)) > 0)
+				{
+					$role = $GLOBALS['egw']->categories->id2name($cat_id);
+				}
+				else
+				{
+					$role = lang(str_replace('X-','',$role));
+				}
+				$names[$id] .= ' '.$role;
+			}
 		}
 		return $names;
 	}
@@ -1518,7 +1579,7 @@ class calendar_bo
 		$color = 0;
 		if (!is_object($this->cats))
 		{
-			$this->cats =& CreateObject('phpgwapi.categories','','calendar');
+			$this->cats = CreateObject('phpgwapi.categories','','calendar');
 		}
 		foreach(explode(',',$category) as $cat_id)
 		{
@@ -1540,7 +1601,9 @@ class calendar_bo
 		return $cats;
 	}
 
-	/* This is called only by list_cals().  It was moved here to remove fatal error in php5 beta4 */
+	/**
+	 *  This is called only by list_cals().  It was moved here to remove fatal error in php5 beta4
+	 */
 	function _list_cals_add($id,&$users,&$groups)
 	{
 		$name = $GLOBALS['egw']->common->grab_owner_name($id);
@@ -1560,9 +1623,10 @@ class calendar_bo
 	}
 
 	/**
-	* generate list of user- / group-calendars for the selectbox in the header
-	* @return alphabeticaly sorted array with groups first and then users
-	*/
+	 * generate list of user- / group-calendars for the selectbox in the header
+	 *
+	 * @return array alphabeticaly sorted array with groups first and then users: $name => array('grantor'=>$id,'value'=>['g_'.]$id,'name'=>$name)
+	 */
 	function list_cals()
 	{
 		$users = $groups = array();
@@ -1667,7 +1731,7 @@ class calendar_bo
 		{
 			if (!is_object($this->holidays))
 			{
-				$this->holidays =& CreateObject('calendar.boholiday');
+				$this->holidays = CreateObject('calendar.boholiday');
 			}
 			$this->holidays->prepare_read_holidays($year);
 			$this->cached_holidays[$year] = $this->holidays->read_holiday();
@@ -1675,7 +1739,7 @@ class calendar_bo
 			// search for birthdays
 			if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
 			{
-				$contacts =& CreateObject('phpgwapi.contacts');
+				$contacts = CreateObject('phpgwapi.contacts');
 				$bdays =& $contacts->read(0,0,array('id','n_family','n_given','n_prefix','n_middle','bday'),'',"bday=!'',n_family=!''",'ASC','bday');
 				if ($bdays)
 				{
@@ -1830,5 +1894,21 @@ class calendar_bo
 			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
 			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
 			($pw ? '&password='.urlencode($pw) : '');
+	}
+
+	/**
+	 * Check if the event is the whole day
+	 *
+	 * @param event
+	 * @return boolean true for whole day events
+	 */
+	function isWholeDay($event)
+	{
+		// check if the event is the whole day
+			$start = $this->date2array($event['start']);
+			$end = $this->date2array($event['end']);
+			$result = (!$start['hour'] && !$start['minute']
+				&& $end['hour'] == 23 && $end['minute'] == 59);
+			return $result;
 	}
 }

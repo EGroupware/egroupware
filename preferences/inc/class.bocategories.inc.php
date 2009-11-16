@@ -96,7 +96,7 @@
 		{
 			$data['type']   = $data['type'] ? $data['type'] : '';
 			$data['cat_id'] = $data['cat_id'] ? $data['cat_id'] : '';
-			return $this->cats->exists($data['type'],$data['cat_name'],$data['type'] == 'subs' ? 0 : $data['cat_id'],$data['type'] != 'subs' ? 0 : $data['cat_id']);
+			return $this->cats->exists($data['type'],$data['cat_name'],$data['type'] == 'subs' ? 0 : $data['cat_id'],$data['type'] != 'subs' ? 0 : $data['cat_id'], $data['cat_access']);
 		}
 
 		function formatted_list($format,$type,$cat_parent,$global_cats)
@@ -126,18 +126,20 @@
 				{
 					$exists = $this->exists(array
 					(
-						'type'     => 'appandmains',
-						'cat_name' => $values['name'],
-						'cat_id'   => $values['id']
+						'type'       => 'appandmains',
+						'cat_name'   => $values['name'],
+						'cat_id'     => $values['id'],
+						'cat_access' => $values['access']
 					));
 				}
 				else
 				{
 					$exists = $this->exists(array
 					(
-						'type'     => 'appandsubs',
-						'cat_name' => $values['name'],
-						'cat_id'   => $values['id']
+						'type'       => 'appandsubs',
+						'cat_name'   => $values['name'],
+						'cat_id'     => $values['id'],
+						'cat_access' => $values['access']
 					));
 				}
 

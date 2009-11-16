@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -111,15 +111,17 @@ class infolog_hooks
 	}
 
 	/**
-	 * populates $GLOBALS['settings'] for the preferences
+	 * populates $settings for the preferences
+	 *
+	 * @return array
 	 */
 	static function settings()
 	{
 		/* Setup some values to fill the array of this app's settings below */
-		$ui = new infolog_ui();	// need some labels from
+		$info = new infolog_bo();	// need some labels from
 		$filters = $show_home = array();
 		$show_home[] = lang("DON'T show InfoLog");
-		foreach($ui->filters as $key => $label)
+		foreach($info->filters as $key => $label)
 		{
 			$show_home[$key] = $filters[$key] = lang($label);
 		}
@@ -144,7 +146,7 @@ class infolog_hooks
 		);
 
 		/* Settings array for this app */
-		$GLOBALS['settings'] = array(
+		$settings = array(
 			'defaultFilter' => array(
 				'type'   => 'select',
 				'label'  => 'Default Filter for InfoLog',
@@ -206,6 +208,15 @@ class infolog_hooks
 				'xmlrpc' => True,
 				'admin'  => False
 			),
+			'limit_des_lines' => array(
+				'type'   => 'input',
+				'size'   => 5,
+				'label'  => 'Limit number of description lines (default 5, 0 for no limit)',
+				'name'   => 'limit_des_lines',
+				'help'   => 'How many describtion lines should be directly visible. Further lines are available via a scrollbar.',
+				'xmlrpc' => True,
+				'admin'  => False
+			),
 			'set_start' => array(
 				'type'   => 'select',
 				'label'  => 'Startdate for new entries',
@@ -223,14 +234,14 @@ class infolog_hooks
 				'type'   => 'multiselect',
 				'label'  => 'Which types should the calendar show',
 				'name'   => 'cal_show',
-				'values' => $ui->bo->enums['type'],
+				'values' => $info->enums['type'],
 				'help'   => 'Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.',
 				'xmlrpc' => True,
 				'admin'  => False
 			),
 			'cat_add_default' => array(
 				'type'   => 'select',
-				'label'  => 'Default category for new Infolog entries',
+				'label'  => 'Default categorie for new Infolog entries',
 				'name'   => 'cat_add_default',
 				'values' => self::all_cats(),
 				'help'   => 'You can choose a categorie to be preselected, when you create a new Infolog entry',
@@ -241,7 +252,7 @@ class infolog_hooks
 		);
 
 		// notification preferences
-		$GLOBALS['settings']['notify_creator'] = array(
+		$settings['notify_creator'] = array(
 			'type'   => 'check',
 			'label'  => 'Receive notifications about own items',
 			'name'   => 'notify_creator',
@@ -249,7 +260,7 @@ class infolog_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		$GLOBALS['settings']['notify_assigned'] = array(
+		$settings['notify_assigned'] = array(
 			'type'   => 'select',
 			'label'  => 'Receive notifications about items assigned to you',
 			'name'   => 'notify_assigned',
@@ -272,7 +283,7 @@ class infolog_hooks
 			'2d'  => lang('%1 days in advance',2),
 			'3d'  => lang('%1 days in advance',3),
 		);
-		$GLOBALS['settings']['notify_due_delegated'] = array(
+		$settings['notify_due_delegated'] = array(
 			'type'   => 'select',
 			'label'  => 'Receive notifications about due entries you delegated',
 			'name'   => 'notify_due_delegated',
@@ -281,7 +292,7 @@ class infolog_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		$GLOBALS['settings']['notify_due_responsible'] = array(
+		$settings['notify_due_responsible'] = array(
 			'type'   => 'select',
 			'label'  => 'Receive notifications about due entries you are responsible for',
 			'name'   => 'notify_due_responsible',
@@ -290,7 +301,7 @@ class infolog_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		$GLOBALS['settings']['notify_start_delegated'] = array(
+		$settings['notify_start_delegated'] = array(
 			'type'   => 'select',
 			'label'  => 'Receive notifications about starting entries you delegated',
 			'name'   => 'notify_start_delegated',
@@ -299,7 +310,7 @@ class infolog_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		$GLOBALS['settings']['notify_start_responsible'] = array(
+		$settings['notify_start_responsible'] = array(
 			'type'   => 'select',
 			'label'  => 'Receive notifications about starting entries you are responsible for',
 			'name'   => 'notify_start_responsible',
@@ -309,7 +320,7 @@ class infolog_hooks
 			'admin'  => False,
 		);
 
-		return true;	// otherwise prefs say it cant find the file ;-)
+		return $settings;
 	}
 
 	/**
@@ -320,6 +331,7 @@ class infolog_hooks
 	private static function all_cats()
 	{
 		$categories = new categories('','infolog');
+		$accountId = $GLOBALS['egw_info']['user']['account_id'];
 
 		foreach((array)$categories->return_sorted_array(0,False,'','','',true) as $cat)
 		{
@@ -328,6 +340,14 @@ class infolog_hooks
 			if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 			{
 				$s .= ' &#9830;';
+			}
+			elseif ($cat['owner'] != $accountId)
+			{
+				$s .= '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+			}
+			elseif ($cat['access'] == 'private')
+			{
+				$s .= ' &#9829;';
 			}
 			$sel_options[$cat['id']] = $s;	// 0.9.14 only
 		}
@@ -346,10 +366,7 @@ class infolog_hooks
 		if ($data['prefs']['notify_due_delegated'] || $data['prefs']['notify_due_responsible'] ||
 			$data['prefs']['notify_start_delegated'] || $data['prefs']['notify_start_responsible'])
 		{
-			require_once(EGW_API_INC.'/class.asyncservice.inc.php');
-
-			$async =& new asyncservice();
-			//$async->cancel_timer('infolog-async-notification');
+			$async = new asyncservice();
 
 			if (!$async->read('infolog-async-notification'))
 			{

@@ -872,7 +872,8 @@ class addressbook_so
 	/**
 	 * Get the availible distribution lists for a user
 	 *
-	 * @param int $required=EGW_ACL_READ required rights on the list
+	 * @param int $required=EGW_ACL_READ required rights on the list or multiple rights or'ed together,
+	 * 	to return only lists fullfilling all the given rights
 	 * @param string $extra_labels=null first labels if given (already translated)
 	 * @return array with id => label pairs or false if backend does not support lists
 	 */
@@ -883,7 +884,7 @@ class addressbook_so
 		$uids = array();
 		foreach($this->grants as $uid => $rights)
 		{
-			if ($rights & $required)
+			if (($rights & $required) == $required)
 			{
 				$uids[] = $uid;
 			}

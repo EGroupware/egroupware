@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-8 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-9 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -116,6 +116,12 @@ class calendar_uiviews extends calendar_ui
 	var $wholeDayPosCounter=1;
 
 	/**
+	 * Switch to disable private data and possibility to view and edit events
+	 * in case of a public view (sitemgr)
+	 */
+	var $allowEdit = true;
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $set_states=null to manualy set / change one of the states, default NULL = use $_REQUEST
@@ -155,7 +161,7 @@ class calendar_uiviews extends calendar_ui
 			$this->dragdrop = new dragdrop();
 			// if the object would auto-disable itself unset object
 			// to avoid unneccesary dragdrop calls later
-			if(!$this->dragdrop->validateBrowser()) { $this->dragdrop = false; }
+			if(!$this->dragdrop->validateBrowser()) $this->dragdrop = false;
 		}
 	}
 
@@ -344,7 +350,10 @@ class calendar_uiviews extends calendar_ui
 				'date' => $this->bo->date2string($week_start),
 			);
 			$title = lang('Wk').' '.adodb_date('W',$week_start);
-			$title = html::a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
+			if ($this->allowEdit)
+			{
+				$title = html::a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
+			}
 
 			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
@@ -452,19 +461,19 @@ class calendar_uiviews extends calendar_ui
 
         #	temporarly disabled, because it collides with the title for the website
         #
-	#	// add navigation for previous and next
-	#	// prev. week
-	#	$GLOBALS['egw_info']['flags']['app_header'] = html::a_href(html::image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
-	#		'menuaction' => $this->view_menuaction,
-	#		'date'       => date('Ymd',$this->first-$days*DAY_s),
-	#		)) . ' &nbsp; <b>'.$GLOBALS['egw_info']['flags']['app_header'];
-	#	// next week
-	#	$GLOBALS['egw_info']['flags']['app_header'] .= '</b> &nbsp; '.html::a_href(html::image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
-	#		'menuaction' => $this->view_menuaction,
-	#		'date'       => date('Ymd',$this->last+$days*DAY_s),
-	#		));
-	#
-	#		$class = $class == 'row_on' ? 'th' : 'row_on';
+		#	// add navigation for previous and next
+		#	// prev. week
+		#	$GLOBALS['egw_info']['flags']['app_header'] = html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
+		#		'menuaction' => $this->view_menuaction,
+		#		'date'       => date('Ymd',$this->first-$days*DAY_s),
+		#		)) . ' &nbsp; <b>'.$GLOBALS['egw_info']['flags']['app_header'];
+		#	// next week
+		#	$GLOBALS['egw_info']['flags']['app_header'] .= '</b> &nbsp; '.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
+		#		'menuaction' => $this->view_menuaction,
+		#		'date'       => date('Ymd',$this->last+$days*DAY_s),
+		#		));
+		#
+		#		$class = $class == 'row_on' ? 'th' : 'row_on';
 		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
 
 		$search_params = array(
@@ -933,16 +942,33 @@ class calendar_uiviews extends calendar_ui
 
 		if ($short_title === true)
 		{
-			$title = html::a_href($title,$day_view,'',
-				!isset($this->holidays[$day_ymd])?' title="'.lang('Dayview').'"':'');
+			if ($this->allowEdit)
+			{
+				$title = html::a_href($title,$day_view,'',
+					!isset($this->holidays[$day_ymd])?' title="'.lang('Dayview').'"':'');
+			}
 		}
 		elseif ($short_title === false)
 		{
 			// add arrows to go to the previous and next day (dayview only)
 			$day_view['date'] = $this->bo->date2string($ts -= 12*HOUR_s);
-			$title = html::a_href(html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' &nbsp; '.$title;
+			if ($this->allowEdit)
+			{
+				$title = html::a_href(html::image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' &nbsp; '.$title;
+			}
+			else
+			{
+				$title = $day_view.' &nbsp; '.$title;
+			}
 			$day_view['date'] = $this->bo->date2string($ts += 48*HOUR_s);
-			$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
+			if ($this->allowEdit)
+			{
+				$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
+			}
+			else
+			{
+				$title .= ' &nbsp; '.$day_view;
+			}
 		}
 		$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calDayColHeader '.$class.'"'.($holidays ? ' title="'.$holidays.'"':'').'>'.
 			$title."</div>\n";
@@ -978,8 +1004,12 @@ class calendar_uiviews extends calendar_ui
 				$droppableID='drop_'.$droppableDateTime.'_O'.$owner;
 
 				$html .= $indent."\t".'<div id="' . $droppableID . '" style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
-					'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";
-
+					'%;" class="calAddEvent"';
+				if ($this->allowEdit)
+				{
+					$html .= ' onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"';
+				}
+				$html .= '></div>'."\n";
 				if(is_object($this->dragdrop) && $dropPermission)
 				{
 					$this->dragdrop->addDroppable(
@@ -1098,7 +1128,7 @@ class calendar_uiviews extends calendar_ui
 	{
 		if ($this->debug > 1 || $this->debug==='eventWidget') $this->bo->debug_message('uiviews::eventWidget(%1,width=%2)',False,$event,$width);
 
-		if($this->use_time_grid && $event['whole_day_on_top']) { $block='event_widget_wholeday_on_top'; }
+		if($this->use_time_grid && $event['whole_day_on_top']) $block = 'event_widget_wholeday_on_top';
 
 		static $tpl = False;
 		if (!$tpl)
@@ -1147,21 +1177,24 @@ class calendar_uiviews extends calendar_ui
 
 		// seperate each participant types
 		$part_array = array();
-		foreach($this->bo->participants($event) as $part_key => $participant)
-		{
-			if(is_numeric($part_key))
-			{
-				$part_array[lang('Participants')][$part_key] = $participant;
-			}
-			elseif(isset($this->bo->resources[$part_key{0}]))
-			{
-				 $part_array[((isset($this->bo->resources[$part_key{0}]['participants_header'])) ? $this->bo->resources[$part_key{0}]['participants_header'] : lang($this->bo->resources[$part_key{0}]['app']))][$part_key] = $participant;
-			}
-		}
-		foreach($part_array as $part_group => $participant)
-		{
-			$participants .= $this->add_nonempty($participant,$part_group,True,False);
-		}
+		if ($this->allowEdit)
+ 		{
+			foreach($this->bo->participants($event) as $part_key => $participant)
+ 			{
+				if(is_numeric($part_key))
+				{
+					$part_array[lang('Participants')][$part_key] = $participant;
+				}
+				elseif(isset($this->bo->resources[$part_key[0]]))
+				{
+					 $part_array[((isset($this->bo->resources[$part_key[0]]['participants_header'])) ? $this->bo->resources[$part_key[0]]['participants_header'] : lang($this->bo->resources[$part_key[0]]['app']))][$part_key] = $participant;
+				}
+ 			}
+			foreach($part_array as $part_group => $participant)
+ 			{
+				$participants .= $this->add_nonempty($participant,$part_group,True,False);
+ 			}
+ 		}
 		// as we only deal with percentual widht, we consider only the full dayview (1 colum) as NOT small
 		$small = $this->view != 'day' || $width < 50;
 		// $small = $width <= $small_trigger_width
@@ -1231,12 +1264,11 @@ class calendar_uiviews extends calendar_ui
 		{
 			$view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
 			$view_link_confirm_text=lang('do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
-			$popup = $is_private ? '' : ' onclick="'.$this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;"';
-
+			$popup = ($is_private || ! $this->allowEdit) ? '' : ' onclick="'.$this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;"';
 		}
 		else
 		{
-			$popup = $is_private ? '' : ' onclick="'.$this->popup($view_link).'; return false;"';
+			$popup = ($is_private || ! $this->allowEdit) ? '' : ' onclick="'.$this->popup($view_link).'; return false;"';
 		}
 		//_debug_array($event);
 		//echo $event['id']."?<br>";
@@ -1602,11 +1634,11 @@ class calendar_uiviews extends calendar_ui
 					if ($this->day >= 15) $prev = $t_arr;		// we stay in the same month
 					$prev['day'] = $this->day < 15 ? 15 : 1;
 					$half = $this->bo->date2string($prev);
-					$title = html::a_href(html::image('phpgwpai','first',lang('back one month'),$options=' alt="<<"'),array(
+					$title = html::a_href(html::image('phpgwapi','first',lang('back one month'),$options=' alt="<<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $full,
 					)) . ' &nbsp; '.
-					html::a_href(html::image('phpgwpai','left',lang('back half a month'),$options=' alt="<"'),array(
+					html::a_href(html::image('phpgwapi','left',lang('back half a month'),$options=' alt="<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $half,
 					)) . ' &nbsp; '.$title;
@@ -1628,11 +1660,11 @@ class calendar_uiviews extends calendar_ui
 					if ($this->day < 15) $next = $t_arr;		// we stay in the same month
 					$next['day'] = $this->day < 15 ? 15 : 1;
 					$half = $this->bo->date2string($next);
-					$title .= ' &nbsp; '.html::a_href(html::image('phpgwpai','right',lang('forward half a month'),$options=' alt=">>"'),array(
+					$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',lang('forward half a month'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $half,
 					)). ' &nbsp; '.
-					html::a_href(html::image('phpgwpai','last',lang('forward one month'),$options=' alt=">>"'),array(
+					html::a_href(html::image('phpgwapi','last',lang('forward one month'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => $full,
 					));
@@ -1678,12 +1710,12 @@ class calendar_uiviews extends calendar_ui
 			else
 			{
 				// prev. week
-				$title = html::a_href(html::image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
+				$title = html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => date('Ymd',$t-7*DAY_s),
 				)) . ' &nbsp; <b>'.$title;
 				// next week
-				$title .= '</b> &nbsp; '.html::a_href(html::image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
+				$title .= '</b> &nbsp; '.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
 					'menuaction' => $this->view_menuaction,
 					'date'       => date('Ymd',$t+7*DAY_s),
 				));
@@ -1737,14 +1769,14 @@ class calendar_uiviews extends calendar_ui
 			{
 				if (!$i)	// prev. day only for the first day
 				{
-					$title = html::a_href(html::image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
+					$title = html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => date('Ymd',$start-DAY_s),
 					)) . ' &nbsp; '.$title;
 				}
 				if ($i == $days-1)	// next day only for the last day
 				{
-					$title .= ' &nbsp; '.html::a_href(html::image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
+					$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
 						'menuaction' => $this->view_menuaction,
 						'date'       => date('Ymd',$start+DAY_s),
 					));

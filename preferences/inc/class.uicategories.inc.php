@@ -180,7 +180,7 @@
 
 // ------------------------------ end nextmatch ------------------------------------------
 
-//------------------- list header variable template-declarations ------------------------- 
+//------------------- list header variable template-declarations -------------------------
 
 			$GLOBALS['egw']->template->set_var('sort_name',$this->nextmatchs->show_sort_order($this->sort,'cat_name',$this->order,'/index.php',lang('Name'),$link_data));
 			$GLOBALS['egw']->template->set_var('sort_description',$this->nextmatchs->show_sort_order($this->sort,'cat_description',$this->order,'/index.php',lang('Description'),$link_data));
@@ -215,6 +215,8 @@
 				}
 				$GLOBALS['egw']->template->set_var('color',$gray < 128 ? 'style="color: white;"' : '');
 
+				$accountId = $GLOBALS['egw_info']['user']['account_id'];
+
 				if ($cat['app_name'] == 'phpgw')
 				{
 					$appendix = '&lt;' . lang('Global') . '&gt;';
@@ -222,6 +224,10 @@
 				elseif ($cat['owner'] == '-1')
 				{
 					$appendix = '&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['egw_info']['apps'][$cats_app]['title'] . '&gt;';
+				}
+				elseif ($cat['owner'] != $accountId)
+				{
+					$appendix = '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
 				}
 				else
 				{

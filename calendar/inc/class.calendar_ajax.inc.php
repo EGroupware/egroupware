@@ -52,7 +52,7 @@ class calendar_ajax {
 
 		$conflicts=$this->calendar->update($event);
 
-		$response =& new xajaxResponse();
+		$response = new xajaxResponse();
 		if(!is_array($conflicts))
 		{
 			$response->addRedirect('');

@@ -31,6 +31,16 @@ class addressbook_sql extends so_sql
 	var $grants;
 
 	/**
+	 * join to show only active account (and not already expired ones)
+	 */
+	const ACOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id';
+	/**
+	 * filter to show only active account (and not already expired ones)
+	 * UNIX_TIMESTAMP(NOW()) gets replaced with value of time() in the code!
+	 */
+	const ACOUNT_ACTIVE_FILTER = '(account_expires IS NULL OR account_expires = -1 OR account_expires > UNIX_TIMESTAMP(NOW()))';
+
+	/**
 	 * internal name of the id, gets mapped to uid
 	 *
 	 * @var string
@@ -277,7 +287,7 @@ class addressbook_sql extends so_sql
 		{
 			foreach($criteria as $col => $val)
 			{
-				if ($col[0] == '#')	// search for a value in a certain custom field
+				if ($col[0] === '#')	// search for a value in a certain custom field
 				{
 					$valarray=array();
 					# val may be a list of values, constructed by multiple select fields, to be able to do the contains feature of adv-search
@@ -298,12 +308,12 @@ class addressbook_sql extends so_sql
 					}
 					$search_customfields = true;
 				}
-				elseif($col == 'cat_id')	// search in comma-sep. cat-column
+				elseif($col === 'cat_id')	// search in comma-sep. cat-column
 				{
 					$criteria = array_merge($criteria,$this->_cat_search($val));
 					unset($criteria[$col]);
 				}
-				elseif($col == 'contact_value')
+				elseif($col === 'contact_value')
 				{
 					if ($order_by[0] == '#')
 					{
@@ -390,11 +400,19 @@ class addressbook_sql extends so_sql
 				unset($criteria['owner']);
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
-			if ($this->db->Type != 'mysql' && preg_match("/(\w+<>'')/",$order_by,$matches))
+			if ($this->db->Type != 'mysql' && preg_match("/([a-zA-Z_.]+)<>''/",$order_by,$matches))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 				$extra_cols[] = $matches[1];
+				$extra_cols[] = $matches[1]."<>''";
 			}
+		}
+		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
+		if (!$owner && substr($this->account_repository,0,3) == 'sql' &&
+			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
+		{
+			$join .= self::ACOUNT_ACTIVE_JOIN;
+			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
 		}
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 
@@ -589,11 +607,23 @@ class addressbook_sql extends so_sql
 	 */
 	function read($keys,$extra_cols='',$join='')
 	{
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+		} else {
+			$minimum_uid_length = 8;
+		}
+
 		if (!is_array($keys) && !is_numeric($keys))
 		{
 			$keys = array('contact_uid' => $keys);
 		}
-		return parent::read($keys,$extra_cols,$join);
+		$contact = parent::read($keys,$extra_cols,$join);
+		// enforce a minium uid strength
+		if (is_array($contact) && (!isset($contact['uid'])
+				|| strlen($contact['uid']) < $minimum_uid_length)) {
+			parent::update(array('uid' => common::generate_uid('addressbook',$contact['id'])));
+		}
+		return $contact;
 	}
 
 	/**
@@ -605,6 +635,12 @@ class addressbook_sql extends so_sql
 	 */
 	function save($keys=null)
 	{
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
+		} else {
+			$minimum_uid_length = 8;
+		}
+
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
 
 		$new_entry = !$this->data['id'];
@@ -631,8 +667,8 @@ class addressbook_sql extends so_sql
 			}
 		}
 		// enforce a minium uid strength
-		if (!$err && ($new_entry || isset($this->data['uid'])) && (strlen($this->data['uid']) < 20 || is_numeric($this->data['uid'])))
-		{
+		if (!$err && (!isset($this->data['uid'])
+				|| strlen($this->data['uid']) < $minimum_uid_length)) {
 			parent::update(array('uid' => common::generate_uid('addressbook',$this->data['id'])));
 			//echo "<p>set uid={$this->data['uid']}, etag={$this->data['etag']}</p>";
 		}

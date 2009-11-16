@@ -5,7 +5,7 @@
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -71,7 +71,7 @@ class addressbook_ui extends addressbook_bo
 		$this->config =& $GLOBALS['egw_info']['server'];
 
 		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
-		if (!$this->config['contact_export_limit'])
+		if ($this->config['contact_export_limit'])
 		{
 			$this->config['export_limit'] = $this->config['contact_export_limit'];
 		}
@@ -260,6 +260,9 @@ class addressbook_ui extends addressbook_bo
 				'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
 			);
 		}
+		// if there is any export limit set, pass it on to the nextmatch, to be evaluated by the export
+		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
+
 		$sel_options['action'] += array(
 			'merge'  => lang('Merge into first or account, deletes all other!'),
 			'cat_add' => lang('Add or delete Categoies'), // add a categirie to multible addresses
@@ -318,6 +321,7 @@ class addressbook_ui extends addressbook_bo
 		if (!isset($sel_options['org_view'][(string) $content['nm']['org_view']]))
 		{
 			$org_name = array();
+			if (strpos($content['nm']['org_view'],'*AND*')!== false) $content['nm']['org_view'] = str_replace('*AND*','&',$content['nm']['org_view']);
 			foreach(explode('|||',$content['nm']['org_view']) as $part)
 			{
 				list(,$name) = explode(':',$part,2);
@@ -397,6 +401,7 @@ class addressbook_ui extends addressbook_bo
 		if (count($checked) > 1)	// use a nicely formatted org-name as title in infolog
 		{
 			$parts = array();
+			if (strpos($org,'*AND*')!== false) $org = str_replace('*AND*','&',$org);
 			foreach(explode('|||',$org) as $part)
 			{
 				list(,$part) = explode(':',$part,2);
@@ -422,7 +427,7 @@ class addressbook_ui extends addressbook_bo
 		$query['filter2'] = (int)$list;
 		$this->action($email_type,array(),true,$success,$failed,$action_msg,$query,$msg);
 
-		$response =& new xajaxResponse();
+		$response = new xajaxResponse();
 
 		if ($success) $response->addScript($GLOBALS['egw']->js->body['onLoad']);
 
@@ -884,6 +889,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			if ($query['org_view'])	// view the contacts of one organisation only
 			{
+				if (strpos($query['org_view'],'*AND*')!== false) $query['org_view'] = str_replace('*AND*','&',$query['org_view']);
 				foreach(explode('|||',$query['org_view']) as $part)
 				{
 					list($name,$value) = explode(':',$part,2);
@@ -1072,11 +1078,8 @@ class addressbook_ui extends addressbook_bo
 			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
 			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
 		}
-		if ($show_distributionlist) {
-			$readonlys['no_distrib_lists'] =true;
-		} else {
-			$readonlys['no_distrib_lists'] =false;
-		}
+		$readonlys['no_distrib_lists'] = (bool)$show_distributionlist;
+
 		if (!$this->prefs['no_auto_hide'])
 		{
 			// disable photo column, if view contains no photo(s)
@@ -1088,6 +1091,9 @@ class addressbook_ui extends addressbook_bo
 		}
 		// disable customfields column, if we have no customefield(s)
 		if (!$this->customfields/* || !$this->prefs['no_auto_hide'] && !$customfields*/) $rows['no_customfields'] = true;
+
+		// disable filemanger icon if user has no access to filemanager
+		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
 
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
@@ -1109,7 +1115,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		if($query['advanced_search'])
 		{
-				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Advanced search');
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Advanced search');
 		}
 		if ($query['cat_id'])
 		{
@@ -1167,7 +1173,7 @@ class addressbook_ui extends addressbook_bo
 	}
 
 	/**
-	 * Get the availible addressbooks of the user
+	 * Get the available addressbooks of the user
 	 *
 	 * @param int $required=EGW_ACL_READ required rights on the addressbook
 	 * @param string $extra_label first label if given (already translated)
@@ -1243,6 +1249,12 @@ class addressbook_ui extends addressbook_bo
 					if ($content['id'] && $content['org_name'] && $content['change_org'])
 					{
 						$old_org_entry = $this->read($content['id']);
+					}
+					if (isset($contact['n_family']) && isset($contact['n_given'])
+						&& $contact['n_family'] != $old_org_entry['n_family']
+						&& $contact['n_given'] != $old_org_entry['n_given'])
+					{
+						unset($content['n_fn']);
 					}
 					if ($this->save($content))
 					{
@@ -1549,7 +1561,7 @@ class addressbook_ui extends addressbook_bo
 			'n_suffix' => $n_suffix,
 			'org_name' => $org_name,
 		);
-		$response =& new xajaxResponse();
+		$response = new xajaxResponse();
 		$response->addScript("setOptions('".addslashes(implode("\b",$this->fileas_options($names)))."');");
 
 		return $response->getXML();
@@ -2025,7 +2037,7 @@ $readonlys['button[vcard]'] = true;
 			return lang("Document '%1' does not exist or is not readable for you!",$document);
 		}
 		require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_merge.inc.php');
-		$document_merge =& new addressbook_merge();
+		$document_merge = new addressbook_merge();
 
 		return $document_merge->download($document,$ids);
 	}

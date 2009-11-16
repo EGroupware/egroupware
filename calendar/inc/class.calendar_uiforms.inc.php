@@ -25,7 +25,7 @@
 class calendar_uiforms extends calendar_ui
 {
 	var $public_functions = array(
-		'freetimesearch'  => True,
+		'freetimesearch'  => true,
 		'edit' => true,
 		'export' => true,
 		'import' => true,
@@ -53,6 +53,15 @@ class calendar_uiforms extends calendar_ui
 	var $locktime_default=1;
 
 	/**
+	 * Set Logging
+	 *
+	 * @var boolean
+	 */
+	var $log = false;
+	var $logfile="/tmp/calendar-edit";
+
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -63,6 +72,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$this->durations[$n*60] = sprintf('%d:%02d',$n/60,$n%60);
 		}
+		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir'].'/calendar-edit';
 	}
 
 	/**
@@ -123,19 +133,17 @@ class calendar_uiforms extends calendar_ui
 
 			if (is_numeric($uid))
 			{
-				$participants[$uid] = $participant_types['u'][$uid] = $uid == $this->user ? 'A' : 'U';
+				$participants[$uid] = $participant_types['u'][$uid] =
+					calendar_so::combine_status($uid == $this->user ? 'A' : 'U',1,$uid == $this->user ? 'CHAIR' : 'REQ-PARTICIPANT');
 			}
 			elseif (is_array($this->bo->resources[$uid[0]]))
 			{
 				$res_data = $this->bo->resources[$uid[0]];
 				list($id,$quantity) = explode(':',substr($uid,1));
-				$participants[$uid] = $participant_types[$uid[0]][$id] = ($res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U').
-					((int) $quantity > 1 ? (int)$quantity : '');
-				// if new_status == 'x', resource is not bookable
-				if(strpos($participant_types[$uid[0]][$id],'x') !== false)
+				if (($status = $res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U'))
 				{
-					unset($participant_types[$uid[0]][$id]);
-					unset($participants[$uid]);
+					$participants[$uid] = $participant_types[$uid[0]][$id] =
+						calendar_so::combine_status($status,$quantity,'REQ-PARTICIPANT');
 				}
 			}
 		}
@@ -158,6 +166,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function process_edit($content)
 	{
+		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($content)."\n",3,$this->logfile);
 		$referer=$this->view_menuaction;
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
@@ -233,12 +242,14 @@ class calendar_uiforms extends calendar_ui
 				$event['recur_data'] = 1 << (int)date('w',$event['start']);
 			}
 			$event['participants'] = $event['participant_types'] = array();
+
 			foreach($content['participants'] as $key => $data)
 			{
 				switch($key)
 				{
 					case 'delete':		// handled in default
 					case 'quantity':	// handled in new_resource
+					case 'role':		// handled in add, account or resource
 					case 'cal_resources':
 						break;
 
@@ -248,21 +259,22 @@ class calendar_uiforms extends calendar_ui
 						if (($email = $_POST['exec']['participants']['resource']['query']) &&
 							(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
 						{
+							$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
 							// check if email belongs to account or contact --> prefer them over just emails
 							if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')))
 							{
-								$event['participants'][$data] = $event['participant_types']['u'][$data] = 'U';
+								$event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
 							}
 							elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
 								'email' => $matches[2],
 								'email_home' => $matches[2],
 							),true,'','','',false,'OR')))
 							{
-								$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = 'U';
+								$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = $status;
 							}
 							else
 							{
-								$event['participants']['e'.$email] = $event['participant_types']['e'][$email] = 'U';
+								$event['participants']['e'.$email] = $event['participant_types']['e'][$email] = $status;
 							}
 						}
 						elseif (!$content['participants']['account'] && !$content['participants']['resource'])
@@ -305,7 +317,7 @@ class calendar_uiforms extends calendar_ui
 									break;
 								}
 							}
-							if ($uid && $id) 
+							if ($uid && $id)
 							{
 								$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 								$event['participants'][$uid] = $event['participant_types'][$type][$id] = $status.((int) $quantity > 1 ? (int)$quantity : '');
@@ -320,16 +332,20 @@ class calendar_uiforms extends calendar_ui
 					case 'account':
 						foreach(is_array($data) ? $data : explode(',',$data) as $uid)
 						{
-							if ($uid) $event['participants'][$uid] = $event['participant_types']['u'][$uid] =
-								$uid == $this->bo->user ? 'A' : 'U';
+							if ($uid)
+							{
+								$event['participants'][$uid] = $event['participant_types']['u'][$uid] =
+									calendar_so::combine_status($uid == $this->bo->user ? 'A' : 'U',1,$content['participants']['role']);
+							}
 						}
 						break;
 
 					default:		// existing participant row
-						foreach(array('uid','status','status_recurrence','quantity') as $name)
+						foreach(array('uid','status','status_recurrence','quantity','role') as $name)
 						{
 							$$name = $data[$name];
 						}
+						if (!$status) $status = $data['old_status']; // fix etemplate bug
 						if ($content['participants']['delete'][$uid])
 						{
 							$uid = false;	// entry has been deleted
@@ -348,10 +364,33 @@ class calendar_uiforms extends calendar_ui
 							}
 							if ($data['old_status'] != $status)
 							{
-								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE && !$status_recurrence ? $content['participants']['status_date'] : 0))
+								if ($content['edit_single'] ||
+									$event['recur_type'] != MCAL_RECUR_NONE && !$status_recurrence )
+								{
+									$recur_date = $content['participants']['status_date'];
+								}
+								else $recur_date = 0;
+								if ($this->bo->set_status($event['id'],$uid,$status,$recur_date))
 								{
 									// refreshing the calendar-view with the changed participant-status
-									$msg = lang('Status changed');
+									if($event['recur_type'] != MCAL_RECUR_NONE)
+									{
+										$msg = lang('Status for all future scheduled days changed');
+									}
+									else
+									{
+										if(isset($content['edit_single']))
+										{
+											$msg = lang('Status for this particular day changed');
+											// prevent accidentally creating a real exception afterwards
+											$view = true;
+											$hide_delete = true;
+										}
+										else
+										{
+											$msg = lang('Status changed');
+										}
+									}
 									if (!$preserv['no_popup'])
 									{
 										$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
@@ -364,7 +403,7 @@ class calendar_uiforms extends calendar_ui
 							if ($uid && $status != 'G')
 							{
 								$event['participants'][$uid] = $event['participant_types'][$type][$id] =
-									$status.((int) $quantity > 1 ? (int)$quantity : '');
+									calendar_so::combine_status($status,$quantity,$role);
 							}
 						}
 						break;
@@ -373,6 +412,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		$preserv = array(
 			'view'        => $view,
+			'hide_delete' => $hide_delete,
 			'edit_single' => $content['edit_single'],
 			'actual_date' => $content['actual_date'],
 			'referer'     => $referer,
@@ -408,21 +448,38 @@ class calendar_uiforms extends calendar_ui
 			// fall through
 		case 'mail':
 		case 'save':
+		//case 'print':
 		case 'apply':
-			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
+			unset($old_event);
+			if ($event['id'])
 			{
-				switch ($button)
+				$old_event = $this->bo->read($event['id']);
+
+				if (!$this->bo->check_perms(EGW_ACL_EDIT, $old_event))
 				{
-					case 'mail':	// just mail without edit-rights is ok
+					if ($button == 'mail')	// just mail without edit-rights is ok
+					{
 						$js = $this->custom_mail($event,false);
-						break 2;
-					case 'print':	// just print without edit-rights is ok
+						break;
+					}
+					if ($button == 'print')	// just print without edit-rights is ok
+					{
 						$js = $this->custom_print($event,false);
-						break 2;
+						break;
+					}
+					// now we can handle a possible status update
+					$uid = $this->bo->user;
+					$recur_date = ($content['edit_single'] ? $content['edit_single'] : 0);
+					$old_status = $this->bo->so->get_recurrences($event['id'], $uid);
+					if (isset($old_status[$recur_date]) && $old_status[$recur_date] == $event['participants'][$uid]) break;
+					$msg = lang('Status updated');
+					$this->bo->set_status($event['id'], $uid, $event['participants'][$uid][0], $recur_date);
+					$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
+							'menuaction' => $referer,
+							'msg' => $msg,
+						))).'\';';
+					break;
 				}
-				$msg = lang('Permission denied');
-				$button = '';
-				break;
 			}
 			if ($event['start'] > $event['end'])
 			{
@@ -457,30 +514,99 @@ class calendar_uiforms extends calendar_ui
 			}
 			if ($content['edit_single'])	// we edited a single event from a series
 			{
-				$event['reference'] = $event['id'];
-				unset($event['id']);
-				unset($event['uid']);
-				$conflicts = $this->bo->update($event,$ignore_conflicts);
-				if (!is_array($conflicts) && $conflicts)
+				// let's compare with the original instance
+				$old_event = $this->bo->read($event['id'], $content['edit_single']);
+				$event['non_blocking'] = empty($event['non_blocking']) ? 0: $event['non_blocking'];
+				$categories = $event['category'];
+				$event['category'] = implode(',', $event['category']);
+				$participants = $event['participants']; // save the status information
+
+				$unchanged = true;
+				foreach (array('start','end','owner','title','description','category',
+					'alarm','location','priority','public','special','non_blocking') as $key)
 				{
+					//error_log('edit_event test ' . $key . ': '. $old_event[$key] . ' == ' .$event[$key]);
+					if ((isset($old_event[$key]) || isset($event[$key]))
+						&& $old_event[$key] != $event[$key]) $unchanged = false;
+				}
+				// only update the stati of the exception
+				if ($unchanged)
+				{
+					foreach ($participants as $uid => $status)
+					{
+						if (!isset($old_event['participants'][$uid])
+							|| !$old_event['participants'][$uid]
+							|| $old_event['participants'][$uid][0] != $status)
+						{
+							$this->bo->set_status($old_event['id'], $uid, $status, $content['edit_single']);
+							$unchanged = false;
+						}
+						unset($old_event['participants'][$uid]);
+					}
+					foreach ($old_event['participants'] as $uid => $status)
+					{
+						// delete the removed participants
+						$this->bo->set_status($old_event['id'], $uid, 'G', $content['edit_single']);
+						$unchanged = false;
+					}
+					if (!$unchanged)
+					{
+						$msg = lang('Status updated');
+						$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
+							'menuaction' => $referer,
+							'msg' => $msg,
+						))).'\';';
+					}
+					break;
+				}
+
+				// now we make a true exception
+				$event['category'] = $categories;
+				$event['reference'] = $content['edit_single'];
+
+				$id = 1;
+				$alarms = array();
+				foreach ($event['alarm'] as $alarm)
+				{
+					// get a temporary non-conflicting, numeric id
+					$alarm['id'] = $id;
+					$alarm['time'] = $event['start'] - $alarm['offset'];
+					unset($alarm['cal_id']);
+					$alarms[$id] = $alarm;
+					$id++;
+				}
+				$event['alarm'] = $alarms;
+				unset($event['id']);
+				$conflicts = $this->bo->update($event, $ignore_conflicts);
+				if (!is_array($conflicts) && $conflicts ||
+					count($conflicts) == 1 && ($conflict = array_pop($conflicts))
+					&& $conflict['id'] == $old_event['id'])
+				{
+					if (is_array($conflicts))
+					{
+						$this->bo->update($event, true);
+					}
 					// now we need to add the original start as recur-execption to the series
-					$recur_event = $this->bo->read($event['reference']);
-					$recur_event['recur_exception'][] = $content['edit_single'];
+					$recur_event = $this->bo->read($old_event['id']);
+					$recur_event['recur_exception'][] = $event['reference'];
 					unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
-					$this->bo->update($recur_event,true);	// no conflict check here
+					$this->bo->update($recur_event, true);	// no conflict check here
 					unset($recur_event);
 					unset($event['edit_single']);			// if we further edit it, it's just a single event
 					unset($preserv['edit_single']);
+					$conflicts = $event['id'];
+					unset($old_event);
 				}
 				else	// conflict or error, we need to reset everything to the state befor we tried to save it
 				{
-					$event['id'] = $event['reference'];
+					$event['id'] = $old_event['id'];
+					$event['uid'] = $old_event['uid'];
 					unset($event['reference']);
-					$event['uid'] = $content['uid'];
 				}
 			}
 			else	// we edited a non-reccuring event or the whole series
 			{
+				$participants = $event['participants']; // save the status information
 				$conflicts = $this->bo->update($event,$ignore_conflicts);
 				unset($event['ignore']);
 			}
@@ -489,7 +615,7 @@ class calendar_uiforms extends calendar_ui
 				$event['button_was'] = $button;	// remember for ignore
 				return $this->conflicts($event,$conflicts,$preserv);
 			}
-			elseif ($conflicts ===0)
+			elseif ($conflicts === 0)
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
@@ -501,8 +627,53 @@ class calendar_uiforms extends calendar_ui
 				$noerror=false;
 
 			}
-			elseif ($conflicts>0)
+			elseif ($conflicts > 0)
 			{
+				if (isset($old_event))
+				{
+					if (is_array($old_event['alarm']))
+					{
+						// remove deleted alarms
+						foreach ($old_event['alarm'] as $id => $alarm)
+						{
+							if (!isset($content['alarm'][$id]) ||
+									$alarm != $content['alarm'][$id])
+							{
+								$this->bo->delete_alarm($id);
+							}
+						}
+					}
+					// Update the stati
+					foreach ($participants as $uid => $status)
+					{
+						if (!isset($old_event['participants'][$uid])
+							|| !$old_event['participants'][$uid]
+							|| $old_event['participants'][$uid][0] != $status)
+						{
+							$this->bo->set_status($old_event['id'], $uid, $status, $content['edit_single']);
+						}
+						unset($old_event['participants'][$uid]);
+					}
+					foreach ($old_event['participants'] as $uid => $status)
+					{
+						// delete the removed participants
+						$this->bo->set_status($old_event['id'], $uid, 'G', $content['edit_single']);
+					}
+					if ($event['recur_type'] != MCAL_RECUR_NONE)
+					{
+						// remove deleted exception
+						$recur_exceptions = $this->bo->so->get_related($event['uid']);
+
+						foreach ($recur_exceptions as $id => $recur_date)
+						{
+							if (!in_array($recur_date, $event['recur_exception']))
+							{
+								$this->bo->delete($id);
+							}
+						}
+					}
+				}
+
 				$msg .= ($msg ? ', ' : '') . lang('Event saved');
 
 				// writing links for new entry, existing ones are handled by the widget itself
@@ -515,6 +686,10 @@ class calendar_uiforms extends calendar_ui
 					'msg' => $msg,
 				))).'\';';
 
+				if ($button == 'print')
+				{
+					$js = $this->custom_print($event,!$content['id'])."\n".$js;	// first open the new window and then update the view
+				}
 				if ($button == 'mail')
 				{
 					$js = $this->custom_mail($event,!$content['id'])."\n".$js;	// first open the new window and then update the view
@@ -527,7 +702,7 @@ class calendar_uiforms extends calendar_ui
 			break;
 
 		case 'cancel':
-			if($content['cancel_needs_refresh'])
+			if ($content['cancel_needs_refresh'])
 			{
 				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => $referer,
@@ -539,6 +714,15 @@ class calendar_uiforms extends calendar_ui
 		case 'delete':
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
+				if (!$content['edit_single'])
+				{
+					// We may delete a whole series
+					$recur_exceptions = $this->bo->so->get_related($event['uid']);
+					foreach ($recur_exceptions as $id => $recur_date)
+					{
+						$this->bo->delete($id);
+					}
+				}
 				$msg = lang('Event deleted');
 				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => $referer,
@@ -607,7 +791,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			$js .= 'window.close();';
 			echo "<html><body onload=\"$js\"></body></html>\n";
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_exit();
 		}
 		return $this->edit($event,$preserv,$msg,$js,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
 	}
@@ -646,6 +830,8 @@ class calendar_uiforms extends calendar_ui
 
 		foreach($event['participants'] as $uid => $status)
 		{
+			$toadd = '';
+
 			if ($status == 'R' || $uid == $this->user) continue;
 
 			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
@@ -654,7 +840,8 @@ class calendar_uiforms extends calendar_ui
 
 				$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
 
-				$to[] = $firstname.' '.$lastname.' <'.$email.'>';
+				$toadd = $firstname.' '.$lastname.' <'.$email.'>';
+				if (!in_array($toadd,$to)) $to[] = $toadd;
 			}
 			elseif ($uid < 0)
 			{
@@ -664,7 +851,9 @@ class calendar_uiforms extends calendar_ui
 
 					$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
 
-					$to[] = $firstname.' '.$lastname.' <'.$email.'>';
+					$toadd = $firstname.' '.$lastname.' <'.$email.'>';
+					// dont add groupmembers if they already rejected the event, or are the current user
+					if (!in_array($toadd,$to) && ($event['participants'][$uid] !== 'R' && $uid != $this->user)) $to[] = $toadd;
 				}
 			}
 			elseif(($info = $this->bo->resource_info($uid)))
@@ -675,7 +864,7 @@ class calendar_uiforms extends calendar_ui
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
 
 		$boical = new calendar_ical();
-		$ics = $boical->exportVCal(array($event),'2.0','request',false);
+		$ics = $boical->exportVCal(array($event),'2.0','REQUEST');
 
 		$ics_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'ics');
 		if(($f = fopen($ics_file,'w')))
@@ -697,6 +886,23 @@ class calendar_uiforms extends calendar_ui
 	}
 
 	/**
+	 * return javascript to open compose window to print the event
+	 *
+	 * @param array $event
+	 * @param boolean $added
+	 * @return string javascript window.open command
+	 */
+	function custom_print($event,$added)
+	{
+			$vars = array(
+			'menuaction'      => 'calendar.calendar_uiforms.edit',
+			'cal_id'      => $event['id'],
+			'print' => true,
+			);
+		return "window.open('".$GLOBALS['egw']->link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
+	}
+
+	/**
 	 * Edit a calendar event
 	 *
 	 * @param array $event=null Event to edit, if not $_GET['cal_id'] contains the event-id
@@ -711,7 +917,8 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function edit($event=null,$preserv=null,$msg='',$js = 'window.focus();',$link_to_id='')
 	{
-		$etpl =& CreateObject('etemplate.etemplate','calendar.edit');
+		$template = $_REQUEST['print'] ? 'calendar.print' : 'calendar.edit';
+		$etpl =& CreateObject('etemplate.etemplate',$template);
 		$sel_options = array(
 			'recur_type' => &$this->bo->recur_types,
 			'status'     => $this->bo->verbose_status,
@@ -719,6 +926,7 @@ class calendar_uiforms extends calendar_ui
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
+				//'print' => array('label' => 'Print', 'title' => 'Print this event'),
 				'mail' => array('label' => 'Mail all participants', 'title' => 'compose a mail to all participants after the event is saved'),
 			),
 			'status_recurrence' => array('' => 'for this event', 'A' => 'for all future events'),
@@ -766,9 +974,7 @@ class calendar_uiforms extends calendar_ui
 			if(isset($_GET['start'])) { $event['start'] = $_GET['start']; }
 			if(isset($_GET['end'])) { $event['end'] = $_GET['end']; }
 			// check if the event is the whole day
-			$start = $this->bo->date2array($event['start']);
-			$end = $this->bo->date2array($event['end']);
-			$event['whole_day'] = !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
+			$event['whole_day'] = $this->bo->isWholeDay($event);
 
 			$link_to_id = $event['id'];
 			if (!$add_link && !$event['id'] && isset($_GET['link_app']) && isset($_GET['link_id']) &&
@@ -874,7 +1080,11 @@ class calendar_uiforms extends calendar_ui
 								'uid'      => $member,
 								'status'   => 'G',
 							);
-							// read access is enought to invite participants, but you edit rights to change status
+							$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
+							$content['participants'][$row++]['title'] =
+								$GLOBALS['egw']->common->grab_owner_name($member);
+							// read access is enought to invite participants
+							// but you edit rights to change status
 							if (!$this->bo->check_perms(EGW_ACL_EDIT,0,$member))
 							{
 								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] =$readonlys[$row]['status']= true;
@@ -883,7 +1093,6 @@ class calendar_uiforms extends calendar_ui
 							{
 								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
 							}
-							$content['participants'][$row++]['title'] = $GLOBALS['egw']->common->grab_owner_name($member);
 						}
 					}
 				}
@@ -970,7 +1179,18 @@ class calendar_uiforms extends calendar_ui
 			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
 			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
 
-			$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
+			if ($content['reference'])
+			{
+				// recurrence exceptions can not be recurring events
+				foreach (array('recur_enddate','recur_interval','recur_exception','recur_type','recur_date','recur_data') as $name)
+				{
+					$readonlys[$name] = true;
+				}
+			}
+			else
+			{
+				$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
+			}
 		}
 		// disabling the custom fields tab, if there are none
 		$readonlys[$this->tabs] = array(
@@ -1107,7 +1327,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function freetimesearch($content = null)
 	{
-		$etpl =& CreateObject('etemplate.etemplate','calendar.freetimesearch');
+		$etpl = new etemplate('calendar.freetimesearch');
 
 		$sel_options['search_window'] = array(
 			7*DAY_s		=> lang('one week'),
@@ -1412,15 +1632,17 @@ class calendar_uiforms extends calendar_ui
 	/**
 	 * Export events as vCalendar version 2.0 files (iCal)
 	 *
-	 * @param int/array $content=0 numeric cal_id or submitted content from etempalte::exec
+	 * @param int|array $content=0 numeric cal_id or submitted content from etempalte::exec
 	 * @param boolean $return_error=false should an error-msg be returned or a regular page with it generated (default)
 	 * @return string error-msg if $return_error
 	 */
 	function export($content=0,$return_error=false)
 	{
+        $boical = new calendar_ical();
+		#error_log(__METHOD__.print_r($content,true));
 		if (is_numeric($cal_id = $content ? $content : $_REQUEST['cal_id']))
 		{
-			if (!($ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$cal_id,'2.0','PUBLISH',false)))
+			if (!($ical =& $boical->exportVCal(array($cal_id),'2.0','PUBLISH')))
 			{
 				$msg = lang('Permission denied');
 
@@ -1428,9 +1650,9 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				$GLOBALS['egw']->browser->content_header('event.ics','text/calendar',bytes($ical));
+				html::content_header('event.ics','text/calendar',bytes($ical));
 				echo $ical;
-				$GLOBALS['egw']->common->egw_exit();
+				common::egw_exit();
 			}
 		}
 		if (is_array($content))
@@ -1449,10 +1671,10 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				$ical =& ExecMethod2('calendar.calendar_ical.exportVCal',$events,'2.0'/*$content['version']*/,'PUBLISH',false);
-				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
+				$ical =& $boical->exportVCal($events,'2.0','PUBLISH');
+				html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
-				$GLOBALS['egw']->common->egw_exit();
+				common::egw_exit();
 			}
 		}
 		if (!is_array($content))
@@ -1469,7 +1691,7 @@ class calendar_uiforms extends calendar_ui
 		$content['msg'] = $msg;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Export');
-		$etpl =& CreateObject('etemplate.etemplate','calendar.export');
+		$etpl = new etemplate('calendar.export');
 
 		$etpl->exec('calendar.calendar_uiforms.export',$content);
 	}
@@ -1503,7 +1725,7 @@ class calendar_uiforms extends calendar_ui
 			'msg' => $msg,
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Import');
-		$etpl =& CreateObject('etemplate.etemplate','calendar.import');
+		$etpl = new etemplate('calendar.import');
 
 		$etpl->exec('calendar.calendar_uiforms.import',$content);
 	}

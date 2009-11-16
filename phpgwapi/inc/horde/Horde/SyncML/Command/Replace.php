@@ -1,21 +1,28 @@
 <?php
-
+/**
+ * eGroupWare - SyncML based on Horde 3
+ *
+ *
+ * Using the PEAR Log class (which need to be installed!)
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage horde
+ * @author Anthony Mills <amills@pyramid6.com>
+ * @copyright (c) The Horde Project (http://www.horde.org/)
+ * @version $Id$
+ */
 include_once 'Horde/SyncML/Command.php';
 
-/**
- * $Horde: framework/SyncML/SyncML/Command/Replace.php,v 1.7 2004/05/26 17:41:30 chuck Exp $
- *
- * Copyright 2003-2004 Anthony Mills <amills@pyramid6.com>
- *
- * See the enclosed file COPYING for license information (LGPL). If you
- * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
- *
- * @author  Anthony Mills <amills@pyramid6.com>
- * @version $Revision$
- * @since   Horde 3.0
- * @package Horde_SyncML
- */
 class Horde_SyncML_Command_Final extends Horde_SyncML_Command {
+
+    /**
+     * Name of the command.
+     *
+     * @var string
+     */
+    var $_cmdName = 'Replace';
 
     function output($currentCmdID, &$output)
     {

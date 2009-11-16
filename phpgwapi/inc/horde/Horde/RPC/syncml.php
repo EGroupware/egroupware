@@ -89,7 +89,7 @@ class Horde_RPC_syncml extends Horde_RPC {
         }
 
         require_once 'XML/WBXML/ContentHandler.php';
-        $this->_output = &new XML_WBXML_ContentHandler();
+        $this->_output = new XML_WBXML_ContentHandler();
 
         $this->_parse($request);
         $response = $this->_output->getOutput();
@@ -200,7 +200,7 @@ class Horde_RPC_syncml extends Horde_RPC {
             // Either <SyncML><SyncHdr> or <SyncML><SyncBody>
             if (!isset($this->_contentHandler)) {
                 // If not defined then create SyncHdr.
-                $this->_contentHandler = &new Horde_SyncML_SyncmlHdr();
+                $this->_contentHandler = new Horde_SyncML_SyncmlHdr();
                 $this->_contentHandler->setOutput($this->_output);
             }
 
@@ -233,7 +233,7 @@ class Horde_RPC_syncml extends Horde_RPC {
 
                 unset($this->_contentHandler);
 
-                $this->_contentHandler = &new Horde_SyncML_SyncmlBody();
+                $this->_contentHandler = new Horde_SyncML_SyncmlBody();
                 $this->_contentHandler->setOutput($this->_output);
             } else {
                 // No longer used.

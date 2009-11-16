@@ -1,6 +1,6 @@
 <?php
 
-include_once 'Horde/SyncML/Sync.php';
+include_once 'Horde/SyncML/Sync/SlowSync.php';
 
 /**
  * $Horde: framework/SyncML/SyncML/Sync/RefreshFromClientSync.php,v 1.8 2004/09/14 04:27:06 chuck Exp $
@@ -15,20 +15,9 @@ include_once 'Horde/SyncML/Sync.php';
  * @since   Horde 3.0
  * @package Horde_SyncML
  */
-class Horde_SyncML_Sync_RefreshFromClientSync extends Horde_SyncML_Sync {
-
+class Horde_SyncML_Sync_RefreshFromClientSync extends Horde_SyncML_Sync_SlowSync {
     /**
-     * We need to erase the current server contents, then we can add
+     * We needed to erase the current server contents, then we can add
      * the client's contents.
      */
-    function startSync($currentCmdID, &$output)
-    {
-        $deletes = $registry->call($this->targetLocURI, '/list', array());
-        foreach ($delete as $deletes) {
-            $registry->call($this->targetLocURI . '/delete', array($delete));
-        }
-
-        return $currentCmdID;
-    }
-
 }

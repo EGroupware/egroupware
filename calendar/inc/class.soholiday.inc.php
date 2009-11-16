@@ -192,7 +192,7 @@ class soholiday
 			echo 'HOLIDAY_TOTAL : '.$where.'<br>'."\n";
 		}
 		
-		$retval = $this->db->select($this->table,'count(*)',$where,__LINE__,__FILE__,false,'','calendar')->fetchSingle();
+		$retval = $this->db->select($this->table,'count(*)',$where,__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 
 		if($this->debug)
 		{

@@ -45,14 +45,14 @@
 			$this->bo =& CreateObject('calendar.boholiday');
 			$this->bo->check_admin();
 			$this->base_url = $this->bo->base_url;
-			$this->template_dir = $GLOBALS['egw']->common->get_tpl_dir('calendar');
+			$this->template_dir = common::get_tpl_dir('calendar');
 			$this->sb =& CreateObject('calendar.sbox');
 
 			// calendar does not work with hidden sidebox atm.
 			unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Holiday Management');
-			
+
 			$GLOBALS['egw']->template->set_var('help_msg',lang('<b>Please note</b>: The calendar use the holidays of your country, which is set to %1. You can change it in your %2.<br />Holidays are %3 automatic installed from %4. You can changed it in %5.',
 				'<b>'.$GLOBALS['egw_info']['user']['preferences']['common']['country'].'</b>','<a href="'.$GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'preferences.uisettings.index',
@@ -71,7 +71,7 @@
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			$GLOBALS['egw_info']['flags']['noappfooter'] = True;
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$p = &$GLOBALS['egw']->template;
 			$p->set_file(Array('locales'=>'locales.tpl'));
@@ -157,7 +157,7 @@
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			$GLOBALS['egw_info']['flags']['noappfooter'] = True;
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 			$p =& $GLOBALS['egw']->template;
 			$p->set_file(Array('locale'=>'locales.tpl'));
 			$p->set_block('locale','list','list');
@@ -210,7 +210,7 @@
 					{
 						$holidays[$i]['name'] = '&nbsp;';
 					}
-					
+
 					$var = Array(
 						'tr_color'		=> $tr_color,
 						'header_delete'=> lang('Delete'),
@@ -268,7 +268,7 @@
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			$GLOBALS['egw_info']['flags']['noappfooter'] = True;
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.($this->bo->id ? lang('Edit') : lang('Add')).' '.lang('Holiday');
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$t = &$GLOBALS['egw']->template;
 			$t->set_file(Array('holiday'=>'holiday.tpl','form_button'=>'form_button_script.tpl'));
@@ -277,13 +277,13 @@
 
 			if (@count($error))
 			{
-				$message = $GLOBALS['egw']->common->error_list($error);
+				$message = common::error_list($error);
 			}
 			else
 			{
 				$message = '';
 			}
-	
+
 			$var = Array(
 				'title_holiday' => ($this->bo->id ? lang('Edit') : lang('Add')).' '.lang('Holiday'),
 				'message'       => $message,
@@ -300,7 +300,7 @@
 			$this->display_item($t,lang('title'),'<input name="holiday[name]" size="60" maxlength="50" value="'.$holiday['name'].'">');
 
 // Date
-			$this->display_item($t,lang('Date'),$GLOBALS['egw']->common->dateformatorder($this->sb->getYears('holiday[year]',$holiday['occurence']>1900?$holiday['occurence']:0),$this->sb->getMonthText('holiday[month_num]',$holiday['month']),$this->sb->getDays('holiday[mday]',$holiday['day'])).
+			$this->display_item($t,lang('Date'),common::dateformatorder($this->sb->getYears('holiday[year]',$holiday['occurence']>1900?$holiday['occurence']:0),$this->sb->getMonthText('holiday[month_num]',$holiday['month']),$this->sb->getDays('holiday[mday]',$holiday['day'])).
 				'&nbsp;'.lang('Set a Year only for one-time / non-regular holidays.'));
 
 // Occurence
@@ -357,7 +357,7 @@
 					'menuaction'	=> 'calendar.uiholiday.admin'
 				);
 			}
-			
+
 			$t->set_var(Array(
 				'action_url_button'	=> $GLOBALS['egw']->link($this->base_url,$link_params),
 				'action_text_button'	=> lang('Cancel'),
@@ -365,7 +365,7 @@
 				'action_extra_field'	=> ''
 			));
 			$t->parse('cancel_button','form_button');
-			
+
 			if ($this->bo->id)
 			{
 				$link_params = Array(
@@ -396,7 +396,7 @@
 
 			$p =& CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(Array('form'=>'delete_common.tpl','form_button'=>'form_button_script.tpl'));
-		
+
 			$p->set_var('messages',lang('Are you sure you want to delete this Country ?')."<br>".$this->bo->locales[0]);
 
 			$var = Array(
@@ -428,15 +428,15 @@
 			{
 				return $this->edit_locale();
 			}
-			
+
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			$GLOBALS['egw_info']['flags']['noappfooter'] = True;
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$p =& CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(Array('form'=>'delete_common.tpl','form_button'=>'form_button_script.tpl'));
-		
+
 			$p->set_var('messages',lang('Are you sure you want to delete this holiday ?')."<br>".$holiday['name'].' ('.$this->bo->locales[0].') '.$this->bo->rule_string($holiday));
 
 			$var = Array(
@@ -468,7 +468,7 @@
 			}
 			$this->bo->year = 0;	// for a complete list with all years
 			$holidays = $this->bo->get_holiday_list();
-			
+
 			if (!is_array($holidays) || !count($holidays))
 			{
 				$this->admin();
@@ -479,11 +479,9 @@
 			if (isset($_GET['download']))
 			{
 				$locale = $this->bo->locales[0];
-				$browser =& CreateObject('phpgwapi.browser');
-				$browser->content_header("holidays.$locale.csv",'text/text');
-				unset($browser);
+				html::content_header("holidays.$locale.csv",'text/text');
 
-				echo "charset\t".$GLOBALS['egw']->translation->charset()."\n";
+				echo "charset\t".translation::charset()."\n";
 				$last_year = -1;
 				foreach($holidays as $holiday)
 				{
@@ -495,7 +493,7 @@
 					}
 					echo "$locale\t$holiday[name]\t$holiday[day]\t$holiday[month]\t$holiday[occurence]\t$holiday[dow]\t$holiday[observance_rule]\n";
 				}
-				$GLOBALS['egw']->common->egw_exit();
+				common::egw_exit();
 			}
 			if($this->debug)
 			{
@@ -508,13 +506,13 @@
 			$GLOBALS['egw_info']['flags']['noappheader']	= True;
 			$GLOBALS['egw_info']['flags']['noappfooter'] = True;
 			$GLOBALS['egw_info']['flags']['nofooter'] = True;
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			echo '<body onLoad="document.submitform.submit()">'."\n";
 			echo '<form action="'.$action.'" method="post" name="submitform">'."\n";
 
 			echo '<input type="hidden" name="locale" value="'.$this->bo->locales[0].'">'."\n";
-			echo '<input type="hidden" name="charset" value="'.$GLOBALS['egw']->translation->charset().'">'."\n";
+			echo '<input type="hidden" name="charset" value="'.translation::charset().'">'."\n";
 			foreach($holidays as $holiday)
 			{
 				echo '<input type="hidden" name="name[]" value="'.htmlspecialchars($holiday['name']).'">'."\n"

@@ -51,8 +51,8 @@ class Horde_RPC_syncml_wbxml extends Horde_RPC_syncml {
         }
 
 
-        $decoder = &new XML_WBXML_Decoder();
-        $this->_output = &new XML_WBXML_Encoder();
+        $decoder = new XML_WBXML_Decoder();
+        $this->_output = new XML_WBXML_Encoder();
 
         $decoder->setContentHandler($this);
 

@@ -4,6 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
  * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -96,6 +97,31 @@ class infolog_bo
 	var $max_line_chars = 40;
 
 	/**
+	 * Available filters
+	 *
+	 * @var array filter => label pairs
+	 */
+	var $filters = array(
+		'none'                     => 'no Filter',
+		'done'                     => 'done',
+		'responsible'              => 'responsible',
+		'responsible-open-today'   => 'responsible open',
+		'responsible-open-overdue' => 'responsible overdue',
+		'responsible-upcoming'     => 'responsible upcoming',
+		'delegated'                => 'delegated',
+		'delegated-open-today'     => 'delegated open',
+		'delegated-open-overdue'   => 'delegated overdue',
+		'delegated-upcoming'       => 'delegated upcomming',
+		'own'                      => 'own',
+		'own-open-today'           => 'own open',
+		'own-open-overdue'         => 'own overdue',
+		'own-upcoming'             => 'own upcoming',
+		'open-today'               => 'open',
+		'open-overdue'             => 'overdue',
+		'upcoming'                 => 'upcoming',
+	);
+
+	/**
 	 * Constructor Infolog BO
 	 *
 	 * @param int $info_id
@@ -129,7 +155,7 @@ class infolog_bo
 				'billed' => 'billed',			// -->  DONE
 				'template' => 'template',		// -->  cancelled
 				'nonactive' => 'nonactive',		// -->  cancelled
-				'archive' => 'archive' ),		// -->  cancelled
+				'archive' => 'archive' ), 		// -->  cancelled
 			'phone' => array(
 				'not-started' => 'call',		// iCal NEEDS-ACTION
 				'ongoing' => 'will-call',		// iCal IN-PROCESS
@@ -211,7 +237,7 @@ class infolog_bo
 		$this->user_time_now = time() + $this->tz_offset_s;
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
-		$this->so =& new infolog_so($this->grants);
+		$this->so = new infolog_so($this->grants);
 
 		if ($info_id)
 		{
@@ -488,10 +514,9 @@ class infolog_bo
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
 
 			// send email notifications and do the history logging
-			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
 			if (!is_object($this->tracking))
 			{
-				$this->tracking =& new infolog_tracking($this);
+				$this->tracking = new infolog_tracking($this);
 			}
 			$this->tracking->track($deleted,$info,$this->user,true);
 		}
@@ -508,7 +533,7 @@ class infolog_bo
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
 	* @return int/boolean info_id on a successfull write or false
 	*/
-	function write(&$values,$check_defaults=True,$touch_modified=True)
+	function write(&$values, $check_defaults=True, $touch_modified=True)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
 		if ($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
@@ -522,9 +547,9 @@ class infolog_bo
 			{
 				$responsible =& $values['info_responsible'];
 			}
-			if (!($status_only = in_array($this->user, $responsible)))	// responsible has implicit right to change status
+			if (!($status_only = in_array($this->user, (array)$responsible)))	// responsible has implicit right to change status
 			{
-				$status_only = !!array_intersect($responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
+				$status_only = !!array_intersect((array)$responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
 			}
 			if (!$status_only && $values['info_status'] != 'deleted')
 			{
@@ -553,8 +578,24 @@ class infolog_bo
 			if ($set_completed)
 			{
 				$values['info_datecompleted'] = $this->user_time_now;
-				$values['info_percent'] = '100%';
-				if (!in_array($values['info_status'],array('done','billed','cancelled'))) $values['info_status'] = 'done';
+				$values['info_percent'] = 100;
+				$forcestatus = true;
+				$status = 'done';
+				if (isset($values['info_type']) && !in_array($values['info_status'],array('done','billed','cancelled'))) {
+					$forcestatus = false;
+					echo "set_completed:"; _debug_array($this->status[$values['info_type']]);
+					if (isset($this->status[$values['info_type']]['done'])) {
+						$forcestatus = true;
+						$status = 'done';
+					} elseif (isset($this->status[$values['info_type']]['billed'])) {
+						$forcestatus = true;
+						$status = 'billed';
+					} elseif (isset($this->status[$values['info_type']]['cancelled'])) {
+						$forcestatus = true;
+						$status = 'cancelled';
+					}
+				}
+				if ($forcestatus && !in_array($values['info_status'],array('done','billed','cancelled'))) $values['info_status'] = $status;
 			}
 			$check_defaults = False;
 		}
@@ -567,11 +608,26 @@ class infolog_bo
 			}
 			if (in_array($values['info_status'],array('done','billed')))
 			{
-				$values['info_percent'] == '100%';
+				$values['info_percent'] = 100;
 			}
 			if ((int)$values['info_percent'] == 100 && !in_array($values['info_status'],array('done','billed','cancelled')))
 			{
-				$values['info_status'] = 'done';
+				//echo "check_defaults:"; _debug_array($this->status[$values['info_type']]);
+				//$values['info_status'] = 'done';
+				$status = 'done';
+				if (isset($values['info_type'])) {
+					if (isset($this->status[$values['info_type']]['done'])) {
+                        $status = 'done';
+					} elseif (isset($this->status[$values['info_type']]['billed'])) {
+						$status = 'billed';
+					} elseif (isset($this->status[$values['info_type']]['cancelled'])) {
+						$status = 'cancelled';
+					} else {
+						// since the comlete stati above do not exist for that type, dont change it
+						$status = $values['info_status'];
+					}
+				}
+				$values['info_status'] = $status;
 			}
 			if ($values['info_responsible'] && $values['info_status'] == 'offer')
 			{
@@ -603,7 +659,7 @@ class infolog_bo
 			// Should only an entry be updated which includes the original modification date?
 			// Used in the web-GUI to check against a modification by an other user while editing the entry.
 			// It's now disabled for xmlrpc, as otherwise the xmlrpc code need to be changed!
-			$xmprpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
+			$xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
 			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $values['info_datemodified']-$this->tz_offset_s : false;
 			$values['info_datemodified'] = $this->user_time_now;
 		}
@@ -611,6 +667,7 @@ class infolog_bo
 		{
 			$values['info_modifier'] = $this->so->user;
 		}
+		//_debug_array($values);
 		$to_write = $values;
 		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
 		// convert user- to system-time
@@ -663,7 +720,7 @@ class infolog_bo
 			// send email notifications and do the history logging
 			if (!is_object($this->tracking))
 			{
-				$this->tracking =& new infolog_tracking($this);
+				$this->tracking = new infolog_tracking($this);
 			}
 			$this->tracking->track($values,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
 		}
@@ -796,7 +853,12 @@ class infolog_bo
 		{
 			foreach ($_attachments as $attachment)
 			{
-				if(is_readable($attachment['tmp_name']))
+				$is_vfs = false;
+				if (parse_url($attachment['tmp_name'],PHP_URL_SCHEME) == 'vfs' && egw_vfs::is_readable($attachment['tmp_name']))
+				{
+					$is_vfs = true;
+				}
+				if(is_readable($attachment['tmp_name']) || $is_vfs)
 				{
 					egw_link::link('infolog',$info['link_to']['to_id'],'file',$attachment);
 				}
@@ -1018,7 +1080,7 @@ class infolog_bo
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
 			if (!$cat_id)
 			{
-				$cat_id = $this->categories->add(array('name' => $cat_name,'descr' => $cat_name));
+				$cat_id = $this->categories->add(array('name' => $cat_name, 'descr' => $cat_name, 'access' => 'private'));
 			}
 
 			if ($cat_id)
@@ -1089,7 +1151,7 @@ class infolog_bo
 			$GLOBALS['egw']->acl->acl($user);
 			$GLOBALS['egw']->acl->read_repository();
 			$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
-			$this->so =& new infolog_so($this->grants);	// so caches it's filters
+			$this->so = new infolog_so($this->grants);	// so caches it's filters
 
 			$notified_info_ids = array();
 			foreach(array(
@@ -1110,32 +1172,32 @@ class infolog_bo
 					// check if we already send a notification for that infolog entry, eg. starting and due on same day
 					if (in_array($info['info_id'],$notified_info_ids)) continue;
 
-					if (is_null($tracking) || $tracking->user != $user)
+					if (is_null($this->tracking) || $this->tracking->user != $user)
 					{
 						require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
-						$tracking = new infolog_tracking($this);
+						$this->tracking = new infolog_tracking($this);
 					}
 					switch($pref)
 					{
 						case 'notify_due_responsible':
 							$info['message'] = lang('%1 you are responsible for is due at %2',$this->enums['type'][$info['info_type']],
-								$tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
+								$this->tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
 							break;
 						case 'notify_due_delegated':
 							$info['message'] = lang('%1 you delegated is due at %2',$this->enums['type'][$info['info_type']],
-								$tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
+								$this->tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
 							break;
 						case 'notify_start_responsible':
 							$info['message'] = lang('%1 you are responsible for is starting at %2',$this->enums['type'][$info['info_type']],
-								$tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
+								$this->tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
 							break;
 						case 'notify_start_delegated':
 							$info['message'] = lang('%1 you delegated is starting at %2',$this->enums['type'][$info['info_type']],
-								$tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
+								$this->tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
 							break;
 					}
 					error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
-					$tracking->send_notification($info,null,$email,$user,$pref);
+					$this->tracking->send_notification($info,null,$email,$user,$pref);
 
 					$notified_info_ids[] = $info['info_id'];
 				}
@@ -1159,6 +1221,8 @@ class infolog_bo
 		'template'    => 'CANCELLED',
 		'nonactive'   => 'CANCELLED',
 		'archive'     => 'CANCELLED',
+		'deferred'    => 'NEEDS-ACTION',
+		'waiting'     => 'IN-PROCESS',
 	);
 
 	/** conversion of vtodo status to infolog status
@@ -1167,7 +1231,9 @@ class infolog_bo
 	 */
 	var $_vtodo2status = array(
 		'NEEDS-ACTION' => 'not-started',
+		'NEEDS ACTION' => 'not-started',
 		'IN-PROCESS'   => 'ongoing',
+		'IN PROCESS'   => 'ongoing',
 		'COMPLETED'    => 'done',
 		'CANCELLED'    => 'cancelled',
 	);
@@ -1222,5 +1288,129 @@ class infolog_bo
 			case 100:	return 'done';
 		}
 		return 'ongoing';
+	}
+
+	/**
+	 * Get the Parent ID of an InfoLog entry
+	 *
+	 * @param string $_guid
+	 * @return string parentID
+	 */
+	function getParentID($_guid)
+	{
+		#Horde::logMessage("getParentID($_guid)",  __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
+		$parentID = False;
+		$myfilter = array('col_filter' => array('info_uid'=>$_guid)) ;
+		if ($_guid && ($found=$this->search($myfilter)) && ($uidmatch = array_shift($found))) {
+			$parentID = $uidmatch['info_id'];
+		};
+		return $parentID;
+	}
+
+	/**
+	 * Try to find a matching db entry
+	 *
+	 * @param array $egwData   the vTODO data we try to find
+	 * @param boolean $relax=false if asked to relax, we only match against some key fields
+	 * @return the infolog_id of the matching entry or false (if none matches)
+	 */
+	function findVTODO($egwData, $relax=false)
+	{
+		$myfilter = array('col_filter' => array('info_uid'=>$egwData['info_uid'])) ;
+		if ($egwData['info_uid']
+			&& ($found = $this->search($myfilter))
+			&& ($uidmatch = array_shift($found)))
+		{
+			return $uidmatch['info_id'];
+		};
+		unset($egwData['info_uid']);
+
+		$filter = array();
+
+		$description = '';
+		if (!empty($egwData['info_des'])) {
+			$description = trim(preg_replace("/\r?\n?\\[[A-Z_]+:.*\\]/i", '', $egwData['info_des']));
+			unset($egwData['info_des']);
+			// Avoid quotation problems
+			$description = preg_replace("/[^\x20-\x7F].*/", '', $description);
+			if (strlen($description)) {
+				$filter['search'] = $description;
+			}
+		}
+
+		if ($egwData['info_id']
+			&& ($found = $this->read($egwData['info_id'])))
+		{
+			// We only do a simple consistency check
+			if ($found['info_subject'] == $egwData['info_subject']
+				&& strpos($found['info_des'], $description) === 0)
+			{
+				return $found['info_id'];
+			}
+		}
+		unset($egwData['info_id']);
+
+		// priority does not need to match
+		unset($egwData['info_priority']);
+
+		$filter['col_filter'] = $egwData;
+
+		if($foundItems = $this->search($filter)) {
+			if(count($foundItems) > 0) {
+				$itemIDs = array_keys($foundItems);
+				return $itemIDs[0];
+			}
+		}
+
+		$filter = array();
+
+		if (!$relax && strlen($description)) {
+			$filter['search'] = $description;
+		}
+
+		$filter['col_filter'] = $egwData;
+
+		// search for date only match
+		unset($filter['col_filter']['info_startdate']);
+		unset($filter['col_filter']['info_datecompleted']);
+
+		// try tasks without category
+		unset($filter['col_filter']['info_cat']);
+
+		#Horde::logMessage("findVTODO Filter\n"
+		#		. print_r($filter, true),
+		#		__FILE__, __LINE__, PEAR_LOG_DEBUG);
+		foreach ($this->search($filter) as $itemID => $taskData) {
+		#	Horde::logMessage("findVTODO Trying\n"
+		#		. print_r($taskData, true),
+		#		__FILE__, __LINE__, PEAR_LOG_DEBUG);
+			if (isset($egwData['info_cat'])
+					&& isset($taskData['info_cat']) && $taskData['info_cat']
+					&& $egwData['info_cat'] != $taskData['info_cat']) continue;
+			if (isset($egwData['info_startdate'])
+					&& isset($taskData['info_startdate']) && $taskData['info_startdate']) {
+				$parts = @getdate($taskData['info_startdate']);
+				$startdate = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
+				if ($egwData['info_startdate'] != $startdate) continue;
+			}
+			// some clients don't support DTSTART
+			if (isset($egwData['info_startdate'])
+					&& (!isset($taskData['info_startdate']) || !$taskData['info_startdate'])
+					&& !$relax) continue;
+			if (isset($egwData['info_datecompleted'])
+					&& isset($taskData['info_datecompleted']) && $taskData['info_datecompleted']) {
+				$parts = @getdate($taskData['info_datecompleted']);
+				$enddate = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
+				if ($egwData['info_datecompleted'] != $enddate) continue;
+			}
+			if ((isset($egwData['info_datecompleted'])
+					&& (!isset($taskData['info_datecompleted']) || !$taskData['info_datecompleted'])) ||
+				(!isset($egwData['info_datecompleted'])
+					&& isset($taskData['info_datecompleted']) && $taskData['info_datecompleted'])
+					&& !$relax) continue;
+			return($itemID);
+		}
+		return false;
 	}
 }

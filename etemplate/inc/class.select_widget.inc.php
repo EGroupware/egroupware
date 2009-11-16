@@ -22,7 +22,7 @@
 	 */
 	class select_widget
 	{
-		/** 
+		/**
 		 * exported methods of this class
 		 * @var array
 		 */
@@ -95,7 +95,7 @@
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
-		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
+		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
 		 * @param object &$tmpl reference to the template we belong too
@@ -184,6 +184,7 @@
 					{
 						$categories =& new categories('',$type3);
 					}
+					$accountId = $GLOBALS['egw_info']['user']['account_id'];
 					foreach((array)$categories->return_sorted_array(0,False,'','','',!$type) as $cat)
 					{
 						$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
@@ -191,6 +192,14 @@
 						if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 						{
 							$s .= ' &#9830;';
+						}
+						elseif ($cat['owner'] != $accountId)
+						{
+							$s .= '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+						}
+						elseif ($cat['access'] == 'private')
+						{
+							$s .= ' &#9829;';
 						}
 						if (!$tmpl->xslt)
 						{
@@ -212,7 +221,7 @@
 
 				case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
 					//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
-					if($type == 'owngroups') 
+					if($type == 'owngroups')
 					{
 						$type = 'groups';
 						$owngroups = true;
@@ -298,7 +307,7 @@
 					$cell['sel_options'] = $this->monthnames;
 					$value = intval($value);
 					break;
-					
+
 				case 'select-dow':	// options: rows[,0=summaries befor days, 1=summaries after days, 2=no summaries[,extraStyleMultiselect]]
 					if (!defined('MCAL_M_SUNDAY'))
 					{
@@ -309,14 +318,14 @@
 						define('MCAL_M_THURSDAY',16);
 						define('MCAL_M_FRIDAY',32);
 						define('MCAL_M_SATURDAY',64);
-						
+
 						define('MCAL_M_WEEKDAYS',62);
 						define('MCAL_M_WEEKEND',65);
 						define('MCAL_M_ALLDAYS',127);
 					}
 					$weekstart = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'];
 					$cell['sel_options'] = array();
-					if ($rows >= 2 && !$type) 
+					if ($rows >= 2 && !$type)
 					{
 						$cell['sel_options'] = array(
 							MCAL_M_ALLDAYS	=> 'all days',
@@ -335,7 +344,7 @@
 					);
 					if ($weekstart != 'Saturday') $cell['sel_options'][MCAL_M_SATURDAY] = 'saturday';
 					if ($weekstart == 'Monday') $cell['sel_options'][MCAL_M_SUNDAY] = 'sunday';
-					if ($rows >= 2 && $type == 1) 
+					if ($rows >= 2 && $type == 1)
 					{
 						$cell['sel_options'] += array(
 							MCAL_M_ALLDAYS	=> 'all days',
@@ -350,13 +359,13 @@
 						if (($value_in & $val) == $val)
 						{
 							$value[] = $val;
-							
-							if ($val == MCAL_M_ALLDAYS || 
+
+							if ($val == MCAL_M_ALLDAYS ||
 								$val == MCAL_M_WEEKDAYS && $value_in == MCAL_M_WEEKDAYS ||
 								$val == MCAL_M_WEEKEND && $value_in == MCAL_M_WEEKEND)
 							{
 								break;	// dont set the others
-							}			
+							}
 						}
 					}
 					if (!$readonly)
@@ -371,7 +380,7 @@
 					$type2 = 31;
 					$type3 = 1;
 					// fall-through
-					
+
 				case 'select-number':	// options: rows,min,max,decrement,suffix
 					$type = $type === '' ? 1 : intval($type);		// min
 					$type2 = $type2 === '' ? 10 : intval($type2);	// max
@@ -392,17 +401,17 @@
 					}
 					$cell['no_lang'] = True;
 					break;
-					
+
 				case 'select-hour':
 					for ($h = 0; $h <= 23; ++$h)
 					{
 						$cell['sel_options'][$h] = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ?
-							(($h % 12 ? $h % 12 : 12).' '.($h < 12 ? lang('am') : lang('pm'))) : 
+							(($h % 12 ? $h % 12 : 12).' '.($h < 12 ? lang('am') : lang('pm'))) :
 							sprintf('%02d',$h);
 					}
 					$cell['no_lang'] = True;
 					break;
-					
+
 				case 'select-app':	// type2: ''=users enabled apps, 'installed', 'all' = not installed ones too
 					$apps = array();
 					foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
@@ -468,7 +477,7 @@
 				}
 			}
 			$info = $show_type ? '('.$acc['account_type'].') ' : '';
-			
+
 			if ($acc['account_type'] == 'g')
 			{
 				$longnames = 1;
@@ -492,7 +501,7 @@
 			}
 			return $info;
 		}
-		
+
 		/**
 		 * postprocessing method, called after the submission of the form
 		 *
