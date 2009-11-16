@@ -279,7 +279,7 @@ class calendar_bo
 	 *	users  mixed integer user-id or array of user-id's to use, defaults to the current user
 	 *	cat_id mixed category-id or array of cat-id's, defaults to all if unset, 0 or False
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
-	 *  filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
+	 *	filter string filter-name, atm. 'all' or 'hideprivate'
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 *	dayswise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
@@ -291,6 +291,7 @@ class calendar_bo
 	 *		otherwise the original recuring event (with the first start- + enddate) is returned
 	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
 	 *  order column-names plus optional DESC|ASC separted by comma
+	 *  show_rejected if set rejected invitation are shown only when true, otherwise it depends on the cal-pref or a running query
 	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
 	 *  cols string|array columns to select, if set an iterator will be returned
@@ -302,17 +303,6 @@ class calendar_bo
 	function &search($params)
 	{
 		$params_in = $params;
-
-		unset($params['sql_filter']);	// dont allow to set it via UI or xmlrpc
-
-		// check if any resource wants to hook into
-		foreach($this->resources as $app => $data)
-		{
-			if (isset($data['search_filter']))
-			{
-				$params = ExecMethod($data['search_filter'],$params);
-			}
-		}
 
 		if (!isset($params['users']) || !$params['users'] ||
 			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
@@ -400,7 +390,7 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-		$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append'],$params['cfs']);
+			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append']);
 
 		if (isset($params['cols']))
 		{
