@@ -156,15 +156,39 @@ class categories
 			{
 				if (!is_array($val) && $val[0] === '!')
 				{
-					if ($cat[$col] == substr($val,1)) continue 2;	// 2 for BOTH foreach!
+					// also match against trimmed database entry on name and description fields
+					if (($col == 'name' || $col == 'description') && is_string($cat[$col]))
+					{
+						if ($cat[$col] == substr($val,1) || trim($cat[$col]) == substr($val,1)) continue 2;
+					}
+					else
+					{
+						if ($cat[$col] == substr($val,1)) continue 2;
+					}
 				}
 				elseif (is_array($val))
 				{
-					if (!in_array($cat[$col],$val)) continue 2;
+					// also match against trimmed database entry on name and description fields
+					if (($col == 'name' || $col == 'description') && is_string($cat[$col]))
+					{
+						if (!in_array($cat[$col],$val) && !in_array(trim($cat[$col]),$val)) continue 2;
+					}
+					else
+					{
+						if (!in_array($cat[$col],$val)) continue 2;
+					}
 				}
 				else
 				{
-					if ($cat[$col] != $val) continue 2;
+					// also match against trimmed database entry on name and description fields
+					if (($col == 'name' || $col == 'description') && is_string($cat[$col]))
+					{
+						if ($cat[$col] != $val && trim($cat[$col]) != $val) continue 2;
+					}
+					else
+					{
+						if ($cat[$col] != $val) continue 2;
+					}
 				}
 			}
 			// check if certain parent required
