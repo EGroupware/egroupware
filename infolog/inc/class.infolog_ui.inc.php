@@ -242,7 +242,8 @@ class infolog_ui
 	{
 		$for = @$values['session_for'] ? $values['session_for'] : @$this->called_by;
 		//echo "<p>$for: ".__METHOD__.'('.print_r($values,True).") called_by='$this->called_by', for='$for'<br />".function_backtrace()."</p>\n";
-		$GLOBALS['egw']->session->appsession($for.'session_data','infolog',array(
+		
+		$arrayToStore = array(
 			'search' => $values['search'],
 			'start'  => $values['start'],
 			'num_rows' => $values['num_rows'],
@@ -256,7 +257,13 @@ class infolog_ui
 			'action_title' => $values['action_title'],
 			'col_filter' => $values['col_filter'],
 			'session_for' => $for
-		));
+		);
+		if ($values['filter']=='bydate') 
+		{
+			$arrayToStore['startdate'] = $values['startdate'];
+			$arrayToStore['enddate'] = $values['enddate'];
+		}
+		$GLOBALS['egw']->session->appsession($for.'session_data','infolog',$arrayToStore);
 	}
 
 	/**
