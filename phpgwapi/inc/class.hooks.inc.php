@@ -153,7 +153,18 @@ class hooks
 			if (strpos($method,'::') !== false || count($parts) == 3 && $parts[1] != 'inc' && $parts[2] != 'php')
 			{
 				// new style hook with method string or static method (eg. 'class::method')
-				return ExecMethod($method,$args);
+				try
+				{
+					return ExecMethod($method,$args);
+				}
+				catch(egw_exception_assertion_failed $e)
+				{
+					if (substr($e->getMessage(),-19) == '.inc.php not found!')
+					{
+						return false;	// fail gracefully if hook class-file does not exists (like the old hooks do, eg. if app got removed)
+					}
+					throw $e;
+				}
 			}
 			// old style hook, with an include file
 			if ($try_unregistered && empty($method))
