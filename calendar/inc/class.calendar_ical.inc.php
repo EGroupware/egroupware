@@ -1479,6 +1479,10 @@ class calendar_ical extends calendar_boupdate
 					{
 						$event['tzid'] = $this->tzid;
 					}
+					else
+					{
+						$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
+					}
 					break;
 				case 'DTEND':
 					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
