@@ -425,15 +425,15 @@ final class notifications {
 					if($action == 'stop' || $action == 'fail') { break; } // stop running through chain				
 				}
 				// check if the user has been notified at all
-				if(!$user_notified) {
+				/*if(!$user_notified) {
 					error_log('Error: notification of receiver '.$receiver->handle.' failed for the following reasons:');
 					foreach($backend_errors as $id=>$backend_error) {
 						error_log($backend_error);
 					}
-				}
+				}*/
 			}
 			catch (Exception $exception_user) {
-				error_log('Error: notification of receiver '.$receiver->handle.' failed: '.$exception_user->getMessage());
+				//error_log('Error: notification of receiver '.$receiver->handle.' failed: '.$exception_user->getMessage());
 			}
 		}
 		return true;
