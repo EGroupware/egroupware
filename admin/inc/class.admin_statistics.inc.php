@@ -19,6 +19,8 @@ class admin_statistics
 	const CONFIG_LAST_SUBMIT = 'last_statistics_submit';
 	const CONFIG_POSTPONE_SUBMIT = 'postpone_statistics_submit';
 	const CONFIG_SUBMIT_ID = 'statistics_submit_id';
+	const CONFIG_COUNTRY = 'country_submit';
+	const CONFIG_USAGE_TYPE = 'usage_type_submit';
 	const CONFIG_INSTALL_TYPE = 'install_type_submit';
 
 	const SUBMIT_URL = 'http://www.egroupware-server.org/usage-statistic';
@@ -54,6 +56,8 @@ class admin_statistics
 			{
 				config::save_value(self::CONFIG_LAST_SUBMIT,time(),self::CONFIG_APP);
 				config::save_value(self::CONFIG_SUBMIT_ID,empty($content['submit_id']) ? '***none***' : $content['submit_id'],self::CONFIG_APP);
+				config::save_value(self::CONFIG_COUNTRY,empty($content['country']) ? '***multinational***' : $content['country'],self::CONFIG_APP);
+				config::save_value(self::CONFIG_USAGE_TYPE,$content['usage_type'],self::CONFIG_APP);
 				config::save_value(self::CONFIG_INSTALL_TYPE,$content['install_type'],self::CONFIG_APP);
 				config::save_value(self::CONFIG_POSTPONE_SUBMIT,null,self::CONFIG_APP);	// remove evtl. postpone time
 				$what = 'submited';
@@ -95,10 +99,20 @@ class admin_statistics
 		));
 		//_debug_array($content);
 
-		// use previous submit ID
+		// show previous submit ID
 		if ($config['statistics_submit_id'])
 		{
 			$content['submit_id'] = $config['statistics_submit_id'] == '***none***' ? '' : $config['statistics_submit_id'];
+		}
+		// show previous country
+		if ($config[self::CONFIG_COUNTRY])
+		{
+			$content['country'] = $config[self::CONFIG_COUNTRY] == '***multinational***' ? '' : $config[self::CONFIG_COUNTRY];
+		}
+		// show previous usage_type
+		if ($config[self::CONFIG_USAGE_TYPE])
+		{
+			$content['usage_type'] = $config[self::CONFIG_USAGE_TYPE];
 		}
 		// check if we detected svn or rpm/deb packages --> readonly
 		if ($content['install_type'] && isset($sel_options['install_type'][$content['install_type']]))
