@@ -106,7 +106,11 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
                                    array('text/plain' => '1.0'));
             $this->_writeDataStore('./contacts', 'text/vcard', '3.0', $output,
                                    array('text/x-vcard' => '2.1'));
+            $this->_writeDataStore('./card', 'text/vcard', '3.0', $output,
+                                   array('text/x-vcard' => '2.1'));
             $this->_writeDataStore('./tasks', 'text/calendar', '2.0', $output,
+                                   array('text/x-vcalendar' => '1.0'));
+            $this->_writeDataStore('./jobs', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));
             $this->_writeDataStore('./calendar', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));

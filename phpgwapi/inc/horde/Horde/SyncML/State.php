@@ -153,17 +153,17 @@ define('SERVER_SYNC_FINNISHED',		5);
 define('SERVER_SYNC_ACKNOWLEDGED',	6);
 
 // conflict management
-define('CONFLICT_CLIENT_WINNING',		0);
-define('CONFLICT_SERVER_WINNING',		1);
-define('CONFLICT_MERGE_DATA',			2);
+define('CONFLICT_CLIENT_WINNING',			0);
+define('CONFLICT_SERVER_WINNING',			1);
+define('CONFLICT_MERGE_DATA',				2);
 define('CONFLICT_RESOLVED_WITH_DUPLICATE',	3);
 define('CONFLICT_CLIENT_CHANGES_IGNORED',	4);
 define('CONFLICT_CLIENT_REFRESH_ENFORCED',	5);
 
 define('MAX_DATA',			19);
-define('MAX_ENTRIES',			10); // default
-define('MAX_GUID_SIZE',			64);
-define('MIN_MSG_LEFT',		       200); // Overhead
+define('MAX_ENTRIES',		10); // default
+define('MAX_GUID_SIZE',		64);
+define('MIN_MSG_LEFT',		200); // Overhead
 
 /**
  * The Horde_SyncML_State class provides a SyncML state object.
@@ -846,6 +846,7 @@ class Horde_SyncML_State {
 		$_type = str_replace('./','',$type);
 		switch (strtolower($_type)) {
 			case 'contacts':
+			case 'card':
 				return 'text/vcard';
 				break;
 
@@ -856,6 +857,7 @@ class Horde_SyncML_State {
 			case 'calendar':
 			case 'events':
 			case 'tasks':
+			case 'jobs':
 			case 'caltasks':
 				return 'text/calendar';
 				break;
@@ -892,6 +894,7 @@ class Horde_SyncML_State {
 		switch(strtolower($_type))
 		{
 			case 'contacts':
+			case 'card':
 				return 'contacts';
 				break;
 
@@ -900,6 +903,7 @@ class Horde_SyncML_State {
 				break;
 
 			case 'tasks':
+			case 'jobs':
 				return 'tasks';
 				break;
 
