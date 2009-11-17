@@ -59,14 +59,14 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			$state->incNumberOfElements();
 		}
 
-		$adds = &$state->getAddedItems($syncType);
-		Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		$adds =& $state->getAddedItems($syncType);
+		$conflicts =& $state->getConflictItems($syncType);
+		Horde::logMessage('SyncML: ' .count($adds). ' added items found for ' .$syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		Horde::logMessage('SyncML: ' . count($conflicts) . ' items to delete on client found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-		if(is_array($adds)) {
-			while($guid = array_shift($adds)) {
-
+		if (is_array($adds)) {
+			while ($guid = array_shift($adds)) {
 				$currentSize = $output->getOutputSize();
-
 				// return if we have to much data
 				if (($maxEntries && ($state->getNumberOfElements() >= $maxEntries)
 					&& isset($contentType['mayFragment'])
@@ -134,7 +134,39 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 				$state->incNumberOfElements();
 			}
 		}
+		// handle remote deletes due to conflicts
+		if (count($conflicts) > 0) {
+			while ($locid = array_shift($conflicts)) {
+				$currentSize = $output->getOutputSize();
+				// return if we have to much data
+				if (($maxEntries && ($state->getNumberOfElements() >= $maxEntries)
+					&& isset ($contentType['mayFragment'])
+					&& $contentType['mayFragment'])
+					|| ($maxMsgSize
+						&& (($currentSize +MIN_MSG_LEFT * 2) > $maxMsgSize))) {
+					// put the item back in the queue
+					$conflicts[] = $locid;
+					$state->maxNumberOfElements();
+					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
+					return $currentCmdID;
+				}
+				Horde :: logMessage("SyncML: delete client locid: $locid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				// Create a Delete request for client.
+				$cmd = new Horde_SyncML_Command_Sync_ContentSyncElement();
+				$cmd->setLocURI($locid);
+				$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Delete');
+				$state->log('Server-DeletedConflicts');
+				$state->removeUID($syncType, $locid);
 
+				// moreData split; save in session state and end current message
+				if ($cmd->hasMoreData()) {
+					$state->curSyncItem = & $cmd;
+					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
+					return $currentCmdID;
+				}
+				$state->incNumberOfElements();
+			}
+		}
 		Horde::logMessage("SyncML: All items handled for sync $syncType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$state->removeExpiredUID($syncType, $serverAnchorNext);
@@ -277,6 +309,6 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 		$state->mergeAddedItems($syncType, $registry->call($hordeType. '/list', array('filter' => $this->_filterExpression)));
 		$this->_syncDataLoaded = TRUE;
 
-		return count($state->getAddedItems($syncType)) - $delta_add;
+		return count($state->getAddedItems($syncType)) - $delta_add + count($state->getConflictItems($syncType));
 	}
 }
