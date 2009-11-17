@@ -121,6 +121,14 @@ class calendar_ical extends calendar_boupdate
 	var $uidExtension = false;
 
 	/**
+	 * user preference: use server timezone for exports to device
+	 *
+	 * @var boolean
+	 */
+	var $useServerTZ = false;
+
+
+	/**
 	 * Device CTCap Properties
 	 *
 	 * @var array
@@ -238,11 +246,13 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
 
-			if (!$serverTZ
-				&& $event['recur_type'] != MCAL_RECUR_NONE
-				&& date('e', $event['start']) != 'UTC')
+			if (!$serverTZ && date('e', $event['start']) != 'UTC'
+				&& ($event['recur_type'] != MCAL_RECUR_NONE
+					|| $this->useServerTZ))
 			{
-				if ($event['recur_enddate'])
+				if (!$this->useServerTZ &&
+					$event['recur_type'] != MCAL_RECUR_NONE
+					&& $event['recur_enddate'])
 				{
 					$startDST = date('I', $event['start']);
 					$finalDST = date('I', $event['recur_enddate']);
@@ -1236,6 +1246,11 @@ class calendar_ical extends calendar_boupdate
 				$deviceInfo['nonBlockingAllday'])
 			{
 				$this->nonBlockingAllday = true;
+			}
+			if (isset($deviceInfo['tzid']) &&
+				$deviceInfo['tzid'])
+			{
+				$this->useServerTZ = ($deviceInfo['tzid'] == 1);
 			}
 			if (!isset($this->productManufacturer) ||
 				 $this->productManufacturer == '' ||
