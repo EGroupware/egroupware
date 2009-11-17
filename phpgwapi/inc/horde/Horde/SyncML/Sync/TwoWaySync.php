@@ -77,15 +77,15 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			$state->incNumberOfElements();
 		}
 
-		$changes = & $state->getChangedItems($syncType);
-		$deletes = & $state->getDeletedItems($syncType);
-		$adds = & $state->getAddedItems($syncType);
-		$conflicts = & $state->getConflictItems($syncType);
+		$changes =& $state->getChangedItems($syncType);
+		$deletes =& $state->getDeletedItems($syncType);
+		$adds =& $state->getAddedItems($syncType);
+		$conflicts =& $state->getConflictItems($syncType);
 
-		Horde :: logMessage('SyncML: ' . count($changes) . ' changed items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		Horde :: logMessage('SyncML: ' . count($deletes) . ' deleted items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		Horde :: logMessage('SyncML: ' . count($conflicts) . ' items to delete on client found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		Horde :: logMessage('SyncML: ' . count($adds) . ' added items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		Horde::logMessage('SyncML: ' . count($changes) . ' changed items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		Horde::logMessage('SyncML: ' . count($deletes) . ' deleted items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		Horde::logMessage('SyncML: ' . count($conflicts) . ' items to delete on client found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		Horde::logMessage('SyncML: ' . count($adds) . ' added items found for ' . $syncType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		// handle changes
 		if (is_array($changes)) {
@@ -441,6 +441,6 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 
 		$this->_syncDataLoaded = TRUE;
 
-		return count($state->getChangedItems($syncType)) - $delta_mod + count($state->getDeletedItems($syncType)) + count($state->getAddedItems($syncType)) - $delta_add +count($state->getConflictItems($syncType));
+		return count($state->getChangedItems($syncType)) - $delta_mod + count($state->getDeletedItems($syncType)) + count($state->getAddedItems($syncType)) - $delta_add + count($state->getConflictItems($syncType));
 	}
 }
