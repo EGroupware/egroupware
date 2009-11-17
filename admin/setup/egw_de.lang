@@ -25,6 +25,7 @@ account-id's have to be integers!	admin	de	Konten-Ids müssen vom Typ Integer (Z
 acl manager	admin	de	ACL-Manager
 acl rights	common	de	ACL-Rechte
 action	admin	de	Aktion
+actions	admin	de	Aktionen
 activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
 add a category	admin	de	Eine Kategorie hinzufügen
 add a group	admin	de	Eine Gruppe hinzufügen
@@ -69,6 +70,7 @@ applications	admin	de	Anwendungen
 applications list	admin	de	Liste der Anwendungen
 applications run rights updated.	admin	de	Anwendungsrechte aktualisiert.
 applies the changes	admin	de	übernimmt Änderungen
+archive: zip or tar	admin	de	Archive: ZIP oder TAR
 are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 löschen wollen?
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto löschen wollen?
 are you sure you want to delete this application ?	admin	de	Sind Sie sicher, dass Sie diese Applikation löschen möchten?
@@ -107,11 +109,13 @@ check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überpr�
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
 color	admin	de	Farbe
+comercial: all sorts of companies	admin	de	Komerziell: alle Arten von Firmen
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 complete path to aspell program	admin	de	Vollständiger Pfad zum Programm ASPELL
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe leer bedeutet den kompletten Domainnamen, für SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere eGW Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
 could not remote execute the command	admin	de	Kann das Kommando nicht Remote ausführen.
+country	admin	de	Nation
 country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
 created	admin	de	Erstellt
@@ -186,7 +190,9 @@ edit this group	admin	de	Diese Gruppe bearbeiten
 edit this user	admin	de	Diesen Benutzer bearbeiten
 edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
-egroupware directory	admin	de	eGroupWare Verzeichnis
+educational: universities, schools, ...	admin	de	Ausbildung: Universitäten, Schulen, ...
+egroupware directory	admin	de	EGroupware Verzeichnis
+egroupware version	admin	de	EGroupware Version
 either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Install ID oder das Konfigurationspasswort oder den Remote Hash
 email account active	admin	de	E-Mail-Konto aktiv
 email address	admin	de	E-Mail-Adresse
@@ -246,6 +252,8 @@ forward also to	admin	de	Zusätzlich weiterleiten an
 forward emails to	admin	de	E-Mails weiterleiten an
 forward only	admin	de	Nur weiterleiten
 global categories	common	de	Globale Kategorien
+go directly to admin menu, returning here the next time you click on administration.	admin	de	Geht direkt zum Administrationsmenü, kehrt hier her zurück wenn Sie das nächste mal auf die Administration klicken.
+governmental: incl. state or municipal authorities or services	admin	de	Öffentlicher Dienst: Bundes-, Länder- oder stättische Behörden und Dienstleistungen
 grant	admin	de	Berechtigungen
 group ?	admin	de	Gruppe ?
 group has been added	common	de	Gruppe wurde hinzugefügt
@@ -271,9 +279,12 @@ in mbyte	admin	de	in MByte
 inbound	admin	de	eingehend
 initial	admin	de	Anfangsbuchstabe
 install crontab	admin	de	Crontab installieren
+installation type	admin	de	Installationstyp
 installed applications	common	de	Installierte Anwendungen
+installed applications, percentage of allowed users and total number of entries.	admin	de	Installierte Anwendungen, Prozentsatz erlaubte Benutzer und Gesamtzahl der Einträge.
 installed crontab	admin	de	Installierte Crontab
 interface	admin	de	Schnittstelle
+international use	admin	de	Internationale Benutzung
 invalid formated date "%1"!	admin	de	Ungültig formatiertes Datum "%1"!
 invalid remote id or name "%1"!	admin	de	Ungültige RemoteID oder Name "%1"!
 invalid value "%1" use yes or no!	admin	de	Ungültiger Wert "%1". Verwenden Sie Ja oder Nein (yes/no)
@@ -285,6 +296,7 @@ last %1 logins	admin	de	Letze %1 Logins
 last %1 logins for %2	admin	de	Letze %1 Logins für %2
 last login	admin	de	Letzter Login
 last login from	admin	de	Letzer Login von
+last submission:	admin	de	Letzte Absendung:
 last time read	admin	de	Zuletzt gelesen
 ldap accounts context	admin	de	LDAP-Kontext für Benutzerkonten
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	de	LDAP-Vorgabewert für Benutzerverzeichnisse (z.B. /home für /home/username)
@@ -337,8 +349,19 @@ no modes available	admin	de	Kein Modus verfügbar
 no permission to add groups	admin	de	Sie haben keine ausreichenden Rechte eine Gruppe hinzuzufügen
 no permission to add users	admin	de	Sie haben keine ausreichenden Rechte eine Benutzer hinzuzufügen
 no permission to create groups	admin	de	Sie haben keine ausreichenden Rechte um eine Gruppe zu erstellen
+non profit: clubs, associations, ...	admin	de	Gemeinnützig: Vereine, Verbände, ...
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
+number of active users	admin	de	Anzahl aktive User
 number of row for a multiline inputfield or line of a multi-select-box	admin	de	Anzahl der Zeilen in einem mehrzeiligen Feld oder eine multi-select-box
+number of sessions / egroupware logins in the last 30 days	admin	de	Anzahl Sitzungen / EGroupware Logins in den letzten 30 Tagen
+number of users	admin	de	Anzahl Benutzer
+official egroupware usage statistic	admin	de	Offizielle EGroupware Nutzungsstatistik
+one day	admin	de	ein Tag
+one hour	admin	de	eine Stunde
+one month	admin	de	ein Monat
+one week	admin	de	eine Woche
+only below displayed information is directly submitted to %s.	admin	de	Nur die unterhalb angezeigte Information wird direkt zu %s übertragen.
+operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 outbound	admin	de	ausgehend
 own install id:	admin	de	Eigene Install-ID
@@ -354,12 +377,15 @@ permission denied	admin	de	Zugriff verweigert
 permission denied !!!	admin	de	Zugriff verweigert !!!
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
+personal: eg. within a family	admin	de	Persönlich: zB. innerhalb einer Familie
+php version	admin	de	PHP Version
 phpinfo	admin	de	PHP-Informationen
 please enter a name	admin	de	Bitte einen Namen eingeben
 please enter a name for that server !	admin	de	Bitte einen Namen für diesen Server eingeben!
 please run setup to become current	admin	de	Bitte Setup ausführen um die Installation zu aktualisieren
 please select	admin	de	Bitte auswählen
 postfix with ldap	admin	de	Postfix mit LDAP
+postpone for	admin	de	Aufschieben um
 preferences	admin	de	Einstellungen
 primary group	admin	de	primäre Gruppe
 qmaildotmode	admin	de	qmaildotmode
@@ -377,6 +403,7 @@ remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gr
 return to admin mainscreen	admin	de	zum Adminstrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 route all mails to	admin	de	Alle Mails senden an
+rpm or debian package	admin	de	RPM oder Debian Pakete
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
 save the category	admin	de	Kategorie speichern
 save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren
@@ -400,6 +427,7 @@ server password	admin	de	Server-Passwort
 server type(mode)	admin	de	Server-Typ (Modus)
 server url	admin	de	Server-URL
 server username	admin	de	Server-Benutzername
+sessions last 30 days	admin	de	Sitzungen in letzten 30 Tagen
 set preference values.	admin	de	Einstellungswert wurde geändert
 should exceptions contain a trace (including function arguments)	admin	de	Sollen Ausnahmefehler eine Rückverfolgung enthalten (einschl. Funktionsargumente)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten (nützlich für Demosites) ?
@@ -423,8 +451,12 @@ standard pop3 server	admin	de	Standard POP3 Server
 standard smtp-server	admin	de	Standard SMTP Server
 start testjob!	admin	de	Testjob starten!
 submit changes	admin	de	Änderungen speichern
+submit displayed information?	admin	de	Angezeigte Informationen übertragen?
+submit statistic information	admin	de	Statistische Informationen übertragen
 submit the search string	admin	de	Geben Sie Ihren Suchbegriff ein
+submit to egroupware.org	admin	de	Übertragen an egroupware.org
 subtype	admin	de	Untertyp
+subversion checkout	admin	de	Subversion checkout (svn)
 switch it off, if users are randomly thrown out	admin	de	schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
 template selection	admin	de	Auswahl der Benutzeroberfläche
 text entry	admin	de	Texteingabe
@@ -435,7 +467,9 @@ that name has been used already	admin	de	Dieser Name wird bereits verwendet
 that server name has been used already !	admin	de	Dieser Server-Name wird bereits verwendet!
 the api is current	admin	de	Die API ist aktuell
 the api requires an upgrade	admin	de	Die API benötigt ein Upgrade
+the cumulated and anonymised data will be publically available:	admin	de	Die kumulierten und anonymisierten Daten werden öffentlich verfügbar sein:
 the groups must include the primary group	admin	de	Die Gruppen müssen die primäre Gruppe beinhalten
+the install id of an instance can be found under admin > site configuration	admin	de	Id Installations ID für diese Instanz wird unter Admin >> Konfiguration der Anwendung angezeigt
 the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nich länger als 8 Zeichen sein
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzer Name (<= 20 buchstaben), veränderungen machen existierende Daten unerreichbar
@@ -451,12 +485,17 @@ this category is currently being used by applications as a parent category	admin
 timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)
 times	admin	de	Zeiten
+to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	de	Benutzen Sie diese Übertragungs ID damit wir das Wachstum Ihrer individuellen Installation erfassen können, ansonsten löschen sie diese:
 top	admin	de	oben
 total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 Ids wurde geändert.
 total records	admin	de	Anzahl Datensätze insgesamt
 true	admin	de	Wahr
 trust level	admin	de	Grad des Vertrauens
 trust relationship	admin	de	Vertrauensverhältnis
+two days	admin	de	zwei Tage
+two hours	admin	de	zwei Stunden
+two month	admin	de	zwei Monate
+two weeks	admin	de	zwei Wochen
 type '%1' already exists !!!	admin	de	Typ '%1' existiert bereits !!!
 type of customfield	admin	de	Typ des Benutzerdefinierten Feldes
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows muß der asynchrone Service %1von Hand%2 installiert werden oder es wird nur die Ausweichmöglichkeit benutzt. Bei der Ausweichmöglichkeit werden die Jobs nur nach jedem Seitenaufbau überprüft!!!
@@ -464,6 +503,7 @@ unknown account: %1 !!!	admin	de	Unbekanntes Benutzerkonto: %1 !!!
 unknown command %1!	admin	de	Unbekanntes Kommando %1 !
 unknown option %1	admin	de	Unbekannte Option %1
 updated	admin	de	aktualisiert
+usage	admin	de	Einsatz
 use cookies to pass sessionid	admin	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 use theme	admin	de	Benutztes Farbschema
@@ -481,6 +521,8 @@ view error log	admin	de	Fehlerprotokoll anzeigen
 view sessions	admin	de	Sitzungen anzeigen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
+we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	de	Wir bitten um diese Daten um unser Profil in der Presse und das Verständnis der EGroupware Benutzer und ihrer Bedürfnisse zu verbessern.
+we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	de	Wir hoffen Sie verstehen die Wichtigkeit dieser freiwilligen Statistik und verwehren sie nicht leichtfertig.
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
 would you like egroupware to cache the egw info array ?	admin	de	Soll eGroupWare das egw_info Array cachen ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	de	Soll eGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich ein Administrator anmeldet ?
@@ -504,4 +546,5 @@ you must select a file type	admin	de	Sie müssen einen Dateityp auswählen
 you must select at least one group member.	admin	de	Sie müssen mindestens ein Gruppenmitglied auswählen.
 you need to enter install id and password!	admin	de	Sie müssen die Install-ID UND das Passwort eingeben!
 you will need to remove the subcategories before you can delete this category	admin	de	Sie müssen erst die Unterkategorien löschen bevor Sie diese Kategorie löschen können!
+your last submission was less then %1 days ago!	admin	de	Ihre letzte Übertragung liegt weniger als %1 Tage zurück!
 your session could not be verified.	admin	de	Ihre Sitzung konnte nicht verifiziert werden.

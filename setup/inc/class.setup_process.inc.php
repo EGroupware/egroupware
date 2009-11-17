@@ -238,6 +238,8 @@
 
 			$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
 
+			$current_config['postpone_statistics_submit'] = time() + 2 * 30 * 3600;	// ask user in 2 month from now, when he has something to report
+
 			if ($preset_config)
 			{
 				$current_config = array_merge($current_config,$preset_config);
@@ -248,7 +250,7 @@
 				$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
 					'config_value' => $value,
 				),array(
-					'config_app' => 'phpgwapi',
+					'config_app' => $name == 'postpone_statistics_submit' ? 'admin' : 'phpgwapi',
 					'config_name' => $name,
 				),__FILE__,__LINE__);
 			}

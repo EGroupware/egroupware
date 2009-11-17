@@ -4,35 +4,28 @@
  *
  * @link http://www.egroupware.org
  * @author Stefan Becker <StefanBecker-AT-outdoor-training.de>
- * @package courseprotocol
- * @copyright (c) 2007 by Stefan Becker <StefanBecker-AT-outdoor-training.de>
+ * @package admin
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id: class.admin_prefs_sidebox_hooks.inc.php
  */
 
-
+/**
+ * Static hooks for admin application
+ *
+ */
 class admin_prefs_sidebox_hooks
 {
-	var $public_functions = array(
-//		'check_set_default_prefs' => true,
-	);
-	var $config = array();
-
-	function admin_prefs_sidebox_hooks()
-	{
-		$config =& CreateObject('phpgwapi.config','admin');
-		$config->read_repository();
-		$this->config =& $config->config_data;
-		unset($config);
-	}
-
 	/**
 	 * hooks to build projectmanager's sidebox-menu plus the admin and preferences sections
 	 *
 	 * @param string/array $args hook args
 	 */
-	function all_hooks($args)
+	static function all_hooks($args)
 	{
+		if (!isset($_GET['menuaction']) && substr($_SERVER['PHP_SELF'],-16) == '/admin/index.php')
+		{
+			admin_statistics::check();
+		}
 		$appname = 'admin';
 		$location = is_array($args) ? $args['location'] : $args;
 				
@@ -42,43 +35,43 @@ class admin_prefs_sidebox_hooks
 			
 			if (! $GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 			{
-				$file['Site Configuration']         = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
+				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
 			}
 
-		/* disabled it, til it does something useful
+			/* disabled it, til it does something useful
 			if (! $GLOBALS['egw']->acl->check('peer_server_access',1,'admin'))
 			{
-				$file['Peer Servers']               = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiserver.list_servers');
+				$file['Peer Servers']               = egw::link('/index.php','menuaction=admin.uiserver.list_servers');
 			}
-		*/
+			*/
 			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
 			{
-				$file['User Accounts']              = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
+				$file['User Accounts']              = egw::link('/index.php','menuaction=admin.uiaccounts.list_users');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
 			{
-				$file['User Groups']                = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups');
+				$file['User Groups']                = egw::link('/index.php','menuaction=admin.uiaccounts.list_groups');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('applications_access',1,'admin'))
 			{
-				$file['Applications']               = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiapplications.get_list');
+				$file['Applications']               = egw::link('/index.php','menuaction=admin.uiapplications.get_list');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('global_categories_access',1,'admin'))
 			{
-				$file['Global Categories']          = $GLOBALS['egw']->link('/index.php','menuaction=admin.uicategories.index');
+				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.uicategories.index');
 			}
 
 			if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_message_access',2,'admin'))
 			{
-				$file['Change Main Screen Message'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index');
+				$file['Change Main Screen Message'] = egw::link('/index.php','menuaction=admin.uimainscreen.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))
 			{
-				$file['View Sessions'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
+				$file['View Sessions'] = egw::link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
 			}
 			
 			if (! $GLOBALS['egw']->acl->check('access_log_access',1,'admin'))
@@ -88,30 +81,32 @@ class admin_prefs_sidebox_hooks
 
 			if (! $GLOBALS['egw']->acl->check('error_log_access',1,'admin'))
 			{
-				$file['View Error Log']  = $GLOBALS['egw']->link('/index.php','menuaction=admin.uilog.list_log');
+				$file['View Error Log']  = egw::link('/index.php','menuaction=admin.uilog.list_log');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('applications_access',16,'admin'))
 			{
-				$file['Find and Register all Application Hooks'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiapplications.register_all_hooks');
+				$file['Find and Register all Application Hooks'] = egw::link('/index.php','menuaction=admin.uiapplications.register_all_hooks');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('asyncservice_access',1,'admin'))
 			{
-				$file['Asynchronous timed services'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiasyncservice.index');
+				$file['Asynchronous timed services'] = egw::link('/index.php','menuaction=admin.uiasyncservice.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('db_backup_access',1,'admin'))
 			{
-				$file['DB backup and restore'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.admin_db_backup.index');
+				$file['DB backup and restore'] = egw::link('/index.php','menuaction=admin.admin_db_backup.index');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('info_access',1,'admin'))
 			{
-				$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['egw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['egw']->link('/admin/phpinfo.php');
+				$file['phpInfo']         = "javascript:openwindow('" . egw::link('/admin/phpinfo.php') . "')"; //egw::link('/admin/phpinfo.php');
 			}
-			$file['Admin queue and history'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.admin_cmds.index');
-			$file['Remote administration instances'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.admin_cmds.remotes');
+			$file['Admin queue and history'] = egw::link('/index.php','menuaction=admin.admin_cmds.index');
+			$file['Remote administration instances'] = egw::link('/index.php','menuaction=admin.admin_cmds.remotes');
+
+			$file['Submit statistic information'] = egw::link('/index.php','menuaction=admin.admin_statistics.submit');
 
 			if ($location == 'admin')
 			{
@@ -121,7 +116,6 @@ class admin_prefs_sidebox_hooks
 			{
 				display_sidebox($appname,lang('Admin'),$file);
 			}
-	
 		}
 	}
 	

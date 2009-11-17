@@ -25,6 +25,7 @@ account-id's have to be integers!	admin	en	Account-id's have to be integers!
 acl manager	admin	en	ACL Manager
 acl rights	common	en	ACL Rights
 action	admin	en	Action
+actions	admin	en	Actions
 activate wysiwyg-editor	admin	en	activate WYSIWYG-editor
 add a category	admin	en	add a category
 add a group	admin	en	add a group
@@ -69,6 +70,7 @@ applications	admin	en	Applications
 applications list	admin	en	Applications list
 applications run rights updated.	admin	en	Applications run rights updated.
 applies the changes	admin	en	applies the changes
+archive: zip or tar	admin	en	Archive: zip or tar
 are you sure you want to delete the application %1 ?	admin	en	Are you sure you want to delete the application %1 ?
 are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
 are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application ?
@@ -107,11 +109,14 @@ check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
+comercial: all sorts of companies	admin	en	Comercial: all sorts of companies
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
 complete path to aspell program	admin	en	Complete path to aspell program
+config password or md5 hash from the header.inc.php	admin	en	Config password or md5 hash from the header.inc.php
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain (default empty means use full domain name, for SiteMgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path (allows multiple eGW sessions with different directories, has problemes with SiteMgr!)
 could not remote execute the command	admin	en	Could not remote execute the command
+country	admin	en	Country
 country selection	admin	en	Country Selection
 create group	admin	en	Create Group
 created	admin	en	Created
@@ -186,7 +191,9 @@ edit this group	admin	en	edit this group
 edit this user	admin	en	edit this user
 edit user	admin	en	edit user
 edit user account	admin	en	Edit user account
+educational: universities, schools, ...	admin	en	Educational: Universities, Schools, ...
 egroupware directory	admin	en	eGroupWare directory
+egroupware version	admin	en	EGroupware Version
 either install id and config password needed or the remote hash!	admin	en	Either Install ID AND config password needed OR the remote hash!
 email account active	admin	en	email account active
 email address	admin	en	email address
@@ -244,6 +251,8 @@ forward also to	admin	en	forward also to
 forward emails to	admin	en	forward emails to
 forward only	admin	en	forward only
 global categories	common	en	Global Categories
+go directly to admin menu, returning here the next time you click on administration.	admin	en	Go directly to admin menu, returning here the next time you click on administration.
+governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
 grant	admin	en	Grant
 group ?	admin	en	group ?
 group has been added	common	en	Group has been added
@@ -252,6 +261,7 @@ group has been updated	common	en	Group has been updated
 group list	admin	en	Group list
 group manager	admin	en	Group Manager
 group name	admin	en	Group Name
+hash	admin	en	Hash
 hide php information	admin	en	hide php information
 home directory	admin	en	Home directory
 host information	admin	en	Host information
@@ -269,9 +279,12 @@ in mbyte	admin	en	in MByte
 inbound	admin	en	inbound
 initial	admin	en	Initial
 install crontab	admin	en	Install crontab
+installation type	admin	en	Installation Type
 installed applications	common	en	Installed applications
+installed applications, percentage of allowed users and total number of entries.	admin	en	Installed applications, percentage of allowed users and total number of entries.
 installed crontab	admin	en	Installed crontab
 interface	admin	en	Interface
+international use	admin	en	International use
 invalid formated date "%1"!	admin	en	Invalid formated date "%1"!
 invalid remote id or name "%1"!	admin	en	Invalid remote id or name "%1"!
 invalid value "%1" use yes or no!	admin	en	Invalid value "%1" use yes or no!
@@ -283,6 +296,7 @@ last %1 logins	admin	en	Last %1 logins
 last %1 logins for %2	admin	en	Last %1 logins for %2
 last login	admin	en	last login
 last login from	admin	en	last login from
+last submission:	admin	en	Last submission:
 last time read	admin	en	Last Time Read
 ldap accounts context	admin	en	LDAP accounts context
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	en	LDAP Default homedirectory prefix (e.g. /home for /home/username)
@@ -300,11 +314,13 @@ length<br>rows	admin	en	Length<br>Rows
 list config settings	admin	en	List config settings
 list current sessions	admin	en	List current sessions
 list of current users	admin	en	list of current users
-login history	common	en	Login History
+logged out	admin	en	logged out
+login history	admin	en	Login History
 login message	admin	en	Login message
 login screen	admin	en	Login screen
 login shell	admin	en	Login shell
 login time	admin	en	Login Time
+login-status	admin	en	Login-Status
 loginid	admin	en	LoginID
 mail settings	admin	en	Mail settings
 main email-address	admin	en	Main Email-Address
@@ -335,8 +351,19 @@ no modes available	admin	en	no modes available
 no permission to add groups	admin	en	no permission to add groups
 no permission to add users	admin	en	no permission to add users
 no permission to create groups	admin	en	no permission to create groups
+non profit: clubs, associations, ...	admin	en	Non profit: Clubs, associations, ...
 note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support
+number of active users	admin	en	number of active users
 number of row for a multiline inputfield or line of a multi-select-box	admin	en	number of row for a multiline inputfield or line of a multi-select-box
+number of sessions / egroupware logins in the last 30 days	admin	en	Number of sessions / EGroupware logins in the last 30 days
+number of users	admin	en	Number of users
+official egroupware usage statistic	admin	en	Official EGroupware usage statistic
+one day	admin	en	one day
+one hour	admin	en	one hour
+one month	admin	en	one month
+one week	admin	en	one week
+only below displayed information is directly submitted to %s.	admin	en	Only below displayed information is directly submitted to %s.
+operating system	admin	en	Operating System
 order	admin	en	Order
 outbound	admin	en	outbound
 own install id:	admin	en	Own install ID:
@@ -352,12 +379,15 @@ permission denied	admin	en	Permission denied
 permission denied !!!	admin	en	Permission denied !!!
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
+personal: eg. within a family	admin	en	Personal: eg. within a family
+php version	admin	en	PHP Version
 phpinfo	admin	en	PHP information
 please enter a name	admin	en	Please enter a name
 please enter a name for that server !	admin	en	Please enter a name for that server !
 please run setup to become current	admin	en	Please run setup to become current
 please select	admin	en	Please Select
 postfix with ldap	admin	en	Postfix with LDAP
+postpone for	admin	en	Postpone for
 preferences	admin	en	Preferences
 primary group	admin	en	primary Group
 qmaildotmode	admin	en	qmaildotmode
@@ -375,6 +405,7 @@ remove all users from this group ?	admin	en	Remove all users from this group ?
 return to admin mainscreen	admin	en	return to admin mainscreen
 return to view account	admin	en	Return to view account
 route all mails to	admin	en	Route all Mails to
+rpm or debian package	admin	en	RPM or Debian package
 run asynchronous services	admin	en	Run Asynchronous services
 save the category	admin	en	save the category
 save the category and return back to the list	admin	en	save the category and return back to the list
@@ -384,6 +415,7 @@ search categories	admin	en	Search categories
 search groups	admin	en	Search groups
 search peer servers	admin	en	Search peer servers
 security	admin	en	Security
+select all	admin	en	Select all
 select group managers	admin	en	Select Group Managers
 select permissions this group will have	admin	en	Select permissions this group will have
 select the parent category. if this is a main category select no category	admin	en	Select the parent category. If this is a main category select NO CATEGORY
@@ -398,6 +430,7 @@ server password	admin	en	Server Password
 server type(mode)	admin	en	Server Type(mode)
 server url	admin	en	Server URL
 server username	admin	en	Server Username
+sessions last 30 days	admin	en	Sessions last 30 days
 set preference values.	admin	en	Set preference values.
 should exceptions contain a trace (including function arguments)	admin	en	Should exceptions contain a trace (including function arguments)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Should the login page include a language selectbox (useful for demo-sites) ?
@@ -421,8 +454,13 @@ standard pop3 server	admin	en	standard POP3 server
 standard smtp-server	admin	en	standard SMTP-Server
 start testjob!	admin	en	Start TestJob!
 submit changes	admin	en	Submit Changes
+submit displayed information?	admin	en	Submit displayed information?
+submit statistic information	admin	en	Submit statistic information
 submit the search string	admin	en	Submit the search string
+submit to egroupware.org	admin	en	Submit to egroupware.org
 subtype	admin	en	Subtype
+subversion checkout	admin	en	Subversion checkout
+success	admin	en	success
 switch it off, if users are randomly thrown out	admin	en	switch it off, if users are randomly thrown out
 template selection	admin	en	Template Selection
 text entry	admin	en	Text Entry
@@ -433,6 +471,7 @@ that name has been used already	admin	en	That name has been used already
 that server name has been used already !	admin	en	That server name has been used already !
 the api is current	admin	en	The API is current
 the api requires an upgrade	admin	en	The API requires an upgrade
+the cumulated and anonymised data will be publically available:	admin	en	The cumulated and anonymised data will be publically available:
 the groups must include the primary group	admin	en	The groups must include the primary group
 the login and password can not be the same	admin	en	The login and password can not be the same
 the loginid can not be more then 8 characters	admin	en	The loginid can not be more then 8 characters
@@ -449,12 +488,17 @@ this category is currently being used by applications as a parent category	admin
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds (default 86400 = 1 day)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds (default 14400 = 4 hours)
 times	admin	en	Times
+to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	en	To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:
 top	admin	en	top
 total of %1 id's changed.	admin	en	Total of %1 id's changed.
 total records	admin	en	Total records
 true	admin	en	true
 trust level	admin	en	Trust Level
 trust relationship	admin	en	Trust Relationship
+two days	admin	en	two days
+two hours	admin	en	two hours
+two month	admin	en	two month
+two weeks	admin	en	two weeks
 type '%1' already exists !!!	admin	en	type '%1' already exists !!!
 type of customfield	admin	en	Type of customfield
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you need to install the asyncservice %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page-view !!!
@@ -462,6 +506,7 @@ unknown account: %1 !!!	admin	en	Unknown account: %1 !!!
 unknown command %1!	admin	en	Unknown command %1!
 unknown option %1	admin	en	Unknown option %1
 updated	admin	en	updated
+usage	admin	en	Usage
 use cookies to pass sessionid	admin	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code (not fully working yet)
 use theme	admin	en	Use theme
@@ -479,6 +524,8 @@ view error log	admin	en	View error log
 view sessions	admin	en	View sessions
 view this user	admin	en	view this user
 view user account	admin	en	View user account
+we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	en	We ask for the data to improve our profile in the press and to get a better understanding of EGroupware's user base and it's needs.
+we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	en	We hope you understand the importance for this voluntary statistic and not deny it lightly.
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like egroupware to cache the egw info array ?	admin	en	Would you like eGroupWare to cache the egw info array ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	en	Would you like eGroupWare to check for a new version<br>when admins login ?
@@ -502,4 +549,5 @@ you must select a file type	admin	en	You must select a file type
 you must select at least one group member.	admin	en	You must select at least one group member.
 you need to enter install id and password!	admin	en	You need to enter Install ID AND Password!
 you will need to remove the subcategories before you can delete this category	admin	en	You will need to remove the subcategories before you can delete this category !
+your last submission was less then %1 days ago!	admin	en	Your last submission was less then %1 days ago!
 your session could not be verified.	admin	en	Your session could not be verified.
