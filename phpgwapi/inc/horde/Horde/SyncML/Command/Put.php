@@ -159,6 +159,7 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 							switch ($this->_sourceReference)
 							{
 								case 'contact':
+								case 'card':
 									if ($this->_contentType != "text/x-s4j-sifc")
 									{
 										error_log("forcing 'contact' content type to 'text/x-s4j-sifc' instead of '".$this->_contentType."'");
