@@ -441,6 +441,10 @@ class egw extends egw_minimal
 		}
 		else
 		{
+			if (headers_sent($file,$line))
+			{
+				throw new egw_exception_assertion_failed(__METHOD__."('".htmlspecialchars($url)."') can NOT redirect, output already started at $file line $line!");
+			}
 			Header("Location: $url");
 			print("\n\n");
 		}
