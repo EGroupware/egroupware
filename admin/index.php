@@ -17,9 +17,13 @@
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
 			'currentapp' => 'admin',
+			'nonheader' => true,
 		),
 	);
 	include('../header.inc.php');
+
+	admin_statistics::check();
+	common::egw_header();
 
 	$GLOBALS['admin_tpl'] =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 	$GLOBALS['admin_tpl']->set_file(
