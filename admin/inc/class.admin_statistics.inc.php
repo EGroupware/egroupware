@@ -101,10 +101,9 @@ class admin_statistics
 			$content['submit_id'] = $config['statistics_submit_id'] == '***none***' ? '' : $config['statistics_submit_id'];
 		}
 		// check if we detected svn or rpm/deb packages --> readonly
-		if ($content['install_type'])
+		if ($content['install_type'] && isset($sel_options['install_type'][$content['install_type']]))
 		{
-			$readonlys['install_type'] = true;
-			$preserv['install_type'] = $content['install_type'];
+			$sel_options['install_type'] = array($content['install_type'] => $sel_options['install_type'][$content['install_type']]);
 		}
 		// else default to previous type
 		elseif($config[self::CONFIG_INSTALL_TYPE])
