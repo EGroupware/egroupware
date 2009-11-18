@@ -13,7 +13,7 @@
 <!-- END event_widget_wholeday_on_top -->
 
 <!-- BEGIN event_tooltip -->
-<div class="calEventTooltip" style="border-color: {bordercolor}; background: {bodybackground};">
+<div class="calEventTooltip {status_class}" style="border-color: {bordercolor}; background: {bodybackground};">
 	<div class="calEventHeaderSmall" style="background-color: {bordercolor};">
 		<font color="{headercolor}">{timespan}</font>
 		<div  class="calEventIcons">{icons}</div>

@@ -447,6 +447,10 @@ class calendar_ui
 		{
 			$icons[] = html::image('calendar','alarm',lang('alarm'));
 		}
+		if($event['participants'][$this->user][0] == 'U')
+		{
+			$icons[] = html::image('calendar','cnr-pending',lang('Needs action'));
+		}
 		return $icons;
 	}
 

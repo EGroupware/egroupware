@@ -1175,6 +1175,30 @@ class calendar_uiviews extends calendar_ui
 		$bodybgcolor1 = $this->brighter($headerbgcolor,$headerbgcolor == '#808080' ? 100 : 170);
 		$bodybgcolor2 = $this->brighter($headerbgcolor,220);
 
+		// mark event as invitation, by NOT using category based backgrond color, but plain white
+		if ($event['participants'][$this->user][0] == 'U')
+		{
+			$bodybgcolor1 = $bodybgcolor2 = 'white';
+		}
+
+		// get status class of event: calEventAllAccepted, calEventAllAnswered or calEventSomeUnknown
+		$status_class = 'calEventAllAccepted';
+		foreach($event['participants'] as $id => $status)
+		{
+			calendar_so::split_status($status,$quantity,$role);
+
+			switch ($status)
+			{
+				case 'A':
+					break;
+				case 'U':
+					$status_class = 'calEventSomeUnknown';
+					break 2;	// break foreach
+				default:
+					$status_class = 'calEventAllAnswered';
+					break;
+			}
+		}
 		// seperate each participant types
 		$part_array = array();
 		if ($this->allowEdit)
@@ -1238,6 +1262,7 @@ class calendar_uiviews extends calendar_ui
 				'&width='.$width.') repeat-y '.$bodybgcolor2),
 			'Small' => $small ? 'Small' : '',	// to use in css class-names
 			'indent' => $indent."\t",
+			'status_class' => $status_class,
 		));
 /* not used at the moment
 		foreach(array(
@@ -1260,7 +1285,7 @@ class calendar_uiviews extends calendar_ui
 
 		$view_link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
 
-		if ($event['recur_type']!= MCAL_RECUR_NONE)
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
 			$view_link_confirm_text=lang('do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
@@ -1271,8 +1296,6 @@ class calendar_uiviews extends calendar_ui
 			$popup = ($is_private || ! $this->allowEdit) ? '' : ' onclick="'.$this->popup($view_link).'; return false;"';
 		}
 		//_debug_array($event);
-		//echo $event['id']."?<br>";
-
 
 		if ($return_array)
 		{
@@ -1310,14 +1333,14 @@ class calendar_uiviews extends calendar_ui
 
 		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.$owner;
 
-		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').
+		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: 20;"'.
 			$popup.' '.html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
 			'>'."\n".$ie_fix.$html."\n".
 			$indent."</div>"."\n";
 
 		// ATM we do not support whole day events or recurring events for dragdrop
-		if (	is_object($this->dragdrop) &&
+		if (is_object($this->dragdrop) &&
 			$this->use_time_grid &&
 			$this->bo->check_perms(EGW_ACL_EDIT,$event) &&
 			!$event['whole_day_on_top'] &&
