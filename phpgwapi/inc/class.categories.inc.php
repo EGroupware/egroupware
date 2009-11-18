@@ -133,7 +133,7 @@ class categories
 	 * @param string $query='' query-pattern
 	 * @param string $sort='ASC' sort order, defaults to 'ASC'
 	 * @param string $order='' order by, default cat_main, cat_level, cat_name ASC
-	 * @param boolean $globals includes the global egroupware categories or not
+	 * @param boolean $globals include the global egroupware categories or not
 	 * @param array|int $parent_id=null return only subcats of $parent_id(s)
 	 * @param int $lastmod = -1 if > 0 return only cats modified since then
 	 * @param string $column='' if column-name given only that column is returned, not the full array with all cat-data
@@ -143,12 +143,6 @@ class categories
 	function return_array($type='all', $start=0, $limit=true, $query='', $sort='ASC',$order='',$globals=false, $parent_id=null, $lastmod=-1, $column='', $filter=null)
 	{
 		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,globals=$globals,parent=".array2string($parent_id).",$lastmod,$column) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
-
-		// load the grants
-		if ($this->account_id != -1 && is_null($this->grants))
-		{
-			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name);
-		}
 		$cats = array();
 		foreach(self::$cache as $cat_id => $cat)
 		{
@@ -194,13 +188,18 @@ class categories
 			// check if certain parent required
 			if ($parent_id && !in_array($cat['parent'],(array)$parent_id)) continue;
 
-			// apply standard acl / grants: return only application global cats (if $globals) or
-			if (!($globals && $cat['appname'] == 'phpgw' ||
-				  $cat['appname'] == $this->app_name && ($cat['owner'] == -1 || $cat['owner'] == $this->account_id ||
-				  	$this->account_id != -1 && $cat['access'] == 'public' && $this->grants && isset($this->grants[$cat['owner']]))))
+			// return global categories just if $globals is set
+			if (!$globals && $cat['appname'] == 'phpgw')
 			{
 				continue;
 			}
+			
+			// check for read permission
+			if(!$this->check_perms(EGW_ACL_READ, $cat))
+			{
+				continue;
+			}
+			
 			// check if we have the correct type
 			switch ($type)
 			{
@@ -491,6 +490,53 @@ class categories
 
 		return $id;
 	}
+	
+	/**
+	 * Checks if the current user has the necessary ACL rights
+	 *
+	 * If the access of a category is set to private, one needs a private grant for the application
+	 *
+	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param mixed $category category as array or the category_id
+	 * @return boolean true permission granted, false for permission denied, null for category does not exist
+	 */
+	public function check_perms($needed,$category)
+	{
+		if (!is_array($category) && !($category = self::$cache[$category]))
+		{
+			return null;
+		}
+
+		// The user for the global cats has id -1, this one has full access to all global cats
+		if ($this->account_id == -1 && ($category['appname'] == 'phpgw'
+				|| $category['appname'] == $this->app_name && $category['owner'] == -1))
+		{
+			return true;
+		}
+		
+		// Read access to global categories
+		if ($needed == EGW_ACL_READ && ($category['appname'] == 'phpgw'
+				|| $category['appname'] == $this->app_name && $category['owner'] == -1))
+		{
+			return true;
+		}
+		
+		// Full access to own categories
+		if ($category['appname'] == $this->app_name && $category['owner'] == $this->account_id)
+		{
+			return true;
+		}
+		
+		// Load the application grants
+		if ($category['appname'] == $this->app_name && is_null($this->grants))
+		{
+			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name);
+		}
+		
+		// Check for ACL granted access, the -1 user must not get access by ACL to keep old behaviour
+		return ($this->account_id != -1 && $category['appname'] == $this->app_name && ($this->grants[$category['owner']] & $needed) &&
+					($category['access'] == 'public' ||  ($this->grants[$category['owner']] & EGW_ACL_PRIVATE)));
+	}
 
 	/**
 	 * delete a category
@@ -664,7 +710,7 @@ class categories
 	 * We use a shared cache together with return_single
 	 *
 	 * @param int $cat_id=0 cat-id
-	 * @param string $item='name requested information, 'path' = / delimited path of category names (incl. parents)
+	 * @param string $item='name' requested information, 'path' = / delimited path of category names (incl. parents)
 	 * @return string information or '--' if not found or !$cat_id
 	 */
 	static function id2name($cat_id=0, $item='name')
