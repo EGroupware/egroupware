@@ -119,7 +119,7 @@ class addressbook_vcal extends addressbook_bo
 	*/
 	function addVCard($_vcard, $_abID=null, $merge=false)
 	{
-		if(!$contact = $this->vcardtoegw($_vcard))
+		if(!$contact = $this->vcardtoegw($_vcard, $_abID))
 		{
 			return false;
 		}
@@ -415,7 +415,7 @@ class addressbook_vcal extends addressbook_bo
 		if (is_array($_supportedFields)) $this->supportedFields = $_supportedFields;
 	}
 
-	function vcardtoegw($_vcard)
+	function vcardtoegw($_vcard, $_abID)
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 		// be as flexible as possible
@@ -825,7 +825,7 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'cat_id':
-								$contact[$fieldName] = implode(',',$this->find_or_add_categories($vcardValues[$vcardKey]['values']));
+								$contact[$fieldName] = implode(',',$this->find_or_add_categories($vcardValues[$vcardKey]['values'], $_abID));
 								break;
 
 							case 'jpegphoto':
