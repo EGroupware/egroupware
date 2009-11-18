@@ -1579,7 +1579,7 @@ class addressbook_bo extends addressbook_so
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories = new categories($this->owner,'addressbook');
+			$this->categories = new categories($this->user,'addressbook');
 		}
 
 		if (!is_array($cat_id_list))
