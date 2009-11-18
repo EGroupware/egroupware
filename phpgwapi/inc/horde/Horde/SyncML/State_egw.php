@@ -27,6 +27,11 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	 */
 	var $uidMappings	= array();
 
+	/*
+	 * the domain of the current user
+	 */
+	var $_account_domain = 'default';
+
 	/**
 	 * get the local content id from a syncid
 	 *
@@ -294,21 +299,22 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				return FALSE;
 			}
 
-			if(!isset($this->_password)) {
+			if (!isset($this->_password)) {
 				Horde::logMessage('SyncML: Authentication not yet possible currently. Password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				return FALSE;
 			}
 
-			if(strpos($this->_locName,'@') === False) {
-				$this->_locName .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
+			if (strpos($this->_locName,'@') === False) {
+				$this->_account_domain = $GLOBALS['egw_info']['server']['default_domain'];
+				$this->_locName .= '@'. $this->_account_domain;
 			} else {
 				$parts = explode('@',$this->_locName);
-				$GLOBALS['egw_info']['user']['domain'] = array_pop($parts);
+				$this->_account_domain = array_pop($parts);
 			}
-
+			$GLOBALS['egw_info']['user']['domain'] = $this->_account_domain;
 			#Horde::logMessage('SyncML: authenticate with username: ' . $this->_locName . ' and password: ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-			if($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text')) {
+			if ($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text')) {
 
 				if ($GLOBALS['egw_info']['user']['apps']['syncml']) {
 					$this->_isAuthorized = true;
@@ -324,7 +330,8 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		} else {
 			// store sessionID in a variable, because ->verify maybe resets that value
 			$sessionID = session_id();
-			if(!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3')) {
+			$GLOBALS['egw_info']['user']['domain'] = $this->_account_domain;
+			if (!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3')) {
 				Horde::logMessage('SyncML_EGW: egw session(' .$sessionID. ') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			}
 		}
