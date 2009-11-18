@@ -1000,22 +1000,28 @@ class translation
 	}
 
 	/**
-	* replace emailaddresses enclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
-	* always returns 1
-	*/
+	 * replace emailaddresses enclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
+	 *    as well as those emailadresses in links, and within broken links
+	 * @param string the text to process
+	 * @return 1
+	 */
 	static function replaceEmailAdresses(&$text)
 	{
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
-		$text = preg_replace("/(<|&lt;)(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)/ie","'$2'", $text);
+		$text = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/ie","'$2 '", $text);
+		$text = preg_replace("/(<|&lt;a href=\")*(mailto:([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/ie","'$2 '", $text);
+		$text = preg_replace('~<a[^>]+href=\"(mailto:)+([^"]+)\"[^>]*>~si','$2 ',$text);
+		$text = preg_replace("/(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))( |\s)*(<\/a>)*( |\s)*(>|&gt;)*/ie","'$1 '", $text);
 		return 1;
 	}
 
-	/*
+	/**
 	 * strip tags out of the message completely with their content
-	 * param $_body is the text to be processed
-	 * param $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
+	 * @param string $_body is the text to be processed
+	 * @param string $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
 	 *            without the enclosing brackets
-	 * param $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
+	 * @param string $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
+	 * @return void the modified text is passed via reference
 	 */
 	static function replaceTagsCompletley(&$_body,$tag,$endtag='')
 	{
@@ -1036,10 +1042,18 @@ class translation
 		}
 	}
 
-	static function convertHTMLToText($_html,$displayCharset=false,$stripcrl=false)
+	/**
+	 * convertHTMLToText
+	 * @param string $_html : Text to be stripped down
+	 * @param string $displayCharset : charset to use; should be a valid charset
+	 * @param bool $stripcrl :  flag to indicate for the removal of all crlf \r\n
+	 * @param bool $stripalltags : flag to indicate wether or not to strip $_html from all remaining tags
+	 * @return text $_html : the modified text.
+	 */
+	static function convertHTMLToText($_html,$displayCharset=false,$stripcrl=false,$stripalltags=true)
 	{
 		if ($displayCharset === false) $displayCharset = self::$system_charset;
-		#error_log($_html);
+		//error_log(__METHOD__.$_html);
 		#print '<hr>';
 		#print "<pre>"; print htmlspecialchars($_html);
 		#print "</pre>";
@@ -1070,6 +1084,7 @@ class translation
 			chr(174),
 		);
 		$_html = preg_replace($Rules, $Replace, $_html);
+
 		//   removing carriage return linefeeds
 		if ($stripcrl === true ) $_html = preg_replace('@(\r\n)@i',' ',$_html);
 		$tags = array (
@@ -1101,10 +1116,15 @@ class translation
 		$_html = preg_replace($tags,$Replace,$_html);
 		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
 		$_html = preg_replace('~<img[^>]+>~s','',$_html);
+		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
+		self::replaceEmailAdresses($_html);
 		//convert hrefs to description -> URL
 		$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
-		$_html = preg_replace('~<[^>^@]+>~s','',$_html);
-		#$_html = strip_tags($_html);
+		//this is supposed to strip out all remaining stuff in tags, this is sometimes taking out whole sections off content
+		if ( $stripalltags ) {
+			$_html = preg_replace('~<[^>^@]+>~s','',$_html);
+			//$_html = strip_tags($_html, '<a>');
+		}
 		// reducing spaces
 		$_html = preg_replace('~ +~s',' ',$_html);
 		// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
@@ -1115,8 +1135,7 @@ class translation
 
 
 		$_html = html_entity_decode($_html, ENT_COMPAT, $displayCharset);
-		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
-		self::replaceEmailAdresses($_html);
+		//self::replaceEmailAdresses($_html);
 		#error_log($text);
 		$pos = strpos($_html, 'blockquote');
 		#error_log("convert HTML2Text");
@@ -1145,24 +1164,29 @@ class translation
 
 					foreach($quoteParts3 as $quotePart3) {
 						$allowedLength = 76-strlen("\r\n$indentString");
-						if (strlen($quotePart3) > $allowedLength) {
-							$s=explode(" ", $quotePart3);
-							$quotePart3 = "";
-							$linecnt = 0;
-							foreach ($s as $k=>$v) {
-								$cnt = strlen($v);
-								// only break long words within the wordboundaries,
-								if($cnt > $allowedLength) {
-									$v=wordwrap($v, $allowedLength, "\r\n$indentString", true);
+						// only break lines, if not already indented
+						if ($quotePart3[0] != $indentString)
+						{
+							if (strlen($quotePart3) > $allowedLength) {
+								$s=explode(" ", $quotePart3);
+								$quotePart3 = "";
+								$linecnt = 0;
+								foreach ($s as $k=>$v) {
+									$cnt = strlen($v);
+									// only break long words within the wordboundaries,
+									// but it may destroy links, so we check for href and dont do it if we find it
+									if($cnt > $allowedLength && stripos($v,'href=')===false) {
+										$v=wordwrap($v, $allowedLength, "\r\n$indentString", true);
+									}
+									// the rest should be broken at the start of the new word that exceeds the limit
+									if ($linecnt+$cnt > $allowedLength) {
+										$v="\r\n$indentString$v";
+										$linecnt = 0;
+									} else {
+										$linecnt += $cnt;
+									}
+									if (strlen($v))  $quotePart3 .= (strlen($quotePart3) ? " " : "").$v;
 								}
-								// the rest should be broken at the start of the new word that exceeds the limit
-								if ($linecnt+$cnt > $allowedLength) {
-									$v="\r\n$indentString$v";
-									$linecnt = 0;
-								} else {
-									$linecnt += $cnt;
-								}
-								if (strlen($v))  $quotePart3 .= (strlen($quotePart3) ? " " : "").$v;
 							}
 						}
 						$asciiTextBuff[] = $indentString . $quotePart3 ;
