@@ -72,11 +72,21 @@
 				$GLOBALS['egw']->translation->add_app('preferences');	// we need the prefs translations too
 			}
 
-			if(!$GLOBALS['egw']->hooks->single('settings',$this->appname))
+			// calling the settings hook
+			$settings = $GLOBALS['egw']->hooks->single('settings',$this->appname);
+			// it either returns the settings or save it in $GLOBALS['settings'] (deprecated!)
+			if (isset($settings) && is_array($settings) && $settings)
 			{
-				return False;
+				$this->settings = array_merge($this->settings,$settings);
 			}
-			$this->settings = array_merge($this->settings,$GLOBALS['settings']);
+			elseif(isset($GLOBALS['settings']) && is_array($GLOBALS['settings']) && $GLOBALS['settings'])
+			{
+				$this->settings = array_merge($this->settings,$GLOBALS['settings']);
+			}
+			else
+			{
+				return False;	// no settings returned
+			}
 
 			/* Remove ui-only settings */
 			if($this->xmlrpc)
