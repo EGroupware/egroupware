@@ -40,10 +40,12 @@ add timesheet entry	infolog	cs	Přidat pracovní výkaz
 add:	infolog	cs	Přidat:
 all	infolog	cs	Vše
 all links and attachments	infolog	cs	všechny odkazy a přílohy
+all projects	infolog	cs	Všechny projekty
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	cs	umožňuje nastavit stav záznamu, např. úkol jako dokončený, když je dořešen (hodnota závisí na typu záznamu)
-applies the changes	infolog	cs	provede změny
+alternatives	infolog	cs	Alternativy
 apply the changes	infolog	cs	Použít změny
 archive	infolog	cs	archiv
+are you shure you want to close this entry ?	infolog	cs	Určitě chcete uzavřít tento záznam?
 are you shure you want to delete this entry ?	infolog	cs	Určitě chcete smazat tento záznam?
 attach a file	infolog	cs	Připojit soubor
 attach file	infolog	cs	Připojit soubor
@@ -65,6 +67,8 @@ check to specify custom contact	infolog	cs	Zaškrtněte pro zadání uživatelsk
 click here to create the link	infolog	cs	klikněte sem pro vytvoření odkazu
 click here to start the search	infolog	cs	klikněte sem pro zahájení hledání
 close	infolog	cs	Zavřít
+close all	infolog	cs	Uzavřít vše
+close this entry and all listed sub-entries	infolog	cs	Uzavřít tento záznam a všechny zobrazené podzáznamy?
 comment	infolog	cs	Komentář
 completed	infolog	cs	Ukončeno
 configuration	infolog	cs	Konfigurace
@@ -87,13 +91,13 @@ custom fields, typ and status	common	cs	Uživatelsky definované položky, typy 
 custom from	infolog	cs	Uživatelsky definované od
 custom regarding	infolog	cs	Uživatelsky definovaný ohled
 custom status for typ	infolog	cs	Uživatelsky definovaný stav pro typ
-customfields	infolog	cs	Uživatelsky definovaná pole
+customfields	infolog	cs	Uživatelsky definované položky
 date completed	infolog	cs	Datum ukočení
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	cs	Datum ukončení (ponechte prázdné, pokud chcete nastavit automaticky při dokončení nebo vyúčtování)
 datecreated	infolog	cs	Datum vytvoření
 dates, status, access	infolog	cs	Datumy, Stavy, Přístupy
 days	infolog	cs	dnů
-default category for new infolog entries	infolog	cs	Výchozí kategorie pro nové záznamy v InfoLogu
+default category for new infolog entries	infolog	cs	Výchozí kategorie pro nové záznamy InfoLogu
 default filter for infolog	infolog	cs	Výchozí filtr pro InfoLog
 default status for a new log entry	infolog	cs	výchozí stav pro nový záznam
 delegated	infolog	cs	delegované
@@ -108,7 +112,7 @@ delete this entry	infolog	cs	smazat záznam
 delete this entry and all listed sub-entries	infolog	cs	Smazat tento záznam a všechny zobrazené podpoložky
 deleted	infolog	cs	smazané
 deletes the selected typ	infolog	cs	smaže vybraný typ
-deletes this field	infolog	cs	smaže toto pole
+deletes this field	infolog	cs	smaže tuto položku
 deletes this status	infolog	cs	smaže tento stav
 description	infolog	cs	Popis
 determines the order the fields are displayed	infolog	cs	určuje pořadí zobrazování položek
@@ -125,6 +129,7 @@ don't show infolog	infolog	cs	NEzobrazovat InfoLog
 done	infolog	cs	hotovo
 download	infolog	cs	Stáhnout
 duration	infolog	cs	Trvání
+e-mail:	infolog	cs	E-mail:
 each value is a line like <id>[=<label>]	infolog	cs	každá hodnota je řádkem jako <id>[=<label>]
 edit	infolog	cs	Editovat
 edit or create categories for ingolog	infolog	cs	Editovat nebo vytvořit kategorie pro InfoLog
@@ -150,17 +155,20 @@ finish	infolog	cs	dokončit
 for which types should this field be used	infolog	cs	pro které typy má být tato položka použita
 from	infolog	cs	Od
 general	infolog	cs	Obecné
+global categories	infolog	cs	Globální kategorie
 group owner for	infolog	cs	Skupinový vlastník pro
 high	infolog	cs	Vysoká
 history	infolog	cs	Historie
 history logging	infolog	cs	Protokolování historie
 history logging and deleting of items	infolog	cs	Protokolování historie a mazání položek
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
 id	infolog	cs	Id
 id#	infolog	cs	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	cs	Pokud má typ skupinového vlastníka, všechny položky toho typu bude vlastnit daná skupina, nikoli uživatel, který je vytvořil!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	cs	Pokud není nastaveno, je řádek s filtry a hledáním skryt, je-li záznamů méně, než udává hodnota "maximum výsledků na stránku" (definovaná ve společných předvolbách).
 import	infolog	cs	Importovat
 import next set	infolog	cs	importovat následující sadu
+importance	infolog	cs	Důležitost
 info log	common	cs	InfoLog
 infolog	common	cs	InfoLog
 infolog - delete	infolog	cs	InfoLog - Smazat
@@ -174,7 +182,7 @@ infolog entry saved	infolog	cs	Záznam InfoLogu uložen
 infolog filter for the main screen	infolog	cs	Filtr InfoLogu pro hlavní obrazovku
 infolog list	infolog	cs	Seznam InfoLogu
 infolog preferences	common	cs	Předvolby InfoLogu
-infolog-fieldname	infolog	cs	InfoLog - Název pole
+infolog-fieldname	infolog	cs	InfoLog - Název položky
 invalid filename	infolog	cs	Neplatné jméno souboru
 label<br>helptext	infolog	cs	Označení<br>Text nápovědy
 last changed	infolog	cs	Naposledy změněno
@@ -184,6 +192,7 @@ leave it empty	infolog	cs	ponechat prázdné
 leave without saveing the entry	infolog	cs	ukončit bez uložení záznamu
 leaves without saveing	infolog	cs	ukončí bez ukládání
 length<br>rows	infolog	cs	Délka<br>Řádky
+limit number of description lines (default 5, 0 for no limit)	infolog	cs	Omezit počet řádek popisu (výchozí 5, pro zrušení limitu 0)
 link	infolog	cs	Odkaz
 links	infolog	cs	Odkazy
 links of this entry	infolog	cs	Odkazy tohoto záznamu
@@ -207,6 +216,7 @@ no details	infolog	cs	žádné detaily
 no entries found, try again ...	infolog	cs	žádné záznamy nebyly nalezeny, zkuste znovu...
 no filter	infolog	cs	žádný filtr
 no links or attachments	infolog	cs	žádné odkazy nebo přílohy
+no project	infolog	cs	Žádný projekt
 nonactive	infolog	cs	neaktivní
 none	infolog	cs	Žádné
 normal	infolog	cs	Normální
@@ -227,12 +237,14 @@ only the links	infolog	cs	jen odkazy
 open	infolog	cs	otevřít
 optional note to the link	infolog	cs	volitelná poznámka k odkazu
 order	infolog	cs	Pořadí
+organization	infolog	cs	Organizace
 overdue	infolog	cs	po termínu
 own	infolog	cs	vlastní
 own open	infolog	cs	vlastní otevřené
 own overdue	infolog	cs	vlastní po termínu
 own upcoming	infolog	cs	vlastní nadcházející
 parent	infolog	cs	Nadřazený
+parent infolog	infolog	cs	Nadřazený InfoLog
 path on (web-)serverside<br>eg. /var/samba/share	infolog	cs	cesta (umístění) na WWW serveru<br>např. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenovou složku dokumentů WWW serveru!!!
 pattern for search in addressbook	infolog	cs	Výraz pro vyhledávání v Adresáři
@@ -291,6 +303,7 @@ select an app to search in	infolog	cs	Vybrat aplikaci k prohledání
 select an entry to link with	infolog	cs	Vybrat záznam, na který se má odkazovat
 select to filter by owner	infolog	cs	vybrat pro filtrování dle vlastníka
 select to filter by responsible	infolog	cs	vybrat pro filtrování dle odpovědné osoby
+sender	infolog	cs	Odesílatel
 sets the status of this entry and its subs to done	infolog	cs	Nastavit stav záznamu a jeho podpoložek na hotový
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	cs	Má InfoLog zobrazovat Pod-úkoly, -hovory nebo -poznámky v normálním zobrazení nebo ne? Podpoložky můžete vždy zobrazit přes jejich rodiče.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	cs	Má InfoLog zobrazovat odkazy na ostatní aplikace nebo připojené soubory v seznamu InfoLogu nebo ne (normální zobrazení při vstupu do InfoLogu)?
@@ -325,7 +338,7 @@ test import (show importable records <u>only</u> in browser)	infolog	cs	Testovat
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	cs	název používaný interně (<= 10 znaků), jeho změna způsobí nedostupnost stávajících dat
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	cs	název používaný interně (<= 20 znaků), jeho změna způsobí nedostupnost stávajících dat
 the text displayed to the user	infolog	cs	text zobrazený uživateli
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	cs	Tento filter InfoLog používá při vstupu do aplikace. Filtry omezují zobrazení záznamů v aktuálním pohledu. Jsou filtry pro zobrazení jen ukončených, stále otevřených nebo budoucích záznamů, Vašich nebo všech uživatelů.
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	cs	Tento filtr InfoLog používá při vstupu do aplikace. Filtry omezují zobrazení záznamů v aktuálním pohledu. Jsou filtry pro zobrazení jen ukončených, stále otevřených nebo budoucích záznamů, Vašich nebo všech uživatelů.
 til when should the todo or phonecall be finished	infolog	cs	dokud se neukončí úkol nebo telefonát
 times	infolog	cs	Časy
 to many might exceed your execution-time-limit	infolog	cs	příliš mnoho může překročit nastavený časový limit spuštění
@@ -346,7 +359,6 @@ urgency	infolog	cs	naléhavost
 urgent	infolog	cs	Naléhavé
 used time	infolog	cs	spotřebovaný čas
 valid path on clientside<br>eg. \servershare or e:	infolog	cs	platná cesta na straně klienta<br>např. \\Server\Sdileni nebo e:\
-valid path on clientside<br>eg. servershare or e:	infolog	cs	platná cesta na klientské straně<br>např. \\Server\Sdílení nebo e:\
 values for selectbox	infolog	cs	Hodnoty pro rozbalovací nabídku
 view all subs of this entry	infolog	cs	Zobrazit všechny podpoložky záznamu
 view other subs	infolog	cs	zobrazit ostatní podpoložky
@@ -360,6 +372,8 @@ which implicit acl rights should the responsible get?	infolog	cs	Jaká implicitn
 which types should the calendar show	infolog	cs	Které typy má kalendář zobrazovat
 will-call	infolog	cs	zavolá
 write (add or update) a record by passing its fields.	infolog	cs	Zapsat (přidat nebo smazat) záznam zadáním jeho položek.
+yes - close	infolog	cs	Ano - uzavřít
+yes - close including sub-entries	infolog	cs	Ano - uzavřít včetně podzáznamů
 yes - delete	infolog	cs	Ano - Smazat
 yes - delete including sub-entries	infolog	cs	Ano - Smazat včetně podpoložek
 yes, noone can purge deleted items	infolog	cs	Ano, nikdo nemůže odstraňovat smazané položky

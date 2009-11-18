@@ -1,4 +1,5 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	cs	%1 (%2 nových) zpráv zapsaných pro aplikaci '%3' a jazyky '%4'
+%1 entries found, select one ...	etemplate	cs	Nalezeno %1 záznamů, vyberte jeden ...
 %1 etemplates deleted	etemplate	cs	%1 eŠablon smazáno
 %1 etemplates for application '%2' dumped to '%3'	etemplate	cs	%1 eŠablon pro aplikaci '%2' vytvořilo výpis do '%3'
 %1 etemplates found	etemplate	cs	%1 eŠablon nalezeno
@@ -33,6 +34,7 @@ alignment of label and input-field in table-cell	etemplate	cs	zarovnání popisk
 alignment of the v/hbox containing table-cell	etemplate	cs	Zarovnání V/HBoxu obsahujícího buňku tabulky
 all days	etemplate	cs	všechny dny
 all operations save the template!	etemplate	cs	všechny operace ukládají šablonu !
+allowed file type: %1	etemplate	cs	Povolený typ souboru: %1
 am	etemplate	cs	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	cs	indexy vytvořené pro sloupec zrychlují vyhledávání v daném sloupci (ale také zabírají místo na disku !!!)
 application	etemplate	cs	Aplikace
@@ -77,7 +79,7 @@ column...	etemplate	cs	Sloupec...
 columnname	etemplate	cs	Jméno sloupce
 comment	etemplate	cs	Komentář
 confirm	etemplate	cs	potvrdit
-confirmation message or custom javascript (returning true or false)	etemplate	cs	Potvrzující zpráva nebo uživatelsky definovaný javaskript (vracející true nebo false)
+confirmation message or custom javascript (returning true or false)	etemplate	cs	Potvrzující zpráva nebo uživatelsky definovaný javascript (vracející true nebo false)
 confirmation necesary or custom java-script	etemplate	cs	vyžadováno potvrzení nebo uživatelský javaskript
 contact	etemplate	cs	Kontakt
 contact field to show	etemplate	cs	Zobrazit položku kontaktu
@@ -146,6 +148,9 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	cs	sem zadejte číslo nové verze (> stará_verze), ponechte prázdné pokud nechcete aktualizovat soubor
 enter the new version number here (has to be > old_version)	etemplate	cs	sem zadejte číslo nové verze (musí být > stará_verze)
 entry saved	etemplate	cs	Záznam uložen
+error copying uploaded file to vfs!	etemplate	cs	Chyba při kopírování uploadovaného souboru do vfs!
+error create parent directory %1!	etemplate	cs	Chyba při vytváření nadřazeného adresáře %1!
+error deleting %1!	etemplate	cs	Chyba při mazání %1!
 error: template not found !!!	etemplate	cs	Chyba: Šablona nebyla nalezena !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	cs	Chyba: webový server nemá oprávnění k zápisu do '%1' !!!
 error: while saving !!!	etemplate	cs	Chyba při ukládání !!!
@@ -164,7 +169,9 @@ extensions loaded:	etemplate	cs	Načtená rozšíření:
 field	etemplate	cs	Položka
 field must not be empty !!!	etemplate	cs	Položka nesmí být prázdná !!!
 file	etemplate	cs	Soubor
+file '%1' not found!	etemplate	cs	Soubor '%1' nebyl nalezen!
 file contains more than one etemplate, last one is shown !!!	etemplate	cs	Soubor obsahuje více jak jednu eŠablonu, zobrazena je poslední !!!
+file is of wrong type (%1 != %2)!	etemplate	cs	Soubor je špatného typu (%1 != %2)!
 file writen	etemplate	cs	Soubor zapsán
 fileupload	etemplate	cs	Upload souboru
 first	etemplate	cs	První
@@ -337,9 +344,10 @@ select which values to show	etemplate	cs	vybrat hodnoty ke zobrazení
 select year	etemplate	cs	Vybrat rok
 selectbox	etemplate	cs	Rozbalovací nabídka
 sets today as date	etemplate	cs	nastaví dnešek jako datum
-should the form be submitted or any custom javascript be executed	etemplate	cs	Má být odeslán formulář nebo spuštěn libovolný uživatelský javaskript
+should the form be submitted or any custom javascript be executed	etemplate	cs	Má být odeslán formulář nebo spuštěn libovolný uživatelský javascript
 show	etemplate	cs	Zobrazit
 show (no save)	etemplate	cs	Zobrazit (neukládat)
+show all / cancel filter	etemplate	cs	Zobrazit vše / zrušit filtr
 show values	etemplate	cs	Zobrazit hodnoty
 showing	etemplate	cs	zobrazuji
 shows / allows you to enter values into the etemplate for testing	etemplate	cs	zobrazí / umožní Vám zadat hodnoty do eŠablony pro testování

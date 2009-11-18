@@ -10,6 +10,7 @@
 %1, %2 or %3 the configuration file.	setup	cs	%1, %2 nebo %3 konfigurační soubor.
 '%1' is no valid domain name!	setup	cs	'%1' není platné doménové jméno!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	cs	'%1' není povoleno jako %2. argumenty volby %3 !!!
+'%1' must be integer	setup	cs	%1 musí být hodnota typu integer
 (searching accounts and changing passwords)	setup	cs	(prohledávání účtů a změna hesel)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	cs	*** Neaktualizujte Vaší databázi prostřednictvím Instalátoru, protože aktualizace by díky nastavení parametru max_execution_time mohla být přerušena a Vaše databáze by pak zůstala v neobnovitelném stavu (ztratil(a) by jste svá data) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	cs	*** Změny musíte provést ručně ve Vašem php.ini (na Linuxu obvykle v adresáři /etc), aby byl eGW plně funkční !!!
@@ -88,7 +89,10 @@ backup '%1' renamed to '%2'	setup	cs	záloha '%1' přejmenována na '%2'
 backup '%1' restored	setup	cs	záloha '%1' obnovena
 backup and restore	setup	cs	Zálohování a obnova
 backup failed	setup	cs	Zálohování selhalo
+backup files (needs ziparchive)	setup	cs	zálohovat soubory (vyžaduje ZipArchive)
 backup finished	setup	cs	Zalohování dokončeno
+backup housekeeping	setup	cs	Zálohy standardního jména mohou být automaticky smazány. Pokud chcete záložní soubory ochránit před smazáním, přejmenujte je.
+backup min count	setup	cs	Minimální počet záloh
 backup now	setup	cs	Zálohovat nyní
 backup sets	setup	cs	záložní sady
 backup skipped!	setup	cs	Záloha přeskočena!
@@ -122,6 +126,7 @@ charsets used by the different languages	setup	cs	znakové sady používané rů
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	cs	Kontrola může být provedena jen pokud je vyvolána prostřednictvím webového serveru, protože uživatelské jméno webového serveru není známo.
 check installation	setup	cs	Zkontrolovat instalaci
 check ip address of all sessions	setup	cs	Kontrolovat IP adresy všech relací
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	cs	zaškrtněte pro zálohování a obnovu adresáře souborů (může zabírat hodně místa, ujistěte se, že máte správně nastavenou údržbu)
 checking extension %1 is loaded or loadable	setup	cs	Kontroluji, zda je rozšíření %1 načtené nebo ho lze načíst
 checking file-permissions of %1 for %2 %3: %4	setup	cs	Kontroluji souborová oprávnění %1 pro %2 %3: %4
 checking for gd support...	setup	cs	Kontroluji podporu GD...
@@ -181,6 +186,7 @@ database	setup	cs	Databáze
 database instance (egw domain)	setup	cs	Instance databáze (eGW doména)
 database is version %1 and up to date.	setup	cs	databáze je verze %1 a je aktuální.
 database successfully converted from '%1' to '%2'	setup	cs	Databáze úspěšně zkonvertována z '%1' na '%2'
+datebase %1 droped.	setup	cs	Databáze %1 byla smazána.
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	cs	Port pro datum a čas.<br />Pokud používáte port 13, nastavte prosím patřičným způsobem pravidla na firewallu dříve, než odešlete tuto stránku.<br />(Port: 13 / Host: 129.6.15.28)
 day	setup	cs	den
 day of week<br />(0-6, 0=sunday)	setup	cs	den týdne <br />(0-6, 0=neděle)
@@ -253,6 +259,7 @@ enter your http proxy server	setup	cs	Zadejte Váš HTTP proxy server
 enter your http proxy server password	setup	cs	Zadejte heslo Vašeho HTTP proxy serveru
 enter your http proxy server port	setup	cs	Zadejte port Vašeho HTTP proxy serveru
 enter your http proxy server username	setup	cs	Zadejte uživatelské jméno Vašeho HTTP proxy serveru
+error dropping user!	setup	cs	Chyba při mazání uživatele!
 error in admin-creation !!!	setup	cs	Chyba při vytváření administrátora !!!
 error in group-creation !!!	setup	cs	Chyba při vytváření skupiny !!!
 export has been completed!	setup	cs	Export byl dokončen!
@@ -363,6 +370,7 @@ mcrypt mode (default cbc)	setup	cs	Mcyrpt  režim (výchozí CBC)
 mcrypt settings (requires mcrypt php extension)	setup	cs	Nastavení mcyrpt (vyžaduje PHP rozšíření mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	cs	Parametr memory_limit je nastaven na méně než %1: některé aplikace eGroupWaru vyžadují více paměti než doporučených 8M, můžete proto očekávat, že bude docházet k náhodným chybám.
 migration between egroupware account repositories	setup	cs	Migrace mezi databázemi eGroupWare účtů
+min backup count	setup	cs	Minimální počet záloh, které by měly zůstat zachovány (nula znamená žádné / bez limitu)
 minimum account id (e.g. 500 or 100, etc.)	setup	cs	Minimální id účtu (např. 500 nebo 100, atp.)
 minute	setup	cs	minuta
 missing or uncomplete mailserver configuration	setup	cs	Chybějící nebo nekompletní konfigurace poštovního serveru
@@ -509,7 +517,7 @@ some or all of its tables are missing	setup	cs	Některé nebo všechny jeho tabu
 sources deleted/missing	setup	cs	Zdrojové kódy jsou smazány (chybí)
 sql encryption type	setup	cs	Typ SQL šifrování pro hesla (výchozí md5)
 ssl validation:	setup	cs	SSL oveřování:
-standard (login-name identical to egroupware user-name)	setup	cs	standardní (přihlašovací jméno se shoduje s uživatelským jménem v eGroupWare)
+standard (login-name identical to egroupware user-name)	setup	cs	standardní (přihlašovací jméno se shoduje s uživatelským jménem v eGroupWaru)
 standard mailserver settings (used for mail authentication too)	setup	cs	Nastavení standardního poštovního serveru (používá se také pro poštovní autentikaci)
 standard, as defined above	setup	cs	Standardní, jak je definováno výše
 start the postmaster	setup	cs	Spustit postmaster

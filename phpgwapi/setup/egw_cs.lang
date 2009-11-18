@@ -1,7 +1,6 @@
 %1 email addresses inserted	common	cs	%1 e-mailových adres vloženo
+%1 file	common	cs	soubor  %1
 %1 is not executable by the webserver !!!	common	cs	%1 není spustitelný pro webový server
-%1 manual	common	cs	%1 manuál
-%1 start	common	cs	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	cs	%1Zvolte jiný adresář%2<br />nebo nastavte práva na %3 tak, aby do něj mohl zapisovat webový server
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	cs	%1eGroupWare%2 je víceuživatelský groupware postavený na webových technologiích napsaný v jazyce %3PHP%4.
 (session restored in %1 seconds)	common	cs	(relace obnovena za %1 sekund)
@@ -48,6 +47,7 @@ albania	common	cs	ALBÁNIE
 algeria	common	cs	ALŽÍRSKO
 all	common	cs	Vše
 all fields	common	cs	všechna pole
+all languages	common	cs	všechny jazyky
 alphabet	common	cs	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	cs	Alternativní formátovací sada
 american samoa	common	cs	AMERICKÁ SAMOA
@@ -104,6 +104,7 @@ brazil	common	cs	BRAZÍLIE
 british indian ocean territory	common	cs	BRITSKÉ INDICKOOCEÁNSKÉ ÚZEMÍ
 brunei darussalam	common	cs	BRUNEJ DARUSSALAM
 bulgaria	common	cs	BULHARSKO
+bulgarian	common	cs	bulharština
 burkina faso	common	cs	HORNÍ VOLTA
 burundi	common	cs	BURUNDI
 calendar	common	cs	Kalendář
@@ -188,6 +189,7 @@ detail	common	cs	Detail
 details	common	cs	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	cs	Zablokovat spouštění skriptu pro opravu chyby v Internet Exploreru 5.5 a vyšších, který umožňuje zobrazit průhlednost v obrázcích formátu .PNG?
 direction left to right	common	cs	Směr zleva doprava
+directory	common	cs	Adresář
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	cs	Adresář neexistuje, web server pro něj nemá práva ke čtení nebo není relativní ke kořenovému adresáři dokumentů.
 disable internet explorer png-image-bugfix	common	cs	Zablokovat zranitelnost Internet Exploreru pro .png obrázky
 disable slider effects	common	cs	Zakázat efekty posuvníku
@@ -209,6 +211,7 @@ done	common	cs	Hotovo
 drag to move	jscalendar	cs	Pro přesun uchopte
 e-mail	common	cs	E-Mail
 east timor	common	cs	VÝCHODNÍ TIMOR
+eastern european	common	cs	Východoevropské
 ecuador	common	cs	EKVÁDOR
 edit	common	cs	Editovat
 edit %1 category for	common	cs	Editovat kategorii %1 pro
@@ -216,7 +219,6 @@ edit categories	common	cs	Editovat kategorie
 edit category	common	cs	Editovat kategorii
 egroupware	common	cs	eGroupWare
 egroupware api version	common	cs	verze eGroupWare API
-egroupware api version %1	common	cs	eGroupWare API verze %1
 egroupware: login blocked for user '%1', ip %2	common	cs	eGroupWare: zablokováno přihlášení uživatele '%1', IP %2
 egypt	common	cs	EGYPT
 el salvador	common	cs	EL SALVADOR
@@ -279,6 +281,7 @@ global public	common	cs	Přístupný všem
 go today	jscalendar	cs	Jdi na dnešek
 grant access	common	cs	Povolit přístup
 greece	common	cs	ŘECKO
+greek	common	cs	řečtina
 greenland	common	cs	GRÓNSKO
 grenada	common	cs	GRENADA
 group	common	cs	Skupina
@@ -339,6 +342,7 @@ italy	common	cs	ITÁLIE
 jamaica	common	cs	JAMAJKA
 january	common	cs	Leden
 japan	common	cs	JAPONSKO
+japanese	common	cs	japonština
 jordan	common	cs	JORDÁNSKO
 july	common	cs	Červenec
 jun	common	cs	Červen
@@ -353,6 +357,7 @@ keywords	common	cs	Klíčová slova
 kiribati	common	cs	KIRIBATI
 korea, democratic peoples republic of	common	cs	KOREA
 korea, republic of	common	cs	KOREA
+korean	common	cs	korejština
 kuwait	common	cs	KUWAIT
 kyrgyzstan	common	cs	KYRGYZSTÁN
 language	common	cs	Jazyk
@@ -371,6 +376,7 @@ liberia	common	cs	LIBÉRIE
 libyan arab jamahiriya	common	cs	LIBYE
 license	common	cs	Licence
 liechtenstein	common	cs	LICHTENŠTEJNSKO
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'<br><b>csv data neobsahují ##last-check-run## tabulky %3 ==> ignorován</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	cs	Řádek %1: '%2'<br><b>csv data neodpovídají počtu sloupců v tabulce %3 ==> ignorován</b>
 list	common	cs	Seznam
 list members	common	cs	Seznam členů
@@ -499,7 +505,6 @@ password must have at least %1 characters	common	cs	Heslo musí mít nejméně %
 path to user and group files has to be outside of the webservers document-root!!!	common	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!!!
 permission denied!	common	cs	Přístup zamítnut!
 permissions to the files/users directory	common	cs	práva k souborům / uživatelským adresářům
-permisson denied!	common	cs	Přístup zamítnut!
 personal	common	cs	Osobní
 peru	common	cs	PERU
 philippines	common	cs	FILIPÍNY
@@ -551,6 +556,7 @@ returns struct of users application access	common	cs	Vrací strukturu uživatels
 reunion	common	cs	RÉUNION
 right	common	cs	Pravý
 romania	common	cs	RUMUNSKO
+russian	common	cs	ruština
 russian federation	common	cs	RUSKO
 rwanda	common	cs	RWANDA
 saint helena	common	cs	SVATÁ HELENA
@@ -704,7 +710,6 @@ use button to search for project	common	cs	použijte tlačítko k hledání proj
 user	common	cs	Uživatel
 user accounts	common	cs	uživatelské účty
 user groups	common	cs	skupiny uživatelů
-user openinstance	common	cs	Otevřená uživatelská instance
 username	common	cs	Uživatelské jméno
 users	common	cs	uživatelé
 users choice	common	cs	Uživatelská volba
@@ -719,6 +724,7 @@ virgin islands, u.s.	common	cs	AMERICKÉ PANENSKÉ OSTROVY
 wallis and futuna	common	cs	WALLIS A FUTUNA
 wednesday	common	cs	Středa
 welcome	common	cs	Vítejte
+western european	common	cs	Západoevropské
 western sahara	common	cs	ZÁPADNÍ SAHARA
 what color should all the blank space on the desktop have	common	cs	Jakou barvu by měla mít všechna prázdná místa na pracovní ploše?
 what style would you like the image to have?	common	cs	Jaký styl mají mít obrázky?

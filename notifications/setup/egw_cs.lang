@@ -23,9 +23,11 @@ if set, embedded links get rendered special for external clients	notifications	c
 linked entries:	notifications	cs	Odkazované záznamy:
 maximum sms messages per notification	admin	cs	Maximální počet SMS zpráv na jedno upozornění
 message from	notifications	cs	Zpráva od
+minutes	notifications	cs	minut
 notification	common	cs	Upozornění
 notify me by	notifications	cs	Upozorni mě pomocí
 optimize e-mails for external mail client	notifications	cs	Optimalizovat e-maily pro externí poštovní klienty
+poll interval	notifications	cs	Interval dotazování (poll)
 preferences for notification	notifications	cs	Předvolby pro upozornění
 received	notifications	cs	Přijato
 sms backend	admin	cs	SMS backend
