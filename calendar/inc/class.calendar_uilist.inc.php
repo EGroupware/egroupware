@@ -230,7 +230,7 @@ class calendar_uilist extends calendar_ui
 			'offset'  => (int) $params['start'],
 			'num_rows'=> $params['num_rows'],
 			'order'   => $params['order'] ? $params['order'].' '.$params['sort'] : 'cal_start',
-			'cfs'     => $params['csv_explort'] ? array() : $cfs,
+			'cfs'     => $params['csv_export'] ? array() : $cfs,
 		);
 		switch($params['filter'])
 		{
