@@ -8,5 +8,5 @@ function dragSidebar()
 function dropSidebar()
 {
 	var mainbox = dd.elements.thesideboxcolumn;
-	xajax_doXMLHTTP("preferences.ajaxpreferences.storeEGWPref","common","idotssideboxwidth",mainbox.w);
+	xajax_doXMLHTTP("preferences.ajaxpreferences.storeEGWPref",currentapp,"idotssideboxwidth",mainbox.w);
 }

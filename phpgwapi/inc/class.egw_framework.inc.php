@@ -285,7 +285,8 @@ abstract class egw_framework
 		else
 		{
 			$var['current_app_title']=$apps[$GLOBALS['egw_info']['flags']['currentapp']]['title'];
-		 }
+		}
+		$var['currentapp'] = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		// current users for admins
 		$var['current_users'] = $this->_current_users();

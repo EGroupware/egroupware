@@ -216,9 +216,9 @@ class idots_framework extends egw_framework
 			{
 				$prefs = array();
 
-				if ($GLOBALS['egw_info']['user']['preferences']['common'])
+				if (isset($GLOBALS['egw_info']['user']['preferences'][$GLOBALS['egw_info']['flags']['currentapp']]['idotssideboxwidth']))
 				{
-					$sideboxwidth = $GLOBALS['egw_info']['user']['preferences']['common']['idotssideboxwidth'];
+					$sideboxwidth = $GLOBALS['egw_info']['user']['preferences'][$GLOBALS['egw_info']['flags']['currentapp']]['idotssideboxwidth'];
 				}
 				if((int)$sideboxwidth < 1)
 				{
@@ -370,7 +370,7 @@ class idots_framework extends egw_framework
 		}
 		else
 		{
-			$var['logo_file'] = $GLOBALS['egw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
+			$var['logo_file'] = common::image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
 		}
 		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
 		if (substr($var['logo_url'],0,4) != 'http')
@@ -386,7 +386,7 @@ class idots_framework extends egw_framework
 			$tmpl->set_var(array(
 				'lang_language' => lang('Language'),
 				'select_language' => html::select('lang',$GLOBALS['egw_info']['user']['preferences']['common']['lang'],
-				$GLOBALS['egw']->translation->get_installed_langs(),true),
+				translation::get_installed_langs(),true),
 			));
 		}
 		else
@@ -750,7 +750,7 @@ class idots_framework extends egw_framework
 			if(isset($item_link['icon']))
 			{
 				$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['egw_info']['flags']['currentapp'];
-				$var['icon_or_star'] = $item_link['icon'] ? '<img style="margin:0px 2px 0px 2px; height: 16px;" src="'.$GLOBALS['egw']->common->image($app,$item_link['icon']).'"/>' : False;
+				$var['icon_or_star'] = $item_link['icon'] ? '<img style="margin:0px 2px 0px 2px; height: 16px;" src="'.common::image($app,$item_link['icon']).'"/>' : False;
 			}
 			$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
 			$var['item_link'] = $item_link['link'];
