@@ -1547,7 +1547,7 @@ class addressbook_bo extends addressbook_so
 
 			if (!$cat_id)
 			{
-				// some SyncML clients (mostly phones add an X- to the category names
+				// some SyncML clients (mostly phones) add an X- to the category names
 				if (strncmp($cat_name, 'X-', 2) == 0)
 				{
 					$cat_name = substr($cat_name, 2);
