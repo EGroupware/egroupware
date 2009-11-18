@@ -17,7 +17,7 @@
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
 			'currentapp' => 'admin',
-			'nonheader' => true,
+			'noheader' => true,
 		),
 	);
 	include('../header.inc.php');
