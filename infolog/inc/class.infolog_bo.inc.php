@@ -319,7 +319,7 @@ class infolog_bo
 	}
 
 	/**
-	 * Check if use is responsible for an entry: he or one of his memberships is in responsible
+	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
 	 *
 	 * @param array $info infolog entry as array
 	 * @return boolean
