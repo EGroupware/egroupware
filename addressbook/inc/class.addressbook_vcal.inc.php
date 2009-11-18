@@ -395,7 +395,7 @@ class addressbook_vcal extends addressbook_bo
 	{
 		$result = false;
 
-		if (($contact = $this->vcardtoegw($_vcard)))
+		if (($contact = $this->vcardtoegw($_vcard, $contentID)))
 		{
 			if ($contentID)
 			{
@@ -415,7 +415,7 @@ class addressbook_vcal extends addressbook_bo
 		if (is_array($_supportedFields)) $this->supportedFields = $_supportedFields;
 	}
 
-	function vcardtoegw($_vcard, $_abID)
+	function vcardtoegw($_vcard, $_abID=null)
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 		// be as flexible as possible
