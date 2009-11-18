@@ -7,10 +7,10 @@ a theme defines the colors and fonts used by the template.	preferences	hu	Egy t�
 acl grants have been updated	preferences	hu	ACL engedélyek frissítése megtörtént
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Bármilyen lista az eGroupWare-ben ennyi bejegyzést vagy sort fog oldalanként megmutatni.<br>A túl nagy szám lelassítja a megjelenítést, a túl kevés az átláthatóságot csökkenti. Ön dönt.
 are you sure you want to delete this category ?	preferences	hu	Biztosan törölni kívánja ezt a kategóriát?
-change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	hu	Felhasználó jelszavának megváltoztatása a régi és az új jelszavak megadásával. TRUE értéket ad vissza sikeres végrehajtás esetén, míg FALSE értéket hiba esetén.
 change your password	preferences	hu	Jelszó megváltoztatása
 change your profile	preferences	hu	Profil megváltoztatása
 change your settings	preferences	hu	Beállítások megváltoztatása
+charset for the csv export	addressbook	hu	Karakterkódolás CSV exporthoz
 click to select a color	preferences	hu	Színválasztás
 color	preferences	hu	Szín
 country	preferences	hu	Ország/állam
@@ -18,12 +18,15 @@ date format	preferences	hu	Dátum formátum
 default	preferences	hu	alapértelmezett
 default application	preferences	hu	Alapértelmezett alkalmazás
 default preferences	preferences	hu	Alapértelmezett Tulajdonságok
+default theme	preferences	hu	Alapértelmezett téma
 delete categories	preferences	hu	Kategóriák Törlése
 description can not exceed 255 characters in length !	preferences	hu	A leírás nem érheti el a 255 karakter hosszúságot!
+display thumbnails for linked images	preferences	hu	Csatolt képekhez ikon megjelenítése
+div	preferences	hu	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	hu	A 24 órás idő formátumot részesíti előnyben, vagy a 12 órásat am/pm utótaggal.
 edit custom fields	preferences	hu	egyedi mezők szerkesztése
-enable drag and drop functionality (experimental)	common	hu	Drag and Drop funkció engedélyezése (haladó)
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	common	hu	Engedélyezi vagy tiltja a Drag and Drop funkciókat az összes alkalmazásban. Ha a böngésző nem támogatja a Drag and Drop-ot, akkor automatikusan le lesz tiltva. Ez a tulajdonság egyelőre haladó.
+enable drag and drop functionality (experimental)	preferences	hu	Drag and Drop funkció engedélyezése (haladó)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	hu	Engedélyezi vagy tiltja a Drag and Drop funkciókat az összes alkalmazásban. Ha a böngésző nem támogatja a Drag and Drop-ot, akkor automatikusan le lesz tiltva. Ez a tulajdonság egyelőre haladó.
 enter your new password	preferences	hu	Új jelszó megadása
 enter your old password	preferences	hu	Régi jelszó megadása
 failed to change password.  please contact your administrator.	preferences	hu	Sikertelen jelszó változtatás. Lépjen kapcsolatba az adminisztrátorral.
@@ -38,6 +41,7 @@ how should egroupware display dates for you.	preferences	hu	Az eGroupWare hogyan
 icon	preferences	hu	Ikon
 icons and text	preferences	hu	Ikonok és képek
 icons only	preferences	hu	csak ikonok
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	hu	Bejegyzéshez csatolt képeket ikonként meg lehet jeleníteni. Ez az opció kikapcsolható, így a lapok gyorsabban jelennek meg.
 in which country are you. this is used to set certain defaults for you.	preferences	hu	Ön melyik országban van. Ez alapján pár alapbeállítás automatikusan megtörténik.
 interface/template selection	preferences	hu	Felület/Sablon választás
 language	preferences	hu	Nyelv
@@ -45,15 +49,23 @@ max matches per page	preferences	hu	Maximális találatok laponként
 max number of icons in navbar	preferences	hu	Az ikonok maximális száma a navigációs panelen
 no default	preferences	hu	Nincs alapértelmezett
 no user-selection at all	common	hu	Egyáltalán nincs felhasználó választás
-note: this feature does *not* change your email password. this will	preferences	hu	Megjegyzés: az email-eknél használt jelszó ezzel nem változott meg. Ezt önnek kell megtennie.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	hu	Megjegyzés: az email-eknél használt jelszó ezzel nem változott meg. Ezt önnek kell megtennie.
+office 2003 theme	preferences	hu	Office 2003 téma
+p: paragraph	preferences	hu	p: Paragrafus
+permanent time zone selection	preferences	hu	Állandó időzóna szelekció
+please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	hu	Kérlek válassz időzónát amelyek között váltani szeretnél. A változtatási lehetőség nem lesz feltüntetve ha kevesebb mint két időzóna lett kiválasztva.
+please select your timezone.	preferences	hu	Kérlek válassz időzónát.
 please, select a new theme	preferences	hu	Válasszon új témát
 popup with search	preferences	hu	Felugró ablak kereséssel
 re-enter your password	preferences	hu	Jelszó megerősítése
-read prefs for the specified application.	preferences	hu	A megadott alkalmazás beállításainak beolvasása.
+rich text editor enter mode	preferences	hu	Egyszerű szöveg szerkesztő beviteli mód
+rich text editor theme	preferences	hu	Egyszerű szöveg szerkesztő téma
 select different theme	preferences	hu	Másik téma választása
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	hu	Válaszd ki a szövegszerkesztő hogy generálja a sorvégeket.
 select one	preferences	hu	Válasszon egyet
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	hu	Válassza ki a szövegek és üzenetek nyelvét.<br>Néhány nyelv nem tartalmaz minden üzenetet az ön nyelvére lefordítva, ebben az esetben angolul fog megjelenni az üzenet. Fordítási észrevételeit/javaslatait az előfordulás pontos helyének megjelölésével és a szöveg pontos idézésével küldje el a http://www.osbusiness.hu címre!
+select the language of the spellchecker integrated into the rich text editor.	preferences	hu	Válaszd ki a szövegszerkesztőbe integrált helyesírás-ellenőrzőt.
+select the theme (visualization) of the rich text editor.	preferences	hu	Válaszd ki a szövegszerkesztő témát.
 selectbox	preferences	hu	Kiválasztó doboz
 selectbox with groupmembers	common	hu	Kiválasztó doboz csoporttagokkal
 selectbox with primary group and search	preferences	hu	Kiválasztó doboz az elsődleges csoporttal és kereséssel
@@ -61,16 +73,18 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	hu	Az aktív kapcsolatok számának állandó megjelenítése (egyszerre hányan használják a rendszert).
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	hu	A segítség üzenetek állandóan megjelenítésre kerülnek, amikor változtatja a tulajdonságokat, vagy csak akkor jelennek meg, ha kifejezetten kéri a megjelenítést.
 show helpmessages by default	preferences	hu	Segítség megjelenítése alapértelmezésben
+show links between egroupware aps as	addressbook	hu	Az eGroupWare alkalmazások közötti linkeket mutassa
 show navigation bar as	preferences	hu	Mutassa a navigációs panelt mint
 show number of current users	preferences	hu	Aktuálisan bejelentkezett felhasználók számának mutatása
 show text on navigation icons	preferences	hu	Szöveg megjelenítése a navigációs ikonokon
 show_more_apps	common	hu	Több program megjelenítése
+silver theme	preferences	hu	Ezüst téma
+spellchecker language	addressbook	hu	Helyesírás-ellenörző nyelve
 text only	preferences	hu	Csak szöveg
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	hu	Az alapértelmezett alkalmazás fog elindulni, amikor belép az eGroupWare-be vagy a Kezdőlap ikonra kattint.<br>Több alkalmazást is megjeleníthet a Kezdőlapon(Főképernyőn), ha nem jelöl meg itt alapértelmezett alkalmazást. Ezeket az egyes alkalmazások beállításai között kell beállítani (pl. Felamimail, Infolog, Hírszerkesztő stb.).
 the old password is not correct	preferences	hu	A régi jelszó hibás
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	hu	A kiválasztó doboz megjeleníti az összes elérhető felhasználót (nagyon lelassulhat sok felhasználó esetén). A felugró ablakban meg lehet keresni a felhasználókat név vagy csoport alapján.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	hu	A kiválasztó doboz megjeleníti az összes elérhető felhasználót (nagyon lelassulhat sok felhasználó esetén). A felugró ablakban meg lehet keresni a felhasználókat név vagy csoport alapján. Az utolsó két opció a többi felhasználó általi láthatóságot korlátozza. Itt lehet kikényszeríteni és alkalmazni, de nem az adminisztrátorok számára.
-the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	hu	Az utolsó két opció a többi felhasználó általi láthatóságot korlátozza. Itt lehet kikényszeríteni és alkalmazni, de nem az adminisztrátorok számára.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	hu	Az előbbi két opció korlátozza más felhasználók megtekintését. Ezért ezt meg kell követelni és nem engedélyezni adminisztrátoroknak.
 the two passwords are not the same	preferences	hu	A két jelszó nem egyezik
 theme (colors/fonts) selection	preferences	hu	Téma (színek/betűtípusok) Kiválasztása
 this server is located in the %1 timezone	preferences	hu	A szerver időzónája: %1
@@ -78,9 +92,10 @@ time format	preferences	hu	Időformátum
 use default	preferences	hu	Használja az alapértelmezettet
 users choice	preferences	hu	Felhasználó választása
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	hu	Kezdőlap és Kilépés gombok megjelennek a navigációs panelen az alkalmazások között. Tipikusan a legelső és utolsó ikonok lesznek azok.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	hu	Milyen karakterkódolást alkalmazzunk CSV exportnál? Az alapértelmezett karakterkódolás az eGroupWare rendszer alapértelmezett karakterkódolásával egyezik meg.
 which currency symbol or name should be used in egroupware.	preferences	hu	Melyik pénznemet használja a rendszer.
-write prefs for the specified application.	preferences	hu	A megadott alkalmazás beállításainak mentése.
 you can show the applications as icons only, icons with app-name or both.	preferences	hu	Az alkalmazások gombja a navigációs panelen megjeleníthetőek mint ikonok, ikonok az alkalmazás nevével, vagy csak az alkalmazás nevével.
+you can show the linked entries with icons only, icons with app-name or both.	addressbook	hu	Csatolt elemeket ikonként, szövegként vagy mindkettőt feltüntetve lehet megjeleníteni.
 you do not have permission to set acl's in this mode!	preferences	hu	Ebben a helyzetben nincs jogosultsága az ACL-eket beállítani!
 you must enter a password	preferences	hu	Meg kell adnia egy jelszót
 your current theme is: %1	preferences	hu	az ön aktuális témája: %1
