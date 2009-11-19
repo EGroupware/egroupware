@@ -1137,7 +1137,7 @@ class infolog_bo
 		{
 			return;
 		}
-		error_log("boinfolog::async_notification() users with open entries: ".implode(', ',$users));
+		//error_log(__METHOD__."() users with open entries: ".implode(', ',$users));
 
 		$save_account_id = $GLOBALS['egw_info']['user']['account_id'];
 		$save_prefs      = $GLOBALS['egw_info']['user']['preferences'];
@@ -1164,7 +1164,7 @@ class infolog_bo
 				if (!($pref_value = $GLOBALS['egw_info']['user']['preferences']['infolog'][$pref])) continue;
 
 				$filter .= date('Y-m-d',time()+24*60*60*(int)$pref_value);
-				error_log("boinfolog::async_notification() checking with filter '$filter' ($pref_value) for user $user ($email)");
+				//error_log(__METHOD__."() checking with filter '$filter' ($pref_value) for user $user ($email)");
 
 				$params = array('filter' => $filter);
 				foreach($this->so->search($params) as $info)
@@ -1196,7 +1196,7 @@ class infolog_bo
 								$tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
 							break;
 					}
-					error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
+					//error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
 					$tracking->send_notification($info,null,$email,$user,$pref);
 
 					$notified_info_ids[] = $info['info_id'];
