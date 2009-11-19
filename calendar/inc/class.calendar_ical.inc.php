@@ -245,6 +245,13 @@ class calendar_ical extends calendar_boupdate
 					// --> we have to parse it and let Horde_iCalendar add it again
 					$horde_vtimezone = Horde_iCalendar::newComponent('VTIMEZONE',$container=false);
 					$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
+					// DTSTART must be in local time!
+					$standard = $horde_vtimezone->findComponent('STANDARD');
+					$dtstart = $standard->getAttribute('DTSTART');
+					$standard->setAttribute('DTSTART', date('Ymd\THis', $dtstart), array(), false);
+					$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
+					$dtstart = $daylight->getAttribute('DTSTART');
+					$daylight->setAttribute('DTSTART', date('Ymd\THis', $dtstart), array(), false);
 					$vcal->addComponent($horde_vtimezone);
 					$vtimezones_added[] = $tzid;
 				}
