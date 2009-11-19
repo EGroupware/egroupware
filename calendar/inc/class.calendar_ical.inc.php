@@ -479,30 +479,7 @@ class calendar_ical extends calendar_boupdate
 						// dont use "virtual" exceptions created by participant status for GroupDAV or file export
 						if (!in_array($this->productManufacturer,array('file','groupdav')))
 						{
-							$participants = $this->so->get_participants($event['id'], 0);
-
-							// Check if the stati for all participants are identical for all recurrences
-							foreach ($participants as $uid => $attendee)
-							{
-								switch ($attendee['type'])
-								{
-									case 'u':	// account
-									case 'c':	// contact
-									case 'e':	// email address
-										$recurrences = $this->so->get_recurrences($event['id'], $uid);
-										foreach ($recurrences as $rdate => $recur_status)
-										{
-											if ($rdate && $recur_status != $recurrences[0])
-											{
-												// Every distinct status results in an exception
-												$days[] = $rdate;
-											}
-										}
-										break;
-									default: // We don't handle the rest
-										break;
-								}
-							}
+							$days = $this->so->get_recurrence_exceptions($event);
 						}
 						if (is_array($event['recur_exception']))
 						{

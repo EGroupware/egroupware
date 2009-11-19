@@ -1402,11 +1402,13 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Gets the exception days of a given recurring event caused by
 	 * irregular participant stati
 	 *
-	 * @param array $event	Recurring Event.
+	 * @param array $event		Recurring Event.
+	 * @param int servertime=0	== 0 -> export event with UTC timestamps
+	 * 							!= 0 -> export with servertime timestamps
 	 *
 	 * @return array		Array of exception days (false for non-recurring events).
 	 */
-	function get_recurrence_exceptions(&$event)
+	function get_recurrence_exceptions(&$event, $servertime=0)
 	{
 		$cal_id = (int) $event['id'];
 		if (!$cal_id || $event['recur_type'] == MCAL_RECUR_NONE) return false;
