@@ -1521,7 +1521,7 @@ class addressbook_bo extends addressbook_so
 			$this->categories = new categories($this->owner,'addressbook');
 		}
 		
-		if($contact_id)
+		if($contact_id && $contact_id > 0)
 		{
 			// preserve categories without users read access
 			$old_contact = $this->read($contact_id);
