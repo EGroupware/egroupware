@@ -567,7 +567,7 @@ class html
 	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	*/
-	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%')
+	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true)
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -575,7 +575,7 @@ class html
 		}
 		else
 		{
-			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width);
+			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width,'',$_purify);
 		}
 	}
 
@@ -1274,6 +1274,7 @@ class html
 			{
 				$config = HTMLPurifier_Config::createDefault();
 				$config->set('Core', 'Encoding', self::$charset);
+				$config->set('HTML', 'Allowed', 'br,div[align],hr[class|style],p,b,i,u,s,em,pre,strong,strike,center,ul,ol[type],li,h1,h2,h3,blockquote,table,tbody,thead,tt,tr,td,a[href|target|name|title],img[src|alt|title]');
 				$config->set('Cache', 'SerializerPath', $GLOBALS['egw_info']['server']['temp_dir']);
 			}
 			$purifier = new HTMLPurifier($config);
