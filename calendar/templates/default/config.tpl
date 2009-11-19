@@ -34,7 +34,7 @@
    </tr>
    <!-- lock setting -->
    <tr class="row_on">
-   <td>{lang_setting_lock_time_calender}:</td>
+    <td>{lang_setting_lock_time_calender}:</td>
     <td><input name="newsettings[Lock_Time_Calender]" value="{value_Lock_Time_Calender}" size="40"></td>
    </tr>
    <tr class="row_off">
@@ -47,6 +47,16 @@
     </td>
    </tr>
    <tr class="row_on">
+    <td>{lang_Require_an_ACL_grant_to_invite_other_users_and_groups}:</td>
+    <td>
+     <select name="newsettings[require_acl_invite]">
+      <option value="">{lang_No}: {lang_Every_user_can_invite_other_users_and_groups}</option>
+      <option value="groups"{selected_require_acl_invite_groups}>{lang_Groups:_other_users_can_allways_be_invited,_only_groups_require_an_invite_grant}</option>
+      <option value="all"{selected_require_acl_invite_all}>{lang_Users_+_groups:_inviting_both_allways_requires_an_invite_grant}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="th">
     <td colspan="2"><b>{lang_Birthdays}</b></td>
    </tr>
    <tr class="row_off">

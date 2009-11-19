@@ -70,6 +70,7 @@ csv-filename	calendar	de	CSV-Dateiname
 custom fields	common	de	Benutzerdefinierte Felder
 custom_2	common	de	freebussy
 daily	calendar	de	Täglich
+day	calendar	de	Tat
 days	calendar	de	Tage
 days of the week for a weekly repeated event	calendar	de	Wochentage für wöchentlich wiederholten Termin
 days repeated	calendar	de	wiederholte Tage
@@ -92,6 +93,7 @@ disinvited	calendar	de	Ausgeladen
 display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt Ihre Standard-Kalender-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
+do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
 do you want a weekview with or without weekend?	calendar	de	Wollen Sie eine Wochenansicht mit oder ohne Wochenende?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtig.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüberliegenden. Alle Änderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
 do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	de	Möchten Sie den Termin der Serie als Ausnahme bearbeiten? Klicken Sie OK um den Termin als Einzeltermin (Ausnahme) zu bearbeiten, Abbrechen um die Terminserie zu verändern.
@@ -102,6 +104,7 @@ download this event as ical	calendar	de	Termin als iCal herunterladen
 duration of the meeting	calendar	de	Dauer des Termins
 edit exception	calendar	de	Ausname bearbeiten
 edit series	calendar	de	Serie bearbeiten
+edit status or alarms for this particular day	calendar	de	Bearbeite Status oder Alarme für diesen speziellen Tag
 edit this event	calendar	de	Diesen Termin bearbeiten
 edit this series of recuring events	calendar	de	Diese Serie von wiederholenden Terminen bearbeiten
 empty for all	calendar	de	leer für alle
@@ -123,6 +126,7 @@ event deleted	calendar	de	Termin gelöscht
 event details follow	calendar	de	Details zum Termin folgen
 event saved	calendar	de	Termin gespeichert
 event will occupy the whole day	calendar	de	Termin nimmt den ganzen Tag ein
+every user can invite other users and groups	admin	de	Jeder Benutzer kann andere Benutzer und Gruppen einladen
 exception	calendar	de	Ausnahme
 exception created - you can now edit or delete it	calendar	de	Ausnahme erzeugt - Sie können sie jetzt bearbeiten oder löschen
 exceptions	calendar	de	Ausnahmen
@@ -156,6 +160,7 @@ group invitation	calendar	de	Gruppeneinladung
 group planner	calendar	de	Gruppenplaner
 group public only	calendar	de	Gruppen-Öffentlich
 groupmember(s) %1 not included, because you have no access.	calendar	de	Gruppenmitglied(er) %1 nicht enthalten, da Sie keinen Zugriff haben.
+groups: other users can allways be invited, only groups require an invite grant	admin	de	Gruppen: andere Benutzer können immer eingeladen werden, nur Gruppen benötigen eine Freigabe
 h	calendar	de	h
 here is your requested alarm.	calendar	de	Hier ist ihr bestellter Alarm.
 hide private infos	calendar	de	Private Informationen ausblenden
@@ -182,6 +187,7 @@ imports events into your calendar from a csv file. csv means 'comma seperated va
 interval	calendar	de	Intervall
 invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1" für Benutzer %2
 invitations	calendar	de	Einladungen
+invite	calendar	de	Einladen
 last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervals
@@ -202,6 +208,7 @@ monthly (by date)	calendar	de	Monatlich (nach Datum)
 monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 monthview	calendar	de	Monatsansicht
 multiple week view	calendar	de	Mehrwochenansicht
+needs action	calendar	de	Zu erledigen
 new search with the above parameters	calendar	de	neue Suche mit den obigen Parametern
 no events found	calendar	de	Keine Termine gefunden
 no filter	calendar	de	Kein Filter
@@ -210,6 +217,7 @@ no response	calendar	de	Keine Antwort
 non blocking	calendar	de	nicht blockierend
 not	calendar	de	nicht
 not rejected	calendar	de	Nicht abgesagt
+nothing to update, version is already %1.	calendar	de	Nichts upgedatet, Version ist bereits %1.
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
 notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
 notification messages for disinvited participants	calendar	de	Benachrichtigung für ausgeladene Teilnehmer
@@ -217,6 +225,7 @@ notification messages for modified events	calendar	de	Benachrichtigungstext für
 notification messages for your alarms	calendar	de	Benachrichtigungstext für Ihre Alarme
 notification messages for your responses	calendar	de	Benachrichtigungstext für Ihre Antworten
 number of records to read (%1)	calendar	de	Anzeil Datensätze zu lesen (%1)
+number of weeks to show	calendar	de	Anzahl Wochen anzuzeigen
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
 old startdate	calendar	de	Altes Startdatum
@@ -229,6 +238,7 @@ on time change of more than 4 hours too	calendar	de	bei zeitlichen Änderungen g
 one month	calendar	de	ein Monat
 one week	calendar	de	eine Woche
 one year	calendar	de	ein Jahr
+only group-events	calendar	de	nur Gruppentermine
 only the initial date of that recuring event is checked!	calendar	de	Nur das Startdatum diese wiederholenden Termins wird geprüft!
 open todo's:	calendar	de	unerledigte Aufgaben:
 optional	calendar	de	Optional
@@ -263,6 +273,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsi
 repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 requested	calendar	de	Erforderlich
+require an acl grant to invite other users and groups	admin	de	Freigabe um andere Benutzer oder Gruppen einzuladen erforderlich
 reset	calendar	de	Zurücksetzen
 resources	calendar	de	Ressourcen
 resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
@@ -270,6 +281,7 @@ resources with conflict detection	calendar	de	Ressourcen mit bereits gebuchten
 role	calendar	de	Rolle
 rule	calendar	de	Regel
 sat	calendar	de	Sa
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	de	Termin als Ausnahme speichern - Einzelne Ausnahme löschen - Status oder Alarm dieses Tages bearbeiten
 saves the changes made	calendar	de	Speichert die Änderungen
 saves the event ignoring the conflict	calendar	de	Speichert den Konflikt ignorierend den Termin
 scheduling conflict	calendar	de	Terminüberschneidung
@@ -287,10 +299,18 @@ should not loged in persons be able to see your freebusy information? you can se
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	de	Sollten Ihre Free/Bussy Zeiten nicht so geschützt sein das diese Daten nur bestimmten Personen zugänglich gemacht werden können? Sie können dafür ein Passwort, abweichend fom eGroupware Passwort vergeben. Die freebusy Information sind im iCal Format und nur dann inkludiert, wenn Sie keine Zeit haben. Die Eventnamen oder  die Veranstaltungsorte werden nicht mit übertragen. Die URL zu den freebusy Information ist <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	de	Soll der Planer eine leere Zeile für Benutzer oder Kategorien ohne einen Termin anzeigen.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	de	Soll der Status (Zugesagt,Abgesagt ...)der Termin- Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
+show all events, as if they were private	calendar	de	Zeige alle Termine, so als wären sie privat
+show all status incl. rejected events	calendar	de	Zeige alle Status einschl. abgesagte Termine
+show all status, but rejected	calendar	de	Zeige alle Status außer abgesagte Termine
+show also events just owned by selected user	calendar	de	Zeige zusätzlich Termine die dem ausgewählten Benutzer nur gehören
 show birthdays from addressbook	admin	de	Zeige Geburtstage vom Adressbuch
 show default view on main screen	calendar	de	Standardansicht auf der Startseite anzeigen
 show empty rows in planner	calendar	de	Zeige leere Zeilen im Planer
 show list of upcoming events	calendar	de	Zeige eine Liste der kommenden Termine
+show only accepted events	calendar	de	Zeige nur zugesagte Termine
+show only invitations, not yet accepted or rejected	calendar	de	Zeige nur Einladungen, nicht bereits zu- oder abgesagte Termine
+show only rejected events	calendar	de	Zeige nur abgesagte Termine
+show only tentative accepted events	calendar	de	Zeige nur vorläufig zugesagte Termine
 show only the date, not the year	admin	de	Zeige nur das Datum nicht das Jahr
 show this month	calendar	de	Diesen Monat anzeigen
 show this week	calendar	de	Diese Woche anzeigen
@@ -302,7 +322,9 @@ startdate and -time of the search	calendar	de	Startdatum und -zeit der Suche
 startdate of the export	calendar	de	Startdatum des Exports
 startrecord	calendar	de	Startdatensatz
 status changed	calendar	de	Status geändert
-submit to repository	calendar	de	Übertragen zu eGroupWare.org
+status for all future scheduled days changed	calendar	de	Status alle zukünftig geplanten Termine geändert
+status for this particular day changed	calendar	de	Status für diesen Tage geändert
+submit to repository	calendar	de	Übertragen zu EGroupware.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
@@ -327,15 +349,20 @@ timeframe	calendar	de	Zeitrahmen
 timeframe to search	calendar	de	Zeitrahmen für die Suche
 timezone	calendar	de	Zeitzone
 timezone in which recurrences have identical time	calendar	de	Zeitzone in der Wiederholungen zu identischer Uhrzeit stattfinden
+timezones updated to version %1 (%2 records updated).	calendar	de	Zeitzonen aktualisiert zu Version %1 (%2 Datensätze aktualisiert).
 title of the event	calendar	de	Titel des Termin
 to many might exceed your execution-time-limit	calendar	de	zu viele können ihre Laufzeitbeschränkung überschreiten
 translation	calendar	de	Übersetzung
 tue	calendar	de	Di
 two weeks	calendar	de	zwei Wochen
+update timezones	calendar	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Popup
 user or group	calendar	de	Benutzer oder Gruppe
+users + groups: inviting both allways requires an invite grant	admin	de	Benutzer + Gruppen: Einladungen beider brauchen eine Freigabe
+view exception	calendar	de	Ausnahme anzeigen
+view series	calendar	de	Terminserie anzeigen
 view this event	calendar	de	Diesen Termin anzeigen
 views with fixed time intervals	calendar	de	Ansichten mit festen Zeitintervallen
 wed	calendar	de	Mi
@@ -355,6 +382,8 @@ whole day	calendar	de	ganztägig
 wk	calendar	de	KW
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
+workday	calendar	de	Arbeitstag
+workdays	calendar	de	Arbeitstage
 yearly	calendar	de	Jährlich
 yearview	calendar	de	Jahresansicht
 you are not allowed to book the resource selected:	calendar	de	Sie sind nicht berechtigt die ausgewählte Ressource zu buchen.

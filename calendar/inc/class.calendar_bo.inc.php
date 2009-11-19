@@ -22,6 +22,10 @@ if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_mes
  */
 define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
 define('EGW_ACL_FREEBUSY',EGW_ACL_CUSTOM_2);
+/**
+ * Allows to invite an other user (if configured to be used!)
+ */
+define('EGW_ACL_INVITE',EGW_ACL_CUSTOM_3);
 
 /**
  * Required (!) include, as we use the MCAL_* constants, BEFORE instanciating (and therefore autoloading) the class
@@ -155,6 +159,13 @@ class calendar_bo
 	var $datetime;
 
 	/**
+	 * Does a user require an extra invite grant, to be able to invite an other user, default no
+	 *
+	 * @var boolean
+	 */
+	public $require_acl_invite = false;
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -196,7 +207,9 @@ class calendar_bo
 		}
 		//echo "registered resources="; _debug_array($this->resources);
 
-		$this->config = config::read('calendar');
+		$this->config = config::read('calendar');	// only used for horizont, regular calendar config is under phpgwapi
+
+		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
 	}
 
 	/**
@@ -333,6 +346,8 @@ class calendar_bo
 			// for groups we have to include the members
 			if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
 			{
+				if ($params['filter'] == 'no-enum-groups') continue;
+
 				$members = $GLOBALS['egw']->accounts->member($user);
 				if (is_array($members))
 				{
@@ -361,6 +376,11 @@ class calendar_bo
 					}
 				}
 			}
+		}
+		// replace (by so not understood filter 'no-enum-groups' with 'default' filter
+		if ($params['filter'] == 'no-enum-groups')
+		{
+			$params['filter'] = 'default';
 		}
 		// if we have no grants from the given user(s), we directly return no events / an empty array,
 		// as calling the so-layer without users would give the events of all users (!)

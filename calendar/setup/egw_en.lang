@@ -70,6 +70,7 @@ csv-filename	calendar	en	CSV-Filename
 custom fields	common	en	Custom fields
 custom_2	common	en	freebussy
 daily	calendar	en	Daily
+day	calendar	en	day
 days	calendar	en	days
 days of the week for a weekly repeated event	calendar	en	Days of the week for a weekly repeated event
 days repeated	calendar	en	days repeated
@@ -92,6 +93,7 @@ disinvited	calendar	en	Disinvited
 display status of events	calendar	en	Display status of events
 displayed view	calendar	en	displayed view
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	en	Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?
+do not include events of group members	calendar	en	Do not include events of group members
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.
 do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	en	Do you want to change the event for this particular day, or for all days?\nOK = Make a one-time change (create an Exception)\nCANCEL = Change the event for all scheduled days
@@ -102,6 +104,7 @@ download this event as ical	calendar	en	Download this event as iCal
 duration of the meeting	calendar	en	Duration of the meeting
 edit exception	calendar	en	Edit exception
 edit series	calendar	en	Edit series
+edit status or alarms for this particular day	calendar	en	Edit status or alarms for this particular day
 edit this event	calendar	en	Edit this event
 edit this series of recuring events	calendar	en	Edit this series of recuring events
 empty for all	calendar	en	empty for all
@@ -123,6 +126,7 @@ event deleted	calendar	en	Event deleted
 event details follow	calendar	en	Event Details follow
 event saved	calendar	en	Event saved
 event will occupy the whole day	calendar	en	Event will occupy the whole day
+every user can invite other users and groups	admin	en	Every user can invite other users and groups
 exception	calendar	en	Exception
 exception created - you can now edit or delete it	calendar	en	Exception created - you can now edit or delete it
 exceptions	calendar	en	Exceptions
@@ -156,6 +160,7 @@ group invitation	calendar	en	Group invitation
 group planner	calendar	en	Group planner
 group public only	calendar	en	group public only
 groupmember(s) %1 not included, because you have no access.	calendar	en	Groupmember(s) %1 not included, because you have no access.
+groups: other users can allways be invited, only groups require an invite grant	admin	en	Groups: other users can allways be invited, only groups require an invite grant
 h	calendar	en	h
 here is your requested alarm.	calendar	en	Here is your requested alarm.
 hide private infos	calendar	en	Hide private infos
@@ -182,6 +187,7 @@ imports events into your calendar from a csv file. csv means 'comma seperated va
 interval	calendar	en	Interval
 invalid email-address "%1" for user %2	calendar	en	Invalid email-address "%1" for user %2
 invitations	calendar	en	Invitations
+invite	calendar	en	invite
 last	calendar	en	Last
 lastname of person to notify	calendar	en	Lastname of person to notify
 length of the time interval	calendar	en	Length of the time interval
@@ -202,6 +208,7 @@ monthly (by date)	calendar	en	Monthly (by date)
 monthly (by day)	calendar	en	Monthly (by day)
 monthview	calendar	en	Monthview
 multiple week view	calendar	en	Multiple week view
+needs action	calendar	en	Needs action
 new search with the above parameters	calendar	en	new search with the above parameters
 no events found	calendar	en	No events found
 no filter	calendar	en	No filter
@@ -210,6 +217,7 @@ no response	calendar	en	No response
 non blocking	calendar	en	non blocking
 not	calendar	en	not
 not rejected	calendar	en	Not rejected
+nothing to update, version is already %1.	calendar	en	Nothing to update, version is already %1.
 notification messages for added events	calendar	en	Notification messages for added events
 notification messages for canceled events	calendar	en	Notification messages for canceled events
 notification messages for disinvited participants	calendar	en	Notification messages for disinvited participants
@@ -217,6 +225,7 @@ notification messages for modified events	calendar	en	Notification messages for 
 notification messages for your alarms	calendar	en	Notification messages for your alarms
 notification messages for your responses	calendar	en	Notification messages for your responses
 number of records to read (%1)	calendar	en	Number of records to read (%1)
+number of weeks to show	calendar	en	Number of weeks to show
 observance rule	calendar	en	Observance Rule
 occurence	calendar	en	Occurence
 old startdate	calendar	en	Old Startdate
@@ -229,6 +238,7 @@ on time change of more than 4 hours too	calendar	en	on time change of more than 
 one month	calendar	en	one month
 one week	calendar	en	one week
 one year	calendar	en	one year
+only group-events	calendar	en	only group-events
 only the initial date of that recuring event is checked!	calendar	en	Only the initial date of that recuring event is checked!
 open todo's:	calendar	en	open ToDo's:
 optional	calendar	en	Optional
@@ -263,6 +273,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	en	repeating inte
 repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetitiondetails (or empty)
 requested	calendar	en	Requested
+require an acl grant to invite other users and groups	admin	en	Require an ACL grant to invite other users and groups
 reset	calendar	en	Reset
 resources	calendar	en	Resources
 resources except conflicting ones	calendar	en	Resources except conflicting ones
@@ -270,6 +281,7 @@ resources with conflict detection	calendar	en	Resources with conflict detection
 role	calendar	en	Role
 rule	calendar	en	Rule
 sat	calendar	en	Sat
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	en	Save event as exception - Delete single occurrence - Edit status or alarms for this particular day
 saves the changes made	calendar	en	saves the changes made
 saves the event ignoring the conflict	calendar	en	Saves the event ignoring the conflict
 scheduling conflict	calendar	en	Scheduling conflict
@@ -287,10 +299,18 @@ should not loged in persons be able to see your freebusy information? you can se
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	en	Should the planner display an empty row for users or categories without any appointment.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	en	Should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?
+show all events, as if they were private	calendar	en	Show all events, as if they were private
+show all status incl. rejected events	calendar	en	Show all status incl. rejected events
+show all status, but rejected	calendar	en	Show all status, but rejected
+show also events just owned by selected user	calendar	en	Show also events just owned by selected user
 show birthdays from addressbook	admin	en	Show birthdays from addressbook
 show default view on main screen	calendar	en	show default view on main screen
 show empty rows in planner	calendar	en	Show empty rows in Planner
 show list of upcoming events	calendar	en	show list of upcoming events
+show only accepted events	calendar	en	Show only accepted events
+show only invitations, not yet accepted or rejected	calendar	en	Show only invitations, not yet accepted or rejected
+show only rejected events	calendar	en	Show only rejected events
+show only tentative accepted events	calendar	en	Show only tentative accepted events
 show only the date, not the year	admin	en	Show only the date, not the year
 show this month	calendar	en	show this month
 show this week	calendar	en	show this week
@@ -302,6 +322,8 @@ startdate and -time of the search	calendar	en	Startdate and -time of the search
 startdate of the export	calendar	en	Startdate of the export
 startrecord	calendar	en	Startrecord
 status changed	calendar	en	Status changed
+status for all future scheduled days changed	calendar	en	Status for all future scheduled days changed
+status for this particular day changed	calendar	en	Status for this particular day changed
 submit to repository	calendar	en	Submit to Repository
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative
@@ -327,15 +349,20 @@ timeframe	calendar	en	Timeframe
 timeframe to search	calendar	en	Timeframe to search
 timezone	calendar	en	Timezone
 timezone in which recurrences have identical time	calendar	en	Timezone in which recurrences have identical time
+timezones updated to version %1 (%2 records updated).	calendar	en	Timezones updated to version %1 (%2 records updated).
 title of the event	calendar	en	Title of the event
 to many might exceed your execution-time-limit	calendar	en	to many might exceed your execution-time-limit
 translation	calendar	en	Translation
 tue	calendar	en	Tue
 two weeks	calendar	en	two weeks
+update timezones	calendar	en	Update timezones
 updated	calendar	en	Updated
 use end date	calendar	en	use end date
 use the selected time and close the popup	calendar	en	use the selected time and close the popup
 user or group	calendar	en	User or group
+users + groups: inviting both allways requires an invite grant	admin	en	Users + groups: inviting both allways requires an invite grant
+view exception	calendar	en	View exception
+view series	calendar	en	View series
 view this event	calendar	en	View this event
 views with fixed time intervals	calendar	en	Views with fixed time intervals
 wed	calendar	en	Wed
@@ -355,6 +382,8 @@ whole day	calendar	en	whole day
 wk	calendar	en	Wk
 work day ends on	calendar	en	work day ends on
 work day starts on	calendar	en	work day starts on
+workday	calendar	en	workday
+workdays	calendar	en	workdays
 yearly	calendar	en	Yearly
 yearview	calendar	en	yearview
 you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:

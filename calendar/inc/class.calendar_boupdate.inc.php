@@ -119,7 +119,23 @@ class calendar_boupdate extends calendar_bo
 		{
 			return false;
 		}
-
+		if (!($new_event = !(int)$event['id']))
+		{
+			$old_event = $this->read((int)$event['id'],null,$ignore_acl);
+			// if no participants are set, set them from the old event, as we might need them to update recuring events
+			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
+			//echo "old $event[id]="; _debug_array($old_event);
+		}
+		else
+		{
+			$event['created'] = $this->now_su;
+			$event['creator'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		// do we need to check, if user is allowed to invite the invited participants
+		if ($this->require_acl_invite && ($removed = $this->remove_no_acl_invite($event,$old_event)))
+		{
+			// todo: report removed participants back to user
+		}
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
 		if (!$ignore_conflicts && !$event['non_blocking'] && isset($event['start']) && isset($event['end']))
 		{
@@ -250,18 +266,6 @@ class calendar_boupdate extends calendar_bo
 			$event['modified'] = $this->now_su;	// we are still in user-time
 			$event['modifier'] = $GLOBALS['egw_info']['user']['account_id'];
 		}
-		if (!($new_event = !(int)$event['id']))
-		{
-			$old_event = $this->read((int)$event['id'],null,$ignore_acl);
-			// if no participants are set, set them from the old event, as we might need them to update recuring events
-			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
-			//echo "old $event[id]="; _debug_array($old_event);
-		}
-		else
-		{
-			$event['created'] = $this->now_su;
-			$event['creator'] = $GLOBALS['egw_info']['user']['account_id'];
-		}
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
 
@@ -291,6 +295,53 @@ class calendar_boupdate extends calendar_bo
 		egw_link::notify_update('calendar',$cal_id,$event);
 
 		return $cal_id;
+	}
+
+	/**
+	 * Remove participants current user has no right to invite
+	 *
+	 * @param array &$event new event
+	 * @param array $old_event=null old event with already invited participants
+	 * @return array removed participants because of missing invite grants
+	 */
+	public function remove_no_acl_invite(array &$event,array $old_event=null)
+	{
+		if (!$this->require_acl_invite)
+		{
+			return array();	// nothing to check, everyone can invite everyone else
+		}
+		if ($event['id'] && is_null($old_event))
+		{
+			$old_event = $this->read($event['id']);
+		}
+		$removed = array();
+		foreach($event['participants'] as $uid => $status)
+		{
+			if ((is_null($old_event) || !in_array($old_event['participants'][$uid])) && !$this->check_acl_invite($uid))
+			{
+				unset($event['participants'][$uid]);	// remove participant
+				$removed[] = $uid;
+			}
+		}
+		echo "<p>".__METHOD__."($event[title],".($old_event?'$old_event':'NULL').") returning ".array2string($removed)."</p>";
+		return $removed;
+	}
+
+	/**
+	 * Check if current user is allowed to invite a given participant
+	 *
+	 * @param int|string $uid
+	 * @return boolean
+	 */
+	public function check_acl_invite($uid)
+	{
+		if (!is_numeric($uid)) return true;	// nothing implemented for resources so far
+
+		if ($this->require_acl_invite == 'group' && $GLOBALS['egw']->accounts->get_type($uid) != 'g')
+		{
+			return true;	// grant only required for groups
+		}
+		return $this->check_perms(EGW_ACL_INVITE,0,$uid);
 	}
 
 	/**
@@ -1080,7 +1131,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$this->categories = new categories($this->user,'calendar');
 		}
-		
+
 		if($cal_id && $cal_id > 0)
 		{
 			// preserve categories without users read access
@@ -1104,7 +1155,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
-			
+
 			if (!$cat_id)
 			{
 				// some SyncML clients (mostly phones) add an X- to the category names
@@ -1120,7 +1171,7 @@ class calendar_boupdate extends calendar_bo
 				$cat_id_list[] = $cat_id;
 			}
 		}
-		
+
 		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
 		{
 			$cat_id_list = array_merge($cat_id_list, $old_cats_preserve);
@@ -1149,7 +1200,7 @@ class calendar_boupdate extends calendar_bo
 		$cat_list = array();
 		foreach($cat_id_list as $cat_id)
 		{
-			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) && 
+			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
 					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
 				$cat_list[] = $cat_name;

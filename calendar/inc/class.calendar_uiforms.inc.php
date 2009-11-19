@@ -121,6 +121,8 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (isset($participants[$uid])) continue;	// already included
 
+			if (!$this->bo->check_acl_invite($uid)) continue;	// no right to invite --> ignored
+
 			if (is_numeric($uid))
 			{
 				$participants[$uid] = $participant_types['u'][$uid] =
@@ -136,6 +138,10 @@ class calendar_uiforms extends calendar_ui
 						calendar_so::combine_status($status,$quantity,'REQ-PARTICIPANT');
 				}
 			}
+		}
+		if (!$participants)	// if all participants got removed, include current user
+		{
+			$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A','CHAIR');
 		}
 		return array(
 			'participant_types' => $participant_types,
@@ -241,6 +247,7 @@ class calendar_uiforms extends calendar_ui
 					case 'quantity':	// handled in new_resource
 					case 'role':		// handled in add, account or resource
 					case 'cal_resources':
+					case 'status_date':
 						break;
 
 					case 'add':
@@ -250,8 +257,8 @@ class calendar_uiforms extends calendar_ui
 							(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
 						{
 							$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
-							// check if email belongs to account or contact --> prefer them over just emails
-							if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')))
+							// check if email belongs to account or contact --> prefer them over just emails (if we are allowed to invite him)
+							if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')) && $this->bo->check_acl_invite($data))
 							{
 								$event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
 							}
@@ -285,7 +292,7 @@ class calendar_uiforms extends calendar_ui
 						foreach($this->bo->resources as $type => $data) if ($data['app'] == $app) break;
 						$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
 						// check if new entry is no account (or contact entry of an account)
-						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')))
+						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')) || !$this->bo->check_acl($data))
 						{
 							if ($uid && $id)
 							{
@@ -295,9 +302,10 @@ class calendar_uiforms extends calendar_ui
 									$event['participants'][$uid] = $event['participant_types'][$type][$id] =
 										calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
 								}
-								else
+								elseif(!$msg_permission_denied_added)
 								{
 									$msg .= lang('Permission denied!');
+									$msg_permission_denied_added = true;
 								}
 							}
 							break;
@@ -306,8 +314,16 @@ class calendar_uiforms extends calendar_ui
 					case 'account':
 						foreach(is_array($data) ? $data : explode(',',$data) as $uid)
 						{
-							if ($uid) $event['participants'][$uid] = $event['participant_types']['u'][$uid] =
-								calendar_so::combine_status($uid == $this->bo->user ? 'A' : 'U',1,$content['participants']['role']);
+							if ($uid && $this->bo->check_acl_invite($uid))
+							{
+								$event['participants'][$uid] = $event['participant_types']['u'][$uid] =
+									calendar_so::combine_status($uid == $this->bo->user ? 'A' : 'U',1,$content['participants']['role']);
+							}
+							elseif($uid && !$msg_permission_denied_added)
+							{
+								$msg .= lang('Permission denied!');
+								$msg_permission_denied_added = true;
+							}
 						}
 						break;
 
@@ -332,8 +348,9 @@ class calendar_uiforms extends calendar_ui
 								$id = substr($uid,1);
 								$type = $uid[0];
 							}
-							if ($data['old_status'] != $status)
+							if ($data['old_status'] != $status && !(!$data['old_status'] && $status == 'G'))
 							{
+								//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
 								if ($this->bo->set_status($event['id'],$uid,$status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0))
 								{
 									// refreshing the calendar-view with the changed participant-status

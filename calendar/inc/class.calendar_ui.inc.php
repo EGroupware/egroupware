@@ -578,6 +578,13 @@ class calendar_ui
 		}
 		$views .= "</tr></table>\n";
 
+		// hack to disable invite ACL column, if not enabled in config
+		if ($_GET['menuaction'] == 'preferences.uiaclprefs.index' &&
+			(!$this->bo->require_acl_invite || $this->bo->require_acl_invite == 'groups' && !($_REQUEST['owner'] < 0)))
+		{
+			$views .= "<style type='text/css'>\n\t.aclInviteColumn { display: none; }\n</style>\n";
+		}
+
 		$file[++$n] = array('text' => $views,'no_lang' => True,'link' => False,'icon' => False);
 
 		// special views and view-options menu
@@ -696,17 +703,19 @@ class calendar_ui
 		// Filter all or hideprivate
 		$options = '';
 		foreach(array(
-			'default'     => lang('Not rejected'),
-			'accepted'    => lang('Accepted'),
-			'unknown'     => lang('Invitations'),
-			'tentative'   => lang('Tentative'),
-			'rejected'    => lang('Rejected'),
-			'owner'       => lang('Owner too'),
-			'all'         => lang('All incl. rejected'),
-			'hideprivate' => lang('Hide private infos'),
+			'default'     => array(lang('Not rejected'), lang('Show all status, but rejected')),
+			'accepted'    => array(lang('Accepted'), lang('Show only accepted events')),
+			'unknown'     => array(lang('Invitations'), lang('Show only invitations, not yet accepted or rejected')),
+			'tentative'   => array(lang('Tentative'), lang('Show only tentative accepted events')),
+			'rejected'    => array(lang('Rejected'),lang('Show only rejected events')),
+			'owner'       => array(lang('Owner too'),lang('Show also events just owned by selected user')),
+			'all'         => array(lang('All incl. rejected'),lang('Show all status incl. rejected events')),
+			'hideprivate' => array(lang('Hide private infos'),lang('Show all events, as if they were private')),
+			'no-enum-groups' => array(lang('only group-events'),lang('Do not include events of group members')),
 		) as $value => $label)
 		{
-			$options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').'>'.$label.'</options>'."\n";
+			list($label,$title) = $label;
+			$options .= '<option value="'.$value.'"'.($this->filter == $value ? ' selected="selected"' : '').' title="'.$title.'">'.$label.'</options>'."\n";
 		}
 		$file[] = $this->_select_box('Filter','filter',$options,$baseurl ? $baseurl.'&filter=' : '');
 
@@ -800,7 +809,6 @@ function load_cal(url,id) {
 			));
 			display_sidebox($appname,$menu_title,$file);
 		}
-
 
 		if ($GLOBALS['egw_info']['user']['apps']['preferences'])
 		{
