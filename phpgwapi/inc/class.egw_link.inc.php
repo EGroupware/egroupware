@@ -37,6 +37,12 @@
  *			'view'  => array(						// get parameters to view an entry of app
  *				'menuaction' => 'app.class.method',
  *			),
+ *			'types' => array(				// Optional list of sub-types to filter (eg organisations), app to handle different queries
+ *				'type_key' => array(
+ *					'name'	=>	'Human Reference',
+ *					'icon'	=>	'app/icon'	// Optional icon to use for that sub-type
+ *				)
+ *			),
  *			'view_id' => 'app_id',					// name of get parameter of the id
  *          'view_popup' => '400x300',				// size of popup (XxY), if view is in popup
  *			'add' => array(							// get parameter to add an empty entry to app
@@ -515,9 +521,10 @@ class egw_link extends solink
 	 *
 	 * @param string $app app to search
 	 * @param string $pattern pattern to search
+	 * @param string $type Search only a certain sub-type of records (optional)
 	 * @return array with $id => $title pairs of matching entries of app
 	 */
-	static function query($app,$pattern)
+	static function query($app,$pattern, $type = '')
 	{
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['query']))
 		{
@@ -527,9 +534,9 @@ class egw_link extends solink
 
 		if (self::DEBUG)
 		{
-			echo "<p>egw_link::query('$app','$pattern') => '$method'</p>\n";
+			echo "<p>egw_link::query('$app','$pattern','$type') => '$method'</p>\n";
 		}
-		return ExecMethod($method,$pattern);
+		return ExecMethod2($method,$pattern,$type);
 	}
 
 	/**
