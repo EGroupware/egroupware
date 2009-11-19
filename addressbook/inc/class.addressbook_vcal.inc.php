@@ -143,6 +143,10 @@ class addressbook_vcal extends addressbook_bo
 			// update entry
 			$contact['id'] = $_abID;
 		}
+		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
+    	{
+    		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+    	}
 		return $this->save($contact);
 	}
 

@@ -121,6 +121,8 @@ class addressbook_sif extends addressbook_bo
 		#fwrite($handle, $sifData);
 		#fclose($handle);
 
+		Horde::logMessage("SyncML siftoegw:\n$sifData", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
 		$this->xml_parser = xml_parser_create('UTF-8');
 		xml_set_object($this->xml_parser, $this);
 		xml_parser_set_option($this->xml_parser, XML_OPTION_CASE_FOLDING, false);
@@ -141,7 +143,10 @@ class addressbook_sif extends addressbook_bo
 				case 'cat_id':
 					if(!empty($value))
 					{
-						$finalContact[$key] = implode(",", $this->find_or_add_categories(explode(';', $value), $_abID));
+							$categories1 = explode(',', $value);
+							$categories2 = explode(';', $value);
+							$categories = count($categories1) > count($categories2) ? $categories1 : $categories2;
+						$finalContact[$key] = implode(",", $this->find_or_add_categories($categories, $_abID));
 					}
 					else
 					{
@@ -160,6 +165,7 @@ class addressbook_sif extends addressbook_bo
 		}
 
 		$this->fixup_contact($finalContact);
+		Horde::logMessage("SyncML siftoegw: " . print_r($finalContact, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $finalContact;
 	}
 
@@ -203,6 +209,11 @@ class addressbook_sif extends addressbook_bo
 			// update entry
 			$contact['id'] = $_abID;
 		}
+		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
+    	{
+    		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+    	}
+
 		return $this->save($contact);
 	}
 
@@ -253,7 +264,7 @@ class addressbook_sif extends addressbook_bo
 
 				case 'Categories':
 					if(!empty($value)) {
-						$value = implode("; ", $this->get_categories($value));
+						$value = implode(", ", $this->get_categories($value));
 						$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
 					} else {
 						break;
