@@ -1690,7 +1690,7 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'Y':		// 1.0
-							if (preg_match('/YM(\d+) #(.\d)/', $recurence, $recurenceMatches))
+							if (preg_match('/YM(\d+)[^#]*#(.\d)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
 								if ($recurenceMatches[2] > 0 && $vcardData['end'])
