@@ -245,6 +245,10 @@ class calendar_ical extends calendar_boupdate
 					error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
 					$vtimezone = calendar_timezones::tz2id($tzid=egw_time::$user_timezone->getName(),'component');
 				}
+				if (!isset(self::$tz_cache[$tzid]))
+				{
+					self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
+				}
 				//error_log("in_array('$tzid',\$vtimezones_added)=".array2string(in_array($tzid,$vtimezones_added)).", component=$vtimezone");;
 				if (!in_array($tzid,$vtimezones_added))
 				{
@@ -255,10 +259,14 @@ class calendar_ical extends calendar_boupdate
 					// DTSTART must be in local time!
 					$standard = $horde_vtimezone->findComponent('STANDARD');
 					$dtstart = $standard->getAttribute('DTSTART');
-					$standard->setAttribute('DTSTART', date('Ymd\THis', $dtstart), array(), false);
+					$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+					$dtstart->setTimezone(self::$tz_cache[$tzid]);
+					$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 					$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
 					$dtstart = $daylight->getAttribute('DTSTART');
-					$daylight->setAttribute('DTSTART', date('Ymd\THis', $dtstart), array(), false);
+					$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+					$dtstart->setTimezone(self::$tz_cache[$tzid]);
+					$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
 					$vcal->addComponent($horde_vtimezone);
 					$vtimezones_added[] = $tzid;
 				}
