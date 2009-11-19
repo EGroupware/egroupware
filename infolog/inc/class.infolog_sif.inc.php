@@ -116,9 +116,10 @@ class infolog_sif extends infolog_bo
 	 *
 	 * @param string $sifData 	the SIF data
 	 * @param string $_sifType	type (note/task)
+	 * @param int $_id=-1		the infolog id
 	 * @return array infolog entry or false on error
 	 */
-	function siftoegw($sifData, $_sifType)
+	function siftoegw($sifData, $_sifType, $_id=-1)
 	{
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
@@ -203,7 +204,7 @@ class infolog_sif extends infolog_bo
 						case 'info_cat':
 							if (!empty($value))
 							{
-								$categories = $this->find_or_add_categories(explode(';', $value));
+								$categories = $this->find_or_add_categories(explode(';', $value), $_id);
 								$taskData['info_cat'] = $categories[0];
 							}
 							break;
@@ -307,7 +308,7 @@ class infolog_sif extends infolog_bo
 						case 'info_cat':
 							if (!empty($value))
 							{
-								$categories = $this->find_or_add_categories(explode(';', $value));
+								$categories = $this->find_or_add_categories(explode(';', $value), $_id);
 								$noteData['info_cat'] = $categories[0];
 							}
 							break;
@@ -338,7 +339,7 @@ class infolog_sif extends infolog_bo
 	 */
 	function searchSIF($_sifData, $_sifType, $contentID=null, $relax=false)
 	{
-		if (!($egwData = $this->siftoegw($_sifData, $_sifType))) return false;
+		if (!($egwData = $this->siftoegw($_sifData, $_sifType, $contentID))) return false;
 
 		if ($contentID) $egwData['info_id'] = $contentID;
 
@@ -372,7 +373,7 @@ class infolog_sif extends infolog_bo
 	 */
 	function addSIF($_sifData, $_id, $_sifType, $merge=false)
 	{
-		if (!($egwData = $this->siftoegw($_sifData, $_sifType))) return false;
+		if (!($egwData = $this->siftoegw($_sifData, $_sifType, $_id))) return false;
 
 		if ($_id > 0) $egwData['info_id'] = $_id;
 

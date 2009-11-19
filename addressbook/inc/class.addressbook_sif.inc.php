@@ -113,7 +113,7 @@ class addressbook_sif extends addressbook_bo
 		$this->sifData .= $_data;
 	}
 
-	function siftoegw($sifData) {
+	function siftoegw($sifData, $_abID=null) {
 
 		#$tmpfname = tempnam('/tmp/sync/contents','sifc_');
 
@@ -141,7 +141,7 @@ class addressbook_sif extends addressbook_bo
 				case 'cat_id':
 					if(!empty($value))
 					{
-						$finalContact[$key] = implode(",", $this->find_or_add_categories(explode(';', $value)));
+						$finalContact[$key] = implode(",", $this->find_or_add_categories(explode(';', $value), $_abID));
 					}
 					else
 					{
@@ -173,7 +173,7 @@ class addressbook_sif extends addressbook_bo
 	{
 	  	$result = false;
 
-		if($contact = $this->siftoegw($_sifdata)) {
+		if($contact = $this->siftoegw($_sifdata, $contentID)) {
 		        if ($contentID) {
 			        $contact['contact_id'] = $contentID;
 			}
@@ -195,7 +195,7 @@ class addressbook_sif extends addressbook_bo
 		#error_log('ABID: '.$_abID);
 		#error_log(base64_decode($_sifdata));
 
-		if(!$contact = $this->siftoegw($_sifdata)) {
+		if(!$contact = $this->siftoegw($_sifdata, $_abID)) {
 			return false;
 		}
 

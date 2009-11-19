@@ -103,7 +103,7 @@ class calendar_sif extends calendar_boupdate
 		$this->sifData .= $_data;
 	}
 
-	function siftoegw($sifData)
+	function siftoegw($sifData, $_calID=-1)
 	{
 		$vcal		= new Horde_iCalendar;
 		$finalEvent	= array();
@@ -164,7 +164,7 @@ class calendar_sif extends calendar_boupdate
 				case 'category':
 					if (!empty($value))
 					{
-						$finalEvent[$key] = implode(',',$this->find_or_add_categories(explode(';', $value)));
+						$finalEvent[$key] = implode(',',$this->find_or_add_categories(explode(';', $value), $_calID));
 					}
 					break;
 
@@ -255,7 +255,7 @@ class calendar_sif extends calendar_boupdate
 	{
 		$result = false;
 
-		if ($event = $this->siftoegw($_sifdata))
+		if ($event = $this->siftoegw($_sifdata, $contentID))
 		{
 			if ($contentID) {
 				$event['id'] = $contentID;
@@ -282,7 +282,7 @@ class calendar_sif extends calendar_boupdate
 		#error_log('ABID: '.$_abID);
 		#error_log(base64_decode($_sifdata));
 
-		if (!$event = $this->siftoegw($_sifdata))
+		if (!$event = $this->siftoegw($_sifdata, $_calID))
 		{
 			return false;
 		}
