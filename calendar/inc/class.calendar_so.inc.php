@@ -91,6 +91,14 @@ class calendar_so
 	const STATUS_SORT = "CASE cal_status WHEN 'U' THEN 1 WHEN 'T' THEN 2 WHEN 'A' THEN 3 WHEN 'R' THEN 4 ELSE 0 END ASC";
 
 	/**
+	 * Cached timezone data
+	 *
+	 * @var array id => data
+	 */
+	protected static $tz_cache = array();
+
+
+	/**
 	 * Constructor of the socal class
 	 */
 	function __construct()
@@ -1433,16 +1441,30 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Gets the exception days of a given recurring event caused by
 	 * irregular participant stati
 	 *
-	 * @param array $event	Recurring Event.
+	 * @param array $event			Recurring Event.
+	 * @param string tz_id=null		timezone for exports (null for event's timezone)
 	 *
 	 * @return array		Array of exception days (false for non-recurring events).
 	 */
-	function get_recurrence_exceptions(&$event)
+	function get_recurrence_exceptions(&$event, $tz_id=null)
 	{
 		$cal_id = (int) $event['id'];
 		if (!$cal_id || $event['recur_type'] == MCAL_RECUR_NONE) return false;
 
 		$days = array();
+		$first_start = $recur_start = '';
+
+		if (!empty($tz_id))
+		{
+			// set export timezone
+			if(!isset(self::$tz_cache[$tz_id]))
+			{
+				self::$tz_cache[$tz_id] = calendar_timezones::DateTimeZone($tz_id);
+			}
+			$starttime = new egw_time($event['start'], egw_time::$server_timezone);
+			$starttime->setTimezone(self::$tz_cache[$tz_id]);
+			$first_start = $starttime->format('His');
+		}
 
 		$participants = $this->get_participants($event['id'], 0);
 
@@ -1457,10 +1479,20 @@ ORDER BY cal_user_type, cal_usre_id
 					$recurrences = $this->get_recurrences($event['id'], $uid);
 					foreach ($recurrences as $recur_date => $recur_status)
 					{
-						if ($recur_date && $recur_status != $recurrences[0])
+						if ($recur_date)
 						{
-							// Every distinct status results in an exception
-							$days[] = $recur_date;
+							if (!empty($tz_id))
+							{
+								$time = new egw_time($recur_date, egw_time::$server_timezone);
+								$time->setTimezone(self::$tz_cache[$tz_id]);
+								$recur_start = $time->format('His');
+							}
+							if ($recur_status != $recurrences[0]
+								|| !empty($tz_id) && $first_start != $recur_start)
+							{
+								// Every distinct status or starttime results in an exception
+								$days[] = $recur_date;
+							}
 						}
 					}
 					break;

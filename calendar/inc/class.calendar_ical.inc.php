@@ -101,6 +101,13 @@ class calendar_ical extends calendar_boupdate
 	var $tzid = null;
 
 	/**
+	 * Cached timezone data
+	 *
+	 * @var array id => data
+	 */
+	protected static $tz_cache = array();
+
+	/**
 	 * Device CTCap Properties
 	 *
 	 * @var array
@@ -384,30 +391,8 @@ class calendar_ical extends calendar_boupdate
 						// dont use "virtual" exceptions created by participant status for GroupDAV or file export
 						if (!in_array($this->productManufacturer,array('file','groupdav')))
 						{
-							$participants = $this->so->get_participants($event['id'], 0);
-
-							// Check if the stati for all participants are identical for all recurrences
-							foreach ($participants as $uid => $attendee)
-							{
-								switch ($attendee['type'])
-								{
-									case 'u':	// account
-									case 'c':	// contact
-									case 'e':	// email address
-										$recurrences = $this->so->get_recurrences($event['id'], $uid);
-										foreach ($recurrences as $rdate => $recur_status)
-										{
-											if ($rdate && $recur_status != $recurrences[0])
-											{
-												// Every distinct status results in an exception
-												$days[] = $rdate;
-											}
-										}
-										break;
-									default: // We don't handle the rest
-										break;
-								}
-							}
+							$tz_id = ($tzid != $event['tzid'] ? $tzid : null);
+							$days = $this->so->get_recurrence_exceptions($event, $tz_id);
 						}
 						if (is_array($event['recur_exception']))
 						{
@@ -687,13 +672,11 @@ class calendar_ical extends calendar_boupdate
 		{
 			$time = new egw_time($time,egw_time::$server_timezone);
 		}
-		static $timezone;
-		static $timezone_tzid;
-		if (is_null($timezone) || $timezone_tzid != $tzid)
+		if (!isset(self::$tz_cache[$tzid]))
 		{
-			$timezone = calendar_timezones::DateTimeZone($timezone_tzid = $tzid);
+			self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
 		}
-		$time->setTimezone($timezone);
+		$time->setTimezone(self::$tz_cache[$tzid]);
 		$params['TZID'] = $tzid;
 
 		return $time->format('Ymd\THis');
