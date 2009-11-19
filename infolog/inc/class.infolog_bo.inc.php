@@ -320,7 +320,7 @@ class infolog_bo
 	}
 
 	/**
-	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
+	 * Check if use is responsible for an entry: he or one of his memberships is in responsible
 	 *
 	 * @param array $info infolog entry as array
 	 * @return boolean
@@ -1067,11 +1067,38 @@ class infolog_bo
 
 	var $categories;
 
-	function find_or_add_categories($catname_list)
+	/**
+	 * Find existing categories in database by name or add categories that do not exist yet
+	 * currently used for ical/sif import
+	 *
+	 * @param array $catname_list names of the categories which should be found or added
+	 * @param int $info_id=-1 match against existing infolog and expand the returned category ids
+	 *  by the ones the user normally does not see due to category permissions - used to preserve categories
+	 * @return array category ids (found, added and preserved categories)
+	 */
+	function find_or_add_categories($catname_list, $info_id=-1)
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'infolog');
+			$this->categories = new categories($this->user,'infolog');
+		}
+		
+		if($info_id && $info_id > 0)
+		{
+			// preserve categories without users read access
+			$old_infolog = $this->read($info_id);
+			$old_categories = explode(',',$old_infolog['info_cat']);
+			$old_cats_preserve = array();
+			if(is_array($old_categories) && count($old_categories) > 0)
+			{
+				foreach($old_categories as $cat_id)
+				{
+					if(!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					{
+						$old_cats_preserve[] = $cat_id;
+					}
+				}
+			}
 		}
 
 		$cat_id_list = array();
@@ -1079,8 +1106,14 @@ class infolog_bo
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
+			
 			if (!$cat_id)
 			{
+				// some SyncML clients (mostly phones) add an X- to the category names
+				if (strncmp($cat_name, 'X-', 2) == 0)
+				{
+					$cat_name = substr($cat_name, 2);
+				}
 				$cat_id = $this->categories->add(array('name' => $cat_name, 'descr' => $cat_name, 'access' => 'private'));
 			}
 
@@ -1089,12 +1122,20 @@ class infolog_bo
 				$cat_id_list[] = $cat_id;
 			}
 		}
+		
+		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
+		{
+			$cat_id_list = array_merge($old_cats_preserve, $cat_id_list);
+		}
 
 		if (count($cat_id_list) > 1)
 		{
 			$cat_id_list = array_unique($cat_id_list);
-			sort($cat_id_list, SORT_NUMERIC);
+			// disable sorting until infolog supports multiple categories
+			// to make sure that the preserved category takes precedence over a new one from the client
+			/* sort($cat_id_list, SORT_NUMERIC); */
 		}
+
 		return $cat_id_list;
 	}
 
@@ -1108,7 +1149,7 @@ class infolog_bo
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'infolog');
+			$this->categories = new categories($this->user,'infolog');
 		}
 
 		if (!is_array($cat_id_list))
@@ -1118,9 +1159,10 @@ class infolog_bo
 		$cat_list = array();
 		foreach($cat_id_list as $cat_id)
 		{
-			if ($cat_data = $this->categories->return_single($cat_id))
+			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) && 
+					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
-				$cat_list[] = $cat_data[0]['name'];
+				$cat_list[] = $cat_name;
 			}
 		}
 

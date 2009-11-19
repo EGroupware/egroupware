@@ -279,7 +279,7 @@ class infolog_ical extends infolog_bo
 	function searchVTODO($_vcalData, $contentID=null, $relax=false) {
 		$result = false;
 
-		if (($egwData = $this->vtodotoegw($_vcalData)))
+		if (($egwData = $this->vtodotoegw($_vcalData,$contentID)))
 		{
 			if ($contentID)
 			{
@@ -403,7 +403,7 @@ class infolog_ical extends infolog_bo
 							break;
 
 						case 'CATEGORIES':
-							$cats = $this->find_or_add_categories(explode(',', $attributes['value']));
+							$cats = $this->find_or_add_categories(explode(',', $attributes['value']), $_taskID);
 							$taskData['info_cat'] = $cats[0];
 							break;
 
@@ -497,13 +497,13 @@ class infolog_ical extends infolog_bo
 	 *
 	 * @param string $_vcalData
 	 * @param string $_type		content type (eg.g text/plain)
-	 * @param int $_taskID=-1 info_id, default -1 = new entry
+	 * @param int $_noteID=-1 info_id, default -1 = new entry
 	 * @param boolean $merge=false	merge data with existing entry
 	 * @return int|boolean integer info_id or false on error
 	 */
-	function importVNOTE(&$_vcalData, $_type, $_noteID = -1, $merge=false)
+	function importVNOTE(&$_vcalData, $_type, $_noteID=-1, $merge=false)
 	{
-		if (!($note = $this->vnotetoegw($_vcalData, $_type))) return false;
+		if (!($note = $this->vnotetoegw($_vcalData, $_type, $_noteID))) return false;
 
 		if($_noteID > 0) $note['info_id'] = $_noteID;
 
@@ -522,7 +522,7 @@ class infolog_ical extends infolog_bo
 	 */
 	function searchVNOTE($_vcalData, $_type, $contentID=null)
 	{
-		if (!($note = $this->vnotetoegw($_vcalData,$_type))) return false;
+		if (!($note = $this->vnotetoegw($_vcalData,$_type,$contentID))) return false;
 
 		if ($contentID)	$note['info_id'] = $contentID;
 
@@ -559,9 +559,10 @@ class infolog_ical extends infolog_bo
 	 *
 	 * @param string $_data 	VNOTE data
 	 * @param string $_type		content type (eg.g text/plain)
+	 * @param int $_noteID=-1	infolog_id of the entry
 	 * @return array infolog entry or false on error
 	 */
-	function vnotetoegw($_data, $_type)
+	function vnotetoegw($_data, $_type, $_noteID=-1)
 	{
 		switch ($_type)
 		{
@@ -612,7 +613,7 @@ class infolog_ical extends infolog_bo
 									break;
 
 								case 'CATEGORIES':
-									$cats = $this->find_or_add_categories(explode(',', $attribute['value']));
+									$cats = $this->find_or_add_categories(explode(',', $attribute['value']), $_noteID);
 									$note['info_cat'] = $cats[0];
 									break;
 							}
