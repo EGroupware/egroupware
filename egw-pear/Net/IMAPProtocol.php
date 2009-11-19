@@ -2307,7 +2307,7 @@ class Net_IMAPProtocol {
         // If inside of a string, skip string -- Boundary IDs and other
         // things can have ) in them.
         if ( $str_line[$pos] != $startDelim ) {
-            $this->_prot_error("_getClosingParenthesisPos: must start with a '(' but is a '". $str_line[$pos] ."'!!!!\n" .
+            $this->_prot_error("_getClosingParenthesisPos: must start with a '".$startDelim."' but is a '". $str_line[$pos] ."'!!!!\n" .
                 "STR_LINE:$str_line|size:$len|POS: $pos\n" , __LINE__ , __FILE__ );
             return( $len );
         }
@@ -2350,6 +2350,7 @@ class Net_IMAPProtocol {
 	function _advanceOverStr($str,&$pos,$len,$startDelim ='(', $stopDelim = ')' )
 	{
 		#error_log(__METHOD__. $len . "#".$str."\n");
+		$startingpos = $pos;
 		if ($str[$pos] !== '"') return false;	// start condition failed
 		$pos++;	
 		$delimCount=0;
@@ -2362,11 +2363,13 @@ class Net_IMAPProtocol {
 			if ($str[$pos] === $startDelim) $delimCount++;
 			if ($str[$pos] === $stopDelim) $delimCount--;
 			if ($str[$pos] === $stopDelim && ($str[$pos+1] === $startDelim ||  ($str[$pos+1] === $stopDelim && $delimCount<=0))) {
-				$numOfQuotes = substr_count($str,'"');
-				$numOfMaskedQuotes = substr_count($str,'\"');
+				$numOfQuotes = substr_count($str,'"',$startingpos);
+				$numOfMaskedQuotes = substr_count($str,'\"',$startingpos);
 				if ((($numOfQuotes - $numOfMaskedQuotes) % 2 ) == 0) {
 					// quotes are balanced, so its unlikely that we meet a stop condition here as strings may contain )(
-					error_log(__METHOD__. "->Length: $len; NumOfQuotes: $numOfQuotes - NumofMaskedQuotes:$numOfMaskedQuotes #".$str."\n");
+					//error_log(__METHOD__. "->Length: $len; NumOfQuotes: $numOfQuotes - NumofMaskedQuotes:$numOfMaskedQuotes #".$str."\n");
+					error_log(__METHOD__." problem at $pos with:".$str[$pos]."(last character) Numberof delimiters ('".$startDelim."','".$stopDelim."') found:".$delimCount.' String:'.substr($str,$startingpos,$pos).' called from:'.function_backtrace());
+					//return false;
 				} else {
 					$pos--;	// stopDelimited need to be parsed outside!
 					return false;
