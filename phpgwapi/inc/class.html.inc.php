@@ -1269,12 +1269,24 @@ class html
 			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.includes.php');
 			// installs an autoloader for other files
 			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.autoload.php');
-
+			// testcase to test the processing of purify
+			//$html = "<h1 onclick=\"alert('hallo');\"> h1 </h1>".$html;
 			if (is_null($config))
 			{
 				$config = HTMLPurifier_Config::createDefault();
 				$config->set('Core', 'Encoding', self::$charset);
-				$config->set('HTML', 'Allowed', 'br,div[align],hr[class|style],p,b,i,u,s,em,pre,strong,strike,center,ul,ol[type],li,h1,h2,h3,blockquote,table,tbody,thead,tt,tr,td,a[href|target|name|title],img[src|alt|title]');
+				$config->set('HTML', 'Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
+							'ul[type],ol[type|start],li,'.
+							'h1,h2,h3,'.
+							'span[class|style],'.
+							'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
+							'tbody,thead,tfoot,colgroup,'.
+							'col[width|span],'.
+							'blockquote[class|cite|dir],'.
+							'tr[class|style|align|bgcolor|align|valign],'.
+							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
+							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
+							'a[href|target|name|title],img[src|alt|title]');
 				$config->set('Cache', 'SerializerPath', $GLOBALS['egw_info']['server']['temp_dir']);
 			}
 			$purifier = new HTMLPurifier($config);
