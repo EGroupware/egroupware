@@ -49,6 +49,7 @@
  *   'current'      => // I  currently select id
  *  // optional for link-string:
  *   'only_app'     => // I  string with appname, eg. 'projectmananager' to list only linked projects
+ *   'link_type'    => // I  string with sub-type key to list only entries of that type
  * );
  *</code>
  *
@@ -270,6 +271,9 @@ class link_widget
 			$tpl = new etemplate('etemplate.link_widget.to');
 			if ($value['link_label']) $tpl->set_cell_attribute('create','label',$value['link_label']);
 			if ($value['search_label']) $tpl->set_cell_attribute('search','label',$value['search_label']);
+
+			self::get_sub_types($cell, $value, $tpl);
+
 			break;
 
 		case 'link-list':
@@ -333,6 +337,7 @@ class link_widget
 			$tpl = new etemplate('etemplate.link_widget.entry');
 			$options = $cell['size'] ? explode(',',$cell['size']) : array();
 			$app = $extension_data['app'] = $options[0];
+			$link_type = $extension_data['link_type'];
 			// handle extra args for onclick like: values2url(this.form,'start,end,duration,participants,recur_type,whole_day')+'&exec[event_id]=
 			if ( isset($value) && is_array($value) && isset($value['extra']) )
 			{
@@ -348,7 +353,7 @@ class link_widget
 				{
 					if (isset($value['current']))
 					{
-						list($app,$id) = explode(':',$value['current']);
+						list($app,$id) = explode(':',$value['current'], 2);
 					}
 				}
 				else
@@ -356,7 +361,7 @@ class link_widget
 					// add selected-entry plus "new search" to the selectbox-options
 					if (!isset($app) || strpos($value,':') !== false)
 					{
-						list($app,$id) = explode(':',$value);
+						list($app,$id) = explode(':',$value, 2);
 					}
 					else
 					{
@@ -406,6 +411,7 @@ class link_widget
 				'blur'       => count($options) == 1 ? lang($app) : lang('Search'),
 				'extra'      => $cell['onchange'] ? ','.self::AJAX_NEED_ONCHANGE : null,	// store flang for ajax_search, to display extra_line required by onchange
 			);
+
 			if ($options)	// limit the app-selectbox to the given apps
 			{
 				$tpl->set_cell_attribute('app','type','select');
@@ -418,6 +424,9 @@ class link_widget
 				}
 				$value['options-app'] = $apps;
 			}
+
+			self::get_sub_types($cell, $value, $tpl);
+
 			break;
 
 		case 'link-apps':
@@ -600,6 +609,29 @@ class link_widget
 	}
 
 	/**
+	*	Get sub-types for the current application
+	*/
+	private static function get_sub_types($cell, &$value, &$tpl) {
+		// Get sub-types
+		if($value['options-app']) {
+			$apps = $value['options_app'];
+		} else {
+			$apps = egw_link::app_list($cell['size'] ? $cell['size'] : 'query');
+			asort($apps);	// sort them alphabetic
+		}
+
+		$current_app = $value['app'] ? $value['app'] : key($apps);
+		if(is_array(egw_link::$app_register[$current_app]['types'])) {
+			foreach(egw_link::$app_register[$current_app]['types'] as $key => $settings) {
+				$value['options-link_type'][$key] = $settings['name'];
+			}
+			$span =& $tpl->get_cell_attribute('type_box','span');
+			$span = str_replace('type_hide','type_show',$span);
+			unset($span);
+		}
+	}
+
+	/**
 	 * Ajax callback to search in $app for $pattern, result is displayed in $id
 	 *
 	 * Called via onClick from etemplate.link_widget.(to|entry)'s search button
@@ -614,7 +646,7 @@ class link_widget
 	 * @param string $extra optionnal extra search arguments
 	 * @return string xajax xml response
 	 */
-	static function ajax_search($app,$pattern,$id_res,$id_hide,$id_show,$id_input,$etemplate_exec_id,$extra=array())
+	static function ajax_search($app,$type,$pattern,$id_res,$id_hide,$id_show,$id_input,$etemplate_exec_id,$extra=array())
 	{
 		$extra_array = array();
 		if (!empty($extra))
@@ -638,9 +670,9 @@ class link_widget
 		if ($etemplate_exec_id) $request = etemplate_request::read($etemplate_exec_id);
 
 		$response = new xajaxResponse();
-		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("',\n'",$args)."')\n calling link->query( $app , $search )" );
+		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("',\n'",$args)."')\n calling link->query( $app , $search, $type )" );
 		//$args = func_get_args(); error_log(__METHOD__."('".implode("','",$args)."')");
-		if (!($found = egw_link::query($app,$search)))       // ignore the blur-text
+		if (!($found = egw_link::query($app,$search,$type)))       // ignore the blur-text
 		{
 			$GLOBALS['egw']->translation->add_app('etemplate');
 			$response->addAlert(lang('Nothing found - try again !!!'));
@@ -679,6 +711,63 @@ class link_widget
 			//$response->addAlert($script);
 			$response->addScript($script);
 		}
+		// store new allowed id's in the eT request
+		if ($request)
+		{
+			$data = $request->get_to_process($id_res);
+			//error_log($id_res.'='.array2string($data));
+			$data['allowed'] = $found ? array_keys($found) : array();
+			$request->set_to_process($id_res,$data);
+			// update id, if request changed it (happens if the request data is stored direct in the form)
+			if ($etemplate_exec_id != ($new_id = $request->id()))
+			{
+				$response->addAssign('etemplate_exec_id','value',$new_id);
+			}
+		}
+		return $response->getXML();
+	}
+
+	/**
+	 * Ajax callback to search for sub-types for $app, result is displayed in $id_res
+	 *
+	 * Called via onChange from etemplate.link_widget.(to|entry)'s app list
+	 *
+	 * @param string $app app-name to search
+	 * @param string $id_res id of selectbox to show the result
+	 * @param string $etemplate_exec_id of the calling etemplate, to upate the allowed ids
+	 * @return string xajax xml response
+	 */
+	static function ajax_get_types($app,$id_res,$etemplate_exec_id)
+	{
+		// open request
+		if ($etemplate_exec_id) $request = etemplate_request::read($etemplate_exec_id);
+
+		$response = new xajaxResponse();
+		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("',\n'",$args)."')\n calling link->query( $app , $search )" );
+		//$args = func_get_args(); error_log(__METHOD__."('".implode("','",$args)."')");
+
+		
+		$script = "var select = document.getElementById('$id_res');\nselect.options.length=0;\n";
+		if(is_array(egw_link::$app_register[$app]['types'])) {
+			$found = egw_link::$app_register[$app]['types'];
+			foreach(egw_link::$app_register[$app]['types'] as $id => $option)
+			{
+				$option = array('label' => $option['name']);
+				$script .= "opt = select.options[select.options.length] = new Option('".addslashes($option['label'])."','".addslashes($id)."');\n";
+				if (count($option) > 1)
+				{
+					foreach($option as $name => $value)
+					{
+						if ($name != 'label') $script .= "opt.$name = '".addslashes($value)."';\n";
+					}
+				}
+			}
+			$script .= "document.getElementById('$id_res').parentNode.style.display='inline';\n";
+		} else {
+			$script .= "document.getElementById('$id_res').parentNode.style.display='none';\n";
+		}
+		$response->addScript($script);
+
 		// store new allowed id's in the eT request
 		if ($request)
 		{
