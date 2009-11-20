@@ -1608,7 +1608,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			if (!is_object($this->categories))
 			{
-				$this->categories = new categories($this->owner,'addressbook');
+				$this->categories = new categories($this->user,'addressbook');
 			}
 			$category_ids = array();
 			foreach(explode(',',$content['cat_id']) as $cat_id)
