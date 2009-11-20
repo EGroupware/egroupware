@@ -2363,8 +2363,8 @@ class Net_IMAPProtocol {
 			if ($str[$pos] === $startDelim) $delimCount++;
 			if ($str[$pos] === $stopDelim) $delimCount--;
 			if ($str[$pos] === $stopDelim && ($str[$pos+1] === $startDelim ||  ($str[$pos+1] === $stopDelim && $delimCount<=0))) {
-				$numOfQuotes = substr_count($str,'"',$startingpos);
-				$numOfMaskedQuotes = substr_count($str,'\"',$startingpos);
+				$numOfQuotes = substr_count(substr($str,$startingpos),'"');
+				$numOfMaskedQuotes = substr_count(substr($str,$startingpos),'\"');
 				if ((($numOfQuotes - $numOfMaskedQuotes) % 2 ) == 0) {
 					// quotes are balanced, so its unlikely that we meet a stop condition here as strings may contain )(
 					//error_log(__METHOD__. "->Length: $len; NumOfQuotes: $numOfQuotes - NumofMaskedQuotes:$numOfMaskedQuotes #".$str."\n");
