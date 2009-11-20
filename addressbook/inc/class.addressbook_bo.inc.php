@@ -119,6 +119,12 @@ class addressbook_bo extends addressbook_so
 	 * @var boolean
 	 */
 	var $default_private;
+	/**
+	 * Categories object
+	 *
+	 * @var object
+	 */
+	var $categories;
 
 	function __construct($contact_app='addressbook')
 	{
@@ -1502,8 +1508,6 @@ class addressbook_bo extends addressbook_so
 		//echo "<p>bocontacts::addr_format_by_country('$country'='$code') = '$adr_format'</p>\n";
 		return $adr_format;
 	}
-
-	var $categories;
 
 	/**
 	 * Find existing categories in database by name or add categories that do not exist yet
