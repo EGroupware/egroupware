@@ -31,7 +31,7 @@ else
 // this is kind of a hack, as the autocreate_session_callback can not change the type of the loaded account-class
 // so we need to make sure the right one is loaded by setting the domain before the header gets included.
 $arg0s = explode(',',@array_shift($arguments));
-@list(,$_GET['domain']) = explode('@',$arg0s[0]);
+@list(,$_REQUEST['domain']) = explode('@',$arg0s[0]);
 
 if (ini_get('session.save_handler') == 'files' && !is_writable(ini_get('session.save_path')) && is_dir('/tmp') && is_writable('/tmp'))
 {
