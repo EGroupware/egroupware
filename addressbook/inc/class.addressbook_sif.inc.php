@@ -121,7 +121,7 @@ class addressbook_sif extends addressbook_bo
 		#fwrite($handle, $sifData);
 		#fclose($handle);
 
-		Horde::logMessage("SyncML siftoegw:\n$sifData", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		// Horde::logMessage("SyncML siftoegw:\n$sifData", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$this->xml_parser = xml_parser_create('UTF-8');
 		xml_set_object($this->xml_parser, $this);
@@ -165,7 +165,7 @@ class addressbook_sif extends addressbook_bo
 		}
 
 		$this->fixup_contact($finalContact);
-		Horde::logMessage("SyncML siftoegw: " . print_r($finalContact, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		// Horde::logMessage("SyncML siftoegw: " . print_r($finalContact, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $finalContact;
 	}
 
