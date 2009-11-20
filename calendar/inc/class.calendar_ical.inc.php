@@ -1430,7 +1430,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($component, 'Horde_iCalendar_vevent'))
 			{
-				if ($event = $this->vevent2egw($component, $version, $this->supportedFields))
+				if ($event = $this->vevent2egw($component, $version, $this->supportedFields, $cal_id))
 				{
 					//common adjustments
 					if ($this->productManufacturer == '' && $this->productName == ''
@@ -1486,10 +1486,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $component			VEVENT
 	 * @param string $version			vCal version (1.0/2.0)
 	 * @param array $supportedFields	supported fields of the device
-	 *
+	 * @param int $cal_id               id of existing event in the content (only used to merge categories)
 	 * @return array|boolean			event on success, false on failure
 	 */
-	function vevent2egw(&$component, $version, $supportedFields)
+	function vevent2egw(&$component, $version, $supportedFields, $cal_id=-1)
 	{
 		if (!is_a($component, 'Horde_iCalendar_vevent')) return false;
 
@@ -1829,11 +1829,11 @@ class calendar_ical extends calendar_boupdate
 					{
 						if($version == '1.0')
 						{
-							$vcardData['category'] = $this->find_or_add_categories(explode(';',$attributes['value']));
+							$vcardData['category'] = $this->find_or_add_categories(explode(';',$attributes['value']), $cal_id);
 						}
 						else
 						{
-							$vcardData['category'] = $this->find_or_add_categories(explode(',',$attributes['value']));
+							$vcardData['category'] = $this->find_or_add_categories(explode(',',$attributes['value']), $cal_id);
 						}
 					}
 					else

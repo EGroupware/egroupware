@@ -1420,11 +1420,38 @@ class addressbook_bo extends addressbook_so
 
 	var $categories;
 
-	function find_or_add_categories($catname_list)
+	/**
+	 * Find existing categories in database by name or add categories that do not exist yet
+	 * currently used for vcard import
+	 *
+	 * @param array $catname_list names of the categories which should be found or added
+	 * @param int $contact_id=null match against existing contact and expand the returned category ids
+	 *  by the ones the user normally does not see due to category permissions - used to preserve categories
+	 * @return array category ids (found, added and preserved categories)
+	 */
+	function find_or_add_categories($catname_list, $contact_id=null)
 	{
 		if (!is_object($this->categories))
 		{
 			$this->categories = new categories($this->owner,'addressbook');
+		}
+
+		if($contact_id && $contact_id > 0)
+		{
+			// preserve categories without users read access
+			$old_contact = $this->read($contact_id);
+			$old_categories = explode(',',$old_contact['cat_id']);
+			$old_cats_preserve = array();
+			if(is_array($old_categories) && count($old_categories) > 0)
+			{
+				foreach($old_categories as $cat_id)
+				{
+					if(!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					{
+						$old_cats_preserve[] = $cat_id;
+					}
+				}
+			}
 		}
 
 		$cat_id_list = array();
@@ -1435,7 +1462,7 @@ class addressbook_bo extends addressbook_so
 
 			if (!$cat_id)
 			{
-				// some SyncML clients (mostly phones add an X- to the category names
+				// some SyncML clients (mostly phones) add an X- to the category names
 				if (strncmp($cat_name, 'X-', 2) == 0)
 				{
 					$cat_name = substr($cat_name, 2);
@@ -1449,11 +1476,17 @@ class addressbook_bo extends addressbook_so
 			}
 		}
 
+		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
+		{
+			$cat_id_list = array_merge($cat_id_list, $old_cats_preserve);
+		}
+
 		if (count($cat_id_list) > 1)
 		{
 			$cat_id_list = array_unique($cat_id_list);
 			sort($cat_id_list, SORT_NUMERIC);
 		}
+
 		return $cat_id_list;
 	}
 
@@ -1461,7 +1494,7 @@ class addressbook_bo extends addressbook_so
 	{
 		if (!is_object($this->categories))
 		{
-			$this->categories = new categories($this->owner,'addressbook');
+			$this->categories = new categories($this->user,'addressbook');
 		}
 
 		if (!is_array($cat_id_list))
@@ -1471,7 +1504,8 @@ class addressbook_bo extends addressbook_so
 		$cat_list = array();
 		foreach($cat_id_list as $cat_id)
 		{
-			if ($cat_id && ($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
+			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
+					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
 				$cat_list[] = $cat_name;
 			}

@@ -94,7 +94,7 @@ class categories
 			case 'mains':		$where = 'cat_parent = 0'; break;
 			default:			return False;
 		}
-		return $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchColumn();
+		return $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchSingle();
 	}
 
 	/**
@@ -106,7 +106,7 @@ class categories
 	 */
 	function return_all_children($cat_id)
 	{
-		$all_children = array($cat_id);
+		$all_children = (array) $cat_id;
 
 		$children = $this->return_array('subs',0,False,'','','',True,$cat_id,-1,'id');
 		if (is_array($children) && count($children))
@@ -190,7 +190,7 @@ class categories
 		$where = '(cat_appname=' . $this->db->quote($this->app_name) . ' AND ' . $grant_cats . $global_cats . ')'
 			. $parent_filter . $querymethod . $filter;
 
-		$this->total_records = $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchColumn();
+		$this->total_records = $this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__)->fetchSingle();
 
 		if (!$this->total_records) return false;
 
@@ -491,6 +491,58 @@ class categories
 	}
 
 	/**
+	 * Checks if the current user has the necessary ACL rights
+	 *
+	 * If the access of a category is set to private, one needs a private grant for the application
+	 *
+	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param mixed $category category as array or the category_id
+	 * @return boolean true permission granted, false for permission denied, null for category does not exist
+	 */
+	public function check_perms($needed,$category)
+	{
+		if (!is_array($category))
+		{
+			if (!isset($this->cache_id2cat_data[$category]))
+			{
+				if (($cat = $this->db->select($this->table,'*',array('cat_id' => $category),__LINE__,__FILE__)->fetch()))
+				{
+					$cat = egw_db::strip_array_keys($cat,'cat_');
+					$cat['app_name'] = $cat['appname'];
+					$this->cache_id2cat_data[$category] = $cat;
+				}
+				else return null;
+			}
+			$category = $this->cache_id2cat_data[$category];
+		}
+
+		// The user for the global cats has id -1, this one has full access to all global cats
+		if ($this->account_id == -1 && ($category['appname'] == 'phpgw'
+				|| $category['appname'] == $this->app_name && $category['owner'] == -1))
+		{
+			return true;
+		}
+
+		// Read access to global categories
+		if ($needed == EGW_ACL_READ && ($category['appname'] == 'phpgw'
+				|| $category['appname'] == $this->app_name && $category['owner'] == -1))
+		{
+			return true;
+		}
+
+		// Full access to own categories
+		if ($category['appname'] == $this->app_name && $category['owner'] == $this->account_id)
+		{
+			return true;
+		}
+
+		// Check for ACL granted access, the -1 user must not get access by ACL to keep old behaviour
+		return ($this->account_id != -1 && $category['appname'] == $this->app_name && ($this->grants[$category['owner']] & $needed) &&
+					($category['access'] == 'public' ||  ($this->grants[$category['owner']] & EGW_ACL_PRIVATE)));
+	}
+
+
+	/**
 	 * delete a category
 	 *
 	 * @param int $cat_id category id
@@ -731,7 +783,7 @@ class categories
 			}
 		}
 		$where[] = $grant_cats . ")";
-		return $cache[$type][$cat_name][$cat_id][$private] = $this->db->select($this->table,'cat_id',$where,__LINE__,__FILE__)->fetchColumn();
+		return $cache[$type][$cat_name][$cat_id][$private] = $this->db->select($this->table,'cat_id',$where,__LINE__,__FILE__)->fetchSingle();
 	}
 
 	/**
