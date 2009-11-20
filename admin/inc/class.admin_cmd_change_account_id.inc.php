@@ -252,14 +252,13 @@ class admin_cmd_change_account_id extends admin_cmd
 				if (!$where) $where = array();
 				$where[] = "$column IS NOT NULL";
 				$where[] = "$column != ''";
-				$db->select($table,'DISTINCT '.$column,$where,__LINE__,__FILE__);
 				$change = array();
-				while(($row = $db->row(true)))
+				foreach($db->select($table,'DISTINCT '.$column,$where,__LINE__,__FILE__) as $row)
 				{
 					$ids = explode(',',$old_ids=$row[$column]);
 					foreach($ids as $key => $id)
 					{
-						if (isset($account_id2change[$id])) $ids[$key] = $account_id2change[$id];
+						if (isset($ids2change[$id])) $ids[$key] = $ids2change[$id];
 					}
 					$ids = implode(',',$ids);
 					if ($ids != $old_ids)
