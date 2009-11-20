@@ -1351,7 +1351,7 @@ class addressbook_ui extends addressbook_bo
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
 				// create a new contact with the content of the old
-				foreach(array('id','modified','modifier','account_id','uid') as $key)
+				foreach(array('id','modified','modifier','account_id','uid','cat_id') as $key)
 				{
 					unset($content[$key]);
 				}
@@ -1602,6 +1602,25 @@ class addressbook_ui extends addressbook_bo
 				$content[$key.'2'] = $content[$key];
 			}
 		}
+		
+		// respect category permissions
+		if(!empty($content['cat_id']))
+		{
+			if (!is_object($this->categories))
+			{
+				$this->categories = new categories($this->owner,'addressbook');
+			}
+			$category_ids = array();
+			foreach(explode(',',$content['cat_id']) as $cat_id)
+			{
+				if($this->categories->check_perms(EGW_ACL_READ, $cat_id))
+				{
+					$category_ids[] = $cat_id;
+				}
+			}
+			$content['cat_id'] = implode(',',$category_ids);
+		}
+		
 		$content['view'] = true;
 		$content['link_to'] = array(
 			'to_app' => 'addressbook',
@@ -1612,8 +1631,8 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
 		$content['disable_change_org'] = true;
-// ToDo: fix vCard export
-$readonlys['button[vcard]'] = true;
+		// ToDo: fix vCard export
+		$readonlys['button[vcard]'] = true;
 
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
@@ -2091,7 +2110,7 @@ $readonlys['button[vcard]'] = true;
 	{
 		if (is_array($content))
 		{
-			if ($content['cat_id'])   //add categorie
+			if ($content['cat_id'])   //add category
 			{
 				if ($content['cat_add'])
 				{
