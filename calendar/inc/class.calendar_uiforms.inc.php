@@ -643,6 +643,7 @@ class calendar_uiforms extends calendar_ui
 							}
 						}
 					}
+					/*
 					// Update the stati
 					foreach ($participants as $uid => $status)
 					{
@@ -659,6 +660,7 @@ class calendar_uiforms extends calendar_ui
 						// delete the removed participants
 						$this->bo->set_status($old_event['id'], $uid, 'G', $content['edit_single']);
 					}
+					*/
 					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
 						// remove deleted exception
