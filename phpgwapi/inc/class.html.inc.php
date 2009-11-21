@@ -1275,6 +1275,15 @@ class html
 			{
 				$config = HTMLPurifier_Config::createDefault();
 				$config->set('Core', 'Encoding', self::$charset);
+				// maybe the two following lines are useful for caching???
+				$config->set('HTML','DefinitionID', 'egroupware');
+				$config->set('HTML','DefinitionRev', 1);
+				// doctype and tidylevel
+ 				$config->set('HTML','Doctype', 'XHTML 1.0 Transitional');
+				$config->set('HTML','TidyLevel', 'light');
+				// EnableID is needed for anchor tags
+				$config->set('Attr','EnableID',true);
+				// actual allowed tags and attributes
 				$config->set('HTML', 'Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
 							'ul[type],ol[type|start],li,'.
 							'h1,h2,h3,'.
@@ -1290,6 +1299,12 @@ class html
 				$config->set('Cache', 'SerializerPath', $GLOBALS['egw_info']['server']['temp_dir']);
 			}
 			$purifier = new HTMLPurifier($config);
+			// the latter may enable you to modify the config later on, but by now
+			// the effort for e.g.  enabling anchor tags is already included above
+			//$def =& $purifier->config->getHTMLDefinition(true);
+			//$def->addAttribute('a', 'name', 'Text');
+
+
 		}
     	return $purifier->purify( $html );
 	}
