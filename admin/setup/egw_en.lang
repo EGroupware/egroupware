@@ -113,8 +113,8 @@ check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
-comercial: all sorts of companies	admin	en	Comercial: all sorts of companies
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
+commercial: all sorts of companies	admin	en	Commercial: all sorts of companies
 complete path to aspell program	admin	en	Complete path to aspell program
 config password or md5 hash from the header.inc.php	admin	en	Config password or md5 hash from the header.inc.php
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain (default empty means use full domain name, for SiteMgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)
@@ -432,7 +432,6 @@ search groups	admin	en	Search groups
 search peer servers	admin	en	Search peer servers
 security	admin	en	Security
 select accounts for which the custom field should be visible	admin	en	Select accounts for which the custom field should be visible
-select all	admin	en	Select all
 select group managers	admin	en	Select Group Managers
 select permissions this group will have	admin	en	Select permissions this group will have
 select the parent category. if this is a main category select no category	admin	en	Select the parent category. If this is a main category select NO CATEGORY
@@ -515,7 +514,7 @@ trust level	admin	en	Trust Level
 trust relationship	admin	en	Trust Relationship
 two days	admin	en	two days
 two hours	admin	en	two hours
-two month	admin	en	two month
+two months	admin	en	two months
 two weeks	admin	en	two weeks
 type '%1' already exists !!!	admin	en	type '%1' already exists !!!
 type of customfield	admin	en	Type of customfield

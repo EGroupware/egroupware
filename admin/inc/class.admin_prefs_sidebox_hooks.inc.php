@@ -6,7 +6,7 @@
  * @author Stefan Becker <StefanBecker-AT-outdoor-training.de>
  * @package admin
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.admin_prefs_sidebox_hooks.inc.php
+ * @version $Id$
  */
 
 /**
