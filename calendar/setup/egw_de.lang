@@ -70,7 +70,7 @@ csv-filename	calendar	de	CSV-Dateiname
 custom fields	common	de	Benutzerdefinierte Felder
 custom_2	common	de	freebussy
 daily	calendar	de	Täglich
-day	calendar	de	Tat
+day	calendar	de	Tag
 days	calendar	de	Tage
 days of the week for a weekly repeated event	calendar	de	Wochentage für wöchentlich wiederholten Termin
 days repeated	calendar	de	wiederholte Tage
