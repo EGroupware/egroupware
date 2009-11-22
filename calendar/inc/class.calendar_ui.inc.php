@@ -562,6 +562,7 @@ class calendar_ui
 			'add' => array('icon'=>'new','text'=>'add'),
 			'day' => array('icon'=>'today','text'=>'Today','menuaction' => 'calendar.calendar_uiviews.day','date' => $this->bo->date2string($this->bo->now_su)),
 			'week' => array('icon'=>'week','text'=>'Weekview','menuaction' => 'calendar.calendar_uiviews.week'),
+			'weekN' => array('icon'=>'multiweek','text'=>'Multiple week view','menuaction' => 'calendar.calendar_uiviews.weekN'),
 			'month' => array('icon'=>'month','text'=>'Monthview','menuaction' => 'calendar.calendar_uiviews.month'),
 			'planner' => array('icon'=>'planner','text'=>'Group planner','menuaction' => 'calendar.calendar_uiviews.planner','sortby' => $this->sortby),
 			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.calendar_uilist.listview'),
