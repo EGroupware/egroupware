@@ -87,7 +87,7 @@ $this->applications['egwcontactssync'] = array(
     'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
     'name' => _("Contacts"),
     'status' => 'active',
-    'provides' => array('contacts', 'sifcontacts', 'scard'),
+    'provides' => array('contacts', 'sifcontacts', 'scard', 'card'),
     'menu_parent' => 'organizing'
 );
 
@@ -107,7 +107,7 @@ $this->applications['egwcalendarsync'] = array(
     'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
     'name' => _("Calendar"),
     'status' => 'active',
-    'provides' => array('calendar', 'sifcalendar', 'scal'),
+    'provides' => array('calendar', 'sifcalendar', 'scal', 'events'),
     'menu_parent' => 'organizing'
 );
 
@@ -127,7 +127,7 @@ $this->applications['egwtaskssync'] = array(
     'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
     'name' => _("Tasks"),
     'status' => 'active',
-    'provides' => array('tasks', 'siftasks', 'stask'),
+    'provides' => array('tasks', 'siftasks', 'stask', 'jobs'),
     'menu_parent' => 'organizing'
 );
 
