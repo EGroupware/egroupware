@@ -65,7 +65,7 @@ class admin_statistics
 			egw::redirect_link('/admin/index.php','statistics='.($what ? $what : 'cancled'));
 		}
 		$sel_options['usage_type'] = array(
-			'comercial'   => lang('Comercial: all sorts of companies'),
+			'commercial'   => lang('Commercial: all sorts of companies'),
 			'governmental' => lang('Governmental: incl. state or municipal authorities or services'),
 			'educational' => lang('Educational: Universities, Schools, ...'),
 			'non-profit'  => lang('Non profit: Clubs, associations, ...'),
@@ -87,7 +87,7 @@ class admin_statistics
 			7*24*3600 => lang('one week'),
 			14*24*3600 => lang('two weeks'),
 			30*24*3600 => lang('one month'),
-			60*24*3600 => lang('two month'),
+			60*24*3600 => lang('two months'),
 		);
 		$config = config::read(self::CONFIG_APP);
 		//_debug_array($config);

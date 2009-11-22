@@ -109,8 +109,8 @@ check ip address of all sessions	admin	de	IP-Adresse f체r alle Sessions 체berpr�
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 click to select a color	admin	de	Anclicken um eine Farbe auszuw채hlen
 color	admin	de	Farbe
-comercial: all sorts of companies	admin	de	Komerziell: alle Arten von Firmen
 command scheduled to run at %1	admin	de	Ausf체hrung des Befehls eingeplant am/um %1
+commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
 complete path to aspell program	admin	de	Vollst채ndiger Pfad zum Programm ASPELL
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe leer bedeutet den kompletten Domainnamen, f체r SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie f체r egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere eGW Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
@@ -494,7 +494,7 @@ trust level	admin	de	Grad des Vertrauens
 trust relationship	admin	de	Vertrauensverh채ltnis
 two days	admin	de	zwei Tage
 two hours	admin	de	zwei Stunden
-two month	admin	de	zwei Monate
+two months	admin	de	zwei Monate
 two weeks	admin	de	zwei Wochen
 type '%1' already exists !!!	admin	de	Typ '%1' existiert bereits !!!
 type of customfield	admin	de	Typ des Benutzerdefinierten Feldes
