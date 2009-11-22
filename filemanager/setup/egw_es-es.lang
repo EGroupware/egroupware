@@ -9,6 +9,7 @@
 %1 files deleted.	filemanager	es-es	%1 ficheros borrados.
 %1 files moved.	filemanager	es-es	%1 ficheros movidos.
 %1 starts with '%2'	filemanager	es-es	%1 empieza por '%2'
+%1 successful uploaded.	filemanager	es-es	%1 copiado correctamente.
 %1 the following files into current directory	filemanager	es-es	%1 los siguientes ficheros en el directorio actual
 %1 urls %2 to clipboard.	filemanager	es-es	%1 URLs %2 al portapapeles
 accessrights	filemanager	es-es	Derechos de acceso
@@ -44,6 +45,7 @@ created %1,%2	filemanager	es-es	Se ha creado %1,%2
 created between	filemanager	es-es	creado entre
 created directory %1	filemanager	es-es	Se ha creado el directorio %1
 current directory	filemanager	es-es	Directorio actual
+custom fields	filemanager	es-es	Campos personalizados
 cut	filemanager	es-es	cortar
 cut to clipboard	filemanager	es-es	Cortar al portapapeles
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	es-es	El comportamiento predeterminado es NO. El enlace no se mostrará, pero se podrá examinar la ubicación, o configurar esta ubicación en particular como carpeta de inicio o enlace.
@@ -57,12 +59,14 @@ directory names cannot contain "%1"	filemanager	es-es	Los nombres de directorio 
 directory not found or no permission to access it!	filemanager	es-es	No se encontró el directorio, o no tiene permiso para acceder a él
 display and modification of content	filemanager	es-es	Mostrar y modificar el contenido
 display of content	filemanager	es-es	Mostar el contenido
+do you want to overwrite the existing file %1?	filemanager	es-es	¿Desea sobreescribir el fichero existente %1?
 download	filemanager	es-es	Descargar
 edit comments	filemanager	es-es	Editar comentarios
 edit settings	filemanager	es-es	Editar configuración
 enter setup user and password	filemanager	es-es	Introducir usuario de configuración y contraseña
 enter setup user and password to get root rights	filemanager	es-es	Introduzca usuario de configuración y contraseña para obtener permisos de administrador
 enter the complete vfs path to specify a fast access link to a folder	filemanager	es-es	Introduzca la ruta VFS completa para especificar un acceso rápido a una carpeta
+enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	es-es	Introduzca la ruta completa VFS para especificar un acceso rápido a una carpeta (1).
 enter the complete vfs path to specify your desired start folder.	filemanager	es-es	Introduzca la ruta VFS completa para especificar la carpeta de inicio deseada.
 error adding the acl!	filemanager	es-es	¡Error al añadir la ACL!
 error deleting the acl entry!	filemanager	es-es	¡Error al borrar la entrada de la ACL!
@@ -72,6 +76,7 @@ extended access control list	filemanager	es-es	Listas de control de acceso exten
 extended acl	filemanager	es-es	ACL extendida
 failed to change permissions of %1!	filemanager	es-es	Fallo al cambiar los permisos de %1
 failed to create directory!	filemanager	es-es	¡Fallo al crear el directorio!
+favorites	filemanager	es-es	Favoritos
 file	filemanager	es-es	Archivo
 file %1 already exists. please edit it or delete it first.	filemanager	es-es	El fichero %1 ya existe. Por favor, edítelo o bórrelo primero.
 file %1 could not be created.	filemanager	es-es	No se pudo crear el fichero %1
@@ -109,6 +114,7 @@ no files in this directory.	filemanager	es-es	No hay ficheros en este directorio
 no preview available	filemanager	es-es	No hay vista previa disponible
 no version history for this file/directory	filemanager	es-es	No hay historial para este fichero/directorio
 only owner can rename or delete the content	filemanager	es-es	Sólo el propietario puede renombrar o borrar el contenido
+open	filemanager	es-es	Abrir
 operation	filemanager	es-es	Operación
 permission denied!	filemanager	es-es	¡Permiso denegado!
 permissions	filemanager	es-es	Permisos
@@ -117,6 +123,7 @@ please select a file to delete.	filemanager	es-es	Por favor, seleccione un fiche
 preview	filemanager	es-es	Vista previa
 preview %1	filemanager	es-es	Vista previa %1
 preview of %1	filemanager	es-es	Vista previa de %1
+projectmanager	filemanager	es-es	Administrador de proyectos
 properties saved.	filemanager	es-es	Se han guardado las propiedades.
 quick jump to	filemanager	es-es	Salto rápido a
 read & write access	filemanager	es-es	Derechos de lectura y escritura
@@ -128,6 +135,7 @@ renamed %1 to %2	filemanager	es-es	Se ha renombrado %1 a %2
 renamed %1 to %2.	filemanager	es-es	Se ha renombrado %1 a %2.
 replaced %1	filemanager	es-es	Se ha sustituido %1
 rights	filemanager	es-es	Derechos
+root	filemanager	es-es	raíz
 root access granted.	filemanager	es-es	Permiso de administrador concedido.
 root access stopped.	filemanager	es-es	Acceso de administrador detenido.
 save %1	filemanager	es-es	Guardar %1
@@ -146,6 +154,7 @@ start search	filemanager	es-es	comenzar la búsqueda
 superuser	filemanager	es-es	Superusuario
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	es-es	La carpeta predeterminada es su carpeta personal. Si se deja en blanco, no existe la ruta o no tiene los permisos necesarios, se usa la predeterminada.
 the requested path %1 is not available.	filemanager	es-es	La ruta solicitada %1 no está disponible.
+there's already a directory with that name!	filemanager	es-es	¡Ya existe un directorio con ese nombre!
 there's already a file with that name!	filemanager	es-es	¡Ya existe un fichero con ese nombre!
 to overwrite the existing file store again.	filemanager	es-es	Para sobreescribir el fichero existente, vuelva a guardar.
 total files	filemanager	es-es	Total ficheros
@@ -155,6 +164,8 @@ updated comment for %1	filemanager	es-es	Comentario actualizado para %1
 used space	filemanager	es-es	Espacio utilizado
 users and groups	filemanager	es-es	Usuarios y grupos
 wrong username or password!	filemanager	es-es	¡El usuario o contraseña son incorrectos!
+you are not allowed to upload a script!	filemanager	es-es	¡Usted NO tiene permiso para subir un script!
+you can only grant additional rights, you can not take rights away!	filemanager	es-es	¡Usted sólo puede conceder derechos adicionales, NO quitar derechos!
 you do not have access to %1	filemanager	es-es	No tiene acceso a %1
 you need to select an owner!	filemanager	es-es	¡Necesita seleccionar un propietario!
 you need to select some files first!	filemanager	es-es	¡Necesita seleccionar antes algunos ficheros!

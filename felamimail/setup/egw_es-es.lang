@@ -28,6 +28,7 @@ any of	felamimail	es-es	cualquiera de
 any status	felamimail	es-es	cualquier estado
 anyone	felamimail	es-es	cualquiera
 as a subfolder of	felamimail	es-es	como una subcarpeta de
+attach	felamimail	es-es	Adjuntar
 attachments	felamimail	es-es	Adjuntos
 authentication required	felamimail	es-es	se requiere identificación
 auto refresh folder list	felamimail	es-es	Refrescar automáticamente la lista de carpetas
@@ -59,7 +60,9 @@ compose as new	felamimail	es-es	Redactar como nuevo
 compress folder	felamimail	es-es	Comprimir carpeta
 condition	felamimail	es-es	condición
 configuration	felamimail	es-es	Configuración
+configure a valid imap server in emailadmin for the profile you are using.	felamimail	es-es	Configure un servidor IMAP válido en emailadmin para el perfil que está usando.
 connection dropped by imap server.	felamimail	es-es	La conexión ha sido ignorada por el servidor IMAP
+contact not found!	felamimail	es-es	¡No se encontró el contacto!
 contains	felamimail	es-es	contiene
 could not complete request. reason given: %s	felamimail	es-es	No se pudo completar la petición. Razón: %s
 could not import message:	felamimail	es-es	No se pudo importar el mensaje:
@@ -110,6 +113,11 @@ do you really want to delete the selected accountsettings and the assosiated ide
 do you really want to delete the selected signatures?	felamimail	es-es	¿Realmente desea borrar las firmas seleccionadas?
 do you really want to move the selected messages to folder:	felamimail	es-es	¿Realmente desea mover los mensajes seleccionados a la carpeta:
 do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	es-es	¿Desea que se le pida confirmación antes de mover los mensajes seleccionados a otra carpeta?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	es-es	¿Desea prevenir la edición o configuración para el reenvío de correo a través de la configuración (incluso si SIEVE está activado)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	es-es	¿Desea prevenir la edición o configuración  de reglas de filtrado (incluso si SIEVE está activado)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	es-es	¿Desea prevenir la edición o configuración de la notificación por correo a otras direcciones de correo si llegan mensajes (incluso si SIEVE está activado)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	es-es	¿Desea prevenir la edición o configuración del aviso de ausencia o vacaciones (incluso si SIEVE está activado)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	es-es	¿Desea prevenir la gestión de carpetas (creación, derechos de acceso Y suscripción)?
 does not contain	felamimail	es-es	No contiene
 does not exist on imap server.	felamimail	es-es	No existe en el servidor IMAP
 does not match	felamimail	es-es	No coincide con
@@ -154,12 +162,14 @@ error connecting to imap server: [%s] %s.	felamimail	es-es	Error al conectar con
 error opening	felamimail	es-es	Error al abrir
 error:	felamimail	es-es	Error:
 error: could not save message as draft	felamimail	es-es	Error: no se pudo salvar el mensaje como borrador
+error: message could not be displayed.	felamimail	es-es	ERROR: No se pudo mostrar el mensaje
 every	felamimail	es-es	cada
 every %1 days	felamimail	es-es	cada %1 días
 expunge	felamimail	es-es	Suprimir
 extended	felamimail	es-es	extendida
 felamimail	common	es-es	FelaMiMail
 file into	felamimail	es-es	Información del fichero
+filemanager	felamimail	es-es	Administrador de ficheros
 files	felamimail	es-es	Ficheros
 filter active	felamimail	es-es	Filtro activo
 filter name	felamimail	es-es	Nombre del filtro
@@ -272,6 +282,7 @@ message list	felamimail	es-es	Lista de mensajes
 messages	felamimail	es-es	mensajes
 mon	felamimail	es-es	Lun
 move	felamimail	es-es	mover
+move folder	felamimail	es-es	mover carpeta
 move messages	felamimail	es-es	mover mensajes
 move selected to	felamimail	es-es	mover los seleccionados a
 move to trash	felamimail	es-es	Mover a la papelera
@@ -286,10 +297,12 @@ no active imap server found!!	felamimail	es-es	¡No se encontró ningún servido
 no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	es-es	No se ha suministrado dirección para el campo A/CC/CCO, ni carpeta donde guardar el mensaje.
 no encryption	felamimail	es-es	Sin cifrar
 no filter	felamimail	es-es	Sin filtro
+no folders	felamimail	es-es	no hay carpetas
 no folders found	felamimail	es-es	No se encontraron carpetas
 no folders were found to subscribe to!	felamimail	es-es	No se encontraron carpetas a las que suscribirse
 no folders were found to unsubscribe from!	felamimail	es-es	No se encontraron carpetas de las que desuscribirse
 no highlighting is defined	felamimail	es-es	No se definió un resaltado
+no imap server host configured!!	felamimail	es-es	¡No se ha configurado un servidor IMAP!
 no message returned.	felamimail	es-es	No se devolvió ningún mensaje.
 no messages found...	felamimail	es-es	no se encontraron mensajes...
 no messages selected, or lost selection. changing to folder	felamimail	es-es	No hay mensajes seleccionados, o se ha perdido la selección. Cambiando a la carpeta
@@ -302,6 +315,8 @@ no subject given!	felamimail	es-es	¡No se ha indicado un asunto!
 no supported imap authentication method could be found.	felamimail	es-es	No se pudo encontrar ningún método de identificación IMAP
 no valid emailprofile selected!!	felamimail	es-es	No se ha seleccionado un perfil de correo válido
 none	felamimail	es-es	ninguno
+none, create all	felamimail	es-es	ninguno, crear todo
+notify when new mails arrive on these folders	felamimail	es-es	notificar cuando lleguen mensajes nuevos a estas carpetas
 on	felamimail	es-es	en
 on behalf of	felamimail	es-es	en nombre de
 one address is not valid	felamimail	es-es	Una dirección no es válida
@@ -311,6 +326,7 @@ only unseen	felamimail	es-es	Sólo los no vistos
 open all	felamimail	es-es	abrir todas
 options	felamimail	es-es	Opciones
 or	felamimail	es-es	o
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	felamimail	es-es	o configurar una conexión a un servidor IMAP válido usando la preferencia de Gestionar cuentas/Identidades en el menú lateral.
 organisation	felamimail	es-es	Organización
 organization	felamimail	es-es	Organización
 organization name	admin	es-es	Nombre de la organización
@@ -318,6 +334,7 @@ original message	felamimail	es-es	mensaje original
 outgoing mail server(smtp)	felamimail	es-es	servidor de correo de salida (SMTP)
 participants	felamimail	es-es	Participantes
 personal information	felamimail	es-es	Información personal
+please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	es-es	Por favor, solicite al administrador que corrija la configuración del servidor IMAP en emailadmin por usted.
 please select a address	felamimail	es-es	Por favor, seleccione una dirección
 please select the number of days to wait between responses	felamimail	es-es	Por favor, seleccione el número de días a esperar entre las respuestas
 please supply the message to send with auto-responses	felamimail	es-es	Por favor, indique el mensaje a enviar para respuestas automáticas
@@ -409,6 +426,7 @@ the imap server does not appear to support the authentication method selected. p
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	es-es	El remitente del mensaje ha solicitado una respuesta para indicar que usted ha leído este mensaje. ¿Desea enviar una confirmación?
 the mimeparser can not parse this message.	felamimail	es-es	El intérprete mime no puede interpretar este mensaje
 then	felamimail	es-es	ENTONCES
+there is no imap server configured.	felamimail	es-es	No se ha configurado un servidor IMAP.
 this folder is empty	felamimail	es-es	ESTA CARPETA ESTA VACIA
 this php has no imap support compiled in!!	felamimail	es-es	¡Esta instalación de PHP no tiene soporte IMAP!
 thu	felamimail	es-es	Jue
@@ -461,6 +479,8 @@ viewing message	felamimail	es-es	Viendo mensaje
 viewing messages	felamimail	es-es	Viendo mensajes
 wed	felamimail	es-es	Mié
 when deleting messages	felamimail	es-es	Al borrar mensajes
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	es-es	qué carpetas (además de la de Enviados) debe mostrarse usando el esquema de vista de enviados.
+which folders - in general - should not be automatically created, if not existing	felamimail	es-es	qué carpetas - en general - NO deben crearse automáticamente, si no existen
 with message	felamimail	es-es	con mensaje
 with message "%1"	felamimail	es-es	con mensaje "%1"
 wrap incoming text at	felamimail	es-es	Ajustar el texto entrante a

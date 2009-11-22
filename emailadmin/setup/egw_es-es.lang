@@ -99,6 +99,7 @@ reset filter	emailadmin	es-es	restablecer filtro
 select type of imap server	emailadmin	es-es	Seleccione el tipo de servidor IMAP
 select type of imap/pop3 server	emailadmin	es-es	Seleccione el tipo de servidor IMAP/POP3
 select type of smtp server	emailadmin	es-es	Seleccione el tipo de servidor SMTP
+send using this email-address	emailadmin	es-es	enviar usando esta dirección de correo electrónico
 server settings	emailadmin	es-es	configuración del servidor
 sieve server hostname or ip address	emailadmin	es-es	Nombre del servidor Sieve o dirección IP
 sieve server port	emailadmin	es-es	Puerto del servidor Sieve

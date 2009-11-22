@@ -25,6 +25,7 @@ account-id's have to be integers!	admin	es-es	¡Los identificadores de cuenta ti
 acl manager	admin	es-es	Manejo de LCA
 acl rights	common	es-es	Permisos de LCA
 action	admin	es-es	Acción
+actions	admin	es-es	Acciones
 activate wysiwyg-editor	admin	es-es	activar editor WYSIWYG
 add a category	admin	es-es	añadir una categoría
 add a group	admin	es-es	añadir un grupo
@@ -69,6 +70,7 @@ applications	admin	es-es	Aplicaciones
 applications list	admin	es-es	Lista de aplicaciones
 applications run rights updated.	admin	es-es	Se han actualizado los derechos de ejecución.
 applies the changes	admin	es-es	aplica los cambios
+archive: zip or tar	admin	es-es	Archivar: zip o tar
 are you sure you want to delete the application %1 ?	admin	es-es	¿Está seguro de que quiere borrar la aplicación %1 ?
 are you sure you want to delete this account ?	admin	es-es	¿Está seguro de que quiere borrar esta cuenta?
 are you sure you want to delete this application ?	admin	es-es	¿Está seguro de que quiere borrar esta aplicación?
@@ -108,10 +110,13 @@ check items to <b>%1</b> to %2 for %3	admin	es-es	Seleccionar los elementos para
 click to select a color	admin	es-es	Pulse para seleccionar un color
 color	admin	es-es	Color
 command scheduled to run at %1	admin	es-es	El comando se ha planificado para ejecutarse a %1
+commercial: all sorts of companies	admin	es-es	Comercial: todo tipo de empresas
 complete path to aspell program	admin	es-es	Ruta completa al programa aspell
+config password or md5 hash from the header.inc.php	admin	es-es	Configurar la contraseña o hash md5 desde el fichero header.inc.php
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	es-es	Dominio de la cookie (vacío significa usar el nombre del dominio completo, para el Administrador de sitios web, p. ej. "dominio.com" permite usar la misma cookie para egw.dominio.com y www.dominio.com)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	es-es	Ruta de la cookie (permite múltiples sesiones de egw con distintos directorios, pero ¡tiene problemas con el Administrador de sitios web!)
 could not remote execute the command	admin	es-es	No se pudo ejecutar el comando remoto
+country	admin	es-es	País
 country selection	admin	es-es	Selección de país
 create group	admin	es-es	Crear grupo
 created	admin	es-es	Creado
@@ -186,7 +191,9 @@ edit this group	admin	es-es	editar este grupo
 edit this user	admin	es-es	editar este usuario
 edit user	admin	es-es	editar usuario
 edit user account	admin	es-es	Editar cuenta de usuario
+educational: universities, schools, ...	admin	es-es	Educación: Universiddes, Colegios, ...
 egroupware directory	admin	es-es	Directorio de eGroupWare
+egroupware version	admin	es-es	Versión de EGroupware
 either install id and config password needed or the remote hash!	admin	es-es	¡Tanto el ID de la instalación como la contraseña de configuración necesitan el hash remoto!
 email account active	admin	es-es	cuenta de correo activa
 email address	admin	es-es	dirección de correo electrónico
@@ -212,7 +219,9 @@ enter the site username for peer servers	admin	es-es	Introduzca el usuario del s
 enter the title for your site	admin	es-es	Introduzca el título para su sitio
 enter the title of your logo	admin	es-es	Introduzca el título de su logo
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	es-es	Introduzca la URL o nombre de archivo (en phpgwapi/templates/default/images) de su logo
+enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	es-es	Introduzca la URL o nombre del fichero (en su directorio de imágenes de plantillas) o su favicon (el icono pequeño que aparece en las pestañas de los navegadores)
 enter the url where your logo should link to	admin	es-es	Introduzca la url a donde apunte el logo
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	es-es	Introduzca la ruta VGS donde se colocan las imágenes, iconos o logos adicionaels (que encuentran las aplicaciones EGroupware). La ruta DEBE comenzar por /, y con permiso de lectura para todos los usuarios
 enter your default ftp server	admin	es-es	Introduzca su servidor FTP predeterminado
 enter your default mail domain ( from: user@domain )	admin	es-es	Introduzca su dominio de correo predeterminado ( De: usuario@dominio )
 enter your http proxy server	admin	es-es	Introduzca su servidor proxy HTTP
@@ -244,6 +253,8 @@ forward also to	admin	es-es	reenviar también a
 forward emails to	admin	es-es	reenviar correos a
 forward only	admin	es-es	reenviar solamente
 global categories	common	es-es	Categorías globales
+go directly to admin menu, returning here the next time you click on administration.	admin	es-es	Ir directamente al menú de administración, volviendo aquí la próxma vez que pulse en administración.
+governmental: incl. state or municipal authorities or services	admin	es-es	Gubernamental: incluye servicios o autoridades estatales o municipales
 grant	admin	es-es	Conceder acceso
 group ?	admin	es-es	¿Grupo?
 group has been added	common	es-es	El grupo ha sido añadido
@@ -252,6 +263,7 @@ group has been updated	common	es-es	El grupo ha sido actualizado
 group list	admin	es-es	Lista de grupos
 group manager	admin	es-es	Administrador de grupos
 group name	admin	es-es	Nombre del grupo
+hash	admin	es-es	Hash
 hide php information	admin	es-es	Ocultar información de PHP
 home directory	admin	es-es	Directorio personal
 host information	admin	es-es	Información del servidor
@@ -269,9 +281,12 @@ in mbyte	admin	es-es	en Mbytes
 inbound	admin	es-es	entrantes
 initial	admin	es-es	Inicial
 install crontab	admin	es-es	Instalar crontab
+installation type	admin	es-es	Tipo de instalación
 installed applications	common	es-es	Aplicaciones instaladas
+installed applications, percentage of allowed users and total number of entries.	admin	es-es	Aplicaciones instaladas, porcentajes de usuarios permitidos y número total de entradas.
 installed crontab	admin	es-es	Crontab instalado
 interface	admin	es-es	Interfaz
+international use	admin	es-es	Uso internacional
 invalid formated date "%1"!	admin	es-es	¡La fecha %1 no tiene un formato válido!
 invalid remote id or name "%1"!	admin	es-es	¡El nombre o id remoto %1 no es válido!
 invalid value "%1" use yes or no!	admin	es-es	El valor "%1" no es válido. Use "sí" o "no"
@@ -283,6 +298,7 @@ last %1 logins	admin	es-es	Ultimos %1 inicios de sesión
 last %1 logins for %2	admin	es-es	Ultimos %1 inicios de sesión de %2
 last login	admin	es-es	Ultimo inicio de sesión
 last login from	admin	es-es	Ultimo inicio de sesión desde
+last submission:	admin	es-es	Último envío
 last time read	admin	es-es	Ultima lectura
 ldap accounts context	admin	es-es	Contexto de las cuentas LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	es-es	Prefijo del directorio de inicio LDAP predeterminado (p. ej. /directorio para /directorio/usuario)
@@ -300,11 +316,13 @@ length<br>rows	admin	es-es	Longitud<br>Filas
 list config settings	admin	es-es	Lista de las opciones de configuración
 list current sessions	admin	es-es	Lista de las sesiones actuales
 list of current users	admin	es-es	Lista de usuarios actuales
-login history	common	es-es	Historial de accesos
+logged out	admin	es-es	sesión finalizada
+login history	admin	es-es	Historial de accesos
 login message	admin	es-es	Mensaje de inicio de sesión
 login screen	admin	es-es	Pantalla de inicio de sesión
 login shell	admin	es-es	Shell de inicio de sesión
 login time	admin	es-es	Hora de acceso
+login-status	admin	es-es	Estado de la sesión
 loginid	admin	es-es	LoginID
 mail settings	admin	es-es	Configuración del correo electrónico
 main email-address	admin	es-es	Dirección de correo principal
@@ -335,8 +353,19 @@ no modes available	admin	es-es	no hay modos disponibles
 no permission to add groups	admin	es-es	no tiene permiso para añadir grupos
 no permission to add users	admin	es-es	no tiene permiso para añadir usuarios
 no permission to create groups	admin	es-es	no tiene permiso para crear grupos
+non profit: clubs, associations, ...	admin	es-es	Sin ánimo de lucro: clubs, asociaciones...
 note: ssl available only if php is compiled with curl support	admin	es-es	Nota: SSL está disponible sólo si PHP está compilado con soporte curl
+number of active users	admin	es-es	número de usuarios activos
 number of row for a multiline inputfield or line of a multi-select-box	admin	es-es	número de filas para un campo multilínea or línea de una lista multiselección
+number of sessions / egroupware logins in the last 30 days	admin	es-es	Número de sesiones / inicios de sesión en EGroupware en los útimos 30 días
+number of users	admin	es-es	Número de usuarios
+official egroupware usage statistic	admin	es-es	Estadística oficial de uso de EGroupware
+one day	admin	es-es	un día
+one hour	admin	es-es	una hora
+one month	admin	es-es	un mes
+one week	admin	es-es	una semana
+only below displayed information is directly submitted to %s.	admin	es-es	Sólo la información mostrada debajo se envía directamente a %s.
+operating system	admin	es-es	Sistema operativo
 order	admin	es-es	Orden
 outbound	admin	es-es	De salida
 own install id:	admin	es-es	ID de instalación propio:
@@ -352,12 +381,15 @@ permission denied	admin	es-es	Permiso denegado
 permission denied !!!	admin	es-es	¡Permiso denegado!
 permissions	admin	es-es	Permisos
 permissions this group has	admin	es-es	Permisos que tiene este grupo
+personal: eg. within a family	admin	es-es	Personal: p.ej. uso familiar
+php version	admin	es-es	Versión de PHP
 phpinfo	admin	es-es	Información de PHP
 please enter a name	admin	es-es	Por favor introduzca un nombre
 please enter a name for that server !	admin	es-es	Por favor, introduzca un nombre para  ese sevidor
 please run setup to become current	admin	es-es	Por favor ejecute setup para estar al día
 please select	admin	es-es	Por favor, seleccione
 postfix with ldap	admin	es-es	Postfix con LDAP
+postpone for	admin	es-es	Posponer para
 preferences	admin	es-es	Preferencias
 primary group	admin	es-es	Grupo principal
 qmaildotmode	admin	es-es	qmaildotmode
@@ -375,6 +407,7 @@ remove all users from this group ?	admin	es-es	¿Borrar todos los usuarios de es
 return to admin mainscreen	admin	es-es	volver a la pantalla principal de administración
 return to view account	admin	es-es	Volver a ver cuenta
 route all mails to	admin	es-es	dirigir todos los correos a
+rpm or debian package	admin	es-es	Paquete RPM o Debian
 run asynchronous services	admin	es-es	Ejecutar servicios asíncronos
 save the category	admin	es-es	guardar la categoría
 save the category and return back to the list	admin	es-es	guardar la categoría y volver a la lista
@@ -398,6 +431,7 @@ server password	admin	es-es	Contraseña del servidor
 server type(mode)	admin	es-es	Tipo (modo) del servidor
 server url	admin	es-es	URL del servidor
 server username	admin	es-es	Usuario del servidor
+sessions last 30 days	admin	es-es	Sesiones en los últimos 30 días
 set preference values.	admin	es-es	Establecer valores para las preferencias
 should exceptions contain a trace (including function arguments)	admin	es-es	Las excepciones deben contener una traza (incluyendo argumentos de funciones)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	es-es	¿Debe incluir la página de inicio de sesión un cuadro de selección de idioma (útil para sitios de demostración)?
@@ -421,8 +455,13 @@ standard pop3 server	admin	es-es	servidor POP3 estándar
 standard smtp-server	admin	es-es	servidor SMTP estándar
 start testjob!	admin	es-es	Iniciar el trabajo de prueba
 submit changes	admin	es-es	Enviar cambios
+submit displayed information?	admin	es-es	¿Enviar la información mostrada?
+submit statistic information	admin	es-es	Enviar información estadística
 submit the search string	admin	es-es	Enviar la cadena de búsqueda
+submit to egroupware.org	admin	es-es	Enviar a egroupware.org
 subtype	admin	es-es	Subtipo
+subversion checkout	admin	es-es	Checkout de subversion
+success	admin	es-es	correcto
 switch it off, if users are randomly thrown out	admin	es-es	Desactivarlo si a los usuarios se les cierra la sesión aleatoriamente
 template selection	admin	es-es	Selección de plantilla
 text entry	admin	es-es	Entrada de texto
@@ -433,6 +472,7 @@ that name has been used already	admin	es-es	Ese nombre ya ha sido usado
 that server name has been used already !	admin	es-es	¡Ese nombre de servidor ya ha sido usado!
 the api is current	admin	es-es	La API está al día
 the api requires an upgrade	admin	es-es	La API requiere ser actualizada
+the cumulated and anonymised data will be publically available:	admin	es-es	Los datos acumulados y anónimos estarán disponibles públicamente:
 the groups must include the primary group	admin	es-es	Los grupos deben incluir el grupo principal
 the login and password can not be the same	admin	es-es	El usuario y la contraseña NO pueden ser iguales
 the loginid can not be more then 8 characters	admin	es-es	El nombre de usuario no puede superar 8 caracteres
@@ -449,12 +489,17 @@ this category is currently being used by applications as a parent category	admin
 timeout for application session data in seconds (default 86400 = 1 day)	admin	es-es	Tiempo límite para los datos de la sesión de la aplicación en segundos (por defecto 86400 = 1 día)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	es-es	Tiempo límite para las sesiones en segundos (por defecto 14400 = 4 horas)
 times	admin	es-es	Horas
+to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	es-es	Para permitirnos realizar un seguimiento del creciiento de su instalación individual, utilice este ID de envío. Si no, bórrelo:
 top	admin	es-es	Superior
 total of %1 id's changed.	admin	es-es	Se han cambiado en total %1 ids
 total records	admin	es-es	Total de registros
 true	admin	es-es	verdadero
 trust level	admin	es-es	Nivel de confianza
 trust relationship	admin	es-es	Relaciones de confianza
+two days	admin	es-es	dos días
+two hours	admin	es-es	dos horas
+two months	admin	es-es	dos meses
+two weeks	admin	es-es	dos semanas
 type '%1' already exists !!!	admin	es-es	¡El tipo '%1' ya existe!
 type of customfield	admin	es-es	Tipo de campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	es-es	En windows, se necesita instalar asyncservice %1manualmente%2 o usar el modo de fallos. El modo de fallos sólo comprueba los trabajos después de ver cada página. ¡Cuidado!
@@ -462,6 +507,7 @@ unknown account: %1 !!!	admin	es-es	¡¡La cuenta es desconocida: %1!!
 unknown command %1!	admin	es-es	Comando desconocido: %1
 unknown option %1	admin	es-es	Opción desconocida: %1
 updated	admin	es-es	actualizado
+usage	admin	es-es	Uso
 use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
 use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (todavía no funciona completamente)
 use theme	admin	es-es	Usar tema
@@ -479,6 +525,8 @@ view error log	admin	es-es	Ver registro de errores
 view sessions	admin	es-es	Ver sesiones
 view this user	admin	es-es	ver este usuario
 view user account	admin	es-es	Ver cuenta de usuario
+we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	es-es	Solicitamos los datos para mejorar nuestro perfil en la prensa y para conseguir una mejor comprensión del usuario base de EGroupware y sus necesidades.
+we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	es-es	Esperamos que comprensa la importancia de esta estadística voluntaria y que no lo deniegue a la ligera.
 who would you like to transfer all records owned by the deleted user to?	admin	es-es	¿A quién desea transferirle todos los registros del usuario eliminado?
 would you like egroupware to cache the egw info array ?	admin	es-es	¿Desea que eGroupWare almacene en memoria el array egw info?
 would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
@@ -502,4 +550,5 @@ you must select a file type	admin	es-es	Debe seleccionar un tipo de archivo
 you must select at least one group member.	admin	es-es	Debe seleccionar al menos un miembro del grupo.
 you need to enter install id and password!	admin	es-es	¡Necesita introducir el ID de instalación o la contraseña!
 you will need to remove the subcategories before you can delete this category	admin	es-es	Deberá eliminar las subcategorías antes de poder borrar esta categoría
+your last submission was less then %1 days ago!	admin	es-es	¡Su último envío fue hace menos de %1 días!
 your session could not be verified.	admin	es-es	Su sesión no pudo ser verificada.

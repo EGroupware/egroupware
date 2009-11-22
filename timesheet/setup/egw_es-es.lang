@@ -5,8 +5,10 @@ actions	timesheet	es-es	Acciones
 all projects	timesheet	es-es	Todos los proyectos
 both: allow to use projectmanager and free project-names	admin	es-es	Ambos: permitir usar nombres de proyectos del Administrador de proyectos y libres
 by	timesheet	es-es	por
+comment by %1 at %2:	timesheet	es-es	Comentario por %1 a las %2:
 create new links	timesheet	es-es	Crear enlaces nuevos
 creating new entry	timesheet	es-es	creando nueva entrada
+custom fields	timesheet	es-es	Campos personalizados
 delete this entry	timesheet	es-es	Borrar esta entrada
 edit this entry	timesheet	es-es	Editar esta entrada
 empty if identical to duration	timesheet	es-es	Vacío si es idéntico a la duración
@@ -21,12 +23,14 @@ exports entries from your timesheet into a csv file. csv means 'comma seperated 
 field must not be empty !!!	timesheet	es-es	¡El campo no debe estar vacío!
 full: use only projectmanager	admin	es-es	Completo: usar sólo el Administrador de proyectos
 general	timesheet	es-es	General
+global categories	timesheet	es-es	Categorías globales
 last modified	timesheet	es-es	Ultima modificación
 last month	timesheet	es-es	Último mes
 last week	timesheet	es-es	Última semana
 last year	timesheet	es-es	Último año
 leave it empty for a full week	timesheet	es-es	Dejar en blanco durante una semana completa
 links	timesheet	es-es	Enlaces
+new ticket submitted by %1 at %2	timesheet	es-es	Nuevo ticket enviado por %1 a las %2
 no details	timesheet	es-es	Sin detalles
 no project	timesheet	es-es	Sin proyecto
 none: use only free project-names	admin	es-es	Ninguno: usar sólo nombres de proyecto libres
@@ -48,6 +52,7 @@ sum %1:	timesheet	es-es	Suma %1:
 this month	timesheet	es-es	Este mes
 this week	timesheet	es-es	Esta semana
 this year	timesheet	es-es	Este año
+ticket modified by %1 at %2	timesheet	es-es	Ticket modificado por %1 a las %2
 timesheet	common	es-es	Hoja de presencia
 timesheet csv export	timesheet	es-es	Exportar a CSV la hoja de presencia
 timesheet openoffice export	timesheet	es-es	Exportar a OpenOffice la hoja de presencia

@@ -143,6 +143,7 @@ fri	calendar	es-es	Vie
 full description	calendar	es-es	Descripción completa
 fullname of person to notify	calendar	es-es	Nombre completo de la persona a la que notificar
 general	calendar	es-es	General
+global categories	calendar	es-es	Categorías globales
 global public and group public	calendar	es-es	Público Global y grupo público
 global public only	calendar	es-es	Público global sólo
 group invitation	calendar	es-es	Invitación de grupo
@@ -271,6 +272,7 @@ setting lock time calender	admin	es-es	Estableciendo el tiempo de bloqueo para e
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	es-es	¿Mostrar las invitaciones rechazadas por usted en el calendario?<br>Puede aceptarlas después (por ejemplo, cuando elimine el conflicto de calendario), si todavía se ven en su calendario.
 should new events created as private by default ?	calendar	es-es	¿Crear nuevos eventos como privados?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	es-es	¿Deben ver las personas que no inicien sesión la información de ocupación? Se puede poner una contraseña extra, distinta a la normal, para proteger esta información. La información de ocupación está en formato iCal y sólo incluye las horas en las que está ocupado. No incluye el nombre del evento, descripción o sitios. La URL para su información de ocupación es %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	es-es	¿Deben ver las personas sin iniciar sesión la información de tiempo disponible? Puede poner una contraseña extra, distinta de la suya de usuario, para proteger esta información. La información de disponibilidad está en formato iCal y sólo incluye las horas en las que usted está ocupado. No incluye ni el nombre del evento, descripción ni ubicaciones. La URL a su información de disponibilidad es <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	es-es	¿Debe mostrarse en el planificador una fila vacía para los usuarios o categorías sin ninguna cita?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	es-es	¿Mostrar el estado de cada evento (aceptar, rechazar, etc) entre corchetes detrás del nombre de cada participante?
 show birthdays from addressbook	admin	es-es	Mostrar cumpleaños de la libreta de direcciones
@@ -293,6 +295,7 @@ submit to repository	calendar	es-es	Enviar al repositorio
 sun	calendar	es-es	Dom
 tentative	calendar	es-es	Provisional
 test import (show importable records <u>only</u> in browser)	calendar	es-es	Probar Importar (mostrar <u>solamente</u> registros importables en el navegador)
+the resource you selected is already overbooked:	calendar	es-es	El recurso que ha seleccionado ya está reservado:
 this day is shown as first day in the week or month view.	calendar	es-es	Este día se mostrará como el primer día en las vistas de semana o de mes.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	es-es	Esto define el final de la vista del día  Los eventos posteriores a esta hora se muestran debajo de la vista del día.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	es-es	Esto define el inicio de la vista del día. Los eventos anteriores a esta hora se muestran encima de la vista del día.<br>Esta hora se usa también como hora predeterminada para nuevos eventos.
@@ -341,6 +344,7 @@ work day ends on	calendar	es-es	Los días laborables acaban en
 work day starts on	calendar	es-es	Los días laborables empiezan en
 yearly	calendar	es-es	Anual
 yearview	calendar	es-es	Vista anual
+you are not allowed to book the resource selected:	calendar	es-es	No tiene permiso para reservar el recurso seleccionado:
 you can either set a year or a occurence, not both !!!	calendar	es-es	Puede poner un año o una ocurrencia, pero no ambos.
 you can only set a year or a occurence !!!	calendar	es-es	Sólo puede poner un año o una ocurrencia
 you do not have permission to read this record!	calendar	es-es	¡No tiene permiso para leer este registro!
@@ -349,5 +353,6 @@ you have been disinvited from the meeting at %1	calendar	es-es	Ha dejado de esta
 you need to select an account, contact or resource first!	calendar	es-es	¡Necesita seleccionar antes una cuenta, contacto o recurso!
 you need to select an ical file first	calendar	es-es	Necesita seleccionar antes un fichero iCal
 you need to set either a day or a occurence !!!	calendar	es-es	Debe indicar un día o una ocurrencia
+you requested more than available for the selected resource:	calendar	es-es	Ha solicitado más de lo disponible para el recurso solicitado:
 your meeting scheduled for %1 has been canceled	calendar	es-es	Su reunión programada para %1 ha sido cancelada
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	es-es	Su reunión programada para %1 ha sido reprogramada para %2
