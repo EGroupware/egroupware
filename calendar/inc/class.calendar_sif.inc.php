@@ -164,7 +164,10 @@ class calendar_sif extends calendar_boupdate
 				case 'category':
 					if (!empty($value))
 					{
-						$finalEvent[$key] = implode(',',$this->find_or_add_categories(explode(';', $value), $_calID));
+						$categories1 = explode(',', $value);
+						$categories2 = explode(';', $value);
+						$categories = count($categories1) > count($categories2) ? $categories1 : $categories2;
+						$finalEvent[$key] = implode(',', $this->find_or_add_categories($categories, $_calID));
 					}
 					break;
 
@@ -266,21 +269,16 @@ class calendar_sif extends calendar_boupdate
 	}
 
 	/**
-	* @return int contact id
-	* @param string	$_vcard		the vcard
-	* @param int	$_abID		the internal addressbook id
+	* @return int event id
+	* @param string	$_sifdata   the SIFE data
+	* @param int	$_calID=-1	the internal addressbook id
 	* @param boolean $merge=false	merge data with existing entry
-	* @desc import a vard into addressbook
+	* @desc import a SIFE into the calendar
 	*/
-	function addSIF($_sifdata, $_calID, $merge=false)
+	function addSIF($_sifdata, $_calID=-1, $merge=false)
 	{
 		$state = &$_SESSION['SyncML.state'];
 		$deviceInfo = $state->getClientDeviceInfo();
-
-		$calID = false;
-
-		#error_log('ABID: '.$_abID);
-		#error_log(base64_decode($_sifdata));
 
 		if (!$event = $this->siftoegw($_sifdata, $_calID))
 		{
@@ -334,7 +332,7 @@ class calendar_sif extends calendar_boupdate
 	* return a sife
 	*
 	* @param int	$_id		the id of the event
-	* @return string containing the vcard
+	* @return string containing the SIFE
 	*/
 	function getSIF($_id)
 	{
@@ -560,7 +558,7 @@ class calendar_sif extends calendar_boupdate
 					case 'Categories':
 						if (!empty($value))
 						{
-							$value = implode('; ', $this->get_categories(explode(',',$value)));
+							$value = implode(', ', $this->get_categories($value));
 							$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
 						}
 						else
