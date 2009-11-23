@@ -75,7 +75,7 @@
 			#$atext = '([a-z0-9!#$&%*+/=?^_`{|}~-]|&amp;)';
 			$atext = '([a-zA-Z0-9_\-\.])';
 			$dot_atom = $atext.'+(\.'.$atext.'+)*';
-			$Email_RegExp_Match = $dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match;
+			$Email_RegExp_Match = '~'.$dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match.'~i';
 
 			$this->t 		=& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->displayCharset   = $GLOBALS['egw']->translation->charset();
@@ -126,7 +126,7 @@
 			$addresses = array();
 
 			/* Find all the email addresses in the body */
-			while(eregi($Email_RegExp_Match, $sbody, $regs)) {
+			while(preg_match($Email_RegExp_Match, $sbody, $regs)) {
 				$addresses[$regs[0]] = strtr($regs[0], array('&amp;' => '&'));
 				$start = strpos($sbody, $regs[0]) + strlen($regs[0]);
 				$sbody = substr($sbody, $start);
@@ -161,9 +161,9 @@
 			#$getstring = "(\?([[:alnum:]][-_%[:alnum:]]*=[-_%[:alnum:]]+)
 			#    (&([[:alnum:]][-_%[:alnum:]]*=[-_%[:alnum:]]+))*)?";
 			#$pattern = "^".$domain.$dir.$trailingslash.$page.$getstring."$";
-			$pattern = "\<a href=\"".$domain.".*?\"";
+			$pattern = "~\<a href=\"".$domain.".*?\"~i";
 			$sbody = $body;
-			while(@eregi($pattern, $sbody, $regs)) {
+			while(@preg_match($pattern, $sbody, $regs)) {
 				#_debug_array($regs);
 				$key=$regs[1].$regs[3].$regs[4].$regs[5];
 				$addresses[$key] = $regs[1].$regs[3].$regs[4].$regs[5];
