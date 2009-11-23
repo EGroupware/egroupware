@@ -76,7 +76,7 @@
 			$Host_RegExp_Match = '('.$IP_RegExp_Match.'|[0-9a-z]([-.]?[0-9a-z])*\\.[a-z][a-z]+)';
 			$atext = '([a-z0-9!#$&%*+/=?^_`{|}~-]|&amp;)';
 			$dot_atom = $atext.'+(\.'.$atext.'+)*';
-			$Email_RegExp_Match = $dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match;
+			$Email_RegExp_Match = '~'.$dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match.'~i';
 
 			$this->t 		= CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->displayCharset   = $GLOBALS['egw']->translation->charset();
@@ -126,7 +126,7 @@
 			$addresses = array();
 
 			/* Find all the email addresses in the body */
-			while(eregi($Email_RegExp_Match, $sbody, $regs)) {
+			while(preg_match($Email_RegExp_Match, $sbody, $regs)) {
 				$addresses[$regs[0]] = strtr($regs[0], array('&amp;' => '&'));
 				$start = strpos($sbody, $regs[0]) + strlen($regs[0]);
 				$sbody = substr($sbody, $start);
