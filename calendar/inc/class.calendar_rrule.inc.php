@@ -621,9 +621,12 @@ class calendar_rrule implements Iterator
 		{
 			$enddate = is_a($event['recur_enddate'],'DateTime') ? $event['recur_enddate'] : new egw_time($event['recur_enddate'],$timestamp_tz);
 		}
-		foreach($event['recur_exception'] as $exception)
+		if (is_array($event['recur_exception']))
 		{
-			$exceptions[] = is_a($exception,'DateTime') ? $exception : new egw_time($exception,$timestamp_tz);
+			foreach($event['recur_exception'] as $exception)
+			{
+				$exceptions[] = is_a($exception,'DateTime') ? $exception : new egw_time($exception,$timestamp_tz);
+			}
 		}
 		return new calendar_rrule($time,$event['recur_type'],$event['recur_interval'],$enddate,$event['recur_data'],$exceptions);
 	}
