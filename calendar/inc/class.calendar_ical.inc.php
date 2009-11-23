@@ -501,7 +501,7 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								$attributes[$icalFieldName] = self::getDateTime($recur_date,$tzid,$parameters[$icalFieldName]);
+								$attributes[$icalFieldName] = self::getDateTime($event['recurrence'],$tzid,$parameters[$icalFieldName]);
 							}
 							unset($revent);
 						}
@@ -658,8 +658,8 @@ class calendar_ical extends calendar_boupdate
 
 		$retval = $vcal->exportvCalendar();
  		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($retval)."\n",3,$this->logfile);
-		return $retval;
 
+		return $retval;
 	}
 
 	/**
