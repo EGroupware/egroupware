@@ -208,7 +208,7 @@ class infolog_tracking extends bo_tracking
 			'info_owner'     => $GLOBALS['egw']->common->grab_owner_name($data['info_owner']),
 			'info_status'    => lang($data['info_status']=='deleted'?'deleted':$this->infolog->status[$data['info_type']][$data['info_status']]),
 			'info_percent'   => (int)$data['info_percent'].'%',
-			'info_datecompleted' => $data['info_datecomplete'] ? $this->datetime($data['info_datecompleted']-$this->infolog->tz_offset_s) : '',
+			'info_datecompleted' => $data['info_datecompleted'] ? $this->datetime($data['info_datecompleted']-$this->infolog->tz_offset_s) : '',
 			'info_location'  => $data['info_location'],
 			'info_startdate' => $data['info_startdate'] ? $this->datetime($data['info_startdate']-$this->infolog->tz_offset_s,null) : '',
 			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate']-$this->infolog->tz_offset_s,false) : '',

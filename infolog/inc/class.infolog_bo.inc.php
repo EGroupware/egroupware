@@ -704,7 +704,8 @@ class infolog_bo
 				);
 			}
 			$values['info_id'] = $info_id;
-
+			// if the info responbsible array is not passed, fetch it from old.
+			if (!array_key_exists('info_responsible',$values)) $values['info_responsible'] = $old['info_responsible'];
 			if (!is_array($values['info_responsible']))		// this should not happen, bug it does ;-)
 			{
 				$values['info_responsible'] = $values['info_responsible'] ? explode(',',$values['info_responsible']) : array();
@@ -722,6 +723,11 @@ class infolog_bo
 			if (!is_object($this->tracking))
 			{
 				$this->tracking = new infolog_tracking($this);
+			}
+
+			if (($missing_fields = array_diff_key($old,$values)))
+			{
+				$values = array_merge($values,$missing_fields);
 			}
 			$this->tracking->track($values,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
 		}
