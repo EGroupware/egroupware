@@ -1,14 +1,14 @@
 %1 days in advance	infolog	sk	%1 dní v predstihu
-%1 deleted	infolog	sk	%1 odstránené
-%1 deleted by %2 at %3	infolog	sk	%1 odstránil %2 %3
-%1 modified	infolog	sk	%1 zmenené
-%1 modified by %2 at %3	infolog	sk	%1 zmenil %2 %3
+%1 deleted	infolog	sk	%1 - odstránená
+%1 deleted by %2 at %3	infolog	sk	%1 - odstránil/a: %2 %3
+%1 modified	infolog	sk	%1 - zmena
+%1 modified by %2 at %3	infolog	sk	%1 - zmenu vykonal/a: %2 %3
 %1 records imported	infolog	sk	Naimportovaných bolo %1 záznamov
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	sk	Načítaných bolo %1 záznamov (zatiaľ nenaimportované, môžete ísť %2späť%3 a odznačiť Test importu)
-%1 you are responsible for is due at %2	infolog	sk	Ste zodpovední za %1, termín je %2
-%1 you are responsible for is starting at %2	infolog	sk	Ste zodpovední za %1 -začína sa %2
-%1 you delegated is due at %2	infolog	sk	Delegovali ste %1, termín je %2
-%1 you delegated is starting at %2	infolog	sk	Delegovali ste %1 -začína sa %2
+%1 you are responsible for is due at %2	infolog	sk	%1 - ste zodpovední, termín je %2
+%1 you are responsible for is starting at %2	infolog	sk	%1 - ste zodpovední, začína sa %2
+%1 you delegated is due at %2	infolog	sk	%1 - delegovali ste, termín je %2
+%1 you delegated is starting at %2	infolog	sk	%1 - delegovali ste, začína sa %2
 - subprojects from	infolog	sk	- Podprojekty od (z)
 0%	infolog	sk	0%
 10%	infolog	sk	10%
@@ -41,8 +41,10 @@ add:	infolog	sk	Pridať:
 all	infolog	sk	Všetko
 all links and attachments	infolog	sk	Všetky odkazy a prílohy
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sk	umožňuje nastaviť stav záznamu, napr. nastaviť Úlohu ktorá sa má vykonať po ukončení (hodnoty závisia na type záznamu)
+alternatives	infolog	sk	Alternatívy
 apply the changes	infolog	sk	Uplatniť zmeny
 archive	infolog	sk	Archív
+are you shure you want to close this entry ?	infolog	sk	Naozaj chcete uzavrieť tento záznam?
 are you shure you want to delete this entry ?	infolog	sk	Naozaj chcete odstrániť tento záznam?
 attach a file	infolog	sk	Priložiť súbor
 attach file	infolog	sk	Priložiť súbor
@@ -56,6 +58,7 @@ cancel	infolog	sk	Zrušiť
 cancelled	infolog	sk	Zrušené
 categories	infolog	sk	Kategórie
 category	infolog	sk	Kategória
+change history	infolog	sk	Zmeniť históriu
 change the status of an entry, eg. close it	infolog	sk	Zmeniť stav záznamu, napr. uzavrieť ho
 charset of file	infolog	sk	Znaková sada súboru
 check to set startday	infolog	sk	Ak chcete zadať dátum začiatku, označte to
@@ -63,6 +66,8 @@ check to specify custom contact	infolog	sk	Ak chcete uviesť používateľsky de
 click here to create the link	infolog	sk	Ak chcete vytvoriť odkaz, kliknite sem
 click here to start the search	infolog	sk	Ak chcete začať hľadanie, kliknite sem
 close	infolog	sk	Zavrieť
+close all	infolog	sk	Zavrieť všetko
+close this entry and all listed sub-entries	infolog	sk	Zavrieť tento záznam a všetky uvedené podzáznamy
 comment	infolog	sk	Poznámka
 completed	infolog	sk	Stav vybavenia
 configuration	infolog	sk	Konfigurácia
@@ -78,26 +83,26 @@ csv-fieldname	infolog	sk	CSV-názov položky
 csv-filename	infolog	sk	CSV-názov súboru
 csv-import	common	sk	CSV-Import
 custom	infolog	sk	Používateľom definované
-custom contact-address, leave empty to use information from most recent link	infolog	sk	Používateľom definovaná kontaktná adresa -ak necháte prázdne, použije sa údaj z najčerstvejšieho odkazu
-custom contact-information, leave emtpy to use information from most recent link	infolog	sk	Používateľom definované kontaktné informácie -ak necháte prázdne, použije sa údaj z najčerstvejšieho odkazu
-custom fields	infolog	sk	Používateľom definované polia
-custom fields, typ and status	common	sk	Používateľom definované polia, typ a stav
+custom contact-address, leave empty to use information from most recent link	infolog	sk	Používateľom definovaná kontaktná adresa - ak necháte prázdne, použije sa údaj z najčerstvejšieho odkazu
+custom contact-information, leave emtpy to use information from most recent link	infolog	sk	Používateľom definované kontaktné informácie - ak necháte prázdne, použije sa údaj z najčerstvejšieho odkazu
+custom fields	infolog	sk	Používateľské polia
+custom fields, typ and status	common	sk	Používateľské polia, typ a stav
 custom from	infolog	sk	Používateľom definované od
 custom regarding	infolog	sk	Používateľom definované ohľadom
 custom status for typ	infolog	sk	Používateľom definovaný stav pre typ
 customfields	infolog	sk	Používateľské polia
 date completed	infolog	sk	Dátum dokončenia
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	sk	Dátum dokončenia (ak ponecháte prázdne, vyplní sa automaticky podľa toho, kedy bol nastavený stav "hotovo" alebo kedy bolo vyúčtované).
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	sk	Dátum dokončenia (ak ponecháte prázdne, vyplní sa automaticky podľa toho, kedy bol nastavený stav "hotovo", alebo kedy prebehlo vyúčtovanie).
 datecreated	infolog	sk	Dátum vytvorenia
 dates, status, access	infolog	sk	Dátum, Stav, Prístup
 days	infolog	sk	dní
 default category for new infolog entries	infolog	sk	Predvolená kategória pre nové záznamy Záznamníka
 default filter for infolog	infolog	sk	Predvolený filter pre Záznamník
 default status for a new log entry	infolog	sk	Predvolený stav pre nový záznam
-delegated	infolog	sk	delegované
-delegated open	infolog	sk	delegované otvorené
-delegated overdue	infolog	sk	delegované meškajúce
-delegated upcomming	infolog	sk	delegované nadchádzajúce
+delegated	infolog	sk	Delegované
+delegated open	infolog	sk	Delegované - otvorené
+delegated overdue	infolog	sk	Delegované - meškajúce
+delegated upcomming	infolog	sk	Delegované - blížiace sa
 delegation	infolog	sk	Delegovať
 delete	infolog	sk	Odstrániť
 delete one record by passing its id.	infolog	sk	Odstrániť konkrétny záznam podľa zadaného ID.
@@ -111,18 +116,19 @@ deletes this status	infolog	sk	odstráni tento stav
 description	infolog	sk	Popis
 determines the order the fields are displayed	infolog	sk	Určuje poradie, v akom sa polia zobrazujú
 disables a status without deleting it	infolog	sk	Zablokuje stav bez toho, aby sa odstránil
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	sk	Budete vyžadovať potvrdenie zodpovedného k týmto akciám?: prijatiu, ukončeniu úlohy alebo obidvom
-do you want a notification, if items get assigned to you or assigned items get updated?	infolog	sk	Chcete dostať pripomienku, keď sa stanú zmeny v položkách, ktoré sú Vám priradené?
-do you want a notification, if items you are responsible for are about to start?	infolog	sk	Chcete dostať pripomienku, keď sa začnú položky, za ktoré ste zodpovední?
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	sk	Budete vyžadovať potvrdenie zodpovedného k týmto akciám?: prijatiu, ukončeniu úlohy, alebo obidvom
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	sk	Chcete dostať pripomienku, keď nastanú zmeny v položkách, ktoré sú vám priradené?
+do you want a notification, if items you are responsible for are about to start?	infolog	sk	Chcete dostať pripomienku, keď sa majú začať položky, za ktoré ste zodpovední?
 do you want a notification, if items you are responsible for are due?	infolog	sk	Chcete dostať pripomienku, keď nastane termín splnenia tých položiek, za ktoré ste zodpovední?
-do you want a notification, if items you created get updated?	infolog	sk	Chcete dostať pripomienku, keď sa stanú zmeny v položkách, ktoré ste vytvorili?
-do you want a notification, if items you delegated are about to start?	infolog	sk	Chcete dostať pripomienku, keď sa začnú položky, ktoré sú na Vás delegované?
-do you want a notification, if items you delegated are due?	infolog	sk	Chcete dostať pripomienku, keď nastane termín splnenia tých položiek, ktoré sú na Vás delegované?
-do you want to receive notifications as html-mails or plain text?	infolog	sk	Pripomienky chcete dostávať ako HTML E-maily alebo čistý text?
+do you want a notification, if items you created get updated?	infolog	sk	Chcete dostať pripomienku, keď nastanú zmeny v položkách, ktoré ste vytvorili?
+do you want a notification, if items you delegated are about to start?	infolog	sk	Chcete dostať pripomienku, keď sa majú začať položky, ktoré ste delegovali?
+do you want a notification, if items you delegated are due?	infolog	sk	Chcete dostať pripomienku, keď nastane termín splnenia tých položiek, ktoré ste delegovali?
+do you want to receive notifications as html-mails or plain text?	infolog	sk	E-mailové pripomienky chcete dostávať ako HTML, alebo ako čistý text?
 don't show infolog	infolog	sk	NEzobrazovať Záznamník
 done	infolog	sk	Hotovo
 download	infolog	sk	Stiahnuť
 duration	infolog	sk	Trvanie
+e-mail:	infolog	sk	E-mail:
 each value is a line like <id>[=<label>]	infolog	sk	každá hodnota je riadok v tvare <id>[=<label>]
 edit	infolog	sk	Upraviť
 edit or create categories for ingolog	infolog	sk	Upraviť alebo vytvoriť kategórie pre Záznamník
@@ -148,10 +154,13 @@ finish	infolog	sk	Koniec
 for which types should this field be used	infolog	sk	Pre ktoré typy sa má použiť toto pole
 from	infolog	sk	Od
 general	infolog	sk	Hlavné
+global categories	infolog	sk	Globálne kategórie
 group owner for	infolog	sk	Skupinový vlastník pre
 high	infolog	sk	Vysoká
+history	infolog	sk	História
 history logging	infolog	sk	Zaznamenávanie histórie
-history logging and deleting of items	infolog	sk	Zaznamenávanie histórie a odstránených položiek
+history logging and deleting of items	infolog	sk	Zaznamenávať históriu a odstránené položky?
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	sk	Koľko riadkov z popisu má byť priamo viditeľných? Ďalšie riadky budú dostupné cez posuvník.
 id	infolog	sk	ID
 id#	infolog	sk	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sk	Ak tento typ MÁ skupinového vlastníka, všetky záznamy tohto typu bude vlastniť zadaná skupina a NIE používateľ, ktorý záznam vytvoril!
@@ -174,12 +183,14 @@ infolog preferences	common	sk	Predvoľby Záznamníka
 infolog-fieldname	infolog	sk	Záznamník - Názov poľa
 invalid filename	infolog	sk	Chybný názov súboru
 label<br>helptext	infolog	sk	Označenie<br>Pomocný text
-last changed	infolog	sk	Naposledy zmenený
+last changed	infolog	sk	Naposledy zmenené
 last modified	infolog	sk	Naposledy upravil
+leave blank to get the used time calculated by timesheet entries	infolog	sk	Ak chcete, aby bol čas spočítaný na základe záznamov Harmonogramu, tak ponechajte prázdne.
 leave it empty	infolog	sk	Ponechať prázdne
 leave without saveing the entry	infolog	sk	Odísť bez uloženia záznamu
 leaves without saveing	infolog	sk	Odísť bez uloženia
 length<br>rows	infolog	sk	Dĺžka<br>Riadky
+limit number of description lines (default 5, 0 for no limit)	infolog	sk	Obmedziť počet riadkov opisu (0 znamená bez limitu; predvolené: 5)
 link	infolog	sk	Odkaz
 links	infolog	sk	Odkazy
 links of this entry	infolog	sk	Odkazy pre tento záznam
@@ -213,8 +224,8 @@ note	infolog	sk	Poznámka
 number of records to read (%1)	infolog	sk	Počet záznamov, ktoré sa majú načítať (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	sk	číslo riadku pre viacriadkové vstupné pole alebo riadok vo výberovom okne
 offer	infolog	sk	Ponuka
-one day after	infolog	sk	deň po
-one day in advance	infolog	sk	deň v predstihu
+one day after	infolog	sk	Deň po
+one day in advance	infolog	sk	1 deň v predstihu
 ongoing	infolog	sk	Prebiehajúce
 only for details	infolog	sk	Len pre podrobnosti
 only if i get assigned or removed	infolog	sk	Iba ak mi je to priradené alebo odobraté
@@ -229,6 +240,7 @@ own open	infolog	sk	Vlastné - otvorené
 own overdue	infolog	sk	Vlastné - meškajúce
 own upcoming	infolog	sk	Vlastné - blížiace sa
 parent	infolog	sk	Rodič
+parent infolog	infolog	sk	Rodičovský Záznamník
 path on (web-)serverside<br>eg. /var/samba/share	infolog	sk	cesta na strane (web-)servera <br>napr. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!
 pattern for search in addressbook	infolog	sk	Výraz pre hľadanie v Adresári
@@ -247,28 +259,31 @@ priority	infolog	sk	Priorita
 private	infolog	sk	Súkromné
 project	infolog	sk	Projekt
 project settings: price, times	infolog	sk	Nastavenia Projektu: cena, časy
+projectmanager	infolog	sk	Projektovník
+re-planned	infolog	sk	Pre-plánované
+re-planned time	infolog	sk	Pre-plánovaný čas
 re:	infolog	sk	Re:
 read one record by passing its id.	infolog	sk	Načítaj jednotlivý záznam zadaním id.
 read rights (default)	infolog	sk	Právo na čítanie (predvolené)
 receive notifications about due entries you are responsible for	infolog	sk	Dostávať pripomienky o záznamoch, ktorým nastáva termín splnenia a ste za ne zodpovední
-receive notifications about due entries you delegated	infolog	sk	Dostávať pripomienky o záznamoch, ktoré boli delegované na Vás
+receive notifications about due entries you delegated	infolog	sk	Dostávať pripomienky o záznamoch, ktoré ste delegovali
 receive notifications about items assigned to you	infolog	sk	Dostávať pripomienky o položkách, ktoré Vám boli priradené
 receive notifications about own items	infolog	sk	Dostávať pripomienky o vlastných položkách
 receive notifications about starting entries you are responsible for	infolog	sk	Dostávať pripomienky o začínajúcich položkách, za ktoré ste zodpovední
-receive notifications about starting entries you delegated	infolog	sk	Dostávať pripomienky o začínajúcich položkách, ktoré sú na Vás delegované
+receive notifications about starting entries you delegated	infolog	sk	Dostávať pripomienky o začínajúcich položkách, ktoré ste delegovali
 receive notifications as html-mails	infolog	sk	Dostávať pripomienky ako HTML E-maily
 reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	sk	reg. výraz pre lokálne IP adresy<br>napr. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	sk	reg. výraz pre lokálne IP adresy<br>napr. ^192\.168\.1\.
 remark	infolog	sk	Poznámka
 remove this link (not the entry itself)	infolog	sk	Odstrániť tento odkaz (nie záznam samotný)
-responsible	infolog	sk	Zodpovedný
-responsible open	infolog	sk	Zodpovedný - otvorené
-responsible overdue	infolog	sk	Zodpovedný - meškajúce
-responsible upcoming	infolog	sk	Zodpovedný - blížiace sa
+responsible	infolog	sk	Zodpovednosť
+responsible open	infolog	sk	Zodpovednosť - otvorené
+responsible overdue	infolog	sk	Zodpovednosť - meškajúce
+responsible upcoming	infolog	sk	Zodpovednosť - blížiace sa
 responsible user, priority	infolog	sk	Zodpovedný používateľ, priorita
 returns a list / search for records.	infolog	sk	Vráti zoznam / hľadanie záznamov.
 rights for the responsible	infolog	sk	Práva pre zodpovednú osobu
-same day	infolog	sk	ten istý deň
+same day	infolog	sk	V ten deň
 save	infolog	sk	Uložiť
 saves the changes made and leaves	infolog	sk	Uloží vykonané zmeny a odíde
 saves this entry	infolog	sk	Uloží tento záznam
@@ -288,10 +303,10 @@ select to filter by responsible	infolog	sk	Filtrovanie podľa zodpovedného
 sets the status of this entry and its subs to done	infolog	sk	Nastaví stav záznamu a jeho podzáznamov na Hotovo
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sk	Má Záznamník zobrazovať Podúlohy, Podhovory alebo Podpoznámky v normálnom zobrazení alebo nie? Vždy ešte môžete zobraziť Podradené záznamy cez ich rodičovský záznam.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	sk	Má Záznamník zobrazovať v zozname odkazy na iné aplikácie a/alebo súbory v prílohe (v normálnom pohľade, keď otvoríte Záznamník)?
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	sk	Zobrazovať Záznamník na hlavnej stránke? Ak áno, s akým filtrom? Funguje len ak ste už nevybrali konkrétnu aplikáciu pre hlavnú stránku (vo vašich nastaveniach).
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	sk	Zobrazovať Záznamník na hlavnej stránke? Ak áno, s akým filtrom? Táto voľba funguje len v prípade, ak ste už nevybrali konkrétnu aplikáciu pre hlavnú stránku (vo vašich predvoľbách).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	sk	Má Záznamník používať plné mená (meno, priezvisko) alebo iba používateľské mená?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	sk	Má sa v zozname Záznamníka zobrazovať jedinečné číselné ID, ktoré môže byť použité napr. ako ID problému?
-should the infolog list show the column "last modified".	infolog	sk	Zobrazovať v zozname Záznamníka aj stĺpec "naposledy zmenené"?
+should the infolog list show the column "last modified".	infolog	sk	Zobrazovať v zozname Záznamníka aj stĺpec "Naposledy zmenené"?
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	sk	Zobrazovať v zozname Záznamníka percentuálny stav vybavenia len pre stav "prebiehajúci", alebo ako dve samostatné ikony?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	sk	Má byť tento záznam viditeľný IBA pre vás a pre ľudí, ktorým pridelíte súkromný prístup cez ACL?
 show a column for used and planned times in the list.	infolog	sk	V zozname zobraziť stĺpec pre použité a plánované časy.
@@ -301,7 +316,6 @@ show last modified	infolog	sk	Zobraziť čas poslednej úpravy
 show status and percent done separate	infolog	sk	Zobraziť samostatne stav záznamu a percentuálny stav vybavenia
 show ticket id	infolog	sk	Zobraziť ID problému
 show times	infolog	sk	Zobraziť časy
-site configuration	infolog	sk	Konfigurácia stránky
 small view	infolog	sk	Zmenšený pohľad
 start a new search, cancel this link	infolog	sk	Spustiť nové vyhľadávanie, zrušiť tento odkaz
 startdate	infolog	sk	Dátum začatia
@@ -324,7 +338,7 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	sk	Dokiaľ sa nedokončí Úloha alebo Telefonát
 times	infolog	sk	Časy
 to many might exceed your execution-time-limit	infolog	sk	Ak priveľa, môže dôjsť k prekročeniu Vašich obmedzení ohľadom povoleného času behu aplikácie
-to what should the startdate of new entries be set.	infolog	sk	Ako má byť nastavený dátum začatia u nových záznamov.
+to what should the startdate of new entries be set.	infolog	sk	Ako má byť nastavený dátum začatia u nových záznamov?
 today	infolog	sk	Dnes
 todays date	infolog	sk	Dnešný dátum
 todo	infolog	sk	Úloha
@@ -356,13 +370,15 @@ which implicit acl rights should the responsible get?	infolog	sk	Ktoré implicit
 which types should the calendar show	infolog	sk	Aké typy má kalendár ukazovať
 will-call	infolog	sk	Zavolá
 write (add or update) a record by passing its fields.	infolog	sk	Zapísať (pridať alebo upraviť) záznam použitím príslušných položiek.
+yes - close	infolog	sk	Áno - Zavrieť
+yes - close including sub-entries	infolog	sk	Áno - Zavrieť vrátane podzáznamov
 yes - delete	infolog	sk	Áno - Odstrániť
 yes - delete including sub-entries	infolog	sk	Áno - Odstrániť vrátane podzáznamov
 yes, noone can purge deleted items	infolog	sk	Áno, nikto nemôže vyčistiť odstránené položky
 yes, only admins can purge deleted items	infolog	sk	Áno, iba správcovia môžu vyčistiť odstránené položky
 yes, with larger fontsize	infolog	sk	Áno, s väčším písmom
 yes, with purging of deleted items possible	infolog	sk	Áno, s možnosťou vyčistenia odstránených položiek
-you can choose a categorie to be preselected, when you create a new infolog entry	infolog	sk	Môžete si vybrať, ktorá kategória bude predvybraná, keď budete vytvárať nový záznam Záznamníka
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	sk	Môžete si vybrať, ktorá kategória bude predvybraná, keď budete vytvárať nový záznam Záznamníka.
 you can't delete one of the stock types !!!	infolog	sk	Nemôžete odstrániť východiskový typ!!
 you have entered an invalid ending date	infolog	sk	Zadali ste chybný termín ukončenia
 you have entered an invalid starting date	infolog	sk	Zadali ste chybný dátum začatia

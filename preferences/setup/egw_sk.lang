@@ -56,7 +56,7 @@ please, select a new theme	preferences	sk	Prosím, vyberte novú farebnú tému
 popup with search	preferences	sk	Vyhľadaním
 re-enter your password	preferences	sk	Zadajte heslo znovu
 read prefs for the specified application.	preferences	sk	Načítať predvoľby pre vybranú aplikáciu.
-rich text editor enter mode	addressbook	sk	Zadávací režim textového editora
+rich text editor enter mode	addressbook	sk	Režim ukončenia riadku v textovom editore
 rich text editor theme	addressbook	sk	Téma textového editora
 select different theme	preferences	sk	Vybrať inú farebnú tému
 select how the rich text editor will generate the enter (linebreak) tag.	addressbook	sk	Vyberte, ako má textový editor generovať značku enter (zalomenie riadku).

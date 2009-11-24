@@ -1,9 +1,8 @@
-%1 email addresses inserted	common	sk	vložených bolo %1 E-mailových adries
+%1 email addresses inserted	common	sk	%1 E-mailových adries bolo vložených
+%1 file	common	sk	%1 súbor
 %1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spustiť!!!
-%1 manual	common	sk	%1 manuál
-%1 start	common	sk	%1 štart
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sk	%1Vyberte iný adresár%2<br />alebo nastavte pre webserver právo zápisu do %3
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1eGroupWare%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v  %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1eGroupWare%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v %3PHP%4.
 (session restored in %1 seconds)	common	sk	(relácia obnovená za %1 sekúnd)
 (shift-)click or drag to change value	jscalendar	sk	Ak chcete zmeniť hodnotu, použite (Shift-)klik alebo potiahnutie
 - click on any of the time parts to increase it	jscalendar	sk	- Ak kliknite na ktorúkoľvek časť času, zvýši sa
@@ -48,6 +47,7 @@ albania	common	sk	ALBÁNSKO
 algeria	common	sk	ALŽÍRSKO
 all	common	sk	Všetko
 all fields	common	sk	všetky polia
+all languages	common	sk	všetky jazyky
 alphabet	common	sk	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	sk	AMERICKÁ SAMOA
 an error happened	common	sk	Nastala nejaká chyba
@@ -103,6 +103,7 @@ brazil	common	sk	BRAZÍLIA
 british indian ocean territory	common	sk	BRITSKÉ INDICKOOCEÁNSKE TERITÓRIUM
 brunei darussalam	common	sk	BRUNEJ DARUSSALAM
 bulgaria	common	sk	BULHARSKO
+bulgarian	common	sk	bulharsky
 burkina faso	common	sk	BOURKINA FASSO
 burundi	common	sk	BURUNDI
 calendar	common	sk	Kalendár
@@ -150,6 +151,7 @@ close sidebox	common	sk	Zavrieť Sidebox
 cocos (keeling) islands	common	sk	KOKOSOVÉ OSTROVY
 colombia	common	sk	KOLUMBIA
 common preferences	common	sk	Bežné predvoľby
+comoros	common	sk	KOMORY
 company	common	sk	Spoločnosť
 congo	common	sk	KONGO
 congo, the democratic republic of the	common	sk	KONGO, DEMOKRATICKÁ REPUBLIKA
@@ -157,6 +159,7 @@ contacting server...	common	sk	Pripájam sa na Server...
 cook islands	common	sk	COOKOVE OSTROVY
 copy	common	sk	Kopírovať
 costa rica	common	sk	KOSTARIKA
+cote d ivoire	common	sk	POBREŽIE SLONOVINY
 could not contact server. operation timed out!	common	sk	Nedá sa pripojiť na server. Čas operácie vypršal!
 create	common	sk	Vytvoriť
 created by	common	sk	Vytvoril
@@ -185,12 +188,13 @@ detail	common	sk	Podrobnosti
 details	common	sk	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť spúšťanie opravného skriptu pre IE5.5 a vyšší, ktorý napráva zobrazovanie priesvitnosti v obrázkoch PNG?
 direction left to right	common	sk	Tok zľava doprava
+directory	common	sk	Priečinok
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sk	Adresár neexistuje, nie je čitateľný webserverom, alebo nesúvisí s koreňovým adresárom dokumentov!
 disable internet explorer png-image-bugfix	common	sk	Vypnúť opravu chyby pre obrázky PNG v Internet Explorer-i
 disable slider effects	common	sk	Vypnúť efekty posuvníka
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sk	Vypnúť animované efekty posuvníka, keď sa zobrazujú alebo skrývajú ponuky na stránke? Používatelia Opery a Konquerer-a to pravdepodobne musia zvoliť.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť opravný skript pre Internet Explorer 5.5 a novšie pre zobrazenie priesvitnosti v obrázkoch PNG?
-disabled	common	sk	Vypnuté
+disabled	common	sk	Neaktívny
 display %s first	jscalendar	sk	Zobraziť %s najskôr
 djibouti	common	sk	DŽIBUTSKO
 do you also want to delete all subcategories ?	common	sk	Chcete odstrániť aj všetky podkategórie?
@@ -205,6 +209,7 @@ done	common	sk	Hotovo
 drag to move	jscalendar	sk	Potiahni pre presun
 e-mail	common	sk	E-Mail
 east timor	common	sk	VÝCHODNÝ TIMOR
+eastern european	common	sk	Východoeurópske
 ecuador	common	sk	EKVÁDOR
 edit	common	sk	Upraviť
 edit %1 category for	common	sk	Uprav %1 kategóriu pre
@@ -212,13 +217,12 @@ edit categories	common	sk	Upraviť kategórie
 edit category	common	sk	Upraviť kategóriu
 egroupware	common	sk	eGwoupWare
 egroupware api version	common	sk	eGroupWare API verzia
-egroupware api version %1	common	sk	eGroupWare API verzia %1
 egroupware: login blocked for user '%1', ip %2	common	sk	eGroupWare: prihlasovanie zablokované pre používateľa '%1', IP %2
 egypt	common	sk	EGYPT
 el salvador	common	sk	SALVADOR
 email	common	sk	E-Mail
 email-address of the user, eg. "%1"	common	sk	E-mailová adresa používateľa, napr. "%1"
-enabled	common	sk	Povolené
+enabled	common	sk	Aktívny
 end date	common	sk	Dátum ukončenia
 end time	common	sk	Čas ukončenia
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre eGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
@@ -275,6 +279,7 @@ global public	common	sk	Verejný pre všetkých
 go today	jscalendar	sk	Choď dnes
 grant access	common	sk	Povoliť prístup
 greece	common	sk	GRÉCKO
+greek	common	sk	grécky
 greenland	common	sk	GRÓNSKO
 grenada	common	sk	GRENADA
 group	common	sk	Skupina
@@ -335,6 +340,7 @@ italy	common	sk	TALIANSKO
 jamaica	common	sk	JAMAJKA
 january	common	sk	Január
 japan	common	sk	JAPONSKO
+japanese	common	sk	japonsky
 jordan	common	sk	JORDÁNSKO
 july	common	sk	Júl
 jun	common	sk	Jún
@@ -349,6 +355,7 @@ keywords	common	sk	Kľúčové slová
 kiribati	common	sk	KIRIBATI
 korea, democratic peoples republic of	common	sk	KÓREJSKÁ ĽUDOVODEMOKRATICKÁ REPUBLIKA
 korea, republic of	common	sk	KÓREJSKÁ REPUBLIKA
+korean	common	sk	kórejsky
 kuwait	common	sk	KUVAJT
 kyrgyzstan	common	sk	KIRGIZSKO
 language	common	sk	Jazyk
@@ -399,6 +406,7 @@ mauritania	common	sk	MAURETÁNIA
 mauritius	common	sk	MAURÍCIUS
 max number of icons in navbar	common	sk	Maximálny počet ikoniek v navigačnom paneli
 may	common	sk	Máj
+mayotte	common	sk	MAYOTTE
 medium	common	sk	Stredná
 menu	common	sk	Ponuka
 message	common	sk	Správa
@@ -494,7 +502,6 @@ password must have at least %1 characters	common	sk	Heslo musí mať dĺžku asp
 path to user and group files has to be outside of the webservers document-root!!!	common	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!!!
 permission denied!	common	sk	Prístup bol odopretý!
 permissions to the files/users directory	common	sk	oprávnenia k adresáru pre súbory / používateľov
-permisson denied!	common	sk	Prístup bol odopretý!
 personal	common	sk	Osobný
 peru	common	sk	PERU
 philippines	common	sk	FILIPÍNY
@@ -504,15 +511,16 @@ pitcairn	common	sk	PITCAIRNOVE OSTROVY
 please %1 by hand	common	sk	Prosím %1 ručne
 please enter a name	common	sk	Prosím zadajte meno!
 please run setup to become current	common	sk	Prosím spusťte setup pre aktualizáciu
-please select	common	sk	Prosím Vyberte
+please select	common	sk	Prosím vyberte
 please set your global preferences	common	sk	Prosím upravte vaše globálne predvoľby!
 please set your preferences for this application	common	sk	Prosím upravte vaše predvoľby pre túto aplikáciu!
 please wait...	common	sk	Prosím čakajte...
+please, check back with us shortly.	common	sk	Prosím, ozvite sa čoskoro.
 poland	common	sk	POĽSKO
 portugal	common	sk	PORTUGALSKO
 postal	common	sk	Poštové
-powered by	common	sk	Beží na
-powered by egroupware version %1	common	sk	Beží na <a href="http://www.egroupware.org">eGroupWare</a> verzie %1
+powered by	common	sk	Používame
+powered by egroupware version %1	common	sk	Používame <a href="http://www.egroupware.org">eGroupWare</a> vo verzii %1
 preferences	common	sk	Predvoľby
 preferences for the idots template set	common	sk	Predvoľby pre idots šablónu boli nastavené
 prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podržaním zobrazíte ponuku)
@@ -544,6 +552,7 @@ returns struct of users application access	common	sk	Vracia štruktúru použív
 reunion	common	sk	RÉUNION
 right	common	sk	Vpravo
 romania	common	sk	RUMUNSKO
+russian	common	sk	rusky
 russian federation	common	sk	RUSKÁ FEDERÁCIA
 rwanda	common	sk	RWANDA
 saint helena	common	sk	SVÄTÁ HELENA
@@ -553,6 +562,7 @@ saint pierre and miquelon	common	sk	SAINT PIERRE A MIQUELON
 saint vincent and the grenadines	common	sk	SVÄTÝ VINCENC A GRENADINY
 samoa	common	sk	ZÁPADNÁ SAMOA
 san marino	common	sk	SAN MARINO
+sao tome and principe	common	sk	SVÄTÝ TOMÁŠ A PRINCOV OSTROV
 saturday	common	sk	Sobota
 saudi arabia	common	sk	SAUDSKÁ ARÁBIA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sk	Verzia Savant2 sa líši od wrappera Savant2. <br/>Táto verzia: %1 <br/>Verzia Savant: %2
@@ -602,16 +612,18 @@ show page generation time?	common	sk	Ukázať čas generovania stránky?
 show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazovať na desktope logá eGroupWare a x-desktopu.
 show_more_apps	common	sk	ukázať viacero aplikácií
 showing %1	common	sk	zobrazujem %1
-showing %1 - %2 of %3	common	sk	zobrazenujem %1 - %2 z %3
+showing %1 - %2 of %3	common	sk	zobrazujem %1 - %2 z %3
 sierra leone	common	sk	SIERRA LEONE
 simple	common	sk	Jednoduché
 singapore	common	sk	SINGAPUR
+site configuration	common	sk	Nastavenia stránky
 slovakia	common	sk	SLOVENSKO
 slovenia	common	sk	SLOVINSKO
 solomon islands	common	sk	ŠALAMÚNOVE OSTROVY
 somalia	common	sk	SOMÁLSKO
 sorry, your login has expired	login	sk	Prepáčte, platnost vášho prihlásenia už vypršala
 south africa	common	sk	JUŽNÁ AFRIKA
+south georgia and the south sandwich islands	common	sk	JUŽNÁ GEORGIA A JUŽNÉ SANDWICHOVE OSTROVY
 spain	common	sk	ŠPANIELSKO
 sri lanka	common	sk	SRÍ LANKA
 start date	common	sk	Dátum začatia
@@ -693,7 +705,6 @@ use button to search for project	common	sk	stlač Tlačidlo pre vyhľadanie proj
 user	common	sk	Používateľ
 user accounts	common	sk	používateľské účty
 user groups	common	sk	používateľské skupiny
-user openinstance	common	sk	Používateľova otvorená inštancia
 username	common	sk	Používateľské meno
 users	common	sk	používatelia
 users choice	common	sk	Používateľská Voľba
@@ -708,6 +719,7 @@ virgin islands, u.s.	common	sk	PANENSKÉ OSTROVY, AMERICKÉ
 wallis and futuna	common	sk	WALLISOVE OSTROVY
 wednesday	common	sk	Streda
 welcome	common	sk	Vitajte
+western european	common	sk	Západoeurópske
 western sahara	common	sk	ZÁPADNÁ SAHARA
 what color should all the blank space on the desktop have	common	sk	Akú farbu má mať všetok prázdny priestor na desktope
 what style would you like the image to have?	common	sk	Aký štýl má mať obrázok?
@@ -740,9 +752,8 @@ your message could <b>not</b> be sent!<br>	common	sk	Vašu správu sa <b>nepodar
 your message has been sent	common	sk	Vaša správa bola odoslaná
 your search returned %1 matchs	common	sk	našiel som %1 záznamov
 your search returned 1 match	common	sk	našiel som 1 záznam
-your session could not be verified.	login	sk	Vaša relácia nie je platná.
+your session could not be verified.	login	sk	Vašu reláciu sa nepodarilo overiť.
 your settings have been updated	common	sk	Vaše nastavenia boli upravené
 zambia	common	sk	ZAMBIA
 zimbabwe	common	sk	ZIMBABWE
 zoom	common	sk	Lupa
-site configuration	common	sk	Nastavenia stránky

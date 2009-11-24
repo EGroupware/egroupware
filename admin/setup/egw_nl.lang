@@ -399,6 +399,7 @@ server type(mode)	admin	nl	Servertype(modus)
 server url	admin	nl	Server-URL
 server username	admin	nl	Servergebruikersnaam
 set preference values.	admin	nl	Stel waarden van voorkeuren in
+should exceptions contain a trace (including function arguments)	admin	nl	Moeten excepties een fout trace bevatten (inclusief functie argumenten)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	nl	Moet de login pagina een taalkeuze box bevatten (handig voor demo sites) ?
 show 'powered by' logo on	admin	nl	''Powered by'-logo weergeven op
 show access log	admin	nl	Toegangslogboek weergeven
@@ -408,7 +409,6 @@ show error log	admin	nl	Foutenlogboek weergeven
 show phpinfo()	admin	nl	De uitvoer van phpinfo() weergeven
 show session ip address	admin	nl	Geef  Sessie IP-adres weer
 site	admin	nl	Site
-site configuration	admin	nl	Site configuratie
 soap	admin	nl	SOAP
 sorry, that group name has already been taken.	admin	nl	Sorry, die groepsnaam bestaat al.
 sorry, the above users are still a member of the group %1	admin	nl	Excuses, de bovenstaande gebruikers zijn nog steeds lid van de groep %1.

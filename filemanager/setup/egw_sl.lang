@@ -4,6 +4,7 @@
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	sl	%1 napak med kopiranjem (%2 map in %3 datotek je bilo kopiranih).
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	sl	%1 napak med brisanjem (%2 map in %3 datotek je bilo izbrisanih).
 %1 errors moving (%2 files moved)!	filemanager	sl	%1 napak med premikanjem (%2 datotek je bilo premaknjenih).
+%1 failed, %2 succeded	filemanager	sl	%1 ni uspelo, %2 je uspelo.
 %1 files copied.	filemanager	sl	%1 datotek je bilo kopiranih.
 %1 files deleted.	filemanager	sl	%1 datotek je bilo izbrisanih.
 %1 files moved.	filemanager	sl	%1 datotek je bilo premaknjenih.
@@ -14,7 +15,6 @@ accessrights	filemanager	sl	Pravice dostopa
 acl added.	filemanager	sl	ACL dodan.
 acl deleted.	filemanager	sl	ACL izbrisan.
 actions	filemanager	sl	Dejanja
-all subdirectories	filemanager	sl	Vse podmape
 allow a maximum of the above configured folderlinks to be configured in settings	admin	sl	Dovoli največ toliko nastavitev povezav do map.
 and all it's childeren	filemanager	sl	in vse njihove podmape
 basedirectory	filemanager	sl	Osnovna mapa
@@ -46,8 +46,10 @@ created directory %1	filemanager	sl	Ustvarjena mapa %1
 current directory	filemanager	sl	Trenutna mapa
 cut	filemanager	sl	Izreži
 cut to clipboard	filemanager	sl	Izreži v odložišče
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sl	Privzeta nastavitev je NE. Povezava ne bo prikazana, vseeno pa boste lahko prišli do lokacije ali določili to lokacijo kot začetno mapo ali povezavo na mapo.
 delete this file or directory	filemanager	sl	Izbriši to datoteko ali mapo
 deleted %1	filemanager	sl	Izbrisano %1
+directories sorted in	filemanager	sl	Maoe razvrščene po
 directory	filemanager	sl	Mapa
 directory %1 already exists	filemanager	sl	Mapa %1 že obstaja
 directory %1 does not exist	filemanager	sl	Mapa %1 ne obstaja
@@ -58,6 +60,8 @@ display of content	filemanager	sl	Prikaz vsebine
 download	filemanager	sl	Prenesi
 edit comments	filemanager	sl	Uredi komentarje
 edit settings	filemanager	sl	Uredi nastavitve
+enter setup user and password	filemanager	sl	Vnesite uporabniško ime in geslo za namestitev
+enter setup user and password to get root rights	filemanager	sl	Vnesite uporabniško ime in geslo za namestitev za pridobitev pravic root-a
 enter the complete vfs path to specify a fast access link to a folder	filemanager	sl	Vnesite celotno pot VFS, da določite hiter dostop do mape.
 enter the complete vfs path to specify your desired start folder.	filemanager	sl	Vnesite celotno pot VFS, da določite želeno začetno mapo.
 error adding the acl!	filemanager	sl	Napaka pri dodajanju ACL!
@@ -66,6 +70,7 @@ error uploading file!	filemanager	sl	Napaka pri prenosu datoteke!
 executable	filemanager	sl	Izvršilna
 extended access control list	filemanager	sl	Razširjen seznam kontrol dostopa
 extended acl	filemanager	sl	Razširjen ACL
+failed to change permissions of %1!	filemanager	sl	Spreminjanje pravic za %1 ni bilo uspešno.
 failed to create directory!	filemanager	sl	Napaka pri ustvarjanju mape!
 file	filemanager	sl	Datoteka
 file %1 already exists. please edit it or delete it first.	filemanager	sl	Datoteka %1 že obstaja. Najprej jo uredite ali izbrišite.
@@ -77,6 +82,7 @@ file or directory not found!	filemanager	sl	Datoteka ali mapa ni bila najdena.
 file successful uploaded.	filemanager	sl	Datoteka je bila uspešno prenesena.
 filemanager	common	sl	Upravljalec datotek
 filemanager configuration	admin	sl	Nastavitev Upravljalca datotek
+files from subdirectories	filemanager	sl	Datoteke iz podmap
 files in this directory	filemanager	sl	Datoteke v mapi
 folder up	filemanager	sl	Nadrejena mapa
 general	filemanager	sl	Splošno
@@ -84,11 +90,11 @@ go home	filemanager	sl	Pojdi domov
 go to	filemanager	sl	Pojdi na
 go to your home directory	filemanager	sl	Pojdi na domačo mapo
 go up	filemanager	sl	Pojdi navzgor
-home directories	filemanager	sl	Domače mape
 id	filemanager	sl	Šifra
 inherited	filemanager	sl	Podedovano
 link %1: %2	filemanager	sl	Povezava %1: %2
 location	filemanager	sl	Lokacija
+log out as superuser	filemanager	sl	Odjavi se kot superuser
 max folderlinks	admin	sl	Največje število povezav do map
 maximum size for uploads	filemanager	sl	Največja velikost za prenos
 mime type	filemanager	sl	MIME tip
@@ -106,11 +112,12 @@ only owner can rename or delete the content	filemanager	sl	Samo lastnik sme prei
 operation	filemanager	sl	Operacija
 permission denied!	filemanager	sl	Dostop zavrnjen!
 permissions	filemanager	sl	Pravice
-permissions changed for %1.	filemanager	sl	Pravice spremenjene za %1.
+permissions of %1 changed.	filemanager	sl	Pravice za %1 so bile spremenjene.
 please select a file to delete.	filemanager	sl	Izberite datoteko za brisanje.
 preview	filemanager	sl	Predogled
 preview %1	filemanager	sl	Predogled %1
 preview of %1	filemanager	sl	Predogled %1
+properties saved.	filemanager	sl	Lastnosti so bile shranjene.
 quick jump to	filemanager	sl	Hiter skok v
 read & write access	filemanager	sl	Pravice branja in pisanja
 read access only	filemanager	sl	Dostop samo za branje
@@ -121,10 +128,13 @@ renamed %1 to %2	filemanager	sl	%1 je bilo preimenovano v %2
 renamed %1 to %2.	filemanager	sl	%1 je bila preimenovana v %2.
 replaced %1	filemanager	sl	Zamenjana %1
 rights	filemanager	sl	Pravice
+root access granted.	filemanager	sl	Dostop do root je bil odobren.
+root access stoped.	filemanager	sl	Dostop do root je bil preklican.
 save %1	filemanager	sl	Shrani %1
 save %1, and go back to file listing	filemanager	sl	Shrani %1 in se vrni na seznam datotek
 save changes	filemanager	sl	Shrani spremembe
 saved %1	filemanager	sl	Shranjen %1
+saving properties failed!	filemanager	sl	Shranjevanje lastnosti ni uspelo!
 search for '%1'	filemanager	sl	Išči '%1'
 searchstring	filemanager	sl	Iskani niz
 select action...	filemanager	sl	Izberite dejanje ...
@@ -132,14 +142,19 @@ select file to upload in current directory	filemanager	sl	Izberite datoteko za p
 show	filemanager	sl	Prikaži
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	sl	Prikažem povezavo do osnovne mape Upravljalca datotek (/) v stranski menijski vrstici?
 size	filemanager	sl	Velikost
-sort folders always to the top?	filemanager	sl	Naj bodo mape vedno urejene?
 start search	filemanager	sl	Začni iskanje
+superuser	filemanager	sl	Superuser
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	sl	Privzeta začetna mapa je vaša osebna mapa. Če pustite to prazno ali vnesena pt ne obstaja ali nimate ustreznih pravic za dostop, bo uporabljena privzeta vrednost.
 the requested path %1 is not available.	filemanager	sl	Pot %1 ni na voljo.
+there's already a file with that name!	filemanager	sl	Datoteka s tem imenom že obstaja!
+to overwrite the existing file store again.	filemanager	sl	Če želite prepisati obstoječo datoteko, shranite še enkrat.
 total files	filemanager	sl	Vseh datotek
 unused space	filemanager	sl	Neuporabljen prostor
 up	filemanager	sl	Navzgor
 updated comment for %1	filemanager	sl	Komentar za %1 je bil posodobljen
 used space	filemanager	sl	Uporabljen prostor
+users and groups	filemanager	sl	Uporabniki in skupine
+wrong username or password!	filemanager	sl	Napačno uporabniško ime ali geslo!
 you do not have access to %1	filemanager	sl	Nimate dostopa do %1
 you need to select an owner!	filemanager	sl	Izbrati morate lastnika!
 you need to select some files first!	filemanager	sl	Najprej morate izbrati nekaj datotek!

@@ -65,6 +65,7 @@ csv	calendar	nl	CSV
 csv-fieldname	calendar	nl	CSV-veldnaam
 csv-filename	calendar	nl	CSV-bestandsnaam
 custom fields	common	nl	Aangepaste velden
+custom_2	common	nl	vrij/bezet
 daily	calendar	nl	Dagelijks
 days	calendar	nl	dagen
 days of the week for a weekly repeated event	calendar	nl	Dagen van de week voor een wekelijks herhalende gebeurtenis
@@ -137,12 +138,14 @@ format of event updates	calendar	nl	Formaat van afspraakbewerkingen
 forward half a month	calendar	nl	halve maand verder
 forward one month	calendar	nl	één maand verder
 four days view	calendar	nl	Vier daagse weergave
+freebusy	common	nl	Vrij/Bezet
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	nl	Vrij/Bezet: onbekende gebruiker '%1', verkeerd wachtwoord of niet beschikbaar voor niet-ingelogde gebruikers!!!
 freetime search	calendar	nl	Beschikbare tijd opzoeken
 fri	calendar	nl	Vri
 full description	calendar	nl	Volledige omschrijving
 fullname of person to notify	calendar	nl	Volledige naam van persoon om te op de hoogte te brengen
 general	calendar	nl	Algemeen
+global categories	calendar	nl	Globale categoriën
 global public and group public	calendar	nl	Globaal publiek en group publiek
 global public only	calendar	nl	Alleen globaal publiek
 group invitation	calendar	nl	Groepsuitnodiging
@@ -172,7 +175,7 @@ ignore conflict	calendar	nl	Conflict negeren
 import	calendar	nl	Importeren
 import csv-file	common	nl	CSV-bstand importeren
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	nl	Importeer gebeurtenissen in uw agenda vanuit een CSV bestand. CSV betekent 'Komma gescheiden velden'. Maar in het Opties tabblad kunt u ook andere scheidingstekens kiezen.
-interval	calendar	nl	Herhaling
+interval	calendar	nl	Interval
 invalid email-address "%1" for user %2	calendar	nl	Ongeldig emailadres "%1" voor gebruiker %2
 last	calendar	nl	laatste
 lastname of person to notify	calendar	nl	Achternaam van persoon om te op de hoogte te brengen
@@ -271,6 +274,7 @@ setting lock time calender	admin	nl	Stel een gegevenslock tijd in voor de agenda
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	nl	Moeten uitnodigingen die u heeft afgewezen nog steeds worden weergegeven in uw agenda? <br/> U kunt ze alleen achteraf nog accepteren als ze in uw agenda worden weergegeven! (bijv. wanneer een planningsconflict is verwijderd)
 should new events created as private by default ?	calendar	nl	Moeten nieuwe afspraken standaard als privé worden aangemaakt?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	nl	Moeten niet-ingelogde personen jouw vrij/bezet informatie kunnen bekijken? Je kunt een extra wachtwoord instellen dat afwijkt van je normale wachtwoord, om deze informatie af te beveiligen. De vrij/bezet informatie is in iCal formaat en bevat uitsluitend de tijdstippen waarop je bezet bent. Het bevat niet de naam, omschrijving of locatie van de afspraak. De URL naar jouw vrij/bezet informatie is %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	nl	Moeten niet ingelogde personen in staat zijn uw vrij/bezet informatie kunnen zien? U kunt een extra wachtwoord instellen dat afwijkt van uw standaard wachtwoord zodat u deze informatie kunt afschermen. De vrij/bezet informatie staat in iCal formaat en bevat alleen de tijden waarop u bezet bent. Het vermeldt niet de naam van de gebeurtenis, omschrijving of locaties. De URL naar uw vrij/bezet informatie is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	nl	Moet de planner een lege regel weergeven voor gebruikers of categorieën zonder enige afspraak.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	nl	Moet de status van de afspraak-deelnemers (accepteren, afwijzen, ...) worden weergegeven tussen haakjes achter elke de namen van de deelnemers?
 show birthdays from addressbook	admin	nl	Toon verjaardagen vanuit het adresboek
@@ -293,6 +297,7 @@ submit to repository	calendar	nl	Naar repository inzenden
 sun	calendar	nl	Zon
 tentative	calendar	nl	op proef
 test import (show importable records <u>only</u> in browser)	calendar	nl	Test import (te impoteren records alleen in uw browser weergeven)
+the resource you selected is already overbooked:	calendar	nl	De bron die u selecteerde is reeds over bezet:
 this day is shown as first day in the week or month view.	calendar	nl	Deze dag wordt weergegeven als de eerste dag in de week- and maandweergave.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	nl	Dit definieert het einde van uw dagweergave. Afspraken die na deze tijd plaatsvinden worden  onderaan de dagweergave weergegeven.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	nl	Dit definieert het begin van uw dagweergave. Afspraken die voor deze tijd plaatsvinden worden boven de dagweergave weergegeven.<br />Deze tijd wordt ook gebruikt als standaard begintijd voor nieuwe afspraken.
@@ -341,6 +346,7 @@ work day ends on	calendar	nl	Werkdag eindigt om
 work day starts on	calendar	nl	Werkdag begint om
 yearly	calendar	nl	Jaarlijks
 yearview	calendar	nl	Jaarweergave
+you are not allowed to book the resource selected:	calendar	nl	U bent niet bevoegd om de geselecteerde bron te boeken:
 you can either set a year or a occurence, not both !!!	calendar	nl	U kunt een of een jaar of een gebeurtenis instellen, niet beiden !!!
 you can only set a year or a occurence !!!	calendar	nl	U kunt alleen een Jaar of een Gebeurtenis instellen !!!
 you do not have permission to read this record!	calendar	nl	U heeft geen toegang om dit record in te lezen
@@ -349,5 +355,6 @@ you have been disinvited from the meeting at %1	calendar	nl	Uw uitnodiging voor 
 you need to select an account, contact or resource first!	calendar	nl	U moet eerst een account, contact of bron selecteren!
 you need to select an ical file first	calendar	nl	U moet eerst een iCal selecteren
 you need to set either a day or a occurence !!!	calendar	nl	U moet of een Dag  of een Gebeurtenis instellen !!!
+you requested more than available for the selected resource:	calendar	nl	U heeft voor de geselecteerde bron meer aangevraagd dan beschikbaar is:
 your meeting scheduled for %1 has been canceled	calendar	nl	Uw geplande vergadering voor %1 is geannuleerd.
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	nl	Uw vergadering die stond gepland voor %1 is opnieuw ingepland naar %2

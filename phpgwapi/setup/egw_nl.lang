@@ -1,7 +1,6 @@
 %1 email addresses inserted	common	nl	%1 emailadres ingevoerd
+%1 file	common	nl	%1 bestand
 %1 is not executable by the webserver !!!	common	nl	%1 kan niet door de webserver uitgevoerd worden !!!
-%1 manual	common	nl	%1 handleiding
-%1 start	common	nl	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2<br />of maak %3 schrijfbaar voor de webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1eGroupWare%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
 (session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
@@ -48,6 +47,7 @@ albania	common	nl	ALBANIË
 algeria	common	nl	ALGERIJE
 all	common	nl	Alles
 all fields	common	nl	alle velden
+all languages	common	nl	alle talen
 alphabet	common	nl	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	nl	Afwisselende style-sheet:
 american samoa	common	nl	AMERIKAANS SAMOA
@@ -104,6 +104,7 @@ brazil	common	nl	BRAZILIË
 british indian ocean territory	common	nl	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	nl	BRUNEI DARUSSALAM
 bulgaria	common	nl	BULGARIJE
+bulgarian	common	nl	Bulgaars
 burkina faso	common	nl	BURKINA FASO
 burundi	common	nl	BURUNDI
 calendar	common	nl	Agenda
@@ -188,6 +189,7 @@ detail	common	nl	Detail
 details	common	nl	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	nl	Het bugfixscript uitschakelen dat dient om transparante PNG-afbeeldingen juist weer te geven in Internet Explorer 5.5 en hoger?
 direction left to right	common	nl	Richting links naar rechts
+directory	common	nl	Directory
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	nl	Directory bestaat niet, kan niet gelezen worden door de webserver of is geen relatief pad ten opzichte van de document root.
 disable internet explorer png-image-bugfix	common	nl	Internet Explorer png-image-bugfix  uitschakelen?
 disable slider effects	common	nl	Bewegende schuifeffecten uitschakelen
@@ -209,6 +211,7 @@ done	common	nl	Gereed
 drag to move	jscalendar	nl	Sleep om te verplaatsen
 e-mail	common	nl	Email
 east timor	common	nl	OOST TIMOR
+eastern european	common	nl	Oost europees
 ecuador	common	nl	ECUADOR
 edit	common	nl	Bewerken
 edit %1 category for	common	nl	Bewerk %1 categorie voor
@@ -216,7 +219,6 @@ edit categories	common	nl	Categorieën bewerken
 edit category	common	nl	Bewerk categorie
 egroupware	common	nl	eGroupWare
 egroupware api version	common	nl	eGroupWare API versie
-egroupware api version %1	common	nl	eGroupWare API versie %1
 egroupware: login blocked for user '%1', ip %2	common	nl	eGroupWare: login geblokkeerd voor gebruiker '%1', IP %2
 egypt	common	nl	EGYPTE
 el salvador	common	nl	EL SALVADOR
@@ -279,6 +281,7 @@ global public	common	nl	Toegang Openbaar
 go today	jscalendar	nl	Ga naar vandaag
 grant access	common	nl	Geef toegang
 greece	common	nl	GRIEKENLAND
+greek	common	nl	Grieks
 greenland	common	nl	GROENLAND
 grenada	common	nl	GRENADA
 group	common	nl	Groep
@@ -339,6 +342,7 @@ italy	common	nl	ITALIË
 jamaica	common	nl	JAMAICA
 january	common	nl	Januari
 japan	common	nl	JAPAN
+japanese	common	nl	Japans
 jordan	common	nl	JORDANIË
 july	common	nl	Juli
 jun	common	nl	Jun
@@ -353,6 +357,7 @@ keywords	common	nl	Trefwoorden
 kiribati	common	nl	KIRIBATI
 korea, democratic peoples republic of	common	nl	NOORD-KOREA
 korea, republic of	common	nl	ZUID-KOREA
+korean	common	nl	Koreaans
 kuwait	common	nl	KOEWEIT
 kyrgyzstan	common	nl	KIRGIZIË
 language	common	nl	Taal
@@ -371,7 +376,7 @@ liberia	common	nl	LIBERIE
 libyan arab jamahiriya	common	nl	LIBIË
 license	common	nl	Licentie
 liechtenstein	common	nl	LIECHTENSTEIN
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br><b>csv data bevat ##last-check-run## van tabel %3 ==> genegeerd</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens bevat ##last-check-run## van tabel %3 ==> overgeslagen</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens klopt niet met het aantal kolommen van tabel %3 ==> genegeerd</b>
 list	common	nl	Lijst
 list members	common	nl	Lijst van leden
@@ -500,7 +505,6 @@ password must have at least %1 characters	common	nl	Wachtwoord moet minstens %1 
 path to user and group files has to be outside of the webservers document-root!!!	common	nl	Pad naar gebruikers- en groepsbestanden. Dit MOET BUITEN het pad liggen van de documentendirectorie van de webserver !!!
 permission denied!	common	nl	Toestemming geweigerd!
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
-permisson denied!	common	nl	Toestemming geweigerd!
 personal	common	nl	Persoonlijk
 peru	common	nl	PERU
 philippines	common	nl	FILIPIJNEN
@@ -552,6 +556,7 @@ returns struct of users application access	common	nl	Geeft de toegangsrechten va
 reunion	common	nl	RÉUNION (EILAND)
 right	common	nl	Rechts
 romania	common	nl	ROMANIË
+russian	common	nl	Russisch
 russian federation	common	nl	RUSLAND
 rwanda	common	nl	RWANDA
 saint helena	common	nl	SINT HELENA
@@ -615,6 +620,7 @@ showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
 sierra leone	common	nl	SIERRA LEONE
 simple	common	nl	Eenvoudig
 singapore	common	nl	SINGAPORE
+site configuration	common	nl	Siteconfiguratie
 slovakia	common	nl	SLOWAKIJË
 slovenia	common	nl	SLOVENIË
 solomon islands	common	nl	SALOMOMEILANDEN
@@ -704,7 +710,6 @@ use button to search for project	common	nl	gebruik Knop om te zoeken naar Projec
 user	common	nl	Gebruiker
 user accounts	common	nl	Gebruikersaccounts
 user groups	common	nl	Gebruikersgroepen
-user openinstance	common	nl	Gebruik Openinstantie
 username	common	nl	Gebruikersnaam
 users	common	nl	gebruikers
 users choice	common	nl	Gebruikerskeuze
@@ -719,6 +724,7 @@ virgin islands, u.s.	common	nl	AMERIKAANSE MAAGDENEILANDEN
 wallis and futuna	common	nl	WALLIS EN FUTUNA
 wednesday	common	nl	Woensdag
 welcome	common	nl	Welkom
+western european	common	nl	West europees
 western sahara	common	nl	WESTELIJK SAHARA
 what color should all the blank space on the desktop have	common	nl	Welke kleur moet de blanko ruimte op het bureaublad hebben
 what style would you like the image to have?	common	nl	Welke stijl wilt u dat de afbeelding heeft?
@@ -747,7 +753,7 @@ you have successfully logged out	common	nl	U bent succesvol afgemeld
 you need to add the webserver user '%1' to the group '%2'.	common	nl	Je moet de webserver user '%1' aan groep '%2' toevoegen.
 you need to be an egroupware administrator to access this functionality!	common	nl	U moet een eGroupWare beheerder zijn om deze functionaliteit te kunnen benaderen!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	nl	U heeft geprobeerd om de eGroupWare toepassing %1 te openen maar u heeft geen toestemming om deze toepassing te gebruiken.
-your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon niet worden verzonden !
+your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon <b>niet</b> worden verzonden!<br />
 your message has been sent	common	nl	Uw bericht is verzonden
 your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
 your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
@@ -756,4 +762,3 @@ your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
 zambia	common	nl	ZAMBIA
 zimbabwe	common	nl	ZIMBABWE
 zoom	common	nl	Inzoemen
-site configuration	common	nl	Siteconfiguratie
