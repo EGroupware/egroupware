@@ -1276,10 +1276,16 @@ function _check_script_tag(&$var,$name='')
 			{
 				if (preg_match('/<\/?[^>]*(iframe|script\b|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
 				{
-					error_log("*** _check_script_tag($name): unset(${name}[$key]) with value $val***");
 					error_log(__FUNCTION__."(,$name) ${name}[$key] = ".$var[$key]);
-					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] =& $var[$key];
-					unset($var[$key]);
+					$GLOBALS['egw_unset_vars'][$name.'['.$key.']'] = $var[$key];
+					// attempt to clean the thing
+					$var[$key] = $val = html::purify($val);
+					// check if we succeeded, if not drop the var anyway, keep the egw_unset_var in any case
+					if (preg_match('/<\/?[^>]*(iframe|script\b|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
+					{
+						error_log("*** _check_script_tag($name): unset(${name}[$key]) with value $val***");
+						unset($var[$key]);
+					}
 				}
 			}
 		}
