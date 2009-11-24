@@ -292,7 +292,7 @@ class calendar_uiforms extends calendar_ui
 						foreach($this->bo->resources as $type => $data) if ($data['app'] == $app) break;
 						$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
 						// check if new entry is no account (or contact entry of an account)
-						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')) || !$this->bo->check_acl($data))
+						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')) || !$this->bo->check_acl_invite($data))
 						{
 							if ($uid && $id)
 							{

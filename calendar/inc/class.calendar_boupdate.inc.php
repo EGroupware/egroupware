@@ -323,7 +323,7 @@ class calendar_boupdate extends calendar_bo
 				$removed[] = $uid;
 			}
 		}
-		echo "<p>".__METHOD__."($event[title],".($old_event?'$old_event':'NULL').") returning ".array2string($removed)."</p>";
+		//echo "<p>".__METHOD__."($event[title],".($old_event?'$old_event':'NULL').") returning ".array2string($removed)."</p>";
 		return $removed;
 	}
 
@@ -336,12 +336,21 @@ class calendar_boupdate extends calendar_bo
 	public function check_acl_invite($uid)
 	{
 		if (!is_numeric($uid)) return true;	// nothing implemented for resources so far
-
-		if ($this->require_acl_invite == 'group' && $GLOBALS['egw']->accounts->get_type($uid) != 'g')
+		
+		if (!$this->require_acl_invite)
 		{
-			return true;	// grant only required for groups
+			$ret = true;	// no grant required
 		}
-		return $this->check_perms(EGW_ACL_INVITE,0,$uid);
+		elseif ($this->require_acl_invite == 'group' && $GLOBALS['egw']->accounts->get_type($uid) != 'g')
+		{
+			$ret = true;	// grant only required for groups
+		}
+		else
+		{
+			$ret = $this->check_perms(EGW_ACL_INVITE,0,$uid);
+		}
+		//error_log(__METHOD__."($uid) = ".array2string($ret));
+		return $ret;
 	}
 
 	/**
