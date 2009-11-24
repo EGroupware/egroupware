@@ -614,7 +614,7 @@ class link_widget
 	private static function get_sub_types($cell, &$value, &$tpl) {
 		// Get sub-types
 		if($value['options-app']) {
-			$apps = $value['options_app'];
+			$apps = $value['options-app'];
 		} else {
 			$apps = egw_link::app_list($cell['size'] ? $cell['size'] : 'query');
 			asort($apps);	// sort them alphabetic
