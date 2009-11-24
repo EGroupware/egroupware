@@ -350,7 +350,7 @@ class ui_resources
 
 			function addOption(label,value,button_id,useable)
 			{
-				quantity = document.getElementById(button_id+'[default_qty]').value;
+				var quantity = document.getElementById(button_id+'[default_qty]').value;
 				value = value+':'+quantity;
 				if(quantity>useable) {
 					alert('".lang('You chose more resources than available')."');
