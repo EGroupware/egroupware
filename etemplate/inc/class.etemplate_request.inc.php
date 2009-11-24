@@ -195,6 +195,7 @@ class etemplate_request
 	{
 		if (!$form_name || !$type) return;
 
+		//echo '<p>'.__METHOD__."($form_name,$type,".array2string($data).")</p>\n";
 		$data['type'] = $type;
 
 		$this->data['to_process'][$form_name] = $data;
@@ -211,6 +212,7 @@ class etemplate_request
 	 */
 	public function set_to_process_attribute($form_name,$attribute,$value,$add_to_array=false)
 	{
+		//echo '<p>'.__METHOD__."($form_name,$attribute,$value,$add_to_array)</p>\n";
 		if (!$form_name) return;
 
 		if ($add_to_array)
@@ -231,6 +233,7 @@ class etemplate_request
 	 */
 	public function unset_to_process($form_name)
 	{
+		//echo '<p>'.__METHOD__."($form_name) isset_to_process($form_name)=".$this->isset_to_process($form_name)."</p>\n";
 		unset($this->data['to_process'][$form_name]);
 		$this->data_modified = true;
 	}
@@ -243,6 +246,7 @@ class etemplate_request
 	 */
 	public function get_to_process($form_name=null)
 	{
+		//echo '<p>'.__METHOD__."($form_name)</p>\n";
 		return $form_name ? $this->data['to_process'][$form_name] : $this->data['to_process'];
 	}
 
@@ -254,6 +258,7 @@ class etemplate_request
 	 */
 	public function isset_to_process($form_name)
 	{
+		//echo '<p>'.__METHOD__."($form_name) = ".array2string(isset($this->data['to_process'][$form_name]))."</p>\n";
 		return isset($this->data['to_process'][$form_name]);
 	}
 
@@ -283,7 +288,7 @@ class etemplate_request
 		return $this->data[$var];
 	}
 
-	
+
 	/**
 	 * magic function to see if a request-var has been set
 	 *
