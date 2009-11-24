@@ -1274,7 +1274,7 @@ class html
 			if (is_null($config))
 			{
 				$config = HTMLPurifier_Config::createDefault();
-				$config->set('Core', 'Encoding', self::$charset);
+				$config->set('Core', 'Encoding', (self::$charset?self::$charset:'UTF-8'));
 				// maybe the two following lines are useful for caching???
 				$config->set('HTML','DefinitionID', 'egroupware');
 				$config->set('HTML','DefinitionRev', 1);
@@ -1296,7 +1296,7 @@ class html
 							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'a[href|target|name|title],img[src|alt|title]');
-				$config->set('Cache', 'SerializerPath', $GLOBALS['egw_info']['server']['temp_dir']);
+				$config->set('Cache', 'SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
 			}
 			$purifier = new HTMLPurifier($config);
 			// the latter may enable you to modify the config later on, but by now
