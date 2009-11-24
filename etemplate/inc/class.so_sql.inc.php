@@ -149,6 +149,13 @@ class so_sql
 	var $columns_to_search;
 
 	/**
+	 * Should search return an iterator (true) or an array (false = default)
+	 *
+	 * @var boolean
+	 */
+	public $search_return_iterator = false;
+
+	/**
 	 * constructor of the class
 	 *
 	 * NEED to be called from the constructor of the derived class !!!
@@ -943,6 +950,10 @@ class so_sql
 			$this->total = $this->db->query('SELECT FOUND_ROWS()')->fetchColumn();
 		}
 		// ToDo: Implement that as an iterator, as $rs is also an interator and we could return one instead of an array
+		if ($this->search_return_iterator)
+		{
+			return new so_sql_db2data_iterator($this,$rs);
+		}
 		$arr = array();
 		if ($rs) foreach($rs as $row)
 		{
@@ -1213,5 +1224,121 @@ class so_sql
 			}
 		}
 		return is_null($column) ? $comments : $comments[$column];
+	}
+}
+
+/**
+ * Iterator applying a so_sql's db2data method on each element retrived
+ *
+ */
+class so_sql_db2data_iterator implements Iterator
+{
+	/**
+	 * Reference of so_sql class to use it's db2data method
+	 *
+	 * @var so_sql
+	 */
+	private $so_sql;
+
+	/**
+	 * Instance of ADOdb record set to iterate
+	 *
+	 * @var Iterator
+	 */
+	private $rs;
+
+	/**
+	 * Total count of entries
+	 *
+	 * @var int
+	 */
+	public $total;
+
+	/**
+	 * Constructor
+	 *
+	 * @param so_sql $so_sql
+	 * @param Traversable $rs
+	 */
+	public function __construct(so_sql $so_sql,Traversable $rs=null)
+	{
+		$this->so_sql = $so_sql;
+
+		$this->total = $so_sql->total;
+
+		if (is_a($rs,'IteratorAggregate'))
+		{
+			$this->rs = $rs->getIterator();
+		}
+		else
+		{
+			$this->rs = $rs;
+		}
+	}
+
+	/**
+	 * Return the current element
+	 *
+	 * @return array
+	 */
+	public function current()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			$data = $this->rs->current();
+
+			return $this->so_sql->data2db($data);
+		}
+		return null;
+	}
+
+	/**
+	 * Return the key of the current element
+	 *
+	 * @return int
+	 */
+	public function key()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			return $this->rs->key();
+		}
+		return 0;
+	}
+
+	/**
+	 * Move forward to next element (called after each foreach loop)
+	 */
+	public function next()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			return $this->rs->next();
+		}
+	}
+
+	/**
+	 * Rewind the Iterator to the first element (called at beginning of foreach loop)
+	 */
+	public function rewind()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			return $this->rs->rewind();
+		}
+	}
+
+	/**
+	 * Checks if current position is valid
+	 *
+	 * @return boolean
+	 */
+	public function valid ()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			return $this->rs->valid();
+		}
+		return false;
 	}
 }
