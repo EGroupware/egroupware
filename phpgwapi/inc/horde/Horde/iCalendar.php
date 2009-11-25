@@ -1140,9 +1140,9 @@ class Horde_iCalendar {
                 }
             } else {
                 $value = str_replace(array("\r", "\n"), array('', '\\n'), $value);
-                $attr_string = $name . $params_str;
+                $attr_string = $name . $params_str . ':';
                 if (!empty($value)) {
-                	$attr_string .= ':' . $value;
+                	$attr_string .= $value;
                 }
                 if (!$this->isOldFormat()) {
                     $attr_string = String::wordwrap($attr_string, 75, $this->_newline . ' ',
