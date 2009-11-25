@@ -157,6 +157,12 @@ class calendar_bo
 	 * @var egw_datetime
 	 */
 	var $datetime;
+	/**
+	 * Instance of the categories class
+	 *
+	 * @var $categories
+	 */
+	var $categories;
 
 	/**
 	 * Does a user require an extra invite grant, to be able to invite an other user, default no
@@ -1307,9 +1313,9 @@ class calendar_bo
 		static $id2cat = array();
 		$cats = array();
 		$color = 0;
-		if (!is_object($this->cats))
+		if (!is_object($this->categories))
 		{
-			$this->cats = CreateObject('phpgwapi.categories','','calendar');
+			$this->categories = new categories($this->user,'calendar');
 		}
 		foreach(explode(',',$category) as $cat_id)
 		{
@@ -1317,7 +1323,7 @@ class calendar_bo
 
 			if (!isset($id2cat[$cat_id]))
 			{
-				list($id2cat[$cat_id]) = $this->cats->return_single($cat_id);
+				list($id2cat[$cat_id]) = $this->categories->return_single($cat_id);
 				$id2cat[$cat_id]['data'] = unserialize($id2cat[$cat_id]['data']);
 			}
 			$cat = $id2cat[$cat_id];

@@ -1123,8 +1123,6 @@ class calendar_boupdate extends calendar_bo
 		return $this->so->delete_alarm($id, $this->now_su);
 	}
 
-	var $categories;
-
 	/**
 	 * Find existing categories in database by name or add categories that do not exist yet
 	 * currently used for ical/sif import
