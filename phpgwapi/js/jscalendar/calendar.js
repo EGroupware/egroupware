@@ -90,17 +90,17 @@ Calendar.is_ie5_mac = ( Calendar.is_ie && /Mac/i.test(navigator.userAgent) ); //
 /// detect Opera browser
 Calendar.is_opera = /opera/i.test(navigator.userAgent);
 
-/// detect KHTML-based browsers
-Calendar.is_khtml = /Konqueror|Safari|KHTML/i.test(navigator.userAgent);
+/// detect KHTML-based browsers, not newer Safari
+Calendar.is_khtml = /Konqueror|Safari|KHTML/i.test(navigator.userAgent) && !/webkit/i.test(navigator.userAgent);
 
 // BEGIN: UTILITY FUNCTIONS; beware that these might be moved into a separate
 //        library, at some point.
 
 // Fills the indicated table cell with the given text. Fixes a bug on IE 5 Mac.
 Calendar._setCellText=function(cell,text){
-	if(cell.firstChild) 
+	if(cell.firstChild)
 		cell.firstChild.data=text;
-	else 
+	else
 		cell.innerText=text;
 };
 
@@ -1076,6 +1076,7 @@ Calendar._keyEvent = function(ev) {
  */
 Calendar.prototype._init = function (firstDayOfWeek, date) {
 	var today = new Date();
+	date.setHours(12);	// Bugfix: Required for daylight saving!!!
 	this.table.style.visibility = "hidden";
 	var year = date.getFullYear();
 	if (year < this.minYear) {
