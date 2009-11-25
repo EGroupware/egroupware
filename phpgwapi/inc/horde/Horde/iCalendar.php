@@ -1566,7 +1566,7 @@ class Horde_iCalendar {
             }
             // Wrap at line breaks for better readability (rule 4).
             if (substr($line, -3) == '=0A') {
-                $output .= $line . "=\r\n ";
+                $output .= $line . "=\r\n";
                 $line = '';
             }
         }
