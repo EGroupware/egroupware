@@ -24,6 +24,7 @@
  *           &16 = prefix r/o display with dow
  *           &32 = prefix r/o display with week-number
  *			 &64 = prefix r/o display with weeknumber and dow
+ *           &128 = no icon to trigger popup, click into input trigers it, also removing the separators to save space
  * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function.
  * Uses the adodb datelibary to overcome the windows-limitation to not allow dates before 1970
  */
@@ -134,8 +135,8 @@ class date_widget
 			{
 				for($n = $i = 0; $n < strlen($data_format); ++$n)
 				{
-					$mdy[$n] = $data_format{$n};
-					$len = $data_format{$n} == 'Y' ? 4 : 2;
+					$mdy[$n] = $data_format[$n];
+					$len = $data_format[$n] == 'Y' ? 4 : 2;
 					$date[$n] = substr($value,$i,$len);
 					$i += $len;
 				}
@@ -280,7 +281,7 @@ class date_widget
 				$dcell['type'] = 'html';
 				$dcell['name'] = 'str';
 				$jscaloptions =  $cell['onchange'] ? ( "onchange='". ( (int)$cell['onchange'] === 1 ? "this.form.submit();'" : $cell['onchange']. "'" ) ) : '' ;
-				$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],lang($cell['help']),$jscaloptions);
+				$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],lang($cell['help']),$jscaloptions,false,!($options & 128));
 				$n = 2;				// no other fields
 				$options &= ~2;		// no set-today button
 			}
@@ -293,7 +294,7 @@ class date_widget
 			}
 			if ($n == 4)
 			{
-				$dcell['label'] = ':';	// put a : between hour and minute
+				$dcell['label'] = $options & 128 ? '' : ':';	// put a : between hour and minute
 			}
 			$dcell['no_lang'] = 2;
 			$row[$tpl->num2chrs($i)] = &$dcell;
@@ -316,7 +317,7 @@ class date_widget
 				$row[$tpl->num2chrs(++$i)] = &$dcell;
 				unset($dcell);
 			}
-			if ($n == 2 && $type == 'date-time')	// insert some space between date+time
+			if ($n == 2 && $type == 'date-time' && !($options & 128))	// insert some space between date+time
 			{
 				$dcell = $tpl->empty_cell();
 				$dcell['type'] = 'html';

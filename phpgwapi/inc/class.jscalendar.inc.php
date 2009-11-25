@@ -82,9 +82,10 @@ class jscalendar
 	 * @param string $helpmsg='' a helpmessage for the statusline of the browser
 	 * @param string $options='' any other options to the inputfield
 	 * @param boolean $jsreturn=false
+	 * @param boolean $useicon=true true: use icon to trigger popup, false: click into input triggers popup
 	 * @return string html
 	 */
-	function input($name,$date,$year=0,$month=0,$day=0,$helpmsg='',$options='',$jsreturn=false)
+	function input($name,$date,$year=0,$month=0,$day=0,$helpmsg='',$options='',$jsreturn=false,$useicon=true)
 	{
 		//echo "<p>jscalendar::input(name='$name', date='$date'='".date('Y-m-d',$date)."', year='$year', month='$month', day='$day')</p>\n";
 
@@ -122,20 +123,21 @@ class jscalendar
 		if ($jsreturn)
 		{
 			$return_array = array(
-				'html' => '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/><img id="'.$name.'-trigger" src="'.common::find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>',
-				'js'   => 'Calendar.setup({inputField : "'.$name.'",button: "'.$name.'-trigger"	});'
+				'html' => '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.htmlspecialchars($date).'"'.$options.'/>'.
+					($useicon ? '<img id="'.$name.'-trigger" src="'.common::find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>' : ''),
+				'js'   => 'Calendar.setup({inputField : "'.$name.'"'.($useicon ? ',button: "'.$name.'-trigger"' : '').' });'
 			);
 
 			return $return_array;
 		}
 		return
-'<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/>
-<script type="text/javascript">
-document.writeln(\'<img id="'.$name.'-trigger" src="'.common::find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
+'<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.htmlspecialchars($date).'"'.$options.'/>
+<script type="text/javascript">'.(!$useicon ? '' : '
+document.writeln(\'<img id="'.$name.'-trigger" src="'.common::find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');').'
 Calendar.setup(
 {
-	inputField  : "'.$name.'",
-	button      : "'.$name.'-trigger"
+	inputField  : "'.$name.'",'.(!$useicon ? '' : '
+	button      : "'.$name.'-trigger"').'
 }
 );
 </script>
