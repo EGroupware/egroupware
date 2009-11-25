@@ -1160,8 +1160,7 @@ class calendar_uiviews extends calendar_ui
 		$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
 
 		$icons = !$is_private ? $this->event_icons($event) : array(html::image('calendar','private',lang('private')));
-		$cats  = $this->bo->categories($event['category'],$color);
-
+		$cats  = $this->bo->categories($this->check_category_perms(EGW_ACL_READ, $event['category']),$color);
 		// these values control varius aspects of the geometry of the eventWidget
 		$small_trigger_width = 120 + 20*count($icons);
 		$corner_radius=$width > $small_trigger_width ? 10 : 5;
@@ -1175,7 +1174,7 @@ class calendar_uiviews extends calendar_ui
 		$bodybgcolor1 = $this->brighter($headerbgcolor,$headerbgcolor == '#808080' ? 100 : 170);
 		$bodybgcolor2 = $this->brighter($headerbgcolor,220);
 
-		// mark event as invitation, by NOT using category based backgrond color, but plain white
+		// mark event as invitation, by NOT using category based background color, but plain white
 		if ($event['participants'][$this->user][0] == 'U')
 		{
 			$bodybgcolor1 = $bodybgcolor2 = 'white';
@@ -1586,7 +1585,7 @@ class calendar_uiviews extends calendar_ui
 		if (!is_array($cat2sort))
 		{
 			$cat2sort = array();
-			foreach((array)$this->cats->return_array('all',0,false,'','','',true) as $data)
+			foreach((array)$this->categories->return_array('all',0,false,'','','',true) as $data)
 			{
 				if ($data['parent'] == $this->cat_id || $data['id'] == $this->cat_id)	// cat is a direct sub of $this->cat_id
 				{
@@ -1612,7 +1611,7 @@ class calendar_uiviews extends calendar_ui
 			$sort2label[0] = lang('none');
 			$ret[] = 0;
 		}
-		//echo "<p>uiviews::_get_planner_cats($cats=".$this->cats->id2name($cats).") (this->cat_id=$this->cat_id) = ".print_r($ret,true).'='.$this->cats->id2name($ret[0])."</p>\n";
+		//echo "<p>uiviews::_get_planner_cats($cats=".$this->categories->id2name($cats).") (this->cat_id=$this->cat_id) = ".print_r($ret,true).'='.$this->categories->id2name($ret[0])."</p>\n";
 		return $ret;
 	}
 
@@ -2033,6 +2032,4 @@ class calendar_uiviews extends calendar_ui
 
 		return $dayEvents;
  	}
-
-
 }

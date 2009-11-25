@@ -1046,6 +1046,9 @@ class calendar_uiforms extends calendar_ui
 				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
 			}
 			$content['participants']['no_add'] = true;
+			
+			// respect category ACLs
+			$content['category'] = $this->check_category_perms(EGW_ACL_READ, $event['category']);
 		}
 		else
 		{

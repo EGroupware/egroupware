@@ -47,11 +47,11 @@ class calendar_ui
 	 */
 	var $datetime;
 	/**
-	 * Reference to global categories class
+	 * Instance of categories class
 	 *
 	 * @var categories
 	 */
-	var $cats;
+	var $categories;
 	/**
 	 * Reference to global uiaccountsel class
 	 *
@@ -145,14 +145,8 @@ class calendar_ui
 		$this->datetime = $GLOBALS['egw']->datetime;
 		$this->accountsel = $GLOBALS['egw']->uiaccountsel;
 
-		if ($GLOBALS['egw']->categories->app_name != 'calendar')
-		{
-			$this->cats = new categories('','calendar');	// we need an own instance to get the calendar cats
-		}
-		else
-		{
-			$this->cats = $GLOBALS['egw']->categories;
-		}
+		$this->categories = new categories($this->user,'calendar');
+		
 		$this->common_prefs	= &$GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs	= &$GLOBALS['egw_info']['user']['preferences']['calendar'];
 		$this->bo->check_set_default_prefs();
@@ -169,6 +163,35 @@ class calendar_ui
 
 		// calendar does not work with hidden sidebox atm.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
+	}
+	
+	/**
+	 * Checks category permissions
+	 * Takes a commaseparated list of category ids
+	 * and truncates it by the ones the user does not have the requested permission on
+	 *
+	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param string $categories commaseparated list of category ids
+	 * @return string truncated commaseparated list of category ids
+	 */
+	function check_category_perms($needed, $categories)
+ 	{
+		if (empty($categories)) return $categories;
+		
+		$cat_arr = explode(',',$categories);
+		if (!empty($cat_arr) && is_array($cat_arr) && count($cat_arr) > 0)
+		{
+			foreach($cat_arr as $id=>$cat_id)
+			{
+				if (!$this->categories->check_perms($needed, $cat_id))
+				{
+					unset($cat_arr[$id]);
+				}
+			}
+			$categories = implode(',',$cat_arr);
+		}
+		
+		return $categories;
 	}
 
 	/**
@@ -699,7 +722,7 @@ class calendar_ui
 		// Category Selection
 		$file[++$n] = $this->_select_box('Category','cat_id',
 			'<option value="0">'.lang('All categories').'</option>'.
-		$this->cats->formatted_list('select','all',$this->cat_id,'True'),$baseurl ? $baseurl.'&cat_id=' : '');
+		$this->categories->formatted_list('select','all',$this->cat_id,'True'),$baseurl ? $baseurl.'&cat_id=' : '');
 
 		// Filter all or hideprivate
 		$options = '';

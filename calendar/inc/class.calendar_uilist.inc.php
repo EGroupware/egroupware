@@ -312,6 +312,7 @@ class calendar_uilist extends calendar_ui
 			}
 			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
 			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
+			$event['category'] = $this->check_category_perms(EGW_ACL_READ, $event['category']);
 
 			$rows[] = $event;
 		}
