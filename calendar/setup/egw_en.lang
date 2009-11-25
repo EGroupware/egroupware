@@ -213,6 +213,7 @@ new search with the above parameters	calendar	en	new search with the above param
 no events found	calendar	en	No events found
 no filter	calendar	en	No filter
 no matches found	calendar	en	no matches found
+no recurrence	calendar	en	No recurrence
 no response	calendar	en	No response
 non blocking	calendar	en	non blocking
 not	calendar	en	not
@@ -352,6 +353,7 @@ timezone in which recurrences have identical time	calendar	en	Timezone in which 
 timezones updated to version %1 (%2 records updated).	calendar	en	Timezones updated to version %1 (%2 records updated).
 title of the event	calendar	en	Title of the event
 to many might exceed your execution-time-limit	calendar	en	to many might exceed your execution-time-limit
+tomorrow	calendar	en	Tomorrow
 translation	calendar	en	Translation
 tue	calendar	en	Tue
 two weeks	calendar	en	two weeks

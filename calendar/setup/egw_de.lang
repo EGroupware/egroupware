@@ -213,6 +213,7 @@ new search with the above parameters	calendar	de	neue Suche mit den obigen Param
 no events found	calendar	de	Keine Termine gefunden
 no filter	calendar	de	Kein Filter
 no matches found	calendar	de	Keine Treffer gefunden
+no recurrence	calendar	de	Keine Wiederholung
 no response	calendar	de	Keine Antwort
 non blocking	calendar	de	nicht blockierend
 not	calendar	de	nicht
@@ -352,6 +353,7 @@ timezone in which recurrences have identical time	calendar	de	Zeitzone in der Wi
 timezones updated to version %1 (%2 records updated).	calendar	de	Zeitzonen aktualisiert zu Version %1 (%2 Datensätze aktualisiert).
 title of the event	calendar	de	Titel des Termin
 to many might exceed your execution-time-limit	calendar	de	zu viele können ihre Laufzeitbeschränkung überschreiten
+tomorrow	calendar	de	Morgen
 translation	calendar	de	Übersetzung
 tue	calendar	de	Di
 two weeks	calendar	de	zwei Wochen

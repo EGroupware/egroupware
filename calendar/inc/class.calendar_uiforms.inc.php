@@ -163,7 +163,7 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function process_edit($content)
 	{
-		$referer=$this->view_menuaction;
+		$referer = !empty($content['referer']) ? $content['referer'] : '/index.php?menuaction='.$this->view_menuaction;
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
 		unset($content['button']); unset($content['action']);
@@ -374,8 +374,7 @@ class calendar_uiforms extends calendar_ui
 									}
 									if (!$preserv['no_popup'])
 									{
-										$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-											'menuaction' => $referer,
+										$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 											'msg' => $msg,
 										))).'\';';
 									}
@@ -401,6 +400,7 @@ class calendar_uiforms extends calendar_ui
 			'referer'		=> $referer,
 			'no_popup'		=> $content['no_popup'],
 			$this->tabs		=> $content[$this->tabs],
+			'template'      => $content['template'],
 		);
 		$noerror=true;
 		switch((string)$button)
@@ -518,7 +518,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
+								htmlspecialchars(egw::link('/index.php',array(
 								'menuaction' => 'calendar.calendar_uiforms.edit',
 									'cal_id'    => $content['id'],
 									'referer'    => $referer,
@@ -534,8 +534,7 @@ class calendar_uiforms extends calendar_ui
 				{
 					egw_link::link('calendar',$event['id'],$content['link_to']['to_id']);
 				}
-				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => $referer,
+				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 					'msg' => $msg,
 				))).'\';';
 
@@ -558,8 +557,7 @@ class calendar_uiforms extends calendar_ui
 		case 'cancel':
 			if($content['cancel_needs_refresh'])
 			{
-				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => $referer,
+				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 					'msg' => $msg,
 				))).'\';';
 			}
@@ -569,8 +567,7 @@ class calendar_uiforms extends calendar_ui
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
 				$msg = lang('Event deleted');
-				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => $referer,
+				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 					'msg' => $msg,
 				))).'\';';
 			}
@@ -629,8 +626,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			if ($content['no_popup'])
 			{
-				$GLOBALS['egw']->redirect_link('/index.php',array(
-					'menuaction' => $referer,
+				$GLOBALS['egw']->redirect_link($referer,array(
 					'msg'        => $msg,
 				));
 			}
@@ -732,7 +728,7 @@ class calendar_uiforms extends calendar_ui
 			'preset[type]'    => 'text/calendar; method=request',
 			'preset[size]'    => filesize($ics_file),
 		);
-		return "window.open('".$GLOBALS['egw']->link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
+		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
 	}
 
 	/**
@@ -749,7 +745,7 @@ class calendar_uiforms extends calendar_ui
 			'cal_id'      => $event['id'],
 			'print' => true,
 			);
-		return "window.open('".$GLOBALS['egw']->link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
+		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
 	}
 
 
@@ -769,8 +765,6 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function edit($event=null,$preserv=null,$msg='',$js = 'window.focus();',$link_to_id='')
 	{
-		$template = $_REQUEST['print'] ? 'calendar.print' : 'calendar.edit';
-		$etpl = CreateObject('etemplate.etemplate',$template);
 		$sel_options = array(
 			'recur_type' => &$this->bo->recur_types,
 			'status'     => $this->bo->verbose_status,
@@ -788,7 +782,8 @@ class calendar_uiforms extends calendar_ui
 		{
 			$preserv = array(
 				'no_popup' => isset($_GET['no_popup']),
-				'referer'  => preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] : $this->view_menuaction,
+				'referer'  => common::get_referer($this->view_menuaction),
+				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
 			$cal_id = (int) $_GET['cal_id'];
 
@@ -841,6 +836,11 @@ class calendar_uiforms extends calendar_ui
 			{
 				egw_link::link('calendar',$link_to_id,$_GET['link_app'],$_GET['link_id']);
 			}
+		}
+		$etpl = new etemplate();
+		if (!$etpl->read($preserv['template']))
+		{
+			$etpl->read($preserv['template'] = 'calendar.edit');
 		}
 		$view = $preserv['view'] = $preserv['view'] || $event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 		//echo "view=$view, event="; _debug_array($event);
@@ -1046,7 +1046,7 @@ class calendar_uiforms extends calendar_ui
 				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
 			}
 			$content['participants']['no_add'] = true;
-			
+
 			// respect category ACLs
 			$content['category'] = $this->check_category_perms(EGW_ACL_READ, $event['category']);
 		}
@@ -1054,7 +1054,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			// We hide the enddate if one of our predefined durations fits
 			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
-			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
+			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','display','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'none' : 'block')."');");
 
 			$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
 		}

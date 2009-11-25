@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.edit.general" template="" lang="" group="0" version="1.7.001">
+	<template id="calendar.edit.general" template="" lang="" group="0" version="1.7.002">
 		<hbox options="0,0">
 			<grid width="100%" height="210">
 				<columns>
@@ -20,7 +20,7 @@
 						<description width="0" options=",,,duration" value="Duration"/>
 						<hbox options="0,0">
 							<menulist>
-								<menupopup no_lang="1" onchange="set_style_by_class('table','end_hide','visibility',this.value == '' ? 'visible' : 'hidden'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" id="duration" options="Use end date" statustext="Duration of the meeting"/>
+								<menupopup no_lang="1" onchange="set_style_by_class('table','end_hide','display',this.value == '' ? 'block' : 'none'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" id="duration" options="Use end date" statustext="Duration of the meeting"/>
 							</menulist>
 							<date-time id="end" class="end_hide"/>
 						</hbox>
@@ -56,7 +56,7 @@
 		</hbox>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="210" overflow="auto">
+		<grid width="100%" height="210">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -70,7 +70,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.7.001">
-		<grid width="100%" height="200" overflow="auto" id="participants">
+		<grid width="100%" height="210" overflow="auto" id="participants">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -120,7 +120,7 @@
 		</styles>
 	</template>
 	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.7.002">
-		<grid>
+		<grid width="100%" height="210">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -182,7 +182,7 @@
 		</grid>
 	</template>
 	<template id="calendar.edit.custom" template="" lang="" group="0" version="1.4.001">
-		<grid width="100%" height="210">
+		<grid width="100%" height="210" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -341,7 +341,7 @@
 			</rows>
 		</grid>
 		<styles>
-			.end_hide { visibility: visible; white-space: nowrap; margin-left: 10px; }
+			.end_hide { display: block; white-space: nowrap; margin-left: 10px; }
 .noBreak { white-space: nowrap; }
 		</styles>
 	</template>

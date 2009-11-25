@@ -101,7 +101,7 @@ class calendar_bo
 	 * @var array recur_types translates MCAL recur-types to verbose labels
 	 */
 	var $recur_types = Array(
-		MCAL_RECUR_NONE         => 'None',
+		MCAL_RECUR_NONE         => 'No recurrence',
 		MCAL_RECUR_DAILY        => 'Daily',
 		MCAL_RECUR_WEEKLY       => 'Weekly',
 		MCAL_RECUR_MONTHLY_WDAY => 'Monthly (by day)',
