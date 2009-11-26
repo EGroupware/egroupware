@@ -135,6 +135,8 @@ class notifications_ajax {
 		require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.bofelamimail.inc.php');
 
 		$bofelamimail = new bofelamimail($GLOBALS['egw']->translation->charset());
+		// buffer felamimail sessiondata, as they are needed for information exchange by the app itself
+		$bufferFMailSession = $bofelamimail->sessionData;
 		if(!$bofelamimail->openConnection()) {
 			// TODO: This is ugly. Log a bit nicer!
 			error_log(self::_appname.' (user: '.$this->recipient->account_lid.'): cannot connect to mailbox. Please check your prefs!');
@@ -164,7 +166,9 @@ class notifications_ajax {
 				}
 			}
 		}
-
+		// restore the felamimail session data, as they are needed by the app itself
+		$bofelamimail->sessionData = $bufferFMailSession;
+		$bofelamimail->saveSessionData(); 
 		if(count($recent_messages) > 0) {
 			// create notify message
 			$notification_subject = lang("You've got new mail");
