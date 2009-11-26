@@ -526,6 +526,7 @@ class calendar_bo
 			'id'    => $event['id'],
 			'start' => $event['start'],
 			'end'   => $event['end'],
+			'tzid'  => $event['tzid'],
 			'title' => lang('private'),
 			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
 			'public'=> 0,
