@@ -1160,7 +1160,7 @@ class calendar_uiviews extends calendar_ui
 		$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
 
 		$icons = !$is_private ? $this->event_icons($event) : array(html::image('calendar','private',lang('private')));
-		$cats  = $this->bo->categories($this->check_category_perms(EGW_ACL_READ, $event['category']),$color);
+		$cats  = $this->bo->categories($this->categories->check_list(EGW_ACL_READ, $event['category']),$color);
 		// these values control varius aspects of the geometry of the eventWidget
 		$small_trigger_width = 120 + 20*count($icons);
 		$corner_radius=$width > $small_trigger_width ? 10 : 5;

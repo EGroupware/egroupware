@@ -1047,8 +1047,11 @@ class calendar_uiforms extends calendar_ui
 			}
 			$content['participants']['no_add'] = true;
 
-			// respect category ACLs
-			$content['category'] = $this->check_category_perms(EGW_ACL_READ, $event['category']);
+			// respect category permissions
+			if(!empty($event['category']))
+			{
+				$content['category'] = $this->categories->check_list(EGW_ACL_READ, $event['category']);
+			}
 		}
 		else
 		{

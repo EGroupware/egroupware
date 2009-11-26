@@ -164,35 +164,6 @@ class calendar_ui
 		// calendar does not work with hidden sidebox atm.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 	}
-	
-	/**
-	 * Checks category permissions
-	 * Takes a commaseparated list of category ids
-	 * and truncates it by the ones the user does not have the requested permission on
-	 *
-	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
-	 * @param string $categories commaseparated list of category ids
-	 * @return string truncated commaseparated list of category ids
-	 */
-	function check_category_perms($needed, $categories)
- 	{
-		if (empty($categories)) return $categories;
-		
-		$cat_arr = explode(',',$categories);
-		if (!empty($cat_arr) && is_array($cat_arr) && count($cat_arr) > 0)
-		{
-			foreach($cat_arr as $id=>$cat_id)
-			{
-				if (!$this->categories->check_perms($needed, $cat_id))
-				{
-					unset($cat_arr[$id]);
-				}
-			}
-			$categories = implode(',',$cat_arr);
-		}
-		
-		return $categories;
-	}
 
 	/**
 	 * Checks and terminates (or returns for home) with a message if $this->owner include a user/resource we have no read-access to
