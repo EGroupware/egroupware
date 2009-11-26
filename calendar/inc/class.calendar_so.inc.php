@@ -908,6 +908,10 @@ ORDER BY cal_user_type, cal_usre_id
 			if ($matches[2]) $role = $matches[2];
 			$status = $status[0];
 		}
+		elseif ($status === true)
+		{
+			$status = 'U';
+		}
 	}
 
 	/**
@@ -1076,7 +1080,7 @@ ORDER BY cal_user_type, cal_usre_id
 		else
 		{
 			$set = array('cal_status' => $status);
-			if (!is_null($role)) $set['cal_role'] = $role;
+			if (!is_null($role) && $role != 'REQ-PARTICIPANT') $set['cal_role'] = $role;
 			$this->db->insert($this->user_table,$set,$where,__LINE__,__FILE__,'calendar');
 		}
 		$ret = $this->db->affected_rows();
@@ -1109,9 +1113,11 @@ ORDER BY cal_user_type, cal_usre_id
 			$type = '';
 			$id = null;
 			$this->split_user($uid,$type,$id);
+			$this->split_status($status,$quantity,$role);
 			$this->db->insert($this->user_table,array(
-				'cal_status'	 => $status !== true ? $status[0] : 'U',
-				'cal_quantity'	=> substr($status,1) ? substr($status,1) : 1,
+				'cal_status'	=> $status,
+				'cal_quantity'	=> $quantity,
+				'cal_role'		=> $role
 			),array(
 				'cal_id'		 => $cal_id,
 				'cal_recur_date' => $start,

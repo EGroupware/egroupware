@@ -164,8 +164,8 @@ class calendar_ical extends calendar_boupdate
 			'LOCATION'		=> 'location',
 			'DTSTART'		=> 'start',
 			'DTEND'			=> 'end',
-			'ORGANIZER'		=> 'owner',
 			'ATTENDEE'		=> 'participants',
+			'ORGANIZER'		=> 'owner',
 			'RRULE'			=> 'recur_type',
 			'EXDATE'		=> 'recur_exception',
 			'PRIORITY'		=> 'priority',
@@ -194,6 +194,9 @@ class calendar_ical extends calendar_boupdate
 		$vtimezones_added = array();
 		foreach($events as $event)
 		{
+			$mailtoOrganizer = false;
+			$organizerCN = false;
+
 			if (strpos($this->productName, 'palmos') !== false)
 			{
 				$date_format = 'ts';
@@ -303,11 +306,17 @@ class calendar_ical extends calendar_boupdate
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
 							if (!($info = $this->resource_info($uid))) continue;
-							if ($uid == $event['owner']) continue; // Organizer
+							$mailtoParticipant = $info['email'] ? 'MAILTO:'.$info['email'] : '';
+							$participantCN = '"' . ($info['cn'] ? $info['cn'] : $info['name']) . '"';
+							calendar_so::split_status($status, $quantity, $role);
+							if ($role == 'CHAIR' && $uid != $this->user)
+							{
+								$mailtoOrganizer = $mailtoParticipant;
+								$organizerCN = $participantCN;
+								if ($status == 'U') continue; // saved ORGANIZER
+							}
 							// RB: MAILTO href contains only the email-address, NO cn!
-							$attributes['ATTENDEE'][]	= $info['email'] ? 'MAILTO:'.$info['email'] : '';
-							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
-							calendar_so::split_status($status,$quantity,$role);
+							$attributes['ATTENDEE'][]	= $mailtoParticipant;
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
 							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
@@ -330,8 +339,9 @@ class calendar_ical extends calendar_boupdate
 									$cutype = 'UNKNOWN';
 									break;
 							};
+							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
 							$parameters['ATTENDEE'][] = array(
-								'CN'       => '"'.($info['cn'] ? $info['cn'] : $info['name']).'"',
+								'CN'       => $participantCN,
 								'ROLE'     => $role,
 								'PARTSTAT' => $status,
 								'CUTYPE'   => $cutype,
@@ -345,13 +355,21 @@ class calendar_ical extends calendar_boupdate
 						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'CONFIDENTIAL';
 						break;
 
-    				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-	    				if ($event['owner'] != $this->user || $this->productManufacturer != 'groupdav')
+    				case 'ORGANIZER':
+    					// according to iCalendar standard, ORGANIZER not used for events in the own calendar
+	    				if (!$organizerCN &&
+	    					($event['owner'] != $this->user
+	    						|| $this->productManufacturer != 'groupdav'))
 	    				{
 		    				$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
-		    				$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
-		    				$parameters['ORGANIZER']['CN'] = '"'.trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
-			    				$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')).'"';
+		    				$mailtoOrganizer = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
+		    				$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
+		    								. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
+	    				}
+	    				if ($organizerCN)
+	    				{
+		    				$attributes['ORGANIZER'] = $mailtoOrganizer;
+		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
 	    				}
 	    				break;
 
@@ -734,12 +752,12 @@ class calendar_ical extends calendar_boupdate
 					$event['owner'] = $this->user;
 				}
 
-				// add ourself to new events as participant
-				if (!isset($this->supportedFields['participants'])
-					||!isset($event['participants'][$this->user]))
- 				{
-					$event['participants'][$this->user] = 'A';
- 				}
+				if (!is_array($event['participants']) || !count($event['participants']))
+				{
+					$status = $event['owner'] == $this->user ? 'A' : 'U';
+					$status = calendar_so::combine_status($status, 1, 'CHAIR');
+					$event['participants'] = array($event['owner'] => $status);
+				}
 			}
 
 			// common adjustments for existing events
@@ -1034,8 +1052,7 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log)
 			{
-				$egw_event = $this->read($event['id']);
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($egw_event)."\n",3,$this->logfile);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
 
@@ -1439,7 +1456,6 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		$isDate = false;
-		$hasOrganizer = false;
 		$event		= array();
 		$alarms		= array();
 		$vcardData	= array(
@@ -1813,7 +1829,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					else
 					{
-						$status = 0;
+						$status = 'U';
 					}
 					$cn = '';
 					if (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
@@ -1862,21 +1878,31 @@ class calendar_ical extends calendar_boupdate
 					}
 
 					//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
-					elseif (preg_match('/(.*) Group/', $searcharray['n_fn'], $matches)
-							&& $status && $status != 'U')
+					elseif (preg_match('/(.*) Group/', $searcharray['n_fn'], $matches))
 					{
 						if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
 						{
 							//Horde::logMessage("vevent2egw: group participant $uid",
-       	    				//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-							$members = $GLOBALS['egw']->accounts->members($uid, true);
-							if (in_array($this->user, $members))
+							//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
+							if ($status == 'U')
 							{
-								//Horde::logMessage("vevent2egw: set status to " . $status,
-       	    					//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
-								$event['participants'][$this->user] = $status;
+
+							}
+							else
+							{
+								// User tries to reply to the group invitiation
+								$members = $GLOBALS['egw']->accounts->members($uid, true);
+								if (in_array($this->user, $members))
+								{
+									//Horde::logMessage("vevent2egw: set status to " . $status,
+									//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
+									$event['participants'][$this->user] =
+										calendar_so::combine_status($status);
+								}
+								continue;
 							}
 						}
+						else continue; // can not find this group
 					}
 					elseif ($attributes['value'] == 'Unknown')
 					{
@@ -1906,22 +1932,26 @@ class calendar_ical extends calendar_boupdate
 					switch($attributes['name'])
 					{
 						case 'ATTENDEE':
-							if ($status)
+							if (!isset($attributes['params']['ROLE']) &&
+								isset($event['owner']) && $event['owner'] == $uid)
 							{
-								$event['participants'][$uid] = $status;
+								$attributes['params']['ROLE'] = 'CHAIR';
 							}
-							else
-							{
-								$event['participants'][$uid] = ($uid == $event['owner'] ? 'A' : 'U');
-							}
-							if (!isset($attributes['params']['ROLE']) || $attributes['params']['ROLE'] != 'ORGANIZER')
-							{
-								// add quantity and role
-								$event['participants'][$uid] = calendar_so::combine_status($status,$attributes['params']['X-EGROUPWARE-QUANTITY'],$attributes['params']['ROLE']);
-								break;
-							}
+							// add quantity and role
+							$event['participants'][$uid] =
+								calendar_so::combine_status($status,
+									$attributes['params']['X-EGROUPWARE-QUANTITY'],
+									$attributes['params']['ROLE']);
+							break;
+
 						case 'ORGANIZER':
-							$hasOrganizer = true;
+							if (isset($event['participants'][$uid]))
+							{
+								$status = $event['participants'][$uid];
+								calendar_so::split_status($status, $quantity, $role);
+								$event['participants'][$uid] =
+									calendar_so::combine_status($status, $quantity, 'CHAIR');
+							}
 							if (is_numeric($uid))
 							{
 								$event['owner'] = $uid;
@@ -1929,9 +1959,13 @@ class calendar_ical extends calendar_boupdate
 							else
 							{
 								$event['owner'] = $this->user;
+								if (!isset($event['participants'][$uid]))
+								{
+									// save the ORGANIZER as event CHAIR
+									$event['participants'][$uid] =
+										calendar_so::combine_status('U', 1, 'CHAIR');
+								}
 							}
-							// RalfBecker: this is not allways true, owner can choose to NOT participate in EGroupware
-							$event['participants'][$uid] = 'A';
 							break;
 					}
 					break;
@@ -1942,13 +1976,6 @@ class calendar_ical extends calendar_boupdate
 					$event['modified'] = $attributes['value'];
 					break;
 			}
-		}
-
-		if (!$hasOrganizer && $this->productManufacturer == 'groupdav'
-			&& !isset($event['participants'][$this->user]))
-		{
-			// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-			$event['participants'][$this->user] = 'A';
 		}
 
 		// check if the entry is a birthday

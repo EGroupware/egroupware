@@ -141,7 +141,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		if (!$participants)	// if all participants got removed, include current user
 		{
-			$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A','CHAIR');
+			$participants[$this->user] = $participant_types['u'][$this->user] = calendar_so::combine_status('A',1,'CHAIR');
 		}
 		return array(
 			'participant_types' => $participant_types,
@@ -351,7 +351,8 @@ class calendar_uiforms extends calendar_ui
 							if ($data['old_status'] != $status && !(!$data['old_status'] && $status == 'G'))
 							{
 								//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
-								if ($this->bo->set_status($event['id'],$uid,$status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0))
+								$new_status = calendar_so::combine_status($status, $quantity, $role);
+								if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0))
 								{
 									// refreshing the calendar-view with the changed participant-status
 									if($event['recur_type'] != MCAL_RECUR_NONE)

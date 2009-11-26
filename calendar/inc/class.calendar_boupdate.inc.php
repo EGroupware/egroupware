@@ -104,33 +104,33 @@ class calendar_boupdate extends calendar_bo
 			// set owner as participant if none is given
 			if (!is_array($event['participants']) || !count($event['participants']))
 			{
-				$event['participants'] = array($event['owner'] => 'U');
+				$status = $event['owner'] == $this->user ? 'A' : 'U';
+				$status = calendar_so::combine_status($status, 1, 'CHAIR');
+				$event['participants'] = array($event['owner'] => $status);
 			}
-			// set the status of the current user to 'A' = accepted
-			if (isset($event['participants'][$this->user]) &&  $event['participants'][$this->user][0] != 'A')
-			{
-				$event['participants'][$this->user][0] = 'A';
-			}
-		}
+			$new_event = true;
+		} else $new_event = false;
+
 		// check if user has the permission to update / create the event
-		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
-			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) &&
+		if (!$ignore_acl && (!$new_event && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
+			$new_event && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) &&
 			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
 		{
 			return false;
 		}
-		if (!($new_event = !(int)$event['id']))
+		if ($new_event)
+		{
+			$event['created'] = $this->now_su;
+			$event['creator'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
+		else
 		{
 			$old_event = $this->read((int)$event['id'],null,$ignore_acl);
 			// if no participants are set, set them from the old event, as we might need them to update recuring events
 			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
 			//echo "old $event[id]="; _debug_array($old_event);
 		}
-		else
-		{
-			$event['created'] = $this->now_su;
-			$event['creator'] = $GLOBALS['egw_info']['user']['account_id'];
-		}
+
 		// do we need to check, if user is allowed to invite the invited participants
 		if ($this->require_acl_invite && ($removed = $this->remove_no_acl_invite($event,$old_event)))
 		{
@@ -336,7 +336,7 @@ class calendar_boupdate extends calendar_bo
 	public function check_acl_invite($uid)
 	{
 		if (!is_numeric($uid)) return true;	// nothing implemented for resources so far
-		
+
 		if (!$this->require_acl_invite)
 		{
 			$ret = true;	// no grant required
@@ -846,7 +846,8 @@ class calendar_boupdate extends calendar_bo
 		{
 			return false;
 		}
-		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0)))
+		calendar_so::split_status($status, $quantity, $role);
+		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0,$role)))
 		{
 			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
 
