@@ -1112,8 +1112,8 @@ ORDER BY cal_user_type, cal_usre_id
 
 			$type = '';
 			$id = null;
-			$this->split_user($uid,$type,$id);
-			$this->split_status($status,$quantity,$role);
+			self::split_user($uid,$type,$id);
+			self::split_status($status,$quantity,$role);
 			$this->db->insert($this->user_table,array(
 				'cal_status'	=> $status,
 				'cal_quantity'	=> $quantity,
@@ -1381,10 +1381,11 @@ ORDER BY cal_user_type, cal_usre_id
 			'cal_user_type'	=> $user_type ? $user_type : 'u',
 			'cal_user_id'   => $user_id,
 		);
-		foreach ($this->db->select($this->user_table,'cal_recur_date,cal_status',$where,
+		foreach ($this->db->select($this->user_table,'cal_recur_date,cal_status,cal_quantity,cal_role',$where,
 				__LINE__,__FILE__,false,'','calendar') as $row)
 		{
-			$participant_status[$row['cal_recur_date']] = $row['cal_status'];
+			$status = self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
+			$participant_status[$row['cal_recur_date']] = $status;
 		}
 		return $participant_status;
 	}
