@@ -492,6 +492,34 @@ class categories
 	}
 	
 	/**
+	 * Checks category permissions for a given list of commaseparated category ids
+	 * and truncates it by the ones the user does not have the requested permission on
+	 *
+	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param string $cat_list commaseparated list of category ids
+	 * @return string truncated commaseparated list of category ids
+	 */
+	function check_list($needed, $cat_list)
+ 	{
+		if (empty($cat_list)) return $cat_list;
+		
+		$cat_arr = explode(',',$cat_list);
+		if (!empty($cat_arr) && is_array($cat_arr) && count($cat_arr) > 0)
+		{
+			foreach($cat_arr as $id=>$cat_id)
+			{
+				if (!$this->check_perms($needed, $cat_id))
+				{
+					unset($cat_arr[$id]);
+				}
+			}
+			$cat_list = implode(',',$cat_arr);
+		}
+		
+		return $cat_list;
+	}
+	
+	/**
 	 * Checks if the current user has the necessary ACL rights
 	 *
 	 * If the access of a category is set to private, one needs a private grant for the application
