@@ -251,6 +251,7 @@ class addressbook_bo extends addressbook_so
 		{
 			$this->org_fields =  unserialize($GLOBALS['egw_info']['server']['org_fileds_to_update']);
 		}
+		$this->categories = new categories($this->user,'addressbook');
 	}
 
 	/**
@@ -1520,11 +1521,6 @@ class addressbook_bo extends addressbook_so
 	 */
 	function find_or_add_categories($catname_list, $contact_id=null)
 	{
-		if (!is_object($this->categories))
-		{
-			$this->categories = new categories($this->user,'addressbook');
-		}
-		
 		if($contact_id && $contact_id > 0)
 		{
 			// preserve categories without users read access
