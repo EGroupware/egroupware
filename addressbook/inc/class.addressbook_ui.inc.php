@@ -1075,6 +1075,12 @@ class addressbook_ui extends addressbook_bo
 			// hide region for address format 'postcode_city'
 			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
 			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
+			
+			// respect category permissions
+			if(!empty($row['cat_id']))
+			{
+				$row['cat_id'] = $this->categories->check_list(EGW_ACL_READ,$row['cat_id']);
+			}
 		}
 		$readonlys['no_distrib_lists'] = (bool)$show_distributionlist;
 
@@ -1606,21 +1612,9 @@ class addressbook_ui extends addressbook_bo
 		// respect category permissions
 		if(!empty($content['cat_id']))
 		{
-			if (!is_object($this->categories))
-			{
-				$this->categories = new categories($this->user,'addressbook');
-			}
-			$category_ids = array();
-			foreach(explode(',',$content['cat_id']) as $cat_id)
-			{
-				if($this->categories->check_perms(EGW_ACL_READ, $cat_id))
-				{
-					$category_ids[] = $cat_id;
-				}
-			}
-			$content['cat_id'] = implode(',',$category_ids);
+			$content['cat_id'] = $this->categories->check_list(EGW_ACL_READ,$content['cat_id']);
 		}
-		
+
 		$content['view'] = true;
 		$content['link_to'] = array(
 			'to_app' => 'addressbook',
