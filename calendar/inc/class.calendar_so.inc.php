@@ -530,6 +530,12 @@ ORDER BY cal_user_type, cal_usre_id
 		unset($event['id']);
 		$set_recurrences = !$cal_id && $event['recur_type'] != MCAL_RECUR_NONE;
 
+		if ($event['recur_type'] != MCAL_RECUR_NONE &&
+			!(int)$event['recur_interval'])
+		{
+			$event['recur_interval'] = 1;
+		}
+
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
 		foreach($event as $col => $val)
 		{
