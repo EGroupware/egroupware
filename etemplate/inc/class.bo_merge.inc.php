@@ -368,6 +368,17 @@ abstract class bo_merge
 				$content = preg_replace_callback('/\$\$NENVLF ([0-9a-z_-]+)\$\$/imU',Array($this,'replace_callback'),$content);
 				unset($this->replacements);
 			}
+			if (strpos($content,'$$LETTERPREFIX$$'))
+			{	//Example use to use: $$LETTERPREFIX$$
+				$LETTERPREFIXCUSTOM = '$$LETTERPREFIXCUSTOM n_prefix title n_family$$';
+				$content = str_replace('$$LETTERPREFIX$$',$LETTERPREFIXCUSTOM,$content);
+			}
+			if (strpos($content,'$$LETTERPREFIXCUSTOM'))
+			{	//Example use to use for a custom Letter Prefix: $$LETTERPREFIX n_prefix title n_family$$
+				$this->replacements =& $replacements;
+				$content = preg_replace_callback('/\$\$LETTERPREFIXCUSTOM ([0-9a-z_-]+)(.*)\$\$/imU',Array($this,'replace_callback'),$content);
+				unset($this->replacements);
+			}
 			// remove not existing replacements (eg. from calendar array)
 			if (strpos($content,'$$') !== null)
 			{
@@ -515,6 +526,16 @@ abstract class bo_merge
 		if (strpos($param[0],'$$NENVLF') === 0)
 		{	//sets a Pagebreak without any value, only if the field has a value
 			if ($this->replacements['$$'.$param[1].'$$'] !='') $replace = $LF;
+		}
+		if (strpos($param[0],'$$LETTERPREFIXCUSTOM') === 0)
+		{	//sets a Letterprefix
+			$replaceprefix = array();
+			$replaceprefix = explode(' ',substr($param[0],21,strlen($contentstart)-2));
+			foreach ($replaceprefix as $key => $nameprefix)
+			{
+				if ($this->replacements['$$'.$nameprefix.'$$'] !='') $replaceprefixsort[] = $this->replacements['$$'.$nameprefix.'$$'];
+			}
+			$replace = implode($replaceprefixsort,' ');
 		}
 		return $replace;
 	}
