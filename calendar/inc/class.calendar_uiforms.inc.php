@@ -126,7 +126,8 @@ class calendar_uiforms extends calendar_ui
 			if (is_numeric($uid))
 			{
 				$participants[$uid] = $participant_types['u'][$uid] =
-					calendar_so::combine_status($uid == $this->user ? 'A' : 'U',1,$uid == $this->user ? 'CHAIR' : 'REQ-PARTICIPANT');
+					calendar_so::combine_status($uid == $this->user ? 'A' : 'U',1,
+					($uid == $this->user || ($uid == $owner && $this->bo->check_perms(EGW_ACL_ADD,0,$owner))) ? 'CHAIR' : 'REQ-PARTICIPANT');
 			}
 			elseif (is_array($this->bo->resources[$uid[0]]))
 			{
