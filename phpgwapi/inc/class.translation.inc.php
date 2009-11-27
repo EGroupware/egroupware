@@ -222,10 +222,11 @@ class translation
 		{
 			if (count($vars) > 1)
 			{
-				static $placeholders = array('%2','%1','|%2|','%3','%4','%5','%6','%7','%8','%9','%10');
+				static $placeholders = array('%3','%2','%1','|%2|','|%3|','%4','%5','%6','%7','%8','%9','%10');
 				// to cope with $vars[0] containing '%2' (eg. an urlencoded path like a referer),
 				// we first replace '%2' in $ret with '|%2|' and then use that as 2. placeholder
-				array_unshift($vars,'|%2|');	// push '|%2|' as first replacement on $vars
+				// we do that for %3 as well, ...
+				array_unshift($vars,array('|%3|','|%2|'));	// push '|%2|' (and such) as first replacement on $vars
 				$ret = str_replace($placeholders,$vars,$ret);
 			}
 			else
