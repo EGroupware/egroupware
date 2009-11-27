@@ -1619,7 +1619,8 @@ class common
 	 */
 	static function get_referer($default='',$referer='')
 	{
-		if (!$referer) $referer = $_SERVER['HTTP_REFERER'];
+		// HTTP_REFERER seems NOT to get urldecoded
+		if (!$referer) $referer = urldecode($_SERVER['HTTP_REFERER']);
 
 		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
 		if (empty($webserver_url) || $webserver_url{0} == '/')	// url is just a path
