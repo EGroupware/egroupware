@@ -9,6 +9,56 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
     . Internal change
 ==========================
 
+4.0.0, released 2009-07-07
+# APIs for ConfigSchema subsystem have substantially changed. See
+  docs/dev-config-bcbreaks.txt for details; in essence, anything that
+  had both namespace and directive now have a single unified key.
+# Some configuration directives were renamed, specifically:
+    %AutoFormatParam.PurifierLinkifyDocURL -> %AutoFormat.PurifierLinkify.DocURL
+    %FilterParam.ExtractStyleBlocksEscaping -> %Filter.ExtractStyleBlocks.Escaping
+    %FilterParam.ExtractStyleBlocksScope -> %Filter.ExtractStyleBlocks.Scope
+    %FilterParam.ExtractStyleBlocksTidyImpl -> %Filter.ExtractStyleBlocks.TidyImpl
+  As usual, the old directive names will still work, but will throw E_NOTICE
+  errors.
+# The allowed values for class have been relaxed to allow all of CDATA for
+  doctypes that are not XHTML 1.1 or XHTML 2.0.  For old behavior, set
+  %Attr.ClassUseCDATA to false.
+# Instead of appending the content model to an old content model, a blank
+  element will replace the old content model.  You can use #SUPER to get
+  the old content model.
+! More robust support for name="" and id=""
+! HTMLPurifier_Config::inherit($config) allows you to inherit one
+  configuration, and have changes to that configuration be propagated
+  to all of its children.
+! Implement %HTML.Attr.Name.UseCDATA, which relaxes validation rules on
+  the name attribute when set. Use with care. Thanks Ian Cook for
+  sponsoring.
+! Implement %AutoFormat.RemoveEmpty.RemoveNbsp, which removes empty
+  tags that contain non-breaking spaces as well other whitespace. You
+  can also modify which tags should have &nbsp; maintained with
+  %AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions.
+! Implement %Attr.AllowedClasses, which allows administrators to restrict
+  classes users can use to a specified finite set of classes, and
+  %Attr.ForbiddenClasses, which is the logical inverse.
+! You can now maintain your own configuration schema directories by
+  creating a config-schema.php file or passing an extra argument. Check
+  docs/dev-config-schema.html for more details.
+! Added HTMLPurifier_Config->serialize() method, which lets you save away
+  your configuration in a compact serial file, which you can unserialize
+  and use directly without having to go through the overhead of setup.
+- Fix bug where URIDefinition would not get cleared if it's directives got
+  changed.
+- Fix fatal error in HTMLPurifier_Encoder on certain platforms (probably NetBSD 5.0)
+- Fix bug in Linkify autoformatter involving <a><span>http://foo</span></a>
+- Make %URI.Munge not apply to links that have the same host as your host.
+- Prevent stray </body> tag from truncating output, if a second </body>
+  is present.
+. Created script maintenance/rename-config.php for renaming a configuration
+  directive while maintaining its alias.  This script does not change source code.
+. Implement namespace locking for definition construction, to prevent
+  bugs where a directive is used for definition construction but is not
+  used to construct the cache hash.
+
 3.3.0, released 2009-02-16
 ! Implement CSS property 'overflow' when %CSS.AllowTricky is true.
 ! Implement generic property list classess
