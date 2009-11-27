@@ -456,9 +456,9 @@
 			$preferences		=& $bopreferences->getPreferences();
 			$urlMailbox		=  urlencode($this->mailbox);
 
-			$imapServer =& $preferences->getIncomingServer(0);
+			if (is_object($preferences)) $imapServer =& $preferences->getIncomingServer(0);
 			#_debug_array($imapServer);
-			$activeIdentity =& $preferences->getIdentity(0);
+			if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity(0);
 			#_debug_array($activeIdentity);
 			$maxMessages		=&  $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			if (empty($maxMessages)) $maxMessages = 23; // this seems to be the number off messages that fit the height of the folder tree

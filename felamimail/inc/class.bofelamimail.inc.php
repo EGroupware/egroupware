@@ -2386,7 +2386,12 @@
 
 		function openConnection($_icServerID=0, $_adminConnection=false)
 		{
-			#if (!is_object($this->mailPreferences)) echo function_backtrace();
+			if (!is_object($this->mailPreferences))
+			{
+				error_log(__METHOD__." No Object for MailPreferences found.". function_backtrace());
+				$this->errorMessage .= lang('No valid data to create MailProfile!!');
+				return false;
+			}
 			if(!$this->icServer = $this->mailPreferences->getIncomingServer((int)$_icServerID)) {
 				$this->errorMessage .= lang('No active IMAP server found!!');
 				return false;
