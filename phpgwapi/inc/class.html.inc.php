@@ -1274,17 +1274,17 @@ class html
 			if (is_null($config))
 			{
 				$config = HTMLPurifier_Config::createDefault();
-				$config->set('Core', 'Encoding', (self::$charset?self::$charset:'UTF-8'));
+				$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));
 				// maybe the two following lines are useful for caching???
-				$config->set('HTML','DefinitionID', 'egroupware');
-				$config->set('HTML','DefinitionRev', 1);
+				$config->set('HTML.DefinitionID', 'egroupware');
+				$config->set('HTML.DefinitionRev', 1);
 				// doctype and tidylevel
- 				$config->set('HTML','Doctype', 'XHTML 1.0 Transitional');
-				$config->set('HTML','TidyLevel', 'light');
+ 				$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+				$config->set('HTML.TidyLevel', 'light');
 				// EnableID is needed for anchor tags
-				$config->set('Attr','EnableID',true);
+				$config->set('Attr.EnableID',true);
 				// actual allowed tags and attributes
-				$config->set('HTML', 'Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
+				$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
 							'ul[type],ol[type|start],li,'.
 							'h1,h2,h3,'.
 							'span[class|style],'.
@@ -1296,7 +1296,7 @@ class html
 							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'a[href|target|name|title],img[src|alt|title]');
-				$config->set('Cache', 'SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
+				$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
 			}
 			$purifier = new HTMLPurifier($config);
 			// the latter may enable you to modify the config later on, but by now
