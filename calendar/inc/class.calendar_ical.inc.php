@@ -126,7 +126,7 @@ class calendar_ical extends calendar_boupdate
 	 *
 	 * @var boolean
 	 */
-	var $log = true;
+	var $log = false;
 	var $logfile="/tmp/log-vcal";
 
 
