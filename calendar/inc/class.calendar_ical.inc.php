@@ -126,7 +126,7 @@ class calendar_ical extends calendar_boupdate
 	 *
 	 * @var boolean
 	 */
-	var $log = false;
+	var $log = true;
 	var $logfile="/tmp/log-vcal";
 
 
@@ -1476,9 +1476,15 @@ class calendar_ical extends calendar_boupdate
 					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 					$vcardData['start']	= $dtstart_ts;
 
-					// import TZID, if PHP understands it (we only care about TZID of starttime, as we store only a TZID for the whole event)
-					if (!empty($attributes['params']['TZID']))
+
+					if ($this->tzid)
 					{
+						// enforce device settings
+						$event['tzid'] = $this->tzid;
+					}
+					elseif (!empty($attributes['params']['TZID']))
+					{
+						// import TZID, if PHP understands it (we only care about TZID of starttime, as we store only a TZID for the whole event)
 						try
 						{
 							$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
@@ -1489,10 +1495,6 @@ class calendar_ical extends calendar_boupdate
 							error_log(__METHOD__."() unknown TZID='{$attributes['params']['TZID']}', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
 							$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
 						}
-					}
-					elseif ($this->tzid)
-					{
-						$event['tzid'] = $this->tzid;
 					}
 					else
 					{
