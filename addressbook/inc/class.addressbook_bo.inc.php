@@ -205,6 +205,7 @@ class addressbook_bo extends addressbook_so
 			'modified'             => lang('last modified'),
 			'modifier'             => lang('last modified by'),
 			'jpegphoto'            => lang('photo'),
+			'account_id'           => lang('Account ID'),
 		);
 		$this->business_contact_fields = array(
 			'org_name'             => lang('Company'),

@@ -158,6 +158,7 @@ switch($_POST['action'])
 		$addr_names['owner']   .= ': id or account name of user or group, defaults to importing user';
 		$addr_names['bday']    .= ': YYYY-mm-dd';
 		$addr_names['uid']      = lang('Unique ID (UID)');
+		$addr_names['account_id'] = lang('Account ID');
 		unset($addr_names['jpegphoto']);	// cant cvs import that
 		$cfs=array();
 		foreach($bocontacts->customfields as $name => $data)
@@ -195,6 +196,7 @@ switch($_POST['action'])
 		$GLOBALS['egw']->template->set_var('unique_id',html::select('unique_id',$unique_id,array(
 			'id' => $addr_names['id'],
 			'uid' => $addr_names['uid'],
+			'account_id' => $addr_names['account_id'],
 		)+$cfs)."\n".html::select('unique_id2',$unique_id2,array(
 			'*none*'   => lang('No fallback'),
 			'id' => $addr_names['id'],
@@ -423,6 +425,10 @@ switch($_POST['action'])
 				{
 					$existing = $bocontacts->read($values[$unique_id]);
 				}
+				elseif ($unique_id == 'account_id')
+				{
+					$existing = $bocontacts->read('account:'.$values[$unique_id]);
+				}
 				else
 				{
 					list($existing) = $bocontacts->search(array($unique_id => $values[$unique_id]),false);
@@ -448,7 +454,7 @@ switch($_POST['action'])
 				$values = array_merge($existing,$values);
 			}
 			// convert user-names to user-id's
-			foreach(array('owner','modifier','creator') as $user)
+			foreach(array('owner','modifier','creator','account_id') as $user)
 			{
 				if (isset($values[$user]) && !is_numeric($values[$user]))
 				{
