@@ -345,10 +345,6 @@ class infolog_so
 	function read($info_id)		// did _not_ ensure ACL
 	{
 		//echo "<p>read($info_id) ".function_backtrace()."</p>\n";
-		if ($info_id && ((int)$info_id == $this->data['info_id'] || $info_id == $this->data['info_uid']))
-		{
-			return $this->data;		// return the already read entry
-		}
 		if (!$info_id || !$this->db->select($this->info_table,'*',
 			$this->db->expression($this->info_table,array('info_id'=>$info_id),' OR ',array('info_uid'=>$info_id)),__LINE__,__FILE__) ||
 			 !(($this->data = $this->db->row(true))))
