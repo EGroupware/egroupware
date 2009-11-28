@@ -1112,7 +1112,7 @@ class addressbook_ui extends addressbook_bo
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' '.($query['filter'] == '0' ? lang('accounts') :
 				($GLOBALS['egw']->accounts->get_type($query['filter']) == 'g' ?
 					lang('Group %1',$GLOBALS['egw']->accounts->id2name($query['filter'])) :
-					$GLOBALS['egw']->common->grab_owner_name((int)$query['filter']).
+					common::grab_owner_name((int)$query['filter']).
 						(substr($query['filter'],-1) == 'p' ? ' ('.lang('private').')' : '')));
 		}
 		if ($query['org_view'])
@@ -1168,7 +1168,7 @@ class addressbook_ui extends addressbook_bo
 		else
 		{
 			$icon = 'personal';
-			$label = $owner == $this->user ? lang('personal') : $GLOBALS['egw']->common->grab_owner_name($owner);
+			$label = $owner == $this->user ? lang('personal') : common::grab_owner_name($owner);
 		}
 		// show tid icon for tid!='n' AND only if one is defined
 		if ($tid != 'n' && $this->content_types[$tid]['options']['icon'])
@@ -1265,7 +1265,7 @@ class addressbook_ui extends addressbook_bo
 						echo "<html><body><script>opener.location.href = '$link&msg=".
 							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
 */
-						$GLOBALS['egw']->common->egw_exit();
+						egw_exit();
 					}
 					$content['link_to']['to_id'] = $content['id'];
 					$GLOBALS['egw_info']['flags']['java_script'] .= "<script language=\"JavaScript\">
@@ -1278,7 +1278,7 @@ class addressbook_ui extends addressbook_bo
 					{
 						echo "<html><body><script>var referer = opener.location; opener.location.href = referer+(referer.search?'&':'?')+'msg=".
 							addslashes(urlencode(lang('Contact deleted')))."';window.close();</script></body></html>\n";
-						$GLOBALS['egw']->common->egw_exit();
+						common::egw_exit();
 					}
 					else
 					{
@@ -1353,11 +1353,11 @@ class addressbook_ui extends addressbook_bo
 			{
 				$content['link_to']['to_id'] = 0;
 				egw_link::link('addressbook',$content['link_to']['to_id'],'addressbook',$content['id'],
-					lang('Copied by %1, from record #%2.',$GLOBALS['egw']->common->display_fullname('',
+					lang('Copied by %1, from record #%2.',common::display_fullname('',
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
 				// create a new contact with the content of the old
-				foreach(array('id','modified','modifier','account_id','uid','cat_id') as $key)
+				foreach(array('id','modified','modifier','account_id','uid','cat_id','etag') as $key)
 				{
 					unset($content[$key]);
 				}
@@ -1406,7 +1406,7 @@ class addressbook_ui extends addressbook_bo
 			if (!isset($sel_options['owner'][(int)$content['owner']]))
 			{
 				$sel_options['owner'][(int)$content['owner']] = !$content['owner'] ? lang('Accounts') :
-					$GLOBALS['egw']->common->grab_owner_name($content['owner']);
+					common::grab_owner_name($content['owner']);
 			}
 			$readonlys['owner'] = !$content['owner'] || 		// dont allow to move accounts, as this mean deleting the user incl. all content he owns
 				$content['id'] && !$this->check_perms(EGW_ACL_DELETE,$content);	// you need delete rights to move an existing contact into an other addressbook
@@ -1815,7 +1815,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		if (!($contact = $this->read($contact_id)) || !$contact['jpegphoto'])
 		{
-			$GLOBALS['egw']->redirect($GLOBALS['egw']->common->image('addressbook','photo'));
+			$GLOBALS['egw']->redirect(common::image('addressbook','photo'));
 		}
 		if (!ob_get_contents())
 		{
@@ -1975,7 +1975,7 @@ class addressbook_ui extends addressbook_bo
 	function migrate2ldap()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Migration to LDAP');
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 		parse_navbar();
 
 		if (!$this->is_admin())
@@ -1987,7 +1987,7 @@ class addressbook_ui extends addressbook_bo
 			parent::migrate2ldap($_GET['type']);
 			echo '<p style="margin-top: 20px;"><b>'.lang('Migration finished')."</b></p>\n";
 		}
-		$GLOBALS['egw']->common->egw_footer();
+		common::egw_footer();
 	}
 
 	/**
@@ -2000,7 +2000,7 @@ class addressbook_ui extends addressbook_bo
 	{
 		translation::add_app('admin');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Contact maintenance');
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 		parse_navbar();
 
 		// check if user has admin rights AND if a valid fileas type is given (Security)
@@ -2013,7 +2013,7 @@ class addressbook_ui extends addressbook_bo
 			$updated = parent::set_all_fileas($_GET['type'],(boolean)$_GET['all'],$errors,true);	// true = ignore acl
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
-		$GLOBALS['egw']->common->egw_footer();
+		common::egw_footer();
 	}
 	
 	/**
@@ -2024,7 +2024,7 @@ class addressbook_ui extends addressbook_bo
 	{
 		translation::add_app('admin');
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Contact maintenance');
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 		parse_navbar();
 
 		// check if user has admin rights (Security)
@@ -2037,7 +2037,7 @@ class addressbook_ui extends addressbook_bo
 			$updated = parent::set_all_cleanup($errors,true);	// true = ignore acl
 			echo '<p style="margin-top: 20px;"><b>'.lang('%1 contacts updated (%2 errors).',$updated,$errors)."</b></p>\n";
 		}
-		$GLOBALS['egw']->common->egw_footer();
+		common::egw_footer();
 	}
 
 	/**
@@ -2118,7 +2118,7 @@ class addressbook_ui extends addressbook_bo
 				}
 			}
 			echo "<html><head><script>$js window.close();</script></head><html>\n";
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_exit();
 		}
 		$content['cat_tab'] = $this->config['cat_tab'];
 
