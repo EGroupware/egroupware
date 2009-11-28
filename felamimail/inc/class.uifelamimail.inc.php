@@ -447,16 +447,16 @@
 		function viewMainScreen()
 		{
 			#printf ("this->uifelamimail->viewMainScreen() start: %s<br>",date("H:i:s",mktime()));
-			$bopreferences		=& CreateObject('felamimail.bopreferences');
-			$bofilter		=& CreateObject('felamimail.bofilter');
-			$uiwidgets		=& CreateObject('felamimail.uiwidgets');
+			$bopreferences		= CreateObject('felamimail.bopreferences');
+			$bofilter		= CreateObject('felamimail.bofilter');
+			$uiwidgets		= CreateObject('felamimail.uiwidgets');
 
-			$preferences		=& $bopreferences->getPreferences();
+			$preferences	=& $bopreferences->getPreferences();
 			$urlMailbox		=  urlencode($this->mailbox);
 
-			$imapServer =& $preferences->getIncomingServer(0);
+			if (is_object($preferences)) $imapServer =& $preferences->getIncomingServer(0);
 			#_debug_array($imapServer);
-			$activeIdentity =& $preferences->getIdentity(0);
+			if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity(0);
 			#_debug_array($activeIdentity);
 			$maxMessages		=&  $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			if (empty($maxMessages)) $maxMessages = 23; // this seems to be the number off messages that fit the height of the folder tree

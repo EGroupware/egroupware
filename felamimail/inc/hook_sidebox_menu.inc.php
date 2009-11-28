@@ -94,7 +94,7 @@
 			$file['Manage Folders']	= $GLOBALS['egw']->link('/index.php','menuaction=felamimail.uipreferences.listFolder');
 		}
 
-		$icServer = $preferences->getIncomingServer(0);
+		if (is_object($preferences)) $icServer = $preferences->getIncomingServer(0);
 		if(is_a($icServer, 'defaultimap')) {
 			if($icServer->enableSieve) 
 			{
@@ -113,7 +113,7 @@
 			}
 		}
 
-		$ogServer = $preferences->getOutgoingServer(0);
+		if (is_object($preferences)) $ogServer = $preferences->getOutgoingServer(0);
 		if(is_a($ogServer, 'defaultsmtp')) {
 			if($ogServer->editForwardingAddress)
 			{
