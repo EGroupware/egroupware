@@ -3,6 +3,7 @@
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	es-es	%1 contactos %2, %3 fallaron debido a privilegios insuficientes.
 %1 contacts updated (%2 errors).	addressbook	es-es	Se han actualizado %1 contactos (%2 errores).
 %1 fields in %2 other organisation member(s) changed	addressbook	es-es	%1 campos en %2 miembros de otra organización cambiados
+%1 not implemented for %2!	addressbook	es-es	%1 no está implementado para %2!
 %1 records imported	addressbook	es-es	Se han importado %1 registros
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	es-es	Se han leído %1 registros (no importados todavía, puede volver %2atrás%3 y desmarcar la prueba de importación)
 %1 starts with '%2'	addressbook	es-es	%1 empieza por '%2'
@@ -87,6 +88,7 @@ choose owner of imported data	addressbook	es-es	Elija el propietario de los dato
 choose seperator and charset	addressbook	es-es	Elija el separador y el juego de caracteres
 chosse an etemplate for this contact type	admin	es-es	Elija una plantilla para este tipo de contacto
 city	common	es-es	Ciudad
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	es-es	Limpiar los campos de la libreta de direcciones (aplicar si la sincronización crea duplicados)
 company	common	es-es	Empresa
 company name	addressbook	es-es	Nombre de la empresa
 configuration	common	es-es	Configuración
@@ -286,6 +288,7 @@ new contact submitted by %1 at %2	addressbook	es-es	Nuevo contacto enviado por %
 new window opened to edit infolog for your selection	addressbook	es-es	Se ha abierto una ventana nueva para editar la nota para su selección
 next date	addressbook	es-es	Fecha siguiente
 no categories selected	addressbook	es-es	no se seleccionaron categorías
+no fallback	addressbook	es-es	Sin respaldo
 no vcard	addressbook	es-es	Sin VCard
 number	addressbook	es-es	Número
 number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
@@ -353,6 +356,7 @@ show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios d
 show infolog entries for this organisation	addressbook	es-es	Mostrar las entradas del Registro de notas y tareas para esta organización
 show the contacts of this organisation	addressbook	es-es	Mostrar los contactos de esta organización
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	es-es	Tamaño de la ventana (ancho x alto, p.ej. 400x300, si se usa una ventana emergente)
+stadt	addressbook	es-es	Estado
 start	admin	es-es	Empezar
 startrecord	addressbook	es-es	Registro inicial
 state	common	es-es	Provincia
@@ -360,6 +364,7 @@ street	common	es-es	Calle
 subject for email	addressbook	es-es	Asunto para el correo electrónico
 successfully imported %1 records into your addressbook.	addressbook	es-es	Se han importado correctamnte %1 registros en la libreta de direcciones.
 suffix	addressbook	es-es	Sufijo
+tag to mark positions for address labels	addressbook	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
 tel home	addressbook	es-es	teléfono particular
 telephony integration	admin	es-es	Integración con telefonía
 test import (show importable records <u>only</u> in browser)	addressbook	es-es	Test de Importación (mostrar los registros que se pueden importar <b>sólo</b> en el navegador)
@@ -379,7 +384,10 @@ to many might exceed your execution-time-limit	addressbook	es-es	a cuánto puede
 today is %1's birthday!	common	es-es	¡Hoy es el cumpleaños de %1!
 tomorrow is %1's birthday.	common	es-es	¡Mañana es el cumpleaños de %1!
 translation	addressbook	es-es	Traducción
+two of: %1	addressbook	es-es	dos de: %1
 type	addressbook	es-es	Tipo
+unique id (uid)	addressbook	es-es	ID único (UID)
+unique id<br />(to update existing records)	addressbook	es-es	ID único<br />(para actualizar los registros existentes)
 update a single entry by passing the fields.	addressbook	es-es	Actualizar una única entrada pasando los campos
 update fields by edited organisations?	admin	es-es	¿Actualizar los campos por organizaciones editadas?
 updated	addressbook	es-es	Actualizado
@@ -389,6 +397,7 @@ use an extra category tab?	addressbook	es-es	¿Usar una pestaña extra para cate
 use an extra tab for private custom fields?	admin	es-es	¿Usar una pestaña extra para campos personalizados privados?
 use country list	addressbook	es-es	Utilizar lista de países
 use setup for a full account-migration	admin	es-es	Use la instalación para una migración completa de las cuentas
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	es-es	Usar esta etiqueta para las etiquetas de direcciones. Ponga el contenido que quiera repetir entre dos etiquetas.
 used for links and for the own sorting of the list	addressbook	es-es	utilizado para los enlaces y para el orden propio de la lista
 vcard	common	es-es	Tarjeta de visita
 vcards require a first name entry.	addressbook	es-es	Las tarjetas de visita requieren el primer nombre.
