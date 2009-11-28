@@ -891,7 +891,7 @@ class html
 		}
 		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
 		{
-			$name = egw_vfs::download_url(substr($name,4));
+			$name = egw::link(egw_vfs::download_url(substr($name,4)));
 		}
 		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://' || stripos($name,'etemplate/thumbnail.php') )
 		{
