@@ -226,7 +226,7 @@ class translation
 				// to cope with $vars[0] containing '%2' (eg. an urlencoded path like a referer),
 				// we first replace '%2' in $ret with '|%2|' and then use that as 2. placeholder
 				// we do that for %3 as well, ...
-				array_unshift($vars,array('|%3|','|%2|'));	// push '|%2|' (and such) as first replacement on $vars
+				$vars = array_merge(array('|%3|','|%2|'),$vars);	// push '|%2|' (and such) as first replacement on $vars
 				$ret = str_replace($placeholders,$vars,$ret);
 			}
 			else
