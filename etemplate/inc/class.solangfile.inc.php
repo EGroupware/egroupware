@@ -292,8 +292,8 @@ class solangfile
 		define('SEP',filesystem_separator());
 
 		$langarray = array();
-		$fd = EGW_SERVER_ROOT . SEP . $app . SEP . ($app == 'setup' ? 'lang' : 'setup');
-		$fn = $fd . SEP . translation::LANGFILE_PREFIX . $userlang . '.lang';
+		$fn = translation::get_lang_file($app,$userlang);
+		$fd = dirname($fn);
 
 		if (@is_writeable($fn) || is_writeable($fd))
 		{
@@ -364,7 +364,7 @@ class solangfile
 		$from = translation::charset();
 		//echo "<p>solangfile::write_file('$app_name',,'$userlang') converting from '$from' to charset('$userlang')='$to'</p>\n";
 
-		$fn = EGW_SERVER_ROOT . SEP . $app_name . SEP . ($app_name == 'setup' ? 'lang' : 'setup') . SEP . translation::LANGFILE_PREFIX . $userlang . '.lang';
+		$fn = EGW_SERVER_ROOT . SEP . $app_name . SEP . 'lang' . SEP . translation::LANGFILE_PREFIX . $userlang . '.lang';
 		if (file_exists($fn))
 		{
 			$backup = $fn . '.old';
