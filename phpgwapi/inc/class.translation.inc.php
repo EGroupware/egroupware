@@ -175,7 +175,7 @@ class translation
 		}
 		else
 		{
-			$new_key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
+			$new_key = strtolower(substr($key,0,MAX_MESSAGE_ID_LENGTH));
 
 			if (isset($this->lang_arr[$new_key]))
 			{
