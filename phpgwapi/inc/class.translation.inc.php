@@ -226,7 +226,7 @@ class translation
 				// to cope with $vars[0] containing '%2' (eg. an urlencoded path like a referer),
 				// we first replace '%2' in $ret with '|%2|' and then use that as 2. placeholder
 				// we do that for %3 as well, ...
-				$vars = array_merge(array('|%3|','|%2|'),$vars);	// push '|%2|' (and such) as first replacement on $vars
+				array_unshift($vars,array('|%3|','|%2|'));	// push '|%2|' (and such) as first replacement on $vars
 				$ret = str_replace($placeholders,$vars,$ret);
 			}
 			else
@@ -428,6 +428,37 @@ class translation
 			$languages[$row['lang_id']] = $row['lang_name'];
 		}
 		return $languages;
+	}
+
+	/**
+	 * provides centralization and compatibility to locate the lang files
+         *
+         * @param string $app application name
+         * @param string $lang language code
+         * @return the full path of the filename for the requested app and language
+         */
+        static function get_lang_file($app,$lang)
+	{
+		// Visit each lang file dir, look for a corresponding ${prefix}_lang file
+		$langprefix=EGW_SERVER_ROOT . SEP ;
+		$langsuffix=strtolower($lang) . '.lang';
+		$new_appfile = $langprefix . $app . SEP . 'lang' . SEP . self::LANGFILE_PREFIX . $langsuffix;
+		$cur_appfile = $langprefix . $app . SEP . 'setup' . SEP . self::LANGFILE_PREFIX . $langsuffix;
+		$old_appfile = $langprefix . $app . SEP . 'setup' . SEP . self::OLD_LANGFILE_PREFIX . $langsuffix;
+		// Note there's no chance for 'lang/phpgw_' files
+		if (file_exists($new_appfile))
+		{
+			$appfile=$new_appfile;
+		}
+		elseif (file_exists($cur_appfile))
+		{
+			$appfile=$cur_appfile;
+		}
+		else
+		{
+			$appfile=$old_appfile;
+		}
+		return $appfile;
 	}
 
 	/**
@@ -641,13 +672,11 @@ class translation
 				$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
 				$raw = array();
 				$apps = $only_app ? array($only_app) : array_keys($setup_info);
-				// Visit each app/setup dir, look for a egw_lang file
 				foreach($apps as $app)
 				{
-					$appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . self::LANGFILE_PREFIX . strtolower($lang) . '.lang';
-					$old_appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . self::OLD_LANGFILE_PREFIX . strtolower($lang) . '.lang';
+					$appfile=self::get_lang_file($app,$lang);
 					//echo '<br>Checking in: ' . $app;
-					if($GLOBALS['egw_setup']->app_registered($app) && (file_exists($appfile) || file_exists($appfile=$old_appfile)))
+					if($GLOBALS['egw_setup']->app_registered($app) && (file_exists($appfile)))
 					{
 						//echo '<br>Including: ' . $appfile;
 						$lines = file($appfile);
@@ -786,7 +815,7 @@ class translation
 		$apps['phpgwapi'] = True;	// check the api too
 		foreach($apps as $app => $data)
 		{
-			$fname = EGW_SERVER_ROOT . "/$app/setup/" . self::LANGFILE_PREFIX . "$lang.lang";
+			$fname=self::get_lang_file($app,$lang);
 			$old_fname = EGW_SERVER_ROOT . "/$app/setup/" . self::OLD_LANGFILE_PREFIX . "$lang.lang";
 
 			if (file_exists($fname) || file_exists($fname = $old_fname))
@@ -1198,8 +1227,3 @@ class translation
 		}
 	}
 }
-/*
-$msg = 'Bitte %1hier%2 clicken!';
-$replace = array('<a href="http://index.php?referer=%2Findex.php">','</a>');
-echo "<p>".htmlspecialchars(translation::translate($msg,$replace))."</p>\n";
-*/
