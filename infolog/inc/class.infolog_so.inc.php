@@ -344,17 +344,16 @@ class infolog_so
 	 */
 	function read($info_id)		// did _not_ ensure ACL
 	{
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
+		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
-		} else {
+		}
+		else
+		{
 			$minimum_uid_length = 8;
 		}
 
 		//echo "<p>read($info_id) ".function_backtrace()."</p>\n";
-		if ($info_id && ((int)$info_id == $this->data['info_id'] || $info_id == $this->data['info_uid']))
-		{
-			return $this->data;		// return the already read entry
-		}
 		if (!$info_id || !$this->db->select($this->info_table,'*',
 			$this->db->expression($this->info_table,array('info_id'=>$info_id),' OR ',array('info_uid'=>$info_id)),__LINE__,__FILE__) ||
 			 !(($this->data = $this->db->row(true))))
@@ -513,9 +512,12 @@ class infolog_so
 	 */
 	function write($values,$check_modified=0)  // did _not_ ensure ACL
 	{
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) 
+		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
-		} else {
+		} 
+		else 
+		{
 			$minimum_uid_length = 8;
 		}
 
