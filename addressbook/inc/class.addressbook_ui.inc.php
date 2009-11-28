@@ -1399,7 +1399,7 @@ class addressbook_ui extends addressbook_bo
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
 				// create a new contact with the content of the old
-				foreach(array('id','modified','modifier','account_id','uid') as $key)
+				foreach(array('id','modified','modifier','account_id','uid','etag') as $key)
 				{
 					unset($content[$key]);
 				}
