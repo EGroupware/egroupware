@@ -1511,7 +1511,8 @@ class infolog_ui
 			if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $bofelamimail->decode_header($headers['TO']);
 			elseif (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);
 			elseif (isset($headers['SENDER'])) $mailaddress = $bofelamimail->decode_header($headers['SENDER']);
-
+			if (isset($headers['CC'])) $mailaddress .= ','.$headers['CC'];
+			//_debug_array($headers);
 			$subject = $bofelamimail->decode_header($headers['SUBJECT']);
 
 			$message = self::getdisplayableBody($bofelamimail, $bodyParts);
