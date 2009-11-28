@@ -256,6 +256,8 @@ class setup_process
 		{
 			$current_config['system_charset'] = $GLOBALS['egw_setup']->system_charset;
 		}
+		// storing default timezone as system timezone
+		$current_config['system_timezone'] = date_default_timezone_get();
 
 		$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
 

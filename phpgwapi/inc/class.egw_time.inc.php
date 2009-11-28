@@ -46,7 +46,7 @@ class egw_time extends DateTime
 	 */
 	const DATABASE = 'Y-m-d H:i:s';
 	/**
-	 * DateTimeZone of server, read via date_default_timezone_get(), set by self::init()
+	 * DateTimeZone of server, read from $GLOBALS['egw_info']['server']['server_timezone'], set by self::init()
 	 *
 	 * @var DateTimeZone
 	 */
@@ -393,7 +393,19 @@ class egw_time extends DateTime
 	 */
 	public static function init()
 	{
-		self::$server_timezone = new DateTimeZone(date_default_timezone_get());
+		// if no server timezone set, use date_default_timezone_get() to determine it once
+		// it fills to log with deprecated warnings under 5.3 otherwise
+		if (empty($GLOBALS['egw_info']['server']['server_timezone']))
+		{
+			$config = new config('phpgwapi');
+			$config->save_value('server_timezone',
+				$GLOBALS['egw_info']['server']['server_timezone'] = date_default_timezone_get());
+			$config->save_repository();
+			error_log(__METHOD__."() stored server_timezone=".date_default_timezone_get());
+		}
+		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+
+		self::$server_timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
 		{
 			self::setUserPrefs($GLOBALS['egw_info']['user']['preferences']['common']['tz'],
@@ -517,7 +529,7 @@ class egw_time extends DateTime
 		}
 		if (!$user_tzs)	// if we have no user timezones, eg. user set no pref --> use server default
 		{
-			$user_tzs = array(date_default_timezone_get());
+			$user_tzs = array($GLOBALS['egw_info']['server']['sever_timezone']);
 		}
 		if ($extra && !in_array($extra,$user_tzs))
 		{
