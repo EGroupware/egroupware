@@ -544,6 +544,8 @@ class nextmatch_widget
 			$value['start'] = 0;
 			$total = self::call_get_rows($value,$rows,$readonlys,$obj,$method);
 		}
+		// otherwise we get stoped by max_excutiontime
+		if ($total > 200) @set_time_limit(0);
 		//error_log($value['get_rows'].'() returning '.array2string($total).', method = '.array2string($method).', value = '.array2string($value));
 		return $total;
 	}
