@@ -563,8 +563,9 @@ class html
 	* @param string $_name name and id of the input-field
 	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
 	* @param string $_content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
-	* @param string $style='' initial css for the style attribute
-	* @param string $base_href=''
+	* @param string $_height='400px'
+	* @param string $_width='100%'
+	* @param boolean $_purify=true
 	* @return string the necessary html for the textarea
 	*/
 	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true)
