@@ -220,6 +220,18 @@ class html
 		{
 			$options .= ' size="'.abs($multiple).'"';
 		}
+		// fix width for MSIE in/for selectboxes
+		if (self::$user_agent == 'msie') 
+		{
+			if (stripos($options,'onfocus="') === false)
+			{
+				$options .= ' onfocus="window.dropdown_menu_hack(this);" ';
+			}
+			else
+			{
+				$options = str_ireplace('onfocus="','onfocus="window.dropdown_menu_hack(this);',$options);
+			}
+		}
 		$out = "<select name=\"$name\" $options>\n";
 
 		if (!is_array($key))
