@@ -92,7 +92,7 @@ deny ressources reservation for private events	calendar	de	Verbiete die Reservie
 disinvited	calendar	de	Ausgeladen
 display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt Ihre Standard-Kalender-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Soll Ihre Standard-Kalender-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
 do you want a weekview with or without weekend?	calendar	de	Wollen Sie eine Wochenansicht mit oder ohne Wochenende?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtig.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüberliegenden. Alle Änderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
@@ -170,7 +170,7 @@ holiday management	calendar	de	Feiertagsverwaltung
 holidays	calendar	de	Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
-how many minutes should each interval last?	calendar	de	Wie viele Minute soll jedes Interval dauern?
+how many minutes should each interval last?	calendar	de	Wie viele Minute soll jedes Intervall dauern?
 how many weeks should the multiple week view show?	calendar	de	Wie viele Wochen soll die Mehrwochenansicht zeigen?
 ical	calendar	de	iCal
 ical / rfc2445	calendar	de	iCal / RFC2445
@@ -190,7 +190,7 @@ invitations	calendar	de	Einladungen
 invite	calendar	de	Einladen
 last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
-length of the time interval	calendar	de	Länge des Zeitintervals
+length of the time interval	calendar	de	Länge des Zeitintervalls
 link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
 links	calendar	de	Verknüpfungen
 links, attachments	calendar	de	Verknüpfungen, Dateianhänge
@@ -254,7 +254,7 @@ permission denied	calendar	de	Zugriff verweigert
 planner by category	calendar	de	Planer nach Kategorien
 planner by user	calendar	de	Planer nach Benutzern
 please note: you can configure the field assignments after you uploaded the file.	calendar	de	Bitte beachten: Die Feldzuordnung kann NACH dem Hochladen der Datei konfiguriert werden.
-preselected group for entering the planner	calendar	de	vorausgewählte Gruppe beim Planeraufruf
+preselected group for entering the planner	calendar	de	Vorausgewählte Gruppe beim Planeraufruf
 previous	calendar	de	vorherig
 private and global public	calendar	de	Privat und Global öffentlich
 private and group public	calendar	de	Privat und Gruppen öffentlich
@@ -335,7 +335,7 @@ this defines the end of your dayview. events after this time, are shown below th
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt.
 this entry is currently opened by %1!	calendar	de	Dieser Termin ist im Moment von %1 geöffnet!
 this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen Benutzer innerhalb des konfigurierten Zeitintervalls geöffnet worden:
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als Vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versandt.
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versandt.
 this message is sent to disinvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern geschickt.
