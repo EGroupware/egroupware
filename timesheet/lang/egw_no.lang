@@ -1,0 +1,38 @@
+2 month ago	timesheet	no	2 måneder siden
+2 years ago	timesheet	no	2 år siden
+3 years ago	timesheet	no	3 år siden
+actions	timesheet	no	Handlinger
+by	timesheet	no	av
+create new links	timesheet	no	Opprett nye lenker
+delete this entry	timesheet	no	Slett denne forekomsten
+edit this entry	timesheet	no	Endre denne forekonsten
+empty if identical to duration	timesheet	no	blankt dersom det samme som varighet
+entry deleted	timesheet	no	Forekomst slettet
+entry saved	timesheet	no	Forekomst lagret
+error deleting the entry!!!	timesheet	no	Feil ved sletting av forekomst!
+error saving the entry!!!	timesheet	no	Feil ved lagring av forekomst!
+existing links	timesheet	no	Eksisterende lenker
+general	timesheet	no	Generell
+last modified	timesheet	no	Sist endret
+last month	timesheet	no	Siste måned
+last week	timesheet	no	Siste uke
+last year	timesheet	no	Siste år
+leave it empty for a full week	timesheet	no	La stå tom for en full uke
+links	timesheet	no	Lenker
+no details	timesheet	no	Ingen detaljer
+permission denied!!!	timesheet	no	Adgang nektes!
+price	timesheet	no	Pris
+quantity	timesheet	no	Antall
+save & new	timesheet	no	Lagre og ny
+saves the changes made	timesheet	no	Lagre endringene
+saves this entry and add a new one	timesheet	no	Lagre denne forekomsten og opprette en ny
+select a price	timesheet	no	Velg en pris
+select a project	timesheet	no	Velg et prosjekt
+this month	timesheet	no	Denne måneden
+this week	timesheet	no	Denne uken
+this year	timesheet	no	Dette året
+timesheet	common	no	Timeregistrering
+unitprice	timesheet	no	Enhetspris
+view this entry	timesheet	no	Vis denne forekomsten
+yesterday	timesheet	no	I går
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	no	Din databse er ikke oppdatert (%1 vs. %2), kjør %3setup%4 for å oppgradere databasen.

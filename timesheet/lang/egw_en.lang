@@ -1,0 +1,113 @@
+%1 timesheets(s) %2	timesheet	en	%1 timesheets(s) %2
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	en	%1 timesheets(s) %2, %3 failed because of insufficent rights !!!
+--> enter new name	timesheet	en	--> enter new name
+2 month ago	timesheet	en	2 month ago
+2 years ago	timesheet	en	2 years ago
+3 years ago	timesheet	en	3 years ago
+actions	timesheet	en	Actions
+all projects	timesheet	en	All projects
+all status	timesheet	en	All status
+and its members	timesheet	en	and its members
+applies the changes	timesheet	en	applies the changes
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	en	Apply the action on the whole query, NOT only the shown timesheets!!!
+both: allow to use projectmanager and free project-names	admin	en	Both: allow to use ProjectManager and free project-names
+by	timesheet	en	by
+changed status	timesheet	en	changed status
+check all	timesheet	en	Check all
+comment by %1 at %2:	timesheet	en	Comment by %1 at %2:
+create new links	timesheet	en	Create new links
+creates a new field	timesheet	en	creates a new field
+creating new entry	timesheet	en	creating new entry
+custom fields	timesheet	en	Custom fields
+delete this entry	timesheet	en	Delete this entry
+delete this status	timesheet	en	Delete this status
+delete timesheet	timesheet	en	Delete Timesheet
+deleted	timesheet	en	deleted
+deletes this field	timesheet	en	deletes this field
+determines the order the fields are displayed	timesheet	en	determines the order the fields are displayed
+each value is a line like <id>[=<label>]	timesheet	en	each value is a line like <id>[=<label>]
+edit status	timesheet	en	Edit status
+edit this entry	timesheet	en	Edit this entry
+empty if identical to duration	timesheet	en	empty if identical to duration
+end	timesheet	en	End
+entry deleted	timesheet	en	Entry deleted
+entry saved	timesheet	en	Entry saved
+error deleting the entry!!!	timesheet	en	Error deleting the entry!!!
+error saving the entry!!!	timesheet	en	Error saving the entry!!!
+existing links	timesheet	en	Existing links
+export	timesheet	en	Export
+export to openoffice spreadsheet	timesheet	en	Export to OpenOffice Spreadsheet
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from your Timesheet into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
+field must not be empty !!!	timesheet	en	Field must not be empty !!!
+full: use only projectmanager	admin	en	Full: use only ProjectManager
+general	timesheet	en	General
+global categories	timesheet	en	Global Categories
+history	timesheet	en	History
+id	timesheet	en	ID
+last modified	timesheet	en	Last modified
+last month	timesheet	en	Last month
+last week	timesheet	en	Last week
+last year	timesheet	en	Last year
+leave it empty for a full week	timesheet	en	Leave it empty for a full week
+leaves without saveing	timesheet	en	leaves without saveing
+length<br>rows	timesheet	en	Length<br>Rows
+links	timesheet	en	Links
+max length of the input [, length of the inputfield (optional)]	timesheet	en	max length of the input [, length of the inputfield (optional)]
+modify the status of the timesheet	timesheet	en	Modify the Status of the Timesheet
+new ticket submitted by %1 at %2	timesheet	en	New ticket submitted by %1 at %2
+new timesheet submitted by %1 at %2	timesheet	en	New timesheet submitted by %1 at %2
+no details	timesheet	en	no details
+no project	timesheet	en	No project
+no status	timesheet	en	No status
+none: use only free project-names	admin	en	None: use only free project-names
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	en	number of row for a multiline inputfield or line of a multi-select-box
+only admin	timesheet	en	Only Admin
+only admin can edit this status	timesheet	en	only Admin can edit this status
+or endtime	timesheet	en	or Endtime
+order	timesheet	en	Order
+parent	timesheet	en	Parent
+permission denied!!!	timesheet	en	Permission denied!!!
+price	timesheet	en	Price
+projectmanager integration	admin	en	ProjectManager integration
+quantity	timesheet	en	Quantity
+save & new	timesheet	en	Save & New
+saves the changes made	timesheet	en	Saves the changes made
+saves the changes made and leaves	timesheet	en	saves the changes made and leaves
+saves this entry and add a new one	timesheet	en	Saves this entry and add a new one
+select a price	timesheet	en	Select a price
+select a project	timesheet	en	Select a project
+select a status of the timesheet	timesheet	en	select a status of the timesheet
+select action	timesheet	en	Select action
+select infolog	timesheet	en	select Infolog
+select multiple timeshhets for a further action	timesheet	en	Select multiple timeshhets for a further action
+select the predefined status, whan creating a new timesheet	timesheet	en	Select the predefined status, whan creating a new timesheet
+show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum (eg. to sum up negative overtime)
+start	timesheet	en	Start
+starttime	timesheet	en	Starttime
+starttime has to be before endtime !!!	timesheet	en	Starttime has to be before endtime !!!
+status deleted.	timesheet	en	Status deleted.
+status of created timesheets	timesheet	en	Status of created timesheets
+status updated.	timesheet	en	Status updated.
+sum %1:	timesheet	en	Sum %1:
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
+the text displayed to the user	timesheet	en	the text displayed to the user
+this month	timesheet	en	This month
+this week	timesheet	en	This week
+this year	timesheet	en	This year
+ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2
+timesheet	common	en	TimeSheet
+timesheet csv export	timesheet	en	Timesheet CSV export
+timesheet modified by %1 at %2	timesheet	en	Timesheet modified by %1 at %2
+timesheet openoffice export	timesheet	en	Timesheet OpenOffice export
+timesheet status-%1 '%2' added.	timesheet	en	Timesheet Status-%1 '%2' added.
+timesheet-%1 '%2' updated.	timesheet	en	Timesheet-%1 '%2' updated.
+timesheet-%1 deleted.	timesheet	en	Timesheet-%1 deleted.
+tracker	timesheet	en	Tracker
+unitprice	timesheet	en	Unitprice
+values for selectbox	timesheet	en	Values for selectbox
+view this entry	timesheet	en	View this entry
+week	timesheet	en	Week
+whole query	timesheet	en	whole query
+yesterday	timesheet	en	Yesterday
+you need to select some timesheets first	timesheet	en	You need to select some timesheets first
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	en	Your database is NOT up to date (%1 vs. %2), please run %3setup%4 to update your database.

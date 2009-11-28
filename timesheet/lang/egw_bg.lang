@@ -1,0 +1,58 @@
+2 month ago	timesheet	bg	преди 2 месеца
+2 years ago	timesheet	bg	преди 2 години
+3 years ago	timesheet	bg	преди 3 години
+actions	timesheet	bg	Действия
+all projects	timesheet	bg	Всички проекти
+both: allow to use projectmanager and free project-names	admin	bg	Позволява използване на имена на проекти, както от Проект-мениджъра, така и собствени
+by	timesheet	bg	от
+create new links	timesheet	bg	Създаване на нови връзки
+creating new entry	timesheet	bg	създаване на нов запис
+delete this entry	timesheet	bg	изтриване на записа
+edit this entry	timesheet	bg	Редактиране на записа
+empty if identical to duration	timesheet	bg	празно, ако съвпада с продължителността
+end	timesheet	bg	Край
+entry deleted	timesheet	bg	Записът е изтрит
+entry saved	timesheet	bg	Записът е запазен
+error deleting the entry!!!	timesheet	bg	Грешка при изтриване!!!
+error saving the entry!!!	timesheet	bg	Грешка при запис!!!
+existing links	timesheet	bg	Съществуващи връзки
+export to openoffice spreadsheet	timesheet	bg	Експорт в OpenOffice електронна таблица
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	timesheet	bg	Експортира записите от Графика Ви в CSV-файл (стойности, разделени със запетая). Може да изберете друг разделител чрез таб Опции.
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	bg	Експортира записите от Графика Ви в CSV-файл (стойности, разделени със запетая). Може да изберете друг разделител чрез таб Опции.
+field must not be empty !!!	timesheet	bg	Полето трябва да бъде попълнено !!!
+full: use only projectmanager	admin	bg	Пълна: използва само имена от Проект-мениджъра
+general	timesheet	bg	Общи
+last modified	timesheet	bg	Последно измемение
+last month	timesheet	bg	Миналия месец
+last week	timesheet	bg	Миналата седмица
+last year	timesheet	bg	Миналата година
+leave it empty for a full week	timesheet	bg	Непопълнено - цяла седмица
+links	timesheet	bg	Връзки
+no details	timesheet	bg	без детайли
+no project	timesheet	bg	Няма проект
+none: use only free project-names	admin	bg	Никаква: използва само собствени имена на проекти
+or endtime	timesheet	bg	или краен срок
+permission denied!!!	timesheet	bg	Достъпът отказан!!!
+price	timesheet	bg	Цена
+projectmanager integration	admin	bg	Интеграция с Проект-мениджъра
+quantity	timesheet	bg	Количество
+save & new	timesheet	bg	Запазване и Нов
+saves the changes made	timesheet	bg	Запазва извършените промени
+saves this entry and add a new one	timesheet	bg	Запазва записа и добавя нов
+select a price	timesheet	bg	Изберете цена
+select a project	timesheet	bg	Изберете проект
+start	timesheet	bg	Начало
+starttime	timesheet	bg	Начален час
+starttime has to be before endtime !!!	timesheet	bg	Началният час трябва да бъде преди крайния !!!
+sum %1:	timesheet	bg	Сума %1:
+this month	timesheet	bg	Този месец
+this week	timesheet	bg	Тази седмица
+this year	timesheet	bg	Тази година
+timesheet	common	bg	График
+timesheet csv export	timesheet	bg	График: експорт в CSV
+timesheet openoffice export	timesheet	bg	График: експорт в OpenOffice
+unitprice	timesheet	bg	Цена на артикул
+view this entry	timesheet	bg	Преглед на записа
+week	timesheet	bg	Седмица
+yesterday	timesheet	bg	Вчера
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	bg	Вашата база данни НЕ Е актуална (%1 вм. %2)! Моля, стартирайте %3setup%4 за да я актуализирате.
