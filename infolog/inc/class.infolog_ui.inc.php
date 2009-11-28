@@ -1426,14 +1426,15 @@ class infolog_ui
 
 			if (is_array($_attachments))
 			{
+				//echo __METHOD__.'<br>';
 				//_debug_array($_attachments);
+				$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+				$bopreferences = CreateObject('felamimail.bopreferences');
+				$bofelamimail->openConnection();
 				foreach ($_attachments as $attachment)
 				{
 					if ($attachment['type'] == 'MESSAGE/RFC822')
 					{
-						$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-						$bopreferences = CreateObject('felamimail.bopreferences');
-						$bofelamimail->openConnection();
 						$bofelamimail->reopen($attachment['folder']);
 
 						$mailcontent = self::get_mailcontent($bofelamimail,$attachment['uid'],$attachment['partID'],$attachment['folder']);
@@ -1445,6 +1446,17 @@ class infolog_ui
 					}
 					else
 					{
+						if (!empty($attachment['folder']))
+						{
+							$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
+							$bofelamimail->reopen($attachment['folder']);
+							$attachmentData = $bofelamimail->getAttachment($attachment['uid'],$attachment['partID'],$is_winmail);
+							$attachment['file'] =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+							$tmpfile = fopen($attachment['file'],'w');
+							fwrite($tmpfile,$attachmentData['attachment']);
+							fclose($tmpfile);
+						}
+
 						$attachments[] = array(
 							'name' => $attachment['name'],
 							'mimeType' => $attachment['type'],
@@ -1453,6 +1465,7 @@ class infolog_ui
 						);
 					}
 				}
+				$bofelamimail->closeConnection();
 			}
 			//_debug_array($attachments);
 			$body = strip_tags($_body);
@@ -1502,7 +1515,7 @@ class infolog_ui
 			$subject = $bofelamimail->decode_header($headers['SUBJECT']);
 
 			$message = self::getdisplayableBody($bofelamimail, $bodyParts);
-
+			//echo __METHOD__.'<br>';
 			//_debug_array($attachments);
 			if (is_array($attachments))
 			{
