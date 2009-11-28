@@ -863,7 +863,7 @@ class html
 	{
 		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
 		{
-			$name = egw_vfs::download_url(substr($name,4));
+			$name = egw::link(egw_vfs::download_url(substr($name,4)));
 		}
 		if (is_array($name))	// menuaction and other get-vars
 		{
