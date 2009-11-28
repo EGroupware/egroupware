@@ -387,9 +387,24 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			return false;
 		}
-		self::symlinkCache_remove($path_from);
-		$ret = rename($url_from,$url_to);
-		if (self::LOG_LEVEL > 1 || self::LOG_LEVEL && $ret)
+		// if file is moved from one filesystem / wrapper to an other --> copy it (rename fails cross wrappers)
+		if (parse_url($url_from,PHP_URL_SCHEME) == parse_url($url_to,PHP_URL_SCHEME))
+		{
+			self::symlinkCache_remove($path_from);
+			$ret = rename($url_from,$url_to);
+		}
+		elseif (($from = fopen($url_from,'r')) && ($to = fopen($url_to,'w')))
+		{
+			$ret = stream_copy_to_stream($from,$to) !== false;
+			fclose($from);
+			fclose($to);
+			if ($ret) $ru = self::unlink($path_from);
+		}
+		else
+		{
+			$ret = false;
+		}
+		if (self::LOG_LEVEL > 1 || self::LOG_LEVEL && !$ret)
 		{
 			error_log(__METHOD__."('$path_from','$path_to') url_from='$url_from', url_to='$url_to' returning ".array2string($ret));
 		}
