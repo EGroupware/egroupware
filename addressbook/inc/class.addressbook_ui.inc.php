@@ -166,7 +166,7 @@ class addressbook_ui extends addressbook_bo
 			'msg' => $msg ? $msg : $_GET['msg'],
 		);
 
-		$content['nm'] = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
+		$content['nm'] = egw_session::appsession($do_email ? 'email' : 'index','addressbook');
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
@@ -389,7 +389,7 @@ class addressbook_ui extends addressbook_bo
 	 */
 	function infolog_org_view($org)
 	{
-		$query = $GLOBALS['egw']->session->appsession('index','addressbook');
+		$query = egw_session::appsession('index','addressbook');
 		$query['num_rows'] = -1;	// all
 		$query['org_view'] = $org;
 		$query['searchletter'] = '';
@@ -410,7 +410,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$org = '';	// use infolog default of link-title
 		}
-		$GLOBALS['egw']->redirect_link('/index.php',array(
+		egw::redirect_link('/index.php',array(
 			'menuaction' => 'infolog.infolog_ui.index',
 			'action' => 'addressbook',
 			'action_id' => implode(',',$checked),
@@ -420,7 +420,7 @@ class addressbook_ui extends addressbook_bo
 
 	function ajax_add_whole_list($list, $email_type = 'email')
 	{
-		$query = $GLOBALS['egw']->session->appsession('email','addressbook');
+		$query = egw_session::appsession('email','addressbook');
 		$query['filter2'] = (int)$list;
 		$this->action($email_type,array(),true,$success,$failed,$action_msg,$query,$msg);
 
@@ -466,7 +466,7 @@ class addressbook_ui extends addressbook_bo
 		if ($use_all || in_array($action,array('remove_from_list','delete_list')))
 		{
 			// get the whole selection
-			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession($session_name,'addressbook');
+			$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'addressbook');
 
 			if ($use_all)
 			{
@@ -486,7 +486,7 @@ class addressbook_ui extends addressbook_bo
 					return $this->infolog_org_view($id);	// uses the org-name, instead of 'selected contacts'
 				}
 				unset($checked[$n]);
-				$query = $GLOBALS['egw']->session->appsession($session_name,'addressbook');
+				$query = egw_session::appsession($session_name,'addressbook');
 				$query['num_rows'] = -1;	// all
 				$query['org_view'] = $id;
 				unset($query['filter2']);
@@ -538,7 +538,7 @@ class addressbook_ui extends addressbook_bo
 				break;
 
 			case 'infolog':
-				$GLOBALS['egw']->redirect_link('/index.php',array(
+				egw::redirect_link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.index',
 					'action' => 'addressbook',
 					'action_id' => implode(',',$checked),
@@ -566,7 +566,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					$msg = lang('Distribution list deleted');
 					unset($query['filter2']);
-					$GLOBALS['egw']->session->appsession($session_name,'addressbook',$query);
+					egw_session::appsession($session_name,'addressbook',$query);
 				}
 				return false;
 
@@ -592,11 +592,11 @@ class addressbook_ui extends addressbook_bo
 						$cat_ids = explode(",",$contact['cat_id']);   //existing categiries
 						if (!is_array($cat_ids_new) && $cat_ids_new) $cat_ids_new = explode(",",$cat_ids_new);
 						//categarie add
-						if ((!($cat_ids_new = $GLOBALS['egw']->session->appsession('cat_add','addressbook')) && !($cat_ids_new = $GLOBALS['egw']->session->appsession('cat_delete','addressbook'))))
+						if ((!($cat_ids_new = egw_session::appsession('cat_add','addressbook')) && !($cat_ids_new = egw_session::appsession('cat_delete','addressbook'))))
 						{
 							$action_msg = lang('no categories selected');
 						}
-						if ($GLOBALS['egw']->session->appsession('cat_add','addressbook'))
+						if (egw_session::appsession('cat_add','addressbook'))
 						{
 							if (is_array($cat_ids_new) && ($ids_to_add = array_diff($cat_ids_new,$cat_ids)))
 							{
@@ -612,7 +612,7 @@ class addressbook_ui extends addressbook_bo
 							}
 						}
 						//categories delete
-						if ($GLOBALS['egw']->session->appsession('cat_delete','addressbook'))
+						if (egw_session::appsession('cat_delete','addressbook'))
 						{
 							if (is_array($cat_ids_new) && ($ids_to_delete = array_diff($cat_ids,$cat_ids_new)) or ($cat_ids = $cat_ids_new))
 							{
@@ -629,8 +629,8 @@ class addressbook_ui extends addressbook_bo
 					}
 				}
 				$checked = array();	// to not start the single actions
-				$GLOBALS['egw']->session->appsession('cat_add','addressbook','');      //delete stored categories to add
-				$GLOBALS['egw']->session->appsession('cat_delete','addressbook','');    //delete stored categories to delete
+				egw_session::appsession('cat_add','addressbook','');      //delete stored categories to add
+				egw_session::appsession('cat_delete','addressbook','');    //delete stored categories to delete
 				break;
 		}
 		foreach($checked as $id)
@@ -648,7 +648,7 @@ class addressbook_ui extends addressbook_bo
 						// delete single account --> redirect to admin
 						elseif (count($checked) == 1 && $contact['account_id'])
 						{
-							$GLOBALS['egw']->redirect_link('/index.php',array(
+							egw::redirect_link('/index.php',array(
 								'menuaction' => 'admin.uiaccounts.delete_user',
 								'account_id' => $contact['account_id'],
 							));
@@ -763,11 +763,11 @@ class addressbook_ui extends addressbook_bo
 
 		if (!$id_only && !$query['csv_export'])	// do NOT store state for csv_export or querying id's (no regular view)
 		{
-			$old_state = $GLOBALS['egw']->session->appsession($what,'addressbook',$query);
+			$old_state = egw_session::appsession($what,'addressbook',$query);
 		}
 		else
 		{
-			$old_state = $GLOBALS['egw']->session->appsession($what,'addressbook');
+			$old_state = egw_session::appsession($what,'addressbook');
 		}
 		if (!isset($this->org_views[(string) $query['org_view']]))   // we dont have an org view, unset the according col_filters
 		{
@@ -1236,7 +1236,7 @@ class addressbook_ui extends addressbook_bo
 					{
 						$content['msg'] = lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
+								htmlspecialchars(egw::link('/index.php',array(
 									'menuaction' => 'addressbook.addressbook_ui.edit',
 									'contact_id' => $content['id'],
 								))).'">','</a>');
@@ -1258,14 +1258,14 @@ class addressbook_ui extends addressbook_bo
 						echo "<html><body><script>var referer = opener.location;opener.location.href = referer+(referer.search?'&':'?')+'msg=".
 							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
 /*
-						$link = $GLOBALS['egw']->link('/index.php',array(
+						$link = egw::link('/index.php',array(
 							'menuaction' => 'addressbook.addressbook_ui.view',
 							'contact_id' => $content['id'],
 						));
 						echo "<html><body><script>opener.location.href = '$link&msg=".
 							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
 */
-						egw_exit();
+						common::egw_exit();
 					}
 					$content['link_to']['to_id'] = $content['id'];
 					$GLOBALS['egw_info']['flags']['java_script'] .= "<script language=\"JavaScript\">
@@ -1300,7 +1300,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			else // not found
 			{
-				$state = $GLOBALS['egw']->session->appsession('index','addressbook');
+				$state = egw_session::appsession('index','addressbook');
 				// check if we create the new contact in an existing org
 				if ($_GET['org'])
 				{
@@ -1577,13 +1577,13 @@ class addressbook_ui extends addressbook_bo
 			switch ($button)
 			{
 				case 'vcard':
-					$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
+					egw::redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
 
 				case 'cancel':
-					$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index');
+					egw::redirect_link('/index.php','menuaction=addressbook.addressbook_ui.index');
 
 				case 'delete':
-					$GLOBALS['egw']->redirect_link('/index.php',array(
+					egw::redirect_link('/index.php',array(
 						'menuaction' => 'addressbook.addressbook_ui.index',
 						'msg' => $this->delete($content) ? lang('Contact deleted') : lang('Error deleting the contact !!!'),
 					));
@@ -1593,7 +1593,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			if(!$_GET['contact_id'] || !is_array($content = $this->read($_GET['contact_id'])))
 			{
-				$GLOBALS['egw']->redirect_link('/index.php',array(
+				egw::redirect_link('/index.php',array(
 					'menuaction' => 'addressbook.addressbook_ui.index',
 					'msg' => $content,
 				));
@@ -1719,7 +1719,7 @@ class addressbook_ui extends addressbook_bo
 		if(!empty($_content)) {
 			$response = new xajaxResponse();
 
-			$query = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
+			$query = egw_session::appsession($do_email ? 'email' : 'index','addressbook');
 
 			$query['advanced_search'] = array_intersect_key($_content,array_flip(array_merge($this->get_contact_columns(),array('operator','meth_select'))));
 			foreach ($query['advanced_search'] as $key => $value)
@@ -1729,10 +1729,10 @@ class addressbook_ui extends addressbook_bo
 			$query['start'] = 0;
 			$query['search'] = '';
 			// store the index state in the session
-			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$query);
+			egw_session::appsession($do_email ? 'email' : 'index','addressbook',$query);
 
 			// store the advanced search in the session to call it again
-			$GLOBALS['egw']->session->appsession('advanced_search','addressbook',$query['advanced_search']);
+			egw_session::appsession('advanced_search','addressbook',$query['advanced_search']);
 
 			$response->addScript("
 				var link = opener.location.href;
@@ -1751,7 +1751,7 @@ class addressbook_ui extends addressbook_bo
 
 		// initialize etemplate arrays
 		$sel_options = $readonlys = $preserv = array();
-		$content = $GLOBALS['egw']->session->appsession('advanced_search','addressbook');
+		$content = egw_session::appsession('advanced_search','addressbook');
 
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
@@ -1815,7 +1815,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		if (!($contact = $this->read($contact_id)) || !$contact['jpegphoto'])
 		{
-			$GLOBALS['egw']->redirect(common::image('addressbook','photo'));
+			egw::redirect(common::image('addressbook','photo'));
 		}
 		if (!ob_get_contents())
 		{
@@ -1924,7 +1924,7 @@ class addressbook_ui extends addressbook_bo
 			var use_all = document.getElementById("exec[use_all]");
 			var action = document.getElementById("exec[action]");
 			egw_openWindowCentered(
-				"'. $GLOBALS['egw']->link('/index.php','menuaction=importexport.uiexport.export_dialog&appname=addressbook').
+				"'. egw::link('/index.php','menuaction=importexport.uiexport.export_dialog&appname=addressbook').
 					'&selection="+( use_all.checked  ? "use_all" : get_selected(form,"[rows][checked][]")),
 				"Export",400,400);
 			action.value="";
@@ -1937,7 +1937,7 @@ class addressbook_ui extends addressbook_bo
 			var name = window.prompt("'.lang('Name for the distribution list').'");
 			if (name)
 			{
-				document.location.href = "'.$GLOBALS['egw']->link('/index.php',array(
+				document.location.href = "'.egw::link('/index.php',array(
 					'menuaction'=>$_GET['menuaction'],//'addressbook.addressbook_ui.index',
 					'add_list'=>'',
 				)).'"+encodeURIComponent(name)+"&owner="+owner;
@@ -2076,7 +2076,7 @@ class addressbook_ui extends addressbook_bo
 	{
 		if (!$this->prefs['document_dir']) return array();
 
-		if (!is_array($actions = $GLOBALS['egw']->session->appsession('document_actions','addressbook')))
+		if (!is_array($actions = egw_session::appsession('document_actions','addressbook')))
 		{
 			$actions = array();
 			if (($files = egw_vfs::find($this->prefs['document_dir'],array('need_mime'=>true),true)))
@@ -2089,7 +2089,7 @@ class addressbook_ui extends addressbook_bo
 					$actions['document-'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
 				}
 			}
-			$GLOBALS['egw']->session->appsession('document_actions','addressbook',$actions);
+			egw_session::appsession('document_actions','addressbook',$actions);
 		}
 		return $actions;
 	}
@@ -2108,12 +2108,12 @@ class addressbook_ui extends addressbook_bo
 			{
 				if ($content['cat_add'])
 				{
-					$GLOBALS['egw']->session->appsession('cat_add','addressbook',$content['cat_id']);
+					egw_session::appsession('cat_add','addressbook',$content['cat_id']);
 					$js = "opener.document.getElementById('exec[action]').value='cat_add'; opener.document.forms.eTemplate.submit();";
 				}
 				if ($content['cat_delete'])   //delete categorie
 				{
-					$GLOBALS['egw']->session->appsession('cat_delete','addressbook',$content['cat_id']);
+					egw_session::appsession('cat_delete','addressbook',$content['cat_id']);
 					$js = "opener.document.getElementById('exec[action]').value='cat_add'; opener.document.forms.eTemplate.submit();";
 				}
 			}
