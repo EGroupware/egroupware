@@ -638,7 +638,8 @@ class filemanager_ui
 				{
 					if (isset($content[$name]) && ($old_value != $content[$name] ||
 						// do not check for modification, if modify_subs is checked!
-						$content['modify_subs'] && in_array($name,array('uid','gid','perms'))) && $name != 'uid' || egw_vfs::$is_root)
+						$content['modify_subs'] && in_array($name,array('uid','gid','perms'))) && 
+						($name != 'uid' || egw_vfs::$is_root))
 					{
 						if ($name == 'name')
 						{
