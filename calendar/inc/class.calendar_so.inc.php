@@ -338,7 +338,7 @@ class calendar_so
 					'cal_user_type' => $type,
 					'cal_user_id'   => $ids,
 				));
-				if ($type == 'u' && $filter == 'owner')
+				if ($type == 'u' && ($filter == 'owner' || $filter == 'all'))
 				{
 					$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
 					$to_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
@@ -1381,7 +1381,7 @@ ORDER BY cal_user_type, cal_usre_id
 		$participant_status = array();
 		$where = array('cal_id' => $cal_id);
 		if ($start != 0 && $end == 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . (int)$start . ')';
-		if ($start == 0 && $end != 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date =< ' . (int)$end . ')';
+		if ($start == 0 && $end != 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date <= ' . (int)$end . ')';
 		if ($start != 0 && $end != 0)
 		{
 			$where[] = '(cal_recur_date = 0 OR (cal_recur_date >= ' . (int)$start .
@@ -1398,7 +1398,7 @@ ORDER BY cal_user_type, cal_usre_id
 			'cal_user_id'   => $user_id,
 		);
 		if ($start != 0 && $end == 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . (int)$start . ')';
-		if ($start == 0 && $end != 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date =< ' . (int)$end . ')';
+		if ($start == 0 && $end != 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date <= ' . (int)$end . ')';
 		if ($start != 0 && $end != 0)
 		{
 			$where[] = '(cal_recur_date = 0 OR (cal_recur_date >= ' . (int)$start .
