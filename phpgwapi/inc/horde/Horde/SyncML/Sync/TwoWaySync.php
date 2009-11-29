@@ -423,15 +423,28 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			'type' => $syncType,
 			'filter' => $this->_filterExpression
 		)));
-		$state->mergeChangedItems($syncType, $registry->call($hordeType . '/listBy', array (
+
+		$changedItems =& $registry->call($hordeType . '/listBy', array (
 			'action' => 'modify',
 			'timestamp' => $refts,
 			'type' => $syncType,
 			'filter' => $this->_filterExpression
-		)));
+		));
 
-		Horde :: logMessage("SyncML: reading deleted items from database for $hordeType",
-			__FILE__, __LINE__, PEAR_LOG_DEBUG);
+		$addedItems =& $registry->call($hordeType . '/listBy', array (
+			'action' => 'add',
+			'timestamp' => $refts,
+			'type' => $syncType,
+			'filter' => $this->_filterExpression
+		));
+
+		// added items may show up as changed, too
+		$changedItems = array_diff($changedItems, $addedItems);
+
+		$state->mergeChangedItems($syncType, $changedItems);
+
+		$state->mergeAddedItems($syncType, $addedItems);
+
 		$state->setDeletedItems($syncType, $registry->call($hordeType . '/listBy', array (
 			'action' => 'delete',
 			'timestamp' => $refts,
@@ -439,8 +452,6 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			'filter' => $this->_filterExpression
 		)));
 
-		Horde :: logMessage("SyncML: reading added items from database for $hordeType",
-			__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		/* The items, which now match the filter criteria are show here, too
 		$delta_add = count($registry->call($hordeType . '/listBy', array (
 			'action' => 'add',
@@ -449,12 +460,6 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			'filter' => $this->_filterExpression
 		)));
 		*/
-		$state->mergeAddedItems($syncType, $registry->call($hordeType . '/listBy', array (
-			'action' => 'add',
-			'timestamp' => $refts,
-			'type' => $syncType,
-			'filter' => $this->_filterExpression
-		)));
 
 		$this->_syncDataLoaded = TRUE;
 

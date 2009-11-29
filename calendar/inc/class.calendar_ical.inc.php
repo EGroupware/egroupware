@@ -87,6 +87,13 @@ class calendar_ical extends calendar_boupdate
 	var $uidExtension = false;
 
 	/**
+	 * user preference: calendar to synchronize with
+	 *
+	 * @var int
+	 */
+	var $calendarOwner = 0;
+
+	/**
 	 * Original timezone
 	 *
 	 * @var string
@@ -942,6 +949,7 @@ class calendar_ical extends calendar_boupdate
 							unset($event_to_store);
 							$event['reference'] = $event_info['master_event']['id'];
 							$event['category'] = $event_info['master_event']['category'];
+							$event['owner'] = $event_info['master_event']['owner'];
 						}
 
 						$event_to_store = $event; // prevent $event from being changed by update method
@@ -1159,6 +1167,14 @@ class calendar_ical extends calendar_boupdate
 				$deviceInfo['tzid'])
 			{
 				$this->tzid = $deviceInfo['tzid'];
+			}
+			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
+			{
+				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
+				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
+				{
+					$this->calendarOwner = $owner;
+				}
 			}
 			if (!isset($this->productManufacturer) ||
 				 $this->productManufacturer == '' ||
@@ -1549,7 +1565,7 @@ class calendar_ical extends calendar_boupdate
 					$recurence = $attributes['value'];
 					$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence[0];
 					// vCard 2.0 values for all types
-					if (preg_match('/UNTIL=([0-9T]+)/',$recurence,$matches))
+					if (preg_match('/UNTIL=([0-9TZ]+)/',$recurence,$matches))
 					{
 						$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($matches[1]);
 					}
@@ -1886,11 +1902,7 @@ class calendar_ical extends calendar_boupdate
 						{
 							//Horde::logMessage("vevent2egw: group participant $uid",
 							//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-							if ($status == 'U')
-							{
-
-							}
-							else
+							if ($status != 'U')
 							{
 								// User tries to reply to the group invitiation
 								$members = $GLOBALS['egw']->accounts->members($uid, true);
@@ -1904,7 +1916,7 @@ class calendar_ical extends calendar_boupdate
 								continue;
 							}
 						}
-						else continue; // can not find this group
+						else continue; // can't find this group
 					}
 					elseif ($attributes['value'] == 'Unknown')
 					{
@@ -1954,12 +1966,14 @@ class calendar_ical extends calendar_boupdate
 								$event['participants'][$uid] =
 									calendar_so::combine_status($status, $quantity, 'CHAIR');
 							}
-							if (is_numeric($uid))
+							if (is_numeric($uid) && ($uid == $this->calendarOwner || !$this->calendarOwner))
 							{
+								// we can store the ORGANIZER as event owner
 								$event['owner'] = $uid;
 							}
 							else
 							{
+								// we must insert a CHAIR participant to keep the ORGANIZER
 								$event['owner'] = $this->user;
 								if (!isset($event['participants'][$uid]))
 								{
@@ -1968,7 +1982,6 @@ class calendar_ical extends calendar_boupdate
 										calendar_so::combine_status('U', 1, 'CHAIR');
 								}
 							}
-							break;
 					}
 					break;
 				case 'CREATED':		// will be written direct to the event
@@ -2048,6 +2061,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 			}
 		}
+		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
 		//Horde::logMessage("vevent2egw:\n" . print_r($event, true),
         //    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $event;
@@ -2239,8 +2253,8 @@ class calendar_ical extends calendar_boupdate
 						$recurrence_event['start'] = $event['recurrence'];
 						$recurrence_event['end'] = $event['recurrence'] + ($master_event['end'] - $master_event['start']);
 						// check for changed data
-						foreach (array('start','end','uid','owner','title','description',
-							'location','priority','public','special','non_blocking') as $key)
+						foreach (array('start','end','uid','title','location',
+									'priority','public','special','non_blocking') as $key)
 						{
 							if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
 							{
