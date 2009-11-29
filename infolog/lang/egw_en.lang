@@ -41,7 +41,7 @@ add:	infolog	en	Add:
 all	infolog	en	All
 all links and attachments	infolog	en	all links and attachments
 all projects	infolog	en	All projects
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-type)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	Allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-type)
 alternatives	infolog	en	Alternatives
 apply the changes	infolog	en	Apply the changes
 archive	infolog	en	archive
@@ -54,7 +54,7 @@ back to main list	infolog	en	Back to main list
 billed	infolog	en	billed
 both	infolog	en	both
 call	infolog	en	call
-can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	en	Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	en	Can be used to show further InfoLog types in the calendar or limit it to show e.g. only tasks.
 cancel	infolog	en	Cancel
 cancelled	infolog	en	cancelled
 categories	infolog	en	Categories
@@ -85,7 +85,7 @@ csv-filename	infolog	en	CSV-Filename
 csv-import	common	en	CSV-Import
 custom	infolog	en	Custom
 custom contact-address, leave empty to use information from most recent link	infolog	en	Custom contact-address, leave empty to use information from most recent link
-custom contact-information, leave emtpy to use information from most recent link	infolog	en	Custom contact-information, leave emtpy to use information from most recent link
+custom contact-information, leave emtpy to use information from most recent link	infolog	en	Custom contact-information, leave empty to use information from most recent link
 custom fields	infolog	en	Custom Fields
 custom fields, typ and status	common	en	Custom fields, type and status
 custom from	infolog	en	Custom from
@@ -93,7 +93,7 @@ custom regarding	infolog	en	Custom regarding
 custom status for typ	infolog	en	Custom status for type
 customfields	infolog	en	Customfields
 date completed	infolog	en	Date completed
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	en	Date completed (leave it empty to have it automatic set if status is done or billed)
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	en	Date completed (leave it empty to have it automatically set if status is done or billed)
 datecreated	infolog	en	date created
 dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
@@ -117,7 +117,7 @@ deletes this status	infolog	en	deletes this status
 description	infolog	en	Description
 determines the order the fields are displayed	infolog	en	determines the order the fields are displayed
 disables a status without deleting it	infolog	en	disables a status without deleting it
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	en	do you want a confirmation of the responsible on: accepting, finishing the task or both
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	en	Do you want a confirmation of the responsible on: accepting, finishing the task or both
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	en	Do you want a notification, if items get assigned to you or assigned items get updated?
 do you want a notification, if items you are responsible for are about to start?	infolog	en	Do you want a notification, if items you are responsible for are about to start?
 do you want a notification, if items you are responsible for are due?	infolog	en	Do you want a notification, if items you are responsible for are due?
@@ -130,18 +130,18 @@ done	infolog	en	done
 download	infolog	en	Download
 duration	infolog	en	Duration
 e-mail:	infolog	en	E-mail:
-each value is a line like <id>[=<label>]	infolog	en	each value is a line like <id>[=<label>]
+each value is a line like <id>[=<label>]	infolog	en	Each value is a line like <id>[=<label>]
 edit	infolog	en	Edit
 edit or create categories for ingolog	infolog	en	Edit or create categories for IngoLog
-edit rights (full edit rights incl. making someone else responsible!)	infolog	en	edit rights (full edit rights incl. making someone else responsible!)
+edit rights (full edit rights incl. making someone else responsible!)	infolog	en	Edit rights (full edit rights incl. making someone else responsible!)
 edit status	infolog	en	Edit status
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
 empty for all	infolog	en	empty for all
 enddate	infolog	en	Due date
 enddate can not be before startdate	infolog	en	Due date can not be before start date
-enter a custom contact, leave empty if linked entry should be used	infolog	en	enter a custom contact, leave empty if linked entry should be used
-enter a custom phone/email, leave empty if linked entry should be used	infolog	en	enter a custom phone/email, leave empty if linked entry should be used
+enter a custom contact, leave empty if linked entry should be used	infolog	en	Enter a custom contact, leave empty if linked entry should be used
+enter a custom phone/email, leave empty if linked entry should be used	infolog	en	Enter a custom phone/email, leave empty if linked entry should be used
 enter a textual description of the log-entry	infolog	en	enter a textual description of the log-entry
 enter the query pattern	infolog	en	Enter the query pattern
 entry and all files	infolog	en	Entry and all files
@@ -161,7 +161,7 @@ high	infolog	en	high
 history	infolog	en	History
 history logging	infolog	en	History logging
 history logging and deleting of items	infolog	en	History logging and deleting of items
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	en	How many describtion lines should be directly visible. Further lines are available via a scrollbar.
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	en	How many description lines should be directly visible. Further lines are available via a scroll bar.
 id	infolog	en	Id
 id#	infolog	en	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
@@ -187,7 +187,7 @@ invalid filename	infolog	en	Invalid filename
 label<br>helptext	infolog	en	Label<br>Helptext
 last changed	infolog	en	Last changed
 last modified	infolog	en	Last modified
-leave blank to get the used time calculated by timesheet entries	infolog	en	Leave blank to get the used time calculated by timesheet entries
+leave blank to get the used time calculated by timesheet entries	infolog	en	Leave blank to get the used time calculated by time sheet entries
 leave it empty	infolog	en	leave it empty
 leave without saveing the entry	infolog	en	leave without saveing the entry
 leaves without saveing	infolog	en	leaves without saveing
@@ -201,7 +201,7 @@ list no subs/childs	infolog	en	List no Subs/Childs
 location	infolog	en	Location
 longer textual description	infolog	en	longer textual description
 low	infolog	en	low
-max length of the input [, length of the inputfield (optional)]	infolog	en	max length of the input [, length of the inputfield (optional)]
+max length of the input [, length of the inputfield (optional)]	infolog	en	max length of the input [, length of the input field (optional)]
 modifierer	infolog	en	Modifierer
 name must not be empty !!!	infolog	en	Name must not be empty !!!
 name of new type to create	infolog	en	name of new type to create
@@ -225,7 +225,7 @@ not assigned	infolog	en	not assigned
 not-started	infolog	en	not started
 note	infolog	en	Note
 number of records to read (%1)	infolog	en	Number of records to read (%1)
-number of row for a multiline inputfield or line of a multi-select-box	infolog	en	number of row for a multiline inputfield or line of a multi-select-box
+number of row for a multiline inputfield or line of a multi-select-box	infolog	en	number of row for a multi-line input field or line of a multi-select-box
 offer	infolog	en	offer
 one day after	infolog	en	one day after
 one day in advance	infolog	en	one day in advance
@@ -276,6 +276,7 @@ receive notifications about own items	infolog	en	Receive notifications about own
 receive notifications about starting entries you are responsible for	infolog	en	Receive notifications about starting entries you are responsible for
 receive notifications about starting entries you delegated	infolog	en	Receive notifications about starting entries you delegated
 receive notifications as html-mails	infolog	en	Receive notifications as html-mails
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
@@ -297,8 +298,8 @@ select a category for this entry	infolog	en	select a category for this entry
 select a price	infolog	en	Select a price
 select a priority for this task	infolog	en	select a priority for this task
 select a project	infolog	en	Select a project
-select a responsible user: a person you want to delegate this task	infolog	en	select a responsible user: a person you want to delegate this task
-select a typ to edit it's status-values or delete it	infolog	en	select a type to edit it's status-values or delete it
+select a responsible user: a person you want to delegate this task	infolog	en	Select a responsible user: a person you want to delegate this task
+select a typ to edit it's status-values or delete it	infolog	en	Select a type to edit it's status-values or delete it
 select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
 select to filter by owner	infolog	en	select to filter by owner
@@ -307,12 +308,12 @@ sender	infolog	en	Sender
 sets the status of this entry and its subs to done	infolog	en	Sets the status of this entry and its subs to done
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog show up on the main screen and with which filter. Works only if you dont selected an application for the main screen (in your preferences).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (surname and familyname) or just the loginnames.
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	en	Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.
-should the infolog list show the column "last modified".	infolog	en	Should the Infolog list show the column "last modified".
-should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	en	Should the Infolog list show the percent done only for status ongoing or two separate icons.
-should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant privat access via the ACL
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog show up on the main screen and with which filter. Works only if you didn't select an application for the main screen (in your preferences).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (sure name and family name) or just the login names.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	en	Should the InfoLog list show a unique numerical Id, which can be used eg. as ticket Id.
+should the infolog list show the column "last modified".	infolog	en	Should the InfoLog list show the column "last modified".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	en	Should the InfoLog list show the percent done only for status ongoing or two separate icons.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant private access via the ACL
 show a column for used and planned times in the list.	infolog	en	Show a column for used and planned times in the list.
 show full usernames	infolog	en	Show full usernames
 show in the infolog list	infolog	en	Show in the InfoLog list
@@ -335,14 +336,14 @@ sum	infolog	en	Sum
 task	infolog	en	ToDo
 template	infolog	en	Template
 test import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	the name used internaly (<= 10 chars), changeing it makes existing data unavailible
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	the name used internally (<= 10 chars), changing it makes existing data unavailable
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	en	the name used internally (<= 20 chars), changing it makes existing data unavailable
 the text displayed to the user	infolog	en	the text displayed to the user
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.
 til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phone call be finished
 times	infolog	en	Times
 to many might exceed your execution-time-limit	infolog	en	to many might exceed your execution-time-limit
-to what should the startdate of new entries be set.	infolog	en	To what should the startdate of new entries be set.
+to what should the startdate of new entries be set.	infolog	en	To what should the start date of new entries be set.
 today	infolog	en	Today
 todays date	infolog	en	todays date
 todo	infolog	en	ToDo
@@ -359,6 +360,7 @@ urgency	infolog	en	urgency
 urgent	infolog	en	urgent
 used time	infolog	en	used time
 valid path on clientside<br>eg. \\server\share or e:\	infolog	en	valid path on clientside<br>eg. \\Server\Share or e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	en	valid path on client side<br>e.g. \\Server\Share or e:\
 values for selectbox	infolog	en	Values for selectbox
 view all subs of this entry	infolog	en	View all subs of this entry
 view other subs	infolog	en	view other Subs
@@ -366,7 +368,7 @@ view parent	infolog	en	View parent
 view subs	infolog	en	view Subs
 view the parent of this entry and all his subs	infolog	en	View the parent of this entry and all his subs
 view this linked entry in its application	infolog	en	view this linked entry in its application
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (startpage)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (start page)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	en	Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.
 which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get?
 which types should the calendar show	infolog	en	Which types should the calendar show
@@ -380,7 +382,7 @@ yes, noone can purge deleted items	infolog	en	Yes, noone can purge deleted items
 yes, only admins can purge deleted items	infolog	en	Yes, only admins can purge deleted items
 yes, with larger fontsize	infolog	en	Yes, with larger fontsize
 yes, with purging of deleted items possible	infolog	en	Yes, with purging of deleted items possible
-you can choose a categorie to be preselected, when you create a new infolog entry	infolog	en	You can choose a categorie to be preselected, when you create a new Infolog entry
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	en	You can choose a category to be preselected, when you create a new InfoLog entry
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
 you have entered an invalid ending date	infolog	en	You have entered an invalid due date
 you have entered an invalid starting date	infolog	en	You have entered an invalid starting date
