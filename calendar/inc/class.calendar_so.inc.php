@@ -892,6 +892,8 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function participants($cal_id,$participants,$change_since=0,$add_only=false)
 	{
+		$recurrences = array();
+
 		// remove group-invitations, they are NOT stored in the db
 		foreach($participants as $uid => $status)
 		{
@@ -907,8 +909,15 @@ ORDER BY cal_user_type, cal_usre_id
 			$where[0] = '(cal_recur_date=0 OR cal_recur_date >= '.(int)$change_since.')';
 		}
 
-		if ($change_since !== false)	// update existing entries
+		if ($change_since !== false)
 		{
+			// find all existing recurrences
+			foreach($this->db->select($this->user_table,'DISTINCT cal_recur_date',$where,__LINE__,__FILE__,false,'','calendar') as $row)
+			{
+				$recurrences[] = $row['cal_recur_date'];
+			}
+
+			// update existing entries
 			$existing_entries = $this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id',$where,__LINE__,__FILE__,false,'','calendar');
 
 			// create a full list of participants which already exist in the db
@@ -956,16 +965,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if (count($participants))	// participants which need to be added
 		{
-			// find all recurrences, as they all need the new parts to be added
-			$recurrences = array();
-			if ($change_since !== false)	// existing entries
-			{
-				foreach($this->db->select($this->user_table,'DISTINCT cal_recur_date',$where,__LINE__,__FILE__,false,'','calendar') as $row)
-				{
-					$recurrences[] = $row['cal_recur_date'];
-				}
-			}
-			if (!count($recurrences)) $recurrences[] = 0;	// insert the default one
+			if (!count($recurrences)) $recurrences[] = 0;   // insert the default recurrence
 
 			// update participants
 			foreach($participants as $uid => $status)
@@ -1075,7 +1075,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 			$type = '';
 			$id = null;
-			$this->split_user($uid,$type,$id);
+			self::split_user($uid,$type,$id);
 			$this->db->insert($this->user_table,array(
 				'cal_status'	 => $status !== true ? $status[0] : 'U',
 				'cal_quantity'	=> substr($status,1) ? substr($status,1) : 1,
@@ -1270,7 +1270,7 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$user_type = '';
 			$user_id = null;
-			$this->split_user($old_user,$user_type,$user_id);
+			self::split_user($old_user,$user_type,$user_id);
 
 			if ($user_type == 'u')	// only accounts can be owners of events
 			{
@@ -1324,14 +1324,24 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param int $cal_id
 	 * @param int $uid participant uid
+	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
+	 * @param int $end=0  if != 0: enddate of the search/list (servertime)
+	 *
 	 * @return array recur_date => status pairs (index 0 => main status)
 	 */
-	function get_recurrences($cal_id, $uid)
+	function get_recurrences($cal_id, $uid, $start=0, $end=0)
 	{
 		$user_type = $user_id = null;
-		$this->split_user($uid, $user_type, $user_id);
+		self::split_user($uid, $user_type, $user_id);
 		$participant_status = array();
 		$where = array('cal_id' => $cal_id);
+		if ($start != 0 && $end == 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . (int)$start . ')';
+		if ($start == 0 && $end != 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date <= ' . (int)$end . ')';
+		if ($start != 0 && $end != 0)
+		{
+			$where[] = '(cal_recur_date = 0 OR (cal_recur_date >= ' . (int)$start .
+						' AND cal_recur_date <= ' . (int)$end . '))';
+		}
 		foreach($this->db->select($this->user_table,'DISTINCT cal_recur_date',$where,__LINE__,__FILE__,false,'','calendar') as $row)
 		{
 			// inititalize the array
@@ -1342,6 +1352,13 @@ ORDER BY cal_user_type, cal_usre_id
 			'cal_user_type'	=> $user_type ? $user_type : 'u',
 			'cal_user_id'   => $user_id,
 		);
+		if ($start != 0 && $end == 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . (int)$start . ')';
+		if ($start == 0 && $end != 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date <= ' . (int)$end . ')';
+		if ($start != 0 && $end != 0)
+		{
+			$where[] = '(cal_recur_date = 0 OR (cal_recur_date >= ' . (int)$start .
+						' AND cal_recur_date <= ' . (int)$end . '))';
+		}
 		foreach ($this->db->select($this->user_table,'cal_recur_date,cal_status',$where,
 				__LINE__,__FILE__,false,'','calendar') as $row)
 		{
@@ -1370,7 +1387,7 @@ ORDER BY cal_user_type, cal_usre_id
 		foreach ($this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id', $where,
 				__LINE__,__FILE__,false,'','calendar') as $row)
 		{
-			$uid = $this->combine_user($row['cal_user_type'], $row['cal_user_id']);
+			$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
 			$id = $row['cal_user_type'] . $row['cal_user_id'];
 			$participants[$id]['type'] = $row['cal_user_type'];
 			$participants[$id]['id'] = $row['cal_user_id'];
@@ -1411,10 +1428,12 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param array $event		Recurring Event.
 	 * @param int servertime=0	== 0 -> export event with UTC timestamps
 	 * 							!= 0 -> export with servertime timestamps
+	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
+	 * @param int $end=0  if != 0: enddate of the search/list (servertime)
 	 *
 	 * @return array		Array of exception days (false for non-recurring events).
 	 */
-	function get_recurrence_exceptions(&$event, $servertime=0)
+	function get_recurrence_exceptions(&$event, $servertime=0, $start=0, $end=0)
 	{
 		$cal_id = (int) $event['id'];
 		if (!$cal_id || $event['recur_type'] == MCAL_RECUR_NONE) return false;
@@ -1431,7 +1450,7 @@ ORDER BY cal_user_type, cal_usre_id
 				case 'u':	// account
 				case 'c':	// contact
 				case 'e':	// email address
-					$recurrences = $this->get_recurrences($event['id'], $uid);
+					$recurrences = $this->get_recurrences($event['id'], $uid, $start, $end);
 					foreach ($recurrences as $recur_date => $recur_status)
 					{
 						if ($recur_date && $recur_status != $recurrences[0])

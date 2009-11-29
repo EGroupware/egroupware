@@ -121,6 +121,13 @@ class calendar_ical extends calendar_boupdate
 	var $uidExtension = false;
 
 	/**
+	 * user preference: calendar to synchronize with
+	 *
+	 * @var int
+	 */
+	var $calendarOwner = 0;
+
+	/**
 	 * user preference: use server timezone for exports to device
 	 *
 	 * @var boolean
@@ -147,7 +154,7 @@ class calendar_ical extends calendar_boupdate
 	 *
 	 * @var boolean
 	 */
-	var $log = false;
+	var $log = true;
 	var $logfile="/tmp/log-vcal";
 
 
@@ -307,7 +314,7 @@ class calendar_ical extends calendar_boupdate
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
 							if (!($info = $this->resource_info($uid))) continue;
-							if ($uid == $event['owner']) continue; // Organizer
+							if ($uid == $event['owner'] && $status == 'A') continue; // Organizer
 							// RB: MAILTO href contains only the email-address, NO cn!
 							$attributes['ATTENDEE'][]	= $info['email'] ? 'MAILTO:'.$info['email'] : '';
 							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
@@ -1010,6 +1017,7 @@ class calendar_ical extends calendar_boupdate
 							unset($event_to_store);
 							$event['reference'] = $event_info['master_event']['id'];
 							$event['category'] = $event_info['master_event']['category'];
+							$event['owner'] = $event_info['master_event']['owner'];
 						}
 
 						$event_to_store = $event; // prevent $event from being changed by update method
@@ -1228,6 +1236,14 @@ class calendar_ical extends calendar_boupdate
 				$deviceInfo['tzid'])
 			{
 				$this->useServerTZ = ($deviceInfo['tzid'] == 1);
+			}
+			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
+			{
+				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
+				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
+				{
+					$this->calendarOwner = $owner;
+				}
 			}
 			if (!isset($this->productManufacturer) ||
 				 $this->productManufacturer == '' ||
@@ -1571,7 +1587,7 @@ class calendar_ical extends calendar_boupdate
 					$recurence = $attributes['value'];
 					$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence[0];
 					// vCard 2.0 values for all types
-					if (preg_match('/UNTIL=([0-9T]+)/',$recurence,$matches))
+					if (preg_match('/UNTIL=([0-9TZ]+)/',$recurence,$matches))
 					{
 						$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($matches[1]);
 					}
@@ -1841,8 +1857,8 @@ class calendar_ical extends calendar_boupdate
 						$vcardData['category'] = array();
 					}
 					break;
-				case 'ATTENDEE':
 				case 'ORGANIZER':	// will be written direct to the event
+				case 'ATTENDEE':
 					if (isset($attributes['params']['PARTSTAT']))
 				    {
 				    	$attributes['params']['STATUS'] = $attributes['params']['PARTSTAT'];
@@ -1902,21 +1918,26 @@ class calendar_ical extends calendar_boupdate
 					}
 
 					//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
-					elseif (preg_match('/(.*) Group/', $searcharray['n_fn'], $matches)
-							&& $status && $status != 'U')
+					elseif (preg_match('/(.*) Group/', $searcharray['n_fn'], $matches))
 					{
 						if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
 						{
 							//Horde::logMessage("vevent2egw: group participant $uid",
-       	    				//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-							$members = $GLOBALS['egw']->accounts->members($uid, true);
-							if (in_array($this->user, $members))
+							//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
+							if ($status != 'U')
 							{
-								//Horde::logMessage("vevent2egw: set status to " . $status,
-       	    					//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
-								$event['participants'][$this->user] = $status;
+								// User tries to reply to the group invitiation
+								$members = $GLOBALS['egw']->accounts->members($uid, true);
+								if (in_array($this->user, $members))
+								{
+									//Horde::logMessage("vevent2egw: set status to " . $status,
+									//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
+									$event['participants'][$this->user] = $status;
+								}
+								$status = 'U'; // keep the group
 							}
 						}
+						else continue; // can't find this group
 					}
 					elseif ($attributes['value'] == 'Unknown')
 					{
@@ -1946,13 +1967,9 @@ class calendar_ical extends calendar_boupdate
 					switch($attributes['name'])
 					{
 						case 'ATTENDEE':
-							if ($status)
+							if (!$status)
 							{
-								$event['participants'][$uid] = $status;
-							}
-							else
-							{
-								$event['participants'][$uid] = ($uid == $event['owner'] ? 'A' : 'U');
+								$status = ($uid == $event['owner'] ? 'A' : 'U');
 							}
 							if (!isset($attributes['params']['ROLE']) || $attributes['params']['ROLE'] != 'ORGANIZER')
 							{
@@ -1962,17 +1979,19 @@ class calendar_ical extends calendar_boupdate
 							}
 						case 'ORGANIZER':
 							$hasOrganizer = true;
-							if (is_numeric($uid))
+							if (is_numeric($uid) && ($uid == $this->calendarOwner || !$this->calendarOwner))
 							{
+								// we can store the ORGANIZER as event owner
 								$event['owner'] = $uid;
 							}
 							else
 							{
 								$event['owner'] = $this->user;
 							}
-							// RalfBecker: this is not allways true, owner can choose to NOT participate in EGroupware
-							$event['participants'][$uid] = 'A';
-							break;
+							if (!isset($event['participants'][$uid]))
+							{
+								$event['participants'][$uid] = 'A';
+							}
 					}
 					break;
 				case 'CREATED':		// will be written direct to the event
@@ -1984,8 +2003,7 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 
-		if (!$hasOrganizer && $this->productManufacturer == 'groupdav'
-			&& !isset($event['participants'][$this->user]))
+		if (!$hasOrganizer && !isset($event['participants'][$this->user]))
 		{
 			// according to iCalendar standard, ORGANIZER not used for events in the own calendar
 			$event['participants'][$this->user] = 'A';
@@ -2059,8 +2077,13 @@ class calendar_ical extends calendar_boupdate
 				break;
 			}
 		}
+		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
 		//Horde::logMessage("vevent2egw:\n" . print_r($event, true),
         //    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+        if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
+		}
 		return $event;
 	}
 
@@ -2250,8 +2273,8 @@ class calendar_ical extends calendar_boupdate
 						$recurrence_event['start'] = $event['reference'];
 						$recurrence_event['end'] = $event['reference'] + ($master_event['end'] - $master_event['start']);
 						// check for changed data
-						foreach (array('start','end','uid','owner','title','description',
-							'location','priority','public','special','non_blocking') as $key)
+						foreach (array('start','end','uid','title','location',
+									'priority','public','special','non_blocking') as $key)
 						{
 							if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
 							{
