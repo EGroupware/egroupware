@@ -18,17 +18,30 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 
 	$contacts =& new addressbook_bo();
 
-	$month_start = date('*-m-*',$contacts->now_su);
-	$bdays =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family');
-
-	if (($month_end = date('*-m-*',$contacts->now_su+$days*24*3600)) != $month_start)
+	$month_start = date('-m-',$contacts->now_su);
+	$bdays =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family','','%');
+	// search accounts too, if not stored in accounts repository
+	$extra_accounts_search = $contacts->account_repository == 'ldap' && !is_null($contacts->so_accounts) &&
+		!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'];
+	if ($extra_accounts_search && ($bdays2 = $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),
+		'n_given,n_family','','%',false,'AND',false,array('owner' => 0))))
 	{
-		if (($bdays2 =& $contacts->search(array('bday' => $month_end),array('id','n_family','n_given','bday'),'n_given,n_family')))
+		$bdays = !$bdays ? $bdays2 : array_merge($bdays,$bdays2);
+	}
+	if (($month_end = date('-m-',$contacts->now_su+$days*24*3600)) != $month_start)
+	{
+		if (($bdays2 =& $contacts->search(array('bday' => $month_end),array('id','n_family','n_given','bday'),'n_given,n_family','','%')))
 		{
 			$bdays = !$bdays ? $bdays2 : array_merge($bdays,$bdays2);
 		}
-		unset($bdays2);
+		// search accounts too, if not stored in accounts repository
+		if ($extra_accounts_search && ($bdays2 = $contacts->search(array('bday' => $month_end),array('id','n_family','n_given','bday'),
+			'n_given,n_family','','%',false,'AND',false,array('owner' => 0))))
+		{
+			$bdays = !$bdays ? $bdays2 : array_merge($bdays,$bdays2);
+		}
 	}
+	unset($bdays2); unset($extra_accounts_search);
 	unset($month_start); unset($month_end);
 
 	if ($bdays)
