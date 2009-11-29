@@ -74,7 +74,6 @@ delete this alarm	calendar	fr	Supprimer cette alarme
 delete this event	calendar	fr	Supprimer cet événement
 delete this exception	calendar	fr	Supprimer cet exception
 delete this series of recuring events	calendar	fr	Supprimer ces occurences d'événements récurrents
-deny ressources reservation for private events	calendar fr	Interdire la réservation de ressources pour les rendez-vous privés
 disinvited	calendar	fr	Invitation annulée
 display status of events	calendar	fr	Afficher le statut des événements
 displayed view	calendar	fr	vue affichée
@@ -121,8 +120,6 @@ filename of the download	calendar	fr	Nom du fichier téléchargé
 find free timeslots where the selected participants are availible for the given timespan	calendar	fr	Trouver des plages de temps libres sur lesquelles les participants sélectionnés sont disponibles
 firstname of person to notify	calendar	fr	Prénom de la personne à prévenir
 for	calendar	fr	pour
-for all future events	calendar	fr	Pour tous les événements à venir
-for this event	calendar	fr	Pour cet événement
 for which views should calendar show distinct lines with a fixed time interval.	calendar	fr	Vues pour lesquelles le calendrier doit afficher des lignes distinctes pour un intervalle de temps fixe.
 format of event updates	calendar	fr	Format des mises à jour d'événements
 forward half a month	calendar	fr	avancer de 15 jours
@@ -254,14 +251,12 @@ select who should get the alarm	calendar	fr	Sélectionner qui doit recevoir l'al
 selected range	calendar	fr	Etendue sélectionnée
 set a year only for one-time / non-regular holidays.	calendar	fr	Régler sur une année seulement pour les vacances uniques / non-régulières.
 set new events to private	calendar	fr	Régler les nouveaux événements comme privés
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	fr	Les invitations que vous avez rejeté doivent-elles être encore montrées dans votre calendrier ?<br>Vous ne pourrez les accepter plus tard (p.ex. quand le conflit de rendez-vous est supprimé), que si elles sont encore montrées dans votre calendrier!
 should new events created as private by default ?	calendar	fr	Les nouveaux événements doivent-ils être créés comme privés par défaut ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	fr	Est-ce que les utilisateurs non connectés devraient avoir accès à l'information de disponibilité? Vous pouvez spécifier un mot de passe supplémentaire, différent de votre mot de passe habituel, afin de protéger cette information. L'information de disponibilité est au format iCal et comprend seulement les heures où vous êtes occupé. Elle n'inclut pas les noms d'événements, descriptions et locations. L'URL de votre information de disponibilité est %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	fr	Est-ce que planificateur doit afficher une ligne vide pour les utilisateurs ou catégories sans aucun rendez-vous.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	fr	Le statut de chaque participant à l'événement (accepté, rejeté, ...) doit-il être montré entre crochets après le nom de chaque participant ?
 show default view on main screen	calendar	fr	montrer la vue par défaut sur l'écran principal
 show empty rows in planner	calendar	fr	Afficher les lignes vides dans le Planificateur
-show invitations you rejected	calendar	fr	Montrer les invitations que vous avez rejeté
 show list of upcoming events	calendar	fr	montrer la liste des événements à venir
 show this month	calendar	fr	afficher ce mois
 show this week	calendar	fr	afficher cette semaine
@@ -273,7 +268,6 @@ startdate and -time of the search	calendar	fr	Date/Heure de début de recherche
 startdate of the export	calendar	fr	Date de début de l'exportation
 startrecord	calendar	fr	Enregistrement de début
 status changed	calendar	fr	Le statut a été modifié
-status recurrence	calendar	fr	Statut de récurrence
 submit to repository	calendar	fr	Soumettre au Dépôt
 sun	calendar	fr	Dim
 tentative	calendar	fr	Tentative
