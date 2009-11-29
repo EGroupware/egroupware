@@ -1913,7 +1913,7 @@ class calendar_ical extends calendar_boupdate
 									$event['participants'][$this->user] =
 										calendar_so::combine_status($status);
 								}
-								continue;
+								$status = 'U'; // keep the group
 							}
 						}
 						else continue; // can't find this group
