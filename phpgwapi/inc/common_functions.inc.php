@@ -33,12 +33,51 @@ function bytes($str)
 /**
  * Format array or other types as (one-line) string, eg. for error_log statements
  *
- * @param mixed $arr
+ * @param mixed $var variable to dump
  * @return string
  */
-function array2string($arr)
+function array2string($var)
 {
-	return str_replace(array("\n",'    '),'',print_r($arr,true));
+	switch (($type = gettype($var)))
+	{
+		case 'boolean':
+			return $var ? 'TRUE' : 'FALSE';
+		case 'string':
+			return "'$var'";
+		case 'integer':
+		case 'double':
+		case 'resource':
+			return $var;
+		case 'NULL':
+			return 'NULL';
+		case 'object':
+		case 'array':
+			return str_replace(array("\n",'    '/*,'Array'*/),'',print_r($var,true));
+	}
+	return 'UNKNOWN TYPE!';
+}
+
+/**
+ * Check if a given extension is loaded or load it if possible (requires sometimes disabled or unavailable dl function)
+ *
+ * @param string $extension
+ * @param boolean $throw=false should we throw an exception, if $extension could not be loaded, default false = no
+ * @return boolean true if loaded now, false otherwise
+ */
+function check_load_extension($extension,$throw=false)
+{
+	if (!defined('PHP_SHLIB_PREFIX'))
+	{
+		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+	}
+	// we check for the existens of 'dl', as multithreaded webservers dont have it and some hosters disable it !!!
+	$loaded = extension_loaded($extension) || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.$extension.'.'.PHP_SHLIB_SUFFIX);
+
+	if (!$loaded && $throw)
+	{
+		throw new Exception ("PHP extension '$extension' not loaded AND can NOT be loaded via dl('$dl')!");
+	}
+	return $loaded;
 }
 
 /**
