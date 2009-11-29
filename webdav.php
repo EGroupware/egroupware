@@ -92,6 +92,9 @@ catch (egw_exception_no_permission_app $e)
 }
 //$headertime = microtime(true);
 
+// webdav is stateless: we dont need to keep the session open, it only blocks other calls to same basic-auth session
+$GLOBALS['egw']->session->commit_session();
+
 $webdav_server = new vfs_webdav_server();
 $webdav_server->ServeRequest();
 //error_log(sprintf("WebDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
