@@ -20,7 +20,7 @@ acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
 actions	filemanager	en	Actions
 all files	common	en	All files
-allow a maximum of the above configured folderlinks to be configured in settings	admin	en	allow a maximum of the above configured folderlinks to be configured in settings
+allow a maximum of the above configured folderlinks to be configured in settings	admin	en	allow a maximum of the above configured folder links to be configured in settings
 and all it's childeren	filemanager	en	and all it's childeren
 applications	common	en	Applications
 basedirectory	filemanager	en	Basedirectory
@@ -56,7 +56,7 @@ current directory	filemanager	en	Current directory
 custom fields	filemanager	en	Custom fields
 cut	filemanager	en	cut
 cut to clipboard	filemanager	en	Cut to clipboard
-default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 delete this file or directory	filemanager	en	Delete this file or directory
 deleted %1	filemanager	en	Deleted %1
 directories sorted in	filemanager	en	Directories sorted in
@@ -89,7 +89,7 @@ favorites	filemanager	en	Favorites
 file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file %1 could not be created.	filemanager	en	File %1 could not be created.
-file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 may be too big. Contact your Systemadministrator for further info
+file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 may be too big. Contact your System administrator for further info
 file deleted.	filemanager	en	File deleted.
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
 file or directory not found!	filemanager	en	File or directory not found!
@@ -160,12 +160,12 @@ select action...	filemanager	en	Select action...
 select file to upload in current directory	filemanager	en	Select file to upload in current directory
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files
-show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to filemanagers basedirectory (/) in side box menu?
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side box menu?
 size	filemanager	en	Size
 start search	filemanager	en	start search
 superuser	filemanager	en	Superuser
 symlink to %1 created.	filemanager	en	Symlink to %1 created.
-the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the necessary access permissions.
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available.
 there's already a directory with that name!	filemanager	en	There's already a directory with that name!
 there's already a file with that name!	filemanager	en	There's already a file with that name!
