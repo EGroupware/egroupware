@@ -826,7 +826,7 @@ class addressbook_ldap
 
 		$entries = ldap_get_entries($this->ds, $result);
 		$this->total = $entries['count'];
-		foreach($entries as $i => $entry)
+		foreach((array)$entries as $i => $entry)
 		{
 			if (!is_int($i)) continue;	// eg. count
 
