@@ -599,7 +599,7 @@ abstract class egw_framework
 		$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . $theme_css .'?'.filemtime(EGW_SERVER_ROOT.$theme_css);
 
 		$print_css = '/phpgwapi/templates/'.$this->template.'/print.css';
-		if(!file_exists(EGW_SERVER_ROOT.$theme_css))
+		if(!file_exists(EGW_SERVER_ROOT.$print_css))
 		{
 			$print_css = '/phpgwapi/templates/idots/print.css';
 		}
