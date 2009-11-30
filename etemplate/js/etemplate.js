@@ -366,8 +366,12 @@ function dropdown_menu_hack(el)
 			{
 				var o = document.createElement("option");
 				o.value = obj.value;
-				//alert("val"+o.value)
-				o.innerHTML = obj.innerHTML;
+				//alert("val"+o.value+', text:'+obj.innerHTML+'selected:'+obj.selectedIndex);
+				o.text = obj.innerHTML;
+				o.text = o.text.replace('<NOBR>','');
+				o.text = o.text.replace('</NOBR>','');
+				//if there is no value, you should not try to set the innerHTML, as it screws up the empty selection ...
+				if (o.value != '') o.innerHTML = o.text;
 				while(el.options.length>0){el.options[0].removeNode(true);}
 				el.appendChild(o);
 				el.title = o.innerHTML;
@@ -393,6 +397,8 @@ function dropdown_menu_hack(el)
 			t = t.replace(/<\/option/gi,'</span');
 			//alert("4"+t);
 			t = t.replace(/<\/select/gi,'</div');
+			//t = t.replace(/<optgroup label/gi,'<span value');
+			//t = t.replace(/<\/optgroup>/gi,'</span>');
 			mb.innerHTML = t;
 			//mb.innerHTML = "<div><span value='dd:ff'>gfgfg</span></div>";
 
@@ -402,9 +408,9 @@ function dropdown_menu_hack(el)
 
 			for(var i=0;i<mb.options.length;i++)
 			{
-
+				//alert('Value:'+mb.options[i].value + ', Text:'+ mb.options[i].innerHTML);
 				mb.options[i].selectedIndex = i;
-				mb.options[i].style.cssText = "list-style:none;margin:0;padding:1px 2px;width/**/:100%;cursor:hand;cursorointer;white-space:nowrap;"
+				mb.options[i].style.cssText = "list-style:none;margin:0;padding:1px 2px;width/**/:100%;cursor:hand;cursor:pointer;white-space:nowrap;"
 				mb.options[i].title =mb.options[i].innerHTML;
 				mb.options[i].innerHTML ="<nobr>" + mb.options[i].innerHTML + "</nobr>";
 				mb.options[i].onmouseover = function()
