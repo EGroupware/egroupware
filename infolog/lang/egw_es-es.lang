@@ -40,9 +40,12 @@ add timesheet entry	infolog	es-es	Añadir entrada a la hoja de presencia
 add:	infolog	es-es	Añadir:
 all	infolog	es-es	Todos
 all links and attachments	infolog	es-es	todos los enlaces y ficheros adjuntos
+all projects	infolog	es-es	Todos los proyectos
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	es-es	permite establecer el estado de una entrada, p.e. poner una tarea pendiente cono finalizada si está terminada (los valores dependen del tipo de entrada)
+alternatives	infolog	es-es	Alternativas
 apply the changes	infolog	es-es	Aplicar los cambios
 archive	infolog	es-es	archivar
+are you shure you want to close this entry ?	infolog	es-es	¿Está seguro de querer cerrar esta entrada?
 are you shure you want to delete this entry ?	infolog	es-es	¿Está seguro de querer borrar esta entrada?
 attach a file	infolog	es-es	Adjuntar un archivo
 attach file	infolog	es-es	Adjuntar archivo
@@ -64,6 +67,8 @@ check to specify custom contact	infolog	es-es	Marcar para especificar un contact
 click here to create the link	infolog	es-es	pulsar para crear un enlace
 click here to start the search	infolog	es-es	pulsar para comenzar la búsqueda
 close	infolog	es-es	Cerrar
+close all	infolog	es-es	Cerrar todo
+close this entry and all listed sub-entries	infolog	es-es	Cerrar esta entrada y todas las subentradas de la lista
 comment	infolog	es-es	Comentario
 completed	infolog	es-es	Completado
 configuration	infolog	es-es	Configuración
@@ -124,6 +129,7 @@ don't show infolog	infolog	es-es	NO mostrar el Registro de notas y tareas
 done	infolog	es-es	hecho
 download	infolog	es-es	Descargar
 duration	infolog	es-es	Duración
+e-mail:	infolog	es-es	Dirección de correo:
 each value is a line like <id>[=<label>]	infolog	es-es	cada valor es una línea como <id>[=<etiqueta>]
 edit	infolog	es-es	Editar
 edit or create categories for ingolog	infolog	es-es	Editar o crear categorías para el Registro
@@ -149,6 +155,7 @@ finish	infolog	es-es	finalizar
 for which types should this field be used	infolog	es-es	para qué tipos se usa este campo
 from	infolog	es-es	De
 general	infolog	es-es	General
+global categories	infolog	es-es	Categorías globales
 group owner for	infolog	es-es	Propietario de grupo para
 high	infolog	es-es	alta
 history	infolog	es-es	Historial
@@ -161,6 +168,7 @@ if a type has a group owner, all entries of that type will be owned by the given
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	es-es	Si no hay valor inicial, la línea con los filtros de búsqueda y filtros está oculta para menos entradas que "máx. por página" (como se definió en las preferencias comunes).
 import	infolog	es-es	Importar
 import next set	infolog	es-es	importar juego siguiente
+importance	infolog	es-es	Importancia
 info log	common	es-es	Registro de notas y tareas
 infolog	common	es-es	Registro de notas y tareas
 infolog - delete	infolog	es-es	Registro - Eliminar
@@ -208,6 +216,7 @@ no details	infolog	es-es	no hay detalles
 no entries found, try again ...	infolog	es-es	no se encontraron registros, inténtelo de nuevo ...
 no filter	infolog	es-es	sin filtro
 no links or attachments	infolog	es-es	sin enlaces o adjuntos
+no project	infolog	es-es	Sin proyecto
 nonactive	infolog	es-es	no activo
 none	infolog	es-es	Ninguno
 normal	infolog	es-es	normal
@@ -228,12 +237,14 @@ only the links	infolog	es-es	sólo los enlaces
 open	infolog	es-es	abrir
 optional note to the link	infolog	es-es	nota opcional para el enlace
 order	infolog	es-es	Ordenar
+organization	infolog	es-es	Organización
 overdue	infolog	es-es	vencido
 own	infolog	es-es	propio
 own open	infolog	es-es	propio abierto
 own overdue	infolog	es-es	propio vencido
 own upcoming	infolog	es-es	propio en camino
 parent	infolog	es-es	Superior
+parent infolog	infolog	es-es	Elemento padre de la tarea
 path on (web-)serverside<br>eg. /var/samba/share	infolog	es-es	Ruta en el servidor ej. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	es-es	Ruta a los ficheros de usuario y grupos. ¡¡DEBE ESTAR FUERA de la estructura del servidor web!!
 pattern for search in addressbook	infolog	es-es	expresión a buscar en la Libreta de direcciones
@@ -252,6 +263,7 @@ priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
 project settings: price, times	infolog	es-es	Configuración del proyecto: precio, tiempos
+projectmanager	infolog	es-es	Administrador de proyectos
 re-planned	infolog	es-es	Replanificado
 re-planned time	infolog	es-es	Tiempo Replanificado
 re:	infolog	es-es	Re:
@@ -291,6 +303,7 @@ select an app to search in	infolog	es-es	Seleccionar una aplicación en la que b
 select an entry to link with	infolog	es-es	Seleccionar una entrada a la que apunte un enlace
 select to filter by owner	infolog	es-es	seleccionar para filtrar por propietario
 select to filter by responsible	infolog	es-es	seleccionar para filtrar por responsable
+sender	infolog	es-es	Remitente
 sets the status of this entry and its subs to done	infolog	es-es	Pone el estado de esta entrada y las inferiores a Hecho
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	es-es	¿Mostrar las Subtareas (llamadas o notas) en la vista normal? Siempre puede ver estos subtipos a través de su tipo superior.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	es-es	¿Deben mostrarse los enlaces a otras aplicaciones y/o los ficheros adjuntos en la lista del registro (la vista normal al entrar en el registro)?
@@ -345,7 +358,7 @@ upcoming	infolog	es-es	próxima
 urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 used time	infolog	es-es	tiempo utilizado
-valid path on clientside<br>eg. \\server\share or e:	infolog	es-es	ruta válida en el lado cliente<br>p. ej. \\servidor\recurso o e:\
+valid path on clientside<br>eg. \\server\share or e:\	infolog	es-es	ruta válida en el cliente<br>p.ej. \\servidor\recurso o e:
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs
@@ -359,6 +372,8 @@ which implicit acl rights should the responsible get?	infolog	es-es	¿Qué derec
 which types should the calendar show	infolog	es-es	Qué tipos debe mostrar el calendario
 will-call	infolog	es-es	va a llamar
 write (add or update) a record by passing its fields.	infolog	es-es	Escribir (añadir o actualizar) un registro pasando sus campos.
+yes - close	infolog	es-es	Sí, cerrar
+yes - close including sub-entries	infolog	es-es	Sí, cerrar incluyendo las subentradas
 yes - delete	infolog	es-es	Sí - Eliminar
 yes - delete including sub-entries	infolog	es-es	Sí - Eliminar incluso las subentradas
 yes, noone can purge deleted items	infolog	es-es	Si, nadie puede purgar los elementos borrados
