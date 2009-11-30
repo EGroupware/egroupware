@@ -471,7 +471,7 @@ function load_wrapper($url)
 function load_egw($user,$passwd,$domain='default')
 {
 	//echo "load_egw($user,$passwd,$domain)\n";
-	$_GET['domain'] = $domain;
+	$_REQUEST['domain'] = $domain;
 	$GLOBALS['egw_login_data'] = array(
 		'login'  => $user,
 		'passwd' => $passwd,
