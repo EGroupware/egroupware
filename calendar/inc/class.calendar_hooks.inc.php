@@ -415,7 +415,7 @@ class calendar_hooks
 			),
 			'notifyAdded' => array(
 				'type'   => 'notify',
-				'label'  => 'Notification messages for added events ',
+				'label'  => 'Notification messages for added events',
 				'name'   => 'notifyAdded',
 				'rows'   => 5,
 				'cols'   => 50,
@@ -427,7 +427,7 @@ class calendar_hooks
 			),
 			'notifyCanceled' => array(
 				'type'   => 'notify',
-				'label'  => 'Notification messages for canceled events ',
+				'label'  => 'Notification messages for canceled events',
 				'name'   => 'notifyCanceled',
 				'rows'   => 5,
 				'cols'   => 50,
@@ -440,7 +440,7 @@ class calendar_hooks
 			),
 			'notifyModified' => array(
 				'type'   => 'notify',
-				'label'  => 'Notification messages for modified events ',
+				'label'  => 'Notification messages for modified events',
 				'name'   => 'notifyModified',
 				'rows'   => 5,
 				'cols'   => 50,
@@ -453,7 +453,7 @@ class calendar_hooks
 			),
 			'notifyDisinvited' => array(
 				'type'   => 'notify',
-				'label'  => 'Notification messages for disinvited participants ',
+				'label'  => 'Notification messages for disinvited participants',
 				'name'   => 'notifyDisinvited',
 				'rows'   => 5,
 				'cols'   => 50,
@@ -465,7 +465,7 @@ class calendar_hooks
 			),
 			'notifyResponse' => array(
 				'type'   => 'notify',
-				'label'  => 'Notification messages for your responses ',
+				'label'  => 'Notification messages for your responses',
 				'name'   => 'notifyResponse',
 				'rows'   => 5,
 				'cols'   => 50,

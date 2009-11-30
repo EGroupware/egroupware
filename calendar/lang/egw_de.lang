@@ -170,7 +170,7 @@ holiday management	calendar	de	Feiertagsverwaltung
 holidays	calendar	de	Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
-how many minutes should each interval last?	calendar	de	Wie viele Minute soll jedes Intervall dauern?
+how many minutes should each interval last?	calendar	de	Wie viele Minuten soll jedes Intervall dauern?
 how many weeks should the multiple week view show?	calendar	de	Wie viele Wochen soll die Mehrwochenansicht zeigen?
 ical	calendar	de	iCal
 ical / rfc2445	calendar	de	iCal / RFC2445
@@ -340,7 +340,7 @@ this message is sent for modified or moved events.	calendar	de	Diese Benachricht
 this message is sent to disinvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern geschickt.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Diese Nachricht wird an alle Teilnehmer der Termine die Sie anlegen versandt, die Benachrichtigungen wünschen.<br>Sie können verschiedene Variablen verwenden, welche durch die Daten des Termins ersetzt werden. Die erste Zeite ist der Betreff der E-Mail.
 this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder absagen.
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Meldung wird ihnen gesandt, wenn sie einen Alarm für einen Termin setzen. Nehmen sie alle Information darin auf, die sie benötigen.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Meldung wird ihnen gesandt, wenn sie einen Alarm für einen Termin setzen. Nehmen sie alle Informationen darin auf, die sie benötigen.
 this module displays the current month	calendar	de	Dieses Modul zeikt den aktuellen Monat an
 three month	calendar	de	drei Monate
 thu	calendar	de	Do
