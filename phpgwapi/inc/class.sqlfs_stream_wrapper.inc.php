@@ -223,7 +223,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			elseif(!file_exists($fs_dir=dirname(self::_fs_path($this->opened_fs_id))))
 			{
 				$umaskbefore = umask();
-				if (self::LOG_LEVEL) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct($umaskbefore)." called from:".function_backtrace());
+				if (self::LOG_LEVEL > 1) error_log(__METHOD__." about to call mkdir for $fs_dir # Present UMASK:".decoct($umaskbefore)." called from:".function_backtrace());
 				self::mkdir_recursive($fs_dir,0700,true);
 			}
 		}
