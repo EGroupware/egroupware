@@ -228,6 +228,9 @@
 			$current_config['tz_offset'] = $datetime->getbestguess();
 			unset($datetime);
 
+			// storing default timezone as system timezone
+			$current_config['system_timezone'] = date_default_timezone_get();
+
 			// RalfBecker: php.net recommend this for security reasons, it should be our default too
 			$current_config['usecookies'] = 'True';
 
