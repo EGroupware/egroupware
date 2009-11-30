@@ -1244,7 +1244,7 @@ function function_backtrace($remove=0)
 			{
 				$ret[] = (isset($level['class'])?$level['class'].$level['type']:'').$level['function'].
 					(!$level['class'] && !is_object($level['args'][0]) && $level['function'] != 'unserialize' ?
-					'('.substr(str_replace(EGW_SERVER_ROOT,'',$level['args'][0]),0,64).')' : '');
+					'('.substr(str_replace(EGW_SERVER_ROOT,'',(string)$level['args'][0]),0,64).')' : '');
 			}
 		}
 		if (is_array($ret))
