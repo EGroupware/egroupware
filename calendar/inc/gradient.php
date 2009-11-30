@@ -1,17 +1,31 @@
 <?php
-/**
- * eGroupWare Calendar: rounded corners
- *
- * @link http://www.egroupware.org
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @package calendar
- * @copyright (c) 2004-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
- */
+	/**************************************************************************\
+	* eGroupWare - calendar: rounded corners                                      *
+	* http://www.egroupware.org                                                *
+	* Written by RalfBecker@outdoor-training.de                                *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-include_once('../../phpgwapi/inc/common_functions.inc.php');
-check_load_extension('gd',true);	// true = throw exception if not loadable
+	/* $Id$ */
+
+// some constanst for pre php4.3
+if (!defined('PHP_SHLIB_SUFFIX'))
+{
+	define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
+}
+if (!defined('PHP_SHLIB_PREFIX'))
+{
+	define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+}
+
+if (!extension_loaded('gd') && !@dl(PHP_SHLIB_PREFIX.'gd.'.PHP_SHLIB_SUFFIX))
+{
+	die("Can't load the needed php-extension 'gd' !!!");
+}
 
 foreach(array('width'=>1,'height'=>1,'color1'=>'000080','color2'=>'ffffff') as $name => $default)
 {
@@ -70,3 +84,4 @@ else
 	imagepng($image);
 }
 imagedestroy($image);
+?>
