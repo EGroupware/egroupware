@@ -188,9 +188,8 @@ class egw extends egw_minimal
 			$this->db->Link_ID->SetCharSet($GLOBALS['egw_info']['server']['system_charset']);
 		}
 		// restoring server timezone, to avoid warnings under php5.3
-		if (empty($GLOBALS['egw_info']['server']['server_timezone']))
+		if (!empty($GLOBALS['egw_info']['server']['server_timezone']))
 		{
-			
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		}
 		register_shutdown_function(array($this, 'shutdown'));
