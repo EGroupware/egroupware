@@ -127,6 +127,11 @@ class egw extends egw_minimal
 		}
 		//$GLOBALS['egw_info']['server'] = config::read('phpgwapi'); would unserialize arrays
 
+		// restoring server timezone, to avoid warnings under php5.3
+		if (!empty($GLOBALS['egw_info']['server']['server_timezone']))
+		{
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+		}
 		// setup the other subclasses
 		// translation class is here only for backward compatibility, as all it's methods can be called static now
 		$this->translation    = new translation();
@@ -179,7 +184,12 @@ class egw extends egw_minimal
 		{
 			$this->db->Link_ID->SetCharSet($GLOBALS['egw_info']['server']['system_charset']);
 		}
-
+		// restoring server timezone, to avoid warnings under php5.3
+		if (!empty($GLOBALS['egw_info']['server']['server_timezone']))
+		{
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+		}
+		
 		register_shutdown_function(array($this, 'shutdown'));
 
 		$this->define_egw_constants();
