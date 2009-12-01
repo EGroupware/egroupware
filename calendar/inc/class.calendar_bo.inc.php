@@ -163,6 +163,12 @@ class calendar_bo
 	 * @var egw_datetime
 	 */
 	var $datetime;
+	/**
+	 * Instance of the categories class
+	 *
+	 * @var $categories
+	 */
+	var $categories;
 
 	/**
 	 * Constructor
@@ -209,6 +215,8 @@ class calendar_bo
 		//echo "registered resources="; _debug_array($this->resources);
 
 		$this->config = config::read('calendar');
+
+		$this->categories = new categories($this->user,'calendar');
 	}
 
 	/**
@@ -1567,17 +1575,14 @@ class calendar_bo
 		static $id2cat = array();
 		$cats = array();
 		$color = 0;
-		if (!is_object($this->cats))
-		{
-			$this->cats = CreateObject('phpgwapi.categories','','calendar');
-		}
+
 		foreach(explode(',',$category) as $cat_id)
 		{
 			if (!$cat_id) continue;
 
 			if (!isset($id2cat[$cat_id]))
 			{
-				list($id2cat[$cat_id]) = $this->cats->return_single($cat_id);
+				list($id2cat[$cat_id]) = $this->categories->return_single($cat_id);
 				$id2cat[$cat_id]['data'] = unserialize($id2cat[$cat_id]['data']);
 			}
 			$cat = $id2cat[$cat_id];

@@ -1050,8 +1050,6 @@ class calendar_boupdate extends calendar_bo
 		return $this->so->delete_alarm($id, $this->now_su);
 	}
 
-	var $categories;
-
 	/**
 	 * Find existing categories in database by name or add categories that do not exist yet
 	 * currently used for ical/sif import
@@ -1063,11 +1061,6 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function find_or_add_categories($catname_list, $cal_id=-1)
 	{
-		if (!is_object($this->categories))
-		{
-			$this->categories = new categories($this->user,'calendar');
-		}
-
 		if ($cal_id && $cal_id > 0)
 		{
 			// preserve categories without users read access
@@ -1124,11 +1117,6 @@ class calendar_boupdate extends calendar_bo
 
 	function get_categories($cat_id_list)
 	{
-		if (!is_object($this->categories))
-		{
-			$this->categories = new categories($this->user,'calendar');
-		}
-
 		if (!is_array($cat_id_list))
 		{
 			$cat_id_list = explode(',',$cat_id_list);
@@ -1155,10 +1143,15 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function find_event($event, $relax=false)
 	{
-		$query = array(
-			'cal_start='.$event['start'],
-			'cal_end='.$event['end'],
-		);
+		$query = array();
+		if (isset($event['start']))
+		{
+			$query[] = 'cal_start='.$event['start'];
+		}
+		if (isset($event['end']))
+		{
+			$query[] = 'cal_end='.$event['end'];
+		}
 
 		foreach (array('title', 'location',
 				 'public', 'non_blocking', 'category') as $key)
@@ -1189,7 +1182,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					// Do we work with a pseudo exception here?
 					$match = true;
-					foreach (array('start', 'end', 'title', 'description', 'priority',
+					foreach (array('start', 'end', 'title', 'priority',
 						'location', 'public', 'non_blocking') as $key)
 					{
 						if (isset($event[$key])

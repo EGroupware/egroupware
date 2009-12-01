@@ -82,9 +82,9 @@ class addressbook_vcal extends addressbook_bo
 	* Set Logging
 	*
 	* @var string
-	* off = 0;
+	* off = false;
 	*/
-	var $log = 0;
+	var $log = false;
 	var $logfile="/tmp/log-vcard";
 	/**
 	* Constructor
@@ -390,8 +390,11 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 		$result = $vCard->exportvCalendar();
-		if($this->log)error_log(__LINE__.__METHOD__.__FILE__."'$this->productManufacturer','$this->productName'"."\n",3,$this->logfile);
-                if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($result)."\n",3,$this->logfile);
+		if ($this->log)
+		{
+			error_log(__LINE__.__METHOD__.__FILE__."'$this->productManufacturer','$this->productName'"."\n",3,$this->logfile);
+        	error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($result)."\n",3,$this->logfile);
+		}
 		return $result;
 	}
 
@@ -403,7 +406,7 @@ class addressbook_vcal extends addressbook_bo
 		{
 			if ($contentID)
 			{
-				$contact['contact_id'] = $contentID;
+				$contact['id'] = $contentID;
 			}
 			$result = $this->find_contact($contact, $relax);
 		}

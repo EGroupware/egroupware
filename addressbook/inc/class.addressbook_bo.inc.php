@@ -119,6 +119,12 @@ class addressbook_bo extends addressbook_so
 	 * @var boolean
 	 */
 	var $default_private;
+	/**
+	 * Categories object
+	 *
+	 * @var object
+	 */
+	var $categories;
 
 	function __construct($contact_app='addressbook')
 	{
@@ -245,6 +251,7 @@ class addressbook_bo extends addressbook_so
 		{
 			$this->org_fields =  unserialize($GLOBALS['egw_info']['server']['org_fileds_to_update']);
 		}
+		$this->categories = new categories($this->user,'addressbook');
 	}
 
 	/**
@@ -1418,8 +1425,6 @@ class addressbook_bo extends addressbook_so
 		return $adr_format;
 	}
 
-	var $categories;
-
 	/**
 	 * Find existing categories in database by name or add categories that do not exist yet
 	 * currently used for vcard import
@@ -1431,11 +1436,6 @@ class addressbook_bo extends addressbook_so
 	 */
 	function find_or_add_categories($catname_list, $contact_id=null)
 	{
-		if (!is_object($this->categories))
-		{
-			$this->categories = new categories($this->owner,'addressbook');
-		}
-
 		if($contact_id && $contact_id > 0)
 		{
 			// preserve categories without users read access
@@ -1549,9 +1549,25 @@ class addressbook_bo extends addressbook_so
 	 */
 	function find_contact($contact, $relax=false)
 	{
+		if (!empty($contact['uid']))
+		{
+			// Try the given UID first
+			Horde::logMessage('Addressbook find UID: '. $contact['uid'],
+				__FILE__, __LINE__, PEAR_LOG_DEBUG);
+			$criteria = array ('contact_uid' => $contact['uid']);
+			if (($found = parent::search($criteria))
+				&& ($uidmatch = array_shift($found)))
+			{
+				return $uidmatch['contact_id'];
+			}
+		}
+		unset($contact['uid']);
+
 		if ($contact['id'] && ($found = $this->read($contact['id'])))
 		{
 			// We only do a simple consistency check
+			Horde::logMessage('Addressbook find ID: '. $contact['id'],
+				__FILE__, __LINE__, PEAR_LOG_DEBUG);
 			if ((empty($found['n_family']) || $found['n_family'] == $contact['n_family'])
 					&& (empty($found['n_given']) || $found['n_given'] == $contact['n_given'])
 					&& (empty($found['org_name']) || $found['org_name'] == $contact['org_name']))
@@ -1561,12 +1577,10 @@ class addressbook_bo extends addressbook_so
 		}
 		unset($contact['id']);
 
-		$columns_to_search = array('contact_id',
-					   'n_family', 'n_given', 'n_middle', 'n_prefix', 'n_suffix',
+		$columns_to_search = array('n_family', 'n_given', 'n_middle', 'n_prefix', 'n_suffix',
 						'bday', 'org_name', 'org_unit', 'title', 'role',
 						'email', 'email_home');
-		$tolerance_fields = array('contact_id',
-					  'n_middle', 'n_prefix', 'n_suffix',
+		$tolerance_fields = array('n_middle', 'n_prefix', 'n_suffix',
 					  'bday', 'org_unit', 'title', 'role',
 					  'email', 'email_home');
 		$addr_one_fields = array('adr_one_street',

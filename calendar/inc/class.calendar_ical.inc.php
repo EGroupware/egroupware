@@ -1425,6 +1425,10 @@ class calendar_ical extends calendar_boupdate
 				}
 				break;
 
+			case 'funambol':
+				$this->supportedFields = $defaultFields['synthesis'];
+				break;
+
 			// the fallback for SyncML
 			default:
 				error_log("Unknown calendar SyncML client: manufacturer='$this->productManufacturer'  product='$this->productName'");

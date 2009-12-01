@@ -704,7 +704,8 @@ class infolog_bo
 				);
 			}
 			$values['info_id'] = $info_id;
-
+			// if the info responbsible array is not passed, fetch it from old.
+			if (!array_key_exists('info_responsible',$values)) $values['info_responsible'] = $old['info_responsible'];
 			if (!is_array($values['info_responsible']))		// this should not happen, bug it does ;-)
 			{
 				$values['info_responsible'] = $values['info_responsible'] ? explode(',',$values['info_responsible']) : array();
@@ -722,6 +723,11 @@ class infolog_bo
 			if (!is_object($this->tracking))
 			{
 				$this->tracking = new infolog_tracking($this);
+			}
+
+			if (($missing_fields = array_diff_key($old,$values)))
+			{
+				$values = array_merge($values,$missing_fields);
 			}
 			$this->tracking->track($values,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
 		}
@@ -1082,7 +1088,7 @@ class infolog_bo
 		{
 			$this->categories = new categories($this->user,'infolog');
 		}
-		
+
 		if($info_id && $info_id > 0)
 		{
 			// preserve categories without users read access
@@ -1106,7 +1112,7 @@ class infolog_bo
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
-			
+
 			if (!$cat_id)
 			{
 				// some SyncML clients (mostly phones) add an X- to the category names
@@ -1122,7 +1128,7 @@ class infolog_bo
 				$cat_id_list[] = $cat_id;
 			}
 		}
-		
+
 		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
 		{
 			$cat_id_list = array_merge($old_cats_preserve, $cat_id_list);
@@ -1159,7 +1165,7 @@ class infolog_bo
 		$cat_list = array();
 		foreach($cat_id_list as $cat_id)
 		{
-			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) && 
+			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
 					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
 				$cat_list[] = $cat_name;
@@ -1360,13 +1366,15 @@ class infolog_bo
 	 */
 	function findVTODO($egwData, $relax=false)
 	{
-		$myfilter = array('col_filter' => array('info_uid'=>$egwData['info_uid'])) ;
-		if ($egwData['info_uid']
-			&& ($found = $this->search($myfilter))
-			&& ($uidmatch = array_shift($found)))
+		if (!empty($egwData['info_uid']))
 		{
-			return $uidmatch['info_id'];
-		};
+			$filter = array('col_filter' => array('info_uid' => $egwData['info_uid']));
+			if (($found = $this->search($filter))
+					&& ($uidmatch = array_shift($found)))
+			{
+				return $uidmatch['info_id'];
+			}
+		}
 		unset($egwData['info_uid']);
 
 		$filter = array();
