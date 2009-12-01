@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare API - Translations
- * 
+ *
  * @link http://www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org>
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
@@ -69,7 +69,7 @@ class translation
 			$this->system_charset =& $GLOBALS['egw_setup']->system_charset;
 		}
 
-		if (extension_loaded('mbstring') || @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX)) {
+		if (extension_loaded('mbstring') || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX)) {
 			$this->mbstring = true;
 			if(!empty($this->system_charset)) {
 				ini_set('mbstring.internal_encoding',$this->system_charset);
@@ -123,7 +123,7 @@ class translation
 		if (ini_get('mbstring.func_overload') && $this->mbstring_internal_encoding != $charset)
 		{
 			ini_set('mbstring.internal_encoding',$this->mbstring_internal_encoding = $charset);
-		}			
+		}
 		return $charset;
 	}
 
@@ -148,7 +148,7 @@ class translation
 			$this->add_app('common');
 		}
 		$this->add_app($GLOBALS['egw_info']['flags']['currentapp']);
-		
+
 		$this->markunstranslated = $GLOBALS['egw_info']['server']['markuntranslated'];
 	}
 
@@ -251,7 +251,7 @@ class translation
 					$phrases[strtolower(trim($message_id))] = str_replace("\n",'',$content);
 				}
 				fclose($fp);
-				
+
 				foreach($phrases as $message_id => $content)
 				{
 					$this->lang_arr[$message_id] = $this->convert($content,$phrases['charset']);
@@ -331,7 +331,7 @@ class translation
 		}
 		fclose($f);
 		$availible = "('".implode("','",$availible)."')";
-		
+
 		// this shows first the installed, then the available and then the rest
 		foreach($this->db->select($this->languages_table,array(
 			'lang_id','lang_name',
@@ -459,15 +459,15 @@ class translation
 		if(function_exists('iconv'))
 		{
 			// iconv can not convert from/to utf7-imap
-			if ($to == 'utf7-imap' && function_exists(imap_utf7_encode)) 
+			if ($to == 'utf7-imap' && function_exists(imap_utf7_encode))
 			{
 				$convertedData = iconv($from, 'iso-8859-1', $data);
 				$convertedData = imap_utf7_encode($convertedData);
-				
+
 				return $convertedData;
 			}
 
-			if ($from == 'utf7-imap' && function_exists(imap_utf7_decode)) 
+			if ($from == 'utf7-imap' && function_exists(imap_utf7_decode))
 			{
 				$convertedData = imap_utf7_decode($data);
 				$convertedData = iconv('iso-8859-1', $to, $convertedData);
@@ -476,16 +476,16 @@ class translation
 			}
 
 			// the following is to workaround patch #962307
-			// if using EUC-CN, for iconv it strickly follow GB2312 and fail 
-			// in an email on the first Traditional/Japanese/Korean character, 
-			// but in reality when people send mails in GB2312, UMA mostly use 
+			// if using EUC-CN, for iconv it strickly follow GB2312 and fail
+			// in an email on the first Traditional/Japanese/Korean character,
+			// but in reality when people send mails in GB2312, UMA mostly use
 			// extended GB13000/GB18030 which allow T/Jap/Korean characters.
-			if($from=='EUC-CN') 
+			if($from=='EUC-CN')
 			{
 				$from='gb18030';
 			}
 
-			if (($convertedData = iconv($from,$to,$data))) 
+			if (($convertedData = iconv($from,$to,$data)))
 			{
 				return $convertedData;
 			}
@@ -787,7 +787,7 @@ class translation
 
 		$this->install_langs($langs,'addmissing',$appname);
 	}
-	
+
 	/**
 	 * insert/update one phrase in the lang-table
 	 *
@@ -823,7 +823,7 @@ class translation
 			'message_id' => $message_id,
 		),__LINE__,__FILE__)->fetchColumn();
 	}
-	
+
 	/**
 	 * Return the message_id of a given translation
 	 *
@@ -838,7 +838,7 @@ class translation
 		$where = array('content '.$like.' '.$this->db->quote($translation));	// like to be case-insensitive
 		if ($app) $where['app_name'] = $app;
 		if ($lang) $where['lang'] = $lang;
-		
+
 		return $this->db->select($this->lang_table,'message_id',$where,__LINE__,__FILE__)->fetchColumn();
 	}
 }
