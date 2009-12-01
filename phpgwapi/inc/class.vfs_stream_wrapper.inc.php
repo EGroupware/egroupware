@@ -556,7 +556,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			// check it it's an eGW stream wrapper returning mime-type via url_stat
 			// we need to first check if the constant is defined, as we get a fatal error in php5.3 otherwise
-			if (class_exists($class = self::scheme2class($scheme)) && 
+			if (class_exists($class = $scheme.'_stream_wrapper') &&
 				defined($class.'::STAT_RETURN_MIME_TYPE') &&
 				($mime_attr = constant($class.'::STAT_RETURN_MIME_TYPE')))
 			{
