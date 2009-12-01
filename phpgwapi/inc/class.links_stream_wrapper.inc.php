@@ -206,6 +206,21 @@ class links_stream_wrapper extends sqlfs_stream_wrapper
 
 		return parent::stream_open($url,$mode,$options,$opened_path);
 	}
+
+	/**
+	 * This method is called in response to rename() calls on URL paths associated with the wrapper.
+	 *
+	 * Reimplemented to use our own url_stat and unlink function (workaround for no lsb in php < 5.3)
+	 *
+	 * @param string $url_from
+	 * @param string $url_to
+	 * @param string $class=__CLASS__ class to use to call static methods, eg url_stat (workaround for no late static binding in php < 5.3)
+	 * @return boolean TRUE on success or FALSE on failure
+	 */
+	static function rename ( $url_from, $url_to, $class=__CLASS__)
+	{
+		return parent::rename($url_from,$url_to,$class);
+	}
 }
 
 stream_register_wrapper(links_stream_wrapper::SCHEME ,'links_stream_wrapper');

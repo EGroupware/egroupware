@@ -538,9 +538,11 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @param string $url_from
 	 * @param string $url_to
+	 * @param string $class=__CLASS__ class to use to call static methods, eg url_stat (workaround for no late static binding in php < 5.3)
+	 * @todo remove $class parameter and use static::url_stat() and static::unlink() once we require PHP5.3!
 	 * @return boolean TRUE on success or FALSE on failure
 	 */
-	static function rename ( $url_from, $url_to )
+	static function rename ( $url_from, $url_to, $class=__CLASS__)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
 
@@ -549,14 +551,15 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$to_dir = dirname($path_to);
 		$operation = self::url2operation($url_from);
 
-		if (!($from_stat = self::url_stat($path_from,0)) || !egw_vfs::check_access(dirname($path_from),egw_vfs::WRITABLE))
+		// we have to use array($class,'url_stat'), as $class.'::url_stat' requires PHP 5.2.3 and we currently only require 5.2+
+		if (!($from_stat = call_user_func(array($class,'url_stat'),$path_from,0)) || !egw_vfs::check_access(dirname($path_from),egw_vfs::WRITABLE))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_from,$url_to): $path_from permission denied!");
 			return false;	// no permission or file does not exist
 		}
-		if (!egw_vfs::check_access($to_dir,egw_vfs::WRITABLE,$to_dir_stat = self::url_stat($to_dir,0)))
+		if (!egw_vfs::check_access($to_dir,egw_vfs::WRITABLE,$to_dir_stat = call_user_func(array($class,'url_stat'),$to_dir,0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
@@ -565,7 +568,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		// the filesystem stream-wrapper does NOT allow to rename files to directories, as this makes problems
 		// for our vfs too, we abort here with an error, like the filesystem one does
-		if (($to_stat = self::url_stat($path_to,0)) &&
+		if (($to_stat = call_user_func(array($class,'url_stat'),$path_to,0)) &&
 			($to_stat['mime'] === self::DIR_MIME_TYPE) !== ($from_stat['mime'] === self::DIR_MIME_TYPE))
 		{
 			self::_remove_password($url_from);
@@ -575,7 +578,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			return false;	// no permission or file does not exist
 		}
 		// if destination file already exists, delete it
-		if ($to_stat && !self::unlink($url_to,$operation))
+		if ($to_stat && !call_user_func(array($class,'unlink'),$url_to,$operation))
 		{
 			self::_remove_password($url_to);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
@@ -585,11 +588,26 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset(self::$stat_cache[$path_to]);
 
 		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_id=:fs_id');
-		return $stmt->execute(array(
+		$ok = $stmt->execute(array(
 			'fs_dir'  => $to_dir_stat['ino'],
 			'fs_name' => egw_vfs::basename($path_to),
 			'fs_id'   => $from_stat['ino'],
 		));
+		unset($stmt);
+
+		// check if extension changed and update mime-type in that case (as we currently determine mime-type by it's extension!)
+		// fixes eg. problems with MsWord storing file with .tmp extension and then renaming to .doc
+		if ($ok && ($new_mime = egw_vfs::mime_content_type($url_to,true)) != egw_vfs::mime_content_type($url_to))
+		{
+			//echo "<p>egw_vfs::nime_content_type($url_to,true) = $new_mime</p>\n";
+			$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_mime=:fs_mime WHERE fs_id=:fs_id');
+			$stmt->execute(array(
+				'fs_mime' => $new_mime,
+				'fs_id'   => $from_stat['ino'],
+			));
+			unset(self::$stat_cache[$path_to]);
+		}
+		return $ok;
 	}
 
 	/**

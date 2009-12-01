@@ -10,6 +10,9 @@
  * @version $Id$
  */
 
+/**
+ * Filemanage user interface class
+ */
 class filemanager_ui
 {
 	/**
@@ -80,7 +83,7 @@ class filemanager_ui
 		if (!is_array($content))
 		{
 			$content = array(
-				'nm' => $GLOBALS['egw']->session->appsession('index','filemanager'),
+				'nm' => egw_session::appsession('index','filemanager'),
 			);
 			if (!is_array($content['nm']))
 			{
@@ -152,8 +155,8 @@ class filemanager_ui
 			}
 			unset($content['nm']['rows']);
 		}
-		$clipboard_files = $GLOBALS['egw']->session->appsession('clipboard_files','filemanager');
-		$clipboard_type = $GLOBALS['egw']->session->appsession('clipboard_type','filemanager');
+		$clipboard_files = egw_session::appsession('clipboard_files','filemanager');
+		$clipboard_type = egw_session::appsession('clipboard_type','filemanager');
 
 		if ($content['button'])
 		{
@@ -178,7 +181,7 @@ class filemanager_ui
 				case 'createdir':
 					if ($content['nm']['path'][0] != '/')
 					{
-						$ses = $GLOBALS['egw']->session->appsession('index','filemanager');
+						$ses = egw_session::appsession('index','filemanager');
 						$old_path = $ses['path'];
 						$content['nm']['path'] = egw_vfs::concat($old_path,$content['nm']['path']);
 					}
@@ -188,7 +191,7 @@ class filemanager_ui
 							lang('Permission denied!') : lang('Failed to create directory!');
 						if (!$old_path)
 						{
-							$ses = $GLOBALS['egw']->session->appsession('index','filemanager');
+							$ses = egw_session::appsession('index','filemanager');
 							$old_path = $ses['path'];
 						}
 						$content['nm']['path'] = $old_path;
@@ -196,7 +199,7 @@ class filemanager_ui
 					break;
 				case 'symlink':
 					$target = $content['nm']['path'];
-					$ses = $GLOBALS['egw']->session->appsession('index','filemanager');
+					$ses = egw_session::appsession('index','filemanager');
 					$content['nm']['path'] = $ses['path'];
 					$link = egw_vfs::concat($content['nm']['path'],egw_vfs::basename($target));
 					$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($content['nm']['path'],$target);
@@ -463,8 +466,8 @@ class filemanager_ui
 
 			case 'copy':
 			case 'cut':
-				$GLOBALS['egw']->session->appsession('clipboard_files','filemanager',$selected);
-				$GLOBALS['egw']->session->appsession('clipboard_type','filemanager',$action);
+				egw_session::appsession('clipboard_files','filemanager',$selected);
+				egw_session::appsession('clipboard_type','filemanager',$action);
 				return lang('%1 URLs %2 to clipboard.',count($selected),$action=='copy'?lang('copied'):lang('cut'));
 
 			case 'copy_paste':
@@ -527,7 +530,7 @@ class filemanager_ui
 						++$errs;
 					}
 				}
-				$GLOBALS['egw']->session->appsession('clipboard_files','filemanager',false);	// cant move again
+				egw_session::appsession('clipboard_files','filemanager',false);	// cant move again
 				if ($errs)
 				{
 					return lang('%1 errors moving (%2 files moved)!',$errs,$files);
@@ -571,7 +574,7 @@ class filemanager_ui
 		{
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'projectmanager';
 		}
-		$GLOBALS['egw']->session->appsession('index','filemanager',$query);
+		egw_session::appsession('index','filemanager',$query);
 
 		if (!egw_vfs::stat($query['path'],true) || !egw_vfs::is_dir($query['path']) || !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
 		{
@@ -688,7 +691,6 @@ class filemanager_ui
 				$content['path'] = $path;
 				$content['hsize'] = egw_vfs::hsize($stat['size']);
 				$content['mime'] = egw_vfs::mime_content_type($path);
-				$content['icon'] = egw_vfs::mime_icon($content['mime']);
 				$content['gid'] *= -1;	// our widgets use negative gid's
 				if (($props = egw_vfs::propfind($path)))
 				{
@@ -759,6 +761,7 @@ class filemanager_ui
 								$msg .= lang('Renamed %1 to %2.',basename($path),basename($to)).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
+								$content['mime'] = mime_magic::filename2mime($path);	// recheck mime type
 							}
 							else
 							{
@@ -869,13 +872,14 @@ class filemanager_ui
 			$js = "opener.location.href='".addslashes($link)."'; ";
 			if ($button == 'save') $js .= "window.close();";
 			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
-			if ($button == 'save')$GLOBALS['egw']->common->egw_exit();
+			if ($button == 'save') common::egw_exit();
 		}
 		if ($content['is_link'] && !egw_vfs::stat($path))
 		{
 			$msg .= ($msg ? "\n" : '').lang('Link target %1 not found!',$content['symlink']);
 		}
-		$content['link'] = $GLOBALS['egw']->link(egw_vfs::download_url($path));
+		$content['link'] = egw::link(egw_vfs::download_url($path));
+		$content['icon'] = egw_vfs::mime_icon($content['mime']);
 		$content['msg'] = $msg;
 
 		if (($readonlys['uid'] = !egw_vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';

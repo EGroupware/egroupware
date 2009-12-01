@@ -611,19 +611,20 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * - use eGW's mime-magic class
 	 *
 	 * @param string $path
+	 * @param boolean $recheck=false true = do a new check, false = rely on stored mime type (if existing)
 	 * @return string mime-type (self::DIR_MIME_TYPE for directories)
 	 */
-	static function mime_content_type($path)
+	static function mime_content_type($path,$recheck=false)
 	{
 		if (!($url = self::resolve_url_symlinks($path)))
 		{
 			return false;
 		}
-		if (($scheme = parse_url($url,PHP_URL_SCHEME)))
+		if (($scheme = parse_url($url,PHP_URL_SCHEME)) && !$recheck)
 		{
 			// check it it's an eGW stream wrapper returning mime-type via url_stat
 			// we need to first check if the constant is defined, as we get a fatal error in php5.3 otherwise
-			if (class_exists($class = self::scheme2class($scheme)) && 
+			if (class_exists($class = self::scheme2class($scheme)) &&
 				defined($class.'::STAT_RETURN_MIME_TYPE') &&
 				($mime_attr = constant($class.'::STAT_RETURN_MIME_TYPE')))
 			{
@@ -643,12 +644,12 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$mime = mime_content_type($path);
 		}
-		// using eGW's own mime magic
+		// using EGw's own mime magic (currently only checking the extension!)
 		if (!$mime)
 		{
 			$mime = mime_magic::filename2mime(parse_url($url,PHP_URL_PATH));
 		}
-		//error_log(__METHOD__."($path) mime=$mime");
+		//error_log(__METHOD__."($path,$recheck) mime=$mime");
 		return $mime;
 	}
 
