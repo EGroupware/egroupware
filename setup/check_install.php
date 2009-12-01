@@ -206,14 +206,26 @@ $checks = array(
 		'error' => lang("The ctype extension is needed by HTMLpurifier to check content of FCKeditor agains Cross Site Skripting."),
 	),
 );
-if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = session_save_path()))
+if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = realpath(session_save_path())))
 {
-	$checks[realpath($session_path)] = array(
-		'func' => 'permission_check',
-		'is_writable' => true,
-		'msg' => lang("Checking if php.ini setting session.save_path='%1' is writable by the webserver",session_save_path()),
-		'error' => lang('You will NOT be able to log into eGroupWare using PHP sessions: "session could not be verified" !!!'),
-	);
+	$sp_visible = true;
+	if (($open_basedir = ini_get('open_basedir')) && $open_basedir != 'none')
+	{
+		foreach(explode(PATH_SEPARATOR,$open_basedir) as $dir)
+		{
+			$dir = realpath($dir);
+			if (($sp_visible = substr($session_path,0,strlen($dir)) == $dir)) break;
+		}
+	}
+	if ($sp_visible)	// only check if session_save_path is visible by webserver
+	{
+		$checks[$session_path] = array(
+			'func' => 'permission_check',
+			'is_writable' => true,
+			'msg' => lang("Checking if php.ini setting session.save_path='%1' is writable by the webserver",session_save_path()),
+			'error' => lang('You will NOT be able to log into eGroupWare using PHP sessions: "session could not be verified" !!!'),
+		);
+	}
 }
 $setup_info = $GLOBALS['egw_setup']->detection->get_versions();
 foreach($setup_info as $app => $app_data)
