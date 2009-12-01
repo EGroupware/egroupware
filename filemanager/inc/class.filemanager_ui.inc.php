@@ -590,7 +590,6 @@ class filemanager_ui
 				$content['path'] = $path;
 				$content['hsize'] = egw_vfs::hsize($stat['size']);
 				$content['mime'] = egw_vfs::mime_content_type($path);
-				$content['icon'] = egw_vfs::mime_icon($content['mime']);
 				$content['gid'] *= -1;	// our widgets use negative gid's
 				if (($props = egw_vfs::propfind($path)))
 				{
@@ -638,7 +637,7 @@ class filemanager_ui
 				{
 					if (isset($content[$name]) && ($old_value != $content[$name] ||
 						// do not check for modification, if modify_subs is checked!
-						$content['modify_subs'] && in_array($name,array('uid','gid','perms'))) && 
+						$content['modify_subs'] && in_array($name,array('uid','gid','perms'))) &&
 						($name != 'uid' || egw_vfs::$is_root))
 					{
 						if ($name == 'name')
@@ -657,6 +656,7 @@ class filemanager_ui
 								$msg .= lang('Renamed %1 to %2.',$path,$to).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
+								$content['mime'] = mime_magic::filename2mime($path);    // recheck mime type
 							}
 							else
 							{
@@ -770,6 +770,7 @@ class filemanager_ui
 			if ($button == 'save')$GLOBALS['egw']->common->egw_exit();
 		}
 		$content['link'] = $GLOBALS['egw']->link(egw_vfs::download_url($path));
+		$content['icon'] = egw_vfs::mime_icon($content['mime']);
 		$content['msg'] = $msg;
 
 		if (($readonlys['uid'] = !egw_vfs::$is_root) && !$content['uid']) $content['ro_uid_root'] = 'root';
