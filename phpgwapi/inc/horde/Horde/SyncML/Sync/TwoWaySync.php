@@ -419,7 +419,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			'filter' => $this->_filterExpression
 		));
 
-		$state->mergeAddedItems($syncType, $addedItems);
+		$state->setAddedItems($syncType, $addedItems);
 
 		$state->setDeletedItems($syncType, $registry->call($hordeType . '/listBy', array (
 			'action' => 'delete',
