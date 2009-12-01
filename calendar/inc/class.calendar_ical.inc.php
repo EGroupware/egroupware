@@ -24,6 +24,15 @@ class calendar_ical extends calendar_boupdate
 	 */
 	var $supportedFields;
 
+	var $recur_days_1_0 = array(
+		MCAL_M_MONDAY    => 'MO',
+		MCAL_M_TUESDAY   => 'TU',
+		MCAL_M_WEDNESDAY => 'WE',
+		MCAL_M_THURSDAY  => 'TH',
+		MCAL_M_FRIDAY    => 'FR',
+		MCAL_M_SATURDAY  => 'SA',
+		MCAL_M_SUNDAY    => 'SU',
+	);
 	/**
 	 * @var array $status_egw2ical conversation of the participant status egw => ical
 	 */
@@ -1354,6 +1363,10 @@ class calendar_ical extends calendar_boupdate
 					default:
 						$this->supportedFields = $defaultFields['full'];
 				}
+				break;
+
+			case 'funambol':
+				$this->supportedFields = $defaultFields['synthesis'];
 				break;
 
 			// the fallback for SyncML

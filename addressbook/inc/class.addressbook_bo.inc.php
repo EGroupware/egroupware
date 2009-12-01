@@ -441,10 +441,10 @@ class addressbook_bo extends addressbook_so
 		}
 		return $updated;
 	}
-	
+
 	/**
 	 * Cleanup all contacts db fields of all users  (called by Admin >> Addressbook >> Site configuration (Admin only)
-	 * 
+	 *
 	 * Cleanup means to truncate all unnecessary chars like whitespaces or tabs,
 	 * remove unneeded carriage returns or set empty fields to NULL
 	 *
@@ -457,7 +457,7 @@ class addressbook_bo extends addressbook_so
 		{
 			unset($this->somain->grants);	// to NOT limit search to contacts readable by current user
 		}
-		
+
 		// fields that must not be touched
 		$fields_exclude = array(
 			'id'				=> true,
@@ -475,7 +475,7 @@ class addressbook_bo extends addressbook_so
 			'calendar_uri' => true,
 			'photo'			=> true,
 		);
-		
+
 		// to be able to work on huge contact repositories we read the contacts in chunks of 100
 		for($n = $updated = $errors = 0; ($contacts = parent::search(array(),false,'','','',false,'OR',array($n*100,100))); ++$n)
 		{
@@ -485,7 +485,7 @@ class addressbook_bo extends addressbook_so
 				foreach($contact as $field_name => $field_value)
 				{
 					if($fields_exclude[$field_name] === true) continue; // dont touch specified field
-					
+
 					if (is_string($field_value) && $field_name != 'pubkey' && $field_name != 'jpegphoto')
 					{
 						// check if field has to be trimmed
@@ -505,7 +505,7 @@ class addressbook_bo extends addressbook_so
 						$fields_to_update[$field_name] = $field_value = null;
 					}
 				}
-				
+
 				if(count($fields_to_update) > 0)
 				{
 					$contact_to_save = array(
@@ -514,7 +514,7 @@ class addressbook_bo extends addressbook_so
 						'private' => $contact['private'],
 						'account_id' => $contact['account_id'],
 						'uid' => $contact['uid']) + $fields_to_update;
-					
+
 					if ($this->save($contact_to_save,$ignore_acl))
 					{
 						$updated++;
@@ -705,7 +705,8 @@ class addressbook_bo extends addressbook_so
 			return false;
 		}
 		// convert categories
-		if (is_array($contact['cat_id'])) {
+		if (is_array($contact['cat_id']))
+		{
 			$contact['cat_id'] = implode(',',$contact['cat_id']);
 		}
 		// last modified
@@ -1561,7 +1562,7 @@ class addressbook_bo extends addressbook_so
 				$cat_id_list[] = $cat_id;
 			}
 		}
-		
+
 		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
 		{
 			$cat_id_list = array_merge($cat_id_list, $old_cats_preserve);
@@ -1590,7 +1591,7 @@ class addressbook_bo extends addressbook_so
 		$cat_list = array();
 		foreach($cat_id_list as $cat_id)
 		{
-			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) && 
+			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
 					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
 			{
 				$cat_list[] = $cat_name;
@@ -1635,9 +1636,25 @@ class addressbook_bo extends addressbook_so
 	 */
 	function find_contact($contact, $relax=false)
 	{
+		if (!empty($contact['uid']))
+		{
+			// Try the given UID first
+			Horde::logMessage('Addressbook find UID: '. $contact['uid'],
+				__FILE__, __LINE__, PEAR_LOG_DEBUG);
+			$criteria = array ('contact_uid' => $contact['uid']);
+			if (($found = parent::search($criteria))
+				&& ($uidmatch = array_shift($found)))
+			{
+				return $uidmatch['contact_id'];
+			}
+		}
+		unset($contact['uid']);
+
 		if ($contact['id'] && ($found = $this->read($contact['id'])))
 		{
 			// We only do a simple consistency check
+			Horde::logMessage('Addressbook find ID: '. $contact['id'],
+				__FILE__, __LINE__, PEAR_LOG_DEBUG);
 			if ((empty($found['n_family']) || $found['n_family'] == $contact['n_family'])
 					&& (empty($found['n_given']) || $found['n_given'] == $contact['n_given'])
 					&& (empty($found['org_name']) || $found['org_name'] == $contact['org_name']))
@@ -1647,12 +1664,10 @@ class addressbook_bo extends addressbook_so
 		}
 		unset($contact['id']);
 
-		$columns_to_search = array('contact_id',
-					   'n_family', 'n_given', 'n_middle', 'n_prefix', 'n_suffix',
+		$columns_to_search = array('n_family', 'n_given', 'n_middle', 'n_prefix', 'n_suffix',
 						'bday', 'org_name', 'org_unit', 'title', 'role',
 						'email', 'email_home');
-		$tolerance_fields = array('contact_id',
-					  'n_middle', 'n_prefix', 'n_suffix',
+		$tolerance_fields = array('n_middle', 'n_prefix', 'n_suffix',
 					  'bday', 'org_unit', 'title', 'role',
 					  'email', 'email_home');
 		$addr_one_fields = array('adr_one_street',

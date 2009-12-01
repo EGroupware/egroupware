@@ -1135,22 +1135,17 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function find_or_add_categories($catname_list, $cal_id=-1)
 	{
-		if (!is_object($this->categories))
-		{
-			$this->categories = new categories($this->user,'calendar');
-		}
-
-		if($cal_id && $cal_id > 0)
+		if ($cal_id && $cal_id > 0)
 		{
 			// preserve categories without users read access
 			$old_event = $this->read($cal_id);
 			$old_categories = explode(',',$old_event['category']);
 			$old_cats_preserve = array();
-			if(is_array($old_categories) && count($old_categories) > 0)
+			if (is_array($old_categories) && count($old_categories) > 0)
 			{
-				foreach($old_categories as $cat_id)
+				foreach ($old_categories as $cat_id)
 				{
-					if(!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if (!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
@@ -1159,7 +1154,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		$cat_id_list = array();
-		foreach($catname_list as $cat_name)
+		foreach ($catname_list as $cat_name)
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
@@ -1180,7 +1175,7 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 
-		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
+		if (is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
 		{
 			$cat_id_list = array_merge($cat_id_list, $old_cats_preserve);
 		}
@@ -1196,17 +1191,12 @@ class calendar_boupdate extends calendar_bo
 
 	function get_categories($cat_id_list)
 	{
-		if (!is_object($this->categories))
-		{
-			$this->categories = new categories($this->user,'calendar');
-		}
-
 		if (!is_array($cat_id_list))
 		{
 			$cat_id_list = explode(',',$cat_id_list);
 		}
 		$cat_list = array();
-		foreach($cat_id_list as $cat_id)
+		foreach ($cat_id_list as $cat_id)
 		{
 			if ($cat_id && $this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
 					($cat_name = $this->categories->id2name($cat_id)) && $cat_name != '--')
@@ -1227,10 +1217,15 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function find_event($event, $relax=false)
 	{
-		$query = array(
-			'cal_start='.$event['start'],
-			'cal_end='.$event['end'],
-		);
+		$query = array();
+		if (isset($event['start']))
+		{
+			$query[] = 'cal_start='.$event['start'];
+		}
+		if (isset($event['end']))
+		{
+			$query[] = 'cal_end='.$event['end'];
+		}
 
 		foreach (array('title', 'location',
 				 'public', 'non_blocking', 'category') as $key)
@@ -1246,7 +1241,7 @@ class calendar_boupdate extends calendar_bo
 				$query['cal_uid'] = $event['uid'];
 				$query['cal_recurrence'] = $event['recurrence'];
 
-				if($foundEvents = parent::search(array(
+				if ($foundEvents = parent::search(array(
 					'query' => $query,
 				)))
 				{
@@ -1261,7 +1256,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					// Do we work with a pseudo exception here?
 					$match = true;
-					foreach (array('start', 'end', 'title', 'description', 'priority',
+					foreach (array('start', 'end', 'title', 'priority',
 						'location', 'public', 'non_blocking') as $key)
 					{
 						if (isset($event[$key])

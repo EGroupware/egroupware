@@ -216,6 +216,8 @@ class calendar_bo
 		$this->config = config::read('calendar');	// only used for horizont, regular calendar config is under phpgwapi
 
 		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
+
+		$this->categories = new categories($this->user,'calendar');
 	}
 
 	/**
@@ -1314,10 +1316,7 @@ class calendar_bo
 		static $id2cat = array();
 		$cats = array();
 		$color = 0;
-		if (!is_object($this->categories))
-		{
-			$this->categories = new categories($this->user,'calendar');
-		}
+
 		foreach(explode(',',$category) as $cat_id)
 		{
 			if (!$cat_id) continue;
