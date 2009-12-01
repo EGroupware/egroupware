@@ -612,7 +612,7 @@ class Horde_SyncML_State {
     function getTargets()
     {
     	if(count($this->_syncs) < 1)
-    		return FALSE;
+    		return false;
 
     	foreach($this->_syncs as $target => $sync)
     	{

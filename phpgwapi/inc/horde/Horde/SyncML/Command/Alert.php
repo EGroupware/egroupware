@@ -174,118 +174,110 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         // Determine sync type and status response code.
         Horde::logMessage("SyncML: Alert " . $this->_alert, __FILE__, __LINE__, PEAR_LOG_DEBUG);
         switch ($this->_alert) {
-	case ALERT_NEXT_MESSAGE:
-		$state->setAlert222Received(true);
-	case ALERT_RESULT_ALERT:
-	case ALERT_NO_END_OF_DATA:
-            // Nothing to do on our side
-            $status = new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
-            $status->setCmdRef($this->_cmdID);
-            if ($this->_sourceLocURI != null) {
-                $status->setSourceRef($this->_sourceLocURI);
-            }
-            if ($this->_targetLocURI != null) {
-                $status->setTargetRef((isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI));
-            }
-            if ($this->_alert == ALERT_NEXT_MESSAGE) {
-                if ($this->_sourceLocURI != null) {
-                    $status->setItemSourceLocURI($this->_sourceLocURI);
-                }
-                if ($this->_targetLocURI != null) {
-                    $status->setItemTargetLocURI(isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI);
-                }
-            }
-            $currentCmdID = $status->output($currentCmdID, $output);
-            return $currentCmdID;
-        case ALERT_TWO_WAY:
-            if ($anchormatch) {
-                $synctype = ALERT_TWO_WAY;
-                $response = RESPONSE_OK;
-            } else {
-                $synctype = ALERT_SLOW_SYNC;
-                $response = RESPONSE_REFRESH_REQUIRED;
-            }
-            break;
+	        case ALERT_NEXT_MESSAGE:
+		        $state->setAlert222Received(true);
+	        case ALERT_RESULT_ALERT:
+	        case ALERT_NO_END_OF_DATA:
+		        // Nothing to do on our side
+		        $status = new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
+		        $status->setCmdRef($this->_cmdID);
+		        if ($this->_sourceLocURI != null) {
+			        $status->setSourceRef($this->_sourceLocURI);
+		        }
+		        if ($this->_targetLocURI != null) {
+			        $status->setTargetRef((isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI));
+		        }
+		        if ($this->_alert == ALERT_NEXT_MESSAGE) {
+			        if ($this->_sourceLocURI != null) {
+				        $status->setItemSourceLocURI($this->_sourceLocURI);
+			        }
+			        if ($this->_targetLocURI != null) {
+				        $status->setItemTargetLocURI(isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI);
+			        }
+		        }
+		        $currentCmdID = $status->output($currentCmdID, $output);
+		        return $currentCmdID;
+	        case ALERT_TWO_WAY:
+		        if ($anchormatch) {
+			        $synctype = ALERT_TWO_WAY;
+			        $response = RESPONSE_OK;
+		        } else {
+			        $synctype = ALERT_SLOW_SYNC;
+			        $response = RESPONSE_REFRESH_REQUIRED;
+		        }
+		        break;
 
-        case ALERT_SLOW_SYNC:
-            $synctype = ALERT_SLOW_SYNC;
-            $response = $anchormatch ? RESPONSE_OK : RESPONSE_REFRESH_REQUIRED;
-            break;
+	        case ALERT_SLOW_SYNC:
+		        $synctype = ALERT_SLOW_SYNC;
+		        $response = $anchormatch ? RESPONSE_OK : RESPONSE_REFRESH_REQUIRED;
+		        break;
 
-        case ALERT_ONE_WAY_FROM_CLIENT:
-            if ($anchormatch) {
-                $synctype = ALERT_ONE_WAY_FROM_CLIENT;
-                $response = RESPONSE_OK;
-            } else {
-                $synctype = ALERT_REFRESH_FROM_CLIENT;
-                $response = RESPONSE_REFRESH_REQUIRED;
-            }
-            break;
+	        case ALERT_ONE_WAY_FROM_CLIENT:
+		        if ($anchormatch) {
+			        $synctype = ALERT_ONE_WAY_FROM_CLIENT;
+			        $response = RESPONSE_OK;
+		        } else {
+			        $synctype = ALERT_REFRESH_FROM_CLIENT;
+			        $response = RESPONSE_REFRESH_REQUIRED;
+		        }
+		        break;
 
-        case ALERT_REFRESH_FROM_CLIENT:
-            $synctype = ALERT_REFRESH_FROM_CLIENT;
-            $response = $anchormatch ? RESPONSE_OK : RESPONSE_REFRESH_REQUIRED;
+	        case ALERT_REFRESH_FROM_CLIENT:
+		        $synctype = ALERT_REFRESH_FROM_CLIENT;
+		        $response = $anchormatch ? RESPONSE_OK : RESPONSE_REFRESH_REQUIRED;
 
-            // We will erase the current server content,
-            // then we can add the client's contents.
+		        // We will erase the current server content,
+		        // then we can add the client's contents.
 
-            $hordeType = $state->getHordeType($this->_targetLocURI);
+		        $hordeType = $state->getHordeType($this->_targetLocURI);
 
-            $state->setTargetURI($this->_targetLocURI);
-            $deletes = $state->getClientItems();
-            if (is_array($deletes)) {
-                foreach ($deletes as $delete) {
-                    $registry->call($hordeType . '/delete', array($delete));
-                }
-                Horde::logMessage("SyncML: RefreshFromClient " . count($deletes) . " entries deleted for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-            }
-            $anchormatch = false;
-            break;
+		        $state->setTargetURI($this->_targetLocURI);
+		        $deletes = $state->getClientItems();
+		        if (is_array($deletes)) {
+			        foreach ($deletes as $delete) {
+				        $registry->call($hordeType . '/delete', array($delete));
+			        }
+			        Horde::logMessage("SyncML: RefreshFromClient " . count($deletes) . " entries deleted for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		        }
+		        $anchormatch = false;
+		        break;
 
-       case ALERT_ONE_WAY_FROM_SERVER:
-            if ($anchormatch) {
-                $synctype = ALERT_ONE_WAY_FROM_SERVER;
-                $response = RESPONSE_OK;
-            } else {
-                $synctype = ALERT_REFRESH_FROM_SERVER;
-                $response = RESPONSE_REFRESH_REQUIRED;
-            }
-            break;
+	        case ALERT_ONE_WAY_FROM_SERVER:
+		        if ($anchormatch) {
+			        $synctype = ALERT_ONE_WAY_FROM_SERVER;
+			        $response = RESPONSE_OK;
+		        } else {
+			        $synctype = ALERT_REFRESH_FROM_SERVER;
+			        $response = RESPONSE_REFRESH_REQUIRED;
+		        }
+		        break;
 
-        case ALERT_REFRESH_FROM_SERVER:
-            $synctype = ALERT_REFRESH_FROM_SERVER;
-            $response = $anchormatch ? RESPONSE_OK : RESPONSE_REFRESH_REQUIRED;
-            break;
+	        case ALERT_REFRESH_FROM_SERVER:
+		        $synctype = ALERT_REFRESH_FROM_SERVER;
+		        $response = $anchormatch ? RESPONSE_OK : RESPONSE_REFRESH_REQUIRED;
+		        break;
 
-        case ALERT_RESUME:
-            // @TODO: Suspend and Resume is not supported yet
-            $synctype = ALERT_SLOW_SYNC;
-            $response = RESPONSE_REFRESH_REQUIRED;
-            break;
+	        case ALERT_RESUME:
+		        // @TODO: Suspend and Resume is not supported yet
+		        $synctype = ALERT_SLOW_SYNC;
+		        $response = RESPONSE_REFRESH_REQUIRED;
+		        break;
 
-        default:
-            // We can't handle this one
-            Horde::logMessage('SyncML: Unknown sync type ' . $this->_alert,
-                __FILE__, __LINE__, PEAR_LOG_ERR);
-            $status = new Horde_SyncML_Command_Status(RESPONSE_BAD_REQUEST, 'Alert');
-            $status->setCmdRef($this->_cmdID);
-            if ($this->_sourceLocURI != null) {
-                $status->setSourceRef($this->_sourceLocURI);
-            }
-            if ($this->_targetLocURI != null) {
-                $status->setTargetRef((isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI));
-            }
-       	    $currentCmdID = $status->output($currentCmdID, $output);
-            return $currentCmdID;
+	        default:
+		        // We can't handle this one
+		        Horde::logMessage('SyncML: Unknown sync type ' . $this->_alert,
+			        __FILE__, __LINE__, PEAR_LOG_ERR);
+	        $status = new Horde_SyncML_Command_Status(RESPONSE_BAD_REQUEST, 'Alert');
+	        $status->setCmdRef($this->_cmdID);
+	        if ($this->_sourceLocURI != null) {
+		        $status->setSourceRef($this->_sourceLocURI);
+	        }
+	        if ($this->_targetLocURI != null) {
+		        $status->setTargetRef((isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI));
+	        }
+	        $currentCmdID = $status->output($currentCmdID, $output);
+	        return $currentCmdID;
         }
-
-        // Store client's Next Anchor in State and
-        // set server's Next Anchor.  After successful sync
-        // this is then written to persistence for negotiation of
-        // further syncs.
-        $state->setClientAnchorNext($type, $this->_metaAnchorNext);
-        $serverAnchorNext = time();
-        $state->setServerAnchorNext($type, $serverAnchorNext);
 
         // Now set interval to retrieve server changes from, defined by
         // ServerAnchor [Last,Next]
@@ -305,7 +297,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
                 . $this->_targetLocURI .  '; sync type ' . $synctype,
                 __FILE__, __LINE__, PEAR_LOG_DEBUG);
             $sync = &Horde_SyncML_Sync::factory($synctype);
-	    $state->clearConflictItems($this->_targetLocURI);
+	    	$state->clearConflictItems($this->_targetLocURI);
         }
         $sync->setTargetLocURI($this->_targetLocURI);
         $sync->setSourceLocURI($this->_sourceLocURI);
@@ -313,6 +305,21 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         $sync->setsyncType($synctype);
         $sync->setFilterExpression($this->_filterExpression);
         $state->setSync($this->_targetLocURI, $sync);
+        $hordeType = $state->getHordeType($this->_targetLocURI);
+        $changes =& $registry->call($hordeType. '/listBy',
+						array('action' => 'modify',
+								'timestamp' => $serverAnchorLast,
+								'type' => $this->_targetLocURI,
+								'filter' => $this->_filterExpression));
+		$state->setChangedItems($this->_targetLocURI, $changes);
+
+        // Store client's Next Anchor in State and
+        // set server's Next Anchor.  After successful sync
+        // this is then written to persistence for negotiation of
+        // further syncs.
+        $state->setClientAnchorNext($type, $this->_metaAnchorNext);
+        $serverAnchorNext = time();
+        $state->setServerAnchorNext($type, $serverAnchorNext);
 
        	$status = new Horde_SyncML_Command_Status($response, 'Alert');
         $status->setCmdRef($this->_cmdID);

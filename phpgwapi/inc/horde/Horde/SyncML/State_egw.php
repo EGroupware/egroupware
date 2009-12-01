@@ -213,8 +213,9 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	/**
 	 * returns GUIDs of all client items
 	 */
-	function getClientItems() {
-		$mapID = $this->_locName . $this->_sourceURI . $this->_targetURI;
+	function getClientItems($type=false) {
+		if (!$type) $type = $this->_targetURI;
+		$mapID = $this->_locName . $this->_sourceURI . $type;
 
 		$guids = array();
 		foreach($GLOBALS['egw']->db->select('egw_contentmap', 'map_guid', array(

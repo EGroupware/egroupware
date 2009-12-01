@@ -308,21 +308,11 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 		$hordeType = $state->getHordeType($syncType);
 		$state->setTargetURI($syncType);
 		$future = $state->getServerAnchorNext($syncType);
-		$delta_add = 0;
 
-		Horde::logMessage("SyncML: reading added items from database for $hordeType",
-			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-		/* The items, which now match the filter criteria are show here, too
-		$delta_add = count($registry->call($hordeType. '/listBy',
-			array('action' => 'add',
-					'timestamp' => $future,
-					'type' => $syncType,
-					'filter' => $this->_filterExpression)));
-		*/
 		$state->mergeAddedItems($syncType, $registry->call($hordeType. '/list', array('filter' => $this->_filterExpression)));
 
 		$this->_syncDataLoaded = TRUE;
 
-		return count($state->getAddedItems($syncType)) - $delta_add + count($state->getConflictItems($syncType));
+		return count($state->getAddedItems($syncType)) + count($state->getConflictItems($syncType));
 	}
 }
