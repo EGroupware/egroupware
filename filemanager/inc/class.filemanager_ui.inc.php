@@ -740,7 +740,7 @@ class filemanager_ui
 				{
 					if (isset($content[$name]) && ($old_value != $content[$name] ||
 						// do not check for modification, if modify_subs is checked!
-						$content['modify_subs'] && in_array($name,array('uid','gid','perms'))) && 
+						$content['modify_subs'] && in_array($name,array('uid','gid','perms'))) &&
 						($name != 'uid' || egw_vfs::$is_root))
 					{
 						if ($name == 'name')
@@ -756,13 +756,13 @@ class filemanager_ui
 							}
 							if (egw_vfs::rename($path,$to))
 							{
-								$msg .= lang('Renamed %1 to %2.',$path,$to).' ';
+								$msg .= lang('Renamed %1 to %2.',basename($path),basename($to)).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
 							}
 							else
 							{
-								$msg .= lang('Rename of %1 to %2 failed!',$path,$to).' ';
+								$msg .= lang('Rename of %1 to %2 failed!',basename($path),basename($to)).' ';
 								if (egw_vfs::deny_script($to))
 								{
 									$msg .= lang('You are NOT allowed to upload a script!').' ';
