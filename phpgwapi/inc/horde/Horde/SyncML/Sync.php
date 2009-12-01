@@ -177,14 +177,8 @@ class Horde_SyncML_Sync {
 		$sourceURI = $state->getSourceURI();
 		$hordeType = $state->getHordeType($type);
 		$serverAnchorLast = $state->getServerAnchorLast($type);
-		$state->setTargetURI($type);
 		$changes = array();
-		// First we get all changes done after the previous sync start
-		foreach ($registry->call($hordeType. '/listBy',
-			array('action' => 'modify',
-					'timestamp' => $serverAnchorLast,
-					'type' => $type,
-					'filter' => $this->_filterExpression)) as $change) {
+		foreach($state->getChangedItems($type) as $change) {
 			// now we have to remove the ones
 			// that came from the last sync with this client
 			$guid_ts = $state->getSyncTSforAction($change, 'modify');

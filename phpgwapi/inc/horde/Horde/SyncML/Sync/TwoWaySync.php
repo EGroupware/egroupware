@@ -409,27 +409,8 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		$state = & $_SESSION['SyncML.state'];
 		$syncType = $this->_targetLocURI;
 		$hordeType = $state->getHordeType($syncType);
-		$state->setTargetURI($syncType);
 		$refts = $state->getServerAnchorLast($syncType);
 		$future = $state->getServerAnchorNext($syncType);
-		$delta_mod = 0;
-		$delta_add = 0;
-
-		Horde :: logMessage("SyncML: reading changed items from database for $hordeType",
-			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-		$delta_mod = count($registry->call($hordeType . '/listBy', array (
-			'action' => 'modify',
-			'timestamp' => $future,
-			'type' => $syncType,
-			'filter' => $this->_filterExpression
-		)));
-
-		$changedItems =& $registry->call($hordeType . '/listBy', array (
-			'action' => 'modify',
-			'timestamp' => $refts,
-			'type' => $syncType,
-			'filter' => $this->_filterExpression
-		));
 
 		$addedItems =& $registry->call($hordeType . '/listBy', array (
 			'action' => 'add',
@@ -437,11 +418,6 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			'type' => $syncType,
 			'filter' => $this->_filterExpression
 		));
-
-		// added items may show up as changed, too
-		$changedItems = array_diff($changedItems, $addedItems);
-
-		$state->mergeChangedItems($syncType, $changedItems);
 
 		$state->mergeAddedItems($syncType, $addedItems);
 
@@ -452,17 +428,8 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			'filter' => $this->_filterExpression
 		)));
 
-		/* The items, which now match the filter criteria are show here, too
-		$delta_add = count($registry->call($hordeType . '/listBy', array (
-			'action' => 'add',
-			'timestamp' => $future,
-			'type' => $syncType,
-			'filter' => $this->_filterExpression
-		)));
-		*/
-
 		$this->_syncDataLoaded = TRUE;
 
-		return count($state->getChangedItems($syncType)) - $delta_mod + count($state->getDeletedItems($syncType)) + count($state->getAddedItems($syncType)) - $delta_add + count($state->getConflictItems($syncType));
+		return count($state->getChangedItems($syncType)) + count($state->getDeletedItems($syncType)) + count($state->getAddedItems($syncType)) + count($state->getConflictItems($syncType));
 	}
 }

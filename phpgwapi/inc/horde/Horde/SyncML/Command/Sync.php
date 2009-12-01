@@ -127,87 +127,92 @@ class Horde_SyncML_Command_Sync extends Horde_SyncML_Command {
 
     function syncToClient($currentCmdID, &$output)
     {
-	Horde::logMessage('SyncML: starting sync to client', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	    Horde::logMessage('SyncML: starting sync to client',
+		    __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-        $state = &$_SESSION['SyncML.state'];
+	    $state = &$_SESSION['SyncML.state'];
 
-       	if($state->getSyncStatus() >= CLIENT_SYNC_FINNISHED && $state->getSyncStatus() < SERVER_SYNC_FINNISHED)
-       	{
-		$deviceInfo = $state->getClientDeviceInfo();
-		$targets = $state->getTargets();
-		foreach($targets as $target)
-		{
-        	$sync = &$state->getSync($target);
-			Horde::logMessage('SyncML['. session_id() .']: sync alerttype '. $sync->_syncType .' found for target ' . $target, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			if ($sync->_syncType == ALERT_ONE_WAY_FROM_CLIENT ||
-				$sync->_syncType == ALERT_REFRESH_FROM_CLIENT) {
-
-				Horde::logMessage('SyncML['. session_id() .']: From client Sync, no sync of '. $target .' to client', __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				$state->clearSync($target);
-
-			} else if ($state->getSyncStatus() >= CLIENT_SYNC_ACKNOWLEDGED) {
-
-				Horde::logMessage("SyncML: starting sync to client $target", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				$attrs = array();
-
-				$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
-
-				$output->startElement($state->getURI(), 'Sync', $attrs);
-				$output->startElement($state->getURI(), 'CmdID', $attrs);
-				$output->characters($currentCmdID);
-				$currentCmdID++;
-				$output->endElement($state->getURI(), 'CmdID');
-
-				$output->startElement($state->getURI(), 'Target', $attrs);
-				$output->startElement($state->getURI(), 'LocURI', $attrs);
-				$chars = $sync->_sourceLocURI;
-				$output->characters($chars);
-				$output->endElement($state->getURI(), 'LocURI');
-				$output->endElement($state->getURI(), 'Target');
-
-				$output->startElement($state->getURI(), 'Source', $attrs);
-				$output->startElement($state->getURI(), 'LocURI', $attrs);
-				$chars = (isset($sync->_targetLocURIParameters) ? $sync->_targetLocURI.'?/'.$sync->_targetLocURIParameters : $sync->_targetLocURI);
-				$output->characters($chars);
-				$output->endElement($state->getURI(), 'LocURI');
-				$output->endElement($state->getURI(), 'Source');
-
-				if(!$sync->_syncDataLoaded)
+	    if ($state->getSyncStatus() >= CLIENT_SYNC_FINNISHED
+		    && $state->getSyncStatus() < SERVER_SYNC_FINNISHED)
+	    {
+		    $deviceInfo = $state->getClientDeviceInfo();
+		    if (($targets = $state->getTargets())) {
+			    foreach ($targets as $target)
 				{
-					$numberOfItems = $sync->loadData();
-					if($deviceInfo['supportNumberOfChanges'])
-					{
-						$output->startElement($state->getURI(), 'NumberOfChanges', $attrs);
-						$output->characters($numberOfItems);
-						$output->endElement($state->getURI(), 'NumberOfChanges');
-					}
+				    $sync = &$state->getSync($target);
+				    Horde::logMessage('SyncML[' . session_id() . ']: sync alerttype ' .
+				    	$sync->_syncType . ' found for target ' . $target,
+				    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+				    if ($sync->_syncType == ALERT_ONE_WAY_FROM_CLIENT ||
+					    $sync->_syncType == ALERT_REFRESH_FROM_CLIENT) {
+					    Horde::logMessage('SyncML[' . session_id() .
+							']: From client Sync, no sync of ' . $target .
+							' to client', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					    $state->clearSync($target);
+
+				    } elseif ($state->getSyncStatus() >= CLIENT_SYNC_ACKNOWLEDGED) {
+
+					    Horde::logMessage("SyncML: starting sync to client $target",
+					    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					    $attrs = array();
+
+					    $state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
+
+					    $output->startElement($state->getURI(), 'Sync', $attrs);
+					    $output->startElement($state->getURI(), 'CmdID', $attrs);
+					    $output->characters($currentCmdID);
+					    $currentCmdID++;
+					    $output->endElement($state->getURI(), 'CmdID');
+
+					    $output->startElement($state->getURI(), 'Target', $attrs);
+					    $output->startElement($state->getURI(), 'LocURI', $attrs);
+					    $chars = $sync->_sourceLocURI;
+					    $output->characters($chars);
+					    $output->endElement($state->getURI(), 'LocURI');
+					    $output->endElement($state->getURI(), 'Target');
+
+					    $output->startElement($state->getURI(), 'Source', $attrs);
+					    $output->startElement($state->getURI(), 'LocURI', $attrs);
+					    $chars = (isset($sync->_targetLocURIParameters) ? $sync->_targetLocURI.'?/'.$sync->_targetLocURIParameters : $sync->_targetLocURI);
+					    $output->characters($chars);
+					    $output->endElement($state->getURI(), 'LocURI');
+					    $output->endElement($state->getURI(), 'Source');
+
+					    if(!$sync->_syncDataLoaded)
+					    {
+						    $numberOfItems = $sync->loadData();
+						    if($deviceInfo['supportNumberOfChanges'])
+						    {
+							    $output->startElement($state->getURI(), 'NumberOfChanges', $attrs);
+							    $output->characters($numberOfItems);
+							    $output->endElement($state->getURI(), 'NumberOfChanges');
+						    }
+					    }
+
+					    $currentCmdID = $sync->endSync($currentCmdID, $output);
+
+					    $output->endElement($state->getURI(), 'Sync');
+
+					    if (isset($state->curSyncItem) ||
+							    $state->getNumberOfElements() === false) {
+						    break;
+					    }
+				    } else {
+					    Horde::logMessage("SyncML: Waiting for client ACKNOWLEDGE for $target",
+					    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+				    }
 				}
+		    }
 
-				$currentCmdID = $sync->endSync($currentCmdID, $output);
-
-				$output->endElement($state->getURI(), 'Sync');
-
-				if (isset($state->curSyncItem) ||
-					$state->getNumberOfElements() === false) {
-					break;
-				}
-			} else {
-       		  Horde::logMessage("SyncML: Waiting for client ACKNOWLEDGE for $target", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			}
-		}
-
-		// no syncs left
-		if($state->getTargets() === FALSE &&
-			!isset($state->curSyncItem)) {
-			$state->setSyncStatus(SERVER_SYNC_FINNISHED);
-		}
-
-		Horde::logMessage('SyncML: syncStatus(syncToClient) = '. $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-	}
-
-	return $currentCmdID;
-
+		    // no syncs left
+		    if ($state->getTargets() === false &&
+			    !isset($state->curSyncItem)) {
+			    $state->setSyncStatus(SERVER_SYNC_FINNISHED);
+		    }
+		    Horde::logMessage('SyncML: syncStatus(syncToClient) = ' .
+		    	$state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	    }
+	    return $currentCmdID;
     }
 
     function endElement($uri, $element)
