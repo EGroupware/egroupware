@@ -1,0 +1,537 @@
+%1 - %2 of %3 user accounts	admin	zh	共有%3个用户帐户, 正显示其中的第%1～%2个
+%1 - %2 of %3 user groups	admin	zh	第%1 到 %2 /共 %3 个用户组
+%1 acl records of not (longer) existing accounts deleted.	admin	zh	不 (再) 存在帐户%1的 ACL 纪录已被删除。
+%1 class not instanciated	admin	zh	%1类没有实例化
+%1 group %2	admin	zh	%1群组%2
+%1 is no command!	admin	zh	%1没有命令！
+%1 not found or not executable !!!	admin	zh	%1找不到或无法执行！
+%1 rights for %2 and applications %3	admin	zh	%2的权限%1和应用程序%3
+%1 user %2	admin	zh	%1用户%2
+(default no, leave it off if you dont use it)	admin	zh	(默认为否，如果您不打算使用请不要修改)
+(stored password will not be shown here)	admin	zh	(已储存密码将不在这里显示)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(请使用<a href="setup/" target="setup">[管理应用程序]</a>来安装新的应用程序！)
+-  type	admin	zh	- 类型
+a group needs at least one member!	admin	zh	一个组需要至少有一名成员！
+accesslog and bruteforce defense	admin	zh	存取纪录与恶意攻击防御
+account %1 %2	admin	zh	帐户 %1 %2
+account '%1' deleted.	admin	zh	帐户 '%1' 已删除。
+account active	admin	zh	帐户激活
+account has been created	common	zh	帐户已创建
+account has been deleted	common	zh	帐户已删除
+account has been updated	common	zh	帐户已更新
+account list	admin	zh	列举帐户
+account permissions	admin	zh	帐户权限
+account preferences	admin	zh	帐户参数选择
+account-id's have to be integers!	admin	zh	帐户 ID 必须是整数！
+acl manager	admin	zh	ACL管理器
+acl rights	common	zh	ACL权限
+action	admin	zh	操作
+actions	admin	zh	操作
+activate wysiwyg-editor	admin	zh	激活所见即所得编辑器
+add a category	admin	zh	添加类别
+add a group	admin	zh	添加组
+add a new account.	admin	zh	添加新帐户。
+add a subcategory	admin	zh	添加子类别
+add a user	admin	zh	添加用户
+add account	admin	zh	添加帐户
+add application	admin	zh	添加应用程序
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	zh	向该组添加自创建用户 (留空则使用默认设置。)
+add global category	admin	zh	添加全局类别
+add global category for %1	admin	zh	为%1添加全局类别
+add group	admin	zh	添加群组
+add new account	admin	zh	添加新帐户
+add new application	admin	zh	添加新应用程序
+add peer server	admin	zh	添加对等服务器
+add sub-category	admin	zh	添加子类别
+admin	admin	zh	系统管理
+admin email	admin	zh	管理员邮箱
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	管理员电子邮件地址 (逗号分隔) 以便通知有关故障等 (留空将不通知任何人)
+admin name	admin	zh	管理员名称
+admin queue and history	admin	zh	管理队列和历史纪录
+administration	admin	zh	系统管理
+admins	admin	zh	管理员
+advanced options	admin	zh	高级选项
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh	几次登录失败后，将锁定该账户 (默认 3)？
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zh	几次登录失败后，将封禁 IP 地址 (默认 3)？
+aliases	admin	zh	别名
+all records and account information will be lost!	admin	zh	所有的记录和账户信息都将丢失！
+all users	admin	zh	所有用户
+allow anonymous access to this app	admin	zh	允许匿名用户访问此应用程序
+allow remote administration from following install id's (comma separated)	admin	zh	允许从以下的安装 ID (逗号分隔) 进行远程管理
+alternate email address	admin	zh	备用邮箱地址
+anonymous user	admin	zh	匿名用户
+anonymous user (not shown in list sessions)	admin	zh	匿名用户 (不在会话列表中显示)
+anonymous user does not exist!	admin	zh	匿名用户不存在！
+anonymous user has no run-rights for the application!	admin	zh	匿名用户没有执行此应用程序的权限！
+appearance	admin	zh	外观
+application	admin	zh	应用程序
+application '%1' not found (maybe not installed or misspelled)!	admin	zh	应用程序'%1'没被找到 (可能没安装或拼写错误)！
+application name	admin	zh	应用程序名称
+application title	admin	zh	应用程序标题
+applications	admin	zh	应用程序
+applications list	admin	zh	应用程序列表
+applications run rights updated.	admin	zh	应用程序运行权限已更新。
+applies the changes	admin	zh	应用更改
+are you sure you want to delete the application %1 ?	admin	zh	确定要删除应用程序%1吗？
+are you sure you want to delete this account ?	admin	zh	确定要删除该账户吗？
+are you sure you want to delete this application ?	admin	zh	确定要删除该应用程序吗？
+are you sure you want to delete this category ?	common	zh	确定要删除该类别吗？
+are you sure you want to delete this global category ?	admin	zh	确定要删除该全局类别吗？
+are you sure you want to delete this group ?	admin	zh	确定要删除该组吗？
+are you sure you want to delete this server?	admin	zh	确定要删除该服务器吗？
+are you sure you want to kill this session ?	admin	zh	确定要中止该会话吗？
+async services last executed	admin	zh	异步服务最近已执行过
+asynchronous timed services	admin	zh	异步定时服务
+asyncservices not yet installed or other error (%1) !!!	admin	zh	异步服务尚未安装或其他错误(%1)！
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh	在FTP中尝试使用正确的mimetype来替代默认的'application/otect-stream'
+attribute accountstatus explained	admin	zh	该 <b><i>-accountStatus-</i></b> 句柄属性来自 QMAIL schema。
+attribute mail explained	admin	zh	该 <b><i>-mail-</i></b> 句柄属性来自 QMAIL schema 并不得为空。它同样也是 eGW 内部电子邮件域。
+attribute mailalternateaddress explained	admin	zh	该 <b><i>-accountStatus-</i></b> 句柄属性来自 QMAIL schema，并能迅速处理为虚拟地图或别名。
+attribute mailforwardingaddress explained	admin	zh	该 <b><i>-accountStatus-</i></b> 句柄属性来自 QMAIL schema，并且如果被指定，绝不能为空。
+authentication / accounts	admin	zh	认证/账户
+auto create account records for authenticated users	admin	zh	自动为已通过身份验证的用户创建帐户记录
+back to the list	admin	zh	返回列表
+backup now	admin	zh	现在备份
+backup sets	admin	zh	备份集
+bi-dir passthrough	admin	zh	bi-dir passthrough(双向通过)
+bi-directional	admin	zh	bi-directional(双向)
+bottom	admin	zh	底部
+calculate next run	admin	zh	计划下次运行
+can change password	admin	zh	可以更改密码
+cancel testjob!	admin	zh	取消测试任务！
+categories list	admin	zh	分类列表
+category %1 has been saved !	admin	zh	类别%1已保存！
+category list	admin	zh	类别列表
+change account_id	admin	zh	更改帐户 ID
+change acl rights	admin	zh	更改 ACL 权限
+change config settings	admin	zh	更改配置设定
+change main screen message	admin	zh	更改主页面信息
+change password for %1	admin	zh	更改%1的密码
+check acl for entries of not (longer) existing accounts	admin	zh	检查 ACL (长期)不是现有的帐户条目
+check ip address of all sessions	admin	zh	检查所有 sessions 的 IP 地址
+check items to <b>%1</b> to %2 for %3	admin	zh	检查%3对%2的权限项目 <b>%1</b>
+click to select a color	admin	zh	点击选择一种颜色
+color	admin	zh	颜色
+command scheduled to run at %1	admin	zh	计划命令运行在%1
+complete path to aspell program	admin	zh	Aspell (拼写检查软件)程序的完整路径
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	zh	Cookie 域 (默认为空表示使用完整域名，对于 SiteMgr 等 ".domain.com" 允许 egw.domain.com 与 www.domain.com 使用同一个 cookie)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	zh	Cookie 路径 (允许多个 eGW 会话使用不同的目录，与 SiteMgr 会有问题！)
+could not remote execute the command	admin	zh	不能远程执行命令
+country selection	admin	zh	选择国家/地区
+create group	admin	zh	创建组
+created	admin	zh	创建日期
+created with id #%1	admin	zh	以 ID #%1 创建
+creates a new field	admin	zh	创建一新字段
+creator	admin	zh	创建者
+crontab only (recomended)	admin	zh	仅 Crontab (推荐命令)
+custom fields	admin	zh	自定义字段
+cyrus imap server	admin	zh	Cyrus IMAP 服务器
+data	admin	zh	数据
+day	admin	zh	日
+day of week<br />(0-6, 0=sunday)	admin	zh	每周星期(0-6,0=日)
+day of week<br>(0-6, 0=sun)	admin	zh	星期(0-6,0=日)
+db backup and restore	admin	zh	数据库备份与恢复
+default	admin	zh	默认
+default file system space per user	admin	zh	每个用户的默认文件系统空间
+default file system space per user/group ?	admin	zh	每一用户/组的默认文件系统空间？
+deinstall crontab	admin	zh	卸载 crontab
+delete account	admin	zh	删除账户
+delete account %1	admin	zh	删除账户%1
+delete all records	admin	zh	删除所有记录
+delete application	admin	zh	删除应用程序
+delete category	admin	zh	删除类别
+delete group	admin	zh	删除组
+delete peer server	admin	zh	删除对等服务器
+delete the category	admin	zh	删除该类别
+delete the group	admin	zh	删除该组
+delete this category	admin	zh	删除此类别
+delete this group	admin	zh	删除该群组
+delete this user	admin	zh	删除该用户
+deletes this field	admin	zh	删除此字段域
+deliver extern	admin	zh	外部传送
+deny access to access log	admin	zh	拒绝对访问日志的访问
+deny access to application registery	admin	zh	拒绝访问应用程序注册
+deny access to applications	admin	zh	拒绝对应用程序的访问
+deny access to asynchronous timed services	admin	zh	拒绝访问异步定时服务器
+deny access to current sessions	admin	zh	拒绝对当前会话的访问
+deny access to db backup and restore	admin	zh	拒绝访问数据库备份与恢复
+deny access to error log	admin	zh	拒绝对错误日志的访问
+deny access to global categories	admin	zh	拒绝对全局类别的访问
+deny access to groups	admin	zh	拒绝对用户组的访问
+deny access to mainscreen message	admin	zh	拒绝访问主界面信息
+deny access to peer servers	admin	zh	拒绝访问对等服务器
+deny access to phpinfo	admin	zh	拒绝对 phpinfo 的访问
+deny access to site configuration	admin	zh	拒绝对站点配置的访问
+deny access to user accounts	admin	zh	拒绝对用户账户的访问
+deny all users access to grant other users access to their entries ?	admin	zh	拒绝所有用户准予其他用户使用他们的账户登录？
+description can not exceed 255 characters in length !	admin	zh	描述不得超过255个字符长度！
+determines the order the fields are displayed	admin	zh	确定显示字段域顺序
+disable "auto completion" of the login form	admin	zh	禁用登录表单的“自动完成”
+disable wysiwyg-editor	admin	zh	禁用所见即所得编辑器
+disabled (not recomended)	admin	zh	禁用 (不推荐)
+display	admin	zh	显示
+do not delete the category and return back to the list	admin	zh	不要删除类别和返回其列表
+do you also want to delete all global subcategories ?	admin	zh	您是否同样要删除所有全局子类别？
+do you want to delete all global subcategories ?	admin	zh	您是否想要删除所有的全局子类别？
+do you want to move all global subcategories one level down ?	admin	zh	您是否想要把所有的全局子类别向下移动一级？
+document root (default)	admin	zh	文件根目录 (默认)
+download	admin	zh	下载
+each value is a line like <id>[=<label>]	admin	zh	每个数值是一行像是<id>[=<label>]这样的文字
+each value is a line like id[=label]	admin	zh	每个数值是一行像是 id[=label] 这样的文字
+edit account	admin	zh	编辑账户
+edit application	admin	zh	编辑应用程序
+edit email settings	admin	zh	编辑邮件设置
+edit global category	admin	zh	编辑全局类别
+edit global category for %1	admin	zh	为%1编辑全局类别
+edit group	admin	zh	编辑组
+edit group acl's	admin	zh	编辑群组 ACL 的
+edit login screen message	admin	zh	编辑登录窗口信息
+edit main screen message	admin	zh	编辑主窗口信息
+edit peer server	admin	zh	编辑对等服务器
+edit table format	admin	zh	编辑表单格式
+edit this category	admin	zh	编辑该类别
+edit this group	admin	zh	编辑该群组
+edit this user	admin	zh	编辑该用户
+edit user	admin	zh	编辑用户
+edit user account	admin	zh	编辑用户账户
+egroupware directory	admin	zh	eGroupWare 目录
+either install id and config password needed or the remote hash!	admin	zh	必须输入安装ID和设置密码或远程散列标记 (hash)！
+email account active	admin	zh	邮件账户激活
+email address	admin	zh	邮件地址
+enable debug-messages	admin	zh	启用调试信息
+enable the soap service	admin	zh	启用 SOAP 服务
+enable the spellcheck in the ritch text editor ?	admin	zh	在 FCKeditor 文本编辑器中使用拼写检查？
+enable the xmlrpc service	admin	zh	启用 XML-RPC 服务
+enabled - hidden from navbar	admin	zh	从导航栏中隐藏
+enabled - popup window	admin	zh	启用弹出窗口
+enter a description for the category	admin	zh	输入对类别的描述
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	zh	为加密 APP-SESSION 输入一些随机文字<br>(需要 Mcrypt 支持)
+enter the background color for the login page	admin	zh	登录页面的背景颜色
+enter the background color for the site title	admin	zh	站点名称的背景颜色
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zh	请输入临时文件的完整路径。<br>例如：/tmp、C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	zh	请输入临时文件的完整路径。<br>例如：/tmp、C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	zh	请输入服务器所在主机的名称
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	请输入eGroupWare的网址。<br>例如：http://www.domain.com/egroupware   或者   /egroupware<br><b>不能以/结尾</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	zh	请输入要查找的字符串。要显示所有条目，此处留空并点击提交按钮
+enter the site password for peer servers	admin	zh	请输入对等服务器的站点密码
+enter the site username for peer servers	admin	zh	请输入对等服务器的站点用户名
+enter the title for your site	admin	zh	输入您的网站标题
+enter the title of your logo	admin	zh	输入您的网站徽标标题
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	zh	输入您的网站徽标 (Logo) 的网址或文件名 (phpgwapi/templates/default/images)
+enter the url where your logo should link to	admin	zh	输入您的 Logo 链接地址 (Url)
+enter your default ftp server	admin	zh	请输入默认的FTP服务器
+enter your default mail domain ( from: user@domain )	admin	zh	输入默认邮件域名 (即邮件地址中"@"号后面的部分)
+enter your http proxy server	admin	zh	请输入HTTP代理服务器
+enter your http proxy server port	admin	zh	请输入HTTP代理服务器的端口号
+enter your smtp server hostname or ip address	admin	zh	输入SMTP服务器的主机名或IP地址
+enter your smtp server port	admin	zh	输入SMTP服务器的端口号
+error canceling timer, maybe there's none set !!!	admin	zh	取消定时器时出错，也许那里并未设定！
+error changing the password for % !!!	admin	zh	为%更改密码错误！
+error changing the password for %1 !!!	admin	zh	为%1更改密码错误！
+error saving	admin	zh	保存错误
+error saving account!	admin	zh	保存帐户错误！
+error saving the command!	admin	zh	保存命令错误！
+error saving to db:	admin	zh	保存到数据库错误：
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	zh	设置定时器时出错，语法不正确或定时器正在运行！
+error! no appname found	admin	zh	错误！找不到应用程序名称
+error: %1 not found or other error !!!	admin	zh	错误: 无法找到%1或其他原因！
+expires	admin	zh	期限
+explanation of ldapman	admin	zh	这一模块已经在 POSTFIX,LDAP,Courier-IMAP 测试通过且需要 Schemas CORE 和 QMAIL(OID7914)支持。更多的关于该系统的使用和设置细节可以在管理员(ADMIN)文档文件夹中的 Readme.ldapman 找到。
+fallback (after each pageview)	admin	zh	后退 (在每个页面请求后)
+false	admin	zh	错误的
+field '%1' already exists !!!	admin	zh	字段域 '%1' 已经存在！
+file space	admin	zh	文件空间
+file space must be an integer	admin	zh	文件空间必须为整数
+filename	admin	zh	文件名
+find and register all application hooks	admin	zh	查找并注册所有应用程序挂接
+for the times above	admin	zh	为以上次数
+for the times below (empty values count as '*', all empty = every minute)	admin	zh	为以下次数(留空视为“*”, 全部为空 = 每一分钟)
+force selectbox	admin	zh	复选框
+forward also to	admin	zh	同时转发到
+forward emails to	admin	zh	转发邮件到
+forward only	admin	zh	转发
+global categories	common	zh	全局分类
+grant	admin	zh	允许
+group ?	admin	zh	群组？
+group has been added	common	zh	组已添加
+group has been deleted	common	zh	组已删除
+group has been updated	common	zh	组已更新
+group list	admin	zh	组列表
+group manager	admin	zh	组管理
+group name	admin	zh	组名称
+hide php information	admin	zh	隐藏php信息
+home directory	admin	zh	首页目录
+host information	admin	zh	主机信息
+hour (0-24)	admin	zh	时(0-24)
+hour<br>(0-23)	admin	zh	时(0-23)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	zh	用以链接图像的缩略图的尺寸应为多大 (最大像素) ？
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh	访问日志中的条目在它们得以删除之前的保留天数 (缺省90)？
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	zh	非管理员应该能导出多少条目 (留空 = 无限制，no = 不导出)
+how many minutes should an account or ip be blocked (default 30) ?	admin	zh	多少分钟后账户或 IP 地址将被锁定 (默认值30分钟)？
+how should email addresses for new users be constructed?	admin	zh	应该怎么为新用户创建邮箱地址？
+icon	admin	zh	图标
+idle	admin	zh	空闲
+if no acl records for user or any group the user is a member of	admin	zh	如果没有用户或任何小组的 ACL 纪录，该用户将作为成员属于
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh	如果使用 LDAP，您想要管理主目录和 Login Shell 属性吗？
+import tts tickets	admin	zh	导入TTS传票
+in mbyte	admin	zh	以 MB 显示
+inbound	admin	zh	入站 (inbound)
+initial	admin	zh	初始的
+install crontab	admin	zh	安装 Crontab
+install id	admin	zh	安装ID
+installed applications	common	zh	已安装的应用程序
+installed crontab	admin	zh	已安装的 crontab
+instance	admin	zh	实例
+interface	admin	zh	界面
+invalid date '%1' use yyyy-mm-dd!	admin	zh	日期 '%1' 使用 YYYY-MM-DD 无效
+invalid formated date "%1"!	admin	zh	无效日期格式“%1”!
+invalid remote id or name "%1"!	admin	zh	无效远程ID或名称"%1"！
+invalid value "%1" use yes or no!	admin	zh	值"%1"使用 yes 或 no 无效！
+ip	admin	zh	IP 地址
+jobs	admin	zh	任务
+kill	admin	zh	中止
+kill session	admin	zh	中止会话
+last %1 logins	admin	zh	最近有%1次登录
+last %1 logins for %2	admin	zh	%2最近有%1次登录
+last login	admin	zh	最近登录
+last login from	admin	zh	最近登录来自
+last time read	admin	zh	最近读取时间
+ldap accounts context	admin	zh	LDAP 账户上下文
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zh	LDAP 默认主目录的前缀 (例如：/home/username 的前缀是：/home)
+ldap default shell (e.g. /bin/bash)	admin	zh	LDAP 默认 Shell (例如：/bin/bash)
+ldap encryption type	admin	zh	LDAP 加密类型
+ldap groups context	admin	zh	LDAP 群组上下文
+ldap host	admin	zh	LDAP 主机名
+ldap root password	admin	zh	LDAP root 密码
+ldap rootdn	admin	zh	LDAP rootdn(目录树根)
+leave empty for no quota	admin	zh	留空表示无限额
+leave the category untouched and return back to the list	admin	zh	不更改类别，返回列表
+leave the group untouched and return back to the list	admin	zh	不更改组，返回列表
+leaves without saveing	admin	zh	不保存
+length<br>rows	admin	zh	长度<br>列数
+list config settings	admin	zh	配置的设置列表
+list current sessions	admin	zh	当前会话列表
+list of current users	admin	zh	当前用户列表
+login history	common	zh	登录历史记录
+login message	admin	zh	更改登录页面信息
+login screen	admin	zh	登录页面
+login shell	admin	zh	登录交互程序
+login time	admin	zh	登录时间
+loginid	admin	zh	登录名
+mail settings	admin	zh	邮件设置
+main email-address	admin	zh	主要信箱
+main screen	admin	zh	主窗口
+main screen message	admin	zh	主窗口信息
+manager	admin	zh	管理器
+max length of the input [, length of the inputfield (optional)]	admin	zh	输入的最大长度 [, 输入字段的长度 (可选)]
+maximum account id (e.g. 65535 or 1000000)	admin	zh	最大帐户 id 数 (例如：65535 或 1000000)
+maximum entries in click path history	admin	zh	在点击路径历史记录中的最大条目数
+message has been updated	admin	zh	信息已更新
+method	admin	zh	方法
+minimum account id (e.g. 500 or 100, etc.)	admin	zh	最小帐户id数 (例如：500或100)
+minute	admin	zh	分
+mode	admin	zh	模式
+modified	admin	zh	修改
+modifier	admin	zh	修改人
+month	admin	zh	月
+more secure	admin	zh	更安全
+name must not be empty !!!	admin	zh	名称不能为空！
+new group name	admin	zh	新建组名称
+new name	admin	zh	新名称
+new password [ leave blank for no change ]	admin	zh	新密码 [留空则仍使用旧密码]
+next run	admin	zh	下次运行
+no algorithms available	admin	zh	没有可用算法
+no alternate email address	admin	zh	没有可替换的邮件地址
+no jobs in the database !!!	admin	zh	没有任务在数据库中！
+no login history exists for this user	admin	zh	没有该用户登录的历史记录
+no matches found	admin	zh	未找到匹配
+no modes available	admin	zh	无可用模式
+no permission to add groups	admin	zh	无权添加组
+no permission to add users	admin	zh	无权添加用户
+no permission to create groups	admin	zh	无权创建组
+note: ssl available only if php is compiled with curl support	admin	zh	注意：只有当php编译与curl支时，SSL有效
+number of row for a multiline inputfield or line of a multi-select-box	admin	zh	多行输入字段的列数或多选框的行数
+order	admin	zh	排序
+outbound	admin	zh	出站
+own install id:	admin	zh	自己的安装 ID：
+passthrough	admin	zh	通过
+password for smtp-authentication	admin	zh	密码为SMTP认证
+password updated	admin	zh	密码已更新
+path information	admin	zh	路径信息
+peer server list	admin	zh	对等服务器列表
+peer servers	admin	zh	对等服务器
+percent of users that logged out	admin	zh	已注销用户的百分比
+percent this user has logged out	admin	zh	该用户注销百分比
+permission denied	admin	zh	没有权限
+permission denied !!!	admin	zh	没有权限！
+permissions	admin	zh	权限
+permissions this group has	admin	zh	该组权限
+phpinfo	admin	zh	系统环境信息
+please enter a name	admin	zh	请输入名称
+please enter a name for that server !	admin	zh	请输入那台服务器的名称！
+please run setup to become current	admin	zh	请运行安装程序以成为当前
+please select	admin	zh	请选择
+postfix with ldap	admin	zh	Postfix 与 LDAP
+preferences	admin	zh	参数选择
+primary group	admin	zh	主要群组
+qmaildotmode	admin	zh	qmailDotMode
+quota settings	admin	zh	配额设置
+quota size in mbyte	admin	zh	配额大小(MB)
+re-enter password	admin	zh	重新输入密码
+read this list of methods.	admin	zh	读取这一方法列表。
+register application hooks	admin	zh	注册应用程序挂接
+remote	admin	zh	远程
+remote administration instances	admin	zh	远程管理实例
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	zh	远程管理需要在系<b>统管理 -->站点配置</b>中启用远程实例!
+remote instance saved	admin	zh	远程实例已保存
+remove	admin	zh	移除
+remove all users from this group	admin	zh	删除该组所有用户
+remove all users from this group ?	admin	zh	删除该组所有用户？
+requested	admin	zh	请求
+restore	admin	zh	还原
+return to admin mainscreen	admin	zh	返回系统管理主窗口
+return to view account	admin	zh	返回到查看账户
+route all mails to	admin	zh	路由所有信件到
+run asynchronous services	admin	zh	运行异步服务
+save the category	admin	zh	保存类别
+save the category and return back to the list	admin	zh	保存类别并返回列表
+saves the changes made and leaves	admin	zh	保存修改并离开
+schedule	admin	zh	计划任务
+scheduled	admin	zh	计划
+scheduled backups	admin	zh	备份计划任务
+search accounts	admin	zh	搜索账户
+search categories	admin	zh	搜索类别
+search groups	admin	zh	搜索组
+search peer servers	admin	zh	搜索对等服务器
+security	admin	zh	安全
+select group managers	admin	zh	选择组管理器
+select permissions this group will have	admin	zh	选择该组权限
+select the parent category. if this is a main category select no category	admin	zh	选择父类别。如果当前是一个主要类别，则选择<b>无类别</b>
+select users for inclusion	admin	zh	选择要包括的用户
+select where you want to store/retrieve filesystem information	admin	zh	选择您想要存储或检索文件系统信息的位置
+select where you want to store/retrieve user accounts	admin	zh	选择您想要存储或检索用户帐户的位置
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	zh	指定该应用程序在导航栏上的排列位置，从最低 (左) 到最高 (右)
+selectbox	admin	zh	选择框
+server %1 has been updated	admin	zh	服务器%1已经更新
+server list	admin	zh	服务器列表
+server password	admin	zh	服务器密码
+server type(mode)	admin	zh	服务器类型 (模式)
+server url	admin	zh	服务器网址
+server username	admin	zh	服务器用户名
+set preference values.	admin	zh	设置偏好参数。
+should the login page include a language selectbox (useful for demo-sites) ?	admin	zh	登录页需要包含语言选单吗 (有益于站点演示)？
+show 'powered by' logo on	admin	zh	显示 'Powered by' 标示在
+show access log	admin	zh	显示访问日志
+show an asterisk (*) to mark untranslated strings	admin	zh	在未翻译字串标记星号 (*)
+show current action	admin	zh	显示当前操作
+show error log	admin	zh	显示错误日志
+show phpinfo()	admin	zh	显示 phpinfo()
+show session ip address	admin	zh	显示会话IP地址
+site	admin	zh	站点
+size	admin	zh	大小
+soap	admin	zh	SOAP
+sorry, that group name has already been taken.	admin	zh	抱歉，该组名已被占用。
+sorry, the above users are still a member of the group %1	admin	zh	抱歉，以上用户仍然是%1组的成员
+sorry, the follow users are still a member of the group %1	admin	zh	抱歉，以下用户仍然是%1组的成员
+sort the entries	admin	zh	按序排列条目
+ssl	admin	zh	SSL
+standard	admin	zh	标准
+standard imap server	admin	zh	标准IMAP服务器
+standard pop3 server	admin	zh	标准POP3服务器
+standard smtp-server	admin	zh	标准SMTP服务器
+start testjob!	admin	zh	启动测试任务！
+submit changes	admin	zh	提交更改
+submit the search string	admin	zh	提交查找字符串
+subtype	admin	zh	子类型
+switch it off, if users are randomly thrown out	admin	zh	如果用户任意地退出，请将它关闭
+template selection	admin	zh	模版选择
+text entry	admin	zh	文本条目
+that application name already exists.	admin	zh	应用程序名称已存在。
+that application order must be a number.	admin	zh	应用程序的次序必须为数字。
+that loginid has already been taken	admin	zh	该登录名已被使用
+that name has been used already	admin	zh	该名称已被使用
+that server name has been used already !	admin	zh	该服务器名称已被使用！
+the api is current	admin	zh	当前 API
+the api requires an upgrade	admin	zh	API 需要升级
+the groups must include the primary group	admin	zh	这个群组必须包含主要群组
+the login and password can not be the same	admin	zh	登录名不能与密码相同
+the loginid can not be more then 8 characters	admin	zh	Login-ID长度不能大于8个字符
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	zh	使用的名称在内 (<= 20 个字符)，修改现有的无效数据
+the testjob sends you a mail everytime it is called.	admin	zh	测试任务将在每次启动时向您发送电子邮件.
+the text displayed to the user	admin	zh	向用户显示的文本
+the two passwords are not the same	admin	zh	两次输入的密码不同
+the users bellow are still members of group %1	admin	zh	以下用户仍然是%1组的成员
+there already is a group with this name. userid's can not have the same name as a groupid	admin	zh	已经有一个群组使用这个名字。用户帐户不能使用同一群组的名称
+they must be removed before you can continue	admin	zh	继续之前必须删除它们
+this application is current	admin	zh	该应用程序为当前应用程序
+this application requires an upgrade	admin	zh	该应用程序需要升级
+this category is currently being used by applications as a parent category	admin	zh	应用程序当前正以该类别作为父类别使用。
+timeout for application session data in seconds (default 86400 = 1 day)	admin	zh	应用程序会话期限，单位：秒 (缺省 86400 = 1天)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	zh	会话时限，单位：秒 (默认 14400 = 4小时)
+times	admin	zh	次数
+top	admin	zh	顶部
+total of %1 id's changed.	admin	zh	共计%1 id 被改变。
+total records	admin	zh	记录总数
+true	admin	zh	真
+trust level	admin	zh	信任级别！
+trust relationship	admin	zh	信任关系
+type '%1' already exists !!!	admin	zh	类型 '%1' 已经存在！
+type of customfield	admin	zh	自定义字段类型
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	zh	在 Windows 环境下需要%1手动%2安装 AsyncService 或是使用退级模式，退级方法指的是在每一页面查看以后才进行检查！
+unknown account to delete: %1 !!!	admin	zh	未知帐户删除：%1！
+unknown account: %1 !!!	admin	zh	未知帐户：%1！
+unknown command %1!	admin	zh	未知命令%1！
+unknown group to edit: %1 !!!	admin	zh	未知群组删除：%1！
+unknown group: %1 !!!	admin	zh	未知群组：%1！
+unknown option %1	admin	zh	未知选项%1
+unknown user to edit: %1 !!!	admin	zh	未知用户编辑：%1！
+unknown user to move to: %1 !!!	admin	zh	未知用户移动到：%1！
+unknown user: %1 !!!	admin	zh	未知用户：%1！
+updated	admin	zh	已更新
+upload backup	admin	zh	上传备份
+use cookies to pass sessionid	admin	zh	使用 Cookie 保存会话标识
+use pure html compliant code (not fully working yet)	admin	zh	是否使用纯 HTML 兼容代码 (目前尚未完全可用)
+use theme	admin	zh	使用主题
+user accounts	admin	zh	用户帐户
+user data	common	zh	用户数据
+user for smtp-authentication (leave it empty if no auth required)	admin	zh	SMTP 用户认证 (如果不需要则保持为空)
+user groups	admin	zh	用户组
+userdata	admin	zh	用户数据
+users choice	admin	zh	用户选择
+value for column %1 is not unique!	admin	zh	栏%1的值不是唯一的！
+view access log	admin	zh	查看访问日志
+view account	admin	zh	查看帐户
+view category	admin	zh	查看类别
+view error log	admin	zh	查看错误日志
+view sessions	admin	zh	查看会话
+view this user	admin	zh	查看该用户
+view user account	admin	zh	查看用户帐户
+who would you like to transfer all records owned by the deleted user to?	admin	zh	需要把被删除用户的所有记录转移给谁？
+would you like egroupware to cache the egw info array ?	admin	zh	需要 eGroupWare 缓存 egw info 数组吗？
+would you like egroupware to check for a new version<br>when admins login ?	admin	zh	您要不要 eGroupWare 在管理员登录时自动检查新版本？
+would you like egroupware to check for new application versions when admins login ?	admin	zh	当管理员登录时，您要不要 eGroupWare 检查新应用程序版本？
+would you like to automaticaly load new langfiles (at login-time) ?	admin	zh	您想要自动加载新的语言文件 (在登录时)？
+would you like to show each application's upgrade status ?	admin	zh	是否显示每个应用程序的升级情况？
+wrong account type: %1 is no %2 !!!	admin	zh	错误的帐户类型：%1没有%2！
+wrong admin-account or -password !!!	admin	zh	错误的管理员账户或密码！
+xml-rpc	admin	zh	XML-RPC
+you have entered an invalid expiration date	admin	zh	输入的有效期限无效
+you have to enter a name, to create a new field!!!	admin	zh	为创建一新字段域，您需要输入一个新字段名！
+you have to enter a name, to create a new type!!!	admin	zh	您必须输入名称来创建新类型！
+you have to specify an non-empty account-name and lastname!	admin	zh	你必须指定一个非空的帐户名和姓！
+you have to specify an non-empty group-name!	admin	zh	你必须指定一个非空群组名！
+you have to specify at least a primary group!	admin	zh	你必须指定至少一个主要组！
+you must add at least 1 permission or group to this account	admin	zh	必须至少为此帐户添加一个权限或组
+you must enter a group name.	admin	zh	必须输入组名称。
+you must enter a lastname	admin	zh	必须输入姓
+you must enter a loginid	admin	zh	必须输入登录 ID
+you must enter an application name and title.	admin	zh	必须为应用程序指定名称和标题。
+you must enter an application name.	admin	zh	必须为应用程序指定名称。
+you must enter an application title.	admin	zh	必须为应用程序指定标题。
+you must select a file type	admin	zh	必须选择文件类型
+you must select at least one group member.	admin	zh	您必须至少选择一个组成员。
+you need to enter install id and password!	admin	zh	您需要输入安装 ID 和密码！
+you will need to remove the subcategories before you can delete this category	admin	zh	在删除该类别前，必须删除它的所有子类别！
+your session could not be verified.	admin	zh	本次会话无法校验。

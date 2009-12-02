@@ -1,0 +1,442 @@
+%1 - %2 of %3 user accounts	admin	el	%1 - %2 of %3 user accounts
+%1 acl records of not (longer) existing accounts deleted.	admin	el	%1 ACL εγγραφές από μη υπάρχοντες λογαριασμούς διαγράφηκαν.
+%1 not found or not executable !!!	admin	el	%1 not found or not executable !!!
+(default no, leave it off if you dont use it)	admin	el	(προεπιλεγμένο Νο, να μείνει απενεργοποιημένο αν δεν χρησιμοποιείται)
+(stored password will not be shown here)	admin	el	(Τα αποθηκευμένα password δεν θα εμφανίζονται εδω)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	el	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
+-  type	admin	el	- τύπος
+accesslog and bruteforce defense	admin	el	AccessLog και BruteForce άμυνα
+account active	admin	el	Λογαριασμός ενεργός
+account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί
+account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
+account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
+account list	admin	el	Λίστα λογαριασμών
+account permissions	admin	el	Δικαιώματα λογαριασμού
+account preferences	admin	el	Ιδιότητες λογαριασμού
+acl manager	admin	el	Διαχειριστής ACL
+acl rights	common	el	Δικαιώματα ACL
+action	admin	el	Ενέργεια
+activate wysiwyg-editor	admin	el	ενεργοποίηση WYSIWYG
+add a category	admin	el	πρόσθεσε μία κατηγορία
+add a group	admin	el	πρόσθεσε μί Ομάδα
+add a new account.	admin	el	Πρόσθεσε έναν νέο λογαριασμό
+add a subcategory	admin	el	πρόσθεσε έναν υποκατάλογο
+add a user	admin	el	πρόσθεσε έναν χρήστη
+add account	admin	el	Πρόσθεσε έναν λογαριασμό
+add application	admin	el	Πρόσθεσε μία εφαρμογή
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	el	Πρόσθεσε auto-created χρήστες στο group ('Default' θα επιχειρηθεί αν αυτο είναι άδειο.)
+add global category	admin	el	Πρόσθεσε γενική κατηγορία
+add global category for %1	admin	el	Πρόσθεσε γενική κατηγορία για %1
+add group	admin	el	Πρόσθεσε ομάδα
+add new account	admin	el	Πρόσθεσε νέο λογαριασμό
+add new application	admin	el	Πρόσθεσε νέα εγαρμογή
+add peer server	admin	el	Πρόσθεσε ομότιμο server
+add sub-category	admin	el	Πρόσθεσε υποκατάλογο
+admin email	admin	el	Email διαχειριστή
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	el	Ηλεκτρονική διεύθυνση (email) διαχειριστή (διαχωρισμένο με κόμμα) ο οποίος θα ειδοποιηθεί για το κλείδωμα (κενό για να μην ειδοποιηθεί)
+admin name	admin	el	Ονομα διαχειρηστή
+administration	admin	el	Διαχείρηση
+admins	admin	el	Διαχειριστές
+advanced options	admin	el	επιλογές για προχωρημένους
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένας λογαριασμός θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
+aliases	admin	el	Ψευδώνυμα
+all records and account information will be lost!	admin	el	Ολες οι εγγραφές και οι πληροφορίες λογαριασμών θα χαθούν!
+all users	admin	el	Ολοι οι χρήστες
+allow anonymous access to this app	admin	el	Επιτρέπεται ανώνυμη πρόσβαση σε αυτή την εφαρμογή
+alternate email address	admin	el	εναλλακτική διεύθυνση email
+anonymous user	admin	el	Ανώνυμος χρήστης
+anonymous user (not shown in list sessions)	admin	el	Ανώνυμος χρήστης
+anonymous user does not exist!	admin	el	Ο ανώνυμος χρήστης ΔΕΝ υπάρχει!
+anonymous user has no run-rights for the application!	admin	el	Ο ανώνυμος χρήστης ΔΕΝ έχει δικαιώματα για αυτήν την εφαρμογή!
+appearance	admin	el	Εμφάνιση
+application	admin	el	Εφαρμογή
+application name	admin	el	Ονομα εφαρμογής
+application title	admin	el	Τίτλος εφαρμογής
+applications	admin	el	Εφαρμογές
+applications list	admin	el	Λίστα εφαρμογών
+applies the changes	admin	el	εφαρμόζει τις αλλαγές
+are you sure you want to delete the application %1 ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις την εφαρμογή %1 ?
+are you sure you want to delete this account ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το λογαριασμό
+are you sure you want to delete this application ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την εφαρμογή
+are you sure you want to delete this category ?	common	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την κατηγορία
+are you sure you want to delete this global category ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή τη γενική κατηγορία
+are you sure you want to delete this group ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το group?
+are you sure you want to delete this server?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το server?
+are you sure you want to kill this session ?	admin	el	Είσαι σίγουρος πως θέλεις να διακόψεις αυτή την περίοδο?
+async services last executed	admin	el	Ασύγχρονες υπηρεσίες θα εκτελεστούν τελευταίες
+asynchronous timed services	admin	el	Ασύγχρονες υπηρεσίες
+asyncservices not yet installed or other error (%1) !!!	admin	el	ασύγχρονες υπηρεσίες δεν έχουν εγκατεστηθεί ακόμα ή άλλο λάθος (%1) !!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	el	Επιχειρήθηκε να χρησημοοιηθεί σωστή ομοιοτυπία αντι του προκαθορισμένου 'εφαρμογή/octet-stream'
+attribute accountstatus explained	admin	el	Αυτό διαχειρίζεται το γνώρισμα <b><i>-accountStatus-</i></b> από το σχήμα QMAIL.
+attribute mail explained	admin	el	Αυτό διαχειρίζεται το γνώρισμα <b><i>-mail-</i></b> από το σχήμα QMAIL και δεν πρέπει ποτέ να είναι άδειο.Είναι επίσης το eGW εσωτερικό email πεδίο.
+attribute mailalternateaddress explained	admin	el	Αυτό διαχειρίζεται το γνώρισμα <b><i>-mailAlternateAddress-</i></b> από το σχήμα QMAIL και μπορεί να διαχειριστεί ως οπτικοί χάρτες ή ψευδώνυμα.
+attribute mailforwardingaddress explained	admin	el	Αυτό διαχειρίζεται το γνώρισμα <b><i>-mailForwardingAddress-</i></b> για το σχήμα QMAIL και δεν πρέπει να είναι κενό αν έχει ανατεθεί.
+authentication / accounts	admin	el	Ποιστοποίηση / λογαριασμοί
+auto create account records for authenticated users	admin	el	Αυτόματη δημιουργία εγραφών λογαριασμού για ποιστοποιημένους χρήστες
+back to the list	admin	el	πίσω στη λίστα
+bi-dir passthrough	admin	el	ημη-κατευθυντικό πέρασμα
+bi-directional	admin	el	ημη-κατευθυντικός
+bottom	admin	el	βάση
+calculate next run	admin	el	Υπολόγησε επόμενη ενέργεια
+can change password	admin	el	Επιτρέπεται η αλλαγή συνθηματικού
+cancel testjob!	admin	el	Διέκοψε την δοκιμαστική ενέργεια!
+categories list	admin	el	Λίστα κατηγοριών
+category %1 has been saved !	admin	el	Κατηγορία %1 έχει σωθεί
+category list	admin	el	Λίστα κατηγοριών
+change acl rights	admin	el	αλλαγή ACL δικαιομάτων
+change config settings	admin	el	Αλλαγή ρυθμήσεων διαμόρφωσης
+change main screen message	admin	el	Αλλαγή μηνύματος κύριας οθόνης
+check ip address of all sessions	admin	el	Ελεγξε τις διευθύνσεις IP από όλα τα sessions
+check items to <b>%1</b> to %2 for %3	admin	el	Ελεγξε τα θέματα στα <b>%1</b> to %2 για %3
+click to select a color	admin	el	Κάντε κλικ για να επιλέξετε ένα χρ΄'ωμα
+color	admin	el	Χρώμα
+country selection	admin	el	Επιλογή χώρας
+create group	admin	el	Δημιουργία ομάδας
+creates a new field	admin	el	δημιουργεί νέο πεδίο
+crontab only (recomended)	admin	el	μόνο cronetab (προτείνεται)
+custom fields	admin	el	Σύνηθη πεδία
+data	admin	el	Δεδομένα
+day	admin	el	Ημέρα
+day of week<br>(0-6, 0=sun)	admin	el	Ημέρα της εβδομάδας <br>(0-6, 0=Κυρ)
+db backup and restore	admin	el	DB backup και επαναφορά
+default	admin	el	Προεπιλεγμένος
+default file system space per user	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη
+default file system space per user/group ?	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη/ομαδά ?
+deinstall crontab	admin	el	Απεγκατάσταση crontab
+delete account	admin	el	Διαγραφή λογαριασμών
+delete all records	admin	el	Διαγραφή όλων των εγγραφών
+delete application	admin	el	Διαγραφή εφαρμογής
+delete category	admin	el	Διαγραφή κατηγορίας
+delete group	admin	el	Διαγραφή ομάδας
+delete peer server	admin	el	Διαγραφή ισότιμων server
+delete the category	admin	el	διέγραψε την κατηγορία
+delete the group	admin	el	διέγραψε την ομάδα
+delete this category	admin	el	διέγραψε αυτή την κατηγορία
+delete this group	admin	el	διέγραψε αυτή την ομάδα
+delete this user	admin	el	διέγραψε αυτό τον χρήστη
+deletes this field	admin	el	διαγράφει αυτό το πεδίο
+deliver extern	admin	el	παράδοση εξωτερ
+deny access to access log	admin	el	Αρνηση πρόσβασης στην αναφορά πρόσβασης
+deny access to application registery	admin	el	Αρνηση πρόσβασης στην καταγραφή της εφαρμογής
+deny access to applications	admin	el	Αρνηση πρόσβασης στις εφαρμογές
+deny access to asynchronous timed services	admin	el	Αρνηση πρόσβασης στις ασυχρόνηστες υπηρεσίες
+deny access to current sessions	admin	el	Αρνηση πρόσβασης στις τρέχουσες περιόδους
+deny access to db backup and restore	admin	el	Άρνηση πρόσβασης στο DB εφεδρικό και επαναφορά
+deny access to error log	admin	el	Αρνηση πρόσβασης στην αναφορά λαθών
+deny access to global categories	admin	el	Αρνηση πρόσβασης στις γενικές κατηγορίες
+deny access to groups	admin	el	Αρνηση πρόσβασης στις ομάδες
+deny access to mainscreen message	admin	el	Αρνηση πρόσβασης στο μήνυμα της κύριας οθόνης
+deny access to peer servers	admin	el	Αρνηση πρόσβασης σε ισότιμους server
+deny access to phpinfo	admin	el	Αρνηση πρόσβασης στο phpinfo
+deny access to site configuration	admin	el	Αρνηση πρόσβασης στην διαμόρφωση της ιστιοσελίδας
+deny access to user accounts	admin	el	Αρνηση πρόσβασης στους λογαριασμούς του χρήστη
+deny all users access to grant other users access to their entries ?	admin	el	Άρνηση πρόσβασης όλων των χρηστών στην μεταβίβαση της πρόσβασης άλλων χρηστών στις εισόδους τους?
+description can not exceed 255 characters in length !	admin	el	Η περιγραφή δεν πρέπει να υπερβαίνει τους 255 χαρακτήρες σε μήκος
+determines the order the fields are displayed	admin	el	καθορίζει τη σειρά εμφάνισης των πεδίων
+disable "auto completion" of the login form	admin	el	Απενεργοποίηση "αυτόματης συμπλήρωσης" της φόρμας εισαγωγής
+disable wysiwyg-editor	admin	el	απενεργοποίηση του WYSIWYG
+disabled (not recomended)	admin	el	απενεργοποίηση (δεν προτείνεται)
+display	admin	el	Εμφάνιση
+do not delete the category and return back to the list	admin	el	μην διαγράψεις την κατηγορία και επέστρεψε στην λίστα
+do you also want to delete all global subcategories ?	admin	el	Θέλεις επίσης να διαγραφούν και όλες οι γενικές υποκατηγορίες?
+do you want to delete all global subcategories ?	admin	el	Θέλεις να διαγραφούν όλες οι γενικές υποκατηγορίες;
+do you want to move all global subcategories one level down ?	admin	el	Θέλεις να μετακινήσεις όλες τις γενικές υποκατηγορίες ένα επίπεδο κάτω?
+document root (default)	admin	el	Document root
+each value is a line like <id>[=<label>]	admin	el	κάθε τιμή είναι μία γραμμή σαν <id>[=<label>]
+each value is a line like id[=label]	admin	el	κάθε τιμή είναι μία γραμμή σαν id[=label]
+edit account	admin	el	Επεξεργασία λογαριασμού
+edit application	admin	el	Επεξεργασία εφαρμογής
+edit email settings	admin	el	επεξεργασία ρυθμίσεων email
+edit global category	admin	el	Επεξεργασία γενικής κατηγορίας
+edit global category for %1	admin	el	Επεξεργασία γενικής κατηγορίας για %1
+edit group	admin	el	Επεξεργασία Ομάδας
+edit group acl's	admin	el	επεξεργασία των ACL των ομάδων
+edit login screen message	admin	el	Επεξεργασία μηνύματος οθόνης εισόδου
+edit main screen message	admin	el	Επεξεργασία μηνύματος κύριας οθόνης
+edit peer server	admin	el	Επεξεργασία ισότιμου server
+edit table format	admin	el	Επεξεργασία διαμόρφωσης πίνακα
+edit this category	admin	el	επεξεργάσου αυτή την κατηγορία
+edit this group	admin	el	επεξεργάσου αυτή την ομάδα
+edit this user	admin	el	επεξεργάσου αυτόν τον χρήστη
+edit user	admin	el	επεξεργασία χρήστη
+edit user account	admin	el	Επεξεργασία λογαριασμού χρήστη
+egroupware directory	admin	el	κατάλογος eGroupWare
+email account active	admin	el	ενεργός κατάλογος email
+email address	admin	el	διεύθυνση email
+enable debug-messages	admin	el	Εμφάνιση μηνυμάτων-αποσφαλμάτωσης
+enable the xmlrpc service	admin	el	Ενεργοποίηση της υπηρεσίας xmlrpc
+enabled - hidden from navbar	admin	el	Εμφάνιση - Απόκρυψη απο μπάρα πλοήγησης
+enabled - popup window	admin	el	Ενεργοποίηση - Εμφνιζόμενο Παράθυρο
+enter a description for the category	admin	el	Εισήγαγε μια περιγραφή για την κατηγορία
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	el	Εισήγαγε λιγο τυχαίο κείμενο για περίοδο εφαρμογής <br> encryption (απαιτήται mcrypt)
+enter the background color for the login page	admin	el	Εισάγετε χρώμα φόντου για την σελίδα εισαγωγής
+enter the background color for the site title	admin	el	Εισάγετε χρώμα φόντου για τον τίτλο της ιστιοσελίδας
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	el	Πληκτρολογήστε ολόκληρο το μονοπάτι για τα προσωρινά αρχεία. <br>Παραδείγματα: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	el	Πληκτρολογίστε ολόκληρο το μονοπάτι για τα αρχεία χρηστών ομάδων. <br>Παραδείγματα: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	el	Εισάγετε το όνομα κομβου του μηχανήματος στο οποίο τρέχει ο server
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε την τοποθεσία του eGroupWare's URL.<br>Παράδειγμα: http://www.domain.com/egroupware   ή   /egroupware<br><b>Χωρίς να ακολουθείται απο κάθετο</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	el	Εισάγετε το αλφαριθμητικό εύρεσης. Για εμφάνηση όλων των εισόδων, άδεισε αυτό το πεδίο και πάτα το κουμπί ΥΠΟΒΟΛΗ πάλι
+enter the site password for peer servers	admin	el	Εισήγαγε το συνθηματικό της ιστιοσελίδας για ισότιμους server
+enter the site username for peer servers	admin	el	Εισήγαγε το όνομα χρήστη της ιστιοσελίδας για ισότιμους server
+enter the title for your site	admin	el	Εισήγαγε τον τίτλο για την ιστιοσελίδα σου
+enter the title of your logo	admin	el	Εισήγαγε τον τίτλο για το λογοτυπο σου
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	el	Πληκτρολογήστε το URL ή το όνομα του αρχείου(στο phpgwapi/templates/default/images) του λογότυπου σας
+enter the url where your logo should link to	admin	el	Εισήγαγε την url από όπου το λογότυπό σου πρέπει να συνδέεται
+enter your default ftp server	admin	el	Εισήγαγε τον προκαθορισμένο FTP server
+enter your default mail domain ( from: user@domain )	admin	el	Εισαγωγή του προκαθορισμένου ονόματος τομέα αλληλογραφίας (Από:user@domain)
+enter your http proxy server	admin	el	Εισήγαγε τον HTTP proxy server
+enter your http proxy server port	admin	el	Εισήγαγε το port του HTTP proxy server
+enter your smtp server hostname or ip address	admin	el	Εισάγωγή του ονόματος ή του IP του SMTP server
+enter your smtp server port	admin	el	Εισάγωγή του SMTP server port
+error canceling timer, maybe there's none set !!!	admin	el	Λάθος ακυρώνωντας χρονομέτρη, ισως να μην εχει ρυθμηστεί κανένας
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	el	Λάθος ακυρώνοντας χρονομέτρη, λάθος σύνταξη ή ίσως ήδη τρέχει ένας!!!
+error! no appname found	admin	el	Σφάλμα!Δεν βρέθηκε το όνομα εφαρμ
+error: %1 not found or other error !!!	admin	el	Λάθος: %1 δεν βρέθηκε ή άλλο λάθος !!!
+expires	admin	el	Λήγει
+explanation of ldapman	admin	el	Αυτή η ενότητα έχει ελεγχθεί έως τώρα για τα POSTFIX,LDAP,Courier-IMAP και χρειάζεται τα σχήματα CORE και QMAIL (OID7914). Περισσότερες λεπτομέρειες σχετικά με τη χρήση και τη διαμόρφωση αυτού του συστήματος μπορείτε να βρείτε στο README.ldapman στον φάκελο εγγ του ADMIN.
+fallback (after each pageview)	admin	el	υποχώρηση (μετα από κάθε εμφάνηση οθόνης)
+field '%1' already exists !!!	admin	el	Το πεδίο '%1' υπάρχει ήδη !!!
+file space	admin	el	Κενό αρχείου
+file space must be an integer	admin	el	Το κενό αρχείου πρέπει να είναι ακείραιος
+find and register all application hooks	admin	el	Βρείτε και καταχωρήστε όλα τα Application Hooks
+for the times above	admin	el	για τις παραπάνω φορές
+for the times below (empty values count as '*', all empty = every minute)	admin	el	για τις παρακάτω φορές (κενές τιμές λογαριάζονται ώς '*', όλο κενό = κάθε λεπτό)
+force selectbox	admin	el	Εξανάγκασε Επιλογή κουτιού
+forward also to	admin	el	προώθηση επίσης στο
+forward emails to	admin	el	προώθηση των emails στο
+forward only	admin	el	μόνο προώθηση
+global categories	common	el	Γενικές κατηγορίες
+group ?	admin	el	ομαδα ?
+group has been added	common	el	Ομάδα προστέθηκε
+group has been deleted	common	el	Ομάδα έχει σβηστεί
+group has been updated	common	el	Ομάδα έχει ενημερωθεί
+group list	admin	el	Λίστα ομάδας
+group manager	admin	el	Διαχειριστής ομάδας
+group name	admin	el	Ονομα ομάδας
+hide php information	admin	el	απόκρυψε php πληροφορία
+home directory	admin	el	Αρχικος κατάλογος
+host information	admin	el	Πληροφορία
+hour<br>(0-23)	admin	el	Ωρα<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	el	Πόσες ημέρες πρέπει οι εισαγωγές να μένουν στην καταγραφή πρόσβασης, πρίν σβυστούν(προκαθορισμένο 90) ?
+how many minutes should an account or ip be blocked (default 30) ?	admin	el	Πόσα λεπτά πρέπει ένας λογαριασμός ή IP να μπλοκαρίζεται (προκαθορισμένο 30) ?
+how should email addresses for new users be constructed?	admin	el	Πως θέλετε οι διευθύνσεις Email για τους νεόυς χρήστες να κατασκευάζονται;
+icon	admin	el	Εικόνα
+idle	admin	el	αδρανής
+if no acl records for user or any group the user is a member of	admin	el	αν καμία εγγραφή ACL για χρήστη ή όποιας ομάδας είναι μέλος του
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής?
+in mbyte	admin	el	σε MByte
+inbound	admin	el	εισερχόμενος
+initial	admin	el	Αρχικό
+install crontab	admin	el	Εγκατάσταση crontab
+installed applications	common	el	Εγκατεστημένες εφαρμογές
+installed crontab	admin	el	Εγκατεστημένα crontab
+interface	admin	el	Επιφάνεια
+ip	admin	el	IP
+jobs	admin	el	Εργασίες
+kill	admin	el	Διέκοψε
+kill session	admin	el	Διέκοψε την περίοδο
+last %1 logins	admin	el	Τελευταίες %1 εισόδους
+last %1 logins for %2	admin	el	Τελευταίες %1 εισόδους για %2
+last login	admin	el	τελευταία είσοδος
+last login from	admin	el	τελευταία είσοδος από
+last time read	admin	el	Διάβασμα τελευταίας φοράς
+ldap accounts context	admin	el	LDAP περιβάλλον λογαριασμών
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	el	LDAP προκαθορισμένο πρόθεμα αρχικού διαμερίσματος (π.χ. /home για /home/username)
+ldap default shell (e.g. /bin/bash)	admin	el	LDAP Προκαθορισμένο κέλυφος (π.χ. /bin/bash)
+ldap encryption type	admin	el	LDAP τύπος απόκρυψης
+ldap groups context	admin	el	LDAP περιβάλον ομάδων
+ldap host	admin	el	LDAP host
+ldap root password	admin	el	LDAP root συνθηματικό
+ldap rootdn	admin	el	LDAP rootdn
+leave empty for no quota	admin	el	να μείνει κενό για μη ποσοστόσεις
+leave the category untouched and return back to the list	admin	el	Αφείστε την κατηγορία ανέπαφη και επιστρέψτε στην λίστα
+leave the group untouched and return back to the list	admin	el	Αφείστε την ομάδα ανέπαφη και επιστρέψτε στην λίστα
+leaves without saveing	admin	el	αποχώρηση χωρίς αποθήκευση
+length<br>rows	admin	el	Μήκος<br>Γραμμές
+list config settings	admin	el	Λίστα διαμόρφωσης ρυθμίσεων
+list current sessions	admin	el	Λίστα τρέχωντων περιόδων
+list of current users	admin	el	λίστα απο τρέχων χρήστες
+login history	common	el	Ιστορικό Εισόδου
+login message	admin	el	Μήνυμα εισόδου
+login screen	admin	el	Οθόνη εισόδου
+login shell	admin	el	Κέλυφος εισόδου
+login time	admin	el	Ωρα Εισόδου
+loginid	admin	el	ID εισόδου
+mail settings	admin	el	Ρυθμίσεις μηνυμάτων
+main email-address	admin	el	Κύρια Διεύθυνση Email
+main screen message	admin	el	Μήνυμα κύριας οθόνης
+manager	admin	el	Διαχειριστής
+max length of the input [, length of the inputfield (optional)]	admin	el	μέγιστο μήκος για την εισαγωγή, [μήκος του πεδίου εισαγωγής (κατ'επιλογήν)]
+maximum account id (e.g. 65535 or 1000000)	admin	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
+maximum entries in click path history	admin	el	Μέγιστος αριθμός εισόδων στο click path ιστορικό
+message has been updated	admin	el	το μήνυμα έχει ενημερωθεί
+method	admin	el	Μέθοδος
+minimum account id (e.g. 500 or 100, etc.)	admin	el	Μίνιμουμ id λογαριασμού (π.χ. 500 ή 100, κ.λ.π)
+minute	admin	el	Λεπτό
+mode	admin	el	Μέθοδος
+month	admin	el	Μήνας
+more secure	admin	el	πιο ασφαλές
+name must not be empty !!!	admin	el	Το όνομα δεν πρέπει να είναι κενό !!!
+new group name	admin	el	Νέο όνομα ομάδας
+new name	admin	el	νέο όνομα
+new password [ leave blank for no change ]	admin	el	Νέο συνθηματικό [Αφείστε κενό για μή αλλαγή]
+next run	admin	el	Επόμενη ενέργεια
+no algorithms available	admin	el	δεν υπάρχουν διαθέσιμοι αλγόριθμοι
+no alternate email address	admin	el	δεν υπάρχει εναλλακτική διεύθυνση email
+no jobs in the database !!!	admin	el	Δέν υπάρχουν ενέργειες στην βάση δεδομένων
+no login history exists for this user	admin	el	Δεν υπάρχει ιστορικό εισόδου γι'αυτόν τον χρήστη
+no matches found	admin	el	Δέν βρέθηκαν όμοια
+no modes available	admin	el	δεν υπάρχουν διαθέσιμες modes
+no permission to add groups	admin	el	δεν υπάρχουν δικαώματα για να προσθέσετε ομάδες
+no permission to add users	admin	el	δεν υπάρχουν δικαώματα για να προσθέσετε χρήστες
+no permission to create groups	admin	el	δεν υπάρχουν δικαώματα για να δημιουργήσετε ομάδες
+note: ssl available only if php is compiled with curl support	admin	el	Σημείωση: SSL διαθέσιμα μόνο αν PHP έχει μεταγλωτιστεί με curl sypport
+number of row for a multiline inputfield or line of a multi-select-box	admin	el	αριθμός σειρών για ένα πολυγραμμικό πεδίο εισαγωγής ή γραμμών για ένα πολυ-επιλογών-κουτί
+order	admin	el	Ταξινόμηση
+outbound	admin	el	βγαίνει προς τα έξω
+passthrough	admin	el	διέρχεται
+password for smtp-authentication	admin	el	Κωδικός για την SMTP-πιστοποίηση
+path information	admin	el	Πλητοφορία path
+peer server list	admin	el	Λίστα ισότιμων server
+peer servers	admin	el	Ισότιμοι server
+percent of users that logged out	admin	el	Ποσοστό χρηστών που κάνανε logged out
+percent this user has logged out	admin	el	Ποσοστό αυτού του χρήστη ποσο έχει κάνει logged out
+permission denied	admin	el	Άδεια απορρίπτεται
+permissions	admin	el	Δικαιώματα
+permissions this group has	admin	el	Δικαιώματα που έχει αυτή η ομάδα
+phpinfo	admin	el	Πληροφορία PHP
+please enter a name	admin	el	Παρακαλώ εισάγετε ένα όνομα
+please enter a name for that server !	admin	el	Παρακαλώ εισάγετε ένα όνομα γι'αυτόν τον server !
+please run setup to become current	admin	el	Παρακαλώ τρέξτε το setup για να γίνετε τρέχων
+please select	admin	el	Παρακαλώ επιλέξτε
+preferences	admin	el	Προτιμήσεις
+primary group	admin	el	Κυρίως ομάδα
+quota settings	admin	el	ρυθμίσεις ποσοστών
+quota size in mbyte	admin	el	μέγεθος ποσοστών σε MByte
+re-enter password	admin	el	Ξανα-εισάγετε το συνθηματικό
+read this list of methods.	admin	el	Διαβάστε αυτή τη λίστα από μεθόδους
+register application hooks	admin	el	Καταχώρηση hook της εφαρμογής
+remove	admin	el	αφαίρεση
+remove all users from this group	admin	el	Διαγράψτε όλους τους χρήστες απο αυτη την ομάδα
+remove all users from this group ?	admin	el	Θα διαγράψετε όλους τους χρήστες απο αυτη την ομάδα?
+return to admin mainscreen	admin	el	Επιστροφή στην κύρια οθόνη του admin
+return to view account	admin	el	Επιστροφή στην εμφάνηση του λογαριασμού
+route all mails to	admin	el	Δρομολογήστε όλα τα Μηνύματα στο
+run asynchronous services	admin	el	Τρέξτε Ασύνχρονες υπηρεσίες
+save the category	admin	el	σώστε την κατηγορία
+save the category and return back to the list	admin	el	σώστε την κατηγορία και επιστρέψτε πίσω στη λίστα
+saves the changes made and leaves	admin	el	αποθηκέυει όλες τις αλλαγές που έγιναν και αποχωρεί
+search accounts	admin	el	Ψάξιμο λογαριασμών
+search categories	admin	el	Ψάξιμο κατηγοριών
+search groups	admin	el	Ψάξιμο ομάδων
+search peer servers	admin	el	Ψάξιμο ισότιμων server
+security	admin	el	Ασφάλεια
+select group managers	admin	el	Επιλέξτε Ομαδα Διαχειριστών
+select permissions this group will have	admin	el	Επιλέξτε δικαιώματα που θαέχει αυτή η ομάδα
+select the parent category. if this is a main category select no category	admin	el	Επιλέξτε την μητρική κατηγορία. Αν αυτή είναι μια κύρια κατηγορία επιλέξτε ΟΧΙ ΚΑΤΗΓΟΡΙΑ
+select users for inclusion	admin	el	Επιλέξτε χρήστες για συνυπολογισμό
+select where you want to store/retrieve filesystem information	admin	el	Επιλέξτε πού θέλετε να αποθηκεύεται/ανακτάται η πληροφορία του συστήματος αρχείων
+select where you want to store/retrieve user accounts	admin	el	Επιλέξτε πού θέλετε να αποθηκεύονται/ανακτώνται οι λογαριασμοί του χρήστη
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	el	Επιλέξτε σε ποιό μέρος της μπάρας πλοήγησης αυτή η εφαρμογή θα έπρεπε να εμφανίζεται, χαμηλότερη (αριστερα) με ψηλότερη (δεξιά)
+selectbox	admin	el	Κουτί επιλογής
+server %1 has been updated	admin	el	Server %1 έχει αναβαθμηστεί
+server list	admin	el	Λίστα Server
+server password	admin	el	Συνθηματικό Server
+server type(mode)	admin	el	Τύπος Server(μέθοδος)
+server url	admin	el	Server URL
+server username	admin	el	Ονομα Χρήστη Server
+set preference values.	admin	el	Καθορισμός τιμών προτιμίσεων
+should the login page include a language selectbox (useful for demo-sites) ?	admin	el	Θα έπρεπε η σελίδα εισόδου να περιέχει ένα κουτί επιλογής (χρήσιμο για demo-sites);
+show 'powered by' logo on	admin	el	Εμφάνηση λογότυπου 'powered by'
+show access log	admin	el	Εμφάνηση καταγραφής συνδέσεων
+show an asterisk (*) to mark untranslated strings	admin	el	Εμφάνιση αστερίσκου (*) ως σημείωση αμετάφραστων στοιχειοσειρών
+show current action	admin	el	Εμφάνηση τρέχουσας ενέργειας
+show error log	admin	el	Εμφάνηση καταγραφή λαθών
+show phpinfo()	admin	el	Εμφάνηση phpinfo()
+show session ip address	admin	el	Εμφάνηση διεύθυνσης περιόδων IP
+site	admin	el	Ιστιοσελίδα
+soap	admin	el	SOAP
+sorry, that group name has already been taken.	admin	el	Συγνώμη, αυτό το όνομα ομάδας υπάρχει ήδη
+sorry, the above users are still a member of the group %1	admin	el	Συγνώμη, οι παραπάνω χρήστες είναι ακόμα μέλοι της ομάδας %1
+sorry, the follow users are still a member of the group %1	admin	el	Συγνώμη, οι ακόλουθοι χρήστες είναι ακόμα μέλοι της ομάδας %1
+sort the entries	admin	el	ταξινόμηση των εισόδων
+ssl	admin	el	ssl
+standard	admin	el	συνήθης
+standard imap server	admin	el	συνήθης IMAP server
+standard pop3 server	admin	el	συνήθης POP3 server
+standard smtp-server	admin	el	συνήθης SMTP-server
+start testjob!	admin	el	Εναρξη Δοκιμαστικής Εργασίας !
+submit changes	admin	el	Υποβολή Αλλαγών
+submit the search string	admin	el	Υποβολή του αλφαριθμητικού εύρεσης
+subtype	admin	el	Υποτύπος
+switch it off, if users are randomly thrown out	admin	el	απενεργοποίηση, αν οι χρήστες "πετάγονται έξω" τυχαία
+template selection	admin	el	Επιλογή φόρμας
+text entry	admin	el	Είσοδος κειμένου
+that application name already exists.	admin	el	Το όνομα της εφαρμογής ισχύει ήδη
+that application order must be a number.	admin	el	Αυτή η σειρά εφαρμογής πρέπει να είναι αριθμός
+that loginid has already been taken	admin	el	Αυτή η Ταυτότητα εισαγωγής είναι καταχωρημένη απο άλλον
+that name has been used already	admin	el	Αυτό το όνομα χρησιμοποιήται ήδη
+that server name has been used already !	admin	el	Το όνομα του server χρησιμοποιήται ήδη !
+the api is current	admin	el	Το API χρησιμοποιήται αυτη τη στιγμή
+the api requires an upgrade	admin	el	Το API απαιτεί αναβάθμηση
+the groups must include the primary group	admin	el	Οι ομάδες πρέπει να συμπεριλαμβάνουν την αρχική ομάδα
+the login and password can not be the same	admin	el	Το όνομα εισαγωγής και το συνθηματικό δεν πρέπει να είναι το ίδιο
+the loginid can not be more then 8 characters	admin	el	Η Ταυτότητα εισαγωγής δεν πρέπει να είναι παραπάνς απο 8 χαρακτήρες
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
+the testjob sends you a mail everytime it is called.	admin	el	Η Δοκιμαστική Εργασία σας στέλνει ενα mail κάθε φορά που την καλείτε
+the text displayed to the user	admin	el	το κείμενο που προβάλεται στον χρήστη
+the two passwords are not the same	admin	el	Τα δυο συνθηματικά δέν είναι ίδια
+the users bellow are still members of group %1	admin	el	οι χρήστες παρακάτω είναι ακόμα μέλη της ομάδας %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	el	Υπάρχει ήδη ομάδα με αυτό το όνομα.Η ταυτότητα χρήστη δεν μπορεί να έχει το ίδιο όνομα με αυτο της ταυτότητας μιας ομάδας.
+they must be removed before you can continue	admin	el	Πρέπει να απομακρινθούν πρίν συνεχίσετε
+this application is current	admin	el	Αυτή η εφαρμογή χρησιμοποιήται
+this application requires an upgrade	admin	el	Αυτή η εφαρμογή απαιτεί αναβάθμιση
+this category is currently being used by applications as a parent category	admin	el	Αυτή η κατηγορία χρησημοποιήται αυτή τη στιγμή απο εφαρμογές σαν αρχική κατηγορία
+timeout for application session data in seconds (default 86400 = 1 day)	admin	el	Χρονοαναμονή για δεδομένα περιόδου εφαρμογής σε δευτερόλεπτα (προκαθορισμένο 86400 = 1 ημέρα)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	el	Χρονοαναμονή για περίοδο σε δευτερόλεπτα (προκαθορισμένο 14400 = 4 ώρες)
+times	admin	el	Φορες
+top	admin	el	κορυφή
+total records	admin	el	Σύνολο εγγραφών
+trust level	admin	el	Επίπεδο εμπιστοσύνης
+trust relationship	admin	el	Σχέση εμπιστοσύνης
+type '%1' already exists !!!	admin	el	ο τύπος '%1" υπάρχει ήδη !!!
+type of customfield	admin	el	Τύπος συνήθους πεδίου
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	el	Στο λειτουργικό σύστημα των windows πρέπει να εγκαταστήσετε %1χειροκίνητα%2 το asyncservice ή να χρησιμοποιήσετε το fallback mode. Fallback σημαίνει ότι οι εργασίες ελέγχονται μόνο μετά από κάθε προβολή σελίδας.
+use cookies to pass sessionid	admin	el	Χρησημοποίηση cookies για να περάσεις την sessionid
+use pure html compliant code (not fully working yet)	admin	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)
+use theme	admin	el	Χρησιμοποίηση θέματος
+user accounts	admin	el	Λογαριασμοί χρήστη
+user data	common	el	Δεδομένα χρήστη
+user for smtp-authentication (leave it empty if no auth required)	admin	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
+user groups	admin	el	Ομάδες χρήστη
+userdata	admin	el	δεδομένα χρήστη
+users choice	admin	el	Επιλογή Χρήστη
+view access log	admin	el	Εμφάνιση καταγραφής πρόσβασης
+view account	admin	el	Εμφάνιση λογαριασμού
+view category	admin	el	Εμφάνιση κατηγορίας
+view error log	admin	el	Εμφάνιση καταγραφής λαθών
+view sessions	admin	el	Εμφάνιση περιόδων
+view this user	admin	el	εμφάνιση αυτού του χρήστη
+view user account	admin	el	Εμφάνιση λογαριασμού χρήστη
+who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε?
+would you like egroupware to cache the egw info array ?	admin	el	Θέλετε η eGroupWare να κρύβει τον πίνακα πληροφοριών της egw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	el	Θέλετε η eGroupWare να ελέγχει για μια νέα έκδωση όταν ο διαχειρηστής κάνει εισαγωγή ?
+would you like egroupware to check for new application versions when admins login ?	admin	el	Θέλετε η eGroupWare να ελέγχει για νέες εκδώσεις της εφαρμογής όταν ο διαχειρηστής κάνει εισαγωγή ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	el	Θέλετε αυτόματα να φορτώνονται νέα langfiles (κατα τη διάρκεια εισαγογής) ?
+would you like to show each application's upgrade status ?	admin	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής ?
+xml-rpc	admin	el	XML-RPC
+you have entered an invalid expiration date	admin	el	Εχετε εισάγει μια λάθοςημερομηνία λήξης
+you have to enter a name, to create a new field!!!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου πεδίου!!!
+you have to enter a name, to create a new type!!!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου τύπου!!!
+you must add at least 1 permission or group to this account	admin	el	Πρέπει να προσθέσεις το λιγότερο 1 δικαίωμα ή ομάδα σ'αυτό τον λογαριασμό
+you must enter a group name.	admin	el	Πρέπει να εισάγετε ένα όνομα ομάδας
+you must enter a lastname	admin	el	Πρέπει να εισάγετε ένα επίθετο
+you must enter a loginid	admin	el	Πρέπει να εισάγετε ένα id εισόδου
+you must enter an application name and title.	admin	el	Πρέπει να εισάγετε ένα όνομα και έναν τίτλο εφαρμογής
+you must enter an application name.	admin	el	Πρέπει να εισάγετε ένα όνομα εφαρμογής
+you must enter an application title.	admin	el	Πρέπει να εισάγετε έναν τίτλο εφαρμογής
+you must select a file type	admin	el	Πρέπει να επιλέξετε έναν τύπο αρχείου
+you must select at least one group member.	admin	el	Πρέπει να επιλέξετε τουλάχιστον ένα μέλος ομάδας
+you will need to remove the subcategories before you can delete this category	admin	el	Θα πρέπει να διαγραφούν οι υποκατηγορίες πριν διαγράψετε αυτή την κατηγορία !
+your session could not be verified.	admin	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί

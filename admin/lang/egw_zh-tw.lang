@@ -1,0 +1,451 @@
+%1 - %2 of %3 user accounts	admin	zh-tw	第%1 到 %2 /共 %3 個使用者
+%1 - %2 of %3 user groups	admin	zh-tw	第%1 到 %2 /共 %3 個使用者群組
+%1 acl records of not (longer) existing accounts deleted.	admin	zh-tw	未有帳號使用的 %1 筆 ACL 資料刪除了。
+%1 not found or not executable !!!	admin	zh-tw	找不到%1或是無法執行！
+(default no, leave it off if you dont use it)	admin	zh-tw	（預設為否，如果您不希望使用請不要修改）
+(stored password will not be shown here)	admin	zh-tw	(已經儲存的檔案不會在這裡顯示)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh-tw	(安裝應用程式必須透過<br><a href="setup/" target="setup">安裝程式</a> [管理應用程式] ！)
+-  type	admin	zh-tw	- 類型
+accesslog and bruteforce defense	admin	zh-tw	存取紀錄與惡意攻擊防禦
+account active	admin	zh-tw	啟用帳號
+account has been created	common	zh-tw	成功新增帳號
+account has been deleted	common	zh-tw	成功移除帳號
+account has been updated	common	zh-tw	成功更新帳號
+account list	admin	zh-tw	帳號清單
+account permissions	admin	zh-tw	帳號權限
+account preferences	admin	zh-tw	帳號喜好設定
+acl manager	admin	zh-tw	ACL管理者
+acl rights	common	zh-tw	ACL權限
+action	admin	zh-tw	動作
+activate wysiwyg-editor	admin	zh-tw	啟用所見即所得編輯器
+add a category	admin	zh-tw	新增類別
+add a group	admin	zh-tw	新增群組
+add a new account.	admin	zh-tw	新增帳號
+add a subcategory	admin	zh-tw	新增子類別
+add a user	admin	zh-tw	新增使用者
+add account	admin	zh-tw	新增帳號
+add application	admin	zh-tw	新增應用程式
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	zh-tw	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
+add global category	admin	zh-tw	新增全區分類
+add global category for %1	admin	zh-tw	新增%1的全域類別
+add group	admin	zh-tw	新增群組
+add new account	admin	zh-tw	新增帳號
+add new application	admin	zh-tw	新增應用程式
+add peer server	admin	zh-tw	新增對點伺服器
+add sub-category	admin	zh-tw	新增子類別
+admin email	admin	zh-tw	管理者信箱
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh-tw	當使用者的帳號被鎖定時應該通知的管理者信箱(逗號分隔)，如果空白將不通知任何人
+admin name	admin	zh-tw	管理者名稱
+administration	admin	zh-tw	管理
+admins	admin	zh-tw	系統管理
+advanced options	admin	zh-tw	進階選項
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh-tw	登入失敗幾次之後要鎖定該帳號(預設三次)？
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zh-tw	登入失敗幾次之後要鎖定IP位址(預設三次)？
+aliases	admin	zh-tw	對齊
+all records and account information will be lost!	admin	zh-tw	所有的帳號資料及紀錄將會消失！
+all users	admin	zh-tw	所有使用者
+allow anonymous access to this app	admin	zh-tw	允許匿名使用者存取此應用程式
+alternate email address	admin	zh-tw	替代郵件位址
+anonymous user	admin	zh-tw	匿名使用者
+anonymous user (not shown in list sessions)	admin	zh-tw	匿名用戶(上線列表中不顯示)
+anonymous user does not exist!	admin	zh-tw	匿名用戶不存在！
+anonymous user has no run-rights for the application!	admin	zh-tw	匿名用戶沒有這個模組的執行權限！
+appearance	admin	zh-tw	外觀
+application	admin	zh-tw	應用程式
+application name	admin	zh-tw	應用程式名稱
+application title	admin	zh-tw	應用程式標題
+applications	admin	zh-tw	應用程式
+applications list	admin	zh-tw	應用程式列表
+applies the changes	admin	zh-tw	套用變更
+are you sure you want to delete the application %1 ?	admin	zh-tw	您確定要刪除這個應用程式%1？
+are you sure you want to delete this account ?	admin	zh-tw	您確定要移除此帳號嗎？
+are you sure you want to delete this application ?	admin	zh-tw	您確定要移除此應用程式嗎？
+are you sure you want to delete this category ?	common	zh-tw	您確定要刪除這個分類？
+are you sure you want to delete this global category ?	admin	zh-tw	您確定要刪除這個全域類別？
+are you sure you want to delete this group ?	admin	zh-tw	您確定要移除此群組嗎？
+are you sure you want to delete this server?	admin	zh-tw	您確定要移除這個伺服器嗎？
+are you sure you want to kill this session ?	admin	zh-tw	您確定要結束此連線嗎？
+async services last executed	admin	zh-tw	非同步服務最後執行時間
+asynchronous timed services	admin	zh-tw	非同步時間服務
+asyncservices not yet installed or other error (%1) !!!	admin	zh-tw	非同步服務還沒安裝或是其他錯誤(%1)！
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh-tw	嘗試使用正確的 FTP 檔案格式，而非預設的「application/octet-stream」
+attribute accountstatus explained	admin	zh-tw	這處理了來自 QMAIL 概要的屬性 <b><i>-accountStatus-</i></b>
+attribute mail explained	admin	zh-tw	這處理了來自 QMAIL 概要的屬性 <b><i>-mail-</i></b>且不能為空白。它也是eGW內建的郵件欄位
+attribute mailalternateaddress explained	admin	zh-tw	這處理了來自 QMAIL 概要的屬性 <b><i>-mailAlternateAddress-</i></b>且可以視為虛擬地圖或是捷徑處理
+attribute mailforwardingaddress explained	admin	zh-tw	這處理了來自 QMAIL 概要的屬性 <b><i>-mailForwardingAddress-</i></b>且如果被指定就不能夠為空白
+authentication / accounts	admin	zh-tw	認證／帳號
+auto create account records for authenticated users	admin	zh-tw	自動建立所有授權使用者的帳號資料
+back to the list	admin	zh-tw	回到列表
+bi-dir passthrough	admin	zh-tw	bi資料夾穿越
+bi-directional	admin	zh-tw	bi方向
+bottom	admin	zh-tw	底部
+calculate next run	admin	zh-tw	計算下次執行
+can change password	admin	zh-tw	允許改變密碼
+cancel testjob!	admin	zh-tw	刪除測試工作
+categories list	admin	zh-tw	類別清單
+category %1 has been saved !	admin	zh-tw	類別%1已儲存!
+category list	admin	zh-tw	分類清單
+change acl rights	admin	zh-tw	修改 ACL 權限
+change config settings	admin	zh-tw	改變組態設定
+change main screen message	admin	zh-tw	變更主畫面訊息
+check ip address of all sessions	admin	zh-tw	檢查所有連線的網路位址
+check items to <b>%1</b> to %2 for %3	admin	zh-tw	檢查%3的項目 <b>%1</b> 到 %2
+click to select a color	admin	zh-tw	選一個顏色
+color	admin	zh-tw	顏色
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	zh-tw	Cookie 網域（預設空白表示使用完整網域名稱於 SiteMgr，例如 ".domain.com" 允許 egw.domain.com 與 www.domain.com 使用同樣的 cookie。
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	zh-tw	Cookie 路徑（允許多個 eGW 連線在不同的資料夾中， SiteMgr 中會出現問題！）
+country selection	admin	zh-tw	選擇國家
+create group	admin	zh-tw	新增群組
+creates a new field	admin	zh-tw	建立新欄位
+crontab only (recomended)	admin	zh-tw	僅crontab  (建議)
+custom fields	admin	zh-tw	自訂欄位
+cyrus imap server	admin	zh-tw	Cyrus IMAP伺服器
+data	admin	zh-tw	資料
+day	admin	zh-tw	日
+day of week<br>(0-6, 0=sun)	admin	zh-tw	星期幾<br>(0-6, 0=星期日)
+db backup and restore	admin	zh-tw	資料庫備份與還原
+default	admin	zh-tw	預設
+default file system space per user	admin	zh-tw	預設各使用者可使用的檔案空間
+default file system space per user/group ?	admin	zh-tw	預設各使用者／群組可使用的檔案空間？
+deinstall crontab	admin	zh-tw	移除排定工作
+delete account	admin	zh-tw	刪除帳號
+delete all records	admin	zh-tw	刪除所有紀錄
+delete application	admin	zh-tw	刪除應用程式
+delete category	admin	zh-tw	刪除分類
+delete group	admin	zh-tw	刪除群組
+delete peer server	admin	zh-tw	刪除對應伺服器
+delete the category	admin	zh-tw	刪除這個分類
+delete the group	admin	zh-tw	刪除這個群組
+delete this category	admin	zh-tw	刪除這個分類
+delete this group	admin	zh-tw	刪除這個群組
+delete this user	admin	zh-tw	刪除這個使用者
+deletes this field	admin	zh-tw	刪除這個欄位
+deliver extern	admin	zh-tw	外來的傳輸
+deny access to access log	admin	zh-tw	禁止對存取紀錄的存取
+deny access to application registery	admin	zh-tw	禁止存取應用程式註冊設定
+deny access to applications	admin	zh-tw	無法存取應用程式
+deny access to asynchronous timed services	admin	zh-tw	無法存取非同步時間服務
+deny access to current sessions	admin	zh-tw	禁止存取目前作業程序
+deny access to db backup and restore	admin	zh-tw	無法存取資料庫備份與還原
+deny access to error log	admin	zh-tw	禁止存取錯誤紀錄
+deny access to global categories	admin	zh-tw	無法存取全域類別
+deny access to groups	admin	zh-tw	無法存取群組
+deny access to mainscreen message	admin	zh-tw	無法存取主畫面訊息
+deny access to peer servers	admin	zh-tw	禁止存取對等伺服器
+deny access to phpinfo	admin	zh-tw	無法存取php資訊
+deny access to site configuration	admin	zh-tw	無法存取網站設定
+deny access to user accounts	admin	zh-tw	無法存取使用者帳號
+deny all users access to grant other users access to their entries ?	admin	zh-tw	不允許任何使用者將自己的資料開放給其它使用者存取？
+description can not exceed 255 characters in length !	admin	zh-tw	描述文章的長度不可以超過255字元！
+determines the order the fields are displayed	admin	zh-tw	偵測顯示欄位的順序
+disable "auto completion" of the login form	admin	zh-tw	停止登入頁面中的自動完成功能
+disable wysiwyg-editor	admin	zh-tw	停用所見即所得編輯器
+disabled (not recomended)	admin	zh-tw	停用(不建議)
+display	admin	zh-tw	顯示
+do not delete the category and return back to the list	admin	zh-tw	不要刪除這個類別並且回到清單
+do you also want to delete all global subcategories ?	admin	zh-tw	您確定要移除所有的全區子分類嗎？
+do you want to delete all global subcategories ?	admin	zh-tw	您確定要刪除全域子類別
+do you want to move all global subcategories one level down ?	admin	zh-tw	您要將所有的子類別向下移一個階層？
+document root (default)	admin	zh-tw	文件根目錄（預設）
+each value is a line like <id>[=<label>]	admin	zh-tw	每個數值是一行像是 <id>[=<label>] 這樣的文字
+each value is a line like id[=label]	admin	zh-tw	每個數值是一行像是 id[=label] 這樣的文字
+edit account	admin	zh-tw	編輯帳號
+edit application	admin	zh-tw	編輯應用程式
+edit email settings	admin	zh-tw	編輯郵件設定
+edit global category	admin	zh-tw	編輯全區分類
+edit global category for %1	admin	zh-tw	編輯全域分類 %1
+edit group	admin	zh-tw	編輯群組
+edit group acl's	admin	zh-tw	編輯群組的ACL's
+edit login screen message	admin	zh-tw	編輯登入畫面訊息
+edit main screen message	admin	zh-tw	編輯主要畫面訊息
+edit peer server	admin	zh-tw	編輯點伺服器
+edit table format	admin	zh-tw	編輯表格格式
+edit this category	admin	zh-tw	編輯這個分類
+edit this group	admin	zh-tw	編輯這個群組
+edit this user	admin	zh-tw	編輯這個使用者
+edit user	admin	zh-tw	編輯使用者
+edit user account	admin	zh-tw	編輯使用者帳號
+egroupware directory	admin	zh-tw	eGroupWare 資料夾
+email account active	admin	zh-tw	郵件帳號啟用
+email address	admin	zh-tw	郵件位址
+enable debug-messages	admin	zh-tw	顯示偵錯訊息
+enable the soap service	admin	zh-tw	啟用 soap 服務
+enable the xmlrpc service	admin	zh-tw	啟用 xmlrpc 服務
+enabled - hidden from navbar	admin	zh-tw	啟用，但不顯示在功能列中
+enabled - popup window	admin	zh-tw	啟用，顯示在跳出視窗中
+enter a description for the category	admin	zh-tw	輸入這個類別的描述
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	zh-tw	輸入用於連線加密的任意字串﹝需要安裝 MCRYPT﹞<br>
+enter the background color for the login page	admin	zh-tw	請輸入登入頁面的背景顏色
+enter the background color for the site title	admin	zh-tw	輸入網站標題的背景顏色
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zh-tw	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	zh-tw	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh-tw	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
+enter the full path for users and group files.<br>examples: /files, e:files	admin	zh-tw	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
+enter the hostname of the machine on which this server is running	admin	zh-tw	輸入這個伺服器主機的主機名稱
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh-tw	輸入 egroupWare 的網頁位址 URL：<br>如：http://www.domain.com/egroupware  或  /egroupware<br><b>結尾無斜線</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	zh-tw	輸入搜尋的字串，如果要顯示所有事件，保持空白並且再次按下送出
+enter the site password for peer servers	admin	zh-tw	輸入對接伺服器的主機密碼
+enter the site username for peer servers	admin	zh-tw	輸入對接伺服器的主機名稱
+enter the title for your site	admin	zh-tw	輸入此網站的標題
+enter the title of your logo	admin	zh-tw	輸入您的首頁圖示說明文字
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	zh-tw	輸入圖示的網址或檔案名稱(在phpgwapi/templates/default/images)
+enter the url where your logo should link to	admin	zh-tw	輸入您的首頁圖示連結
+enter your default ftp server	admin	zh-tw	輸入預設的檔案傳輸伺服器主機名稱
+enter your default mail domain ( from: user@domain )	admin	zh-tw	輸入您的預設郵件網域
+enter your http proxy server	admin	zh-tw	輸入網頁代理伺服器主機名稱
+enter your http proxy server port	admin	zh-tw	輸入網頁代理伺服器主機埠
+enter your smtp server hostname or ip address	admin	zh-tw	輸入您的SMTP伺服器主機名稱或IP位址
+enter your smtp server port	admin	zh-tw	輸入您的SMTP伺服器連接埠
+error canceling timer, maybe there's none set !!!	admin	zh-tw	刪除計時器錯誤，也許並未設定！
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	zh-tw	計時器設定錯誤，錯誤的語法或是已經有一個正在執行！
+error! no appname found	admin	zh-tw	錯誤！找不到應用程式名稱
+error: %1 not found or other error !!!	admin	zh-tw	錯誤：找不到%1或是其他錯誤！
+expires	admin	zh-tw	過期
+explanation of ldapman	admin	zh-tw	這個模組已經在 POSTFIX,LDAP,Courier-IMAP 測試過且需要核心與 QMAIL (OID7914)概要。更多細節可以參考 ADMIN 資料夾中的 README.ldapman 。
+fallback (after each pageview)	admin	zh-tw	回到主頁(在每次瀏覽頁面後)
+field '%1' already exists !!!	admin	zh-tw	欄位 '%1' 已經存在！
+file space	admin	zh-tw	檔案空間
+file space must be an integer	admin	zh-tw	檔案空間必須是整數
+find and register all application hooks	admin	zh-tw	尋找並註冊所有應用程式Hooks
+for the times above	admin	zh-tw	次數上限
+for the times below (empty values count as '*', all empty = every minute)	admin	zh-tw	下面的次數(空白視為"*"，全部空白等於每一分鐘)
+force selectbox	admin	zh-tw	固定勾選方塊
+forward also to	admin	zh-tw	同時轉寄到
+forward emails to	admin	zh-tw	轉寄信件到
+forward only	admin	zh-tw	轉寄
+global categories	common	zh-tw	全區分類
+group ?	admin	zh-tw	群組？
+group has been added	common	zh-tw	成功新增群組
+group has been deleted	common	zh-tw	成功移除群組
+group has been updated	common	zh-tw	成功更新群組
+group list	admin	zh-tw	群組列表
+group manager	admin	zh-tw	群組管理員
+group name	admin	zh-tw	群組名稱
+hide php information	admin	zh-tw	隱藏 PHP 資訊
+home directory	admin	zh-tw	家目錄
+host information	admin	zh-tw	主機資訊
+hour<br>(0-23)	admin	zh-tw	小時<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh-tw	存取紀錄應該保留幾天內的事件後刪除(預設90)？
+how many minutes should an account or ip be blocked (default 30) ?	admin	zh-tw	帳號鎖定將持續幾分鐘(預設30)？
+how should email addresses for new users be constructed?	admin	zh-tw	新使用者的信箱該如何建構？
+icon	admin	zh-tw	圖示
+idle	admin	zh-tw	閒置時間
+if no acl records for user or any group the user is a member of	admin	zh-tw	如果使用者或任何群組沒有 ACL 資料，要將它歸類於
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh-tw	如果使用 LDAP ，您是否要管理家目錄與登入指令列屬性？
+in mbyte	admin	zh-tw	以MB顯示
+inbound	admin	zh-tw	聚集
+initial	admin	zh-tw	初始的
+install crontab	admin	zh-tw	安裝排定的工作
+installed applications	common	zh-tw	已安裝之應用程式
+installed crontab	admin	zh-tw	已經安裝的排定工作
+interface	admin	zh-tw	介面
+ip	admin	zh-tw	網路位址
+jobs	admin	zh-tw	工作
+kill	admin	zh-tw	終止
+kill session	admin	zh-tw	刪除工作
+last %1 logins	admin	zh-tw	最後 %1 次登入
+last %1 logins for %2	admin	zh-tw	%2的最近 %1 次登入
+last login	admin	zh-tw	上次登入時間
+last login from	admin	zh-tw	上次登入來源
+last time read	admin	zh-tw	上次讀取時間
+ldap accounts context	admin	zh-tw	LDAP 使用者帳號內容
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zh-tw	LDAP 預設家目錄前置目錄﹝如：/home/username 的前置目錄為 /home﹞
+ldap default shell (e.g. /bin/bash)	admin	zh-tw	LDAP 預設登入命令處理器﹝如：/bin/bash﹞
+ldap encryption type	admin	zh-tw	LDAP 加密類型
+ldap groups context	admin	zh-tw	LDAP 群組內容
+ldap host	admin	zh-tw	LDAP 主機
+ldap root password	admin	zh-tw	LDAP 管理者密碼
+ldap rootdn	admin	zh-tw	LDAP 主要端點﹝rootdn﹞
+leave empty for no quota	admin	zh-tw	不填入任何資料表示無限制
+leave the category untouched and return back to the list	admin	zh-tw	保留類別原樣並且回到列表
+leave the group untouched and return back to the list	admin	zh-tw	保留群組員樣並且回到列表
+leaves without saveing	admin	zh-tw	不儲存離開
+length<br>rows	admin	zh-tw	長度<br>列數
+list config settings	admin	zh-tw	列出組態設定
+list current sessions	admin	zh-tw	列出目前連線
+list of current users	admin	zh-tw	線上使用者列表
+login history	common	zh-tw	登入歷史記錄
+login message	admin	zh-tw	登入訊息
+login screen	admin	zh-tw	登入畫面
+login shell	admin	zh-tw	登入命令處理器
+login time	admin	zh-tw	登入時間
+loginid	admin	zh-tw	登入代碼
+mail settings	admin	zh-tw	郵件設定
+main email-address	admin	zh-tw	主要信箱
+main screen message	admin	zh-tw	主畫面訊息
+manager	admin	zh-tw	管理者
+max length of the input [, length of the inputfield (optional)]	admin	zh-tw	輸入資料長度上限[, 輸入欄位長度（選填）]
+maximum account id (e.g. 65535 or 1000000)	admin	zh-tw	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
+maximum entries in click path history	admin	zh-tw	點選紀錄的最大項目數
+message has been updated	admin	zh-tw	訊息已經更新
+method	admin	zh-tw	方法
+minimum account id (e.g. 500 or 100, etc.)	admin	zh-tw	使用者帳號編碼最小值﹝如：500 或 100﹞
+minute	admin	zh-tw	分
+mode	admin	zh-tw	模式
+month	admin	zh-tw	月
+more secure	admin	zh-tw	更安全
+name must not be empty !!!	admin	zh-tw	名稱不能空白！
+new group name	admin	zh-tw	新的群組名稱
+new name	admin	zh-tw	新名稱
+new password [ leave blank for no change ]	admin	zh-tw	新的密碼（空白時不更動）
+next run	admin	zh-tw	下次執行
+no algorithms available	admin	zh-tw	沒有任何可以使用的演算法
+no alternate email address	admin	zh-tw	沒有可替換的郵件位址
+no jobs in the database !!!	admin	zh-tw	資料庫中沒有任何工作！
+no login history exists for this user	admin	zh-tw	這個使用者沒有登入的紀錄
+no matches found	admin	zh-tw	沒有找到符合的資料
+no modes available	admin	zh-tw	沒有可用的模式
+no permission to add groups	admin	zh-tw	沒有權限新增群組
+no permission to add users	admin	zh-tw	沒有權限新增使用者
+no permission to create groups	admin	zh-tw	沒有權限建立群組
+note: ssl available only if php is compiled with curl support	admin	zh-tw	注意：SSL只有在PHP編譯時附加CURL支援時才有效
+number of row for a multiline inputfield or line of a multi-select-box	admin	zh-tw	多行輸入的行數或是多重選擇區塊的行數
+order	admin	zh-tw	順序
+outbound	admin	zh-tw	登出
+passthrough	admin	zh-tw	傳送到
+password for smtp-authentication	admin	zh-tw	SMTP認證密碼
+path information	admin	zh-tw	路徑資訊
+peer server list	admin	zh-tw	伺服器清單
+peer servers	admin	zh-tw	對接伺服器
+percent of users that logged out	admin	zh-tw	使用者登出比例
+percent this user has logged out	admin	zh-tw	這個使用者登出的比例
+permission denied	admin	zh-tw	拒絕存取
+permissions	admin	zh-tw	權限
+permissions this group has	admin	zh-tw	群組權限
+phpinfo	admin	zh-tw	PHP 資訊
+please enter a name	admin	zh-tw	請輸入一個名稱
+please enter a name for that server !	admin	zh-tw	請為該伺服器輸入一個名稱
+please run setup to become current	admin	zh-tw	請執行安裝來符合現在的環境
+please select	admin	zh-tw	請選擇
+postfix with ldap	admin	zh-tw	使用LDAP與 Postfix
+preferences	admin	zh-tw	喜好設定
+primary group	admin	zh-tw	主要群組
+qmaildotmode	admin	zh-tw	qmaildotmode
+quota settings	admin	zh-tw	配額設定
+quota size in mbyte	admin	zh-tw	配額大小（MB）
+re-enter password	admin	zh-tw	再次輸入密碼
+read this list of methods.	admin	zh-tw	讀取這個方法的列表
+register application hooks	admin	zh-tw	註冊應用程式
+remove	admin	zh-tw	移除
+remove all users from this group	admin	zh-tw	移除此群組中所有的使用者
+remove all users from this group ?	admin	zh-tw	移除這個群組的所有使用者？
+return to admin mainscreen	admin	zh-tw	回到管理者主畫面
+return to view account	admin	zh-tw	回到帳號瀏覽
+route all mails to	admin	zh-tw	轉遞所有信件到
+run asynchronous services	admin	zh-tw	執行非同步服務
+save the category	admin	zh-tw	儲存類別
+save the category and return back to the list	admin	zh-tw	儲存類別並且回到列表
+saves the changes made and leaves	admin	zh-tw	儲存異動後離開
+search accounts	admin	zh-tw	搜尋帳號
+search categories	admin	zh-tw	搜尋類別
+search groups	admin	zh-tw	搜尋群組
+search peer servers	admin	zh-tw	搜尋伺服器
+security	admin	zh-tw	安全
+select group managers	admin	zh-tw	選擇群組管理員
+select permissions this group will have	admin	zh-tw	選擇此群組的權限
+select the parent category. if this is a main category select no category	admin	zh-tw	選擇父類別。如果這是主要類別，請選擇沒有類別
+select users for inclusion	admin	zh-tw	選擇屬於此群組的使用者
+select where you want to store/retrieve filesystem information	admin	zh-tw	選擇您欲儲存／取得檔案系統資訊的位置
+select where you want to store/retrieve user accounts	admin	zh-tw	選擇您欲儲存／取得檔案使用者帳號訊的位置
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	zh-tw	此應用程式於功能列中之位置（數字較小者列於左方，較大者列於右方）
+selectbox	admin	zh-tw	勾選方塊
+server %1 has been updated	admin	zh-tw	伺服器%1已經更新
+server list	admin	zh-tw	伺服器列表
+server password	admin	zh-tw	伺服器密碼
+server type(mode)	admin	zh-tw	伺服器種類(模式)
+server url	admin	zh-tw	伺服器網址
+server username	admin	zh-tw	伺服器使用者帳號
+set preference values.	admin	zh-tw	設定偏好值
+should the login page include a language selectbox (useful for demo-sites) ?	admin	zh-tw	登入畫面要不要包含語言選單(利於展示)？
+show 'powered by' logo on	admin	zh-tw	顯示「powered by」圖示位置
+show access log	admin	zh-tw	顯示存取紀錄
+show an asterisk (*) to mark untranslated strings	admin	zh-tw	在未翻譯字串顯示星號 (*)
+show current action	admin	zh-tw	顯示現在動作
+show error log	admin	zh-tw	顯示錯誤紀錄
+show phpinfo()	admin	zh-tw	顯示PHP資訊
+show session ip address	admin	zh-tw	顯示處理?></td>  </tr>  <tr bgcolor=
+site	admin	zh-tw	網站
+soap	admin	zh-tw	SOAP
+sorry, that group name has already been taken.	admin	zh-tw	抱歉，群組名稱已經存在
+sorry, the above users are still a member of the group %1	admin	zh-tw	抱歉，以上使用者仍然是群組%1的成員
+sorry, the follow users are still a member of the group %1	admin	zh-tw	很抱歉，下列使用者仍然屬於群組 %1
+sort the entries	admin	zh-tw	排序
+ssl	admin	zh-tw	ssl
+standard	admin	zh-tw	標準
+standard imap server	admin	zh-tw	標準IMAP伺服器
+standard pop3 server	admin	zh-tw	標準POP3伺服器
+standard smtp-server	admin	zh-tw	標準SMTP伺服器
+start testjob!	admin	zh-tw	啟動測試任務!
+submit changes	admin	zh-tw	送出更新資料
+submit the search string	admin	zh-tw	送出搜尋字串
+subtype	admin	zh-tw	副類型
+switch it off, if users are randomly thrown out	admin	zh-tw	如果使用者不定時被登出，請將它關閉
+template selection	admin	zh-tw	選擇畫面配置
+text entry	admin	zh-tw	文字資料
+that application name already exists.	admin	zh-tw	應用程式名稱已經存在
+that application order must be a number.	admin	zh-tw	應用程式順序必須是數字
+that loginid has already been taken	admin	zh-tw	該使用者代碼已被使用了
+that name has been used already	admin	zh-tw	這個名稱已經被使用了
+that server name has been used already !	admin	zh-tw	這個伺服器名稱已經被使用了
+the api is current	admin	zh-tw	API不需要升級
+the api requires an upgrade	admin	zh-tw	API需要升級
+the groups must include the primary group	admin	zh-tw	這個群組必須包含主要群組
+the login and password can not be the same	admin	zh-tw	使用者密碼不可和使用者代碼相同
+the loginid can not be more then 8 characters	admin	zh-tw	登入帳號不能超過8個字元
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	zh-tw	內部名稱（小於 20 個字元），修改這個項目將可能造成現有資料無法讀取
+the testjob sends you a mail everytime it is called.	admin	zh-tw	測試工作每次執行都會傳送一個電子郵件訊息給您。
+the text displayed to the user	admin	zh-tw	顯示的文字
+the two passwords are not the same	admin	zh-tw	請確認兩次都輸入同樣的密碼
+the users bellow are still members of group %1	admin	zh-tw	以下的使用者仍是群組%1的成員
+there already is a group with this name. userid's can not have the same name as a groupid	admin	zh-tw	群組名稱已經存在，使用者帳號的群組不能使用同樣的群組
+they must be removed before you can continue	admin	zh-tw	您必須將其他資料移除後才能繼續
+this application is current	admin	zh-tw	應用程式不需要升級
+this application requires an upgrade	admin	zh-tw	這個應用程式必須升級
+this category is currently being used by applications as a parent category	admin	zh-tw	此分類正被其他的應用程式使用中
+timeout for application session data in seconds (default 86400 = 1 day)	admin	zh-tw	應用程式連線資料逾時秒數(預設86400=一天)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	zh-tw	連線逾時秒數(預設14400 = 4小時)
+times	admin	zh-tw	次數
+top	admin	zh-tw	頂部
+total records	admin	zh-tw	所有紀錄
+trust level	admin	zh-tw	信用層級
+trust relationship	admin	zh-tw	信用關係
+type '%1' already exists !!!	admin	zh-tw	類型 '%1' 已經存在
+type of customfield	admin	zh-tw	自訂欄位類型
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	zh-tw	在 windows 環境需要 %1手動%2 安裝 asyncservice 或是使用回應模式，回應模式指的是在每頁瀏覽完才會被檢查。
+use cookies to pass sessionid	admin	zh-tw	使用 COOKIE 傳遞連線代碼
+use pure html compliant code (not fully working yet)	admin	zh-tw	使用標準 HTML 原始碼（尚未完全支援）
+use theme	admin	zh-tw	使用佈景主題
+user accounts	admin	zh-tw	使用者管理
+user data	common	zh-tw	使用者資料
+user for smtp-authentication (leave it empty if no auth required)	admin	zh-tw	SMTP認證帳號(如果不需要就不用填入)
+user groups	admin	zh-tw	使用者群組管理
+userdata	admin	zh-tw	使用者資料
+users choice	admin	zh-tw	使用者的選擇
+view access log	admin	zh-tw	列出存取記錄
+view account	admin	zh-tw	瀏覽帳號
+view category	admin	zh-tw	瀏覽分類
+view error log	admin	zh-tw	列出錯誤記錄
+view sessions	admin	zh-tw	列出連線
+view this user	admin	zh-tw	查看該使用者
+view user account	admin	zh-tw	瀏覽使用者帳號
+who would you like to transfer all records owned by the deleted user to?	admin	zh-tw	您希望將被移除使用者的資料轉移給誰？
+would you like egroupware to cache the egw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 egw 資訊嗎？
+would you like egroupware to check for a new version<br>when admins login ?	admin	zh-tw	您希望 egroupWare 自動於管理者登入時檢查是否有最新版本？
+would you like egroupware to check for new application versions when admins login ?	admin	zh-tw	您希望egroupWare在每次管理者登入時檢查新版的應用程式嗎？
+would you like to automaticaly load new langfiles (at login-time) ?	admin	zh-tw	您想要自動讀取新的語言檔案嗎(登入時)？
+would you like to show each application's upgrade status ?	admin	zh-tw	您希望顯示每一個應用程式升級的資訊嗎？
+xml-rpc	admin	zh-tw	XML-RPC
+you have entered an invalid expiration date	admin	zh-tw	您輸入了一個錯誤的、過期的日期
+you have to enter a name, to create a new field!!!	admin	zh-tw	要建立一個新欄位需要輸入名稱！
+you have to enter a name, to create a new type!!!	admin	zh-tw	您必須輸入一個名稱來新增類型！
+you must add at least 1 permission or group to this account	admin	zh-tw	您必須至少授權此帳號一項權限或將此帳號歸於一個群組下。
+you must enter a group name.	admin	zh-tw	您必須輸入群組名稱
+you must enter a lastname	admin	zh-tw	您必須輸入使用者姓名
+you must enter a loginid	admin	zh-tw	您必須輸入使用者帳號
+you must enter an application name and title.	admin	zh-tw	您必須輸入應用程式名稱及標頭。
+you must enter an application name.	admin	zh-tw	您必須輸入應用程式名稱
+you must enter an application title.	admin	zh-tw	您必須輸入應用程式標題
+you must select a file type	admin	zh-tw	您必須選擇一種檔案型態。
+you must select at least one group member.	admin	zh-tw	您必須選擇至少一個群組成員。
+you will need to remove the subcategories before you can delete this category	admin	zh-tw	您必須在刪除這個類別前刪除所有的子類別！
+your session could not be verified.	admin	zh-tw	您的連線不合法。

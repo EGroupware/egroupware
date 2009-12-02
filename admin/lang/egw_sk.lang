@@ -1,0 +1,520 @@
+%1 - %2 of %3 user accounts	admin	sk	%1 - %2 z %3 používateľských účtov
+%1 - %2 of %3 user groups	admin	sk	%1 - %2 z %3 používateľských skupín
+%1 acl records of not (longer) existing accounts deleted.	admin	sk	Boli odstránené ACL záznamy už neexistujúcich účtov. Počet odstránených záznamov: %1.
+%1 class not instanciated	admin	sk	%1 trieda nie je inštancionalizovaná
+%1 group %2	admin	sk	%1 skupina %2
+%1 is no command!	admin	sk	%1 nie je príkaz!
+%1 log entries deleted.	admin	sk	%1 položiek záznamu bolo zmazaných.
+%1 not found or not executable !!!	admin	sk	%1 sa nenašiel alebo nie je spustiteľný !!!
+%1 rights for %2 and applications %3	admin	sk	%1 práva pre %2 a aplikácie %3
+%1 user %2	admin	sk	%1 používateľ %2
+(default no, leave it off if you dont use it)	admin	sk	(zvyčajne Nie; ak to nepoužívate, ponechajte prázdne)
+(stored password will not be shown here)	admin	sk	(Uložené heslá sa tu nezobrazia)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sk	(Pre nainštalovanie nových aplikácií použite<br><a href="setup/" target="setup">Inštalátor</a> [Správa aplikácií] !!!)
+-  type	admin	sk	- typ
+accesslog and bruteforce defense	admin	sk	Prístupové záznamy a Ochrana proti útoku hrubou silou
+account %1 %2	admin	sk	Účet %1 %2
+account '%1' deleted.	admin	sk	Účet '%1' bol zmazaný.
+account active	admin	sk	Platnosť účtu
+account has been created	common	sk	Účet bol vytvorený
+account has been deleted	common	sk	Účet bol odstránený
+account has been updated	common	sk	Účet bol aktualizovaný
+account list	admin	sk	Zoznam účtov
+account permissions	admin	sk	Prístupové oprávnenia účtu
+account preferences	admin	sk	Predvoľby účtu
+account-id's have to be integers!	admin	sk	ID účtov musia byť celé čísla!
+acl manager	admin	sk	Správa prístupov (ACL)
+acl rights	common	sk	Prístupové práva (ACL)
+action	admin	sk	Akcia
+activate wysiwyg-editor	admin	sk	zapni WYSIWYG-editor
+add a category	admin	sk	pridať kategóriu
+add a group	admin	sk	pridať skupinu
+add a new account.	admin	sk	Pridať nový účet.
+add a new remote instance	admin	sk	Pridať novú vzdialenú inštanciu
+add a subcategory	admin	sk	pridať podkategóriu
+add a user	admin	sk	pridať používateľa
+add account	admin	sk	Pridať účet
+add application	admin	sk	Pridať aplikáciu
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	sk	Pridať automaticky vytvorených používateľov do tejto skupiny (Ak je prázdne, použije sa predvolená.)
+add global category	admin	sk	Pridať globálnu kategóriu
+add global category for %1	admin	sk	Pridať globálnu kategóriu pre %1
+add group	admin	sk	Pridať skupinu
+add new account	admin	sk	Pridať nový účet
+add new application	admin	sk	Pridať novú aplikáciu
+add peer server	admin	sk	Pridať peer server
+add sub-category	admin	sk	Pridať podkategóriu
+admin email	admin	sk	Správcova E-mailová adresa
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sk	Správcova E-mailová adresa (oddelené čiarkou), kde sa má zasielať upozornenie o blokovaní (ponechajte prázdne, ak nechcete zasielať upozornenia)
+admin name	admin	sk	Meno správcu
+admin queue and history	admin	sk	Správcova fronta a história
+administration	admin	sk	Správa
+admins	admin	sk	Správcovia
+advanced options	admin	sk	Rozšírené možnosti
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sk	Po koľkých neúspešných pokusoch o prihlásenie sa má účet zablokovať (predvolené: 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sk	Po koľkých neúspešných pokusoch o prihlásenie sa má IP zablokovať (predvolené: 3)?
+aliases	admin	sk	Aliasy
+all records and account information will be lost!	admin	sk	Všetky záznamy a informácie o účtoch sa stratia!
+all users	admin	sk	Všetci používatelia
+allow anonymous access to this app	admin	sk	Povoliť anonymnému používateľovi prístup k tejto aplikácii
+allow remote administration from following install id's (comma separated)	admin	sk	Povoliť vzdialenú správu z nasledovných ID inštalácie (oddelené čiarkou)
+alternate email address	admin	sk	alternatívna E-mailová adresa
+anonymous user	admin	sk	Anonymný používateľ
+anonymous user (not shown in list sessions)	admin	sk	Anonymný používateľ (nezobrazuje sa na zozname relácií)
+anonymous user does not exist!	admin	sk	Anonymný používateľ NEexistuje!
+anonymous user has no run-rights for the application!	admin	sk	Anonymný používateľ NEMÁ právo spustiť túto aplikáciu!
+appearance	admin	sk	Vzhľad
+application	admin	sk	Aplikácia
+application '%1' not found (maybe not installed or misspelled)!	admin	sk	Aplikácia '%1' sa nenašla (možno nie je nainštalovaná, alebo je chybne uvedený názov)!
+application name	admin	sk	Názov aplikácie
+application title	admin	sk	Titulok aplikácie
+applications	admin	sk	Aplikácie
+applications list	admin	sk	Zoznam aplikácií
+applications run rights updated.	admin	sk	Aplikácie bežia s aktualizovanými právami.
+applies the changes	admin	sk	vykoná zmeny
+apply the changes	admin	sk	Vykonať zmeny
+are you sure you want to delete the application %1 ?	admin	sk	Ste si istí, že chcete odstrániť aplikáciu %1 ?
+are you sure you want to delete this account ?	admin	sk	Naozaj chcete odstrániť tento účet?
+are you sure you want to delete this application ?	admin	sk	Naozaj chcete odstrániť túto aplikáciu?
+are you sure you want to delete this category ?	common	sk	Naozaj chcete odstrániť túto kategóriu?
+are you sure you want to delete this global category ?	admin	sk	Naozaj chcete odstrániť túto globálnu kategóriu?
+are you sure you want to delete this group ?	admin	sk	Naozaj chcete odstrániť túto skupinu?
+are you sure you want to delete this server?	admin	sk	Naozaj chcete odstrániť tento server?
+are you sure you want to kill this session ?	admin	sk	Naozaj chcete ukončiť túto reláciu?
+async services last executed	admin	sk	Asynchrónne služby naposledy spustené
+asynchronous timed services	admin	sk	Asynchrónne časované služby
+asyncservices not yet installed or other error (%1) !!!	admin	sk	Asyncslužby zatiaľ nie sú nainštalované, alebo iná chyba (%1) !!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sk	Pokúsiť sa použiť korektný MIME typ pre FTP namiesto predvoleného 'application/octet-stream'
+attribute accountstatus explained	admin	sk	Toto zabezpečuje príznak <b><i>-accountStatus-</i></b> zo schémy QMAIL.
+attribute mail explained	admin	sk	Toto zabezpečuje príznak <b><i>-mail-</i></b> zo schémy QMAIL, pole nesmie byť prázdne. Je to taktiež pole interného E-mailu eGW.
+attribute mailalternateaddress explained	admin	sk	Toto zabezpečuje príznak <b><i>-mailAlternateAddress-</i></b> zo schémy QMAIL a môže byť použitý ako virtuálne mapy alebo aliasy.
+attribute mailforwardingaddress explained	admin	sk	Toto zabezpečuje príznak <b><i>-mailForwardingAddress-</i></b> zo schémy QMAIL, pole nesmie byť prázdne ak je priradené.
+authentication / accounts	admin	sk	Overovanie / Účty
+auto create account records for authenticated users	admin	sk	Automaticky vytvoriť záznamy pre overených používateľov
+back to the list	admin	sk	naspäť na zoznam
+bi-dir passthrough	admin	sk	obojsmerné prepojenie
+bi-directional	admin	sk	obojsmerné
+bottom	admin	sk	naspodku
+calculate next run	admin	sk	Vypočítať ďalší prechod
+can change password	admin	sk	Môže zmeniť heslo
+cancel testjob!	admin	sk	Zrušiť testovaciu úlohu!
+cancel this scheduled command	admin	sk	Zrušiť tento naplánovaný príkaz
+categories list	admin	sk	Zoznam kategórií
+category %1 has been saved !	admin	sk	Kategória %1 bola uložená !
+category list	admin	sk	Zoznam kategórií
+change account_id	admin	sk	Zmeniť ID účtu
+change acl rights	admin	sk	zmeniť prístupové (ACL) práva
+change config settings	admin	sk	Zmeniť voľby nastanení
+change main screen message	admin	sk	Zmeniť správu zobrazovanú na hlavnej stránke
+change password for %1	admin	sk	zmeniť heslo pre %1
+check acl for entries of not (longer) existing accounts	admin	sk	Skontrolovať ACL na záznamy už neexistujúcich účtov
+check ip address of all sessions	admin	sk	Skontrolovať IP adresu všetkých relácií
+check items to <b>%1</b> to %2 for %3	admin	sk	Skontrolovať položky po <b>%1</b> po %2 pre %3
+click to select a color	admin	sk	Ak chcete vybrať farbu, kliknite sem
+color	admin	sk	Farba
+command scheduled to run at %1	admin	sk	Príkaz bol zaradený na vykonanie o %1
+complete path to aspell program	admin	sk	Plná cesta ku programu aspell
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	sk	Doména cookie (predvolené prázdne znamená, že sa použije plné doménové meno, pre SiteMgr napr. ".domain.com" povoľuje použitie tej istej cookie pre egw.domain.com a www.domain.com)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	sk	Cesta Cookie (umožňuje viacero relácií eGW s rozličnými adresármi, avšak sú tu problémy so SiteMgr!)
+could not remote execute the command	admin	sk	Nepodarilo sa vzdialene spustiť tento príkaz
+country selection	admin	sk	Výber krajiny
+create group	admin	sk	Vytvoriť skupinu
+created	admin	sk	Vytvorený
+created with id #%1	admin	sk	vytvorené s IS #%1
+creates a new field	admin	sk	vytvorí nové pole
+crontab only (recomended)	admin	sk	iba crontab (odporúča sa)
+custom fields	admin	sk	Vlastné polia
+cyrus imap server	admin	sk	Cyrus IMAP Server
+data	admin	sk	Údaje
+day	admin	sk	Deň
+day of week<br>(0-6, 0=sun)	admin	sk	Deň v týždni<br>(0-6, 0=Ned)
+db backup and restore	admin	sk	Záloha a obnova databáz
+default	admin	sk	Predvolené
+default file system space per user	admin	sk	Predvolený priestor v súborovom systéme na používateľa
+default file system space per user/group ?	admin	sk	Predvolený priestor v súborovom systéme na používateľa/skupinu?
+deinstall crontab	admin	sk	Odinštalovať crontab
+delete account	admin	sk	Odstrániť účet
+delete account %1	admin	sk	Odstrániť účet %1
+delete all records	admin	sk	Odstrániť všetky záznamy
+delete application	admin	sk	Odstrániť aplikáciu
+delete category	admin	sk	Odstrániť kategóriu
+delete group	admin	sk	Odstrániť skupinu
+delete peer server	admin	sk	Odstrániť peer server
+delete selected entries	admin	sk	Odstrániť označené položky
+delete the category	admin	sk	odstráň kategóriu
+delete the group	admin	sk	odstráň skupinu
+delete this category	admin	sk	odstráň túto kategóriu
+delete this group	admin	sk	odstráň túto skupinu
+delete this log entry	admin	sk	Odstrániť túto položku záznamu
+delete this user	admin	sk	odstráň tohto používateľa
+deletes this field	admin	sk	odstráni túto položku
+deliver extern	admin	sk	doručiť extern
+deny access to access log	admin	sk	Zakáž prístup do prístupových záznamov
+deny access to application registery	admin	sk	Zakáž prístup do registrov aplikácie
+deny access to applications	admin	sk	Zakáž prístup do aplikácií
+deny access to asynchronous timed services	admin	sk	Zakáž prístup do asynchrónnych časovaných služieb
+deny access to current sessions	admin	sk	Zakáž prístup do aktuálnych relácií
+deny access to db backup and restore	admin	sk	Zakáž prístup k zálohe a obnove databáz
+deny access to error log	admin	sk	Zakáž prístup do chybových záznamov
+deny access to global categories	admin	sk	Zakáž prístup do globálnych kategórií
+deny access to groups	admin	sk	Zakáž prístup do skupín
+deny access to mainscreen message	admin	sk	Zakáž prístup do textu správy na hlavnej stránke
+deny access to peer servers	admin	sk	Zakáž prístup k peer serverom
+deny access to phpinfo	admin	sk	Zakáž prístup do phpinfo
+deny access to site configuration	admin	sk	Zakáž prístup do nastavení stránky
+deny access to user accounts	admin	sk	Zakáž prístup do používateľských účtov
+deny all users access to grant other users access to their entries ?	admin	sk	Zakázať všetkým používateľom možnosť prideliť iným používateľom prístup k ich záznamom?
+description can not exceed 255 characters in length !	admin	sk	Dĺžka popisu nemôže presiahnuť 255 znakov!
+determines the order the fields are displayed	admin	sk	určuje poradie, v akom sa položky zobrazujú
+disable "auto completion" of the login form	admin	sk	Vypnúť automatické dopĺňanie v prihlasovacej stránke
+disable wysiwyg-editor	admin	sk	vypnúť WYSIWYG-editor
+disabled (not recomended)	admin	sk	vypnuté (neodporúča sa)
+display	admin	sk	Zobraziť
+do not delete the category and return back to the list	admin	sk	NEodstraňovať túto kategóriu a vrátiť sa naspäť do zoznamu
+do you also want to delete all global subcategories ?	admin	sk	Chcete zároveň odstrániť všetky globálne podkategórie?
+do you want to delete all global subcategories ?	admin	sk	Chcete odstrániť všetky globálne podkategórie?
+do you want to move all global subcategories one level down ?	admin	sk	Chcete presunúť všetky globálne podkategórie o jednu úroveň nižšie?
+document root (default)	admin	sk	Koreňový adresár dokumentov
+each value is a line like <id>[=<label>]	admin	sk	každá hodnota je riadok ako <id>[=<label>]
+each value is a line like id[=label]	admin	sk	každá hodnota je riadok ako <id>[=<label>]
+edit account	admin	sk	Upraviť účet
+edit application	admin	sk	Upraviť aplikáciu
+edit email settings	admin	sk	upraviť nastavenia E-mailu
+edit global category	admin	sk	Upraviť globálnu kategóriu
+edit global category for %1	admin	sk	Upraviť globálnu kategóriu pre %1
+edit group	admin	sk	Upraviť skupinu
+edit group acl's	admin	sk	upraviť prístupové práva (ACL) skupiny
+edit login screen message	admin	sk	Upraviť text správy prihlasovacej stránky
+edit main screen message	admin	sk	Upraviť text správy hlavnej stránky
+edit peer server	admin	sk	Upraviť peer server
+edit table format	admin	sk	Upraviť formát tabuľky
+edit this category	admin	sk	uprav túto kategóriu
+edit this group	admin	sk	uprav túto skupinu
+edit this user	admin	sk	uprav tohoto používateľa
+edit user	admin	sk	uprav používateľa
+edit user account	admin	sk	Upraviť používateľský účet
+egroupware directory	admin	sk	adresár eGroupWare
+either install id and config password needed or the remote hash!	admin	sk	Je potrebné buď ID inštalácie A heslo konfigurátora, ALEBO vzdialený hash!
+email account active	admin	sk	E-mailový účet je aktívny
+email address	admin	sk	E-mailová adresa
+enable debug-messages	admin	sk	Zapnúť ladiace správy
+enable the soap service	admin	sk	Zapnúť službu SOAP
+enable the spellcheck in the ritch text editor ?	admin	sk	Zapnúť kontrolu pravopisu v textovom editore?
+enable the xmlrpc service	admin	sk	Zapnúť službu XMLRPC
+enabled - hidden from navbar	admin	sk	Zapnuté - Skryté v navigačnom paneli
+enabled - popup window	admin	sk	Zapnuté - Vyskakovacie okno
+enter a description for the category	admin	sk	zadajte opis tejto kategórie
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	sk	Zadajte náhodný text pre app_session <br>kryptovanie (vyžaduje mcrypt)
+enter the background color for the login page	admin	sk	Zadajte farbu pozadia prihlasovacej stránky
+enter the background color for the site title	admin	sk	Zadajte farbu pozadia nadpisu stránky
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.<br>Príklady: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.<br>Príklady: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	sk	Zadajte názov stroja (hostname) na ktorom beží tento server
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte URL adresu pre eGroupWare.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	sk	Zadajte reťazec pre vyhľadávanie. Pre zobrazenie všetkých záznamov, vyčistite toto pole a stlačte znovu tlačítko ODOSLAŤ
+enter the site password for peer servers	admin	sk	Zadajte heslo stránky pre peer servre
+enter the site username for peer servers	admin	sk	Zadajte používateľské meno stránky pre peer servre
+enter the title for your site	admin	sk	Zadajte nadpis Vašej stránky
+enter the title of your logo	admin	sk	Zadajte titulok Vášho loga
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	sk	Zadajte URL adresu alebo názov súboru Vášho loga (v phpgwapi/templates/default/images)
+enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	sk	Zadajte URL alebo názov súboru (v adresári šablónového obrazu) vašej favikony (tej malej ikonky ktorá sa objavuje na kartách prehliadača)
+enter the url where your logo should link to	admin	sk	Zadajte URL adresu, kam má smerovať odkaz pod Vaším logom
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	sk	Zadajte VFP cestu, kde sa môžu ukladať ďalšie obrázky, ikony alebo logá (a použiť v aplikáciách EGroupware). Cesta MUSÍ byť čitateľná pre všetkých a začínať /
+enter your default ftp server	admin	sk	Zadajte Váš predvolený FTP server
+enter your default mail domain ( from: user@domain )	admin	sk	Zadajte Vašu predvolenú mailovú doménu ( Z tvaru: user@domain )
+enter your http proxy server	admin	sk	Zadajte Váš HTTP proxy server
+enter your http proxy server port	admin	sk	Zadajte port Vášho HTTP proxy servera
+enter your smtp server hostname or ip address	admin	sk	Zadajte názov (hostname) alebo IP adresu Vášho SMTP servera
+enter your smtp server port	admin	sk	Zadajte port Vášho SMTP servera
+error canceling timer, maybe there's none set !!!	admin	sk	Chyba pri rušení časovača, možnože nie je žiadny nastavený !!!
+error changing the password for % !!!	admin	sk	Chyba pri zmene hesla pre % !!!
+error changing the password for %1 !!!	admin	sk	Chyba pri zmene hesla pre %1 !!!
+error deleting log entry!	admin	sk	Chyba pri mazaní položky záznamu!
+error saving	admin	sk	Chyba pri ukladaní
+error saving account!	admin	sk	Chyba pri ukladaní účtu!
+error saving the command!	admin	sk	Chyba pri ukladaní príkazu!
+error saving to db:	admin	sk	Chyba pri ukladaní do db:
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	sk	Chyba pri nastavovaní časovača, chybná syntax alebo možno už nejaký beží !!!
+error! no appname found	admin	sk	CHYBA! Nenašiel sa názov aplikácie
+error: %1 not found or other error !!!	admin	sk	Chyba: %1 sa nenašiel, alebo iná chyba !!!
+expires	admin	sk	Vyprší
+explanation of ldapman	admin	sk	Tento modul bol testovaný doposiaľ pre POSTFIX, LDAP, Courier-IMAP a vyžaduje schémy CORE a QMAIL (OID7914). Podrobnosti o používaní a nastavení tohto systému nájdete v README.ldapman v doc adresári ADMIN-a.
+fallback (after each pageview)	admin	sk	návrat (po každom zobrazení stránky)
+false	admin	sk	Nepravda
+field '%1' already exists !!!	admin	sk	Pole '%1' už existuje
+file space	admin	sk	Priestor pre súbory
+file space must be an integer	admin	sk	Priestor pre súbory musí byť celé číslo
+find and register all application hooks	admin	sk	Nájdi a zaregistruj všetky aplikácie
+for the times above	admin	sk	pre vyššieuvedené časy
+for the times below (empty values count as '*', all empty = every minute)	admin	sk	pre nižšieuvedené časy (prázdne hodnoty sa berú ako '*', všetky prázdne = každú minútu)
+force selectbox	admin	sk	Vynútiť ponuku pre výber
+forward also to	admin	sk	Preposlať ešte (komu)
+forward emails to	admin	sk	Preposlať správy (komu)
+forward only	admin	sk	Iba preposlať
+global categories	common	sk	Globálne kategórie
+grant	admin	sk	Prideliť
+group ?	admin	sk	skupina ?
+group has been added	common	sk	Skupina bola pridaná
+group has been deleted	common	sk	Skupina bola odstránená
+group has been updated	common	sk	Skupina bola aktualizovaná
+group list	admin	sk	Zoznam skupín
+group manager	admin	sk	Správca skupín
+group name	admin	sk	Názov skupiny
+hide php information	admin	sk	skryť php informácie
+home directory	admin	sk	Domovský adresár
+host information	admin	sk	Informácie o serveri
+hour<br>(0-23)	admin	sk	Hodina<br>(0-23)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	sk	Aké veľké majú byť náhľady pre odkazované obrázky (maximum v pixeloch)?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sk	Koľko dní má záznam ostávať v Prístupových Záznamoch než sa zmaže? (predvolené: 90)
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	sk	Koľko záznamov majú povolené exportovať používatelia, ktorí nie sú správcami? (prázdne = bez obmedzení, no = žiaden export)
+how many minutes should an account or ip be blocked (default 30) ?	admin	sk	Koľko minút má trvať zablokovanie účtu alebo IP? (predvolené: 30)
+how should email addresses for new users be constructed?	admin	sk	Ako sa majú vytvárať E-mailové adresy pre nových používateľov?
+icon	admin	sk	Ikona
+idle	admin	sk	voľné
+if no acl records for user or any group the user is a member of	admin	sk	Ak pre používateľa alebo akúkoľvek skupinu, ktorej je členom, neexistujú ACL záznamy
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sk	Ak používate LDAP, chcete spravovať domovský adresár a atribúty login shellu?
+in mbyte	admin	sk	v Megabajtoch
+inbound	admin	sk	príchodzie
+initial	admin	sk	Počiatočné
+install crontab	admin	sk	Nainštalovať crontab
+install id	admin	sk	ID inštalácie
+installed applications	common	sk	Nainštalované aplikácie
+installed crontab	admin	sk	Nainštalovaný crontab
+instance	admin	sk	Inštancia
+interface	admin	sk	Rozhranie
+invalid formated date "%1"!	admin	sk	Chybný formát dátumu "%1"!
+invalid remote id or name "%1"!	admin	sk	Chybné vzdialené ID alebo meno "%1"!
+invalid value "%1" use yes or no!	admin	sk	Chybná hodnota "%1" - použite áno alebo nie"
+ip	admin	sk	IP
+jobs	admin	sk	Úlohy
+kill	admin	sk	Ukončiť
+kill session	admin	sk	Ukončiť reláciu
+last %1 logins	admin	sk	Ostatné %1 prihlásenia
+last %1 logins for %2	admin	sk	Ostatné %1 prihlásenia pre %2
+last login	admin	sk	posledné prihlásenie
+last login from	admin	sk	posledné prihlásenie od
+last time read	admin	sk	Naposledy Prečítané
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	sk	Predpona LDAP domovského adresára (napr. /home pre /home/používateľ)
+ldap encryption type	admin	sk	Typ LDAP šifrovania
+ldap root password	admin	sk	Heslo LDAP root-a
+leave empty for no quota	admin	sk	ak nechcete kvóty, ponechajte prázdne
+leave the category untouched and return back to the list	admin	sk	nechať kategóriu bezo zmien a vrátiť sa späť na zoznam
+leave the group untouched and return back to the list	admin	sk	Nechať skupinu bezo zmien a vrátiť sa na zoznam
+leave without saveing the entry	admin	sk	odísť bez uloženia tejto položky
+leaves without saveing	admin	sk	odísť bez uloženia
+length<br>rows	admin	sk	Dĺžka/<br>Riadkov
+list config settings	admin	sk	Zobraziť voľby nastavení
+list current sessions	admin	sk	Zobraziť aktuálne relácie
+list of current users	admin	sk	zoznam aktuálnych používateľov
+login history	admin	sk	História prihlásení
+login message	admin	sk	Text správy prihlásenia
+login screen	admin	sk	Prihlasovacia stránka
+login time	admin	sk	Čas prihlásenia
+loginid	admin	sk	Prihlasovacie ID
+logintime	admin	sk	Čas prihlásenia
+logoutime	admin	sk	Čas odhlásenia
+mail settings	admin	sk	Nastavenia pošty
+main email-address	admin	sk	Hlavná E-mailová adresa
+main screen message	admin	sk	Text správy hlavnej stránky
+manager	admin	sk	Správca
+max length of the input [, length of the inputfield (optional)]	admin	sk	Maximálna dĺžka vstupu [, dĺžka vstupného poľa (nepovinné)]
+maximum account id (e.g. 65535 or 1000000)	admin	sk	Maximálne ID účtu (napr. 65535 alebo 1000000)
+maximum entries in click path history	admin	sk	Maximálny počet záznamov v histórii kliknutí
+message has been updated	admin	sk	správa bola upravená
+method	admin	sk	Metóda
+minimum account id (e.g. 500 or 100, etc.)	admin	sk	Najmenšie ID účtu (napr. 500 alebo 100, atď.)
+minute	admin	sk	Minúta
+mode	admin	sk	Režim
+modified	admin	sk	Zmenený
+month	admin	sk	Mesiac
+more secure	admin	sk	bezpečnejšie
+name must not be empty !!!	admin	sk	Názov nemôže byť prázdny!
+name of the egroupware instance, eg. default	admin	sk	Názov inštancie eGroupWare, napríklad predvolený
+new group name	admin	sk	Názov novej skupiny
+new name	admin	sk	nový názov
+new password [ leave blank for no change ]	admin	sk	Nové heslo [ Ak nechcete zmenu, nechajte prázdne ]
+next run	admin	sk	Ďalší prechod
+no algorithms available	admin	sk	nie sú dostupné žiadne algoritmy
+no alternate email address	admin	sk	žiadna alternatívna E-mailová adresa
+no jobs in the database !!!	admin	sk	V databáze nie sú žiadne úlohy !!!
+no login history exists for this user	admin	sk	Pre používateľa neexistuje žiadna história prihlásení
+no matches found	admin	sk	Nenašlo sa
+no modes available	admin	sk	žiadne režimy nie sú dostupné
+no permission to add groups	admin	sk	nemáte oprávnenie pridávať skupiny
+no permission to add users	admin	sk	nemáte oprávnenie pridávať používateľov
+no permission to create groups	admin	sk	nemáte oprávnenie vytvárať skupiny
+note: ssl available only if php is compiled with curl support	admin	sk	Upozornenie: SSL je dostupné iba v prípade, že PHP bolo skompilované s podporou curl
+number of row for a multiline inputfield or line of a multi-select-box	admin	sk	počet riadkov vo viacriadkovom vstupnom poli alebo v ponuke pre výber
+order	admin	sk	Poradie
+outbound	admin	sk	odchodzie
+own install id:	admin	sk	Vlastné ID inštalácie:
+passthrough	admin	sk	prechádzajúce
+password for smtp-authentication	admin	sk	Heslo pre SMTP overovanie
+password updated	admin	sk	Heslo bolo zmenené
+path information	admin	sk	Informácia o ceste
+peer server list	admin	sk	Zoznam peer serverov
+peer servers	admin	sk	Peer servre
+percent of users that logged out	admin	sk	Koľko percent používateľov sa odhlásilo
+percent this user has logged out	admin	sk	Na koľko percent sa odhlasoval tento používateľ
+permission denied	admin	sk	Prístup bol odmietnutý
+permission denied !!!	admin	sk	Prístup bol odmietnutý!!!
+permissions	admin	sk	Oprávnenia
+permissions this group has	admin	sk	Oprávnenia prináležiace tejto skupine
+phpinfo	admin	sk	PHP informácie
+please enter a name	admin	sk	Prosím zadajte meno
+please enter a name for that server !	admin	sk	Prosím zadajte názov toho servera !
+please run setup to become current	admin	sk	Prosím spusťte setup pre aktualizáciu
+please select	admin	sk	Prosím vyberte
+postfix with ldap	admin	sk	Postfix + LDAP
+preferences	admin	sk	Predvoľby
+primary group	admin	sk	primárna skupina
+qmaildotmode	admin	sk	bodkový režim qmail
+quota settings	admin	sk	nastavenia kvót
+quota size in mbyte	admin	sk	veľkosť kvóty v Megabajtoch
+re-enter password	admin	sk	Zadajte heslo znovu
+read this list of methods.	admin	sk	Načítaj tento zoznam metód.
+register application hooks	admin	sk	Zaregistruj všetky aplikácie
+remote administration instances	admin	sk	Vzdialené správcovské inštancie
+remote administration need to be enabled in the remote instance under admin > site configuration!	admin	sk	Vzdialená správa musí byť najprv zapnutá pre vzdialenú inštanciu pod Správca > Nastavenia stránky!
+remote instance saved	admin	sk	Vzdialená inštancia bola uložená
+remove	admin	sk	odstrániť
+remove all users from this group	admin	sk	Odstrániť všetkých používateľov z tejto skupiny
+remove all users from this group ?	admin	sk	Odstrániť všetkých používateľov z tejto skupiny ?
+requested	admin	sk	Vyžiadané
+return to admin mainscreen	admin	sk	návrat do správcovej hlavnej stránky
+return to view account	admin	sk	Návrat na zobrazenie účtov
+route all mails to	admin	sk	Všetky správy smerovať cez
+run asynchronous services	admin	sk	Spustiť asynchrónne služby
+save the category	admin	sk	uložiť kategóriu
+save the category and return back to the list	admin	sk	uložiť kategóriu a vrátiť sa späť na zoznam
+saves the changes made and leaves	admin	sk	uloží vykonané zmeny a odíde
+saves this entry	admin	sk	Uložiť túto položku
+scheduled	admin	sk	Naplánované
+search accounts	admin	sk	Hľadať v účtoch
+search categories	admin	sk	Hľadať v kategóriách
+search groups	admin	sk	Hľadať v skupinách
+search peer servers	admin	sk	Hľadať v peer serveroch
+security	admin	sk	Zabezpečenie
+select accounts for which the custom field should be visible	admin	sk	Vyberte účty, pre ktoré bude vlastné pole viditeľné
+select group managers	admin	sk	Vybrať správcov skupín
+select permissions this group will have	admin	sk	Vyberte, aké oprávnenia má mať táto skupina
+select the parent category. if this is a main category select no category	admin	sk	Vyberte rodičovskú kategóriu. Ak toto je hlavná kategória, vyberte ŽIADNA KATEGÓRIA
+select users for inclusion	admin	sk	Vyberte používateľov pre zaradenie
+select where you want to store/retrieve filesystem information	admin	sk	Vyberte, kde chcete ukladať/získavať informácie o súborovom systéme
+select where you want to store/retrieve user accounts	admin	sk	Vyberte, kde chcete ukladať/získavať informácie o používateľských účtoch
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	sk	Vyberte, na ktorom mieste sa má táto aplikácia zobrazovať v navigačnom paneli, nižšie (doľava) alebo vyššie (vpravo)
+selectbox	admin	sk	Ponuka pre výber
+server %1 has been updated	admin	sk	Server %1 bol upravený
+server list	admin	sk	Zoznam serverov
+server password	admin	sk	Heslo servera
+server type(mode)	admin	sk	Typ (režim) servera
+server url	admin	sk	URL adresa servera
+server username	admin	sk	Používateľské meno pre server
+set preference values.	admin	sk	Nastaviť hodnoty.
+should exceptions contain a trace (including function arguments)	admin	sk	Chcete, aby výnimky obsahovali trasovacie údaje (vrátane argumentov funkcií)?
+should the login page include a language selectbox (useful for demo-sites) ?	admin	sk	Chcete, aby sa na prihlasovacej stránke zobrazoval výber jazyka (vhodné pre demo-stránky)?
+show 'powered by' logo on	admin	sk	Kde zobrazovať logo "powered by"
+show access log	admin	sk	Zobraziť prístupové záznamy
+show an asterisk (*) to mark untranslated strings	admin	sk	Použiť hviezdičku (*) na označenie nepreložených fráz
+show current action	admin	sk	Zobraziť aktuálnu akciu
+show error log	admin	sk	Zobraziť záznamy o chybách
+show phpinfo()	admin	sk	Zobraziť phpinfo()
+show session ip address	admin	sk	Zobraziť IP adresu relácie
+site	admin	sk	Stránka
+soap	admin	sk	SOAP
+sorry, that group name has already been taken.	admin	sk	Ľutujem, také meno skupiny tu už bolo.
+sorry, the above users are still a member of the group %1	admin	sk	Ľutujem, uvedení používatelia sú stále členmi skupiny %1
+sorry, the follow users are still a member of the group %1	admin	sk	Ľutujem, nasledujúci používatelia sú stále členmi skupiny %1
+sort the entries	admin	sk	triediť záznamy
+ssl	admin	sk	ssl
+standard	admin	sk	štandardný
+standard imap server	admin	sk	štandardný IMAP server
+standard pop3 server	admin	sk	štandardný POP3 server
+standard smtp-server	admin	sk	štandardný SMTP-Server
+start testjob!	admin	sk	Spustiť testovaciu úlohu
+submit changes	admin	sk	Vykonať Zmeny
+submit the search string	admin	sk	Hľadaj podľa zadaného reťazca
+subtype	admin	sk	Podtyp
+switch it off, if users are randomly thrown out	admin	sk	vypnite to, ak sú používatelia náhodne odpájaní
+template selection	admin	sk	Výber šablóny
+text entry	admin	sk	Textová položka
+that application name already exists.	admin	sk	Takýto názov aplikácie už existuje.
+that application order must be a number.	admin	sk	Poradie aplikácie musí byť číslom.
+that loginid has already been taken	admin	sk	Takéto ID prihlásenia sa už používa
+that name has been used already	admin	sk	Toto meno sa už používa
+that server name has been used already !	admin	sk	Toto meno servera sa už používa !
+the api is current	admin	sk	API je aktuálne
+the api requires an upgrade	admin	sk	API potrebuje aktualizáciu
+the groups must include the primary group	admin	sk	Skupiny musia obsahovať aj primárnu skupinu
+the install id of an instance can be found under admin > site configuration	admin	sk	ID inštalácie pre inštanciu sa nachádza pod Správca > Nastavenia stránky
+the login and password can not be the same	admin	sk	Prihlasovacie meno a heslo sa nesmú zhodovať
+the loginid can not be more then 8 characters	admin	sk	Prihlasovacie ID nesmie presahovať 8 znakov
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	sk	Vnútorne používané meno (nanajvýš 20 znakov), jeho zmena zneprístupní existujúce údaje
+the testjob sends you a mail everytime it is called.	admin	sk	Testovacia Úloha vám pošle správu, kedykoľvek sa spustí.
+the text displayed to the user	admin	sk	text zobrazený používateľovi
+the two passwords are not the same	admin	sk	Heslá sa nezhodujú
+the users bellow are still members of group %1	admin	sk	nasledujúci používatelia sú stále členmi skupiny %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	sk	Skupina tohto mena už existuje. ID používateľa a ID skupiny nesmú byť totožné
+they must be removed before you can continue	admin	sk	Než bude možné pokračovať, musia sa odstrániť
+this application is current	admin	sk	Táto aplikácia je aktuálna
+this application requires an upgrade	admin	sk	Táto aplikácia vyžaduje aktualizáciu
+this category is currently being used by applications as a parent category	admin	sk	Táto kategória je práve používaná aplikáciami ako rodičovská.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	sk	Čas vypršania údajov o relácii aplikácie, v sekundách (predvolené: 86400 = 1 deň)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	sk	Čas vypršania údajov o relácii, v sekundách (predvolené: 14400 = 4 hodiny)
+times	admin	sk	Časy
+top	admin	sk	navrchu
+total of %1 id's changed.	admin	sk	Celkovo bolo zmenených %1 ID.
+total records	admin	sk	Záznamov spolu
+true	admin	sk	Pravda
+trust level	admin	sk	Úroveň dôvery
+trust relationship	admin	sk	Vzťah dôvery
+type '%1' already exists !!!	admin	sk	typ '%1' už existuje !!!
+type of customfield	admin	sk	Typ vlastného poľa
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sk	Pod windows musíte asyncslužby nainštalovať %1manuálne%2 alebo použiť fallback režim. Fallback znamená, že úlohy sú skontrolované iba po jednotlivých zobrazeniach stránky !!!
+unknown account: %1 !!!	admin	sk	Neznámy účet: %1 !!!
+unknown command %1!	admin	sk	Neznámy príkaz %1!
+unknown option %1	admin	sk	Neznáma možnosť %1
+updated	admin	sk	aktualizované
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	sk	URL inštalácie eGroupWare, napríklad http://domain.com/egroupware
+use cookies to pass sessionid	admin	sk	Použiť cookies na odovzdanie ID relácie
+use pure html compliant code (not fully working yet)	admin	sk	Použiť čistý HTML kód (zatiaľ nie je plne funkčné)
+use theme	admin	sk	Použiť tému
+user accounts	admin	sk	Používateľské účty
+user data	common	sk	Používateľské údaje
+user for smtp-authentication (leave it empty if no auth required)	admin	sk	Používateľ pre SMTP overovanie (ak netreba, ponechajte prázdne)
+user groups	admin	sk	Používateľské skupiny
+userdata	admin	sk	používateľské údaje
+users choice	admin	sk	Používateľská voľba
+value for column %1 is not unique!	admin	sk	Hodnota pre stĺpec %1 nie je jedinečná!
+view access log	admin	sk	Zobraziť prístupové záznamy
+view account	admin	sk	Zobraziť účet
+view category	admin	sk	Zobraziť kategóriu
+view error log	admin	sk	Zobraziť záznam o chybách
+view sessions	admin	sk	Zobraziť relácie
+view this user	admin	sk	zobraziť tohto používateľa
+view user account	admin	sk	Zobraziť používateľský účet
+who would you like to transfer all records owned by the deleted user to?	admin	sk	Na koho by ste chceli preniesť VŠETKY záznamy odstráneného používateľa?
+would you like egroupware to cache the egw info array ?	admin	sk	Chcete, aby eGroupWare kešoval egw info pole?
+would you like egroupware to check for a new version<br>when admins login ?	admin	sk	Chcete, aby eGroupWare kontroloval aktuálnosť svojej verzie <br>po prihlásení správcu?
+would you like egroupware to check for new application versions when admins login ?	admin	sk	Chcete, aby eGroupWare kontroloval aktuálnosť verzie aplikácií po prihlásení správcu?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	sk	Chcete, aby sa nové jazykové súbory uplatnili počas prihlasovania?
+would you like to show each application's upgrade status ?	admin	sk	Chcete, aby sa zobrazoval stav aktualizácie každej aplikácie?
+wrong account type: %1 is no %2 !!!	admin	sk	Nesprávny typ účtu: %1 NIE je %2!!!
+wrong admin-account or -password !!!	admin	sk	Nesprávny účet alebo heslo správcu!!!
+xml-rpc	admin	sk	XML-RPC
+you have entered an invalid expiration date	admin	sk	Zadali ste nesprávny čas vypršania
+you have to enter a name, to create a new field!!!	admin	sk	Ak chcete vytvoriť nové pole, musíte zadať názov!!!
+you have to enter a name, to create a new type!!!	admin	sk	Ak chcete vytvoriť nový typ, musíte zadať názov!!!
+you must add at least 1 permission or group to this account	admin	sk	Tomuto účtu musíte pridať aspoň 1 oprávnenie alebo skupinu
+you must enter a group name.	admin	sk	Musíte zadať názov skupiny
+you must enter a lastname	admin	sk	Musíte zadať priezvisko
+you must enter a loginid	admin	sk	Musíte zadať prihlasovacie ID
+you must enter an application name and title.	admin	sk	Musíte zadať názov a titulok aplikácie.
+you must enter an application name.	admin	sk	Musíte zadať názov aplikácie.
+you must enter an application title.	admin	sk	Musíte zadať titulok aplikácie.
+you must select a file type	admin	sk	Musíte zadať typ súboru
+you must select at least one group member.	admin	sk	Musíte zadať aspoň jedného člena skupiny.
+you need to enter install id and password!	admin	sk	Musíte zadať ID inštalácie a heslo!
+you will need to remove the subcategories before you can delete this category	admin	sk	Než odstránite túto kategóriu, musíte odstrániť všetky podkategórie!
+your session could not be verified.	admin	sk	Vašu reláciu sa nepodarilo overiť.

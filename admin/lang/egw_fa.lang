@@ -1,0 +1,400 @@
+%1 - %2 of %3 user accounts	admin	fa	%1 - %2 از %3 حساب کاربری
+%1 - %2 of %3 user groups	admin	fa	%1 - %2 از %3 گروههای کاربران
+%1 acl records of not (longer) existing accounts deleted.	admin	fa	%1 اطلاعات حقوق دسترسی حسابهائی که دیگر موجود نیستند حذف شد
+%1 not found or not executable !!!	admin	fa	%1 یافت نشد یا اجرائی نبود !!!
+(default no, leave it off if you dont use it)	admin	fa	پیش فرض نه است. خالی بگذارید اگر استفاده نمی کنید
+(stored password will not be shown here)	admin	fa	گذرواژه های ذخیره شده اینجا نمایش داده نمی شوند.
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fa	برای برپا سازی کاربردهای جدید از <br><a href="setup/" target="setup">برپاسازی</a> استفاده کنید. [مدیریت کاربردها]
+-  type	admin	fa	نوع -
+account active	admin	fa	حساب فعال
+account has been created	common	fa	حساب ساخته شد
+account has been deleted	common	fa	حساب حذف شد
+account has been updated	common	fa	حساب بهنگام شد
+account list	admin	fa	فهرست حساب
+account permissions	admin	fa	مجوزهای حساب
+account preferences	admin	fa	تنظیمات حساب
+acl manager	admin	fa	مدیریت حقوق دسترسی
+acl rights	common	fa	حقوق دسترسی
+action	admin	fa	عمل
+activate wysiwyg-editor	admin	fa	فعالسازی ویرایشگر WYSIWYG
+add a category	admin	fa	افزودن دسته
+add a group	admin	fa	افزودن گروه
+add a new account.	admin	fa	افزودن حساب جدید
+add a subcategory	admin	fa	افزودن زیر مجموعه
+add a user	admin	fa	افزودن کاربر
+add account	admin	fa	افزودن حساب
+add application	admin	fa	افزودن کاربرد
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	fa	افزودن کاربران ایجاد-خودکار به این گروه - اگر خالی باشد، پیش فرضها در نظر گرفته می شوند
+add global category	admin	fa	افزودن دسته عمومی
+add global category for %1	admin	fa	افزودن دسته عمومی برای  %1
+add group	admin	fa	افزودن گروه
+add new account	admin	fa	افزودن حساب جدید
+add new application	admin	fa	افزودن کاربرد جدید
+add peer server	admin	fa	افزودن کارگزار کمکی
+add sub-category	admin	fa	افزودن زیر مجموعه
+admin email	admin	fa	رایانامه مدیر
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fa	نشانیهای رایانامه مدیر-با ویرگول جدا کنید- برای تذکر قفل شدن(خالی بگذارید برای تذکر ندادن)
+admin name	admin	fa	نام مدیر
+administration	admin	fa	مدیریت
+admins	admin	fa	مدیران
+advanced options	admin	fa	گزینه های پیشرفته
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fa	بعد از چند تلاش ناموفق باید حساب کاربر قفل شود؟(پیش فرض 3 است)
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fa	بعد از چند تلاش ناموفق باید نشانی IP کاربر قفل شود؟(پیش فرض 3 است)
+aliases	admin	fa	نامهای مستعار
+all records and account information will be lost!	admin	fa	تمام اطلاعات و حسابها از بین می روند!
+all users	admin	fa	همه کاربران
+allow anonymous access to this app	admin	fa	دسترسی بی نام به این کاربرد فعال شود
+alternate email address	admin	fa	نشانی رایانامه دیگر
+anonymous user	admin	fa	کاربر بی نام
+anonymous user (not shown in list sessions)	admin	fa	کاربر بی نام (در فهرست نشستها دیده نمی شود)
+anonymous user does not exist!	admin	fa	کاربر بی نام موجود نیست!
+anonymous user has no run-rights for the application!	admin	fa	کاربر بی نام اجازه اجرای این کاربرد را ندارد!
+appearance	admin	fa	ظاهر
+application	admin	fa	کاربرد
+application name	admin	fa	نام کاربرد
+application title	admin	fa	عنوان کاربرد
+applications	admin	fa	کاربردها
+applications list	admin	fa	فهرست کاربردها
+applies the changes	admin	fa	تغییرات را اعمال می کند
+are you sure you want to delete the application %1 ?	admin	fa	آیا برای حذف کاربرد %1 اطمینان دارید؟
+are you sure you want to delete this account ?	admin	fa	آیا مطمئنید که می خواهید این حساب را حذف کنید؟
+are you sure you want to delete this application ?	admin	fa	آیا مطمئنید که می خواهید این کاربد را حذف کنید؟
+are you sure you want to delete this category ?	common	fa	آیا مطمئنید که می خواهید این دسته را حذف کنید؟
+are you sure you want to delete this global category ?	admin	fa	آیا مطمئنید که می خواهید این دسته عمومی را حذف کنید؟
+are you sure you want to delete this group ?	admin	fa	آیا مطمئنید که می خواهید این گروه را حذف کنید؟
+are you sure you want to delete this server?	admin	fa	آیا مطمئنید که می خواهید این کارگزار را حذف کنید؟
+are you sure you want to kill this session ?	admin	fa	آیا مطمئنید که می خواهید این نشست را از بین ببرید؟
+async services last executed	admin	fa	آخرین اجرای خدمات Async
+asynchronous timed services	admin	fa	خدمات ناهماهنگ زمانی
+asyncservices not yet installed or other error (%1) !!!	admin	fa	خدمات ناهماهنگ نصب نشده یا خطای دیگری هست (%1) !!!
+authentication / accounts	admin	fa	تصدیق/حسابها
+auto create account records for authenticated users	admin	fa	ایجاد خودکار اطلاعات حساب کاربری برای کاربران تصدیق شده
+back to the list	admin	fa	بازگشت به فهرست
+bi-directional	admin	fa	دوجهته
+bottom	admin	fa	پائین
+calculate next run	admin	fa	اجرای بعدی محاسبه شود
+can change password	admin	fa	توانائی تغییر گذرواژه
+cancel testjob!	admin	fa	لغو کارآزمایشی!
+categories list	admin	fa	فهرست دسته ها
+category %1 has been saved !	admin	fa	دسته %1 ذخیره شد
+category list	admin	fa	فهرست دسته
+change acl rights	admin	fa	تغییر حقوق دسترسی
+change config settings	admin	fa	تغییر تنظیمات پیکربندی
+change main screen message	admin	fa	تغییر پیام صفحه اصلی
+change your password	preferences	fa	تغییر گذرواژه
+check ip address of all sessions	admin	fa	بازرسی نشانی IP  تمام نشستها
+check items to <b>%1</b> to %2 for %3	admin	fa	بررسی موارد در <b>%1</b> به %2 برای %3
+click to select a color	admin	fa	برای انتخاب رنگ کلیک کنید
+color	admin	fa	رنگ
+country selection	admin	fa	انتخاب کشور
+create group	admin	fa	ایجاد گروه
+creates a new field	admin	fa	ایجاد فیلد جدید
+crontab only (recomended)	admin	fa	فقط crontab (پیشنهاد میشود)
+custom fields	admin	fa	فیلدهای سفارشی
+data	admin	fa	داده
+day	admin	fa	روز
+day of week<br>(0-6, 0=sun)	admin	fa	روز هفته <br>(0-6, 0=یکشنبه)
+db backup and restore	admin	fa	پشتیبانی و برگرداندن پایگاه داده
+default	admin	fa	پیش فرض
+default file system space per user	admin	fa	فضای پیش فرض سیستم برای هر کاربر
+default file system space per user/group ?	admin	fa	فضای پیش فرض سیستم برای هر کاربر/گروه؟
+deinstall crontab	admin	fa	برداشتن crontab
+delete account	admin	fa	حذف حساب
+delete all records	admin	fa	حذف همه اطلاعات
+delete application	admin	fa	حذف کاربرد
+delete category	admin	fa	حذف دسته
+delete group	admin	fa	حذف گروه
+delete peer server	admin	fa	حذف کارگزار کمکی
+delete the category	admin	fa	حذف دسته
+delete the group	admin	fa	حذف گروه
+delete this category	admin	fa	حذف این دسته
+delete this group	admin	fa	حذف این گروه
+delete this user	admin	fa	حذف این کاربر
+deletes this field	admin	fa	حذف این فیلد
+deliver extern	admin	fa	حمل خارجی
+deny access to access log	admin	fa	ممنوعیت دسترسی به ثبت دسترسی
+deny access to application registery	admin	fa	ممنوعیت  دسترسی به ثبات کاربرد
+deny access to applications	admin	fa	ممنوعیت دسترسی به کاربردها
+deny access to asynchronous timed services	admin	fa	ممنوعیت دسترسی به خدمات ناهماهنگ زمانی
+deny access to current sessions	admin	fa	ممنوعیت دسترسی به نشستهای جاری
+deny access to db backup and restore	admin	fa	ممنوعیت دسترسی به پشتیبان و بازگشت پایگاه داده
+deny access to error log	admin	fa	ممنوعیت دسترسی به ثبت خطا
+deny access to global categories	admin	fa	ممنوعیت دسترسی به دسته های عمومی
+deny access to groups	admin	fa	ممنوعیت دسترسی به گروهها
+deny access to mainscreen message	admin	fa	ممنوعیت دسترسی به پیام صفحه اصلی
+deny access to peer servers	admin	fa	ممنوعیت دسترسی به کارگزارهای کمکی
+deny access to phpinfo	admin	fa	ممنوعیت دسترسی به اطلاعات php
+deny access to site configuration	admin	fa	ممنوعیت دسترسی به پیکربندی سایت
+deny access to user accounts	admin	fa	ممنوعیت دسترسی به حسابهای کاربری
+deny all users access to grant other users access to their entries ?	admin	fa	دسترسی همه کاربران برای دادن دسترسی به دیگر کاربران ممنوع شود؟
+description can not exceed 255 characters in length !	admin	fa	توضیحات نمی تواند بیشتر از 255 حرف باشد!
+determines the order the fields are displayed	admin	fa	تشخیص ترتیب نمایش فیلدها
+disable "auto completion" of the login form	admin	fa	غیرفعال کردن تکمیل خودکار در صفحه ورود
+disable wysiwyg-editor	admin	fa	غیر فعال کردن ویرایشگر WYSIWYG
+disabled (not recomended)	admin	fa	غیر فعال (پیشنهاد نمی شود)
+display	admin	fa	نمایش
+do not delete the category and return back to the list	admin	fa	دسته را حذف نکن و به فهرست برگرد
+do you also want to delete all global subcategories ?	admin	fa	آیا میخواهید که همه زیر دسته های عمومی را حذف کنید؟
+do you want to delete all global subcategories ?	admin	fa	آیا میخواهید همه زیر دسته های عمومی را هم حذف کنید؟
+do you want to move all global subcategories one level down ?	admin	fa	آیا میخواهید که همه زیر دسته های عمومی را تا یک سطح پایینترحذف کنید؟
+each value is a line like <id>[=<label>]	admin	fa	هر مقدار در یک خط مثل [<id>[=<label>
+each value is a line like id[=label]	admin	fa	هر مقدار در یک خط مثل [id[=label
+edit account	admin	fa	ویراستن حساب
+edit application	admin	fa	ویراستن کاربرد
+edit email settings	admin	fa	ویراستن تنظیمات رایانامه
+edit global category	admin	fa	ویراستن دسته عمومی
+edit global category for %1	admin	fa	ویراستن دسته عمومی برای %1
+edit group	admin	fa	ویراستن گروه
+edit group acl's	admin	fa	ویراستن حقوق دسترسی گروه
+edit login screen message	admin	fa	ویراستن پیام صفحه ورود
+edit main screen message	admin	fa	ویراستن پیام صفحه اصلی
+edit peer server	admin	fa	ویراستن کارگزار کمکی
+edit table format	admin	fa	ویراستن قالب جدول
+edit this category	admin	fa	ویراستن این دسته
+edit this group	admin	fa	ویراستن این گروه
+edit this user	admin	fa	ویراستن این کاربر
+edit user	admin	fa	ویراستن کاربر
+edit user account	admin	fa	ویراستن حساب کاربری
+email account active	admin	fa	حساب رایانامه فعال
+email address	admin	fa	نشانی رایانامه
+enable debug-messages	admin	fa	پیامهای اشکالزدائی فعال
+enable the soap service	admin	fa	خدمات soap فعال
+enable the xmlrpc service	admin	fa	خدمات xmlrpc فعال
+enabled - hidden from navbar	admin	fa	فعال - مخفی از نوار ناوبری
+enabled - popup window	admin	fa	فعال - پنجره جداگانه
+enter a description for the category	admin	fa	یک توصیف برای این دسته وارد کنید
+enter the background color for the login page	admin	fa	رنگ زمینه برای صفحه ورود را وارد کنید
+enter the background color for the site title	admin	fa	رنگ زمینه برای عنوان سایت را وارد کنید
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fa	مسیر کامل پرونده های موقت را وارد کنید.<br>برای مثال: tmp, C:\TEMP/
+enter the hostname of the machine on which this server is running	admin	fa	نام میزبانی که این کارگزار روی آن اجرا می شود را وارد کنید
+enter the site password for peer servers	admin	fa	گذرواژه سایت برای کارگزار کمکی را وارد کنید
+enter the site username for peer servers	admin	fa	نام کاربری سایت برای کارگزار کمکی را وارد کنید
+enter the title for your site	admin	fa	عنوان برای سایتتان وارد کنید
+enter the title of your logo	admin	fa	عنوان برای لوگو تان وارد کنید
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	fa	نام یا مسیر کامل لوگو را وارد کنید
+enter the url where your logo should link to	admin	fa	نشانی جائی که باید لوگو به آنجا پیوند شود وارد کنید
+enter your default ftp server	admin	fa	کارگزار پیش فرض قاپ را وارد کنید
+enter your default mail domain ( from: user@domain )	admin	fa	حوزه پیش فرض رایانامه را وارد کنید:مثلا: user@domain
+enter your http proxy server	admin	fa	کارگزار پیشکار شبکه را وارد کنید
+enter your http proxy server port	admin	fa	درگاه کارگزار پیشکار شبکه را وارد کنید
+enter your smtp server hostname or ip address	admin	fa	نشانی IP یا نام میزبان کارگزار رایانامه ‌SMTP را وارد کنید
+enter your smtp server port	admin	fa	درگاه کارگزار رایانامه ‌SMTP را وارد کنید
+error! no appname found	admin	fa	خطا! نام کاربرد پیدا نشد
+error: %1 not found or other error !!!	admin	fa	خطا!!!: %1 پیدا نشد یا خطائی دیگر
+expires	admin	fa	انقضاء
+fallback (after each pageview)	admin	fa	بازگشتنی(پس از نمایش هر صفحه)
+field '%1' already exists !!!	admin	fa	فیلد '%1'  وجود دارد!!!
+file space	admin	fa	فضای پرونده
+file space must be an integer	admin	fa	فضای پرونده باید عدد صحیح باشد
+find and register all application hooks	admin	fa	یافتن و ثبت همه گیرهای کاربردها
+for the times above	admin	fa	برای زمانهای فوق
+for the times below (empty values count as '*', all empty = every minute)	admin	fa	برای زمانهای ذیل(مقادیر خالی بعنوان '*' و خالی بودن همه به معنی هر دقیقه است)
+force selectbox	admin	fa	جعبه انتخاب اجباری
+forward also to	admin	fa	پیش سو به
+forward emails to	admin	fa	پیش سوی رایانامه به
+forward only	admin	fa	فقط پیش سو
+global categories	common	fa	دسته های عمومی
+group ?	admin	fa	گروه؟
+group code	admin	fa	کد گروه
+group has been added	common	fa	گروه اضافه شد
+group has been deleted	common	fa	گروه حذف شد
+group has been updated	common	fa	گروه بهنگام شد
+group list	admin	fa	فهرست گروه
+group manager	admin	fa	مدیر گروه
+group name	admin	fa	نام گروه
+hide php information	admin	fa	پنهان سازی اطلاعات php
+home directory	admin	fa	پوشه خانه
+host information	admin	fa	اطلاعات میزبان
+hour<br>(0-23)	admin	fa	ساعت <br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fa	اطلاعات چند روز قبل از حذف ثبت دسترسی باید نگهداری شوند:(پیش فرض ۹۰)؟
+how many minutes should an account or ip be blocked (default 30) ?	admin	fa	چند دقیقه باید یک IP قفل باشد؟ (پیش فرض 30 دقیقه)
+icon	admin	fa	نمایه
+idle	admin	fa	بیکار
+in mbyte	admin	fa	به مگابایت
+inbound	admin	fa	داخلی
+install crontab	admin	fa	برپاسازی crontab
+installed applications	common	fa	کاربردهای برپاشده
+installed crontab	admin	fa	crontab برپاشده
+interface	admin	fa	رابط
+ip	admin	fa	IP
+jobs	admin	fa	کارها
+kill	admin	fa	از بین بردن
+kill session	admin	fa	از بین بردن نشست
+last %1 logins	admin	fa	آخرین %1 ورود
+last %1 logins for %2	admin	fa	آخرین %1 ورود برای %2
+last login	admin	fa	آخرین ورود
+last login from	admin	fa	آخرین ورود از
+last time read	admin	fa	آخرین بار خوانده شدن
+leave empty for no quota	admin	fa	خالی برای بی سهمیه
+leave the category untouched and return back to the list	admin	fa	دسته ، دست نخورده رها شود به به فهرست برگردد
+leave the group untouched and return back to the list	admin	fa	گروه را دست نخورده بگذار و به فهرست برگرد
+leaves without saveing	admin	fa	ترک بدون ذخیره
+length<br>rows	admin	fa	طول <br> سطور
+list config settings	admin	fa	فهرست تنظیمات پیکربندی
+list current sessions	admin	fa	فهرست نشستهای جاری
+list of current users	admin	fa	فهرست کاربران جاری
+login history	common	fa	تاریخچه ورود
+login message	admin	fa	پیام ورود
+login screen	admin	fa	صفحه ورود
+login shell	admin	fa	پوسته ورود
+login time	admin	fa	زمان ورود
+loginid	admin	fa	شناسه ورود
+mail settings	admin	fa	تنظیمات رایانامه
+main email-address	admin	fa	نشانی رایانامه اصلی
+main screen message	admin	fa	پیام صفحه اصلی
+manager	admin	fa	مدیر
+maximum account id (e.g. 65535 or 1000000)	admin	fa	حداکثر شناسه حساب (مثلا:65535 یا 1000000)
+maximum entries in click path history	admin	fa	حداکثر ورودیها در مسیر تاریخچه
+message has been updated	admin	fa	پیام بهنگام شد
+method	admin	fa	روش
+minimum account id (e.g. 500 or 100, etc.)	admin	fa	حداقل شناسه حساب (مثلا:500 یا 100 یا غیره)
+minute	admin	fa	دقیقه
+mode	admin	fa	سبک
+month	admin	fa	ماه
+name must not be empty !!!	admin	fa	نام نباید خالی باشد!!!
+new group name	admin	fa	نام گروه جدید
+new name	admin	fa	نام جدید
+new password [ leave blank for no change ]	admin	fa	گذرواژه جدید(برای تغییر نکردن خالی بگذارید)
+next run	admin	fa	اجرای بعدی
+no algorithms available	admin	fa	الگوریتمی موجود نیست
+no alternate email address	admin	fa	نشانی رایانامه دیگر موجود نیست
+no jobs in the database !!!	admin	fa	کاری در پایگاه داده نیست!!!
+no login history exists for this user	admin	fa	تاریخچه ورودی برای این کاربر نیست
+no matches found	admin	fa	هیچ موردی یافت نشد
+no modes available	admin	fa	هیچ سبکی موجود نیست
+no permission to add groups	admin	fa	مجوزی برای افزودن گروهها نیست
+no permission to add users	admin	fa	مجوزی برای افزودن کاربان نیست
+no permission to create groups	admin	fa	مجوزی برای ایجاد گروهها نیست
+order	admin	fa	ترتیب
+outbound	admin	fa	خارجی
+password for smtp-authentication	admin	fa	گذرواژه برای تصدیق SMTP
+path information	admin	fa	اطلاعات مسیر
+peer server list	admin	fa	فهرست کارگزار کمکی
+peer servers	admin	fa	کارگزاران کمکی
+percent of users that logged out	admin	fa	درصد کاربرانی که خارج شده اند
+percent this user has logged out	admin	fa	درصدی که این کاربر خارج شده
+permission denied	admin	fa	دسترسی ممنوع
+permissions	admin	fa	مجورها
+permissions this group has	admin	fa	مجوزهایی که این گروه دارد
+phpinfo	admin	fa	اطلاعات PHP
+please enter a name	admin	fa	لطفا یک نام وارد کنید
+please enter a name for that server !	admin	fa	لطفا یک نام برای کارگزار وارد کنید!
+please run setup to become current	admin	fa	لطفا برپاسازی را اجرا کنید تا بروز شوید
+please select	admin	fa	لطفا انتخاب کنید
+preferences	admin	fa	تنظیمات
+primary group	admin	fa	گروه اولیه
+quota settings	admin	fa	تنظیمات سهمیه
+quota size in mbyte	admin	fa	سهمیه به مگابایت
+re-enter password	admin	fa	ورود مجدد گذرواژه
+read this list of methods.	admin	fa	خواندن این فهرست از روشها
+register application hooks	admin	fa	ثبت گیرهای کاربرد
+remove	admin	fa	حذف
+remove all users from this group	admin	fa	حذف همه کاربران از این گروه
+remove all users from this group ?	admin	fa	همه کاربران از این گروه حذف شوند؟
+return to admin mainscreen	admin	fa	بازگشت به صفحه اصلی مدیر
+return to view account	admin	fa	بازگشت برای دیدن حساب
+route all mails to	admin	fa	همه رایانامه ها را مسیر دهی کن به
+run asynchronous services	admin	fa	اجرای خدمات ناهماهنگ
+save the category	admin	fa	ذخیره دسته
+save the category and return back to the list	admin	fa	ذخیره دسته و بازگشت به فهرست
+saves the changes made and leaves	admin	fa	تغییرات را ذخیره کرده و خارج می شود
+search accounts	admin	fa	جستجوی حسابها
+search categories	admin	fa	جستجوی دسته ها
+search groups	admin	fa	جستجوی گروهها
+search peer servers	admin	fa	جستجوی کارگزاران کمکی
+security	admin	fa	امنیت
+select group managers	admin	fa	انتخاب مدیران گروه
+select permissions this group will have	admin	fa	انتخاب مجوزهایی که این گروه باید داشته باشد
+select the parent category. if this is a main category select no category	admin	fa	دسته والد را انتخاب کنید. اگر این دسته والد است، هیچکدام را انتخاب کنید
+select users for inclusion	admin	fa	انتخاب کاربران برای شامل شدن
+selectbox	admin	fa	جعبه انتخاب
+server %1 has been updated	admin	fa	کارگزار %1 بهنگام شد
+server list	admin	fa	فهرست کارگزار
+server password	admin	fa	گذرواژه کارگزار
+server type(mode)	admin	fa	نوع کارگزار(سبک)
+server url	admin	fa	نشانی کارگزار
+server username	admin	fa	نام کاربری کارگزار
+set preference values.	admin	fa	تنظیم مقدار پیش فرضها
+should the login page include a language selectbox (useful for demo-sites) ?	admin	fa	آیا صفحه ورود باید یک جعبه انتخاب برای زبان داشته باشد(این برای سایتهای نمایشی خوب است)؟
+show 'powered by' logo on	admin	fa	نمایش «پشتیبانی بوسیله» در
+show access log	admin	fa	نمایش ثبت دسترسی
+show current action	admin	fa	نمایش فعالیت جاری
+show error log	admin	fa	نمایش ثبت خطا
+show phpinfo()	admin	fa	نمایش اطلاعات php
+show session ip address	admin	fa	نمایش نشانی IP نشست
+site	admin	fa	سایت
+sorry, that group name has already been taken.	admin	fa	متأسفم، قبلا این نام برای گروه دیگری گرفته شده است
+sorry, the above users are still a member of the group %1	admin	fa	متأسفم، کاربران فوق هنوز عضو گروه %1 هستند
+sorry, the follow users are still a member of the group %1	admin	fa	متأسفم، کاربران ذیل هنوز عضو گروه %1 هستند
+sort the entries	admin	fa	ورودیها مرتب شوند
+standard	admin	fa	استاندارد
+standard imap server	admin	fa	کارگزار استاندارد IMAP
+standard pop3 server	admin	fa	کارگزار استاندارد POP3
+standard smtp-server	admin	fa	کارگزار استاندارد SMTP
+start testjob!	admin	fa	شروع کار آزمایشی!
+submit changes	admin	fa	ثبت تغییرات
+submit the search string	admin	fa	ثبت رشته جستجو
+subtype	admin	fa	زیرنوع
+template selection	admin	fa	انتخاب قالب
+text entry	admin	fa	ورودی متن
+that application name already exists.	admin	fa	نام کاربرد وجود دارد
+that application order must be a number.	admin	fa	ترتیب کاربرد باید عدد باشد
+that loginid has already been taken	admin	fa	شناسه ورود قبلا گرفته شده است
+that name has been used already	admin	fa	نام قبلا گرفته شده است
+that server name has been used already !	admin	fa	نام کارگزار قبلا استفاده شده
+the api is current	admin	fa	API بروز است
+the api requires an upgrade	admin	fa	API بهنگام سازی لازم دارد
+the groups must include the primary group	admin	fa	گروهها باید شامل گروه اولیه باشند
+the login and password can not be the same	admin	fa	شناسه ورود و گذرواژه نمی توانند مثل هم باشند
+the loginid can not be more then 8 characters	admin	fa	شناسه ورود نمی تواند بیشتر از 8 حرف باشد
+the testjob sends you a mail everytime it is called.	admin	fa	کارآزمایشی برای شما نامه می فرستد هروقت که فراخوانی شود
+the text displayed to the user	admin	fa	متنی که به کاربر نمایش داده می شود
+the two passwords are not the same	admin	fa	گذرواژه های وارد شده مثل هم نیستند
+the users bellow are still members of group %1	admin	fa	کاربران ذیل هنوز عضو گروه %1 هستند
+there already is a group with this name. userid's can not have the same name as a groupid	admin	fa	گروهی با همین نام وجود دارد. نام کاربری نمی تواند مثل نام گروه باشد.
+they must be removed before you can continue	admin	fa	آنها باید حذف شوند تا کار ادامه یابد
+this application is current	admin	fa	این کاربرد بهنگام است
+this application requires an upgrade	admin	fa	این کاربرد بهنگام سازی می خواهد
+this category is currently being used by applications as a parent category	admin	fa	این دسته بعنوان دسته والد توسط کاربردها در حال استفاده است
+timeout for application session data in seconds (default 86400 = 1 day)	admin	fa	زمان برای اطلاعات نشست کاربرد به ثانیه (پیش فرض ۸۶۴۰۰=۱ روز است)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	fa	حداکثر زمان نشست بیکار(پیش فرض ۱۴۴۰۰=۴ ساعت است)
+times	admin	fa	زمانها
+top	admin	fa	بالا
+total records	admin	fa	کل رکوردها
+trust level	admin	fa	سطح اعتماد
+trust relationship	admin	fa	رابطه اعتماد
+type '%1' already exists !!!	admin	fa	نوع '%1'  وجود دارد!!!
+type of customfield	admin	fa	نوع فیلد سفارشی
+use cookies to pass sessionid	admin	fa	از کوکی برای ارسال شناسه نشست استفاده شود
+use theme	admin	fa	استفاده از تم
+user accounts	admin	fa	حسابهای کاربری
+user data	admin	fa	اطلاعات کاربر
+user groups	admin	fa	گروههای کاربری
+userdata	admin	fa	اطلاعات کاربر
+users choice	admin	fa	انتخاب کاربران
+view access log	admin	fa	نمایش ثبت دسترسی
+view account	admin	fa	نمایش حساب
+view category	admin	fa	نمایش دسته
+view error log	admin	fa	نمایش ثبت خطا
+view sessions	admin	fa	نمایش نشستها
+view this user	admin	fa	دیدن این کاربر
+view user account	admin	fa	دیدن حساب کاربر
+when admins login	admin	fa	آیا دوست دارید هنگامی که وارد سیستم میشوید، سیستم جهت بروزرسانی کردن سیستم اصلی چک شود؟*:
+who would you like to transfer all records owned by the deleted user to?	admin	fa	آیا می خواهید همه رکوردهائی که مالکیت آنها در اختیار کاربر است به کاربر دیگری انتقال یابد؟
+would you like egroupware to cache the egw info array ?	admin	fa	آیا میخواهید که گروه افزار آرایه های خود را در نهانگاه نگهداری کند؟
+would you like egroupware to check for a new version<br>when admins login ?	admin	fa	آیا میخواهید گروه افزار برای نسخه های جدید در زمان ورود بررسی انجام دهد؟
+would you like egroupware to check for new application versions when admins login ?	admin	fa	آیا میخواهید که گروه افزار برای نسخه های جدید کاربردها در زمان ورود مدیر بررسی انجام دهد؟
+would you like to automaticaly load new langfiles (at login-time) ?	admin	fa	آیا میخواهید در زمان ورود فایلهای زبانی جدید بارگذاری شوند؟
+would you like to show each application's upgrade status ?	admin	fa	آیا میخواهید وضعیت به روز رسانی هر کاربرد نمایش داده شود؟
+you have entered an invalid expiration date	admin	fa	شما تاریخ انقضای غیر معتبر وارد کردید
+you have to enter a name, to create a new field!!!	admin	fa	شما باید یک نام برای ساختن فیلد جدید وارد کنید!!!
+you have to enter a name, to create a new type!!!	admin	fa	شما باید یک نام برای ساختن نوع جدید وارد کنید!!!
+you must add at least 1 permission or group to this account	admin	fa	شما باید حداقل یک مجوز یا گروه به این حساب اضافه کنید
+you must enter a group name.	admin	fa	شما باید یک نام گروه وارد کنید
+you must enter a lastname	admin	fa	شما باید یک نام خانوادگی وارد کنید
+you must enter a loginid	admin	fa	شما باید یک شناسه کاربری وارد کنید
+you must enter an application name and title.	admin	fa	شما باید یک نام کاربرد و عنوان وارد کنید
+you must enter an application name.	admin	fa	شما باید یک نام کاربرد وارد کنید
+you must enter an application title.	admin	fa	شما باید یک عنوان کاربرد وارد کنید
+you must select a file type	admin	fa	شما باید یک نوع پرونده انتخاب کنید
+you will need to remove the subcategories before you can delete this category	admin	fa	شما باید قبل از حذف این دسته، زیر مجموعه ها را حذف کنید!

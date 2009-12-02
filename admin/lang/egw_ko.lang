@@ -1,0 +1,380 @@
+%1 - %2 of %3 user accounts	admin	ko	** %1 - %3 의 %2 사용자 계정
+%1 - %2 of %3 user groups	admin	ko	** %1 - %3 의 %2 유저 그룹
+%1 not found or not executable !!!	admin	ko	** %1 , 찾거나 실행할수 없습니다!!
+(stored password will not be shown here)	admin	ko	(저장된 패스워드는 여기에 보이지 않습니다)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ko	새 응용프로그램을 설치하기 위해서 <br><a href="setup/" target="setup">설정</a>[응용프로그램 관리]!!!)
+* make sure that you remove users from this group before you delete it.	admin	ko	* 이 그룹에서 사용자를 정말 삭제하시겠습니까?
+accesslog and bruteforce defense	admin	ko	접근 로그와 브루탈포스 방어
+account active	admin	ko	계정 활정화
+account has been created	common	ko	계정이 생성되었습니다
+account has been deleted	common	ko	계정이 삭제되었습니다
+account has been updated	common	ko	계정이 갱신되었습니다
+account list	admin	ko	계정 목록
+account permissions	admin	ko	계정 권한
+account preferences	admin	ko	계정 환경설정
+acl manager	admin	ko	ACL 메니저
+acl rights	common	ko	ACL 권한
+action	admin	ko	액션
+activate wysiwyg-editor	admin	ko	위지웍-편집기 활성화
+active	admin	ko	활성화
+add a category	admin	ko	카테고리 추가
+add a group	admin	ko	그룹 추가
+add a new account.	admin	ko	새 계정 추가
+add a subcategory	admin	ko	하위카테고리 추가
+add a user	admin	ko	사용자 추가
+add account	admin	ko	계정 추가
+add application	admin	ko	응용프로그램 추가
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	ko	이 그룹에 자동-생성 사용자를 추가 (이 란이 비어있으면 '기본'이 시도됨)
+add global category	admin	ko	전역 카테고리 추가
+add global category for %1	admin	ko	** %1의 전역 카테고리 추가 (Add global category for %1)
+add group	admin	ko	그룹 추가
+add new account	admin	ko	새 계정 추가
+add new application	admin	ko	새 응용프로그램 추가
+add peer server	admin	ko	피어 서버 추가
+add sub-category	admin	ko	하위-카테고리 추가
+admin email	admin	ko	관리자 이메일
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ko	블럭되면 알림 메일 발송될 관리자 이메일 주소들 (컴마구분,비어있으면 안알림)
+admin name	admin	ko	관리자 이름
+administration	admin	ko	관리자
+admins	admin	ko	관리자
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ko	접속 시도할때 몇번 실패하면 계정을 막겠습니까? ( 기본 3번 )
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ko	접속 시도할때 몇번 실패하면 IP를 막겠습니까? ( 기본 3번 )
+all records and account information will be lost!	admin	ko	이 계정의 자료와 정보가 삭제됩니다.
+all users	admin	ko	모든 사용자
+allow anonymous access to this app	admin	ko	이 응용프로그램에 익명 연결 허용
+anonymous user	admin	ko	익명 사용자
+anonymous user (not shown in list sessions)	admin	ko	익명 사용자 ( 세션 목록에 나타나지 않음 )
+appearance	admin	ko	보이기
+application	admin	ko	응용프로그램
+application name	admin	ko	응용프로그램 이름
+application title	admin	ko	응용프로그램 제목
+applications	admin	ko	응용프로그램들
+applications list	admin	ko	응용프로그램 목록
+are you sure you want to delete the application %1 ?	admin	ko	%1 응용프로그램을 정말 삭제하시겠습니까?
+are you sure you want to delete this account ?	admin	ko	이 계정을 정말 삭제하시겠습니까 ?
+are you sure you want to delete this application ?	admin	ko	이 응용프로그램을 정말 삭제하시겠습니까?
+are you sure you want to delete this category ?	common	ko	이 카테고리를 정말 삭제하시겠습니까?
+are you sure you want to delete this global category ?	admin	ko	이 전역 카테고리를 정말 삭제하시겠습니까?
+are you sure you want to delete this group ?	admin	ko	이 그룹을 정말 삭제하시겠습니까 ?
+are you sure you want to delete this server?	admin	ko	이 서버를 정말 삭제하시겠습니까?
+are you sure you want to kill this session ?	admin	ko	이 세션을 정말 종료시키시겠습니까 ?
+async services last executed	admin	ko	비동기 서비스 최종 실행됨
+asynchronous timed services	admin	ko	비동기예약 서비스
+asyncservices not yet installed or other error (%1) !!!	admin	ko	비동기서비스 가 아직 설치 되지 않았거나 다른 오류 (%1) !!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ko	기본 'application/octet-stream' 대신에 현재 mimetype으로 FTP 사용을 시도합니다
+authentication / accounts	admin	ko	인증 / 계정
+auto create account records for authenticated users	admin	ko	인증된 사용자용 자동 생성 계정 레코드
+back to the list	admin	ko	목록으로 돌아감
+bi-dir passthrough	admin	ko	** 양방향 통과 (bi-dir passthrough)
+bi-directional	admin	ko	양방향( bi-directional )
+bottom	admin	ko	하단
+calculate next run	admin	ko	다음 실행을 계산
+can change password	admin	ko	암호 변경 가능
+cancel testjob!	admin	ko	테스트작업(TestJob) 취소
+categories list	admin	ko	카테고리 목록
+category %1 has been saved !	admin	ko	%1 카테고리가 저장되었습니다!
+category list	admin	ko	카테고리 목록
+change acl rights	admin	ko	ACL 권한 변경
+change config settings	admin	ko	구성 설정 변경
+change main screen message	admin	ko	주 화면 메세지 변경
+check ip address of all sessions	admin	ko	모든 세션에 ip 주소 확인
+check items to <b>%1</b> to %2 for %3	admin	ko	** %3의 항목을 <b>%1</b>에서 %2로 체크
+click to select a color	admin	ko	클릭해서 색깔을 선택
+color	admin	ko	색
+country selection	admin	ko	국가 선택
+create group	admin	ko	새 그룹 만들기
+crontab only (recomended)	admin	ko	크론탭 만 ( 추천 )
+data	admin	ko	데이터
+day	admin	ko	날
+day of week<br>(0-6, 0=sun)	admin	ko	주의 일수<br>(0-6, 0=일요일)
+default	admin	ko	기본
+default file system space per user	admin	ko	유저 당 기본 파일시스템 용량
+default file system space per user/group ?	admin	ko	유저/그룹 당 기본 파일시스템 용량?
+deinstall crontab	admin	ko	크론탭 설치제거
+delete account	admin	ko	계정 삭제
+delete all records	admin	ko	모든 레코드 삭제
+delete application	admin	ko	응용프로그램 삭제
+delete category	admin	ko	카테고리 삭제
+delete group	admin	ko	그룹 삭제
+delete peer server	admin	ko	피어 서버 삭제
+delete the category	admin	ko	카테고리 삭제
+delete the group	admin	ko	그룹 삭제
+delete this category	admin	ko	카테고리 삭제
+delete this group	admin	ko	그룹 삭제
+delete this user	admin	ko	사용자 삭제
+deny access to access log	admin	ko	거부된 접근을 접근 로그로
+deny access to application registery	admin	ko	거부된 접근을 응용프로그램 레지스트리로
+deny access to applications	admin	ko	거부된 접근을 응용프로그램으로
+deny access to asynchronous timed services	admin	ko	거부된 접근을 비동기예약 서비스로
+deny access to current sessions	admin	ko	거부된 접근을 현재 세션으로
+deny access to error log	admin	ko	거부된 접근을 에러 로그로
+deny access to global categories	admin	ko	거부된 접근을 전역 카테고리로
+deny access to groups	admin	ko	거부된 접근을 그룹으로
+deny access to mainscreen message	admin	ko	거부된 접근을 주 화면 메세지로
+deny access to peer servers	admin	ko	거부된 접근을 피어 서버로
+deny access to phpinfo	admin	ko	거부된 접근을 phpinfo로
+deny access to site configuration	admin	ko	거부된 접근을 사이트 구성으로
+deny access to user accounts	admin	ko	거부된 접근을 사용자 계정으로
+deny all users access to grant other users access to their entries ?	admin	ko	** 허락된 다른 사용자들이 자신의 항목에 접근하는 것 이외에 다른 모든 사용자의 접근을 막는다
+description can not exceed 255 characters in length !	admin	ko	설명은 255 글자길이를 초과 할수 없습니다!
+disable "auto completion" of the login form	admin	ko	접속시 "자동완성" 기능 비활성화
+disable wysiwyg-editor	admin	ko	위지웍-편집기 비활성화
+disabled	admin	ko	비활성화
+disabled (not recomended)	admin	ko	비활성화 됨 (추천)
+display	admin	ko	표시
+do not delete the category and return back to the list	admin	ko	카테고리를 삭제하지 않고 목록으로 되돌아 감
+do you also want to delete all global subcategories ?	admin	ko	모든 전역의 하위카테고리를 역시 삭제하길 원하십니까?
+do you want to delete all global subcategories ?	admin	ko	모든 전역의 하위카테고리를 삭제하길 원하십니까?
+do you want to move all global subcategories one level down ?	admin	ko	모든 전역의 하위카테고리를 한 단계 아래로 (level down) 옮기시길 원합니까?
+edit account	admin	ko	계정 편집
+edit application	admin	ko	응용프로그램 편집
+edit global category	admin	ko	전역 카테고리 편집
+edit global category for %1	admin	ko	%1의 전역 카테고리 편집
+edit group	admin	ko	그룹 편집
+edit group acl's	admin	ko	그룹의 ACL을 편집
+edit login screen message	admin	ko	접속화면 메세지 편집
+edit main screen message	admin	ko	주 화면 메세지 편집
+edit peer server	admin	ko	피어 서버 편집
+edit table format	admin	ko	테이블 형식 편집
+edit this category	admin	ko	이 카테고리를 편집
+edit this group	admin	ko	이 그룹을 편집
+edit this user	admin	ko	이 유저를 편집
+edit user	admin	ko	사용자 편집
+edit user account	admin	ko	사용자 계정을 편집
+enable debug-messages	admin	ko	디버그-메세지를 활성화
+enabled - hidden from navbar	admin	ko	활성화 - 네비게이션바에서 숨김
+enabled - popup window	admin	ko	활성화 - 팝업창
+enter a description for the category	admin	ko	카테고리의 설명을 입력하세요
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	ko	응용프로그램의 세션 암호화에 사용할 텍스트 입력<br>(mcrypt 필요)
+enter the background color for the login page	admin	ko	접속 페이지의 배경색 입력
+enter the background color for the site title	admin	ko	사이트 제목의 배경색 입력
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ko	임시 파일의 완전경로 입력<br>예:/tmp,C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	ko	사용자와 그룹 파일의 완전경로 입력<br>예:/files ,E:\FILES
+enter the hostname of the machine on which this server is running	admin	ko	이 서버의 호스트이름 입력
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	eGroupWare의 URL의 위치를 입력.<br>예: http://www.domain.com/egroupware &nbsp; 이나 &nbsp; /egroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
+enter the search string. to show all entries, empty this field and press the submit button again	admin	ko	검색할 문자열을 입력. 모든 항목을 보기위해선, 이 필드를 비우고 보내기(Submit) 버튼을 다시 누르세요
+enter the site password for peer servers	admin	ko	피어서버의 사이트 암호 입력
+enter the site username for peer servers	admin	ko	피어서버의 사이트 사용자이름 입력
+enter the title for your site	admin	ko	귀하의 사이트 제목을 입력
+enter the title of your logo	admin	ko	귀하의 로고의 제목을 입력
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	ko	귀하의 로고의 URL 이나 파일이름을 입력 ( phpgwapi/templates/default/images 안에 )
+enter the url where your logo should link to	admin	ko	귀하의 로고가 링크될 URL 을 입력
+enter your default ftp server	admin	ko	기본 FTP 서버주소 입력
+enter your default mail domain ( from: user@domain )	admin	ko	기본 메일 도메인을 입력 ( From : 유저@도메인 )
+enter your http proxy server	admin	ko	HTTP 프록시 서버주소 입력
+enter your http proxy server port	admin	ko	HTTP 프록시 서버 포트 입력
+enter your smtp server hostname or ip address	admin	ko	SMTP서버 호스트 이름이나 IP주소 입력
+enter your smtp server port	admin	ko	SMTP 서버 포트 입력
+error canceling timer, maybe there's none set !!!	admin	ko	타이머를 취소하는데 오류발생,  설정안되어 있을수도 있습니다!!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	ko	타이머를 설정오류 발생, 문법이 틀렸거나 이미 작동중일 수 있습니다!!!
+error: %1 not found or other error !!!	admin	ko	오류 : %1을 찾을수 없거나 다른 오류입니다!!!
+expires	admin	ko	만료
+fallback (after each pageview)	admin	ko	폴백 (각 페이지보기 이후)
+file space	admin	ko	파일 용량
+file space must be an integer	admin	ko	파일 용량은 정수이어야 합니다
+find and register all application hooks	admin	ko	모든 응용프로그램의 "가로채기"을 찾거나 등록
+for the times above	admin	ko	위와 같은 시간
+for the times below (empty values count as '*', all empty = every minute)	admin	ko	이하와 같은 시간 (빈 값은 '*'로 처리되고, 모두 비어있으면 매 분마다입니다)
+force selectbox	admin	ko	강제 선택박스
+global categories	common	ko	전역 카테고리
+group ?	admin	ko	그룹 ?
+group has been added	common	ko	그룹이 추가되었습니다
+group has been deleted	common	ko	그룹이 삭제되었습니다
+group has been updated	common	ko	그룹이 갱신되었습니다
+group list	admin	ko	그룹 리스트
+group manager	admin	ko	그룹 관리자
+group name	admin	ko	그룹이름
+hide php information	admin	ko	php 정보를 숨김
+home directory	admin	ko	홈 디렉토리
+host information	admin	ko	호스트 정보
+hour<br>(0-23)	admin	ko	시간<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ko	접근 로그에 항목을 삭제되기까지 일간 유지할까요 (기본 90) ?
+how many minutes should an account or ip be blocked (default 30) ?	admin	ko	몇분간 IP나 계정을 막을까요 (기본 30) ?
+icon	admin	ko	아이콘
+idle	admin	ko	대기시간
+if no acl records for user or any group the user is a member of	admin	ko	사용자나 어떤 그룹 사용자 ACL 레코드가 없다면 다음의 멤버 :
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ko	LDAP를 사용한다면, 홈디렉토리와 로그인쉘 속성을 관리 하시겠습니까?
+inbound	admin	ko	인바운드
+install crontab	admin	ko	크론탭 설치
+installed applications	common	ko	설치된 응용프로그램
+installed crontab	admin	ko	설치된 크론탭
+interface	admin	ko	인터페이스
+ip	admin	ko	IP
+jobs	admin	ko	작업(Jobs)
+kill	admin	ko	종료
+kill session	admin	ko	세션 종료
+last %1 logins	admin	ko	** Last %1 logins
+last %1 logins for %2	admin	ko	** Last %1 logins for %2
+last login	admin	ko	마지막 접속
+last login from	admin	ko	마지막 접속 위치는
+last time read	admin	ko	마지막 읽은 시각
+ldap accounts context	admin	ko	LDAP 계정 컨텍스트
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ko	LDAP 기본 홈디렉토리 접두어 (예:/home/username 의 /home)
+ldap default shell (e.g. /bin/bash)	admin	ko	LDAP 기본 쉘 (예 /bin/bash)
+ldap encryption type	admin	ko	LDAP 암호화 타입
+ldap groups context	admin	ko	LDAP 그룹 컨텍스트
+ldap host	admin	ko	LDAP 호스트
+ldap root password	admin	ko	LDAP 최고관리자 암호
+ldap rootdn	admin	ko	LDAP rootdn
+leave the category untouched and return back to the list	admin	ko	카테고리를 손대지 않고 목록으로 되돌아 가기
+leave the group untouched and return back to the list	admin	ko	그룹을 손대지 않고 목록으로 되돌아 가기
+list config settings	admin	ko	구성 설정 목록
+list current sessions	admin	ko	현재 세션 목록
+list of current users	admin	ko	현재 사용자 목록
+login history	common	ko	접속 기록
+login message	admin	ko	접속 메세지
+login screen	admin	ko	접속 화면
+login shell	admin	ko	로그인 쉘
+login time	admin	ko	접속 시간
+loginid	admin	ko	접속ID
+mail settings	admin	ko	메일 설정
+main screen message	admin	ko	주 화면 메세지
+manager	admin	ko	관리자
+maximum account id (e.g. 65535 or 1000000)	admin	ko	최대 계정ID  (예 65535 나 1000000)
+maximum entries in click path history	admin	ko	경로 기록의 최대 항목
+message has been updated	admin	ko	메세지가 갱신되었습니다
+method	admin	ko	메소드
+minimum account id (e.g. 500 or 100, etc.)	admin	ko	최소 계정ID (예 500 나 100, 기타.)
+minute	admin	ko	분
+mode	admin	ko	모드
+month	admin	ko	월
+new group name	admin	ko	새 그룹 이름
+new password [ leave blank for no change ]	admin	ko	새 패스워드[ 바꾸지 않으려면 빈칸으로 남겨두세요 ]
+next run	admin	ko	다음 실행
+no algorithms available	admin	ko	어떠한 알고리즘도 가능하지 않습니다.
+no jobs in the database !!!	admin	ko	데이터베이스에 어떠한 작업도 없습니다 !!!
+no login history exists for this user	admin	ko	이 사용자의 접속 기록은 없습니다
+no matches found	admin	ko	일치하는 것을 찾을수 없습니다
+no modes available	admin	ko	가능한 모드(mode)가 없습니다
+no permission to add groups	admin	ko	그룹을 추가할 권한이 없습니다
+no permission to add users	admin	ko	사용자를 추가할 권한이 없습니다
+no permission to create groups	admin	ko	그룹을 생성할 권한이 없습니다
+note: ssl available only if php is compiled with curl support	admin	ko	주의: PHP가 curl 지원가능하도록 컴파일 된 경우에만 SSL을 지원할수있습니다
+outbound	admin	ko	아웃바운드
+passthrough	admin	ko	** 통과(passthrough)
+password for smtp-authentication	admin	ko	SMTP-인증 암호
+path information	admin	ko	경로 정보
+peer server list	admin	ko	피어서버 목록
+peer servers	admin	ko	피어 서버
+percent of users that logged out	admin	ko	퍼센트의 사용자가 접속해지 하였습니다.
+percent this user has logged out	admin	ko	퍼센트의 사용자가 접속해지 하였습니다.
+permissions	admin	ko	권한
+permissions this group has	admin	ko	이 그룹이 가진 권한
+phpinfo	admin	ko	PHP 정보
+please enter a name	admin	ko	이름을 입력하세요
+please enter a name for that server !	admin	ko	서버의 이름을 입력하세요!
+please run setup to become current	admin	ko	현재버전이 되려면 설정을 실행하세요
+please select	admin	ko	선택하세요
+preferences	admin	ko	환경설정
+primary group	admin	ko	주 그룹
+re-enter password	admin	ko	비밀번호 재입력
+read this list of methods.	admin	ko	이 메소드 목록 읽기
+register application hooks	admin	ko	응용프로그램 훅(hooks) 등록
+remove all users from this group	admin	ko	이 그룹의 모든 사용자를 삭제
+remove all users from this group ?	admin	ko	이 그룹의 모든 사용자를 삭제?
+return to admin mainscreen	admin	ko	관리자 주화면으로 돌아가기
+return to view account	admin	ko	계정 보기로 돌아가기
+run asynchronous services	admin	ko	비동기 서비스 실행
+save the category	admin	ko	카테고리 저장
+save the category and return back to the list	admin	ko	카테고리를 저장하고 목록으로 돌아가기
+search accounts	admin	ko	계정 찾기
+search categories	admin	ko	카테고리 찾기
+search groups	admin	ko	그룹 찾기
+search peer servers	admin	ko	피어 서버 찾기
+security	admin	ko	보안
+select group managers	admin	ko	그룹 관리자 찾기
+select permissions this group will have	admin	ko	이 그룹이 가질 권한을 선택
+select the parent category. if this is a main category select no category	admin	ko	상위 카테고리 선택. 만약 이 것이 주 카테고리고 NO CATEGORY 선택했을때
+select users for inclusion	admin	ko	포함할 사용자를 선택하세요.
+select where you want to store/retrieve filesystem information	admin	ko	어디에 파일시스템 정보를 저장/회수할지 선택
+select where you want to store/retrieve user accounts	admin	ko	어디에 사용자 계정을 저장/회수할지 선택
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ko	이 응용프로그램이 네비게이션바에 보여질 위치 선택, 가장낮음(왼쪽) 에서 가장높음(오른쪽)
+selectbox	admin	ko	선택상자
+server %1 has been updated	admin	ko	%1 서버가 업데이트 되었습니다
+server list	admin	ko	서버 목록
+server password	admin	ko	서버 암호
+server type(mode)	admin	ko	서버 타입(모드)
+server url	admin	ko	서버 URL
+server username	admin	ko	서버 사용자이름
+set preference values.	admin	ko	환경설정 값을 결정
+should the login page include a language selectbox (useful for demo-sites) ?	admin	ko	접속 페이지에서 언어 선택박스를 포함할까요 (데모사이트에서 유용) ?
+show 'powered by' logo on	admin	ko	'powered by' 로고를 보임
+show access log	admin	ko	접근 기록을 보임
+show current action	admin	ko	현재 액션을 보임
+show error log	admin	ko	에러 기록을 보임
+show phpinfo()	admin	ko	phpinfo()를 보임
+show session ip address	admin	ko	세션 IP주소를 보임
+site	admin	ko	Site
+soap	admin	ko	SOAP
+sorry, that group name has already been taken.	admin	ko	죄송합니다, 입력하신 그룹이름은 이미 있습니다.
+sorry, the above users are still a member of the group %1	admin	ko	죄송합니다 위의 사용자는 아직 %1 그룹의 구성원입니다.
+sorry, the follow users are still a member of the group %1	admin	ko	죄송합니다 다음의 사용자는 아직 %1 그룹의 구성원입니다.
+sort the entries	admin	ko	항목들을 정렬
+ssl	admin	ko	ssl
+standard	admin	ko	기본
+start testjob!	admin	ko	테스트작업(TestJob) 시작
+submit changes	admin	ko	변경된것을 보냄(Submit)
+submit the search string	admin	ko	검색 문자열 보냄
+template selection	admin	ko	템플릿 선택
+text entry	admin	ko	텍스트 엔트리(Text entry)
+that application name already exists.	admin	ko	응용프로그램 이름이 이미 있습니다
+that application order must be a number.	admin	ko	응용프로그램 순서는 반드시 정수여야 합니다
+that loginid has already been taken	admin	ko	이 접속ID는 이미 사용중입니다
+that name has been used already	admin	ko	이름이 이미 있습니다
+that server name has been used already !	admin	ko	이미 존재하는 서버이름 입니다!
+the api is current	admin	ko	API는 현재버전
+the api requires an upgrade	admin	ko	API의 업그레이드가 필요
+the groups must include the primary group	admin	ko	그룹은 반드시 주 그룹을 포함해야함
+the login and password can not be the same	admin	ko	계정과 패스워드는 같지 않아야 합니다.
+the loginid can not be more then 8 characters	admin	ko	접속ID는 8글자를 초과할수 없습니다
+the testjob sends you a mail everytime it is called.	admin	ko	테스트작업(TestJob)이 불려질때마다 메일 발송
+the two passwords are not the same	admin	ko	두 비밀번호가 다릅니다
+the users bellow are still members of group %1	admin	ko	아래의 사용자는 아직 %1 그룹의 구성원입니다.
+there already is a group with this name. userid's can not have the same name as a groupid	admin	ko	이 이름의 그룹이 이미 있습니다. 사용자ID는 그룹ID와 같을수 없습니다
+they must be removed before you can continue	admin	ko	계속하기전에 반드시 삭제되어야 합니다
+this application is current	admin	ko	응용프로그램은 현재버전
+this application requires an upgrade	admin	ko	응용프로그램은 업그레이가 필요합니다
+this category is currently being used by applications as a parent category	admin	ko	이 카테고리는 현재 응용프로그램에 의해 상위 카테고리로 사용되고 있습니다
+timeout for application session data in seconds (default 86400 = 1 day)	admin	ko	응용프로그램 세션 데이터의 타임아웃 초 (기본 86400 = 하루)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	ko	세션 타임아웃 초 (기본 14400 = 4시간)
+times	admin	ko	시간
+top	admin	ko	상위
+total records	admin	ko	Total records
+trust level	admin	ko	신용등급
+trust relationship	admin	ko	신용관계
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ko	윈도우에서는 비동기 서비스를 설치하기위해 %1수동으로%2 하셔야 하거나 fallback 모드여야 합니다. fallback은 작업이 각 페이지-뷰를 마친후 체크되는 의미입니다!!!
+use cookies to pass sessionid	admin	ko	sessionid 를 전달하기 위해 쿠키 사용
+use pure html compliant code (not fully working yet)	admin	ko	순수 HTML 호환 코드 사용 (아직 완전하지 않습니다)
+use theme	admin	ko	테마 사용
+user accounts	admin	ko	사용자 계정
+user data	admin	ko	사용자 데이터
+user for smtp-authentication (leave it empty if no auth required)	admin	ko	사용자 SMTP-인증 (인증이 필요없을경우 비워둡니다)
+user groups	admin	ko	사용자 그룹
+userdata	admin	ko	사용자데이터
+users choice	admin	ko	사용자 선택
+view access log	admin	ko	접속 기록 보기
+view account	admin	ko	계정 보기
+view category	admin	ko	카테고리 보기
+view error log	admin	ko	오류 기록 보기
+view sessions	admin	ko	세션 보기
+view this user	admin	ko	이 사용자를보기
+view user account	admin	ko	사용자 계정 보기
+who would you like to transfer all records owned by the deleted user to?	admin	ko	** 누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
+would you like egroupware to check for a new version<br>when admins login ?	admin	ko	관리자가 접속 할때<br>eGroupWare가 새버전을 확인하겠습니까?
+would you like egroupware to check for new application versions when admins login ?	admin	ko	관리자가 접속 할때 eGroupWare가 새 응용프로그램 버전을 확인하시겠습니까?
+would you like egroupware to cache the egw info array ?	admin	ko	eGroupWare가 egw info 배열을 캐쉬하도록 하겠습니까?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	ko	새로운 언어 파일을 자동적으로 읽겠습니까? (접속 할때)
+would you like to show each application's upgrade status ?	admin	ko	각 응용프로그램의 업그레이드 상태를 보시겠습니까?
+xml-rpc	admin	ko	XML-RPC
+you have entered an invalid expiration date	admin	ko	부적절한 만료 날짜를 입력하셨습니다
+you must add at least 1 permission or group to this account	admin	ko	이 계정에 최소한 하나의 권한이나 그룹을 추가하셔야 합니다
+you must enter a group name.	admin	ko	그룹 이름을 입력해야 합니다
+you must enter a lastname	admin	ko	이름을 입력해야 합니다
+you must enter a loginid	admin	ko	접속ID를 입력해야 합니다
+you must enter a password	admin	ko	패스워드를 입력해야 합니다.
+you must enter an application name and title.	admin	ko	응용프로그램 이름과 제목을 입력해야 합니다
+you must enter an application name.	admin	ko	응용프로그램 이름을 입력해야 합니다
+you must enter an application title.	admin	ko	응용프로그램 제목을 입력해야 합니다
+you must select a file type	admin	ko	파일 타입을 선택해야 합니다.
+you will need to remove the subcategories before you can delete this category	admin	ko	이 카테고리를 삭제하기 전에 하위카테고리를 삭제해야 합니다!
+your session could not be verified.	admin	ko	세션이 검증되지 않았습니다

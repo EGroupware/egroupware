@@ -1,0 +1,359 @@
+%1 - %2 of %3 user accounts	admin	uk	%1 - %2 з %3 користувачів
+%1 not found or not executable !!!	admin	uk	%1 не знайдено або не може бути виконано !!!
+(stored password will not be shown here)	admin	uk	(збережений пароль не буде тут показуватись)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	uk	(Для встановлення нових приложень використайте<br><a href="setup/" target="setup">Setup</a> [Керування приложеннями] !!!)
+accesslog and bruteforce defense	admin	uk	Протоколи доступу та захист BruteForce
+account active	admin	uk	Рахунок активний
+account has been created	common	uk	Рахунок створено
+account has been deleted	common	uk	Рахунок видалено
+account has been updated	common	uk	Рахунок змінено
+account list	admin	uk	Перелік рахунків
+account permissions	admin	uk	Права рахунку
+account preferences	admin	uk	Параметри рахунку
+acl manager	admin	uk	Керування ACL
+acl rights	common	uk	Права ACL
+action	admin	uk	Дія
+add a category	admin	uk	Додати категорію
+add a group	admin	uk	Додати групу
+add a new account.	admin	uk	Створити новий рахунок
+add a subcategory	admin	uk	Додати підкатегорію
+add a user	admin	uk	Додати користувача
+add account	admin	uk	Додати рахунок
+add application	admin	uk	Додати приложення
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	uk	Додавати автоматично створених користувачів до цієї групи ('Default' якщо порожнє)
+add global category	admin	uk	Додати глобальну категорію
+add global category for %1	admin	uk	Додати глобальну категорію для %1
+add group	admin	uk	Додати групу
+add new account	admin	uk	Створити новий рахунок
+add new application	admin	uk	Додати нове приложення
+add peer server	admin	uk	Додати Peer сервер
+add sub-category	admin	uk	Додати підкатегорію
+admin email	admin	uk	email адміністратора
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	uk	email адреси адміністраторів (розділені комою), які будуть сповіщатися про випадки блокування (залиште порожнім, якщо сповіщень не треба)
+admin name	admin	uk	Ім'я адміністратора
+administration	admin	uk	Адміністрація
+admins	admin	uk	Адміністратори
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	uk	Після якої кількості неуспішних спроб входу рахунок має бути заблоковано (по замовченню 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	uk	Після якої кількості неуспішних спроб входу IP має бути заблоковано (по замовченню 3) ?
+all records and account information will be lost!	admin	uk	Всі записи та інформація рахунку будуть втрачені !
+all users	admin	uk	Всі користувачі
+allow anonymous access to this app	admin	uk	Дозволити анонімний доступ до цього приложення
+anonymous user	admin	uk	Анонімний користувач
+anonymous user (not shown in list sessions)	admin	uk	Анонімний користувач (не показується в переліку сесій)
+appearance	admin	uk	Вигляд
+application	admin	uk	Приложення
+application name	admin	uk	Назва приложення
+application title	admin	uk	Найменування приложення
+applications	admin	uk	Приложення
+applications list	admin	uk	Перелік приложень
+are you sure you want to delete the application %1 ?	admin	uk	Ви дійсно хочете видалити приложення %1 ?
+are you sure you want to delete this account ?	admin	uk	Ви дійсно хочете видалити цей рахунок?
+are you sure you want to delete this application ?	admin	uk	Ви дійсно хочете видалити це приложення ?
+are you sure you want to delete this category ?	common	uk	Ви дійсно хочете видалити цю категорію ?
+are you sure you want to delete this global category ?	admin	uk	Ви дійсно хочете видалити цю глобальну категорію ?
+are you sure you want to delete this group ?	admin	uk	Ви дійсно хочете видалити цю групу ?
+are you sure you want to delete this server?	admin	uk	Ви дійсно хочете видалити цей сервер ?
+are you sure you want to kill this session ?	admin	uk	Ви дійсно хочете закрити цю сесію ?
+async services last executed	admin	uk	Останні виконані асинхронні сервіси
+asynchronous timed services	admin	uk	Асинхронні сервіси
+asyncservices not yet installed or other error (%1) !!!	admin	uk	Асинхроні сервіси ще не встановлено або інша помилка (%1) !!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	uk	Спроба використати вірний mime-тип для FTP замість типового 'application/octet-stream'
+authentication / accounts	admin	uk	Аутентифікація / Рахунки
+auto create account records for authenticated users	admin	uk	Створювати автоматично записи рахунків для аутентифікованих користувачів
+back to the list	admin	uk	Назад до переліку
+bi-dir passthrough	admin	uk	
+bi-directional	admin	uk	
+bottom	admin	uk	низ
+calculate next run	admin	uk	Розрахувати наступний запуск
+can change password	admin	uk	Може міняти пароль
+cancel testjob!	admin	uk	Перервати Тестове завдання!
+categories list	admin	uk	Перелік категорій
+category %1 has been saved !	admin	uk	Категорія % збережено !
+category list	admin	uk	Перелік категорій
+change acl rights	admin	uk	Змінити ACL права
+change config settings	admin	uk	Змінити конфігураційні установки
+change main screen message	admin	uk	Змінити повідомлення основного екрану
+check ip address of all sessions	admin	uk	перевіряти ip адресу для всіх сесій
+check items to <b>%1</b> to %2 for %3	admin	uk	
+country selection	admin	uk	Вибір країни
+create group	admin	uk	Створити групу
+crontab only (recomended)	admin	uk	тільки crontab (рекомендується)
+data	admin	uk	Число
+day	admin	uk	День
+day of week<br>(0-6, 0=sun)	admin	uk	День тиждня (0-6, 0=Неділя)
+default	admin	uk	По замовченню
+default file system space per user	admin	uk	Обсяг файлової системи для користувача по замовченню
+default file system space per user/group ?	admin	uk	Обсяг файлової системи для користувача/групи по замовченню
+deinstall crontab	admin	uk	Деінсталювати crontab
+delete account	admin	uk	Видалити рахунок
+delete all records	admin	uk	Видалити всі записи
+delete application	admin	uk	Видалити приложення
+delete category	admin	uk	Видалити категорію
+delete group	admin	uk	Видалити групу
+delete peer server	admin	uk	Видалити peer сервер
+delete the category	admin	uk	Видалити категорію
+delete the group	admin	uk	Видалити групу
+delete this category	admin	uk	Видалити цю категорію
+delete this group	admin	uk	Видалити цю групу
+delete this user	admin	uk	Видалити цього користувача
+deny access to access log	admin	uk	Заборонити доступ до протоколу доступу
+deny access to application registery	admin	uk	Заборонити доступ до регістру приложень
+deny access to applications	admin	uk	Заборонити доступ до приложень
+deny access to asynchronous timed services	admin	uk	Заборонити доступ до асинхронних сервісів
+deny access to current sessions	admin	uk	Заборонити доступ до поточних сесій
+deny access to error log	admin	uk	Заборонити доступ до протоколу помилок
+deny access to global categories	admin	uk	Заборонити доступ до глобальних категорій
+deny access to groups	admin	uk	Заборонити доступ до груп
+deny access to mainscreen message	admin	uk	Заборонити доступ до повідомлення основного екрану
+deny access to peer servers	admin	uk	Заборонити доступ до peer серверів
+deny access to phpinfo	admin	uk	Заборонити доступ до phpinfo
+deny access to site configuration	admin	uk	Заборонити доступ до конфігурації сайту
+deny access to user accounts	admin	uk	Заборонити доступ до рахунків користувачів
+deny all users access to grant other users access to their entries ?	admin	uk	Заборонити всім користувачам давати доступ іншим користувачам до їх записів ?
+description can not exceed 255 characters in length !	admin	uk	Довжина опису не може перевищувати 255 символів !
+disable "auto completion" of the login form	admin	uk	Відключити "авто заповнення" у формі входу
+disabled (not recomended)	admin	uk	відключено (не рекомендується)
+display	admin	uk	Показувати
+do not delete the category and return back to the list	admin	uk	НЕ видаляти категорію та повернутись до переліку
+do you also want to delete all global subcategories ?	admin	uk	Чи хочете ви також видалити всі глобальні підкатегорії ?
+do you want to delete all global subcategories ?	admin	uk	Чи хочете ви видалити всі глобальні підкатегорії ?
+do you want to move all global subcategories one level down ?	admin	uk	Чи хочете ви перенести всі глобальні підкатегорії рівнем нижче ?
+edit account	admin	uk	Редагувати рахунок
+edit application	admin	uk	Редагувати приложення
+edit global category	admin	uk	Редагувати глобальну категорію
+edit global category for %1	admin	uk	Редагувати глобальну категорію для %1
+edit group	admin	uk	Редагувати групу
+edit login screen message	admin	uk	Редагувати повідомлення вхідного екрану
+edit main screen message	admin	uk	Редагувати повідомлення основного екрану
+edit peer server	admin	uk	Редагувати Peer сервер
+edit table format	admin	uk	Редагувати формат таблиці
+edit this category	admin	uk	Редагувати цю категорію
+edit this group	admin	uk	Редагувати цю групу
+edit this user	admin	uk	Редагувати цього користувача
+edit user	admin	uk	Редагувати користувача
+edit user account	admin	uk	Редагувати рахунок користувача
+enable debug-messages	admin	uk	Дозволити відладочні повідомлення
+enabled - hidden from navbar	admin	uk	Включено - Сховано з навігаційної панелі
+enter a description for the category	admin	uk	введіть опис категорії
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	uk	Введіть якийсь випадковий текст для app_session<br>шифрації (вимагає mcrypt)
+enter the background color for the login page	admin	uk	Введіть колір фону для вхідного екрану
+enter the background color for the site title	admin	uk	Введіть колір фону для заголовку сайта
+enter the file name of your logo	admin	uk	Введіть назву файлу логотипу
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	uk	Введіть повний шлях для тимчасових файлів. <br>Наприклад: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	uk	Введіть повний шлях для файлів користувачів та груп. <br>Наприклад: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	uk	Введіть hostname машини, на якій працює цей сервер.
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL eGroupWare.<br>наприклад: http://www.domain.com/egroupware &nbsp; або &nbsp; /egroupware<br><b>Без / в кінці</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	uk	Введіть зразок пошуку. Для показу всіх записів залиште це поле порожнім та знову натисніть кнопку ВІДІСЛАТИ.
+enter the site password for peer servers	admin	uk	Введіть пароль сайту для peer серверів
+enter the site username for peer servers	admin	uk	Введіть ім'я користувача сайту для peer серверів
+enter the title for your site	admin	uk	Введіть найменування Вашого сайту
+enter the title of your logo	admin	uk	Введіть найменування Вашого логотипу
+enter the url where your logo should link to	admin	uk	Введіть url, на який має вказувати логотип
+enter your default ftp server	admin	uk	Введіть Ваш типовий FTP сервер
+enter your http proxy server	admin	uk	Введіть Ваш HTTP проксі сервер
+enter your http proxy server port	admin	uk	Введіть порт Вашого HTTP проксі серверу
+error canceling timer, maybe there's none set !!!	admin	uk	Помилка зупинення таймеру, можливо, що жоден не встановлено !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	uk	Помилка встановлення таймеру, невірний синтаксис або вже один працює !!!
+error: %1 not found or other error !!!	admin	uk	Помилка: %1 не знайдено або інша помилка!!!
+expires	admin	uk	Обмежено
+fallback (after each pageview)	admin	uk	
+file space	admin	uk	Розмір файлу
+file space must be an integer	admin	uk	Розмір файлу має бути цілим числом
+find and register all application hooks	admin	uk	Шукати та реєструвати всі Hook'и приложень
+for the times above	admin	uk	
+for the times below (empty values count as '*', all empty = every minute)	admin	uk	
+force selectbox	admin	uk	Форсувати Selectbox
+global categories	common	uk	Глобальні категорії
+group ?	admin	uk	Група ?
+group has been added	common	uk	Група створена
+group has been deleted	common	uk	Група видалена
+group has been updated	common	uk	Група змінена
+group list	admin	uk	Перелік груп
+group manager	admin	uk	Керування групами
+group name	admin	uk	Назва групи
+hide php information	admin	uk	сховати php інформацію
+home directory	admin	uk	Домашній каталог
+host information	admin	uk	Інформація хосту
+hour<br>(0-23)	admin	uk	Година<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	uk	Скільки днів записи мають зберігатися в протоколі доступу (по замовченню 90) ?
+how many minutes should an account or ip be blocked (default 30) ?	admin	uk	На скільки хвилин блокується рахунок або IP (по замовченню 30) ?
+idle	admin	uk	простій
+if no acl records for user or any group the user is a member of	admin	uk	Якщо немає записів ACL для користувача або будь якої групи, членом якої є користувач
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	uk	При використанні LDAP, чи хочете Ви керувати домашніми каталогами та атрибутами входу до системи?
+inbound	admin	uk	вхідний
+install crontab	admin	uk	Встановити crontab
+installed applications	common	uk	Встановлені приложення
+installed crontab	admin	uk	Встановлені crontab
+interface	admin	uk	Інтерфейс
+ip	admin	uk	IP
+jobs	admin	uk	Завдання
+kill	admin	uk	Закрити
+kill session	admin	uk	Закрити сесію
+last %1 logins	admin	uk	Останні %1 входів
+last %1 logins for %2	admin	uk	Останні %1 входів для %2
+last login	admin	uk	останній вхід
+last login from	admin	uk	останній вхід з
+last time read	admin	uk	Останній раз читалось
+ldap accounts context	admin	uk	Контекст LDAP рахунків
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	uk	Типовий префікс домашніх каталогів LDAP (тобто /home для /home/username)
+ldap default shell (e.g. /bin/bash)	admin	uk	Типовий шелл LDAP (тобто /bin/bash)
+ldap encryption type	admin	uk	Тип шифрування LDAP
+ldap groups context	admin	uk	Контекст LDAP груп
+ldap host	admin	uk	Хост LDAP
+ldap root password	admin	uk	root пароль LDAP
+ldap rootdn	admin	uk	LDAP rootdn
+leave the category untouched and return back to the list	admin	uk	залишити категорію незмінною та повернутися до переліку
+leave the group untouched and return back to the list	admin	uk	Залишити групу незмінною та повернутися до переліку
+list config settings	admin	uk	Перелік конфігураційних установок
+list current sessions	admin	uk	Перелік поточних сесій
+list of current users	admin	uk	Перелік поточних користувачів
+login history	common	uk	Історія входів
+login message	admin	uk	Повідомлення при вході
+login screen	admin	uk	Екран входу
+login shell	admin	uk	Шелл після входу
+login time	admin	uk	Час входу
+loginid	admin	uk	ID входу
+main screen message	admin	uk	Повідомлення основного екрану
+manager	admin	uk	Керівник
+maximum account id (e.g. 65535 or 1000000)	admin	uk	Максимальний ідентифікатор рахунку (тобто 65535 або 1000000)
+maximum entries in click path history	admin	uk	Максимальна кількість записів у історії переходів
+message has been updated	admin	uk	Повідомлення змінено
+method	admin	uk	Метод
+minimum account id (e.g. 500 or 100, etc.)	admin	uk	Мінімальний ідентифікатор рахунку (тобто 65535 або 1000000)
+minute	admin	uk	Хвилина
+mode	admin	uk	Режим
+month	admin	uk	Місяць
+new group name	admin	uk	Назва нової групи
+new password [ leave blank for no change ]	admin	uk	Новий пароль [залиште порожнім якщо без змін]
+next run	admin	uk	Наступний запуск
+no algorithms available	admin	uk	Немає алгоритмів
+no jobs in the database !!!	admin	uk	В базі немає завдань
+no login history exists for this user	admin	uk	Для користувача немає історії входів
+no matches found	admin	uk	Відповідностей не знайдено
+no modes available	admin	uk	Немає режимів
+no permission to add groups	admin	uk	Дозвіл на створення груп не надано
+no permission to add users	admin	uk	Дозвіл на створення користувачів не надано
+no permission to create groups	admin	uk	Дозвіл на створення груп не надано
+note: ssl available only if php is compiled with curl support	admin	uk	Примітка: SSL доступний тільки якщо PHP скомпільовано з підтримкою curl
+outbound	admin	uk	вихідний
+passthrough	admin	uk	
+path information	admin	uk	Інформація шляху
+peer server list	admin	uk	Перелік peer серверів
+peer servers	admin	uk	Peer сервери
+percent of users that logged out	admin	uk	Процент користувачів, що вийшли нормально
+percent this user has logged out	admin	uk	Процент нормальних виходів користувача
+permissions	admin	uk	Дозволи
+permissions this group has	admin	uk	Ця група має дозволи
+phpinfo	admin	uk	Інформація PHP
+please enter a name	admin	uk	Будь ласка, введіть ім'я
+please enter a name for that server !	admin	uk	Будь ласка, введіть назву серверу !
+please run setup to become current	admin	uk	Будь ласка, запустіть setup для оновлення
+please select	admin	uk	Виберіть будь ласка
+preferences	admin	uk	Параметри
+primary group	admin	uk	первинна група
+re-enter password	admin	uk	Перевведіть пароль
+read this list of methods.	admin	uk	Прочитати цей перелік методів
+register application hooks	admin	uk	
+remove all users from this group	admin	uk	Видалити всіх користувачів з цієї групи
+remove all users from this group ?	admin	uk	Видалити всіх користувачів з цієї групи ?
+return to admin mainscreen	admin	uk	Повернутись до головного екрану адміністратора
+return to view account	admin	uk	Повернутись до перегляду рахунку
+run asynchronous services	admin	uk	Виконувати асинхронні сервіси
+save the category	admin	uk	зберегти категорію
+save the category and return back to the list	admin	uk	зберегти категорію та повернутись до переліку
+search accounts	admin	uk	Шукати рахунки
+search categories	admin	uk	Шукати категорії
+search groups	admin	uk	Шукати групи
+search peer servers	admin	uk	Шукати peer сервери
+security	admin	uk	Безпека
+select group managers	admin	uk	Визначити керівників групи
+select permissions this group will have	admin	uk	Визначити права цієї групи
+select the parent category. if this is a main category select no category	admin	uk	Визначте батьківську категорію. Якщо це основна категорія вкажіть NO CATEGORY
+select users for inclusion	admin	uk	Визначте користувачів для включення
+select where you want to store/retrieve filesystem information	admin	uk	Визначте де зберігати інформацію файлової системи
+select where you want to store/retrieve user accounts	admin	uk	Визначте де зберігати рахунки користувачів
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	uk	Визначте місце цього приложення в навігаційній панелі, від меншого (лівого) до більшого (правого)
+selectbox	admin	uk	Selectbox
+server %1 has been updated	admin	uk	Сервер %1 поновлено
+server list	admin	uk	Перелік серверів
+server password	admin	uk	Пароль серверу
+server type(mode)	admin	uk	Тип серверу (режим)
+server url	admin	uk	URL серверу
+server username	admin	uk	ім'я користувача на сервері
+set preference values.	admin	uk	Встановити значення параметрів.
+show 'powered by' logo on	admin	uk	Показувати логотип 'powered by'
+show access log	admin	uk	Показати протокол доступу
+show current action	admin	uk	Показати поточні дії
+show error log	admin	uk	Показати протокол помилок
+show phpinfo()	admin	uk	Показати phpinfo()
+show session ip address	admin	uk	Показати IP адреси сесій
+site	admin	uk	Сайт
+soap	admin	uk	SOAP
+sorry, that group name has already been taken.	admin	uk	Вибачте, така назва групи вже зайнята,
+sorry, the above users are still a member of the group %1	admin	uk	Вибачте, вищевказані користувачі все ще члени групи %1
+sorry, the follow users are still a member of the group %1	admin	uk	Вибачте, нижчевказані користувачі все ще члени групи %1
+sort the entries	admin	uk	сортувати записи
+ssl	admin	uk	ssl
+standard	admin	uk	стандарт
+start testjob!	admin	uk	Стартувати тестове завдання!
+submit changes	admin	uk	Відіслати зміни
+submit the search string	admin	uk	Відіслати зразок пошуку
+template selection	admin	uk	Вибір шаблону
+text entry	admin	uk	Текстовий запис
+that application name already exists.	admin	uk	Така назва приложення вже існує.
+that application order must be a number.	admin	uk	Номер послідовності приложень має бути числом.
+that loginid has already been taken	admin	uk	Такий ідентифікатор користувача вже зайнято
+that name has been used already	admin	uk	Така назва вже використовується
+that server name has been used already !	admin	uk	Така назва серверу вже використовується
+the api is current	admin	uk	API не потребує оновлення
+the api requires an upgrade	admin	uk	API потребує оновлення
+the login and password can not be the same	admin	uk	Ідентифікатор користувача та пароль не можуть співпадати
+the loginid can not be more then 8 characters	admin	uk	Ідентифікатор користувача не може бути довше 8 символів
+the testjob sends you a mail everytime it is called.	admin	uk	Тестове завдання шле Вам листа кожного разу, коли його виконують
+the two passwords are not the same	admin	uk	Паролі не співпадають
+the users bellow are still members of group %1	admin	uk	нижчевказані користувачі все ще члени групи %1
+they must be removed before you can continue	admin	uk	
+this application is current	admin	uk	Приложення не потребує оновлення
+this application requires an upgrade	admin	uk	Приложення потребує оновлення
+this category is currently being used by applications as a parent category	admin	uk	Ця категорія використовується приложеннями як батьківська категорія.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	uk	Таймаут для даних сесії приложення в секундах (по замовченню 86400 = 1 доба)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	uk	Таймаут для сесій в секундах (по замовченню 14400 = 4 години)
+times	admin	uk	Раз
+top	admin	uk	зверху
+total records	admin	uk	Всього записів
+trust level	admin	uk	Рівень довіри
+trust relationship	admin	uk	Довірительні відносини
+under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	uk	Зараз в windows Ви можете використовувати тільки fallback режим. Це означає, що завдання перевіряються тільки після кожної перзагрузки сторінки!!!
+use cookies to pass sessionid	admin	uk	Використовувати куки для передачі ідентифікатора сесії
+use pure html compliant code (not fully working yet)	admin	uk	Використовувати чистий HTML код (ще не повністю працює)
+use theme	admin	uk	Використовувати тему
+user accounts	admin	uk	Рахунки користувачів
+user data	admin	uk	Дані користувача
+user groups	admin	uk	Групи користувачів
+userdata	admin	uk	Дані користувача
+users choice	admin	uk	Вибір користувача
+view access log	admin	uk	Перегляд протоколу доступів
+view account	admin	uk	Перегляд рахунку
+view category	admin	uk	Перегляд категорії
+view error log	admin	uk	Перегляд протоколу помилок
+view sessions	admin	uk	Перегляд сесій
+view this user	admin	uk	переглянути цього користувача
+view user account	admin	uk	Перегляд рахунку користувача
+who would you like to transfer all records owned by the deleted user to?	admin	uk	Кому передати ВСІ записи користувача, що видаляється ?
+would you like egroupware to cache the egw info array ?	admin	uk	Чи хотіли б Ви, щоб eGroupWare утримувало в кеші інформаційний масив egw?
+would you like egroupware to check for a new version<br>when admins login ?	admin	uk	Чи перевіряти на нові версіі при вході адміністратора ?
+would you like egroupware to check for new application versions when admins login ?	admin	uk	Чи перевіряти на нові версіі приложень при вході адміністратора ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	uk	Чи потрібно автоматично загружати нові мовні файли під час входу?
+would you like to show each application's upgrade status ?	admin	uk	Чи показувати стан поновлення кожного приложення ?
+xml-rpc	admin	uk	XML-RPC
+you have entered an invalid expiration date	admin	uk	Ви ввели невірну дату припинення
+you must add at least 1 permission or group to this account	admin	uk	Необхідно надати рахунку хоча б один дозвіл чи групу.
+you must enter a group name.	admin	uk	Необхідно ввести назву групи
+you must enter a lastname	admin	uk	Необхідно ввести прізвище
+you must enter a loginid	admin	uk	Необхідно ввести ідентифікатор входу
+you must enter an application name and title.	admin	uk	Необхідно ввести назву та найменування приложення
+you must enter an application name.	admin	uk	Необхідно ввести назву приложення
+you must enter an application title.	admin	uk	Необхідно ввести найменування приложення
+you must select a file type	admin	uk	Необхідно визначити тип файлу
+you will need to remove the subcategories before you can delete this category	admin	uk	Необхідно видалити підкатегорії перед тим, як Ви зможете видалити цю категорію !
+your session could not be verified.	admin	uk	Неможливо перевірити Ваш вхід
