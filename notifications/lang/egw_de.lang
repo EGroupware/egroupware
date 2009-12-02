@@ -1,0 +1,41 @@
+all possible notification backends	notifications	de	alle verfügbaren Benachrichtigungs-Backends
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	de	Wählen Sie eine Benachrichtigungskette. Sie werden über die Backends benachrichtigt, die in der Kette enthalten sind.<br />Bitte beachten: Wenn eine Benachrichtigungskette als "deaktiviert" markiert ist, erlaubt Ihr Administrator ein oder mehrere Backends nicht, die in der Kette enthalten sind und die Anwendung "Benachrichtigungen" weicht dann auf die Methode "E-Mail" aus während Sie benachrichtigt werden.
+common chains	notifications	de	Einfache Ketten
+disabled chains	notifications	de	Deaktivierte Ketten
+do not notify me at all	notifications	de	benachrichtige mich niemals
+e-mail only	notifications	de	nur E-Mail
+egroupware has notifications for you	notifications	de	eGroupWare hat Benachrichtigungen für Sie
+egroupware-popup and e-mail	notifications	de	eGroupWare-Popup und E-Mail
+egroupware-popup and windows-popup	notifications	de	eGroupWare-Popup und Windows-Popup
+egroupware-popup backend	admin	de	eGroupWare-Popup Backend
+egroupware-popup first, if that fails notify me by e-mail	notifications	de	zuerst eGroupWare-Popup, wenn das misslingt benachrichtige mich per E-Mail
+egroupware-popup first, if that fails notify me by sms	notifications	de	zuerst eGroupware-Popup, wenn das misslingt benachrichtige mich per SMS
+egroupware-popup only	notifications	de	nur eGroupWare-Popup
+egroupware-popup verbosity	notifications	de	eGroupWare-Popup Mitteilungspriorität
+enable egroupware-popup backend	admin	de	eGroupWare-Popup Backend aktivieren
+enable sms backend	admin	de	SMS Backend aktivieren
+enable windows-popup backend	admin	de	Windows-Popup Backend aktivieren
+enabled chains	notifications	de	Aktivierte Ketten
+folder	notifications	de	Ordner
+from	notifications	de	Von
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	de	Wie hoch soll das eGroupWare-Popup die Priorität setzen wenn eine Benachrichtigung an den Benutzer geschickt wird:<br />Niedrig: es wird nur die Benachrichtigungsglocke im Topmenü angezeigt - das Topmenü muss hierfür eingeschaltet sein!<br />Mittel: Holt das Benachrichtigungsfenster in den Vordergrund<br />Hoch: Holt das Benachrichtigungsfenster in den Vordergrund und lässt den Browser etwas tun um sich bemerkbar zu machen
+if set, embedded links get rendered special for external clients	notifications	de	Eingebettete Links werden besonders behandelt für externe Clients wenn diese Option gesetzt ist
+linked entries:	notifications	de	Verknüpfte Einträge:
+maximum sms messages per notification	admin	de	Maximale Anzahl an SMS Nachrichten pro Benachrichtigung
+message from	notifications	de	Nachricht von
+minutes	notifications	de	Minuten
+notification	common	de	Benachrichtigung
+notify me by	notifications	de	Benachrichtige mich per
+optimize e-mails for external mail client	notifications	de	Optimiere E-Mails für externe Mailclients
+poll interval	notifications	de	Abfrageintervall
+preferences for notification	notifications	de	Benachrichtigungs-Einstellungen
+received	notifications	de	Erhalten
+sms backend	admin	de	SMS Backend
+sms only	notifications	de	nur SMS
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	de	Diese eGroupWare-Benachrichtigung wurde Ihnen per Mail zugesandt weil Ihre gewählte Benachrichtigungskette vom Administrator deaktiviert wurde. Bitte wählen Sie eine andere Benachrichtigungskette in Ihren Einstellungen!
+windows-popup and e-mail	notifications	de	Windows-Popup und E-Mail
+windows-popup backend	admin	de	Windows-Popup Backend
+windows-popup first, if that fails notify me by e-mail	notifications	de	zuerst Windows-Popup, wenn das misslingt benachrichtige mich per E-Mail
+windows-popup first, if that fails notify me by sms	notifications	de	zuerst Windows-Popup, wenn das misslingt benachrichtige mich per SMS
+windows-popup only	notifications	de	nur Windows-Popup
+you've got new mail	notifications	de	Sie haben neue E-Mails
