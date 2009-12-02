@@ -1,0 +1,100 @@
+accessories of	resources	sl	Pripomočki v
+accessories:	resources	sl	Pripomočki:
+actions	resources	sl	Dejanja
+add accessory	resources	sl	Dodaj pripomoček
+add resource	resources	sl	Dodaj sredstvo
+add resources	resources	sl	Dodaj sredstvo
+administrator	resources	sl	Administrator
+all categories	resources	sl	Vse kategorije
+book	resources	sl	Rezerviraj
+book selected resources	resources	sl	Rezervira izbrano sredstvo
+book this resource	resources	sl	Rezerviraj to sredstvo
+bookable	resources	sl	Se lahko rezervira
+buy this article	resources	sl	Kupi ta artikel
+buy this resource	resources	sl	Kupi to sredstvo
+buyable	resources	sl	Se lahko kupi
+categories admin	resources	sl	Upravljalnik kategorij
+category:	resources	sl	Kategorija:
+check all	resources	sl	Izberi vse
+choose categories admin	resources	sl	Izberi upravljalnik kategorij
+clear selection	resources	sl	Izbriši izbor
+configure access permissions	admin	sl	Konfiguriraj pravice dostopa
+create new accessory for this resource	resources	sl	Ustvari nov pripomoček za to sredstvo
+create new links	resources	sl	Ustvari nove povezave
+delete selected resources	resources	sl	Izbriši izbrana sredstva
+delete this entry	resources	sl	Izbriši ta vnos
+description (short)	resources	sl	Opis (kratek)
+direct booking permissions	resources	sl	Neposredno dovoljenje za rezervacijo
+don't use vfs (this will need a symlink --> see readme)	resources	sl	Ne uporabljaj vfs (za to potrebujete symlink --> glejte README)
+edit this entry	resources	sl	Uredi ta vnos
+existing links	resources	sl	Obstoječe povezave
+general	resources	sl	Splošno
+general informations about resource	resources	sl	Splošne informacije o sredstvu
+gernal resource	resources	sl	Splošno sredstvo
+how many of the resources are useable?	resources	sl	Koliko sredstev je uporabnih?
+how many of them are useable?	resources	sl	Koliko jih je uporabnih?
+how many of this resource are usable	resources	sl	Koliko sredstev je uporabnih
+how many of this resource exists	resources	sl	Koliko teh sredstev obstaja
+implies booking permission	resources	sl	Vsebuje dovoljenje za rezervacijo
+implies read permission	resources	sl	Vsebuje dovoljenje za branje
+information about storage	resources	sl	Informacije o prostoru
+informations about the location of resource	resources	sl	Informacije o lokaciji sredstva
+inventory number	resources	sl	Inventarna številka
+inventory number:	resources	sl	Inventarna številka:
+is resource bookable?	resources	sl	Se sredstvo lahko rezervira?
+is resource buyable?	resources	sl	Se sredstvo lahko kupi?
+is this resource bookable?	resources	sl	Se to sredstvo lahko rezervira?
+is this resource buyable?	resources	sl	Se to sredstvo lahko kupi?
+links	resources	sl	Povezave
+location	resources	sl	Lokacija
+location of resource	resources	sl	Lokacija sredstva
+location:	resources	sl	Lokacija:
+name of resource	resources	sl	Ime sredstva
+name:	resources	sl	Ime:
+no description available	resources	sl	Opis ni na voljo
+no resources selected	resources	sl	Nobeno sredstvo ni izbrano
+notify your administrator to correct this situation	resources	sl	Obvestite administratorja, da odpravi problem
+picture	resources	sl	Slika
+picture source	resources	sl	Izvor slike
+picture type is not supported, sorry!	resources	sl	Ta vsta slike ni podprta!
+pictures or resource	resources	sl	Slika serdstva
+planer	resources	sl	Planer
+prizeing information for booking or buying	resources	sl	Informacija o ceni za rezervacijo ali nakup
+quantity	resources	sl	Količina
+quantity of resource	resources	sl	Količina sredstva
+quantity:	resources	sl	Količina:
+read calendar permissions	resources	sl	Preberi dovoljenje Koledarja
+read permissions	resources	sl	Dovoljenje branja
+related links	resources	sl	Povezave na to temo
+resources	common	sl	Sredstva
+resources list	resources	sl	Seznam sredstev
+responsible:	resources	sl	Odgovorni:
+saves entry and exits	resources	sl	Shrani vnos in zapre okna
+select a category	resources	sl	Izberite kategorijo
+select resource	resources	sl	Izberite sredstvo
+select resources	common	sl	Izberite sredstva
+select/deselect all	resources	sl	Označi/odznači vse
+short description	resources	sl	Kratek opis
+short description of resource	resources	sl	Kratek opis sredstva
+show calendar of resource	resources	sl	Prikaži koledar sredstva
+something went wrong by deleting resource	resources	sl	Nekaj ni bilo v redu pri brisanju sredstva
+something went wrong by saving resource	resources	sl	Nekaj ni bilo v redu pri shranjevanju sredstva
+storage information	resources	sl	Informacija o prostoru
+storage information:	resources	sl	Informacija o prostoru:
+the calendar of this resource	resources	sl	Koledar tega sredstva
+this module displays the resources app	resources	sl	Ta modul prikaže program za vodenje sredstev
+use general resources icon	resources	sl	Uporabi splošno ikono za sredstva
+use own picture	resources	sl	Uporabi lastno sliko
+use the category's icon	resources	sl	Uporabi ikono kategorije
+useable	resources	sl	Uporabno
+useable:	resources	sl	Uporabno:
+view accessories for this resource	resources	sl	Poglej koledar tega sredstva
+view this entry	resources	sl	Poglej ta vnos
+web-page of resource	resources	sl	Spletna stran sredstva
+web-site for this resource	resources	sl	Spletna stran tega sredstva
+where to find this resource?	resources	sl	Kje najti to sredstvo?
+which category does this resource belong to?	resources	sl	Kateri kategoriji to sredstvo pripada?
+write permissions	resources	sl	Dovoljenje za pisanje
+you are not permitted to edit this reource!	resources	sl	Nimate dovoljenja za urejanje tega sredstva!
+you are not permitted to get information about this resource!	resources	sl	Nimate dovoljenja pridobiti informacij o tem sredstvu!
+you chose more resources than available	resources	sl	Izbrali ste več sredstev, kot jih je na voljo

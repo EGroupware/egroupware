@@ -1,0 +1,101 @@
+accessories of	resources	it	accessori di
+accessories:	resources	it	Accessori:
+actions	resources	it	Azioni
+add accessory	resources	it	Aggiungi accessorio
+add resource	resources	it	aggiungi risorsa
+add resources	resources	it	Aggiungi risorse
+administrator	resources	it	Amministratore
+all categories	resources	it	tutte le categorie
+book	resources	it	Prenota
+book selected resources	resources	it	prenota risorse selezionate
+book this resource	resources	it	Prenota questa risorsa
+bookable	resources	it	Prenotabile
+buy this article	resources	it	Compra questo articolo
+buy this resource	resources	it	Acquista questa risorsa
+buyable	resources	it	Acquistabile
+categories admin	resources	it	Gestione Categorie
+category:	resources	it	Categoria:
+check all	resources	it	Seleziona tutto
+choose categories admin	resources	it	gestione scelta categorie
+clear selection	resources	it	cancella selezione
+configure access permissions	admin	it	Configura Permessi Accesso
+create new accessory for this resource	resources	it	Crea un nuovo accessorio per questa risorsa
+create new links	resources	it	Crea nuovi collegamenti
+delete selected resources	resources	it	elimina risorse selezionate
+delete this entry	resources	it	Cancella questa voce
+description (short)	resources	it	Descrizione (breve)
+direct booking permissions	resources	it	Permessi di prenotazione diretti
+don't use vfs (this will need a symlink --> see readme)	resources	it	Non usare vfs (servirà un symlink --> vedi README)
+edit this entry	resources	it	Modifica questa voce
+existing links	resources	it	Collegamenti esistenti
+general	resources	it	Generale
+general informations about resource	resources	it	Informazioni generali sulla risorsa
+gernal resource	resources	it	risorsa generale
+how many of the resources are useable?	resources	it	Quante risorse sono utilizzabili?
+how many of them are useable?	resources	it	Quante di loro sono utilizzabili?
+how many of this resource are usable	resources	it	Quante di questa risorse sono utilizzabili
+how many of this resource exists	resources	it	Quante di queste risorse esistono
+implies booking permission	resources	it	implica permesso di prenotazione
+implies read permission	resources	it	implica permesso di lettura
+information about storage	resources	it	Informazioni sullo stoccaggio
+informations about the location of resource	resources	it	Informazioni sulla localizzazione della risorsa
+inventory number	resources	it	Numero inventario
+inventory number:	resources	it	Numero inventario:
+is resource bookable?	resources	it	La risorsa è prenotabile?
+is resource buyable?	resources	it	La risorsa è acquistabile?
+is this resource bookable?	resources	it	Questa risorsa è prenotabile?
+is this resource buyable?	resources	it	Questa risorsa è acquistabile?
+links	resources	it	Collegamenti
+location	resources	it	Luogo
+location of resource	resources	it	Luogo della risorsa
+location:	resources	it	Localizzazione:
+name of resource	resources	it	Nome della risorsa
+name:	resources	it	Nome:
+no description available	resources	it	nessuna descrizione disponibile
+no resources selected	resources	it	Nessuna risorsa selezionata
+notify your administrator to correct this situation	resources	it	Avverti il tuo amministratore di correggere questa situazione
+picture	resources	it	Immagine
+picture source	resources	it	sorgente immagine
+picture type is not supported, sorry!	resources	it	Tipo immagine non supportato, spiacente!
+pictures or resource	resources	it	Immagini della risorsa
+planer	resources	it	pianificatore
+prizeing information for booking or buying	resources	it	Prezziario per prenotazione o acquisto
+quantity	resources	it	Quantità
+quantity of resource	resources	it	Quantità della risorsa
+quantity:	resources	it	Quantità:
+read calendar permissions	resources	it	Permessi di lettura calendario
+read permissions	resources	it	Permessi di lettura
+related links	resources	it	Collegamenti relativi
+resources	common	it	Risorse
+resources list	resources	it	elenco risorse
+responsible:	resources	it	Responsabile:
+saves entry and exits	resources	it	Salva la voce e esce
+select a category	resources	it	Seleziona una categoria
+select resource	resources	it	seleziona risorsa
+select resources	common	it	Seleziona risorse
+select/deselect all	resources	it	seleziona/deseleziona tutto
+short description	resources	it	Descrizione breve
+short description of resource	resources	it	Descrizione breve della risorsa
+show calendar of resource	resources	it	Mostra calendario della risorsa
+something went wrong by deleting resource	resources	it	Qualcosa non ha funzionato cancellando la risorsa
+something went wrong by saving resource	resources	it	Qualcosa non ha funzionato salvando la risorsa
+storage information	resources	it	Informazioni stoccaggio
+storage information:	resources	it	Informazioni stoccaggio:
+the calendar of this resource	resources	it	Il Calendario di questa risorsa
+this module displays the resources app	resources	it	Questo modulo visualizza l'applicazione risorse
+use general resources icon	resources	it	Usa l'icona risorsa generica
+use own picture	resources	it	Usa propria immagine
+use the category's icon	resources	it	Usa l'icona della categoria
+useable	resources	it	utilizzabile
+useable:	resources	it	Utilizzabile:
+view accessories for this resource	resources	it	Vedi accessori per questa risorsa
+view this entry	resources	it	Vedi questa voce
+web-page of resource	resources	it	Pagina Web della risorsa
+web-site for this resource	resources	it	Pagina Web di questa risorsa
+where to find this resource?	resources	it	Dove trovare questa risorsa?
+which category does this resource belong to?	resources	it	A quale categoria appartiene questa risorsa?
+write permissions	resources	it	Permessi di scrittura
+you are not permitted to delete this reource!	resources	it	Non hai il permesso di cancellare questa risorsa!
+you are not permitted to edit this reource!	resources	it	Non hai il permesso di modificare questa risorsa!
+you are not permitted to get information about this resource!	resources	it	Non hai il permesso di ottenere informazioni su questa risorsa!
+you chose more resources than available	resources	it	Hai scelto più risorse di quelle disponibili

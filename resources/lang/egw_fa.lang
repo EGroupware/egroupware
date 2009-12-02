@@ -1,0 +1,112 @@
+accessories of	resources	fa	ملزومات
+accessories:	resources	fa	ملزومات:
+actions	resources	fa	فعالیتها
+add accessory	resources	fa	افزودن ملزومه
+add resource	resources	fa	افزودن منبع
+add resources	resources	fa	افزودن منابع
+administrator	resources	fa	مدیر
+all categories	resources	fa	همه دسته ها
+attach	resources	fa	پیوست
+attach file	resources	fa	پیوست پرونده
+book	resources	fa	رزرو
+book selected resources	resources	fa	منابع انتخاب شده را رزرو کن
+book this resource	resources	fa	این منبع را رزرو کن
+bookable	resources	fa	قابل رزرو
+buy this article	resources	fa	خرید این کالا
+buy this resource	resources	fa	خرید این منبع
+buyable	resources	fa	قابل خرید
+categories admin	resources	fa	مدیر دسته ها
+category	resources	fa	دسته
+category:	resources	fa	دسته:
+check all	resources	fa	انتخاب همه
+choose categories admin	resources	fa	انتخاب مدیر دسته ها
+clear selection	resources	fa	پاک کردن انتخاب
+comment	resources	fa	شرح
+configure access permissions	resources	fa	پیکربندی مجوز دسترسی
+create new accessory for this resource	resources	fa	ایجاد ملزومه جدید برای این منبع
+create new links	resources	fa	ایجاد پیوندهای جدید
+delete selected resources	resources	fa	حذف منابع انتخاب شده
+delete this entry	resources	fa	حذف این ورودی
+description (short)	resources	fa	شرح مختصر
+direct booking permissions	resources	fa	مجوزهای رزور مستقیم
+do you really want do delete the selected resources?	resources	fa	آیا واقعا می خواهید منابع انتخاب شده را حذف کنید؟
+do you really want do delte this resource?	resources	fa	آیا واقعا می خواهید این منبع را حذف کنید؟
+don't use vfs (this will need a symlink --> see readme)	resources	fa	از vfs استفاده نکن
+edit this entry	resources	fa	ویراستن این ورودی
+existing links	resources	fa	پیوندهای موجود
+field must not be empty !!!	resources	fa	فیلد نمیتواند خالی باشد!!!
+general	resources	fa	عمومی
+general informations about resource	resources	fa	اطلاعات عمومی درباره منبع
+general resources	resources	fa	منابع عمومی
+gernal resource	resources	fa	منبع عمومی
+how many of the resources are useable?	resources	fa	چقدر از منابع قابل استفاده است؟
+how many of them are useable?	resources	fa	چقدر از آنها قابل استفاده است؟
+how many of this resource are usable	resources	fa	چقدر از این منبع قابل استفاده است
+how many of this resource exists	resources	fa	چقدر از این منبع قابل موجود است
+implies booking permission	resources	fa	مجوز رزرو را میرساند
+implies read permission	resources	fa	مجوز خواندن را میرساند
+information about storage	resources	fa	اطلاعات درباره مخزن
+informations about the location of resource	resources	fa	اطلاعات درباره محل منبع
+inventory number	resources	fa	شماره انبار
+inventory number:	resources	fa	شماره انبار:
+is resource bookable?	resources	fa	آیا منبع قابل رزرو است؟
+is resource buyable?	resources	fa	آیا منبع قابل خرید است؟
+is this resource bookable?	resources	fa	آیا این منبع قابل رزرو است؟
+is this resource buyable?	resources	fa	آیا این منبع قابل خرید است؟
+link	resources	fa	پیوند شود
+links	resources	fa	پیوندها
+location	resources	fa	مکان
+location of resource	resources	fa	مکان منبع
+location:	resources	fa	مکان:
+name of resource	resources	fa	نام منبع
+name:	resources	fa	نام:
+new search	resources	fa	جستجوی جدید
+no description available	resources	fa	شرحی موجود نیست
+no resources selected	resources	fa	منبعی انتخاب نشد
+notify your administrator to correct this situation	resources	fa	به مدیر سیستم بگوئید این مشکل را رفع کند
+of	resources	fa	از
+picture	resources	fa	تصویر
+picture source	resources	fa	منبع تصویر
+picture type is not supported, sorry!	resources	fa	متأسفم، این نوع تصویر پشتیبانی نمی شود!
+pictures or resource	resources	fa	تصاویر یا منبع
+planer	resources	fa	برنامه ریز
+prizeing information for booking or buying	resources	fa	اطلاعات اضافی برای خرید یا رزرو
+quantity	resources	fa	مقدار
+quantity of resource	resources	fa	مقدار منبع
+quantity:	resources	fa	مقدار:
+read calendar permissions	resources	fa	مجوزهای خواندن تقویم
+read permissions	resources	fa	مجوزهای خواندن
+related links	resources	fa	پیوندهای مرتبط
+resources	common	fa	منابع
+resources list	resources	fa	لیست منبع
+responsible:	resources	fa	مسئول
+saves entry and exits	resources	fa	ورودی را ذخیره کرده و خارج می شود
+select a category	resources	fa	دسته را انتخاب کنید
+select resource	resources	fa	منبع انتخاب کنید
+select resources	common	fa	منابع را انتخاب کنید
+select/deselect all	resources	fa	انتخاب/عدم انتخاب همه
+short description	resources	fa	شرح مختصر
+short description of resource	resources	fa	شرح مختصر منبع
+show calendar of resource	resources	fa	نمایش تقویم منبع
+showing	resources	fa	نمایش
+something went wrong by deleting resource	resources	fa	اشتباهی در حذف منبع پیش آمده
+something went wrong by saving resource	resources	fa	اشتباهی در ذخیره منبع پیش آمده
+storage information	resources	fa	اطلاعات مخزن
+storage information:	resources	fa	اطلاعات مخزن
+the calendar of this resource	resources	fa	تقویم این منبع
+this module displays the resources app	resources	fa	این پیمانه کاربرد منابع را نمایش میدهد
+use general resources icon	resources	fa	از نمایه عمومی منابع استفاده کن
+use own picture	resources	fa	استفاده از تصویر خود
+use the category's icon	resources	fa	از نمایه مربوط به دسته استفاده کن
+useable	resources	fa	قابل استفاده
+useable:	resources	fa	قابل استفاده:
+view accessories for this resource	resources	fa	دیدن ملزومات این منبع
+view this entry	resources	fa	دیدن این ورودی
+web-page of resource	resources	fa	صفحه وب منبع
+web-site for this resource	resources	fa	سایت وب این منبع
+where to find this resource?	resources	fa	کجا این منبع پیدا میشود؟
+which category does this resource belong to?	resources	fa	این منبع به کدام دسته تعلق دارد؟
+write permissions	resources	fa	مجوزهای نوشتن
+you are not permitted to edit this reource!	resources	fa	شما مجوز ویراستن این منبع را ندارید!
+you are not permitted to get information about this resource!	resources	fa	شما مجاز به دریافت اطلاعات این منبع نیستید!
+you chose more resources than available	resources	fa	شما منابعی بیش از آنچه که موجود است انتخاب کردید

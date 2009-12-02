@@ -1,0 +1,100 @@
+accessories of	resources	no	Tilbehør til:
+accessories:	resources	no	Rekvisita
+actions	resources	no	Aksjoner
+add accessory	resources	no	Legg til rekvista
+add resource	resources	no	Legg til ressurs
+add resources	resources	no	Legg til ressurser
+administrator	resources	no	Administrator
+all categories	resources	no	Alle kategorier
+book	resources	no	Bestill
+book selected resources	resources	no	Bestill valgte ressurser
+book this resource	resources	no	Bestille denne ressursen
+bookable	resources	no	Mulig å bestille
+buy this article	resources	no	Kjøp denne artikkelen
+buy this resource	resources	no	Kjøp denne ressursen
+buyable	resources	no	Mulig å kjøpe
+categories admin	resources	no	Admin. av kategorier
+category:	resources	no	Kategori
+check all	resources	no	Kontroller alle
+choose categories admin	resources	no	Velg admin. for kategoriene
+clear selection	resources	no	Opphev valgene
+configure access permissions	resources	no	Konfigurer aksesstillatelser
+create new accessory for this resource	resources	no	Opprette nytt tilbehør til denne ressursen
+create new links	resources	no	Opprette nye lenker
+delete selected resources	resources	no	Slett valgte ressurser
+delete this entry	resources	no	Slett denne registreringen
+description (short)	resources	no	Beskrivelse (kort)
+direct booking permissions	resources	no	Deleger bestillingsrettigheter
+don't use vfs (this will need a symlink --> see readme)	resources	no	Ikke bruke vfs (dette trenger en symlink-->Se LESMEG
+edit this entry	resources	no	Endre denne registreringen
+existing links	resources	no	Eksisterende lenker
+general	resources	no	Generell
+general informations about resource	resources	no	Generell informasjon om ressursen
+gernal resource	resources	no	Generell ressurs
+how many of the resources are useable?	resources	no	Hvor mange av ressursene er brukbare ?
+how many of them are useable?	resources	no	Hvor mange av dem er brukbare ?
+how many of this resource are usable	resources	no	Hvor mange av denne ressursen er brukbare ?
+how many of this resource exists	resources	no	Hvor mange eksisterer det av denne ressursen
+implies booking permission	resources	no	Innbefatter bestillingsrettigheter
+implies read permission	resources	no	Innbefatter leserettigheter
+information about storage	resources	no	Informasjon om lagersted
+informations about the location of resource	resources	no	Informasjon om hvor ressursen er lagret
+inventory number	resources	no	Inventarnummer
+inventory number:	resources	no	Inventarnummer:
+is resource bookable?	resources	no	Er det mulig å bestille ressursen ?
+is resource buyable?	resources	no	Er det mulig å kjøpe ressursen ?
+is this resource bookable?	resources	no	Er det mulig å bestille denne ressursen ?
+is this resource buyable?	resources	no	Er det mulig å kjøpe denne ressursen ?
+links	resources	no	Lenker
+location	resources	no	Lokasjon
+location of resource	resources	no	Lokasjon av ressurser
+location:	resources	no	Lokasjon:
+name of resource	resources	no	Navn på ressurs
+name:	resources	no	Navn:
+no description available	resources	no	Ingen beskrivelse tilgjengelig
+no resources selected	resources	no	Ingen ressurser valgt
+notify your administrator to correct this situation	resources	no	Gjør din EDB-ansvarlige beskjed om å korrigere denne situasjonen
+picture	resources	no	Bilde
+picture source	resources	no	Bildekilde
+picture type is not supported, sorry!	resources	no	Bildetype supporteres ikke, dessverre !
+pictures or resource	resources	no	Bilder av ressurs
+planer	resources	no	Planlegger
+prizeing information for booking or buying	resources	no	Prisinformasjon for bestilling eller kjøp
+quantity	resources	no	Antall
+quantity of resource	resources	no	Antall av  ressurs
+quantity:	resources	no	Antall :
+read calendar permissions	resources	no	Kalendertillatelser for visning
+read permissions	resources	no	Lesetillatelser
+related links	resources	no	Relaterte lenker
+resources	common	no	Ressurser
+resources list	resources	no	Liste over ressurser
+responsible:	resources	no	Ansvarlig :
+saves entry and exits	resources	no	Lagre endringene og fortsette
+select a category	resources	no	Velg en kategori
+select resource	resources	no	Velg en ressurs
+select resources	resources	no	Velg ressurser
+select/deselect all	resources	no	Velg/fravelg alle
+short description	resources	no	Kort beskrivelse
+short description of resource	resources	no	Kort beskivelse av ressursen
+show calendar of resource	resources	no	Vis kalender for ressursen
+something went wrong by deleting resource	resources	no	Noe gikk galt ved sletting av ressyrsen
+something went wrong by saving resource	resources	no	Noe gikk galt ved lagring av ressursen
+storage information	resources	no	Lagringsinformasjon
+storage information:	resources	no	Lagringsinformasjon:
+the calendar of this resource	resources	no	Kalender for denne ressursen
+this module displays the resources app	resources	no	Denne modulen viser ressursprogrammet
+use general resources icon	resources	no	Bruk generelt ikon for ressursen
+use own picture	resources	no	Bruk eget bilde
+use the category's icon	resources	no	Bruk kategoriens ikon
+useable	resources	no	Brukbare
+useable:	resources	no	Brukbare:
+view accessories for this resource	resources	no	Vis tilbehør til denne ressursen
+view this entry	resources	no	Vis denne oppføringen
+web-page of resource	resources	no	Nettsider for ressursen
+web-site for this resource	resources	no	Nettsted for denne ressursen
+where to find this resource?	resources	no	Hvor finnes denne ressursen ?
+which category does this resource belong to?	resources	no	Hvilken kategori hører denne ressursen hjemme i
+write permissions	resources	no	Skrivetillatelser
+you are not permitted to edit this reource!	resources	no	Du har ikke lov til endre denne ressursen !
+you are not permitted to get information about this resource!	resources	no	Du har ikke tillatelse til å få informasjon om denne ressursen
+you chose more resources than available	resources	no	Du valgte flere ressurser enn tilgjengelige

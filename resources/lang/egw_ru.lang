@@ -1,0 +1,102 @@
+accessories of	resources	ru	комплектующие к
+accessories:	resources	ru	Комплектующие:
+actions	resources	ru	Действия
+add accessory	resources	ru	Добавить комплектующее
+add resource	resources	ru	добавить ресурс
+add resources	resources	ru	Добавить ресурсы
+administrator	resources	ru	Администратор
+all categories	resources	ru	все категории
+book	resources	ru	Бронь
+book selected resources	resources	ru	бронировать выбранные ресурсы
+book this resource	resources	ru	Бронировать этот ресурс
+bookable	resources	ru	Бронируемый
+buy this article	resources	ru	Купить эту статью
+buy this resource	resources	ru	Купить этот ресурс
+buyable	resources	ru	Покупаемый
+categories admin	resources	ru	Администрирование категорий
+category:	resources	ru	Категория:
+check all	resources	ru	Отметить все
+choose categories admin	resources	ru	выбрать администратора категорий
+clear selection	resources	ru	очистить выбор
+configure access permissions	admin	ru	Настроить разрешения доступа
+create new accessory for this resource	resources	ru	Создать новое комплектующее для этого ресурса
+create new links	resources	ru	Создать новые ссылки
+delete selected resources	resources	ru	удалить выбранные ресурсы
+delete this entry	resources	ru	Удалить эту запись
+description (short)	resources	ru	Описание (краткое)
+direct booking permissions	resources	ru	Разрешения прямого бронирования
+don't use vfs (this will need a symlink --> see readme)	resources	ru	Не использовать vfs (это требует применеия символических ссылок --> см. README)
+edit this entry	resources	ru	Редактировать эту запись
+existing links	resources	ru	Существующие ссылки
+general	resources	ru	Общий
+general informations about resource	resources	ru	Общая информация о ресурсе
+gernal resource	resources	ru	общий ресурс
+how many of the resources are useable?	resources	ru	Сколько ресурсов доступно?
+how many of them are useable?	resources	ru	Сколько из них доступно?
+how many of this resource are usable	resources	ru	Сколько этого ресурса доступно?
+how many of this resource exists	resources	ru	Сколько этого ресурса есть?
+implies booking permission	resources	ru	подразумевает права на бронирование
+implies read permission	resources	ru	подразумевает права на чтение
+information about storage	resources	ru	Информация о хранилище
+informations about the location of resource	resources	ru	Информация о местоположении ресурса
+inventory number	resources	ru	Инвентаризационный номер
+inventory number:	resources	ru	Инвентаризационный номер:
+is resource bookable?	resources	ru	Ресурс бронируемый?
+is resource buyable?	resources	ru	Ресурс покупаемый?
+is this resource bookable?	resources	ru	Этот ресурс бронируемый?
+is this resource buyable?	resources	ru	Этот ресурс покупаемый?
+links	resources	ru	Ссылки
+location	resources	ru	Местоположение
+location of resource	resources	ru	Местоположение ресурса
+location:	resources	ru	Местоположение:
+name of resource	resources	ru	Имя ресурса
+name:	resources	ru	Имя:
+no description available	resources	ru	описание недоступно
+no resources selected	resources	ru	Ресурсы не выбраны
+notify your administrator to correct this situation	resources	ru	Сообщите Вашему администратору для исправления этой ситуации
+picture	resources	ru	Изображение
+picture source	resources	ru	источник изображения
+picture type is not supported, sorry!	resources	ru	формат изображения не поддерживается, извините!
+pictures or resource	resources	ru	Изображение или ресурс
+planer	resources	ru	планировщик
+prizeing information for booking or buying	resources	ru	Информация для бронирования или покупки
+quantity	resources	ru	Количество
+quantity of resource	resources	ru	Количество ресурса
+quantity:	resources	ru	Количество:
+read calendar permissions	resources	ru	Читать разрешения доступа к Календарю
+read permissions	resources	ru	Прочитать разрешения доступа
+related links	resources	ru	Связанные ссылки
+resources	common	ru	Ресурсы
+resources list	resources	ru	список ресурсов
+responsible:	resources	ru	Ответственный:
+saves entry and exits	resources	ru	Сохраняет запись и выходит
+select a category	resources	ru	Выбрать категорию
+select resource	resources	ru	выбрать ресурс
+select resources	common	ru	Выбрать ресурсы
+select/deselect all	resources	ru	выбрать/отменить выбор все
+short description	resources	ru	Краткое описание
+short description of resource	resources	ru	Краткое описание русурса
+show calendar of resource	resources	ru	Показать календарь ресурса
+something went wrong by deleting resource	resources	ru	Что-то пошло не так при удалении ресурса
+something went wrong by saving resource	resources	ru	Что-то пошло не так при сохранении ресурса
+storage inforation	resources	ru	Информация о Хранилище
+storage information	resources	ru	Информация о хранилище:
+storage information:	resources	ru	Информация о хранилище:
+the calendar of this resource	resources	ru	Календарь этого Ресурса
+this module displays the resources app	resources	ru	Этот модуль показывает приложение ресурсов
+use general resources icon	resources	ru	Использовать общую пиктограмму ресурсов
+use own picture	resources	ru	Использовать своё изображение
+use the category's icon	resources	ru	Использовать пиктограмму категории
+useable	resources	ru	доступный
+useable:	resources	ru	Доступный:
+view accessories for this resource	resources	ru	Посмотреть комплетующие этого ресурса
+view this entry	resources	ru	Показать эту запись
+web-page of resource	resources	ru	Веб-Страница ресурса
+web-site for this resource	resources	ru	Веб-Сайт этого ресурса
+where to find this resource?	resources	ru	Где искать этот ресурса
+which category does this resource belong to?	resources	ru	К какой категории относится этот ресурс
+write permissions	resources	ru	Разрешение на запись
+you are not permitted to delete this reource!	resources	ru	Вам не разрешено удалять этот ресурс!
+you are not permitted to edit this reource!	resources	ru	Вам не разрешено редактировать этот ресурс
+you are not permitted to get information about this resource!	resources	ru	Вам не разрешено получать информацию об этом ресурсе!
+you chose more resources than available	resources	ru	Вы выбрали больше ресурсов, чем возможно

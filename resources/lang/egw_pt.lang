@@ -1,0 +1,101 @@
+accessories of	resources	pt	acessórios de
+accessories:	resources	pt	Acessórios:
+actions	resources	pt	Acções
+add accessory	resources	pt	Adicionar acessório
+add resource	resources	pt	Adicionar recurso
+add resources	resources	pt	Adicionar recursos
+administrator	resources	pt	Administrador
+all categories	resources	pt	Todas as categorias
+book	resources	pt	Agendar
+book selected resources	resources	pt	Agendar recursos seleccionados
+book this resource	resources	pt	Agendar este recurso
+bookable	resources	pt	Agendável
+buy this article	resources	pt	Comprar este artigo
+buy this resource	resources	pt	Comprar este recurso
+buyable	resources	pt	À venda
+categories admin	resources	pt	Categorias de administração
+category:	resources	pt	Categoria
+check all	resources	pt	Marcar todas
+choose categories admin	resources	pt	escolher categorias de administração
+clear selection	resources	pt	Limpar selecção
+configure access permissions	resources	pt	Configurar permissões de acesso
+create new accessory for this resource	resources	pt	Criar novo acessório para este recurso
+create new links	resources	pt	Criar novas ligações
+delete selected resources	resources	pt	Eliminar recursos seleccionados
+delete this entry	resources	pt	Eliminar este registo
+description (short)	resources	pt	Descrição (breve)
+direct booking permissions	resources	pt	Permissões de agendamento directo
+don't use vfs (this will need a symlink --> see readme)	resources	pt	Não utilize vfs (necessitará de um symlink --> ver README)
+edit this entry	resources	pt	Editar este registo
+existing links	resources	pt	Ligações existentes
+general	resources	pt	Geral
+general informations about resource	resources	pt	Informações gerais sobre recurso
+gernal resource	resources	pt	Recurso geral
+how many of the resources are useable?	resources	pt	Quantos recursos estão funcionais?
+how many of them are useable?	resources	pt	Quantos deles estão funcionais?
+how many of this resource are usable	resources	pt	Quantos deste recurso estão funcionais
+how many of this resource exists	resources	pt	Quantos deste recurso existem
+implies booking permission	resources	pt	implica permissão de agendamento
+implies read permission	resources	pt	implica permissão de leitura
+information about storage	resources	pt	Informações sobre armazenamento
+informations about the location of resource	resources	pt	Informações sobre a localização do recurso
+inventory number	resources	pt	Número de inventário
+inventory number:	resources	pt	Número de inventário:
+is resource bookable?	resources	pt	É possível agendar recurso?
+is resource buyable?	resources	pt	É possívem comprar recurso?
+is this resource bookable?	resources	pt	Este recurso é agendável?
+is this resource buyable?	resources	pt	Este recurso está à venda?
+links	resources	pt	Ligações
+location	resources	pt	Local
+location of resource	resources	pt	Local do recurso
+location:	resources	pt	Local:
+name of resource	resources	pt	Nome do recurso
+name:	resources	pt	Nome:
+no description available	resources	pt	sem descrição disponível
+no resources selected	resources	pt	Nenhum recurso seleccionado
+notify your administrator to correct this situation	resources	pt	Notifique o administrador para que esta situação seja corrigida
+picture	resources	pt	Imagem
+picture source	resources	pt	Fonte da imagem
+picture type is not supported, sorry!	resources	pt	Pedimos desculpa, mas o tipo de imagem não é suportado!
+pictures or resource	resources	pt	Imagens ou recurso
+planer	resources	pt	Planeamento
+prizeing information for booking or buying	resources	pt	Tabela de preços para reserva ou compra
+quantity	resources	pt	Quantidade
+quantity of resource	resources	pt	Quantidade do recurso
+quantity:	resources	pt	Quantidade:
+read calendar permissions	resources	pt	Ler permissões de calendário
+read permissions	resources	pt	Ler permissões
+related links	resources	pt	Ligações relacionadas
+resources	common	pt	Recursos
+resources list	resources	pt	Lista de recursos
+responsible:	resources	pt	Responsável:
+saves entry and exits	resources	pt	Guarda registo e sai
+select a category	resources	pt	Seleccionar uma categoria
+select resource	resources	pt	Seleccionar recurso
+select resources	common	pt	Seleccionar recursos
+select/deselect all	resources	pt	Seleccionar/não seleccionar todos
+short description	resources	pt	Breve descrição
+short description of resource	resources	pt	Breve descrição do recurso
+show calendar of resource	resources	pt	Exibir recurso do calendário
+something went wrong by deleting resource	resources	pt	Ocorreu um erro ao eliminar recurso
+something went wrong by saving resource	resources	pt	Ocorreu um erro ao guardar recurso
+storage information	resources	pt	Informações sobre armazenamento
+storage information:	resources	pt	Informações sobre armazenamento:
+the calendar of this resource	resources	pt	O calendário deste recurso
+this module displays the resources app	resources	pt	Este módulo apresenta as aplicações de recursos
+use general resources icon	resources	pt	Utilizar ícone de recursos gerais
+use own picture	resources	pt	Utilizar imagem própria
+use the category's icon	resources	pt	Utilizar o ícone da categoria
+useable	resources	pt	Usabilidade
+useable:	resources	pt	Usabilidade:
+view accessories for this resource	resources	pt	Ver acessórios para este recurso
+view this entry	resources	pt	Ver este registo
+web-page of resource	resources	pt	Recurso de página Web
+web-site for this resource	resources	pt	Página Web para este recurso
+where to find this resource?	resources	pt	Onde encontrar este recurso?
+which category does this resource belong to?	resources	pt	A que categoria pertence este recurso?
+write permissions	resources	pt	Permissões de escrita
+you are not permitted to delete this reource!	resources	pt	Não tem permissões para eliminar este recurso!
+you are not permitted to edit this reource!	resources	pt	Não tem permissões para editar este recurso!
+you are not permitted to get information about this resource!	resources	pt	Não tem permissões para aceder a informações sobre este recurso!
+you chose more resources than available	resources	pt	Escolheu mais recursos do que os disponíveis

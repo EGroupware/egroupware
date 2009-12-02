@@ -1,0 +1,105 @@
+accessories of	resources	zh	附属于
+accessories:	resources	zh	附件：
+actions	resources	zh	操作
+add accessory	resources	zh	添加附件
+add resource	resources	zh	添加资源
+add resources	resources	zh	添加资源
+admin	resources	zh	管理员
+administrator	resources	zh	管理员
+all categories	resources	zh	所有分类
+book	resources	zh	预订资源
+book selected resources	resources	zh	预订所选资源
+book this resource	resources	zh	预订这个资源
+bookable	resources	zh	可预约
+buy this article	resources	zh	购买这篇文章
+buy this resource	resources	zh	购买这个资源
+buyable	resources	zh	可购买的
+categories admin	resources	zh	类别管理
+category:	resources	zh	类别：
+check all	resources	zh	选择全部
+choose categories admin	resources	zh	选择类别管理者
+clear selection	resources	zh	明确的选择
+configure access permissions	admin	zh	设置访问权限
+create new accessory for this resource	resources	zh	添加此资源附件
+create new links	resources	zh	添加链接
+delete selected resources	resources	zh	删除所选资源
+delete this entry	resources	zh	删除此条目
+description (short)	resources	zh	描述 (简短)
+direct booking permissions	resources	zh	直接预订权限
+don't use vfs (this will need a symlink --> see readme)	resources	zh	不要使用虚拟文件系统(这将需要使用符号链接，-->请参阅 README 文档说明)
+edit this entry	resources	zh	编辑此条目
+existing links	resources	zh	已存在链接
+general	resources	zh	通用
+general informations about resource	resources	zh	关于资源的通用信息
+general resources	resources	zh	一般资源
+gernal resource	resources	zh	通用资源
+global categories	resources	zh	全局分类
+how many of the resources are useable?	resources	zh	有多少资源可以使用？
+how many of them are useable?	resources	zh	他们有多少可以使用？
+how many of this resource are usable	resources	zh	该资源有多少可以使用
+how many of this resource exists	resources	zh	该资源有多少
+implies booking permission	resources	zh	包含预定权限
+implies read permission	resources	zh	包含读取权限
+information about storage	resources	zh	有关于储存的信息
+informations about the location of resource	resources	zh	有关于资源所在位置的信息
+inventory number	resources	zh	库存数量
+inventory number:	resources	zh	库存数量：
+is resource bookable?	resources	zh	是可预定资源吗？
+is resource buyable?	resources	zh	是可购买资源吗？
+is this resource bookable?	resources	zh	该资源可预定吗？
+is this resource buyable?	resources	zh	该资源可购买吗？
+links	resources	zh	链接
+location	resources	zh	位置
+location of resource	resources	zh	资源的位置
+location:	resources	zh	位置：
+name of resource	resources	zh	资源名称
+name:	resources	zh	名称：
+no description available	resources	zh	没有可用的描述
+no resources selected	resources	zh	没有选择资源
+notify your administrator to correct this situation	resources	zh	通知您的系统管理者纠正该状况
+picture	resources	zh	图片
+picture source	resources	zh	图片来源
+picture type is not supported, sorry!	resources	zh	抱歉，不支持的图片格式！
+pictures or resource	resources	zh	图片或资源
+planer	resources	zh	计划员
+prizeing information for booking or buying	resources	zh	预定或购买的价格信息
+quantity	resources	zh	数量
+quantity of resource	resources	zh	资源数量
+quantity:	resources	zh	数量：
+read calendar permissions	resources	zh	读取日历权限
+read permissions	resources	zh	读取权限
+related links	resources	zh	相关链接
+resources	common	zh	资源管理
+resources list	resources	zh	资源列表
+responsible:	resources	zh	责任人：
+saves entry and exits	resources	zh	保存后退出
+select a category	resources	zh	选择一个类别
+select resource	resources	zh	选择资源
+select resources	common	zh	选择资源
+select/deselect all	resources	zh	选择/全部取消
+short description	resources	zh	简短描述
+short description of resource	resources	zh	资源的简短描述
+show calendar of resource	resources	zh	显示资源日历
+site configuration	resources	zh	站点配置
+something went wrong by deleting resource	resources	zh	删除资源时发生错误
+something went wrong by saving resource	resources	zh	保存资源时发生错误
+storage information	resources	zh	存储信息
+storage information:	resources	zh	存储信息：
+the calendar of this resource	resources	zh	这一资源的日历
+this module displays the resources app	resources	zh	这一模块显示资源应用
+use general resources icon	resources	zh	使用通用资源图标
+use own picture	resources	zh	使用自己的图标
+use the category's icon	resources	zh	使用这一类别的图标
+useable	resources	zh	可用
+useable:	resources	zh	可用：
+view accessories for this resource	resources	zh	查看这一资源的附件
+view this entry	resources	zh	查看此条目
+web-page of resource	resources	zh	资源网页
+web-site for this resource	resources	zh	这一资源的网站
+where to find this resource?	resources	zh	从哪里找的到这一资源？
+which category does this resource belong to?	resources	zh	这一资源属于哪个类别？
+write permissions	resources	zh	写入权限
+you are not permitted to delete this reource!	resources	zh	您没有删除这个资源的权限！
+you are not permitted to edit this reource!	resources	zh	您没有编辑这个资源的权限！
+you are not permitted to get information about this resource!	resources	zh	您没有获取有关这个资源信息的权限！
+you chose more resources than available	resources	zh	您选择的资源超过了现有可用范围！

@@ -1,0 +1,84 @@
+accessories of	resources	lv	piederumi no
+accessories:	resources	lv	Piederumi:
+actions	resources	lv	Darbības
+add accessory	resources	lv	Pievienot piederumu
+add resource	resources	lv	pievienot resursu
+add resources	resources	lv	Pievienot resursus
+administrator	resources	lv	Administrators
+all categories	resources	lv	visas kategorijas
+book this resource	resources	lv	Grāmatot šo resursu
+bookable	resources	lv	Grāmatojams
+buy this resource	resources	lv	Pirkt šo resursu
+buyable	resources	lv	Pērkams
+categories admin	resources	lv	Kategoriju administrators
+check all	resources	lv	Pārbaudīt visu
+choose categories admin	resources	lv	izvēlēties kategoriju administratoru
+clear selection	resources	lv	notīrīt izvēli
+configure access permissions	resources	lv	Konfigurēt pieejas atļaujas
+create new accessory for this resource	resources	lv	Izveidot jaunu piederumu šim resursam
+create new links	resources	lv	Izveidot jaunas saites
+delete this entry	resources	lv	Dzēst šo ierakstu
+description (short)	resources	lv	Aprsaksts (īss)
+direct booking permissions	resources	lv	Tiešās grāmatošanas atļaujas
+edit this entry	resources	lv	Rediģ''et šo ierakstu
+existing links	resources	lv	Esošās saites
+general	resources	lv	Vispārējs
+general informations about resource	resources	lv	Vispārēja informācija par resursu
+gernal resource	resources	lv	vispārējs resurss
+how many of the resources are useable?	resources	lv	Cik daudz resursu ir izmantojamii?
+how many of them are useable?	resources	lv	Cik daudz no tiem ir izmantojami?
+how many of this resource are usable	resources	lv	Cik daudz no šī resursa ir izmantojams/
+how many of this resource exists	resources	lv	Cik daudz no šī resursa eksistē?
+implies booking permission	resources	lv	satur grāmatošanas atļauju
+implies read permission	resources	lv	satur lasīšanas atļauju
+informations about the location of resource	resources	lv	Informācija par resursa novietojumu
+is resource bookable?	resources	lv	Vai resurss ir grāmatojams?
+is resource buyable?	resources	lv	Vai resurss ir nopērkams?
+is this resource bookable?	resources	lv	Vai šis resurss ir grāmatojams?
+is this resource buyable?	resources	lv	Vai šis resurss ir nopērkams?
+links	resources	lv	Saires
+location	resources	lv	Novietojums
+location of resource	resources	lv	Resursa novietojums
+name of resource	resources	lv	Resursa nosaukums
+no description available	resources	lv	apraksts nav pieejams
+no resources selected	resources	lv	Nav atzīmēts resurss
+notify your administrator to correct this situation	resources	lv	Paziņo to savam administratoram, lai labotu šo situāciju
+picture	resources	lv	Attēls
+picture source	resources	lv	attēla avots
+picture type is not supported, sorry!	resources	lv	Netabalsta attēla tipu!
+pictures or resource	resources	lv	Attēli vai resursi
+quantity	resources	lv	Daudzums
+quantity of resource	resources	lv	Resursa daudzums
+quantity:	resources	lv	Daudzums:
+read calendar permissions	resources	lv	Lasīt kalendāra atļaujas
+read calender permissions	resources	lv	Lasīt kalendāra atļaujas
+read permissions	resources	lv	Lasīt atļaujas
+related links	resources	lv	Saistītās saites
+resources	common	lv	resursi
+resources list	resources	lv	resursu saraksts
+responsible:	resources	lv	Atbildīgs:
+saves entry and exits	resources	lv	Saglabā ierakstu un iziet
+select a category	resources	lv	Iezīmē kategoriju
+select resource	resources	lv	iezīmē resursu
+select resources	resources	lv	Iezīmē resursus
+short description	resources	lv	īss apraksts
+short description of resource	resources	lv	īss resursa apraksts
+something went wrong by deleting resource	resources	lv	Kaut kas nenotika pareizi dzēšot resursu
+something went wrong by saving resource	resources	lv	Kaut kas notika nepareizi saglabājot resursu
+storage information	resources	lv	Krātuves informācija
+the calendar of this resource	resources	lv	Šī resursa kalendārs
+this module displays the resources app	resources	lv	Šis modulis attēlo resursu programmatūru
+use general resources icon	resources	lv	Lietot vispārējo resursu ikonu
+use own picture	resources	lv	Lietot paša attēlu
+use the category's icon	resources	lv	Lietot kategorijas ikonu
+useable	resources	lv	izmantojams
+view accessories for this resource	resources	lv	Rādīt šī resursa  piederumus
+view this entry	resources	lv	Rādīt šo ierakstu
+web-page of resource	resources	lv	Resursa tīmekļa lapa
+web-site for this resource	resources	lv	Šī resursa tīmekļa vietne
+where to find this resource?	resources	lv	Kur atrast šo resursu?
+which category does this resource belong to?	resources	lv	Kurai kategorijai pieder šis resurss?
+write permissions	resources	lv	Rakstīt atļaujas
+you are not permitted to edit this reource!	resources	lv	Tev nav atļauts rediģēt šo resursu!
+you are not permitted to get information about this resource!	resources	lv	Tev nav atļauts iegūt informāciju par šo resursu!
+you chose more resources than available	resources	lv	Tu izvēlies vairāk resursu kā pieejams
