@@ -1,0 +1,405 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	zh	应用程序'%3'和语言'%4'的文字讯息%1(%2新)
+%1 etemplates deleted	etemplate	zh	%1 个模板已删除
+%1 etemplates for application '%2' dumped to '%3'	etemplate	zh	%1 个模板为应用程序 '%2' 转储到 '%3'
+%1 etemplates found	etemplate	zh	找到 %1 个模板
+%1 matches on search criteria	etemplate	zh	有 %1 条符合搜索条件的资料
+%1 new etemplates imported for application '%2'	etemplate	zh	导入 %1 条应用程序 '%2' 的模板
+%s disabled	etemplate	zh	%s 已禁用
+%s needed	etemplate	zh	需要 %s
+%s notranslation	etemplate	zh	%s 未翻译
+%s onchange	etemplate	zh	%s onChange
+%s readonly	etemplate	zh	%s 只读
+'%1' has an invalid format !!!	etemplate	zh	'%1' 格式错误！
+'%1' is not a valid date !!!	etemplate	zh	'%1'不是有效的日期！
+'%1' is not a valid floatingpoint number !!!	etemplate	zh	'%1' 不是正确的浮点数！
+'%1' is not a valid integer !!!	etemplate	zh	'%1' 不是正确的整数！
+a pattern to be searched for	etemplate	zh	一搜索模式用于
+accesskey	etemplate	zh	快捷键
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	zh	快捷键也可以在标签中指定有一个 & (例如 &Name) 字符
+account contactdata	etemplate	zh	账户联系人数据
+add a new column (after the existing ones)	etemplate	zh	添加新列 (在已存在的之后)
+add a new entry of the selected application	etemplate	zh	在选择的应用程序中添加新条目
+add a new multi-column index	etemplate	zh	添加新的多列索引
+add column	etemplate	zh	添加列
+add index	etemplate	zh	添加索引
+add new	etemplate	zh	新增
+add table	etemplate	zh	添加表
+advanced search	etemplate	zh	高级搜索
+align	etemplate	zh	对齐
+alignment of label and input-field in table-cell	etemplate	zh	标签与输入字段的对齐方式
+alignment of the v/hbox containing table-cell	etemplate	zh	V/HBox 的对齐方式
+all days	etemplate	zh	全部日数
+all operations save the template!	etemplate	zh	所有操作保存模板！
+am	etemplate	zh	上午
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	zh	使用索引列可以提高搜索速度(但是会占用磁盘空间！)
+application	etemplate	zh	应用程序
+application name needed to write a langfile or dump the etemplates !!!	etemplate	zh	应用程序需要写一个语言文件或是转储模板！
+applies the changes made	etemplate	zh	应用所作修改
+applies the changes to the given version of the template	etemplate	zh	应用修改到指定模板的版本
+as default	etemplate	zh	默认
+attach	etemplate	zh	附加
+attach file	etemplate	zh	附加文件
+baseline	etemplate	zh	基线
+blurtext	etemplate	zh	模煳文字
+border	etemplate	zh	边框
+border-line-thickness for the table-tag	etemplate	zh	表格标签使用的框线宽度
+bottom	etemplate	zh	底部
+box	etemplate	zh	容器 Box
+box...	etemplate	zh	容器 Box...
+can not have special sql-value null	etemplate	zh	不能有特殊 SQL-value  NULL
+cancel	etemplate	zh	取消
+cant delete a single widget from a grid !!!	etemplate	zh	不能从栅格中删除单一部件！
+cant delete the only column of a grid !!!	etemplate	zh	无法从栅格中删除唯一的列！
+cant delete the only row in a grid !!!	etemplate	zh	无法从栅格中删除唯一的行！
+category	etemplate	zh	类别
+category tree	etemplate	zh	类别树
+cellpadding for the table-tag	etemplate	zh	表格标签文字与单元格之间的距离
+cells	etemplate	zh	储存格
+cellspacing for the table-tag	etemplate	zh	表格标签文字与单元格之间的距离
+center	etemplate	zh	居中
+changed	etemplate	zh	已更改
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	zh	检查如果内容只是被显示，但不被改变 (当时不返回内容！)
+check if field has to be filled by user	etemplate	zh	检查字段是否已被用户填写
+checkbox	etemplate	zh	选择框
+class	etemplate	zh	类
+class, valign	etemplate	zh	类，垂直对齐
+click here to attach the file	etemplate	zh	点击以附加文件
+click here to create the link	etemplate	zh	点击以创建连接
+click here to start the search	etemplate	zh	点击开始搜索
+click here to upload the file	etemplate	zh	点击上传文件
+click to order after that criteria	etemplate	zh	点击按此为标准排序
+clickable path	etemplate	zh	可点击路径
+closes the window without saving the changes	etemplate	zh	关闭窗口不保存任何更改
+column...	etemplate	zh	列...
+columnname	etemplate	zh	列_名称
+comment	etemplate	zh	备注
+confirm	etemplate	zh	确认
+confirmation message or custom javascript (returning true or false)	etemplate	zh	确认消息或自定义javascript(返回true或false)
+confirmation necesary or custom java-script	etemplate	zh	需要确认或自定义 javascript
+contact	etemplate	zh	联系人
+contact field to show	etemplate	zh	要显示的联系人字段
+contact fields	etemplate	zh	联系人字段
+contains	etemplate	zh	包含
+create a new table for the application	etemplate	zh	为这个应用程序创建一新数据表
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	zh	从标签和帮助文本创建一个英文('en')语言文件(用于应用程序名称)
+css class for the table-tag	etemplate	zh	表格标签的 CSS 类
+css properties	etemplate	zh	CSS 属性
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	zh	该行的CSS类名，预设：'nmh' = NextMatch header，'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	zh	该列的CSS类名，预设：'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
+css-styles	etemplate	zh	CSS-风格
+custom	etemplate	zh	自定义
+custom fields	etemplate	zh	自定义字段
+custom javascript for onchange	etemplate	zh	为 onChange 自定义 javascript
+cut	etemplate	zh	剪切
+date+time	etemplate	zh	日期+时间
+datum	etemplate	zh	数据
+day	etemplate	zh	天
+days	etemplate	zh	天
+db ensures that every row has a unique value in that column	etemplate	zh	在该列中数据库确保每一行有一个不重复的值
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	zh	特定数据库索引选项(以逗号分隔)，例如：MySQL(FULLTEXT)或MySQL(100)来设定列的索引长度
+db-tools	etemplate	zh	数据库工具
+deck	etemplate	zh	装饰(内部)
+default	etemplate	zh	默认
+delete a single entry by passing the id.	etemplate	zh	通过 ID 删除一单项条目。
+delete all selected etemplates, without further inquiry	etemplate	zh	删除所有选取的模板，不再进行确认询问
+delete and cut save the template!	etemplate	zh	删除和剪切保存模板！
+delete column	etemplate	zh	删除列
+delete index	etemplate	zh	删除索引
+delete the spezified etemplate	etemplate	zh	删除指定模板
+delete this column	etemplate	zh	删除此列
+delete this etemplate	etemplate	zh	删除该模板
+delete this file	etemplate	zh	删除此文件
+delete this row	etemplate	zh	删除此行
+delete whole column (can not be undone!!!)	etemplate	zh	删除全部列 (无法复原！)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	zh	从数据库删除以上指定的模板，无法复原
+deletes the etemplate spez. above	etemplate	zh	删除以上指定的模板
+deletes this column	etemplate	zh	删除该列
+deletes this index	etemplate	zh	删除此索引
+discard changes	etemplate	zh	放弃更改
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	zh	在输入之前显示或输入是为'%s'插入标签中(提交按钮标签或图片文件名)
+displayed in statusline of browser if input-field gets focus	etemplate	zh	如果输入字段获得焦点则在浏览器状态栏显示
+displayed in the top line of the groupbox (legend)	etemplate	zh	在GroupBox (图例) 的顶行显示
+do you want to save the changes you made in table %s?	etemplate	zh	是否要保存您在表%s所作修改？
+documentation	etemplate	zh	文档
+doesn't matter	etemplate	zh	没关系
+drop a table - this can not be undone	etemplate	zh	删去数据表 - 这将无法撤消
+drop table	etemplate	zh	删去数据表
+dump4setup	etemplate	zh	Dump4 安装
+duration	etemplate	zh	期间
+edit	etemplate	zh	编辑
+edit embeded css styles or of the applications app.css file	etemplate	zh	编辑 CSS 嵌入式样式表或应用程序 app.css 文件
+edit the etemplate spez. above	etemplate	zh	编辑上面指定的模板
+edit...	etemplate	zh	编辑...
+editable templates - db-tools	etemplate	zh	可编辑模板 - 数据库-工具
+editable templates - delete template	etemplate	zh	可编辑模板 - 删除模板
+editable templates - editor	etemplate	zh	可编辑模板 - 编辑器
+editable templates - search	etemplate	zh	可编辑模板 - 搜索
+editable templates - show template	etemplate	zh	可编辑模板 - 显示模板
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	zh	CSS嵌入式样式表，例如'.red { background: red;}' (注意'.'在类名称之前)或是 '@import url(...)' (类名称可以在全局网页使用！)
+enable javascript onchange submit	etemplate	zh	启用 JavaScript 改动时提交功能
+enter '' for an empty default, nothing mean no default	etemplate	zh	对于空的默认值，输入'' 意味着没有任何的默认
+enter a search pattern	etemplate	zh	输入搜索条件
+enter filename to upload and attach, use [browse...] to search for it	etemplate	zh	输入上传文件与附件的文件名，使用[浏览...]对其搜索
+enter the new version number here (> old_version), empty for no update-file	etemplate	zh	输入新的版本号(大于旧版本)，空白表示没有更新
+enter the new version number here (has to be > old_version)	etemplate	zh	输入新的版本号(必须大于旧版本)
+entry saved	etemplate	zh	条目已储存
+error: template not found !!!	etemplate	zh	错误：找不到模板！
+error: webserver is not allowed to write into '%1' !!!	etemplate	zh	错误：Web服务器无法写入文件'%1'！
+error: while saving !!!	etemplate	zh	错误：保存时！
+error: writing file (no write-permission for the webserver) !!!	etemplate	zh	错误：写入文件时(Web服务器没有写入权限)！
+etemplate	common	zh	[eGW-TPL]模板管理
+etemplate '%1' imported, use save to put it in the database	etemplate	zh	模板'%1'已导入，点击保存将其放入数据库中
+etemplate '%1' written to '%2'	etemplate	zh	模板 '%1' 写到 '%2'
+etemplate editor	etemplate	zh	模板编辑器
+etemplate reference	etemplate	zh	模板参考
+etemplate tutorial	etemplate	zh	模板教学指南
+exchange this row with the one above	etemplate	zh	用以上行替换这一行
+exchange this two columns	etemplate	zh	交换这两列
+export the loaded etemplate into a xml-file	etemplate	zh	将载入的模板导出到 XML-文件
+export xml	etemplate	zh	导出 XML文件
+extensions loaded:	etemplate	zh	已载入扩展：
+field	etemplate	zh	字段
+field must not be empty !!!	etemplate	zh	字段不得为空！
+file	etemplate	zh	文件
+file contains more than one etemplate, last one is shown !!!	etemplate	zh	文件包含多个模板，只显示最后一条！
+file writen	etemplate	zh	书面文件
+fileupload	etemplate	zh	文件上传
+first	etemplate	zh	第一条
+floating point	etemplate	zh	浮点数
+foreign key	etemplate	zh	外键 (Foreign Key)
+formatted text (html)	etemplate	zh	格式化文本 (HTML)
+go to the first entry	etemplate	zh	到第一条目
+go to the last entry	etemplate	zh	到最后条目
+go to the next page of entries	etemplate	zh	下一条目页面
+go to the previous page of entries	etemplate	zh	上一条目页面
+grid	etemplate	zh	栅格
+grid column attributes	etemplate	zh	栅格列属性
+grid row attributes	etemplate	zh	栅格行属性
+groupbox	etemplate	zh	成组框控件
+hbox	etemplate	zh	水平框控件
+height	etemplate	zh	高度
+height of row (in % or pixel)	etemplate	zh	行高 (百分比或像素)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	zh	行高(百分比或像素)，禁用行：[! = not]<value>[=<check>]例如：'!@data'如果数据内容为空则禁用
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	zh	表格标签和(可选)div的表格高度(百分比或像素)
+height, disabled	etemplate	zh	高度，禁用
+help	etemplate	zh	帮助
+history log	etemplate	zh	历史日志
+horizontal rule	etemplate	zh	水平规则
+hour	etemplate	zh	小时
+hours	etemplate	zh	小时
+how many entries should the list show	etemplate	zh	列表将要显示多少个条目
+html	etemplate	zh	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	zh	为了(暂时)移除一个 field/cell，如果字段被禁用则会显示一个空白 table-cell
+image	etemplate	zh	图片
+import	etemplate	zh	导入
+import an etemplate from a xml-file	etemplate	zh	从XML文件导入一个模板
+import table-definitions from existing db-table	etemplate	zh	从已有的数据表导入表定义文件
+import xml	etemplate	zh	导入XML文件
+increment version to not overwrite the existing template	etemplate	zh	增加版本以避免覆盖现有模板
+index/name of returned content (name of the template, link / method for image)	etemplate	zh	返回内容的索引/名称(模板名称，图片的链接/方法)
+indexed	etemplate	zh	已索引
+indexoptions	etemplate	zh	索引选项
+insert a column before	etemplate	zh	在前面插入一列
+insert a column behind	etemplate	zh	在后面插入一列
+insert a row above	etemplate	zh	在上方插入一行
+insert a row below	etemplate	zh	在下方插入一行
+insert a widget before	etemplate	zh	在前面插入一个容器
+insert a widget behind	etemplate	zh	在后面插入一个容器
+insert new column behind this one	etemplate	zh	在这一列之后插入新列
+insert new column in front of all	etemplate	zh	在最前面插入新列
+insert new row after this one	etemplate	zh	在这一行之后插入新行
+insert new row in front of first line	etemplate	zh	在第一行之前插入新行
+integer	etemplate	zh	整数
+key	etemplate	zh	键值
+label	etemplate	zh	标签
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	zh	标签:[bold][italic] 文本:[len][,max] 编号:[min][,[max][,len]] 文本区:[rows][,cols] 复选按钮:value 水平线:[width] 模板:[IndexInContent] 选择:[multiselect] 日期:[values: eg. 'Y-m-d']
+lang	etemplate	zh	语言
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	zh	从属语言模板的语言-缩写(例如：'en'表示英文)("会读取您的语言用户配置文件或默认值，us'默认'将读取默认模板")
+last	etemplate	zh	最后
+left	etemplate	zh	左
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	zh	字元长度，精确数字：2,4,8 和浮点数：4,8
+link	etemplate	zh	链接
+linkapps	etemplate	zh	链接应用程序
+linkentry	etemplate	zh	链接条目
+linklist	etemplate	zh	链接列表
+linkstring	etemplate	zh	链接字串
+linkto	etemplate	zh	链接到
+load this template into the editor	etemplate	zh	载入该模板到编辑器中
+middle	etemplate	zh	中间
+minute	etemplate	zh	分
+minutes	etemplate	zh	分
+month	etemplate	zh	月
+multicolumn indices	etemplate	zh	多列索引
+name	etemplate	zh	名称
+name of other table where column is a key from	etemplate	zh	其他表名哪一列是来自键值
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	zh	模板名称(例如：verdilak)：'' = 默认(将读取模板用户配置文件，'默认'us 来读取默认模板)
+name of table to add	etemplate	zh	要添加的数据表名称
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	zh	模板名称，应在表单 application.function[.subTemplate]中
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	zh	在表格中必须是唯一的且不是SQL的保留字，最好加上两个英文与一个底线当作前置字来表示应用程序
+new search	etemplate	zh	新建搜索
+new table created	etemplate	zh	新表已创建
+newer version '%1' exists !!!	etemplate	zh	有新的版本 '%1'！
+nextmatch	etemplate	zh	下一个匹配
+nextmatch accountfilter	etemplate	zh	下一个匹配的账户规则
+nextmatch custom filterheader	etemplate	zh	下一个匹配的自定义过滤头
+nextmatch filterheader	etemplate	zh	下一个匹配过滤头
+nextmatch header	etemplate	zh	下一个匹配头
+nextmatch sortheader	etemplate	zh	下一个匹配分类头
+no column to swap with !!!	etemplate	zh	没有与之交换的列！
+no file	etemplate	zh	无文件
+no filename given or selected via browse...	etemplate	zh	没有指定文件名或是通过浏览器选择的...
+no row to swap with !!!	etemplate	zh	没有与之交换的行！
+not null	etemplate	zh	非空
+nothing	etemplate	zh	无
+nothing found - try again !!!	etemplate	zh	没有找到 - 请再试！
+nothing in clipboard to paste !!!	etemplate	zh	无法从剪贴板粘贴！
+nothing matched search criteria !!!	etemplate	zh	没有与搜索条件相匹配的！
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	zh	字段/单元列数应为跨距或'所有'的其余列，CSS类名(对于TD标签)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	zh	V/HBox 中 rows/cols 数目、Cellpadding, Cellspacing
+of	etemplate	zh	的
+onchange	etemplate	zh	当改动时
+onclick	etemplate	zh	当点击时
+only an other version found !!!	etemplate	zh	只有找到一个其他版本！
+open the online help.	etemplate	zh	开启在线帮助
+operator	etemplate	zh	操作符
+optional note about the link	etemplate	zh	可选的关于链接的注释
+options	etemplate	zh	选项
+order to navigating by tab key through the form	etemplate	zh	使用跳位键实现在表单中的导航
+overflow	etemplate	zh	超过
+padding	etemplate	zh	文框距离
+parent is a '%1' !!!	etemplate	zh	上一层是一个 '%1' ！
+paste	etemplate	zh	贴上
+path	etemplate	zh	路径
+please enter table-name first !!!	etemplate	zh	请先输入表格名称！
+pm	etemplate	zh	下午
+popup	etemplate	zh	弹出窗口
+precision	etemplate	zh	精度
+primary key	etemplate	zh	主键
+primary key for the table, gets automaticaly indexed	etemplate	zh	表的主键，自动获取索引
+radiobutton	etemplate	zh	单选按钮
+read	etemplate	zh	读取
+read a list of entries.	etemplate	zh	读取条目列表。
+read a single entry by passing the id and fieldlist.	etemplate	zh	通过ID和字段列表读取一单项条目。
+read etemplate from database (for the keys above)	etemplate	zh	从数据库读取模板 (通过以上键值)
+readonly	etemplate	zh	只读
+remove row (can not be undone!!!)	etemplate	zh	移除行 (无法还原！)
+remove this link (not the entry itself)	etemplate	zh	移除此链接 (不是条目本身)
+returns savely, without deleting	etemplate	zh	返回，未删除
+right	etemplate	zh	正确
+row...	etemplate	zh	列...
+save selected columns as default preference for all users.	etemplate	zh	保存所选列作为所有用户默认首选。
+save the changes made and close the window	etemplate	zh	保存所作更改并且关闭窗口
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	zh	在上面的键值(name,...)之下保存模板，把它们改为另存将
+saves changes to tables_current.inc.php	etemplate	zh	保存到 tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	zh	使用给定的版本号保存模板并关闭窗口
+scale	etemplate	zh	比例
+scale for float	etemplate	zh	小数点位数
+search	etemplate	zh	搜索
+select a category	etemplate	zh	选择分类
+select a primary contact, to show in the list	etemplate	zh	选择主要联系人在列表中显示
+select access	etemplate	zh	选择访问
+select account	etemplate	zh	选择账户
+select an app first !!!	etemplate	zh	选择一个应用程序！
+select an app to search in	etemplate	zh	选择要搜索的应用程序
+select an application	etemplate	zh	选择一个应用程序
+select an application, (*) = uninstalled	etemplate	zh	应用程序，(*)  = 未安装的
+select an entry to link with	etemplate	zh	选择要链接的条目
+select an table of the application	etemplate	zh	选择一个应用程序的数据表
+select application	etemplate	zh	选择应用程序
+select application to search	etemplate	zh	选择要搜索的应用程序
+select category	etemplate	zh	选择分类
+select columns	etemplate	zh	选择列
+select country	etemplate	zh	选择国家
+select day	etemplate	zh	选择日
+select day of week	etemplate	zh	选择一周的星期几
+select entry	etemplate	zh	选择条目
+select hour	etemplate	zh	选择小时
+select if content of field should not be translated (label gets always translated)	etemplate	zh	如果字段内容不应被翻译(标签总是被翻译)时选择
+select language	etemplate	zh	选择语言
+select month	etemplate	zh	选择月份
+select number	etemplate	zh	选择数字
+select one ...	etemplate	zh	选择一个...
+select percentage	etemplate	zh	选择比率
+select priority	etemplate	zh	选择优先权
+select state	etemplate	zh	选择状态
+select the columns to display in the list	etemplate	zh	在列表中选择要显示的列
+select the indexed columns in their desired order	etemplate	zh	在希望的排序中选择索引列
+select this etemplate to delete it	etemplate	zh	选择删除这个模板
+select which accounts to show	etemplate	zh	选择要显示的帐户
+select which values to show	etemplate	zh	选择要显示的数值
+select year	etemplate	zh	选择年
+selectbox	etemplate	zh	下拉选单
+sets today as date	etemplate	zh	设置为当前日期
+should the form be submitted or any custom javascript be executed	etemplate	zh	将表单提交或是执行任何自定义 javascript
+show	etemplate	zh	显示
+show (no save)	etemplate	zh	显示 (不保存)
+show values	etemplate	zh	显示数值
+showing	etemplate	zh	显示
+shows / allows you to enter values into the etemplate for testing	etemplate	zh	显示/允许您输入用于测试的数值到模板中
+shows/displays etemplate for testing, does not save it before	etemplate	zh	为测试显示/展示模板，在之前不保存
+spacing	etemplate	zh	间隔
+span	etemplate	zh	Span
+span, class	etemplate	zh	Span, Class
+stack	etemplate	zh	Stack
+start a new search, cancel this link	etemplate	zh	取消此链接，开始新的搜索
+start new search for the above pattern	etemplate	zh	用以上规则开始新的搜索
+submit form	etemplate	zh	提交表单
+submitbutton	etemplate	zh	提交按钮
+swap	etemplate	zh	切换
+swap widget with next one	etemplate	zh	切换到下一个容器
+swap with next column	etemplate	zh	切换到下一个列
+swap with next row	etemplate	zh	切换到下一个行
+switch to a parent widget	etemplate	zh	切换到父器件
+switch to an other widgets of that container	etemplate	zh	与其他容器切换
+tabindex	etemplate	zh	跳位键索引
+table unchanged, no write necessary !!!	etemplate	zh	表没有改动，没必要保存！
+tablename	etemplate	zh	数据表名称
+tabs	etemplate	zh	跳位
+template	etemplate	zh	模板
+template deleted	etemplate	zh	模板已删除
+template saved	etemplate	zh	模板已保存
+text	etemplate	zh	文字
+textarea	etemplate	zh	文字区
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	zh	如果输入字段为空且没有焦点(模煳)，这些文本得以显示
+time	etemplate	zh	时间
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	zh	禁用：[! = not]<value>[=<check>]，例如：'!@data' 如果数据内容为空则禁用
+to start the db-tools	etemplate	zh	开始数据库工具
+to start the etemplate editor	etemplate	zh	开始模板编辑器
+to start the search	etemplate	zh	开始搜索
+today	etemplate	zh	今天
+top	etemplate	zh	顶部
+tree	etemplate	zh	树
+type	etemplate	zh	类型
+type of the column	etemplate	zh	列的类型
+type of the field (select label if field should be empty)	etemplate	zh	字段类型 (如果字段为空则选择标签)
+unique	etemplate	zh	唯一的
+unlink	etemplate	zh	取消链接
+update a single entry by passing the fields.	etemplate	zh	通过字段更新一个单一条目
+update from version '%s' to	etemplate	zh	从版本 '%s'更新到
+upload	etemplate	zh	上传
+valign	etemplate	zh	垂直对齐
+value	etemplate	zh	数值
+value has to be at least '%1' !!!	etemplate	zh	数值最少必须是 '%1'！
+value has to be at maximum '%1' !!!	etemplate	zh	数值最大是 '%1' ！
+vbox	etemplate	zh	VBox
+version	etemplate	zh	版本
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	zh	版本号格式应该是：major.minor.revision.number (例如：0.9.13.001 所有数字用0来填空)
+vertical alignment of row	etemplate	zh	行的垂直对齐
+view this etemplate	etemplate	zh	查看这个模板
+view this linked entry in its application	etemplate	zh	在应用程序中查看这个链接
+weekend	etemplate	zh	周末
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	zh	发生内容超出：显示(默认)，隐藏，卷动，自动(由浏览器决定)
+widget copied into clipboard	etemplate	zh	容器复制到剪贴簿
+width	etemplate	zh	宽度
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	zh	列宽(百分比或是像素)，禁用列：[! = not]<value>[=<check>]例如：'!@data' 如果数据内容为空就禁用
+width of column (in % or pixel)	etemplate	zh	列的宽度（百分比或像素）
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	zh	用于table-tag和(可选)div的百分比或像素表格宽度
+width, disabled	etemplate	zh	宽度，禁用
+working days	etemplate	zh	工作日
+write <app>/setup/tables_current.inc.php	etemplate	zh	写入<app>/setup/tables_current.inc.php
+write langfile	etemplate	zh	写语言文件
+write tables	etemplate	zh	写入表格
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	zh	在应用程序的安装目录写入'etemplates.inc.php'文件(对指定的应用程序)
+xml-file to import	etemplate	zh	要导入的 XML-文件
+xslt template	etemplate	zh	XSLT 模板
+year	etemplate	zh	年

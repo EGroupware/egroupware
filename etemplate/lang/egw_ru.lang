@@ -1,0 +1,414 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	ru	%1 (%2 новых) Сообщений записано для Приложения '%3' и Языков '%4'
+%1 etemplates deleted	etemplate	ru	%1 e-Шаблонов  удалено
+%1 etemplates for application '%2' dumped to '%3'	etemplate	ru	%1 е-Шаблонов приложения '%2' сброшено в '%3'
+%1 etemplates found	etemplate	ru	%1 e-Шаблонов найдено
+%1 matches on search criteria	etemplate	ru	%1 совпадений с условием поиска
+%1 more...	etemplate	ru	еще %1 ...
+%1 new etemplates imported for application '%2'	etemplate	ru	%1 новых е-Шаблонов импортировано для Приложения '%2'
+%s disabled	etemplate	ru	%s отключен
+%s needed	etemplate	ru	нужен %s
+%s notranslation	etemplate	ru	%s Без Перевода
+%s onchange	etemplate	ru	%s Изменяется
+%s readonly	etemplate	ru	%s только для чтения
+'%1' has an invalid format !!!	etemplate	ru	у '%1' неверный формат !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	ru	'%1' нет файла php в корневом каталоге eGW (%2)!
+'%1' is not a valid date !!!	etemplate	ru	'%1' - неправильная дата !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	ru	'%1' неправильное число с плавающей запятой !!!
+'%1' is not a valid integer !!!	etemplate	ru	'%1' неверное целое !!!
+'%1' is not allowed ('%2')!	etemplate	ru	'%1' НЕ допускается ('%2')!
+a pattern to be searched for	etemplate	ru	шаблон для поиска
+accesskey	etemplate	ru	Ключ доступа
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	ru	Ключи доступа могут быть также заданы при помощи "&" в названии (напр &Name)
+account contactdata	etemplate	ru	Данные учетной запися для связи
+add a new column (after the existing ones)	etemplate	ru	Добавить новую колонку (сразу после существующих)
+add a new entry of the selected application	etemplate	ru	Добавить новую запись выбранного приложения
+add a new multi-column index	etemplate	ru	Добавить новый многоколоночный индекс
+add column	etemplate	ru	Добавить Колонку
+add index	etemplate	ru	Добавить Индекс
+add new	etemplate	ru	Добавить Новый
+add table	etemplate	ru	Добавить Таблицу
+advanced search	etemplate	ru	Расширенный поиск
+align	etemplate	ru	Выравнивание
+alignment of label and input-field in table-cell	etemplate	ru	Выравнивание меток и полей ввода в ячейке таблицы
+alignment of the v/hbox containing table-cell	etemplate	ru	Выравнивание Верт/Гориз (Box)  содержащего ячеку таблицы
+all days	etemplate	ru	все дни
+all operations save the template!	etemplate	ru	все действия сохраняют шаблон!
+am	etemplate	ru	утр?(am)
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	ru	проиндексированные колонки уеличивают скорость обработки запросов использующих колонки (при этом затрачивается дополнительное дисковое пространство)
+application	etemplate	ru	Приложение
+application name needed to write a langfile or dump the etemplates !!!	etemplate	ru	Имя приложения необходмо для записи языкового файла или е-Шаблона
+applies the changes made	etemplate	ru	применяет сделанные изменения
+applies the changes to the given version of the template	etemplate	ru	применяет изменения к выбранной версии шаблона
+as default	etemplate	ru	по-умолчанию
+attach	etemplate	ru	Вложить
+attach file	etemplate	ru	вложить файл
+baseline	etemplate	ru	Базовая линия
+blurtext	etemplate	ru	расплывшийсяТекст
+border	etemplate	ru	Кайма
+border-line-thickness for the table-tag	etemplate	ru	Толщина-линии-каймы для тега Таблица
+bottom	etemplate	ru	Низ
+box	etemplate	ru	Рамка
+box...	etemplate	ru	Рамка...
+can not have special sql-value null	etemplate	ru	не может содержать значение NULL языка SQL
+cancel	etemplate	ru	Прервать
+cant delete a single widget from a grid !!!	etemplate	ru	не могу удалить отдельный виджет с сетки !!!
+cant delete the only column of a grid !!!	etemplate	ru	не могу удалять одну лишь колонку в сетке !!!
+cant delete the only row in a grid !!!	etemplate	ru	не могу удалять одну лишь строку в сетке !!!
+category	etemplate	ru	Категория
+category tree	etemplate	ru	Дерево категории
+cellpadding for the table-tag	etemplate	ru	Набивка ячеек для тега Таблица
+cells	etemplate	ru	Ячейки
+cellspacing for the table-tag	etemplate	ru	Интервал между ячейками для тега Таблица
+center	etemplate	ru	Центрировать
+changed	etemplate	ru	Изменилось
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	ru	убедитесь, что содержимое должно только отображаться, но не меняться (содержание не будет отослано назад!)
+check if field has to be filled by user	etemplate	ru	отметьте если поле будет заполняться пользователем
+checkbox	etemplate	ru	Флажек
+class	etemplate	ru	Класс
+class, valign	etemplate	ru	класс, Выравнивание по вертикали
+click here to attach the file	etemplate	ru	щелкните здесь для вложения файла
+click here to create the link	etemplate	ru	щелкните здесь для создания ссылки
+click here to start the search	etemplate	ru	Щелкните здесь для запуска поиска
+click here to upload the file	etemplate	ru	Щелкните здесь для публикации файла
+click to order after that criteria	etemplate	ru	щелкните для упорядовачивания по критерию
+clickable path	etemplate	ru	кликабельный путь
+closes the window without saving the changes	etemplate	ru	закрывает окно без сохраненя изменений
+column...	etemplate	ru	Столбец...
+columnname	etemplate	ru	ИмяСтолбца
+comment	etemplate	ru	Комментарий
+confirm	etemplate	ru	подтвердить
+confirmation message or custom javascript (returning true or false)	etemplate	ru	подтверждающее сообщение или свой скрипт Java (возвращающий true или falce)
+confirmation necesary or custom java-script	etemplate	ru	необходимо подтверждение или свой java-скрипт
+contact	etemplate	ru	Контакт
+contact field to show	etemplate	ru	Поле Контакт для показа
+contact fields	etemplate	ru	Поля Контакта
+contains	etemplate	ru	содержит
+create a new table for the application	etemplate	ru	Создать новую таблицу для приложения
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	ru	создает английский ('en') файл перевода из меток и текстов помощи (для приложения по Имени)
+css class for the table-tag	etemplate	ru	Класс CSS для тега Таблица
+css properties	etemplate	ru	свойства CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	ru	название класса CSS для этой строки, предопределенные: 'nmh' = заголовок СледующегоСоответствия, 'nmr' = перемежающаяся СледСтр строка, СледСтр строки 'nmr0'+'nmr1'
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	ru	название класса CSS для этой строки, предопределенные: 'th' = заголовок, 'row' = перемежающаяся строка, строки 'row_off'+'row_on'
+css-styles	etemplate	ru	стили CSS
+custom	etemplate	ru	пользовательский
+custom fields	etemplate	ru	пользовательские поля
+custom javascript for onchange	etemplate	ru	пользовательский java-скрипт по onChange
+cut	etemplate	ru	Вырезать
+date+time	etemplate	ru	Дата+Время
+datum	etemplate	ru	Дата
+day	etemplate	ru	День
+days	etemplate	ru	день/дня(ей)
+db ensures that every row has a unique value in that column	etemplate	ru	БД проверяет, чтобы у каждой строки в этой колонке было уникальное значение
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	ru	Специфичные для базы данных опции индекса (разделенныя запятыми), напр. mysql(FULLTEXT) или mysql(100) для индексиремой длины колонки.
+db-tools	etemplate	ru	инструменты БД
+deck	etemplate	ru	Колода (внутренняя)
+default	etemplate	ru	По умолчанию
+delete a single entry by passing the id.	etemplate	ru	Удаление записи во введенному ID
+delete all selected etemplates, without further inquiry	etemplate	ru	удалить ВСЕ выбранные е-Шаблоны БЕЗ подтверждения (??)
+delete and cut save the template!	etemplate	ru	удалить и вырезать записывает шаблон!
+delete column	etemplate	ru	Удалить Колонку
+delete index	etemplate	ru	Удалить Индекс
+delete the spezified etemplate	etemplate	ru	Удалить указанный е-Шаблон
+delete this column	etemplate	ru	удалить эту колонку
+delete this etemplate	etemplate	ru	удалить этот е-Шаблон
+delete this file	etemplate	ru	Удалить этот файл
+delete this row	etemplate	ru	удалить эту строку
+delete whole column (can not be undone!!!)	etemplate	ru	удалить колонку целиком (отменить будет НЕЛЬЗЯ)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	ru	удаляет обозначенный выше е-Шаблон из базы данных, НЕ может быть отменено
+deletes the etemplate spez. above	etemplate	ru	удаляет е-Шаблон обозначенный выше
+deletes this column	etemplate	ru	Удапяет эту колонку
+deletes this index	etemplate	ru	Удаляет этот индекс
+discard changes	etemplate	ru	отменить изменения
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	ru	показывается впереди вводимого или когда вводимое вставлено для '%s' в метке (метка кнопки Применить или Изображение-имяфайла)
+displayed in statusline of browser if input-field gets focus	etemplate	ru	показывается в строке состояния браузера если поле ввода получает фокус
+displayed in the top line of the groupbox (legend)	etemplate	ru	показывается в верхней строке рамки группировки (надпись)
+do you want to save the changes you made in table %s?	etemplate	ru	Желаете ли вы сохранить сделанные вами изменения в таблицу %s?
+documentation	etemplate	ru	Документация
+doesn't matter	etemplate	ru	не важно
+drop a table - this can not be undone	etemplate	ru	Сброс таблицы - действие не может быть отменено
+drop table	etemplate	ru	Сброс Таблицы
+dump4setup	etemplate	ru	ДапмДляУстановки
+duration	etemplate	ru	Длительность
+edit	etemplate	ru	Редактировать
+edit embeded css styles or of the applications app.css file	etemplate	ru	редактировать встроенные стили CSS или файл app.css приложения
+edit the etemplate spez. above	etemplate	ru	редактировать е-Шаблон обозначенный выше
+edit...	etemplate	ru	Редактировать...
+editable templates - db-tools	etemplate	ru	Редактируемые Шаблоны - Инсрументы-БД(DB-Tools)
+editable templates - delete template	etemplate	ru	Редактируемые Шаблоны - Удаление Шаблона
+editable templates - editor	etemplate	ru	Редактируемые Шаблоны - Редактор
+editable templates - search	etemplate	ru	Редактируемые Шаблоны - Поиск
+editable templates - show template	etemplate	ru	Редактируемые Шаблоны - Показать Шаблон
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	ru	встроенные стили css, yапр. '.red { background: red; }' (отметьте знак '.' gеред именем класса) или '@import url(...)' (имя класса глобально для всей страницы!)
+enable javascript onchange submit	etemplate	ru	разрешить подчинение JavaScript onChange
+enter '' for an empty default, nothing mean no default	etemplate	ru	ввести '' для пустого значения по-умолчанию, ничего обозначает без значения по-умолчанию
+enter a search pattern	etemplate	ru	Введите шаблон поиска
+enter filename to upload and attach, use [browse...] to search for it	etemplate	ru	Введите имя файла для загрузки и прикрепления, используйте [Обзор] чтобы его найти
+enter the new version number here (> old_version), empty for no update-file	etemplate	ru	введите здесь новый номер версии (больше прежнего номера), не заполнять если не изменять файл
+enter the new version number here (has to be > old_version)	etemplate	ru	введите здесь новый номер версии (должен быть больше прежнего номера)
+entry saved	etemplate	ru	Запись сохранена
+error: template not found !!!	etemplate	ru	Ошибка: Шаблон не найден !!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	ru	Ошибка: веб-сервер не может записывать в '%1'!!!
+error: while saving !!!	etemplate	ru	Ошибка: во время сохранения!!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	ru	Ошибка: запись файла (нет разрешения на запись для веб-сервера)!!!
+etemplate	common	ru	е-Шаблон
+etemplate '%1' imported, use save to put it in the database	etemplate	ru	е-Шаблон '%1' импортирован, используте "Сохранить" для вода в базу данных
+etemplate '%1' written to '%2'	etemplate	ru	е-Шаблон '%1'перепсан в '%2'
+etemplate editor	etemplate	ru	Редактор е-Шаблона
+etemplate reference	etemplate	ru	Руководство по е-Шаблону
+etemplate tutorial	etemplate	ru	Обучающийкурс по е-Шаблону
+exchange this row with the one above	etemplate	ru	поменять местами это строку со строкой выше
+exchange this two columns	etemplate	ru	пеменять местами эти две колонки
+export the loaded etemplate into a xml-file	etemplate	ru	экспорт загруженного е-Шаблона в файл xml
+export xml	etemplate	ru	Экспорт XML
+extensions loaded:	etemplate	ru	Загруженные расширения:
+field	etemplate	ru	Поле
+field must not be empty !!!	etemplate	ru	Поле должно быть заполнено !!!
+file	etemplate	ru	Файл
+file contains more than one etemplate, last one is shown !!!	etemplate	ru	Файл содержит больше одного е-Шаблона, показан только последний !!!
+file writen	etemplate	ru	Файл записан
+fileupload	etemplate	ru	Публикация Файла
+first	etemplate	ru	Первый
+floating point	etemplate	ru	С плавающей запятой
+foreign key	etemplate	ru	Внешний ключ
+formatted text (html)	etemplate	ru	Форматированный текст (HTML)
+go to the first entry	etemplate	ru	перейти к первой записи
+go to the last entry	etemplate	ru	перейти к последней записи
+go to the next page of entries	etemplate	ru	перейти на следующую страницу
+go to the previous page of entries	etemplate	ru	перейти на предыдущую страницу
+grid	etemplate	ru	Решетка
+grid column attributes	etemplate	ru	Атрибуты колонки сетки
+grid row attributes	etemplate	ru	Атрибуты строки сетки
+groupbox	etemplate	ru	Рамка группы
+hbox	etemplate	ru	ГРамка
+height	etemplate	ru	Высота
+height of row (in % or pixel)	etemplate	ru	высота строки (в % или пикселях)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	ru	высота строки (в % или пикселях), запретить строку [! = нет]<значение>[=<проверка>] напр.: '!@data' запрещает строку если содержимое данных - пустое
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	ru	Высота таблицы в % или пикселях для тега Таблица и (необязательно) div
+height, disabled	etemplate	ru	Высота, Отключено
+help	etemplate	ru	Помощь
+history log	etemplate	ru	Хроники
+horizontal rule	etemplate	ru	Горизонтальная подсказка
+hour	etemplate	ru	Час
+hours	etemplate	ru	час(а,ов)
+how many entries should the list show	etemplate	ru	Сколко записей надо показывать в списке
+html	etemplate	ru	Html
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	ru	если поле запрещено - показывается пустая клетка таблицы, для (временного) удаления поля/ячейки
+image	etemplate	ru	Картинка
+import	etemplate	ru	Импортировать
+import an etemplate from a xml-file	etemplate	ru	импорт е-Шаблона из xml-файла
+import table-definitions from existing db-table	etemplate	ru	Импорт определений таблицы из существующей таблицы БД
+import xml	etemplate	ru	Импорт XML
+increment version to not overwrite the existing template	etemplate	ru	увеличте версию чтобы не перезаписывать уже существующий шаблон
+index/name of returned content (name of the template, link / method for image)	etemplate	ru	индекс/имя возвращаемого содержимого (имя Шаблона, Ссылки / Метода для Изображения)
+indexed	etemplate	ru	Проиндексировано
+indexoptions	etemplate	ru	Параметры идексирования
+insert a column before	etemplate	ru	вставить колонку перед
+insert a column behind	etemplate	ru	вставить колонку после
+insert a row above	etemplate	ru	вставить строку выше
+insert a row below	etemplate	ru	вставить строку ниже
+insert a widget before	etemplate	ru	вставить виджет перед
+insert a widget behind	etemplate	ru	вставить виджет после
+insert new column behind this one	etemplate	ru	вставить новую колонку сзади этой
+insert new column in front of all	etemplate	ru	вставить новую колонку впереди всех
+insert new row after this one	etemplate	ru	вставить новую строку после этой
+insert new row in front of first line	etemplate	ru	вставить новую строку перед  первой Строкой
+integer	etemplate	ru	Целое
+key	etemplate	ru	Ключ
+label	etemplate	ru	Метка
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	ru	Метка:[жирн][наклонный] Текст:[длина][,макс] Число:[мин][,[макс][,длина]] Т.область:[строк][,столбцов] Радиокн.:значение Г.Линейка:[ширина] Шабл.:[ИндексВСодерж] Выбор:[множественный] Дата:[значения: напр. 'Г-м-д']
+lang	etemplate	ru	Язык
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	ru	язык-кратко (напр. 'en' для английского) для шаблонов, зависящих от языка ('' читает ваш препочтительный язык или по-умолчанию, использовать 'по-умолчанию' чтобы прочитать шаблон по-умолчанию
+last	etemplate	ru	Последний
+left	etemplate	ru	Левый
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	ru	длина для char+varchar, точность целых: 2, 4, 8 и с плавающей точкой: 4, 8
+link	etemplate	ru	Ссылка
+linkapps	etemplate	ru	СсылкаНаПриложение
+linkentry	etemplate	ru	СсылкаНаЗапись
+linklist	etemplate	ru	СсылкаНаСписок
+linkstring	etemplate	ru	СсылкаНаСтроку
+linkto	etemplate	ru	СвязатьС
+load this template into the editor	etemplate	ru	загрузить этот шаблон в редактор
+message ...	etemplate	ru	Сообщение ...
+middle	etemplate	ru	Середина
+minute	etemplate	ru	Минута
+minutes	etemplate	ru	Минут(а,ы)
+month	etemplate	ru	Месяц
+more than 1 match for '%1'	etemplate	ru	Более чем 1 совпадает с '%1'
+multicolumn indices	etemplate	ru	Многоколоночные Индексы
+name	etemplate	ru	Название
+name of other table where column is a key from	etemplate	ru	имя другой таблицы, из которой колонка есть ключевой
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	ru	имя набора шаблонов phpgw (напр. verdilak): '' = по-умолчанию (будет читать предпочтительный шаблон, используйте 'по-умолчанию' чтобы прочитать шаблон по-умолчанию'')
+name of table to add	etemplate	ru	Название таблицы для добавления
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	ru	имя еШаблона, должно быть в форме приложение.функция[.подШаблон]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	ru	должно быть уникальным в пределах таблицы и не быть зарезервированным словом из SQL, лучше всего - давайте всем префикс из общепринятого 2-цифрового сокращения для приложения, напр. 'et_'
+new search	common	ru	Новый поиск
+new table created	etemplate	ru	Новая таблица создана
+newer version '%1' exists !!!	etemplate	ru	существует более новая версия '%1' !!!
+nextmatch	etemplate	ru	Следующее совпадение
+nextmatch accountfilter	etemplate	ru	Фильтр учетной записи Следующего совпадения
+nextmatch custom filterheader	etemplate	ru	Пользовательский Заголовок фильтра Следующего совпадения
+nextmatch filterheader	etemplate	ru	Заголовок фильтра Следующего совпадения
+nextmatch header	etemplate	ru	Заголовок Следующего совпадения
+nextmatch sortheader	etemplate	ru	Заголовок сортировки Следующего совпадения
+no column to swap with !!!	etemplate	ru	нет колонки для обмена !!!
+no file	etemplate	ru	нет файла
+no filename given or selected via browse...	etemplate	ru	файл через "Открыть" не получен либо не выбран ...
+no matches found	etemplate	ru	Не найдено совпадений
+no row to swap with !!!	etemplate	ru	нет строки для обмена !!!
+not null	etemplate	ru	НЕ ПУСТО
+nothing	etemplate	ru	ничего
+nothing found - try again !!!	etemplate	ru	Ничего не найдено - попробуйте еще раз !!!
+nothing in clipboard to paste !!!	etemplate	ru	в буфере нет ничего для вставки
+nothing matched search criteria !!!	etemplate	ru	Нет совпадений с критерием поиска
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	ru	количество столбцов, которые должно объединять поле/ячейка или 'все' для оставшихся столбцов, имя класса CSS (для тега TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	ru	количество строк/столбцов в В/ГРамке, Набивка ячеек, Разгонка ячеек
+of	etemplate	ru	из
+onchange	etemplate	ru	приИзменении
+onclick	etemplate	ru	приЩелчке
+only an other version found !!!	etemplate	ru	найдена только другая Версия !!!
+open the online help.	etemplate	ru	Открыть онлайн справку
+operator	etemplate	ru	Оператор
+optional note about the link	etemplate	ru	необязательная заметка о Ссылке
+options	etemplate	ru	Настройки
+order to navigating by tab key through the form	etemplate	ru	Порядок навигации по форме по клавише табуляции
+overflow	etemplate	ru	Переполнение
+padding	etemplate	ru	Набивка
+parent is a '%1' !!!	etemplate	ru	родитель - '%1' !!!
+paste	etemplate	ru	Вставить
+path	etemplate	ru	Путь
+please enter table-name first !!!	etemplate	ru	Пожалйста, сначала введите имя таблицы !!!
+pm	etemplate	ru	вечер
+popup	etemplate	ru	Всплывающее
+precision	etemplate	ru	Точность
+primary key	etemplate	ru	Первичный Ключ
+primary key for the table, gets automaticaly indexed	etemplate	ru	Первичный ключ для таблицы, автоматически становится индексированным
+radiobutton	etemplate	ru	Радиокнопка
+read	etemplate	ru	Читать
+read a list of entries.	etemplate	ru	Читать список записей:
+read a single entry by passing the id and fieldlist.	etemplate	ru	Прочитать одну запись в соответствии с идентификатором и списком полей
+read etemplate from database (for the keys above)	etemplate	ru	прочитать еШаблон из базы данных (для вышеуказанных ключей)
+readonly	etemplate	ru	только для чтения
+remove row (can not be undone!!!)	etemplate	ru	убрать Строку (НЕ может быть отменено!!!)
+remove this link (not the entry itself)	etemplate	ru	Убрать эту ссылку (не запись по ней)
+required	etemplate	ru	Необходимо
+returns savely, without deleting	etemplate	ru	возвращает безопасно, БЕЗ удаление
+right	etemplate	ru	Вправо
+row...	etemplate	ru	Строка...
+save selected columns as default preference for all users.	etemplate	ru	Записать выбранные столбцы как настройки по-умолчанию для всех пользователей.
+save the changes made and close the window	etemplate	ru	Сохранить изменения и закрыть окно
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	ru	записать еШаблон под вышеуказанными ключами (имя, ...), изменить их для СохранитьКак
+saves changes to tables_current.inc.php	etemplate	ru	сохраняет изменения в tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	ru	записывает шаблон с данной версией и закрывает окно
+scale	etemplate	ru	Масштаб
+scale for float	etemplate	ru	масштаб для плавающего размера
+search	etemplate	ru	Поиск
+select a category	etemplate	ru	выбор Категории
+select a primary contact, to show in the list	etemplate	ru	Выбор первого контакта для показа в списке
+select access	etemplate	ru	Выбор Доступа
+select account	etemplate	ru	Выбор Аккаунта
+select an app first !!!	etemplate	ru	Сначала выберите прил.!!!
+select an app to search in	etemplate	ru	Выбор Прил. для поиска в (?)
+select an application	etemplate	ru	Выбор приложения
+select an application, (*) = uninstalled	etemplate	ru	Выбор приложения, (*) = уделены
+select an entry to link with	etemplate	ru	Выбор записи для формирования связи с ней
+select an table of the application	etemplate	ru	Выбор таблицы приложения
+select application	etemplate	ru	Выбор Приложения
+select application to search	etemplate	ru	Выбор приложения для поиска
+select category	etemplate	ru	Выбор Категории
+select columns	etemplate	ru	Выбор столбца
+select country	etemplate	ru	Выбор Страны
+select day	etemplate	ru	Выбор Дня
+select day of week	etemplate	ru	выбор дня недели
+select entry	etemplate	ru	Выбор записи
+select hour	etemplate	ru	Выбор часа
+select if content of field should not be translated (label gets always translated)	etemplate	ru	выбрать если содержимое поля не может быть переведено (метки всегда будут переводимыми)
+select language	etemplate	ru	Выбор Языка
+select month	etemplate	ru	Выбор Месяца
+select number	etemplate	ru	Выбор Номара
+select one ...	etemplate	ru	Выберите один (?)...
+select percentage	etemplate	ru	Выбрать процент
+select priority	etemplate	ru	Выбрать Приоритет
+select state	etemplate	ru	Выбрать Состояние
+select the columns to display in the list	etemplate	ru	Выбор колонок для показа в списке
+select the indexed columns in their desired order	etemplate	ru	Выберите проиндексированную колонку в ее предпочтительном порядке
+select this etemplate to delete it	etemplate	ru	выберите этот е-Шаблон для удаления
+select which accounts to show	etemplate	ru	выбрать какие аккаунты показывать
+select which values to show	etemplate	ru	выбрать значения для показа
+select year	etemplate	ru	Выбрать Год
+selectbox	etemplate	ru	Рамка выбора
+sets today as date	etemplate	ru	Установить сегодняшний день как дату
+should the form be submitted or any custom javascript be executed	etemplate	ru	Должна ли форма быть передана или должен выполняться любой пользовательский javascript
+show	etemplate	ru	Показать
+show (no save)	etemplate	ru	Показать (без сохранения)
+show values	etemplate	ru	Показать Значения
+showing	etemplate	ru	показывем
+shows / allows you to enter values into the etemplate for testing	etemplate	ru	показывает / разрешает вам вводить значения в еШаблон для тестирования
+shows/displays etemplate for testing, does not save it before	etemplate	ru	показывает/разрешает еШаблон для тестирования, НЕ записывает его перед этим
+spacing	etemplate	ru	Интервал
+span	etemplate	ru	Интервал
+span, class	etemplate	ru	Интервал, Класс
+stack	etemplate	ru	Стек
+start a new search, cancel this link	etemplate	ru	Запуск нового поиска, отказ от этой ссылки
+start new search for the above pattern	etemplate	ru	Запуск нового поиска  указанного выше примера
+submit form	etemplate	ru	принять форму
+submitbutton	etemplate	ru	Кнопа "Принять"
+swap	etemplate	ru	обменять
+swap widget with next one	etemplate	ru	обменять виджет со следующим
+swap with next column	etemplate	ru	обменять со следующей колонкой
+swap with next row	etemplate	ru	обменять со следующей строкой
+switch to a parent widget	etemplate	ru	переключиться на родительский виджет
+switch to an other widgets of that container	etemplate	ru	переключиться на другой виджет в контейнере
+tabindex	etemplate	ru	Индекс табуляции
+table unchanged, no write necessary !!!	etemplate	ru	Таблица не изменена, нет необходимости в записи !!!
+tablename	etemplate	ru	ИмяТаблицы
+tabs	etemplate	ru	Закладки
+template	etemplate	ru	Шаблон
+template deleted	etemplate	ru	Шаблон удален
+template saved	etemplate	ru	Шаблон сохранен
+text	etemplate	ru	Текст
+textarea	etemplate	ru	область текста
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	ru	этот текст появляется, если поле ввода пусто и не в фокусе (смазано)
+time	etemplate	ru	Время
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	ru	чтобы запретить: [! = нет]<значение>[=<проверка>] напр: '!@data' запрещает, если содержание данных - пусто
+to start the db-tools	etemplate	ru	для запуска инструментов БД
+to start the etemplate editor	etemplate	ru	для запуска редактора е-Шаблона
+to start the search	etemplate	ru	для запуска поиска
+today	etemplate	ru	Сегодня
+top	etemplate	ru	Верх
+tree	etemplate	ru	Дерево
+type	etemplate	ru	Тип
+type of the column	etemplate	ru	тип колонки
+type of the field (select label if field should be empty)	etemplate	ru	тип поля (выбрать Метку, если поле должно быть пустым
+unique	etemplate	ru	Уникальный
+unlink	etemplate	ru	Разорвать связь (убрать ссылку?)
+update a single entry by passing the fields.	etemplate	ru	Изменение отдельной записи передачей полей.
+update from version '%s' to	etemplate	ru	Изменение с Версии '%s' на
+upload	etemplate	ru	Опубликовать
+valign	etemplate	ru	вВыравнивание
+value	etemplate	ru	Значение
+value has to be at least '%1' !!!	etemplate	ru	Значение должно быть минимум '%1' !!!
+value has to be at maximum '%1' !!!	etemplate	ru	Значение должно быть максимум '%1' !!!
+vbox	etemplate	ru	ВРамка
+version	etemplate	ru	Версия
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	ru	номер версии, должно быть в форме: старший.младший.ревизия.номер (напр. 0.9.13.001 все цифры дополняются слева нулями)
+vertical alignment of row	etemplate	ru	вертикальное выравнивание строки
+view this etemplate	etemplate	ru	посмотреть этот е-Шаблон
+view this linked entry in its application	etemplate	ru	просмотреть запись в связанном с ней приложении
+weekend	etemplate	ru	выходной
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	ru	что происходит при переполнении содержимого: видимо (по-умолчанию), скрыто, прокрутка, авто (решается браузером)
+widget copied into clipboard	etemplate	ru	виджет скопирован в буфер
+width	etemplate	ru	Ширина
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	ru	ширина столбца (в % или пикселях), чтобы запретить столбец: [! = нет]<значение>[=<проверка>] напр: '!@data' запрещает столбец, если содержание данных - пусто
+width of column (in % or pixel)	etemplate	ru	ширина колонки (в % или пикселях)
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	ru	Ширина таблицы в % или пикселях для тега Таблица и (необязательно) div
+width, disabled	etemplate	ru	Ширина, Отключено
+working days	etemplate	ru	рабочие дни
+write <app>/setup/tables_current.inc.php	etemplate	ru	Записать <прил>/setup/tables_current.inc.php
+write langfile	etemplate	ru	Запись файла языка
+write tables	etemplate	ru	Запись Таблиц
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	ru	pfписывает файл 'etemplates.inc.php' (для приложения по Имени) в каталог setup приложения
+xml-file to import	etemplate	ru	файл xml для импорта
+xslt template	etemplate	ru	Шаблон XLST
+year	etemplate	ru	Год
+you are not allowed to export more then %1 entries!	etemplate	ru	Вам не разрешено экспортировать более чем %1 записей!
+you can respond by visiting:	etemplate	ru	Вы можете отозваться посетив:

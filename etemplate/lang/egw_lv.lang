@@ -1,0 +1,272 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	lv	%1(%2 jauns) Ziņojumi uzrakstīti aplikācijai %3 un valodām %4'
+%1 etemplates deleted	etemplate	lv	%1 eVeidnes izdzēstas
+%1 etemplates for application '%2' dumped to '%3'	etemplate	lv	%1 eVeidnes %2' aplikācijai izmestas %3'
+%1 etemplates found	etemplate	lv	atrasti %1 eVeidnes
+%1 matches on search criteria	etemplate	lv	meklēšanas kritērijiem atbilst %1 ieraksti
+%1 new etemplates imported for application '%2'	etemplate	lv	%2 Aplikācijai inmportētas %1 jauni eVeidnes
+%s disabled	etemplate	lv	%s nav atļauts
+%s needed	etemplate	lv	%s vajadzīgs
+%s notranslation	etemplate	lv	%s Nav tulkojuma
+%s onchange	etemplate	lv	%s Mainās
+%s readonly	etemplate	lv	%s tikai lasāms
+'%1' has an invalid format !!!	etemplate	lv	%1' nav derīgs formāts!!!
+'%1' is not a valid floatingpoint number !!!	etemplate	lv	%1' nav derīgs peldošā komata skaitlis!!!
+'%1' is not a valid integer !!!	etemplate	lv	%1' nav derīgs vesels skaitlis
+a pattern to be searched for	etemplate	lv	meklējamais paraugs
+add a new column (after the existing ones)	etemplate	lv	Pievienot jaunu kolonnu (aiz eksistējošām)
+add a new multi-column index	etemplate	lv	Pievienot jaunu daudzkolonnu priekšmetu rādītāju
+add column	etemplate	lv	Pievienot kolonnu
+add index	etemplate	lv	Pievienot indeksu
+add table	etemplate	lv	PIevienot tabulu
+align	etemplate	lv	Centrēt
+alignment of label and input-field in table-cell	etemplate	lv	iezīmes un ievades lauka novietojums tabulas kolonnā
+alignment of the v/hbox containing table-cell	etemplate	lv	V/Hbox satura novietojums tabulas kolonnā
+am	etemplate	lv	noo rīta
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	lv	indeksēta kolonna paātrina pieprasījumu (izrēķina vietu diskā!!!)
+application	etemplate	lv	Programmatūra
+application name needed to write a langfile or dump the etemplates !!!	etemplate	lv	Programmatūras nosaukumam vajag uzrakstīt <i>langfile</i> vai izmest eVeidnes!!!
+attach	etemplate	lv	Pievienot
+attach file	etemplate	lv	pievienot datni
+blurtext	etemplate	lv	neskaidrs teksts
+border	etemplate	lv	Robeža
+border-line-thickness for the table-tag	etemplate	lv	tabulas taga robežlīnijas biezums
+can not have special sql-value null	etemplate	lv	nevar būt speciāls SQL- vērtība NULL
+cancel	etemplate	lv	Arcelt
+category	etemplate	lv	Kategorija
+cellpadding for the table-tag	etemplate	lv	Kolonnas paplašināšana tabulas tagam
+cells	etemplate	lv	Kolonnas
+cellspacing for the table-tag	etemplate	lv	Kolonnas atstarpe tabulas tagam
+center	etemplate	lv	Centrs
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	lv	atzīmē, ja ierakstu vajag tikai parādīt nevis mainīt (saturs atpakaļ netiek sūtīts!)
+check if field has to be filled by user	etemplate	lv	atzīmē, ja lauks jāaizpilda lietotājam
+checkbox	etemplate	lv	izvēles rūtiņa <i>Checkbox</i>
+class	etemplate	lv	Klase
+click here to attach the file	etemplate	lv	uzklišķini šeit, ja vēlies pievienot datni
+click here to create the link	etemplate	lv	uzklikšķini šeit, lai izveidotu saiti
+click here to start the search	etemplate	lv	Uzklikšķini šeit, lai sāktu meklēšanu
+click here to upload the file	etemplate	lv	Uzklikšķini šeit, lai atjauninātu datni
+click to order after that criteria	etemplate	lv	uzklikšķini, lai sakārtotu pēc tā kritērija
+columnname	etemplate	lv	Kolonnas nosaukums
+comment	etemplate	lv	Komentārs
+create a new table for the application	etemplate	lv	Izveidot jaunu tabulu aplikācijai
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	lv	izveido angļu ('en')<i>langfile</i> no iezīmes un palīgtekstiem
+css class for the table-tag	etemplate	lv	CSS klase tabulas tagam
+css-styles	etemplate	lv	CSS veidi
+date+time	etemplate	lv	Datums+Laiks
+datum	etemplate	lv	Dati
+day	etemplate	lv	Diena
+db ensures that every row has a unique value in that column	etemplate	lv	DB pārliecinās, ka katrā kolonnas rindiņā ir unikāla vērtība
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	lv	DB īpašas indeksa opcijas (atdalītas ar komatu),piem., mysql(FULLTEXT)vai mysql(100)kolonnas indeksētajam garumam
+db-tools	etemplate	lv	DB rīki
+default	etemplate	lv	Noklusējums
+delete	etemplate	lv	Izdzēst
+delete a single entry by passing the id.	etemplate	lv	Dzēst atsevišķu ierakstu apejot id
+delete all selected etemplates, without further inquiry	etemplate	lv	izdzēst visas atzīmētās eVeidnes bez atkārtotas jautāšanas
+delete column	etemplate	lv	Izdzēst kolonnu
+delete index	etemplate	lv	Izdzēst indeksu
+delete this etemplate	etemplate	lv	izdzēst šo eVeidni
+delete whole column (can not be undone!!!)	etemplate	lv	izdzēst visu kolonnu (nevar būt neizdarīts!!!)
+deletes this column	etemplate	lv	Idzēš šo kolonnu
+deletes this index	etemplate	lv	Izdzēs šo indeksu
+discard changes	etemplate	lv	atcelt izmaiņas
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	lv	parādīts pirms ievades vai arī ievade ievietota iezīmē priekš "%s" (parakstīšanās pogas iezīme vai Attēla datnes vārds)
+displayed in statusline of browser if input-field gets focus	etemplate	lv	attēlots pārlūka statusjoslā, ja ievades lauks tiek nofokusēts
+do you want to save the changes you made in table %s?	etemplate	lv	Vai vēlies saglabāt izmaiņas, ko veici %s tabulā?
+documentation	etemplate	lv	Dokumentācija
+drop a table - this can not be undone	etemplate	lv	Pabeigt tabulu- tas nevar būt neizdarīts
+drop table	etemplate	lv	Pabeigt tabulu
+dump4setup	etemplate	lv	izmest iestatīšanai
+edit	etemplate	lv	Rediģēt
+editable templates - db-tools	etemplate	lv	Rediģējamas veidnes -DB rīki
+editable templates - delete template	etemplate	lv	Rediģējamas veidnes- Izdzdēst veidni
+editable templates - editor	etemplate	lv	Rediģējamas veidnes- Redaktors
+editable templates - search	etemplate	lv	Rediģējamas veidnes- Meklēt
+editable templates - show template	etemplate	lv	rediģējamas veidnes- Rādīt veidni
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	lv	iegultie CSS stili, piem.'.red { background: red; }' (atzīmē '.' pirms klases nosaukuma) or '@import url(...)' (klases nosaukums ir vispārējs visai lapai!)
+enable javascript onchange submit	etemplate	lv	aktivizē JavaScript uz Izmaiņu apstiprināšanas
+enter '' for an empty default, nothing mean no default	etemplate	lv	ievadi " tukšam noklusējumam, tukšums nozīmē, ka nav noklusējuma
+enter a search pattern	etemplate	lv	Ievadi meklēšanas paraugu
+enter filename to upload and attach, use [browse...] to search for it	etemplate	lv	Ievadi datnes nosaukumu, ko ielādēt un pievienot, lieto [Browse...] lai to sameklētu
+enter the new version number here (> old_version), empty for no update-file	etemplate	lv	ievadi jaunās versijas numuru šeit (>vecā versija), atstāj tukšu, lai neielādētu datni
+enter the new version number here (has to be > old_version)	etemplate	lv	ievadi jaunās versijas numuru šeit(jābūt>vecā_versija)
+entry saved	etemplate	lv	Ieraksts saglabāts
+error: template not found !!!	etemplate	lv	Kļūda: Veidne nav atrasta!!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	lv	Kļūda: vebserverim nav atļaut ierakstīt "%1"!!!
+error: while saveing !!!	etemplate	lv	Kļūda saglabājot!!!
+error: writeing !!!	etemplate	lv	Kļūda rakstot!!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	lv	Kļuda rakstot failu (vebserverim nav rakstīšanas atļaujas)!!!
+etemplate	common	lv	eVeidne
+etemplate '%1' imported, use save to put it in the database	etemplate	lv	eVeidne "%1" importēta, lieto "Saglabāt", lai saglabātu to datubāzē
+etemplate '%1' written to '%2'	etemplate	lv	eVeidne"%1" paarrakstīta "%2"
+etemplate editor	etemplate	lv	eVeidnes redaktors
+etemplate referenz	etemplate	lv	eVeidnes  reference
+etemplate tutorial	etemplate	lv	eVeidnes pamācība
+exchange this row with the one above	etemplate	lv	samainīt šo rindu ar iepriekšējo
+exchange this two columns	etemplate	lv	apmainīt šīs divas kolonnas
+export the loaded etemplate into a xml-file	etemplate	lv	pārsūtīt ielādēto eVeidni xml datnē
+export xml	etemplate	lv	Pārsūtīt XML
+extensions loaded:	etemplate	lv	Ielādētie paplašinājumi:
+field must not be empty !!!	etemplate	lv	Lauks nedīkst būt tukšs
+file	etemplate	lv	Datne
+file contains more than one etemplate, last one is shown !!!	etemplate	lv	Datnē ir vairāk kā viena eVeidne, tiek parādīta pēdējā!!!
+file writen	etemplate	lv	Datne uzrakstīta
+fileupload	etemplate	lv	Datne augšupiel'
+first	etemplate	lv	Pirmā
+floating point	etemplate	lv	Peldošais punkts
+foreign key	etemplate	lv	Ārējā atslēga
+formatted text (html)	etemplate	lv	Noformatēts teksts(HTML)
+go to the first entry	etemplate	lv	iet uz pirmo ierakstu
+go to the last entry	etemplate	lv	Iet uz pēdējo ierakstu
+go to the next page of entries	etemplate	lv	iet uz ierakstu nākamo lapu
+go to the previous page of entries	etemplate	lv	iet uz ierakstu iepriekšējo lapu
+hbox	etemplate	lv	HBox
+height	etemplate	lv	Augstums
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	lv	rindas augstums(% vai pikseļos), neatļaut rindiņu:[!=not]<value>[=<check>]piem., '!@data'neatļauj rindiņu, ja ieraksts ir tukšs
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	lv	Tabulas augstums % vai pikseļos tabulas tagam un (pēc izvēles) sadalījumam
+height, disabled	etemplate	lv	Augstums,nav atļauts
+help	etemplate	lv	Palīgs
+horizontal rule	etemplate	lv	Horizontālā kārtula
+hour	etemplate	lv	Stundas
+html	etemplate	lv	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	lv	ja lauks nav atļauts,īslaicīgai lauka/kolonnas pārcelšanai tiek parādītas tabulas tukšās kolonnas.
+image	etemplate	lv	Attēls
+import	etemplate	lv	Importēt
+import an etemplate from a xml-file	etemplate	lv	importēt eveidni no xml datnes
+import table-definitions from existing db-table	etemplate	lv	Importēt tabulas nosacījumus no eksistējošas DB tabulas
+import xml	etemplate	lv	Importēt XML
+index/name of returned content (name of the template, link / method for image)	etemplate	lv	atgrieztā satura(veidnes nosaukums,saite/attēla veids) indekss/nosaukums
+indexed	etemplate	lv	Indeksēts
+indexoptions	etemplate	lv	Indeksa opcijas
+insert new column behind this one	etemplate	lv	ievieto jaunu kolonnu aiz šīs
+insert new column in front of all	etemplate	lv	pirms visām kolonnām ievieto jaunu kolonnu
+insert new row after this one	etemplate	lv	pēc šīs rindiņas ievieto jaunu rindiņu
+insert new row in front of first line	etemplate	lv	pierms pirmās līnijas ievieto jaunu rindiņu
+integer	etemplate	lv	Vesels skaitlis
+key	etemplate	lv	Atslēga
+label	etemplate	lv	Iezīme
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	lv	Iezīme:[bold][italic] Teksts:[len][,max] Skaitļi:[min][,[max][,len]] Teksta lauks:[rows][,cols] Radiopogas.:value <i>H.Rule</i>:[width] Veidnes:[IndexInContent] Atzīmē:[multiselect] Datums:[values: eg. 'Y-m-d']
+lang	etemplate	lv	Valoda
+last	etemplate	lv	Pēdējais
+left	etemplate	lv	Kreisais
+link	etemplate	lv	Saite
+linklist	etemplate	lv	Saistīt sarakstu
+linkstring	etemplate	lv	Saistīt virkni
+linkto	etemplate	lv	Saistīt ar
+load this template into the editor	etemplate	lv	ielādēt šo veidni redaktorā
+minute	etemplate	lv	Minūte
+month	etemplate	lv	Mēnesis
+multicolumn indices	etemplate	lv	Daudzkolonnu indeksi
+name	etemplate	lv	Vārds
+name of other table where column is a key from	etemplate	lv	citas kolonnas, no kurienes ir atslēga, nosaukums
+name of table to add	etemplate	lv	Tabulas , kur pievienot, nosaukums
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	lv	eVeidnes nosaukumam jābūt application.function formā [.apakšveidne]
+new search	common	lv	Jauna meklēšana
+new table created	etemplate	lv	Izveidota jauna tabula
+newer version '%1' exists !!!	etemplate	lv	eksistē "%1"jaunāka versija!!!
+no file	etemplate	lv	nav datnes
+no filename given or selected via browse...	etemplate	lv	Meklēt...nav dots vai atzīmēts datnes nosaukums
+not null	etemplate	lv	NOT NULL
+nothing found - try again !!!	etemplate	lv	Nekas netika atrasts- mēģini vēlreiz!!!
+nothing matched search criteria !!!	etemplate	lv	Nav atzīmēti meklēšanas kritēriji!!!
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	lv	rindu/kolonnu skaits V/HBox, šūnu paplašināšana, atstarpes starp šūnām
+of	etemplate	lv	no
+only an other version found !!!	etemplate	lv	atrasta tikai cita versija !!!
+optional note about the link	etemplate	lv	atzīme par saiti pēc izvēles
+options	etemplate	lv	Opcijas
+overflow	etemplate	lv	Pārpilde
+padding	etemplate	lv	Papildināšana
+please enter table-name first !!!	etemplate	lv	VIspirms norādiet tabulas nosaukumu, lūdzu !!!
+pm	etemplate	lv	pēcpusdienā
+primary key	etemplate	lv	Primārā atslēga
+primary key for the table, gets automaticaly indexed	etemplate	lv	Tabulas primārā atslēga tiek indeksēta automātiski
+radiobutton	etemplate	lv	Radiopogas
+read	etemplate	lv	Lasīt
+read a list of entries.	etemplate	lv	Las
+read a single entry by passing the id and fieldlist.	etemplate	lv	Lasīt atsevišķu ierakstu apejot id un lauku sarakstu
+read etemplate from database (for the keys above)	etemplate	lv	lasīt eVeidni no datubāzes (ar iepriekšminētajām atslēgām)
+remove row (can not be undone!!!)	etemplate	lv	izdzēst rindiņu (nevar but nepabeigts!!!)
+remove this link (not the entry itself)	etemplate	lv	Izdzēst šo saiti (ne pašu ierakstu)
+returns savely, without deleting	etemplate	lv	atgriežas saglabājot , BEZ dzēšanas
+right	etemplate	lv	Pa labi
+save	etemplate	lv	Saglabāt
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	lv	saglabā eVeidni ar minētajām atslēgām (vārds,...)Save As lai nomainītu
+saves changes to tables_current.inc.php	etemplate	lv	saglabā izmaiņas tables_current.inc.php
+scale	etemplate	lv	Skala
+scale for float	etemplate	lv	slīdēšanas skala
+search	etemplate	lv	Meklēt
+select a category	etemplate	lv	Atzīmē kategoriju
+select a primary contact, to show in the list	etemplate	lv	Atzīmē primāro kontaktu, ko rādīt sarakstā
+select access	etemplate	lv	Atzīmē pieeju
+select account	etemplate	lv	Atzīmē kontu
+select an app first !!!	etemplate	lv	Vispirms atzīmē aplikāciju!!!
+select an app to search in	etemplate	lv	Atzīmē, kurā aplikācijā meklēt
+select an application	etemplate	lv	atzīmē aolikāciju
+select an application, (*) = uninstalled	etemplate	lv	Atzīmē programmatūru, (*)=atinstalēts
+select an entry to link with	etemplate	lv	Atzīmē ierakstu, ar kuru saistīt
+select an table of the application	etemplate	lv	Atzīmē aplikāciju tabulu
+select application	etemplate	lv	Atzīmē programmatūtu
+select category	etemplate	lv	Atzīmē kategoriju
+select country	etemplate	lv	Atzīmē valsto
+select day	etemplate	lv	Atzīmē dienu
+select if content of field should not be translated (label gets always translated)	etemplate	lv	atzīmē, ja lauka saturs nav jātuko (iezīmes vienmēr tiek tulkotas)
+select month	etemplate	lv	Atzīmē mēnesi
+select number	etemplate	lv	Atzīmē skaiti
+select one ...	etemplate	lv	Atzīmē vienu...
+select percentage	etemplate	lv	Atzīmē procentus
+select priority	etemplate	lv	Atzīmē prioritāti
+select state	etemplate	lv	Atzīmē štatu
+select the indexed columns in their desired order	etemplate	lv	Atzīmē indeksētas kolonnas izvēlētajā secībā
+select this etemplate to delete it	etemplate	lv	atzīmē šo eVeidni, lai to izdzēstu
+select which values to show	etemplate	lv	atzīmē, kuras vērtības rādīt
+select year	etemplate	lv	Atzīmē gadu
+selectbox	etemplate	lv	<i>Selectbox</i>
+sets today as date	etemplate	lv	šodienu uzstāda kā datumu
+show	etemplate	lv	Rādīt
+show (no save)	etemplate	lv	Rādīt (bez saglabāšanas)
+show values	etemplate	lv	Rādīt vērtības
+showing	etemplate	lv	rādīšana
+shows / allows you to enter values into the etemplate for testing	etemplate	lv	parāda/ ļauj ievadīt vērtības eVeidnē testēšanai
+shows/displays etemplate for testing, does not save it before	etemplate	lv	parāda/ attēlo eVeidni testēšanai, pirms tam nesaglabājot
+spacing	etemplate	lv	Atstarpe
+stack	etemplate	lv	Steks
+start a new search, cancel this link	etemplate	lv	sākt jaunu meklēšanu, atcelt šo saiti
+start new search for the above pattern	etemplate	lv	sākt jaunu meklēšanu norādītajiem kritērijiem
+submitbutton	etemplate	lv	Piekrišanas poga
+table unchanged, no write necessary !!!	etemplate	lv	Neizmainīta tabula nav nepieciešams rakstīt!!!
+tablename	etemplate	lv	Tabulas nosaukums
+template	etemplate	lv	Veidne
+template deleted	etemplate	lv	Veidne izdzēsta
+template saved	etemplate	lv	Veidne saglabāta
+text	etemplate	lv	Teksts
+textarea	etemplate	lv	Teksta lauks
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	lv	šis teksts tiek attēlots, ja ievades lauks nav fokusēt(izplūdis)
+time	etemplate	lv	Laiks
+to start the db-tools	etemplate	lv	sākt DB rīkus
+to start the etemplate editor	etemplate	lv	sākt eVeidnes redaktoru
+to start the search	etemplate	lv	sākt meklēšanu
+today	etemplate	lv	šodien
+type	etemplate	lv	Tips
+type of the column	etemplate	lv	kolonnas tips
+type of the field (select label if field should be empty)	etemplate	lv	lauka tips(atzīmē iezīmi, ja laukam jābūt tukšam)
+unique	etemplate	lv	Unikāls
+unlink	etemplate	lv	Noņemt saiti
+update a single entry by passing the fields.	etemplate	lv	Atjaunini vienu ierakstu apejot laukus
+update from version '%s' to	etemplate	lv	Atjaunināt no versijas "%s"uz
+upload	etemplate	lv	Ielādēt
+value	etemplate	lv	Vērtība
+value has to be at least '%1' !!!	etemplate	lv	Vērtībai jābūt vismaz "%1"!!!
+value has to be at maximum '%1' !!!	etemplate	lv	Vērtībai jābūt ne lielākai par "%1"!!!
+vbox	etemplate	lv	VBox
+version	etemplate	lv	Versija
+view this linked entry in its application	etemplate	lv	rādīt šo saistīto ierakstu tā aplikācijā
+width	etemplate	lv	Platums
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	lv	kolonnas platums(% vai pikseļos), neatļauj kolonnu:! = not]<value>[=<check>]piem.,'!@data' neatļauj kolonnu, ja ieraksts ir tukšs
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	lv	Tabulas platums % vai pikseļos tabulas tagam un (pēc izvēles) sadalījums
+width, disabled	etemplate	lv	Platums,neatļauts
+write <app>/setup/tables_current.inc.php	etemplate	lv	Raksti <app>/setup/tables_current.inc.php
+write langfile	etemplate	lv	Ieraksti <i>Langfile</i>
+write tables	etemplate	lv	Ieraksti tabulas
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	lv	programmatūras iestatīšanas direktorijā raksta 'etemplates.inc.php'
+xml-file to import	etemplate	lv	xml datne importēšanai
+xslt template	etemplate	lv	XSLT veidne
+year	etemplate	lv	Gads

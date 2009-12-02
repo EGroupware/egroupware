@@ -1,0 +1,199 @@
+%1 etemplates deleted	etemplate	eu	%1 plantilla ezabatuta
+%1 etemplates found	etemplate	eu	%1 plantilla aurkituta
+%1 matches on search criteria	etemplate	eu	%1 parekotasun egindako bilaketa eskaeran
+%1 new etemplates imported for application '%2'	etemplate	eu	%1 plantilla berri inportatu dira '%2' aplikaziorako
+%s disabled	etemplate	eu	%s desaktibatuta
+%s needed	etemplate	eu	%s beharrezkoa da
+%s notranslation	etemplate	eu	%s itzulpenik gabe
+%s onchange	etemplate	eu	%s aldatzerakoan
+%s readonly	etemplate	eu	%s irakurtzeko soilik
+'%1' has an invalid format !!!	etemplate	eu	'%1' -ek ez dauka formato egokia!!!
+'%1' is not a valid date !!!	etemplate	eu	'%1' ez da data egokia!!!
+'%1' is not a valid integer !!!	etemplate	eu	'%1' ez da oso baliozkoa!!!
+a pattern to be searched for	etemplate	eu	bilaketarako patroia
+accesskey	etemplate	eu	Tekla azkarra
+add a new column (after the existing ones)	etemplate	eu	Zutabe berri bat gehitu (existitzen direnen atzean)
+add a new entry of the selected application	etemplate	eu	Aplikazioari sarrera berri bat gehitu
+add a new multi-column index	etemplate	eu	Zutabe anitzeko aurkibide berri bat gehitu
+add column	etemplate	eu	Zutabea gehitu
+add index	etemplate	eu	Aurkibidea gehitu
+add new	etemplate	eu	Berria gehitu
+add table	etemplate	eu	Taula gehitu
+advanced search	etemplate	eu	Bilaketa aurreratua
+align	etemplate	eu	Lerrokatzea
+all days	etemplate	eu	egunero
+all operations save the template!	etemplate	eu	operazio guztiek plantilla gordetzen dute!
+am	etemplate	eu	am
+application	etemplate	eu	Aplikazioa
+applies the changes made	etemplate	eu	Egindako aldaketak aplikatu
+attach	etemplate	eu	Erantsi
+attach file	etemplate	eu	Fitxategia erantsi
+baseline	etemplate	eu	Oinarri lerro
+blurtext	etemplate	eu	testu ez oso argia
+border	etemplate	eu	Ertza
+border-line-thickness for the table-tag	etemplate	eu	Taulako etiketaren ertzeko lerroaren handiera
+bottom	etemplate	eu	Beheraldea
+box	etemplate	eu	Kaxa
+box...	etemplate	eu	Kaxa...
+cancel	etemplate	eu	Ezeztatu
+category	etemplate	eu	Kategoria
+cells	etemplate	eu	Gelaxkak
+cellspacing for the table-tag	etemplate	eu	Gelaxkaren handiera taularen etiketarentzako
+center	etemplate	eu	Erdiratu
+check if field has to be filled by user	etemplate	eu	markatu eremua erabiltzaileak bete behar badu
+checkbox	etemplate	eu	Laukia
+class	etemplate	eu	Klase
+class, valign	etemplate	eu	klase, posizio bertikala
+click here to attach the file	etemplate	eu	egin hemen klik fitxategia eransteko
+click here to create the link	etemplate	eu	egin hemen klik lotura bat sortzeko
+click here to start the search	etemplate	eu	egin hemen klik bilaketarekin hasteko
+click here to upload the file	etemplate	eu	egin hemen klik fitxategia zerbitzarira igotzeko
+click to order after that criteria	etemplate	eu	egin klik irizpide horren ondoren ordenatzeko
+closes the window without saving the changes	etemplate	eu	leihoa itxi aldaketak gorde gabe
+column...	etemplate	eu	Zutabea...
+columnname	etemplate	eu	Zutabearen izena
+comment	etemplate	eu	Komentarioa
+confirm	etemplate	eu	berretsi
+contains	etemplate	eu	dauka
+create a new table for the application	etemplate	eu	Aplikaziorako taula berri bat sortu
+css class for the table-tag	etemplate	eu	Taularen etiketarentzako CSS klasea
+css properties	etemplate	eu	CSS propietateak
+css-styles	etemplate	eu	CSS estiloak
+custom	etemplate	eu	pertsonalizatua
+custom fields	etemplate	eu	eremu pertsonalizatuak
+custom javascript for onchange	etemplate	eu	javascript pertsonalizatua onChange-entzako
+cut	etemplate	eu	Ebaki
+date+time	etemplate	eu	Data+ordua
+datum	etemplate	eu	Data
+day	etemplate	eu	Eguna
+days	etemplate	eu	egunak
+db-tools	etemplate	eu	Datu baseko tresnak
+deck	etemplate	eu	Bizkar (barne)
+default	etemplate	eu	Lehenetsia
+delete a single entry by passing the id.	etemplate	eu	Sarrera sinple bat ezabatu id-a pasatuz.
+delete all selected etemplates, without further inquiry	etemplate	eu	Aukeratutako plantilla GUZTIAK ezabatu, galdetu GABE
+delete and cut save the template!	etemplate	eu	ezabatu eta ebakik plantilla gordetzen dute!
+delete column	etemplate	eu	Zutabea ezabatu
+delete index	etemplate	eu	Aurkibidea ezabatu
+delete the spezified etemplate	etemplate	eu	Zehaztutako plantilla ezabatu
+delete this column	etemplate	eu	zutabe hau ezabatu
+delete this etemplate	etemplate	eu	plantilla hau ezabatu
+delete this file	etemplate	eu	Fitxategi hau ezabatu
+delete this row	etemplate	eu	errenkada hau ezabatu
+delete whole column (can not be undone!!!)	etemplate	eu	Zutabe osoa ezabatu (ezin da desegin!!!)
+deletes the etemplate spez. above	etemplate	eu	Goran zehaztutako plantilla ezabatu
+deletes this column	etemplate	eu	Zutabe hau ezabatu
+deletes this index	etemplate	eu	Aurkibide hau ezabatu
+discard changes	etemplate	eu	aldaketak baztertu
+documentation	etemplate	eu	Dokumentazioa
+doesn't matter	etemplate	eu	ez du axola
+drop a table - this can not be undone	etemplate	eu	Taula ezabatu - ezin da desegin
+drop table	etemplate	eu	Taula ezabatu
+duration	etemplate	eu	Iraupena
+edit	etemplate	eu	Editatu
+edit...	etemplate	eu	Editatu...
+editable templates - db-tools	etemplate	eu	Plantilla editagarriak - Datu baseko tresnak
+editable templates - delete template	etemplate	eu	Plantilla editagarriak - Plantilla ezabatu
+editable templates - editor	etemplate	eu	Plantilla editagarriak - Editorea
+editable templates - search	etemplate	eu	Plantilla editagarriak - Bilatu
+editable templates - show template	etemplate	eu	Plantilla editagarriak - Plantilla erakutsi
+enable javascript onchange submit	etemplate	eu	bidali aktibatu JavaScript onChange
+enter a search pattern	etemplate	eu	Bilaketa patroi bat sartu
+entry saved	etemplate	eu	Sarrera gordeta
+error: template not found !!!	etemplate	eu	Errorea: ez da plantilla aurkitu
+error: webserver is not allowed to write into '%1' !!!	etemplate	eu	Errorea: zerbitzariak ezin du`'%1'-en idatzi!!!
+error: while saving !!!	etemplate	eu	Errorea gordetzerakoan
+error: writing file (no write-permission for the webserver) !!!	etemplate	eu	Errorea: web zerbitzaria ez dauka idazketa baimenik
+etemplate	common	eu	Plantilla elektronikoa
+etemplate editor	etemplate	eu	Plantilla elektronikoen editorea
+etemplate reference	etemplate	eu	Plantilla elektronikoen erreferentziak
+etemplate tutorial	etemplate	eu	Plantilla elektronikoen tutoriala
+exchange this row with the one above	etemplate	eu	Errenkada hau gainekoarekin trukatu
+exchange this two columns	etemplate	eu	Bi zutabe hauek trukatu
+export xml	etemplate	eu	XML esportatu
+extensions loaded:	etemplate	eu	Luzapenak kargatuta:
+field must not be empty !!!	etemplate	eu	Eremuak ez dira hutsik egon behar!!!
+file	etemplate	eu	Fitxategia
+file writen	etemplate	eu	Fitxategia gordeta
+fileupload	etemplate	eu	Fitxategia igo
+first	etemplate	eu	Lehenengoa
+floating point	etemplate	eu	Koma mugikorra
+foreign key	etemplate	eu	Kanpoko klabea
+formatted text (html)	etemplate	eu	Testuaren formatoa (HTML)
+go to the first entry	etemplate	eu	lehenengo sarrerara joan
+go to the last entry	etemplate	eu	azken sarrerara joan
+go to the next page of entries	etemplate	eu	sarreren hurrengo orrialdera joan
+go to the previous page of entries	etemplate	eu	sarreren aurreko orrialdera joan
+grid	etemplate	eu	Sareta
+grid column attributes	etemplate	eu	Saretako zutabearen atributoak
+grid row attributes	etemplate	eu	Saretako errenkaden atributoak
+groupbox	etemplate	eu	Taldeko koadroa
+hbox	etemplate	eu	Koadro horizontala
+height	etemplate	eu	Altuera
+height of row (in % or pixel)	etemplate	eu	errenkadaren altuera (% edo pixeletan)
+height, disabled	etemplate	eu	Altuera desaktibatuta
+help	etemplate	eu	Laguntza
+horizontal rule	etemplate	eu	Lerro horizontala
+hour	etemplate	eu	Ordua
+hours	etemplate	eu	Orduak
+how many entries should the list show	etemplate	eu	Zenbait sarrera ikusten dira zerrendan?
+html	etemplate	eu	Html
+image	etemplate	eu	Irudia
+import	etemplate	eu	Inportatu
+import an etemplate from a xml-file	etemplate	eu	Plantilla xml fitxategi batetik inportatu
+import xml	etemplate	eu	XML inportatu
+indexed	etemplate	eu	Indexatua
+indexoptions	etemplate	eu	Indexatzearen aukerak
+insert a column before	etemplate	eu	zutabe bat txertatu aurrean
+insert a column behind	etemplate	eu	zutabe bat txertatu ondoren
+insert a row above	etemplate	eu	errenkada bat txertatu gainean
+insert a row below	etemplate	eu	errenkada bat txertatu azpian
+insert a widget before	etemplate	eu	kontrol bat txertatu aurrean
+insert a widget behind	etemplate	eu	kontrol bat txertatu atzean
+insert new column behind this one	etemplate	eu	zutabe berri bat txertatu honen ondoren
+insert new column in front of all	etemplate	eu	zutabe berri bat txerta denen aurretik
+insert new row after this one	etemplate	eu	errenkada berri  bat txertatu honen ondoren
+insert new row in front of first line	etemplate	eu	errenkada berri bat txertatu lehenengoaren aurrean
+integer	etemplate	eu	Osoa
+key	etemplate	eu	Gakoa
+label	etemplate	eu	Etiketa
+lang	etemplate	eu	Hizkuntza
+last	etemplate	eu	Azkena
+left	etemplate	eu	Ezkerra
+link	etemplate	eu	Lotura
+linkentry	etemplate	eu	Lotura sarrera
+linklist	etemplate	eu	Loturen zerrenda
+linkstring	etemplate	eu	Loturen katea
+linkto	etemplate	eu	Lotu
+load this template into the editor	etemplate	eu	plantilla hau editorean kargatu
+middle	etemplate	eu	Erdia
+minute	etemplate	eu	Minutua
+minutes	etemplate	eu	Minutuak
+month	etemplate	eu	Hilabetea
+multicolumn indices	etemplate	eu	Zutabe askotako aurkibidea
+name	etemplate	eu	Izena
+name of table to add	etemplate	eu	Gehitu behar den taularen izena
+new search	common	eu	Bilaketa berria
+new table created	etemplate	eu	Taula berri bat sortu da
+newer version '%1' exists !!!	etemplate	eu	Bertsio '%1' berriagoa dago!!!
+nextmatch	etemplate	eu	Hurrengo parekatzea
+no column to swap with !!!	etemplate	eu	Ez dago zutaberik aldatzeko!!!
+no file	etemplate	eu	ez dago fitxategirik
+no row to swap with !!!	etemplate	eu	Ez dago errenkadarik aldatzeko!!!
+not null	etemplate	eu	NOT NULL
+nothing	etemplate	eu	ezerrez
+nothing found - try again !!!	etemplate	eu	Ez da ezerrez aurkitu. Saiatu berriro!!!
+nothing in clipboard to paste !!!	etemplate	eu	Ez dago ezerrez arbelean Itsasteko!!!
+nothing matched search criteria !!!	etemplate	eu	Ez da ezerrez aurkitu irizpide horrekin!!!
+onchange	etemplate	eu	onChange
+onclick	etemplate	eu	onClick
+only an other version found !!!	etemplate	eu	bakarrik bertsio bat aurkitu da
+open the online help.	etemplate	eu	On line laguntza zabaldu
+operator	etemplate	eu	Operadorea
+optional note about the link	etemplate	eu	loturari buruzko aukerazko oharra
+options	etemplate	eu	Aukerak
+overflow	etemplate	eu	Gainezkatzea
+padding	etemplate	eu	Testutik gelaxkarako distantzia
+paste	etemplate	eu	Itsatsi
+path	etemplate	eu	Ruta
+pm	etemplate	eu	pm

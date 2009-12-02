@@ -1,0 +1,381 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	fa	%1 پیام (%2 جدید) برای کاربرد '%3' و زبان '%4' نوشته شد
+%1 etemplates deleted	etemplate	fa	%1 فرم حذف شد
+%1 etemplates for application '%2' dumped to '%3'	etemplate	fa	%1 فرم برای کاربرد '%2' به '%3' نوشته شد
+%1 etemplates found	etemplate	fa	%1 فرم پیدا شد
+%1 matches on search criteria	etemplate	fa	%1 با شروط جستجو جور شد
+%1 new etemplates imported for application '%2'	etemplate	fa	%1 فرم جدید برای کاربرد %2 وارد شد
+%s disabled	etemplate	fa	%s غیر فعال شده
+%s needed	etemplate	fa	%s  لازم است
+%s notranslation	etemplate	fa	%s ترجمه نشده
+%s onchange	etemplate	fa	%s موقع تغییر
+%s readonly	etemplate	fa	%s فقط خواندنی
+'%1' has an invalid format !!!	etemplate	fa	'%1' قالب نامعتبر دارد!!!
+'%1' is not a valid date !!!	etemplate	fa	'%1' تاریخ معتبر نیست!!!
+'%1' is not a valid floatingpoint number !!!	etemplate	fa	'%1' عدد اعشاری معتبری نیست!!!
+'%1' is not a valid integer !!!	etemplate	fa	'%1' عدد صحیح معتبری نیست!!!
+a pattern to be searched for	etemplate	fa	الگوئی که باید جستجو شود
+accesskey	etemplate	fa	کلید دسترسی
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	fa	کلیدهای دسترسی همچنین می توانند با یک & در برچسب مشخص شوند(مانند: &نام)
+add a new column (after the existing ones)	etemplate	fa	افزودن ستون جدید(پس از ستونهای موجود)
+add a new entry of the selected application	etemplate	fa	افزودن ورودی جدید از کاربرد انتخاب شده
+add a new multi-column index	etemplate	fa	افزودن یک نمایه چند ستونی
+add column	etemplate	fa	افزودن ستون
+add index	etemplate	fa	افزودن نمایه
+add new	etemplate	fa	افزودن جدید
+add table	etemplate	fa	افزودن جدول
+advanced search	etemplate	fa	جستجوی پیشرفته
+align	etemplate	fa	چیدن
+alignment of label and input-field in table-cell	etemplate	fa	چیدمان برچسب و فیلد ورودی در سلول جدول
+alignment of the v/hbox containing table-cell	etemplate	fa	چیدمان افقی/عمودی جعبه شامل سلول جدول
+all days	etemplate	fa	همه روزها
+all operations save the template!	etemplate	fa	همه عملیات فرم ذخیره شد!
+am	etemplate	fa	صبح
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fa	ستون نمایه دار شده باعث می شود که پرس و جوهای آن ستون سریعتر انجام شوند(فضای دیسک را بیشتر مصرف می کند)!!!
+application	etemplate	fa	کاربرد
+application name needed to write a langfile or dump the etemplates !!!	etemplate	fa	نام کاربرد لازم است در پرونده زبان نوشته شود یا در فرمها نوشته شود!!!
+applies the changes made	etemplate	fa	تغییرات انجام شده را اعمال میکند
+applies the changes to the given version of the template	etemplate	fa	تغییرات را به نسخه داده شده از فرم اعمال میکند
+attach	etemplate	fa	پیوست
+attach file	etemplate	fa	پیوست پرونده
+baseline	etemplate	fa	خط پایه
+blurtext	etemplate	fa	متن بلوری
+border	etemplate	fa	کادر
+border-line-thickness for the table-tag	etemplate	fa	ضخامت خط کادر برای علامت جدول
+bottom	etemplate	fa	پایین
+box	etemplate	fa	جعبه
+box...	etemplate	fa	جعبه...
+can not have special sql-value null	etemplate	fa	مقدار ویژه SQL  نمیتواند «هیچ»(NULL) باشد
+cancel	etemplate	fa	لغو
+cant delete a single widget from a grid !!!	etemplate	fa	نمی توان یک موجودیت تنها را از یک توری(grid) حذف کرد!!!
+cant delete the only column of a grid !!!	etemplate	fa	نمی توان تنها ستون موجود در توری (grid) را حذف کرد!!!
+cant delete the only row in a grid !!!	etemplate	fa	نمی توان تنها سطر موجود در توری (grid) را حذف کرد!!!
+category	etemplate	fa	دسته
+cellpadding for the table-tag	etemplate	fa	عرض سلول برای علامت جدول
+cells	etemplate	fa	سلولها
+cellspacing for the table-tag	etemplate	fa	فاصله سلولها برای علامت جدول
+center	etemplate	fa	وسط
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fa	اگر میخواهید محتوی فقط نشان داده شده و عوض نشوند، علامت بگذارید!(محتوی بعدا برگشت نخواهد کرد)
+check if field has to be filled by user	etemplate	fa	فیلد بررسی شود که بوسیله کاربر پرشده است
+checkbox	etemplate	fa	جعبه انتخاب
+class	etemplate	fa	کلاس
+class, valign	etemplate	fa	کلاس، چیدمان عمودی
+click here to attach the file	etemplate	fa	اینجا کلیک کنید تا پرونده پیوست شود
+click here to create the link	etemplate	fa	اینجا کلیک کنید تا اتصال ساخته شود
+click here to start the search	etemplate	fa	اینجا کلیک کنید تا جستجو آغاز شود
+click here to upload the file	etemplate	fa	اینجا کلیک کنید تا پرونده ارسال شود
+click to order after that criteria	etemplate	fa	برای مرتب شدن بر اساس شرط، کلیک کنید
+clickable path	etemplate	fa	مسیر قابل کلیک
+closes the window without saving the changes	etemplate	fa	پنجره ها را بدون ذخیره تغییرات می بندد
+column...	etemplate	fa	ستون...
+columnname	etemplate	fa	نام ستون
+comment	etemplate	fa	توضیحات
+confirm	etemplate	fa	تأیید
+confirmation message or custom javascript (returning true or false)	etemplate	fa	پیام تأیید یا جاوااسکریپت سفارشی(با برگرداندن true یا false)
+confirmation necesary or custom java-script	etemplate	fa	تأییدیه ضروری یا جاوااسکریپت سفارشی
+contains	etemplate	fa	شامل
+create a new table for the application	etemplate	fa	ایجاد یک جدول جدید برای کاربرد
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fa	یک پرونده زبان انگلیسی ('en') از برچسب و متون راهنما (برای کاربرد در نام)
+css class for the table-tag	etemplate	fa	کلاس CSS برای علامت جدول
+css properties	etemplate	fa	مشخصات CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	fa	نام کلاس CSS برای این ردیف، از قبل تعیین شده:'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	fa	نام کلاس CSS برای این ردیف، از قبل تعیین شده:'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
+css-styles	etemplate	fa	سبکهای CSS
+custom	etemplate	fa	سفارشی
+custom fields	etemplate	fa	فیلدهای سفارشی
+custom javascript for onchange	etemplate	fa	جاوااسکریپت سفارشی برای «درتغییر»
+cut	etemplate	fa	بریدن
+date+time	etemplate	fa	تاریخ و ساعت
+datum	etemplate	fa	مأخذ
+day	etemplate	fa	روز
+days	etemplate	fa	روز
+db ensures that every row has a unique value in that column	etemplate	fa	پایگاه داده تضمین می کند که هر سطر یک مقدار یکتائی در آن ستون دارد
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	fa	گزینه های مشخصه پایگاه داده( جداسازی با ویرگول)، مثل (mysql(FULLTEXT یا (mysql(100 برای طول نمایه یک ستون
+db-tools	etemplate	fa	ابزارهای پایگاه داده
+deck	etemplate	fa	پوشیده(داخلی)
+default	etemplate	fa	پیش فرض
+delete a single entry by passing the id.	etemplate	fa	حذف یک ورودی با عبور شناسه آن
+delete all selected etemplates, without further inquiry	etemplate	fa	حذف همه فرمهای انتخاب شده، بدون پرسیدن بعدی
+delete and cut save the template!	etemplate	fa	حذف و بریدن فرم ذخیره شده!
+delete column	etemplate	fa	حذف ستون
+delete index	etemplate	fa	حذف نمایه
+delete the spezified etemplate	etemplate	fa	فرم مشخص شده حذف شود
+delete this column	etemplate	fa	این ستون حذف شود
+delete this etemplate	etemplate	fa	این فرم حذف شود
+delete this file	etemplate	fa	این پرونده حذف شود
+delete this row	etemplate	fa	این سطر حذف شود
+delete whole column (can not be undone!!!)	etemplate	fa	کل ستون حذف شود(غیر قابل بازگشت!!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	fa	حذف فرم مشخص شده فوق از پایگاه داده، نمی توان آنرا برگرداند
+deletes the etemplate spez. above	etemplate	fa	فرم مشخص شده فوق را حذف می کند
+deletes this column	etemplate	fa	حذف این ستون
+deletes this index	etemplate	fa	حذف این نمایه
+discard changes	etemplate	fa	نادیده گرفتن تغییرات
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	fa	در جلوی ورودی نمایش داده می شود یا ورودی برای یک '%s' در برچسب درج می شود.(بر چسب یک دکمه ثبت یا نام پرونده تصویری)
+displayed in statusline of browser if input-field gets focus	etemplate	fa	نمایش در خط وضعیت مرورگر، در صورت رفتن به فیلد ورودی
+displayed in the top line of the groupbox (legend)	etemplate	fa	در خط بالائی جعبه گروه نمایش داده می شود(راهنما)
+do you want to save the changes you made in table %s?	etemplate	fa	آیا می خواهید که تغییرات انجام شده در جدول %s را ذخیره نمائید؟
+documentation	etemplate	fa	مستندات
+doesn't matter	etemplate	fa	مهم نیست
+drop a table - this can not be undone	etemplate	fa	حذف جدول - غیر قابل برگشت
+drop table	etemplate	fa	حذف جدول
+dump4setup	etemplate	fa	نوشتن برای نصب
+duration	etemplate	fa	مدت
+edit	etemplate	fa	ویراستن
+edit embeded css styles or of the applications app.css file	etemplate	fa	ویرایش سبک CSS جاسازی شده یا از پرونده app.css مربوط به کاربرد
+edit the etemplate spez. above	etemplate	fa	ویراستن فرم مشخص شده فوق
+edit...	etemplate	fa	ویراستن...
+editable templates - db-tools	etemplate	fa	فرمهای قابل ویرایش - ابزارهای پایگاه داده
+editable templates - delete template	etemplate	fa	فرمهای قابل ویرایش -حذف فرم
+editable templates - editor	etemplate	fa	فرمهای قابل ویرایش - ویرایشگر
+editable templates - search	etemplate	fa	فرمهای قابل ویرایش -جستجو
+editable templates - show template	etemplate	fa	فرمهای قابل ویرایش - نمایش فرم
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	fa	سبک CSS جاسازی شده، مانند: '{;red { background: red.' (توجه: « . » قبل از نام کلاس باشد. یا '@import url(...)'  نام کلاس عمومی است یا برای همه صفحه کاربرد دارد.
+enable javascript onchange submit	etemplate	fa	فعال سازی ثبت «درتغییر» جاوااسکریپت
+enter '' for an empty default, nothing mean no default	etemplate	fa	برای پیش فرض خالی '' بگذارید، هیچ نگذارید یعنی پیش فرضی نیست
+enter a search pattern	etemplate	fa	ورود یک الگوی جستجو
+enter filename to upload and attach, use [browse...] to search for it	etemplate	fa	نام پرونده را برای ارسال یا پیوست وارد کنید از [Browse...] برای جستجوی آن استفاده کنید
+enter the new version number here (> old_version), empty for no update-file	etemplate	fa	شماره نسخه جدید را در اینجا وارد کنید(باید بزرگتر از نسخه قدیمی باشد)، برای نبودن پرونده به روز رسانی خالی بگذارید
+enter the new version number here (has to be > old_version)	etemplate	fa	شماره نسخه جدید را در اینجا وارد کنید(باید بزرگتر از نسخه قدیمی باشد)
+entry saved	etemplate	fa	ورودی ذخیره شد
+error: template not found !!!	etemplate	fa	خطا: فرم یافت نشد!!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	fa	خطا: کارگزار وب مجاز به نوشتن در '%1' نیست !!!
+error: while saving !!!	etemplate	fa	خطا: در زمان ذخیره سازی‌!!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	fa	خطا: نوشتن پرونده (مجوز نوشتن برای کارگزار وب موجود نیست) !!!
+etemplate	common	fa	فرم ساز
+etemplate '%1' imported, use save to put it in the database	etemplate	fa	فرم '%1'  وارد شد، از «ذخیره» استفاده کنید تا در پایگاه داده قرار گیرد
+etemplate '%1' written to '%2'	etemplate	fa	فرم '%1'  در '%2' نوشته شد
+etemplate editor	etemplate	fa	ویرایشگر فرم
+etemplate reference	etemplate	fa	مرجع راهنمای فرم ساز
+etemplate tutorial	etemplate	fa	مرجع فوری فرم ساز
+exchange this row with the one above	etemplate	fa	این سطر با سطر بالائیش عوض شود
+exchange this two columns	etemplate	fa	این دو ستون باهم عوض شود
+export the loaded etemplate into a xml-file	etemplate	fa	فرم بارگذاری شده در یک پرونده xml صادر شود
+export xml	etemplate	fa	صدور XML
+extensions loaded:	etemplate	fa	گسترشهای بارگذاری شده:
+field must not be empty !!!	etemplate	fa	فیلد نمی تواند خالی باشد!!!
+file	etemplate	fa	پرونده
+file contains more than one etemplate, last one is shown !!!	etemplate	fa	پرونده شامل بیش از یک فرم است، آخرین فرم نمایش داده می شود !!!
+file writen	etemplate	fa	پرونده نوشته شد
+fileupload	etemplate	fa	ارسال پرونده
+first	etemplate	fa	اولین
+floating point	etemplate	fa	اعشاری
+foreign key	etemplate	fa	کلید خارجی
+formatted text (html)	etemplate	fa	متن قالب بندی شده(HTML)
+go to the first entry	etemplate	fa	رفتن به ورودی اول
+go to the last entry	etemplate	fa	رفتن به ورودی آخر
+go to the next page of entries	etemplate	fa	رفتن به صفحه بعد از ورودیها
+go to the previous page of entries	etemplate	fa	رفتن به صفحه قبل از ورودیها
+grid	etemplate	fa	توری(grid)
+grid column attributes	etemplate	fa	مشخصات ستون توری
+grid row attributes	etemplate	fa	مشخصات سطر توری
+groupbox	etemplate	fa	جعبه گروه
+hbox	etemplate	fa	جعبه افقی
+height	etemplate	fa	ارتفاع
+height of row (in % or pixel)	etemplate	fa	ارتفاع سطر( به ٪ یا پیکسل)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	fa	ارتفاع سطر( به ٪ یا پیکسل)، غیر فعال سازی سطر: [! = not]<value>[=<check>] مانند: '!@data' ، غیرفعال سازی سطر در صورتی که محتوای اطلاعاتی خالی باشد
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	fa	ارتفاع جدول به ٪ یا پیکسل برای علامت جدول و (گزینشی) جداساز(div)
+height, disabled	etemplate	fa	ارتفاع، غیرفعال شده
+help	etemplate	fa	راهنما
+horizontal rule	etemplate	fa	قانون افقی
+hour	etemplate	fa	ساعت
+hours	etemplate	fa	ساعت
+how many entries should the list show	etemplate	fa	فهرست باید چند ورودی را نمایش دهد
+html	etemplate	fa	زنگام(html)
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	fa	اگر فیلد غیر فعال شود یک سلول خالی جدول نمایش داده می شود، برای (موقتی) حذف یک فیلد/سلول
+image	etemplate	fa	تصویر
+import	etemplate	fa	وارد کردن
+import an etemplate from a xml-file	etemplate	fa	وارد کردن یک فرم از یک پرونده xml
+import table-definitions from existing db-table	etemplate	fa	وارد کردن تعاریف جدول از جدولهای پایگاه داده موجود
+import xml	etemplate	fa	وارد کردن XML
+increment version to not overwrite the existing template	etemplate	fa	شماره نسخه را زیاد کنید تا روی فرم موجود نوشته نشود
+index/name of returned content (name of the template, link / method for image)	etemplate	fa	نمایه/نام محتوای بازگشتی (نام فرم، پیوند/روش برای تصویر)
+indexed	etemplate	fa	نمایه شده
+indexoptions	etemplate	fa	گزینه های نمایه
+insert a column before	etemplate	fa	درج یک ستون در قبل
+insert a column behind	etemplate	fa	درج یک ستون در کنار
+insert a row above	etemplate	fa	درج یک سطر در بالا
+insert a row below	etemplate	fa	درج یک سطر در پائین
+insert a widget before	etemplate	fa	درج یک موجودیت در قبل
+insert a widget behind	etemplate	fa	درج یک موجودیت در کنار
+insert new column behind this one	etemplate	fa	درج یک ستون جدید در کنار این یکی
+insert new column in front of all	etemplate	fa	درج یک ستون در جلوی همه
+insert new row after this one	etemplate	fa	درج یک سطر بعد از این یکی
+insert new row in front of first line	etemplate	fa	درج یک سطر در جلوی اولین خط
+integer	etemplate	fa	صحیح
+key	etemplate	fa	کلید
+label	etemplate	fa	برچسب
+lang	etemplate	fa	زبان
+last	etemplate	fa	آخرین
+left	etemplate	fa	چپ
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	fa	طول برای char+varchar, precisions int: 2, 4, 8 و float: 4, 8
+link	etemplate	fa	پیوند
+linkentry	etemplate	fa	ورودی پیوند
+linklist	etemplate	fa	فهرست پیوند
+linkstring	etemplate	fa	رشته پیوند
+linkto	etemplate	fa	پیوند به
+load this template into the editor	etemplate	fa	این فرم در ویرایشگر بارگذاری شود
+manual	etemplate	fa	راهنمای دستی
+middle	etemplate	fa	وسط
+minute	etemplate	fa	دقیقه
+minutes	etemplate	fa	دقیقه
+month	etemplate	fa	ماه
+multicolumn indices	etemplate	fa	نمایه های چند ستونی
+name	etemplate	fa	نام
+name of other table where column is a key from	etemplate	fa	نام جدول دیگری که کلید ستون از آنجاست
+name of table to add	etemplate	fa	نام جدول برای افزودن
+new search	common	fa	جستجوی جدید
+new table created	etemplate	fa	جدول جدید ایجاد شد!
+newer version '%1' exists !!!	etemplate	fa	نسخه جدیدتر '%1'  موجود است
+nextmatch	etemplate	fa	موردجور شده بعدی
+nextmatch accountfilter	etemplate	fa	موردجور شده بعدی در صافی حساب
+nextmatch filterheader	etemplate	fa	موردجور شده بعدی در  سرآیندصافی
+nextmatch sortheader	etemplate	fa	موردجور شده بعدی در ترتیب سرآیند
+no column to swap with !!!	etemplate	fa	ستونی برای جابجائی نیست!!!
+no file	etemplate	fa	پرونده ای نیست
+no filename given or selected via browse...	etemplate	fa	نام پرونده ای داده نشده یا از طریق Browse... انتخاب نشده
+no row to swap with !!!	etemplate	fa	سطری برای جابجائی نیست !!!
+not null	etemplate	fa	«پوچ» نباشد
+nothing	etemplate	fa	هیچ
+nothing found - try again !!!	etemplate	fa	هیچ چیز پیدا نشد - دوباره سعی کنید !!!
+nothing in clipboard to paste !!!	etemplate	fa	در تخته یادآوری چیزی برای چسباندن نیست !!!
+nothing matched search criteria !!!	etemplate	fa	هیچ چیز با شاخص جستجو جور نشد !!!
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	fa	تعداد سطر/ستون در یک جعبه عمودی/افقی، عرض سلول، فاصله سلول
+of	etemplate	fa	از
+onchange	etemplate	fa	«درتغییر»
+onclick	etemplate	fa	«درکلیک»
+only an other version found !!!	etemplate	fa	فقط یک نسخه دیگر پیدا شد !!!
+open the online help.	etemplate	fa	باز کردن راهنمای برخط
+operator	etemplate	fa	عملگر
+optional note about the link	etemplate	fa	یادداشت دلخواه برای پیوند
+options	etemplate	fa	گزینه ها
+order to navigating by tab key through the form	etemplate	fa	ترتیب ناوبری توسط کلید tab در فرم
+overflow	etemplate	fa	سرریز
+padding	etemplate	fa	لایه گذاری
+parent is a '%1' !!!	etemplate	fa	والد یک '%1' است !!!
+paste	etemplate	fa	چسباندن
+path	etemplate	fa	مسیر
+please enter table-name first !!!	etemplate	fa	لطفا ابتدا نام جدول را وارد کنید !!!
+pm	etemplate	fa	عصر
+popup	etemplate	fa	بالاپر
+precision	etemplate	fa	دقت
+primary key	etemplate	fa	کلیداولیه
+primary key for the table, gets automaticaly indexed	etemplate	fa	کلید اولیه برای جدول، بطور خودکار نمایه سازی می شود
+radiobutton	etemplate	fa	کلید رادیوئی
+read	etemplate	fa	خواندن
+read a list of entries.	etemplate	fa	خواندن فهرست ورودیها.
+read a single entry by passing the id and fieldlist.	etemplate	fa	خواندن یک ورودی با فرستادن شناسه و فهرست فیلد
+read etemplate from database (for the keys above)	etemplate	fa	خواندن فرم از پایگاه داده
+readonly	etemplate	fa	فقط خواندنی
+remove row (can not be undone!!!)	etemplate	fa	حذف سطر(غیر قابل برگشت)!!!
+remove this link (not the entry itself)	etemplate	fa	حذف این پیوند (نه خود ورودی)
+returns savely, without deleting	etemplate	fa	بازگشت ذخیره ای، بدون حذف
+right	etemplate	fa	راست
+row...	etemplate	fa	سطر...
+save the changes made and close the window	etemplate	fa	ذخیره تغییرات ایجاد شده و بستن پنجره
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	fa	ذخیره فرم زیر کلیدهای فوق(نام و...)، تغییر آنها برای «ذخیره بعنوان»
+saves changes to tables_current.inc.php	etemplate	fa	ذخیره تغییرات به tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	fa	ذخیره فرم با شماره نسخه داده شده و بستن پنجره
+scale	etemplate	fa	مقیاس
+scale for float	etemplate	fa	مقیاس برای اعشار
+search	etemplate	fa	جستجو
+select a category	etemplate	fa	انتخاب دسته
+select a primary contact, to show in the list	etemplate	fa	انتخاب مخاطب اولیه برای نمایش در فهرست
+select access	etemplate	fa	انتخاب دسترسی
+select account	etemplate	fa	انتخاب حساب
+select an app first !!!	etemplate	fa	ابتدا یک کاربرد انتخاب کنید!!!
+select an app to search in	etemplate	fa	انتخاب کاربرد برای جستجو
+select an application	etemplate	fa	انتخاب کاربرد
+select an application, (*) = uninstalled	etemplate	fa	انتخاب کاربرد، (*)=نصب نشده
+select an entry to link with	etemplate	fa	انتخاب ورودی برای پیوند شدن
+select an table of the application	etemplate	fa	انتخاب جدول کاربرد
+select application	etemplate	fa	انتخاب کاربرد
+select category	etemplate	fa	انتخاب دسته
+select country	etemplate	fa	انتخاب کشور
+select day	etemplate	fa	انتخاب روز
+select day of week	etemplate	fa	انتخاب روز هفته
+select hour	etemplate	fa	انتخاب ساعت
+select if content of field should not be translated (label gets always translated)	etemplate	fa	درصورتی که محتویات فیلد نباید ترجمه شود، انتخاب کنید(برچسبها همیشه ترجمه می شوند)
+select month	etemplate	fa	انتخاب ماه
+select number	etemplate	fa	انتخاب شماره
+select one ...	etemplate	fa	انتخاب...
+select percentage	etemplate	fa	انتخاب درصد
+select priority	etemplate	fa	انتخاب تقدم
+select state	etemplate	fa	انتخاب وضعیت
+select the indexed columns in their desired order	etemplate	fa	انتخاب ستون نمایه شده به ترتیب دلخواه خودش
+select this etemplate to delete it	etemplate	fa	این فرم را برای حذف انتخاب کنید
+select which accounts to show	etemplate	fa	انتخاب کنید کدام حساب کاربری نمایش داده شود
+select which values to show	etemplate	fa	انتخاب کنید کدام مقادیر نمایش داده شود
+select year	etemplate	fa	انتخاب سال
+selectbox	etemplate	fa	جعبه انتخاب
+sets today as date	etemplate	fa	تنظیم امروز بعنوان تاریخ
+should the form be submitted or any custom javascript be executed	etemplate	fa	فرم باید ثبت شود یا هر جاوااسکریپت سفارشی باید اجرا شود
+show	etemplate	fa	نمایش
+show (no save)	etemplate	fa	نمایش(بدون ذخیره)
+show values	etemplate	fa	دیدن مقادیر
+showing	etemplate	fa	نمایش
+shows / allows you to enter values into the etemplate for testing	etemplate	fa	نمایش/مجوز شما برای واردکردن مقادیر آزمایشی به فرم
+shows/displays etemplate for testing, does not save it before	etemplate	fa	فرم را به صورت آزمایشی نمایش می دهد، و قبل از آن ذخیره نمی نماید
+spacing	etemplate	fa	فاصله
+span	etemplate	fa	پوشش
+span, class	etemplate	fa	پوشش، کلاس
+stack	etemplate	fa	پشته
+start a new search, cancel this link	etemplate	fa	شروع جستجوی جدید، لغو این پیوند
+start new search for the above pattern	etemplate	fa	شروع جستجوی جدید برای الگوی فوق
+submit form	etemplate	fa	ثبت فرم
+submitbutton	etemplate	fa	دکمه ثبت
+swap	etemplate	fa	جابجائی
+swap widget with next one	etemplate	fa	جابجائی موجودیت با بعدی
+swap with next column	etemplate	fa	جابجائی با ستون بعدی
+swap with next row	etemplate	fa	جابجائی با سطر بعدی
+switch to a parent widget	etemplate	fa	رفتن به موجودیت والد
+switch to an other widgets of that container	etemplate	fa	رفتن به موجودیت بعدی محتوی
+tabindex	etemplate	fa	ترتیب پرش
+table unchanged, no write necessary !!!	etemplate	fa	جدول بدون تغییر است، نوشتن لازم نیست !!!
+tablename	etemplate	fa	نام جدول
+tabs	etemplate	fa	پرشها
+template	etemplate	fa	فرم
+template deleted	etemplate	fa	فرم حذف شد
+template saved	etemplate	fa	فرم ذخیره شد
+text	etemplate	fa	متن
+textarea	etemplate	fa	محدوده متن
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	fa	این متن در زمانی که فیلد ورودی خالی باشد و هنوز وارد ان نشده باشید نمایش داده می شود.
+time	etemplate	fa	ساعت
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	fa	برای غیر فعالسازی: [! = not]<value>[=<check>] eg: '!@data' غیرفعال است اگر محتوای داده ها خالی باشد
+to start the db-tools	etemplate	fa	برای شروع ابزارهای پایگاه داده
+to start the etemplate editor	etemplate	fa	برای شروع ویرایشگر فرم
+to start the search	etemplate	fa	برای شروع جستجو
+today	etemplate	fa	امروز
+top	etemplate	fa	بالا
+type	etemplate	fa	نوع
+type of the column	etemplate	fa	نوع ستون
+type of the field (select label if field should be empty)	etemplate	fa	نوع فیلد(اگر فیلد باید خالی بماند ، برچسب را انتخاب کنید)
+unique	etemplate	fa	یکتائی
+unlink	etemplate	fa	برداشتن پیوند
+update a single entry by passing the fields.	etemplate	fa	بهنگام سازی یک ورودی با عبور(ارسال) فیلدها
+update from version '%s' to	etemplate	fa	بهنگام سازی نسخه '%s' به
+upload	etemplate	fa	ارسال
+valign	etemplate	fa	چیدمان عمودی
+value	etemplate	fa	مقدار
+value has to be at least '%1' !!!	etemplate	fa	مقدار باید حداقل '%1' باشد!!!
+value has to be at maximum '%1' !!!	etemplate	fa	مقدار باید حداکثر '%1' باشد!!!
+vbox	etemplate	fa	جعبه عمودی
+version	etemplate	fa	نسخه
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	fa	شماره نسخه، باید در قالب : major.minor.revision.numbe باشد(مثلا:0.9.13.001 همه شماره ها با صفر پرخواهند شد)
+vertical alignment of row	etemplate	fa	چیدمان افقی سطر
+view this etemplate	etemplate	fa	دیدن این فرم
+view this linked entry in its application	etemplate	fa	دیدن این پیوند ورودی در کاربرد خودش
+weekend	etemplate	fa	آخر هفته
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	fa	چه اتفاقی برای محتوای سرریز می افتد: قابل دیدن(پیش فرض)، مخفی، مروری، خودکار(مرورگر تصمیم میگیرد)
+widget copied into clipboard	etemplate	fa	موجودیت به تخته یادآوری رونوشت شد
+width	etemplate	fa	عرض
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	fa	عرض ستون(به درصد یا پیکسل)، غیر فعالسازی ستون: [! = not]<value>[=<check>] eg: '!@data' غیر فعالسازی ستون درصورت خالی بودن محتوای داده ها
+width of column (in % or pixel)	etemplate	fa	عرض ستون(به درصد یا پیکسل)
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	fa	عرض جدول به درصد یا پیکسل برای علامت جدول و div (انتخابی)
+width, disabled	etemplate	fa	عرض، غیر فعال شده
+working days	etemplate	fa	روزهای کاری
+write <app>/setup/tables_current.inc.php	etemplate	fa	نوشتن <app>/setup/tables_current.inc.php
+write langfile	etemplate	fa	نوشتن پرونده زبان
+write tables	etemplate	fa	نوشتن جداول
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	fa	نوشتن یک پرونده 'etemplates.inc.php' (برای کاربرد در نام) در پوشه setup مربوط به کاربرد
+xml-file to import	etemplate	fa	پرونده xml برای ورود
+xslt template	etemplate	fa	فرم XSLT
+year	etemplate	fa	سال

@@ -1,0 +1,389 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	sk	%1 (%2 nových) správ bolo napísaných pre aplikáciu '%3' a jazyky '%4'
+%1 etemplates deleted	etemplate	sk	%1 eŠablón bolo odstránených
+%1 etemplates for application '%2' dumped to '%3'	etemplate	sk	%1 eŠablón pre aplikáciu '%2' urobilo výpis do '%3'
+%1 etemplates found	etemplate	sk	Našlo sa %1 eŠablón.
+%1 matches on search criteria	etemplate	sk	Nájdených bolo %1 zhôd s vyhľadávacím kritériom
+%1 more...	etemplate	sk	O %1 viac...
+%1 new etemplates imported for application '%2'	etemplate	sk	Naimportovaných %1 nových eŠablón pre aplikáciu '%2'
+%s disabled	etemplate	sk	%s je vypnuté
+%s needed	etemplate	sk	%s je potrebné
+%s notranslation	etemplate	sk	%s BezPrekladu
+%s onchange	etemplate	sk	%s saMení
+%s readonly	etemplate	sk	%s lenNaČítanie
+'%1' has an invalid format !!!	etemplate	sk	'%1' má nesprávny formát !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	sk	'%1' nie je php súborom v root adresári eGW servera (%2)!
+'%1' is not a valid date !!!	etemplate	sk	'%1' nie je platný dátum !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	sk	'%1' nie je platné číslo s plávajúcou desatinnou čiarkou !!!
+'%1' is not a valid integer !!!	etemplate	sk	'%1' nie je platné celé číslo !!!
+'%1' is not allowed ('%2')!	etemplate	sk	'%1' NIE je dovolené ('%2')!
+a pattern to be searched for	etemplate	sk	hľadaný výraz
+accesskey	etemplate	sk	Prístupový kľúč
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	sk	Prístupový kľúč sa dá špecifikovať aj so znakom & v označení (napr. &Name)
+account contactdata	etemplate	sk	Kontaktné údaje účtu
+add a new column (after the existing ones)	etemplate	sk	Pridať nový stĺpec (za existujúcimi)
+add a new entry of the selected application	etemplate	sk	Pridať novú položku vybranej aplikácie
+add a new multi-column index	etemplate	sk	Pridať nový viacstĺpcový index
+add column	etemplate	sk	Pridať Stĺpec
+add index	etemplate	sk	Pridať Index
+add new	etemplate	sk	Pridať nový
+add table	etemplate	sk	Pridať Tabuľku
+advanced search	etemplate	sk	Pokročilé hľadanie
+align	etemplate	sk	Zarovnať
+alignment of label and input-field in table-cell	etemplate	sk	zarovnanie označenia a vstupného poľa v bunke tabuľky
+alignment of the v/hbox containing table-cell	etemplate	sk	Zarovnanie V/HBoxu obsahujúceho bunku tabuľky
+all days	etemplate	sk	všetky dni
+all operations save the template!	etemplate	sk	všetky operácie ukladajú šablónu!
+am	etemplate	sk	dp
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sk	indexovaný stĺpec zrýchľuje hľadanie v danom stĺpci (avšak na úkor miesta na disku !!!)
+application	etemplate	sk	Aplikácia
+application name needed to write a langfile or dump the etemplates !!!	etemplate	sk	Názov aplikácie potrebuje zapísať jazykový súbor alebo urobiť výpis z eŠablón !!!
+applies the changes made	etemplate	sk	uplatnia sa vykonané zmeny
+applies the changes to the given version of the template	etemplate	sk	vykoná zmeny urobené na danej verzii šablóny
+as default	etemplate	sk	ako predvolené
+attach	etemplate	sk	Priložiť
+attach file	etemplate	sk	Priložiť súbor
+baseline	etemplate	sk	Základný
+border	etemplate	sk	Hranica
+border-line-thickness for the table-tag	etemplate	sk	Hrúbka okrajovej čiary pre tag tabuľky
+bottom	etemplate	sk	Spodok
+box	etemplate	sk	Okno
+box...	etemplate	sk	Okno...
+can not have special sql-value null	etemplate	sk	špeciálna SQL-hodnota nemôže byť NULL
+cancel	etemplate	sk	Zrušiť
+cant delete a single widget from a grid !!!	etemplate	sk	Nedá sa odstrániť jednotlivý widget z matice!!!
+cant delete the only column of a grid !!!	etemplate	sk	Nedá sa odstrániť jediný stĺpec matice!!!
+cant delete the only row in a grid !!!	etemplate	sk	Nedá sa odstrániť jediný riadok matice!!!
+category	etemplate	sk	Kategória
+category tree	etemplate	sk	Strom kategórie
+cellpadding for the table-tag	etemplate	sk	Odstup okraja bunky od jej obsahu pre tag tabuľky
+cells	etemplate	sk	Bunky
+cellspacing for the table-tag	etemplate	sk	Rozostup medzi bunkami pre tag tabuľky
+center	etemplate	sk	Stred
+changed	etemplate	sk	Zmenené
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sk	Začiarknite, ak obsah má byť iba zobrazovaný ale nie menený (obsah sa potom neposiela naspäť!)
+check if field has to be filled by user	etemplate	sk	Začiarknite, ak pole musí byť vyplnené používateľom
+checkbox	etemplate	sk	Začiarkávacie políčko
+class	etemplate	sk	Trieda
+class, valign	etemplate	sk	trieda, V-zarovnanie
+click here to attach the file	etemplate	sk	Ak chcete pripojiť súbor, kliknite sem
+click here to create the link	etemplate	sk	Ak chcete vytvoriť odkaz, kliknite sem
+click here to start the search	etemplate	sk	Ak chcete začať hľadanie, kliknite sem
+click here to upload the file	etemplate	sk	Ak chcete odovzdať súbor, kliknite sem
+click to order after that criteria	etemplate	sk	Ak chcete zoradiť podľa tohto kritéria, kliknite sem
+clickable path	etemplate	sk	rozkliknuteľná cesta
+closes the window without saving the changes	etemplate	sk	zavrie okno bez uloženia zmien
+column...	etemplate	sk	Stĺpec...
+columnname	etemplate	sk	Názov stĺpca
+comment	etemplate	sk	Komentár
+confirm	etemplate	sk	Potvrdiť
+confirmation message or custom javascript (returning true or false)	etemplate	sk	Potvrdzovacia správa alebo používateľský javascript (vracia true alebo false - pravda/nepravda)
+confirmation necesary or custom java-script	etemplate	sk	potvrdenie je nevyhnutné, alebo používateľský javascript
+contact	etemplate	sk	Kontakt
+contact field to show	etemplate	sk	Pole kontaktu, ktoré sa má zobraziť
+contact fields	etemplate	sk	Polia kontaktu
+contains	etemplate	sk	Obsahuje
+create a new table for the application	etemplate	sk	Vytvoriť novú tabuľku pre aplikáciu
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sk	vytvorí anglický ('en') jazykový súbor z označenia a pomocných textov (pre aplikáciu uvedenú v Názve)
+css class for the table-tag	etemplate	sk	CSS trieda pre tag tabuľky
+css properties	etemplate	sk	CSS nastavenia
+css-styles	etemplate	sk	CSS štýly
+custom	etemplate	sk	Vlastné
+custom fields	etemplate	sk	Vlastné polia
+cut	etemplate	sk	Vystrihnúť
+date+time	etemplate	sk	Dátum+Čas
+datum	etemplate	sk	Dátum
+day	etemplate	sk	Deň
+days	etemplate	sk	dni
+db ensures that every row has a unique value in that column	etemplate	sk	DB zabezpečuje, aby mal každý riadok svoju jedinečnú hodnotu v tomto stĺpci
+db-tools	etemplate	sk	DB-Nástroje
+deck	etemplate	sk	Balíček (vnútorný)
+default	etemplate	sk	Predvolené
+delete a single entry by passing the id.	etemplate	sk	Odstrániť položku podľa zadaného ID.
+delete all selected etemplates, without further inquiry	etemplate	sk	Odstrániť VŠETKY označené eŠablóny, BEZ ďalšieho varovania
+delete column	etemplate	sk	Odstrániť stĺpec
+delete index	etemplate	sk	Odstrániť index
+delete the spezified etemplate	etemplate	sk	Odstrániť vybranú eŠablónu
+delete this column	etemplate	sk	Odstrániť tento stĺpec
+delete this etemplate	etemplate	sk	Odstrániť túto eŠablónu
+delete this file	etemplate	sk	Odstrániť tento súbor
+delete this row	etemplate	sk	Odstrániť tento riadok
+delete whole column (can not be undone!!!)	etemplate	sk	Odstrániť celý stĺpec (NEDÁ sa vrátiť späť !!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	sk	Odstráni vyššieuvedenú eŠablónu, NEDÁ sa vrátiť späť
+deletes the etemplate spez. above	etemplate	sk	odstráni vyššieuvedenú eŠablónu
+deletes this column	etemplate	sk	Odstráni tento stĺpec
+deletes this index	etemplate	sk	Odstráni tento index
+discard changes	etemplate	sk	zahodiť zmeny
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	sk	zobrazené na začiatku vstupu alebo vstup je vložený pre '%s' v menovke (menovke tlačítka pre Odoslanie alebo názvu súboru obrázku)
+displayed in statusline of browser if input-field gets focus	etemplate	sk	zobrazené v stavovom riadku prehliadača ak vstupné pole dostane fokus
+displayed in the top line of the groupbox (legend)	etemplate	sk	zobrazené v hornom riadku skupiny ovládacích prvkov (legenda)
+do you want to save the changes you made in table %s?	etemplate	sk	Chcete uložiť zmeny ktoré ste vykonali v tabuľke %s?
+documentation	etemplate	sk	Dokumentácia
+doesn't matter	etemplate	sk	nezáleží
+drop a table - this can not be undone	etemplate	sk	Zahodiť tabuľku -NEDÁ sa vrátiť späť
+drop table	etemplate	sk	Zahodiť tabuľku
+duration	etemplate	sk	Trvanie
+edit	etemplate	sk	Upraviť
+edit embeded css styles or of the applications app.css file	etemplate	sk	upraviť vložené CSS štýly alebo súbor app.css aplikácie
+edit the etemplate spez. above	etemplate	sk	upraviť vyššieuvedenú eŠablónu
+edit...	etemplate	sk	Upraviť...
+editable templates - db-tools	etemplate	sk	Upraviteľné šablóny - DB-Nástroje
+editable templates - delete template	etemplate	sk	Upraviteľné šablóny - Odstrániť šablónu
+editable templates - editor	etemplate	sk	Upraviteľné šablóny - Editor
+editable templates - search	etemplate	sk	Upraviteľné šablóny - Hľadať
+editable templates - show template	etemplate	sk	Upraviteľné šablóny - Zobraziť šablónu
+enable javascript onchange submit	etemplate	sk	zapnúť odosielanie JavaScript onChange
+enter '' for an empty default, nothing mean no default	etemplate	sk	vložte '' pre prázdnu predvolenú hodnotu, nič znamená bez predvolenej hodnoty
+enter a search pattern	etemplate	sk	Zadajte hľadaný výraz
+enter filename to upload and attach, use [browse...] to search for it	etemplate	sk	Zadajte názov súboru, ktorý chcete priložiť, prípadne použite tlačítko "Prehľadávať"
+enter the new version number here (> old_version), empty for no update-file	etemplate	sk	zadajte sem nové číslo verzie (> stará verzia), prázdne znamená bez aktualizácie súboru
+enter the new version number here (has to be > old_version)	etemplate	sk	zadajte sem nové číslo verzie (musí byť > stará verzia)
+entry saved	etemplate	sk	Záznam uložený
+error: template not found !!!	etemplate	sk	Chyba: Šablóna sa nenašla !!!
+error: webserver is not allowed to write into '%1' !!!	etemplate	sk	Chyba: webserver nemá povolený zápis do '%1' !!!
+error: while saving !!!	etemplate	sk	Chyba: počas ukladania !!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	sk	Chyba: počas ukladania (webserver nemá povolený zápis)!!!
+etemplate	common	sk	eŠablóna
+etemplate '%1' imported, use save to put it in the database	etemplate	sk	eŠablóna '%1' naimportované, použite Uložiť pre vloženie do databázy
+etemplate '%1' written to '%2'	etemplate	sk	eŠablóna '%1' zapísaná do '%2'
+etemplate editor	etemplate	sk	Editor eŠablón
+etemplate reference	etemplate	sk	Referenčná príručka eŠablón
+etemplate tutorial	etemplate	sk	Tutoriál eŠablón
+exchange this row with the one above	etemplate	sk	zameniť tento riadok s riadkom vyššie
+exchange this two columns	etemplate	sk	zameniť tieto dva stĺpce
+export the loaded etemplate into a xml-file	etemplate	sk	exportovať nahranú eŠablónu do súboru xml
+export xml	etemplate	sk	Exportovať XML
+extensions loaded:	etemplate	sk	Nahraté rozšírenia:
+field	etemplate	sk	Pole
+field must not be empty !!!	etemplate	sk	Pole nesmie byť prázdne!!!
+file	etemplate	sk	Súbor
+file contains more than one etemplate, last one is shown !!!	etemplate	sk	Súbor obsahuje viac než jednu eŠablónu, zobrazuje sa iba posledná!!!
+file writen	etemplate	sk	Súbor zapísaný
+fileupload	etemplate	sk	Nahrať Súbor
+first	etemplate	sk	Prvé
+floating point	etemplate	sk	Pohyblivá desatinná čiarka
+foreign key	etemplate	sk	Cudzí kľúč
+formatted text (html)	etemplate	sk	Formátovaný text (HTML)
+go to the first entry	etemplate	sk	choď na prvý záznam
+go to the last entry	etemplate	sk	choď na posledný záznam
+go to the next page of entries	etemplate	sk	choď na nasledujúcu stránku so záznamami
+go to the previous page of entries	etemplate	sk	choď na predchádzajúcu stránku so záznamami
+grid	etemplate	sk	Matica
+grid column attributes	etemplate	sk	Atribúty stĺpca matice
+grid row attributes	etemplate	sk	Atribúty riadku matice
+groupbox	etemplate	sk	Skupina ovládacích prvkov
+height	etemplate	sk	Výška
+height of row (in % or pixel)	etemplate	sk	výška riadku (v % alebo pixeloch)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	sk	výška riadku (v % alebo pixeloch), vypnúť riadok: [! = not]<hodnota>[=<check>] napr: '!@data' vypne riadok ak obsah dát je prázdny
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	sk	Výška tabuľky v % alebo pixeloch pre table-tag a (voliteľne) div
+height, disabled	etemplate	sk	Výška, Vypnuté
+help	etemplate	sk	Pomocník
+history log	etemplate	sk	Záznam histórie
+horizontal rule	etemplate	sk	Vodorovné pravítko
+hour	etemplate	sk	Hodina
+hours	etemplate	sk	hodín
+how many entries should the list show	etemplate	sk	Koľko záznamov má zoznam zobraziť
+html	etemplate	sk	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	sk	ak je položka vypnutá, zobrazuje sa prázdna bunka tabuľky, pre (dočasné) odstránenie položky/bunky
+image	etemplate	sk	Obrázok
+import	etemplate	sk	Import
+import an etemplate from a xml-file	etemplate	sk	importovať eŠablónu zo súboru xml
+import table-definitions from existing db-table	etemplate	sk	Importovať definície tabuľky z existujúcej db-tabuľky
+import xml	etemplate	sk	Importovať XML
+increment version to not overwrite the existing template	etemplate	sk	zvýšte verziu, aby sa neprepísala existujúca šablóna
+index/name of returned content (name of the template, link / method for image)	etemplate	sk	index/názov vráteného obsahu (názov Šablóny, Odkaz / Metóda pre Obrázok)
+indexed	etemplate	sk	Indexované
+indexoptions	etemplate	sk	Nastavenia Indexu
+insert a column before	etemplate	sk	vložiť stĺpec pred
+insert a column behind	etemplate	sk	vložiť stĺpec za
+insert a row above	etemplate	sk	vložiť riadok nad
+insert a row below	etemplate	sk	vložiť riadok pod
+insert a widget before	etemplate	sk	vložiť widget pred
+insert a widget behind	etemplate	sk	vložiť widget za
+insert new column behind this one	etemplate	sk	vložiť nový stĺpec za týmto
+insert new column in front of all	etemplate	sk	vložiť nový stĺpec na úplný začiatok
+insert new row after this one	etemplate	sk	vložiť riadok za týmto
+insert new row in front of first line	etemplate	sk	vložiť riadok na začiatok prvého Riadku
+integer	etemplate	sk	Celé číslo
+key	etemplate	sk	Kľúč
+label	etemplate	sk	Menovka
+lang	etemplate	sk	Jazyk
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	sk	skratka jazyka (napr. 'en' pre english) pre jazykovo závislú šablónu ('' znamená vaše uprednostňované jazyky alebo predvolený, použite 'default' pre načítanie predvolenej šablóny '')
+last	etemplate	sk	Posledné
+left	etemplate	sk	Vľavo
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	sk	dĺžka pre char+varchar, presnosť celočís: 2, 4, 8 a pláv.čiar: 4, 8
+link	etemplate	sk	Odkaz
+linkapps	etemplate	sk	Aplikácia odkazu
+linkentry	etemplate	sk	Záznam o odkaze
+linklist	etemplate	sk	Zoznam odkazov
+linkstring	etemplate	sk	Reťazec odkazu
+linkto	etemplate	sk	Odkázať Na
+load this template into the editor	etemplate	sk	načítať túto šablónu do editora
+message ...	etemplate	sk	Správa ...
+middle	etemplate	sk	Stred
+minute	etemplate	sk	Minúta
+minutes	etemplate	sk	Minút
+month	etemplate	sk	Mesiac
+more than 1 match for '%1'	etemplate	sk	Viac než 1 výskyt pre '%1'
+name	etemplate	sk	Meno
+name of other table where column is a key from	etemplate	sk	názov inej tabuľky, kde stĺpec je kľúčom z
+name of table to add	etemplate	sk	Názov tabuľky, ktorá sa má pridať
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sk	názov eŠablóny, mal by byť vo forme aplikácia.funkcia[podŠablóna]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	sk	musí byť v tabuľke jedinečné a nesmie byť rezervovaným slovom z SQL, najlepšie začať všetky spoločným 2-miestnou skratkou aplikácie, napr. 'et_'
+new search	common	sk	Nové hľadanie
+new table created	etemplate	sk	Nová tabuľka vytvorená
+newer version '%1' exists !!!	etemplate	sk	novšia verzia '%1' existuje!!!
+nextmatch	etemplate	sk	Ďalšia zhoda
+no column to swap with !!!	etemplate	sk	nemám žiadny stĺpec pre zámenu !!!
+no file	etemplate	sk	žiadny súbor
+no filename given or selected via browse...	etemplate	sk	nebol zadaný názov súboru, ani nebol vybratý pomocou "Prehľadávať"
+no matches found	etemplate	sk	Žiadna zhoda so zadaním vyhľadávania
+no row to swap with !!!	etemplate	sk	nemám žiadny riadok pre zámenu !!!
+not null	etemplate	sk	NIE NULL
+nothing	etemplate	sk	nič
+nothing found - try again !!!	etemplate	sk	Nič sa nenašlo - skúste znovu !!!
+nothing in clipboard to paste !!!	etemplate	sk	Z clipboardu niet čo vložiť!
+nothing matched search criteria !!!	etemplate	sk	Nič nevyhovelo vyhľadávacím kritériám !!!
+of	etemplate	sk	z
+onchange	etemplate	sk	priZmene
+onclick	etemplate	sk	priKliknutí
+only an other version found !!!	etemplate	sk	našla sa iba iná Verzia !!!
+open the online help.	etemplate	sk	Otvoriť online pomocníka.
+operator	etemplate	sk	Operátor
+optional note about the link	etemplate	sk	voliteľná poznámka o Odkaze
+options	etemplate	sk	Možnosti
+order to navigating by tab key through the form	etemplate	sk	Poradie pre navigáciu vo formulári pomocou klávesy TAB
+overflow	etemplate	sk	Pretečenie
+padding	etemplate	sk	Odstup
+parent is a '%1' !!!	etemplate	sk	rodič je '%1' !!!
+paste	etemplate	sk	Vložiť
+path	etemplate	sk	Cesta
+please enter table-name first !!!	etemplate	sk	Prosím, zadajte najprv názov tabuľky !!!
+pm	etemplate	sk	pp
+popup	etemplate	sk	Vyskakovacie okno
+precision	etemplate	sk	Presnosť
+primary key	etemplate	sk	Primárny kľúč
+primary key for the table, gets automaticaly indexed	etemplate	sk	Primárny kľúč pre tabuľku, indexuje sa automaticky
+radiobutton	etemplate	sk	Tlačítko vypnutia
+read	etemplate	sk	Čítať
+read a list of entries.	etemplate	sk	Čítať zoznam záznamov
+read a single entry by passing the id and fieldlist.	etemplate	sk	Načítať jednotlivý záznam pomocou zadania id a zoznamu.
+read etemplate from database (for the keys above)	etemplate	sk	načítať eŠablónu z databázy (pre vyššieuvedené kľúče)
+readonly	etemplate	sk	iba na čítanie
+remove row (can not be undone!!!)	etemplate	sk	odstrániť Riadok (NEDÁ sa vrátiť späť!!!)
+remove this link (not the entry itself)	etemplate	sk	Odstrániť tento odkaz (nie záznam samotný)
+required	etemplate	sk	Vyžadované
+returns savely, without deleting	etemplate	sk	vracia sa BEZ odstraňovania
+right	etemplate	sk	Vpravo
+row...	etemplate	sk	Riadok...
+save selected columns as default preference for all users.	etemplate	sk	Uložiť vybrané stĺpce ako predvolené nastavenie pre všetkých používateľov.
+save the changes made and close the window	etemplate	sk	Uložiť vykonané zmeny a zavrieť okno
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	sk	Uložiť eŠablónu pod uvedenými hodnotami (názov,...), zmente ich ak chcete Uložiť Ako
+saves changes to tables_current.inc.php	etemplate	sk	uloží zmeny do tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	sk	uloží šablónu s uvedeným číslom verzie a zavrie okno
+scale	etemplate	sk	Prispôsobiť
+scale for float	etemplate	sk	Prispôsobiť pre pohyblivú desatinnú čiarku
+search	etemplate	sk	Hľadať
+select a category	etemplate	sk	Vyberte kategóriu
+select a primary contact, to show in the list	etemplate	sk	Vyberte primárny kontakt, ktorý sa zobrazí v zozname
+select access	etemplate	sk	Vyberte prístup
+select account	etemplate	sk	Vyberte účet
+select an app first !!!	etemplate	sk	Najprv vyberte aplikáciu !!!
+select an app to search in	etemplate	sk	Vyberte, v ktorej aplikácii chcete hľadať
+select an application	etemplate	sk	Vyberte aplikáciu
+select an application, (*) = uninstalled	etemplate	sk	Vyberte aplikáciu, (*) = odinštalované
+select an entry to link with	etemplate	sk	Vyberte záznam na ktorý chcete vytvoriť odkaz
+select an table of the application	etemplate	sk	Vyberte tabuľku aplikácie
+select application	etemplate	sk	Vyberte aplikáciu
+select application to search	etemplate	sk	Vyberte, v akej aplikácii hľadať
+select category	etemplate	sk	Vyberte kategóriu
+select columns	etemplate	sk	Vyberte stĺpce
+select country	etemplate	sk	Vyberte krajinu
+select day	etemplate	sk	Vyberte deň
+select day of week	etemplate	sk	vyberte deň v týždni
+select entry	etemplate	sk	Vyberte záznam
+select hour	etemplate	sk	Vyberte hodinu
+select if content of field should not be translated (label gets always translated)	etemplate	sk	vyberte, ak sa obsah poľa nemá prekladať (označenia sa prekladajú vždy)
+select language	etemplate	sk	Vyberte jazyk
+select month	etemplate	sk	Vyberte mesiac
+select number	etemplate	sk	Vyberte číslo
+select one ...	etemplate	sk	Vyberte si jeden...
+select percentage	etemplate	sk	Vyberte percento
+select priority	etemplate	sk	Vyberte prioritu
+select state	etemplate	sk	Vyberte štát
+select the columns to display in the list	etemplate	sk	Vyberte, ktoré stĺpce sa majú zobraziť v zozname
+select the indexed columns in their desired order	etemplate	sk	Vyebrte indexované stĺpce v požadovanom poradí
+select this etemplate to delete it	etemplate	sk	vyberte túto eŠablónu, aby sa mohla odstrániť
+select which accounts to show	etemplate	sk	vyberte, ktoré účty zobraziť
+select which values to show	etemplate	sk	vyberte, ktoré hodnoty zobraziť
+select year	etemplate	sk	Vyberte rok
+selectbox	etemplate	sk	Výberové menu
+sets today as date	etemplate	sk	nastaví dnešok ako dátum
+should the form be submitted or any custom javascript be executed	etemplate	sk	Má sa formulár odoslať alebo akýkoľvek používateľský javaskript spustiť
+show	etemplate	sk	Ukázať
+show (no save)	etemplate	sk	Ukázať (neuložiť)
+show values	etemplate	sk	Zobraziť hodnoty
+showing	etemplate	sk	zobrazujem
+shows / allows you to enter values into the etemplate for testing	etemplate	sk	zobrazí / umožní zadať hodnoty do eŠablóny pre testovacie účely
+shows/displays etemplate for testing, does not save it before	etemplate	sk	zobrazí eŠablónu pre testovanie, NEuloží ju predtým
+spacing	etemplate	sk	Rozostupy
+stack	etemplate	sk	Zásobník
+start a new search, cancel this link	etemplate	sk	začať nové hľadanie, zrušiť tento odkaz
+start new search for the above pattern	etemplate	sk	začať nové hľadanie pre uvedený výraz
+submit form	etemplate	sk	odoslať formulár
+submitbutton	etemplate	sk	Tlačítko pre odoslanie
+swap	etemplate	sk	vymeniť
+swap widget with next one	etemplate	sk	vymeniť widget s nasledujúcim
+swap with next column	etemplate	sk	vymeniť s nasledujúcim stĺpcom
+swap with next row	etemplate	sk	vymeniť s nasledujúcim riadkom
+switch to a parent widget	etemplate	sk	prepnúť na rodičovský widget
+switch to an other widgets of that container	etemplate	sk	prepnúť na iné widgety v danom kontaineri
+table unchanged, no write necessary !!!	etemplate	sk	Tabuľka sa nezmenila, zápis nie je nevyhnutný!
+tablename	etemplate	sk	NázovTabuľky
+tabs	etemplate	sk	Tabuľky
+template	etemplate	sk	Šablóna
+template deleted	etemplate	sk	Šablóna bola odstránené
+template saved	etemplate	sk	Šablóna uložená
+text	etemplate	sk	Text
+textarea	etemplate	sk	Oblasť textu
+time	etemplate	sk	Čas
+to start the db-tools	etemplate	sk	pre spustenie DB-Nástrojov
+to start the etemplate editor	etemplate	sk	pre spustenie editora eŠablón
+to start the search	etemplate	sk	pre spustenie hľadania
+today	etemplate	sk	Dnes
+top	etemplate	sk	Vrch
+tree	etemplate	sk	Strom
+type	etemplate	sk	Typ
+type of the column	etemplate	sk	typ stĺpca
+type of the field (select label if field should be empty)	etemplate	sk	typ poľa (vyberte Menovku ak pole má byť prázdne)
+unique	etemplate	sk	Jedinečné
+unlink	etemplate	sk	Odpojiť Odkaz
+update a single entry by passing the fields.	etemplate	sk	Aktualizovať jednotlivý záznam podľa zadaných polí
+update from version '%s' to	etemplate	sk	Aktualizovať z Verzie '%s' na
+upload	etemplate	sk	Odovzdať
+valign	etemplate	sk	vZarovnanie
+value	etemplate	sk	Hodnota
+value has to be at least '%1' !!!	etemplate	sk	Hodnota musí byť najmenej '%1' !!!
+value has to be at maximum '%1' !!!	etemplate	sk	Hodnota musí byť nanajvýš '%1' !!!
+vbox	etemplate	sk	VBox
+version	etemplate	sk	Verzia
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	sk	číslo verzie, malo by byť v tvare: major.minor.revision.number (napr. 0.9.13.001 všetky čísla zaplnené nulami)
+vertical alignment of row	etemplate	sk	zvislé zarovnanie riadku
+view this etemplate	etemplate	sk	zobraziť túto eŠablónu
+view this linked entry in its application	etemplate	sk	zobraziť tento pripojený záznam v jeho aplikácii
+weekend	etemplate	sk	víkend
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	sk	čo sa stane s presahujúcim obsahom: viditeľný (predvolené), skrytý, skrolovať, automaticky (prehliadač rozhodne)
+widget copied into clipboard	etemplate	sk	widget skopírovaný do schránky
+width	etemplate	sk	Šírka
+width of column (in % or pixel)	etemplate	sk	šírka stĺpca (v % alebo pixeloch)
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	sk	Šírka tabuľky v % alebo pixeloch pre table-tag a (voliteľne) div
+width, disabled	etemplate	sk	Šírka, Vypnuté
+working days	etemplate	sk	pracovné dni
+write <app>/setup/tables_current.inc.php	etemplate	sk	Zapísať <app>/setup/tables_current.inc.php
+write langfile	etemplate	sk	Zapísať jazykový súbor
+write tables	etemplate	sk	Zapísať tabuľky
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	sk	zapíše súbor 'etemplates.inc.php' (pre aplikáciu zadanú v Názve) v setup adresári aplikácie
+xml-file to import	etemplate	sk	xml súbor pre import
+xslt template	etemplate	sk	XSLT šablóna
+year	etemplate	sk	Rok
+you are not allowed to export more then %1 entries!	etemplate	sk	Nie je vám dovolené, exportovať viac než %1 záznamov!
+you can respond by visiting:	etemplate	sk	Odpovedať môžete na tejto adrese:

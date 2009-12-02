@@ -1,0 +1,278 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	ca	%1 mensajes(%2 nuevos) escritos para la aplicación '%3' e idiomas '%4'
+%1 etemplates deleted	etemplate	ca	%1 plantillas borradas
+%1 etemplates for application '%2' dumped to '%3'	etemplate	ca	%1 plantillas para la aplicación '%2' volcadas a '%3'
+%1 etemplates found	etemplate	ca	%1 plantillas encontradas
+%1 matches on search criteria	etemplate	ca	%1 coincidencias para la búsqueda solicitada
+%1 new etemplates imported for application '%2'	etemplate	ca	%1 nuevas plantillas importadas para la aplicación '%2'
+%s disabled	etemplate	ca	%s desactivado
+%s needed	etemplate	ca	%s es necesario
+%s notranslation	etemplate	ca	%s sin traducción
+%s onchange	etemplate	ca	%s al cambiar
+%s readonly	etemplate	ca	%s de sólo lectura
+a pattern to be searched for	etemplate	ca	un patrón de búsqueda
+add a new column (after the existing ones)	etemplate	ca	Añadir una columna nueva (detrás de las existentes)
+add a new multi-column index	etemplate	ca	Añadir un nuevo índice multicolumna
+add column	etemplate	ca	Añadir columna
+add index	etemplate	ca	Añadir índice
+add table	etemplate	ca	Añadir tabla
+align	etemplate	ca	Alinear
+alignment of label and input-field in table-cell	etemplate	ca	posición de la etiqueta y campo de entrada en la celda de la tabla
+alignment of the v/hbox containing table-cell	etemplate	ca	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
+am	etemplate	ca	am
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	ca	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
+application	etemplate	ca	Aplicación
+application name needed to write a langfile or dump the etemplates !!!	etemplate	ca	Se necesita el nombre de la aplicación para escribir un fichero de idioma o volcar las plantillas
+attach	etemplate	ca	Adjuntar
+attach file	etemplate	ca	Adjuntar fichero
+blurtext	etemplate	ca	Texto poco claro
+border	etemplate	ca	Borde
+border-line-thickness for the table-tag	etemplate	ca	Grosor de la línea del borde de la etiqueta de la tabla
+can not have special sql-value null	etemplate	ca	no puede tener el valor especial de SQL NULL
+cancel	etemplate	ca	Cancelar
+category	etemplate	ca	Categoría
+cellpadding for the table-tag	etemplate	ca	Distancia de la etiquete de la tabla la celda
+cells	etemplate	ca	Celdas
+cellspacing for the table-tag	etemplate	ca	Espaciado en la celda para la etiqueta de la tabla
+center	etemplate	ca	Centrar
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	ca	marcar si desea mostrar el contenido sin modificar (el contenido no es devuelto)
+check if field has to be filled by user	etemplate	ca	marcar si el campo tiene que rellenarlo el usuario
+checkbox	etemplate	ca	Casilla
+class	etemplate	ca	Clase
+class, valign	etemplate	ca	clase, posición vertical
+click here to attach the file	etemplate	ca	pulse aquí para adjuntar el fichero
+click here to create the link	etemplate	ca	pulse aquí para crear el enlace
+click here to start the search	etemplate	ca	Pulse aquí para iniciar la búsqueda
+click here to upload the file	etemplate	ca	Pulse aquí para subir el fichero al servidor
+click to order after that criteria	etemplate	ca	pulse para ordenar después de ese criterio
+columnname	etemplate	ca	Nombre de la columna
+comment	etemplate	ca	Comentario
+create a new table for the application	etemplate	ca	Crear una tabla nueva para la aplicación
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	ca	Crea un fichero de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
+css class for the table-tag	etemplate	ca	clase CSS para la etiqueta de la tabla
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	ca	Nombre de la Clase CSS para esta fila. Predefinidos: 'nmh' (NextMatch header), 'nmr' (Alternating NM row), 'nmr0'+'nmr1' filas NM
+css-styles	etemplate	ca	Estilos CSS
+date+time	etemplate	ca	Fecha + hora
+datum	etemplate	ca	Fecha
+day	etemplate	ca	Día
+db ensures that every row has a unique value in that column	etemplate	ca	La base de datos se asegura de que cada fila tiene un valor único en esa columna
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	ca	Opciones de índice específicas de la base de datos (separadas por comas), por ej. mysql(FULLTEXT) o mysql(100) para la longitud indexada de una columna
+db-tools	etemplate	ca	Herramientas de la base de datos
+deck	etemplate	ca	Cubierta (interna)
+default	etemplate	ca	Predeterminado
+delete a single entry by passing the id.	etemplate	ca	Borrar una entrada simple pasando el id.
+delete all selected etemplates, without further inquiry	etemplate	ca	Borrar TODAS las plantillas seleccionadas, SIN preguntar
+delete column	etemplate	ca	Borrar columna
+delete index	etemplate	ca	Borrar índice
+delete this etemplate	etemplate	ca	Borrar esta plantilla
+delete whole column (can not be undone!!!)	etemplate	ca	Borra la columna completa (NO se puede deshacer)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	ca	Borra la plantilla especificada de la base de datos. NO se puede deshacer.
+deletes the etemplate spez. above	etemplate	ca	Borra la plantilla especificada arriba
+deletes this column	etemplate	ca	Borra esta columna
+deletes this index	etemplate	ca	Borra este índice
+discard changes	etemplate	ca	Descartar cambios
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	ca	Se muestra delante de la entrada o la entrada se inserta para un '%s' en la etiqueta (la del botón de enviar o el nombre del fichero de la imagen)
+displayed in statusline of browser if input-field gets focus	etemplate	ca	Se muestra en la línea de estado del navegador cuando el cuadro de texto tiene el foco
+do you want to save the changes you made in table %s?	etemplate	ca	¿Desea guardar los cambis que ha realizado en la tabla %s?
+documentation	etemplate	ca	Documentación
+drop a table - this can not be undone	etemplate	ca	Borrar una tabla - NO se puede deshacer
+drop table	etemplate	ca	Borrar tabla
+dump4setup	etemplate	ca	Volcar para instalación
+edit	etemplate	ca	Editar
+edit the etemplate spez. above	etemplate	ca	editar las especificaciones de la plantilla indicada arriba
+editable templates - db-tools	etemplate	ca	Plantillas editables - Herramientas de la base de datos
+editable templates - delete template	etemplate	ca	Plantillas editables - Borrar plantilla
+editable templates - editor	etemplate	ca	Plantillas editables - Editor
+editable templates - search	etemplate	ca	Plantillas editables - Buscar
+editable templates - show template	etemplate	ca	Plantillas editables - Mostrar plantilla
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	ca	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la página)
+enable javascript onchange submit	etemplate	ca	activar enviar JavaScript onChange
+enter '' for an empty default, nothing mean no default	etemplate	ca	Introduzca '' para un valor predeterminado vacío. Si se deja en blanco, no hay valor predeterminado
+enter a search pattern	etemplate	ca	Introduzca un patrón de búsqueda
+enter filename to upload and attach, use [browse...] to search for it	etemplate	ca	Introduzca el nombre del fichero para subir y adjuntar. Use [Examinar...] Para buscarlo
+enter the new version number here (> old_version), empty for no update-file	etemplate	ca	Introduzca el nuevo número de versión aquí (mayor que versión anterior), vacío para no usar fichero de actualización
+enter the new version number here (has to be > old_version)	etemplate	ca	Introduzca el nuevo número de versión aquí (tiene que ser mayor que la versión anterior)
+entry saved	etemplate	ca	Entrada guardada
+error: template not found !!!	etemplate	ca	Error: no se encontró la plantilla
+error: webserver is not allowed to write into '%1' !!!	etemplate	ca	Error: ¡El servidor no puede escribir en '%1'!
+error: writing file (no write-permission for the webserver) !!!	etemplate	ca	Error: el servidor web no tiene permiso de escritura para el fichero
+etemplate	common	ca	Plantilla
+etemplate '%1' imported, use save to put it in the database	etemplate	ca	Plantilla '%1' importada. Use Guardar para ponerla en la base de datos
+etemplate '%1' written to '%2'	etemplate	ca	La plantilla '%1' se ha guardado en '%2'
+etemplate editor	etemplate	ca	Editor de plantillas
+etemplate reference	etemplate	ca	Referencia de plantillas
+etemplate tutorial	etemplate	ca	Tutorial de plantillas
+exchange this row with the one above	etemplate	ca	Intercambiar esta fila con la de encima
+exchange this two columns	etemplate	ca	Intercambiar estas dos columnas
+export the loaded etemplate into a xml-file	etemplate	ca	Exportar la plantilla cargada en un fichero xml
+export xml	etemplate	ca	Exportar XML
+extensions loaded:	etemplate	ca	Extensiones cargadas:
+file	etemplate	ca	Fichero
+file contains more than one etemplate, last one is shown !!!	etemplate	ca	El fichero contiene más de una plantilla. Sólo se mostrará la última.
+file writen	etemplate	ca	Fichero guardado
+fileupload	etemplate	ca	Subir fichero
+first	etemplate	ca	Primero
+floating point	etemplate	ca	Punto flotante
+foreign key	etemplate	ca	Clave ajena
+go to the first entry	etemplate	ca	Ir a la primera entrada
+go to the last entry	etemplate	ca	Ir a la última entrada
+go to the next page of entries	etemplate	ca	Ir a la página siguiente de las entradas
+go to the previous page of entries	etemplate	ca	Ir a la página anterior de las entradas
+hbox	etemplate	ca	Cuadro horizontal
+height	etemplate	ca	Altura
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	ca	Altura de la fila (in % o píxeles), desactivar fila: [!= no]<valor>[=<check]. Ejemplo: '!@data' desactiva la fila si el contenido de los datos está vacío.
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	ca	Altura de la tabla en % o píxeles para la etiqueta de la tabla y, opcionalmente, div.
+height, disabled	etemplate	ca	Altura, desactivada
+help	etemplate	ca	Ayuda
+horizontal rule	etemplate	ca	Regla horizontal
+hour	etemplate	ca	Hora
+html	etemplate	ca	Html
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	ca	Si el campo está desactivado, la celda de la tabla estará vacía, para borrar temporalmente un campo o celda.
+image	etemplate	ca	Imagen
+import	etemplate	ca	Importar
+import an etemplate from a xml-file	etemplate	ca	Importar una plantilla de un fichero xml
+import table-definitions from existing db-table	etemplate	ca	Importar definiciones de tabla de una tabla de una base de datos existente
+import xml	etemplate	ca	Importar XML
+index/name of returned content (name of the template, link / method for image)	etemplate	ca	Nombre o índice del nombre del contenido devuelto (nombre de la plantilla, enlace o método para una imagen)
+indexed	etemplate	ca	Indexado
+indexoptions	etemplate	ca	Opciones de indexar
+insert new column behind this one	etemplate	ca	Insertar nueva columna detrás de ésta
+insert new column in front of all	etemplate	ca	Insertar nueva columna al principio de todas
+insert new row after this one	etemplate	ca	Insertar una nueva fila después de ésta
+insert new row in front of first line	etemplate	ca	Insertar una nueva fila delante de la primera línea
+integer	etemplate	ca	Entero
+key	etemplate	ca	Clave
+label	etemplate	ca	Etiqueta
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	ca	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] BotónRadio:valor Regla Hor.:[width] Plantilla:[IndexInContent] Selec.:[multiselect] Fecha:[valores: ej. 'A-m-d']
+lang	etemplate	ca	Idioma
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	ca	Abreviatura del idioma (ej. 'en' para inglés) para plantillas que dependen del idioma ('' lee las preferencias del idioma o el predeterminado. Use 'default' para la plantilla predeterminada.
+last	etemplate	ca	Última
+left	etemplate	ca	Izquierda
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	ca	longitud para char+varchar. Precisiones int: 2, 4, y float: 4, 8
+link	etemplate	ca	Enlace
+linklist	etemplate	ca	Lista de enlaces
+linkstring	etemplate	ca	Cadena de enlaces
+linkto	etemplate	ca	Enlace a
+load this template into the editor	etemplate	ca	cargar esta plantilla en el editor
+minute	etemplate	ca	Minuto
+month	etemplate	ca	Mes
+multicolumn indices	etemplate	ca	Indices multicolumna
+name	etemplate	ca	Nombre
+name of other table where column is a key from	etemplate	ca	nombre de la otra tabla donde la columna es una clave de
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	ca	nombre del conjunto de plantillas (p. ej. verdiak): " = predeterminada (leerá la plantila de preferencias. Use 'default' para leer la plantilla predeterminada ")
+name of table to add	etemplate	ca	Nombre de la tabla a añadir
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	ca	Nombre de la plantilla. Debe estar en el formato aplicación.función[,subplantilla]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	ca	necesita ser única en la tabla y no ser palabra reservada SQL. Intente poner un prefijo común de dos caracteres para la aplicación, por ejemplo 'et_'
+new search	common	ca	Nueva búsqueda
+new table created	etemplate	ca	Se ha creado una tabla nueva
+newer version '%1' exists !!!	etemplate	ca	¡Existe una versión '%1' más reciente!
+nextmatch	etemplate	ca	Siguiente coincidencia
+no file	etemplate	ca	sin fichero
+no filename given or selected via browse...	etemplate	ca	no se indicó un nombre de fichero ni se selección mediante Examinar...
+not null	etemplate	ca	NO NULO
+nothing found - try again !!!	etemplate	ca	No se encontró nada. Inténtelo de nuevo.
+nothing matched search criteria !!!	etemplate	ca	No se encontró nada con ese criterio.
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	ca	número de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	ca	número de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
+of	etemplate	ca	de
+only an other version found !!!	etemplate	ca	sólo se encontró otra versión!
+optional note about the link	etemplate	ca	nota opcional sobre el enlace
+options	etemplate	ca	Opciones
+overflow	etemplate	ca	Desbordamiento
+padding	etemplate	ca	Distancia del texto a la celda
+please enter table-name first !!!	etemplate	ca	Por favor, introduzca el nombre de la tabla primero
+pm	etemplate	ca	pm
+precision	etemplate	ca	Precisión
+primary key	etemplate	ca	Clave primaria
+primary key for the table, gets automaticaly indexed	etemplate	ca	Clave primaria para la tabla, se indexa automáticamente
+radiobutton	etemplate	ca	Botón tipo radio
+read	etemplate	ca	Leído
+read a list of entries.	etemplate	ca	Leer una lista de entradas
+read a single entry by passing the id and fieldlist.	etemplate	ca	Leer una sola entrada pasando el id y la lista de campos
+read etemplate from database (for the keys above)	etemplate	ca	leer plantilla de la base de datos (para las claves de arriba)
+remove row (can not be undone!!!)	etemplate	ca	eliminar fila (¡NO se puede deshacer!)
+remove this link (not the entry itself)	etemplate	ca	Borrar este enlace (no la entrada en sí)
+returns savely, without deleting	etemplate	ca	vuelve de forma segura, SIN borrar
+right	etemplate	ca	Derecha
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	ca	guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
+saves changes to tables_current.inc.php	etemplate	ca	guarda los cambios a tables_current.inc.php
+scale	etemplate	ca	Escala
+scale for float	etemplate	ca	scala para flotante
+search	etemplate	ca	Buscar
+select a category	etemplate	ca	seleccione una categoría
+select a primary contact, to show in the list	etemplate	ca	Seleccione un contacto primario, para mostrar en la lista
+select access	etemplate	ca	Seleccionar acceso
+select account	etemplate	ca	Seleccionar cuenta
+select an app first !!!	etemplate	ca	Seleccione una aplicación primero
+select an app to search in	etemplate	ca	Seleccione una aplicación para buscar dentro
+select an application	etemplate	ca	Seleccione una aplicación
+select an application, (*) = uninstalled	etemplate	ca	Seleccione una aplicación. (*) = sin instalar
+select an entry to link with	etemplate	ca	Seleccione una entrada para enlazar
+select an table of the application	etemplate	ca	Seleccione una tabla de la aplicación
+select application	etemplate	ca	Seleccione aplicación
+select category	etemplate	ca	Seleccione categoría
+select country	etemplate	ca	Seleccione país
+select day	etemplate	ca	Seleccione día
+select if content of field should not be translated (label gets always translated)	etemplate	ca	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
+select month	etemplate	ca	Seleccionar mes
+select number	etemplate	ca	Seleccionar número
+select one ...	etemplate	ca	Seleccionar uno...
+select percentage	etemplate	ca	Seleccionar porcentaje
+select priority	etemplate	ca	Seleccionar prioridad
+select state	etemplate	ca	Seleccionar estado
+select the indexed columns in their desired order	etemplate	ca	Seleccionar las columnas indexadas en su orden deseado
+select this etemplate to delete it	etemplate	ca	Seleccionar esta plantilla para borrarla
+select which values to show	etemplate	ca	Seleccionar qué valores mostrar
+select year	etemplate	ca	Seleccionar vista
+selectbox	etemplate	ca	Cuadro de selección
+sets today as date	etemplate	ca	pone hoy como fecha
+show	etemplate	ca	Mostrar
+show (no save)	etemplate	ca	Mostrar (sin guardar)
+show values	etemplate	ca	Mostar valores
+showing	etemplate	ca	mostrando
+shows / allows you to enter values into the etemplate for testing	etemplate	ca	muestra / permite introducir valores en la plantilla para probar
+shows/displays etemplate for testing, does not save it before	etemplate	ca	muestra la plantilla para pruebas. NO lo guarda antes
+spacing	etemplate	ca	Espaciado
+span, class	etemplate	ca	Abarcar, clase
+stack	etemplate	ca	Pila
+start a new search, cancel this link	etemplate	ca	comienza una nueva búsqueda, cancela este enlace
+start new search for the above pattern	etemplate	ca	comenzar una nueva búsqueda para el patrón de arriba
+submitbutton	etemplate	ca	Botón de enviar
+table unchanged, no write necessary !!!	etemplate	ca	Tabla no modificada, no es necesario guardarla
+tablename	etemplate	ca	Nombre de la tabla
+tabs	etemplate	ca	Pestañas
+template	etemplate	ca	Plantilla
+template deleted	etemplate	ca	Plantilla borrada
+template saved	etemplate	ca	Plantilla guardada
+text	etemplate	ca	Texto
+textarea	etemplate	ca	Area de texto
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	ca	este texto se muestra si el campo de entrada está vacío y no tiene foco (borroso)
+time	etemplate	ca	Hora
+to start the db-tools	etemplate	ca	para iniciar las Herramientas de la base de datos
+to start the etemplate editor	etemplate	ca	para iniciar el editor de plantillas
+to start the search	etemplate	ca	para iniciar la búsqueda
+today	etemplate	ca	Hoy
+type	etemplate	ca	Tipo
+type of the column	etemplate	ca	tipo de la columna
+type of the field (select label if field should be empty)	etemplate	ca	tipo del campo (seleccione la etiqueta si el campo tiene que estar vacío)
+unique	etemplate	ca	Único
+unlink	etemplate	ca	Desvincular
+update a single entry by passing the fields.	etemplate	ca	Actualizar una única entrada pasando los campos
+update from version '%s' to	etemplate	ca	Actualizar de la versión '%s' a
+upload	etemplate	ca	Subir a un servidor
+value	etemplate	ca	Valor
+vbox	etemplate	ca	VBox
+version	etemplate	ca	Versión
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	ca	número de la versión, en formato mayor.menor.revisión.número (por ej. 0.9.13.001, con todos los números rellenos con ceros)
+view this linked entry in its application	etemplate	ca	ver esta entrada enlazada en su aplicación
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	ca	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
+width	etemplate	ca	Ancho
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	ca	ancho de la columna (in % o píxeles), desactivar columna: [!= no]<valor>[=comprobar] ej: '!@data' desactiva la columna si el contenido de los datos está vacío
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	ca	Ancho de la tabla en % o píxeles para la etiqueta y, opcionalmente, elemento div
+width, disabled	etemplate	ca	Ancho, desactivado
+write <app>/setup/tables_current.inc.php	etemplate	ca	Escribir <app>/setup/tables_current.inc.php
+write langfile	etemplate	ca	Escribir fichero de idioma
+write tables	etemplate	ca	Escribir tablas
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	ca	escribe un fichero 'etemplates.inc.php' (para la aplicación en Nombre) en el directorio de instalación de la aplicación
+xml-file to import	etemplate	ca	fichero xml a importar
+xslt template	etemplate	ca	Plantilla XSLT
+year	etemplate	ca	Año
