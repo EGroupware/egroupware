@@ -1,0 +1,42 @@
+2 month ago	timesheet	pt	Há 2 meses atrás
+2 years ago	timesheet	pt	Há 2 anos atrás
+3 years ago	timesheet	pt	Há 3 anos atrás
+actions	timesheet	pt	Acções
+by	timesheet	pt	por
+create new links	timesheet	pt	Criar novas ligações
+delete this entry	timesheet	pt	Eliminar este registo
+edit this entry	timesheet	pt	Editar este registo
+empty if identical to duration	timesheet	pt	vazio se for igual à duração
+end	timesheet	pt	Fim
+entry deleted	timesheet	pt	Registo eliminado
+entry saved	timesheet	pt	Registo guardado
+error deleting the entry!!!	timesheet	pt	Erro ao eliminar o registo!!!
+error saving the entry!!!	timesheet	pt	Erro ao guardar o registo!!!
+existing links	timesheet	pt	Ligações existentes
+general	timesheet	pt	Geral
+last modified	timesheet	pt	Última modificação
+last month	timesheet	pt	Último mês
+last week	timesheet	pt	Última semana
+last year	timesheet	pt	Último ano
+leave it empty for a full week	timesheet	pt	Deixar vário para uma semana interira
+links	timesheet	pt	Ligações
+no details	timesheet	pt	Sem detalhes
+permission denied!!!	timesheet	pt	Permissão negada!!!
+price	timesheet	pt	Preço
+quantity	timesheet	pt	Quantidade
+save & new	timesheet	pt	Guardar e criar novo
+saves the changes made	timesheet	pt	Guarda as alterações efectuadas
+saves this entry and add a new one	timesheet	pt	Guarda este registo e adiciona um novo
+select a price	timesheet	pt	Seleccione um preço
+select a project	timesheet	pt	Seleccione um projecto
+start	timesheet	pt	Início
+sum %1:	timesheet	pt	Sum %1:
+this month	timesheet	pt	Este mês
+this week	timesheet	pt	Esta semana
+this year	timesheet	pt	Este ano
+timesheet	common	pt	Folha de tempo
+unitprice	timesheet	pt	Preço por unidade
+view this entry	timesheet	pt	Ver este registo
+week	timesheet	pt	Semana
+yesterday	timesheet	pt	Ontem
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pt	A sua base de dados NÃO está actualizada (%1 vs. %2). Por favor, execute a %3configuração%4 para actualizar a sua base de dados.

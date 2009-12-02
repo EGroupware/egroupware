@@ -1,0 +1,58 @@
+2 month ago	timesheet	nl	2 maanden geleden
+2 years ago	timesheet	nl	2 jaar geleden
+3 years ago	timesheet	nl	3 jaar geleden
+actions	timesheet	nl	Acties
+all projects	timesheet	nl	Alle projecten
+both: allow to use projectmanager and free project-names	admin	nl	Beiden: accepteer het gebruik van ProjectManager en zelfgekozen projectnamen
+by	timesheet	nl	door
+create new links	timesheet	nl	Creëer nieuwe links
+creating new entry	timesheet	nl	een nieuw item aanmaken
+delete this entry	timesheet	nl	Verwijder dit item
+edit this entry	timesheet	nl	Wijzig dit item
+empty if identical to duration	timesheet	nl	leeg indien gelijk aan duur
+end	timesheet	nl	Einde
+entry deleted	timesheet	nl	Item verwijderd
+entry saved	timesheet	nl	Item opgeslagen
+error deleting the entry!!!	timesheet	nl	Fout bij verwijderen van het item !!!
+error saving the entry!!!	timesheet	nl	Fout bij opslaan van het item !!!
+existing links	timesheet	nl	Bestaande links
+export to openoffice spreadsheet	timesheet	nl	Export naar OpenOffice rekenblad
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
+field must not be empty !!!	timesheet	nl	Veld mag niet leeg zijn !!!
+full: use only projectmanager	admin	nl	Volledig: alleen de ProjectManager gebruiken
+general	timesheet	nl	Algemeen
+last modified	timesheet	nl	Laatst gewijzigd
+last month	timesheet	nl	Vorige maand
+last week	timesheet	nl	Vorige week
+last year	timesheet	nl	Vorig jaar
+leave it empty for a full week	timesheet	nl	Laat het leeg voor een volle week
+links	timesheet	nl	Links
+no details	timesheet	nl	geen details
+no project	timesheet	nl	Geen project
+none: use only free project-names	admin	nl	Geen: gebruik uitsluitend zelfgekozen projectnamen
+or endtime	timesheet	nl	of eindtijd
+permission denied!!!	timesheet	nl	Toegang geweigerd!!!
+price	timesheet	nl	Tarief
+projectmanager integration	admin	nl	ProjectManager integratie
+quantity	timesheet	nl	Hoeveelheid
+save & new	timesheet	nl	Opslaan & Nieuw
+saves the changes made	timesheet	nl	Bewaar de gemaakte wijzigingen
+saves this entry and add a new one	timesheet	nl	Bewaar dit item en maak een nieuwe
+select a price	timesheet	nl	Selecteer een tarief
+select a project	timesheet	nl	Selecteer een project
+show a quantity sum (eg. to sum up negative overtime)	admin	nl	Toont een optelling van hoeveelheid (bijvoorbeeld om negatieve overtijd op te tellen)
+start	timesheet	nl	Start
+starttime	timesheet	nl	Aanvangstijd
+starttime has to be before endtime !!!	timesheet	nl	Aanvangstijd moet voor de eindtijd liggen !!!
+sum %1:	timesheet	nl	Sommeer %1:
+this month	timesheet	nl	Deze maand
+this week	timesheet	nl	Deze week
+this year	timesheet	nl	Dit jaar
+timesheet	common	nl	Urenregistratie
+timesheet csv export	timesheet	nl	Urenregistratie CSV export
+timesheet openoffice export	timesheet	nl	Urenregistratie OpenOffice export
+unitprice	timesheet	nl	Eenheidstarief
+view this entry	timesheet	nl	Dit item weergeven
+week	timesheet	nl	Week
+yesterday	timesheet	nl	Gisteren
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	nl	Uw database is niet up to date (%1 vs. %2), draai s.v.p. %3setup%4 om uw database bij te werken.
