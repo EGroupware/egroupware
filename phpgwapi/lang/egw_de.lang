@@ -1,0 +1,763 @@
+%1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
+%1 file	common	de	%1 Datei
+%1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	de	%1Anderes Verzeichnis auswählen%2<br />oder %3 vom Webserver beschreibbar machen
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1EGroupware%2 ist eine, in %3PHP%4 programmierte, webbasierende, mehrbenutzer Groupware Suite.
+(session restored in %1 seconds)	common	de	(Sitzung in %1 Sekunden wiederhergestellt)
+(shift-)click or drag to change value	jscalendar	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
+- click on any of the time parts to increase it	jscalendar	de	- Auf Uhrzeit clicken um sie zu erhöhen
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	de	- für eine schnelle Auswahl die Maus gedrückt halten auf jedem der obigen Knöpfe
+- or click and drag for faster selection.	jscalendar	de	- oder clicken und ziehen für eine schnelle Auswahl
+- or shift-click to decrease it	jscalendar	de	- oder Umschalten-click um sie zu verkleinern
+- use the %1, %2 buttons to select month	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Monat auszuwählen
+- use the %1, %2 buttons to select year	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Jahr auszuwählen
+00 (disable)	admin	de	00 (deaktiviert)
+1 day	common	de	1 Tag
+1 hour	common	de	1 Stunde
+1 month	common	de	1 Monat
+1 week	common	de	1 Woche
+13 (ntp)	admin	de	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	de	2
+3 number of chars for month-shortcut	jscalendar	de	3
+80 (http)	admin	de	80 (http)
+about	common	de	Über
+about %1	common	de	Über %1
+about egroupware	common	de	Über EGroupware
+about the calendar	jscalendar	de	Über den Kalender
+access	common	de	Zugriff
+access not permitted	common	de	Zugriff verweigert
+account has been created	common	de	Benutzerkennung wurde angelegt
+account has been deleted	common	de	Benutzerkennung wurde gelöscht
+account has been updated	common	de	Benutzerkennung wurde aktualisiert
+account is expired	common	de	Benutzerkennung ist abgelaufen
+accounts	common	de	Benutzerkonten
+acl	common	de	ACL
+action	common	de	Aktion
+active	common	de	Aktiv
+add	common	de	Hinzufügen
+add %1 category for	common	de	%1 Kategorie hinzufügen für
+add category	common	de	Kategorie hinzufügen
+add shortcut	common	de	Abkürzung hinzufügen
+add sub	common	de	Untergeordnete hinzufügen
+addressbook	common	de	Adressbuch
+admin	common	de	Admin
+administration	common	de	Administration
+afghanistan	common	de	AFGHANISTAN
+albania	common	de	ALBANIEN
+algeria	common	de	ALGERIEN
+all	common	de	alle
+all fields	common	de	alle Felder
+all languages	common	de	Alle Sprachen
+alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
+alternate style-sheet:	common	de	Alternatives Stylesheet
+american samoa	common	de	AMERICANISCH SAMOA
+an error happened	common	de	Ein Fehler trat auf
+an existing and by the webserver readable directory enables the image browser and upload.	common	de	Ein existierendes UND vom Webserver lesbares Verzeichnis, schaltet den Bild Browser und Upload ein.
+andorra	common	de	ANDORRA
+angola	common	de	ANGOLA
+anguilla	common	de	ANGUILLA
+antarctica	common	de	ANTARKTIS
+antigua and barbuda	common	de	ANTIGUA UND BARBUDA
+application	common	de	Anwendung
+apply	common	de	Übernehmen
+april	common	de	April
+are you sure you want to delete these entries ?	common	de	Sind Sie sicher, daß Sie diese Einträge löschen wollen?
+are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
+argentina	common	de	ARGENTIEN
+armenia	common	de	ARMENIEN
+aruba	common	de	ARUBA
+august	common	de	August
+australia	common	de	AUSTRALIEN
+austria	common	de	ÖSTERREICH
+author	common	de	Autor
+autohide sidebox menu's	common	de	Linkes Navigationsmenü ausblenden
+autohide sidebox menus	common	de	Linkes Navigationsmenü ausblenden
+automatically hide the sidebox menu's?	common	de	Automatisch das linkes Navigationsmenü ausblenden
+automatically hide the sidebox menus?	common	de	Automatisch das linkes Navigationsmenü ausblenden
+autosave default category	common	de	Standard-Kategorie automatisch speichern
+azerbaijan	common	de	ASERBAIDSCHAN
+back	common	de	Zurück
+back to user login	common	de	Zurück zur Benutzer Anmeldung
+background color:	common	de	Hintergrund Farbe:
+backupdir '%1' is not writeable by the webserver	common	de	Backupverzeichnis '%1' ist nicht vom Webserver beschreibbar
+bad login or password	common	de	Falscher Benutzername oder Passwort
+bahamas	common	de	BAHAMAS
+bahrain	common	de	BAHRAIN
+bangladesh	common	de	BANGLADESH
+barbados	common	de	BARBADOS
+bcc	common	de	Blindkopie
+belarus	common	de	BELORUSSLAND (WEISSRUSSLAND)
+belgium	common	de	BELGIEN
+belize	common	de	BELIZE
+benin	common	de	BENIN
+bermuda	common	de	BERMUDA
+bhutan	common	de	BHUTAN
+blocked, too many attempts	common	de	Gesperrt, zu viele Versuche
+bold	common	de	Fett
+bolivia	common	de	BOLIVIEN
+border	common	de	Rahmen
+bosnia and herzegovina	common	de	BOSNIEN UND HERZEGOVINA
+botswana	common	de	BOTSWANA
+bottom	common	de	Unten
+bouvet island	common	de	BOUVET INSELN
+brazil	common	de	BRASILIEN
+british indian ocean territory	common	de	BRITISCH INDIEN OZEAN TERRITORIUM
+brunei darussalam	common	de	BRUNEI DARUSSALAM
+bulgaria	common	de	BULGARIEN
+bulgarian	common	de	Bulgarisch
+burkina faso	common	de	BURKINA FASO
+burundi	common	de	BURUNDI
+calendar	common	de	Kalender
+cambodia	common	de	KAMBODSCHA
+cameroon	common	de	KAMERUN
+canada	common	de	KANADA
+cancel	common	de	Abbrechen
+cannot replace %1 because it is a directory	common	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
+cant open '%1' for %2	common	de	Kann '%1' nicht zum %2 öffnen
+cape verde	common	de	KAP VERDE
+caption	common	de	Text
+categories	common	de	Kategorien
+categories for	common	de	Kategorien für
+category	common	de	Kategorie
+category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt !
+category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet !
+cayman islands	common	de	KAIMAN INSELN
+cc	common	de	Kopie
+centered	common	de	zentriert
+central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
+chad	common	de	TSCHAD
+change	common	de	ändern
+charset	common	de	utf-8
+check installation	common	de	Installation überprüfen
+check now	common	de	jetzt überprüfen
+chile	common	de	CHILE
+china	common	de	CHINA
+choose a background color	common	de	Wählen Sie eine Hintergrundfarbe
+choose a background color for the icons	common	de	Wählen Sie eine Hintergrundfarbe für die Knöpfe
+choose a background image.	common	de	Wählen Sie ein Hintergrundbild.
+choose a background style.	common	de	Wählen Sie einen Hintergrundstil.
+choose a text color for the icons	common	de	Wählen Sie eine Textfarbe für die Knöpfe
+choose the category	common	de	Kategorie auswählen
+choose the parent category	common	de	Wählen der übergeordneten Kategorie
+christmas island	common	de	WEIHNACHTS INSEL
+clear	common	de	Zurücksetzen
+clear form	common	de	Eingaben löschen
+click	common	de	Klicken
+click here to resume your egroupware session.	common	de	Hier klicken um die EGroupware Sitzung wieder auf zu nehmen.
+click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
+click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen?
+click this image on the navbar: %1	common	de	Klicken Sie auf dieses Symbol in der Navigation: %1
+close	common	de	Schließen
+close sidebox	common	de	Seitenmenü schließen
+cocos (keeling) islands	common	de	COCOS INSELN
+colombia	common	de	KOLUMBIEN
+common preferences	common	de	Allgemeine Einstellungen
+comoros	common	de	KOMOREN
+company	common	de	Unternehmen
+congo	common	de	KONGO
+congo, the democratic republic of the	common	de	KONGO, DIE DEMOKRATISCHE REPUBLIK DES
+contacting server...	common	de	Kontaktiere Server...
+cook islands	common	de	COOK INSELN
+copy	common	de	Kopieren
+costa rica	common	de	COSTA RICA
+cote d ivoire	common	de	COTE D IVOIRE
+could not contact server. operation timed out!	common	de	Konnte Sever nicht kontaktieren. Die Zeit lief ab!
+create	common	de	Erstellen
+created by	common	de	Erstellt von
+croatia	common	de	KROATIEN
+cuba	common	de	KUBA
+currency	common	de	Währung
+current	common	de	derzeit
+current users	common	de	Derzeit angemeldete Benutzer
+cyprus	common	de	ZYPERN
+czech republic	common	de	TSCHECHISCHE REPUBLIK
+database error	common	de	Datenbank Fehler
+database error!	common	de	Datenbank Fehler!
+date	common	de	Datum
+date due	common	de	fällig am
+date selection:	jscalendar	de	Datum auswählen:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn sie Port 13 benützen, bitte die Regeln der Firewall entsprechend anpassen bevor sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	de	Dezember
+default category	common	de	Standard-Kategorie
+default height for the windows	common	de	Vorgabewert für Höhe des Fensters
+default width for the windows	common	de	Vorgabewert für Breite des Fensters
+delete	common	de	Löschen
+delete row	common	de	Zeile löschen
+denmark	common	de	DÄNEMARK
+description	common	de	Beschreibung
+detail	common	de	Detail
+details	common	de	Details
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Ausführen des Bugfix-Scripts für Internet Explorer 5.5 und höher, zum Darstellen von transparenten PNG-Bildern abschalten?
+direction left to right	common	de	Richtung links nach rechts
+directory	common	de	Verzeichnis
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	de	Verzeichnis existiert nicht, ist nicht vom Webserver lesbar oder ist nicht relative zur Dokumentroot!
+disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG-Bilder-Bugfix abschalten
+disable slider effects	common	de	Schwebeeffekte des Navigationsmenüs abschalten
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim Anzeigen oder Verstecken des navigations Menüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Ausschalten des Fehlerbehebungsskripts für den Internetexplorer 5.5 und höher, um transparente PNG-Bilder anzuzeigen?
+disabled	common	de	Deaktiviert
+display %s first	jscalendar	de	%s zuerst anzeigen
+djibouti	common	de	DJIBOUTI
+do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
+doctype:	common	de	DOCTYPE:
+document properties	common	de	Dokument Eigentschaften
+document title:	common	de	Title des Dokuments:
+domain	common	de	Domain
+domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, zB. "%1"
+domestic	common	de	Inland
+dominica	common	de	DOMINICA
+dominican republic	common	de	DOMÄNIKANISCHE REPUBLIK
+done	common	de	Fertig
+drag to move	jscalendar	de	Ziehen um zu Bewegen
+e-mail	common	de	E-Mail
+east timor	common	de	OST TIMOR
+eastern european	common	de	Östeuropäische
+ecuador	common	de	EQUADOR
+edit	common	de	Editieren
+edit %1 category for	common	de	%1 Kategorie editieren für
+edit categories	common	de	Kategorien editieren
+edit category	common	de	Kategorie editieren
+egroupware	common	de	EGroupware
+egroupware api version	common	de	EGroupware API Version
+egroupware: login blocked for user '%1', ip %2	common	de	EGroupware: Anmelden gesperrt für Benutzer '%1', IP %2
+egypt	common	de	ÄGYPTEN
+el salvador	common	de	EL SALVADOR
+email	common	de	E-Mail
+email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B. "%1"
+enabled	common	de	Verfügbar
+end date	common	de	Enddatum
+end time	common	de	Endzeit
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware   or   /egroupware<br><b> KEINEN Slash "/" am ende</b>
+entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
+entry not found!	common	de	Eintrag nicht gefunden!
+entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
+equatorial guinea	common	de	EQUATORIAL GUINEA
+eritrea	common	de	ERITREA
+error	common	de	Fehler
+error creating %1 %2 directory	common	de	Fehler beim Erstellen des Verzeichnisses %1 %2
+error deleting %1 %2 directory	common	de	Fehler beim Löschen des Verzeichnisses %1 %2
+error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
+estonia	common	de	ESTONIEN
+ethiopia	common	de	ETHIOPIEN
+everything	common	de	Alles
+exact	common	de	exakt
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Adminstrator wenn das fehlschlägt.
+falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
+faroe islands	common	de	FAROE INSELN
+fax number	common	de	Fax Nummer
+features of the editor?	common	de	Features des Editors?
+february	common	de	Februar
+fields	common	de	Felder
+fiji	common	de	FIJI
+files	common	de	Dateien
+filter	common	de	Filter
+finland	common	de	FINLAND
+first name	common	de	Vorname
+first name of the user, eg. "%1"	common	de	Vorname des Benutzers, zB. "%1"
+first page	common	de	Erste Seite
+firstname	common	de	Vorname
+fixme!	common	de	KORREGIER MICH!
+folder already exists.	common	de	Verzeichnis existiert bereits.
+force selectbox	common	de	Auswahlfeld erzwingen
+forever	common	de	Für immer
+france	common	de	FRANKREICH
+french guiana	common	de	FRANZÖSISCH GUIANA
+french polynesia	common	de	FRANZÖSISCH POLYNESIEN
+french southern territories	common	de	FRENCH SOUTHERN TERRITORIES
+friday	common	de	Freitag
+ftp	common	de	FTP
+fullname	common	de	Vor+Nachname
+fullscreen mode	common	de	Vollbild Modus
+gabon	common	de	GABON
+gambia	common	de	GAMBIA
+general menu	common	de	Hauptmenü
+georgia	common	de	GEORGIEN
+german	common	de	Deutsch
+germany	common	de	DEUTSCHLAND
+ghana	common	de	GHANA
+gibraltar	common	de	GIBRALTAR
+global	common	de	Global
+global public	common	de	Global Public
+go today	jscalendar	de	Heute setzen
+grant access	common	de	Zugriff gewähren
+greece	common	de	GRIECHENLAND
+greek	common	de	Griechisch
+greenland	common	de	GRÖNLAND
+grenada	common	de	GRENADA
+group	common	de	Gruppe
+group access	common	de	Gruppenzugriff
+group has been added	common	de	Gruppe wurde zugefügt
+group has been deleted	common	de	Gruppe wurde  gelöscht
+group has been updated	common	de	Gruppe wurde  aktualisiert
+group name	common	de	Gruppenname
+group public	common	de	Group Public
+groups	common	de	Gruppen
+groups with permission for %1	common	de	Gruppen mit Berechtigung für %1
+groups without permission for %1	common	de	Gruppen ohne Berechtigung für %1
+guadeloupe	common	de	GUADELOUPE
+guam	common	de	GUAM
+guatemala	common	de	GUATEMALA
+guinea	common	de	GUINEA
+guinea-bissau	common	de	GUINEA-BISSAU
+guyana	common	de	GUYANA
+haiti	common	de	HAITI
+heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
+height	common	de	Höhe
+help	common	de	Hilfe
+high	common	de	Hoch
+highest	common	de	Höchste
+holy see (vatican city state)	common	de	VATICAN
+home	common	de	Home
+home email	common	de	private E-Mail
+honduras	common	de	HONDURAS
+hong kong	common	de	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Nabigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
+how to show the general egroupware menu ?	common	de	Wie soll das allgemeine EGroupware Menü angezeigt werden
+hungary	common	de	UNGARN
+iceland	common	de	ISLAND
+iespell not detected. click ok to go to download page.	common	de	ieSpell nicht gefunden. OK klicken um zur Download Seite zu gehen.
+if the clock is enabled would you like it to update it every second or every minute?	common	de	Wenn die Uhr eingeschaltet ist, wollen Sie dass sie sekündlich aktualisiert wird?
+if there are some images in the background folder you can choose the one you would like to see.	common	de	Wenn mehrere Bild im Hintergrund Ordner sind können Sie wählen welches Sie sehen wollen.
+image directory relative to document root (use / !), example:	common	de	Bildverzeichnis relative zur Dokumentroot (benutze / !), Beispliel:
+image url	common	de	Bild URL
+india	common	de	INDIEN
+indonesia	common	de	INDONESIEN
+insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der %2 Kontakte in %3 einfügen
+insert column after	common	de	Spalte danach einfügen
+insert column before	common	de	Spalte davor einfügen
+insert row after	common	de	Zeile danach einfügen
+insert row before	common	de	Zeile davor einfügen
+international	common	de	International
+invalid filename	common	de	Ungültiger Dateiname
+invalid ip address	common	de	Ungültige IP Adresse
+invalid password	common	de	Ungültiges Passwort
+iran, islamic republic of	common	de	IRAN, ISLAMISCHE REPUBLIC
+iraq	common	de	IRAQ
+ireland	common	de	IRELAND
+israel	common	de	ISRAEL
+it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
+it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
+italic	common	de	Kursiv
+italy	common	de	ITALIEN
+jamaica	common	de	JAMAICA
+january	common	de	Januar
+japan	common	de	JAPAN
+japanese	common	de	Japanisch
+jordan	common	de	JORDANIEN
+july	common	de	Juli
+jun	common	de	Jun
+june	common	de	Juni
+justify center	common	de	Ausrichtung mittig
+justify full	common	de	Ausrichtung im Block
+justify left	common	de	Ausrichtung links
+justify right	common	de	Ausrichtung rechts
+kazakstan	common	de	KAZAKSTAN
+kenya	common	de	KENIA
+keywords	common	de	Schlüsselwort
+kiribati	common	de	KIRIBATI
+korea, democratic peoples republic of	common	de	KOREA, DEMOKRATISCHE VOLKSREPUBLIK
+korea, republic of	common	de	KOREA, REPUBLIK
+korean	common	de	Koreanisch
+kuwait	common	de	KUWAIT
+kyrgyzstan	common	de	KYRGYZSTAN
+language	common	de	Sprache
+lao peoples democratic republic	common	de	LAOS, VOLKSREPUBLIK
+last name	common	de	Name
+last name of the user, eg. "%1"	common	de	Familienname des Benutzers, zB. "%1"
+last page	common	de	Letzte Seite
+lastname	common	de	Name
+latvia	common	de	LATVIA
+ldap-mgr	common	de	LDAP-Manager
+lebanon	common	de	LIBANON
+left	common	de	Links
+lesotho	common	de	LESOTHO
+liberia	common	de	LYBIEN
+libyan arab jamahiriya	common	de	LIBYAN ARAB JAMAHIRIYA
+license	common	de	Lizenz
+liechtenstein	common	de	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	de	Zeile %1: '%2'<br /><b>CSV enthalten ##last-check-run## der Tabelle %3 ==> ignoriert</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	de	Zeile %1: '%2'<br /><b>CSV haben andere Spaltenanzahl als Tabelle %3 ==> ignoriert</b>
+list	common	de	Liste
+list members	common	de	Mitglieder anzeigen
+lithuania	common	de	LITAUEN
+local	common	de	lokal
+login	common	de	Anmelden
+loginid	common	de	Benutzerkennung
+logout	common	de	Abmelden
+lost login id	common	de	Anmeldenamen vergessen
+lost password	common	de	Anmeldepasswort vergessen
+low	common	de	Niedrig
+lowest	common	de	Niedrigst
+luxembourg	common	de	LUXEMBURG
+macau	common	de	MACAU
+macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
+madagascar	common	de	MADAGASCAR
+mail domain, eg. "%1"	common	de	Mail Domain, zB. "%1"
+main category	common	de	Hauptkategorie
+main screen	common	de	Startseite
+maintainer	common	de	Maintainer
+malawi	common	de	MALAWI
+malaysia	common	de	MALAYSIA
+maldives	common	de	MALDIVEN
+mali	common	de	MALI
+malta	common	de	MALTA
+march	common	de	März
+marshall islands	common	de	MARSHALL ISLANDS
+martinique	common	de	MARTINIQUE
+mauritania	common	de	MAURITANIEN
+mauritius	common	de	MAURITIUS
+max number of icons in navbar	common	de	Maximale Anzahl der Icons in der Menüleiste
+may	common	de	Mai
+mayotte	common	de	MAYOTTE
+medium	common	de	Mittel
+menu	common	de	Menü
+message	common	de	Nachricht
+mexico	common	de	MEXICO
+micronesia, federated states of	common	de	MICRONESIEN, VEREINIGTE STAATEN VON
+minute	common	de	Minute
+moldova, republic of	common	de	MOLDAVIEN, REPUBLIK
+monaco	common	de	MONACO
+monday	common	de	Montag
+mongolia	common	de	MONGOLEI
+montenegro	common	de	MONTENEGRO
+montserrat	common	de	MONTSERRA
+morocco	common	de	MAROCCO
+mozambique	common	de	MOZAMBIQUE
+multiple	common	de	mehrere
+myanmar	common	de	MYANMAR
+name	common	de	Name
+name of the user, eg. "%1"	common	de	Name des Benutzers, zB. "%1"
+namibia	common	de	NAMIBIEN
+nauru	common	de	NAURU
+nepal	common	de	NEPAL
+netherlands	common	de	NIEDERLANDE
+netherlands antilles	common	de	NIEDERLÄNDISCHE ANTILLEN
+never	common	de	Niemals
+new caledonia	common	de	NEU CALEDONIEN
+new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugefügt
+new main category	common	de	neue Hauptkategorie
+new value	common	de	Neuer Wert
+new zealand	common	de	NEUSEELAND
+next	common	de	Nächste
+next month (hold for menu)	jscalendar	de	Nächster Monat (halten für Menü)
+next page	common	de	Nächste Seite
+next year (hold for menu)	jscalendar	de	Nächstes Jahr (halten für Menü)
+nicaragua	common	de	NICARAGUA
+niger	common	de	NIGER
+nigeria	common	de	NIGERIA
+niue	common	de	NIUE
+no	common	de	Nein
+no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
+no history for this record	common	de	Keine Historie für diesen Datensatz
+no savant2 template directories were found in:	common	de	Kein Savant2 Vorlagen Verzeichnis gefunden in:
+no subject	common	de	Kein Betreff
+none	common	de	Keine
+norfolk island	common	de	NORFOLK INSELN
+normal	common	de	Normal
+northern mariana islands	common	de	NORTHERN MARIANA ISLANDS
+norway	common	de	NORWEGEN
+not	common	de	nicht
+not a user yet? register now	common	de	Noch kein Benutzer? Registrieren Sie sich jetzt
+not assigned	common	de	nicht zugewiesen
+not readable %1 entry of user %2	common	de	Nicht lesbarer %1 Eintrag des Benutzers %2
+note	common	de	Notiz
+notes	common	de	Notizen
+notifications	common	de	Benachrichtigungen
+notify window	common	de	Benachrichtigungsfenster
+notify your administrator to correct this situation	common	de	Benachrichtigen Sie Ihren Administration um diese Situation zu lösen
+november	common	de	November
+october	common	de	Oktober
+ok	common	de	OK
+old value	common	de	Alter Wert
+oman	common	de	OMAN
+on *nix systems please type: %1	common	de	Auf *nix systemen bitte %1 eingeben
+on mouse over	common	de	On Maus Over
+only private	common	de	nur private
+only yours	common	de	nur eigene
+oops! you caught us in the middle of system maintainance.	common	de	Hoppla! Sie haben uns in der Mitte einer Systemwartung erwischt.
+open notify window	common	de	Benachrichtigungsfenster öffnen
+open popup window	common	de	Popup Fenster öffnen
+open sidebox	common	de	Seitenmenü öffnen
+ordered list	common	de	Nummerierung
+original	common	de	Original
+other	common	de	Andere
+overview	common	de	Überblick
+owner	common	de	Besitzer
+page	common	de	Seite
+page was generated in %1 seconds	common	de	Seite wurde erstellt in %1 Sekunden
+pakistan	common	de	PAKISTAN
+palau	common	de	PALAU
+palestinian territory, occupied	common	de	PALESTINENSISCHES TERRITORIUM, BESETZT
+panama	common	de	PANAMA
+papua new guinea	common	de	PAPUA NEU GUINEA
+paraguay	common	de	PARAGUAY
+parcel	common	de	Paket
+parent category	common	de	Übergeordnete Kategorie
+password	common	de	Passwort
+password could not be changed	common	de	Passwort konnte nicht geändert werden
+password has been updated	common	de	Passwort wurde aktualisiert
+password must contain at least %1 lowercase letters	common	de	Das Passwort muss mindestens %1 Kleinbuchstaben enthalten
+password must contain at least %1 numbers	common	de	Das Passwort muss mindestens %1 Nummern enthalten
+password must contain at least %1 special characters	common	de	Das Passwort muss mindestens %1 Sonderzeichen enthalten
+password must contain at least %1 uppercase letters	common	de	Das Passwort muss mindestens %1 Großbuchstaben enthalten
+password must have at least %1 characters	common	de	Das Passwort muss mindestens %1 Zeichen lang sein
+path to user and group files has to be outside of the webservers document-root!!!	common	de	Der Pfad für Benutzer oder Gruppen Ordner muss ausserhalb des Webserver Root Verzeichnisses liegen (Webserver Root = /var/www/html; Pfad für Benutzer/Gruppen Ordner /var/www
+permission denied!	common	de	Zugriff verweigert!
+permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien / Benutzerverzeichnissen
+personal	common	de	persönlich
+peru	common	de	PERU
+philippines	common	de	PHILIPPINEN
+phone number	common	de	Telefonnummer
+phpgwapi	common	de	EGroupware API
+pitcairn	common	de	PITCAIRN
+please %1 by hand	common	de	Bitte %1 per Hand
+please enter a name	common	de	Bitte geben Sie einen Namen ein !
+please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
+please select	common	de	Bitte wählen
+please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
+please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Anwendung !
+please wait...	common	de	Bitte warten...
+please, check back with us shortly.	common	de	Bitte schauen Sie bald wieder vorbei.
+poland	common	de	POLEN
+portugal	common	de	PORTUGAL
+postal	common	de	Postadresse
+powered by	common	de	Powered by
+powered by egroupware version %1	common	de	Powered by <a href="http://www.egroupware.org" target="_blank">EGroupware</a> version %1
+preferences	common	de	Einstellungen
+preferences for the idots template set	common	de	Einstellungen für das Idots Template
+prev. month (hold for menu)	jscalendar	de	Vorheriger Monat (halten für Menü)
+prev. year (hold for menu)	jscalendar	de	Vorheriges Jahr (halten für Menü)
+previous page	common	de	Vorherige Seite
+primary style-sheet:	common	de	Haupt-Stylesheet:
+print	common	de	Drucken
+priority	common	de	Priorität
+private	common	de	Privat
+programs	common	de	Programme
+project	common	de	Projekt
+public	common	de	öffentlich
+puerto rico	common	de	PUERTO RICO
+qatar	common	de	QATAR
+read	common	de	Lesen
+read this list of methods.	common	de	Diese Liste der Methoden lesen.
+reading	common	de	lesen
+register	common	de	Registieren
+regular	common	de	Normal
+reject	common	de	Zurückweisen
+remember me	common	de	Mich erinnern
+remove selected accounts	common	de	Ausgewähle Benutzer entfernen
+remove shortcut	common	de	Abkürzung entfernen
+rename	common	de	Umbenennen
+replace	common	de	Ersetzen
+replace with	common	de	Ersetzem durch
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
+returns an array of todo items	common	de	Liefert ein array mit ToDo Einträgen
+returns struct of users application access	common	de	Liefert Strucktur mit Benutzerzugriffsrechten auf Anwendungen
+reunion	common	de	REUNION
+right	common	de	Rechts
+romania	common	de	RUMÄNIEN
+russian	common	de	Russisch
+russian federation	common	de	RUSSISCHE FÖDERATION
+rwanda	common	de	RWANDA
+saint helena	common	de	SANKT HELENA
+saint kitts and nevis	common	de	SAINT KITTS AND NEVIS
+saint lucia	common	de	SANTA LUCIA
+saint pierre and miquelon	common	de	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	de	SAINT VINCENT AND THE GRENADINES
+samoa	common	de	SAMOA
+san marino	common	de	SAN MARINO
+sao tome and principe	common	de	SAO TOME AND PRINCIPE
+saturday	common	de	Samstag
+saudi arabia	common	de	SAUDI ARABIEN
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	de	Savant2 Version unterscheidet sich von Savant2 Wrapper<br />Diese Version: %1<br />Savant version: %2
+save	common	de	Speichern
+search	common	de	Suchen
+search %1 '%2'	common	de	Suche %1 '%2'
+search accounts	common	de	Benutzer suchen
+search or select accounts	common	de	Suchen und auswählen von Benutzern
+second	common	de	Sekunden
+section	common	de	Sektion
+select	common	de	Auswählen
+select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
+select category	common	de	Kategorie auswählen
+select date	common	de	Datum auswählen
+select group	common	de	Gruppe auswählen
+select home email address	common	de	private E-Mail-Adresse auswählen
+select multiple accounts	common	de	mehrere Benutzer auswählen
+select one	common	de	Eine(n) auswählen
+select the default height for the application windows	common	de	Vorgabewert für Höhe des Anwendungsfensters auswählen
+select the default width for the application windows	common	de	Vorgabewert für Breite des Anwendungsfensters auswählen
+select user	common	de	Benutzer auswählen
+select work email address	common	de	geschäftl. E-Mail-Addresse auswählen
+selection	common	de	Auswahl
+send	common	de	Abschicken
+senegal	common	de	SENEGAL
+september	common	de	September
+serbia	common	de	SERBIEN
+server %1 has been added	common	de	Server %1 wurde zugefügt
+server answered. processing response...	common	de	Server antwortet. Bearbeite Antwort...
+server contacted. waiting for response...	common	de	Server kontaktiert. Warte auf Antwort...
+server name	common	de	Server Name
+session has been killed	common	de	Session wurde gelöscht
+setup	common	de	Setup
+setup main menu	common	de	Setup Hauptmenü
+seychelles	common	de	SEYCHELLEN
+show all	common	de	alle anzeigen
+show all categorys	common	de	Alle Kategorien anzeigen
+show as topmenu	common	de	Menü oben anzeigen
+show clock?	common	de	Uhr anzeigen?
+show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Knopf in Hauptnavigation Balken?
+show in sidebox	common	de	In Seitenmenü anzeigen
+show logo's on the desktop.	common	de	Logos auf der Arbeitsfläche anzeigen.
+show menu	common	de	Menü anzeigen
+show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
+show page generation time on the bottom of the page?	common	de	Zeit zum Erstellen der Seite in der Fußzeile anzeigen
+show page generation time?	common	de	Erstellungszeit der Seite anzeigen?
+show the logo's of egroupware and x-desktop on the desktop.	common	de	Zeige Logos von EGroupware und x-desktop auf der Arbeitsfläche.
+show_more_apps	common	de	Mehr Applikationen anzeigen
+showing %1	common	de	%1 Einträge
+showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
+sierra leone	common	de	SIERRA LEONE
+simple	common	de	Einfach
+singapore	common	de	SINGAPUR
+site configuration	common	de	Konfiguration der Anwendung
+slovakia	common	de	SLOVAKEI
+slovenia	common	de	SLOVENIEN
+solomon islands	common	de	SOLOMON INSELN
+somalia	common	de	SOMALIA
+sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
+south africa	common	de	SÜDAFRIKA
+south georgia and the south sandwich islands	common	de	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spain	common	de	SPANIEN
+sri lanka	common	de	SRI LANKA
+start date	common	de	Startdatum
+start time	common	de	Startzeit
+start with	common	de	beginnt mit
+starting up...	common	de	Starte...
+status	common	de	Status
+stretched	common	de	ausgedehnt
+subject	common	de	Betreff
+submit	common	de	Absenden
+substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
+sudan	common	de	SUDAN
+sunday	common	de	Sonntag
+suriname	common	de	SURINAME
+svalbard and jan mayen	common	de	SVALBARD AND JAN MAYEN
+swaziland	common	de	SWAZILAND
+sweden	common	de	SCHWEDEN
+switzerland	common	de	SCHWEIZ
+syrian arab republic	common	de	SYRIEN, ARABISCHE REPUBLIK
+table properties	common	de	Tabelleneigenschaften
+taiwan	common	de	TAIWAN/TAIPEI
+tajikistan	common	de	TAJIKISTAN
+tanzania, united republic of	common	de	TANZANIA, VEREINIGTE REPUBLIK
+text color:	common	de	Textfarbe:
+thailand	common	de	THAILAND
+the api is current	common	de	Die API ist aktuell
+the api requires an upgrade	common	de	Die API benötigt eine Aktualisierung
+the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
+the mail server returned	common	de	Der E-Mail-Server liefert zurück
+this application is current	common	de	Diese Anwendung ist aktuell
+this application requires an upgrade	common	de	Diese Anwendung benötigt eine Aktualisierung
+this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
+thursday	common	de	Donnerstag
+tiled	common	de	gekachelt
+time	common	de	Zeit
+time selection:	jscalendar	de	Zeitauswahl:
+time zone	common	de	Zeitzone
+time zone offset	common	de	Zeitzonendifferenz
+title	common	de	Titel
+to	common	de	An
+to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, müssen sie folgendes setzen:
+to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
+today	common	de	Heute
+todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
+toggle first day of week	jscalendar	de	ersten Tag der Woche wechseln
+togo	common	de	TOGO
+tokelau	common	de	TOKELAU
+tonga	common	de	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Versuche sich anzumelden: %1 für den Benutzer '%2', %3 für die IP %4
+top	common	de	Oben
+total	common	de	Gesamt
+transparant bg for the icons?	common	de	Transparenter Hintergrund für Symbole
+trinidad and tobago	common	de	TRINIDAD AND TOBAGO
+tuesday	common	de	Dienstag
+tunisia	common	de	TUNISIEN
+turkey	common	de	TÜRKEI
+turkmenistan	common	de	TURKMENISTAN
+turks and caicos islands	common	de	TURKS AND CAICOS ISLANDS
+tuvalu	common	de	TUVALU
+type	common	de	Typ
+uganda	common	de	UGANDA
+ukraine	common	de	UKRAINE
+underline	common	de	Unterstrichen
+united arab emirates	common	de	VEREINIGTEN ARABISCHEN EMIRATE
+united kingdom	common	de	GROSSBRITANIEN
+united states	common	de	VEREINIGTE STAATEN VON AMERIKA
+united states minor outlying islands	common	de	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	de	Unbekannt
+update	common	de	Aktualisieren
+update the clock per minute or per second	common	de	Uhr minütlich oder sekündlich aktualisieren
+upload	common	de	Hochladen
+upload directory does not exist, or is not writeable by webserver	common	de	Das Verzeichnis zum Hochladen existiert nicht oder ist nicht vom Webserver beschreibbar.
+upload requires the directory to be writable by the webserver!	common	de	Der Upload verlangt, dass das Verzeich vom Webserver beschreibbar ist!
+url	common	de	Webseite
+uruguay	common	de	URUGUAY
+use button to search for	common	de	benutze Knopf zum suchen nach
+use button to search for address	common	de	benutze Knopf zum Suchen nach Adressen
+use button to search for calendarevent	common	de	benutze Knopf zum Suchen nach Terminen
+use button to search for project	common	de	benutze Knopf zum Suchen nach Projekten
+user	common	de	Benutzer
+user accounts	common	de	Benutzerkonten
+user groups	common	de	Benutzergruppen
+username	common	de	Benutzername
+users	common	de	Benutzer
+users choice	common	de	Benutzerauswahl
+uzbekistan	common	de	UZBEKISTAN
+vanuatu	common	de	VANUATU
+venezuela	common	de	VENEZUELA
+version	common	de	Version
+viet nam	common	de	VIETNAM
+view	common	de	Anzeigen
+virgin islands, british	common	de	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	de	VIRGIN ISLANDS, U.S.
+wallis and futuna	common	de	WALLIS AND FUTUNA
+wednesday	common	de	Mittwoch
+welcome	common	de	Willkommen
+western european	common	de	Westeuropäisch
+western sahara	common	de	WEST SAHARA
+what color should all the blank space on the desktop have	common	de	Welche Farbe soll der freie Platz auf der Arbeitsfläche haben
+what style would you like the image to have?	common	de	Welchen Stil soll das Bild haben?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie das einschalten werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
+which groups	common	de	Welche Gruppen
+width	common	de	Breite
+wk	jscalendar	de	KW
+work email	common	de	geschäftliche E-Mail
+would you like to display the page generation time at the bottom of every window?	common	de	Wollen Sie die Zeit zur Erstellung der Seite am Ende jedes Fensters anzeigen?
+writing	common	de	schreiben
+written by:	common	de	Geschrieben von:
+year	common	de	Jahr
+yemen	common	de	YEMEN
+yes	common	de	Ja
+you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
+you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen wieviele Icons und Toolbars der Editor anzeigt.
+you have been successfully logged out	login	de	Abmelden erfolgreich
+you have not entered a title	common	de	Sie haben keinen Titel eingegeben
+you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben
+you have not entered a valid time of day	common	de	Sie haben keine gültige Uhrzeit eingegeben
+you have not entered participants	common	de	Sie haben keine Teilnehmer eingegeben
+you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gewählt !
+you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt !
+you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
+you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
+you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware administrator sein, um auf diese Funktion zuzugreifen!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, aber Sie haben keine Rechte dazu.
+your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
+your message has been sent	common	de	Ihre Nachricht wurde versandt
+your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
+your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
+your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
+your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
+zambia	common	de	ZAMBIA
+zimbabwe	common	de	ZIMBABWE
+zoom	common	de	Zoomen
