@@ -1049,11 +1049,13 @@ class translation
 	 * strip tags out of the message completely with their content
 	 * @param string $_body is the text to be processed
 	 * @param string $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
-	 *            without the enclosing brackets
+	 *				without the enclosing brackets
 	 * @param string $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
+	 * @param bool $addbbracesforendtag if endtag is given, you may decide if the </ and > braces are to be added, 
+	 *				or if you want the string to be matched as is
 	 * @return void the modified text is passed via reference
 	 */
-	static function replaceTagsCompletley(&$_body,$tag,$endtag='')
+	static function replaceTagsCompletley(&$_body,$tag,$endtag='',$addbracesforendtag=true)
 	{
 		if ($tag) $tag = strtolower($tag);
 		if ($endtag == '' || empty($endtag) || !isset($endtag))
@@ -1061,14 +1063,25 @@ class translation
 		        $endtag = $tag;
 		} else {
 		        $endtag = strtolower($endtag);
+				//error_log(__METHOD__.' Using EndTag:'.$endtag);
 		}
 		// strip tags out of the message completely with their content
 		$taglen=strlen($tag);
 		$endtaglen=strlen($endtag);
 		if ($_body) {
-			$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'>~sim','',$_body);
-			// remove left over tags, unfinished ones, and so on
-			$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+			if ($addbracesforendtag === true )
+			{
+				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'>~sim','',$_body);
+				// remove left over tags, unfinished ones, and so on
+				$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+			}
+			if ($addbracesforendtag === false )
+			{
+				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~sim','',$_body);
+				// remove left over tags, unfinished ones, and so on
+				$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+				$_body = preg_replace('~'.$endtag.'~','',$_body);
+			}
 		}
 	}
 

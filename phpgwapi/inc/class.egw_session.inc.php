@@ -749,7 +749,7 @@ class egw_session
 		{
 			$sessionid = false;
 		}
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() returning '.print_r($sessionid,true));
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() returning '.array2string($sessionid).' called from:'.function_backtrace());
 		return $sessionid;
 	}
 
@@ -1194,9 +1194,10 @@ class egw_session
 		{
 			self::set_cookiedomain();
 		}
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($cookiename,$cookievalue,$cookietime,$cookiepath,self::$cookie_domain)");
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($cookiename,$cookievalue,$cookietime,$cookiepath,".self::$cookie_domain.")");
 
-		setcookie($cookiename,$cookievalue,$cookietime,is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain);
+		$rv = setcookie($cookiename,$cookievalue,$cookietime,is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain);
+		//error_log(__METHOD__." $cookiename->$cookievalue".' returned:'.print_r($rv,true).print_r($_COOKIE,true));
 	}
 
 	/**
@@ -1421,7 +1422,7 @@ class egw_session
 		{
 			self::$session_handler = $GLOBALS['egw_info']['server']['session_handler'];
 		}
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() session_handler='.self::$session_handler.', egw_info[server][session_handler]='.$GLOBALS['egw_info']['server']['session_handler']);
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() session_handler='.self::$session_handler.', egw_info[server][session_handler]='.$GLOBALS['egw_info']['server']['session_handler'].' called from:'.function_backtrace());
 
 		if (method_exists(self::$session_handler,'init_session_handler'))
 		{
