@@ -1,0 +1,303 @@
+%1 records imported	infolog	fi	%1 tietue(tta) tuotu
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	fi	%1 tietue(tta) luettu (ehkä ei vielä tuotu, mene %2takaisin%3 ja poista valinta Testi tuonti
+- subprojects from	infolog	fi	- Aliprojektit
+0%	infolog	fi	0%
+10%	infolog	fi	10%
+100%	infolog	fi	100%
+20%	infolog	fi	20%
+30%	infolog	fi	30%
+40%	infolog	fi	40%
+50%	infolog	fi	50%
+60%	infolog	fi	60%
+70%	infolog	fi	70%
+80%	infolog	fi	80%
+90%	infolog	fi	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	fi	<b>Liitetiedostot symbolisinalinkkeinä</b>Sen sijaan että lataisit ja etsisit tiedostoja: /polku suoraan lähiverkon koneille
+a short subject for the entry	infolog	fi	lyhyt aihe merkinnälle
+abort without deleting	infolog	fi	Keskeytä ilman poistamista
+accept	infolog	fi	hyväksy
+action	infolog	fi	Toimenpide
+actual date and time	infolog	fi	todellinen päivä ja aika
+add	infolog	fi	Lisää
+add a file	infolog	fi	Lisää tiedosto
+add a new entry	infolog	fi	Lisää uusi merkintä
+add a new note	infolog	fi	Lisää uusi muistiinpano
+add a new phonecall	infolog	fi	Lisää uusi puhelinsoitto
+add a new sub-task, -note, -call to this entry	infolog	fi	Lisää uusi ali-tehtävä,-huomautus,-soitto merkinnälle
+add a new todo	infolog	fi	Lisää uusi ToDo
+add file	infolog	fi	Lisää tiedosto
+add sub	infolog	fi	lisää Sub
+add timesheet entry	infolog	fi	Lisää pääsy ajanseurantaan
+add:	infolog	fi	Lisää:
+all	infolog	fi	Kaikki
+all links and attachments	infolog	fi	kaikki linkit ja liitetyt
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	fi	salli lisätä merkintä Tila kohtaan, esim aseta ToDo tehdyksi jos se on päättynyt (arvot riippuvat sisällön muodosta).
+apply the changes	infolog	fi	Hyväksy muutokset
+are you shure you want to delete this entry ?	infolog	fi	Halutako poistaa  tämän merkinnän
+attach a file	infolog	fi	Liitä tiedosto
+attach file	infolog	fi	Liitä tiedosto
+attension: no contact with address %1 found.	infolog	fi	Huomio: Yhteystietoa jolla olisi osoitteena %1 ei löydetty
+back to main list	infolog	fi	Takaisin päälistaan
+billed	infolog	fi	laskutettu
+both	infolog	fi	molemmat
+call	infolog	fi	soitto
+cancel	infolog	fi	Peruuta
+cancelled	infolog	fi	peruutettu
+categories	infolog	fi	Kategoriat
+category	infolog	fi	Kategoria
+change the status of an entry, eg. close it	infolog	fi	Vaihda merkinnän tilaa, esim.sulje se
+charset of file	infolog	fi	Tiedoston merkistö
+check to set startday	infolog	fi	Tarkista aloituspäivä
+check to specify custom contact	infolog	fi	Tarkista tietty yhteystieto
+click here to create the link	infolog	fi	Paina tästä luodaksesi linkin
+click here to start the search	infolog	fi	Paina tästä aloittaaksesi etsimisen
+close	infolog	fi	Sulje
+comment	infolog	fi	Kommentti
+completed	infolog	fi	Valmis
+configuration	infolog	fi	Asetukset
+confirm	infolog	fi	vahvista
+contact	infolog	fi	Ota yhteyttä
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	fi	Kopioi tekemäsi muutokset leikepöydälle, %1lataa pääsy %2 ja merkitse ne.
+create new links	infolog	fi	Luo uusi linkki
+creates a new field	infolog	fi	Luodaan uusi kenttä
+creates a new status with the given values	infolog	fi	Luodaan uusi tila annetuilla arvoilla
+creates a new typ with the given name	infolog	fi	Luodaan uusi tyyppi annetuilla nimillä
+creation	infolog	fi	Luominen
+csv-fieldname	infolog	fi	CSV kentän nimi
+csv-filename	infolog	fi	CSV tiedoston nimi
+csv-import	common	fi	CSV Tuo
+custom	infolog	fi	Muokattu
+custom fields	infolog	fi	Muokatut kentät
+custom fields, typ and status	common	fi	Muokatut kentät, tyypi ja tilat
+customfields	infolog	fi	Muokatut kentät
+date completed	infolog	fi	Valmistumispäivä
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	fi	Valmistumispäivä (jätä tyhjäksi automaattista asetusta varten jos tila on valmis tai laskutettu)
+datecreated	infolog	fi	luotu
+dates, status, access	infolog	fi	Päivät, tilat, pääsyt
+days	infolog	fi	päivää
+default filter for infolog	infolog	fi	InfoLogin oletussuodatin
+default status for a new log entry	infolog	fi	Uuden lokimerkinnän oletustila
+delegation	infolog	fi	Delegointi
+delete	infolog	fi	Poistaa
+delete one record by passing its id.	infolog	fi	Poista yksi tietue ohittaen sen id.
+delete the entry	infolog	fi	Poista merkintä
+delete this entry	infolog	fi	poista tämä merkintä
+delete this entry and all listed sub-entries	infolog	fi	Poista tämä merkintä ja kaikki sen alamerkinnät
+deletes the selected typ	infolog	fi	poistaa valitun tyypin
+deletes this field	infolog	fi	poistaa tämän kentän
+deletes this status	infolog	fi	poista tämä tila
+description	infolog	fi	Kuvaus
+disables a status without deleting it	infolog	fi	estä tila poistamatta sitä
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fi	haluatko vahvistuksen vastuuhenkilöltä: tehtävän hyväksyminen, tehtävän valmistuminen vai molemmista?
+do you want to see custom infolog types in the calendar?	infolog	fi	Haluatko nähdä muokatut InfoLog merkinnän muodot kalenterissa?
+don't show infolog	infolog	fi	ÄLÄ näytä InfoLogissa
+done	infolog	fi	valmis
+download	infolog	fi	Lataa
+duration	infolog	fi	Kesto
+each value is a line like <id>[=<label>]	infolog	fi	jokainen arvo on rivillä kuten <id>[=<label>]
+edit	infolog	fi	Muokkaa
+edit or create categories for ingolog	infolog	fi	Muokkaa tai luo kategoria InfoLogiin
+edit rights (full edit rights incl. making someone else responsible!)	infolog	fi	muokkaus oikeudet (täysien muokkaus oikeuksien antaminen on hyvin vastuullinen teko!)
+edit status	infolog	fi	Muokkaa tilaa
+edit the entry	infolog	fi	Muokkaa merkintää
+edit this entry	infolog	fi	Muokkaa tätä merkintää
+empty for all	infolog	fi	tyhjennä kaikki
+enddate	infolog	fi	Loppumispäivä
+enddate can not be before startdate	infolog	fi	Loppumispäivä ei voi olla ennen alkamispäivää
+enter a textual description of the log-entry	infolog	fi	syötä tekstimuotoinen kuvaus lokimerkintään
+enter the query pattern	infolog	fi	Anna tiedustelun malli
+entry and all files	infolog	fi	Vienti ja kaikki tiedostot
+error: saving the entry	infolog	fi	Virhe: tallentaessa merkintää
+error: the entry has been updated since you opened it for editing!	infolog	fi	Virhe: Merkintä on päivitetty koska avasit sen muokattavaksi!
+existing links	infolog	fi	Olemassa olevat linkit
+fax	infolog	fi	Faksi
+fieldseparator	infolog	fi	Kenttäerotin
+finish	infolog	fi	valmis
+for which types should this field be used	infolog	fi	Millaista kenttää käytetään
+from	infolog	fi	Mistä
+general	infolog	fi	Yleinen
+group owner for	infolog	fi	Ryhmän omistaja
+high	infolog	fi	korkea
+id	infolog	fi	Id
+import	infolog	fi	Tuo
+import next set	infolog	fi	Tuo seuraava osa
+info log	common	fi	InfoLog
+infolog	common	fi	InfoLog
+infolog - delete	infolog	fi	InfoLog - Poista
+infolog - edit	infolog	fi	InfoLog - Muokkaat
+infolog - import csv-file	infolog	fi	InfoLog - Tuo CSV-tiedosto
+infolog - new	infolog	fi	InfoLog - Uusi
+infolog - new subproject	infolog	fi	InfoLog - Uusi aliprojekti
+infolog - subprojects from	infolog	fi	InfoLog - Aliprojektit kohteesta
+infolog entry deleted	infolog	fi	InfoLog merkintä poistettu
+infolog entry saved	infolog	fi	InfoLog merkintä tallennettu
+infolog filter for the main screen	infolog	fi	InfoLog suodatin päänäkymässä
+infolog list	infolog	fi	InfoLog lista
+infolog preferences	common	fi	InfoLog asetukset
+infolog-fieldname	infolog	fi	InfoLog- kentän nimi
+invalid filename	infolog	fi	Tiedostonimi ei kelpaa
+label<br>helptext	infolog	fi	Otsikko<br>Vihjeteksti
+last changed	infolog	fi	muutettu viimeksi
+last modified	infolog	fi	Viimeksi muokattu
+leave it empty	infolog	fi	jätä tyhjäksi
+leave without saveing the entry	infolog	fi	poistu tallentamatta merkintää
+leaves without saveing	infolog	fi	poistu tallentamatta
+length<br>rows	infolog	fi	Pituus<br>Rivit
+link	infolog	fi	Linkki
+links	infolog	fi	Linkit
+links of this entry	infolog	fi	Tämän merkinnän linkit
+list all categories	infolog	fi	Listaa kaikki kategoriat
+list no subs/childs	infolog	fi	Älä listaa aliprojekteja
+location	infolog	fi	Sijainti
+longer textual description	infolog	fi	pitempi tekstikuvaus
+low	infolog	fi	matala
+max length of the input [, length of the inputfield (optional)]	infolog	fi	kentän maksimi pituus [, kentän maksimi pituus(vaihtoehtoinen)]
+name must not be empty !!!	infolog	fi	Nimi ei saa olla tyhjä !!!
+name of new type to create	infolog	fi	luotavan tyypin nimi
+never hide search and filters	infolog	fi	Hakua ja suodattimia ei piiloiteta koskaan
+new name	infolog	fi	uusi nimi
+new search	infolog	fi	Uusi etsintä
+no - cancel	infolog	fi	Ei - Peruuta
+no describtion, links or attachments	infolog	fi	Ei kuvausta, linkkejä tai liitetiedostoja
+no details	infolog	fi	Ei lisätietoja
+no entries found, try again ...	infolog	fi	ei löytynyt, yritä uudelleen ...
+no filter	infolog	fi	ei rajausta
+no links or attachments	infolog	fi	ei linkkejä tai liitettyjä
+none	infolog	fi	Ei mitään
+normal	infolog	fi	normaali
+not	infolog	fi	ei
+not assigned	infolog	fi	ei kohdistettu
+not-started	infolog	fi	aloittamatta
+note	infolog	fi	Tietoja
+number of records to read (%1)	infolog	fi	(%1) tietuetta luettu
+number of row for a multiline inputfield or line of a multi-select-box	infolog	fi	Rivien määrä monenrivisessä syöttökentässä tai monivalinta-laatikosta
+offer	infolog	fi	tarjous
+ongoing	infolog	fi	nykyinen
+only for details	infolog	fi	Vain lisätiedot
+only the attachments	infolog	fi	vain liitetyt
+only the links	infolog	fi	vain linkit
+open	infolog	fi	avoin
+optional note to the link	infolog	fi	vapaaehtoinen muistio linkkiin
+order	infolog	fi	järjestä
+overdue	infolog	fi	myöhästynyt
+own	infolog	fi	oma
+own open	infolog	fi	oma avoin
+own overdue	infolog	fi	oma myöhästynyt
+own upcoming	infolog	fi	oma tuleva
+path on (web-)serverside<br>eg. /var/samba/share	infolog	fi	polku (web-)palvelimella<br>esim. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	fi	Polku käyttäjän ja ryhmän tiedostoihin pitää olla palvelimen tiedostojuuren ULKOPUOLELLA!!!
+pattern for search in addressbook	infolog	fi	merkkijonohaku Yhteystiedoista
+pattern for search in projects	infolog	fi	merkkijonohaku Projekteista
+percent completed	infolog	fi	Prosenttia valmistunut
+permission denied	infolog	fi	Pääsy estetty
+phone	infolog	fi	Puhelinsoitto
+phone/email	infolog	fi	Puhelin/E-mail
+phonecall	infolog	fi	Puhelinsoitto
+planned	infolog	fi	suunniteltu
+planned time	infolog	fi	suunniteltu aikataulu
+price	infolog	fi	Hinta
+priority	infolog	fi	Tärkeys
+private	infolog	fi	Yksityinen
+project	infolog	fi	Projekti
+project settings: price, times	infolog	fi	Projektin asetukset: hinta, aika
+re:	infolog	fi	Re:
+read rights (default)	infolog	fi	lue oikeudet (oletus)
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	fi	reg. expr. paikallisille IP-osoitteille<br>esim. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	fi	reg. expr. paikallisille IP-osoitteille<br>esim. ^192\.168\.1\.
+remark	infolog	fi	Merkitse uudelleen
+remove this link (not the entry itself)	infolog	fi	Poista tämä linkki (ei poista itse merkintää)
+responsible	infolog	fi	Vastuuhenkilö
+responsible open	infolog	fi	Vastuuhenkilö määrittelemättä
+responsible overdue	infolog	fi	Vastuuhenkilö erääntyy
+responsible user, priority	infolog	fi	Vastuuhenkilö, tärkeysaste
+returns a list / search for records.	infolog	fi	Palauttaa listan / haun arvoista
+rights for the responsible	infolog	fi	Vastuuhenkilön oikeudet
+save	infolog	fi	Tallenna
+saves the changes made and leaves	infolog	fi	Tallenna muutokset ja poistu
+saves this entry	infolog	fi	Tallenna tämä merkintä
+search	infolog	fi	Etsi
+search for:	infolog	fi	Etsi:
+select	infolog	fi	Valitse
+select a category for this entry	infolog	fi	valitse ryhmä merkinnälle
+select a price	infolog	fi	Valitse hinta
+select a priority for this task	infolog	fi	valitse prioriteetti tehtävälle
+select a project	infolog	fi	valitse projekti
+select a responsible user: a person you want to delegate this task	infolog	fi	valitse vastaava käyttäjä: henkilö jolle haluat siirtää tehtävän
+select a typ to edit it's status-values or delete it	infolog	fi	valitse tyyppi muokataksesi sen tilan arvoa tai poistaaksesi sen.
+select an app to search in	infolog	fi	Valitse haettava sovellus
+select an entry to link with	infolog	fi	Valitse merkintä linkitettäväksi
+select to filter by owner	infolog	fi	valitse omistaja suodatus
+select to filter by responsible	infolog	fi	valitse vastuuhenkilö suodatus
+sets the status of this entry and its subs to done	infolog	fi	Aseta tila tälle merkinnälle ja sen alitapahtumille tehdyksi.
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	fi	Näyttääkö InfoLog alitehtävät, -soitot tai -muistiot normaalinäkymässä. Voit aina nähdä alitapahtumat päätapahtuman alta.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	fi	Näyttääkö InfoLog linkkejä muihin sovelluksiin ja / tai liitetiedostoihin InfoLog listalla (normaalinäkymässä kun avaat InfoLogin).
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	fi	Näyttetääkö InfoLog näkymä etusivulla ja millä suotimilla. Toimii vain jos et ole valinnut mitään sovellusta etusivulle omissa asetuksissasi.
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	fi	InfoLogin pitäisi käyttää koko nimeä (sukunimi) tai kirjautumisnimeä.
+should the calendar show custom types too	infolog	fi	Näyttääkö kalenteri myös omat tyyppimerkinnät
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	fi	Näyttää InfoLog listaus yksilöllisen numerotunnisteen, jota voidaan käyttää esimerkiksi HeplDesk pyynnön tunnisteena.
+should the infolog list show the column "last modified".	infolog	fi	Näyttää InfoLog listaus sarakkeen "viimeksi muokattu".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	fi	Näyttää InfoLog listauksessa montako prosenttia tehtävästä on tehty vai näytetäänkö kaksi erillistä ikonia.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	fi	pitäisikö tämän merkinnän näkyä vain sinulle ja niille joille olet antanut oikeudet ACL:ssä?
+show a column for used and planned times in the list.	infolog	fi	Näytä listalla sarakkeet käytetystä ja suunnitellusta ajankäytöstä.
+show full usernames	infolog	fi	Näytä koko nimet
+show in the infolog list	infolog	fi	Näytä
+show last modified	infolog	fi	Näytä viimeksi muokattu
+show status and percent done separate	infolog	fi	Näytä tila ja prosenttia tehty, erillisinä kohtina.
+show ticket id	infolog	fi	Näytä pyynnön id
+show times	infolog	fi	Näytä ajat
+small view	infolog	fi	pieni näkymä
+start a new search, cancel this link	infolog	fi	aloita uusi etsintä
+startdate	infolog	fi	Alkupäivä
+startdate enddate	infolog	fi	aloituspäivä lopetuspäivä
+startdate for new entries	infolog	fi	Aloituspäivä uusille merkinnöille
+startrecord	infolog	fi	Startrecord
+status	infolog	fi	Tila
+status ...	infolog	fi	Tila...
+sub	infolog	fi	Sub
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	fi	Alamerkinnät tuleva ylemmänmerkinnän alle tai ylemmiksimerkinnöiksi ellei niillä ole ylempäämerkintää
+subject	infolog	fi	Aihe
+task	infolog	fi	ToDo
+test import (show importable records <u>only</u> in browser)	infolog	fi	Kokeile tuonti (näytä tuotavat tietueet <u>vain</u> selaimessa)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	fi	nimi on sisäisessä käytössä (<= 10 merkkiä), sen muuttaminen aiheuttaa nykyisen tiedon muuttumisen eikäytettäväksi.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fi	nimi on sisäisessä käytössä (<= 20 merkkiä), sen muuttaminen aiheuttaa nykyisen tiedon muuttumisen eikäytettäväksi.
+the text displayed to the user	infolog	fi	käyttäjälle näytettävä teksti
+til when should the todo or phonecall be finished	infolog	fi	kunnes ToDo tai puhelinsoitto on valmistunut
+times	infolog	fi	Ajat
+to what should the startdate of new entries be set.	infolog	fi	Mikä alkamispäivä uusille merkinnöille asetetaan.
+today	infolog	fi	Tänään
+todays date	infolog	fi	Tänään päiväys
+todo	infolog	fi	ToDo
+translation	infolog	fi	Käännös
+typ	infolog	fi	Tyyppi
+typ '%1' already exists !!!	infolog	fi	Tyyppi %1 on jo olemassa
+type	infolog	fi	Tyyppi
+type ...	infolog	fi	Tyyppi...
+type of customfield	infolog	fi	Oman kentän tyyppi
+type of the log-entry: note, phonecall or todo	infolog	fi	Lokimerkinnän tyyppi: Muistio, soitto, ToDo
+unlink	infolog	fi	Poista linkki
+upcoming	infolog	fi	tuleva
+urgency	infolog	fi	tärkeys
+urgent	infolog	fi	tärkeä
+used time	infolog	fi	käytetty aika
+valid path on clientside<br>eg. \\server\share or e:\	infolog	fi	polku asiakkaan puolella<br>eg. \\Server\Share tai e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	fi	polku asiakkaan puolella<br>eg. \\Server\Share tai e:\
+valid path on clientside<br>eg. servershare or e:	infolog	fi	polku asiakkaan puolella<br>eg. \\Server\Share tai e:\
+values for selectbox	infolog	fi	Valintalaatikon arvot
+view all subs of this entry	infolog	fi	Näytä kaikki tämän merkinnän alta
+view other subs	infolog	fi	näytä muut Aliprojektit
+view parent	infolog	fi	Näytä isäntä
+view subs	infolog	fi	näytä Aliprojektit
+view the parent of this entry and all his subs	infolog	fi	Näytä tämän isäntämerkintä ja kaikki sen alimerkinnät
+view this linked entry in its application	infolog	fi	näytä tämä linkitetty merkintä sovelluksessa
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	fi	millon ToDo:n tai puhelinsoiton pitäisi alkaa, se näkyy sen päivä avoimissa tai omissa avoimissa tehtävissä (aloitussivulla)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	fi	Mitä muita kenttiä vastuuhenkilö saa muokata, ilman että hänellä on muokkas oikeuksia? <br/>Tila, prosentit, valmistumispäivä ovat aina sallittuja.
+which implicit acl rights should the responsible get?	infolog	fi	Mitä ACL oikeuksia vastuuhenkilö saa?
+will-call	infolog	fi	soittaa
+yes - delete	infolog	fi	Kyllä - Poista
+yes - delete including sub-entries	infolog	fi	Kyllä - Poista, tuhoaa myös alimerkinnät
+you can't delete one of the stock types !!!	infolog	fi	Et voi poistaa mitään tyyppien ryhmästä !!!
+you have entered an invalid ending date	infolog	fi	Loppumispäivä ei kelpaa
+you have entered an invalid starting date	infolog	fi	Alkamispäivä ei kelpaa
+you have to enter a name, to create a new typ!!!	infolog	fi	Kirjoita nimi luodaksesi uuden tyypin !!!
+you must enter a subject or a description	infolog	fi	Anna aihe tai kuvaus
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	fi	Tietokantasi EI ole ajantasalla (%1 vs. %2), suorita %3asetukset%4 päivittääksesi tietokantasi.

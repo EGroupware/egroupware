@@ -1,0 +1,223 @@
+%1 records imported	infolog	eu	%1 erregistro inportatu
+- subprojects from	infolog	eu	-Azpiproiektuak
+0%	infolog	eu	%0
+10%	infolog	eu	%10
+100%	infolog	eu	%100
+20%	infolog	eu	%20
+30%	infolog	eu	%30
+40%	infolog	eu	%40
+50%	infolog	eu	%50
+60%	infolog	eu	%60
+70%	infolog	eu	%70
+80%	infolog	eu	%80
+90%	infolog	eu	%90
+a short subject for the entry	infolog	eu	deskribapen labur bat sarrerarako
+abort without deleting	infolog	eu	Ezeztatu ezabatu gabe
+accept	infolog	eu	Onartu
+action	infolog	eu	Ekintza
+actual date and time	infolog	eu	uneko data eta ordua
+add	infolog	eu	Gehitu
+add a file	infolog	eu	Fitxategia gehitu
+add a new entry	infolog	eu	Sarrera berri bat gehitu
+add a new note	infolog	eu	Ohar berri bat gehitu
+add a new phonecall	infolog	eu	Dei berri bat gehitu
+add a new todo	infolog	eu	Egiteko berri bat gehitu
+add file	infolog	eu	Fitxategia gehitu
+add:	infolog	eu	Gehitu:
+all	infolog	eu	Guztiak
+all links and attachments	infolog	eu	lotura eta fitxategi erantsi guztiak
+apply the changes	infolog	eu	Aldaketak aplikatu
+are you shure you want to delete this entry ?	infolog	eu	Ziur zaude sarrera hau ezabatu nahi duzula?
+attach a file	infolog	eu	Fitxategi bat erantsi
+attach file	infolog	eu	Fitxategia erantsi
+back to main list	infolog	eu	Zerrenda nagusira itzuli
+both	infolog	eu	biak
+call	infolog	eu	deitu
+cancel	infolog	eu	Ezeztatu
+cancelled	infolog	eu	Ezeztatua
+categories	infolog	eu	Kategoriak
+category	infolog	eu	Kategoria
+charset of file	infolog	eu	Fitxategiko karaktereak
+check to set startday	infolog	eu	markatu hasiera data ezartzeko
+click here to create the link	infolog	eu	egin klik lotura bat sortzeko
+click here to start the search	infolog	eu	egin kilk bilaketa hasteko
+close	infolog	eu	Itxi
+comment	infolog	eu	Komentario
+completed	infolog	eu	Osatua
+configuration	infolog	eu	Konfigurazioa
+confirm	infolog	eu	Berretsi
+contact	infolog	eu	Kontaktua
+create new links	infolog	eu	Lotura berriak sortu
+creates a new field	infolog	eu	eremu berri bat sortu
+creates a new status with the given values	infolog	eu	egoera berri bat sortu emandako balioekin
+creates a new typ with the given name	infolog	eu	mota berri bat sortu emandako izenarekin
+creation	infolog	eu	Sorkuntza
+csv-fieldname	infolog	eu	CSV-eremuaren izena
+csv-filename	infolog	eu	CSV-fitxategiaren izena
+csv-import	common	eu	CSV-inportatu
+custom	infolog	eu	Pertsonalizatua
+custom fields	infolog	eu	Eremu pertsonalizatuak
+custom fields, typ and status	common	eu	Eremu pertsonalizatuak, mota eta egoera
+custom regarding	infolog	eu	Oroitzapen pertsonalak
+custom status for typ	infolog	eu	Egoera pertsonalizatua motarentzat
+customfields	infolog	eu	Eremu pertsonalizatuak
+datecreated	infolog	eu	Sorrera data
+dates, status, access	infolog	eu	Datak, egoera, sarrera
+days	infolog	eu	egunak
+default filter for infolog	infolog	eu	Lehenetsitako iragazkia erregistrorako
+default status for a new log entry	infolog	eu	Lehenetsitako egoera sarrera berri baterako
+delegation	infolog	eu	Ordezkaritza
+delete	infolog	eu	Ezabatu
+delete the entry	infolog	eu	Sarrera ezabatu
+delete this entry	infolog	eu	Sarrera hau ezabatu
+deletes the selected typ	infolog	eu	Aukeratutako mota ezabatu
+deletes this field	infolog	eu	Eremu hau ezabatu
+deletes this status	infolog	eu	Egoera hau ezabatu
+description	infolog	eu	Deskribapena
+disables a status without deleting it	infolog	eu	debekatu egoera bat ezabatu gabe
+done	infolog	eu	eginda
+download	infolog	eu	Deskargatu
+duration	infolog	eu	Iraupena
+edit	infolog	eu	Editatu
+edit or create categories for ingolog	infolog	eu	Erregistrorako kategoriak sortu edo editatu
+edit status	infolog	eu	Egoera editatu
+edit the entry	infolog	eu	Sarrera editatu
+edit this entry	infolog	eu	Sarrera hau editatu
+empty for all	infolog	eu	Guztia garbitu
+enddate	infolog	eu	Amaiera data
+enter a textual description of the log-entry	infolog	eu	Sarreraren deskribapen testu bat sartu
+enter the query pattern	infolog	eu	Bilaketa patroia sartu
+entry and all files	infolog	eu	Sarrera eta fitxategi guztiak
+error: saving the entry	infolog	eu	Errorea: sarrera gordetzerakoan
+existing links	infolog	eu	Loturak
+fax	infolog	eu	Fax
+fieldseparator	infolog	eu	Eremu banatzailea
+finish	infolog	eu	bukatu
+for which types should this field be used	infolog	eu	zein motarentzako erabiltzen da eremu hau
+id	infolog	eu	Id
+import	infolog	eu	Inportatu
+import next set	infolog	eu	hurrengo jokoa inportatu
+info log	common	eu	Egitekoak
+infolog	common	eu	Egitekoak
+infolog - delete	infolog	eu	Egitekoak - Ezabatu
+infolog - edit	infolog	eu	Egitekoak - Editatu
+infolog - import csv-file	infolog	eu	Egitekoak - Inportatu CSV-Fitxategia
+infolog - new	infolog	eu	Egitekoak - Berria
+infolog - new subproject	infolog	eu	Egitekoak - Azpiproiektu berria
+infolog - subprojects from	infolog	eu	Egitekoak - Azpiproiektuak
+infolog entry deleted	infolog	eu	Sartutako egitekoa ezabatu da
+infolog entry saved	infolog	eu	Sartutako egitekoa gorde da
+infolog list	infolog	eu	Egitekoen zerrenda
+infolog preferences	common	eu	Egitekoak hobespenak
+infolog-fieldname	infolog	eu	Egitekoak-Eremuaren izena
+invalid filename	infolog	eu	Fitxategiaren izenak ez du balio
+label<br>helptext	infolog	eu	Marka<br>laguntza testu
+last changed	infolog	eu	Azken aldaketa
+last modified	infolog	eu	Azken aldaketa
+leave without saveing the entry	infolog	eu	sarrera gorde gabe utzi
+leaves without saveing	infolog	eu	gorde gabe utzi
+length<br>rows	infolog	eu	Luzera<br>Errenkadak
+link	infolog	eu	Lotura
+links	infolog	eu	Loturak
+links of this entry	infolog	eu	Sarreraren loturak
+list all categories	infolog	eu	Kategoria guztien zerrenda
+longer textual description	infolog	eu	sarreraren deskribapen luzea
+name must not be empty !!!	infolog	eu	Izenak ezin du hutsik gelditu!
+never hide search and filters	infolog	eu	Bilaketa eta iragazkiak ez ezkutatu
+new name	infolog	eu	izen berria
+new search	infolog	eu	Bilaketa berria
+no - cancel	infolog	eu	Ez - Ezeztatu
+no describtion, links or attachments	infolog	eu	ez dago deskibapenik, loturak edo eranskinak
+no details	infolog	eu	ez dago detailerik
+no entries found, try again ...	infolog	eu	ez dira sarrerarik aurkitu, saiatu berriro
+no filter	infolog	eu	iragazkirik gabe
+no links or attachments	infolog	eu	eranskin edo loturarik gabe
+none	infolog	eu	bat ere ez
+normal	infolog	eu	normal
+not	infolog	eu	ez
+not assigned	infolog	eu	esleitu gabe
+note	infolog	eu	Oharra
+number of records to read (%1)	infolog	eu	Irakurtzeko erregistro kopurua (%1)
+offer	infolog	eu	Eskaini
+ongoing	infolog	eu	momentukoak
+only the attachments	infolog	eu	eranskinak soilik
+only the links	infolog	eu	loturak soilik
+open	infolog	eu	ireki
+optional note to the link	infolog	eu	aukerako oharra loturarentzat
+order	infolog	eu	Ordenatu
+overdue	infolog	eu	garaitua
+own	infolog	eu	propio
+pattern for search in addressbook	infolog	eu	helbide libruan bilatu beharreko espresioa
+pattern for search in projects	infolog	eu	proiektuetan bilatu beharreko espresioa
+permission denied	infolog	eu	Baimena ukatua
+phone	infolog	eu	Telefono deia
+phone/email	infolog	eu	Telefonoa/posta elektronikoa
+phonecall	infolog	eu	Telefono deia
+planned	infolog	eu	Aurreikusia
+planned time	infolog	eu	planifikatutako ordua
+price	infolog	eu	Prezioa
+priority	infolog	eu	Lehentasuna
+private	infolog	eu	Pribatua
+project	infolog	eu	Proiektua
+project settings: price, times	infolog	eu	Proiektuaren konfigurazioa: prezioa, denbora
+re:	infolog	eu	Re:
+read one record by passing its id.	infolog	eu	Erregistro bat irakurri bere id-a pasatuz
+remark	infolog	eu	Komentario
+remove this link (not the entry itself)	infolog	eu	Lotura hau ezabatu (ez sarrera)
+responsible	infolog	eu	arduraduna
+responsible open	infolog	eu	arduradun irekia
+responsible overdue	infolog	eu	arduradun garaitua
+responsible upcoming	infolog	eu	iristear dagoen arduraduna
+responsible user, priority	infolog	eu	erabiltzaile arduraduna, lehetasuna
+returns a list / search for records.	infolog	eu	Zerrenda bat itzuli edo erregistro bat bilatu
+save	infolog	eu	Gorde
+saves the changes made and leaves	infolog	eu	egindako aldaketak gorde eta irten
+saves this entry	infolog	eu	Sarrera hau gorde
+search	infolog	eu	Bilatu
+search for:	infolog	eu	Bilatu:
+select	infolog	eu	Aukeratu
+select a category for this entry	infolog	eu	Sarrera honentzako kategoria bat aukeratu
+select a price	infolog	eu	Prezio bat aukeratu
+select a priority for this task	infolog	eu	aukeratu lehentasun bat egiteko honentzako
+select a project	infolog	eu	Proiektu bat aukeratu
+select an app to search in	infolog	eu	Bilaketa egiteko aplikazio bat aukeratu
+show full usernames	infolog	eu	Erabiltzaileen izen osoak erakutsi
+show in the infolog list	infolog	eu	Erregistro zerrenda erakutsi
+show list of upcoming entries	infolog	eu	Iristear dauden sarreren zerrenda erakutsi
+show times	infolog	eu	Orduak erakutsi
+small view	infolog	eu	ikuspegi txikitua
+start a new search, cancel this link	infolog	eu	bilaketa berri bat hasi, lotura hau ezeztatu
+startdate	infolog	eu	Hasiera data
+startdate enddate	infolog	eu	Hasiera eta amaiera data
+startrecord	infolog	eu	Erregistroaren grabazioa hasi
+status	infolog	eu	Egoera
+status ...	infolog	eu	Egoera...
+sub	infolog	eu	Azpi
+subject	infolog	eu	Gaia
+task	infolog	eu	Egitekoak
+the text displayed to the user	infolog	eu	erabiltzaileari erakusten zaion testua
+times	infolog	eu	Aldiak
+to many might exceed your execution-time-limit	infolog	eu	Zenbaiteraino luzatu daiteke exekuzioreko denbora?
+today	infolog	eu	Gaur
+todays date	infolog	eu	gaurko data
+todo	infolog	eu	Egitekoak
+translation	infolog	eu	Itzulpena
+typ	infolog	eu	Mota
+typ '%1' already exists !!!	infolog	eu	%1 mota esistitzen da!
+type	infolog	eu	Mota
+type ...	infolog	eu	Mota...
+unlink	infolog	eu	Desestekatu
+upcoming	infolog	eu	hurrengoa
+urgency	infolog	eu	Larrialdia
+urgent	infolog	eu	presazko
+used time	infolog	eu	erabilitako denbora
+view all subs of this entry	infolog	eu	Sarrera honen azpi guztiak ikusi
+view other subs	infolog	eu	beste azpi batzuk ikusi
+view parent	infolog	eu	Nagusia ikusi
+view subs	infolog	eu	Azpiak ikusi
+view the parent of this entry and all his subs	infolog	eu	Sarrera honen nagusia ikusi eta bere azpi guztiak
+view this linked entry in its application	infolog	eu	zure aplikazioarekin lotura duen sarrera hau ikusi
+will-call	infolog	eu	ditu behar duzu
+yes - delete	infolog	eu	Bai - Ezabatu
+yes - delete including sub-entries	infolog	eu	Bai - Ezabatu azpikategoriak eta guzti
+you must enter a subject or a description	infolog	eu	Gai edo deskribapen bat sartu behar duzu

@@ -1,0 +1,245 @@
+%1 records imported	infolog	iw	%1 רשומות הובאו
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	iw	(%1 רשומות נקראו (אך עדיין לא הובאו, אפשר ל-%2חזור%3 ולהסיר את הסימן ליד בדוק ייבוא
+- subprojects from	infolog	iw	-תתי-פרויקטים מ
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	iw	ישירות LAN עבור לקוחות file:/path במקום העלה ושליפה באמצעות <b>symlinks צרף קבצים בעזרת</b>
+a short subject for the entry	infolog	iw	תיאור קצר לרשומה
+abort without deleting	infolog	iw	בטל בלי למחוק
+accept	infolog	iw	קבל
+action	infolog	iw	פעולה
+add	infolog	iw	הוסף
+add a file	infolog	iw	הוסף קובץ
+add a new entry	infolog	iw	הוסף רשומה חדשה
+add a new note	infolog	iw	הוסף הערה חדשה
+add a new phonecall	infolog	iw	הוסף שיחת טלפון חדשה
+add a new sub-task, -note, -call to this entry	infolog	iw	הוסף תת-משימה, -הערה, -שיחה לרשומה זו
+add a new todo	infolog	iw	הוסף משימה חדשה
+add file	preferences	iw	הוסף קובץ
+add sub	infolog	iw	הוסף בן
+add:	infolog	iw	:הוסף
+all	infolog	iw	הכל
+all links and attachments	infolog	iw	כל הקישורים והמצורפים
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	iw	(מאפר קביעת סטאטוס של רשומה, למשל לקבוע הסתיימה למשימה שנגמרנ (הערכים תלויים בסוג הרשומה
+applies the changes	infolog	iw	מבצע את השינוים
+are you shure you want to delete this entry ?	infolog	iw	?בטוך שברצונך למחוק רשומה זו
+are you sure you want to delete this entry	infolog	iw	בטוך שברצונך למחוק רשומה זו
+attach a file	infolog	iw	צרף קובץ
+attach file	infolog	iw	צרף קובץ
+back to main list	infolog	iw	חזור אל הרשיצה הראשית
+back to projectlist	infolog	iw	חזרה אל רשימת הפרויקטים
+billed	infolog	iw	יצא חשבון
+both	infolog	iw	שניהם
+call	infolog	iw	שיחה
+cancel	infolog	iw	בטל
+categories	infolog	iw	קטגוריות
+category	infolog	iw	קטגוריה
+change the status of an entry, eg. close it	infolog	iw	שנה סטאטוס של רשומה, למשל סגור אותה
+charset of file	infolog	iw	סט תווים של הקובץ
+check to set startday	infolog	iw	סמן כדי לקבוע את יום ההתחלה
+click here to create the link	infolog	iw	הקלק כאן כדי ליצור את הקישור
+click here to start the search	infolog	iw	הקלק כאן כדי להתחיל את החיפוש
+close	infolog	iw	סגור
+comment	infolog	iw	הערה
+configuration	infolog	iw	תצורה
+confirm	infolog	iw	אישורך
+contact	infolog	iw	איש קשר
+create new links	infolog	iw	יצור קישורים חדשים
+creates a new field	infolog	iw	יוצר שדה חדש
+creates a new status with the given values	infolog	iw	יוצר סטאטוס חדש עם הערכים הנתונים
+creates a new typ with the given name	infolog	iw	יוצר סוג חדש בעל שם נתון
+csv-fieldname	infolog	iw	שם שדה - CSV
+csv-filename	infolog	iw	שם קובץ - CSV
+csv-import	common	iw	CSV - ייבוא
+custom	infolog	iw	מותאם אישית
+custom contact-address, leave empty to use information from most recent link	infolog	iw	כתובת איש קשר מותאם אישית -פ להשאיר ריק כדי להשתמש במידע מהקישור האחרון
+custom contact-information, leave emtpy to use information from most recent link	infolog	iw	נתוני איש קשר מותאם אישית -פ להשאיר ריק כדי להשתמש במידע מהקישור האחרון
+custom fields	infolog	iw	שדות מותאמים אישית
+custom fields, typ and status	common	iw	שדות מותאמים אישית, סוג וסטאטוס
+custom regarding	infolog	iw	בנושא מותאם אישית
+custom status for typ	infolog	iw	סטאטוס מותאם אישית עבור סוג
+customfields	infolog	iw	שדות מותאמים אישית
+datecreated	infolog	iw	תאריל יצירה
+dates, status, access	infolog	iw	תאריכים, סטאטוס, גישה
+days	infolog	iw	ימים
+default filter for infolog	infolog	iw	InfoLog מסנן מחדלי של
+default status for a new log entry	infolog	iw	סטאטוס מחדלי עבור רשומת יומן חדשה
+delegation	infolog	iw	נציגות
+delete	infolog	iw	מחק
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	iw	(מוחק את כל תתי-רשומות (אם לא מוחקים, תתי הרשומות יהיו תתי-רשומות של רשומת האם, או ללא אם
+delete one record by passing its id.	infolog	iw	מחק רשומה אחת על ידי העברת הזיהוי שלה
+delete the entry	infolog	iw	מחק את הרשומה
+delete this entry	infolog	iw	מחק רשומה זו
+deletes the selected typ	infolog	iw	מוחק את הסוג הנבחר
+deletes this field	infolog	iw	מוחק את השדה הזה
+deletes this status	infolog	iw	מוחק את הסטאטוס השה
+description	infolog	iw	תיאור
+description can not exceed 8000 characters in length	infolog	iw	תיאור, עד 8000 תווים באורך
+determines the order the fields are displayed	infolog	iw	קובע את סדר תצוגת השדות
+disables a status without deleting it	infolog	iw	הופך סטאטוס ללא פעיל מבלי למחוק אותו
+done	infolog	iw	בוצע
+download	infolog	iw	הורד
+duration	infolog	iw	משך
+edit	infolog	iw	ערוך
+edit or create categories for ingolog	infolog	iw	InfoLog ערוך או צור קטגוריות עבור
+edit status	infolog	iw	ערוך סטאטוס
+edit the entry	infolog	iw	ערוך את הרשומה
+edit this entry	infolog	iw	ערוך רשומה זו
+empty for all	infolog	iw	רוקן עבור כולם
+enddate	infolog	iw	תאריך סיום
+enddate can not be before startdate	infolog	iw	אסור לתאריך הסיום להיות לפני תאריך ההתחלה
+enter a custom contact, leave empty if linked entry should be used	infolog	iw	הכנס איש קשר מותאם אישית, השאר ריק אם יש להשתמש ברשומה מקושרת
+enter a custom phone/email, leave empty if linked entry should be used	infolog	iw	הכנס טלפון/דוא"ל מותאם אישית, השאר ריק אם יש להשתמש ברשומה מקושרת
+enter a textual description of the log-entry	infolog	iw	הכנס תיאור טקסטואלי של רשומת היומן
+enter the query pattern	infolog	iw	הכנס את תבנית השאילתא
+entry and all files	infolog	iw	רשומת כל הקבצים
+existing links	infolog	iw	קישורים קיימים
+fax	infolog	iw	פקס
+fieldseparator	infolog	iw	מפריד שדות
+finish	infolog	iw	סיים
+for which types should this field be used	infolog	iw	איזה סוגים שדה זה ישמש
+from	infolog	iw	מאת
+high	infolog	iw	גבוה
+id	infolog	iw	זיהוי
+import	infolog	iw	ייבוא
+import next set	infolog	iw	ייבוא קבוצה הבאה
+infolog - delete	infolog	iw	Info-Log - מחיקה
+infolog - edit	infolog	iw	Info-Log - עריכה
+infolog - import csv-file	infolog	iw	Info-Log - CSV ייבוא קובץ
+infolog - new	infolog	iw	Info-Log - חדש
+infolog - new subproject	infolog	iw	Info-Log - תת-פרויקט חדש
+infolog - subprojects from	infolog	iw	Info-Log - תת-פרויקט מ
+infolog list	infolog	iw	Info-Log רשימה
+infolog preferences	common	iw	Info-Log עדיפויות
+infolog-fieldname	infolog	iw	Info-Log שם שדה
+invalid filename	infolog	iw	שם קובץ לא חוקי
+label<br>helptext	infolog	iw	תווית<br>קובץ עזרה
+last changed	infolog	iw	שונה לאחרונה
+last modified	infolog	iw	שונה לאחרונה
+leave without saveing the entry	infolog	iw	צא בלי לשמור את הרשומה
+leaves without saveing	infolog	iw	יוצא בלי לשמור
+length<br>rows	infolog	iw	אורך<br>שורות
+link	infolog	iw	קישור
+links	infolog	iw	קישורים
+links of this entry	infolog	iw	קישורי רשומה זו
+list all categories	infolog	iw	הצג את כל הקטגוריות
+list no subs/childs	infolog	iw	אל תציג תתי/ילדי
+longer textual description	infolog	iw	תיאור טקסטואלי אורך יותר
+low	infolog	iw	נמוך
+max length of the input [, length of the inputfield (optional)]	infolog	iw	([אורך הקלט המירבי [, אורך שדה הקלט (אופציונאלי
+max number of entries to display on the main screen	infolog	iw	כמות הרשומות המירבית להציג במסך הראשי
+name must not be empty !!!	infolog	iw	!לשם אסור להיות ריק
+name of new type to create	infolog	iw	שם הסוג החדש ליצור
+new name	infolog	iw	שם חדש
+new search	infolog	iw	חיפוש חדש
+no - cancel	infolog	iw	לא - בטל
+no entries found, try again ...	infolog	iw	...לא נמצאו רשומות, נסה שוב
+no filter	infolog	iw	ללא מסנן
+no links or attachments	infolog	iw	אין קישורים או מצורפים
+none	infolog	iw	ללא
+normal	infolog	iw	רגיל
+not	infolog	iw	לא
+not assigned	infolog	iw	לא נקבע
+note	infolog	iw	הערה
+number of records to read (%1)	infolog	iw	(מספר הרשומות לקרוא (%1
+number of row for a multiline inputfield or line of a multi-select-box	infolog	iw	מספר השורה של שדה קלט רב-שורות או של תיבת רבי-בחירה
+offer	infolog	iw	הצעה
+ongoing	infolog	iw	מתמשך
+only the attachments	infolog	iw	רק את המצורפים
+only the links	infolog	iw	רק את הקישורים
+only up to this number of entries are displayed on the main screen.	infolog	iw	רק עד כמות רשומות זו תוצג במסך הראשי
+open	infolog	iw	פתח
+optional note to the link	infolog	iw	הערה אופציונלית לקישור
+order	infolog	iw	סדר
+overdue	infolog	iw	עבר זמנו
+own	infolog	iw	שלי
+own open	infolog	iw	פתח את שלי
+own overdue	infolog	iw	זמנו עבר שלי
+own upcoming	infolog	iw	שלי בקרוב
+path on (web-)serverside<br>eg. /var/samba/share	infolog	iw	(המסלול בצד השרת (הווב<br>
+/var/samba/Share למשל
+path to user and group files has to be outside of the webservers document-root!!!	infolog	iw	המסלול אל קבצי משתמשים/קבוצות חייב להיות מחוץ לשורש שרת הווב
+pattern for search in addressbook	infolog	iw	תבנית לחיפוש בספר כתובות
+pattern for search in projects	infolog	iw	תבנית לחיפוש בפרויקטים
+phone	infolog	iw	שיחת טלפון
+phone/email	infolog	iw	טלפון/דוא"ל
+phonecall	infolog	iw	שיחת טלפון
+priority	infolog	iw	עדיפות
+private	infolog	iw	פרטי
+project	infolog	iw	פרויקט
+re:	infolog	iw	:הנידון
+read one record by passing its id.	infolog	iw	קרא רשומה אחת ע"י העברת הזיהוי שלה
+remark	infolog	iw	הערה
+remove this link (not the entry itself)	infolog	iw	(הסר קישור זה (אבל לא את הרשומה עצמה
+responsible	infolog	iw	אחראי
+responsible user, priority, ...	infolog	iw	...,משתמש אחראי, עדיפות
+returns a list / search for records.	infolog	iw	מחזיר רשימה/חיפוש של רשומות
+save	infolog	iw	שמור
+saves the changes made and leaves	infolog	iw	יוצא ושומר את השינוים
+saves this entry	infolog	iw	שומר רשומה זו
+search	infolog	iw	חפש
+search for:	infolog	iw	:חפש
+select	infolog	iw	בחר
+select a category for this entry	infolog	iw	בחר קטגוריה לרשומה זו
+select a priority for this task	infolog	iw	בחר עדיפות למשימה זו
+select a responsible user: a person you want to delegate this task	infolog	iw	בחר משתמש אחראי: אדם שאליו ברצונך להסמיך עבור משימה זו
+select a typ to edit it's status-values or delete it	infolog	iw	בחר סוג כדי לערוך את ערכי הסטאטוס שלו או למחוק אותו
+select an app to search in	infolog	iw	בחר יישום לחפש בו
+select an entry to link with	infolog	iw	בחר רשומה לקשור אליה
+should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	iw	להציג את הרשומות הפתוחות שלך - משימות שלא הסתיימו, שיחות טלפון ופתקים - במסך הראשי InfoLog האם על<br>
+(פועל רק כאשר לא נבחרה יישום למסך הראשי (בהעדיפויות
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	iw	להציג תתימשימות, -שיחות, -הערת בתצוגה רגילה או לא. תמיד ניתן לראותם דרך הוריהם InfoLog האם על
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	iw	להציג קישורים ליישומים אחרים InfoLog האם על
+<br>(InfoLog-המצב הרגיל בכניסה ל) InfoLog ו/או קבצים מצורפים ברשימת
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	iw	להשתמש בשמות מלאים (שם פרטי ושם משפחה) אן רק את שמ המשתמש InfoLog האם על
+should this entry only be visible to you and people you grant privat access via the acl	infolog	iw	האם רשומה זו תראה רק לך ולאותם אנשים להם הרשאת גישה פרטית ברשימת גישה
+show full usernames	infolog	iw	הצג שמןת משתמש מלאים
+show in the infolog list	infolog	iw	InfoLog-הצג את רשימתה
+show list of upcoming entries	infolog	iw	הצג רשימת רשומות מתקרבות
+show open entries: tasks/calls/notes on main screen	infolog	iw	הצג רשומות פתוחות: משימות/שיחות/הערות במסך הראשי
+small view	infolog	iw	תצוגה קטנה
+start a new search, cancel this link	infolog	iw	מתחיל חיפוש חדש, בטל קישור זה
+startdate	infolog	iw	תאריך התחלה
+startdate enddate	infolog	iw	תאריך התחלה ותאריך סיום
+startrecord	infolog	iw	רשומה מתחלת
+status	infolog	iw	סטאטוס
+status ...	infolog	iw	...סטאטוס
+subject	infolog	iw	נושא
+task	infolog	iw	משימה
+test import (show importable records <u>only</u> in browser)	infolog	iw	(בדוק ייבוא (הצג רשומות הנתנים לייבוא בלבד בדפדפן
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	iw	השם לשימוש פנימי (>=10 תווים), אם משנים אותו אין יותר גישה לנתונים הקיימים
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	iw	השם לשימוש פנימי (>=20 תווים), אם משנים אותו אין יותר גישה לנתונים הקיימים
+the text displayed to the user	infolog	iw	הטקסט להציג למשתמש
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	iw	זהו הטקסט המוצג שנכנסים ליישום. מסננים מגבילים את הרשומות בהצגה. קיימים מסננים כדי להציג רק רשומות שהסתיימו, עדיין פתוחות, או עתידיות לעצמך או לכל המשתמשים
+til when should the todo or phonecall be finished	infolog	iw	מועד הסיום של הסיחה או המשימה
+to many might exceed your execution-time-limit	infolog	iw	יתכן כי רבים מיידי יעברו על הקצאת זמן העיבוד שלך
+today	infolog	iw	היום
+todo	infolog	iw	משימה
+translation	infolog	iw	תרגום
+typ	infolog	iw	סוג
+typ '%1' already exists !!!	infolog	iw	!הסוג %1 קיים כבר
+type	infolog	iw	סוג
+type ...	infolog	iw	...הסוג
+type of the log-entry: note, phonecall or todo	infolog	iw	סוג רשומת היומן: הערה, שיחה או משימה
+unlink	infolog	iw	בטל קישור
+upcoming	infolog	iw	מתקרב
+urgency	infolog	iw	דחיפות
+urgent	infolog	iw	דחוף
+use button to search for address	infolog	iw	השתמש בכפתור לחפש כתובת
+use button to search for project	infolog	iw	השתמש בכפתור לחפש את פרויקט
+valid path on clientside<br>eg. \\server\share or e:\	infolog	iw	המסלול החוקי בצד הלקוח, למשל
+<br>\\Server\Share או e:\
+values for selectbox	infolog	iw	הערכים לתיבת הבחירה
+view all subs of this entry	infolog	iw	הצג את כל תתי-הרשומה
+view other subs	infolog	iw	הצג תתי-רשומה נוספים
+view parent	infolog	iw	הצג רשומת האם
+view subs	infolog	iw	הצג תתי רשומה
+view the parent of this entry and all his subs	infolog	iw	הצג את רשומת האם של רשומה זו את כל תתי הרשומה שלה
+view this linked entry in its application	infolog	iw	צפה ברשומה  מקושרת זו ביישום שלה
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	iw	מועד התחלה של שיחה או משימה. ממועד זה הוא יופיע כאשר מסננים לפי פתוחים או פתוחים שלי
+will-call	infolog	iw	יטלפן
+write (add or update) a record by passing its fields.	infolog	iw	כתוב (הוסף או עדכן) רשומה על ידי העברת השדות שלה
+yes - delete	infolog	iw	כן - מחק
+you can't delete one of the stock types !!!	infolog	iw	(?) אי אפשר למחוק אחד מסוגי הסטוק
+you have entered an invalid ending date	infolog	iw	ציינת תאריך סיום לא חוקי
+you have entered an invalid starting date	infolog	iw	ציינת תאריך התחלה לא חוקי
+you have to enter a name, to create a new typ!!!	infolog	iw	!יש לציין שם כדי ליצור סוג חדש
+you must enter a subject or a description	infolog	iw	עליך להכניס נושא או תיאור

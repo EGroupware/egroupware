@@ -1,0 +1,314 @@
+%1 records imported	infolog	it	%1 record importati
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	it	%1 record letti (non ancora importati, puoi tornare %2indietro%3 e deselezionare Test Importazione)
+- subprojects from	infolog	it	- Sottoprogetti da
+0%	infolog	it	0%
+10%	infolog	it	10%
+100%	infolog	it	100%
+20%	infolog	it	20%
+30%	infolog	it	30%
+40%	infolog	it	40%
+50%	infolog	it	50%
+60%	infolog	it	60%
+70%	infolog	it	70%
+80%	infolog	it	80%
+90%	infolog	it	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	it	<b>allegati via symlinks</b> invece che caricamento e recupero via file:/path per i lan-client diretti
+a short subject for the entry	infolog	it	un breve oggetto per la nota
+abort without deleting	infolog	it	Annulla senza cancellare
+accept	infolog	it	accetta
+action	infolog	it	Azione
+actual date and time	infolog	it	data e ora attuale
+add	infolog	it	Aggiungi
+add a file	infolog	it	Aggiungi File
+add a new entry	infolog	it	Aggiungi una voce
+add a new note	infolog	it	Aggiungi una Nota
+add a new phonecall	infolog	it	Aggiungi una Chiamata
+add a new sub-task, -note, -call to this entry	infolog	it	Aggiungi un'attività-, nota-, chiamata a questo contatto- secondaria
+add a new todo	infolog	it	Aggiungi un nuovo ToDo
+add file	infolog	it	Aggiungi file
+add sub	infolog	it	Aggiungi secondaria
+add timesheet entry	infolog	it	Aggiungi voce foglio ore
+add:	infolog	it	Aggiungi:
+all	infolog	it	Tutte
+all links and attachments	infolog	it	tutti i link links e gli allegati
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	it	pemette di impostare lo stato di una voce, es. impostare completato un ToDo finito (i valori dipendono dal tipo di voce)
+apply the changes	infolog	it	Applica le modifiche
+are you shure you want to delete this entry ?	infolog	it	Sei sicuro di voler cancellare questa voce ?
+attach a file	infolog	it	Allega un file
+attach file	infolog	it	Allega file
+attension: no contact with address %1 found.	infolog	it	Attenzione: nessun contatto trovato con l'indirizzo %1.
+back to main list	infolog	it	Torna all'elenco principale
+billed	infolog	it	fatturato
+both	infolog	it	entrambi
+call	infolog	it	chiamata
+cancel	infolog	it	Annulla
+cancelled	infolog	it	annullato
+categories	infolog	it	Categorie
+category	infolog	it	Categoria
+change the status of an entry, eg. close it	infolog	it	Cambia lo stato di una voce, es. chiudi
+charset of file	infolog	it	Set di Caratteri del file
+check to set startday	infolog	it	seleziona per impostare la data d'inizio
+check to specify custom contact	infolog	it	Spunta per specificare contatto personalizzato
+click here to create the link	infolog	it	clicca qui per creare il collegamento
+click here to start the search	infolog	it	clicca qui per iniziare la ricerca
+close	infolog	it	Chiudi
+comment	infolog	it	Commento
+completed	infolog	it	Avanzamento
+configuration	infolog	it	Configurazione
+confirm	infolog	it	conferma
+contact	infolog	it	Rubrica
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	it	Copia le tue modifiche negli appunti, %1ricarica la voce%2 e fondile.
+create new links	infolog	it	Crea nuovi links
+creates a new field	infolog	it	crea un nuovo campo
+creates a new status with the given values	infolog	it	crea un nuovo stato col valore inserito
+creates a new typ with the given name	infolog	it	crea un nuovo tipo col valore inserito
+creation	infolog	it	Creazione
+csv-fieldname	infolog	it	CSV Nome Campo
+csv-filename	infolog	it	CSV Nome File
+csv-import	common	it	CSV Importa
+custom	infolog	it	Personalizzato
+custom contact-address, leave empty to use information from most recent link	infolog	it	Indirizzo personalizzato, lascia vuoto per usare le informazioni dal link più recente
+custom contact-information, leave emtpy to use information from most recent link	infolog	it	Informazione personalizzata del contatto, lascia vuoto per usare le informazioni dal link più recente
+custom fields	infolog	it	Campi Personalizzati
+custom fields, typ and status	common	it	Campi personalizzati, tipo e stato
+custom regarding	infolog	it	Considerazione personale
+custom status for typ	infolog	it	Stato personalizzato per il tipo
+customfields	infolog	it	Customfields
+date completed	infolog	it	Data completamento
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	it	Data completamento (lasciala vuota per averla impostata automaticamento se lo stato è Fatto o Fatturato)
+datecreated	infolog	it	data creazione
+dates, status, access	infolog	it	Date, Stato, Accesso
+days	infolog	it	giorni
+default filter for infolog	infolog	it	Filtro predefinito per Attività
+default status for a new log entry	infolog	it	stato predefinito per le nuove voci
+delegation	infolog	it	Delega
+delete	infolog	it	Cancella
+delete one record by passing its id.	infolog	it	Cancella un record fornendo la sua ID
+delete the entry	infolog	it	Cancella la voce
+delete this entry	infolog	it	Cancella questa voce
+delete this entry and all listed sub-entries	infolog	it	Cancella questa voce e tutte le sotto-voci elencate
+deletes the selected typ	infolog	it	cancella il tipo selezionato
+deletes this field	infolog	it	cancella questo campo
+deletes this status	infolog	it	cancella questo stato
+description	infolog	it	Descrizione
+determines the order the fields are displayed	infolog	it	determina l'ordine di visualizzazone dei campi
+disables a status without deleting it	infolog	it	disabilita lo stato senza cancellarlo
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	it	vuoi una conferma dal responsabile su: accettazione, completamento dei ToDo o entrambe
+do you want to see custom infolog types in the calendar?	infolog	it	Vuoi vedere tipi Attività personalizzati in agenda?
+don't show infolog	infolog	it	NON mostrare Attività
+done	infolog	it	eseguita
+download	infolog	it	Download
+duration	infolog	it	Durata
+each value is a line like <id>[=<label>]	infolog	it	ogni valore è una linea tipo <id>[=<label>]
+edit	infolog	it	Modifica
+edit or create categories for ingolog	infolog	it	Modifica o crea una categoria di IngoLog
+edit rights (full edit rights incl. making someone else responsible!)	infolog	it	diritti di modifica (diritti di modifica completi incluso rendere qualcun'altro responsabile!)
+edit status	infolog	it	Modifica lo Stato
+edit the entry	infolog	it	Modifica una voce
+edit this entry	infolog	it	Modifica questa voce
+empty for all	infolog	it	vuoto per tutti
+enddate	infolog	it	Data Fine
+enddate can not be before startdate	infolog	it	La data finale non può precedere la data iniziale
+enter a custom contact, leave empty if linked entry should be used	infolog	it	inserisci un contatto personalizzato, lascia vuoto se vuoi usare la voce linkata
+enter a custom phone/email, leave empty if linked entry should be used	infolog	it	inserisci un numero di telefono/email personalizzato, lascia vuoto se vuoi usare la voce linkata
+enter a textual description of the log-entry	infolog	it	inserisci una descrizione testuale per il log della voce
+enter the query pattern	infolog	it	Inserisci la stringa di ricerca
+entry and all files	infolog	it	Inserimenti e tutti i files
+error: saving the entry	infolog	it	Errore: durante il salvataggio della voce
+error: the entry has been updated since you opened it for editing!	infolog	it	Errore: la voce è stata aggiornata da quando l'hai aperta per la modifica!
+existing links	infolog	it	Collegamenti esistenti
+fax	infolog	it	Fax
+fieldseparator	infolog	it	Separatore campi
+finish	infolog	it	termina
+for which types should this field be used	infolog	it	per quali tipo devi usare questo campo
+from	infolog	it	Da
+general	infolog	it	Generale
+high	infolog	it	Alta
+id	infolog	it	Id
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	it	Se non impostato, la linea con ricerca e filtri viene nascosta per meno voci di "massime occorrenze per pagina" (come definito nelle tue preferenze comuni).
+import	infolog	it	Importa
+import next set	infolog	it	importa il prossimo set
+info log	common	it	Attività
+infolog	common	it	Attività
+infolog - delete	infolog	it	Attività - Cancella
+infolog - edit	infolog	it	Attività - Modifica
+infolog - import csv-file	infolog	it	Attività - Importa File CSV
+infolog - new	infolog	it	Attività - Nuovo
+infolog - new subproject	infolog	it	Attività - Nuovo progetto secondario
+infolog - subprojects from	infolog	it	Attività - progetto secondario da
+infolog entry deleted	infolog	it	Voce Attività cancellata
+infolog entry saved	infolog	it	Voce Attività salvata
+infolog filter for the main screen	infolog	it	Filtro Attività per la schermata principale
+infolog list	infolog	it	Elenco Attività
+infolog preferences	common	it	Preferenze Attività
+infolog-fieldname	infolog	it	Attività - Nome del Campo
+invalid filename	infolog	it	Nome di Campo non valido
+label<br>helptext	infolog	it	Etichetta<br>Testo di Help
+last changed	infolog	it	Ultima modifica
+last modified	infolog	it	Ultima modifica
+leave it empty	infolog	it	lascia vuoto
+leave without saveing the entry	infolog	it	uscire senza salvare la voce
+leaves without saveing	infolog	it	uscire senza salvare
+length<br>rows	infolog	it	Lunghezza<br>Righe
+link	infolog	it	Link
+links	infolog	it	Links
+links of this entry	infolog	it	Links della voce
+list all categories	infolog	it	Elenca tutte le categorie
+list no subs/childs	infolog	it	Non elencare Sub/figli
+location	infolog	it	Localizzazione
+longer textual description	infolog	it	descrizione testuale più lunga
+low	infolog	it	Bassa
+max length of the input [, length of the inputfield (optional)]	infolog	it	massima lunghezza di inserimento [, lunghezza dal campo di inserimento (opzionale)]
+name must not be empty !!!	infolog	it	Il nome deve essere vuoto !!!
+name of new type to create	infolog	it	nome del tipo da creare
+never hide search and filters	infolog	it	Non nascondere mai ricerca e filtri
+new name	infolog	it	nuovo nome
+new search	infolog	it	Nuova ricerca
+no - cancel	infolog	it	No - Annulla
+no describtion, links or attachments	infolog	it	nessuna descrizione, collegamenti o allegati
+no details	infolog	it	no dettagli
+no entries found, try again ...	infolog	it	nessun risulato, prova ancora...
+no filter	infolog	it	Nessun Filtro
+no links or attachments	infolog	it	nessun link o allegato
+none	infolog	it	Nessuna
+normal	infolog	it	Normale
+not	infolog	it	non
+not assigned	infolog	it	non assegnata
+not-started	infolog	it	non iniziata
+note	infolog	it	Nota
+number of records to read (%1)	infolog	it	Numero di record da leggere (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	it	numeri di righe per la casella di inserimento multilinea o linee per una select-box multipla
+offer	infolog	it	offerta
+ongoing	infolog	it	in corso
+only for details	infolog	it	Solo per dettagli
+only the attachments	infolog	it	solo gli allegati
+only the links	infolog	it	solo i collegamenti
+open	infolog	it	aperte
+optional note to the link	infolog	it	note opzionali per il Link
+order	infolog	it	Ordine
+overdue	infolog	it	scaduto
+own	infolog	it	proprie
+own open	infolog	it	proprie aperte
+own overdue	infolog	it	proprie scaduti
+own upcoming	infolog	it	proprie in arrivo
+path on (web-)serverside<br>eg. /var/samba/share	infolog	it	percorso lato (web)server<br>es. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	it	Il path ai file utente e gruppo DEVE ESSERE ESTERNO alla directory principale del webserver!!!
+pattern for search in addressbook	infolog	it	stringa da ricercare nella rubrica
+pattern for search in projects	infolog	it	stringa da ricercare nei progetti
+percent completed	infolog	it	Percentuale completamento
+permission denied	infolog	it	Permesso negato
+phone	infolog	it	Chiamata Telefonica
+phone/email	infolog	it	Telefono/Email
+phonecall	infolog	it	Chiamata Telefonica
+planned	infolog	it	pianificato
+planned time	infolog	it	tempo pianificato
+price	infolog	it	Prezzo
+priority	infolog	it	Priorità
+private	infolog	it	Privata
+project	infolog	it	Progetto
+project settings: price, times	infolog	it	Impostazioni progetto: prezzo, tempi
+re:	infolog	it	Re:
+read one record by passing its id.	infolog	it	Leggi un record fornendo la sua ID
+read rights (default)	infolog	it	diritti di lettura (default)
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	it	espressione corretta per indirizzi IP Locali<br>es.^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	it	espressione corretta per indirizzi IP Locali<br>es.^192\.168\.1\.
+remark	infolog	it	Osservazione
+remove this link (not the entry itself)	infolog	it	Rimuovi questo link (non la voce)
+responsible	infolog	it	responsabile
+responsible open	infolog	it	aperte responsabile
+responsible overdue	infolog	it	scadute responsabile
+responsible upcoming	infolog	it	imminenti responsabile
+responsible user, priority	infolog	it	utente, priorità responsabile
+returns a list / search for records.	infolog	it	Restituisce un elenco / cerca record.
+rights for the responsible	infolog	it	Diritti del responsabile
+save	infolog	it	Salva
+saves the changes made and leaves	infolog	it	salva i cambiamenti ed esci
+saves this entry	infolog	it	Salva questa voce
+search	infolog	it	Cerca
+search for:	infolog	it	Ricerca:
+select	infolog	it	Seleziona
+select a category for this entry	infolog	it	seleziona una ricerca per questa voce
+select a price	infolog	it	Seleziona un prezzo
+select a priority for this task	infolog	it	seleziona una priorità per questo ToDo
+select a project	infolog	it	Seleziona un progetto
+select a responsible user: a person you want to delegate this task	infolog	it	seleziona un utente responsabile: una persona a cui vuoi delegare questa attività
+select a typ to edit it's status-values or delete it	infolog	it	seleziona un tipo per modificare il suo stato o cancellarlo
+select an app to search in	infolog	it	Seleziona un'applicazione un cui cercare
+select an entry to link with	infolog	it	Seleziona una voce da linkare con
+select to filter by owner	infolog	it	seleziona per filtrare per proprietario
+select to filter by responsible	infolog	it	seleziona per filtrare per responsabile
+sets the status of this entry and its subs to done	infolog	it	Imposta lo stato di questa voce e delle sue sotto- a fatto
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	it	Attività deve visualizzare ToDo-, chiamate- o note- secondarie nella vista normale oppure no. Potrai sempre visualizzare le secondarie attraverso le principali.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	it	Attività deve mostrare i link ad altre apllicazioni e/o gli allegati nell'elenco Attività (vista normale quando entri in Attività).
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	it	Attività deve apparire nella schermata principale e con quale filtro. Funziona solo se non hai selezionato un'applicazione per la schermata principale (nelle tue preferenze).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	it	Attività deve usare i nomi completi (nome e cognome) o solo il nome utente.
+should the calendar show custom types too	infolog	it	Agenda deve mostrare anche i tipi personalizzati.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	it	L'elenco Attività deve mostrare un ID numerico univoco, che può essere usato ad esempio come Id ticket.
+should the infolog list show the column "last modified".	infolog	it	L'elenco Attività deve mostrare la colonna "ultima modifica".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	it	L'elenco Attività deve mostrare la percentuale di completamento solo per lo stato IN CORSO o due icone separate.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	it	questa voce deve essere visibile solo alle persone a cui garantisci accesso privato attraverso la ACL
+show a column for used and planned times in the list.	infolog	it	Mostra una colonna per i tempi effettivi e pianificati nell'elenco.
+show full usernames	infolog	it	Mostra nomi utente completi
+show in the infolog list	infolog	it	Visualizza nella lista di Attività
+show last modified	infolog	it	Mostra ultima modifica
+show status and percent done separate	infolog	it	Mostra status e percentuale completamento separati
+show ticket id	infolog	it	Mostra ID ticket
+show times	infolog	it	Mostra tempi
+small view	infolog	it	vista ridotta
+start a new search, cancel this link	infolog	it	inizia una nuova ricerca, annulla questo link
+startdate	infolog	it	Data Inizio
+startdate enddate	infolog	it	Data Inizio Data Fine
+startdate for new entries	infolog	it	Data iniziale per nuove voci
+startrecord	infolog	it	Record Iniziale
+status	infolog	it	Stato
+status ...	infolog	it	Stato ...
+sub	infolog	it	Sub
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	it	Le sotto-voci diventano sotto- di voci superiori o voci principali, se non c'è più superiore
+subject	infolog	it	Oggetto
+task	infolog	it	ToDo
+test import (show importable records <u>only</u> in browser)	infolog	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	it	il nome usato internamente (<= 10 caratteri), cambiandolo rende i dati esistenti indisponibili
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	it	il nome usato internamente (<= 20 caratteri), cambiandolo rende i dati esistenti indisponibili
+the text displayed to the user	infolog	it	il testo mostrato all'utente
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	it	Questo è il filtro che Attività applica quando entri nell'applicazione. I filtri limitano le voci visualizzate nella vista attuale. Ci sono filtri per visualizzare solo le voci completate, ancora aperte o future sia tue che degli altri utenti.
+til when should the todo or phonecall be finished	infolog	it	esegue fino a quando il ToDo o la Chiamata Telefonica è finita
+times	infolog	it	Tempi
+to many might exceed your execution-time-limit	infolog	it	troppi potrebbero superare il tuo limite di tempo di esecuzione
+to what should the startdate of new entries be set.	infolog	it	A quando deve essere impostata la data inizio delle nuove voci.
+today	infolog	it	Oggi
+todays date	infolog	it	data odierna
+todo	infolog	it	ToDo
+translation	infolog	it	Traduzione
+typ	infolog	it	Tipo
+typ '%1' already exists !!!	infolog	it	Il tipo '%1' esiste già !!!
+type	infolog	it	Tipo
+type ...	infolog	it	Tipo ...
+type of customfield	infolog	it	Tipo di campo personalizzato
+type of the log-entry: note, phonecall or todo	infolog	it	Tipo di log per la voce: Note, Chiamate o ToDo
+unlink	infolog	it	annulla link
+upcoming	infolog	it	imminente
+urgency	infolog	it	Urgenza
+urgent	infolog	it	urgente
+used time	infolog	it	tempo effettivo
+valid path on clientside<br>eg. \\server\share or e:\	infolog	it	percorsi validi lato client<br>es. \\Server\Share or e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	it	percorsi validi lato client<br>es. \\Server\Share or e:\
+values for selectbox	infolog	it	Valori per la selectbox
+view all subs of this entry	infolog	it	Visualizza tutti le sub voci
+view other subs	infolog	it	visualizza altri sub
+view parent	infolog	it	Visualizza i padri
+view subs	infolog	it	visualizza sub
+view the parent of this entry and all his subs	infolog	it	Visualizza i padri di queste voci e tutte i suoi subs
+view this linked entry in its application	infolog	it	visualizza le voci linkate nella sua applicazione
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	it	quando i ToDo e le Chiamate Telefoniche iniziano, vengono visualizzati dalla data impostata sul filtro aperti o propri aperti (pagina iniziale)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	it	Che campi aggiuntivi sarà permesso modificare al responsabile senza avere diritti di modifica?<br />Stato, percentuale e data completamento sono sempre permessi.
+which implicit acl rights should the responsible get?	infolog	it	Che diritti ACL impliciti otterrà il responsabile?
+will-call	infolog	it	chiamerà
+write (add or update) a record by passing its fields.	infolog	it	Scrivi (aggiungi o aggiorna) un record fornendo i suoi campi.
+yes - delete	infolog	it	Sì - Cancella
+yes - delete including sub-entries	infolog	it	Sì - Cancella includendo voci secondarie
+you can't delete one of the stock types !!!	infolog	it	Non puoi cancellare uno dei tipi predefiniti !!!
+you have entered an invalid ending date	infolog	it	E' stata inserita una data di fine non valida
+you have entered an invalid starting date	infolog	it	E' stata inserita una data di inizio non valida
+you have to enter a name, to create a new typ!!!	infolog	it	Per creare un nuovo tipo devi inserire un nome!!!
+you must enter a subject or a description	infolog	it	E' necessario inserire un oggetto o una descrizione
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	it	Il tuo database NON è aggiornato (%1 invece di %2), per favore esegui %3setup%4 per aggiornarlo.

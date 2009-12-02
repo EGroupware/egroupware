@@ -1,0 +1,204 @@
+a short subject for the entry	infolog	ko	이 엔트리의 짧은 제목
+abort without deleting	infolog	ko	삭제없이 취소
+accept	infolog	ko	수락
+action	infolog	ko	처리
+add	infolog	ko	추가
+add a file	infolog	ko	파일 추가
+add a new entry	infolog	ko	새 엔트리 추가
+add a new note	infolog	ko	새 노트 추가
+add a new phonecall	infolog	ko	새 통화기록 추가
+add a new sub-task, -note, -call to this entry	infolog	ko	이 엔트리의 하위작업 추가
+add a new todo	infolog	ko	새 할일 추가
+add file	infolog	ko	파일 추가
+add sub	infolog	ko	하위 추가
+add timesheet entry	infolog	ko	타임시트 엔트리에 추가
+add:	infolog	ko	추가:
+all	infolog	ko	모두
+all links and attachments	infolog	ko	모든 첨부와 링크들
+apply the changes	infolog	ko	변경사항 적용
+are you shure you want to delete this entry ?	infolog	ko	정말로 이 엔트리를 삭제하시겠습니까?
+attach a file	infolog	ko	파일 첨부
+attach file	infolog	ko	파일 첨부
+back to main list	infolog	ko	메인 목록으로 돌아가기
+both	infolog	ko	모두
+call	infolog	ko	통화
+cancel	infolog	ko	취소
+cancelled	infolog	ko	취소됨
+categories	infolog	ko	카테고리들
+category	infolog	ko	카테고리
+change the status of an entry, eg. close it	infolog	ko	엔트리의 상태를 변경 (예: 만료)
+charset of file	infolog	ko	파일의 문자열설정
+check to set startday	infolog	ko	시작일 설정을 확인
+click here to create the link	infolog	ko	새 링크를 생성하려면 클릭하세요
+click here to start the search	infolog	ko	검색을 시작하려면 클릭하세요
+close	infolog	ko	만료
+comment	infolog	ko	커멘트
+completed	infolog	ko	완료됨
+configuration	infolog	ko	설정
+confirm	infolog	ko	확인
+contact	infolog	ko	연락
+create new links	infolog	ko	새 링크 만들기
+creates a new field	infolog	ko	새 필드 만들기
+creates a new status with the given values	infolog	ko	주어진 값으로 새 상태 만들기
+creates a new typ with the given name	infolog	ko	주어진 이름으로 새 형식 만들기
+creation	infolog	ko	생성
+date completed	infolog	ko	완료일
+datecreated	infolog	ko	개설일
+delegation	infolog	ko	위임
+delete	infolog	ko	삭제
+delete the entry	infolog	ko	엔트리 삭제
+delete this entry	infolog	ko	이 엔트리 삭제
+delete this entry and all listed sub-entries	infolog	ko	하위 엔트리를 포함 삭제
+deletes the selected typ	infolog	ko	선택된 형식 삭제
+deletes this field	infolog	ko	이 필드 삭제
+deletes this status	infolog	ko	이 상태 삭제
+description	infolog	ko	내용
+details	infolog	ko	내용포함
+don't show infolog	infolog	ko	인포로그 보이지 않기
+done	infolog	ko	완료
+download	infolog	ko	다운로드
+duration	infolog	ko	기간
+edit	infolog	ko	수정
+edit or create categories for ingolog	infolog	ko	인포로그전용 카테고리 편집/수정
+edit rights (full edit rights incl. making someone else responsible!)	infolog	ko	편집 권한 (특정인 혹은 응답자를 포함한 수정의 모든권한)
+edit status	infolog	ko	상태 수정
+edit the entry	infolog	ko	엔트리 수정
+edit this entry	infolog	ko	이 엔트리 수정
+enddate	infolog	ko	만기일
+enddate can not be before startdate	infolog	ko	만기일은 시작일보다 앞설수 없습니다.
+enter the query pattern	infolog	ko	질의 패턴 입력
+error: saving the entry	infolog	ko	오류: 엔트리 저장
+error: the entry has been updated since you opened it for editing!	infolog	ko	오류: 이 엔트리는 당신이 수정하는 중간에 업데이트 되었습니다.
+existing links	infolog	ko	기존 링크
+fax	infolog	ko	팩스
+fieldseparator	infolog	ko	필드구분자
+finish	infolog	ko	완료
+general	infolog	ko	일반
+import	infolog	ko	불러오기
+info log	common	ko	인포로그
+infolog	common	ko	인포로그
+infolog - delete	infolog	ko	인포로그 - 삭제
+infolog - edit	infolog	ko	인포로그 - 수정
+infolog - import csv-file	infolog	ko	인포로그 - 불러오기 CSV
+infolog - new	infolog	ko	인포로그 - 신규
+infolog - new subproject	infolog	ko	인포로그 - 새 하위프로젝트
+infolog - subprojects from	infolog	ko	인포로그 - 서브프로젝트로부터
+infolog entry deleted	infolog	ko	인포로그 엔트리가 삭제됨
+infolog entry saved	infolog	ko	인포로그 엔트리가 저장됨
+infolog filter for the main screen	infolog	ko	메인화면의 인포로그 필터
+infolog list	infolog	ko	인포로그 목록
+infolog preferences	common	ko	인포로그 설정
+infolog-fieldname	infolog	ko	인포로그 - 필드명
+invalid filename	infolog	ko	잘못된 파일명
+last changed	infolog	ko	마지막 변경
+last modified	infolog	ko	마지막 수정
+leave it empty	infolog	ko	빈채로 남겨두기
+leave without saveing the entry	infolog	ko	엔트리를 저장없이 나가기
+leaves without saveing	infolog	ko	저장없이 나가기
+link	infolog	ko	링크
+links	infolog	ko	링크들
+links of this entry	infolog	ko	이 엔트리의 링크
+list all categories	infolog	ko	모든 카테고리 목록
+list no subs/childs	infolog	ko	스레드 제외 목록
+location	infolog	ko	장소
+low	infolog	ko	낮음
+name must not be empty !!!	infolog	ko	이름을 입력하세요
+name of new type to create	infolog	ko	새 형식을 만들기 위한 명칭
+never hide search and filters	infolog	ko	검색 및 필터 숨기지 않음
+new name	infolog	ko	새 이름
+new search	infolog	ko	새 검색
+no - cancel	infolog	ko	아니오 - 취소
+no describtion, links or attachments	infolog	ko	설명,링크,첨부 제외
+no details	infolog	ko	내용제외
+no entries found, try again ...	infolog	ko	항목이 없습니다. 다시해주세요
+no filter	infolog	ko	필터없음
+no links or attachments	infolog	ko	링크 혹은 첨부 없음
+none	infolog	ko	없음
+normal	infolog	ko	일반
+not assigned	infolog	ko	지정안됨
+not-started	infolog	ko	시작안됨
+note	infolog	ko	노트
+number of records to read (%1)	infolog	ko	%1 개의 레코드를 읽었습니다.
+offer	infolog	ko	제안
+ongoing	infolog	ko	진행중
+open	infolog	ko	개설
+overdue	infolog	ko	만기초과
+own	infolog	ko	소유
+own open	infolog	ko	소유 개설
+own overdue	infolog	ko	소유 만기초과
+own upcoming	infolog	ko	소유 예정
+owner	infolog	ko	소유주
+pattern for search in addressbook	infolog	ko	주소록 검색을 위한 패턴
+pattern for search in projects	infolog	ko	프로젝트 검색을 위한 패턴
+percent completed	infolog	ko	퍼센트 완료
+permission denied	infolog	ko	권한 거절
+phone	infolog	ko	통화
+phone/email	infolog	ko	전화/메일
+phonecall	infolog	ko	통화
+planned	infolog	ko	기획
+planned time	infolog	ko	기획기간
+price	infolog	ko	가격
+priority	infolog	ko	중요도
+private	infolog	ko	개인
+project	infolog	ko	프로젝트
+re:	infolog	ko	회신:
+responsible	infolog	ko	응답대상
+responsible open	infolog	ko	응답자 개설
+responsible overdue	infolog	ko	응답자 만기초과
+responsible upcoming	infolog	ko	응답자 예정
+responsible user, priority	infolog	ko	응답대상,중요도
+rights for the responsible	infolog	ko	응답자에 대한 권한
+save	infolog	ko	저장
+saves the changes made and leaves	infolog	ko	저장하고 나가기
+saves this entry	infolog	ko	이 엔트리를 저장함
+search	infolog	ko	검색
+select	infolog	ko	선택
+select a category for this entry	infolog	ko	이 엔트리의 카테고리를 선택하세요
+select a price	infolog	ko	가격을 선택하세요
+select a priority for this task	infolog	ko	이 엔트리의 중요도를 선택하세요
+select a project	infolog	ko	프로젝트를 선택하세요
+select a responsible user: a person you want to delegate this task	infolog	ko	응답자를 선택하세요 (이업무를 위임할 사람)
+select to filter by owner	infolog	ko	소유자에 따른 정렬
+select to filter by responsible	infolog	ko	응답에 따른 정렬
+show full usernames	infolog	ko	긴 사용자명 표기
+show in the infolog list	infolog	ko	인포로그 목록에 표기
+show last modified	infolog	ko	마지막 수정일 표기
+show status and percent done separate	infolog	ko	상태 및 완료도 개별 표기
+show ticket id	infolog	ko	티켓ID 표기
+small view	infolog	ko	미니뷰
+start a new search, cancel this link	infolog	ko	이 링크를 취소하고 새로 검색
+startdate	infolog	ko	시작일
+startdate enddate	infolog	ko	시작일 만기일
+startdate for new entries	infolog	ko	새 엔트리를 위한 시작일
+startrecord	infolog	ko	시작레코드
+status	infolog	ko	상태
+status ...	infolog	ko	상태 ...
+sub	infolog	ko	하위
+subject	infolog	ko	제목
+task	infolog	ko	할일
+today	infolog	ko	오늘
+todays date	infolog	ko	오늘 일자
+todo	infolog	ko	할일
+translation	infolog	ko	번역
+typ	infolog	ko	형식
+typ '%1' already exists !!!	infolog	ko	%1 형식은 이미 있습니다.
+type	infolog	ko	형식
+type ...	infolog	ko	형식 ..
+unlink	infolog	ko	삭제
+upcoming	infolog	ko	예정
+urgency	infolog	ko	긴급
+urgent	infolog	ko	긴급
+used time	infolog	ko	사용한 시간
+view all subs of this entry	infolog	ko	이 엔트리의 모든 하위보기
+view other subs	infolog	ko	다른 하위보기
+view parent	infolog	ko	상위보기
+view subs	infolog	ko	하위보기
+view the parent of this entry and all his subs	infolog	ko	이 상위에 속한 모든 하위보기
+will-call	infolog	ko	통화 예약
+yes - delete	infolog	ko	예 - 삭제
+yes - delete including sub-entries	infolog	ko	예 - 하위 엔트리 포함삭제
+you can't delete one of the stock types !!!	infolog	ko	기본형식을 삭제할 수 없습니다.
+you have entered an invalid ending date	infolog	ko	만기일을 잘못입력하였습니다.
+you have entered an invalid starting date	infolog	ko	시작일을 잘못입력하였습니다.
+you have to enter a name, to create a new typ!!!	infolog	ko	새 형식을 만들기 위해서는 이름을 입력하여야 합니다.
+you must enter a subject or a description	infolog	ko	제목이나 내용을 필히 입력하여야 합니다.

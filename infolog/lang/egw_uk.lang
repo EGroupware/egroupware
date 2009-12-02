@@ -1,0 +1,249 @@
+%1 records imported	infolog	uk	%1 записів імпортовано
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	uk	%1 записів прочитано(Ще не імпортовано, верніться %2назад%3 та зніміть відмітку Тестувати Імпорт)
+- subprojects from	infolog	uk	- з субпроектів
+0%	infolog	uk	0%
+10%	infolog	uk	10%
+20%	infolog	uk	20%
+30%	infolog	uk	30%
+40%	infolog	uk	40%
+50%	infolog	uk	50%
+60%	infolog	uk	60%
+70%	infolog	uk	70%
+80%	infolog	uk	80%
+90%	infolog	uk	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	uk	
+a short subject for the entry	infolog	uk	Коротка тема запису
+abort without deleting	infolog	uk	Перервати без видалення
+accept	infolog	uk	прийнято
+action	infolog	uk	Дія
+add	infolog	uk	Додати
+add a file	infolog	uk	Додати файл
+add a new entry	infolog	uk	Додати новий запис
+add a new note	infolog	uk	Додати нову нотатку
+add a new phonecall	infolog	uk	Додати новий телефонний дзвінок
+add a new sub-task, -note, -call to this entry	infolog	uk	Додати до цього запису нове під-завдання, -нотатку, -дзвінок
+add a new todo	infolog	uk	Додати нове Завдання
+add file	infolog	uk	Додати файл
+add sub	infolog	uk	Додати Підзапис
+add:	infolog	uk	Додати:
+all	infolog	uk	Все
+all links and attachments	infolog	uk	Всі додатки та посилання
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	uk	Дозволяє встановити статус запису, наприклад, встановити Завдання як виконане у випадку закінчення (значення залежать від типу запису)
+applies the changes	infolog	uk	Застосувати зміни
+are you shure you want to delete this entry ?	infolog	uk	Ви впевнені, що хочете видалити цей запис ?
+are you sure you want to delete this entry	infolog	uk	Ви впевнені, що хочете видалити цей запис
+attach a file	infolog	uk	Прикласти файл
+attach file	infolog	uk	Прикласти файл
+back to main list	infolog	uk	Вернутись до основного списку
+back to projectlist	infolog	uk	Вернутись до переліку проектів
+billed	infolog	uk	Нараховано
+both	infolog	uk	обидва
+call	infolog	uk	дзвінок
+cancel	infolog	uk	Закінчити
+categories	infolog	uk	Категорії
+category	infolog	uk	Категорія
+charset of file	infolog	uk	Кодування файлу
+check to set startday	infolog	uk	відмітьте для встановлення дати початку
+click here to create the link	infolog	uk	натисніть тут для створення Посилання
+click here to start the search	infolog	uk	натисніть тут щоб почати пошук
+close	infolog	uk	Закрити
+comment	infolog	uk	Коментувати
+configuration	infolog	uk	Конфігурація
+confirm	infolog	uk	Підтвердити
+contact	infolog	uk	Контакт
+create new links	infolog	uk	Створити нові посилання
+creates a new field	infolog	uk	створює нові поля
+creates a new status with the given values	infolog	uk	створює новий статус з заданим значенням
+creates a new typ with the given name	infolog	uk	створює новий тип з заданою назвою
+csv-fieldname	infolog	uk	
+csv-filename	infolog	uk	
+csv-import	common	uk	
+custom	infolog	uk	
+custom contact-address, leave empty to use information from most recent link	infolog	uk	Додаткові адреси контактів, залиште порожнім, щоб використати інформацію з останнього посилання
+custom contact-information, leave emtpy to use information from most recent link	infolog	uk	Додаткові інформація контактів, залиште порожнім, щоб використати інформацію з останнього посилання
+custom fields	infolog	uk	Власні поля
+custom fields, typ and status	common	uk	Власні поля, типи та статуси
+custom regarding	infolog	uk	
+custom status for typ	infolog	uk	Власний статус типу
+customfields	infolog	uk	Власні поля
+datecreated	infolog	uk	Дата створення
+dates, status, access	infolog	uk	Дати, Статуси, Доступи
+days	infolog	uk	дні
+default filter for infolog	infolog	uk	Типовий фільтр для Записок
+default status for a new log entry	infolog	uk	Типовий статус нового запису
+delegation	infolog	uk	Делегування
+delete	infolog	uk	Видалити
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	uk	Видалити всі підпорядковаі записи (якщо ні, підзаписи будут передані батьківському запису, або залишаться самостійними)
+delete the entry	infolog	uk	Видалити цей запис
+delete this entry	infolog	uk	видалити цей запис
+deletes the selected typ	infolog	uk	видаляє вибраний тип
+deletes this field	infolog	uk	видаляє це поле
+deletes this status	infolog	uk	видаляє цей статус
+description	infolog	uk	Опис
+description can not exceed 8000 characters in length	infolog	uk	Довжина опису не може перевищувати 8000 символів
+determines the order the fields are displayed	infolog	uk	визначає послідовність показу полів
+disables a status without deleting it	infolog	uk	відключає статус без його видалення
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	uk	Чи потрібне Вам підтвердження від Відповідального у випадках прийняття та/або закінчення
+done	infolog	uk	виконано
+download	infolog	uk	Загрузити
+duration	infolog	uk	Тривалість
+each value is a line like <id>[=<label>]	infolog	uk	Кожне значення є рядком у вигляді <id>[=<label>]
+edit	infolog	uk	Редагувати
+edit or create categories for ingolog	infolog	uk	Редагувати або створити категорії для Записок
+edit the entry	infolog	uk	Редагувати запис
+edit this entry	infolog	uk	Редагувати цей запис
+empty for all	infolog	uk	порожнє для всіх
+enddate	infolog	uk	Дата закінчення
+enddate can not be before startdate	infolog	uk	Закінчення не може бути раніше Початку
+enter a custom contact, leave empty if linked entry should be used	infolog	uk	Введіть додатковий контакт, або залиште його порожнім, якщо повинен використовуватись прив'язаний запис
+enter a custom phone/email, leave empty if linked entry should be used	infolog	uk	Введіть додатковий телефон/email, або залиште його порожнім, якщо повинен використовуватись прив'язаний запис
+enter a textual description of the log-entry	infolog	uk	Введіть опис запису
+enter the query pattern	infolog	uk	Введіть зразок пошуку
+entry and all files	infolog	uk	Запис та всі файли
+existing links	infolog	uk	Існуючі посилання
+fax	infolog	uk	Факс
+fieldseparator	infolog	uk	
+finish	infolog	uk	закінчено
+for which types should this field be used	infolog	uk	для яких типів призначене це поле
+from	infolog	uk	Від
+high	infolog	uk	високий
+id	infolog	uk	Id
+import	infolog	uk	Імпорт
+import next set	infolog	uk	імпортувати наступний набір
+info log	common	uk	Записки
+infolog	common	uk	Записки
+infolog - delete	infolog	uk	Записки - Видалення
+infolog - edit	infolog	uk	Записки - Редагування
+infolog - import csv-file	infolog	uk	Записки - Імпорт CSV-файлу
+infolog - new	infolog	uk	Записки - Новий запис
+infolog - new subproject	infolog	uk	Записки - Новий підпроект
+infolog - subprojects from	infolog	uk	Записки - Підпроекти
+infolog list	infolog	uk	Перелік записок
+infolog preferences	common	uk	Записки - Параметри
+infolog-fieldname	infolog	uk	Записки - Ім'я поля
+invalid filename	infolog	uk	невірне ім'я файлу
+label<br>helptext	infolog	uk	Мітка<br>Пояснючий текст
+last changed	infolog	uk	Востаннє змінено
+last modified	infolog	uk	Востаннє змінено
+leave without saveing the entry	infolog	uk	вийти без збереження запису
+leaves without saveing	infolog	uk	вийти без збереження
+length<br>rows	infolog	uk	Довжина<br>Рядки
+link	infolog	uk	Посилання
+links	infolog	uk	Посилання
+links of this entry	infolog	uk	Посилання цього запису
+list no subs/childs	infolog	uk	Перелік без підзаписів
+longer textual description	infolog	uk	довший текстовий опис
+low	infolog	uk	низький
+max length of the input [, length of the inputfield (optional)]	infolog	uk	максимальна довжина вводу[, видима довжина поля вводу (необов'язково)]
+max number of entries to display on the main screen	infolog	uk	Максимальна кількість записів для показу на основному екрані
+name must not be empty !!!	infolog	uk	Назва повинна бути непорожнім
+name of new type to create	infolog	uk	Назва нового типу, що створюється
+new name	infolog	uk	нова назва
+new search	infolog	uk	Новий пошук
+no - cancel	infolog	uk	Ні - Відмовитись
+no entries found, try again ...	infolog	uk	Записів не знайдено, спробуте ще...
+no filter	infolog	uk	Немає Фільтру
+no links or attachments	infolog	uk	без посилань або додатків
+none	infolog	uk	Немає
+normal	infolog	uk	нормальний
+not	infolog	uk	не треба
+not assigned	infolog	uk	не призначено
+note	infolog	uk	Нотатка
+number of records to read (%1)	infolog	uk	Кількість записів для читання (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	uk	кількість рядків для багаторядкового поля вводу або рядків віконця вибору множини
+offer	infolog	uk	пропозиція
+ongoing	infolog	uk	в роботі
+only the attachments	infolog	uk	тільки додатки
+only the links	infolog	uk	тільки посилання
+only up to this number of entries are displayed on the main screen.	infolog	uk	На основному екрані показується не більше вказаної кількості записів
+open	infolog	uk	відкрито
+optional note to the link	infolog	uk	необов'язкова примітка до Посилання
+order	infolog	uk	
+overdue	infolog	uk	прострочено
+own	infolog	uk	власні
+own open	infolog	uk	власні відкриті
+own overdue	infolog	uk	власні прострочені
+own upcoming	infolog	uk	власні майбутні
+path on (web-)serverside<br>eg. /var/samba/share	infolog	uk	шлях на стороні вебсерверу<br>наприклад /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	uk	Шлях до файлів користувачів та груп МАЄ БУТИ ЗАВНІШНІМ відносно корню документів вебсервера
+pattern for search in addressbook	infolog	uk	зразок пошуку в Адресній книзі
+pattern for search in projects	infolog	uk	зразок пошуку в проектах
+phone	infolog	uk	Телефонний дзвінок
+phone/email	infolog	uk	Телефон/Email
+phonecall	infolog	uk	Телефонний дзвінок
+priority	infolog	uk	Пріоритет
+private	infolog	uk	Особисте
+project	infolog	uk	Проект
+re:	infolog	uk	Re:
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	uk	Маска локальних IP<br>наприклад ^192\.168\.1\.
+remark	infolog	uk	Ремарка
+remove this link (not the entry itself)	infolog	uk	Видалити це посилання (не сам запис)
+responsible	infolog	uk	Відповідальний
+responsible user, priority, ...	infolog	uk	відповідальні, приіоритет, ...
+save	infolog	uk	Зберегти
+saves the changes made and leaves	infolog	uk	зберігає зроблені зміни та виходить
+saves this entry	infolog	uk	Зберігає цей запис
+search	infolog	uk	Шукати
+search for:	infolog	uk	Шукати:
+select	infolog	uk	Вибрати
+select a category for this entry	infolog	uk	виберіть категорію запису
+select a priority for this task	infolog	uk	виберіть приоритет завдання
+select a responsible user: a person you want to delegate this task	infolog	uk	визначте відповідального: людину, якій Ви хочете делегувати це завдання
+select a typ to edit it's status-values or delete it	infolog	uk	виберіть тип для редагування його статусів або видалення
+select an app to search in	infolog	uk	Виберіть приложення в якому шукати
+select an entry to link with	infolog	uk	Виберіть запис для Посилання
+should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	uk	Чи повинні Записки показуватись на основному екрані (не закінчені завдання, дзвінки або нотатки). Працює тільки якщо Ви не визначили приложення для основного екрану (в Ваших Параметрах).
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	uk	Чи повинні Записки показувати Під-завдання, -дзвінки, -нотатки у нормальному вигляді. Ви завжди можете переглянути їх через "батька".
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	uk	Чи повинні Записки показувати посилання на інші приложення або файлові додатки у нормальному вигляді.
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	uk	Чи повиннні Записки використовувати повні імена (Ім'я та Прізвище) чи тільки Ім'я входу.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	uk	Чи повинее цей запис бути видимим тільки Вам та людям, яким Ви надали доступ за допомогою ACL
+show full usernames	infolog	uk	Показувати повні імена
+show in the infolog list	infolog	uk	Показувати в переліку Записок
+show list of upcoming entries	infolog	uk	Показувати перелік майбутніх записів
+show open entries: tasks/calls/notes on main screen	infolog	uk	Показувати відкриті записи: Завдання/Дзвінки/Нотатки на основному екрані
+small view	infolog	uk	маленький вигляд
+start a new search, cancel this link	infolog	uk	Розпочати новий пошук, покинути це посилання
+startdate	infolog	uk	Дата початку
+startdate enddate	infolog	uk	Дата Початку Дата Закінчення
+startrecord	infolog	uk	Початковий запис
+status	infolog	uk	Статус
+status ...	infolog	uk	Статус...
+sub	infolog	uk	Підзапис
+subject	infolog	uk	Тема
+task	infolog	uk	Завдання
+test import (show importable records <u>only</u> in browser)	infolog	uk	Тестувати Імпорт (лише показувати записи, що можуть бути імпортовані)
+the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	uk	назва використовується системою (<= 32 chars), зміна зробить існуючі дані недоступними
+the text displayed to the user	infolog	uk	текст, що показуються користувачу
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	uk	Це фільтр, який використовується Записками зразу після входу в приложення. Фільтри обмежують перелік записів, які мають показуватись в поточному вигляді. Існують фільтри для показу тільки виконаних, відкритих або майбутніх записів - Ваших, чи всіх користувачів.
+til when should the todo or phonecall be finished	infolog	uk	
+to many might exceed your execution-time-limit	infolog	uk	надто багато може перевищити Ваш ліміт часу
+today	infolog	uk	Сьогодні
+todo	infolog	uk	Завдання
+translation	infolog	uk	Переклад
+typ	infolog	uk	Тип
+typ '%1' already exists !!!	infolog	uk	Тип '%1' вже існує !
+type	infolog	uk	Тип
+type ...	infolog	uk	Тип ...
+type of the log-entry: note, phonecall or todo	infolog	uk	Тип запису: Нотатка, Телефонний дзвінок або Завдання
+unlink	infolog	uk	Викинути
+upcoming	infolog	uk	майбутні
+urgency	infolog	uk	терміновість
+urgent	infolog	uk	терміновий
+use button to search for address	infolog	uk	використайте кнопку для пошуку в Адресах
+use button to search for project	infolog	uk	використайте кнопку для пошуку в Проектах
+valid path on clientside<br>eg. \\server\share or e:\	infolog	uk	діючий шлях на клієнтській стороні<br>наприклад \\Server\Share або e:\
+values for selectbox	infolog	uk	Значення для selectbox
+view all subs of this entry	infolog	uk	Переглянути всі підзаписи цього запису
+view other subs	infolog	uk	переглянути інші підзаписи
+view parent	infolog	uk	Переглянути батьківський запис
+view subs	infolog	uk	переглянути підзаписи
+view the parent of this entry and all his subs	infolog	uk	Переглянути батьківський запис та всі його підзаписи
+view this linked entry in its application	infolog	uk	переглянути посилання в відповідному приложенні
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	uk	коли Завдання або Дзвінок повинні розпочатися, вони показуються з цієї дати у фільтрі відкритих або власних відкритих на основній сторінці
+will-call	infolog	uk	Має подзвонити
+yes - delete	infolog	uk	Так - Видалити
+you can't delete one of the stock types !!!	infolog	uk	Ви не можете видалити один з вбудованих типів
+you have entered an invalid ending date	infolog	uk	Ви ввели невірну дату закінчення
+you have entered an invalid starting date	infolog	uk	Ви ввели невірну дату початку
+you have to enter a name, to create a new typ!!!	infolog	uk	Для створення нового типу необхідно ввести назву
+you must enter a subject or a description	infolog	uk	Необхідно ввести тему або опис

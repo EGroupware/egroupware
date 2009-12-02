@@ -1,0 +1,258 @@
+%1 records imported	infolog	hr	%1 zapisa uvezeno
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	hr	%1 zapisa pročitano(još nije uvezeno, možete se %2back%3 i odizabrati testni uvoz)
+- subprojects from	infolog	hr	- Podprojekti od
+0%	infolog	hr	0%
+10%	infolog	hr	10%
+20%	infolog	hr	20%
+30%	infolog	hr	30%
+40%	infolog	hr	40%
+50%	infolog	hr	50%
+60%	infolog	hr	60%
+70%	infolog	hr	70%
+80%	infolog	hr	80%
+90%	infolog	hr	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	hr	<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients
+a short subject for the entry	infolog	hr	kratka tema za novi unos
+abort without deleting	infolog	hr	Prekini bez brisanja
+accept	infolog	hr	Prihvati
+action	infolog	hr	Djelovanje
+add	infolog	hr	Dodaj
+add a file	infolog	hr	Dodaj datoteku
+add a new entry	infolog	hr	Dodaj novi unos
+add a new note	infolog	hr	Dodaj novu bilješku
+add a new phonecall	infolog	hr	Dodaj novi poziv
+add a new sub-task, -note, -call to this entry	infolog	hr	Dodaj novi pod-zadatak, -bilješku, -poziv u ovaj unos
+add a new todo	infolog	hr	Dodaj novi zadatak
+add file	infolog	hr	Dodaj datoteku
+add sub	infolog	hr	Dodaj pod
+add:	infolog	hr	Dodaj:
+all	infolog	hr	Svi
+all links and attachments	infolog	hr	all links and attachments
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	hr	omogućuje postavljanje statusa zapisa, npr. postavi Za Napraviti na završeno ako je završeno (vrijednosti ovise o vrsti unosa)
+applies the changes	infolog	hr	Prihvaćanje promjena
+are you shure you want to delete this entry ?	infolog	hr	Da li ste sigurni da želite obrisati ovaj unos?
+are you sure you want to delete this entry	infolog	hr	Da li ste sigurni da želite obrisati ovaj unos
+attach a file	infolog	hr	Dodaj datoteku
+attach file	infolog	hr	Dodaj datoteku
+back to main list	infolog	hr	Povratak na glavnu listu
+back to projectlist	infolog	hr	Povratak na listu projekata
+billed	infolog	hr	naplaćeno
+both	infolog	hr	Oboje
+call	infolog	hr	nazovi
+cancel	infolog	hr	Otkaži
+categories	infolog	hr	Kategorije
+category	infolog	hr	Kategorija
+change the status of an entry, eg. close it	infolog	hr	Promijeni status ovog unosa, tj. zatvori ga
+charset of file	infolog	hr	Charset of file
+check to set startday	infolog	hr	Označi za datum početka
+click here to create the link	infolog	hr	click here to create the Link
+click here to start the search	infolog	hr	Pritisnite za početak pretrage
+close	infolog	hr	Zatvori
+comment	infolog	hr	Komentar
+configuration	infolog	hr	Konfiguracija
+confirm	infolog	hr	Potvrdi
+contact	infolog	hr	Kontakt
+create new links	infolog	hr	Create new links
+creates a new field	infolog	hr	stvara novo polje
+creates a new status with the given values	infolog	hr	stvara novi status sa danim vrijednostima
+creates a new typ with the given name	infolog	hr	stvara novi tip sa danim imenom
+csv-fieldname	infolog	hr	CSV-Ime Polja
+csv-filename	infolog	hr	CSV-Ime Datoteke
+csv-import	common	hr	CSV-Import
+custom	infolog	hr	Proizvoljno
+custom contact-address, leave empty to use information from most recent link	infolog	hr	Proizvoljna adresa za kontakt, ostavite prazno za upotrebu informacija iz zadnjeg lika-a
+custom contact-information, leave emtpy to use information from most recent link	infolog	hr	Custom contact-information, leave emtpy to use information from most recent link
+custom fields	infolog	hr	Proizvoljna polja
+custom fields, typ and status	common	hr	Proizvoljna polja, vrste i status
+custom regarding	infolog	hr	Custom regarding
+custom status for typ	infolog	hr	Proizvoljan status za tip
+customfields	infolog	hr	Proizvoljna polja
+datecreated	infolog	hr	Napravljeno dana
+dates, status, access	infolog	hr	Datumi, Status, Pristup
+days	infolog	hr	dana
+default filter for infolog	infolog	hr	Default Filter for InfoLog
+default status for a new log entry	infolog	hr	Početna vrijednost statusa za novi zapis
+delegation	infolog	hr	Delegacija
+delete	infolog	hr	Obriši
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	hr	Delete all subs (if not subs will be subs of this enties parent or have no parent)
+delete one record by passing its id.	infolog	hr	Obriši jedan zapis proslijeđujući njegov indetitet
+delete the entry	infolog	hr	Obriši zapis
+delete this entry	infolog	hr	Obriši ovaj zapis
+deletes the selected typ	infolog	hr	Obriši izabrane tipove
+deletes this field	infolog	hr	obriši ova polja
+deletes this status	infolog	hr	obriši ovaj status
+description	infolog	hr	Opis
+description can not exceed 8000 characters in length	infolog	hr	Opis ne može biti duži od 8000 znakova
+determines the order the fields are displayed	infolog	hr	Određuje redosljed prikazivanja polja
+disables a status without deleting it	infolog	hr	Onemogućuje status ne brišući ga
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	hr	želite li potvrdu odgovorne osobe u slučaju: prihvata, završetka ili oboje
+done	infolog	hr	gotovo
+download	infolog	hr	Prenesi sa poslužitelja
+duration	infolog	hr	Trajanje
+each value is a line like <id>[=<label>]	infolog	hr	each value is a line like <id>[=<label>]
+edit	infolog	hr	Uredi
+edit or create categories for ingolog	infolog	hr	Uredi ili napravi kategorije za IngoLog
+edit status	infolog	hr	Uredi status
+edit the entry	infolog	hr	Uredi zapis
+edit this entry	infolog	hr	Uredi ovaj zapis
+empty for all	infolog	hr	Isprazni za sve
+enddate	infolog	hr	Datum kraja
+enddate can not be before startdate	infolog	hr	Krajnji datum nesmije biti prije početnog
+enter a custom contact, leave empty if linked entry should be used	infolog	hr	enter a custom contact, leave empty if linked entry should be used
+enter a custom phone/email, leave empty if linked entry should be used	infolog	hr	enter a custom phone/email, leave empty if linked entry should be used
+enter a textual description of the log-entry	infolog	hr	enter a textual description of the log-entry
+enter the query pattern	infolog	hr	Enter the query pattern
+entry and all files	infolog	hr	Svi zapisi i datoteke
+existing links	infolog	hr	Existing links
+fax	infolog	hr	Faks
+fieldseparator	infolog	hr	Razmaknica polja
+finish	infolog	hr	završi
+for which types should this field be used	infolog	hr	Za koje tipove se koristi ovo polje
+from	infolog	hr	Forma
+high	infolog	hr	visok
+id	infolog	hr	identitet
+import	infolog	hr	Uvezi
+import next set	infolog	hr	Uvezi slijedeći set
+info log	common	hr	InfoLog
+infolog	common	hr	InfoLog
+infolog - delete	infolog	hr	Info Log -Obriši
+infolog - edit	infolog	hr	InfoLog - Uredi
+infolog - import csv-file	infolog	hr	InfoLog - Uvezi CSV-Datoteku
+infolog - new	infolog	hr	InfoLog - Novo
+infolog - new subproject	infolog	hr	InfoLog - Novi podprojekt
+infolog - subprojects from	infolog	hr	InfoLog - Forma podprojekata
+infolog list	infolog	hr	InfoLog lista
+infolog preferences	common	hr	InfoLog postavke
+infolog-fieldname	infolog	hr	Info Log-Ime polja
+invalid filename	infolog	hr	Nevažeće ime datoteke
+label<br>helptext	infolog	hr	Label<br>Helptext
+last changed	infolog	hr	Zadnja promjena
+last modified	infolog	hr	Zadnja izmjena
+leave without saveing the entry	infolog	hr	napusti bez spremanja zapisa
+leaves without saveing	infolog	hr	napusti bez spremanja
+length<br>rows	infolog	hr	Duljina<br>Retci
+link	infolog	hr	Link
+links	infolog	hr	Links
+links of this entry	infolog	hr	Links of this entry
+list all categories	infolog	hr	Prikaži sve kategorije
+list no subs/childs	infolog	hr	Ne prikaži podmape
+longer textual description	infolog	hr	duži tekstualni opis
+low	infolog	hr	nizak
+max length of the input [, length of the inputfield (optional)]	infolog	hr	max length of the input [, length of the inputfield (optional)]
+max number of entries to display on the main screen	infolog	hr	Max number of entries to display on the main screen
+name must not be empty !!!	infolog	hr	Ime nesmije biti prazno!!!
+name of new type to create	infolog	hr	Imena novih tipova za napraviti
+new name	infolog	hr	novo ime
+new search	infolog	hr	Nova pretraga
+no - cancel	infolog	hr	Ne - Otkaži
+no entries found, try again ...	infolog	hr	Nema pronađenih zapisa, probajte ponovo...
+no filter	infolog	hr	Nema Filtera
+no links or attachments	infolog	hr	no links or attachments
+none	infolog	hr	Nijedan
+normal	infolog	hr	normalan
+not	infolog	hr	ne
+not assigned	infolog	hr	nije dodijeljeno
+note	infolog	hr	napomena
+number of records to read (%1)	infolog	hr	Broj zapisa za pročitati (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	hr	number of row for a multiline inputfield or line of a multi-select-box
+offer	infolog	hr	ponudi
+ongoing	infolog	hr	traje (trajući)
+only the attachments	infolog	hr	Samo privitke
+only the links	infolog	hr	only the links
+only up to this number of entries are displayed on the main screen.	infolog	hr	Only up to this number of entries are displayed on the main screen.
+open	infolog	hr	otvori
+optional note to the link	infolog	hr	optional note to the Link
+order	infolog	hr	Naredi
+overdue	infolog	hr	prošao rok
+own	infolog	hr	vlastiti
+own open	infolog	hr	otvori vlastiti
+own overdue	infolog	hr	prošao vlastiti rok
+own upcoming	infolog	hr	obnovljen vlastiti
+path on (web-)serverside<br>eg. /var/samba/share	infolog	hr	path on (web-)serverside<br>eg. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	infolog	hr	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
+pattern for search in addressbook	infolog	hr	uzorak za pretragu adresara
+pattern for search in projects	infolog	hr	uzorak za pretragu projekata
+phone	infolog	hr	Telefonski poziv
+phone/email	infolog	hr	Telefon/Email
+phonecall	infolog	hr	Telefonski poziv
+priority	infolog	hr	Prioritet
+private	infolog	hr	Privatno
+project	infolog	hr	Projekt
+re:	infolog	hr	Re:
+read one record by passing its id.	infolog	hr	Read one record by passing its id.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	hr	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
+remark	infolog	hr	Primjedba
+remove this link (not the entry itself)	infolog	hr	Remove this link (not the entry itself)
+responsible	infolog	hr	Odgovoran
+responsible user, priority, ...	infolog	hr	odgovoran korisnik, prioritet, ...
+returns a list / search for records.	infolog	hr	Vrati listu / traži zapise
+save	infolog	hr	Spremi
+saves the changes made and leaves	infolog	hr	sprema promjene i izlazi
+saves this entry	infolog	hr	Sprema ovaj zapis
+search	infolog	hr	Traži
+search for:	infolog	hr	Traži:
+select	infolog	hr	Izaberi
+select a category for this entry	infolog	hr	izaberi kategoriju za ovaj zapis
+select a priority for this task	infolog	hr	Izaberi prioritet za ovaj zadatak
+select a responsible user: a person you want to delegate this task	infolog	hr	select a responsible user: a person you want to delegate this task
+select a typ to edit it's status-values or delete it	infolog	hr	select a type to edit it's status-values or delete it
+select an app to search in	infolog	hr	Izaberite aplikaciju za pretragu
+select an entry to link with	infolog	hr	Select an entry to link with
+should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	hr	Treba li InfoLog prikazivati vaše otvorene zapise - nezavršene obveze, pozive ili napomene - na glavnom ekranu. Djeluje samu u slučaju ako ne izaberete aplikaciju za prikaz na glavnom ekranu (u vašim postavkama).
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	hr	Treba li InfoLog prikazivati podzadatke, -pozive ili bilješke u normalnom pregledu ili ne.Uvijek možete vidjeti podpodatke preko glavnog zadatka
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	hr	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	hr	Should InfoLog use full names (surname and familyname) or just the loginnames.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	hr	terba li ovaj zapis biti vidljiv samo vama i osobama kojima dobustite pristup preko ACL-a
+show full usernames	infolog	hr	Prikaži puno ime i prezime korisnika
+show in the infolog list	infolog	hr	Prikaži InfoLog listu
+show list of upcoming entries	infolog	hr	Prikaži listu dolazećih zapisa
+show open entries: tasks/calls/notes on main screen	infolog	hr	Prikaži otvorene zapise: Zadatke/Pozive/Bilješke na glavnom ekranu
+small view	infolog	hr	smanji pogled
+start a new search, cancel this link	infolog	hr	Započni novu pretragu, prekini ovaj link!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+startdate	infolog	hr	Datum početka
+startdate enddate	infolog	hr	Datum početka i kraja
+startrecord	infolog	hr	Početak zapisa
+status	infolog	hr	Status
+status ...	infolog	hr	Status ...
+sub	infolog	hr	Sub
+subject	infolog	hr	Tema
+task	infolog	hr	Za obaviti
+test import (show importable records <u>only</u> in browser)	infolog	hr	Testni uvoz (prikaži datoteke koje se mogu uvesti <u>samo</u> u prozoru)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	hr	ime upotrebljavano interno (<= 10 znakova), mijenjanjem postoječe podatke činite nedostupnima
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	hr	ime upotrebljavano interno (<= 20 znakova), mijenjanjem postoječe podatke činite nedostupnima
+the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	hr	the name used internaly (<= 32 chars), changeing it makes existing data unavailible
+the text displayed to the user	infolog	hr	Tekst prikazan korisniku
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	hr	Ovo je filter koji InfoLog upotrebljava prilikom vašeg ulaska u aplikaciju. Filteri limitiraju zapise koji će se stvarno prikazati. Postoje filteri koji prikazuju samo završene, još otvorene ili buduće zapise vas ili svih korisnika.
+til when should the todo or phonecall be finished	infolog	hr	do kada bi Za obaviti ili poziv tebao trajati
+to many might exceed your execution-time-limit	infolog	hr	to many might exceed your execution-time-limit
+today	infolog	hr	Danas
+todo	infolog	hr	Za obaviti
+translation	infolog	hr	Prijevod
+typ	infolog	hr	Tip
+typ '%1' already exists !!!	infolog	hr	Tip '%1' već postoji !!!
+type	infolog	hr	Tip
+type ...	infolog	hr	Tip ...
+type of the log-entry: note, phonecall or todo	infolog	hr	Vrsta zapisa: Bilješka, Poziv ili za obaviti
+unlink	infolog	hr	Unlink
+upcoming	infolog	hr	nadolazeći
+urgency	infolog	hr	hitnost
+urgent	infolog	hr	hitan
+use button to search for address	infolog	hr	use Button to search for Address
+use button to search for project	infolog	hr	use Button to search for Project
+valid path on clientside<br>eg. \\server\share or e:\	infolog	hr	valid path on clientside<br>eg. \\Server\Share or e:\
+values for selectbox	infolog	hr	Vrijednosti za izabrati
+view all subs of this entry	infolog	hr	Prikaži sve podzapise za ovaj zapis
+view other subs	infolog	hr	Prikažii druge podzapise
+view parent	infolog	hr	Prikaži glavni zapis
+view subs	infolog	hr	Prikaži podzapise
+view the parent of this entry and all his subs	infolog	hr	Prikaži glavni zapis i sve njegove podzapise
+view this linked entry in its application	infolog	hr	view this linked entry in its application
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	hr	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (startpage)
+will-call	infolog	hr	Nazvat ću
+write (add or update) a record by passing its fields.	infolog	hr	Write (add or update) a record by passing its fields.
+yes - delete	infolog	hr	Da - Obriši
+you can't delete one of the stock types !!!	infolog	hr	Ne možete obrisati neku od vrsta zapisa!!!
+you have entered an invalid ending date	infolog	hr	Unijeli ste nevažeći datum kraja
+you have entered an invalid starting date	infolog	hr	Unijeli ste nevažeći datum početka
+you have to enter a name, to create a new typ!!!	infolog	hr	Morate unijeti ime, da bi napravili novi tip
+you must enter a subject or a description	infolog	hr	Morate unijeti temu ili opis
