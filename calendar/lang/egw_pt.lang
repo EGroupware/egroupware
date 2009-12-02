@@ -1,0 +1,314 @@
+%1 %2 in %3	calendar	pt	%1 %2 em %3
+%1 records imported	calendar	pt	%1 registos importados
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt	%1 registos lidos (ainda por importar: pode voltar atrás e desmarcar a opção Importação de Teste)
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	pt	<b>Nota</b>: O calendário integra os feriados do seu país, estando definido como %1. Pode alterá-lo nas suas %2.<br />Os feriados são %3 automaticamente instalados a partir de %4. Pode alterá-lo no %5.
+a non blocking event will not conflict with other events	calendar	pt	Um evento não conflituoso não afectará com outros eventos
+accept or reject an invitation	calendar	pt	Aceitar ou rejeitar um convite
+accepted	calendar	pt	Aceite
+access denied to the calendar of %1 !!!	calendar	pt	Acesso negado ao calendário de %1 !!!
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pt	Acção que gerou o aviso: Adicionada, Cancelada, Aceite, Rejeitada, ...
+actions	calendar	pt	Acções
+add alarm	calendar	pt	Adicionar aviso
+added	calendar	pt	Adicionado
+after current date	calendar	pt	Após data actual
+alarm	calendar	pt	Aviso
+alarm added	calendar	pt	Aviso adicionado
+alarm deleted	calendar	pt	Aviso eliminado
+alarm for %1 at %2 in %3	calendar	pt	Aviso para %1 às %2 em %3
+alarm management	calendar	pt	Gestor de avisos
+alarms	calendar	pt	Avisos
+all categories	calendar	pt	Todas as categorias
+all day	calendar	pt	Todo o dia
+all events	calendar	pt	Todos os eventos
+all participants	calendar	pt	Todos os participantes
+allows to edit the event again	calendar	pt	Permite editar o evento
+apply the changes	calendar	pt	Aplicar alterações
+are you sure you want to delete this country ?	calendar	pt	Tem certeza que deseja eliminar este país ?
+are you sure you want to delete this holiday ?	calendar	pt	Tem certeza que deseja eliminar este feriado ?
+back half a month	calendar	pt	Recuar meio mês
+back one month	calendar	pt	Recuar um mês
+before current date	calendar	pt	Antes da data actual
+before the event	calendar	pt	Antes do evento
+birthday	calendar	pt	Aniversário
+busy	calendar	pt	ocupado
+by	calendar	pt	por
+calendar event	calendar	pt	Evento do calendário
+calendar holiday management	admin	pt	Gestão de feriados do calendário
+calendar menu	calendar	pt	Menu do calendário
+calendar preferences	calendar	pt	Preferências do calendário
+calendar settings	admin	pt	Configurações do calendário
+calendar-fieldname	calendar	pt	calendário-Nome do campo
+can't add alarms in the past !!!	calendar	pt	Não é possível adicionar avisos no passado !!!
+canceled	calendar	pt	Cancelado
+charset of file	calendar	pt	Charset do ficheiro
+close the window	calendar	pt	Fechar janela
+compose a mail to all participants after the event is saved	calendar	pt	compor mensagem para todos os participantes depois de guardar evento
+copy of:	calendar	pt	Cópia de:
+copy this event	calendar	pt	Copiar este evento
+countries	calendar	pt	Países
+country	calendar	pt	País
+create an exception at this recuring event	calendar	pt	Criar uma excepção para este evento recorrente
+create new links	calendar	pt	Criar novas ligações
+csv	calendar	pt	CSV
+csv-fieldname	calendar	pt	CSV-Nome de campo
+csv-filename	calendar	pt	CSV-Nome de ficheiro
+custom fields	common	pt	Personalizar campos
+daily	calendar	pt	Diário/a
+days	calendar	pt	Dias
+days of the week for a weekly repeated event	calendar	pt	Dias da semana para um evento repetido semanalmente
+days repeated	calendar	pt	Dias repetidos
+dayview	calendar	pt	Visualização diária
+default appointment length (in minutes)	calendar	pt	Duração do compromisso por omissão (em minutos)
+default calendar filter	calendar	pt	Filtro do calendário por omissão
+default calendar view	calendar	pt	Visualização do calendário por omissão
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	pt	Duração por omissão de eventos criados. A duração encontra-se em minutos. Ex: 60 por 1 hora.
+default week view	calendar	pt	Visualização semanal por omissão
+delete series	calendar	pt	Eliminar consjuntos
+delete this alarm	calendar	pt	Eliminar este aviso
+delete this event	calendar	pt	Eliminar este evento
+delete this exception	calendar	pt	Eliminar esta excepção
+delete this series of recuring events	calendar	pt	Eliminar este conjunto de eventos recorrentes
+disinvited	calendar	pt	Desconvidado
+display status of events	calendar	pt	Exibir estado dos eventos
+displayed view	calendar	pt	Visualização exibida
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	pt	Deseja exibir, por omissão, a sua visualização do calendário na página inicial (ao entrar no eGroupWare ou ao clicar no ícone da página inicial)?
+do you want a weekview with or without weekend?	calendar	pt	Deseja que a visualização semanal inclua os fins de semana?
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	pt	Deseja ser avisado de compromissos novos ou alterados? Será avisado de alterações que fizer.<br>Pode limitar os avisos para apenas algumas alterações. Cada item inclui todas os avisos listados. Todas as modificações incluem alterações de título, descrições, participantes, mas não as respostas dos participantes. Se o administrador de um evento requerer quaisquer avisos, obterá sempre as respostas dos participantes, bem como a aceitação e rejeição das mesmas.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pt	Deseja receber um resumo regular dos seus compromissos através de correio electrónico?<br>O resumo será enviado para a sua conta de correio electrónico na manhã do próprio dia ou à segunda-feira para resumos semanais.<br>Será apenas enviado quando tiver compromissos nesse dia ou semana.
+do you wish to autoload calendar holidays files dynamically?	admin	pt	Deseja carregar automaticamente ficheiros de feriados do Calendário dinamicamente ?
+download	calendar	pt	Transferir
+download this event as ical	calendar	pt	Transferir este evento como iCal
+duration of the meeting	calendar	pt	Duração da reunião
+edit exception	calendar	pt	Editar excepção
+edit series	calendar	pt	Editar conjuntos
+edit this event	calendar	pt	Editar este evento
+edit this series of recuring events	calendar	pt	Editar este conjunto de eventos recorrentes
+empty for all	calendar	pt	vazio para todos
+end	calendar	pt	Fim
+end date/time	calendar	pt	Data/Hora de conclusão
+enddate	calendar	pt	Data de conclusão
+enddate / -time of the meeting, eg. for more then one day	calendar	pt	Data/hora de fim da reunião, ex: para mais do que um dia
+enddate of the export	calendar	pt	Data para o fim da exportação
+ends	calendar	pt	termina
+error adding the alarm	calendar	pt	Erro ao adicionar aviso
+error: importing the ical	calendar	pt	Erro ao importar o iCal
+error: no participants selected !!!	calendar	pt	Erro: nenhum participante seleccionado !!!
+error: saving the event !!!	calendar	pt	Erro ao guardar o evento !!!
+error: starttime has to be before the endtime !!!	calendar	pt	Erro: A data de início tem de ser anterior à data de fim !!!
+event copied - the copy can now be edited	calendar	pt	Evento copiado - a cópia pode ser editada agora
+event deleted	calendar	pt	Evento eliminado
+event details follow	calendar	pt	Seguem detalhes do evento
+event saved	calendar	pt	Evento guardado
+event will occupy the whole day	calendar	pt	Evento de dia inteiro
+exception	calendar	pt	Excepção
+exceptions	calendar	pt	Excepções
+existing links	calendar	pt	Ligações existentes
+export	calendar	pt	Exportar
+extended	calendar	pt	Avançado
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt	As actualizações avançadas incluem sempre os detalhes completos do evento. Os detalhes do iCal podem ser importados por outras aplicações do calendário.
+fieldseparator	calendar	pt	Separador de campos
+filename	calendar	pt	Nome de ficheiro
+filename of the download	calendar	pt	Nome de ficheiro para a transferência
+find free timeslots where the selected participants are availible for the given timespan	calendar	pt	Procurar por horas vagas dos participantes num dado período de tempo
+firstname of person to notify	calendar	pt	Nome da pessoa a avisar
+for	calendar	pt	para
+for which views should calendar show distinct lines with a fixed time interval.	calendar	pt	O calendário deve exibir linhas distintas com um intervalo de tempo fixo para que visualizações.
+format of event updates	calendar	pt	Formato de actualizações de eventos
+forward half a month	calendar	pt	Avançar meio mês
+forward one month	calendar	pt	Avançar um mês
+four days view	calendar	pt	Visualização a quatro dias
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	pt	disponibilidade: Utilizador desconhecido %1', senha incorrecta ou informação não acessível a utilizadores não ligados !!!
+freetime search	calendar	pt	Pesquisa de tempo livre
+fri	calendar	pt	Sex
+full description	calendar	pt	Descrição completa
+fullname of person to notify	calendar	pt	Nome completo da pessoa a avisar
+general	calendar	pt	Geral
+global public and group public	calendar	pt	Acesso público e de grupo
+global public only	calendar	pt	Apenas acesso público
+group invitation	calendar	pt	Convite de grupo
+group planner	calendar	pt	Planeamento de grupo
+group public only	calendar	pt	Acesso de grupo apenas
+groupmember(s) %1 not included, because you have no access.	calendar	pt	Membro(s) do grupo %1 não incluído(s), por não lhe(s) ter acesso.
+h	calendar	pt	h
+here is your requested alarm.	calendar	pt	Eis o aviso que solicitou.
+high priority	calendar	pt	prioridade alta
+holiday	calendar	pt	Feriado
+holiday management	calendar	pt	Gestão de feriados
+holidays	calendar	pt	Feriados
+hours	calendar	pt	Horas
+how far to search (from startdate)	calendar	pt	pesquisar desde quando (data de início)
+how many minutes should each interval last?	calendar	pt	Quantos minutos deve ter cada intervalo?
+ical	calendar	pt	iCal
+ical / rfc2445	calendar	pt	iCal / rfc2445
+ical export	calendar	pt	Exportar iCal
+ical file	calendar	pt	ficheiro iCal
+ical import	calendar	pt	Importar iCal
+ical successful imported	calendar	pt	iCal importado com sucesso
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	pt	Se os feriados surgirem num fim de semana são transferidos para a segunda-feira seguinte.
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	pt	Se não definir uma senha aqui, a informação estará acessível a todos as pessoas que saibam a URL!!!
+ignore conflict	calendar	pt	Ignorar conflito
+import	calendar	pt	Importar
+import csv-file	common	pt	Importar ficheiro CSV
+interval	calendar	pt	Intervalo
+invalid email-address "%1" for user %2	calendar	pt	Endereço de correio electrónico "%1" inválido para o utilizador %2
+last	calendar	pt	Último
+lastname of person to notify	calendar	pt	Apelido da pessoa a avisar
+length of the time interval	calendar	pt	Duração do intervalo
+link to view the event	calendar	pt	Ligação para visualizar o evento
+links	calendar	pt	Ligações
+links, attachments	calendar	pt	Ligações, Anexos
+listview	calendar	pt	Visualização da lista
+location	calendar	pt	Local
+location to autoload from	admin	pt	Local para enviar automaticamente de
+location, start- and endtimes, ...	calendar	pt	Local, data de início e de fim, ....
+mail all participants	calendar	pt	Enviar mensagens a todos os participantes
+make freebusy information available to not loged in persons?	calendar	pt	Deseja tornar acessível a informação sobre a disponibilidade a pessoas não ligadas?
+minutes	calendar	pt	Minutos
+modified	calendar	pt	Modificado
+mon	calendar	pt	Seg
+monthly	calendar	pt	Mensalmente
+monthly (by date)	calendar	pt	Mensalmente (por data)
+monthly (by day)	calendar	pt	Mensalmente (por dia)
+monthview	calendar	pt	Visualização mensal
+new search with the above parameters	calendar	pt	Nova pesquisa com os parâmetros indicados em cima
+no events found	calendar	pt	Nenhum evento encontrado
+no filter	calendar	pt	Sem filtro
+no matches found	calendar	pt	Sem resultados encontrados
+no response	calendar	pt	Sem resposta
+non blocking	calendar	pt	Não conflituoso
+not	calendar	pt	não
+notification messages for added events	calendar	pt	Mensagens de aviso: Eventos adicionados
+notification messages for canceled events	calendar	pt	Mensagens de aviso: Eventos cancelados
+notification messages for disinvited participants	calendar	pt	Mensagens de aviso: Participantes desconvidados
+notification messages for modified events	calendar	pt	Mensagens de aviso: Eventos modificados
+notification messages for your alarms	calendar	pt	Mensagens de aviso: Os seus avisos
+notification messages for your responses	calendar	pt	Mensagens de aviso: As suas respostas
+number of records to read (%1)	calendar	pt	Número de registos por ler (%1)
+observance rule	calendar	pt	Observação
+occurence	calendar	pt	Ocorrência
+old startdate	calendar	pt	Data de início antiga
+on %1 %2 %3 your meeting request for %4	calendar	pt	Por %1 %2 %3 o seu pedido de reunião para %4
+on all modification, but responses	calendar	pt	Por todas as modificações, excluindo repostas
+on any time change too	calendar	pt	Por todas as alterações de horário também
+on invitation / cancelation only	calendar	pt	Por convite / cancelamento apenas
+on participant responses too	calendar	pt	Por respostas dos participantes também
+on time change of more than 4 hours too	calendar	pt	Por alterações de horário em mais de 4 horas também
+one month	calendar	pt	um mês
+one week	calendar	pt	uma semana
+one year	calendar	pt	um ano
+only the initial date of that recuring event is checked!	calendar	pt	Apenas será verificada a data de início de um evento recorrente!
+open todo's:	calendar	pt	Abrir lista de tarefas
+overlap holiday	calendar	pt	saltar feriado
+participants	calendar	pt	Participantes
+participants disinvited from an event	calendar	pt	Participantes desconvidados de um evento
+participants, resources, ...	calendar	pt	Participantes, Fontes, ...
+password for not loged in users to your freebusy information?	calendar	pt	Deseja atribuir uma senha aos utilizadores não ligados para acederem à sua informação de disponibilidade?
+people holiday	calendar	pt	aniversários
+permission denied	calendar	pt	Acesso negado
+planner by category	calendar	pt	Planeamento por categoria
+planner by user	calendar	pt	Planeamento por utilizador
+please note: you can configure the field assignments after you uploaded the file.	calendar	pt	Nota: Pode configurar o campo de compromissos DEPOIS de enviar o ficheiro.
+preselected group for entering the planner	calendar	pt	Grupo pré-seleccionado para iniciar o planeamento
+previous	calendar	pt	anterior
+private and global public	calendar	pt	Privado e público globalmente
+private and group public	calendar	pt	Privado e público ao grupo
+private only	calendar	pt	Privado somente
+re-edit event	calendar	pt	Re-Editar evento
+receive email updates	calendar	pt	Receber actualizações de mensagens
+receive summary of appointments	calendar	pt	Receber resumos de compromissos
+recurrence	calendar	pt	Recorrência
+recurring event	calendar	pt	Evento recorrente
+rejected	calendar	pt	Rejeitado
+repeat days	calendar	pt	Repetir dias
+repeat the event until which date (empty means unlimited)	calendar	pt	repetir o evento até (campo vazio significa ilimitado)
+repeat type	calendar	pt	Tipo de repetição
+repeating event information	calendar	pt	Repetir informação do evento
+repeating interval, eg. 2 to repeat every second week	calendar	pt	repetir intervalo, ex: 2 para repetir em todas as segundas semanas
+repetition	calendar	pt	Repetição
+repetitiondetails (or empty)	calendar	pt	Detalhes de repetição (ou vazio)
+reset	calendar	pt	Limpar
+resources	calendar	pt	Fontes
+rule	calendar	pt	Regra
+sat	calendar	pt	Sab
+saves the changes made	calendar	pt	Guarda as alterações
+saves the event ignoring the conflict	calendar	pt	Guarda o evento ignorando o conflito
+scheduling conflict	calendar	pt	Conflito de agendamento
+select a %1	calendar	pt	seleccionar um %1
+select a time	calendar	pt	seleccionar uma hora
+select resources	calendar	pt	Seleccionar fontes
+select who should get the alarm	calendar	pt	Seleccionar quem deve ser avisado
+set a year only for one-time / non-regular holidays.	calendar	pt	Definir um Ano para feriados únicos / não regulares
+set new events to private	calendar	pt	Definir novos eventos com acesso privado
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	pt	Deseja que os convites que rejeita apareçam no seu calendário ?<br>Apenas as pode aceitar posteriormente (ex: quando um conflito de agendamento esteja resolvido), se ainda surgirem no seu calendário!
+should new events created as private by default ?	calendar	pt	Deseja que os novos eventos sejam criados como privados por omissão?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	pt	Deseja que pessoas não ligadas tenham acesso à informação da sua disponibilidade? Pode definir uma senha extra, diferente da sua senha normal, para proteger estes dados. A informação de disponibilidade encontra-se em formato iCal e inlui apenas o horário em que se encontra ocupado. Não inclui o nome do evento, descrição ou local. A URL para a informação da sua disponibilidade é %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=rfarinha" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=rfarinha</a>.*	calendar	pt	Deseja que pessoas não ligadas tenham acesso à informação da sua disponibilidade? Pode definir uma senha extra, diferente da sua senha normal, para proteger estes dados. A informação de disponibilidade encontra-se em formato iCal e inlui apenas o horário em que se encontra ocupado. Não inclui o nome do evento, descrição ou local. A URL para a informação da sua disponibilidade é <a href="http://localhost/egroupware/calendar/freebusy.php?user=rfarinha" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=rfarinha</a>.
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	pt	Deseja que o estado dos participantes do evento (aceite, rejeitado, ...) seja exibido entre parenteses depois do nome de cada participante ?
+show default view on main screen	calendar	pt	Exibir visualização por omissão no ecrã principal
+show invitations you rejected	calendar	pt	Exibir convites que rejeitou
+show list of upcoming events	calendar	pt	Exibir lista de próximos eventos
+show this month	calendar	pt	Exibir este mês
+show this week	calendar	pt	Exibir esta semana
+single event	calendar	pt	evento único
+start	calendar	pt	Início
+start date/time	calendar	pt	Data/hora de início
+startdate / -time	calendar	pt	Data/hora de início
+startdate and -time of the search	calendar	pt	Data/hora de início da pesquisa
+startdate of the export	calendar	pt	Data de início da exportação
+startrecord	calendar	pt	Registo inicial
+status changed	calendar	pt	Estado alterado
+submit to repository	calendar	pt	Submeter no Repositório
+sun	calendar	pt	Dom
+tentative	calendar	pt	Tentativa
+test import (show importable records <u>only</u> in browser)	calendar	pt	Importação de Teste (exibir registos a importar <u>apenas</u> no navegador)
+this day is shown as first day in the week or month view.	calendar	pt	Este dia é exibido como o primeiro dia da visualização semanal ou mensal.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	pt	Este campo define o fim da sua visualização diária. Os eventos fora deste horário serão exibidos abaixo da visualização diária.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	pt	Este campo define o início da sua visualização diária.<b>Este horário será igualmente aplicado como data de início de novos eventos por omissão.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	pt	Grupo pré-seleccionado quando inicia o planeamento. Pode alterá-lo no planeamento sempre que quiser.
+this message is sent for canceled or deleted events.	calendar	pt	Esta mensagem é enviada para eventos cancelados ou eliminados
+this message is sent for modified or moved events.	calendar	pt	Esta mensagem é enviada para eventos modificados ou transferidos.
+this message is sent to disinvited participants.	calendar	pt	Esta mensagem é enviada aos participantes desconvidados.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	pt	Esta mensagem é enviada para todos os participantes de eventos, que gere, que tenham pedido para ser avisados de novos eventos.<br>Pode utilizar certas variáveis a ser substituídas  pela data do evento. A primeira linha é o assunto da mensagem.
+this message is sent when you accept, tentative accept or reject an event.	calendar	pt	Esta mensagem é enviada quando aceita, tenta aceitar ou rejeita um evento.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	pt	Esta mensagem é enviada quando define um Aviso para um determinado evento. Inclui toda a informação de que precisa.
+three month	calendar	pt	três meses
+thu	calendar	pt	Qui
+til	calendar	pt	até
+timeframe	calendar	pt	Prazo
+timeframe to search	calendar	pt	Prazo para pesquisar
+title of the event	calendar	pt	Título do evento
+to many might exceed your execution-time-limit	calendar	pt	em demasia pode exceder o seu tempo limite de execução
+translation	calendar	pt	Tradução
+tue	calendar	pt	Ter
+two weeks	calendar	pt	duas semanas
+updated	calendar	pt	Actualizado
+use end date	calendar	pt	Utilizar data de conclusão
+use the selected time and close the popup	calendar	pt	utilizar a hora seleccionada e fechar a janela
+view this event	calendar	pt	Visualizar este evento
+views with fixed time intervals	calendar	pt	Visualizar com intervalos de tempo fixos
+wed	calendar	pt	Qua
+week	calendar	pt	Semana
+weekday starts on	calendar	pt	Semana começa na/o
+weekdays	calendar	pt	Dias da semana
+weekdays to use in search	calendar	pt	Dias da semana a utilizar na pesquisa
+weekly	calendar	pt	Semanal
+weekview	calendar	pt	Visualização semanal
+weekview with weekend	calendar	pt	Visualização semanal com fim de semana
+weekview without weekend	calendar	pt	Visualização semanal sem fim de semana
+which events do you want to see when you enter the calendar.	calendar	pt	Quais os eventos que deseja ver ao entrar no calendário.
+which of calendar view do you want to see, when you start calendar ?	calendar	pt	Qual das visualizações do calendário deseja ver ao iniciar o calendário ?
+whole day	calendar	pt	dia inteiro
+wk	calendar	pt	Semana
+work day ends on	calendar	pt	Dia de trabalho termina às
+work day starts on	calendar	pt	Dia de trabalho começa às
+yearly	calendar	pt	Anual
+yearview	calendar	pt	Visualização anual
+you can either set a year or a occurence, not both !!!	calendar	pt	Pode definir um Ano ou uma Ocorrência. Não pode definir os dois !!!
+you can only set a year or a occurence !!!	calendar	pt	Pode apenas definir um ano ou uma ocorrência !!!
+you do not have permission to read this record!	calendar	pt	Não tem permissões para ler este registo!
+you have a meeting scheduled for %1	calendar	pt	Tem uma reunião agendada para %1
+you have been disinvited from the meeting at %1	calendar	pt	Foi desconvidado para a reunião em %1
+you need to select an ical file first	calendar	pt	É necessário seleccionar um ficheiro iCal primeiro
+you need to set either a day or a occurence !!!	calendar	pt	É necessário definir um dia ou uma ocorrência !!!
+your meeting scheduled for %1 has been canceled	calendar	pt	A sua reunião agendada para %1 foi cancelada
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	pt	A sua reunião agendada para %1 foi remarcada para as %2
