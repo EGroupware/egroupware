@@ -1,0 +1,22 @@
+allowed users	importexport	cs	Oprávnění uživatelé
+automatically created by importexport	importexport	cs	Automaticky vytvořeno aplikací ImportExport
+choose a name for this definition	importexport	cs	Zvolte název pro tuto definici
+choose a plugin	importexport	cs	Zvolte plugin
+choose an application	importexport	cs	Zvolte aplikaci
+delete all selected definitions	importexport	cs	Smazat VŠECHNY vybrané definice
+expert options	importexport	cs	Rozšířené volby
+export	importexport	cs	Exportovat
+export all selected definitions	importexport	cs	Exportovat VŠECHNY vybrané definice
+finish	importexport	cs	Dokončit
+general	importexport	cs	Obecné
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	cs	Importovat definice (Pozor: Stávající definice téhož jména budou přepsány!!!)
+importexport wizard finished successfully!	importexport	cs	Průvodce aplikace ImportExport úspěšně dokončen!
+next	importexport	cs	Další
+preview	importexport	cs	Náhled
+previous	importexport	cs	Předchozí
+save as definition	importexport	cs	Uložit jako definici
+select definition	importexport	cs	Vybrat definici
+select plugin	importexport	cs	Vybrat plugin
+some nice text	importexport	cs	nějaký pěkný text
+which useres are allowed for this definition	importexport	cs	Oprávnění uživatelé této definice
+you need to select an app and format first!	importexport	cs	Nejprve musíte vybrat aplikaci a formát!

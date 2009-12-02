@@ -1,0 +1,23 @@
+allowed users	importexport	zh	允许的用户
+automatically created by importexport	importexport	zh	导入导出自动地创建
+choose a name for this definition	importexport	zh	选择这个定义的名称
+choose a plugin	importexport	zh	选择一插件
+choose an application	importexport	zh	选择一应用程序
+delete all selected definitions	importexport	zh	删除所有选择的定义
+expert options	importexport	zh	高级选项
+export	importexport	zh	导出
+export all selected definitions	importexport	zh	导出所有选择的定义
+finish	importexport	zh	完成
+general	importexport	zh	通用
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	zh	导入定义(注意：现有的同名定义将被覆盖！)
+importexport	common	zh	导入导出
+importexport wizard finished successfully!	importexport	zh	导入导出向导成功地完成！
+next	importexport	zh	下一个
+preview	importexport	zh	预览
+previous	importexport	zh	上一个
+save as definition	importexport	zh	保存为默认
+select definition	importexport	zh	选择定义
+select plugin	importexport	zh	选择插件
+some nice text	importexport	zh	一些不错的文本
+which useres are allowed for this definition	importexport	zh	哪个用户考虑到这一定义
+you need to select an app and format first!	importexport	zh	您需要选择应用程序并首先格式化！
