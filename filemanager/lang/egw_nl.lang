@@ -1,0 +1,164 @@
+%1 already exists as a file	filemanager	nl	%1 bestaat reeds als een bestand
+%1 directories and %2 files copied.	filemanager	nl	%1 directories en %2 bestanden gekopieerd.
+%1 directories and %2 files deleted.	filemanager	nl	%1 directories en %2 bestanden verwijderd.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	nl	%1 fouten tijdens kopiëren ((%2 directories en %3 bestanden gekopieerd)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	nl	%1 fouten tijdens verwijderen (%2 directories en %3 bestanden verwijderd)!
+%1 errors moving (%2 files moved)!	filemanager	nl	%1 fouten tijdens verplaatsen (%2 bestanden verplaatst)!
+%1 failed, %2 succeded	filemanager	nl	%1 mislukt, %2 gelukt
+%1 files copied.	filemanager	nl	%1 bestanden gekopieerd.
+%1 files deleted.	filemanager	nl	%1 bestanden verwijderd.
+%1 files moved.	filemanager	nl	%1 bestanden verplaatst.
+%1 starts with '%2'	filemanager	nl	%1 start met '%2'
+%1 the following files into current directory	filemanager	nl	%1de volgende bestanden naar de huidige directory
+%1 urls %2 to clipboard.	filemanager	nl	%1 URLs %2 naar het klembord.
+accessrights	filemanager	nl	Toegangsrechten
+acl added.	filemanager	nl	ACL toegevoegd.
+acl deleted.	filemanager	nl	ACL verwijderd.
+actions	filemanager	nl	Acties
+allow a maximum of the above configured folderlinks to be configured in settings	admin	nl	staat een maximum van de hierboven ingestelde folderlinks toe om ingesteld te worden
+and all it's childeren	filemanager	nl	en alle kinderen
+basedirectory	filemanager	nl	Basisdirectory
+cancel editing %1 without saving	filemanager	nl	Annuleer het bewerken van %1 zonder op te slaan
+cannot create directory because it begins or ends in a space	filemanager	nl	Kan de directory niet aanmaken omdat de naam met en spatie begint of eindigt
+check all	filemanager	nl	Markeer alles
+clear search	filemanager	nl	zoekcriteria leegmaken
+comment	filemanager	nl	Commentaar
+comments cannot contain "%1"	filemanager	nl	Commentaar kan geen "%1" bevatten
+copied	filemanager	nl	gekopieerd
+copied %1 to %2	filemanager	nl	%1 naar %2 gekopieerd
+copy to	filemanager	nl	Kopieer naar
+copy to clipboard	filemanager	nl	Kopieer naar klembord
+could not copy %1 to %2	filemanager	nl	Kon %1 niet naar %2 kopieëren
+could not copy file because no destination directory is given	filemanager	nl	Kon het bestand niet kopieëren omdat geen bestemmingsdirectory is opgegeven
+could not create %1	filemanager	nl	Kon %1 niet aanmaken
+could not delete %1	filemanager	nl	Kon %1 niet verwijderen
+could not move %1 to %2	filemanager	nl	Kon %1 niet naar %2 verplaatsen
+could not move file because no destination directory is given	filemanager	nl	Kon het bestand niet verplaatsen omdat geen bestemmingsdirectory is opgegeven
+could not rename %1 to %2	filemanager	nl	Kon %1 niet hernoemen in %2
+could not save %1	filemanager	nl	Kon %1 niet bewaren
+create directory	filemanager	nl	Directory aanmaken
+create file	filemanager	nl	Bestand aanmaken
+create folder	filemanager	nl	Folder aanmaken
+created	filemanager	nl	aangemaakt
+created %1,%2	filemanager	nl	%1, %2 aangemaakt
+created between	filemanager	nl	aangemaakt tussen
+created directory %1	filemanager	nl	Directory %1 aangemaakt
+current directory	filemanager	nl	Huidige directory
+cut	filemanager	nl	knippen
+cut to clipboard	filemanager	nl	Knippen naar klembord
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	nl	Standaard gedrag is NEE. De link wordt niet getoond maar u kunt nog steeds naar deze locatie navigeren. Of stel deze locatie in als start folder of folder link.
+delete this file or directory	filemanager	nl	Verwijder dit bestand of deze directory
+deleted %1	filemanager	nl	%1 verwijderd
+directories sorted in	filemanager	nl	Directories gesorteerd in
+directory	filemanager	nl	Directory
+directory %1 already exists	filemanager	nl	Directory %1 bestaat reeds
+directory %1 does not exist	filemanager	nl	Directory %1 bestaat niet
+directory names cannot contain "%1"	filemanager	nl	Directory namen kunnen geen "%1" bevatten
+directory not found or no permission to access it!	filemanager	nl	Directory niet gevonden of geen rechten om het te benaderen!
+display and modification of content	filemanager	nl	Weergave en modifcatie van inhoud
+display of content	filemanager	nl	Weergave van inhoud
+download	filemanager	nl	Download
+edit comments	filemanager	nl	Commentaar bewerken
+edit settings	filemanager	nl	Instellingen bewerken
+enter setup user and password	filemanager	nl	Voer installatie gebruiker en wachtwoord in
+enter setup user and password to get root rights	filemanager	nl	Voer installatie gebruiker en wachwoord in om root rechten te krijgen
+enter the complete vfs path to specify a fast access link to a folder	filemanager	nl	Vul het volledige VFS pad in om een snelkoppeling naar een folder te specificeren
+enter the complete vfs path to specify your desired start folder.	filemanager	nl	Vul het volledige VFS pad in om uw voorkeurs start folder te specificeren.
+error adding the acl!	filemanager	nl	Fout bij toevoegen van ACL!
+error deleting the acl entry!	filemanager	nl	Fout bij verwijderen van de ACL regel!
+error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
+executable	filemanager	nl	Uitvoerbaar bestand
+extended access control list	filemanager	nl	Uitgebreide toegangscontrolelijst
+extended acl	filemanager	nl	Uitgebreide ACL
+failed to change permissions of %1!	filemanager	nl	Wijzigen van toestemmingen van %1 is mislukt.
+failed to create directory!	filemanager	nl	Aanmaken van directory is mislukt!
+file	filemanager	nl	Bestand
+file %1 already exists. please edit it or delete it first.	filemanager	nl	Bestand %1 bestaat reeds. Ga het wijzigen of verwijder het eerst.
+file %1 could not be created.	filemanager	nl	Bestand %1 kon niet aangemaakt worden.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	nl	Bestand %1 is mogelijk te groot. Neem contact op met uw systeembeheerder voor meer informatie
+file deleted.	filemanager	nl	Bestand verwijderd.
+file names cannot contain "%1"	filemanager	nl	Bestandnamen kunnen geen "%1" bevatten
+file or directory not found!	filemanager	nl	Bestand of directory niet gevonden!
+file successful uploaded.	filemanager	nl	Bestandsupload met succes voltooid.
+filemanager	common	nl	Bestandsbeheerder
+filemanager configuration	admin	nl	bestandsbeheerder configuratie
+files from subdirectories	filemanager	nl	Bestanden uit subdirectories
+files in this directory	filemanager	nl	Bestanden in deze directory
+folder up	filemanager	nl	Folder omhoog
+general	filemanager	nl	Algemeen
+go home	filemanager	nl	ga naar home
+go to	filemanager	nl	Ga naar
+go to your home directory	filemanager	nl	Ga naar uw homedirectory
+go up	filemanager	nl	naar boven
+id	filemanager	nl	ID
+inherited	filemanager	nl	Geërfd
+link %1: %2	filemanager	nl	Link %1: %2
+location	filemanager	nl	Locatie
+log out as superuser	filemanager	nl	Uitloggen als supergebruiker
+max folderlinks	admin	nl	max folderlinks
+maximum size for uploads	filemanager	nl	Maximum grootte voor uploads
+mime type	filemanager	nl	MIME-type
+modified	filemanager	nl	Gewijzigd
+modified between	filemanager	nl	gewijzigd tussen
+modify all subdirectories and their content	filemanager	nl	Wijzig alle subdirectories en hun inhoud
+move	filemanager	nl	Verplaats
+move to	filemanager	nl	Verplaats naar
+moved %1 to %2	filemanager	nl	%1 verplaatst naar %2
+no access	filemanager	nl	Geen toegang
+no files in this directory.	filemanager	nl	Geen bestanden in deze directory.
+no preview available	filemanager	nl	Geen afdrukvoorbeeld beschikbaar
+no version history for this file/directory	filemanager	nl	Geen versie historie voor dit bestand/deze directory
+only owner can rename or delete the content	filemanager	nl	Alleen de eigenaar kan de inhoud hernoemen of verwijderen
+operation	filemanager	nl	Bewerking
+permission denied!	filemanager	nl	Toestemming geweigerd!
+permissions	filemanager	nl	Toestemmingen
+permissions of %1 changed.	filemanager	nl	Toestemmingen van %1 gewijzigd.
+please select a file to delete.	filemanager	nl	Selecteer svp een bestand om te verwijderen.
+preview	filemanager	nl	Afdrukvoorbeeld
+preview %1	filemanager	nl	Afdrukvoorbeeld %1
+preview of %1	filemanager	nl	Afdrukvoorbeeld van %1
+properties saved.	filemanager	nl	Eigenschappen opgeslagen.
+quick jump to	filemanager	nl	Snel springen naar
+read & write access	filemanager	nl	Lees en schrijf toegang
+read access only	filemanager	nl	Alleen lezen toegang
+reload	filemanager	nl	herladen
+rename of %1 to %2 failed!	filemanager	nl	Hernoemen van %1 in %2 is mislukt!
+rename, change permissions or ownership	filemanager	nl	Hernoemen, wijzig toestemmingen of eigendom
+renamed %1 to %2	filemanager	nl	%1 hernoemd in %2
+renamed %1 to %2.	filemanager	nl	%1 hernoemd in %2
+replaced %1	filemanager	nl	%1 is vervangen
+rights	filemanager	nl	Rechten
+root access granted.	filemanager	nl	Root toegang verleend.
+root access stopped.	filemanager	nl	Root toegang ingetrokken.
+save %1	filemanager	nl	Bewaar %1
+save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar de bestandenlijst
+save changes	filemanager	nl	Wijzigingen bewaren
+saved %1	filemanager	nl	%1 is bewaard
+saving properties failed!	filemanager	nl	Opslaan van eigenschappen is mislukt!
+search for '%1'	filemanager	nl	Zoek naar '%1'
+searchstring	filemanager	nl	zoektekst
+select action...	filemanager	nl	Kies actie...
+select file to upload in current directory	filemanager	nl	Selecteer bestand om in de huidige directory te uploaden
+show	filemanager	nl	Toon
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	nl	Toon link naar bestandbeheerder's basisdirectory (/) in zijkant menu?
+size	filemanager	nl	Grootte
+start search	filemanager	nl	start zoeken
+superuser	filemanager	nl	Supergebruiker
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	nl	De standaard start folder is uw persoonlijke folder. De standaard wordt gebruikt indien u dit leeg laat, het pad niet bestaat of indien u onvoldoende toegangsrechten heeft.
+the requested path %1 is not available.	filemanager	nl	Het aangevraagde pad %1 is niet beschikbaar.
+there's already a file with that name!	filemanager	nl	Er bestaat reeds een bestand met deze naam!
+to overwrite the existing file store again.	filemanager	nl	Om het bestaande bestand te overschrijven moet u het opnieuw opslaan.
+total files	filemanager	nl	Totaal aantal bestanden
+unused space	filemanager	nl	Ongebruikte ruimte
+up	filemanager	nl	Naar boven
+updated comment for %1	filemanager	nl	Commentaar voor %1 is bijgewerkt
+used space	filemanager	nl	Gebruikte ruimte
+users and groups	filemanager	nl	Gebruikers en groepen
+wrong username or password!	filemanager	nl	Onjuiste gebruikersnaam of wachtwoord!
+you do not have access to %1	filemanager	nl	U heeft geen toegang tot %1
+you need to select an owner!	filemanager	nl	U moet een eigenaar selecteren
+you need to select some files first!	filemanager	nl	U moet eerst enkele bestanden selecteren
+you will be redirected to your home directory.	filemanager	nl	U wordt omgeleid naar uw Home Directory
+you will be redirected to your start folder.	filemanager	nl	U wordt omgeleid naar uw Start Folder
+your home dir did not exist, egroupware created a new one.	filemanager	nl	Uw Home Dir bestond niet, eGroupware heeft een nieuwe aangemaakt.
+your home directory	filemanager	nl	Uw home directory

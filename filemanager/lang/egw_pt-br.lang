@@ -1,0 +1,151 @@
+%1 already exists as a file	filemanager	pt-br	%1 já existe como um arquivo
+%1 directories and %2 files copied.	filemanager	pt-br	%1 diretórios e %2 arquivos copiados.
+%1 directories and %2 files deleted.	filemanager	pt-br	%1 diretórios e %2 arquivos removidos.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	pt-br	%1 erros copiando (%2 diretórios e %3 arquivos copiados)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	pt-br	%1 erros removendo (%2 diretórios e %3 arquivos removidos)!
+%1 errors moving (%2 files moved)!	filemanager	pt-br	%1 erros movendo (%2 arquivos movidos)!
+%1 files copied.	filemanager	pt-br	%1 arquivos copiados.
+%1 files deleted.	filemanager	pt-br	%1 arquivos removidos.
+%1 files moved.	filemanager	pt-br	%1 arquivos movidos.
+%1 starts with '%2'	filemanager	pt-br	%1 inicia com '%2'
+%1 the following files into current directory	filemanager	pt-br	%1 os seguintes arquivos para o diretório atual.
+%1 urls %2 to clipboard.	filemanager	pt-br	%1 URLs %2 para a área de transferência.
+accessrights	filemanager	pt-br	Direitos de acesso
+acl added.	filemanager	pt-br	ACL adicionada
+acl deleted.	filemanager	pt-br	ACL removida.
+actions	filemanager	pt-br	Ações
+all subdirectories	filemanager	pt-br	Todos os subdiretórios
+allow a maximum of the above configured folderlinks to be configured in settings	admin	pt-br	permite um número máximo de links para pastas acima indicado, a serem definidos nas configurações
+and all it's childeren	filemanager	pt-br	e todos seus subdiretórios
+basedirectory	filemanager	pt-br	Diretório base
+cancel editing %1 without saving	filemanager	pt-br	Cancelar edição de %1 sem salvar
+cannot create directory because it begins or ends in a space	filemanager	pt-br	Não foi possível criar o diretório em razão do nome começar ou terminar com um espaço
+check all	filemanager	pt-br	Checar todos
+clear search	filemanager	pt-br	limpar pesquisa
+comment	filemanager	pt-br	Comentário
+comments cannot contain "%1"	filemanager	pt-br	Comentário não pode conter "%1"
+copied	filemanager	pt-br	copiado
+copied %1 to %2	filemanager	pt-br	%1 copiado para %2
+copy to	filemanager	pt-br	Copiar para
+copy to clipboard	filemanager	pt-br	Copiar para a área de transferência
+could not copy %1 to %2	filemanager	pt-br	Não foi possível copiar %1 para %2
+could not copy file because no destination directory is given	filemanager	pt-br	Não foi possível copiar o arquivo porque nenhum diretório destino foi informado
+could not create %1	filemanager	pt-br	Não foi possível criar %1
+could not delete %1	filemanager	pt-br	Não foi possível remover %1
+could not move %1 to %2	filemanager	pt-br	Não foi possível mover %1 para %2
+could not move file because no destination directory is given	filemanager	pt-br	Não foi possível mover o arquivo porque nenhum diretório destino foi informado
+could not rename %1 to %2	filemanager	pt-br	Não foi possível renomear %1 para %2
+could not save %1	filemanager	pt-br	Não foi possível salvar %1
+create directory	filemanager	pt-br	Criar diretório
+create file	filemanager	pt-br	Criar arquivo
+create folder	filemanager	pt-br	Criar pasta
+created	filemanager	pt-br	Criado
+created %1,%2	filemanager	pt-br	Criado %1,%2
+created between	filemanager	pt-br	criado entre
+created directory %1	filemanager	pt-br	Criado diretório %1
+current directory	filemanager	pt-br	Diretório atual
+cut	filemanager	pt-br	recortar
+cut to clipboard	filemanager	pt-br	Recortar para a área de transferência
+delete this file or directory	filemanager	pt-br	Remover este arquivo ou diretório
+deleted %1	filemanager	pt-br	Removido %1
+directory	filemanager	pt-br	Pasta
+directory %1 already exists	filemanager	pt-br	Diretório %1 já existe
+directory %1 does not exist	filemanager	pt-br	Diretório %1 não existe
+directory names cannot contain "%1"	filemanager	pt-br	Nomes de diretórios não podem conter "%1"
+directory not found or no permission to access it!	filemanager	pt-br	Diretório não encontrado ou sem permissão para acessá-lo!
+display and modification of content	filemanager	pt-br	Exibe a alteração do conteúdo
+display of content	filemanager	pt-br	Exibe o conteúdo
+download	filemanager	pt-br	Download
+edit comments	filemanager	pt-br	Editar comentários
+edit settings	filemanager	pt-br	Editar configurações
+enter the complete vfs path to specify a fast access link to a folder	filemanager	pt-br	Informe o caminho VFS completo para especificar um link rápido à pasta
+enter the complete vfs path to specify your desired start folder.	filemanager	pt-br	Informe o caminho VFS completo para especificar sua pasta inicial desejada.
+error adding the acl!	filemanager	pt-br	Erro editanto a ACL!
+error deleting the acl entry!	filemanager	pt-br	Erro removendo o registro ACL!
+error uploading file!	filemanager	pt-br	Erro carregando arquivo!
+executable	filemanager	pt-br	Executável
+extended access control list	filemanager	pt-br	Lista de controle de acesso ampliada
+extended acl	filemanager	pt-br	ACL ampliada
+failed to create directory!	filemanager	pt-br	Falha ao criar diretório!
+file	filemanager	pt-br	Arquivo
+file %1 already exists. please edit it or delete it first.	filemanager	pt-br	Arquivo %1 já existe. Por favor, edite ou o remova primeiro.
+file %1 could not be created.	filemanager	pt-br	Arquivo %1 não pôde ser criado.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	pt-br	Arquivo %1 pode ser muito grande. Entre em contato com o administrador do sistema para maiores informações.
+file deleted.	filemanager	pt-br	Arquivo removido.
+file names cannot contain "%1"	filemanager	pt-br	Nomes de arquivos não podem contem "%1"
+file or directory not found!	filemanager	pt-br	Arquivo ou diretório não encontrado!
+file successful uploaded.	filemanager	pt-br	Arquivo carregado com sucesso.
+filemanager	common	pt-br	Gerenciador de Arquivos
+filemanager configuration	admin	pt-br	configuração do Gerenciador de Arquivos
+files in this directory	filemanager	pt-br	Arquivos neste diretório
+folder up	filemanager	pt-br	Pasta acima
+general	filemanager	pt-br	Geral
+go home	filemanager	pt-br	ir à pasta Home
+go to	filemanager	pt-br	Ir Para
+go to your home directory	filemanager	pt-br	Ir à sua pasta Home
+go up	filemanager	pt-br	Acima
+home directories	filemanager	pt-br	Diretórios Home
+id	filemanager	pt-br	ID
+inherited	filemanager	pt-br	Herdado
+link %1: %2	filemanager	pt-br	Link %1: %2
+location	filemanager	pt-br	Localização
+max folderlinks	admin	pt-br	máximo de links para pastas
+maximum size for uploads	filemanager	pt-br	Tamanho máximo para uploads
+mime type	filemanager	pt-br	Tipo MIME
+modified	filemanager	pt-br	Modificado
+modified between	filemanager	pt-br	moficiado entre
+modify all subdirectories and their content	filemanager	pt-br	Modificar todos os subdiretórios e seus conteúdos
+move	filemanager	pt-br	Mover
+move to	filemanager	pt-br	Mover para
+moved %1 to %2	filemanager	pt-br	%1 movido para %2
+no access	filemanager	pt-br	Sem acesso
+no files in this directory.	filemanager	pt-br	Nenhum arquivo neste diretório
+no preview available	filemanager	pt-br	Pré-visualização indisponível
+no version history for this file/directory	filemanager	pt-br	Nenhum histórico de versões para este arquivo/diretório
+only owner can rename or delete the content	filemanager	pt-br	Apenas o proprietário pode renomear ou remover o conteúdo
+operation	filemanager	pt-br	Operação
+permission denied!	filemanager	pt-br	Permissão negada!
+permissions	filemanager	pt-br	Permissões
+permissions changed for %1.	filemanager	pt-br	Permissões alteradas para %1.
+please select a file to delete.	filemanager	pt-br	Por favor, selecione um arquivo para remoção.
+preview	filemanager	pt-br	Pré-visualização
+preview %1	filemanager	pt-br	Pré-visualizar %1
+preview of %1	filemanager	pt-br	Pré-visualização de %1
+properties saved.	filemanager	pt-br	Propriedades salvas.
+quick jump to	filemanager	pt-br	Saltar para
+read & write access	filemanager	pt-br	Acesso de leitura e gravação
+read access only	filemanager	pt-br	Somente acesso de leitura
+reload	filemanager	pt-br	recarregar
+rename of %1 to %2 failed!	filemanager	pt-br	Falha ao renomar %1 para %2
+rename, change permissions or ownership	filemanager	pt-br	Renomear, alterar permissões e propriedade
+renamed %1 to %2	filemanager	pt-br	%1 renomeado para %2
+renamed %1 to %2.	filemanager	pt-br	%1 renomeado para %2.
+replaced %1	filemanager	pt-br	%1 trocado
+rights	filemanager	pt-br	Direitos
+save %1	filemanager	pt-br	Salvar %1
+save %1, and go back to file listing	filemanager	pt-br	Salvar %1 e voltar à lista de arquivos
+save changes	filemanager	pt-br	Salvar alterações
+saved %1	filemanager	pt-br	%1 salvo
+saving properties failed!	filemanager	pt-br	Falha ao salvar propriedades!
+search for '%1'	filemanager	pt-br	Procurar por '%1'
+searchstring	filemanager	pt-br	parâmetro de pesquisa
+select action...	filemanager	pt-br	Selecionar ação...
+select file to upload in current directory	filemanager	pt-br	Selecionar arquivo para upload no diretório atual
+show	filemanager	pt-br	Exibir
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	pt-br	Exibir link para o diretório base (/) na caixa lateral de menu?
+size	filemanager	pt-br	Tamanho
+sort folders always to the top?	filemanager	pt-br	Sempre ordernar pastas no topo?
+start search	filemanager	pt-br	iniciar procura
+the requested path %1 is not available.	filemanager	pt-br	O caminho solicitado %1 não está disponível.
+total files	filemanager	pt-br	Total de arquivos
+unused space	filemanager	pt-br	Espaço não utilizado
+up	filemanager	pt-br	Acima
+updated comment for %1	filemanager	pt-br	Comentários para %1 atualizados
+used space	filemanager	pt-br	Espaço utilizado
+you do not have access to %1	filemanager	pt-br	Você não possui acesso a %1
+you need to select an owner!	filemanager	pt-br	Você precisa selecionar um proprietário!
+you need to select some files first!	filemanager	pt-br	Você precisa selecionar alguns arquivos antes!
+you will be redirected to your home directory.	filemanager	pt-br	Você será redirecionado ao seu diretório Home
+you will be redirected to your start folder.	filemanager	pt-br	Você será redirecionado a sua Pasta Inicial
+your home dir did not exist, egroupware created a new one.	filemanager	pt-br	Seu diretório Home não existe, eGroupWare criou um novo.
+your home directory	filemanager	pt-br	Se diretório home

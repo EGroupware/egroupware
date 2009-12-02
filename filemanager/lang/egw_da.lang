@@ -1,0 +1,116 @@
+%1 already exists as a file	filemanager	da	%1 eksistere allerede som fil
+application	filemanager	da	Applikation
+back to file manager	filemanager	da	Tilbage til fil håndteringen
+cancel editing %1 without saving	filemanager	da	annullere redigéring af %1 uden at gemme
+cannot create directory because it begins or ends in a space	filemanager	da	Kan ikke oprette biblioteket fordi den begynder eller slutter med et mellemrum
+cannot replace %1 because it is a directory	filemanager	da	Kan ikke erstatte %1 da det er et biblioteket
+command sucessfully run	filemanager	da	Kommandoen afsluttede med succes
+comment	filemanager	da	Kommentar
+comments cannot contain "%1"	filemanager	da	Kommentaren kan ikke indeholde "%1"
+copied %1 to %2	filemanager	da	Kopieret %1 til %2
+copy to	filemanager	da	Kopier til
+copy to:	filemanager	da	Kopier til:
+could not copy %1 to %2	filemanager	da	Kunne ikke kopiere %1 til %2
+could not copy file because no destination directory is given	filemanager	da	Kunne ikke kopiere fil fordi ingen destniations bibliotek er angivet
+could not create %1	filemanager	da	Kunne ikke oprette %1
+could not create directory %1	filemanager	da	Kunne ikke oprette biblioteket %1
+could not delete %1	filemanager	da	Kunne ikke slette %1
+could not move %1 to %2	filemanager	da	Kunne ikke flytte %1 til %2
+could not move file because no destination directory is given	filemanager	da	Kunne ikke flytte fil fordi ingen destniations bibliotek er angivet
+could not rename %1 to %2	filemanager	da	Kunne ikke omdøbe %1 til %2
+could not save %1	filemanager	da	Kunne ikke gemme %1
+create file	filemanager	da	Opret fil
+create folder	filemanager	da	Opret bibliotek
+created	filemanager	da	Oprettet
+created %1	filemanager	da	Oprettede %1
+created %1,%2	filemanager	da	Oprettede %1, %2
+created by	filemanager	da	Oprettet af
+created directory %1	filemanager	da	Oprettede biblioteket %1
+date	filemanager	da	Dato
+default number of upload fields to show	filemanager	da	Antal af upload felter at vise som standart
+delete	filemanager	da	Slet
+deleted %1	filemanager	da	Slettede %1
+directory	filemanager	da	Bibliotek
+directory %1 already exists	filemanager	da	Biblioteket %1 findes eksistere allerede
+directory %1 does not exist	filemanager	da	Biblioteket %1 eksistere ikke
+directory names cannot contain "%1"	filemanager	da	Biblioteknavne må ikke indeholde "%1"
+display attributes	filemanager	da	Vis attributter
+download	filemanager	da	Hent
+edit	filemanager	da	Redigér
+edit comments	filemanager	da	Redigér kommentar
+error running command	filemanager	da	Kommandoen afsluttede med fejl
+execute	filemanager	da	Eksekvere
+failed to create directory	filemanager	da	Kunne ikke oprette biblioteket
+fake base dir did not exist, egroupware created a new one.	filemanager	da	Fake Base Dir fandtes ikke, eGroupWare oprettede en ny.
+file	filemanager	da	Fil
+file %1 already exists. please edit it or delete it first.	filemanager	da	Filen %1 eksistere allerede. Ændre eller slet filen først
+file %1 could not be created.	filemanager	da	Filen %1 kunne ikke oprettes.
+file name	filemanager	da	Filnavn
+file names cannot contain  or /	filemanager	da	Filnavne kan ikke indeholde \ eller /
+file names cannot contain "%1"	filemanager	da	Filnavne kan ikke indeholde "%1"
+file names cannot contain \ or /	filemanager	da	Filnavne kan ikke indeholde / eller \
+filemanager	common	da	Filhåndtering
+filemanager preferences	filemanager	da	Filhåndtering
+files	filemanager	da	Filer
+files in this directory	filemanager	da	Filer i dette bibliotek
+folder	filemanager	da	Bibliotek
+folder up	filemanager	da	Bibliotek op
+go home	filemanager	da	gå hjem
+go to	filemanager	da	Gå til
+go to %1	filemanager	da	Gå til %1
+go to your home directory	filemanager	da	Gå til hjemmebibliotek
+go to:	filemanager	da	Gå til:
+go up	filemanager	da	gå op
+home	filemanager	da	Hjem
+location	filemanager	da	Sti
+locked	filemanager	da	Låst
+mime type	filemanager	da	MIME type
+modified	filemanager	da	Ændret
+modified by	filemanager	da	Ændret af
+move to	filemanager	da	Flyt til
+move to:	filemanager	da	Flyt til:
+moved %1 to %2	filemanager	da	Flyttede %1 til %2
+no files in this directory.	filemanager	da	Ingen filer i dette bibliotek.
+no version history for this file/directory	filemanager	da	Ingen versions historie for denne fil/bibliotek
+operation	filemanager	da	Operation
+other settings	filemanager	da	Andre indstillinger
+owner	filemanager	da	Ejer
+please select a file to delete.	filemanager	da	Vælg venligst filen som skal slettes.
+preview %1	filemanager	da	Snig kik %1
+preview of %1	filemanager	da	Snig kik af %1
+quick jump to	filemanager	da	Hop til
+reload	filemanager	da	opdater
+rename	filemanager	da	Omdøb
+renamed %1 to %2	filemanager	da	Omdøbte %1 til %2
+replaced %1	filemanager	da	%1 erstattet
+save %1	filemanager	da	Gem %1
+save %1, and go back to file listing	filemanager	da	Gem %1, og gå tilbage til fil visning
+save all	filemanager	da	Gem alle
+save changes	filemanager	da	Gem ændringer
+saved %1	filemanager	da	%1 gemt
+show	filemanager	da	Vis
+show ..	filemanager	da	Vis ..
+show .files	filemanager	da	Vis .filer
+show command line (experimental. dangerous.)	filemanager	da	Vis kommando prompt (EKSPERIMENTAL & FARLIG)
+show help	filemanager	da	Vis hjælp
+size	filemanager	da	Størrelse
+sort by:	filemanager	da	Sorter efter:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	da	Fremtidens Filhåndtering, kun til eksperimenterende brug, send venligst bugreports.
+total files	filemanager	da	Antal filer
+unknown mime-type defaults to text/plain when viewing	filemanager	da	Hvis ukendt MIME type, vis standart som alm/tekst
+unused space	filemanager	da	Ubrugt plads
+up	filemanager	da	Op
+update	filemanager	da	Opdater
+updated comment for %1	filemanager	da	Opdaterede %1 kommentaren
+upload	filemanager	da	Upload
+upload fields	filemanager	da	upload felter
+upload files	filemanager	da	Upload filer
+use new experimental filemanager?	filemanager	da	Brug ny eksperimenterende Filehåndtering?
+used space	filemanager	da	Brugt plads
+users	filemanager	da	Brugere
+version	filemanager	da	Version
+view documents in new window	filemanager	da	Se dokumenter i nyt vindue
+view documents on server (if available)	filemanager	da	Vi dokumenter på server (hvis tilgængelig)
+who	filemanager	da	Hvem
+you do not have access to %1	filemanager	da	Du har ikke adgang til %1
+your home dir did not exist, egroupware created a new one.	filemanager	da	Dit hjemme bibliotek fandtes ikke, eGroupWare har oprette en ny til dig.

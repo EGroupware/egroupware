@@ -1,0 +1,188 @@
+%1 already exists as a file	filemanager	hu	%1 már létezik, mint állomány
+%1 directories and %2 files copied.	filemanager	hu	%1 mappa és %2 file átmásolva.
+%1 directories and %2 files deleted.	filemanager	hu	%1 mappa és %2 file törölve.
+%1 elements linked.	filemanager	hu	%1 elemhez link létrehozva.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	hu	%1 hiba a másolás során (%2 mappa és %3 file átmásolva)
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	hu	%1 hiba a törlés közben (%2 mappa és %3 file törölve)
+%1 errors linking (%2)!	filemanager	hu	%1 hiba a link létrehozása során (%2)!
+%1 errors moving (%2 files moved)!	filemanager	hu	%1 hiba a mozgatás során (%2 file átmozgatva)!
+%1 failed, %2 succeded	filemanager	hu	%1 hibás, %2 végrehajtva
+%1 files	common	hu	%1 file
+%1 files copied.	filemanager	hu	%1 file másolva.
+%1 files deleted.	filemanager	hu	%1 file törölve.
+%1 files moved.	filemanager	hu	%1 file átmozgatva.
+%1 starts with '%2'	filemanager	hu	%1 '%2'-vel kezdődik
+%1 successful uploaded.	filemanager	hu	%1 sikeresen feltöltve.
+%1 the following files into current directory	filemanager	hu	%1 a következő fileokat az aktuális mappába
+%1 urls %2 to clipboard.	filemanager	hu	%1 URL %2 a vágólapra
+accessrights	filemanager	hu	hozzáférés
+acl added.	filemanager	hu	hozzáférés engedélyezve
+acl deleted.	filemanager	hu	hozzáférés törölve
+actions	filemanager	hu	Akció
+all files	common	hu	minden file
+allow a maximum of the above configured folderlinks to be configured in settings	admin	hu	Maximálisan létrehozható linkek száma mappák számára
+and all it's childeren	filemanager	hu	és az összes bejegyzést
+applications	common	hu	Alkalmazások
+basedirectory	filemanager	hu	Alapkönyvtár
+can't open directory %1!	filemanager	hu	%1 mappa nem nyitható meg!
+cancel editing %1 without saving	filemanager	hu	%1 szerkesztésének megszakítása, mentés nélkül
+cannot create directory because it begins or ends in a space	filemanager	hu	Könyvtár létrehozása nem lehetséges, mert a név elején/végén 'fehér' karakter szerepel (space).
+check all	filemanager	hu	Összes kijelölése
+clear search	filemanager	hu	keresés eredményének törlése
+comment	filemanager	hu	Megjegyzés
+comments cannot contain "%1"	filemanager	hu	Megjegyzés nem tartalmazhatja "%1"
+copied	filemanager	hu	másolva
+copied %1 to %2	filemanager	hu	%1 átmásolva ide: %2
+copy	filemanager	hu	Másol
+copy to	filemanager	hu	Másold ide:
+copy to clipboard	filemanager	hu	Vágólapra másol
+could not copy %1 to %2	filemanager	hu	%1 nem másolható ide: %2
+could not copy file because no destination directory is given	filemanager	hu	Másolás nem lehetséges mert nincs megadva célkönyvtár
+could not create %1	filemanager	hu	%1 nem hozható létre
+could not delete %1	filemanager	hu	%1 nem törölhető
+could not move %1 to %2	filemanager	hu	%1 nem mozgatható át ide: %2
+could not move file because no destination directory is given	filemanager	hu	Mozgatás nem lehetséges mert nincs megadva célkönyvtár
+could not rename %1 to %2	filemanager	hu	%1 nem nevezhető át erre: %2
+could not save %1	filemanager	hu	%1 nem menthető el
+create a link	filemanager	hu	Link létrehozása
+create directory	filemanager	hu	Mappa létrehozása
+create file	filemanager	hu	Fájl létrehozása
+create folder	filemanager	hu	Mappa létrehozása
+created	filemanager	hu	Létrehozva
+created %1,%2	filemanager	hu	%1,%2 létrehozva
+created between	filemanager	hu	létrehozva
+created directory %1	filemanager	hu	%1 mappa létrehozva
+current directory	filemanager	hu	aktuális mappa
+custom fields	filemanager	hu	egyedi mező
+cut	filemanager	hu	kivágás
+cut to clipboard	filemanager	hu	Kivágás a vágólapra
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	hu	Alapértelmezett beállítás NEM. A link nem lesz megjelenítve, de beléphetsz erre a helyre vagy beállíthatod alapértelmezett kezdeti mappának.
+delete this file or directory	filemanager	hu	Kijelölt file vagy mappa törlése.
+deleted %1	filemanager	hu	%1 törölve
+directories sorted in	filemanager	hu	Mappák tárolva a
+directory	filemanager	hu	Könyvtár
+directory %1 already exists	filemanager	hu	%1 könyvtár már létezik
+directory %1 does not exist	filemanager	hu	%1 könyvtár nem létezik
+directory names cannot contain "%1"	filemanager	hu	Könyvtárnév nem tartalmazhatja: "%1"
+directory not found or no permission to access it!	filemanager	hu	Könyvtár nem létezik vagy nincs hozzáférési jogosultságod a belépéshez!
+display and modification of content	filemanager	hu	A tartalom megjelenítése és módosítása
+display of content	filemanager	hu	A tartalom megjelenítése
+do you want to overwrite the existing file %1?	filemanager	hu	Felülírod a létező %1 filet?
+download	filemanager	hu	Letölt
+edit comments	filemanager	hu	Megjegyzés szerkesztése
+edit settings	filemanager	hu	Beállítások módosítása
+enter setup user and password	filemanager	hu	Kérem az operator felhasználónevét és jelszavát
+enter setup user and password to get root rights	filemanager	hu	Kérem az operator felhasználónevét és jelszavát
+enter the complete vfs path to specify a fast access link to a folder	filemanager	hu	Add meg a teljes VFS elérési utat a gyors mappa-hozzáféréshez
+enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	hu	Add meg a teljes VFS elérési utat a gyors mappa-hozzáféréshez (1).
+enter the complete vfs path to specify your desired start folder.	filemanager	hu	Add meg a teljes VFS elérési utat kiinduló mappa meghatározásához.
+error adding the acl!	filemanager	hu	HIba a hozzáférés létrehozása során!
+error creating symlink to target %1!	filemanager	hu	Hiba a sylink létrehozása során %1 céhoz!
+error deleting the acl entry!	filemanager	hu	Hiba a hozzáférés törlése során!
+error uploading file!	filemanager	hu	HIba a file feltöltése során!
+executable	filemanager	hu	Végrehajtható
+extended access control list	filemanager	hu	Kiterjeszett hozzáférés korlátozás lista
+extended acl	filemanager	hu	Kiterjeszett hozzáférés korlátozás
+failed to change permissions of %1!	filemanager	hu	Hiba a %1 hozzáférés módosítása során!
+failed to create directory!	filemanager	hu	Hiba a mappa léterhozása során!
+favorites	filemanager	hu	Kedvencek
+file	filemanager	hu	File
+file %1 already exists. please edit it or delete it first.	filemanager	hu	%1 állomány már létezik. Kérem szerkessze azt, vagy törölje előbb.
+file %1 could not be created.	filemanager	hu	%1 fájl nem hozható létre.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	hu	%1 file mérete túl nagy, további információért lépj kapcsolatba a rendszergazdával.
+file deleted.	filemanager	hu	File törölve.
+file names cannot contain "%1"	filemanager	hu	Állománynév nem tartalmazhatja: "%1"
+file or directory not found!	filemanager	hu	File vagy mappa nem található!
+file successful uploaded.	filemanager	hu	File sikeresen feltöltve.
+filemanager	common	hu	Fájlkezelő
+filemanager configuration	admin	hu	Filekezelő beállítása
+files from subdirectories	filemanager	hu	Alkönyvtárak filejai
+files in this directory	filemanager	hu	A könyvtár fájljai
+folder up	filemanager	hu	Felső mappa
+general	filemanager	hu	general
+go home	filemanager	hu	Saját mappára ugrás
+go to	filemanager	hu	Ugorj ide
+go to your home directory	filemanager	hu	Saját mappára ugrás
+go up	filemanager	hu	Egy szinttel feljebb
+id	filemanager	hu	Azonosító
+inherited	filemanager	hu	lemásolva
+link	filemanager	hu	Link
+link %1: %2	filemanager	hu	Link %1: %2
+link target %1 not found!	filemanager	hu	Link célpontja nem található (%1)!
+location	filemanager	hu	Hely
+log out as superuser	filemanager	hu	Rendszergazda kijelentkezés
+max folderlinks	admin	hu	maximális mappalink száma
+maximum size for uploads	filemanager	hu	Feltöltés maximális mérete
+mime type	filemanager	hu	MIME típus
+modified	filemanager	hu	Módosítva
+modified between	filemanager	hu	módosítva
+modify all subdirectories and their content	filemanager	hu	Összes könyvtár és tartalmának módosítása.
+move	filemanager	hu	Mozgat
+move to	filemanager	hu	Mozgatás ide:
+moved %1 to %2	filemanager	hu	%1 mozgatása ide: %2
+no access	filemanager	hu	Nincs hozzáférés
+no files in this directory.	filemanager	hu	Nincs állomány ebben a könyvtárban.
+no preview available	filemanager	hu	Előnézet nem áll rendelkezésre
+no version history for this file/directory	filemanager	hu	Nincs elérhető verzió történet ehhez az állományhoz/könyvtárhoz
+only owner can rename or delete the content	filemanager	hu	Csak a tulajdonos tudja átnevezni és törölni a tartalmat
+open	filemanager	hu	Megnyit
+operation	filemanager	hu	Művelet
+permission denied!	filemanager	hu	Hozzáférés elutasítva!
+permissions	filemanager	hu	Hozzáférés
+permissions of %1 changed.	filemanager	hu	%1 hozzáférése módosult
+please select a file to delete.	filemanager	hu	Kérem jelöljön ki egy állományt a törléshez.
+preview	filemanager	hu	Előnézet
+preview %1	filemanager	hu	Előnézet %1
+preview of %1	filemanager	hu	%1 előnézete
+projectmanager	filemanager	hu	Projektmanager
+properties saved.	filemanager	hu	Tulajdosnágok elmentve.
+quick jump to	filemanager	hu	Gyors ugrás ide
+read & write access	filemanager	hu	Olvasás és írási hozzáférés
+read access only	filemanager	hu	Csak olvasási hozzáférés
+reload	filemanager	hu	Újratölt
+rename of %1 to %2 failed!	filemanager	hu	%1 átnevezése %2-re nem sikerült!
+rename, change permissions or ownership	filemanager	hu	Átnevezés, hozzáférés- vagy tulajdonos módosítás
+renamed %1 to %2	filemanager	hu	%1 átnevezve erre: %2
+renamed %1 to %2.	filemanager	hu	%1 átnevezve erre: %2
+replaced %1	filemanager	hu	%1 cserélve
+rights	filemanager	hu	Hozzáférés
+root	filemanager	hu	root
+root access granted.	filemanager	hu	Adminisztrátor hozzáférés megadva.
+root access stopped.	filemanager	hu	Adminisztrátor hozzáférés leállítva.
+save %1	filemanager	hu	Mentés %1
+save %1, and go back to file listing	filemanager	hu	%1 mentése és visszatérés az állománylistához
+save changes	filemanager	hu	Változások mentése
+saved %1	filemanager	hu	%1 elmentve
+saving properties failed!	filemanager	hu	Tulajdonságok mentése nem sikerült.
+search for '%1'	filemanager	hu	%1 keresése
+searchstring	filemanager	hu	Keresett kifejezés
+select action...	filemanager	hu	Válasz akciót
+select file to upload in current directory	filemanager	hu	Válasz ki a feltöltendő filet.
+show	filemanager	hu	Mutat
+show hidden files	filemanager	hu	Rejtett fileok megjelenítése
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	hu	Az oldaldobozban mutasson egy link az alapkönyvtárra?
+size	filemanager	hu	Méret
+start search	filemanager	hu	keresés
+superuser	filemanager	hu	Operator
+symlink to %1 created.	filemanager	hu	Symlink %1-hez létrehozva.
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	hu	Az alapértelmezett kezdőmappa a saját könyvtárad. Az alapértelmezett mappa lesz beállítva ha ez a mező üres, az elérési út nem létezik vagy nincs hozzáférésed.
+the requested path %1 is not available.	filemanager	hu	%1 elérési út nem létezik.
+there's already a directory with that name!	filemanager	hu	A megadott néven már létezik egy mappa.
+there's already a file with that name!	filemanager	hu	A megadott néven már létezik egy file.
+to overwrite the existing file store again.	filemanager	hu	A létező file felülírásához válaszd a mentést ismét.
+total files	filemanager	hu	Összes fájl
+unused space	filemanager	hu	Szabad terület
+up	filemanager	hu	Fel
+updated comment for %1	filemanager	hu	%1 megjegyzése frissítve
+used space	filemanager	hu	Felhasznált terület
+users and groups	filemanager	hu	Felhasználók és csoportok
+wrong username or password!	filemanager	hu	Hibás felhasználónév vagy jelszó!
+you are not allowed to upload a script!	filemanager	hu	Végrehajtható file feltöltéséhez nincs hjogosultságod!
+you can only grant additional rights, you can not take rights away!	filemanager	hu	Jogosultságot csak hozzáadhatsz, el nem vehetsz!
+you do not have access to %1	filemanager	hu	Nincs jogosultsága %1 eléréséhez
+you need to select an owner!	filemanager	hu	Választanod kell tulajdonost!
+you need to select some files first!	filemanager	hu	Először válaszd ki a fileokat!
+you will be redirected to your home directory.	filemanager	hu	A saját mappádhoz lépek.
+you will be redirected to your start folder.	filemanager	hu	A kezdőmappádhoz lépek.
+your home dir did not exist, egroupware created a new one.	filemanager	hu	Megjegyzés: Az Ön Home könyvtára nem létezett, ezért létrehoztam. Nincs további teendője.
+your home directory	filemanager	hu	A saját mappád
