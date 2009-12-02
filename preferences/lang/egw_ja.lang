@@ -1,0 +1,30 @@
+change password	preferences	ja	パスワード変更
+change your password	preferences	ja	パスワード変更
+change your profile	preferences	ja	プロフィール変更
+change your settings	preferences	ja	設定変更
+country selection	preferences	ja	国の選択
+currency	preferences	ja	通貨
+date format	preferences	ja	日付書式
+default application	preferences	ja	アプリケーション（既定）
+edit custom fields	preferences	ja	カスタム項目訂正
+enter your new password	preferences	ja	新しいパスワードを入力して下さい。
+icons and text	preferences	ja	アイコンとテキスト
+icons only	preferences	ja	アイコンのみ
+interface/template selection	preferences	ja	テンプレート選択
+language	preferences	ja	言語
+max matches per page	preferences	ja	１ページ最大行数
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	ja	※注意：電子メールのパスワードは変更しません。電子メールのパスワードは、手動で変更してください。
+please, select a new theme	preferences	ja	Please, select a new theme
+re-enter your password	preferences	ja	パスワードを再入力して下さい。
+select different theme	preferences	ja	異なるテーマを選択してください。
+select one	preferences	ja	選択して下さい
+show current users on navigation bar	preferences	ja	現在のユーザ数を表示する。
+show navigation bar as	preferences	ja	ナビゲーション
+show text on navigation icons	preferences	ja	ナビゲーションアイコンにテキスト表示
+text only	preferences	ja	テキストのみ
+theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
+this server is located in the %1 timezone	preferences	ja	 タイムゾーン
+time format	preferences	ja	時間書式
+use selectbox	preferences	ja	セレクトボックス
+use text entry	preferences	ja	テキスト入力
+your current theme is: %1	preferences	ja	</b>

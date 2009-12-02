@@ -1,0 +1,90 @@
+%1 - preferences	preferences	fa	تنظیمات %1
+%1 hours	preferences	fa	%1 ساعت
+12 hour	preferences	fa	12 ساعته
+24 hour	preferences	fa	24 ساعته
+a template defines the layout of egroupware and it contains icons for each application.	preferences	fa	یک قالب نحوه نمایش نمایه ها و کاربردها در گروه افزار را مشخص می کند
+a theme defines the colors and fonts used by the template.	preferences	fa	یک تم رنگها و قلمهای قالب را مشخص می کند
+acl grants have been updated	preferences	fa	فهرست حقوق دسترسی بهنگام شد
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fa	هر فهرستی در گروه افزار این تعداد ورودی را در هر صفحه به شما نمایش خواهد داد.<br> بخاطر داشته باشید که تعداد زیاد نمایش صفحات را کند خواهد کرد. و تعداد خیلی کم دید کلی شما را با خستگی مواجه خواهد کرد.
+are you sure you want to delete this category ?	preferences	fa	آیا مطمئنید که می خواهید این دسته را حذف کنید؟
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fa	تغییر یک گذرواژه کاربری با ارسال گذرواژه قدیمی و جدید. در صورت موفقیت «درست» و در غیر اینضورت «نادرست» بر می گرداند
+change your password	preferences	fa	تغییر گذرواژه
+change your profile	preferences	fa	تغییر مشخصات
+change your settings	preferences	fa	تغییر تنظیمات
+click to select a color	preferences	fa	برای انتخاب رنگ کلیک کنید
+color	preferences	fa	رنگ
+country	preferences	fa	کشور
+date format	preferences	fa	قالب تاریخ
+default	preferences	fa	پیش فرض
+default application	preferences	fa	کاربرد پیش فرض
+default preferences	preferences	fa	تنظیمات پیش فرض
+delete categories	preferences	fa	حذف دسته ها
+description can not exceed 255 characters in length !	preferences	fa	توضیحات (شرح) نمی تواند بیش از ۲۵۵ کاراکتر باشد.
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this	preferences	fa	غیر فعال کردن جلوه های پویا نمایی فهرست کناری. ممکن است کاربران Opera و Konqueror به این نیاز داشته باشند
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	preferences	fa	غیر فعال کردن اجرای نویسه های رفع خطا برای IE 5.5 و بالاتر که بتواند شفافیت در تصاویر PNG را نمایش دهد.
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fa	شما سبک ساعتی ۲۴ ساعته را در نظر دارید یا ۱۲ ساعته با نوشتار «صبح» و «عصر» در کنار آن
+edit custom fields	preferences	fa	ویرایش فیلدهای سفارشی
+enter your new password	preferences	fa	گذرواژه جدبد را وارد کنید
+enter your old password	preferences	fa	گذرواژه قبلی خود را وارد کنید
+failed to change password.  please contact your administrator.	preferences	fa	ناتوان از تغییر گذرواژه. لطفا با مدیر سیستم تماس بگیرید
+forced preferences	preferences	fa	تنظیمات اجباری
+help off	preferences	fa	کمک خاموش
+hours	preferences	fa	ساعت
+how do you like to display accounts	preferences	fa	چگونه می خواهید حسابها نمایش داده شوند
+how do you like to select accounts	preferences	fa	چگونه می خواهید حسابها را انتخاب کنید
+how many days should entries stay in the access log, before they get deleted (default 90) ?	common	fa	ورودیهای ثبت شده در access log چند روز باید نگه داشته شوند؟(پیش فرض 90 روز است)
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	fa	چند ساعت قبل یا بعد از ساعت کارگزار قرار دارید.<br> اگر در ناحیه زمانی شبیه زمان کارگزار قرار دارید صفر را انتخاب کنید در غیر اینصورت محل اقامت و تفاوت ناحیه زمانی خود را انتخاب کنید.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	fa	چند نمایه در ناوبری اصلی بالای صفحه باید نمایش داده شوند. نمایه های اضافی در فهرست پایین افتادنی قرار خواهند گرفت که از طریق یک فلش کوچک (در ابتدا یا انتهای نوار ناوبری) قابل دسترس می باشند.
+how should egroupware display dates for you.	preferences	fa	گروه افزار چگونه تاریخ را به شما نشان دهد
+icon	preferences	fa	نمایه
+icons and text	preferences	fa	نمایه و متن
+icons only	preferences	fa	فقط نمایه
+in which country are you. this is used to set certain defaults for you.	preferences	fa	در کدام کشور اقامت دارید. این برای پیش فرضهای قطعی شما استفاده خواهد شد.
+interface/template selection	preferences	fa	انتخاب قالب/رابط
+language	preferences	fa	زبان
+max matches per page	preferences	fa	حداکثر نمایش فهرستها
+max number of icons in navbar	preferences	fa	حداکثر تعداد نمایه ها در نوار ناوبری
+no default	preferences	fa	بدون پیش فرض
+note: this feature does *not* change your email password. this will	preferences	fa	تذکر: این قابلیت گذرواژه رایانامه شما را تغییر نخواهد داد. باید بصورت دستی این کار را انجام دهید.
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	fa	تذکر:  این قابلیت گذرواژه رایانامه شما را تغییر نخواهد داد. باید بصورت دستی این کار را انجام دهید.
+please, select a new theme	preferences	fa	لطفا یک تم جدید انتخاب کنید
+popup with search	preferences	fa	پایین افتادنی با جستجو
+preferences for the idots template set	preferences	fa	تنظیمات مخصوص قالب انتخاب شده
+re-enter your password	preferences	fa	گذرواژه را مجددا وارد کنید
+read prefs for the specified application.	preferences	fa	خواندن تنظیمات برای کاربرد تعریف شده
+select different theme	preferences	fa	تم متفاوت انتخاب کنید
+select one	preferences	fa	انتخاب کنید
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fa	زبان متنها و پیامها در گروه افزار را انتخاب کنید.<br> برخی زبانها ممکن است همه پیامها را نداشته باشند در اینصورت آن پیامها به زبان انگلیسی نمایش داده می شوند
+selectbox	preferences	fa	جعبه انتخاب
+selectbox with primary group and search	preferences	fa	جعبه انتخاب برای گروه اولیه و جستجو
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	fa	این را آنطور که می خواهید تنظیم کنید. بدلایل امنیتی شاید بخواهید. شناسه کاربری شما نمایش داده نشود.
+should the login page include a language selectbox (useful for demo-sites) ?	common	fa	آیا میخواهید که جعبه انتخاب زبان در صفحه ورود وجود داشته باشد؟ (برای سایتهای نمایشی مناسبتر است)
+should the number of active sessions be displayed for you all the time.	preferences	fa	می خواهید تعداد نشستهای فعال همیشه برای شما نمایش داده شوند؟
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	fa	می خواهید این متنهای راهنما -همیشه - در زمان تعریف تنظیمات نمایش داده شوند؟
+show helpmessages by default	preferences	fa	نمایش پیامهای کمک بصورت پیش فرض
+show navigation bar as	preferences	fa	نمایش نوار ناوبری بصورت
+show number of current users	preferences	fa	نمایش تعداد کاربران فعلی
+show text on navigation icons	preferences	fa	نمایش متن روی نمایه های ناوبری
+show_more_apps	common	fa	نمایش کاربردهای بیشتر
+text only	preferences	fa	فقط متن
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fa	«کاربرد پیش فرض» در زمان ورود شما به گروه افزار یا با کلیک بر روی نمایه «خانه» نمایش داده خواهد شد.
+the old password is not correct	preferences	fa	گذرواژه قبلی نادرست است
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fa	جعبه انتخاب همه کاربران را نمایش خواهد داد.(می تواند در سیستمهای با تعداد کاربر زیاد، کندی ایجاد کند)
+the two passwords are not the same	preferences	fa	گذرواژه های جدید وارد شده شبیه هم نیستند
+theme (colors/fonts) selection	preferences	fa	انتخاب تم (نمایه/قلم)
+this server is located in the %1 timezone	preferences	fa	این کارگزار در ناحیه زمانی %1 قرار دارد.
+time format	preferences	fa	قالب زمان
+timeout for sessions in seconds (default 14400 = 4 hours)	common	fa	حداکثر زمان بیکاری برای نشست(پیش فرض 14400 که معادل 4 ساعت می شود)
+use default	preferences	fa	استفاده از پیش فرض
+users choice	preferences	fa	پسند کاربرها
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fa	وقتی بگوئید «بله» نمایه های «خانه» و «خروج» در نوار ناوبری نمایش داده خواهند شد.
+which currency symbol or name should be used in egroupware.	preferences	fa	کدام واحد (نماد) پولی باید در گروه افزار استفاده شود
+would you like egroupware to check for a new version when admins login ?	common	fa	آیا می خواهید که گروه افزار برای نسخه های جدید در هر ورود مدیران بررسی شود؟
+would you like to automaticaly load new langfiles (at login-time) ?	common	fa	آیا می خواهید که پرونده های زبانی جدید در زمان ورود بطور خودکار بارگذاری شوند؟
+would you like to show each application's upgrade status ?	common	fa	آیا میخواهید که وضعیت بهنگام سازی هر کاربرد نمایش داده شود؟
+write prefs for the specified application.	preferences	fa	نوشتن تنظیمات برای کاربرد تعریف شده
+you can show the applications as icons only, icons with app-name or both.	preferences	fa	می توانید فقط نمایه، نمایه با متن، یا متن خالی نام کاربرد را در نوار ناوبری ببینید.
+you do not have permission to set acl's in this mode!	preferences	fa	شما دسترسی کافی ندارید.
+you must enter a password	preferences	fa	شما باید یک گذرواژه وارد کنید
+your current theme is: %1	preferences	fa	تم فعلی شما %1 است
+your preferences	preferences	fa	تنظیمات شما

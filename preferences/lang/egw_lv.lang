@@ -1,0 +1,65 @@
+%1 - preferences	preferences	lv	%1- Iestatījumi
+%1 hours	preferences	lv	%1 stundas
+12 hour	preferences	lv	12stundas
+24 hour	preferences	lv	24stundas
+a template defines the layout of phpgroupware and it contains icons for each application.	preferences	lv	Veidne definē eGroupWare izvietojumu un tajā ir ikonas katrai aplikācijai
+a theme defines the colors and fonts used by the template.	preferences	lv	Temats definē krāsas un fontus, kurus lieto veidne
+are you sure you want to delete this category ?	preferences	lv	Esi pārliecināts, ka vēlies dzēst šo kategoriju?
+change your password	preferences	lv	Mainīt tavu paroli
+change your profile	preferences	lv	Mainīt tavu profilu
+change your settings	preferences	lv	Mainīt tavus uzstādījumus
+click to select a color	preferences	lv	Noklikšķini, lai izvēlētos krāsu
+color	preferences	lv	Krāsa
+country	preferences	lv	Valsts
+date format	preferences	lv	Datuma formāts
+default	preferences	lv	noklusējums
+default application	preferences	lv	Noklusējuma programmatūra
+default preferences	preferences	lv	Noklusējuma iestatījumi
+delete categories	preferences	lv	Dzēst kategorijas
+description can not exceed 255 characters in length !	preferences	lv	Apraksts nevar pārsniegt 255 simbolu garumu!
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	lv	Vai tev labāk patīk 24stundu formāts, vai arī 12, pievienojot am/pm?
+edit custom fields	preferences	lv	rediģēt klientu laukus
+enter your new password	preferences	lv	Ievadi jauno paroli
+failed to change password.  please contact your administrator.	preferences	lv	Neizdevād nomainīt paroli. Lūdzu sazinies ar savu administratoru
+forced preferences	preferences	lv	Vajadzīgie iestatījumi
+help off	preferences	lv	Palīgs izslēgts
+hours	preferences	lv	stundas
+how do you like to display accounts	preferences	lv	Kā tu vēlies prādīt kontus?
+how do you like to select accounts	preferences	lv	Kā tu vēlies atzīmēt kontus?
+how should phpgroupware display dates for you.	preferences	lv	Kā eGroupWare vajadzētu parādīt tev laiku?
+icon	preferences	lv	Ikona
+icons and text	preferences	lv	Ikonas un teksts
+icons only	preferences	lv	tikai ikonas
+in which country are you. this is used to set certain defaults for you.	preferences	lv	Kurā valstī tu atrodies? Tas tiek lietots, lai noteiktu tev nepieciešamos noklusējumus
+interface/template selection	preferences	lv	Saskarnes/Veidnes izvēle
+language	preferences	lv	Valoda
+max matches per page	preferences	lv	Maksimālo atbilstošo ierakstu skaits lapā
+max number of icons in navbar	preferences	lv	Maksimālais ikonu skaits rīku joslā
+no default	preferences	lv	Nav noklusējuma
+please, select a new theme	preferences	lv	Lūdzu atzīmē jaunu tēmu
+popup with search	preferences	lv	Uzsākt ar meklēšanu
+re-enter your password	preferences	lv	Atkārto savu paroli
+select different theme	preferences	lv	Atzīmē citu tēmu
+select one	preferences	lv	Atzīmē vienu
+select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	lv	Atzīmē eGroupWare tekstu un ziņōjumu valodu.<br>Dažās valodās var nebūt visi ziņojumi, tāpēc tu vari saņemt ziņojumus angļu valodā
+selectbox	preferences	lv	Izvēlne (selectbox)
+should the number of active sessions be displayed for you all the time.	preferences	lv	Vai aktīvo sesiju skaitam vajadzētu tikt tev parā�ītam visu laiku?
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	lv	Vai šīm palīdzības vēstulēm vienmēr jāparādās, kad tu maini iestatījumus, vai tikai pēc tava pieprasījuma?
+show helpmessages by default	preferences	lv	Rādīt palīga vēstules pēc noklusējuma
+show navigation bar as	preferences	lv	Rādīt navigācijas joslu kā
+show number of current users	preferences	lv	Rādīt patreizējo lietotaju skaitu
+show text on navigation icons	preferences	lv	Rādīt tekstu uz navigācijas ikonām
+show_more_apps	common	lv	Rādīt vairāk aplikācijas
+text only	preferences	lv	Tikai teksts
+the two passwords are not the same	preferences	lv	Abas paroles nav vienādas
+theme (colors/fonts) selection	preferences	lv	Tēmas(krāsu/fontu) izvēle
+this server is located in the %1 timezone	preferences	lv	Šis serveris atrodas %1laika joslā
+time format	preferences	lv	Laika formāts
+use default	preferences	lv	Lietot noklusējumu
+users choice	preferences	lv	Lietotāju izvēle
+which currency symbol or name should be used in phpgroupware.	preferences	lv	Kādu valūtas simbolu vai nosaukumu vajadzētu lietot eGroupWare?
+you can show the applications as icons only, icons with app-name or both.	preferences	lv	Tu vari parādīt aplikācijas tikai kā ikonas, ikonas ar aplikācijas nosaukumu vai abus
+you do not have permission to set acl's in this mode!	preferences	lv	Tev nav atļaujas uzstā�īt ACL šajā režīmā
+you must enter a password	preferences	lv	Tev jaievada parole
+your current theme is: %1	preferences	lv	tava patreizējā tema ir:%1
+your preferences	preferences	lv	Tavi iestatījumi

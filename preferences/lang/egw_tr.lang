@@ -1,0 +1,80 @@
+sf project tracker preferences	tr	SF Project tracker preferences
+e-mail clear cache	tr	E-Mail Clear Cache
+other preferences	tr	Other Preferences
+%1 - preferences	tr	%1 - Preferences
+%1 hours	tr	%1 hours
+12 hour	tr	12 hour
+24 hour	tr	24 hour
+a template defines the layout of phpgroupware and it contains icons for each application.	tr	A template defines the layout of eGroupWare and it contains icons for each application.
+a theme defines the colors and fonts used by the template.	tr	A theme defines the colors and fonts used by the template.
+acl grants have been updated	tr	ACL grants have been updated
+any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	tr	Any listing in eGroupWare will show you this number of entries or lines per page.<br>Too many slow down the page display, too less will cost you the overview.
+are you sure you want to delete this category ?	tr	Are you sure you want to delete this category ?
+change your password	tr	Change your Password
+change your profile	tr	Change your profile
+change your settings	tr	Change your Settings
+click to select a color	tr	Click to select a color
+color	tr	Color
+country	tr	Country
+date format	tr	Date format
+default	tr	default
+default application	tr	Default application
+default preferences	tr	Default Preferences
+delete categories	tr	Delete Categories
+description can not exceed 255 characters in length !	tr	Description can not exceed 255 characters in length !
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	tr	Do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.
+edit custom fields	tr	edit custom fields
+enter your new password	tr	Enter your new password
+enter your old password	tr	Enter your old password
+failed to change password.  please contact your administrator.	tr	Failed to change password.  Please contact your administrator.
+forced preferences	tr	Forced Preferences
+help off	tr	Help off
+hours	tr	hours
+how do you like to display accounts	tr	How would you like to display accounts
+how do you like to select accounts	tr	How would you like to select accounts
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	tr	How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	tr	How many icons should be shown in the navigation bar at the top of the page. Additional icons go into a pulldown menu, callable by the icon on the far right side of the navbar.
+how should phpgroupware display dates for you.	tr	How should eGroupWare display dates for you.
+icon	tr	Icon
+icons and text	tr	Icons and text
+icons only	tr	icons only
+in which country are you. this is used to set certain defaults for you.	tr	In which country are you. This is used to set certain defaults for you.
+interface/template selection	tr	Interface/Template Selection
+language	tr	Language
+max matches per page	tr	Max matches per page
+max number of icons in navbar	tr	Max number of icons in navigation bar
+no default	tr	No default
+note: this feature does *not* change your email password. this will need to be done manually.	tr	Note: This feature does *not* change your email password. This will need to be done manually.
+please, select a new theme	tr	Please, select a new theme
+popup with search	tr	Popup with search
+re-enter your password	tr	Re-Enter your password
+select different theme	tr	Select different Theme
+select one	tr	Select one
+select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	tr	Select the language of texts and messages within eGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.
+selectbox	tr	Selectbox
+selectbox with primary group and search	tr	Selectbox with primary group and search
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	tr	Set this to your liking.  For security reasons, you might not want to show your Username in public.
+should the number of active sessions be displayed for you all the time.	tr	Should the number of active sessions be displayed for you all the time.
+should this help messages shown up always, when you enter the preferences or only on request.	tr	Should these help messages always display when modifying preferences, or only on request.
+show helpmessages by default	tr	Show help messages by default
+show navigation bar as	tr	Show navigation bar as
+show number of current users	tr	Show number of current users
+show text on navigation icons	tr	Show text on navigation icons
+text only	tr	Text only
+the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don	tr	t choose a specific application here (has to
+the old password is not correct	tr	The old password is not correct
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	tr	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
+the two passwords are not the same	tr	The two passwords are not the same
+theme (colors/fonts) selection	tr	Theme (colors/fonts) Selection
+this server is located in the %1 timezone	tr	This server is located in the %1 timezone
+time format	tr	Time format
+use default	tr	Use default
+users choice	tr	Users choice
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	tr	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
+which currency symbol or name should be used in phpgroupware.	tr	Which currency symbol or name should be used in eGroupWare.
+you can show the applications as icons only, icons with app-name or both.	tr	You can show the applications as icons only, icons with app-name or both.
+you do not have permission to set acl	tr	s in this mode!
+you must enter a password	tr	You must enter a password
+your current theme is: %1	tr	your current theme is: %1
+your preferences	tr	Your Preferences
+select displayed stocks	tr	Select displayed stock quotes
