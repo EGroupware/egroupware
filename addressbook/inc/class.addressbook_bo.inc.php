@@ -506,7 +506,7 @@ class addressbook_bo extends addressbook_so
 					}
 					// check for valid birthday date
 					if ($field_name == 'bday' && $field_value != null &&
-						!preg_match('/^(18|19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/',$field_value))
+						!preg_match('/^(18|19|20|21|22)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/',$field_value))
 					{
 						$fields_to_update[$field_name] = $field_value = null;
 					}
