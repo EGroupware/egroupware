@@ -1,0 +1,767 @@
+%1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
+%1 - %2 of %3 user groups	admin	fr	%1 - %2 de %3 groupes utilisateurs
+%1 acl records of not (longer) existing accounts deleted.	admin	fr	%1 droits d'accès de comptes inexistants supprimés.
+%1 added	addressbook	fr	%1 ajouté
+%1 contact(s) %2	addressbook	fr	%1 contact(s) %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants).
+%1 fields in %2 other organisation member(s) changed	addressbook	fr	Le champ %1 dans %2 d'autre membre de l'organisation a changé.
+%1 not found or not executable !!!	admin	fr	%1 introuvable ou pas exécutable !!!
+%1 records imported	addressbook	fr	%1 enregistrements importés
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fr	%1 enregistrements lus (non encore importé, vous devriez retourner en arrière %2back%3 et décocher le test de límportation)
+%1 starts with '%2'	addressbook	fr	%1 débute avec '%2'
+%s please calculate the result	addressbook	fr	%s calculez s'il vous plait le résultat
+(default no, leave it off if you dont use it)	admin	fr	(Non par défaut, ne pas modifier si vous ne l'utilisez pas)
+(e.g. 1969)	addressbook	fr	(e.g. 1969)
+(stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fr	(Pour installer de nouvelles applications utilisez<br><a href="setup/" target="setup">Setup</a> [Gérer Les Applications] !!!)
+-  type	admin	fr	- type
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fr	<b>Aucun type de conversion <aucun> n'a pu être trouvé.</b>  SVP choisissez un type de conversion depuis la liste
+@-eval() is only availible to admins!!!	addressbook	fr	@-eval() est disponible uniquement pour les administrateurs!!!
+accesslog and bruteforce defense	admin	fr	Protection contre les attaques accès aux logs et attaque systématique
+account active	admin	fr	Compte actif
+account has been created	common	fr	Le compte a été créé
+account has been deleted	common	fr	Le compte a été supprimé
+account has been updated	common	fr	Le compte a été mis à jour
+account list	admin	fr	Liste des comptes
+account permissions	admin	fr	Permissions de compte
+account preferences	admin	fr	Préférences de compte
+account repository	admin	fr	Dépôt de comptes
+accounts	addressbook	fr	Comptes
+acl manager	admin	fr	Gestionnaire des droits d'accès
+acl rights	common	fr	Droits d'accès
+action	admin	fr	Action
+actions	addressbook	fr	Actions
+activate wysiwyg-editor	admin	fr	activer l'éditeur WYSIWYG
+add %1	addressbook	fr	Ajouter %1
+add a category	admin	fr	Ajouter une catégorie
+add a contact to this organisation	addressbook	fr	Ajouter un contact à cette organisation
+add a group	admin	fr	Ajouter un groupe
+add a new account.	admin	fr	Ajouter un nouveau compte.
+add a new contact	addressbook	fr	Ajouter un nouveau contact
+add a new list	addressbook	fr	Ajouter une nouvelle liste
+add a single entry by passing the fields.	addressbook	fr	Ajouter une seule entrée en passant les champs.
+add a subcategory	admin	fr	Ajouter une sous-catégorie
+add a user	admin	fr	Ajouter un utilisateur
+add account	admin	fr	Ajouter un compte
+add application	admin	fr	Ajouter une application
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	fr	Ajouter les utilisateurs crées automatiquement à ce groupe ('Défaut' sera tenté si ce champ est laissé vide.)
+add business email of whole distribution list?	addressbook	fr	Ajouter l'email professionnel
+add custom field	addressbook	fr	Ajouter un champ personnalisé
+add global category	admin	fr	Ajouter une catégorie globale
+add global category for %1	admin	fr	Ajouter une catégorie globale pour %1
+add group	admin	fr	Ajouter un groupe
+add new account	admin	fr	Ajouter un nouveau compte
+add new application	admin	fr	Ajouter une nouvelle application
+add peer server	admin	fr	Ajouter un Serveur Pair
+add sub-category	admin	fr	Ajouter une sous-catégorie
+add to distribution list:	addressbook	fr	Ajouter à la liste de distribution:
+added by synchronisation	addressbook	fr	ajouté par synchronisation
+added to distribution list	addressbook	fr	ajouté à la liste de distribution
+additional information about using ldap as contact repository	admin	fr	Informations complémentaires pour utiliser LDAP comme dépôt de contacts
+address book	common	fr	Carnet d'adresses
+address book - vcard in	addressbook	fr	Carnet d'adresses - Entrée VCard
+address book - view	addressbook	fr	Carnet d'adresses - Voir
+address line 2	addressbook	fr	Adresse ligne 2
+address type	addressbook	fr	Type d'adresse
+addressbook	common	fr	Carnet d'adresses
+addressbook csv export	addressbook	fr	Exporter en CSV le carnet d'adresse
+addressbook menu	addressbook	fr	Menu de carnet d'adresses
+addressbook preferences	addressbook	fr	Préférences du carnet d'adresses
+addressbook the contact should be saved to	addressbook	fr	Le contact du carnet d'adresses doit être sauvegardé vers
+addressbook-fieldname	addressbook	fr	Carnet d'adresses - nom du champ
+addvcard	addressbook	fr	Ajouter VCard
+admin email	admin	fr	Email de l'administrateur
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fr	Adresses EMail (séparées par des virgules) des administrateurs à prévenir à propos du blocage (vide pour aucune notification)
+admin name	admin	fr	Nom de l'administrateur
+administration	admin	fr	Administration
+admins	admin	fr	Administrateurs
+advanced options	admin	fr	options avançées
+advanced search	addressbook	fr	Recherche avancée
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué (3 par défaut) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
+aliases	admin	fr	Alias
+all contacts	addressbook	fr	Tous les contacts
+all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
+all users	admin	fr	Tous les utilisateurs
+allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
+allow users to maintain their own account-data	admin	fr	Permettre aux utilisateurs de maintenir les données de leur propre compte
+alt. csv import	addressbook	fr	Importation CSV alternative
+alternate email address	admin	fr	Adresse email alternative
+always	addressbook	fr	toujours
+anonymous user	admin	fr	Utilisateur anonyme
+anonymous user (not shown in list sessions)	admin	fr	Utilisateur anonyme (n'apparaît pas dans la liste des sessions)
+anonymous user does not exist!	admin	fr	L'utilisateur anonyme n'existe pas !
+anonymous user has no run-rights for the application!	admin	fr	L'utilisateur anonyme n'a pas le droit d'exécuter cette application !
+appearance	admin	fr	Apparence
+application	admin	fr	Application
+application name	admin	fr	Nom d'application
+application title	admin	fr	Titre d'application
+applications	admin	fr	Applications
+applications list	admin	fr	Liste de applications
+applies the changes	admin	fr	appliquer les changements
+apply changes to all members, whose fields have the same previous content	addressbook	fr	Appliquer les changements à tous les membres dont les champs ont le même contenu.
+apply the action on the whole query, not only the shown contacts!!!	addressbook	fr	Appliquer l'action sur la totalité des résultats de la requête et pas seulement sur les contacts affichés.
+are you shure you want to delete this contact?	addressbook	fr	Etes-vous sûr que vous voulez supprimer ce contact?
+are you sure you want to delete the application %1 ?	admin	fr	Etes-vous sûr de vouloir supprimer l'application %1 ?
+are you sure you want to delete this account ?	admin	fr	Etes-vous sûr de vouloir supprimer ce compte ?
+are you sure you want to delete this application ?	admin	fr	Etes-vous sûr de vouloir supprimer cette application ?
+are you sure you want to delete this category ?	common	fr	Etes-vous sûr de vouloir supprimer cette catégorie ?
+are you sure you want to delete this field?	addressbook	fr	Etes-vous sûr de vouloir effacer ce champ ?
+are you sure you want to delete this global category ?	admin	fr	Etes-vous sûr de vouloir supprimer cette catégorie globale ?
+are you sure you want to delete this group ?	admin	fr	Etes-vous sûr de vouloir supprimer ce groupe ?
+are you sure you want to delete this server?	admin	fr	Etes-vous sûr de vouloir supprimer ce serveur ?
+are you sure you want to kill this session ?	admin	fr	Etes-vous sûr de vouloir tuer cette session ?
+assistent	addressbook	fr	Assistant(e)
+assistent phone	addressbook	fr	Téléphone assistant(e)
+async services last executed	admin	fr	Dernière exécution des services asynchrones
+asynchronous timed services	admin	fr	Services asynchrones
+asyncservices not yet installed or other error (%1) !!!	admin	fr	services asynchrones pas encore installés ou autre erreur (%1) !!!
+at the moment the following document-types are supported:	addressbook	fr	À l'heure actuelle les types de documents supportés  :
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fr	Tentative d'utiliser le type MIME correct pour ftp à la place de celui par défaut 'application/octet-stream'
+attribute accountstatus explained	admin	fr	Ceci modifie l'attribut <b><i>accountStatus</i></b> (Status du compte) pour le schéma de QMAIL.
+attribute mail explained	admin	fr	Ceci modifie l'attribut <b><i>-mail-</b></i> du schéma QMAIL. Cet attribut doit toujours être renseigné, c'est aussi le champ de l'adresse de courriel interne de eGW.
+attribute mailalternateaddress explained	admin	fr	Ceci modifie l'attribut <b><i>-mailAlternateAddress-</i></b> (adresse de messagerie alternative) du schéma QMAIL. Cela peut être utilisé comme un alias ou un adressage virtuel.
+attribute mailforwardingaddress explained	admin	fr	Ceci modifie l'attribut <b><i>-mailForwardingAddress-</i></b> (adresse de routage de messagerie) du schéma QMAIL. En cas d'utilisation de cette valeur, elle ne peut être vide.
+authentication / accounts	admin	fr	Authentification / Comptes
+auto create account records for authenticated users	admin	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés
+back to the list	admin	fr	retour à la liste
+bi-dir passthrough	admin	fr	passage bidirectionnel
+bi-directional	admin	fr	bidirectionnel
+birthday	common	fr	Anniversaire
+birthdays	common	fr	Anniversaires
+blank	addressbook	fr	Blanc
+bottom	admin	fr	bas
+business	common	fr	Bureau
+business address	addressbook	fr	Adresse (bureau)
+business city	addressbook	fr	Ville (bureau)
+business country	addressbook	fr	Pays (bureau)
+business email	addressbook	fr	EMail (bureau)
+business fax	addressbook	fr	Fax (bureau)
+business phone	addressbook	fr	Téléphone (bureau)
+business state	addressbook	fr	Région (bureau)
+business street	addressbook	fr	Rue (bureau)
+business zip code	addressbook	fr	Code postal (bureau)
+calculate next run	admin	fr	Calculer la prochaine exécution
+calendar fields:	addressbook	fr	Champ calendrier:
+calendar uri	addressbook	fr	URI du calendrier
+can be changed via setup >> configuration	admin	fr	Peut être modifié via Setup >> Configuration
+can change password	admin	fr	Peut modifier son mot de passe
+cancel testjob!	admin	fr	Annuler le Travail de test!
+car phone	addressbook	fr	Téléphone voiture
+categories list	admin	fr	Liste des catégories
+categories, notes, ...	addressbook	fr	Catégories, Notes, ...
+category %1 has been saved !	admin	fr	La catégorie %1 a été enregistrée !
+category list	admin	fr	Liste de catégories
+cell phone	addressbook	fr	Téléphone portable
+change acl rights	admin	fr	modifier les droits d'accès (ACL)
+change all organisation members	addressbook	fr	Modifier tous les membres de l'organisation
+change config settings	admin	fr	Modifier les paramètres de configuration
+change main screen message	admin	fr	Changer le message de l'écran principal
+charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation CSV
+charset of file	addressbook	fr	Jeu de caractères du fichier
+check all	addressbook	fr	Vérifier tout
+check ip address of all sessions	admin	fr	Vérifier l'adresse IP de toutes les sessions
+check items to <b>%1</b> to %2 for %3	admin	fr	Vérifier les objets vers <b>%1</b> à %2 pour %3
+choose an icon for this contact type	admin	fr	Choisisser une icône pour ce type de contact
+choose owner of imported data	addressbook	fr	Choisisser le propriétaire de données importées
+choose seperator and charset	addressbook	fr	Choisisser le séparateur et l'encodage
+chosse an etemplate for this contact type	admin	fr	Choisissez un eTemplate pour ce type de contact
+city	common	fr	Ville
+click to select a color	admin	fr	Cliquez pour sélectionner une couleur
+color	admin	fr	Couleur
+company	common	fr	Société
+company name	addressbook	fr	Nom de la société
+configuration	common	fr	Configuration
+contact	common	fr	Contact
+contact application	admin	fr	Application contact
+contact copied	addressbook	fr	Contact copié
+contact deleted	addressbook	fr	Contact supprimé
+contact id	addressbook	fr	ID (identificateur) du contact
+contact repository	admin	fr	Dépôt de contacts
+contact saved	addressbook	fr	Contact enregistré
+contact settings	admin	fr	Paramètres du contact
+contacts and account contact-data to ldap	admin	fr	contacts et dépôt des données des comptes vers LDAP
+contacts to ldap	admin	fr	contacts vers LDAP
+contacts to ldap, account contact-data to sql	admin	fr	contacts vers LDAP, dépôt des données des comptes vers SQL
+contains	addressbook	fr	contient
+copied by %1, from record #%2.	addressbook	fr	Copié par %1 depuis l'enregistrement n°%2.
+copy a contact and edit the copy	addressbook	fr	Copier un contact et modifier la copie
+country	common	fr	Pays
+country selection	admin	fr	Sélection du pays
+create group	admin	fr	Créer un groupe
+create new links	addressbook	fr	Créer de nouveaux liens
+created	addressbook	fr	Créé(s)
+creates a new field	admin	fr	Créer un nouveau champ
+credit	addressbook	fr	Crédits
+crontab only (recomended)	admin	fr	crontab seulement (recommandé)
+csv-fieldname	addressbook	fr	CSV - Nom du champ
+csv-filename	addressbook	fr	CSV - Nom du fichier
+custom	addressbook	fr	Personnalisé
+custom fields	addressbook	fr	Champs personnalisés
+cyrus imap server	admin	fr	Serveur Cyrus IMAP
+data	admin	fr	Données
+day	admin	fr	Jour
+day of week<br>(0-6, 0=sun)	admin	fr	Jour de la semaine<br>(0-6, 0=Dim)
+db backup and restore	admin	fr	Sauvegarde et restauration de la BDD
+debug output in browser	addressbook	fr	Deboguer la sortie dans le navigateur
+default	addressbook	fr	Défaut
+default addressbook for adding contacts	addressbook	fr	Carnet d'adresses par défaut pour l'ajout de contacts
+default file system space per user	admin	fr	Espace disque par utilisateur (par défaut)
+default file system space per user/group ?	admin	fr	Espace disque par utilisateur/groupe (par défaut) ?
+default filter	addressbook	fr	Filtre par défaut
+deinstall crontab	admin	fr	Désinstaller le crontab
+delete a single entry by passing the id.	addressbook	fr	Effacer une seule entrée en passant l'ID.
+delete account	admin	fr	Supprimer le compte
+delete all records	admin	fr	Supprimer tous les enregistrements
+delete application	admin	fr	Supprimer l'application
+delete category	admin	fr	Supprimer catégorie
+delete group	admin	fr	Supprimer groupe
+delete peer server	admin	fr	Supprimer serveur Pair
+delete selected distribution list!	addressbook	fr	Effacer la liste de distribution sélectionnée!
+delete the category	admin	fr	Supprimer la catégorie
+delete the group	admin	fr	Supprimer le groupe
+delete this category	admin	fr	Supprimer cette catégorie
+delete this contact	addressbook	fr	Supprimer ce contact
+delete this group	admin	fr	Supprimer ce groupe
+delete this organisation including all its contacts	addressbook	fr	Détruire cette organisation et tous ses contacts
+delete this user	admin	fr	Supprimer cet utilisateur
+deleted	addressbook	fr	supprimé
+deletes the photo	addressbook	fr	Supprime la photo
+deletes this field	admin	fr	Supprimer ce champ
+deliver extern	admin	fr	Envoi externe
+deny access to access log	admin	fr	Refuser l'accès au log d'accès
+deny access to application registery	admin	fr	Refuser l'accès à l'enregistrement d'applications
+deny access to applications	admin	fr	Refuser l'accès aux applications
+deny access to asynchronous timed services	admin	fr	Refuser l'accès aux services asynchrones
+deny access to current sessions	admin	fr	Refuser l'accès aux sessions en cours
+deny access to db backup and restore	admin	fr	Refuser l'accès à  Sauvegarde et restauration de la BDD
+deny access to error log	admin	fr	Refuser l'accès à la log d'erreurs
+deny access to global categories	admin	fr	Refuser l'accès aux catégories globales
+deny access to groups	admin	fr	Refuser l'accès aux groupes
+deny access to mainscreen message	admin	fr	Refuser l'accès au message de la page principale
+deny access to peer servers	admin	fr	Refuser l'accès aux serveurs pairs
+deny access to phpinfo	admin	fr	Refuser l'accès à phpinfo
+deny access to site configuration	admin	fr	Refuser  l'accès à la configuration du site
+deny access to user accounts	admin	fr	Refuser l'accès aux comptes utilisateurs
+deny all users access to grant other users access to their entries ?	admin	fr	Les utilisateurs ne peuvent permettre aux autres l'accès à leurs données ?
+department	common	fr	Département
+departments	addressbook	fr	départements
+description can not exceed 255 characters in length !	admin	fr	La description ne peut dépasser 255 caractères de long !
+determines the order the fields are displayed	admin	fr	Détermine l'ordre d'afficahge des champs
+disable "auto completion" of the login form	admin	fr	Désactiver "remplissage auto" dans le formulaire de login
+disable wysiwyg-editor	admin	fr	désactiver l'éditeur WYSIWYG
+disabled (not recomended)	admin	fr	désactivé (pas recommandé)
+display	admin	fr	Afficher
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	fr	Affiche un rappel pour les anniversaires sur la page d'accueil (page qui s'affiche quand vous entrez dans eGroupWare ou quand vous cliquez sur l'icône Accueil)
+distribution list deleted	addressbook	fr	La liste de distribution est supprimée
+distribution lists	addressbook	fr	Listes de distribution
+do not delete the category and return back to the list	admin	fr	Ne PAS supprimer la catégorie et retourner à la liste
+do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi supprimer toutes les sous-catégories globales ?
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	fr	Voulez vous un carnet d'adresse privé qui ne pourra être vu par les autres utilisateurs sauf si vous modifiez les autorisations ?
+do you want to delete all global subcategories ?	admin	fr	Voulez-vous supprimer toutes les sous-catégories globales ?
+do you want to move all global subcategories one level down ?	admin	fr	Voulez-vous déplacer toutes les sous-catégories globales un niveau plus bas ?
+do your really want to delete this contact?	addressbook	fr	Voulez vous vraiment supprimer ce contact?
+doesn't matter	addressbook	fr	sans importance
+domestic	addressbook	fr	Domestique
+don't hide empty columns	addressbook	fr	Ne pas cacher les colonnes vides
+download	addressbook	fr	Télécharger
+download export file (uncheck to debug output in browser)	addressbook	fr	Télécharger le fichier d'exportation (Décocher pour deboguer la sortie dans le navigateur)
+download this contact as vcard file	addressbook	fr	Téléchargez ce contact comme un fichier vCard
+each value is a line like <id>[=<label>]	admin	fr	Chaque valeur est une ligne comme <id>[=<label>]
+each value is a line like id[=label]	admin	fr	Chaque valeur est une ligne comme id[=<label>]
+edit account	admin	fr	Modifier le compte
+edit application	admin	fr	Modifier l'application
+edit custom field	addressbook	fr	Editer le champ personnalisé
+edit custom fields	admin	fr	Editer les champs personnalisés
+edit email settings	admin	fr	paramétrage email
+edit extra account-data in the addressbook	admin	fr	Editer les données supplémentaires dans le carnet d'adresse
+edit global category	admin	fr	Modifier la catégorie globale
+edit global category for %1	admin	fr	Modifier la catégorie globale pour %1
+edit group	admin	fr	Modifier le groupe
+edit group acl's	admin	fr	modifier les autorisations d'accès du groupe (ACL)
+edit login screen message	admin	fr	Modifier le message de l'écran de connexion
+edit main screen message	admin	fr	Modifier le message de l'écran principal
+edit peer server	admin	fr	Modifier le Serveur Pair
+edit phonenumbers -	addressbook	fr	Editer les numéros de téléphone -
+edit table format	admin	fr	Modifier le format de la table
+edit this category	admin	fr	Modifier cette catégorie
+edit this group	admin	fr	Modifier ce groupe
+edit this user	admin	fr	Modifier cet utilisateur
+edit user	admin	fr	Modifier l'utilisateur
+edit user account	admin	fr	Modifier le compte de l'utilisateur
+email & internet	addressbook	fr	Email & Internet
+email account active	admin	fr	compte de messagerie actif
+email address	admin	fr	adresse email
+empty for all	addressbook	fr	vide pour tous
+enable an extra private addressbook	addressbook	fr	Activer un carnet d'adresses privé supplémentaire
+enable debug-messages	admin	fr	Activer les messages de déboguage
+enable the soap service	admin	fr	Activer le service soap
+enable the xmlrpc service	admin	fr	Activer le service xmlrp
+enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
+enabled - popup window	admin	fr	Activé - Fenêtre popup
+enter a description for the category	admin	fr	Entrez une description pour la catégorie
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	fr	Entrez un texte au hasard pour le <br>chiffrement de l'app_session (nécessite mcrypt)
+enter the background color for the login page	admin	fr	Entrez la couleur de fond pour la page de connexion
+enter the background color for the site title	admin	fr	Entrez la couleur de fond pour le titre du site
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, c:\temp
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, c:\temp
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.<br>Exemples: /files, e:\files
+enter the full path for users and group files.<br>examples: /files, e:files	admin	fr	Entrez le chemin complet pour les fichiers de utilisateurs et groupes.<br>Exemples: /files, e:\files
+enter the hostname of the machine on which this server is running	admin	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrez l'emplacement de l'URL eGroupWare.<br>Exemple: http://www.domaine.com/egroupware   ou   /egroupware<br><b>Pas de division (/) à la fin</b>
+enter the path to the exported file here	addressbook	fr	Entrer ici le chemin vers le fichier exporté
+enter the search string. to show all entries, empty this field and press the submit button again	admin	fr	Entrez la chaîne de recherche. Pour montrer toutes les entrées, videz ce champ et recliquez sur le bouton SOUMETTRE
+enter the site password for peer servers	admin	fr	Entrez le mot de passe du site pour les serveurs pairs
+enter the site username for peer servers	admin	fr	Entrez le nom d'utilisateur du site pour les serveurs pairs
+enter the title for your site	admin	fr	Entrez le titre pour votre site
+enter the title of your logo	admin	fr	Entrez le titre de votre logo
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	fr	Entrez l'URL ou le fichier pour votre logo (dans phpgwapi/templates/default/images)
+enter the url where your logo should link to	admin	fr	Entrez l'URL vers laquelle votre logo doit rediriger
+enter your default ftp server	admin	fr	Entrez votre serveur FTP par défaut
+enter your default mail domain ( from: user@domain )	admin	fr	Entrez votre domaine de messagerie par défaut (De: utilisateur@domaine)
+enter your http proxy server	admin	fr	Entrez votre serveur proxy HTTP
+enter your http proxy server port	admin	fr	Entrez le port de votre serveur proxy HTTP
+enter your smtp server hostname or ip address	admin	fr	Entrez votre nom de serveur SMTP ou adresse IP
+enter your smtp server port	admin	fr	Entrez le port de votre serveur SMTP
+error canceling timer, maybe there's none set !!!	admin	fr	Erreur en annulant le timer, peut-être qu'il n'y en a aucun de défini !!!
+error deleting the contact !!!	addressbook	fr	Erreur lors de la suppresion du contact
+error saving the contact !!!	addressbook	fr	Erreur lors de la sauvegarde du contact
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	fr	Erreur en créant le timer, erreur de syntaxe ou peut-être il y en a déjà un qui tourne !!!
+error! no appname found	admin	fr	Erreur : pas de nom d'application trouvé !
+error: %1 not found or other error !!!	admin	fr	Erreur: %1 introuvable ou autre erreur !!!
+existing links	addressbook	fr	Liens existants
+expires	admin	fr	Expire
+explanation of ldapman	admin	fr	Ce module a été testé avec POSTFIX, LDAP, Courier-IMAP et nécessite les schémas CORE et QMAIL (OID7914). Des informations supplémentaires pour configurer ce système sont disponibles dans le fichier README.ldap du répertoire ADMIN.
+export	addressbook	fr	Exporter
+export as csv	addressbook	fr	Exporter au format CSV
+export as vcard	addressbook	fr	Export au format VCard
+export contacts	addressbook	fr	Exporter les contacts
+export file name	addressbook	fr	Nom du fichier d'exportation
+export from addressbook	addressbook	fr	Exporter depuis le carnet d'adresses
+export selection	addressbook	fr	Sélection pour l'exportation
+exported	addressbook	fr	exporté
+extra	addressbook	fr	Supplément
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fr	Echec du changement des membres de l'organisation %1 (droits insufisants).
+fallback (after each pageview)	admin	fr	retour au défaut (après chaque prévisualisation)
+fax	addressbook	fr	Fax
+fax number	common	fr	Numéro de Fax
+field %1 has been added !	addressbook	fr	Le champ %1 a été ajouté !
+field %1 has been updated !	addressbook	fr	Le champ %1 a été mis à jour !
+field '%1' already exists !!!	admin	fr	Le Champ '%1'  existe déjà !
+field name	addressbook	fr	Nom du champ
+fields for the csv export	addressbook	fr	Champ pour l'exportation au format CSV
+fields the user is allowed to edit himself	admin	fr	Champs que l'utilisateur peut modifier lui-même
+fields to show in address list	addressbook	fr	Champs à afficher dans la liste des adresses
+fieldseparator	addressbook	fr	Séparateur de champ
+file space	admin	fr	Espace fichiers
+file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
+find and register all application hooks	admin	fr	Trouver et inscrire tous les dépendances
+for read only ldap	admin	fr	pour un LDAP en lecture seule
+for the times above	admin	fr	pour le timing ci-dessus
+for the times below (empty values count as '*', all empty = every minute)	admin	fr	pour le timing ci-dessous (valeurs vides comptent comme '*', tout vide = chaque minute)
+force selectbox	admin	fr	Forcer la boite de sélection
+forward also to	admin	fr	Transférer également à
+forward emails to	admin	fr	Transférer le emails à
+forward only	admin	fr	Transférer seulement à
+freebusy uri	addressbook	fr	Freebusy URI
+full name	addressbook	fr	Nom complet
+general	addressbook	fr	Général
+geo	addressbook	fr	GEO
+global categories	addressbook	fr	Catégorie globale
+grant addressbook access	common	fr	Donner l'accès au Carnet d'adresses
+group %1	addressbook	fr	Groupe %1
+group ?	admin	fr	Groupe ?
+group has been added	common	fr	Le groupe a été ajouté
+group has been deleted	common	fr	Le groupe a été effacé
+group has been updated	common	fr	Le groupe a été mis à jour
+group list	admin	fr	Liste des groupes
+group manager	admin	fr	Gestionnaire de groupe
+group name	admin	fr	Nom du groupe
+hide php information	admin	fr	Cacher les informations sur php
+home address	addressbook	fr	Adresse (domicile)
+home address, birthday, ...	addressbook	fr	Adresse (domicile), Anniversaire, ...
+home city	addressbook	fr	Ville (domicile)
+home country	addressbook	fr	Pays (domicile)
+home directory	admin	fr	Répertoire maison
+home email	addressbook	fr	EMail (domicile)
+home phone	addressbook	fr	Téléphone (domicile)
+home state	addressbook	fr	Région (domicile)
+home street	addressbook	fr	Rue (domicile)
+home zip code	addressbook	fr	Code postal (domicile)
+host information	admin	fr	Informations sur l'hôte
+hour<br>(0-23)	admin	fr	Heure<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fr	Pendant combien de jours les entrées doivent-elles rester dans la log d'accès, avant d'être effacées (90 par défaut) ?
+how many minutes should an account or ip be blocked (default 30) ?	admin	fr	Pendant combien de minutes un compte ou une adresse IP doit-il(elle) être bloqué(e) (30 par défaut) ?
+how should email addresses for new users be constructed?	admin	fr	Comment former les adresses de messagerie des nouveaux utilisateurs ?
+icon	addressbook	fr	Icône
+idle	admin	fr	Disponible
+if accounts are already in ldap	admin	fr	si les comptes sont déjà dans LDAP
+if no acl records for user or any group the user is a member of	admin	fr	Si pas d'enregistrements dans les droits d'accès pour l'utilisateur ou n'importe quel groupe, l'utilisateur est membre de
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire maison et shell de connexion?
+import	addressbook	fr	Importer
+import contacts	addressbook	fr	Importer les contacts
+import csv-file into addressbook	addressbook	fr	Importer le fichier CSV dans le carnet d'adresses
+import file	addressbook	fr	Importer le fichier
+import from	addressbook	fr	Importer depuis
+import from ldif, csv, or vcard	addressbook	fr	Importer depuis LDIF, CSV ou VCard
+import from outlook	addressbook	fr	Importer depuis Outlook
+import multiple vcard	addressbook	fr	Importation VCard Multiple
+import next set	addressbook	fr	Importer l'élément suivant
+import_instructions	addressbook	fr	Dans Netscape, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules,  dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format VCard.
+in %1 days (%2) is %3's birthday.	addressbook	fr	Dans %1 jours (%2) c'est l'anniversaire de %3.
+in mbyte	admin	fr	en Moctet
+inbound	admin	fr	Entrant
+income	addressbook	fr	Revenus
+initial	admin	fr	Initial
+install crontab	admin	fr	Installer le crontab
+installed applications	common	fr	Applications installées
+installed crontab	admin	fr	Crontab installée
+insufficent rights to delete this list!	addressbook	fr	Autorisations insuffisantes pour supprimer cette liste!
+interface	admin	fr	Interface
+international	addressbook	fr	International
+ip	admin	fr	IP
+jobs	admin	fr	Travaux
+kill	admin	fr	Tuer
+kill session	admin	fr	Tuer la session
+label	addressbook	fr	Label
+last %1 logins	admin	fr	Dernières %1 connexions
+last %1 logins for %2	admin	fr	Dernières %1 connexions pour %2
+last login	admin	fr	Dernière connexion
+last login from	admin	fr	Dernière connexion depuis
+last modified	addressbook	fr	Dernière modification
+last modified by	addressbook	fr	Dernière modification par
+last time read	admin	fr	Dernière lecture
+ldap accounts context	admin	fr	Contexte comptes LDAP
+ldap context for contacts	admin	fr	Contexte LDAP pour les contacts
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	fr	Préfixe par défaut des répertoires d'accueil LDAP (p.ex. /home pour /home/utilisateur)
+ldap default shell (e.g. /bin/bash)	admin	fr	Shell par défaut LDAP (p.ex. /bin/bash)
+ldap encryption type	admin	fr	Type de chiffrement LDAP
+ldap groups context	admin	fr	Contexte des groupes LDAP
+ldap host	admin	fr	Hôte LDAP
+ldap host for contacts	admin	fr	Hôte LDAP pour les contacts
+ldap root password	admin	fr	Mot de passe root LDAP
+ldap rootdn	admin	fr	Rootdn LDAP
+ldap settings for contacts	admin	fr	configuration LDAP pour les contacts
+ldif	addressbook	fr	LDIF
+leave empty for no quota	admin	fr	Laisser vide pour ne pas avoir de quota
+leave the category untouched and return back to the list	admin	fr	Laisser la catégorie telle quelle et retourner à la liste
+leave the group untouched and return back to the list	admin	fr	Laisser le groupe tel quel et retourner à la liste
+leaves without saveing	admin	fr	Quitter sans enregistrer
+length<br>rows	admin	fr	Longueur<br>lignes
+line 2	addressbook	fr	Ligne 2
+link title for contacts show	addressbook	fr	Le titre du lien pour les contacts montre
+links	addressbook	fr	Liens
+list all categories	addressbook	fr	Lister toutes les catégories
+list all customfields	addressbook	fr	Lister tous les champs spécifiques
+list config settings	admin	fr	Afficher les paramètres de configuration
+list created	addressbook	fr	Liste créée
+list creation failed, no rights!	addressbook	fr	La création de la liste a échoué, aucune autorisation!
+list current sessions	admin	fr	Afficher les sessions en cours
+list of current users	admin	fr	liste des utilisateurs en cours
+load vcard	addressbook	fr	Charger VCard
+locations	addressbook	fr	localisations
+login history	common	fr	Historique de connexion
+login message	admin	fr	Message d'accueil
+login screen	admin	fr	Ecran de connexion
+login shell	admin	fr	Shell de connexion
+login time	admin	fr	Heure de connexion
+loginid	admin	fr	Identifiant de l'utilisateur
+mail settings	admin	fr	Réglages mail
+main email-address	admin	fr	Adresse email principale
+main screen message	admin	fr	Message de l'écran principal
+manager	admin	fr	Gestionnaire
+mark records as private	addressbook	fr	Marquer l´enregistrement comme privé
+max length of the input [, length of the inputfield (optional)]	admin	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
+maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.e. 65535 ou 1000000)
+maximum entries in click path history	admin	fr	Nombre maximal d'entrées dans l'historique des clics sur les liens
+merge into first or account, deletes all other!	addressbook	fr	Fusion avec le premier compte, efface tous les autres!
+merged	addressbook	fr	fusionné
+message has been updated	admin	fr	le message a été mis à jour
+message phone	addressbook	fr	Message téléphonique
+method	admin	fr	Méthode
+middle name	addressbook	fr	Deuxième prénom
+migration finished	addressbook	fr	Migration terminée
+migration to ldap	admin	fr	Migration vers LDAP
+minimum account id (e.g. 500 or 100, etc.)	admin	fr	Numéro de compte minimum (p.e. 500 ou 100, etc.)
+minute	admin	fr	Minute
+mobile	addressbook	fr	Portable
+mobile phone	addressbook	fr	Téléphone portable
+mode	admin	fr	Mode
+modem phone	addressbook	fr	Téléphone modem
+month	admin	fr	Mois
+more ...	addressbook	fr	Plus ...
+move to addressbook:	addressbook	fr	Aller vers le carnet d'adresses
+moved	addressbook	fr	déplacé(s)
+multiple vcard	addressbook	fr	VCard multiples
+name for the distribution list	addressbook	fr	Nom de la liste de distribution
+name must not be empty !!!	admin	fr	Le nom ne doit pas être vide !
+name, address	addressbook	fr	Nom, Adresse
+new group name	admin	fr	Nouveau nom de groupe
+new name	admin	fr	Nouveau nom
+new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour aucun changement ]
+next run	admin	fr	Prochain démarrage
+no algorithms available	admin	fr	Pas d'algorithme disponible
+no alternate email address	admin	fr	Pas d'adresse email alternative
+no jobs in the database !!!	admin	fr	Pas de travaux dans la base de données !!!
+no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur
+no matches found	admin	fr	Aucune occurrence trouvée
+no modes available	admin	fr	Pas de modes disponibles
+no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes
+no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs
+no permission to create groups	admin	fr	Aucune permission pour créer des groupes
+no vcard	addressbook	fr	Pas de VCard
+note: ssl available only if php is compiled with curl support	admin	fr	Note: SSL disponible si PHP est compilé avec le support de CURL
+number	addressbook	fr	Numéro
+number of records to read (%1)	addressbook	fr	Nombre d'enregistrements à lire (%1)
+number of row for a multiline inputfield or line of a multi-select-box	admin	fr	Nombre de lignes pour un champ multiligne ou pour une boîte de sélection multiple.
+options for type	admin	fr	Options pour le type
+order	admin	fr	Ordre
+organisation	addressbook	fr	organisation
+organisations	addressbook	fr	Organisations
+organisations by departments	addressbook	fr	Organisations par département
+organisations by location	addressbook	fr	Organisations par localisation
+other number	addressbook	fr	Autre Numéro
+other phone	addressbook	fr	Autre Téléphone
+outbound	admin	fr	sortant
+own sorting	addressbook	fr	tri personnalisé
+pager	common	fr	Pager
+parcel	addressbook	fr	Paquet
+passthrough	admin	fr	passage
+password for smtp-authentication	admin	fr	Mot de passe pour l'authentification SMTP
+path information	admin	fr	Information sur le chemin
+peer server list	admin	fr	Liste des serveurs (peer servers)
+peer servers	admin	fr	Serveurs pairs
+percent of users that logged out	admin	fr	Pourcentage des utilisateurs qui se sont déconnectés
+percent this user has logged out	admin	fr	Pourcentage de déconnexion de cet utilisateur
+permission denied	admin	fr	Permission refusée
+permission denied !!!	addressbook	fr	Autorisation refusée !!!
+permissions	admin	fr	Permissions
+permissions this group has	admin	fr	Permissions attribuées à ce groupe
+phone number	common	fr	Numéro de téléphone
+phone numbers	common	fr	Numéros de téléphone
+photo	addressbook	fr	Photo
+phpinfo	admin	fr	Informations PHP
+please enter a name	admin	fr	SVP entrez un nom
+please enter a name for that field !	addressbook	fr	SVP entrez un nom pour ce champ !
+please enter a name for that server !	admin	fr	SVP entrez un nom pour ce serveur !
+please run setup to become current	admin	fr	SVP exécutez setup pour vous mettre à jour
+please select	admin	fr	SVP choisissez
+please select only one category	addressbook	fr	Sélectionnez une seule catégorie !
+postal	common	fr	Postal
+postfix with ldap	admin	fr	Postfix avec support LDAP
+pref	addressbook	fr	pref
+preferences	admin	fr	Préférences
+preferred phone	addressbook	fr	Numéro de téléphone préférentiel
+prefix	addressbook	fr	Préfixe
+primary group	admin	fr	groupe initial
+public key	addressbook	fr	Clé publique
+publish into groups:	addressbook	fr	Publié dans les groupes:
+qmaildotmode	admin	fr	qmaildotmode
+quota settings	admin	fr	Paramétrage des quotas
+quota size in mbyte	admin	fr	Taille des quota en Mo
+re-enter password	admin	fr	Entrez le mot de passe à nouveau
+read a list / search for entries.	addressbook	fr	Lire une liste / rechercher des entrées.
+read a list of entries.	addressbook	fr	Lire une liste d'entrées.
+read a single entry by passing the id and fieldlist.	addressbook	fr	Lire une seule entrée en passant l'ID et la liste des champs.
+read only	addressbook	fr	lecture seule
+read this list of methods.	admin	fr	Lisez cette liste de méthodes.
+record access	addressbook	fr	Enregistrer l'accès
+record owner	addressbook	fr	Enregistrer le propriétaire
+register application hooks	admin	fr	Inscrire les dépendances
+remove	admin	fr	Supprimer
+remove all users from this group	admin	fr	Retirer tous les utilisateurs de ce groupe
+remove all users from this group ?	admin	fr	Retirer tous les utilisateurs de ce groupe ?
+remove selected contacts from distribution list	addressbook	fr	Retirer les contacts sélectionnés de la liste de distribution
+removed from distribution list	addressbook	fr	retiré de la liste de distribution
+return to admin mainscreen	admin	fr	Revenir à l'écran principal d'administration
+return to view account	admin	fr	Revenir à l'affichage du compte
+role	addressbook	fr	Rôle
+room	addressbook	fr	Salle
+route all mails to	admin	fr	Livrer tous les emails à
+run asynchronous services	admin	fr	Exécuter les Services asynchrones
+save the category	admin	fr	Enregistrer la catégorie
+save the category and return back to the list	admin	fr	Enregistrer la catégorie et retourner à la liste
+saves the changes made and leaves	admin	fr	Enregistrer les modifications et quitter
+search accounts	admin	fr	Chercher des comptes
+search categories	admin	fr	Chercher des catégories
+search for '%1'	addressbook	fr	Recherche de '%1'
+search groups	admin	fr	Chercher des groupes
+search peer servers	admin	fr	Chercher des serveurs Pairs
+security	admin	fr	Sécurité
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	fr	Sélectionner une photo jpeg en mode portrait. Elle sera reformatée en 60 pixels de largeur.
+select a view	addressbook	fr	Sélectionnez une vue
+select addressbook type	addressbook	fr	Sélectionnez un type de carnet d'adresse
+select all	addressbook	fr	Sélectionner tout
+select an action or addressbook to move to	addressbook	fr	Sélectionnez une action ou un carnet d'adresses à déplacer
+select group managers	admin	fr	Sélectionner les gestionnaires de groupe
+select migration type	admin	fr	Sélectionnez un type de migration
+select multiple contacts for a further action	addressbook	fr	Sélectionner plusieurs contacts pour une même action
+select permissions this group will have	admin	fr	Choisissez les permissions que ce groupe va avoir
+select phone number as prefered way of contact	addressbook	fr	sélectionner le téléphone comme moyen de contact préféré
+select the parent category. if this is a main category select no category	admin	fr	Choisissez la catégorie parente. Si ceci est une catégorie principale choisissez PAS DE CATEGORIE
+select the type of conversion	addressbook	fr	Sélectionner le type de convertion
+select the type of conversion:	addressbook	fr	Sélectionner le type de convertion:
+select users for inclusion	admin	fr	Choisissez les utilisateurs à inclure
+select where you want to store / retrieve contacts	admin	fr	Sélectionnez où vous voulez stocker / récupérer les contacts
+select where you want to store/retrieve filesystem information	admin	fr	Choisissez où vous voulez stocker/récupérer les informations sur les systèmes de fichiers
+select where you want to store/retrieve user accounts	admin	fr	Choisissez où vous voulez stocker/récupérer les comptes utilisateurs
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fr	Choisissez à quel endroit cette application devra apparaître dans la barre de navigation, du plus bas (ou à gauche) au plus haut (ou à droite)
+selectbox	admin	fr	Boite de sélection
+selected contacts	addressbook	fr	contacts choisis
+server %1 has been updated	admin	fr	Le serveur %1 a été mis à jour
+server list	admin	fr	Liste de serveurs
+server password	admin	fr	Mot de passe du serveur
+server type(mode)	admin	fr	Type de serveur (mode)
+server url	admin	fr	URL du serveur
+server username	admin	fr	Nom d'utilisateur du serveur
+set preference values.	admin	fr	Régler les valeurs des préférences.
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	fr	Est-ce que les colonnes photo et adresse privée doivent toujours être affichés, même s'ils sont vides.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	fr	Est-ce que la page de login doit inclure une zone de sélection linguistique (utile aussi pour les sites de démonstration)
+show	addressbook	fr	Montre
+show 'powered by' logo on	admin	fr	Montrer le logo 'motorisé par' sur
+show access log	admin	fr	Montrer les journaux d'accès
+show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
+show current action	admin	fr	Montrer les actions en cours
+show error log	admin	fr	Montrer le journal des erreurs
+show infolog entries for this organisation	addressbook	fr	Montre les entrées InfoLog pour cette organisation
+show phpinfo()	admin	fr	Montrer phpinfo()
+show session ip address	admin	fr	Montrer les adresses IP des sessions
+show the contacts of this organisation	addressbook	fr	Montrer les contacts de l'organisation
+site	admin	fr	Site
+site configuration	common	fr	Configuration du site
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	fr	Taille du popup (LxH, p.ex.400x300, si un popup doit être utilisé)
+soap	admin	fr	SOAP
+sorry, that group name has already been taken.	admin	fr	Désolé, ce nom de groupe existe déjà.
+sorry, the above users are still a member of the group %1	admin	fr	Désolé, les utilisateurs ci-dessus sont toujours membre du groupe %1
+sorry, the follow users are still a member of the group %1	admin	fr	Désolé, les utilisateurs suivants sont encore membres de ce groupe %1
+sort the entries	admin	fr	Trier les entrées
+ssl	admin	fr	ssl
+standard	admin	fr	standard
+standard imap server	admin	fr	Serveur IMAP standard
+standard pop3 server	admin	fr	Serveur POP3 standard
+standard smtp-server	admin	fr	Serveur SMTP standard
+start	admin	fr	Début
+start testjob!	admin	fr	Démarrer le Travail de test!
+startrecord	addressbook	fr	Enregistrement de départ
+state	common	fr	Région
+street	common	fr	Rue
+submit changes	admin	fr	Soumettre les changements
+submit the search string	admin	fr	Soumettre la chaîne de recherche
+subtype	admin	fr	Sous-type
+successfully imported %1 records into your addressbook.	addressbook	fr	%1 enregistrement(s) ont été enregistrés avec succès dans votre carnet d´adresses.
+suffix	addressbook	fr	Suffixe
+tel home	addressbook	fr	tel maison
+telephony integration	admin	fr	Intégration téléphonique
+template selection	admin	fr	Sélection du style
+test import (show importable records <u>only</u> in browser)	addressbook	fr	Tester l'import (montrer <u>seulement</u> les enregistrements importables dans le navigateur)
+text entry	admin	fr	Entrée de texte
+that application name already exists.	admin	fr	Ce nom d'application existe déjà.
+that application order must be a number.	admin	fr	Cet ordre d'application doit être un nombre.
+that field name has been used already !	addressbook	fr	Ce nom de champ a déjà été utilisé !
+that loginid has already been taken	admin	fr	Ce LoginID a déjà été pris
+that name has been used already	admin	fr	Ce nom a déjà été utilisé
+that server name has been used already !	admin	fr	Ce nom de serveur a déjà été utilisé !
+the api is current	admin	fr	L'API est à jour
+the api requires an upgrade	admin	fr	L'API nécessite une mise à jour
+the groups must include the primary group	admin	fr	Les groupes doivent inclure le groupe primaire
+the login and password can not be the same	admin	fr	Le login et le mot de passe ne peuvent être identiques
+the loginid can not be more then 8 characters	admin	fr	Le loginid ne peut pas être composé de plus de 8 caractères
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fr	Nom utilisé en interne (<= 20 caractères), le changer rendra certaines données inaccessibles.
+the testjob sends you a mail everytime it is called.	admin	fr	Le Travail de test vous envoie un mail chaque fois qu'il est appelé.
+the text displayed to the user	admin	fr	le texte montré à l'utilisateur
+the two passwords are not the same	admin	fr	Les deux mots de passe ne sont pas identiques
+the users bellow are still members of group %1	admin	fr	Les utilisateurs ci-dessous sont encore membres du groupe %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	fr	Il y a déjà un groupe portant ce nom. Les noms de comptes ne peuvent pas avoir le même nom qu'un nom de groupe
+they must be removed before you can continue	admin	fr	Ceux-ci doivent être retirés avant que vous ne puissiez continuer
+this application is current	admin	fr	Cette application est à jour
+this application requires an upgrade	admin	fr	Cette application nécessite une mise à jour
+this category is currently being used by applications as a parent category	admin	fr	Cette catégorie est actuellement utilisée par des applications comme une catégorie parente
+this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses.
+this person's last name was not in the address book.	addressbook	fr	Le nom de cette personne n'était pas dans le carnet d'adresses.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	fr	Expiration pour les données session de l'application en secondes (par défaut 86400 = 1 jour)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	fr	Expiration pour les sessions en secondes (par défaut 14400 = 4 heures)
+times	admin	fr	Heures
+timezone	addressbook	fr	Fuseau horaire
+to many might exceed your execution-time-limit	addressbook	fr	trop pourrait dépasser votre temps limite d'exécution
+today is %1's birthday!	common	fr	Aujourd'hui c'est l'anniversaire de %1 !
+tomorrow is %1's birthday.	common	fr	Demain c'est l'anniversaire de %1.
+top	admin	fr	Haut
+total records	admin	fr	Enregistrements totaux
+translation	addressbook	fr	Traduction
+trust level	admin	fr	Niveau de confiance
+trust relationship	admin	fr	Relation de confiance
+type	addressbook	fr	Type
+type '%1' already exists !!!	admin	fr	Le type '%1'  existe déjà !
+type of customfield	admin	fr	Type de champ personnalisé
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fr	Sous windows vous devez installer les services asynchrones %1manuellement%2  ou utiliser le mode "fallback". "Fallback" veut dire que les travaux ne sont vérifiés qu'après chaque affichage de page !!!
+update a single entry by passing the fields.	addressbook	fr	Mettre à jour une seule entrée en passant les champs.
+upload or delete the photo	addressbook	fr	Envoyez ou supprimez la photo
+use an extra category tab?	addressbook	fr	Utiliser un onglet supplémentaire pour la catégorie?
+use cookies to pass sessionid	admin	fr	Utiliser les cookies pour passer l'ID de session
+use country list	addressbook	fr	Utiliser la liste des pays
+use pure html compliant code (not fully working yet)	admin	fr	Utiliser du code HTML standard (ne fonctionne pas encore complètement)
+use setup for a full account-migration	admin	fr	utiliser le setup pour une migration de comptes complète
+use theme	admin	fr	Utiliser le thème
+used for links and for the own sorting of the list	addressbook	fr	utilisé pour les liens et le tri de la liste
+user accounts	admin	fr	Comptes utilisateurs
+user data	common	fr	Données utilisateurs
+user for smtp-authentication (leave it empty if no auth required)	admin	fr	Utilisateur pour l'authentification SMTP (laisser vide si pas requis)
+user groups	admin	fr	Groupes utilisateurs
+userdata	admin	fr	Données utilisateur
+users choice	admin	fr	Choix de l'utilisateur
+vcard	common	fr	VCard
+vcards require a first name entry.	addressbook	fr	Les VCards nécessitent une entrée prénom.
+vcards require a last name entry.	addressbook	fr	Les Vcards nécessitent une entrée nom de famille.
+view access log	admin	fr	Afficher le journal d'accès
+view account	admin	fr	Afficher le compte
+view category	admin	fr	Afficher la catégorie
+view error log	admin	fr	Afficher le journal d'erreurs
+view linked infolog entries	addressbook	fr	Afficher les entrées liées à InfoLog
+view sessions	admin	fr	Afficher les sessions
+view this user	admin	fr	Afficher cet utilisateur
+view user account	admin	fr	Afficher le compte utilisateur
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	ATTENTION!! LDAP est valide seulement si vous n'utilisez PAS les contacts pour le stockage des comptes!
+warning: all contacts found will be deleted!	addressbook	fr	AVERTISSEMENT:  Tous les contacts trouvés seront supprimés!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fr	Que devraient afficher les liens du carnet d'adresses dans les autres applications. Les valeurs vides ne seront pas prises en compte. Vous devez vous reconnecter si vous modifiez ce paramètre!
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	fr	Quel carnet d'adresses devra être sélectionné quand vous ajoutez un contact ET que vous n'avez pas d'autorisation pour le carnet d'adresses en cours.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'eGroupWare.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	fr	Quels champs doivent être exportés. Tous signifie que les champs personnalisés du carnet d'adresses sont inclus. Les adresses personnelles et professionelles contiennent seulement le nom la société et les adresses sélectionnées.
+who would you like to transfer all records owned by the deleted user to?	admin	fr	A qui voudriez-vous tranférer tous les enregistrements appartenant à l'utilisateur effacé?
+whole query	addressbook	fr	requête entière
+work phone	addressbook	fr	Téléphone (bureau)
+would you like egroupware to cache the egw info array ?	admin	fr	Voulez-vous qu'eGroupWare mette le tableau d'informations egw en cache ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	fr	Voulez-vous que eGroupWare vérifie les mises à jour<br>quand un administrateur se connecte ?
+would you like egroupware to check for new application versions when admins login ?	admin	fr	Voudriez-vous que eGroupWare vérifie s'il y a de nouvelles versions d'applications quand les administrateurs se connectent ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	fr	Voulez-vous automatiquement charger les nouveaux fichiers de langues (à la connexion) ?
+would you like to show each application's upgrade status ?	admin	fr	Voudriez-vous montrer l'état de mise à jour de chaque application ?
+write (update or add) a single entry by passing the fields.	addressbook	fr	Ecrivez (modifiez ou ajoutez) une entrée unique en passant les champs.
+xml-rpc	admin	fr	XML-RPC
+yes, for the next three days	addressbook	fr	Oui, pour les trois prochains jours
+yes, for the next two weeks	addressbook	fr	Oui, pour les deux prochaines semaines
+yes, for the next week	addressbook	fr	Oui, pour la semaine prochaine
+yes, for today and tomorrow	addressbook	fr	Oui, pour aujourd'hui et demain
+you are not permitted to delete contact %1	addressbook	fr	Vous n'êtes pas autorisés à supprimer le contact %1
+you are not permittet to delete this contact	addressbook	fr	Vous n'êtes pas autorisés à supprimer ce contact
+you are not permittet to edit this contact	addressbook	fr	Vous n'êtes pas autorisés à éditer ce contact
+you are not permittet to view this contact	addressbook	fr	Vous n'êtes pas autorisés à voir ce contact
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	fr	Vous ne pouvez utiliser LDAP comme dépôt de contacts que si les comptes sont aussi stockés dans LDAP!
+you have entered an invalid expiration date	admin	fr	Vous avez entré une date d'expiration invalide
+you have to enter a name, to create a new field!!!	admin	fr	Vous avez saisi un nom pour créer un nouveau champ!!!
+you have to enter a name, to create a new type!!!	admin	fr	Vous avez saisi un nom pour créer un nouveau type!!!
+you must add at least 1 permission or group to this account	admin	fr	Vous devez ajouter au moins 1 permission ou groupe à ce compte
+you must enter a group name.	admin	fr	Vous devez entrer un nom de groupe
+you must enter a lastname	admin	fr	Vous devez entrer un nom
+you must enter a loginid	admin	fr	Vous devez entrer un loginid
+you must enter an application name and title.	admin	fr	Vous devez entrer un nom d'application et un titre.
+you must enter an application name.	admin	fr	Vous devez entrer un nom d'application.
+you must enter an application title.	admin	fr	Vous devez entrer un titre d'application.
+you must select a file type	admin	fr	Vous devez choisir un type de fichier
+you must select a vcard. (*.vcf)	addressbook	fr	Vous devez choisir une vcard. (*.vcf)
+you must select at least 1 column to display	addressbook	fr	Vous devez choisir au moins 1 colonne à afficher
+you must select at least one group member.	admin	fr	Vous devez sélectionner au moins un membre de groupe.
+you need to select a distribution list	addressbook	fr	Vous devez choisir une liste de distribution
+you need to select some contacts first	addressbook	fr	Vous devez d'abord choisir les contacts
+you will need to remove the subcategories before you can delete this category	admin	fr	Vous allez devoir enlever les sous-catégories avant de pouvoir effacer cette catégorie !
+your session could not be verified.	admin	fr	Votre session n'a pas pu être vérifiée.
+zip code	common	fr	Code postal
+zip_note	addressbook	fr	<p><b>Note:</b> Le fichier peut être un fichier zip contenant une collection de fichiers .csv, .vcf ou .ldif. C´est pourquoi il est important de ne pas mélanger les types de fichiers lors de l'importation.

@@ -1,0 +1,99 @@
+address book	common	ja	アドレス帳
+address book - vcard in	addressbook	ja	アドレス帳 - VCard追加
+addressbook	common	ja	アドレス帳
+addressbook preferences	addressbook	ja	アドレス帳ユーザ設定
+addresses	common	ja	アドレス帳
+addvcard	addressbook	ja	VCard追加
+add a field	addressbook	ja	項目追加
+address book - view	addressbook	ja	アドレス帳 - 表示
+address line 2	addressbook	ja	町域２
+address line 3	addressbook	ja	町域３
+address type	addressbook	ja	アドレスタイプ
+alt. csv import	addressbook	ja	CSVインポート
+are you sure you want to delete this field?	addressbook	ja	この項目を削除してもよろしいですか。
+bbs phone	addressbook	ja	BBS電話
+birthday	common	ja	誕生日
+blank	addressbook	ja	空白
+business address type	addressbook	ja	アドレスタイプ
+business	common	ja	ビジネス
+business city	addressbook	ja	市区町村
+business country	addressbook	ja	国
+business email	addressbook	ja	電子メール
+business email type	addressbook	ja	電子メールタイプ
+business fax	addressbook	ja	FAX
+business phone	addressbook	ja	電話
+business state	addressbook	ja	都道府県
+business street	addressbook	ja	町域
+business zip code	addressbook	ja	郵便番号
+car phone	addressbook	ja	自動車電話
+cell phone	addressbook	ja	cell 電話
+city	common	ja	市区町村
+company	common	ja	会社
+company name	common	ja	会社名
+contact	common	ja	連絡先
+country	common	ja	国
+csv-filename	addressbook	ja	CSVファイル名
+custom fields	addressbook	ja	カスタム項目
+custom field	addressbook	ja	カスタム項目
+default filter	addressbook	ja	既定のフィルタ
+department	common	ja	部署
+edit field	addressbook	ja	カスタム項目訂正
+export contacts	addressbook	ja	エクスポート
+export file name	addressbook	ja	エクスポートファイル名
+export from addressbook	addressbook	ja	エクスポート（アドレス帳）
+fax	common	ja	Fax
+field list	addressbook	ja	項目一覧
+field name	addressbook	ja	項目名
+field %1 has been added !	addressbook	ja	項目 %1 を追加しました。
+field %1 has been updated !	addressbook	ja	項目 %1 を訂正しました。
+fields to show in address list	addressbook	ja	アドレスリストに表示する項目
+fieldseparator	addressbook	ja	項目の区切り
+geo	addressbook	ja	Geo
+grant addressbook access	common	ja	利用許可設定
+home address type	addressbook	ja	住所
+home city	addressbook	ja	市区町村
+home country	addressbook	ja	国
+home email	addressbook	ja	電子メール
+home email type	addressbook	ja	電子メールタイプ
+home phone	addressbook	ja	自宅TEL
+home state	addressbook	ja	都道府県
+home street	addressbook	ja	町域
+home zip code	addressbook	ja	郵便番号
+import contacts	addressbook	ja	インポート
+import csv-file into addressbook	addressbook	ja	CSVファイルからのインポート
+import file	addressbook	ja	インポート
+import from ldif, csv, or vcard	addressbook	ja	インポート（LDIF, CSV, VCard）
+import from outlook	addressbook	ja	インポート（Outlook）
+isdn phone	addressbook	ja	ISDN
+label	addressbook	ja	ラベル
+line 2	addressbook	ja	町域（２行目）
+message phone	addressbook	ja	メッセージ
+middle name	addressbook	ja	ミドルネーム
+mobile	addressbook	ja	携帯電話
+other number	addressbook	ja	その他番号
+pager	common	ja	ページャー
+parcel	addressbook	ja	区画
+phone numbers	common	ja	電話番号
+Please enter a name for that field!	addressbook	ja	項目名を入力して下さい。
+please set your preferences for this app	addressbook	ja	ユーザ設定を行って下さい。
+postal	common	ja	郵便
+prefix	addressbook	ja	プレフィックス
+public key	addressbook	ja	パブリックキー
+record access	addressbook	ja	アクセス権
+record owner	addressbook	ja	所有者
+show birthday reminders on main screen	addressbook	ja	メイン画面に誕生日情報を表示
+state	common	ja	都道府県
+street	common	ja	町域
+suffix	addressbook	ja	敬称
+that field name has been used already !	addressbook	ja	項目名は既に存在しています。
+this person's first name was not in the address book.	addressbook	ja	アドレス帳に名前がありません。
+today is %1's birthday!	common	ja	今日は %1 さんの誕生日です。
+tommorow is %1's birthday.	common	ja	明日は %1 さんの誕生日です。
+url	addressbook	ja	URL
+vcard	common	ja	VCard
+vcards require a first name entry.	addressbook	ja	VCard には、名前が必要です。
+video phone	addressbook	ja	ビデオ電話
+voice phone	addressbook	ja	電話
+work phone	addressbook	ja	勤務先TEL
+you must select at least 1 column to display	addressbook	ja	表示する項目を選択してください。
+zip code	common	ja	郵便番号

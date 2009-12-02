@@ -1,0 +1,206 @@
+%1 records imported	addressbook	fa	%1 رکورد وارد شد
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fa	تعداد %1  رکورد خوانده شد.(هنوز وارد نشده، شما می توانید بر گردید و آزمایش ورود را غیر فعال کنید)
+(e.g. 1969)	addressbook	fa	(مثلا: 1969)
+actions	addressbook	fa	اعمال
+add a single entry by passing the fields.	addressbook	fa	افزودن ورودی با ارسال فیلدها
+add custom field	addressbook	fa	افزودن فیلد سفارشی
+address book	common	fa	اطلاعات اشخاص
+address book - vcard in	addressbook	fa	مخاطبین - VCard در
+address book - view	addressbook	fa	اطلاعات اشخاص - نمایش
+address line 2	addressbook	fa	آدرس خط دوم
+address line 3	addressbook	fa	آدرس خط سوم
+address type	addressbook	fa	نوع آدرس
+addressbook	common	fa	اطلاعات اشخاص
+addressbook preferences	addressbook	fa	پیشفرض اطلاعات اشخاص
+addressbook-fieldname	addressbook	fa	اطلاعات اشخاص - نام فیلد
+addvcard	addressbook	fa	افزودن کارت ویزیت
+advanced search	addressbook	fa	جستجوی پیشرفته
+alt. csv import	addressbook	fa	وارد کردن CSV دیگر
+and	addressbook	fa	و
+are you shure you want to delete this contact?	addressbook	fa	آیا برای حذف این مخاطب مطمئنید؟
+are you sure you want to delete this field?	addressbook	fa	آیا برای حذف این فیلد مطمئنید؟
+attach	addressbook	fa	پیوست شود
+attach file	addressbook	fa	پیوست پرونده
+bbs phone	addressbook	fa	تلفن BBS
+birthday	common	fa	تاریخ تولد
+birthdays	common	fa	تاریخ تولد
+blank	addressbook	fa	خالی
+business	common	fa	کاری
+business address type	addressbook	fa	نوع نشانی کاری
+business city	addressbook	fa	شهر کاری
+business country	addressbook	fa	کشور کاری
+business email	addressbook	fa	رایانامه کاری
+business email type	addressbook	fa	نوع رایانامه کاری
+business fax	addressbook	fa	دورنگار کاری
+business phone	addressbook	fa	تلفن کاری
+business state	addressbook	fa	استان کاری
+business street	addressbook	fa	خیابان کاری
+business zip code	addressbook	fa	کدپستی کاری
+car phone	addressbook	fa	تلفن خودرو
+cell phone	addressbook	fa	تلفن همراه
+charset of file	addressbook	fa	UTF-8
+checkbox	addressbook	fa	جعبه بررسی
+choose an icon for this contact type	addressbook	fa	یک نمایه برای این نوع مخاطب انتخاب کنید
+chosse an etemplate for this contact type	addressbook	fa	یک قالب الکترونیکی برای این نوع مخاطب انتخاب کنید
+city	common	fa	شهر
+company	common	fa	شرکت/سازمان
+company name	common	fa	نام شرکت/سازمان
+configuration	common	fa	پیکربندی
+contact	common	fa	مخاطب
+contact application	admin	fa	برنامه مخاطب
+contact saved	addressbook	fa	مخاطب ضبط شد
+contact settings	admin	fa	تنظیمات مخاطب
+contains	addressbook	fa	شامل است
+copied by %1, from record #%2.	addressbook	fa	بوسیله %1 از رکورد #%2 نسخه برداری شد
+country	common	fa	کشور
+create new links	addressbook	fa	ایجاد پیوندهای جدید
+credit	addressbook	fa	اعتبار
+csv-fieldname	addressbook	fa	نام فیلد-csv
+csv-filename	addressbook	fa	نام پرونده - csv
+custom	addressbook	fa	سفارشی
+custom fields	addressbook	fa	فیلدهای سفارشی
+debug output in browser	addressbook	fa	نمایش خروجی اشکالزدائی در مرورگر
+default filter	addressbook	fa	صافی پیش فرض
+delete a single entry by passing the id.	addressbook	fa	حذف یک ورودی با ارسال شناسه
+department	common	fa	قسمت
+do your really want to delete this contact?	addressbook	fa	آیا واقعا شما می خواهید این مخاطب را حذف کنید؟
+doesn't matter	addressbook	fa	مهم نیست
+domestic	addressbook	fa	خانگی
+download	addressbook	fa	دریافت
+download export file (uncheck to debug output in browser)	addressbook	fa	دریافت پرونده صدور(غیر فعال کنید تا خروجی در مرورگر اشکالزدائی شود)
+download this contact as vcard file	addressbook	fa	این مخاطب را بعنوان پرونده کارت ویزیت دریافت کن
+edit custom field	addressbook	fa	ویرایش فیلد سفارشی
+edit custom fields	admin	fa	ویرایش فیلدهای سفارشی
+edit phonenumbers -	addressbook	fa	ویرایش شماره تلفن
+email & internet	addressbook	fa	اینترنت و رایانامه
+empty for all	addressbook	fa	خالی برای همه
+enter the path to the exported file here	addressbook	fa	مسیر را برای صدور پرونده در اینجا وارد کنید
+existing links	addressbook	fa	پیوندهای موجود
+export	addressbook	fa	صدور
+export contacts	addressbook	fa	صدور مخاطب
+export file name	addressbook	fa	نام پرونده صدور
+export from addressbook	addressbook	fa	صدور از دفتر نشانی
+extra	addressbook	fa	اضافی
+fax	addressbook	fa	فکس
+fax number	common	fa	شماره فکس
+field %1 has been added !	addressbook	fa	فیلد %1 اضافه شد
+field %1 has been updated !	addressbook	fa	فیلد %1 بهنگام شد
+field name	addressbook	fa	نام فیلد
+fields to show in address list	addressbook	fa	فیلدها برای نمایش در لیست نشانی
+fieldseparator	addressbook	fa	جدا کننده فیلد
+full name	addressbook	fa	نام کامل
+geo	addressbook	fa	نشانی جغرافیائی
+global categories	addressbook	fa	دسته های عمومی
+grant addressbook access	common	fa	اعطاء دسترسی دفتر نشانی
+haghighi	addressbook	fa	حقیقی
+hoghooghi	addressbook	fa	حقوقی
+home address type	addressbook	fa	نوع نشانی منزل
+home city	addressbook	fa	شهر منزل
+home country	addressbook	fa	کشور منزل
+home email	addressbook	fa	رایانامه منزل
+home email type	addressbook	fa	نوع رایانامه منزل
+home phone	addressbook	fa	تلفن منزل
+home state	addressbook	fa	استان منزل
+home street	addressbook	fa	خیابان منزل
+home zip code	addressbook	fa	کد پستی منزل
+icon	addressbook	fa	نمایه
+import	addressbook	fa	وارد کردن
+import contacts	addressbook	fa	وارد کردن مخاطب
+import csv-file into addressbook	addressbook	fa	وارد کردن پرونده CSV در دفتر نشانی
+import file	addressbook	fa	وارد کردن پرونده
+import from	addressbook	fa	وارد کردن از
+import from ldif, csv, or vcard	addressbook	fa	وارد کردن از LDIF, CSV, یا VCard
+import from outlook	addressbook	fa	وارد کردن از Outlook
+import multiple vcard	addressbook	fa	وارد کردن چند VCard
+import next set	addressbook	fa	وارد کردن سری بعدی
+import_instructions	addressbook	fa	مراحل وارد کردن
+income	addressbook	fa	ورودی
+international	addressbook	fa	بین المللی
+isdn phone	addressbook	fa	تلفن ISDN
+label	addressbook	fa	برچسب
+last modified	addressbook	fa	آخرین تغییرات
+line 2	addressbook	fa	خط ۲
+links	addressbook	fa	پیوندها
+list all categories	addressbook	fa	فهرست همه دسته ها
+list all customfields	addressbook	fa	فهرست همه فیلدهای سفارشی
+load vcard	addressbook	fa	بارگذاری VCARD
+mark records as private	addressbook	fa	علامت زدن رکوردها بعنوان خصوصی
+message phone	addressbook	fa	تلفن پیام
+middle name	addressbook	fa	نام وسط
+mobile	addressbook	fa	همراه
+mobile phone	addressbook	fa	تلفن همراه
+modem phone	addressbook	fa	تلفن مودم
+more ...	addressbook	fa	بیشتر...
+multiple vcard	addressbook	fa	چندتا Vcard
+no vcard	addressbook	fa	بدون VCard
+number	addressbook	fa	شماره
+number of records to read (%1)	addressbook	fa	تعداد رکوردها برای خواندن (%1)
+operator	addressbook	fa	عملگر
+options	addressbook	fa	گزینه ها
+options for type	addressbook	fa	گزینه های نوع
+or	addressbook	fa	یا
+organisation	addressbook	fa	سازمان
+other number	addressbook	fa	شماره دیگر
+other phone	addressbook	fa	تلفن دیگر
+pager	common	fa	پیجر
+parcel	addressbook	fa	جعبه پستی
+persontype	addressbook	fa	نوع شخص
+phone number	common	fa	شماره تلفن
+phone numbers	common	fa	شماره تلفنها
+please enter a name for that field !	addressbook	fa	لطفا یک نام برای فیلد انتخاب کنید!
+please select only one category	addressbook	fa	لطفا فقط یک دسته را انتخاب کنید
+postal	common	fa	پستی
+pref	addressbook	fa	پیش
+prefix	addressbook	fa	پیش شماره
+public key	addressbook	fa	کلید عمومی
+publish into groups:	addressbook	fa	انتشار در گروه:
+radiobutton	addressbook	fa	کلیدرادیوئی
+read a list / search for entries.	addressbook	fa	خواندن فهرست/جستجو برای ورودی
+read a list of entries.	addressbook	fa	خواندن یک فهرست از ورودیها
+read a single entry by passing the id and fieldlist.	addressbook	fa	خواندن یک ورودی با وارد کردن شناسه و فهرست فیلد ها
+record access	addressbook	fa	دسترسی رکورد
+record owner	addressbook	fa	مالک رکورد
+retrieve contacts	admin	fa	بازیابی مخاطب
+select all	addressbook	fa	انتخاب همه
+select the type of conversion	addressbook	fa	نوع تبدیل را انتخاب کنید
+select the type of conversion:	addressbook	fa	نوع تبدیل را انتخاب کنید:
+select where you want to store	admin	fa	مکان ضبط را انتخاب کنید
+show	addressbook	fa	نمایش
+show birthday reminders on main screen	addressbook	fa	نمایش یادآور روز تولد در صفحه اصلی
+something went wrong by deleting %1	addressbook	fa	در حذف %1 یک مورد اشتباهی وجود دارد
+something went wrong by deleting this contact	addressbook	fa	در حذف این مخاطب یک مورد اشتباهی وجود دارد
+something went wrong by reading this contact	addressbook	fa	در خواندن این مخاطب یک مورد اشتباهی وجود دارد
+something went wrong by saving this contact. errorcode %1	addressbook	fa	در ضبط کردن این مخاطب یک مورد اشتباهی وجود دارد: خطای شماره %1
+startrecord	addressbook	fa	رکورد شروع
+state	common	fa	استان
+street	common	fa	خیابان
+successfully imported %1 records into your addressbook.	addressbook	fa	تعداد %1 رکورد با موفقیت به مخاطبین شما وارد شد.
+suffix	addressbook	fa	پسوند
+tel home	addressbook	fa	شماره منزل
+test import (show importable records <u>only</u> in browser)	addressbook	fa	آزمایش ورود.( <u>فقط</u>  نمایش رکوردهای قابل وارد کردن در مرورگر)
+text	addressbook	fa	متنی
+that field name has been used already !	addressbook	fa	این نام فیلد قبلا استفاده شده است
+this person's first name was not in the address book.	addressbook	fa	نام این شخص در مخاطبین نبود.
+this person's last name was not in the address book.	addressbook	fa	نام خانوادگی این شخص در مخاطبین نبود.
+to many might exceed your execution-time-limit	addressbook	fa	ممکن است به حد زمانی اجرا برسید
+today is %1's birthday!	common	fa	امروز تولد %1 است
+tomorrow is %1's birthday.	common	fa	فردا تولد %1 است
+translation	addressbook	fa	ترجمه
+update a single entry by passing the fields.	addressbook	fa	بهنگام سازی یک ورودی با ارسال یک فیلد
+url	addressbook	fa	وب سایت
+use country list	addressbook	fa	استفاده ار فهرست کشورها
+vcard	common	fa	VCard
+vcards require a first name entry.	addressbook	fa	عناصر VCard یک نام برای ورودی لازم دارند
+vcards require a last name entry.	addressbook	fa	عناصر VCard یک نام خانوادگی برای ورودی لازم دارن
+video phone	addressbook	fa	تلفن تصویری
+voice phone	addressbook	fa	تلفن صوتی
+warning: all contacts found will be deleted!	addressbook	fa	هشدار! تمامی مخاطبین حذف خواهند شد!
+work phone	addressbook	fa	شماره محل کار
+write (update or add) a single entry by passing the fields.	addressbook	fa	نوشتن(افزودن یا بهنگام سازی) یک ورودی با ارسال فیلدها
+you are not permitted to delete contact %1	addressbook	fa	شما مجاز به حذف مخاطب « %1 » نیستید.
+you are not permittet to delete this contact	addressbook	fa	شما مجاز به حذف این مخاطب نیستید
+you are not permittet to edit this contact	addressbook	fa	شما مجاز به ویرایش این مخاطب نیستید
+you are not permittet to view this contact	addressbook	fa	شما مجاز به
+you must select a vcard. (*.vcf)	addressbook	fa	شما باید یک vcard انتخاب کنید
+you must select at least 1 column to display	addressbook	fa	شما باید حد اقل یک ستون برای نمایش انتخاب کنید
+zip code	common	fa	کد پستی

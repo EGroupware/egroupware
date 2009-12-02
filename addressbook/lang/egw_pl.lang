@@ -1,0 +1,326 @@
+%1 added	addressbook	pl	%1 dodany
+%1 contact(s) %2	addressbook	pl	%1 kontakt(ów) %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pl	%1 kontakt(ów)%2, %3 nie było możliwe ponieważ nie masz odpowiednich praw !!!
+%1 fields in %2 other organisation member(s) changed	addressbook	pl	%1 pól w %2 członków innej organizacji zmieniono
+%1 records imported	addressbook	pl	Zaimportowano %1 rekordów
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pl	Wczytano %1 rekordów (ale jeszcze nie zaimportowano, możesz %2wrócić%3 i skasować zaznaczenie próbnego importu)
+%1 starts with '%2'	addressbook	pl	%1 zaczyna się od %2
+(e.g. 1969)	addressbook	pl	(np. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	pl	<b>Nie wybrano trybu konwersji typu <żaden>.</b> Proszę wybrać typ trybu konwersji z listy
+@-eval() is only availible to admins!!!	addressbook	pl	@-eval() jest dostępne wyłącznie dla administratorów !!!
+account repository	admin	pl	Repozytorium kont
+accounts	addressbook	pl	Konta
+actions	addressbook	pl	Polecenia
+add %1	addressbook	pl	Dodaj %1
+add a contact to this organisation	addressbook	pl	Dodaj kontakty do tej organizacji
+add a new contact	addressbook	pl	Dodaj nowy kontakt
+add a new list	addressbook	pl	Dodaj nową listę
+add a single entry by passing the fields.	addressbook	pl	Dodaj pojedyczy wpis za pomocą przekazania pól
+add custom field	addressbook	pl	Dodaj pole użytkownika
+add to distribution list:	addressbook	pl	Dodaj do listy dystrybucyjnej:
+added by synchronisation	addressbook	pl	dodano poprzez synchronizację
+added to distribution list	addressbook	pl	dodano do listy dystrybucyjnej
+additional information about using ldap as contact repository	admin	pl	Dodatkowe informacje o korzystaniu z LDAP jako repozytorium kontaktów
+address book	common	pl	Kontakty, adresy
+address book - vcard in	addressbook	pl	Wczytanie kartek elektronicznych do książki adresowej
+address book - view	addressbook	pl	Przegląd książki adresowej
+address line 2	addressbook	pl	Wiersz adresu nr 2
+address type	addressbook	pl	Typ adresu
+addressbook	common	pl	Książka adresowa
+addressbook csv export	addressbook	pl	Eksport książki adresowej do CSV
+addressbook menu	addressbook	pl	Menu książki adresowej
+addressbook preferences	addressbook	pl	Ustawienia książki adresowej
+addressbook the contact should be saved to	addressbook	pl	Książka adresowa do której  ma zostać zapisany ontakt
+addressbook-fieldname	addressbook	pl	Nazwa pola adresowego
+addvcard	addressbook	pl	Dodaj kartkę elektroniczną
+advanced search	addressbook	pl	Wyszukiwanie szczgółowe
+all contacts	addressbook	pl	Wszystkie kontakty
+allow users to maintain their own account-data	admin	pl	Pozwól użytkownikom zarządzać danymi własnego konta
+alt. csv import	addressbook	pl	Alt. CSV Import
+always	addressbook	pl	zawsze
+apply changes to all members, whose fields have the same previous content	addressbook	pl	Zapisz zmiany do wszystkich członków, którzy mają tę samą zawartość pól
+apply the action on the whole query, not only the shown contacts!!!	addressbook	pl	Zapisz zmiany do wszystkich, nie tylko pokazanych !!!
+are you shure you want to delete this contact?	addressbook	pl	Jesteś pewien, że chcesz usunąć ten kontakt?
+are you sure you want to delete this field?	addressbook	pl	Czy na pewno skasować to pole?
+assistent	addressbook	pl	Asystent
+assistent phone	addressbook	pl	Nr. telefonu asystenta
+birthday	common	pl	Urodziny
+birthdays	common	pl	Urodziny
+blank	addressbook	pl	Puste
+business	common	pl	Firma
+business address	addressbook	pl	Adres firmy
+business city	addressbook	pl	Miasto firmy
+business country	addressbook	pl	Kraj firmy
+business email	addressbook	pl	E-mail firmy
+business fax	addressbook	pl	Faks firmy
+business phone	addressbook	pl	Telefon firmy
+business state	addressbook	pl	Województwo
+business street	addressbook	pl	Ulica firmy
+business zip code	addressbook	pl	Kod pocztowy firmy
+calendar uri	addressbook	pl	URI kalendarza
+can be changed via setup >> configuration	admin	pl	Może zostać zmieniony przez Ustawienia >> Konfiguracja
+car phone	addressbook	pl	Telefon w samochodzie
+categories, notes, ...	addressbook	pl	Kategorie, notatki, ...
+cell phone	addressbook	pl	Telefon komórkowy
+change all organisation members	addressbook	pl	zmień wszystkich członków organizacji
+charset for the csv export	addressbook	pl	strona kodowa dla eksportu CSV
+charset of file	addressbook	pl	strona kodowa pliku
+check all	addressbook	pl	Zaznacz wszystkie
+choose an icon for this contact type	admin	pl	Wybierz ikonkę dla tego typu kontaktów
+chosse an etemplate for this contact type	admin	pl	Wybierz jakiś eTemplate dla tego typu kontaktów
+city	common	pl	Miasto
+company	common	pl	Firma
+company name	addressbook	pl	Nazwa firmy
+configuration	common	pl	Konfiguracja
+contact	common	pl	Kontakt
+contact application	admin	pl	Aplikacja kontaktowa
+contact copied	addressbook	pl	Kontakt został skopiowany
+contact deleted	addressbook	pl	Kontakt został skasowany
+contact id	addressbook	pl	ID kontaktu
+contact repository	admin	pl	Repozytorium kontaktu
+contact saved	addressbook	pl	Kontakt został zapisany
+contact settings	admin	pl	Ustawienia kontaktu
+contacts and account contact-data to ldap	admin	pl	Kontakty i dane osobiste konta do LDAP
+contacts to ldap	admin	pl	kontakty do LDAP'a
+contacts to ldap, account contact-data to sql	admin	pl	kontakty do LDAP'a, dane kont do SQL'a
+contains	addressbook	pl	zawiera
+copied by %1, from record #%2.	addressbook	pl	Skopiowane przez %1, z rekordu # %2
+copy a contact and edit the copy	addressbook	pl	Skopiuj kontakt i edytuj kopię
+country	common	pl	Kraj
+create new links	addressbook	pl	Utwórz nowe linki
+created	addressbook	pl	Utworzony
+credit	addressbook	pl	Kredyt
+csv-fieldname	addressbook	pl	Nazwa pola CSV
+csv-filename	addressbook	pl	Nazwa pliku CSV
+custom	addressbook	pl	Użytkownika
+custom fields	addressbook	pl	Pola użytkownika
+debug output in browser	addressbook	pl	Debuguj wynik w przeglądarce
+default address format	addressbook	pl	Domyślny format adresu
+default addressbook for adding contacts	addressbook	pl	Domyślna książka adresowa przy dodawaniu kontaktów
+default filter	addressbook	pl	Filtr domyślny
+delete a single entry by passing the id.	addressbook	pl	Usuń jeden wpis według podanego id.
+delete selected distribution list!	addressbook	pl	Usuń wybraną listę dystrybucyjną!
+delete this contact	addressbook	pl	Usuń ten kontakt
+delete this organisation including all its contacts	addressbook	pl	Usuń tę organizację i wszystkie jej kontakty
+deleted	addressbook	pl	skasowany
+deletes the photo	addressbook	pl	Usuń to zdjęcie
+department	common	pl	Oddział
+departments	addressbook	pl	oddziały
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	pl	Przypominaj o urodzinach na stronie startowej (strona domowa z ikonką domu)
+distribution list deleted	addressbook	pl	Lista dystrybucyjna została usunięta
+distribution lists	addressbook	pl	Listy dystrybucyjne
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	pl	Czy chcesz prywatną księgę gości, niewidoczną dla innych użytkowników, którym nie dałeś praw do niej?
+do your really want to delete this contact?	addressbook	pl	Naprawdę chcesz usunąć ten kontakt?
+doesn't matter	addressbook	pl	nie ma znaczenia
+domestic	addressbook	pl	Domowy
+don't hide empty columns	addressbook	pl	Nie ukrywaj pustych kolumn
+download	addressbook	pl	Pobierz
+download export file (uncheck to debug output in browser)	addressbook	pl	Zapisz plik na dysku (jeżeli nie zaznaczysz, wynik będzie pokazany wyłącznie w oknie przeglądarki)
+download this contact as vcard file	addressbook	pl	sciągnij ten kontakt jako plik vCard
+edit custom field	addressbook	pl	Edytuj pole użytkownika
+edit custom fields	admin	pl	Edytuj pola użytkownika
+edit extra account-data in the addressbook	admin	pl	Eytuj dodatkowe dane kont w książce adresowej
+edit phonenumbers -	addressbook	pl	Edytuj numery telefonów
+email & internet	addressbook	pl	Email i WWW
+empty for all	addressbook	pl	puste dla wszystkich
+enable an extra private addressbook	addressbook	pl	Włącz dodatkową prywatną książkę adresową
+enter the path to the exported file here	addressbook	pl	Podaj ścieżkę do wyexportowanego pliku tutaj
+error deleting the contact !!!	addressbook	pl	Błąd podczas kasowania kontaktu !!!
+error saving the contact !!!	addressbook	pl	Błąd podczas zapisywania kontaktu !!!
+existing links	addressbook	pl	Istniejące linki
+export	addressbook	pl	eksport
+export as csv	addressbook	pl	Eksport jako CSV
+export as vcard	addressbook	pl	Eksport jako vCard
+export contacts	addressbook	pl	Eksportuj kontakty
+export file name	addressbook	pl	Nazwa pliku
+export from addressbook	addressbook	pl	Eksport z książki adresowej
+export selection	addressbook	pl	Wyeksportuj wybrane
+exported	addressbook	pl	wyeksportowano
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Eksportuj kontakty z książki adresowej do pliku CSV, czyli "wartości rozdzielone przecinkami". Możesz wybrać również tabulator jako separator.
+extra	addressbook	pl	Dodatkowe
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pl	nie udało się zmienić %1 członków organizacji (brak uprawnień)
+fax	addressbook	pl	Faks
+fax number	common	pl	Numer faksu
+field %1 has been added !	addressbook	pl	Pole %1 zostało dodane !
+field %1 has been updated !	addressbook	pl	Pole %1 zostało zaktualizowane !
+field name	addressbook	pl	Nazwa pola
+fields for the csv export	addressbook	pl	Pola do wyeksportowania do CSV
+fields the user is allowed to edit himself	admin	pl	Pola, które mogą być edytowane przez użytkownika
+fields to show in address list	addressbook	pl	Pola pokazywane na liście adresów
+fieldseparator	addressbook	pl	Separator pól
+for read only ldap	admin	pl	dla dostępu LDAP tylko do odczytu
+freebusy uri	addressbook	pl	URI wolny/zajęty
+full name	addressbook	pl	Pełna nazwa
+general	addressbook	pl	Główne
+geo	addressbook	pl	GEO
+global categories	addressbook	pl	Kategorie globalne
+grant addressbook access	common	pl	Nadaj prawa dostępu do książki adresowej
+group %1	addressbook	pl	Grupa %1
+hide accounts from addressbook	addressbook	pl	Ukryj konta z książki adresowej
+hides accounts completly from the adressbook.	addressbook	pl	Ukrywa całkowicie konta z książki adresowej
+home address	addressbook	pl	Adres domowy
+home address, birthday, ...	addressbook	pl	Adres domowy, urodziny, ...
+home city	addressbook	pl	Miasto zamieszkania
+home country	addressbook	pl	Kraj zamieszkania
+home email	addressbook	pl	E-mail domowy
+home phone	addressbook	pl	Telefon domowy
+home state	addressbook	pl	Wojewdztwo
+home street	addressbook	pl	Ulica
+home zip code	addressbook	pl	Kod pocztowy
+how many contacts should non-admins be able to export (empty = no limit)	admin	pl	Jak dużą paczkę kontaktów mogą eksportować nie-administratorzy (puste oznacza brak limitu)
+icon	addressbook	pl	Ikonka
+if accounts are already in ldap	admin	pl	jeśli konta są już w LDAPie
+import	addressbook	pl	Importuj
+import contacts	addressbook	pl	Importuj kontakty
+import csv-file into addressbook	addressbook	pl	Importuj plik CSV do książki adresowej
+import file	addressbook	pl	Plik importu
+import from	addressbook	pl	Importuj z
+import from ldif, csv, or vcard	addressbook	pl	Import z LDIF, CSV lub VCard
+import from outlook	addressbook	pl	Importuj z programu Outlook
+import multiple vcard	addressbook	pl	Importuj wiele plików VCard
+import next set	addressbook	pl	Importuj następny set
+import_instructions	addressbook	pl	W Netscape, otwórz Książkę Adresową (Addressbook) i wybierz z menu <b>Plik</b> (File) pozycję <b>Eksport</b>. Plik zostanie wyeksportowany w formacie LDIF.<p> W Outlooku, wybierz folder Kontakty, wybierz z menu <b>Plik</b> pozycję <b>Import i eksport</b> i wyeksportuj swoje kontakty do pliku tekstowego oddzielanego kropką (CSV).<p>W Palm Desktop 4.0 (lub wyższym), wejdź do książki adresowej i wybierz <b>Export</b> z menu <b>Plik</b>. Zostanie on wyeksportowany w formacie VCard.
+in %1 days (%2) is %3's birthday.	addressbook	pl	Za %1 dni są urodziny %3
+income	addressbook	pl	Dochód
+insufficent rights to delete this list!	addressbook	pl	Brak wystarczających uprawnień do usunięcia listy!
+international	addressbook	pl	Międzynarodowy
+label	addressbook	pl	Etykieta
+last modified	addressbook	pl	ostatnio zmodyfikowany
+last modified by	addressbook	pl	ostatnio zmodyfikowany przez
+ldap context for contacts	admin	pl	Kontekst LDAP dla kontaktów
+ldap host for contacts	admin	pl	Serwer LDAP dla kontaktów
+ldap settings for contacts	admin	pl	Ustawienia LDAP dla kontaktu
+ldif	addressbook	pl	LDIF
+line 2	addressbook	pl	Wiersz 2
+link title for contacts show	addressbook	pl	Tytuł linku przy pokazywaniu kontaktów
+links	addressbook	pl	Linki
+list all categories	addressbook	pl	Wywietl wszystkie kategorie
+list all customfields	addressbook	pl	Pokaż wszystkie pola użytkownika
+list created	addressbook	pl	Lista została utworzona
+list creation failed, no rights!	addressbook	pl	Lista NIE została utworzona, brak uprawnień!
+load vcard	addressbook	pl	Ładuj vCard
+locations	addressbook	pl	Lokacje
+mark records as private	addressbook	pl	Zaznacz rekordy jako prywatne
+merge into first or account, deletes all other!	addressbook	pl	Włącz do pierwszego albo konta, skasuj wszystkie inne!
+merged	addressbook	pl	połączone
+message phone	addressbook	pl	Automatyczna sekretarka
+middle name	addressbook	pl	Drugie imię
+migration finished	addressbook	pl	Migracja zakończona
+migration to ldap	admin	pl	Migracja do LDAP
+mobile	addressbook	pl	Komórka
+mobile phone	addressbook	pl	Komórka
+modem phone	addressbook	pl	Numer modemu
+more ...	addressbook	pl	Więcej ...
+move to addressbook:	addressbook	pl	Przenieś do ksiażki adresowej:
+moved	addressbook	pl	przesunięto
+multiple vcard	addressbook	pl	VCard z wieloma kontaktami
+name for the distribution list	addressbook	pl	Nazwa dla listy dystrybucyjnej
+name, address	addressbook	pl	Imię, adres
+no vcard	addressbook	pl	Bez VCard
+number	addressbook	pl	Numer
+number of records to read (%1)	addressbook	pl	Liczba rekordów do wczytania (%1)
+options for type	admin	pl	Opcje typu
+organisation	addressbook	pl	organizacja
+organisations	addressbook	pl	Organizacje
+organisations by departments	addressbook	pl	Organizacje w/g oddziału
+organisations by location	addressbook	pl	Organizacje w/g położenia
+other number	addressbook	pl	Inny numer
+other phone	addressbook	pl	Inny telefon
+own sorting	addressbook	pl	własne system sortowania
+pager	common	pl	Pager
+parcel	addressbook	pl	Paczka
+permission denied !!!	addressbook	pl	Dostęp wzbroniony !!!
+phone number	common	pl	Numer telefonu
+phone numbers	common	pl	Numery telefonów
+photo	addressbook	pl	Zdjęcie
+please enter a name for that field !	addressbook	pl	Proszę podać nazwę tego pola !
+please select only one category	addressbook	pl	Proszę wybrać jedynie jedną kategorię
+postal	common	pl	Kod pocztowy
+pref	addressbook	pl	pref
+preferred phone	addressbook	pl	preferowany nr. telefonu
+prefix	addressbook	pl	Prefiks (Pan/Pani)
+public key	addressbook	pl	Klucz publiczny
+publish into groups:	addressbook	pl	Opublikuj do grup:
+read a list / search for entries.	addressbook	pl	Czytaj listę / szukaj wpisów.
+read a list of entries.	addressbook	pl	Wczytaj listę wpisów
+read a single entry by passing the id and fieldlist.	addressbook	pl	Czytaj pojedynczy wpis szukając w/g id i listy pól.
+read only	addressbook	pl	tylko do odczytu
+record access	addressbook	pl	Dostęp do rekordu
+record owner	addressbook	pl	Właściciel rekordu
+remove selected contacts from distribution list	addressbook	pl	Usuń wybrane kontakty z listy dystrybucyjnej
+removed from distribution list	addressbook	pl	usunięto z listy dystrybucyjnej
+role	addressbook	pl	Pozycja
+room	addressbook	pl	Pokój
+search for '%1'	addressbook	pl	Szukaj '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	pl	Wybierz zdjęcie w formacie JPEG. Będzie zmniejszone do szerokości 60 pikseli.
+select a view	addressbook	pl	Wybierz wygląd
+select addressbook type	addressbook	pl	Wybierz typ książki adresowej
+select all	addressbook	pl	Zaznacz wszystkie
+select an action or addressbook to move to	addressbook	pl	Wybierz akcję lub książkę adresową, do której mam przesunąć
+select migration type	admin	pl	Wybierz typ migracji
+select multiple contacts for a further action	addressbook	pl	Wybierz parę kontaktów dla następującej akcji
+select phone number as prefered way of contact	addressbook	pl	wybierz numer telefonu jako preferowaną metodę kontaktowania
+select the type of conversion	addressbook	pl	Wybierz typ konwersji
+select the type of conversion:	addressbook	pl	Wybierz typ konwersji
+select where you want to store / retrieve contacts	admin	pl	Wybierz, dokąd mam zapisywać kontakty
+selected contacts	addressbook	pl	wybrane kontakty
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	pl	Czy kolumny: zdjęcie i adres domowy powinny być wyświetlane zawsze, nawet jeżeli są puste?
+show	addressbook	pl	Pokaż
+show birthday reminders on main screen	addressbook	pl	Pokazuj przypomnienia o urodzinach na głównym ekranie
+show infolog entries for this organisation	addressbook	pl	Pokaż wpisy InfoLog tej organizacji
+show the contacts of this organisation	addressbook	pl	Pokaż kontakty tej organizacji
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	pl	Wielkość okna 'popup' (szerokość na wysokość, np.: 400x300, jeśli chcesz z tego korzystać)
+start	admin	pl	Początek
+startrecord	addressbook	pl	Rekord początkowy
+state	common	pl	Województwo
+street	common	pl	Ulica
+successfully imported %1 records into your addressbook.	addressbook	pl	Zaimportowano %1 rekordów do książki adresowej.
+suffix	addressbook	pl	Sufiks
+tel home	addressbook	pl	Tel. domowy
+telephony integration	admin	pl	Integracja telefonii
+test import (show importable records <u>only</u> in browser)	addressbook	pl	Import testowy (pokaż importowane rekordy <u>tylko</u> w przeglądarce)
+that field name has been used already !	addressbook	pl	Taka nazwa pola jest już używana!
+this person's first name was not in the address book.	addressbook	pl	Ksika adresowa nie zawiera imienia tej osoby
+this person's last name was not in the address book.	addressbook	pl	Ksika adresowa nie zawiera nazwiska tej osoby
+timezone	addressbook	pl	Strefa czasowa
+to many might exceed your execution-time-limit	addressbook	pl	zbyt wiele może spowodować przekroczenie czasu wykonywania
+today is %1's birthday!	common	pl	Dzi s urodziny %1
+tomorrow is %1's birthday.	common	pl	Jutro s urodziny  %1
+translation	addressbook	pl	Tłumaczenie
+type	addressbook	pl	typ
+update a single entry by passing the fields.	addressbook	pl	Aktualizuj pojedyńczy wpis poprzez podawanie wartości pól.
+upload or delete the photo	addressbook	pl	Załaduj lub usuń zdjęcie
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pl	Odnośnik URL do numerów telefonów (użyj %1 zamiast numeru telefonu, %2 zamiast nazwy konta, %3 zamiast numeru telefonu konta)
+use an extra category tab?	addressbook	pl	Używać specjalnej zakładki kategorii?
+use country list	addressbook	pl	Użyj listy krajów
+use setup for a full account-migration	admin	pl	użyj (/setup) w celu pełnej migracji kont
+used for links and for the own sorting of the list	addressbook	pl	używane w odnośnikach oraz we własnym sortowaniu listy
+vcard	common	pl	Kartka elektroniczna (VCard)
+vcards require a first name entry.	addressbook	pl	Kartki elektroniczne (VCard) wymagają podania imienia.
+vcards require a last name entry.	addressbook	pl	Kartki elektroniczne (VCard) wymagają podania nazwiska
+view linked infolog entries	addressbook	pl	Pokaż wpisy do InfoLog jako link
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pl	UWAGA!! Można używać LDAP tylko kiedy NIE używa się kontaktów do przechowywania kont!
+warning: all contacts found will be deleted!	addressbook	pl	UWAGA: Wszystkie znalezione kontakty zostaną skasowane!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pl	Jaką treść powinny mieć odnośniki do książki adresowej widocznie w innych aplikacjach? Puste wartości zostaną pominięte. Musisz na nowo się zalogować, jeżeli zmienisz to ustawienie.
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	pl	Jaki format adresu powinien być używany przez książkę adresową dla państw, które nie mają określonego formatu adresu? Jeżeli format dla danego państwa jest ustalony, ma pierwszeństwo przed powyższym.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	pl	Która książka adresowa powinna być wybrana przy dodawaniu kontaktu, jeżeli nie masz praw zapisu do BIEŻĄCEJ książki adresowej?
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji eGroupWare.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	pl	Które pola powinny być wyeksportowane? 'Wszystkie', czyli każde pole książki adresowej, również pola własne użytkowników. Tryb adresu 'biznes' oraz 'domowy' zawiera tylko: nazwę, przedsiębiorstwo oraz wybrany rodzaj adresu.
+whole query	addressbook	pl	Całe zapytanie
+work phone	addressbook	pl	Telefon do pracy
+write (update or add) a single entry by passing the fields.	addressbook	pl	Zapisz (aktualizuj lub dodaj) pojedynczy wpis poprzez podanie zawartości pól.
+yes, for the next three days	addressbook	pl	Tak, dla następnych trzech dni
+yes, for the next two weeks	addressbook	pl	Tak, dla następnych dwuch tygodni
+yes, for the next week	addressbook	pl	Tak, dla następnego tygodnia
+yes, for today and tomorrow	addressbook	pl	Tak, na dziś i jutro
+you are not permitted to delete contact %1	addressbook	pl	Nie masz uprawnień do kasowania kontaktu %1
+you are not permittet to delete this contact	addressbook	pl	Nie masz uprawnień do kasowania tego kontaktu
+you are not permittet to edit this contact	addressbook	pl	Nie masz uprawnień do edytowania tego kontaktu
+you are not permittet to view this contact	addressbook	pl	Nie masz uprawnień do oglądania tego kontaktu
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	pl	Możesz jedynie używać LDAP jako repozytorium kontaktów, jeśli te konto zostało zapisane także w LDAP!
+you must select a vcard. (*.vcf)	addressbook	pl	Musisz wybrać kartke adresową VCard (*.vcf)
+you must select at least 1 column to display	addressbook	pl	Musisz wybrać przynajmniej jedną kolumnę do wyświetlenia
+you need to select a distribution list	addressbook	pl	Musisz wybrać listę dystrybucyjną
+you need to select some contacts first	addressbook	pl	Musisz najpierw wybrać kontakty
+zip code	common	pl	Kod pocztowy
+zip_note	addressbook	pl	<p><b>Uwaga:</b>Plik może być typu zip i zawierać zbiór plików typu .csv, .vcf lub .ldif. Mimo to proszę nie mieszać plików różnego typu w jednym archiwum.

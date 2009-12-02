@@ -1,0 +1,202 @@
+%1 records imported	addressbook	pt	%1 registos importados
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt	%1 registos lidos (ainda por importar: pode %2voltar%3 atrás e desmarcar a opção Importação de Teste)
+(e.g. 1969)	addressbook	pt	(ex: 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	pt	<b>O tipo de conversão <Nenhum> não foi encontrado.</b> Por favor, escolha um tipo de conversão da lista
+@-eval() is only availible to admins!!!	addressbook	pt	@-eval() só está disponível para administradores!!!
+actions	addressbook	pt	Acções
+add a single entry by passing the fields.	addressbook	pt	Adicionar um registo único passando os campos.
+add custom field	addressbook	pt	Adicionar campo personalizado
+address book	common	pt	Livro de Endereços
+address book - vcard in	addressbook	pt	Livro de endereços - VCard
+address book - view	addressbook	pt	Livro de endereços - Ver
+address line 2	addressbook	pt	Linha de endereço 2
+address line 3	addressbook	pt	Linha de endereço 3
+address type	addressbook	pt	Tipo de endereço
+addressbook	common	pt	Livro de endereços
+addressbook preferences	addressbook	pt	Preferências do livro de endereços
+addressbook-fieldname	addressbook	pt	Livro de endereços - Nome do campo
+addvcard	addressbook	pt	Adicionar VCard
+advanced search	addressbook	pt	Pesquisa avançada
+alt. csv import	addressbook	pt	Importar CSV
+are you shure you want to delete this contact?	addressbook	pt	Tem a certeza de que deseja eliminar este contacto?
+are you sure you want to delete this field?	addressbook	pt	Tem certeza que de deseja eliminar este campo ?
+bbs phone	addressbook	pt	Telefone BBS
+birthday	common	pt	Aniversário
+birthdays	common	pt	Aniversários
+blank	addressbook	pt	Vazio
+business	common	pt	Emprego
+business address type	addressbook	pt	Endereço
+business city	addressbook	pt	Cidade
+business country	addressbook	pt	País
+business email	addressbook	pt	Endereço de correio electrónico
+business email type	addressbook	pt	Tipo de endereço de correio electrónico
+business fax	addressbook	pt	Fax
+business phone	addressbook	pt	Telefone
+business state	addressbook	pt	Bairro
+business street	addressbook	pt	Rua
+business zip code	addressbook	pt	Código postal
+car phone	addressbook	pt	Telefone do carro
+cell phone	addressbook	pt	Telemóvel
+charset of file	addressbook	pt	Charset do ficheiro
+choose an icon for this contact type	addressbook	pt	Escolha um ícone para este tipo de contacto
+chosse an etemplate for this contact type	addressbook	pt	Escolha um modelo Web para este tipo de contacto
+city	common	pt	Cidade
+company	common	pt	Empresa
+company name	common	pt	Nome da empresa
+configuration	common	pt	Configuração
+contact	common	pt	Contacto
+contact application	admin	pt	Aplicação de contactos
+contact deleted !!!	addressbook	pt	Contacto eliminado !!!
+contact saved	addressbook	pt	Contacto guardado
+contact settings	admin	pt	Preferências de contactos
+copied by %1, from record #%2.	addressbook	pt	Copiado do registo #%2, por %1
+country	common	pt	País
+create new links	addressbook	pt	Criar novas ligações
+credit	addressbook	pt	Crédito
+csv-fieldname	addressbook	pt	CSV - Nome do campo
+csv-filename	addressbook	pt	CSV - Nome do ficheiro
+custom	addressbook	pt	Personalizar
+custom fields	addressbook	pt	Personalizar campos
+debug output in browser	addressbook	pt	Fazer debug do resultado no navegador
+default filter	addressbook	pt	Filtro padrão
+delete a single entry by passing the id.	addressbook	pt	Eliminar um único resgisto passando a ID.
+department	common	pt	Departamento
+do your really want to delete this contact?	addressbook	pt	Deseja realmente eliminar este contacto?
+doesn't matter	addressbook	pt	Não interessa
+domestic	addressbook	pt	Doméstico
+download	addressbook	pt	Transferência
+download export file (uncheck to debug output in browser)	addressbook	pt	Transferir ficheiro de exportação (desmarque a opção "fazer debug do resultado no navegador")
+download this contact as vcard file	addressbook	pt	transferor este contacto como ficheiro vCard
+edit custom field	addressbook	pt	Editar campo personalizado
+edit custom fields	admin	pt	Editar campos personalizados
+edit phonenumbers -	addressbook	pt	Editar números de telefone -
+email & internet	addressbook	pt	Correio Electrónico e Internet
+empty for all	addressbook	pt	vazio para todos
+enter the path to the exported file here	addressbook	pt	Inserir o caminho para o ficheiro exportado aqui
+existing links	addressbook	pt	Ligações existentes
+export	addressbook	pt	Exportar
+export contacts	addressbook	pt	Exportar contactos
+export file name	addressbook	pt	Exportar nome de ficheiro
+export from addressbook	addressbook	pt	Exportar do livro de endereços
+extra	addressbook	pt	Extra
+fax	addressbook	pt	Fax
+fax number	common	pt	Número de fax
+field %1 has been added !	addressbook	pt	Campo %1 foi adicionado !
+field %1 has been updated !	addressbook	pt	Campo %1 foi actualizado !
+field name	addressbook	pt	Nome do campo
+fields to show in address list	addressbook	pt	Campos a exibir na lista de endereços
+fieldseparator	addressbook	pt	Separador de campos
+full name	addressbook	pt	Nome completo
+geo	addressbook	pt	GEO
+global categories	addressbook	pt	Categorias gerais
+grant addressbook access	common	pt	Permitir acesso ao livro de endereços
+home address type	addressbook	pt	Endereço Pessoal
+home city	addressbook	pt	Cidade
+home country	addressbook	pt	País
+home email	addressbook	pt	Endereço de correio electrónico
+home email type	addressbook	pt	Endereço de correio electrónico
+home phone	addressbook	pt	Telefone
+home state	addressbook	pt	Bairro
+home street	addressbook	pt	Rua
+home zip code	addressbook	pt	Código postal
+icon	addressbook	pt	Ícone
+import	addressbook	pt	Importar
+import contacts	addressbook	pt	Importar contactos
+import csv-file into addressbook	addressbook	pt	Importar ficheiro CSV para o livro de endereços
+import file	addressbook	pt	Importar ficheiro
+import from	addressbook	pt	Importar de
+import from ldif, csv, or vcard	addressbook	pt	Importar de LDIF, CSV, ou VCard
+import from outlook	addressbook	pt	Importar do Outlook
+import multiple vcard	addressbook	pt	Importar vários VCard
+import next set	addressbook	pt	Importar o conjunto seguinte
+import_instructions	addressbook	pt	No Netscape, abra o Livro de endereços e seleccione <b>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formato LDIF.<p>No Outlook, seleccione a sua pasta de contactos, seleccione <br>Importar e Exportar...</b> do menu <b>Ficheiro</b> e exporte os seus contactos, separados por vírgulas, num ficheiro de texto (CSV).<br>No Palm Desktop 4.0 ou superior, visite o seu livro de endereços e seleccione <br>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formado VCard.
+income	addressbook	pt	Entrada
+international	addressbook	pt	Internacional
+isdn phone	addressbook	pt	Telefone ISDN
+label	addressbook	pt	Comentário
+last modified	addressbook	pt	última modificação
+ldap context for contacts	admin	pt	contexto LDAP para contactos
+ldap host for contacts	admin	pt	servidor LDAP para contactos
+ldap root dn for contacts	admin	pt	super usuário LDAP para contactos
+ldap root pw for contacts	admin	pt	senha do super usuário LDAP para contactos
+ldif	addressbook	pt	LDIF
+line 2	addressbook	pt	Linha 2
+links	addressbook	pt	Ligações
+list all categories	addressbook	pt	Listar todas as categorias
+list all customfields	addressbook	pt	Listar todos os campos personalizados
+load vcard	addressbook	pt	Carregar VCard
+mark records as private	addressbook	pt	Marcar registos como privados
+message phone	addressbook	pt	Telefone de mensagens
+middle name	addressbook	pt	Nome do meio
+mobile	addressbook	pt	Telemóvel
+mobile phone	addressbook	pt	Telemóvel
+modem phone	addressbook	pt	Telefone de dados (Modem)
+more ...	addressbook	pt	Mais..
+multiple vcard	addressbook	pt	Vários VCard
+no vcard	addressbook	pt	Nenhum VCard
+number	addressbook	pt	Número
+number of records to read (%1)	addressbook	pt	Número de registos por ler (%1)
+options for type	addressbook	pt	Opções por tipo
+organisation	addressbook	pt	empresa
+other number	addressbook	pt	Outro número
+other phone	addressbook	pt	Outro telefone
+pager	common	pt	Pager
+parcel	addressbook	pt	Parcel
+phone number	common	pt	Número de telefone
+phone numbers	common	pt	Números de telefone
+please enter a name for that field !	addressbook	pt	Por favor, atribua um nome ao campo !
+please select only one category	addressbook	pt	Por favor, seleccione apenas uma categoria
+postal	common	pt	Código postal
+pref	addressbook	pt	pref
+prefix	addressbook	pt	Prefixo
+public key	addressbook	pt	Chave pública
+publish into groups:	addressbook	pt	Publicar nos grupos:
+read a list / search for entries.	addressbook	pt	Ler uma lista / pesquisar registos.
+read a list of entries.	addressbook	pt	Ler uma lista de registos.
+read a single entry by passing the id and fieldlist.	addressbook	pt	Ler um registo único passando a ID e a lista de campos
+record access	addressbook	pt	Acesso ao registo
+record owner	addressbook	pt	Dono do registo
+retrieve contacts	admin	pt	receber contatos
+select all	addressbook	pt	Seleccionar tudo
+select the type of conversion	addressbook	pt	Seleccionar o tipo de conversão
+select the type of conversion:	addressbook	pt	Seleccionar o tipo de conversão:
+select where you want to store	admin	pt	Selecione onde você deseja guardar
+show	addressbook	pt	Exibir
+show birthday reminders on main screen	addressbook	pt	Exibir lembrete de aniversários no ecrã principal
+something went wrong by deleting %1	addressbook	pt	Ocorreu um erro ao eliminar %1
+something went wrong by deleting this contact	addressbook	pt	Ocorreu um erro ao eliminar este contacto
+something went wrong by reading this contact	addressbook	pt	Ocorreu um erro ao ler este contacto
+something went wrong by saving this contact. errorcode %1	addressbook	pt	Ocorreu um erro ao guardar este contacto. Código de erro %1
+startrecord	addressbook	pt	Iniciar registo
+state	common	pt	Bairro
+street	common	pt	Rua
+successfully imported %1 records into your addressbook.	addressbook	pt	%1 registo(s) importado(s) para o seu livro de endereços com sucesso.
+suffix	addressbook	pt	Sufixo
+tel home	addressbook	pt	telefone de casa
+test import (show importable records <u>only</u> in browser)	addressbook	pt	Importação de Teste (exibir no navegador <u>apenas</u> os registos importáveis)
+that field name has been used already !	addressbook	pt	Esse nome do campo já existe !
+this person's first name was not in the address book.	addressbook	pt	O primeiro nome desta pessoa não estava no Livro de Endereços
+this person's last name was not in the address book.	addressbook	pt	O apelido desta pessoa não foi encontrado no livro de endereços
+to many might exceed your execution-time-limit	addressbook	pt	Demasiados podem exceder o seu tempo limite de execução
+today is %1's birthday!	common	pt	Hoje é o aniversário de %1.
+tomorrow is %1's birthday.	common	pt	Amanhã é o aniversário de %1.
+translation	addressbook	pt	Tradução
+update a single entry by passing the fields.	addressbook	pt	Actualizar um registo único passando os campos.
+use country list	addressbook	pt	Utilizar lista de países
+vcard	common	pt	VCard
+vcards require a first name entry.	addressbook	pt	VCards requer um primeiro nome.
+vcards require a last name entry.	addressbook	pt	VCards requer um apelido.
+video phone	addressbook	pt	Videofone
+voice phone	addressbook	pt	Telefone voz
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt	Aviso!! LDAP é válido apenas se não estiver a utilizar contactos para armazenamento de contas!
+warning: all contacts found will be deleted!	addressbook	pt	Aviso: Todos os contactos encontrados serão eliminados!
+work phone	addressbook	pt	Telefone de trabalho
+write (update or add) a single entry by passing the fields.	addressbook	pt	Editar (actualizar ou adicionar) um registo único passando os campos.
+you are not permitted to delete contact %1	addressbook	pt	Não tem permissões para eliminar o contacto %1
+you are not permittet to delete this contact	addressbook	pt	Não tem permissões para eliminar este contacto
+you are not permittet to edit this contact	addressbook	pt	Não tem permissões para editar este contacto
+you are not permittet to view this contact	addressbook	pt	Não tem permissões para ver este contacto
+you must select a vcard. (*.vcf)	addressbook	pt	É necessário seleccionar um vcard. (*.vcf)
+you must select at least 1 column to display	addressbook	pt	É necessário seleccionar pelo menos uma coluna a apresentar
+zip code	common	pt	Código postal
+zip_note	addressbook	pt	<p><b>Nota:</b> O ficheiro pode ser um ficheiro .zip com uma colecção de ficheiros .csv, .vcf ou .ldif. No entanto, não misture os tipos de ficheiro por importação.

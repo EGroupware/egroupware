@@ -1,0 +1,28 @@
+%1 added	addressbook	et	%1 lisatud
+accounts	addressbook	et	Kontod
+add %1	addressbook	et	Lisa %1
+add a new contact	addressbook	et	Lisa uus kontakt
+always	addressbook	et	alati
+birthday	common	et	Sünnipäev
+birthdays	common	et	Sünnipäevad
+cell phone	addressbook	et	Mobiil telefon
+city	common	et	Linn
+contains	addressbook	et	sisaldab
+country	common	et	Riik
+create new links	addressbook	et	Tee uued lingid
+created	addressbook	et	Tehtud
+default filter	addressbook	et	Vaikimisi Filter
+delete this contact	addressbook	et	Kustuta see kontakt
+deleted	addressbook	et	kustutatud
+duration	addressbook	et	Kestvus
+email & internet	addressbook	et	Email & Internet
+empty for all	addressbook	et	tühi kõigijaoks
+end	addressbook	et	Lõpp
+existing links	addressbook	et	Eksisteerivad lingid
+links	addressbook	et	Lingid
+photo	addressbook	et	Foto
+select all	addressbook	et	Märgi kõik
+state	common	et	Maakond
+street	common	et	Tänav
+weekday	addressbook	et	Nädalati
+wrong - try again ...	addressbook	et	Vale - proovi uuesti ...
