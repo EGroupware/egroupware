@@ -41,7 +41,7 @@ class egw_session
 	/**
 	 * Write debug messages about session verification and creation to the error_log
 	 */
-	const ERROR_LOG_DEBUG = true;
+	const ERROR_LOG_DEBUG = false;
 
 	/**
 	 * key of eGW's session-data in $_SESSION
