@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.cat_acl" template="" lang="" group="0" version="1.7.001">
+		<groupbox>
+			<caption label="Category ACL"/>
+			<description value="Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!"/>
+		</groupbox>
+		<grid id="rows">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="Category"/>
+					<description value="Restrict add category to"/>
+					<description value="Restrict set status to"/>
+				</row>
+				<row class="row" valign="top">
+					<menulist>
+						<menupopup type="select-cat" id="${row}[cat_id]" options="Select one"/>
+					</menulist>
+					<listbox type="select-account" rows="5" options="both" id="${row}[add]"/>
+					<listbox type="select-account" rows="5" options="both" id="${row}[status]"/>
+				</row>
+			</rows>
+		</grid>
+		<hbox>
+			<button label="Save" id="button[save]"/>
+			<button id="button[apply]" label="Apply"/>
+			<button id="button[cancel]" label="Cancel"/>
+		</hbox>
+	</template>
+</overlay>

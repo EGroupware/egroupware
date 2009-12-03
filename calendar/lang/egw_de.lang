@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	de	%1 %2 im %3
+%1 participants removed because of missing invite grants	calendar	de	%1 Teilnehmer entfernt wegen fehlender Einladungsrechte
 %1 records imported	calendar	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 Datensätze gelesen (noch nicht importiert, sie können zurück gehen und Test Import ausschalten)
 %1 weeks	calendar	de	%1 Wochen
@@ -50,6 +51,9 @@ calendar-fieldname	calendar	de	Kalender Feldname
 can't add alarms in the past !!!	calendar	de	Kann keine Alarme in der Vergangenheit setzen !!!
 can't aquire lock!	calendar	de	Kann Termin nicht sperren!
 canceled	calendar	de	Abgesagt
+category %1 removed because of missing rights	calendar	de	Kategorie %1 entfertn wegen fehlender Rechte
+category acl	calendar	de	Kategorie Rechte
+category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie Reche beschrenken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
 chair	calendar	de	Vorsitz
 charset of file	calendar	de	Zeichensatz der Datei
 check all	calendar	de	Alle auswählen
@@ -279,6 +283,8 @@ reset	calendar	de	Zurücksetzen
 resources	calendar	de	Ressourcen
 resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
 resources with conflict detection	calendar	de	Ressourcen mit bereits gebuchten
+restrict add category to	calendar	de	Beschränke hinzufügen der Kategorie auf
+restrict set status to	calendar	de	Beschränke Statusänderungen auf
 role	calendar	de	Rolle
 rule	calendar	de	Regel
 sat	calendar	de	Sa
@@ -324,6 +330,7 @@ startrecord	calendar	de	Startdatensatz
 status changed	calendar	de	Status geändert
 status for all future scheduled days changed	calendar	de	Status alle zukünftig geplanten Termine geändert
 status for this particular day changed	calendar	de	Status für diesen Tage geändert
+status of participants set to unknown because of missing category rights	calendar	de	Status der Teilnehmer auf unbekannt gesetzt wegen fehlender Kategorie Rechte
 submit to repository	calendar	de	Übertragen zu EGroupware.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage

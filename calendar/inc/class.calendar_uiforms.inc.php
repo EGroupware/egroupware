@@ -29,6 +29,7 @@ class calendar_uiforms extends calendar_ui
 		'edit' => true,
 		'export' => true,
 		'import' => true,
+		'cat_acl' => true,
 	);
 
 	/**
@@ -487,7 +488,7 @@ class calendar_uiforms extends calendar_ui
 				$event['reference'] = $event['id'];
 				$event['recurrence'] = $content['edit_single'];
 				unset($event['id']);
-				$conflicts = $this->bo->update($event,$ignore_conflicts);
+				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages);
 				if (!is_array($conflicts) && $conflicts)
 				{
 					// now we need to add the original start as recur-execption to the series
@@ -508,7 +509,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			else	// we edited a non-reccuring event or the whole series
 			{
-				$conflicts = $this->bo->update($event,$ignore_conflicts);
+				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages);
 				unset($event['ignore']);
 			}
 			if (is_array($conflicts))
@@ -516,20 +517,25 @@ class calendar_uiforms extends calendar_ui
 				$event['button_was'] = $button;	// remember for ignore
 				return $this->conflicts($event,$conflicts,$preserv);
 			}
-			elseif ($conflicts === 0)
+			// check if there are messages from update, eg. removed participants or categories because of missing rights
+			if ($messages)
+			{
+				$msg  .= ($msg ? ', ' : '').implode(', ',$messages);
+			}
+			if ($conflicts === 0)
 			{
 				$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
 								htmlspecialchars(egw::link('/index.php',array(
 								'menuaction' => 'calendar.calendar_uiforms.edit',
-									'cal_id'    => $content['id'],
-									'referer'    => $referer,
-									))).'">','</a>');
+								'cal_id'    => $content['id'],
+								'referer'    => $referer,
+							))).'">','</a>');
 				$noerror=false;
 			}
 			elseif ($conflicts > 0)
 			{
-				$msg .= ($msg ? ', ' : '') . lang('Event saved');
+				$msg = lang('Event saved').($msg ? ', '.$msg : '');
 
 				// writing links for new entry, existing ones are handled by the widget itself
 				if (!$content['id'] && is_array($content['link_to']['to_id']))
@@ -1631,5 +1637,70 @@ class calendar_uiforms extends calendar_ui
 		$etpl = CreateObject('etemplate.etemplate','calendar.import');
 
 		$etpl->exec('calendar.calendar_uiforms.import',$content);
+	}
+
+	/**
+	 * Edit category ACL (admin only)
+	 *
+	 * @param array $content=null
+	 */
+	function cat_acl(array $content=null)
+	{
+		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			throw new egw_exception_no_permission_admin();
+		}
+		if ($content)
+		{
+			list($button) = each($content['button']);
+			unset($content['button']);
+			if ($button != 'cancel')	// store changed acl
+			{
+				foreach($content['rows'] as $data)
+				{
+					if (!($cat_id = $data['cat_id'])) continue;
+					foreach(array_merge((array)$data['add'],(array)$data['status'],array_keys((array)$data['old'])) as $account_id)
+					{
+						$rights = 0;
+						if (in_array($account_id,(array)$data['add'])) $rights |= calendar_boupdate::CAT_ACL_ADD;
+						if (in_array($account_id,(array)$data['status'])) $rights |= calendar_boupdate::CAT_ACL_STATUS;
+						if ($account_id) $this->bo->set_cat_rights($cat_id,$account_id,$rights);
+					}
+				}
+			}
+			if ($button != 'apply')	// end dialog
+			{
+				egw::redirect_link('/index.php',array('menuaction' => $this->view_menuaction));
+			}
+		}
+		$content['rows'] = $preserv['rows'] = array();
+		$n = 1;
+		foreach($this->bo->get_cat_rights() as $Lcat_id => $data)
+		{
+			$cat_id = (int)substr($Lcat_id,1);
+			$row = array(
+				'cat_id' => $cat_id,
+				'add' => array(),
+				'status' => array(),
+			);
+			foreach($data as $account_id => $rights)
+			{
+				if ($rights & calendar_boupdate::CAT_ACL_ADD) $row['add'][] = $account_id;
+				if ($rights & calendar_boupdate::CAT_ACL_STATUS) $row['status'][] = $account_id;
+			}
+			$content['rows'][$n] = $row;
+			$preserv['rows'][$n] = array(
+				'cat_id' => $cat_id,
+				'old' => $data,
+			);
+			$readonlys[$n.'[cat_id]'] = true;
+			++$n;
+		}
+		// add empty row for new entries
+		$content['rows'][] = array('cat_id' => '');
+
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Calendar').' - '.lang('Category ACL');
+		$tmp = new etemplate('calendar.cat_acl');
+		$tmp->exec('calendar.calendar_uiforms.cat_acl',$content,null,$readonlys,$preserv);
 	}
 }

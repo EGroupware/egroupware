@@ -1,4 +1,5 @@
 %1 %2 in %3	calendar	en	%1 %2 in %3
+%1 participants removed because of missing invite grants	calendar	en	%1 participants removed because of missing invite grants
 %1 records imported	calendar	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
 %1 weeks	calendar	en	%1 weeks
@@ -50,6 +51,9 @@ calendar-fieldname	calendar	en	Calendar-Fieldname
 can't add alarms in the past !!!	calendar	en	Can't add alarms in the past !!!
 can't aquire lock!	calendar	en	Can't aquire lock!
 canceled	calendar	en	Canceled
+category %1 removed because of missing rights	calendar	en	Category %1 removed because of missing rights
+category acl	calendar	en	Category ACL
+category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	en	Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!
 chair	calendar	en	Chair
 charset of file	calendar	en	Charset of file
 check all	calendar	en	Check all
@@ -279,6 +283,8 @@ reset	calendar	en	Reset
 resources	calendar	en	Resources
 resources except conflicting ones	calendar	en	Resources except conflicting ones
 resources with conflict detection	calendar	en	Resources with conflict detection
+restrict add category to	calendar	en	Restrict add category to
+restrict set status to	calendar	en	Restrict set status to
 role	calendar	en	Role
 rule	calendar	en	Rule
 sat	calendar	en	Sat
@@ -324,6 +330,7 @@ startrecord	calendar	en	Start record
 status changed	calendar	en	Status changed
 status for all future scheduled days changed	calendar	en	Status for all future scheduled days changed
 status for this particular day changed	calendar	en	Status for this particular day changed
+status of participants set to unknown because of missing category rights	calendar	en	Status of participants set to unknown because of missing category rights
 submit to repository	calendar	en	Submit to Repository
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative

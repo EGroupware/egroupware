@@ -115,6 +115,7 @@ class calendar_hooks
 			'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.edit&appname=calendar'),
 			'Calendar Holiday Management' => egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
 			'Global Categories' => egw::link('/index.php','menuaction=admin.uicategories.index&appname=calendar'),
+			'Category ACL' => egw::link('/index.php','menuaction=calendar.calendar_uiforms.cat_acl'),
 			'Update timezones' => egw::link('/index.php','menuaction=calendar.calendar_timezones.update'),
 		);
 		display_section('calendar','calendar',$file);

@@ -41,6 +41,15 @@ define('MSG_DISINVITE',7);
 class calendar_boupdate extends calendar_bo
 {
 	/**
+	 * Category ACL allowing to add a given category
+	 */
+	const CAT_ACL_ADD = 512;
+	/**
+	 * Category ACL allowing to change status of a participant
+	 */
+	const CAT_ACL_STATUS = 1024;
+
+	/**
 	 * name of method to debug or level of debug-messages:
 	 *	False=Off as higher as more messages you get ;-)
 	 *	1 = function-calls incl. parameters to general functions like search, read, write, delete
@@ -76,10 +85,11 @@ class calendar_boupdate extends calendar_bo
 	 * @param boolean $touch_modified=true touch modificatin time and set modifing user, default true=yes
 	 * @param boolean $ignore_acl=false should we ignore the acl
 	 * @param boolean $updateTS=true update the content history of the event
+	 * @param array &$messages=null messages about because of missing ACL removed participants or categories
 	 * @return mixed on success: int $cal_id > 0, on error false or array with conflicting events (only if $check_conflicts)
 	 * 		Please note: the events are not garantied to be readable by the user (no read grant or private)!
 	 */
-	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true)
+	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null)
 	{
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
 		if ($this->debug > 1 || $this->debug == 'update')
@@ -97,7 +107,7 @@ class calendar_boupdate extends calendar_bo
 			return false;
 		}
 
-		if (!$event['id'])	// some defaults for new entries
+		if (($new_event = !$event['id']))	// some defaults for new entries
 		{
 			// if no owner given, set user to owner
 			if (!$event['owner']) $event['owner'] = $this->user;
@@ -108,8 +118,7 @@ class calendar_boupdate extends calendar_bo
 				$status = calendar_so::combine_status($status, 1, 'CHAIR');
 				$event['participants'] = array($event['owner'] => $status);
 			}
-			$new_event = true;
-		} else $new_event = false;
+		}
 
 		// check if user has the permission to update / create the event
 		if (!$ignore_acl && (!$new_event && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
@@ -134,7 +143,55 @@ class calendar_boupdate extends calendar_bo
 		// do we need to check, if user is allowed to invite the invited participants
 		if ($this->require_acl_invite && ($removed = $this->remove_no_acl_invite($event,$old_event)))
 		{
-			// todo: report removed participants back to user
+			// report removed participants back to user
+			foreach($removed as $key => $account_id)
+			{
+				$removed[$key] = $this->participant_name($account_id);
+			}
+			$messages[] = lang('%1 participants removed because of missing invite grants',count($removed)).
+				': '.implode(', ',$removed);
+		}
+		// check category based ACL
+		if ($event['category'])
+		{
+			if (!is_array($event['category'])) $event['category'] = explode(',',$event['category']);
+			if ($old_event && $old_event['category'] && !is_array($old_event['category']))
+			{
+				$old_event['category'] = explode(',',$old_event['category']);
+			}
+			foreach($event['category'] as $key => $cat_id)
+			{
+				// check if user is allowed to update event categories
+				if ((!$old_event || !isset($old_event['category'][$cat_id])) && !self::has_cat_right(self::CAT_ACL_ADD,$cat_id,$this->user))
+				{
+					unset($event['category'][$key]);
+					// report removed category to user
+					$removed_cats[$cat_id] = $this->categories->id2name($cat_id);
+				}
+				// for new or moved events check status of participants, if no category status right --> set all status to 'U' = unknown
+				if (!$status_reset_to_unknown && !self::has_cat_right(self::CAT_ACL_STATUS,$cat_id,$this->user) &&
+					(!$old_event || $old_event['start'] != $event['start'] || $old_event['end'] != $event['end']))
+				{
+					foreach($event['participants'] as $uid => $status)
+					{
+						calendar_so::split_status($status,$q,$r);
+						if ($status != 'U')
+						{
+							$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
+							// todo: report reset status to user
+						}
+					}
+					$status_reset_to_unknown = true;	// once is enough
+				}
+			}
+			if ($removed_cats)
+			{
+				$messages[] = lang('Category %1 removed because of missing rights',implode(', ',$removed_cats));
+			}
+			if ($status_reset_to_unknown)
+			{
+				$messages[] = lang('Status of participants set to unknown because of missing category rights');
+			}
 		}
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
 		if (!$ignore_conflicts && !$event['non_blocking'] && isset($event['start']) && isset($event['end']))
@@ -817,6 +874,10 @@ class calendar_boupdate extends calendar_bo
 
 			return $this->check_perms(EGW_ACL_EDIT,0,$event['owner']);
 		}
+		if (!$this->check_cat_acl(self::CAT_ACL_STATUS,$event))
+		{
+			return false;
+		}
 		if (!is_numeric($uid))	// this is eg. for resources (r123)
 		{
 			$resource = $this->resource_info($uid);
@@ -825,6 +886,125 @@ class calendar_boupdate extends calendar_bo
 		}
 		// regular user and groups
 		return $this->check_perms(EGW_ACL_EDIT,0,$uid);
+	}
+
+	/**
+	 * Check if current user has a certain right on the categories of an event
+	 *
+	 * Not having the given right for a single category, means not having it!
+	 *
+	 * @param int $right self::CAT_ACL_{ADD|STATUS}
+	 * @param int|array $event
+	 * @return boolean true if use has the right, false if not
+	 */
+	function check_cat_acl($right,$event)
+	{
+		if (!is_array($event)) $event = $this->read($event);
+
+		$ret = true;
+		if ($event['category'])
+		{
+			foreach(is_array($event['category']) ? $event['category'] : explode(',',$event['category']) as $cat_id)
+			{
+				if (!self::has_cat_right($right,$cat_id,$this->user))
+				{
+					$ret = false;
+					break;
+				}
+			}
+		}
+		//echo "<p>".__METHOD__."($event[id]: $event[title], $right) = ".array2string($ret)."</p>\n";
+		return $ret;
+	}
+
+	/**
+	 * Array with $cat_id => $rights pairs for current user (no entry means, cat is not limited by ACL!)
+	 *
+	 * @var array
+	 */
+	private static $cat_rights_cache;
+
+	/**
+	 * Get rights for a given category id
+	 *
+	 * @param int $cat_id=null null to return array with all cats
+	 * @return array with account_id => right pairs
+	 */
+	public static function get_cat_rights($cat_id=null)
+	{
+		if (!isset(self::$cat_rights_cache))
+		{
+			self::$cat_rights_cache = egw_cache::getSession('calendar','cat_rights',
+				array($GLOBALS['egw']->acl,'get_location_grants'),array('L%','calendar'));
+		}
+		//echo "<p>".__METHOD__."($cat_id) = ".array2string($cat_id ? self::$cat_rights_cache['L'.$cat_id] : self::$cat_rights_cache)."</p>\n";
+		return $cat_id ? self::$cat_rights_cache['L'.$cat_id] : self::$cat_rights_cache;
+	}
+
+	/**
+	 * Set rights for a given single category and user
+	 *
+	 * @param int $cat_id
+	 * @param int $user
+	 * @param int $rights self::CAT_ACL_{ADD|STATUS} or'ed together
+	 */
+	public static function set_cat_rights($cat_id,$user,$rights)
+	{
+		//echo "<p>".__METHOD__."($cat_id,$user,$rights)</p>\n";
+		if (!isset(self::$cat_rights_cache)) self::get_cat_rights($cat_id);
+
+		if ((int)$rights != (int)self::$cat_rights_cache['L'.$cat_id][$user])
+		{
+			if ($rights)
+			{
+				self::$cat_rights_cache['L'.$cat_id][$user] = $rights;
+				$GLOBALS['egw']->acl->add_repository('calendar','L'.$cat_id,$user,$rights);
+			}
+			else
+			{
+				unset(self::$cat_rights_cache['L'.$cat_id][$user]);
+				if (!self::$cat_rights_cache['L'.$cat_id]) unset(self::$cat_rights_cache['L'.$cat_id]);
+				$GLOBALS['egw']->acl->delete_repository('calendar','L'.$cat_id,$user);
+			}
+			egw_cache::setSession('calendar','cat_rights',self::$cat_rights_cache);
+		}
+	}
+
+	/**
+	 * Check if current user has a given right on a category (if it's restricted!)
+	 *
+	 * @param int $cat_id
+	 * @return boolean
+	 */
+	public static function has_cat_right($right,$cat_id,$user)
+	{
+		static $cache;
+
+		if (!isset($cache[$cat_id][$right]))
+		{
+			$all = $own = 0;
+			$cat_rights = self::get_cat_rights($cat_id);
+			if (!is_null($cat_rights))
+			{
+				static $memberships;
+				if (is_null($memberships))
+				{
+					$memberships = $GLOBALS['egw']->accounts->memberships($user,true);
+					$memberships[] = $user;
+				}
+				foreach($cat_rights as $uid => $value)
+				{
+					$all |= $value;
+					if (in_array($uid,$memberships)) $own |= $value;
+				}
+			}
+			foreach(array(self::CAT_ACL_ADD,self::CAT_ACL_STATUS) as $mask)
+			{
+				$cache[$cat_id][$mask] = !($all & $mask) || ($own & $mask);
+			}
+		}
+		//echo "<p>".__METHOD__."($right,$cat_id) all=$all, own=$own returning ".array2string($cache[$cat_id][$right])."</p>\n";
+		return $cache[$cat_id][$right];
 	}
 
 	/**
