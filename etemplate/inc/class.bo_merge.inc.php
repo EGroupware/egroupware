@@ -278,7 +278,7 @@ abstract class bo_merge
 		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
 		if ($mimetype == 'application/vnd.oasis.opendocument.text' && count($ids) > 1)
 		{
-			//for odt files we have to slpit the content and add a style for page break to  the style area
+			//for odt files we have to split the content and add a style for page break to  the style area
 			list($contentstart,$contentrepeat,$contentend) = preg_split('/office:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
 			$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "<"
 			$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
@@ -290,7 +290,7 @@ abstract class bo_merge
 		}
 		if ($mimetype == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' && count($ids) > 1)
 		{
-			//for Word 2007 XML files we have to slpit the content and add a style for page break to  the style area
+			//for Word 2007 XML files we have to split the content and add a style for page break to  the style area
 			list($contentstart,$contentrepeat,$contentend) = preg_split('/w:body>/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
 			$contentstart = substr($contentstart,0,strlen($contentstart)-1);  //remove "</"
 			$contentrepeat = substr($contentrepeat,0,strlen($contentrepeat)-2);  //remove "</";
@@ -418,8 +418,6 @@ abstract class bo_merge
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
-					// todo ms word xml files
-					break;
 			}
 			$err = lang('%1 not implemented for %2!','$$labelplacement$$',$mimetype);
 			return false;
@@ -436,12 +434,11 @@ abstract class bo_merge
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.spreadsheet':
+				case 'application/xml':
 					return $contentstart.implode('',$contentrep).$contentend;
-					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
-					break;
 			}
 			$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
 			return false;
