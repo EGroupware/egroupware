@@ -160,7 +160,7 @@ class calendar_bo
 	/**
 	 * Instance of the categories class
 	 *
-	 * @var $categories
+	 * @var categories
 	 */
 	var $categories;
 
@@ -1024,7 +1024,7 @@ class calendar_bo
 	 * @param mixed $param a variable number of parameters, to be inserted in $msg
 	 *	arrays get serialized with print_r() !
 	 */
-	function debug_message($msg,$backtrace=True)
+	static function debug_message($msg,$backtrace=True)
 	{
 		static $acl2string = array(
 			0               => 'ACL-UNKNOWN',
@@ -1210,6 +1210,7 @@ class calendar_bo
 	* Converts a participant into a (readable) user- or resource-name
 	*
 	* @param string|int $id id of user or resource
+	* @param string|boolean type-letter or false
 	* @return string with name
 	*/
 	function participant_name($id,$use_type=false)
@@ -1230,7 +1231,7 @@ class calendar_bo
 			}
 			else
 			{
-				$id2lid[$id] = $GLOBALS['egw']->common->grab_owner_name($id);
+				$id2lid[$id] = common::grab_owner_name($id);
 			}
 		}
 		return $id2lid[$id];
