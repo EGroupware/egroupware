@@ -103,13 +103,6 @@ class calendar_ical extends calendar_boupdate
 	var $calendarOwner = 0;
 
 	/**
-	 * Original timezone
-	 *
-	 * @var string
-	 */
-	var $original_tz;
-
-	/**
 	 * user preference: Use this timezone for import from and export to device
 	 *
 	 * @var string
@@ -157,7 +150,6 @@ class calendar_ical extends calendar_boupdate
 		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
 		$this->vCalendar = new Horde_iCalendar;
-		$this->original_tz = date_default_timezone_get();
 	}
 
 
@@ -1396,7 +1388,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if ($this->tzid)
 			{
-				date_default_timezone_set($this->original_tz);
+				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 			}
 			return false;
 		}
@@ -1440,7 +1432,7 @@ class calendar_ical extends calendar_boupdate
 
 		if ($this->tzid)
 		{
-			date_default_timezone_set($this->original_tz);
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		}
 
 		// decide what to return
