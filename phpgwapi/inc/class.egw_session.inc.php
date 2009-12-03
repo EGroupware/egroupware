@@ -41,7 +41,7 @@ class egw_session
 	/**
 	 * Write debug messages about session verification and creation to the error_log
 	 */
-	const ERROR_LOG_DEBUG = false;
+	const ERROR_LOG_DEBUG = true;
 
 	/**
 	 * key of eGW's session-data in $_SESSION
@@ -749,7 +749,7 @@ class egw_session
 		{
 			$sessionid = false;
 		}
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() returning '.array2string($sessionid).' called from:'.function_backtrace());
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() returning '.print_r($sessionid,true));
 		return $sessionid;
 	}
 
