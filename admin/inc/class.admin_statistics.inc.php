@@ -166,7 +166,11 @@ return true;";
 
 		// api version
 		$data['version'] = $GLOBALS['egw_info']['apps']['phpgwapi']['version'];
-
+		// append EPL version
+		if (isset($GLOBALS['egw_info']['apps']['stylite']))
+		{
+			$data['version'] .= ' '.$GLOBALS['egw_info']['apps']['stylite']['version'].'EPL';
+		}
 		// sessions in the last 30 days
 		$data['sessions'] = $GLOBALS['egw']->db->query('SELECT COUNT(*) FROM egw_access_log WHERE li > '.(time()-30*24*3600))->fetchColumn();
 
@@ -179,7 +183,7 @@ return true;";
 
 		$data['php'] = PHP_VERSION.': '.PHP_SAPI;
 		$data['os'] = PHP_OS;
-		if (file_exists($file = '/etc/SuSE-release') || file_exists($file = '/etc/redhat-release') || file_exists('debian_version'))
+		if (file_exists($file = '/etc/SuSE-release') || file_exists($file = '/etc/redhat-release') || file_exists($file = '/etc/debian_version'))
 		{
 			$data['os'] .= ': '.str_replace(array("\n","\r"),'',implode(',',file($file)));
 		}
