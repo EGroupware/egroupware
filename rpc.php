@@ -59,6 +59,8 @@ if (!empty($_SERVER['CONTENT_TYPE'])) {
     if (strpos($_SERVER['CONTENT_TYPE'], 'application/vnd.syncml+xml') !== false) {
         $serverType = 'syncml';
     } elseif (strpos($_SERVER['CONTENT_TYPE'], 'application/vnd.syncml+wbxml') !== false) {
+	// switching output compression off, as it makes problems with synthesis client
+	ini_set('zlib.output_compression',0);
         $serverType = 'syncml_wbxml';
     } elseif (strpos($_SERVER['CONTENT_TYPE'], 'text/xml') !== false) {
         $input = Horde_RPC::getInput();
