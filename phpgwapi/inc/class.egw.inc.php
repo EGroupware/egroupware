@@ -127,11 +127,19 @@ class egw extends egw_minimal
 		}
 		//$GLOBALS['egw_info']['server'] = config::read('phpgwapi'); would unserialize arrays
 
-		// restoring server timezone, to avoid warnings under php5.3
-		if (!empty($GLOBALS['egw_info']['server']['server_timezone']))
+		// if no server timezone set, use date_default_timezone_get() to determine it once
+		// it fills to log with deprecated warnings under 5.3 otherwise
+		if (empty($GLOBALS['egw_info']['server']['server_timezone']))
 		{
-			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+			$config = new config('phpgwapi');
+			$config->read_repository();
+			$config->save_value('server_timezone',
+				$GLOBALS['egw_info']['server']['server_timezone'] = date_default_timezone_get());
+			$config->save_repository();
+			error_log(__METHOD__."() stored server_timezone=".$GLOBALS['egw_info']['server']['server_timezone']);
 		}
+		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+
 		// setup the other subclasses
 		// translation class is here only for backward compatibility, as all it's methods can be called static now
 		$this->translation    = new translation();
@@ -189,7 +197,7 @@ class egw extends egw_minimal
 		{
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		}
-		
+
 		register_shutdown_function(array($this, 'shutdown'));
 
 		$this->define_egw_constants();

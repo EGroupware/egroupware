@@ -393,26 +393,11 @@ class egw_time extends DateTime
 	 */
 	public static function init()
 	{
-		// if no server timezone set, use date_default_timezone_get() to determine it once
-		// it fills to log with deprecated warnings under 5.3 otherwise
+		// if no server timezone set, use date_default_timezone_get() to determine it
 		if (empty($GLOBALS['egw_info']['server']['server_timezone']))
 		{
-			$config = new config('phpgwapi');
-			$config->read_repository();
-			if ($config->config_data['server_timezone'])
-			{
-				$GLOBALS['egw_info']['server']['server_timezone'] = $config->config_data['server_timezone'];
-			}
-			else
-			{
-				$config->save_value('server_timezone',
-					$GLOBALS['egw_info']['server']['server_timezone'] = date_default_timezone_get());
-				$config->save_repository();
-				error_log(__METHOD__."() stored server_timezone=".date_default_timezone_get());
-			}
+			$GLOBALS['egw_info']['server']['server_timezone'] = date_default_timezone_get();
 		}
-		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-
 		self::$server_timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
 		{
