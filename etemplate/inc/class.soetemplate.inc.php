@@ -1037,20 +1037,10 @@ class soetemplate
 		}
 		ksort($langarr);
 
-		$dir = EGW_SERVER_ROOT . "/$app/setup";
+		$dir = EGW_SERVER_ROOT . "/$app/lang";
 		if (!is_writeable($dir))
 		{
 			return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
-		}
-		$file = "$dir/phpgw_$lang.lang";
-		if (file_exists($file))
-		{
-			$old_file = "$dir/phpgw_$lang.old.lang";
-			if (file_exists($old_file))
-			{
-				unlink($old_file);
-			}
-			rename($file,$old_file);
 		}
 		$solangfile->write_file($app,$langarr,$lang);
 		$solangfile->loaddb($app,$lang);
