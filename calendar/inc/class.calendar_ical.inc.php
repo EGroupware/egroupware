@@ -229,8 +229,17 @@ class calendar_ical extends calendar_boupdate
 			}
 			elseif ($event['recur_enddate'])
 			{
-				$recur_enddate = (int)$event['recur_enddate'];
-				$recur_enddate += 24 * 60 * 60 - 1;
+				$time = new egw_time($event['start'],egw_time::$server_timezone);
+				if (!isset(self::$tz_cache[$event['tzid']]))
+				{
+					self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+				}
+				// all calculations in the event's timezone
+				$time->setTimezone(self::$tz_cache[$event['tzid']]);
+				$time->setTime(0, 0, 0);
+				$delta = $event['end'] - (int)$time->format('U');
+				// Adjust recur_enddate to end time
+				$event['recur_enddate'] += $delta;
 			}
 
 			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
@@ -1514,6 +1523,7 @@ class calendar_ical extends calendar_boupdate
 						catch(Exception $e)
 						{
 							error_log(__METHOD__."() unknown TZID='{$attributes['params']['TZID']}', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
+							$tz = egw_time::$user_timezone;
 							$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
 						}
 					}
@@ -1635,10 +1645,13 @@ class calendar_ical extends calendar_boupdate
 
 							if (!empty($vcardData['recur_count']))
 							{
-								$vcardData['recur_enddate'] = mktime(0,0,0,
-									date('m',$vcardData['start']),
-									date('d',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)*7),
-									date('Y',$vcardData['start']));
+								$vcardData['recur_enddate'] = mktime(
+									date('H', $vcardData['end']),
+									date('i', $vcardData['end']),
+									date('s', $vcardData['end']),
+									date('m', $vcardData['start']),
+									date('d', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)*7),
+									date('Y', $vcardData['start']));
 							}
 							break;
 
@@ -1674,10 +1687,13 @@ class calendar_ical extends calendar_boupdate
 
 							if (!empty($vcardData['recur_count']))
 							{
-								$vcardData['recur_enddate'] = mktime(0,0,0,
-									date('m',$vcardData['start']),
-									date('d',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
-									date('Y',$vcardData['start']));
+								$vcardData['recur_enddate'] = mktime(
+									date('H', $vcardData['end']),
+									date('i', $vcardData['end']),
+									date('s', $vcardData['end']),
+									date('m', $vcardData['start']),
+									date('d', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
+									date('Y', $vcardData['start']));
 							}
 							break;
 
@@ -1729,10 +1745,13 @@ class calendar_ical extends calendar_boupdate
 
 							if (!empty($vcardData['recur_count']))
 							{
-								$vcardData['recur_enddate'] = mktime(0,0,0,
-									date('m',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
-									date('d',$vcardData['start']),
-									date('Y',$vcardData['start']));
+								$vcardData['recur_enddate'] = mktime(
+									date('H', $vcardData['end']),
+									date('i', $vcardData['end']),
+									date('s', $vcardData['end']),
+									date('m', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
+									date('d', $vcardData['start']),
+									date('Y', $vcardData['start']));
 							}
 							break;
 
@@ -1767,10 +1786,13 @@ class calendar_ical extends calendar_boupdate
 
 							if (!empty($vcardData['recur_count']))
 							{
-								$vcardData['recur_enddate'] = mktime(0,0,0,
-									date('m',$vcardData['start']),
-									date('d',$vcardData['start']),
-									date('Y',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)));
+								$vcardData['recur_enddate'] = mktime(
+									date('H', $vcardData['end']),
+									date('i', $vcardData['end']),
+									date('s', $vcardData['end']),
+									date('m', $vcardData['start']),
+									date('d', $vcardData['start']),
+									date('Y', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)));
 							}
 							break;
 					}
@@ -2021,9 +2043,9 @@ class calendar_ical extends calendar_boupdate
 		{
 			// reset recure_enddate to 00:00:00 on the last day
 			$vcardData['recur_enddate'] = mktime(0, 0, 0,
-				date('m',$vcardData['recur_enddate']),
-				date('d',$vcardData['recur_enddate']),
-				date('Y',$vcardData['recur_enddate'])
+				date('m', $vcardData['recur_enddate']),
+				date('d', $vcardData['recur_enddate']),
+				date('Y', $vcardData['recur_enddate'])
 			);
 		}
 
