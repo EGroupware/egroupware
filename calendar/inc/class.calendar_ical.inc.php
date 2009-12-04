@@ -247,8 +247,14 @@ class calendar_ical extends calendar_boupdate
 			}
 			elseif ($event['recur_enddate'])
 			{
-				$recur_enddate = (int)$event['recur_enddate'];
-				$recur_enddate += 24 * 60 * 60 - 1;
+				$delta = $event['end'] - mktime(0, 0, 0,
+					date('m', $event['start']),
+					date('d', $event['start']),
+					date('Y', $event['start'])
+				);
+				if ($delta == 0) $delta = 24 * 60 * 60;
+
+				$event['recur_enddate'] += $delta;
 			}
 
 			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
@@ -435,7 +441,7 @@ class calendar_ical extends calendar_boupdate
 
 							if ($event['recur_enddate'])
 							{
-								$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
+								$rrule['UNTIL'] = $vcal->_exportDateTime($event['recur_enddate']);
 							}
 							else
 							{
@@ -473,7 +479,7 @@ class calendar_ical extends calendar_boupdate
 							if ($event['recur_enddate'])
 							{
 								// UNTIL should be a UTC timestamp
-								$rrule['UNTIL'] = $vcal->_exportDateTime($recur_enddate);
+								$rrule['UNTIL'] = $vcal->_exportDateTime($event['recur_enddate']);
 							}
 							$attributes['RRULE'] = '';
 							$parameters['RRULE'] = $rrule;
@@ -1656,10 +1662,13 @@ class calendar_ical extends calendar_boupdate
 
 							if (!empty($vcardData['recur_count']))
 							{
-								$vcardData['recur_enddate'] = mktime(0,0,0,
-									date('m',$vcardData['start']),
-									date('d',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)*7),
-									date('Y',$vcardData['start']));
+								$vcardData['recur_enddate'] = mktime(
+									date('H', $vcardData['end']),
+									date('i', $vcardData['end']),
+									date('s', $vcardData['end']),
+									date('m', $vcardData['start']),
+									date('d', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)*7),
+									date('Y', $vcardData['start']));
 							}
 							break;
 
@@ -1695,10 +1704,13 @@ class calendar_ical extends calendar_boupdate
 
 							if (!empty($vcardData['recur_count']))
 							{
-								$vcardData['recur_enddate'] = mktime(0,0,0,
-									date('m',$vcardData['start']),
-									date('d',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
-									date('Y',$vcardData['start']));
+								$vcardData['recur_enddate'] = mktime(
+									date('H', $vcardData['end']),
+									date('i', $vcardData['end']),
+									date('s', $vcardData['end']),
+									date('m', $vcardData['start']),
+									date('d', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
+									date('Y', $vcardData['start']));
 							}
 							break;
 
@@ -1750,10 +1762,13 @@ class calendar_ical extends calendar_boupdate
 
 							if (!empty($vcardData['recur_count']))
 							{
-								$vcardData['recur_enddate'] = mktime(0,0,0,
-									date('m',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
-									date('d',$vcardData['start']),
-									date('Y',$vcardData['start']));
+								$vcardData['recur_enddate'] = mktime(
+									date('H', $vcardData['end']),
+									date('i', $vcardData['end']),
+									date('s', $vcardData['end']),
+									date('m', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
+									date('d', $vcardData['start']),
+									date('Y', $vcardData['start']));
 							}
 							break;
 
@@ -1788,10 +1803,13 @@ class calendar_ical extends calendar_boupdate
 
 							if (!empty($vcardData['recur_count']))
 							{
-								$vcardData['recur_enddate'] = mktime(0,0,0,
-									date('m',$vcardData['start']),
-									date('d',$vcardData['start']),
-									date('Y',$vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)));
+								$vcardData['recur_enddate'] = mktime(
+									date('H', $vcardData['end']),
+									date('i', $vcardData['end']),
+									date('s', $vcardData['end']),
+									date('m', $vcardData['start']),
+									date('d', $vcardData['start']),
+									date('Y', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)));
 							}
 							break;
 					}
