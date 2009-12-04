@@ -177,6 +177,7 @@ class calendar_ui
 		$no_access = $no_access_group = array();
 		foreach(explode(',',$this->owner) as $owner)
 		{
+			$owner = trim($owner);
 			if (is_numeric($owner) && $GLOBALS['egw']->accounts->get_type($owner) == 'g')
 			{
 				foreach($GLOBALS['egw']->accounts->member($owner) as $member)
