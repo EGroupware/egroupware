@@ -326,6 +326,7 @@ class calendar_bo
 		$users = array();
 		foreach($params['users'] as $user)
 		{
+			$user = trim($user);
 			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?
