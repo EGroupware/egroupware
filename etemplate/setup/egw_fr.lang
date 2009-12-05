@@ -3,6 +3,7 @@
 %1 etemplates for application '%2' dumped to '%3'	etemplate	fr	%1 eTemplates pour l'Application '%2' écrits dans '%3'
 %1 etemplates found	etemplate	fr	%1 eTemplates trouvé(s)
 %1 matches on search criteria	etemplate	fr	%1 occurences sur les critères de recherche
+%1 more...	etemplate	fr	%1 plus...
 %1 new etemplates imported for application '%2'	etemplate	fr	%1 nouveaux eTemplates importés pour l'Application '%2'
 %s disabled	etemplate	fr	%s désactivé
 %s needed	etemplate	fr	%s nécessaire
@@ -10,9 +11,11 @@
 %s onchange	etemplate	fr	%s surChangement
 %s readonly	etemplate	fr	%s LectureSeule
 '%1' has an invalid format !!!	etemplate	fr	'%1' a un format invalide !!!
+'%1' is no php file in the egw server root (%2)!	etemplate	fr	'%1'  n'a pas de fichier php dans la racine du serveur eGW (%2)!
 '%1' is not a valid date !!!	etemplate	fr	'%1'  n'est pas une date valide !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	fr	'%1' n'est pas un nombre à virgule flottante valide !!!
 '%1' is not a valid integer !!!	etemplate	fr	'%1' n'est pas un entier valide !!!
+'%1' is not allowed ('%2')!	etemplate	fr	'%1' n'est PAS authorisé ('%2')!
 a pattern to be searched for	etemplate	fr	Une chaine de caractères à rechercher
 accesskey	etemplate	fr	Clé d'accès
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	fr	Les clés d'accès peuvent être spécifiées avec un & dans le label (p.ex. &Nom)
@@ -52,6 +55,7 @@ cant delete a single widget from a grid !!!	etemplate	fr	ne peut pas supprimer u
 cant delete the only column of a grid !!!	etemplate	fr	ne peut pas supprimer la seule colonne d'une grille !!!
 cant delete the only row in a grid !!!	etemplate	fr	ne peut pas supprimer la seule ligne d'une grille !!!
 category	etemplate	fr	Catégorie
+category tree	etemplate	fr	Arbre des catégories
 cellpadding for the table-tag	etemplate	fr	Remplissage de cellule pour le tag de la table
 cells	etemplate	fr	Cellules
 cellspacing for the table-tag	etemplate	fr	Espacement des cellules pour le tag de la table
@@ -224,10 +228,12 @@ linklist	etemplate	fr	Liste de liens
 linkstring	etemplate	fr	ChaîneDeLien
 linkto	etemplate	fr	LierVers
 load this template into the editor	etemplate	fr	Charger ce template dans l'éditeur
+message ...	etemplate	fr	Message ...
 middle	etemplate	fr	Milieu
 minute	etemplate	fr	Minute
 minutes	etemplate	fr	Minutes
 month	etemplate	fr	Mois
+more than 1 match for '%1'	etemplate	fr	Plus d'une occurence pour '%1'
 multicolumn indices	etemplate	fr	Indices Multi-colonnes
 name	etemplate	fr	Nom
 name of other table where column is a key from	etemplate	fr	Nom de l'autre table où la colonne est une clé de
@@ -247,6 +253,7 @@ nextmatch sortheader	etemplate	fr	Prochaine occurence Entête de tri
 no column to swap with !!!	etemplate	fr	aucune colonne à échanger !!!
 no file	etemplate	fr	Pas de fichier
 no filename given or selected via browse...	etemplate	fr	Pas de nom de fichier donné ou sélectionnée avec naviguer...
+no matches found	etemplate	fr	Pas d'occurences trouvées
 no row to swap with !!!	etemplate	fr	aucune ligne à échanger !!!
 not null	etemplate	fr	PAS NULL
 nothing	etemplate	fr	rien
@@ -283,6 +290,7 @@ read etemplate from database (for the keys above)	etemplate	fr	Lire eTemplate de
 readonly	etemplate	fr	lecture seule
 remove row (can not be undone!!!)	etemplate	fr	Enlever la ligne (ne peut PAS être annulé!!!)
 remove this link (not the entry itself)	etemplate	fr	Enlever ce lien (pas l'entrée elle-même)
+required	etemplate	fr	Requis
 returns savely, without deleting	etemplate	fr	Revient de manière sûre, sans effacer
 right	etemplate	fr	Droite
 row...	etemplate	fr	Ligne...
@@ -367,6 +375,7 @@ to start the etemplate editor	etemplate	fr	Pour démarre l'éditeur d'eTemplate
 to start the search	etemplate	fr	Pour démarrer la recherche
 today	etemplate	fr	Aujourd'hui
 top	etemplate	fr	Sommet
+tree	etemplate	fr	Arbre
 type	etemplate	fr	Type
 type of the column	etemplate	fr	Type de la colonne
 type of the field (select label if field should be empty)	etemplate	fr	Type du champ (choisissez le label si le champ devrait être vide)
@@ -401,3 +410,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	fr	Fichier XML à importer
 xslt template	etemplate	fr	Template XSLT
 year	etemplate	fr	Année
+you are not allowed to export more then %1 entries!	etemplate	fr	Vous n'êtes pas autorisé à exporter plus de %1 entrées!
+you can respond by visiting:	etemplate	fr	Vous pouvez répondre en visitant:

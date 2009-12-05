@@ -8,11 +8,15 @@ advanced options	emailadmin	fr	Options avancées
 alternate email address	emailadmin	fr	Adresse email alternative
 any application	emailadmin	fr	Toutes les applications
 any group	emailadmin	fr	Tous les groupes
+any user	emailadmin	fr	Tous les utilisateurs
+back to admin/grouplist	emailadmin	fr	Retourner à Administrateur/Liste de groupe
+back to admin/userlist	emailadmin	fr	Retourner à Administrateur/Liste des utilisateurs
 bad login name or password.	emailadmin	fr	ID login ou mot de passe erroné
 bad or malformed request. server responded: %s	emailadmin	fr	Requête invalide ou erronnée. Réponse serveur: %s
 bad request: %s	emailadmin	fr	Requête invalide: %s
 can be used by application	emailadmin	fr	Peut être utilisée par application
 can be used by group	emailadmin	fr	Peut être utilisée par groupe
+can be used by user	emailadmin	fr	Peut être utilisé par les utilisateurs
 connection dropped by imap server.	emailadmin	fr	Connexion interrompue par le Serveur IMAP.
 could not complete request. reason given: %s	emailadmin	fr	Impossible d'effectuer la requête. Raison invoquée: %s
 could not open secure connection to the imap server. %s : %s.	emailadmin	fr	Impossible d'ouvrir la connexion sécurisée avec le serveur IMAP. %s: %s
@@ -23,12 +27,15 @@ default	emailadmin	fr	défaut
 deliver extern	emailadmin	fr	Relai de messagerie
 do not validate certificate	emailadmin	fr	ne pas valider le certificat
 do you really want to delete this profile	emailadmin	fr	Voulez-vous vraiment supprimer ce profil?
+do you really want to reset the filter for the profile listing	emailadmin	fr	Voulez-vous vraiment réinitialiser le filtre de la liste le profil
 domainname	emailadmin	fr	Nom de domaine
 edit email settings	emailadmin	fr	Modifier les paramètres de messagerie
 email account active	emailadmin	fr	Compte de messagerie actif
 email address	emailadmin	fr	Adresse de messagerie
 email settings	common	fr	Paramètres de messagerie
 emailadmin	emailadmin	fr	Administration de la messagerie
+emailadmin: group assigned profile	common	fr	Administration Mail: Profil de groupe assigné
+emailadmin: user assigned profile	common	fr	Administration Mail: Profil d'utilisateur assigné
 enable cyrus imap server administration	emailadmin	fr	Activer la gestion du serveur Cyrus IMAP
 enable sieve	emailadmin	fr	Activer Sieve
 encrypted connection	emailadmin	fr	connexion chiffrée
@@ -36,6 +43,8 @@ encryption settings	emailadmin	fr	Paramètres de chiffrement
 enter your default mail domain (from: user@domain)	emailadmin	fr	Introduisez votre domaine par défaut (utilisateur@domaine.com)
 error connecting to imap server. %s : %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. %s: %s.
 error connecting to imap server: [%s] %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. [%s] %s.
+filtered by account	emailadmin	fr	Filtré par comptes
+filtered by group	emailadmin	fr	Filtré par groupes
 forward also to	emailadmin	fr	Transférer aussi à
 forward email's to	emailadmin	fr	Transférer les emails à
 forward only	emailadmin	fr	Seulement transférer
@@ -52,6 +61,7 @@ imap server name	emailadmin	fr	Nom du serveur IMAP
 imap server port	emailadmin	fr	Port IMAP
 imap/pop3 server name	emailadmin	fr	Nom du serveur IMAP/POP3
 in mbyte	emailadmin	fr	en Mo
+inactive	emailadmin	fr	inactif
 ldap basedn	emailadmin	fr	LDAP DN de base
 ldap server	emailadmin	fr	LDAP Serveur
 ldap server accounts dn	emailadmin	fr	LDAP DN contenant les comptes utilisateurs
@@ -78,15 +88,18 @@ pop3 server hostname or ip address	emailadmin	fr	Nom ou adresse IP du POP3
 pop3 server port	emailadmin	fr	Port POP3
 postfix with ldap	emailadmin	fr	Postfix avec support LDAP
 profile access rights	emailadmin	fr	droits d'accès du profil
+profile is active	emailadmin	fr	Le profil est actif
 profile list	emailadmin	fr	Liste des profils
 profile name	emailadmin	fr	Nom de profil
 qmaildotmode	emailadmin	fr	qmaildotmode
 qouta size in mbyte	emailadmin	fr	Taille du quota en Mo
 quota settings	emailadmin	fr	Paramètres de quota
 remove	emailadmin	fr	Supprimer
+reset filter	emailadmin	fr	Remise à zéro du filtre
 select type of imap server	emailadmin	fr	Sélectionner le type de serveur IMAP
 select type of imap/pop3 server	emailadmin	fr	Sélectionner le type de serveur IMAP/POP3
 select type of smtp server	emailadmin	fr	Sélectionner le type de serveur SMTP
+send using this email-address	emailadmin	fr	Envoyer en utilisant cette adresse Mail
 server settings	emailadmin	fr	Configuration du serveur
 sieve server hostname or ip address	emailadmin	fr	Nom ou adresse IP du serveur Sieve
 sieve server port	emailadmin	fr	Port Sieve
@@ -111,12 +124,16 @@ unknown imap response from the server. server responded: %s	emailadmin	fr	Répon
 unsupported action '%1' !!!	emailadmin	fr	Action '%1' non supportée!!!
 update current email address:	emailadmin	fr	Mettre à jour l'adresse email actuelle:
 use ldap defaults	emailadmin	fr	Utiliser les paramètres LDAP par défaut
+use predefined username and password defined below	emailadmin	fr	Utilisez les nom d'utilisateur et mot de passe prédéfinis ci-dessous
 use smtp auth	emailadmin	fr	Utiliser l'authentification SMTP
 use tls authentication	emailadmin	fr	Utiliser l'authentification TLS
 use tls encryption	emailadmin	fr	Utiliser le cryptage TLS
 user can edit forwarding address	emailadmin	fr	L'utilisateur peut modifier l'adresse de transfert.
 username (standard)	emailadmin	fr	nom de l'utilisateur (standard)
+username/password defined by admin	emailadmin	fr	Nom d'utilisateur / mot de passe défini par admin
 username@domainname (virtual mail manager)	emailadmin	fr	utilisateur@domaine (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	emailadmin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
+users can define their own identities	emailadmin	fr	les utilisateurs peuvent définir leur propre identité
 users can define their own signatures	emailadmin	fr	les utilisateurs peuvent définir leurs propres signatures
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	fr	Les messages 'en vacance' avec date de démarrage et de fin nécessitent un compte administrateur pour être réglés!
 virtual mail manager	emailadmin	fr	Virtual MAIL ManaGeR

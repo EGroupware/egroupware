@@ -1,34 +1,34 @@
 %1 already exists as a file	filemanager	fr	%1 existe déjà en tant que fichier
 %1 directories and %2 files copied.	filemanager	fr	%1 répertoires et %2 fichiers copiés.
-%1 directories and %2 files deleted.	filemanager	fr	%1 répertoires et %2 fichiers supprimés.
-%1 errors copying (%2 diretories and %3 files copied)!	filemanager	fr	%1 erreurs pendant la copie (%2 répertoires et %3 fichiers copiés)!
-%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	fr	%1 erreurs pendant la suppression (%2 répertoires et %3 fichiers supprimés)!
-%1 errors moving (%2 files moved)!	filemanager	fr	%1 erreurs pendant le déplacement (%2 fichiers déplacés)!
-%1 failed, %2 succeded	filemanager	fr	%1 échec, %2 réussis
+%1 directories and %2 files deleted.	filemanager	fr	%1 répertoires et %2 fichiers effacés.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	fr	%1 erreurs lors de la copie ( %2 répertoires et %3 fichiers copiés)!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	fr	%1 erreurs lors de la suppression ( %2 répertoires et %3 fichiers effacés)!
+%1 errors moving (%2 files moved)!	filemanager	fr	%1 erreurs lors du déplacement ( %2 fichiers déplacés)!
+%1 failed, %2 succeded	filemanager	fr	%1 echoués, %2 reussis
 %1 files copied.	filemanager	fr	%1 fichiers copiés.
-%1 files deleted.	filemanager	fr	%1 fichiers supprimés
-%1 files moved.	filemanager	fr	%1 fichiers déplacés
-%1 starts with '%2'	filemanager	fr	%1 commence avec '%2'
-%1 successful uploaded.	filemanager	fr	%1 envoyé avec succès.
-%1 the following files into current directory	filemanager	fr	%1 les fichiers suivants dans le répertoire courant
-%1 urls %2 to clipboard.	filemanager	fr	%1 URLs %2 dans le presse-papier.
+%1 files deleted.	filemanager	fr	%1 fichiers supprimés.
+%1 files moved.	filemanager	fr	%1 fichiers déplacés.
+%1 starts with '%2'	filemanager	fr	%1 démarrages avec '%2'
+%1 successful uploaded.	filemanager	fr	%1 téléchargements réussis.
+%1 the following files into current directory	filemanager	fr	%1 fichiers suivants dans le répertoire courant
+%1 urls %2 to clipboard.	filemanager	fr	%1 URLs %2 vers le presse-papier
 accessrights	filemanager	fr	Droits d'accès
 acl added.	filemanager	fr	ACL ajouté.
 acl deleted.	filemanager	fr	ACL supprimé.
 actions	filemanager	fr	Actions
-allow a maximum of the above configured folderlinks to be configured in settings	admin	fr	autoriser un maximum des liens de répertoire ci-dessus à être configuré dans les réglages
+allow a maximum of the above configured folderlinks to be configured in settings	admin	fr	permettre à un maximum de liens des répertoires précédemment configuré d'être configurés dans les Paramètres
 and all it's childeren	filemanager	fr	et tous ses enfants
 basedirectory	filemanager	fr	Répertoire de base
 cancel editing %1 without saving	filemanager	fr	Annuler les modifications de "%1"
 cannot create directory because it begins or ends in a space	filemanager	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
-check all	filemanager	fr	Vérifier tout
-clear search	filemanager	fr	vider la recherche
+check all	filemanager	fr	Vérifie tout
+clear search	filemanager	fr	Efface la recherche
 comment	filemanager	fr	Commentaire
 comments cannot contain "%1"	filemanager	fr	Les commentaires ne peuvent pas contenir "%1"
-copied	filemanager	fr	copié
+copied	filemanager	fr	Copiés
 copied %1 to %2	filemanager	fr	Copié %1 vers %2
 copy to	filemanager	fr	Copier Vers
-copy to clipboard	filemanager	fr	Copier dans le presse-papier
+copy to clipboard	filemanager	fr	Copier vers le presse papier
 could not copy %1 to %2	filemanager	fr	N'a pas pu copier %1 vers %2
 could not copy file because no destination directory is given	filemanager	fr	Impossible de copier le fichier car aucun répertoire de destination n'a été donné
 could not create %1	filemanager	fr	N'a pas pu créér %1
@@ -37,137 +37,137 @@ could not move %1 to %2	filemanager	fr	N'a pas pu déplacer %1 to %2
 could not move file because no destination directory is given	filemanager	fr	Impossible de déplacer le fichier car aucun répertoire de destination n'a été donné
 could not rename %1 to %2	filemanager	fr	N'a pas pu renommer %1 to %2
 could not save %1	filemanager	fr	N'a pas pu enregistrer %1
-create directory	filemanager	fr	Créer répertoire
+create directory	filemanager	fr	Créer un répertoire
 create file	filemanager	fr	Créer fichier
 create folder	filemanager	fr	Créer dossier
 created	filemanager	fr	Créé
 created %1,%2	filemanager	fr	Création de %1,%2
-created between	filemanager	fr	créer entre
+created between	filemanager	fr	crée entre
 created directory %1	filemanager	fr	Répertoire %1 créé
 current directory	filemanager	fr	Répertoire courant
-custom fields	filemanager	fr	Champs personalisés
-cut	filemanager	fr	Couper
-cut to clipboard	filemanager	fr	Couper dans le presse-papier
-default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	fr	Le comportement par défaut est NON. Le lien ne sera pas affiché, mais vous serrez toujours capable de naviguer jusqu'à son emplacement, ou de configurer cet emplacement comme le répertoire de départ ou un lien de répertoire
+custom fields	filemanager	fr	Champs personnalisés
+cut	filemanager	fr	Coupe
+cut to clipboard	filemanager	fr	Coupe vers le presse papier
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	fr	Le comportement par défaut est NON. Le lien ne sera pas montré, mais vous êtes encore capable de naviguer à cet endroit, ou de configurer cet emplacement notamment comme répertoire de départ ou répertoire de liens.
 delete this file or directory	filemanager	fr	Supprimer ce fichier ou répertoire
-deleted %1	filemanager	fr	Effacer %1
-directories sorted in	filemanager	fr	Répertoires triés
+deleted %1	filemanager	fr	%1 effacé
+directories sorted in	filemanager	fr	Répertoires triés par
 directory	filemanager	fr	Répertoire
 directory %1 already exists	filemanager	fr	Le répertoire %1 existe déjà
 directory %1 does not exist	filemanager	fr	Le répertoire %1 n'existe pas
 directory names cannot contain "%1"	filemanager	fr	Les noms de répertoire ne peuvent pas contenir "%1"
-directory not found or no permission to access it!	filemanager	fr	Répertoire non trouvé ou pas la permission d'y accéder
-display and modification of content	filemanager	fr	Affichage et modification du contenu
-display of content	filemanager	fr	Affichage du contenu
-do you want to overwrite the existing file %1?	filemanager	fr	Voulez vous écraser le fichier existant %1 ?
-download	filemanager	fr	Downloader
+directory not found or no permission to access it!	filemanager	fr	Répertoire introuvable ou sans la permission d'y accéder!
+display and modification of content	filemanager	fr	Affichage et modification de contenu
+display of content	filemanager	fr	Affichage de contenus
+do you want to overwrite the existing file %1?	filemanager	fr	Voulez-vous écraser le fichier existant % 1?
+download	filemanager	fr	Télécharger
 edit comments	filemanager	fr	Modifier les commentaires
-edit settings	filemanager	fr	Editer réglages
-enter setup user and password	filemanager	fr	Entrer l'utilisateur de l'installation et le mot de passe
-enter setup user and password to get root rights	filemanager	fr	Entrer l'utilisateur de l'installation et le mot de passe pour avoir les droits d'administrateur
-enter the complete vfs path to specify a fast access link to a folder	filemanager	fr	Entrer le chemin VFS complet pour spécifier un lien d'accès rapide au répertoire
-enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	fr	Entrer le chemin VFS complet pour spécifier un lien d'accès rapide au répertoire (1).
-enter the complete vfs path to specify your desired start folder.	filemanager	fr	Entrer le chemin VFS complet pour spécifier le répertoire de départ désiré.
-error adding the acl!	filemanager	fr	Erreur en ajoutant l'ACL !
-error deleting the acl entry!	filemanager	fr	Erreur en supprimant l'ACL !
-error uploading file!	filemanager	fr	Erreur lors de l'envoi du fichier !
-executable	filemanager	fr	Executable
-extended access control list	filemanager	fr	Liste de contrôle d'accès étendu
-extended acl	filemanager	fr	ACL étendu
-failed to change permissions of %1!	filemanager	fr	Echec de changement des permissions de %1!
-failed to create directory!	filemanager	fr	Echec de création du répertoire !
+edit settings	filemanager	fr	Modifier les paramètres
+enter setup user and password	filemanager	fr	Saisissez l'identifiant et le mot de passe de configuration
+enter setup user and password to get root rights	filemanager	fr	Saisissez l'identifiant et le mot de passe pour devenir superadministrateur
+enter the complete vfs path to specify a fast access link to a folder	filemanager	fr	Saisissez le chemin complet VFS pour spécifier un lien d'accès rapide à un dossier
+enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	fr	Saisissez le chemin complet VFS pour spécifier un lien d'accès rapide à un dossier (1).
+enter the complete vfs path to specify your desired start folder.	filemanager	fr	Saisissez le chemin complet VFS pour spécifier votre dossier de départ souhaité.
+error adding the acl!	filemanager	fr	Erreur en ajoutant l'ACL!
+error deleting the acl entry!	filemanager	fr	Erreur de suppression de l'entrée ACL!
+error uploading file!	filemanager	fr	Erreur de téléchargement de fichier!
+executable	filemanager	fr	Exécutable
+extended access control list	filemanager	fr	Liste de contrôle étendu des droits d'accès (EACL)
+extended acl	filemanager	fr	ACL Etendu
+failed to change permissions of %1!	filemanager	fr	Impossible de modifier les permissions de% 1!
+failed to create directory!	filemanager	fr	Impossible de créer le répertoire!
 favorites	filemanager	fr	Favoris
 file	filemanager	fr	Fichier
 file %1 already exists. please edit it or delete it first.	filemanager	fr	Le fichier %1 existe déjà. SVP modifiez-le ou effacez-le d'abord.
 file %1 could not be created.	filemanager	fr	Le fichier %1 n'a pas pu être créé.
-file %1 may be too big. contact your systemadministrator for further info	filemanager	fr	Le fichier %1 est peut-être trop gros. Contacter votre administrateur système pour plus d'informations
-file deleted.	filemanager	fr	Fichier supprimé.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	fr	Le fichier %1 est peut être trop grand. Contactez votre administrateur system pour plus de renseignements
+file deleted.	filemanager	fr	Fichier effacé
 file names cannot contain "%1"	filemanager	fr	Les noms de fichier ne peuvent contenir "%1"
-file or directory not found!	filemanager	fr	Fichier ou répertoire non trouvé!
-file successful uploaded.	filemanager	fr	Fichier envoyé avec succès
+file or directory not found!	filemanager	fr	Fichier ou répertoire introuvable!
+file successful uploaded.	filemanager	fr	Fichier téléchargé avec succès.
 filemanager	common	fr	Gestionnaire de fichiers
-filemanager configuration	admin	fr	configuration du gestionnaire de fichiers
-files from subdirectories	filemanager	fr	Fichiers des sous-répertoires
+filemanager configuration	admin	fr	gestionnaire de fichiers de configuration
+files from subdirectories	filemanager	fr	Fichiers de sous-répertoires
 files in this directory	filemanager	fr	Fichiers dans ce répertoire
 folder up	filemanager	fr	Répertoire parent
-general	filemanager	fr	Générale
+general	filemanager	fr	Général
 go home	filemanager	fr	Répertoire personnel
 go to	filemanager	fr	Aller dans
 go to your home directory	filemanager	fr	Aller dans votre répertoire "home" (maison)
 go up	filemanager	fr	Remonter
 id	filemanager	fr	Id
 inherited	filemanager	fr	Hérité
-link %1: %2	filemanager	fr	Lien %1: %2
+link %1: %2	filemanager	fr	Liens %1: %2
 location	filemanager	fr	Emplacement
-log out as superuser	filemanager	fr	Déconnexion en tant que super-utilisateur
-max folderlinks	admin	fr	liens de répertoire maximum
-maximum size for uploads	filemanager	fr	Taille maximum pour les envois
+log out as superuser	filemanager	fr	Se déconnecter de superutilisateur
+max folderlinks	admin	fr	Nombre maxi de répertoires de liens
+maximum size for uploads	filemanager	fr	La taille maximum pour les téléchargements
 mime type	filemanager	fr	Type MIME
 modified	filemanager	fr	Modifié
-modified between	filemanager	fr	modifié entre
-modify all subdirectories and their content	filemanager	fr	Modifier tous les sous répertoires et leurs contenus
+modified between	filemanager	fr	modifiés entre
+modify all subdirectories and their content	filemanager	fr	Modifiez tous les sous-répertoires et leur contenu
 move	filemanager	fr	Déplacer
 move to	filemanager	fr	Déplacer Dans
 moved %1 to %2	filemanager	fr	Déplacé %1 dans %2
-no access	filemanager	fr	Pas d'accès
+no access	filemanager	fr	Pas de droits d'accès
 no files in this directory.	filemanager	fr	Pas de fichiers dans ce répertoire.
-no preview available	filemanager	fr	Pas d'appercu disponible
+no preview available	filemanager	fr	Pas de pré-visualisation disponible
 no version history for this file/directory	filemanager	fr	Pas d'historique de versions pour ce fichier/répertoire
-only owner can rename or delete the content	filemanager	fr	Seul le propriétaire peu renommer ou supprimer le contenu
+only owner can rename or delete the content	filemanager	fr	Seul le propriétaire peut renommer ou supprimer le contenu
 open	filemanager	fr	Ouvrir
 operation	filemanager	fr	Opération
-permission denied!	filemanager	fr	Permission refusé !
+permission denied!	filemanager	fr	Permission refusée!
 permissions	filemanager	fr	Permissions
 permissions of %1 changed.	filemanager	fr	Permissions de %1 modifiées
 please select a file to delete.	filemanager	fr	Sélectionnez un fichier à effacer.
-preview	filemanager	fr	Appercu
+preview	filemanager	fr	Pré-visualisation
 preview %1	filemanager	fr	Prévisualisation %1
 preview of %1	filemanager	fr	Prévisualisation de %1
 projectmanager	filemanager	fr	Gestionnaire de projets
 properties saved.	filemanager	fr	Propriétés sauvegardées
 quick jump to	filemanager	fr	Aller à
-read & write access	filemanager	fr	Accès en  lecture et écriture
+read & write access	filemanager	fr	Accès en lecture et écriture
 read access only	filemanager	fr	Accès en lecture seule
 reload	filemanager	fr	Recharger
-rename of %1 to %2 failed!	filemanager	fr	Impossible de renommer de %1à %2 !
-rename, change permissions or ownership	filemanager	fr	Renommer, changer les permissions ou le propriétaire
+rename of %1 to %2 failed!	filemanager	fr	Le renommage de %1 en %2 a échoué
+rename, change permissions or ownership	filemanager	fr	Renommer, modifier les autorisations ou la propriété
 renamed %1 to %2	filemanager	fr	Renommé %1 en %2
-renamed %1 to %2.	filemanager	fr	Renommé %1 en %2
+renamed %1 to %2.	filemanager	fr	Renommé %1 en %2.
 replaced %1	filemanager	fr	Remplacé %1
 rights	filemanager	fr	Droits
-root access granted.	filemanager	fr	Accès administrateur autorisé.
-root access stopped.	filemanager	fr	Accès administrateur interrompu.
+root access granted.	filemanager	fr	Droits d'accès superadministrateur donnés.
+root access stopped.	filemanager	fr	Droits d'accès superadministrateur arrêtés.
 save %1	filemanager	fr	Enregistrer %1
 save %1, and go back to file listing	filemanager	fr	Enregistrer %1, et retour au listing
 save changes	filemanager	fr	Enregistrer les changements
 saved %1	filemanager	fr	%1 enregistré
-saving properties failed!	filemanager	fr	Echec de la sauvegarde des propriétés
-search for '%1'	filemanager	fr	Recherche pour '%1'
-searchstring	filemanager	fr	chaîne de recherche
-select action...	filemanager	fr	Selectionner action...
-select file to upload in current directory	filemanager	fr	Selectionner un fichier à envoyer dans le répertoire courant
+saving properties failed!	filemanager	fr	Sauvegarde des propriétés échouée!
+search for '%1'	filemanager	fr	Rechercher après '%1'
+searchstring	filemanager	fr	Chaine de recherche
+select action...	filemanager	fr	Sélectionnez une action ...
+select file to upload in current directory	filemanager	fr	Sélectionnez le fichier à télécharger dans le répertoire courant
 show	filemanager	fr	Montrer
-show link to filemanagers basedirectory (/) in side box menu?	filemanager	fr	Afficher le lien vers le repértoire de base (/) dans la barre de menu?
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	fr	Montrer le liens vers le gestionnaire de fichier du répertoire de base (/) dans la boite de menu secondaire?
 size	filemanager	fr	Taille
-start search	filemanager	fr	recherche de départ
-superuser	filemanager	fr	Super-utilisateur
-the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	fr	Le répertoire de départ par défaut est votre répertoire personnel. Le défaut est utilisé, si vous laissez vide, le chemin n'existe pas ou si vous n'avez pas les permissions nécéssaires
-the requested path %1 is not available.	filemanager	fr	Le chemin demandé %1 n'est pas disponible.
-there's already a directory with that name!	filemanager	fr	Il y a déjà un répertoire avec ce nom !
-there's already a file with that name!	filemanager	fr	Il y a déjà un fichier avec ce nom !
-to overwrite the existing file store again.	filemanager	fr	Pour écraser le fichier existant stocker le à nouveau.
+start search	filemanager	fr	Démarrer la recherche
+superuser	filemanager	fr	Superutilisateur
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	fr	Le dossier de démarrage par défaut est votre dossier personnel. La valeur par défaut sera utilisée si vous laissez cette case vide si le chemin n'existe pas ou si vous ne disposez pas des autorisations d'accès nécessaires.
+the requested path %1 is not available.	filemanager	fr	Le chemin demandé 1% n'est pas disponible.
+there's already a directory with that name!	filemanager	fr	Il ya déjà un répertoire avec ce nom!
+there's already a file with that name!	filemanager	fr	Il ya déjà un fichier portant ce nom!
+to overwrite the existing file store again.	filemanager	fr	Pour écraser le fichier existant, enregistrez le à nouveau.
 total files	filemanager	fr	Nombre de Fichiers
 unused space	filemanager	fr	Espace inutilisé
 up	filemanager	fr	Haut
 updated comment for %1	filemanager	fr	Commentaire pour %1 mis à jour
 used space	filemanager	fr	Espace utilisé
 users and groups	filemanager	fr	Utilisateurs et groupes
-wrong username or password!	filemanager	fr	Mauvais nom d'utilisateur ou mot de passe!
-you are not allowed to upload a script!	filemanager	fr	vous N'ÊTES PAS autorisé à envoyer un script!
+wrong username or password!	filemanager	fr	Mauvais identifiant ou mot de passe!
+you are not allowed to upload a script!	filemanager	fr	Vous n'êtes pas autorisé à télécharger un script!
 you do not have access to %1	filemanager	fr	Vous n'avez pas accès à %1
-you need to select an owner!	filemanager	fr	Vous avez besoin de sélectionner un propriétaire !
-you need to select some files first!	filemanager	fr	Vous avez besoin de sélectionner des fichiers en premier !
-you will be redirected to your home directory.	filemanager	fr	Vous allez être redirigés vers votre répertoire d'accueil.
-you will be redirected to your start folder.	filemanager	fr	Vous allez être redirigés vers votre répertoire de départ.
+you need to select an owner!	filemanager	fr	Vous devez sélectionner un propriétaire!
+you need to select some files first!	filemanager	fr	Vous devez sélectionner certains fichiers d'abord!
+you will be redirected to your home directory.	filemanager	fr	Vous allez être redirigé vers votre répertoire perso.
+you will be redirected to your start folder.	filemanager	fr	Vous allez être redirigé vers votre dossier de départ.
 your home dir did not exist, egroupware created a new one.	filemanager	fr	Votre répertoire personnel n'existe pas, eGroupWare l'a créé.
 your home directory	filemanager	fr	Votre répertoire d'accueil

@@ -1,3 +1,23 @@
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	fr	Choisissez un texte de notification. Vous serez informé sur les backends inclus dans le texte. <br /> Remarque: Si une notification de la chaîne est marquée comme "désactivée", l'administrateur ne permet pas à un ou plusieurs des backends inclus dans la chaîne et les notifications retombent à "E-Mail" pour vous avertir.
+common chains	notifications	fr	Chaines communes
+disabled chains	notifications	fr	Chaines invalidées
 don't notify me via popups in egroupware	notifications	fr	Ne pas me notifier via popups dans eGroupWare
+egroupware has notifications for you	notifications	fr	eGroupware a des notifications pour vous
+egroupware-popup backend	admin	fr	backends des popup eGroupware
+egroupware-popup verbosity	notifications	fr	détails des popup eGroupware
+enable egroupware-popup backend	admin	fr	activer les backends des popup eGroupware
+enable sms backend	admin	fr	activer les backends SMS
+enable windows-popup backend	admin	fr	activer les backends des popup fenêtrés
+enabled chains	notifications	fr	activer les textes
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	fr	A que degre de détails doivent se comporter les popups eGroupware si une notification est envoyée à l'utilisateur:<br />bas: juste montrer la cloche de notification dans le menu supérieur - le menu supérieur doit être activé !<br />moyen: faire apparaitre une fenêtre de notification<br />haut: faire apparaitre une fenêtre de notification et permettre a l'explorateur de faire quelque chose pour s'annoncer
+if set, embedded links get rendered special for external clients	notifications	fr	Si défini, les  liens intégrés auront un rendu spécial pour les clients externes
+linked entries:	notifications	fr	Entrées liées:
+maximum sms messages per notification	admin	fr	Nombre maxi de messages SMS par notification
+message from	notifications	fr	Message de
 notification	common	fr	Notification
+notify me by	notifications	fr	Notifiez moi par
+optimize e-mails for external mail client	notifications	fr	Optimiser les E-Mails pour les clients de messagerie externe
 preferences for notification	notifications	fr	Préférences de notification
+sms backend	admin	fr	backend SMS
+this egroupware notification has been sent to you by mail because your	notifications	fr	Cette notification EGroupWare a été envoyée par mail parce que votre
+windows-popup backend	admin	fr	backend de fenêtre popup

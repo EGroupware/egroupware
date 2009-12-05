@@ -1,8 +1,22 @@
 allowed users	importexport	fr	Utilisateurs autorisés
+automatically created by importexport	importexport	fr	Créées automatiquement par l'import-export
 choose a name for this definition	importexport	fr	Choisissez un nom pour cette définition
 choose a plugin	importexport	fr	Choisissez un module enfichable
 choose an application	importexport	fr	Choisissez une application
+delete all selected definitions	importexport	fr	supprimer toutes définitions  sélectionnées
+expert options	importexport	fr	option Expert
+export	importexport	fr	Export
+export all selected definitions	importexport	fr	Export de TOUTES les définitions sélectionnées
 finish	importexport	fr	terminer
+general	importexport	fr	Général
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	fr	Import des définitions( Attention: les définitions existantes ayant les mêmes noms seront ré-écrites!!!)
+importexport wizard finished successfully!	importexport	fr	Assistant d'import-export terminé avec succès!
 next	importexport	fr	prochain
+preview	importexport	fr	Pré-visualisation
 previous	importexport	fr	précédent
+save as definition	importexport	fr	Sauvegardez comme une définition
+select definition	importexport	fr	Sélectionnez une définition
+select plugin	importexport	fr	Sélectionnez plugin
+some nice text	importexport	fr	un joli texte
 which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont autorisés pour cette définition
+you need to select an app and format first!	importexport	fr	Vous devez d'abord sélectionner une application et son format!

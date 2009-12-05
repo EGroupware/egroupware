@@ -1,9 +1,9 @@
 %1 email addresses inserted	common	fr	%1 adresse(s) email a (ont) été insérée(s)
-%1 file	common	fr	%1 fichier
+%1 file	common	fr	fichier %1
 %1 is not executable by the webserver !!!	common	fr	%1 n'est pas exécutable par le serveur web !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	fr	%1Choisissez un autre répertoire%2<br />ou faites en sorte que le serveur web puisse écrire dans %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1eGroupWare%2 est un progiciel de collaboration multi-utilisateur basé sur le web et écrit en %3PHP%4.
-(session restored in %1 seconds)	common	fr	(session restauré in %1 seconds)
+(session restored in %1 seconds)	common	fr	( session restaurée dans %1 secondes )
 (shift-)click or drag to change value	jscalendar	fr	(Shift-)Cliquer ou glisser pour changer la valeur
 - click on any of the time parts to increase it	jscalendar	fr	- Cliquer sur les chiffres horaires pour les augmenter
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	fr	- Maintenir le bouton de la souris sur n'importe lequel des boutons ci-dessus pour une sélection plus rapide.
@@ -30,7 +30,7 @@ account has been created	common	fr	Le compte a été créé
 account has been deleted	common	fr	Le compte a été supprimé
 account has been updated	common	fr	Le compte a été mis à jour
 account is expired	common	fr	Le compte a expiré
-accounts	common	fr	Comptes
+accounts	common	fr	Compte
 acl	common	fr	Liste de Contrôle d'Accès
 action	common	fr	Action
 active	common	fr	Actif
@@ -47,11 +47,12 @@ albania	common	fr	ALBANIE
 algeria	common	fr	ALGERIE
 all	common	fr	Tout
 all fields	common	fr	tous les champs
-all languages	common	fr	tous les langages
+all languages	common	fr	toutes les langues
 alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	fr	Feuille de style alternative:
 american samoa	common	fr	SAMOA AMERICAINES
-an error happened	common	fr	Une erreur est survenue
+an error happend	common	fr	Une erreur est survenue
+an existing and by the webserver readable directory enables the image browser and upload.	common	fr	Un AND existant sur le répertoire en lecture du serveur web authorise le butineur de naviguer et de charger des fichier.
 andorra	common	fr	ANDORRE
 angola	common	fr	ANGOLA
 anguilla	common	fr	ANGUILLA
@@ -103,6 +104,7 @@ brazil	common	fr	BRESIL
 british indian ocean territory	common	fr	TERRITOIRES ANGLAIS DE L'OCEAN INDIEN
 brunei darussalam	common	fr	SULTANAT DE BRUNEI
 bulgaria	common	fr	BULGARIE
+bulgarian	common	fr	Bulgarie
 burkina faso	common	fr	BURKINA FASO
 burundi	common	fr	BURUNDI
 calendar	common	fr	Calendrier
@@ -141,7 +143,7 @@ christmas island	common	fr	ILE NOEL
 clear	common	fr	Effacer
 clear form	common	fr	Effacer le formulaire
 click	common	fr	Cliquer
-click here to resume your egroupware session.	common	fr	Cliquer ici pour terminer votre session Egroupware.
+click here to resume your egroupware session.	common	fr	Cliquer ici pour retourner à votre session eGroupware.
 click or mouse over to show menus	common	fr	Cliquer ou passer la souris dessus pour voir les menus
 click or mouse over to show menus?	common	fr	Cliquer ou passer la souris dessus pour voir les menus?
 click this image on the navbar: %1	common	fr	Cliquez cette image sur la barre de navigation: %1
@@ -169,8 +171,8 @@ current	common	fr	Courant
 current users	common	fr	Utilisateurs connectés
 cyprus	common	fr	CHYPRE
 czech republic	common	fr	REPUBLIQUE TCHEQUE
-database error	common	fr	Erreur de base de données
-database error!	common	fr	Erreur de base de données!
+database error	common	fr	Erreur base de donnée
+database error!	common	fr	Erreur base de donnée!
 date	common	fr	Date
 date due	common	fr	Date butoire
 date selection:	jscalendar	fr	Sélection de la date :
@@ -188,6 +190,7 @@ details	common	fr	Détails
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script correcteur pour Internet Explorer 5.5 et plus récent pour montrer la transparence des images PNG?
 direction left to right	common	fr	Direction de gauche à droite
 directory	common	fr	Répertoire
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fr	Le répertoire n'existe pas, n'est pas accessible en lecture par le serveur web ou n'est pas contenu dans la racine des documents!
 disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
 disable slider effects	common	fr	Désactiver les effets de glisse
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? Les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
@@ -208,12 +211,14 @@ done	common	fr	Fait
 drag to move	jscalendar	fr	Glisser pour le déplacer
 e-mail	common	fr	email
 east timor	common	fr	TIMOR EST
-eastern european	common	fr	Europe de l'est
+eastern european	common	fr	Européen de l'est
 ecuador	common	fr	ECUADOR
 edit	common	fr	Modifier
 edit %1 category for	common	fr	Modifier la catégorie %1 pour
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
+egroupware	common	fr	eGroupWare
+egroupware api version	common	fr	Version de l'API eGroupWare
 egroupware: login blocked for user '%1', ip %2	common	fr	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
@@ -224,7 +229,7 @@ end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´eGroupWare.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
 entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
-entry not found!	common	fr	Entrée non trouvée
+entry not found!	common	fr	Entrée non trouvée!
 entry updated sucessfully	common	fr	Entrée mise à jour avec succès
 equatorial guinea	common	fr	GUINEE EQUATORIALE
 eritrea	common	fr	ERYTHREE
@@ -234,13 +239,13 @@ error deleting %1 %2 directory	common	fr	Erreur à la suppression du répertoire
 error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
 estonia	common	fr	ESTONIE
 ethiopia	common	fr	ETHIOPIE
-everything	common	fr	Tout
+everything	common	fr	Tous
 exact	common	fr	exact
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fr	Impossible de contacter le serveur ou réponse invalide de ce dernier. Essayez de vous reconnecter. En cas de panne contactez votre administrateur.
 falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
 faroe islands	common	fr	ILES FAROE
 fax number	common	fr	Numéro de fax
-features of the editor?	common	fr	Fonctionnalités de l'éditeur?
+features of the editor?	common	fr	Caractéristiques de l'éditeur?
 february	common	fr	Février
 fields	common	fr	Champs
 fiji	common	fr	FIDJI
@@ -276,6 +281,7 @@ global public	common	fr	Public global
 go today	jscalendar	fr	Aller à aujourd'hui
 grant access	common	fr	Autoriser l'accès
 greece	common	fr	GRECE
+greek	common	fr	Grec
 greenland	common	fr	GROENLANDE
 grenada	common	fr	GRENADE
 group	common	fr	Groupe
@@ -312,6 +318,7 @@ iceland	common	fr	ISLANDE
 iespell not detected. click ok to go to download page.	common	fr	ieSpell non détecté. Cliquez sur Ok pour aller à la page de téléchargement.
 if the clock is enabled would you like it to update it every second or every minute?	common	fr	Si l'horloge est activée voulez-vous la mettre à jour toutes les secondes ou toutes les minutes?
 if there are some images in the background folder you can choose the one you would like to see.	common	fr	S'il y a des images dans le dossier d'arrière-plan vous pouvez choisir celle que vous voulez voir.
+image directory relative to document root (use / !), example:	common	fr	Répertoire d'images par rapport au document root (à utiliser /!), Exemple:
 image url	common	fr	URL de l'Image
 india	common	fr	INDE
 indonesia	common	fr	INDONESIE
@@ -335,6 +342,7 @@ italy	common	fr	ITALIE
 jamaica	common	fr	JAMAIQUE
 january	common	fr	Janvier
 japan	common	fr	JAPON
+japanese	common	fr	Japonais
 jordan	common	fr	JORDANIE
 july	common	fr	Juillet
 jun	common	fr	Jun
@@ -349,6 +357,7 @@ keywords	common	fr	Mots-clés
 kiribati	common	fr	KIRIBATI
 korea, democratic peoples republic of	common	fr	COREE, REPUBLIQUE DEMOCRATIQUE DES PEUPLES DE
 korea, republic of	common	fr	COREE, REPUBLIQUE DE
+korean	common	fr	Koréen
 kuwait	common	fr	KOWAIT
 kyrgyzstan	common	fr	KYRGYZSTAN
 language	common	fr	Langue
@@ -367,6 +376,7 @@ liberia	common	fr	LIBERIA
 libyan arab jamahiriya	common	fr	LIBYE
 license	common	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	fr	Ligne %1:'%2'<br><b>Les données CSV ne contiennent pas ##last-check-run## de la table %3 ==> ignorrée</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'<br><b>Les données csv ne correspondent pas au nombre de colonnes de la table %3 ==> ignoré</b>
 list	common	fr	Liste
 list members	common	fr	Liste les membres
@@ -410,6 +420,7 @@ moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
 monaco	common	fr	MONACO
 monday	common	fr	Lundi
 mongolia	common	fr	MONGOLIE
+montenegro	common	fr	Monténégro
 montserrat	common	fr	MONTSERRAT
 morocco	common	fr	MAROC
 mozambique	common	fr	MOZAMBIQUE
@@ -449,6 +460,7 @@ norway	common	fr	NORVEGE
 not	common	fr	pas
 not a user yet? register now	common	fr	Pas encore identifié? Enregisrez-vous maintenant
 not assigned	common	fr	non assigné
+not readable %1 entry of user %2	common	fr	Ne peut être lue %1 entrée de l'utilisateur %2
 note	common	fr	Note
 notes	common	fr	Notes
 notifications	common	fr	notifications
@@ -491,7 +503,7 @@ password must contain at least %1 special characters	common	fr	Le mot de passe d
 password must contain at least %1 uppercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères majuscules
 password must have at least %1 characters	common	fr	Le mot de passe doit contenir au moins %1 caractères
 path to user and group files has to be outside of the webservers document-root!!!	common	fr	Le chemin vers les fichiers des utilisateurs et groupes DOIT ETRE EN DEHORS de la racine des documents du serveur web!!!
-permission denied!	common	fr	Permissions refusé!
+permission denied!	common	fr	Permission refusée!
 permissions to the files/users directory	common	fr	Permissions sur le répertoire fichiers/utilisateurs
 personal	common	fr	Personnel
 peru	common	fr	PERU
@@ -530,6 +542,7 @@ read	common	fr	Lire
 read this list of methods.	common	fr	Lisez cette liste de méthodes.
 reading	common	fr	Lecture
 register	common	fr	S'enregistrer
+regular	common	fr	Régulier
 reject	common	fr	Rejeter
 remember me	common	fr	Se souvenir de moi
 remove selected accounts	common	fr	supprimer les comptes sélectionnés
@@ -543,6 +556,7 @@ returns struct of users application access	common	fr	Retourne une structure d'ac
 reunion	common	fr	REUNION
 right	common	fr	Droit
 romania	common	fr	ROUMANIE
+russian	common	fr	Russe
 russian federation	common	fr	FEDERATION DE RUSSIE
 rwanda	common	fr	RWANDA
 saint helena	common	fr	SAINTE HELENE
@@ -559,7 +573,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	fr	Enregistrer
 search	common	fr	Rechercher
 search %1 '%2'	common	fr	Rechercher %1 '%2'
-search accounts	common	fr	Rechercher les comptes
+search accounts	common	fr	Recherche des comptes
 search or select accounts	common	fr	Rechercher ou sélectionner des comptes
 second	common	fr	seconde
 section	common	fr	Section
@@ -579,6 +593,7 @@ selection	common	fr	Sélection
 send	common	fr	Envoyer
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
+serbia	common	fr	Serbie
 server %1 has been added	common	fr	Le serveur %1 a été ajouté
 server answered. processing response...	common	fr	Le serveur a répondu. Traitement de la réponse...
 server contacted. waiting for response...	common	fr	Le serveur a été contacté. Attente de la réponse...
@@ -603,7 +618,7 @@ show_more_apps	common	fr	Voir plus d'applications
 showing %1	common	fr	Montre %1
 showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
 sierra leone	common	fr	SIERRA LEONE
-simple	common	fr	simple
+simple	common	fr	Simple
 singapore	common	fr	SINGAPOUR
 site configuration	common	fr	Configuration du site
 slovakia	common	fr	SLOVAQUIE
@@ -654,7 +669,7 @@ time zone offset	common	fr	Décalage du fuseau horaire
 title	common	fr	Titre
 to	common	fr	Pour
 to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur dans le futur vous devrez définir correctement le/la
-to go back to the msg list, click <a href= %1 >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
+to go back to the msg list, click <a href= %1?sessionid=3423f9fe5e46b5ba5b60e57818f0cdac >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1?sessionid=3423f9fe5e46b5ba5b60e57818f0cdac">ici</a>
 today	common	fr	Aujourd'hui
 todays date, eg. "%1"	common	fr	date d'aujourd'hui, p.ex. "%1"
 toggle first day of week	jscalendar	fr	Voir le premier jour de la semaine
@@ -685,6 +700,7 @@ update	common	fr	Mettre à jour
 update the clock per minute or per second	common	fr	Mettre à jour l'horloge par minutes ou secondes
 upload	common	fr	Déposer
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire de dépôt n'existe pas ou le serveur web ne peut pas y écrire
+upload requires the directory to be writable by the webserver!	common	fr	Le téléchargement nécessite que le répertoire soit en accès écriture par le serveur web!
 url	common	fr	Url
 uruguay	common	fr	URUGUAY
 use button to search for	common	fr	Utilisez le bouton pour rechercher
@@ -708,7 +724,7 @@ virgin islands, u.s.	common	fr	ILES VIERGES AMERICAINES
 wallis and futuna	common	fr	WALLIS ET FUTUNA
 wednesday	common	fr	Mercredi
 welcome	common	fr	Bienvenue
-western european	common	fr	Europe de l'ouest
+western european	common	fr	Européen de l'ouest
 western sahara	common	fr	SAHARA OUEST
 what color should all the blank space on the desktop have	common	fr	Quelle couleur l'espace vide du bureau doit-il avoir?
 what style would you like the image to have?	common	fr	Quel style  souhaitez-vous pour l'image?
@@ -725,6 +741,7 @@ year	common	fr	Année
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
+you can customize how many icons and toolbars the editor shows.	common	fr	Vous pouvez personnaliser autant d'icônes et de barres d'outils que peut en montrer l'éditeur.
 you have been successfully logged out	login	fr	Déconnexion réussie
 you have not entered a title	common	fr	Vous n'avez pas entré de titre
 you have not entered a valid date	common	fr	Vous n'avez pas entré une date valide
@@ -734,6 +751,7 @@ you have selected an invalid date	common	fr	Vous avez sélectionné une date inv
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
 you have successfully logged out	common	fr	Vous vous êtes correctement déconnecté
 you need to add the webserver user '%1' to the group '%2'.	common	fr	Vous devez ajouter l'utilisateur du serveur web '%1' au groupe '%2'.
+you need to be an egroupware administrator to access this functionality!	common	fr	Vous devez être un administrateur eGroupWare pour accéder à cette fonction!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application eGroupWare: %1, mais vous n'avez aucune permission d'y accéder.
 your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé!<br>
 your message has been sent	common	fr	Votre message a été envoyé

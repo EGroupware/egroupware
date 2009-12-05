@@ -1,9 +1,14 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	fr	%1 '%2' n'existe PAS, n'est pas lisible par le serveur web ou ne contient pas d'installation eGroupWare !
 %1 already exists in %2.	setup	fr	%1 existe déjà dans %2.
 %1 created in %2.	setup	fr	%1 créé dans %2.
+%1 database %2 on %3 already contains the following tables:	setup	fr	% 1 la base de données %2 sur %3 contient déjà les tableaux suivants:
 %1 does not exist !!!	setup	fr	%1 n'existe pas !!!
 %1 is %2%3 !!!	setup	fr	%1 est %2%3 !!!
+%1 is needed by: %2.	setup	fr	%1 est nécéssaire à: %2.
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	fr	%1 est fixé à %2, vous ne pourrez PAS télécharger ou joindre des fichiers plus gros que ça!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	fr	%1 est fixé à %2. Ce n'est PAS recommandé pour un système en production, car des messages d'erreur affichés peuvent contenir des mots de passe ou autres informations sensibles!
 %1, %2 or %3 the configuration file.	setup	fr	%1, %2 ou le fichier de configuration %3.
+'%1' is no valid domain name!	setup	fr	'%1' n'est pas un nom de domaine valide!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	fr	'%1' n'est pas autorisé en tant que %2ème argument de l'option %3 !!!
 (searching accounts and changing passwords)	setup	fr	(recherche des comptes et modification des mots de passe)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fr	*** Ne mettez PAS à jour votre base de données via le setup, car elle pourrait être pertubée par l'option "max_execution_time", qui laisserait votre base de donnée dans un état irrécupérable (vos données seraient perdues)
@@ -46,7 +51,6 @@ allow authentication via cookie	setup	fr	Permettre l'authentification par cookie
 allow password migration	setup	fr	Permettre la migration des mots de passe
 allowed migration types (comma-separated)	setup	fr	Permettre les types de migration (séparés par virgules)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	fr	Alternativement, les domaines peuvent être accédés en se connectant avec <i>utilisateur@domaine</i>.
-analysis	setup	fr	Analyse
 and is up to date	setup	fr	et est à jour
 and reload your webserver, so the above changes take effect !!!	setup	fr	ET redémarrez votre serveur Web pour qu'ils soient pris en compte.
 app details	setup	fr	Détails de l'application
@@ -70,6 +74,8 @@ at your request, this script is going to take the evil action of deleting your e
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	fr	Sur votre demande, ce script va (sans hésiter !) désinstaller toutes vos applications, ce qui supprime vos tables existantes et vos données de configuration
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	fr	Tentative d'utiliser le type MIME correct pour FTP au lieu de celui par défaut 'application/octet-stream'
 authentication / accounts	setup	fr	Authentification / Comptes
+authentication type for application	setup	fr	Le type d'authentification pour l'application
+authentification mode:	setup	fr	Mode d'authentification :
 auto create account records for authenticated users	setup	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés
 auto login anonymous user	setup	fr	Connexion automatique avec utilisateur anonyme
 auto-created user accounts expire	setup	fr	Les comptes d'utilisateur auto-créés expirent
@@ -92,13 +98,23 @@ because it depends upon	setup	fr	car cela dépend de
 because it is not a user application, or access is controlled via acl	setup	fr	car ce n'est pas une application utilisateur, ou l'accès est contrôlé par ACL
 because it requires manual table installation, <br />or the table definition was incorrect	setup	fr	car cela nécessite une installation manuelle de table, <br />ou la définition de la table était incorrecte
 because it was manually disabled	setup	fr	car cela a été désactivé manuellement
+because its sources are missing	setup	fr	parce que ses sources sont manquantes
 because of a failed upgrade or install	setup	fr	A cause d'une mise à jour ou d'une installation défectueuse
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	fr	A cause d'une mise à jour défectueuse, ou la base de données est plus récente que celle de la version installée de cette app
 because the enable flag for this app is set to 0, or is undefined	setup	fr	car le témoin d'activation de cette application est sur 0 ou indéfini
 bottom	setup	fr	Bas
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	fr	Mais nous vous <u>recommandons fortement de sauvegarder</u> vos tables au cas où le script endommagerait vos données.<br /><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong>
+ca certificate	setup	fr	Certificat CA
+can not connect to %1 database %2 on host %3 using user %4!	setup	fr	Impossible de se connecter à %1% sur la base de données %2 sur hôte %3 à l'aide de l'utilisateur %4!
+can not connect to ldap server on host %1 using dn %2!	setup	fr	Impossible de se connecter au serveur LDAP sur l'hôte %1 en utilisant le DN %2!
+can not create %1 database %2 on %3 for user %4!	setup	fr	Impossible de créer %1 base de données %2 sur %3 pour l'utilisateur %4!
+can not create dn %1!	setup	fr	Impossible de créer le DN %1!
 cancel	setup	fr	Abandon
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	fr	Impossible de créer le fichier header.inc.php à cause des permissions manquantes.<br /> A la place vous pouvez %1 ou %2 le fichier.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	fr	Nom du serveur CAS hôte :<br />Exemple : sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	fr	Port du serveur CAS :<br />Exemple : 443
+cas server uri:	setup	fr	URI du serveur CAS :
+certificate (pem or ca):	setup	fr	Certificat (PEM ou CA) :
 change system-charset	setup	fr	Modifier jeu de caractères
 charset	setup	fr	utf-8
 charset to convert to	setup	fr	Conversion vers
@@ -116,7 +132,7 @@ checking php.ini	setup	fr	Vérification de php.ini
 checking required php version %1 (recommended %2)	setup	fr	Vérification version PHP %1 requise (%2 recommandée)
 checking the egroupware installation	setup	fr	Vérification de l'installation eGroupWare
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	fr	vérification de l'installation d'eGroupWare, sa version et ses mises à jour requises (pour les valeurs de retour voir --exit-codes)
-click <a href="index.php">here</a> to return to setup.	setup	fr	cliquez <a href="index.php">ici</a> pour revenir au setup.
+click <a href="index.php?sessionid=33b461865912d6db630e4f36884275e2">here</a> to return to setup.	setup	fr	cliquez <a href="index.php?sessionid=33b461865912d6db630e4f36884275e2">ici</a> pour revenir au setup.
 click here	setup	fr	Cliquez ici
 click here to re-run the installation tests	setup	fr	Cliquez ici pour rédemarrer la procédure de vérification
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	fr	liste des adresses IP ou noms d'hôtes, par défaut accès au setup depuis partout
@@ -158,6 +174,8 @@ current system-charset	setup	fr	Jeu de caractères actuel
 current system-charset is %1.	setup	fr	Le jeu de caractères actuel est %1.
 current version	setup	fr	Version actuelle
 currently installed languages: %1 <br />	setup	fr	Langues installées actuellement: %1 <br />
+custom handler: %1	setup	fr	Gestionnaire personnalisé: %1
+custom set via %1	setup	fr	Ensemble personnalisé par l'intermédiaire de %1
 cyrus imap: admin user,password	setup	fr	Cyrus IMAP: Admin user,Password
 database	setup	fr	Base de données
 database instance (egw domain)	setup	fr	Instance de base de données (domaine eGW)
@@ -201,6 +219,7 @@ domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_back
 domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	fr	domain(par défaut),[config user(admin)],password,[backup to install],[charset(default depends on language)]
 domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	fr	domain(par défaut),[config user(admin)],password,[nom=valeur,...] définit les valeurs de configuration suivantes:
 domain-name	setup	fr	nom de domaine
+don't change, if you already stored files! you will loose them!	setup	fr	Ne changez pas, si vous avez déjà stocké des fichiers! Vous les perdriez!
 dont touch my data	setup	fr	Ne pas toucher à mes données
 download	setup	fr	Télécharger
 edit current configuration	setup	fr	Modifier la configuration actuelle
@@ -246,8 +265,8 @@ file type, size, version, etc.	setup	fr	Type de fichier, taille, version, etc.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	fr	Le dépôt de fichiers est désactivé: vous ne pouvez NI utiliser le gestionnaire de fichiers NI attacher de fichiers dans plusieurs applications!
 filename	setup	fr	nom du fichier
 filesystem	setup	fr	Système de fichiers
+filesystem (default)	setup	fr	Système de fichiers (par défaut)
 force selectbox	setup	fr	Forcer la boîte de sélection
-found existing configuration file. loading settings from the file...	setup	fr	J'ai trouvé un fichier de configuration existant. Je charge les réglages depuis ce fichier...
 give admin access to all installed apps	setup	fr	Donner les droits administrateur à toutes les applications installées
 gives further options	setup	fr	fournit d'autres options
 go back	setup	fr	Retour arrière
@@ -270,22 +289,24 @@ host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add d
 host/ip domain controler	setup	fr	Hôte/IP du contrôleur de Domaine
 hostname/ip of database server	setup	fr	Nom de machine/IP du serveur de base de données
 hour (0-24)	setup	fr	heure (0-24)
+however the tables are still in the database	setup	fr	Toutefois, les tables sont encore dans la base de données
 however, the application is otherwise installed	setup	fr	De toutes façons l'application est installée
 however, the application may still work	setup	fr	Malgré tout l'application pourrait encore fonctionner
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	fr	Types d'authentifications HTTP (séparés par des virgules) à utiliser sans page de login, par exemple. "NTLM"
 if no acl records for user or any group the user is a member of	setup	fr	Si aucun enregistrement d'ACL pour un utilisateur ou groupe l'utilisateur est un membre de
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fr	Si safe_mode est activé, eGroupWare sera incapable de modifier certaines options ou d'activer certains modules.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	fr	Si l'application n'a pas défini de tables, choisir mise à jour devrait résoudre le problème
 if using ads (active directory) authentication	setup	fr	Si vous utilisez l'authentification ADS (Active Directory)
+if using cas (central authentication service):	setup	fr	Si vous utilisez l'authentification CAS (Central Authentication Service) :
 if using ldap	setup	fr	Si vous utilisez LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire d'accueil et shell de connexion?
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	fr	Si vous ne pouvez que accéder aux docroot, choisissez <b> Base de données </b> pour savoir où stocker le contenu du fichier ET utilisez le même chemin que pour les fichiers temporaires.
 if you did not receive any errors, your applications have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos applications ont été
 if you did not receive any errors, your tables have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos tables ont été
 if you running this the first time, don't forget to manualy %1 !!!	setup	fr	Si vous exécutez ceci pour la première fois, n'oubliez pas  de faire manuellement %1 !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	fr	Si vous utilisez des langues qui appartiennent aux mêmes jeux de caractères (exemple: Europe de l'ouest), vous n'avez pas besoin de définir le jeu de caractère au niveau du système
 image type selection order	setup	fr	Ordre de sélection de type d'image
 import has been completed!	setup	fr	L'importation est terminée!
-importing old settings into the new format....	setup	fr	Importation des anciens réglages au nouveau format....
-include root	setup	fr	Inclure root
 include_path need to contain "." - the current directory	setup	fr	include_path doit contenir "." - le répertoire courant
 install	setup	fr	Installer
 install all	setup	fr	Installer Tout
@@ -297,6 +318,7 @@ installation finished	setup	fr	Installation terminée
 installation started, this might take a few minutes ...	setup	fr	L'installation a démarré, ceci peut prendre quelques minutes
 installed	setup	fr	installé
 instructions for creating the database in %1:	setup	fr	Instructions pour créer la base de données dans %1:
+invalid argument '%1' !!!	setup	fr	Argument invalide '%1' !!!
 invalid ip address	setup	fr	Adresse IP invalide
 invalid mcrypt algorithm/mode combination	setup	fr	Combinaison Algorithme/Mode Mcrypt invalide
 invalid password	setup	fr	Mot de passe invalide
@@ -341,7 +363,6 @@ mcrypt algorithm (default tripledes)	setup	fr	Algorithme Mcrypt (par défaut TRI
 mcrypt initialization vector	setup	fr	Vecteur d'initialisation MCrypt
 mcrypt mode (default cbc)	setup	fr	Mode Mcrypt (par défaut CBC)
 mcrypt settings (requires mcrypt php extension)	setup	fr	Réglages Mcrypt (nécessite l'extension PHP mcrypt)
-mcrypt version	setup	fr	Version de MCrypt
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fr	L'option memory_limit est positionnée en dessous de %1: <br/>certaines applications ont requièrent plus de 8M, ceci peut entraîner des problèmes.
 migration between egroupware account repositories	setup	fr	Migration entre les dépôts de comptes eGroupWare
 minimum account id (e.g. 500 or 100, etc.)	setup	fr	ID de compte minimum (p.e. 500 ou 100, etc.)
@@ -372,6 +393,7 @@ not completed	setup	fr	Pas Terminé
 not ready for this stage yet	setup	fr	Pas encore prêt pour cette partie
 not set	setup	fr	pas défini
 note: you will be able to customize this later	setup	fr	Note: vous aurez la possibilité de personnaliser ceci plus tard
+nothing to change.	setup	fr	Rien à changer.
 now guessing better values for defaults...	setup	fr	Maintenant j'essaye de trouver les meilleurs valeurs par défaut...
 odbc / maxdb: dsn (data source name) to use	setup	fr	ODBC / MaxDB: DSN (data source name) à utiliser
 ok	setup	fr	OK
@@ -395,10 +417,13 @@ path of egroupware install directory (default auto-detected)	setup	fr	chemin ver
 path to user and group files has to be outside of the webservers document-root!!!	setup	fr	Le chemin vers les fichiers utilisateur et groupe DOIT ETRE EN DEHORS du répertoire racine des serveurs web!!!
 path to various directories: have to exist and be writeable by the webserver	setup	fr	le chemin vers divers répertoires: doivent exister et le serveur web doit pouvoir y écrire
 pear (%1) is a php repository and is usually in a package called %2.	setup	fr	PEAR (%1) est un dépôt PHP et est généralement fourni par un paquetge appelé %2.
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	fr	Les extensions PEAR sont réclamées par de nombreuses applications eGroupware, PEAR est lui-même la base requise pour chaque extension!
 pear%1 is needed by: %2.	setup	fr	PEAR%1 est requis par: %2.
+pem certificate	setup	fr	Certificat PEM
 persistent connections	setup	fr	Connexions persistantes
-php plus restore	setup	fr	PHP plus restore
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	fr	PHP plus restore vous donne la meilleure performance, car il stocke l'enviroment eGW completement dans la session.
+php client	setup	fr	php Client
+php proxy	setup	fr	php Proxy
+php session handler enabled in php.ini	setup	fr	Gestionnaire de session PHP activé dans le php.ini
 please check for sql scripts within the application's directory	setup	fr	SVP vérifiez la présence de scripts SQL dans le répertoire setup de l'application
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.
 please configure egroupware for your environment	setup	fr	SVP configurez eGroupWare pour votre environnement
@@ -425,7 +450,6 @@ re-enter password	setup	fr	Réentrer mon mot de passe
 read translations from	setup	fr	Lire les traductions depuis
 readable by the webserver	setup	fr	lisible par le serveur Web
 really uninstall all applications	setup	fr	Désinstaller VRAIMENT toutes les applications
-recommended: filesystem	setup	fr	Recommandé: système de fichiers
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fr	L'option register_globals est activé, eGroupWare n'a pas besoin de cela et cela est il est généralement plus sécurisé en le désactivant.
 registered	setup	fr	Enregistré
 rejected lines	setup	fr	Lignes rejetées
@@ -444,7 +468,6 @@ return to setup	setup	fr	Revenir à la page de setup
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	fr	exécutez une mise à jour du schéma de la base de données (si nécessaire): domain(all),[config user(admin)],password
 run installation tests	setup	fr	Démarrage de la procédure de vérification...
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	fr	l'option safe_mode (mode sécurisé) est actif, ceci est en général une bonne chose et rend votre installation plus sécurisée.
-sample configuration not found. using built in defaults	setup	fr	Configuration exemple introuvable. Utilisation des valeurs par défaut prédéfinies
 save	setup	fr	Enregistrer
 save this text as contents of your header.inc.php	setup	fr	Enregistrer ce texte comme le contenu de votre fichier header.inc.php
 schedule	setup	fr	planification
@@ -454,8 +477,6 @@ select one...	setup	fr	sélectionnez un...
 select the default applications to which your users will have access	setup	fr	Choisisseez les applications par défaut auxquelles vos utilisateurs auront accès
 select the desired action(s) from the available choices	setup	fr	Choisissez la(les) action(s) désirée(s) dans les choix possibles
 select to download file	setup	fr	Choisissez pour downloader le fichier
-select where you want to store/retrieve file contents	setup	fr	Choisissez où vous voulez stocker/récupérer les contenus de fichiers
-select where you want to store/retrieve filesystem information	setup	fr	Choisissez où vous voulez stocker/récupérer les informations sur le système de fichiers
 select where you want to store/retrieve user accounts	setup	fr	Choisissez où vous voulez stocker/récupérer les informations de comptes utilisateurs
 select which group(s) will be exported	setup	fr	Sélectionnez quels groupes seront exportés
 select which group(s) will be imported (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être importé(s) (l'appartenance au groupe sera conservée)
@@ -471,16 +492,15 @@ select which user(s) will have admin privileges	setup	fr	Choisissez quel(s) util
 select your old version	setup	fr	Choisissez votre ancienne version
 selectbox	setup	fr	Boîte de sélection
 server root	setup	fr	Racine serveur
-sessions type	setup	fr	Type de Sessions
+session handler class used.	setup	fr	Classe de gestionnaire de session utilisés.
+sessions handler	setup	fr	Gestionnaire de sessions
 set	setup	fr	définir
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	fr	Mettez ceci sur "old" pour les versions < 2.4, sinon la version exacte de mcrypt que vous utilisez.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractères en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues.
 settings	setup	fr	Réglages
 setup	setup	fr	Installation
 setup main menu	setup	fr	Menu principal de configuration
 setup the database	setup	fr	Configurer la base de données
 setup/config admin login	setup	fr	Page de connexion pour la configuration et l'installation
-should be the same as server root unless you know what you are doing.	setup	fr	Devrait être identique au ServerRoot sauf si vous savez ce que vous faites.
 show 'powered by' logo on	setup	fr	Montrer le logo 'motorisé par' sur
 sieve: host[,port(2000)]	setup	fr	Sieve: Host[,Port(2000)]
 size	setup	fr	taille
@@ -488,9 +508,12 @@ skip the installation tests (not recommended)	setup	fr	Eviter les tests d'instal
 smtp server hostname or ip address	setup	fr	Nom d'hôte ou adresse IP du serveur SMTP
 smtp server port	setup	fr	Port du serveur SMTP
 some or all of its tables are missing	setup	fr	Certaines ou toutes ses tables manquent
+sources deleted/missing	setup	fr	Sources effacées/manquantes
 sql encryption type	setup	fr	Type de chiffrement SQL (par défaut - md5)
+ssl validation:	setup	fr	Validation SSL :
 standard (login-name identical to egroupware user-name)	setup	fr	standard (login identique à l'utilisateur eGroupWare)
 standard mailserver settings (used for mail authentication too)	setup	fr	Paramètres standard du serveur de messagerie (utilisé aussi pour l'authentification d'emails)
+standard, as defined above	setup	fr	Standard, tels que définis ci-dessus
 start the postmaster	setup	fr	Démarrer le postmaster
 start updating languages %1 ...	setup	fr	Démarrage de la mise à jour des langues %1 ...
 start updating the database ...	setup	fr	Démarrage de la mise à jour de la base de données ...
@@ -502,6 +525,11 @@ step %1 - db backup and restore	setup	fr	Etape %1 - Sauvegarde et récupération
 step %1 - language management	setup	fr	Etape %1 - Gestion linguistique
 step %1 - simple application management	setup	fr	Etape %1 - Gestion simplifiée des applications
 succesfully uploaded file %1	setup	fr	déposé fichier %1 avec succès
+successful connected to %1 database %2 on %3 using user %4.	setup	fr	Connecté avec succès à %1 base de données %2 sur %3 avec l'utilisateur %4.
+successful connected to %1 on %3 and created database %2 for user %4.	setup	fr	Connecté avec succès à %1 sur %3 en ayant créé la base de données %2 pour l'utilisateur %4.
+successful connected to ldap server on %1 and created/checked required structur %2.	setup	fr	Connecté avec succès au serveur LDAP sur %1 et a créé/vérifié la structure requise %2.
+successful connected to ldap server on %1 using dn %2.	setup	fr	Connecté avec succès au serveur LDAP sur %1 en utilisant le DN %2.
+supported node types:	setup	fr	Les types de noeud supportés:
 table change messages	setup	fr	Messages de modifications de table
 tables dropped	setup	fr	tables supprimées
 tables installed, unless there are errors printed above	setup	fr	tables installées, sauf s'il y a des messages d'erreur ci-dessus
@@ -514,12 +542,16 @@ the %1 extension is needed, if you plan to use a %2 database.	setup	fr	L'extensi
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fr	Le type de base de données (db_type) des valeurs par défaut (%1) n'est pas supporté sur ce serveur. Utilisation du premier type supporté.
 the file	setup	fr	le fichier
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fr	La première étape lors de l'installation d'eGroupWare est la vérification de votre environnement système.
+the following applications are not installed:	setup	fr	Les applications suivantes sont pas installés:
 the following applications need to be upgraded:	setup	fr	L'application suivante a besoin d'une mise à jour:
 the function %1 is needed from: %2.	setup	fr	La fonction %1 est requise par : %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	fr	La fonction imagecreatefromjpeg est fournie par l'extension gd (conformément au support jpeg). Il est nécessaire de déposer des photos pour les contacts.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	fr	L'extension LDAP est nécessaire, si vous utilisez LDAP comme stockage de comptes ou de contacts, pour l'authentification par LDAP ou Active Directory. Ce n'est pas nécessaire pour une installation SQL standard.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fr	L'extension mbstring est nécessaire pour le support complet d'unicode (utf-8) ou des autres jeux de caractères multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fr	Le paramètre mbstring.func_overload = 7 est requis pour supporter pleinement unicode (utf-8) ou d'autres jeux de caractères multibyte.
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	fr	L'extension PDO en plus d'un driver spécifique de base de données est requis par le VFS (Système de Fichier Virtuel)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	fr	L'extension de session est requis pour utiliser les sessions php (les sessions db fonctionnent sans)
+the session extension is required!	setup	fr	L'extension de session est requis!
 the table definition was correct, and the tables were installed	setup	fr	La définition de la table était correcte, et les tables ont été installées
 the tables	setup	fr	les tables
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	fr	Les utilisateurs/mots de passe sont: demo/guest, demo2/guest and demo3/guest.
@@ -544,7 +576,6 @@ translations upgraded	setup	fr	Traductions Mises à jour
 true	setup	fr	Vrai
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fr	Essayez de configurer php pour qu'il supporte une des bases de données mentionnées ci-dessus, ou installez eGroupWare à la main.
 two weeks	setup	fr	deux semaines
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	fr	Malheureusement quelques paquetages PHP/Apache ont des problèmes avec (Apache meurt et vous ne pouvez plus vous connecter)
 uninstall	setup	fr	désinstaller
 uninstall all applications	setup	fr	Désinstaller toutes les applications
 uninstalled	setup	fr	désinstallé
@@ -568,6 +599,7 @@ use pure html compliant code (not fully working yet)	setup	fr	Utiliser du code H
 user	setup	fr	utilisateur
 user account prefix	setup	fr	Préfixe des comptes utilisateurs
 user for smtp-authentication (leave it empty if no auth required)	setup	fr	Utilisateur pour l'authentification SMTP (laisser vide si aucune authentification n'est requise)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	fr	Les Noms d'utilisateurs (séparés par des virgules) qui peuvent obtenir un accès root VFS (mis à part l'utilisateur de configuration)
 usernames are casesensitive	setup	fr	Les identifiants sont sensibles à la casse
 users choice	setup	fr	Choix des Utilisateurs
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	fr	Usuellement plus ennuyeux.<br />Les administrateurs peuvent utiliser Admin >> Gérer les comptes ou les groupes pour donner accès aux applications futures.
@@ -576,13 +608,15 @@ validation errors	setup	fr	Erreurs de validation
 version	setup	fr	version
 version mismatch	setup	fr	Différence de Version
 view	setup	fr	Voir
+virtual filesystem	setup	fr	Système de fichiers virtuel (VFS)
 virtual mail manager (login-name includes domain)	setup	fr	Virtual mail manager (le login inclut le domaine)
 warning!	setup	fr	Attention!
 we can proceed	setup	fr	Nous pouvons continuer
+we could not determine the version of %1, please make sure it is at least %2	setup	fr	Nous n'avons pas pu déterminer la version de %1, assurez-vous qu'il est au moins en %2
 we will automatically update your tables/records to %1	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fr	Nous allons démarrer une série de tests qui vont prendre quelques minutes. Cliquez sur le lien ci-dessous pour commencer.
 welcome to the egroupware installation	setup	fr	Bienvenue sur l'installateur eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	fr	Quel type de gestion de session voulez-vous utiliser (les sessions PHP pourraient avoir de meilleures performances)?
+where should egroupware store file content	setup	fr	Où eGroupware doit-il stocker les fichiers
 which database type do you want to use with egroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec eGroupWare?
 world readable	setup	fr	visible par tous
 world writable	setup	fr	accès en écriture pour tous
@@ -591,6 +625,7 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	fr	Voulez-vous afficher le statut de mise à jour de chaque application ?
 writable by the webserver	setup	fr	accès en écriture pour le serveur Web
 write	setup	fr	Ecrire
+wrong credentials to access the header.inc.php file!	setup	fr	Mauvaises Acréditations pour accéder au fichier header.inc.php!
 year	setup	fr	année
 yes	setup	fr	Oui
 yes, with lowercase usernames	setup	fr	Oui, avec les utilisateurs en minuscules
@@ -598,7 +633,6 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fr	Vous semblez utiliser une ancienne version de PHP<br />Il est recommandé de faire une mise à jour.<br />Les anciennes versions de PHP pourraient ne pas fonctionner correctement, ou pas du tout, avec eGroupWare.<br /><br />SVP faites une mise à jour à la dernière version %1
 you appear to be running version %1 of egroupware	setup	fr	Vous semblez utiliser la version %1 d'eGroupWare
 you appear to have %1 support.	setup	fr	Votre support %1 semble activé
-you appear to have php session support. enabling php sessions.	setup	fr	Votre support sessions PHP semble activé. J'active le support de sessions PHP
 you appear to have xml support enabled	setup	fr	Votre support XML semble activé
 you are ready for this stage, but this stage is not yet written.<br />	setup	fr	Vous êtes prêt pour cette étape, mais ceci n'est pas encore écrit.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	fr	Vous utilisez PHP version %1. eGroupWare requiert à présent %2 ou plus, PHP %3 est recommandé.
@@ -613,15 +647,15 @@ you have not created your header.inc.php yet!<br /> you can create it now.	setup
 you have successfully logged out	setup	fr	Vous vous êtes déconnecté avec succès
 you must enter a username for the admin	setup	fr	Vous devez entrer un nom d'utilisateur pour le compte admin
 you need to add at least one egroupware domain / database instance.	setup	fr	Vous devez ajouter au moins un domaine / instance de base de données eGroupWare.
-you need to add some domains to your header.inc.php.	setup	fr	Vous devez ajouter quelques domaines dans votre header.inc.php.
 you need to configure egroupware:	setup	fr	Vous devez configurer eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	fr	Vous devez résoudre les erreurs ci-dessus, avant que le fichier de configuration header.inc.php puisse être écrit!
 you need to save the settings you made here first!	setup	fr	Vous devez d'abord enregistrer les paramètres que vous avez configuré ici!
 you need to select your current charset!	setup	fr	Vous devez sélectionner votre jeu de caractères!
+you need to specify a password!	setup	fr	Vous devez spécifier un mot de passe!
+you should either install the sources or uninstall it, to get rid of the tables	setup	fr	Vous devez soit installer les sources, soit les désinstaller, pour vous débarrasser des tables
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	fr	Vous devriez soit le désinstaller et le ré-installer, soit tenter une réparation manuelle
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	fr	Vous ne pourrez PAS vous connecter à eGroupWare en utilisant des sessions PHP: "la session n'a pas pu être vérifiée" !!!
 you're using an old configuration file format...	setup	fr	Vous utilisez un ancien format de fichier de configuration...
-you're using an old header.inc.php version...	setup	fr	Vous utilisez une ancienne version du fichier header.inc.php...
 your applications are current	setup	fr	Vos applications sont à jour
 your backup directory '%1' %2	setup	fr	Votre répertoire de sauvegarde '%1' %2
 your database does not exist	setup	fr	Votre base de données n'existe pas
@@ -632,21 +666,10 @@ your files directory '%1' %2	setup	fr	Votre répertoire de fichiers '%1' %2
 your header admin password is not set. please set it now!	setup	fr	Votre mot de passe d'administration d'En-tête n'est PAS configuré. Veuillez le configurer maintenant!
 your header.inc.php needs upgrading.	setup	fr	Votre fichier header.inc.php a besoin d'une mise à jour.
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	fr	Votre fichier header.inc.php a besoin d'une mise à jour.<br /><blink><b class="msg">ATTENTION!</b></blink><br /><b>FAITES DES SAUVEGARDES!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	fr	Votre version installée de %1 est %2,ce qui est requis doit être d'au moins %3, Veuillez exécuter:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	fr	Votre installation de PHP n'a pas de support GD approprié. <br/>Vous avez besoin de la bibliothèque gd supérieure ou égale à la version 1.8 pour voir les diagrammes de Gantt dans les Projets.
 your tables are current	setup	fr	Vos tables sont à jour
 your tables will be dropped and you will lose data	setup	fr	Vos tables seront supprimées et vous allez perdre des données !!
 your temporary directory '%1' %2	setup	fr	Votre répertoire temporaire '%1' %2
 {db | php(default) | php-restore}	setup	fr	{db | php(par défaut) | php-restore}
 {off(default) | on}	setup	fr	{off(par défaut) | on}
-authentification mode:	setup	fr	Mode d'authentification :
-ca certificate	setup	fr	Certificat CA
-cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	fr	Nom du serveur CAS hôte :<br />Exemple : sso-cas.univ-rennes1.fr
-cas server port:<br />Example: 443	setup	fr	Port du serveur CAS :<br />Exemple : 443
-cas server uri:	setup	fr	URI du serveur CAS :
-certificate (pem or ca):	setup	fr	Certificat (PEM ou CA) :
-if using cas (central authentication service):	setup	fr	Si vous utilisez l'authentification CAS (Central Authentication Service) :
-pem certificate	setup	fr	Certificat PEM
-php client	setup	fr	php Client
-php proxy	setup	fr	php Proxy
-ssl validation:	setup	fr	Validation SSL :
-

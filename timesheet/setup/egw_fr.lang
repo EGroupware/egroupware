@@ -5,8 +5,10 @@ actions	timesheet	fr	Actions
 all projects	timesheet	fr	Tous les projets
 both: allow to use projectmanager and free project-names	admin	fr	Les deux: permettre l'utilisation du Gestionnaire de projets et l'utilisation de noms de projets libres
 by	timesheet	fr	par
+comment by %1 at %2:	timesheet	fr	Commentaire par %1 à %2:
 create new links	timesheet	fr	Créer de nouveaux liens
 creating new entry	timesheet	fr	nouvelle entrée en création
+custom fields	timesheet	fr	Champs personnalisés
 delete this entry	timesheet	fr	Supprimer cette entrée
 edit this entry	timesheet	fr	Modifier cette entrée
 empty if identical to duration	timesheet	fr	vide si identique à la durée
@@ -16,14 +18,19 @@ entry saved	timesheet	fr	Entrée enregistrée
 error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entrée !!!
 error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrée !!!
 existing links	timesheet	fr	Liens existants
+export to openoffice spreadsheet	timesheet	fr	Exporter vers le Tableur OpenOffice
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exportations des entrées de votre feuille de temps dans un fichier CSV. CSV signifie 'Valeurs Séparées par des Virgules'. Cependant, dans les options de l'onglet, vous pouvez également choisir d'autres séparateurs.
+field must not be empty !!!	timesheet	fr	Le Champ ne doit pas être vide!
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
 general	timesheet	fr	Général
+global categories	timesheet	fr	Catégories globales
 last modified	timesheet	fr	Dernière modification
 last month	timesheet	fr	Le mois dernier
 last week	timesheet	fr	La semaine dernière
 last year	timesheet	fr	L'année dernière
 leave it empty for a full week	timesheet	fr	Laisser vide pour une semaine pleine
 links	timesheet	fr	Liens
+new ticket submitted by %1 at %2	timesheet	fr	Nouveaux tickets soumis par %1 à %2
 no details	timesheet	fr	pas de détails
 no project	timesheet	fr	Pas de projet
 none: use only free project-names	admin	fr	Aucun: utiliser seulement des noms de projets libres
@@ -37,6 +44,7 @@ saves the changes made	timesheet	fr	Enregistrer les modifications
 saves this entry and add a new one	timesheet	fr	Enregistrer cette entrée et en ajouter une nouvelle
 select a price	timesheet	fr	Choisissez un prix
 select a project	timesheet	fr	Choisissez un projet
+show a quantity sum (eg. to sum up negative overtime)	admin	fr	Pour montrer une somme quantifiée ( P.E. la somme des heures sup négatives )
 start	timesheet	fr	Début
 starttime	timesheet	fr	Heure de début
 starttime has to be before endtime !!!	timesheet	fr	L'heure de début doit être avant l'heure de fin !!!
@@ -44,7 +52,11 @@ sum %1:	timesheet	fr	Somme %1:
 this month	timesheet	fr	Ce mois
 this week	timesheet	fr	Cette semaine
 this year	timesheet	fr	Cette année
+ticket modified by %1 at %2	timesheet	fr	Ticket modifié par %1 à %2
 timesheet	common	fr	Feuille de temps
+timesheet csv export	timesheet	fr	Exportation de la feuille de temps au format CSV
+timesheet openoffice export	timesheet	fr	Exportation de la feuille de temps au format OpenOffice
+tracker	timesheet	fr	Traqueur
 unitprice	timesheet	fr	Prix à l'unité
 view this entry	timesheet	fr	Voir cette entrée
 week	timesheet	fr	Semaine
