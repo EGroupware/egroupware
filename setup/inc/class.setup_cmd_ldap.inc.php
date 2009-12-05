@@ -7,13 +7,13 @@
  * @package setup
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * setup command: test or create the ldap connection and hierarchy
  */
-class setup_cmd_ldap extends setup_cmd 
+class setup_cmd_ldap extends setup_cmd
 {
 	/**
 	 * Allow to run this command via setup-cli
@@ -31,7 +31,6 @@ class setup_cmd_ldap extends setup_cmd
 	 * Constructor
 	 *
 	 * @param string/array $domain domain-name to customize the defaults or array with all parameters
-	 * @param string $ldap_type db-type (mysql, pgsql, ...)
 	 * @param string $ldap_host=null
 	 * @param string $ldap_suffix=null base of the whole ldap install, default "dc=local"
 	 * @param string $ldap_admin=null root-dn needed to create new entries in the suffix
@@ -71,7 +70,7 @@ class setup_cmd_ldap extends setup_cmd
 
 	/**
 	 * run the command: test or create the ldap connection and hierarchy
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception(lang('Wrong credentials to access the header.inc.php file!'),2);
@@ -103,7 +102,7 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		return $msg;
 	}
-	
+
 	/**
 	 * Connect to ldap server
 	 *
@@ -115,20 +114,20 @@ class setup_cmd_ldap extends setup_cmd
 	{
 		if (is_null($dn)) $dn = $this->ldap_root_dn;
 		if (is_null($pw)) $pw = $this->ldap_root_pw;
-		
+
 		if (!$pw)	// ldap::ldapConnect use the current eGW's pw otherwise
 		{
 			throw new egw_exception_wrong_userinput(lang('You need to specify a password!'));
 		}
 		$this->test_ldap = new ldap();
-		
+
 		$error_rep = error_reporting();
 		//error_reporting($error_rep & ~E_WARNING);	// switch warnings of, in case they are on
 		ob_start();
 		$ds = $this->test_ldap->ldapConnect($this->ldap_host,$dn,$pw);
 		ob_end_clean();
 		error_reporting($error_rep);
-		
+
 		if (!$ds)
 		{
 			throw new egw_exception_wrong_userinput(lang('Can not connect to LDAP server on host %1 using DN %2!',
@@ -136,19 +135,19 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		return lang('Successful connected to LDAP server on %1 using DN %2.',$this->ldap_host,$dn);
 	}
-	
+
 	/**
 	 * Check and if does not yet exist create the new database and user
 	 *
 	 * The check will fail if the database exists, but already contains tables
-	 * 
+	 *
 	 * @return string with success message
 	 * @throws egw_exception_wrong_userinput
 	 */
 	private function create()
 	{
 		$this->connect($this->ldap_admin,$this->ldap_admin_pw);
-		
+
 		foreach(array(
 			$this->ldap_base => array(),
 			$this->ldap_context => array(),
@@ -165,7 +164,7 @@ class setup_cmd_ldap extends setup_cmd
 		return lang('Successful connected to LDAP server on %1 and created/checked required structur %2.',
 			$this->ldap_host,$this->ldap_base);
 	}
-	
+
 	/**
 	 * array with objectclasses for the objects we can create
 	 *
@@ -195,14 +194,14 @@ class setup_cmd_ldap extends setup_cmd
 			return false;
 		}
 		list($node,$base) = explode(',',$dn,2);
-		
+
 		if (!@ldap_read($this->test_ldap->ds,$base,'objectClass=*'))
 		{
 			$this->_create_node($base);		// create the base if it's not already there
 		}
 		// now we need to create the node itself
 		list($name,$value) = explode('=',$node);
-		
+
 		if (!isset(self::$requiredObjectclasses[$name]))
 		{
 			throw new egw_exception_wrong_userinput(lang('Can not create DN %1!',$dn).' '.
@@ -260,12 +259,14 @@ class setup_cmd_ldap extends setup_cmd
 					'$domain',
 					'$suffix',
 					'$base',
+					'$admin_pw',
 				),array(
 					$this->domain,
 					$this->ldap_suffix,
 					$this->ldap_base,
+					$this->ldap_admin_pw,
 				),$this->$name);
 			}
-		}	
+		}
 	}
 }

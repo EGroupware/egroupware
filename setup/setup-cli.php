@@ -67,7 +67,7 @@ switch($action)
 		break;
 
 	case '--install':
-		do_install($arguments[0]);
+		do_install($arguments);
 		break;
 
 	case '--config':
@@ -374,14 +374,20 @@ function _check_auth_config($arg,$stop,$set_lang=true)
 /**
  * Install eGroupWare
  *
- * @param string $args domain,[config user(admin)],password,[backup-file],[charset],[lang]
+ * @param array $args array(0 => "domain,[config user(admin)],password,[backup-file],[charset],[lang]", "name=value", ...)
  */
 function do_install($args)
 {
-	list($domain,$user,$password,$backup,$charset,$lang) = explode(',',$args);
+	list($domain,$user,$password,$backup,$charset,$lang) = explode(',',array_shift($args));
 	_fetch_user_password($user,$password);
 
-	$cmd = new setup_cmd_install($domain,$user,$password,$backup,$charset,true,array(),$lang);
+	$config = array();
+	foreach($args as $arg)
+	{
+		list($name,$value) = explode('=',$arg,2);
+		$config[$name] = $value;
+	}
+	$cmd = new setup_cmd_install($domain,$user,$password,$backup,$charset,true,$config,$lang);
 	echo $cmd->run()."\n";
 }
 

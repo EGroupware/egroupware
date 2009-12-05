@@ -42,6 +42,19 @@ $config = array(
 	'start_webserver' => '/etc/init.d/httpd',
 	'autostart_webserver' => '/sbin/chkconfig --level 345 httpd on',
 	'distro'      => 'rh',
+	'auth_type'   => 'sql',
+	'account_repository' => 'sql',
+	'account_min_id' => '',
+	'ldap_suffix'   => 'dc=local',
+	'ldap_host'     => 'localhost',
+	'ldap_admin'    => 'cn=admin,$suffix',
+	'ldap_admin_pw' => '',
+	'ldap_base'     => 'o=$domain,$suffix',
+	'ldap_root_dn'  => 'cn=admin,$base',
+	'ldap_root_pw'  => randomstring(),
+	'ldap_context'  => 'ou=accounts,$base',
+	'ldap_search_filter' => '(uid=%user)',
+	'ldap_group_context' => 'ou=groups,$base',
 );
 
 // read language from LANG enviroment variable
@@ -76,6 +89,12 @@ function set_distro_defaults($distro=null)
 			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
 			$config['start_webserver'] = '/etc/init.d/apache2';
 			$config['autostart_webserver'] = '/sbin/chkconfig --level 345 apache2 on';
+			$config['ldap_suffix'] = 'dc=site';
+			$config['ldap_admin'] = $config['ldap_root_dn'] = 'cn=Administrator,$suffix';
+			$config['ldap_root_pw'] = '$admin_pw';
+			$config['ldap_base'] = '$suffix';
+			$config['ldap_context'] = 'ou=people,$base';
+			$config['ldap_group_context'] = 'ou=group,$base';
 			break;
 		case 'debian':
 			$config['start_db'] = '/etc/init.d/mysql';
@@ -96,6 +115,7 @@ set_distro_defaults();
 $argv = $_SERVER['argv'];
 $prog = array_shift($argv);
 
+$auth_type_given = false;
 while(($arg = array_shift($argv)))
 {
 	if ($arg == '-v' || $arg == '--verbose')
@@ -117,6 +137,20 @@ while(($arg = array_shift($argv)))
 	elseif(substr($arg,0,2) == '--' && isset($config[$name=substr($arg,2)]))
 	{
 		$config[$name] = array_shift($argv);
+
+		switch($name)
+		{
+			case 'auth_type':
+				$auth_type_given = true;
+				break;
+
+			case 'account_repository':	// auth-type defaults to account-repository
+				if (!$auth_type_given)
+				{
+					$config['auth_type'] = $config[$name];
+				}
+				break;
+		}
 	}
 	else
 	{
@@ -143,12 +177,7 @@ $setup_cli = $config['php'].' '.$config['setup-cli'];
 if (!file_exists($config['header']) || filesize($config['header']) < 200)	// default header redirecting to setup is 147 bytes
 {
 	// --> new install
-
-	// create header
-	$setup_header = $setup_cli.' --create-header '.escapeshellarg($config['config_passwd'].','.$config['config_user']).
-		' --domain '.escapeshellarg($config['domain'].','.$config['db_name'].','.$config['db_user'].','.$config['db_pass'].
-			','.$config['db_type'].','.$config['db_host'].','.$config['db_port']);
-	run_cmd($setup_header);
+	$extra_config = '';
 
 	// check for localhost if database server is started and start it (permanent) if not
 	if ($config['db_host'] == 'localhost' && file_exists($config['start_db']))
@@ -167,8 +196,47 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	}
 	run_cmd($setup_db);
 
+	// check if ldap is required and initialise it
+	$extra_config .= ' '.escapeshellarg('auth_type='.$config['auth_type']);
+	$extra_config .= ' '.escapeshellarg('account_repository='.$config['account_repository']);
+	if ($config['auth_type'] == 'ldap' || $config['account_repository'] == 'ldap')
+	{
+		$extra_config .= ' '.escapeshellarg('account_min_id='.(!empty($config['account_min_id']) ? $config['account_min_id'] : 1100));
+
+		$setup_ldap = $setup_cli.' --setup-cmd-ldap sub_command='.
+			($config['account_repository'] == 'ldap' ? 'create_ldap' : 'test_ldap');
+		foreach(array(
+			'domain','ldap_suffix','ldap_host','ldap_admin','ldap_admin_pw',	// non-egw params: only used for create
+			'ldap_base','ldap_root_dn','ldap_root_pw','ldap_context','ldap_search_filter','ldap_group_context',	// egw params
+		) as $name)
+		{
+			if (strpos($value=$config[$name],'$') !== false)
+			{
+				$config[$name] = $value = strtr($value,array(
+					'$suffix' => $config['ldap_suffix'],
+					'$base' => $config['ldap_base'],
+					'$admin_pw' => $config['ldap_admin_pw'],
+				));
+			}
+			$setup_ldap .= ' '.escapeshellarg($name.'='.$value);
+
+			if (!in_array($name,array('domain','ldap_suffix','ldap_admin','ldap_admin_pw')))
+			{
+				$extra_config .= ' '.escapeshellarg($name.'='.$value);
+			}
+		}
+		run_cmd($setup_ldap);
+	}
+
+	// create header
+	$setup_header = $setup_cli.' --create-header '.escapeshellarg($config['config_passwd'].','.$config['config_user']).
+		' --domain '.escapeshellarg($config['domain'].','.$config['db_name'].','.$config['db_user'].','.$config['db_pass'].
+			','.$config['db_type'].','.$config['db_host'].','.$config['db_port']);
+	run_cmd($setup_header);
+
 	// install egroupware
-	$setup_install = $setup_cli.' --install '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd'].','.$config['backup'].','.$config['charset'].','.$config['lang']);
+	$setup_install = $setup_cli.' --install '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd'].','.$config['backup'].','.$config['charset'].','.$config['lang'])
+		.$extra_config;
 	run_cmd($setup_install);
 
 	if ($config['data_dir'] != '/var/lib/egroupware')
