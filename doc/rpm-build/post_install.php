@@ -42,8 +42,7 @@ $config = array(
 	'start_webserver' => '/etc/init.d/httpd',
 	'autostart_webserver' => '/sbin/chkconfig --level 345 httpd on',
 	'distro'      => 'rh',
-	'auth_type'   => 'sql',
-	'account_repository' => 'sql',
+	'account-auth'  => 'sql,sql',
 	'account_min_id' => '',
 	'ldap_suffix'   => 'dc=local',
 	'ldap_host'     => 'localhost',
@@ -55,6 +54,11 @@ $config = array(
 	'ldap_context'  => 'ou=accounts,$base',
 	'ldap_search_filter' => '(uid=%user)',
 	'ldap_group_context' => 'ou=groups,$base',
+	'mailserver'    => 'localhost,imap,$domain',
+	'smtpserver'    => 'localhost,25',
+	'postfix'       => '',	// see setup-cli.php --help config
+	'cyrus'         => '',
+	'sieve'         => '',
 );
 
 // read language from LANG enviroment variable
@@ -197,10 +201,14 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	run_cmd($setup_db);
 
 	// check if ldap is required and initialise it
-	$extra_config .= ' '.escapeshellarg('auth_type='.$config['auth_type']);
+	// we need to specify account_repository and auth_type to --install as extra config, otherwise install happens for sql!
+	@list($config['account_repository'],$config['auth_type'],$rest) = explode(',',$config['account-auth'],3);
 	$extra_config .= ' '.escapeshellarg('account_repository='.$config['account_repository']);
-	if ($config['auth_type'] == 'ldap' || $config['account_repository'] == 'ldap')
+	$extra_config .= ' '.escapeshellarg('auth_type='.(empty($config['auth_type']) ? $config['account_repository'] : $config['auth_type']));
+	if (empty($rest)) unset($config['account-auth']);
+	if ($config['account_repository'] == 'ldap' || $config['auth_type'] == 'ldap')
 	{
+		// set account_min_id to 1100 if not specified to NOT clash with system accounts
 		$extra_config .= ' '.escapeshellarg('account_min_id='.(!empty($config['account_min_id']) ? $config['account_min_id'] : 1100));
 
 		$setup_ldap = $setup_cli.' --setup-cmd-ldap sub_command='.
@@ -246,9 +254,12 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 			' --files-dir '.escapeshellarg($config['data_dir'].'/files').' --backup-dir '.escapeshellarg($config['data_dir'].'/backup');
 		run_cmd($setup_config);
 	}
-	// create dummy mailserver config, as fmail otherwise gives fatal error otherwise
-	$setup_mailserver = $setup_cli.' --config '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd']).
-		' --mailserver localhost,imap --smtpserver localhost,25';
+	// create mailserver config (fmail requires at least minimal config given as default, otherwise fatal error)
+	$setup_mailserver = $setup_cli.' --config '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd']);
+	foreach(array('account-auth','smtpserver','postfix','mailserver','cyrus','sieve') as $name)
+	{
+		if (!empty($config[$name])) $setup_mailserver .= ' --'.$name.' '.escapeshellarg($config[$name]);
+	}
 	run_cmd($setup_mailserver);
 
 	// create first user
