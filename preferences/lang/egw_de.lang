@@ -10,7 +10,7 @@ are you sure you want to delete this category ?	preferences	de	Sind sie sicher, 
 change your password	preferences	de	Passwort ändern
 change your profile	preferences	de	Profil ändern
 change your settings	preferences	de	Einstellungen ändern
-charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
+charset for the csv export	common	de	Zeichensatz für den CSV Export
 click to select a color	preferences	de	Anklicken um eine Farbe auszuwählen
 color	preferences	de	Farbe
 country	preferences	de	Land
@@ -50,6 +50,7 @@ max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Na
 no default	preferences	de	Keine Vorgabe
 no user-selection at all	common	de	Überhaupt keine Benutzerauswahl
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail-Server. Dies müssen Sie separat tun.
+number format	preferences	de	Zahlenformat
 office 2003 theme	preferences	de	Office 2003
 p: paragraph	preferences	de	p: Absatz
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
@@ -88,6 +89,7 @@ the two last options limit the visibility of other users. therefore they should 
 the two passwords are not the same	preferences	de	Die beiden Passworte sind nicht identisch
 theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)
 this server is located in the %1 timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
+thousands separator is only used for displaying and not for editing numbers.	common	de	Tausender Trennzeichen ist nur für das Anzeigeformat und nicht zum Editieren von Zahlen
 time format	preferences	de	Zeitformat
 use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
