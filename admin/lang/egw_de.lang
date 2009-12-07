@@ -99,7 +99,7 @@ bottom	admin	de	unten
 calculate next run	admin	de	nächste Ausführung berechnen
 can change password	admin	de	Darf Passwort ändern
 cancel testjob!	admin	de	Testjob abbrechen!
-cancel this scheduled command	admin	de	Dieses geplante Komando abbrechen
+cancel this scheduled command	admin	de	Dieses geplante Kommando abbrechen
 categories list	admin	de	Liste der Kategorien
 category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert
 category list	admin	de	Kategorieliste
@@ -116,6 +116,7 @@ color	admin	de	Farbe
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
 complete path to aspell program	admin	de	Vollständiger Pfad zum Programm ASPELL
+config password or md5 hash from the header.inc.php	admin	de	Konfigurationspasswort oder md5 Hash von der header.inc.php Datei
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe leer bedeutet den kompletten Domainnamen, für SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere eGW Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
 could not remote execute the command	admin	de	Kann das Kommando nicht Remote ausführen.
@@ -269,6 +270,7 @@ group has been updated	common	de	Gruppe wurde aktualisiert
 group list	admin	de	Liste der Gruppen
 group manager	admin	de	Gruppenmanager
 group name	admin	de	Gruppenname
+hash	admin	de	Hash-Wert
 hide php information	admin	de	PHP-Informationen ausblenden
 home directory	admin	de	Benutzerverzeichnis
 host information	admin	de	Host-Information
@@ -281,7 +283,7 @@ how should email addresses for new users be constructed?	admin	de	In welchem For
 icon	admin	de	Icon
 idle	admin	de	im Leerlauf
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder oder eine Gruppe der er angehört gibt
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Kommandointerpreter verwalten ?
 in mbyte	admin	de	in MByte
 inbound	admin	de	eingehend
 initial	admin	de	Anfangsbuchstabe
@@ -309,7 +311,7 @@ last submission:	admin	de	Letzte Absendung:
 last time read	admin	de	Zuletzt gelesen
 ldap accounts context	admin	de	LDAP-Kontext für Benutzerkonten
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	de	LDAP-Vorgabewert für Benutzerverzeichnisse (z.B. /home für /home/username)
-ldap default shell (e.g. /bin/bash)	admin	de	LDAP-Vorgabewert für Komandointerpreter (Shell) (z.B. /bin/bash)
+ldap default shell (e.g. /bin/bash)	admin	de	LDAP-Vorgabewert für Kommandointerpreter (Shell) (z.B. /bin/bash)
 ldap encryption type	admin	de	LDAP-Verschlüsselungstyp
 ldap groups context	admin	de	LDAP-Kontext für Gruppen
 ldap host	admin	de	LDAP-Host
@@ -324,11 +326,13 @@ length<br>rows	admin	de	Länge<br>Zeilen
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
+logged out	admin	de	abgemeldet
 login history	admin	de	Login-Kontrolle
 login message	admin	de	Meldung der Login-Seite
 login screen	admin	de	Login-Seite
-login shell	admin	de	Login-Komandointerpreter (Login-Shell)
+login shell	admin	de	Login-Kommandointerpreter (Login-Shell)
 login time	admin	de	Login Zeit
+login-status	admin	de	Angemeldet-Status
 loginid	admin	de	Login-ID
 logintime	admin	de	Anmeldezeit
 logoutime	admin	de	Abmeldezeit
@@ -474,6 +478,7 @@ submit the search string	admin	de	Geben Sie Ihren Suchbegriff ein
 submit to egroupware.org	admin	de	Übertragen an egroupware.org
 subtype	admin	de	Untertyp
 subversion checkout	admin	de	Subversion checkout (svn)
+success	admin	de	erfolgreich
 switch it off, if users are randomly thrown out	admin	de	schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
 template selection	admin	de	Auswahl der Benutzeroberfläche
 text entry	admin	de	Texteingabe
