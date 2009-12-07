@@ -405,7 +405,10 @@ class categories
 					}
 					elseif ($cat['owner'] != $this->account_id)
 					{
-						$s .= '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+						if ($GLOBALS['egw_info']['user']['preferences']['common']['show_category_owner'])
+						{
+							$s .= ' &lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+						}
 					}
 					elseif ($cat['access'] == 'private')
 					{

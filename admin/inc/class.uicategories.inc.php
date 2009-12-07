@@ -231,11 +231,14 @@
 
 				if ($this->appname && $cat['app_name'] == 'phpgw')
 				{
-					$appendix = '&lt;' . lang('Global') . '&gt;';
+					$appendix = ' &#9830;';
 				}
 				elseif ($cat['owner'] != $accountId)
 				{
-					$appendix = '&lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+					if ($GLOBALS['egw_info']['user']['preferences']['common']['show_category_owner'])
+					{
+						$appendix = ' &lt;' . $GLOBALS['egw']->accounts->id2name($cat['owner'], 'account_fullname') . '&gt;';
+					}
 				}
 				else
 				{

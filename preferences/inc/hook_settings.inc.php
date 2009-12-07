@@ -316,6 +316,18 @@
 			'xmlrpc' => True,
 			'admin'  => false,
 		),
+		'show_category_owner' => array(
+			'type'		=>	'select',
+			'label'		=>	'Show the category owner with the category name.',
+			'name'		=>	'show_category_owner',
+			'values'    =>  array(
+				'1'		=>  lang('Yes'),
+				'0'     =>	lang('No'),
+			),
+			'help'		=>	'The owner is attached to distinguish between categories with the same name.  You can turn this off and will get the names only.',
+			'xmlrpc'	=>	True,
+			'admin'		=>	False
+		),
 	);
 	// disable thumbnails, if no size configured by admin
 	if (!$GLOBALS['egw_info']['server']['link_list_thumbnail']) unset($GLOBALS['settings']['link_list_thumbnail']);

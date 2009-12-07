@@ -17,6 +17,7 @@ require_once 'Horde/RPC.php';
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'currentapp'			=> 'login',
+		'login'				=> True,
 		'noheader'			=> True,
 		'nonavbar'			=> True,
 		'disable_Template_class'	=> True
