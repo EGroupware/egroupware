@@ -969,7 +969,7 @@ class setup
 
 	function setup_account_object(array $config=array())
 	{
-		if (!is_object($this->accounts) || $config)
+		if (!isset($this->accounts) || $config)
 		{
 			if (!is_object($this->db))
 			{
@@ -987,7 +987,7 @@ class setup
 				}
 			}
 			$this->accounts = new accounts($config);
-			if (!is_object($GLOBALS['egw']->accounts)) $GLOBALS['egw']->accounts = $this->accounts;
+			if (!isset($GLOBALS['egw']->accounts)) $GLOBALS['egw']->accounts = $this->accounts;
 			$this->accounts->cache_invalidate();	// the cache is shared for all instances of the class
 
 			if($this->accounts->backend instanceof accounts_ldap && !$this->accounts->backend->ds)
