@@ -162,14 +162,17 @@ class calendar_boupdate extends calendar_bo
 			foreach($event['category'] as $key => $cat_id)
 			{
 				// check if user is allowed to update event categories
-				if ((!$old_event || !isset($old_event['category'][$cat_id])) && !self::has_cat_right(self::CAT_ACL_ADD,$cat_id,$this->user))
+				if ((!$old_event || !in_array($cat_id,$old_event['category'])) &&
+					self::has_cat_right(self::CAT_ACL_ADD,$cat_id,$this->user) === false)
 				{
 					unset($event['category'][$key]);
 					// report removed category to user
 					$removed_cats[$cat_id] = $this->categories->id2name($cat_id);
+					continue;	// no further check, as cat was removed
 				}
 				// for new or moved events check status of participants, if no category status right --> set all status to 'U' = unknown
-				if (!$status_reset_to_unknown && !self::has_cat_right(self::CAT_ACL_STATUS,$cat_id,$this->user) &&
+				if (!$status_reset_to_unknown &&
+					self::has_cat_right(self::CAT_ACL_STATUS,$cat_id,$this->user) === false &&
 					(!$old_event || $old_event['start'] != $event['start'] || $old_event['end'] != $event['end']))
 				{
 					foreach($event['participants'] as $uid => $status)
@@ -374,7 +377,7 @@ class calendar_boupdate extends calendar_bo
 		$removed = array();
 		foreach($event['participants'] as $uid => $status)
 		{
-			if ((is_null($old_event) || !in_array($old_event['participants'][$uid])) && !$this->check_acl_invite($uid))
+			if ((is_null($old_event) || !isset($old_event['participants'][$uid])) && !$this->check_acl_invite($uid))
 			{
 				unset($event['participants'][$uid]);	// remove participant
 				$removed[] = $uid;
@@ -398,7 +401,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$ret = true;	// no grant required
 		}
-		elseif ($this->require_acl_invite == 'group' && $GLOBALS['egw']->accounts->get_type($uid) != 'g')
+		elseif ($this->require_acl_invite == 'groups' && $GLOBALS['egw']->accounts->get_type($uid) != 'g')
 		{
 			$ret = true;	// grant only required for groups
 		}
@@ -407,6 +410,7 @@ class calendar_boupdate extends calendar_bo
 			$ret = $this->check_perms(EGW_ACL_INVITE,0,$uid);
 		}
 		//error_log(__METHOD__."($uid) = ".array2string($ret));
+		//echo "<p>".__METHOD__."($uid) require_acl_invite=$this->require_acl_invite returning ".array2string($ret)."</p>\n";
 		return $ret;
 	}
 
@@ -868,16 +872,19 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function check_status_perms($uid,$event)
 	{
-		if ($uid[0] == 'c' || $uid['0'] == 'e')	// for contact we use the owner of the event
+		if ($uid[0] == 'c' || $uid[0] == 'e')	// for contact we use the owner of the event
 		{
 			if (!is_array($event) && !($event = $this->read($event))) return false;
 
 			return $this->check_perms(EGW_ACL_EDIT,0,$event['owner']);
 		}
-		if (!$this->check_cat_acl(self::CAT_ACL_STATUS,$event))
+		// check if we have a category acl for the event or not (null)
+		$access = $this->check_cat_acl(self::CAT_ACL_STATUS,$event);
+		if (!is_null($access))
 		{
-			return false;
+			return $access;
 		}
+		// no access or denied access because of category acl --> regular check
 		if (!is_numeric($uid))	// this is eg. for resources (r123)
 		{
 			$resource = $this->resource_info($uid);
@@ -896,20 +903,27 @@ class calendar_boupdate extends calendar_bo
 	 * @param int $right self::CAT_ACL_{ADD|STATUS}
 	 * @param int|array $event
 	 * @return boolean true if use has the right, false if not
+	 * @return boolean false=access denied because of cat acl, true access granted because of cat acl,
+	 * 	null = cat has no acl
 	 */
 	function check_cat_acl($right,$event)
 	{
 		if (!is_array($event)) $event = $this->read($event);
 
-		$ret = true;
+		$ret = null;
 		if ($event['category'])
 		{
 			foreach(is_array($event['category']) ? $event['category'] : explode(',',$event['category']) as $cat_id)
 			{
-				if (!self::has_cat_right($right,$cat_id,$this->user))
+				$access = self::has_cat_right($right,$cat_id,$this->user);
+				if ($access === true)
 				{
-					$ret = false;
+					$ret = true;
 					break;
+				}
+				if ($access === false)
+				{
+					$ret = false;	// cat denies access --> check further cats
 				}
 			}
 		}
@@ -974,13 +988,14 @@ class calendar_boupdate extends calendar_bo
 	 * Check if current user has a given right on a category (if it's restricted!)
 	 *
 	 * @param int $cat_id
-	 * @return boolean
+	 * @return boolean false=access denied because of cat acl, true access granted because of cat acl,
+	 * 	null = cat has no acl
 	 */
 	public static function has_cat_right($right,$cat_id,$user)
 	{
 		static $cache;
 
-		if (!isset($cache[$cat_id][$right]))
+		if (!isset($cache[$cat_id]))
 		{
 			$all = $own = 0;
 			$cat_rights = self::get_cat_rights($cat_id);
@@ -1000,7 +1015,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			foreach(array(self::CAT_ACL_ADD,self::CAT_ACL_STATUS) as $mask)
 			{
-				$cache[$cat_id][$mask] = !($all & $mask) || ($own & $mask);
+				$cache[$cat_id][$mask] = !($all & $mask) ? null : !!($own & $mask);
 			}
 		}
 		//echo "<p>".__METHOD__."($right,$cat_id) all=$all, own=$own returning ".array2string($cache[$cat_id][$right])."</p>\n";
