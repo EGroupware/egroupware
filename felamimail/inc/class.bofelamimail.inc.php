@@ -756,35 +756,56 @@
 			return $structure;
 		}
 
-		/*
-		* strip tags out of the message completely with their content
-		* param $_body is the text to be processed
-		* param $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
-		*            without the enclosing brackets
-		* param $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
-		*/
-		static function replaceTagsCompletley(&$_body,$tag,$endtag='')
+		/**
+		 * strip tags out of the message completely with their content
+		 * @param string $_body is the text to be processed
+		 * @param string $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
+		 *				without the enclosing brackets
+		 * @param string $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
+		 * @param bool $addbbracesforendtag if endtag is given, you may decide if the </ and > braces are to be added, 
+		 *				or if you want the string to be matched as is
+		 * @return void the modified text is passed via reference
+		 */
+		static function replaceTagsCompletley(&$_body,$tag,$endtag='',$addbracesforendtag=true)
 		{
-			if (self::$debug) error_log("bofelamimail:replaceTagsCompletley $tag/$endtag: $_body");
 			if ($tag) $tag = strtolower($tag);
 			if ($endtag == '' || empty($endtag) || !isset($endtag))
 			{
-			        $endtag = $tag;
+		        $endtag = $tag;
 			} else {
 			        $endtag = strtolower($endtag);
+					//error_log(__METHOD__.' Using EndTag:'.$endtag);
 			}
 			// strip tags out of the message completely with their content
 			$taglen=strlen($tag);
 			$endtaglen=strlen($endtag);
 			if ($_body) {
-				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'>~sim','',$_body);
-				// remove left over tags, unfinished ones, and so on
-				$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+				if ($addbracesforendtag === true )
+				{
+					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'>~sim','',$_body);
+					// remove left over tags, unfinished ones, and so on
+					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+				}
+				if ($addbracesforendtag === false )
+				{
+					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~sim','',$_body);
+					// remove left over tags, unfinished ones, and so on
+					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
+					$_body = preg_replace('~'.$endtag.'~','',$_body);
+				}
 			}
 		}
 
 		static function getCleanHTML(&$_html)
 		{
+			// remove CRLF and TAB as it is of no use in HTML.
+			$_html = str_replace("\r\n",' ',$_html);
+			$_html = str_replace("\t",' ',$_html);
+
+			self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
+			self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head	
+			self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs	
+			self::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs	
 			#echo $_html;exit;
 			$kses = new kses();
 			$kses->AddProtocol('cid');
@@ -976,17 +997,14 @@
 
 			// no scripts allowed
 			// clean out comments
-			$search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
+			$search = array(
 				'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
-				'@<head[^>]*?>.*?</head>@si',  // Strip out head tag
 				'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
 			);
 			$_html = preg_replace($search,"",$_html);
 
 			// do the kses clean out first, to avoid general problems with content later on
 			$_html = $kses->Parse($_html);
-			// clean out empty or pagewide style definitions / left over tags
-			self::replaceTagsCompletley($_html,'style');
 			// remove non printable chars
 			$_html = preg_replace('/([\000-\012])/','',$_html);
 		}
