@@ -790,7 +790,7 @@ class calendar_uiforms extends calendar_ui
 		{
 			$preserv = array(
 				'no_popup' => isset($_GET['no_popup']),
-				'referer'  => common::get_referer($this->view_menuaction),
+				'referer'  => common::get_referer('/index.php?menuaction='.$this->view_menuaction),
 				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
 			$cal_id = (int) $_GET['cal_id'];
