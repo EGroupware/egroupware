@@ -623,8 +623,18 @@ class infolog_ical extends infolog_bo
 									break;
 
 								case 'CATEGORIES':
-									$cats = $this->find_or_add_categories(explode(',', $attribute['value']), $_noteID);
-									$note['info_cat'] = $cats[0];
+									if ($attribute['value'])
+									{
+										if($version == '1.0')
+										{
+											$vcats = $this->find_or_add_categories(explode(';',$attribute['value']), $_noteID);
+										}
+										else
+										{
+											$cats = $this->find_or_add_categories(explode(',',$attribute['value']), $_noteID);
+										}
+										$note['info_cat'] = $cats[0];
+									}
 									break;
 							}
 						}
