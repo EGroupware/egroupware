@@ -1,7 +1,7 @@
 <?php
 /**
  * eGroupWare API - Applications
- * 
+ *
  * @link http://www.egroupware.org
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
  * Copyright (C) 2000, 2001 Dan Kuykendall
@@ -27,7 +27,7 @@ class acl
 	 */
 	var $account_id = 0;
 	/**
-	 * @var $account_type 
+	 * @var $account_type
 	 */
 	var $account_type;
 	/**
@@ -36,7 +36,7 @@ class acl
 	var $data = Array();
 	/**
 	 * internal copy of the db-object
-	 * 
+	 *
 	 * @var egw_db
 	 */
 	var $db;
@@ -49,7 +49,7 @@ class acl
 	 * ACL constructor for setting account id
 	 *
 	 * Sets the ID for $acl->account_id. Can be used to change a current instances id as well.
-	 * Some functions are specific to this account, and others are generic. 
+	 * Some functions are specific to this account, and others are generic.
 	 *
 	 * @example acl->acl(5); // 5 is the user id
 	 * @param int $account_id int-the user id
@@ -122,7 +122,7 @@ class acl
 	/**
 	 * Read acl records for $acl->account_id from reposity
 	 *
-	 * @internal 
+	 * @internal
 	 * @return array along with storing it in $acl->data.  <br>
 	 */
 	function read_repository()
@@ -135,10 +135,10 @@ class acl
 		}
 		$acl_acc_list = $GLOBALS['egw']->accounts->memberships($this->account_id,true);
 			@array_unshift($acl_acc_list,$this->account_id);
-			
-			
+
+
 		$this->data = Array();
-		foreach($this->db->select(acl::TABLE,'*',array('acl_account' => $acl_acc_list ),__LINE__,__FILE__) as $row) 
+		foreach($this->db->select(acl::TABLE,'*',array('acl_account' => $acl_acc_list ),__LINE__,__FILE__) as $row)
 		{
 			$this->data[$row['acl_appname'].'-'.$row['acl_location'].'-'.$row['acl_account']] = egw_db::strip_array_keys($row,'acl_');
 		}
@@ -162,7 +162,7 @@ class acl
 	/**
 	 * Adds ACL record to  the repository of the class
 	 *
-	 * Adds ACL record to $this->data. 
+	 * Adds ACL record to $this->data.
 	 *
 	 * @param string $appname default False derives value from $GLOBALS['egw_info']['flags']['currentapp']
 	 * @param string $location location
@@ -174,9 +174,9 @@ class acl
 		if (!$appname) $appname = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		$row = array(
-			'appname'  => $appname, 
-			'location' => $location, 
-			'account'  => (int) $this->account_id, 
+			'appname'  => $appname,
+			'location' => $location,
+			'account'  => (int) $this->account_id,
 			'rights'   => (int) $rights
 		);
 		$this->data[$row['appname'].'-'.$row['location'].'-'.$row['account']] = $row;
@@ -197,8 +197,8 @@ class acl
 
 		foreach($this->data as $idx => $value)
 		{
-			if ($value['appname'] == $appname && 
-				($location === false || $value['location'] == $location) && 
+			if ($value['appname'] == $appname &&
+				($location === false || $value['location'] == $location) &&
 				$value['account'] == $this->account_id)
 			{
 				unset($this->data[$idx]);
@@ -230,7 +230,7 @@ class acl
 				),false,__LINE__,__FILE__);
 			}
 		}
-		if ($this->account_id == $GLOBALS['egw_info']['user']['account_id'] && 
+		if ($this->account_id == $GLOBALS['egw_info']['user']['account_id'] &&
 			method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 		{
 			$GLOBALS['egw']->invalidate_session_cache();
@@ -321,7 +321,7 @@ class acl
 
 		foreach($this->data as $idx => $value)
 		{
-			if ($value['appname'] == $appname && 
+			if ($value['appname'] == $appname &&
 				($value['location'] == $location ||	$value['location'] == 'everywhere') &&
 				$value['account'] == $this->account_id)
 			{
@@ -355,7 +355,7 @@ class acl
 	\**************************************************************************/
 
 	/**
-	 * add repository information / rights for app/location/account_id to the database 
+	 * add repository information / rights for app/location/account_id to the database
 	 *
 	 * @param string $app appname
 	 * @param string $location location
@@ -419,7 +419,7 @@ class acl
 
 		return $this->db->affected_rows();
 	}
-	
+
 	/**
 	 * Get rights for a given account, location and application
 	 *
@@ -438,7 +438,7 @@ class acl
 			'acl_appname'  => $appname,
 		),__LINE__,__FILE__)->fetchColumn();
 	}
-	
+
 	/**
 	 * Get all rights for a given location and application
 	 *
@@ -544,7 +544,7 @@ class acl
 	function get_location_list_for_id($app, $required, $accountid = '')
 	{
 		static $cache_accountid;
-		
+
 		if($cache_accountid[$accountid])
 		{
 			$accountid = $cache_accountid[$accountid];
@@ -680,13 +680,13 @@ class acl
 			$grantor    = $row['acl_account'];
 			$rights     = $row['acl_rights'];
 			$granted_to = (int) $row['acl_location'];
-			
+
 			if(!isset($grants[$grantor]))
 			{
 				$grants[$grantor] = 0;
 			}
 			$grants[$grantor] |= $rights;
-			
+
 			// if the right is granted from a group and we enummerated group ACL's
 			if ($GLOBALS['egw']->accounts->get_type($grantor) == 'g' && $enum_group_acls &&
 				(!is_array($enum_group_acls) || !in_array($grantor,$enum_group_acls)))
@@ -715,7 +715,7 @@ class acl
 		//echo "acl::get_grants('$app',$enum_group_acls) ".function_backtrace(); _debug_array($grants);
 		return $grants;
 	}
-	
+
 	/**
 	 * Deletes all ACL entries for an account (user or group)
 	 *
@@ -734,5 +734,30 @@ class acl
 				'acl_location' => $account_id,
 			),__LINE__,__FILE__);
 		}
+	}
+
+	/**
+	 * get the locations for an app (excluding the run location !!!)
+	 *
+	 * @param string $location location, can contain wildcards % or ?
+	 * @param string $app app optional defaults to $GLOBALS['egw_info']['flags']['currentapp'];
+	 * @return array with location => array(account => rights) pairs
+	 */
+	function get_location_grants($location,$app='')
+	{
+		if (!$app) $app = $GLOBALS['egw_info']['flags']['currentapp'];
+
+		$locations = array();
+		foreach($this->db->select(acl::TABLE,'acl_location,acl_account,acl_rights',array(
+			'acl_appname'  => $app,
+			'acl_location LIKE '.$this->db->quote($location),
+		),__LINE__,__FILE__) as $row)
+		{
+			if (($location = $row['acl_location']) != 'run')
+			{
+				$locations[$location][$row['acl_account']] = $row['acl_rights'];
+			}
+		}
+		return $locations;
 	}
 } //end of acl class
