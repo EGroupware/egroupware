@@ -598,6 +598,11 @@ class egw_link extends solink
 	}
 
 	/**
+	 * Maximum number of titles to query from an application at once (to NOT trash mysql)
+	 */
+	const MAX_TITLES_QUERY = 100;
+
+	/**
 	 * Query the titles off multiple id's of one app
 	 *
 	 * Apps can implement that hook, if they have a quicker (eg. less DB queries) method to query the title of multiple entries.
@@ -631,10 +636,13 @@ class egw_link extends solink
 		}
 		if ($ids_to_query)
 		{
-			foreach(ExecMethod(self::$app_register[$app]['titles'],$ids_to_query) as $id => $t)
+			for ($n = 0; $ids = array_slice($ids_to_query,$n*MAX_TITLES_QUERY,100); ++$n)
 			{
-				$title =& self::get_cache($app,$id);
-				$titles[$id] = $title = $t;
+				foreach(ExecMethod(self::$app_register[$app]['titles'],$ids) as $id => $t)
+				{
+					$title =& self::get_cache($app,$id);
+					$titles[$id] = $title = $t;
+				}
 			}
 		}
 		return $titles;
