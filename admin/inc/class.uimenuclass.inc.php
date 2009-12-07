@@ -84,6 +84,7 @@
 		// create the html code for the menu
 		function createHTMLCode($_hookname)
 		{
+			$hook['location'] = $_hookname;
 			switch ($_hookname)
 			{
 				case 'edit_user':
@@ -92,6 +93,7 @@
 						'url'         => '/index.php',
 						'extradata'   => 'menuaction=admin.uiaccounts.edit_user'
 					);
+					if (get_var('account_id',array('GET','POST'))) $hook['account_id'] = get_var('account_id',array('GET','POST'));
 					break;
 				case 'view_user':
 					$GLOBALS['menuData'][] = array(
@@ -99,6 +101,7 @@
 						'url'         => '/index.php',
 						'extradata'   => 'menuaction=admin.uiaccounts.view_user'
 					);
+					//if (get_var('account_id',array('GET','POST'))) $hook['account_id'] = get_var('account_id',array('GET','POST'));
 					break;
 				case 'edit_group':
 					$GLOBALS['menuData'][] = array(
@@ -115,8 +118,8 @@
 					);
 					break;
 			}
-
-			$GLOBALS['egw']->hooks->process($_hookname);
+			//_debug_array($hook);
+			$GLOBALS['egw']->hooks->process($hook);
 			if (count($GLOBALS['menuData']) >= 1) 
 			{
 				$result = $this->display_section($GLOBALS['menuData']);
