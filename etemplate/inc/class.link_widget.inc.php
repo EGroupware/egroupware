@@ -670,9 +670,13 @@ class link_widget
 		if ($etemplate_exec_id) $request = etemplate_request::read($etemplate_exec_id);
 
 		$response = new xajaxResponse();
+		$options = array();
 		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("',\n'",$args)."')\n calling link->query( $app , $search, $type )" );
 		//$args = func_get_args(); error_log(__METHOD__."('".implode("','",$args)."')");
-		if (!($found = egw_link::query($app,$search,$type)))       // ignore the blur-text
+		if($type) {
+			$options['type'] = $type;
+		}
+		if (!($found = egw_link::query($app,$search,$options)))       // ignore the blur-text
 		{
 			$GLOBALS['egw']->translation->add_app('etemplate');
 			$response->addAlert(lang('Nothing found - try again !!!'));
