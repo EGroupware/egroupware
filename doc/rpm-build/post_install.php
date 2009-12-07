@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling setup-cli as web-page
+if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling post_install as web-page
 {
 	die('<h1>rpm_post_install.php must NOT be called as web-page --> exiting !!!</h1>');
 }
@@ -37,12 +37,12 @@ $config = array(
 	'admin_passwd'=> randomstring(),
 	'lang'        => 'en',	// languages for admin user and extra lang to install
 	'charset'     => 'utf-8',
-	'start_db'    => '/etc/init.d/mysqld',
+	'start_db'    => '/sbin/service mysqld',
 	'autostart_db' => '/sbin/chkconfig --level 345 mysqld on',
-	'start_webserver' => '/etc/init.d/httpd',
+	'start_webserver' => '/sbin/service httpd',
 	'autostart_webserver' => '/sbin/chkconfig --level 345 httpd on',
 	'distro'      => 'rh',
-	'account-auth'  => 'sql,sql',
+	'account-auth'  => 'sql',
 	'account_min_id' => '',
 	'ldap_suffix'   => 'dc=local',
 	'ldap_host'     => 'localhost',
@@ -89,9 +89,9 @@ function set_distro_defaults($distro=null)
 	{
 		case 'suse':
 			$config['php'] = '/usr/bin/php5';
-			$config['start_db'] = '/etc/init.d/mysql';
+			$config['start_db'] = '/sbin/service mysql';
 			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
-			$config['start_webserver'] = '/etc/init.d/apache2';
+			$config['start_webserver'] = '/sbin/service apache2';
 			$config['autostart_webserver'] = '/sbin/chkconfig --level 345 apache2 on';
 			$config['ldap_suffix'] = 'dc=site';
 			$config['ldap_admin'] = $config['ldap_root_dn'] = 'cn=Administrator,$suffix';
@@ -101,9 +101,9 @@ function set_distro_defaults($distro=null)
 			$config['ldap_group_context'] = 'ou=group,$base';
 			break;
 		case 'debian':
-			$config['start_db'] = '/etc/init.d/mysql';
+			$config['start_db'] = '/usr/sbin/service mysql';
 			$config['autostart_db'] = '/usr/sbin/update-rc.d mysql defaults';
-			$config['start_webserver'] = '/etc/init.d/apache2';
+			$config['start_webserver'] = '/usr/sbin/service apache2';
 			$config['autostart_webserver'] = '/usr/sbin/update-rc.d apache2 defaults';
 			break;
 		default:
@@ -118,6 +118,27 @@ set_distro_defaults();
 // read config from command line
 $argv = $_SERVER['argv'];
 $prog = array_shift($argv);
+
+// check if we have EGW_POST_INSTALL set and prepend it to the command line (command line has precedence)
+if (($config_set = isset($_ENV['EGW_POST_INSTALL']) ? $_ENV['EGW_POST_INSTALL'] : @$_SERVER['EGW_POST_INSTALL']))
+{
+	$conf = array();
+	$config_set = explode(' ',$config_set);
+	while(($val = array_shift($config_set)))
+	{
+		if (($quote = $val[0]) == "'" || $quote == '"')	// arguments might be quoted with ' or "
+		{
+			while (substr($val,-1) != $quote)
+			{
+				if (!$config_set) throw new Exception('Invalid EGW_POST_INSTALL enviroment variable!');
+				$val .= ' '.array_shift($config_set);
+			}
+			$val = substr($val,1,-1);
+		}
+		$conf[] = $val;
+	}
+	$argv = array_merge($conf,$argv);
+}
 
 $auth_type_given = false;
 while(($arg = array_shift($argv)))
@@ -437,7 +458,10 @@ function usage($error=null)
 	echo "options and their defaults:\n";
 	foreach($config as $name => $default)
 	{
-		if (in_array($name,array('config_passwd','db_pass','admin_passwd'))) $default = '<16 char random string>';
+		if (in_array($name,array('config_passwd','db_pass','admin_passwd','ldap_root_pw')))
+		{
+			$default = '<16 char random string>';
+		}
 		echo '--'.str_pad($name,20).$default."\n";
 	}
 	if ($error)
