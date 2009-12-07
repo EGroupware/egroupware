@@ -73,7 +73,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	de	Soll die Anzahl aktiver Sitzungen permanent für Sie angezeigt werden.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	de	Sollen die Hilfetexte immer angezeigt werden, wenn Sie die Einstellungen aufrufen oder nur auf Anforderung?
 show helpmessages by default	preferences	de	Hilfetexte standardmäßig anzeigen
-show links between egroupware aps as	addressbook	de	Zeige Verknüpfungen zwischen EGroupware Ansendungen als
+show links between egroupware aps as	common	de	Zeige Verknüpfungen zwischen EGroupware Ansendungen als
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
 show number of current users	preferences	de	Anzahl gegenwärtiger Benutzer anzeigen
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
@@ -94,8 +94,8 @@ users choice	preferences	de	Benutzerauswahl
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in eGroupWare verwendet werden.
-you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	de	Sie können verknüpfte Einträge mit Bild, Anwendungsnamen oder beidem anzeigen.
+you can show the applications as icons only, icons with app-name or both.	common	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
+you can show the linked entries with icons only, icons with app-name or both.	common	de	Sie können verknüpfte Einträge mit Bild, Anwendungsnamen oder beidem anzeigen.
 you do not have permission to set acl's in this mode!	preferences	de	Sie haben keine Berechtigung die ACL in diesm Modus zu setzen.
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben
 your current theme is: %1	preferences	de	Ihr aktuelles Farbschema ist: %1
