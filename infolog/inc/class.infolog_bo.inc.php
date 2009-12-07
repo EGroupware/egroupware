@@ -669,6 +669,7 @@ class infolog_bo
 			$values['info_modifier'] = $this->so->user;
 		}
 		//_debug_array($values);
+		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
 		$to_write = $values;
 		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
 		// convert user- to system-time
@@ -1099,7 +1100,7 @@ class infolog_bo
 			{
 				foreach($old_categories as $cat_id)
 				{
-					if(!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if($cat_id && !$this->categories->check_perms(EGW_ACL_READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
