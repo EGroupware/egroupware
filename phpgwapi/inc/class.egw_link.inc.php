@@ -31,7 +31,7 @@
  *	function search_link($location)
  *	{
  *		return array(
- *			'query' => 'app.class.link_query',		// method to search app for a pattern: array link_query(string $pattern)
+ *			'query' => 'app.class.link_query',		// method to search app for a pattern: array link_query(string $pattern, array $options)
  *			'title' => 'app.class.link_title',		// method to return title of an entry of app: string/false/null link_title(int/string $id)
  *			'titles' => 'app.class.link_titles',	// method to return multiple titles: array link_title(array $ids)
  *			'view'  => array(						// get parameters to view an entry of app
@@ -524,7 +524,7 @@ class egw_link extends solink
 	 * @param string $type Search only a certain sub-type of records (optional)
 	 * @return array with $id => $title pairs of matching entries of app
 	 */
-	static function query($app,$pattern, $type = '')
+	static function query($app,$pattern, &$options = array())
 	{
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['query']))
 		{
@@ -534,9 +534,21 @@ class egw_link extends solink
 
 		if (self::DEBUG)
 		{
-			echo "<p>egw_link::query('$app','$pattern','$type') => '$method'</p>\n";
+			echo "<p>egw_link::query('$app','$pattern') => '$method'</p>\n";
+			echo "Options: "; _debug_array($options);
 		}
-		return ExecMethod2($method,$pattern,$type);
+		$result = ExecMethod2($method,$pattern,$options);
+
+		if (!isset($options['total']))
+		{
+		       $options['total'] = count($result);
+		}
+		if (is_array($result) && (isset($options['start']) || count($result) > $options['num_rows']))
+		{
+			$result = array_slice($result, $options['start'], $options['num_rows'], true);
+		}
+
+		return $result;
 	}
 
 	/**
