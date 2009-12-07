@@ -301,6 +301,7 @@ class infolog_ical extends infolog_bo
 	{
 		$vcal = new Horde_iCalendar;
 		if (!($vcal->parsevCalendar($_vcalData))) return false;
+		$version = $vcal->getAttribute('VERSION');
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
@@ -601,6 +602,7 @@ class infolog_ical extends infolog_bo
 			case 'text/x-vnote':
 				$vnote = new Horde_iCalendar;
 				if (!$vcal->parsevCalendar($_data))	return false;
+				$version = $vcal->getAttribute('VERSION');
 
 				$components = $vnote->getComponent();
 				foreach ($components as $component)
@@ -627,7 +629,7 @@ class infolog_ical extends infolog_bo
 									{
 										if($version == '1.0')
 										{
-											$vcats = $this->find_or_add_categories(explode(';',$attribute['value']), $_noteID);
+											$cats = $this->find_or_add_categories(explode(';',$attribute['value']), $_noteID);
 										}
 										else
 										{
