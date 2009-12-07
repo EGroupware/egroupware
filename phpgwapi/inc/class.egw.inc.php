@@ -498,10 +498,6 @@ class egw extends egw_minimal
 		{
 			define('EGW_SHUTDOWN',True);
 
-			if (isset($this->accounts))
-			{
-				$this->accounts->save_session_cache();
-			}
 			if (class_exists('egw_link',false))	// false = no autoload!
 			{
 				egw_link::save_session_cache();
