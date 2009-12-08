@@ -363,9 +363,10 @@ class bo_resources
 	 * @param string|array $pattern if it's a string it is the string we will search for as a criteria, if it's an array we
 	 * 	will seach for 'search' key in this array to get the string criteria. others keys handled are actually used
 	 *	for calendar disponibility.
+	 * @param array $options Array of options for the search
 	 *
 	 */
-	function link_query( $pattern )
+	function link_query( $pattern, Array &$options = array() )
 	{
 		if (is_array($pattern))
 		{
@@ -382,7 +383,11 @@ class bo_resources
 			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
 			//'accessory_of' => '-1'
 		);
-		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR',false,$filter);
+		$limit = false;
+		if($options['start'] || $options['num_rows']) {
+			$limit = array($options['start'], $options['num_rows']);
+		}
+		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
 		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
 		$show_conflict=False;
 		if (is_array($pattern) && isset($pattern['exec']) )
@@ -496,6 +501,7 @@ class bo_resources
 				error_log(__METHOD__." No Data found for Resource with id ".$resource['res_id']);
 			}
 		}
+		$options['total'] = $this->so->total;
 		return $list;
 	}
 
