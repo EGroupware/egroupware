@@ -545,6 +545,9 @@ class infolog_ui
 			$values['action'] = $action;
 			$values['action_id'] = $action_id;
 		}
+		if($_GET['search']) {
+			$values['nm']['search'] = $_GET['search'];
+		}
 		if ($values['nm']['add'])
 		{
 			$values['add'] = $values['nm']['add'];
@@ -866,7 +869,7 @@ class infolog_ui
 					if ($content['info_contact'])
 					{
 						$old_link_id = (int)$content['info_link_id'];
-						list($app,$id) = explode(':',$content['info_contact']);
+						list($app,$id) = explode(':',$content['info_contact'], 2);
 						$content['info_link_id'] = (int)($info_link_id = egw_link::link('infolog',$content['link_to']['to_id'],$app,$id));
 							if ($old_link_id && $old_link_id != $content['info_link_id']) egw_link::unlink($old_link_id);
 					}

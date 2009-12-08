@@ -32,6 +32,7 @@ class infolog_hooks
 				'action' => 'sp'
 			),
 			'view_id'    => 'action_id',
+			'view_list'	=>	'infolog.infolog_ui.index',
 			'add' => array(
 				'menuaction' => 'infolog.infolog_ui.edit',
 				'type'   => 'task'
