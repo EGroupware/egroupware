@@ -312,6 +312,7 @@ class addressbook_hooks
 				'menuaction' => 'addressbook.addressbook_ui.view'
 			),
 			'view_id' => 'contact_id',
+			'view_list'	=>	'addressbook.addressbook_ui.index',
 			'add' => array(
 				'menuaction' => 'addressbook.addressbook_ui.edit'
 			),

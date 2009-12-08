@@ -208,6 +208,11 @@ class addressbook_ui extends addressbook_bo
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
+
+		// Search parameter passed in
+		if ($_GET['search']) {
+			$content['nm']['search'] = $_GET['search'];
+		}
 		if (isset($typeselection)) $content['nm']['col_filter']['tid'] = $typeselection;
 
 		if ($this->lists_available())
