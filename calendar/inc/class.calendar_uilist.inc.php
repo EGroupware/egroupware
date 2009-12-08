@@ -139,6 +139,9 @@ class calendar_uilist extends calendar_ui
 				'header_left'    => 'calendar.list.dates',
 			);
 		}
+		if ($_GET['search']) {
+			$content['nm']['search'] = $_GET['search'];
+		}
 		if (isset($_REQUEST['keywords']))	// new search => set filters so every match is shown
 		{
 			$this->adjust_for_search($_REQUEST['keywords'],$content['nm']);
