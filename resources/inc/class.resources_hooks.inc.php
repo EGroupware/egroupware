@@ -104,6 +104,7 @@ class resources_hooks
 			),
 			'view_id'    => 'res_id',
 			'view_popup' => '850x600',
+			'view_list'  => 'resources.ui_resources.index',
 			'add'        => array(
 				'menuaction' => 'resources.ui_resources.edit',
 			),

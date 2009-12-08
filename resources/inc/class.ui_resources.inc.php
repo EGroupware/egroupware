@@ -118,6 +118,9 @@ class ui_resources
 			$content['nm'] = $nm_session_data;
 		}
 		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
+		if($_GET['search']) {
+			$content['nm']['search'] = $_GET['search'];
+		}
 
 		// check if user is permitted to add resources
 		if(!$this->bo->acl->get_cats(EGW_ACL_ADD))
