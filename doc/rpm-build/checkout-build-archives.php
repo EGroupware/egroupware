@@ -16,24 +16,25 @@ if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling setup-c
 
 $verbose = 0;
 $config = array(
-	'packagename' => 'eGroupware',
-	'version' => 'trunk',				// '1.6'
+	'packagename' => 'egroupware-epl',
+	'version' => '9.2',				// '1.6'
 	'packaging' => date('Ymd'),			// '001'
 	'egwdir' => 'egroupware',
-	'svndir' => '/tmp/build_root/egw_buildroot-svn',
-	'egw_buildroot' => '/tmp/build_root/egw_buildroot',
-	'sourcedir' => '~/rpm/SOURCES',
-	'svnbase' => 'http://svn.egroupware.org/egroupware',
-	'svnbranch' => 'trunk',				// 'branches/1.6' or 'tags/1.6.001'
-	'svnalias' => 'aliases/default',	// default alias
+	'svndir' => '/tmp/build_root/epl_buildroot-svn',
+	'egw_buildroot' => '/tmp/build_root/epl_buildroot',
+	'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-9.1',
+	'svnbase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
+	'egwbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
+	'svnbranch' => 'branches/Stylite-EPL-9.2',	// 'branches/1.6' or 'tags/1.6.001'
+	'svnalias' => 'epl-ssh',			// default alias
 	'aliasdir' => 'egroupware',			// directory created by the alias
-	'extra' => array('egw-pear','gallery','mydms','icalsrv'),
+	'extra' => array('stylite','$egwbase/$svnbranch/egw-pear','$egwbase/$svnbranch/gallery','$egwbase/$svnbranch/phpfreechat'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
-	'packager' => 'packager@egroupware.org',
+	'packager' => 'build@stylite.de',
 	'skip' => array(),
 	'run' => array('checkout','copy','virusscan','create','sign')
 );
@@ -71,7 +72,7 @@ while(($arg = array_shift($argv)))
 				}
 				else
 				{
-					$config[$name] = array_unique(preg_split('/[ ,]+/',$value));
+					$config[$name] = array_unique(split('[ ,]+',$value));
 				}
 				break;
 
