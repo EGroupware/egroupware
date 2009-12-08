@@ -1099,11 +1099,13 @@ class addressbook_bo extends addressbook_so
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param string|array $pattern pattern to search, or an array with a 'search' key
+	 * @param array $options Array of options for the search
 	 * @return array with id - title pairs of the matching entries
 	 */
-	function link_query($pattern)
+	function link_query($pattern, Array &$options = array())
 	{
 		$result = $criteria = array();
+		$limit = false;
 		if ($pattern)
 		{
 			foreach($this->columns_to_search as $col)
@@ -1111,7 +1113,10 @@ class addressbook_bo extends addressbook_so
 				$criteria[$col] = is_array($pattern) ? $pattern['search'] : $pattern;
 			}
 		}
-		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR')))
+		if($options['start'] || $options['num_rows']) {
+			$limit = array($options['start'], $options['num_rows']);
+		}
+		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR', $limit)))
 		{
 			foreach($contacts as $contact)
 			{
@@ -1126,6 +1131,7 @@ class addressbook_bo extends addressbook_so
 				}
 			}
 		}
+		$options['total'] = $this->total;
 		return $result;
 	}
 
