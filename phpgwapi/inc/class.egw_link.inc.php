@@ -648,7 +648,7 @@ class egw_link extends solink
 		}
 		if ($ids_to_query)
 		{
-			for ($n = 0; $ids = array_slice($ids_to_query,$n*MAX_TITLES_QUERY,100); ++$n)
+			for ($n = 0; $ids = array_slice($ids_to_query,$n*self::MAX_TITLES_QUERY,self::MAX_TITLES_QUERY); ++$n)
 			{
 				foreach(ExecMethod(self::$app_register[$app]['titles'],$ids) as $id => $t)
 				{
