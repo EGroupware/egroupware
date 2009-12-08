@@ -793,6 +793,9 @@ class timesheet_ui extends timesheet_bo
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 			);
 		}
+		if($_GET['search']) {
+			$content['nm']['search'] = $_GET['search'];
+		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
 		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows']) $content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
