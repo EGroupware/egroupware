@@ -924,16 +924,19 @@ class infolog_bo
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param string $pattern pattern to search
+	 * @param array $options Array of options for the search
 	 * @return array with info_id - title pairs of the matching entries
 	 */
-	function link_query( $pattern )
+	function link_query( $pattern, Array &$options = array() )
 	{
 		$query = array(
 			'search' => $pattern,
-			'start'  => 0,
+			'start'  => $options['start'],
+			'num_rows'	=>	$options['num_rows'],
 			'subs'   => true,
 		);
 		$ids = $this->search($query);
+		$options['total'] = $query['total'];
 		$content = array();
 		if (is_array($ids))
 		{
