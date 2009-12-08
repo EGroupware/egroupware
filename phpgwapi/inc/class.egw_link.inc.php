@@ -45,6 +45,7 @@
  *			),
  *			'view_id' => 'app_id',					// name of get parameter of the id
  *          'view_popup' => '400x300',				// size of popup (XxY), if view is in popup
+ *			'view_list'  => 'app.class.method'	// Method to be called to display a list of links, method should check $_GET['search'] to filter
  *			'add' => array(							// get parameter to add an empty entry to app
  *				'menuaction' => 'app.class.method',
  *			),
@@ -537,7 +538,46 @@ class egw_link extends solink
 			echo "<p>egw_link::query('$app','$pattern') => '$method'</p>\n";
 			echo "Options: "; _debug_array($options);
 		}
-		$result = ExecMethod2($method,$pattern,$options);
+
+		// See etemplate's nextmatch widget, following was copied from there
+		// allow static callbacks
+		if(strpos($method,'::') !== false)
+		{
+			//  workaround for php < 5.3: do NOT call it static, but allow application code to specify static callbacks
+			if (version_compare(PHP_VERSION,'5.3','<')) list($class,$method) = explode('::',$method);
+		}
+		else
+		{
+			list($app,$class,$method) = explode('.',$method);
+		}
+		if ($class)
+		{
+			if (!$app && !is_object($GLOBALS[$class]))
+			{
+				$GLOBALS[$class] = new $class();
+			}
+			if (is_object($GLOBALS[$class]))        // use existing instance (put there by a previous CreateObject)
+			{
+				$obj = $GLOBALS[$class];
+			}
+			else
+			{
+				$obj = CreateObject($app.'.'.$class);
+			}
+		}
+		if(is_callable($method))        // php5.3+ call
+		{
+			$result = $method($pattern,$options);
+		}
+		elseif(is_object($obj) && method_exists($obj,$method))
+		{
+			$result = $obj->$method($pattern,$options);
+                }
+                else
+                {
+			// Fall back to original method
+			$result = ExecMethod2($method,$pattern,$options);
+		}
 
 		if (!isset($options['total']))
 		{
