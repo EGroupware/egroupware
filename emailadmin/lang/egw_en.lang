@@ -1,0 +1,143 @@
+account '%1' not found !!!	emailadmin	en	Account '%1' not found !!!
+active templates	emailadmin	en	Active templates
+add new email address:	emailadmin	en	Add new email address:
+add profile	emailadmin	en	Add Profile
+admin dn	emailadmin	en	Admin dn
+admin password	emailadmin	en	Admin password
+admin username	emailadmin	en	Admin username
+advanced options	emailadmin	en	Advanced options
+alternate email address	emailadmin	en	Alternate email address
+any application	emailadmin	en	Any application
+any group	emailadmin	en	Any group
+any user	emailadmin	en	any user
+back to admin/grouplist	emailadmin	en	Back to Admin/Grouplist
+back to admin/userlist	emailadmin	en	Back to Admin/Userlist
+bad login name or password.	emailadmin	en	Bad login name or password.
+bad or malformed request. server responded: %s	emailadmin	en	Bad or malformed request. Server Responded: %s
+bad request: %s	emailadmin	en	Bad request: %s
+can be used by application	emailadmin	en	Can be used by application
+can be used by group	emailadmin	en	Can be used by group
+can be used by user	emailadmin	en	can be used by user
+connection dropped by imap server.	emailadmin	en	Connection dropped by IMAP server.
+could not complete request. reason given: %s	emailadmin	en	Could not complete request. Reason Given: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	en	Could not open secure connection to the IMAP server. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	en	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
+cyrus imap server	emailadmin	en	Cyrus IMAP Server
+cyrus imap server administration	emailadmin	en	Cyrus IMAP server administration
+default	emailadmin	en	default
+deliver extern	emailadmin	en	deliver extern
+do not validate certificate	emailadmin	en	do not validate certificate
+do you really want to delete this profile	emailadmin	en	Do you really want to delete this Profile
+do you really want to reset the filter for the profile listing	emailadmin	en	Do you really want to reset the filter for the Profile listing
+domainname	emailadmin	en	Domainname
+edit email settings	emailadmin	en	Edit email settings
+email account active	emailadmin	en	Email account active
+email address	emailadmin	en	Email address
+email settings	common	en	Email settings
+emailadmin	emailadmin	en	EMailAdmin
+emailadmin: group assigned profile	common	en	eMailAdmin: Group assigned Profile
+emailadmin: user assigned profile	common	en	eMailAdmin: User assigned Profile
+enable cyrus imap server administration	emailadmin	en	enable Cyrus IMAP server administration
+enable sieve	emailadmin	en	Enable Sieve
+encrypted connection	emailadmin	en	encrypted connection
+encryption settings	emailadmin	en	Encryption settings
+enter your default mail domain (from: user@domain)	emailadmin	en	Enter your default mail domain (from: user@domain)
+error connecting to imap server. %s : %s.	emailadmin	en	Error connecting to IMAP server. %s : %s.
+error connecting to imap server: [%s] %s.	emailadmin	en	Error connecting to IMAP server: [%s] %s.
+filtered by account	emailadmin	en	filtered by Account
+filtered by group	emailadmin	en	filtered by Group
+forward also to	emailadmin	en	Forward also to
+forward email's to	emailadmin	en	Forward email's to
+forward only	emailadmin	en	Forward only
+global options	emailadmin	en	Global options
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
+imap admin password	admin	en	IMAP admin password
+imap admin user	admin	en	IMAP admin user
+imap c-client version < 2001	emailadmin	en	IMAP C-Client Version < 2001
+imap server closed the connection.	emailadmin	en	IMAP server closed the connection.
+imap server closed the connection. server responded: %s	emailadmin	en	IMAP Server closed the connection. Server Responded: %s
+imap server hostname or ip address	emailadmin	en	IMAP server hostname or ip address
+imap server logintyp	emailadmin	en	IMAP server login type
+imap server name	emailadmin	en	imap server name
+imap server port	emailadmin	en	IMAP server port
+imap/pop3 server name	emailadmin	en	IMAP/POP3 server name
+in mbyte	emailadmin	en	in MByte
+inactive	emailadmin	en	inactive
+ldap basedn	emailadmin	en	LDAP basedn
+ldap server	emailadmin	en	LDAP server
+ldap server accounts dn	emailadmin	en	LDAP server accounts DN
+ldap server admin dn	emailadmin	en	LDAP server admin DN
+ldap server admin password	emailadmin	en	LDAP server admin password
+ldap server hostname or ip address	emailadmin	en	LDAP server hostname or ip address
+ldap settings	emailadmin	en	LDAP settings
+leave empty for no quota	emailadmin	en	leave empty for no quota
+mail settings	admin	en	Mail settings
+manage stationery templates	emailadmin	en	Manage stationery templates
+name of organisation	emailadmin	en	Name of organization
+no alternate email address	emailadmin	en	no alternate email address
+no encryption	emailadmin	en	no encryption
+no forwarding email address	emailadmin	en	no forwarding email address
+no message returned.	emailadmin	en	No message returned.
+no supported imap authentication method could be found.	emailadmin	en	No supported IMAP authentication method could be found.
+order	emailadmin	en	Order
+organisation	emailadmin	en	Organisation
+plesk can't rename users --> request ignored	emailadmin	en	Plesk can't rename users --> request ignored
+plesk imap server (courier)	emailadmin	en	Plesk IMAP Server (Courier)
+plesk mail script '%1' not found !!!	emailadmin	en	Plesk mail script '%1' not found !!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	en	Plesk requires passwords to have at least 5 characters and not contain the account-name --> password NOT set!!!
+plesk smtp-server (qmail)	emailadmin	en	Plesk SMTP-Server (Qmail)
+pop3 server hostname or ip address	emailadmin	en	POP3 server hostname or ip address
+pop3 server port	emailadmin	en	POP3 server port
+postfix with ldap	emailadmin	en	Postfix with LDAP
+profile access rights	emailadmin	en	profile access rights
+profile is active	emailadmin	en	profile is active
+profile list	emailadmin	en	Profile List
+profile name	emailadmin	en	Profile Name
+qmaildotmode	emailadmin	en	qmaildotmode
+qouta size in mbyte	emailadmin	en	Qouta size in MByte
+quota settings	emailadmin	en	Quota settings
+remove	emailadmin	en	Remove
+reset filter	emailadmin	en	reset filter
+select type of imap server	emailadmin	en	select type of IMAP server
+select type of imap/pop3 server	emailadmin	en	Select type of IMAP/POP3 server
+select type of smtp server	emailadmin	en	Select type of SMTP Server
+send using this email-address	emailadmin	en	send using this eMail-Address
+server settings	emailadmin	en	Server settings
+sieve server hostname or ip address	emailadmin	en	Sieve server hostname or ip address
+sieve server port	emailadmin	en	Sieve server port
+sieve settings	emailadmin	en	Sieve settings
+smtp authentication	emailadmin	en	SMTP authentication
+smtp options	emailadmin	en	SMTP options
+smtp server name	emailadmin	en	SMTP server name
+smtp settings	emailadmin	en	SMTP settings
+smtp-server hostname or ip address	emailadmin	en	SMTP server hostname or IP address
+smtp-server port	emailadmin	en	SMTP server port
+standard	emailadmin	en	Standard
+standard imap server	emailadmin	en	Standard IMAP server
+standard pop3 server	emailadmin	en	Standard POP3 server
+standard smtp-server	emailadmin	en	Standard SMTP server
+stationery	emailadmin	en	Stationery
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	en	The IMAP server does not appear to support the authentication method selected. Please contact your system administrator.
+this php has no imap support compiled in!!	emailadmin	en	This PHP has no IMAP support compiled in!!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
+unexpected response from server to authenticate command.	emailadmin	en	Unexpected response from server to AUTHENTICATE command.
+unexpected response from server to digest-md5 response.	emailadmin	en	Unexpected response from server to Digest-MD5 response.
+unexpected response from server to login command.	emailadmin	en	Unexpected response from server to LOGIN command.
+unknown imap response from the server. server responded: %s	emailadmin	en	Unknown IMAP response from the server. Server Responded: %s
+unsupported action '%1' !!!	emailadmin	en	Unsupported action '%1' !!!
+update current email address:	emailadmin	en	Update current email address:
+use ldap defaults	emailadmin	en	Use LDAP defaults
+use predefined username and password defined below	emailadmin	en	Use predefined username and password defined below
+use smtp auth	emailadmin	en	Use SMTP auth
+use tls authentication	emailadmin	en	Use TLS authentication
+use tls encryption	emailadmin	en	Use TLS encryption
+user can edit forwarding address	emailadmin	en	User can edit forwarding address
+username (standard)	emailadmin	en	username (standard)
+username/password defined by admin	emailadmin	en	Username/Password defined by admin
+username@domainname (virtual mail manager)	emailadmin	en	username@domainname (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	emailadmin	en	Users can define their own email accounts
+users can define their own identities	emailadmin	en	users can define their own identities
+users can define their own signatures	emailadmin	en	users can define their own signatures
+users can utilize these stationery templates	emailadmin	en	Users can utilize these stationery templates
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	en	Vacation messages with start- and end-date require an admin account to be set!
+virtual mail manager	emailadmin	en	Virtual MAIL ManaGeR

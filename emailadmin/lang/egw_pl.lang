@@ -1,0 +1,108 @@
+account '%1' not found !!!	emailadmin	pl	Konto '%1' nie zostało znalezione!
+add new email address:	emailadmin	pl	Dodaj nowy adres poczty elektronicznej:
+add profile	emailadmin	pl	Dodaj profil
+admin dn	emailadmin	pl	DN (nazwa wyróżniająca) administratora
+admin password	emailadmin	pl	Hasło administratora
+admin username	emailadmin	pl	Nazwa użytkownika konta administratora
+advanced options	emailadmin	pl	Ustawienia zaawansowane
+alternate email address	emailadmin	pl	Alternatywny adres email
+any application	emailadmin	pl	Dowolna aplikacja
+any group	emailadmin	pl	Dowolna grupa
+bad login name or password.	emailadmin	pl	Zła nazwa użytkownika lub hasło
+bad or malformed request. server responded: %s	emailadmin	pl	Nieprawidłowe lub źle skonstruowane żądane. Serwer odpowiedział: %s
+bad request: %s	emailadmin	pl	Nieprawidłowe żądanie: %s
+can be used by application	emailadmin	pl	Może być używane przez aplikację
+can be used by group	emailadmin	pl	Może byc używane przez grupę
+connection dropped by imap server.	emailadmin	pl	Połączenie zerwane przez serwer IMAP
+could not complete request. reason given: %s	emailadmin	pl	Nie udało się zrealizować żądania. Powód: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	pl	Nie udało się stworzyć bezpiecznego połączenia do serwera IMAP. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	pl	CRAM-MD5 lub DIGEST-MD5 wymagają, aby pakiet Auth_SASL (Perl) był zainstalowany
+cyrus imap server	emailadmin	pl	Serwer IMAP Cyrus
+cyrus imap server administration	emailadmin	pl	Administracja serwerem IMAP Cyrus
+default	emailadmin	pl	domyślny
+deliver extern	emailadmin	pl	dostarczanie na zewnątrz
+do you really want to delete this profile	emailadmin	pl	Czy na pewno chcesz usunąć ten profil?
+domainname	emailadmin	pl	Nazwa domeny
+edit email settings	emailadmin	pl	Edytuj ustawienia poczty elektronicznej
+email account active	emailadmin	pl	Konto poczty aktywne
+email address	emailadmin	pl	Adres poczty elektronicznej
+email settings	common	pl	Ustawienia poczty elektronicznej
+emailadmin	emailadmin	pl	Poczta Elektroniczna - Administracja
+enable cyrus imap server administration	emailadmin	pl	aktywuj administrację serwerem IMAP Cyrus
+enable sieve	emailadmin	pl	aktywuj sito (Sieve)
+encryption settings	emailadmin	pl	ustawienia szyfrowania
+enter your default mail domain (from: user@domain)	emailadmin	pl	Wprowadź domyślną domenę pocztową (z użytkownik@domena)
+error connecting to imap server. %s : %s.	emailadmin	pl	Błąd połączenia do serwera IMAP. %s : %s
+error connecting to imap server: [%s] %s.	emailadmin	pl	Błąd połączenia do serwera IMAP. [%s]  %s
+forward also to	emailadmin	pl	Prześlij również do
+forward email's to	emailadmin	pl	Prześlij wiadomości do
+forward only	emailadmin	pl	Prześlij tylko
+global options	emailadmin	pl	Ustawienia globalne
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	pl	Jeżeli korzystasz z SSL lub TLS, musisz zapewnić obsługę OpenSSL w PHP.
+imap admin password	admin	pl	Hasło administratora IMAP
+imap admin user	admin	pl	Login administratora IMAP
+imap c-client version < 2001	emailadmin	pl	Wersja C-Client IMAP < 2001
+imap server closed the connection.	emailadmin	pl	Serwer IMAP zakończył połączenie.
+imap server closed the connection. server responded: %s	emailadmin	pl	Serwer IMAP zakończył połączenie. Jego odpowiedź: %s
+imap server hostname or ip address	emailadmin	pl	Nazwa hosta lub IP serwera IMAP
+imap server logintyp	emailadmin	pl	Sposób logowania do serwera IMAP
+imap server port	emailadmin	pl	Port serwera IMAP
+imap/pop3 server name	emailadmin	pl	Nazwa serwera IMAP/POP3
+in mbyte	emailadmin	pl	w megabajtach
+ldap basedn	emailadmin	pl	Bazowy DN w LDAP
+ldap server	emailadmin	pl	Serwer LDAP
+ldap server accounts dn	emailadmin	pl	DN dla kont w LDAP
+ldap server admin dn	emailadmin	pl	DN administratora w LDAP
+ldap server admin password	emailadmin	pl	Hasło administratora serwera LDAP
+ldap server hostname or ip address	emailadmin	pl	Nazwa hosta lub IP serwera LDAP
+ldap settings	emailadmin	pl	Ustawienia LDAP
+leave empty for no quota	emailadmin	pl	zostaw puste aby wyłączyć quota
+mail settings	admin	pl	Ustawienia poczty elektronicznej
+name of organisation	emailadmin	pl	Nazwa lub organizacja
+no alternate email address	emailadmin	pl	brak zapasowego adresu e-mail
+no encryption	emailadmin	pl	brak szyfrowania
+no forwarding email address	emailadmin	pl	brak adresu poczty przesyłanej
+no message returned.	emailadmin	pl	Nie otrzymano wiadomości.
+no supported imap authentication method could be found.	emailadmin	pl	Nie znaleziono obsługiwanej metody autentykacji dla IMAP
+order	emailadmin	pl	Porządek
+organisation	emailadmin	pl	Organizacja
+pop3 server hostname or ip address	emailadmin	pl	Nazwa hosta lub IP serwera POP3
+pop3 server port	emailadmin	pl	Port serwera POP3
+postfix with ldap	emailadmin	pl	Postfix z LDAP
+profile access rights	emailadmin	pl	prawa dostępu do profilu
+profile list	emailadmin	pl	Lista profili
+profile name	emailadmin	pl	Nazwa Profilu
+qouta size in mbyte	emailadmin	pl	rozmiar quoty w megabajtach
+quota settings	emailadmin	pl	ustawnienia quoty
+remove	emailadmin	pl	Usuń
+select type of imap/pop3 server	emailadmin	pl	Wybierz rodzaj serwera IMAP/POP3
+select type of smtp server	emailadmin	pl	Wybierz rodzaj serwera SMTP
+server settings	emailadmin	pl	Ustawienia serwera
+smtp authentication	emailadmin	pl	Autentykacja SMTP
+smtp options	emailadmin	pl	Opcje SMTP
+smtp server name	emailadmin	pl	Nazwa serwera SMTP
+smtp settings	emailadmin	pl	Ustawienia SMTP
+smtp-server hostname or ip address	emailadmin	pl	Nazwa hosta lub IP serwera SMTP
+smtp-server port	emailadmin	pl	Port serwera SMTP
+standard	emailadmin	pl	Standard
+standard imap server	emailadmin	pl	Standardowy serwer IMAP
+standard pop3 server	emailadmin	pl	Standardowy serwer POP3
+standard smtp-server	emailadmin	pl	Standardowy serwer SMTP
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	pl	Serwer IMAP nie obsługuje wskazanej metody autentykacji. Proszę skontaktować się z administratorem.
+this php has no imap support compiled in!!	emailadmin	pl	Interpreter PHP nie posiada obsługi IMAP!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	pl	Aby skorzystać z połączenia TLS, musisz posiadać wersję PHP 5.1.0 lub wyższą.
+unexpected response from server to authenticate command.	emailadmin	pl	Niespodziewana odpowiedź serwera na polecenie AUTHENTICATE.
+unexpected response from server to digest-md5 response.	emailadmin	pl	Niespodziewana odpowiedź serwera na zapytanie Digest-MD5
+unexpected response from server to login command.	emailadmin	pl	Niespodziewana odpowiedź serwera na polecenie LOGIN.
+unknown imap response from the server. server responded: %s	emailadmin	pl	Nieznana odpowiedź z serwera IMAP. Serwer przesłał: %s
+unsupported action '%1' !!!	emailadmin	pl	Operacja nieobsługiwana '%1'!
+update current email address:	emailadmin	pl	Uaktualnij bieżący adres pocztowy
+use ldap defaults	emailadmin	pl	Skorzystaj z domyślnych wartości LDAP
+use smtp auth	emailadmin	pl	Skorzystaj z autentykacji SMTP
+use tls authentication	emailadmin	pl	Skorzystaj z autentykacji TLS
+use tls encryption	emailadmin	pl	Skorzystaj z szyfrowania TLS
+user can edit forwarding address	emailadmin	pl	Użytkownik może zmieniać adres przekazywania
+username (standard)	emailadmin	pl	login (standardowo)
+username@domainname (virtual mail manager)	emailadmin	pl	login@domena (wirtualny zarządca kont)
+users can define their own emailaccounts	emailadmin	pl	Użytkownicy mogą definiować swoje własne konta poczty elektronicznej
+virtual mail manager	emailadmin	pl	Wirtualny Serwer Pocztowy - zarządca

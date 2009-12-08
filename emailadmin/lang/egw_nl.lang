@@ -1,0 +1,138 @@
+account '%1' not found !!!	emailadmin	nl	Account '%1' niet gevonden !!!
+add new email address:	emailadmin	nl	Voeg nieuw emailadres toe:
+add profile	emailadmin	nl	Profiel toevoegen
+admin dn	emailadmin	nl	admin dn
+admin password	emailadmin	nl	Admin wachtwoord
+admin username	emailadmin	nl	Admin gebruikersnaam
+advanced options	emailadmin	nl	Geavanceerde opties
+alternate email address	emailadmin	nl	Alternatief emailadres
+any application	emailadmin	nl	Iedere toepassing
+any group	emailadmin	nl	Iedere groep
+any user	emailadmin	nl	iedere gebruiker
+back to admin/grouplist	emailadmin	nl	Terug naar Beheer/Groepslijst
+back to admin/userlist	emailadmin	nl	Terug naar Beheer/Gebruikerslijst
+bad login name or password.	emailadmin	nl	Ongeldige login of paswoord
+bad or malformed request. server responded: %s	emailadmin	nl	Ongeldig of slecht geformuleerde aanvraag. Server reageerde: %s
+bad request: %s	emailadmin	nl	Slechte vraag: %s
+can be used by application	emailadmin	nl	Kan gebruikt worden door toepassing
+can be used by group	emailadmin	nl	Kan gebruikt worden door groep
+can be used by user	emailadmin	nl	kan door gebruiker gebruikt worden
+connection dropped by imap server.	emailadmin	nl	Verbinding viel uit door IMAP server
+could not complete request. reason given: %s	emailadmin	nl	Kan verzoek niet afmaken. Opgegeven reden: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	nl	Kon geen veilige verbinding openen met de IMAP server. %s : %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	nl	CRAM-MDS of DIGEST-MDS vereist de installatie van het Auth_SASL pakket.
+cyrus imap server	emailadmin	nl	Cyrus IMAP-server
+cyrus imap server administration	emailadmin	nl	Cyrus IMAP-serverbeheer
+default	emailadmin	nl	standaard
+deliver extern	emailadmin	nl	bezorg extern
+do not validate certificate	emailadmin	nl	het certificaat niet valideren
+do you really want to delete this profile	emailadmin	nl	Weet u zeker dat u dit profiel wilt verwijderen
+do you really want to reset the filter for the profile listing	emailadmin	nl	Wilt u werkelijk het filter voor de profielenlijst opnieuw instellen
+domainname	emailadmin	nl	Domeinnaam
+edit email settings	emailadmin	nl	Wijzig emailinstellingen
+email account active	emailadmin	nl	Emailaccount actief
+email address	emailadmin	nl	Emailadres
+email settings	common	nl	Emailinstellingen
+emailadmin	emailadmin	nl	EmailAdmin
+emailadmin: group assigned profile	common	nl	eMailAdmin: Groep heeft profiel toegewezen gekregen
+emailadmin: user assigned profile	common	nl	eMailAdmin: Gebruiker heeft profiel toegewezen gekregen
+enable cyrus imap server administration	emailadmin	nl	activier Cyrus IMAP serverbeheer
+enable sieve	emailadmin	nl	activeer Sieve
+encrypted connection	emailadmin	nl	versleutelde verbinding
+encryption settings	emailadmin	nl	encryptie instellingen
+enter your default mail domain (from: user@domain)	emailadmin	nl	Voer uw standaard emaildomein in (uit: gebruiker@domein)
+error connecting to imap server. %s : %s.	emailadmin	nl	Fout verbinden met de IMAP server. %s : %s
+error connecting to imap server: [%s] %s.	emailadmin	nl	Fout verbinden met de IMAP server: [%s] %s
+filtered by account	emailadmin	nl	gefilterd op Account
+filtered by group	emailadmin	nl	gefilterd op Groep
+forward also to	emailadmin	nl	Ook doorsturen naar
+forward email's to	emailadmin	nl	Emails doorsturen naar
+forward only	emailadmin	nl	Alleen doorsturen
+global options	emailadmin	nl	Algemene opties
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	nl	Indien SSL of TSL wordt gebruikt, moet u de PHP openssl extensie opgeladen hebben
+imap admin password	admin	nl	IMAP beheerders wachtwoord
+imap admin user	admin	nl	IMAP beheerdersgebruiker
+imap c-client version < 2001	emailadmin	nl	IMAP C-Client Versie < 2001
+imap server closed the connection.	emailadmin	nl	IMAP server sloot de verbinding
+imap server closed the connection. server responded: %s	emailadmin	nl	IMAP Server sloot de verbinding. Server reageerde: %s
+imap server hostname or ip address	emailadmin	nl	IMAP-server hostnaam of IP-adres
+imap server logintyp	emailadmin	nl	IMAP-server logintype
+imap server name	emailadmin	nl	imap server naam
+imap server port	emailadmin	nl	IMAP-serverpoort
+imap/pop3 server name	emailadmin	nl	IMAP/POP3-servernaam
+in mbyte	emailadmin	nl	in MBytes
+inactive	emailadmin	nl	inactief
+ldap basedn	emailadmin	nl	LDAP basedn
+ldap server	emailadmin	nl	LDAP-server
+ldap server accounts dn	emailadmin	nl	LDAP server accounts DN
+ldap server admin dn	emailadmin	nl	LDAP server admin DN
+ldap server admin password	emailadmin	nl	LDAP-server admin wachtwoord
+ldap server hostname or ip address	emailadmin	nl	LDAP-serverhostnaam of IP-adres
+ldap settings	emailadmin	nl	LDAP-instellingen
+leave empty for no quota	emailadmin	nl	Laat leeg voor geen quota
+mail settings	admin	nl	Mailinstellingen
+name of organisation	emailadmin	nl	Naam van de Organisatie
+no alternate email address	emailadmin	nl	geen alternatief emailadres
+no encryption	emailadmin	nl	geen versleuteling
+no forwarding email address	emailadmin	nl	geen emailadres om naar door te sturen
+no message returned.	emailadmin	nl	Geen bericht teruggekomen.
+no supported imap authentication method could be found.	emailadmin	nl	Geen ondersteunde IMAP authenticatiemethode kon gevonden worden.
+order	emailadmin	nl	Volgorde
+organisation	emailadmin	nl	Organisatie
+plesk can't rename users --> request ignored	emailadmin	nl	Plesk kan gebruikers niet hernoemen --> verzoek genegeerd
+plesk imap server (courier)	emailadmin	nl	Plesk IMAP Server (Courier)
+plesk mail script '%1' not found !!!	emailadmin	nl	Plesk mail script '%1' niet gevonden !!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	nl	Plesk vereist dat wachtwoorden minstens 5 karakters bevatten en niet de accountnaam mogen bevatten --> wachtwoord niet gewijzigd !!!
+plesk smtp-server (qmail)	emailadmin	nl	Plesk SMTP-Server (Qmail)
+pop3 server hostname or ip address	emailadmin	nl	POP3-server hostnaam of IP-adres
+pop3 server port	emailadmin	nl	POP3-serverpoort
+postfix with ldap	emailadmin	nl	Postfix met LDAP
+profile access rights	emailadmin	nl	profiel toegangsrechten
+profile is active	emailadmin	nl	profiel is actief
+profile list	emailadmin	nl	Profiellijst
+profile name	emailadmin	nl	Profielnaam
+qmaildotmode	emailadmin	nl	qmaildotmode
+qouta size in mbyte	emailadmin	nl	quota grootte in MBytes
+quota settings	emailadmin	nl	Quota-installingen
+remove	emailadmin	nl	Verwijderen
+reset filter	emailadmin	nl	filter opnieuw instellen
+select type of imap server	emailadmin	nl	selecteer IMAP servertype
+select type of imap/pop3 server	emailadmin	nl	Selecteer IMAP/POP3-servertype
+select type of smtp server	emailadmin	nl	Selecteer SMTP-servertype
+server settings	emailadmin	nl	server instellingen
+sieve server hostname or ip address	emailadmin	nl	Sieve-serverhostnaam of IP-adres
+sieve server port	emailadmin	nl	Sieve-serverpoort
+sieve settings	emailadmin	nl	Sieve instellingen
+smtp authentication	emailadmin	nl	SMTP authenticatie
+smtp options	emailadmin	nl	SMTP opties
+smtp server name	emailadmin	nl	SMTP-servernaam
+smtp settings	emailadmin	nl	SMTP instellingen
+smtp-server hostname or ip address	emailadmin	nl	SMTP-serverhostnaam of IP-adres
+smtp-server port	emailadmin	nl	SMTP-serverpoort
+standard	emailadmin	nl	Standaard
+standard imap server	emailadmin	nl	Standaard IMAP-server
+standard pop3 server	emailadmin	nl	Standaard POP3-server
+standard smtp-server	emailadmin	nl	Standaard SMTP-server
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	nl	The IMAP server blijkt geen authenticatiemethode te ondersteunen. Gelieve uw systeembeheerder te contacteren.
+this php has no imap support compiled in!!	emailadmin	nl	Deze PHP heeft geen IMAP ondersteuning verzamelt in!!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	nl	Om een TLS verbinding te gebruiken, moet u een versie van PHP 5.1.0 of hoger gebruiken.
+unexpected response from server to authenticate command.	emailadmin	nl	Onverwachte reactie van de server om de opdracht te AUTHENTICEREN.
+unexpected response from server to digest-md5 response.	emailadmin	nl	Onverwachte reactie van de server op Digest-MD5 reactie.
+unexpected response from server to login command.	emailadmin	nl	Onverwachte reactie van de server op LOGIN opdracht.
+unknown imap response from the server. server responded: %s	emailadmin	nl	Onverwachte IMAP reactie van de server. Server reageerde: %s
+unsupported action '%1' !!!	emailadmin	nl	Niet-ondersteunde actie '%1'
+update current email address:	emailadmin	nl	Huidige emailadres bijwerken:
+use ldap defaults	emailadmin	nl	gebruik LDAP standaard instellingen
+use predefined username and password defined below	emailadmin	nl	Gebruik voorgekozen gebruikersnaam en wachtwoord zoals hieronder is ingesteld
+use smtp auth	emailadmin	nl	Gebruik SMTP authenticatie
+use tls authentication	emailadmin	nl	Gebruik TLS authenticatie
+use tls encryption	emailadmin	nl	Gebruik TLS-encryptie
+user can edit forwarding address	emailadmin	nl	Gebruiker kan het doorstuuradres aanpassen
+username (standard)	emailadmin	nl	gebruikersnaam (standaard)
+username/password defined by admin	emailadmin	nl	Gebruikersnaam/Wachtwoord ingesteld door beheerder
+username@domainname (virtual mail manager)	emailadmin	nl	gebruikersnaam@domeinnaam (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	emailadmin	nl	Gebruikers kunnen hun eigen emailaccounts definiëren
+users can define their own identities	emailadmin	nl	gebruikers kunnen hun eigen identiteit instellen
+users can define their own signatures	emailadmin	nl	gebruikers kunnen hun eigen ondertekening instellen
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	nl	Afwezigheidsmeldingen met een start- en einddatum vereisen dat een beheerders account is ingesteld!
+virtual mail manager	emailadmin	nl	Virtual MAIL ManaGeR

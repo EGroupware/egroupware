@@ -1,0 +1,138 @@
+account '%1' not found !!!	emailadmin	pt-br	Conta '%1' não encontrada !!!
+add new email address:	emailadmin	pt-br	Adicionar novo e-mail:
+add profile	emailadmin	pt-br	Adicionar Perfil
+admin dn	emailadmin	pt-br	dn do administrador
+admin password	emailadmin	pt-br	senha do administrador
+admin username	emailadmin	pt-br	nome de usuário do administrador
+advanced options	emailadmin	pt-br	opções avançadas
+alternate email address	emailadmin	pt-br	endereço de e-mail alternativo
+any application	emailadmin	pt-br	qualquer aplicação
+any group	emailadmin	pt-br	qualquer grupo
+any user	emailadmin	pt-br	qualquer usuário
+back to admin/grouplist	emailadmin	pt-br	Voltar para Administração/Lista de Grupos
+back to admin/userlist	emailadmin	pt-br	Voltar para Administração/Lista de Usuários
+bad login name or password.	emailadmin	pt-br	Nome de usuário ou senha inválido(s).
+bad or malformed request. server responded: %s	emailadmin	pt-br	Solicitação inválida. Resposta do servidor: %s
+bad request: %s	emailadmin	pt-br	Solicitação inválida: %s
+can be used by application	emailadmin	pt-br	pode ser usado pela aplicação
+can be used by group	emailadmin	pt-br	pode ser usado pelo grupo
+can be used by user	emailadmin	pt-br	pode ser usado pelo usuário
+connection dropped by imap server.	emailadmin	pt-br	Conexão interrompida pelo servidor IMAP.
+could not complete request. reason given: %s	emailadmin	pt-br	Não foi possível completar a solicitação. Resposta do servidor: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	pt-br	Não foi possível abrir conexão segura com o servidor IMAP. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	pt-br	CRAM-MD5 ou DIGEST-MD5 necessitam que o pacote Auth_SASL esteja instalado.
+cyrus imap server	emailadmin	pt-br	Servidor Cyrus IMAP
+cyrus imap server administration	emailadmin	pt-br	Administração do Servidor Cyrus IMAP
+default	emailadmin	pt-br	padrão
+deliver extern	emailadmin	pt-br	entrega externa
+do not validate certificate	emailadmin	pt-br	não validar certificado
+do you really want to delete this profile	emailadmin	pt-br	Tem certeza que deseja remover esse perfil?
+do you really want to reset the filter for the profile listing	emailadmin	pt-br	Tem certeza que deseja reiniciar o filtro para a listagem do perfil
+domainname	emailadmin	pt-br	nome do domínio
+edit email settings	emailadmin	pt-br	editar configurações de e-mail
+email account active	emailadmin	pt-br	conta de e-mail ativa
+email address	emailadmin	pt-br	endrereço de e-mail
+email settings	common	pt-br	Configurações do E-mail
+emailadmin	emailadmin	pt-br	Administração do E-Mail
+emailadmin: group assigned profile	common	pt-br	Administração de eMail: Perfil de Grupo
+emailadmin: user assigned profile	common	pt-br	Administração de eMail: Perfil de Usuário
+enable cyrus imap server administration	emailadmin	pt-br	habilitar administração do Servidor Cyrus IMAP
+enable sieve	emailadmin	pt-br	habilitar Sieve
+encrypted connection	emailadmin	pt-br	conexão criptografada
+encryption settings	emailadmin	pt-br	configurações de criptografia
+enter your default mail domain (from: user@domain)	emailadmin	pt-br	Entre com o domínio de e-mail padrão (de: usuario@dominio)
+error connecting to imap server. %s : %s.	emailadmin	pt-br	Erro conectando ao servidor IMAP. %s : %s.
+error connecting to imap server: [%s] %s.	emailadmin	pt-br	Erro conectando ao servidor IMAP: [%s] %s.
+filtered by account	emailadmin	pt-br	filtrado por Conta
+filtered by group	emailadmin	pt-br	filtrado por Grupo
+forward also to	emailadmin	pt-br	encaminhar também para
+forward email's to	emailadmin	pt-br	encaminhar mensagens para
+forward only	emailadmin	pt-br	encaminhar somente
+global options	emailadmin	pt-br	opções globais
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	pt-br	Se estiver usando SSL ou TLS, você deverá ter a extensão PHP 'openssl' carretada.
+imap admin password	admin	pt-br	Senha do administrador IMAP
+imap admin user	admin	pt-br	Usuário administrador do IMAP
+imap c-client version < 2001	emailadmin	pt-br	IMAP C-Cliente Versão < 2001
+imap server closed the connection.	emailadmin	pt-br	O servidor IMAP fechou a conexão.
+imap server closed the connection. server responded: %s	emailadmin	pt-br	O servidor IMAP fechou a conexão. Resposta do servidor: %s
+imap server hostname or ip address	emailadmin	pt-br	Nome ou IP do servidor IMAP
+imap server logintyp	emailadmin	pt-br	Tipo de login do servidor IMAP
+imap server name	emailadmin	pt-br	nome do servidor imap
+imap server port	emailadmin	pt-br	Porta do servidor IMAP
+imap/pop3 server name	emailadmin	pt-br	Nome do servidor IMAP/POP3
+in mbyte	emailadmin	pt-br	em Mbytes
+inactive	emailadmin	pt-br	inativo
+ldap basedn	emailadmin	pt-br	DN Base do LDAP
+ldap server	emailadmin	pt-br	Servidor LDAP
+ldap server accounts dn	emailadmin	pt-br	Contas DN de servidores LDAP
+ldap server admin dn	emailadmin	pt-br	Administrador DN de servidor LDAP
+ldap server admin password	emailadmin	pt-br	Senha do administrador DN de servidor LDAP
+ldap server hostname or ip address	emailadmin	pt-br	Nome ou endereço IP do servidor LDAP
+ldap settings	emailadmin	pt-br	Configurações do LDAP
+leave empty for no quota	emailadmin	pt-br	deixe em branco para nenhuma quota
+mail settings	admin	pt-br	Configurações de E-Mail
+name of organisation	emailadmin	pt-br	Nome da organização
+no alternate email address	emailadmin	pt-br	sem conta de e-mail alternativa
+no encryption	emailadmin	pt-br	sem criptografia
+no forwarding email address	emailadmin	pt-br	sem conta de e-mail para encaminhar
+no message returned.	emailadmin	pt-br	Nenhuma mensagem retornada.
+no supported imap authentication method could be found.	emailadmin	pt-br	Nenhum método de autenticação IMAP suportado pôde ser encontrado.
+order	emailadmin	pt-br	ordem
+organisation	emailadmin	pt-br	organização
+plesk can't rename users --> request ignored	emailadmin	pt-br	Plesk não pode renomear usuários --> solicitação ignorada
+plesk imap server (courier)	emailadmin	pt-br	Servidor IMAP Plesk (Courier)
+plesk mail script '%1' not found !!!	emailadmin	pt-br	Script de e-mail Plesk '%1' não encontrado !!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	pt-br	Plesk exige que senhas tenha no mínimo 5 caracteres e não contenham o nome da conta --> senha NÃO configurada!!!
+plesk smtp-server (qmail)	emailadmin	pt-br	Servidor SMTP Plesk (Qmail)
+pop3 server hostname or ip address	emailadmin	pt-br	Nome ou endereço IP do servidor POP3
+pop3 server port	emailadmin	pt-br	Porta do servidor POP3
+postfix with ldap	emailadmin	pt-br	Postfix com LDAP
+profile access rights	emailadmin	pt-br	direito de acesso aos perfis
+profile is active	emailadmin	pt-br	perfil está ativo
+profile list	emailadmin	pt-br	Lista de perfis
+profile name	emailadmin	pt-br	Nome do perfil
+qmaildotmode	emailadmin	pt-br	modo dos arquivos qmail (.qmail)
+qouta size in mbyte	emailadmin	pt-br	tamanho da quota em MBytes
+quota settings	emailadmin	pt-br	configurações de quota
+remove	emailadmin	pt-br	remover
+reset filter	emailadmin	pt-br	reiniciar filtro
+select type of imap server	emailadmin	pt-br	selecione o tipo de servidor IMAP
+select type of imap/pop3 server	emailadmin	pt-br	Selecione o tipo de servidor IMAP/POP3
+select type of smtp server	emailadmin	pt-br	Selecione o tipo de servidor SMTP
+server settings	emailadmin	pt-br	configurações do servidor
+sieve server hostname or ip address	emailadmin	pt-br	Nome ou endereço IP do servidor Sieve
+sieve server port	emailadmin	pt-br	Porta do Servidor Sieve
+sieve settings	emailadmin	pt-br	Configurações Sieve
+smtp authentication	emailadmin	pt-br	autenticação smtp
+smtp options	emailadmin	pt-br	opções smtp
+smtp server name	emailadmin	pt-br	Nome do Servidor SMTP
+smtp settings	emailadmin	pt-br	configurações SMTP
+smtp-server hostname or ip address	emailadmin	pt-br	Nome ou endereço IP do servidor SMTP
+smtp-server port	emailadmin	pt-br	Porta do servidor SMTP
+standard	emailadmin	pt-br	Padrão
+standard imap server	emailadmin	pt-br	Servidor IMAP padrão
+standard pop3 server	emailadmin	pt-br	Servidor POP3 padrão
+standard smtp-server	emailadmin	pt-br	Servidor SMTP padrão
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	pt-br	O servidor IMAP não parece suportar o método de autenticação selecionado. Por favor contacte o administrador do seu sistema.
+this php has no imap support compiled in!!	emailadmin	pt-br	Este PHP não tem suporte a IMAP compilado nele!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	pt-br	Para usar uma conexão TLS, você deve estar rodando PHP versão 5.1.0 ou maior.
+unexpected response from server to authenticate command.	emailadmin	pt-br	Resposta inesperada do servidor para o comando AUTHENTICATE.
+unexpected response from server to digest-md5 response.	emailadmin	pt-br	Resposta inesperada do servidor para a resposta Digest-MD5.
+unexpected response from server to login command.	emailadmin	pt-br	Resposta inesperada do servidor para o comando LOGIN.
+unknown imap response from the server. server responded: %s	emailadmin	pt-br	Resposta desconhecida do servidor IMAP. Resposta do servidor: %s
+unsupported action '%1' !!!	emailadmin	pt-br	Ação não suportada: '%1' !!!
+update current email address:	emailadmin	pt-br	Atualizar e-mail atual:
+use ldap defaults	emailadmin	pt-br	usar padrões LDAP
+use predefined username and password defined below	emailadmin	pt-br	Usar usuário e senha pré-definidos abaixo
+use smtp auth	emailadmin	pt-br	usar SMTP Autenticado
+use tls authentication	emailadmin	pt-br	Usar autenticação TLS
+use tls encryption	emailadmin	pt-br	Usar encriptação TLS
+user can edit forwarding address	emailadmin	pt-br	usuário pode editar endereço de encaminhamento
+username (standard)	emailadmin	pt-br	nome do usuário (padrão)
+username/password defined by admin	emailadmin	pt-br	Nome de usuário/Senha definidos pelo administrador
+username@domainname (virtual mail manager)	emailadmin	pt-br	nomedousuario@nomedodominio (Gerenciador Virtual Mail)
+users can define their own emailaccounts	emailadmin	pt-br	Os usuários podem definir sua próprias contas de correio
+users can define their own identities	emailadmin	pt-br	usuários podem definir suas próprias identidades
+users can define their own signatures	emailadmin	pt-br	usuários podem definir suas próprias assinaturas
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	pt-br	Mensagens de ausência com datas de início e término necessitam de uma conta de administrador para serem definidas!
+virtual mail manager	emailadmin	pt-br	Gerenciador Virtual Mail

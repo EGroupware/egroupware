@@ -1,0 +1,434 @@
+(no subject)	felamimail	zh	(无主题)
+(only cc/bcc)	felamimail	zh	(仅抄送/密送)
+(separate multiple addresses by comma)	felamimail	zh	(多个地址由逗号分开)
+(unknown sender)	felamimail	zh	(未知发件人)
+activate	felamimail	zh	激活
+activate script	felamimail	zh	启用脚本
+activating by date requires a start- and end-date!	felamimail	zh	以日期激活需要一个开始和结束日期！
+add acl	felamimail	zh	添加 ACL
+add address	felamimail	zh	添加地址
+add rule	felamimail	zh	添加规则
+add script	felamimail	zh	添加脚本
+add to %1	felamimail	zh	添加至%1
+add to address book	felamimail	zh	添加至通讯录
+add to addressbook	felamimail	zh	添加至通讯录
+adding file to message. please wait!	felamimail	zh	添加文件到邮件，请稍候！
+additional info	felamimail	zh	附加信息
+address book	felamimail	zh	通讯簿
+address book search	felamimail	zh	通讯簿搜索
+after message body	felamimail	zh	在邮件内容后
+all address books	felamimail	zh	所有通讯簿
+all folders	felamimail	zh	所有邮件夹
+all of	felamimail	zh	所有的
+allow images from external sources in html emails	felamimail	zh	在HTML邮件中允许外部图片来源
+allways a new window	felamimail	zh	允许新窗口
+always show html emails	felamimail	zh	总是显示HTML邮件
+and	felamimail	zh	和
+any of	felamimail	zh	任何
+any status	felamimail	zh	任何状态
+anyone	felamimail	zh	任何人
+as a subfolder of	felamimail	zh	作为该邮件夹的子邮件夹
+attachments	felamimail	zh	附件
+authentication required	felamimail	zh	必要附件
+auto refresh folder list	felamimail	zh	自动刷新邮件夹列表
+back to folder	felamimail	zh	返回邮件夹
+bad login name or password.	felamimail	zh	错误登录名或密码
+bad or malformed request. server responded: %s	felamimail	zh	不正确的请求。服务器或应：%s
+bad request: %s	felamimail	zh	错误请求：%s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	zh	基于给定的标准，接收的邮件在列表中可以使用不同的背景颜色，这可以有助于轻易辨别邮件的来源，特别是邮件列表。
+bcc	felamimail	zh	密送
+before headers	felamimail	zh	在邮件头之前
+between headers and message body	felamimail	zh	在邮件头和邮件内容之间
+body part	felamimail	zh	内容部份
+by date	felamimail	zh	以日期
+can not send message. no recipient defined!	felamimail	zh	不能发送邮件。收件人没有定义！
+can't connect to inbox!!	felamimail	zh	无法连接收件箱！
+cc	felamimail	zh	抄送
+change folder	felamimail	zh	更改邮件夹
+check message against next rule also	felamimail	zh	也用下一个规则检查邮件
+checkbox	felamimail	zh	复选框
+clear search	felamimail	zh	清除搜索
+click here to log back in.	felamimail	zh	点击此处登录.
+click here to return to %1	felamimail	zh	点击此处返回到 %1
+close all	felamimail	zh	全部关闭
+close this page	felamimail	zh	关闭该页面
+close window	felamimail	zh	关闭窗口
+color	felamimail	zh	颜色
+compose	felamimail	zh	撰写
+compress folder	felamimail	zh	压缩文件夹
+condition	felamimail	zh	条件
+configuration	felamimail	zh	配置
+connection dropped by imap server.	felamimail	zh	连接被 IMAP 服务器中断
+contains	felamimail	zh	包含
+could not complete request. reason given: %s	felamimail	zh	无法完成请求。原因是：%s
+could not open secure connection to the imap server. %s : %s.	felamimail	zh	无法开启到 IMAP 服务器的安全连接。%s：%s。
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	zh	CRAM-MD5 或 DIGEST-MD5 需要安装 Auth_SASL 包。
+create	felamimail	zh	创建
+create folder	felamimail	zh	创建邮件夹
+create sent	felamimail	zh	创建发件箱
+create subfolder	felamimail	zh	创建子邮件夹
+create trash	felamimail	zh	创建回收站
+created folder successfully!	felamimail	zh	邮件夹创建成功！
+dark blue	felamimail	zh	暗蓝色
+dark cyan	felamimail	zh	暗青色
+dark gray	felamimail	zh	暗灰色
+dark green	felamimail	zh	暗绿色
+dark magenta	felamimail	zh	暗紫色
+dark yellow	felamimail	zh	暗黄色
+date(newest first)	felamimail	zh	日期 (最近邮件优先)
+date(oldest first)	felamimail	zh	日期 (最早邮件优先)
+days	felamimail	zh	天
+deactivate script	felamimail	zh	停用脚本
+default	felamimail	zh	默认
+default signature	felamimail	zh	默认签名
+default sorting order	felamimail	zh	默认排序
+delete all	felamimail	zh	全部删除
+delete folder	felamimail	zh	删除邮件夹
+delete script	felamimail	zh	删除脚本
+delete selected	felamimail	zh	删除所选
+delete selected messages	felamimail	zh	删除选择的邮件
+deleted	felamimail	zh	已删除
+deleted folder successfully!	felamimail	zh	邮件夹删除成功!
+deleting messages	felamimail	zh	删除邮件
+disable	felamimail	zh	禁用
+discard	felamimail	zh	取消
+discard message	felamimail	zh	取消邮件
+display message in new window	felamimail	zh	打开新窗口以查看邮件
+display messages in multiple windows	felamimail	zh	在多窗口显示邮件
+display of html emails	felamimail	zh	显示HTML邮件
+display only when no plain text is available	felamimail	zh	仅当邮件非纯文本时显示
+display preferences	felamimail	zh	显示用户参数
+displaying html messages is disabled	felamimail	zh	显示HTML邮件被禁用
+do it!	felamimail	zh	执行！
+do not use sent	felamimail	zh	不使用发件箱
+do not use trash	felamimail	zh	不使用回收站
+do not validate certificate	felamimail	zh	不确认证书
+do you really want to delete the '%1' folder?	felamimail	zh	确定要删除邮件夹'%1'吗？
+do you really want to delete the selected signatures?	felamimail	zh	您确定要删除选择的签名吗?
+does not contain	felamimail	zh	不包含
+does not match	felamimail	zh	不符合
+does not match regexp	felamimail	zh	不符合条件
+don't use draft folder	felamimail	zh	不使用草稿夹
+don't use sent	felamimail	zh	不使用发件箱
+don't use trash	felamimail	zh	不使用回收站
+down	felamimail	zh	向下
+download	felamimail	zh	下载
+download this as a file	felamimail	zh	作为文件下载
+draft folder	felamimail	zh	草稿夹
+e-mail	felamimail	zh	电子邮件
+e-mail address	felamimail	zh	邮件地址
+e-mail folders	felamimail	zh	邮件夹
+edit email forwarding address	felamimail	zh	编辑邮件转发地址
+edit filter	felamimail	zh	编辑过滤器
+edit rule	felamimail	zh	编辑规则
+edit selected	felamimail	zh	编辑选定
+edit vacation settings	felamimail	zh	编辑假期设置
+email address	felamimail	zh	邮件地址
+email forwarding address	felamimail	zh	邮件转发地址
+email signature	felamimail	zh	邮件签名
+emailaddress	felamimail	zh	邮件地址
+empty trash	felamimail	zh	清空回收站
+enable	felamimail	zh	启用
+encrypted connection	felamimail	zh	加密的连接
+enter your default mail domain ( from: user@domain )	admin	zh	输入您的默认邮件域(如：user@domain 中 @ 之后的所字母)
+enter your imap mail server hostname or ip address	admin	zh	输入您的 IMAP 服务器主机名或 IP 地址
+enter your sieve server hostname or ip address	admin	zh	输入您的 ISIEV 服务器主机名或 IP 地址
+enter your sieve server port	admin	zh	输入您的 ISIEV 服务器端口
+enter your smtp server hostname or ip address	admin	zh	输入您的 SMAP 服务器主机名或 IP 地址
+enter your smtp server port	admin	zh	输入您的 SMAP 服务器端口
+error	felamimail	zh	错误
+error connecting to imap serv	felamimail	zh	连接 IMAP 服务器错误
+error connecting to imap server. %s : %s.	felamimail	zh	连接到 IMAP 服务器错误。%s：%s。
+error connecting to imap server: [%s] %s.	felamimail	zh	连接到 IMAP 服务器错误：[%s] %s。
+error opening	felamimail	zh	打开错误
+every	felamimail	zh	每一
+every %1 days	felamimail	zh	每 %1 天
+expunge	felamimail	zh	删掉
+extended	felamimail	zh	延伸的
+felamimail	common	zh	我的邮箱
+file into	felamimail	zh	文件插入
+files	felamimail	zh	文件
+filter active	felamimail	zh	过滤器激活
+filter name	felamimail	zh	过滤器名称
+filter rules	common	zh	过滤规则
+first name	felamimail	zh	名
+flagged	felamimail	zh	已标记
+flags	felamimail	zh	标记
+folder	felamimail	zh	邮件夹
+folder acl	felamimail	zh	邮件夹 ACL
+folder name	felamimail	zh	邮件夹名称
+folder path	felamimail	zh	邮件夹路径
+folder preferences	felamimail	zh	邮件夹用户参数
+folder settings	felamimail	zh	邮件夹设置
+folder status	felamimail	zh	邮件夹状态
+folderlist	felamimail	zh	邮件夹列表
+foldername	felamimail	zh	邮件夹名称
+folders	felamimail	zh	邮件夹
+folders created successfully!	felamimail	zh	邮件夹创建成功！
+follow	felamimail	zh	跟
+for mail to be send - not functional yet	felamimail	zh	要发出的邮件 - 尚未发出
+for received mail	felamimail	zh	收到的邮件
+forward	felamimail	zh	转发
+forward messages to	felamimail	zh	转发邮件到
+forward to	felamimail	zh	转发到
+forward to address	felamimail	zh	转发到地址
+forwarding	felamimail	zh	转发中
+found	felamimail	zh	建立
+fri	felamimail	zh	五
+from	felamimail	zh	发件人
+from(a->z)	felamimail	zh	从 (A->Z)
+from(z->a)	felamimail	zh	从 (Z->A)
+full name	felamimail	zh	姓名
+greater than	felamimail	zh	大于
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	zh	更多信息请参考<a href="http://www.felamimail.org" target="_new">www.felamimail.org</a><br>
+header lines	felamimail	zh	邮件头
+hide header	felamimail	zh	隐藏邮件头
+hostname / address	felamimail	zh	主机名 / 地址
+html	felamimail	zh	HTML
+icons and text	felamimail	zh	图标与文字
+icons only	felamimail	zh	只显示图标
+identifying name	felamimail	zh	正在识别名称
+identity	felamimail	zh	身份
+if	felamimail	zh	如果
+if from contains	felamimail	zh	如果发件人包含
+if mail header	felamimail	zh	如果邮件头
+if message size	felamimail	zh	如果邮件大小
+if subject contains	felamimail	zh	如果主题包含
+if to contains	felamimail	zh	如果收件人包含
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	zh	如果使用 SSL 或 TLS，您必须加载 PHP openssl 扩展。
+illegal folder name.  please select a different name.	felamimail	zh	邮件夹名称无效。请指定其他名称。
+imap	felamimail	zh	IMAP
+imap server	felamimail	zh	IMAP 服务器
+imap server address	felamimail	zh	IMAP 服务器地址
+imap server closed the connection.	felamimail	zh	IMAP 服务器已关闭连接。
+imap server closed the connection. server responded: %s	felamimail	zh	IMAP 服务器已关闭连接。服务器回应：%s
+imap server password	felamimail	zh	IMAP 服务器密码
+imap server type	felamimail	zh	IMAP 服务器类型
+imap server username	felamimail	zh	IMAP 服务器用户名
+imaps authentication	felamimail	zh	IMAPS 身份验证
+imaps encryption only	felamimail	zh	仅 IMAPS 加密
+in	felamimail	zh	在
+inbox	felamimail	zh	收件箱
+incoming mail server(imap)	felamimail	zh	收件服务器(IMAP)
+index order	felamimail	zh	索引顺序
+info	felamimail	zh	信息
+invalid user name or password	felamimail	zh	用户名或密码无效
+javascript	felamimail	zh	JavaScript
+jumping to end	felamimail	zh	跳到结尾
+jumping to start	felamimail	zh	跳到开始
+keep a copy of the message in your inbox	felamimail	zh	在收件箱保留一个邮件副本
+keep local copy of email	felamimail	zh	在本地保留邮件副本
+kilobytes	felamimail	zh	kb
+language	felamimail	zh	语言
+last name	felamimail	zh	姓
+left	felamimail	zh	左
+less	felamimail	zh	少
+less than	felamimail	zh	少于
+light gray	felamimail	zh	亮灰色
+list all	felamimail	zh	全部列出
+loading	felamimail	zh	载入
+location of buttons when composing	felamimail	zh	排版时按钮的位置
+mail server login type	admin	zh	邮件服务器登录类型
+mail settings	felamimail	zh	邮件设置
+mainmessage	felamimail	zh	主要邮件
+manage emailaccounts	preferences	zh	管理邮件帐户
+manage emailfilter / vacation	preferences	zh	管理邮件过滤 / 假期
+manage folders	common	zh	邮件夹管理
+manage sieve	common	zh	管理服务器脚本
+manage signatures	felamimail	zh	管理签名
+mark as deleted	felamimail	zh	标记为已删除
+mark messages as	felamimail	zh	将选定邮件标记为
+mark selected as flagged	felamimail	zh	标记选定邮件
+mark selected as read	felamimail	zh	将选定邮件标记为已读
+mark selected as unflagged	felamimail	zh	清除选定邮件标记
+mark selected as unread	felamimail	zh	将选定邮件标记为未读
+match	felamimail	zh	符合
+matches	felamimail	zh	符合
+matches regexp	felamimail	zh	符合规则
+max uploadsize	felamimail	zh	最大上传
+message highlighting	felamimail	zh	邮件高亮显示
+message list	felamimail	zh	邮件列表
+messages	felamimail	zh	邮件
+mon	felamimail	zh	一
+move	felamimail	zh	移动
+move messages	felamimail	zh	移动邮件
+move selected to	felamimail	zh	将选定邮件移至
+move to trash	felamimail	zh	移动至回收站
+moving messages to	felamimail	zh	移动邮件到
+name	felamimail	zh	名称
+never display html emails	felamimail	zh	从不显示 HTML 邮件
+new	common	zh	新建
+new filter	felamimail	zh	新建过滤器
+next	felamimail	zh	下一个
+next message	felamimail	zh	下一封邮件
+no active imap server found!!	felamimail	zh	找不到可使用的 IMAP 服务器！
+no encryption	felamimail	zh	未加密
+no filter	felamimail	zh	无过滤器
+no folders found	felamimail	zh	找不到邮件夹
+no folders were found to subscribe to!	felamimail	zh	找不到可以订阅的文件夹！
+no folders were found to unsubscribe from!	felamimail	zh	找不到可以取消订阅的邮件夹
+no highlighting is defined	felamimail	zh	为定义突出显示
+no message returned.	felamimail	zh	没有邮件回应
+no messages found...	felamimail	zh	未发现邮件...
+no messages were selected.	felamimail	zh	没有选择任何邮件。
+no plain text part found	felamimail	zh	未找到纯文本部分
+no previous message	felamimail	zh	没有上一个
+no recipient address given!	felamimail	zh	没有给定收件人地址！
+no signature	felamimail	zh	没有签名
+no subject given!	felamimail	zh	没有指定的主题！
+no supported imap authentication method could be found.	felamimail	zh	找不到支持 IMAP 验证方法。
+no valid emailprofile selected!!	felamimail	zh	指定的邮件帐户无效！
+none	felamimail	zh	无
+on behalf of	felamimail	zh	代表
+one address is not valid	felamimail	zh	其中一个地址无效
+only inbox	felamimail	zh	只有收件箱
+only one window	felamimail	zh	只一个窗口
+only unseen	felamimail	zh	只有未读取
+open all	felamimail	zh	全部打开
+options	felamimail	zh	选项
+or	felamimail	zh	或
+organisation	felamimail	zh	组织
+organization	felamimail	zh	组织
+organization name	admin	zh	组织名称
+outgoing mail server(smtp)	felamimail	zh	发件邮件服务器(IMAP)
+participants	felamimail	zh	参与者
+personal information	felamimail	zh	个人信息
+please select a address	felamimail	zh	请选择地址
+please select the number of days to wait between responses	felamimail	zh	请选择回复之间要等待的天数
+please supply the message to send with auto-responses	felamimail	zh	请提供要自动回复的内容
+port	felamimail	zh	端口
+posting	felamimail	zh	发布中
+previous	felamimail	zh	上一个
+previous message	felamimail	zh	上一封邮件
+print it	felamimail	zh	打印
+print this page	felamimail	zh	打印该页
+quicksearch	felamimail	zh	快速搜索
+read	felamimail	zh	已读
+reading	felamimail	zh	读取中
+receive notification	felamimail	zh	接收通知
+recent	felamimail	zh	最近
+refresh time in minutes	felamimail	zh	刷新时间分钟数
+reject with	felamimail	zh	拒绝
+remove	felamimail	zh	删除
+remove immediately	felamimail	zh	立刻删除
+rename	felamimail	zh	重命名
+rename a folder	felamimail	zh	重命名一个文件夹
+rename folder	felamimail	zh	重命名邮件夹
+renamed successfully!	felamimail	zh	重命名邮件夹成功！
+replied	felamimail	zh	已回复
+reply	felamimail	zh	回复
+reply all	felamimail	zh	全部回复
+reply to	felamimail	zh	回复到
+replyto	felamimail	zh	回复到
+respond	felamimail	zh	回复
+respond to mail sent to	felamimail	zh	回复邮件收件人
+return	felamimail	zh	返回
+return to options page	felamimail	zh	返回到选项
+right	felamimail	zh	正确
+row order style	felamimail	zh	行排序类型
+rule	felamimail	zh	规则
+sat	felamimail	zh	六
+save	felamimail	zh	保存
+save as draft	felamimail	zh	存为草稿
+save as infolog	felamimail	zh	存为记事本
+save changes	felamimail	zh	保存为修改
+save message to disk	felamimail	zh	保存邮件到磁盘
+script name	felamimail	zh	脚本名
+script status	felamimail	zh	脚本状态
+search	felamimail	zh	搜索
+search for	felamimail	zh	搜索
+select	felamimail	zh	选择
+select all	felamimail	zh	全选
+select emailprofile	felamimail	zh	选择邮件 Profile
+select folder	felamimail	zh	选择文件夹
+select your mail server type	admin	zh	选择您的邮件服务器类型
+send	felamimail	zh	发送
+send a reject message	felamimail	zh	发送一拒绝邮件
+sent folder	felamimail	zh	发件夹
+server supports mailfilter(sieve)	felamimail	zh	服务器支持邮件过滤(sieve)
+set as default	felamimail	zh	设置作为缺省
+show header	felamimail	zh	显示邮件头
+show new messages on main screen	felamimail	zh	在首页上显示新邮件
+sieve script name	felamimail	zh	Sieve 脚本名
+sieve settings	admin	zh	Sieve 设置
+signature	felamimail	zh	签名
+simply click the target-folder	felamimail	zh	简单地点击目标文件夹
+size	felamimail	zh	大小
+size of editor window	felamimail	zh	编辑窗口大小
+size(...->0)	felamimail	zh	大小 (...->0)
+size(0->...)	felamimail	zh	大小(0->...)
+skipping forward	felamimail	zh	跳到前面
+skipping previous	felamimail	zh	跳回上一个
+small view	felamimail	zh	小视图
+smtp settings	admin	zh	SMTP设置
+subject	felamimail	zh	主题
+subject(a->z)	felamimail	zh	主题 (A->Z)
+subject(z->a)	felamimail	zh	主题 (Z->A)
+submit	felamimail	zh	提交
+subscribe	felamimail	zh	订阅
+subscribed	felamimail	zh	已订阅
+subscribed successfully!	felamimail	zh	订阅成功！
+sun	felamimail	zh	日
+system signature	felamimail	zh	系统签名
+table of contents	felamimail	zh	目录
+text only	felamimail	zh	纯文字
+the connection to the imap server failed!!	felamimail	zh	连接 IMAP 服务器发生错误！
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	zh	IMAP 服务器不支持选定的认证方法。请联系系统管理员。
+the mimeparser can not parse this message.	felamimail	zh	mime 解析器不能解析这个邮件。
+then	felamimail	zh	然后
+this folder is empty	felamimail	zh	这个文件夹时空的
+this php has no imap support compiled in!!	felamimail	zh	您的 PHP 并未编译为支持 IMAP！
+thu	felamimail	zh	四
+to	felamimail	zh	收件人
+to mail sent to	felamimail	zh	到邮件收件人
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	zh	要使用 TLS 连接，您必须运行 PHP 5.1.0 或更高版本。
+translation preferences	felamimail	zh	翻译偏好
+translation server	felamimail	zh	翻译服务器
+trash fold	felamimail	zh	垃圾桶
+trash folder	felamimail	zh	回收站
+tue	felamimail	zh	二
+type	felamimail	zh	类型
+unexpected response from server to authenticate command.	felamimail	zh	服务器 AUTHENTICATE 指令返回了不明回应。
+unexpected response from server to digest-md5 response.	felamimail	zh	服务器 Digest-MD5 指令返回了不明回应。
+unexpected response from server to login command.	felamimail	zh	服务器登录指令返回了不明回应。
+unflagged	felamimail	zh	已清除标记
+unknown err	felamimail	zh	未知错误
+unknown error	felamimail	zh	未知错误
+unknown imap response from the server. server responded: %s	felamimail	zh	未知 IMAP 服务器回应。服务器回应：%s
+unknown sender	felamimail	zh	未知发件人
+unknown user or password incorrect.	felamimail	zh	未知用户或密码错误。
+unread	common	zh	未读
+unseen	felamimail	zh	未读
+unselect all	felamimail	zh	取消全部选择
+unsubscribe	felamimail	zh	取消订阅
+unsubscribed	felamimail	zh	已取消订阅
+unsubscribed successfully!	felamimail	zh	取消订阅成功！
+up	felamimail	zh	向上
+updating message status	felamimail	zh	更新邮件状态
+updating view	felamimail	zh	更新查看
+use <a href="%1">emailadmin</a> to create profiles	felamimail	zh	使用<a href="%1">邮件管理</a>来创建配置文件(profile)
+use a signature	felamimail	zh	使用签名
+use a signature?	felamimail	zh	使用签名？
+use addresses	felamimail	zh	使用地址
+use custom settings	felamimail	zh	使用自定义设置
+use regular expressions	felamimail	zh	使用正则表达式
+use smtp auth	admin	zh	使用 SMTP 认证
+users can define their own emailaccounts	admin	zh	用户可定义他们自己的邮件帐户
+vacation notice	common	zh	假期通知
+vacation notice is active	felamimail	zh	假期通知已激活
+vacation start-date must be before the end-date!	felamimail	zh	假期开始日期必须是在结束日期之前！
+validate certificate	felamimail	zh	有效证书
+view full header	felamimail	zh	查看完整邮件头
+view header lines	felamimail	zh	查看邮件头
+view message	felamimail	zh	查看邮件
+viewing full header	felamimail	zh	查看完整邮件头
+viewing message	felamimail	zh	查看邮件
+viewing messages	felamimail	zh	查看邮件
+wed	felamimail	zh	三
+when deleting messages	felamimail	zh	当删除邮件时
+with message	felamimail	zh	与邮件
+with message "%1"	felamimail	zh	与邮件"%1"
+wrap incoming text at	felamimail	zh	邮件换行设置
+writing	felamimail	zh	写
+wrote	felamimail	zh	写信
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	zh	您可以使用上述开始日期%1和结束日期%2。

@@ -1,0 +1,122 @@
+account '%1' not found !!!	emailadmin	fr	Le compte %1 n'a pas été trouvé!!!
+add new email address:	emailadmin	fr	Ajouter une nouvelle adresse email:
+add profile	emailadmin	fr	Ajouter un profil
+admin dn	emailadmin	fr	DN administrateur
+admin password	emailadmin	fr	Mot de passe administrateur
+admin username	emailadmin	fr	Nom d'utilisateur de l'administrateur
+advanced options	emailadmin	fr	Options avancées
+alternate email address	emailadmin	fr	Adresse email alternative
+any application	emailadmin	fr	Toutes les applications
+any group	emailadmin	fr	Tous les groupes
+bad login name or password.	emailadmin	fr	ID login ou mot de passe erroné
+bad or malformed request. server responded: %s	emailadmin	fr	Requête invalide ou erronnée. Réponse serveur: %s
+bad request: %s	emailadmin	fr	Requête invalide: %s
+can be used by application	emailadmin	fr	Peut être utilisée par application
+can be used by group	emailadmin	fr	Peut être utilisée par groupe
+connection dropped by imap server.	emailadmin	fr	Connexion interrompue par le Serveur IMAP.
+could not complete request. reason given: %s	emailadmin	fr	Impossible d'effectuer la requête. Raison invoquée: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	fr	Impossible d'ouvrir la connexion sécurisée avec le serveur IMAP. %s: %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	fr	CRAM-MD5 ou DIGEST-MD5 requiert l'installation du progiciel Auth_SASL
+cyrus imap server	emailadmin	fr	Serveur Cyrus IMAP
+cyrus imap server administration	emailadmin	fr	Administration du serveur Cyrus IMAP
+default	emailadmin	fr	défaut
+deliver extern	emailadmin	fr	Relai de messagerie
+do not validate certificate	emailadmin	fr	ne pas valider le certificat
+do you really want to delete this profile	emailadmin	fr	Voulez-vous vraiment supprimer ce profil?
+domainname	emailadmin	fr	Nom de domaine
+edit email settings	emailadmin	fr	Modifier les paramètres de messagerie
+email account active	emailadmin	fr	Compte de messagerie actif
+email address	emailadmin	fr	Adresse de messagerie
+email settings	common	fr	Paramètres de messagerie
+emailadmin	emailadmin	fr	Administration de la messagerie
+enable cyrus imap server administration	emailadmin	fr	Activer la gestion du serveur Cyrus IMAP
+enable sieve	emailadmin	fr	Activer Sieve
+encrypted connection	emailadmin	fr	connexion chiffrée
+encryption settings	emailadmin	fr	Paramètres de chiffrement
+enter your default mail domain (from: user@domain)	emailadmin	fr	Introduisez votre domaine par défaut (utilisateur@domaine.com)
+error connecting to imap server. %s : %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. %s: %s.
+error connecting to imap server: [%s] %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. [%s] %s.
+forward also to	emailadmin	fr	Transférer aussi à
+forward email's to	emailadmin	fr	Transférer les emails à
+forward only	emailadmin	fr	Seulement transférer
+global options	emailadmin	fr	Options globales
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	fr	Si vous utilisez SSl ou TLS, vous devez avoir chargé l'extension PHP openssl
+imap admin password	admin	fr	Mot de passe de l'administrateur IMAP
+imap admin user	admin	fr	ID administrateur IMAP
+imap c-client version < 2001	emailadmin	fr	IMAP C-Client Version < 2001
+imap server closed the connection.	emailadmin	fr	Le serveur IMAP a interrompu la connexion.
+imap server closed the connection. server responded: %s	emailadmin	fr	Le serveur IMAP a interrompu la connexion. Réponse du serveur: %s.
+imap server hostname or ip address	emailadmin	fr	Nom du serveur IMAP ou adresse IP
+imap server logintyp	emailadmin	fr	Type d'authentification IMAP
+imap server name	emailadmin	fr	Nom du serveur IMAP
+imap server port	emailadmin	fr	Port IMAP
+imap/pop3 server name	emailadmin	fr	Nom du serveur IMAP/POP3
+in mbyte	emailadmin	fr	en Mo
+ldap basedn	emailadmin	fr	LDAP DN de base
+ldap server	emailadmin	fr	LDAP Serveur
+ldap server accounts dn	emailadmin	fr	LDAP DN contenant les comptes utilisateurs
+ldap server admin dn	emailadmin	fr	LDAP DN administrateur
+ldap server admin password	emailadmin	fr	LDAP Mot de passe administateur
+ldap server hostname or ip address	emailadmin	fr	LDAP Nom du serveur ou adresse IP
+ldap settings	emailadmin	fr	LDAP Paramètres
+leave empty for no quota	emailadmin	fr	Laisser vide pour ne pas avoir de quota
+mail settings	admin	fr	Paramètres de messagerie
+name of organisation	emailadmin	fr	Nom de l'entreprise
+no alternate email address	emailadmin	fr	Pas d'adresse email alternative
+no encryption	emailadmin	fr	pas de chiffrement
+no forwarding email address	emailadmin	fr	Pas d'adresse email de transfert
+no message returned.	emailadmin	fr	Aucun message n'est retourné.
+no supported imap authentication method could be found.	emailadmin	fr	Il n'a été trouvé aucune méthode d'authentification IMAP supportée
+order	emailadmin	fr	Ordre
+organisation	emailadmin	fr	Organisation
+plesk can't rename users --> request ignored	emailadmin	fr	Plesk ne peut pas renommer les utilisateurs --> requête ignorée
+plesk imap server (courier)	emailadmin	fr	Serveur IMAP Plesk (Courier)
+plesk mail script '%1' not found !!!	emailadmin	fr	Le script email Plesk '%1' introuvable!!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	fr	Plesk requiert des mots de passe d'au moins 5 caractères qui ne comprennent pas le nom du compte --> le mot de passe n'est PAS fixé!!!
+plesk smtp-server (qmail)	emailadmin	fr	Serveur SMTP Plesk (Qmail)
+pop3 server hostname or ip address	emailadmin	fr	Nom ou adresse IP du POP3
+pop3 server port	emailadmin	fr	Port POP3
+postfix with ldap	emailadmin	fr	Postfix avec support LDAP
+profile access rights	emailadmin	fr	droits d'accès du profil
+profile list	emailadmin	fr	Liste des profils
+profile name	emailadmin	fr	Nom de profil
+qmaildotmode	emailadmin	fr	qmaildotmode
+qouta size in mbyte	emailadmin	fr	Taille du quota en Mo
+quota settings	emailadmin	fr	Paramètres de quota
+remove	emailadmin	fr	Supprimer
+select type of imap server	emailadmin	fr	Sélectionner le type de serveur IMAP
+select type of imap/pop3 server	emailadmin	fr	Sélectionner le type de serveur IMAP/POP3
+select type of smtp server	emailadmin	fr	Sélectionner le type de serveur SMTP
+server settings	emailadmin	fr	Configuration du serveur
+sieve server hostname or ip address	emailadmin	fr	Nom ou adresse IP du serveur Sieve
+sieve server port	emailadmin	fr	Port Sieve
+sieve settings	emailadmin	fr	Paramètres Sieve
+smtp authentication	emailadmin	fr	Authentication SMTP
+smtp options	emailadmin	fr	Options SMTP
+smtp server name	emailadmin	fr	Nom du serveur SMTP
+smtp settings	emailadmin	fr	Paramètres SMTP
+smtp-server hostname or ip address	emailadmin	fr	Nom ou adresse IP du serveur SMTP
+smtp-server port	emailadmin	fr	Port SMTP
+standard	emailadmin	fr	Standard
+standard imap server	emailadmin	fr	Serveur IMAP standard
+standard pop3 server	emailadmin	fr	Serveur POP3 standard
+standard smtp-server	emailadmin	fr	Serveur SMTP standard
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	fr	Le serveur IMAP ne supporterait pas la méthode d'authentication sélectionnée. Veuillez contacter votre administrateur système.
+this php has no imap support compiled in!!	emailadmin	fr	Ce PHP ne comprend pas de support IMAP!!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	fr	Pour utiliser une connexion TLS, vous devez utiliser une version PHP 5.1.0 ou plus élevée.
+unexpected response from server to authenticate command.	emailadmin	fr	Réponse inattendue du serveur à la commande AUTHENTICATE.
+unexpected response from server to digest-md5 response.	emailadmin	fr	Réponse inattendue du serveur à la réponse Digest-MD5.
+unexpected response from server to login command.	emailadmin	fr	Réponse inattendue du serveur à la commande LOGIN.
+unknown imap response from the server. server responded: %s	emailadmin	fr	Réponse IMAP inconnue du serveur. Le serveur a répondu: %s
+unsupported action '%1' !!!	emailadmin	fr	Action '%1' non supportée!!!
+update current email address:	emailadmin	fr	Mettre à jour l'adresse email actuelle:
+use ldap defaults	emailadmin	fr	Utiliser les paramètres LDAP par défaut
+use smtp auth	emailadmin	fr	Utiliser l'authentification SMTP
+use tls authentication	emailadmin	fr	Utiliser l'authentification TLS
+use tls encryption	emailadmin	fr	Utiliser le cryptage TLS
+user can edit forwarding address	emailadmin	fr	L'utilisateur peut modifier l'adresse de transfert.
+username (standard)	emailadmin	fr	nom de l'utilisateur (standard)
+username@domainname (virtual mail manager)	emailadmin	fr	utilisateur@domaine (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	emailadmin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
+users can define their own signatures	emailadmin	fr	les utilisateurs peuvent définir leurs propres signatures
+virtual mail manager	emailadmin	fr	Virtual MAIL ManaGeR

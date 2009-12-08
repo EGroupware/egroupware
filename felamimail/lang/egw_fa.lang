@@ -1,0 +1,351 @@
+(no subject)	felamimail	fa	(بدون عنوان)
+(only cc/bcc)	felamimail	fa	(فقط رونوشت/رونوشت دوم)
+(unknown sender)	felamimail	fa	(فرستنده نامشخص)
+activate	felamimail	fa	فعال سازی
+activate script	felamimail	fa	اسکریپت فعال سازی
+add address	felamimail	fa	افزودن نشانی
+add rule	felamimail	fa	افزودن قانون
+add script	felamimail	fa	افزودن اسکریپت
+add to %1	felamimail	fa	افزودن به %1
+add to address book	felamimail	fa	افزودن به دفترچه آدرس
+add to addressbook	felamimail	fa	افزودن به دفترچه آدرس
+additional info	felamimail	fa	اطلاعات بیشتر
+address book	felamimail	fa	دفترچه آدرس
+address book search	felamimail	fa	جستجوی دفترچه آدرس
+after message body	felamimail	fa	پس از بدنه پیام
+all address books	felamimail	fa	همه دفترچه آدرسها
+all folders	felamimail	fa	همه پوشه ها
+all of	felamimail	fa	همه
+allways a new window	felamimail	fa	همیشه پنجره جدید
+always show html emails	felamimail	fa	همیشه رایانامه های زنگام را نمایش بده
+any of	felamimail	fa	هرکدام از
+anyone	felamimail	fa	همه
+as a subfolder of	felamimail	fa	بعنوان زیر پوشه
+attachments	felamimail	fa	پیوندها
+auto refresh folder list	felamimail	fa	بازخوانی خودکار فهرست پوشه
+back to folder	felamimail	fa	بازگشت به پوشه
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	fa	برپایه شاخصهای تعیین شده، پیامهای ورودی در فهرست پیامها می توانند رنگهای پس زمینه متفاوتی داشته باشند. این کمک می کند که به راحتی پیامها از یکدیگر تشخیص داده شوند
+bcc	felamimail	fa	رونوشت دوم
+before headers	felamimail	fa	قبل از سرآیندها
+between headers and message body	felamimail	fa	بین سرآیندها و بدنه پیام
+body part	felamimail	fa	قسمت بدنه
+can't connect to inbox!!	felamimail	fa	ناتوان از اتصال به صندوق ورودی!!!
+cc	felamimail	fa	رونوشت
+change folder	felamimail	fa	تغییر پوشه
+check message against next rule also	felamimail	fa	پیام را در مقابل قانون بعد هم بازرسی کن
+checkbox	felamimail	fa	جعبه انتخاب
+click here to log back in.	felamimail	fa	برای ورود مجدد اینجا کلیک کنید
+click here to return to %1	felamimail	fa	برای بازگشت به %1 اینجا را کلیک کنید
+close all	felamimail	fa	بستن همه
+close this page	felamimail	fa	بستن این صفحه
+close window	felamimail	fa	بستن پنجره
+color	felamimail	fa	رنگ
+compose	felamimail	fa	نامه جدید
+compress folder	felamimail	fa	فشرده سازی پوشه
+configuration	felamimail	fa	پیکربندی
+contains	felamimail	fa	شامل
+could not add folder %1 (%2) !!!	felamimail	fa	ناتوان از افزودن پوشه %1 (%2) !!!
+could not delete folder %1 (%2) !!!	felamimail	fa	ناتوان از حذف پوشه %1 (%2) !!!
+could not rename folder %1 to %2 (%3) !!!	felamimail	fa	ناتوان از تغییر نام پوشه %1 به %2 (%3) !!!
+create	felamimail	fa	ایجاد
+create folder	felamimail	fa	ایجاد پوشه
+create sent	felamimail	fa	ایجاد ارسال شده
+create subfolder	felamimail	fa	ایجاد زیر پوشه
+create trash	felamimail	fa	ایجاد بازیافت
+created folder successfully!	felamimail	fa	پوشه با موفقیت ایجاد شد
+custom	felamimail	fa	سفارشی
+dark blue	felamimail	fa	آبی تیره
+dark cyan	felamimail	fa	فیروزه ای تیره
+dark gray	felamimail	fa	خاکستری تیره
+dark green	felamimail	fa	سبز تیره
+dark magenta	felamimail	fa	بنفش تیره
+dark yellow	felamimail	fa	زرد تیره
+date(newest first)	felamimail	fa	تاریخ (جدیدها اول)
+date(oldest first)	felamimail	fa	تاریخ (قدیمی ها اول)
+days	felamimail	fa	روز
+deactivate script	felamimail	fa	غیرفعال سازی اسکریپت
+default sorting order	felamimail	fa	ترتیب مرتب سازی پیش فرض
+delete all	felamimail	fa	حذف همه
+delete folder	felamimail	fa	حذف پوشه
+delete script	felamimail	fa	حذف اسکریپت
+delete selected	felamimail	fa	حذف انتخاب شده ها
+delete selected messages	felamimail	fa	حذف پیامهای انتخاب شده
+deleted	felamimail	fa	حذف شد
+deleted folder successfully!	felamimail	fa	پوشه با موفقیت حذف شد!
+disable	felamimail	fa	غیر فعال
+discard message	felamimail	fa	نادیده گرفتن پیام
+display messages in multiple windows	felamimail	fa	نمایش پیامها در چند پنجره
+display of html emails	felamimail	fa	نمایش رایانامه های زنگام
+display only when no plain text is available	felamimail	fa	نمایش فقط وقتی که متن معمولی موجود نیست
+display preferences	felamimail	fa	مشخصات نمایش
+do it!	felamimail	fa	انجامش بده!
+do not use sent	felamimail	fa	از ارسال شده استفاده نشود
+do not use trash	felamimail	fa	از بازیافت استفاده نشود
+do you really want to delete the '%1' folder?	felamimail	fa	آیا واقعا مطمئنید که می خواهید پوشه '%1' را حدف کنید؟
+does not contain	felamimail	fa	شامل نیست
+does not match	felamimail	fa	جور نیست
+does not match regexp	felamimail	fa	با عبارت باقاعده جور نبود
+don't use sent	felamimail	fa	از ارسال شده استفاده نشود
+don't use trash	felamimail	fa	از بازیافت استفاده نشود
+down	felamimail	fa	پائین
+download	felamimail	fa	دریافت
+download this as a file	felamimail	fa	دریافت این بعنوان یک پرونده
+e-mail	felamimail	fa	رایانامه ۲
+e-mail address	felamimail	fa	نشانی رایانامه
+e-mail folders	felamimail	fa	پوشه رایانامه
+edit email forwarding address	felamimail	fa	ویرایش نشانی رایانامه پیش سو
+edit filter	felamimail	fa	ویرایش صافی
+edit rule	felamimail	fa	ویرایش قانون
+edit selected	felamimail	fa	ویرایش انتخاب شده ها
+edit vacation settings	felamimail	fa	ویرایش تنظیمات بیکاری
+email address	felamimail	fa	نشانی رایانامه
+email forwarding address	felamimail	fa	نشانی رایانامه پیش سو
+email signature	felamimail	fa	امضاء رایانامه
+empty trash	felamimail	fa	خالی کردن زباله
+enable	felamimail	fa	فعال
+enter your default mail domain ( from: user@domain )	admin	fa	حوزه پیش فرض رایانامه خود را وارد کنید( از: user@domain‌ )
+enter your imap mail server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار IMAP را وارد کنید
+enter your sieve server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار SIEVE را وارد کنید
+enter your sieve server port	admin	fa	درگاه کارگزار SIEVE راوارد کنید
+enter your smtp server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار SMTP را وارد کنید
+enter your smtp server port	admin	fa	درگاه کارگزار SMTP راوارد کنید
+error	felamimail	fa	خطا!
+error connecting to imap serv	felamimail	fa	خطا در اتصال به کارگزار آی مپ
+error opening	felamimail	fa	خطا در باز کردن
+every	felamimail	fa	هر
+every %1 days	felamimail	fa	هر %1 روز
+expunge	felamimail	fa	محو کردن
+felamimail	common	fa	رایانامه ۲
+file into	felamimail	fa	پرونده در
+files	felamimail	fa	پرونده ها
+filter active	felamimail	fa	فعالسازی صافی
+filter name	felamimail	fa	نام صافی
+filter rules	felamimail	fa	قوانین صافی
+first name	felamimail	fa	نام
+flagged	felamimail	fa	علامت گذاری شده
+flags	felamimail	fa	علامتها
+folder acl	felamimail	fa	حق دسترسی پوشه
+folder name	felamimail	fa	نام پوشه
+folder path	felamimail	fa	مسیر پوشه
+folder preferences	felamimail	fa	مشخصات پوشه
+folder settings	felamimail	fa	تنظیمات پوشه
+folder status	felamimail	fa	وضعیت پوشه
+folderlist	felamimail	fa	فهرست پوشه
+foldername	felamimail	fa	نام پوشه
+folders	felamimail	fa	پوشه ها
+folders created successfully!	felamimail	fa	پوشه ها با موفقیت ایجاد شدند!
+follow	felamimail	fa	پیرو
+for mail to be send - not functional yet	felamimail	fa	برای رایانامه هایی که ارسال می شوند - هنوز عملیاتی نیست
+for received mail	felamimail	fa	برای رایانامه های دریافت شده
+forward	felamimail	fa	پیش سو
+forward to address	felamimail	fa	پیش سو به نشانی
+forwarding	felamimail	fa	پیش سو می شود
+found	felamimail	fa	پیدا شدن
+fri	felamimail	fa	جمعه
+from	felamimail	fa	از
+from(a->z)	felamimail	fa	از(A->Z)
+from(z->a)	felamimail	fa	از (Z->A)
+full name	felamimail	fa	نام کامل
+greater than	felamimail	fa	بزرگتر از
+header lines	felamimail	fa	خطوط سرآیند
+hide header	felamimail	fa	پنهانسازی سرآیند
+html	felamimail	fa	زنگام
+icons and text	felamimail	fa	نمایه و متن
+icons only	felamimail	fa	فقط نمایه
+identifying name	felamimail	fa	نام شناخته شده
+if	felamimail	fa	اگر
+if from contains	felamimail	fa	اگر از شامل باشد
+if mail header	felamimail	fa	اگر سرآیند نامه باشد
+if message size	felamimail	fa	اگر اندازه پیام باشد
+if subject contains	felamimail	fa	اگر موضوع شامل باشد
+if to contains	felamimail	fa	اگر به شامل باشد
+illegal folder name.  please select a different name.	felamimail	fa	نام نامعتبر برای پوشه. لطفا نام دیگری برگزینید
+imap	felamimail	fa	آی مپ
+imap server	felamimail	fa	کارگزار آی مپ
+imap server address	felamimail	fa	نشانی کارگزار آی مپ
+imap server type	felamimail	fa	نوع کارگزار آی مپ
+in	felamimail	fa	در
+index order	felamimail	fa	ترتیب اندیکس
+info	felamimail	fa	اطلاعات
+invalid user name or password	felamimail	fa	نام کاربری یا گذرواژه نادرست
+javascript	felamimail	fa	جاوا اسکریپت
+keep a copy of the message in your inbox	felamimail	fa	یک نسخه از پیام را در صندوق ورودی نگهداری شود
+keep local copy of email	felamimail	fa	نسخه محلی از رایانامه نگهداری شود
+kilobytes	felamimail	fa	کیلوبایت
+language	felamimail	fa	زبان
+last name	felamimail	fa	نام خانوادگی
+left	felamimail	fa	چپ
+less	felamimail	fa	کمتر
+less than	felamimail	fa	کمتر از
+light gray	felamimail	fa	خاکستری روشن
+list all	felamimail	fa	فهرست همه
+location of buttons when composing	felamimail	fa	محل دکمه ها در زمان نوشتن نامه جدید
+mail server login type	admin	fa	نوع ورود کارگزار رایانامه
+mail settings	felamimail	fa	تنظیمات رایانامه
+mainmessage	felamimail	fa	پیام اصلی
+manage emailfilter / vacation	preferences	fa	مدیریت بیکاری/صافی رایانامه
+manage folders	common	fa	مدیریت پوشه ها
+manage sieve	common	fa	مدیریت اسکریپتهای Sieve
+mark as deleted	felamimail	fa	شناسائی بعنوان حذف شده
+mark messages as	felamimail	fa	شناسائی انتخاب شده ها بعنوان
+mark selected as flagged	felamimail	fa	شناسائی انتخاب شده ها بعنوان علامت دار
+mark selected as read	felamimail	fa	شناسائی انتخاب شده ها بعنوان خوانده شده
+mark selected as unflagged	felamimail	fa	شناسائی انتخاب شده ها بعنوان بدون علامت
+mark selected as unread	felamimail	fa	شناسائی انتخاب شده ها بعنوان خوانده نشده
+match	felamimail	fa	جور شود
+matches	felamimail	fa	جور شده ها
+matches regexp	felamimail	fa	عبارات باقاعده جور شده
+message highlighting	felamimail	fa	نمایان سازی پیامها
+message list	felamimail	fa	فهرست پیامها
+messages	felamimail	fa	پیام
+mon	felamimail	fa	دوشنبه
+move	felamimail	fa	انتقال دادن
+move messages	felamimail	fa	انتقال پیامها
+move selected to	felamimail	fa	انتقال انتخاب شده ها به
+move to trash	felamimail	fa	انتقال به بازیافت
+moving messages to	felamimail	fa	در حال انتقال پیامها به
+name	felamimail	fa	نام
+never display html emails	felamimail	fa	هرگز پیامهای زنگام را نشان نده
+new	common	fa	جدید
+new filter	felamimail	fa	صافی جدید
+next	felamimail	fa	بعدی
+next message	felamimail	fa	پیام بعدی
+no filter	felamimail	fa	بدون صافی
+no folders found	felamimail	fa	پوشه ای پیدا نشد
+no folders were found to subscribe to!	felamimail	fa	پوشه ای برای عضویت پیدا نشد!
+no folders were found to unsubscribe from!	felamimail	fa	پوشه ای برای لغو عضویت پیدا نشد!
+no highlighting is defined	felamimail	fa	نمایان سازی تعریف نشده
+no messages found...	felamimail	fa	پیامی پیدا نشد...
+no messages were selected.	felamimail	fa	پیامی انتخاب نشده
+no previous message	felamimail	fa	پیام قبلی موجود نیست
+no valid emailprofile selected!!	felamimail	fa	تنظیمات معتبری برای رایانامه انتخاب نشده!!!
+none	felamimail	fa	هیچ
+on behalf of	felamimail	fa	در نیمه
+one address is not valid	felamimail	fa	یکی از نشانیها معتبر نیستند
+only inbox	felamimail	fa	فقط صندوق ورودی
+only one window	felamimail	fa	فقط یک پنجره
+only unseen	felamimail	fa	فقط ندیده ها
+open all	felamimail	fa	بازکردن همه
+options	felamimail	fa	گزینه ها
+organisation	felamimail	fa	سازمان
+organization	felamimail	fa	سازمان
+organization name	admin	fa	نام سازمان
+participants	felamimail	fa	همکاران
+personal information	felamimail	fa	اطلاعات شخصی
+please select a address	felamimail	fa	لطفا یک نشانی انتخاب کنید
+please select the number of days to wait between responses	felamimail	fa	لطفا تعداد روزها برای انتظار مابین پاسخها را انتخاب کنید
+please supply the message to send with auto-responses	felamimail	fa	لطفا پیامی را برای ارسال پاسخ خودکار تعیین کنید
+posting	felamimail	fa	درحال پست
+previous	felamimail	fa	قبلی
+previous message	felamimail	fa	پیام قبلی
+print it	felamimail	fa	چاپش کن
+print this page	felamimail	fa	چاپ این صفحه
+quicksearch	felamimail	fa	جستجوی سریع
+read	felamimail	fa	خوانده شده
+reading	felamimail	fa	در حال خواندن
+recent	felamimail	fa	اخیر
+refresh time in minutes	felamimail	fa	زمان بازخوانی به دقیقه
+remove	felamimail	fa	حذف کردن
+remove immediately	felamimail	fa	فورا حذف شود
+rename	felamimail	fa	تغییر نام
+rename a folder	felamimail	fa	تغییر نام یک پوشه
+rename folder	felamimail	fa	تغییر نام پوشه
+renamed successfully!	felamimail	fa	با موفقیت تغییر نام یافت!
+replied	felamimail	fa	پاسخ داده شده
+reply	felamimail	fa	پاسخ
+reply all	felamimail	fa	پاسخ به همه
+reply to	felamimail	fa	پاسخ به
+replyto	felamimail	fa	پاسخ به
+respond	felamimail	fa	پاسخ
+respond to mail sent to	felamimail	fa	پاسخ به نامه ارسال شده به
+return	felamimail	fa	بازگشت
+return to options page	felamimail	fa	بازگشت به صفحه گزینه ها
+right	felamimail	fa	راست
+rule	felamimail	fa	قانون
+sat	felamimail	fa	شنبه
+save	felamimail	fa	ذخیره
+save changes	felamimail	fa	ذخیره تغییرات
+script name	felamimail	fa	نام اسکریپت
+script status	felamimail	fa	وضعیت اسکریپت
+search	felamimail	fa	جستجو
+search for	felamimail	fa	جستجو برای
+select	felamimail	fa	انتخاب
+select all	felamimail	fa	انتخاب همه
+select emailprofile	felamimail	fa	تنظیمات رایانامه را انتخاب کنید
+select folder	felamimail	fa	پوشه را انتخاب کنید
+select your mail server type	admin	fa	نوع کارگزار رایانامه خود را انتخاب کنید
+send	felamimail	fa	ارسال
+send a reject message	felamimail	fa	ارسال یک پیام برگشتی
+sent folder	felamimail	fa	پوشه ارسال شده
+show header	felamimail	fa	نمایش سرآیند
+show new messages on main screen	felamimail	fa	نمایش پیامهای جدید در صفحه اصلی(خانه)
+sieve settings	admin	fa	تنظیمات Sieve
+signature	felamimail	fa	امضاء
+simply click the target-folder	felamimail	fa	برای انتقال انتخاب شده ها فقط روی پوشه مقصد کلیک کنید
+size	felamimail	fa	اندازه
+size of editor window	felamimail	fa	اندازه پنجره ویرایشگر
+size(...->0)	felamimail	fa	اندازه (...->0)
+size(0->...)	felamimail	fa	اندازه (0->...)
+skipping forward ...	felamimail	fa	پرش به جلو ...
+small view	felamimail	fa	نمای کوچک
+smtp settings	admin	fa	تنظیمات SMTP
+subject	felamimail	fa	موضوع
+subject(a->z)	felamimail	fa	موضوع (A->Z)
+subject(z->a)	felamimail	fa	موضوع (Z->A)
+submit	felamimail	fa	ثبت
+subscribe	felamimail	fa	عضو شدن
+subscribed	felamimail	fa	عضو شده
+subscribed successfully!	felamimail	fa	عضویت با موفقیت انجام شد!
+sun	felamimail	fa	یکشنبه
+table of contents	felamimail	fa	فهرست محتویات
+text only	felamimail	fa	فقط متن
+the connection to the imap server failed!!	felamimail	fa	اتصال به کارگزار آی مپ ناموفق بود!!!
+the mimeparser can not parse this message.	felamimail	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست
+then	felamimail	fa	سپس
+this folder is empty	felamimail	fa	این پوشه خالی است
+this php has no imap support compiled in!!	felamimail	fa	این PHP پشتیبانی از آی مپ را در خود ندارد!
+thu	felamimail	fa	پنجشنبه
+to	felamimail	fa	به
+to mail sent to	felamimail	fa	برای نامه های ارسال شده
+translation preferences	felamimail	fa	مشخصات ترجمه
+translation server	felamimail	fa	کارگزار ترجمه
+trash fold	felamimail	fa	پوشه بازیافت
+trash folder	felamimail	fa	پوشه بازیافت
+tue	felamimail	fa	سه شنبه
+type	felamimail	fa	نوع
+unflagged	felamimail	fa	بی علامت
+unknown err	felamimail	fa	خطای ناشناخته
+unknown error	felamimail	fa	خطای ناشناخته
+unknown sender	felamimail	fa	فرستنده ناشناس
+unknown user or password incorrect.	felamimail	fa	نام کاربری یا گذرواژه نادرست است
+unread	common	fa	خوانده نشده
+unseen	felamimail	fa	دیده نشده
+unselect all	felamimail	fa	خارج کردن از انتخاب همه
+unsubscribe	felamimail	fa	لغو عضویت
+unsubscribed	felamimail	fa	عضویت لغو شده
+unsubscribed successfully!	felamimail	fa	لغو شدن عضویت با موفقیت انجام شد!
+up	felamimail	fa	بالا
+use <a href="%1">emailadmin</a> to create profiles	felamimail	fa	از <a href="%1">مدیر رایانامه</a برای ایجاد پروفایل استفاده کنید
+use a signature	felamimail	fa	استفاده از امضاء
+use a signature?	felamimail	fa	استفاده از امضاء؟
+use addresses	felamimail	fa	استفاده از
+use custom settings	felamimail	fa	از تنظیمات سفارشی استفاده شود
+use javascript or html addressbook?	felamimail	fa	استفاده از اطلاعات اشخاص جاوااسکریپتی یا زنگامی(html)؟
+use regular expressions	felamimail	fa	استفاده از عبارات باقاعده
+use smtp auth	admin	fa	استفاده از تصدیق در SMTP
+users can define their own emailaccounts	admin	fa	کاربران می توانند حسابهای کاربری را خودشان تعریف کنند
+vacation notice	felamimail	fa	آگهی بیکاری
+view full header	felamimail	fa	نمایش همه سرآیندها
+view message	felamimail	fa	نمایش پیام
+viewing full header	felamimail	fa	نمایش همه سرآیندها
+viewing message	felamimail	fa	نمایش پیام
+viewing messages	felamimail	fa	نمایش پیامها
+wed	felamimail	fa	چهارشنبه
+welcome to %1's webmail system	felamimail	fa	به %1 سامانه رایانامه مبتنی بر وب خوش آمدید
+when deleting messages	felamimail	fa	وقتی پیامی حذف می شود
+with message	felamimail	fa	با پیام
+with message "%1"	felamimail	fa	با پیام "%1"
+wrap incoming text at	felamimail	fa	شکستن متن ورودی در
+writing	felamimail	fa	نوشتن
+wrote	felamimail	fa	نوشته شده
+you must login first.	felamimail	fa	شما باید ابتدا وارد شوید

@@ -1,0 +1,421 @@
+(no subject)	felamimail	zh-tw	(沒有標題)
+(only cc/bcc)	felamimail	zh-tw	(只要副本/密件副本)
+(unknown sender)	felamimail	zh-tw	(不知名的寄件者)
+activate	felamimail	zh-tw	啟用
+activate script	felamimail	zh-tw	啟用程式
+add acl	felamimail	zh-tw	新增存取控制
+add address	felamimail	zh-tw	新增位址
+add rule	felamimail	zh-tw	新增規則
+add script	felamimail	zh-tw	新增程式
+add to %1	felamimail	zh-tw	新增到 %1
+add to address book	felamimail	zh-tw	加入通訊錄
+add to addressbook	felamimail	zh-tw	加入通訊錄
+adding file to message. please wait!	felamimail	zh-tw	新增檔案到訊息中，請等待！
+additional info	felamimail	zh-tw	其他資訊
+address book	felamimail	zh-tw	通訊錄
+address book search	felamimail	zh-tw	搜尋通訊錄
+after message body	felamimail	zh-tw	在訊息內容之後
+all address books	felamimail	zh-tw	所有通訊錄
+all folders	felamimail	zh-tw	所有資料夾
+all of	felamimail	zh-tw	所有的
+allow images from external sources in html emails	felamimail	zh-tw	在 HTML 郵件中允許來自外部的圖片
+allways a new window	felamimail	zh-tw	都開啟一個新視窗
+always show html emails	felamimail	zh-tw	都用HTML顯示郵件
+and	felamimail	zh-tw	且
+any of	felamimail	zh-tw	任意的
+any status	felamimail	zh-tw	任意狀態
+anyone	felamimail	zh-tw	任何人
+as a subfolder of	felamimail	zh-tw	子資料夾在
+attachments	felamimail	zh-tw	附加檔案
+authentication required	felamimail	zh-tw	需要登入
+auto refresh folder list	felamimail	zh-tw	自動更新資料夾清單
+back to folder	felamimail	zh-tw	回到資料夾
+bad login name or password.	felamimail	zh-tw	帳號或密碼有誤
+bad or malformed request. server responded: %s	felamimail	zh-tw	錯誤的請求，伺服器回應： %s
+bad request: %s	felamimail	zh-tw	錯誤的請求： %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	zh-tw	基於給予的規則，收進來的信件在清單中可以使用不同的背景顏色。這樣子可以輕易的辨識郵件的來源，特別是電子報。
+bcc	felamimail	zh-tw	密件副本
+before headers	felamimail	zh-tw	頁首之前
+between headers and message body	felamimail	zh-tw	頁首與訊息內容之間
+body part	felamimail	zh-tw	內容部份
+can't connect to inbox!!	felamimail	zh-tw	無法連結收件夾！
+cc	felamimail	zh-tw	副本
+change folder	felamimail	zh-tw	改變資料夾
+check message against next rule also	felamimail	zh-tw	也用下一個規則檢查郵件
+checkbox	felamimail	zh-tw	核選方塊
+clear search	felamimail	zh-tw	清除搜尋
+click here to log back in.	felamimail	zh-tw	點這裡登入
+click here to return to %1	felamimail	zh-tw	點這裡回到%1
+close all	felamimail	zh-tw	全部關閉
+close this page	felamimail	zh-tw	關閉這一頁
+close window	felamimail	zh-tw	關閉視窗
+color	felamimail	zh-tw	顏色
+compose	felamimail	zh-tw	建立
+compress folder	felamimail	zh-tw	壓縮資料夾
+condition	felamimail	zh-tw	條件
+configuration	felamimail	zh-tw	設定
+connection dropped by imap server.	felamimail	zh-tw	連線被 IMAP 伺服器中斷了
+contains	felamimail	zh-tw	包含
+could not complete request. reason given: %s	felamimail	zh-tw	無法完成請求，理由： %s
+could not open secure connection to the imap server. %s : %s.	felamimail	zh-tw	無法開啟安全連線到 IMAP 伺服器。 %s： %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	zh-tw	CRAM-MD5 或 DIGEST-MD5 需要安裝 Auth_SASL 程式。
+create	felamimail	zh-tw	建立
+create folder	felamimail	zh-tw	建立資料夾
+create sent	felamimail	zh-tw	建立寄件備份
+create subfolder	felamimail	zh-tw	建立子資料夾
+create trash	felamimail	zh-tw	建立垃圾桶
+created folder successfully!	felamimail	zh-tw	建立資料夾完成！
+dark blue	felamimail	zh-tw	深藍
+dark cyan	felamimail	zh-tw	深青綠
+dark gray	felamimail	zh-tw	深灰
+dark green	felamimail	zh-tw	深綠
+dark magenta	felamimail	zh-tw	深紅
+dark yellow	felamimail	zh-tw	深黃
+date(newest first)	felamimail	zh-tw	日期(新的在前)
+date(oldest first)	felamimail	zh-tw	日期(舊的在前)
+days	felamimail	zh-tw	日
+deactivate script	felamimail	zh-tw	停用程式
+default signature	felamimail	zh-tw	預設簽名
+default sorting order	felamimail	zh-tw	預設排序
+delete all	felamimail	zh-tw	刪除全部
+delete folder	felamimail	zh-tw	刪除資料夾
+delete script	felamimail	zh-tw	刪除指令
+delete selected	felamimail	zh-tw	刪除所選擇的
+delete selected messages	felamimail	zh-tw	刪除所選擇的訊息
+deleted	felamimail	zh-tw	刪除日期
+deleted folder successfully!	felamimail	zh-tw	刪除資料夾完成！
+deleting messages	felamimail	zh-tw	刪除信件中
+disable	felamimail	zh-tw	停用
+discard	felamimail	zh-tw	取消
+discard message	felamimail	zh-tw	取消郵件
+display message in new window	felamimail	zh-tw	在新視窗顯示訊息
+display messages in multiple windows	felamimail	zh-tw	開啟多個視窗顯示訊息
+display of html emails	felamimail	zh-tw	顯示HTML郵件
+display only when no plain text is available	felamimail	zh-tw	只有在不包含存文字時顯示
+display preferences	felamimail	zh-tw	顯示設定
+displaying html messages is disabled	felamimail	zh-tw	顯示 html 信件的功能停用中
+do it!	felamimail	zh-tw	執行！
+do not use sent	felamimail	zh-tw	不使用寄件備份
+do not use trash	felamimail	zh-tw	不使用垃圾桶
+do not validate certificate	felamimail	zh-tw	不驗證執照
+do you really want to delete the '%1' folder?	felamimail	zh-tw	您確定要刪除資料夾 '%1' ？
+do you really want to delete the selected signatures?	felamimail	zh-tw	您確定要刪除選擇的簽名？
+does not contain	felamimail	zh-tw	不包含
+does not match	felamimail	zh-tw	不符合
+does not match regexp	felamimail	zh-tw	不符合條件
+don't use draft folder	felamimail	zh-tw	不使用草稿夾
+don't use sent	felamimail	zh-tw	不使用寄件備份
+don't use trash	felamimail	zh-tw	不使用垃圾桶
+down	felamimail	zh-tw	下
+download	felamimail	zh-tw	下載
+download this as a file	felamimail	zh-tw	另存新檔
+draft folder	felamimail	zh-tw	草稿夾
+e-mail	felamimail	zh-tw	E-Mail
+e-mail address	felamimail	zh-tw	E-Mail位址
+e-mail folders	felamimail	zh-tw	郵件資料夾
+edit email forwarding address	felamimail	zh-tw	編輯郵件轉寄位址
+edit filter	felamimail	zh-tw	編輯規則
+edit rule	felamimail	zh-tw	編輯規則
+edit selected	felamimail	zh-tw	編輯選取的
+edit vacation settings	felamimail	zh-tw	編輯假期設定
+email address	felamimail	zh-tw	郵件位址
+email forwarding address	felamimail	zh-tw	郵件轉寄位址
+email signature	felamimail	zh-tw	簽名檔
+emailaddress	felamimail	zh-tw	郵件位址
+empty trash	felamimail	zh-tw	清空垃圾桶
+enable	felamimail	zh-tw	啟用
+encrypted connection	felamimail	zh-tw	加密的連線
+enter your default mail domain ( from: user@domain )	admin	zh-tw	輸入您的預設郵件網域
+enter your imap mail server hostname or ip address	admin	zh-tw	輸入您的IMAP伺服器主機名稱或IP位址
+enter your sieve server hostname or ip address	admin	zh-tw	輸入您的SIEVE伺服器主機名稱或IP位址
+enter your sieve server port	admin	zh-tw	輸入您的SIEVE伺服器連接埠
+enter your smtp server hostname or ip address	admin	zh-tw	輸入您的SMTP伺服器主機名稱或IP位址
+enter your smtp server port	admin	zh-tw	輸入您的SMTP伺服器連接埠
+error	felamimail	zh-tw	錯誤
+error connecting to imap serv	felamimail	zh-tw	連結IMAP伺服器錯誤
+error connecting to imap server. %s : %s.	felamimail	zh-tw	連線到 IMAP 伺服器時發生錯誤。 %s : %s
+error connecting to imap server: [%s] %s.	felamimail	zh-tw	連線到 IMAP 伺服器時發生錯誤： [%s] %s
+error opening	felamimail	zh-tw	開啟錯誤
+every	felamimail	zh-tw	每一
+every %1 days	felamimail	zh-tw	每 %1 天
+expunge	felamimail	zh-tw	刪去
+extended	felamimail	zh-tw	延伸的
+felamimail	common	zh-tw	FelaMiMail
+file into	felamimail	zh-tw	檔案插入
+files	felamimail	zh-tw	檔案
+filter active	felamimail	zh-tw	規則啟用中
+filter name	felamimail	zh-tw	規則名稱
+filter rules	common	zh-tw	過濾規則
+first name	felamimail	zh-tw	名
+flagged	felamimail	zh-tw	被標示
+flags	felamimail	zh-tw	標示
+folder acl	felamimail	zh-tw	資料夾 ACL
+folder name	felamimail	zh-tw	資料夾名稱
+folder path	felamimail	zh-tw	資料夾路徑
+folder preferences	felamimail	zh-tw	資料夾偏好
+folder settings	felamimail	zh-tw	資料夾設定
+folder status	felamimail	zh-tw	資料夾狀態
+folderlist	felamimail	zh-tw	資料夾清單
+foldername	felamimail	zh-tw	資料夾名稱
+folders	felamimail	zh-tw	資料夾
+folders created successfully!	felamimail	zh-tw	資料夾建立成功！
+follow	felamimail	zh-tw	跟
+for mail to be send - not functional yet	felamimail	zh-tw	要寄出的郵件 - 尚未寄出
+for received mail	felamimail	zh-tw	收到的郵件
+forward	felamimail	zh-tw	轉寄
+forward to	felamimail	zh-tw	轉寄給
+forward to address	felamimail	zh-tw	轉寄到信箱
+forwarding	felamimail	zh-tw	轉寄中
+found	felamimail	zh-tw	找到
+fri	felamimail	zh-tw	五
+from	felamimail	zh-tw	來自
+from(a->z)	felamimail	zh-tw	從 (A->Z)
+from(z->a)	felamimail	zh-tw	從 (Z->A)
+full name	felamimail	zh-tw	全名
+greater than	felamimail	zh-tw	大於
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	zh-tw	更多訊息請參考<a href="http://www.felamimail.org" target="_new">www.felamimail.org</a><br>
+header lines	felamimail	zh-tw	頭條新聞
+hide header	felamimail	zh-tw	隱藏標頭
+hostname / address	felamimail	zh-tw	主機名稱/位址
+html	felamimail	zh-tw	HTML
+icons and text	felamimail	zh-tw	圖示與文字
+icons only	felamimail	zh-tw	只顯示圖示
+identifying name	felamimail	zh-tw	識別名稱
+identity	felamimail	zh-tw	識別
+if	felamimail	zh-tw	如果
+if from contains	felamimail	zh-tw	如果寄件人包含
+if mail header	felamimail	zh-tw	如果郵件標頭
+if message size	felamimail	zh-tw	如果信件大小
+if subject contains	felamimail	zh-tw	如果主旨包含
+if to contains	felamimail	zh-tw	如果收件人包含
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	zh-tw	如果使用 SSL 或 TLS ，您必須先載入 PHP openssl 外掛。
+illegal folder name.  please select a different name.	felamimail	zh-tw	錯誤的資料夾名稱，請重新輸入
+imap	felamimail	zh-tw	IMAP
+imap server	felamimail	zh-tw	IMAP伺服器
+imap server address	felamimail	zh-tw	IMAP伺服器位址
+imap server closed the connection.	felamimail	zh-tw	IMAP伺服器關閉連線
+imap server closed the connection. server responded: %s	felamimail	zh-tw	IMAP伺服器關閉連線，伺服器回應： %s
+imap server password	felamimail	zh-tw	IMAP伺服器密碼
+imap server type	felamimail	zh-tw	IMAP伺服器種類
+imap server username	felamimail	zh-tw	IMAP伺服器帳號
+imaps authentication	felamimail	zh-tw	IMAPS驗證
+imaps encryption only	felamimail	zh-tw	只透過IMAPS加密
+in	felamimail	zh-tw	在
+inbox	felamimail	zh-tw	收件匣
+incoming mail server(imap)	felamimail	zh-tw	收信伺服器（IMAP）
+index order	felamimail	zh-tw	排序
+info	felamimail	zh-tw	資訊
+invalid user name or password	felamimail	zh-tw	錯誤的帳號或密碼
+javascript	felamimail	zh-tw	JavaScript
+jumping to end	felamimail	zh-tw	跳到結束的地方
+jumping to start	felamimail	zh-tw	跳到開始的地方
+keep a copy of the message in your inbox	felamimail	zh-tw	在收件夾保留郵件副本
+keep local copy of email	felamimail	zh-tw	在本機保留信件備份
+kilobytes	felamimail	zh-tw	KB
+language	felamimail	zh-tw	語言
+last name	felamimail	zh-tw	姓
+left	felamimail	zh-tw	左
+less	felamimail	zh-tw	少
+less than	felamimail	zh-tw	小於
+light gray	felamimail	zh-tw	淺灰
+list all	felamimail	zh-tw	顯示全部
+loading	felamimail	zh-tw	載入中
+location of buttons when composing	felamimail	zh-tw	建立按鈕時的位置
+mail server login type	admin	zh-tw	郵件伺服器登入種類
+mail settings	felamimail	zh-tw	郵件設定
+mainmessage	felamimail	zh-tw	郵件主體
+manage emailaccounts	preferences	zh-tw	管理郵件帳號
+manage emailfilter / vacation	preferences	zh-tw	管理郵件規則/假期
+manage folders	common	zh-tw	管理資料夾
+manage sieve	common	zh-tw	管理Sieve程式
+manage signatures	felamimail	zh-tw	管理簽名
+mark as deleted	felamimail	zh-tw	標示刪除
+mark messages as	felamimail	zh-tw	標示選取的訊息為
+mark selected as flagged	felamimail	zh-tw	標示選取的為標註
+mark selected as read	felamimail	zh-tw	標示選取的為已讀取
+mark selected as unflagged	felamimail	zh-tw	標示選取的為取消標註
+mark selected as unread	felamimail	zh-tw	標示選取的為未讀取
+match	felamimail	zh-tw	符合
+matches	felamimail	zh-tw	符合
+matches regexp	felamimail	zh-tw	符合規則
+max uploadsize	felamimail	zh-tw	上傳檔案大小上限
+message highlighting	felamimail	zh-tw	訊息醒目標示
+message list	felamimail	zh-tw	訊息清單
+messages	felamimail	zh-tw	訊息
+mon	felamimail	zh-tw	一
+move	felamimail	zh-tw	移動
+move messages	felamimail	zh-tw	移動訊息
+move selected to	felamimail	zh-tw	移動選取的到
+move to trash	felamimail	zh-tw	移到垃圾桶
+moving messages to	felamimail	zh-tw	移動信件到
+name	felamimail	zh-tw	名稱
+never display html emails	felamimail	zh-tw	不顯示HTML郵件
+new	common	zh-tw	新增
+new filter	felamimail	zh-tw	新規則
+next	felamimail	zh-tw	下一個
+next message	felamimail	zh-tw	下一封郵件
+no active imap server found!!	felamimail	zh-tw	找不到可以使用的 IMAP 伺服器！
+no encryption	felamimail	zh-tw	沒有加密
+no filter	felamimail	zh-tw	沒有過濾規則
+no folders found	felamimail	zh-tw	找不到資料夾
+no folders were found to subscribe to!	felamimail	zh-tw	找不到可以訂閱的資料夾
+no folders were found to unsubscribe from!	felamimail	zh-tw	找不到可以取消訂閱的資料夾
+no highlighting is defined	felamimail	zh-tw	未定義醒目標示
+no message returned.	felamimail	zh-tw	沒有訊息回應。
+no messages found...	felamimail	zh-tw	沒有任何信件...
+no messages were selected.	felamimail	zh-tw	沒有選取任何訊息
+no plain text part found	felamimail	zh-tw	找不到純文字部份
+no previous message	felamimail	zh-tw	沒有上一個
+no recipient address given!	felamimail	zh-tw	沒有輸入收件人信箱！
+no supported imap authentication method could be found.	felamimail	zh-tw	找不到能夠使用的 IMAP 驗證方式。
+no valid emailprofile selected!!	felamimail	zh-tw	沒有選取可以使用的郵件資料！
+none	felamimail	zh-tw	無
+on behalf of	felamimail	zh-tw	代表
+one address is not valid	felamimail	zh-tw	其中一個信箱格式有誤
+only inbox	felamimail	zh-tw	只有收件夾
+only one window	felamimail	zh-tw	只開啟一個視窗
+only unseen	felamimail	zh-tw	只有未讀取
+open all	felamimail	zh-tw	全部開啟
+options	felamimail	zh-tw	選項
+or	felamimail	zh-tw	或
+organisation	felamimail	zh-tw	組織
+organization	felamimail	zh-tw	組織
+organization name	admin	zh-tw	組織名稱
+outgoing mail server(smtp)	felamimail	zh-tw	寄信伺服器（SMTP）
+participants	felamimail	zh-tw	參與人
+personal information	felamimail	zh-tw	個人資訊
+please select a address	felamimail	zh-tw	請選擇一個位址
+please select the number of days to wait between responses	felamimail	zh-tw	請選擇回應之間要等待的天數
+please supply the message to send with auto-responses	felamimail	zh-tw	請提供要自動回信的內容
+port	felamimail	zh-tw	連接埠
+posting	felamimail	zh-tw	發佈中
+previous	felamimail	zh-tw	上一個
+previous message	felamimail	zh-tw	上一封郵件
+print it	felamimail	zh-tw	列印
+print this page	felamimail	zh-tw	印出這一頁
+quicksearch	felamimail	zh-tw	快速搜尋
+read	felamimail	zh-tw	讀取
+reading	felamimail	zh-tw	讀取中
+receive notification	felamimail	zh-tw	收到提醒
+recent	felamimail	zh-tw	最近
+refresh time in minutes	felamimail	zh-tw	重新整理的分鐘數
+reject with	felamimail	zh-tw	拒絕
+remove	felamimail	zh-tw	移除
+remove immediately	felamimail	zh-tw	立刻移除
+rename	felamimail	zh-tw	改名
+rename a folder	felamimail	zh-tw	修改資料匣名稱
+rename folder	felamimail	zh-tw	修改資料匣名稱
+renamed successfully!	felamimail	zh-tw	修改名稱完成！
+replied	felamimail	zh-tw	已回信
+reply	felamimail	zh-tw	回信
+reply all	felamimail	zh-tw	全部回覆
+reply to	felamimail	zh-tw	回覆到
+replyto	felamimail	zh-tw	回覆到
+respond	felamimail	zh-tw	回覆
+respond to mail sent to	felamimail	zh-tw	回覆到郵件收件人
+return	felamimail	zh-tw	回上頁
+return to options page	felamimail	zh-tw	回到選項
+right	felamimail	zh-tw	正確
+row order style	felamimail	zh-tw	列順序風格
+rule	felamimail	zh-tw	規則
+sat	felamimail	zh-tw	六
+save	felamimail	zh-tw	儲存
+save as draft	felamimail	zh-tw	儲存為草稿
+save as infolog	felamimail	zh-tw	儲存為記事
+save changes	felamimail	zh-tw	儲存修改
+save message to disk	felamimail	zh-tw	儲存訊息到硬碟
+script name	felamimail	zh-tw	指令名稱
+script status	felamimail	zh-tw	指令狀態
+search	felamimail	zh-tw	搜尋
+search for	felamimail	zh-tw	搜尋
+select	felamimail	zh-tw	選擇
+select all	felamimail	zh-tw	選擇全部
+select emailprofile	felamimail	zh-tw	選擇郵件資料
+select folder	felamimail	zh-tw	選擇資料夾
+select your mail server type	admin	zh-tw	選擇您的郵件伺服器種類
+send	felamimail	zh-tw	送出
+send a reject message	felamimail	zh-tw	寄送一個拒絕信件
+sent folder	felamimail	zh-tw	寄件備份
+server supports mailfilter(sieve)	felamimail	zh-tw	伺服器支援郵件規則(sieve)
+show header	felamimail	zh-tw	顯示標頭
+show new messages on main screen	felamimail	zh-tw	在主要畫面顯示新訊息
+sieve script name	felamimail	zh-tw	sieve 程式名稱
+sieve settings	admin	zh-tw	Sieve設定
+signature	felamimail	zh-tw	簽名檔
+simply click the target-folder	felamimail	zh-tw	點選目標資料夾
+size	felamimail	zh-tw	大小
+size of editor window	felamimail	zh-tw	編輯視窗大小
+size(...->0)	felamimail	zh-tw	大小 (...->0)
+size(0->...)	felamimail	zh-tw	大小(0->...)
+skipping forward	felamimail	zh-tw	略過轉寄
+skipping previous	felamimail	zh-tw	略過上一個
+small view	felamimail	zh-tw	縮小
+smtp settings	admin	zh-tw	SMTP設定
+subject	felamimail	zh-tw	主旨
+subject(a->z)	felamimail	zh-tw	標題(A->Z)
+subject(z->a)	felamimail	zh-tw	標題(Z->A)
+submit	felamimail	zh-tw	送出
+subscribe	felamimail	zh-tw	訂閱
+subscribed	felamimail	zh-tw	已訂閱
+subscribed successfully!	felamimail	zh-tw	訂閱完成！
+sun	felamimail	zh-tw	日
+table of contents	felamimail	zh-tw	內容表單
+text only	felamimail	zh-tw	純文字
+the connection to the imap server failed!!	felamimail	zh-tw	連結IMAP伺服器發生錯誤！
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	zh-tw	IMAP 伺服器不支援指定的認證方式，請聯繫您的系統管理員。
+the mimeparser can not parse this message.	felamimail	zh-tw	mime 解析程式無法處理這封郵件
+then	felamimail	zh-tw	然後
+this folder is empty	felamimail	zh-tw	這個資料夾沒有任何信件
+this php has no imap support compiled in!!	felamimail	zh-tw	您的PHP並未編譯為支援IMAP的狀態
+thu	felamimail	zh-tw	四
+to	felamimail	zh-tw	到
+to mail sent to	felamimail	zh-tw	到郵件寄件人
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	zh-tw	要使用 TLS 連線，您必須執行在 PHP 5.1.0 或是更新版本中。
+translation preferences	felamimail	zh-tw	翻譯偏好
+translation server	felamimail	zh-tw	翻譯伺服器
+trash fold	felamimail	zh-tw	垃圾桶
+trash folder	felamimail	zh-tw	垃圾桶
+tue	felamimail	zh-tw	二
+type	felamimail	zh-tw	格式
+unexpected response from server to authenticate command.	felamimail	zh-tw	伺服器 AUTHENTICATE 指令傳回了不明的回應。
+unexpected response from server to digest-md5 response.	felamimail	zh-tw	伺服器 Digest-MD5 指令傳回了不明的回應。
+unexpected response from server to login command.	felamimail	zh-tw	伺服器登入指令傳回了不明的回應。
+unflagged	felamimail	zh-tw	取消標示
+unknown err	felamimail	zh-tw	不知名的錯誤
+unknown error	felamimail	zh-tw	不知名的錯誤
+unknown imap response from the server. server responded: %s	felamimail	zh-tw	不明的 IMAP 伺服器回應，回應內容： %s
+unknown sender	felamimail	zh-tw	不知名的寄件人
+unknown user or password incorrect.	felamimail	zh-tw	不知名的使用者或是密碼錯誤
+unread	common	zh-tw	未讀取
+unseen	felamimail	zh-tw	未讀取
+unselect all	felamimail	zh-tw	取消全部選取
+unsubscribe	felamimail	zh-tw	取消訂閱
+unsubscribed	felamimail	zh-tw	取消訂閱
+unsubscribed successfully!	felamimail	zh-tw	取消訂閱完成！
+up	felamimail	zh-tw	上一層
+updating message status	felamimail	zh-tw	更新訊息狀態中
+updating view	felamimail	zh-tw	更新檢視
+use <a href="%1">emailadmin</a> to create profiles	felamimail	zh-tw	使用 <a href="%1">郵件管理</a> 來建立資料
+use a signature	felamimail	zh-tw	使用簽名檔
+use a signature?	felamimail	zh-tw	使用簽名檔？
+use addresses	felamimail	zh-tw	使用位址
+use custom settings	felamimail	zh-tw	使用個人設定
+use regular expressions	felamimail	zh-tw	使用樣式比對
+use smtp auth	admin	zh-tw	使用SMTP認證
+users can define their own emailaccounts	admin	zh-tw	使用者可以自行定義郵件帳號
+vacation notice	common	zh-tw	假期提醒
+vacation notice is active	felamimail	zh-tw	假期提醒功能啟用中
+validate certificate	felamimail	zh-tw	驗證
+view full header	felamimail	zh-tw	顯示完整標頭
+view header lines	felamimail	zh-tw	檢視檔頭
+view message	felamimail	zh-tw	顯示訊息
+viewing full header	felamimail	zh-tw	顯示完整標頭中
+viewing message	felamimail	zh-tw	顯示訊息中
+viewing messages	felamimail	zh-tw	顯示訊息中
+wed	felamimail	zh-tw	三
+when deleting messages	felamimail	zh-tw	當刪除訊息時
+with message	felamimail	zh-tw	信件
+with message "%1"	felamimail	zh-tw	信件 "%1"
+wrap incoming text at	felamimail	zh-tw	自動斷行
+writing	felamimail	zh-tw	編輯中
+wrote	felamimail	zh-tw	寫

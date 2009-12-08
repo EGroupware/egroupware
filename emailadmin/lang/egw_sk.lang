@@ -1,0 +1,139 @@
+account '%1' not found !!!	emailadmin	sk	Účet '%1' sa nenašiel !!!
+add new email address:	emailadmin	sk	Pridať novú E-mailovú adresu:
+add profile	emailadmin	sk	Pridať profil
+admin dn	emailadmin	sk	Správcov dn
+admin password	emailadmin	sk	Heslo správcu
+admin username	emailadmin	sk	Používateľské meno správcu
+advanced options	emailadmin	sk	Pokročilé možnosti
+alternate email address	emailadmin	sk	Alternatívna E-mailová adresa
+any application	emailadmin	sk	Ktorákoľvek aplikácia
+any group	emailadmin	sk	Ktorákoľvek skupina
+any user	emailadmin	sk	Ktorýkoľvek používateľ
+back to admin/grouplist	emailadmin	sk	Späť na Správu/Skupiny
+back to admin/userlist	emailadmin	sk	Späť na Správu/Používateľov
+bad login name or password.	emailadmin	sk	Chybné prihlasovacie meno alebo heslo.
+bad or malformed request. server responded: %s	emailadmin	sk	Chybná požiadavka. Odpoveď servera: %s
+bad request: %s	emailadmin	sk	Chybná požiadavka: %s
+can be used by application	emailadmin	sk	môže byť použité aplikáciou
+can be used by group	emailadmin	sk	môže byť použité skupinou
+can be used by user	emailadmin	sk	môže byť použité používateľom
+connection dropped by imap server.	emailadmin	sk	Spojenie prerušené IMAP serverom.
+could not complete request. reason given: %s	emailadmin	sk	Nemožno dokončiť požiadavku. Dôvod: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	sk	Nepodarilo sa nadviazať zabezpečené pripojenie k IMAP serveru. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	sk	CRAM-MD5 alebo DIGEST-MD5 vyžaduje, aby bol nainštalovaný balík Auth_SASL.
+cyrus imap server	emailadmin	sk	Cyrus IMAP Server
+cyrus imap server administration	emailadmin	sk	Správa servera Cyrus IMAP
+default	emailadmin	sk	predvolené
+deliver extern	emailadmin	sk	doručiť extern
+do not validate certificate	emailadmin	sk	neoveriť certifikát
+do you really want to delete this profile	emailadmin	sk	Naozaj chcete odstrániť tento Profil
+do you really want to reset the filter for the profile listing	emailadmin	sk	Naozaj chcete vynulovať filter pre výpis profilu?
+domainname	emailadmin	sk	názov domény
+edit email settings	emailadmin	sk	upraviť nastavenia E-mailu
+email account active	emailadmin	sk	E-mailový účet je aktívny
+email address	emailadmin	sk	E-mailová adresa
+email settings	common	sk	Nastavenia E-mailu
+emailadmin	emailadmin	sk	EMailAdmin
+emailadmin: group assigned profile	common	sk	eMailAdmin: skupinovo priradený Profil
+emailadmin: user assigned profile	common	sk	eMailAdmin: používateľsky priradený Profil
+enable cyrus imap server administration	emailadmin	sk	zapnúť správu servera Cyrus IMAP
+enable sieve	emailadmin	sk	zapnúť Sieve
+encrypted connection	emailadmin	sk	šifrované spojenie
+encryption settings	emailadmin	sk	nastavenia šifrovania
+enter your default mail domain (from: user@domain)	emailadmin	sk	Zadajte vašu predvolenú doménu (z tvaru: user@domain)
+error connecting to imap server. %s : %s.	emailadmin	sk	Chyba počas pripájania k IMAP serveru. %s : %s.
+error connecting to imap server: [%s] %s.	emailadmin	sk	Chyba počas pripájania k IMAP serveru: [%s] %s.
+filtered by account	emailadmin	sk	filtrované podľa Účtu
+filtered by group	emailadmin	sk	filtrované podľa Skupiny
+forward also to	emailadmin	sk	preposlať taktiež (komu)
+forward email's to	emailadmin	sk	preposlať emaily (kam)
+forward only	emailadmin	sk	preposlať iba
+global options	emailadmin	sk	Globálne možnosti
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	sk	Ak používate SSL alebo TLS, musíte mať nahraté rozšírenie PHP openssl.
+imap admin password	admin	sk	heslo správcu IMAP
+imap admin user	admin	sk	používateľ pre správu IMAP
+imap c-client version < 2001	emailadmin	sk	IMAP C-klient verzia < 2001
+imap server closed the connection.	emailadmin	sk	IMAP server ukončil spojenie.
+imap server closed the connection. server responded: %s	emailadmin	sk	IMAP server ukončil spojenie. Odpoveď servera: %s
+imap server hostname or ip address	emailadmin	sk	názov (hostname) alebo IP adresa IMAP servera
+imap server logintyp	emailadmin	sk	typ prihlásenia IMAP servera
+imap server name	emailadmin	sk	názov IMAP servera
+imap server port	emailadmin	sk	port IMAP servera
+imap/pop3 server name	emailadmin	sk	názov IMAP/POP3 servera
+in mbyte	emailadmin	sk	v Megabajtoch
+inactive	emailadmin	sk	neaktívne
+ldap basedn	emailadmin	sk	LDAP basedn
+ldap server	emailadmin	sk	LDAP server
+ldap server accounts dn	emailadmin	sk	DN účtov LDAP servera
+ldap server admin dn	emailadmin	sk	DN správcu LDAP servera
+ldap server admin password	emailadmin	sk	heslo správcu LDAP servera
+ldap server hostname or ip address	emailadmin	sk	názov (hostname) alebo IP adresa LDAP servera
+ldap settings	emailadmin	sk	nastavenia LDAP
+leave empty for no quota	emailadmin	sk	ak nechcete kvóty, ponechajte prázdne
+mail settings	admin	sk	nastavenia Pošty
+name of organisation	emailadmin	sk	Názov organizácie
+no alternate email address	emailadmin	sk	žiadna alternatívna E-mailová adresa
+no encryption	emailadmin	sk	bez šifrovania
+no forwarding email address	emailadmin	sk	žiadna emailová adresa pre preposielanie
+no message returned.	emailadmin	sk	Žiadne správy sa nevrátili.
+no supported imap authentication method could be found.	emailadmin	sk	Nenašiel som žiadnu podporovanú overovaciu metódu IMAP.
+order	emailadmin	sk	Poradie
+organisation	emailadmin	sk	Organizácia
+plesk can't rename users --> request ignored	emailadmin	sk	Plesk používatelia sa nedajú premenovať --> požiadavka ignorovaná
+plesk imap server (courier)	emailadmin	sk	Plesk IMAP Server (Courier)
+plesk mail script '%1' not found !!!	emailadmin	sk	Plesk mail script '%1' sa nenašlo !!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	sk	Plesk vyžaduje, aby heslá mali aspoň 5 znakov a neobsahovali názov účtu --> heslo NEBOLO nastavené!!!
+plesk smtp-server (qmail)	emailadmin	sk	Plesk SMTP-Server (qmail)
+pop3 server hostname or ip address	emailadmin	sk	názov (hostname) alebo IP adresa POP3 servera
+pop3 server port	emailadmin	sk	port POP3 servera
+postfix with ldap	emailadmin	sk	Postfix + LDAP
+profile access rights	emailadmin	sk	prístupové práva profilu
+profile is active	emailadmin	sk	profil je aktívny
+profile list	emailadmin	sk	Zoznam profilov
+profile name	emailadmin	sk	Názov profilu
+qmaildotmode	emailadmin	sk	qmail bodkový režim
+qouta size in mbyte	emailadmin	sk	Neľkosť kvóty v Megabajtoch
+quota settings	emailadmin	sk	Nastavenia kvóty
+remove	emailadmin	sk	Odstrániť
+reset filter	emailadmin	sk	vynulovať filter
+select type of imap server	emailadmin	sk	Vyberte typ IMAP servera
+select type of imap/pop3 server	emailadmin	sk	Vyberte typ IMAP/POP3 servera
+select type of smtp server	emailadmin	sk	Vyberte typ SMTP servera
+send using this email-address	emailadmin	sk	odoslať pomocou tejto e-mailovej adresy
+server settings	emailadmin	sk	Nastavenia servera
+sieve server hostname or ip address	emailadmin	sk	Názov (hostname) alebo IP Sieve servera
+sieve server port	emailadmin	sk	Nort Sieve servera
+sieve settings	emailadmin	sk	Nastavenia Sieve
+smtp authentication	emailadmin	sk	SMTP overovanie
+smtp options	emailadmin	sk	SMTP možnosti
+smtp server name	emailadmin	sk	Názov SMTP servera
+smtp settings	emailadmin	sk	SMTP nastavenia
+smtp-server hostname or ip address	emailadmin	sk	názov (hostname) alebo IP adresa SMTP servera
+smtp-server port	emailadmin	sk	port SMTP servera
+standard	emailadmin	sk	Štandard
+standard imap server	emailadmin	sk	Štandardný IMAP server
+standard pop3 server	emailadmin	sk	Štandardný POP3 server
+standard smtp-server	emailadmin	sk	Štandardný SMTP server
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	sk	Tento IMAP server, zdá sa, nepodporuje zvolenú overovaciu metódu. Prosím kontaktujte správcu systému.
+this php has no imap support compiled in!!	emailadmin	sk	Toto PHP nemá zakompilovanú podporu pre IMAP !!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	sk	Ak chcete používať pripojenie TLS, musíte fungovať na verzii PHP 5.1.0 alebo vyššej.
+unexpected response from server to authenticate command.	emailadmin	sk	Neočakávaná odpoveď od servera na príkaz AUTENTICATE.
+unexpected response from server to digest-md5 response.	emailadmin	sk	Neočakávaná odpoveď od servera na Digest-MD5 odpoveď.
+unexpected response from server to login command.	emailadmin	sk	Neočakávaná odpoveď od servera na príkaz LOGIN.
+unknown imap response from the server. server responded: %s	emailadmin	sk	Neznáma IMAP odpoveď od servera. Server odpovedal: %s
+unsupported action '%1' !!!	emailadmin	sk	Nepodporovaná akcia '%1' !!!
+update current email address:	emailadmin	sk	Aktualizovať súčasnú E-mailovú adresu:
+use ldap defaults	emailadmin	sk	Použiť predvolené hodnoty LDAP
+use predefined username and password defined below	emailadmin	sk	Použiť preddefinované používateľské meno a heslo, definované nižšie
+use smtp auth	emailadmin	sk	Použiť SMTP overovanie
+use tls authentication	emailadmin	sk	Použiť TLS overovanie
+use tls encryption	emailadmin	sk	Použiť TLS šifrovanie
+user can edit forwarding address	emailadmin	sk	Používateľ môže upraviť adresu preposielania
+username (standard)	emailadmin	sk	používateľské meno (štandardné)
+username/password defined by admin	emailadmin	sk	Používateľské meno/heslo definované správcom
+username@domainname (virtual mail manager)	emailadmin	sk	používateľ@doména (Virtuálny Mail ManaGeR)
+users can define their own emailaccounts	emailadmin	sk	Používatelia môžu definovať ich vlastné E-mailové účty
+users can define their own identities	emailadmin	sk	Používatelia môžu definovať svoje vlastné identity
+users can define their own signatures	emailadmin	sk	Používatelia môžu definovať svoje vlastné podpisy
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	sk	Správy v neprítomnosti s počiatočným a koncovým dátumom vyžadujú, aby bol nastavený účet správcu!
+virtual mail manager	emailadmin	sk	Virtuálny MAIL ManaGeR

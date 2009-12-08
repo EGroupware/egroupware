@@ -1,0 +1,411 @@
+(no subject)	felamimail	el	(κανένα θέμα)
+(only cc/bcc)	felamimail	el	(μόνο Cc/Bcc)
+(unknown sender)	felamimail	el	(άγνωστος αποστολέας)
+activate	felamimail	el	Ενεργοποίηση
+activate script	felamimail	el	ενεργοποίηση κειμένου ομιλίας
+add acl	felamimail	el	προσθήκη acl
+add address	felamimail	el	Προσθήκη διεύθυνσης
+add rule	felamimail	el	Προσθήκη Κανόνα
+add script	felamimail	el	Προσθήκη Κειμένου ομιλίας
+add to %1	felamimail	el	Προσθήκη στο %1
+add to address book	felamimail	el	Προσθήκη στο βιβλίο διευθύνσεων
+add to addressbook	felamimail	el	προσθήκη στο βιβλίο διευθύνσεων
+adding file to message. please wait!	felamimail	el	Το αρχείο προστίθεται στο μήνυμα.Παρακαλώ περιμένετε!
+additional info	felamimail	el	Επιπλέον πληροφορίες
+address book	felamimail	el	Βιβλίο Διευθύνσεων
+address book search	felamimail	el	Αναζήτηση Βιβλίου Διευθύνσεων
+after message body	felamimail	el	Μετά το κυρίως σώμα του μηνύματος
+all address books	felamimail	el	Όλα τα βιβλία διευθύνσεων
+all folders	felamimail	el	Όλοι οι Φάκελοι
+all of	felamimail	el	όλα από
+allow images from external sources in html emails	felamimail	el	Να επιτρέπονται οι εικόνες από εξωτερικές πηγές στα HTML emails
+allways a new window	felamimail	el	πάντα νέο παράθυρο
+always show html emails	felamimail	el	Να εμφανίζονται πάντοτε τα HTML emails
+and	felamimail	el	και
+any of	felamimail	el	οποιοδήποτε
+any status	felamimail	el	οποιαδήποτε κατάσταση
+anyone	felamimail	el	οποιοσδήποτε
+as a subfolder of	felamimail	el	ως υποφάκελος του
+attachments	felamimail	el	Επισυνάψεις
+authentication required	felamimail	el	απαιτείται αυθεντικότητα
+auto refresh folder list	felamimail	el	Αυτόματη ανανέωση λίστας φακέλων
+back to folder	felamimail	el	Πίσω στο φάκελο
+bad login name or password.	felamimail	el	Λάθος όνομα ή κωδικός πρόσβασης
+bad request: %s	felamimail	el	Άκυρη απαίτηση: %
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	el	Βασισμένο πάνω στα δοθέντα κριτήρια, τα εισερχόμενα μηνύματα μπορούν να έχουν διαφορετικό χρώμα φόντου στη λίστα μηνυμάτων. Αυτό βοηθάει στην εύκολη διάκριση του αποστολέα, ιδιαίτερα  στις λίστες μηνυμάτων.
+bcc	felamimail	el	BCC
+before headers	felamimail	el	Πριν τις κεφαλίδες
+between headers and message body	felamimail	el	Ανάμεσα στις κεφαλίδες και το κυρίως σώμα του μηνύματος
+body part	felamimail	el	κυρίως σώμα
+can't connect to inbox!!	felamimail	el	δεν μπορεί να συνδεθεί με τα ΕΙΣΕΡΧΟΜΕΝΑ
+cc	felamimail	el	CC
+change folder	felamimail	el	Αλλαγή φακέλου
+checkbox	felamimail	el	Checkbox
+clear search	felamimail	el	καθαρισμός αναζήτησης
+click here to log back in.	felamimail	el	Κάντε κλικ εδώ για να εισέλθετε ξανά πίσω
+click here to return to %1	felamimail	el	Κάντε κλικ εδώ για επιστροφή στο %1
+close all	felamimail	el	κλείσιμο όλων
+close this page	felamimail	el	κλείσιμο αυτής της σελίδας
+close window	felamimail	el	Κλείσιμο παράθυρου
+color	felamimail	el	Χρώμα
+compose	felamimail	el	Συνθέτω
+compress folder	felamimail	el	Φάκελος συμπίεσης
+condition	felamimail	el	κατάσταση
+configuration	felamimail	el	Διάρθρωση
+connection dropped by imap server.	felamimail	el	Έπεσε η σύνδεση από τον IMAP server
+contains	felamimail	el	περιέχει
+could not complete request. reason given: %s	felamimail	el	Δεν ολοκληρώθηκε το αίτημα. Αιτία: %s
+could not open secure connection to the imap server. %s : %s.	felamimail	el	Δεν έγινε ασφαλής σύνδεση με τον IMAP server. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	el	CRAM-MD5 ή DIGEST-MD5 απαιτεί το Auth_SASL πακέτο να εγκατασταθεί.
+create	felamimail	el	Δημιουργία
+create folder	felamimail	el	Δημιουργία Φακέλου
+create sent	felamimail	el	Δημιουργία Σταλθέντων
+create subfolder	felamimail	el	Δημιουργία υποφακέλου
+create trash	felamimail	el	Δημιουργία Κάδου Αχρήστων
+created folder successfully!	felamimail	el	Δημιουργία φακέλου επιτυχής!
+dark blue	felamimail	el	Σκούρο μπλε
+dark cyan	felamimail	el	Σκούρο κυανό
+dark gray	felamimail	el	Σκούρο γκρι
+dark green	felamimail	el	Σκούρο πράσινο
+dark magenta	felamimail	el	Σκούρο ματζέντα
+dark yellow	felamimail	el	Σκούρο κίτρινο
+date(newest first)	felamimail	el	Ημερομηνία (πρώτα η πιο πρόσφατη)
+date(oldest first)	felamimail	el	Ημερομηνία (πρώτα η πιο παλιά)
+days	felamimail	el	ημέρες
+deactivate script	felamimail	el	απενεργοποίηση σεναρίου
+default signature	felamimail	el	προεπιλεγμένη υπογραφή
+default sorting order	felamimail	el	Προεπιλεγμένη σειρά ταξινόμησης
+delete all	felamimail	el	διαγραφή όλων
+delete folder	felamimail	el	Διαγραφή Φακέλου
+delete script	felamimail	el	διαγραφή σεναρίου
+delete selected	felamimail	el	Διαγραφή επιλεγμένων
+delete selected messages	felamimail	el	διαγραφή επιλεγμένων μηνυμάτων
+deleted	felamimail	el	διεγράφη
+deleted folder successfully!	felamimail	el	Φάκελος διεγράφη επιτυχώς
+deleting messages	felamimail	el	διαγραφή μηνυμάτων
+disable	felamimail	el	Απενεργοποίηση
+discard	felamimail	el	απόρριψη
+discard message	felamimail	el	απόρριψη μηνύματων
+display message in new window	felamimail	el	Προβολή μηνύματος σε νέο παράθυρο
+display messages in multiple windows	felamimail	el	προβολή μηνυμάτων σε πολλαπλά παράθυρα
+display of html emails	felamimail	el	Προβολή των HTML emails
+display only when no plain text is available	felamimail	el	Προβολή μόνο όταν είναι δεν διαθέσιμο κανένα αποκρυπτογραφημένο κείμενο
+display preferences	felamimail	el	Προβολή Προτιμήσεων
+displaying html messages is disabled	felamimail	el	η προβολή των html μηνυμάτων είναι απενεργοποιημένη
+do it!	felamimail	el	Κάντο!
+do not use sent	felamimail	el	Μην χρησιμοποιείτε τα Σταλθέντα
+do not use trash	felamimail	el	Μην χρησιμοποιείτε τον Κάδο Αχρήστων
+do not validate certificate	felamimail	el	μην επικυρώνετε το πιστοποιητικό
+do you really want to delete the '%1' folder?	felamimail	el	Θέλετε πραγματικά να διαγράψετε τον φάκελο '%1' ;
+do you really want to delete the selected signatures?	felamimail	el	Θέλετε πραγματικά να διαγάψετε τι=ς επιλεγμένες υπογραφές;
+does not contain	felamimail	el	δεν περιέχει
+does not match	felamimail	el	δεν συμπίπτει
+don't use draft folder	felamimail	el	Μην χρησιμοποιείτε των φάκελο προσχεδίων
+don't use sent	felamimail	el	Μην χρησιμοποιείτε τα Σταλθέντα
+don't use trash	felamimail	el	Μην χρησιμοποιείτε των Κάδο Αχρήστων
+down	felamimail	el	κάτω
+download	felamimail	el	φόρτωση
+download this as a file	felamimail	el	Φόρτωση αυτού του φακέλου
+draft folder	felamimail	el	προσχέδιος φάκελος
+e-mail	felamimail	el	E-mail
+e-mail address	felamimail	el	Διεύθυνση e-mail
+e-mail folders	felamimail	el	Φάκελοι e-mail
+edit email forwarding address	felamimail	el	επεξεργασία διευθυνσης προωθημένου e-mail
+edit filter	felamimail	el	Επεξεργασία φίλτρου
+edit rule	felamimail	el	επεξεργασία κανόνα
+edit selected	felamimail	el	Επεξεργασία επιλεγμένων
+edit vacation settings	felamimail	el	επεξεργασία ρυθμίσεων διακοπών
+email address	felamimail	el	Διεύθυνση e-mail
+email forwarding address	felamimail	el	διεύθυνση προωθημένου e-mail
+email signature	felamimail	el	Υπογραφή e-mail
+emailaddress	felamimail	el	Διεύθυνση e-mail
+empty trash	felamimail	el	Άδειασμα κάδου αχρήστων
+enable	felamimail	el	ενεργοποίηση
+encrypted connection	felamimail	el	αποκρυπτογραφημένη σύνδεση
+enter your imap mail server hostname or ip address	admin	el	Πληκτρολογήστε το IMAP mail server όνομα χρήστη ή την IP διεύθυνση
+enter your sieve server hostname or ip address	admin	el	Πληκτρολογήστε το SIEVE server όνομα χρήστη ή την IP διεύθυνση
+enter your sieve server port	admin	el	Πληκτρολογήστε την SIEVE server θύρα
+enter your smtp server hostname or ip address	admin	el	Πληκτρολογήστε το SMTP server όνομα χρήστη ή την IP διεύθυνση
+enter your smtp server port	admin	el	Πληκτρολογήστε την SMTP server θύρα
+error	felamimail	el	ΣΦΑΛΜΑ
+error connecting to imap serv	felamimail	el	Σφάλμα κατά τη σύνδεση με τον IMAP serv
+error connecting to imap server. %s : %s.	felamimail	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. %s : %s.
+error connecting to imap server: [%s] %s.	felamimail	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. [%s] : %s.
+error opening	felamimail	el	Σφάλμα στο άνοιγμα
+every	felamimail	el	κάθε
+every %1 days	felamimail	el	κάθε %1 ημέρες
+expunge	felamimail	el	Διαγράφω
+extended	felamimail	el	επεκτάθηκε
+felamimail	common	el	FelaMiMail
+file into	felamimail	el	αρχείο μέσα στο
+files	felamimail	el	αρχεία
+filter active	felamimail	el	ενεργό φίλτρο
+filter name	felamimail	el	Όνομα φίλτρου
+filter rules	common	el	κανόνες φίλτρου
+first name	felamimail	el	Όνομα
+flagged	felamimail	el	σημαιοστολισμένο
+flags	felamimail	el	Σημαίες
+folder acl	felamimail	el	Acl φακέλου
+folder name	felamimail	el	Όνομα φακέλου
+folder path	felamimail	el	Διαδρομή φακέλου
+folder preferences	felamimail	el	Προτιμήσεις Φακέλου
+folder settings	felamimail	el	Ρυθμίσεις φακέλου
+folder status	felamimail	el	Κατάσταση φακέλου
+folderlist	felamimail	el	Λίστα φακέλου
+foldername	felamimail	el	Όνομα φακέλου
+folders	felamimail	el	Φάκελοι
+folders created successfully!	felamimail	el	Επιτυχής δημιουργία φακέλων!
+follow	felamimail	el	ακολουθώ
+for mail to be send - not functional yet	felamimail	el	Για αποστολή μηνύματος - δεν λειτουργεί ακόμα
+for received mail	felamimail	el	Για εισερχόμενα μηνύματα
+forward	felamimail	el	Προώθηση
+forward to	felamimail	el	προώθηση σε
+forward to address	felamimail	el	προώθηση στην διεύθυνση
+forwarding	felamimail	el	Προωθείται
+found	felamimail	el	Βρέθηκε
+fri	felamimail	el	Παρ
+from	felamimail	el	Από
+from(a->z)	felamimail	el	Από (Α->Ω)
+from(z->a)	felamimail	el	Από (Ω->Α)
+full name	felamimail	el	Ολόκληρο το όνομα
+greater than	felamimail	el	μεγαλύτερο από
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	el	Κοιτάξτε στο <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> για να μάθετε περισσότερα για το Squirrelmail.<br>
+header lines	felamimail	el	Γραμμές Τίτλου
+hide header	felamimail	el	απόκρυψη τίτλου
+hostname / address	felamimail	el	όνομα χρήστη / διεύθυνση
+html	felamimail	el	HTML
+icons and text	felamimail	el	Εικόνες και κείμενο
+icons only	felamimail	el	Μόνο εικόνες
+identifying name	felamimail	el	Αναγνώριση ονόματος
+identity	felamimail	el	Ταυτότητα
+if	felamimail	el	ΑΝ
+if from contains	felamimail	el	αν από τα περιεχόμενα
+if mail header	felamimail	el	αν ο τίτλος του μηνύματος
+if message size	felamimail	el	αν το μέγεθος του μηνύματος
+if subject contains	felamimail	el	αν το θέμα περιέχει
+if to contains	felamimail	el	αν το σε περιέχει
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	el	Αν χρησιμοποιείται SSL ή TLS, πρέπει να έχετε την PHP openssl επέκταση φορτωμένη.
+illegal folder name.  please select a different name.	felamimail	el	Άκυρο όνομα φακέλου. Παρακαλώ επιλέξτε διαφορετικό όνομα.
+imap	felamimail	el	IMAP
+imap server	felamimail	el	IMAP Server
+imap server address	felamimail	el	Διεύθυνση IMAP Server
+imap server closed the connection.	felamimail	el	Ο IMAP Server έκλεισε τη σύνδεση
+imap server closed the connection. server responded: %s	felamimail	el	Ο IMAP Server έκλεισε τη σύνδεση. Ο Server απάντησε: %s
+imap server password	felamimail	el	imap server κωδικός
+imap server type	felamimail	el	IMAP Server τύπος
+imap server username	felamimail	el	imap server όνομα χρήστη
+imaps authentication	felamimail	el	IMAPS ΑΥΘΕΝΤΙΚΟΤΗΤΑ
+imaps encryption only	felamimail	el	Μόνο IMAPS κρυπτογράφηση
+in	felamimail	el	μέσα
+inbox	felamimail	el	Εισερχόμενα
+incoming mail server(imap)	felamimail	el	server(IMAP) εισερχομένων μηνυμάτων
+index order	felamimail	el	Ταξινόμηση ευρετηρίου
+info	felamimail	el	Πληροφορίες
+invalid user name or password	felamimail	el	Άκυρο όνομα χρήστη ή κωδικός
+javascript	felamimail	el	JavaScript
+jumping to end	felamimail	el	μετάβαση στην αρχή
+jumping to start	felamimail	el	μετάβαση στο τέλος
+keep a copy of the message in your inbox	felamimail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
+keep local copy of email	felamimail	el	κρατήστε ένα τοπικό αντίγραφο του email
+kilobytes	felamimail	el	kilobytes
+language	felamimail	el	Γλώσσα
+last name	felamimail	el	Επώνυμο
+left	felamimail	el	Αριστερά
+less	felamimail	el	λιγότερο
+less than	felamimail	el	λιγότερο από
+light gray	felamimail	el	Ανοιχτό Γκρι
+list all	felamimail	el	Δημιουργία λίστας με όλα
+loading	felamimail	el	φόρτωση
+location of buttons when composing	felamimail	el	Τοποθεσία κουμπιών όταν γίνεται η σύνθεση
+mail server login type	admin	el	Τύπος εισόδου μηνύματος server
+mail settings	felamimail	el	Ρυθμίσεις μηνύματος
+mainmessage	felamimail	el	κύριο μήνυμα
+manage emailaccounts	preferences	el	Διαχείριση λογαρισμών Email
+manage emailfilter / vacation	preferences	el	Διαχείριση φίλτρου Email / Διακοπών
+manage folders	common	el	Διαχείριση Φακέλων
+manage sieve	common	el	Διαχείριση Sieve σεναρίων
+manage signatures	felamimail	el	Διαχείριση υπογραφών
+mark as deleted	felamimail	el	Σημείωση ως διαγραμένο
+mark messages as	felamimail	el	Σημείωση επιλεγμένων μηνυμάτων ως
+mark selected as flagged	felamimail	el	Σημείωση επιλεγμένων ως σημαιοστολισμένα
+mark selected as read	felamimail	el	Σημείωση επιλεγμένων ως διαβασμένα
+mark selected as unflagged	felamimail	el	Σημείωση επιλεγμένων ως μη σημαιοστολισμένα
+mark selected as unread	felamimail	el	Σημείωση επιλεγμένων ως μη διαβασμένα
+match	felamimail	el	Συνδυασμός
+matches	felamimail	el	συνδυάζεται
+matches regexp	felamimail	el	συνδυάζεται regexp
+max uploadsize	felamimail	el	μέγιστο μέγεθος φορτώματος
+message highlighting	felamimail	el	Υπογράμμιση Μηνύματος
+message list	felamimail	el	Κατάλογος μηνυμάτων
+messages	felamimail	el	μηνύματα
+mon	felamimail	el	Δευ
+move	felamimail	el	μετακίνηση
+move messages	felamimail	el	μετακίνηση μηνυμάτων
+move selected to	felamimail	el	μετακίνηση επιλεγμένων στο
+move to trash	felamimail	el	Μετακίνηση στον Κάδο Αχρήστων
+moving messages to	felamimail	el	μετακίνηση επιλεγμένων στο
+name	felamimail	el	Όνομα
+never display html emails	felamimail	el	Να μην προβάλονται τα HTML emails
+new	common	el	Νέο
+new filter	felamimail	el	Νέο φίλτρο
+next	felamimail	el	Επόμενο
+next message	felamimail	el	επόμενο μήνυμα
+no active imap server found!!	felamimail	el	Δεν βρέθηκε ενεργός IMAP server!!!
+no encryption	felamimail	el	Καμία κρυπτογράφηση
+no filter	felamimail	el	Κανένα φίλτρο
+no folders found	felamimail	el	Δεν βρέθηκε κανένας φάκελος
+no folders were found to subscribe to!	felamimail	el	Δεν βρέθηκε κανένας φάκελος για εγγραφή σε αυτόν!
+no folders were found to unsubscribe from!	felamimail	el	Δεν βρέθηκε κανένας φάκελος για παύση συνδρομής!
+no highlighting is defined	felamimail	el	Δεν έχει όριστει κάποια υπογράμμιση
+no message returned.	felamimail	el	Δεν επεστράφη κάποιο μήνυμα.
+no messages found...	felamimail	el	δεν βρέθηκαν μηνύματα...
+no messages were selected.	felamimail	el	Δεν επιλέχθηκαν κάποια μηνύματα.
+no plain text part found	felamimail	el	δεν βρέθηκε μέρος αποκρυπτογραφημένου κειμένου
+no previous message	felamimail	el	κανένα προηγούμενο κείμενο
+no supported imap authentication method could be found.	felamimail	el	Δεν βρέθηκε καμία υποστηριζόμενη IMAP επικυρωμένη μέθοδος.
+no valid emailprofile selected!!	felamimail	el	Έχει επιλεχθεί άκυρο προφίλ Email!
+none	felamimail	el	κανένα
+on behalf of	felamimail	el	εκ μέρους του
+one address is not valid	felamimail	el	Κάποια διεύθυνση είναι άκυρη
+only inbox	felamimail	el	Μόνο τα ΕΙΣΕΡΧΟΜΕΝΑ
+only one window	felamimail	el	μόνο ένα παράθυρο
+only unseen	felamimail	el	μόνο αυτά που δεν έχουν προβληθεί
+open all	felamimail	el	άνοιγμα όλων
+options	felamimail	el	Επιλογές
+or	felamimail	el	ή
+organisation	felamimail	el	οργανισμός
+organization	felamimail	el	οργανισμός
+organization name	admin	el	Όνομα οργανισμού
+participants	felamimail	el	Συμμετέχοντες
+personal information	felamimail	el	Προσωπικές πληροφορίες
+please select a address	felamimail	el	Παρακαλώ επιλέξτε μία διεύθυνση
+please select the number of days to wait between responses	felamimail	el	παρακαλώ επιλέξτε τον αριθμό των ημερών για αναμονή μεταξύ των απαντήσεων
+please supply the message to send with auto-responses	felamimail	el	Παρακαλώ τροφοδοτήστε το μήνυμα προς αποστολή με αυτόματες απαντήσεις
+port	felamimail	el	θύρα
+posting	felamimail	el	ταχυδρόμηση
+previous	felamimail	el	Προηγούμενο
+previous message	felamimail	el	προηγούμενο μήνυμα
+print it	felamimail	el	εκτύπωση
+print this page	felamimail	el	εκτύπωση σελίδας
+quicksearch	felamimail	el	Γρήγορη αναζήτηση
+read	felamimail	el	ανάγνωση
+reading	felamimail	el	ανάγνωση
+receive notification	felamimail	el	Παρελήφθη ειδοποίηση
+recent	felamimail	el	πρόσφατα
+refresh time in minutes	felamimail	el	Ανανέωση ώρας σε λεπτά
+reject with	felamimail	el	απόρριψη με
+remove	felamimail	el	μετακίνηση
+remove immediately	felamimail	el	Άμεση μετακίνηση
+rename	felamimail	el	Μετονομασία
+rename a folder	felamimail	el	Μετονομασία ενός Φακέλου
+rename folder	felamimail	el	Μετονομασία φακέλου
+renamed successfully!	felamimail	el	Επιτυχής μετονομασία!
+replied	felamimail	el	απαντήθηκε
+reply	felamimail	el	Απάντηση
+reply all	felamimail	el	Απάντηση σε όλα
+reply to	felamimail	el	Απάντηση στο
+replyto	felamimail	el	Απάντησηστο
+respond	felamimail	el	Απόκριση
+return	felamimail	el	Επιστροφή
+return to options page	felamimail	el	Επιστροφή στη σελίδα επιλογών
+right	felamimail	el	Δεξιά
+row order style	felamimail	el	Στυλ ταξινόμησης σειράς
+rule	felamimail	el	Κανόνας
+sat	felamimail	el	Σάβ
+save	felamimail	el	Αποθήκευση
+save as draft	felamimail	el	Αποθήκευση ως προσχέδιο
+save as infolog	felamimail	el	Αποθήκευση ως infolog
+save changes	felamimail	el	αποθήκευση αλλαγών
+save message to disk	felamimail	el	αποθήκευση αλλαγών στο δίσκο
+script name	felamimail	el	όνομα σεναρίου
+script status	felamimail	el	κατάσταση σεναρίου
+search	felamimail	el	Αναζήτηση
+search for	felamimail	el	Αναζήτηση για
+select	felamimail	el	Επιλογή
+select all	felamimail	el	Επιλογή όλων
+select emailprofile	felamimail	el	Επιλογή προφίλ Email
+select folder	felamimail	el	επιλογή φακέλου
+select your mail server type	admin	el	Επιλέξτε τον τύπο mail server
+send	felamimail	el	Αποστολή
+send a reject message	felamimail	el	αποστολή μηνύματος απόρριψης
+sent folder	felamimail	el	Φάκελος σταλθέντων
+show header	felamimail	el	Προβολή τίτλου
+show new messages on main screen	felamimail	el	Προβολή νέων μηνυμάτων στην κύρια οθόνη
+sieve script name	felamimail	el	όνομα sieve σεναρίου
+sieve settings	admin	el	Ρυθμίσεις Sieve
+signature	felamimail	el	Υπογραφή
+simply click the target-folder	felamimail	el	Απλά κάντε κλικ στον στόχο-φάκελο
+size	felamimail	el	Μέγεθος
+size of editor window	felamimail	el	Μέγεθος παραθύρου συντάκτη
+size(...->0)	felamimail	el	Μέγεθος (...->0)
+size(0->...)	felamimail	el	Μέγεθος (0->...)
+skipping forward	felamimail	el	παράληψη προώθησης
+skipping previous	felamimail	el	παράληψη προηγουμένων
+small view	felamimail	el	μικρή προβολή
+smtp settings	admin	el	Ρυθμίσεις SMTP
+subject	felamimail	el	Θέμα
+subject(a->z)	felamimail	el	Θέμα (Α->Ω)
+subject(z->a)	felamimail	el	Θέμα (Ω->Α)
+submit	felamimail	el	Υποβολή
+subscribe	felamimail	el	Εγγραφή
+subscribed	felamimail	el	Έχει εγγραφεί
+subscribed successfully!	felamimail	el	Η εγγραφή ήταν επιτυχής
+sun	felamimail	el	Κυρ
+table of contents	felamimail	el	Πίνακας περιεχομένων
+text only	felamimail	el	Μόνο κείμενο
+the connection to the imap server failed!!	felamimail	el	Αποτυχία σύνδεση με τον IMAP Server
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	el	Ο IMAP server δεν υποστηρίζει την επιλεγμένη μέθοδο αυθεντικότητας.Παρακαλώ επικοινωνήστε με τον διαχειριστή σας.
+then	felamimail	el	ΜΕΤΑ
+this folder is empty	felamimail	el	ΑΥΤΟΣ Ο ΦΑΚΕΛΟΣ ΕΙΝΑΙ ΑΔΕΙΟΣ
+this php has no imap support compiled in!!	felamimail	el	Αυτό το PHP δεν έχει καθόλου IMAP υποστήριξη μεταφρασμένη!!
+thu	felamimail	el	Πέμ
+to	felamimail	el	Στο
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	el	Για τη χρησιμοποίηση TLS σύνδεσης, πρέπει να έχετε PHP 5.1.0 ή υψηλότερη έκδοση.
+translation preferences	felamimail	el	Προτιμήσεις Μετάφρασης
+translation server	felamimail	el	Server μετάφρασης
+trash fold	felamimail	el	Φάκ Κάδου Αχρήστων
+trash folder	felamimail	el	Φάκελος Κάδου Αχρήστων
+tue	felamimail	el	Τρί
+type	felamimail	el	τύπος
+unexpected response from server to authenticate command.	felamimail	el	Απρόσμενη απάντηση από τον server στην ΕΞΑΚΡΙΒΩΣΗ ΓΝΗΣΙΟΤΗΤΑΣ εντολής.
+unexpected response from server to digest-md5 response.	felamimail	el	Απρόσμενη απάντηση από τον server στην Digest-MD5 απάντηση.
+unexpected response from server to login command.	felamimail	el	Απρόσμενη απάντηση από τον server στην εντολή ΕΙΣΟΔΟΥ
+unflagged	felamimail	el	αποσημαιοστολίστηκε
+unknown err	felamimail	el	Άγνωστο λάθ
+unknown error	felamimail	el	Άγνωστο λάθος
+unknown imap response from the server. server responded: %s	felamimail	el	Άγνωστη IMAP απάντηση από τον server.Απάντηση Server:%s
+unknown sender	felamimail	el	Άγνωστος αποστολέας
+unknown user or password incorrect.	felamimail	el	Άγνωστος χρήστης ή λάθος κωδικός.
+unread	common	el	Αδιάβαστα
+unseen	felamimail	el	Αθέατα
+unselect all	felamimail	el	Αποεπιλογή όλων
+unsubscribe	felamimail	el	Παύση συνδρομής
+unsubscribed	felamimail	el	Η συνδρομή σταμάτησε
+unsubscribed successfully!	felamimail	el	Η συνδρομή σταμάτησε επιτυχώς!
+up	felamimail	el	πάνω
+updating message status	felamimail	el	ενημέρωση κατάστασης μηνύματος
+updating view	felamimail	el	ενημέρωση εμφάνισης
+use <a href="%1">emailadmin</a> to create profiles	felamimail	el	χρησιμοποιήστε <a href="%1">EmailAdmin</a> για τη δημιουργία προφίλ
+use a signature	felamimail	el	Χρήση υπογραφής
+use a signature?	felamimail	el	Χρήση υπογραφής;
+use addresses	felamimail	el	Χρήση διευθύνσεων
+use custom settings	felamimail	el	Χρήση σύνηθων Ρυθμίσεων
+use regular expressions	felamimail	el	χρήση κανονικών εκφράσεων
+use smtp auth	admin	el	Χρήση SMTP αυθ
+users can define their own emailaccounts	admin	el	Οι χρήστες μπορούν να ορίσουν τους δικούς τους email λογαριασμούς
+vacation notice	common	el	ειδοποίηση διακοπών
+vacation notice is active	felamimail	el	Η ειδοποίηση διακοπών είναι ενεργή
+validate certificate	felamimail	el	επικύρωση πιστοποιητικού
+view full header	felamimail	el	Προβολή πλήρους τίτλου
+view header lines	felamimail	el	Προβολή γραμμών τίτλου
+view message	felamimail	el	Προβολή μηνύματος
+viewing full header	felamimail	el	Προβάλλεται πλήρης τίτλος
+viewing message	felamimail	el	Προβολή μηνύματος
+viewing messages	felamimail	el	Προβολή μηνυμάτων
+wed	felamimail	el	Τετ
+when deleting messages	felamimail	el	Όταν διαγράφονται τα μηνύματα
+with message	felamimail	el	με μήνυμα
+with message "%1"	felamimail	el	με μήνυμα "%1"
+wrap incoming text at	felamimail	el	Τύλιγμα εισερχόμενου μηνύματος σε
+writing	felamimail	el	γράφεται
+wrote	felamimail	el	γράφτηκε
