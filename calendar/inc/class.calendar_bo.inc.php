@@ -1500,13 +1500,21 @@ class calendar_bo
 	 * @param string $pattern pattern to search
 	 * @return array with cal_id - title pairs of the matching entries
 	 */
-	function link_query($pattern)
+	function link_query($pattern, Array &$options = array())
 	{
 		$result = array();
-		foreach((array) $this->search(array('query' => $pattern)) as $event)
+		$query = array(
+			'query'	=>	$pattern,
+			'offset'	=>	$options['start'],
+		);
+		if($options['num_rows']) {
+			$query['num_rows'] = $options['num_rows'];
+		}
+		foreach((array) $this->search($query) as $event)
 		{
 			$result[$event['id']] = $this->link_title($event);
 		}
+		$options['total'] = $this->total;
 		return $result;
 	}
 
