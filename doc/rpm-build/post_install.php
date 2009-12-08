@@ -123,9 +123,10 @@ $prog = array_shift($argv);
 if (($config_set = isset($_ENV['EGW_POST_INSTALL']) ? $_ENV['EGW_POST_INSTALL'] : @$_SERVER['EGW_POST_INSTALL']))
 {
 	$conf = array();
-	$config_set = explode(' ',$config_set);
-	while(($val = array_shift($config_set)))
+	$config_set = preg_split('/[ \t]+/',trim($config_set));
+	while($config_set)
 	{
+		$val = array_shift($config_set);
 		if (($quote = $val[0]) == "'" || $quote == '"')	// arguments might be quoted with ' or "
 		{
 			while (substr($val,-1) != $quote)
