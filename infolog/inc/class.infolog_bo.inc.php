@@ -726,7 +726,7 @@ class infolog_bo
 				$this->tracking = new infolog_tracking($this);
 			}
 
-			if (($missing_fields = array_diff_key($old,$values)))
+			if ($old && ($missing_fields = array_diff_key($old,$values)))
 			{
 				$values = array_merge($values,$missing_fields);
 			}
