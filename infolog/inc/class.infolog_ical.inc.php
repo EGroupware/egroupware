@@ -378,7 +378,7 @@ class infolog_ical extends infolog_bo
 							break;
 
 						case 'PRIORITY':
-							if (1 <= $attributes['value'] && $attributes['value'] <= 3)	{
+							if (1 <= $attributes['value'] && $attributes['value'] <= 9)	{
 								$taskData['info_priority'] = $this->vcal_priority2egw_priority[$attributes['value']];
 							} else {
 								$taskData['info_priority'] = 1;	// default = normal
