@@ -329,7 +329,7 @@ startdate of the export	calendar	de	Startdatum des Exports
 startrecord	calendar	de	Startdatensatz
 status changed	calendar	de	Status geändert
 status for all future scheduled days changed	calendar	de	Status alle zukünftig geplanten Termine geändert
-status for this particular day changed	calendar	de	Status für diesen Tage geändert
+status for this particular day changed	calendar	de	Status für diesen Tag geändert
 status of participants set to unknown because of missing category rights	calendar	de	Status der Teilnehmer auf unbekannt gesetzt wegen fehlender Kategorie Rechte
 submit to repository	calendar	de	Übertragen zu EGroupware.org
 sun	calendar	de	So
