@@ -397,7 +397,7 @@ function dropdown_menu_hack(el)
 			t = t.replace(/<\/option/gi,'</span');
 			//alert("4"+t);
 			t = t.replace(/<\/select/gi,'</div');
-			t = t.replace(/<optgroup label=\"([\w\s\wäöüßÄÖÜ]*[^>])*">/gi,'<span value="">$1</span>');
+			t = t.replace(/<optgroup label=\"([\w\s\wäöüßÄÖÜ]*[^>])*">/gi,'<span value="i-opt-group-lable-i">$1</span>');
 			t = t.replace(/<\/optgroup>/gi,'<span value="">---</span>');
 			mb.innerHTML = t;
 			//mb.innerHTML = "<div><span value='dd:ff'>gfgfg</span></div>";
@@ -411,11 +411,11 @@ function dropdown_menu_hack(el)
 				//alert('Value:'+mb.options[i].value + ', Text:'+ mb.options[i].innerHTML);
 				mb.options[i].selectedIndex = i;
 				mb.options[i].style.cssText = "list-style:none;margin:0;padding:1px 2px;width/**/:100%;white-space:nowrap;"
-				if (mb.options[i].value != '') mb.options[i].style.cssText = mb.options[i].style.cssText + "cursor:hand;cursor:pointer;";
+				if (mb.options[i].value != 'i-opt-group-lable-i') mb.options[i].style.cssText = mb.options[i].style.cssText + "cursor:hand;cursor:pointer;";
 				mb.options[i].title =mb.options[i].innerHTML;
 				mb.options[i].innerHTML ="<nobr>" + mb.options[i].innerHTML + "</nobr>";
-				if (mb.options[i].value == '') mb.options[i].innerHTML = "<b><i>"+mb.options[i].innerHTML+"</b></i>";
-				if (mb.options[i].value != '') mb.options[i].onmouseover = function()
+				if (mb.options[i].value == 'i-opt-group-lable-i') mb.options[i].innerHTML = "<b><i>"+mb.options[i].innerHTML+"</b></i>";
+				if (mb.options[i].value != 'i-opt-group-lable-i') mb.options[i].onmouseover = function()
 				{
 					if( mb.options.selected )
 					{mb.options.selected.style.background="white";mb.options.selected.style.color="black";}
@@ -423,7 +423,7 @@ function dropdown_menu_hack(el)
 					this.style.background="#333366";this.style.color="white";
 				}
 				mb.options[i].onmouseout = function(){this.style.background="white";this.style.color="black";}
-				if (mb.options[i].value != '') 
+				if (mb.options[i].value != 'i-opt-group-lable-i') 
 				{
 					mb.options[i].onmousedown = function(){selectMenu(this); }
 					mb.options[i].onkeydown = function(){selectMenu(this); }
