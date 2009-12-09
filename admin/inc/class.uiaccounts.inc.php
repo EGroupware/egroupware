@@ -1393,7 +1393,7 @@
 			{
 				$lang_homedir = lang('home directory');
 				$lang_shell = lang('login shell');
-				$homedirectory = '<input name="homedirectory" value="'. ($_account_id?$userData['homedirectory']:$GLOBALS['egw_info']['server']['ldap_account_home'].$account_lid).'">';
+				$homedirectory = '<input name="homedirectory" id="homedirectory" value="'. ($_account_id?$userData['homedirectory']:$GLOBALS['egw_info']['server']['ldap_account_home'].$account_lid).'">';
 				$loginshell = '<input name="loginshell" value="'
 					. ($_account_id?$userData['loginshell']:$GLOBALS['egw_info']['server']['ldap_account_shell'])
 					. '">';
@@ -1593,6 +1593,11 @@
 			{
 				$response->addScript("alert('".addslashes(lang('That loginid has already been taken').': '.$account_lid)."'); document.getElementById('account').value='".
 					($account_id ? $GLOBALS['egw']->accounts->id2name($account_id) : '')."'; document.getElementById('account').focus();");
+			}
+			if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'] &&
+				($home = $GLOBALS['egw_info']['server']['ldap_account_home']) && $home != '/dev/null')
+			{
+				$response->addAssign('homedirectory','value',$home.'/'.$account_lid);
 			}
 			return $response->getXML();
 		}
