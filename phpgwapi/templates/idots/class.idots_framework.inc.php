@@ -598,8 +598,12 @@ class idots_framework extends egw_framework
 	*/
 	function topmenu(array &$vars,array &$apps)
 	{
-		$this->tplsav2->menuitems = array();
-		$this->tplsav2->menuinfoitems = array();
+		if(!is_array($this->tplsav2->menuitems)) {
+			$this->tplsav2->menuitems = array();
+		}
+		if(!is_array($this->tplsav2->menuinfoitems)) {
+			$this->tplsav2->menuinfoitems = array();
+		}
 
 		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
 		{
