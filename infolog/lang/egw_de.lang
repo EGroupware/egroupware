@@ -26,6 +26,7 @@ a short subject for the entry	infolog	de	einen kurzen Titel für diesen Eintrag
 abort without deleting	infolog	de	Abruch ohne zu Löschen
 accept	infolog	de	bei Annahme
 action	infolog	de	Befehle
+actions...	infolog	de	Befehle...
 actual date and time	infolog	de	aktuelles Datum und Uhrzeit
 add	infolog	de	Hinzufügen
 add a file	infolog	de	Datei anhängen
@@ -74,6 +75,7 @@ completed	infolog	de	Erledigt
 configuration	infolog	de	Konfiguration
 confirm	infolog	de	Bestätigung
 contact	infolog	de	Kontakt
+copy of:	infolog	de	Kopie von:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 create new links	infolog	de	Neue Verknüpfung erzeugen
 creates a new field	infolog	de	erstellt ein neues Feld
@@ -177,6 +179,7 @@ infolog - import csv-file	infolog	de	InfoLog - Import CSV-Datei
 infolog - new	infolog	de	InfoLog - Anlegen
 infolog - new subproject	infolog	de	InfoLog - Anlegen Teilprojekt
 infolog - subprojects from	infolog	de	InfoLog - Teilprojekte von
+infolog copied - the copy can now be edited	infolog	de	Infolog Kopie - Diese Kopie kann jetzt bearbeitet werden
 infolog entry deleted	infolog	de	InfoLog Eintrag gelöscht
 infolog entry saved	infolog	de	InfoLog Eintrag gespeichert
 infolog filter for the main screen	infolog	de	InfoLog Filter für Startseite

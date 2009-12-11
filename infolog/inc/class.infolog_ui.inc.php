@@ -242,7 +242,7 @@ class infolog_ui
 	{
 		$for = @$values['session_for'] ? $values['session_for'] : @$this->called_by;
 		//echo "<p>$for: ".__METHOD__.'('.print_r($values,True).") called_by='$this->called_by', for='$for'<br />".function_backtrace()."</p>\n";
-		
+
 		$arrayToStore = array(
 			'search' => $values['search'],
 			'start'  => $values['start'],
@@ -258,7 +258,7 @@ class infolog_ui
 			'col_filter' => $values['col_filter'],
 			'session_for' => $for
 		);
-		if ($values['filter']=='bydate') 
+		if ($values['filter']=='bydate')
 		{
 			$arrayToStore['startdate'] = $values['startdate'];
 			$arrayToStore['enddate'] = $values['enddate'];
@@ -298,8 +298,8 @@ class infolog_ui
 		{
 			$query['header_left'] = 'infolog.index.dates';
 			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
-			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_startdate > '.$GLOBALS['egw']->db->quote($query['startdate']);	
-			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_startdate < '.$GLOBALS['egw']->db->quote($query['enddate']); 
+			if (is_int($query['startdate'])) $query['col_filter'][] = 'info_startdate > '.$GLOBALS['egw']->db->quote($query['startdate']);
+			if (is_int($query['enddate'])) $query['col_filter'][] = 'info_startdate < '.$GLOBALS['egw']->db->quote($query['enddate']);
 			//unset($query['startdate']);
 			//unset($query['enddate']);
 		}
@@ -846,9 +846,20 @@ class infolog_ui
 			$content['info_custom_from'] = (int)$content['info_custom_from'];
 
 			list($button) = @each($content['button']);
+			if (!$button && $action) $button = $action;	// action selectbox
 			unset($content['button']);
 			if ($button)
 			{
+				//Copy Infolog
+				if (($button == 'copy'))
+				{
+					unset($content['info_id']);
+					unset($content['info_datemodified']);
+					unset($contentt['info_modifier']);
+					$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
+					$content['msg'] = lang('Infolog copied - the copy can now be edited');
+					$content['info_subject'] = lang('Copy of:').' '.$content['info_subject'];
+				}
 				//echo "<p>infolog_ui::edit(info_id=$info_id) '$button' button pressed, content="; _debug_array($content);
 				if (($button == 'save' || $button == 'apply') && isset($content['info_subject']) && empty($content['info_subject']))
 				{
@@ -1275,6 +1286,10 @@ class infolog_ui
 			'info_confirm'  => $this->bo->enums['confirm'],
 			'info_status'   => $this->bo->status[$content['info_type']],
 			'status'        => $history_stati,
+			'action'     => array(
+				'copy' => array('label' => 'Copy', 'title' => 'Copy this Infolog'),
+			//	'print' => array('label' => 'Print', 'title' => 'Print this Infolog'),
+			),
 		),$readonlys,$preserv+array(	// preserved values
 			'info_id'       => $info_id,
 			'action'        => $action,

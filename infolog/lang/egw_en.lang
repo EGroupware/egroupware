@@ -26,6 +26,7 @@ a short subject for the entry	infolog	en	a short subject for the entry
 abort without deleting	infolog	en	Abort without deleting
 accept	infolog	en	accept
 action	infolog	en	Action
+actions...	infolog	en	Actions...
 actual date and time	infolog	en	actual date and time
 add	infolog	en	Add
 add a file	infolog	en	Add a file
@@ -74,6 +75,7 @@ completed	infolog	en	Completed
 configuration	infolog	en	Configuration
 confirm	infolog	en	Confirm
 contact	infolog	en	Contact
+copy of:	infolog	en	Copy of:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
 create new links	infolog	en	Create new links
 creates a new field	infolog	en	creates a new field
@@ -177,6 +179,7 @@ infolog - import csv-file	infolog	en	InfoLog - Import CSV-File
 infolog - new	infolog	en	InfoLog - New
 infolog - new subproject	infolog	en	InfoLog - New Subproject
 infolog - subprojects from	infolog	en	InfoLog - Subprojects from
+infolog copied - the copy can now be edited	infolog	en	Infolog copied - the copy can now be edited
 infolog entry deleted	infolog	en	InfoLog entry deleted
 infolog entry saved	infolog	en	InfoLog entry saved
 infolog filter for the main screen	infolog	en	InfoLog filter for the main screen
