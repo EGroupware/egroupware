@@ -22,6 +22,8 @@ var lang_updating_view 		= '{lang_updating_view}';
 var lang_mark_all_messages 	= '{lang_mark_all_messages}';
 var lang_confirm_all_messages = '{lang_confirm_all_messages}';
 
+var MessageBuffer;
+
 var activityImagePath		= '{ajax-loader}';
 
 // how many row are selected currently
@@ -30,6 +32,8 @@ var checkedCounter=0;
 // the refreshtimer objects
 var aktiv;
 var fm_timerFolderStatus;
+var fm_previewMessageID;
+var fm_previewMessageFolderType;
 
 // refresh time for mailboxview
 var refreshTimeOut = {refreshTime};
@@ -62,6 +66,9 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 		</td>
 		<td align="center" width="100px">
 			{select_status}
+		</td>
+		<td align="center" width="40px">
+			{select_messagecount}
 		</td>
 		<td width="120px" style="white-space:nowrap; align:right; text-align:right;">
 			<div class="parentDIV" style="text-align:right; align:right;">
@@ -114,7 +121,6 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 			</form>
 
 			<!-- End MessageList -->
-
 		</TD>
 	</TR>
 </table>
@@ -122,9 +128,14 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 <!-- END main -->
 
 <!-- BEGIN message_table -->
-<table BORDER="0" style="width:98%; padding-left:2; table-layout: fixed;" cellspacing="0">
-	{message_rows}
-</table>
+<div id="divMessageTableList" style="overflow:auto; height:{messagelist_height}; margin-left:0px; margin-right:0px; margin-top:0px; margin-bottom: 0px; z-index:90; border : 1px solid Silver;">
+	<table BORDER="0" style="width:98%; padding-left:2; table-layout: fixed;" cellspacing="0">
+		{message_rows}
+	</table>
+</div>
+<span id="spanMessagePreview">
+	{IFrameForPreview}
+</span>
 <!-- END message_table -->
 
 <!-- BEGIN status_row_tpl -->
@@ -164,7 +175,10 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 			 {prio_image}{attachment_image}
 		</td>
 		<td class="mainscreenRow" style="overflow:hidden; white-space:nowrap;"><nobr>
-			<a class="{row_css_class}" name="subject_url" href="#" onclick="fm_readMessage('{url_read_message}', '{read_message_windowName}', this); return false;" title="{full_subject}">{header_subject}</a>
+			<a class="{row_css_class}" name="subject_url" href="#" 
+				onclick="fm_readMessage('{url_read_message}', '{preview_message_windowName}', this); return false;" 
+				ondblclick="fm_readMessage('{url_read_message}', '{read_message_windowName}', this); return false;" 
+				title="{full_subject}">{header_subject}</a>
 		</td>
 		<td class="mainscreenRow" width="95px" align="center">
 			<nobr><span style="font-size:10px" title="{datetime}">{date}</span>
@@ -197,7 +211,10 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 		<td class="mainscreenRow" width="2px">
 		</td>
 		<td class="mainscreenRow" style="overflow:hidden; white-space:nowrap;"><nobr>
-			<a class="{row_css_class}" name="subject_url" href="#" onclick="fm_readMessage('{url_read_message}', '{read_message_windowName}', this); parentNode.parentNode.parentNode.style.fontWeight='normal'; return false;" title="{full_subject}">{header_subject}</a>
+			<a class="{row_css_class}" name="subject_url" href="#" 
+				onclick="fm_readMessage('{url_read_message}', '{preview_message_windowName}', this); parentNode.parentNode.parentNode.style.fontWeight='normal'; return false;" 
+				ondblclick="fm_readMessage('{url_read_message}', '{read_message_windowName}', this); parentNode.parentNode.parentNode.style.fontWeight='normal'; return false;" 
+				title="{full_subject}">{header_subject}</a>
 		</td>
 		<td class="mainscreenRow" width="95px" align="center">
 			<nobr><span style="font-size:10px" title="{datetime}">{date}</span>

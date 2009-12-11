@@ -5,6 +5,7 @@
 	* http://www.phpgw.de                                                       *
 	* http://www.egroupware.org                                                 *
 	* Written by : Lars Kneschke [lkneschke@linux-at-work.de]                   *
+	* maintained by Klaus Leithoff												*
 	* -------------------------------------------------                         *
 	* This program is free software; you can redistribute it and/or modify it   *
 	* under the terms of the GNU General Public License as published by the     *
@@ -678,6 +679,29 @@
 
 			// generate the new messageview
 			return $this->generateMessageList($this->sessionData['mailbox']);
+		}
+
+		function refreshMessagePreview($_messageID,$_folderType)
+		{
+
+			$this->bofelamimail->restoreSessionData();
+			$headerData = $this->bofelamimail->getHeaders(
+				$this->sessionData['mailbox'],
+				0,
+				0,
+				'',
+				'',
+				'',
+				$_messageID
+			);
+			$headerData = $headerData['header'][0];
+			$this->sessionData['previewMessage'] = $headerData['uid'];
+			$this->saveSessionData();
+			//error_log(print_r($headerData,true));
+			$response = new xajaxResponse();
+			$response->addScript("document.getElementById('messageCounter').innerHTML =MessageBuffer;");
+			$response->addAssign('spanMessagePreview', 'innerHTML', $this->uiwidgets->updateMessagePreview($headerData,$_folderType, $this->sessionData['mailbox']));
+			return $response->getXML();
 		}
 
 		function refreshMessageList()

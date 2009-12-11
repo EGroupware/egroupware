@@ -5,6 +5,7 @@
 	* http://www.phpgw.de                                                       *
 	* http://www.egroupware.org                                                 *
 	* Written by : Lars Kneschke [lkneschke@linux-at-work.de]                   *
+	* maintained by Klaus Leithoff												*
 	* -------------------------------------------------                         *
 	* This program is free software; you can redistribute it and/or modify it   *
 	* under the terms of the GNU General Public License as published by the     *
@@ -564,44 +565,7 @@
 			} else {
 				$this->t->set_var('quota_display','&nbsp;');
 			}
-			/*
-			$linkData = array (
-				'menuaction'    => 'felamimail.uicompose.compose'
-			);
-			$urlCompose = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','compose', 700, egw_getWindowOuterHeight());";
-
-			$navbarImages = array(
-				'new'			=> array(
-					'action'	=> $urlCompose,
-					'tooltip'	=> lang('compose'),
-				),
-				'read_small'		=> array(
-					'action'	=> "flagMessages('read')",
-					'tooltip'	=> lang('mark selected as read'),
-				),
-				'unread_small'		=> array(
-					'action'	=> "flagMessages('unread')",
-					'tooltip'	=> lang('mark selected as unread'),
-				),
-				'unread_flagged_small'	=> array(
-					'action'	=> "flagMessages('flagged')",
-					'tooltip'	=> lang('mark selected as flagged'),
-				),
-				'read_flagged_small'	=> array(
-					'action'	=> "flagMessages('unflagged')",
-					'tooltip'	=> lang('mark selected as unflagged'),
-				),
-				'delete'		=> array(
-					'action'	=> "deleteMessages(xajax.getFormValues('formMessageList'))",
-					'tooltip'	=> lang('mark as deleted'),
-				),
-			);
-			
-			foreach($navbarImages as $buttonName => $buttonInfo) {
-				$navbarButtons .= $uiwidgets->navbarButton($buttonName, $buttonInfo['action'], $buttonInfo['tooltip']);
-			}
-			$this->t->set_var('navbarButtonsLeft',$navbarButtons);
-			*/
+			// navigation
 			$navbarImages = array(
 				'last'		=> array(
 					'action'	=> "jumpEnd(); return false;",
@@ -736,28 +700,6 @@
 			);
 			$selectStatus = html::select('status', $defaultSelectStatus, $statusTypes, false, "style='width:100%;' onchange='javascript:quickSearch();' id='status'");
 			$this->t->set_var('select_status', $selectStatus);
-			/* moved to sidebar
-			// the data needed here are collected at the start of this function
-			if (!isset($activeIdentity->id) && $selectedID == 0) {
-				$identities[0] = $activeIdentity->realName.' '.$activeIdentity->organization.' <'.$activeIdentity->emailAddress.'>';
-			}
-			// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
-			if ($activeIdentity->id) {
-				$boemailadmin = new emailadmin_bo();
-				$defaultProfile = $boemailadmin->getUserProfile() ;
-				#_debug_array($defaultProfile);
-				$identitys =& $defaultProfile->identities;
-				$icServers =& $defaultProfile->ic_server;
-				foreach ($identitys as $tmpkey => $identity)
-				{
-					if (empty($icServers[$tmpkey]->host)) continue;
-					$identities[0] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
-				}
-				#$identities[0] = $defaultIdentity->realName.' '.$defaultIdentity->organization.' <'.$defaultIdentity->emailAddress.'>';
-			}
-			$selectAccount = html::select('accountSelect', $selectedID, $identities, true, "style='width:100%;' onchange='changeActiveAccount(this);'");
-			$this->t->set_var('accountSelect', $selectAccount);
-			*/
 
 			if($this->connectionStatus === false) {
 				$this->t->set_var('connection_error_message', lang($this->bofelamimail->getErrorMessage()));
@@ -813,7 +755,6 @@
 				$totalMessage = $headers['info']['total'];
 				$langTotal = lang("total");		
 			
-
 				$this->t->set_var('maxMessages',$i);
 				if($_GET["select_all"] == "select_all") {
 					$this->t->set_var('checkedCounter',$i);
@@ -876,28 +817,10 @@
 				}
 				$this->t->parse('status_row','status_row_tpl',True);
 				//print __LINE__ . ': ' . (microtime(true) - $this->timeCounter) . '<br>';
-				/* moved to sidebar
-				$folderObjects = $this->bofelamimail->getFolderObjects(true, false);
-				//print __LINE__ . ': ' . (microtime(true) - $this->timeCounter) . '<br>';
-				$folderStatus = $this->bofelamimail->getFolderStatus($this->mailbox);
-				//print __LINE__ . ': ' . (microtime(true) - $this->timeCounter) . '<br>';
-
-				$folderTree = $uiwidgets->createHTMLFolder
-				(
-					$folderObjects, 
-					$this->mailbox, 
-					$folderStatus['unseen'],
-					lang('IMAP Server'), 
-					$imapServer->username.'@'.$imapServer->host,
-					'divFolderTree',
-					FALSE
-				);
-				*/
-				//print __LINE__ . ': ' . (microtime(true) - $this->timeCounter) . '<br>';
 				$this->bofelamimail->closeConnection();
 
 			}
-			$this->t->set_var('current_mailbox',$current_mailbox);
+			$this->t->set_var('current_mailbox',$this->mailbox);
 			//$this->t->set_var('folder_tree',$folderTree);
 
 			$this->t->set_var('options_folder',$options_folder);

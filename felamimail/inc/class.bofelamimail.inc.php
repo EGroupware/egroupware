@@ -1907,7 +1907,7 @@
 			}
 		}
 
-		function getHeaders($_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter)
+		function getHeaders($_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null)
 		{
 			$reverse = (bool)$_reverse;
 			// get the list of messages to fetch
@@ -1916,33 +1916,39 @@
 
 			#print "<pre>";
 			#$this->icServer->setDebug(true);
-
-			$sortResult = $this->getSortedList($_folderName, $_sort, $_reverse, $_filter);
-			#$this->icServer->setDebug(false);
-			#print "</pre>";
-			// nothing found
-			if(!is_array($sortResult) || empty($sortResult)) {
-				$retValue = array();
-				$retValue['info']['total']	= 0;
-				$retValue['info']['first']	= 0;
-				$retValue['info']['last']	= 0;
-				return $retValue;
-			}
-
-			$total = count($sortResult);
-			#_debug_array($sortResult);
-			#_debug_array(array_slice($sortResult, -5, -2));
-			#error_log("REVERSE: $reverse");
-			if($reverse === true) {
-				$startMessage = $_startMessage-1;
-				if($startMessage > 0) {
-					$sortResult = array_slice($sortResult, -($_numberOfMessages+$startMessage), -$startMessage);
-				} else {
-					$sortResult = array_slice($sortResult, -($_numberOfMessages+($_startMessage-1)));
+			if ($_thisUIDOnly === null)
+			{
+				$sortResult = $this->getSortedList($_folderName, $_sort, $_reverse, $_filter);
+				#$this->icServer->setDebug(false);
+				#print "</pre>";
+				// nothing found
+				if(!is_array($sortResult) || empty($sortResult)) {
+					$retValue = array();
+					$retValue['info']['total']	= 0;
+					$retValue['info']['first']	= 0;
+					$retValue['info']['last']	= 0;
+					return $retValue;
 				}
-				$sortResult = array_reverse($sortResult);
-			} else {
-				$sortResult = array_slice($sortResult, $_startMessage-1, $_numberOfMessages);
+
+				$total = count($sortResult);
+				#_debug_array($sortResult);
+				#_debug_array(array_slice($sortResult, -5, -2));
+				#error_log("REVERSE: $reverse");
+				if($reverse === true) {
+					$startMessage = $_startMessage-1;
+					if($startMessage > 0) {
+						$sortResult = array_slice($sortResult, -($_numberOfMessages+$startMessage), -$startMessage);
+					} else {
+						$sortResult = array_slice($sortResult, -($_numberOfMessages+($_startMessage-1)));
+					}
+					$sortResult = array_reverse($sortResult);
+				} else {
+					$sortResult = array_slice($sortResult, $_startMessage-1, $_numberOfMessages);
+				}
+			}
+			else
+			{
+				$sortResult = (is_array($_thisUIDOnly) ? $_thisUIDOnly:(array)$_thisUIDOnly);
 			}
 
 			$queryString = implode(',', $sortResult);

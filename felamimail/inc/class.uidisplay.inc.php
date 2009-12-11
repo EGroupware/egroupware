@@ -5,6 +5,7 @@
 	* http://www.phpgw.de                                                       *
 	* http://www.egroupware.org                                                 *
 	* Written by : Lars Kneschke [lkneschke@linux-at-work.de]                   *
+	* maintained by Klaus Leithoff												*
 	* -------------------------------------------------                         *
 	* This program is free software; you can redistribute it and/or modify it   *
 	* under the terms of the GNU General Public License as published by the     *
@@ -343,167 +344,12 @@
 
 			$this->translate();
 
-//			if(!isset($_GET['printable']))
-//			{
-			// navbar start
-			// compose as new URL
-			$linkData = array (
-				'menuaction'    => 'felamimail.uicompose.composeAsNew',
-				'icServer'  => $this->icServer,
-				'folder'    => base64_encode($this->mailbox),
-				'reply_id'  => $this->uid,
-			);
+			// navBar buttons
+			$headerData = array('uid'=>$this->uid);
 			if($partID != '') {
-				$linkData['part_id'] = $partID;
+				$headerData['partid'] = $partID;
 			}
-			$asnewURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			// reply url
-			$linkData = array (
-				'menuaction'	=> 'felamimail.uicompose.reply',
-				'icServer'	=> $this->icServer,
-				'folder'	=> base64_encode($this->mailbox),
-				'reply_id'	=> $this->uid,
-			);
-			if($partID != '') {
-				$linkData['part_id'] = $partID;
-			}
-			$replyURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			// reply all url
-			$linkData = array (
-				'menuaction'	=> 'felamimail.uicompose.replyAll',
-				'icServer'	=> $this->icServer,
-				'folder'	=> base64_encode($this->mailbox),
-				'reply_id'	=> $this->uid,
-			);
-			if($partID != '') {
-				$linkData['part_id'] = $partID;
-			}
-			$replyAllURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			// forward url
-			$linkData = array (
-				'menuaction'	=> 'felamimail.uicompose.forward',
-				'reply_id'	=> $this->uid,
-				'folder'	=> base64_encode($this->mailbox),
-			);
-			if($partID != '') {
-				$linkData['part_id'] = $partID;
-			}
-			$forwardURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			//delete url
-			$linkData = array (
-				'menuaction'	=> 'felamimail.uifelamimail.deleteMessage',
-				'icServer'	=> $this->icServer,
-				'folder'	=> base64_encode($this->mailbox),
-				'message'	=> $this->uid,
-			);
-			$deleteURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			$navbarImages = array(
-				'new'	=> array(
-					'action'    => "window.location.href = '$asnewURL'",
-					'tooltip'   => lang('compose as new'),
-				),
-				'mail_reply'	=> array(
-					'action'	=> "window.location.href = '$replyURL'",
-					'tooltip'	=> lang('reply'),
-				),
-				'mail_replyall'	=> array(
-					'action'	=> "window.location.href = '$replyAllURL'",
-					'tooltip'	=> lang('reply all'),
-				),
-				'mail_forward'	=> array(
-					'action'	=> "window.location.href = '$forwardURL'",
-					'tooltip'	=> lang('forward'),
-				),
-				'delete'	=> array(
-					'action'	=> "window.location.href = '$deleteURL'",
-					'tooltip'	=> lang('delete'),
-				),
-			);
-			foreach($navbarImages as $buttonName => $buttonInfo) {
-				$navbarButtons .= $uiWidgets->navbarButton($buttonName, $buttonInfo['action'], $buttonInfo['tooltip']);
-			}
-			$navbarButtons .= $uiWidgets->navbarSeparator();
-
-			// print url
-			$linkData = array (
-				'menuaction'	=> 'felamimail.uidisplay.printMessage',
-				'uid'		=> $this->uid,
-				'folder'    => base64_encode($this->mailbox),
-			);
-			if($partID != '') {
-				$linkData['part'] = $partID;
-			}
-			$printURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			// infolog URL
-			$linkData = array(
-				'menuaction' => 'infolog.infolog_ui.import_mail',
-				'uid'    => $this->uid,
-				'mailbox' =>  base64_encode($this->mailbox)
-			);
-			if($partID != '') {
-				$linkData['part'] = $partID;
-			}
-			$to_infologURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			// viewheader url
-			$linkData = array (
-				'menuaction'	=> 'felamimail.uidisplay.displayHeader',
-				'uid'		=> $this->uid,
-				'mailbox'	=> base64_encode($this->mailbox)
-			);
-			if($partID != '') {
-				$linkData['part'] = $partID;
-			}
-			$viewHeaderURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			$navbarImages = array();
-
-			// save message url
-			$linkData = array (
-				'menuaction'	=> 'felamimail.uidisplay.saveMessage',
-				'uid'		=> $this->uid,
-				'mailbox'	=> base64_encode($this->mailbox)
-			);
-			if($partID != '') {
-				$linkData['part'] = $partID;
-			}
-			$saveMessageURL = $GLOBALS['egw']->link('/index.php',$linkData);
-
-			$navbarImages = array();
-
-			//print email
-			$navbarImages = array(
-				'fileprint' => array(
-					'action'	=> "window.location.href = '$printURL'",
-					'tooltip'	=> lang('print it'),
-				),
-			);
-			if ($GLOBALS['egw_info']['user']['apps']['infolog']) $navbarImages['to_infolog'] = array(
-					'action'	=> "window.open('$to_infologURL','_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes')",
-					'tooltip'	=> lang('save as infolog'));
-
-			// save email as
-			$navbarImages['fileexport'] = array(
-				'action'	=> "window.location.href = '$saveMessageURL'",
-				'tooltip'	=> lang('save message to disk'),
-			);
-
-			// view header lines
-			$navbarImages['kmmsgread'] = array(
-				'action'	=> "fm_displayHeaderLines('$viewHeaderURL')",
-				'tooltip'	=> lang('view header lines'),
-			);
-
-			foreach($navbarImages as $buttonName => $buttonData) {
-				$navbarButtons .= $uiWidgets->navbarButton($buttonName, $buttonData['action'], $buttonData['tooltip']);
-			}
-			$this->t->set_var('navbarButtonsLeft',$navbarButtons);
+			$this->t->set_var('navbarButtonsLeft',$uiWidgets->displayMessageActions($headerData, $this->mailbox, $this->icServer));
 
 			$navbarButtons = '';
 			$navbarImages  = array();
@@ -777,6 +623,7 @@
 		function displayBody()
 		{
 			$partID		= $_GET['part'];
+			if (empty($this->uid) && !empty($_GET['uid']) ) $this->uid = 9247;//$_GET['uid'];
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
 
 			$this->bofelamimail->reopen($this->mailbox);

@@ -13,6 +13,26 @@
  */
 class felamimail_hooks
 {
+    /**
+     * Hook called by link-class to include calendar in the appregistry of the linkage
+     *
+     * @param array/string $location location and other parameters (not used)
+     * @return array with method-names
+     */
+    static function search_link($location)
+    {
+        return array(
+            'view'  => array(
+                'menuaction' => 'felamimail.uidisplay.display',
+            ),
+            'view_popup' => '850xegw_getWindowOuterHeight()',
+            'add'        => array(
+                'menuaction' => 'felamimail.uicompose.compose',
+            ),
+            'add_popup'  => '850xegw_getWindowOuterHeight()',
+        );
+    }
+
 	/**
 	 * Settings hook
 	 *
@@ -240,6 +260,14 @@ class felamimail_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 'felamimail',
+			),
+			'PreViewFrameHeight' => array(
+				'type'   => 'input',
+				'label'  => '3PaneView: If you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). The preview will be displayed at the end of the message list on demand (click).',
+				'name'   => 'PreViewFrameHeight',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => '-1',
 			),
 		    'message_forwarding' => array(
 		        'type'   => 'select',

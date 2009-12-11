@@ -11,15 +11,14 @@
 
 $setup_info['felamimail']['name']      		= 'felamimail';
 $setup_info['felamimail']['title']     		= 'FeLaMiMail';
-$setup_info['felamimail']['version']     	= '1.6.001';
+$setup_info['felamimail']['version']     	= '1.7.001';
 $setup_info['felamimail']['app_order'] 		= 2;
 $setup_info['felamimail']['enable']    		= 1;
 $setup_info['felamimail']['index']    		= 'felamimail.uifelamimail.viewMainScreen';
 
 $setup_info['felamimail']['author']		= 'Lars Kneschke';
 $setup_info['felamimail']['license']		= 'GPL';
-$setup_info['felamimail']['description']	=
-	'IMAP emailclient for eGroupWare';
+$setup_info['felamimail']['description']	= 'IMAP emailclient for eGroupWare';
 $setup_info['felamimail']['maintainer'] 	= 'Klaus Leithoff';
 $setup_info['felamimail']['maintainer_email'] 	= 'kl@leithoff.net';
 
@@ -35,6 +34,7 @@ $setup_info['felamimail']['hooks']['deleteaccount']	= 'felamimail.bofelamimail.d
 $setup_info['felamimail']['hooks']['editaccount']	= 'felamimail.bofelamimail.updateAccount';
 $setup_info['felamimail']['hooks']['edit_user']		= 'felamimail.bofelamimail.adminMenu';
 $setup_info['felamimail']['hooks']['verify_settings'] = 'felamimail.bofelamimail.forcePrefReload';
+$setup_info['felamimail']['hooks']['search_link'] = 'felamimail_hooks::search_link';
 
 /* Dependencies for this app to work */
 $setup_info['felamimail']['depends'][] = array(

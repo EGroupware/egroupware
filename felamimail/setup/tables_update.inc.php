@@ -534,4 +534,11 @@
 		$GLOBALS['egw_setup']->oProc->AddColumn('egw_felamimail_accounts','fm_ic_templatefolder',  array('type' => 'varchar','precision' => '128'));
 		return $GLOBALS['setup_info']['felamimail']['currentver'] = '1.6.001';
 	}
+
+	$test[] = '1.6.001';
+	function felamimail_upgrade1_6_001()
+	{
+		// no real changes here
+		return $GLOBALS['setup_info']['felamimail']['currentver'] = '1.7.001';
+	}
 ?>

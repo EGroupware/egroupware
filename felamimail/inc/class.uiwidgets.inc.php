@@ -40,7 +40,8 @@
 	*
 	* @package FeLaMiMail
 	* @author Lars Kneschke
-	* @version 1.35
+	* @maintainer Klaus Leithoff
+	* @version 1.7.
 	* @copyright Lars Kneschke 2004
 	* @license http://www.opensource.org/licenses/bsd-license.php BSD
 	*/
@@ -248,6 +249,7 @@
 		// $_rowStyle felamimail or outlook
 		function messageTable($_headers, $_folderType, $_folderName, $_readInNewWindow, $_rowStyle='felamimail')
 		{
+			//error_log(__METHOD__);
 			$this->t = CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->t->set_file(array("body" => 'mainscreen.tpl'));
 			$this->t->set_block('body','header_row_felamimail');
@@ -261,6 +263,7 @@
 
 
 			$i=0;
+			$firstuid = null;
 			foreach((array)$_headers['header'] as $header)
 			{
 				//_debug_array($header);
@@ -392,7 +395,13 @@
 				$this->t->set_var('datetime', $GLOBALS['egw']->common->show_date($header['date']/*,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']*/));
 
 				$this->t->set_var('size', $this->show_readable_size($header['size']));
-
+				if ($firstuid === null)
+				{
+					//_debug_array($header);
+					$firstuid = $header['uid'];
+					$firstheader = $header;
+					$firstFullAddress = $full_address;
+				}
 				if($_folderType == 2 || $_folderType == 3) {
 					$linkData = array (
 						'menuaction'    => 'felamimail.uicompose.composeFromDraft',
@@ -405,6 +414,7 @@
 
 					$windowName = 'composeFromDraft_'.$header['uid'];
 					$this->t->set_var('read_message_windowName', $windowName);
+					$this->t->set_var('preview_message_windowName', $windowName);
 				} else {
 				#	_debug_array($header);
 					$linkData = array (
@@ -418,6 +428,10 @@
 
 					$windowName = ($_readInNewWindow == 1 ? 'displayMessage' : 'displayMessage_'.$header['uid']);
 					$this->t->set_var('read_message_windowName', $windowName);
+
+					if ($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0) $windowName = 'MessagePreview_'.$header['uid'].'_'.$_folderType;
+
+					$this->t->set_var('preview_message_windowName', $windowName);
 				}
 
 				if($_folderType > 0) {
@@ -448,7 +462,7 @@
 				);
 				$windowName = 'compose'.$header['uid'];
 				$this->t->set_var('url_compose',"egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());");
-
+				/*
 				$linkData = array
 				(
 					'menuaction'   		=> 'addressbook.addressbook_ui.edit',
@@ -459,6 +473,7 @@
 				//TODO: url_add_to_addressbook isn't in any of the templates.
 				//If you want to use it, you need to adopt syntax to the new addressbook (popup)
 				$this->t->set_var('url_add_to_addressbook',$GLOBALS['egw']->link('/index.php',$linkData));
+				*/
 				$this->t->set_var('msg_icon_sm',$msg_icon_sm);
 
 				$this->t->set_var('phpgw_images',EGW_IMAGES);
@@ -472,10 +487,272 @@
 						break;
 				}
 			}
+			
+			$IFRAMEBody =  $this->updateMessagePreview($firstheader,$_folderType,$_folderName);
+
+			$this->t->set_var('IFrameForPreview',$IFRAMEBody);
+			$this->t->set_var('messagelist_height',($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0 ? ($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']).'px':'auto'));
+
 			$this->t->parse("out","message_table");
 
 			return $this->t->get('out','message_table');
 		}
+
+		function updateMessagePreview($headerData,$_folderType,$_folderName,$_icServer=0)
+		{
+			// IFrame for Preview ....
+			if ($headerData['uid'] && $GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0)
+			{
+				if ($_folderType > 0) {
+					// sent or drafts or template folder
+					if (!empty($headerData['to_name'])) {
+						$sender_name	= $headerData['to_name'];
+						$full_address	= $headerData['to_name'].' <'.$headerData['to_address'].'>';
+					} else {
+						$sender_name	= $headerData['to_address'];
+						$full_address	= $headerData['to_address'];
+					}
+				} else {
+					if (!empty($headerData['sender_name'])) {
+						$sender_name	= $headerData['sender_name'];
+						$full_address	= $headerData['sender_name'].' <'.$headerData['sender_address'].'>';
+					} else {
+						$sender_name	= $headerData['sender_address'];
+						$full_address	= $headerData['sender_address'];
+					}
+				}
+				$linkData = array (
+					'menuaction'    => 'felamimail.uidisplay.display',
+					'showHeader'	=> 'false',
+					'mailbox'    => base64_encode($_folderName),
+					'uid'		=> $headerData['uid'],
+					'id'		=> $headerData['id'],
+				);
+				$windowName =  'displayMessage_'.$headerData['uid'];
+				if($headerData['mimetype'] == 'multipart/mixed' ||
+					$headerData['mimetype'] == 'multipart/related' ||
+					substr($headerData['mimetype'],0,11) == 'application' ||
+					substr($headerData['mimetype'],0,5) == 'audio') {
+					$image = html::image('felamimail','attach');
+
+					$image = "<a name=\"subject_url\" href=\"#\" 
+						onclick=\"fm_readMessage('".$GLOBALS['egw']->link('/index.php',$linkData)."', '".$windowName."', this); return false;\" 
+						title=\"".$headerData['subject']."\">".$image."</a>";
+
+					$windowName = ($_readInNewWindow == 1 ? 'displayMessage' : 'displayMessage_'.$header['uid']);
+				} else {
+					$image = '';
+				}
+				$subject = "<a name=\"subject_url\" href=\"#\" 
+						onclick=\"fm_readMessage('".$GLOBALS['egw']->link('/index.php',$linkData)."', '".$windowName."', this); return false;\" 
+						title=\"".$headerData['subject']."\">".$headerData['subject']."</a>";
+				$IFrameHeight = $GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight'];
+				$linkData = array (
+						'menuaction'	=> 'felamimail.uidisplay.displayBody',
+						'uid'		=> $headerData['uid'],
+						'mailbox'	=>  base64_encode($_folderName)
+					);
+
+				//_debug_array($GLOBALS['egw']->link('/index.php',$linkData));
+				$IFRAMEBody = "<TABLE BORDER=\"1\" rules=\"rows\" style=\"width:100%;\">
+								<TR class=\"th\" style=\"width:73%;\">
+									<TD nowrap valign=\"top\">
+										".($_folderType > 0?lang('to'):lang('from')).':<b>'.$full_address .'</b><br> '.
+										lang('date').':<b>'.$GLOBALS['egw']->common->show_date($headerData['date']/*,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']*/)."</b><br>
+										".lang('subject').":<b>".$subject."</b>
+									</TD>
+									<td style=\"width:2%;\">
+										$image
+									</td>
+									<td style=\"width:25%;\" align=\"right\">
+										".$this->navbarSeparator().$this->displayMessageActions($headerData, $_folderName, $_icServer,true)."
+									</td>
+								</TR>
+								<TR>
+									<TD nowrap valign=\"top\" colspan=\"3\" height=\"".$IFrameHeight."\">
+										<iframe id=\"messageIFRAME\" frameborder=\"1\" height=\"".$IFrameHeight."\" scrolling=\"auto\" src=\"".$GLOBALS['egw']->link('/index.php',$linkData)."\">
+										</iframe>
+									</TD>
+								</TR>
+							   </TABLE>";
+			}
+			else
+			{
+				$IFRAMEBody = "&nbsp;";
+			}
+			return $IFRAMEBody;
+		}
+
+		function displayMessageActions($_headerData, $_folderName, $_icServer, $_forceNewWindow=false)
+		{
+			if ($_forceNewWindow)
+			{
+				list($fm_width,$fm_height) = explode('x',egw_link::get_registry('felamimail','view_popup'));
+			}
+			// navbar start
+			// compose as new URL
+			$linkData = array (
+				'menuaction'    => 'felamimail.uicompose.composeAsNew',
+				'icServer'  => $_icServer,
+				'folder'    => base64_encode($_folderName),
+				'reply_id'  => $_headerData['uid'],
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part_id'] = $_headerData['partid'];
+			}
+			$asnewURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			// reply url
+			$linkData = array (
+				'menuaction'	=> 'felamimail.uicompose.reply',
+				'icServer'	=> $_icServer,
+				'folder'	=> base64_encode($_folderName),
+				'reply_id'	=> $_headerData['uid'],
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part_id'] = $_headerData['partid'];
+			}
+			$replyURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			// reply all url
+			$linkData = array (
+				'menuaction'	=> 'felamimail.uicompose.replyAll',
+				'icServer'	=> $_icServer,
+				'folder'	=> base64_encode($_folderName),
+				'reply_id'	=> $_headerData['uid'],
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part_id'] = $_headerData['partid'];
+			}
+			$replyAllURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			// forward url
+			$linkData = array (
+				'menuaction'	=> 'felamimail.uicompose.forward',
+				'reply_id'	=> $_headerData['uid'],
+				'folder'	=> base64_encode($_folderName),
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part_id'] = $_headerData['partid'];
+			}
+			$forwardURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			//delete url
+			$linkData = array (
+				'menuaction'	=> 'felamimail.uifelamimail.deleteMessage',
+				'icServer'	=> $_icServer,
+				'folder'	=> base64_encode($_folderName),
+				'message'	=> $_headerData['uid'],
+			);
+			$deleteURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			$navbarImages = array(
+				'new'	=> array(
+					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$asnewURL','composeasnew_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$asnewURL'"),
+					'tooltip'   => lang('compose as new'),
+				),
+				'mail_reply'	=> array(
+					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$replyURL','reply_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$replyURL'"),
+					'tooltip'	=> lang('reply'),
+				),
+				'mail_replyall'	=> array(
+					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$replyAllURL','replyAll_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$replyAllURL'"),
+					'tooltip'	=> lang('reply all'),
+				),
+				'mail_forward'	=> array(
+					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$forwardURL','forward_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$forwardURL'"),
+					'tooltip'	=> lang('forward'),
+				),
+				'delete'	=> array(
+					'action'	=> ($_forceNewWindow ? "window.open('$deleteURL','_blank','dependent=yes,width=100,height=100,toolbar=no,scrollbars=no,status=no')": "window.location.href = '$deleteURL'"),
+					'tooltip'	=> lang('delete'),
+				),
+			);
+			foreach($navbarImages as $buttonName => $buttonInfo) {
+				$navbarButtons .= $this->navbarButton($buttonName, $buttonInfo['action'], $buttonInfo['tooltip']);
+			}
+			$navbarButtons .= $this->navbarSeparator();
+
+			// print url
+			$linkData = array (
+				'menuaction'	=> 'felamimail.uidisplay.printMessage',
+				'uid'		=> $_headerData['uid'],
+				'folder'    => base64_encode($_folderName),
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part'] = $_headerData['partid'];
+			}
+			$printURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			// infolog URL
+			$linkData = array(
+				'menuaction' => 'infolog.infolog_ui.import_mail',
+				'uid'    => $_headerData['uid'],
+				'mailbox' =>  base64_encode($_folderName)
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part'] = $_headerData['partid'];
+			}
+			$to_infologURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			// viewheader url
+			$linkData = array (
+				'menuaction'	=> 'felamimail.uidisplay.displayHeader',
+				'uid'		=> $_headerData['uid'],
+				'mailbox'	=> base64_encode($_folderName)
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part'] = $_headerData['partid'];
+			}
+			$viewHeaderURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			$navbarImages = array();
+
+			// save message url
+			$linkData = array (
+				'menuaction'	=> 'felamimail.uidisplay.saveMessage',
+				'uid'		=> $_headerData['uid'],
+				'mailbox'	=> base64_encode($_folderName)
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part'] = $_headerData['partid'];
+			}
+			$saveMessageURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
+			$navbarImages = array();
+
+			//print email
+			$navbarImages = array(
+				'fileprint' => array(
+					'action'	=> ($_forceNewWindow ? "egw_openWindowCentered('$printURL','forward_".$_headerData['uid']."',".$fm_width.",".$fm_height.");": "window.location.href = '$printURL'"),
+					'tooltip'	=> lang('print it'),
+				),
+			);
+			if ($GLOBALS['egw_info']['user']['apps']['infolog']) 
+			{
+				list($i_width,$i_height) = explode('x',egw_link::get_registry('infolog','add_popup'));
+				$navbarImages['to_infolog'] = array(
+					'action'	=> "window.open('$to_infologURL','_blank','dependent=yes,width=".$i_width.",height=".$i_height.",scrollbars=yes,status=yes')",
+					'tooltip'	=> lang('save as infolog'));
+			}
+
+			// save email as
+			$navbarImages['fileexport'] = array(
+				'action'	=> ($_forceNewWindow ? "window.open('$saveMessageURL','_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')": "window.location.href = '$saveMessageURL'"),
+				'tooltip'	=> lang('save message to disk'),
+			);
+
+			// view header lines
+			$navbarImages['kmmsgread'] = array(
+				'action'	=> "fm_displayHeaderLines('$viewHeaderURL')",
+				'tooltip'	=> lang('view header lines'),
+			);
+
+			foreach($navbarImages as $buttonName => $buttonData) {
+				$navbarButtons .= $this->navbarButton($buttonName, $buttonData['action'], $buttonData['tooltip']);
+			}
+			return $navbarButtons;
+		}			
 
 		/**
 		* create multiselectbox

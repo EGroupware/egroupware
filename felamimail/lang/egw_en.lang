@@ -3,6 +3,7 @@
 (only cc/bcc)	felamimail	en	(only Cc/Bcc)
 (separate multiple addresses by comma)	felamimail	en	(separate multiple addresses by comma)
 (unknown sender)	felamimail	en	(unknown sender)
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	en	3PaneView: If you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). The preview will be displayed at the end of the message list on demand (click).
 aborted	felamimail	en	aborted
 activate	felamimail	en	Activate
 activate script	felamimail	en	activate script
@@ -319,6 +320,7 @@ no signature	felamimail	en	no signature
 no stationery	felamimail	en	no stationery
 no subject given!	felamimail	en	No subject given!
 no supported imap authentication method could be found.	felamimail	en	No supported IMAP authentication method could be found.
+no valid data to create mailprofile!!	felamimail	en	No valid data to create MailProfile!!
 no valid emailprofile selected!!	felamimail	en	No Valid Email Profile Selected!!
 none	felamimail	en	none
 none, create all	felamimail	en	none, create all
@@ -430,6 +432,7 @@ template folder	felamimail	en	Template folder
 templates	felamimail	en	Templates
 text only	felamimail	en	Text only
 text/plain	felamimail	en	text/plain
+the action will be applied to all messages of the current folder.\ndo you want to proceed?	felamimail	en	The action will be applied to all messages of the current folder.\nDo you want to proceed?
 the connection to the imap server failed!!	felamimail	en	The connection to the IMAP Server failed!!
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	en	The IMAP server does not appear to support the authentication method selected. Please contact your system administrator.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?

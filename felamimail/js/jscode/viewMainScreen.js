@@ -48,6 +48,10 @@ function displayMessage(_url,_windowName) {
 	egw_openWindowCentered(_url, _windowName, 850, egw_getWindowOuterHeight());
 }
 
+function fm_displayHeaderLines(_url) {
+	egw_openWindowCentered(_url,'fm_display_headerLines','700','600',window.outerWidth/2,window.outerHeight/2);
+}
+
 function emptyTrash() {
 	setStatusMessage('<span style="font-weight: bold;">' + lang_emptyTrashFolder + '</span>');
 	xajax_doXMLHTTP("felamimail.ajaxfelamimail.emptyTrash");
@@ -339,6 +343,12 @@ function refresh() {
 
 	resetMessageSelect();
 	xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshMessageList');
+	if (fm_previewMessageID>0)
+	{
+		MessageBuffer = document.getElementById('messageCounter').innerHTML;
+		setStatusMessage('<span style="font-weight: bold;">'+ lang_updating_view +'</span>');
+		xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",fm_previewMessageID,fm_previewMessageFolderType);
+	}
 }     
 
 function refreshFolderStatus(_nodeID,mode) {
@@ -350,6 +360,12 @@ function refreshFolderStatus(_nodeID,mode) {
 	}
 	var activeFolders = getTreeNodeOpenItems(nodeToRefresh,mode2use);
 	xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshFolderList', activeFolders);
+	if (fm_previewMessageID>0)
+	{
+		MessageBuffer = document.getElementById('messageCounter').innerHTML;
+		setStatusMessage('<span style="font-weight: bold;">'+ lang_updating_view +'</span>');
+		xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",fm_previewMessageID,fm_previewMessageFolderType);
+	}
 }
 
 function refreshView() {
@@ -380,7 +396,18 @@ function fm_startTimerMessageListUpdate(_refreshTimeOut) {
 }
 
 function fm_readMessage(_url, _windowName, _node) {
-	egw_openWindowCentered(_url, _windowName, 750, egw_getWindowOuterHeight());
+	var windowArray = _windowName.split('_');
+	if (windowArray[0] == 'MessagePreview')
+	{
+		//document.getElementById('spanMessagePreview').innerHTML = '';
+		MessageBuffer = document.getElementById('messageCounter').innerHTML;
+		setStatusMessage('<span style="font-weight: bold;">'+ lang_updating_view +'</span>');
+		fm_previewMessageID = windowArray[1];
+		fm_previewMessageFolderType = windowArray[2];
+		xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",windowArray[1],windowArray[2]);
+	} else {
+		egw_openWindowCentered(_url, _windowName, 750, egw_getWindowOuterHeight());
+	}
 	trElement = _node.parentNode.parentNode.parentNode;
 	trElement.style.fontWeight='normal';
 
