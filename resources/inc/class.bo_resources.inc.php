@@ -542,7 +542,7 @@ class bo_resources
 	function link_titles(array $ids)
 	{
 		$titles = array();
-		if (($resources =& $this->search(array('res_id' => $ids),self::TITLE_COLS)))
+		if (($resources =& $this->so->search(array('res_id' => $ids),self::TITLE_COLS)))
 		{
 			foreach($resources as $resource)
 			{
