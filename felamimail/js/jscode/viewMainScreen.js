@@ -340,12 +340,11 @@ var searchesPending=0;
 function refresh() {
 	//searchesPending++;
 	//document.title=searchesPending;
-
+	MessageBuffer = document.getElementById('messageCounter').innerHTML;
 	resetMessageSelect();
 	xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshMessageList');
 	if (fm_previewMessageID>0)
 	{
-		MessageBuffer = document.getElementById('messageCounter').innerHTML;
 		setStatusMessage('<span style="font-weight: bold;">'+ lang_updating_view +'</span>');
 		xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",fm_previewMessageID,fm_previewMessageFolderType);
 	}
@@ -354,6 +353,7 @@ function refresh() {
 function refreshFolderStatus(_nodeID,mode) {
 	var nodeToRefresh = 0;
 	var mode2use = "none";
+	MessageBuffer = document.getElementById('messageCounter').innerHTML;
 	if (_nodeID) nodeToRefresh = _nodeID;
 	if (mode) {
 		if (mode == "forced") {mode2use = mode;}
@@ -362,7 +362,6 @@ function refreshFolderStatus(_nodeID,mode) {
 	xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshFolderList', activeFolders);
 	if (fm_previewMessageID>0)
 	{
-		MessageBuffer = document.getElementById('messageCounter').innerHTML;
 		setStatusMessage('<span style="font-weight: bold;">'+ lang_updating_view +'</span>');
 		xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",fm_previewMessageID,fm_previewMessageFolderType);
 	}
