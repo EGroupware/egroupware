@@ -831,7 +831,6 @@ class infolog_ui
 	function edit($content = null,$action = '',$action_id=0,$type='',$referer='')
 	{
 		$tabs = 'description|links|delegation|project|customfields|history';
-
 		if (is_array($content))
 		{
 			//echo "infolog_ui::edit: content="; _debug_array($content);
@@ -841,7 +840,6 @@ class infolog_ui
 			$referer   = $content['referer'];   unset($content['referer']);
 			$no_popup  = $content['no_popup'];  unset($content['no_popup']);
 			$caller    = $content['caller'];    unset($content['caller']);
-
 			// convert custom from to 0 or 1, it's unset if not checked, which starts the detection
 			$content['info_custom_from'] = (int)$content['info_custom_from'];
 
@@ -859,6 +857,10 @@ class infolog_ui
 					$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
 					$content['msg'] = lang('Infolog copied - the copy can now be edited');
 					$content['info_subject'] = lang('Copy of:').' '.$content['info_subject'];
+				}
+				if ($button == 'print')
+				{
+					$content['js'] = $this->custom_print($content,!$content['info_id'])."\n".$js;	// first open the new window and then update the view
 				}
 				//echo "<p>infolog_ui::edit(info_id=$info_id) '$button' button pressed, content="; _debug_array($content);
 				if (($button == 'save' || $button == 'apply') && isset($content['info_subject']) && empty($content['info_subject']))
@@ -1008,6 +1010,7 @@ class infolog_ui
 				$GLOBALS['egw']->common->get_referer('/index.php?menuaction=infolog.infolog_ui.index'));
 			$referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
 			$no_popup  = $_GET['no_popup'];
+			$print = (int) $_REQUEST['print'];
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 			$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
@@ -1215,7 +1218,7 @@ class infolog_ui
 		// use a typ-specific template (infolog.edit.xyz), if one exists, otherwise fall back to the generic one
 		if (!$this->tmpl->read('infolog.edit.'.$content['info_type']))
 		{
-			$this->tmpl->read('infolog.edit');
+			$this->tmpl->read($print ? 'infolog.edit.print':'infolog.edit');
 		}
 		if ($this->bo->has_customfields($content['info_type']))
 		{
@@ -1288,7 +1291,7 @@ class infolog_ui
 			'status'        => $history_stati,
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this Infolog'),
-			//	'print' => array('label' => 'Print', 'title' => 'Print this Infolog'),
+				'print' => array('label' => 'Print', 'title' => 'Print this Infolog'),
 			),
 		),$readonlys,$preserv+array(	// preserved values
 			'info_id'       => $info_id,
@@ -1639,6 +1642,23 @@ class infolog_ui
 			}
 		}
 		return $message;
+	}
+
+	/**
+	 * return javascript to open compose window to print the Infolog
+	 *
+	 * @param array $event
+	 * @param boolean $added
+	 * @return string javascript window.open command
+	 */
+	function custom_print($content,$added)
+	{
+			$vars = array(
+			'menuaction'      => 'infolog.infolog_ui.edit',
+			'info_id'         => $content['info_id'],
+			'print'           => true,
+			);
+		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
 	}
 
 	/**
