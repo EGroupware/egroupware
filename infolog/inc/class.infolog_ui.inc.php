@@ -852,6 +852,7 @@ class infolog_ui
 				if (($button == 'copy'))
 				{
 					unset($content['info_id']);
+					unset ($info_id);
 					unset($content['info_datemodified']);
 					unset($contentt['info_modifier']);
 					$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
