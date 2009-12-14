@@ -468,7 +468,8 @@
 				$listMode,
 				$_folderName,
 				$GLOBALS['egw_info']['user']['preferences']['felamimail']['message_newwindow'],
-				$GLOBALS['egw_info']['user']['preferences']['felamimail']['rowOrderStyle']
+				$GLOBALS['egw_info']['user']['preferences']['felamimail']['rowOrderStyle'],
+				$this->sessionData['previewMessage']
 			);
 
 			$firstMessage = (int)$headers['info']['first'];
@@ -700,6 +701,8 @@
 			//error_log(print_r($headerData,true));
 			$response = new xajaxResponse();
 			$response->addScript("document.getElementById('messageCounter').innerHTML =MessageBuffer;");
+			//$response->addScript("document.getElementById('messageCounter').innerHTML ='';");
+			$response->addScript("fm_previewMessageID=".$headerData['uid'].";");
 			$response->addAssign('spanMessagePreview', 'innerHTML', $this->uiwidgets->updateMessagePreview($headerData,$_folderType, $this->sessionData['mailbox']));
 			return $response->getXML();
 		}

@@ -247,7 +247,7 @@
 
 		// $_folderType 0: normal imap folder 1: sent folder 2: draft folder 3: template folder
 		// $_rowStyle felamimail or outlook
-		function messageTable($_headers, $_folderType, $_folderName, $_readInNewWindow, $_rowStyle='felamimail')
+		function messageTable($_headers, $_folderType, $_folderName, $_readInNewWindow, $_rowStyle='felamimail',$messageToBePreviewed=0)
 		{
 			//error_log(__METHOD__);
 			$this->t = CreateObject('phpgwapi.Template',EGW_APP_TPL);
@@ -400,7 +400,13 @@
 					//_debug_array($header);
 					$firstuid = $header['uid'];
 					$firstheader = $header;
-					$firstFullAddress = $full_address;
+				}
+				if ($messageToBePreviewed>0 
+					&& $GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0 
+					&& $messageToBePreviewed == $header['uid']) 
+				{
+					//error_log(__METHOD__.$header['uid']);
+					$firstheader = $header;
 				}
 				if($_folderType == 2 || $_folderType == 3) {
 					$linkData = array (

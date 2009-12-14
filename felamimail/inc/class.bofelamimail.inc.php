@@ -96,6 +96,7 @@
 			{
 				$this->restoreSessionData();
 				$lv_mailbox = $this->sessionData['mailbox'];
+				$firstMessage = $this->sessionData['previewMessage'];
 				$this->sessionData = array();
 				$this->forcePrefReload();
 			}
@@ -130,6 +131,7 @@
 				$this->sessionData['activeFilter']	= "-1";
 				// default mailbox INBOX
 				$this->sessionData['mailbox']		= (($lv_mailbox && self::folderExists($lv_mailbox,true)) ? $lv_mailbox : "INBOX");
+				$this->sessionData['previewMessage'] = ($firstMessage >0 ? $firstMessage : 0); 
 				// default start message
 				$this->sessionData['startMessage']	= 1;
 				// default mailbox for preferences pages
