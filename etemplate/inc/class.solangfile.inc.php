@@ -364,7 +364,7 @@ class solangfile
 		$from = translation::charset();
 		//echo "<p>solangfile::write_file('$app_name',,'$userlang') converting from '$from' to charset('$userlang')='$to'</p>\n";
 
-		$fn = EGW_SERVER_ROOT . SEP . $app_name . SEP . 'lang' . SEP . translation::LANGFILE_PREFIX . $userlang . '.lang';
+		$fn = translation::get_lang_file($app_name,$userlang);
 		if (file_exists($fn))
 		{
 			$backup = $fn . '.old';
