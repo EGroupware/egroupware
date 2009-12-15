@@ -666,20 +666,28 @@ class timesheet_bo extends so_sql_cf
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param string $pattern pattern to search
+	 * @param array $options Array of options for the search
 	 * @return array with ts_id - title pairs of the matching entries
 	 */
-	function link_query( $pattern )
+	function link_query( $pattern, Array &$options = array() )
 	{
 		$criteria = array();
+		$limit = false;
+		$need_count = false;
 		foreach(array('ts_project','ts_title','ts_description') as $col)
 		{
 			$criteria[$col] = $pattern;
 		}
+		if($options['start'] || $options['num_rows']) {
+			$limit = array($options['start'], $options['num_rows']);
+			$need_count = true;
+		}
 		$result = array();
-		foreach((array) $this->search($criteria,false,'','','%',false,'OR') as $ts )
+		foreach((array) $this->search($criteria,false,'','','%',false,'OR', $limit, null, '', $need_count) as $ts )
 		{
 			if ($ts) $result[$ts['ts_id']] = $this->link_title($ts);
 		}
+		$options['total'] = $need_count ? $this->total : count($result);
 		return $result;
 	}
 

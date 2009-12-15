@@ -112,7 +112,7 @@ class timesheet_ui extends timesheet_bo
 				$content['start_time']=$content['end_time']='00:00';
 			}
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
-			if ($content['start_time'] != '00:00')		// start-time specified
+			if (isset($content['start_time']) && $content['start_time'] != '00:00')		// start-time specified
 			{
 				//$content['ts_start'] += $content['start_time'];
 				$start = new egw_time($content['ts_start']);
@@ -120,7 +120,7 @@ class timesheet_ui extends timesheet_bo
 				$start->setTime($start_time[0],$start_time[1]);
 				$content['ts_start'] = $start->format('ts');
 			}
-			if ($content['end_time'] != '00:00')		// end-time specified
+			if (isset($content['end_time']) && $content['end_time'] != '00:00')		// end-time specified
 			{
 				$end = new egw_time($content['ts_start']);
 				$end_time = explode(':',$content['end_time']);
@@ -384,7 +384,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		if (!$this->customfields) $readonlys['tabs']['customfields'] = true;	// suppress tab if there are not customfields
 		if (!$this->data['ts_id']) $readonlys['tabs']['history']    = true;   //suppress history for the first loading without ID
-
+		
 		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.edit',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
@@ -792,6 +792,9 @@ class timesheet_ui extends timesheet_bo
 				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 			);
+		}
+		if($_GET['search']) {
+			$content['nm']['search'] = $_GET['search'];
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;

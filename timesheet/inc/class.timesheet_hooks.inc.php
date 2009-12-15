@@ -45,6 +45,7 @@ class timesheet_hooks
 			),
 			'view_id' => 'ts_id',
 			'view_popup'  => '600x400',
+			'view_list' => 'timesheet.timesheet_ui.index',
 			'add' => array(
 				'menuaction' => TIMESHEET_APP.'.timesheet_ui.edit',
 			),
