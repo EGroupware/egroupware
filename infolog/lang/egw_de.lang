@@ -308,6 +308,8 @@ select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
 select to filter by owner	infolog	de	Besiter zum Filtern auswählen
 select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
 sender	infolog	de	Absender
+set status to done	infolog	de	Status auf erledigt setzen
+set status to done for all entries	infolog	de	Status für alle Einträge auf erledigt setzen
 sets the status of this entry and its subs to done	infolog	de	Setzt den Status dieses Eintrags und seiner Untereinträge auf erledigt
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.

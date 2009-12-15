@@ -1440,7 +1440,7 @@ class infolog_ui
 		$uid = $_GET['uid'];
 		$partid = $_GET['part'];
 		$mailbox = base64_decode($_GET['mailbox']);
-
+		if ($_date == false || empty($_date)) $_date = $this->bo->user_time_now;
 		if (!empty($_to_emailAddress))
 		{
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
@@ -1492,7 +1492,7 @@ class infolog_ui
 			//_debug_array($attachments);
 			$body = strip_tags($_body);
 			$this->edit($this->bo->import_mail(
-				implode(',',$_to_emailAddress),$_subject,$body,$attachments,''
+				implode(',',$_to_emailAddress),$_subject,$body,$attachments,$_date
 			));
 			exit;
 		}

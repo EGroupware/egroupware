@@ -5,16 +5,16 @@
 		<description class="headertext bold" value="InfoLog"/>
 		<styles>.bold { font-weight: bold; }</styles>
 	</template>
-	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.5.001">
+	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.7.001">
 		<hbox>
 			<description class="headertext" value="Add:"/>
 			<button image="task" label="ToDo" id="add[task]" statustext="Add a new ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]}'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.003">
-		<grid>
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.005">
+		<grid width="100%" class="my_form">
 			<columns>
 				<column width="2%"/>
 				<column/>
@@ -141,8 +141,8 @@
 							<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
 						</hbox>
 						<hbox options="0,0" class="noPrint" orient="0">
-							<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
-							<button image="done_all" label="Close all" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
+							<button image="done" label="Set status to done" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
+							<button image="done_all" label="Set status to done for all entries" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
 							<description/>
 							<description/>
 						</hbox>
@@ -152,7 +152,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.7.004">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.7.005">
 		<grid>
 			<columns>
 				<column width="2%"/>
@@ -294,8 +294,8 @@
 							<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
 						</hbox>
 						<hbox options="0,0" class="noPrint" orient="0">
-							<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
-							<button image="done_all" label="Close all" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
+							<button image="done" label="Set status to done" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
+							<button image="done_all" label="Set status to done for all entries" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
 						</hbox>
 						<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16" label="Filemanager"/>
 					</vbox>
