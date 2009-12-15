@@ -308,6 +308,8 @@ select an entry to link with	infolog	en	Select an entry to link with
 select to filter by owner	infolog	en	select to filter by owner
 select to filter by responsible	infolog	en	select to filter by responsible
 sender	infolog	en	Sender
+set status to done	infolog	en	Set status to done
+set status to done for all entries	infolog	en	Set status to done for all entries
 sets the status of this entry and its subs to done	infolog	en	Sets the status of this entry and its subs to done
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
