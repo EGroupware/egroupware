@@ -18,7 +18,7 @@ function changeSorting(_sort, _aNode) {
 }
 
 function compressFolder() {
-	MessageBuffer = document.getElementById('messageCounter').innerHTML;
+	if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
 	setStatusMessage('<span style="font-weight: bold;">'+ lang_compressingFolder +'</span>');
 	xajax_doXMLHTTP("felamimail.ajaxfelamimail.compressFolder");
 }
@@ -56,7 +56,7 @@ function fm_displayHeaderLines(_url) {
 }
 
 function emptyTrash() {
-	MessageBuffer = document.getElementById('messageCounter').innerHTML;
+	if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
 	setStatusMessage('<span style="font-weight: bold;">' + lang_emptyTrashFolder + '</span>');
 	xajax_doXMLHTTP("felamimail.ajaxfelamimail.emptyTrash");
 }
@@ -130,7 +130,7 @@ function onNodeSelect(_nodeID) {
 			if (Check == true && document.getElementById('selectAllMessagesCheckBox').checked == true) Check = confirm(lang_confirm_all_messages);
 			if (Check == true)
 			{
-				MessageBuffer = document.getElementById('messageCounter').innerHTML;
+				if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
 				if (document.getElementById('selectAllMessagesCheckBox').checked == true) {
 					resetMessageSelect();
 					formData = 'all';
@@ -291,7 +291,7 @@ function flagMessages(_flag)
 
 function resetMessageSelect()
 {
-	MessageBuffer = document.getElementById('messageCounter').innerHTML;
+	if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
 	document.getElementById('messageCheckBox').checked = false;
 	document.getElementById('selectAllMessagesCheckBox').checked = false;
 	checkedCounter = 0;
@@ -358,7 +358,7 @@ function refresh() {
 function refreshFolderStatus(_nodeID,mode) {
 	var nodeToRefresh = 0;
 	var mode2use = "none";
-	MessageBuffer = document.getElementById('messageCounter').innerHTML;
+	if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
 	if (_nodeID) nodeToRefresh = _nodeID;
 	if (mode) {
 		if (mode == "forced") {mode2use = mode;}
@@ -373,7 +373,7 @@ function refreshFolderStatus(_nodeID,mode) {
 }
 
 function refreshView() {
-	MessageBuffer = document.getElementById('messageCounter').innerHTML;
+	if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
 	document.mainView.submit();
 	document.getElementById('messageCounter').innerHTML = MessageBuffer;
 }
@@ -406,7 +406,7 @@ function fm_readMessage(_url, _windowName, _node) {
 	if (windowArray[0] == 'MessagePreview')
 	{
 		//document.getElementById('spanMessagePreview').innerHTML = '';
-		MessageBuffer = document.getElementById('messageCounter').innerHTML;
+		if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
 		setStatusMessage('<span style="font-weight: bold;">'+ lang_updating_view +'</span>');
 		fm_previewMessageID = windowArray[1];
 		fm_previewMessageFolderType = windowArray[2];
