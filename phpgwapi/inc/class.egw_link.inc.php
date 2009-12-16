@@ -572,9 +572,9 @@ class egw_link extends solink
 		elseif(is_object($obj) && method_exists($obj,$method))
 		{
 			$result = $obj->$method($pattern,$options);
-                }
-                else
-                {
+		}
+		else
+		{
 			// Fall back to original method
 			$result = ExecMethod2($method,$pattern,$options);
 		}
@@ -583,9 +583,9 @@ class egw_link extends solink
 		{
 		       $options['total'] = count($result);
 		}
-		if (is_array($result) && (isset($options['start']) || count($result) > $options['num_rows']))
+		if (is_array($result) && (isset($options['start']) || (isset($options['num_rows']) && count($result) > $options['num_rows'])))
 		{
-			$result = array_slice($result, $options['start'], $options['num_rows'], true);
+			$result = array_slice($result, $options['start'], (isset($options['num_rows']) ? $options['num_rows'] : count($result)), true);
 		}
 
 		return $result;
