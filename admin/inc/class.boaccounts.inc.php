@@ -352,20 +352,30 @@
 				$error[$totalerrors] = lang('The groups must include the primary group');
 				$totalerrors++;
 			}
-
+			// if accounts stored in ldap, there is a chance that users are systemusers as well.
+			// check if an account already exists there, and if it does deny creation (increase the totalerrors counter
+			// and the message thereof
+			if($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
+			{
+				if (posix_getpwnam($_userData['account_lid']))
+				{
+					$error[$totalerrors] = lang('There already is a system-user with this name. User\'s should not have the same name as a systemuser');
+					$totalerrors++;
+				}
+			}
 			if($_userData['old_loginid'] != $_userData['account_lid'])
 			{
-				 if($GLOBALS['egw']->accounts->exists($_userData['account_lid']))
+				if($GLOBALS['egw']->accounts->exists($_userData['account_lid']))
 				{
-					 if($GLOBALS['egw']->accounts->exists($_userData['account_lid']) && $GLOBALS['egw']->accounts->get_type($_userData['account_lid'])=='g')
-					 {
+					if($GLOBALS['egw']->accounts->exists($_userData['account_lid']) && $GLOBALS['egw']->accounts->get_type($_userData['account_lid'])=='g')
+					{
 						$error[$totalerrors] = lang('There already is a group with this name. Userid\'s can not have the same name as a groupid');
-					 }
-					 else
-					 {
+					}
+					else
+					{
 						$error[$totalerrors] = lang('That loginid has already been taken');
-					 }
-					 $totalerrors++;
+					}
+					$totalerrors++;
 				}
 			}
 
