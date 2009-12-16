@@ -800,8 +800,9 @@
 		static function getCleanHTML(&$_html, $usepurify = false)
 		{
 			// remove CRLF and TAB as it is of no use in HTML.
-			$_html = str_replace("\r\n",' ',$_html);
-			$_html = str_replace("\t",' ',$_html);
+			// but they matter in <pre>, so we rather don't
+			//$_html = str_replace("\r\n",' ',$_html);
+			//$_html = str_replace("\t",' ',$_html);
 
 			self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
 			self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head	

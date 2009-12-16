@@ -239,16 +239,18 @@
 
         function toggleEditor($_composeID, $_content ,$_mode)
         {
-			if($this->_debug) error_log("ajaxfelamimail::toggleEditor->".$_mode);
+			if($this->_debug) error_log("ajaxfelamimail::toggleEditor->".$_mode.'->'.$_content);
 	        $bocompose  = CreateObject('felamimail.bocompose', $_composeID);
 			if($_mode == 'simple') {
 				if($this->_debug) error_log(__METHOD__.$_content);
 				#if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck'])) $_mode = 'egw_simple_spellcheck';
 	    		$this->sessionData['mimeType'] = 'html';
 				// convert emailadresses presentet in angle brackets to emailadress only
+				$_content = str_replace(array("\r\n","\n","\r","<br>"),array("<br>","<br>","<br>","\r\n"),$_content);
 				$bocompose->replaceEmailAdresses($_content);
 			} else {
 				$this->sessionData['mimeType'] = 'text';
+				$_content = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$_content);
 				$_content = $bocompose->_getCleanHTML($_content);
 				$_content = $bocompose->convertHTMLToText($_content);
 			}

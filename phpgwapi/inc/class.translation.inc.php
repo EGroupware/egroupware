@@ -1037,11 +1037,12 @@ class translation
 	 */
 	static function replaceEmailAdresses(&$text)
 	{
+		//error_log($text);
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
-		$text = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/ie","'$2 '", $text);
 		$text = preg_replace("/(<|&lt;a href=\")*(mailto:([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/ie","'$2 '", $text);
 		$text = preg_replace('~<a[^>]+href=\"(mailto:)+([^"]+)\"[^>]*>~si','$2 ',$text);
 		$text = preg_replace("/(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))( |\s)*(<\/a>)*( |\s)*(>|&gt;)*/ie","'$1 '", $text);
+		$text = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/ie","'$2 '", $text);
 		return 1;
 	}
 

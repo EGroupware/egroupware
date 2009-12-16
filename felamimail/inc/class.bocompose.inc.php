@@ -574,19 +574,19 @@
 			foreach ($headers['TO'] as $mailheader) {
 				$toAddressA[] =  ($mailheader['PERSONAL_NAME'] != 'NIL') ? $mailheader['RFC822_EMAIL'] : $mailheader['EMAIL'];
 			}
-			if (count($toAddressA)>0) $toAddress = @htmlspecialchars(lang("to").": ".$bofelamimail->decode_header(implode(', ', $toAddressA)),ENT_QUOTES).($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
+			if (count($toAddressA)>0) $toAddress = @htmlspecialchars(lang("to").": ".$bofelamimail->decode_header(implode(', ', $toAddressA)),ENT_QUOTES).($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
 			$ccAddressA = array();
 			$ccAddress = '';
 			foreach ($headers['CC'] as $mailheader) {
 				$ccAddressA[] =  ($mailheader['PERSONAL_NAME'] != 'NIL') ? $mailheader['RFC822_EMAIL'] : $mailheader['EMAIL'];
 			}
-			if (count($ccAddressA)>0) $ccAddress = @htmlspecialchars(lang("cc").": ".$bofelamimail->decode_header(implode(', ', $ccAddressA)),ENT_QUOTES).($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
+			if (count($ccAddressA)>0) $ccAddress = @htmlspecialchars(lang("cc").": ".$bofelamimail->decode_header(implode(', ', $ccAddressA)),ENT_QUOTES).($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
 			if($bodyParts['0']['mimeType'] == 'text/html') {
-				$this->sessionData['body']	= "<br>&nbsp;\r\n<p>".'----------------'.lang("original message").'-----------------<br>'.
-					@htmlspecialchars(lang("from").": ".$bofelamimail->decode_header($fromAddress),ENT_QUOTES)."<br>".
+				$this->sessionData['body']	= "<br>&nbsp;\r\n<p>".'----------------'.lang("original message").'-----------------'."\r\n".'<br>'.
+					@htmlspecialchars(lang("from").": ".$bofelamimail->decode_header($fromAddress),ENT_QUOTES)."\r\n<br>".
 					$toAddress.$ccAddress.
-					@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES)."<br>".
-					'----------------------------------------------------------'."</p>\r\n";
+					@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES)."\r\n<br>".
+					'----------------------------------------------------------'."\r\n</p>";
 				$this->sessionData['mimeType'] 	= 'html';
 				$this->sessionData['body']	.= '<blockquote type="cite">';
 
