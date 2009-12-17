@@ -61,6 +61,12 @@ class idots_framework extends egw_framework
 	var $topmenu_icon_arr = array();
 
 	/**
+	* Contains array of information for additional topmenu items added
+	* by hooks
+	*/
+	private static $hook_items = array();
+
+	/**
 	* Constructor
 	*
 	* @param string $template='idots' name of the template
@@ -598,12 +604,8 @@ class idots_framework extends egw_framework
 	*/
 	function topmenu(array &$vars,array &$apps)
 	{
-		//if(!is_array($this->tplsav2->menuitems)) {
-			$this->tplsav2->menuitems = array();
-		//}
-		//if(!is_array($this->tplsav2->menuinfoitems)) {
-			$this->tplsav2->menuinfoitems = array();
-		//}
+		$this->tplsav2->menuitems = array();
+		$this->tplsav2->menuinfoitems = array();
 
 		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
 		{
@@ -621,6 +623,11 @@ class idots_framework extends egw_framework
 		}
 
 		//$this->_add_topmenu_item($apps['about'],lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']));
+		// Add extra items added by hooks
+		foreach(self::$hook_items as $extra_item) {
+			$this->_add_topmenu_item($extra_item);
+		}
+
 		$this->_add_topmenu_item($apps['logout']);
 
 		$this->tplsav2->assign('info_icons',$this->topmenu_icon_arr);
@@ -634,6 +641,27 @@ class idots_framework extends egw_framework
 		$this->_add_topmenu_info_item($vars['quick_add']);
 
 		return $this->tplsav2->fetch('topmenu.tpl.php');
+	}
+
+	/**
+	* Called by hooks to add an entry in the topmenu location.
+	* Extra entries will be added just before Logout.
+	*
+	* @param string $id unique element id
+	* @param string $url Address for the entry to link to
+	* @param string $title Text displayed for the entry
+	* @param string $target Optional, so the entry can open in a new page or popup
+	* @access public
+	* @return void
+	*/
+	public static function add_topmenu_item($id,$url,$title,$target = '')
+	{
+		$entry['name'] = $id;
+		$entry['url'] = $url;
+		$entry['title'] = $title;
+		$entry['target'] = $target;
+
+		self::$hook_items[$id] = $entry;
 	}
 
 	/**
