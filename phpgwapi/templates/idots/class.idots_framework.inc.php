@@ -601,15 +601,15 @@ class idots_framework extends egw_framework
 		$this->tplsav2->menuitems = array();
 		$this->tplsav2->menuinfoitems = array();
 
-		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
-		{
+		//if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
+		//{
 			$this->_add_topmenu_item($apps['home']);
-		}
+		//}
 
-		if($GLOBALS['egw_info']['user']['apps']['preferences'])
-		{
+		//if($GLOBALS['egw_info']['user']['apps']['preferences'])
+		//{
 			$this->_add_topmenu_item($apps['preferences']);
-		}
+		//}
 
 		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
 		{
