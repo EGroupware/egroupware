@@ -499,7 +499,6 @@ abstract class bo_merge
 		if (array_key_exists('$$'.$param[4].'$$',$this->replacements)) $param[4] = $this->replacements['$$'.$param[4].'$$'];
 		if (array_key_exists('$$'.$param[3].'$$',$this->replacements)) $param[3] = $this->replacements['$$'.$param[3].'$$'];
 		$replace = preg_match('/'.$param[2].'/',$this->replacements['$$'.$param[1].'$$']) ? $param[3] : $param[4];
-
 		switch($this->mimetype)
 			{
 				case 'application/rtf':
@@ -508,7 +507,7 @@ abstract class bo_merge
 					break;
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.spreadsheet':
-					$LF ='</text:p><text:p>';
+					$LF ='</text:span></text:p><text:p><text:span>';  //span is needed here
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
