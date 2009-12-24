@@ -522,7 +522,7 @@ class egw_time extends DateTime
 		}
 		if (!$user_tzs)	// if we have no user timezones, eg. user set no pref --> use server default
 		{
-			$user_tzs = array($GLOBALS['egw_info']['server']['sever_timezone']);
+			$user_tzs = array($GLOBALS['egw_info']['server']['server_timezone']);
 		}
 		if ($extra && !in_array($extra,$user_tzs))
 		{
