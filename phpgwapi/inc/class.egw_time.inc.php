@@ -399,16 +399,13 @@ class egw_time extends DateTime
 			$GLOBALS['egw_info']['server']['server_timezone'] = date_default_timezone_get();
 		}
 		self::$server_timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
-		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
+		if (!isset($GLOBALS['egw_info']['user']['preferences']['common']['tz']))
 		{
-			self::setUserPrefs($GLOBALS['egw_info']['user']['preferences']['common']['tz'],
-				$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
-				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat']);
+			$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
 		}
-		else
-		{
-			self::$user_timezone = clone(self::$server_timezone);
-		}
+		self::setUserPrefs($GLOBALS['egw_info']['user']['preferences']['common']['tz'],
+			$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
+			$GLOBALS['egw_info']['user']['preferences']['common']['timeformat']);
 	}
 
 	/**
