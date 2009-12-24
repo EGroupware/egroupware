@@ -232,17 +232,16 @@ abstract class bo_merge
 	/**
 	 * Format a datetime
 	 *
-	 * @param int|string $time unix timestamp or Y-m-d H:i:s string (in user time!)
+	 * @param int|string|DateTime $time unix timestamp or Y-m-d H:i:s string (in user time!)
 	 * @param string $format=null format string, default $this->datetime_format
+	 * @deprecated use egw_time::to($time='now',$format='')
 	 * @return string
 	 */
 	protected function format_datetime($time,$format=null)
 	{
 		if (is_null($format)) $format = $this->datetime_format;
 
-		if (empty($time)) return '';
-
-		return date($this->datetime_format,is_numeric($time) ? $time : strtotime($time));
+		return egw_time::to($time,$format);
 	}
 
 	/**
@@ -323,10 +322,9 @@ abstract class bo_merge
 			{
 				$replacements += $this->contact_replacements($user,'user');
 			}
-			$now = time()+$this->contacts->tz_offset_s;
-			$replacements['$$date$$'] = $this->format_datetime($now,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
-			$replacements['$$datetime$$'] = $this->format_datetime($now);
-			$replacements['$$time$$'] = $this->format_datetime($now,$GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i a':'H:i');
+			$replacements['$$date$$'] = egw_time::to('now',true);
+			$replacements['$$datetime$$'] = egw_time::to('now');
+			$replacements['$$time$$'] = egw_time::to('now',false);
 
 			// does our extending class registered table-plugins AND document contains table tags
 			if ($this->table_plugins && preg_match_all('/\\$\\$table\\/([A-Za-z0-9_]+)\\$\\$(.*?)\\$\\$endtable\\$\\$/s',$content,$matches,PREG_SET_ORDER))
