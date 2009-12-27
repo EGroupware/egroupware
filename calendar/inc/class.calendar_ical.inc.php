@@ -752,7 +752,8 @@ class calendar_ical extends calendar_boupdate
 		// other events are exceptions and need to be checked if they are new
 		// and for real (not status only) exceptions their recurrence-id need 
 		// to be included as recur_exception to the master
-		if ($cal_id > 0 && count($events) > 1 && !$events[1]['id'] &&
+		if ($this->productManufacturer == 'groupdav' && $cal_id > 0 &&
+			count($events) > 1 && !$events[1]['id'] &&
 			$events[0]['recur_type'] != MCAL_RECUR_NONE)
 		{
 			calendar_groupdav::fix_series($events);
