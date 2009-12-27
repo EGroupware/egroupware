@@ -524,6 +524,7 @@ abstract class bo_merge
 		if (strpos($param[0],'$$LETTERPREFIXCUSTOM') === 0)
 		{	//sets a Letterprefix
 			$replaceprefix = array();
+			// ToDo Stefan: $contentstart is NOT defined here!!!
 			$replaceprefix = explode(' ',substr($param[0],21,strlen($contentstart)-2));
 			foreach ($replaceprefix as $key => $nameprefix)
 			{
@@ -572,9 +573,17 @@ abstract class bo_merge
 						preg_quote('</w:t></w:r><w:proofErr w:type="spellEnd"/><w:r><w:t>','/').'/i' => '$ $\\1$ $',
 				);
 				break;
+			case 'application/xml':
+				$fix = array(	// hack to get Excel 2003 to display additional rows in tables
+					'/ss:ExpandedRowCount="\d+"/' => 'ss:ExpandedRowCount="9999"',
+				);
+				break;
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.shee':
 				$mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				$fix = array(	// hack to get Excel 2007 to display additional rows in tables
+					'/ss:ExpandedRowCount="\d+"/' => 'ss:ExpandedRowCount="9999"',
+				);
 				$archive = tempnam($GLOBALS['egw_info']['server']['temp_dir'], basename($document,'.xlsx').'-').'.xlsx';
 				copy($content_url,$archive);
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'xl/sharedStrings.xml');
