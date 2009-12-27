@@ -747,6 +747,16 @@ class calendar_ical extends calendar_boupdate
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
+		// check if we are importing an event series with exceptions in CalDAV
+		// only first event / series master get's cal_id from URL
+		// other events are exceptions and need to be checked if they are new
+		// and for real (not status only) exceptions their recurrence-id need 
+		// to be included as recur_exception to the master
+		if ($cal_id > 0 && count($events) > 1 && !$events[1]['id'] &&
+			$events[0]['recur_type'] != MCAL_RECUR_NONE)
+		{
+			calendar_groupdav::fix_series($events);
+		}
 		foreach ($events as $event)
 		{
 			$updated_id = false;
@@ -1408,7 +1418,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($component, 'Horde_iCalendar_vevent'))
 			{
-				if ($event = $this->vevent2egw($component, $version, $this->supportedFields, $cal_id))
+				if (($event = $this->vevent2egw($component, $version, $this->supportedFields, $cal_id)))
 				{
 					//common adjustments
 					if ($this->productManufacturer == '' && $this->productName == ''
@@ -1444,23 +1454,12 @@ class calendar_ical extends calendar_boupdate
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		}
 
-		// decide what to return
-		if (count($events) == 1)
-		{
-			$event = array_shift($events);
-			if ($cal_id > 0) $event['id'] = $cal_id;
-			if (!is_null($etag)) $event['etag'] = $etag;
-			if ($recur_date) $event['recurrence'] = $recur_date;
+		// if cal_id, etag or recur_date is given, use/set it for 1. event
+		if ($cal_id > 0) $events[0]['id'] = $cal_id;
+		if (!is_null($etag)) $events[0]['etag'] = $etag;
+		if ($recur_date) $events[0]['recurrence'] = $recur_date;
 
-			return array($event);
-		}
-		elseif (count($events) == 0 || $cal_id > 0 || !is_null($etag) || $recur_date)
-		{
-			// no events to return
-			// or not allowed N:1 relation with params just meant for a single event
-			return false;
-		}
-		else return $events;
+		return $events;
 	}
 
 	/**

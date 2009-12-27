@@ -35,6 +35,22 @@ class calendar_groupdav extends groupdav_handler
 		//'EXDATE'
 		//'RECURRENCE-ID'
 	);
+	
+	/**
+	 * Does client understand exceptions to be included in VCALENDAR component of series master sharing its UID
+	 * 
+	 * That also means no EXDATE for these exceptions!
+	 * 
+	 * Setting it to false, should give the old behavior used in 1.6 (hopefully) no client needs that.
+	 * 
+	 * @var boolean
+	 */
+	var $client_shared_uid_exceptions = true;
+
+	/**
+	 * Are we using id or uid for the path/url
+	 */
+	const PATH_ATTRIBUTE = 'id';
 
 	/**
 	 * Constructor
@@ -49,8 +65,6 @@ class calendar_groupdav extends groupdav_handler
 
 		$this->bo = new calendar_boupdate();
 	}
-
-	const PATH_ATTRIBUTE = 'id';
 
 	/**
 	 * Create the path for an event
@@ -96,13 +110,17 @@ class calendar_groupdav extends groupdav_handler
 			'daywise' => false,
 			'date_format' => 'server',
 		);
-		if ($this->debug > 1) error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));
-		//error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));
+		if ($this->client_shared_uid_exceptions)
+		{
+			$cal_filters['query']['cal_reference'] = 0;
+		}
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$cal_filters,$id))
 		{
 			return false;
 		}
+		if ($this->debug > 1) error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));
+
 		// check if we have to return the full calendar data or just the etag's
 		if (!($calendar_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
 		{
@@ -115,10 +133,19 @@ class calendar_groupdav extends groupdav_handler
 				}
 			}
 		}
-		if (($events =& $this->bo->search($cal_filters)))
+		$events =& $this->bo->search($cal_filters);
+		if ($events)
 		{
+			// get all max user modified times at once
 			foreach($events as &$event)
 			{
+				$ids[] = $event['id'];
+			}
+			$max_user_modified = $this->bo->so->max_user_modified($ids);
+
+			foreach($events as &$event)
+			{
+				$event['max_user_modified'] = $max_user_modified[$event['id']];
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($event)),
@@ -131,8 +158,7 @@ class calendar_groupdav extends groupdav_handler
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
-					if (is_null($handler)) $handler = $this->_get_handler();
-					$content = $handler->exportVCal(array($event),'2.0','PUBLISH');
+					$content = $this->iCal($event);
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
@@ -172,29 +198,29 @@ class calendar_groupdav extends groupdav_handler
 				switch($filter['name'])
 				{
 					case 'comp-filter':
-						if ($this->debug > 1) error_log(__METHOD__."($path,...) comp-filter='{$filter['attrs']['name']}'");
+						if ($this->debug > 1) error_log(__METHOD__."($options[path],...) comp-filter='{$filter['attrs']['name']}'");
 
 						switch($filter['attrs']['name'])
 						{
 							case 'VTODO':
 								return false;	// return nothing for now, todo: check if we can pass it on to the infolog handler
 								// todos are handled by the infolog handler
-								$infolog_handler = new groupdav_infolog();
-								return $infolog_handler->propfind($path,$options,$files,$user,$method);
+								//$infolog_handler = new groupdav_infolog();
+								//return $infolog_handler->propfind($path,$options,$files,$user,$method);
 							case 'VCALENDAR':
 							case 'VEVENT':
 								break;			// that's our default anyway
 						}
 						break;
 					case 'prop-filter':
-						if ($this->debug > 1) error_log(__METHOD__."($path,...) prop-filter='{$filter['attrs']['name']}'");
+						if ($this->debug > 1) error_log(__METHOD__."($options[path],...) prop-filter='{$filter['attrs']['name']}'");
 						$prop_filter = $filter['attrs']['name'];
 						break;
 					case 'text-match':
-						if ($this->debug > 1) error_log(__METHOD__."($path,...) text-match: $prop_filter='{$filter['data']}'");
+						if ($this->debug > 1) error_log(__METHOD__."($options[path],...) text-match: $prop_filter='{$filter['data']}'");
 						if (!isset($this->filter_prop2cal[strtoupper($prop_filter)]))
 						{
-							if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user) unknown property '$prop_filter' --> ignored");
+							if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown property '$prop_filter' --> ignored");
 						}
 						else
 						{
@@ -203,15 +229,15 @@ class calendar_groupdav extends groupdav_handler
 						unset($prop_filter);
 						break;
 					case 'param-filter':
-						if ($this->debug) error_log(__METHOD__."($path,...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
+						if ($this->debug) error_log(__METHOD__."($options[path],...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'time-range':
-				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($path,...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
+				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($options[path],...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
 						$cal_filters['start'] = $filter['attrs']['start'];
 						$cal_filters['end']   = $filter['attrs']['end'];
 						break;
 					default:
-						if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user) unknown filter --> ignored");
+						if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown filter --> ignored");
 						break;
 				}
 			}
@@ -261,7 +287,7 @@ class calendar_groupdav extends groupdav_handler
 				$cal_filters['query'][] = 'egw_cal.cal_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
 			}
 
-			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($path,,,$user,$id) calendar-multiget: ids=".implode(',',$ids));
+			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids));
 		}
 		return true;
 	}
@@ -279,12 +305,95 @@ class calendar_groupdav extends groupdav_handler
 		{
 			return $event;
 		}
-		$handler = $this->_get_handler();
-		$options['data'] = $handler->exportVCal(array($event),'2.0','PUBLISH');
+		$options['data'] = $this->iCal($event);
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($event));
 		return true;
+	}
+	
+	/**
+	 * Generate an iCal for the given event
+	 * 
+	 * Taking into account virtual an real exceptions for recuring events
+	 * 
+	 * @param array $event
+	 * @return string
+	 */
+	private function iCal(array $event)
+	{
+		static $handler = null;
+		if (is_null($handler)) $handler = $this->_get_handler();
+		
+		$events = array($event);
+		
+		// for recuring events we have to add the exceptions
+		if ($this->client_shared_uid_exceptions && $event['recur_type'] && !empty($event['uid']))
+		{
+			$events =& self::get_series($event['uid'],$this->bo);
+		}
+		elseif(!$this->client_shared_uid_exceptions && $event['reference'])
+		{
+			$events[0]['uid'] .= '-'.$event['id'];	// force a different uid
+		}
+		return $handler->exportVCal($events,'2.0','PUBLISH');
+	}
+	
+	/**
+	 * Get array with events of a series identified by its UID (master and all exceptions)
+	 * 
+	 * Maybe that should be part of calendar_bo
+	 * 
+	 * @param string $uid UID
+	 * @param calendar_bo $bo=null calendar_bo object to reuse for search call
+	 * @return array
+	 */
+	private static function &get_series($uid,calendar_bo $bo=null)
+	{
+		if (is_null($bo)) $bo = new calendar_bo();
+
+		$events =& $bo->search(array(
+			'query' => array('cal_uid' => $uid),
+			'daywise' => false,
+			'date_format' => 'server',
+		));
+		$master = null;
+		foreach($events as $k => &$recurrence)
+		{
+			if (!isset($master))	// first event is allways the series master
+			{
+				$master =& $events[$k];
+				//error_log('master: '.array2string($master));
+				continue;	// nothing to change
+			}
+			if ($recurrence['id'] != $master['id'])	// real exception
+			{
+				//error_log('real exception: '.array2string($recurrence));
+				// remove from masters recur_exception, as exception is include
+				// at least Lightning "understands" EXDATE as exception from what's included 
+				// in the whole resource / VCALENDAR component
+				// not removing it causes Lightning to remove the exception itself
+				if (($k = array_search($recurrence['recurrence'],$master['recur_exception'])) !== false)
+				{
+					unset($master['recur_exception'][$k]);
+				}
+				continue;	// nothing to change
+			}
+			// now we need to check if this recurrence is an exception
+			if ($master['participants'] == $recurrence['participants'])
+			{
+				//error_log('NO exception: '.array2string($recurrence));
+				unset($events[$k]);	// no exception --> remove it
+				continue;
+			}
+			// this is a virtual excetion now (no extra event/cal_id in DB)
+			//error_log('virtual exception: '.array2string($recurrence));
+			$recurrence['recurrence'] = $recurrence['start'];
+			$recurrence['reference'] = $master['id'];
+			$recurrence['recur_type'] = MCAL_RECUR_NONE;	// is set, as this is a copy of the master
+			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
+		}
+		return $events;
 	}
 
 	/**
@@ -303,8 +412,7 @@ class calendar_groupdav extends groupdav_handler
 
 		if (!is_null($event) && !is_array($event))
 		{
-
-		if($this->debug) error_log(__METHOD__.print_r($event,true).function_backtrace());
+			if($this->debug) error_log(__METHOD__.print_r($event,true).function_backtrace());
 			return $event;
 		}
 		$handler = $this->_get_handler();
@@ -324,12 +432,78 @@ class calendar_groupdav extends groupdav_handler
 		}
 		return true;
 	}
+	
+	/**
+	 * Fix event series with exceptions, called by calendar_ical::importVCal():
+	 *	a) only series master = first event got cal_id from URL
+	 *	b) exceptions need to be checked if they are already in DB or new
+	 *	c) recurrence-id of (real not virtual) exceptions need to be re-added to master
+	 * 
+	 * @param array &$events
+	 */
+	static function fix_series(array &$events)
+	{
+		foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
+		$master =& $events[0];
+		
+		$bo = new calendar_boupdate();
+		
+		// get array with orginal recurrences indexed by recurrence-id
+		$org_recurrences = array();
+		foreach(self::get_series($master['uid'],$bo) as $event)
+		{
+			if ($event['recurrence'])
+			{
+				$org_recurrences[$event['recurrence']] = $event;
+			}
+		}
+
+		// assign cal_id's to already existing recurrences and evtl. re-add recur_exception to master
+		foreach($events as &$recurrence)
+		{
+			if ($recurrence['id'] || !$recurrence['recurrence']) continue;	// master
+			
+			// from now on we deal with exceptions
+			$org_recurrence = $org_recurrences[$recurrence['recurrence']];
+			if (isset($org_recurrence))	// already existing recurrence
+			{
+				error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
+				$recurrence['id'] = $org_recurrence['id'];
+				
+				// re-add (non-virtual) exceptions to master's recur_exception
+				if ($recurrence['id'] != $master['id'])
+				{
+					error_log(__METHOD__.'() re-adding recur_exception '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']));
+					$master['recur_exception'][] = $recurrence['recurrence'];
+				}
+				// remove recurrence to be able to detect deleted exceptions
+				unset($org_recurrences[$recurrence['recurrence']]);
+			}
+		}
+
+		// delete not longer existing recurrences
+		foreach($org_recurrences as $org_recurrence)
+		{
+			if ($org_recurrence['id'] != $master['id'])	// non-virtual recurrence
+			{
+				error_log(__METHOD__.'() deleting #'.$org_recurrence['id']);
+				$bo->delete($org_recurrence['id']);	// might fail because of permissions
+			}
+			else	// virtual recurrence
+			{
+				error_log(__METHOD__.'() ToDO: delete virtual exception '.$org_recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$org_recurrence['recurrence']));
+				// todo: reset status and participants to master default
+			}
+		}
+		foreach($events as $n => $event) error_log(__METHOD__." $n after: ".array2string($event));
+	}
 
 	/**
 	 * Handle delete request for an event
 	 *
 	 * If current user has no right to delete the event, but is an attendee, we reject the event for him.
 	 *
+	 * @todo remove (non-virtual) exceptions, if series master gets deleted
 	 * @param array &$options
 	 * @param int $id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
@@ -372,20 +546,41 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function get_etag($entry)
 	{
-		$e_in = $entry;
 		if (!is_array($entry))
 		{
 			$entry = $this->read($entry);
 		}
-		if (!$entry['id'] || !isset($entry['etag']) || !isset($entry['participants'])) {
-			if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($e_in): id=$entry[id], etag=$entry[etag], isset(participants)=".(int)isset($entry['participants']).", title=$entry[title]: id, etag or participants not set!!!");
-		}
 		$etag = $entry['id'].':'.$entry['etag'];
-		// add a hash over the participants and their stati
-		ksort($entry['participants']);	// create a defined order
-		$etag .= ':'.md5(serialize($entry['participants']));
-		//error_log(__FILE__ .__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
-		return $etag;
+
+		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
+		if (isset($entry['max_user_modified']))
+		{
+			$etag .= ':'.$entry['max_user_modified'];
+		}
+		else
+		{
+			$etag .= ':'.$this->bo->so->max_user_modified($entry['id']);
+		}
+		// include exception etags into our own etag, if exceptions are included
+		if ($this->client_shared_uid_exceptions && !empty($entry['uid']) &&
+			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
+		{
+			$events =& $this->bo->search(array(
+				'query' => array('cal_uid' => $entry['uid']),
+				'daywise' => false,
+				'enum_recuring' => false,
+				'date_format' => 'server',
+			));
+			foreach($events as $k => &$recurrence)
+			{
+				if ($recurrence['reference'])	// ignore series master
+				{
+					$etag .= ':'.substr($this->get_etag($recurrence),1,-1);
+				}
+			}
+		}
+		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
+		return '"'.$etag.'"';
 	}
 
 	/**
