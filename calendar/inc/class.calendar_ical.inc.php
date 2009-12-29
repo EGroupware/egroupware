@@ -54,7 +54,7 @@ class calendar_ical extends calendar_boupdate
 	);
 
 	/**
-	 * @var array $status_ical2egw conversion of the priority egw => ical
+	 * @var array $priority_egw2ical conversion of the priority egw => ical
 	 */
 	var $priority_egw2ical = array(
 		0 => 0,		// undefined
@@ -64,13 +64,32 @@ class calendar_ical extends calendar_boupdate
 	);
 
 	/**
-	 * @var array $status_ical2egw conversion of the priority ical => egw
+	 * @var array $priority_ical2egw conversion of the priority ical => egw
 	 */
 	var $priority_ical2egw = array(
 		0 => 0,		// undefined
 		9 => 1,	8 => 1, 7 => 1, 6 => 1,	// low
 		5 => 2,		// normal
 		4 => 3, 3 => 3, 2 => 3, 1 => 3,	// high
+	);
+	
+	/**
+	 * @var array $priority_egw2funambol conversion of the priority egw => funambol
+	 */
+	var $priority_egw2funambol = array(
+		0 => 1,		// undefined (mapped to normal since undefined does not exist)
+		1 => 0,		// low
+		2 => 1,		// normal
+		3 => 2,		// high
+	);
+
+	/**
+	 * @var array $priority_funambol2egw conversion of the priority funambol => egw
+	 */
+	var $priority_funambol2egw = array(
+		0 => 1,		// low
+		1 => 2,		// normal
+		2 => 3,		// high
 	);
 
 	/**
@@ -474,7 +493,14 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'PRIORITY':
-							$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
+							if($this->productManufacturer == 'funambol')
+							{
+								$attributes['PRIORITY'] = (int) $this->priority_egw2funambol[$event['priority']];
+							}
+							else
+							{
+								$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
+							}
 							break;
 
 					case 'TRANSP':
@@ -1843,7 +1869,14 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'PRIORITY':
-					$vcardData['priority'] = (int) $this->priority_ical2egw[$attributes['value']];
+					if($this->productManufacturer == 'funambol')
+					{
+						$vcardData['priority'] = (int) $this->priority_funambol2egw[$attributes['value']];
+					}
+					else
+					{
+						$vcardData['priority'] = (int) $this->priority_ical2egw[$attributes['value']];
+					}
 					break;
 				case 'CATEGORIES':
 					if ($attributes['value'])
