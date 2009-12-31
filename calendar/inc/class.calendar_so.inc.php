@@ -238,6 +238,26 @@ class calendar_so
 		//echo "<p>socal::read(".print_r($ids,true).")=<pre>".print_r($events,true)."</pre>\n";
 		return $events;
 	}
+	
+	/**
+	 * Get maximum modification time of participant data of given event(s)
+	 * 
+	 * This includes ALL recurences of an event series
+	 * 
+	 * @param int|array $ids one or multiple cal_id's
+	 * @return int|array (array of) modification timestamp(s)
+	 */
+	function max_user_modified($ids)
+	{
+		foreach($this->db->select($this->user_table,'cal_id,MAX(cal_user_modified) AS user_etag',array(
+			'cal_id' => $ids,
+		),__LINE__,__FILE__,false,'GROUP BY cal_id','calendar') as $row)
+		{
+			$etags[$row['cal_id']] = $this->db->from_timestamp($row['user_etag']);
+		}
+		//echo "<p>".__METHOD__.'('.array2string($ids).') = '.array2string($etags)."</p>\n";
+		return is_array($ids) ? $etags : $etags[$ids];
+	}
 
 	/**
 	 * generate SQL to filter after a given category (evtl. incl. subcategories)
@@ -300,10 +320,6 @@ class calendar_so
 		$cols = !is_null($_cols) ? $_cols : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
 
 		$where = array();
-		if (!empty($sql_filter) && is_string($sql_filter))
-		{
-			$where[] = $sql_filter;
-		}
 		if (is_array($query))
 		{
 			$where = $query;
@@ -315,6 +331,10 @@ class calendar_so
 				$to_or[] = $col . ' LIKE ' . $this->db->quote('%'.$query.'%');
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
+		}
+		if (!empty($sql_filter) && is_string($sql_filter))
+		{
+			$where[] = $sql_filter;
 		}
 		if ($users)
 		{
@@ -371,7 +391,7 @@ class calendar_so
 		if ($start) $where[] = (int)$start.' < cal_end';
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
-		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injunktion
+		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injection
 
 		if ($this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'])
 		{
