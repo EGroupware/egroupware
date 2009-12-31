@@ -1141,7 +1141,7 @@ class Horde_iCalendar {
             } else {
                 $value = str_replace(array("\r", "\n"), array('', '\\n'), $value);
                 $attr_string = $name . $params_str;
-                if (!empty($value)) {
+                if (!empty($value) || $value === 0 || (is_string($value) && strlen($value) > 0)) {
                 	$attr_string .= ':' . $value;
                 } elseif ($name != 'RRULE') {
                 	$attr_string .= ':';
