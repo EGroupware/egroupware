@@ -298,7 +298,7 @@ abstract class bo_merge
 		}
 		list($Labelstart,$Labelrepeat,$Labeltend) = preg_split('/\$\$label\$\$/',$contentrepeat,-1, PREG_SPLIT_NO_EMPTY);  //get the Lable content
 		preg_match_all('/\$\$labelplacement\$\$/',$contentrepeat,$countlables, PREG_SPLIT_NO_EMPTY);
-		$countlables = count($countlables[0])+1;
+		$countlables = count($countlables[0]);
 		preg_replace('/\$\$labelplacement\$\$/','',$Labelrepeat,1);
 		if ($countlables > 1) $lableprint = true;
 		if (count($ids) > 1 && !$contentrepeat)
@@ -392,13 +392,13 @@ abstract class bo_merge
 
 			foreach ($contentrep as $Label)
 			{
+				$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/',$Label,$contentrepeatpages[$countpage],1);
 				$count=$count+1;
-				if ($count % $countlables == 0)
+				if (($count % $countlables) == 0 && count($contentrep)>$count)  //new page
 				{
-					$countpage=$countpage+1;
+					$countpage = $countpage+1;
 					$contentrepeatpages[$countpage] = $Labelstart.$Labeltend;
 				}
-				$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/',$Label,$contentrepeatpages[$countpage],1);
 			}
 			$contentrepeatpages[$countpage] = preg_replace('/\$\$labelplacement\$\$/','',$contentrepeatpages[$countpage],-1);  //clean empty fields
 
