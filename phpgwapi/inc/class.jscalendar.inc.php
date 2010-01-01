@@ -83,6 +83,7 @@ class jscalendar
 	 * @param string $options='' any other options to the inputfield
 	 * @param boolean $jsreturn=false
 	 * @param boolean $useicon=true true: use icon to trigger popup, false: click into input triggers popup
+	 * 		the input is made readonly via javascript to NOT trigger mobile devices to display a keyboard!
 	 * @return string html
 	 */
 	function input($name,$date,$year=0,$month=0,$day=0,$helpmsg='',$options='',$jsreturn=false,$useicon=true)
@@ -132,8 +133,10 @@ class jscalendar
 		}
 		return
 '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.htmlspecialchars($date).'"'.$options.'/>
-<script type="text/javascript">'.(!$useicon ? '' : '
-document.writeln(\'<img id="'.$name.'-trigger" src="'.common::find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');').'
+<script type="text/javascript">'.(!$useicon ? '
+document.getElementById("'.$name.'").readOnly=true;
+' : '
+document.writeln(\'<img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');').'
 Calendar.setup(
 {
 	inputField  : "'.$name.'",'.(!$useicon ? '' : '
