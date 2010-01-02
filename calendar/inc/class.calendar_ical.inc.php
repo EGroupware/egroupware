@@ -493,15 +493,15 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'PRIORITY':
-							if($this->productManufacturer == 'funambol')
-							{
-								$attributes['PRIORITY'] = (int) $this->priority_egw2funambol[$event['priority']];
-							}
-							else
-							{
-								$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
-							}
-							break;
+						if($this->productManufacturer == 'funambol')
+						{
+							$attributes['PRIORITY'] = (int) $this->priority_egw2funambol[$event['priority']];
+						}
+						else
+						{
+							$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
+						}
+						break;
 
 					case 'TRANSP':
 						if ($version == '1.0')
