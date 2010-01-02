@@ -1652,9 +1652,9 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				html::content_header('event.ics','text/calendar',bytes($ical));
+				$GLOBALS['egw']->browser->content_header('event.ics','text/calendar',bytes($ical));
 				echo $ical;
-				common::egw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 		}
 		if (is_array($content))

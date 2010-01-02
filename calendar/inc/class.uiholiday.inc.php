@@ -479,7 +479,9 @@
 			if (isset($_GET['download']))
 			{
 				$locale = $this->bo->locales[0];
-				html::content_header("holidays.$locale.csv",'text/text');
+				$browser =& CreateObject('phpgwapi.browser');
+				$browser->content_header("holidays.$locale.csv",'text/text'); 	 
+				unset($browser);
 
 				echo "charset\t".translation::charset()."\n";
 				$last_year = -1;
