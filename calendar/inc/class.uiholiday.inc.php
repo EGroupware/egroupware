@@ -495,7 +495,7 @@
 					}
 					echo "$locale\t$holiday[name]\t$holiday[day]\t$holiday[month]\t$holiday[occurence]\t$holiday[dow]\t$holiday[observance_rule]\n";
 				}
-				common::egw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 			if($this->debug)
 			{

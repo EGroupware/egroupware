@@ -793,7 +793,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			$js .= 'window.close();';
 			echo "<html><body onload=\"$js\"></body></html>\n";
-			common::egw_exit();
+			$GLOBALS['egw']->common->egw_exit();
 		}
 		return $this->edit($event,$preserv,$msg,$js,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
 	}
@@ -1674,9 +1674,9 @@ class calendar_uiforms extends calendar_ui
 			else
 			{
 				$ical =& $boical->exportVCal($events,'2.0','PUBLISH');
-				html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
+				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
 				echo $ical;
-				common::egw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 		}
 		if (!is_array($content))
