@@ -49,6 +49,10 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	const CARDDAV = 'urn:ietf:params:xml:ns:carddav';
 	/**
+	 * Calendarserver namespace (eg. for ctag)
+	 */
+	const CALENDARSERVER = 'http://calendarserver.org/ns/';
+	/**
 	 * Realm and powered by string
 	 */
 	const REALM = 'eGroupWare CalDAV/CardDAV/GroupDAV server';
@@ -229,7 +233,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if ($method != 'REPORT' && !$id)	// no self URL for REPORT requests (only PROPFIND) or propfinds on an id
 			{
-				$files['files'][] = array(
+				$files['files'][0] = array(
 		        	'path'  => '/'.$app.'/',
 					// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
 		        	'props' => $this->_properties($app,$app=='addressbook'&&strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false),
@@ -237,6 +241,12 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			if (!$options['depth'] && !$id)
 			{
+				// add ctag if handler implements it (only for depth 0)
+				if (method_exists($handler,'getctag'))
+				{
+					$files['files'][0]['props'][] = HTTP_WebDAV_Server::mkprop(
+						groupdav::CALENDARSERVER,'getctag',$handler->getctag($options['path'],$user));
+				}
 				return true;	// depth 0 --> show only the self url
 			}
 			return $handler->propfind($options['path'],$options,$files,$user,$id);

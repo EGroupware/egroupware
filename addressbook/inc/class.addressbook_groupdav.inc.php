@@ -22,7 +22,7 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * bo class of the application
 	 *
-	 * @var addressbook_vcal
+	 * @var addressbook_bo
 	 */
 	var $bo;
 
@@ -305,6 +305,24 @@ class addressbook_groupdav extends groupdav_handler
 			return '201 Created';
 		}
 		return true;
+	}
+
+	/**
+	 * Query ctag for addressbook
+	 * 
+	 * @return string
+	 */
+	public function getctag($path,$user)
+	{
+		$filter = array();
+		// show addressbook of a single user?
+		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
+		// should we hide the accounts addressbook
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
+		
+		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','','','',$filter);
+		
+		return date('Y-m-d H:i:s',$result[0]['modified']);
 	}
 
 	/**
