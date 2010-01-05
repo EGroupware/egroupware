@@ -322,7 +322,7 @@ class addressbook_groupdav extends groupdav_handler
 		
 		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','','','',$filter);
 		
-		return date('Y-m-d H:i:s',$result[0]['modified']);
+		return '"'.$result[0]['modified'].'"';
 	}
 
 	/**
