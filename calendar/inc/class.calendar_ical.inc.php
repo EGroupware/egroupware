@@ -248,17 +248,15 @@ class calendar_ical extends calendar_boupdate
 			}
 			elseif ($event['recur_enddate'])
 			{
-				$time = new egw_time($event['start'],egw_time::$server_timezone);
+				$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
 				if (!isset(self::$tz_cache[$event['tzid']]))
 				{
 					self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
 				}
 				// all calculations in the event's timezone
 				$time->setTimezone(self::$tz_cache[$event['tzid']]);
-				$time->setTime(0, 0, 0);
-				$delta = $event['end'] - (int)$time->format('U');
-				// Adjust recur_enddate to end time
-				$event['recur_enddate'] += $delta;
+				$time->setTime(23, 59, 59);
+				$event['recur_enddate'] = $this->date2ts($time);
 			}
 
 			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
@@ -2122,6 +2120,8 @@ class calendar_ical extends calendar_boupdate
 				$last = clone $rriter->current;
 				$rriter->next_no_exception();
 			}
+			$delta = $event['end'] - $event['start'];
+			$last->modify('+' . $delta . ' seconds');
 			$last->setTime(0, 0, 0);
 			$event['recur_enddate'] = $this->date2ts($last);
 		}
