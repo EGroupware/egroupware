@@ -240,12 +240,16 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 
 		$ua = $_SERVER['HTTP_USER_AGENT'];
 
-		if (preg_match("/^\s*Funambol (.*) [^\d]*(\d+\.?\d*)[\.|\d]*\s*$/i", $ua, $matches)) {
-			// Funambol uses the hardware Manufacturer we don't care about
+		if (($pos = strpos($ua, 'Funambol'))!== false) {
 			$this->_deviceInfo['manufacturer'] = 'Funambol';
-			$this->_deviceInfo['model'] = trim($matches[1]);
-			$this->_deviceInfo['softwareVersion'] = floatval($matches[2]);
-
+			$this->_deviceInfo['model'] = 'generic';
+			$this->_deviceInfo['softwareVersion'] = 3.1; // force special treatment
+			$type = substr($ua, $pos + 9);
+			if (preg_match("/^(.*) [^\d]*(\d+\.?\d*)[\.|\d]*\s*$/i", $type, $matches)) {
+				// Funambol uses the hardware Manufacturer we don't care about
+				$this->_deviceInfo['model'] = trim($matches[1]);
+				$this->_deviceInfo['softwareVersion'] = floatval($matches[2]);
+			}
 			if (!isset($this->_deviceInfo['deviceType'])) {
 				switch (strtolower(trim($matches[1]))) {
 					case 'pocket pc plug-in':
@@ -257,6 +261,7 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 					break;
 				}
 			}
+
 		}
 
 		switch (strtolower($this->_deviceInfo['deviceID'])) {
