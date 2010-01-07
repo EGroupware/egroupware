@@ -326,6 +326,22 @@ class addressbook_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Add extra properties for addressbook collections
+	 *
+	 * @param array $props=array() regular props by the groupdav handler
+	 * @return array
+	 */
+	static function extra_properties(array $props=array())
+	{
+		// supported reports (required property for CardDAV)
+		$props[] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
+			HTTP_WebDAV_Server::mkprop('supported-report','addressbook-query'),
+			HTTP_WebDAV_Server::mkprop('supported-report','addressbook-multiget'),
+		));
+		return $props;
+	}
+
+	/**
 	 * Get the handler and set the supported fields
 	 *
 	 * @return addressbook_vcal
