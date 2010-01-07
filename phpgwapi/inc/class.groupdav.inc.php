@@ -497,7 +497,16 @@ class groupdav extends HTTP_WebDAV_Server
 				default:
 					$ns = $prop['ns'];
 			}
-			$arr[$ns.':'.$prop['name']] = $prop['val'];
+			// allow multiple values for same name
+			if (isset($arr[$ns.':'.$prop['name']]))
+			{
+				$arr[$ns.':'.$prop['name']] = (array)$arr[$ns.':'.$prop['name']];
+				$arr[$ns.':'.$prop['name']][] = $prop['val'];
+			}
+			else
+			{
+				$arr[$ns.':'.$prop['name']] = $prop['val'];
+			}
 		}
 		return $arr;
 	}

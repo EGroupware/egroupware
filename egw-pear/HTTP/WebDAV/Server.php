@@ -758,8 +758,9 @@ class HTTP_WebDAV_Server
                                 . "GMT</D:getlastmodified>\n";
                             break;
                         case "resourcetype":
+                        case "supported-report-set":
                         	if (!is_array($prop['val'])) {
-                            	echo "     <D:resourcetype><D:$prop[val]/></D:resourcetype>\n";
+                            	echo "     <D:$prop[name]><D:$prop[val]/></D:$prop[name]>\n";
                         	} else {	// multiple resourcetypes from different namespaces as required by GroupDAV
                        			$vals = $extra_ns = '';
                         		foreach($prop['val'] as $subprop)
@@ -781,10 +782,17 @@ class HTTP_WebDAV_Server
 		                            } else {
 		                            	$ns_name = '';
 		                            }
-		                            $vals .= "<$ns_name$subprop[val]/>";
+		                            // check if $prop[val] should be returned as attribute or value
+		                            if ($subprop['name'] == $subprop['val'] || 
+		                                $subprop['name'] == $prop['name']) {
+		                            	$vals .= "<$ns_name$subprop[val]/>";
+		                            } else {
+		                            	$vals .= "<$ns_name$subprop[name]>$subprop[val]</$ns_name$subprop[name]>";
+		                            }
                         		}
-                        		echo "     <D:resourcetype$extra_ns>$vals</D:resourcetype>\n";
-								//error_log("resourcetype: <D:resourcetype$extra_ns>$vals</D:resourcetype>");
+                        		echo "     <D:$prop[name]$extra_ns>$vals</D:$prop[name]>\n";
+                        		//error_log(array2string($prop));
+                        		//error_log("<D:$prop[name]$extra_ns>$vals</D:$prop[name]>");
                         	}
                             break;
                         case "supportedlock":
