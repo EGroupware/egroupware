@@ -655,13 +655,15 @@ abstract class egw_framework
 
 		if ($GLOBALS['egw_info']['flags']['include_xajax'])
 		{
-			require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/xajax.inc.php');
-
-			$xajax = new xajax(egw::link('/xajax.php'), 'xajax_', translation::charset());
-			$xajax->waitCursorOff();
-			$xajax->registerFunction("doXMLHTTP");
-
-			$java_script .= $xajax->getJavascript($GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/js/');
+			require_once(EGW_API_INC.'/xajax/xajax_core/xajax.inc.php');
+			
+			$xajax = new xajax();
+			$xajax->configure('requestURI', egw::link('/xajax.php'));
+			$xajax->configure('javascript URI',$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/inc/xajax');
+ 			$xajax->configure('waitCursor',false);
+ 			$xajax->register(XAJAX_FUNCTION,'doXMLHTTP');
+ 			
+ 			$java_script .= $xajax->getJavascript();
 		}
 
 		/* this flag is for all javascript code that has to be put before other jscode.

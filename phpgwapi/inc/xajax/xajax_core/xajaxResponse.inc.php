@@ -39,6 +39,33 @@
 */
 class xajaxResponse
 {
+	/**
+	 * Adding all legacy functions to ease the transition
+	 */
+	function outputEntitiesOn()		{ $this->setOutputEntities(true); }
+	function outputEntitiesOff()	{ $this->setOutputEntities(false); }
+	function addConfirmCommands()	{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'confirmCommands'), $temp); }
+	function addAssign()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'assign'), $temp); }
+	function addAppend()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'append'), $temp); }
+	function addPrepend()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'prepend'), $temp); }
+	function addReplace()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'replace'), $temp); }
+	function addClear()				{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'clear'), $temp); }
+	function addAlert()				{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'alert'), $temp); }
+	function addRedirect()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'redirect'), $temp); }
+	function addScript()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'script'), $temp); }
+	function addScriptCall()		{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'call'), $temp); }
+	function addRemove()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'remove'), $temp); }
+	function addCreate()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'create'), $temp); }
+	function addInsert()			{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'insert'), $temp); }
+	function addInsertAfter()		{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'insertAfter'), $temp); }
+	function addCreateInput()		{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'createInput'), $temp); }
+	function addInsertInput()		{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'insertInput'), $temp); }
+	function addInsertInputAfter()	{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'insertInputAfter'), $temp); }
+	function addRemoveHandler()		{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'removeHandler'), $temp); }
+	function addIncludeScript()		{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'includeScript'), $temp); }
+	function addIncludeCSS()		{ $temp=func_get_args(); return call_user_func_array(array(&$this, 'includeCSS'), $temp); }
+	function &getXML()				{ return $this; }
+	
 	/**#@+
 	 * @access protected
 	 */
