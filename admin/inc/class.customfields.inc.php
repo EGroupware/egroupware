@@ -189,6 +189,12 @@ class customfields
 		$sel_options = array(
 			'type2' => $this->types2 + array('tmpl' => 'template'),
 		);
+		// do NOT allow to delete original contact content-type for addressbook, 
+		// as it only creates support problems as users incidently delete it
+		if ($this->appname == 'addressbook' && $this->content_type == 'n')
+		{
+			$readonlys['content_types']['delete'] = true;
+		}
 		$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 			'fields' => $preserv_fields,
 			'appname' => $this->appname,
