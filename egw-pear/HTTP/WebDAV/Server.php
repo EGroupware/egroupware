@@ -757,44 +757,6 @@ class HTTP_WebDAV_Server
                                 . gmdate("D, d M Y H:i:s ", $prop['val'])
                                 . "GMT</D:getlastmodified>\n";
                             break;
-                        case "resourcetype":
-                        case "supported-report-set":
-                        	if (!is_array($prop['val'])) {
-                            	echo "     <D:$prop[name]><D:$prop[val]/></D:$prop[name]>\n";
-                        	} else {	// multiple resourcetypes from different namespaces as required by GroupDAV
-                       			$vals = $extra_ns = '';
-                        		foreach($prop['val'] as $subprop)
-                        		{
- 		                            if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
-										// register property namespace if not known yet
-	                            		if (!isset($ns_hash[$subprop['ns']])) {
-			                                $ns_name = "ns".(count($ns_hash) + 1);
-			                                $ns_hash[$subprop['ns']] = $ns_name;
-	                            		} else {
-	                            			$ns_name = $ns_hash[$subprop['ns']];
-	                            		}
-		                            	if (strchr($extra_ns,$extra=' xmlns:'.$ns_name.'="'.$subprop['ns'].'"') === false) {
-			                                $extra_ns .= $extra;
-		                            	}
-		                            	$ns_name .= ':';
-		                            } elseif ($subprop['ns'] == 'DAV:') {
-		                            	$ns_name = 'D:';
-		                            } else {
-		                            	$ns_name = '';
-		                            }
-		                            // check if $prop[val] should be returned as attribute or value
-		                            if ($subprop['name'] == $subprop['val'] || 
-		                                $subprop['name'] == $prop['name']) {
-		                            	$vals .= "<$ns_name$subprop[val]/>";
-		                            } else {
-		                            	$vals .= "<$ns_name$subprop[name]>$subprop[val]</$ns_name$subprop[name]>";
-		                            }
-                        		}
-                        		echo "     <D:$prop[name]$extra_ns>$vals</D:$prop[name]>\n";
-                        		//error_log(array2string($prop));
-                        		//error_log("<D:$prop[name]$extra_ns>$vals</D:$prop[name]>");
-                        	}
-                            break;
                         case "supportedlock":
                             echo "     <D:supportedlock>$prop[val]</D:supportedlock>\n";
                             break;
@@ -804,10 +766,11 @@ class HTTP_WebDAV_Server
                             echo "     </D:lockdiscovery>\n";
                             break;
                         default:
-                        	if (is_array($prop['val'])) error_log($file['path'].': '.$prop['name'].'='.array2string($prop['val']));
-                            echo "     <D:$prop[name]>"
-                                . $this->_prop_encode(htmlspecialchars($prop['val']))
-                                .     "</D:$prop[name]>\n";
+                            echo "     <D:$prop[name]>".
+                            	(is_array($prop['val']) ?
+	                                $this->_hierarchical_prop_encode($prop['val']) : 
+	                                $this->_prop_encode(htmlspecialchars($prop['val']))).
+	                            "</D:$prop[name]>\n";
                             break;
                         }
                     } else {
@@ -2120,6 +2083,45 @@ class HTTP_WebDAV_Server
     function _urldecode($path)
     {
         return urldecode($path);
+    }
+
+    /**
+     * Encode a hierarchical properties like:
+     * 
+ 	 * <D:supported-report-set>
+	 *    <supported-report>
+	 *       <report>
+	 *          <addressbook-query xmlns='urn:ietf:params:xml:ns:carddav'/>
+	 *       </report>
+	 *    </supported-report>
+	 *    <supported-report>
+	 *       <report>
+	 *          <addressbook-multiget xmlns='urn:ietf:params:xml:ns:carddav'/>
+	 *       </report>
+	 *    </supported-report>
+	 * </D:supported-report-set>
+     * 
+     * @param array $props
+     * @return string
+     */
+	function _hierarchical_prop_encode(array $props)
+    {
+    	//error_log(__METHOD__.'('.array2string($props).')');
+    	if (isset($props['name'])) $props = array($props);
+    	
+    	$ret = '';
+    	foreach($props as $prop)
+    	{
+	    	$ret .= '<'.$prop['name'].
+	    		($prop['ns'] != 'DAV:' ? ' xmlns="'.$prop['ns'].'"' : '').
+	    		(empty($prop['val']) ? ' />' : '>'.
+	    			(is_array($prop['val']) ? 
+	    				$this->_hierarchical_prop_encode($prop['val']) :
+	    				$this->_prop_encode($prop['val'])).
+	    			'</'.$prop['name'].'>');
+    	}
+    	//error_log(__METHOD__.'('.array2string($props).') = '.array2string($ret));
+    	return $ret;
     }
 
     /**

@@ -328,6 +328,21 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Add extra properties for addressbook collections
 	 *
+	 * Example for supported-report-set syntax from Apples Calendarserver:
+	 * <D:supported-report-set>
+	 *    <supported-report>
+	 *       <report>
+	 *          <addressbook-query xmlns='urn:ietf:params:xml:ns:carddav'/>
+	 *       </report>
+	 *    </supported-report>
+	 *    <supported-report>
+	 *       <report>
+	 *          <addressbook-multiget xmlns='urn:ietf:params:xml:ns:carddav'/>
+	 *       </report>
+	 *    </supported-report>
+	 * </D:supported-report-set>
+	 * @link http://www.mail-archive.com/calendarserver-users@lists.macosforge.org/msg01156.html
+	 *    
 	 * @param array $props=array() regular props by the groupdav handler
 	 * @return array
 	 */
@@ -335,8 +350,12 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		// supported reports (required property for CardDAV)
 		$props[] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
-			HTTP_WebDAV_Server::mkprop('supported-report','addressbook-query'),
-			HTTP_WebDAV_Server::mkprop('supported-report','addressbook-multiget'),
+			HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',
+					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-query','')))),
+			HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',
+					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget','')))),
 		));
 		return $props;
 	}

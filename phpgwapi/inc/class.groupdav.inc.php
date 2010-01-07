@@ -275,13 +275,13 @@ class groupdav extends HTTP_WebDAV_Server
 			if ($prop == 'resourcetype')
 			{
 				$resourcetype = array(
-					self::mkprop('collection','collection'),
+					self::mkprop('collection',''),
 				);
 				if (!$no_extra_types)
 				{
 					foreach($this->root[$app]['resourcetype'] as $ns => $type)
 					{
-						$resourcetype[] = self::mkprop($ns,'resourcetype', $type);
+						$resourcetype[] = self::mkprop($ns,$type,'');
 					}
 				}
 				$props[] = self::mkprop('resourcetype',$resourcetype);
@@ -389,7 +389,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if (!isset($collection_props))
 			{
-				$collection_props = self::props2array($file['props']);
+				$collection_props = $this->props2array($file['props']);
 				echo '<h3>'.lang('Collection listing').': '.htmlspecialchars($collection_props['DAV:displayname'])."</h3>\n";
 				continue;	// own entry --> displaying properies later
 			}
@@ -398,7 +398,7 @@ class groupdav extends HTTP_WebDAV_Server
 				echo "<table>\n\t<tr class='th'><th>#</th><th>".lang('Name')."</th><th>".lang('Size')."</th><th>".lang('Last modified')."</th><th>".
 					lang('ETag')."</th><th>".lang('Content type')."</th><th>".lang('Resource type')."</th></tr>\n";
 			}
-			$props = self::props2array($file['props']);
+			$props = $this->props2array($file['props']);
 			//echo $file['path']; _debug_array($props);
 			$class = $class == 'row_on' ? 'row_off' : 'row_on';
 			if (substr($file['path'],-1) == '/')
@@ -448,13 +448,13 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @param mixed $value
 	 * @return string
 	 */
-	protected static function prop_value($value)
+	protected function prop_value($value)
 	{
 		if (is_array($value))
 		{
 			if (isset($value[0]['ns']))
 			{
-				$value = self::props2array($value);
+				$value = $this->_hierarchical_prop_encode($value);
 			}
 			$value = htmlspecialchars(array2string($value));
 		}
@@ -475,7 +475,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @param array $props
 	 * @return array
 	 */
-	protected static function props2array(array $props)
+	protected function props2array(array $props)
 	{
 		$arr = array();
 		foreach($props as $prop)
@@ -497,16 +497,8 @@ class groupdav extends HTTP_WebDAV_Server
 				default:
 					$ns = $prop['ns'];
 			}
-			// allow multiple values for same name
-			if (isset($arr[$ns.':'.$prop['name']]))
-			{
-				$arr[$ns.':'.$prop['name']] = (array)$arr[$ns.':'.$prop['name']];
-				$arr[$ns.':'.$prop['name']][] = $prop['val'];
-			}
-			else
-			{
-				$arr[$ns.':'.$prop['name']] = $prop['val'];
-			}
+			$arr[$ns.':'.$prop['name']] = is_array($prop['val']) ? 
+				$this->_hierarchical_prop_encode($prop['val']) : $prop['val'];
 		}
 		return $arr;
 	}
