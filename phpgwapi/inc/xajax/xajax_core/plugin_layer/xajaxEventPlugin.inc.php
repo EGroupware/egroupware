@@ -127,7 +127,7 @@ class xajaxEventPlugin extends xajaxRequestPlugin
 
 				if (false === isset($this->aEvents[$sEvent]))
 				{
-					$xe =& new xajaxEvent($sEvent);
+					$xe = new xajaxEvent($sEvent);
 
 					if (2 < count($aArgs))
 						if (is_array($aArgs[2]))
@@ -151,7 +151,7 @@ class xajaxEventPlugin extends xajaxRequestPlugin
 						$xuf =& $aArgs[2];
 
 						if (false === is_a($xuf, 'xajaxUserFunction'))
-							$xuf =& new xajaxUserFunction($xuf);
+							$xuf = new xajaxUserFunction($xuf);
 
 						$objEvent =& $this->aEvents[$sEvent];
 						$objEvent->addHandler($xuf);

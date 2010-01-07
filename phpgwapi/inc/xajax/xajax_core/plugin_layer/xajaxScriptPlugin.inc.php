@@ -240,7 +240,7 @@ class xajaxScriptPlugin extends xajaxRequestPlugin
 				if ('style' == $this->sRequest)
 					$sType = 'text/css';
 					
-				$objResponse =& new xajaxCustomResponse($sType);
+				$objResponse = new xajaxCustomResponse($sType);
 				
 				foreach ($aSections as $sSection)
 					$objResponse->append($sSection . "\n");

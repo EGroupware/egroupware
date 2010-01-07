@@ -36,7 +36,7 @@ class legacyXajax extends xajax {
 	}
 	function registerExternalFunction($mFunction, $sInclude)
 	{
-		$xuf =& new xajaxUserFunction($mFunction, $sInclude);
+		$xuf = new xajaxUserFunction($mFunction, $sInclude);
 		$this->register(XAJAX_FUNCTION, $xuf);
 	}
 	function registerCatchAllFunction($mFunction)
