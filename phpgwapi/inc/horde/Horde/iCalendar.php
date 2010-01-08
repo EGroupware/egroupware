@@ -602,6 +602,7 @@ class Horde_iCalendar {
 
         // Unfold any folded lines.
         if ($this->isOldFormat()) {
+        	// old formats force folding at whitespace which must therefore be preserved
         	$vCal = preg_replace('/[\r\n]+([ \t])/', '\1', $vCal);
         } else {
         	$vCal = preg_replace('/[\r\n]+[ \t]/', '', $vCal);
@@ -899,7 +900,7 @@ class Horde_iCalendar {
                     		&& (!$this->isOldFormat() || empty($param_value))) {
                         continue;
                     }
-                    if ($param_name == 'ENCODING' && empty($param_value)) {
+                    if ($param_name == 'ENCODING') {
                     	continue;
                     }
                     /* Skip VALUE=DATE for vCalendar 1.0 data, not allowed. */
@@ -1080,20 +1081,20 @@ class Horde_iCalendar {
                     // Text containing newlines or ASCII >= 127 must be BASE64
                     // or QUOTED-PRINTABLE encoded. Currently we use
                     // QUOTED-PRINTABLE as default.
-                    if (preg_match("/[^\x20-\x7F]/", $value) &&
-                        !isset($params['ENCODING']))  {
-                        $params['ENCODING'] = 'QUOTED-PRINTABLE';
-                        $params_str .= ';ENCODING=QUOTED-PRINTABLE';
-                        // Add CHARSET as well. At least the synthesis client
-                        // gets confused otherwise
-                        if (!isset($params['CHARSET'])) {
-                            $params['CHARSET'] = NLS::getCharset();
-                            $params_str .= ';CHARSET=' . $params['CHARSET'];
-                        }
+                    if (preg_match('/[^\x20-\x7F]/', $value) &&
+		                    !isset($params['ENCODING']))  {
+	                    $params['ENCODING'] = 'QUOTED-PRINTABLE';
+                    }
+                    if (preg_match('/([\177-\377])/', $value) &&
+		                    !isset($params['CHARSET'])) {
+	                    // Add CHARSET as well. At least the synthesis client
+	                    // gets confused otherwise
+	                    $params['CHARSET'] = NLS::getCharset();
+	                    $params_str .= ';CHARSET=' . $params['CHARSET'];
                     }
                 } else {
                     if (is_array($attribute['values']) &&
-                        count($attribute['values'])) {
+                        count($attribute['values']) > 1) {
                         $values = $attribute['values'];
                         if ($name == 'N' || $name == 'ADR' || $name == 'ORG') {
                             $glue = ';';
@@ -1118,30 +1119,40 @@ class Horde_iCalendar {
             }
 
             if (!empty($params['ENCODING']) && strlen(trim($value))) {
-                switch($params['ENCODING']) {
-                      case 'Q':
-                      case 'QUOTED-PRINTABLE':
-                            $value = str_replace("\r", '', $value);
-                            $result .= $name . $params_str . ':'
-                                    . str_replace('=0A', '=0D=0A',
-                                          $this->_quotedPrintableEncode($value))
-                                    . $this->_newline;
-                            break;
-                      case 'B':
-                      case 'BASE64':
-		            		$attr_string = $name . $params_str . ":" . $this->_newline . ' ' . $this->_base64Encode($value);
-                            $attr_string = String::wordwrap($attr_string, 75, $this->_newline . ' ',
-                                                      true, 'utf-8', true);
-                            $result .= $attr_string . $this->_newline;
-                            if ($this->isOldFormat()) {
-                            	$result .= $this->_newline; // Append an empty line
-                            }
-                            break;
-                }
+	            switch($params['ENCODING']) {
+		            case 'Q':
+		            case 'QUOTED-PRINTABLE':
+			            $params_str .= ';ENCODING=' . $params['ENCODING'];
+			            $value = str_replace("\r", '', $value);
+			            $result .= $name . $params_str . ':'
+				            . str_replace('=0A', '=0D=0A',
+					            $this->_quotedPrintableEncode($value))
+								. $this->_newline;
+			            break;
+		            case 'FUNAMBOL-QP':
+		            	// Funambol does not support wrapping and needs some special quoting
+			            $params_str .= ';ENCODING=QUOTED-PRINTABLE';
+			            $value = str_replace(array('<', "\r"), array('&lt;', ''), $value);
+			            $result .= $name . $params_str . ':'
+				            . str_replace('=0A', '=0D=0A',
+					            $this->_quotedPrintableEncode($value, false))
+								. $this->_newline;
+			            break;
+		            case 'B':
+		            case 'BASE64':
+			            $params_str .= ';ENCODING=' . $params['ENCODING'];
+			            $attr_string = $name . $params_str . ':' . $this->_newline . ' ' . $this->_base64Encode($value);
+			            $attr_string = String::wordwrap($attr_string, 75, $this->_newline . ' ',
+				            true, 'utf-8', true);
+			            $result .= $attr_string . $this->_newline;
+			            if ($this->isOldFormat()) {
+				            $result .= $this->_newline; // Append an empty line
+			            }
+	            }
             } else {
                 $value = str_replace(array("\r", "\n"), array('', '\\n'), $value);
                 $attr_string = $name . $params_str;
-                if (!empty($value) || $value === 0 || (is_string($value) && strlen($value) > 0)) {
+                if (strlen($value) > 0) {
                 	$attr_string .= ':' . $value;
                 } elseif ($name != 'RRULE') {
                 	$attr_string .= ':';
@@ -1537,7 +1548,7 @@ class Horde_iCalendar {
      *
      * @return string  The quoted-printable encoded string.
      */
-    function _quotedPrintableEncode($input = '')
+    function _quotedPrintableEncode($input = '', $withFolding=true)
     {
         $output = $line = '';
         $len = strlen($input);
@@ -1555,7 +1566,7 @@ class Horde_iCalendar {
             }
             $line .= $chunk;
             // Wrap long lines (rule 5)
-            if (strlen($line) + 1 > 76) {
+            if ($withFolding && strlen($line) + 1 > 76) {
                 $line = String::wordwrap($line, 75, "=\r\n", true, 'us-ascii', true);
                 $newline = strrchr($line, "\r\n");
                 if ($newline !== false) {
@@ -1567,7 +1578,7 @@ class Horde_iCalendar {
                 continue;
             }
             // Wrap at line breaks for better readability (rule 4).
-            if (substr($line, -3) == '=0A') {
+            if ($withFolding && substr($line, -3) == '=0A') {
                 $output .= $line . "=\r\n";
                 $line = '';
             }

@@ -48,7 +48,7 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
         }
 */
         if (isset($this->_content) && !$this->_moreData) {
-			$this->_content = trim($this->_content);
+			//$this->_content = trim($this->_content);
 	    	$this->_contentSize = strlen($this->_content);
 			if (strtolower($this->_contentFormat) == 'b64') {
 				$this->_content = base64_encode($this->_content);

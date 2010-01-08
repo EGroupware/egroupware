@@ -169,20 +169,40 @@ class infolog_ical extends infolog_bo
 
 			if ($field == 'RELATED-TO')
 			{
-				$options = array('RELTYPE' => 'PARENT');
+				$options = array('RELTYPE'	=> 'PARENT',
+								'CHARSET'	=> 'UTF-8');
 			}
 			else
 			{
-				$options = array();
+				$options = array('CHARSET'	=> 'UTF-8');
 			}
 
-			/*if(preg_match('/([\000-\012\015\016\020-\037\075])/', $value)) {
-				$options['ENCODING'] = 'QUOTED-PRINTABLE';
-			}*/
-			if ($this->productManufacturer != 'groupdav'
-				&& preg_match('/([\177-\377])/',$value))
+			if (preg_match('/[^\x20-\x7F]/', $value))
 			{
-				$options['CHARSET'] = 'UTF-8';
+				switch ($this->productManufacturer)
+				{
+					case 'groupdav':
+						if ($this->productName == 'kde')
+						{
+							$options['ENCODING'] = 'QUOTED-PRINTABLE';
+						}
+						else
+						{
+							$options['CHARSET'] = '';
+
+							if (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+							{
+								$options['ENCODING'] = 'QUOTED-PRINTABLE';
+							}
+							else
+							{
+								$options['ENCODING'] = '';
+							}
+						}
+						break;
+					case 'funambol':
+						$options['ENCODING'] = 'FUNAMBOL-QP';
+				}
 			}
 			$vevent->setAttribute($field, $value, $options);
 		}
@@ -462,19 +482,48 @@ class infolog_ical extends infolog_bo
 				break;
 
 			case 'text/x-vnote':
+				if (!empty($note['info_cat']))
+				{
+					$cats = $this->get_categories(array($note['info_cat']));
+					$note['info_cat'] = $GLOBALS['egw']->translation->convert($cats[0],
+						$GLOBALS['egw']->translation->charset(), 'UTF-8');
+				}
 				$vnote = new Horde_iCalendar_vnote();
-				$options = array('CHARSET' => 'UTF-8');
 				$vNote->setAttribute('VERSION', '1.1');
-				foreach (array(	'SUMMARY'	=> $note['info_subject'],
-								'BODY' 		=> $note['info_des'],
+				foreach (array(	'SUMMARY'		=> $note['info_subject'],
+								'BODY'			=> $note['info_des'],
+								'CATEGORIES'	=> $note['info_cat'],
 							) as $field => $value)
 				{
-					$vnote->setAttribute($field, $value);
-					if ($this->productManufacturer != 'groupdav'
-						&& preg_match('/([\177-\377])/', $value))
+					$options = array('CHARSET'	=> 'UTF-8');
+					if (preg_match('/[^\x20-\x7F]/', $value))
 					{
-						$vevent->setParameter($field, $options);
+						switch ($this->productManufacturer)
+						{
+							case 'groupdav':
+								if ($this->productName == 'kde')
+								{
+									$options['ENCODING'] = 'QUOTED-PRINTABLE';
+								}
+								else
+								{
+									$options['CHARSET'] = '';
+
+									if (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+									{
+										$options['ENCODING'] = 'QUOTED-PRINTABLE';
+									}
+									else
+									{
+										$options['ENCODING'] = '';
+									}
+								}
+								break;
+							case 'funambol':
+								$options['ENCODING'] = 'FUNAMBOL-QP';
+						}
 					}
+					$vevent->setAttribute($field, $value, $options);
 				}
 				if ($note['info_startdate'])
 				{
@@ -482,18 +531,6 @@ class infolog_ical extends infolog_bo
 				}
 				$vnote->setAttribute('DCREATED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'add'));
 				$vnote->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction('infolog_note',$_noteID,'modify'));
-
-				if (!empty($note['info_cat']))
-				{
-					$cats = $this->get_categories(array($note['info_cat']));
-					$value = $cats[0];
-					$vnote->setAttribute('CATEGORIES', $value);
-					if ($this->productManufacturer != 'groupdav'
-						&& preg_match('/([\177-\377])/', $value))
-					{
-						$vevent->setParameter('CATEGORIES', $options);
-					}
-				}
 
 				#$vnote->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 

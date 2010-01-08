@@ -513,10 +513,16 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'CATEGORIES':
-						if ($event['category'])
+						if ($event['category'] && ($values['CATEGORIES'] = $this->get_categories($event['category'])))
 						{
-							$attributes['CATEGORIES'] = '';
-							$values['CATEGORIES'] = $this->get_categories($event['category']);
+							if (count($values['CATEGORIES']) == 1)
+							{
+								$attributes['CATEGORIES'] = array_shift($values['CATEGORIES']);
+							}
+							else
+							{
+								$attributes['CATEGORIES'] = '';
+							}
 						}
 						break;
 
@@ -698,12 +704,37 @@ class calendar_ical extends calendar_boupdate
 					$vevent->setAttribute($key, $valueData, $paramData, true, $valuesData);
 					$options = array();
 					if ($paramData['CN']) $valueData .= $paramData['CN'];	// attendees or organizer CN can contain utf-8 content
-					/*if($key != 'RRULE' && preg_match('/([\000-\012\015\016\020-\037\075])/',$valueData)) {
-						$options['ENCODING'] = 'QUOTED-PRINTABLE';
-					}*/
-					if ($this->productManufacturer != 'groupdav' && preg_match('/([\177-\377])/', $valueData))
+
+					if (preg_match('/[^\x20-\x7F]/', $valueData))
 					{
-						$options['CHARSET'] = 'UTF-8';
+						switch ($this->productManufacturer)
+						{
+							case 'groupdav':
+								if ($this->productName == 'kde')
+								{
+									$options['CHARSET'] = 'UTF-8';
+									$options['ENCODING'] = 'QUOTED-PRINTABLE';
+								}
+								else
+								{
+									$options['CHARSET'] = '';
+
+									if (preg_match('/([\000-\012\015\016\020-\037\075])/', $valueData))
+									{
+										$options['ENCODING'] = 'QUOTED-PRINTABLE';
+									}
+									else
+									{
+										$options['ENCODING'] = '';
+									}
+								}
+								break;
+							case 'funambol':
+								$options['ENCODING'] = 'FUNAMBOL-QP';
+							default:
+								// force UTF-8
+								$options['CHARSET'] = 'UTF-8';
+						}
 					}
 					if (preg_match('/([\000-\012])/', $valueData))
 					{
@@ -764,12 +795,12 @@ class calendar_ical extends calendar_boupdate
 	{
 		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($_vcalData)."\n",3,$this->logfile);
 
+		if (!is_array($this->supportedFields)) $this->setSupportedFields();
+
 		if (!($events = $this->icaltoegw($_vcalData,$cal_id,$etag,$recur_date)))
 		{
 			return false;
 		}
-
-		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
 		// check if we are importing an event series with exceptions in CalDAV
 		// only first event / series master get's cal_id from URL
@@ -784,6 +815,7 @@ class calendar_ical extends calendar_boupdate
 		}
 		foreach ($events as $event)
 		{
+			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
 			$updated_id = false;
 			$event_info = $this->get_event_info($event);
 
@@ -1275,6 +1307,12 @@ class calendar_ical extends calendar_boupdate
 			'etag'				=> 'etag',
 		);
 
+		$defaultFields['funambol'] = $defaultFields['basic'] + array(
+			'category'			=> 'category',
+			'non_blocking'		=> 'non_blocking',
+			'recurrence'		=> 'recurrence',
+		);
+
 		$defaultFields['evolution'] = $defaultFields['basic'] + array(
 			'participants'		=> 'participants',
 			'owner'				=> 'owner',
@@ -1402,7 +1440,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'funambol':
-				$this->supportedFields = $defaultFields['synthesis'];
+				$this->supportedFields = $defaultFields['funambol'];
 				break;
 
 			// the fallback for SyncML
@@ -1430,6 +1468,7 @@ class calendar_ical extends calendar_boupdate
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData))
 		{
+			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(): No vCalendar Container found!\n",3,$this->logfile);
 			if ($this->tzid)
 			{
 				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
@@ -2047,7 +2086,6 @@ class calendar_ical extends calendar_boupdate
 					// fall through
 				case 'LAST-MODIFIED':	// will be written direct to the event
 					$event['modified'] = $attributes['value'];
-					break;
 			}
 		}
 
@@ -2127,6 +2165,7 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
+		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
 		//Horde::logMessage("vevent2egw:\n" . print_r($event, true),
         //    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $event;

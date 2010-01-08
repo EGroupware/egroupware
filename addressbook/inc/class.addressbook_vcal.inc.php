@@ -225,7 +225,7 @@ class addressbook_vcal extends addressbook_bo
 			}
 			foreach ($databaseFields as $databaseField)
 			{
-				$value = "";
+				$value = '';
 
 				if (!empty($databaseField))
 				{
@@ -282,21 +282,44 @@ class addressbook_vcal extends addressbook_bo
 						{
 							$values = (array) $GLOBALS['egw']->translation->convert($values, $sysCharSet, $_charset);
 							$value = implode(',', $values); // just for the CHARSET recognition
-							if ($extra_charset_attribute && preg_match('/([\177-\377])/', $value))
+							if (($size > 0) && strlen($value) > $size)
 							{
-								$options['CHARSET'] = $_charset;
+								// let us try with only the first category
+								$value = $values[0];
+								if (strlen($value) > $size)
+								{
+									error_log(__FILE__ . __LINE__ . __METHOD__ . " vCalAddressbook $vcardField omitted due to maximum size $size");
+									// Horde::logMessage("vCalAddressbook $vcardField omitted due to maximum size $size",
+									//		__FILE__, __LINE__, PEAR_LOG_WARNING);
+									continue;
+								}
+								$values = array();
+							}
+							if (preg_match('/[^\x20-\x7F]/', $value))
+							{
+								if ($extra_charset_attribute || $this->productName == 'kde')
+								{
+									$options['CHARSET'] = $_charset;
+								}
 								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
-								if ($this->productName == 'kde' ||
-									($this->productManufacturer == 'funambol' && $this->productName == 'blackberry plug-in'))
+								if ($this->productName == 'kde')
 								{
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
-								else
+								elseif ($this->productManufacturer == 'funambol')
+								{
+										$options['ENCODING'] = 'FUNAMBOL-QP';
+								}
+								elseif (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+								{
+									$options['ENCODING'] = 'QUOTED-PRINTABLE';
+								}
+								elseif (!$extra_charset_attribute)
 								{
 									$options['ENCODING'] = '';
 								}
 							}
- 							$hasdata++;
+							$hasdata++;
 						}
 						break;
 
@@ -331,33 +354,29 @@ class addressbook_vcal extends addressbook_bo
 						{
 							$value = $GLOBALS['egw']->translation->convert(trim($value), $sysCharSet, $_charset);
 							$values[] = $value;
-							if ($extra_charset_attribute)
+							if (preg_match('/[^\x20-\x7F]/', $value))
 							{
-								if (preg_match('/([\177-\377])/', $value))
+								if ($extra_charset_attribute || $this->productName == 'kde')
 								{
 									$options['CHARSET'] = $_charset;
-									// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
-									if ($this->productName == 'kde' ||
-										($this->productManufacturer == 'funambol' && $this->productName == 'blackberry plug-in'))
-									{
-										$options['ENCODING'] = 'QUOTED-PRINTABLE';
-									}
-									else
-									{
-										$options['ENCODING'] = '';
-									}
 								}
-								// protect the CardDAV
-								if (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+								// KAddressbook requires non-ascii chars to be qprint encoded, other clients eg. nokia phones have trouble with that
+								if ($this->productName == 'kde')
 								{
 									$options['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
-							}
-							else
-							{
-								// avoid that these options are inserted from horde code
-								$options['CHARSET'] = '';
-								$options['ENCODING'] = '';
+								elseif ($this->productManufacturer == 'funambol')
+								{
+										$options['ENCODING'] = 'FUNAMBOL-QP';
+								}
+								elseif (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
+								{
+									$options['ENCODING'] = 'QUOTED-PRINTABLE';
+								}
+								elseif (!$extra_charset_attribute)
+								{
+									$options['ENCODING'] = '';
+								}
 							}
 							if ($vcardField == 'TEL' && $entry['tel_prefer'] &&
 								($databaseField == $entry['tel_prefer']))
