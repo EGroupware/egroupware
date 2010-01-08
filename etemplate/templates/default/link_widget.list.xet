@@ -1,25 +1,21 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.link_widget.list" template="" lang="" group="0" version="1.5.001">
+	<template id="etemplate.link_widget.list" template="" lang="" group="0" version="1.7.001">
 		<grid class="whiteback">
 			<columns>
-				<column/>
+				<column width="20" disabled="@link_list_format=text"/>
+				<column disabled="@link_list_format=icons"/>
 				<column/>
 				<column/>
 				<column disabled="!@primary"/>
 			</columns>
 			<rows>
-				<row class="nmr">
-					<vbox>
-						<html id="${row}[mime_icon]"/>
-						<description id="${row}[app]"/>
-					</vbox>
+				<row class="row">
+					<vfs-mime id="${row}[icon]"/>
+					<description id="${row}[app]"/>
 					<hbox options="0,0">
-						<box no_lang="1">
-							<html id="${row}[thumbnail]"/>
-							<description no_lang="1" id="${row}[title]" options=",@${row}[view],,,$row_cont[target]" statustext="view this linked entry in its application"/>
-						</box>
+						<description no_lang="1" id="${row}[title]" options=",@${row}[view],,,$row_cont[target],$row_cont[popup]" statustext="view this linked entry in its application"/>
 						<description no_lang="1" id="${row}[remark]" class="note_following"/>
 					</hbox>
 					<button label="Unlink" id="unlink[$row_cont[link_id]]" image="delete.png" statustext="Remove this link (not the entry itself)"/>
@@ -30,6 +26,7 @@
 		<styles>
 			.whiteback { background: white; }
 .note_following { font-style: italic; padding-left: 5px; }
+
 		</styles>
 	</template>
 </overlay>
