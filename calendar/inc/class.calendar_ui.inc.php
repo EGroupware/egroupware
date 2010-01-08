@@ -380,7 +380,7 @@ class calendar_ui
 			if ($saved_states != $this->cal_prefs['saved_states'])
 			{
 				$GLOBALS['egw']->preferences->add('calendar','saved_states',$saved_states);
-				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
+				$GLOBALS['egw']->preferences->save_repository(false,'user',true);
 			}
 		}
 	}
