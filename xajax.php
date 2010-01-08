@@ -11,7 +11,7 @@
  * @version $Id$
  */
 
-require_once('./phpgwapi/inc/xajax.inc.php');
+require_once('./phpgwapi/inc/xajax/xajax_core/xajax.inc.php');
 
 /**
  * callback if the session-check fails, redirects via xajax to login.php
@@ -22,15 +22,15 @@ require_once('./phpgwapi/inc/xajax.inc.php');
 function xajax_redirect(&$anon_account)
 {
 	// now the header is included, we can set the charset
-	$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
-	define('XAJAX_DEFAULT_CHAR_ENCODING',$GLOBALS['egw']->translation->charset());
+	$GLOBALS['xajax']->configure('characterEncoding',translation::charset());
+	define('XAJAX_DEFAULT_CHAR_ENCODING',translation::charset());
 
 	$response = new xajaxResponse();
 	$response->addScript("location.href='".$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10'."';");
 
-	header('Content-type: text/xml; charset='.$GLOBALS['egw']->translation->charset());
+	header('Content-type: text/xml; charset='.translation::charset());
 	echo $response->getXML();
-	$GLOBALS['egw']->common->egw_exit();
+	common::egw_exit();
 }
 
 /**
@@ -44,11 +44,11 @@ function ajax_exception_handler(Exception $e)
 {
 	$response = new xajaxResponse();
 	$response->addAlert($e->getMessage()."\n\n".$e->getTraceAsString());
-	header('Content-type: text/xml; charset='.(is_object($GLOBALS['egw'])?$GLOBALS['egw']->translation->charset():'utf-8'));
+	header('Content-type: text/xml; charset='.(is_object($GLOBALS['egw'])?translation::charset():'utf-8'));
 	echo $response->getXML();
 	if (is_object($GLOBALS['egw']))
 	{
-		$GLOBALS['egw']->common->egw_exit();
+		common::egw_exit();
 	}
 	exit;
 }
@@ -61,7 +61,7 @@ set_exception_handler('ajax_exception_handler');
  *
  * Includs the header and set's up the eGW enviroment.
  *
- * @return string with XML response from xajaxResponse::getXML()
+ * @return xajaxResponse object
  */
 function doXMLHTTP()
 {
@@ -109,8 +109,8 @@ function doXMLHTTP()
 	include('./header.inc.php');
 
 	// now the header is included, we can set the charset
-	$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
-	define('XAJAX_DEFAULT_CHAR_ENCODING',$GLOBALS['egw']->translation->charset());
+	$GLOBALS['xajax']->configure('characterEncoding',translation::charset());
+	define('XAJAX_DEFAULT_CHAR_ENCODING',translation::charset());
 
 	switch($handler)
 	{
@@ -147,7 +147,8 @@ function doXMLHTTP()
 
 	return call_user_func_array(array(&$ajaxClass, $functionName), (array)$argList );
 }
-
-$xajax = new xajax($_SERVER['PHP_SELF']);
-$xajax->registerFunction('doXMLHTTP');
-$xajax->processRequests();
+$xajax = new xajax();
+//$xajax->configure('requestURI',$_SERVER['PHP_SELF']);
+$xajax->register(XAJAX_FUNCTION,'doXMLHTTP');
+$xajax->register(XAJAX_FUNCTION,'doXMLHTTP',array('mode' => "'synchronous'",'alias' => 'doXMLHTTPsync'));
+$xajax->processRequest();
