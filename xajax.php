@@ -61,7 +61,7 @@ set_exception_handler('ajax_exception_handler');
  *
  * Includs the header and set's up the eGW enviroment.
  *
- * @return string with XML response from xajaxResponse::getXML()
+ * @return xajaxResponse object
  */
 function doXMLHTTP()
 {
@@ -150,4 +150,5 @@ function doXMLHTTP()
 $xajax = new xajax();
 //$xajax->configure('requestURI',$_SERVER['PHP_SELF']);
 $xajax->register(XAJAX_FUNCTION,'doXMLHTTP');
+$xajax->register(XAJAX_FUNCTION,'doXMLHTTP',array('mode' => "'synchronous'",'alias' => 'doXMLHTTPsync'));
 $xajax->processRequest();

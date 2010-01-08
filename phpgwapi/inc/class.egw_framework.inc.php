@@ -662,6 +662,7 @@ abstract class egw_framework
 			$xajax->configure('javascript URI',$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/inc/xajax');
  			$xajax->configure('waitCursor',false);
  			$xajax->register(XAJAX_FUNCTION,'doXMLHTTP');
+ 			$xajax->register(XAJAX_FUNCTION,'doXMLHTTP',array('mode' => "'synchronous'",'alias' => 'doXMLHTTPsync'));
  			
  			$java_script .= $xajax->getJavascript();
 		}
