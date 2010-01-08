@@ -72,7 +72,7 @@ class calendar_ical extends calendar_boupdate
 		5 => 2,		// normal
 		4 => 3, 3 => 3, 2 => 3, 1 => 3,	// high
 	);
-	
+
 	/**
 	 * @var array $priority_egw2funambol conversion of the priority egw => funambol
 	 */
@@ -248,17 +248,15 @@ class calendar_ical extends calendar_boupdate
 			}
 			elseif ($event['recur_enddate'])
 			{
-				$time = new egw_time($event['start'],egw_time::$server_timezone);
+				$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
 				if (!isset(self::$tz_cache[$event['tzid']]))
 				{
 					self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
 				}
 				// all calculations in the event's timezone
 				$time->setTimezone(self::$tz_cache[$event['tzid']]);
-				$time->setTime(0, 0, 0);
-				$delta = $event['end'] - (int)$time->format('U');
-				// Adjust recur_enddate to end time
-				$event['recur_enddate'] += $delta;
+				$time->setTime(23, 59, 59);
+				$event['recur_enddate'] = $this->date2ts($time);
 			}
 
 			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
@@ -493,15 +491,15 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'PRIORITY':
-							if($this->productManufacturer == 'funambol')
-							{
-								$attributes['PRIORITY'] = (int) $this->priority_egw2funambol[$event['priority']];
-							}
-							else
-							{
-								$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
-							}
-							break;
+						if($this->productManufacturer == 'funambol')
+						{
+							$attributes['PRIORITY'] = (int) $this->priority_egw2funambol[$event['priority']];
+						}
+						else
+						{
+							$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
+						}
+						break;
 
 					case 'TRANSP':
 						if ($version == '1.0')
@@ -776,7 +774,7 @@ class calendar_ical extends calendar_boupdate
 		// check if we are importing an event series with exceptions in CalDAV
 		// only first event / series master get's cal_id from URL
 		// other events are exceptions and need to be checked if they are new
-		// and for real (not status only) exceptions their recurrence-id need 
+		// and for real (not status only) exceptions their recurrence-id need
 		// to be included as recur_exception to the master
 		if ($this->productManufacturer == 'groupdav' && $cal_id > 0 &&
 			count($events) > 1 && !$events[1]['id'] &&
@@ -2072,16 +2070,6 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 
-		if (!empty($vcardData['recur_enddate']))
-		{
-			// reset recure_enddate to 00:00:00 on the last day
-			$vcardData['recur_enddate'] = mktime(0, 0, 0,
-				date('m', $vcardData['recur_enddate']),
-				date('d', $vcardData['recur_enddate']),
-				date('Y', $vcardData['recur_enddate'])
-			);
-		}
-
 		$event['priority'] = 2; // default
 		$event['alarm'] = $alarms;
 
@@ -2121,6 +2109,23 @@ class calendar_ical extends calendar_boupdate
 				break;
 			}
 		}
+		if (!empty($event['recur_enddate']))
+		{
+			// reset recure_enddate to 00:00:00 on the last day
+			$rriter = calendar_rrule::event2rrule($event, false);
+			$rriter->rewind();
+			$last = clone $rriter->time;
+			while ($rriter->current <= $rriter->enddate)
+			{
+				$last = clone $rriter->current;
+				$rriter->next_no_exception();
+			}
+			$delta = $event['end'] - $event['start'];
+			$last->modify('+' . $delta . ' seconds');
+			$last->setTime(0, 0, 0);
+			$event['recur_enddate'] = $this->date2ts($last);
+		}
+
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
 		//Horde::logMessage("vevent2egw:\n" . print_r($event, true),
         //    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
