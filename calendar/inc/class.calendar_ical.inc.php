@@ -259,7 +259,11 @@ class calendar_ical extends calendar_boupdate
 				$event['recur_enddate'] = $this->date2ts($time);
 			}
 
-			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+					array2string($event)."\n",3,$this->logfile);
+			}
 
 			if ($this->tzid === false)
 			{
@@ -491,7 +495,8 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'PRIORITY':
-						if($this->productManufacturer == 'funambol')
+						if($this->productManufacturer == 'funambol' &&
+							strpos($this->productName, 'outlook') !== false)
 						{
 							$attributes['PRIORITY'] = (int) $this->priority_egw2funambol[$event['priority']];
 						}
@@ -701,54 +706,61 @@ class calendar_ical extends calendar_boupdate
                     $valuesData = (array) $GLOBALS['egw']->translation->convert($values[$key],
                     		$GLOBALS['egw']->translation->charset(),'UTF-8');
 					//echo "$key:$valueID: value=$valueData, param=".print_r($paramDate,true)."\n";
-					$vevent->setAttribute($key, $valueData, $paramData, true, $valuesData);
-					$options = array();
-					if ($paramData['CN']) $valueData .= $paramData['CN'];	// attendees or organizer CN can contain utf-8 content
-
-					if (preg_match('/[^\x20-\x7F]/', $valueData))
+					// attendees or organizer CN can contain utf-8 content
+					$paramData['CHARSET'] = 'UTF-8';
+					if (preg_match('/[^\x20-\x7F]/', $valueData) ||
+						($paramData['CN'] && preg_match('/[^\x20-\x7F]/', $paramData['CN'])))
 					{
 						switch ($this->productManufacturer)
 						{
 							case 'groupdav':
 								if ($this->productName == 'kde')
 								{
-									$options['CHARSET'] = 'UTF-8';
-									$options['ENCODING'] = 'QUOTED-PRINTABLE';
+									$paramData['ENCODING'] = 'QUOTED-PRINTABLE';
 								}
 								else
 								{
-									$options['CHARSET'] = '';
-
+									$paramData['CHARSET'] = '';
 									if (preg_match('/([\000-\012\015\016\020-\037\075])/', $valueData))
 									{
-										$options['ENCODING'] = 'QUOTED-PRINTABLE';
+										$paramData['ENCODING'] = 'QUOTED-PRINTABLE';
 									}
 									else
 									{
-										$options['ENCODING'] = '';
+										$paramData['ENCODING'] = '';
 									}
 								}
 								break;
 							case 'funambol':
-								$options['ENCODING'] = 'FUNAMBOL-QP';
-							default:
-								// force UTF-8
-								$options['CHARSET'] = 'UTF-8';
+								if ($this->productName == 'mozilla sync client')
+								{
+									$valueData = str_replace( "\n", '\\n', $valueData);
+								}
+								$paramData['ENCODING'] = 'FUNAMBOL-QP';
 						}
 					}
 					if (preg_match('/([\000-\012])/', $valueData))
 					{
-						if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."() Has invalid XML data: $valueData",3,$this->logfile);
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+								"() Has invalid XML data: $valueData",3,$this->logfile);
+						}
 					}
-					$vevent->setParameter($key, $options);
+					$vevent->setAttribute($key, $valueData, $paramData, true, $valuesData);
 				}
 			}
 			$vcal->addComponent($vevent);
 		}
 
 		$retval = $vcal->exportvCalendar();
- 		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($retval)."\n",3,$this->logfile);
-
+ 		if ($this->log)
+ 		{
+ 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+				"() '$this->productManufacturer','$this->productName'\n",3,$this->logfile);
+ 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+				"()\n".array2string($retval)."\n",3,$this->logfile);
+ 		}
 		return $retval;
 	}
 
@@ -793,7 +805,11 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0)
 	{
-		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($_vcalData)."\n",3,$this->logfile);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($_vcalData)."\n",3,$this->logfile);
+		}
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
@@ -815,7 +831,11 @@ class calendar_ical extends calendar_boupdate
 		}
 		foreach ($events as $event)
 		{
-			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+					array2string($event)."\n",3,$this->logfile);
+			}
 			$updated_id = false;
 			$event_info = $this->get_event_info($event);
 
@@ -1137,7 +1157,8 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log)
 			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event_info['stored_event'])."\n",3,$this->logfile);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
 
@@ -1308,6 +1329,8 @@ class calendar_ical extends calendar_boupdate
 		);
 
 		$defaultFields['funambol'] = $defaultFields['basic'] + array(
+			'participants'		=> 'participants',
+			'owner'				=> 'owner',
 			'category'			=> 'category',
 			'non_blocking'		=> 'non_blocking',
 			'recurrence'		=> 'recurrence',
@@ -1468,7 +1491,11 @@ class calendar_ical extends calendar_boupdate
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData))
 		{
-			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(): No vCalendar Container found!\n",3,$this->logfile);
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					"(): No vCalendar Container found!\n",3,$this->logfile);
+			}
 			if ($this->tzid)
 			{
 				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
@@ -1906,7 +1933,8 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'PRIORITY':
-					if($this->productManufacturer == 'funambol')
+					if($this->productManufacturer == 'funambol' &&
+						strpos($this->productName, 'outlook') !== false)
 					{
 						$vcardData['priority'] = (int) $this->priority_funambol2egw[$attributes['value']];
 					}
@@ -2165,7 +2193,11 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
-		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($event)."\n",3,$this->logfile);
+		}
 		//Horde::logMessage("vevent2egw:\n" . print_r($event, true),
         //    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $event;

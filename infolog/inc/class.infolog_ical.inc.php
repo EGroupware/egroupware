@@ -20,23 +20,42 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 class infolog_ical extends infolog_bo
 {
 	/**
-	 * @var array conversion of the priority egw => ical
+	 * @var array $priority_egw2ical conversion of the priority egw => ical
 	 */
-	var $egw_priority2vcal_priority = array(
-		0 => 9,         // low
-		1 => 5,         // normal
-		2 => 3,         // high
-		3 => 1,         // urgent
+	var $priority_egw2ical = array(
+		0 => 9,		// low
+		1 => 5,		// normal
+		2 => 3,		// high
+		3 => 1,		// urgent
 	);
 
 	/**
-	 * @var array conversion of the priority ical => egw
+	 * @var array $priority_ical2egw conversion of the priority ical => egw
 	 */
-	var $vcal_priority2egw_priority = array(
-		9 => 0, 8 => 0, 7 => 0,		// low
-		6 => 1, 5 => 1, 4 => 1, 0 => 1, // normal
-		3 => 2, 2 => 2,			// high
-		1 => 3,				// urgent
+	var $priority_ical2egw = array(
+		9 => 0,	8 => 0, 7 => 0,	// low
+		6 => 1, 5 => 1, 4 => 1, 0 => 1,	// normal
+		3 => 2,	2 => 2,	// high
+		1 => 3,			// urgent
+	);
+
+	/**
+	 * @var array $priority_egw2funambol conversion of the priority egw => funambol
+	 */
+	var $priority_egw2funambol = array(
+		0 => 0,		// low
+		1 => 1,		// normal
+		2 => 2,		// high
+		3 => 2,		// urgent
+	);
+
+	/**
+	 * @var array $priority_funambol2egw conversion of the priority funambol => egw
+	 */
+	var $priority_funambol2egw = array(
+		0 => 0,		// low
+		1 => 1,		// normal
+		2 => 3,		// high
 	);
 
 	/**
@@ -62,6 +81,15 @@ class infolog_ical extends infolog_bo
 	var $clientProperties;
 
 	/**
+	 * Set Logging
+	 *
+	 * @var boolean
+	 */
+	var $log = false;
+	var $logfile="/tmp/log-infolog-vcal";
+
+
+	/**
 	 * Constructor
 	 *
 	 * @param array $_clientProperties		client properties
@@ -69,7 +97,7 @@ class infolog_ical extends infolog_bo
 	function __construct(&$_clientProperties = array())
 	{
 		parent::__construct();
-
+		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-infolog-vcal";
 		$this->clientProperties = $_clientProperties;
 	}
 
@@ -201,6 +229,10 @@ class infolog_ical extends infolog_bo
 						}
 						break;
 					case 'funambol':
+						if ($this->productName == 'mozilla sync client')
+						{
+							$value = str_replace( "\n", '\\n', $value);
+						}
 						$options['ENCODING'] = 'FUNAMBOL-QP';
 				}
 			}
@@ -228,13 +260,27 @@ class infolog_ical extends infolog_bo
 		// we try to preserv the original infolog status as X-INFOLOG-STATUS, so we can restore it, if the user does not modify STATUS
 		$vevent->setAttribute('X-INFOLOG-STATUS',$taskData['info_status']);
 		$vevent->setAttribute('PERCENT-COMPLETE',$taskData['info_percent']);
-		$vevent->setAttribute('PRIORITY',$this->egw_priority2vcal_priority[$taskData['info_priority']]);
-
+		if($this->productManufacturer == 'funambol' &&
+			strpos($this->productName, 'outlook') !== false)
+		{
+			$priority = (int) $this->priority_egw2funambol[$taskData['info_priority']];
+		}
+		else
+		{
+			$priority = (int) $this->priority_egw2ical2[$taskData['info_priority']];
+		}
+		$vevent->setAttribute('PRIORITY', $priority);
 
 		$vcal->addComponent($vevent);
 
 		$retval = $vcal->exportvCalendar();
-		Horde::logMessage("exportVTODO:\n" . print_r($retval, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($retval)."\n",3,$this->logfile);
+		}
+		// Horde::logMessage("exportVTODO:\n" . print_r($retval, true),
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $retval;
 	}
 
@@ -272,7 +318,7 @@ class infolog_ical extends infolog_bo
 	 */
 	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false)
 	{
-		if (!$taskData = $this->vtodotoegw($_vcalData,$_taskID)) return false;
+		if (!($taskData = $this->vtodotoegw($_vcalData,$_taskID))) return false;
 
 		// we suppose that a not set status in a vtodo means that the task did not started yet
 		if (empty($taskData['info_status']))
@@ -283,6 +329,12 @@ class infolog_ical extends infolog_bo
 		if (empty($taskData['info_datecompleted']))
 		{
 			$taskData['info_datecompleted'] = 0;
+		}
+
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($taskData)."\n",3,$this->logfile);
 		}
 
 		return $this->write($taskData);
@@ -319,8 +371,23 @@ class infolog_ical extends infolog_bo
 	 */
 	function vtodotoegw($_vcalData, $_taskID=-1)
 	{
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($_vcalData)."\n",3,$this->logfile);
+		}
+
 		$vcal = new Horde_iCalendar;
-		if (!($vcal->parsevCalendar($_vcalData))) return false;
+		if (!($vcal->parsevCalendar($_vcalData)))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					"(): No vCalendar Container found!\n",3,$this->logfile);
+			}
+			return false;
+		}
+
 		$version = $vcal->getAttribute('VERSION');
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
@@ -332,11 +399,22 @@ class infolog_ical extends infolog_bo
 			$minimum_uid_length = 8;
 		}
 
-		$components = $vcal->getComponents();
-
-		foreach ($components as $component)
+		foreach ($vcal->getComponents() as $component)
 		{
-			if (is_a($component, 'Horde_iCalendar_vtodo'))
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+					array2string($component)."\n",3,$this->logfile);
+			}
+			if (!is_a($component, 'Horde_iCalendar_vtodo'))
+			{
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						"(): Not a vTODO container, skipping...\n",3,$this->logfile);
+				}
+			}
+			else
 			{
 				$taskData = array();
 				$taskData['info_type'] = 'task';
@@ -399,7 +477,15 @@ class infolog_ical extends infolog_bo
 
 						case 'PRIORITY':
 							if (1 <= $attributes['value'] && $attributes['value'] <= 9)	{
-								$taskData['info_priority'] = $this->vcal_priority2egw_priority[$attributes['value']];
+								if($this->productManufacturer == 'funambol' &&
+									strpos($this->productName, 'outlook') !== false)
+								{
+									$taskData['info_priority'] = (int) $this->priority_funambol2egw[$attributes['value']];
+								}
+								else
+								{
+									$taskData['info_priority'] = (int) $this->priority_ical2egw[$attributes['value']];
+								}
 							} else {
 								$taskData['info_priority'] = 1;	// default = normal
 							}
@@ -520,6 +606,10 @@ class infolog_ical extends infolog_bo
 								}
 								break;
 							case 'funambol':
+								if ($this->productName == 'mozilla sync client')
+								{
+									$value = str_replace( "\n", '\\n', $value);
+								}
 								$options['ENCODING'] = 'FUNAMBOL-QP';
 						}
 					}
@@ -534,8 +624,13 @@ class infolog_ical extends infolog_bo
 
 				#$vnote->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 
-				return $vnote->exportvCalendar();
-				break;
+				$retval = $vnote->exportvCalendar();
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+						array2string($retval)."\n",3,$this->logfile);
+				}
+				return $retval;
 		}
 		return false;
 	}
@@ -551,13 +646,24 @@ class infolog_ical extends infolog_bo
 	 */
 	function importVNOTE(&$_vcalData, $_type, $_noteID=-1, $merge=false)
 	{
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($_vcalData)."\n",3,$this->logfile);
+		}
+
 		if (!($note = $this->vnotetoegw($_vcalData, $_type, $_noteID))) return false;
 
 		if($_noteID > 0) $note['info_id'] = $_noteID;
 
 		if (empty($note['info_status'])) $note['info_status'] = 'done';
 
-		#_debug_array($taskData);exit;
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($note)."\n",3,$this->logfile);
+		}
+
 		return $this->write($note);
 	}
 

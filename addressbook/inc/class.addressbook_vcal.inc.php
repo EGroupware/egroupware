@@ -96,8 +96,12 @@ class addressbook_vcal extends addressbook_bo
 	function __construct($contact_app='addressbook', $_contentType='text/x-vcard', &$_clientProperties = array())
 	{
 		parent::__construct($contact_app);
-		if($this->log)$this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcard";
-		if($this->log)error_log(__LINE__.__METHOD__.__FILE__.array2string($_contentType)."\n",3,$this->logfile);
+		if ($this->log)
+		{
+			$this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcard";
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($_contentType)."\n",3,$this->logfile);
+		}
 		switch($_contentType)
 		{
 			case 'text/vcard':
@@ -367,7 +371,11 @@ class addressbook_vcal extends addressbook_bo
 								}
 								elseif ($this->productManufacturer == 'funambol')
 								{
-										$options['ENCODING'] = 'FUNAMBOL-QP';
+									if ($this->productName == 'mozilla sync client')
+									{
+										$valueData = str_replace( "\n", '\\n', $valueData);
+									}
+									$options['ENCODING'] = 'FUNAMBOL-QP';
 								}
 								elseif (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
 								{
@@ -411,8 +419,10 @@ class addressbook_vcal extends addressbook_bo
 		$result = $vCard->exportvCalendar();
 		if ($this->log)
 		{
-			error_log(__LINE__.__METHOD__.__FILE__."'$this->productManufacturer','$this->productName'"."\n",3,$this->logfile);
-        	error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($result)."\n",3,$this->logfile);
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+				"() '$this->productManufacturer','$this->productName'\n",3,$this->logfile);
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($result)."\n",3,$this->logfile);
 		}
 		return $result;
 	}
@@ -484,7 +494,11 @@ class addressbook_vcal extends addressbook_bo
 			'UID'				=> array('uid'),
 		);
 
-		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($_vcard)."\n",3,$this->logfile);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($_vcard)."\n",3,$this->logfile);
+		}
 
 		//Horde::logMessage("vCalAddressbook vcardtoegw:\n$_vcard", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
@@ -658,17 +672,18 @@ class addressbook_vcal extends addressbook_bo
 			$rowNames[$key] = $rowName;
 		}
 
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($rowNames)."\n",3,$this->logfile);
+		}
 
-
-               if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($rowNames)."\n",3,$this->logfile);
-
-	       // All rowNames of the vCard are now concatenated with their qualifiers.
-               // If qualifiers are missing we apply a default strategy.
-               // E.g. ADR will be either ADR;WORK, if no ADR;WORK is given,
-               // or else ADR;HOME, if not available elsewhere.
+		// All rowNames of the vCard are now concatenated with their qualifiers.
+		// If qualifiers are missing we apply a default strategy.
+		// E.g. ADR will be either ADR;WORK, if no ADR;WORK is given,
+		// or else ADR;HOME, if not available elsewhere.
 
 		//error_log(print_r($rowNames, true));
-
 
 		$finalRowNames = array();
 
@@ -815,7 +830,11 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 
-		if($this->log)error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($finalRowNames)."\n",3,$this->logfile);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($finalRowNames)."\n",3,$this->logfile);
+		}
 
 		//error_log(print_r($finalRowNames, true));
 
@@ -884,8 +903,13 @@ class addressbook_vcal extends addressbook_bo
 
 		$this->fixup_contact($contact);
 
-		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__."'$this->productManufacturer','$this->productName'"."\n",3,$this->logfile);
-		if ($this->log) error_log(__LINE__.__METHOD__.__FILE__."\n".array2string($contact)."\n",3,$this->logfile);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__	.
+				"() '$this->productManufacturer','$this->productName'\n",3,$this->logfile);
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($contact)."\n",3,$this->logfile);
+		}
 		return $contact;
 	}
 

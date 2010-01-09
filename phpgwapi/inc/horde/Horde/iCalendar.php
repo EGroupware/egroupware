@@ -520,14 +520,20 @@ class Horde_iCalendar {
      *
      * @return boolean  True on successful import, false otherwise.
      */
-    function parsevCalendar($text, $base = 'VCALENDAR', $charset = null,
-                            $clear = true)
+    function parsevCalendar($text, $base = 'VCALENDAR', $charset = null, $clear = true)
     {
         if ($clear) {
             $this->clear();
         }
 
-        if (preg_match('/^BEGIN:' . $base . '(.*)^END:' . $base . '/ism', $text, $matches)) {
+        if ($base == 'VTODO' &&
+        	preg_match('/^BEGIN:VTODO(.*)^END:VEVENT/ism', $text, $matches)) {
+        	// Workaround for Funambol VTODO bug in Mozilla Sync Plugins
+        	Horde::logMessage('iCalendar: Funambol VTODO-bug detected, workaround activated...',
+        		__FILE__, __LINE__, PEAR_LOG_WARNING);
+            $container = true;
+            $vCal = $matches[1];
+        } elseif (preg_match('/^BEGIN:' . $base . '(.*)^END:' . $base . '/ism', $text, $matches)) {
             $container = true;
             $vCal = $matches[1];
         } else {
@@ -543,12 +549,14 @@ class Horde_iCalendar {
             $this->setAttribute('VERSION', $matches[1]);
         }
 
-	// Preserve a trailing CR
+		// Preserve a trailing CR
         $vCal = trim($vCal) . "\n";
 
         // All subcomponents.
         $matches = null;
-        if (preg_match_all('/^BEGIN:(.*)(\r\n|\r|\n)(.*)^END:\1/Uims', $vCal, $matches)) {
+        // Workaround for Funambol VTODO bug in Mozilla Sync Plugins
+        if (preg_match_all('/^BEGIN:(VTODO)(\r\n|\r|\n)(.*)^END:VEVENT/Uims', $vCal, $matches) ||
+        	preg_match_all('/^BEGIN:(.*)(\r\n|\r|\n)(.*)^END:\1/Uims', $vCal, $matches)) {
             // vTimezone components are processed first. They are
             // needed to process vEvents that may use a TZID.
             foreach ($matches[0] as $key => $data) {
@@ -652,6 +660,8 @@ class Horde_iCalendar {
 									$value = $GLOBALS['egw']->translation->convert($value,
 										empty($charset) ? ($this->isOldFormat() ? 'iso-8859-1' : 'utf-8') : $charset);
                                  }
+                                 // Funambol hack :-(
+                                 $value = str_replace('\\\\n', "\n", $value);
                                  break;
                            case 'B':
                            case 'BASE64':
