@@ -260,8 +260,9 @@ class infolog_ical extends infolog_bo
 		// we try to preserv the original infolog status as X-INFOLOG-STATUS, so we can restore it, if the user does not modify STATUS
 		$vevent->setAttribute('X-INFOLOG-STATUS',$taskData['info_status']);
 		$vevent->setAttribute('PERCENT-COMPLETE',$taskData['info_percent']);
-		if($this->productManufacturer == 'funambol' &&
-			strpos($this->productName, 'outlook') !== false)
+		if ($this->productManufacturer == 'funambol' &&
+			(strpos($this->productName, 'outlook') !== false
+				|| strpos($this->productName, 'pocket pc') !== false))
 		{
 			$priority = (int) $this->priority_egw2funambol[$taskData['info_priority']];
 		}
@@ -426,7 +427,8 @@ class infolog_ical extends infolog_bo
 				foreach ($component->_attributes as $attributes)
 				{
 					//$attributes['value'] = trim($attributes['value']);
-					if (empty($attributes['value'])) continue;
+					if (!strlen($attributes['value'])) continue;
+
 					switch ($attributes['name'])
 					{
 						case 'CLASS':
@@ -476,9 +478,10 @@ class infolog_ical extends infolog_bo
 							break;
 
 						case 'PRIORITY':
-							if (1 <= $attributes['value'] && $attributes['value'] <= 9)	{
-								if($this->productManufacturer == 'funambol' &&
-									strpos($this->productName, 'outlook') !== false)
+							if (0 <= $attributes['value'] && $attributes['value'] <= 9)	{
+								if ($this->productManufacturer == 'funambol' &&
+									(strpos($this->productName, 'outlook') !== false
+										|| strpos($this->productName, 'pocket pc') !== false))
 								{
 									$taskData['info_priority'] = (int) $this->priority_funambol2egw[$attributes['value']];
 								}

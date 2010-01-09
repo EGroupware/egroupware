@@ -495,8 +495,9 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'PRIORITY':
-						if($this->productManufacturer == 'funambol' &&
-							strpos($this->productName, 'outlook') !== false)
+						if ($this->productManufacturer == 'funambol' &&
+							(strpos($this->productName, 'outlook') !== false
+								|| strpos($this->productName, 'pocket pc') !== false))
 						{
 							$attributes['PRIORITY'] = (int) $this->priority_egw2funambol[$event['priority']];
 						}
@@ -1933,8 +1934,9 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'PRIORITY':
-					if($this->productManufacturer == 'funambol' &&
-						strpos($this->productName, 'outlook') !== false)
+					if ($this->productManufacturer == 'funambol' &&
+						(strpos($this->productName, 'outlook') !== false
+							|| strpos($this->productName, 'pocket pc') !== false))
 					{
 						$vcardData['priority'] = (int) $this->priority_funambol2egw[$attributes['value']];
 					}
