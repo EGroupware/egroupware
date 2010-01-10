@@ -583,8 +583,14 @@ class calendar_ical extends calendar_boupdate
 						{
 							$size = $this->clientProperties[$icalFieldName]['Size'];
 							$noTruncate = $this->clientProperties[$icalFieldName]['NoTruncate'];
-							#Horde::logMessage("vCalendar $icalFieldName Size: $size, NoTruncate: " .
-							#	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+							if ($this->log && $size > 0)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+									"() $icalFieldName Size: $size, NoTruncate: " .
+									($noTruncate ? 'TRUE' : 'FALSE') . "\n",3,$this->logfile);
+							}
+							//Horde::logMessage("vCalendar $icalFieldName Size: $size, NoTruncate: " .
+							//	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 						}
 						else
 						{
@@ -597,14 +603,24 @@ class calendar_ical extends calendar_boupdate
 						{
 							if ($noTruncate)
 							{
-								Horde::logMessage("vCalendar $icalFieldName omitted due to maximum size $size",
-									__FILE__, __LINE__, PEAR_LOG_WARNING);
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+										"() $icalFieldName omitted due to maximum size $size\n",3,$this->logfile);
+								}
+								//Horde::logMessage("vCalendar $icalFieldName omitted due to maximum size $size",
+								//	__FILE__, __LINE__, PEAR_LOG_WARNING);
 								continue; // skip field
 							}
 							// truncate the value to size
 							$value = substr($value, 0, $size - 1);
-							Horde::logMessage("vCalendar $icalFieldName truncated to maximum size $size",
-								__FILE__, __LINE__, PEAR_LOG_INFO);
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+									"() $icalFieldName truncated to maximum size $size\n",3,$this->logfile);
+							}
+							//Horde::logMessage("vCalendar $icalFieldName truncated to maximum size $size",
+							//	__FILE__, __LINE__, PEAR_LOG_INFO);
 						}
 						if (!empty($value) || ($size >= 0 && !$noTruncate))
 						{
@@ -706,12 +722,11 @@ class calendar_ical extends calendar_boupdate
                             $GLOBALS['egw']->translation->charset(),'UTF-8');
                     $valuesData = (array) $GLOBALS['egw']->translation->convert($values[$key],
                     		$GLOBALS['egw']->translation->charset(),'UTF-8');
-					//echo "$key:$valueID: value=$valueData, param=".print_r($paramDate,true)."\n";
-					// attendees or organizer CN can contain utf-8 content
-					$paramData['CHARSET'] = 'UTF-8';
+
 					if (preg_match('/[^\x20-\x7F]/', $valueData) ||
 						($paramData['CN'] && preg_match('/[^\x20-\x7F]/', $paramData['CN'])))
 					{
+						$paramData['CHARSET'] = 'UTF-8';
 						switch ($this->productManufacturer)
 						{
 							case 'groupdav':
@@ -733,13 +748,10 @@ class calendar_ical extends calendar_boupdate
 								}
 								break;
 							case 'funambol':
-								if ($this->productName == 'mozilla sync client')
-								{
-									$valueData = str_replace( "\n", '\\n', $valueData);
-								}
 								$paramData['ENCODING'] = 'FUNAMBOL-QP';
 						}
 					}
+					/*
 					if (preg_match('/([\000-\012])/', $valueData))
 					{
 						if ($this->log)
@@ -748,6 +760,7 @@ class calendar_ical extends calendar_boupdate
 								"() Has invalid XML data: $valueData",3,$this->logfile);
 						}
 					}
+					*/
 					$vevent->setAttribute($key, $valueData, $paramData, true, $valuesData);
 				}
 			}
@@ -1334,7 +1347,6 @@ class calendar_ical extends calendar_boupdate
 			'owner'				=> 'owner',
 			'category'			=> 'category',
 			'non_blocking'		=> 'non_blocking',
-			'recurrence'		=> 'recurrence',
 		);
 
 		$defaultFields['evolution'] = $defaultFields['basic'] + array(

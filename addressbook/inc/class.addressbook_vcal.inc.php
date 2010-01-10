@@ -219,6 +219,12 @@ class addressbook_vcal extends addressbook_bo
 			{
 				$size = $this->clientProperties[$vcardField]['Size'];
 				$noTruncate = $this->clientProperties[$vcardField]['NoTruncate'];
+				if ($this->log && $size > 0)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+						"() $vcardField Size: $size, NoTruncate: " .
+						($noTruncate ? 'TRUE' : 'FALSE') . "\n",3,$this->logfile);
+				}
 				//Horde::logMessage("vCalAddressbook $vcardField Size: $size, NoTruncate: " .
 				//	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			}
@@ -292,7 +298,11 @@ class addressbook_vcal extends addressbook_bo
 								$value = $values[0];
 								if (strlen($value) > $size)
 								{
-									error_log(__FILE__ . __LINE__ . __METHOD__ . " vCalAddressbook $vcardField omitted due to maximum size $size");
+									if ($this->log)
+									{
+										error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+										"() $vcardField omitted due to maximum size $size\n",3,$this->logfile);
+									}
 									// Horde::logMessage("vCalAddressbook $vcardField omitted due to maximum size $size",
 									//		__FILE__, __LINE__, PEAR_LOG_WARNING);
 									continue;
@@ -332,7 +342,11 @@ class addressbook_vcal extends addressbook_bo
 						{
 							if ($noTruncate)
 							{
-								error_log(__FILE__ . __LINE__ . __METHOD__ . " vCalAddressbook $vcardField omitted due to maximum size $size");
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+										"() $vcardField omitted due to maximum size $size\n",3,$this->logfile);
+								}
 								// Horde::logMessage("vCalAddressbook $vcardField omitted due to maximum size $size",
 								//		__FILE__, __LINE__, PEAR_LOG_WARNING);
 								continue;
@@ -348,7 +362,11 @@ class addressbook_vcal extends addressbook_bo
 							{
 								$value = '';
 							}
-							error_log(__FILE__ . __LINE__ . __METHOD__ . " vCalAddressbook $vcardField truncated to maximum size $size");
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+									"() $vcardField truncated to maximum size $size\n",3,$this->logfile);
+							}
 							//Horde::logMessage("vCalAddressbook $vcardField truncated to maximum size $size",
 							//		__FILE__, __LINE__, PEAR_LOG_INFO);
 						}
@@ -371,10 +389,6 @@ class addressbook_vcal extends addressbook_bo
 								}
 								elseif ($this->productManufacturer == 'funambol')
 								{
-									if ($this->productName == 'mozilla sync client')
-									{
-										$valueData = str_replace( "\n", '\\n', $valueData);
-									}
 									$options['ENCODING'] = 'FUNAMBOL-QP';
 								}
 								elseif (preg_match('/([\000-\012\015\016\020-\037\075])/', $value))
@@ -683,8 +697,6 @@ class addressbook_vcal extends addressbook_bo
 		// E.g. ADR will be either ADR;WORK, if no ADR;WORK is given,
 		// or else ADR;HOME, if not available elsewhere.
 
-		//error_log(print_r($rowNames, true));
-
 		$finalRowNames = array();
 
 		foreach ($rowNames as $vcardKey => $rowName)
@@ -835,9 +847,6 @@ class addressbook_vcal extends addressbook_bo
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
 				array2string($finalRowNames)."\n",3,$this->logfile);
 		}
-
-		//error_log(print_r($finalRowNames, true));
-
 
 		$contact = array();
 

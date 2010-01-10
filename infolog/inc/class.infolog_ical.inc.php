@@ -170,8 +170,14 @@ class infolog_ical extends infolog_bo
 			{
 				$size = $this->clientProperties[$field]['Size'];
 				$noTruncate = $this->clientProperties[$field]['NoTruncate'];
-				#Horde::logMessage("VTODO $field Size: $size, NoTruncate: " .
-				#	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				if ($this->log && $size > 0)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+						"() $field Size: $size, NoTruncate: " .
+						($noTruncate ? 'TRUE' : 'FALSE') . "\n",3,$this->logfile);
+				}
+				//Horde::logMessage("VTODO $field Size: $size, NoTruncate: " .
+				//	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			}
 			else
 			{
@@ -183,30 +189,40 @@ class infolog_ical extends infolog_bo
 			{
 				if ($noTruncate)
 				{
-					Horde::logMessage("VTODO $field omitted due to maximum size $size",
-						__FILE__, __LINE__, PEAR_LOG_WARNING);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+							"() $field omitted due to maximum size $size\n",3,$this->logfile);
+					}
+					//Horde::logMessage("VTODO $field omitted due to maximum size $size",
+					//	__FILE__, __LINE__, PEAR_LOG_WARNING);
 					continue; // skip field
 				}
 				// truncate the value to size
 				$value = substr($value, 0, $size -1);
-				#Horde::logMessage("VTODO $field truncated to maximum size $size",
-				#	__FILE__, __LINE__, PEAR_LOG_INFO);
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+						"() $field truncated to maximum size $size\n",3,$this->logfile);
+				}
+				//Horde::logMessage("VTODO $field truncated to maximum size $size",
+				//	__FILE__, __LINE__, PEAR_LOG_INFO);
 			}
 
 			if (empty($value) && ($size < 0 || $noTruncate)) continue;
 
 			if ($field == 'RELATED-TO')
 			{
-				$options = array('RELTYPE'	=> 'PARENT',
-								'CHARSET'	=> 'UTF-8');
+				$options = array('RELTYPE'	=> 'PARENT');
 			}
 			else
 			{
-				$options = array('CHARSET'	=> 'UTF-8');
+				$options = array();
 			}
 
 			if (preg_match('/[^\x20-\x7F]/', $value))
 			{
+				$options['CHARSET']	= 'UTF-8';
 				switch ($this->productManufacturer)
 				{
 					case 'groupdav':
@@ -229,10 +245,6 @@ class infolog_ical extends infolog_bo
 						}
 						break;
 					case 'funambol':
-						if ($this->productName == 'mozilla sync client')
-						{
-							$value = str_replace( "\n", '\\n', $value);
-						}
 						$options['ENCODING'] = 'FUNAMBOL-QP';
 				}
 			}
@@ -268,7 +280,7 @@ class infolog_ical extends infolog_bo
 		}
 		else
 		{
-			$priority = (int) $this->priority_egw2ical2[$taskData['info_priority']];
+			$priority = (int) $this->priority_egw2ical[$taskData['info_priority']];
 		}
 		$vevent->setAttribute('PRIORITY', $priority);
 
@@ -584,9 +596,10 @@ class infolog_ical extends infolog_bo
 								'CATEGORIES'	=> $note['info_cat'],
 							) as $field => $value)
 				{
-					$options = array('CHARSET'	=> 'UTF-8');
+					$options = array();
 					if (preg_match('/[^\x20-\x7F]/', $value))
 					{
+						$options['CHARSET']	= 'UTF-8';
 						switch ($this->productManufacturer)
 						{
 							case 'groupdav':
@@ -609,10 +622,6 @@ class infolog_ical extends infolog_bo
 								}
 								break;
 							case 'funambol':
-								if ($this->productName == 'mozilla sync client')
-								{
-									$value = str_replace( "\n", '\\n', $value);
-								}
 								$options['ENCODING'] = 'FUNAMBOL-QP';
 						}
 					}
