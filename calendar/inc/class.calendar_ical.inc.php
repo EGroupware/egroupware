@@ -259,7 +259,11 @@ class calendar_ical extends calendar_boupdate
 				$event['recur_enddate'] = $this->date2ts($time);
 			}
 
-			if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event)."\n",3,$this->logfile);
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+					array2string($event)."\n",3,$this->logfile);
+			}
 
 			if ($this->tzid === false)
 			{
@@ -491,7 +495,9 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'PRIORITY':
-						if($this->productManufacturer == 'funambol')
+						if ($this->productManufacturer == 'funambol' &&
+							(strpos($this->productName, 'outlook') !== false
+								|| strpos($this->productName, 'pocket pc') !== false))
 						{
 							$attributes['PRIORITY'] = (int) $this->priority_egw2funambol[$event['priority']];
 						}
@@ -513,10 +519,16 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'CATEGORIES':
-						if ($event['category'])
+						if ($event['category'] && ($values['CATEGORIES'] = $this->get_categories($event['category'])))
 						{
-							$attributes['CATEGORIES'] = '';
-							$values['CATEGORIES'] = $this->get_categories($event['category']);
+							if (count($values['CATEGORIES']) == 1)
+							{
+								$attributes['CATEGORIES'] = array_shift($values['CATEGORIES']);
+							}
+							else
+							{
+								$attributes['CATEGORIES'] = '';
+							}
 						}
 						break;
 
@@ -571,8 +583,14 @@ class calendar_ical extends calendar_boupdate
 						{
 							$size = $this->clientProperties[$icalFieldName]['Size'];
 							$noTruncate = $this->clientProperties[$icalFieldName]['NoTruncate'];
-							#Horde::logMessage("vCalendar $icalFieldName Size: $size, NoTruncate: " .
-							#	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+							if ($this->log && $size > 0)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+									"() $icalFieldName Size: $size, NoTruncate: " .
+									($noTruncate ? 'TRUE' : 'FALSE') . "\n",3,$this->logfile);
+							}
+							//Horde::logMessage("vCalendar $icalFieldName Size: $size, NoTruncate: " .
+							//	($noTruncate ? 'TRUE' : 'FALSE'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 						}
 						else
 						{
@@ -585,14 +603,24 @@ class calendar_ical extends calendar_boupdate
 						{
 							if ($noTruncate)
 							{
-								Horde::logMessage("vCalendar $icalFieldName omitted due to maximum size $size",
-									__FILE__, __LINE__, PEAR_LOG_WARNING);
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+										"() $icalFieldName omitted due to maximum size $size\n",3,$this->logfile);
+								}
+								//Horde::logMessage("vCalendar $icalFieldName omitted due to maximum size $size",
+								//	__FILE__, __LINE__, PEAR_LOG_WARNING);
 								continue; // skip field
 							}
 							// truncate the value to size
 							$value = substr($value, 0, $size - 1);
-							Horde::logMessage("vCalendar $icalFieldName truncated to maximum size $size",
-								__FILE__, __LINE__, PEAR_LOG_INFO);
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+									"() $icalFieldName truncated to maximum size $size\n",3,$this->logfile);
+							}
+							//Horde::logMessage("vCalendar $icalFieldName truncated to maximum size $size",
+							//	__FILE__, __LINE__, PEAR_LOG_INFO);
 						}
 						if (!empty($value) || ($size >= 0 && !$noTruncate))
 						{
@@ -694,30 +722,59 @@ class calendar_ical extends calendar_boupdate
                             $GLOBALS['egw']->translation->charset(),'UTF-8');
                     $valuesData = (array) $GLOBALS['egw']->translation->convert($values[$key],
                     		$GLOBALS['egw']->translation->charset(),'UTF-8');
-					//echo "$key:$valueID: value=$valueData, param=".print_r($paramDate,true)."\n";
-					$vevent->setAttribute($key, $valueData, $paramData, true, $valuesData);
-					$options = array();
-					if ($paramData['CN']) $valueData .= $paramData['CN'];	// attendees or organizer CN can contain utf-8 content
-					/*if($key != 'RRULE' && preg_match('/([\000-\012\015\016\020-\037\075])/',$valueData)) {
-						$options['ENCODING'] = 'QUOTED-PRINTABLE';
-					}*/
-					if ($this->productManufacturer != 'groupdav' && preg_match('/([\177-\377])/', $valueData))
+
+					if (preg_match('/[^\x20-\x7F]/', $valueData) ||
+						($paramData['CN'] && preg_match('/[^\x20-\x7F]/', $paramData['CN'])))
 					{
-						$options['CHARSET'] = 'UTF-8';
+						$paramData['CHARSET'] = 'UTF-8';
+						switch ($this->productManufacturer)
+						{
+							case 'groupdav':
+								if ($this->productName == 'kde')
+								{
+									$paramData['ENCODING'] = 'QUOTED-PRINTABLE';
+								}
+								else
+								{
+									$paramData['CHARSET'] = '';
+									if (preg_match('/([\000-\012\015\016\020-\037\075])/', $valueData))
+									{
+										$paramData['ENCODING'] = 'QUOTED-PRINTABLE';
+									}
+									else
+									{
+										$paramData['ENCODING'] = '';
+									}
+								}
+								break;
+							case 'funambol':
+								$paramData['ENCODING'] = 'FUNAMBOL-QP';
+						}
 					}
+					/*
 					if (preg_match('/([\000-\012])/', $valueData))
 					{
-						if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."() Has invalid XML data: $valueData",3,$this->logfile);
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+								"() Has invalid XML data: $valueData",3,$this->logfile);
+						}
 					}
-					$vevent->setParameter($key, $options);
+					*/
+					$vevent->setAttribute($key, $valueData, $paramData, true, $valuesData);
 				}
 			}
 			$vcal->addComponent($vevent);
 		}
 
 		$retval = $vcal->exportvCalendar();
- 		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($retval)."\n",3,$this->logfile);
-
+ 		if ($this->log)
+ 		{
+ 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+				"() '$this->productManufacturer','$this->productName'\n",3,$this->logfile);
+ 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+				"()\n".array2string($retval)."\n",3,$this->logfile);
+ 		}
 		return $retval;
 	}
 
@@ -762,14 +819,18 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0)
 	{
-		if ($this->log) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($_vcalData)."\n",3,$this->logfile);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($_vcalData)."\n",3,$this->logfile);
+		}
+
+		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
 		if (!($events = $this->icaltoegw($_vcalData,$cal_id,$etag,$recur_date)))
 		{
 			return false;
 		}
-
-		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
 		// check if we are importing an event series with exceptions in CalDAV
 		// only first event / series master get's cal_id from URL
@@ -784,6 +845,11 @@ class calendar_ical extends calendar_boupdate
 		}
 		foreach ($events as $event)
 		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+					array2string($event)."\n",3,$this->logfile);
+			}
 			$updated_id = false;
 			$event_info = $this->get_event_info($event);
 
@@ -815,6 +881,10 @@ class calendar_ical extends calendar_boupdate
 			// common adjustments for existing events
 			if (is_array($event_info['stored_event']))
 			{
+				if (empty($event['uid']))
+				{
+					$event['uid'] = $event_info['stored_event']['uid']; // restore the UID if it was not delivered
+				}
 				if ($merge)
 				{
 					// overwrite with server data for merge
@@ -934,11 +1004,20 @@ class calendar_ical extends calendar_boupdate
 			switch ($event_info['type'])
 			{
 				case 'SINGLE':
-					Horde::logMessage('importVCAL event SINGLE',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"(): event SINGLE\n",3,$this->logfile);
+					}
+					//Horde::logMessage('importVCAL event SINGLE',
+					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// update the event
 					if ($event_info['acl_edit'])
 					{
+						// Force SINGLE
+						unset($event['recurrence']);
+						$event['reference'] = 0;
 						$event_to_store = $event; // prevent $event from being changed by the update method
 						$updated_id = $this->update($event_to_store, true);
 						unset($event_to_store);
@@ -946,7 +1025,13 @@ class calendar_ical extends calendar_boupdate
 					break;
 
 				case 'SERIES-MASTER':
-					Horde::logMessage('importVCAL event SERIES-MASTER',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"(): event SERIES-MASTER\n",3,$this->logfile);
+					}
+					//Horde::logMessage('importVCAL event SERIES-MASTER',
+					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// remove all known "status only" exceptions and update the event
 					if ($event_info['acl_edit'])
@@ -973,7 +1058,13 @@ class calendar_ical extends calendar_boupdate
 
 				case 'SERIES-EXCEPTION':
 				case 'SERIES-EXCEPTION-PROPAGATE':
-					Horde::logMessage('importVCAL event SERIES-EXCEPTION',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"(): event SERIES-EXCEPTION\n",3,$this->logfile);
+					}
+					//Horde::logMessage('importVCAL event SERIES-EXCEPTION',
+					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// update event
 					if ($event_info['acl_edit'])
@@ -1004,7 +1095,13 @@ class calendar_ical extends calendar_boupdate
 					break;
 
 				case 'SERIES-EXCEPTION-STATUS':
-					Horde::logMessage('importVCAL event SERIES-EXCEPTION-STATUS',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"(): event SERIES-EXCEPTION-STATUS\n",3,$this->logfile);
+					}
+					//Horde::logMessage('importVCAL event SERIES-EXCEPTION-STATUS',
+					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					if ($event_info['acl_edit'])
 					{
@@ -1105,7 +1202,8 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log)
 			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($event_info['stored_event'])."\n",3,$this->logfile);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
 
@@ -1233,8 +1331,15 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 
-		Horde::logMessage('setSupportedFields(' . $this->productManufacturer
-				. ', ' . $this->productName .')', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'(' . $this->productManufacturer .
+				', '. $this->productName . ")\n",3,$this->logfile);
+		}
+
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer
+		//		. ', ' . $this->productName .')', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$defaultFields['minimal'] = array(
 			'public'			=> 'public',
@@ -1273,6 +1378,13 @@ class calendar_ical extends calendar_boupdate
 			'uid'				=> 'uid',
 			'recurrence'		=> 'recurrence',
 			'etag'				=> 'etag',
+		);
+
+		$defaultFields['funambol'] = $defaultFields['basic'] + array(
+			'participants'		=> 'participants',
+			'owner'				=> 'owner',
+			'category'			=> 'category',
+			'non_blocking'		=> 'non_blocking',
 		);
 
 		$defaultFields['evolution'] = $defaultFields['basic'] + array(
@@ -1402,7 +1514,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'funambol':
-				$this->supportedFields = $defaultFields['synthesis'];
+				$this->supportedFields = $defaultFields['funambol'];
 				break;
 
 			// the fallback for SyncML
@@ -1430,6 +1542,11 @@ class calendar_ical extends calendar_boupdate
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData))
 		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					"(): No vCalendar Container found!\n",3,$this->logfile);
+			}
 			if ($this->tzid)
 			{
 				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
@@ -1867,7 +1984,9 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'PRIORITY':
-					if($this->productManufacturer == 'funambol')
+					if ($this->productManufacturer == 'funambol' &&
+						(strpos($this->productName, 'outlook') !== false
+							|| strpos($this->productName, 'pocket pc') !== false))
 					{
 						$vcardData['priority'] = (int) $this->priority_funambol2egw[$attributes['value']];
 					}
@@ -2047,7 +2166,6 @@ class calendar_ical extends calendar_boupdate
 					// fall through
 				case 'LAST-MODIFIED':	// will be written direct to the event
 					$event['modified'] = $attributes['value'];
-					break;
 			}
 		}
 
@@ -2127,6 +2245,11 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($event)."\n",3,$this->logfile);
+		}
 		//Horde::logMessage("vevent2egw:\n" . print_r($event, true),
         //    	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		return $event;
