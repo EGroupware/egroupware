@@ -881,6 +881,10 @@ class calendar_ical extends calendar_boupdate
 			// common adjustments for existing events
 			if (is_array($event_info['stored_event']))
 			{
+				if (empty($event['uid']))
+				{
+					$event['uid'] = $event_info['stored_event']['uid']; // restore the UID if it was not delivered
+				}
 				if ($merge)
 				{
 					// overwrite with server data for merge
@@ -1000,11 +1004,20 @@ class calendar_ical extends calendar_boupdate
 			switch ($event_info['type'])
 			{
 				case 'SINGLE':
-					Horde::logMessage('importVCAL event SINGLE',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"(): event SINGLE\n",3,$this->logfile);
+					}
+					//Horde::logMessage('importVCAL event SINGLE',
+					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// update the event
 					if ($event_info['acl_edit'])
 					{
+						// Force SINGLE
+						unset($event['recurrence']);
+						$event['reference'] = 0;
 						$event_to_store = $event; // prevent $event from being changed by the update method
 						$updated_id = $this->update($event_to_store, true);
 						unset($event_to_store);
@@ -1012,7 +1025,13 @@ class calendar_ical extends calendar_boupdate
 					break;
 
 				case 'SERIES-MASTER':
-					Horde::logMessage('importVCAL event SERIES-MASTER',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"(): event SERIES-MASTER\n",3,$this->logfile);
+					}
+					//Horde::logMessage('importVCAL event SERIES-MASTER',
+					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// remove all known "status only" exceptions and update the event
 					if ($event_info['acl_edit'])
@@ -1039,7 +1058,13 @@ class calendar_ical extends calendar_boupdate
 
 				case 'SERIES-EXCEPTION':
 				case 'SERIES-EXCEPTION-PROPAGATE':
-					Horde::logMessage('importVCAL event SERIES-EXCEPTION',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"(): event SERIES-EXCEPTION\n",3,$this->logfile);
+					}
+					//Horde::logMessage('importVCAL event SERIES-EXCEPTION',
+					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// update event
 					if ($event_info['acl_edit'])
@@ -1070,7 +1095,13 @@ class calendar_ical extends calendar_boupdate
 					break;
 
 				case 'SERIES-EXCEPTION-STATUS':
-					Horde::logMessage('importVCAL event SERIES-EXCEPTION-STATUS',__FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"(): event SERIES-EXCEPTION-STATUS\n",3,$this->logfile);
+					}
+					//Horde::logMessage('importVCAL event SERIES-EXCEPTION-STATUS',
+					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					if ($event_info['acl_edit'])
 					{
@@ -1300,8 +1331,15 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 
-		Horde::logMessage('setSupportedFields(' . $this->productManufacturer
-				. ', ' . $this->productName .')', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'(' . $this->productManufacturer .
+				', '. $this->productName . ")\n",3,$this->logfile);
+		}
+
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer
+		//		. ', ' . $this->productName .')', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$defaultFields['minimal'] = array(
 			'public'			=> 'public',
