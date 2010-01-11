@@ -486,6 +486,12 @@ class nextmatch_widget
 
 	/**
 	 * Calling our callback
+	 * 
+	 * Signature of get_rows callback is either:
+	 * a) int get_rows($query,&$rows,&$readonlys)
+	 * b) int get_rows(&$query,&$rows,&$readonlys)
+	 * 
+	 * If get_rows is called static (and php >= 5.2.3), it is always b) independent on how it's defined!
 	 *
 	 * @param array &$value
 	 * @param array &$rows=null
@@ -503,8 +509,14 @@ class nextmatch_widget
 			// allow static callbacks
 			if(strpos($method,'::') !== false)
 			{
-				//  workaround for php < 5.3: do NOT call it static, but allow application code to specify static callbacks
-				if (version_compare(PHP_VERSION,'5.3','<')) list($class,$method) = explode('::',$method);
+				list($class,$method) = explode('::',$method);
+
+				//  workaround for php < 5.2.3: do NOT call it static, but allow application code to specify static callbacks
+				if (version_compare(PHP_VERSION,'5.2.3','>='))
+				{
+					$method = array($class,$method);
+					unset($class);
+				}
 			}
 			else
 			{
@@ -526,9 +538,9 @@ class nextmatch_widget
 				}
 			}
 		}
-		if(is_callable($method))	// php5.3+ call
+		if(is_callable($method))	// php5.2.3+ static call (value is always a var param!)
 		{
-			$total = $method($value,$rows,$readonlys);
+			$total = call_user_func_array($method,array(&$value,&$rows,&$readonlys));
 		}
 		elseif(is_object($obj) && method_exists($obj,$method))
 		{
