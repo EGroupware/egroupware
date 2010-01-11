@@ -270,7 +270,7 @@ class addressbook_ui extends addressbook_bo
 		if (isset($this->config['contact_export_limit']) && (int)$this->config['contact_export_limit']) $content['nm']['export_limit']=$this->config['contact_export_limit'];
 		$sel_options['action'] += array(
 			'merge'  => lang('Merge into first or account, deletes all other!'),
-			'cat_add' => lang('Add or delete Categoies'), // add a categirie to multible addresses
+			'cat_add' => lang('Add or delete Categories'), // add a categirie to multible addresses
 			'infolog_add' => lang('Add a new Infolog'),
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
