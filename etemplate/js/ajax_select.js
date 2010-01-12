@@ -281,7 +281,7 @@ function change(e, value) {
 			selects[i].style.visibility = 'hidden';
 		}
 	}
-	xajax_doXMLHTTP(current_app + ".ajax_select_widget.ajax_search.etemplate", id, value, set_id, query);
+	xajax_doXMLHTTP(current_app + ".ajax_select_widget.ajax_search.etemplate", id, value, set_id, query, document.getElementById('etemplate_exec_id').value);
 }
 
 
