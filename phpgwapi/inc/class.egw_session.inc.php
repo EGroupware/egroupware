@@ -735,7 +735,7 @@ class egw_session
 			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php')))
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
-			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT);
+			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT.':'.self::getuser_ip());
 		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
 		{
@@ -825,6 +825,8 @@ class egw_session
 		// This is to ensure that we authenticate to the correct domain (might not be default)
 		if($GLOBALS['egw_info']['user']['domain'] && $this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
+			return false;	// session not verified, domain changed
+
 			throw new Exception("Wrong domain! '$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'");
 /*			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid','$kp3') account_domain='$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'=egw_info[user][domain]");
 			$GLOBALS['egw']->ADOdb = null;
@@ -901,10 +903,10 @@ class egw_session
 
 		if ($GLOBALS['egw_info']['server']['sessions_checkip'])
 		{
-			if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) wrong IP");
 			if (strtoupper(substr(PHP_OS,0,3)) != 'WIN' && (!$GLOBALS['egw_info']['user']['session_ip'] ||
 				$GLOBALS['egw_info']['user']['session_ip'] != $this->getuser_ip()))
 			{
+				if (self::ERROR_LOG_DEBUG) error_log("*** session::verify($sessionid) wrong IP");
 				if(is_object($GLOBALS['egw']->log))
 				{
 					// This needs some better wording
@@ -1247,6 +1249,8 @@ class egw_session
 	 */
 	public static function search_instance($login,$domain_requested,&$default_domain,$server_name,array $domains=null)
 	{
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$login','$domain_requested',".array2string($default_domain).".'$server_name'.".array2string($domains).")");
+		
 		if (is_null($domains)) $domains = $GLOBALS['egw_domain'];
 
 		if (!isset($default_domain) || !isset($domains[$default_domain]))	// allow to overwrite the default domain
@@ -1290,6 +1294,8 @@ class egw_session
 		{
 			$domain = $default_domain;
 		}
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() default_domain=".array2string($default_domain).', login='.array2string($login)." returning ".array2string($domain));
+		
 		return $domain;
 	}
 
