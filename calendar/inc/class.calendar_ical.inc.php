@@ -1815,7 +1815,7 @@ class calendar_ical extends calendar_boupdate
 										date('i', $vcardData['end']),
 										date('s', $vcardData['end']),
 										date('m', $vcardData['end']),
-										date('d', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval']),
+										date('d', $vcardData['end']) + ($vcardData['recur_interval']*($recurenceMatches[2]-1)),
 										date('Y', $vcardData['end'])
 									);
 								}
