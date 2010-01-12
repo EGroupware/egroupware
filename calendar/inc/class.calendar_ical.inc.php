@@ -1748,12 +1748,16 @@ class calendar_ical extends calendar_boupdate
 						case 'W':
 						case 'WEEKLY':
 							$days = array();
-							if (preg_match('/W(\d+) ([^ ]*)( ([^ ]*))?$/',$recurence, $recurenceMatches))		// 1.0
+							if (preg_match('/W(\d+)((?i: [AEFMORSTUW]*)+)?( +([^ ]*))$/',$recurence, $recurenceMatches))		// 1.0
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if (empty($recurenceMatches[4]))
+								if (empty($recurenceMatches[2]))
 								{
-									if ($recurenceMatches[2] != '#0')
+									if (preg_match('/#(\d+)/',$recurenceMatches[4],$recurenceMatches))
+									{
+										if ($recurenceMatches[1]) $vcardData['recur_count'] = $recurenceMatches[1];
+									}
+									else
 									{
 										$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 									}
@@ -1763,7 +1767,11 @@ class calendar_ical extends calendar_boupdate
 								{
 									$days = explode(' ',trim($recurenceMatches[2]));
 
-									if ($recurenceMatches[4] != '#0')
+									if (preg_match('/#(\d+)/',$recurenceMatches[4],$recurenceMatches))
+									{
+										if ($recurenceMatches[1]) $vcardData['recur_count'] = $recurenceMatches[1];
+									}
+									else
 									{
 										$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[4]);
 									}
@@ -1823,10 +1831,7 @@ class calendar_ical extends calendar_boupdate
 							elseif (preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if ($recurenceMatches[2] != '#0')
-								{
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
-								}
+								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 							}
 							else break;
 
@@ -1847,7 +1852,7 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'M':
-							if (preg_match('/MD(\d+) #(.\d)/', $recurence, $recurenceMatches))
+							if (preg_match('/MD(\d+)(?: [^ ])? #(\d+)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
 								$vcardData['recur_interval'] = $recurenceMatches[1];
@@ -1857,7 +1862,7 @@ class calendar_ical extends calendar_boupdate
 										date('H', $vcardData['end']),
 										date('i', $vcardData['end']),
 										date('s', $vcardData['end']),
-										date('m', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval']),
+										date('m', $vcardData['end']) + ($vcardData['recur_interval']*($recurenceMatches[2]-1)),
 										date('d', $vcardData['end']),
 										date('Y', $vcardData['end'])
 									);
@@ -1870,19 +1875,26 @@ class calendar_ical extends calendar_boupdate
 								{
 									$vcardData['recur_interval'] = $recurenceMatches[1];
 								}
-								if ($recurenceMatches[2] != '#0')
-								{
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
-								}
+								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 							}
 							elseif (preg_match('/MP(\d+) (.*) (.*) (.*)/',$recurence, $recurenceMatches))
 							{
 								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_WDAY;
-								if ($recurenceMatches[1] > 1)
+								$vcardData['recur_interval'] = $recurenceMatches[1];
+								if (preg_match('/#(\d+)/',$recurenceMatches[4],$recurenceMatches))
 								{
-									$vcardData['recur_interval'] = $recurenceMatches[1];
+									if ($recurenceMatches[1])
+									{
+										$vcardData['recur_enddate'] = mktime(
+											date('H', $vcardData['end']),
+											date('i', $vcardData['end']),
+											date('s', $vcardData['end']),
+											date('m', $vcardData['start']) + ($vcardData['recur_interval']*($recurenceMatches[1]-1)),
+											date('d', $vcardData['start']),
+											date('Y', $vcardData['start']));
+									}
 								}
-								if ($recurenceMatches[4] != '#0')
+								else
 								{
 									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[4]);
 								}
