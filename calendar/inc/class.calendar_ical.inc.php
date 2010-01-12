@@ -390,7 +390,14 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'CLASS':
-						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'CONFIDENTIAL';
+						if ($this->productManufacturer == 'funambol')
+						{
+							$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
+						}
+						else
+						{
+							$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'CONFIDENTIAL';
+						}
 						break;
 
     				case 'ORGANIZER':
@@ -1202,6 +1209,7 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log)
 			{
+				$event_info['stored_event'] = $this->read($event_info['stored_event']['id']);
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
 					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
@@ -1797,7 +1805,7 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'D':	// 1.0
-							if (preg_match('/D(\d+) #(.\d)/', $recurence, $recurenceMatches))
+							if (preg_match('/D(\d+) #(\d+)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
 								if ($recurenceMatches[2] > 0 && $vcardData['end'])
