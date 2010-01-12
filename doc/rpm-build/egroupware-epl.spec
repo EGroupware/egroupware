@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.2.20100108
+Version: 9.2.20100112
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database

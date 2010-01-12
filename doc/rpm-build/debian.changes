@@ -1,10 +1,10 @@
 egroupware-epl (9.2.20100112-1) hardy; urgency=low
 
-  * Fixes for session problems with basic auth clients (sogo connector eg.)
+  * Fixes for session problems "Wrong domain" with basic auth clients (sogo connector eg.)
   * EventMgr: OMSE offset, bigger title and storing index state in user prefs
   * Furhter fixes/improvments for Funambol
 
- -- Ralf Becker <rb@stylite.de>  Fri, 12 Jan 2010 05:00:00 +0200
+ -- Ralf Becker <rb@stylite.de>  Tue, 12 Jan 2010 05:00:00 +0200
 
 egroupware-epl (9.2.20100108-1) hardy; urgency=low
 
