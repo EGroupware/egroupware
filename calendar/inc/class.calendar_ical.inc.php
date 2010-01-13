@@ -1289,13 +1289,13 @@ class calendar_ical extends calendar_boupdate
 
 	function setSupportedFields($_productManufacturer='', $_productName='')
 	{
-		$state = &$_SESSION['SyncML.state'];
+		$state =& $_SESSION['SyncML.state'];
 		if (isset($state))
 		{
 			$deviceInfo = $state->getClientDeviceInfo();
 		}
 
-		// store product manufacturer and name, to be able to use it elsewhere
+		// store product manufacturer and name for further usage
 		if ($_productManufacturer)
 		{
 				$this->productManufacturer = strtolower($_productManufacturer);
