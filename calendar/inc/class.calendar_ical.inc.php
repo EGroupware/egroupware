@@ -1748,7 +1748,7 @@ class calendar_ical extends calendar_boupdate
 						case 'W':
 						case 'WEEKLY':
 							$days = array();
-							if (preg_match('/W(\d+)((?i: [AEFMORSTUW]*)+)?( +([^ ]*))$/',$recurence, $recurenceMatches))		// 1.0
+							if (preg_match('/W(\d+)((?i: [AEFHMORSTUW]*)+)?( +([^ ]*))$/',$recurence, $recurenceMatches))		// 1.0
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
 								if (empty($recurenceMatches[2]))
@@ -1959,6 +1959,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'EXDATE':
+					if (!$attributes['value']) break;
 					if ((isset($attributes['params']['VALUE'])
 							&& $attributes['params']['VALUE'] == 'DATE') ||
 						(!isset($attributes['params']['VALUE']) && $isDate))
