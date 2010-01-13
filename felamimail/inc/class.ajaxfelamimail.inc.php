@@ -371,9 +371,9 @@
 		*/
 		function emptyTrash()
 		{
-			if($this->_debug) error_log("ajaxfelamimail::emptyTrash");
-			if(!empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'])) {
-				$this->bofelamimail->compressFolder($GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder']);
+			if($this->_debug) error_log("ajaxfelamimail::emptyTrash Folder:".$this->bofelamimail->mailPreferences->preferences['trashFolder']);
+			if(!empty($this->bofelamimail->mailPreferences->preferences['trashFolder'])) {
+				$this->bofelamimail->compressFolder($this->bofelamimail->mailPreferences->preferences['trashFolder']);
 			}
 
 			return $this->generateMessageList($this->sessionData['mailbox']);

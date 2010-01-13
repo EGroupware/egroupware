@@ -727,7 +727,7 @@
 			}
 
 			foreach((array)$_formData['to'] as $address) {
-				$address_array	= imap_rfc822_parse_adrlist($address, '');
+				$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address), '');
 				foreach((array)$address_array as $addressObject) {
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
@@ -737,7 +737,7 @@
 			}
 
 			foreach((array)$_formData['cc'] as $address) {
-				$address_array	= imap_rfc822_parse_adrlist($address,'');
+				$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
@@ -747,7 +747,7 @@
 			}
 
 			foreach((array)$_formData['bcc'] as $address) {
-				$address_array	= imap_rfc822_parse_adrlist($address,'');
+				$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
@@ -757,7 +757,7 @@
 			}
 
 			foreach((array)$_formData['replyto'] as $address) {
-				$address_array  = imap_rfc822_parse_adrlist($address,'');
+				$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
@@ -867,7 +867,7 @@
 			$this->sessionData['stationeryID'] = $_formData['stationeryID'];
 			$this->sessionData['identity']  = $_formData['identity'];
 			foreach((array)$this->sessionData['bcc'] as $address) {
-				$address_array  = imap_rfc822_parse_adrlist($address,'');
+				$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					$mailAddr[] = array($emailAddress, $addressObject->personal);
@@ -1016,7 +1016,7 @@
 			if (count($folder) > 0) {
 
 				foreach((array)$this->sessionData['bcc'] as $address) {
-					$address_array  = imap_rfc822_parse_adrlist($address,'');
+					$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 					foreach((array)$address_array as $addressObject) {
 						$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 						$mailAddr[] = array($emailAddress, $addressObject->personal);

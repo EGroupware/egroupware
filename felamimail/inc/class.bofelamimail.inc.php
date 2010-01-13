@@ -237,8 +237,8 @@
 		{
  			if ($GLOBALS['egw_info']['server']['account_repository'] == "ldap")
 			{
-									$data = Array
-							(
+				$data = Array
+				(
 					'description'   => 'email settings',
 					'url'           => '/index.php',
 					'extradata'     => 'menuaction=emailadmin.uiuserdata.editUserData'
@@ -290,7 +290,7 @@
 		{
 			$folderName	= ($_folderName ? $_folderName : $this->sessionData['mailbox']);
 			$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['felamimail']['deleteOptions'];
-			$trashFolder	= $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'];
+			$trashFolder	= $this->mailPreferences->preferences['trashFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'];
 
 			$this->icServer->selectMailbox($folderName);
 
@@ -557,8 +557,8 @@
 
 			$deleteOptions  = $this->mailPreferences->preferences['deleteOptions'];
 			$trashFolder    = $this->mailPreferences->preferences['trashFolder'];
-			$draftFolder	= $GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
-			$templateFolder    = $GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
+			$draftFolder	= $this->mailPreferences->preferences['draftFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
+			$templateFolder = $this->mailPreferences->preferences['templateFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
 
 			if(($this->sessionData['mailbox'] == $trashFolder && $deleteOptions == "move_to_trash") ||
 			   ($this->sessionData['mailbox'] == $draftFolder)) {
@@ -1055,6 +1055,8 @@
 						"src"		=> array("minlen" =>   4, 'maxlen' =>  384, $GLOBALS['egw_info']['user']['preferences']['felamimail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
 						"align"		=> array("minlen" =>   1),
 						"border"	=> array('maxlen' => 30),
+						"width"		=> array("minlen" =>   1, 'maxlen' =>  3),
+						"height"	=> array("minlen" =>   1, 'maxlen' =>  3),
 					)
 				);
 
