@@ -306,6 +306,9 @@ function dropdown_menu_hack(el)
 		if(el.runtimeStyle.behavior.toLowerCase()=="none"){return;}
 		el.runtimeStyle.behavior="none";
 
+		if (el.multiple ==1) {return;}
+		if (el.size > 1) {return;}
+
 		var ie5 = (document.namespaces==null);
 		el.ondblclick = function(e)
 		{
