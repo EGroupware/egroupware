@@ -551,8 +551,8 @@ class calendar_rrule implements Iterator
 				case self::MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
 					break;
 
-				case self::MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
-					$rrule['BYDAY'] = $this->monthly_byday_num .
+				case self::MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}+ {MO..SO}
+					$rrule['BYDAY'] = $this->monthly_byday_num . '+ ' .
 						strtoupper(substr($this->time->format('l'),0,2));
 					$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
 					break;
