@@ -13,7 +13,7 @@
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @version $Id$
  */
-require_once(EGW_API_INC.'/common_functions.inc.php');
+require_once(EGW_API_INC.'/class.egw_db.inc.php');
 include_once dirname(__FILE__).'/State.php';
 
 /**
