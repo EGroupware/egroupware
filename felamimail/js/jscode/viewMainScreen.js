@@ -358,7 +358,9 @@ function refresh() {
 function refreshFolderStatus(_nodeID,mode) {
 	var nodeToRefresh = 0;
 	var mode2use = "none";
-	if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
+	if (document.getElementById('messageCounter')) {
+		if (document.getElementById('messageCounter').innerHTML.search(eval('/'+lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
+	}
 	if (_nodeID) nodeToRefresh = _nodeID;
 	if (mode) {
 		if (mode == "forced") {mode2use = mode;}
