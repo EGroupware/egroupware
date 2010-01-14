@@ -26,10 +26,9 @@ function xajax_redirect(&$anon_account)
 	define('XAJAX_DEFAULT_CHAR_ENCODING',translation::charset());
 
 	$response = new xajaxResponse();
-	$response->addScript("location.href='".$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10'."';");
+	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10');
+	$response->printOutput();
 
-	header('Content-type: text/xml; charset='.translation::charset());
-	echo $response->printOutput();
 	common::egw_exit();
 }
 
@@ -44,8 +43,8 @@ function ajax_exception_handler(Exception $e)
 {
 	$response = new xajaxResponse();
 	$response->addAlert($e->getMessage()."\n\n".$e->getTraceAsString());
-	header('Content-type: text/xml; charset='.(is_object($GLOBALS['egw'])?translation::charset():'utf-8'));
-	echo $response->printOutput();
+	$response->printOutput();
+
 	if (is_object($GLOBALS['egw']))
 	{
 		common::egw_exit();
@@ -126,7 +125,7 @@ function doXMLHTTP()
 				$argList[0],
 				'xajaxResponse',
 			);
-			error_log("xajax_doXMLHTTP() /etemplate/process_exec handler: arg0='$arg0', menuaction='$_GET[menuaction]'");
+			//error_log("xajax_doXMLHTTP() /etemplate/process_exec handler: arg0='$arg0', menuaction='$_GET[menuaction]'");
 			break;
 		case 'etemplate':	// eg. ajax code in an eTemplate widget
 			$arg0 = ($appName = 'etemplate').'.'.$className.'.'.$functionName;
@@ -143,7 +142,7 @@ function doXMLHTTP()
 		exit;
 	}
 	$ajaxClass =& CreateObject($appName.'.'.$className);
-	$argList = $GLOBALS['egw']->translation->convert($argList, 'utf-8');
+	$argList = translation::convert($argList, 'utf-8');
 
 	return call_user_func_array(array(&$ajaxClass, $functionName), (array)$argList );
 }
