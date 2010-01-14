@@ -21,50 +21,113 @@ class calendar_sif extends calendar_boupdate
 	var $sifMapping = array(
 		'Start'				=> 'start',
 		'End'				=> 'end',
-		'AllDayEvent'			=> 'alldayevent',
+		'AllDayEvent'		=> 'alldayevent',
 		'Attendees'			=> '',
 		'BillingInformation'		=> '',
 		'Body'				=> 'description',
-		'BusyStatus'			=> '',
-		'Categories'			=> 'category',
+		'BusyStatus'		=> '',
+		'Categories'		=> 'category',
 		'Companies'			=> '',
-		'Importance'			=> 'priority',
-		'IsRecurring'			=> 'isrecurring',
+		'Importance'		=> 'priority',
+		'IsRecurring'		=> 'isrecurring',
 		'Location'			=> 'location',
-		'MeetingStatus'			=> '',
+		'MeetingStatus'		=> '',
 		'Mileage'			=> '',
 		'ReminderMinutesBeforeStart'	=> 'reminderstart',
-		'ReminderSet'			=> 'reminderset',
-		'ReminderSoundFile'		=> '',
-		'ReminderOptions'		=> '',
-		'ReminderInterval'		=> '',
+		'ReminderSet'		=> 'reminderset',
+		'ReminderSoundFile'	=> '',
+		'ReminderOptions'	=> '',
+		'ReminderInterval'	=> '',
 		'ReminderRepeatCount'		=> '',
-		'Exceptions'			=> '',
+		'Exceptions'		=> '',
 		'ReplyTime'			=> '',
-		'Sensitivity'			=> 'public',
+		'Sensitivity'		=> 'public',
 		'Subject'			=> 'title',
-		'RecurrenceType'		=> 'recur_type',
+		'RecurrenceType'	=> 'recur_type',
 		'Interval'			=> 'recur_interval',
-		'MonthOfYear'			=> '',
-		'DayOfMonth'			=> '',
-		'DayOfWeekMask'			=> 'recur_weekmask',
+		'MonthOfYear'		=> '',
+		'DayOfMonth'		=> '',
+		'DayOfWeekMask'		=> 'recur_weekmask',
 		'Instance'			=> '',
-		'PatternStartDate'		=> '',
+		'PatternStartDate'	=> '',
 		'NoEndDate'			=> 'recur_noenddate',
-		'PatternEndDate'		=> 'recur_enddate',
-		'Occurrences'			=> '',
+		'PatternEndDate'	=> 'recur_enddate',
+		'Occurrences'		=> '',
 	);
 
-	// the calendar event array
+	/**
+	 *  the calendar event array for the XML Parser
+	 */
 	var $event;
 
-	// device specific settings
+	/**
+	 * name and sorftware version of the Funambol client
+	 *
+	 * @var string
+	 */
 	var $productName = 'mozilla plugin';
 	var $productSoftwareVersion = '0.3';
+
+	/**
+	 * user preference: import all-day events as non blocking
+	 *
+	 * @var boolean
+	 */
+	var $nonBlockingAllday = false;
+
+	/**
+	 * user preference: attach UID entries to the DESCRIPTION
+	 *
+	 * @var boolean
+	 */
 	var $uidExtension = false;
 
+	/**
+	 * user preference: calendar to synchronize with
+	 *
+	 * @var int
+	 */
+	var $calendarOwner = 0;
+
+	/**
+	 * user preference: Use this timezone for import from and export to device
+	 *
+	 * @var string
+	 */
+	var $tzid = null;
+
+	/**
+	 * Cached timezone data
+	 *
+	 * @var array id => data
+	 */
+	protected static $tz_cache = array();
+
+	/**
+	 * Device CTCap Properties
+	 *
+	 * @var array
+	 */
+	var $clientProperties;
+
+	/**
+	 * vCalendar Instance for parsing
+	 *
+	 * @var array
+	 */
+	var $vCalendar;
+
+	/**
+	 * Set Logging
+	 *
+	 * @var boolean
+	 */
+	var $log = false;
+	var $logfile="/tmp/log-sifcal";
+
+
 	// constants for recurence type
-	const olRecursDaily	= 0;
+	const olRecursDaily		= 0;
 	const olRecursWeekly	= 1;
 	const olRecursMonthly	= 2;
 	const olRecursMonthNth	= 3;
@@ -72,17 +135,32 @@ class calendar_sif extends calendar_boupdate
 	const olRecursYearNth	= 6;
 
 	// constants for weekdays
-	const olSunday = 1;
-	const olMonday = 2;
-	const olTuesday = 4;
-	const olWednesday = 8;
-	const olThursday = 16;
-	const olFriday = 32;
-	const olSaturday = 64;
+	const olSunday		= 1;
+	const olMonday		= 2;
+	const olTuesday 	= 4;
+	const olWednesday	= 8;
+	const olThursday	= 16;
+	const olFriday		= 32;
+	const olSaturday	= 64;
 
 	// standard headers
 	const xml_decl = '<?xml version="1.0" encoding="UTF-8"?>';
 	const SIF_decl = '<SIFVersion>1.1</SIFVersion>';
+
+
+	/**
+	 * Constructor
+	 *
+	 * @param array $_clientProperties		client properties
+	 */
+	function __construct(&$_clientProperties = array())
+	{
+		parent::__construct();
+		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-sifcal";
+		$this->clientProperties = $_clientProperties;
+		$this->vCalendar = new Horde_iCalendar;
+	}
+
 
 	function startElement($_parser, $_tag, $_attributes)
 	{
@@ -90,10 +168,17 @@ class calendar_sif extends calendar_boupdate
 
 	function endElement($_parser, $_tag)
 	{
-		//error_log('endElem: ' . $_tag .' => '. trim($this->sifData));
-		if(!empty($this->sifMapping[$_tag]))
+		switch (strtolower($_tag))
 		{
-			$this->event[$this->sifMapping[$_tag]] = trim($this->sifData);
+			case 'excludedate':
+				$this->event['recur_exception'][] = trim($this->sifData);
+				break;
+
+			default:
+				if(!empty($this->sifMapping[$_tag]))
+				{
+					$this->event[$this->sifMapping[$_tag]] = trim($this->sifData);
+				}
 		}
 		unset($this->sifData);
 	}
@@ -103,11 +188,47 @@ class calendar_sif extends calendar_boupdate
 		$this->sifData .= $_data;
 	}
 
+	/**
+	 * Get DateTime value for a given time and timezone
+	 *
+	 * @param int|string|DateTime $time in server-time as returned by calendar_bo for $data_format='server'
+	 * @param string $tzid TZID of event or 'UTC' or NULL for palmos timestamps in usertime
+	 * @return mixed attribute value to set: integer timestamp if $tzid == 'UTC' otherwise Ymd\THis string IN $tzid
+	 */
+	function getDateTime($time,$tzid)
+	{
+		if (empty($tzid) || $tzid == 'UTC')
+		{
+			return $this->vCalendar->_exportDateTime(egw_time::to($time,'ts'));
+		}
+		if (!is_a($time,'DateTime'))
+		{
+			$time = new egw_time($time,egw_time::$server_timezone);
+		}
+		if (!isset(self::$tz_cache[$tzid]))
+		{
+			self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
+		}
+		$time->setTimezone(self::$tz_cache[$tzid]);
+
+		return $this->vCalendar->_exportDateTime($time->format('Ymd\THis'));
+	}
+
 	function siftoegw($sifData, $_calID=-1)
 	{
-		$vcal		= new Horde_iCalendar;
 		$finalEvent	= array();
+		$this->event = array();
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
+
+		if ($this->tzid)
+		{
+			// enforce device settings
+			$finalEvent['tzid'] = $this->tzid;
+		}
+		else
+		{
+			$finalEvent['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
+		}
 		#error_log($sifData);
 
 		#$tmpfname = tempnam('/tmp/sync/contents','sife_');
@@ -135,7 +256,12 @@ class calendar_sif extends calendar_boupdate
 		{
 			$value = preg_replace('/<\!\[CDATA\[(.+)\]\]>/Usim', '$1', $value);
 			$value = $GLOBALS['egw']->translation->convert($value, 'utf-8', $sysCharSet);
-			#error_log("$key => $value");
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					"() $key => $value\n",3,$this->logfile);
+			}
+
 			switch ($key)
 			{
 				case 'alldayevent':
@@ -175,18 +301,27 @@ class calendar_sif extends calendar_boupdate
 				case 'start':
 					if ($this->event['alldayevent'] < 1)
 					{
-						$finalEvent[$key] = $vcal->_parseDateTime($value);
-						error_log("event ".$key." val=".$value.", parsed=".$finalEvent[$key]);
+						$finalEvent[$key] = $this->vCalendar->_parseDateTime($value);
 					}
 					break;
 
 				case 'isrecurring':
 					if ($value == 1)
 					{
+						if (is_array($this->event['recur_exception']))
+						{
+							$finalEvent['recur_exception'] = array();
+							foreach ($this->event['recur_exception'] as $day)
+							{
+								$finalEvent['recur_exception'][] = $this->vCalendar->_parseDateTime($day);
+							}
+							array_unique($finalEvent['recur_exception']);
+						}
 						$finalEvent['recur_interval'] = $this->event['recur_interval'];
+						$finalEvent['recur_data'] = 0;
 						if ($this->event['recur_noenddate'] == 0)
 						{
-							$finalEvent['recur_enddate'] = $vcal->_parseDateTime($this->event['recur_enddate']);
+							$finalEvent['recur_enddate'] = $this->vCalendar->_parseDateTime($this->event['recur_enddate']);
 						}
 						switch ($this->event['recur_type'])
 						{
@@ -231,6 +366,7 @@ class calendar_sif extends calendar_boupdate
 				case 'recur_interval':
 				case 'recur_weekmask':
 				case 'reminderstart':
+				case 'recur_exception':
 					// do nothing, get's handled in isrecuring clause
 					break;
 
@@ -246,10 +382,11 @@ class calendar_sif extends calendar_boupdate
 			}
 		}
 
-		#$middleName = ($finalEvent['n_middle']) ? ' '.trim($finalEvent['n_middle']) : '';
-		#$finalEvent['fn']  = trim($finalEvent['n_given']. $middleName .' '. $finalEvent['n_family']);
-
-		#error_log(print_r($finalEvent, true));
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($finalEvent)."\n",3,$this->logfile);
+		}
 
 		return $finalEvent;
 	}
@@ -277,9 +414,11 @@ class calendar_sif extends calendar_boupdate
 	*/
 	function addSIF($_sifdata, $_calID=-1, $merge=false)
 	{
-		$state = &$_SESSION['SyncML.state'];
-		$deviceInfo = $state->getClientDeviceInfo();
-
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($_sifdata)."\n",3,$this->logfile);
+		}
 		if (!$event = $this->siftoegw($_sifdata, $_calID))
 		{
 			return false;
@@ -287,42 +426,48 @@ class calendar_sif extends calendar_boupdate
 
 		if (isset($event['alarm']))
 		{
-			$alarm = $event['alarm'];
-			unset($event['alarm']);
+			$alarmData = array();
+			$alarmData['offset'] = $event['alarm'] * 60;
+			$alarmData['time']	= $event['start'] - $alarmData['offset'];
+			$alarmData['owner']	= $this->user;
+			$alarmData['all']	= false;
+			$event['alarm'] = $alarmData;
 		}
 
-		if ($_calID > 0)
+		if ($_calID > 0 && ($storedEvent = $this->read($_calID)))
 		{
 			// update entry
 			$event['id'] = $_calID;
+			// delete existing alarms
+			if (count($storedEvent['alarm']) > 0)
+			{
+				foreach ($storedEvent['alarm'] as $alarm_id => $alarm_data)
+				{
+					// only touch own alarms
+					if ($alarm_data['all'] == false && $alarm_data['owner'] == $this->user)
+					{
+						$this->delete_alarm($alarm_id);
+					}
+				}
+			}
 		}
 		else
 		{
-			if (isset($event['whole_day']) && $event['whole_day']
-				&& isset ($deviceInfo) && is_array($deviceInfo)
-				&& isset($deviceInfo['nonBlockingAllday'])
-				&& $deviceInfo['nonBlockingAllday'])
+			if (isset($event['whole_day'])
+				&& $event['whole_day']
+				&& $this->nonBlockingAllday)
 			{
-				$event['non_blocking'] = '1';
+				$event['non_blocking'] = 1;
 			}
 		}
 
-		if ($eventID = $this->update($event, TRUE))
-		{
-			$updatedEvent = $this->read($eventID);
-			foreach ($updatedEvent['alarm'] as $alarmID => $alarmData)
-			{
-				$this->delete_alarm($alarmID);
-			}
+		$eventID = $this->update($event, true);
 
-			if (isset($alarm))
-			{
-				$alarmData['time']	= $event['start'] - ($alarm*60);
-				$alarmData['offset']	= $alarm*60;
-				$alarmData['all']	= 1;
-				$alarmData['owner']	= $GLOBALS['egw_info']['user']['account_id'];
-				$this->save_alarm($eventID, $alarmData);
-			}
+		if ($eventID && $this->log)
+		{
+			$storedEvent = $this->read($eventID);
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($storedEvent)."\n",3,$this->logfile);
 		}
 
 		return $eventID;
@@ -346,7 +491,11 @@ class calendar_sif extends calendar_boupdate
 
 		if (($event = $this->read($_id,null,false,'server')))
 		{
-
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+					array2string($event)."\n",3,$this->logfile);
+			}
 			if ($this->uidExtension)
 			{
 				if (!preg_match('/\[UID:.+\]/m', $event['description']))
@@ -355,10 +504,31 @@ class calendar_sif extends calendar_boupdate
 				}
 			}
 
-			$vcal		= new Horde_iCalendar('1.0');
+			if ($this->tzid === false)
+			{
+				$tzid = null;
+			}
+			elseif ($this->tzid)
+			{
+				$tzid = $this->tzid;
+			}
+			else
+			{
+				$tzid = $event['tzid'];
+			}
+			if ($tzid && $tzid != 'UTC')
+			{
+				if (!isset(self::$tz_cache[$tzid]))
+				{
+					self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
+				}
+			}
+			if (!isset(self::$tz_cache[$event['tzid']]))
+			{
+				self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+			}
 
-
-			$sifEvent = self::xml_decl . "\n<appointment>" . self::SIF_decl;
+			$sifEvent = self::xml_decl . "<appointment>" . self::SIF_decl;
 
 			foreach ($this->sifMapping as $sifField => $egwField)
 			{
@@ -396,24 +566,28 @@ class calendar_sif extends calendar_boupdate
 						}
 						else
 						{
-							$recurEndDate = mktime(24 , 0, 0,
-								date('m',$event['recur_enddate']),
-								date('d', $event['recur_enddate']),
-								date('Y', $event['recur_enddate']));
+							$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
+							// all calculations in the event's timezone
+							$time->setTimezone(self::$tz_cache[$event['tzid']]);
+							$time->setTime(23, 59, 59);
+							$recurEndDate = $this->date2ts($time);
 							$sifEvent .= '<NoEndDate>0</NoEndDate>';
-							$sifEvent .= '<PatternEndDate>'. $vcal->_exportDateTime($recurEndDate) .'</PatternEndDate>';
+							$sifEvent .= '<PatternEndDate>'. $this->vCalendar->_exportDateTime($recurEndDate) .'</PatternEndDate>';
 						}
+						$time = new egw_time($event['start'],egw_time::$server_timezone);
+						// all calculations in the event's timezone
+						$time->setTimezone(self::$tz_cache[$event['tzid']]);
+						$time->setTime(0, 0, 0);
+						$recurStartDate = $this->date2ts($time);
+						$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
 						switch ($event['recur_type'])
 						{
 
 							case MCAL_RECUR_DAILY:
-								$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
-								$recurStartDate = mktime(0,0,0,date('m',$event['start']), date('d', $event['start']), date('Y', $event['start']));
-
 								$sifEvent .= "<$sifField>1</$sifField>";
 								$sifEvent .= '<RecurrenceType>'. self::olRecursDaily .'</RecurrenceType>';
 								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-								$sifEvent .= '<PatternStartDate>'. $vcal->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+								$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
 								if ($event['recur_enddate'])
 								{
 									$totalDays = ($recurEndDate - $recurStartDate) / 86400;
@@ -423,19 +597,15 @@ class calendar_sif extends calendar_boupdate
 								break;
 
 							case MCAL_RECUR_WEEKLY:
-								$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
-								$recurStartDate = mktime(0,0,0,date('m',$event['start']), date('d', $event['start']), date('Y', $event['start']));
-
 								$sifEvent .= "<$sifField>1</$sifField>";
 								$sifEvent .= '<RecurrenceType>'. self::olRecursWeekly .'</RecurrenceType>';
 								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-								$sifEvent .= '<PatternStartDate>'. $vcal->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+								$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
 								$sifEvent .= '<DayOfWeekMask>'. $event['recur_data'] .'</DayOfWeekMask>';
 								if ($event['recur_enddate'])
 								{
 									$daysPerWeek = substr_count(decbin($event['recur_data']),'1');
 									$totalWeeks = floor(($recurEndDate - $recurStartDate) / (86400*7));
-									#error_log("AAA: $daysPerWeek $totalWeeks");
 									$occurrences = ($totalWeeks / $eventInterval) * $daysPerWeek;
 									for($i = $recurEndDate; $i > $recurStartDate + ($totalWeeks * 86400*7); $i = $i - 86400)
 									{
@@ -470,26 +640,20 @@ class calendar_sif extends calendar_boupdate
 								break;
 
 							case MCAL_RECUR_MONTHLY_MDAY:
-								$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
-								$recurStartDate = mktime(0,0,0,date('m',$event['start']), date('d', $event['start']), date('Y', $event['start']));
-
 								$sifEvent .= "<$sifField>1</$sifField>";
 								$sifEvent .= '<RecurrenceType>'. self::olRecursMonthly .'</RecurrenceType>';
 								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-								$sifEvent .= '<PatternStartDate>'. $vcal->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+								$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
 								break;
 
 							case MCAL_RECUR_MONTHLY_WDAY:
 								$weekMaskMap = array('Sun' => self::olSunday, 'Mon' => self::olMonday, 'Tue' => self::olTuesday,
 													 'Wed' => self::olWednesday, 'Thu' => self::olThursday, 'Fri' => self::olFriday,
 													 'Sat' => self::olSaturday);
-								$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
-								$recurStartDate = mktime(0,0,0,date('m',$event['start']), date('d', $event['start']), date('Y', $event['start']));
-
 								$sifEvent .= "<$sifField>1</$sifField>";
 								$sifEvent .= '<RecurrenceType>'. self::olRecursMonthNth .'</RecurrenceType>';
 								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-								$sifEvent .= '<PatternStartDate>'. $vcal->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+								$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
 								$sifEvent .= '<Instance>' . (1 + (int) ((date('d',$event['start'])-1) / 7)) . '</Instance>';
 								$sifEvent .= '<DayOfWeekMask>' . $weekMaskMap[date('D',$event['start'])] . '</DayOfWeekMask>';
 								break;
@@ -498,6 +662,24 @@ class calendar_sif extends calendar_boupdate
 								$sifEvent .= "<$sifField>1</$sifField>";
 								$sifEvent .= '<RecurrenceType>'. self::olRecursYearly .'</RecurrenceType>';
 								break;
+						}
+						if (is_array($event['recur_exception']))
+						{
+							$sifEvent .= '<Exceptions>';
+							foreach ($event['recur_exception'] as $day)
+							{
+								if ($this->isWholeDay($event))
+								{
+									$time = new egw_time($day,egw_time::$server_timezone);
+									$time->setTimezone(self::$tz_cache[$tzid]);
+									$sifEvent .= '<ExcludeDate>' . $time->format('Y-m-d') . '</ExcludeDate>';
+								}
+								else
+								{
+									$sifEvent .= '<ExcludeDate>' . self::getDateTime($day,$tzid) . '</ExcludeDate>';
+								}
+							}
+							$sifEvent .= '</Exceptions>';
 						}
 						break;
 
@@ -519,18 +701,18 @@ class calendar_sif extends calendar_boupdate
 					case 'Start':
 						if ($this->isWholeDay($event))
 						{
-							$value = date('Y-m-d', $event['start']);
-							$sifEvent .= "<Start>$value</Start>";
-							$vaule = date('Y-m-d', $event['end']);
-							$sifEvent .= "<End>$value</End>";
+							$time = new egw_time($event['start'],egw_time::$server_timezone);
+							$time->setTimezone(self::$tz_cache[$tzid]);
+							$sifEvent .= '<Start>' . $time->format('Y-m-d') . '</Start>';
+							$time = new egw_time($event['end'],egw_time::$server_timezone);
+							$time->setTimezone(self::$tz_cache[$tzid]);
+							$sifEvent .= '<End>' . $time->format('Y-m-d') . '</End>';
 							$sifEvent .= "<AllDayEvent>1</AllDayEvent>";
 						}
 						else
 						{
-							$value = $vcal->_exportDateTime($event['start']);
-							$sifEvent .= "<Start>$value</Start>";
-							$value = $vcal->_exportDateTime($event['end']);
-							$sifEvent .= "<End>$value</End>";
+							$sifEvent .= '<Start>' . self::getDateTime($event['start'],$tzid) . '</Start>';
+							$sifEvent .= '<End>' . self::getDateTime($event['end'],$tzid) . '</End>';
 							$sifEvent .= "<AllDayEvent>0</AllDayEvent>";
 						}
 						break;
@@ -556,9 +738,9 @@ class calendar_sif extends calendar_boupdate
 						break;
 
 					case 'Categories':
-						if (!empty($value))
+						if (!empty($value) && ($values = $this->get_categories($value)))
 						{
-							$value = implode(', ', $this->get_categories($value));
+							$value = implode(', ', $values);
 							$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
 						}
 						else
@@ -572,7 +754,15 @@ class calendar_sif extends calendar_boupdate
 						break;
 				}
 			}
-			$sifEvent .= '</appointment>';
+			$sifEvent .= "</appointment>";
+
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+					"() '$this->productName','$this->productSoftwareVersion'\n",3,$this->logfile);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+					"()\n".array2string($sifEvent)."\n",3,$this->logfile);
+			}
 
 			return $sifEvent;
 		}
@@ -594,18 +784,39 @@ class calendar_sif extends calendar_boupdate
 	*/
 	function setSupportedFields($_productName='', $_productSoftwareVersion='')
 	{
-		$state = &$_SESSION['SyncML.state'];
-		$deviceInfo = $state->getClientDeviceInfo();
+		$state =& $_SESSION['SyncML.state'];
+		if (isset($state))
+		{
+			$deviceInfo = $state->getClientDeviceInfo();
+		}
 
 		if (isset($deviceInfo) && is_array($deviceInfo))
 		{
 			if (isset($deviceInfo['uidExtension']) &&
-				$deviceInfo['uidExtension'])
+					$deviceInfo['uidExtension'])
+			{
+				$this->uidExtension = true;
+			}
+			if (isset($deviceInfo['nonBlockingAllday']) &&
+				$deviceInfo['nonBlockingAllday'])
+			{
+				$this->nonBlockingAllday = true;
+			}
+			if (isset($deviceInfo['tzid']) &&
+				$deviceInfo['tzid'])
+			{
+				$this->tzid = $deviceInfo['tzid'];
+			}
+			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
+			{
+				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
+				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
 				{
-					$this->uidExtension = true;
+					$this->calendarOwner = $owner;
 				}
+			}
 		}
-		// store product name and version, to be able to use it elsewhere
+		// store product name and software version for futher usage
 		if ($_productName)
 		{
 			$this->productName = strtolower($_productName);
@@ -613,6 +824,12 @@ class calendar_sif extends calendar_boupdate
 			{
 				$this->productSoftwareVersion = $matches[1];
 			}
+		}
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'(' . $this->productName .
+				', '. $this->productSoftwareVersion . ")\n",3,$this->logfile);
 		}
 	}
 }
