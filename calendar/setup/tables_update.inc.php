@@ -1942,3 +1942,31 @@ function calendar_upgrade1_7_005()
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.006';
 }
+
+/**
+ * // Fix whole day event cal_end times which are set to 23:59:00 or 00:00 instead of 23:59:59
+ * // Fix recur_interval from 0 to 1 for event series
+ *
+ * @return string
+ */
+function calendar_upgrade1_7_006()
+{
+	foreach($GLOBALS['egw_setup']->db->query('SELECT * FROM egw_cal_dates
+		WHERE (cal_end-cal_start)%86400=86340',__LINE__,__FILE__) as $row)
+	{
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal_dates SET cal_end=cal_end+59
+			WHERE cal_id='.(int)$row['cal_id'].' AND cal_start='.(int)$row['cal_start'],__LINE__,__FILE__);
+	}
+	
+	foreach($GLOBALS['egw_setup']->db->query('SELECT * FROM egw_cal_dates
+		WHERE cal_end-cal_start>0 AND (cal_end-cal_start)%86400=0',__LINE__,__FILE__) as $row)
+	{
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal_dates SET cal_end=cal_end-1
+			WHERE cal_id='.(int)$row['cal_id'].' AND cal_start='.(int)$row['cal_start'],__LINE__,__FILE__);
+	}
+    
+    $GLOBALS['egw_setup']->db->query('UPDATE egw_cal_repeats SET recur_interval=1
+			WHERE recur_interval=0',__LINE__,__FILE__);
+	
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.007';
+}
