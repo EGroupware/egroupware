@@ -29,7 +29,7 @@ function xajax_redirect(&$anon_account)
 	$response->addScript("location.href='".$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10'."';");
 
 	header('Content-type: text/xml; charset='.translation::charset());
-	echo $response->getXML();
+	echo $response->printOutput();
 	common::egw_exit();
 }
 
@@ -45,7 +45,7 @@ function ajax_exception_handler(Exception $e)
 	$response = new xajaxResponse();
 	$response->addAlert($e->getMessage()."\n\n".$e->getTraceAsString());
 	header('Content-type: text/xml; charset='.(is_object($GLOBALS['egw'])?translation::charset():'utf-8'));
-	echo $response->getXML();
+	echo $response->printOutput();
 	if (is_object($GLOBALS['egw']))
 	{
 		common::egw_exit();
