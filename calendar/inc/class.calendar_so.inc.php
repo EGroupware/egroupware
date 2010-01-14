@@ -238,12 +238,12 @@ class calendar_so
 		//echo "<p>socal::read(".print_r($ids,true).")=<pre>".print_r($events,true)."</pre>\n";
 		return $events;
 	}
-	
+
 	/**
 	 * Get maximum modification time of participant data of given event(s)
-	 * 
+	 *
 	 * This includes ALL recurences of an event series
-	 * 
+	 *
 	 * @param int|array $ids one or multiple cal_id's
 	 * @return int|array (array of) modification timestamp(s)
 	 */
@@ -1489,16 +1489,18 @@ ORDER BY cal_user_type, cal_usre_id
 
 	/**
 	 * Gets the exception days of a given recurring event caused by
-	 * irregular participant stati
+	 * irregular participant stati or timezone transitions
 	 *
 	 * @param array $event			Recurring Event.
 	 * @param string tz_id=null		timezone for exports (null for event's timezone)
 	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
 	 * @param int $end=0  if != 0: enddate of the search/list (servertime)
+	 * @param string $filter='all' string filter-name: all (not rejected), accepted, unknown, tentative,
+	 * 		rejected, tz_transitions (return only by timezone transition affected entries)
 	 *
 	 * @return array		Array of exception days (false for non-recurring events).
 	 */
-	function get_recurrence_exceptions(&$event, $tz_id=null, $start=0, $end=0)
+	function get_recurrence_exceptions(&$event, $tz_id=null, $start=0, $end=0, $filter='all')
 	{
 		$cal_id = (int) $event['id'];
 		if (!$cal_id || $event['recur_type'] == MCAL_RECUR_NONE) return false;
@@ -1538,8 +1540,35 @@ ORDER BY cal_user_type, cal_usre_id
 								$time = new egw_time($recur_date, egw_time::$server_timezone);
 								$time->setTimezone(self::$tz_cache[$tz_id]);
 								$recur_start = $time->format('His');
+								//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								//	"() first=$first_start <> current=$recur_start");
 							}
-							if ($recur_status != $recurrences[0]
+							if ($attendee['type'] = 'u' &&
+								$attendee['id'] == $GLOBALS['egw_info']['user']['account_id'])
+							{
+								// handle filter for current user
+								switch ($filter)
+								{
+									case 'unknown':
+										if ($recur_status != 'U') continue;
+										break;
+									case 'accepted':
+										if ($recur_status != 'A') continue;
+										break;
+									case 'tentative':
+										if ($recur_status != 'T') continue;
+										break;
+									case 'rejected':
+										if ($recur_status != 'R') continue;
+										break;
+									case 'default':
+										if ($recur_status == 'R') continue;
+										break;
+									default:
+										// All entries
+								}
+							}
+							if (($filter !=  'tz_transitions' && $recur_status != $recurrences[0])
 								|| !empty($tz_id) && $first_start != $recur_start)
 							{
 								// Every distinct status or starttime results in an exception

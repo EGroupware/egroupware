@@ -1513,4 +1513,122 @@ class calendar_boupdate extends calendar_bo
 		}
 		return false;
 	}
+
+	/**
+	 * classifies an incoming event from the eGW point-of-view
+	 *
+     * exceptions: unlike other calendar apps eGW does not create an event exception
+     * if just the participant state changes - therefore we have to distinguish between
+     * real exceptions and status only exceptions
+     *
+     * @param array $event the event to check
+     *
+     * @return array
+     * 	type =>
+     * 		SINGLE a single event
+     * 		SERIES-MASTER the series master
+     * 		SERIES-EXCEPTION event is a real exception
+	  * 		SERIES-EXCEPTION-STATUS event is a status only exception
+	  * 		SERIES-EXCEPTION-PROPAGATE event was a status only exception in the past and is now a real exception
+	  * 	stored_event => if event already exists in the database array with event data or false
+	  * 	master_event => for event type SERIES-EXCEPTION, SERIES-EXCEPTION-STATUS or SERIES-EXCEPTION-PROPAGATE
+	  * 		the corresponding series master event array
+	  * 		NOTE: this param is false if event is of type SERIES-MASTER
+     */
+    function get_event_info($event)
+    {
+			$type = 'SINGLE'; // default
+			$return_master = false; //default
+
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$type = 'SERIES-MASTER';
+			}
+			else
+			{
+				// SINGLE, SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
+				if (empty($event['uid']) && $event['id'] > 0 && ($stored_event = $this->read($event['id'])))
+				{
+					$event['uid'] = $stored_event['uid']; // restore the UID if it was not delivered
+				}
+
+				if (isset($event['uid'])
+					&& $event['recurrence']
+					&& ($master_event = $this->read($event['uid']))
+					&& isset($master_event['recur_type'])
+					&& $master_event['recur_type'] != MCAL_RECUR_NONE)
+				{
+					// SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
+					$return_master = true; // we have a valid master and can return it
+
+					if (isset($event['id']) && $master_event['id'] != $event['id'])
+					{
+						$type = 'SERIES-EXCEPTION'; // this is an existing exception
+					}
+					else
+					{
+						$type = 'SERIES-EXCEPTION-STATUS'; // default if we cannot find a proof for a fundamental change
+						// the recurrence_event is the master event with start and end adjusted to the recurrence
+						$recurrence_event = $master_event;
+						$recurrence_event['start'] = $event['recurrence'];
+						$recurrence_event['end'] = $event['recurrence'] + ($master_event['end'] - $master_event['start']);
+						// check for changed data
+						foreach (array('start','end','uid','title','location',
+									'priority','public','special','non_blocking') as $key)
+						{
+							if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
+							{
+								if (isset($event['id']))
+								{
+									$type = 'SERIES-EXCEPTION-PROPAGATE';
+								}
+								else
+								{
+									$type = 'SERIES-EXCEPTION'; // this is a new exception
+								}
+								break;
+							}
+						}
+						// the event id here is always the id of the master event
+						// unset it to prevent confusion of stored event and master event
+						unset($event['id']);
+					}
+				}
+				else
+				{
+					// SINGLE
+					$type = 'SINGLE';
+				}
+			}
+
+			// read existing event
+			if (isset($event['id']))
+			{
+				$stored_event = $this->read($event['id']);
+			}
+
+			// check ACL
+			if ($return_master)
+			{
+				$acl_edit = $this->check_perms(EGW_ACL_EDIT, $master_event['id']);
+			}
+			else
+			{
+				if (is_array($stored_event))
+				{
+					$acl_edit = $this->check_perms(EGW_ACL_EDIT, $stored_event['id']);
+				}
+				else
+				{
+					$acl_edit = true; // new event
+				}
+			}
+
+			return array(
+				'type' => $type,
+				'acl_edit' => $acl_edit,
+				'stored_event' => is_array($stored_event) ? $stored_event : false,
+				'master_event' => $return_master ? $master_event : false,
+			);
+    }
 }
