@@ -33,7 +33,7 @@ function xajax_redirect(&$anon_account)
 }
 
 /**
- * Exception handler for xajax, return the message (and trace) as alert() to the user
+ * Exception handler for xajax, return the message (and trace, if enabled) as alert() to the user
  *
  * Does NOT return!
  *
@@ -41,8 +41,20 @@ function xajax_redirect(&$anon_account)
  */
 function ajax_exception_handler(Exception $e)
 {
+	// logging all exceptions to the error_log
+	if (function_exists('_egw_log_exception'))
+	{
+		_egw_log_exception($e,$message);
+	}
 	$response = new xajaxResponse();
-	$response->addAlert($e->getMessage()."\n\n".$e->getTraceAsString());
+	$message .= ($message ? "\n\n" : '').$e->getMessage();
+	
+	// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
+	if ($GLOBALS['egw_info']['server']['exception_show_trace'])
+	{
+		$message .= "\n\n".$e->getTraceAsString();
+	}
+	$response->addAlert($message);
 	$response->printOutput();
 
 	if (is_object($GLOBALS['egw']))
