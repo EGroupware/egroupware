@@ -1422,13 +1422,12 @@ function __autoload($class)
 }
 
 /**
- * Fail a little bit more gracefully then an uncought exception
- *
- * Does NOT return
- *
+ * Clasify exception for a headline and log it to error_log, if not running as cli
+ * 
  * @param Exception $e
+ * @param string &$headline
  */
-function egw_exception_handler(Exception $e)
+function _egw_log_exception(Exception $e,&$headline=null)
 {
 	if ($e instanceof egw_exception_no_permission)
 	{
@@ -1446,6 +1445,29 @@ function egw_exception_handler(Exception $e)
 	{
 		$headline = try_lang('An error happened');
 	}
+	// log exception to error log, if not running as cli,
+	// which outputs the error_log to stderr and therefore output it twice to the user
+	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
+	{
+		error_log($headline.': '.$e->getMessage());
+		foreach(explode("\n",$e->getTraceAsString()) as $line) error_log($line);
+		error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+			($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+	}
+}
+
+/**
+ * Fail a little bit more gracefully then an uncought exception
+ *
+ * Does NOT return
+ *
+ * @param Exception $e
+ */
+function egw_exception_handler(Exception $e)
+{
+	// logging all exceptions to the error_log (if not cli) and get headline
+	_egw_log_exception($e,$headline);
+	
 	// exception handler for cli (command line interface) clients, no html, no logging
 	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
 	{
@@ -1456,12 +1478,6 @@ function egw_exception_handler(Exception $e)
 		}
 		exit($e->getCode() ? $e->getCode() : 9999);		// allways give a non-zero exit code
 	}
-	// logging all exceptions to the error_log
-	error_log($headline.': '.$e->getMessage());
-	foreach(explode("\n",$e->getTraceAsString()) as $line) error_log($line);
-	error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
-		($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-
 	// regular GUI exception
 	if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']))
 	{
@@ -1494,9 +1510,9 @@ function egw_exception_handler(Exception $e)
 		header('HTTP/1.1 401 Unauthorized');
 		header('X-WebDAV-Status: 401 Unauthorized', true);
 	}
-	if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->common))
+	if (is_object($GLOBALS['egw']))
 	{
-		$GLOBALS['egw']->common->egw_exit();
+		common::egw_exit();
 	}
 	exit;
 }
