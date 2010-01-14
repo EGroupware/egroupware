@@ -146,7 +146,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
 
     var $_maxMsgSize;
 
-    function getStateFromSession($sourceURI, $locName, $sessionID)
+    function &getStateFromSession($sourceURI, $locName, $sessionID)
     {
         // Remove any existing session since we'll be contructing a
         // custom session id.
@@ -185,7 +185,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
 		}
 
 
-        if($_SESSION['SyncML.state']->isAuthorized()) {
+        if ($_SESSION['SyncML.state']->isAuthorized()) {
 			Horde::logMessage('SyncML['. session_id() .']: session is authorized',
 				__FILE__, __LINE__, PEAR_LOG_DEBUG);
 		}
@@ -214,29 +214,22 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
     {
         switch ($this->_xmlStack) {
         case 2:
-            /*
-            $str = 'localname=' . $this->_locName;
-            $str .= ' version=' . $this->_version;
-            $str .= ' msgid=' . $this->_msgID;
-            $str .= ' source=' . $this->_sourceURI;
-            $str .= ' target=' . $this->_targetURI;
-            $str .= ' sessionID=' . $this->_sessionID;
-            */
             // </SyncHdr></SyncML>
-            // Find the state.
-            #Horde::logMessage('SymcML: SyncHdr done. Try to load state from session.', __FILE__, __LINE__, PEAR_LOG_DEBUG);
-            $state = $this->getStateFromSession($this->_sourceURI, $this->_locName, $this->_sessionID);
-
-			Horde::logMessage('SyncML['. session_id() .']: package '
+            Horde::logMessage('SyncML['. session_id() .']: package '
 				. $this->_msgID.' +++++++++++++++++++++ started',
 				__FILE__, __LINE__, PEAR_LOG_DEBUG);
+
+            // Find the state.
+            //Horde::logMessage('SymcML: SyncHdr done. Try to load state from session.',
+            //	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+            $state =& $this->getStateFromSession($this->_sourceURI, $this->_locName, $this->_sessionID);
 
             $state->setVersion($this->_version);
             $state->setMsgID($this->_msgID);
             $state->setTargetURI($this->_targetURI);
             $state->setWBXML(is_a($this->_output, 'XML_WBXML_Encoder'));
 
-            if(isset($this->_credData)
+            if (isset($this->_credData)
             	&& isset($this->_locName)
             	&& !$state->isAuthorized()) {
             	$state->setPassword($this->_credData);
@@ -247,14 +240,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
 				$state->setMaxMsgSize($this->_maxMsgSize);
             }
 
-            #$str  = 'authorized=' . $state->isAuthorized();
-            #$str .= ' version=' . $state->getVersion();
-            #$str .= ' msgid=' . $state->getMsgID();
-            #$str .= ' source=' . $state->getSourceURI();
-            #$str .= ' target=' . $state->getTargetURI();
-            #$str .= ' locName=' . $state->getLocName();
-
-            $_SESSION['SyncML.state'] = $state;
+            // $_SESSION['SyncML.state'] = $state;
 
             #Horde::logMessage('SymcML: session id 2 =' . session_id(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
@@ -289,14 +275,14 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
                 // </Cred></SyncHdr></SyncML>
                 $this->_isCred = false;
 
-                //multisync does not specify the cred format
+                // We only support b64 for now
                 //if ($this->_credFormat == 'b64') {
                 $this->_credData = base64_decode($this->_credData);
                 //}
 
                 $tmp = explode(':', $this->_credData, 2);
                 // set only if not set by LocName already
-                if(!isset($this->_locName)) {
+                if (!isset($this->_locName)) {
                 	$this->_locName = $tmp[0];
                 }
                 $this->_credData = $tmp[1];
@@ -355,7 +341,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
     {
         $attrs = array();
 
-        $state = &$_SESSION['SyncML.state'];
+        $state =& $_SESSION['SyncML.state'];
 
         $uri = $state->getURI();
         $uriMeta = $state->getURIMeta();
@@ -495,7 +481,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
     function startElement($uri, $element, $attrs)
     {
         parent::startElement($uri, $element, $attrs);
-        $state = &$_SESSION['SyncML.state'];
+        $state =& $_SESSION['SyncML.state'];
 
         switch ($this->_xmlStack) {
         case 2:
@@ -505,8 +491,8 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             // <SyncML><SyncBody>
             $this->_output->startElement($uri, $element, $attrs);
 
-	    	if($state->getLocName()) {
-				if($state->isAuthConfirmed()) {
+	    	if ($state->getLocName()) {
+				if ($state->isAuthConfirmed()) {
             		// Right our status about the header
             		$status = new Horde_SyncML_Command_Status(($state->isAuthorized()) ?
                     	RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS, 'SyncHdr');
@@ -550,7 +536,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
                 Horde::logMessage('SyncML['. session_id() ."]: found action commands <$element> ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
             }
 
-            switch($element)
+            switch ($element)
             {
             	case 'Sync':
             		$state->setSyncStatus(CLIENT_SYNC_STARTED);
@@ -568,7 +554,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 
 	function endElement($uri, $element)
 	{
-		$state = &$_SESSION['SyncML.state'];
+		$state =& $_SESSION['SyncML.state'];
 
 		switch ($this->_xmlStack) {
 			case 2:
@@ -588,14 +574,14 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 				// send the sync reply
 				// we do still have some data to send OR
 				// we should reply to the Sync command
-				if($state->getSyncStatus() > CLIENT_SYNC_FINNISHED && $state->getSyncStatus() < SERVER_SYNC_FINNISHED) {
+				if ($state->getSyncStatus() > CLIENT_SYNC_FINNISHED && $state->getSyncStatus() < SERVER_SYNC_FINNISHED) {
 					$sync = new Horde_SyncML_Command_Sync();
 					$this->_currentCmdID = $sync->syncToClient($this->_currentCmdID, $this->_output);
 				}
 
 				// send the Final tag if possible
-				#if($state->getSyncStatus() != SERVER_SYNC_DATA_PENDING && $state->getSyncStatus() != CLIENT_SYNC_STARTED) {
-				if($state->getSyncStatus() >= SERVER_SYNC_FINNISHED || $state->_sendFinal) {
+				#if ($state->getSyncStatus() != SERVER_SYNC_DATA_PENDING && $state->getSyncStatus() != CLIENT_SYNC_STARTED) {
+				if ($state->getSyncStatus() >= SERVER_SYNC_FINNISHED || $state->_sendFinal) {
 					$final = new Horde_SyncML_Command_Final();
 					$this->_currentCmdID = $final->output($this->_currentCmdID, $this->_output);
 				}
@@ -609,11 +595,12 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 					// this packet did not contain any real actions, just status and map.
 					// This means, we're through! The session can be closed and
 					// the Anchors saved for the next Sync
-					Horde::logMessage('SyncML['. session_id() .']: sync' . session_id() . ' completed successfully!', __FILE__, __LINE__, PEAR_LOG_INFO);
+					Horde::logMessage('SyncML['. session_id() .']: sync' . session_id() . ' completed successfully!',
+						__FILE__, __LINE__, PEAR_LOG_INFO);
 					$state->writeSyncSummary();
 					$log = $state->getLog();
 					$s="";
-					foreach($log as $k => $v) {
+					foreach ($log as $k => $v) {
 						$s .= " $k=$v";
 					}
 					if (strlen(trim($s)) == 0) {
@@ -630,11 +617,12 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 					// this packet did not contain any real actions, just status and map.
 					// This means, we're through! The session can be closed and
 					// the Anchors saved for the next Sync
-					Horde::logMessage('SyncML['. session_id() .']: sync' . session_id() . ' completed successfully!', __FILE__, __LINE__, PEAR_LOG_INFO);
+					Horde::logMessage('SyncML['. session_id() .']: sync' . session_id() . ' completed successfully!',
+						__FILE__, __LINE__, PEAR_LOG_INFO);
 					$state->writeSyncSummary();
 					$log = $state->getLog();
 					$s="";
-					foreach($log as $k => $v) {
+					foreach ($log as $k => $v) {
 						$s .= " $k=$v";
 					}
 					if (strlen(trim($s)) == 0) {
@@ -654,7 +642,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 
             			$this->_currentCommand->endElement($uri, $element);
 
-            			switch($element) {
+            			switch ($element) {
 	            			case 'Final':
 		            			$this->_actionCommands = false;
 		            			$deviceInfo = $state->getClientDeviceInfo();
