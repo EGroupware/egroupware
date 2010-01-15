@@ -207,6 +207,7 @@ make freebusy information available to not loged in persons?	calendar	en	Make Fr
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified
 mon	calendar	en	Mon
+month	calendar	en	Month
 monthly	calendar	en	Monthly
 monthly (by date)	calendar	en	Monthly (by date)
 monthly (by day)	calendar	en	Monthly (by day)
@@ -393,6 +394,7 @@ work day starts on	calendar	en	Work day starts on
 workday	calendar	en	Work day
 workdays	calendar	en	Work days
 yearly	calendar	en	Yearly
+yearly planner	calendar	en	Yearly planner
 yearview	calendar	en	Year view
 you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:
 you can either set a year or a occurence, not both !!!	calendar	en	You can either set a Year or a Occurrence, not both !!!

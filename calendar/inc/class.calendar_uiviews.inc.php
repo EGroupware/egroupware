@@ -238,7 +238,19 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function &planner($home=false)
 	{
-		if (!$this->planner_days)	// planner monthview
+		if ($this->sortby == 'month')	// yearly planner with month rows
+		{
+			$this->first = $this->bo->date2array($this->date);
+			$this->first['day'] = 1;
+			unset($this->first['raw']);
+			$this->last = $this->first;
+			$this->last['year']++;
+			$this->last = $this->bo->date2ts($this->last)-1;
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('yearly planner').' '.
+				lang(egw_time::to($this->first,'F')).' '.egw_time::to($this->first,'Y').' - '.
+				lang(egw_time::to($this->last,'F')).' '.egw_time::to($this->last,'Y');
+		}
+		elseif (!$this->planner_days)	// planner monthview
 		{
 			if ($this->day < 15)	// show one complete month
 			{
@@ -278,11 +290,11 @@ class calendar_uiviews extends calendar_ui
 		$search_params['start'] = $this->first;
 		$search_params['end'] = $this->last;
 		$search_params['enum_groups'] = $this->sortby == 'user';
-		$events = $this->bo->search($search_params);
+		$events =& $this->bo->search($search_params);
 
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::planner() date=%1: first=%2, last=%3',False,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));
 
-		$content =& $this->plannerWidget($events,$this->first,$this->last,$this->sortby == 'user' ? false : (int) $this->cat_id);
+		$content =& $this->plannerWidget($events,$this->first,$this->last,$this->sortby != 'category' ? $this->sortby : (int) $this->cat_id);
 
 		if (!$home)
 		{
@@ -1441,18 +1453,39 @@ class calendar_uiviews extends calendar_ui
 	 * @param array $events events to show
 	 * @param mixed $start start-time of the grid
 	 * @param mixed $end end-time of the grid
-	 * @param boolean/int $by_cat rows by sub-categories of $by_cat (cat_id or 0 for upmost level) or by users (false)
+	 * @param string|int $by_cat rows by sub-categories of $by_cat (cat_id or 0 for upmost level) or by 'user' or 'month'
 	 * @param string $indent='' string for correct indention
 	 * @return string with widget
 	 */
-	function &plannerWidget($events,$start,$end,$by_cat=0,$indent='')
+	function &plannerWidget(&$events,$start,$end,$by_cat=0,$indent='')
 	{
 		$content = $indent.'<div class="plannerWidget">'."\n";
 
 		// display the header, containing a headerTitle and multiple headerRows with the scales
 		$content .= $indent."\t".'<div class="plannerHeader">'."\n";
-		// display the headerTitle
-		$title = $by_cat === false ? lang('User') : lang('Category');
+
+		// display the headerTitle, and get sort2labels
+		switch($by_cat)
+		{
+			case 'user':
+				$title = lang('User');
+				$sort2label = $this->_get_planner_users();
+				break;
+			case 'month':
+				$title = lang('Month');
+				$sort2label = array();
+				$time = new egw_time($start);
+				for($n = 0; $n < 12; ++$n)
+				{
+					$sort2label[$time->format('Y-m')] = lang($time->format('F')).' '.$time->format('Y');
+					$time->modify('+1 month');
+				}
+				break;
+			default:
+				$title = lang('Category');
+				$sort2label = array();
+				break;
+		}
 		$content .= $indent."\t\t".'<div class="plannerHeaderTitle th">'.$title."</div>\n";
 
 		// display the headerRows with the scales
@@ -1467,34 +1500,37 @@ class calendar_uiviews extends calendar_ui
 			${$v}['minute'] = ${$v}['second'] = 0;
 			${$v} = $this->bo->date2ts($$v);
 		}
-		$days = 1 + (int) round(($last - $first) / DAY_s);	// we have to use round to get the right number if daylight saving changes
-		if ($days >= 28)	// display the month scale
+		if ($by_cat === 'month')
 		{
-			$content .= $this->plannerMonthScale($first,$days,$indent."\t\t\t");
+			$content .= $this->plannerDayOfMonthScale($indent."\t\t\t");
 		}
-		if ($days >= 5)	// display the week scale
+		else
 		{
-			$content .= $this->plannerWeekScale($first,$days,$indent."\t\t\t");
-		}
-		$content .= $this->plannerDayScale($first,$days,$indent."\t\t\t");		// day-scale, always displayed
-		if ($days <= 7)	// display the hour scale
-		{
-			$content .= $this->plannerHourScale($start,$days,$indent."\t\t\t");
+			$days = 1 + (int) round(($last - $first) / DAY_s);	// we have to use round to get the right number if daylight saving changes
+			if ($days >= 28)	// display the month scale
+			{
+				$content .= $this->plannerMonthScale($first,$days,$indent."\t\t\t");
+			}
+			if ($days >= 5)	// display the week scale
+			{
+				$content .= $this->plannerWeekScale($first,$days,$indent."\t\t\t");
+			}
+			$content .= $this->plannerDayScale($first,$days,$indent."\t\t\t");		// day-scale, always displayed
+			if ($days <= 7)	// display the hour scale
+			{
+				$content .= $this->plannerHourScale($start,$days,$indent."\t\t\t");
+			}
 		}
 		$content .= $indent."\t\t</div>\n";	// end of the plannerHeaderRows
 		$content .= $indent."\t</div>\n";	// end of the plannerHeader
 
 		// sort the events after user or category
-		$rows = $sort2label = array();
-		if ($by_cat === false)	// planner by user
-		{
-			$sort2label = $this->_get_planner_users();
-		}
+		$rows = array();
 		if (!is_array($events)) $events = array();
 
 		foreach($events as $key => $event)
 		{
-			if ($by_cat === false)	// planner by user
+			if ($by_cat === 'user')	// planner by user
 			{
 				foreach($event['participants'] as $sort => $status)
 				{
@@ -1503,6 +1539,16 @@ class calendar_uiviews extends calendar_ui
 					{
 						$rows[$sort][] =& $events[$key];
 					}
+				}
+			}
+			elseif ($by_cat === 'month')	// planner by month / yearly planner
+			{
+				$sort = date('Y-m',$event['start']);
+				$rows[$sort][] =& $events[$key];
+				// end in a different month?
+				if ($sort != ($end_sort = date('Y-m',$event['end'])))
+				{
+					$rows[$end_sort][] =& $events[$key];
 				}
 			}
 			else	// planner by cat
@@ -1519,12 +1565,20 @@ class calendar_uiviews extends calendar_ui
 		foreach($sort2label as $sort => $label)
 		{
 			if (!isset($rows[$sort]) && (!$this->cal_prefs['planner_show_empty_rows'] ||
-				$by_cat === false && $this->cal_prefs['planner_show_empty_rows'] == 'cat' ||
-				$by_cat !== false && $this->cal_prefs['planner_show_empty_rows'] == 'user'))
+				$by_cat === 'user' && $this->cal_prefs['planner_show_empty_rows'] == 'cat' ||
+				is_int($by_cat) && $this->cal_prefs['planner_show_empty_rows'] == 'user'))
 			{
 				continue;		// dont show empty categories or user rows
 			}
 			$class = $class == 'row_on' ? 'row_off' : 'row_on';
+			if ($by_cat === 'month')
+			{
+				$time = new egw_time($sort.'-01');
+				$start = $time->format('ts');
+				$time->modify('+1month -1second');
+				$end = $time->format('ts');
+				if ($sort == date('Y-m')) $class = 'calToday';
+			}
 			$content .= $this->plannerRowWidget(isset($rows[$sort]) ? $rows[$sort] : array(),$start,$end,$label,$class,$indent."\t");
 		}
 		$content .= $indent."</div>\n";		// end of the plannerWidget
@@ -1811,6 +1865,29 @@ class calendar_uiviews extends calendar_ui
 
 		return $content;
 	}
+	
+	/**
+	 * Creates DayOfMonth scale for planner by month
+	 * 
+	 * @param string $indent
+	 * @return string
+	 */
+	function plannerDayOfMonthScale($indent)
+	{
+		$day_width = round(100 / 31,2);
+		
+		$content .= $indent.'<div class="plannerScale">'."\n";
+		$today = egw_time::to('now','d');
+		for($left = 0,$i = 0; $i < 31; $left += $day_width,++$i)
+		{
+			$class = 1+$i == $today ? 'calToday' : ($i & 1 ? 'row_on' : 'row_off');
+			$content .= $indent."\t".'<div class="plannerDayOfMonthScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;">'.
+				(1+$i)."</div>\n";
+		}
+		$content .= $indent."</div>\n";		// end of plannerScale
+
+		return $content;
+	}
 
 	/**
 	 * Creates hour scale for the planner
@@ -1935,7 +2012,7 @@ class calendar_uiviews extends calendar_ui
 		if ($time <= $start) return 0;	// we are left of our scale
 		if ($time >= $end) return 100;	// we are right of our scale
 
-		if ($this->planner_days)
+		if ($this->planner_days || $this->sortby == 'month')
 		{
 			$percent = ($time - $start) / ($end - $start);
 		}
