@@ -1915,8 +1915,7 @@ class etemplate extends boetemplate
 		}
 		if (strpos($on,'confirm(') !== false && preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$on,$matches)) {
 			$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
-			$on = str_replace($matches[0],'confirm(\''.addslashes($question).'\')',$on);
-			//$on = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.addslashes($question).'\')',$on);
+			$on = str_replace($matches[0],'confirm(\''.str_replace("'","\\'",$question).'\')',$on);
 		}
 
 		if (strpos($on,'window.open(') !== false && preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=(.*),height=(.*),scrollbars=yes,status=(.*)'\)/",$on,$matches)) {
