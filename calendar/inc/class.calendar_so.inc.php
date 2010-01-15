@@ -120,7 +120,7 @@ class calendar_so
 	 * All times (start, end and modified) are returned as timesstamps in servertime!
 	 *
 	 * @param int|array|string $ids id or array of id's of the entries to read, or string with a single uid
-	 * @param int $recur_date=0 if set read the next recurrance at or after the timestamp, default 0 = read the initital one
+	 * @param int $recur_date=0 if set read the next recurrence at or after the timestamp, default 0 = read the initital one
 	 * @return array|boolean array with id => data pairs or false if entry not found
 	 */
 	function read($ids,$recur_date=0)
