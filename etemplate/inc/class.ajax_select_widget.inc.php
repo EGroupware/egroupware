@@ -231,6 +231,9 @@ class ajax_select_widget
 			if(is_numeric($value)) {
 				$value = (string)$value;
 			}
+			if($value === null) {
+				unset($options[$key]);
+			}
 		}
 		$options = $GLOBALS['egw']->js->convert_phparray_jsarray("options['$name']", $options, true);
 		$GLOBALS['egw']->js->set_onload("if(!options) {
