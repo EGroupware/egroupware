@@ -599,11 +599,18 @@ class calendar_bo
 	 */
 	function set_recurrences($event,$start=0)
 	{
-		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
+ 		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
 		{
 			$this->debug_message('bocal::set_recurrences(%1,%2)',true,$event,$start);
 		}
-		// check if the caller gave the participants and if not read them from the DB
+		// check if the caller gave the event start and end times and if not read them from the DB
+		if (!isset($event['start']) || !isset($event['end']))
+		{
+			$event_read=$this->read($event['id']);
+			$event['start'] = $event_read['start'];
+			$event['end'] = $event_read['end'];
+		}
+ 		// check if the caller gave the participants and if not read them from the DB
 		if (!isset($event['participants']))
 		{
 			list(,$event_read) = each($this->so->read($event['id']));
