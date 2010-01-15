@@ -1548,7 +1548,17 @@ class calendar_uiviews extends calendar_ui
 				// end in a different month?
 				if ($sort != ($end_sort = date('Y-m',$event['end'])))
 				{
-					$rows[$end_sort][] =& $events[$key];
+					while($sort != $end_sort)
+					{
+						list($y,$m) = explode('-',$sort);
+						if (++$m > 12)
+						{
+							++$y;
+							$m = 1;
+						}
+						$sort = sprintf('%04d-%02d',$y,$m);
+						$rows[$sort][] =& $events[$key];
+					}
 				}
 			}
 			else	// planner by cat
