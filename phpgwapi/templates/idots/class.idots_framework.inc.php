@@ -39,18 +39,6 @@ class idots_framework extends egw_framework
 	* @var tplsavant2
 	*/
 	var $tplsav2;
-	/**
-	* true if $this->header() was called
-	*
-	* @var boolean
-	*/
-	static $header_done = false;
-	/**
-	* true if $this->navbar() was called
-	*
-	* @var boolean
-	*/
-	static $navbar_done = false;
 
 	/**
 	* Contains array with linked icons in the topmenu
@@ -160,7 +148,7 @@ class idots_framework extends egw_framework
 
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox')
 		{
-			$GLOBALS['egw']->hooks->process('topmenu_info');
+			$GLOBALS['egw']->hooks->process('topmenu_info',array(),true);
 			$content = $this->topmenu($vars,$apps);
 			$vars['current_users'] = $vars['quick_add'] = $vars['user_info']='';
 		}

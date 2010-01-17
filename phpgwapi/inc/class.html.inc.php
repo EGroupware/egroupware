@@ -100,8 +100,7 @@ class html
 	*
 	* Note: The wz_tooltip.js file gets automaticaly loaded at the end of the page
 	*
-	* @param string/boolean $text text or html for the tooltip, all chars allowed, they will be quoted approperiate
-	*	Or if False the content (innerHTML) of the element itself is used.
+	* @param string $text text or html for the tooltip, all chars allowed, they will be quoted approperiate
 	* @param boolean $do_lang (default False) should the text be run though lang()
 	* @param array $options param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
 	*  title (string) gives extra title-row, width (int,'auto') , padding (int), above (bool), bgcolor (color), bgimg (URL)
@@ -110,28 +109,20 @@ class html
 	*/
 	static function tooltip($text,$do_lang=False,$options=False)
 	{
-		if (!self::$wz_tooltip_included)
-		{
-			if (strpos($GLOBALS['egw_info']['flags']['need_footer'],'wz_tooltip')===false)
-			{
-				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.self::$api_js_url.'/wz_tooltip/wz_tooltip.js"></script>'."\n";
-			}
-			self::$wz_tooltip_included = True;
-		}
 		if ($do_lang) $text = lang($text);
 
-		$opt_out = 'this.T_WIDTH = 200;';
+		$ttip = ' onmouseover="Tip(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\'';
+		
 		if (is_array($options))
 		{
 			foreach($options as $option => $value)
 			{
-				$opt_out .= 'this.T_'.strtoupper($option).'='.(is_bool($value)?($value?'true':'false'):
-					(is_numeric($value)?$value:"'".str_replace(array("'",'"'),array("\\'",'&quot;'),$value)."'")).'; ';
+				$ttip .= ','.strtoupper($option).','.$value;
 			}
 		}
-		if ($text === False) return ' onmouseover="'.$opt_out.'return escape(this.innerHTML);"';
-
-		return ' onmouseover="'.$opt_out.'return escape(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\')"';
+		$ttip .= ')" onmouseout="UnTip()"';
+		
+		return $ttip;
 	}
 
 	/**
