@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-9 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-10 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -13,7 +13,7 @@
 /**
  * Class to generate the calendar views and the necesary widgets
  *
- * The listview is in a separate class uilist!
+ * The listview is in a separate class calendar_uilist!
  *
  * The new UI, BO and SO classes have a strikt definition, in which time-zone they operate:
  *  UI only operates in user-time, so there have to be no conversation at all !!!
@@ -22,7 +22,7 @@
  *
  * The state of the UI elements is managed in the uical class, which all UI classes extend.
  *
- * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
+ * All permanent debug messages of the calendar-code should done via the debug-message method of the calendar_bo class !!!
  */
 class calendar_uiviews extends calendar_ui
 {
@@ -1444,6 +1444,10 @@ class calendar_uiviews extends calendar_ui
 		return (int)round($sum / 3.0, 0);
 	}
 
+	/**
+	 * Number of month to display in yearly planner
+	 */
+	const YEARLY_PLANNER_NUM_MONTH = 12;
 
 	/**
 	 * Creates a planner view: grid with columns for the time and rows for categories or users
@@ -1475,7 +1479,7 @@ class calendar_uiviews extends calendar_ui
 				$title = lang('Month');
 				$sort2label = array();
 				$time = new egw_time($start);
-				for($n = 0; $n < 12; ++$n)
+				for($n = 0; $n < self::YEARLY_PLANNER_NUM_MONTH; ++$n)
 				{
 					$sort2label[$time->format('Y-m')] = lang($time->format('F')).' '.$time->format('Y');
 					$time->modify('+1 month');
@@ -1587,7 +1591,6 @@ class calendar_uiviews extends calendar_ui
 				$start = $time->format('ts');
 				$time->modify('+1month -1second');
 				$end = $time->format('ts');
-				if ($sort == date('Y-m')) $class = 'calToday';
 			}
 			$content .= $this->plannerRowWidget(isset($rows[$sort]) ? $rows[$sort] : array(),$start,$end,$label,$class,$indent."\t");
 		}
@@ -1886,11 +1889,50 @@ class calendar_uiviews extends calendar_ui
 	{
 		$day_width = round(100 / 31,2);
 		
+		// month scale with navigation
+		$content .= $indent.'<div class="plannerScale">'."\n";
+		
+		$title = lang(egw_time::to($this->first,'F')).' '.egw_time::to($this->first,'Y').' - '.
+			lang(egw_time::to($this->last,'F')).' '.egw_time::to($this->last,'Y');
+
+		// calculate date for navigation links
+		$time = new egw_time($this->first);
+		$time->modify('-1year');
+		$last_year = $time->format('Ymd');
+		$time->modify('+11month');
+		$last_month = $time->format('Ymd');
+		$time->modify('+2month');
+		$next_month = $time->format('Ymd');
+		$time->modify('+11month');
+		$next_year = $time->format('Ymd');
+		
+		$title = html::a_href(html::image('phpgwapi','first',lang('back one year'),$options=' alt="<<"'),array(
+				'menuaction' => $this->view_menuaction,
+				'date'       => $last_year,
+			)) . ' &nbsp; '.
+			html::a_href(html::image('phpgwapi','left',lang('back one month'),$options=' alt="<"'),array(
+				'menuaction' => $this->view_menuaction,
+				'date'       => $last_month,
+			)) . ' &nbsp; '.$title;
+			$title .= ' &nbsp; '.html::a_href(html::image('phpgwapi','right',lang('forward one month'),$options=' alt=">>"'),array(
+					'menuaction' => $this->view_menuaction,
+					'date'       => $next_month,
+				)). ' &nbsp; '.
+				html::a_href(html::image('phpgwapi','last',lang('forward one year'),$options=' alt=">>"'),array(
+					'menuaction' => $this->view_menuaction,
+					'date'       => $next_year,
+				));
+		
+		$content .= $indent."\t".'<div class="plannerMonthScale th" style="left: 0; width: 100%;">'.
+				$title."</div>\n";
+		$content .= $indent."</div>\n";		// end of plannerScale
+
+		// day of month scale
 		$content .= $indent.'<div class="plannerScale">'."\n";
 		$today = egw_time::to('now','d');
 		for($left = 0,$i = 0; $i < 31; $left += $day_width,++$i)
 		{
-			$class = 1+$i == $today ? 'calToday' : ($i & 1 ? 'row_on' : 'row_off');
+			$class = $i & 1 ? 'row_on' : 'row_off';
 			$content .= $indent."\t".'<div class="plannerDayOfMonthScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;">'.
 				(1+$i)."</div>\n";
 		}
@@ -1970,15 +2012,60 @@ class calendar_uiviews extends calendar_ui
 		}
 		//echo $header; _debug_array($rows);
 		// display the rows
-		$content .= $indent."\t".'<div class="eventRows">'."\n";
+		$content .= $indent."\t".'<div class="eventRows"';
+
+		if ($this->sortby == 'month' && ($days = date('j',$end)) < 31)
+		{
+			$width = round(85*$days/31,2);
+			$content .= ' style="width: '.$width.'%;"';
+		}
+		$content .= ">\n";
+		
+		// mark weekends and other special days in yearly planner
+		if ($this->sortby == 'month')
+		{
+			$content .= $this->yearlyPlannerMarkDays($start,$days,$indent."\t\t");
+		}
 		foreach($rows as $row)
 		{
 			$content .= $this->eventRowWidget($row,$start,$end,$indent."\t\t");
 		}
 		$content .= $indent."\t</div>\n";	// end of the eventRows
 
+		if ($this->sortby == 'month' && $days < 31)
+		{
+			// add a filler for non existing days in that month
+			$content .= $indent."\t".'<div class="eventRowsFiller"'.
+				' style="left:'.(15+$width).'%; width:'.(85-$width).'%;" ></div>'."\n";
+		}
 		$content .= $indent."</div>\n";		// end of the plannerRowWidget
 
+		return $content;
+	}
+	
+	/**
+	 * Mark weekends and other special days in yearly planner
+	 * 
+	 * @param int $start timestamp of start of row
+	 * @param int $days number of days in month of row
+	 * @param string $indent=''
+	 * @return string
+	 */
+	function yearlyPlannerMarkDays($start,$days,$indent='')
+	{
+		$day_width = round(100/$days,2);
+		for($t = $start,$left = 0,$i = 0; $i < $days; $t += DAY_s,$left += $day_width,++$i)
+		{
+			$this->_day_class_holiday($this->bo->date2string($t),$class,$holidays,true);
+			
+			if ($class != 'row_on' && $class != 'row_off')	// no regular weekday
+			{
+				$content .= $indent.'<div class="eventRowsMarkedDay '.$class.
+					'" style="left: '.$left.'%; width:'.$day_width.'%;"'.
+					($holidays ? ' title="'.html::htmlspecialchars($holidays).'"' : '').
+					' ></div>'."\n";
+			}
+		}
 		return $content;
 	}
 
