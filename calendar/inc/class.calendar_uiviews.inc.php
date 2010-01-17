@@ -2058,7 +2058,8 @@ class calendar_uiviews extends calendar_ui
 		{
 			$this->_day_class_holiday($this->bo->date2string($t),$class,$holidays,true);
 			
-			if ($class != 'row_on' && $class != 'row_off')	// no regular weekday
+			$class = trim(str_replace(array('row_on','row_off'),'',$class));
+			if ($class)	// no regular weekday
 			{
 				$content .= $indent.'<div class="eventRowsMarkedDay '.$class.
 					'" style="left: '.$left.'%; width:'.$day_width.'%;"'.
