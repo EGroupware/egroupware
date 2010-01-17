@@ -34,6 +34,7 @@ are you sure you want to delete this country ?	calendar	en	Are you sure you want
 are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday ?
 back half a month	calendar	en	back half a month
 back one month	calendar	en	back one month
+back one year	calendar	en	back one year
 before %1	calendar	en	Before %1
 before current date	calendar	en	Before current date
 before the event	calendar	en	Before the event
@@ -149,6 +150,7 @@ for which views should calendar show distinct lines with a fixed time interval.	
 format of event updates	calendar	en	Format of event updates
 forward half a month	calendar	en	forward half a month
 forward one month	calendar	en	forward one month
+forward one year	calendar	en	forward one year
 four days view	calendar	en	Four days view
 freebusy	common	en	Free/Busy
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	Free/Busy: Unknown user '%1', wrong password or not available to not logged in users !!!

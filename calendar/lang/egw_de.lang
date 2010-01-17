@@ -34,6 +34,7 @@ are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass
 are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen wollen ?
 back half a month	calendar	de	einen halben Monat zurück
 back one month	calendar	de	einen Monat zurück
+back one year	calendar	de	ein Jahr zurück
 before %1	calendar	de	Vor dem %1
 before current date	calendar	de	Vor dem aktuellen Datum
 before the event	calendar	de	vor dem Termin
@@ -148,6 +149,7 @@ for which views should calendar show distinct lines with a fixed time interval.	
 format of event updates	calendar	de	Format der Benachrichtigungen
 forward half a month	calendar	de	einen halben Monat weiter
 forward one month	calendar	de	einen Monat weiter
+forward one year	calendar	de	ein Jahr weiter
 four days view	calendar	de	Vier-Tagesansicht
 freebusy	common	de	Frei/Belegt
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Belegtzeiten: Unbekannter Benutzername '%1', falsches Passwort oder nicht verfügbar für nicht angemeldete Benutzer !!!
