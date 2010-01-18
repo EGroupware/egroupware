@@ -19,6 +19,7 @@
  * @copyright (c) The Horde Project (http://www.horde.org/)
  * @version $Id$
  */
+require_once(EGW_API_INC.'/class.egw_db.inc.php');
 include_once 'Horde/SyncML/Command.php';
 include_once 'Horde/SyncML/Command/Status.php';
 include_once 'Horde/SyncML/Command/Alert.php';
