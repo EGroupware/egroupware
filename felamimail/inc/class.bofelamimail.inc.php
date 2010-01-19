@@ -782,13 +782,13 @@
 			if ($_body) {
 				if ($addbracesforendtag === true )
 				{
-					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'>~sim','',$_body);
+					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'[\s]*>~simU','',$_body);
 					// remove left over tags, unfinished ones, and so on
 					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
 				}
 				if ($addbracesforendtag === false )
 				{
-					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~sim','',$_body);
+					$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~simU','',$_body);
 					// remove left over tags, unfinished ones, and so on
 					$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
 					$_body = preg_replace('~'.$endtag.'~','',$_body);
@@ -799,8 +799,9 @@
 		static function getCleanHTML(&$_html)
 		{
 			// remove CRLF and TAB as it is of no use in HTML.
-			$_html = str_replace("\r\n",' ',$_html);
-			$_html = str_replace("\t",' ',$_html);
+			// but they are of means in pre formatted text, so we rather dont
+			//$_html = str_replace("\r\n",' ',$_html);
+			//$_html = str_replace("\t",' ',$_html);
 
 			self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
 			self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head	
