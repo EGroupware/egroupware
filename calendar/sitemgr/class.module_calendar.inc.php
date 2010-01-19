@@ -9,7 +9,7 @@
 *  option) any later version.                                              *
 \**************************************************************************/
 
-/* $Id: class.module_calendar.inc.php,v 1.4 2008-12-29 19:01:26 hjtappe Exp $ */
+/* $Id$ */
 
 class module_calendar extends Module 
 {

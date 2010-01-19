@@ -9,7 +9,7 @@
 *  option) any later version.                                              *
 \**************************************************************************/
 
-/* $Id: class.module_calendar_list.inc.php,v 1.9 2008-12-30 17:56:19 hjtappe Exp $ */
+/* $Id$ */
 
 /*
 // AN EXAMPLE STYLESHEET
