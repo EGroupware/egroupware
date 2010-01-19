@@ -704,8 +704,8 @@ class egw_link extends solink
 	 * Add new entry to $app, evtl. already linked to $to_app, $to_id
 	 *
 	 * @param string $app appname of entry to create
-	 * @param string $to_app appname to link the new entry to
-	 * @param string $to_id id in $to_app
+	 * @param string $to_app='' appname to link the new entry to
+	 * @param string $to_id =''id in $to_app
 	 * @return array/boolean with name-value pairs for link to add-methode of $app or false if add not supported
 	 */
 	static function add($app,$to_app='',$to_id='')
@@ -722,6 +722,29 @@ class egw_link extends solink
 			$params[$reg['add_app']] = $to_app;
 			$params[$reg['add_id']] = $to_id;
 		}
+		return $params;
+	}
+
+	/**
+	 * Edit entry $id of $app
+	 *
+	 * @param string $app appname of entry
+	 * @param string $id id in $app
+	 * @param string &$popup=null on return popup size eg. '600x400' or null
+	 * @return array|boolean with name-value pairs for link to edit-methode of $app or false if edit not supported
+	 */
+	static function edit($app,$id,&$popup=null)
+	{
+		//echo "<p>egw_link::add('$app','$to_app','$to_id') app_register[$app] ="; _debug_array($app_register[$app]);
+		if (empty($app) || empty($id) || !is_array($reg = self::$app_register[$app]) || !isset($reg['edit']))
+		{
+			return false;
+		}
+		$params = $reg['edit'];
+		$params[$reg['edit_id']] = $id;
+		
+		$popup = $reg['edit_popup'];
+
 		return $params;
 	}
 
