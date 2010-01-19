@@ -694,7 +694,7 @@ class db_backup
 		// save files
 		if(!$zippresent)  // save without files (why ever it works only right without '!'...)
 		{
-			echo '<center>'."No file backup, needs ZipArchive or disabled<br>".'</center>';
+			if ($this->backup_files) echo '<center>'."No file backup, needs ZipArchive or disabled<br>".'</center>';
 		    fclose($f);
 		    if (file_exists($name)) unlink($name);
 			return TRUE;
