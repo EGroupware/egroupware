@@ -1072,13 +1072,13 @@ class translation
 		if ($_body) {
 			if ($addbracesforendtag === true )
 			{
-				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'>~sim','',$_body);
+				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)</'.$endtag.'[\s]*>~simU','',$_body);
 				// remove left over tags, unfinished ones, and so on
 				$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
 			}
 			if ($addbracesforendtag === false )
 			{
-				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~sim','',$_body);
+				$_body = preg_replace('~<'.$tag.'[^>]*?>(.*)'.$endtag.'~simU','',$_body);
 				// remove left over tags, unfinished ones, and so on
 				$_body = preg_replace('~<'.$tag.'[^>]*?>~si','',$_body);
 				$_body = preg_replace('~'.$endtag.'~','',$_body);
@@ -1103,7 +1103,7 @@ class translation
 		#print "</pre>";
 		#print "<hr>";
 		self::replaceTagsCompletley($_html,'style');
-		$Rules = array ('@<script[^>]*?>.*?</script>@si', // Strip out javascript
+		$Rules = array ('@<script[^>]*?>.*?</script>@siU', // Strip out javascript
 			'@&(quot|#34);@i',                // Replace HTML entities
 			'@&(amp|#38);@i',                 //   Ampersand &
 			'@&(lt|#60);@i',                  //   Less Than <
