@@ -412,13 +412,19 @@ class calendar_so
 			{
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
 				$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
+				if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 
 				$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
+				$selects = array($selects[0],$selects[1]);
 			}
+			if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
+//_debug_array($selects);
+$this->db->query_log = '/tmp/query.log';
 			// error_log("calendar_so_search:\n" . print_r($selects, true));
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$order,$offset,$num_rows);
+$this->db->query_log = false;
 		}
 		else	// MsSQL oder MySQL 3.23
 		{
@@ -443,18 +449,21 @@ class calendar_so
 		$events = $ids = $recur_dates = $recur_ids = array();
 		foreach($rs as $row)
 		{
-			$ids[] = $id = $row['cal_id'];
+			$id = $row['cal_id'];
+			if (is_numeric($id)) $ids[] = $id;
+
 			if ($row['cal_recur_date'])
 			{
 				$id .= '-'.$row['cal_recur_date'];
 				$recur_dates[] = $row['cal_recur_date'];
 			}
-			$row['alarm'] = array();
+			$row['alarm'] = $row['participants'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 
 			$events[$id] = egw_db::strip_array_keys($row,'cal_');
 		}
-		if (count($events))
+		//_debug_array($events);
+		if (count($ids))
 		{
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
@@ -517,6 +526,38 @@ class calendar_so
 		}
 		//echo "<p>socal::search\n"; _debug_array($events);
 		return $events;
+	}
+
+	/**
+	 * Ask other apps if they want to participate in calendar search / display
+	 *
+	 * @param &$selects parts of union query
+	 * @param $start see search()
+	 * @param $end
+	 * @param $users
+	 * @param $cat_id
+	 * @param $filter
+	 * @param $query
+	 */
+	private static function get_union_selects(array &$selects,$start,$end,$users,$cat_id,$filter,$query)
+	{
+		$app_selects = $GLOBALS['egw']->hooks->process(array(
+			'location' => 'calendar_search_union',
+			'cols'  => $selects[0]['cols'],	// cols to return
+			'start' => $start,
+			'end'   => $end,
+			'users' => $users,
+			'cat_id'=> $cat_id,
+			'filter'=> $filter,
+			'query' => $query,
+		));
+		foreach($app_selects as $app => $data)
+		{
+			if (is_array($data['selects']))
+			{
+				$selects = array_merge($selects,$data['selects']);
+			}
+		}
 	}
 
 	/**
