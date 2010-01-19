@@ -1145,9 +1145,8 @@ class calendar_uiviews extends calendar_ui
 		static $tpl = False;
 		if (!$tpl)
 		{
-			$tpl = $GLOBALS['egw']->template;
+			$tpl = new Template(common::get_tpl_dir('calendar'));
 
-			$tpl->set_root($GLOBALS['egw']->common->get_tpl_dir('calendar'));
 			$tpl->set_file('event_widget_t','event_widget.tpl');
 			$tpl->set_block('event_widget_t','event_widget');
 			$tpl->set_block('event_widget_t','event_widget_wholeday_on_top');
@@ -1294,17 +1293,44 @@ class calendar_uiviews extends calendar_ui
 		$tpl->set_var('tooltip',html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)));
 		$html = $tpl->fp('out',$block);
 
-		$view_link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
 
-		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		if ($is_private || !$this->allowEdit)
 		{
-			$view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
-			$view_link_confirm_text=lang('do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
-			$popup = ($is_private || ! $this->allowEdit) ? '' : ' onclick="'.$this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;"';
+			$popup = '';
+		}
+		elseif(!is_numeric($event['id']))
+		{
+			$popup = '';
+			if (preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches) && 
+				($edit = egw_link::edit($matches[1],$matches[2],$popup_size)))
+			{
+				$view_link = egw::link('/index.php',$edit);
+				
+				if ($popup_size)
+				{
+					list($w,$h) = explode('x',$popup_size);
+					$popup = ' onclick="'.$this->popup($view_link,'_blank',$w,$h).'; return false;"';
+				}
+				else
+				{
+					$popup = ' onclick="location.href=\''.$view_link.'\'; return false;"';
+				}
+			}
 		}
 		else
 		{
-			$popup = ($is_private || ! $this->allowEdit) ? '' : ' onclick="'.$this->popup($view_link).'; return false;"';
+			$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
+			
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
+				$view_link_confirm_text=lang('do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
+				$popup = ' onclick="'.$this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;"';
+			}
+			else
+			{
+				$popup = ' onclick="'.$this->popup($view_link).'; return false;"';
+			}
 		}
 		//_debug_array($event);
 
@@ -1333,7 +1359,8 @@ class calendar_uiviews extends calendar_ui
 					$this->wholeDayPosCounter++;
 			}
 			else
-			{
+			{		$view_link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
+				
 					$style = 'top: '.$this->time2pos($event['start_m']).'%; height: '.$height.'%;';
 			}
 		}
@@ -1353,7 +1380,7 @@ class calendar_uiviews extends calendar_ui
 		// ATM we do not support whole day events or recurring events for dragdrop
 		if (is_object($this->dragdrop) &&
 			$this->use_time_grid &&
-			$this->bo->check_perms(EGW_ACL_EDIT,$event) &&
+			(int)$event['id'] && $this->bo->check_perms(EGW_ACL_EDIT,$event) &&
 			!$event['whole_day_on_top'] &&
 			!$event['whole_day'] &&
 			!$event['recur_type']
