@@ -2005,31 +2005,37 @@ class calendar_uiviews extends calendar_ui
 	function tagWholeDayOnTop($dayEvents)
 	{
 		$this->extraRows = $this->extraRowsOriginal;
-		foreach ($dayEvents as $day=>$oneDayEvents)
+
+		if (is_array($dayEvents))
 		{
-		  $extraRowsToAdd = 0;
-			foreach ($oneDayEvents as $num=>$event)
+			foreach ($dayEvents as $day=>$oneDayEvents)
 			{
-				$start = $this->bo->date2array($event['start']);
-				$end = $this->bo->date2array($event['end']);
-				if(!$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59)
+				$extraRowsToAdd = 0;
+				foreach ($oneDayEvents as $num => $event)
 				{
-					if($event['non_blocking'])
+					$start = $this->bo->date2array($event['start']);
+					$end = $this->bo->date2array($event['end']);
+					if(!$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59)
 					{
-						$dayEvents[$day][$num]['whole_day_on_top']=true;
-						$this->whole_day_positions[$num]=($this->rowHeight*($num+2));
-						$extraRowsToAdd++;
-					}
-					else
-					{
-						$dayEvents[$day][$num]['whole_day']=true;
+						if($event['non_blocking'])
+						{
+							$dayEvents[$day][$num]['whole_day_on_top']=true;
+							$this->whole_day_positions[$num]=($this->rowHeight*($num+2));
+							$extraRowsToAdd++;
+						}
+						else
+						{
+							$dayEvents[$day][$num]['whole_day']=true;
+						}
 					}
 				}
+				// check after every day if we have to increase $this->extraRows
+				if(($this->extraRowsOriginal+$extraRowsToAdd) > $this->extraRows)
+				{
+					$this->extraRows = ($this->extraRowsOriginal+$extraRowsToAdd);
+				}
 			}
-			// check after every day if we have to increase $this->extraRows
-			if(($this->extraRowsOriginal+$extraRowsToAdd) > $this->extraRows) { $this->extraRows = ($this->extraRowsOriginal+$extraRowsToAdd); }
-			}
-
+		}
 		return $dayEvents;
  	}
 }
