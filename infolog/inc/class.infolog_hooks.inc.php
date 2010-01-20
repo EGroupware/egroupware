@@ -41,6 +41,11 @@ class infolog_hooks
 			'add_id'     => 'action_id',
 			'add_popup'  => '750x550',
 			'file_access'=> 'infolog.infolog_bo.file_access',
+			'edit'       => array(
+				'menuaction' => 'infolog.infolog_ui.edit',
+			),
+			'edit_id'    => 'info_id',
+			'edit_popup'  => '750x580',
 		);
 	}
 
