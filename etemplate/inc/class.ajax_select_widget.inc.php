@@ -21,6 +21,7 @@
  * This widget can get data from any function that can provide data to a nextmatch widget.
  * This widget is generating html, so it does not work (without an extra implementation) in an other UI
  */
+
 class ajax_select_widget
 {
 	var $public_functions = array(
@@ -29,6 +30,29 @@ class ajax_select_widget
 		'ajax_search'	=>	True,
 	);
 	var $human_name = 'AJAX Select';	// this is the name for the editor
+
+	// Accepted option keys if you're passing in an array to set up the widget
+	// Additional options will be passed to the search query
+	public static $known_options = array(
+		// These ones can be passed in from eTemplate editor in size
+		'get_rows',
+		'get_title',
+		'id_field',
+		'template',
+		'filter',
+		'filter2',
+		'link',
+		'icon',
+
+		// Pass by code only
+		'values',
+	);
+
+	// Flag used in id_field to indicate that the key of the record should be used as the value
+	const ARRAY_KEY = 'array_key';
+
+	// Array of static values to emulate a combo-box, with no DB lookup
+	protected static $static_values = array();
 
 	private $debug = false;
 
@@ -103,6 +127,13 @@ class ajax_select_widget
 			$options['template'] = 'etemplate.ajax_select_widget.row';
 		}
 
+		if(array_key_exists('values', $options)) {
+			if($options['values']) {
+				self::$static_values[$name] = $options['values'];
+			}
+			unset($options['values']);
+		}
+
 		$onchange = ($cell['onchange'] ? $cell['onchange'] : 'false');
 
 		// Set current value
@@ -121,10 +152,15 @@ class ajax_select_widget
 				$title_obj =& CreateObject($title_app . '.' . $title_class);
 			}
 		}
+
 		if(!is_object($title_obj) || !method_exists($title_obj,$title_method)) {
 			echo "$entry_app.$entry_class.$entry_method is not a valid method for getting the title";
 		} elseif($current_value) {
-			$title = $title_obj->$title_method($current_value);
+			if($title_method == 'array_title' && $title_class == __CLASS__) {
+				$title = self::$title_method($current_value, $name);
+			} else {
+				$title = $title_obj->$title_method($current_value);
+			}
 		}
 
 		// Check get_rows method
@@ -146,7 +182,8 @@ class ajax_select_widget
 		$cell['type'] = 'template';
 		$cell['size'] = $cell['name'];
 		$value = array('value' => $current_value, 'search' => $title);
-		$widget =& new etemplate('etemplate.ajax_select_widget');
+
+		$widget = new etemplate('etemplate.ajax_select_widget');
 		$widget->no_onclick = True;
 
 		// Link if readonly & link is set
@@ -165,6 +202,9 @@ class ajax_select_widget
 		} else {
 			$search['type'] = 'text';
 			$search['size'] = '';
+			if($current_value == '' && $options['id_field'] == self::ARRAY_KEY) {
+				$search['blur'] = lang('Search...');
+			}
 		}
 
 		// Icon
@@ -172,6 +212,11 @@ class ajax_select_widget
 		$icon['name'] = $options['icon'];
 
 		$cell['obj'] = &$widget;
+
+		// Save static values, if set
+		if(self::$static_values[$name]) {
+			$extension_data['values'] = self::$static_values[$name];
+		}
 
 		// Save options for post_processing
 		$extension_data['options'] = $options;
@@ -181,6 +226,12 @@ class ajax_select_widget
 		$GLOBALS['egw_info']['flags']['include_xajax'] = True;
 
 		// JavaScript
+		// converter doesn't handle numeric well
+		foreach($options as $key => &$value) {
+			if(is_numeric($value)) {
+				$value = (string)$value;
+			}
+		}
 		$options = $GLOBALS['egw']->js->convert_phparray_jsarray("options['$name']", $options, true);
 		$GLOBALS['egw']->js->set_onload("if(!options) {
 				var options = new Object();
@@ -250,12 +301,24 @@ class ajax_select_widget
 			}
 			return $return;
 		} else {
-			$value = $value_in['value'];
+			if (stripos($extension_data['options']['id_field'], ";")) {
+				$expected_fields = array_flip(explode(";", $extension_data['options']['id_field']));
+				$fields_n_values = explode(";", $value_in['value']);
+				foreach ($fields_n_values as $field_n_value) {
+					list($myfield, $myvalue) = explode(":", $field_n_value);
+					if (array_key_exists($myfield, $expected_fields)) {
+						$value_in[$myfield] = $myvalue;
+					}
+				}
+				$value = $value_in;
+			} else {
+				$value = $value_in['value'];
+			}
 			return true;
 		}
 	}
 
-	function ajax_search($id, $value, $set_id, $query) {
+	function ajax_search($id, $value, $set_id, $query, $etemplate_id) {
 		$base_id = substr($id, 0, strrpos($id, '['));
 		$result_id = ($set_id ? $set_id : $base_id . '[results]');
 		$response = new xajaxResponse();
@@ -269,7 +332,7 @@ class ajax_select_widget
 
 		// Expand lists
 		foreach($query as $key => &$row) {
-			if(strpos($row, ',')) {
+			if($row && strpos($row, ',')) {
 				$query[$key] = explode(',', $row);
 			}
 
@@ -281,6 +344,19 @@ class ajax_select_widget
 			}
 		}
 		$query['search'] = $value;
+		
+		if($query['id_field'] == self::ARRAY_KEY) {
+			// Pass base_id so we can get the right values
+			$query['field_name'] = $base_id;
+
+			// Check for a provided list of values
+			if($request = etemplate_request::read($etemplate_id)) {
+				$extension_data = $request->extension_data[$base_id];
+				if(is_array($extension_data) && $extension_data['values']) {
+					self::$static_values[$base_id] = $extension_data['values'];
+				}
+			}
+		}
 
 		$result_list = array();
 		$readonlys = array();
@@ -301,21 +377,53 @@ class ajax_select_widget
 			}
 			foreach($result_list as $key => &$row) {
 				if(!is_array($row)) {
-					continue;
-				}
-				if($query['id_field'] && $query['get_title']) {
-					if($row[$query['id_field']]) {
-						$row['title'] = ExecMethod($query['get_title'], $row[$query['id_field']]);
+					if($query['id_field'] == self::ARRAY_KEY) {
+						if(!is_array($row)) {
+							// Restructure $row to be an array
+							$row = array(
+								self::ARRAY_KEY => $key,
+								'id_field' => $key,
+								'title' => $row
+							);
+						}
+					} else {
+						continue;
 					}
 				}
+				
+				//check for multiple id's
+				//this if control statement is to determine if there are multiple ids in the ID FIELD of the Ajax Widget
+				if(stristr($query['id_field'], ';') !=  FALSE) {
+					$id_field_keys = explode(';', $query['id_field']);
+					if($query['get_title']) {
+						//the title will always be created using the first ID FIELD
+						if($row[$id_field_keys[0]]) {
+							$row['title'] = ExecMethod($query['get_title'], $row[$id_field_keys[0]]);
+						}
+					}
+					foreach($id_field_keys as $value) {
+						$id_field_keys_values[] = $value.':'.$row[$value];
+					}		
+					$row['id_field'] = implode(';',$id_field_keys_values); 
+					unset($id_field_keys_values);
+				} else {
+					if($query['id_field'] && $query['get_title']) {
+						if($row[$query['id_field']] && $query['id_field'] != self::ARRAY_KEY) {
+							$row['title'] = ExecMethod($query['get_title'], $row[$query['id_field']]);
+                                        	}
+					}
+					if($query['id_field'] != self::ARRAY_KEY) {
+						$row['id_field'] = $row[$query['id_field']];
+					}
+				}
+				// If we use htmlspecialchars, it causes issues with mixed quotes.  addslashes() seems to handle it.
+				$row['id_field'] = addslashes($row['id_field']);
 
 				$data = ($query['nextmatch_template']) ? array(1=>$row) : $row;
 				$widget =& CreateObject('etemplate.etemplate', $query['template']);
 				$html = addslashes(str_replace("\n", '', $widget->show($data, '', $readonlys)));
-
-				// If we use htmlspecialchars, it causes issues with mixed quotes.  addslashes() seems to handle it.
-				$row['id_field'] = addslashes($row[$query['id_field']]);
 				$row['title'] = addslashes($row['title']);
+				
 				$response->addScript("add_ajax_result('$result_id', '${row['id_field']}', '" . $row['title'] . "', '$html');");
 				$count++;
 				if($count > $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) {
@@ -327,5 +435,31 @@ class ajax_select_widget
 			$response->addScript("add_ajax_result('$result_id', '', '', '" . lang('No matches found') ."');");
 		}
 		return $response->getXML();
+	}
+
+	/**
+	*	Use a simple array to get the title
+	*	Values should be passed in to the widget as an array in $size['values']
+	*/
+	protected function array_title($id, $name) {
+		if(trim($id) == '') {
+			return lang('Search');
+		}
+		return self::$static_values[$name][$id];
+	}
+
+	/**
+	*	Use a simple array to get the results
+	*	Values should be passed in to the widget as an array in $size['values']
+	*/
+	protected function array_rows(&$query, &$result) {
+		foreach( self::$static_values[$query['field_name']] as $key => $value) {
+			if($query['search'] && stripos($value, $query['search']) === false) continue;
+
+			$result[$key] = $value;
+		}
+		$count = count($result);
+		$result = array_slice($result, $query['start'], $query['num_rows']);
+		return $count;
 	}
 }

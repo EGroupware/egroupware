@@ -45,6 +45,7 @@ class customfields_widget
 		'text'     => 'Text',
 		'label'    => 'Label',
 		'select'   => 'Selectbox',
+		'ajax_select' => 'Search',
 		'radio'    => 'Radiobutton',
 		'checkbox' => 'Checkbox',
 		'date'     => 'Date',
@@ -234,6 +235,34 @@ class customfields_widget
 							)));
 							*/
 						}
+						break;
+					case 'ajax_select' :
+						// Set some reasonable defaults for the widget
+						$options = array(
+							'get_title'	=> 'etemplate.ajax_select_widget.array_title',
+							'get_rows'	=> 'etemplate.ajax_select_widget.array_rows',
+							'id_field'	=> ajax_select_widget::ARRAY_KEY,
+						);
+						if($field['rows']) {
+							$options['num_rows'] = $field['rows'];
+						}
+
+						// If you specify an option known to the AJAX Select widget, it will be pulled from the list of values
+						// and used as such.  All unknown values will be used for selection, not passed through to the query
+						if (isset($field['values']['@']))
+						{
+							$options['values'] = $this->_get_options_from_file($field['values']['@']);
+							unset($field['values']['@']);
+						} else {
+							$options['values'] = array_diff_key($field['values'], array_flip(ajax_select_widget::$known_options));
+						}
+						$options = array_merge($options, array_intersect_key($field['values'], array_flip(ajax_select_widget::$known_options)));
+
+						$input =& etemplate::empty_cell('ajax_select', $this->prefix.$lname, array(
+							'readonly'	=> $readonly,
+							'no_lang'	=> True,
+							'size'		=> $options
+						));
 						break;
 					case 'label' :
 						$row_class = 'th';
