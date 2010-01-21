@@ -72,7 +72,7 @@
 				translation::add_app('preferences');	// we need the prefs translations too
 			}
 
-			// calling the settings hook
+			// calling app specific settings hook
 			$settings = $GLOBALS['egw']->hooks->single('settings',$this->appname);
 			// it either returns the settings or save it in $GLOBALS['settings'] (deprecated!)
 			if (isset($settings) && is_array($settings) && $settings)
@@ -88,6 +88,14 @@
 				return False;	// no settings returned
 			}
 
+			// calling settings hook all apps can answer (for a specific app)
+			foreach($GLOBALS['egw']->hooks->process('settings_'.$this->appname,$this->appname) as $app => $settings)
+			{
+				if (isset($settings) && is_array($settings) && $settings)
+				{
+					$this->settings = array_merge($this->settings,$settings);
+				}
+			}
 			/* Remove ui-only settings */
 			if($this->xmlrpc)
 			{
