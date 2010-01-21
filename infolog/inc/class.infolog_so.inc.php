@@ -139,19 +139,27 @@ class infolog_so
 	/**
 	 * Filter for a given responsible user: info_responsible either contains a the user or one of his memberships
 	 *
-	 * @param int $user
+	 * @param int|array $users one or more account_ids
 	 * @return string
 	 *
 	 * @todo make the responsible a second table and that filter a join with the responsible table
 	 */
-	function responsible_filter($user)
+	function responsible_filter($users)
 	{
-		if (!$user) return '0';
+		if (!$users) return '0';
 
-		$responsible = $user > 0 ? $GLOBALS['egw']->accounts->memberships($user,true) :
-			$GLOBALS['egw']->accounts->members($user,true);
-
-		$responsible[] = $user;
+		$responsible = array();
+		foreach((array)$users as $user)
+		{
+			$responsible = array_merge($responsible,
+				$user > 0 ? $GLOBALS['egw']->accounts->memberships($user,true) :
+					$GLOBALS['egw']->accounts->members($user,true));
+			$responsible[] = $user;
+		}
+		if (is_array($users))
+		{
+			$responsible = array_unique($responsible);
+		}
 		foreach($responsible as $key => $uid)
 		{
 			$responsible[$key] = $this->db->concat("','",'info_responsible',"','")." LIKE '%,$uid,%'";
@@ -171,13 +179,17 @@ class infolog_so
 	 */
 	function aclFilter($filter = False)
 	{
-		preg_match('/(my|responsible|delegated|own|privat|private|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
+		preg_match('/(my|responsible|delegated|own|privat|private|all|none|user)([0-9,-]*)/',$filter_was=$filter,$vars);
 		$filter = $vars[1];
-		$f_user   = intval($vars[2]);
+		$f_user = $vars[2];
 
 		if (isset($this->acl_filter[$filter.$f_user]))
 		{
 			return $this->acl_filter[$filter.$f_user];  // used cached filter if found
+		}
+		if ($f_user && strpos($f_user,',') !== false)
+		{
+			$f_user = explode(',',$f_user);
 		}
 
 		$filtermethod = " (info_owner=$this->user"; // user has all rights
@@ -236,9 +248,11 @@ class infolog_so
 			}
 			$filtermethod .= ') ';
 
-			if ($filter == 'user' && $f_user > 0)
+			if ($filter == 'user' && $f_user)
 			{
-				$filtermethod .= " AND (info_owner=$f_user AND info_responsible='0' OR ".$this->responsible_filter($f_user).')';
+				$filtermethod .= $this->db->expression($this->info_table,' AND (',array(
+					'info_owner' => $f_user,
+				)," AND info_responsible='0' OR ",$this->responsible_filter($f_user),')');
 			}
 		}
 		//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
