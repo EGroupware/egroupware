@@ -932,7 +932,7 @@ class filemanager_ui
 				array_unshift($content['eacl'],false);	// make the keys start with 1, not 0
 				$content['eacl']['owner'] = 0;
 				$content['eacl']['rights'] = 5;
-				unset($sel_options['rights'][0]);	// there's no "No access" for eACL, as you can only add rights
+				//unset($sel_options['rights'][0]);	// there's no "No access" for eACL, as you can only add rights
 			}
 		}
 		else
