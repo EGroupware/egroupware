@@ -441,7 +441,15 @@ class calendar_bo
 			{
 				$events[$id] = $event;
 			}
-			if (!$this->check_perms(EGW_ACL_READ,$event) || (!$event['public'] && $filter == 'hideprivate'))
+			if (!(int)$event['id'] && preg_match('/^([a-z_]+)([0-9]+)$/',$event['id'],$matches))
+			{
+				$is_private = self::integration_get_private($matches[1],$matches[2],$event);
+			}
+			else
+			{
+				$is_private = !$this->check_perms(EGW_ACL_READ,$event);
+			}
+			if ($is_private || (!$event['public'] && $filter == 'hideprivate'))
 			{
 				if($params['query'])
 				{
@@ -513,6 +521,59 @@ class calendar_bo
 			$this->debug_message('bocal::search(%1)=%2',True,$params,$events);
 		}
 		return $events;
+	}
+
+	/**
+	 * Get integration data for a given app of a part (value for a certain key) of it
+	 * 
+	 * @param string $app
+	 * @param string $part
+	 * @return array
+	 */
+	static function integration_get_data($app,$part=null)
+	{
+		static $integration_data;
+		
+		if (!isset($integration_data))
+		{
+			$integration_data = calendar_so::get_integration_data();
+		}
+		
+		if (!isset($integration_data[$app])) return null;
+		
+		return $part ? $integration_data[$app][$part] : $integration_data[$app];
+	}
+	
+	/**
+	 * Get private attribute for an integration event
+	 * 
+	 * Attribute 'is_private' is either a boolean value, eg. false to make all events of $app public
+	 * or an ExecMethod callback with parameters $id,$event
+	 * 
+	 * @param string $app
+	 * @param int|string $id
+	 * @return string
+	 */
+	static function integration_get_private($app,$id,$event)
+	{
+		$app_data = self::integration_get_data($app,'is_private');
+		
+		// no method, fall back to link title
+		if (is_null($app_data))
+		{
+			$is_private = !egw_link::title($app,$id);
+		}
+		// boolean value to make all events of $app public (false) or private (true)
+		elseif (is_bool($app_data))
+		{
+			$is_private = $app_data;
+		}
+		else
+		{
+			$is_private = (bool)ExecMethod2($app_data,$id,$event);
+		}
+		//echo '<p>'.__METHOD__."($app,$id,) returning ".array2string($is_private)."</p>\n";
+		return $is_private;
 	}
 
 	/**

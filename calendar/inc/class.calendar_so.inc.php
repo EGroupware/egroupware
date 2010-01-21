@@ -537,6 +537,11 @@ class calendar_so
 		//echo "<p>socal::search\n"; _debug_array($events);
 		return $events;
 	}
+	
+	/**
+	 * Data returned by calendar_search_union hook
+	 */
+	private static $integration_data;
 
 	/**
 	 * Ask other apps if they want to participate in calendar search / display
@@ -551,7 +556,7 @@ class calendar_so
 	 */
 	private static function get_union_selects(array &$selects,$start,$end,$users,$cat_id,$filter,$query)
 	{
-		$app_selects = $GLOBALS['egw']->hooks->process(array(
+		self::$integration_data = $GLOBALS['egw']->hooks->process(array(
 			'location' => 'calendar_search_union',
 			'cols'  => $selects[0]['cols'],	// cols to return
 			'start' => $start,
@@ -561,15 +566,26 @@ class calendar_so
 			'filter'=> $filter,
 			'query' => $query,
 		));
-		foreach($app_selects as $app => $data)
+		foreach(self::$integration_data as $app => $data)
 		{
 			if (is_array($data['selects']))
 			{
+				//echo $app; _debug_array($data);
 				$selects = array_merge($selects,$data['selects']);
 			}
 		}
 	}
-
+	
+	/**
+	 * Get data from last 'calendar_search_union' hook call
+	 * 
+	 * @return array
+	 */
+	public static function get_integration_data()
+	{
+		return self::$integration_data;
+	}
+	
 	/**
 	 * Checks for conflicts
 	 */

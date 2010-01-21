@@ -1173,24 +1173,13 @@ class calendar_uiviews extends calendar_ui
 			$app = $matches[1];
 			$app_id = $matches[2];
 			$icons = array();
-			if (($is_private = !egw_link::title($app,$app_id)))
+			if (($is_private = calendar_bo::integration_get_private($app,$app_id,$event)))
 			{
 				$icons[] = html::image('calendar','private');
 			}
 			else
 			{
-				if ($event['icons'])
-				{
-					foreach(explode(',',$event['icons']) as $icon)
-					{
-						list($icon_app,$icon) = explode(':',$icon);
-						if (common::find_image($icon_app,$icon))
-						{
-							$icons[] = html::image($icon_app,$icon);
-						}
-					}
-				}
-				$icons[] = html::image($app,'navbar');
+				$icons = self::integration_get_icons($app,$app_id,$event);
 			}
 		}
 		else
@@ -1334,21 +1323,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		elseif($app && $app_id)
 		{
-			$popup = '';
-			if (($edit = egw_link::edit($app,$app_id,$popup_size)))
-			{
-				$view_link = egw::link('/index.php',$edit);
-				
-				if ($popup_size)
-				{
-					list($w,$h) = explode('x',$popup_size);
-					$popup = ' onclick="'.$this->popup($view_link,'_blank',$w,$h).'; return false;"';
-				}
-				else
-				{
-					$popup = ' onclick="location.href=\''.$view_link.'\'; return false;"';
-				}
-			}
+			$popup = $this->integration_get_popup($app,$app_id);
 		}
 		else
 		{
@@ -1429,13 +1404,95 @@ class calendar_uiviews extends calendar_ui
 						'errorImage'=>addslashes(html::image('phpgwapi','dialog_error',false,'style="width: 16px;"')),
 						'loaderImage'=>addslashes(html::image('phpgwapi','ajax-loader')),
 					),
-					'calendar.dragDropFunctions.dragEvent',
+					'calend false to make all events of $app publicar.dragDropFunctions.dragEvent',
 					'calendar.dragDropFunctions.dropEvent',
 					'top center 2'
 			);
 		}
 
 		return $html;
+	}
+	
+	/**
+	 * Get onclick attribute to open integration item for edit
+	 * 
+	 * Name of the attribute is 'edit_link' and it should be an array with values for keys:
+	 * - 'edit'    => array('menuaction' => 'app.class.method')
+	 * - 'edit_id' => 'app_id'
+	 * - 'edit_popup' => '400x300' (optional)
+	 * 
+	 * @param string $app
+	 * @param int|string $id
+	 * @return string
+	 */
+	function integration_get_popup($app,$id)
+	{
+		$app_data = calendar_bo::integration_get_data($app,'edit_link');
+		
+		if (is_array($app_data) && isset($app_data['edit']))
+		{
+			$popup_size = $app_data['edit_popup'];
+			$edit = $app_data['edit'];
+			$edit[$app_data['edit_id']] = $id;
+		}
+		else
+		{
+			$edit = egw_link::edit($app,$id,$popup_size);
+		}
+		if ($edit)
+		{
+			$view_link = egw::link('/index.php',$edit);
+			
+			if ($popup_size)
+			{
+				list($w,$h) = explode('x',$popup_size);
+				$popup = ' onclick="'.$this->popup($view_link,'_blank',$w,$h).'; return false;"';
+			}
+			else
+			{
+				$popup = ' onclick="location.href=\''.$view_link.'\'; return false;"';
+			}
+		}
+		return $popup;
+	}
+
+	/**
+	 * Get icons for an integration event
+	 * 
+	 * Attribute 'icons' is either null (--> navbar icon), false (--> no icon) 
+	 * or a callback with parameters $id,$event
+	 * 
+	 * Icons specified in $events['icons'] are always displayed!
+	 * 
+	 * @param string $app
+	 * @param int|string $id
+	 * @param array $event
+	 * @return array
+	 */
+	static function integration_get_icons($app,$id,$event)
+	{
+		$icons = array();
+		if ($event['icons'])
+		{
+			foreach(explode(',',$event['icons']) as $icon)
+			{
+				list($icon_app,$icon) = explode(':',$icon);
+				if (common::find_image($icon_app,$icon))
+				{
+					$icons[] = html::image($icon_app,$icon);
+				}
+			}
+		}
+		$app_data = calendar_bo::integration_get_data($app,'icons');
+		if (is_null($app_data))
+		{
+			$icons[] = html::image($app,'navbar');	// use navbar icon
+		}
+		elseif ($app_data)
+		{
+			$icons += (array)ExecMethod2($app_data,$id,$event);
+		}
+		return $icons;
 	}
 
 	function add_nonempty($content,$label,$one_per_line=False,$space = True)
