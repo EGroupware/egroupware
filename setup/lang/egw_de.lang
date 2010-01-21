@@ -54,7 +54,7 @@ alternatively domains can be accessed by logging in with <i>username@domain</i>.
 and is up to date	setup	de	und ist aktuell
 and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten!!!
 app details	setup	de	Details der Anwendung
-app install/remove/upgrade	setup	de	Anwendung installierenn/entfernen/aktualisieren
+app install/remove/upgrade	setup	de	Anwendung installieren/entfernen/aktualisieren
 app process	setup	de	Anwendung bearbeiten
 application data	setup	de	Daten der Anwendung
 application list	setup	de	Liste der Anwendungen
