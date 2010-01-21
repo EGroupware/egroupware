@@ -516,7 +516,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		if (($ret = $stmt->execute(array('fs_id' => $stat['ino']))))
 		{
-			if (self::url2operation($url) == self::STORE2FS && !($stat['mode'] & self::MODE_LINK))
+			if (self::url2operation($url) == self::STORE2FS && 
+				($stat['mode'] & self::MODE_LINK) != self::MODE_LINK)
 			{
 				unlink(self::_fs_path($stat['ino']));
 			}
