@@ -395,6 +395,8 @@ class calendar_so
 
 		if ($this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'])
 		{
+			// allow apps to supply participants and/or icons
+			if (is_null($_cols)) $cols .= ',NULL AS participants,NULL AS icons';
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
 			$select = array(
 				'table' => $this->cal_table,
@@ -420,11 +422,9 @@ class calendar_so
 				$selects = array($selects[0],$selects[1]);
 			}
 			if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
-//_debug_array($selects);
-$this->db->query_log = '/tmp/query.log';
+
 			// error_log("calendar_so_search:\n" . print_r($selects, true));
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$order,$offset,$num_rows);
-$this->db->query_log = false;
 		}
 		else	// MsSQL oder MySQL 3.23
 		{
@@ -457,7 +457,17 @@ $this->db->query_log = false;
 				$id .= '-'.$row['cal_recur_date'];
 				$recur_dates[] = $row['cal_recur_date'];
 			}
-			$row['alarm'] = $row['participants'] = array();
+			if ($row['participants'])
+			{
+				$row['participants'] = explode(',',$row['participants']);
+				$row['participants'] = array_combine($row['participants'],
+					array_fill(0,count($row['participants']),''));
+			}
+			else
+			{
+				$row['participants'] = array();
+			}
+			$row['alarm'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 
 			$events[$id] = egw_db::strip_array_keys($row,'cal_');

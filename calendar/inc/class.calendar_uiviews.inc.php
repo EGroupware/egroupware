@@ -1168,9 +1168,42 @@ class calendar_uiviews extends calendar_ui
 		{
 			$timespan = $this->bo->timespan($event['start_m'],$event['end_m']);
 		}
-		$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
-
-		$icons = !$is_private ? $this->event_icons($event) : array(html::image('calendar','private',lang('private')));
+		if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
+		{
+			$app = $matches[1];
+			$app_id = $matches[2];
+			$icons = array();
+			if (($is_private = !egw_link::title($app,$app_id)))
+			{
+				$icons[] = html::image('calendar','private');
+			}
+			else
+			{
+				if ($event['icons'])
+				{
+					foreach(explode(',',$event['icons']) as $icon)
+					{
+						list($icon_app,$icon) = explode(':',$icon);
+						if (common::find_image($icon_app,$icon))
+						{
+							$icons[] = html::image($icon_app,$icon);
+						}
+					}
+				}
+				$icons[] = html::image($app,'navbar');
+			}
+		}
+		else
+		{
+			if (($is_private = !$this->bo->check_perms(EGW_ACL_READ,$event)))
+			{
+				$icons = array(html::image('calendar','private'));
+			}
+			else
+			{
+				$icons = $this->event_icons($event); 				
+			}
+		}
 		$cats  = $this->bo->categories($this->categories->check_list(EGW_ACL_READ, $event['category']),$color);
 		// these values control varius aspects of the geometry of the eventWidget
 		$small_trigger_width = 120 + 20*count($icons);
@@ -1200,6 +1233,7 @@ class calendar_uiviews extends calendar_ui
 			switch ($status)
 			{
 				case 'A':
+				case '':	// app without status
 					break;
 				case 'U':
 					$status_class = 'calEventSomeUnknown';
@@ -1298,11 +1332,10 @@ class calendar_uiviews extends calendar_ui
 		{
 			$popup = '';
 		}
-		elseif(!is_numeric($event['id']))
+		elseif($app && $app_id)
 		{
 			$popup = '';
-			if (preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches) && 
-				($edit = egw_link::edit($matches[1],$matches[2],$popup_size)))
+			if (($edit = egw_link::edit($app,$app_id,$popup_size)))
 			{
 				$view_link = egw::link('/index.php',$edit);
 				
