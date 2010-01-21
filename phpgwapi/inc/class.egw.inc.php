@@ -49,7 +49,13 @@ class egw extends egw_minimal
 	 * @var common
 	 */
 	var $common;
-
+	/**
+	 * Instace of the hooks object
+	 *
+	 * @var hooks
+	 */
+	var $hooks;
+	
 	private $cat_cache;
 
 	/**
@@ -146,6 +152,8 @@ class egw extends egw_minimal
 		$this->common         = new common();
 		$this->accounts       = accounts::getInstance();
 		$this->acl            = new acl();
+		// we instanciate the hooks object here manually, to cache it's hooks in the session
+		$this->hooks          = new hooks();
 		/* Do not create the session object if called by the sessions class.  This way
 		 * we ensure the correct db based on the user domain.
 		 */

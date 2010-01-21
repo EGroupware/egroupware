@@ -34,7 +34,6 @@
  */
 class hooks
 {
-	var $found_hooks = Array();
 	/**
 	 * Reference to the global db object
 	 *
@@ -42,6 +41,12 @@ class hooks
 	 */
 	var $db;
 	var $table = 'egw_hooks';
+	/**
+	 * Hooks by location and appname
+	 * 
+	 * @var array $location => $app => $file
+	 */
+	var $locations;
 
 	/**
 	 * constructor, reads and caches the complete hooks table
@@ -52,11 +57,12 @@ class hooks
 	{
 		$this->db = $db ? $db : $GLOBALS['egw']->db;	// this is to allow setup to set the db
 
-		foreach($this->db->select($this->table,'hook_appname,hook_location,hook_filename',false,__LINE__,__FILE__) as $row)
+		// sort hooks by app-order
+		foreach($this->db->select($this->table,'hook_appname,hook_location,hook_filename',false,__LINE__,__FILE__,false,'ORDER BY app_order','phpgwapi',0,'JOIN egw_applications ON hook_appname=app_name') as $row)
 		{
-			$this->found_hooks[$row['hook_appname']][$row['hook_location']] = $row['hook_filename'];
+			$this->locations[$row['hook_location']][$row['hook_appname']] = $row['hook_filename'];
 		}
-		//_debug_array($this->found_hooks);
+		//_debug_array($this->locations);
 	}
 
 	/**
@@ -71,53 +77,41 @@ class hooks
 	}
 
 	/**
-	 * executes all the hooks (the user has rights to) for a given location
+	 * Executes all the hooks (the user has rights to) for a given location
+	 * 
+	 * If no $order given, hooks are executed in the order of the applications!
 	 *
-	 * @param string|array $args location-name as string or array with keys location, order and
+	 * @param string|array $args location-name as string or array with keys location and
 	 *	further data to be passed to the hook, if its a new method-hook
 	 * @param array $order appnames (as value), which should be executes first
 	 * @param boolean $no_permission_check if True execute all hooks, not only the ones a user has rights to
 	 *	$no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 	 * @return array with results of each hook call (with appname as key) and value:
-	 *	- False if no hook exists,
+	 *	- False if no hook exists (should no longer be the case),
 	 *	- True if old hook exists and
 	 * 	- whatever the new method-hook returns (can be True or False too!).
 	 */
-	function process($args, $order = '', $no_permission_check = False)
+	function process($args, $order = array(), $no_permission_check = False)
 	{
-		//echo "<p>hooks::process("; print_r($args); echo ")</p>\n";
-		if ($order == '')
-		{
-			$order = is_array($args) && isset($args['order']) ? $args['order'] :
-				array($GLOBALS['egw_info']['flags']['currentapp']);
-		}
+		//echo "<p>".__METHOD__.'('.array2string($args).','.array2string($order).','.array2string($no_permission_check).")</p>\n";
+		$location = is_array($args) ? $args['location'] : $args;
 
-		/* First include the ordered apps hook file */
-		foreach($order as $appname)
-		{
-			$results[$appname] = $this->single($args,$appname,$no_permission_check);
+		$hooks = $this->locations[$location];
+		if (!isset($hooks)) return array();	// not a single app implements that hook
 
-			if (!isset($results[$appname]))	// happens if the method hook has no return-value
-			{
-				$results[$appname] = False;
-			}
-		}
-
-		/* Then add the rest */
-		if ($no_permission_check)
+		$apps = array_keys($hooks);
+		if (!$no_permission_check)
 		{
-			$apps = array_keys($this->found_hooks);
+			$apps = array_intersect($apps,array_keys($GLOBALS['egw_info']['user']['apps']));
 		}
-		elseif(is_array($GLOBALS['egw_info']['user']['apps']))
+		if ($order)
 		{
-			$apps = array_keys($GLOBALS['egw_info']['user']['apps']);
+			$apps = array_unique(array_merge($order,$apps));
 		}
+		$results = array();
 		foreach((array)$apps as $appname)
 		{
-			if (!isset($results[$appname]))
-			{
-				$results[$appname] = $this->single($args,$appname,$no_permission_check);
-			}
+			$results[$appname] = $this->single($args,$appname,$no_permission_check);
 		}
 		return $results;
 	}
@@ -146,9 +140,9 @@ class hooks
 		$SEP = filesystem_separator();
 
 		/* First include the ordered apps hook file */
-		if (isset($this->found_hooks[$appname][$location]) || $try_unregistered)
+		if (isset($this->locations[$location][$appname]) || $try_unregistered)
 		{
-			$parts = explode('.',$method = $this->found_hooks[$appname][$location]);
+			$parts = explode('.',$method = $this->locations[$location][$appname]);
 
 			if (strpos($method,'::') !== false || count($parts) == 3 && $parts[1] != 'inc' && $parts[2] != 'php')
 			{
@@ -190,27 +184,7 @@ class hooks
 	 */
 	function count($location)
 	{
-		$count = 0;
-		foreach($GLOBALS['egw_info']['user']['apps'] as $appname => $data)
-		{
-			if (isset($this->found_hooks[$appname][$location]))
-			{
-					++$count;
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * @deprecated currently not being used
-	 */
-	function read()
-	{
-		//if (!is_array($this->found_hooks))
-		//{
-			$this->__construct();
-		//}
-		return $this->found_hooks;
+		return count($this->locations[$location]);
 	}
 
 	/**
@@ -265,14 +239,18 @@ class hooks
 	{
 		$SEP = filesystem_separator();
 
+		// deleting hooks of all not longer registered apps
+		if (($all_apps = array_keys($GLOBALS['egw_info']['apps'])))
+		{
+			$this->db->delete($this->table,"hook_appname NOT IN ('".implode("','",$all_apps)."')",__LINE__,__FILE__);
+		}
+		// now register the rest again
 		foreach($GLOBALS['egw_info']['apps'] as $appname => $app)
 		{
 			$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'setup' . $SEP . 'setup.inc.php';
-			if(@file_exists($f))
-			{
-				include($f);
-				$this->register_hooks($appname,$setup_info[$appname]['hooks']);
-			}
+			$setup_info = array($appname => array());
+			if(@file_exists($f)) include($f);
+			$this->register_hooks($appname,$setup_info[$appname]['hooks']);
 		}
 	}
 }
