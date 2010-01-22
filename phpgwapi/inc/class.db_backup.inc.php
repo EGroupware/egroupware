@@ -183,7 +183,7 @@ class db_backup
 	}
 
 	/**
-	 * Opens the backup-file using the highest availible compression
+	 * Opens the backup-file using the highest available compression
 	 *
 	 * @param $name=false string/boolean filename to use, or false for the default one
 	 * @param $reading=false opening for reading ('rb') or writing ('wb')
@@ -216,7 +216,7 @@ class db_backup
 			{
 				$this->backup_files = false;
 				//echo '   -> (new ZipArchive) == NULL<br>';	// !
-				return lang("Cant open $name, needs ZipArchive")."<br>";
+				return lang("Cant open %1, needs ZipArchive", $name)."<br>\n";
 			}
 			if(!($f = fopen($name, $mode)))
 			{
@@ -336,6 +336,9 @@ class db_backup
 	 *
 	 * @param resource $f file opened with fopen for reading
 	 * @param boolean $convert_to_system_charset=false convert the restored data to the selected system-charset
+	 * @param string $filename='' gives the file name which is used in case of a zip archive.
+	 *
+	 * @returns An empty string or an error message in case of failure.
 	 */
 	function restore($f,$convert_to_system_charset=false,$filename='')
 	{
@@ -370,10 +373,11 @@ class db_backup
 		$_f = NULL;
 		if($type == 'zip')
 	    {
+			// has already been verified to be available in fopen_backup
 			$zip = new ZipArchive;
 			if(($zip->open($filename)) !== TRUE)
 			{
-				return "Cant open '$filename' for reading<br>";
+				return lang("Cant open '%1' for %2", $filename, lang("reading"))."<br>\n";
 			}
 			self::remove_dir_content($dir);  // removes the files-dir
 			$zip->extractTo($dir);
@@ -383,6 +387,7 @@ class db_backup
 			if(!($f = fopen($name, 'rb')))
 			{
 				return "Cant open $name for reading<br>";
+				return lang("Cant open '%1' for %2", $filename, lang("reading"))."<br>\n";
 			}
 		}
 		$table = False;
@@ -520,7 +525,11 @@ class db_backup
 			unlink($name);
 			rmdir($dir.'/database_backup');
 		}
-		$this->db->transaction_commit();
+		if (!$this->db->transaction_commit())
+		{
+			return lang('Restore failed');
+		}
+		return '';
 	}
 
 	/**
@@ -647,7 +656,7 @@ class db_backup
 				if($res !== TRUE)
 				{
 					//echo '   -> !$res<br>';	// !
-					return "Cant open '$filename'<br>";
+					return lang("Cant open '%1' for %2", $filename, lang("writing"))."<br>\n";
 				}
 				$file_list = $this->get_file_list($dir);
 			}
@@ -694,7 +703,11 @@ class db_backup
 		}
 		if(!$zippresent)  // save without files 
 		{
-			if ($this->backup_files) echo '<center>'."No file backup, needs ZipArchive or disabled<br>".'</center>';
+			if ($this->backup_files)
+			{
+				echo '<center>'.lang("Cant open %1, needs ZipArchive", $name)."<br>\n".'</center>';
+			}
+
 		    fclose($f);
 		    if (file_exists($name)) unlink($name);
 			return TRUE;

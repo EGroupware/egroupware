@@ -89,7 +89,7 @@ class setup_cmd_install extends setup_cmd
 			{
 				ob_start();	// restore echos the table structure
 			}
-			$db_backup->restore($f,$this->charset);
+			$db_backup->restore($f,$this->charset,$this->backup);
 			fclose($f);
 
 			if (!$this->verbose)
