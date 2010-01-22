@@ -39,7 +39,7 @@ class date_widget
 		'post_process' => True
 	);
 	/**
-	 * availible extensions and there names for the editor
+	 * available extensions and there names for the editor
 	 * @var array
 	 */
 	var $human_name = array(
