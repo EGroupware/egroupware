@@ -574,6 +574,15 @@ class calendar_uiforms extends calendar_ui
 		case 'delete':
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
+				if ($content['reference'] == 0 && !$content['edit_single'])
+				{
+					// We delete a whole series
+					$recur_exceptions = $this->bo->so->get_related($event['uid']);
+					foreach ($recur_exceptions as $id)
+					{
+						$this->bo->delete($id);
+					}
+				}
 				$msg = lang('Event deleted');
 				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 					'msg' => $msg,
