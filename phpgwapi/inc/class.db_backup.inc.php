@@ -386,7 +386,6 @@ class db_backup
 			$name = $dir.'/database_backup/'.basename($list[0]);
 			if(!($f = fopen($name, 'rb')))
 			{
-				return "Cant open $name for reading<br>";
 				return lang("Cant open '%1' for %2", $filename, lang("reading"))."<br>\n";
 			}
 		}
