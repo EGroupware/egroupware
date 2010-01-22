@@ -337,7 +337,7 @@ class db_backup
 	 * @param resource $f file opened with fopen for reading
 	 * @param boolean $convert_to_system_charset=false convert the restored data to the selected system-charset
 	 */
-	function restore($f,$convert_to_system_charset=false,$filename)
+	function restore($f,$convert_to_system_charset=false,$filename='')
 	{
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);
@@ -632,7 +632,7 @@ class db_backup
 			rmdir($dir.'/database_backup');
 		}
 
-		$file_list = $this->get_file_list($dir);
+		$file_list = array();
 		$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
 		$filename = $name.'.zip';
 		$zippresent = false;
@@ -649,6 +649,7 @@ class db_backup
 					//echo '   -> !$res<br>';	// !
 					return "Cant open '$filename'<br>";
 				}
+				$file_list = $this->get_file_list($dir);
 			}
 		}
 		fwrite($f,"eGroupWare backup from ".date('Y-m-d H:i:s')."\n\n");
@@ -691,14 +692,14 @@ class db_backup
 				fwrite($f,implode(',',$row)."\n");
 			}
 		}
-		// save files
-		if(!$zippresent)  // save without files (why ever it works only right without '!'...)
+		if(!$zippresent)  // save without files 
 		{
 			if ($this->backup_files) echo '<center>'."No file backup, needs ZipArchive or disabled<br>".'</center>';
 		    fclose($f);
 		    if (file_exists($name)) unlink($name);
 			return TRUE;
 		}
+		// save files ....
 		//echo $name.'<br>';
 		$zip->addFile($name, 'database_backup/'.basename($name));
 		$count = 1;
