@@ -716,9 +716,9 @@ class calendar_uiforms extends calendar_ui
 		case 'delete':
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
-				if (!$content['edit_single'])
+				if ($content['reference'] == 0 && !$content['edit_single'])
 				{
-					// We may delete a whole series
+					// We delete a whole series
 					$recur_exceptions = $this->bo->so->get_related($event['uid']);
 					foreach ($recur_exceptions as $id => $recur_date)
 					{
