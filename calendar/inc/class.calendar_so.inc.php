@@ -1545,10 +1545,10 @@ ORDER BY cal_user_type, cal_usre_id
 		foreach ($this->db->select($this->cal_table,'cal_id,cal_reference',$where,
 				__LINE__,__FILE__,false,'','calendar') as $row)
 		{
-			if ($row['cal_reference'])
+			if ($row['cal_reference'] != 0)
 			{
-				// not the series entry itself
-				$related[$row['cal_id']] = $row['cal_reference'];
+				// not the series master
+				$related[] = $row['cal_id'];
 			}
 		}
 		return $related;
