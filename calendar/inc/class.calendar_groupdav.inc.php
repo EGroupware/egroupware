@@ -360,7 +360,7 @@ class calendar_groupdav extends groupdav_handler
 		$master = null;
 		foreach($events as $k => &$recurrence)
 		{
-			if (!isset($master))	// first event is allways the series master
+			if (!isset($master))	// first event is always the series master
 			{
 				$master =& $events[$k];
 				//error_log('master: '.array2string($master));
