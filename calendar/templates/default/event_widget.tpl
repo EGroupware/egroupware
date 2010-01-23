@@ -27,7 +27,7 @@
 		{category}
 		{participants}</p>
 	</div>
-</dir>
+</div>
 <!-- END event_tooltip -->
 
 <!-- BEGIN planner_event -->
