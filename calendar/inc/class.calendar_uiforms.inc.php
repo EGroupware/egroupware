@@ -1057,11 +1057,6 @@ class calendar_uiforms extends calendar_ui
 			$readonlys['link_to'] = $readonlys['customfields'] = true;
 			$readonlys['duration'] = true;
 
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
-			{
-				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
-				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
-			}
 			$content['participants']['no_add'] = true;
 
 			// respect category permissions
@@ -1077,6 +1072,17 @@ class calendar_uiforms extends calendar_ui
 			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','display','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'none' : 'block')."');");
 
 			$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
+			
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
+				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
+				
+				// some fundamental values of an existing series should not be changed by the user
+				$readonlys['start'] = $readonlys['whole_day'] = true;
+				$readonlys['recur_type'] = $readonlys['recur_data'] = true;
+				$readonlys['recur_interval'] = $readonlys['tzid'] = true;
+			}
 		}
 		// disabling the custom fields tab, if there are none
 		$readonlys[$this->tabs] = array(
