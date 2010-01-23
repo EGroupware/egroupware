@@ -1083,6 +1083,11 @@ class calendar_uiforms extends calendar_ui
 				$readonlys['recur_type'] = $readonlys['recur_data'] = true;
 				$readonlys['recur_interval'] = $readonlys['tzid'] = true;
 			}
+			elseif ($event['reference'] != 0)
+			{
+				$readonlys['recur_type'] = $readonlys['recur_enddate'] = true;
+				$readonlys['recur_interval'] = $readonlys['recur_data'] = true;
+			}
 		}
 		// disabling the custom fields tab, if there are none
 		$readonlys[$this->tabs] = array(
