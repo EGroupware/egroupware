@@ -19,7 +19,7 @@
  * There's a static factory method calendar_rrule::event2rrule(array $event,$usertime=true), which converts an
  * event read by calendar_bo::read() or calendar_bo::search() to a rrule iterator.
  *
- * The rrule iterator object can be casted to string, to get a human readable describtion of the rrule.
+ * The rrule iterator object can be casted to string, to get a human readable description of the rrule.
  *
  * There's an interactive test-form, if the class get's called directly: http://localhost/egroupware/calendar/inc/class.calendar_rrule.inc.php
  *
