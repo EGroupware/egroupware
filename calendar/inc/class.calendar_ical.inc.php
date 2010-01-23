@@ -942,7 +942,7 @@ class calendar_ical extends calendar_boupdate
 							$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
 						}
 					}
-					$event['tzid'] = $storedEvent['tzid'];
+					$event['tzid'] = $event_info['stored_event']['tzid'];
 					// avoid that iCal changes the organizer, which is not allowed
 					$event['owner'] = $event_info['stored_event']['owner'];
 				}
