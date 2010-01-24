@@ -1313,7 +1313,6 @@ class calendar_uiviews extends calendar_ui
 		}
 */
 		$tooltip = $tpl->fp('tooltip','event_tooltip');
-		$tpl->set_var('tooltip',html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)));
 		$html = $tpl->fp('out',$block);
 
 
@@ -1352,11 +1351,18 @@ class calendar_uiviews extends calendar_ui
 				'color'   => $color,
 			);
 		}
+		$ttip_options = array(
+			'BorderWidth' => 0,		// as we use our round borders
+			'Padding'     => 0,
+			'Sticky'      => true,	// make long tooltips scrollable
+			'ClickClose'  => true,
+			'FollowMouse' => false,
+		);
 		$ie_fix = '';
         if (html::$user_agent == 'msie')	// add a transparent image to make the event "opaque" to mouse events
         {
 			$ie_fix = $indent."\t".html::image('calendar','transparent.gif','',
-				html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
+				html::tooltip($tooltip,False,$ttip_options).
 				' style="top:0px; left:0px; position:absolute; height:100%; width:100%; z-index:1"') . "\n";
         }
 		if ($this->use_time_grid)
@@ -1381,7 +1387,7 @@ class calendar_uiviews extends calendar_ui
 
 		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: 20;"'.
-			$popup.' '.html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
+			$popup.' '.html::tooltip($tooltip,False,$ttip_options).
 			'>'."\n".$ie_fix.$html."\n".
 			$indent."</div>"."\n";
 
