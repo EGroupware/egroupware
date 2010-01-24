@@ -53,13 +53,16 @@ class common
 			$lang.'_'.$country,
 			$lang.'_'.$country_from_lang,
 			$lang,
-			'en_EN',
-			'de_DE',	// this works with utf-8, en_EN@utf-8 does NOT!
+			'en_US',
 			'C',
 		) as $local)
 		{
-			if (($ret = setlocale($category,$local.'@'.$charset))) return $ret;
-			if (($ret = setlocale($category,$local))) return $ret;
+			if (($ret = setlocale($category,$local.'@'.$charset)) ||
+				($ret = setlocale($category,$local)))
+			{
+				//error_log(__METHOD__."($category,$charset) lang=$lang, country=$country, country_from_lang=$country_from_lang: returning '$ret'");
+				return $ret;
+			}
 		}
 		error_log(__METHOD__."($category,$charset) lang=$lang, country=$country, country_from_lang=$country_from_lang: Could not set local!");
 		return false;	// should not happen, as the 'C' local should at least be available everywhere
