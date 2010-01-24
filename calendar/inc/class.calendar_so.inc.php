@@ -556,6 +556,10 @@ class calendar_so
 	 */
 	private static function get_union_selects(array &$selects,$start,$end,$users,$cat_id,$filter,$query)
 	{
+		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','rpc.php','xmlrpc.php')))
+		{
+			return;	// disable integration for GroupDAV, SyncML, ...
+		}
 		self::$integration_data = $GLOBALS['egw']->hooks->process(array(
 			'location' => 'calendar_search_union',
 			'cols'  => $selects[0]['cols'],	// cols to return
