@@ -113,15 +113,30 @@ class html
 
 		$ttip = ' onmouseover="Tip(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\'';
 		
+		$sticky = false;
 		if (is_array($options))
 		{
 			foreach($options as $option => $value)
 			{
-				$ttip .= ','.strtoupper($option).','.$value;
+				$option = strtoupper($option);
+				if ($option == 'STICKY') $sticky = (bool)$value;
+
+				switch(gettype($value))
+				{
+					case 'boolean':
+						$value = $value ? 'true' : 'false';
+						break;
+					case 'string':
+						$value = "'$value'";
+						break;
+				}
+				$ttip .= ','.$option.','.$value;
 			}
 		}
-		$ttip .= ')" onmouseout="UnTip()"';
-		
+		$ttip .= ')"';
+
+		if (!$sticky) $ttip .= ' onmouseout="UnTip()"';
+
 		return $ttip;
 	}
 
