@@ -406,7 +406,7 @@ class link_widget
 			$value = array(
 				'app'        => is_array($value) && isset($value['default_sel']) ? $value['default_sel'] : $app,
 				'no_app_sel' => !!$extension_data['app'],
-				'id'         => is_array($value) ? $value['current'] : $value,
+				'id'         => is_array($value) ? $value['current'] : $id,
 				'query'      => is_array($value) ? $value['query'] : '',
 				'blur'       => count($options) == 1 ? lang($app) : lang('Search'),
 				'extra'      => $cell['onchange'] ? ','.self::AJAX_NEED_ONCHANGE : null,	// store flang for ajax_search, to display extra_line required by onchange
