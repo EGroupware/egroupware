@@ -83,7 +83,7 @@ class hooks
 	 *
 	 * @param string|array $args location-name as string or array with keys location and
 	 *	further data to be passed to the hook, if its a new method-hook
-	 * @param array $order appnames (as value), which should be executes first
+	 * @param string|array $order appname(s as value), which should be executes first
 	 * @param boolean $no_permission_check if True execute all hooks, not only the ones a user has rights to
 	 *	$no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 	 * @return array with results of each hook call (with appname as key) and value:
@@ -106,7 +106,7 @@ class hooks
 		}
 		if ($order)
 		{
-			$apps = array_unique(array_merge($order,$apps));
+			$apps = array_unique(array_merge((array)$order,$apps));
 		}
 		$results = array();
 		foreach((array)$apps as $appname)
