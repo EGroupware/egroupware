@@ -100,7 +100,7 @@ config. TitleFontColor	= '#FFFFFF'	// Color of title text - if '', BgColor (of t
 config. TitleFontFace	= ''		// If '' use FontFace (boldified)
 config. TitleFontSize	= ''		// If '' use FontSize
 config. TitlePadding	= 2
-config. Width			= 0			// Tooltip width; 0 for automatic adaption to tooltip content; < -1 (e.g. -240) for a maximum width for that automatic adaption;
+config. Width			= 300		// Tooltip width; 0 for automatic adaption to tooltip content; < -1 (e.g. -240) for a maximum width for that automatic adaption;
 									// -1: tooltip width confined to the width required for the titlebar
 //=======  END OF TOOLTIP CONFIG, DO NOT CHANGE ANYTHING BELOW  ==============//
 
