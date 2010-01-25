@@ -411,24 +411,24 @@
 			// sent by a mailinglist??
 			// parse the from header
 			if($envelope['FROM'][0] != $envelope['SENDER'][0]) {
-				$senderAddress = $this->emailAddressToHTML($envelope['SENDER']);
-				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization);
+				$senderAddress = self::emailAddressToHTML($envelope['SENDER']);
+				$fromAddress   = self::emailAddressToHTML($envelope['FROM'], $organization);
 				$this->t->set_var("from_data",$senderAddress);
 				$this->t->set_var("onbehalfof_data",$fromAddress);
 				$this->t->parse('on_behalf_of_part','message_onbehalfof',True);
 			} else {
-				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization);
+				$fromAddress   = self::emailAddressToHTML($envelope['FROM'], $organization);
 				$this->t->set_var("from_data", $fromAddress);
 				$this->t->set_var('on_behalf_of_part','');
 			}
 
 			// parse the to header
-			$toAddress = $this->emailAddressToHTML($envelope['TO']);
+			$toAddress = self::emailAddressToHTML($envelope['TO']);
 			$this->t->set_var("to_data",$toAddress);
 
 			// parse the cc header
 			if(count($envelope['CC'])) {
-				$ccAddress = $this->emailAddressToHTML($envelope['CC']);
+				$ccAddress = self::emailAddressToHTML($envelope['CC']);
 				$this->t->set_var("cc_data",$ccAddress);
 				$this->t->parse('cc_data_part','message_cc',True);
 			} else {
@@ -437,7 +437,7 @@
 
 			// parse the bcc header
 			if(count($envelope['BCC'])) {
-				$bccAddress = $this->emailAddressToHTML($envelope['BCC']);
+				$bccAddress = self::emailAddressToHTML($envelope['BCC']);
 				$this->t->set_var("bcc_data",$bccAddress);
 				$this->t->parse('bcc_data_part','message_bcc',True);
 			} else {
@@ -755,7 +755,7 @@
 			$GLOBALS['egw']->common->egw_header();
 		}
 
-		function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true) {
+		static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true) {
 			#_debug_array($_emailAddress);
 			// create some nice formated HTML for senderaddress
 			#if($_emailAddress['EMAIL'] == 'undisclosed-recipients: ;')
@@ -780,8 +780,8 @@
 
 					if($addressData['PERSONAL_NAME'] != 'NIL') {
 						$newSenderAddress = $addressData['RFC822_EMAIL'] != 'NIL' ? $addressData['RFC822_EMAIL'] : $addressData['EMAIL'];
-						$newSenderAddress = $this->bofelamimail->decode_header($newSenderAddress);
-						$decodedPersonalName = $this->bofelamimail->decode_header($addressData['PERSONAL_NAME']);
+						$newSenderAddress = bofelamimail::decode_header($newSenderAddress);
+						$decodedPersonalName = bofelamimail::decode_header($addressData['PERSONAL_NAME']);
 
 						$realName =  $decodedPersonalName;
 						// add mailaddress
@@ -800,8 +800,8 @@
 						$link = $GLOBALS['egw']->link('/index.php',$linkData);
 						$senderAddress .= sprintf('<a href="%s" title="%s">%s</a>',
 									$link,
-									@htmlentities($newSenderAddress,ENT_QUOTES,$this->displayCharset),
-									@htmlentities($realName, ENT_QUOTES, $this->displayCharset));
+									@htmlentities($newSenderAddress,ENT_QUOTES,bofelamimail::$displayCharset),
+									@htmlentities($realName, ENT_QUOTES, bofelamimail::$displayCharset));
 
 						$linkData = array (
 							'menuaction'		=> 'addressbook.addressbook_ui.edit',
@@ -839,7 +839,7 @@
 						);
 						$link = $GLOBALS['egw']->link('/index.php',$linkData);
 						$senderAddress .= sprintf('<a href="%s">%s</a>',
-									$link,@htmlentities($addressData['EMAIL'], ENT_QUOTES, $this->displayCharset));
+									$link,@htmlentities($addressData['EMAIL'], ENT_QUOTES, bofelamimail::$displayCharset));
 						//TODO: This uses old addressbook code, which should be removed in Version 1.4
 						//Please use addressbook.addressbook_ui.edit with proper paramenters
 						$linkData = array
@@ -1196,24 +1196,24 @@
 			$this->translate();
 
 			if($envelope['FROM'][0] != $envelope['SENDER'][0]) {
-				$senderAddress = $this->emailAddressToHTML($envelope['SENDER'], '', true, false);
-				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization, true, false);
+				$senderAddress = self::emailAddressToHTML($envelope['SENDER'], '', true, false);
+				$fromAddress   = self::emailAddressToHTML($envelope['FROM'], $organization, true, false);
 				$this->t->set_var("from_data",$senderAddress);
 				$this->t->set_var("onbehalfof_data",$fromAddress);
 				$this->t->parse('on_behalf_of_part','message_onbehalfof',True);
 			} else {
-				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization, true, false);
+				$fromAddress   = self::emailAddressToHTML($envelope['FROM'], $organization, true, false);
 				$this->t->set_var("from_data", $fromAddress);
 				$this->t->set_var('on_behalf_of_part','');
 			}
 
 			// parse the to header
-			$toAddress = $this->emailAddressToHTML($envelope['TO'], '', true, false);
+			$toAddress = self::emailAddressToHTML($envelope['TO'], '', true, false);
 			$this->t->set_var("to_data",$toAddress);
 
 			// parse the cc header
 			if(count($envelope['CC'])) {
-				$ccAddress = $this->emailAddressToHTML($envelope['CC'], '', true, false);
+				$ccAddress = self::emailAddressToHTML($envelope['CC'], '', true, false);
 				$this->t->set_var("cc_data",$ccAddress);
 				$this->t->parse('cc_data_part','message_cc',True);
 			} else {

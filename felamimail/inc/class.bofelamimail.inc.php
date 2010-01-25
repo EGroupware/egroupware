@@ -433,7 +433,7 @@
 			}
 		}
 
-		function decode_header($_string)
+		static function decode_header($_string)
 		{
 			return $GLOBALS['egw']->translation->decodeMailHeader($_string,self::$displayCharset);
 		}

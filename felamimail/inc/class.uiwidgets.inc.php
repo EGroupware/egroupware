@@ -513,20 +513,56 @@
 					// sent or drafts or template folder
 					if (!empty($headerData['to_name'])) {
 						$sender_name	= $headerData['to_name'];
-						$full_address	= $headerData['to_name'].' <'.$headerData['to_address'].'>';
+						$sender_address = $headerData['to_address'];
+						$full_address	= $headerData['to_name'].' &lt;'.$headerData['to_address'].'&gt;';
 					} else {
 						$sender_name	= $headerData['to_address'];
+						$sender_address = $headerData['to_address'];
 						$full_address	= $headerData['to_address'];
 					}
 				} else {
 					if (!empty($headerData['sender_name'])) {
 						$sender_name	= $headerData['sender_name'];
-						$full_address	= $headerData['sender_name'].' <'.$headerData['sender_address'].'>';
+						$sender_address = $headerData['sender_address'];
+						$full_address	= $headerData['sender_name'].' &lt;'.$headerData['sender_address'].'&gt;';
 					} else {
 						$sender_name	= $headerData['sender_address'];
+						$sender_address = $headerData['sender_address'];
 						$full_address	= $headerData['sender_address'];
 					}
 				}
+				//$fromAddress   = uidisplay::emailAddressToHTML(array('PERSONAL_NAME'=>$sender_name,'EMAIL'=>$sender_address,'RFC822_EMAIL'=>$full_address),'');
+				if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
+					$addresslinkData = array (
+						'menuaction'		=> 'addressbook.addressbook_ui.edit',
+						'presets[email]'	=> $sender_address,
+						'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
+					);
+					$decodedPersonalName = $sender_name;
+					if (!empty($decodedPersonalName)) {
+						if($spacePos = strrpos($decodedPersonalName, ' ')) {
+							$addresslinkData['presets[n_family]']	= substr($decodedPersonalName, $spacePos+1);
+							$addresslinkData['presets[n_given]'] 	= substr($decodedPersonalName, 0, $spacePos);
+						} else {
+							$addresslinkData['presets[n_family]']	= $decodedPersonalName;
+						}
+						$addresslinkData['presets[n_fn]']	= $decodedPersonalName;
+					}
+
+					$urlAddToAddressbook = $GLOBALS['egw']->link('/index.php',$addresslinkData);
+					$onClick = "window.open(this,this.target,'dependent=yes,width=850,height=440,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;";
+					$image = $GLOBALS['egw']->common->image('felamimail','sm_envelope');
+					$fromAddress .= sprintf('<a href="%s" onClick="%s">
+						<img src="%s" width="10" height="8" border="0"
+						align="absmiddle" alt="%s"
+						title="%s"></a>',
+						$urlAddToAddressbook,
+						$onClick,
+						$image,
+						lang('add to addressbook'),
+						lang('add to addressbook'));
+				}
+				
 				$linkData = array (
 					'menuaction'    => 'felamimail.uidisplay.display',
 					'showHeader'	=> 'false',
@@ -560,18 +596,20 @@
 					);
 
 				//_debug_array($GLOBALS['egw']->link('/index.php',$linkData));
-				$IFRAMEBody = "<TABLE BORDER=\"1\" rules=\"rows\" style=\"width:100%;\">
-								<TR class=\"th\" style=\"width:73%;\">
-									<TD nowrap valign=\"top\">
-										".($_folderType > 0?lang('to'):lang('from')).':<b>'.$full_address .'</b><br> '.
+				$IFRAMEBody = "<TABLE BORDER=\"1\" rules=\"rows\" style=\"table-layout:fixed;width:100%;\">
+								<TR class=\"th\" style=\"width:100%;\">
+									<TD nowrap valign=\"top\" style=\"overflow:hidden;\">
+										".($_folderType > 0?lang('to'):lang('from')).':<b>'.$full_address.' '.($fromAddress?$fromAddress:'') .'</b><br> '.
 										lang('date').':<b>'.$GLOBALS['egw']->common->show_date($headerData['date']/*,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']*/)."</b><br>
 										".lang('subject').":<b>".$subject."</b>
 									</TD>
-									<td style=\"width:2%;\">
+									<td style=\"width:20px;\" align=\"right\">
 										$image
 									</td>
-									<td style=\"width:25%;\" align=\"right\">
-										".$this->navbarSeparator().$this->displayMessageActions($headerData, $_folderName, $_icServer,true)."
+									<td style=\"width:250px;\" align=\"right\">
+										<nobr>
+											".$this->navbarSeparator().$this->displayMessageActions($headerData, $_folderName, $_icServer,true)."
+										</nobr>
 									</td>
 								</TR>
 								<TR>
