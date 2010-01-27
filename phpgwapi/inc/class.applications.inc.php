@@ -252,7 +252,7 @@ class applications
 	 */
 	function read_installed_apps()
 	{
-		foreach($this->db->select($this->table_name,'*','app_enabled != 0',__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
+		foreach($this->db->select($this->table_name,'*',false,__LINE__,__FILE__,false,'ORDER BY app_order ASC') as $row)
 		{
 			$title = $app_name = $row['app_name'];
 
