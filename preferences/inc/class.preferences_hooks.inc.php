@@ -396,13 +396,19 @@ class preferences_hooks
 	/**
 	 * Hook called when a user gets deleted, to delete his preferences
 	 *
-	 * @param string|array $hook_data
+	 * @param string|array $data
 	 */
-	public static function deleteaccount($hook_data)
+	public static function deleteaccount($data)
 	{
-		if((int)$GLOBALS['hook_values']['account_id'] > 0)
+		$account_id = (int)$data['account_id'];
+
+		if($account_id > 0)	// user
 		{
-			$GLOBALS['egw']->preferences->delete_user($GLOBALS['hook_values']['account_id']);
+			$GLOBALS['egw']->preferences->delete_user($account_id);
+		}
+		elseif ($account_id < 0)	// group
+		{
+			$GLOBALS['egw']->preferences->delete_group($account_id);
 		}
 	}
 }

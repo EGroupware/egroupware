@@ -15,11 +15,17 @@
 /**
  * preferences class used for setting application preferences
  *
- * the prefs are read into 4 arrays:
+ * the prefs are read into 5 arrays:
  * 	 $data the effective prefs used everywhere in phpgw, they are merged from the other 3 arrays
  * 	 $user the stored user prefs, only used for manipulating and storeing the user prefs
+ *   $group the stored prefs of users primary groupd, only used for manipulating and storeing the user prefs
  * 	 $default the default preferences, always used when the user has no own preference set
  * 	 $forced forced preferences set by the admin, they take precedence over user or default prefs
+ * 
+ * To update the prefs of a certain group, not just the primary group of the user, you have to
+ * create a new instance of preferences class, with the given id of the group. This takes into
+ * account the offset of DEFAULT_ID, we are using currently for groups (as -1, and -2) are already
+ * taken!
  */
 class preferences
 {
@@ -52,6 +58,11 @@ class preferences
 	 * @var array
 	 */
 	var $user = array();
+	/**
+	 * primary group prefs
+	 * @var array
+	 */
+	var $group = array();
 	/**
 	 * default prefs
 	 * @var array
@@ -87,7 +98,7 @@ class preferences
 	 */
 	function __construct($account_id = '')
 	{
-		if (is_object($GLOBALS['egw']->db))
+		if (isset($GLOBALS['egw']->db))
 		{
 			$this->db = $GLOBALS['egw']->db;
 		}
@@ -96,7 +107,15 @@ class preferences
 			$this->db = $GLOBALS['egw_setup']->db;
 			$this->table = $GLOBALS['egw_setup']->prefs_table;
 		}
-		$this->account_id = get_account_id($account_id);
+		// if we got instancated for a group, need to set offset of DEFAULT_ID!
+		if ($account_id < 0 && $GLOBALS['egw']->accounts->exists($account_id) == 2)
+		{
+			$this->account_id = $account_id + self::DEFAULT_ID;
+		}
+		else
+		{
+			$this->account_id = get_account_id($account_id);
+		}
 	}
 
 	/**
@@ -265,9 +284,14 @@ class preferences
 		{
 			$this->session = array();
 		}
-		$this->forced = $this->default = $this->user = array();
-		foreach($this->db->select($this->table,'*','preference_owner IN (-1,-2,'.(int) $this->account_id.')',__LINE__,__FILE__) as $row)
-
+		$this->forced = $this->default = $this->user = $this->group = array();
+		$primary_group = $GLOBALS['egw']->accounts->id2name($this->account_id,'account_primary_group');
+		foreach($this->db->select($this->table,'*',array('preference_owner' => array(
+			self::DEFAULT_ID,
+			self::FORCED_ID,
+			$this->account_id,
+			$primary_group+self::DEFAULT_ID,	// need to offset it with DEFAULT_ID = -2!
+		)),__LINE__,__FILE__) as $row)
 		{
 			// The following replacement is required for PostgreSQL to work
 			$app = trim($row['preference_app']);
@@ -290,8 +314,11 @@ class preferences
 				case self::DEFAULT_ID:
 					$this->default[$app] = $value;
 					break;
-				default:	// user
+				case $this->account_id:	// user
 					$this->user[$app] = $value;
+					break;
+				default:
+					$this->group[$app] = $value;
 					break;
 			}
 		}
@@ -307,6 +334,18 @@ class preferences
 			}
 		}
 
+		// now use (primary) group defaults if needed (user-value unset or empty)
+		//
+		foreach($this->group as $app => $values)
+		{
+			foreach($values as $var => $value)
+			{
+				if (!isset($this->data[$app][$var]) || $this->data[$app][$var] === '')
+				{
+					$this->data[$app][$var] = $value;
+				}
+			}
+		}
 		// now use defaults if needed (user-value unset or empty)
 		//
 		foreach($this->default as $app => $values)
@@ -342,6 +381,7 @@ class preferences
 			echo 'user<pre>';     print_r($this->user); echo "</pre>\n";
 			echo 'forced<pre>';   print_r($this->forced); echo "</pre>\n";
 			echo 'default<pre>';  print_r($this->default); echo "</pre>\n";
+			echo 'group<pre>';    print_r($this->group); echo "</pre>\n";
 			echo 'effectiv<pre>'; print_r($this->data); echo "</pre>\n";
 		}
 		$this->check_set_tz_offset();
@@ -471,7 +511,8 @@ class preferences
 		$set_via = array(
 			'forced'  => array('user','default'),
 			'default' => array('forced','user'),
-			'user'    => array('forced','default')
+			'user'    => array('forced','group','default'),
+			'group'   => array('forced'),
 		);
 		if (!isset($set_via[$type]))
 		{
@@ -523,7 +564,23 @@ class preferences
 	 */
 	function delete_user($accountid)
 	{
-		$this->delete($this->table,array('preference_owner' => $accountid),__LINE__,__FILE__);
+		if ($account_id > 0)
+		{
+			$this->delete($this->table,array('preference_owner' => $accountid),__LINE__,__FILE__);
+		}
+	}
+
+	/**
+	 * delete all prefs of a given group
+	 *
+	 * @param int $accountid
+	 */
+	function delete_group($accountid)
+	{
+		if ($account_id < 0)
+		{
+			$this->delete($this->table,array('preference_owner' => $accountid+self::DEFAULT_ID),__LINE__,__FILE__);
+		}
 	}
 
 	/**
@@ -624,6 +681,10 @@ class preferences
 			case 'default':
 				$account_id = self::DEFAULT_ID;
 				$prefs = &$this->default;
+				break;
+			case 'group':
+				$account_id = $GLOBALS['egw']->accounts->id2name($this->account_id,'account_primary_group')+self::DEFAULT_ID;
+				$prefs = &$this->group;
 				break;
 			default:
 				$account_id = (int)$this->account_id;

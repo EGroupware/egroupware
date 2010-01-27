@@ -18,6 +18,7 @@ $setup_info['preferences']['enable']    = 2;
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['preferences']['hooks']['deleteaccount'] = 'preferences_hooks::deleteaccount';
+$setup_info['preferences']['hooks']['deletegroup']   = 'preferences_hooks::deleteaccount';
 $setup_info['preferences']['hooks']['preferences']   = 'preferences_hooks::preferences';
 $setup_info['preferences']['hooks']['settings']      = 'preferences_hooks::settings';
 $setup_info['preferences']['hooks']['edit_user']     = 'preferences.uisettings.edit_user';
