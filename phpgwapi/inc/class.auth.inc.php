@@ -3,6 +3,7 @@
  * eGroupWare API - Authentication baseclass
  *
  * @link http://www.egroupware.org
+ * @author Ralf Becker <ralfbecker@outdoor-training.de>
  * @author Miles Lott <milos@groupwhere.org>
  * @copyright 2004 by Miles Lott <milos@groupwhere.org>
  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
@@ -22,7 +23,6 @@ if(empty($GLOBALS['egw_info']['server']['auth_type']))
 	$GLOBALS['egw_info']['server']['auth_type'] = 'sql';
 }
 //error_log('using auth_type='.$GLOBALS['egw_info']['server']['auth_type'].', currentapp='.$GLOBALS['egw_info']['flags']['currentapp']);
-include(EGW_API_INC.'/class.auth_'.$GLOBALS['egw_info']['server']['auth_type'].'.inc.php');
 
 /**
  * eGroupWare API - Authentication baseclass, password auth and crypt functions
@@ -32,10 +32,55 @@ include(EGW_API_INC.'/class.auth_'.$GLOBALS['egw_info']['server']['auth_type'].'
  *
  * Other functions from class.common.inc.php originally from phpGroupWare
  */
-class auth extends auth_
+class auth
 {
 	static $error;
+	
+	/**
+	 * Holds instance of backend
+	 * 
+	 * @var auth_backend
+	 */
+	private $backend;
+	
+	function __construct()
+	{
+		$backend_class = 'auth_'.$GLOBALS['egw_info']['server']['auth_type'];
+		
+		$this->backend = new $backend_class;
+		
+		if (!is_a($this->backend,'auth_backend'))
+		{
+			throw new egw_exception_assertion_failed("Auth backend class $backend_class is NO auth_backend!");
+		}
+	}
 
+	/**
+	 * password authentication against password stored in sql datababse
+	 *
+	 * @param string $username username of account to authenticate
+	 * @param string $passwd corresponding password
+	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @return boolean true if successful authenticated, false otherwise
+	 */
+	function authenticate($username, $passwd, $passwd_type='text')
+	{
+		return $this->backend->authenticate($username, $passwd, $passwd_type);
+	}
+	
+	/**
+	 * changes password in sql datababse
+	 *
+	 * @param string $old_passwd must be cleartext
+	 * @param string $new_passwd must be cleartext
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @return boolean true if password successful changed, false otherwise
+	 */
+	function change_password($old_passwd, $new_passwd, $account_id=0)
+	{
+		return $this->backend->change_password($old_passwd, $new_passwd, $account_id);
+	}
+	
 	/**
 	 * return a random string of size $size
 	 *
@@ -470,4 +515,30 @@ class auth extends auth_
 
 		return strcmp($md5_hmac,$db_val) == 0;
 	}
+}
+
+/**
+ * Interface for authentication backend
+ */
+interface auth_backend
+{
+	/**
+	 * password authentication against password stored in sql datababse
+	 *
+	 * @param string $username username of account to authenticate
+	 * @param string $passwd corresponding password
+	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @return boolean true if successful authenticated, false otherwise
+	 */
+	function authenticate($username, $passwd, $passwd_type='text');
+	
+	/**
+	 * changes password in sql datababse
+	 *
+	 * @param string $old_passwd must be cleartext
+	 * @param string $new_passwd must be cleartext
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @return boolean true if password successful changed, false otherwise
+	 */
+	function change_password($old_passwd, $new_passwd, $account_id=0);
 }

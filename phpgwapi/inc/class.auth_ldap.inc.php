@@ -3,11 +3,12 @@
  * eGroupWare API - LDAP Authentication
  *
  * @link http://www.egroupware.org
+ * @author Ralf Becker <ralfbecker@outdoor-training.de>
  * @author Lars Kneschke <lkneschke@linux-at-work.de>
  * @author Joseph Engo <jengo@phpgroupware.org>
  * Copyright (C) 2000, 2001 Joseph Engo
  * Copyright (C) 2002, 2003 Lars Kneschke
-  * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
+ * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
  * @package api
  * @subpackage authentication
  * @version $Id$
@@ -16,7 +17,7 @@
 /**
  * Authentication agains a LDAP Server
  */
-class auth_
+class auth_ldap implements auth_backend
 {
 	var $previous_login = -1;
 
@@ -27,13 +28,13 @@ class auth_
 	 * @param string $passwd corresponding password
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
-	function authenticate($username, $passwd)
+	function authenticate($username, $passwd, $passwd_type='text')
 	{
 		// allow non-ascii in username & password
-		$username = $GLOBALS['egw']->translation->convert($username,$GLOBALS['egw']->translation->charset(),'utf-8');
-		$passwd = $GLOBALS['egw']->translation->convert($passwd,$GLOBALS['egw']->translation->charset(),'utf-8');
+		$username = translation::convert($username,translation::charset(),'utf-8');
+		$passwd = translation::convert($passwd,translation::charset(),'utf-8');
 
-		if(!$ldap = $GLOBALS['egw']->common->ldapConnect())
+		if(!$ldap = common::ldapConnect())
 		{
 			$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
 			$GLOBALS['egw']->log->commit();
@@ -90,7 +91,7 @@ class auth_
 						) as $ldap_name => $acct_name)
 						{
 							$GLOBALS['auto_create_acct'][$acct_name] =
-								$GLOBALS['egw']->translation->convert($allValues[0][$ldap_name][0],'utf-8');
+								translation::convert($allValues[0][$ldap_name][0],'utf-8');
 						}
 						return True;
 					}
@@ -123,15 +124,15 @@ class auth_
 		}
 		else
 		{
-			$username = $GLOBALS['egw']->translation->convert($GLOBALS['egw']->accounts->id2name($account_id),
-				$GLOBALS['egw']->translation->charset(),'utf-8');
+			$username = translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
+				translation::charset(),'utf-8');
 		}
 		//echo "<p>auth_ldap::change_password('$old_password','$new_passwd',$account_id) username='$username'</p>\n";
 
 		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
 
-		$ds = $GLOBALS['egw']->common->ldapConnect();
+		$ds = common::ldapConnect();
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
 		$allValues = ldap_get_entries($ds, $sri);
 
@@ -142,7 +143,7 @@ class auth_
 
 		if($old_passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
 		{
-			$ds = $GLOBALS['egw']->common->ldapConnect('',$dn,$old_passwd);
+			$ds = common::ldapConnect('',$dn,$old_passwd);
 		}
 		if (!@ldap_modify($ds, $dn, $entry))
 		{

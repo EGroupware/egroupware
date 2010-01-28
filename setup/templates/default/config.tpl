@@ -218,6 +218,7 @@
       <option value="nis"{selected_auth_type_nis}>NIS</option>
       <option value="pam"{selected_auth_type_pam}>PAM</option>
       <option value="cas"{selected_auth_type_cas}>CAS</option>
+      <option value="fallback"{selected_auth_type_fallback}>Fallback LDAP -> SQL</option>
      </select>
     </td>
    </tr>
@@ -235,6 +236,7 @@
       <option value="http"{selected_auth_type_syncml_http}>HTTP</option>
       <option value="nis"{selected_auth_type_syncml_nis}>NIS</option>
       <option value="pam"{selected_auth_type_syncml_pam}>PAM</option>
+      <option value="fallback"{selected_auth_type_fallback}>Fallback LDAP -> SQL</option>
      </select>
     </td>
    </tr>
@@ -252,6 +254,7 @@
       <option value="http"{selected_auth_type_groupdav_http}>HTTP</option>
       <option value="nis"{selected_auth_type_groupdav_nis}>NIS</option>
       <option value="pam"{selected_auth_type_groupdav_pam}>PAM</option>
+      <option value="fallback"{selected_auth_type_fallback}>Fallback LDAP -> SQL</option>
      </select>
     </td>
    </tr>
