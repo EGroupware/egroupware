@@ -12,7 +12,7 @@
 /**
  * eGroupWare API - Authentication based on CAS (Central Authetication Service)
  */
-class auth_
+class auth_cas implements auth_backend
 {
 	var $previous_login = -1;
 
@@ -21,9 +21,10 @@ class auth_
 	 *
 	 * @param string $username username of account to authenticate
 	 * @param string $passwd corresponding password
+	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
-	function authenticate($username, $passwd)
+	function authenticate($username, $passwd, $passwd_type='text')
 	{
 		/* if program goes here, authenticate is, normaly, already verified by CAS */
 		if ($GLOBALS['egw_info']['server']['account_repository'] != 'ldap' &&
@@ -56,7 +57,7 @@ class auth_
 	 *
 	 * @param string $old_passwd must be cleartext or empty to not to be checked
 	 * @param string $new_passwd must be cleartext
-	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param int $account_id=0 account id of user whose passwd should be changed
 	 * @return boolean true if password successful changed, false otherwise
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)

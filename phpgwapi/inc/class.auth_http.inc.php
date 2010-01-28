@@ -1,47 +1,54 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare API - Auth from HTTP                                          *
-	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	* and Joseph Engo <jengo@phpgroupware.org>                                 *
-	* Authentication based on HTTP auth                                        *
-	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	* ------------------------------------------------------------------------ *
-	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org/api                                            *
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
+/**
+ * eGroupWare API - Authentication based on HTTP auth
+ *
+ * @link http://www.egroupware.org
+ * @author Dan Kuykendall <seek3r@phpgroupware.org>
+ * @author Joseph Engo <jengo@phpgroupware.org>
+ * Copyright (C) 2000, 2001 Dan Kuykendall
+ * @license http://opensource.org/licenses/lgpl-license.php LGPL - GNU Lesser General Public License
+ * @package api
+ * @subpackage authentication
+ * @version $Id$
+ */
 
-	/* $Id$ */
+/**
+ * Authentication based on HTTP auth
+ */
+class auth_http implements auth_backend
+{
+	var $previous_login = -1;
 
-	class auth_
+	/**
+	 * password authentication
+	 *
+	 * @param string $username username of account to authenticate
+	 * @param string $passwd corresponding password
+	 * @param string $passwd_type='text' 'text' for cleartext passwords (default)
+	 * @return boolean true if successful authenticated, false otherwise
+	 */
+	function authenticate($username, $passwd, $passwd_type='text')
 	{
-		var $previous_login = -1;
-
-		function authenticate($username, $passwd)
+		if (isset($_SERVER['PHP_AUTH_USER']))
 		{
-			if (isset($_SERVER['PHP_AUTH_USER']))
-			{
-				return True;
-			}
-			else
-			{
-				return False;
-			}
+			return True;
 		}
-
-		function change_password($old_passwd, $new_passwd)
+		else
 		{
 			return False;
 		}
 	}
+
+	/**
+	 * changes password
+	 *
+	 * @param string $old_passwd must be cleartext or empty to not to be checked
+	 * @param string $new_passwd must be cleartext
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @return boolean true if password successful changed, false otherwise
+	 */
+	function change_password($old_passwd, $new_passwd, $account_id=0)
+	{
+		return False;
+	}
+}

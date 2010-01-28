@@ -3,6 +3,7 @@
  * eGroupWare API - Authentication from SQL
  *
  * @link http://www.egroupware.org
+ * @author Ralf Becker <ralfbecker@outdoor-training.de>
  * @author Dan Kuykendall <seek3r@phpgroupware.org>
  * @author Joseph Engo <jengo@phpgroupware.org>
  * Copyright (C) 2000, 2001 Dan Kuykendall
@@ -20,7 +21,7 @@
  *
  * Massive code cleanup and added password migration by Cornelius Weiss <egw@von-und-zu-weiss.de
  */
-class auth_
+class auth_sql implements auth_backend
 {
 	/**
 	 * Reference to the global db object
@@ -31,7 +32,7 @@ class auth_
 	var $table = 'egw_accounts';
 	var $previous_login = -1;
 
-	function auth_()
+	function __construct()
 	{
 		$this->db = $GLOBALS['egw']->db;
 
@@ -141,7 +142,7 @@ class auth_
 		}
 
 		// old password ok, or admin called the function from the admin application (no old passwd available).
-		return $this->_update_passwd($this->encrypt_sql($new_passwd),$new_passwd,$account_id,$admin);
+		return $this->_update_passwd(auth::encrypt_sql($new_passwd),$new_passwd,$account_id,$admin);
 	}
 
 	/**
