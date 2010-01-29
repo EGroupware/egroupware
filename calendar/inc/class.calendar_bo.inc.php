@@ -525,7 +525,7 @@ class calendar_bo
 
 	/**
 	 * Get integration data for a given app of a part (value for a certain key) of it
-	 * 
+	 *
 	 * @param string $app
 	 * @param string $part
 	 * @return array
@@ -533,23 +533,23 @@ class calendar_bo
 	static function integration_get_data($app,$part=null)
 	{
 		static $integration_data;
-		
+
 		if (!isset($integration_data))
 		{
 			$integration_data = calendar_so::get_integration_data();
 		}
-		
+
 		if (!isset($integration_data[$app])) return null;
-		
+
 		return $part ? $integration_data[$app][$part] : $integration_data[$app];
 	}
-	
+
 	/**
 	 * Get private attribute for an integration event
-	 * 
+	 *
 	 * Attribute 'is_private' is either a boolean value, eg. false to make all events of $app public
 	 * or an ExecMethod callback with parameters $id,$event
-	 * 
+	 *
 	 * @param string $app
 	 * @param int|string $id
 	 * @return string
@@ -557,7 +557,7 @@ class calendar_bo
 	static function integration_get_private($app,$id,$event)
 	{
 		$app_data = self::integration_get_data($app,'is_private');
-		
+
 		// no method, fall back to link title
 		if (is_null($app_data))
 		{
@@ -660,22 +660,23 @@ class calendar_bo
 	 */
 	function set_recurrences($event,$start=0)
 	{
- 		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
+		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
 		{
 			$this->debug_message('bocal::set_recurrences(%1,%2)',true,$event,$start);
 		}
-		// check if the caller gave the event start and end times and if not read them from the DB
-		if (!isset($event['start']) || !isset($event['end']))
-		{
-			$event_read=$this->read($event['id']);
-			$event['start'] = $event_read['start'];
-			$event['end'] = $event_read['end'];
-		}
- 		// check if the caller gave the participants and if not read them from the DB
-		if (!isset($event['participants']))
+		// check if the caller gave us enough information and if not read it from the DB
+		if (!isset($event['participants']) || !isset($event['start']) || !isset($event['end']))
 		{
 			list(,$event_read) = each($this->so->read($event['id']));
-			$event['participants'] = $event_read['participants'];
+			if (!isset($event['participants']))
+			{
+				$event['participants'] = $event_read['participants'];
+			}
+			if (!isset($event['start']) || !isset($event['end']))
+			{
+				$event['start'] = $event_read['start'];
+				$event['end'] = $event_read['end'];
+			}
 		}
 		if (!$start) $start = $event['start'];
 
@@ -708,7 +709,6 @@ class calendar_bo
 		foreach($events as $id => &$event)
 		{
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
-			unset($event_timezone);
 			if (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id'])))
 			{
 				$event['tzid'] = egw_time::$server_timezone->getName();

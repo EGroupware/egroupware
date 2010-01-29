@@ -195,7 +195,7 @@ class calendar_sif extends calendar_boupdate
 	 * @param string $tzid TZID of event or 'UTC' or NULL for palmos timestamps in usertime
 	 * @return mixed attribute value to set: integer timestamp if $tzid == 'UTC' otherwise Ymd\THis string IN $tzid
 	 */
-	function getDateTime($time,$tzid)
+	function getDateTime($time, $tzid)
 	{
 		if (empty($tzid) || $tzid == 'UTC')
 		{
@@ -223,19 +223,10 @@ class calendar_sif extends calendar_boupdate
 		if ($this->tzid)
 		{
 			// enforce device settings
+			date_default_timezone_set($this->tzid);
 			$finalEvent['tzid'] = $this->tzid;
 		}
-		else
-		{
-			$finalEvent['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
-		}
-		#error_log($sifData);
 
-		#$tmpfname = tempnam('/tmp/sync/contents','sife_');
-
-		#$handle = fopen($tmpfname, "w");
-		#fwrite($handle, $sifData);
-		#fclose($handle);
 
 		$this->xml_parser = xml_parser_create('UTF-8');
 		xml_set_object($this->xml_parser, $this);
@@ -248,20 +239,24 @@ class calendar_sif extends calendar_boupdate
 			error_log(sprintf("XML error: %s at line %d",
 				xml_error_string(xml_get_error_code($this->xml_parser)),
 				xml_get_current_line_number($this->xml_parser)));
+			if ($this->tzid)
+			{
+				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+			}
 			return false;
 		}
-		#error_log(print_r($this->event, true));
 
 		foreach ($this->event as $key => $value)
 		{
 			$value = preg_replace('/<\!\[CDATA\[(.+)\]\]>/Usim', '$1', $value);
 			$value = $GLOBALS['egw']->translation->convert($value, 'utf-8', $sysCharSet);
+			/*
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					"() $key => $value\n",3,$this->logfile);
 			}
-
+			*/
 			switch ($key)
 			{
 				case 'alldayevent':
@@ -269,17 +264,17 @@ class calendar_sif extends calendar_boupdate
 					{
 						$finalEvent['whole_day'] = true;
 						$startParts = explode('-',$this->event['start']);
-						$finalEvent['start']['hour'] = $finalEvent['start']['minute'] = $finalEvent['start']['second'] = 0;
-						$finalEvent['start']['year'] = $startParts[0];
-						$finalEvent['start']['month'] = $startParts[1];
-						$finalEvent['start']['day'] = $startParts[2];
-						$finalEvent['start'] = $this->date2ts($finalEvent['start']);
+						$finalEvent['startdate']['hour'] = $finalEvent['startdate']['minute'] = $finalEvent['startdate']['second'] = 0;
+						$finalEvent['startdate']['year'] = $startParts[0];
+						$finalEvent['startdate']['month'] = $startParts[1];
+						$finalEvent['startdate']['day'] = $startParts[2];
+						$finalEvent['start'] = $this->date2ts($finalEvent['startdate']);
 						$endParts = explode('-',$this->event['end']);
-						$finalEvent['end']['hour'] = 23; $finalEvent['end']['minute'] = $finalEvent['end']['second'] = 59;
-						$finalEvent['end']['year'] = $endParts[0];
-						$finalEvent['end']['month'] = $endParts[1];
-						$finalEvent['end']['day'] = $endParts[2];
-						$finalEvent['end'] = $this->date2ts($finalEvent['end']);
+						$finalEvent['enddate']['hour'] = 23; $finalEvent['enddate']['minute'] = $finalEvent['enddate']['second'] = 59;
+						$finalEvent['enddate']['year'] = $endParts[0];
+						$finalEvent['enddate']['month'] = $endParts[1];
+						$finalEvent['enddate']['day'] = $endParts[2];
+						$finalEvent['end'] = $this->date2ts($finalEvent['enddate']);
 					}
 					break;
 
@@ -293,7 +288,7 @@ class calendar_sif extends calendar_boupdate
 						$categories1 = explode(',', $value);
 						$categories2 = explode(';', $value);
 						$categories = count($categories1) > count($categories2) ? $categories1 : $categories2;
-						$finalEvent[$key] = implode(',', $this->find_or_add_categories($categories, $_calID));
+						$finalEvent[$key] = $this->find_or_add_categories($categories, $_calID);
 					}
 					break;
 
@@ -321,7 +316,14 @@ class calendar_sif extends calendar_boupdate
 						$finalEvent['recur_data'] = 0;
 						if ($this->event['recur_noenddate'] == 0)
 						{
-							$finalEvent['recur_enddate'] = $this->vCalendar->_parseDateTime($this->event['recur_enddate']);
+							$recur_enddate = $this->vCalendar->_parseDateTime($this->event['recur_enddate']);
+							$finalEvent['recur_enddate'] = mktime(
+									date('H', 23),
+									date('i', 59),
+									date('s', 59),
+									date('m', $recur_enddate),
+									date('d', $recur_enddate),
+									date('Y', $recur_enddate));
 						}
 						switch ($this->event['recur_type'])
 						{
@@ -382,6 +384,15 @@ class calendar_sif extends calendar_boupdate
 			}
 		}
 
+		if ($this->calendarOwner) $finalEvent['owner'] = $this->calendarOwner;
+
+		if ($this->tzid)
+		{
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+		}
+
+		if ($_calID > 0) $finalEvent['id'] = $_calID;
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
@@ -393,14 +404,15 @@ class calendar_sif extends calendar_boupdate
 
 	function search($_sifdata, $contentID=null, $relax=false)
 	{
-		$result = false;
+		$result = array();
+		$filter = $relax ? 'relax' : 'exact';
 
 		if ($event = $this->siftoegw($_sifdata, $contentID))
 		{
 			if ($contentID) {
 				$event['id'] = $contentID;
 			}
-			$result = $this->find_event($event, $relax);
+			$result = $this->find_event($event, $filter);
 		}
 		return $result;
 	}
@@ -410,9 +422,11 @@ class calendar_sif extends calendar_boupdate
 	* @param string	$_sifdata   the SIFE data
 	* @param int	$_calID=-1	the internal addressbook id
 	* @param boolean $merge=false	merge data with existing entry
+	* @param int $recur_date=0 if set, import the recurrence at this timestamp,
+	*                          default 0 => import whole series (or events, if not recurring)
 	* @desc import a SIFE into the calendar
 	*/
-	function addSIF($_sifdata, $_calID=-1, $merge=false)
+	function addSIF($_sifdata, $_calID=-1, $merge=false, $recur_date=0)
 	{
 		if ($this->log)
 		{
@@ -424,24 +438,167 @@ class calendar_sif extends calendar_boupdate
 			return false;
 		}
 
-		if (isset($event['alarm']))
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
-			$alarmData = array();
-			$alarmData['offset'] = $event['alarm'] * 60;
-			$alarmData['time']	= $event['start'] - $alarmData['offset'];
-			$alarmData['owner']	= $this->user;
-			$alarmData['all']	= false;
-			$event['alarm'] = $alarmData;
+			// Adjust the event start -- no exceptions before and at the start
+			$length = $event['end'] - $event['start'];
+			$rriter = calendar_rrule::event2rrule($event, false);
+			$rriter->rewind();
+			if (!$rriter->valid()) continue; // completely disolved into exceptions
+
+			$newstart = egw_time::to($rriter->current, 'server');
+			if ($newstart != $event['start'])
+			{
+				// leading exceptions skiped
+				$event['start'] = $newstart;
+				$event['end'] = $newstart + $length;
+			}
+
+			$exceptions = $event['recur_exception'];
+			foreach($exceptions as $key => $day)
+			{
+				// remove leading exceptions
+				if ($day <= $event['start'])
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							'(): event SERIES-MASTER skip leading exception ' .
+							$day . "\n",3,$this->logfile);
+					}
+					unset($exceptions[$key]);
+				}
+			}
+			$event['recur_exception'] = $exceptions;
 		}
 
-		if ($_calID > 0 && ($storedEvent = $this->read($_calID)))
+		if ($recur_date) $event['recurrence'] = $recur_date;
+		$event_info = $this->get_event_info($event);
+
+		// common adjustments for existing events
+		if (is_array($event_info['stored_event']))
 		{
-			// update entry
-			$event['id'] = $_calID;
-			// delete existing alarms
-			if (count($storedEvent['alarm']) > 0)
+			if (empty($event['uid']))
 			{
-				foreach ($storedEvent['alarm'] as $alarm_id => $alarm_data)
+				$event['uid'] = $event_info['stored_event']['uid']; // restore the UID if it was not delivered
+			}
+			if ($merge)
+			{
+				// overwrite with server data for merge
+				foreach ($event_info['stored_event'] as $key => $value)
+				{
+					if (!empty($value))	$event[$key] = $value;
+				}
+			}
+			else
+			{
+				// not merge
+				// SIF clients do not support participants => add them back
+				$event['participants'] = $event_info['stored_event']['participants'];
+				$event['participant_types'] = $event_info['stored_event']['participant_types'];
+				if ($event['whole_day'] && $event['tzid'] != $event_info['stored_event']['tzid'])
+				{
+					if (!isset(self::$tz_cache[$event_info['stored_event']['tzid']]))
+					{
+						self::$tz_cache[$event_info['stored_event']['tzid']] =
+							calendar_timezones::DateTimeZone($event_info['stored_event']['tzid']);
+					}
+					// Adjust dates to original TZ
+					$time = new egw_time($event['startdate'],self::$tz_cache[$event_info['stored_event']['tzid']]);
+					$event['start'] = egw_time::to($time, 'server');
+					$time = new egw_time($event['enddate'],self::$tz_cache[$event_info['stored_event']['tzid']]);
+					$event['end'] = egw_time::to($time, 'server');
+					if ($event['recur_type'] != MCAL_RECUR_NONE)
+					{
+						foreach ($event['recur_exception'] as $key => $day)
+						{
+							$time = new egw_time($day,egw_time::$server_timezone);
+							$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
+							$event['recur_exception'][$key] = egw_time::to($time,'server');
+						}
+					}
+				}
+
+				calendar_rrule::rrule2tz($event, $event_info['stored_event']['start'],
+					$event_info['stored_event']['tzid']);
+
+				$event['tzid'] = $event_info['stored_event']['tzid'];
+				// avoid that iCal changes the organizer, which is not allowed
+				$event['owner'] = $event_info['stored_event']['owner'];
+			}
+		}
+		else // common adjustments for new events
+		{
+			// set non blocking all day depending on the user setting
+			if (isset($event['whole_day'])
+				&& $event['whole_day']
+				&& $this->nonBlockingAllday)
+			{
+				$event['non_blocking'] = 1;
+			}
+
+			// check if an owner is set and the current user has add rights
+			// for that owners calendar; if not set the current user
+			if (!isset($event['owner'])
+					|| !$this->check_perms(EGW_ACL_ADD, 0, $event['owner']))
+			{
+				$event['owner'] = $this->user;
+			}
+
+			$status = $event['owner'] == $this->user ? 'A' : 'U';
+			$status = calendar_so::combine_status($status, 1, 'CHAIR');
+			$event['participants'] = array($event['owner'] => $status);
+		}
+
+		unset($event['startdate']);
+		unset($event['enddate']);
+
+		$alarmData = array();
+		if (isset($event['alarm']))
+		{
+			$alarmData['offset'] = $event['alarm'] * 60;
+			$alarmData['time'] = $event['start'] - $alarmData['offset'];
+			$alarmData['owner']	= $this->user;
+			$alarmData['all'] = false;
+		}
+
+		// update alarms depending on the given event type
+		if (!empty($alarmData) || isset($this->supportedFields['alarm']))
+		{
+			switch ($event_info['type'])
+			{
+				case 'SINGLE':
+				case 'SERIES-MASTER':
+				case 'SERIES-EXCEPTION':
+				case 'SERIES-EXCEPTION-PROPAGATE':
+					if (isset($event['alarm']))
+					{
+						if (is_array($event_info['stored_event'])
+								&& count($event_info['stored_event']['alarm']) > 0)
+						{
+							foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
+							{
+								if ($alarmData['time'] == $alarm_data['time'] &&
+									($alarm_data['all'] || $alarm_data['owner'] == $this->user))
+								{
+									unset($alarmData);
+									unset($event_info['stored_event']['alarm'][$alarm_id]);
+									break;
+								}
+							}
+							if (isset($alarmData)) $event['alarm'][] = $alarmData;
+						}
+					}
+					break;
+
+				case 'SERIES-PSEUDO-EXCEPTION':
+					// nothing to do here
+					break;
+			}
+			if (is_array($event_info['stored_event'])
+					&& count($event_info['stored_event']['alarm']) > 0)
+			{
+				foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
 				{
 					// only touch own alarms
 					if ($alarm_data['all'] == false && $alarm_data['owner'] == $this->user)
@@ -451,327 +608,609 @@ class calendar_sif extends calendar_boupdate
 				}
 			}
 		}
-		else
+
+		// save event depending on the given event type
+		switch ($event_info['type'])
 		{
-			if (isset($event['whole_day'])
-				&& $event['whole_day']
-				&& $this->nonBlockingAllday)
-			{
-				$event['non_blocking'] = 1;
-			}
+			case 'SINGLE':
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						"(): event SINGLE\n",3,$this->logfile);
+				}
+
+				// update the event
+				if ($event_info['acl_edit'])
+				{
+					// Force SINGLE
+					unset($event['recurrence']);
+					$event['reference'] = 0;
+					$event_to_store = $event; // prevent $event from being changed by the update method
+					$updated_id = $this->update($event_to_store, true);
+					unset($event_to_store);
+				}
+				break;
+
+			case 'SERIES-MASTER':
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						"(): event SERIES-MASTER\n",3,$this->logfile);
+				}
+
+				// remove all known pseudo exceptions and update the event
+				if ($event_info['acl_edit'])
+				{
+					$days = $this->so->get_recurrence_exceptions($event_info['stored_event'], $this->tzid, 0, 0, 'tz_map');
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(EXCEPTIONS MAPPING):\n" .
+							array2string($days)."\n",3,$this->logfile);
+					}
+					if (is_array($days))
+					{
+						$exceptions = array();
+						foreach ($event['recur_exception'] as $recur_exception)
+						{
+							if (isset($days[$recur_exception]))
+							{
+								$exceptions[] = $days[$recur_exception];
+							}
+						}
+						$event['recur_exception'] = $exceptions;
+					}
+
+					$event_to_store = $event; // prevent $event from being changed by the update method
+					$updated_id = $this->update($event_to_store, true);
+					unset($event_to_store);
+				}
+				break;
+
+			case 'SERIES-EXCEPTION':
+			case 'SERIES-EXCEPTION-PROPAGATE':
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						"(): event SERIES-EXCEPTION\n",3,$this->logfile);
+				}
+
+				// update event
+				if ($event_info['acl_edit'])
+				{
+					if (isset($event_info['stored_event']['id']))
+					{
+						// We update an existing exception
+						$event['id'] = $event_info['stored_event']['id'];
+						$event['category'] = $event_info['stored_event']['category'];
+					}
+					else
+					{
+						// We create a new exception
+						unset($event['id']);
+						unset($event_info['stored_event']);
+						$event['recur_type'] = MCAL_RECUR_NONE;
+						$event_info['master_event']['recur_exception'] =
+							array_unique(array_merge($event_info['master_event']['recur_exception'],
+								array($event['recurrence'])));
+
+						// Adjust the event start -- must not be an exception
+						$length = $event_info['master_event']['end'] - $event_info['master_event']['start'];
+						$rriter = calendar_rrule::event2rrule($event_info['master_event'], false);
+						$rriter->rewind();
+						if ($rriter->valid())
+						{
+							$newstart = egw_time::to($rriter->current, 'server');
+							foreach($event_info['master_event']['recur_exception'] as $key => $day)
+							{
+								// remove leading exceptions
+								if ($day < $newstart)
+								{
+									unset($event_info['master_event']['recur_exception'][$key]);
+								}
+							}
+						}
+						if ($event_info['master_event']['start'] < $newstart)
+						{
+							$event_info['master_event']['start'] = $newstart;
+							$event_info['master_event']['end'] = $newstart + $length;
+							$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
+							$this->server2usertime($event_to_store);
+							$this->update($event_to_store, true);
+							unset($event_to_store);
+						}
+						$event['reference'] = $event_info['master_event']['id'];
+						$event['category'] = $event_info['master_event']['category'];
+						$event['owner'] = $event_info['master_event']['owner'];
+					}
+
+					$event_to_store = $event; // prevent $event from being changed by update method
+					$updated_id = $this->update($event_to_store, true);
+					unset($event_to_store);
+				}
+				break;
+
+			case 'SERIES-PSEUDO-EXCEPTION':
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						"(): event SERIES-PSEUDO-EXCEPTION\n",3,$this->logfile);
+				}
+
+				if ($event_info['acl_edit'])
+				{
+					// truncate the status only exception from the series master
+					$recur_exceptions = array();
+					foreach ($event_info['master_event']['recur_exception'] as $recur_exception)
+					{
+						if ($recur_exception != $event['recurrence'])
+						{
+							$recur_exceptions[] = $recur_exception;
+						}
+					}
+					$event_info['master_event']['recur_exception'] = $recur_exceptions;
+
+					// save the series master with the adjusted exceptions
+					$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
+					$updated_id = $this->update($event_to_store, true, true, false, false);
+					unset($event_to_store);
+				}
 		}
 
-		$eventID = $this->update($event, true);
-
-		if ($eventID && $this->log)
+		// read stored event into info array for fresh stored (new) events
+		if (!is_array($event_info['stored_event']) && $updated_id > 0)
 		{
-			$storedEvent = $this->read($eventID);
+			$event_info['stored_event'] = $this->read($updated_id);
+		}
+
+		// choose which id to return to the client
+		switch ($event_info['type'])
+		{
+			case 'SINGLE':
+			case 'SERIES-MASTER':
+			case 'SERIES-EXCEPTION':
+				$return_id = $updated_id;
+				break;
+
+			case 'SERIES-PSEUDO-EXCEPTION':
+				$return_id = is_array($event_info['master_event']) ? $event_info['master_event']['id'] . ':' . $event['recurrence'] : false;
+				break;
+
+			case 'SERIES-EXCEPTION-PROPAGATE':
+				if ($event_info['acl_edit'] && is_array($event_info['stored_event']))
+				{
+					// we had sufficient rights to propagate the status only exception to a real one
+					$return_id = $event_info['stored_event']['id'];
+				}
+				else
+				{
+					// we did not have sufficient rights to propagate the status only exception to a real one
+					// we have to keep the SERIES-PSEUDO-EXCEPTION id and keep the event untouched
+					$return_id = $event_info['master_event']['id'] . ':' . $event['recurrence'];
+				}
+				break;
+		}
+
+		if ($this->log)
+		{
+			$recur_date = $this->date2usertime($event_info['stored_event']['start']);
+			$event_info['stored_event'] = $this->read($event_info['stored_event']['id'], $recur_date);
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
-				array2string($storedEvent)."\n",3,$this->logfile);
+				array2string($event_info['stored_event'])."\n",3,$this->logfile);
 		}
 
-		return $eventID;
+		return $return_id;
 	}
 
 	/**
 	* return a sife
 	*
 	* @param int	$_id		the id of the event
+	* @param int $recur_date=0	if set export the next recurrence at or after the timestamp,
+	*                          	default 0 => export whole series (or events, if not recurring)
 	* @return string containing the SIFE
 	*/
-	function getSIF($_id)
+	function getSIF($_id, $recur_date=0)
 	{
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+			"($_id, $recur_date)\n",3,$this->logfile);
+		}
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
 		$fields = array_unique(array_values($this->sifMapping));
 		sort($fields);
+		$tzid = null;
 
-		#$event = $this->read($_id,null,false,'server');
-		#error_log("FOUND EVENT: ". print_r($event, true));
-
-		if (($event = $this->read($_id,null,false,'server')))
+		if (!($event = $this->read($_id, $recur_date, false, 'server')))
 		{
-			if ($this->log)
+			if ($this->read($_id, $recur_date, true, 'server'))
 			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
-					array2string($event)."\n",3,$this->logfile);
-			}
-			if ($this->uidExtension)
-			{
-				if (!preg_match('/\[UID:.+\]/m', $event['description']))
+				$retval = -1; // Permission denied
+				if($this->xmlrpc)
 				{
-					$event['description'] .= "\n[UID:" . $event['uid'] . "]";
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],
+						$GLOBALS['xmlrpcstr']['no_access']);
 				}
-			}
-
-			if ($this->tzid === false)
-			{
-				$tzid = null;
-			}
-			elseif ($this->tzid)
-			{
-				$tzid = $this->tzid;
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						"() User does not have the permission to read event $_id.\n",
+						3,$this->logfile);
+				}
 			}
 			else
 			{
-				$tzid = $event['tzid'];
-			}
-			if ($tzid && $tzid != 'UTC')
-			{
-				if (!isset(self::$tz_cache[$tzid]))
+				$retval = false;  // Entry does not exist
+				if ($this->log)
 				{
-					self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						"() Event $_id not found.\n",3,$this->logfile);
 				}
 			}
-			if (!isset(self::$tz_cache[$event['tzid']]))
+			return $retval;
+		}
+
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($event)."\n",3,$this->logfile);
+		}
+
+		if ($this->tzid)
+		{
+			// explicit device timezone
+			$tzid = $this->tzid;
+		}
+		else
+		{
+			// use event's timezone
+			$tzid = $event['tzid'];
+		}
+
+		if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
+
+		if ($tzid)
+		{
+			if (!isset(self::$tz_cache[$tzid]))
 			{
-				self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+				self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
 			}
+		}
+		if (!isset(self::$tz_cache[$event['tzid']]))
+		{
+			self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+		}
 
-			$sifEvent = self::xml_decl . "<appointment>" . self::SIF_decl;
-
-			foreach ($this->sifMapping as $sifField => $egwField)
+		if ($recur_date && ($master = $this->read($_id, 0, true, 'server')))
+		{
+			$days = $this->so->get_recurrence_exceptions($master, $tzid, 0, 0, 'tz_rrule');
+			if (isset($days[$recur_date]))
 			{
-				if (empty($egwField)) continue;
-
-				#error_log("$sifField => $egwField");
-				#error_log('VALUE1: '.$event[$egwField]);
-				$value = $GLOBALS['egw']->translation->convert($event[$egwField], $sysCharSet, 'utf-8');
-				#error_log('VALUE2: '.$value);
-
-				switch ($sifField)
+				$recur_date = $days[$recur_date]; // use remote representation
+			}
+			else
+			{
+				if ($this->log)
 				{
-					case 'Importance':
-						$value = $value-1;
-						$sifEvent .= "<$sifField>$value</$sifField>";
-						break;
-
-					case 'RecurrenceType':
-					case 'Interval':
-					case 'PatternStartDate':
-					case 'NoEndDate':
-					case 'DayOfWeekMask':
-					case 'PatternEndDate':
-						break;
-
-					case 'IsRecurring':
-						if ($event['recur_type'] == MCAL_RECUR_NONE)
-						{
-							$sifEvent .= "<$sifField>0</$sifField>";
-							break;
-						}
-						if ($event['recur_enddate'] == 0)
-						{
-							$sifEvent .= '<NoEndDate>1</NoEndDate>';
-						}
-						else
-						{
-							$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
-							// all calculations in the event's timezone
-							$time->setTimezone(self::$tz_cache[$event['tzid']]);
-							$time->setTime(23, 59, 59);
-							$recurEndDate = $this->date2ts($time);
-							$sifEvent .= '<NoEndDate>0</NoEndDate>';
-							$sifEvent .= '<PatternEndDate>'. $this->vCalendar->_exportDateTime($recurEndDate) .'</PatternEndDate>';
-						}
-						$time = new egw_time($event['start'],egw_time::$server_timezone);
-						// all calculations in the event's timezone
-						$time->setTimezone(self::$tz_cache[$event['tzid']]);
-						$time->setTime(0, 0, 0);
-						$recurStartDate = $this->date2ts($time);
-						$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
-						switch ($event['recur_type'])
-						{
-
-							case MCAL_RECUR_DAILY:
-								$sifEvent .= "<$sifField>1</$sifField>";
-								$sifEvent .= '<RecurrenceType>'. self::olRecursDaily .'</RecurrenceType>';
-								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-								$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
-								if ($event['recur_enddate'])
-								{
-									$totalDays = ($recurEndDate - $recurStartDate) / 86400;
-									$occurrences = ceil($totalDays / $eventInterval);
-									$sifEvent .= '<Occurrences>'. $occurrences .'</Occurrences>';
-								}
-								break;
-
-							case MCAL_RECUR_WEEKLY:
-								$sifEvent .= "<$sifField>1</$sifField>";
-								$sifEvent .= '<RecurrenceType>'. self::olRecursWeekly .'</RecurrenceType>';
-								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-								$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
-								$sifEvent .= '<DayOfWeekMask>'. $event['recur_data'] .'</DayOfWeekMask>';
-								if ($event['recur_enddate'])
-								{
-									$daysPerWeek = substr_count(decbin($event['recur_data']),'1');
-									$totalWeeks = floor(($recurEndDate - $recurStartDate) / (86400*7));
-									$occurrences = ($totalWeeks / $eventInterval) * $daysPerWeek;
-									for($i = $recurEndDate; $i > $recurStartDate + ($totalWeeks * 86400*7); $i = $i - 86400)
-									{
-										switch (date('w', $i-1))
-										{
-											case 0:
-												if ($event['recur_data'] & 1) $occurrences++;
-												break;
-											// monday
-											case 1:
-												if ($event['recur_data'] & 2) $occurrences++;
-												break;
-											case 2:
-												if ($event['recur_data'] & 4) $occurrences++;
-												break;
-											case 3:
-												if ($event['recur_data'] & 8) $occurrences++;
-												break;
-											case 4:
-												if ($event['recur_data'] & 16) $occurrences++;
-												break;
-											case 5:
-												if ($event['recur_data'] & 32) $occurrences++;
-												break;
-											case 6:
-												if ($event['recur_data'] & 64) $occurrences++;
-												break;
-										}
-									}
-									$sifEvent .= '<Occurrences>'. $occurrences .'</Occurrences>';
-								}
-								break;
-
-							case MCAL_RECUR_MONTHLY_MDAY:
-								$sifEvent .= "<$sifField>1</$sifField>";
-								$sifEvent .= '<RecurrenceType>'. self::olRecursMonthly .'</RecurrenceType>';
-								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-								$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
-								break;
-
-							case MCAL_RECUR_MONTHLY_WDAY:
-								$weekMaskMap = array('Sun' => self::olSunday, 'Mon' => self::olMonday, 'Tue' => self::olTuesday,
-													 'Wed' => self::olWednesday, 'Thu' => self::olThursday, 'Fri' => self::olFriday,
-													 'Sat' => self::olSaturday);
-								$sifEvent .= "<$sifField>1</$sifField>";
-								$sifEvent .= '<RecurrenceType>'. self::olRecursMonthNth .'</RecurrenceType>';
-								$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-								$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
-								$sifEvent .= '<Instance>' . (1 + (int) ((date('d',$event['start'])-1) / 7)) . '</Instance>';
-								$sifEvent .= '<DayOfWeekMask>' . $weekMaskMap[date('D',$event['start'])] . '</DayOfWeekMask>';
-								break;
-
-							case MCAL_RECUR_YEARLY:
-								$sifEvent .= "<$sifField>1</$sifField>";
-								$sifEvent .= '<RecurrenceType>'. self::olRecursYearly .'</RecurrenceType>';
-								break;
-						}
-						if (is_array($event['recur_exception']))
-						{
-							$sifEvent .= '<Exceptions>';
-							foreach ($event['recur_exception'] as $day)
-							{
-								if ($this->isWholeDay($event))
-								{
-									$time = new egw_time($day,egw_time::$server_timezone);
-									$time->setTimezone(self::$tz_cache[$tzid]);
-									$sifEvent .= '<ExcludeDate>' . $time->format('Y-m-d') . '</ExcludeDate>';
-								}
-								else
-								{
-									$sifEvent .= '<ExcludeDate>' . self::getDateTime($day,$tzid) . '</ExcludeDate>';
-								}
-							}
-							$sifEvent .= '</Exceptions>';
-						}
-						break;
-
-					case 'Sensitivity':
-						$value = (!$value ? '2' : '0');
-						$sifEvent .= "<$sifField>$value</$sifField>";
-						break;
-
-					case 'Folder':
-						# skip currently. This is the folder where Outlook stores the contact.
-						#$sifEvent .= "<$sifField>/</$sifField>";
-						break;
-
-					case 'AllDayEvent':
-					case 'End':
-						// get's handled by Start clause
-						break;
-
-					case 'Start':
-						if ($this->isWholeDay($event))
-						{
-							$time = new egw_time($event['start'],egw_time::$server_timezone);
-							$time->setTimezone(self::$tz_cache[$tzid]);
-							$sifEvent .= '<Start>' . $time->format('Y-m-d') . '</Start>';
-							$time = new egw_time($event['end'],egw_time::$server_timezone);
-							$time->setTimezone(self::$tz_cache[$tzid]);
-							$sifEvent .= '<End>' . $time->format('Y-m-d') . '</End>';
-							$sifEvent .= "<AllDayEvent>1</AllDayEvent>";
-						}
-						else
-						{
-							$sifEvent .= '<Start>' . self::getDateTime($event['start'],$tzid) . '</Start>';
-							$sifEvent .= '<End>' . self::getDateTime($event['end'],$tzid) . '</End>';
-							$sifEvent .= "<AllDayEvent>0</AllDayEvent>";
-						}
-						break;
-
-					case 'ReminderMinutesBeforeStart':
-						break;
-
-					case 'ReminderSet':
-						if (count((array)$event['alarm']) > 0)
-						{
-							$sifEvent .= "<$sifField>1</$sifField>";
-							foreach ($event['alarm'] as $alarmID => $alarmData)
-							{
-								$sifEvent .= '<ReminderMinutesBeforeStart>'. $alarmData['offset']/60 .'</ReminderMinutesBeforeStart>';
-								// lets take only the first alarm
-								break;
-							}
-						}
-						else
-						{
-							$sifEvent .= "<$sifField>0</$sifField>";
-						}
-						break;
-
-					case 'Categories':
-						if (!empty($value) && ($values = $this->get_categories($value)))
-						{
-							$value = implode(', ', $values);
-							$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
-						}
-						else
-						{
-							break;
-						}
-
-					default:
-						$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
-						$sifEvent .= "<$sifField>$value</$sifField>";
-						break;
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						"($_id, $recur_date) Unsupported status only exception, skipped ...\n",
+						3,$this->logfile);
 				}
+				return false; // unsupported pseudo exception
 			}
-			$sifEvent .= "</appointment>";
-
+			/*
+			$time = new egw_time($master['start'], egw_time::$server_timezone);
+			$time->setTimezone(self::$tz_cache[$tzid]);
+			$first_start = $time->format('His');
+			$time = new egw_time($event['start'], egw_time::$server_timezone);
+			$time->setTimezone(self::$tz_cache[$tzid]);
+			$recur_start = $time->format('His');
+			if ($first_start == $recur_start) return false; // Nothing to export
+			*/
+			$event['recur_type'] = MCAL_RECUR_NONE;
+		}
+		elseif (!$recur_date &&
+			$event['recur_type'] != MCAL_RECUR_NONE &&
+			!isset($event['whole_day'])) // whole-day events are not shifted
+		{
+			// Add the timezone transition related pseudo exceptions
+			$exceptions = $this->so->get_recurrence_exceptions($event, $tzid, 0, 0, 'tz_rrule');
 			if ($this->log)
 			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
-					"() '$this->productName','$this->productSoftwareVersion'\n",3,$this->logfile);
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
-					"()\n".array2string($sifEvent)."\n",3,$this->logfile);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(EXCEPTIONS)\n" .
+					array2string($exceptions)."\n",3,$this->logfile);
 			}
+			$event['recur_exception'] = $exceptions;
+			// Adjust the event start -- must not be an exception
+			$length = $event['end'] - $event['start'];
+			$rriter = calendar_rrule::event2rrule($event, false, $tzid);
+			$rriter->rewind();
+			if (!$rriter->valid()) return false; // completely disolved into exceptions
 
-			return $sifEvent;
+			$event['start'] = egw_time::to($rriter->current, 'server');
+			$event['end'] = $event['start'] + $length;
+			foreach($exceptions as $key => $day)
+			{
+				// remove leading exceptions
+				if ($day <= $event['start']) unset($exceptions[$key]);
+			}
+			$event['recur_exception'] = $exceptions;
+			calendar_rrule::rrule2tz($event, $event['start'], $tzid);
 		}
 
-		if($this->xmlrpc)
+		if ($this->uidExtension)
 		{
-			$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			if (!preg_match('/\[UID:.+\]/m', $event['description']))
+			{
+				$event['description'] .= "\n[UID:" . $event['uid'] . "]";
+			}
 		}
-		return False;
+
+		$sifEvent = self::xml_decl . "<appointment>" . self::SIF_decl;
+
+		foreach ($this->sifMapping as $sifField => $egwField)
+		{
+			if (empty($egwField)) continue;
+
+			$value = $GLOBALS['egw']->translation->convert($event[$egwField], $sysCharSet, 'utf-8');
+
+			switch ($sifField)
+			{
+				case 'Importance':
+					$value = $value-1;
+					$sifEvent .= "<$sifField>$value</$sifField>";
+					break;
+
+				case 'RecurrenceType':
+				case 'Interval':
+				case 'PatternStartDate':
+				case 'NoEndDate':
+				case 'DayOfWeekMask':
+				case 'PatternEndDate':
+					break;
+
+				case 'IsRecurring':
+					if ($event['recur_type'] == MCAL_RECUR_NONE)
+					{
+						$sifEvent .= "<$sifField>0</$sifField>";
+						break;
+					}
+					if ($event['recur_enddate'] == 0)
+					{
+						$sifEvent .= '<NoEndDate>1</NoEndDate>';
+					}
+					else
+					{
+						$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
+						// all calculations in the event's timezone
+						$time->setTimezone(self::$tz_cache[$event['tzid']]);
+						$time->setTime(23, 59, 59);
+
+						if ($tzid)
+						{
+							$time->setTimezone(self::$tz_cache[$tzid]);
+						}
+						else
+						{
+							$time->setTimezone(egw_time::$user_timezone);
+						}
+						$recurEndDate = egw_time::to($time,'server');
+						$sifEvent .= '<NoEndDate>0</NoEndDate>';
+						$sifEvent .= '<PatternEndDate>'. $this->vCalendar->_exportDateTime($recurEndDate) .'</PatternEndDate>';
+					}
+
+					$time = new egw_time($event['start'],egw_time::$server_timezone);
+
+					// all calculations in the event's timezone
+					$time->setTimezone(self::$tz_cache[$event['tzid']]);
+					$time->setTime(0, 0, 0);
+
+					if ($tzid)
+					{
+						$time->setTimezone(self::$tz_cache[$tzid]);
+					}
+					else
+					{
+						$time->setTimezone(egw_time::$user_timezone);
+					}
+					$recurStartDate = egw_time::to($time,'server');
+					$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
+
+					switch ($event['recur_type'])
+					{
+
+						case MCAL_RECUR_DAILY:
+							$sifEvent .= "<$sifField>1</$sifField>";
+							$sifEvent .= '<RecurrenceType>'. self::olRecursDaily .'</RecurrenceType>';
+							$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
+							$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+							if ($event['recur_enddate'])
+							{
+								$totalDays = ($recurEndDate - $recurStartDate) / 86400;
+								$occurrences = ceil($totalDays / $eventInterval);
+								$sifEvent .= '<Occurrences>'. $occurrences .'</Occurrences>';
+							}
+							break;
+
+						case MCAL_RECUR_WEEKLY:
+							$sifEvent .= "<$sifField>1</$sifField>";
+							$sifEvent .= '<RecurrenceType>'. self::olRecursWeekly .'</RecurrenceType>';
+							$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
+							$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+							$sifEvent .= '<DayOfWeekMask>'. $event['recur_data'] .'</DayOfWeekMask>';
+							if ($event['recur_enddate'])
+							{
+								$daysPerWeek = substr_count(decbin($event['recur_data']),'1');
+								$totalWeeks = floor(($recurEndDate - $recurStartDate) / (86400*7));
+								$occurrences = ceil($totalWeeks / $eventInterval) * $daysPerWeek;
+								for($i = $recurEndDate; $i > $recurStartDate + ($totalWeeks * 86400*7); $i = $i - 86400)
+								{
+									switch (date('w', $i-1))
+									{
+										case 0:
+											if ($event['recur_data'] & 1) $occurrences++;
+											break;
+											// monday
+										case 1:
+											if ($event['recur_data'] & 2) $occurrences++;
+											break;
+										case 2:
+											if ($event['recur_data'] & 4) $occurrences++;
+											break;
+										case 3:
+											if ($event['recur_data'] & 8) $occurrences++;
+											break;
+										case 4:
+											if ($event['recur_data'] & 16) $occurrences++;
+											break;
+										case 5:
+											if ($event['recur_data'] & 32) $occurrences++;
+											break;
+										case 6:
+											if ($event['recur_data'] & 64) $occurrences++;
+											break;
+									}
+								}
+								$sifEvent .= '<Occurrences>'. $occurrences .'</Occurrences>';
+							}
+							break;
+
+						case MCAL_RECUR_MONTHLY_MDAY:
+							$sifEvent .= "<$sifField>1</$sifField>";
+							$sifEvent .= '<RecurrenceType>'. self::olRecursMonthly .'</RecurrenceType>';
+							$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
+							$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+							break;
+
+						case MCAL_RECUR_MONTHLY_WDAY:
+							$weekMaskMap = array('Sun' => self::olSunday, 'Mon' => self::olMonday, 'Tue' => self::olTuesday,
+								'Wed' => self::olWednesday, 'Thu' => self::olThursday, 'Fri' => self::olFriday,
+								'Sat' => self::olSaturday);
+							$sifEvent .= "<$sifField>1</$sifField>";
+							$sifEvent .= '<RecurrenceType>'. self::olRecursMonthNth .'</RecurrenceType>';
+							$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
+							$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+							$sifEvent .= '<Instance>' . (1 + (int) ((date('d',$event['start'])-1) / 7)) . '</Instance>';
+							$sifEvent .= '<DayOfWeekMask>' . $weekMaskMap[date('D',$event['start'])] . '</DayOfWeekMask>';
+							break;
+
+						case MCAL_RECUR_YEARLY:
+							$sifEvent .= "<$sifField>1</$sifField>";
+							$sifEvent .= '<RecurrenceType>'. self::olRecursYearly .'</RecurrenceType>';
+							break;
+					}
+					if (is_array($event['recur_exception']))
+					{
+						$sifEvent .= '<Exceptions>';
+						foreach ($event['recur_exception'] as $day)
+						{
+							if (isset($event['whole_day']))
+							{
+								if (!is_a($day,'DateTime'))
+								{
+									$day = new egw_time($day,egw_time::$server_timezone);
+									$day->setTimezone(self::$tz_cache[$event['tzid']]);
+								}
+								$sifEvent .= '<ExcludeDate>' . $day->format('Y-m-d') . '</ExcludeDate>';
+							}
+							else
+							{
+								if ($this->log && is_a($day,'DateTime'))
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+										'() exception[' . $day->getTimezone()->getName() . ']: ' .
+										$day->format('Ymd\THis') . "\n",3,$this->logfile);
+								}
+								$sifEvent .= '<ExcludeDate>' . self::getDateTime($day,$tzid) . '</ExcludeDate>';
+							}
+						}
+						$sifEvent .= '</Exceptions>';
+					}
+					break;
+
+				case 'Sensitivity':
+					$value = (!$value ? '2' : '0');
+					$sifEvent .= "<$sifField>$value</$sifField>";
+					break;
+
+				case 'Folder':
+					# skip currently. This is the folder where Outlook stores the contact.
+					#$sifEvent .= "<$sifField>/</$sifField>";
+					break;
+
+				case 'AllDayEvent':
+				case 'End':
+					// get's handled by Start clause
+					break;
+
+				case 'Start':
+					if (isset($event['whole_day']))
+					{
+						// for whole-day events we use the date in event timezone
+						$time = new egw_time($event['start'],egw_time::$server_timezone);
+						$time->setTimezone(self::$tz_cache[$event['tzid']]);
+						$sifEvent .= '<Start>' . $time->format('Y-m-d') . '</Start>';
+						$time = new egw_time($event['end'],egw_time::$server_timezone);
+						$time->setTimezone(self::$tz_cache[$event['tzid']]);
+						$sifEvent .= '<End>' . $time->format('Y-m-d') . '</End>';
+						$sifEvent .= "<AllDayEvent>1</AllDayEvent>";
+					}
+					else
+					{
+						$sifEvent .= '<Start>' . self::getDateTime($event['start'],$tzid) . '</Start>';
+						$sifEvent .= '<End>' . self::getDateTime($event['end'],$tzid) . '</End>';
+						$sifEvent .= "<AllDayEvent>0</AllDayEvent>";
+					}
+					break;
+
+				case 'ReminderMinutesBeforeStart':
+					break;
+
+				case 'ReminderSet':
+					if (count((array)$event['alarm']) > 0)
+					{
+						$sifEvent .= "<$sifField>1</$sifField>";
+						foreach ($event['alarm'] as $alarmID => $alarmData)
+						{
+							$sifEvent .= '<ReminderMinutesBeforeStart>'. $alarmData['offset']/60 .'</ReminderMinutesBeforeStart>';
+							// lets take only the first alarm
+							break;
+						}
+					}
+					else
+					{
+						$sifEvent .= "<$sifField>0</$sifField>";
+					}
+					break;
+
+				case 'Categories':
+					if (!empty($value) && ($values = $this->get_categories($value)))
+					{
+						$value = implode(', ', $values);
+						$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
+					}
+					else
+					{
+						break;
+					}
+
+				default:
+					$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
+					$sifEvent .= "<$sifField>$value</$sifField>";
+			}
+		}
+		$sifEvent .= "</appointment>";
+
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+				"() '$this->productName','$this->productSoftwareVersion'\n",3,$this->logfile);
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+				"()\n".array2string($sifEvent)."\n",3,$this->logfile);
+		}
+
+		return $sifEvent;
 	}
 
 	/**

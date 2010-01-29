@@ -5,6 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Joerg Lehrke <jlehrke@noc.de>
  * @copyright (c) 2009 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -192,6 +193,12 @@ class calendar_rrule implements Iterator
 	 */
 	protected $lastdayofweek;
 
+	/**
+	 * Cached timezone data
+	 *
+	 * @var array id => data
+	 */
+	protected static $tz_cache = array();
 
 	/**
 	 * Constructor
@@ -426,6 +433,12 @@ class calendar_rrule implements Iterator
 	public function rewind()
 	{
 		$this->current = clone $this->time;
+		while ($this->valid() &&
+			$this->exceptions &&
+			in_array($this->current->format('Ymd'),$this->exceptions))
+		{
+			$this->next_no_exception();
+		}
 	}
 
 	/**
@@ -517,17 +530,20 @@ class calendar_rrule implements Iterator
 	/**
 	 * Generate a VEVENT RRULE
 	 * @param string $version='1.0' could be '2.0', too
+	 *
+	 * $return array	vCalendar RRULE
 	 */
 	public function generate_rrule($version='1.0')
 	{
-		static $utc;
 		$repeat_days = array();
 		$rrule = array();
 
-		if (is_null($utc))
+		if (!isset(self::$tz_cache['UTC']))
 		{
-			$utc = calendar_timezones::DateTimeZone('UTC');
+			self::$tz_cache['UTC'] = calendar_timezones::DateTimeZone('UTC');
 		}
+
+		$utc = self::$tz_cache['UTC'];
 
 		if ($this->type == self::NONE) return false;	// no recuring event
 
@@ -609,13 +625,24 @@ class calendar_rrule implements Iterator
 	 *
 	 * @param array $event
 	 * @param boolean $usertime=true true: event timestamps are usertime (default for calendar_bo::(read|search), false: servertime
+	 * @param string $to_tz			timezone for exports (null for event's timezone)
+	 *
 	 * @return calendar_rrule
 	 */
-	public static function event2rrule(array $event,$usertime=true)
+	public static function event2rrule(array $event,$usertime=true,$to_tz=null)
 	{
+		if (!$to_tz) $to_tz = $event['tzid'];
 		$timestamp_tz = $usertime ? egw_time::$user_timezone : egw_time::$server_timezone;
 		$time = is_a($event['start'],'DateTime') ? $event['start'] : new egw_time($event['start'],$timestamp_tz);
-		$time->setTimezone(new DateTimeZone($event['tzid']));
+
+		if (!isset(self::$tz_cache[$to_tz]))
+		{
+			self::$tz_cache[$to_tz] = calendar_timezones::DateTimeZone($to_tz);
+		}
+
+		self::rrule2tz($event, $time, $to_tz);
+
+		$time->setTimezone(self::$tz_cache[$to_tz]);
 
 		if ($event['recur_enddate'])
 		{
@@ -645,6 +672,64 @@ class calendar_rrule implements Iterator
 			'recur_data' => $this->weekdays,
 			'recur_exception' => $this->exceptions,
 		);
+	}
+
+	/**
+	 * Shift a recurrence rule to a new timezone
+	 *
+	 * @param array $event			recurring event
+	 * @param DateTime/string		starttime of the event (in servertime)
+	 * @param string $to_tz			new timezone
+	 */
+	public static function rrule2tz(array &$event,$starttime,$to_tz)
+	{
+		// We assume that the difference between timezones can result
+		// in a maximum of one day
+
+		if (!is_array($event) ||
+			!isset($event['recur_type']) ||
+			$event['recur_type'] == MCAL_RECUR_NONE ||
+			empty($event['recur_data']) || $event['recur_data'] == ALLDAYS ||
+			empty($event['tzid']) || empty($to_tz) ||
+			$event['tzid'] == $to_tz) return;
+
+		if (!isset(self::$tz_cache[$event['tzid']]))
+		{
+			self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+		}
+		if (!isset(self::$tz_cache[$to_tz]))
+		{
+			self::$tz_cache[$to_tz] = calendar_timezones::DateTimeZone($to_tz);
+		}
+
+		$time = is_a($starttime,'DateTime') ?
+			$starttime : new egw_time($starttime, egw_time::$server_timezone);
+		$time->setTimezone(self::$tz_cache[$event['tzid']]);
+		$remote = clone $time;
+		$remote->setTimezone(self::$tz_cache[$to_tz]);
+		$delta = (int)$remote->format('w') - (int)$time->format('w');
+		if ($delta)
+		{
+			// We have to generate a shifted rrule
+			switch ($event['recur_type'])
+			{
+				case self::MONTHLY_WDAY:
+				case self::WEEKLY:
+					$mask = (int)$event['recur_data'];
+
+					if ($delta == 1 || $delta == -6)
+					{
+						$mask = $mask << 1;
+						if ($mask & 128) $mask = $mask - 127; // overflow
+					}
+					else
+					{
+						if ($mask & 1) $mask = $mask + 128; // underflow
+						$mask = $mask >> 1;
+					}
+					$event['recur_data'] = $mask;
+			}
+		}
 	}
 }
 

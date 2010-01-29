@@ -157,6 +157,7 @@ class calendar_so
 			// We want only the parents to match
 			$where['cal_uid'] = $ids;
 			$where['cal_reference'] = 0;
+			$where['cal_recurrence'] = 0;
 		}
 		if ((int) $recur_date)
 		{
@@ -358,7 +359,7 @@ class calendar_so
 					'cal_user_type' => $type,
 					'cal_user_id'   => $ids,
 				));
-				if ($type == 'u' && ($filter == 'owner' || $filter == 'all'))
+				if ($type == 'u' && ($filter == 'owner'))
 				{
 					$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
 					$to_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
@@ -377,6 +378,7 @@ class calendar_so
 				case 'rejected':
 					$where[] = "cal_status='R'"; break;
 				case 'all':
+				case 'owner':
 					break;
 				default:
 					//if (!$show_rejected)	// not longer used
@@ -458,22 +460,22 @@ class calendar_so
 				$recur_dates[] = $row['cal_recur_date'];
 			}
 			if ($row['participants'])
-			{
-				$row['participants'] = explode(',',$row['participants']);
-				$row['participants'] = array_combine($row['participants'],
-					array_fill(0,count($row['participants']),''));
-			}
-			else
-			{
-				$row['participants'] = array();
-			}
-			$row['alarm'] = array();
+            {
+                $row['participants'] = explode(',',$row['participants']);
+                $row['participants'] = array_combine($row['participants'],
+                    array_fill(0,count($row['participants']),''));
+            }
+            else
+            {
+                $row['participants'] = array();
+            }
+            $row['alarm'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 
 			$events[$id] = egw_db::strip_array_keys($row,'cal_');
 		}
 		//_debug_array($events);
-		if (count($ids))
+		if (count($events))
 		{
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
@@ -537,7 +539,7 @@ class calendar_so
 		//echo "<p>socal::search\n"; _debug_array($events);
 		return $events;
 	}
-	
+
 	/**
 	 * Data returned by calendar_search_union hook
 	 */
@@ -558,11 +560,11 @@ class calendar_so
 	{
 		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','rpc.php','xmlrpc.php')))
 		{
-			return;	// disable integration for GroupDAV, SyncML, ...
+			return;    // disable integration for GroupDAV, SyncML, ...
 		}
 		self::$integration_data = $GLOBALS['egw']->hooks->process(array(
 			'location' => 'calendar_search_union',
-			'cols'  => $selects[0]['cols'],	// cols to return
+			'cols'  => $selects[0]['cols'],    // cols to return
 			'start' => $start,
 			'end'   => $end,
 			'users' => $users,
@@ -579,17 +581,17 @@ class calendar_so
 			}
 		}
 	}
-	
+
 	/**
 	 * Get data from last 'calendar_search_union' hook call
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function get_integration_data()
 	{
 		return self::$integration_data;
 	}
-	
+
 	/**
 	 * Checks for conflicts
 	 */
@@ -669,7 +671,19 @@ ORDER BY cal_user_type, cal_usre_id
 				unset($event[$col]);
 			}
 		}
-		if (is_array($event['cal_category'])) $event['cal_category'] = implode(',',$event['cal_category']);
+		// ensure that we find mathing entries later on
+		if (!is_array($event['cal_category']))
+		{
+			$categories = array_unique(explode(',',$event['cal_category']));
+			sort($categories);
+		}
+		else
+		{
+			$categories = array_unique($event['cal_category']);
+		}
+		sort($categories, SORT_NUMERIC);
+
+		$event['cal_category'] = implode(',',$categories);
 
 		if ($cal_id)
 		{
@@ -1565,95 +1579,334 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param array $event			Recurring Event.
 	 * @param string tz_id=null		timezone for exports (null for event's timezone)
 	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
-	 * @param int $end=0  if != 0: enddate of the search/list (servertime)
-	 * @param string $filter='all' string filter-name: all (not rejected), accepted, unknown, tentative,
-	 * 		rejected, tz_transitions (return only by timezone transition affected entries)
+	 * @param int $end=0  if != 0:	enddate of the search/list (servertime)
+	 * @param string $filter='all'	string filter-name: all (not rejected),
+	 * 		accepted, unknown, tentative, rejected,
+	 *      rrule					return array of remote exceptions in servertime
+	 * 		tz_rrule/tz_only,		return (only by) timezone transition affected entries
+	 * 		map						return array of dates with no pseudo exception
+	 * 									key remote occurrence date
+	 * 		tz_map					return array of all dates with no tz pseudo exception
 	 *
 	 * @return array		Array of exception days (false for non-recurring events).
 	 */
-	function get_recurrence_exceptions(&$event, $tz_id=null, $start=0, $end=0, $filter='all')
+	function get_recurrence_exceptions($event, $tz_id=null, $start=0, $end=0, $filter='all')
 	{
+		if (!is_array($event)) return false;
 		$cal_id = (int) $event['id'];
+		//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+		//		"($cal_id, $tz_id, $filter): " . $event['tzid']);
 		if (!$cal_id || $event['recur_type'] == MCAL_RECUR_NONE) return false;
 
 		$days = array();
-		$first_start = $recur_start = '';
 
-		if (!empty($tz_id))
+		$expand_all = (!$this->isWholeDay($event) && $tz_id && $tz_id != $event['tzid']);
+
+		if ($filter == 'tz_only' && !$expand_all) return $days;
+
+		$remote = in_array($filter, array('tz_rrule', 'rrule'));
+
+		$egw_rrule = calendar_rrule::event2rrule($event, false);
+		$egw_rrule->rewind();
+		if ($expand_all)
 		{
-			// set export timezone
-			if(!isset(self::$tz_cache[$tz_id]))
+			unset($event['recur_excpetion']);
+			$remote_rrule = calendar_rrule::event2rrule($event, false, $tz_id);
+			$remote_rrule->rewind();
+		}
+		while ($egw_rrule->valid())
+		{
+			$day = $egw_rrule->current();
+			$locts = (int)egw_time::to($day,'server');
+			$tz_exception = ($filter == 'tz_rrule');
+			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+			//	'()[EVENT Server]: ' . $day->format('Ymd\THis') . " ($locts)");
+			if ($expand_all)
 			{
-				self::$tz_cache[$tz_id] = calendar_timezones::DateTimeZone($tz_id);
+				$remote_day = $remote_rrule->current();
+				$remts = (int)egw_time::to($remote_day,'server');
+			//	error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+			//	'()[EVENT Device]: ' . $remote_day->format('Ymd\THis') . " ($remts)");
 			}
-			$starttime = new egw_time($event['start'], egw_time::$server_timezone);
-			$starttime->setTimezone(self::$tz_cache[$tz_id]);
-			$first_start = $starttime->format('His');
+
+
+			if (!($end && $end < $locts) && $start <= $locts)
+			{
+				// we are within the relevant time period
+				if ($expand_all && $day->format('U') != $remote_day->format('U'))
+				{
+					$tz_exception = true;
+					if ($filter != 'map' && $filter != 'tz_map')
+					{
+						// timezone pseudo exception
+						//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						//	'() tz exception: ' . $day->format('Ymd\THis'));
+						if ($remote)
+						{
+							$days[$locts]= $remts;
+						}
+						else
+						{
+							$days[$remts]= $locts;
+						}
+					}
+				}
+				if ($filter != 'tz_map' && (!$tz_exception || $filter == 'tz_only') &&
+					$this->status_pseudo_exception($event['id'], $locts, $filter))
+				{
+					// status pseudo exception
+					//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					//	'() status exception: ' . $day->format('Ymd\THis'));
+					if ($expand_all)
+					{
+						$remts = (int)egw_time::to($remote_day,'server');
+						if ($filter == 'tz_only')
+						{
+								unset($days[$remts]);
+						}
+						else
+						{
+							if ($filter != 'map')
+							{
+								if ($remote)
+								{
+									$days[$locts]= $remts;
+								}
+								else
+								{
+									$days[$remts]= $locts;
+								}
+							}
+						}
+					}
+					elseif ($filter != 'map')
+					{
+						$days[$locts]= $locts;
+					}
+				}
+				elseif (($filter == 'map' || filter == 'tz_map') &&
+						!$tz_exception)
+				{
+					// no pseudo exception date
+					if ($expand_all)
+					{
+
+						$days[$remts]= $locts;
+					}
+					else
+					{
+						$days[$locts]= $locts;
+					}
+				}
+			}
+			do
+			{
+				$egw_rrule->next_no_exception();
+				$day = $egw_rrule->current();
+				if ($expand_all)
+				{
+					$remote_rrule->next_no_exception();
+					$remts = (int)egw_time::to($remote_rrule->current(),'server');
+				}
+				$exception = $egw_rrule->exceptions &&
+					in_array($day->format('Ymd'),$egw_rrule->exceptions);
+				if (in_array($filter, array('map','tz_map','rrule','tz_rrule'))
+					&& $exception)
+				{
+					 // real exception
+					$locts = (int)egw_time::to($day,'ts');
+					if ($expand_all)
+					{
+						if ($remote)
+						{
+							$days[$locts]= $remts;
+						}
+						else
+						{
+							$days[$remts]= $locts;
+						}
+					}
+					else
+					{
+						$days[$locts]= $locts;
+					}
+				}
+			}
+			while ($exception);
+		}
+		return $days;
+	}
+
+	/**
+	 * Checks for status only pseudo exceptions
+	 *
+	 * @param int $cal_id		event id
+	 * @param int $recur_date	occurrence to check
+	 * @param string $filter	status filter criteria for user
+	 *
+	 * @return boolean			true, if stati don't match with defaults
+	 */
+	function status_pseudo_exception($cal_id, $recur_date, $filter)
+	{
+		static $recurrence_zero;
+		static $cached_id;
+		static $user;
+
+		if (!isset($cached_id) || $cached_id != $cal_id)
+		{
+			// get default stati
+			$recurrence_zero = array();
+			$user = $GLOBALS['egw_info']['user']['account_id'];
+			$where = array('cal_id' => $cal_id,
+							'cal_recur_date' => 0);
+			foreach ($this->db->select($this->user_table,'cal_user_id,cal_user_type,cal_status',$where,
+				__LINE__,__FILE__,false,'','calendar') as $row)
+			{
+				switch ($row['cal_user_type'])
+				{
+					case 'u':	// account
+					case 'c':	// contact
+					case 'e':	// email address
+						$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
+						$recurrence_zero[$uid] = $row['cal_status'];
+				}
+			}
+			$cached_id = $cal_id;
 		}
 
-		$participants = $this->get_participants($event['id'], 0);
+		//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+		//	"($cal_id, $recur_date, $filter)[DEFAULTS]: " .
+		//	array2string($recurrence_zero));
 
-		// Check if the stati for all participants are identical for all recurrences
-		foreach ($participants as $uid => $attendee)
+		$participants = array();
+		$where = array('cal_id' => $cal_id,
+			'cal_recur_date' => $recur_date);
+		foreach ($this->db->select($this->user_table,'cal_user_id,cal_user_type,cal_status',$where,
+			__LINE__,__FILE__,false,'','calendar') as $row)
 		{
-			switch ($attendee['type'])
+			switch ($row['cal_user_type'])
 			{
 				case 'u':	// account
 				case 'c':	// contact
 				case 'e':	// email address
-					$recurrences = $this->get_recurrences($event['id'], $uid, $start, $end);
-					foreach ($recurrences as $recur_date => $recur_status)
-					{
-						if ($recur_date)
-						{
-							if (!empty($tz_id))
-							{
-								$time = new egw_time($recur_date, egw_time::$server_timezone);
-								$time->setTimezone(self::$tz_cache[$tz_id]);
-								$recur_start = $time->format('His');
-								//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-								//	"() first=$first_start <> current=$recur_start");
-							}
-							if ($attendee['type'] = 'u' &&
-								$attendee['id'] == $GLOBALS['egw_info']['user']['account_id'])
-							{
-								// handle filter for current user
-								switch ($filter)
-								{
-									case 'unknown':
-										if ($recur_status != 'U') continue;
-										break;
-									case 'accepted':
-										if ($recur_status != 'A') continue;
-										break;
-									case 'tentative':
-										if ($recur_status != 'T') continue;
-										break;
-									case 'rejected':
-										if ($recur_status != 'R') continue;
-										break;
-									case 'default':
-										if ($recur_status == 'R') continue;
-										break;
-									default:
-										// All entries
-								}
-							}
-							if (($filter !=  'tz_transitions' && $recur_status != $recurrences[0])
-								|| !empty($tz_id) && $first_start != $recur_start)
-							{
-								// Every distinct status or starttime results in an exception
-								$days[] = $recur_date;
-							}
-						}
-					}
-					break;
-				default: // We don't handle the rest
-					break;
+					$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
+					$participants[$uid] = $row['cal_status'];
 			}
 		}
-		$days = array_unique($days);
-		sort($days);
-		return $days;
+
+		if (empty($participants)) return false; // occurrence does not exist at all yet
+
+		foreach ($recurrence_zero as $uid => $status)
+		{
+			if ($uid == $user)
+			{
+				// handle filter for current user
+				switch ($filter)
+				{
+					case 'unknown':
+						if ($status != 'U')
+						{
+							unset($participants[$uid]);
+							continue;
+						}
+						break;
+					case 'accepted':
+						if ($status != 'A')
+						{
+							unset($participants[$uid]);
+							continue;
+						}
+						break;
+					case 'tentative':
+						if ($status != 'T')
+						{
+							unset($participants[$uid]);
+							continue;
+						}
+						break;
+					case 'rejected':
+						if ($status != 'R')
+						{
+							unset($participants[$uid]);
+							continue;
+						}
+						break;
+					case 'default':
+						if ($status == 'R')
+						{
+							unset($participants[$uid]);
+							continue;
+						}
+						break;
+					default:
+						// All entries
+				}
+			}
+			if (!isset($participants[$uid])
+				|| $participants[$uid] != $status)
+				return true;
+			unset($participants[$uid]);
+		}
+		return (!empty($participants));
+	}
+
+	/**
+	 * Check if the event is the whole day
+	 *
+	 * @param array $event event (all timestamps in servertime)
+	 * @return boolean true if whole day event within its timezone, false othwerwise
+	 */
+	function isWholeDay($event)
+	{
+		if (!isset($event['start']) || !isset($event['end'])) return false;
+
+		if (empty($event['tzid']))
+		{
+			$timezone = egw_time::$server_timezone;
+		}
+		else
+		{
+			if (!isset(self::$tz_cache[$event['tzid']]))
+			{
+				self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+			}
+			$timezone = self::$tz_cache[$event['tzid']];
+		}
+		$start = new egw_time($event['start'],egw_time::$server_timezone);
+		$start->setTimezone($timezone);
+		$end = new egw_time($event['end'],egw_time::$server_timezone);
+		$end->setTimezone($timezone);
+		//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+		//	'(): ' . $start . '-' . $end);
+		$start = egw_time::to($start,'array');
+		$end = egw_time::to($end,'array');
+
+
+		return !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
+	}
+
+	/**
+	 * Moves a datetime to the beginning og the day within timezone
+	 *
+	 * @param egw_time	&time	the datetime entry
+	 * @param string tz_id		timezone
+	 *
+	 * @return DateTime
+	 */
+	function &startOfDay(egw_time $time, $tz_id)
+	{
+		if (empty($tz_id))
+		{
+			$timezone = egw_time::$server_timezone;
+		}
+		else
+		{
+			if (!isset(self::$tz_cache[$tz_id]))
+			{
+				self::$tz_cache[$tz_id] = calendar_timezones::DateTimeZone($tz_id);
+			}
+			$timezone = self::$tz_cache[$tz_id];
+		}
+		return new egw_time($time->format('Y-m-d 00:00:00'), $timezone);
 	}
 }

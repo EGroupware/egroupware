@@ -277,7 +277,7 @@ class Horde_SyncML_State {
             $this->setPassword($password);
         }
 
-        $this->_isAuthorized = false;
+        $this->_isAuthorized = 0;
         $this->_isAuthConfirmed = false;
     }
 
@@ -560,12 +560,12 @@ class Horde_SyncML_State {
 
 		if($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text','u'))
 		{
-			$this->_isAuthorized = true;
+			$this->_isAuthorized = 1;
 			#Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		}
 		else
 		{
-			$this->_isAuthorized = false;
+			$this->_isAuthorized = -1;
 			Horde::logMessage('SyncML: Authentication of ' . $this->_locName . ' failed' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		}
 	}
@@ -577,7 +577,7 @@ class Horde_SyncML_State {
 			Horde::logMessage('SyncML_EGW: egw session('.$sessionID. ') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
-        return $this->_isAuthorized;
+        return ($this->_isAuthorized > 0);
     }
 
     function isAuthConfirmed()

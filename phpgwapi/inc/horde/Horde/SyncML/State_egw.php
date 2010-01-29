@@ -60,6 +60,12 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
 		$ts = $GLOBALS['egw']->contenthistory->getTSforAction($_appName, $_id, $_action);
 
+		if (strstr($_id, ':')) {
+			// pseudo entries are related to parent entry
+			$parentId =  array_shift(explode(':', $_id));
+			$pts = $GLOBALS['egw']->contenthistory->getTSforAction($_appName, $parentId, $_action);
+			if ($pts > $ts) $ts = $pts; // We have changed the parent
+		}
 		return $ts;
 	}
 
@@ -336,18 +342,18 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
 				if (($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text'))) {
 					if ($GLOBALS['egw_info']['user']['apps']['syncml']) {
-						$this->_isAuthorized = true;
+						$this->_isAuthorized = 1;
 						Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded',
 							__FILE__, __LINE__, PEAR_LOG_DEBUG);
 					} else {
-						$this->_isAuthorized = false;
+						$this->_isAuthorized = -1; // Authentication failed!
 						Horde::logMessage('SyncML is not enabled for user ' . $this->_locName,
 							__FILE__, __LINE__, PEAR_LOG_ERROR);
 					}
-					return $this->_isAuthorized;
+					return ($this->_isAuthorized > 0);
 				}
 			}
-			$this->_isAuthorized = false;
+			$this->_isAuthorized = -1;
 			Horde::logMessage('SyncML: Authentication of ' . $this->_locName . ' failed' ,
 				__FILE__, __LINE__, PEAR_LOG_INFO);
 		} else {
@@ -359,7 +365,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 					__FILE__, __LINE__, PEAR_LOG_WARNING);
 			}
 		}
-		return $this->_isAuthorized;
+		return ($this->_isAuthorized > 0);
 	}
 
 	/**
