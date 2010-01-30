@@ -16,6 +16,11 @@
  */
 class boetemplate extends soetemplate
 {
+	/**
+	 * Widget types implemented directly by etemplate (no extensions)
+	 * 
+	 * @var array intern name => label
+	 */
 	static public $types = array(
 		'label'	=> 'Label',			// Label $cell['label'] is (to be translated) textual content
 		'text'	=> 'Text',			// Textfield 1 Line (size = [length][,maxlength])
@@ -41,7 +46,8 @@ class boetemplate extends soetemplate
 		'box'	=> 'Box',			// just a container for widgets (html: div)
 		'grid'	=> 'Grid',			// tabular widget containing rows with columns of widgets
 		'deck'	=> 'Deck',			// a container of elements where only one is visible, size = # of elem.
-		'passwd' => 'Password'		// a text of type password
+		'passwd' => 'Password',		// a text of type password
+		'colorpicker' => 'Colorpicker',	// input for a color (eg. #123456)
 	);
 
 	/**

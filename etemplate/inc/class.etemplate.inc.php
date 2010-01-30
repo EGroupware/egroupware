@@ -638,7 +638,7 @@ class etemplate extends boetemplate
 			{
 				return $cat2color[$cat];
 			}
-			$data = unserialize($GLOBALS['egw']->categories->id2name($cat,'data'));
+			$data = categories::id2name($cat,'data');
 
 			if (($color = $data['color']))
 			{
@@ -1692,6 +1692,22 @@ class etemplate extends boetemplate
 					),'style,id'));
 				}
 				break;
+			case 'colorpicker':
+				if ($readonly)
+				{
+					$html = $value;
+				}
+				else
+				{
+					$html = html::inputColor($form_name,$value,$cell['help']);
+
+					self::$request->set_to_process($form_name,$cell['type'],array(
+							'maxlength' => 7,
+							'needed'    => $cell['needed'],
+							'preg'      => '/^(#[0-9a-f]{6}|)$/i',
+						));
+				}
+				break;
 			default:
 				if ($ext_type && $this->haveExtension($ext_type,'render'))
 				{
@@ -1913,7 +1929,7 @@ class etemplate extends boetemplate
 				$on = str_replace($matches[0],"'<style>".str_replace(array("\n","\r"),'',$tpl->style)."</style>'",$on);
 			}
 		}
-		if (strpos($on,'confirm(') !== false && preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$on,$matches)) {
+		if (strpos($on,'confirm(') !== false && preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/U',$on,$matches)) {
 			$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
 			$on = str_replace($matches[0],'confirm(\''.str_replace("'","\\'",$question).'\')',$on);
 		}
@@ -2035,6 +2051,7 @@ class etemplate extends boetemplate
 				case 'passwd':
 				case 'text':
 				case 'textarea':
+				case 'colorpicker':
 					if ($value === '' && $attr['needed'] && !$attr['blur'])
 					{
 						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
