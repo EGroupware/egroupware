@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.categories.delete" template="" lang="" group="0" version="1.7.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<groupbox class="confirmDelete">
+						<caption label="Delete this category"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row height="30">
+									<description span="all" value="Are you sure you want to delete this category ?" align="center"/>
+								</row>
+								<row class="confirmSubs">
+									<checkbox label="Do you also want to delete all global subcategories ?" id="delete[subs]" span="all" align="center"/>
+								</row>
+								<row height="40">
+									<button label="Delete" id="delete[delete]" align="center"/>
+									<buttononly label="Cancel" id="delete[cancel]" align="center" onclick="set_style_by_class('fieldset','confirmDelete','display','none');"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+		<textbox id="delete[cat_id]" class="hiddenCatid"/>
+		<styles>
+			.confirmDelete {
+  position: absolute;
+  left: 120px;
+  top: 80px;
+  background-color: white;
+  display: none;
+  border: 2px solid black;
+}
+.hiddenCatid {
+  display: none;
+}
+.confirmSubs
+{
+}
+		</styles>
+	</template>
+	<template id="admin.categories.edit" template="" lang="" group="0" version="1.7.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" align="center" id="msg"/>
+					<description/>
+				</row>
+				<row class="th" height="25">
+					<description options=",,,parent" value="Parent category"/>
+					<menulist>
+						<menupopup type="select-cat" options="None,,,$cont[appname],,-1" id="parent"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,name" value="Name"/>
+					<textbox size="50" maxlength="150" id="name"/>
+				</row>
+				<row class="row" valign="top">
+					<description options=",,,description" value="Description"/>
+					<textbox multiline="true" rows="5" cols="50" id="description"/>
+				</row>
+				<row class="row">
+					<description options=",,,cat_data[color]" value="Color"/>
+					<colorpicker id="data[color]"/>
+				</row>
+				<row class="row">
+					<description options=",,,cat_data[icon]" value="Icon"/>
+					<hbox options="0,0">
+						<menulist>
+							<menupopup id="data[icon]" options="None" onchange="document.getElementById('icon_url').src = '$cont[base_url]' + this.value;"/>
+						</menulist>
+						<image src="icon_url" class="leftPad5"/>
+					</hbox>
+				</row>
+				<row class="row" disabled="@appname=phpgw">
+					<description value="Application"/>
+					<menulist>
+						<menupopup type="select-app" id="appname" readonly="true"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description value="Modified"/>
+					<date-time id="last_mod" readonly="true"/>
+				</row>
+				<row>
+					<hbox>
+						<button label="Save" id="button[save]"/>
+						<button label="Apply" id="button[apply]"/>
+					</hbox>
+					<hbox>
+						<buttononly id="button[cancel]" label="Cancel" onclick="window.close();"/>
+						<buttononly label="Delete" align="right" id="button[delete]" statustext="Delete this category" onclick="set_style_by_class('tr','confirmSubs','visibility','$cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block');"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<template id="admin.categories.delete"/>
+	</template>
+</overlay>

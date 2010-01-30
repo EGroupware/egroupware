@@ -60,7 +60,7 @@ class admin_prefs_sidebox_hooks
 
 			if (! $GLOBALS['egw']->acl->check('global_categories_access',1,'admin'))
 			{
-				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.uicategories.index');
+				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.admin_categories.index');
 			}
 
 			if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_message_access',2,'admin'))
