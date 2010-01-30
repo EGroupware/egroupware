@@ -572,7 +572,7 @@ class calendar_bo
 		{
 			$is_private = (bool)ExecMethod2($app_data,$id,$event);
 		}
-		//echo '<p>'.__METHOD__."($app,$id,) returning ".array2string($is_private)."</p>\n";
+		//echo '<p>'.__METHOD__."($app,$id,) app_data=".array2string($app_data).' returning '.array2string($is_private)."</p>\n";
 		return $is_private;
 	}
 
@@ -1393,8 +1393,7 @@ class calendar_bo
 
 			if (!isset($id2cat[$cat_id]))
 			{
-				list($id2cat[$cat_id]) = $this->categories->return_single($cat_id);
-				$id2cat[$cat_id]['data'] = unserialize($id2cat[$cat_id]['data']);
+				$id2cat[$cat_id] = categories::read($cat_id);
 			}
 			$cat = $id2cat[$cat_id];
 
