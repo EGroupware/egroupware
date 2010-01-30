@@ -23,6 +23,16 @@
  * Categories are read now once from the database into a static cache variable (by the static init_cache method).
  * The egw object fills that cache ones per session, stores it in a private var, from which it restores it for each
  * request of that session.
+ * 
+ * $cat['data'] array:
+ * ------------------
+ * $cat['data'] array is stored serialized in the database to allow applications to simply add all
+ * sorts of values there (without the hassel of a DB schema change).
+ * Static methods categories::read($cat_id) and categories::id2name now returns data already unserialized 
+ * and add() or edit() methods automatically serialize $cat['data'], if it's not yet serialized. 
+ * return*() methods still return $cat['data'] serialized by default, but have a parameter to return
+ * it as array(). That default might change in future too, so better check if it's 
+ * not already an array, before unserialize!
  *
  * @ToDo The cache now contains a backlink from the parent to it's children. Use that link to simplyfy return_all_children
  * 	and other functions needing to know if a cat has children. Be aware a user might not see all children, as they can
@@ -31,13 +41,13 @@
 class categories
 {
 	/**
-	 * Account id this class is instanciated for (-1 for global cats)
+	 * Account id this class is instanciated for (self::GLOBAL_ACCOUNT for global cats)
 	 *
 	 * @var int
 	 */
 	public $account_id;
 	/**
-	 * Application this class is instancated for ('phpgw' for application global cats)
+	 * Application this class is instancated for (self::GLOBAL_APPNAME for application global cats)
 	 *
 	 * @var string
 	 */
@@ -75,16 +85,33 @@ class categories
 	private static $cache;
 
 	/**
+	 * Appname for global categories
+	 */
+	const GLOBAL_APPNAME = 'phpgw';
+	
+	/**
+	 * account_id for global categories
+	 */
+	const GLOBAL_ACCOUNT = -1;
+	
+	/**
 	 * constructor for categories class
 	 *
-	 * @param int/string $accountid='' account id or lid, default to current user
+	 * @param int|string $accountid='' account id or lid, default to current user
 	 * @param string $app_name='' app name defaults to current app
 	 */
 	function __construct($accountid='',$app_name = '')
 	{
 		if (!$app_name) $app_name = $GLOBALS['egw_info']['flags']['currentapp'];
 
-		$this->account_id	= (int) get_account_id($accountid);
+		if ($accountid == self::GLOBAL_ACCOUNT)
+		{
+			$this->account_id = self::GLOBAL_ACCOUNT;
+		}
+		else
+		{
+			$this->account_id	= (int) get_account_id($accountid);
+		}
 		$this->app_name		= $app_name;
 		$this->db			= $GLOBALS['egw']->db;
 
@@ -105,7 +132,6 @@ class categories
 	}
 
 	/**
-	 * return_all_children
 	 * returns array with id's of all children from $cat_id and $cat_id itself!
 	 *
 	 * @param int|array $cat_id (array of) integer cat-id to search for
@@ -138,11 +164,12 @@ class categories
 	 * @param int $lastmod = -1 if > 0 return only cats modified since then
 	 * @param string $column='' if column-name given only that column is returned, not the full array with all cat-data
 	 * @param array $filter=null array with column-name (without cat_-prefix) => value pairs (! negates the value)
+	 * @param boolean $unserialize_data=false return $cat['data'] as array (not serialized array)
 	 * @return array of cat-arrays or $column values
 	 */
-	function return_array($type='all', $start=0, $limit=true, $query='', $sort='ASC',$order='',$globals=false, $parent_id=null, $lastmod=-1, $column='', $filter=null)
+	function return_array($type='all', $start=0, $limit=true, $query='', $sort='ASC',$order='',$globals=false, $parent_id=null, $lastmod=-1, $column='', $filter=null,$unserialize_data=false)
 	{
-		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,globals=$globals,parent=".array2string($parent_id).",$lastmod,$column) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
+		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,globals=$globals,parent=".array2string($parent_id).",$lastmod,$column,filter=".array2string($filter).",$unserialize_data) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
 		$cats = array();
 		foreach(self::$cache as $cat_id => $cat)
 		{
@@ -189,7 +216,7 @@ class categories
 			if ($parent_id && !in_array($cat['parent'],(array)$parent_id)) continue;
 
 			// return global categories just if $globals is set
-			if (!$globals && $cat['appname'] == 'phpgw')
+			if (!$globals && $cat['appname'] == self::GLOBAL_APPNAME)
 			{
 				continue;
 			}
@@ -229,6 +256,8 @@ class categories
 			// check if last modified since
 			if ($lastmod > 0 && $cat['last_mod'] <= $lastmod) continue;
 
+			if ($unserialize_data) $cat['data'] = $cat['data'] ? unserialize($cat['data']) : array();
+
 			$cats[] = $cat;
 		}
 		if (!($this->total_records = count($cats)))
@@ -261,7 +290,7 @@ class categories
 				$cats[$k] = $cat[$column];
 			}
 		}
-		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,$globals,parent=$parent_id,$lastmod,$column) account_id=$this->account_id, appname=$this->app_name = ".array2string($cats));
+		//error_log(__METHOD__."($type,$start,$limit,$query,$sort,$order,$globals,parent=".array2string($parent_id).",$lastmod,$column,filter=".array2string($filter).",$unserialize_data) account_id=$this->account_id, appname=$this->app_name = ".array2string($cats));
 
 		reset($cats);	// some old code (eg. sitemgr) relies on the array-pointer!
 		return $cats;
@@ -277,17 +306,18 @@ class categories
 	 * @param string $order='cat_name' order by
 	 * @param boolean $globals includes the global egroupware categories or not
 	 * @param array|int $parent_id=0 return only subcats of $parent_id(s)
+	 * @param boolean $unserialize_data=false return $cat['data'] as array (not serialized array)
 	 * @return array with cats
 	 */
-	function return_sorted_array($start=0,$limit=True,$query='',$sort='ASC',$order='cat_name',$globals=False, $parent_id=0)
+	function return_sorted_array($start=0,$limit=True,$query='',$sort='ASC',$order='cat_name',$globals=False, $parent_id=0,$unserialize_data=false)
 	{
 		if (!$sort)  $sort = 'ASC';
 		if (!$order) $order = 'cat_name';
 
-		//error_log(__METHOD__."($start,$limit,$query,$sort,$order,globals=$globals,parent=$parent_id) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
+		//error_log(__METHOD__."($start,$limit,$query,$sort,$order,globals=$globals,parent=$parent_id,$unserialize_data) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
 
 		$parents = $cats = array();
-		if (!($cats = $this->return_array('all',0,false,$query,$sort,$order,$globals,(array)$parent_id)))
+		if (!($cats = $this->return_array('all',0,false,$query,$sort,$order,$globals,(array)$parent_id,-1,'',null,$unserialize_data)))
 		{
 			$cats = array();
 		}
@@ -297,7 +327,7 @@ class categories
 		}
 		while (count($parents))
 		{
-			if (!($subs = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parents)))
+			if (!($subs = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parents,-1,'',null,$unserialize_data)))
 			{
 				break;
 			}
@@ -338,117 +368,23 @@ class categories
 	}
 
 	/**
-	 * read a single category
+	 * Read a category
 	 *
 	 * We use a shared cache together with id2name
+	 * 
+	 * Data array get automatically unserialized!
 	 *
 	 * @param int $id id of category
-	 * @return array|boolean array with one array of cat-data or false if cat not found
+	 * @return array|boolean array with cat-data or false if cat not found
 	 */
-	static function return_single($id)
+	static function read($id)
 	{
-		return isset(self::$cache[$id]) ? array(self::$cache[$id]) : false;
-	}
+		if (!isset(self::$cache[$id])) return false;
+		
+		$cat = self::$cache[$id];
+		$cat['data'] = $cat['data'] ? unserialize($cat['data']) : array();
 
-	/**
-	 * return into a select box, list or other formats
-	 *
-	 * @param string/array $format string 'select' or 'list', or array with all params
-	 * @param string $type='' subs or mains
-	 * @param int/array $selected - cat_id or array with cat_id values
-	 * @param boolean $globals True or False, includes the global egroupware categories or not
-	 * @deprecated use html class to create selectboxes
-	 * @return string populated with categories
-	 */
-	function formatted_list($format,$type='',$selected = '',$globals = False,$site_link = 'site')
-	{
-		if(is_array($format))
-		{
-			$type = ($format['type']?$format['type']:'all');
-			$selected = (isset($format['selected'])?$format['selected']:'');
-			$self = (isset($format['self'])?$format['self']:'');
-			$globals = (isset($format['globals'])?$format['globals']:True);
-			$site_link = (isset($format['site_link'])?$format['site_link']:'site');
-			$format = $format['format'] ? $format['format'] : 'select';
-		}
-
-		if (!is_array($selected))
-		{
-			$selected = explode(',',$selected);
-		}
-
-		if ($type != 'all')
-		{
-			$cats = $this->return_array($type,0,False,'','','',$globals);
-		}
-		else
-		{
-			$cats = $this->return_sorted_array(0,False,'','','',$globals);
-		}
-
-		if (!$cats) return '';
-
-		if($self)
-		{
-			foreach($cats as $key => $cat)
-			{
-				if ($cat['id'] == $self)
-				{
-					unset($cats[$key]);
-				}
-			}
-		}
-
-		switch ($format)
-		{
-			case 'select':
-				foreach($cats as $cat)
-				{
-					$s .= '<option value="' . $cat['id'] . '"';
-					if (in_array($cat['id'],$selected))
-					{
-						$s .= ' selected="selected"';
-					}
-					$s .= '>'.str_repeat('&nbsp;',$cat['level']);
-					$s .= $GLOBALS['egw']->strip_html($cat['name']);
-					if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
-					{
-						$s .= ' &#9830;';
-					}
-					$s .= '</option>' . "\n";
-				}
-				break;
-
-			case 'list':
-				$space = '&nbsp;&nbsp;';
-
-				$s  = '<table border="0" cellpadding="2" cellspacing="2">' . "\n";
-
-				foreach($cats as $cat)
-				{
-					$image_set = '&nbsp;';
-
-					if (in_array($cat['id'],$selected))
-					{
-						$image_set = '<img src="' . EGW_IMAGES_DIR . '/roter_pfeil.gif">';
-					}
-					if (($cat['level'] == 0) && !in_array($cat['id'],$selected))
-					{
-						$image_set = '<img src="' . EGW_IMAGES_DIR . '/grauer_pfeil.gif">';
-					}
-					$space_set = str_repeat($space,$cat['level']);
-
-					$s .= '<tr>' . "\n";
-					$s .= '<td width="8">' . $image_set . '</td>' . "\n";
-					$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['egw']->link($site_link,'cat_id=' . $cat['id']) . '">'
-						. $GLOBALS['egw']->strip_html($cat['name'])
-						. '</a></td>' . "\n"
-						. '</tr>' . "\n";
-				}
-				$s .= '</table>' . "\n";
-				break;
-		}
-		return $s;
+		return $cat;
 	}
 
 	/**
@@ -473,7 +409,7 @@ class categories
 			'cat_appname' => $this->app_name,
 			'cat_name'    => $values['name'],
 			'cat_description' => isset($values['description']) ? $values['description'] : $values['descr'],	// support old name different from returned one
-			'cat_data'    => $values['data'],
+			'cat_data'    => is_array($values['data']) ? serialize($values['data']) : $values['data'],
 			'cat_main'    => $values['main'],
 			'cat_level'   => $values['level'],
 			'last_mod'    => time(),
@@ -535,16 +471,16 @@ class categories
 			return null;
 		}
 
-		// The user for the global cats has id -1, this one has full access to all global cats
-		if ($this->account_id == -1 && ($category['appname'] == 'phpgw'
-				|| $category['appname'] == $this->app_name && $category['owner'] == -1))
+		// The user for the global cats has id self::GLOBAL_ACCOUNT, this one has full access to all global cats
+		if ($this->account_id == self::GLOBAL_ACCOUNT && ($category['appname'] == self::GLOBAL_APPNAME
+				|| $category['appname'] == $this->app_name && $category['owner'] == self::GLOBAL_ACCOUNT))
 		{
 			return true;
 		}
 		
 		// Read access to global categories
-		if ($needed == EGW_ACL_READ && ($category['appname'] == 'phpgw'
-				|| $category['appname'] == $this->app_name && $category['owner'] == -1))
+		if ($needed == EGW_ACL_READ && ($category['appname'] == self::GLOBAL_APPNAME
+				|| $category['appname'] == $this->app_name && $category['owner'] == self::GLOBAL_ACCOUNT))
 		{
 			return true;
 		}
@@ -561,8 +497,8 @@ class categories
 			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name);
 		}
 		
-		// Check for ACL granted access, the -1 user must not get access by ACL to keep old behaviour
-		return ($this->account_id != -1 && $category['appname'] == $this->app_name && ($this->grants[$category['owner']] & $needed) &&
+		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
+		return ($this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name && ($this->grants[$category['owner']] & $needed) &&
 					($category['access'] == 'public' ||  ($this->grants[$category['owner']] & EGW_ACL_PRIVATE)));
 	}
 
@@ -657,7 +593,7 @@ class categories
 		$this->db->update(self::TABLE,array(
 			'cat_name' => $values['name'],
 			'cat_description' => isset($values['description']) ? $values['description'] : $values['descr'],	// support old name different from the one read
-			'cat_data' => $values['data'],
+			'cat_data'    => is_array($values['data']) ? serialize($values['data']) : $values['data'],
 			'cat_parent' => $values['parent'],
 			'cat_access' => $values['access'],
 			'cat_main' => $values['main'],
@@ -712,7 +648,7 @@ class categories
 
 		if (!($cats = $this->return_array('all',0,false,'','','',true,null,-1,'',array(
 			'name' => $cats,
-			'appname' => array($this->app_name, 'phpgw'),
+			'appname' => array($this->app_name, self::GLOBAL_APPNAME),
 		))))
 		{
 			return 0;	// cat not found, dont cache it, as it might be created in this request
@@ -723,8 +659,8 @@ class categories
 			foreach($cats as $k => $cat)
 			{
 				$cats[$k]['weight'] = 100 * ($cat['name'] == $cat_name) +
-					10 * ($cat['owner'] == $this->account_id ? 3 : ($cat['owner'] == -1 ? 2 : 1)) +
-					($cat['appname'] != 'phpgw');
+					10 * ($cat['owner'] == $this->account_id ? 3 : ($cat['owner'] == self::GLOBAL_ACCOUNT ? 2 : 1)) +
+					($cat['appname'] != self::GLOBAL_APPNAME);
 			}
 			// sort heighest weight to the top
 			usort($cats,create_function('$a,$b',"return \$b['weight'] - \$a['weight'];"));
@@ -735,7 +671,8 @@ class categories
 	/**
 	 * return category information for a given id
 	 *
-	 * We use a shared cache together with return_single
+	 * We use a shared cache together with read
+	 * $item == 'data' is returned as array (not serialized array)!
 	 *
 	 * @param int $cat_id=0 cat-id
 	 * @param string $item='name' requested information, 'path' = / delimited path of category names (incl. parents)
@@ -757,7 +694,11 @@ class categories
 			}
 			$item = 'name';
 		}
-		if ($cat[$item])
+		if ($item == 'data')
+		{
+			return $cat['data'] ? unserialize($cat['data']) : array();
+		}
+		elseif ($cat[$item])
 		{
 			return $cat[$item];
 		}
@@ -768,17 +709,6 @@ class categories
 		return null;
 	}
 
-	/**
-	 * return category name for a given id
-	 *
-	 * @deprecated This is only a temp wrapper, use id2name() to keep things matching across the board. (jengo)
-	 * @param int $cat_id
-	 * @return string cat_name category name
-	 */
-	function return_name($cat_id)
-	{
-		return $this->id2name($cat_id);
-	}
 
 	/**
 	 * check if a category id and/or name exists, if id AND name are given the check is for a category with same name and different id (!)
@@ -887,5 +817,136 @@ class categories
 		self::init_cache();
 		// we need to invalidate the whole session cache, as it stores our cache
 		egw::invalidate_session_cache();
+	}
+
+	/**
+	 ******************************** old / deprecated functions ***********************************
+	 */
+
+	/**
+	 * read a single category
+	 *
+	 * We use a shared cache together with id2name
+	 *
+	 * @deprecated use read($id) returning just the category array not an array with one element
+	 * @param int $id id of category
+	 * @return array|boolean array with one array of cat-data or false if cat not found
+	 */
+	static function return_single($id)
+	{
+		return isset(self::$cache[$id]) ? array(self::$cache[$id]) : false;
+	}
+	
+	/**
+	 * return into a select box, list or other formats
+	 *
+	 * @param string/array $format string 'select' or 'list', or array with all params
+	 * @param string $type='' subs or mains
+	 * @param int/array $selected - cat_id or array with cat_id values
+	 * @param boolean $globals True or False, includes the global egroupware categories or not
+	 * @deprecated use html class to create selectboxes
+	 * @return string populated with categories
+	 */
+	function formatted_list($format,$type='',$selected = '',$globals = False,$site_link = 'site')
+	{
+		if(is_array($format))
+		{
+			$type = ($format['type']?$format['type']:'all');
+			$selected = (isset($format['selected'])?$format['selected']:'');
+			$self = (isset($format['self'])?$format['self']:'');
+			$globals = (isset($format['globals'])?$format['globals']:True);
+			$site_link = (isset($format['site_link'])?$format['site_link']:'site');
+			$format = $format['format'] ? $format['format'] : 'select';
+		}
+
+		if (!is_array($selected))
+		{
+			$selected = explode(',',$selected);
+		}
+
+		if ($type != 'all')
+		{
+			$cats = $this->return_array($type,0,False,'','','',$globals);
+		}
+		else
+		{
+			$cats = $this->return_sorted_array(0,False,'','','',$globals);
+		}
+
+		if (!$cats) return '';
+
+		if($self)
+		{
+			foreach($cats as $key => $cat)
+			{
+				if ($cat['id'] == $self)
+				{
+					unset($cats[$key]);
+				}
+			}
+		}
+
+		switch ($format)
+		{
+			case 'select':
+				foreach($cats as $cat)
+				{
+					$s .= '<option value="' . $cat['id'] . '"';
+					if (in_array($cat['id'],$selected))
+					{
+						$s .= ' selected="selected"';
+					}
+					$s .= '>'.str_repeat('&nbsp;',$cat['level']);
+					$s .= $GLOBALS['egw']->strip_html($cat['name']);
+					if ($cat['app_name'] == self::GLOBAL_APPNAME || $cat['owner'] == 'self::GLOBAL_ACCOUNT')
+					{
+						$s .= ' &#9830;';
+					}
+					$s .= '</option>' . "\n";
+				}
+				break;
+
+			case 'list':
+				$space = '&nbsp;&nbsp;';
+
+				$s  = '<table border="0" cellpadding="2" cellspacing="2">' . "\n";
+
+				foreach($cats as $cat)
+				{
+					$image_set = '&nbsp;';
+
+					if (in_array($cat['id'],$selected))
+					{
+						$image_set = '<img src="' . EGW_IMAGES_DIR . '/roter_pfeil.gif">';
+					}
+					if (($cat['level'] == 0) && !in_array($cat['id'],$selected))
+					{
+						$image_set = '<img src="' . EGW_IMAGES_DIR . '/grauer_pfeil.gif">';
+					}
+					$space_set = str_repeat($space,$cat['level']);
+
+					$s .= '<tr>' . "\n";
+					$s .= '<td width="8">' . $image_set . '</td>' . "\n";
+					$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['egw']->link($site_link,'cat_id=' . $cat['id']) . '">'
+						. $GLOBALS['egw']->strip_html($cat['name'])
+						. '</a></td>' . "\n"
+						. '</tr>' . "\n";
+				}
+				$s .= '</table>' . "\n";
+				break;
+		}
+		return $s;
+	}
+
+	/**
+	 * return category name for a given id
+	 *
+	 * @deprecated This is only a temp wrapper, use id2name() to keep things matching across the board. (jengo)
+	 * @param int $cat_id
+	 * @return string cat_name category name
+	 */
+	function return_name($cat_id)
+	{
+		return $this->id2name($cat_id);
 	}
 }
