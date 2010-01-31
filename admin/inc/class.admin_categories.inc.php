@@ -108,7 +108,7 @@ class admin_categories
 				$readonlys['button[cancel]'] = false;
 			}
 			$content['base_url'] = self::icon_url();
-			$content['icon_url'] = $content['basthis->e_url'] . $content['data']['icon'];
+			$content['icon_url'] = $content['base_url'] . $content['data']['icon'];
 		}
 		elseif ($content['button'] || $content['delete'])
 		{
@@ -277,7 +277,7 @@ class admin_categories
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 
 			$content['nm'] = egw_cache::getSession(__CLASS__,'nm');
-			//if (!is_array($content['nm']))
+			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'admin_categories::get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
@@ -315,7 +315,7 @@ class admin_categories
 			unset($content['delete']);
 		}
 		$content['msg'] = $msg;
-		$readonlys['add'] = true;//!self::$acl_add;
+		$readonlys['add'] = !self::$acl_add;
 
 		$tmpl = new etemplate('admin.categories.index');
 		$tmpl->exec('admin.admin_categories.index',$content,$sel_options,$readonlys,array(
