@@ -193,7 +193,7 @@ class select_widget
 				{
 					$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
-					if ($cat['app_name'] == categories::GLOBAL_APPNAME || $cat['owner'] == categories::GLOBAL_ACCOUNT)
+					if (categories::is_global($cat))
 					{
 						$s .= ' &#9830;';
 					}
@@ -225,7 +225,8 @@ class select_widget
 					$cell['no_lang'] = True;
 					foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
 					{
-						$cell['sel_options'][$id] = $this->accountInfo($id,$acc,$type2,$type=='both');
+						$cell['sel_options'][$id] = !$id && !is_numeric($rows) ? lang($rows) :
+							$this->accountInfo($id,$acc,$type2,$type=='both');
 					}
 					break;
 				}

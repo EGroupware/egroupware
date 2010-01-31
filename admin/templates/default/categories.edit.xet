@@ -80,7 +80,7 @@
 					<colorpicker id="data[color]"/>
 				</row>
 				<row class="row">
-					<description options=",,,cat_data[icon]" value="Icon"/>
+					<description options=",,,data[icon]" value="Icon"/>
 					<hbox options="0,0">
 						<menulist>
 							<menupopup id="data[icon]" options="None" onchange="document.getElementById('icon_url').src = '$cont[base_url]' + this.value;"/>
@@ -91,10 +91,16 @@
 				<row class="row" disabled="@appname=phpgw">
 					<description value="Application"/>
 					<menulist>
-						<menupopup type="select-app" id="appname" readonly="true"/>
+						<menupopup type="select-app" id="appname" readonly="true" options="All applications"/>
 					</menulist>
 				</row>
 				<row class="row">
+					<description options=",,,owner" value="Limit to members of"/>
+					<menulist>
+						<menupopup type="select-account" options="All users,groups" id="owner" statustext="Limit global category to members of a certain group"/>
+					</menulist>
+				</row>
+				<row class="row" disabled="!@last_mod">
 					<description value="Modified"/>
 					<date-time id="last_mod" readonly="true"/>
 				</row>

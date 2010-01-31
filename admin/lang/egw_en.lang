@@ -55,7 +55,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login, an IP should be blocked (default 3) ?
 aliases	admin	en	Aliases
 all records and account information will be lost!	admin	en	All records and account information will be lost!
-all users	admin	en	All Users
+all users	admin	en	All users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
 allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's (comma separated)
 alternate email address	admin	en	alternate email address
@@ -111,6 +111,7 @@ change password for %1	admin	en	change password for %1
 check acl for entries of not (longer) existing accounts	admin	en	Check ACL for entries of not (longer) existing accounts
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
+children	admin	en	Children
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
@@ -321,6 +322,8 @@ leave the group untouched and return back to the list	admin	en	Leave the group u
 leave without saveing the entry	admin	en	leave without saveing the entry
 leaves without saveing	admin	en	leaves without saveing
 length<br>rows	admin	en	Length<br>Rows
+limit global category to members of a certain group	admin	en	Limit global category to members of a certain group
+limit to members of	admin	en	Limit to members of
 list config settings	admin	en	List config settings
 list current sessions	admin	en	List current sessions
 list of current users	admin	en	list of current users

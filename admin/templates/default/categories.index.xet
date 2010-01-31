@@ -7,6 +7,7 @@
 				<column/>
 				<column/>
 				<column/>
+				<column/>
 				<column width="40"/>
 				<column width="80"/>
 				<column/>
@@ -17,7 +18,8 @@
 				<row class="th">
 					<nextmatch-sortheader label="Name" id="name"/>
 					<nextmatch-sortheader label="Description" id="description"/>
-					<nextmatch-header id="appname" label="Application"/>
+					<nextmatch-header id="app" label="Application"/>
+					<nextmatch-header label="Limit to members of" id="owner"/>
 					<nextmatch-header label="Icon" id="icon" align="center"/>
 					<nextmatch-header label="Color" id="color"/>
 					<nextmatch-sortheader label="Modified" id="last_mod"/>
@@ -31,15 +33,18 @@
 					</hbox>
 					<description id="${row}[description]"/>
 					<menulist>
-						<menupopup type="select-app" id="${row}[appname]" options="Global" readonly="true"/>
+						<menupopup type="select-app" id="${row}[appname]" readonly="true"/>
+					</menulist>
+					<menulist>
+						<menupopup type="select-account" id="${row}[owner]" readonly="true" options="All users,groups"/>
 					</menulist>
 					<image src="${row}[icon_url]" label="{$row_cont[data][icon]}" align="center"/>
 					<description id="${row}[data][color]"/>
 					<date-time id="${row}[last_mod]" readonly="true"/>
 					<description id="${row}[subs]" align="center"/>
 					<hbox options="0,0">
-						<buttononly options="edit" label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_categories.edit&amp;cat_id=$row_cont[id]'),'_blank','dependent=yes,width=600,height=300,scrollbars=yes,status=yes'); return false;"/>
-						<buttononly options="new" label="Add sub" id="add[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_categories.edit&amp;parent=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=300,scrollbars=yes,status=yes'); return false;"/>
+						<buttononly options="edit" label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_categories.edit&amp;cat_id=$row_cont[id]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
+						<buttononly options="new" label="Add sub" id="add[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_categories.edit&amp;parent=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=380,scrollbars=yes,status=yes'); return false;"/>
 						<buttononly options="delete" label="Delete" id="delete[$row_cont[id]]" statustext="Delete this category" onclick="document.getElementById('exec[delete][cat_id]').value='$row_cont[id]'; set_style_by_class('tr','confirmSubs','visibility','$row_cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block'); return false;" class="leftPad5"/>
 					</hbox>
 				</row>

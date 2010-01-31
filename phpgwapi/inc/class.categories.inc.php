@@ -92,7 +92,16 @@ class categories
 	/**
 	 * account_id for global categories
 	 */
-	const GLOBAL_ACCOUNT = -1;
+	const GLOBAL_ACCOUNT = 0;
+	
+	/**
+	 * Owners for global accounts
+	 * 
+	 * Usually the users group memberships and self::GLOBAL_ACCOUNT
+	 * 
+	 * @var array
+	 */
+	private $global_owners = array(self::GLOBAL_ACCOUNT);
 	
 	/**
 	 * constructor for categories class
@@ -104,13 +113,16 @@ class categories
 	{
 		if (!$app_name) $app_name = $GLOBALS['egw_info']['flags']['currentapp'];
 
-		if ($accountid == self::GLOBAL_ACCOUNT)
+		if ($accountid === self::GLOBAL_ACCOUNT ||
+			$accountid < 0 && $GLOBALS['egw']->accounts->exists($accountid) == 2)
 		{
-			$this->account_id = self::GLOBAL_ACCOUNT;
+			$this->account_id = (int) $accountid;
 		}
 		else
 		{
 			$this->account_id	= (int) get_account_id($accountid);
+			$this->global_owners = $GLOBALS['egw']->accounts->memberships($this->account_id,true);
+			$this->global_owners[] = self::GLOBAL_ACCOUNT;
 		}
 		$this->app_name		= $app_name;
 		$this->db			= $GLOBALS['egw']->db;
@@ -466,22 +478,24 @@ class categories
 	 */
 	public function check_perms($needed,$category)
 	{
-		if (!is_array($category) && !($category = self::$cache[$category]))
+		if (!is_array($category) && !($category = self::read($category)))
 		{
 			return null;
 		}
 
 		// The user for the global cats has id self::GLOBAL_ACCOUNT, this one has full access to all global cats
-		if ($this->account_id == self::GLOBAL_ACCOUNT && ($category['appname'] == self::GLOBAL_APPNAME
-				|| $category['appname'] == $this->app_name && $category['owner'] == self::GLOBAL_ACCOUNT))
+		if ($this->account_id == self::GLOBAL_ACCOUNT && ($category['appname'] == self::GLOBAL_APPNAME ||
+			$category['appname'] == $this->app_name && self::is_global($category)))
 		{
+			//echo "<p>".__METHOD__."($needed,$category[name]) access because class instanciated for GLOBAL ACCOUNT</p>\n";
 			return true;
 		}
 		
 		// Read access to global categories
-		if ($needed == EGW_ACL_READ && ($category['appname'] == self::GLOBAL_APPNAME
-				|| $category['appname'] == $this->app_name && $category['owner'] == self::GLOBAL_ACCOUNT))
+		if ($needed == EGW_ACL_READ && in_array($category['owner'],$this->global_owners) &&
+			($category['appname'] == self::GLOBAL_APPNAME || $category['appname'] == $this->app_name))
 		{
+			//echo "<p>".__METHOD__."($needed,$category[name]) access because global via memberships</p>\n";
 			return true;
 		}
 		
@@ -659,13 +673,26 @@ class categories
 			foreach($cats as $k => $cat)
 			{
 				$cats[$k]['weight'] = 100 * ($cat['name'] == $cat_name) +
-					10 * ($cat['owner'] == $this->account_id ? 3 : ($cat['owner'] == self::GLOBAL_ACCOUNT ? 2 : 1)) +
+					10 * ($cat['owner'] == $this->account_id ? 3 : ($cat['owner'] <= self::GLOBAL_ACCOUNT ? 2 : 1)) +
 					($cat['appname'] != self::GLOBAL_APPNAME);
 			}
 			// sort heighest weight to the top
 			usort($cats,create_function('$a,$b',"return \$b['weight'] - \$a['weight'];"));
 		}
 		return $cache[$cat['cat_name']] = (int) $cats[0]['id'];
+	}
+	
+	/**
+	 * Check if catgory is global (owner <= 0 || appname == 'phpgw')
+	 * 
+	 * @param int|array $cat
+	 * @return boolean
+	 */
+	static function is_global($cat)
+	{
+		if (!is_array($cat) && !($cat = self::read($cat))) return null;	// cat not found
+		
+		return $cat['owner'] <= self::GLOBAL_ACCOUNT || $cat['appname'] == self::GLOBAL_APPNAME;
 	}
 
 	/**
@@ -781,12 +808,27 @@ class categories
 			//error_log(__METHOD__."() ".count($cache)." cats restored: ".function_backtrace());
 			return self::$cache =& $cache;
 		}
+		// check if we are already updated to global owner == 0, if not do it now
+		if (!$GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)','cat_owner=0',__LINE__,__FILE__)->fetchColumn())
+		{
+			$GLOBALS['egw']->db->update(self::TABLE,'cat_owner=0','cat_owner=-1',__LINE__,__FILE__);
+			$GLOBALS['egw']->db->insert(self::TABLE,array(
+				'cat_main'    => 0,
+				'cat_parent'  => 0,
+				'cat_level'   => 0,
+				'cat_owner'   => 0,
+				'cat_appname' => '*update*',
+				'cat_name'    => 'global=0',
+				'cat_description' => 'global=0',
+			),false,__LINE__,__FILE__);
+		}
 		self::$cache = array();
 		// read all cats (cant use $this->db!)
 		foreach($GLOBALS['egw']->db->select(self::TABLE,'*',false,__LINE__,__FILE__,
 			false,'ORDER BY cat_main, cat_level, cat_name ASC') as $cat)
 		{
 			$cat = egw_db::strip_array_keys($cat,'cat_');
+			if ($cat['appname'] == '*update*') continue;	// --> ignore update marker
 			$cat['app_name'] = $cat['appname'];
 			// backlink children to their parent
 			if ($cat['parent'])
@@ -898,7 +940,7 @@ class categories
 					}
 					$s .= '>'.str_repeat('&nbsp;',$cat['level']);
 					$s .= $GLOBALS['egw']->strip_html($cat['name']);
-					if ($cat['app_name'] == self::GLOBAL_APPNAME || $cat['owner'] == 'self::GLOBAL_ACCOUNT')
+					if (self::is_global($cat))
 					{
 						$s .= ' &#9830;';
 					}

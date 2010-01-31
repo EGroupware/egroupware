@@ -112,7 +112,7 @@ class admin_categories
 		}
 		elseif ($content['button'] || $content['delete'])
 		{
-			$cats = new categories(categories::GLOBAL_ACCOUNT,$content['appname']);
+			$cats = new categories($content['owner'] ? $content['owner'] : categories::GLOBAL_ACCOUNT,$content['appname']);
 
 			if ($content['delete']['delete'])
 			{
@@ -178,6 +178,7 @@ class admin_categories
 		$sel_options['icon'] = self::get_icons();
 
 		$readonlys['button[delete]'] = !$content['id'] || !self::$acl_delete;	// cant delete not yet saved category
+		$readonlys['owner'] = $content['id'] > 0;
 
 		$tmpl = new etemplate('admin.categories.edit');
 		$tmpl->exec('admin.admin_categories.edit',$content,$sel_options,$readonlys,$content+array(
