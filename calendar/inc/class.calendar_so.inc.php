@@ -460,22 +460,22 @@ class calendar_so
 				$recur_dates[] = $row['cal_recur_date'];
 			}
 			if ($row['participants'])
-            {
-                $row['participants'] = explode(',',$row['participants']);
-                $row['participants'] = array_combine($row['participants'],
-                    array_fill(0,count($row['participants']),''));
-            }
-            else
-            {
-                $row['participants'] = array();
-            }
-            $row['alarm'] = array();
+			{
+				$row['participants'] = explode(',',$row['participants']);
+				$row['participants'] = array_combine($row['participants'],
+				array_fill(0,count($row['participants']),''));
+			}
+			else
+			{
+				$row['participants'] = array();
+			}
+			$row['alarm'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 
 			$events[$id] = egw_db::strip_array_keys($row,'cal_');
 		}
 		//_debug_array($events);
-		if (count($events))
+		if (count($ids))
 		{
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
