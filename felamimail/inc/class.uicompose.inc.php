@@ -152,7 +152,7 @@
 				$replyIds = explode(',',$replyID);
 				$icServer = 0; //(int)$_GET['icServer'];
 				$folder = base64_decode($_GET['folder']);
-				_debug_array(array('reply_id'=>$replyIds,'folder'=>$folder));
+				//_debug_array(array('reply_id'=>$replyIds,'folder'=>$folder));
 				if (!empty($folder) && !empty($replyID) ) {
 					// this fill the session data with the values from the original email
 					$buff = $this->bocompose->preferencesArray['message_forwarding'];
