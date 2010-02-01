@@ -498,7 +498,7 @@ class felamimail_hooks
 			$linkData = array (
 				'menuaction'    => 'felamimail.uicompose.compose'
 			);
-			$urlCompose = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','compose', 700, egw_getWindowOuterHeight());";
+			$urlCompose = "openComposeWindow('".$GLOBALS['egw']->link('/index.php',$linkData)."');";
 
 			$navbarImages = array(
 				'new'			=> array(

@@ -23,6 +23,7 @@
 			'fileSelector'		=> True,
 			'forward'		=> True,
 			'composeAsNew'         => True,
+			'composeAsForward'=> True,
 			'reply'			=> True,
 			'replyAll'		=> True,
 			'selectFolder'		=> True,
@@ -140,6 +141,30 @@
 
 			#$GLOBALS['egw']->common->egw_exit();
 			print "<script type=\"text/javascript\">window.close();</script>";
+		}
+
+		function composeAsForward($_focusElement='to')
+		{
+			if (isset($_GET['forwardmails']))
+			{
+				unset($_GET['forwardmails']);
+				$replyID = $_GET['reply_id'];
+				$replyIds = explode(',',$replyID);
+				$icServer = 0; //(int)$_GET['icServer'];
+				$folder = base64_decode($_GET['folder']);
+				_debug_array(array('reply_id'=>$replyIds,'folder'=>$folder));
+				if (!empty($folder) && !empty($replyID) ) {
+					// this fill the session data with the values from the original email
+					$buff = $this->bocompose->preferencesArray['message_forwarding'];
+					$this->bocompose->preferencesArray['message_forwarding'] = 'asmail';
+					foreach($replyIds as $key => $id)
+					{
+						$this->bocompose->getForwardData($icServer, $folder, $id,NULL);
+					}
+					$this->bocompose->preferencesArray['message_forwarding'] = $buff;
+				}
+			}
+			$this->compose($_focusElement);
 		}
 
 		function compose($_focusElement='to')

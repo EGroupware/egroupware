@@ -522,7 +522,8 @@
 				$GLOBALS['egw']->common->egw_footer();
 				exit;
 			}
-			
+			$this->t->set_var('activeFolder',$urlMailbox);
+			$this->t->set_var('activeFolderB64',base64_encode($this->mailbox));	
 			$this->t->set_var('oldMailbox',$urlMailbox);
 			$this->t->set_var('image_path',EGW_IMAGES);
 			#printf ("this->uifelamimail->viewMainScreen() Line 272: %s<br>",date("H:i:s",mktime()));

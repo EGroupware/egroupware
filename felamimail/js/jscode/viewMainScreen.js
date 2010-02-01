@@ -381,7 +381,36 @@ function refreshView() {
 }
 
 function openComposeWindow(_url) {
-	egw_openWindowCentered(_url,'test',700,egw_getWindowOuterHeight());
+    var Check=true;
+    var _messageList;
+    var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
+    resetMessageSelect();
+    if (cbAllMessages == true) Check = confirm(lang_confirm_all_messages);
+    if (cbAllMessages == true && Check == true)
+    {
+        _messageList = 'all';
+    } else {
+        _messageList = xajax.getFormValues('formMessageList');
+    }
+	sMessageList='';
+	for (var i in _messageList['msg']) {
+		//alert('eigenschaft:'+_messageList['msg'][i]);
+		sMessageList=sMessageList+_messageList['msg'][i]+',';
+		//sMessageList.concat(',');
+	}
+	if (sMessageList.length >0) {
+		sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
+	}
+	//alert(sMessageList);
+    if (Check == true)
+    {
+		egw_openWindowCentered(_url+sMessageList,'compose',700,egw_getWindowOuterHeight());
+    }
+    for(i=0; i< document.forms.formMessageList.elements.length; i++) {
+        if(document.forms.formMessageList.elements[i].checked) {
+            document.forms.formMessageList.elements[i].checked = false;
+        }
+    }
 }
 
 // timer functions

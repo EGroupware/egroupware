@@ -432,7 +432,8 @@
 		{
 			if($this->_debug) error_log("ajaxfelamimail::generateMessageList with $_folderName,$modifyoffset");
 			$response = new xajaxResponse();
-
+			$response->addScript("activeFolder = \"".$_folderName."\";");
+			$response->addScript("activeFolderB64 = \"".base64_encode($_folderName)."\";");
 			if($this->_connectionStatus === false) {
 				return $response->getXML();
 			}

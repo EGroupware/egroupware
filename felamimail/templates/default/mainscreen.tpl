@@ -23,7 +23,10 @@ var lang_mark_all_messages 	= '{lang_mark_all_messages}';
 var lang_confirm_all_messages = '{lang_confirm_all_messages}';
 
 var MessageBuffer;
-
+// global vars to store server and active folder info
+//var activeServerID			= '{activeServerID}';
+var activeFolder			= '{activeFolder}';
+var activeFolderB64			= '{activeFolderB64}';
 var activityImagePath		= '{ajax-loader}';
 
 // how many row are selected currently
