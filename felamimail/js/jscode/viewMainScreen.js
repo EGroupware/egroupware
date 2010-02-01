@@ -367,11 +367,11 @@ function refreshFolderStatus(_nodeID,mode) {
 	}
 	var activeFolders = getTreeNodeOpenItems(nodeToRefresh,mode2use);
 	xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshFolderList', activeFolders);
-	if (fm_previewMessageID>0)
-	{
-		//setStatusMessage('<span style="font-weight: bold;">'+ lang_updating_view +'</span>');
-		//xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",fm_previewMessageID,fm_previewMessageFolderType);
-	}
+//	if (fm_previewMessageID>0)
+//	{
+//		//setStatusMessage('<span style="font-weight: bold;">'+ lang_updating_view +'</span>');
+//		//xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshMessagePreview",fm_previewMessageID,fm_previewMessageFolderType);
+//	}
 }
 
 function refreshView() {

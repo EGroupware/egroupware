@@ -321,6 +321,7 @@
 			}
 
 			# Split it
+			//_debug_array($attr);
 			$attrarr = $this->_hair($attr);
 			
 			# Go through $attrarr, and save the allowed attributes for this element
@@ -377,6 +378,7 @@
 		###############################################################################
 		function _hair($attr)
 		{
+			//echo __METHOD__.'called<br>';
 			$attrarr  = array();
 			$mode     = 0;
 			$attrname = '';
@@ -393,7 +395,9 @@
 					case 0:	# attribute name, href for instance
 						if (preg_match('/^([-a-zA-Z]+)/', $attr, $match))
 						{
+							//echo 'mode 0:'.$match[0].'<br>';
 							$attrname = $match[1];
+							//echo 'mode 0 -> attrname:'.$attrname.'<br>';
 							$working = $mode = 1;
 							$attr = preg_replace('/^[-a-zA-Z]+/', '', $attr);
 						}
@@ -404,6 +408,7 @@
 							$working = 1;
 							$mode    = 2;
 							$attr    = preg_replace('/^\s*=\s*/', '', $attr);
+							//echo 'mode 1:'.$attr.'<br>';
 							break;
 						}
 						if (preg_match('/^\s+/', $attr)) # valueless
@@ -420,9 +425,10 @@
 						}
 						break;
 					case 2: # attribute value, a URL after href= for instance
+							//echo 'mode 2 Attrname:'.$attrname.'<br>';
 						if (preg_match('/^"([^"]*)"(\s+|$)/', $attr, $match)) # "value"
 						{
-							$thisval   = $this->_bad_protocol($match[1]);
+							$thisval   = ($attrname == 'name' ? $match[1] : $this->_bad_protocol($match[1]));
 							$attrarr[] = array(
 								'name'  => $attrname,
 								'value' => $thisval,
@@ -432,11 +438,12 @@
 							$working   = 1;
 							$mode      = 0;
 							$attr      = preg_replace('/^"[^"]*"(\s+|$)/', '', $attr);
+							//echo 'mode 2:'.$attr.'<br>';
 							break;
 						}
 						if (preg_match("/^'([^']*)'(\s+|$)/", $attr, $match)) # 'value'
 						{
-							$thisval   = $this->_bad_protocol($match[1]);
+							$thisval   = ($attrname == 'name' ? $match[1] : $this->_bad_protocol($match[1]));
 							$attrarr[] = array(
 								'name'  => $attrname,
 								'value' => $thisval,
@@ -446,11 +453,12 @@
 							$working   = 1;
 							$mode      = 0;
 							$attr      = preg_replace("/^'[^']*'(\s+|$)/", '', $attr);
+							//echo 'mode 2:'.$attr.'<br>';
 							break;
 						}
 						if (preg_match("%^([^\s\"']+)(\s+|$)%", $attr, $match)) # value
 						{
-							$thisval   = $this->_bad_protocol($match[1]);
+							$thisval   = ($attrname == 'name' ? $match[1] : $this->_bad_protocol($match[1]));
 							$attrarr[] = array(
 								'name'  => $attrname,
 								'value' => $thisval,
@@ -513,6 +521,7 @@
 		###############################################################################
 		function _bad_protocol_once($string)
 		{
+			if ($string[0]=='#') return $string; // its an anchor, dont check for protocol any further
 			$string2 = preg_split('/:|&#58;|&#x3a;/i', $string, 2);
 			if(isset($string2[1]) && !preg_match('%/\?%',$string2[0]))
 			{
@@ -535,21 +544,24 @@
 		###############################################################################
 		function _bad_protocol_once2($string)
 		{
-			$string2 = $this->_decode_entities($string2);
-			$string2 = preg_replace('/\s/', '', $string);
+			$string2 = $this->_decode_entities($string);
+			$string2 = preg_replace('/\s/', '', $string2);
 			$string2 = $this->_no_null($string2);
+			$string2 = preg_replace('/\xad+/', '', $string2); # deals with Opera "feature"
 			$string2 = strtolower($string2);
 
 			$allowed = false;
-			foreach ($this->allowed_protocols as $one_protocol)
+			if(is_array($this->allowed_protocols) && count($this->allowed_protocols) > 0)
 			{
-				if (strtolower($one_protocol) == $string2)
+				foreach ($this->allowed_protocols as $one_protocol)
 				{
-					$allowed = true;
-					break;
+					if (strtolower($one_protocol) == $string2)
+					{
+						$allowed = true;
+						break;
+					}
 				}
 			}
-
 			if ($allowed)
 			{
 				return "$string2:";

@@ -173,7 +173,7 @@
 				$sbody = substr($sbody, $start);
 			}
 			$llink='';
-			#_debug_array($addresses);
+			//_debug_array($addresses);
 			if (is_array($addresses)) ksort($addresses);
 			foreach ((array)$addresses as $text => $link) {
 				if (empty($link)) continue;
@@ -1073,8 +1073,11 @@
 					// removes stuff between http and ?http
 					$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
 					$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
-					// create links for websites
-					$newBody = html::activate_links($newBody);
+					// spamsaver emailaddress, needed to be able to apply email compose links later
+					$newBody = preg_replace('/'.'(?<!"|href=|href\s=\s|href=\s|href\s=)'.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
+						'<a href="#" onclick="document.location=\'mai\'+\'lto:\\1\'+unescape(\'%40\')+\'\\2.\\3\'; return false;">\\1 AT \\2 DOT \\3</a>',
+						$newBody);
+
 					// redirect links for websites if you use no cookies
 					#if (!($GLOBALS['egw_info']['server']['usecookies'])) { //do it all the time, since it does mask the mailadresses in urls
 						$this->parseHREF($newBody);

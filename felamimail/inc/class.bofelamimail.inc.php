@@ -803,7 +803,7 @@
 			// but they matter in <pre>, so we rather don't
 			//$_html = str_replace("\r\n",' ',$_html);
 			//$_html = str_replace("\t",' ',$_html);
-
+			//error_log($_html);
 			self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
 			self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head	
 			self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs	
@@ -870,7 +870,7 @@
 			}
 			else
 			{
-				#echo $_html;exit;
+				//echo $_html;exit;
 				$kses = new kses();
 				$kses->AddProtocol('cid');
 				// since check protocoll is called for every value associated to an attribute we have to add color and background-color to the valid protocolls
