@@ -127,7 +127,7 @@ class html
 						$value = $value ? 'true' : 'false';
 						break;
 					case 'string':
-						$value = "'$value'";
+						if (stripos($value,"'")===false) $value = "'$value'";
 						break;
 				}
 				$ttip .= ','.$option.','.$value;
@@ -135,7 +135,7 @@ class html
 		}
 		$ttip .= ')"';
 
-		if (!$sticky) $ttip .= ' onmouseout="UnTip()"';
+		$ttip .= ' onmouseout="UnTip()"';
 
 		return $ttip;
 	}

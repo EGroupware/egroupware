@@ -1351,12 +1351,19 @@ class calendar_uiviews extends calendar_ui
 				'color'   => $color,
 			);
 		}
+
+		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.$owner;
+
 		$ttip_options = array(
 			'BorderWidth' => 0,		// as we use our round borders
 			'Padding'     => 0,
 			'Sticky'      => true,	// make long tooltips scrollable
 			'ClickClose'  => true,
-			'FollowMouse' => false,
+			'FOLLOWMOUSE' => false,
+			'DELAY'		  => 600,
+			'FIX'		  => "['".$draggableID."',10,-5]",
+			'SHADOW'	  => false,
+			'WIDTH'		  => -400,
 		);
 		$ie_fix = '';
         if (html::$user_agent == 'msie')	// add a transparent image to make the event "opaque" to mouse events
@@ -1382,8 +1389,6 @@ class calendar_uiviews extends calendar_ui
 		{
 			$style = 'position: relative; margin-top: 3px;';
 		}
-
-		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.$owner;
 
 		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: 20;"'.
