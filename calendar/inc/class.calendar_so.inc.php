@@ -558,7 +558,7 @@ class calendar_so
 	 */
 	private static function get_union_selects(array &$selects,$start,$end,$users,$cat_id,$filter,$query)
 	{
-		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','rpc.php','xmlrpc.php')))
+		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','rpc.php','xmlrpc.php')) || $GLOBALS['egw_info']['flags']['currentapp'] != 'calendar')
 		{
 			return;    // disable integration for GroupDAV, SyncML, ...
 		}
