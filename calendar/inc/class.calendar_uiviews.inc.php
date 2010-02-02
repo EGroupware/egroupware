@@ -145,6 +145,7 @@ class calendar_uiviews extends calendar_ui
 			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
 
 		// standard params for calling bocal::search for all views
+		$this->owner = str_replace('%2C',',',$this->owner);
 		$this->search_params = array(
 			'start'   => $this->date,
 			'cat_id'  => $this->cat_id,
@@ -1279,7 +1280,6 @@ class calendar_uiviews extends calendar_ui
 		}
 */
 		$tooltip = $tpl->fp('tooltip','event_tooltip');
-		$tpl->set_var('tooltip',html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)));
 		$html = $tpl->fp('out',$block);
 
 		$view_link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
@@ -1306,11 +1306,25 @@ class calendar_uiviews extends calendar_ui
 				'color'   => $color,
 			);
 		}
+
+		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.$owner;
+
+		$ttip_options = array(
+			'BorderWidth' => 0,		// as we use our round borders
+			'Padding'     => 0,
+			'Sticky'      => true,	// make long tooltips scrollable
+			'ClickClose'  => true,
+			'FOLLOWMOUSE' => false,
+			'DELAY'		  => 600,
+			//'FIX'		  => "['".$draggableID."',10,-5]",
+			'SHADOW'	  => false,
+			'WIDTH'		  => -400,
+		);
 		$ie_fix = '';
         if (html::$user_agent == 'msie')	// add a transparent image to make the event "opaque" to mouse events
         {
 			$ie_fix = $indent."\t".html::image('calendar','transparent.gif','',
-				html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
+				html::tooltip($tooltip,False,$ttip_options).
 				' style="top:0px; left:0px; position:absolute; height:100%; width:100%; z-index:1"') . "\n";
         }
 		if ($this->use_time_grid)
@@ -1330,11 +1344,9 @@ class calendar_uiviews extends calendar_ui
 			$style = 'position: relative; margin-top: 3px;';
 		}
 
-		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.$owner;
-
 		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: 20;"'.
-			$popup.' '.html::tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
+			$popup.' '.html::tooltip($tooltip,False,$ttip_options).
 			'>'."\n".$ie_fix.$html."\n".
 			$indent."</div>"."\n";
 

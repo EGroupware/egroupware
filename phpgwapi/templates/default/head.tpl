@@ -23,6 +23,6 @@
 		{css_file}
 		{java_script}
 	</head>
-	<!-- we don't need body tags anymore, do we?) we do!!! onload!! LK -->
 	<body {body_tags}>
+		{include_wz_tooltip}
 <!-- END head -->

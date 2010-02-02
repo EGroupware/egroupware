@@ -46,6 +46,19 @@ abstract class egw_framework
 	var $template;
 
 	/**
+	* true if $this->header() was called
+	*
+	* @var boolean
+	*/
+	static $header_done = false;
+	/**
+	* true if $this->navbar() was called
+	*
+	* @var boolean
+	*/
+	static $navbar_done = false;
+
+	/**
 	 * Constructor
 	 *
 	 * The constructor instanciates the class in $GLOBALS['egw']->framework, from where it should be used
@@ -56,7 +69,7 @@ abstract class egw_framework
 	{
 		$this->template = $template;
 
-		if (!is_object($GLOBALS['egw']->framework))
+		if (!isset($GLOBALS['egw']->framework))
 		{
 			$GLOBALS['egw']->framework = $this;
 		}
@@ -157,7 +170,6 @@ abstract class egw_framework
 			$var['page_generation_time'] .= '</span></div>';
 		}
 		$var['powered_by'] = lang('Powered by').' <a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php">eGroupWare</a> '.lang('version').' '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'];
-		$var['activate_tooltips'] = '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js" type="text/javascript"></script>';
 
 		return $var;
 	}
@@ -250,6 +262,12 @@ abstract class egw_framework
 			$var['favicon_file'] = common::image('phpgwapi',$GLOBALS['egw_info']['server']['favicon_file']?$GLOBALS['egw_info']['server']['favicon_file']:'favicon.ico');
 		}
 
+		$wz_tooltip = '/phpgwapi/js/wz_tooltip/wz_tooltip.js';
+		if (file_exists(EGW_SERVER_ROOT.$wz_tooltip))
+		{
+			$include_wz_tooltip = '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				$wz_tooltip.'?'.filemtime(EGW_SERVER_ROOT.$wz_tooltip).'" type="text/javascript"></script>';
+		}
 		return $this->_get_css()+array(
 			#'img_icon'      	=> EGW_IMAGES_DIR . '/favicon.ico',
 			'img_icon'			=> $var['favicon_file'],
@@ -265,6 +283,7 @@ abstract class egw_framework
 			'java_script'   	=> self::_get_js(),
 			'meta_robots'		=> $robots,
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
+			'include_wz_tooltip'=> $include_wz_tooltip,
 		);
 	}
 
