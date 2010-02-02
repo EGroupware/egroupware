@@ -145,6 +145,7 @@ class calendar_uiviews extends calendar_ui
 			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
 
 		// standard params for calling bocal::search for all views
+		$this->owner = str_replace('%2C',',',$this->owner);
 		$this->search_params = array(
 			'start'   => $this->date,
 			'cat_id'  => $this->cat_id,
@@ -1361,7 +1362,7 @@ class calendar_uiviews extends calendar_ui
 			'ClickClose'  => true,
 			'FOLLOWMOUSE' => false,
 			'DELAY'		  => 600,
-			'FIX'		  => "['".$draggableID."',10,-5]",
+			//'FIX'		  => "['".$draggableID."',10,-5]",
 			'SHADOW'	  => false,
 			'WIDTH'		  => -400,
 		);
