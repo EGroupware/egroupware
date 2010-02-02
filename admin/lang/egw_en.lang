@@ -215,9 +215,11 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	en
 enter the background color for the login page	admin	en	Enter the background color for the login page
 enter the background color for the site title	admin	en	Enter the background color for the site title
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	en	Enter the hostname of the machine on which this server is running
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	en	Enter the search string. To show all entries, empty this field and press the SUBMIT button again
 enter the site password for peer servers	admin	en	Enter the site password for peer servers
 enter the site username for peer servers	admin	en	Enter the site username for peer servers
@@ -545,8 +547,8 @@ view error log	admin	en	View error log
 view sessions	admin	en	View sessions
 view this user	admin	en	view this user
 view user account	admin	en	View user account
-we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	en	We ask for the data to improve our profile in the press and to get a better understanding of EGroupware's user base and it's needs.
-we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	en	We hope you understand the importance for this voluntary statistic and not deny it lightly.
+we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	en	We ask those data for statistical purpose only to get an general overview about the use of EGroupware worldwide.
+we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	en	We're not saving any data regarding your identity.
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like egroupware to cache the egw info array ?	admin	en	Would you like eGroupWare to cache the egw info array ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	en	Would you like eGroupWare to check for a new version<br>when admins login ?
