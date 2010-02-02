@@ -570,6 +570,13 @@
 					'uid'		=> $headerData['uid'],
 					'id'		=> $headerData['id'],
 				);
+				$linkDataAttachments = array (
+					'menuaction'    => 'felamimail.uidisplay.displayAttachments',
+					'showHeader'	=> 'false',
+					'mailbox'    => base64_encode($_folderName),
+					'uid'		=> $headerData['uid'],
+					'id'		=> $headerData['id'],
+				);
 				$windowName =  'displayMessage_'.$headerData['uid'];
 				if($headerData['mimetype'] == 'multipart/mixed' ||
 					$headerData['mimetype'] == 'multipart/related' ||
@@ -578,7 +585,7 @@
 					$image = html::image('felamimail','attach');
 
 					$image = "<a name=\"subject_url\" href=\"#\" 
-						onclick=\"fm_readMessage('".$GLOBALS['egw']->link('/index.php',$linkData)."', '".$windowName."', this); return false;\" 
+						onclick=\"fm_readAttachments('".$GLOBALS['egw']->link('/index.php',$linkDataAttachments)."', '".$windowName."', this); return false;\" 
 						title=\"".$headerData['subject']."\">".$image."</a>";
 
 					$windowName = ($_readInNewWindow == 1 ? 'displayMessage' : 'displayMessage_'.$header['uid']);

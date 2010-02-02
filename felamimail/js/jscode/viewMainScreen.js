@@ -454,6 +454,10 @@ function fm_readMessage(_url, _windowName, _node) {
 	xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
 }
 
+function fm_readAttachments(_url, _windowName, _node) {
+	egw_openWindowCentered(_url, _windowName, 750, 220);
+}
+
 function fm_clearSearch() {
 	var inputQuickSearch = document.getElementById('quickSearch');
 	var status 	= document.getElementById('status').value;

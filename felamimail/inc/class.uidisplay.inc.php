@@ -34,14 +34,15 @@
 
 		var $public_functions = array
 		(
-			'display'	=> 'True',
-			'displayBody'	=> 'True',
-			'displayHeader'	=> 'True',
-			'displayImage'	=> 'True',
-			'printMessage'	=> 'True',
-			'saveMessage'	=> 'True',
-			'showHeader'	=> 'True',
-			'getAttachment'	=> 'True',
+			'display'	=> True,
+			'displayBody'	=> True,
+			'displayHeader'	=> True,
+			'displayImage'	=> True,
+			'displayAttachments' => True,
+			'printMessage'	=> True,
+			'saveMessage'	=> True,
+			'showHeader'	=> True,
+			'getAttachment'	=> True,
 		);
 
 		var $icServerID=0;
@@ -507,7 +508,7 @@
 								'mailbox'	=> base64_encode($this->mailbox),
 								'is_winmail'    => $value['is_winmail']
 							);
-							$windowName = 'displayMessage_'. $this->uid;
+							$windowName = 'displayMessage_'. $this->uid.'_'.$value['partID'];
 							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
 							break;
 						case 'IMAGE/JPEG':
@@ -700,6 +701,193 @@
 
 		}
 
+		function displayAttachments()
+		{
+			$partID		= $_GET['part'];
+			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
+            $nonDisplayAbleCharacters = array('[\016]','[\017]',
+                    '[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
+                    '[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+
+			//$transformdate	=& CreateObject('felamimail.transformdate');
+			//$htmlFilter	=& CreateObject('felamimail.htmlfilter');
+			// (regis) seems to be necessary to reopen...
+			$this->bofelamimail->reopen($this->mailbox);
+			$headers	= $this->bofelamimail->getMessageHeader($this->uid, $partID);
+			$envelope   = $this->bofelamimail->getMessageEnvelope($this->uid, $partID);
+			if (PEAR::isError($headers)) {
+				print lang("ERROR: Message could not be displayed.")."<br>";
+				print "In Mailbox: $this->mailbox, with ID: $this->uid, and PartID: $partID<br>";
+				print $headers->message."<br>";
+				_debug_array($headers->backtrace[0]);
+				exit;
+			}
+			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid, $partID);
+			#_debug_array($attachments); exit;
+
+			$this->display_app_header();
+			$this->t->set_file(array("displayMsg" => "view_attachments.tpl"));
+			$this->t->set_var('charset',$GLOBALS['egw']->translation->charset());
+			$this->t->set_block('displayMsg','message_main_attachment');
+			$this->t->set_block('displayMsg','message_attachement_row');
+			$this->bofelamimail->closeConnection();
+
+			$this->t->egroupware_hack = False;
+
+			$this->translate();
+            $this->t->set_var("subject_data",
+                @htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT'])),
+                ENT_QUOTES,$this->displayCharset));
+
+			// attachments
+			if(is_array($attachments) && count($attachments) > 0) {
+				$this->t->set_var('attachment_count',count($attachments));
+			} else {
+				$this->t->set_var('attachment_count','0');
+			}
+
+			if (is_array($attachments) && count($attachments) > 0) {
+				$this->t->set_var('row_color',$this->rowColor[0]);
+				$this->t->set_var('name',lang('name'));
+				$this->t->set_var('type',lang('type'));
+				$this->t->set_var('size',lang('size'));
+				$this->t->set_var('url_img_save',html::image('felamimail','fileexport', lang('save')));
+				$url_img_vfs = html::image('filemanager','navbar', lang('Filemanager'), ' height="16"');
+				$url_img_vfs_save_all = html::image('felamimail','save_all', lang('Save all'));
+				#$this->t->parse('attachment_rows','attachment_row_bold',True);
+
+				$detectedCharSet=$charset2use=$this->displayCharset;
+				foreach ($attachments as $key => $value)
+				{
+					#$detectedCharSet = mb_detect_encoding($value['name'].'a',strtoupper($this->displayCharset).",UTF-8, ISO-8559-1");
+					if (function_exists('mb_convert_variables')) mb_convert_variables("UTF-8","ISO-8559-1",$value['name']); # iso 2 UTF8
+					//if (mb_convert_variables("ISO-8859-1","UTF-8",$value['name'])){echo "Juhu utf8 2 ISO\n";};
+					//echo $value['name']."\n";
+					$filename=htmlentities($value['name'], ENT_QUOTES, $detectedCharSet);
+
+					$this->t->set_var('row_color',$this->rowColor[($key+1)%2]);
+					$this->t->set_var('filename',($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)')));
+					$this->t->set_var('mimetype',mime_magic::mime2label($value['mimeType']));
+					$this->t->set_var('size',egw_vfs::hsize($value['size']));
+					$this->t->set_var('attachment_number',$key);
+
+					switch(strtoupper($value['mimeType']))
+					{
+						case 'MESSAGE/RFC822':
+							$linkData = array
+							(
+								'menuaction'	=> 'felamimail.uidisplay.display',
+								'uid'		=> $this->uid,
+								'part'		=> $value['partID'],
+								'mailbox'	=> base64_encode($this->mailbox),
+								'is_winmail'    => $value['is_winmail']
+							);
+							$windowName = 'displayMessage_'. $this->uid.'_'.$value['partID'];
+							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',700,screen.availHeight-50);";
+							break;
+						case 'IMAGE/JPEG':
+						case 'IMAGE/PNG':
+						case 'IMAGE/GIF':
+						case 'IMAGE/BMP':
+						case 'APPLICATION/PDF':
+						case 'TEXT/PLAIN':
+						case 'TEXT/HTML':
+						case 'TEXT/CALENDAR':
+						case 'TEXT/X-VCARD':
+							$linkData = array
+							(
+								'menuaction'	=> 'felamimail.uidisplay.getAttachment',
+								'uid'		=> $this->uid,
+								'part'		=> $value['partID'],
+								'is_winmail'    => $value['is_winmail'],
+								'mailbox'   => base64_encode($this->mailbox),
+							);
+							$windowName = 'displayAttachment_'. $this->uid;
+							$reg = '800x600';
+							// handle calendar/vcard
+							if (strtoupper($value['mimeType'])=='TEXT/CALENDAR') 
+							{
+								$windowName = 'displayEvent_'. $this->uid;
+								$reg2 = egw_link::get_registry('calendar','view_popup');
+							}
+							if (strtoupper($value['mimeType'])=='TEXT/X-VCARD')
+							{
+								$windowName = 'displayContact_'. $this->uid;
+								$reg2 = egw_link::get_registry('addressbook','add_popup');
+							}
+							// apply to action
+							list($width,$height) = explode('x',(!empty($reg2) ? $reg2 : $reg));
+							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',$width,$height);";
+							break;
+						default:
+							$linkData = array
+							(
+								'menuaction'	=> 'felamimail.uidisplay.getAttachment',
+								'uid'		=> $this->uid,
+								'part'		=> $value['partID'],
+								'is_winmail'    => $value['is_winmail'],
+								'mailbox'   => base64_encode($this->mailbox),
+							);
+							$linkView = "window.location.href = '".$GLOBALS['egw']->link('/index.php',$linkData)."';";
+							break;
+					}
+					$this->t->set_var("link_view",$linkView);
+					$this->t->set_var("target",$target);
+
+					$linkData = array
+					(
+						'menuaction'	=> 'felamimail.uidisplay.getAttachment',
+						'mode'		=> 'save',
+						'uid'		=> $this->uid,
+						'part'		=> $value['partID'],
+						'is_winmail'    => $value['is_winmail'],
+						'mailbox'   => base64_encode($this->mailbox),
+					);
+					$this->t->set_var("link_save",$GLOBALS['egw']->link('/index.php',$linkData));
+
+					if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
+					{
+						$link_vfs_save = egw::link('/index.php',array(
+							'menuaction' => 'filemanager.filemanager_select.select',
+							'mode' => 'saveas',
+							'name' => $value['name'],
+							'mime' => strtolower($value['mimeType']),
+							'method' => 'felamimail.uidisplay.vfsSaveAttachment',
+							'id' => $this->mailbox.'::'.$this->uid.'::'.$value['partID'].'::'.$value['is_winmail'],
+							'label' => lang('Save'),
+						));
+						$vfs_save = "<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','570',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs</a>";
+						// add save-all icon for first attachment
+						if (!$key && count($attachments) > 1)
+						{
+							foreach ($attachments as $key => $value)
+							{
+								$ids["id[$key]"] = $this->mailbox.'::'.$this->uid.'::'.$value['partID'].'::'.$value['is_winmail'].'::'.$value['name'];
+							}
+							$link_vfs_save = egw::link('/index.php',array(
+								'menuaction' => 'filemanager.filemanager_select.select',
+								'mode' => 'select-dir',
+								'method' => 'felamimail.uidisplay.vfsSaveAttachment',
+								'label' => lang('Save all'),
+							)+$ids);
+							$vfs_save .= "\n<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','530',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs_save_all</a>";
+						}
+						$this->t->set_var('vfs_save',$vfs_save);
+					}
+					else
+					{
+						$this->t->set_var('vfs_save','');
+					}
+					$this->t->parse('attachment_rows','message_attachement_row',True);
+				}
+			} else {
+				$this->t->set_var('attachment_rows','');
+			}
+
+			$this->t->pparse('out','message_main_attachment');
+
+		}
+
 		function displayImage()
 		{
 			$cid	= base64_decode($_GET['cid']);
@@ -736,6 +924,7 @@
 		{
 			if ($_GET['menuaction'] != 'felamimail.uidisplay.printMessage' &&
 				$_GET['menuaction'] != 'felamimail.uidisplay.displayBody' && 
+				$_GET['menuaction'] != 'felamimail.uidisplay.displayAttachments' &&
 				empty($printing)) 
 			{
 				$GLOBALS['egw']->js->validate_file('tabs','tabs');
@@ -748,7 +937,8 @@
 			}
 
 			if($_GET['menuaction'] == 'felamimail.uidisplay.printMessage' || (!empty($printing) && $printing == 1) ||
-				$_GET['menuaction'] == 'felamimail.uidisplay.displayBody') {
+				$_GET['menuaction'] == 'felamimail.uidisplay.displayBody' ||
+				$_GET['menuaction'] == 'felamimail.uidisplay.displayAttachments' ) {
 				$GLOBALS['egw_info']['flags']['nofooter'] = true;
 			}
 			$GLOBALS['egw_info']['flags']['include_xajax'] = True;
