@@ -10,22 +10,27 @@
 
 error_reporting(E_ALL & ~E_NOTICE);
 @define('AUTH_HANDLER', true);
-@define('HORDE_BASE', dirname(__FILE__).'/phpgwapi/inc/horde/');
+@define('EGW_API_INC', dirname(__FILE__) . '/phpgwapi/inc/');
+@define('HORDE_BASE', EGW_API_INC . '/horde/');
 require_once HORDE_BASE . '/lib/core.php';
 require_once 'Horde/RPC.php';
+//require_once EGW_API_INC . '/common_functions.inc.php';
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp'			=> 'login',
-		'noheader'			=> True,
-		'nonavbar'			=> True,
-		'disable_Template_class'	=> True
-	)
+		'currentapp'				=> 'syncml',
+		'noheader'					=> true,
+		'nonavbar'					=> true,
+		'noapi'						=> true,
+		'disable_Template_class'	=> true,
+	),
+	'server' => array(
+		'show_domain_selectbox'		=> true,
+	),
 );
-include('./header.inc.php');
 
-// allow to use an authentication specific for SyncML
-$GLOBALS['egw_info']['flags']['currentapp'] = 'syncml';
+
+include('./header.inc.php');
 
 $errors = array();
 
@@ -44,11 +49,6 @@ if(ini_get('mbstring.func_overload') != 0) {
 if(version_compare(PHP_VERSION, '5.0.0') < 0) {
 	$errors[] = 'eGroupWare\'s SyncML server requires PHP5. Please update to PHP 5.0.x if you want to use SyncML.';
 }
-
-$config =& CreateObject('phpgwapi.config','syncml');
-$config->read_repository();
-$GLOBALS['config_syncml'] =& $config->config_data;
-unset($config);
 
 /* Look at the Content-type of the request, if it is available, to try
  * and determine what kind of request this is. */

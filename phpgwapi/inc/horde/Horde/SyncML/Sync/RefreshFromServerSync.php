@@ -89,6 +89,9 @@ class Horde_SyncML_Sync_RefreshFromServerSync extends Horde_SyncML_Sync_TwoWaySy
 
 				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
 				$c = $registry->call($hordeType . '/export', array('guid' => $guid, 'contentType' => $contentType));
+
+				if ($c === false) continue; // no content to export
+
 				if (is_a($c, 'PEAR_Error')) {
 					Horde::logMessage("SyncML: refresh failed to export guid $guid:\n" . print_r($c, true),
 						__FILE__, __LINE__, PEAR_LOG_WARNING);

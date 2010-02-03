@@ -500,6 +500,12 @@ class egw_session
 			}
 			$this->account_id = $GLOBALS['egw']->accounts->auto_add($this->account_lid, $passwd);
 		}
+		// fix maybe wrong case in username, it makes problems eg. in filemanager (name of homedir)
+		if ($this->account_lid != ($lid = $GLOBALS['egw']->accounts->id2name($this->account_id)))
+		{
+			$this->account_lid = $lid;
+			$this->login = $lid.substr($this->login,strlen($lid));
+		}
 
 		$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
 		$GLOBALS['egw']->accounts->accounts($this->account_id);
@@ -740,7 +746,8 @@ class egw_session
 			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php')))
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
-			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT);
+			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'
+								.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT.':'.self::getuser_ip());
 		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
 		{
@@ -830,6 +837,8 @@ class egw_session
 		// This is to ensure that we authenticate to the correct domain (might not be default)
 		if($GLOBALS['egw_info']['user']['domain'] && $this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
+			return false;	// session not verified, domain changed
+
 			throw new Exception("Wrong domain! '$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'");
 /*			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$sessionid','$kp3') account_domain='$this->account_domain' != '{$GLOBALS['egw_info']['user']['domain']}'=egw_info[user][domain]");
 			$GLOBALS['egw']->ADOdb = null;
@@ -1071,7 +1080,7 @@ class egw_session
 		}
 		else
 		{
-			if ($othervars) $extravars .= '&'.$othervars;
+			if ($othervars) $extravars .= ($extravars?'&':'').$othervars;
 		}
 
 		// parse extravars string into the vars array

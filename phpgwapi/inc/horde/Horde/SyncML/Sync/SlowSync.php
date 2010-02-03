@@ -96,6 +96,9 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 
 				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
 				$c = $registry->call($hordeType . '/export', array('guid' => $guid, 'contentType' => $contentType));
+
+				if ($c === false) continue; // no content to export
+
 				if (is_a($c, 'PEAR_Error')) {
 					Horde::logMessage("SyncML: slowsync failed to export guid $guid:\n" . print_r($c, true),
 						__FILE__, __LINE__, PEAR_LOG_WARNING);
@@ -235,7 +238,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			$guid = false;
 
 			$guid = $registry->call($hordeType . '/search',
-				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType, $state->getGlobalUID($type, $syncItem->getLocURI()) ));
+				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType, $state->getGlobalUID($type, $syncItem->getLocURI()), $type));
 
 			if ($guid) {
 				// Check if the found entry came from the client
