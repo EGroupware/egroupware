@@ -522,3 +522,69 @@ function dropdown_menu_hack(el)
 		el.onmousewheel= switchMenu;
 	}
 }
+
+function popup_resize()
+{
+	var widest = 0, highest = 0, smallest = window.innerWidth, width2grow, height2grow;
+	// find all elements and check their size
+	var divs = document.getElementsByTagName("div");
+	for(var i = 0;i < divs.length;i++)
+	{
+	  if(divs[i].offsetWidth + divs[i].offsetLeft > widest)
+		widest = divs[i].offsetWidth + divs[i].offsetLeft;
+	  if(divs[i].offsetHeight + divs[i].offsetTop > highest)
+		highest = divs[i].offsetHeight + divs[i].offsetTop;
+	  if(divs[i].offsetLeft > 0 && divs[i].offsetLeft < smallest)
+		smallest = divs[i].offsetLeft;
+	}
+	var tables = document.getElementsByTagName("table");
+	for(var i = 0;i < tables.length;i++)
+	{
+	  if(tables[i].offsetWidth + tables[i].offsetLeft > widest)
+		widest = tables[0].offsetWidth + tables[i].offsetLeft;
+	  if(tables[i].offsetHeight + tables[i].offsetTop > highest)
+		highest = tables[0].offsetHeight + tables[i].offsetTop;
+	  if(tables[i].offsetLeft > 0 && tables[i].offsetLeft < smallest)
+		smallest = tables[i].offsetLeft;
+	}
+	var labels = document.getElementsByTagName("label");
+	for(var i = 0;i < labels.length;i++)
+	{
+	  if(labels[i].offsetWidth + labels[i].offsetLeft > widest)
+		widest = labels[i].offsetWidth + labels[i].offsetLeft;
+	  if(labels[i].offsetHeight + labels[i].offsetTop > highest)
+		highest = labels[i].offsetHeight + labels[i].offsetTop;
+	  if(labels[i].offsetLeft > 0 && labels[i].offsetLeft < smallest)
+		smallest = labels[i].offsetLeft;
+	}
+	var inputs = document.getElementsByTagName("input");
+	for(var i = 0;i < inputs.length;i++)
+	{
+	  if(inputs[i].offsetWidth + inputs[i].offsetLeft > widest)
+		widest = inputs[i].offsetWidth + inputs[i].offsetLeft;
+	  if(inputs[i].offsetHeight + inputs[i].offsetTop > highest)
+		highest = inputs[i].offsetHeight + inputs[i].offsetTop;
+	  if(inputs[i].offsetLeft > 0 && inputs[i].offsetLeft < smallest)
+		smallest = inputs[i].offsetLeft;
+	}
+	// calculate the width and height the window has to grow
+	width2grow = widest - window.innerWidth + (smallest != window.innerWidth ? Math.max(smallest, 10) : 10);
+	height2grow = highest - window.innerHeight + 10;
+	if(width2grow > 0 && window.outerWidth + width2grow < screen.availWidth * 0.8)
+	{
+	  window.moveBy(-(width2grow / 2), 0);
+	  window.resizeBy(width2grow, 0);
+	}
+	if(height2grow > 0)
+	{
+	  if(window.outerHeight + height2grow > screen.availHeight)
+	  {
+		window.resizeTo(window.outerWidth, screen.availHeight);
+	  }
+	  else
+	  {
+		window.moveBy(0, -(height2grow / 2));
+		window.resizeBy(0, height2grow);
+	  }
+	}
+}
