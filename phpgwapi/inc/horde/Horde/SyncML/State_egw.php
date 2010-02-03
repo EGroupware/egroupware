@@ -329,6 +329,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			$_POST['login'] = $this->_locName;
 			$_REQUEST['domain'] = $this->_account_domain;
 			$GLOBALS['egw_info']['server']['default_domain'] = $this->_account_domain;
+			$GLOBALS['egw_info']['user']['domain'] = $this->_account_domain;
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
 			$GLOBALS['egw_info']['flags']['noapi'] = false;
 			require_once(EGW_API_INC . '/functions.inc.php');
