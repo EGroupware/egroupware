@@ -56,7 +56,11 @@ class uiasyncservice
 
 			if ($_POST['test'])
 			{
-				if (!$async->set_timer($times,'test','admin.uiasyncservice.test',$GLOBALS['egw_info']['user']['email']))
+				if (strpos($GLOBALS['egw_info']['user']['email'],'@') === false)
+				{
+					echo '<p><b>'.lang("You have no email address for your user set !!!")."</b></p>\n";
+				}
+				elseif (!$async->set_timer($times,'test','admin.uiasyncservice.test',$GLOBALS['egw_info']['user']['email']))
 				{
 					echo '<p><b>'.lang("Error setting timer, wrong syntax or maybe there's one already running !!!")."</b></p>\n";
 				}
