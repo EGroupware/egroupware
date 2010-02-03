@@ -257,7 +257,7 @@
 			$this->sessionData['uid'] = $_uid;
 			$this->sessionData['messageFolder'] = $_folder;
 			$this->sessionData['isDraft'] = true;
-			foreach($headers['CC'] as $val) {
+			foreach((array)$headers['CC'] as $val) {
 				if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
 					continue;
 				}
@@ -274,7 +274,7 @@
 				}
 			}
 
-			foreach($headers['TO'] as $val) {
+			foreach((array)$headers['TO'] as $val) {
 				if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
 					continue;
 				}
@@ -291,7 +291,7 @@
 				}
 			}
 
-			foreach($headers['REPLY_TO'] as $val) {
+			foreach((array)$headers['REPLY_TO'] as $val) {
 				if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
 					continue;
 				}
@@ -308,7 +308,7 @@
 				}
 			}
 
-			foreach($headers['BCC'] as $val) {
+			foreach((array)$headers['BCC'] as $val) {
 				if($val['MAILBOX_NAME'] == 'undisclosed-recipients' || (empty($val['MAILBOX_NAME']) && empty($val['HOST_NAME'])) ) {
 					continue;
 				}
@@ -1071,7 +1071,14 @@
 			//error_log(print_r($this->sessionData['to'],true));
 			//error_log(print_r($this->sessionData['cc'],true));
 			//error_log(print_r($this->sessionData['bcc'],true));
-			$mailaddresses = $this->sessionData['to'];
+			if (is_array($this->sessionData['to']))
+			{
+				$mailaddresses = $this->sessionData['to'];
+			}
+			else
+			{
+				$mailaddresses = array();
+			}
 			if (is_array($this->sessionData['cc'])) $mailaddresses = array_merge($mailaddresses,$this->sessionData['cc']);
 			if (is_array($this->sessionData['bcc'])) $mailaddresses = array_merge($mailaddresses,$this->sessionData['bcc']);
 			// attention: we dont return from infolog. cleanups will be done there.
