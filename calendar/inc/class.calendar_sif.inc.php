@@ -303,9 +303,9 @@ class calendar_sif extends calendar_boupdate
 				case 'isrecurring':
 					if ($value == 1)
 					{
+						$finalEvent['recur_exception'] = array();
 						if (is_array($this->event['recur_exception']))
 						{
-							$finalEvent['recur_exception'] = array();
 							foreach ($this->event['recur_exception'] as $day)
 							{
 								$finalEvent['recur_exception'][] = $this->vCalendar->_parseDateTime($day);
@@ -976,45 +976,31 @@ class calendar_sif extends calendar_boupdate
 						$sifEvent .= "<$sifField>0</$sifField>";
 						break;
 					}
+					$occurrences = 0;
 					if ($event['recur_enddate'] == 0)
 					{
 						$sifEvent .= '<NoEndDate>1</NoEndDate>';
 					}
 					else
 					{
-						$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
-						// all calculations in the event's timezone
-						$time->setTimezone(self::$tz_cache[$event['tzid']]);
-						$time->setTime(23, 59, 59);
+						$rriter = calendar_rrule::event2rrule($event, false, $tzid);
+						$rriter->rewind();
 
-						if ($tzid)
+						while ($rriter->valid())
 						{
-							$time->setTimezone(self::$tz_cache[$tzid]);
+							$occurrences++;
+							$recur_date = $rriter->current();
+							if (!$rriter->exceptions || !in_array($recur_date->format('Ymd'),$rriter->exceptions))
+							{
+								$recur_end = $recur_date;
+							}
+							$rriter->next_no_exception();
 						}
-						else
-						{
-							$time->setTimezone(egw_time::$user_timezone);
-						}
-						$recurEndDate = egw_time::to($time,'server');
+						$recurEndDate = egw_time::to($recur_end, 'server');
 						$sifEvent .= '<NoEndDate>0</NoEndDate>';
-						$sifEvent .= '<PatternEndDate>'. $this->vCalendar->_exportDateTime($recurEndDate) .'</PatternEndDate>';
+						$sifEvent .= '<PatternEndDate>'. self::getDateTime($recurEndDate,$tzid) .'</PatternEndDate>';
 					}
 
-					$time = new egw_time($event['start'],egw_time::$server_timezone);
-
-					// all calculations in the event's timezone
-					$time->setTimezone(self::$tz_cache[$event['tzid']]);
-					$time->setTime(0, 0, 0);
-
-					if ($tzid)
-					{
-						$time->setTimezone(self::$tz_cache[$tzid]);
-					}
-					else
-					{
-						$time->setTimezone(egw_time::$user_timezone);
-					}
-					$recurStartDate = egw_time::to($time,'server');
 					$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
 
 					switch ($event['recur_type'])
@@ -1024,11 +1010,9 @@ class calendar_sif extends calendar_boupdate
 							$sifEvent .= "<$sifField>1</$sifField>";
 							$sifEvent .= '<RecurrenceType>'. self::olRecursDaily .'</RecurrenceType>';
 							$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-							$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+							$sifEvent .= '<PatternStartDate>'. self::getDateTime($event['start'],$tzid) .'</PatternStartDate>';
 							if ($event['recur_enddate'])
 							{
-								$totalDays = ($recurEndDate - $recurStartDate) / 86400;
-								$occurrences = ceil($totalDays / $eventInterval);
 								$sifEvent .= '<Occurrences>'. $occurrences .'</Occurrences>';
 							}
 							break;
@@ -1037,41 +1021,10 @@ class calendar_sif extends calendar_boupdate
 							$sifEvent .= "<$sifField>1</$sifField>";
 							$sifEvent .= '<RecurrenceType>'. self::olRecursWeekly .'</RecurrenceType>';
 							$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-							$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+							$sifEvent .= '<PatternStartDate>'. self::getDateTime($event['start'],$tzid) .'</PatternStartDate>';
 							$sifEvent .= '<DayOfWeekMask>'. $event['recur_data'] .'</DayOfWeekMask>';
 							if ($event['recur_enddate'])
 							{
-								$daysPerWeek = substr_count(decbin($event['recur_data']),'1');
-								$totalWeeks = floor(($recurEndDate - $recurStartDate) / (86400*7));
-								$occurrences = ceil($totalWeeks / $eventInterval) * $daysPerWeek;
-								for($i = $recurEndDate; $i > $recurStartDate + ($totalWeeks * 86400*7); $i = $i - 86400)
-								{
-									switch (date('w', $i-1))
-									{
-										case 0:
-											if ($event['recur_data'] & 1) $occurrences++;
-											break;
-											// monday
-										case 1:
-											if ($event['recur_data'] & 2) $occurrences++;
-											break;
-										case 2:
-											if ($event['recur_data'] & 4) $occurrences++;
-											break;
-										case 3:
-											if ($event['recur_data'] & 8) $occurrences++;
-											break;
-										case 4:
-											if ($event['recur_data'] & 16) $occurrences++;
-											break;
-										case 5:
-											if ($event['recur_data'] & 32) $occurrences++;
-											break;
-										case 6:
-											if ($event['recur_data'] & 64) $occurrences++;
-											break;
-									}
-								}
 								$sifEvent .= '<Occurrences>'. $occurrences .'</Occurrences>';
 							}
 							break;
@@ -1080,7 +1033,7 @@ class calendar_sif extends calendar_boupdate
 							$sifEvent .= "<$sifField>1</$sifField>";
 							$sifEvent .= '<RecurrenceType>'. self::olRecursMonthly .'</RecurrenceType>';
 							$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-							$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+							$sifEvent .= '<PatternStartDate>'. self::getDateTime($event['start'],$tzid) .'</PatternStartDate>';
 							break;
 
 						case MCAL_RECUR_MONTHLY_WDAY:
@@ -1090,7 +1043,7 @@ class calendar_sif extends calendar_boupdate
 							$sifEvent .= "<$sifField>1</$sifField>";
 							$sifEvent .= '<RecurrenceType>'. self::olRecursMonthNth .'</RecurrenceType>';
 							$sifEvent .= '<Interval>'. $eventInterval .'</Interval>';
-							$sifEvent .= '<PatternStartDate>'. $this->vCalendar->_exportDateTime($recurStartDate) .'</PatternStartDate>';
+							$sifEvent .= '<PatternStartDate>'. self::getDateTime($event['start'],$tzid) .'</PatternStartDate>';
 							$sifEvent .= '<Instance>' . (1 + (int) ((date('d',$event['start'])-1) / 7)) . '</Instance>';
 							$sifEvent .= '<DayOfWeekMask>' . $weekMaskMap[date('D',$event['start'])] . '</DayOfWeekMask>';
 							break;
