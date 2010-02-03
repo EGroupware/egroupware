@@ -1629,3 +1629,62 @@ function calendar_upgrade1_5_002()
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.6';
 }
+
+
+/**
+ * Adjust UIDs of series exceptions to RFC standard
+ * Propagate cal_reference field to temporarily contain RECURRENCE-ID
+ *
+ * @return string
+ */
+function calendar_upgrade1_6()
+{
+	// Set UID of series exception to UID of series master
+	// update cal_etag, cal_modified and cal_modifier to distribute changes on GroupDAV devices
+	foreach($GLOBALS['egw_setup']->db->query('
+		SELECT cal_ex.cal_id,cal_ex.cal_uid AS cal_uid_ex,cal_master.cal_uid AS cal_uid_master
+		FROM egw_cal cal_ex
+		JOIN egw_cal cal_master ON cal_ex.cal_reference=cal_master.cal_id
+		WHERE cal_ex.cal_reference != 0',__LINE__,__FILE__) as $row)
+	{
+		if (strlen($row['cal_uid_master']) > 0 && $row['cal_uid_ex'] != $row['cal_uid_master'])
+		{
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_uid=\''.$row['cal_uid_master'].
+				'\',cal_etag=cal_etag+1,cal_modified='.time().
+				',cal_modifier=NULL WHERE cal_id='.(int)$row['cal_id'],__LINE__,__FILE__);
+		}
+	}
+	
+	// Search series exception for nearest exception in series master and add that RECURRENCE-ID
+	// as cal_reference (for 1.6.003 and move it to new field cal_recurrence in 1.7.001)
+	foreach($GLOBALS['egw_setup']->db->query('SELECT egw_cal.cal_id,cal_start,recur_exception FROM egw_cal
+		JOIN egw_cal_dates ON egw_cal.cal_id=egw_cal_dates.cal_id
+		JOIN egw_cal_repeats ON cal_reference=egw_cal_repeats.cal_id
+		WHERE cal_reference != 0',__LINE__,__FILE__) as $row)
+	{
+		$recurrence = null;
+		foreach(explode(',',$row['recur_exception']) as $ts)
+		{
+			if (is_null($recurrence) || abs($ts-$row['cal_start']) < $diff)
+			{
+				$recurrence = $ts;
+				$diff = abs($ts-$row['cal_start']);
+			}
+		}
+		if ($recurrence)
+		{
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_reference='.(int)$recurrence.
+				' WHERE cal_id='.(int)$row['cal_id'],__LINE__,__FILE__);
+		}
+		else
+		{
+			// if we cannot determine the RECURRENCE-ID use cal_start
+			// because RECURRENCE-ID must be present
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_reference='.(int)$row['cal_start'].
+				' WHERE cal_id='.(int)$row['cal_id'],__LINE__,__FILE__);
+		}
+	}
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.6.003';
+}
+
