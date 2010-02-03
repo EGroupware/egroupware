@@ -13,7 +13,7 @@
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @version $Id$
  */
-require_once(EGW_API_INC.'/class.egw_db.inc.php');
+
 include_once dirname(__FILE__).'/State.php';
 
 /**
@@ -301,68 +301,95 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	}
 
 	function isAuthorized()	{
-		if (!$this->_isAuthorized) {
-			if(!isset($this->_locName) && !isset($this->_password)) {
-				Horde::logMessage('SyncML: Authentication not yet possible currently. Username and password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				return false;
-			}
 
-			if (!isset($this->_password)) {
-				Horde::logMessage('SyncML: Authentication not yet possible currently. Password not available' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				return false;
-			}
+		if(!isset($this->_locName))
+		{
+			Horde::logMessage('SyncML: Authentication not yet possible. Username not available',
+				__FILE__, __LINE__, PEAR_LOG_DEBUG);
+			return false;
+		}
 
-			if (strpos($this->_locName,'@') === False) {
-				$this->_account_domain = $GLOBALS['egw_info']['server']['default_domain'];
-				$this->_locName .= '@'. $this->_account_domain;
-			} else {
-				$parts = explode('@',$this->_locName);
-				$this->_account_domain = array_pop($parts);
-			}
+		// store sessionID in a variable, because create() and verify() reset this value
+		$sessionID = session_id();
 
-			$GLOBALS['egw_info']['user']['domain'] = $this->_account_domain;
-			if (is_array($GLOBALS['egw_domain'][$this->_account_domain]))
+		if (strpos($this->_locName,'@') === False)
+		{
+			$this->_account_domain = $GLOBALS['egw_info']['server']['default_domain'];
+			$this->_locName .= '@'. $this->_account_domain;
+		}
+		else
+		{
+			$parts = explode('@',$this->_locName);
+			$this->_account_domain = array_pop($parts);
+		}
+
+		if (!is_object($GLOBALS['egw']))
+		{
+			// Let the EGw core create the infrastructure classes
+			$_POST['login'] = $this->_locName;
+			$_REQUEST['domain'] = $this->_account_domain;
+			$GLOBALS['egw_info']['server']['default_domain'] = $this->_account_domain;
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
+			$GLOBALS['egw_info']['flags']['noapi'] = false;
+			require_once(EGW_API_INC . '/functions.inc.php');
+		}
+
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'syncml';
+
+		if (!$this->_isAuthorized)
+		{
+
+			if (!isset($this->_password))
 			{
+				Horde::logMessage('SyncML: Authentication not yet possible. Credetials missing',
+					__FILE__, __LINE__, PEAR_LOG_DEBUG);
+				return false;
+			}
 
-				$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$this->_account_domain]['db_host'];
-				$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$this->_account_domain]['db_port'];
-				$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$this->_account_domain]['db_name'];
-				$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$this->_account_domain]['db_user'];
-				$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$this->_account_domain]['db_pass'];
-				$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->_account_domain]['db_type'];
-				// It works -- don't ask me why.
-				$this->db = new egw_db($GLOBALS['egw_info']['server']);
-				if (!$this->db->connect()) {
-					Horde::logMessage('SyncML_EGW: Can not connect to database for user ' . $this->_locName,
-						__FILE__, __LINE__, PEAR_LOG_ERROR);
-					return false;
+			if ($GLOBALS['egw']->session->create($this->_locName,$this->_password,'text'))
+			{
+				if ($GLOBALS['egw_info']['user']['apps']['syncml'])
+				{
+					$this->_isAuthorized = 1;
+					// restore the original sessionID
+					session_regenerate_id();
+					session_id($sessionID);
+					$GLOBALS['sessionid'] = $sessionID;
+					@session_start();
+
+					Horde::logMessage('SyncML_EGW[' . $GLOBALS['sessionid']
+						.']: Authentication of ' . $this->_locName . ' succeded',
+						__FILE__, __LINE__, PEAR_LOG_DEBUG);
+
+					$config =& CreateObject('phpgwapi.config','syncml');
+					$config->read_repository();
+					$GLOBALS['config_syncml'] =& $config->config_data;
+					unset($config);
+
 				}
-
-				#Horde::logMessage('SyncML: authenticate with username: ' . $this->_locName . ' and password: ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-				if (($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text'))) {
-					if ($GLOBALS['egw_info']['user']['apps']['syncml']) {
-						$this->_isAuthorized = 1;
-						Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded',
-							__FILE__, __LINE__, PEAR_LOG_DEBUG);
-					} else {
-						$this->_isAuthorized = -1; // Authentication failed!
-						Horde::logMessage('SyncML is not enabled for user ' . $this->_locName,
-							__FILE__, __LINE__, PEAR_LOG_ERROR);
-					}
-					return ($this->_isAuthorized > 0);
+				else
+				{
+					$this->_isAuthorized = -1; // Authorization failed!
+					Horde::logMessage('SyncML is not enabled for user '
+						. $this->_locName, __FILE__, __LINE__, PEAR_LOG_ERROR);
 				}
 			}
-			$this->_isAuthorized = -1;
-			Horde::logMessage('SyncML: Authentication of ' . $this->_locName . ' failed' ,
-				__FILE__, __LINE__, PEAR_LOG_INFO);
-		} else {
-			// store sessionID in a variable, because verify() may reset this value
-			$sessionID = session_id();
-			$GLOBALS['egw_info']['user']['domain'] = $this->_account_domain;
-			if (!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3')) {
-				Horde::logMessage('SyncML_EGW: egw session(' .$sessionID. ') not verified' ,
-					__FILE__, __LINE__, PEAR_LOG_WARNING);
+			else
+			{
+				$this->_isAuthorized = -1;
+				Horde::logMessage('SyncML: Authentication of ' . $this->_locName
+					. ' failed', __FILE__, __LINE__, PEAR_LOG_INFO);
+
+			}
+
+		}
+		elseif ($this->_isAuthorized > 0)
+		{
+			if (!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3'))
+			{
+				Horde::logMessage('SyncML_EGW: egw session(' . $sessionID
+					. ') could not be not verified' ,
+					__FILE__, __LINE__, PEAR_LOG_ERROR);
 			}
 		}
 		return ($this->_isAuthorized > 0);

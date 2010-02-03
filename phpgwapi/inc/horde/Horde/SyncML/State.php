@@ -203,6 +203,11 @@ class Horde_SyncML_State {
 
 	var $_password;
 
+	/*
+	 * integer  0 authorization pending
+	 * 		   -1 authorization failed
+	 *          1 session is authorized
+	 */
 	var $_isAuthorized;
 
 	var $_AuthConfirmed;
