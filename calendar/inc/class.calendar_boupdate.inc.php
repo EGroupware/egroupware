@@ -1423,7 +1423,6 @@ class calendar_boupdate extends calendar_bo
 	{
 		$matchingEvents = array();
 		$query = array();
-		// unset($event['uid']);
 
 		if ($this->log)
 		{
@@ -1433,27 +1432,22 @@ class calendar_boupdate extends calendar_bo
 
 		if ($filter == 'master')
 		{
-			$recur_date = 0;
-			$event['recurrence'] = 0;
-		}
-		else
-		{
-			if ($event['recur_type'] == MCAL_RECUR_NONE)
+			if (empty($event['uid']) || !isset($event['recurrence']))
 			{
-				if (empty($event['uid']) || !isset($event['recurrence']))
-				{
-					$event['recurrence'] = $event['start'];
-				}
-				$recur_date = $event['recurrence'];
+				$recur_date = $event['start']; // without UID we ignore RECURRENCE-IDs
 			}
 			else
 			{
-				$event['recurrence'] = 0;
-				$recur_date = $event['start'];
+				$recur_date = $event['recurrence'];
 			}
-
-			$recur_date = $this->date2usertime($recur_date);
 		}
+		else
+		{
+			$recur_date = $event['start'];
+		}
+
+		$recur_date = $this->date2usertime($recur_date);
+
 
 		if ($event['id'])
 		{
@@ -1606,6 +1600,10 @@ class calendar_boupdate extends calendar_bo
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'(' . $event['uid'] . ')[EventUID]');
+			}
+			if ($filter != 'relax' && isset($event['recurrence']))
+			{
+				$query['cal_recurrence'] = $event['recurrence'];
 			}
 		}
 
@@ -1867,6 +1865,7 @@ class calendar_boupdate extends calendar_bo
 			$master_event = false; //default
 			$stored_event = false;
 			$recurrence_event = false;
+			$wasPseudo = false;
 
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
@@ -1887,6 +1886,7 @@ class calendar_boupdate extends calendar_bo
 					if (strstr($eventID, ':'))
 					{
 						$type = 'SERIES-PSEUDO-EXCEPTION';
+						$wasPseudo = true;
 						list($eventID, $recur_date) = explode(':', $eventID);
 						$recur_date = $this->date2usertime($recur_date);
 						$stored_event = $this->read($eventID, $recur_date, false, 'server');
@@ -1918,6 +1918,13 @@ class calendar_boupdate extends calendar_bo
 							if (isset($stored_event['id']) && $master_event['id'] != $stored_event['id'])
 							{
 								$type = 'SERIES-EXCEPTION'; // this is an existing exception
+								break;
+							}
+							elseif (isset($event['recurrence']) &&
+								in_array($event['recurrence'], $master_event['recur_exception']))
+							{
+								$type = 'SERIES-PSEUDO-EXCEPTION'; // could also be a real one
+								break;
 							}
 							elseif (in_array($event['start'], $master_event['recur_exception']))
 							{
@@ -1925,12 +1932,6 @@ class calendar_boupdate extends calendar_bo
 								$recurrence_event = $event;
 								break;
 							}
-							elseif (isset($event['recurrence']) &&
-								in_array($event['recurrence'], $master_event['recur_exception']))
-								{
-								$type = 'SERIES-EXCEPTION';
-								break;
-								}
 							else
 							{
 								// try to find a suitable pseudo exception date
@@ -1978,7 +1979,16 @@ class calendar_boupdate extends calendar_bo
 					{
 						if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
 						{
-							$type = 'SERIES-EXCEPTION-PROPAGATE';
+							if ($wasPseudo)
+							{
+								// We started with a pseudo exception
+								$type = 'SERIES-EXCEPTION-PROPAGATE';
+							}
+							else
+							{
+								$type = 'SERIES-EXCEPTION';
+							}
+
 							if ($stored_event)
 							{
 								unset($stored_event['id']); // signal the true exception
