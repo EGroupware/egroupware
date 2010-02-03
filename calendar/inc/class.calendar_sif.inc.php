@@ -895,7 +895,7 @@ class calendar_sif extends calendar_boupdate
 				{
 					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 						"($_id, $recur_date) Unsupported status only exception, skipped ...\n",
-						3,$this->logfile);
+						3, $this->logfile);
 				}
 				return false; // unsupported pseudo exception
 			}
@@ -936,7 +936,6 @@ class calendar_sif extends calendar_boupdate
 				if ($day <= $event['start']) unset($exceptions[$key]);
 			}
 			$event['recur_exception'] = $exceptions;
-			calendar_rrule::rrule2tz($event, $event['start'], $tzid);
 		}
 
 		if ($this->uidExtension)
@@ -990,6 +989,11 @@ class calendar_sif extends calendar_boupdate
 						{
 							$occurrences++;
 							$recur_date = $rriter->current();
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+									"() Client Recurrence[$occurrences] $recur_date\n", 3, $this->logfile);
+							}
 							if (!$rriter->exceptions || !in_array($recur_date->format('Ymd'),$rriter->exceptions))
 							{
 								$recur_end = $recur_date;
@@ -1000,6 +1004,8 @@ class calendar_sif extends calendar_boupdate
 						$sifEvent .= '<NoEndDate>0</NoEndDate>';
 						$sifEvent .= '<PatternEndDate>'. self::getDateTime($recurEndDate,$tzid) .'</PatternEndDate>';
 					}
+
+					calendar_rrule::rrule2tz($event, $event['start'], $tzid);
 
 					$eventInterval = ($event['recur_interval'] > 1 ? $event['recur_interval'] : 1);
 
