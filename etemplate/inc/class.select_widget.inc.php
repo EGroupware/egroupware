@@ -102,7 +102,7 @@ class select_widget
 	 */
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
-		list($rows,$type,$type2,$type3,$type4) = explode(',',$cell['size']);
+		list($rows,$type,$type2,$type3,$type4,$type5) = explode(',',$cell['size']);
 
 		$extension_data['type'] = $cell['type'];
 
@@ -158,7 +158,7 @@ class select_widget
 				$cell['no_lang'] = True;
 				break;
 
-			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id
+			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global)
 				if ($readonly)	// for readonly we dont need to fetch all cat's, nor do we need to indent them by level
 				{
 					$cell['no_lang'] = True;
@@ -179,20 +179,21 @@ class select_widget
 					}
 					break;
 				}
-				if (!$type3 || $type3 === $GLOBALS['egw']->categories->app_name)
+				if ((!$type3 || $type3 === $GLOBALS['egw']->categories->app_name) &&
+					(!$type5 || $type5 ==  $GLOBALS['egw']->categories->account_id))
 				{
 					$categories = $GLOBALS['egw']->categories;
 				}
 				else	// we need to instanciate a new cat object for the correct application
 				{
-					$categories = new categories('',$type3);
+					$categories = new categories($type5,$type3);
 				}
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
-				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,(int)$type4) as $cat)
+				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,(int)$type4,true) as $cat)
 				{
 					$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
-					if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
+					if ($cat['app_name'] == categories::GLOBAL_APPNAME || $cat['owner'] == categories::GLOBAL_ACCOUNT)
 					{
 						$s .= ' &#9830;';
 					}

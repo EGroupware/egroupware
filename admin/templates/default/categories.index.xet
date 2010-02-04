@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.categories.index.rows" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column width="40"/>
+				<column width="80"/>
+				<column/>
+				<column width="30"/>
+				<column width="1%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="Name" id="name"/>
+					<nextmatch-sortheader label="Description" id="description"/>
+					<nextmatch-header id="appname" label="Application"/>
+					<nextmatch-header label="Icon" id="icon" align="center"/>
+					<nextmatch-header label="Color" id="color"/>
+					<nextmatch-sortheader label="Modified" id="last_mod"/>
+					<nextmatch-header label="Children" id="subs" align="center"/>
+					<description value="Actions"/>
+				</row>
+				<row class="$row_cont[id]">
+					<hbox options="0,0">
+						<html id="${row}[level_spacer]"/>
+						<description id="${row}[name]" class="$row_cont[class]"/>
+					</hbox>
+					<description id="${row}[description]"/>
+					<menulist>
+						<menupopup type="select-app" id="${row}[appname]" options="Global" readonly="true"/>
+					</menulist>
+					<image src="${row}[icon_url]" label="{$row_cont[data][icon]}" align="center"/>
+					<description id="${row}[data][color]"/>
+					<date-time id="${row}[last_mod]" readonly="true"/>
+					<description id="${row}[subs]" align="center"/>
+					<hbox options="0,0">
+						<buttononly options="edit" label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_categories.edit&amp;cat_id=$row_cont[id]'),'_blank','dependent=yes,width=600,height=300,scrollbars=yes,status=yes'); return false;"/>
+						<buttononly options="new" label="Add sub" id="add[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_categories.edit&amp;parent=$row_cont[id]&amp;appname=$cont[appname]'),'_blank','dependent=yes,width=600,height=300,scrollbars=yes,status=yes'); return false;"/>
+						<buttononly options="delete" label="Delete" id="delete[$row_cont[id]]" statustext="Delete this category" onclick="document.getElementById('exec[delete][cat_id]').value='$row_cont[id]'; set_style_by_class('tr','confirmSubs','visibility','$row_cont[children]'?'visible':'collapse'); set_style_by_class('fieldset','confirmDelete','display','block'); return false;" class="leftPad5"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.categories.delete" template="" lang="" group="0" version="1.7.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<groupbox class="confirmDelete">
+						<caption label="Delete this category"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row height="30">
+									<description span="all" value="Are you sure you want to delete this category ?" align="center"/>
+								</row>
+								<row class="confirmSubs">
+									<checkbox label="Do you also want to delete all global subcategories ?" id="delete[subs]" span="all" align="center"/>
+								</row>
+								<row height="40">
+									<button label="Delete" id="delete[delete]" align="center"/>
+									<buttononly label="Cancel" id="delete[cancel]" align="center" onclick="set_style_by_class('fieldset','confirmDelete','display','none');"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+		<textbox id="delete[cat_id]" class="hiddenCatid"/>
+		<styles>
+			.confirmDelete {
+  position: absolute;
+  left: 120px;
+  top: 80px;
+  background-color: white;
+  display: none;
+  border: 2px solid black;
+}
+.hiddenCatid {
+  display: none;
+}
+.confirmSubs
+{
+}
+		</styles>
+	</template>
+	<template id="admin.categories.index" template="" lang="" group="0" version="1.7.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description id="msg" align="center" span="all" class="redItalic"/>
+				</row>
+				<row>
+					<nextmatch options="admin.categories.index.rows" id="nm"/>
+				</row>
+				<row>
+					<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=admin.admin_categories.edit&amp;appname={$cont[nm][appname]}'),'_blank','dependent=yes,width=600,height=300,scrollbars=yes,status=yes'); return false;"/>
+				</row>
+			</rows>
+		</grid>
+		<template id="admin.categories.delete"/>
+		<styles>.level0 { font-weight: bold; }</styles>
+	</template>
+</overlay>

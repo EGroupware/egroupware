@@ -79,7 +79,7 @@ class html
 	/**
 	* Created an input-field with an attached color-picker
 	*
-	* Please note: it need to be called before the call to phpgw_header() !!!
+	* Please note: it need to be called before the call to egw_header() !!!
 	*
 	* @param string $name the name of the input-field
 	* @param string $value the actual value for the input-field, default ''
@@ -89,8 +89,8 @@ class html
 	static function inputColor($name,$value='',$title='')
 	{
 		$id = str_replace(array('[',']'),array('_',''),$name).'_colorpicker';
-		$onclick = "javascript:window.open('".self::$api_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+document.getElementById('$id').value,'colorPicker','width=240,height=187,scrollbars=no,resizable=no,toolbar=no');";
-		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.self::htmlspecialchars($value).'" /> '.
+		$onclick = "javascript:window.open('".self::$api_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+encodeURIComponent(document.getElementById('$id').value),'colorPicker','width=240,height=187,scrollbars=no,resizable=no,toolbar=no');";
+		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.self::htmlspecialchars($value).'" size="7" maxsize="7" /> '.
 			'<a href="#" onclick="'.$onclick.'">'.
 			'<img src="'.self::$api_js_url.'/colorpicker/ed_color_bg.gif'.'"'.($title ? ' title="'.self::htmlspecialchars($title).'"' : '')." /></a>";
 	}

@@ -1325,8 +1325,7 @@ class calendar_bo
 
 			if (!isset($id2cat[$cat_id]))
 			{
-				list($id2cat[$cat_id]) = $this->categories->return_single($cat_id);
-				$id2cat[$cat_id]['data'] = unserialize($id2cat[$cat_id]['data']);
+				$id2cat[$cat_id] = categories::read($cat_id);
 			}
 			$cat = $id2cat[$cat_id];
 

@@ -728,6 +728,7 @@ function &CreateObject($class)
 				'uimilestones'      => 'projectmanager_milestones_ui',
 				'uipricelist'       => 'projectmanager_pricelist_ui',
 				'bowiki'            => 'wiki_bo',
+				'uicategories'      => 'admin_categories',
 			);
 			if (isset($replace[$classname]))
 			{
