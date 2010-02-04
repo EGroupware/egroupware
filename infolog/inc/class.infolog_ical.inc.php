@@ -111,7 +111,7 @@ class infolog_ical extends infolog_bo
 	 */
 	function exportVTODO($_taskID, $_version='2.0',$_method='PUBLISH')
 	{
-		$taskData = $this->read($_taskID);
+		$taskData = $this->read($_taskID, true, 'server');
 
 		if ($taskData['info_id_parent'])
 		{
@@ -350,7 +350,7 @@ class infolog_ical extends infolog_bo
 				array2string($taskData)."\n",3,$this->logfile);
 		}
 
-		return $this->write($taskData);
+		return $this->write($taskData, true, true, false);
 	}
 
 	/**
@@ -571,7 +571,7 @@ class infolog_ical extends infolog_bo
 	 */
 	function exportVNOTE($_noteID, $_type)
 	{
-		$note = $this->read($_noteID);
+		$note = $this->read($_noteID, true, 'server');
 		$note = $GLOBALS['egw']->translation->convert($note,
 			$GLOBALS['egw']->translation->charset(), 'UTF-8');
 
@@ -676,7 +676,7 @@ class infolog_ical extends infolog_bo
 				array2string($note)."\n",3,$this->logfile);
 		}
 
-		return $this->write($note);
+		return $this->write($note, true, true, false);
 	}
 
 	/**

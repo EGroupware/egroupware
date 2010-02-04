@@ -382,7 +382,7 @@ class infolog_sif extends infolog_bo
 			$taskData['info_datecompleted'] = 0;
 		}
 
-		$egwID = $this->write($egwData, false);
+		$egwID = $this->write($egwData, false, true, false);
 
 		return $egwID;
 	}
@@ -402,7 +402,7 @@ class infolog_sif extends infolog_bo
 		switch($_sifType)
 		{
 			case 'task':
-				if (($taskData = $this->read($_id)))
+				if (($taskData = $this->read($_id, true, 'server')))
 				{
 					$vcal		= new Horde_iCalendar('1.0');
 
@@ -534,7 +534,7 @@ class infolog_sif extends infolog_bo
 				break;
 
 			case 'note':
-				if (($taskData = $this->read($_id)))
+				if (($taskData = $this->read($_id, true, 'server')))
 				{
 					$vcal		= new Horde_iCalendar('1.0');
 

@@ -163,17 +163,17 @@ class infolog_tracking extends bo_tracking
 		if (!$old || $old['info_status'] == 'deleted')
 		{
 			return lang('New %1 created by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
-				$GLOBALS['egw']->common->grab_owner_name($this->infolog->user),$this->datetime(time()));
+				common::grab_owner_name($this->infolog->user),$this->datetime('now'));
 		}
 		elseif($data['info_status'] == 'deleted')
 		{
 			return lang('%1 deleted by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
-				$GLOBALS['egw']->common->grab_owner_name($data['info_modifier']),
-				$this->datetime($data['info_datemodified']-$this->infolog->tz_offset_s));
+				common::grab_owner_name($data['info_modifier']),
+				$this->datetime($data['info_datemodified']));
 		}
 		return lang('%1 modified by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
-			$GLOBALS['egw']->common->grab_owner_name($data['info_modifier']),
-			$this->datetime($data['info_datemodified']-$this->infolog->tz_offset_s));
+			common::grab_owner_name($data['info_modifier']),
+			$this->datetime($data['info_datemodified']));
 	}
 
 	/**
@@ -192,7 +192,7 @@ class infolog_tracking extends bo_tracking
 		{
 			foreach($data['info_responsible'] as $uid)
 			{
-				$responsible[] = $GLOBALS['egw']->common->grab_owner_name($uid);
+				$responsible[] = common::grab_owner_name($uid);
 			}
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['show_id'])
@@ -205,13 +205,13 @@ class infolog_tracking extends bo_tracking
 			'info_addr'      => $data['info_addr'],
 			'info_cat'       => $data['info_cat'] ? $GLOBALS['egw']->categories->id2name($data['info_cat']) : '',
 			'info_priority'  => lang($this->infolog->enums['priority'][$data['info_priority']]),
-			'info_owner'     => $GLOBALS['egw']->common->grab_owner_name($data['info_owner']),
+			'info_owner'     => common::grab_owner_name($data['info_owner']),
 			'info_status'    => lang($data['info_status']=='deleted'?'deleted':$this->infolog->status[$data['info_type']][$data['info_status']]),
 			'info_percent'   => (int)$data['info_percent'].'%',
-			'info_datecompleted' => $data['info_datecompleted'] ? $this->datetime($data['info_datecompleted']-$this->infolog->tz_offset_s) : '',
+			'info_datecompleted' => $data['info_datecompleted'] ? $this->datetime($data['info_datecompleted']) : '',
 			'info_location'  => $data['info_location'],
-			'info_startdate' => $data['info_startdate'] ? $this->datetime($data['info_startdate']-$this->infolog->tz_offset_s,null) : '',
-			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate']-$this->infolog->tz_offset_s,false) : '',
+			'info_startdate' => $data['info_startdate'] ? $this->datetime($data['info_startdate'],null) : '',
+			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate'],false) : '',
 			'info_responsible' => implode(', ',$responsible),
 			'info_subject'   => $data['info_subject'],
 		) as $name => $value)

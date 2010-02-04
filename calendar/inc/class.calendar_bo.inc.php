@@ -1030,7 +1030,7 @@ class calendar_bo
 	 *	string (!) in form YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss or YYYYMMDDThhmmss
 	 *	int already a timestamp
 	 *	array with keys 'second', 'minute', 'hour', 'day' or 'mday' (depricated !), 'month' and 'year'
-	 * @param boolean $user2server_time conversation between user- and server-time default False == Off
+	 * @param boolean $user2server=False conversion between user- and server-time; default False == Off
 	 */
 	static function date2ts($date,$user2server=False)
 	{

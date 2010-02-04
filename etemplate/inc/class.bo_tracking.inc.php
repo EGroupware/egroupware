@@ -158,12 +158,6 @@ abstract class bo_tracking
 	 */
 	var $datetime_format;
 	/**
-	 * Offset to server-time of the currently notified user (send_notificaton)
-	 *
-	 * @var int
-	 */
-	var $tz_offset_s;
-	/**
 	 * Should the class allow html content (for notifications)
 	 *
 	 * @var boolean
@@ -530,22 +524,26 @@ abstract class bo_tracking
 	/**
 	 * Return date+time formatted for the currently notified user (prefs in $GLOBALS['egw_info']['user']['preferences'])
 	 *
-	 * @param int $timestamp
+	 * @param int|string|DateTime $timestamp in user-time
 	 * @param boolean $do_time=true true=allways (default), false=never print the time, null=print time if != 00:00
-	 * @todo implement timezone handling via 'tz' pref
+	 *
 	 * @return string
 	 */
 	public function datetime($timestamp,$do_time=true)
 	{
+		if (!is_a($timestamp,'DateTime'))
+		{
+			$timestamp = new egw_time($timestamp,egw_time::$user_timezone);
+		}
+		$timestamp->setTimezone(egw_time::$user_timezone);
 		if (is_null($do_time))
 		{
-			$do_time = date('H:i',$timestamp+$this->tz_offset_s) != '00:00';
+			$do_time = ($timestamp->format('Hi') != '0000');
 		}
 		$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 		if ($do_time) $format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] != 12 ? 'H:i' : 'h:i a');
 
-		//error_log("bo_tracking::datetime($timestamp,$do_time)=date('$format',$timestamp+$this->tz_offset_s)='".date($format,$timestamp+$this->tz_offset_s).'\')');
-		return date($format,$timestamp+3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']);
+		return $timestamp->format($format);
 	}
 
 	/**

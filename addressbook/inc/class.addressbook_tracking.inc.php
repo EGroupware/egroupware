@@ -121,12 +121,12 @@ class addressbook_tracking extends bo_tracking
 		if (!$data['modified'] || !$old)
 		{
 			return lang('New contact submitted by %1 at %2',
-				$GLOBALS['egw']->common->grab_owner_name($data['creator']),
-				$this->datetime($data['created']-$this->tracker->tz_offset_s));
+				common::grab_owner_name($data['creator']),
+				$this->datetime($data['created']));
 		}
 		return lang('Contact modified by %1 at %2',
-			$GLOBALS['egw']->common->grab_owner_name($data['modifier']),
-			$this->datetime($data['modified']-$this->tracker->tz_offset_s));
+			common::grab_owner_name($data['modifier']),
+			$this->datetime($data['modified']));
 	}
 
 	/**
@@ -167,7 +167,7 @@ class addressbook_tracking extends bo_tracking
 				case 'created': case 'modified':
 					$details[$name] = array(
 						'label' => $label,
-						'value' => $this->datetime($data[$name]-$this->contacts->tz_offset_s),
+						'value' => $this->datetime($data[$name]),
 					);
 					break;
 				case 'bday':
@@ -176,14 +176,14 @@ class addressbook_tracking extends bo_tracking
 						list($y,$m,$d) = explode('-',$data[$name]);
 						$details[$name] = array(
 							'label' => $label,
-							'value' => $GLOBALS['egw']->common->dateformatorder($y,$m,$d,true),
+							'value' => common::dateformatorder($y,$m,$d,true),
 						);
 					}
 					break;
 				case 'owner': case 'creator': case 'modifier':
 					$details[$name] = array(
 						'label' => $label,
-						'value' => $GLOBALS['egw']->common->grab_owner_name($data[$name]),
+						'value' => common::grab_owner_name($data[$name]),
 					);
 					break;
 				case 'cat_id':

@@ -121,11 +121,11 @@ class timesheet_tracking extends bo_tracking
 		if (!$data['ts_modified'] || !$old)
 		{
 			return lang('New timesheet submitted by %1 at %2',
-				$GLOBALS['egw']->common->grab_owner_name($data['ts_creator']),
-				$this->datetime($data['ts_created']-$this->tracker->tz_offset_s));
+				common::grab_owner_name($data['ts_creator']),
+				$this->datetime($data['ts_created']));
 		}
 		return lang('Timesheet modified by %1 at %2',
-			$data['ts_modifier'] ? $GLOBALS['egw']->common->grab_owner_name($data['ts_modifier']) : lang('Timesheet'),
-			$this->datetime($data['ts_modified']-$this->timesheet->tz_offset_s));
+			$data['ts_modifier'] ? common::grab_owner_name($data['ts_modifier']) : lang('Timesheet'),
+			$this->datetime($data['ts_modified']));
 	}
 }

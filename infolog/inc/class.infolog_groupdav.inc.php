@@ -181,7 +181,7 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
-		return $this->bo->read($id,false);
+		return $this->bo->read($id,false,'server');
 	}
 
 	/**
@@ -206,7 +206,7 @@ class infolog_groupdav extends groupdav_handler
 	{
 		if (!is_array($info))
 		{
-			$info = $this->bo->read($info);
+			$info = $this->bo->read($info,true,'server');
 		}
 		if (!is_array($info) || !isset($info['info_id']) || !isset($info['info_datemodified']))
 		{

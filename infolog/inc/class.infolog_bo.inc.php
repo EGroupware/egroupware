@@ -31,15 +31,14 @@ class infolog_bo
 	var $link_pathes = array();
 	var $send_file_ips = array();
 
-	var $tz_offset = 0;
 	/**
-	 * offset in secconds between user and server-time,
-	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
+	 * current time as timestamp in user-time and server-time
 	 *
-	 * @var int
+	 * var int
 	 */
-	var $tz_offset_s = 0;
 	var $user_time_now;
+	var $now;
+
 	/**
 	 * name of timestamps in an InfoLog entry
 	 *
@@ -233,9 +232,8 @@ class infolog_bo
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
-		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-		$this->tz_offset_s = 60*60*$this->tz_offset;
-		$this->user_time_now = time() + $this->tz_offset_s;
+		$this->user_time_now = egw_time::to('now','ts');
+		$this->now = time();
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
 		$this->so = new infolog_so($this->grants);
@@ -406,14 +404,31 @@ class infolog_bo
 	}
 
 	/**
+	 * convert a date from server to user-time
+	 *
+	 * @param int $ts timestamp in server-time
+	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
+	 * @return mixed depending of $date_format
+	 */
+	function date2usertime($ts,$date_format='ts')
+	{
+		if (empty($ts) || $date_format == 'server') return $ts;
+
+		return egw_time::server2user($ts,$date_format);
+	}
+
+	/**
 	 * Read an infolog entry specified by $info_id
 	 *
 	 * @param int/array $info_id integer id or array with key 'info_id' of the entry to read
 	 * @param boolean $run_link_id2from=true should link_id2from run, default yes,
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
+	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
+	 * 	'array'=array or string with date-format
+	 *
 	 * @return array/boolean infolog entry, null if not found or false if no permission to read it
 	 */
-	function &read($info_id,$run_link_id2from=true)
+	function &read($info_id,$run_link_id2from=true,$date_format='ts')
 	{
 		if (is_array($info_id))
 		{
@@ -437,13 +452,30 @@ class infolog_bo
 		}
 		if ($run_link_id2from) $this->link_id2from($data);
 
+		if ($data['info_enddate'])
+		{
+			// Set due date to 00:00
+			$due = new egw_time($data['info_enddate'], egw_time::$server_timezone);
+			$due->setTime(0, 0, 0);
+			if ($date_format != 'server')
+			{
+				$arr = egw_time::to($due,'array');
+				$due = new egw_time($arr, egw_time::$user_timezone);
+			}
+			$data['info_enddate'] = egw_time::to($due,'server');
+		}
+
 		// convert system- to user-time
 		foreach($this->timestamps as $time)
 		{
-			if ($data[$time]) $data[$time] += $this->tz_offset_s;
+			if ($data[$time]) $data[$time] = $this->date2usertime($data[$time],$date_format);
 		}
-		// pre-cache title and file access
-		self::set_link_cache($data);
+
+		if ($date_format == 'ts')
+		{
+			// pre-cache title and file access
+			self::set_link_cache($data);
+		}
 
 		return $data;
 	}
@@ -492,7 +524,7 @@ class infolog_bo
 
 		$deleted = $info;
 		$deleted['info_status'] = 'deleted';
-		$deleted['info_datemodified'] = time();
+		$deleted['info_datemodified'] = $this->user_time_now;
 		$deleted['info_modifier'] = $this->user;
 
 		// if we have history switched on and not an already deleted item --> set only status deleted
@@ -532,9 +564,11 @@ class infolog_bo
 	* @param array &$values values to write
 	* @param boolean $check_defaults=true check and set certain defaults
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
+	* @param boolean $user2server=true conversion between user- and server-time necessary
+	*
 	* @return int/boolean info_id on a successfull write or false
 	*/
-	function write(&$values, $check_defaults=True, $touch_modified=True)
+	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
 		if ($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
@@ -578,7 +612,7 @@ class infolog_bo
 			}
 			if ($set_completed)
 			{
-				$values['info_datecompleted'] = $this->user_time_now;
+				$values['info_datecompleted'] = $user2server ? $this->user_time_now : $this->now;
 				$values['info_percent'] = 100;
 				$forcestatus = true;
 				$status = 'done';
@@ -605,7 +639,7 @@ class infolog_bo
 			if (!$values['info_datecompleted'] &&
 				(in_array($values['info_status'],array('done','billed')) || (int)$values['info_percent'] == 100))
 			{
-				$values['info_datecompleted'] = $this->user_time_now;	// set date completed to today if status == done
+				$values['info_datecompleted'] = $user2server ? $this->user_time_now : $this->now;	// set date completed to today if status == done
 			}
 			if (in_array($values['info_status'],array('done','billed')))
 			{
@@ -651,18 +685,58 @@ class infolog_bo
 		{
 			$values['info_owner'] = $this->so->user;
 		}
+
 		if ($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from'])))
 		{
 			$values['info_from'] = $this->link_id2from($values);
 		}
+
+		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
+
+		$to_write = $values;
+		if ($user2server)
+		{
+			// convert user- to system-time
+			foreach($this->timestamps as $time)
+			{
+				if ($to_write[$time]) $to_write[$time] = egw_time::user2server($to_write[$time],'ts');
+			}
+			if ($values['info_enddate'])
+			{
+				// Set due date to 00:00
+				$due = new egw_time($values['info_enddate'], egw_time::$user_timezone);
+				$due->setTime(0, 0, 0);
+				$values['info_enddate'] = egw_time::to($due,'ts');
+				$arr = egw_time::to($due,'array');
+				$to_write['info_enddate'] = mktime(0, 0, 0, $arr['month'], $arr['day'], $arr['year']);
+			}
+		}
+		else
+		{
+			// convert server- to user-time
+			foreach($this->timestamps as $time)
+			{
+				if ($values[$time]) $values[$time] = egw_time::server2user($values[$time],'ts');
+			}
+			if ($to_write['info_enddate'])
+			{
+				$due = new egw_time($to_write['info_enddate'], egw_time::$server_timezone);
+				$due->setTime(0, 0, 0);
+				$to_write['info_enddate'] = egw_time::to($due,'server');
+				$arr = egw_time::to($due,'array');
+				$due = new egw_time($arr, egw_time::$user_timezone);
+				$values['info_enddate'] = egw_time::to($due,'ts');
+			}
+		}
+
 		if ($touch_modified || !$values['info_datemodified'])
 		{
 			// Should only an entry be updated which includes the original modification date?
 			// Used in the web-GUI to check against a modification by an other user while editing the entry.
 			// It's now disabled for xmlrpc, as otherwise the xmlrpc code need to be changed!
 			$xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
-			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $values['info_datemodified']-$this->tz_offset_s : false;
-			$values['info_datemodified'] = $this->user_time_now;
+			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $to_write['info_datemodified'] : false;
+			$values['info_datemodified'] = $user2server ? $this->user_time_now : $this->now;
 		}
 		if ($touch_modified || !$values['info_modifier'])
 		{
@@ -670,13 +744,7 @@ class infolog_bo
 		}
 		//_debug_array($values);
 		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
-		$to_write = $values;
-		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
-		// convert user- to system-time
-		foreach($this->timestamps as $time)
-		{
-			if ($to_write[$time]) $to_write[$time] -= $this->tz_offset_s;
-		}
+
 		// we need to get the old values to update the links in customfields and for the tracking
 		if ($values['info_id'])
 		{
@@ -764,6 +832,10 @@ class infolog_bo
 	function &search(&$query)
 	{
 		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
+		if (!empty($query['start']))
+		{
+			$query['start'] = egw_time::user2server($query['start'],'ts');
+		}
 		$ret = $this->so->search($query);
 
 		// convert system- to user-time
@@ -771,13 +843,20 @@ class infolog_bo
 		{
 			foreach($ret as $id => &$data)
 			{
-				if($this->tz_offset_s)
+				if ($data['info_enddate'])
 				{
-					foreach($this->timestamps as $time)
-					{
-						if ($data[$time]) $data[$time] += $this->tz_offset_s;
-					}
+					// Set due date to 00:00 in user-time
+					$due = new egw_time($data['info_enddate'], egw_time::$server_timezone);
+					$due->setTime(0, 0, 0);
+					$arr = egw_time::to($due,'array');
+					$due = new egw_time($arr, egw_time::$user_timezone);
+					$data['info_enddate'] = egw_time::to($due,'server');
 				}
+				foreach($this->timestamps as $time)
+				{
+					if ($data[$time]) $data[$time] = $this->date2usertime($data[$time]);
+				}
+
 				// pre-cache title and file access
 				self::set_link_cache($data);
 			}
@@ -883,7 +962,7 @@ class infolog_bo
 	 * @param int/array $info int info_id or array with infolog entry
 	 * @return string/boolean string with the title, null if $info not found, false if no perms to view
 	 */
-	function link_title( $info )
+	function link_title($info)
 	{
 		if (!is_array($info))
 		{
@@ -902,7 +981,7 @@ class infolog_bo
 	 *
 	 * @param array $ids
 	 */
-	function link_titles( array $ids )
+	function link_titles(array $ids)
 	{
 		$titles = array();
 		foreach($this->search($params=array(
@@ -927,7 +1006,7 @@ class infolog_bo
 	 * @param array $options Array of options for the search
 	 * @return array with info_id - title pairs of the matching entries
 	 */
-	function link_query( $pattern, Array &$options = array() )
+	function link_query($pattern, Array &$options = array())
 	{
 		$query = array(
 			'search' => $pattern,
@@ -1012,8 +1091,9 @@ class infolog_bo
 		{
 			foreach($infos as $info)
 			{
-				$time = (int) adodb_date('Hi',$info['info_startdate']);
-				$date = adodb_date('Y/m/d',$info['info_startdate']);
+				$start = new egw_time($info['info_startdate'],egw_time::$user_timezone);
+				$time = (int) $start->format('Hi');
+				$date = $start->format('Y/m/d');
 				/* As event-like infologs are not showen in current calendar,
 				we need to present all open infologs to the user! (2006-06-27 nelius)
 				if ($do_events && !$time ||
@@ -1021,7 +1101,7 @@ class infolog_bo
 				{
 					continue;
 				}*/
-				$title = ($do_events?$GLOBALS['egw']->common->formattime(adodb_date('H',$info['info_startdate']),adodb_date('i',$info['info_startdate'])).' ':'').
+				$title = ($do_events?common::formattime($start->format('H'),$start->format('i')).' ':'').
 					$info['info_subject'];
 				$view = egw_link::view('infolog',$info['info_id']);
 				$content=array();
@@ -1363,6 +1443,8 @@ class infolog_bo
 
 	/**
 	 * Try to find a matching db entry
+	 * This method is working completely in server-time and
+	 * expects all time entriey to be 00:00 normalized.
 	 *
 	 * @param array $egwData   the vTODO data we try to find
 	 * @param boolean $relax=false if asked to relax, we only match against some key fields
@@ -1373,7 +1455,7 @@ class infolog_bo
 		if (!empty($egwData['info_uid']))
 		{
 			$filter = array('col_filter' => array('info_uid' => $egwData['info_uid']));
-			if (($found = $this->search($filter))
+			if (($found = $this->so->search($filter))
 					&& ($uidmatch = array_shift($found)))
 			{
 				return $uidmatch['info_id'];
@@ -1411,7 +1493,7 @@ class infolog_bo
 
 		$filter['col_filter'] = $egwData;
 
-		if($foundItems = $this->search($filter)) {
+		if($foundItems = $this->so->search($filter)) {
 			if(count($foundItems) > 0) {
 				$itemIDs = array_keys($foundItems);
 				return $itemIDs[0];
@@ -1433,20 +1515,23 @@ class infolog_bo
 		// try tasks without category
 		unset($filter['col_filter']['info_cat']);
 
-		#Horde::logMessage("findVTODO Filter\n"
-		#		. print_r($filter, true),
-		#		__FILE__, __LINE__, PEAR_LOG_DEBUG);
-		foreach ($this->search($filter) as $itemID => $taskData) {
-		#	Horde::logMessage("findVTODO Trying\n"
-		#		. print_r($taskData, true),
-		#		__FILE__, __LINE__, PEAR_LOG_DEBUG);
+		// Horde::logMessage("findVTODO Filter\n"
+		//	. print_r($filter, true),
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+		foreach ($this->so->search($filter) as $itemID => $taskData)
+		{
+			// Horde::logMessage("findVTODO Trying\n"
+			//	. print_r($taskData, true),
+			//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 			if (isset($egwData['info_cat'])
 					&& isset($taskData['info_cat']) && $taskData['info_cat']
 					&& $egwData['info_cat'] != $taskData['info_cat']) continue;
 			if (isset($egwData['info_startdate'])
-					&& isset($taskData['info_startdate']) && $taskData['info_startdate']) {
-				$parts = @getdate($taskData['info_startdate']);
-				$startdate = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
+					&& isset($taskData['info_startdate']) && $taskData['info_startdate'])
+			{
+				$time = new egw_time($taskData['info_startdate'],egw_time::$server_timezone);
+				$time->setTime(0, 0, 0);
+				$startdate = egw_time::to($time,'server');
 				if ($egwData['info_startdate'] != $startdate) continue;
 			}
 			// some clients don't support DTSTART
@@ -1454,9 +1539,11 @@ class infolog_bo
 					&& (!isset($taskData['info_startdate']) || !$taskData['info_startdate'])
 					&& !$relax) continue;
 			if (isset($egwData['info_datecompleted'])
-					&& isset($taskData['info_datecompleted']) && $taskData['info_datecompleted']) {
-				$parts = @getdate($taskData['info_datecompleted']);
-				$enddate = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
+					&& isset($taskData['info_datecompleted']) && $taskData['info_datecompleted'])
+			{
+				$time = new egw_time($taskData['info_datecompleted'],egw_time::$server_timezone);
+				$time->setTime(0, 0, 0);
+				$enddate = egw_time::to($time,'server');
 				if ($egwData['info_datecompleted'] != $enddate) continue;
 			}
 			if ((isset($egwData['info_datecompleted'])

@@ -2029,7 +2029,7 @@ class calendar_boupdate extends calendar_bo
     }
 
     /*
-     * Translates all timestamps for a given event from servert-ime to user-time.
+     * Translates all timestamps for a given event from server-time to user-time.
      * The update() and save() methods expect timestamps in user-time.
      * @param &$event	the event we are working on
      *
