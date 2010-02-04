@@ -210,6 +210,7 @@ switch($cmd)
 			usage();
 		}
 		load_wrapper($url=$argv[0]);
+
 		if($argc > 1 && !egw_vfs::$is_root)
 		{
 			die("You need to be root to do that!\n");
@@ -224,7 +225,7 @@ switch($cmd)
 		}
 		elseif ($fstab === false)
 		{
-			echo "URL '$url' not found or permission denied (are your root?)!\n";
+			echo "URL '$url' not found or permission denied (are you root?)!\n";
 		}
 		else
 		{
@@ -434,7 +435,7 @@ switch($cmd)
 function load_wrapper($url)
 {
 	$scheme = parse_url($url,PHP_URL_SCHEME);
-
+	
 	if (!in_array($scheme,stream_get_wrappers()))
 	{
 		switch($scheme)
@@ -503,8 +504,8 @@ function load_egw($user,$passwd,$domain='default')
 
 		if ($user == 'root_'.$GLOBALS['egw_info']['server']['header_admin_user'] &&
 			_check_pw($GLOBALS['egw_info']['server']['header_admin_password'],$passwd) ||
-			$user == 'root_'.$GLOBALS['egw_domain'][$_GET['domain']]['config_user'] &&
-			_check_pw($GLOBALS['egw_domain'][$_GET['domain']]['config_passwd'],$passwd))
+			$user == 'root_'.$GLOBALS['egw_domain'][$domain]['config_user'] &&
+			_check_pw($GLOBALS['egw_domain'][$domain]['config_passwd'],$passwd))
 		{
 			echo "\nRoot access granted!\n";
 			egw_vfs::$is_root = true;
