@@ -669,6 +669,20 @@ class categories
 	}
 
 	/**
+	 * Check if catgory is global (owner <= 0 || appname == 'phpgw')
+	 *
+	 * @param int|array $cat
+	 * @return boolean
+	 */
+	static function is_global($cat)
+	{
+		if (!is_array($cat) && !($cat = self::read($cat))) return null; // cat not found
+
+		return $cat['owner'] <= self::GLOBAL_ACCOUNT || $cat['appname'] == self::GLOBAL_APPNAME;
+	}
+
+
+	/**
 	 * return category information for a given id
 	 *
 	 * We use a shared cache together with read
