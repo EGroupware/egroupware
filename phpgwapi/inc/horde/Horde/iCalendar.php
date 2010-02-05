@@ -735,9 +735,9 @@ class Horde_iCalendar {
 				foreach ($values[1] as $value) {
 					if ((isset($params['VALUE'])
 							&& $params['VALUE'] == 'DATE') || (!isset($params['VALUE']) && $isDate)) {
-						$dates[] = $this->_parseDate($value);
+						$dates[] = $this->_parseDate(trim($value));
 					} else {
-						$dates[] = $this->_parseDateTime($value, $tzid);
+						$dates[] = $this->_parseDateTime(trim($value), $tzid);
 					}
 				}
 				$this->setAttribute($tag, isset($dates[0]) ? $dates[0] : null, $params, true, $dates);
@@ -941,12 +941,52 @@ class Horde_iCalendar {
                 $value = $this->_exportDateTime($value);
                 break;
 
+
+				// Support additional fields after date.
+ 			case 'AALARM':
+            case 'DALARM':
+            	if (isset($params['VALUE'])) {
+                    if ($params['VALUE'] == 'DATE') {
+                        // VCALENDAR 1.0 uses T000000 - T235959 for all day events:
+                        if ($this->isOldFormat() && $name == 'DTEND') {
+                            $d = new Horde_Date($value);
+                            $value = new Horde_Date(array(
+                                'year' => $d->year,
+                                'month' => $d->month,
+                                'mday' => $d->mday - 1));
+                            $value->correct();
+                            $value = $this->_exportDate($value, '235959');
+                        } else {
+                            $value = $this->_exportDate($value, '000000');
+                        }
+                    } else {
+                        $value = $this->_exportDateTime($value);
+                    }
+                } else {
+                    $value = $this->_exportDateTime($value);
+                }
+
+            	if (is_array($attribute['values']) &&
+		            	count($attribute['values']) > 0) {
+		            $values = $attribute['values'];
+	            	if ($this->isOldFormat()) {
+		            	$values = str_replace(';', '\\;', $values);
+	            	} else {
+                        // As of rfc 2426 2.5 semicolon and comma must be
+                        // escaped.
+                        $values = str_replace(array('\\', ';', ','),
+                                              array('\\\\', '\\;', '\\,'),
+                                              $values);
+	            	}
+	            	$value .= ';' . implode(';', $values);
+		         }
+
+                break;
+
             case 'DTEND':
             case 'DTSTART':
             case 'DTSTAMP':
             case 'DUE':
-            case 'AALARM':
-            case 'DALARM':
             case 'RECURRENCE-ID':
             case 'X-RECURRENCE-ID':
                 if (isset($params['VALUE'])) {

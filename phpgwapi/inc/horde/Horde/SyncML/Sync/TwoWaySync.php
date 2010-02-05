@@ -135,6 +135,9 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 					'guid' => $guid,
 					'contentType' => $contentType
 				));
+
+				if ($c === false) continue; // no content to export
+
 				if (is_a($c, 'PEAR_Error')) {
 					// Item in history but not in database. Strange, but can happen.
 					Horde :: logMessage("SyncML: change: export of guid $guid failed:\n" . print_r($c, true),
@@ -343,12 +346,13 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 
 				// Create an Add request for client.
 				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI, $this->_targetLocURI);
-
 				$c = $registry->call($hordeType . '/export', array (
 					'guid' => $guid,
 					'contentType' => $contentType,
 
 				));
+
+				if ($c === false) continue; // no content to export
 
 				if (is_a($c, 'PEAR_Error')) {
 					// Item in history but not in database. Strange, but can happen.
@@ -406,7 +410,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 	function loadData() {
 		global $registry;
 
-		$state = & $_SESSION['SyncML.state'];
+		$state =& $_SESSION['SyncML.state'];
 		$syncType = $this->_targetLocURI;
 		$hordeType = $state->getHordeType($syncType);
 		$refts = $state->getServerAnchorLast($syncType);
@@ -421,15 +425,29 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 
 		$state->setAddedItems($syncType, $addedItems);
 
-		$state->setDeletedItems($syncType, $registry->call($hordeType . '/listBy', array (
+		$changedItems =& $state->getChangedItems($syncType);
+
+		$deletedItems =& $registry->call($hordeType . '/listBy', array (
 			'action' => 'delete',
 			'timestamp' => $refts,
 			'type' => $syncType,
 			'filter' => $this->_filterExpression
-		)));
+		));
+		foreach ($deletedItems as $guid)
+		{
+			if (strstr($guid, ':'))
+			{
+				$parentGUID = array_shift(explode(':', $guid));
+				if (!in_array($parentGUID, $changedItems))
+				{
+					$changedItems[] = $parentGUID;
+				}
+			}
+		}
+		$state->setDeletedItems($syncType, $deletedItems);
 
-		$this->_syncDataLoaded = TRUE;
+		$this->_syncDataLoaded = true;
 
-		return count($state->getChangedItems($syncType)) + count($state->getDeletedItems($syncType)) + count($state->getAddedItems($syncType)) + count($state->getConflictItems($syncType));
+		return count($changedItems) + count($deletedItems) + count($addedItems) + count($state->getConflictItems($syncType));
 	}
 }

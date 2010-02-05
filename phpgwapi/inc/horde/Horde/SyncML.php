@@ -19,7 +19,7 @@
  * @copyright (c) The Horde Project (http://www.horde.org/)
  * @version $Id$
  */
-require_once(EGW_API_INC.'/class.egw_db.inc.php');
+
 include_once 'Horde/SyncML/Command.php';
 include_once 'Horde/SyncML/Command/Status.php';
 include_once 'Horde/SyncML/Command/Alert.php';
@@ -646,11 +646,12 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             			switch ($element) {
 	            			case 'Final':
 		            			$this->_actionCommands = false;
-		            			$deviceInfo = $state->getClientDeviceInfo();
 
 		            			if ($state->getSyncStatus() == CLIENT_SYNC_STARTED) {
-			            			if (strtolower($deviceInfo['manufacturer']) == 'funambol'
-				            			&& isset($deviceInfo['softwareVersion'])) {
+			            			if ($state->isAuthorized() &&
+					            			($deviceInfo = $state->getClientDeviceInfo()) &&
+											strtolower($deviceInfo['manufacturer']) == 'funambol'
+												&& isset($deviceInfo['softwareVersion'])) {
 				            			$swversion = $deviceInfo['softwareVersion'];
 				            			if ($swversion < 1.0) {
 					            			// e.g. Mozilla plugin uses this range
@@ -668,9 +669,8 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 			            			} else {
 				            			$state->setSyncStatus(CLIENT_SYNC_ACKNOWLEDGED);
 			            			}
-		            			}
 
-		            			if ($state->getSyncStatus() == SERVER_SYNC_FINNISHED) {
+		            			} elseif ($state->getSyncStatus() == SERVER_SYNC_FINNISHED) {
 			            			$state->setSyncStatus(SERVER_SYNC_ACKNOWLEDGED);
 		            			}
 
