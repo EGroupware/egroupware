@@ -79,7 +79,6 @@ enter the complete vfs path to specify your desired start folder.	filemanager	de
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
-error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 executable	filemanager	de	Ausführbar
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte ACL
@@ -112,7 +111,6 @@ link target %1 not found!	filemanager	de	Verküpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
-maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	Verändert
 modified between	filemanager	de	verändert zwischen

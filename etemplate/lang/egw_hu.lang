@@ -81,3 +81,5 @@ weekend	etemplate	hu	hétvége
 width	etemplate	hu	Szélesség
 working days	etemplate	hu	munkanapok
 year	etemplate	hu	Év
+error uploading file!	filemanager	hu	HIba a file feltöltése során!
+maximum size for uploads	filemanager	hu	Feltöltés maximális mérete

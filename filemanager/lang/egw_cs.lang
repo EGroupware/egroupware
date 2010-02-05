@@ -79,7 +79,6 @@ enter the complete vfs path to specify your desired start folder.	filemanager	cs
 error adding the acl!	filemanager	cs	Při přidávání ACL došlo k chybě!
 error creating symlink to target %1!	filemanager	cs	Chyba při vytváření symbolického odkazu na cíl %1!
 error deleting the acl entry!	filemanager	cs	Při mazání ACL záznamu došlo k chybě!
-error uploading file!	filemanager	cs	Chyba při uploadu souboru!
 executable	filemanager	cs	Spustitelný
 extended access control list	filemanager	cs	Rozšířený seznam přístupových oprávnění
 extended acl	filemanager	cs	Rozšířený ACL
@@ -112,7 +111,6 @@ link target %1 not found!	filemanager	cs	Odkaz na cíl %1 nebyl nalezen!
 location	filemanager	cs	Umístění
 log out as superuser	filemanager	cs	Odhlášení superuživatele
 max folderlinks	admin	cs	maximálně odkazů na složky
-maximum size for uploads	filemanager	cs	Maximální velikost pro uploady
 mime type	filemanager	cs	MIME typ
 modified	filemanager	cs	Změněno
 modified between	filemanager	cs	změněno mezi

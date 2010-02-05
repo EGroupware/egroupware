@@ -135,11 +135,6 @@ class filemanager_ui
 				if (!$content['nm']['filter']) $content['nm']['filter'] = '1';
 			}
 		}
-		// check if we have a failed upload AND upload_max_filesize >= post_max_size --> no $_POST array
-		if ($_GET['post_empty'] && self::km2int(ini_get('upload_max_filesize')) >= self::km2int(ini_get('post_max_size')))
-		{
-			$msg = lang('Error uploading file!')."\n".self::max_upload_size_message();
-		}
 		$content['nm']['msg'] = $msg;
 
 		if ($content['action'] || $content['nm']['rows'])
@@ -247,7 +242,7 @@ class filemanager_ui
 					}
 					if ($upload_failure)
 					{
-						$content['nm']['msg'] .= ($upload_success ? "\n" : '').lang('Error uploading file!')."\n".self::max_upload_size_message();
+						$content['nm']['msg'] .= ($upload_success ? "\n" : '').lang('Error uploading file!')."\n".etemplate::max_upload_size_message();
 					}
 					break;
 			}
@@ -264,7 +259,7 @@ class filemanager_ui
 			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
 		$content['linkpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
 			lang('link')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
-		$content['upload_size'] = self::max_upload_size_message();
+		$content['upload_size'] = etemplate::max_upload_size_message();
 		//_debug_array($content);
 
 		$readonlys['button[linkpaste]'] = $readonlys['button[paste]'] = !$clipboard_files || !$dir_is_writable;
@@ -345,47 +340,6 @@ class filemanager_ui
 			$start = $path;
 		}
 		return $start;
-	}
-
-	/**
-	 * Convert numbers like '32M' or '512k' to integers
-	 *
-	 * @param string $size
-	 * @return int
-	 */
-	private static function km2int($size)
-	{
-		if (!is_numeric($size))
-		{
-			switch(strtolower(substr($size,-1)))
-			{
-				case 'm':
-					$size = 1024*1024*(int)$size;
-					break;
-				case 'k':
-					$size = 1024*(int)$size;
-					break;
-			}
-		}
-		return (int)$size;
-	}
-
-	/**
-	 * Message containing the max Upload size from the current php.ini settings
-	 *
-	 * We have to take the smaler one of upload_max_filesize AND post_max_size-2800 into account.
-	 * memory_limit does NOT matter any more, because of the stream-interface of the vfs.
-	 *
-	 * @return string
-	 */
-	static function max_upload_size_message()
-	{
-		$upload_max_filesize = ini_get('upload_max_filesize');
-		$post_max_size = ini_get('post_max_size');
-		$max_upload = min(self::km2int($upload_max_filesize),self::km2int($post_max_size)-2800);
-
-		return lang('Maximum size for uploads').': '.egw_vfs::hsize($max_upload).
-			" (php.ini: upload_max_filesize=$upload_max_filesize, post_max_size=$post_max_size)";
 	}
 
 	/**

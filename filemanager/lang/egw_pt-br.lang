@@ -62,7 +62,6 @@ enter the complete vfs path to specify a fast access link to a folder	filemanage
 enter the complete vfs path to specify your desired start folder.	filemanager	pt-br	Informe o caminho VFS completo para especificar sua pasta inicial desejada.
 error adding the acl!	filemanager	pt-br	Erro editanto a ACL!
 error deleting the acl entry!	filemanager	pt-br	Erro removendo o registro ACL!
-error uploading file!	filemanager	pt-br	Erro carregando arquivo!
 executable	filemanager	pt-br	Executável
 extended access control list	filemanager	pt-br	Lista de controle de acesso ampliada
 extended acl	filemanager	pt-br	ACL ampliada
@@ -90,7 +89,6 @@ inherited	filemanager	pt-br	Herdado
 link %1: %2	filemanager	pt-br	Link %1: %2
 location	filemanager	pt-br	Localização
 max folderlinks	admin	pt-br	máximo de links para pastas
-maximum size for uploads	filemanager	pt-br	Tamanho máximo para uploads
 mime type	filemanager	pt-br	Tipo MIME
 modified	filemanager	pt-br	Modificado
 modified between	filemanager	pt-br	moficiado entre

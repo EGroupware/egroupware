@@ -412,3 +412,5 @@ xslt template	etemplate	es-es	Plantilla XSLT
 year	etemplate	es-es	Año
 you are not allowed to export more then %1 entries!	etemplate	es-es	¡No se le permite exportar más de %1 entradas!
 you can respond by visiting:	etemplate	es-es	Puede responder visitando:
+error uploading file!	filemanager	es-es	¡Error al subir el fichero!
+maximum size for uploads	filemanager	es-es	Tamaño máximo para subida de ficheros

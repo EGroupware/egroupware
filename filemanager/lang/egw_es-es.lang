@@ -76,7 +76,6 @@ enter the complete vfs path to specify your desired start folder.	filemanager	es
 error adding the acl!	filemanager	es-es	¡Error al añadir la ACL!
 error creating symlink to target %1!	filemanager	es-es	¡Error al crear el enlace simbólico al destino %1!
 error deleting the acl entry!	filemanager	es-es	¡Error al borrar la entrada de la ACL!
-error uploading file!	filemanager	es-es	¡Error al subir el fichero!
 executable	filemanager	es-es	Ejecutable
 extended access control list	filemanager	es-es	Listas de control de acceso extendidas
 extended acl	filemanager	es-es	ACL extendida
@@ -108,7 +107,6 @@ link target %1 not found!	filemanager	es-es	¡No se ha encontrado el enlace de d
 location	filemanager	es-es	Ubicación
 log out as superuser	filemanager	es-es	Cerrar sesión como superusuario
 max folderlinks	admin	es-es	Número máximo de enlaces a carpetas
-maximum size for uploads	filemanager	es-es	Tamaño máximo para subida de ficheros
 mime type	filemanager	es-es	Tipo MIME
 modified	filemanager	es-es	Modificado
 modified between	filemanager	es-es	Modificado entre
