@@ -520,11 +520,11 @@ class infolog_bo
 				}
 			}
 		}
-		if (!($info = $this->read($info_id))) return false;			// should not happen
+		if (!($info = $this->read($info_id, true, 'server'))) return false;	 // should not happen
 
 		$deleted = $info;
 		$deleted['info_status'] = 'deleted';
-		$deleted['info_datemodified'] = $this->user_time_now;
+		$deleted['info_datemodified'] = time();
 		$deleted['info_modifier'] = $this->user;
 
 		// if we have history switched on and not an already deleted item --> set only status deleted
@@ -722,7 +722,7 @@ class infolog_bo
 			{
 				$due = new egw_time($to_write['info_enddate'], egw_time::$server_timezone);
 				$due->setTime(0, 0, 0);
-				$to_write['info_enddate'] = egw_time::to($due,'server');
+				$to_write['info_enddate'] = egw_time::to($due,'ts');
 				$arr = egw_time::to($due,'array');
 				$due = new egw_time($arr, egw_time::$user_timezone);
 				$values['info_enddate'] = egw_time::to($due,'ts');
@@ -742,6 +742,7 @@ class infolog_bo
 		if ($touch_modified || !$values['info_modifier'])
 		{
 			$values['info_modifier'] = $this->so->user;
+			$to_write['info_modifier'] = $this->so->user;
 		}
 		//_debug_array($values);
 		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
@@ -749,7 +750,7 @@ class infolog_bo
 		// we need to get the old values to update the links in customfields and for the tracking
 		if ($values['info_id'])
 		{
-			$old = $this->read($values['info_id'],false);
+			$old = $this->read($values['info_id'], false, 'server');
 		}
 		if(($info_id = $this->so->write($to_write,$check_modified)))
 		{
@@ -774,11 +775,13 @@ class infolog_bo
 				);
 			}
 			$values['info_id'] = $info_id;
-			// if the info responbsible array is not passed, fetch it from old.
+			$to_write['info_id'] = $info_id;
+			// if the info responsible array is not passed, fetch it from old.
 			if (!array_key_exists('info_responsible',$values)) $values['info_responsible'] = $old['info_responsible'];
 			if (!is_array($values['info_responsible']))		// this should not happen, bug it does ;-)
 			{
 				$values['info_responsible'] = $values['info_responsible'] ? explode(',',$values['info_responsible']) : array();
+				$to_write['info_responsible'] = $values['info_responsible'];
 			}
 			// create (and remove) links in custom fields
 			customfields_widget::update_customfield_links('infolog',$values,$old,'info_id');
@@ -798,8 +801,9 @@ class infolog_bo
 			if ($old && ($missing_fields = array_diff_key($old,$values)))
 			{
 				$values = array_merge($values,$missing_fields);
+				$to_write = array_merge($to_write,$missing_fields);
 			}
-			$this->tracking->track($values,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
+			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
 		}
 		if ($info_from_set) $values['info_from'] = '';
 
@@ -1315,19 +1319,19 @@ class infolog_bo
 					{
 						case 'notify_due_responsible':
 							$info['message'] = lang('%1 you are responsible for is due at %2',$this->enums['type'][$info['info_type']],
-								$this->tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
+								$this->tracking->datetime($info['info_enddate'],false));
 							break;
 						case 'notify_due_delegated':
 							$info['message'] = lang('%1 you delegated is due at %2',$this->enums['type'][$info['info_type']],
-								$this->tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
+								$this->tracking->datetime($info['info_enddate'],false));
 							break;
 						case 'notify_start_responsible':
 							$info['message'] = lang('%1 you are responsible for is starting at %2',$this->enums['type'][$info['info_type']],
-								$this->tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
+								$this->tracking->datetime($info['info_startdate'],null));
 							break;
 						case 'notify_start_delegated':
 							$info['message'] = lang('%1 you delegated is starting at %2',$this->enums['type'][$info['info_type']],
-								$this->tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
+								$this->tracking->datetime($info['info_startdate'],null));
 							break;
 					}
 					//error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
