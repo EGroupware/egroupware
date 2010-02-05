@@ -209,7 +209,7 @@ abstract class bo_tracking
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param int $user=null user who made the changes, default to current user
-	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undeleted
 	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
 	 */
@@ -524,7 +524,7 @@ abstract class bo_tracking
 	/**
 	 * Return date+time formatted for the currently notified user (prefs in $GLOBALS['egw_info']['user']['preferences'])
 	 *
-	 * @param int|string|DateTime $timestamp in user-time
+	 * @param int|string|DateTime $timestamp in server-time
 	 * @param boolean $do_time=true true=allways (default), false=never print the time, null=print time if != 00:00
 	 *
 	 * @return string
@@ -533,7 +533,7 @@ abstract class bo_tracking
 	{
 		if (!is_a($timestamp,'DateTime'))
 		{
-			$timestamp = new egw_time($timestamp,egw_time::$user_timezone);
+			$timestamp = new egw_time($timestamp,egw_time::$server_timezone);
 		}
 		$timestamp->setTimezone(egw_time::$user_timezone);
 		if (is_null($do_time))
