@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-9 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-10 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -27,6 +27,7 @@ class calendar_uiforms extends calendar_ui
 	var $public_functions = array(
 		'freetimesearch'  => True,
 		'edit' => true,
+		'process_edit' => true,
 		'export' => true,
 		'import' => true,
 		'cat_acl' => true,
@@ -165,6 +166,10 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function process_edit($content)
 	{
+		if (!is_array($content))	// redirect from etemplate, if POST empty
+		{
+			return $this->edit(null,null,strip_tags($_GET['msg']));
+		}
 		$referer = !empty($content['referer']) ? $content['referer'] : '/index.php?menuaction='.$this->view_menuaction;
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
