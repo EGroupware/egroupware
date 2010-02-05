@@ -232,8 +232,8 @@ class infolog_bo
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
-		$this->user_time_now = egw_time::to('now','ts');
 		$this->now = time();
+		$this->user_time_now = egw_time::server2user($this->now,'ts');
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
 		$this->so = new infolog_so($this->grants);
@@ -736,7 +736,8 @@ class infolog_bo
 			// It's now disabled for xmlrpc, as otherwise the xmlrpc code need to be changed!
 			$xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
 			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $to_write['info_datemodified'] : false;
-			$values['info_datemodified'] = $user2server ? $this->user_time_now : $this->now;
+			$values['info_datemodified'] = $this->user_time_now;
+			$to_write['info_datemodified'] = $this->now;
 		}
 		if ($touch_modified || !$values['info_modifier'])
 		{
