@@ -64,7 +64,6 @@ download	filemanager	zh	下载
 edit	filemanager	zh	编辑
 edit comments	filemanager	zh	编辑注释
 error running command	filemanager	zh	命令执行出错
-error uploading file!	filemanager	zh	上传文件错误！
 execute	filemanager	zh	执行
 failed to create directory	filemanager	zh	创建目录失败
 failed to create directory!	filemanager	zh	创建目录失败！
@@ -96,7 +95,6 @@ home	filemanager	zh	首页
 id	filemanager	zh	编号
 location	filemanager	zh	文件位置
 locked	filemanager	zh	已锁定
-maximum size for uploads: %1 (php.ini: upload_max_filesize=%2, post_max_size=%3)	filemanager	zh	上传最大大小：%1 (php.ini: upload_max_filesize=%2, post_max_size=%3)
 mime type	filemanager	zh	MIME类型
 modified	filemanager	zh	修改日期
 modified between	filemanager	zh	修改介于

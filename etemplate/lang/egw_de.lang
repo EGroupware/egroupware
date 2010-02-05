@@ -420,3 +420,5 @@ xslt template	etemplate	de	XSLT Template
 year	etemplate	de	Jahr
 you are not allowed to export more then %1 entries!	etemplate	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
 you can respond by visiting:	etemplate	de	Sie können unter dem folgenden Verweis antworten:
+error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
+maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen

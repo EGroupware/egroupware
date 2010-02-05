@@ -420,3 +420,5 @@ xslt template	etemplate	cs	XSLT šablona
 year	etemplate	cs	Rok
 you are not allowed to export more then %1 entries!	etemplate	cs	Nemáte oprávnění exportovat více než %1 záznamů!
 you can respond by visiting:	etemplate	cs	Můžete odpovědět navštívením:
+error uploading file!	filemanager	cs	Chyba při uploadu souboru!
+maximum size for uploads	filemanager	cs	Maximální velikost pro uploady

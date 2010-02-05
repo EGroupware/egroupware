@@ -461,7 +461,14 @@ class vfs_widget
 		}
 		$tmp_name = etemplate::get_array($_FILES['exec']['tmp_name'],$name);
 		$error = etemplate::get_array($_FILES['exec']['error'],$name);
-		if ($error || empty($tmp_name) || function_exists('is_uploaded_file') && !is_uploaded_file($tmp_name) || !file_exists($tmp_name))
+		if ($error)
+		{
+			etemplate::set_validation_error($name,lang('Error uploading file!')."\n".
+				etemplate::max_upload_size_message());
+			$loop = true;
+			return false;
+		}
+		if (empty($tmp_name) || function_exists('is_uploaded_file') && !is_uploaded_file($tmp_name) || !file_exists($tmp_name))
 		{
 			return false;
 		}

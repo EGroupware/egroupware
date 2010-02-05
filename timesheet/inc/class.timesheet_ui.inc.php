@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -16,10 +16,10 @@
 class timesheet_ui extends timesheet_bo
 {
 	var $public_functions = array(
-	'view' => true,
-	'edit' => true,
-	'index' => true,
-	'editstatus' => true,
+		'view' => true,
+		'edit' => true,
+		'index' => true,
+		'editstatus' => true,
 	);
 	/**
 	 * ProjectManager integration: 'none', 'full' or default null
@@ -61,6 +61,8 @@ class timesheet_ui extends timesheet_bo
 		$etpl = new etemplate('timesheet.edit');
 		if (!is_array($content))
 		{
+			if ($_GET['msg']) $msg = strip_tags($_GET['msg']);
+			
 			if ($view || (int)$_GET['ts_id'])
 			{
 				if (!$this->read((int)$_GET['ts_id']))

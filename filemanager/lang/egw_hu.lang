@@ -79,7 +79,6 @@ enter the complete vfs path to specify your desired start folder.	filemanager	hu
 error adding the acl!	filemanager	hu	HIba a hozzáférés létrehozása során!
 error creating symlink to target %1!	filemanager	hu	Hiba a sylink létrehozása során %1 céhoz!
 error deleting the acl entry!	filemanager	hu	Hiba a hozzáférés törlése során!
-error uploading file!	filemanager	hu	HIba a file feltöltése során!
 executable	filemanager	hu	Végrehajtható
 extended access control list	filemanager	hu	Kiterjeszett hozzáférés korlátozás lista
 extended acl	filemanager	hu	Kiterjeszett hozzáférés korlátozás
@@ -112,7 +111,6 @@ link target %1 not found!	filemanager	hu	Link célpontja nem található (%1)!
 location	filemanager	hu	Hely
 log out as superuser	filemanager	hu	Rendszergazda kijelentkezés
 max folderlinks	admin	hu	maximális mappalink száma
-maximum size for uploads	filemanager	hu	Feltöltés maximális mérete
 mime type	filemanager	hu	MIME típus
 modified	filemanager	hu	Módosítva
 modified between	filemanager	hu	módosítva

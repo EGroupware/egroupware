@@ -387,3 +387,5 @@ xslt template	etemplate	sk	XSLT šablóna
 year	etemplate	sk	Rok
 you are not allowed to export more then %1 entries!	etemplate	sk	Nie je vám dovolené, exportovať viac než %1 záznamov!
 you can respond by visiting:	etemplate	sk	Odpovedať môžete na tejto adrese:
+error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
+maximum size for uploads	filemanager	sk	Maximálna veľkosť pre odovzdané súbory

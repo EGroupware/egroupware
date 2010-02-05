@@ -23,7 +23,7 @@ class ui_resources
 		'show'		=> True,
 		'select'	=> True,
 		'writeLangFile'	=> True
-		);
+	);
 
 	/**
 	 * Constructor
@@ -229,7 +229,7 @@ class ui_resources
 					'to_app' => 'resources'
 				);
 			}
-
+			if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
 		}
 		// some presetes
 		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);

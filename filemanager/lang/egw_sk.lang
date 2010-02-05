@@ -79,7 +79,6 @@ enter the complete vfs path to specify your desired start folder.	filemanager	sk
 error adding the acl!	filemanager	sk	Chyba počas pridávania ACL!
 error creating symlink to target %1!	filemanager	sk	Chyba pri vytváraní symbolického odkazu na cieľ %1!
 error deleting the acl entry!	filemanager	sk	Chyba počas odstraňovania záznamu ACL!
-error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
 executable	filemanager	sk	Spustiteľný
 extended access control list	filemanager	sk	Rozšírený zoznam prístupových oprávnení (ACL)
 extended acl	filemanager	sk	Rozšírený ACL
@@ -112,7 +111,6 @@ link target %1 not found!	filemanager	sk	Cieľ odkazu %1 sa nenašiel!
 location	filemanager	sk	Umiestnenie
 log out as superuser	filemanager	sk	Odhlásiť sa ako supervízor
 max folderlinks	admin	sk	max priečinkových odkazov
-maximum size for uploads	filemanager	sk	Maximálna veľkosť pre odovzdané súbory
 mime type	filemanager	sk	MIME typ
 modified	filemanager	sk	Zmenené
 modified between	filemanager	sk	Zmenené medzi

@@ -66,7 +66,6 @@ enter the complete vfs path to specify a fast access link to a folder	filemanage
 enter the complete vfs path to specify your desired start folder.	filemanager	sl	Vnesite celotno pot VFS, da določite želeno začetno mapo.
 error adding the acl!	filemanager	sl	Napaka pri dodajanju ACL!
 error deleting the acl entry!	filemanager	sl	Napaka pri brisanju ACL!
-error uploading file!	filemanager	sl	Napaka pri prenosu datoteke!
 executable	filemanager	sl	Izvršilna
 extended access control list	filemanager	sl	Razširjen seznam kontrol dostopa
 extended acl	filemanager	sl	Razširjen ACL
@@ -96,7 +95,6 @@ link %1: %2	filemanager	sl	Povezava %1: %2
 location	filemanager	sl	Lokacija
 log out as superuser	filemanager	sl	Odjavi se kot superuser
 max folderlinks	admin	sl	Največje število povezav do map
-maximum size for uploads	filemanager	sl	Največja velikost za prenos
 mime type	filemanager	sl	MIME tip
 modified	filemanager	sl	Spremenjeno
 modified between	filemanager	sl	Spremenjeno med

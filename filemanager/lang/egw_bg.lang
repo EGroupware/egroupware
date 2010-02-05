@@ -63,7 +63,6 @@ enter the complete vfs path to specify a fast access link to a folder	filemanage
 enter the complete vfs path to specify your desired start folder.	filemanager	bg	Въведете пълния VFS път, за да зададете желаната си стартова директория
 error adding the acl!	filemanager	bg	Грешка при добавяне на ACL!
 error deleting the acl entry!	filemanager	bg	Грешка при изтриване на ACL записа
-error uploading file!	filemanager	bg	Грешка при качване на файла!
 executable	filemanager	bg	Изпълним
 extended access control list	filemanager	bg	Разширен списък за контрол на достъпа (ACL)
 extended acl	filemanager	bg	Разширен ACL
@@ -91,7 +90,6 @@ inherited	filemanager	bg	Наследени
 link %1: %2	filemanager	bg	Връзка %1: %2
 location	filemanager	bg	Местоположение
 max folderlinks	admin	bg	макс. връзки към директории
-maximum size for uploads	filemanager	bg	Максимален размер за качване
 mime type	filemanager	bg	MIME тип
 modified	filemanager	bg	променян на
 modified between	filemanager	bg	променян между

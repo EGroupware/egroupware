@@ -426,7 +426,23 @@ class etemplate extends boetemplate
 			if ($this->sitemgr) return false;
 			//echo "uitemplate::process_exec() id='$_POST[etemplate_exec_id]' invalid session-data !!!"; _debug_array($_SESSION);
 			// this prevents an empty screen, if the sessiondata gets lost somehow
-			$this->location(array('menuaction' => $_GET['menuaction'],'post_empty' => (int)!$_POST));
+			$redirect = array(
+				'menuaction' => $_GET['menuaction'],
+			);
+			if (!$_POST && $_SERVER['REQUEST_METHOD'] == 'POST')
+			{
+				$redirect['post_empty'] = 1;
+				// check if we have a failed upload, because user tried to uploaded a file 
+				// bigger then php.ini setting post_max_size
+				// in that case the webserver calls PHP with $_POST === array()
+				if (substr($_SERVER['CONTENT_TYPE'],0,19) == 'multipart/form-data' &&
+					$_SERVER['CONTENT_LENGTH'] > self::km2int(ini_get('post_max_size')))
+				{
+					$redirect['failed_upload'] = 1;
+					$redirect['msg'] = lang('Error uploading file!')."\n".self::max_upload_size_message();
+				}
+			}
+			$this->location($redirect);
 		}
 		self::$name_vars = self::$request->name_vars;
 		if (isset($submit_button) && !empty($submit_button))
@@ -520,6 +536,47 @@ class etemplate extends boetemplate
 			return ExecMethod($type == 'regular' ? self::$request->method : $_GET['menuaction'],
 				self::complete_array_merge(self::$request->preserv,$content));
 		}
+	}
+
+	/**
+	 * Message containing the max Upload size from the current php.ini settings
+	 *
+	 * We have to take the smaler one of upload_max_filesize AND post_max_size-2800 into account.
+	 * memory_limit does NOT matter any more, because of the stream-interface of the vfs.
+	 *
+	 * @return string
+	 */
+	static function max_upload_size_message()
+	{
+		$upload_max_filesize = ini_get('upload_max_filesize');
+		$post_max_size = ini_get('post_max_size');
+		$max_upload = min(self::km2int($upload_max_filesize),self::km2int($post_max_size)-2800);
+
+		return lang('Maximum size for uploads').': '.egw_vfs::hsize($max_upload).
+			" (php.ini: upload_max_filesize=$upload_max_filesize, post_max_size=$post_max_size)";
+	}
+
+	/**
+	 * Convert numbers like '32M' or '512k' to integers
+	 *
+	 * @param string $size
+	 * @return int
+	 */
+	private static function km2int($size)
+	{
+		if (!is_numeric($size))
+		{
+			switch(strtolower(substr($size,-1)))
+			{
+				case 'm':
+					$size = 1024*1024*(int)$size;
+					break;
+				case 'k':
+					$size = 1024*(int)$size;
+					break;
+			}
+		}
+		return (int)$size;
 	}
 
 	/**
@@ -2166,6 +2223,12 @@ class etemplate extends boetemplate
 						}
 						if (!$multiple) $file['path'] = $this->get_array($content_in,substr($form_name,0,-1).'_path]');
 						$file['ip'] = $_SERVER['REMOTE_ADDR'];
+						// check if we have an upload error
+						if ($file['error'] && $file['name'] !== '' && !$file['size'])	// ignore empty upload boxes
+						{
+							self::set_validation_error($form_name.($multiple?'[]':''),
+								lang('Error uploading file!')."\n".self::max_upload_size_message(),'');
+						}
 						if ((string)$file['name'] === '' || $file['tmp_name'] && function_exists('is_uploaded_file') && !is_uploaded_file($file['tmp_name']))
 						{
 							if ($multiple && ($file['name'] === '' || $file['error']))

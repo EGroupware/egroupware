@@ -403,3 +403,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	zh	要导入的 XML-文件
 xslt template	etemplate	zh	XSLT 模板
 year	etemplate	zh	年
+error uploading file!	filemanager	zh	上传文件错误！
+maximum size for uploads: %1 (php.ini: upload_max_filesize=%2, post_max_size=%3)	filemanager	zh	上传最大大小：%1 (php.ini: upload_max_filesize=%2, post_max_size=%3)

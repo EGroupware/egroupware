@@ -66,7 +66,6 @@ enter the complete vfs path to specify a fast access link to a folder	filemanage
 enter the complete vfs path to specify your desired start folder.	filemanager	nl	Vul het volledige VFS pad in om uw voorkeurs start folder te specificeren.
 error adding the acl!	filemanager	nl	Fout bij toevoegen van ACL!
 error deleting the acl entry!	filemanager	nl	Fout bij verwijderen van de ACL regel!
-error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
 executable	filemanager	nl	Uitvoerbaar bestand
 extended access control list	filemanager	nl	Uitgebreide toegangscontrolelijst
 extended acl	filemanager	nl	Uitgebreide ACL
@@ -96,7 +95,6 @@ link %1: %2	filemanager	nl	Link %1: %2
 location	filemanager	nl	Locatie
 log out as superuser	filemanager	nl	Uitloggen als supergebruiker
 max folderlinks	admin	nl	max folderlinks
-maximum size for uploads	filemanager	nl	Maximum grootte voor uploads
 mime type	filemanager	nl	MIME-type
 modified	filemanager	nl	Gewijzigd
 modified between	filemanager	nl	gewijzigd tussen
