@@ -238,12 +238,12 @@ class calendar_so
 		//echo "<p>socal::read(".print_r($ids,true).")=<pre>".print_r($events,true)."</pre>\n";
 		return $events;
 	}
-	
+
 	/**
 	 * Get maximum modification time of participant data of given event(s)
-	 * 
+	 *
 	 * This includes ALL recurences of an event series
-	 * 
+	 *
 	 * @param int|array $ids one or multiple cal_id's
 	 * @return int|array (array of) modification timestamp(s)
 	 */
@@ -1498,7 +1498,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @return array		Array of exception days (false for non-recurring events).
 	 */
-	function get_recurrence_exceptions(&$event, $tz_id=null, $start=0, $end=0)
+	function get_recurrence_exceptions($event, $tz_id=null, $start=0, $end=0)
 	{
 		$cal_id = (int) $event['id'];
 		if (!$cal_id || $event['recur_type'] == MCAL_RECUR_NONE) return false;
