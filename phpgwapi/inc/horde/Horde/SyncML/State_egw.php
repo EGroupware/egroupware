@@ -152,8 +152,18 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	function getClientDeviceInfo() {
 		#Horde::logMessage("SyncML: getClientDeviceInfo " . $this->_locName
 		#	. ", " . $this->_sourceURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		$syncml_prefs = $GLOBALS['egw_info']['user']['preferences']['syncml'];
+		$deviceMaxEntries = 'maxEntries-' . $this->_sourceURI;
+		$deviceUIDExtension = 'uidExtension-' . $this->_sourceURI;
+		$deviceNonBlockingAllday = 'nonBlockingAllday-' . $this->_sourceURI;
+		$deviceTimezone = 'tzid-' . $this->_sourceURI;
 		if (isset($this->_clientDeviceInfo)
 				&& is_array($this->_clientDeviceInfo)) {
+			// update user preferences
+			$this->_clientDeviceInfo['maxEntries'] = $syncml_prefs[$deviceMaxEntries];
+			$this->_clientDeviceInfo['uidExtension'] = $syncml_prefs[$deviceUIDExtension];
+			$this->_clientDeviceInfo['nonBlockingAllday'] = $syncml_prefs[$deviceNonBlockingAllday];
+			$this->_clientDeviceInfo['tzid'] = $syncml_prefs[$deviceTimezone];
 			// use cached information
 			return $this->_clientDeviceInfo;
 		}
@@ -187,11 +197,6 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
 			if (($row = $GLOBALS['egw']->db->select('egw_syncmldevinfo',
 				$cols, $where, __LINE__, __FILE__, false, '', 'syncml')->fetch())) {
-				$deviceMaxEntries = 'maxEntries-' . $this->_sourceURI;
-				$deviceUIDExtension = 'uidExtension-' . $this->_sourceURI;
-				$deviceNonBlockingAllday = 'nonBlockingAllday-' . $this->_sourceURI;
-				$deviceTimezone = 'tzid-' . $this->_sourceURI;
-				$syncml_prefs = $GLOBALS['egw_info']['user']['preferences']['syncml'];
 				$this->_clientDeviceInfo = array (
 					'DTDVersion'				=> $row['dev_dtdversion'],
 					'supportNumberOfChanges'	=> $row['dev_numberofchanges'],
