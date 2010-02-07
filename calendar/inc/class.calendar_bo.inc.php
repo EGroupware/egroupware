@@ -446,7 +446,7 @@ class calendar_bo
 				$this->debug_message('socalendar::search daywise sorting from %1 to %2 of %3',False,$start,$end,$events);
 			}
 			// create empty entries for each day in the reported time
-			for($ts = $start; $ts <= $end; $ts += DAY_s)
+			for($ts = $start; $ts <= $end; $ts += DAY_s) // good enough for array creation, but see while loop below.
 			{
 				$daysEvents[$this->date2string($ts)] = array();
 			}
@@ -457,9 +457,13 @@ class calendar_bo
 				$e_end   = min($this->date2ts($event['end'])-1,$end);
 
 				// add event to each day in the reported time
-				for($ts = $e_start; $ts <= $e_end; $ts += DAY_s)
+				$ts = $e_start;
+				//  $ts += DAY_s in a 'for' loop does not work for daylight savings in week view
+				// because the day is longer than DAY_s: Fullday events will be added twice.
+				while ($ts <= $e_end)
 				{
 					$daysEvents[$ymd = $this->date2string($ts)][] =& $events[$k];
+					$ts = strtotime("+1 day",$ts);
 				}
 				if ($ymd != ($last = $this->date2string($e_end)))
 				{
