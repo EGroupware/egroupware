@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -30,7 +30,6 @@
  * The stream wrapper interface is according to the docu on php.net
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
- * @ToDo versioning
  */
 class sqlfs_stream_wrapper implements iface_stream_wrapper
 {
@@ -80,10 +79,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	const LOG_LEVEL = 1;
 
-	/**
-	 * We do versioning AND store the content in the db, NOT YET IMPLEMENTED
-	 */
-	const VERSIONING = 0;
 	/**
 	 * We store the content in the DB (no versioning)
 	 */
@@ -142,13 +137,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @var array $path => info-array pairs
 	 */
-	static private $stat_cache = array();
+	static protected $stat_cache = array();
 	/**
 	 * Reference to the PDO object we use
 	 *
 	 * @var PDO
 	 */
-	static private $pdo;
+	static protected $pdo;
 	/**
 	 * Array with filenames of dir opened with dir_opendir
 	 *
@@ -174,10 +169,13 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * - STREAM_USE_PATH      If path is relative, search for the resource using the include_path.
 	 * - STREAM_REPORT_ERRORS If this flag is set, you are responsible for raising errors using trigger_error() during opening of the stream.
 	 *                        If this flag is not set, you should not raise any errors.
-	 * @param string $opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
+	 * @param string &$opened_path full path of the file/resource, if the open was successfull and STREAM_USE_PATH was set
+	 * @param array $overwrite_new=null if set create new file with values overwriten by the given ones
+	 * @param string $class=__CLASS__ class to use to call static methods, eg url_stat (workaround for no late static binding in php < 5.3)
+	 * @todo remove $class parameter and use static::url_stat() once we require PHP5.3!
 	 * @return boolean true if the ressource was opened successful, otherwise false
 	 */
-	function stream_open ( $url, $mode, $options, &$opened_path )
+	function stream_open ( $url, $mode, $options, &$opened_path, array $overwrite_new=null, $class=__CLASS__ )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$mode,$options)");
 
@@ -188,17 +186,17 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_path = $path;
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
-
-		if (!($stat = self::url_stat($path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
+		
+		if (!is_null($overwrite_new) || !($stat = call_user_func(array($class,'url_stat'),$path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
 				$mode[0] == 'x' ||	// or file should not exist, but does
-				!($dir_stat=self::url_stat($dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
+				!($dir_stat=call_user_func(array($class,'url_stat'),$dir,STREAM_URL_STAT_QUIET)) ||	// or parent dir does not exist																																			create it
 				!egw_vfs::check_access($dir,egw_vfs::WRITABLE,$dir_stat))	// or we are not allowed to 																																			create it
 			{
 				self::_remove_password($url);
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file does not exist or can not be created!");
-				if (!($options & STREAM_URL_STAT_QUIET))
+				if (($options & STREAM_REPORT_ERRORS))
 				{
 					trigger_error(__METHOD__."($url,$mode,$options) file does not exist or can not be created!",E_USER_WARNING);
 				}
@@ -206,8 +204,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				return false;
 			}
 			// new file --> create it in the DB
-			$query = 'INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size'.
-				') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size)';
+			$query = 'INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size,fs_active'.
+				') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_active)';
 			if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 			$stmt = self::$pdo->prepare($query);
 			$values = array(
@@ -224,7 +222,9 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				'fs_creator'  => egw_vfs::$user,
 				'fs_mime'     => 'application/octet-stream',	// required NOT NULL!
 				'fs_size'     => 0,
+				'fs_active'   => self::_pdo_boolean(true),
 			);
+			if ($overwrite_new) $values = array_merge($values,$overwrite_new);
 			if (!$stmt->execute($values) || !($this->opened_fs_id = self::$pdo->lastInsertId('egw_sqlfs_fs_id_seq')))
 			{
 				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
@@ -252,7 +252,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				self::_remove_password($url);
 				$op = $mode == 'r' ? 'read' : 'edited';
 				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) file can not be $op!");
-				if (!($options & STREAM_URL_STAT_QUIET))
+				if (($options & STREAM_REPORT_ERRORS))
 				{
 					trigger_error(__METHOD__."($url,$mode,$options) file can not be $op!",E_USER_WARNING);
 				}
@@ -644,7 +644,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) already exist!");
-			if (!($options & STREAM_URL_STAT_QUIET))
+			if (!($options & STREAM_REPORT_ERRORS))
 			{
 				//throw new Exception(__METHOD__."('$url',$mode,$options) already exist!");
 				trigger_error(__METHOD__."('$url',$mode,$options) already exist!",E_USER_WARNING);
@@ -670,7 +670,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."('$url',$mode,$options) permission denied!");
-			if (!($options & STREAM_URL_STAT_QUIET))
+			if (!($options & STREAM_REPORT_ERRORS))
 			{
 				trigger_error(__METHOD__."('$url',$mode,$options) permission denied!",E_USER_WARNING);
 			}
@@ -717,7 +717,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			$err_msg = __METHOD__."($url,$options) ".(!$stat ? 'not found!' :
 				($stat['mime'] != self::DIR_MIME_TYPE ? 'not a directory!' : 'permission denied!'));
 			if (self::LOG_LEVEL) error_log($err_msg);
-			if (!($options & STREAM_URL_STAT_QUIET))
+			if (!($options & STREAM_REPORT_ERRORS))
 			{
 				trigger_error($err_msg,E_USER_WARNING);
 			}
@@ -729,7 +729,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		{
 			self::_remove_password($url);
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$options) dir is not empty!");
-			if (!($options & STREAM_URL_STAT_QUIET))
+			if (!($options & STREAM_REPORT_ERRORS))
 			{
 				trigger_error(__METHOD__."('$url',$options) dir is not empty!",E_USER_WARNING);
 			}
@@ -932,7 +932,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		$this->opened_dir = array();
 		$query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.self::$extra_columns.
-			' FROM '.self::TABLE." WHERE fs_dir=? ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
+			' FROM '.self::TABLE.' WHERE fs_dir=? AND fs_active='.self::_pdo_boolean(true).
+			" ORDER BY fs_mime='httpd/unix-directory' DESC, fs_name ASC";
 		//if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__."($url,$options)".' */ '.$query;
 
@@ -1005,7 +1006,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			self::_pdo();
 		}
 		$base_query = 'SELECT fs_id,fs_name,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified'.self::$extra_columns.
-			' FROM '.self::TABLE.' WHERE fs_name'.self::$case_sensitive_equal.'? AND fs_dir=';
+			' FROM '.self::TABLE.' WHERE fs_active='.self::_pdo_boolean(true).
+			' AND fs_name'.self::$case_sensitive_equal.'? AND fs_dir=';
 		$parts = explode('/',$path);
 
 		// if we have extendes acl access to the url, we dont need and can NOT include the sql for the readable check
@@ -1035,7 +1037,8 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 					// we also store negatives (all methods creating new files/dirs have to unset the stat-cache!)
 					return self::$stat_cache[$path] = false;
 				}
-				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name);
+				$query = 'SELECT fs_id FROM '.self::TABLE.' WHERE fs_dir=('.$query.') AND fs_active='.
+					self::_pdo_boolean(true).' AND fs_name'.self::$case_sensitive_equal.self::$pdo->quote($name);
 
 				// if we are not root AND have no extended acl access, we need to make sure the user has the right to tranverse all parent directories (read-rights)
 				if (!egw_vfs::$is_root && !$eacl_access)
@@ -1078,7 +1081,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @return string
 	 */
-	private function _sql_readable()
+	protected function _sql_readable()
 	{
 		static $sql_read_acl;
 
@@ -1243,7 +1246,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Read the extended acl via acl::get_grants('sqlfs')
 	 *
 	 */
-	private static function _read_extended_acl()
+	static protected function _read_extended_acl()
 	{
 		if ((self::$extended_acl = $GLOBALS['egw']->session->appsession('extended_acl',self::EACL_APPNAME)) != false)
 		{
@@ -1445,7 +1448,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @param array $info
 	 * @return array
 	 */
-	static private function _vfsinfo2stat($info)
+	static protected function _vfsinfo2stat($info)
 	{
 		$stat = array(
 			'ino'   => $info['fs_id'],
@@ -1480,7 +1483,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @return PDO
 	 */
-	static private function _pdo()
+	static protected function _pdo()
 	{
 		$egw_db = isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
 
@@ -1522,7 +1525,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			self::$pdo = new PDO($dsn,$egw_db->User,'$egw_db->Password');
 		}
 		// set client charset of the connection
-		$charset = $GLOBALS['egw']->translation->charset();
+		$charset = translation::charset();
 		switch(self::$pdo_type)
 		{
 			case 'mysql':
@@ -1545,13 +1548,28 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @param mixed $time
 	 * @return string Y-m-d H:i:s
 	 */
-	static private function _pdo_timestamp($time)
+	static protected function _pdo_timestamp($time)
 	{
 		if (is_numeric($time))
 		{
 			$time = date('Y-m-d H:i:s',$time);
 		}
 		return $time;
+	}
+	
+	/**
+	 * Just a little abstration 'til I know how to organise stuff like that with PDO
+	 *
+	 * @param boolean $val
+	 * @return string '1' or '0' for mysql, 'true' or 'false' for everyone else
+	 */
+	static protected function _pdo_boolean($val)
+	{
+		if (self::$pdo_type == 'mysql')
+		{
+			return $val ? '1' : '0';
+		}
+		return $val ? 'true' : 'false';
 	}
 
 	/**
@@ -1612,7 +1630,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 *
 	 * @param string &$url
 	 */
-	static private function _remove_password(&$url)
+	static protected function _remove_password(&$url)
 	{
 		$parts = parse_url($url);
 
