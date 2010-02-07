@@ -315,7 +315,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		if (strpos($this->_locName,'@') === False)
 		{
 			$this->_account_domain = $GLOBALS['egw_info']['server']['default_domain'];
-			$this->_locName .= ($this->_account_domain ? '@'. $this->_account_domain : '');
+			$this->_locName .= '@'. ($this->_account_domain ? $this->_account_domain : 'default');
 		}
 		else
 		{
