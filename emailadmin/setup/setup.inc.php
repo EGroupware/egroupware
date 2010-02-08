@@ -38,7 +38,7 @@ $setup_info['emailadmin']['hooks']['view_user'] = 'emailadmin_hooks::edit_user';
 $setup_info['emailadmin']['hooks']['edit_group'] = 'emailadmin_hooks::edit_group';
 $setup_info['emailadmin']['hooks']['group_manager'] = 'emailadmin_hooks::edit_group';
 $setup_info['emailadmin']['hooks']['deleteaccount'] = 'emailadmin_hooks::deleteaccount';
-$setup_info['emailadmin']['hooks']['deletegroup'] = 'emailadmin_hookss::deletegroup';
+$setup_info['emailadmin']['hooks']['deletegroup'] = 'emailadmin_hooks::deletegroup';
 /* Dependencies for this app to work */
 $setup_info['emailadmin']['depends'][] = array(
 	'appname'  => 'phpgwapi',
