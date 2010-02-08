@@ -892,6 +892,10 @@ class calendar_ical extends calendar_boupdate
 				{
 					$event['uid'] = $event_info['stored_event']['uid']; // restore the UID if it was not delivered
 				}
+				elseif (empty($event['id']))
+				{
+					$event['id'] = $event_info['stored_event']['id']; // CalDAV does only provide UIDs
+				}
 				if ($merge)
 				{
 					// overwrite with server data for merge
@@ -1210,7 +1214,7 @@ class calendar_ical extends calendar_boupdate
 			if ($this->log)
 			{
 				$event_info['stored_event'] = $this->read($event_info['stored_event']['id']);
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()[$updated_id]\n" .
 					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
