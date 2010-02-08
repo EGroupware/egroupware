@@ -285,10 +285,10 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
             $synctype != ALERT_ONE_WAY_FROM_CLIENT &&
             $synctype != ALERT_ONE_WAY_FROM_SERVER) {
             $serverAnchorLast = 0;
-            #if (!$anchormatch) {
+            if (!$anchormatch) {
                 // Erase existing map:
                 $state->removeAllUID($this->_targetLocURI);
-            #}
+            }
         }
         // Now create the actual SyncML_Sync object, if it doesn't exist yet.
         $sync = &$state->getSync($this->_targetLocURI);

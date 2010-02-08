@@ -237,14 +237,16 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 
 			$guid = false;
 
+			$oguid = $state->getGlobalUID($type, $syncItem->getLocURI());
+
 			$guid = $registry->call($hordeType . '/search',
-				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType, $state->getGlobalUID($type, $syncItem->getLocURI()), $type));
+				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType, $oguid, $type));
 
 			if ($guid) {
 				// Check if the found entry came from the client
 				$guid_ts = $state->getSyncTSforAction($guid, 'add');
 				$sync_ts = $state->getChangeTS($type, $guid);
-				if ($sync_ts && $sync_ts == $guid_ts) {
+				if ($oguid != $guid && $sync_ts && $sync_ts == $guid_ts) {
 					// Entry came from the client, so we get a duplicate here
 					Horde::logMessage('SyncML: CONFLICT for locuri ' . $syncItem->getLocURI()
 						. ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_WARNING);
