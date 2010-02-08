@@ -603,7 +603,11 @@ class Horde_iCalendar {
         //  last=20line
         while (preg_match_all('/^([^:]+;\s*((ENCODING=)?QUOTED-PRINTABLE|ENCODING=[Q|q])(.*=\r?\n)+(.*[^=])?\r?\n)/mU', $vCal, $matches)) {
             foreach ($matches[1] as $s) {
-                $r = preg_replace('/=\r?\n[ \t]*/', '', $s);
+            	if ($this->isOldFormat()) {
+                	$r = preg_replace('/=\r?\n([ \t])/', '\1', $s);
+            	} else {
+            		$r = preg_replace('/=\r?\n[ \t]*/', '', $s);
+            	}
                 $vCal = str_replace($s, $r, $vCal);
             }
         }
