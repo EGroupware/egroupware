@@ -53,10 +53,6 @@ class addressbook_contactform
 				$contact = new addressbook_bo();
 				if ($content['owner'])	// save the contact in the addressbook
 				{
-					if ($content['email_contactform'])	// only necessary as long addressbook is not doing this itself
-					{
-						$tracking = new addressbook_tracking($contact);
-					}
 					if (($id = $contact->save($content)))
 					{
 						// check for fileuploads and attach the found files
@@ -67,9 +63,6 @@ class addressbook_contactform
 								egw_link::link('addressbook',$id,egw_link::VFS_APPNAME,$value,$name);
 							}
 						}
-						unset($content['modified']); unset($content['modifier']);	// not interesting for new entries
-
-						$tracking->do_notifications($content,null);	// only necessary as long addressbook is not doing this itself
 
 						return '<p align="center">'.$content['msg'].'</p>';
 					}

@@ -71,6 +71,13 @@ class addressbook_tracking extends bo_tracking
 		parent::__construct();	// calling the constructor of the extended class
 
 		$this->contacts =& $bocontacts;
+
+		if(is_object($bocontacts->somain)) {
+			$this->field2history = array_combine($bocontacts->somain->db_cols, $bocontacts->somain->db_cols);
+			unset($this->field2history['modified']);
+			unset($this->field2history['modifier']);
+			unset($this->field2history['etag']);
+		}
 	}
 
 	/**

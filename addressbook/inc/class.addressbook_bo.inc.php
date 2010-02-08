@@ -126,6 +126,13 @@ class addressbook_bo extends addressbook_so
 	 */
 	var $categories;
 
+	/**
+	* Tracking changes
+	* 
+	* @var object
+	*/
+	protected $tracking;
+
 	function __construct($contact_app='addressbook')
 	{
 		parent::__construct($contact_app);
@@ -253,6 +260,8 @@ class addressbook_bo extends addressbook_so
 			$this->org_fields =  unserialize($GLOBALS['egw_info']['server']['org_fileds_to_update']);
 		}
 		$this->categories = new categories($this->user,'addressbook');
+
+		$this->tracking = new addressbook_tracking($this);
 	}
 
 	/**
@@ -650,6 +659,7 @@ class addressbook_bo extends addressbook_so
 			{
 				egw_link::unlink(0,'addressbook',$id);
 				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
+				$this->tracking->track(array('id' => $id), array('id' => $id), null, true);
 			}
 			else
 			{
@@ -736,6 +746,10 @@ class addressbook_bo extends addressbook_so
 				}
 			}
 		}
+
+		// Get old record for tracking changes
+		$old = $this->read($contact['id']);
+		
 		// we dont update the content-history, if we run inside setup (admin-account-creation)
 		if(!($this->error = parent::save($to_write)) && is_object($GLOBALS['egw']->contenthistory))
 		{
@@ -754,6 +768,9 @@ class addressbook_bo extends addressbook_so
 				$to_write['location'] = 'editaccountcontact';
 				$GLOBALS['egw']->hooks->process($to_write,False,True);	// called for every app now, not only enabled ones));
 			}
+
+			// Record change history
+			$this->tracking->track($to_write, $old);
 		}
 
 		return $this->error ? false : $contact['id'];

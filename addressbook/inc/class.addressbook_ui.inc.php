@@ -1456,6 +1456,10 @@ class addressbook_ui extends addressbook_bo
 			'to_app' => 'addressbook',
 			'to_id'  => $content['link_to']['to_id'],
 		);
+
+		// Enable history
+		$this->setup_history($content, $sel_options);
+
 		$content['photo'] = $this->photo_src($content['id'],$content['jpegphoto'],'photo');
 
 		if ($content['private']) $content['owner'] .= 'p';
@@ -1666,6 +1670,10 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content['owner'] .= 'p';
 		}
+
+		// Enable history
+		$this->setup_history($content, $sel_options);
+
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys['tabs']['custom'] = !$this->customfields;
@@ -2131,5 +2139,24 @@ class addressbook_ui extends addressbook_bo
 
 		$this->tmpl->read('addressbook.index.cat_add');
 		return $this->tmpl->exec('addressbook.addressbook_ui.cat_add',$content,$sel_options,$readonlys,$content, 2);
+	}
+
+	/**
+	* Set up history log widget
+	*/
+	protected function setup_history(&$content, &$sel_options) {
+		$content['history'] = array(
+			'id'	=>	$content['id'],
+			'app'	=>	'addressbook',
+			'status-widgets'	=>	array(
+				'owner'		=>	'select-account',
+				'cat_id'	=>	'select-cat',
+			),
+		);
+
+		foreach($this->content_types as $id => $settings) {
+			$content['history']['status-widgets']['tid'][$id] = $settings['name'];
+		}
+		$sel_options['status'] = $this->contact_fields;
 	}
 }
