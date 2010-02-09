@@ -285,8 +285,10 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
             $synctype != ALERT_ONE_WAY_FROM_CLIENT &&
             $synctype != ALERT_ONE_WAY_FROM_SERVER) {
             $serverAnchorLast = 0;
-            if (!$anchormatch) {
-                // Erase existing map:
+            if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['slowsync_ignore_map']) &&
+            	$GLOBALS['egw_info']['user']['preferences']['syncml']['slowsync_ignore_map']
+            	|| !$anchormatch) {
+                // Erase existing map
                 $state->removeAllUID($this->_targetLocURI);
             }
         }
