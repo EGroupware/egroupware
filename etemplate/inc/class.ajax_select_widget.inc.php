@@ -242,7 +242,7 @@ class ajax_select_widget
 			$options;\n
 			ajax_select_widget_setup('$name', '$onchange', options['$name'], '" . $GLOBALS['egw_info']['flags']['currentapp'] . "');
 		");
-		$GLOBALS['egw']->js->validate_file('', 'ajax_select', 'etemplate');
+		$GLOBALS['egw']->js->validate_file('.', 'ajax_select', 'etemplate');
 
 		return True;	// no extra label
 	}
