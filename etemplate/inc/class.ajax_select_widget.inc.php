@@ -253,6 +253,10 @@ class ajax_select_widget
 		if(!is_array($value_in)) {
 			$value_in = $extension_data['old_value'];
 		}
+		// Check for blur text left in
+		if($extension_data['options']['id_field'] == self::ARRAY_KEY && $value_in['search'] == lang('Search...') ) {
+			$value_in['search'] = '';
+		}
 
 		// They typed something in, but didn't choose a result
 		if(!$value_in['value'] && $value_in['search']) {
