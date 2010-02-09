@@ -129,13 +129,6 @@ class calendar_ical extends calendar_boupdate
 	var $tzid = null;
 
 	/**
-	 * Cached timezone data
-	 *
-	 * @var array id => data
-	 */
-	protected static $tz_cache = array();
-
-	/**
 	 * Device CTCap Properties
 	 *
 	 * @var array
@@ -257,7 +250,7 @@ class calendar_ical extends calendar_boupdate
 				// explicit device timezone
 				$tzid = $this->tzid;
 			}
-			else
+			elseif ($this->tzid === false)
 			{
 				// use event's timezone
 				$tzid = $event['tzid'];
@@ -334,6 +327,7 @@ class calendar_ical extends calendar_boupdate
 				{
 					error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
 					$vtimezone = calendar_timezones::tz2id($tzid=egw_time::$user_timezone->getName(),'component');
+					$tzid = null;
 				}
 				if (!isset(self::$tz_cache[$tzid]))
 				{
@@ -525,7 +519,6 @@ class calendar_ical extends calendar_boupdate
 							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
 								$time = new egw_time($event[$f],egw_time::$server_timezone);
-								$time->setTimezone(self::$tz_cache[$event['tzid']]);
 								$arr = egw_time::to($time,'array');
 								$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
 									array('VALUE' => 'DATE'));
@@ -1005,6 +998,10 @@ class calendar_ical extends calendar_boupdate
 				{
 					$event['uid'] = $event_info['stored_event']['uid']; // restore the UID if it was not delivered
 				}
+				elseif (empty($event['id']))
+				{
+					$event['id'] = $event_info['stored_event']['id']; // CalDAV does only provide UIDs
+				}
 				if ($merge)
 				{
 					if ($this->log)
@@ -1246,7 +1243,6 @@ class calendar_ical extends calendar_boupdate
 					if ($event_info['acl_edit'])
 					{
 						// Force SINGLE
-						unset($event['recurrence']);
 						$event['reference'] = 0;
 						$event_to_store = $event; // prevent $event from being changed by the update method
 						$this->server2usertime($event_to_store);
@@ -1515,9 +1511,8 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->log)
 			{
-				$recur_date = $this->date2usertime($event_info['stored_event']['start']);
-				$event_info['stored_event'] = $this->read($event_info['stored_event']['id'], $recur_date);
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				$event_info['stored_event'] = $this->read($event_info['stored_event']['id']);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()[$updated_id]\n" .
 					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
@@ -1630,11 +1625,25 @@ class calendar_ical extends calendar_boupdate
 			if (isset($deviceInfo['tzid']) &&
 				$deviceInfo['tzid'])
 			{
-				$this->tzid = $deviceInfo['tzid'];
+				switch ($deviceInfo['tzid'])
+				{
+					case 1:
+						$this->tzid = false;
+						break;
+					case 2:
+						$this->tzid = null;
+						break;
+					default:
+						$this->tzid = $deviceInfo['tzid'];
+				}
 			}
 			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
 			{
 				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
+				if ($owner == 0)
+				{
+					$owner = $GLOBALS['egw_info']['user']['account_primary_group'];
+				}
 				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
 				{
 					$this->calendarOwner = $owner;
@@ -1656,11 +1665,15 @@ class calendar_ical extends calendar_boupdate
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 				'(' . $this->productManufacturer .
-				', '. $this->productName . ")\n",3,$this->logfile);
+				', '. $this->productName .', ' .
+				($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .
+				")\n" , 3, $this->logfile);
 		}
 
-		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer
-		//		. ', ' . $this->productName .')', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
+		//	. $this->productName .', ' .
+		//	($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$defaultFields['minimal'] = array(
 			'public'			=> 'public',
@@ -1863,8 +1876,14 @@ class calendar_ical extends calendar_boupdate
 
 		if ($this->tzid)
 		{
-			date_default_timezone_set($this->tzid);
+			$tzid = $this->tzid;
 		}
+		else
+		{
+			$tzid = egw_time::$user_timezone->getName();
+		}
+
+		date_default_timezone_set($tzid);
 
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData))
@@ -1912,20 +1931,21 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 					$event['alarm'] = $alarms;
+					if ($this->tzid || empty($event['tzid']))
+					{
+						$event['tzid'] = $tzid;
+					}
 
 					$events[] = $event;
 				}
 			}
 		}
 
-		if ($this->tzid)
-		{
-			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-		}
+		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 
 		// if cal_id, etag or recur_date is given, use/set it for 1. event
 		if ($cal_id > 0) $events[0]['id'] = $cal_id;
-		if (!is_null($etag)) $events[0]['etag'] = $etag;
+		if (!is_null($etag)) $events[0]['etag'] = (int) $etag;
 		if ($recur_date) $events[0]['recurrence'] = $recur_date;
 
 		return $events;
@@ -1974,32 +1994,34 @@ class calendar_ical extends calendar_boupdate
 					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 					$vcardData['start']	= $dtstart_ts;
 
-
 					if ($this->tzid)
 					{
-						// enforce device settings
 						$event['tzid'] = $this->tzid;
-					}
-					elseif (!empty($attributes['params']['TZID']))
-					{
-						// import TZID, if PHP understands it (we only care about TZID of starttime, as we store only a TZID for the whole event)
-						try
-						{
-							$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
-							$event['tzid'] = $tz->getName();
-						}
-						catch(Exception $e)
-						{
-							error_log(__METHOD__."() unknown TZID='{$attributes['params']['TZID']}', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
-							$tz = egw_time::$user_timezone;
-							$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
-						}
 					}
 					else
 					{
-						$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
+						$event['tzid'] =  date_default_timezone_get();
+
+						if (!empty($attributes['params']['TZID']))
+						{
+							// import TZID, if PHP understands it (we only care about TZID of starttime,
+							// as we store only a TZID for the whole event)
+							try
+							{
+								$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
+								$event['tzid'] = $tz->getName();
+							}
+							catch(Exception $e)
+							{
+								error_log(__METHOD__ . '() unknown TZID='
+									. $attributes['params']['TZID'] . ', defaulting to timezone "'
+									. date_default_timezone_get() . '".');
+								$event['tzid'] = date_default_timezone_get();	// default to current timezone
+							}
+						}
 					}
 					break;
+
 				case 'DTEND':
 					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 					if (date('H:i:s',$dtend_ts) == '00:00:00')
@@ -2028,7 +2050,6 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'DESCRIPTION':
 					$vcardData['description'] = str_replace("\r\n", "\n", $attributes['value']);
-					$vcardData['description'] = str_replace("\r", "\n", $vcardData['description']);
 					if (preg_match('/\s*\[UID:(.+)?\]/Usm', $attributes['value'], $matches))
 					{
 						if (!isset($vCardData['uid'])
@@ -2044,7 +2065,6 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'LOCATION':
 					$vcardData['location']	= str_replace("\r\n", "\n", $attributes['value']);
-					$vcardData['location']	= str_replace("\r", "\n", $vcardData['location']);
 					break;
 				case 'RRULE':
 					$recurence = $attributes['value'];
@@ -2301,7 +2321,6 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'SUMMARY':
 					$vcardData['title']	= str_replace("\r\n", "\n", $attributes['value']);
-					$vcardData['title']	= str_replace("\r", "\n", $vcardData['title']);
 					break;
 				case 'UID':
 					if (strlen($attributes['value']) >= $minimum_uid_length)
@@ -2457,11 +2476,16 @@ class calendar_ical extends calendar_boupdate
 							{
 								$attributes['params']['ROLE'] = 'CHAIR';
 							}
-							// add quantity and role
-							$event['participants'][$uid] =
-								calendar_so::combine_status($status,
-									$attributes['params']['X-EGROUPWARE-QUANTITY'],
-									$attributes['params']['ROLE']);
+							if (!isset($event['participants'][$uid]) ||
+									$event['participants'][$uid][0] != 'A')
+							{
+								// for multiple entries the ACCEPT wins
+								// add quantity and role
+								$event['participants'][$uid] =
+									calendar_so::combine_status($status,
+										$attributes['params']['X-EGROUPWARE-QUANTITY'],
+										$attributes['params']['ROLE']);
+							}
 							break;
 
 						case 'ORGANIZER':
@@ -2575,6 +2599,8 @@ class calendar_ical extends calendar_boupdate
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
 
+		if ($cal_id > 0) $event['id'] = $cal_id;
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
@@ -2595,6 +2621,7 @@ class calendar_ical extends calendar_boupdate
 				$filter = $relax ? 'relax' : 'exact';
 				$event = array_shift($events);
 				if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
+				if ($contentID) $event['id'] = $contentID;
 				return $this->find_event($event, $filter);
 			}
 			if ($this->log)

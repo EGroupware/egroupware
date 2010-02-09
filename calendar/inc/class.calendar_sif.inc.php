@@ -97,13 +97,6 @@ class calendar_sif extends calendar_boupdate
 	var $tzid = null;
 
 	/**
-	 * Cached timezone data
-	 *
-	 * @var array id => data
-	 */
-	protected static $tz_cache = array();
-
-	/**
 	 * Device CTCap Properties
 	 *
 	 * @var array
@@ -211,7 +204,7 @@ class calendar_sif extends calendar_boupdate
 		}
 		$time->setTimezone(self::$tz_cache[$tzid]);
 
-		return $this->vCalendar->_exportDateTime($time->format('Ymd\THis'));
+		return $time->format('Ymd\THis');
 	}
 
 	function siftoegw($sifData, $_calID=-1)
@@ -220,13 +213,18 @@ class calendar_sif extends calendar_boupdate
 		$this->event = array();
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
+
 		if ($this->tzid)
 		{
-			// enforce device settings
-			date_default_timezone_set($this->tzid);
-			$finalEvent['tzid'] = $this->tzid;
+			$tzid = $this->tzid;
+		}
+		else
+		{
+			$tzid = egw_time::$user_timezone->getName();
 		}
 
+		date_default_timezone_set($tzid);
+		$finalEvent['tzid'] = $tzid;
 
 		$this->xml_parser = xml_parser_create('UTF-8');
 		xml_set_object($this->xml_parser, $this);
@@ -239,10 +237,7 @@ class calendar_sif extends calendar_boupdate
 			error_log(sprintf("XML error: %s at line %d",
 				xml_error_string(xml_get_error_code($this->xml_parser)),
 				xml_get_current_line_number($this->xml_parser)));
-			if ($this->tzid)
-			{
-				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-			}
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 			return false;
 		}
 
@@ -379,17 +374,14 @@ class calendar_sif extends calendar_boupdate
 					}
 
 				default:
-					$finalEvent[$key] = $value;
+					$finalEvent[$key] = str_replace("\r\n", "\n", $value);
 					break;
 			}
 		}
 
 		if ($this->calendarOwner) $finalEvent['owner'] = $this->calendarOwner;
 
-		if ($this->tzid)
-		{
-			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-		}
+		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 
 		if ($_calID > 0) $finalEvent['id'] = $_calID;
 
@@ -862,7 +854,7 @@ class calendar_sif extends calendar_boupdate
 			// explicit device timezone
 			$tzid = $this->tzid;
 		}
-		else
+		elseif ($this->tzid === false)
 		{
 			// use event's timezone
 			$tzid = $event['tzid'];
@@ -1203,11 +1195,25 @@ class calendar_sif extends calendar_boupdate
 			if (isset($deviceInfo['tzid']) &&
 				$deviceInfo['tzid'])
 			{
-				$this->tzid = $deviceInfo['tzid'];
+				switch ($deviceInfo['tzid'])
+				{
+					case 1:
+						$this->tzid = false;
+						break;
+					case 2:
+						$this->tzid = null;
+						break;
+					default:
+						$this->tzid = $deviceInfo['tzid'];
+				}
 			}
 			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
 			{
 				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
+				if ($owner == 0)
+				{
+					$owner = $GLOBALS['egw_info']['user']['account_primary_group'];
+				}
 				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
 				{
 					$this->calendarOwner = $owner;

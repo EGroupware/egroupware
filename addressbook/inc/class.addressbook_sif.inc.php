@@ -159,7 +159,7 @@ class addressbook_sif extends addressbook_bo
 					break;
 
 				default:
-					$finalContact[$key] = $value;
+					$finalContact[$key] = str_replace("\r\n", "\n", $value);
 					break;
 			}
 		}
@@ -173,18 +173,20 @@ class addressbook_sif extends addressbook_bo
 	 * Search an exactly matching entry (used for slow sync)
 	 *
 	 * @param string $_sifdata
-	 * @return boolean/int/string contact-id or false, if not found
+	 * @return array of matching contact-ids
 	 */
 	function search($_sifdata, $contentID=null, $relax=false)
 	{
-	  	$result = false;
+	  	$result = array();
 
-		if($contact = $this->siftoegw($_sifdata, $contentID)) {
-		        if ($contentID) {
-			        $contact['contact_id'] = $contentID;
-			}
-			$result = $this->find_contact($contact, $relax);
-		}
+	  	if($contact = $this->siftoegw($_sifdata, $contentID))
+	  	{
+		  	if ($contentID)
+		  	{
+			  	$contact['contact_id'] = $contentID;
+		  	}
+		  	$result = $this->find_contact($contact, $relax);
+	  	}
 		return $result;
 	}
 
@@ -198,22 +200,44 @@ class addressbook_sif extends addressbook_bo
 	*/
 	function addSIF($_sifdata, $_abID=null, $merge=false)
 	{
-		#error_log('ABID: '.$_abID);
-		#error_log(base64_decode($_sifdata));
-
-		if(!$contact = $this->siftoegw($_sifdata, $_abID)) {
+		if(!$contact = $this->siftoegw($_sifdata, $_abID))
+		{
 			return false;
 		}
 
-		if($_abID) {
+		if($_abID)
+		{
+			if (($old_contact = $this->read($_abID)))
+			{
+				if ($merge)
+				{
+					foreach ($contact as $key => $value)
+					{
+						if (!empty($old_contact[$key]))
+						{
+							$contact[$key] = $old_contact[$key];
+						}
+					}
+				}
+				else
+				{
+					if (isset($old_contact['account_id']))
+					{
+						$contact['account_id'] = $old_contact['account_id'];
+					}
+				}
+			}
 			// update entry
 			$contact['id'] = $_abID;
 		}
 		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
     	{
     		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+    		if ($contact['owner'] == -1)
+    		{
+	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+    		}
     	}
-
 		return $this->save($contact);
 	}
 

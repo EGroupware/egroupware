@@ -79,7 +79,7 @@ class addressbook_contactform
 						require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_tracking.inc.php');
 						$tracking = new addressbook_tracking($contact);
 					}
-					if ($tracking->do_notifications($content,null))
+					if ($tracking->do_notifications($contact->data2db($content),null))
 					{
 						return '<p align="center">'.$content['msg'].'</p>';
 					}

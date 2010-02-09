@@ -130,10 +130,9 @@ class addressbook_vcal extends addressbook_bo
 
 		if($_abID)
 		{
-			if ($merge)
+			if (($old_contact = $this->read($_abID)))
 			{
-				$old_contact = $this->read($_abID);
-				if ($old_contact)
+				if ($merge)
 				{
 					foreach ($contact as $key => $value)
 					{
@@ -143,6 +142,13 @@ class addressbook_vcal extends addressbook_bo
 						}
 					}
 				}
+				else
+				{
+					if (isset($old_contact['account_id']))
+					{
+						$contact['account_id'] = $old_contact['account_id'];
+					}
+				}
 			}
 			// update entry
 			$contact['id'] = $_abID;
@@ -150,6 +156,10 @@ class addressbook_vcal extends addressbook_bo
 		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
     	{
     		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+    		if ($contact['owner'] == -1)
+    		{
+	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+    		}
     	}
 		return $this->save($contact);
 	}
@@ -443,7 +453,7 @@ class addressbook_vcal extends addressbook_bo
 
 	function search($_vcard, $contentID=null, $relax=false)
 	{
-		$result = false;
+		$result = array();
 
 		if (($contact = $this->vcardtoegw($_vcard, $contentID)))
 		{
@@ -887,8 +897,7 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'note':
-								// note may contain ','s but maybe this needs to be fixed in vcard parser...
-								$contact[$fieldName] = $vcardValues[$vcardKey]['value'];
+								$contact[$fieldName] = str_replace("\r\n", "\n", $vcardValues[$vcardKey]['value']);
 								break;
 
 							case 'uid':

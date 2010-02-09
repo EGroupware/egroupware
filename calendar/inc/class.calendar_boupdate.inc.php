@@ -68,6 +68,13 @@ class calendar_boupdate extends calendar_bo
 	var $log = false;
 
 	/**
+	 * Cached timezone data
+	 *
+	 * @var array id => data
+	 */
+	protected static $tz_cache = array();
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -1417,7 +1424,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param string filter='exact' exact	-> check for identical matches
 	 * 							    relax	-> be more tolerant
 	 *                              master	-> try to find a releated series master
-	 * @return array calendar_id's of matching entries
+	 * @return array calendar_ids of matching entries
 	 */
 	function find_event($event, $filter='exact')
 	{
@@ -1432,22 +1439,20 @@ class calendar_boupdate extends calendar_bo
 
 		if ($filter == 'master')
 		{
-			if (empty($event['uid']) || !isset($event['recurrence']))
-			{
-				$recur_date = $event['start']; // without UID we ignore RECURRENCE-IDs
-			}
-			else
+			if (isset($event['recurrence']))
 			{
 				$recur_date = $event['recurrence'];
 			}
+			else
+			{
+				$recur_date = $event['start'];
+			}
+			$recur_date = $this->date2usertime($recur_date);
 		}
 		else
 		{
-			$recur_date = $event['start'];
+			$recur_date = 0;
 		}
-
-		$recur_date = $this->date2usertime($recur_date);
-
 
 		if ($event['id'])
 		{
@@ -1465,9 +1470,7 @@ class calendar_boupdate extends calendar_bo
 				}
 				// Just a simple consistency check
 				if ($filter == 'master'  && $egwEvent['recur_type'] != MCAL_RECUR_NONE ||
-					$egwEvent['title'] == $event['title'] &&
-					abs($egwEvent['start'] - $event['start']) < 60 &&
-					abs($egwEvent['end'] - $event['end']) < 120)
+					strpos($egwEvent['title'], $event['title']) === 0)
 				{
 					$retval = $egwEvent['id'];
 					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
@@ -1482,41 +1485,6 @@ class calendar_boupdate extends calendar_bo
 			if ($filter == 'exact') return array();
 		}
 		unset($event['id']);
-
-		if (isset($event['whole_day']) && $event['whole_day'])
-		{
-			if ($filter == 'relax')
-			{
-				$delta = 1800;
-			}
-			else
-			{
-				$delta = 60;
-			}
-
-			// check length with some tolerance
-			$length = $event['end'] - $event['start'] - $delta;
-			$query[] = ('(cal_end-cal_start)>' . $length);
-			$length += 2 * $delta;
-			$query[] = ('(cal_end-cal_start)<' . $length);
-		}
-		elseif (isset($event['start']))
-		{
-			if ($filter != 'master')
-			{
-				if ($filter == 'relax')
-				{
-					$query[] = ('cal_start>' . ($event['start'] - 3600));
-					$query[] = ('cal_start<' . ($event['start'] + 3600));
-				}
-				else
-				{
-					// we accept a tiny tolerance
-					$query[] = ('cal_start>' . ($event['start'] - 2));
-					$query[] = ('cal_start<' . ($event['start'] + 2));
-				}
-			}
-		}
 
 		if ($filter == 'master')
 		{
@@ -1574,20 +1542,45 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
-		if (empty($event['uid']))
+		if ($filter == 'relax' || empty($event['uid']))
 		{
-			$matchFields = array('title', 'priority', 'public', 'non_blocking');
-			switch ($filter)
+			if (isset($event['whole_day']) && $event['whole_day'])
 			{
-				case 'relax':
-					$matchFields[] = 'location';
-				case 'master':
-					break;
-				default:
-					$matchFields[] = 'description';
-					$matchFields[] = 'location';
-			}
+				if ($filter == 'relax')
+				{
+					$delta = 1800;
+				}
+				else
+				{
+					$delta = 60;
+				}
 
+				// check length with some tolerance
+				$length = $event['end'] - $event['start'] - $delta;
+				$query[] = ('(cal_end-cal_start)>' . $length);
+				$length += 2 * $delta;
+				$query[] = ('(cal_end-cal_start)<' . $length);
+				$query[] = ('cal_start>' . ($event['start'] - 86400));
+				$query[] = ('cal_start<' . ($event['start'] + 86400));
+			}
+			elseif (isset($event['start']))
+			{
+				if ($filter != 'master')
+				{
+					if ($filter == 'relax')
+					{
+						$query[] = ('cal_start>' . ($event['start'] - 3600));
+						$query[] = ('cal_start<' . ($event['start'] + 3600));
+					}
+					else
+					{
+						// we accept a tiny tolerance
+						$query[] = ('cal_start>' . ($event['start'] - 2));
+						$query[] = ('cal_start<' . ($event['start'] + 2));
+					}
+				}
+			}
+			$matchFields = array('priority', 'public', 'non_blocking', 'recurrence');
 			foreach ($matchFields as $key)
 			{
 				if (!empty($event[$key])) $query['cal_'.$key] = $event[$key];
@@ -1601,7 +1594,7 @@ class calendar_boupdate extends calendar_bo
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'(' . $event['uid'] . ')[EventUID]');
 			}
-			if ($filter != 'relax' && isset($event['recurrence']))
+			if (isset($event['recurrence']))
 			{
 				$query['cal_recurrence'] = $event['recurrence'];
 			}
@@ -1633,6 +1626,12 @@ class calendar_boupdate extends calendar_bo
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'[FOUND]: ' . array2string($egwEvent));
+			}
+
+			if ($filter == 'exact' && !empty($event['uid']))
+			{
+				$matchingEvents[] = $egwEvent['id']; // UID found
+				continue;
 			}
 
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
@@ -1671,10 +1670,35 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 
-			if ($filter != 'master')
+			// check for real match
+			$matchFields = array('title');
+			switch ($filter)
+			{
+				case 'master':
+					break;
+				case 'relax':
+					$matchFields[] = 'location';
+				default:
+					$matchFields[] = 'description';
+			}
+			foreach ($matchFields as $key)
+			{
+				if (!empty($event[$key]) && (empty($egwEvent[$key])
+						|| strpos($egwEvent[$key], $event[$key]) !== 0))
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"() event[$key] differ: '" . $event[$key] .
+							"' <> '" . $egwEvent[$key]) . "'";
+					}
+					continue 2; // next foundEvent
+				}
+			}
+
+			if ($filter != 'master' && is_array($event['category']))
 			{
 				// check categories
-				if (!is_array($event['category'])) $event['category'] = array();
 				$egwCategories = explode(',', $egwEvent['category']);
 				foreach ($egwCategories as $cat_id)
 				{
@@ -1700,24 +1724,6 @@ class calendar_boupdate extends calendar_bo
 					continue;
 				}
 			}
-			/*
-			// check information
-			$matchFields = array();
-			foreach ($matchFields as $key)
-			{
-				if (isset($event[$key])
-						&& $event[$key] != $egwEvent[$key])
-				{
-					if ($this->log)
-					{
-						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							"() events[$key] differ: " . $event[$key] .
-							' <> ' . $egwEvent[$key]);
-					}
-					continue 2; // next foundEvent
-				}
-			}
-			*/
 
 			if ($filter != 'relax' && $filter != 'master')
 			{
@@ -1924,6 +1930,7 @@ class calendar_boupdate extends calendar_bo
 								in_array($event['recurrence'], $master_event['recur_exception']))
 							{
 								$type = 'SERIES-PSEUDO-EXCEPTION'; // could also be a real one
+								$recurrence_event = $event;
 								break;
 							}
 							elseif (in_array($event['start'], $master_event['recur_exception']))
@@ -2028,7 +2035,7 @@ class calendar_boupdate extends calendar_bo
 			);
     }
 
-    /*
+    /**
      * Translates all timestamps for a given event from server-time to user-time.
      * The update() and save() methods expect timestamps in user-time.
      * @param &$event	the event we are working on

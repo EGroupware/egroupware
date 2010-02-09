@@ -72,7 +72,8 @@ class addressbook_tracking extends bo_tracking
 
 		$this->contacts =& $bocontacts;
 
-		if(is_object($bocontacts->somain)) {
+		if (is_object($bocontacts->somain))
+		{
 			$this->field2history = array_combine($bocontacts->somain->db_cols, $bocontacts->somain->db_cols);
 			unset($this->field2history['modified']);
 			unset($this->field2history['modifier']);
@@ -156,8 +157,7 @@ class addressbook_tracking extends bo_tracking
 	 * Get the details of an entry
 	 *
 	 * @param array $data
-	 * @param string $datetime_format of user to notify, eg. 'Y-m-d H:i'
-	 * @param int $tz_offset_s offset in sec to be add to server-time to get the user-time of the user to notify
+	 *
 	 * @return array of details as array with values for keys 'label','value','type'
 	 */
 	function get_details($data)

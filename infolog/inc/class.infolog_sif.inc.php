@@ -90,6 +90,65 @@ class infolog_sif extends infolog_bo
 	*/
 	var $uidExtension = false;
 
+	/**
+	 * user preference: Use this timezone for import from and export to device
+	 *
+	 * @var string
+	 */
+	var $tzid = null;
+
+	/**
+	 * Set Logging
+	 *
+	 * @var boolean
+	 */
+	var $log = false;
+	var $logfile="/tmp/log-infolog-sif";
+
+	/**
+	 * Constructor
+	 *
+	 */
+	function __construct()
+	{
+		parent::__construct();
+		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-infolog-sif";
+		$this->vCalendar = new Horde_iCalendar;
+	}
+
+	/**
+	 * Get DateTime value for a given time and timezone
+	 *
+	 * @param int|string|DateTime $time in server-time as returned by calendar_bo for $data_format='server'
+	 * @param string $tzid TZID of event or 'UTC' or NULL for palmos timestamps in usertime
+	 * @return mixed attribute value to set: integer timestamp if $tzid == 'UTC' otherwise Ymd\THis string IN $tzid
+	 */
+	function getDateTime($time, $tzid)
+	{
+		if (empty($tzid) || $tzid == 'UTC')
+		{
+			return $this->vCalendar->_exportDateTime(egw_time::to($time,'ts'));
+		}
+		if (!is_a($time,'DateTime'))
+		{
+			$time = new egw_time($time,egw_time::$server_timezone);
+		}
+		if (!isset(self::$tz_cache[$tzid]))
+		{
+			self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
+		}
+		// check for date --> export it as such
+		if ($time->format('Hi') == '0000')
+		{
+			$arr = egw_time::to($time, 'array');
+			$time = new egw_time($arr, self::$tz_cache[$tzid]);
+		}
+		else
+		{
+			$time->setTimezone(self::$tz_cache[$tzid]);
+		}
+		return $time->format('Ymd\THis');
+	}
 
 	function startElement($_parser, $_tag, $_attributes)
 	{
@@ -121,13 +180,14 @@ class infolog_sif extends infolog_bo
 	 */
 	function siftoegw($sifData, $_sifType, $_id=-1)
 	{
+
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($_sifType, $_id)\n" .
+				array2string($sifData) . "\n", 3, $this->logfile);
+		}
+
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
-
-		#$tmpfname = tempnam('/tmp/sync/contents','sift_');
-
-		#$handle = fopen($tmpfname, "w");
-		#fwrite($handle, $sifData);
-		#fclose($handle);
 
 		switch ($_sifType)
 		{
@@ -136,9 +196,12 @@ class infolog_sif extends infolog_bo
 				break;
 
 			case 'task':
-			default:
 				$this->_currentSIFMapping = $this->_sifTaskMapping;
 				break;
+
+			default:
+				// we don't know how to handle this
+				return false;
 		}
 
 		$this->xml_parser = xml_parser_create('UTF-8');
@@ -156,16 +219,22 @@ class infolog_sif extends infolog_bo
 			return false;
 		}
 
-		if (!array($this->_extractedSIFData)) return false;
+		if (!array($this->_extractedSIFData))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()[PARSER FAILD]\n",
+					3, $this->logfile);
+			}
+			return false;
+		}
+		$infoData = array();
 
 		switch ($_sifType)
 		{
 			case 'task':
-				$taskData	= array();
-				$vcal		= new Horde_iCalendar;
-
-				$taskData['info_type'] = 'task';
-				$taskData['info_status'] = 'not-started';
+				$infoData['info_type'] = 'task';
+				$infoData['info_status'] = 'not-started';
 
 				if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 				{
@@ -186,7 +255,7 @@ class infolog_sif extends infolog_bo
 					switch($key)
 					{
 						case 'info_access':
-							$taskData[$key] = ((int)$value > 0) ? 'private' : 'public';
+							$infoData[$key] = ((int)$value > 0) ? 'private' : 'public';
 							break;
 
 						case 'info_datecompleted':
@@ -194,9 +263,9 @@ class infolog_sif extends infolog_bo
 						case 'info_startdate':
 							if (!empty($value))
 							{
-								$taskData[$key] = $vcal->_parseDateTime($value);
+								$infoData[$key] = $this->vCalendar->_parseDateTime($value);
 								// somehow the client always deliver a timestamp about 3538 seconds, when no startdate set.
-								if ($taskData[$key] < 10000) unset($taskData[$key]);
+								if ($infoData[$key] < 10000) unset($infoData[$key]);
 							}
 							break;
 
@@ -205,49 +274,48 @@ class infolog_sif extends infolog_bo
 							if (!empty($value))
 							{
 								$categories = $this->find_or_add_categories(explode(';', $value), $_id);
-								$taskData['info_cat'] = $categories[0];
+								$infoData['info_cat'] = $categories[0];
 							}
 							break;
 
 						case 'info_priority':
-							$taskData[$key] = (int)$value;
+							$infoData[$key] = (int)$value;
 							break;
 
 						case 'info_status':
 							switch ($value)
 							{
 								case '0':
-									$taskData[$key] = 'not-started';
+									$infoData[$key] = 'not-started';
 									break;
 								case '1':
-									$taskData[$key] = 'ongoing';
+									$infoData[$key] = 'ongoing';
 									break;
 								case '2':
-									$taskData[$key] = 'done';
-									$taskData['info_percent'] = 100;
+									$infoData[$key] = 'done';
+									$infoData['info_percent'] = 100;
 									break;
 								case '3':
-									$taskData[$key] = 'waiting';
+									$infoData[$key] = 'waiting';
 									break;
 								case '4':
 									if ($this->productName == 'blackberry plug-in')
 									{
-										$taskData[$key] = 'deferred';
+										$infoData[$key] = 'deferred';
 									}
 									else
 									{
-										$taskData[$key] = 'cancelled';
+										$infoData[$key] = 'cancelled';
 									}
 									break;
 								default:
-									$taskData[$key] = 'ongoing';
-									break;
+									$infoData[$key] = 'ongoing';
 							}
 							break;
 
 						case 'complete':
-							$taskData['info_status'] = 'done';
-							$taskData['info_percent'] = 100;
+							$infoData['info_status'] = 'done';
+							$infoData['info_percent'] = 100;
 							break;
 
 						case 'info_des':
@@ -256,7 +324,7 @@ class infolog_sif extends infolog_bo
 							{
 								if (strlen($matches[1]) >= $minimum_uid_length)
 								{
-									$taskData['info_uid'] = $matches[1];
+									$infoData['info_uid'] = $matches[1];
 								}
 								//$value = str_replace($matches[0], '', $value);
 							}
@@ -264,25 +332,28 @@ class infolog_sif extends infolog_bo
 							{
 								if (strlen($matches[1]) >= $minimum_uid_length)
 								{
-									$taskData['info_id_parent'] = $this->getParentID($matches[1]);
+									$infoData['info_id_parent'] = $this->getParentID($matches[1]);
 								}
 								//$value = str_replace($matches[0], '', $value);
 							}
 
 						default:
-							$taskData[$key] = $value;
-							break;
+							$infoData[$key] = str_replace("\r\n", "\n", $value);
 					}
-					#error_log("infolog task key=$key => value=" . $taskData[$key]);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+							"key=$key => value=" . $infoData[$key] . "\n", 3, $this->logfile);
+					}
 				}
-
-				return $taskData;
+				if (empty($infoData['info_datecompleted']))
+				{
+					$infoData['info_datecompleted'] = 0;
+				}
 				break;
 
 			case 'note':
-				$noteData = array();
-				$noteData['info_type'] = 'note';
-				$vcal		= new Horde_iCalendar;
+				$infoData['info_type'] = 'note';
 
 				foreach ($this->_extractedSIFData as $key => $value)
 				{
@@ -295,13 +366,13 @@ class infolog_sif extends infolog_bo
 						case 'info_startdate':
 							if (!empty($value))
 							{
-								$noteData[$key] = $vcal->_parseDateTime($value);
+								$infoData[$key] = $this->vCalendar->_parseDateTime($value);
 								// somehow the client always deliver a timestamp about 3538 seconds, when no startdate set.
-								if ($noteData[$key] < 10000) $noteData[$key] = '';
+								if ($infoData[$key] < 10000) $infoData[$key] = '';
 							}
 							else
 							{
-								$noteData[$key] = '';
+								$infoData[$key] = '';
 							}
 							break;
 
@@ -309,23 +380,26 @@ class infolog_sif extends infolog_bo
 							if (!empty($value))
 							{
 								$categories = $this->find_or_add_categories(explode(';', $value), $_id);
-								$noteData['info_cat'] = $categories[0];
+								$infoData['info_cat'] = $categories[0];
 							}
 							break;
 
 						default:
-							$noteData[$key] = $value;
-							break;
+							$infoData[$key] = str_replace("\r\n", "\n", $value);
 					}
-					#error_log("infolog note key=$key => value=".$noteData[$key]);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+							"key=$key => value=" . $infoData[$key] . "\n", 3, $this->logfile);
+					}
 				}
-				return $noteData;
-				break;
-
-
-			default:
-				return false;
 		}
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($infoData) . "\n", 3, $this->logfile);
+		}
+		return $infoData;
 	}
 
 	/**
@@ -339,28 +413,13 @@ class infolog_sif extends infolog_bo
 	 */
 	function searchSIF($_sifData, $_sifType, $contentID=null, $relax=false)
 	{
-		if (!($egwData = $this->siftoegw($_sifData, $_sifType, $contentID))) return false;
+		if (!($egwData = $this->siftoegw($_sifData, $_sifType, $contentID))) return array();
 
 		if ($contentID) $egwData['info_id'] = $contentID;
 
-		if ($_sifType == 'task') return $this->findVTODO($egwData, $relax);
-
 		if ($_sifType == 'note') unset($egwData['info_startdate']);
 
-		$filter = array();
-
-		$filter['col_filter'] = $egwData;
-
-		if ($foundItems = $this->search($filter))
-		{
-			if (count($foundItems) > 0)
-			{
-				$itemIDs = array_keys($foundItems);
-				return $itemIDs[0];
-			}
-		}
-
-		return false;
+		return $this->findInfo($egwData, $relax, $this->tzid);
 	}
 
 	/**
@@ -373,18 +432,20 @@ class infolog_sif extends infolog_bo
 	 */
 	function addSIF($_sifData, $_id, $_sifType, $merge=false)
 	{
-		if (!($egwData = $this->siftoegw($_sifData, $_sifType, $_id))) return false;
+		if ($this->tzid)
+		{
+			date_default_timezone_set($this->tzid);
+		}
+		$egwData = $this->siftoegw($_sifData, $_sifType, $_id);
+		if ($this->tzid)
+		{
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+		}
+		if (!$egwData) return false;
 
 		if ($_id > 0) $egwData['info_id'] = $_id;
 
-		if (empty($taskData['info_datecompleted']))
-		{
-			$taskData['info_datecompleted'] = 0;
-		}
-
-		$egwID = $this->write($egwData, false, true, false);
-
-		return $egwID;
+		return $this->write($egwData, true, true, false);
 	}
 
 
@@ -399,189 +460,161 @@ class infolog_sif extends infolog_bo
 	{
 		$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
+		if (!($infoData = $this->read($_id, true, 'server'))) return false;
+
 		switch($_sifType)
 		{
 			case 'task':
-				if (($taskData = $this->read($_id, true, 'server')))
+				if ($infoData['info_id_parent'])
 				{
-					$vcal		= new Horde_iCalendar('1.0');
-
-					if ($taskData['info_id_parent'])
-					{
-						$parent = $this->read($taskData['info_id_parent']);
-						$taskData['info_id_parent'] = $parent['info_uid'];
-					}
-					else
-					{
-						$taskData['info_id_parent'] = '';
-					}
-
-					if (!preg_match('/\[UID:.+\]/m', $taskData['info_des']))
-					{
-						$taskData['info_des'] .= "\r\n[UID:" . $taskData['info_uid'] . "]";
-						if ($taskData['info_id_parent'] != '')
-						{
-							$taskData['info_des'] .= "\r\n[PARENT_UID:" . $taskData['info_id_parent'] . "]";
-						}
-					}
-
-					$sifTask = self::xml_decl . "\n<task>" . self::SIF_decl;
-
-					foreach ($this->_sifTaskMapping as $sifField => $egwField)
-					{
-						if (empty($egwField)) continue;
-
-						$value = $GLOBALS['egw']->translation->convert($taskData[$egwField], $sysCharSet, 'utf-8');
-
-						switch ($sifField)
-						{
-
-							case 'Complete':
-								// is handled with DateCompleted
-								break;
-
-							case 'DateCompleted':
-								if ($taskData[info_status] == 'done')
-								{
-									$sifTask .= "<Complete>1</Complete>";
-								}
-								else
-								{
-									$sifTask .= "<DateCompleted></DateCompleted><Complete>0</Complete>";
-									continue;
-								}
-							case 'DueDate':
-								if (!empty($value))
-								{
-									$hdate	= new Horde_Date($value);
-									$value = $vcal->_exportDate($hdate, '000000Z');
-									$sifTask .= "<$sifField>$value</$sifField>";
-								}
-								else
-								{
-									$sifTask .= "<$sifField></$sifField>";
-								}
-								break;
-							case 'StartDate':
-								if (!empty($value))
-								{
-									$value = $vcal->_exportDateTime($value);
-									$sifTask .= "<$sifField>$value</$sifField>";
-								}
-								else
-								{
-									$sifTask .= "<$sifField></$sifField>";
-								}
-								break;
-
-							case 'Importance':
-								if ($value > 3) $value = 3;
-								$sifTask .= "<$sifField>$value</$sifField>";
-								break;
-
-							case 'Sensitivity':
-								$value = ($value == 'private' ? '2' : '0');
-								$sifTask .= "<$sifField>$value</$sifField>";
-								break;
-
-							case 'Status':
-								switch ($value)
-								{
-									case 'cancelled':
-									case 'deferred':
-										$value = '4';
-										break;
-									case 'waiting':
-									case 'nonactive':
-										$value = '3';
-										break;
-									case 'done':
-									case 'archive':
-									case 'billed':
-										$value = '2';
-										break;
-									case 'not-started':
-									case 'template':
-										$value = '0';
-										break;
-									default: //ongoing
-										$value = 1;
-										break;
-								}
-								$sifTask .= "<$sifField>$value</$sifField>";
-								break;
-
-							case 'Categories':
-								if (!empty($value) && $value)
-								{
-									$value = implode('; ', $this->get_categories(array($value)));
-									$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
-								}
-								else
-								{
-									break;
-								}
-
-							default:
-								$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
-								$sifTask .= "<$sifField>$value</$sifField>";
-								break;
-						}
-					}
-					$sifTask .= '<ActualWork>0</ActualWork><IsRecurring>0</IsRecurring></task>';
-					return $sifTask;
+					$parent = $this->read($infoData['info_id_parent']);
+					$infoData['info_id_parent'] = $parent['info_uid'];
 				}
-				break;
+				else
+				{
+					$infoData['info_id_parent'] = '';
+				}
+
+				if (!preg_match('/\[UID:.+\]/m', $infoData['info_des']))
+				{
+					$infoData['info_des'] .= "\r\n[UID:" . $infoData['info_uid'] . "]";
+					if ($infoData['info_id_parent'] != '')
+					{
+						$infoData['info_des'] .= "\r\n[PARENT_UID:" . $infoData['info_id_parent'] . "]";
+					}
+				}
+
+				$sifTask = self::xml_decl . "\n<task>" . self::SIF_decl;
+
+				foreach ($this->_sifTaskMapping as $sifField => $egwField)
+				{
+					if (empty($egwField)) continue;
+
+					$value = $GLOBALS['egw']->translation->convert($infoData[$egwField], $sysCharSet, 'utf-8');
+
+					switch ($sifField)
+					{
+
+						case 'Complete':
+							// is handled with DateCompleted
+							break;
+
+						case 'DateCompleted':
+							if ($infoData[info_status] != 'done')
+							{
+								$sifTask .= "<DateCompleted></DateCompleted><Complete>0</Complete>";
+								continue;
+							}
+							$sifTask .= "<Complete>1</Complete>";
+
+						case 'DueDate':
+						case 'StartDate':
+							$sifTask .= '<$sifField>';
+							if (!empty($value))
+							{
+								$sifTask .= $this->getDateTime($value, $this->tzid);
+							}
+							$sifTask .= '</$sifField>';
+							break;
+
+						case 'Importance':
+							if ($value > 3) $value = 3;
+							$sifTask .= "<$sifField>$value</$sifField>";
+							break;
+
+						case 'Sensitivity':
+							$value = ($value == 'private' ? '2' : '0');
+							$sifTask .= "<$sifField>$value</$sifField>";
+							break;
+
+						case 'Status':
+							switch ($value)
+							{
+								case 'cancelled':
+								case 'deferred':
+									$value = '4';
+									break;
+								case 'waiting':
+								case 'nonactive':
+									$value = '3';
+									break;
+								case 'done':
+								case 'archive':
+								case 'billed':
+									$value = '2';
+									break;
+								case 'not-started':
+								case 'template':
+									$value = '0';
+									break;
+								default: //ongoing
+									$value = 1;
+								break;
+							}
+							$sifTask .= "<$sifField>$value</$sifField>";
+							break;
+
+						case 'Categories':
+							if (!empty($value) && $value)
+							{
+								$value = implode('; ', $this->get_categories(array($value)));
+								$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
+							}
+							else
+							{
+								break;
+							}
+
+						default:
+							$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
+						$sifTask .= "<$sifField>$value</$sifField>";
+						break;
+					}
+				}
+				$sifTask .= '<ActualWork>0</ActualWork><IsRecurring>0</IsRecurring></task>';
+				return $sifTask;
 
 			case 'note':
-				if (($taskData = $this->read($_id, true, 'server')))
+				$sifNote = self::xml_decl . "\n<note>" . self::SIF_decl;
+
+				foreach ($this->_sifNoteMapping as $sifField => $egwField)
 				{
-					$vcal		= new Horde_iCalendar('1.0');
+					if(empty($egwField)) continue;
 
-					$sifNote = self::xml_decl . "\n<note>" . self::SIF_decl;
+					$value = $GLOBALS['egw']->translation->convert($infoData[$egwField], $sysCharSet, 'utf-8');
 
-					foreach ($this->_sifNoteMapping as $sifField => $egwField)
+					switch ($sifField)
 					{
-						if(empty($egwField)) continue;
+						case 'Date':
+							$sifNote .= '<$sifField>';
+							if (!empty($value))
+							{
+								$sifNote .= $this->getDateTime($value, $this->tzid);
+							}
+							$sifNote .= '</$sifField>';
+							break;
 
-						$value = $GLOBALS['egw']->translation->convert($taskData[$egwField], $sysCharSet, 'utf-8');
-
-						switch ($sifField)
-						{
-							case 'Date':
-								if (!empty($value))
-								{
-									$value = $vcal->_exportDateTime($value);
-								}
-								$sifNote .= "<$sifField>$value</$sifField>";
+						case 'Categories':
+							if (!empty($value))
+							{
+								$value = implode('; ', $this->get_categories(array($value)));
+								$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
+							}
+							else
+							{
 								break;
+							}
 
-							case 'Categories':
-								if (!empty($value))
-								{
-									$value = implode('; ', $this->get_categories(array($value)));
-									$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
-								}
-								else
-								{
-									break;
-								}
-
-							default:
-								$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
-								$sifNote .= "<$sifField>$value</$sifField>";
-								break;
-						}
+						default:
+							$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
+						$sifNote .= "<$sifField>$value</$sifField>";
+						break;
 					}
-					$sifNote .= '</note>';
-					return $sifNote;
 				}
-				break;
-
-			default;
-				return false;
+				$sifNote .= '</note>';
+				return $sifNote;
 		}
-
+		return false;
 	}
 
 	/**
@@ -603,6 +636,21 @@ class infolog_sif extends infolog_bo
 				$deviceInfo['uidExtension'])
 			{
 					$this->uidExtension = true;
+			}
+			if (isset($deviceInfo['tzid']) &&
+				$deviceInfo['tzid'])
+			{
+				switch ($deviceInfo['tzid'])
+				{
+					case 1:
+						$this->tzid = false;
+						break;
+					case 2:
+						$this->tzid = null;
+						break;
+					default:
+						$this->tzid = $deviceInfo['tzid'];
+				}
 			}
 		}
 		// store product name and version, to be able to use it elsewhere
