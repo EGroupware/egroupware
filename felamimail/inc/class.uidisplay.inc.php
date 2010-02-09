@@ -74,7 +74,8 @@
 			global $IP_RegExp_Match, $Host_RegExp_Match, $Email_RegExp_Match;
 			$IP_RegExp_Match = '\\[?[0-9]{1,3}(\\.[0-9]{1,3}){3}\\]?';
 			$Host_RegExp_Match = '('.$IP_RegExp_Match.'|[0-9a-z]([-.]?[0-9a-z])*\\.[a-z][a-z]+)';
-			$atext = '([a-z0-9!#$&%*+/=?^_`{|}~-]|&amp;)';
+			#$atext = '([a-z0-9!#$&%*+/=?^_`{|}~-]|&amp;)';
+			$atext = '([a-zA-Z0-9_\-\.])';
 			$dot_atom = $atext.'+(\.'.$atext.'+)*';
 			$Email_RegExp_Match = '~'.$dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match.'~i';
 
