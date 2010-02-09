@@ -219,16 +219,16 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Voll
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur eGroupWare-Installation.<br>Beispiel: http://www.domain.com/egroupware   or   /egroupware<br><b>keinen nachfolgenden Slash /</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur EGroupware-Installation.<br>Beispiel: http://www.domain.com/egroupware   or   /egroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf noch einmal.
 enter the site password for peer servers	admin	de	Site-Passwort für Peer-Server
 enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Server
-enter the title for your site	admin	de	Titel der eGroupWare-Installation
+enter the title for your site	admin	de	Titel der Egroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	de	URL oder Dateiname (in phpgwapi/templates/default/images) Ihres Logos
 enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	de	Geben Sie eine URL oder einen Dateinamen (in Ihrem Templates Bilder Verzeichnis) für Ihrem Favoriten (das kleine Icon oben links im Browserfenster) an.
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Icons abgelegt und von EGroupware Applikationen verwendet werden können. Der Pfad MUS mit einem / beginnen und von allen Benutzern lesbar sein.
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Icons abgelegt und von EGroupware Applikationen verwendet werden können. Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
 enter your default ftp server	admin	de	Standard-FTP-Server
 enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your http proxy server	admin	de	HTTP-Proxy-Server
