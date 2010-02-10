@@ -134,6 +134,15 @@ class addressbook_bo extends addressbook_so
 	*/
 	protected $tracking;
 
+	/**
+	* Keep deleted addresses, or really delete them
+	* Set in Admin -> Addressbook -> Site Configuration
+	* ''=really delete, 'history'=keep, only admins delete
+ 	*
+	* @var string
+ 	*/
+	protected $delete_history = '';
+
 	function __construct($contact_app='addressbook')
 	{
 		parent::__construct($contact_app);
@@ -262,6 +271,9 @@ class addressbook_bo extends addressbook_so
 		$this->categories = new categories($this->user,'addressbook');
 
 		$this->tracking = new addressbook_tracking($this);
+
+		$config = config::read('phpgwapi');
+		$this->delete_history = $config['history'];
 	}
 
 	/**
@@ -661,11 +673,26 @@ class addressbook_bo extends addressbook_so
 			$id = is_array($c) ? $c['id'] : $c;
 
 			$ok = false;
-			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete) && ($ok = parent::delete($id,$check_etag)))
+			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete))
 			{
-				egw_link::unlink(0,'addressbook',$id);
-				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
-				$this->tracking->track(array('id' => $id), array('id' => $id), null, true);
+				if(!($old = $this->read($id))) return false;
+				if($this->delete_history != '' && $old['tid'] != addressbook_so::DELETED_TYPE) 
+				{
+					$delete = $old;
+					$delete['tid'] = addressbook_so::DELETED_TYPE;
+					$ok = $this->save($delete);
+					egw_link::unlink(0,'addressbook',$id,'','!file');
+				} 
+				elseif($ok = parent::delete($id,$check_etag)) 
+				{
+					egw_link::unlink(0,'addressbook',$id);
+				}
+
+				// Don't notify of final purge
+				if($ok && $old['tid'] != addressbook_so::DELETED_TYPE) {
+					$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
+					$this->tracking->track(array('id' => $id), array('id' => $id), null, true);
+				}
 			}
 			else
 			{
@@ -776,7 +803,8 @@ class addressbook_bo extends addressbook_so
 			}
 
 			// Record change history
-			$this->tracking->track($to_write, $old);
+			$deleted = ($old['tid'] == addressbook_so::DELETED_TYPE || $contact['tid'] == addressbook_so::DELETED_TYPE);
+			$this->tracking->track($to_write, $old, null, $deleted);
 		}
 
 		return $this->error ? false : $contact['id'];

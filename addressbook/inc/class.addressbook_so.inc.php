@@ -165,6 +165,13 @@ class addressbook_so
 	var $content_types = array();
 
 	/**
+	* Special content type to indicate a deleted addressbook
+	*
+	* @var String;
+	*/
+	const DELETED_TYPE = 'D';
+
+	/**
 	 * total number of matches of last search
 	 *
 	 * @var int
@@ -302,6 +309,17 @@ class addressbook_so
 					'template' => 'addressbook.edit',
 					'icon' => 'navbar.png'
 			)));
+		}
+
+		// Add in deleted type for admins
+		if($this->is_admin()) {
+			$this->content_types[self::DELETED_TYPE] = array(
+				'name'	=>	lang('Deleted'),
+				'options' =>	array(
+					'template'	=>	'addressbook.edit',
+					'icon'		=>	'deleted.png'
+				)
+			);
 		}
 	}
 
@@ -585,6 +603,12 @@ class addressbook_so
 		{
 			$filter['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($filter['adr_one_countryname']);
 		}
+
+		// Hide deleted items unless type is specifically deleted
+		if(array_key_exists('tid', $filter) && $filter['tid'] !== self::DELETED_TYPE) {
+			$filter[] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+		}
+
 		$backend =& $this->get_backend(null,$filter['owner']);
 		// single string to search for --> create so_sql conformant search criterial for the standard search columns
 		if ($criteria && !is_array($criteria))

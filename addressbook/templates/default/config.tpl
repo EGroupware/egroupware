@@ -68,6 +68,17 @@
     <td><input name="newsettings[contact_export_limit]" value="{value_contact_export_limit}" size="5"></td>
    </tr>
    <tr class="th">
+    <td colspan="2">&nbsp;<b>{lang_History_logging}</b></td>
+   </tr>
+   <tr class="row_on">
+    <td>&nbsp;{lang_Prevent_deleting_of_contacts}</td>
+    <td>
+     <select name="newsettings[history]">
+      <option value="">{lang_No}</option>
+      <option value="history"{selected_history_history}>{lang_Yes,_only_admins_can_purge_deleted_items}</option>
+     </select>
+    </td>
+   <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Contact_maintenance}</b></td>
    </tr>
    <tr class="row_on">
