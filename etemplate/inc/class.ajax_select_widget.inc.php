@@ -231,6 +231,9 @@ class ajax_select_widget
 			if(is_numeric($value)) {
 				$value = (string)$value;
 			}
+			if($value === null) {
+				unset($options[$key]);
+			}
 		}
 		$options = $GLOBALS['egw']->js->convert_phparray_jsarray("options['$name']", $options, true);
 		$GLOBALS['egw']->js->set_onload("if(!options) {
@@ -239,7 +242,7 @@ class ajax_select_widget
 			$options;\n
 			ajax_select_widget_setup('$name', '$onchange', options['$name'], '" . $GLOBALS['egw_info']['flags']['currentapp'] . "');
 		");
-		$GLOBALS['egw']->js->validate_file('', 'ajax_select', 'etemplate');
+		$GLOBALS['egw']->js->validate_file('.', 'ajax_select', 'etemplate');
 
 		return True;	// no extra label
 	}
@@ -249,6 +252,10 @@ class ajax_select_widget
 		//echo "<p>ajax_select_widget.post_process: $name = "; _debug_array($value_in);_debug_array($extension_data);
 		if(!is_array($value_in)) {
 			$value_in = $extension_data['old_value'];
+		}
+		// Check for blur text left in
+		if($extension_data['options']['id_field'] == self::ARRAY_KEY && $value_in['search'] == lang('Search...') ) {
+			$value_in['search'] = '';
 		}
 
 		// They typed something in, but didn't choose a result
