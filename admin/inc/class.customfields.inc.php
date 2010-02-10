@@ -79,13 +79,21 @@ class customfields
 		$this->fields = config::get_customfields($this->appname,true);
 		$this->tmpl->read('admin.customfields');
 
-		if($this->manage_content_types) $this->content_types = $this->get_content_types();
+		if($this->manage_content_types) 
+		{
+			$this->content_types = config::get_content_types($this->appname);
+			if (count($this->content_types)==0) 
+			{
+				// if you define your default types of your app with the search_link hook, they are available here, if no types were found
+				$this->content_types = (array)egw_link::get_registry($this->appname,'default_types');
+				//error_log( array2string($this->content_types));
+			}
+		}
 		else
 		{
 			$this->tmpl->children[0]['data'][2]['A']['disabled'] = true;
 			$this->tmpl->children[0]['data'][3]['A']['disabled'] = true;
 		}
-
 		if (is_array($content))
 		{
 			//echo '<pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
@@ -153,7 +161,6 @@ class customfields
 				$content['content_types']['non_deletable'] = true;
 			}
 		}
-
 		//echo 'customfields=<pre style="text-align: left;">'; print_r($this->fields); echo "</pre>\n";
 		$content['fields'] = array('use_private' => $content['use_private']);
 		$n = 0;

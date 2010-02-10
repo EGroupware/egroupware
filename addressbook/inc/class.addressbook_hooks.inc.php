@@ -320,6 +320,7 @@ class addressbook_hooks
 			'add_id'     => 'link_id',
 			'add_popup'  => '850x440',
 			'file_access'=> 'addressbook.addressbook_bo.file_access',
+			'default_types' => array('n' => array('name' => 'contact', 'options' => array('icon' => 'navbar.png','template' => 'addressbook.edit'))),
 		);
 	}
 
