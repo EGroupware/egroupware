@@ -994,6 +994,9 @@ class calendar_bo
 					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite READ and PRIVAT grant
+						// exept the group gives its members only EGW_ACL_FREEBUSY and the participant is not the current user
+						if ($this->grants[$uid] == EGW_ACL_FREEBUSY && $uid != $user) continue;
+
 						$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
 						break;
 					}
@@ -1005,6 +1008,8 @@ class calendar_bo
 					}
 					elseif (!is_numeric($uid))
 					{
+						// if the owner only grants EGW_ACL_BUSY we are not interested in the recources explicit rights
+						if ($grants == EGW_ACL_FREEBUSY) break;
 						// if we have a resource as participant
 						$resource = $this->resource_info($uid);
 						$grants |= $resource['rights'];
