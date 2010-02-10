@@ -1865,174 +1865,168 @@ class calendar_boupdate extends calendar_bo
 	  * 		the corresponding series master event array
 	  * 		NOTE: this param is false if event is of type SERIES-MASTER
      */
-    function get_event_info($event)
-    {
-			$type = 'SINGLE'; // default
-			$master_event = false; //default
-			$stored_event = false;
-			$recurrence_event = false;
-			$wasPseudo = false;
+	function get_event_info($event)
+	{
+		$type = 'SINGLE'; // default
+		$master_event = false; //default
+		$stored_event = false;
+		$recurrence_event = false;
+		$wasPseudo = false;
 
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
+		if (($foundEvents = $this->find_event($event, 'exact')))
+		{
+			// We found the exact match
+			$eventID = array_shift($foundEvents);
+			if (strstr($eventID, ':'))
 			{
-				$type = 'SERIES-MASTER';
+				$type = 'SERIES-PSEUDO-EXCEPTION';
+				$wasPseudo = true;
+				list($eventID, $recur_date) = explode(':', $eventID);
+				$recur_date = $this->date2usertime($recur_date);
+				$stored_event = $this->read($eventID, $recur_date, false, 'server');
+				$master_event = $this->read($eventID, 0, false, 'server');
+				$recurrence_event = $stored_event;
 			}
 			else
 			{
-				// SINGLE, SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
-				if (($foundEvents = $this->find_event($event, 'exact')))
+				$stored_event = $this->read($eventID, 0, false, 'server');
+			}
+			if (!empty($stored_event['uid']) && empty($event['uid']))
+			{
+				$event['uid'] = $stored_event['uid']; // restore the UID if it was not delivered
+			}
+		}
+
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		{
+			$type = 'SERIES-MASTER';
+		}
+
+		if ($type == 'SINGLE' &&
+			($foundEvents = $this->find_event($event, 'master')))
+		{
+			// SINGLE, SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
+			foreach ($foundEvents  as $eventID)
+			{
+				// Let's try to find a related series
+				if ($this->log)
 				{
-					// We found the exact match
-					$eventID = array_shift($foundEvents);
-					if ($this->log)
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					"()[MASTER]: $eventID");
+				}
+				if (($master_event = $this->read($eventID, 0, false, 'server')))
+				{
+					if (isset($stored_event['id']) && $master_event['id'] != $stored_event['id'])
 					{
-						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-						"()[EVENT]: $eventID");
+						$type = 'SERIES-EXCEPTION'; // this is an existing exception
+						break;
 					}
-					if (strstr($eventID, ':'))
+					elseif (isset($event['recurrence']) &&
+						in_array($event['recurrence'], $master_event['recur_exception']))
 					{
-						$type = 'SERIES-PSEUDO-EXCEPTION';
-						$wasPseudo = true;
-						list($eventID, $recur_date) = explode(':', $eventID);
-						$recur_date = $this->date2usertime($recur_date);
-						$stored_event = $this->read($eventID, $recur_date, false, 'server');
-						$master_event = $this->read($eventID, 0, false, 'server');
-						$recurrence_event = $stored_event;
+						$type = 'SERIES-PSEUDO-EXCEPTION'; // could also be a real one
+						$recurrence_event = $event;
+						break;
+					}
+					elseif (in_array($event['start'], $master_event['recur_exception']))
+					{
+						$type='SERIES-PSEUDO-EXCEPTION'; // new pseudo exception?
+						$recurrence_event = $event;
+						break;
 					}
 					else
 					{
-						$stored_event = $this->read($eventID, 0, false, 'server');
-					}
-					if (empty($event['uid']))
-					{
-						$event['uid'] = $stored_event['uid']; // restore the UID if it was not delivered
-					}
-				}
-				if ($type == 'SINGLE' &&
-					($foundEvents = $this->find_event($event, 'master')))
-				{
-					// Let's try to find a related series
-					foreach ($foundEvents  as $eventID)
-					{
-						if ($this->log)
+						// try to find a suitable pseudo exception date
+						$egw_rrule = calendar_rrule::event2rrule($master_event, false);
+						$egw_rrule->rewind();
+						while ($egw_rrule->valid())
 						{
-							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							"()[MASTER]: $eventID");
-						}
-						if (($master_event = $this->read($eventID, 0, false, 'server')))
-						{
-							if (isset($stored_event['id']) && $master_event['id'] != $stored_event['id'])
+							$occurrence = egw_time::to($egw_rrule->current(), 'server');
+							if ($this->log)
 							{
-								$type = 'SERIES-EXCEPTION'; // this is an existing exception
-								break;
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+									'() try occurrence ' . $egw_rrule->current() . " ($occurrence)");
 							}
-							elseif (isset($event['recurrence']) &&
-								in_array($event['recurrence'], $master_event['recur_exception']))
+							if ($event['start'] == $occurrence)
 							{
-								$type = 'SERIES-PSEUDO-EXCEPTION'; // could also be a real one
+								$type = 'SERIES-PSEUDO-EXCEPTION'; // let's try a pseudo exception
 								$recurrence_event = $event;
-								break;
+								break 2;
 							}
-							elseif (in_array($event['start'], $master_event['recur_exception']))
+							if (isset($event['recurrence']) && $event['recurrence'] == $occurrence)
 							{
-								$type='SERIES-PSEUDO-EXCEPTION'; // new pseudo exception?
-								$recurrence_event = $event;
-								break;
-							}
-							else
-							{
-								// try to find a suitable pseudo exception date
-								$egw_rrule = calendar_rrule::event2rrule($master_event, false);
-								$egw_rrule->rewind();
-								while ($egw_rrule->valid())
-								{
-									$occurrence = egw_time::to($egw_rrule->current(), 'server');
-									if ($this->log)
-									{
-										error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-											'() try occurrence ' . $egw_rrule->current() . " ($occurrence)");
-									}
-									if ($event['start'] == $occurrence)
-									{
-										$type = 'SERIES-PSEUDO-EXCEPTION'; // let's try a pseudo exception
-										$recurrence_event = $event;
-										break 2;
-									}
-									if (isset($event['recurrence']) && $event['recurrence'] == $occurrence)
-									{
-										$type = 'SERIES-EXCEPTION-PROPAGATE';
-										if ($stored_event)
-										{
-											unset($stored_event['id']); // signal the true exception
-											$stored_event['recur_type'] = MCAL_RECUR_NONE;
-										}
-										break 2;
-									}
-									$egw_rrule->next_no_exception();
-								}
-							}
-						}
-					}
-				}
-
-				// check pseudo exception propagation
-				if ($recurrence_event)
-				{
-					// default if we cannot find a proof for a fundamental change
-					// the recurrence_event is the master event with start and end adjusted to the recurrence
-					// check for changed data
-					foreach (array('start','end','uid','title','location','description',
-						'priority','public','special','non_blocking') as $key)
-					{
-						if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
-						{
-							if ($wasPseudo)
-							{
-								// We started with a pseudo exception
 								$type = 'SERIES-EXCEPTION-PROPAGATE';
+								if ($stored_event)
+								{
+									unset($stored_event['id']); // signal the true exception
+									$stored_event['recur_type'] = MCAL_RECUR_NONE;
+								}
+								break 2;
 							}
-							else
-							{
-								$type = 'SERIES-EXCEPTION';
-							}
-
-							if ($stored_event)
-							{
-								unset($stored_event['id']); // signal the true exception
-								$stored_event['recur_type'] = MCAL_RECUR_NONE;
-							}
-							break;
+							$egw_rrule->next_no_exception();
 						}
 					}
-					// the event id here is always the id of the master event
-					// unset it to prevent confusion of stored event and master event
-					unset($event['id']);
 				}
 			}
+		}
 
-			// check ACL
-			if (is_array($master_event))
+		// check pseudo exception propagation
+		if ($recurrence_event)
+		{
+			// default if we cannot find a proof for a fundamental change
+			// the recurrence_event is the master event with start and end adjusted to the recurrence
+			// check for changed data
+			foreach (array('start','end','uid','title','location','description',
+				'priority','public','special','non_blocking') as $key)
+				{
+				if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
+				{
+					if ($wasPseudo)
+					{
+						// We started with a pseudo exception
+						$type = 'SERIES-EXCEPTION-PROPAGATE';
+					}
+					else
+					{
+						$type = 'SERIES-EXCEPTION';
+					}
+
+					if ($stored_event)
+					{
+						unset($stored_event['id']); // signal the true exception
+						$stored_event['recur_type'] = MCAL_RECUR_NONE;
+					}
+					break;
+				}
+				}
+			// the event id here is always the id of the master event
+			// unset it to prevent confusion of stored event and master event
+			unset($event['id']);
+		}
+
+		// check ACL
+		if (is_array($master_event))
+		{
+			$acl_edit = $this->check_perms(EGW_ACL_EDIT, $master_event['id']);
+		}
+		else
+		{
+			if (is_array($stored_event))
 			{
-				$acl_edit = $this->check_perms(EGW_ACL_EDIT, $master_event['id']);
+				$acl_edit = $this->check_perms(EGW_ACL_EDIT, $stored_event['id']);
 			}
 			else
 			{
-				if (is_array($stored_event))
-				{
-					$acl_edit = $this->check_perms(EGW_ACL_EDIT, $stored_event['id']);
-				}
-				else
-				{
-					$acl_edit = true; // new event
-				}
+				$acl_edit = true; // new event
 			}
+		}
 
-			return array(
-				'type' => $type,
-				'acl_edit' => $acl_edit,
-				'stored_event' => $stored_event,
-				'master_event' => $master_event,
-			);
+		return array(
+			'type' => $type,
+			'acl_edit' => $acl_edit,
+			'stored_event' => $stored_event,
+			'master_event' => $master_event,
+		);
     }
 
     /**
