@@ -1544,7 +1544,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
-		if ($filter != 'master' && $filter != 'exact' )
+		if ($filter != 'master' && ($filter != 'exact' || empty($event['uid'])))
 		{
 			if (isset($event['whole_day']) && $event['whole_day'])
 			{
