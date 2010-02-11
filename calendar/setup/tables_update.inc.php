@@ -1631,11 +1631,69 @@ function calendar_upgrade1_5_002()
 }
 
 /**
- * Adding column for recurrence time of master event to improve iCal handling of exceptions
+ * Adjust UIDs of series exceptions to RFC standard
+ * Propagate cal_reference field to temporarily contain RECURRENCE-ID
  *
  * @return string
  */
 function calendar_upgrade1_6()
+{
+	// Set UID of series exception to UID of series master
+	// update cal_etag, cal_modified and cal_modifier to distribute changes on GroupDAV devices
+	foreach($GLOBALS['egw_setup']->db->query('
+		SELECT cal_ex.cal_id,cal_ex.cal_uid AS cal_uid_ex,cal_master.cal_uid AS cal_uid_master
+		FROM egw_cal cal_ex
+		JOIN egw_cal cal_master ON cal_ex.cal_reference=cal_master.cal_id
+		WHERE cal_ex.cal_reference != 0',__LINE__,__FILE__) as $row)
+	{
+		if (strlen($row['cal_uid_master']) > 0 && $row['cal_uid_ex'] != $row['cal_uid_master'])
+		{
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_uid=\''.$row['cal_uid_master'].
+				'\',cal_etag=cal_etag+1,cal_modified='.time().
+				',cal_modifier=NULL WHERE cal_id='.(int)$row['cal_id'],__LINE__,__FILE__);
+		}
+	}
+	
+	// Search series exception for nearest exception in series master and add that RECURRENCE-ID
+	// as cal_reference (for 1.6.003 and move it to new field cal_recurrence in 1.7.001)
+	foreach($GLOBALS['egw_setup']->db->query('SELECT egw_cal.cal_id,cal_start,recur_exception FROM egw_cal
+		JOIN egw_cal_dates ON egw_cal.cal_id=egw_cal_dates.cal_id
+		JOIN egw_cal_repeats ON cal_reference=egw_cal_repeats.cal_id
+		WHERE cal_reference != 0',__LINE__,__FILE__) as $row)
+	{
+		$recurrence = null;
+		foreach(explode(',',$row['recur_exception']) as $ts)
+		{
+			if (is_null($recurrence) || abs($ts-$row['cal_start']) < $diff)
+			{
+				$recurrence = $ts;
+				$diff = abs($ts-$row['cal_start']);
+			}
+		}
+		if ($recurrence)
+		{
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_reference='.(int)$recurrence.
+				' WHERE cal_id='.(int)$row['cal_id'],__LINE__,__FILE__);
+		}
+		else
+		{
+			// if we cannot determine the RECURRENCE-ID use cal_start
+			// because RECURRENCE-ID must be present
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_reference='.(int)$row['cal_start'].
+				' WHERE cal_id='.(int)$row['cal_id'],__LINE__,__FILE__);
+		}
+	}
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.6.003';
+}
+
+
+/**
+ * Adding column for RECURRENCE-ID of master event to improve iCal handling of exceptions
+ *
+ * @return string
+ */
+function calendar_upgrade1_6_003()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_creator',array(
 		'type' => 'int',
@@ -1670,28 +1728,24 @@ function calendar_upgrade1_6()
 		'default' => '0',
 		'comment' => 'cal_start of original recurrence for exception'
 	));
-	// search series of exception for nearest exception and add that as cal_recurrence
-	foreach($GLOBALS['egw_setup']->db->query('SELECT egw_cal.cal_id,cal_start,recur_exception FROM egw_cal
-		JOIN egw_cal_dates ON egw_cal.cal_id=egw_cal_dates.cal_id
-		JOIN egw_cal_repeats ON cal_reference=egw_cal_repeats.cal_id
-		WHERE cal_reference != 0 AND recur_exception IS NOT NULL',__LINE__,__FILE__) as $row)
+	
+	// move RECURRENCE-ID from temporarily (1.6.003)
+	// used field cal_reference to new field cal_recurrence
+	// and restore cal_reference field of series exceptions with id of the series master
+	foreach($GLOBALS['egw_setup']->db->query('
+		SELECT cal_ex.cal_id AS cal_id_ex,cal_master.cal_id AS cal_id_master,
+		cal_ex.cal_reference AS cal_reference_ex,cal_ex.cal_uid AS cal_uid_ex,
+		cal_master.cal_uid AS cal_uid_master
+		FROM egw_cal cal_ex
+		JOIN egw_cal cal_master
+		ON cal_ex.cal_uid=cal_master.cal_uid AND cal_master.cal_reference = 0 AND cal_ex.cal_owner = cal_master.cal_owner
+		WHERE cal_ex.cal_reference !=0 AND cal_master.cal_id IS NOT NULL',__LINE__,__FILE__) as $row)
 	{
-		$recurrence = null;
-		foreach(explode(',',$row['recur_exception']) as $ts)
-		{
-			if (is_null($recurrence) || abs($ts-$row['cal_start']) < $diff)
-			{
-				$recurrence = $ts;
-				$diff = abs($ts-$row['cal_start']);
-			}
-		}
-		if ($recurrence)
-		{
-			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_recurrence='.(int)$recurrence.
-				' WHERE cal_id='.(int)$row['cal_id']);
-		}
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_recurrence='.(int)$row['cal_reference_ex'].
+			', cal_reference='.(int)$row['cal_id_master'].
+			' WHERE cal_id='.(int)$row['cal_id_ex']);
 	}
-
+	
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.001';
 }
 
@@ -1941,4 +1995,59 @@ function calendar_upgrade1_7_005()
 		}
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.006';
+}
+
+/**
+ * // Fix whole day event cal_end times which are set to 23:59:00 or 00:00 instead of 23:59:59
+ * // Fix recur_interval from 0 to 1 for event series
+ *
+ * @return string
+ */
+function calendar_upgrade1_7_006()
+{
+	foreach($GLOBALS['egw_setup']->db->query('SELECT * FROM egw_cal_dates
+		WHERE (cal_end-cal_start)%86400=86340',__LINE__,__FILE__) as $row)
+	{
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal_dates SET cal_end=cal_end+59
+			WHERE cal_id='.(int)$row['cal_id'].' AND cal_start='.(int)$row['cal_start'],__LINE__,__FILE__);
+	}
+	
+	foreach($GLOBALS['egw_setup']->db->query('SELECT * FROM egw_cal_dates
+		WHERE cal_end-cal_start>0 AND (cal_end-cal_start)%86400=0',__LINE__,__FILE__) as $row)
+	{
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal_dates SET cal_end=cal_end-1
+			WHERE cal_id='.(int)$row['cal_id'].' AND cal_start='.(int)$row['cal_start'],__LINE__,__FILE__);
+	}
+    
+    $GLOBALS['egw_setup']->db->query('UPDATE egw_cal_repeats SET recur_interval=1
+			WHERE recur_interval=0',__LINE__,__FILE__);
+	
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.007';
+}
+
+/**
+ * Adjust UIDs of series exceptions to RFC standard
+ * this was already done in upgrade to 1.6.003 but we repeat it here in a non-destructive
+ * way to catch installations which already used versions > 1.6.003 before we added this to setup
+ *
+ * @return string
+ */
+function calendar_upgrade1_7_007()
+{
+	// Set UID of series exception to UID of series master
+	// update cal_etag,cal_modified and cal_modifier to distribute changes on GroupDAV devices
+	foreach($GLOBALS['egw_setup']->db->query('
+		SELECT cal_ex.cal_id,cal_ex.cal_uid AS cal_uid_ex,cal_master.cal_uid AS cal_uid_master
+		FROM egw_cal cal_ex
+		JOIN egw_cal cal_master ON cal_ex.cal_reference=cal_master.cal_id
+		WHERE cal_ex.cal_reference != 0',__LINE__,__FILE__) as $row)
+	{
+		if (strlen($row['cal_uid_master']) > 0 && $row['cal_uid_ex'] != $row['cal_uid_master'])
+		{
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET cal_uid=\''.$row['cal_uid_master'].
+				'\',cal_etag=cal_etag+1,cal_modified='.time().
+				',cal_modifier=NULL WHERE cal_id='.(int)$row['cal_id'],__LINE__,__FILE__);
+		}
+	}
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.008';
 }
