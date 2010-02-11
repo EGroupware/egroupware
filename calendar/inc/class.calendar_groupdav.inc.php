@@ -35,14 +35,14 @@ class calendar_groupdav extends groupdav_handler
 		//'EXDATE'
 		//'RECURRENCE-ID'
 	);
-	
+
 	/**
 	 * Does client understand exceptions to be included in VCALENDAR component of series master sharing its UID
-	 * 
+	 *
 	 * That also means no EXDATE for these exceptions!
-	 * 
+	 *
 	 * Setting it to false, should give the old behavior used in 1.6 (hopefully) no client needs that.
-	 * 
+	 *
 	 * @var boolean
 	 */
 	var $client_shared_uid_exceptions = true;
@@ -311,12 +311,12 @@ class calendar_groupdav extends groupdav_handler
 		header('ETag: '.$this->get_etag($event));
 		return true;
 	}
-	
+
 	/**
 	 * Generate an iCal for the given event
-	 * 
+	 *
 	 * Taking into account virtual an real exceptions for recuring events
-	 * 
+	 *
 	 * @param array $event
 	 * @return string
 	 */
@@ -324,9 +324,9 @@ class calendar_groupdav extends groupdav_handler
 	{
 		static $handler = null;
 		if (is_null($handler)) $handler = $this->_get_handler();
-		
+
 		$events = array($event);
-		
+
 		// for recuring events we have to add the exceptions
 		if ($this->client_shared_uid_exceptions && $event['recur_type'] && !empty($event['uid']))
 		{
@@ -338,12 +338,12 @@ class calendar_groupdav extends groupdav_handler
 		}
 		return $handler->exportVCal($events,'2.0','PUBLISH');
 	}
-	
+
 	/**
 	 * Get array with events of a series identified by its UID (master and all exceptions)
-	 * 
+	 *
 	 * Maybe that should be part of calendar_bo
-	 * 
+	 *
 	 * @param string $uid UID
 	 * @param calendar_bo $bo=null calendar_bo object to reuse for search call
 	 * @return array
@@ -370,7 +370,7 @@ class calendar_groupdav extends groupdav_handler
 			{
 				//error_log('real exception: '.array2string($recurrence));
 				// remove from masters recur_exception, as exception is include
-				// at least Lightning "understands" EXDATE as exception from what's included 
+				// at least Lightning "understands" EXDATE as exception from what's included
 				// in the whole resource / VCALENDAR component
 				// not removing it causes Lightning to remove the exception itself
 				if (($k = array_search($recurrence['recurrence'],$master['recur_exception'])) !== false)
@@ -416,6 +416,10 @@ class calendar_groupdav extends groupdav_handler
 			return $event;
 		}
 		$handler = $this->_get_handler();
+		if (!is_numeric($id) && ($foundEntries = $handler->find_event($options['content'], 'check')))
+		{
+			$id = array_shift($foundEntries);
+		}
 		if (!($cal_id = $handler->importVCal($options['content'],is_numeric($id) ? $id : -1,
 			self::etag2value($this->http_if_match))))
 		{
@@ -432,22 +436,22 @@ class calendar_groupdav extends groupdav_handler
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Fix event series with exceptions, called by calendar_ical::importVCal():
 	 *	a) only series master = first event got cal_id from URL
 	 *	b) exceptions need to be checked if they are already in DB or new
 	 *	c) recurrence-id of (real not virtual) exceptions need to be re-added to master
-	 * 
+	 *
 	 * @param array &$events
 	 */
 	static function fix_series(array &$events)
 	{
 		foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
 		$master =& $events[0];
-		
+
 		$bo = new calendar_boupdate();
-		
+
 		// get array with orginal recurrences indexed by recurrence-id
 		$org_recurrences = array();
 		foreach(self::get_series($master['uid'],$bo) as $event)
@@ -462,14 +466,14 @@ class calendar_groupdav extends groupdav_handler
 		foreach($events as &$recurrence)
 		{
 			if ($recurrence['id'] || !$recurrence['recurrence']) continue;	// master
-			
+
 			// from now on we deal with exceptions
 			$org_recurrence = $org_recurrences[$recurrence['recurrence']];
 			if (isset($org_recurrence))	// already existing recurrence
 			{
 				error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
 				$recurrence['id'] = $org_recurrence['id'];
-				
+
 				// re-add (non-virtual) exceptions to master's recur_exception
 				if ($recurrence['id'] != $master['id'])
 				{

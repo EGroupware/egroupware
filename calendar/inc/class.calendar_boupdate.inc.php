@@ -1470,8 +1470,9 @@ class calendar_boupdate extends calendar_bo
 						'()[FOUND]:' . array2string($egwEvent));
 				}
 				// Just a simple consistency check
-				if ($filter == 'master'  && $egwEvent['recur_type'] != MCAL_RECUR_NONE ||
-					$filter == 'exact' || strpos($egwEvent['title'], $event['title']) === 0)
+				if ($filter == 'exact' ||
+					$filter == 'master'  && $egwEvent['recur_type'] != MCAL_RECUR_NONE ||
+					$filter != 'master' && strpos($egwEvent['title'], $event['title']) === 0)
 				{
 					$retval = $egwEvent['id'];
 					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
@@ -1543,7 +1544,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
-		if ($filter != 'master')
+		if ($filter != 'master' && $filter != 'exact' )
 		{
 			if (isset($event['whole_day']) && $event['whole_day'])
 			{
