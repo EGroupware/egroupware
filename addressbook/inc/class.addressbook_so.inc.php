@@ -605,7 +605,8 @@ class addressbook_so
 		}
 
 		// Hide deleted items unless type is specifically deleted
-		if(array_key_exists('tid', $filter) && $filter['tid'] !== self::DELETED_TYPE) {
+		if(!is_array($filter)) $filter = array();
+		if($filter['tid'] !== self::DELETED_TYPE) {
 			$filter[] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
 		}
 
