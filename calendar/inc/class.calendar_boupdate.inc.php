@@ -1421,7 +1421,8 @@ class calendar_boupdate extends calendar_bo
 	 * Try to find a matching db entry
 	 *
 	 * @param array $event	the vCalendar data we try to find
-	 * @param string filter='exact' exact	-> check for identical matches
+	 * @param string filter='exact' exact	-> find the matching entry
+	 * 								check	-> check (consitency) for identical matches
 	 * 							    relax	-> be more tolerant
 	 *                              master	-> try to find a releated series master
 	 * @return array calendar_ids of matching entries
@@ -1470,7 +1471,7 @@ class calendar_boupdate extends calendar_bo
 				}
 				// Just a simple consistency check
 				if ($filter == 'master'  && $egwEvent['recur_type'] != MCAL_RECUR_NONE ||
-					strpos($egwEvent['title'], $event['title']) === 0)
+					$filter == 'exact' || strpos($egwEvent['title'], $event['title']) === 0)
 				{
 					$retval = $egwEvent['id'];
 					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
@@ -1482,7 +1483,7 @@ class calendar_boupdate extends calendar_bo
 					return $matchingEvents;
 				}
 			}
-			if ($filter == 'exact') return array();
+			if ($filter == 'exact' || $filter == 'check') return array();
 		}
 		unset($event['id']);
 
@@ -1542,7 +1543,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
-		if ($filter == 'relax' || empty($event['uid']))
+		if ($filter != 'master')
 		{
 			if (isset($event['whole_day']) && $event['whole_day'])
 			{
@@ -1565,19 +1566,17 @@ class calendar_boupdate extends calendar_bo
 			}
 			elseif (isset($event['start']))
 			{
-				if ($filter != 'master')
+
+				if ($filter == 'relax')
 				{
-					if ($filter == 'relax')
-					{
-						$query[] = ('cal_start>' . ($event['start'] - 3600));
-						$query[] = ('cal_start<' . ($event['start'] + 3600));
-					}
-					else
-					{
-						// we accept a tiny tolerance
-						$query[] = ('cal_start>' . ($event['start'] - 2));
-						$query[] = ('cal_start<' . ($event['start'] + 2));
-					}
+					$query[] = ('cal_start>' . ($event['start'] - 3600));
+					$query[] = ('cal_start<' . ($event['start'] + 3600));
+				}
+				else
+				{
+					// we accept a tiny tolerance
+					$query[] = ('cal_start>' . ($event['start'] - 2));
+					$query[] = ('cal_start<' . ($event['start'] + 2));
 				}
 			}
 			$matchFields = array('priority', 'public', 'non_blocking', 'recurrence');
@@ -1586,7 +1585,7 @@ class calendar_boupdate extends calendar_bo
 				if (!empty($event[$key])) $query['cal_'.$key] = $event[$key];
 			}
 		}
-		else
+		if (!empty($event['uid']))
 		{
 			$query['cal_uid'] = $event['uid'];
 			if ($this->log)
@@ -1628,7 +1627,7 @@ class calendar_boupdate extends calendar_bo
 					'[FOUND]: ' . array2string($egwEvent));
 			}
 
-			if ($filter == 'exact' && !empty($event['uid']))
+			if ($filter == 'chec' && !empty($event['uid']))
 			{
 				$matchingEvents[] = $egwEvent['id']; // UID found
 				continue;

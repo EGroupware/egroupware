@@ -2618,7 +2618,7 @@ class calendar_ical extends calendar_boupdate
 			// this function only supports searching a single event
 			if (count($events) == 1)
 			{
-				$filter = $relax ? 'relax' : 'exact';
+				$filter = $relax ? 'relax' : 'check';
 				$event = array_shift($events);
 				if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
 				if ($contentID) $event['id'] = $contentID;
