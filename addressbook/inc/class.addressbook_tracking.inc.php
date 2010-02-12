@@ -46,6 +46,14 @@ class addressbook_tracking extends bo_tracking
 	 */
 	var $field2history = array(
 	);
+
+	/**
+        * Translate field name to label
+        */
+        public $field2label = array(
+		// Custom fields added in constructor
+	);
+
 	/**
 	 * Should the user (passed to the track method or current user if not passed) be used as sender or get_config('sender')
 	 *
@@ -78,6 +86,13 @@ class addressbook_tracking extends bo_tracking
 			unset($this->field2history['modified']);
 			unset($this->field2history['modifier']);
 			unset($this->field2history['etag']);
+		}
+		$custom = config::get_customfields('addressbook', true);
+		if(is_array($custom)) {
+			foreach($custom as $name => $settings) {
+				$this->field2history['#'.$name] = '#'.$name;
+				$this->field2label['#'.$name] = $settings['label'];
+			}
 		}
 	}
 

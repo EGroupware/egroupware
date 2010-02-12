@@ -2158,5 +2158,22 @@ class addressbook_ui extends addressbook_bo
 			$content['history']['status-widgets']['tid'][$id] = $settings['name'];
 		}
 		$sel_options['status'] = $this->contact_fields;
+		foreach($this->tracking->field2label as $field => $label) {
+			$sel_options['status'][$field] = lang($label);
+		}
+
+		// Get custom field options
+		$custom = config::get_customfields('addressbook', true);
+		if(is_array($custom)) {
+			foreach($custom as $name => $settings) {
+				if(!is_array($settings['values'])) {
+					$content['history']['status-widgets']['#'.$name] = $settings['type'];
+				} elseif($settings['values']['@']) {
+					$content['history']['status-widgets']['#'.$name] = customfields_widget::_get_options_from_file($settings['values']['@']);
+				} else {
+					$content['history']['status-widgets']['#'.$name] = $settings['values'];
+				}
+			}
+		}
 	}
 }
