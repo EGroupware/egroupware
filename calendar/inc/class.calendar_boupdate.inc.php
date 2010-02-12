@@ -858,6 +858,8 @@ class calendar_boupdate extends calendar_bo
 		}
 		$set_recurrences = false;
 		$set_recurrences_start = 0;
+		$old_event = $this->read($event['id'], $event['recurrence']);
+
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$save_event['id'] = $cal_id;
@@ -866,6 +868,10 @@ class calendar_boupdate extends calendar_bo
 			$this->set_recurrences($save_event, $set_recurrences_start);
 		}
 		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,$event['id'] ? 'modify' : 'add',time());
+
+		// Update history
+		$tracking = new calendar_tracking($this);
+		$tracking->track($event, $old_event);
 
 		return $cal_id;
 	}
@@ -1056,6 +1062,7 @@ class calendar_boupdate extends calendar_bo
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 				"($cal_id, $uid, $status, $recur_date)");
 		}
+		$old_event = $this->read($cal_id, $recur_date);
 		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0,$role)))
 		{
 			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
@@ -1071,6 +1078,12 @@ class calendar_boupdate extends calendar_bo
 				if (isset($recur_date)) $event = $this->read($event['id'],$recur_date); //re-read the actually edited recurring event
 				$this->send_update($status2msg[$status],$event['participants'],$event);
 			}
+
+			// Update history
+			if (!is_array($event)) $event = $this->read($cal_id);
+			$tracking = new calendar_tracking($this);
+			$tracking->track($event, $old_event);
+
 		}
 		return $Ok;
 	}
@@ -1098,6 +1111,10 @@ class calendar_boupdate extends calendar_bo
 		{
 			$this->so->delete($cal_id);
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
+			
+			// Update history
+			$tracking = new calendar_tracking($this);
+			$tracking->track($event, $event, null, true);
 
 			// delete all links to the event
 			egw_link::unlink(0,'calendar',$cal_id);

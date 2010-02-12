@@ -45,7 +45,7 @@ class calendar_uiforms extends calendar_ui
 	 *
 	 * @var string
 	 */
-	var $tabs = 'general|description|participants|recurrence|custom|links|alarms';
+	var $tabs = 'general|description|participants|recurrence|custom|links|alarms|history';
 
 	/**
 	 * default locking time for entries, that are opened by another user
@@ -1137,6 +1137,10 @@ class calendar_uiforms extends calendar_ui
 		{
 			$etpl->set_cell_attribute('button[cancel]','onclick','');
 		}
+
+		// Setup history tab
+		$this->setup_history($content, $sel_options);
+
 		//echo "content="; _debug_array($content);
 		//echo "preserv="; _debug_array($preserv);
  		//echo "readonlys="; _debug_array($readonlys);
@@ -1727,5 +1731,67 @@ class calendar_uiforms extends calendar_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Calendar').' - '.lang('Category ACL');
 		$tmp = new etemplate('calendar.cat_acl');
 		$tmp->exec('calendar.calendar_uiforms.cat_acl',$content,null,$readonlys,$preserv);
+	}
+
+	/**
+	* Set up the required fields to get the history tab
+	*/
+	public function setup_history(&$content, &$sel_options) {
+		$status = 'history_status';
+
+		$content['history'] = array(
+			'id'    =>      $content['id'],
+			'app'   =>      'calendar',
+			'status-widgets'        =>      array(
+				'owner'         =>      'select-account',
+				'cat_id'        =>      'select-cat',
+				'non_blocking'	=>	array(''=>lang('No'), 1=>lang('Yes')),
+		
+				'start'		=>	'date-time',
+				'end'		=>	'date-time',
+
+				// Participants
+				'participants'	=>	array(
+					'select-account',
+					$sel_options['status'],
+					$sel_options['role']
+				),
+				'participants-c'	=>	array(
+					'link:addressbook',
+					$sel_options['status'],
+					'label',
+					$sel_options['role']
+				),
+			),
+		);
+
+
+		// Get participants for only this one, if it's recurring.  The date is on the end of the value.
+		if($content['recur_type'] || $content['recurrence']) {
+			$content['history']['filter'] = array(
+				'(history_status NOT LIKE \'participants%\' OR (history_status LIKE \'participants%\' AND (
+					history_new_value LIKE \'%' . bo_tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\' OR 
+					history_old_value LIKE \'%' . bo_tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\')))'
+			);
+		}
+		
+		// Translate labels
+		$tracking = new calendar_tracking();
+		foreach($tracking->field2label as $field => $label) {
+			$sel_options[$status][$field] = lang($label);
+		}
+		// Get custom field options
+		$custom = config::get_customfields('calendar', true);
+		if(is_array($custom)) {
+			foreach($custom as $name => $settings) {
+				if(!is_array($settings['values'])) {
+					$content['history']['status-widgets']['#'.$name] = $settings['type'];
+				} elseif($settings['values']['@']) {
+					$content['history']['status-widgets']['#'.$name] = customfields_widget::_get_options_from_file($settings['values']['@']);
+				} else {
+					$content['history']['status-widgets']['#'.$name] = $settings['values'];
+				}
+			}
+		}
 	}
 }
