@@ -85,9 +85,17 @@ class historylog_widget
 					foreach($type as $n => $t)
 					{
 						$opt = '';
+						if(is_array($t)) {
+							$sel_options = $t;
+						}
 						list($t,$opt) = explode(':',$t);
+						if(is_array($sel_options)) {
+							$t = 'select';
+						}
 						$child = etemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true,'size' => $opt));
+						$child['sel_options'] = $sel_options;
 						etemplate::add_child($cell,$child);
+						unset($sel_options);
 						unset($child);
 					}
 				}
@@ -103,11 +111,12 @@ class historylog_widget
 		$app = is_array($value) ? $value['app'] : $GLOBALS['egw_info']['flags']['currentapp'];
 		$status_widgets = is_array($value) && isset($value['status-widgets']) ? $value['status-widgets'] : null;
 		$id = is_array($value) ? $value['id'] : $value;
+		$filter = is_array($value) ? $value['filter'] : array();
 
 		$historylog = new historylog($app);
 		if (!$id || method_exists($historylog,'search'))
 		{
-			$value = $id ? $historylog->search($id) : false;
+			$value = $id ? $historylog->search($filter ? array('history_record_id'=>$id) + $filter : $id) : false;
 		}
 		unset($historylog);
 
