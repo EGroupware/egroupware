@@ -343,6 +343,16 @@ class preferences_hooks
 				'admin'  => False,
 				'forced' => true,
 			),
+            'enable_ie_dropdownmenuhack' => array(
+                'type'   => 'check',
+                'label'  => 'Enable selectbox dropdown resizing for IE (experimental)',
+                'name'   => 'enable_ie_dropdownmenuhack',
+                'help'   => 'Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE '.
+                        ', the option will not apply. This feature is experimental at the moment.',
+                'xmlrpc' => False,
+                'admin'  => False,
+                'forced' => false,
+            ),
 			'csv_charset' => array(
 				'type'   => 'select',
 				'label'  => 'Charset for the CSV export',
