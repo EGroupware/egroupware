@@ -7,6 +7,7 @@ a theme defines the colors and fonts used by the template.	preferences	en	A them
 acl grants have been updated	preferences	en	ACL grants have been updated
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in eGroupWare will show you this number of entries or lines per page.<br>Too many slow down the page display, too less will cost you the overview.
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	en	Change a user password by passing the old and new passwords.  Returns TRUE on success, FALSE on failure.
 change your password	preferences	en	Change your Password
 change your profile	preferences	en	Change your profile
 change your settings	preferences	en	Change your Settings
@@ -26,7 +27,9 @@ div	preferences	en	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	en	Do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.
 edit custom fields	preferences	en	edit custom fields
 enable drag and drop functionality (experimental)	preferences	en	Enable drag and drop functionality (experimental)
+enable selectbox dropdown resizing for ie (experimental)	preferences	en	Enable selectbox-dropdown-menu resizing for IE (experimental)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	en	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically. This feature is experimental at the moment.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox-dropdown-menu resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
 enter your new password	preferences	en	Enter your new password
 enter your old password	preferences	en	Enter your old password
 failed to change password.  please contact your administrator.	preferences	en	Failed to change password.  Please contact your administrator.
@@ -49,7 +52,9 @@ max matches per page	preferences	en	Max matches per page
 max number of icons in navbar	preferences	en	Max number of icons in navigation bar
 no default	preferences	en	No default
 no user-selection at all	common	en	No user-selection at all
+note: this feature does *not* change your email password. this will	preferences	en	note: This feature does *not* change your email password. This will
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
+number format	preferences	en	Number format
 office 2003 theme	preferences	en	Office 2003 theme
 p: paragraph	preferences	en	p: Paragraph
 permanent time zone selection	preferences	en	Permanent time zone selection
@@ -58,6 +63,7 @@ please select your timezone.	preferences	en	Please select your timezone.
 please, select a new theme	preferences	en	Please, select a new theme
 popup with search	preferences	en	Popup with search
 re-enter your password	preferences	en	Re-Enter your password
+read prefs for the specified application.	preferences	en	Read prefs for the specified application.
 rich text editor enter mode	preferences	en	Rich text editor enter mode
 rich text editor theme	preferences	en	Rich text editor theme
 select different theme	preferences	en	Select different Theme
@@ -84,16 +90,19 @@ text only	preferences	en	Text only
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).
 the old password is not correct	preferences	en	The old password is not correct
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group. The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
 the two passwords are not the same	preferences	en	The two passwords are not the same
 theme (colors/fonts) selection	preferences	en	Theme (colors/fonts) Selection
 this server is located in the %1 timezone	preferences	en	This server is located in the %1 timezone
+thousands separator is only used for displaying and not for editing numbers.	preferences	en	Thousands separator is only used for displaying and not for editing numbers.
 time format	preferences	en	Time format
 use default	preferences	en	Use default
 users choice	preferences	en	Users choice
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	en	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.
 which currency symbol or name should be used in egroupware.	preferences	en	Which currency symbol or name should be used in eGroupWare.
+write prefs for the specified application.	preferences	en	Write prefs for the specified application.
 you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.
 you can show the linked entries with icons only, icons with app-name or both.	addressbook	en	You can show the linked entries with icons only, icons with app-name or both.
 you do not have permission to set acl's in this mode!	preferences	en	You do not have permission to set ACL's in this mode!

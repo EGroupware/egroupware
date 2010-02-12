@@ -648,7 +648,11 @@ abstract class egw_framework
 
 		// always include javascript helper functions
 		$GLOBALS['egw']->js->validate_file('jsapi','jsapi');
-
+		// GLOBAL var to tell egroupware wether or not to enable the IE selectBox resize hack
+		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_ie_dropdownmenuhack'])
+		{
+			$java_script .= "<script type=\"text/javascript\">\nvar enable_ie_dropdownmenuhack=1;\n</script>\n";
+		}
 		//viniciuscb: in Concisus this condition is inexistent, and in all
 		//pages the javascript globals are inserted. Today, because
 		//filescenter needs these javascript globals, this
