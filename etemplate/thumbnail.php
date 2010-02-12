@@ -12,7 +12,7 @@
 // strip slashes from _GET parameters, if someone still has magic_quotes_gpc on
 if (get_magic_quotes_gpc() && $_GET)
 {
-	$_GET = etemplate::array_stripslashes($_GET);
+	$_GET = array_stripslashes($_GET);
 }
 
 if (isset($_GET['app']))
@@ -202,3 +202,23 @@ function gdVersion($user_ver = 0)
 	$gd_ver = $match[0];
 	return $match[0];
 }
+
+/**
+ * applies stripslashes recursivly on each element of an array
+ *
+ * @param array &$var
+ * @return array
+ */
+function array_stripslashes($var)
+{
+	if (!is_array($var))
+	{
+		return stripslashes($var);
+	}
+	foreach($var as $key => $val)
+	{
+		$var[$key] = is_array($val) ? array_stripslashes($val) : stripslashes($val);
+	}
+	return $var;
+}
+
