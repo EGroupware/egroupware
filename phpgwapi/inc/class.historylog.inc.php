@@ -144,7 +144,7 @@ class historylog
 		}
 		foreach($filter as $col => $value)
 		{
-			if (substr($col,0,8) != 'history_')
+			if (!is_numeric($col) && substr($col,0,8) != 'history_')
 			{
 				$filter['history_'.$col] = $value;
 				unset($filter[$col]);
