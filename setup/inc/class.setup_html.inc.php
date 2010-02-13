@@ -169,7 +169,7 @@
 			$manual_remote_egw_url = 'http://manual.egroupware.org/egroupware';
 			$url_parts = explode('/',$_SERVER['PHP_SELF']);
 			$script = array_pop($url_parts);
-			$lang = get_var('ConfigLang',Array('POST','COOKIE'));
+			$lang = setup::get_lang();
 			$url = $manual_remote_egw_url.'/manual/index.php?referer='.urlencode($manual_remote_egw_url.'/setup/'.$script).
 				($lang ? '&lang='.urlencode($lang) : '');
 			$GLOBALS['setup_tpl']->set_var('manual','<a href="'.$url.'" target="manual" onclick="'.
