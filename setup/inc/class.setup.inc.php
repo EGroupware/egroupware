@@ -223,7 +223,6 @@ class setup
 		#phpinfo();
 		$FormLogout = get_var('FormLogout',  array('GET','POST'));
 		$ConfigLang   = self::get_lang();
-		if (!preg_match('/^['))
 		if(!$FormLogout)
 		{
 			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
