@@ -1,3 +1,82 @@
+2010/02/13 (RalfBecker)
+Reworked Jose's original aspell integration shown in Klaus' entry from 2008/10/09.
+Aspell path and language is now read directly from the configuration and an active EGroupware session is required.
+--- /tmp/fckeditor-2.6.4.1/editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php  2009-07-06 10:10:02.000000000 +0200              
++++ editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php 2010-02-13 04:18:18.000000000 +0100                                      
+@@ -3,11 +3,34 @@                                                                                                                                        
+                                                                                                                                                         
+ // The following variables values must reflect your installation needs.                                                                                 
+                                                                                                                                                         
+-$aspell_prog   = '"C:\Program Files\Aspell\bin\aspell.exe"';   // by FredCK (for Windows)                                                               
++//$aspell_prog = '"C:\Program Files\Aspell\bin\aspell.exe"';   // by FredCK (for Windows)                                                               
+ //$aspell_prog = 'aspell';                                                                             // by FredCK (for Linux)                         
+                                                                                                                                                         
+-$lang                  = 'en_US';                                                                                                                       
+-$aspell_opts   = "-a --lang=$lang --encoding=utf-8 -H --rem-sgml-check=alt";           // by FredCK                                                     
++// This is to prevent abitrary access to FCK's spellchecker.php AND to supply the configured path and lang                                              
++function deny_no_egw_session(&$account)                                                                                                                 
++{                                                                                                                                                       
++   die('Access denied, no EGroupware session!');                                                                                                        
++}                                                                                                                                                       
++$GLOBALS['egw_info'] = array(                                                                                                                           
++   'flags' => array(                                                                                                                                    
++       'currentapp' => 'home',                                                                                                                          
++       'noheader' => true,                                                                                                                              
++       'autocreate_session_callback' => 'deny_no_egw_session',                                                                                          
++   )                                                                                                                                                    
++);                                                                                                                                                      
++// will not continue, unless the header get's included and there is a valid eGW session                                                                 
++require('../../../../../../../../header.inc.php');                                                                                                      
++                                                                                                                                                        
++if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']))                                                                 
++{                                                                                                                                                       
++       $lang = $GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'];                                                              
++}                                                                                                                                                       
++else                                                                                                                                                    
++{                                                                                                                                                       
++       $lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];                                                                           
++}                                                                                                                                                       
++                                                                                                                                                        
++$aspell_opts   = '-a '.escapeshellarg('--lang='.$lang).' --encoding=utf-8 -H --rem-sgml-check=alt';            // by FredCK                             
+                                                                                                                                                         
+ $tempfiledir   = "./";                                                                                                                                  
+                                                                                                                                                         
+@@ -69,14 +92,32 @@                                                                                                                                      
+ ## for each misspelled word, get suggestions and put in the javascript suggs array                                                                      
+ function print_checker_results() {
+
+-       global $aspell_prog;
+        global $aspell_opts;
+        global $tempfiledir;
+        global $textinputs;
+        global $input_separator;
+        $aspell_err = "";
++
++       // check if admin enabled serverside (aspell based) spellchecker
++       if (!isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
++       {
++               error_handler('Spellchecker is NOT enabled in global EGroupware configuration (Admin >> Site configuration)!');
++               return;
++       }
++
++       if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
++               is_executable($GLOBALS['egw_info']['server']['aspell_path']))
++       {
++               $aspell_prog = $GLOBALS['egw_info']['server']['aspell_path'];
++       }
++       else    // little fallback that might save linux users
++       {
++               $aspell_prog = 'aspell';
++       }
++
+        # create temp file
+-       $tempfile = tempnam( $tempfiledir, 'aspell_data_' );
++       // use EGroupware's temp_dir
++       $tempfile = tempnam( $GLOBALS['egw_info']['server']['temp_dir'], 'aspell_data_' );
+
+        # open temp file, add the submitted text.
+        if( $fh = fopen( $tempfile, 'w' )) {
+
 2009/07/09 (KlausLeithoff)
 after merging the vendor branch into the current release, remove _samples Directory, and unneeded connectors
 -change to phpgwapi/js/fckeditor
