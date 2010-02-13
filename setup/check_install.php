@@ -768,7 +768,7 @@ if ($run_by_webserver)
 	));
 	$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
 	if (@$_GET['intro']) {
-		if($ConfigLang = get_var('ConfigLang',array('POST','COOKIE')))
+		if(($ConfigLang = setup::get_lang()))
 		{
 			$GLOBALS['egw_setup']->set_cookie('ConfigLang',$ConfigLang,(int) (time()+(1200*9)),'/');
 		}
