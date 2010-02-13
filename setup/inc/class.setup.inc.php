@@ -206,7 +206,7 @@ class setup
 	static function get_lang()
 	{
 		$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
-		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$',$ConfigLang))
+		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$ConfigLang))
 		{
 			return $ConfigLang;
 		}
