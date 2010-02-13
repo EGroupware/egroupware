@@ -605,9 +605,17 @@ class addressbook_so
 		}
 
 		// Hide deleted items unless type is specifically deleted
-		if(!is_array($filter)) $filter = array();
-		if($filter['tid'] !== self::DELETED_TYPE) {
-			$filter[] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+		if(!is_array($filter)) $filter = $filter ? (array) $filter : array();
+		if($filter['tid'] !== self::DELETED_TYPE)
+		{
+			if ($join && strpos($join,'RIGHT JOIN') !== false)	// used eg. to search for groups
+			{
+				$filter[] = '(contact_tid != \'' . self::DELETED_TYPE . '\' OR contact_tid IS NULL)';
+			}
+			else
+			{
+				$filter[] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+			}
 		}
 
 		$backend =& $this->get_backend(null,$filter['owner']);
