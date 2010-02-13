@@ -310,7 +310,7 @@ else
 					$remember_time,'/');	// make the cookie valid for the whole site (incl. sitemgr) and not only the eGW install-dir
 			}
 
-			if ($_POST['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2}){0,1}$/',$_POST['lang']) &&
+			if ($_POST['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$_POST['lang']) &&
 				$_POST['lang'] != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{
 				$GLOBALS['egw']->preferences->add('common','lang',$_POST['lang'],'session');
@@ -369,7 +369,7 @@ else
 				$GLOBALS['egw_info']['user']['preferences'] = $prefs->read_repository();
 			}
 		}
-		if ($_GET['lang'])
+		if ($_GET['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$_GET['lang']))
 		{
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $_GET['lang'];
 		}

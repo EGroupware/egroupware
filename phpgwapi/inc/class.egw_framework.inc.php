@@ -203,9 +203,11 @@ abstract class egw_framework
 	 */
 	protected function _get_header()
 	{
-		// get used language code
-		$lang_code = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-
+		// get used language code (with a little xss check, if someone tries to sneak something in)
+		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$GLOBALS['egw_info']['user']['preferences']['common']['lang']))
+		{
+			$lang_code = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+		}
 		//pngfix defaults to yes
 		if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])
 		{

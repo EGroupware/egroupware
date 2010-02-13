@@ -197,6 +197,21 @@ class setup
 		}
 		setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain);
 	}
+	
+	/**
+	 * Get configuration language from $_POST or $_COOKIE and validate it
+	 * 
+	 * @return string
+	 */
+	static function get_lang()
+	{
+		$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
+		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$',$ConfigLang))
+		{
+			return $ConfigLang;
+		}
+		return 'en';
+	}
 
 	/**
 	 * authenticate the setup user
@@ -207,7 +222,8 @@ class setup
 	{
 		#phpinfo();
 		$FormLogout = get_var('FormLogout',  array('GET','POST'));
-		$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
+		$ConfigLang   = self::get_lang();
+		if (!preg_match('/^['))
 		if(!$FormLogout)
 		{
 			$ConfigLogin  = get_var('ConfigLogin', array('POST'));

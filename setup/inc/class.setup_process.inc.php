@@ -179,7 +179,7 @@
 				$langs = false;
 				if ($method == 'new')
 				{
-					$langs[] = ($own_lang = get_var('ConfigLang',Array('POST','COOKIE')));
+					$langs[] = ($own_lang = setup::get_lang());
 					if ($own_lang != 'en') $langs[] = 'en';
 				}
 				$this->translation->drop_add_all_langs($langs);
