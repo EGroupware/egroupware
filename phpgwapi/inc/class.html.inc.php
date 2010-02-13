@@ -622,18 +622,6 @@ class html
 			$spell = '_spellcheck';
 			$oFCKeditor->Config['SpellChecker'] = 'SpellerPages';
 			$oFCKeditor->Config['SpellerPagesServerScript'] = 'server-scripts/spellchecker.php?enabled=1';
-			if (isset($GLOBALS['egw_info']['server']['aspell_path']))
-			{
-				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&aspell_path='.$GLOBALS['egw_info']['server']['aspell_path'];
-			}
-			if (isset($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']))
-			{
-				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&spellchecker_lang='.$GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'];
-			}
-			else
-			{
-				$oFCKeditor->Config['SpellerPagesServerScript'] .= '&spellchecker_lang='.$GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-			}
 			$oFCKeditor->Config['FirefoxSpellChecker'] = false;
 		}
 		// Now setting the user preferences
