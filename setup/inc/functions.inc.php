@@ -108,7 +108,7 @@ function lang_select($onChange=False,$ConfigLang='')
 {
 	if (!$ConfigLang)
 	{
-		$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
+		$ConfigLang = setup::get_lang();
 	}
 	$select = '<select name="ConfigLang"'.($onChange ? ' onchange="this.form.submit();"' : '').'>' . "\n";
 	$languages = get_langs();

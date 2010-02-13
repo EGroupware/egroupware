@@ -32,7 +32,7 @@ class setup_translation
 	 */
 	function __construct()
 	{
-		$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
+		$ConfigLang = setup::get_lang();
 
 		if(!$ConfigLang)
 		{
