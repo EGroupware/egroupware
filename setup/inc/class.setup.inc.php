@@ -206,7 +206,7 @@ class setup
 	static function get_lang()
 	{
 		$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
-		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$',$ConfigLang))
+		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$ConfigLang))
 		{
 			return $ConfigLang;
 		}
@@ -223,7 +223,6 @@ class setup
 		#phpinfo();
 		$FormLogout = get_var('FormLogout',  array('GET','POST'));
 		$ConfigLang   = self::get_lang();
-		if (!preg_match('/^['))
 		if(!$FormLogout)
 		{
 			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
