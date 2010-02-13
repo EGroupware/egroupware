@@ -5,24 +5,32 @@ header('Content-type: text/html; charset=utf-8');
 
 //$aspell_prog	= '"C:\Program Files\Aspell\bin\aspell.exe"';	// by FredCK (for Windows)
 //$aspell_prog	= 'aspell';										// by FredCK (for Linux)
-if ($_GET['aspell_path'])
+
+// This is to prevent abitrary access to FCK's spellchecker.php AND to supply the configured path and lang
+function deny_no_egw_session(&$account)
 {
-	$aspell_prog = $_GET['aspell_path'];
+   die('Access denied, no EGroupware session!');
+}
+$GLOBALS['egw_info'] = array(
+   'flags' => array(
+       'currentapp' => 'home',
+       'noheader' => true,
+       'autocreate_session_callback' => 'deny_no_egw_session',
+   )
+);
+// will not continue, unless the header get's included and there is a valid eGW session
+require('../../../../../../../../header.inc.php');
+
+if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']))
+{
+	$lang = $GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'];
 }
 else
 {
-	$aspell_prog = 'aspell';
+	$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 }
- 	  	 
-if ($_GET['spellchecker_lang'])
-{
-	$lang = $_GET['spellchecker_lang'];
-}
-else
-{
-	$lang			= 'en_US';
-}
-$aspell_opts	= "-a --lang=$lang --encoding=utf-8 -H --rem-sgml-check=alt";		// by FredCK
+
+$aspell_opts	= '-a '.escapeshellarg('--lang='.$lang).' --encoding=utf-8 -H --rem-sgml-check=alt';		// by FredCK
 
 $tempfiledir	= "./";
 
@@ -84,14 +92,32 @@ function error_handler( $err ) {
 ## for each misspelled word, get suggestions and put in the javascript suggs array
 function print_checker_results() {
 
-	global $aspell_prog;
 	global $aspell_opts;
 	global $tempfiledir;
 	global $textinputs;
 	global $input_separator;
 	$aspell_err = "";
+	
+	// check if admin enabled serverside (aspell based) spellchecker
+	if (!isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
+	{
+		error_handler('Spellchecker is NOT enabled in global EGroupware configuration (Admin >> Site configuration)!');
+		return;
+	}
+	
+	if (!empty($GLOBALS['egw_info']['server']['aspell_path']) && 
+		is_executable($GLOBALS['egw_info']['server']['aspell_path']))
+	{
+		$aspell_prog = $GLOBALS['egw_info']['server']['aspell_path'];
+	}
+	else	// little fallback that might save linux users
+	{
+		$aspell_prog = 'aspell';
+	}
+	
 	# create temp file
-	$tempfile = tempnam( $tempfiledir, 'aspell_data_' );
+	// use EGroupware's temp_dir
+	$tempfile = tempnam( $GLOBALS['egw_info']['server']['temp_dir'], 'aspell_data_' );
 
 	# open temp file, add the submitted text.
 	if( $fh = fopen( $tempfile, 'w' )) {
