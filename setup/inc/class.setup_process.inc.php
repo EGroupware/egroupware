@@ -206,7 +206,7 @@ class setup_process
 	{
 		$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 
-		$current_config['site_title'] = 'eGroupWare';
+		$current_config['site_title'] = 'EGroupware';
 		$current_config['hostname']  = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
 
 		// guessing the eGW url
@@ -235,6 +235,7 @@ class setup_process
 			}
 			$current_config['files_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/files';
 			$current_config['backup_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/backup';
+			$current_config['aspell_path'] = '/usr/bin/aspell';
 		}
 		else
 		{
@@ -246,8 +247,14 @@ class setup_process
 			{
 				$current_config['temp_dir'] = 'c:\\path\\to\\temp\\dir';
 			}
-			$current_config['files_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
-			$current_config['backup_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
+			$current_config['files_dir'] = 'C:\\Program Files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
+			$current_config['backup_dir'] = 'C:\\Program Files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
+			$current_config['aspell_path'] = 'C:\Program Files\Aspell\bin\aspell.exe';
+		}
+		// only set aspell path, if it's installed
+		if (!is_executable($current_config['aspell_path']))
+		{
+			unset($current_config['aspell_path']);
 		}
 		$datetime =& CreateObject('phpgwapi.egw_datetime');
 		$current_config['tz_offset'] = $datetime->getbestguess();

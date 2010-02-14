@@ -646,3 +646,4 @@ your tables will be dropped and you will lose data	setup	zh	您的数据表将�
 your temporary directory '%1' %2	setup	zh	您的暂存文件夹 '%1' %2
 {db | php(default) | php-restore}	setup	zh	{db | php(默认) | php-restore}
 {off(default) | on}	setup	zh	{off(默认) | on}
+complete path to aspell program	setup	zh	Aspell (拼写检查软件)程序的完整路径

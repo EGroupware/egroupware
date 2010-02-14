@@ -673,3 +673,4 @@ your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden
 your temporary directory '%1' %2	setup	de	Ihr temporäres Verzeichnis '%1' %2
 {db | php(default) | php-restore}	setup	de	{db | php(Vorgabe) | php-restore}
 {off(default) | on}	setup	de	{off(Vorgabe) | on}
+complete path to aspell program	setup	de	Vollständiger Pfad zum Programm ASPELL
