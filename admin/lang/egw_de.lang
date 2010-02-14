@@ -116,7 +116,6 @@ click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
 color	admin	de	Farbe
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
-complete path to aspell program	admin	de	Vollständiger Pfad zum Programm ASPELL
 config password or md5 hash from the header.inc.php	admin	de	Konfigurationspasswort oder md5 Hash von der header.inc.php Datei
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere eGW Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)

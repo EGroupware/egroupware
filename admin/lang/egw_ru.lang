@@ -108,7 +108,6 @@ check items to <b>%1</b> to %2 for %3	admin	ru	Проверить элемент
 click to select a color	admin	ru	Щелкните для выбора цвета
 color	admin	ru	Цвет
 command scheduled to run at %1	admin	ru	Команда запланирована на запуск %1
-complete path to aspell program	admin	ru	Полный путь до программы проверки орфографии(?)
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	ru	Домен куки (по-умолчанию пуст и позволяет использовать полное имя домена, для менеджера сайта (SiteMgr) например ".domain.ru" позволяет использовать один файл куки как для egw.domain.ru  так и www.domain.ru)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	ru	Путь куки (позволяет одновременно работать нескольким сессиям с различными папками, имеются проблемы с менеджером сайта (SiteMgr!)
 could not remote execute the command	admin	ru	Не могу удаленно запустить команду

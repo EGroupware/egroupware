@@ -679,3 +679,4 @@ your tables will be dropped and you will lose data	setup	en	Your tables will be 
 your temporary directory '%1' %2	setup	en	Your temporary directory '%1' %2
 {db | php(default) | php-restore}	setup	en	{db | php(default) | php-restore}
 {off(default) | on}	setup	en	{off(default) | on}
+complete path to aspell program	setup	en	Complete path to aspell program

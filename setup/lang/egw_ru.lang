@@ -665,3 +665,4 @@ your tables will be dropped and you will lose data	setup	ru	Ваши табли�
 your temporary directory '%1' %2	setup	ru	Ваша папка временных файлов '%1' %2
 {db | php(default) | php-restore}	setup	ru	{БД | php(по-умолчанию)| php-восстановление}
 {off(default) | on}	setup	ru	{выкл(по-умолчанию) | вкл}
+complete path to aspell program	setup	ru	Полный путь до программы проверки орфографии(?)

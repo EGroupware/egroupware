@@ -108,7 +108,6 @@ check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %
 click to select a color	admin	pt-br	Clique para selecionar uma cor
 color	admin	pt-br	Cor
 command scheduled to run at %1	admin	pt-br	Comando agendado para rodar às %1
-complete path to aspell program	admin	pt-br	Caminho completo para o programa aspell
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pt-br	Cookie domínio (o padrão vazio significa usar o nome completo do domínio, por exemplo: para SiteMgr ".dominio.com.br" permite usar o mesmo domínio para egw.dominio.com.br e www.dominio.com.br)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Cookie caminho (permite múltiplas sessões eGW com diferentes diretórios, mas tem problemas com SiteMgr!)
 could not remote execute the command	admin	pt-br	Não foi possível executar remotamente o comando
