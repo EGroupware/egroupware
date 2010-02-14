@@ -648,3 +648,4 @@ your tables will be dropped and you will lose data	setup	sk	Vaše tabuľky budú
 your temporary directory '%1' %2	setup	sk	Váš adresár dočasných súborov '%1' %2
 {db | php(default) | php-restore}	setup	sk	{db | php(predvolené) | php-restore}
 {off(default) | on}	setup	sk	{vypnúť(predvolené) | zapnúť}
+complete path to aspell program	setup	sk	Plná cesta ku programu aspell

@@ -215,6 +215,7 @@
 				}
 				$current_config['files_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/files';
 				$current_config['backup_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/backup';
+				$current_config['aspell_path'] = '/usr/bin/aspell';
 			} else {
 				if(@is_dir('c:\\windows\\temp')) {
 					$current_config['temp_dir'] = 'c:\\windows\\temp';
@@ -223,6 +224,12 @@
 				}
 				$current_config['files_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
 				$current_config['backup_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
+				$current_config['aspell_path'] = 'C:\\Program Files\\Aspell\\bin\\aspell.exe';
+			}
+			// only set aspell path, if it's installed
+			if (!is_executable($current_config['aspell_path']))
+			{
+				unset($current_config['aspell_path']);
 			}
 			$datetime =& CreateObject('phpgwapi.egw_datetime');
 			$current_config['tz_offset'] = $datetime->getbestguess();

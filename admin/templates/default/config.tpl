@@ -126,13 +126,6 @@
     </td>
    </tr>
 
-   <tr class="row_off">
-    <td>{lang_Complete_path_to_aspell_program}:</td>
-    <td>
-     <input name="newsettings[aspell_path]" value="{value_aspell_path}" size="40">
-    </td>
-   </tr>
-
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_security}</b></td>
    </tr>
