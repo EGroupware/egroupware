@@ -625,3 +625,11 @@ function phpgwapi_upgrade1_6_001()
 {
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.6.002';
 }
+
+/**
+ * Final 1.6.003 security and bugfix release
+ */
+function phpgwapi_upgrade1_6_002()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.6.003';
+}
