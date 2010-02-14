@@ -249,7 +249,7 @@ class setup_process
 			}
 			$current_config['files_dir'] = 'C:\\Program Files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
 			$current_config['backup_dir'] = 'C:\\Program Files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
-			$current_config['aspell_path'] = 'C:\Program Files\Aspell\bin\aspell.exe';
+			$current_config['aspell_path'] = 'C:\\Program Files\\Aspell\\bin\\aspell.exe';
 		}
 		// only set aspell path, if it's installed
 		if (!is_executable($current_config['aspell_path']))
