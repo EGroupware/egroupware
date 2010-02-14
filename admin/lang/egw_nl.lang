@@ -108,7 +108,6 @@ check items to <b>%1</b> to %2 for %3	admin	nl	Controleer items van <b>%1</b> to
 click to select a color	admin	nl	Klik om een kleur te kiezen
 color	admin	nl	Kleur
 command scheduled to run at %1	admin	nl	Command is gepland om om %1 uitgevoerd te worden
-complete path to aspell program	admin	nl	Volledige pad naar aspell programma
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	nl	Cook domein (standaard leeg wat betekent dat de volledige domeinnaam gebruikt wordt. Voorbeeld: ".domein.nl" maakt het mogelijk om hetzelfde cookie te gebruiken voor verschillende subdomeinen als egw.domein.nl en www.domein.nl.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	nl	Cookie pad (maakt het mogelijk om meerdere eGW sessies in verschillende directories te gebruiken. Dit geeft problemen met SiteMgr!
 could not remote execute the command	admin	nl	Kon het commando op afstand niet uivoeren

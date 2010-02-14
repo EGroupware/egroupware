@@ -113,7 +113,6 @@ check items to <b>%1</b> to %2 for %3	admin	zh	检查%3对%2的权限项目 <b>%
 click to select a color	admin	zh	点击选择一种颜色
 color	admin	zh	颜色
 command scheduled to run at %1	admin	zh	计划命令运行在%1
-complete path to aspell program	admin	zh	Aspell (拼写检查软件)程序的完整路径
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	zh	Cookie 域 (默认为空表示使用完整域名，对于 SiteMgr 等 ".domain.com" 允许 egw.domain.com 与 www.domain.com 使用同一个 cookie)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	zh	Cookie 路径 (允许多个 eGW 会话使用不同的目录，与 SiteMgr 会有问题！)
 could not remote execute the command	admin	zh	不能远程执行命令

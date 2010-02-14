@@ -112,7 +112,6 @@ check items to <b>%1</b> to %2 for %3	admin	sk	Skontrolovať položky po <b>%1</
 click to select a color	admin	sk	Ak chcete vybrať farbu, kliknite sem
 color	admin	sk	Farba
 command scheduled to run at %1	admin	sk	Príkaz bol zaradený na vykonanie o %1
-complete path to aspell program	admin	sk	Plná cesta ku programu aspell
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	sk	Doména cookie (predvolené prázdne znamená, že sa použije plné doménové meno, pre SiteMgr napr. ".domain.com" povoľuje použitie tej istej cookie pre egw.domain.com a www.domain.com)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	sk	Cesta Cookie (umožňuje viacero relácií eGW s rozličnými adresármi, avšak sú tu problémy so SiteMgr!)
 could not remote execute the command	admin	sk	Nepodarilo sa vzdialene spustiť tento príkaz

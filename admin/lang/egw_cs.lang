@@ -112,7 +112,6 @@ check items to <b>%1</b> to %2 for %3	admin	cs	Zkontrolovat položky k <b>%1</b>
 click to select a color	admin	cs	Klikněte pro výběr barvy
 color	admin	cs	Barva
 command scheduled to run at %1	admin	cs	Spuštění příkazu naplánováno na %1
-complete path to aspell program	admin	cs	Celá cesta k programu aspell
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	cs	Cookie doména (výchozí prázdná hodnota znamená použití celého doménového jména; ve Správci webu např. ".domena.cz" dovoluje použít stejnou cookie pro egw.domena.cz i www.domena.cz)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	cs	Cookie cesta (umožňuje několik eGW relací s různými adresáři, nefunguje korektně ve Správci webu!)
 could not remote execute the command	admin	cs	Příkaz nebylo možné vzdáleně spustit.
