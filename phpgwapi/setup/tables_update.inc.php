@@ -33,6 +33,11 @@ function phpgwapi_upgrade1_6_002()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.7.001';
 }
 
+function phpgwapi_upgrade1_6_003()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.7.001';
+}
+
 function phpgwapi_upgrade1_7_001()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_sqlfs','fs_link',array(
