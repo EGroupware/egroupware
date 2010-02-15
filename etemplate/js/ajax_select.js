@@ -26,6 +26,8 @@ var current_app = 'etemplate';
 var ajax_select_timer_id = 0;
 var ajax_select_timeout = 300;
 
+var ajax_select_event = null;
+
 // These keys will not trigger a search if the results box is currently displayed
 var no_search_keys = [
 	'9',		// Tab
@@ -212,6 +214,12 @@ function timer_change(e, value) {
 	if ( ajax_select_timer_id != 0) {
 		clearTimeout(ajax_select_timer_id);
 	}
+	if(!e) {
+		var e = cloneObject(window.event);
+	} else {
+		var e = cloneObject(e);
+	}
+	ajax_select_event = e;
 	ajax_select_timer_id = setTimeout(
 		function() {
 			change(e, value);
@@ -224,18 +232,27 @@ function change(e, value) {
 	if(!e) {
 		var e = window.event;
 	}
+	
 	if(e.target) {
 		var target = e.target;
+	} else if (ajax_select_event) {
+		var e = ajax_select_event;
+		ajax_select_event = null;
+		if(e.target) {
+			var target = e.target;
+		} else if (e.srcElement) {
+			var target = e.srcElement;
+		} 
 	} else if (e.srcElement) {
 		var target = e.srcElement;
-	}
+	} 
 	if(target) {
 		if (target.nodeType == 3) { // defeat Safari bug
 			target = target.parentNode;
 		} 
 		var id = target.id;
 		var value = target.value;
-	} else if (e) {
+	} else if (typeof(e) == 'string' ) {
 		var id = e;
 		if(value) {
 			var value = value;
@@ -243,6 +260,9 @@ function change(e, value) {
 			var value = e.value;
 		}
 		var set_id = id.substr(0, id.lastIndexOf('['));
+	} else {
+		alert('Error in events');
+		return;
 	}
 
 	var base_id = id.substr(0, id.lastIndexOf('['));
@@ -254,8 +274,14 @@ function change(e, value) {
 		 * We check for Tab, Up and Down
 		 */
 		var interested = false;
+		var keycode = '';
 		for(var i = 0; i < no_search_keys.length; i++) {
-			if(e.keyCode == no_search_keys[i]) {
+			if(e.which) {
+				keycode = e.which;
+			} else if(e && e.keyCode) {
+				keycode = e.keyCode;
+			}
+			if(keycode == no_search_keys[i]) {
 				interested = true;
 				break;
 			}
@@ -284,6 +310,18 @@ function change(e, value) {
 	xajax_doXMLHTTP(current_app + ".ajax_select_widget.ajax_search.etemplate", id, value, set_id, query, document.getElementById('etemplate_exec_id').value);
 }
 
+
+/**
+*  Deep copy an object
+*  Used because IE thinks its a good idea to use a global var for events
+*/
+function cloneObject(obj) {
+	var clone = {};
+	for(var i in obj) {
+		clone[i] = obj[i];
+	}
+	return clone;
+}
 
 /* Remove options from a results box
 *  @param id - The id of the select
