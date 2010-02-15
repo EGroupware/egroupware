@@ -1679,7 +1679,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * @param array $props array or array with values for keys 'name', 'ns', 'val' (null to delete the prop)
 	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
 	 */
-	static function proppatch($path,array &$props)
+	static function proppatch($path,array $props)
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."(".array2string($path).','.array2string($props));
 		if (!is_numeric($path))
