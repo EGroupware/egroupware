@@ -548,12 +548,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url_from,$url_to)");
 
 		$path_from = parse_url($url_from,PHP_URL_PATH);
+		$from_dir = dirname($path_from);
 		$path_to = parse_url($url_to,PHP_URL_PATH);
 		$to_dir = dirname($path_to);
 		$operation = self::url2operation($url_from);
 
 		// we have to use array($class,'url_stat'), as $class.'::url_stat' requires PHP 5.2.3 and we currently only require 5.2+
-		if (!($from_stat = call_user_func(array($class,'url_stat'),$path_from,0)) || !egw_vfs::check_access(dirname($path_from),egw_vfs::WRITABLE))
+		if (!($from_stat = call_user_func(array($class,'url_stat'),$path_from,0)) || 
+			!egw_vfs::check_access($from_dir,egw_vfs::WRITABLE,$from_dir_stat = call_user_func(array($class,'url_stat'),$from_dir,0)))
 		{
 			self::_remove_password($url_from);
 			self::_remove_password($url_to);
@@ -588,11 +590,12 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		unset(self::$stat_cache[$path_from]);
 		unset(self::$stat_cache[$path_to]);
 
-		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_id=:fs_id');
+		$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_dir=:fs_dir,fs_name=:fs_name WHERE fs_dir=:old_dir AND fs_name=:old_name');
 		$ok = $stmt->execute(array(
-			'fs_dir'  => $to_dir_stat['ino'],
-			'fs_name' => egw_vfs::basename($path_to),
-			'fs_id'   => $from_stat['ino'],
+			'fs_dir'   => $to_dir_stat['ino'],
+			'fs_name'  => egw_vfs::basename($path_to),
+			'old_dir'  => $from_dir_stat['ino'],
+			'old_name' => $from_stat['name'],
 		));
 		unset($stmt);
 
@@ -614,7 +617,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	/**
 	 * due to problems with recursive directory creation, we have our own here
 	 */
-	function mkdir_recursive($pathname, $mode, $depth=0)
+	private static function mkdir_recursive($pathname, $mode, $depth=0)
 	{
 		$maxdepth=10;
 		$depth2propagate = (int)$depth + 1;
