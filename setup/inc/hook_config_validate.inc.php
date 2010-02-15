@@ -43,7 +43,7 @@ function mail_server($settings)
 	{
 		$GLOBALS['config_error'] = lang('Missing or uncomplete mailserver configuration');
 	}
-	if (@file_exists('../emailadmin/inc/class.emailadmin_bo.inc.php') && $GLOBALS['egw_setup']->table_exist(array('egw_emailadmin')) || true)
+	if (@file_exists('../emailadmin/inc/class.emailadmin_bo.inc.php') && $GLOBALS['egw_setup']->table_exist(array('egw_emailadmin')))
 	{
 		$emailadmin = new emailadmin_bo(-1,false);	// false=no session stuff
 		if (is_object($emailadmin))
