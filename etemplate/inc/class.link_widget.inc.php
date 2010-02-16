@@ -371,8 +371,12 @@ class link_widget
 				$titles = array();
 				foreach(explode(',',$id) as $id)
 				{
-					if ($id && ($title = egw_link::title($app,$id)))
+					if ($id)
 					{
+						if (!($title = egw_link::title($app,$id)))
+						{
+							$title = $app.': #'.$id;
+						}
 						$titles[$id] = $title;
 					}
 				}
