@@ -146,8 +146,7 @@ class addressbook_bo extends addressbook_so
 	function __construct($contact_app='addressbook')
 	{
 		parent::__construct($contact_app);
-
-		$this->now_su = new egw_time('now');
+		$this->now_su = egw_time::to('now','ts');
 
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
 		// get the default addressbook from the users prefs
