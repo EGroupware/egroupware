@@ -1180,7 +1180,7 @@ class Horde_iCalendar {
 		            case 'QUOTED-PRINTABLE':
 		            	if (!$this->isOldFormat())
 		            	{
-		            		$enconding = false;
+		            		$encoding = false;
 		            		break;
 		            	}
 			            $params_str .= ';ENCODING=' . $params['ENCODING'];
