@@ -214,16 +214,35 @@
 				),
 			); 
 			
-			if ($_restoreSesssion &&  !(is_array($this->sessionData) && (count($this->sessionData)>0))  ) $this->restoreSessionData();
-			#_debug_array($this->sessionData);	
+			if ($_restoreSesssion &&  !(is_array($this->sessionData) && (count($this->sessionData)>0))  )
+			{
+				$this->restoreSessionData();
+			}
+			if ($_restoreSesssion===false && (is_array($this->sessionData) && (count($this->sessionData)>0))  )
+			{
+				// make sure session data will be created new
+				$this->sessionData = array();
+				self::saveSessionData();
+			}
+			#_debug_array($this->sessionData);
 			if($_profileID >= 0)
 			{
 				$this->profileID	= $_profileID;
-			
+
 				$this->profileData	= $this->getProfile($_profileID);
-			
-				$this->imapClass	=& CreateObject('emailadmin.'.$this->IMAPServerType[$this->profileData['imapType']]['classname']);
-				$this->smtpClass	=& CreateObject('emailadmin.'.$this->SMTPServerType[$this->profileData['smtpType']]['classname']);
+
+				// try autoloading class, if that fails include it from emailadmin
+				if (!class_exists($class = $this->IMAPServerType[$this->profileData['imapType']]['classname']))
+				{
+					include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php');
+				}
+				$this->imapClass	= new $class;
+
+				if (!class_exists($class = $this->SMTPServerType[$this->profileData['smtpType']]['classname']))
+				{
+					include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php');
+				}
+				$this->smtpClass	= new $class;
 			}
 		}
 		
@@ -578,10 +597,24 @@
 
 		function restoreSessionData()
 		{
+			$GLOBALS['egw_info']['flags']['autoload'] = array(__CLASS__,'autoload');
+
 			//echo function_backtrace()."<br>";
 			//unserializing the sessiondata, since they are serialized for objects sake
 			$this->sessionData = (array) unserialize($GLOBALS['egw']->session->appsession('session_data','emailadmin'));
-			#$this->userSessionData = $GLOBALS['egw']->session->appsession('user_session_data','emailadmin');
+		}
+
+		/**
+		* Autoload classes from emailadmin, 'til they get autoloading conform names
+		*
+		* @param string $class
+		*/
+		static function autoload($class)
+		{
+			if (file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php'))
+			{
+				include_once($file);
+			}
 		}
 		
 		function saveSMTPForwarding($_accountID, $_forwardingAddress, $_keepLocalCopy)

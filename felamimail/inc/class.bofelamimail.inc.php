@@ -62,17 +62,50 @@
 		 */
 		var $autoFolders = array('Drafts', 'Junk', 'Sent', 'Trash', 'Templates');
 
-		function bofelamimail($_displayCharset='iso-8859-1')
+		/**
+		* Autoload classes from emailadmin, 'til they get autoloading conform names
+		*
+		* @param string $class
+		*/
+		static function autoload($class)
 		{
-			$this->restoreSessionData();
+			if (file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$class.'.inc.php'))
+			{
+				include_once($file);
+				//error_log(__METHOD__."($class) included $file");
+			}
+			elseif (file_exists($file=EGW_INCLUDE_ROOT.'/felamimail/inc/class.'.$class.'.inc.php'))
+			{
+				include_once($file);
+			}
+			else
+			{
+				#error_log(__METHOD__."($class) failed!");
+			}
+		}
+
+		function bofelamimail($_displayCharset='iso-8859-1',$_restoreSession=true)
+		{
+			if ($_restoreSession) 
+			{
+				//error_log(__METHOD__." Session restore ".function_backtrace());
+				$this->restoreSessionData();
+			}
+			else
+			{
+				$this->restoreSessionData();
+				$lv_mailbox = $this->sessionData['mailbox'];
+				$this->sessionData = array();
+				$this->forcePrefReload();
+			}
 
 			// FIXME: this->foldername seems to be unused
 			//$this->foldername	= $this->sessionData['mailbox'];
 			$this->accountid	= $GLOBALS['egw_info']['user']['account_id'];
 
-			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
-			$this->sofelamimail	=& CreateObject('felamimail.sofelamimail');
-			self::$botranslation	=& CreateObject('phpgwapi.translation');
+			$this->bopreferences    = CreateObject('felamimail.bopreferences',$_restoreSession);
+			$this->sofelamimail	= CreateObject('felamimail.sofelamimail');
+			self::$botranslation	= CreateObject('phpgwapi.translation');
 
 			$this->mailPreferences	= $this->bopreferences->getPreferences();
 			if ($this->mailPreferences) {
@@ -95,7 +128,7 @@
 				// no filter active
 				$this->sessionData['activeFilter']	= "-1";
 				// default mailbox INBOX
-				$this->sessionData['mailbox']		= "INBOX";
+				$this->sessionData['mailbox']		= (($lv_mailbox && self::folderExists($lv_mailbox,true)) ? $lv_mailbox : "INBOX");
 				// default start message
 				$this->sessionData['startMessage']	= 1;
 				// default mailbox for preferences pages
@@ -149,6 +182,13 @@
 				$this->mbAvailable = TRUE;
 			}
 
+		}
+
+		function forcePrefReload()
+		{
+			// unset the fm_preferences session object, to force the reload/rebuild
+			$GLOBALS['egw']->session->appsession('fm_preferences','felamimail',serialize(array()));
+			$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(array()));
 		}
 
 		function setACL($_folderName, $_accountName, $_acl)
@@ -2463,6 +2503,8 @@
 
 		function restoreSessionData()
 		{
+			$GLOBALS['egw_info']['flags']['autoload'] = array(__CLASS__,'autoload');
+
 			$this->sessionData = $GLOBALS['egw']->session->appsession('session_data','felamimail');
 		}
 

@@ -45,10 +45,10 @@
 			$this->timeCounter = microtime(true);
 
 			$this->displayCharset	= $GLOBALS['egw']->translation->charset();
-			$this->bofelamimail     =& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$this->bofelamimail     = CreateObject('felamimail.bofelamimail',$this->displayCharset,false);
 
-			$this->bofilter		=& CreateObject('felamimail.bofilter');
-			$this->bopreferences	=& CreateObject('felamimail.bopreferences');
+			$this->bofilter		= CreateObject('felamimail.bofilter');
+			$this->bopreferences    =& $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
 			$this->preferences	= $this->bopreferences->getPreferences();
 			$this->botranslation	=& CreateObject('phpgwapi.translation');
 
