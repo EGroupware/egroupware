@@ -299,15 +299,21 @@ class calendar_ical extends calendar_boupdate
 					$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
 					// DTSTART must be in local time!
 					$standard = $horde_vtimezone->findComponent('STANDARD');
-					$dtstart = $standard->getAttribute('DTSTART');
-					$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-					$dtstart->setTimezone(self::$tz_cache[$tzid]);
-					$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+					if (is_a($standard, 'Horde_iCalendar'))
+					{
+						$dtstart = $standard->getAttribute('DTSTART');
+						$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+						$dtstart->setTimezone(self::$tz_cache[$tzid]);
+						$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+					}
 					$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
-					$dtstart = $daylight->getAttribute('DTSTART');
-					$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-					$dtstart->setTimezone(self::$tz_cache[$tzid]);
-					$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+					if (is_a($daylight, 'Horde_iCalendar'))
+					{
+						$dtstart = $daylight->getAttribute('DTSTART');
+						$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+						$dtstart->setTimezone(self::$tz_cache[$tzid]);
+						$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+					}
 					$vcal->addComponent($horde_vtimezone);
 					$vtimezones_added[] = $tzid;
 				}
@@ -2153,11 +2159,16 @@ class calendar_ical extends calendar_boupdate
 							{
 								$attributes['params']['ROLE'] = 'CHAIR';
 							}
-							// add quantity and role
-							$event['participants'][$uid] =
-								calendar_so::combine_status($status,
-									$attributes['params']['X-EGROUPWARE-QUANTITY'],
-									$attributes['params']['ROLE']);
+							if (!isset($event['participants'][$uid]) ||
+								$event['participants'][$uid][0] != 'A')
+							{
+								// for multiple entries the ACCEPT wins
+								// add quantity and role
+								$event['participants'][$uid] =
+									calendar_so::combine_status($status,
+										$attributes['params']['X-EGROUPWARE-QUANTITY'],
+										$attributes['params']['ROLE']);
+							}
 							break;
 
 						case 'ORGANIZER':
