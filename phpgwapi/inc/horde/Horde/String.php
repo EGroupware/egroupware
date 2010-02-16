@@ -6,9 +6,9 @@ $GLOBALS['_HORDE_STRING_CHARSET'] = 'iso-8859-1';
  * The String:: class provides static methods for charset and locale safe
  * string manipulation.
  *
- * $Horde: framework/Util/String.php,v 1.43.6.31 2008/10/23 21:28:38 jan Exp $
+ * $Horde: framework/Util/String.php,v 1.43.6.38 2009-09-15 16:36:14 jan Exp $
  *
- * Copyright 2003-2008 The Horde Project (http://www.horde.org/)
+ * Copyright 2003-2009 The Horde Project (http://www.horde.org/)
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
@@ -86,6 +86,9 @@ class String {
         }
 
         /* If the from and to character sets are identical, return now. */
+        if ($from == $to) {
+            return $input;
+        }
         $from = String::lower($from);
         $to = String::lower($to);
         if ($from == $to) {
@@ -94,6 +97,7 @@ class String {
 
         if (is_array($input)) {
             $tmp = array();
+            reset($input);
             while (list($key, $val) = each($input)) {
                 $tmp[String::_convertCharset($key, $from, $to)] = String::convertCharset($val, $from, $to);
             }
@@ -317,20 +321,40 @@ class String {
         if (is_null($length)) {
             $length = String::length($string, $charset) - $start;
         }
+
         if ($length == 0) {
             return '';
         }
+
+		/* Try mbstring. */
         if (String::extensionExists('mbstring')) {
+	        if (is_null($charset)) {
+		        $charset = $GLOBALS['_HORDE_STRING_CHARSET'];
+	        }
+	        $old_error = error_reporting(0);
+	        $ret = mb_substr($string, $start, $length, String::_mbstringCharset($charset));
+	        error_reporting($old_error);
+	        /* mb_substr() returns empty string on failure. */
+	        if (strlen($ret)) {
+		        return $ret;
+	        }
+        }
+
+        /* Try iconv. */
+        if (function_exists('iconv_substr')) {
             if (is_null($charset)) {
                 $charset = $GLOBALS['_HORDE_STRING_CHARSET'];
             }
+
             $old_error = error_reporting(0);
-            $ret = mb_substr($string, $start, $length, String::_mbstringCharset($charset));
+            $ret = iconv_substr($string, $start, $length, $charset);
             error_reporting($old_error);
-            if (!empty($ret)) {
+            /* iconv_substr() returns false on failure. */
+            if ($ret !== false) {
                 return $ret;
             }
         }
+
         return substr($string, $start, $length);
     }
 
@@ -349,9 +373,6 @@ class String {
             $charset = $GLOBALS['_HORDE_STRING_CHARSET'];
         }
         $charset = String::lower($charset);
-        if ($charset == 'utf-8' || $charset == 'utf8') {
-            return strlen(utf8_decode($string));
-        }
         if (String::extensionExists('mbstring')) {
             $old_error = error_reporting(0);
             $ret = mb_strlen($string, String::_mbstringCharset($charset));
@@ -359,6 +380,9 @@ class String {
             if (!empty($ret)) {
                 return $ret;
             }
+        }
+        if ($charset == 'utf-8' || $charset == 'utf8') {
+            return strlen(utf8_decode($string));
         }
         return strlen($string);
     }
@@ -482,9 +506,9 @@ class String {
             $line = String::substr($string, 0, $width, 'utf-8');
             $string = String::substr($string, String::length($line, 'utf-8'), null, 'utf-8');
             // Make sure didn't cut a word, unless we want hard breaks anyway.
-            if (!$cut && preg_match('/^(.+?)(\s|\r?\n)/u', $string, $match)) {
+            if (!$cut && preg_match('/^(.+?)((\s|\r?\n).*)/us', $string, $match)) {
                 $line .= $match[1];
-                $string = String::substr($string, String::length($match[1], 'utf-8'), null, 'utf-8');
+                $string = $match[2];
             }
             // Wrap at existing line breaks.
             if (preg_match('/^(.*?)(\r?\n)(.*)$/u', $line, $match)) {
@@ -513,8 +537,7 @@ class String {
             }
             // Hard wrap if necessary.
             if ($cut) {
-                $wrapped .= String::substr($line, 0, $width, 'utf-8') . $break;
-                $string = String::substr($line, $width, null, 'utf-8') . $string;
+                $wrapped .= $line . $break;
                 continue;
             }
             $wrapped .= $line;
