@@ -150,7 +150,8 @@
 		function async_vacation($_vacation)
 		{
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.'('.print_r($_vacation,true).')');
-			$bopreferences    =& CreateObject('felamimail.bopreferences');
+			$_restoreSession = false; // as in async, each call may be for a different user
+			$bopreferences    = CreateObject('felamimail.bopreferences',$_restoreSession);
 			$mailPreferences  = $bopreferences->getPreferences();
 			$icServer = $mailPreferences->getIncomingServer(0);
 			
