@@ -150,11 +150,15 @@
 		function async_vacation($_vacation)
 		{
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.'('.print_r($_vacation,true).')');
+			// unset the fm_preferences session object, to force the reload/rebuild
+			$GLOBALS['egw']->session->appsession('fm_preferences','felamimail',serialize(array()));
+			$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(array()));
+
 			$_restoreSession = false; // as in async, each call may be for a different user
 			$bopreferences    = CreateObject('felamimail.bopreferences',$_restoreSession);
 			$mailPreferences  = $bopreferences->getPreferences();
 			$icServer = $mailPreferences->getIncomingServer(0);
-			
+			//error_log(__METHOD__.$icServer->loginName);	
 			if ($this->_connect($icServer,$icServer->loginName) === true) {			
 				$this->setVacation($_vacation['scriptName'],$_vacation);
 				// we need to logout, so further vacation's get processed
