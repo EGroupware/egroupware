@@ -166,7 +166,8 @@ class so_sql
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
-	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects
+	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps, 
+	 * 	'object' use egw_time objects or 'string' use DB timestamp (Y-m-d H:i:s) string
 	 *
 	 * @return so_sql
 	 */
@@ -197,8 +198,22 @@ class so_sql
 			echo "<p>so_sql('$app','$table')</p>\n";
 			_debug_array($this);
 		}
-		// set timestampt type and current time
-		switch(($this->timestamp_type = $timestamp_type))
+		$this->set_times($timestamp_type);
+	}
+	
+	/**
+	 * Set class vars timestamp_type, now and tz_offset_s
+	 * 
+	 * @param string|boolean $timestamp_type=false default false do NOT set time_stamptype,
+	 * 	null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects,
+	 *  'string' use DB timestamp (Y-m-d H:i:s) string
+	 */
+	public function set_times($timestamp_type=false)
+	{
+		if ($timestamp_type !== false) $this->timestamp_type = $timestamp_type;
+
+		// set current time
+		switch($this->timestamp_type)
 		{
 			case 'object':
 				$this->now = new egw_time('now');
@@ -320,6 +335,10 @@ class so_sql
 				$this->data[$col] = $new[$col];
 			}
 		}
+		if (isset($new[self::USER_TIMEZONE_READ]))
+		{
+			$this->data[self::USER_TIMEZONE_READ] = $new[self::USER_TIMEZONE_READ];
+		}
 		if ((int) $this->debug >= 4) _debug_array($this->data);
 	}
 
@@ -419,6 +438,11 @@ class so_sql
 
 		return $this->data;
 	}
+	
+	/**
+	 * Name of automatically set user timezone field from read
+	 */
+	const USER_TIMEZONE_READ = 'user_timezone_read';
 
 	/**
 	 * reads row matched by key and puts all cols in the data array
@@ -514,6 +538,9 @@ class so_sql
 			}
 			$this->db2data();
 
+			// store user timezone used for reading
+			$this->data[self::USER_TIMEZONE_READ] = egw_time::$user_timezone->getName();
+
 			if ((int) $this->debug >= 4)
 			{
 				echo "data =\n"; _debug_array($this->data);
@@ -527,7 +554,7 @@ class so_sql
 		if ((int) $this->debug >= 4) echo "nothing found !!!</p>\n";
 
 		$this->db2data();
-
+		
 		return False;
 	}
 
@@ -541,7 +568,20 @@ class so_sql
 	function save($keys=null,$extra_where=null)
 	{
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
-
+		
+		// check if data contains user timezone during read AND user changed timezone since then
+		// --> load old timezone for the rest of this request
+		// this only a grude hack, better handle this situation in app code:
+		// history logging eg. depends on old data read before calling save, which is then in new timezone!
+		// anyway it's better fixing it here then not fixing it at all ;-)
+		if (isset($this->data[self::USER_TIMEZONE_READ]) && $this->data[self::USER_TIMEZONE_READ] != egw_time::$user_timezone->getName())
+		{
+			//echo "<p>".__METHOD__."() User change TZ since read! tz-read=".$this->data[self::USER_TIMEZONE_READ].' != current-tz='.egw_time::$user_timezone->getName()." --> fixing</p>\n";
+			error_log(__METHOD__."() User changed TZ since read! tz-read=".$this->data[self::USER_TIMEZONE_READ].' != current-tz='.egw_time::$user_timezone->getName()." --> fixing</p>");
+			$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $this->data[self::USER_TIMEZONE_READ];
+			egw_time::setUserPrefs($this->data[self::USER_TIMEZONE_READ]);
+			$this->set_times();
+		}
 		$this->data2db();
 
 		if ((int) $this->debug >= 4) { echo "so_sql::save(".print_r($keys,true).") autoinc_id='$this->autoinc_id', data="; _debug_array($this->data); }
