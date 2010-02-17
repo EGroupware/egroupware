@@ -41,6 +41,7 @@ class calendar_ical extends calendar_boupdate
 		'A' => 'ACCEPTED',
 		'R' => 'DECLINED',
 		'T' => 'TENTATIVE',
+		'D' => 'DELEGATED'
 	);
 	/**
 	 * @var array conversation of the participant status ical => egw
@@ -51,6 +52,7 @@ class calendar_ical extends calendar_boupdate
 		'ACCEPTED'     => 'A',
 		'DECLINED'     => 'R',
 		'TENTATIVE'    => 'T',
+		'DELEGATED'    => 'D',
 	);
 
 	/**
@@ -227,7 +229,7 @@ class calendar_ical extends calendar_boupdate
 					if ($this->log)
 					{
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							"() User does not have the permission to read event $_id.\n",
+							'() User does not have the permission to read event ' . $event['id']. "\n",
 							3,$this->logfile);
 					}
 					return -1; // Permission denied
@@ -238,8 +240,8 @@ class calendar_ical extends calendar_boupdate
 					if ($this->log)
 					{
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							"() Event $_id not found.\n",
-							3,$this->logfile);
+							"() Event $event not found.\n",
+							3, $this->logfile);
 					}
 				}
 				continue;
@@ -342,15 +344,21 @@ class calendar_ical extends calendar_boupdate
 					$horde_vtimezone->parsevCalendar($vtimezone,'VTIMEZONE');
 					// DTSTART must be in local time!
 					$standard = $horde_vtimezone->findComponent('STANDARD');
-					$dtstart = $standard->getAttribute('DTSTART');
-					$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-					$dtstart->setTimezone(self::$tz_cache[$tzid]);
-					$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+					if (is_a($standard, 'Horde_iCalendar'))
+					{
+						$dtstart = $standard->getAttribute('DTSTART');
+						$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+						$dtstart->setTimezone(self::$tz_cache[$tzid]);
+						$standard->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+					}
 					$daylight = $horde_vtimezone->findComponent('DAYLIGHT');
-					$dtstart = $daylight->getAttribute('DTSTART');
-					$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
-					$dtstart->setTimezone(self::$tz_cache[$tzid]);
-					$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+					if (is_a($daylight, 'Horde_iCalendar'))
+					{
+						$dtstart = $daylight->getAttribute('DTSTART');
+						$dtstart = new egw_time($dtstart, egw_time::$server_timezone);
+						$dtstart->setTimezone(self::$tz_cache[$tzid]);
+						$daylight->setAttribute('DTSTART', $dtstart->format('Ymd\THis'), array(), false);
+					}
 					$vcal->addComponent($horde_vtimezone);
 					$vtimezones_added[] = $tzid;
 				}
@@ -396,6 +404,7 @@ class calendar_ical extends calendar_boupdate
 					sort($exceptions);
 				}
 				$event['recur_exception'] = $exceptions;
+				/*
 				// Adjust the event start -- must not be an exception
 				$length = $event['end'] - $event['start'];
 				$rriter = calendar_rrule::event2rrule($event, false, $tzid);
@@ -415,13 +424,21 @@ class calendar_ical extends calendar_boupdate
 				{
 					// the series dissolved completely into exceptions
 					continue;
-				}
+				}*/
 			}
 
 			foreach ($egwSupportedFields as $icalFieldName => $egwFieldName)
 			{
-				if (!isset($this->supportedFields[$egwFieldName])) continue;
-
+				if (!isset($this->supportedFields[$egwFieldName]))
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							'(' . $event['id'] . ") [$icalFieldName] not supported\n",
+							3,$this->logfile);
+					}
+					continue;
+				}
 				$values[$icalFieldName] = array();
 				switch ($icalFieldName)
 				{
@@ -928,9 +945,28 @@ class calendar_ical extends calendar_boupdate
 	{
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
-		if (!($events = $this->icaltoegw($_vcalData,$cal_id,$etag,$recur_date)))
+		if (!($events = $this->icaltoegw($_vcalData)))
 		{
 			return false;
+		}
+
+		if ($cal_id > 0)
+		{
+			if (count($events) == 1)
+			{
+				$events[0]['id'] = $cal_id;
+				if (!is_null($etag)) $events[0]['etag'] = (int) $etag;
+				if ($recur_date) $events[0]['recurrence'] = $recur_date;
+			}
+			elseif (($foundEvent = $this->find_event(array('id' => $cal_id), 'exact')) &&
+					($eventId = array_shift($foundEvent)) &&
+					($egwEvent = $this->read($eventId)))
+			{
+				foreach ($events as $k => $event)
+				{
+					if (!isset($event['uid'])) $events[$k]['uid'] = $egwEvent['uid'];
+				}
+			}
 		}
 
 		// check if we are importing an event series with exceptions in CalDAV
@@ -947,13 +983,18 @@ class calendar_ical extends calendar_boupdate
 		foreach ($events as $event)
 		{
 			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
-
+			if (is_array($event['category']))
+			{
+				$event['category'] = $this->find_or_add_categories($event['category'],
+					isset($event['id']) ? $event['id'] : -1);
+			}
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
 					array2string($event)."\n",3,$this->logfile);
 			}
 
+			/*
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				// Adjust the event start -- no exceptions before and at the start
@@ -987,7 +1028,7 @@ class calendar_ical extends calendar_boupdate
 				}
 				$event['recur_exception'] = $exceptions;
 			}
-
+			*/
 			$updated_id = false;
 			$event_info = $this->get_event_info($event);
 
@@ -1066,11 +1107,11 @@ class calendar_ical extends calendar_boupdate
 										error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 											"() Restore status for $uid\n",3,$this->logfile);
 									}
-									$event['participants']['uid'] = $event_info['stored_event']['participants'][$uid];
+									$event['participants'][$uid] = $event_info['stored_event']['participants'][$uid];
 								}
 								else
 								{
-									$event['participants']['uid'] = calendar_so::combine_status('U');
+									$event['participants'][$uid] = calendar_so::combine_status('U');
 								}
 							}
 						}
@@ -1271,7 +1312,7 @@ class calendar_ical extends calendar_boupdate
 						if (is_array($days))
 						{
 							$recur_exceptions = array();
-
+							/*
 							if (!isset($days[$event_info['stored_event']['start']]) &&
 								$event_info['stored_event']['start'] < $event['start'])
 							{
@@ -1318,7 +1359,7 @@ class calendar_ical extends calendar_boupdate
 
 								$event['start'] = $startdate;
 								$event['end'] = $startdate + $length;
-							}
+							} */
 
 							foreach ($event['recur_exception'] as $recur_exception)
 							{
@@ -1363,7 +1404,7 @@ class calendar_ical extends calendar_boupdate
 							$event_info['master_event']['recur_exception'] =
 								array_unique(array_merge($event_info['master_event']['recur_exception'],
 									array($event['recurrence'])));
-
+							/*
 							// Adjust the event start -- must not be an exception
 							$length = $event_info['master_event']['end'] - $event_info['master_event']['start'];
 							$rriter = calendar_rrule::event2rrule($event_info['master_event'], false);
@@ -1376,6 +1417,21 @@ class calendar_ical extends calendar_boupdate
 									// remove leading exceptions
 									if ($day < $newstart)
 									{
+										if (($foundEvents = $this->find_event(
+											array('uid' => $event_info['master_event']['uid'],
+												'recurrence' => $day), 'exact')) &&
+												($eventId = array_shift($foundEvents)) &&
+												($exception = read($eventId, 0, 'server')))
+										{
+											// Unlink this exception
+											unset($exception['uid']);
+											$this->update($exception, true);
+										}
+										if ($event['recurrence'] == $day)
+										{
+											// Unlink this exception
+											unset($event['uid']);
+										}
 										unset($event_info['master_event']['recur_exception'][$key]);
 									}
 								}
@@ -1384,14 +1440,14 @@ class calendar_ical extends calendar_boupdate
 							{
 								$event_info['master_event']['start'] = $newstart;
 								$event_info['master_event']['end'] = $newstart + $length;
-								$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
-								$this->server2usertime($event_to_store);
-								$this->update($event_to_store, true);
-								unset($event_to_store);
-							}
+							}*/
 							$event['reference'] = $event_info['master_event']['id'];
 							$event['category'] = $event_info['master_event']['category'];
 							$event['owner'] = $event_info['master_event']['owner'];
+							$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
+							$this->server2usertime($event_to_store);
+							$this->update($event_to_store, true);
+							unset($event_to_store);
 						}
 
 						$event_to_store = $event; // prevent $event from being changed by update method
@@ -1864,7 +1920,7 @@ class calendar_ical extends calendar_boupdate
 		}
 	}
 
-	function icaltoegw($_vcalData, $cal_id=-1, $etag=null, $recur_date=0)
+	function icaltoegw($_vcalData)
 	{
 		if ($this->log)
 		{
@@ -1906,7 +1962,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($component, 'Horde_iCalendar_vevent'))
 			{
-				if (($event = $this->vevent2egw($component, $version, $this->supportedFields, $cal_id)))
+				if (($event = $this->vevent2egw($component, $version, $this->supportedFields)))
 				{
 					//common adjustments
 					if ($this->productManufacturer == '' && $this->productName == ''
@@ -1943,11 +1999,6 @@ class calendar_ical extends calendar_boupdate
 
 		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 
-		// if cal_id, etag or recur_date is given, use/set it for 1. event
-		if ($cal_id > 0) $events[0]['id'] = $cal_id;
-		if (!is_null($etag)) $events[0]['etag'] = (int) $etag;
-		if ($recur_date) $events[0]['recurrence'] = $recur_date;
-
 		return $events;
 	}
 
@@ -1957,11 +2008,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $component			VEVENT
 	 * @param string $version			vCal version (1.0/2.0)
 	 * @param array $supportedFields	supported fields of the device
-	 * @param int $cal_id				id of existing event in the content (only used to merge categories)
 	 *
 	 * @return array|boolean			event on success, false on failure
 	 */
-	function vevent2egw(&$component, $version, $supportedFields, $cal_id=-1)
+	function vevent2egw(&$component, $version, $supportedFields)
 	{
 		if (!is_a($component, 'Horde_iCalendar_vevent')) return false;
 
@@ -2353,7 +2403,7 @@ class calendar_ical extends calendar_boupdate
 				case 'CATEGORIES':
 					if ($attributes['value'])
 					{
-						$vcardData['category'] = $this->find_or_add_categories(explode(',',$attributes['value']), $cal_id);
+						$vcardData['category'] = explode(',', $attributes['value']);
 					}
 					else
 					{
@@ -2369,6 +2419,7 @@ class calendar_ical extends calendar_boupdate
 				    if (isset($attributes['params']['STATUS']))
 					{
 						$status = $this->status_ical2egw[strtoupper($attributes['params']['STATUS'])];
+						if (empty($status)) $status = 'X';
 					}
 					else
 					{
@@ -2599,8 +2650,6 @@ class calendar_ical extends calendar_boupdate
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
 
-		if ($cal_id > 0) $event['id'] = $cal_id;
-
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
@@ -2613,7 +2662,15 @@ class calendar_ical extends calendar_boupdate
 
 	function search($_vcalData, $contentID=null, $relax=false)
 	{
-		if (($events = $this->icaltoegw($_vcalData,!is_null($contentID) ? $contentID : -1)))
+		if (is_null($contentID))
+		{
+			$eventId = -1;
+		}
+		else
+		{
+			$eventId = $contentID;
+		}
+		if (($events = $this->icaltoegw($_vcalData)))
 		{
 			// this function only supports searching a single event
 			if (count($events) == 1)
@@ -2621,6 +2678,7 @@ class calendar_ical extends calendar_boupdate
 				$filter = $relax ? 'relax' : 'check';
 				$event = array_shift($events);
 				if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
+				$event['category'] = $this->find_or_add_categories($event['category'], $eventId);
 				if ($contentID) $event['id'] = $contentID;
 				return $this->find_event($event, $filter);
 			}

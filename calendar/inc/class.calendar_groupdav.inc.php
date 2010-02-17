@@ -110,10 +110,12 @@ class calendar_groupdav extends groupdav_handler
 			'daywise' => false,
 			'date_format' => 'server',
 		);
+		/*
 		if ($this->client_shared_uid_exceptions)
 		{
 			$cal_filters['query']['cal_reference'] = 0;
 		}
+		*/
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$cal_filters,$id))
 		{
@@ -137,8 +139,17 @@ class calendar_groupdav extends groupdav_handler
 		if ($events)
 		{
 			// get all max user modified times at once
-			foreach($events as &$event)
+			foreach($events as $k => &$event)
 			{
+				if ($this->client_shared_uid_exceptions &&
+						$event['reference'] &&
+						($master = $this->bo->read($event['reference'], 0, false, 'server')) &&
+						array_search($event['recurrence'], $master['recur_exception']) !== false)
+				{
+					// this exception will be handled with the series master
+					unset($events[$k]);
+					continue;
+				}
 				$ids[] = $event['id'];
 			}
 			$max_user_modified = $this->bo->so->max_user_modified($ids);
@@ -350,22 +361,28 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	private static function &get_series($uid,calendar_bo $bo=null)
 	{
-		if (is_null($bo)) $bo = new calendar_bo();
+		if (is_null($bo)) $bo = new calendar_bopdate();
+
+		if (!($masterId = array_shift($bo->find_event(array('uid' => $uid), 'master')))
+				|| !($master = $bo->read($masterId, 0, false, 'server')))
+		{
+			return array(); // should never happen
+		}
+
+		$exceptions = $master['recur_exception'];
 
 		$events =& $bo->search(array(
 			'query' => array('cal_uid' => $uid),
 			'daywise' => false,
 			'date_format' => 'server',
 		));
-		$master = null;
+		$events = array_merge(array($master), $events);
 		foreach($events as $k => &$recurrence)
 		{
-			if (!isset($master))	// first event is always the series master
-			{
-				$master =& $events[$k];
-				//error_log('master: '.array2string($master));
-				continue;	// nothing to change
-			}
+			//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+			//	"($uid)[$k]:" . array2string($recurrence));
+			if (!$k) continue; // nothing to change
+
 			if ($recurrence['id'] != $master['id'])	// real exception
 			{
 				//error_log('real exception: '.array2string($recurrence));
@@ -373,9 +390,9 @@ class calendar_groupdav extends groupdav_handler
 				// at least Lightning "understands" EXDATE as exception from what's included
 				// in the whole resource / VCALENDAR component
 				// not removing it causes Lightning to remove the exception itself
-				if (($k = array_search($recurrence['recurrence'],$master['recur_exception'])) !== false)
+				if (($e = array_search($recurrence['recurrence'],$exceptions)) !== false)
 				{
-					unset($master['recur_exception'][$k]);
+					unset($exceptions[$e]);
 				}
 				continue;	// nothing to change
 			}
@@ -386,13 +403,14 @@ class calendar_groupdav extends groupdav_handler
 				unset($events[$k]);	// no exception --> remove it
 				continue;
 			}
-			// this is a virtual excetion now (no extra event/cal_id in DB)
+			// this is a virtual exception now (no extra event/cal_id in DB)
 			//error_log('virtual exception: '.array2string($recurrence));
 			$recurrence['recurrence'] = $recurrence['start'];
 			$recurrence['reference'] = $master['id'];
 			$recurrence['recur_type'] = MCAL_RECUR_NONE;	// is set, as this is a copy of the master
 			// not for included exceptions (Lightning): $master['recur_exception'][] = $recurrence['start'];
 		}
+		$events[0]['recur_exception'] = $exceptions;
 		return $events;
 	}
 
@@ -416,10 +434,12 @@ class calendar_groupdav extends groupdav_handler
 			return $event;
 		}
 		$handler = $this->_get_handler();
-		if (!is_numeric($id) && ($foundEntries = $handler->find_event($options['content'], 'check')))
+
+		if (!is_numeric($id) && ($foundEntries = $handler->find_event($options['content'], 'exact')))
 		{
 			$id = array_shift($foundEntries);
 		}
+
 		if (!($cal_id = $handler->importVCal($options['content'],is_numeric($id) ? $id : -1,
 			self::etag2value($this->http_if_match))))
 		{
@@ -448,14 +468,15 @@ class calendar_groupdav extends groupdav_handler
 	static function fix_series(array &$events)
 	{
 		foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
-		$master =& $events[0];
+		//$master =& $events[0];
 
 		$bo = new calendar_boupdate();
 
 		// get array with orginal recurrences indexed by recurrence-id
-		$org_recurrences = array();
-		foreach(self::get_series($master['uid'],$bo) as $event)
+		$org_recurrences = $exceptions = array();
+		foreach(self::get_series($events[0]['uid'],$bo) as $k => $event)
 		{
+			if (!$k) $master = $event;
 			if ($event['recurrence'])
 			{
 				$org_recurrences[$event['recurrence']] = $event;
@@ -463,9 +484,15 @@ class calendar_groupdav extends groupdav_handler
 		}
 
 		// assign cal_id's to already existing recurrences and evtl. re-add recur_exception to master
-		foreach($events as &$recurrence)
+		foreach($events as $k => &$recurrence)
 		{
-			if ($recurrence['id'] || !$recurrence['recurrence']) continue;	// master
+			if (!$recurrence['recurrence'])
+			{
+				// master
+				$recurrence['id'] = $master['id'];
+				$master =& $events[$k];
+				continue;
+			}
 
 			// from now on we deal with exceptions
 			$org_recurrence = $org_recurrences[$recurrence['recurrence']];
@@ -478,12 +505,13 @@ class calendar_groupdav extends groupdav_handler
 				if ($recurrence['id'] != $master['id'])
 				{
 					error_log(__METHOD__.'() re-adding recur_exception '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']));
-					$master['recur_exception'][] = $recurrence['recurrence'];
+					$exceptions[] = $recurrence['recurrence'];
 				}
 				// remove recurrence to be able to detect deleted exceptions
 				unset($org_recurrences[$recurrence['recurrence']]);
 			}
 		}
+		$master['recur_exception'] = array_merge($exceptions, $master['recur_exception']);
 
 		// delete not longer existing recurrences
 		foreach($org_recurrences as $org_recurrence)

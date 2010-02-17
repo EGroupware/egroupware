@@ -20,6 +20,7 @@ define('MSG_TENTATIVE',4);
 define('MSG_ACCEPTED',5);
 define('MSG_ALARM',6);
 define('MSG_DISINVITE',7);
+define('MSG_DELEGATED',8);
 
 /**
  * Class to access AND manipulate all calendar data (business object)
@@ -493,7 +494,7 @@ class calendar_boupdate extends calendar_bo
 
 		// the following switch falls through all cases, as each included the following too
 		//
-		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE;
+		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
 		switch($ru = $part_prefs['calendar']['receive_updates'])
 		{
@@ -615,6 +616,12 @@ class calendar_boupdate extends calendar_bo
 				break;
 			case MSG_ACCEPTED:
 				$action = lang('Accepted');
+				$msg = 'Response';
+				$msgtype = '"calendar";';
+				$method = 'REPLY';
+				break;
+			case MSG_DELEGATED:
+				$action = lang('Delegated');
 				$msg = 'Response';
 				$msgtype = '"calendar";';
 				$method = 'REPLY';
@@ -825,8 +832,16 @@ class calendar_boupdate extends calendar_bo
 			return false;
 		}
 
-		// invalidate the read-cache if it contains the event we store now
-		if ($event['id'] && $event['id'] == self::$cached_event['id']) self::$cached_event = array();
+		if ($event['id'])
+		{
+			// invalidate the read-cache if it contains the event we store now
+			if ($event['id'] == self::$cached_event['id']) self::$cached_event = array();
+			$old_event = $this->read($event['id'], $event['recurrence'], false, 'server');
+		}
+		else
+		{
+			$old_event = null;
+		}
 
 		$save_event = $event;
 		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
@@ -858,8 +873,6 @@ class calendar_boupdate extends calendar_bo
 		}
 		$set_recurrences = false;
 		$set_recurrences_start = 0;
-		$old_event = $this->read($event['id'], $event['recurrence']);
-
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			$save_event['id'] = $cal_id;
@@ -1062,7 +1075,7 @@ class calendar_boupdate extends calendar_bo
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 				"($cal_id, $uid, $status, $recur_date)");
 		}
-		$old_event = $this->read($cal_id, $recur_date);
+		$old_event = $this->read($cal_id, $recur_date, false, 'server');
 		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0,$role)))
 		{
 			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
@@ -1071,6 +1084,7 @@ class calendar_boupdate extends calendar_bo
 				'R' => MSG_REJECTED,
 				'T' => MSG_TENTATIVE,
 				'A' => MSG_ACCEPTED,
+				'D' => MSG_DELEGATED,
 			);
 			if (isset($status2msg[$status]))
 			{
@@ -1080,7 +1094,7 @@ class calendar_boupdate extends calendar_bo
 			}
 
 			// Update history
-			if (!is_array($event)) $event = $this->read($cal_id);
+			$event = $this->read($cal_id, $recur_date, false, 'server');
 			$tracking = new calendar_tracking($this);
 			$tracking->track($event, $old_event);
 
@@ -1098,8 +1112,6 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function delete($cal_id,$recur_date=0,$ignore_acl=false)
 	{
-		$event = $this->read($cal_id,$recur_date);
-
 		if (!($event = $this->read($cal_id,$recur_date)) ||
 			!$ignore_acl && !$this->check_perms(EGW_ACL_DELETE,$event))
 		{
@@ -1111,10 +1123,6 @@ class calendar_boupdate extends calendar_bo
 		{
 			$this->so->delete($cal_id);
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
-			
-			// Update history
-			$tracking = new calendar_tracking($this);
-			$tracking->track($event, $event, null, true);
 
 			// delete all links to the event
 			egw_link::unlink(0,'calendar',$cal_id);
@@ -1448,6 +1456,7 @@ class calendar_boupdate extends calendar_bo
 	{
 		$matchingEvents = array();
 		$query = array();
+		$recur_date = 0;
 
 		if ($this->log)
 		{
@@ -1459,17 +1468,12 @@ class calendar_boupdate extends calendar_bo
 		{
 			if (isset($event['recurrence']))
 			{
-				$recur_date = $event['recurrence'];
+				$recur_date = $this->date2usertime($event['recurrence']);
 			}
-			else
+			elseif (isset($event['start']))
 			{
-				$recur_date = $event['start'];
+				$recur_date = $this->date2usertime($event['start']);
 			}
-			$recur_date = $this->date2usertime($recur_date);
-		}
-		else
-		{
-			$recur_date = 0;
 		}
 
 		if ($event['id'])
@@ -1501,13 +1505,14 @@ class calendar_boupdate extends calendar_bo
 					return $matchingEvents;
 				}
 			}
-			if ($filter == 'exact' || $filter == 'check') return array();
+			if ($filter == 'exact') return array();
 		}
 		unset($event['id']);
 
 		if ($filter == 'master')
 		{
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
+			$query['cal_recurrence'] = 0;
 		}
 
 		// only query calendars of users, we have READ-grants from
@@ -1611,7 +1616,7 @@ class calendar_boupdate extends calendar_bo
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'(' . $event['uid'] . ')[EventUID]');
 			}
-			if (isset($event['recurrence']))
+			if ($filter != 'master' && isset($event['recurrence']))
 			{
 				$query['cal_recurrence'] = $event['recurrence'];
 			}
@@ -1637,17 +1642,17 @@ class calendar_boupdate extends calendar_bo
 
 		foreach($foundEvents as $egwEvent)
 		{
-			if (in_array($egwEvent['id'], $matchingEvents)) continue;
-
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'[FOUND]: ' . array2string($egwEvent));
 			}
+			if (in_array($egwEvent['id'], $matchingEvents)) continue;
 
-			if ($filter == 'chec' && !empty($event['uid']))
+			if (in_array($filter, array('exact', 'master')) && !empty($event['uid']))
 			{
 				$matchingEvents[] = $egwEvent['id']; // UID found
+				if ($filter = 'master') break;
 				continue;
 			}
 
@@ -1849,6 +1854,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 			$matchingEvents[] = $egwEvent['id']; // exact match
+			if ($filter = 'master') break;
 		}
 		// append pseudos as last entries
 		$matchingEvents = array_merge($matchingEvents, $pseudos);
@@ -1942,20 +1948,24 @@ class calendar_boupdate extends calendar_bo
 						in_array($event['recurrence'], $master_event['recur_exception']))
 					{
 						$type = 'SERIES-PSEUDO-EXCEPTION'; // could also be a real one
-						$recurrence_event = $event;
+						$recurrence_event = $master_event;
+						$recurrence_event['start'] = $event['recurrence'];
+						$recurrence_event['end'] -= $master_event['start'] - $event['recurrence'];
 						break;
 					}
 					elseif (in_array($event['start'], $master_event['recur_exception']))
 					{
 						$type='SERIES-PSEUDO-EXCEPTION'; // new pseudo exception?
-						$recurrence_event = $event;
+						$recurrence_event = $master_event;
+						$recurrence_event['start'] = $event['start'];
+						$recurrence_event['end'] -= $master_event['start'] - $event['start'];
 						break;
 					}
 					else
 					{
 						// try to find a suitable pseudo exception date
 						$egw_rrule = calendar_rrule::event2rrule($master_event, false);
-						$egw_rrule->rewind();
+						$egw_rrule->current = clone $egw_rrule->time;
 						while ($egw_rrule->valid())
 						{
 							$occurrence = egw_time::to($egw_rrule->current(), 'server');
@@ -1967,7 +1977,9 @@ class calendar_boupdate extends calendar_bo
 							if ($event['start'] == $occurrence)
 							{
 								$type = 'SERIES-PSEUDO-EXCEPTION'; // let's try a pseudo exception
-								$recurrence_event = $event;
+								$recurrence_event = $master_event;
+								$recurrence_event['start'] = $occurrence;
+								$recurrence_event['end'] -= $master_event['start'] - $occurrence;
 								break 2;
 							}
 							if (isset($event['recurrence']) && $event['recurrence'] == $occurrence)

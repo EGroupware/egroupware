@@ -44,6 +44,7 @@ define('REJECTED',0);
 define('NO_RESPONSE',1);
 define('TENTATIVE',2);
 define('ACCEPTED',3);
+define('DELEGATED',4);
 
 define('HOUR_s',60*60);
 define('DAY_s',24*HOUR_s);
@@ -187,6 +188,18 @@ class calendar_so
 				$event['uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$event['id']);
 				$this->db->update($this->cal_table, array('cal_uid' => $event['uid']),
 					array('cal_id' => $event['id']),__LINE__,__FILE__,'calendar');
+			}
+			if ((int) $recur_date == 0 &&
+				$event['recur_type'] != MCAL_RECUR_NONE &&
+				!empty($event['recur_exception']))
+			{
+				sort($event['recur_exception']);
+				if ($event['recur_exception'][0] < $event['start'])
+				{
+					// leading exceptions => move start and end
+					$event['end'] -= $event['start'] - $event['recur_exception'][0];
+					$event['start'] = $event['recur_exception'][0];
+				}
 			}
 		}
 
@@ -377,6 +390,8 @@ class calendar_so
 					$where[] = "cal_status='T'"; break;
 				case 'rejected':
 					$where[] = "cal_status='R'"; break;
+				case 'delegated':
+					$where[] = "cal_status='D'"; break;
 				case 'all':
 				case 'owner':
 					break;
@@ -649,6 +664,8 @@ ORDER BY cal_user_type, cal_usre_id
 			$minimum_uid_length = 8;
 		}
 
+		$old_min = $old_duration = 0;
+
 		//echo '<p>'.__METHOD__.'('.array2string($event).",$change_since) event="; _debug_array($event);
 		//error_log(__METHOD__.'('.array2string($event).",$set_recurrences,$change_since,$etag)");
 
@@ -827,7 +844,7 @@ ORDER BY cal_user_type, cal_usre_id
 		// update start- and endtime if present in the event-array, evtl. we need to move all recurrences
 		if (isset($event['cal_start']) && isset($event['cal_end']))
 		{
-			$this->move($cal_id,$event['cal_start'],$event['cal_end'],!$cal_id ? false : $change_since);
+			$this->move($cal_id,$event['cal_start'],$event['cal_end'],!$cal_id ? false : $change_since, $old_min, $old_min +  $old_duration);
 		}
 		// update participants if present in the event-array
 		if (isset($event['cal_participants']))
@@ -1157,7 +1174,8 @@ ORDER BY cal_user_type, cal_usre_id
 			REJECTED 	=> 'R',
 			NO_RESPONSE	=> 'U',
 			TENTATIVE	=> 'T',
-			ACCEPTED	=> 'A'
+			ACCEPTED	=> 'A',
+			DELEGATED	=> 'D'
 		);
 		if (!(int)$cal_id || !(int)$user_id && $user_type != 'e')
 		{
@@ -1581,7 +1599,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
 	 * @param int $end=0  if != 0:	enddate of the search/list (servertime)
 	 * @param string $filter='all'	string filter-name: all (not rejected),
-	 * 		accepted, unknown, tentative, rejected,
+	 * 		accepted, unknown, tentative, rejected, delegated
 	 *      rrule					return array of remote exceptions in servertime
 	 * 		tz_rrule/tz_only,		return (only by) timezone transition affected entries
 	 * 		map						return array of dates with no pseudo exception
@@ -1607,15 +1625,46 @@ ORDER BY cal_user_type, cal_usre_id
 		$remote = in_array($filter, array('tz_rrule', 'rrule'));
 
 		$egw_rrule = calendar_rrule::event2rrule($event, false);
-		$egw_rrule->rewind();
+		$egw_rrule->current = clone $egw_rrule->time;
 		if ($expand_all)
 		{
 			unset($event['recur_excpetion']);
 			$remote_rrule = calendar_rrule::event2rrule($event, false, $tz_id);
-			$remote_rrule->rewind();
+			$remote_rrule->current = clone $remote_rrule->time;
 		}
 		while ($egw_rrule->valid())
 		{
+			while ($egw_rrule->exceptions &&
+				in_array($egw_rrule->current->format('Ymd'),$egw_rrule->exceptions))
+			{
+				if (in_array($filter, array('map','tz_map','rrule','tz_rrule')))
+				{
+					 // real exception
+					$locts = (int)egw_time::to($egw_rrule->current(),'server');
+					if ($expand_all)
+					{
+						$remts = (int)egw_time::to($remote_rrule->current(),'server');
+						if ($remote)
+						{
+							$days[$locts]= $remts;
+						}
+						else
+						{
+							$days[$remts]= $locts;
+						}
+					}
+					else
+					{
+						$days[$locts]= $locts;
+					}
+				}
+				if ($expand_all)
+				{
+					$remote_rrule->next_no_exception();
+				}
+				$egw_rrule->next_no_exception();
+				if (!$egw_rrule->valid()) return $days;
+			}
 			$day = $egw_rrule->current();
 			$locts = (int)egw_time::to($day,'server');
 			$tz_exception = ($filter == 'tz_rrule');
@@ -1659,7 +1708,6 @@ ORDER BY cal_user_type, cal_usre_id
 					//	'() status exception: ' . $day->format('Ymd\THis'));
 					if ($expand_all)
 					{
-						$remts = (int)egw_time::to($remote_day,'server');
 						if ($filter == 'tz_only')
 						{
 								unset($days[$remts]);
@@ -1699,40 +1747,11 @@ ORDER BY cal_user_type, cal_usre_id
 					}
 				}
 			}
-			do
+			if ($expand_all)
 			{
-				$egw_rrule->next_no_exception();
-				$day = $egw_rrule->current();
-				if ($expand_all)
-				{
-					$remote_rrule->next_no_exception();
-					$remts = (int)egw_time::to($remote_rrule->current(),'server');
-				}
-				$exception = $egw_rrule->exceptions &&
-					in_array($day->format('Ymd'),$egw_rrule->exceptions);
-				if (in_array($filter, array('map','tz_map','rrule','tz_rrule'))
-					&& $exception)
-				{
-					 // real exception
-					$locts = (int)egw_time::to($day,'ts');
-					if ($expand_all)
-					{
-						if ($remote)
-						{
-							$days[$locts]= $remts;
-						}
-						else
-						{
-							$days[$remts]= $locts;
-						}
-					}
-					else
-					{
-						$days[$locts]= $locts;
-					}
-				}
+				$remote_rrule->next_no_exception();
 			}
-			while ($exception);
+			$egw_rrule->next_no_exception();
 		}
 		return $days;
 	}
@@ -1826,6 +1845,13 @@ ORDER BY cal_user_type, cal_usre_id
 						break;
 					case 'rejected':
 						if ($status != 'R')
+						{
+							unset($participants[$uid]);
+							continue;
+						}
+						break;
+					case 'delegated':
+						if ($status != 'D')
 						{
 							unset($participants[$uid]);
 							continue;

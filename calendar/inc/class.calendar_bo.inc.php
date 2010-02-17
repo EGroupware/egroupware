@@ -95,6 +95,7 @@ class calendar_bo
 		'R' => 'Rejected',
 		'T' => 'Tentative',
 		'U' => 'No Response',
+		'D' => 'Delegated',
 		'G' => 'Group invitation',
 	);
 	/**
@@ -1348,6 +1349,9 @@ class calendar_bo
 						break;
 					case 'U':	// no response = unknown
 						$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
+						break;
+					case 'D':	// delegated
+						$status = html::image('calendar','forward',$this->verbose_status[$status]);
 						break;
 					case 'G':	// group invitation
 						// Todo: Image, seems not to be used

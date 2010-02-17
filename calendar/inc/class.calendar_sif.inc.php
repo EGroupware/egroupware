@@ -430,6 +430,7 @@ class calendar_sif extends calendar_boupdate
 			return false;
 		}
 
+		/*
 		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			// Adjust the event start -- no exceptions before and at the start
@@ -462,7 +463,7 @@ class calendar_sif extends calendar_boupdate
 				}
 			}
 			$event['recur_exception'] = $exceptions;
-		}
+		} */
 
 		if ($recur_date) $event['recurrence'] = $recur_date;
 		$event_info = $this->get_event_info($event);
@@ -684,7 +685,7 @@ class calendar_sif extends calendar_boupdate
 						$event_info['master_event']['recur_exception'] =
 							array_unique(array_merge($event_info['master_event']['recur_exception'],
 								array($event['recurrence'])));
-
+						/*
 						// Adjust the event start -- must not be an exception
 						$length = $event_info['master_event']['end'] - $event_info['master_event']['start'];
 						$rriter = calendar_rrule::event2rrule($event_info['master_event'], false);
@@ -709,7 +710,7 @@ class calendar_sif extends calendar_boupdate
 							$this->server2usertime($event_to_store);
 							$this->update($event_to_store, true);
 							unset($event_to_store);
-						}
+						} */
 						$event['reference'] = $event_info['master_event']['id'];
 						$event['category'] = $event_info['master_event']['category'];
 						$event['owner'] = $event_info['master_event']['owner'];
@@ -914,6 +915,7 @@ class calendar_sif extends calendar_boupdate
 					array2string($exceptions)."\n",3,$this->logfile);
 			}
 			$event['recur_exception'] = $exceptions;
+			/*
 			// Adjust the event start -- must not be an exception
 			$length = $event['end'] - $event['start'];
 			$rriter = calendar_rrule::event2rrule($event, false, $tzid);
@@ -927,7 +929,7 @@ class calendar_sif extends calendar_boupdate
 				// remove leading exceptions
 				if ($day <= $event['start']) unset($exceptions[$key]);
 			}
-			$event['recur_exception'] = $exceptions;
+			$event['recur_exception'] = $exceptions; */
 		}
 
 		if ($this->uidExtension)
