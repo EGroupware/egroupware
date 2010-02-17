@@ -684,6 +684,7 @@ class addressbook_ui extends addressbook_bo
 						}
 						if($email)
 						{
+							$contact['n_fn'] = str_replace(',',' ',$contact['n_fn']);
 							$GLOBALS['egw']->js->set_onload("addEmail('".addslashes(
 								$contact['n_fn'] ? $contact['n_fn'].' <'.$email.'>' : $email)."');");
 							$Ok = true;
