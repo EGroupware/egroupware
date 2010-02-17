@@ -255,6 +255,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 	        case ALERT_REFRESH_FROM_SERVER:
 		        $synctype = ALERT_REFRESH_FROM_SERVER;
 		        $response = $anchormatch ? RESPONSE_OK : RESPONSE_REFRESH_REQUIRED;
+		        $anchormatch = false;
 		        break;
 
 	        case ALERT_RESUME:
