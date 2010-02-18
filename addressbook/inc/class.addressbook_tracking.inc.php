@@ -59,7 +59,7 @@ class addressbook_tracking extends bo_tracking
 	 *
 	 * @var boolean
 	 */
-	var $prefer_user_as_sender = true;
+	var $prefer_user_as_sender = false;
 	/**
 	 * Instance of the bocontacts class calling us
 	 *
