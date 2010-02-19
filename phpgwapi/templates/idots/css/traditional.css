@@ -322,7 +322,13 @@ body {
 	border:solid 1px #9c9c9c;
 	background-image: url(../images/background-icon-bar.png);
 	background-repeat: repeat-x;
-	height: 45px;
+	overflow:visible;
+	height: 45px; /* prevents text line to show in IE7+8(Compatibilitymode) */
+}
+/* Star-Plus-HTML Hack fix for the above */
+*:first-child+html #divAppIconBar
+{
+	height: 60px;
 }
 
 #divAppTextBar
