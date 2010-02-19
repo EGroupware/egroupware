@@ -1912,7 +1912,7 @@ ORDER BY cal_user_type, cal_usre_id
 	}
 
 	/**
-	 * Moves a datetime to the beginning og the day within timezone
+	 * Moves a datetime to the beginning of the day within timezone
 	 *
 	 * @param egw_time	&time	the datetime entry
 	 * @param string tz_id		timezone

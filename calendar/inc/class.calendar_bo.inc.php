@@ -16,6 +16,10 @@ if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_mes
 	define('ACL_TYPE_IDENTIFER','***ACL***');
 }
 
+define('HOUR_s',60*60);
+define('DAY_s',24*HOUR_s);
+define('WEEK_s',7*DAY_s);
+
 /**
  * Gives read access to the calendar, but all events the user is not participating are private!
  * Used by addressbook.
@@ -292,9 +296,9 @@ class calendar_bo
 	 *	filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
-	 *	dayswise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
+	 *	daywise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
 	 *		(events spanning multiple days are returned each day again (!)) otherwise it returns one array with
-	 *		the events (default), not honored in a search ==> always returns an array of events !
+	 *		the events (default), not honored in a search ==> always returns an array of events!
 	 *	date_format string date-formats: 'ts'=timestamp (default), 'array'=array, or string with format for date
 	 *  offset boolean/int false (default) to return all entries or integer offset to return only a limited result
 	 *  enum_recuring boolean if true or not set (default) or daywise is set, each recurence of a recuring events is returned,
