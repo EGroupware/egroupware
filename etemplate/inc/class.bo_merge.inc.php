@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -479,9 +479,30 @@ abstract class bo_merge
 		{
 			$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$charset);
 		}
-		if ($is_xml)	// zip'ed xml document (eg. OO) --> need to encode &,<,> to not mess up xml
+		if ($is_xml)	// zip'ed xml document (eg. OO)
 		{
-			$replacements = str_replace(array('&amp;','&','<','>'),array('&amp;','&amp;','&lt;','&gt;'),$replacements);
+			// clean replacements from html or html-entities, which mess up xml
+			foreach($replacements as $name => &$value)
+			{
+				// decode html entities back to utf-8
+				if (strpos($value,'&') !== false)
+				{
+					$value = html_entity_decode($value,ENT_QUOTES,$charset);
+					
+					// remove all non-decodable entities
+					if (strpos($value,'&') !== false)
+					{
+						$value = preg_replace('/&[^; ]+;/','',$value);
+					}
+				}
+				// remove all html tags, evtl. included
+				if (strpos($value,'<') !== false)
+				{
+					$value = strip_tags($value);
+				}
+			}
+			// now decode &, < and >, which need to be encoded as entities in xml
+			$replacements = str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),$replacements);
 		}
 		return str_replace(array_keys($replacements),array_values($replacements),$content);
 	}
