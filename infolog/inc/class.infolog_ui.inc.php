@@ -854,7 +854,15 @@ class infolog_ui
 					unset($content['info_id']);
 					unset ($info_id);
 					unset($content['info_datemodified']);
-					unset($contentt['info_modifier']);
+					unset($content['info_modifier']);
+
+					// Get links to be copied
+					$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $content['link_to']['to_id']);
+					if($content['info_link_id']) {
+						$info_link_id = $content['info_link_id'];
+						unset($content['info_link_id']);
+					}
+
 					$content['info_owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
 					$content['msg'] = lang('Infolog copied - the copy can now be edited');
 					$content['info_subject'] = lang('Copy of:').' '.$content['info_subject'];
