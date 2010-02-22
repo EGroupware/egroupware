@@ -970,7 +970,14 @@ class nextmatch_widget
 		}
 		foreach($this->cfs as $name => $field) {
 			if($GLOBALS['egw_info']['apps'][$field['type']]) {
-				if ((string)$value_in[self::CF_PREFIX.$name] != (string)$extension_data['old_value'][self::CF_PREFIX.$name])
+				if(is_array($value_in[self::CF_PREFIX.$name])) {
+					list($old_app, $old_id) = explode(':', $extension_data['old_value'][self::CF_PREFIX.$name]);
+					if($value_in[self::CF_PREFIX.$name]['id'] != '' && $value_in[self::CF_PREFIX.$name]['id'] != $old_id)  {
+						$nm_global['filter'][self::CF_PREFIX.$name] = $value_in[self::CF_PREFIX.$name]['id'];
+					}
+					
+				} 
+				elseif ((string)$value_in[self::CF_PREFIX.$name] != (string)$extension_data['old_value'][self::CF_PREFIX.$name])
 				{
 					$nm_global['filter'][self::CF_PREFIX.$name] = $value_in[self::CF_PREFIX.$name]['id'];
 				}
