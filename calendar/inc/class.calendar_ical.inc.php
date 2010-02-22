@@ -2370,7 +2370,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'SUMMARY':
-					$vcardData['title']	= str_replace("\r\n", "\n", $attributes['value']);
+					$vcardData['title'] = str_replace("\r\n", "\n", $attributes['value']);
 					break;
 				case 'UID':
 					if (strlen($attributes['value']) >= $minimum_uid_length)

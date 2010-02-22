@@ -639,7 +639,7 @@ class calendar_bo
 		$old_horizont = $this->config['horizont'];
 		$this->config['horizont'] = $new_horizont;
 
-		// create further recurrences for all recuring and not yet (at the old horizont) ended events
+		// create further recurrences for all recurring and not yet (at the old horizont) ended events
 		if (($recuring = $this->so->unfinished_recuring($old_horizont)))
 		{
 			foreach($this->read(array_keys($recuring)) as $cal_id => $event)
@@ -660,7 +660,7 @@ class calendar_bo
 	}
 
 	/**
-	 * set all recurrences for an event until defined horizont $this->config['horizont']
+	 * set all recurrences for an event until the defined horizont $this->config['horizont']
 	 *
 	 * This methods operates in usertime, while $this->config['horizont'] is in servertime!
 	 *
@@ -715,7 +715,7 @@ class calendar_bo
 	function db2data(&$events,$date_format='ts')
 	{
 		if (!is_array($events)) echo "<p>bocal::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
-		foreach($events as $id => &$event)
+		foreach($events as &$event)
 		{
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
 			if (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id'])))
@@ -732,7 +732,7 @@ class calendar_bo
 			// same with the recur exceptions
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 			{
-				foreach($event['recur_exception'] as $n => &$date)
+				foreach($event['recur_exception'] as &$date)
 				{
 					$date = $this->date2usertime($date,$date_format);
 				}
@@ -740,7 +740,7 @@ class calendar_bo
 			// same with the alarms
 			if (isset($event['alarm']) && is_array($event['alarm']))
 			{
-				foreach($event['alarm'] as $n => &$alarm)
+				foreach($event['alarm'] as &$alarm)
 				{
 					$alarm['time'] = $this->date2usertime($alarm['time'],$date_format);
 				}
@@ -769,7 +769,7 @@ class calendar_bo
 	 * @param mixed $date=null date to specify a single event of a series
 	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
-	 * @return boolean/array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
+	 * @return boolean|array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
 	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
 	{
@@ -985,7 +985,6 @@ class calendar_bo
 			$owner = $event['owner'];
 			$private = !$event['public'];
 		}
-		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$grants = $this->grants[$owner];
 		if (is_array($event) && $needed == EGW_ACL_READ)
 		{
@@ -996,11 +995,11 @@ class calendar_bo
 			{
 				foreach($event['participants'] as $uid => $accept)
 				{
-					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
+					if ($uid == $this->user || $uid < 0 && in_array($this->user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite READ and PRIVAT grant
 						// exept the group gives its members only EGW_ACL_FREEBUSY and the participant is not the current user
-						if ($this->grants[$uid] == EGW_ACL_FREEBUSY && $uid != $user) continue;
+						if ($this->grants[$uid] == EGW_ACL_FREEBUSY && $uid != $this->user) continue;
 
 						$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
 						break;
@@ -1028,7 +1027,7 @@ class calendar_bo
 		}
 		else
 		{
-			$access = $user == $owner || $grants & $needed && (!$private || $grants & EGW_ACL_PRIVATE);
+			$access = $this->user == $owner || $grants & $needed && (!$private || $grants & EGW_ACL_PRIVATE);
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'check_perms'))
 		{

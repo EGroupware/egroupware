@@ -1607,7 +1607,7 @@ class calendar_boupdate extends calendar_bo
 			$matchFields = array('priority', 'public', 'non_blocking', 'recurrence');
 			foreach ($matchFields as $key)
 			{
-				if (!empty($event[$key])) $query['cal_'.$key] = $event[$key];
+				if (isset($event[$key])) $query['cal_'.$key] = $event[$key];
 			}
 		}
 		if (!empty($event['uid']))
@@ -1803,14 +1803,9 @@ class calendar_boupdate extends calendar_bo
 					// check exceptions
 					// $exceptions[$remote_ts] = $egw_ts
 					$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['$tzid'], 0, 0, 'map');
-					// remove leading exceptions
-					foreach ($exceptions as $key => $day)
+					if (is_array($event['recur_exception']))
 					{
-						if ($day <= $event['start']) unset($exceptions['key']);
-					}
-					if (is_array($event['recur_excpetion']))
-					{
-						foreach ($event['recur_excpetion'] as $key => $day)
+						foreach ($event['recur_exception'] as $key => $day)
 						{
 							if (isset($exceptions[$day]))
 							{
@@ -1832,14 +1827,14 @@ class calendar_boupdate extends calendar_bo
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 									'() missing event[recur_exception]: ' .
-									array2string($event['recur_excpetion']));
+									array2string($event['recur_exception']));
 							}
 							continue;
 						}
 					}
 
 					// check recurrence information
-					foreach (array('recur_type', 'recur_interval') as $key)
+					foreach (array('recur_type', 'recur_interval', 'recur_enddate') as $key)
 					{
 						if (isset($event[$key])
 								&& $event[$key] != $egwEvent[$key])
