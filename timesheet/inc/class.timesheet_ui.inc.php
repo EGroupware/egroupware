@@ -759,7 +759,7 @@ class timesheet_ui extends timesheet_bo
 			else
 			{
 				if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
-				$success,$failed,$action_msg,$content['action'],$msg))
+				$success,$failed,$action_msg,'index',$msg))
 				{
 					$msg .= lang('%1 timesheets(s) %2',$success,$action_msg);
 				}
