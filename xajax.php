@@ -94,7 +94,7 @@ function doXMLHTTP()
 			}
 		}
 	}
-	//error_log("xajax_doXMLHTTP('$arg0',...)");
+	//error_log("xajax_doXMLHTTP('$arg0',...)".print_r($argList,true));
 
 	if (strpos($arg0,'::') !== false && strpos($arg0,'.') === false)	// static method name app_something::method
 	{
@@ -155,7 +155,13 @@ function doXMLHTTP()
 	}
 	$ajaxClass =& CreateObject($appName.'.'.$className);
 	$argList = translation::convert($argList, 'utf-8');
-
+	if ($arg0 == 'etemplate.link_widget.ajax_search' && count($argList)==7)
+	{
+		$first = array_shift($argList);
+		array_unshift($argList,'');
+		array_unshift($argList,$first);
+	}
+	//error_log("xajax_doXMLHTTP('$arg0',...)".print_r($argList,true));
 	return call_user_func_array(array(&$ajaxClass, $functionName), (array)$argList );
 }
 $xajax = new xajax();
