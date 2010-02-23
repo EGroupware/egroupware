@@ -44,6 +44,7 @@ define('REJECTED',0);
 define('NO_RESPONSE',1);
 define('TENTATIVE',2);
 define('ACCEPTED',3);
+define('DELEGATED',4);
 
 define('HOUR_s',60*60);
 define('DAY_s',24*HOUR_s);
@@ -112,7 +113,7 @@ class calendar_so
 	 * All times (start, end and modified) are returned as timesstamps in servertime!
 	 *
 	 * @param int|array|string $ids id or array of id's of the entries to read, or string with a single uid
-	 * @param int $recur_date=0 if set read the next recurrance at or after the timestamp, default 0 = read the initital one
+	 * @param int $recur_date=0 if set read the next recurrence at or after the timestamp, default 0 = read the initital one
 	 * @return array|boolean array with id => data pairs or false if entry not found
 	 */
 	function read($ids,$recur_date=0)
@@ -179,6 +180,18 @@ class calendar_so
 				$this->db->update($this->cal_table, array('cal_uid' => $event['uid']),
 					array('cal_id' => $event['id']),__LINE__,__FILE__,'calendar');
 			}
+			if ((int) $recur_date == 0 &&
+				$event['recur_type'] != MCAL_RECUR_NONE &&
+				!empty($event['recur_exception']))
+			{
+				sort($event['recur_exception']);
+				if ($event['recur_exception'][0] < $event['start'])
+				{
+					// leading exceptions => move start and end
+					$event['end'] -= $event['start'] - $event['recur_exception'][0];
+					$event['start'] = $event['recur_exception'][0];
+				}
+			}
 		}
 
 		// check if we have a real recurance, if not set $recur_date=0
@@ -229,6 +242,37 @@ class calendar_so
 		}
 		//echo "<p>socal::read(".print_r($ids,true).")=<pre>".print_r($events,true)."</pre>\n";
 		return $events;
+	}
+
+	/**
+	 * Get maximum modification time of participant data of given event(s)
+	 *
+	 * This includes ALL recurences of an event series
+	 *
+	 * @param int|array $ids one or multiple cal_id's
+	 * @return int|array (array of) modification timestamp(s)
+	 */
+	function max_user_modified($ids)
+	{
+		$etags = array();
+		if (is_array($ids))
+		{
+			$events = $ids;
+		}
+		else
+		{
+			$events = array($ids);
+		}
+		foreach ($events as $id)
+		{
+			if (!($ts = $GLOBALS['egw']->contenthistory->getTSforAction('calendar', $id, 'modify')))
+			{
+				$ts = $GLOBALS['egw']->contenthistory->getTSforAction('calendar', $id, 'add');
+			}
+			if ($ts) $etags[$id] = $ts;
+		}
+		//echo "<p>".__METHOD__.'('.array2string($ids).') = '.array2string($etags)."</p>\n";
+		return is_array($ids) ? $etags : $etags[$ids];
 	}
 
 	/**
@@ -285,7 +329,7 @@ class calendar_so
 	 *
 	 * ToDo: search custom-fields too
 	 */
-	function &search($start,$end,$users,$cat_id=0,$filter='',$query='',$offset=False,$num_rows=0,$order='cal_start',$show_rejected=true,$_cols=null,$append='')
+	function &search($start,$end,$users,$cat_id=0,$filter='',$query='',$offset=False,$num_rows=0,$order='cal_start',$show_rejected=true,$_cols=null,$append='',$cfs=null)
 	{
 		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append,".array2string($cfs).")</p>\n";
 
@@ -326,6 +370,11 @@ class calendar_so
 					'cal_user_type' => $type,
 					'cal_user_id'   => $ids,
 				));
+				if ($type == 'u' && $show_rejected)
+				{
+					$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
+					$to_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
+				}
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
 
@@ -338,7 +387,7 @@ class calendar_so
 		if ($start) $where[] = (int)$start.' < cal_end';
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
-		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injunktion
+		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injection
 
 		if ($this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'])
 		{
@@ -390,11 +439,23 @@ class calendar_so
 		$events = $ids = $recur_dates = $recur_ids = array();
 		foreach($rs as $row)
 		{
-			$ids[] = $id = $row['cal_id'];
+			$id = $row['cal_id'];
+			if (is_numeric($id)) $ids[] = $id;
+
 			if ($row['cal_recur_date'])
 			{
 				$id .= '-'.$row['cal_recur_date'];
 				$recur_dates[] = $row['cal_recur_date'];
+			}
+			if ($row['participants'])
+			{
+				$row['participants'] = explode(',',$row['participants']);
+				$row['participants'] = array_combine($row['participants'],
+				array_fill(0,count($row['participants']),''));
+			}
+			else
+			{
+				$row['participants'] = array();
 			}
 			$row['alarm'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
@@ -523,6 +584,8 @@ ORDER BY cal_user_type, cal_usre_id
 			$minimum_uid_length = 8;
 		}
 
+		$old_min = $old_duration = 0;
+
 		//echo '<p>'.__METHOD__.'('.array2string($event).",$change_since) event="; _debug_array($event);
 		//error_log(__METHOD__.'('.array2string($event).",$set_recurrences,$change_since,$etag)");
 
@@ -545,7 +608,19 @@ ORDER BY cal_user_type, cal_usre_id
 				unset($event[$col]);
 			}
 		}
-		if (is_array($event['cal_category'])) $event['cal_category'] = implode(',',$event['cal_category']);
+		// ensure that we find mathing entries later on
+		if (!is_array($event['cal_category']))
+		{
+			$categories = array_unique(explode(',',$event['cal_category']));
+			sort($categories);
+		}
+		else
+		{
+			$categories = array_unique($event['cal_category']);
+		}
+		sort($categories, SORT_NUMERIC);
+
+		$event['cal_category'] = implode(',',$categories);
 
 		if ($cal_id)
 		{
@@ -684,7 +759,7 @@ ORDER BY cal_user_type, cal_usre_id
 		// update start- and endtime if present in the event-array, evtl. we need to move all recurrences
 		if (isset($event['cal_start']) && isset($event['cal_end']))
 		{
-			$this->move($cal_id,$event['cal_start'],$event['cal_end'],!$cal_id ? false : $change_since);
+			$this->move($cal_id,$event['cal_start'],$event['cal_end'],!$cal_id ? false : $change_since, $old_min, $old_min +  $old_duration);
 		}
 		// update participants if present in the event-array
 		if (isset($event['cal_participants']))
@@ -860,7 +935,7 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * splits the combined status, quantity and role
 	 *
-	 * @param string &$status I: combined value, O: status letter: U, T, A, R
+	 * @param string &$status I: combined value, O: status letter: U, T, A, R, D
 	 * @param int &$quantity only O: quantity
 	 * @param string &$role only O: role
 	 */
@@ -874,6 +949,10 @@ ORDER BY cal_user_type, cal_usre_id
 			if ((int)$matches[1] > 0) $quantity = (int)$matches[1];
 			if ($matches[2]) $role = $matches[2];
 			$status = $status[0];
+		}
+		elseif ($status === true)
+		{
+			$status = 'U';
 		}
 	}
 
@@ -1009,7 +1088,8 @@ ORDER BY cal_user_type, cal_usre_id
 			REJECTED 	=> 'R',
 			NO_RESPONSE	=> 'U',
 			TENTATIVE	=> 'T',
-			ACCEPTED	=> 'A'
+			ACCEPTED	=> 'A',
+			DELEGATED	=> 'D'
 		);
 		if (!(int)$cal_id || !(int)$user_id && $user_type != 'e')
 		{
@@ -1323,16 +1403,14 @@ ORDER BY cal_user_type, cal_usre_id
 	 * get stati of all recurrences of an event for a specific participant
 	 *
 	 * @param int $cal_id
-	 * @param int $uid participant uid
+	 * @param int $uid=null  participant uid; if == null return onyl the recur dates
 	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
 	 * @param int $end=0  if != 0: enddate of the search/list (servertime)
 	 *
 	 * @return array recur_date => status pairs (index 0 => main status)
 	 */
-	function get_recurrences($cal_id, $uid, $start=0, $end=0)
+	function get_recurrences($cal_id, $uid=null, $start=0, $end=0)
 	{
-		$user_type = $user_id = null;
-		self::split_user($uid, $user_type, $user_id);
 		$participant_status = array();
 		$where = array('cal_id' => $cal_id);
 		if ($start != 0 && $end == 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . (int)$start . ')';
@@ -1347,6 +1425,9 @@ ORDER BY cal_user_type, cal_usre_id
 			// inititalize the array
 			$participant_status[$row['cal_recur_date']] = null;
 		}
+		if (is_null($uid)) return $participant_status;
+		$user_type = $user_id = null;
+		self::split_user($uid, $user_type, $user_id);
 		$where = array(
 			'cal_id'		=> $cal_id,
 			'cal_user_type'	=> $user_type ? $user_type : 'u',
@@ -1426,21 +1507,21 @@ ORDER BY cal_user_type, cal_usre_id
 	 * irregular participant stati
 	 *
 	 * @param array $event		Recurring Event.
-	 * @param int servertime=0	== 0 -> export event with UTC timestamps
-	 * 							!= 0 -> export with servertime timestamps
 	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
 	 * @param int $end=0  if != 0: enddate of the search/list (servertime)
+	 * @param boolean $show_rejected=true should the search return rejected invitations
 	 *
 	 * @return array		Array of exception days (false for non-recurring events).
 	 */
-	function get_recurrence_exceptions(&$event, $servertime=0, $start=0, $end=0)
+	function get_recurrence_exceptions(&$event, $start=0, $end=0, $show_rejected=true)
 	{
 		$cal_id = (int) $event['id'];
+		$user = $GLOBALS['egw_info']['user']['account_id'];
 		if (!$cal_id || $event['recur_type'] == MCAL_RECUR_NONE) return false;
 
-		$days = array();
+		$days = $removed_days = array();
 
-		$participants = $this->get_participants($event['id'], 0);
+		$participants = $this->get_participants($cal_id, 0);
 
 		// Check if the stati for all participants are identical for all recurrences
 		foreach ($participants as $uid => $attendee)
@@ -1450,13 +1531,18 @@ ORDER BY cal_user_type, cal_usre_id
 				case 'u':	// account
 				case 'c':	// contact
 				case 'e':	// email address
-					$recurrences = $this->get_recurrences($event['id'], $uid, $start, $end);
+					$recurrences = $this->get_recurrences($cal_id, $uid, $start, $end);
 					foreach ($recurrences as $recur_date => $recur_status)
 					{
+						if ($uid == $user && !$show_rejected &&	$recur_status[0] == 'R')
+						{
+							$removed_days[$recur_date] = $recur_date;
+							continue;
+						}
 						if ($recur_date && $recur_status != $recurrences[0])
 						{
 							// Every distinct status results in an exception
-							$days[] = $recur_date;
+							$days[$recur_date] = $recur_date;
 						}
 					}
 					break;
@@ -1464,6 +1550,7 @@ ORDER BY cal_user_type, cal_usre_id
 					break;
 			}
 		}
+		$days = array_diff($days, $removed_days);
 		$days = array_unique($days);
 		sort($days);
 		return $days;

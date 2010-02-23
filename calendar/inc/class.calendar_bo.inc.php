@@ -101,13 +101,14 @@ class calendar_bo
 		'R' => 'Rejected',
 		'T' => 'Tentative',
 		'U' => 'No Response',
+		'D' => 'Delegated',
 		'G' => 'Group invitation',
 	);
 	/**
 	 * @var array recur_types translates MCAL recur-types to verbose labels
 	 */
 	var $recur_types = Array(
-		MCAL_RECUR_NONE         => 'None',
+		MCAL_RECUR_NONE         => 'No recurrence',
 		MCAL_RECUR_DAILY        => 'Daily',
 		MCAL_RECUR_WEEKLY       => 'Weekly',
 		MCAL_RECUR_MONTHLY_WDAY => 'Monthly (by day)',
@@ -166,7 +167,7 @@ class calendar_bo
 	/**
 	 * Instance of the categories class
 	 *
-	 * @var $categories
+	 * @var categories
 	 */
 	var $categories;
 
@@ -290,9 +291,9 @@ class calendar_bo
 	 *	filter string filter-name, atm. 'all' or 'hideprivate'
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
-	 *	dayswise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
+	 *	daywise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
 	 *		(events spanning multiple days are returned each day again (!)) otherwise it returns one array with
-	 *		the events (default), not honored in a search ==> always returns an array of events !
+	 *		the events (default), not honored in a search ==> always returns an array of events!
 	 *	date_format string date-formats: 'ts'=timestamp (default), 'array'=array, or string with format for date
 	 *  offset boolean/int false (default) to return all entries or integer offset to return only a limited result
 	 *  enum_recuring boolean if true or not set (default) or daywise is set, each recurence of a recuring events is returned,
@@ -399,7 +400,7 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append']);
+			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected,$params['cols'],$params['append'],$params['cfs']);
 
 		if (isset($params['cols']))
 		{
@@ -555,7 +556,7 @@ class calendar_bo
 		$old_horizont = $this->config['horizont'];
 		$this->config['horizont'] = $new_horizont;
 
-		// create further recurances for all recuring and not yet (at the old horizont) ended events
+		// create further recurrences for all recurring and not yet (at the old horizont) ended events
 		if (($recuring = $this->so->unfinished_recuring($old_horizont)))
 		{
 			foreach($this->read(array_keys($recuring)) as $cal_id => $event)
@@ -576,10 +577,10 @@ class calendar_bo
 	}
 
 	/**
-	 * set all recurances for an event til the defined horizont $this->config['horizont']
+	 * set all recurrences for an event until the defined horizont $this->config['horizont']
 	 *
 	 * @param array $event
-	 * @param mixed $start=0 minimum start-time for new recurances or !$start = since the start of the event
+	 * @param mixed $start=0 minimum start-time for new recurrences or !$start = since the start of the event
 	 */
 	function set_recurrences($event,$start=0)
 	{
@@ -587,11 +588,19 @@ class calendar_bo
 		{
 			$this->debug_message('bocal::set_recurrences(%1,%2)',true,$event,$start);
 		}
-		// check if the caller gave the participants and if not read them from the DB
-		if (!isset($event['participants']))
+		// check if the caller gave us enough information and if not read it from the DB
+		if (!isset($event['participants']) || !isset($event['start']) || !isset($event['end']))
 		{
 			list(,$event_read) = each($this->so->read($event['id']));
-			$event['participants'] = $event_read['participants'];
+			if (!isset($event['participants']))
+			{
+				$event['participants'] = $event_read['participants'];
+			}
+			if (!isset($event['start']) || !isset($event['end']))
+			{
+				$event['start'] = $event_read['start'];
+				$event['end'] = $event_read['end'];
+			}
 		}
 		if (!$start) $start = $event['start'];
 
@@ -679,11 +688,11 @@ class calendar_bo
 	/**
 	 * Reads a calendar-entry
 	 *
-	 * @param int/array/string $ids id or array of id's of the entries to read, or string with a single uid
+	 * @param int|array|string $ids id or array of id's of the entries to read, or string with a single uid
 	 * @param mixed $date=null date to specify a single event of a series
 	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
-	 * @return boolean/array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
+	 * @return boolean|array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
 	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
 	{
@@ -747,9 +756,9 @@ class calendar_bo
 	 */
 	function insert_all_repetitions($event,$start,$end,&$events,$recur_exceptions)
 	{
-		if ((int) $this->debug >= 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions')
+		if ((int) $this->debug >= 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repetions')
 		{
-			$this->debug_message('bocal::insert_all_repitions(%1,%2,%3,&$event,%4)',true,$event,$start,$end,$recur_exceptions);
+			$this->debug_message(__METHOD__.'(%1,%2,%3,&$event,%4)',true,$event,$start,$end,$recur_exceptions);
 		}
 		$start_in = $start; $end_in = $end;
 
@@ -758,9 +767,9 @@ class calendar_bo
 		$event_start_ts = $this->date2ts($event['start']);
 		$event_end_ts   = $this->date2ts($event['end']);
 
-		if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
+		if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repetions'))
 		{
-			$this->debug_message('bocal::insert_all_repetions(%1,start=%2,end=%3,,%4) starting...',True,$event,$start_in,$end_in,$recur_exceptions);
+			$this->debug_message(__METHOD__.'(%1,start=%2,end=%3,,%4) starting...',True,$event,$start_in,$end_in,$recur_exceptions);
 		}
 		$id = $event['id'];
 		$event_start_arr = $this->date2array($event['start']);
@@ -800,9 +809,9 @@ class calendar_bo
 					if (($have_exception = $search_date_ymd == (int)$this->date2string($exception_ts))) break;
 				}
 			}
-			if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
+			if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repetions'))
 			{
-				$this->debug_message('bocal::insert_all_repetions(...,%1) checking recur_exceptions[%2] and event[recur_exceptions]=%3 ==> %4',False,
+				$this->debug_message(__METHOD__.'(...,%1) checking recur_exceptions[%2] and event[recur_exceptions]=%3 ==> %4',False,
 					$recur_exceptions,$search_date_ymd,$event['recur_exception'],$have_exception);
 			}
 			if ($have_exception)
@@ -914,18 +923,18 @@ class calendar_bo
 					break;
 			} // switch(recur-type)
 		} // for($date = ...)
-		if ($this->debug && ((int) $this->debug > 2 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
+		if ($this->debug && ((int) $this->debug > 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repetions'))
 		{
-			$this->debug_message('bocal::insert_all_repetions(%1,start=%2,end=%3,events,exections=%4) events=%5',True,$event,$start_in,$end_in,$recur_exceptions,$events);
+			$this->debug_message(__METHOD__.'(%1,start=%2,end=%3,events,exections=%4) events=%5',True,$event,$start_in,$end_in,$recur_exceptions,$events);
 		}
 	}
 
 	/**
 	 * Adds one repetion of $event for $date_ymd to the $events array, after adjusting its start- and end-time
 	 *
-	 * @param $events array in which the event gets inserted
-	 * @param $event array event to insert, it has start- and end-date of the first recurrence, not of $date_ymd
-	 * @param $date_ymd int/string of the date of the event
+	 * @param array $events in which the event gets inserted
+	 * @param array $event event to be inserted; it has start- and end-date of the first recurrence, not of $date_ymd
+	 * @param int|string $date_ymd of the date of the event
 	 */
 	function add_adjusted_event(&$events,$event,$date_ymd)
 	{
@@ -1092,13 +1101,13 @@ class calendar_bo
 	/**
 	 * Converts several date-types to a timestamp and optionaly converts user- to server-time
 	 *
-	 * @param $date mixed date to convert, should be one of the following types
+	 * @param mixed $date date to convert, should be one of the following types
 	 *	string (!) in form YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss or YYYYMMDDThhmmss
 	 *	int already a timestamp
 	 *	array with keys 'second', 'minute', 'hour', 'day' or 'mday' (depricated !), 'month' and 'year'
-	 * @param $user2server_time boolean conversation between user- and server-time default False == Off
+	 * @param boolean  $user2server_time conversation between user- and server-time; default false == Off
 	 */
-	function date2ts($date,$user2server=False)
+	function date2ts($date,$user2server=false)
 	{
 		$date_in = $date;
 
@@ -1173,11 +1182,11 @@ class calendar_bo
 	/**
 	 * Converts a date to an array and optionaly converts server- to user-time
 	 *
-	 * @param $date mixed date to convert
-	 * @param $server2user_time boolean conversation between user- and server-time default False == Off
+	 * @param mixed $date date to convert
+	 * @param boolean $server2user_time=false conversation between user- and server-time; default false == Off
 	 * @return array with keys 'second', 'minute', 'hour', 'day', 'month', 'year', 'raw' (timestamp) and 'full' (Ymd-string)
 	 */
-	function date2array($date,$server2user=False)
+	function date2array($date,$server2user=false)
 	{
 		$date_called = $date;
 
@@ -1254,7 +1263,7 @@ class calendar_bo
 	 * Formats a date given as timestamp or array
 	 *
 	 * @param mixed $date integer timestamp or array with ('year','month',..,'second') to convert
-	 * @param string/boolean $format='' default common_prefs[dateformat], common_prefs[timeformat], false=time only, true=date only
+	 * @param string|boolean $format='' default common_prefs[dateformat], common_prefs[timeformat], false=time only, true=date only
 	 * @return string the formated date (incl. time)
 	 */
 	function format_date($date,$format='')
@@ -1288,13 +1297,13 @@ class calendar_bo
 	 *
 	 * The parameters get formated depending on their type. ACL-values need a ACL_TYPE_IDENTIFER prefix.
 	 *
-	 * @param $msg string message with parameters/variables like lang(), eg. '%1'
-	 * @param $backtrace include a function-backtrace, default True=On
+	 * @param string  $msg message with parameters/variables like lang(), eg. '%1'
+	 * @param boolean $backtrace=true include a function-backtrace, default true=On
 	 *	should only be set to False=Off, if your code ensures a call with backtrace=On was made before !!!
-	 * @param $param mixed a variable number of parameters, to be inserted in $msg
+	 * @param mixed $param a variable number of parameters, to be inserted in $msg
 	 *	arrays get serialized with print_r() !
 	 */
-	function debug_message($msg,$backtrace=True)
+	function debug_message($msg,$backtrace=true)
 	{
 		static $acl2string = array(
 			0               => 'ACL-UNKNOWN',
@@ -1473,7 +1482,7 @@ class calendar_bo
 	/**
 	* Converts a participant into a (readable) user- or resource-name
 	*
-	* @param $id string|int id of user or resource
+	* @param string|int $id id of user or resource
 	* @return string with name
 	*/
 	function participant_name($id,$use_type=false)
@@ -1534,6 +1543,9 @@ class calendar_bo
 					case 'U':	// no response = unknown
 						$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
 						break;
+					case 'D':	// delegated
+						$status = html::image('calendar','forward',$this->verbose_status[$status]);
+						break;
 					case 'G':	// group invitation
 						// Todo: Image, seems not to be used
 						$status = '('.$this->verbose_status[$status].')';
@@ -1571,8 +1583,8 @@ class calendar_bo
 	/**
 	* Converts category string of an event into array of (readable) category-names
 	*
-	* @param $category string cat-id (multiple id's commaseparated)
-	* @param $color int color of the category, if multiple cats, the color of the last one with color is returned
+	* @param string $category cat-id (multiple id's commaseparated)
+	* @param int $color color of the category, if multiple cats, the color of the last one with color is returned
 	* @return array with id / names
 	*/
 	function categories($category,&$color)
@@ -1656,7 +1668,7 @@ class calendar_bo
 	}
 
 	/**
-	 * Convert the recure-information of an event, into a human readable string
+	 * Convert the recurrence-information of an event, into a human readable string
 	 *
 	 * @param array $event
 	 * @return string
@@ -1708,7 +1720,7 @@ class calendar_bo
 	 *
 	 * The holidays get cached in the session (performance), so changes in holidays or birthdays do NOT affect a current session!!!
 	 *
-	 * @param integer $year=0 year, defaults to 0 = current year
+	 * @param int $year=0 year, defaults to 0 = current year
 	 * @return array indexed with Ymd of array of holidays. A holiday is an array with the following fields:
 	 *	index: numerical unique id
 	 *	locale: string, 2-char short for the nation
@@ -1775,8 +1787,8 @@ class calendar_bo
 	 *
 	 * Is called as hook to participate in the linking
 	 *
-	 * @param int/array $entry int cal_id or array with event
-	 * @param string/boolean string with title, null if not found or false if not read perms
+	 * @param int|array $entry int cal_id or array with event
+	 * @param string|boolean string with title, null if not found or false if not read perms
 	 */
 	function link_title($event)
 	{
@@ -1797,7 +1809,7 @@ class calendar_bo
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param string $pattern pattern to search
-	 * @return array with pm_id - title pairs of the matching entries
+	 * @return array with cal_id - title pairs of the matching entries
 	 */
 	function link_query($pattern)
 	{
@@ -1883,7 +1895,7 @@ class calendar_bo
 	/**
 	 * Get the freebusy URL of a user
 	 *
-	 * @param int/string $user account_id or account_lid
+	 * @param int|string $user account_id or account_lid
 	 * @param string $pw=null password
 	 */
 	static function freebusy_url($user,$pw=null)
@@ -1900,13 +1912,14 @@ class calendar_bo
 	 * Check if the event is the whole day
 	 *
 	 * @param event
+	 * @param boolean $server2user_time=false conversation between user- and server-time; default false == Off
 	 * @return boolean true for whole day events
 	 */
-	function isWholeDay($event)
+	function isWholeDay($event, $server2user=false)
 	{
 		// check if the event is the whole day
-			$start = $this->date2array($event['start']);
-			$end = $this->date2array($event['end']);
+			$start = $this->date2array($event['start'], $server2user);
+			$end = $this->date2array($event['end'], $server2user);
 			$result = (!$start['hour'] && !$start['minute']
 				&& $end['hour'] == 23 && $end['minute'] == 59);
 			return $result;

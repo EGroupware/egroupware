@@ -20,6 +20,7 @@ define('MSG_TENTATIVE',4);
 define('MSG_ACCEPTED',5);
 define('MSG_ALARM',6);
 define('MSG_DISINVITE',7);
+define('MSG_DELEGATED',8);
 
 /**
  * Class to access AND manipulate all calendar data (business object)
@@ -50,6 +51,13 @@ class calendar_boupdate extends calendar_bo
 	 * @var mixed
 	 */
 	var $debug;
+
+	/**
+	 * Set Logging
+	 *
+	 * @var boolean
+	 */
+	var $log = false;
 
 	/**
 	 * @var string|boolean $log_file filename to enable the login or false for no update-logging
@@ -97,27 +105,33 @@ class calendar_boupdate extends calendar_bo
 			return false;
 		}
 
-		if (!$event['id'])	// some defaults for new entries
+		if (($new_event = !$event['id']))	// some defaults for new entries
 		{
 			// if no owner given, set user to owner
 			if (!$event['owner']) $event['owner'] = $this->user;
 			// set owner as participant if none is given
 			if (!is_array($event['participants']) || !count($event['participants']))
 			{
-				$event['participants'] = array($event['owner'] => 'U');
-			}
-			// set the status of the current user to 'A' = accepted
-			if (isset($event['participants'][$this->user]) &&  $event['participants'][$this->user][0] != 'A')
-			{
-				$event['participants'][$this->user][0] = 'A';
+				$status = $event['owner'] == $this->user ? 'A' : 'U';
+				$status = calendar_so::combine_status($status, 1, 'CHAIR');
+				$event['participants'] = array($event['owner'] => $status);
 			}
 		}
+
 		// check if user has the permission to update / create the event
-		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
-			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) &&
+		if (!$ignore_acl && (!$new_event && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
+			$new_event && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) &&
 			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
 		{
 			return false;
+		}
+
+		if (!$new_event)
+		{
+			$old_event = $this->read((int)$event['id'],null,$ignore_acl);
+			// if no participants are set, set them from the old event, as we might need them to update recuring events
+			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
+			//echo "old $event[id]="; _debug_array($old_event);
 		}
 
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
@@ -250,14 +264,6 @@ class calendar_boupdate extends calendar_bo
 			$event['modified'] = $this->now_su;	// we are still in user-time
 			$event['modifier'] = $GLOBALS['egw_info']['user']['account_id'];
 		}
-		if (!($new_event = !(int)$event['id']))
-		{
-			$old_event = $this->read((int)$event['id'],null,$ignore_acl);
-			// if no participants are set, set them from the old event, as we might need them to update recuring events
-			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
-			//echo "old $event[id]="; _debug_array($old_event);
-		}
-
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
 
@@ -359,7 +365,7 @@ class calendar_boupdate extends calendar_bo
 
 		// the following switch falls through all cases, as each included the following too
 		//
-		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE;
+		$msg_is_response = $msg_type == MSG_REJECTED || $msg_type == MSG_ACCEPTED || $msg_type == MSG_TENTATIVE || $msg_type == MSG_DELEGATED;
 
 		switch($ru = $part_prefs['calendar']['receive_updates'])
 		{
@@ -481,6 +487,12 @@ class calendar_boupdate extends calendar_bo
 				break;
 			case MSG_ACCEPTED:
 				$action = lang('Accepted');
+				$msg = 'Response';
+				$msgtype = '"calendar";';
+				$method = 'REPLY';
+				break;
+			case MSG_DELEGATED:
+				$action = lang('Delegated');
 				$msg = 'Response';
 				$msgtype = '"calendar";';
 				$method = 'REPLY';
@@ -738,7 +750,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function check_status_perms($uid,$event)
 	{
-		if ($uid[0] == 'c' || $uid['0'] == 'e')	// for contact we use the owner of the event
+		if ($uid[0] == 'c' || $uid[0] == 'e')	// for contact we use the owner of the event
 		{
 			if (!is_array($event) && !($event = $this->read($event))) return false;
 
@@ -781,6 +793,7 @@ class calendar_boupdate extends calendar_bo
 				'R' => MSG_REJECTED,
 				'T' => MSG_TENTATIVE,
 				'A' => MSG_ACCEPTED,
+				'D' => MSG_DELEGATED,
 			);
 			if (isset($status2msg[$status]))
 			{
@@ -802,8 +815,6 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function delete($cal_id,$recur_date=0,$ignore_acl=false)
 	{
-		$event = $this->read($cal_id,$recur_date);
-
 		if (!($event = $this->read($cal_id,$recur_date)) ||
 			!$ignore_acl && !$this->check_perms(EGW_ACL_DELETE,$event))
 		{
@@ -828,7 +839,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		if ($event['reference'])
 		{
-			// evtl. delete recur_exception $event['recurrence'] from event with cal_id=$event['reference']
+			// evtl. delete recur_exception $event['reference'] from event with cal_id=$event['reference']
 		}
 		return true;
 	}
@@ -1138,110 +1149,597 @@ class calendar_boupdate extends calendar_bo
 	 * Try to find a matching db entry
 	 *
 	 * @param array $event	the vCalendar data we try to find
-	 * @param boolean $relax=false if asked to relax, we only match against some key fields
-	 * @return the calendar_id of the matching entry or false (if none matches)
+	 * @param string filter='exact' exact	-> find the matching entry
+	 * 								check	-> check (consitency) for identical matches
+	 * 							    relax	-> be more tolerant
+	 *                              master	-> try to find a releated series master
+	 * @return array calendar_ids of matching entries
 	 */
-	function find_event($event, $relax=false)
+	function find_event($event, $filter='exact')
 	{
+		$matchingEvents = array();
 		$query = array();
-		if (isset($event['start']))
+		$recur_date = 0;
+
+		if ($this->log)
 		{
-			$query[] = 'cal_start='.$event['start'];
-		}
-		if (isset($event['end']))
-		{
-			$query[] = 'cal_end='.$event['end'];
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				"($filter)[EVENT]:" . array2string($event));
 		}
 
-		foreach (array('title', 'location',
-				 'public', 'non_blocking', 'category') as $key)
+		if ($filter == 'master')
 		{
-			if (!empty($event[$key])) $query['cal_'.$key] = $event[$key];
-		}
-
-		if ($event['uid'] && ($uidmatch = $this->read($event['uid'])))
-		{
-			if ($event['reference'])
+			if (isset($event['reference']))
 			{
-				// Let's try to find a real exception first
-				$query['cal_uid'] = $event['uid'];
-				$query['cal_reference'] = $event['reference'];
-
-				if ($foundEvents = parent::search(array(
-					'query' => $query,
-				)))
-				{
-					if(is_array($foundEvents))
-					{
-						$event = array_shift($foundEvents);
-						return $event['id'];
-					}
-				}
-				// Let's try the "status only" (pseudo) exceptions now
-				if (($egw_event = $this->read($uidmatch['id'], $event['reference'])))
-				{
-					// Do we work with a pseudo exception here?
-					$match = true;
-					foreach (array('start', 'end', 'title', 'priority',
-						'location', 'public', 'non_blocking') as $key)
-					{
-						if (isset($event[$key])
-								&& $event[$key] != $egw_event[$key])
-						{
-							$match = false;
-							break;
-						}
-					}
-					if ($match && is_array($event['participants']))
-					{
-						foreach ($event['participants'] as $attendee => $status)
-						{
-							if (!isset($egw_event['participants'][$attendee])
-									|| $egw_event['participants'][$attendee] != $status)
-							{
-								$match = false;
-								break;
-							}
-							else
-							{
-								unset($egw_event['participants'][$attendee]);
-							}
-						}
-						if ($match && !empty($egw_event['participants'])) $match = false;
-					}
-					if ($match)	return ($uidmatch['id'] . ':' . $event['reference']);
-
-					return false; // We need to create a new pseudo exception
-				}
+				$recur_date = $event['reference'];
 			}
-			else
+			elseif (isset($event['start']))
 			{
-				return $uidmatch['id'];
+				$recur_date = $event['start'];
 			}
 		}
 
-		if ($event['id'] && ($found = $this->read($event['id'])))
+		if ($event['id'])
 		{
-			// We only do a simple consistency check
-			if ($found['title'] == $event['title']
-				&& $found['start'] == $event['start']
-				&& $found['end'] == $event['end'])
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					'(' . $event['id'] . ")[EventID]");
+			}
+			if (($egwEvent = $this->read($event['id'], $recur_date, false, 'server')))
+			{
+				if ($this->log)
 				{
-					return $found['id'];
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+						'()[FOUND]:' . array2string($egwEvent));
 				}
+				// Just a simple consistency check
+				if ($filter == 'exact' ||
+					$filter == 'master'  && $egwEvent['recur_type'] != MCAL_RECUR_NONE ||
+					$filter != 'master' && strpos($egwEvent['title'], $event['title']) === 0)
+				{
+					$retval = $egwEvent['id'];
+					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
+						$event['recur_type'] == MCAL_RECUR_NONE && $event['reference'] != 0)
+					{
+						$retval .= ':' . (int)$event['reference'];
+					}
+					$matchingEvents[] = $retval;
+					return $matchingEvents;
+				}
+			}
+			if ($filter == 'exact') return array();
 		}
 		unset($event['id']);
 
-		if($foundEvents = parent::search(array(
-			'query' => $query,
-		)))
+		if ($filter == 'master')
 		{
-			if(is_array($foundEvents))
+			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
+			$query['cal_reference'] = 0;
+		}
+
+		// only query calendars of users, we have READ-grants from
+		$users = array();
+		foreach(array_keys($this->grants) as $user)
+		{
+			$user = trim($user);
+			if ($this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS|EGW_ACL_FREEBUSY,0,$user))
 			{
-				$event = array_shift($foundEvents);
-				return $event['id'];
+				if ($user && !in_array($user,$users))	// already added?
+				{
+					$users[] = $user;
+				}
+			}
+			elseif ($GLOBALS['egw']->accounts->get_type($user) != 'g')
+			{
+				continue;	// for non-groups (eg. users), we stop here if we have no read-rights
+			}
+			// the further code is only for real users
+			if (!is_numeric($user)) continue;
+
+			// for groups we have to include the members
+			if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
+			{
+				$members = $GLOBALS['egw']->accounts->member($user);
+				if (is_array($members))
+				{
+					foreach($members as $member)
+					{
+						// use only members which gave the user a read-grant
+						if (!in_array($member['account_id'],$users) &&
+								$this->check_perms(EGW_ACL_READ|EGW_ACL_FREEBUSY,0,$member['account_id']))
+						{
+							$users[] = $member['account_id'];
+						}
+					}
+				}
+			}
+			else	// for users we have to include all the memberships, to get the group-events
+			{
+				$memberships = $GLOBALS['egw']->accounts->membership($user);
+				if (is_array($memberships))
+				{
+					foreach($memberships as $group)
+					{
+						if (!in_array($group['account_id'],$users))
+						{
+							$users[] = $group['account_id'];
+						}
+					}
+				}
 			}
 		}
-		return false;
+		if ($filter != 'master' && ($filter != 'exact' || empty($event['uid'])))
+		{
+			if (isset($event['whole_day']) && $event['whole_day'])
+			{
+				if ($filter == 'relax')
+				{
+					$delta = 1800;
+				}
+				else
+				{
+					$delta = 60;
+				}
+
+				// check length with some tolerance
+				$length = $event['end'] - $event['start'] - $delta;
+				$query[] = ('(cal_end-cal_start)>' . $length);
+				$length += 2 * $delta;
+				$query[] = ('(cal_end-cal_start)<' . $length);
+				$query[] = ('cal_start>' . ($event['start'] - 86400));
+				$query[] = ('cal_start<' . ($event['start'] + 86400));
+			}
+			elseif (isset($event['start']))
+			{
+				if ($filter == 'relax')
+				{
+					$query[] = ('cal_start>' . ($event['start'] - 3600));
+					$query[] = ('cal_start<' . ($event['start'] + 3600));
+				}
+				else
+				{
+					// we accept a tiny tolerance
+					$query[] = ('cal_start>' . ($event['start'] - 2));
+					$query[] = ('cal_start<' . ($event['start'] + 2));
+				}
+			}
+			$matchFields = array('priority', 'public', 'non_blocking', 'reference');
+			foreach ($matchFields as $key)
+			{
+				if (isset($event[$key])) $query['cal_'.$key] = $event[$key];
+			}
+		}
+		if (!empty($event['uid']))
+		{
+			$query['cal_uid'] = $event['uid'];
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					'(' . $event['uid'] . ')[EventUID]');
+			}
+			if ($filter != 'master' && isset($event['reference']))
+			{
+				$query['cal_reference'] = $event['reference'];
+			}
+		}
+
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'[QUERY]: ' . array2string($query));
+		}
+		if (!count($users) || !($foundEvents =
+			$this->so->search(null, null, $users, 0, 'all', $query)))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'[NO MATCH]');
+			}
+			return $matchingEvents;
+		}
+
+		$pseudos = array();
+
+		foreach($foundEvents as $egwEvent)
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					'[FOUND]: ' . array2string($egwEvent));
+			}
+			if (in_array($egwEvent['id'], $matchingEvents)) continue;
+
+			if (in_array($filter, array('exact', 'master')) && !empty($event['uid']))
+			{
+				$matchingEvents[] = $egwEvent['id']; // UID found
+				if ($filter = 'master') break;
+				continue;
+			}
+
+			// check times
+			if ($filter != 'relax')
+			{
+				if (isset($event['whole_day'])&& $event['whole_day'])
+				{
+					if (!$this->isWholeDay($egwEvent, true))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							'() egwEvent is not a whole-day event!');
+						}
+						continue;
+					}
+				}
+				elseif ($filter != 'master')
+				{
+					if (abs($event['end'] - $egwEvent['end']) >= 120)
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							'() egwEvent length does not match!');
+						}
+						continue;
+					}
+				}
+			}
+
+			// check for real match
+			$matchFields = array('title');
+			switch ($filter)
+			{
+				case 'master':
+					break;
+				case 'relax':
+					$matchFields[] = 'location';
+				default:
+					$matchFields[] = 'description';
+			}
+			foreach ($matchFields as $key)
+			{
+				if (!empty($event[$key]) && (empty($egwEvent[$key])
+						|| strpos($egwEvent[$key], $event[$key]) !== 0))
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"() event[$key] differ: '" . $event[$key] .
+							"' <> '" . $egwEvent[$key]) . "'";
+					}
+					continue 2; // next foundEvent
+				}
+			}
+
+			if ($filter != 'master' && is_array($event['category']))
+			{
+				// check categories
+				$egwCategories = explode(',', $egwEvent['category']);
+				foreach ($egwCategories as $cat_id)
+				{
+					if ($this->categories->check_perms(EGW_ACL_READ, $cat_id) &&
+							!in_array($cat_id, $event['category']))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"() egwEvent category $cat_id is missing!");
+						}
+						continue 2;
+					}
+				}
+				$newCategories = array_diff($event['category'], $egwCategories);
+				if (!empty($newCategories))
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							'() event has additional categories:' . array2string($newCategories));
+					}
+					continue;
+				}
+			}
+
+			if ($filter != 'relax' && $filter != 'master')
+			{
+				// check participants
+				if (is_array($event['participants']))
+				{
+					foreach ($event['participants'] as $attendee => $status)
+					{
+						if (!isset($egwEvent['participants'][$attendee]) &&
+								$attendee != $egwEvent['owner']) // ||
+							//(!$relax && $egw_event['participants'][$attendee] != $status))
+						{
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								"() additional event['participants']: $attendee");
+							}
+							continue 2;
+						}
+						else
+						{
+							unset($egwEvent['participants'][$attendee]);
+						}
+					}
+					// ORGANIZER is maybe missing
+					unset($egwEvent['participants'][$egwEvent['owner']]);
+					if (!empty($egwEvent['participants']))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								'() missing event[participants]: ' .
+								array2string($egwEvent['participants']));
+						}
+						continue;
+					}
+				}
+			}
+
+			if ($filter != 'master')
+			{
+				if ($event['recur_type'] == MCAL_RECUR_NONE)
+				{
+					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE)
+					{
+						// We found a pseudo Exception
+						$start = $this->date2ts($event['start'], true);
+						$pseudos[] = $egwEvent['id'] . ':' . $start;
+						continue;
+					}
+				}
+				elseif ($filter != 'relax')
+				{
+					// check exceptions
+					// $exceptions[$remote_ts] = $egw_ts
+					$exceptions = $this->so->get_recurrence_exceptions($egwEvent);
+					$exceptions = array_merge($egwEvent['recur_exception'], $exceptions);
+					if (is_array($event['recur_exception']))
+					{
+						foreach ($event['recur_exception'] as $key => $day)
+						{
+							if (isset($exceptions[$day]))
+							{
+								unset($exceptions[$day]);
+							}
+							else
+							{
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+									"() additional event['recur_exception']: $day");
+								}
+								continue 2;
+							}
+						}
+						if (!empty($exceptions))
+						{
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+									'() missing event[recur_exception]: ' .
+									array2string($event['recur_exception']));
+							}
+							continue;
+						}
+					}
+
+					// check recurrence information
+					foreach (array('recur_type', 'recur_interval', 'recur_enddate') as $key)
+					{
+						if (isset($event[$key])
+								&& $event[$key] != $egwEvent[$key])
+						{
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+									"() events[$key] differ: " . $event[$key] .
+									' <> ' . $egwEvent[$key]);
+							}
+							continue 2;
+						}
+					}
+				}
+			}
+			$matchingEvents[] = $egwEvent['id']; // exact match
+			if ($filter = 'master') break;
+		}
+		// append pseudos as last entries
+		$matchingEvents = array_merge($matchingEvents, $pseudos);
+
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'[MATCHES]:' . array2string($matchingEvents));
+		}
+		return $matchingEvents;
 	}
+
+	/**
+	 * classifies an incoming event from the eGW point-of-view
+	 *
+     * exceptions: unlike other calendar apps eGW does not create an event exception
+     * if just the participant state changes - therefore we have to distinguish between
+     * real exceptions and status only exceptions
+     *
+     * @param array $event the event to check
+     *
+     * @return array
+     * 	type =>
+     * 		SINGLE a single event
+     * 		SERIES-MASTER the series master
+     * 		SERIES-EXCEPTION event is a real exception
+	  * 		SERIES-PSEUDO-EXCEPTION event is a status only exception
+	  * 		SERIES-EXCEPTION-PROPAGATE event was a status only exception in the past and is now a real exception
+	  * 	stored_event => if event already exists in the database array with event data or false
+	  * 	master_event => for event type SERIES-EXCEPTION, SERIES-PSEUDO-EXCEPTION or SERIES-EXCEPTION-PROPAGATE
+	  * 		the corresponding series master event array
+	  * 		NOTE: this param is false if event is of type SERIES-MASTER
+     */
+	function get_event_info($event)
+	{
+		$type = 'SINGLE'; // default
+		$master_event = false; //default
+		$stored_event = false;
+		$recurrence_event = false;
+		$wasPseudo = false;
+
+		if (($foundEvents = $this->find_event($event, 'exact')))
+		{
+			// We found the exact match
+			$eventID = array_shift($foundEvents);
+			if (strstr($eventID, ':'))
+			{
+				$type = 'SERIES-PSEUDO-EXCEPTION';
+				$wasPseudo = true;
+				list($eventID, $recur_date) = explode(':', $eventID);
+				$recur_date = $this->date2usertime($recur_date);
+				$stored_event = $this->read($eventID, $recur_date, false, 'server');
+				$master_event = $this->read($eventID, 0, false, 'server');
+				$recurrence_event = $stored_event;
+			}
+			else
+			{
+				$stored_event = $this->read($eventID, 0);
+			}
+			if (!empty($stored_event['uid']) && empty($event['uid']))
+			{
+				$event['uid'] = $stored_event['uid']; // restore the UID if it was not delivered
+			}
+		}
+
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		{
+			$type = 'SERIES-MASTER';
+		}
+
+		if ($type == 'SINGLE' &&
+			($foundEvents = $this->find_event($event, 'master')))
+		{
+			// SINGLE, SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
+			foreach ($foundEvents  as $eventID)
+			{
+				// Let's try to find a related series
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					"()[MASTER]: $eventID");
+				}
+				if (($master_event = $this->read($eventID, 0)))
+				{
+					if (isset($stored_event['id']) && $master_event['id'] != $stored_event['id'])
+					{
+						$type = 'SERIES-EXCEPTION'; // this is an existing exception
+						break;
+					}
+					elseif (isset($event['reference']) &&
+						in_array($event['reference'], $master_event['recur_exception']))
+					{
+						$type = 'SERIES-PSEUDO-EXCEPTION'; // could also be a real one
+						$recurrence_event = $master_event;
+						$recurrence_event['start'] = $event['reference'];
+						$recurrence_event['end'] -= $master_event['start'] - $event['reference'];
+						break;
+					}
+					elseif (in_array($event['start'], $master_event['recur_exception']))
+					{
+						$type='SERIES-PSEUDO-EXCEPTION'; // new pseudo exception?
+						$recurrence_event = $master_event;
+						$recurrence_event['start'] = $event['start'];
+						$recurrence_event['end'] -= $master_event['start'] - $event['start'];
+						break;
+					}
+					else
+					{
+						// try to find a suitable pseudo exception date
+						$recur_date = $this->date2usertime($event['start']);
+						$egwEvent = $this->read($eventID, $recur_date, false, 'server');
+						if ($event['start'] == $egwEvent['start'])
+						{
+							$type = 'SERIES-PSEUDO-EXCEPTION'; // let's try a pseudo exception
+							$recurrence_event = $master_event;
+							$recurrence_event['start'] = $event['start'];
+							$recurrence_event['end'] -= $master_event['start'] - $event['start'];
+							break;
+
+						}
+						$recur_date = $this->date2usertime($event['reference']);
+						$egwEvent = $this->read($eventID,$recur_date , false, 'server');
+						if (isset($event['reference']) && $event['reference'] == $egwEvent['start'])
+						{
+							$type = 'SERIES-EXCEPTION-PROPAGATE';
+							if ($stored_event)
+							{
+								unset($stored_event['id']); // signal the true exception
+								$stored_event['recur_type'] = MCAL_RECUR_NONE;
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		// check pseudo exception propagation
+		if ($recurrence_event)
+		{
+			// default if we cannot find a proof for a fundamental change
+			// the recurrence_event is the master event with start and end adjusted to the recurrence
+			// check for changed data
+			foreach (array('start','end','uid','title','location','description',
+				'priority','public','special','non_blocking') as $key)
+				{
+				if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
+				{
+					if ($wasPseudo)
+					{
+						// We started with a pseudo exception
+						$type = 'SERIES-EXCEPTION-PROPAGATE';
+					}
+					else
+					{
+						$type = 'SERIES-EXCEPTION';
+					}
+
+					if ($stored_event)
+					{
+						unset($stored_event['id']); // signal the true exception
+						$stored_event['recur_type'] = MCAL_RECUR_NONE;
+					}
+					break;
+				}
+				}
+			// the event id here is always the id of the master event
+			// unset it to prevent confusion of stored event and master event
+			unset($event['id']);
+		}
+
+		// check ACL
+		if (is_array($master_event))
+		{
+			$acl_edit = $this->check_perms(EGW_ACL_EDIT, $master_event['id']);
+		}
+		else
+		{
+			if (is_array($stored_event))
+			{
+				$acl_edit = $this->check_perms(EGW_ACL_EDIT, $stored_event['id']);
+			}
+			else
+			{
+				$acl_edit = true; // new event
+			}
+		}
+
+		return array(
+			'type' => $type,
+			'acl_edit' => $acl_edit,
+			'stored_event' => $stored_event,
+			'master_event' => $master_event,
+		);
+    }
 }
