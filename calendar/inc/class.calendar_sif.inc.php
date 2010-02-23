@@ -312,10 +312,7 @@ class calendar_sif extends calendar_boupdate
 						if ($this->event['recur_noenddate'] == 0)
 						{
 							$recur_enddate = $this->vCalendar->_parseDateTime($this->event['recur_enddate']);
-							$finalEvent['recur_enddate'] = mktime(
-									date('H', 23),
-									date('i', 59),
-									date('s', 59),
+							$finalEvent['recur_enddate'] = mktime(0, 0, 0,
 									date('m', $recur_enddate),
 									date('d', $recur_enddate),
 									date('Y', $recur_enddate));
@@ -480,6 +477,11 @@ class calendar_sif extends calendar_boupdate
 				// overwrite with server data for merge
 				foreach ($event_info['stored_event'] as $key => $value)
 				{
+					if (in_array($key, array('participants', 'participant_types')))
+					{
+						unset($event[$key]);
+						continue;
+					}
 					if (!empty($value))	$event[$key] = $value;
 				}
 			}
@@ -487,8 +489,8 @@ class calendar_sif extends calendar_boupdate
 			{
 				// not merge
 				// SIF clients do not support participants => add them back
-				$event['participants'] = $event_info['stored_event']['participants'];
-				$event['participant_types'] = $event_info['stored_event']['participant_types'];
+				unset($event['participants']);
+				unset($event['participant_types']);
 				if ($event['whole_day'] && $event['tzid'] != $event_info['stored_event']['tzid'])
 				{
 					if (!isset(self::$tz_cache[$event_info['stored_event']['tzid']]))

@@ -1491,16 +1491,14 @@ ORDER BY cal_user_type, cal_usre_id
 	 * get stati of all recurrences of an event for a specific participant
 	 *
 	 * @param int $cal_id
-	 * @param int $uid participant uid
+	 * @param int $uid=null  participant uid; if == null return only the recur dates
 	 * @param int $start=0  if != 0: startdate of the search/list (servertime)
 	 * @param int $end=0  if != 0: enddate of the search/list (servertime)
 	 *
 	 * @return array recur_date => status pairs (index 0 => main status)
 	 */
-	function get_recurrences($cal_id, $uid, $start=0, $end=0)
+	function get_recurrences($cal_id, $uid=null, $start=0, $end=0)
 	{
-		$user_type = $user_id = null;
-		self::split_user($uid, $user_type, $user_id);
 		$participant_status = array();
 		$where = array('cal_id' => $cal_id);
 		if ($start != 0 && $end == 0) $where[] = '(cal_recur_date = 0 OR cal_recur_date >= ' . (int)$start . ')';
@@ -1515,6 +1513,9 @@ ORDER BY cal_user_type, cal_usre_id
 			// inititalize the array
 			$participant_status[$row['cal_recur_date']] = null;
 		}
+		if (is_null($uid)) return $participant_status;
+		$user_type = $user_id = null;
+		self::split_user($uid, $user_type, $user_id);
 		$where = array(
 			'cal_id'		=> $cal_id,
 			'cal_user_type'	=> $user_type ? $user_type : 'u',

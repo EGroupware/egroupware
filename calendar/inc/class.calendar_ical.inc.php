@@ -196,6 +196,7 @@ class calendar_ical extends calendar_boupdate
 			'UID'			=> 'uid',
 			'RECURRENCE-ID' => 'recurrence',
 			'SEQUENCE'		=> 'etag',
+			'STATUS'		=> 'status',
 		);
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
@@ -218,7 +219,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			$mailtoOrganizer = false;
 			$organizerCN = false;
-			$recurrence = $recur_date;
+			$recurrence = $this->date2usertime($recur_date);
 			$tzid = null;
 
 			if (!is_array($event)
@@ -622,6 +623,10 @@ class calendar_ical extends calendar_boupdate
 						}
 						break;
 
+					case 'STATUS':
+						$attributes['STATUS'] = 'CONFIRMED';
+						break;
+
 					case 'CATEGORIES':
 						if ($event['category'] && ($values['CATEGORIES'] = $this->get_categories($event['category'])))
 						{
@@ -641,12 +646,12 @@ class calendar_ical extends calendar_boupdate
 						{
 								$icalFieldName = 'X-RECURRENCE-ID';
 						}
-						if ($recurrence)
+						if ($recur_date)
 						{
 							// We handle a pseudo exception
 							if (isset($event['whole_day']))
 							{
-								$time = new egw_time($recurrence,egw_time::$server_timezone);
+								$time = new egw_time($recur_date,egw_time::$server_timezone);
 								$time->setTimezone(self::$tz_cache[$event['tzid']]);
 								$arr = egw_time::to($time,'array');
 								$vevent->setAttribute($icalFieldName, array(
@@ -658,7 +663,7 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								$attributes[$icalFieldName] = self::getDateTime($recurrence,$tzid,$parameters[$icalFieldName]);
+								$attributes[$icalFieldName] = self::getDateTime($recur_date,$tzid,$parameters[$icalFieldName]);
 							}
 						}
 						elseif ($event['recurrence'] && $event['reference'])
@@ -734,7 +739,6 @@ class calendar_ical extends calendar_boupdate
 						{
 							$attributes[$icalFieldName] = $value;
 						}
-					break;
 				}
 			}
 
@@ -1089,8 +1093,8 @@ class calendar_ical extends calendar_boupdate
 
 						// If this is an updated meeting, and the client doesn't support
 						// participants OR the event no longer contains participants, add them back
-						$event['participants'] = $event_info['stored_event']['participants'];
-						$event['participant_types'] = $event_info['stored_event']['participant_types'];
+						unset($event['participants']);
+						unset($event['participant_types']);
 					}
 					else
 					{
@@ -1748,6 +1752,7 @@ class calendar_ical extends calendar_boupdate
 		$defaultFields['basic'] = $defaultFields['minimal'] + array(
 			'recur_exception'	=> 'recur_exception',
 			'priority'			=> 'priority',
+			'status'			=> 'status',
 		);
 
 		$defaultFields['nexthaus'] = $defaultFields['basic'] + array(
@@ -2662,14 +2667,6 @@ class calendar_ical extends calendar_boupdate
 
 	function search($_vcalData, $contentID=null, $relax=false)
 	{
-		if (is_null($contentID))
-		{
-			$eventId = -1;
-		}
-		else
-		{
-			$eventId = $contentID;
-		}
 		if (($events = $this->icaltoegw($_vcalData)))
 		{
 			// this function only supports searching a single event

@@ -98,8 +98,11 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
-		$starttime = microtime(true);
+		if ($this->debug)
+		{
+			error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
+			$starttime = microtime(true);
+		}
 
 		// ToDo: add parameter to only return id & etag
 		$cal_filters = array(
@@ -121,7 +124,11 @@ class calendar_groupdav extends groupdav_handler
 		{
 			return false;
 		}
-		if ($this->debug > 1) error_log(__METHOD__."($path,,,$user,$id) cal_filters=".array2string($cal_filters));
+		if ($this->debug > 1)
+		{
+			error_log(__METHOD__."($path,,,$user,$id) cal_filters=".
+				array2string($cal_filters));
+		}
 
 		// check if we have to return the full calendar data or just the etag's
 		if (!($calendar_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
@@ -183,7 +190,11 @@ class calendar_groupdav extends groupdav_handler
 				);
 			}
 		}
-		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files['files']).' items');
+		if ($this->debug)
+		{
+			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
+				' to return '.count($files['files']).' items');
+		}
 		return true;
 	}
 
@@ -284,11 +295,9 @@ class calendar_groupdav extends groupdav_handler
 			{
 				foreach($options['other'] as $option)
 				{
-
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-
 						if (is_numeric($id = basename(array_pop($parts),'.ics'))) $ids[] = $id;
 					}
 				}
@@ -424,13 +433,13 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function put(&$options,$id,$user=null)
 	{
-		if($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
+		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 		$return_no_access=true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$event = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 
 		if (!is_null($event) && !is_array($event))
 		{
-			if($this->debug) error_log(__METHOD__.print_r($event,true).function_backtrace());
+			if ($this->debug) error_log(__METHOD__.print_r($event,true).function_backtrace());
 			return $event;
 		}
 		$handler = $this->_get_handler();
