@@ -236,6 +236,7 @@ class calendar_ical extends calendar_boupdate
 		$vcal->setAttribute('VERSION', $version);
 		$vcal->setAttribute('METHOD', $method);
 		$serverTZ = false;
+		$events_exported = false;
 
 		if (!is_array($events)) $events = array($events);
 
@@ -405,7 +406,8 @@ class calendar_ical extends calendar_boupdate
 				$exceptions = array();
 
 				// dont use "virtual" exceptions created by participant status for GroupDAV or file export
-				if (!in_array($this->productManufacturer,array('file','groupdav')))
+				if (!in_array($this->productManufacturer,array('file','groupdav')) &&
+					isset($this->supportedFields['participants']))
 				{
 					$exceptions = $this->so->get_recurrence_exceptions($event);
 					if ($this->log)
@@ -983,9 +985,10 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 			$vcal->addComponent($vevent);
+			$events_exported = true;
 		}
 
-		$retval = $vcal->exportvCalendar();
+		$retval = $events_exported ? $vcal->exportvCalendar() : false;
  		if ($this->log)
  		{
  			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
@@ -1097,7 +1100,7 @@ class calendar_ical extends calendar_boupdate
 									if (!isset($event['participants'][$uid]))
 									{
 										// Add it back in
-										$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
+										$event['participants'][$uid] = $status;
 									}
 								}
 								break;
@@ -1110,7 +1113,14 @@ class calendar_ical extends calendar_boupdate
 				else
 				{
 					// no merge
-					if (!isset($this->supportedFields['participants']) || !count($event['participants']))
+					if(!isset($this->supportedFields['category']))
+					{
+						$event['category'] = $event_info['stored_event']['category'];
+					}
+					if (!isset($this->supportedFields['participants'])
+						|| !$event['participants']
+						|| !is_array($event['participants'])
+						|| !count($event['participants']))
 					{
 						if ($this->log)
 						{
@@ -1121,16 +1131,14 @@ class calendar_ical extends calendar_boupdate
 						// If this is an updated meeting, and the client doesn't support
 						// participants OR the event no longer contains participants, add them back
 						unset($event['participants']);
-						unset($event['participant_types']);
 					}
 					else
 					{
-						// if the client does not return a status, we restore the original one
 						foreach ($event['participants'] as $uid => $status)
 						{
-							// Is it a resource and no longer present in the event?
 							if ($status[0] == 'X')
 							{
+								// the client did not give us a proper status => restore original
 								if (isset($event_info['stored_event']['participants'][$uid]))
 								{
 									if ($this->log)
@@ -1146,20 +1154,19 @@ class calendar_ical extends calendar_boupdate
 								}
 							}
 						}
-					}
-
-					foreach ($event_info['stored_event']['participants'] as $uid => $status)
-					{
-						// Is it a resource and no longer present in the event?
-						if ($uid[0] == 'r' && !isset($event['participants'][$uid]))
+						foreach ($event_info['stored_event']['participants'] as $uid => $status)
 						{
-							if ($this->log)
+							// Is it a resource and no longer present in the event?
+							if ($uid[0] == 'r' && !isset($event['participants'][$uid]))
 							{
-								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-									"() Restore resource $uid to status $status\n",3,$this->logfile);
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+										"() Restore resource $uid to status $status\n",3,$this->logfile);
+								}
+								// Add it back in
+								$event['participants'][$uid] = $status;
 							}
-							// Add it back in
-							$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
 						}
 					}
 
@@ -1184,7 +1191,9 @@ class calendar_ical extends calendar_boupdate
 					$event['owner'] = $this->user;
 				}
 
-				if (!is_array($event['participants']) || !count($event['participants']))
+				if (!$event['participants']
+					|| !is_array($event['participants'])
+					|| !count($event['participants']))
 				{
 					$status = $event['owner'] == $this->user ? 'A' : 'U';
 					$status = calendar_so::combine_status($status, 1, 'CHAIR');
@@ -1194,7 +1203,7 @@ class calendar_ical extends calendar_boupdate
 				{
 					foreach ($event['participants'] as $uid => $status)
 					{
-						// Is it a resource and no longer present in the event?
+						// if the client did not give us a proper status => set default
 						if ($status[0] == 'X')
 						{
 							if ($uid == $event['owner'])
@@ -1412,48 +1421,50 @@ class calendar_ical extends calendar_boupdate
 				$event_info['stored_event'] = $this->read($updated_id, 0, false, 'server');
 			}
 
-			// update status depending on the given event type
-			switch ($event_info['type'])
+			if (isset($event['participants']))
 			{
-				case 'SINGLE':
-				case 'SERIES-MASTER':
-				case 'SERIES-EXCEPTION':
-				case 'SERIES-EXCEPTION-PROPAGATE':
-					if (is_array($event_info['stored_event'])) // status update requires a stored event
-					{
-						if ($event_info['acl_edit'])
+				// update status depending on the given event type
+				switch ($event_info['type'])
+				{
+					case 'SINGLE':
+					case 'SERIES-MASTER':
+					case 'SERIES-EXCEPTION':
+					case 'SERIES-EXCEPTION-PROPAGATE':
+						if (is_array($event_info['stored_event'])) // status update requires a stored event
 						{
-							// update all participants if we have the right to do that
-							$this->update_status($event, $event_info['stored_event']);
+							if ($event_info['acl_edit'])
+							{
+								// update all participants if we have the right to do that
+								$this->update_status($event, $event_info['stored_event']);
+							}
+							elseif (isset($event['participants'][$this->user]) || isset($event_info['stored_event']['participants'][$this->user]))
+							{
+								// update the users status only
+								$this->set_status($event_info['stored_event']['id'], $this->user,
+									($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), 0, true);
+							}
 						}
-						elseif (isset($event['participants'][$this->user]) || isset($event_info['stored_event']['participants'][$this->user]))
-						{
-							// update the users status only
-							$this->set_status($event_info['stored_event']['id'], $this->user,
-								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), 0, true);
-						}
-					}
-					break;
+						break;
 
-				case 'SERIES-PSEUDO-EXCEPTION':
-					if (is_array($event_info['master_event'])) // status update requires a stored master event
-					{
-						$recurrence = $this->date2usertime($event['reference']);
-						if ($event_info['acl_edit'])
+					case 'SERIES-PSEUDO-EXCEPTION':
+						if (is_array($event_info['master_event'])) // status update requires a stored master event
 						{
-							// update all participants if we have the right to do that
-							$this->update_status($event, $event_info['stored_event'], $recurrence);
+							$recurrence = $this->date2usertime($event['reference']);
+							if ($event_info['acl_edit'])
+							{
+								// update all participants if we have the right to do that
+								$this->update_status($event, $event_info['stored_event'], $recurrence);
+							}
+							elseif (isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
+							{
+								// update the users status only
+								$this->set_status($event_info['master_event']['id'], $this->user,
+									($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recurrence, true);
+							}
 						}
-						elseif (isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
-						{
-							// update the users status only
-							$this->set_status($event_info['master_event']['id'], $this->user,
-								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recurrence, true);
-						}
-					}
-					break;
+						break;
+				}
 			}
-
 			// choose which id to return to the client
 			switch ($event_info['type'])
 			{
@@ -1618,6 +1629,11 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 
+		if (in_array($this->productManufacturer,array('file','groupdav')))
+		{
+			$this->useServerTZ = true;
+		}
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
@@ -1761,6 +1777,7 @@ class calendar_ical extends calendar_boupdate
 					case 'd750i':
 					case 'p910i':
 					case 'g705i':
+					case 'w890i':
 						$this->supportedFields = $defaultFields['basic'];
 						break;
 					default:
@@ -2295,7 +2312,7 @@ class calendar_ical extends calendar_boupdate
 				case 'UID':
 					if (strlen($attributes['value']) >= $minimum_uid_length)
 					{
-						$event['uid'] = $vcardData['uid'] = $attributes['value'];
+						$vcardData['uid'] = $attributes['value'];
 					}
 					break;
 				case 'TRANSP':
@@ -2406,7 +2423,7 @@ class calendar_ical extends calendar_boupdate
 								{
 									//Horde::logMessage("vevent2egw: set status to " . $status,
 									//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
-									$event['participants'][$this->user] =
+									$vcardData['participants'][$this->user] =
 										calendar_so::combine_status($status);
 								}
 								$status = 'U'; // keep the group
@@ -2442,12 +2459,12 @@ class calendar_ical extends calendar_boupdate
 					switch($attributes['name'])
 					{
 						case 'ATTENDEE':
-							if (!isset($event['participants'][$uid]) ||
-									$event['participants'][$uid][0] != 'A')
+							if (!isset($vcardData['participants'][$uid]) ||
+									$vcardData['participants'][$uid][0] != 'A')
 							{
 								// for multiple entries the ACCEPT wins
 								// add quantity and role
-								$event['participants'][$uid] =
+								$vcardData['participants'][$uid] =
 									calendar_so::combine_status($status,
 										$attributes['params']['X-EGROUPWARE-QUANTITY'],
 										$attributes['params']['ROLE']);
@@ -2455,11 +2472,11 @@ class calendar_ical extends calendar_boupdate
 							break;
 
 						case 'ORGANIZER':
-							if (isset($event['participants'][$uid]))
+							if (isset($vcardData['participants'][$uid]))
 							{
-								$status = $event['participants'][$uid];
+								$status = $vcardData['participants'][$uid];
 								calendar_so::split_status($status, $quantity, $role);
-								$event['participants'][$uid] =
+								$vcardData['participants'][$uid] =
 									calendar_so::combine_status($status, $quantity, 'CHAIR');
 							}
 							if (is_numeric($uid) && ($uid == $this->calendarOwner || !$this->calendarOwner))
@@ -2471,10 +2488,10 @@ class calendar_ical extends calendar_boupdate
 							{
 								// we must insert a CHAIR participant to keep the ORGANIZER
 								$event['owner'] = $this->user;
-								if (!isset($event['participants'][$uid]))
+								if (!isset($vcardData['participants'][$uid]))
 								{
 									// save the ORGANIZER as event CHAIR
-									$event['participants'][$uid] =
+									$vcardData['participants'][$uid] =
 										calendar_so::combine_status('U', 1, 'CHAIR');
 								}
 							}
@@ -2674,6 +2691,8 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function update_status($new_event, $old_event , $recur_date=0)
 	{
+		if (!isset($new_event['participants'])) return;
+
 		// check the old list against the new list
 		foreach ($old_event['participants'] as $userid => $status)
   		{

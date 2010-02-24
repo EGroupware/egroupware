@@ -235,7 +235,7 @@ class calendar_uiforms extends calendar_ui
 				$event['end']['hour'] = 23; $event['end']['minute'] = $event['end']['second'] = 59; unset($event['end']['raw']);
 				$event['end'] = $this->bo->date2ts($event['end']);
 			}
-			// some checks for recurances, if you give a date, make it a weekly repeating event and visa versa
+			// some checks for recurrences, if you give a date, make it a weekly repeating event and visa versa
 			if ($event['recur_type'] == MCAL_RECUR_NONE && $event['recur_data']) $event['recur_type'] = MCAL_RECUR_WEEKLY;
 			if ($event['recur_type'] == MCAL_RECUR_WEEKLY && !$event['recur_data'])
 			{
@@ -643,24 +643,6 @@ class calendar_uiforms extends calendar_ui
 							}
 						}
 					}
-					/*
-					// Update the stati
-					foreach ($participants as $uid => $status)
-					{
-						if (!isset($old_event['participants'][$uid])
-							|| !$old_event['participants'][$uid]
-							|| $old_event['participants'][$uid][0] != $status)
-						{
-							$this->bo->set_status($old_event['id'], $uid, $status, $content['edit_single']);
-						}
-						unset($old_event['participants'][$uid]);
-					}
-					foreach ($old_event['participants'] as $uid => $status)
-					{
-						// delete the removed participants
-						$this->bo->set_status($old_event['id'], $uid, 'G', $content['edit_single']);
-					}
-					*/
 					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
 						// remove deleted exception
@@ -963,12 +945,14 @@ class calendar_uiforms extends calendar_ui
 				$preserv['actual_date'] = $event['start'];		// remember the date clicked
 				if ($event['recur_type'] != MCAL_RECUR_NONE)
 				{
-					$participants = array('participants' => $event['participants'], 'participant_types' => $event['participant_types']); // preserv participants of this event
-					$event = array_merge($this->bo->read($cal_id,0,true), $participants);	// recuring event --> read the series + concatenate with participants of the selected recurrence
 					// check if we should create an exception
 					if ($_GET['exception'])
 					{
 						$msg = $this->_create_exception($event,$preserv);
+					}
+					else
+					{
+						$event = $this->bo->read($cal_id,0,true);
 					}
 				}
 			}

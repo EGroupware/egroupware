@@ -129,9 +129,6 @@ class calendar_boupdate extends calendar_bo
 		if (!$new_event)
 		{
 			$old_event = $this->read((int)$event['id'],null,$ignore_acl);
-			// if no participants are set, set them from the old event, as we might need them to update recuring events
-			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
-			//echo "old $event[id]="; _debug_array($old_event);
 		}
 
 		// check for conflicts only happens !$ignore_conflicts AND if start + end date are given
@@ -144,7 +141,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			// get all NOT rejected participants and evtl. their quantity
 			$quantity = $users = array();
-			foreach($event['participants'] as $uid => $status)
+			foreach((array)$event['participants'] as $uid => $status)
 			{
 				calendar_so::split_status($status,$q,$r);
 				if ($status[0] == 'R') continue;	// ignore rejected participants
@@ -1091,7 +1088,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		$cat_id_list = array();
-		foreach ($catname_list as $cat_name)
+		foreach ((array)$catname_list as $cat_name)
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
