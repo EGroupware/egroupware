@@ -83,11 +83,11 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 </table>
 <form method="post" name="mainView" id="mainView" action="{reloadView}">
 </form>
+	
+<input type="hidden" name="folderAction" id="folderAction" value="changeFolder">
+<INPUT TYPE=hidden NAME="oldMailbox" value="{oldMailbox}">
+<INPUT TYPE=hidden NAME="mailbox">
 <TABLE  width="100%" cellpadding="0" cellspacing="0" border="0" style="height:100px;">
-		<input type="hidden" name="folderAction" id="folderAction" value="changeFolder">
-		<INPUT TYPE=hidden NAME="oldMailbox" value="{oldMailbox}">
-		<INPUT TYPE=hidden NAME="mailbox">
-
 	<tr style="height: 20px;">
 		<td nowrap>
 			<span id="folderFunction" align="left" style="font-size:11px;"></span>

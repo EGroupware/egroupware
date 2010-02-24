@@ -533,7 +533,9 @@ class felamimail_hooks
 			$file[] = array(
 				'text' => "<TABLE WIDTH=\"100%\" CELLPADDING=\"0\" CELLSPACING=\"0\" style=\"border: solid #aaaaaa 1px; border-right: solid black 1px; \">
 							<tr class=\"navbarBackground\">
-								<td align=\"right\" width=\"100%\">".$navbarButtons."</td></tr></table></div>",
+								<td align=\"right\" width=\"100%\">".$navbarButtons."</td>
+							</tr>
+						   </table>",
 				'no_lang' => True,
 				'link' => False,
 				'icon' => False,

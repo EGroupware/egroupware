@@ -357,7 +357,6 @@ div.navButton {
 	padding: 2px;
 	margin: 2px;
 	border: solid #dddddd 1px;
-	position: relative;
 }
 
 div.navButton:hover, div.navButtonHover { 
