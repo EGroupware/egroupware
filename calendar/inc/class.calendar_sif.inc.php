@@ -477,7 +477,7 @@ class calendar_sif extends calendar_boupdate
 				// overwrite with server data for merge
 				foreach ($event_info['stored_event'] as $key => $value)
 				{
-					if (in_array($key, array('participants', 'participant_types')))
+					if ($key == 'participants')
 					{
 						unset($event[$key]);
 						continue;
@@ -490,7 +490,6 @@ class calendar_sif extends calendar_boupdate
 				// not merge
 				// SIF clients do not support participants => add them back
 				unset($event['participants']);
-				unset($event['participant_types']);
 				if ($event['whole_day'] && $event['tzid'] != $event_info['stored_event']['tzid'])
 				{
 					if (!isset(self::$tz_cache[$event_info['stored_event']['tzid']]))

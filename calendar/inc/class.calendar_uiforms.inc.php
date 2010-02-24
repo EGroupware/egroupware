@@ -238,7 +238,7 @@ class calendar_uiforms extends calendar_ui
 				$event['end']['hour'] = 23; $event['end']['minute'] = $event['end']['second'] = 59; unset($event['end']['raw']);
 				$event['end'] = $this->bo->date2ts($event['end']);
 			}
-			// some checks for recurances, if you give a date, make it a weekly repeating event and visa versa
+			// some checks for recurrences, if you give a date, make it a weekly repeating event and visa versa
 			if ($event['recur_type'] == MCAL_RECUR_NONE && $event['recur_data']) $event['recur_type'] = MCAL_RECUR_WEEKLY;
 			if ($event['recur_type'] == MCAL_RECUR_WEEKLY && !$event['recur_data'])
 			{
@@ -833,14 +833,11 @@ class calendar_uiforms extends calendar_ui
 					// check if we should create an exception
 					if ($_GET['exception'])
 					{
-						// exception: preserv participants of this event and merge it with the 0-recurrence
-						$participants = array('participants' => $event['participants'],'participant_types' => $event['participant_types']);
-						$event = array_merge($this->bo->read($cal_id,0,true),$participants);
 						$msg = $this->_create_exception($event,$preserv);
 					}
 					else
 					{
-						$event = $this->bo->read($cal_id,0,true); // read the 0-recurrence
+						$event = $this->bo->read($cal_id,0,true);
 					}
 				}
 			}
@@ -1077,12 +1074,12 @@ class calendar_uiforms extends calendar_ui
 			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','display','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'none' : 'block')."');");
 
 			$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
-			
+
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
 				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
-				
+
 				// some fundamental values of an existing series should not be changed by the user
 				$readonlys['start'] = $readonlys['whole_day'] = true;
 				$readonlys['recur_type'] = $readonlys['recur_data'] = true;
@@ -1746,7 +1743,7 @@ class calendar_uiforms extends calendar_ui
 				'owner'         =>      'select-account',
 				'cat_id'        =>      'select-cat',
 				'non_blocking'	=>	array(''=>lang('No'), 1=>lang('Yes')),
-		
+
 				'start'		=>	'date-time',
 				'end'		=>	'date-time',
 
@@ -1770,11 +1767,11 @@ class calendar_uiforms extends calendar_ui
 		if($content['recur_type'] || $content['recurrence']) {
 			$content['history']['filter'] = array(
 				'(history_status NOT LIKE \'participants%\' OR (history_status LIKE \'participants%\' AND (
-					history_new_value LIKE \'%' . bo_tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\' OR 
+					history_new_value LIKE \'%' . bo_tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\' OR
 					history_old_value LIKE \'%' . bo_tracking::ONE2N_SEPERATOR . $content['recurrence'] . '\')))'
 			);
 		}
-		
+
 		// Translate labels
 		$tracking = new calendar_tracking();
 		foreach($tracking->field2label as $field => $label) {
