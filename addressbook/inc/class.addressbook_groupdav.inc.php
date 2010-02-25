@@ -1,25 +1,28 @@
 <?php
 /**
- * eGroupWare: GroupDAV access: addressbook handler
+ * EGroupware: GroupDAV access: addressbook handler
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package addressbook
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
 /**
- * eGroupWare: GroupDAV access: addressbook handler
+ * EGroupware: GroupDAV access: addressbook handler
+ *
+ * Propfind now uses a groupdav_propfind_iterator with a callback to query huge addressbooks in chunk,
+ * without getting into problems with memory_limit.
  */
 class addressbook_groupdav extends groupdav_handler
 {
 	/**
 	 * bo class of the application
 	 *
-	 * @var addressbook_vcal
+	 * @var addressbook_bo
 	 */
 	var $bo;
 
@@ -93,33 +96,53 @@ class addressbook_groupdav extends groupdav_handler
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id) filter=".array2string($filter));
 
 		// check if we have to return the full calendar data or just the etag's
-		if (!($address_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CARDDAV) && is_array($options['props']))
+		if (!($filter['address_data'] = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CARDDAV) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
 				if ($prop['name'] == 'address-data')
 				{
-					$address_data = true;
+					$filter['address_data'] = true;
 					break;
 				}
 			}
 		}
-		if ($address_data)
+		// return iterator, calling ourself to return result in chunks
+		$files['files'] = new groupdav_propfind_iterator($this,$filter,$files['files']);
+
+		return true;
+	}
+
+	/**
+	 * Callback for profind interator
+	 *
+	 * @param array $filter
+	 * @param array|boolean $start=false false=return all or array(start,num)
+	 * @return array with "files" array with values for keys path and props
+	 */
+	function &propfind_callback(array $filter,$start=false)
+	{
+		$starttime = microtime(true);
+
+		if (($address_data = $filter['address_data']))
 		{
 			$handler = self::_get_handler();
 		}
+		unset($filter['address_data']);
+
+		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
-		if (($contacts =& $this->bo->search(array(),$address_data ? false : array('id','uid','etag','modified'),'contact_id','','',False,'AND',false,$filter)))
+		if (($contacts =& $this->bo->search(array(),$address_data ? false : array('id','uid','etag','modified'),'contact_id','','',False,'AND',$start,$filter)))
 		{
-			foreach($contacts as $contact)
+			foreach($contacts as &$contact)
 			{
- 				$props = array(
+				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($contact)),
 					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/x-vcard'),
 					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $contact['modified']),
 				);
-			 	if ($address_data)
+				if ($address_data)
 				{
 					$content = $handler->getVCard($contact,$this->charset,false);
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
@@ -129,13 +152,14 @@ class addressbook_groupdav extends groupdav_handler
 				{
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
-				$files['files'][] = array(
+				$files[] = array(
 	            	'path'  => self::get_path($contact),
 	            	'props' => $props,
 				);
 			}
 		}
-		return true;
+		if ($this->debug) error_log(__METHOD__.'('.array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
+		return $files;
 	}
 
 	/**
@@ -224,7 +248,7 @@ class addressbook_groupdav extends groupdav_handler
 			return $contact;
 		}
 		$handler = self::_get_handler();
-		$options['data'] = $handler->getVCard($contact['id'],$this->charset);
+		$options['data'] = $handler->getVCard($contact['id'],$this->charset,false);
 		$options['mimetype'] = 'text/x-vcard; charset='.$this->charset;
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($contact));
@@ -284,13 +308,66 @@ class addressbook_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Query ctag for addressbook
+	 * 
+	 * @return string
+	 */
+	public function getctag($path,$user)
+	{
+		$filter = array();
+		// show addressbook of a single user?
+		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
+		// should we hide the accounts addressbook
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
+		
+		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','','','',$filter);
+		
+		return '"'.$result[0]['modified'].'"';
+	}
+
+	/**
+	 * Add extra properties for addressbook collections
+	 *
+	 * Example for supported-report-set syntax from Apples Calendarserver:
+	 * <D:supported-report-set>
+	 *    <supported-report>
+	 *       <report>
+	 *          <addressbook-query xmlns='urn:ietf:params:xml:ns:carddav'/>
+	 *       </report>
+	 *    </supported-report>
+	 *    <supported-report>
+	 *       <report>
+	 *          <addressbook-multiget xmlns='urn:ietf:params:xml:ns:carddav'/>
+	 *       </report>
+	 *    </supported-report>
+	 * </D:supported-report-set>
+	 * @link http://www.mail-archive.com/calendarserver-users@lists.macosforge.org/msg01156.html
+	 *    
+	 * @param array $props=array() regular props by the groupdav handler
+	 * @return array
+	 */
+	static function extra_properties(array $props=array())
+	{
+		// supported reports (required property for CardDAV)
+		$props[] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
+			HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',
+					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-query','')))),
+			HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',
+					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget','')))),
+		));
+		return $props;
+	}
+
+	/**
 	 * Get the handler and set the supported fields
 	 *
 	 * @return addressbook_vcal
 	 */
 	private function _get_handler()
 	{
-		$handler = new addressbook_vcal();
+		$handler = new addressbook_vcal('addressbook','text/vcard');
 		$handler->setSupportedFields('GroupDAV',$this->agent);
 
 		return $handler;

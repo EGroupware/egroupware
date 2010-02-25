@@ -24,7 +24,7 @@
  *
  * The accounts can be stored in SQL or LDAP too (account_repository):
  * If the account-repository is different from the contacts-repository, the filter all (no owner set)
- * will only search the accounts and NOT the contacts! Only the filter accounts (owner=0) shows accounts.
+ * will only search the contacts and NOT the accounts! Only the filter accounts (owner=0) shows accounts.
  *
  * If sql-ldap is used as contact-storage (LDAP is managed from eGroupWare) the filter all, searches
  * the accounts in the SQL contacts-table too. Change in made in LDAP, are not detected in that case!
@@ -130,6 +130,7 @@ class addressbook_so
 	var $sql_cols_not_to_search = array(
 		'jpegphoto','owner','tid','private','id','cat_id','etag',
 		'modified','modifier','creator','created','tz','account_id',
+		'uid',
 	);
 	/**
 	 * columns to search, if we search for a single pattern
@@ -752,8 +753,8 @@ class addressbook_so
 		if ($owner === '') $owner = null;
 
 		if ($this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
-			(!is_null($owner) && !$owner || !is_null($contact_id) &&
-			($this->contact_repository == 'sql' && (!is_numeric($contact_id) && !is_array($contact_id) )||
+			(!is_null($owner) && !$owner || is_array($contact_id) && $contact_id['account_id'] || !is_null($contact_id) &&
+			($this->contact_repository == 'sql' && (!is_numeric($contact_id) && !is_array($contact_id)) ||
 			 $this->contact_repository == 'ldap' && is_numeric($contact_id))))
 		{
 			return $this->so_accounts;

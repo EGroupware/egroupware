@@ -96,6 +96,13 @@ class addressbook_bo extends addressbook_so
 	var $home_contact_fields = array();
 
 	/**
+	 * Set Logging
+	 *
+	 * @var boolean
+	 */
+	var $log = false;
+
+	/**
 	 * Number and message of last error or false if no error, atm. only used for saving
 	 *
 	 * @var string/boolean
@@ -205,6 +212,7 @@ class addressbook_bo extends addressbook_so
 			'modified'             => lang('last modified'),
 			'modifier'             => lang('last modified by'),
 			'jpegphoto'            => lang('photo'),
+			'account_id'           => lang('Account ID'),
 		);
 		$this->business_contact_fields = array(
 			'org_name'             => lang('Company'),
@@ -390,7 +398,7 @@ class addressbook_bo extends addressbook_so
 	 */
 	function set_all_fileas($fileas_type,$all=false,&$errors=null,$ignore_acl=false)
 	{
-		if ($type != '' && !in_array($type,$this->fileas_types))
+		if ($fileas_type != '' && !in_array($fileas_type, $this->fileas_types))
 		{
 			return false;
 		}
@@ -441,6 +449,98 @@ class addressbook_bo extends addressbook_so
 		return $updated;
 	}
 
+	/**
+	 * Cleanup all contacts db fields of all users  (called by Admin >> Addressbook >> Site configuration (Admin only)
+	 *
+	 * Cleanup means to truncate all unnecessary chars like whitespaces or tabs,
+	 * remove unneeded carriage returns or set empty fields to NULL
+	 *
+	 * @param int &$errors=null on return number of errors
+	 * @return int|boolean number of contacts updated
+	 */
+	function set_all_cleanup(&$errors=null,$ignore_acl=false)
+	{
+		if ($ignore_acl)
+		{
+			unset($this->somain->grants);	// to NOT limit search to contacts readable by current user
+		}
+
+		// fields that must not be touched
+		$fields_exclude = array(
+			'id'			=> true,
+			'tid'			=> true,
+			'owner'			=> true,
+			'private'		=> true,
+			'created'		=> true,
+			'creator'		=> true,
+			'modified'		=> true,
+			'modifier'		=> true,
+			'account_id'	=> true,
+			'etag'			=> true,
+			'uid'			=> true,
+			'freebusy_uri'	=> true,
+			'calendar_uri'	=> true,
+			'photo'			=> true,
+		);
+
+		// to be able to work on huge contact repositories we read the contacts in chunks of 100
+		for($n = $updated = $errors = 0; ($contacts = parent::search(array(),false,'','','',false,'OR',array($n*100,100))); ++$n)
+		{
+			foreach($contacts as $contact)
+			{
+				$fields_to_update = array();
+				foreach($contact as $field_name => $field_value)
+				{
+					if($fields_exclude[$field_name] === true) continue; // dont touch specified field
+
+					if (is_string($field_value) && $field_name != 'pubkey' && $field_name != 'jpegphoto')
+					{
+						// check if field has to be trimmed
+						if (strlen($field_value) != strlen(trim($field_value)))
+						{
+							$fields_to_update[$field_name] = $field_value = trim($field_value);
+						}
+						// check if field contains a carriage return - exclude notes
+						if ($field_name != 'note' && strpos($field_value,"\x0D\x0A") !== false)
+						{
+							$fields_to_update[$field_name] = $field_value = str_replace("\x0D\x0A"," ",$field_value);;
+						}
+					}
+					// check if a field contains an empty string
+					if (is_string($field_value) && strlen($field_value) == 0)
+					{
+						$fields_to_update[$field_name] = $field_value = null;
+					}
+					// check for valid birthday date
+					if ($field_name == 'bday' && $field_value != null &&
+						!preg_match('/^(18|19|20|21|22)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/',$field_value))
+					{
+						$fields_to_update[$field_name] = $field_value = null;
+					}
+				}
+
+				if(count($fields_to_update) > 0)
+				{
+					$contact_to_save = array(
+						'id' => $contact['id'],
+						'owner' => $contact['owner'],
+						'private' => $contact['private'],
+						'account_id' => $contact['account_id'],
+						'uid' => $contact['uid']) + $fields_to_update;
+
+					if ($this->save($contact_to_save,$ignore_acl))
+					{
+						$updated++;
+					}
+					else
+					{
+						$errors++;
+					}
+				}
+			}
+		}
+		return $updated;
+	}
 
 	/**
 	 * get full name from the name-parts
@@ -474,9 +574,9 @@ class addressbook_bo extends addressbook_so
 	function db2data($data)
 	{
 		// convert timestamps from server-time in the db to user-time
-		foreach($this->timestamps as $name)
+		foreach ($this->timestamps as $name)
 		{
-			if(isset($data[$name]))
+			if (isset($data[$name]))
 			{
 				$data[$name] += $this->tz_offset_s;
 			}
@@ -520,9 +620,9 @@ class addressbook_bo extends addressbook_so
 	function data2db($data)
 	{
 		// convert timestamps from user-time to server-time in the db
-		foreach($this->timestamps as $name)
+		foreach ($this->timestamps as $name)
 		{
-			if(isset($data[$name]))
+			if (isset($data[$name]))
 			{
 				$data[$name] -= $this->tz_offset_s;
 			}
@@ -1545,37 +1645,54 @@ class addressbook_bo extends addressbook_so
 	 *
 	 * @param array $contact   the contact data we try to find
 	 * @param boolean $relax=false if asked to relax, we only match against some key fields
-	 * @return the contact_id of the matching entry or false (if none matches)
+	 * @return array od matching contact_ids
 	 */
 	function find_contact($contact, $relax=false)
 	{
-		if (!empty($contact['uid']))
+		if ($this->log)
 		{
-			// Try the given UID first
-			Horde::logMessage('Addressbook find UID: '. $contact['uid'],
-				__FILE__, __LINE__, PEAR_LOG_DEBUG);
-			$criteria = array ('contact_uid' => $contact['uid']);
-			if (($found = parent::search($criteria))
-				&& ($uidmatch = array_shift($found)))
-			{
-				return $uidmatch['contact_id'];
-			}
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+				. '('. ($relax ? 'RELAX': 'EXACT') . ')[ContactData]:'
+				. array2string($contact));
 		}
-		unset($contact['uid']);
 
+		$matchingContacts = array();
 		if ($contact['id'] && ($found = $this->read($contact['id'])))
 		{
-			// We only do a simple consistency check
-			Horde::logMessage('Addressbook find ID: '. $contact['id'],
-				__FILE__, __LINE__, PEAR_LOG_DEBUG);
-			if ((empty($found['n_family']) || $found['n_family'] == $contact['n_family'])
-					&& (empty($found['n_given']) || $found['n_given'] == $contact['n_given'])
-					&& (empty($found['org_name']) || $found['org_name'] == $contact['org_name']))
+			if ($this->log)
 			{
-				return $found['id'];
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. '()[ContactID]: ' . $contact['id']);
+			}
+			// We only do a simple consistency check
+			if (!$relax || ((empty($found['n_family']) || $found['n_family'] == $contact['n_family'])
+					&& (empty($found['n_given']) || $found['n_given'] == $contact['n_given'])
+					&& (empty($found['org_name']) || $found['org_name'] == $contact['org_name'])))
+			{
+				return array($found['id']);
 			}
 		}
 		unset($contact['id']);
+
+		if (!$relax && !empty($contact['uid']))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. '()[ContactUID]: ' . $contact['uid']);
+			}
+			// Try the given UID first
+			$criteria = array ('contact_uid' => $contact['uid']);
+			if (($foundContacts = parent::search($criteria)))
+			{
+				foreach ($foundContacts as $egwContact)
+				{
+					$matchingContacts[] = $egwContact['id'];
+				}
+			}
+			return $matchingContacts;
+		}
+		unset($contact['uid']);
 
 		$columns_to_search = array('n_family', 'n_given', 'n_middle', 'n_prefix', 'n_suffix',
 						'bday', 'org_name', 'org_unit', 'title', 'role',
@@ -1697,28 +1814,47 @@ class addressbook_bo extends addressbook_so
 				}
 			}
 		}
-
-		Horde::logMessage("Addressbook find step 1:\n" . print_r($criteria, true) .
-				  "filter:\n" . print_r($filter, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+				. '()[Addressbook FIND Step 1]: '
+				. 'FILTER:' . array2string($filter)
+				. 'CRITERIA' . array2string($criteria));
+		}
 
 		// first try full match
 		if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
 		{
-			$result =  $foundContacts[0]['id'];
+			foreach ($foundContacts as $egwContact)
+			{
+				$matchingContacts[] = $egwContact['id'];
+			}
 		}
 
 		// No need for more searches for relaxed matching
-		if (!$relax && !$result && !$this->all_empty($contact, $addr_one_fields)
+		if (!$relax || count($matchingContacts)) return $matchingContacts;
+
+
+		if (!$this->all_empty($contact, $addr_one_fields)
 				&& $this->all_empty($contact, $addr_two_fields))
 		{
 			// try given address and ignore the second one in EGW
 			$filter = array_diff($filter, $no_addr_two);
 
-			Horde::logMessage("Addressbook find step 2:\n" . print_r($criteria, true) .
-				"filter:\n" . print_r($filter, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. '()[Addressbook FIND Step 2]: '
+					. 'FILTER:' . array2string($filter)
+					. 'CRITERIA' . array2string($criteria));
+			}
+
 			if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
 			{
-				$result =  $foundContacts[0]['id'];
+				foreach ($foundContacts as $egwContact)
+				{
+					$matchingContacts[] = $egwContact['id'];
+				}
 			}
 			else
 			{
@@ -1743,16 +1879,25 @@ class addressbook_bo extends addressbook_so
 
 				$filter = $filter + $no_addr_one;
 
-				Horde::logMessage("Addressbook find step 3:\n" . print_r($criteria, true) .
-					"filter:\n" . print_r($filter, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+						. '()[Addressbook FIND Step 3]: '
+						. 'FILTER:' . array2string($filter)
+						. 'CRITERIA' . array2string($criteria));
+				}
+
 				if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
 				{
-					$result =  $foundContacts[0]['id'];
+					foreach ($foundContacts as $egwContact)
+					{
+						$matchingContacts[] = $egwContact['id'];
+					}
 				}
 			}
 		}
-		elseif (!$relax && !$result)
-		{ // No more searches for relaxed matching, try again after address swap
+		else
+		{ // try again after address swap
 
 			$filter = $empty_columns;
 
@@ -1791,15 +1936,26 @@ class addressbook_bo extends addressbook_so
 					$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
 				}
 			}
-
-			Horde::logMessage("Addressbook find step 4:\n" . print_r($criteria, true) .
-					  "filter:\n" . print_r($filter, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. '()[Addressbook FIND Step 4]: '
+					. 'FILTER:' . array2string($filter)
+					. 'CRITERIA' . array2string($criteria));
+			}
 			if(($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
 			{
-				$result =  $foundContacts[0]['id'];
+				foreach ($foundContacts as $egwContact)
+				{
+					$matchingContacts[] = $egwContact['id'];
+				}
 			}
 		}
-		return $result;
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+				. '()[FOUND]:' . array2string($matchingContacts));
+		}
+		return $matchingContacts;
 	}
-
 }
