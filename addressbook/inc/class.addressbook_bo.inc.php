@@ -735,7 +735,7 @@ class addressbook_bo extends addressbook_so
 		$org = array();
 		foreach(explode('|||',$org_id) as $part)
 		{
-			list($name,$value) = explode(':',$part);
+			list($name,$value) = explode(':',$part,2);
 			$org[$name] = $value;
 		}
 		$csvs = array('cat_id');	// fields with comma-separated-values
