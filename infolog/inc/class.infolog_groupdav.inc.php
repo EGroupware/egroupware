@@ -7,7 +7,7 @@
  * @package infolog
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -70,6 +70,8 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
+		$starttime = microtime(true);
+
 		// todo add a filter to limit how far back entries from the past get synced
 		$filter = array(
 			'info_type'	=> 'task',
@@ -77,7 +79,7 @@ class infolog_groupdav extends groupdav_handler
 		if ($id) $filter['info_id'] = $id;	// propfind on a single id
 
 		// ToDo: add parameter to only return id & etag
-		if (($tasks = $this->bo->search($params=array(
+		if (($tasks =& $this->bo->search($params=array(
 			'order'		=> 'info_datemodified',
 			'sort'		=> 'DESC',
 			'filter'    => 'own',	// filter my: entries user is responsible for,
@@ -85,7 +87,7 @@ class infolog_groupdav extends groupdav_handler
 			'col_filter'	=> $filter,
 		))))
 		{
-			foreach($tasks as $task)
+			foreach($tasks as &$task)
 			{
 				$files['files'][] = array(
 	            	'path'  => self::get_path($task),
@@ -100,6 +102,7 @@ class infolog_groupdav extends groupdav_handler
 				);
 			}
 		}
+		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files['files']).' items');
 		return true;
 	}
 
@@ -178,7 +181,7 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
-		return $this->bo->read($id,false);
+		return $this->bo->read($id,false,'server');
 	}
 
 	/**
@@ -203,7 +206,7 @@ class infolog_groupdav extends groupdav_handler
 	{
 		if (!is_array($info))
 		{
-			$info = $this->bo->read($info);
+			$info = $this->bo->read($info,true,'server');
 		}
 		if (!is_array($info) || !isset($info['info_id']) || !isset($info['info_datemodified']))
 		{

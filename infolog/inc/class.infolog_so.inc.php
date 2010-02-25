@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -139,19 +139,27 @@ class infolog_so
 	/**
 	 * Filter for a given responsible user: info_responsible either contains a the user or one of his memberships
 	 *
-	 * @param int $user
+	 * @param int|array $users one or more account_ids
 	 * @return string
 	 *
 	 * @todo make the responsible a second table and that filter a join with the responsible table
 	 */
-	function responsible_filter($user)
+	function responsible_filter($users)
 	{
-		if (!$user) return '0';
+		if (!$users) return '0';
 
-		$responsible = $user > 0 ? $GLOBALS['egw']->accounts->memberships($user,true) :
-			$GLOBALS['egw']->accounts->members($user,true);
-
-		$responsible[] = $user;
+		$responsible = array();
+		foreach((array)$users as $user)
+		{
+			$responsible = array_merge($responsible,
+				$user > 0 ? $GLOBALS['egw']->accounts->memberships($user,true) :
+					$GLOBALS['egw']->accounts->members($user,true));
+			$responsible[] = $user;
+		}
+		if (is_array($users))
+		{
+			$responsible = array_unique($responsible);
+		}
 		foreach($responsible as $key => $uid)
 		{
 			$responsible[$key] = $this->db->concat("','",'info_responsible',"','")." LIKE '%,$uid,%'";
@@ -171,13 +179,17 @@ class infolog_so
 	 */
 	function aclFilter($filter = False)
 	{
-		preg_match('/(my|responsible|delegated|own|privat|private|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
+		preg_match('/(my|responsible|delegated|own|privat|private|all|none|user)([0-9,-]*)/',$filter_was=$filter,$vars);
 		$filter = $vars[1];
-		$f_user   = intval($vars[2]);
+		$f_user = $vars[2];
 
 		if (isset($this->acl_filter[$filter.$f_user]))
 		{
 			return $this->acl_filter[$filter.$f_user];  // used cached filter if found
+		}
+		if ($f_user && strpos($f_user,',') !== false)
+		{
+			$f_user = explode(',',$f_user);
 		}
 
 		$filtermethod = " (info_owner=$this->user"; // user has all rights
@@ -236,9 +248,11 @@ class infolog_so
 			}
 			$filtermethod .= ') ';
 
-			if ($filter == 'user' && $f_user > 0)
+			if ($filter == 'user' && $f_user)
 			{
-				$filtermethod .= " AND (info_owner=$f_user AND info_responsible='0' OR ".$this->responsible_filter($f_user).')';
+				$filtermethod .= $this->db->expression($this->info_table,' AND (',array(
+					'info_owner' => $f_user,
+				)," AND info_responsible='0' OR ",$this->responsible_filter($f_user),')');
 			}
 		}
 		//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
@@ -724,18 +738,24 @@ class infolog_so
 				if (substr($col,0,5) != 'info_' && substr($col,0,1)!='#') $col = 'info_'.$col;
 				if (!empty($data) && preg_match('/^[a-z_0-9]+$/i',$col))
 				{
-					if ($col == 'info_responsible')
+					switch ($col)
 					{
-						$data = (int) $data;
-						if (!$data) continue;
-						$filtermethod .= " AND (".$this->responsible_filter($data)." OR info_responsible='0' AND ".
-							$this->db->expression($this->info_table,array(
-								'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
-							)).')';
-					}
-					else
-					{
-						$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
+						case 'info_responsible':
+							$data = (int) $data;
+							if (!$data) continue;
+							$filtermethod .= ' AND ('.$this->responsible_filter($data)." OR info_responsible='0' AND ".
+								$this->db->expression($this->info_table,array(
+									'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
+								)).')';
+							break;
+
+						case 'info_id':	// info_id itself is ambigous
+							$filtermethod .= ' AND '.$this->db->expression($this->info_table,'main.',array('info_id' => $data));
+							break;
+
+						default:
+							$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
+							break;
 					}
 				}
 				if ($col[0] == '#' &&  $query['custom_fields'] && $data)

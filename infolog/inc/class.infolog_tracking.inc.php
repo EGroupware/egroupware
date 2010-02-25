@@ -169,11 +169,11 @@ class infolog_tracking extends bo_tracking
 		{
 			return lang('%1 deleted by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
 				$GLOBALS['egw']->common->grab_owner_name($data['info_modifier']),
-				$this->datetime($data['info_datemodified']-$this->infolog->tz_offset_s));
+				$this->datetime($data['info_datemodified']));
 		}
 		return lang('%1 modified by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
 			$GLOBALS['egw']->common->grab_owner_name($data['info_modifier']),
-			$this->datetime($data['info_datemodified']-$this->infolog->tz_offset_s));
+			$this->datetime($data['info_datemodified']));
 	}
 
 	/**
@@ -207,10 +207,10 @@ class infolog_tracking extends bo_tracking
 			'info_owner'     => $GLOBALS['egw']->common->grab_owner_name($data['info_owner']),
 			'info_status'    => lang($data['info_status']=='deleted'?'deleted':$this->infolog->status[$data['info_type']][$data['info_status']]),
 			'info_percent'   => (int)$data['info_percent'].'%',
-			'info_datecompleted' => $data['info_datecomplete'] ? $this->datetime($data['info_datecompleted']-$this->infolog->tz_offset_s) : '',
+			'info_datecompleted' => $data['info_datecomplete'] ? $this->datetime($data['info_datecompleted']) : '',
 			'info_location'  => $data['info_location'],
-			'info_startdate' => $data['info_startdate'] ? $this->datetime($data['info_startdate']-$this->infolog->tz_offset_s,null) : '',
-			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate']-$this->infolog->tz_offset_s,false) : '',
+			'info_startdate' => $data['info_startdate'] ? $this->datetime($data['info_startdate'],null) : '',
+			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate'],false) : '',
 			'info_responsible' => implode(', ',$responsible),
 			'info_subject'   => $data['info_subject'],
 		) as $name => $value)
