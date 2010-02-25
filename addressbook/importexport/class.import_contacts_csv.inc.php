@@ -46,14 +46,14 @@ class import_contacts_csv implements iface_import_plugin  {
 	/**
 	 * actions wich could be done to data entries
 	 */
-	private static $actions = array( 'none', 'update', 'insert', 'delete', );
+	protected static $actions = array( 'none', 'update', 'insert', 'delete', );
 
 	/**
 	 * conditions for actions
 	 *
 	 * @var array
 	 */
-	private static $conditions = array( 'exists', 'greater', 'greater or equal', );
+	protected static $conditions = array( 'exists', 'greater', 'greater or equal', );
 
 	/**
 	 * @var definition
@@ -64,6 +64,11 @@ class import_contacts_csv implements iface_import_plugin  {
 	 * @var bocontacts
 	 */
 	private $bocontacts;
+
+	/**
+	* For figuring out if a contact has changed
+	*/
+	protected $tracking;
 
 	/**
 	 * @var bool
@@ -79,6 +84,11 @@ class import_contacts_csv implements iface_import_plugin  {
 	 * @var int
 	 */
 	private $user = null;
+
+	/**
+	 * List of import errors
+	 */
+	protected $errors = array();
 
 	/**
 	 * imports entries according to given definition object.
@@ -104,6 +114,9 @@ class import_contacts_csv implements iface_import_plugin  {
 		// fetch the addressbook bo
 		$this->bocontacts = new addressbook_bo();
 
+		// Get the tracker for changes
+		$this->tracking = new addressbook_tracking($this->bocontacts);
+
 		// set FieldMapping.
 		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
 
@@ -111,15 +124,25 @@ class import_contacts_csv implements iface_import_plugin  {
 		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
 
 		//check if file has a header lines
-		if ( isset( $_definition->plugin_options['num_header_lines'] ) ) {
+		if ( isset( $_definition->plugin_options['num_header_lines'] ) && $_definition->plugin_options['num_header_lines'] > 0) {
 			$import_csv->skip_records($_definition->plugin_options['num_header_lines']);
+		} elseif(isset($_definition->plugin_options['has_header_line']) && $_definition->plugin_options['has_header_line']) {
+			// First method is preferred
+			$import_csv->skip_records(1);
 		}
 
 		// set eventOwner
 		$_definition->plugin_options['contact_owner'] = isset( $_definition->plugin_options['contact_owner'] ) ?
 			$_definition->plugin_options['contact_owner'] : $this->user;
 
+		// Start counting successes
+		$count = 0;
+
+		// Failures
+		$this->errors = array();
+
 		while ( $record = $import_csv->get_record() ) {
+			$success = false;
 
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
@@ -127,7 +150,6 @@ class import_contacts_csv implements iface_import_plugin  {
 			if ( $_definition->plugin_options['contact_owner'] != -1 ) {
 				$record['owner'] = $_definition->plugin_options['contact_owner'];
 			} else unset( $record['owner'] );
-
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
@@ -148,11 +170,11 @@ class import_contacts_csv implements iface_import_plugin  {
 										if ( !is_array( $record['cat_id'] ) ) $record['cat_id'] = explode( ',', $record['cat_id'] );
 										$record['cat_id'] = implode( ',', array_unique( array_merge( $record['cat_id'], $contact['cat_id'] ) ) );
 									}
-									$this->action(  $action['action'], $record );
+									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
 								}
 							} else {
 								$action = $condition['false'];
-								$this->action( $action['action'], $record );
+								$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
 							}
 							break;
 
@@ -165,9 +187,11 @@ class import_contacts_csv implements iface_import_plugin  {
 				}
 			} else {
 				// unconditional insert
-				$this->action( 'insert', $record );
+				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
 			}
+			if($success) $count++;
 		}
+		return $count;
 	}
 
 	/**
@@ -177,16 +201,31 @@ class import_contacts_csv implements iface_import_plugin  {
 	 * @param array $_data contact data for the action
 	 * @return bool success or not
 	 */
-	private function action ( $_action, $_data ) {
+	private function action ( $_action, $_data, $record_num = 0 ) {
 		switch ($_action) {
 			case 'none' :
 				return true;
 			case 'update' :
+				// Only update if there are changes
+				$old = $this->bocontacts->read($_data['id']);
+
+				// Merge to deal with fields not in import record
+				$_data = array_merge($old, $_data);
+				$changed = $this->tracking->changed_fields($_data, $old);
+				if(count($changed) == 0) {
+					return true;
+				} 
+				// Fall through
 			case 'insert' :
 				if ( $this->dry_run ) {
 					print_r($_data);
+					return true;
 				} else {
-					return $this->bocontacts->save( $_data );
+					$result = $this->bocontacts->save( $_data, $this->is_admin);
+					if(!$result) {
+						$this->errors[$record_num] = $this->bocontacts->error;
+					}
+					return $result;
 				}
 			case 'delete' :
 		}
@@ -198,7 +237,7 @@ class import_contacts_csv implements iface_import_plugin  {
 	 * @return string name
 	 */
 	public static function get_name() {
-		return lang('Addressbook CSV export');
+		return lang('Addressbook CSV import');
 	}
 
 	/**
@@ -244,5 +283,16 @@ class import_contacts_csv implements iface_import_plugin  {
 		// lets do it!
 	}
 
+	/**
+        * Returns errors that were encountered during importing
+        * Maximum of one error message per record, but you can append if you need to
+        *
+        * @return Array (
+        *       record_# => error message
+        *       )
+        */
+        public function get_errors() {
+		return $this->errors;
+	}
 } // end of iface_export_plugin
 ?>
