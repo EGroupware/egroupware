@@ -173,7 +173,7 @@ class calendar_ical extends calendar_boupdate
 	 *
 	 * @var boolean
 	 */
-	var $log = true;
+	var $log = false;
 	var $logfile="/tmp/log-vcal";
 
 
@@ -377,7 +377,7 @@ class calendar_ical extends calendar_boupdate
 				}
 				if ($serverTZ)
 				{
-					$serverTZ = $this->generate_vtimezone($event, $vcal);
+					$serverTZ = self::generate_vtimezone($event, $vcal);
 				}
 			}
 
@@ -1604,6 +1604,11 @@ class calendar_ical extends calendar_boupdate
 			{
 				$this->useServerTZ = ($deviceInfo['tzid'] == 1);
 			}
+			elseif (strpos($this->productName, 'palmos') !== false)
+			{
+				// for palmos we have to use user-time and NO timezone
+				$this->useServerTZ = false;
+			}
 			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
 			{
 				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
@@ -1628,25 +1633,6 @@ class calendar_ical extends calendar_boupdate
 				$this->productName = strtolower($deviceInfo['model']);
 			}
 		}
-
-		if (in_array($this->productManufacturer,array('file','groupdav')))
-		{
-			$this->useServerTZ = true;
-		}
-
-		if ($this->log)
-		{
-			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				'(' . $this->productManufacturer .
-				', '. $this->productName .', ' .
-				($this->useServerTZ ? 'TRUE' : 'FALSE') .
-				")\n" , 3, $this->logfile);
-		}
-
-		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
-		//	. $this->productName .', ' .
-		//	($this->useServerTZ ? 'TRUE' : 'FALSE') .')',
-		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$defaultFields['minimal'] = array(
 			'public'			=> 'public',
@@ -1811,10 +1797,12 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
+				$this->useServerTZ = true;
 				$this->supportedFields = $defaultFields['full'];
 				break;
 
 			case 'groupdav':		// all GroupDAV access goes through here
+				$this->useServerTZ = true;
 				switch ($this->productName)
 				{
 					default:
@@ -1830,8 +1818,21 @@ class calendar_ical extends calendar_boupdate
 			default:
 				error_log("Unknown calendar SyncML client: manufacturer='$this->productManufacturer'  product='$this->productName'");
 				$this->supportedFields = $defaultFields['synthesis'];
-				break;
 		}
+
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'(' . $this->productManufacturer .
+				', '. $this->productName .', ' .
+				($this->useServerTZ ? 'SERVERTIME' : 'USERTIME') .
+				")\n" , 3, $this->logfile);
+		}
+
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
+		//	. $this->productName .', ' .
+		//	($this->useServerTZ ? 'TRUE' : 'FALSE') .')',
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
 	function icaltoegw($_vcalData)
@@ -2720,7 +2721,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $vcal VCALENDAR entry
 	 * @return string local timezone name (e.g. 'CET/CEST')
 	 */
-	function generate_vtimezone($event, &$vcal)
+	static function generate_vtimezone($event, &$vcal)
 	{
 		$dayofweek = array('SU','MO','TU','WE','TH','FR','SA');
 		$tbl_tz = array(
@@ -2972,7 +2973,7 @@ class calendar_ical extends calendar_boupdate
 			$value2['minute'] = $minutes % 60;
 
 			$daylight = Horde_iCalendar::newComponent('DAYLIGHT', $container);
-			$dtstart = $this->calc_dtstart($year, $tbl_tz_row[5],
+			$dtstart = self::calc_dtstart($year, $tbl_tz_row[5],
 				$tbl_tz_row[6], $tbl_tz_row[7], $tbl_tz_row[8], $tbl_tz_row[9]);
 			$daylight->setAttribute('DTSTART', $dtstart);
 			$byday = ($tbl_tz_row[7] == 5 ? '-1' : $tbl_tz_row[7]) . $dayofweek[$tbl_tz_row[6]];
@@ -2987,7 +2988,7 @@ class calendar_ical extends calendar_boupdate
 			$daylight->setAttribute('TZOFFSETTO', $value1);
 
 			$standard = Horde_iCalendar::newComponent('STANDARD', $container);
-			$dtstart = $this->calc_dtstart($year, $tbl_tz_row[10], $tbl_tz_row[11],
+			$dtstart = self::calc_dtstart($year, $tbl_tz_row[10], $tbl_tz_row[11],
 				$tbl_tz_row[12], $tbl_tz_row[13], $tbl_tz_row[14]);
 			$standard->setAttribute('DTSTART', $dtstart);
 			$byday = ($tbl_tz_row[12] == 5 ? '-1' : $tbl_tz_row[12]) . $dayofweek[$tbl_tz_row[11]];
@@ -3024,7 +3025,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param int $wMinute
 	 * @return string DTSTART entry
 	 */
-	function calc_dtstart($wYear, $wMonth, $wDayOfWeek, $wNth, $wHour, $wMinute)
+	static function calc_dtstart($wYear, $wMonth, $wDayOfWeek, $wNth, $wHour, $wMinute)
 	{
 		if (!$wYear) $wYear = 1981;
 		if ($wNth < 5)
