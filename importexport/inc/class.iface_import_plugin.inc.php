@@ -31,6 +31,7 @@ interface iface_import_plugin {
 	 *
 	 * @param stram $_stram
 	 * @param definition $_definition
+	 * @return int number of successful imports
 	 */
 	public function import( $_stream, definition $_definition );
 	
@@ -75,6 +76,16 @@ interface iface_import_plugin {
 	 * @return string etemplate name
 	 */
 	public function get_selectors_etpl();
+
+	/**
+	* Returns errors that were encountered during importing
+	* Maximum of one error message per record, but you can concatenate them if you need to
+	*
+	* @return Array (
+	*	record_# => error message
+	*	)
+	*/
+	public function get_errors();
 
 } // end of iface_export_plugin
 ?>

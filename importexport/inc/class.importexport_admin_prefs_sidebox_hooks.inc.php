@@ -62,6 +62,9 @@ class importexport_admin_prefs_sidebox_hooks
 				'Define {im|ex}ports'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'importexport.uidefinitions.index',
 				)),
+				'Schedule' => $GLOBALS['egw']->link('/index.php', array(
+					'menuaction' => 'importexport.importexport_schedule_ui.index'
+				)),
 			);
 			if ($location == 'admin')
 			{

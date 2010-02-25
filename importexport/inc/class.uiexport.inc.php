@@ -57,7 +57,8 @@ class uiexport {
 		if(empty($_content)) {
 			$et = new etemplate(self::_appname. '.export_dialog');
 			$_appname = $_GET['appname'];
-			$_definition =$_GET['definition'] = 'expert';
+			//$_definition = $_GET['definition'] = 'expert';
+			$_definition = $_GET['definition'];
 			$_plugin = $_GET['plugin']; // NOTE: definition _must_ be 'expert' if for plugin to be used!
 			$_selection = $_GET['selection'];
 			
@@ -67,6 +68,7 @@ class uiexport {
 				$content['appname'] = $_appname;
 				$preserv['appname'] = $_appname;
 				$readonlys['appname'] = true;
+				$this->js->set_onload("export_dialog.appname = '$_appname';");
 				$this->js->set_onload("set_style_by_class('tr','select_appname','display','none');");
 
 				// fill definitions
@@ -84,8 +86,9 @@ class uiexport {
 				}
 				unset($definitions);
 				$sel_options['definition']['expert'] = lang('Expert options');
+
 				
-				if(isset($_definition) && array_key_exists($_definition,$sel_options)) {
+				if(isset($_definition) && array_key_exists($_definition,$sel_options['definition'])) {
 					$content['definition'] = $_definition;
 				}
 				else {
@@ -98,16 +101,17 @@ class uiexport {
 				$sel_options['plugin'] = $this->export_plugins[$_appname]['export'];
 				
 				// show definitions or plugins in ui?
-				if($content['defintion'] == 'expert') {
+				if($content['definition'] == 'expert') {
 					if(isset($_plugin) && array_key_exists($_plugin,$sel_options['plugin'])) {
 						$content['plugin'] = $_plugin;
 						$selected_plugin = $_plugin;
-						error_log('hallo');
 					}
 					else {
-						$plugins_classnames = array_keys($plugins);
+/*
+						$plugins_classnames = array_keys($sel_options['plugin']);
 						$selected_plugin = $plugins_classnames[0];
 						$sel_options['plugin'] = $plugins;
+*/
 					}
 					$this->js->set_onload("set_style_by_class('tr','select_definition','display','none');");
 				}
@@ -120,15 +124,17 @@ class uiexport {
 				}
 				
 				// handle selector
-				//$plugin_object = new $selected_plugin;
-				
-				//$content['description'] = $plugin_object->get_description();
-				
-				// fill options tab
-				// TODO: do we need all options templates online?
-				// NO, we can manipulate the session array of template id on xajax request
-				// however, there might be other solutions... we solve this in 1.3
-				//$content['plugin_options_html'] = $plugin_object->get_options_etpl();
+				if($selected_plugin) {
+					$plugin_object = new $selected_plugin;
+					
+					$content['description'] = $plugin_object->get_description();
+					
+					// fill options tab
+					// TODO: do we need all options templates online?
+					// NO, we can manipulate the session array of template id on xajax request
+					// however, there might be other solutions... we solve this in 1.3
+					$content['plugin_options_html'] = $plugin_object->get_options_etpl();
+				}
 				
 				// fill selection tab
 				if ($_selection) {
@@ -169,7 +175,7 @@ class uiexport {
 			//error_log(__LINE__.__FILE__.'$_content: '.print_r($_content,true));
 			$response = new xajaxResponse();
 			
-			if ($_content['defintion'] == 'expert') {
+			if ($_content['definition'] == 'expert') {
 				$definition = new definition();
 				$definition->definition_id	= $_content['definition_id'] ? $_content['definition_id'] : '';
 				$definition->name			= $_content['name'] ? $_content['name'] : '';
@@ -247,11 +253,52 @@ class uiexport {
 		return $et->exec(self::_appname. '.uiexport.export_dialog',$content,$sel_options,$readonlys,$preserv,2);
 	}
 	
-	public function ajax_get_plugins($_appname) {
-		$response = new xajaxResponse();
+	public function ajax_get_definitions($_appname, xajaxResponse &$response = null) {
+		if(is_null($response)) {
+			$response = new xajaxResponse();
+		} else {
+			$no_return = true;
+		}
+		if (!$_appname) {
+			$response->addScript("set_style_by_class('tr','select_definition','display','none');");
+			return $no_return ? '' : $response->getXML();
+		}
+		
+		$definitions = new bodefinitions(array(
+			'type' => 'export',
+			'application' => $_appname
+		));
+		foreach ((array)$definitions->get_definitions() as $identifier) {
+				$definition = new definition($identifier);
+				if ($title = $definition->get_title()) {
+					if (!$selected_plugin) $selected_plugin = $plugin;
+					$sel_options['definition'] .= '<option value="'. $title. '" >'. $title. '</option>';
+				}
+				unset($definition);
+		}
+		unset($definitions);
+		$sel_options['definition'] .= '<option value="expert">' . lang('Expert options') . '</option';
+		
+		if($selected_plugin == 'expert') {
+			$this->ajax_get_plugins($_appname, $response);
+		} else {
+			$response->addScript("set_style_by_class('tr','select_plugin','display','none');");
+		}
+		$response->addScript('export_dialog.change_definition(document.getElementId(\'exec[definition]\'));');
+		$response->addAssign('exec[definition]','innerHTML',$sel_options['definition']);
+		$response->addScript("set_style_by_class('tr','select_definition','display','table-row');");
+		return $no_return ? '' : $response->getXML();
+	}
+	
+	public function ajax_get_plugins($_appname, xajaxResponse &$response = null) {
+		if(!is_null($response)) {
+			$no_return = true;
+		} else {
+			$response = new xajaxResponse();
+		}
 		if (!$_appname) {
 			$response->addScript("set_style_by_class('tr','select_plugin','display','none');");
-			return $response->getXML();
+			return $no_return ? '' : $response->getXML();
 		}
 		
 		(array)$plugins = import_export_helper_functions::get_plugins($_appname,'export');
@@ -264,27 +311,49 @@ class uiexport {
 		$this->ajax_get_plugin_description($selected_plugin,$response);
 		$response->addAssign('exec[plugin]','innerHTML',$sel_options['plugin']);
 		$response->addScript("set_style_by_class('tr','select_plugin','display','table-row');");
-		return $response->getXML();
+		return $no_return ? '' : $response->getXML();
 	}
 	
-	public function ajax_get_plugin_description($_plugin,$_response=false) {
-		$response = $_response ? $_response : new xajaxResponse();
-		if (!$_plugin) return $response->getXML();
+	public function ajax_get_definition_description($_definition, xajaxResponse &$response=null) {
+		$no_return = !is_null($response);
+		if(is_null($response)) {
+			$response = new xajaxResponse();
+		}
+		if (!$_definition) return $response->getXML();
+		$_object = new definition($_definition);
+		if (is_a($_object, 'definition')) {
+			$description = $_object->description;
+			$response->assign('exec[plugin_description]','innerHTML',$description);
+		}
+		unset ($_object);
+
+		return $no_return ? '' : $response->getXML();
+	}
+	
+	public function ajax_get_plugin_description($_plugin,&$_response=false) {
+		$no_return = !is_null($response);
+		if(is_null($response)) {
+			$response = new xajaxResponse();
+		}
+		if (!$_plugin) return $no_return ? '' : $response->getXML();
 
 		$plugin_object = new $_plugin;
 		if (is_a($plugin_object, 'iface_export_plugin')) {
 			$description = $plugin_object->get_description();
-			$_response->addAssign('plugin_description','style.width','300px');
-			$_response->addAssign('plugin_description','innerHTML',$description);
+			$_response->addAssign('exec[plugin_description]','innerHTML',$description);
 		}
 		unset ($plugin_object);
 		
-		return $_response ? '' : $response->getXML();
+		return $no_return ? '' : $response->getXML();
 	}
 	
 	public function ajax_get_plugin_options($_plugin,$_response=false) {
+		$no_return = !is_null($response);
+		if(is_null($response)) {
+			$response = new xajaxResponse();
+		}
 		$response = $_response ? $_response : new xajaxResponse();
-		if (!$_plugin) return $response->getXML();
+		if (!$_plugin) return $no_return ? '' : $response->getXML();
 		
 		$plugin_object = new $_plugin;
 		if (is_a($plugin_object, 'iface_export_plugin')) {

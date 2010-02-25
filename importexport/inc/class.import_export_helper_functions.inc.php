@@ -184,7 +184,7 @@ class import_export_helper_functions {
 		$CntlPre = '|TC{';		    // Filter all cntl-chars \x01-\x1f and trim
 		$CntlnCLPre  = '|TCnCL{';   // Like |C{ but allowes CR and LF
 		$INE = '|INE{';             // Only insert if stuff in ^^ is not empty
-		
+
 		foreach ( $_conversion as $idx => $conversion_string ) {
 			if ( empty( $conversion_string ) ) continue;
 			
@@ -221,7 +221,7 @@ class import_export_helper_functions {
 			}
 			// clean each field
 			$val = preg_replace_callback("/(\|T\{|\|TC\{|\|TCnCL\{|\|INE\{)(.*)\}/", array( self, 'strclean'), $val );
-			
+
 			$_record[$idx] = $val;
 		}
 		return $_record;
@@ -249,7 +249,6 @@ class import_export_helper_functions {
 	}
 	
 	private static function strclean( $_matches ) {
-		//print_r($_matches);
 		switch( $_matches[1] ) {
 			case '|T{' : return trim( $_matches[2] );
 			case '|TC{' : return trim( preg_replace( '/[\x01-\x1F]+/', '', $_matches[2] ) );

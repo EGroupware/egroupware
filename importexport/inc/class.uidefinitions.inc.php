@@ -19,7 +19,7 @@ require_once('class.bodefinitions.inc.php');
  */
 class uidefinitions
 {
-	const _debug = true;
+	const _debug = false;
 
 	const _appname = 'importexport';
 
@@ -64,12 +64,12 @@ class uidefinitions
 		$this->steps = array(
 			'wizzard_step10' => lang('Choose an application'),
 			'wizzard_step20' => lang('Choose a plugin'),
-			'wizzard_step80' => lang('Which useres are allowed for this definition'),
+			'wizzard_step80' => lang('Which users are allowed to use this definition'),
 			'wizzard_step90' => lang('Choose a name for this definition'),
 			'wizzard_finish' => '',
 		);
-		//register plugins (depricated)
-		//$this->plugins = bodefinitions::plugins();
+		//register plugins
+		$this->plugins = import_export_helper_functions::get_plugins();
 	}
 
 	/**
@@ -134,7 +134,7 @@ class uidefinitions
 		}
 		$definition = array('name' => $_definition);
 		$bodefinitions = new bodefinitions();
-		$bodefinitions->read($definition);
+		$definition = $bodefinitions->read($definition);
 		$definition['edit'] = true;
 		$this->wizzard($definition);
 	}
@@ -160,8 +160,9 @@ class uidefinitions
 			if($content['plugin'] && $content['application'])
 			{
 				// we need to deal with the wizzard object if exists
-				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/inc/class.wizzard_'. $content['plugin'].'.inc.php'))
+				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizzard_'. $content['plugin'].'.inc.php'))
 				{
+					require_once(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizzard_'. $content['plugin'].'.inc.php');
 					$wizzard_plugin = 'wizzard_'.$content['plugin'];
 				}
 				else
@@ -169,7 +170,10 @@ class uidefinitions
 					$wizzard_plugin = $content['plugin'];
 				}
 				$this->plugin = is_object($GLOBALS['egw']->$wizzard_plugin) ? $GLOBALS['egw']->$wizzard_plugin : new $wizzard_plugin;
-				if(!is_object($GLOBALS['egw']->uidefinitions)) $GLOBALS['egw']->uidefinitions =& $this;
+
+				// Global object needs to be the same, or references to plugin don't work
+				if(!is_object($GLOBALS['egw']->uidefinitions) || $GLOBALS['egw']->uidefinitions !== $this) 
+					$GLOBALS['egw']->uidefinitions =& $this;
 			}
 			// deal with buttons even if we are not on ajax
 			if(isset($content['button']) && array_search('pressed',$content['button']) === false && count($content['button']) == 1)
@@ -273,7 +277,7 @@ class uidefinitions
 			$plugin_definition =  $this->plugins[$content['application']][$content['plugin']]['definition'];
 			if($plugin_definition) $this->plugin = new $plugin_definition;
 		}*/
-		if(is_object($this->plugin))
+		if(is_object($this->plugin) && is_array($this->plugin->steps))
 		{
 			$steps = array_merge($this->steps,$this->plugin->steps);
 			$steps = array_flip($steps); asort($steps);	$steps = array_flip($steps);
@@ -331,7 +335,7 @@ class uidefinitions
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
-					$content['type'] = $this->plugin->plugin_info['type'];
+					$content['type'] = $this->plugin instanceof iface_import_plugin ? 'import' : 'export';
 					return $this->get_step($content['step'],1);
 				case 'previous' :
 					unset ($content['plugin']);
@@ -347,7 +351,11 @@ class uidefinitions
 		else
 		{
 			$content['msg'] = $this->steps['wizzard_step20'];
-			foreach ($this->plugins[$content['application']] as $plugin => $info) $sel_options['plugin'][$plugin] = $info['name'];
+			foreach ($this->plugins[$content['application']] as $type => $plugins) {
+				foreach($plugins as $plugin => $name) {
+					$sel_options['plugin'][$plugin] = $name;
+				}
+			}
 			$content['step'] = 'wizzard_step20';
 			$preserv = $content;
 			unset ($preserv['button']);
@@ -427,6 +435,11 @@ class uidefinitions
 	function wizzard_finish(&$content)
 	{
 		if(self::_debug) error_log('importexport.uidefinitions::wizzard_finish->$content '.print_r($content,true));
+		// Take out some UI leavings
+		unset($content['msg']);
+		unset($content['step']);
+		unset($content['button']);
+
 		$bodefinitions = new bodefinitions();
 		$bodefinitions->save($content);
 		// This message is displayed if browser cant close window

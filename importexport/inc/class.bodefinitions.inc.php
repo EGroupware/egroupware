@@ -71,6 +71,17 @@ class bodefinitions {
 	}
 
 	/**
+	* Save a definition
+	*
+	* @param definition $definition
+	*/
+	public function save(Array $data) {
+		$definition = new definition();
+		$definition->set_record($data);
+		$definition->save($data['definition_id']);
+	}
+
+	/**
 	 * checkes if user if permitted to access given definition
 	 *
 	 * @param array $_definition
