@@ -123,12 +123,9 @@ class addressbook_vcal extends addressbook_bo
 	*/
 	function addVCard($_vcard, $_abID=null, $merge=false)
 	{
-		if(!$contact = $this->vcardtoegw($_vcard, $_abID))
-		{
-			return false;
-		}
+		if (!($contact = $this->vcardtoegw($_vcard, $_abID))) return false;
 
-		if($_abID)
+		if ($_abID)
 		{
 			if (($old_contact = $this->read($_abID)))
 			{
@@ -252,7 +249,7 @@ class addressbook_vcal extends addressbook_bo
 					$value = trim($entry[$databaseField]);
 				}
 
-				switch($databaseField)
+				switch ($databaseField)
 				{
 					case 'private':
 						$value = $value ? 'PRIVATE' : 'PUBLIC';
@@ -671,24 +668,24 @@ class addressbook_vcal extends addressbook_bo
 				}
 			}
 
-			if($rowName == 'EMAIL')
+			if ($rowName == 'EMAIL')
 			{
 				$rowName .= ';X-egw-Ref' . $email++;
 			}
 
-			if(($rowName == 'TEL;CELL') ||
+			if (($rowName == 'TEL;CELL') ||
 					($rowName == 'TEL;CELL;VOICE'))
 			{
 				$rowName = 'TEL;CELL;X-egw-Ref' . $cell++;
 			}
 
-			if(($rowName == 'TEL') ||
+			if (($rowName == 'TEL') ||
 					($rowName == 'TEL;VOICE'))
 			{
 				$rowName = 'TEL;X-egw-Ref' . $tel++;
 			}
 
-			if($rowName == 'URL')
+			if ($rowName == 'URL')
 			{
 				$rowName = 'URL;X-egw-Ref' . $url++;
 			}
@@ -711,7 +708,7 @@ class addressbook_vcal extends addressbook_bo
 
 		foreach ($rowNames as $vcardKey => $rowName)
 		{
-			switch($rowName)
+			switch ($rowName)
 			{
 				case 'VERSION':
 					break;

@@ -480,8 +480,8 @@ class addressbook_bo extends addressbook_so
 
 		// fields that must not be touched
 		$fields_exclude = array(
-			'id'				=> true,
-			'tid'				=> true,
+			'id'			=> true,
+			'tid'			=> true,
 			'owner'			=> true,
 			'private'		=> true,
 			'created'		=> true,
@@ -490,9 +490,9 @@ class addressbook_bo extends addressbook_so
 			'modifier'		=> true,
 			'account_id'	=> true,
 			'etag'			=> true,
-			'uid'				=> true,
+			'uid'			=> true,
 			'freebusy_uri'	=> true,
-			'calendar_uri' => true,
+			'calendar_uri'	=> true,
 			'photo'			=> true,
 		);
 
@@ -674,21 +674,22 @@ class addressbook_bo extends addressbook_so
 			$ok = false;
 			if ($this->check_perms(EGW_ACL_DELETE,$c,$deny_account_delete))
 			{
-				if(!($old = $this->read($id))) return false;
-				if($this->delete_history != '' && $old['tid'] != addressbook_so::DELETED_TYPE) 
+				if (!($old = $this->read($id))) return false;
+				if ($this->delete_history != '' && $old['tid'] != addressbook_so::DELETED_TYPE)
 				{
 					$delete = $old;
 					$delete['tid'] = addressbook_so::DELETED_TYPE;
 					$ok = $this->save($delete);
 					egw_link::unlink(0,'addressbook',$id,'','!file');
-				} 
-				elseif($ok = parent::delete($id,$check_etag)) 
+				}
+				elseif (($ok = parent::delete($id,$check_etag)))
 				{
 					egw_link::unlink(0,'addressbook',$id);
 				}
 
 				// Don't notify of final purge
-				if($ok && $old['tid'] != addressbook_so::DELETED_TYPE) {
+				if ($ok && $old['tid'] != addressbook_so::DELETED_TYPE)
+				{
 					$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
 					$this->tracking->track(array('id' => $id), array('id' => $id), null, true);
 				}
@@ -761,11 +762,11 @@ class addressbook_bo extends addressbook_so
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
 		// set full name and fileas from the content
-		if (strlen($fullname = $this->fullname($contact)) > 0 && (!isset($contact['n_fn']) || $contact['n_fn'] != $fullname)) {
-			$contact['n_fn'] = $fullname;
+		if (!isset($contact['n_fn']))
+		{
+			$contact['n_fn'] = $this->fullname($contact);
 			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
-		unset($fullname);
 		$to_write = $contact;
 		// (non-admin) user editing his own account, make sure he does not change fields he is not allowed to (eg. via SyncML or xmlrpc)
 		if (!$ignore_acl && !$contact['owner'] && !$this->is_admin($contact))
@@ -1715,9 +1716,9 @@ class addressbook_bo extends addressbook_so
 					. '()[ContactID]: ' . $contact['id']);
 			}
 			// We only do a simple consistency check
-			if ((empty($found['n_family']) || $found['n_family'] == $contact['n_family'])
+			if (!$relax || ((empty($found['n_family']) || $found['n_family'] == $contact['n_family'])
 					&& (empty($found['n_given']) || $found['n_given'] == $contact['n_given'])
-					&& (empty($found['org_name']) || $found['org_name'] == $contact['org_name']))
+					&& (empty($found['org_name']) || $found['org_name'] == $contact['org_name'])))
 			{
 				return array($found['id']);
 			}
