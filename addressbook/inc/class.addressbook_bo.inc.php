@@ -726,11 +726,11 @@ class addressbook_bo extends addressbook_so
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
 		// set full name and fileas from the content
-		if (!isset($contact['n_fn']))
-		{
-			$contact['n_fn'] = $this->fullname($contact);
+		if (strlen($fullname = $this->fullname($contact)) > 0 && (!isset($contact['n_fn']) || $contact['n_fn'] != $fullname)) {
+			$contact['n_fn'] = $fullname;
 			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
+		unset($fullname);
 		$to_write = $contact;
 		// (non-admin) user editing his own account, make sure he does not change fields he is not allowed to (eg. via SyncML or xmlrpc)
 		if (!$ignore_acl && !$contact['owner'] && !$this->is_admin($contact))
