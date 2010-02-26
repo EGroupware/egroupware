@@ -439,12 +439,6 @@ class calendar_ical extends calendar_boupdate
 							$mailtoParticipant = $info['email'] ? 'MAILTO:'.$info['email'] : '';
 							$participantCN = '"' . ($info['cn'] ? $info['cn'] : $info['name']) . '"';
 							calendar_so::split_status($status, $quantity, $role);
-							if ($role == 'CHAIR' && $uid != $this->user)
-							{
-								$mailtoOrganizer = $mailtoParticipant;
-								$organizerCN = $participantCN;
-								if ($status == 'U') continue; // saved ORGANIZER
-							}
 							// RB: MAILTO href contains only the email-address, NO cn!
 							$attributes['ATTENDEE'][]	= $mailtoParticipant;
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
@@ -496,7 +490,8 @@ class calendar_ical extends calendar_boupdate
     					// according to iCalendar standard, ORGANIZER not used for events in the own calendar
 	    				if (!$organizerCN &&
 	    					($event['owner'] != $this->user
-	    						|| $this->productManufacturer != 'groupdav'))
+	    						|| $this->productManufacturer != 'groupdav'
+	    						|| $this->productName == 'kde'))
 	    				{
 		    				$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 		    				$mailtoOrganizer = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
