@@ -513,7 +513,8 @@ class calendar_ical extends calendar_boupdate
     					// according to iCalendar standard, ORGANIZER not used for events in the own calendar
 	    				if (!$organizerCN &&
 	    					($event['owner'] != $this->user
-	    						|| $this->productManufacturer != 'groupdav'))
+	    						|| $this->productManufacturer != 'groupdav'
+	    						|| $this->productName == 'kde'))
 	    				{
 		    				$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 		    				$mailtoOrganizer = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
