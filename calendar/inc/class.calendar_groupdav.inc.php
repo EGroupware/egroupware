@@ -476,7 +476,7 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	static function fix_series(array &$events)
 	{
-		foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
+		//foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
 		//$master =& $events[0];
 
 		$bo = new calendar_boupdate();
@@ -527,16 +527,16 @@ class calendar_groupdav extends groupdav_handler
 		{
 			if ($org_recurrence['id'] != $master['id'])	// non-virtual recurrence
 			{
-				error_log(__METHOD__.'() deleting #'.$org_recurrence['id']);
+				//error_log(__METHOD__.'() deleting #'.$org_recurrence['id']);
 				$bo->delete($org_recurrence['id']);	// might fail because of permissions
 			}
 			else	// virtual recurrence
 			{
-				error_log(__METHOD__.'() ToDO: delete virtual exception '.$org_recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$org_recurrence['recurrence']));
-				// todo: reset status and participants to master default
+				//error_log(__METHOD__.'() ToDO: delete virtual exception '.$org_recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$org_recurrence['recurrence']));
+				$bo->update_status($master, $org_recurrence, $org_recurrence['recurrence']);
 			}
 		}
-		foreach($events as $n => $event) error_log(__METHOD__." $n after: ".array2string($event));
+		//foreach($events as $n => $event) error_log(__METHOD__." $n after: ".array2string($event));
 	}
 
 	/**

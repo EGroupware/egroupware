@@ -126,7 +126,11 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * user preference: Use this timezone for import from and export to device
 	 *
-	 * @var string
+	 * @var mixed
+	 * === false => use event's TZ
+	 * === null  => export in UTC
+	 * string    => device TZ
+	 *
 	 */
 	var $tzid = null;
 
@@ -1700,15 +1704,21 @@ class calendar_ical extends calendar_boupdate
 				switch ($deviceInfo['tzid'])
 				{
 					case 1:
-						$this->tzid = false;
+						$this->tzid = false; // use event's TZ
 						break;
 					case 2:
-						$this->tzid = null;
+						$this->tzid = null; // use UTC for export
 						break;
 					default:
 						$this->tzid = $deviceInfo['tzid'];
 				}
 			}
+			elseif (strpos($this->productName, 'palmos') !== false)
+			{
+				// for palmos we have to use user-time and NO timezone
+				$this->tzid = false;
+			}
+
 			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
 			{
 				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
@@ -1732,20 +1742,6 @@ class calendar_ical extends calendar_boupdate
 				$this->productName = strtolower($deviceInfo['model']);
 			}
 		}
-
-		if ($this->log)
-		{
-			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				'(' . $this->productManufacturer .
-				', '. $this->productName .', ' .
-				($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .
-				")\n" , 3, $this->logfile);
-		}
-
-		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
-		//	. $this->productName .', ' .
-		//	($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
-		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$defaultFields['minimal'] = array(
 			'public'			=> 'public',
@@ -1910,10 +1906,12 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
+				$this->tzid = false; // use event's TZ
 				$this->supportedFields = $defaultFields['full'];
 				break;
 
 			case 'groupdav':		// all GroupDAV access goes through here
+				$this->tzid = false; // use event's TZ
 				switch ($this->productName)
 				{
 					default:
@@ -1929,13 +1927,21 @@ class calendar_ical extends calendar_boupdate
 			default:
 				error_log("Unknown calendar SyncML client: manufacturer='$this->productManufacturer'  product='$this->productName'");
 				$this->supportedFields = $defaultFields['synthesis'];
-				break;
 		}
-		// for palmos we have to use user-time and NO timezone
-		if (strpos($this->productName, 'palmos') !== false)
+
+		if ($this->log)
 		{
-			$this->tzid = false;
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'(' . $this->productManufacturer .
+				', '. $this->productName .', ' .
+				($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .
+				")\n" , 3, $this->logfile);
 		}
+
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
+		//	. $this->productName .', ' .
+		//	($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
 	function icaltoegw($_vcalData)
@@ -2784,35 +2790,4 @@ class calendar_ical extends calendar_boupdate
 
 		return $vcal->exportvCalendar();
 	}
-
-	/**
-	 * update the status of all participant for a given recurrence or for all recurrences since now (includes recur_date=0)
-	 *
-	 * @param array $new_event event-array with the new stati
-	 * @param array $old_event event-array with the old stati
-	 * @param int $recur_date=0 date to change, or 0 = all since now
-	 */
-	function update_status($new_event, $old_event , $recur_date=0)
-	{
-		if (!isset($new_event['participants'])) return;
-
-		// check the old list against the new list
-		foreach ($old_event['participants'] as $userid => $status)
-  		{
-            if (!isset($new_event['participants'][$userid])){
-            	// Attendee will be deleted this way
-            	$new_event['participants'][$userid] = 'G';
-            }
-            elseif ($new_event['participants'][$userid] == $status)
-            {
-            	// Same status -- nothing to do.
-            	unset($new_event['participants'][$userid]);
-            }
-		}
-		// write the changes
-		foreach ($new_event['participants'] as $userid => $status)
-		{
-			$this->set_status($old_event, $userid, $status, $recur_date, true, false);
-		}
-    }
 }
