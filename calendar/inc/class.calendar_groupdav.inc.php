@@ -149,8 +149,9 @@ class calendar_groupdav extends groupdav_handler
 			foreach($events as $k => &$event)
 			{
 				if ($this->client_shared_uid_exceptions &&
-						$event['reference'] &&
-						($master = $this->bo->read($event['reference'], 0, false, 'server')) &&
+						$event['reference'] && $event['uid'] &&
+						($masterId = array_shift($this->bo->find_event(array('uid' => $event['uid']), 'master'))) &&
+						($master = $this->bo->read($masterId, 0, false, 'server')) &&
 						array_search($event['reference'], $master['recur_exception']) !== false)
 				{
 					// this exception will be handled with the series master
@@ -475,8 +476,7 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	static function fix_series(array &$events)
 	{
-		foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
-		//$master =& $events[0];
+		//foreach($events as $n => $event) error_log(__METHOD__." $n before: ".array2string($event));
 
 		$bo = new calendar_boupdate();
 
@@ -526,16 +526,16 @@ class calendar_groupdav extends groupdav_handler
 		{
 			if ($org_recurrence['id'] != $master['id'])	// non-virtual recurrence
 			{
-				error_log(__METHOD__.'() deleting #'.$org_recurrence['id']);
+				//error_log(__METHOD__.'() deleting #'.$org_recurrence['id']);
 				$bo->delete($org_recurrence['id']);	// might fail because of permissions
 			}
 			else	// virtual recurrence
 			{
-				error_log(__METHOD__.'() ToDO: delete virtual exception '.$org_recurrence['reference'].' = '.date('Y-m-d H:i:s',$org_recurrence['reference']));
-				// todo: reset status and participants to master default
+				//error_log(__METHOD__.'() ToDO: delete virtual exception '.$org_recurrence['reference'].' = '.date('Y-m-d H:i:s',$org_recurrence['reference']));
+				$bo->update_status($master, $org_recurrence, $org_recurrence['reference']);
 			}
 		}
-		foreach($events as $n => $event) error_log(__METHOD__." $n after: ".array2string($event));
+		//foreach($events as $n => $event) error_log(__METHOD__." $n after: ".array2string($event));
 	}
 
 	/**

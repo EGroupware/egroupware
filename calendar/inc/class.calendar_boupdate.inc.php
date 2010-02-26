@@ -803,6 +803,37 @@ class calendar_boupdate extends calendar_bo
 	}
 
 	/**
+	 * update the status of all participant for a given recurrence or for all recurrences since now (includes recur_date=0)
+	 *
+	 * @param array $new_event event-array with the new stati
+	 * @param array $old_event event-array with the old stati
+	 * @param int $recur_date=0 date to change, or 0 = all since now
+	 */
+	function update_status($new_event, $old_event , $recur_date=0)
+	{
+		if (!isset($new_event['participants'])) return;
+
+		// check the old list against the new list
+		foreach ($old_event['participants'] as $userid => $status)
+  		{
+            if (!isset($new_event['participants'][$userid])){
+            	// Attendee will be deleted this way
+            	$new_event['participants'][$userid] = 'G';
+            }
+            elseif ($new_event['participants'][$userid] == $status)
+            {
+            	// Same status -- nothing to do.
+            	unset($new_event['participants'][$userid]);
+            }
+		}
+		// write the changes
+		foreach ($new_event['participants'] as $userid => $status)
+		{
+			$this->set_status($old_event, $userid, $status, $recur_date, true, false);
+		}
+    }
+
+	/**
 	 * deletes an event
 	 *
 	 * @param int $cal_id id of the event to delete
