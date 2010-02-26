@@ -377,10 +377,10 @@ class groupdav extends HTTP_WebDAV_Server
 
 		echo '<h1>(Cal|Card|Group)DAV ';
 		$path = '/groupdav.php';
-		foreach(explode('/',substr($options['path'],0,-1)) as $n => $name)
+		foreach(explode('/',$this->_unslashify($options['path'])) as $n => $name)
 		{
 			$path .= ($n != 1 ? '/' : '').$name;
-			echo html::a_href(htmlspecialchars($name.'/'),$path.($n ? '/' : ''));
+			echo html::a_href(htmlspecialchars($name.'/'),$path);
 		}
 		echo "</h1>\n";
 
@@ -401,6 +401,8 @@ class groupdav extends HTTP_WebDAV_Server
 			$props = $this->props2array($file['props']);
 			//echo $file['path']; _debug_array($props);
 			$class = $class == 'row_on' ? 'row_off' : 'row_on';
+			$name = $this->_slashify(basename($this->_unslashify($file['path'])));
+			/*
 			if (substr($file['path'],-1) == '/')
 			{
 				$name = basename(substr($file['path'],0,-1)).'/';
@@ -409,6 +411,7 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				$name = basename($file['path']);
 			}
+			*/
 			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".html::a_href(htmlspecialchars($name),'/groupdav.php'.$file['path'])."</td>\n";
 			echo "\t\t<td>".$props['DAV:getcontentlength']."</td>\n";
 			echo "\t\t<td>".(!empty($props['DAV:getlastmodified']) ? date('Y-m-d H:i:s',$props['DAV:getlastmodified']) : '')."</td>\n";
@@ -497,7 +500,7 @@ class groupdav extends HTTP_WebDAV_Server
 				default:
 					$ns = $prop['ns'];
 			}
-			$arr[$ns.':'.$prop['name']] = is_array($prop['val']) ? 
+			$arr[$ns.':'.$prop['name']] = is_array($prop['val']) ?
 				$this->_hierarchical_prop_encode($prop['val']) : $prop['val'];
 		}
 		return $arr;
@@ -673,16 +676,25 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function _parse_path($path,&$id,&$app,&$user,&$user_prefix=null)
 	{
-		if ($this->debug) error_log(__METHOD__." called with ('$path') id=$id, app='$app', user=$user");
-		$parts = explode('/',$path);
-
-		if (count($parts) > 3 || !$GLOBALS['egw']->accounts->name2id($parts[1]))
+		if ($this->debug)
 		{
-			list($id) = explode('.',array_pop($parts));		// remove evtl. .ics extension
+			error_log(__METHOD__." called with ('$path') id=$id, app='$app', user=$user");
 		}
-		$app = array_pop($parts);
+		if ($path[0] == '/')
+		{
+            $path = substr($path, 1);
+		}
+		$parts = explode('/', $this->_unslashify($path));
 
-		if (($user = array_pop($parts)))
+		if ($GLOBALS['egw']->accounts->name2id($parts[0]))
+		{
+			// /$user/$app/...
+			$user = array_shift($parts);
+		}
+
+		$app = array_shift($parts);
+
+		if ($user)
 		{
 			$user_prefix = '/'.$user;
 			$user = $GLOBALS['egw']->accounts->name2id($user,'account_lid',$app != 'addressbook' ? 'u' : null);
@@ -692,9 +704,18 @@ class groupdav extends HTTP_WebDAV_Server
 			$user_prefix = '';
 			$user = $GLOBALS['egw_info']['user']['account_id'];
 		}
+
+		if (($id = array_pop($parts)))
+		{
+			list($id) = explode('.',$id);		// remove evtl. .ics extension
+		}
+
 		if (!($ok = $id && in_array($app,array('addressbook','calendar','infolog','principals','groups')) && $user))
 		{
-			if ($this->debug) error_log(__METHOD__."('$path') returning false: id=$id, app='$app', user=$user");
+			if ($this->debug)
+			{
+				error_log(__METHOD__."('$path') returning false: id=$id, app='$app', user=$user");
+			}
 		}
 		return $ok;
 	}
