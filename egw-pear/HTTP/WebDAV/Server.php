@@ -600,8 +600,14 @@ class HTTP_WebDAV_Server
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         echo "<D:multistatus xmlns:D=\"DAV:\">\n";
 
+        // using an ArrayIterator to prevent foreach from copying the array,
+        // as we cant loop by reference, when an iterator is given in $files['files']
+        if (is_array($files['files']))
+        {
+        	$files['files'] = new ArrayIterator($files['files']);
+        }
         // now we loop over all returned file entries
-        foreach ($files["files"] as &$file) {
+        foreach ($files['files'] as $file) {
 
 	        // collect namespaces here
 	        $ns_hash = array();
@@ -687,7 +693,8 @@ class HTTP_WebDAV_Server
 	                                = $this->mkprop("DAV:",
 	                                                "lockdiscovery",
 	                                                $this->lockdiscovery($file['path']));
-	                        } else {
+	                        // only collect $file['noprops'] if we have NO Brief: t HTTP Header
+	                        } elseif (!isset($this->_SERVER['HTTP_BRIEF']) || $this->_SERVER['HTTP_BRIEF'] != 't') {
 	                            // add empty value for this property
 	                            $file["noprops"][] =
 	                                $this->mkprop($reqprop["xmlns"], $reqprop["name"], "");
@@ -750,36 +757,6 @@ class HTTP_WebDAV_Server
                                 . gmdate("D, d M Y H:i:s ", $prop['val'])
                                 . "GMT</D:getlastmodified>\n";
                             break;
-                        case "resourcetype":
-                        	if (!is_array($prop['val'])) {
-                            	echo "     <D:resourcetype><D:$prop[val]/></D:resourcetype>\n";
-                        	} else {	// multiple resourcetypes from different namespaces as required by GroupDAV
-                       			$vals = $extra_ns = '';
-                        		foreach($prop['val'] as $subprop)
-                        		{
- 		                            if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
-										// register property namespace if not known yet
-	                            		if (!isset($ns_hash[$subprop['ns']])) {
-			                                $ns_name = "ns".(count($ns_hash) + 1);
-			                                $ns_hash[$subprop['ns']] = $ns_name;
-	                            		} else {
-	                            			$ns_name = $ns_hash[$subprop['ns']];
-	                            		}
-		                            	if (strchr($extra_ns,$extra=' xmlns:'.$ns_name.'="'.$subprop['ns'].'"') === false) {
-			                                $extra_ns .= $extra;
-		                            	}
-		                            	$ns_name .= ':';
-		                            } elseif ($subprop['ns'] == 'DAV:') {
-		                            	$ns_name = 'D:';
-		                            } else {
-		                            	$ns_name = '';
-		                            }
-		                            $vals .= "<$ns_name$subprop[val]/>";
-                        		}
-                        		echo "     <D:resourcetype$extra_ns>$vals</D:resourcetype>\n";
-								//error_log("resourcetype: <D:resourcetype$extra_ns>$vals</D:resourcetype>");
-                        	}
-                            break;
                         case "supportedlock":
                             echo "     <D:supportedlock>$prop[val]</D:supportedlock>\n";
                             break;
@@ -789,10 +766,11 @@ class HTTP_WebDAV_Server
                             echo "     </D:lockdiscovery>\n";
                             break;
                         default:
-                        	if (is_array($prop['val'])) error_log($file['path'].': '.$prop['name'].'='.array2string($prop['val']));
-                            echo "     <D:$prop[name]>"
-                                . $this->_prop_encode(htmlspecialchars($prop['val']))
-                                .     "</D:$prop[name]>\n";
+                            echo "     <D:$prop[name]>".
+                            	(is_array($prop['val']) ?
+	                                $this->_hierarchical_prop_encode($prop['val']) : 
+	                                $this->_prop_encode(htmlspecialchars($prop['val']))).
+	                            "</D:$prop[name]>\n";
                             break;
                         }
                     } else {
@@ -2076,6 +2054,15 @@ class HTTP_WebDAV_Server
      */
     function _urlencode($url)
     {
+    	// cadaver (and probably all neon using agents) need a more complete url encoding
+    	// otherwise special chars like "$,()'" in filenames do NOT work
+		if (strpos($_SERVER['HTTP_USER_AGENT'],'neon') !== false)
+		{
+			return strtr(rawurlencode($url),array(
+				'%2F' => '/',
+				'%3A' => ':',
+			));
+		}
 		//error_log( __METHOD__."\n" .print_r($url,true));
 		return strtr($url, array(" "=>"%20",
                                  "&"=>"%26",
@@ -2099,6 +2086,45 @@ class HTTP_WebDAV_Server
     }
 
     /**
+     * Encode a hierarchical properties like:
+     * 
+ 	 * <D:supported-report-set>
+	 *    <supported-report>
+	 *       <report>
+	 *          <addressbook-query xmlns='urn:ietf:params:xml:ns:carddav'/>
+	 *       </report>
+	 *    </supported-report>
+	 *    <supported-report>
+	 *       <report>
+	 *          <addressbook-multiget xmlns='urn:ietf:params:xml:ns:carddav'/>
+	 *       </report>
+	 *    </supported-report>
+	 * </D:supported-report-set>
+     * 
+     * @param array $props
+     * @return string
+     */
+	function _hierarchical_prop_encode(array $props)
+    {
+    	//error_log(__METHOD__.'('.array2string($props).')');
+    	if (isset($props['name'])) $props = array($props);
+    	
+    	$ret = '';
+    	foreach($props as $prop)
+    	{
+	    	$ret .= '<'.$prop['name'].
+	    		($prop['ns'] != 'DAV:' ? ' xmlns="'.$prop['ns'].'"' : '').
+	    		(empty($prop['val']) ? ' />' : '>'.
+	    			(is_array($prop['val']) ? 
+	    				$this->_hierarchical_prop_encode($prop['val']) :
+	    				$this->_prop_encode($prop['val'])).
+	    			'</'.$prop['name'].'>');
+    	}
+    	//error_log(__METHOD__.'('.array2string($props).') = '.array2string($ret));
+    	return $ret;
+    }
+
+    /**
      * UTF-8 encode property values if not already done so
      *
      * @param  string  text to encode
@@ -2117,7 +2143,7 @@ class HTTP_WebDAV_Server
 			case "iso-8859-15":
 			case "latin-1":
 			default:
-				//error_log( __METHOD__."utf8 encode\n" .print_r(utf8_encode($text),true));
+				error_log( __METHOD__."utf8 encode\n" .print_r(utf8_encode($text),true));
 				return utf8_encode($text);
         }
     }
