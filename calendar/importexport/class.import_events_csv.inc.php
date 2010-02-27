@@ -82,6 +82,11 @@ class import_events_csv implements iface_import_plugin  {
 	private $user = null;
 
 	/**
+         * List of import errors
+         */
+        protected $errors = array();
+
+	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
 	 * @param string $_charset
@@ -131,6 +136,8 @@ class import_events_csv implements iface_import_plugin  {
 				echo "Attension: All Events of '$lid' would be deleted!\n";
 			}
 		}
+
+		$this->errors = array();
 
 		while ( $record = $import_csv->get_record() ) {
 
@@ -224,7 +231,12 @@ class import_events_csv implements iface_import_plugin  {
 				if ( $this->dry_run ) {
 					print_r($_data);
 				} else {
-					return $this->bocalupdate->update( $_data, true, !$_data['modified'], $this->is_admin);
+					$messages = array();
+					$result = $this->bocalupdate->update( $_data, true, !$_data['modified'], $this->is_admin, true, $messages);
+					if(!$result) {
+						$this->errors = implode(',', $messages);
+					}
+					return $result;
 				}
 
 			case 'delete' :
@@ -281,6 +293,18 @@ class import_events_csv implements iface_import_plugin  {
 	 */
 	public function get_selectors_etpl() {
 		// lets do it!
+	}
+
+	/**
+        * Returns errors that were encountered during importing
+        * Maximum of one error message per record, but you can append if you need to
+        *
+        * @return Array (
+        *       record_# => error message
+        *       )
+        */
+        public function get_errors() {
+		return $this->errors;
 	}
 
 } // end of iface_export_plugin
