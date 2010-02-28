@@ -1222,7 +1222,7 @@ class Horde_iCalendar {
                 $attr_string = $name . $params_str;
                 if (strlen($value) > 0) {
                 	$attr_string .= ':' . $value;
-                } elseif ($name != 'RRULE' && $name != 'ATTENDEE' && $name != 'ORGANIZER') {
+                } elseif ($name != 'RRULE') {
                 	$attr_string .= ':';
                 }
                 if (!$this->isOldFormat()) {
