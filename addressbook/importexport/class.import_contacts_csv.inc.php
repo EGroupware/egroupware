@@ -147,9 +147,6 @@ class import_contacts_csv implements iface_import_plugin  {
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			if ( $_definition->plugin_options['contact_owner'] != -1 ) {
-				$record['owner'] = $_definition->plugin_options['contact_owner'];
-			} else unset( $record['owner'] );
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
