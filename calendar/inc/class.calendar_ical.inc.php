@@ -2674,6 +2674,11 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
+		
+		if ($this->isWholeDay($event))
+		{
+			$event['whole_day'] == true;
+		}
 
 		if ($this->log)
 		{
