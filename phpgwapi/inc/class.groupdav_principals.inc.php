@@ -29,10 +29,11 @@ class groupdav_principals extends groupdav_handler
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param int $debug=null debug-level to set
 	 * @param string $base_uri=null base url of handler
+	 * @param string $principalURL=null pricipal url of handler
 	 */
-	function __construct($app,$debug=null,$base_uri=null)
+	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
 	{
-		parent::__construct($app,$debug,$base_uri);
+		parent::__construct($app,$debug,$base_uri,$principalURL);
 
 		$this->accounts = $GLOBALS['egw']->accounts;
 	}
@@ -48,25 +49,43 @@ class groupdav_principals extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user)
 	{
+		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
+
 		list(,,$id) = explode('/',$path);
+
 		if ($id && !($id = $this->accounts->id2name($id)))
 		{
 			return false;
 		}
 		foreach($id ? array($this->accounts->read($id)) : $this->accounts->search(array('type' => 'accounts')) as $account)
 		{
-	      $props = array(
-				HTTP_WebDAV_Server::mkprop('displayname',trim($account['account_firstname'].' '.$account['account_lastname'])),
-				HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($account)),
-				HTTP_WebDAV_Server::mkprop('resourcetype','principal'),
-				HTTP_WebDAV_Server::mkprop('alternate-URI-set',''),
-				HTTP_WebDAV_Server::mkprop('principal-URL',$_SERVER['SCRIPT_NAME'].'/principals/'.$account['account_lid']),
-				HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$_SERVER['SCRIPT_NAME'].'/'),
-				HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$account['account_email']),
-			);
-			foreach($this->accounts->memberships($account['account_id']) as $gid => $group)
+			$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
+				$GLOBALS['egw']->translation->charset(),'utf-8');
+			if ($options['root']['name'] == 'principal-search-property-set')
 			{
-				$props[] = HTTP_WebDAV_Server::mkprop('group-membership',$_SERVER['SCRIPT_NAME'].'/groups/'.$group);
+				$props = array(HTTP_WebDAV_Server::mkprop('principal-search-property',
+					array(HTTP_WebDAV_Server::mkprop('prop',
+						array(HTTP_WebDAV_Server::mkprop('displayname',$displayname))
+					),
+					HTTP_WebDAV_Server::mkprop('description', 'Full name')))
+				);
+			}
+			else
+			{
+				$props = array(
+					HTTP_WebDAV_Server::mkprop('displayname',$displayname),
+					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($account)),
+					HTTP_WebDAV_Server::mkprop('resourcetype','principal'),
+					HTTP_WebDAV_Server::mkprop('alternate-URI-set',''),
+					HTTP_WebDAV_Server::mkprop('current-user-principal',array(HTTP_WebDAV_Server::mkprop('href',$this->principalURL))),
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',array(HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/calendar/'))),
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$account['account_email']),
+					//HTTP_WebDAV_Server::mkprop('principal-URL',array(HTTP_WebDAV_Server::mkprop('href',$this->principalURL))),
+				);
+				foreach($this->accounts->memberships($account['account_id']) as $gid => $group)
+				{
+					$props[] = HTTP_WebDAV_Server::mkprop('group-membership',$this->base_uri.'/groups/'.$group);
+				}
 			}
 			$files['files'][] = array(
 	           	'path'  => '/principals/'.$account['account_lid'],
@@ -90,9 +109,12 @@ class groupdav_principals extends groupdav_handler
 		{
 			return $account;
 		}
+		$displayname = $GLOBALS['egw']->translation->convert(
+			trim($account['account_firstname'].' '.$account['account_lastname']),
+			$GLOBALS['egw']->translation->charset(),'utf-8');
 		$options['data'] = 'Principal: '.$account['account_lid'].
-			"\nURL: ".$_SERVER['SCRIPT_NAME'].$options['path'].
-			"\nName: ".$account['account_firstname'].' '.$account['account_lastname'].
+			"\nURL: ".$this->base_uri.$options['path'].
+			"\nName: ".$displayname.
 			"\nEmail: ".$account['account_email'].
 			"\nMemberships: ".implode(', ',$this->accounts->memberships($id))."\n";
 		$options['mimetype'] = 'text/plain; charset=utf-8';

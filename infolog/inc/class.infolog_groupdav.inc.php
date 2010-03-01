@@ -29,10 +29,11 @@ class infolog_groupdav extends groupdav_handler
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param int $debug=null debug-level to set
 	 * @param string $base_uri=null base url of handler
+	 * @param string $principalURL=null pricipal url of handler
 	 */
-	function __construct($app,$debug=null,$base_uri=null)
+	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
 	{
-		parent::__construct($app,$debug,$base_uri);
+		parent::__construct($app,$debug,$base_uri,$principalURL);
 
 		$this->bo = new infolog_bo();
 	}
@@ -72,6 +73,42 @@ class infolog_groupdav extends groupdav_handler
 	{
 		$starttime = microtime(true);
 
+		if ($options['filters'])
+		{
+
+			foreach($options['filters'] as $filter)
+			{
+				switch($filter['name'])
+				{
+					case 'comp-filter':
+						if ($this->debug > 1) error_log(__METHOD__."($options[path],...) comp-filter='{$filter['attrs']['name']}'");
+
+						switch($filter['attrs']['name'])
+						{
+							case 'VCALENDAR':
+								continue;
+							case 'VTODO':
+								break 3;
+							default: // We don't handle this
+								return false;
+						}
+				}
+			}
+		}
+
+		// check if we have to return the full calendar data or just the etag's
+		if (!($calendar_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
+		{
+			foreach($options['props'] as $prop)
+			{
+				if ($prop['name'] == 'calendar-data')
+				{
+					$calendar_data = true;
+					break;
+				}
+			}
+		}
+
 		// todo add a filter to limit how far back entries from the past get synced
 		$filter = array(
 			'info_type'	=> 'task',
@@ -84,21 +121,35 @@ class infolog_groupdav extends groupdav_handler
 			'sort'		=> 'DESC',
 			'filter'    => 'own',	// filter my: entries user is responsible for,
 									// filter own: entries the user own or is responsible for
+			'date_format' => 'server',
 			'col_filter'	=> $filter,
 		))))
 		{
 			foreach($tasks as &$task)
 			{
+				$props = array(
+					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($task)),
+					HTTP_WebDAV_Server::mkprop('getcontenttype',$this->agent != 'kde' ?
+							'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar'),	// Konqueror (3.5) dont understand it otherwise
+							// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
+							HTTP_WebDAV_Server::mkprop('getlastmodified', $task['info_datemodified']),
+							HTTP_WebDAV_Server::mkprop('resourcetype',''),	// DAVKit requires that attribute!
+							HTTP_WebDAV_Server::mkprop('getcontentlength',''),
+				);
+				if ($calendar_data)
+				{
+					$handler = $this->_get_handler();
+					$content = $handler->exportVTODO($task,'2.0','PUBLISH');
+					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
+					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
+				}
+				else
+				{
+					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', ''); // expensive to calculate and no CalDAV client uses it
+				}
 				$files['files'][] = array(
 	            	'path'  => self::get_path($task),
-	            	'props' => array(
-	            		HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($task)),
-	            		HTTP_WebDAV_Server::mkprop('getcontenttype',$this->agent != 'kde' ?
-	            			'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar'),	// Konqueror (3.5) dont understand it otherwise
-						// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
-						HTTP_WebDAV_Server::mkprop('getlastmodified', $task['info_datemodified']),
-						HTTP_WebDAV_Server::mkprop('getcontentlength',''),
-	            	),
+	            	'props' => $props,
 				);
 			}
 		}
@@ -120,7 +171,7 @@ class infolog_groupdav extends groupdav_handler
 			return $task;
 		}
 		$handler = $this->_get_handler();
-		$options['data'] = $handler->exportVTODO($id,'2.0',false,false);	// keep UID the client set and no extra charset attributes
+		$options['data'] = $handler->exportVTODO($id,'2.0','PUBLISH');
 		$options['mimetype'] = 'text/calendar; charset=utf-8';
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($task));
@@ -213,6 +264,36 @@ class infolog_groupdav extends groupdav_handler
 			return false;
 		}
 		return '"'.$info['info_id'].':'.$info['info_datemodified'].'"';
+	}
+
+	/**
+	 * Add extra properties for calendar collections
+	 *
+	 * @param array $props=array() regular props by the groupdav handler
+	 * @param string $base_uri=null base url of handler
+	 * @return array
+	 */
+	static function extra_properties(array $props=array(), $base_uri=null)
+	{
+		// calendar description
+		$displayname = $GLOBALS['egw']->translation->convert(lang('Tasks of') . ' ' .
+			$GLOBALS['egw_info']['user']['account_fullname'],
+			$GLOBALS['egw']->translation->charset(),'utf-8');
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
+		// email of the current user, see caldav-sheduling draft
+		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$GLOBALS['egw_info']['user']['email']);
+		// supported components, currently only VEVENT
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
+			// HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),
+		));
+		/*
+		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
+			HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget'))))));
+		*/
+		return $props;
 	}
 
 	/**

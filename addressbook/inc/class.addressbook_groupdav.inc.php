@@ -51,10 +51,11 @@ class addressbook_groupdav extends groupdav_handler
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param int $debug=null debug-level to set
 	 * @param string $base_uri=null base url of handler
+	 * @param string $principalURL=null pricipal url of handler
 	 */
-	function __construct($app,$debug=null,$base_uri=null)
+	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
 	{
-		parent::__construct($app,$debug,$base_uri);
+		parent::__construct($app,$debug,$base_uri,$principalURL);
 
 		$this->bo = new addressbook_bo();
 	}
@@ -309,7 +310,7 @@ class addressbook_groupdav extends groupdav_handler
 
 	/**
 	 * Query ctag for addressbook
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getctag($path,$user)
@@ -319,9 +320,9 @@ class addressbook_groupdav extends groupdav_handler
 		if ($user && $path != '/addressbook/') $filter['contact_owner'] = $user;
 		// should we hide the accounts addressbook
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
-		
+
 		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','','','',$filter);
-		
+
 		return '"'.$result[0]['modified'].'"';
 	}
 
@@ -342,11 +343,12 @@ class addressbook_groupdav extends groupdav_handler
 	 *    </supported-report>
 	 * </D:supported-report-set>
 	 * @link http://www.mail-archive.com/calendarserver-users@lists.macosforge.org/msg01156.html
-	 *    
+	 *
 	 * @param array $props=array() regular props by the groupdav handler
+	 * @param string $base_uri=null base url of handler
 	 * @return array
 	 */
-	static function extra_properties(array $props=array())
+	static function extra_properties(array $props=array(), $base_uri=null)
 	{
 		// supported reports (required property for CardDAV)
 		$props[] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(

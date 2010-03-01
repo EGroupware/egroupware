@@ -837,7 +837,8 @@ class infolog_bo
 	function &search(&$query)
 	{
 		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
-		if (!empty($query['start']))
+		if (!empty($query['start']) &&
+			(!isset($query['date_format']) || $query['date_format'] != 'server'))
 		{
 			$query['start'] -= $this->tz_offset_s;
 		}
@@ -864,7 +865,8 @@ class infolog_bo
 						date('Y', $data['info_enddate']));
 				}
 
-				if ($this->tz_offset_s)
+				if ($this->tz_offset_s &&
+					(!isset($query['date_format']) || $query['date_format'] != 'server'))
 				{
 					// convert system- to user-time
 					foreach ($this->timestamps as $time)
@@ -875,9 +877,14 @@ class infolog_bo
 							$data[$time] += $this->tz_offset_s;
 						}
 					}
+					// pre-cache title and file access
+					self::set_link_cache($data);
 				}
-				// pre-cache title and file access
-				self::set_link_cache($data);
+				elseif (!$this->tz_offset_s)
+				{
+					// pre-cache title and file access
+					self::set_link_cache($data);
+				}
 			}
 		}
 		//echo "<p>boinfolog::search(".print_r($query,True).")=<pre>".print_r($ret,True)."</pre>\n";

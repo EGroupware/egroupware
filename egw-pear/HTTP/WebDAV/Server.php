@@ -43,7 +43,6 @@ class HTTP_WebDAV_Server
      */
     var $uri;
 
-
     /**
      * base URI for this request
      *
@@ -433,6 +432,26 @@ class HTTP_WebDAV_Server
     */
     // }}}
 
+       // {{{ LOCK()
+
+    /**
+     * ACL implementation
+     *
+     * ACL implementation
+     *
+     * @abstract
+     * @param array &$params
+     * @returns int HTTP-Statuscode
+     */
+
+    /* abstract
+     function ACL()
+     {
+     // dummy entry for PHPDoc
+     }
+    */
+    // }}}
+
     // }}}
 
     // {{{ other abstract methods
@@ -592,13 +611,27 @@ class HTTP_WebDAV_Server
             }
         }
 
-        // now we generate the reply header ...
-        $this->http_status("207 Multi-Status");
+		// now we generate the reply header ...
+		if ($propinfo->root['name'] == 'principal-search-property-set')
+		{
+			$this->http_status('200 OK');
+		}
+		else
+		{
+			 $this->http_status('207 Multi-Status');
+		}
         header('Content-Type: text/xml; charset="utf-8"');
 
         // ... and payload
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-        echo "<D:multistatus xmlns:D=\"DAV:\">\n";
+        if ($propinfo->root['name'] == 'principal-search-property-set')
+		{
+        	echo "<D:principal-search-property-set xmlns:D=\"DAV:\">\n";
+		}
+		else
+		{
+			echo "<D:multistatus xmlns:D=\"DAV:\">\n";
+		}
 
         // using an ArrayIterator to prevent foreach from copying the array,
         // as we cant loop by reference, when an iterator is given in $files['files']
@@ -715,7 +748,7 @@ class HTTP_WebDAV_Server
             $path = $file['path'];
             if (!is_string($path) || $path==="") continue;
 
-            echo " <D:response $ns_defs>\n";
+            if ($propinfo->root['name'] != 'principal-search-property-set') echo " <D:response $ns_defs>\n";
 
             /* TODO right now the user implementation has to make sure
              collections end in a slash, this should be done in here
@@ -723,13 +756,15 @@ class HTTP_WebDAV_Server
             // path needs to be urlencoded (only basic version of this class!)
 			$href = $this->_urlencode($this->_mergePathes($this->base_uri, $path));
 
-            echo "  <D:href>$href</D:href>\n";
+            if ($propinfo->root['name'] != 'principal-search-property-set') echo "  <D:href>$href</D:href>\n";
 
             // report all found properties and their values (if any)
             if (isset($file["props"]) && is_array($file["props"])) {
-                echo "   <D:propstat>\n";
-                echo "    <D:prop>\n";
-
+	            if ($propinfo->root['name'] != 'principal-search-property-set')
+	            {
+		            echo "   <D:propstat>\n";
+		            echo "    <D:prop>\n";
+	            }
                 foreach ($file["props"] as &$prop) {
 
                     if (!is_array($prop)) continue;
@@ -757,8 +792,40 @@ class HTTP_WebDAV_Server
                                 . gmdate("D, d M Y H:i:s ", $prop['val'])
                                 . "GMT</D:getlastmodified>\n";
                             break;
+                        /* @Todo: breaks CalDAV - 2010/03/01 jlehrke
+                        case "resourcetype":
+	                        if (!is_array($prop['val'])) {
+		                        echo '     <D:resourcetype><D:'.$prop['val']."/></D:resourcetype>\n";
+	                        } else {	// multiple resourcetypes from different namespaces as required by GroupDAV
+		                        $vals = $extra_ns = '';
+		                        foreach($prop['val'] as $subprop)
+								{
+			                        if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
+				                        // register property namespace if not known yet
+				                        if (!isset($ns_hash[$subprop['ns']])) {
+					                        $ns_name = "ns".(count($ns_hash) + 1);
+					                        $ns_hash[$subprop['ns']] = $ns_name;
+				                        } else {
+					                        $ns_name = $ns_hash[$subprop['ns']];
+				                        }
+				                        if (strchr($extra_ns,$extra=' xmlns:'.$ns_name.'="'.$subprop['ns'].'"') === false) {
+					                        $extra_ns .= $extra;
+				                        }
+				                        $ns_name .= ':';
+			                        } elseif ($subprop['ns'] == 'DAV:') {
+				                        $ns_name = 'D:';
+			                        } else {
+				                        $ns_name = '';
+			                        }
+			                        $vals .= "<$ns_name$subprop[val]/>";
+								}
+		                        echo "     <D:resourcetype$extra_ns>$vals</D:resourcetype>\n";
+		                        //error_log("resourcetype: <D:resourcetype$extra_ns>$vals</D:resourcetype>");
+	                        }
+	                        break;
+	                    */
                         case "supportedlock":
-                            echo "     <D:supportedlock>$prop[val]</D:supportedlock>\n";
+	                        echo "     <D:supportedlock>$prop[val]</D:supportedlock>\n";
                             break;
                         case "lockdiscovery":
                             echo "     <D:lockdiscovery>\n";
@@ -768,7 +835,7 @@ class HTTP_WebDAV_Server
                         default:
                             echo "     <D:$prop[name]>".
                             	(is_array($prop['val']) ?
-	                                $this->_hierarchical_prop_encode($prop['val']) : 
+	                                $this->_hierarchical_prop_encode($prop['val']) :
 	                                $this->_prop_encode(htmlspecialchars($prop['val']))).
 	                            "</D:$prop[name]>\n";
                             break;
@@ -829,10 +896,12 @@ class HTTP_WebDAV_Server
                         }
                     }
                 }
-
-                echo "   </D:prop>\n";
-                echo "   <D:status>HTTP/1.1 200 OK</D:status>\n";
-                echo "  </D:propstat>\n";
+                if ($propinfo->root['name'] != 'principal-search-property-set')
+                {
+	                echo "   </D:prop>\n";
+	                echo "   <D:status>HTTP/1.1 200 OK</D:status>\n";
+	                echo "  </D:propstat>\n";
+                }
             }
 
             // now report all properties requested but not found
@@ -855,10 +924,18 @@ class HTTP_WebDAV_Server
                 echo "  </D:propstat>\n";
             }
 
-            echo " </D:response>\n";
+            if ($propinfo->root['name'] != 'principal-search-property-set') echo " </D:response>\n";
         }
 
-        echo "</D:multistatus>\n";
+        if ($propinfo->root['name'] == 'principal-search-property-set')
+        {
+	        echo "</D:principal-search-property-set>\n";
+        }
+        else
+        {
+	        echo "</D:multistatus>\n";
+        }
+
     }
 
 
@@ -1550,6 +1627,49 @@ class HTTP_WebDAV_Server
 
     // }}}
 
+    // {{{ http_UNLOCK()
+
+    /**
+     * ACL method handler
+     *
+     * @param  void
+     * @return void
+     */
+    function http_ACL()
+    {
+        $options         = Array();
+        $options['path'] = $this->path;
+        $options['errors'] = array();
+
+        if (isset($this->_SERVER['HTTP_DEPTH'])) {
+            $options['depth'] = $this->_SERVER['HTTP_DEPTH'];
+        } else {
+            $options['depth'] = 'infinity';
+        }
+
+        // call user method
+        $status = $this->ACL($options);
+
+		// now we generate the reply header ...
+		$this->http_status($status);
+		$content = '';
+
+        if (is_array($options['errors']) && count($options['errors'])) {
+	        header('Content-Type: text/xml; charset="utf-8"');
+	        // ... and payload
+	        $content .= "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+	        $content .= "<D:error xmlns:D=\"DAV:\"> \n";
+	        foreach ($options['errors'] as $violation) {
+	        	$content .= "<D:$violation/>\n";
+	        }
+	        $content .=  "</D:error>\n";
+        }
+        header("Content-length: ".$this->bytes($content));
+        if ($content) echo $options['content'];
+    }
+
+    // }}}
+
     // }}}
 
     // {{{ _copymove()
@@ -2087,7 +2207,7 @@ class HTTP_WebDAV_Server
 
     /**
      * Encode a hierarchical properties like:
-     * 
+     *
  	 * <D:supported-report-set>
 	 *    <supported-report>
 	 *       <report>
@@ -2100,7 +2220,7 @@ class HTTP_WebDAV_Server
 	 *       </report>
 	 *    </supported-report>
 	 * </D:supported-report-set>
-     * 
+     *
      * @param array $props
      * @return string
      */
@@ -2108,14 +2228,14 @@ class HTTP_WebDAV_Server
     {
     	//error_log(__METHOD__.'('.array2string($props).')');
     	if (isset($props['name'])) $props = array($props);
-    	
+
     	$ret = '';
     	foreach($props as $prop)
     	{
 	    	$ret .= '<'.$prop['name'].
 	    		($prop['ns'] != 'DAV:' ? ' xmlns="'.$prop['ns'].'"' : '').
 	    		(empty($prop['val']) ? ' />' : '>'.
-	    			(is_array($prop['val']) ? 
+	    			(is_array($prop['val']) ?
 	    				$this->_hierarchical_prop_encode($prop['val']) :
 	    				$this->_prop_encode($prop['val'])).
 	    			'</'.$prop['name'].'>');

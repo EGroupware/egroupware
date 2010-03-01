@@ -29,10 +29,11 @@ class groupdav_groups extends groupdav_handler
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param int $debug=null debug-level to set
 	 * @param string $base_uri=null base url of handler
+	 * @param string $principalURL=null pricipal url of handler
 	 */
-	function __construct($app,$debug=null,$base_uri=null)
+	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
 	{
-		parent::__construct($app,$debug,$base_uri);
+		parent::__construct($app,$debug,$base_uri,$principalURL);
 
 		$this->accounts = $GLOBALS['egw']->accounts;
 	}
@@ -56,8 +57,8 @@ class groupdav_groups extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($account)),
 				HTTP_WebDAV_Server::mkprop('resourcetype','principal'),
 				HTTP_WebDAV_Server::mkprop('alternate-URI-set',''),
-				HTTP_WebDAV_Server::mkprop('principal-URL',$this->base_uri.'/groups/'.$account['account_lid']),
-				HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$this->base_uri.'/calendar/'),
+				HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$this->base_uri.'/'.$account['account_lid'].'/calendar/'),
+				//HTTP_WebDAV_Server::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
 			);
 			foreach($this->accounts->members($account['account_id']) as $uid => $user)
 			{

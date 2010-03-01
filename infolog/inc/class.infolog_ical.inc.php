@@ -111,12 +111,12 @@ class infolog_ical extends infolog_bo
 	/**
 	 * Exports one InfoLog tast to an iCalendar VTODO
 	 *
-	 * @param int $_taskID info_id
+	 * @param int|array $task infolog_id or infolog-tasks data
 	 * @param string $_version='2.0' could be '1.0' too
 	 * @param string $_method='PUBLISH'
 	 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
-	function exportVTODO($_taskID, $_version='2.0',$_method='PUBLISH')
+	function exportVTODO($task, $_version='2.0',$_method='PUBLISH')
 	{
 		if ($this->useServerTZ)
 		{
@@ -126,7 +126,14 @@ class infolog_ical extends infolog_bo
 		{
 			$date_format = 'ts';
 		}
-		if (!($taskData = $this->read($_taskID, true, $date_format))) return false;
+		if (is_array($task))
+		{
+			$taskData = $task;
+		}
+		else
+		{
+			if (!($taskData = $this->read($task, true, $date_format))) return false;
+		}
 
 		if ($taskData['info_id_parent'])
 		{

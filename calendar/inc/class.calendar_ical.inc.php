@@ -54,6 +54,7 @@ class calendar_ical extends calendar_boupdate
 		'DECLINED'     => 'R',
 		'TENTATIVE'    => 'T',
 		'DELEGATED'    => 'D',
+		'X-UNINVITED'  => 'G', // removed
 	);
 
 	/**
@@ -188,21 +189,29 @@ class calendar_ical extends calendar_boupdate
 		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
 		$this->vCalendar = new Horde_iCalendar;
+		$this->addressbook = new addressbook_bo;
 	}
 
 
 	/**
 	 * Exports one calendar event to an iCalendar item
 	 *
-	 * @param int/array $events (array of) cal_id or array of the events
+	 * @param int|array $events (array of) cal_id or array of the events
 	 * @param string $version='1.0' could be '2.0' too
 	 * @param string $method='PUBLISH'
 	 * @param int $recur_date=0	if set export the next recurrence at or after the timestamp,
 	 *                          	default 0 => export whole series (or events, if not recurring)
-	 * @return string/boolean string with iCal or false on error (eg. no permission to read the event)
+	 * @param string $principalURL='' Used for CalDAV exports
+	 * @return string|boolean string with iCal or false on error (eg. no permission to read the event)
 	 */
-	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0)
+	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='')
 	{
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				"($version, $method, $recur_date, $principalURL)\n",
+				3, $this->logfile);
+		}
 		$egwSupportedFields = array(
 			'CLASS'			=> 'public',
 			'SUMMARY'		=> 'title',
@@ -242,7 +251,7 @@ class calendar_ical extends calendar_boupdate
 
 		foreach ($events as $event)
 		{
-			$mailtoOrganizer = false;
+			$organizerURL = '';
 			$organizerCN = false;
 			$recurrence = $this->date2usertime($recur_date);
 			if (!is_array($event)
@@ -436,11 +445,19 @@ class calendar_ical extends calendar_boupdate
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
 							if (!($info = $this->resource_info($uid))) continue;
-							$mailtoParticipant = $info['email'] ? 'MAILTO:'.$info['email'] : '';
+							$participantURL = $info['email'] ? 'MAILTO:'.$info['email'] : '';
 							$participantCN = '"' . ($info['cn'] ? $info['cn'] : $info['name']) . '"';
 							calendar_so::split_status($status, $quantity, $role);
+							if ($uid == $event['owner'])
+							{
+								$role = 'CHAIR';
+							}
+							else
+							{
+								$role = 'REQ-PARTICIPANT';
+							}
 							// RB: MAILTO href contains only the email-address, NO cn!
-							$attributes['ATTENDEE'][]	= $mailtoParticipant;
+							$attributes['ATTENDEE'][]	= $participantURL;
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
 							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
@@ -487,21 +504,28 @@ class calendar_ical extends calendar_boupdate
 						break;
 
     				case 'ORGANIZER':
-    					// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-	    				if (!$organizerCN &&
-	    					($event['owner'] != $this->user
-	    						|| $this->productManufacturer != 'groupdav'
-	    						|| $this->productName == 'kde'))
+	    				$organizerURL = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+	    				$organizerURL = $organizerURL ? 'MAILTO:'.$organizerURL : '';
+	    				$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
+		    				. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
+	    				if (!isset($event['participants'][$event['owner']]))
 	    				{
-		    				$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
-		    				$mailtoOrganizer = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
-		    				$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
-		    								. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
+		    				$attributes['ATTENDEE'][] = $organizerURL;
+		    				$parameters['ATTENDEE'][] = array(
+			    				'CN'       => $organizerCN,
+								'ROLE'     => 'CHAIR',
+								'PARTSTAT' => 'DELEGATED',
+								'CUTYPE'   => 'INDIVIDUAL',
+								'RSVP'     => 'FALSE',
+								'X-EGROUPWARE-UID' => $event['owner'],
+		    				);
 	    				}
-	    				if ($organizerCN)
+	    				if ($this->productManufacturer != 'groupdav'
+			    				|| !$this->check_perms(EGW_ACL_EDIT,$event['id']))
 	    				{
-		    				$attributes['ORGANIZER'] = $mailtoOrganizer;
+		    				$attributes['ORGANIZER'] = $organizerURL;
 		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
+		    				$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $event['owner'];
 	    				}
 	    				break;
 
@@ -1004,13 +1028,14 @@ class calendar_ical extends calendar_boupdate
 	 * @param boolean $merge=false	merge data with existing entry
 	 * @param int $recur_date=0 if set, import the recurrence at this timestamp,
 	 *                          default 0 => import whole series (or events, if not recurring)
+	 * @param string $principalURL='' Used for CalDAV imports
 	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag
 	 */
-	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0)
+	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='')
 	{
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
-		if (!($events = $this->icaltoegw($_vcalData)))
+		if (!($events = $this->icaltoegw($_vcalData, $principalURL)))
 		{
 			return false;
 		}
@@ -1055,8 +1080,9 @@ class calendar_ical extends calendar_boupdate
 			}
 			if ($this->log)
 			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
-					array2string($event)."\n",3,$this->logfile);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					."($cal_id, $etag, $recur_date, $principalURL)\n"
+					. array2string($event)."\n",3,$this->logfile);
 			}
 			$updated_id = false;
 			$event_info = $this->get_event_info($event);
@@ -1108,7 +1134,7 @@ class calendar_ical extends calendar_boupdate
 				else
 				{
 					// no merge
-					if(!isset($this->supportedFields['category']))
+					if(!isset($this->supportedFields['category']) || !isset($event['category']))
 					{
 						$event['category'] = $event_info['stored_event']['category'];
 					}
@@ -1830,11 +1856,18 @@ class calendar_ical extends calendar_boupdate
 		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
-	function icaltoegw($_vcalData)
+	/**
+	 * Convert vCalendar data in EGw events
+	 *
+	 * @param string $_vcalData
+	 * @param string $principalURL='' Used for CalDAV imports
+	 * @return array|boolean events on success, false on failure
+	 */
+	function icaltoegw($_vcalData, $principalURL='')
 	{
 		if ($this->log)
 		{
-			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($principalURL)\n" .
 				array2string($_vcalData)."\n",3,$this->logfile);
 		}
 
@@ -1848,10 +1881,6 @@ class calendar_ical extends calendar_boupdate
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					"(): No vCalendar Container found!\n",3,$this->logfile);
 			}
-			if ($this->tzid)
-			{
-				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-			}
 			return false;
 		}
 		$version = $vcal->getAttribute('VERSION');
@@ -1861,7 +1890,12 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($component, 'Horde_iCalendar_vevent'))
 			{
-				if ($event = $this->vevent2egw($component, $version, $this->supportedFields))
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
+						get_class($component)." found\n",3,$this->logfile);
+				}
+				if ($event = $this->vevent2egw($component, $version, $this->supportedFields, $principalURL))
 				{
 					if ($this->isWholeDay($event)) $event['whole_day'] = true;
 					//common adjustments
@@ -1958,6 +1992,14 @@ class calendar_ical extends calendar_boupdate
 					$events[] = $event;
 				}
 			}
+			else
+			{
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
+						get_class($component)." found\n",3,$this->logfile);
+				}
+			}
 		}
 
 		return $events;
@@ -1969,12 +2011,21 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $component			VEVENT
 	 * @param string $version			vCal version (1.0/2.0)
 	 * @param array $supportedFields	supported fields of the device
+	 * @param string $principalURL=''	Used for CalDAV imports
 	 *
 	 * @return array|boolean			event on success, false on failure
 	 */
-	function vevent2egw(&$component, $version, $supportedFields)
+	function vevent2egw(&$component, $version, $supportedFields, $principalURL='')
 	{
-		if (!is_a($component, 'Horde_iCalendar_vevent')) return false;
+		if (!is_a($component, 'Horde_iCalendar_vevent'))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
+					get_class($component)." found\n",3,$this->logfile);
+			}
+			return false;
+		}
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
@@ -2014,11 +2065,24 @@ class calendar_ical extends calendar_boupdate
 					$vcardData['end']	= $dtend_ts;
 			}
 		}
-		if (!isset($vcardData['start'])) return false; // not a valid entry
-
+		if (!isset($vcardData['start']))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. "() DTSTART missing!\n",3,$this->logfile);
+			}
+			return false; // not a valid entry
+		}
 		// lets see what we can get from the vcard
 		foreach ($component->_attributes as $attributes)
 		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. '(): ' . $attributes['name'] . ' => '
+					. $attributes['value'] . "\n",3,$this->logfile);
+			}
 			switch ($attributes['name'])
 			{
 				case 'AALARM':
@@ -2358,14 +2422,64 @@ class calendar_ical extends calendar_boupdate
 					{
 						$status = 'X'; // client did not return the status
 					}
-					$cn = '';
-					if (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
+					$uid = $email = $cn = '';
+					$quantity = 1;
+					$role = 'REQ-PARTICIPANT';
+					if (!empty($attributes['params']['ROLE']))
+					{
+						$role = $attributes['params']['ROLE'];
+					}
+					// try pricipal url from CalDAV
+					if (strpos($attributes['value'], 'http') === 0)
+					{
+						if (!empty($principalURL) && strstr($attributes['value'], $principalURL) !== false)
+						{
+							$uid = $this->user;
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. "(): Found myself: '$uid'\n",3,$this->logfile);
+							}
+						}
+						else
+						{
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. '(): Unknown URI: ' . $attributes['value']
+									. "\n",3,$this->logfile);
+							}
+							$attributes['value'] = '';
+						}
+					}
+					// try X-EGROUPWARE-UID
+					if (!$uid && !empty($attributes['params']['X-EGROUPWARE-UID']))
+					{
+						$uid = $attributes['params']['X-EGROUPWARE-UID'];
+						if (!empty($attributes['params']['X-EGROUPWARE-QUANTITY']))
+						{
+							$quantity = $attributes['params']['X-EGROUPWARE-QUANTITY'];
+						}
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. "(): Found X-EGROUPWARE-UID: '$uid'\n",3,$this->logfile);
+						}
+					}
+					elseif ($attributes['value'] == 'Unknown')
+					{
+							// we use the current user
+							$uid = $this->user;
+					}
+					// try to find an email address
+					elseif (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches))
 					{
 						$email = $matches[1] ? $matches[1] : $matches[3];
 						$cn = isset($matches[2]) ? $matches[2]: '';
 					}
-					elseif (preg_match('/"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
+					elseif (!empty($attributes['value']) &&
+						preg_match('/"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches))
 					{
 						$cn = $matches[1];
@@ -2375,82 +2489,92 @@ class calendar_ical extends calendar_boupdate
 					{
 						$email = $attributes['value'];
 					}
-					else
+					if (!$uid && $email && ($uid = $GLOBALS['egw']->accounts->name2id($email, 'account_email')))
 					{
-						$email = false;	// no email given
-					}
-					$searcharray = array();
-					if ($email)
-					{
-						$searcharray = array('email' => $email, 'email_home' => $email);
-					}
-					if (isset($attributes['params']['CN']) && $attributes['params']['CN'])
-					{
-						if ($attributes['params']['CN'][0] == '"'
-							&& substr($attributes['params']['CN'],-1) == '"')
+						// we use the account we found
+						if ($this->log)
 						{
-							$attributes['params']['CN'] = substr($attributes['params']['CN'],1,-1);
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. "() Found account: '$uid', '$cn', '$email'\n",3,$this->logfile);
 						}
-						$searcharray['n_fn'] = $attributes['params']['CN'];
 					}
-					elseif ($cn)
+					if (!$uid)
 					{
-						$searcharray['n_fn'] = $cn;
-					}
-					if (($uid = $attributes['params']['X-EGROUPWARE-UID'])
-						&& ($info = $this->resource_info($uid))
-						&& (!$email || $info['email'] == $email))
-					{
-						// we use the (checked) X-EGROUPWARE-UID
-					}
-
-					//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
-					elseif (preg_match('/(.*) Group/', $searcharray['n_fn'], $matches))
-					{
-						if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
+						$searcharray = array();
+						// search for provided email address ...
+						if ($email)
 						{
-							//Horde::logMessage("vevent2egw: group participant $uid",
-							//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-							if ($status != 'X' && $status != 'U')
+							$searcharray = array('email' => $email, 'email_home' => $email);
+						}
+						// ... and for provided CN
+						if (!empty($attributes['params']['CN']))
+						{
+							if ($attributes['params']['CN'][0] == '"'
+								&& substr($attributes['params']['CN'],-1) == '"')
 							{
-								// User tries to reply to the group invitiation
-								$members = $GLOBALS['egw']->accounts->members($uid, true);
-								if (in_array($this->user, $members))
+								$cn = substr($attributes['params']['CN'],1,-1);
+							}
+							$searcharray['n_fn'] = $cn;
+						}
+						elseif ($cn)
+						{
+							$searcharray['n_fn'] = $cn;
+						}
+
+						//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
+						if (preg_match('/(.*) Group/', $cn, $matches))
+						{
+							if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
+							{
+								//Horde::logMessage("vevent2egw: group participant $uid",
+								//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
+								if (!isset($vcardData['participants'][$this->user]) &&
+									$status != 'X' && $status != 'U')
 								{
-									//Horde::logMessage("vevent2egw: set status to " . $status,
-									//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
-									$vcardData['participants'][$this->user] =
-										calendar_so::combine_status($status);
+									// User tries to reply to the group invitiation
+									$members = $GLOBALS['egw']->accounts->members($uid, true);
+									if (in_array($this->user, $members))
+									{
+										//Horde::logMessage("vevent2egw: set status to " . $status,
+										//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
+										$vcardData['participants'][$this->user] =
+											calendar_so::combine_status($status,$quantity,$role);
+									}
 								}
 								$status = 'U'; // keep the group
 							}
+							else continue; // can't find this group
 						}
-						else continue; // can't find this group
-					}
-					elseif ($attributes['value'] == 'Unknown')
-					{
-						$uid = $this->user;
-					}
-					elseif ($email && ($uid = $GLOBALS['egw']->accounts->name2id($email,'account_email')))
-					{
-						// we use the account we found
-					}
-					elseif (!$searcharray)
-					{
-						continue;	// participants without email AND CN --> ignore it
-					}
-					elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',$searcharray,
-						array('id','egw_addressbook.account_id as account_id','n_fn'),'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC','','',false,'OR')))
-					{
-						$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
-					}
-					else
-					{
-						if (!$email)
+						elseif (empty($searcharray))
 						{
-							$email = 'no-email@egroupware.org';	// set dummy email to store the CN
+							continue;	// participants without email AND CN --> ignore it
 						}
-						$uid = 'e'.($attributes['params']['CN'] ? $attributes['params']['CN'].' <'.$email.'>' : $email);
+						elseif ((list($data) = $this->addressbook->search($searcharray,
+							array('id','egw_addressbook.account_id as account_id','n_fn'),
+							'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC',
+							'','',false,'OR')))
+						{
+							// found an addressbook entry
+							$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. "() Found addressbook entry: '$uid', '$cn', '$email'\n",3,$this->logfile);
+							}
+						}
+						else
+						{
+							if (!$email)
+							{
+								$email = 'no-email@egroupware.org';	// set dummy email to store the CN
+							}
+							$uid = 'e'. ($cn ? '"' . $cn . '" <' . $email . '>' : $email);
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. "() Not Found, create dummy: '$uid', '$cn', '$email'\n",3,$this->logfile);
+							}
+						}
 					}
 					switch($attributes['name'])
 					{
@@ -2461,9 +2585,15 @@ class calendar_ical extends calendar_boupdate
 								// for multiple entries the ACCEPT wins
 								// add quantity and role
 								$vcardData['participants'][$uid] =
-									calendar_so::combine_status($status,
-										$attributes['params']['X-EGROUPWARE-QUANTITY'],
-										$attributes['params']['ROLE']);
+									calendar_so::combine_status($status, $quantity, $role);
+
+								if (!$this->calendarOwner && is_numeric($uid) &&
+										$role == 'CHAIR' &&
+										is_a($component->getAttribute('ORGANIZER'), 'PEAR_Error'))
+								{
+									// we can store the ORGANIZER as event owner
+									$event['owner'] = $uid;
+								}
 							}
 							break;
 
@@ -2475,7 +2605,7 @@ class calendar_ical extends calendar_boupdate
 								$vcardData['participants'][$uid] =
 									calendar_so::combine_status($status, $quantity, 'CHAIR');
 							}
-							if (is_numeric($uid) && ($uid == $this->calendarOwner || !$this->calendarOwner))
+							if (!$this->calendarOwner && is_numeric($uid))
 							{
 								// we can store the ORGANIZER as event owner
 								$event['owner'] = $uid;
@@ -2488,7 +2618,7 @@ class calendar_ical extends calendar_boupdate
 								{
 									// save the ORGANIZER as event CHAIR
 									$vcardData['participants'][$uid] =
-										calendar_so::combine_status('U', 1, 'CHAIR');
+										calendar_so::combine_status('D', 1, 'CHAIR');
 								}
 							}
 					}
@@ -2563,7 +2693,7 @@ class calendar_ical extends calendar_boupdate
 
 		if ($this->log)
 		{
-			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($principalURL)\n" .
 				array2string($event)."\n",3,$this->logfile);
 		}
 		//Horde::logMessage("vevent2egw:\n" . print_r($event, true),
