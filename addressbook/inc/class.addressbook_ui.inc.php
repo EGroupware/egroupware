@@ -327,6 +327,13 @@ class addressbook_ui extends addressbook_bo
 			$org_name = implode(': ',$org_name);
 			$sel_options['org_view'][(string) $content['nm']['org_view']] = $org_name;
 		}
+		// unset the filters regarding organisations, when there is no organisation selected
+		if (empty($sel_options['org_view'][(string) $content['nm']['org_view']]) || stripos($org_view,":") === false )
+		{
+			unset($content['nm']['col_filter']['org_name']);
+			unset($content['nm']['col_filter']['org_unit']);
+			unset($content['nm']['col_filter']['adr_one_locality']);
+		}
 		$content['nm']['org_view_label'] = $sel_options['org_view'][(string) $content['nm']['org_view']];
 
 		$this->tmpl->read(/*$do_email ? 'addressbook.email' :*/ 'addressbook.index');
