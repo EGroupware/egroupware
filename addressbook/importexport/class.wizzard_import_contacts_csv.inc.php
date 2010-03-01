@@ -189,8 +189,9 @@ class wizzard_import_contacts_csv extends import_contacts_csv
 			foreach($bocontacts->customfields as $name => $data) {
 				$contact_fields['#'.$name] = $data['label'];
 			}
-			unset($addr_names['jpegphoto']);        // can't cvs import that
+			unset($contact_fields['jpegphoto']);        // can't cvs import that
 			$sel_options['field_mapping'] = array('' => lang('none')) + $contact_fields;
+			$content['msg'] .= "\n*" . lang('Contact ID cannot be changed by import');
 			$preserv = $content;
 			unset ($preserv['button']);
 			return 'addressbook.importexport_wizzard_fieldmaping';

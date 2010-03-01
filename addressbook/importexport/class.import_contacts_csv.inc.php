@@ -147,6 +147,8 @@ class import_contacts_csv implements iface_import_plugin  {
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
+			$record['owner'] = $_definition->plugin_options['contact_owner'];
+
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
@@ -214,6 +216,10 @@ class import_contacts_csv implements iface_import_plugin  {
 				} 
 				// Fall through
 			case 'insert' :
+				if($_action == 'insert') {
+					// Addressbook backend doesn't like inserting with ID specified, it screws up the owner & etag
+					unset($_data['id']);
+				}
 				if ( $this->dry_run ) {
 					print_r($_data);
 					return true;
