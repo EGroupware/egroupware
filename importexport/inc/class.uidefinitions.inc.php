@@ -64,8 +64,8 @@ class uidefinitions
 		$this->steps = array(
 			'wizzard_step10' => lang('Choose an application'),
 			'wizzard_step20' => lang('Choose a plugin'),
-			'wizzard_step80' => lang('Which users are allowed to use this definition'),
-			'wizzard_step90' => lang('Choose a name for this definition'),
+			'wizzard_step21' => lang('Choose a name for this definition'),
+			'wizzard_step90' => lang('Which users are allowed to use this definition'),
 			'wizzard_finish' => '',
 		);
 		//register plugins
@@ -190,6 +190,11 @@ class uidefinitions
 
 			// pre precess next step
 			$sel_options = $readonlys = $preserv = array();
+
+			// Disable finish button if required fields are missing
+			if(!$content['name'] || !$content['type'] || !$content['plugin']) {
+				$GLOBALS['egw']->js->set_onload("disable_button('exec[button][finish]');");
+			}
 			if(!key_exists($next_step,$this->steps))
 			{
 				$this->wizzard_content_template = $this->plugin->$next_step($content,$sel_options,$readonlys,$preserv);
@@ -288,7 +293,7 @@ class uidefinitions
 		}
 		$step_keys = array_keys($steps);
 		$nn = array_search($curr_step,$step_keys)+(int)$step_width;
-		return (key_exists($nn,$step_keys)) ? $step_keys[$nn] : false;
+		return (key_exists($nn,$step_keys)) ? $step_keys[$nn] : 'wizzard_finish';
 	}
 
 
@@ -339,7 +344,9 @@ class uidefinitions
 					return $this->get_step($content['step'],1);
 				case 'previous' :
 					unset ($content['plugin']);
-					$this->response->addScript("disable_button('exec[button][previous]');");
+					if(is_object($this->response)) {
+						$this->response->addScript("disable_button('exec[button][previous]');");
+					}
 					return $this->get_step($content['step'],-1);
 				case 'finish':
 					return 'wizzard_finish';
@@ -365,16 +372,14 @@ class uidefinitions
 
 	}
 
-	// allowed users
-	function wizzard_step80(&$content, &$sel_options, &$readonlys, &$preserv)
+	// name
+	function wizzard_step21(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if(self::_debug) error_log('importexport.uidefinitions::wizzard_step80->$content '.print_r($content,true));
+		if(self::_debug) error_log('importexport.uidefinitions::wizzard_step21->$content '.print_r($content,true));
 
-		// return from step80
-		if ($content['step'] == 'wizzard_step80')
+		// return from step21
+		if ($content['step'] == 'wizzard_step21')
 		{
-			$content['allowed_users'] = implode(',',$content['allowed_users']);
-
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -384,21 +389,21 @@ class uidefinitions
 				case 'finish':
 					return 'wizzard_finish';
 				default :
-					return $this->wizzard_step80($content,$sel_options,$readonlys,$preserv);
+					return $this->wizzard_step21($content,$sel_options,$readonlys,$preserv);
 			}
 		}
-		// init step80
+		// init step21
 		else
 		{
-			$content['msg'] = $this->steps['wizzard_step80'];
-			$content['step'] = 'wizzard_step80';
+			$content['msg'] = $this->steps['wizzard_step21'];
+			$content['step'] = 'wizzard_step21';
 			$preserv = $content;
 			unset ($preserv['button']);
-			return 'importexport.wizzard_chooseallowedusers';
+			return 'importexport.wizzard_choosename';
 		}
 	}
 
-	// name
+	// allowed users
 	function wizzard_step90(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		if(self::_debug) error_log('importexport.uidefinitions::wizzard_step90->$content '.print_r($content,true));
@@ -406,12 +411,14 @@ class uidefinitions
 		// return from step90
 		if ($content['step'] == 'wizzard_step90')
 		{
+			$content['allowed_users'] = implode(',',$content['allowed_users']);
+
 			// workaround for some ugly bug related to readonlys;
-			unset($content['button']['next']);
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'previous' :
 					return $this->get_step($content['step'],-1);
+				case 'next':
 				case 'finish':
 					return 'wizzard_finish';
 				default :
@@ -426,10 +433,11 @@ class uidefinitions
 			$preserv = $content;
 			unset ($preserv['button']);
 			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][next]');");
-			return 'importexport.wizzard_choosename';
+			if(is_object($this->response)) {
+				$this->response->addAssign('exec[button][next]','style.display', 'none');
+			}
+			return 'importexport.wizzard_chooseallowedusers';
 		}
-
-
 	}
 
 	function wizzard_finish(&$content)
