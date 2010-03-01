@@ -90,11 +90,10 @@ class wizzard_import_contacts_csv extends import_contacts_csv
 					if (($handle = fopen($GLOBALS['egw']->session->appsession('csvfile'), "rb")) !== FALSE) {
 						$data = fgetcsv($handle, 8000, $content['fieldsep']);
 						$content['csv_fields'] = translation::convert($data,$content['charset']);
-						return $GLOBALS['egw']->uidefinitions->get_step($content['step'],1);
 					} elseif($content['plugin_options']['csv_fields']) {
 						$content['csv_fields'] = $content['plugin_options']['csv_fields'];
 					}
-					return $this->wizzard_step40($content,$sel_options,$readonlys,$preserv);
+					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],1);
 				case 'previous' :
 					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],-1);
 				case 'finish':
@@ -112,6 +111,8 @@ class wizzard_import_contacts_csv extends import_contacts_csv
 			// If editing an existing definition, these will be in plugin_options
 			if(!$content['fieldsep'] && $content['plugin_options']['fieldsep']) {
 				$content['fieldsep'] = $content['plugin_options']['fieldsep'];
+			} elseif (!$content['fieldsep']) {
+				$content['fieldsep'] = ';';
 			}
 			if(!$content['charset'] && $content['plugin_options']['charset']) {
 				$content['charset'] = $content['plugin_options']['charset'];
