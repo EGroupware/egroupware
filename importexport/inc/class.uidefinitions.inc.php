@@ -144,7 +144,7 @@ class uidefinitions
 		$GLOBALS['egw_info']['flags']['java_script'] .=
 			"<script LANGUAGE='JavaScript'>
 				function xajax_eT_wrapper_init() {
-					window.resizeTo(document.documentElement.scrollWidth+20,document.documentElement.offsetHeight+40);
+					//window.resizeTo(document.documentElement.scrollWidth+20,document.documentElement.offsetHeight+40);
 					window.moveTo(screen.availWidth/2 - window.outerWidth/2,
 						screen.availHeight/2 - window.outerHeight/2);
 				}
