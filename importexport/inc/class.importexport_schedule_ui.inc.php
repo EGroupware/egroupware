@@ -40,6 +40,12 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 			}
 			$async_list = ExecMethod('phpgwapi.asyncservice.read', 'importexport%');
 			foreach($async_list as $id => $async) {
+				if(is_array($async['data']['errors'])) {
+					$async['data']['errors'] = implode("\n", $async['data']['errors']);
+				}
+				if(is_numeric($async['data']['result'])) {
+					$async['data']['record_count'] = lang('%1 records processed', $async['data']['result']);
+				}
 				$data['scheduled'][] = $async['data'] + array(
 					'id'	=>	$id,
 					'next'	=>	$async['next'],
@@ -183,7 +189,7 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 			$definitions = new bodefinitions($query);
 			$definition_list = ((array)$definitions->get_definitions());
 			
-			$id = 'importexport'.$definition_list[0].time();
+			$id = 'importexport.'.$definition_list[0].'.'.$data['target'];
 			return $id;
 		}
 
@@ -254,7 +260,6 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
 				exit();
 			}
-
 			$GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
 
 			require_once(EGW_INCLUDE_ROOT . "/$definition->application/importexport/class.$definition->plugin.inc.php");
@@ -262,7 +267,7 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 
 			$type = $data['type'];
 			if($resource = fopen( $data['target'], $data['type'] == 'import' ? 'r' : 'w' )) {
-				$po->$type( $resource, $definition );
+				$result = $po->$type( $resource, $definition );
 
 				fclose($resource);
 			} else {
@@ -270,10 +275,30 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 			}
 
 			if($po->get_errors()) {
+				$data['errors'] = $po->get_errors();
 				fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n");
 				foreach($po->get_errors() as $record => $error) {
 					fwrite(STDERR, "$record\t$error\n");
 				}
+			} else {
+				unset($data['errors']);
+			}
+
+			$data['result'] = $result;
+			$data['last_run'] = time();
+
+			// Update job with results
+			$id = self::generate_id($data);
+			$async = ExecMethod('phpgwapi.asyncservice.read', $id);
+			$async = $async[$id];
+			if(is_array($async)) {
+				ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
+				$result = ExecMethod2('phpgwapi.asyncservice.set_timer', 
+					$async['times'],
+					$id,
+					'importexport.importexport_schedule_ui.exec',
+					$data
+				);
 			}
 
 			$contents = ob_get_contents();
