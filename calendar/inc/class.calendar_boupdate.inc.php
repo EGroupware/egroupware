@@ -1421,24 +1421,27 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		$cat_id_list = array();
-		foreach ($catname_list as $cat_name)
+		if(is_array($catname_list) && count($catname_list) > 0)
 		{
-			$cat_name = trim($cat_name);
-			$cat_id = $this->categories->name2id($cat_name, 'X-');
-
-			if (!$cat_id)
+			foreach ($catname_list as $cat_name)
 			{
-				// some SyncML clients (mostly phones) add an X- to the category names
-				if (strncmp($cat_name, 'X-', 2) == 0)
+				$cat_name = trim($cat_name);
+				$cat_id = $this->categories->name2id($cat_name, 'X-');
+
+				if (!$cat_id)
 				{
-					$cat_name = substr($cat_name, 2);
+					// some SyncML clients (mostly phones) add an X- to the category names
+					if (strncmp($cat_name, 'X-', 2) == 0)
+					{
+						$cat_name = substr($cat_name, 2);
+					}
+					$cat_id = $this->categories->add(array('name' => $cat_name, 'descr' => $cat_name, 'access' => 'private'));
 				}
-				$cat_id = $this->categories->add(array('name' => $cat_name, 'descr' => $cat_name, 'access' => 'private'));
-			}
 
-			if ($cat_id)
-			{
-				$cat_id_list[] = $cat_id;
+				if ($cat_id)
+				{
+					$cat_id_list[] = $cat_id;
+				}
 			}
 		}
 
