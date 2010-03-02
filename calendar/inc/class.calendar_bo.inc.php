@@ -942,6 +942,7 @@ class calendar_bo
 		// calculate the new start- and end-time
 		$length_s = $this->date2ts($event['end']) - $this->date2ts($event['start']);
 		$event_start_arr = $this->date2array($event['start']);
+		$event_end_arr = $this->date2array($event['end']);
 
 		$date_arr = $this->date2array((string) $date_ymd);
 		$date_arr['hour'] = $event_start_arr['hour'];
@@ -950,6 +951,28 @@ class calendar_bo
 		unset($date_arr['raw']);	// else date2ts would use it
 		$event['start'] = $this->date2ts($date_arr);
 		$event['end'] = $event['start'] + $length_s;
+		$date_arr = $this->date2array($event['end']);
+
+		if ($event_start_arr['hour'] == 0 &&
+			$event_start_arr['minute'] == 0 &&
+			$event_end_arr['hour'] == 23 &&
+			$event_end_arr['minute'] == 59 &&
+			($date_arr['hour'] != 23 ||
+			$date_arr['minute'] != 59))
+		{
+			// Adjust whole-day event
+			unset($date_arr['raw']);	// else date2ts would use it
+			$date_arr['hour'] = 23;
+			$date_arr['minute'] = 59;
+			$date_arr['second'] = 59;
+			$new_end = $this->date2ts($date_arr);
+			if ($new_end - $event['end'] > DAY_s/2)
+			{
+				// we ended up the following day => step back
+				$new_end -= DAY_s;
+			}
+			$event['end'] = $new_end;
+		}
 
 		$events[] = $event;
 
@@ -1099,7 +1122,7 @@ class calendar_bo
 	}
 
 	/**
-	 * Converts several date-types to a timestamp and optionaly converts user- to server-time
+	 * Converts several date-types to a timestamp and optionally converts user- to server-time
 	 *
 	 * @param mixed $date date to convert, should be one of the following types
 	 *	string (!) in form YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss or YYYYMMDDThhmmss
@@ -1110,6 +1133,7 @@ class calendar_bo
 	function date2ts($date,$user2server=false)
 	{
 		$date_in = $date;
+		$time_offset = 0;
 
 		switch(gettype($date))
 		{
@@ -1180,7 +1204,7 @@ class calendar_bo
 	}
 
 	/**
-	 * Converts a date to an array and optionaly converts server- to user-time
+	 * Converts a date to an array and optionally converts server- to user-time
 	 *
 	 * @param mixed $date date to convert
 	 * @param boolean $server2user_time=false conversation between user- and server-time; default false == Off
