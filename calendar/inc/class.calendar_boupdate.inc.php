@@ -1205,7 +1205,11 @@ class calendar_boupdate extends calendar_bo
 			{
 				$recur_date = $event['start'];
 			}
+			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
+			$query['cal_reference'] = 0;
 		}
+
+		if (!isset($event['reference'])) $event['reference'] = 0;
 
 		if ($event['id'])
 		{
@@ -1239,12 +1243,6 @@ class calendar_boupdate extends calendar_bo
 			if ($filter == 'exact') return array();
 		}
 		unset($event['id']);
-
-		if ($filter == 'master')
-		{
-			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
-			$query['cal_reference'] = 0;
-		}
 
 		// only query calendars of users, we have READ-grants from
 		$users = array();
@@ -1346,10 +1344,6 @@ class calendar_boupdate extends calendar_bo
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'(' . $event['uid'] . ')[EventUID]');
 			}
-			if ($filter != 'master' && isset($event['reference']))
-			{
-				$query['cal_reference'] = $event['reference'];
-			}
 		}
 
 		if ($this->log)
@@ -1381,8 +1375,29 @@ class calendar_boupdate extends calendar_bo
 
 			if (in_array($filter, array('exact', 'master')) && !empty($event['uid']))
 			{
-				$matchingEvents[] = $egwEvent['id']; // UID found
-				if ($filter = 'master') break;
+				// UID found
+				if ($egwEvent['reference'] == $event['reference'])
+				{
+					// We found the exact match
+					$matchingEvents[] = $egwEvent['id'];
+					break;
+				}
+				if (!$egwEvent['reference'])
+				{
+					// We found the master
+					if ($filter == 'master')
+					{
+						$matchingEvents[] = $egwEvent['id'];
+						break;
+					}
+					if (($egwEvent = $this->read($egwEvent['id'], $event['reference'], false, 'server'))
+						&& $egwEvent['reference'] == $event['reference'])
+					{
+						// We found a pseudo exception
+						$matchingEvents[] = $egwEvent['id'] . ':' . (int)$event['reference'];
+						break;
+					}
+				}
 				continue;
 			}
 

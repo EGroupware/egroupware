@@ -2710,9 +2710,14 @@ class calendar_ical extends calendar_boupdate
 			{
 				$filter = $relax ? 'relax' : 'check';
 				$event = array_shift($events);
+				$eventId = -1;
 				if ($this->isWholeDay($event, true)) $event['whole_day'] = true;
+				if ($contentID)
+				{
+					$parts = preg_split('/:/', $contentID);
+					$event['id'] = $eventId = $parts[0];
+				}
 				$event['category'] = $this->find_or_add_categories($event['category'], $eventId);
-				if ($contentID) $event['id'] = $contentID;
 				return $this->find_event($event, $filter);
 			}
 			if ($this->log)

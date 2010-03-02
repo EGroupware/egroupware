@@ -546,13 +546,10 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			'map_id'	=> $mapID,
 			'map_locuid'	=> $locid,
 		);
-		$data = array (
-			'map_expired'	=> true,
-		);
 		$GLOBALS['egw']->db->delete('egw_contentmap', $where,
 			__LINE__, __FILE__, 'syncml');
 
-		// delete all egw id's
+		// delete all EGw id's
 		$where = array(
 			'map_id'	=> $mapID,
 			'map_guid'	=> $guid,
