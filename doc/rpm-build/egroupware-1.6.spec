@@ -1,5 +1,4 @@
 %define packagename eGroupware
-%define egwdirname egroupware
 %define egwversion 1.6
 %define packaging 003
 #define epoch 1
@@ -40,6 +39,9 @@
 	%define distribution CentOS %{?centos_version}
 	%define extra_requires httpd php-mysql php-xml
 %endif
+Prefix: /usr/share
+%define egwdir %{prefix}/egroupware
+%define egwdatadir /var/lib/egroupware
 
 Name: %{packagename}
 Version: %{egwversion}.%{packaging}
@@ -60,13 +62,10 @@ Source5: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
 Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{php}-posix %{extra_requires} %{cron} %{packagename}-egw-pear >= %{egwversion}.%{packaging}
-Provides: egw-core egw-addressbook egw-etemplate
 Requires: %{packagename}-core %{packagename}-bookmarks %{packagename}-calendar %{packagename}-developer_tools %{packagename}-emailadmin %{packagename}-felamimail %{packagename}-filemanager %{packagename}-infolog %{packagename}-importexport %{packagename}-manual %{packagename}-news_admin %{packagename}-notifications %{packagename}-phpbrain %{packagename}-polls %{packagename}-projectmanager %{packagename}-registration %{packagename}-resources %{packagename}-sambaadmin %{packagename}-sitemgr %{packagename}-syncml %{packagename}-timesheet %{packagename}-wiki
-Obsoletes: %{packagename}-icalsrv
 #otherwise build fails because of jar files in G2
 BuildRequires: unzip
 
-Prefix: /usr/share
 Buildarch: noarch
 AutoReqProv: no
 
@@ -415,35 +414,35 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 
 %files core
 %defattr(-,root,root)
-%dir %attr(0755,root,root) %{prefix}/%{egwdirname}
+%dir %attr(0755,root,root) %{egwdir}
 %dir %attr(0755,root,root) /var/lib/egroupware
-%{prefix}/%{egwdirname}/about.php
-%{prefix}/%{egwdirname}/anon_wrapper.php
-%{prefix}/%{egwdirname}/header.inc.php
-%{prefix}/%{egwdirname}/header.inc.php.template
-%{prefix}/%{egwdirname}/index.php
-%{prefix}/%{egwdirname}/login.php
-%{prefix}/%{egwdirname}/logout.php
-%{prefix}/%{egwdirname}/notify.php
-%{prefix}/%{egwdirname}/notify_simple.php
-%{prefix}/%{egwdirname}/notifyxml.php
-%{prefix}/%{egwdirname}/redirect.php
-%{prefix}/%{egwdirname}/rpc.php
-%{prefix}/%{egwdirname}/set_box.php
-%{prefix}/%{egwdirname}/soap.php
-%{prefix}/%{egwdirname}/xajax.php
-%{prefix}/%{egwdirname}/xmlrpc.php
-%{prefix}/%{egwdirname}/svn-helper.php
-%{prefix}/%{egwdirname}/webdav.php
-%{prefix}/%{egwdirname}/groupdav.php
-%{prefix}/%{egwdirname}/addressbook
-%{prefix}/%{egwdirname}/admin
-%{prefix}/%{egwdirname}/doc
-%{prefix}/%{egwdirname}/etemplate
-%{prefix}/%{egwdirname}/home
-%{prefix}/%{egwdirname}/phpgwapi
-%{prefix}/%{egwdirname}/preferences
-%{prefix}/%{egwdirname}/setup
+%{egwdir}/about.php
+%{egwdir}/anon_wrapper.php
+%{egwdir}/header.inc.php
+%{egwdir}/header.inc.php.template
+%{egwdir}/index.php
+%{egwdir}/login.php
+%{egwdir}/logout.php
+%{egwdir}/notify.php
+%{egwdir}/notify_simple.php
+%{egwdir}/notifyxml.php
+%{egwdir}/redirect.php
+%{egwdir}/rpc.php
+%{egwdir}/set_box.php
+%{egwdir}/soap.php
+%{egwdir}/xajax.php
+%{egwdir}/xmlrpc.php
+%{egwdir}/svn-helper.php
+%{egwdir}/webdav.php
+%{egwdir}/groupdav.php
+%{egwdir}/addressbook
+%{egwdir}/admin
+%{egwdir}/doc
+%{egwdir}/etemplate
+%{egwdir}/home
+%{egwdir}/phpgwapi
+%{egwdir}/preferences
+%{egwdir}/setup
 %attr(0644,root,root) /etc/cron.d/egroupware
 %config %attr(0644,root,root) %{httpdconfd}/egroupware.conf
 %if 0%{?suse_version}
@@ -461,116 +460,124 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 # addressbook is part of core now, as it contains required classes for accounts
 #%files addressbook
 #%defattr(-,root,root)
-#%{prefix}/%{egwdirname}/addressbook
+#%{egwdir}/addressbook
+
+%files bookmarks
+%defattr(-,root,root)
+%{egwdir}/bookmarks
 
 %files calendar
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/calendar
+%{egwdir}/calendar
 
 %files developer_tools
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/developer_tools
+%{egwdir}/developer_tools
 
 %files egw-pear
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/egw-pear
+%{egwdir}/egw-pear
 
 %files emailadmin
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/emailadmin
+%{egwdir}/emailadmin
 
 %files felamimail
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/felamimail
+%{egwdir}/felamimail
 
 %files filemanager
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/filemanager
+%{egwdir}/filemanager
 
 %files gallery
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/gallery
+%{egwdir}/gallery
 
 %files icalsrv
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/icalsrv
+%{egwdir}/icalsrv
 
 %files infolog
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/infolog
+%{egwdir}/infolog
 
 %files importexport
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/importexport
+%{egwdir}/importexport
 
 %files manual
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/manual
+%{egwdir}/manual
 
 %files mydms
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/mydms
+%{egwdir}/mydms
 
 %files news_admin
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/news_admin
+%{egwdir}/news_admin
 
 %files notifications
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/notifications
+%{egwdir}/notifications
 
 %files phpbrain
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/phpbrain
+%{egwdir}/phpbrain
 
 %files phpsysinfo
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/phpsysinfo
+%{egwdir}/phpsysinfo
 
 %files polls
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/polls
+%{egwdir}/polls
 
 %files projectmanager
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/projectmanager
+%{egwdir}/projectmanager
 
 %files registration
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/registration
+%{egwdir}/registration
 
 %files resources
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/resources
+%{egwdir}/resources
 
 %files sambaadmin
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/sambaadmin
+%{egwdir}/sambaadmin
 
 %files sitemgr
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/sitemgr
+%{egwdir}/sitemgr
+
+%files syncml
+%defattr(-,root,root)
+%{egwdir}/syncml
 
 %files timesheet
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/timesheet
+%{egwdir}/timesheet
 
 %files tracker
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/tracker
+%{egwdir}/tracker
 
 %files wiki
 %defattr(-,root,root)
-%{prefix}/%{egwdirname}/wiki
+%{egwdir}/wiki
 
 %changelog
 * Tue Mar 9 2010 Ralf Becker <rb@stylite.de> 1.6.003
 - eGroupware 1.6.003 security and bugfix release
 - fixes 2 security problems:
   + one is a serious remote command execution (allowing to run arbitrary
-    command on the web server by simply issuing a HTTP request!)
+    commands on the web server by simply issuing a HTTP request!)
   + the other a reflected cross-site scripting (XSS)
-  Both require NOT a valid EGroupware account and work without being logged in!
+  Both require NO valid EGroupware account and work without being logged in!
 - SyncML 1.2 support and many SyncML bug fixes
 - many bugfixes since 1.6.002 release
 
