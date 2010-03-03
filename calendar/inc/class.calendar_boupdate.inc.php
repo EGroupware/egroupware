@@ -660,7 +660,9 @@ class calendar_boupdate extends calendar_bo
 				continue;	// dont notify rejected participants or groups
 			}
 
-			if($userid != $GLOBALS['egw_info']['user']['account_id'] || $user_prefs['calendar']['receive_own_updates']==1 ||  $msg_type == MSG_ALARM)
+			if($userid != $GLOBALS['egw_info']['user']['account_id'] || 
+				($userid == $GLOBALS['egw_info']['user']['account_id'] && $user_prefs['calendar']['receive_own_updates']==1) ||  
+				$msg_type == MSG_ALARM)
 			{
 				$preferences = CreateObject('phpgwapi.preferences',$userid);
 				$part_prefs = $preferences->read_repository();
