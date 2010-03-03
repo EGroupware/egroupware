@@ -1187,7 +1187,6 @@ class calendar_boupdate extends calendar_bo
 	{
 		$matchingEvents = array();
 		$query = array();
-		$recur_date = 0;
 
 		if ($this->log)
 		{
@@ -1197,14 +1196,6 @@ class calendar_boupdate extends calendar_bo
 
 		if ($filter == 'master')
 		{
-			if (isset($event['reference']))
-			{
-				$recur_date = $event['reference'];
-			}
-			elseif (isset($event['start']))
-			{
-				$recur_date = $event['start'];
-			}
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_reference'] = 0;
 		}
@@ -1218,29 +1209,41 @@ class calendar_boupdate extends calendar_bo
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'(' . $event['id'] . ")[EventID]");
 			}
-			if (($egwEvent = $this->read($event['id'], $recur_date, false, 'server')))
+			if (($egwEvent = $this->read($event['id'], 0, false, 'server')))
 			{
 				if ($this->log)
 				{
 					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 						'()[FOUND]:' . array2string($egwEvent));
 				}
-				// Just a simple consistency check
-				if ($filter == 'exact' ||
-					$filter == 'master'  && $egwEvent['recur_type'] != MCAL_RECUR_NONE ||
-					$filter != 'master' && strpos($egwEvent['title'], $event['title']) === 0)
+				if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
+					(empty($event['uid']) || $event['uid'] == $egwEvent['uid']))
 				{
-					$retval = $egwEvent['id'];
-					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
-						$event['recur_type'] == MCAL_RECUR_NONE && $event['reference'] != 0)
+					if ($filter == 'master')
 					{
-						$retval .= ':' . (int)$event['reference'];
+						$matchingEvents[] = $egwEvent['id']; // we found the master
 					}
-					$matchingEvents[] = $retval;
-					return $matchingEvents;
+					if ($event['recur_type'] == $egwEvent['recur_type'])
+					{
+						$matchingEvents[] = $egwEvent['id']; // we found the event
+					}
+					elseif ($event['recur_type'] == MCAL_RECUR_NONE &&
+								$event['reference'] != 0)
+					{
+						$exceptions = $this->so->get_recurrence_exceptions($egwEvent);
+						if (in_array($event['reference'], $exceptions))
+						{
+							$matchingEvents[] = $egwEvent['id'] . ':' . (int)$event['reference'];
+						}
+					}
+				} elseif ($event['recur_type'] == $egwEvent['recur_type'] &&
+							$filter != 'master' &&
+							strpos($egwEvent['title'], $event['title']) === 0)
+				{
+					$matchingEvents[] = $egwEvent['id']; // we found the event
 				}
 			}
-			if ($filter == 'exact') return array();
+			if (!empty($matchingEvents) || $filter == 'exact') return $matchingEvents;
 		}
 		unset($event['id']);
 
@@ -1382,7 +1385,7 @@ class calendar_boupdate extends calendar_bo
 					$matchingEvents[] = $egwEvent['id'];
 					break;
 				}
-				if (!$egwEvent['reference'])
+				if (!$egwEvent['reference'] && $event['reference'])
 				{
 					// We found the master
 					if ($filter == 'master')
@@ -1390,8 +1393,8 @@ class calendar_boupdate extends calendar_bo
 						$matchingEvents[] = $egwEvent['id'];
 						break;
 					}
-					if (($egwEvent = $this->read($egwEvent['id'], $event['reference'], false, 'server'))
-						&& $egwEvent['reference'] == $event['reference'])
+					$exceptions = $this->so->get_recurrence_exceptions($egwEvent);
+					if (in_array($event['reference'], $exceptions))
 					{
 						// We found a pseudo exception
 						$matchingEvents[] = $egwEvent['id'] . ':' . (int)$event['reference'];
@@ -1400,6 +1403,8 @@ class calendar_boupdate extends calendar_bo
 				}
 				continue;
 			}
+
+			if (!empty($event['uid']) && $filter == 'exact') beak;
 
 			// check times
 			if ($filter != 'relax')

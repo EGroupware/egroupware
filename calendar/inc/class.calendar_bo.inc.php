@@ -176,7 +176,7 @@ class calendar_bo
 	 */
 	function __construct()
 	{
-		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',True,$param);
+		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',true);
 
 		$this->so = new calendar_so();
 		$this->datetime = $GLOBALS['egw']->datetime;
