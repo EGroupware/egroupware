@@ -34,7 +34,18 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$file = array(
-				'Import definitions' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.uidefinitions.import_definition'),
+				'Import'=> array(
+					'text' => 'Import',
+					'link' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_import_ui.import_dialog'),
+					'target' => 'new',
+					'icon' => 'import'
+				),
+				'Export'=> array(
+					'text' => 'Export',
+					'link' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.uiexport.export_dialog'),
+					'target' => 'new',
+					'icon' => 'export'
+				),
 			);
 			display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
 		}
@@ -59,6 +70,7 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
+				'Import definitions' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.uidefinitions.import_definition'),
 				'Define {im|ex}ports'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'importexport.uidefinitions.index',
 				)),
