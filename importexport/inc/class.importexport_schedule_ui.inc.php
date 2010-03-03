@@ -43,8 +43,8 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				if(is_array($async['data']['errors'])) {
 					$async['data']['errors'] = implode("\n", $async['data']['errors']);
 				}
-				if(is_numeric($async['data']['result'])) {
-					$async['data']['record_count'] = lang('%1 records processed', $async['data']['result']);
+				if(is_numeric($async['data']['record_count'])) {
+					$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
 				}
 				$data['scheduled'][] = $async['data'] + array(
 					'id'	=>	$id,
@@ -284,7 +284,17 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				unset($data['errors']);
 			}
 
-			$data['result'] = $result;
+			if($po instanceof iface_import_plugin) {
+				if(is_numeric($result)) {
+					$data['record_count'] = $result;
+				}
+				$data['result'] = '';
+				foreach($po->get_results() as $action => $count) {
+					$data['result'] .= "\n" . lang($action) . ": $count";
+				}
+			} else {
+				$data['result'] = $result;
+			}
 			$data['last_run'] = time();
 
 			// Update job with results

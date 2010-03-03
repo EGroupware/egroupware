@@ -62,7 +62,10 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 					$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
 					$count = $plugin->import($file, $definition_obj);
 
-					$this->message = lang('%1 records imported successfully', $count);
+					$this->message = lang('%1 records processed', $count);
+					foreach($plugin->get_results() as $action => $count) {
+						$this->message .= "\n" . lang($action) . ": $count";
+					}
 					if(count($plugin->get_errors())) {
 						$this->message .= "\n".lang('Unable to import:');
 						foreach($plugin->get_errors() as $record => $message) {

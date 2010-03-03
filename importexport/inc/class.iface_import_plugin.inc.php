@@ -87,5 +87,15 @@ interface iface_import_plugin {
 	*/
 	public function get_errors();
 
+	/**
+	* Returns a list of actions taken, and the number of records for that action.
+	* Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+	*
+	* @return Array (
+	*	action => record count
+	* )
+	*/
+	public function get_results();
+
 } // end of iface_export_plugin
 ?>
