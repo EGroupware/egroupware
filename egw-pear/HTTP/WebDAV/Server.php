@@ -757,36 +757,6 @@ class HTTP_WebDAV_Server
                                 . gmdate("D, d M Y H:i:s ", $prop['val'])
                                 . "GMT</D:getlastmodified>\n";
                             break;
-                        case "resourcetype":
-                        	if (!is_array($prop['val'])) {
-                            	echo "     <D:resourcetype><D:$prop[val]/></D:resourcetype>\n";
-                        	} else {	// multiple resourcetypes from different namespaces as required by GroupDAV
-                       			$vals = $extra_ns = '';
-                        		foreach($prop['val'] as $subprop)
-                        		{
- 		                            if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
-										// register property namespace if not known yet
-	                            		if (!isset($ns_hash[$subprop['ns']])) {
-			                                $ns_name = "ns".(count($ns_hash) + 1);
-			                                $ns_hash[$subprop['ns']] = $ns_name;
-	                            		} else {
-	                            			$ns_name = $ns_hash[$subprop['ns']];
-	                            		}
-		                            	if (strchr($extra_ns,$extra=' xmlns:'.$ns_name.'="'.$subprop['ns'].'"') === false) {
-			                                $extra_ns .= $extra;
-		                            	}
-		                            	$ns_name .= ':';
-		                            } elseif ($subprop['ns'] == 'DAV:') {
-		                            	$ns_name = 'D:';
-		                            } else {
-		                            	$ns_name = '';
-		                            }
-		                            $vals .= "<$ns_name$subprop[val]/>";
-                        		}
-                        		echo "     <D:resourcetype$extra_ns>$vals</D:resourcetype>\n";
-								//error_log("resourcetype: <D:resourcetype$extra_ns>$vals</D:resourcetype>");
-                        	}
-                            break;
                         case "supportedlock":
                             echo "     <D:supportedlock>$prop[val]</D:supportedlock>\n";
                             break;
