@@ -87,6 +87,11 @@ class import_events_csv implements iface_import_plugin  {
         protected $errors = array();
 
 	/**
+	 * List of actions, and how many times that action was taken
+	 */
+	protected $results = array();
+
+	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
 	 * @param string $_charset
@@ -138,6 +143,7 @@ class import_events_csv implements iface_import_plugin  {
 		}
 
 		$this->errors = array();
+		$this->results = array();
 
 		while ( $record = $import_csv->get_record() ) {
 
@@ -230,11 +236,14 @@ class import_events_csv implements iface_import_plugin  {
 				// are we serious?
 				if ( $this->dry_run ) {
 					print_r($_data);
+					$this->results[$_action]++;
 				} else {
 					$messages = array();
 					$result = $this->bocalupdate->update( $_data, true, !$_data['modified'], $this->is_admin, true, $messages);
 					if(!$result) {
 						$this->errors = implode(',', $messages);
+					} else {
+						$this->results[$_action]++;
 					}
 					return $result;
 				}
@@ -307,5 +316,16 @@ class import_events_csv implements iface_import_plugin  {
 		return $this->errors;
 	}
 
+	/**
+        * Returns a list of actions taken, and the number of records for that action.
+        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+        *
+        * @return Array (
+        *       action => record count
+        * )
+        */
+        public function get_results() {
+		return $this->results;
+	}
 } // end of iface_export_plugin
 ?>
