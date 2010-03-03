@@ -91,6 +91,11 @@ class import_contacts_csv implements iface_import_plugin  {
 	protected $errors = array();
 
 	/**
+         * List of actions, and how many times that action was taken
+         */
+        protected $results = array();
+
+	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
 	 * @param string $_charset
@@ -137,6 +142,7 @@ class import_contacts_csv implements iface_import_plugin  {
 
 		// Start counting successes
 		$count = 0;
+		$this->results = array();
 
 		// Failures
 		$this->errors = array();
@@ -222,11 +228,14 @@ class import_contacts_csv implements iface_import_plugin  {
 				}
 				if ( $this->dry_run ) {
 					print_r($_data);
+					$this->results[$_action]++;
 					return true;
 				} else {
 					$result = $this->bocontacts->save( $_data, $this->is_admin);
 					if(!$result) {
 						$this->errors[$record_num] = $this->bocontacts->error;
+					} else {
+						$this->results[$_action]++;
 					}
 					return $result;
 				}
@@ -297,5 +306,17 @@ class import_contacts_csv implements iface_import_plugin  {
         public function get_errors() {
 		return $this->errors;
 	}
+
+	/**
+        * Returns a list of actions taken, and the number of records for that action.
+        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
+        *
+        * @return Array (
+        *       action => record count
+        * )
+        */
+        public function get_results() {
+                return $this->results;
+        }
 } // end of iface_export_plugin
 ?>
