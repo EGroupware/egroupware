@@ -41,8 +41,6 @@
 	%define extra_requires httpd php-mysql php-xml
 %endif
 
-Distribution: %{distribution}
-
 Name: %{packagename}
 Version: %{egwversion}.%{packaging}
 Release:
@@ -58,8 +56,7 @@ Source1: %{packagename}-egw-pear-%{egwversion}.%{packaging}.tar.bz2
 Source2: %{packagename}-icalsrv-%{egwversion}.%{packaging}.tar.bz2
 Source3: %{packagename}-mydms-%{egwversion}.%{packaging}.tar.bz2
 Source4: %{packagename}-gallery-%{egwversion}.%{packaging}.tar.bz2
-Source5: %{?source5}
-Source6: %{name}-rpmlintrc
+Source5: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
 Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{php}-posix %{extra_requires} %{cron} %{packagename}-egw-pear >= %{egwversion}.%{packaging}
@@ -375,7 +372,6 @@ This is the wiki app for eGroupware.
 %setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
-%setup5 -T -D -a 5 -n %{egwdirname}
 %patch0 -p 0
 
 %build
