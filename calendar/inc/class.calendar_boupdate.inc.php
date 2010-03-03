@@ -658,6 +658,9 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
+		//$currentPrefs = CreateObject('phpgwapi.preferences',$GLOBALS['egw_info']['user']['account_id']);
+		//$user_prefs = $currentPrefs->read_repository();
+		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
 		foreach($to_notify as $userid => $statusid)
 		{
 			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid");
@@ -672,7 +675,8 @@ class calendar_boupdate extends calendar_bo
 			{
 				continue;	// dont notify rejected participants or groups
 			}
-			if($userid != $GLOBALS['egw_info']['user']['account_id'] ||  $msg_type == MSG_ALARM)
+
+			if($userid != $GLOBALS['egw_info']['user']['account_id'] || $user_prefs['calendar']['receive_own_updates']==1 ||  $msg_type == MSG_ALARM)
 			{
 				$preferences = CreateObject('phpgwapi.preferences',$userid);
 				$part_prefs = $preferences->read_repository();
