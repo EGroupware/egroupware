@@ -368,6 +368,13 @@ class groupdav_propfind_iterator implements Iterator
 	const CHUNK_SIZE = 500;
 
 	/**
+	 * Log calls via error_log()
+	 *
+	 * @var boolean
+	 */
+	public $debug = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param groupdav_handler $handler
@@ -376,6 +383,8 @@ class groupdav_propfind_iterator implements Iterator
 	 */
 	public function __construct(groupdav_handler $handler,array $filter,array &$files=null)
 	{
+		if ($this->debug) error_log(__METHOD__."(,".array2string($filter).",)");
+
 		$this->handler = $handler;
 		$this->filter  = $filter;
 		$this->files   = $files;
@@ -389,6 +398,8 @@ class groupdav_propfind_iterator implements Iterator
 	 */
 	public function current()
 	{
+		if ($this->debug) error_log(__METHOD__."() returning ".array2string(current($this->files)));
+
 		return current($this->files);
 	}
 
@@ -401,6 +412,7 @@ class groupdav_propfind_iterator implements Iterator
 	{
 		$current = $this->current();
 
+		if ($this->debug) error_log(__METHOD__."() returning ".array2string($current['path']));
 		return $current['path'];	// we return path as key
 	}
 
@@ -411,10 +423,14 @@ class groupdav_propfind_iterator implements Iterator
 	{
 		if (next($this->files) !== false)
 		{
+			if ($this->debug) error_log(__METHOD__."() returning TRUE");
+
 			return true;
 		}
-		if (!$this->handler)
+		if (is_array($this->files) && count($this->files) < self::CHUNK_SIZE)	// less entries then asked --> no further available
 		{
+			if ($this->debug) error_log(__METHOD__."() returning FALSE (no more entries)");
+
 			return false;	// no further entries
 		}
 		// try query further files via propfind callback of handler and store result in $this->files
@@ -422,10 +438,7 @@ class groupdav_propfind_iterator implements Iterator
 		$this->start += self::CHUNK_SIZE;
 		reset($this->files);
 
-		if (count($this->files) < self::CHUNK_SIZE)	// less entries then asked --> no further available
-		{
-			unset($this->handler);
-		}
+		if ($this->debug) error_log(__METHOD__."() returning ".array2string(current($this->files) !== false));
 		return current($this->files) !== false;
 	}
 
@@ -434,7 +447,13 @@ class groupdav_propfind_iterator implements Iterator
 	 */
 	public function rewind()
 	{
+		if ($this->debug) error_log(__METHOD__."()");
 
+		// query first set of files via propfind callback of handler and store result in $this->files
+		$this->start = 0;
+		$this->files = $this->handler->propfind_callback($this->filter,array($this->start,self::CHUNK_SIZE));
+		$this->start += self::CHUNK_SIZE;
+		reset($this->files);
 	}
 
 	/**
@@ -444,6 +463,7 @@ class groupdav_propfind_iterator implements Iterator
 	 */
 	public function valid ()
 	{
+		if ($this->debug) error_log(__METHOD__."() returning ".array2string(current($this->files) !== false));
 		return current($this->files) !== false;
 	}
 }
