@@ -86,7 +86,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 					return $currentCmdID;
 				}
 
-				if ($locID = $state->getLocID($syncType, $guid)) {
+				if (($locID = $state->getLocID($syncType, $guid))) {
 					Horde::logMessage("SyncML: slowsync add to client: $guid ignored, already at client($locID)",
 						__FILE__, __LINE__, PEAR_LOG_DEBUG);
 					continue;
@@ -266,7 +266,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 					Horde::logMessage('SyncML: adding mapping for locuri:'
 						. $syncItem->getLocURI() . ' and guid:' . $guid,
 						__FILE__, __LINE__, PEAR_LOG_DEBUG);
-						$state->setUID($type, $syncItem->getLocURI(), $guid, mktime());
+						$state->setUID($type, $syncItem->getLocURI(), $guid);
 						$state->log("Client-Map");
 						continue;
 				}
@@ -294,13 +294,9 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			$guid = $registry->call($hordeType . '/import',
 				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
 			if (!is_a($guid, 'PEAR_Error') && $guid != false) {
-				$ts = $state->getSyncTSforAction($guid, 'modify');
-				if (!$ts) {
-					$ts = $state->getSyncTSforAction($guid, 'add');
-				}
-				$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+				$state->setUID($type, $syncItem->getLocURI(), $guid);
 				$state->log("Client-AddReplace");
-				Horde::logMessage('SyncML: r/ added client entry as ' . $guid,
+				Horde::logMessage('SyncML: replaced/added client entry as ' . $guid,
 					__FILE__, __LINE__, PEAR_LOG_DEBUG);
 			} else {
 				Horde::logMessage('SyncML: Error in replacing/add client entry:' . $guid->message,
