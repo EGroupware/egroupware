@@ -167,7 +167,7 @@ class calendar_hooks
 			'5' => lang('Weekview without weekend'),
 			'7' => lang('Weekview with weekend'),
 		);
-		$mainpage = array(
+		$mainpage = $yesno = array(
 			'1' => lang('Yes'),
 			'0' => lang('No'),
 		);
@@ -404,6 +404,16 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> 'time_change',
 			),
+            'receive_own_updates' => array(
+                'type'   => 'select',
+                'label'  => 'Receive notifications about events you created/modified/deleted',
+                'name'   => 'receive_own_updates',
+                'values' => $yesno,
+                'help'   => "Do you want to be notified about changes of appointments you modified?",
+                'xmlrpc' => True,
+                'admin'  => False,
+                'default'=> 'false',
+            ),
 			'update_format' => array(
 				'type'   => 'select',
 				'label'  => 'Format of event updates',
