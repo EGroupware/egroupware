@@ -195,7 +195,7 @@ class link_widget
 			}
 			if ($value['to_id'] && $value['to_app'])
 			{
-				$value = egw_link::get_links($value['to_app'],$value['to_id'],$only_app = $value['only_app']);
+				$value = egw_link::get_links($value['to_app'],$value['to_id'],$only_app = $value['only_app'],'link_lastmod DESC',true);
 				if ($only_app)
 				{
 					foreach($value as $key => $id)
@@ -287,7 +287,7 @@ class link_widget
 			{
 				$value['title'] = egw_link::title($app,$id);
 			}
-			$links = egw_link::get_links($app,$id);
+			$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true);
 			$value['anz_links'] = count($links);
 			$extension_data = $value;
 
