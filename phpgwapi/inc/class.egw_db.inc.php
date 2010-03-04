@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -1468,6 +1468,11 @@ class egw_db
 				if ($truncate_varchar)
 				{
 					$maxlength = $column_definitions[$key]['type'] == 'varchar' ? $column_definitions[$key]['precision'] : null;
+				}
+				// dont use IN ( ), if there's only one value, it's slower for MySQL
+				if (is_array($data) && count($data) == 1)
+				{
+					$data = array_shift($data);
 				}
 				if (is_array($data))
 				{
