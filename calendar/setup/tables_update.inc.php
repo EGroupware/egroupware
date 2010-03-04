@@ -2052,3 +2052,16 @@ function calendar_upgrade1_7_007()
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.008';
 }
+
+/**
+ * Create an index over egw_cal_user.cal_user_type and cal_user_id, to speed up calendar queries
+ * 
+ * @return string
+ */
+function calendar_upgrade1_7_008()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal_user',array('cal_user_type','cal_user_id'));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.009';
+}
+

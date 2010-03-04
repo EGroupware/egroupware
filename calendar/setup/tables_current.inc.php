@@ -80,7 +80,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('cal_id','cal_recur_date','cal_user_type','cal_user_id'),
 		'fk' => array(),
-		'ix' => array(),
+		'ix' => array(array('cal_user_type','cal_user_id')),
 		'uc' => array()
 	),
 	'egw_cal_extra' => array(
