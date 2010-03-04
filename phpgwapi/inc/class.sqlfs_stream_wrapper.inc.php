@@ -326,16 +326,24 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			if ($this->operation == self::STORE2FS)
 			{
 				$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=:fs_size,fs_mime=:fs_mime,fs_modifier=:fs_modifier,fs_modified=:fs_modified WHERE fs_id=:fs_id');
+				if (!($ret = $stmt->execute($values)))
+				{
+					error_log(__METHOD__."() execute() failed! errorInfo()=".array2string(self::$pdo->errorInfo()));
+				}
 			}
 			else
 			{
 				$stmt = self::$pdo->prepare('UPDATE '.self::TABLE.' SET fs_size=:fs_size,fs_mime=:fs_mime,fs_modifier=:fs_modifier,fs_modified=:fs_modified,fs_content=:fs_content WHERE fs_id=:fs_id');
 				$this->stream_seek(0,SEEK_SET);	// rewind to the start
+				foreach($values as $name => &$value)
+				{
+					$stmt->bindParam($name,$value);
+				}
 				$stmt->bindParam('fs_content', $this->opened_stream, PDO::PARAM_LOB);
-			}
-			if (!($ret = $stmt->execute($values)))
-			{
-				error_log(__METHOD__."() execute() failed! errorInfo()=".array2string(self::$pdo->errorInfo()));
+				if (!($ret = $stmt->execute()))
+				{
+					error_log(__METHOD__."() execute() failed! errorInfo()=".array2string(self::$pdo->errorInfo()));
+				}
 			}
 		}
 		$ret = fclose($this->opened_stream) && $ret;
