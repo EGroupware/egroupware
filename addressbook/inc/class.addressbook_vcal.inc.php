@@ -123,7 +123,7 @@ class addressbook_vcal extends addressbook_bo
 	*/
 	function addVCard($_vcard, $_abID=null, $merge=false)
 	{
-		if (!$contact = $this->vcardtoegw($_vcard, $_abID))
+		if (!$contact = $this->vcardtoegw($_vcard))
 		{
 			return false;
 		}
@@ -148,6 +148,15 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$contact['account_id'] = $old_contact['account_id'];
 					}
+					if (is_array($contact['category']))
+					{
+						$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'], $_abID));
+					}
+					else
+					{
+						// restore from orignal
+						$contact['category'] = $old_contact['category'];
+					}
 				}
 			}
 			// update entry
@@ -160,6 +169,10 @@ class addressbook_vcal extends addressbook_bo
     		{
 	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
     		}
+    		if (is_array($contact['category']))
+			{
+				$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'], -1));
+			}
     	}
 		return $this->save($contact);
 	}
@@ -455,8 +468,13 @@ class addressbook_vcal extends addressbook_bo
 	{
 		$result = array();
 
-		if (($contact = $this->vcardtoegw($_vcard, $contentID)))
+		if (($contact = $this->vcardtoegw($_vcard)))
 		{
+			if (is_array($contact['category']))
+			{
+					$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'],
+						$contentID ? $contentID : -1));
+			}
 			if ($contentID)
 			{
 				$contact['id'] = $contentID;
@@ -475,7 +493,7 @@ class addressbook_vcal extends addressbook_bo
 		if (is_array($_supportedFields)) $this->supportedFields = $_supportedFields;
 	}
 
-	function vcardtoegw($_vcard, $_abID=null)
+	function vcardtoegw($_vcard)
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 		// be as flexible as possible
@@ -889,7 +907,7 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'cat_id':
-								$contact[$fieldName] = implode(',',$this->find_or_add_categories($vcardValues[$vcardKey]['values'], $_abID));
+								$contact[$fieldName] = $vcardValues[$vcardKey]['values'];
 								break;
 
 							case 'jpegphoto':

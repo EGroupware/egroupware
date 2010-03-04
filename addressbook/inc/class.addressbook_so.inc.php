@@ -526,8 +526,8 @@ class addressbook_so
 	/**
 	 * reads contact data including custom fields
 	 *
-	 * @param int/string $contact_id contact_id or 'a'.account_id
-	 * @return array/boolean data if row could be retrived else False
+	 * @param int|string $contact_id contact_id or 'a'.account_id
+	 * @return array|boolean data if row could be retrived else False
 	*/
 	function read($contact_id)
 	{

@@ -23,8 +23,6 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	var $bo;
 
-	const DAV = 'DAV:';
-
 	var $filter_prop2cal = array(
 		'SUMMARY' => 'cal_title',
 		'UID' => 'cal_uid',
@@ -86,7 +84,7 @@ class calendar_groupdav extends groupdav_handler
 			if (!is_array($event)) $event = $this->bo->read($event);
 			$name = $event[self::PATH_ATTRIBUTE];
 		}
-		return '/calendar/'.$name.'.ics';
+		return $name.'.ics';
 	}
 
 	/**
@@ -191,7 +189,7 @@ class calendar_groupdav extends groupdav_handler
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
 				$files['files'][] = array(
-	            	'path'  => self::get_path($event),
+	            	'path'  => $path.self::get_path($event),
 	            	'props' => $props,
 				);
 			}
@@ -447,12 +445,19 @@ class calendar_groupdav extends groupdav_handler
 			if ($this->debug) error_log(__METHOD__.print_r($event,true).function_backtrace());
 			return $event;
 		}
-		$handler = $this->_get_handler();
 
+		if (is_null($event) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
+		{
+			// we have not permission on this user's calendar
+			if ($this->debug) error_log(__METHOD__."(,$user) we have not enough rights on this calendar");
+			return '403 Forbidden';
+		}
+
+		$handler = $this->_get_handler();
 		$vCalendar = htmlspecialchars_decode($options['content']);
 
 		if (!($cal_id = $handler->importVCal($vCalendar, is_numeric($id) ? $id : -1,
-			self::etag2value($this->http_if_match), false, 0, $this->principalURL)))
+			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
 			return '403 Forbidden';
@@ -461,14 +466,10 @@ class calendar_groupdav extends groupdav_handler
 		header('ETag: '.$this->get_etag($cal_id));
 		if (is_null($event) || !$return_no_access)	// let lightning think the event is added
 		{
+			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
 			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id, is_null(\$event)=".(int)is_null($event));
-			header('Location: '.$this->base_uri.self::get_path($cal_id));
+			header('Location: '.$path.self::get_path($cal_id));
 			return '201 Created';
-		}
-		if (strpos($_SERVER[HTTP_USER_AGENT], 'Mac OS X') !== false)
-		{
-			//return '205 Reset Content'; // would be nicer
-			return '400 Event updated, please reload'; // Enforce a reload by iCal
 		}
 		return true;
 	}
@@ -580,8 +581,7 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
-		//$cal_read = $this->bo->read($id,null,false,'server');//njv: do we actually get anything
-		if ($this->debug > 1) error_log("bo-ical read  :$id:");//njv:
+		if ($this->debug > 1) error_log("bo-ical read  :$id:");
 		return $this->bo->read($id,null,false,'server');
 	}
 
@@ -622,12 +622,12 @@ class calendar_groupdav extends groupdav_handler
 			{
 				if ($recurrence['reference'])	// ignore series master
 				{
-					$etag .= ':'.substr($this->get_etag($recurrence),1,-1);
+					$etag .= ':'.substr($this->get_etag($recurrence),4,-4);
 				}
 			}
 		}
 		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
-		return '"'.$etag.'"';
+		return 'EGw-'.$etag.'-wGE';
 	}
 
 	/**
@@ -650,23 +650,23 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	static function current_user_privilege_set(array $props=array())
 	{
-		$props[] = HTTP_WebDAV_Server::mkprop(self::DAV,'current-user-privilege-set',
-			array(HTTP_WebDAV_Server::mkprop(self::DAV,'privilege',
-				array(//HTTP_WebDAV_Server::mkprop(self::DAV,'all',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'read',''),
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::DAV,'current-user-privilege-set',
+			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'privilege',
+				array(//HTTP_WebDAV_Server::mkprop(groupdav::DAV,'all',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'read-free-busy',''),
-					//HTTP_WebDAV_Server::mkprop(self::DAV,'read-current-user-privilege-set',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'bind',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'unbind',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'schedule-post',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'schedule-post-vevent',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'schedule-respond',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'schedule-respond-vevent',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'schedule-deliver',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'schedule-deliver-vevent',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'write',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'write-properties',''),
-					HTTP_WebDAV_Server::mkprop(self::DAV,'write-content',''),
+					//HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read-current-user-privilege-set',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'bind',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'unbind',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post-vevent',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-respond',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-respond-vevent',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-deliver',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-deliver-vevent',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write-properties',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write-content',''),
 				))));
 		return $props;
 	}
@@ -675,42 +675,41 @@ class calendar_groupdav extends groupdav_handler
 	 * Add extra properties for calendar collections
 	 *
 	 * @param array $props=array() regular props by the groupdav handler
+	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
 	 * @return array
 	 */
-	static function extra_properties(array $props=array(), $base_uri=null)
+	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
 	{
 		// calendar description
-		$displayname = $GLOBALS['egw']->translation->convert(lang('Calendar of'). ' ' .
-			$GLOBALS['egw_info']['user']['account_fullname'],
-			$GLOBALS['egw']->translation->charset(),'utf-8');
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		// BOX URLs of the current user
 		/*
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-inbox-URL',
 			array(HTTP_WebDAV_Server::mkprop(self::DAV,'href',$base_uri.'/calendar/')));
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-outbox-URL',
-			array(HTTP_WebDAV_Server::mkprop(self::DAV,'href',$base_uri.'/calendar/')));
+			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'schedule-default-calendar-URL',
-			array(HTTP_WebDAV_Server::mkprop(self::DAV,'href',$base_uri.'/calendar/')));
+			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'dropbox-home-URL',
-			array(HTTP_WebDAV_Server::mkprop(self::DAV,'href',$base_uri.'/calendar/')));
+			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'notifications-URL',
-			array(HTTP_WebDAV_Server::mkprop(self::DAV,'href',$base_uri.'/calendar/')));
+			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
 		*/
 		// email of the current user, see caldav-sheduling draft
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$GLOBALS['egw_info']['user']['email']);
+		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
 		// supported components, currently only VEVENT
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
 		//	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),	// not yet supported
 		));
-		/*
+
 		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget'))))));
-		*/
+
 		//$props = self::current_user_privilege_set($props);
 		return $props;
 	}

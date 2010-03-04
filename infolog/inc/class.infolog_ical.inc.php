@@ -380,9 +380,10 @@ class infolog_ical extends infolog_bo
 	 * @param string $_vcalData
 	 * @param int $_taskID=-1 info_id, default -1 = new entry
 	 * @param boolean $merge=false	merge data with existing entry
+	 * @param int $user=null delegate new task to this account_id, default null
 	 * @return int|boolean integer info_id or false on error
 	 */
-	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false)
+	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null)
 	{
 		if (!($taskData = $this->vtodotoegw($_vcalData,$_taskID))) return false;
 
@@ -395,6 +396,11 @@ class infolog_ical extends infolog_bo
 		if (empty($taskData['info_datecompleted']))
 		{
 			$taskData['info_datecompleted'] = 0;
+		}
+
+		if (!is_null($user))
+		{
+			$taskData['info_responsible'] = array($user);
 		}
 
 		if ($this->log)

@@ -420,13 +420,13 @@ class infolog_bo
 	/**
 	 * Read an infolog entry specified by $info_id
 	 *
-	 * @param int/array $info_id integer id or array with key 'info_id' of the entry to read
+	 * @param int|array $info_id integer id or array with key 'info_id' of the entry to read
 	 * @param boolean $run_link_id2from=true should link_id2from run, default yes,
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
 	 * 	'array'=array or string with date-format
 	 *
-	 * @return array/boolean infolog entry, null if not found or false if no permission to read it
+	 * @return array|boolean infolog entry, null if not found or false if no permission to read it
 	 */
 	function &read($info_id,$run_link_id2from=true,$date_format='ts')
 	{

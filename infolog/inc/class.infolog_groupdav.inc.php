@@ -57,7 +57,7 @@ class infolog_groupdav extends groupdav_handler
 			if (!is_array($info)) $info = $this->bo->read($info);
 			$name = $info[self::PATH_ATTRIBUTE];
 		}
-		return '/infolog/'.$name.'.ics';
+		return $name.'.ics';
 	}
 
 	/**
@@ -72,6 +72,8 @@ class infolog_groupdav extends groupdav_handler
 	function propfind($path,$options,&$files,$user,$id='')
 	{
 		$starttime = microtime(true);
+
+		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
 
 		if ($options['filters'])
 		{
@@ -113,14 +115,17 @@ class infolog_groupdav extends groupdav_handler
 		$filter = array(
 			'info_type'	=> 'task',
 		);
+
+		//if (!$myself) $filter['info_owner'] = $user;
+
 		if ($id) $filter['info_id'] = $id;	// propfind on a single id
 
 		// ToDo: add parameter to only return id & etag
 		if (($tasks =& $this->bo->search($params=array(
 			'order'		=> 'info_datemodified',
 			'sort'		=> 'DESC',
-			'filter'    => 'own',	// filter my: entries user is responsible for,
-									// filter own: entries the user own or is responsible for
+			'filter'    => ($myself ? 'own' : 'own'),	// filter my: entries user is responsible for,
+														// filter own: entries the user own or is responsible for
 			'date_format' => 'server',
 			'col_filter'	=> $filter,
 		))))
@@ -148,7 +153,7 @@ class infolog_groupdav extends groupdav_handler
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', ''); // expensive to calculate and no CalDAV client uses it
 				}
 				$files['files'][] = array(
-	            	'path'  => self::get_path($task),
+	            	'path'  => $path.self::get_path($task),
 	            	'props' => $props,
 				);
 			}
@@ -193,8 +198,11 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return $ok;
 		}
+
 		$handler = $this->_get_handler();
-		if (!($info_id = $handler->importVTODO($options['content'],is_numeric($id) ? $id : -1)))
+		$vTodo = htmlspecialchars_decode($options['content']);
+
+		if (!($info_id = $handler->importVTODO($vTodo,is_numeric($id) ? $id : -1, false, $user)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
 			return '403 Forbidden';
@@ -202,7 +210,8 @@ class infolog_groupdav extends groupdav_handler
 		header('ETag: '.$this->get_etag($info_id));
 		if (is_null($ok) || $id != $info_id)
 		{
-			header('Location: '.$this->base_uri.self::get_path($info_id));
+			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
+			header('Location: '.$path.self::get_path($info_id));
 			return '201 Created';
 		}
 		return true;
@@ -263,36 +272,38 @@ class infolog_groupdav extends groupdav_handler
 		{
 			return false;
 		}
-		return '"'.$info['info_id'].':'.$info['info_datemodified'].'"';
+		return 'EGw-'.$info['info_id'].':'.$info['info_datemodified'].'-wGE';
 	}
 
 	/**
 	 * Add extra properties for calendar collections
 	 *
 	 * @param array $props=array() regular props by the groupdav handler
+	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
 	 * @return array
 	 */
-	static function extra_properties(array $props=array(), $base_uri=null)
+	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
 	{
 		// calendar description
 		$displayname = $GLOBALS['egw']->translation->convert(lang('Tasks of') . ' ' .
-			$GLOBALS['egw_info']['user']['account_fullname'],
+			$displayname,
 			$GLOBALS['egw']->translation->charset(),'utf-8');
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		// email of the current user, see caldav-sheduling draft
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set','MAILTO:'.$GLOBALS['egw_info']['user']['email']);
+		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
 		// supported components, currently only VEVENT
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
 			// HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),
 		));
-		/*
+
 		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget'))))));
-		*/
+
 		return $props;
 	}
 

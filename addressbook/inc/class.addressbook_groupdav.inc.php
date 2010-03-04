@@ -68,7 +68,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	static function get_path($contact)
 	{
-		return '/addressbook/'.$contact[self::PATH_ATTRIBUTE].'.vcf';
+		return $contact[self::PATH_ATTRIBUTE].'.vcf';
 	}
 
 	/**
@@ -96,8 +96,9 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id) filter=".array2string($filter));
 
-		// check if we have to return the full calendar data or just the etag's
-		if (!($filter['address_data'] = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CARDDAV) && is_array($options['props']))
+		// check if we have to return the full contact data or just the etag's
+		if (!($filter['address_data'] = $options['props'] == 'all' &&
+			$options['root']['ns'] == groupdav::CARDDAV) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
@@ -109,7 +110,7 @@ class addressbook_groupdav extends groupdav_handler
 			}
 		}
 		// return iterator, calling ourself to return result in chunks
-		$files['files'] = new groupdav_propfind_iterator($this,$filter,$files['files']);
+		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
 
 		return true;
 	}
@@ -117,11 +118,12 @@ class addressbook_groupdav extends groupdav_handler
 	/**
 	 * Callback for profind interator
 	 *
+	 * @param string $path
 	 * @param array $filter
 	 * @param array|boolean $start=false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback(array $filter,$start=false)
+	function &propfind_callback($path,array $filter,$start=false)
 	{
 		$starttime = microtime(true);
 
@@ -139,7 +141,7 @@ class addressbook_groupdav extends groupdav_handler
 			{
 				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($contact)),
-					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/x-vcard'),
+					HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
 					// getlastmodified and getcontentlength are required by WebDAV and Cadaver eg. reports 404 Not found if not set
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $contact['modified']),
 				);
@@ -147,19 +149,19 @@ class addressbook_groupdav extends groupdav_handler
 				{
 					$content = $handler->getVCard($contact,$this->charset,false);
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
-					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content);
+					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
 				}
 				else
 				{
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
 				$files[] = array(
-	            	'path'  => self::get_path($contact),
+	            	'path'  => $path.self::get_path($contact),
 	            	'props' => $props,
 				);
 			}
 		}
-		if ($this->debug) error_log(__METHOD__.'('.array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
+		if ($this->debug) error_log(__METHOD__."($path,".array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
 		return $files;
 	}
 
@@ -266,14 +268,24 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function put(&$options,$id,$user=null)
 	{
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).",$id,$user)");
 		$ok = $this->_common_get_put_delete('PUT',$options,$id);
 		if (!is_null($ok) && !is_array($ok))
 		{
 			return $ok;
 		}
 		$handler = self::_get_handler();
-		$contact = $handler->vcardtoegw($options['content']);
-
+		$vCard = htmlspecialchars_decode($options['content']);
+		$contactId = (is_array($ok) ? -1 : $ok['id']);
+		$contact = $handler->vcardtoegw($vCard, $contactId);
+		if (is_array($contact['category']))
+		{
+			$contact['category'] = implode(',',$this->bo->find_or_add_categories($contact['category'], $contactId));
+		}
+		elseif ($contactId > 0)
+		{
+			$contact['category'] = $ok['category'];
+		}
 		if (!is_null($ok))
 		{
 			$contact['id'] = $ok['id'];
@@ -281,6 +293,10 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['uid'] = $ok['uid'];
 			$contact['owner'] = $ok['owner'];
 			$contact['private'] = $ok['private'];
+		}
+		else
+		{
+			$contact['owner'] = $user;
 		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
@@ -295,13 +311,14 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		if (!isset($contact['etag']))
 		{
-			$contact = $this->read($contact['id']);
+			$contact = $this->read($save_ok);
 		}
 
 		header('ETag: '.$this->get_etag($contact));
 		if (is_null($ok))
 		{
-			header($h='Location: '.$this->base_uri.self::get_path($contact));
+			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
+			header($h='Location: '.$path.self::get_path($contact));
 			if ($this->debug) error_log(__METHOD__."($method,,$id) header('$h'): 201 Created");
 			return '201 Created';
 		}
@@ -323,7 +340,37 @@ class addressbook_groupdav extends groupdav_handler
 
 		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','','','',$filter);
 
-		return '"'.$result[0]['modified'].'"';
+		$ctag = 'EGw-'.$result[0]['modified'].'-wGE';
+		return $ctag;
+	}
+
+	/**
+	 * Add the privileges of the current user
+	 *
+	 * @param array $props=array() regular props by the groupdav handler
+	 * @return array
+	 */
+	static function current_user_privilege_set(array $props=array())
+	{
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::DAV,'current-user-privilege-set',
+			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'privilege',
+				array(//HTTP_WebDAV_Server::mkprop(groupdav::DAV,'all',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'read-free-busy',''),
+					//HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read-current-user-privilege-set',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'bind',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'unbind',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post-vevent',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-respond',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-respond-vevent',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-deliver',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-deliver-vevent',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write-properties',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'write-content',''),
+				))));
+		return $props;
 	}
 
 	/**
@@ -345,11 +392,17 @@ class addressbook_groupdav extends groupdav_handler
 	 * @link http://www.mail-archive.com/calendarserver-users@lists.macosforge.org/msg01156.html
 	 *
 	 * @param array $props=array() regular props by the groupdav handler
+	 * @param string $displayname
 	 * @param string $base_uri=null base url of handler
 	 * @return array
 	 */
-	static function extra_properties(array $props=array(), $base_uri=null)
+	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
 	{
+		// addressbook description
+		$displayname = $GLOBALS['egw']->translation->convert(lang('Addressbook of') . ' ' .
+			$displayname,
+			$GLOBALS['egw']->translation->charset(),'utf-8');
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$displayname);
 		// supported reports (required property for CardDAV)
 		$props[] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
@@ -359,6 +412,7 @@ class addressbook_groupdav extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('report',
 					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget','')))),
 		));
+		//$props = self::current_user_privilege_set($props);
 		return $props;
 	}
 
@@ -392,7 +446,7 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			return '412 Precondition Failed';
 		}
-		return $ok;
+		//return $ok;
 	}
 
 	/**

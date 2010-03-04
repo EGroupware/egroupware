@@ -1029,9 +1029,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param int $recur_date=0 if set, import the recurrence at this timestamp,
 	 *                          default 0 => import whole series (or events, if not recurring)
 	 * @param string $principalURL='' Used for CalDAV imports
+	 * @param int $user=null account_id of owner, default null
 	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag
 	 */
-	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='')
+	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null)
 	{
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
@@ -1081,7 +1082,7 @@ class calendar_ical extends calendar_boupdate
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
-					."($cal_id, $etag, $recur_date, $principalURL)\n"
+					."($cal_id, $etag, $recur_date, $principalURL, $user)\n"
 					. array2string($event)."\n",3,$this->logfile);
 			}
 			$updated_id = false;
@@ -1204,9 +1205,20 @@ class calendar_ical extends calendar_boupdate
 					$event['non_blocking'] = 1;
 				}
 
+				if (!is_null($user))
+				{
+					if ($this->check_perms(EGW_ACL_ADD, 0, $user))
+					{
+						$event['owner'] = $user;
+					}
+					else
+					{
+						return false; // no permission
+					}
+				}
 				// check if an owner is set and the current user has add rights
 				// for that owners calendar; if not set the current user
-				if (!isset($event['owner'])
+				elseif (!isset($event['owner'])
 					|| !$this->check_perms(EGW_ACL_ADD, 0, $event['owner']))
 				{
 					$event['owner'] = $this->user;
