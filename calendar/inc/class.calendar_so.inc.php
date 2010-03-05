@@ -380,8 +380,13 @@ class calendar_so
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
 
+			if($filter != 'deleted') {
+				$where[] = "sync_deleted IS NULL";
+			}
 			switch($filter)
 			{
+				case 'deleted':
+					$where[] = "sync_deleted IS NOT NULL"; break;
 				case 'unknown':
 					$where[] = "cal_status='U'"; break;
 				case 'accepted':
@@ -417,7 +422,7 @@ class calendar_so
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
 			$select = array(
 				'table' => $this->cal_table,
-				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id",
+				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id JOIN egw_api_content_history ON egw_api_content_history.sync_appname = 'calendar' AND egw_api_content_history.sync_contentid=$this->cal_table.cal_id",
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',

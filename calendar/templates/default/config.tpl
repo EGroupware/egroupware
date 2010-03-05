@@ -57,6 +57,18 @@
     </td>
    </tr>
    <tr class="th">
+    <td colspan="2">&nbsp;<b>{lang_History_logging}</b></td>
+   </tr>
+   <tr class="row_on">
+    <td>&nbsp;{lang_Prevent_deleting_of_entries}</td>
+    <td>
+     <select name="newsettings[calendar_delete_history]">
+      <option value="">{lang_No}</option>
+      <option value="history"{selected_calendar_delete_history_history}>{lang_Yes,_only_admins_can_purge_deleted_items}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="th">
     <td colspan="2"><b>{lang_Birthdays}</b></td>
    </tr>
    <tr class="row_off">
