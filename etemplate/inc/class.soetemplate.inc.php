@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-9 by RalfBecker@outdoor-training.de
+ * @copyright 2002-10 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
@@ -43,7 +43,7 @@ class soetemplate
 	/**
 	 * private reference to the global db-object
 	 *
-	 * @public egw_db
+	 * @var egw_db
 	 */
 	private $db;
 	/**
@@ -391,13 +391,9 @@ class soetemplate
 			echo "<p>soetemplate::read('$this->name','$this->template','$this->lang',$this->group,'$this->version')</p>\n";
 		}
 		if (($GLOBALS['egw_info']['server']['eTemplate-source'] == 'files' ||
-					$GLOBALS['egw_info']['server']['eTemplate-source'] == 'xslt') && $this->readfile())
+			$GLOBALS['egw_info']['server']['eTemplate-source'] == 'xslt') && $this->readfile())
 		{
 			return True;
-		}
-		if ($this->name)
-		{
-			$this->test_import($this->name);	// import updates in setup-dir
 		}
 		$pref_lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		$pref_templ = $GLOBALS['egw_info']['server']['template_set'];
@@ -433,7 +429,7 @@ class soetemplate
 		{
 			$where['et_version'] = $this->version;
 		}
-		if (!($row = $this->db->select(self::TABLE,'*',$where,__LINE__,__FILE__,false,'ORDER BY et_lang DESC,et_template DESC,et_version DESC','etemplate')->fetch()))
+		if (!($row = $this->db->select(self::TABLE,'*',$where,__LINE__,__FILE__,false,'ORDER BY et_lang DESC,et_template DESC,et_version DESC','etemplate',1)->fetch()))
 		{
 			$version = $this->version;
 			return $this->readfile() && (empty($version) || $version == $this->version);
@@ -547,7 +543,7 @@ class soetemplate
 	{
 		if ($this->name)
 		{
-			$this->test_import($this->name);	// import updates in setup-dir
+			boetemplate::test_import($this->name);	// import updates in setup-dir
 		}
 		if (is_array($name))
 		{
@@ -1046,72 +1042,6 @@ class soetemplate
 		$solangfile->loaddb($app,$lang);
 
 		return lang("%1 (%2 new) Messages writen for Application '%3' and Languages '%4'",$n,$new,$app,$lang);
-	}
-
-	/**
-	 * Imports the dump-file /$app/setup/etempplates.inc.php unconditional (!)
-	 *
-	 * @param string $app app name
-	 * @return string translated message with number of templates imported
-	 */
-	static function import_dump($app)
-	{
-		$templ_version=0;
-
-		include($path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
-		$templ = new etemplate($app);
-
-		foreach($templ_data as $data)
-		{
-			if ((int)$templ_version < 1)	// we need to stripslashes
-			{
-				$data['data'] = stripslashes($data['data']);
-			}
-			$templ->init($data);
-
-			if (!$templ->modified)
-			{
-				$templ->modified = filemtime($path);
-			}
-			$templ->save();
-		}
-		return lang("%1 new eTemplates imported for Application '%2'",$n,$app);
-	}
-
-	static private $import_tested = array();
-
-	/**
-	 * test if new template-import necessary for app and does the import
-	 *
-	 * Get called on every read of a eTemplate, caches the result in phpgw_info.
-	 * The timestamp of the last import for app gets written into the db.
-	 *
-	 * @param string $app app- or template-name
-	 * @return string translated message with number of templates imported
-	 */
-	static function test_import($app)	// should be done from the setup-App
-	{
-		list($app) = explode('.',$app);
-
-		if (!$app || self::$import_tested[$app])
-		{
-			return '';	// ensure test is done only once per call and app
-		}
-		self::$import_tested[$app] = True;	// need to be done before new ...
-
-		$path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php";
-
-		if ($time = @filemtime($path))
-		{
-			$templ = new soetemplate(".$app",'','##');
-			if ($templ->lang != '##' || $templ->modified < $time) // need to import
-			{
-				$ret = self::import_dump($app);
-				$templ->modified = $time;
-				$templ->save('.'.$app,'','##');
-			}
-		}
-		return $ret;
 	}
 
 	/**

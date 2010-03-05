@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-9 by RalfBecker@outdoor-training.de
+ * @copyright 2002-10 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
@@ -18,7 +18,7 @@ class boetemplate extends soetemplate
 {
 	/**
 	 * Widget types implemented directly by etemplate (no extensions)
-	 * 
+	 *
 	 * @var array intern name => label
 	 */
 	static public $types = array(
@@ -71,8 +71,8 @@ class boetemplate extends soetemplate
 	 *
 	 * Calls the constructor of soetemplate
 	 *
-	 * @param string/array $name name of etemplate or array with name and other keys
-	 * @param string/array $load_via name or array with keys of other etemplate to load in order to get $name
+	 * @param string|array $name name of etemplate or array with name and other keys
+	 * @param string|array $load_via name or array with keys of other etemplate to load in order to get $name
 	 */
 	function __construct($name='',$load_via='')
 	{
@@ -338,7 +338,7 @@ class boetemplate extends soetemplate
 	/**
 	 * set one or more attibutes for column $c
 	 *
-	 * @param int/string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
+	 * @param int|string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
 	 * @param string $width percent or pixel or '' for no height
 	 * @param mixed $disabled=0 True or expression or False to disable or enable the column (Only the number 0 means dont change the attribute !!!)
 	 * @param string $path='/0' default is the first widget in the tree of children
@@ -366,7 +366,7 @@ class boetemplate extends soetemplate
 	/**
 	 * disables column $c
 	 *
-	 * @param int/string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
+	 * @param int|string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
 	 * @param boolean $enable can be used to re-enable a column if set to True
 	 * @param string $path='/0' default is the first widget in the tree of children
 	 */
@@ -387,7 +387,7 @@ class boetemplate extends soetemplate
 	 *
 	 * @param string $name name of the extension, the classname should be class.${name}_widget.inc.php
 	 *	the $name might be "$name.$app" to give a app-name (default is the current app,or template-name)
-	 * @return string/boolean human readable name or false if not found/loadable
+	 * @return string|boolean human readable name or false if not found/loadable
 	 */
 	function loadExtension($type)
 	{
@@ -741,12 +741,12 @@ class boetemplate extends soetemplate
 	/**
 	 * generated a file-name from an eTemplates, name, template(-set) and lang
 	 *
-	 * @param string/array $name name of template or array('name'=>$name,'template'=>$template,'lang'=>$lang)
+	 * @param string|array $name name of template or array('name'=>$name,'template'=>$template,'lang'=>$lang)
 	 * @param string $template template-set
 	 * @param string $lang language to use
 	 * @return string
 	 */
-	private function cache_name($name='',$template='default',$lang='default')
+	private /* static */ function cache_name($name='',$template='default',$lang='default')
 	{
 		if (empty($name))
 		{
@@ -765,17 +765,10 @@ class boetemplate extends soetemplate
 			$template = 'default';
 		}
 		$cname = $template . '/' . $name . (!empty($lang) && $lang != 'default' ? '.' . $lang : '');
-		//echo "cache_name('$name','$template','$lang') = '$cname'";
+		//echo "<p>".__METHOD__."('$name','$template','$lang') = '$cname'</p>";
 
 		return $cname;
 	}
-
-	/**
-	 * Cache for already read etemplates
-	 *
-	 * @var array
-	 */
-	private static $template_cache = array();
 
 	/**
 	 * stores the etemplate in the cache in egw_info
@@ -785,45 +778,95 @@ class boetemplate extends soetemplate
 	public /*static*/ function store_in_cache(boetemplate $tpl=null)
 	{
 		if (is_null($tpl)) $tpl = $this;
-		//echo "<p>store_in_cache('$tpl->name','$tpl->template','$tpl->lang','$tpl->version')</p>\n";
-		self::$template_cache[$tpl->cache_name()] = $tpl->as_array(1);
+
+		$cname = $tpl->cache_name();
+		$old = egw_cache::getInstance('etemplate',$cname);
+
+		// only cache newest versions (currently cached one is older or same version)
+		if (is_null($old) || version_compare($old['version'],$tpl->version,'<='))
+		{
+			//echo "<p>".__METHOD__."('$tpl->name','$tpl->template','$tpl->lang','$tpl->version') modified=$tpl->modified, time()=".time()."</p>\n";
+			egw_cache::setInstance('etemplate',$cname,$tpl->as_array(1));
+		}
 	}
 
 	/**
-	* deletes the etemplate in the cache in phpgw_info
+	* deletes the etemplate in the cache
 	*/
 	private function delete_in_cache()
 	{
-		//echo "<p>delete_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
-		unset(self::$template_cache[$this->cache_name()]);
+		//echo "<p>".__METHOD__."('$this->name','$this->template','$this->lang','$this->version')</p>\n";
+		egw_cache::unsetInstance('etemplate',$this->cache_name());
+	}
+
+	static private $import_tested = array();
+
+	/**
+	 * Test if new template-import necessary for app and does the import
+	 *
+	 * Get called on every read of a eTemplate, caches the result.
+	 * The timestamp of the last import for app gets written into the db.
+	 *
+	 * @param string|array $app app- or template-name
+	 * @return string translated message with number of templates imported
+	 */
+	static function test_import($app)	// should be done from the setup-App
+	{
+		if (is_array($app)) $app = $app['name'];
+		list($app) = explode('.',$app);
+
+		if (!$app || self::$import_tested[$app])
+		{
+			return '';	// ensure test is done only once per call and app
+		}
+		self::$import_tested[$app] = True;	// need to be done before new ...
+
+		$path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php";
+
+		if ($time = @filemtime($path))
+		{
+			$templ = new boetemplate(array('name' => '.'.$app,'lang' => '##'));
+			if ($templ->lang != '##' || $templ->modified < $time) // need to import
+			{
+				//echo "<p>".__METHOD__."($app) import necessary, as app-modified=$templ->modified < filemtime($path)=$time test-tpl=".array2string($templ->as_array(1))."</p>\n";
+				$ret = self::import_dump($app);
+				$templ->modified = $time;
+				$templ->save('.'.$app,'','##');
+			}
+		}
+		return $ret;
 	}
 
 	/**
-	 * returns true if a given eTemplate is in the cache
+	 * Imports the dump-file /$app/setup/etempplates.inc.php unconditional (!)
 	 *
-	 * @param string/array $name name of template or array('name'=>$name,'template'=>$template,'lang'=>$lang)
-	 * @param string $template template-set
-	 * @param string $lang language to use
-	 * @param int $group to use the template for
-	 * @param string $version of the template
-	 * @return boolean
+	 * @param string $app app name
+	 * @return string translated message with number of templates imported
 	 */
-	private function in_cache($name,$template='default',$lang='default',$group=0,$version='')
+	static function import_dump($app)
 	{
-		$cname = $this->cache_name($name,$template,$lang);
-		if (is_array($name))
+		$templ_version=0;
+
+		include($path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
+		$templ = new boetemplate($app);
+
+		foreach($templ_data as $data)
 		{
-			$version = $name['version'];
-			$name    = $name['name'];
+			if ((int)$templ_version < 1)	// we need to stripslashes
+			{
+				$data['data'] = stripslashes($data['data']);
+			}
+			$templ->init($data);
+
+			if (!$templ->modified)
+			{
+				$templ->modified = filemtime($path);
+			}
+			$templ->save();
+
+			$n++;
 		}
-		if (!isset(self::$template_cache[$cname]) ||
-				!empty($version) && self::$template_cache[$cname]['version'] != $version)
-		{
-			//echo " NOT found in cache</p>\n";
-			return False;
-		}
-		//echo " found in cache</p>\n";
-		return $cname;
+		return lang("%1 new eTemplates imported for Application '%2'",$n,$app);
 	}
 
 	/**
@@ -831,7 +874,7 @@ class boetemplate extends soetemplate
 	 *
 	 * same as read but only via the cache
 	 *
-	 * @param string/array $name name of template or array('name'=>$name,'template'=>$template,'lang'=>$lang)
+	 * @param string|array $name name of template or array('name'=>$name,'template'=>$template,'lang'=>$lang)
 	 * @param string $template template-set
 	 * @param string $lang language to use
 	 * @param int $group to use the template for
@@ -840,14 +883,25 @@ class boetemplate extends soetemplate
 	 */
 	private function read_from_cache($name,$template='default',$lang='default',$group=0,$version='')
 	{
-		//if (is_array($name)) $version = $name['version']; echo "<p>read_from_cache(,,,version='$version'): ";
-		if ($cname = $this->in_cache($name,$template,$lang,$group))
-		{
-			$this->init(self::$template_cache[$cname]);
+		// check if new import necessary, currently on every request
+		$msg = self::test_import($name);
+		//if ($msg) echo "<p>".__METHOD__."($name,$template,$lang,$group,$version) self::test_import($name) returning $msg</p>\n";
 
-			return True;
+		$data = egw_cache::getInstance('etemplate',$cname=self::cache_name($name,$template,$lang));
+		if (is_array($name))
+		{
+			$version = $name['version'];
+			$name = $name['name'];
 		}
-		return False;
+		//echo "<p>".__METHOD__.'('.array2string($name).",$template,$lang,$group,$version) egw_cache::getInstance('etemplate','$cname')=".array2string(array('name'=>$data['name'],'version'=>$data['version'],'modified'=>$data['modified']))."</p>\n";
+
+		if (!is_null($data) && (empty($version) || $data['version'] == $version))
+		{
+			$this->init($data);
+
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -865,7 +919,8 @@ class boetemplate extends soetemplate
 	 */
 	function read($name,$template='default',$lang='default',$group=0,$version='',$load_via='')
 	{
-		if (is_array($name)) {
+		if (is_array($name))
+		{
 			$pname = &$name['name'];
 		}
 		else
@@ -878,18 +933,18 @@ class boetemplate extends soetemplate
 		}
 		$parent = is_array($load_via) ? $load_via['name'] : $load_via;
 
-				if (strstr($pname,'.') === False && !empty($parent))
+		if (strstr($pname,'.') === False && !empty($parent))
 		{
 			$pname = $parent . '.' . $pname;
 		}
 		if (!$this->read_from_cache($name,$template,$lang,$group,$version))
 		{
-			if (!soetemplate::read($name,$template,$lang,$group,$version))
+			if (!parent::read($name,$template,$lang,$group,$version))
 			{
 				if ($load_via && (is_string($load_via) ||
-						!isset($load_via['tpls_in_file']) || $load_via['tpls_in_file'] > 1))
+					!isset($load_via['tpls_in_file']) || $load_via['tpls_in_file'] > 1))
 				{
-					soetemplate::read($load_via);
+					parent::read($load_via);
 					return $this->read_from_cache($name,$template,$lang,$group,$version);
 				}
 				return False;
@@ -913,7 +968,7 @@ class boetemplate extends soetemplate
 	 */
 	function save($name='',$template='.',$lang='.',$group=0,$version='.')
 	{
-		if ($result = soetemplate::save($name,$template,$lang,$group,$version))
+		if ($result = parent::save($name,$template,$lang,$group,$version))
 		{
 			$this->store_in_cache();
 		}
@@ -931,7 +986,7 @@ class boetemplate extends soetemplate
 	{
 		$this->delete_in_cache();
 
-		return soetemplate::delete();
+		return parent::delete();
 	}
 
 	/**
@@ -974,7 +1029,8 @@ if (!function_exists('set_cell_attribute_helper'))
 	function &get_widgets_by_type_helper(&$widget, &$extra)
 	{
 		//echo '<br />get_widgets_by_type_helper(' . $widget['name'] . ',' . $extra['type'] . ')<br />';
-		if($widget['type'] == $extra['type']) {
+		if($widget['type'] == $extra['type'])
+		{
 			$extra['widgets'][] =& $widget;
 		}
 	}
