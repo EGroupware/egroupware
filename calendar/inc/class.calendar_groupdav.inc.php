@@ -448,7 +448,7 @@ class calendar_groupdav extends groupdav_handler
 
 		if (is_null($oldEvent) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
 		{
-			// we have not permission on this user's calendar
+			// we have no add permission on this user's calendar
 			if ($this->debug) error_log(__METHOD__."(,$user) we have not enough rights on this calendar");
 			return '403 Forbidden';
 		}

@@ -400,7 +400,7 @@ class infolog_ical extends infolog_bo
 
 		if (!is_null($user))
 		{
-			$taskData['info_responsible'] = array($user);
+			$taskData['info_owner'] = $user;
 		}
 
 		if ($this->log)
