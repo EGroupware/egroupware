@@ -1258,9 +1258,9 @@ class addressbook_ui extends addressbook_bo
 					{
 						$old_org_entry = $this->read($content['id']);
 					}
-					if (isset($contact['n_family']) && isset($contact['n_given'])
-						&& $contact['n_family'] != $old_org_entry['n_family']
-						&& $contact['n_given'] != $old_org_entry['n_given'])
+					if (isset($content['n_family']) && isset($content['n_given'])
+						&& $content['n_family'] != $old_org_entry['n_family']
+						&& $content['n_given'] != $old_org_entry['n_given'])
 					{
 						unset($content['n_fn']);
 					}
