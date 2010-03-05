@@ -437,16 +437,16 @@ class calendar_groupdav extends groupdav_handler
 	function put(&$options,$id,$user=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-		$return_no_access=true;	// as handled by importVCal anyway and allows it to set the status for participants
-		$event = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 
-		if (!is_null($event) && !is_array($event))
+		$return_no_access=true;	// as handled by importVCal anyway and allows it to set the status for participants
+		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
+		if (!is_null($oldEvent) && !is_array($oldEvent))
 		{
-			if ($this->debug) error_log(__METHOD__.print_r($event,true).function_backtrace());
-			return $event;
+			if ($this->debug) error_log(__METHOD__.print_r($oldEvent,true).function_backtrace());
+			return $oldEvent;
 		}
 
-		if (is_null($event) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
+		if (is_null($oldEvent) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
 		{
 			// we have not permission on this user's calendar
 			if ($this->debug) error_log(__METHOD__."(,$user) we have not enough rights on this calendar");
@@ -456,7 +456,46 @@ class calendar_groupdav extends groupdav_handler
 		$handler = $this->_get_handler();
 		$vCalendar = htmlspecialchars_decode($options['content']);
 
-		if (!($cal_id = $handler->importVCal($vCalendar, is_numeric($id) ? $id : -1,
+		if (is_array($oldEvent))
+		{
+			$eventId = $oldEvent['id'];
+			if ($return_no_access)
+			{
+				$retval = true;
+			}
+			else
+			{
+				// let lightning think the event is added
+				$retval = '201 Created';
+			}
+		}
+		else
+		{
+			// new entry?
+			if (($foundEvents = $handler->search($vCalendar)))
+			{
+				if (($eventId = array_shift($foundEvents)) &&
+					(list($eventId) = explode(':', $eventId)) &&
+					($oldEvent = $this->bo->read($eventId)))
+				{
+					$retval = '301 Moved Permanently';
+				}
+				else
+				{
+					// to be safe
+					$eventId = -1;
+					$retval = '201 Created';
+				}
+			}
+			else
+			{
+				// new entry
+				$eventId = -1;
+				$retval = '201 Created';
+			}
+		}
+
+		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
 			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
@@ -464,12 +503,12 @@ class calendar_groupdav extends groupdav_handler
 		}
 
 		header('ETag: '.$this->get_etag($cal_id));
-		if (is_null($event) || !$return_no_access)	// let lightning think the event is added
+		if ($retval !== true)
 		{
 			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
-			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id, is_null(\$event)=".(int)is_null($event));
-			header('Location: '.$path.self::get_path($cal_id));
-			return '201 Created';
+			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id: $retval");
+			header('Location: '.$this->base_uri.$path.self::get_path($cal_id));
+			return $retval;
 		}
 		return true;
 	}

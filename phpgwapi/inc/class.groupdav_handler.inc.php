@@ -238,7 +238,7 @@ abstract class groupdav_handler
 	 * @param array &$options
 	 * @param int $id
 	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
-	 * @return array/string entry on success, string with http-error-code on failure, null for PUT on an unknown id
+	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
 	function _common_get_put_delete($method,&$options,$id,&$return_no_access=false)
 	{
@@ -463,7 +463,7 @@ class groupdav_propfind_iterator implements Iterator
 	 */
 	public function key()
 	{
-		$current = $this->current();
+		$current = current($this->files);
 
 		if ($this->debug) error_log(__METHOD__."() returning ".array2string($current['path']));
 		return $current['path'];	// we return path as key

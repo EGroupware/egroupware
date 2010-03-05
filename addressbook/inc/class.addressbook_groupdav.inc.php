@@ -132,7 +132,6 @@ class addressbook_groupdav extends groupdav_handler
 			$handler = self::_get_handler();
 		}
 		unset($filter['address_data']);
-
 		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
 		if (($contacts =& $this->bo->search(array(),$address_data ? false : array('id','uid','etag','modified'),'contact_id','','',False,'AND',$start,$filter)))
@@ -147,7 +146,7 @@ class addressbook_groupdav extends groupdav_handler
 				);
 				if ($address_data)
 				{
-					$content = $handler->getVCard($contact,$this->charset,false);
+					$content = $handler->getVCard($contact['id'],$this->charset,false);
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
 				}
@@ -269,35 +268,69 @@ class addressbook_groupdav extends groupdav_handler
 	function put(&$options,$id,$user=null)
 	{
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).",$id,$user)");
-		$ok = $this->_common_get_put_delete('PUT',$options,$id);
-		if (!is_null($ok) && !is_array($ok))
+
+		$oldContact = $this->_common_get_put_delete('PUT',$options,$id);
+		if (!is_null($oldContact) && !is_array($oldContact))
 		{
-			return $ok;
+			return $oldContact;
 		}
+
 		$handler = self::_get_handler();
 		$vCard = htmlspecialchars_decode($options['content']);
-		$contactId = (is_array($ok) ? -1 : $ok['id']);
-		$contact = $handler->vcardtoegw($vCard, $contactId);
+
+		if (is_array($oldContact))
+		{
+			$contactId = $oldContact['id'];
+			$retval = true;
+		}
+		else
+		{
+			// new entry?
+			if (($foundContacts = $handler->search($vCard)))
+			{
+				if (($contactId = array_shift($foundContacts)) &&
+					($oldContact = $this->bo->read($contactId)))
+				{
+					$retval = '301 Moved Permanently';
+				}
+				else
+				{
+					// to be safe
+					$contactId = -1;
+					$retval = '201 Created';
+				}
+			}
+			else
+			{
+				// new entry
+				$contactId = -1;
+				$retval = '201 Created';
+			}
+		}
+
+		$contact = $handler->vcardtoegw($vCard);
+
 		if (is_array($contact['category']))
 		{
 			$contact['category'] = implode(',',$this->bo->find_or_add_categories($contact['category'], $contactId));
 		}
 		elseif ($contactId > 0)
 		{
-			$contact['category'] = $ok['category'];
+			$contact['category'] = $oldContact['category'];
 		}
-		if (!is_null($ok))
+		if (is_array($oldContact))
 		{
-			$contact['id'] = $ok['id'];
+			$contact['id'] = $oldContact['id'];
 			// dont allow the client to overwrite certain values
-			$contact['uid'] = $ok['uid'];
-			$contact['owner'] = $ok['owner'];
-			$contact['private'] = $ok['private'];
+			$contact['uid'] = $oldContact['uid'];
+			$contact['owner'] = $oldContact['owner'];
+			$contact['private'] = $oldContact['private'];
 		}
 		else
 		{
 			$contact['owner'] = $user;
 		}
+
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
 		if (!($save_ok = $this->bo->save($contact)))
@@ -309,18 +342,19 @@ class addressbook_groupdav extends groupdav_handler
 			}
 			return false;
 		}
+
 		if (!isset($contact['etag']))
 		{
 			$contact = $this->read($save_ok);
 		}
 
 		header('ETag: '.$this->get_etag($contact));
-		if (is_null($ok))
+		if ($retval !== true)
 		{
 			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
-			header($h='Location: '.$path.self::get_path($contact));
-			if ($this->debug) error_log(__METHOD__."($method,,$id) header('$h'): 201 Created");
-			return '201 Created';
+			header($h='Location: '.$this->base_uri.$path.self::get_path($contact));
+			if ($this->debug) error_log(__METHOD__."($method,,$id) header('$h'): $retval");
+			return $retval;
 		}
 		return true;
 	}

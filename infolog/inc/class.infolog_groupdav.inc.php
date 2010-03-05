@@ -193,26 +193,61 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function put(&$options,$id,$user=null)
 	{
-		$ok = $this->_common_get_put_delete('PUT',$options,$id);
-		if (!is_null($ok) && !is_array($ok))
+		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
+
+		$oldTask = $this->_common_get_put_delete('PUT',$options,$id);
+		if (!is_null($oldTask) && !is_array($oldTask))
 		{
-			return $ok;
+			return $oldTask;
 		}
 
 		$handler = $this->_get_handler();
 		$vTodo = htmlspecialchars_decode($options['content']);
 
-		if (!($info_id = $handler->importVTODO($vTodo,is_numeric($id) ? $id : -1, false, $user)))
+		if (is_array($oldTask))
+		{
+			$taskId = $oldTask['info_id'];
+			$retval = true;
+		}
+		else
+		{
+			// new entry?
+			if (($foundTasks = $handler->searchVTODO($vTodo)))
+			{
+				if (($taskId = array_shift($foundTasks)) &&
+					($oldTask = $this->bo->read($taskId)))
+				{
+					$retval = '301 Moved Permanently';
+				}
+				else
+				{
+					// to be safe
+					$taskId = -1;
+					$retval = '201 Created';
+				}
+			}
+			else
+			{
+				// new entry
+				$taskId = -1;
+				$retval = '201 Created';
+			}
+		}
+
+		if (!($infoId = $handler->importVTODO($vTodo, $taskId, false, $user)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
 			return '403 Forbidden';
 		}
-		header('ETag: '.$this->get_etag($info_id));
-		if (is_null($ok) || $id != $info_id)
+
+		if ($infoId != $taskId) $retval = '201 Created';
+
+		header('ETag: '.$this->get_etag($infoId));
+		if ($retval !== true)
 		{
 			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
-			header('Location: '.$path.self::get_path($info_id));
-			return '201 Created';
+			header('Location: '.$this->base_uri.$path.self::get_path($infoId));
+			return $retval;
 		}
 		return true;
 	}
