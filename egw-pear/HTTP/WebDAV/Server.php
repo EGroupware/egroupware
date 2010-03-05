@@ -919,7 +919,7 @@ class HTTP_WebDAV_Server
 	                        // properties from namespaces != "DAV:" or without any namespace
 	                        if ($prop['ns']) {
 		                        if ($this->crrnd) {
-			                        echo "     <$prop[name]> xmlns:".$ns_hash[$prop['ns']]."=".'"'.$prop["ns"].'">'
+			                        echo "     <$prop[name] xmlns=".'"'.$prop["ns"].'">'
 									. $val . "</$prop[name]>\n";
 		                        } else {
 			                        echo "     <" . $ns_hash[$prop["ns"]] . ":$prop[name]>"
