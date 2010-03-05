@@ -118,7 +118,7 @@ function do_obs()
 	foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($config['obs'])) as $path)
 	{
 		if (basename(dirname($path)) != '.osc' &&
-			preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-[0-9.-]+(\.tar\.(gz|bz2))$/',$path,$matches) &&
+			preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/',$path,$matches) &&
 			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
 		{
 			if (basename($path) != basename($new_name))
