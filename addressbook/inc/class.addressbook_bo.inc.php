@@ -267,7 +267,7 @@ class addressbook_bo extends addressbook_so
 	{
 		//echo "uicontacts::get_addressbooks($required,$include_all) grants="; _debug_array($this->grants);
 
-		$addressbooks = array();
+		$addressbooks = $to_sort = array();
 		if ($extra_label) $addressbooks[''] = $extra_label;
 		$addressbooks[$this->user] = lang('Personal');
 		// add all group addressbooks the user has the necessary rights too
@@ -275,20 +275,31 @@ class addressbook_bo extends addressbook_so
 		{
 			if (($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'g')
 			{
-				$addressbooks[$uid] = lang('Group %1',$GLOBALS['egw']->accounts->id2name($uid));
+				$to_sort[$uid] = lang('Group %1',$GLOBALS['egw']->accounts->id2name($uid));
 			}
+		}
+		if ($to_sort)
+		{
+			asort($to_sort);
+			$addressbooks += $to_sort;
 		}
 		if (($this->grants[0] & $required) == $required && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
 		{
 			$addressbooks[0] = lang('Accounts');
 		}
 		// add all other user addressbooks the user has the necessary rights too
+		$to_sort = array();
 		foreach($this->grants as $uid => $rights)
 		{
 			if ($uid != $this->user && ($rights & $required) == $required && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
 			{
-				$addressbooks[$uid] = $GLOBALS['egw']->common->grab_owner_name($uid);
+				$to_sort[$uid] = $GLOBALS['egw']->common->grab_owner_name($uid);
 			}
+		}
+		if ($to_sort)
+		{
+			asort($to_sort);
+			$addressbooks += $to_sort;
 		}
 		if ($this->private_addressbook)
 		{
