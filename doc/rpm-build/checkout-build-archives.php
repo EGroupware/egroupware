@@ -34,6 +34,7 @@ $config = array(
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
 	'packager' => 'packager@egroupware.org',
+	'obs' => false,
 	'skip' => array(),
 	'run' => array('checkout','copy','virusscan','create','sign')
 );
@@ -75,6 +76,13 @@ while(($arg = array_shift($argv)))
 				}
 				break;
 
+			case 'obs':
+				if (!is_dir($value))
+				{
+					usage("Path '$value' not found!");
+				}
+				if (!in_array('obs',$config['run'])) $config['run'][] = 'obs';
+				// fall through
 			default:
 				$config[$name] = $value;
 				break;
@@ -96,6 +104,34 @@ foreach(array_diff($config['run'],$config['skip']) as $func)
 {
 	$func = 'do_'.$func;
 	$func();
+}
+
+/**
+ * Copy archive files to obs checkout and commit them
+ *
+ */
+function do_obs()
+{
+	global $config,$verbose;
+
+	$n = 0;
+	foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($config['obs'])) as $path)
+	{
+		if (basename(dirname($path)) != '.osc' &&
+			preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-[0-9.-]+(\.tar\.(gz|bz2))$/',$path,$matches) &&
+			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
+		{
+			if (basename($path) != basename($new_name))
+			{
+				unlink($path);
+				if ($verbose) echo "rm $path\n";
+			}
+			copy($new_name,dirname($path).'/'.basename($new_name));
+			if ($verbose) echo "cp $new_name ".dirname($path)."/\n";
+			++$n;
+		}
+	}
+	if ($n) echo "$n files replaced in $config[obs] --> commit them now: osc addremove; osc commit\n";
 }
 
 /**
