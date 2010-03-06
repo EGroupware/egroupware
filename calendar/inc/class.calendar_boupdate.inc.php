@@ -145,9 +145,6 @@ class calendar_boupdate extends calendar_bo
 		else
 		{
 			$old_event = $this->read((int)$event['id'],null,$ignore_acl);
-			// if no participants are set, set them from the old event, as we might need them to update recuring events
-			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
-			//echo "old $event[id]="; _debug_array($old_event);
 		}
 
 		// do we need to check, if user is allowed to invite the invited participants
@@ -185,7 +182,7 @@ class calendar_boupdate extends calendar_bo
 					self::has_cat_right(self::CAT_ACL_STATUS,$cat_id,$this->user) === false &&
 					(!$old_event || $old_event['start'] != $event['start'] || $old_event['end'] != $event['end']))
 				{
-					foreach($event['participants'] as $uid => $status)
+					foreach((array)$event['participants'] as $uid => $status)
 					{
 						calendar_so::split_status($status,$q,$r);
 						if ($status != 'U')
@@ -658,8 +655,6 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
-		//$currentPrefs = CreateObject('phpgwapi.preferences',$GLOBALS['egw_info']['user']['account_id']);
-		//$user_prefs = $currentPrefs->read_repository();
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
 		foreach($to_notify as $userid => $statusid)
 		{
@@ -676,8 +671,9 @@ class calendar_boupdate extends calendar_bo
 				continue;	// dont notify rejected participants or groups
 			}
 
-			if($userid != $GLOBALS['egw_info']['user']['account_id'] || 
-				($userid == $GLOBALS['egw_info']['user']['account_id'] && $user_prefs['calendar']['receive_own_updates']==1) ||  
+			if($userid != $GLOBALS['egw_info']['user']['account_id'] ||
+				($userid == $GLOBALS['egw_info']['user']['account_id'] &&
+					$user_prefs['calendar']['receive_own_updates']==1) ||
 				$msg_type == MSG_ALARM)
 			{
 				$preferences = CreateObject('phpgwapi.preferences',$userid);
@@ -1084,7 +1080,9 @@ class calendar_boupdate extends calendar_bo
 				"($cal_id, $uid, $status, $recur_date)");
 		}
 		$old_event = $this->read($cal_id, $recur_date, false, 'server');
-		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0,$role)))
+		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],
+				is_numeric($uid)?$uid:substr($uid,1),$status,
+				$recur_date?$this->date2ts($recur_date,true):0,$role)))
 		{
 			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
 
@@ -1430,27 +1428,24 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		$cat_id_list = array();
-		if(is_array($catname_list) && count($catname_list) > 0)
+		foreach ((array)$catname_list as $cat_name)
 		{
-			foreach ($catname_list as $cat_name)
+			$cat_name = trim($cat_name);
+			$cat_id = $this->categories->name2id($cat_name, 'X-');
+
+			if (!$cat_id)
 			{
-				$cat_name = trim($cat_name);
-				$cat_id = $this->categories->name2id($cat_name, 'X-');
-
-				if (!$cat_id)
+				// some SyncML clients (mostly phones) add an X- to the category names
+				if (strncmp($cat_name, 'X-', 2) == 0)
 				{
-					// some SyncML clients (mostly phones) add an X- to the category names
-					if (strncmp($cat_name, 'X-', 2) == 0)
-					{
-						$cat_name = substr($cat_name, 2);
-					}
-					$cat_id = $this->categories->add(array('name' => $cat_name, 'descr' => $cat_name, 'access' => 'private'));
+					$cat_name = substr($cat_name, 2);
 				}
+				$cat_id = $this->categories->add(array('name' => $cat_name, 'descr' => $cat_name, 'access' => 'private'));
+			}
 
-				if ($cat_id)
-				{
-					$cat_id_list[] = $cat_id;
-				}
+			if ($cat_id)
+			{
+				$cat_id_list[] = $cat_id;
 			}
 		}
 
@@ -1501,7 +1496,6 @@ class calendar_boupdate extends calendar_bo
 	{
 		$matchingEvents = array();
 		$query = array();
-		$recur_date = 0;
 
 		if ($this->log)
 		{
@@ -1511,15 +1505,11 @@ class calendar_boupdate extends calendar_bo
 
 		if ($filter == 'master')
 		{
-			if (isset($event['recurrence']))
-			{
-				$recur_date = $this->date2usertime($event['recurrence']);
-			}
-			elseif (isset($event['start']))
-			{
-				$recur_date = $this->date2usertime($event['start']);
-			}
+			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
+			$query['cal_recurrence'] = 0;
 		}
+
+		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
 
 		if ($event['id'])
 		{
@@ -1528,37 +1518,43 @@ class calendar_boupdate extends calendar_bo
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'(' . $event['id'] . ")[EventID]");
 			}
-			if (($egwEvent = $this->read($event['id'], $recur_date, false, 'server')))
+			if (($egwEvent = $this->read($event['id'], 0, false, 'server')))
 			{
 				if ($this->log)
 				{
 					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 						'()[FOUND]:' . array2string($egwEvent));
 				}
-				// Just a simple consistency check
-				if ($filter == 'exact' ||
-					$filter == 'master'  && $egwEvent['recur_type'] != MCAL_RECUR_NONE ||
-					$filter != 'master' && strpos($egwEvent['title'], $event['title']) === 0)
+				if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
+					(empty($event['uid']) || $event['uid'] == $egwEvent['uid']))
 				{
-					$retval = $egwEvent['id'];
-					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
-						$event['recur_type'] == MCAL_RECUR_NONE && $event['recurrence'] != 0)
+					if ($filter == 'master')
 					{
-						$retval .= ':' . (int)$event['recurrence'];
+						$matchingEvents[] = $egwEvent['id']; // we found the master
 					}
-					$matchingEvents[] = $retval;
-					return $matchingEvents;
+					if ($event['recur_type'] == $egwEvent['recur_type'])
+					{
+						$matchingEvents[] = $egwEvent['id']; // we found the event
+					}
+					elseif ($event['recur_type'] == MCAL_RECUR_NONE &&
+								$event['recurrence'] != 0)
+					{
+						$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid']);
+						if (in_array($event['recurrence'], $exceptions))
+						{
+							$matchingEvents[] = $egwEvent['id'] . ':' . (int)$event['recurrence'];
+						}
+					}
+				} elseif ($event['recur_type'] == $egwEvent['recur_type'] &&
+							$filter != 'master' &&
+							strpos($egwEvent['title'], $event['title']) === 0)
+				{
+					$matchingEvents[] = $egwEvent['id']; // we found the event
 				}
 			}
-			if ($filter == 'exact') return array();
+			if (!empty($matchingEvents) || $filter == 'exact') return $matchingEvents;
 		}
 		unset($event['id']);
-
-		if ($filter == 'master')
-		{
-			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
-			$query['cal_recurrence'] = 0;
-		}
 
 		// only query calendars of users, we have READ-grants from
 		$users = array();
@@ -1611,6 +1607,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
+
 		if ($filter != 'master' && ($filter != 'exact' || empty($event['uid'])))
 		{
 			if (isset($event['whole_day']) && $event['whole_day'])
@@ -1661,10 +1658,6 @@ class calendar_boupdate extends calendar_bo
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'(' . $event['uid'] . ')[EventUID]');
 			}
-			if ($filter != 'master' && isset($event['recurrence']))
-			{
-				$query['cal_recurrence'] = $event['recurrence'];
-			}
 		}
 
 		if ($this->log)
@@ -1694,19 +1687,41 @@ class calendar_boupdate extends calendar_bo
 			}
 			if (in_array($egwEvent['id'], $matchingEvents)) continue;
 
-			if (in_array($filter, array('exact', 'master')) && !empty($event['uid']))
-			{
-				$matchingEvents[] = $egwEvent['id']; // UID found
-				if ($filter = 'master') break;
-				continue;
-			}
-
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
 			if (!$egwEvent['tz_id'] || !($egwEvent['tzid'] = calendar_timezones::id2tz($egwEvent['tz_id'])))
 			{
 				$egwEvent['tzid'] = egw_time::$server_timezone->getName();
 			}
 
+			if (in_array($filter, array('exact', 'master')) && !empty($event['uid']))
+			{
+				// UID found
+				if ($egwEvent['recurrence'] == $event['recurrence'])
+				{
+					// We found the exact match
+					$matchingEvents[] = $egwEvent['id'];
+					break;
+				}
+				if (!$egwEvent['recurrence'] && $event['recurrence'])
+				{
+					// We found the master
+					if ($filter == 'master')
+					{
+						$matchingEvents[] = $egwEvent['id'];
+						break;
+					}
+					$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid']);
+					if (in_array($event['recurrence'], $exceptions))
+					{
+						// We found a pseudo exception
+						$matchingEvents[] = $egwEvent['id'] . ':' . (int)$event['recurrence'];
+						break;
+					}
+				}
+				continue;
+			}
+
+			if (!empty($event['uid']) && $filter == 'exact') break;
 
 			// check times
 			if ($filter != 'relax')

@@ -339,7 +339,7 @@ class addressbook_so
 	/**
 	 * Read all customfields of the given id's
 	 *
-	 * @param int/array $ids
+	 * @param int|array $ids
 	 * @param array $field_names=null custom fields to read, default all
 	 * @return array id => name => value
 	 */
@@ -374,7 +374,7 @@ class addressbook_so
 	/**
 	 * Read all distributionlists of the given id's
 	 *
-	 * @param int/array $ids
+	 * @param int|array $ids
 	 * @return array id => name => value
 	 */
 	function read_distributionlist($ids, $dl_allowed=array())
@@ -544,8 +544,8 @@ class addressbook_so
 	/**
 	 * reads contact data including custom fields
 	 *
-	 * @param int/string $contact_id contact_id or 'a'.account_id
-	 * @return array/boolean data if row could be retrived else False
+	 * @param int|string $contact_id contact_id or 'a'.account_id
+	 * @return array|boolean data if row could be retrived else False
 	*/
 	function read($contact_id)
 	{
@@ -581,10 +581,10 @@ class addressbook_so
 	 *
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
 	 *
-	 * @param array/string $criteria array of key and data cols, OR string to search over all standard search fields
-	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param array|string $criteria array of key and data cols, OR string to search over all standard search fields
+	 * @param boolean|string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string|array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard='' appended befor and after each criteria
 	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
@@ -985,7 +985,7 @@ class addressbook_so
 	/**
 	 * Deletes a distribution list (incl. it's members)
 	 *
-	 * @param int/array $list list_id(s)
+	 * @param int|array $list list_id(s)
 	 * @return number of members deleted or false if list does not exist
 	 */
 	function delete_list($list)
@@ -1011,7 +1011,7 @@ class addressbook_so
 	/**
 	 * Check if distribution lists are availible for a given addressbook
 	 *
-	 * @param int/string $owner='' addressbook (eg. 0 = accounts), default '' = "all" addressbook (uses the main backend)
+	 * @param int|string $owner='' addressbook (eg. 0 = accounts), default '' = "all" addressbook (uses the main backend)
 	 * @return boolean
 	 */
 	function lists_available($owner='')

@@ -121,7 +121,7 @@ class infolog_sif extends infolog_bo
 	 *
 	 * @param int|string|DateTime $time in server-time as returned by calendar_bo for $data_format='server'
 	 * @param string $tzid TZID of event or 'UTC' or NULL for palmos timestamps in usertime
-	 * @return mixed attribute value to set: integer timestamp if $tzid == 'UTC' otherwise Ymd\THis string IN $tzid
+	 *
 	 */
 	function getDateTime($time, $tzid)
 	{
@@ -142,12 +142,14 @@ class infolog_sif extends infolog_bo
 		{
 			$arr = egw_time::to($time, 'array');
 			$time = new egw_time($arr, self::$tz_cache[$tzid]);
+			$value = $time->format('Y-m-d');
 		}
 		else
 		{
 			$time->setTimezone(self::$tz_cache[$tzid]);
+			$value = $time->format('Ymd\THis');
 		}
-		return $time->format('Ymd\THis');
+		return $value;
 	}
 
 	function startElement($_parser, $_tag, $_attributes)
@@ -509,12 +511,12 @@ class infolog_sif extends infolog_bo
 
 						case 'DueDate':
 						case 'StartDate':
-							$sifTask .= '<$sifField>';
+							$sifTask .= "<$sifField>";
 							if (!empty($value))
 							{
 								$sifTask .= $this->getDateTime($value, $this->tzid);
 							}
-							$sifTask .= '</$sifField>';
+							$sifTask .= "</$sifField>";
 							break;
 
 						case 'Importance':

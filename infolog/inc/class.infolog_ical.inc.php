@@ -111,14 +111,21 @@ class infolog_ical extends infolog_bo
 	/**
 	 * Exports one InfoLog tast to an iCalendar VTODO
 	 *
-	 * @param int $_taskID info_id
+	 * @param int|array $task infolog_id or infolog-tasks data
 	 * @param string $_version='2.0' could be '1.0' too
 	 * @param string $_method='PUBLISH'
 	 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
-	function exportVTODO($_taskID, $_version='2.0',$_method='PUBLISH')
+	function exportVTODO($task, $_version='2.0',$_method='PUBLISH')
 	{
-		$taskData = $this->read($_taskID, true, 'server');
+		if (is_array($task))
+		{
+			$taskData = $task;
+		}
+		else
+		{
+			if (!($taskData = $this->read($task, true, 'server'))) return false;
+		}
 
 		if ($taskData['info_id_parent'])
 		{
@@ -150,6 +157,12 @@ class infolog_ical extends infolog_bo
 
 		$taskData = $GLOBALS['egw']->translation->convert($taskData,
 			$GLOBALS['egw']->translation->charset(), 'UTF-8');
+
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($taskData)."\n",3,$this->logfile);
+		}
 
 		$vcal = new Horde_iCalendar;
 		$vcal->setAttribute('VERSION',$_version);
@@ -407,9 +420,10 @@ class infolog_ical extends infolog_bo
 	 * @param string $_vcalData
 	 * @param int $_taskID=-1 info_id, default -1 = new entry
 	 * @param boolean $merge=false	merge data with existing entry
+	 * @param int $user=null delegate new task to this account_id, default null
 	 * @return int|boolean integer info_id or false on error
 	 */
-	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false)
+	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null)
 	{
 
 		if ($this->tzid)
@@ -436,6 +450,11 @@ class infolog_ical extends infolog_bo
 		if (empty($taskData['info_datecompleted']))
 		{
 			$taskData['info_datecompleted'] = 0;
+		}
+
+		if (!is_null($user))
+		{
+			$taskData['info_owner'] = $user;
 		}
 
 		if ($this->log)
@@ -615,7 +634,7 @@ class infolog_ical extends infolog_bo
 						// check if we (still) have X-INFOLOG-STATUS set AND it would give an unchanged status (no change by the user)
 						foreach ($component->_attributes as $attr)
 						{
-						if ($attr['name'] == 'X-INFOLOG-STATUS') break;
+							if ($attr['name'] == 'X-INFOLOG-STATUS') break;
 						}
 						$taskData['info_status'] = $this->vtodo2status($attribute['value'],
 							$attr['name'] == 'X-INFOLOG-STATUS' ? $attr['value'] : null);
@@ -668,7 +687,8 @@ class infolog_ical extends infolog_bo
 	 */
 	function exportVNOTE($_noteID, $_type)
 	{
-		$note = $this->read($_noteID, true, 'server');
+		if(!($note = $this->read($_noteID, true, 'server'))) return false;
+
 		$note = $GLOBALS['egw']->translation->convert($note,
 			$GLOBALS['egw']->translation->charset(), 'UTF-8');
 

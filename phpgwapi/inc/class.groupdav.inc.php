@@ -37,6 +37,10 @@ require_once('HTTP/WebDAV/Server.php');
 class groupdav extends HTTP_WebDAV_Server
 {
 	/**
+	 * DAV namespace
+	 */
+	const DAV = 'DAV:';
+	/**
 	 * GroupDAV namespace
 	 */
 	const GROUPDAV = 'http://groupdav.org/';
@@ -70,7 +74,7 @@ class groupdav extends HTTP_WebDAV_Server
 			'component-set' => array(self::GROUPDAV => 'VCARD'),
 		),
 		'infolog' => array(
-			'resourcetype' => array(self::GROUPDAV => 'vtodo-collection'),
+			'resourcetype' => array(self::GROUPDAV => 'vtodo-collection', self::CALDAV => 'calendar'),
 			'component-set' => array(self::GROUPDAV => 'VTODO'),
 		),
 	);
@@ -81,7 +85,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @var integer
 	 */
-	var $debug = 0;
+	var $debug = 3;
 
 	/**
 	 * eGW's charset
@@ -101,6 +105,19 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @var groupdav_handler
 	 */
 	var $handler;
+	/**
+	 * principal URL
+	 *
+	 * @var string
+	 */
+	var $principalURL;
+	/**
+	 * Reference to the accounts class
+	 *
+	 * @var accounts
+	 */
+	var $accounts;
+
 
 	function __construct()
 	{
@@ -115,11 +132,24 @@ class groupdav extends HTTP_WebDAV_Server
 			case 'davkit':	// iCal app in OS X 10.6 created wrong request, if full url given
 				$this->client_require_href_as_url = false;
 				break;
+			case 'cfnetwork':
+				$this->crrnd = true; // Apple Addressbook.app does not cope with namespace redundancy
 		}
 		parent::HTTP_WebDAV_Server();
 
 		$this->translation =& $GLOBALS['egw']->translation;
 		$this->egw_charset = $this->translation->charset();
+		if (strpos($this->base_uri, 'http') === 0)
+		{
+			$this->principalURL = $this->_slashify($this->base_uri);
+		}
+		else
+		{
+			$this->principalURL = (@$_SERVER["HTTPS"] === "on" ? "https:" : "http:") .
+				'//' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/';
+		}
+		$this->principalURL .= 'principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
+		$this->accounts = $GLOBALS['egw']->accounts;
 	}
 
 	/**
@@ -130,7 +160,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function app_handler($app)
 	{
-		return groupdav_handler::app_handler($app,$this->debug,$this->base_uri);
+		return groupdav_handler::app_handler($app,$this->debug,$this->base_uri,$this->principalURL);
 	}
 
 	/**
@@ -146,11 +176,24 @@ class groupdav extends HTTP_WebDAV_Server
 		switch($app)
 		{
 			case 'calendar':
+				$dav[] = 2;
+				$dav[] = 'access-control';
 				$dav[] = 'calendar-access';
+				//$dav[] = 'calendar-schedule';
+				//$dav[] = 'calendar-proxy';
+				//$dav[] = 'calendar-avialibility';
+				//$dav[] = 'calendarserver-private-events';
 				break;
 			case 'addressbook':
-				$dav[] = 'addressbook';
+				$dav[] = 2;
+				$dav[] = 3;
+				$dav[] = 'access-control';
+				$dav[] = 'addressbook-access';
 				break;
+			default:
+				$dav[] = 2;
+				$dav[] = 'access-control';
+				$dav[] = 'calendar-access';
 		}
 		// not yet implemented: $dav[] = 'access-control';
 	}
@@ -162,62 +205,101 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @param  array  return array for file properties
 	 * @return bool   true on success
 	 */
-	function PROPFIND(&$options, &$files,$method='PROPFIND')
+	function PROPFIND(&$options, &$files, $method='PROPFIND')
 	{
 		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options,true).')');
 
+
+		if (groupdav_handler::get_agent() == 'cfnetwork' && // Apple Addressbook
+			$options['root']['name'] == 'propfind')
+		{
+			foreach ($options['props'] as $props)
+			{
+				if ($props['name'] == 'current-user-privilege-set')
+				{
+					if ($this->debug > 2) error_log(__CLASS__."::$method: current-user-privilege-set not implemented!");
+					return '501 Not Implemented';
+				}
+			}
+		}
 		// parse path in form [/account_lid]/app[/more]
 		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user)
 		{
-			if ($this->debug > 1) error_log(__CLASS__."::$method: user=$user, app=$app, id=$id: 404 not found!");
+			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
 			return '404 Not Found';
 		}
-		if ($this->debug > 1) error_log(__CLASS__."::$method: user=$user, app='$app', id=$id");
+		if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id'");
+
+		if ($user)
+		{
+			$account_lid = $this->accounts->id2name($user);
+		}
+		else
+		{
+			$account_lid = $GLOBALS['egw_info']['user']['account_lid'];
+		}
+		$account = $this->accounts->read($account_lid);
+		$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
+				$GLOBALS['egw']->translation->charset(),'utf-8');
 
 		$files = array('files' => array());
+		$path = $user_prefix = $this->_slashify($user_prefix);
 
-		if (!$app)	// root folder containing apps
+		if (!$app)	// user root folder containing apps
 		{
+			if (empty($user_prefix))
+			{
+				$user_prefix = '/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
+			}
+			if ($options['depth'])
+			{
+				$displayname = 'EGroupware (Cal|Card|Group)DAV server';
+			}
 			// self url
-			$files['files'][] = array(
-				'path'  => $user_prefix.'/',
-				'props' => array(
-					self::mkprop('displayname','EGroupware (Cal|Card|Group)DAV server'),
-					self::mkprop('resourcetype','collection'),
+			$props = array(
+					self::mkprop('displayname',$displayname),
+					self::mkprop('resourcetype',array(self::mkprop('collection',''))),
 					// adding the calendar extra property (calendar-home-set, etc.) here, allows apple iCal to "autodetect" the URL
-					self::mkprop(groupdav::CALDAV,'calendar-home-set',$this->base_uri.'/calendar/'),
-					self::mkprop('current-user-principal',array(self::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
-				),
+					self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
+						self::mkprop('href',$this->base_uri.$user_prefix.'calendar/'))),
+					self::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
+						self::mkprop('href',$this->base_uri.$user_prefix))),
+					self::mkprop('current-user-principal',array(self::mkprop('href',$this->principalURL))),
+					self::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+						self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']))),
+					//self::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
+					//self::mkprop('principal-collection-set',array(self::mkprop('href',$this->base_uri.'/principals/'))),
+				);
+			//$props = self::current_user_privilege_set($props);
+			$files['files'][] = array(
+				'path'  => $path,
+				'props' => $props,
 			);
 			if ($options['depth'])
 			{
-				if (empty($user_prefix))
+				if (strlen($path) == 1) // GroupDAV Root
 				{
 					// principals collection
 					$files['files'][] = array(
 		            	'path'  => '/principals/',
 		            	'props' => array(
-		            		self::mkprop('displayname',lang('Accounts')),
-		            		self::mkprop('resourcetype','collection'),
-							self::mkprop('current-user-principal',array(self::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
-						),
-		            );
-					// groups collection
-					$files['files'][] = array(
-		            	'path'  => '/groups/',
-		            	'props' => array(
-		            		self::mkprop('displayname',lang('Groups')),
-		            		self::mkprop('resourcetype','collection'),
-							self::mkprop('current-user-principal',array(self::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
-						),
-		            );
+			            	self::mkprop('displayname',lang('Accounts')),
+							self::mkprop('resourcetype',array(self::mkprop('collection',''))),
+							self::mkprop('current-user-principal',array(self::mkprop('href',$this->principalURL))),
+							self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
+								self::mkprop('href',$this->base_uri.$user_prefix.'calendar/'))),
+							self::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
+								self::mkprop('href',$this->base_uri.'/'))),
+							self::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
+		            	),
+					);
 				}
 				foreach($this->root as $app => $data)
 				{
 					if (!$GLOBALS['egw_info']['user']['apps'][$app]) continue;	// no rights for the given app
 
 					$files['files'][] = array(
-		            	'path'  => $user_prefix.'/'.$app.'/',
+		            	'path'  => $path.$app.'/',
 		            	'props' => $this->_properties($app,false,$user),
 		            );
 				}
@@ -234,12 +316,12 @@ class groupdav extends HTTP_WebDAV_Server
 			if ($method != 'REPORT' && !$id)	// no self URL for REPORT requests (only PROPFIND) or propfinds on an id
 			{
 				$files['files'][0] = array(
-		        	'path'  => '/'.$app.'/',
+		        	'path'  => $path.$app.'/',
 					// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
-		        	'props' => $this->_properties($app,$app=='addressbook'&&strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false),
+		        	'props' => $this->_properties($app,$app=='addressbook'&&strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false,$user),
 		        );
 			}
-			if (!$options['depth'] && !$id)
+			if (isset($options['depth']) && !$options['depth'] && !$id)
 			{
 				// add ctag if handler implements it (only for depth 0)
 				if (method_exists($handler,'getctag'))
@@ -249,7 +331,7 @@ class groupdav extends HTTP_WebDAV_Server
 				}
 				return true;	// depth 0 --> show only the self url
 			}
-			return $handler->propfind($options['path'],$options,$files,$user,$id);
+			return $handler->propfind($this->_slashify($options['path']),$options,$files,$user,$id);
 		}
 		return '501 Not Implemented';
 	}
@@ -264,12 +346,54 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function _properties($app,$no_extra_types=false,$user=null)
 	{
-		if (!$user) $user = $GLOBALS['egw_info']['user']['account_fullname'];
-
+		if ($this->debug) error_log(__CLASS__."::$method: user='$user', app='$app'");
+		if ($user)
+		{
+			$account_lid = $this->accounts->id2name($user);
+		}
+		else
+		{
+			$account_lid = $GLOBALS['egw_info']['user']['account_lid'];
+		}
+		$account = $this->accounts->read($account_lid);
+		$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
+				$GLOBALS['egw']->translation->charset(),'utf-8');
 		$props = array(
-    		self::mkprop('displayname',$this->translation->convert(lang($app).' '.common::grab_owner_name($user),$this->egw_charset,'utf-8')),
-			self::mkprop('current-user-principal',array(self::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
- 		);
+			self::mkprop('current-user-principal',array(self::mkprop('href',$this->principalURL))),
+			self::mkprop('owner',$displayname),
+			self::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
+			self::mkprop('alternate-URI-set',array(
+				self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']))),
+			self::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+						self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']))),
+			self::mkprop('principal-collection-set',array(
+				self::mkprop('href',$this->base_uri.'/principals/users/'),
+				self::mkprop('href',$this->base_uri.'/principals/groups/'),
+			)),
+		);
+
+		switch ($app)
+		{
+			case 'calendar':
+				$props[] = self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
+					self::mkprop('href',$this->base_uri.'/'.$account_lid.'/calendar/')));
+				break;
+			case 'infolog':
+				$props[] = self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
+					self::mkprop('href',$this->base_uri.'/'.$account_lid.'/infolog/')));
+				$displayname = $this->translation->convert(lang($app).' '.
+					common::grab_owner_name($user),$this->egw_charset,'utf-8');
+				break;
+			default:
+				$props[] = self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
+					self::mkprop('href',$this->base_uri.'/'.$account_lid.'/calendar/')));
+				$displayname = $this->translation->convert(lang($app).' '.
+				common::grab_owner_name($user),$this->egw_charset,'utf-8');
+		}
+		$props[] = self::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
+				self::mkprop('href',$this->base_uri.'/'.$account_lid.'/')));
+		$props[] = self::mkprop('displayname',$displayname);
+
 		foreach((array)$this->root[$app] as $prop => $values)
 		{
 			if ($prop == 'resourcetype')
@@ -296,7 +420,9 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if (method_exists($app.'_groupdav','extra_properties'))
 		{
-			$props = ExecMethod($app.'_groupdav::extra_properties',$props);
+			$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
+				$GLOBALS['egw']->translation->charset(),'utf-8');
+			$props = ExecMethod2($app.'_groupdav::extra_properties',$props,$displayname,$this->base_uri);
 		}
 		return $props;
 	}
@@ -401,8 +527,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$props = $this->props2array($file['props']);
 			//echo $file['path']; _debug_array($props);
 			$class = $class == 'row_on' ? 'row_off' : 'row_on';
-			$name = $this->_slashify(basename($this->_unslashify($file['path'])));
-			/*
+
 			if (substr($file['path'],-1) == '/')
 			{
 				$name = basename(substr($file['path'],0,-1)).'/';
@@ -411,7 +536,7 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				$name = basename($file['path']);
 			}
-			*/
+
 			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".html::a_href(htmlspecialchars($name),'/groupdav.php'.$file['path'])."</td>\n";
 			echo "\t\t<td>".$props['DAV:getcontentlength']."</td>\n";
 			echo "\t\t<td>".(!empty($props['DAV:getlastmodified']) ? date('Y-m-d H:i:s',$props['DAV:getlastmodified']) : '')."</td>\n";
@@ -665,6 +790,34 @@ class groupdav extends HTTP_WebDAV_Server
 	}
 
 	/**
+	 * ACL method handler
+	 *
+	 * @param  array  general parameter passing array
+	 * @return string HTTP status
+	 */
+	function ACL(&$options)
+	{
+		self::_parse_path($options['path'],$id,$app,$user);
+
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).") path=$path");
+
+		$options['errors'] = array();
+		switch ($app)
+		{
+			case 'calendar':
+			case 'addressbook':
+			case 'infolog':
+				$status = '200 OK'; // grant all
+				break;
+			default:
+				$options['errors'][] = 'no-inherited-ace-conflict';
+				$status = '403 Forbidden';
+		}
+
+		return $status;
+	}
+
+	/**
 	 * Parse a path into it's id, app and user parts
 	 *
 	 * @param string $path
@@ -686,7 +839,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		$parts = explode('/', $this->_unslashify($path));
 
-		if ($GLOBALS['egw']->accounts->name2id($parts[0]))
+		if ($this->accounts->name2id($parts[0]))
 		{
 			// /$user/$app/...
 			$user = array_shift($parts);
@@ -697,7 +850,7 @@ class groupdav extends HTTP_WebDAV_Server
 		if ($user)
 		{
 			$user_prefix = '/'.$user;
-			$user = $GLOBALS['egw']->accounts->name2id($user,'account_lid',$app != 'addressbook' ? 'u' : null);
+			$user = $this->accounts->name2id($user,'account_lid',$app != 'addressbook' ? 'u' : null);
 		}
 		else
 		{
@@ -710,13 +863,39 @@ class groupdav extends HTTP_WebDAV_Server
 			list($id) = explode('.',$id);		// remove evtl. .ics extension
 		}
 
-		if (!($ok = $id && in_array($app,array('addressbook','calendar','infolog','principals','groups')) && $user))
+		$ok = $id && $user && in_array($app,array('addressbook','calendar','infolog','principals','groups'));
+		if ($this->debug)
 		{
-			if ($this->debug)
-			{
-				error_log(__METHOD__."('$path') returning false: id=$id, app='$app', user=$user");
-			}
+			error_log(__METHOD__."('$path') returning " . ($ok ? 'true' : 'false') . ": id='$id', app='$app', user='$user', user_prefix='$user_prefix'");
 		}
 		return $ok;
+	}
+	/**
+	 * Add the privileges of the current user
+	 *
+	 * @param array $props=array() regular props by the groupdav handler
+	 * @return array
+	 */
+	static function current_user_privilege_set(array $props=array())
+	{
+		$props[] = HTTP_WebDAV_Server::mkprop('current-user-privilege-set',
+			array(HTTP_WebDAV_Server::mkprop('privilege',
+				array(//HTTP_WebDAV_Server::mkprop('all',''),
+					HTTP_WebDAV_Server::mkprop('read',''),
+					HTTP_WebDAV_Server::mkprop('read-free-busy',''),
+					//HTTP_WebDAV_Server::mkprop('read-current-user-privilege-set',''),
+					HTTP_WebDAV_Server::mkprop('bind',''),
+					HTTP_WebDAV_Server::mkprop('unbind',''),
+					HTTP_WebDAV_Server::mkprop('schedule-post',''),
+					HTTP_WebDAV_Server::mkprop('schedule-post-vevent',''),
+					HTTP_WebDAV_Server::mkprop('schedule-respond',''),
+					HTTP_WebDAV_Server::mkprop('schedule-respond-vevent',''),
+					HTTP_WebDAV_Server::mkprop('schedule-deliver',''),
+					HTTP_WebDAV_Server::mkprop('schedule-deliver-vevent',''),
+					HTTP_WebDAV_Server::mkprop('write',''),
+					HTTP_WebDAV_Server::mkprop('write-properties',''),
+					HTTP_WebDAV_Server::mkprop('write-content',''),
+				))));
+		return $props;
 	}
 }

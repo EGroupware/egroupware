@@ -758,15 +758,35 @@ ORDER BY cal_user_type, cal_usre_id
 				array('cal_id' => $event['cal_id']),__LINE__,__FILE__,'calendar');
 		}
 		// write information about recuring event, if recur_type is present in the array
-		if (isset($event['recur_type']))
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
 			// fetch information about the currently saved (old) event
 			$old_min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 			$old_duration = (int) $this->db->select($this->dates_table,'MIN(cal_end)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn() - $old_min;
 			$old_repeats = $this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetch();
 			$old_exceptions = $old_repeats['recur_exception'] ? explode(',',$old_repeats['recur_exception']) : array();
+			if (!empty($old_exceptions))
+			{
+				sort($old_exceptions);
+				if ($old_min > $old_exceptions[0]) $old_min = $old_exceptions[0];
+			}
 
 			$event['recur_exception'] = is_array($event['recur_exception']) ? $event['recur_exception'] : array();
+			if (!empty($event['recur_exception']))
+			{
+				sort($event['recur_exception']);
+			}
+
+			$where = array('cal_id' => $cal_id,
+							'cal_recur_date' => 0);
+			$old_participants = array();
+			foreach ($this->db->select($this->user_table,'cal_user_type,cal_user_id,cal_status,cal_quantity,cal_role', $where,
+				__LINE__,__FILE__,false,'','calendar') as $row)
+			{
+				$uid = self::combine_user($row['cal_user_type'], $row['cal_user_id']);
+				$status = self::combine_status($row['cal_status'], $row['cal_quantity'], $row['cal_role']);
+				$old_participants[$uid] = $status;
+			}
 
 			// re-check: did so much recurrence data change that we have to rebuild it from scratch?
 			if (!$set_recurrences)
@@ -795,18 +815,20 @@ ORDER BY cal_user_type, cal_usre_id
 			{
 				// we adjust some possibly changed recurrences manually
 				// deleted exceptions: re-insert recurrences into the user and dates table
-				if(count($deleted_exceptions = array_diff($old_exceptions,$event['recur_exception'])))
+				if (count($deleted_exceptions = array_diff($old_exceptions,$event['recur_exception'])))
 				{
+					if (isset($event['cal_participants']))
+					{
+						$participants = $event['cal_participants'];
+					}
+					else
+					{
+						// use old default
+						$participants = $old_participants;
+					}
 					foreach($deleted_exceptions as $id => $deleted_exception)
 					{
 						// rebuild participants for the re-inserted recurrence
-						$participants = array();
-						$participants_only = $this->get_participants($cal_id); // participants without states
-						foreach($participants_only as $id => $participant_only)
-						{
-							$states = $this->get_recurrences($cal_id, $participant_only['uid']);
-							$participants[$participant_only['uid']] = $states[0]; // insert main status as default
-						}
 						$this->recurrence($cal_id, $deleted_exception, $deleted_exception + $old_duration, $participants);
 					}
 				}
@@ -1058,11 +1080,12 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * updates the participants of an event, taken into account the evtl. recurrences of the event(!)
 	 * this method just adds new participants or removes not longer set participants
-	 * this method does never overwrite existing entries (except for delete)
+	 * this method does never overwrite existing entries (except the 0-recurrence and for delete)
 	 *
 	 * @param int $cal_id
 	 * @param array $participants uid => status pairs
-	 * @param int|boolean $change_since=0, false=new entry, 0=all, > 0 time from which on the repetitions should be changed
+	 * @param int|boolean $change_since=0, false=new event,
+	 * 		0=all, > 0 time from which on the repetitions should be changed
 	 * @param boolean $add_only=false
 	 *		false = add AND delete participants if needed (full list of participants required in $participants)
 	 *		true = only add participants if needed, no participant will be deleted (participants to check/add required in $participants)
@@ -1148,7 +1171,7 @@ ORDER BY cal_user_type, cal_usre_id
 			// update participants
 			foreach($participants as $uid => $status)
 			{
-				$id = null;
+				$type = $id = $quantity = $role = null;
 				self::split_user($uid,$type,$id);
 				self::split_status($status,$quantity,$role);
 				$set = array(

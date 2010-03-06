@@ -824,8 +824,8 @@ class addressbook_bo extends addressbook_so
 	/**
 	* reads contacts matched by key and puts all cols in the data array
 	*
-	* @param int/string $contact_id
-	* @return array/boolean array with contact data, null if not found or false on no view perms
+	* @param int|string $contact_id
+	* @return array|boolean array with contact data, null if not found or false on no view perms
 	*/
 	function read($contact_id)
 	{

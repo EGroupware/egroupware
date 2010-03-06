@@ -30,30 +30,25 @@ class infolog_bo
 	var $vfs_basedir='/infolog';
 	var $link_pathes = array();
 	var $send_file_ips = array();
-
 	/**
 	 * Set Logging
 	 *
 	 * @var boolean
 	 */
 	var $log = false;
-
-
 	/**
 	 * Cached timezone data
 	 *
 	 * @var array id => data
 	 */
 	protected static $tz_cache = array();
-
 	/**
 	 * current time as timestamp in user-time and server-time
 	 *
-	 * var int
+	 * @var int
 	 */
 	var $user_time_now;
 	var $now;
-
 	/**
 	 * name of timestamps in an InfoLog entry
 	 *
@@ -288,7 +283,7 @@ class infolog_bo
 	/**
 	 * check's if user has the requiered rights on entry $info_id
 	 *
-	 * @param int/array $info data or info_id of infolog entry to check
+	 * @param int|array $info data or info_id of infolog entry to check
 	 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
 	 * @return boolean
 	 */
@@ -514,13 +509,13 @@ class infolog_bo
 	/**
 	 * Read an infolog entry specified by $info_id
 	 *
-	 * @param int/array $info_id integer id or array with key 'info_id' of the entry to read
+	 * @param int|array $info_id integer id or array with key 'info_id' of the entry to read
 	 * @param boolean $run_link_id2from=true should link_id2from run, default yes,
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
 	 * 	'array'=array or string with date-format
 	 *
-	 * @return array/boolean infolog entry, null if not found or false if no permission to read it
+	 * @return array|boolean infolog entry, null if not found or false if no permission to read it
 	 */
 	function &read($info_id,$run_link_id2from=true,$date_format='ts')
 	{
@@ -558,7 +553,7 @@ class infolog_bo
 		{
 			$time = new egw_time($data['info_enddate'], egw_time::$server_timezone);
 			// Set due date to 00:00
-			$time->setTime(0, 0,0 );
+			$time->setTime(0, 0, 0);
 			$data['info_enddate'] = egw_time::to($time,'ts');
 		}
 
@@ -568,9 +563,9 @@ class infolog_bo
 	/**
 	 * Delete an infolog entry, evtl. incl. it's children / subs
 	 *
-	 * @param int/array $info_id int id
+	 * @param int|array $info_id int id
 	 * @param boolean $delete_children should the children be deleted
-	 * @param int/boolean $new_parent parent to use for not deleted children if > 0
+	 * @param int|boolean $new_parent parent to use for not deleted children if > 0
 	 * @return boolean True if delete was successful, False otherwise ($info_id does not exist or no rights)
 	 */
 	function delete($info_id,$delete_children=False,$new_parent=False)
@@ -691,7 +686,7 @@ class infolog_bo
 				'info_id'     => $values['info_id'],
 				'info_datemodified' => $values['info_datemodified'],
 			);
-			foreach($this->responsible_edit as $name)
+			foreach ($this->responsible_edit as $name)
 			{
 				if (isset($backup_values[$name])) $values[$name] = $backup_values[$name];
 			}
@@ -790,7 +785,7 @@ class infolog_bo
 		}
 		else
 		{
-			$time = new egw_time($values['info_enddate'], egw_time::$user_timezone);
+			$time = new egw_time($values['info_enddate'], egw_time::$server_timezone);
 			// Set due date to 00:00
 			$time->setTime(0, 0, 0);
 			$to_write['info_enddate'] = egw_time::to($time,'ts');
@@ -821,13 +816,13 @@ class infolog_bo
 		{
 			$old = $this->read($values['info_id'], false, 'server');
 		}
-		if(($info_id = $this->so->write($to_write,$check_modified)))
+		if (($info_id = $this->so->write($to_write,$check_modified)))
 		{
 			if (!isset($values['info_type']) || $status_only)
 			{
-				$values = $this->read($info_id);
+				$values = $this->read($info_id, true, 'server');
 			}
-			if($values['info_id'] && $old['info_status'] != 'deleted')
+			if ($values['info_id'] && $old['info_status'] != 'deleted')
 			{
 				// update
 				$GLOBALS['egw']->contenthistory->updateTimeStamp(
@@ -910,11 +905,12 @@ class infolog_bo
 		{
 			$query['start'] = egw_time::user2server($query['start'],'ts');
 		}
+
 		$ret = $this->so->search($query);
 
 		if (is_array($ret))
 		{
-			foreach($ret as $id => &$data)
+			foreach ($ret as $id => &$data)
 			{
 				if (!$this->check_access($data,EGW_ACL_READ))
 				{
@@ -922,7 +918,7 @@ class infolog_bo
 					continue;
 				}
 				// convert system- to user-time
-				foreach($this->timestamps as $key)
+				foreach ($this->timestamps as $key)
 				{
 					if ($data[$key])
 					{
@@ -1043,8 +1039,8 @@ class infolog_bo
 	 *
 	 * Is called as hook to participate in the linking
 	 *
-	 * @param int/array $info int info_id or array with infolog entry
-	 * @return string/boolean string with the title, null if $info not found, false if no perms to view
+	 * @param int|array $info int info_id or array with infolog entry
+	 * @return string|boolean string with the title, null if $info not found, false if no perms to view
 	 */
 	function link_title($info)
 	{
@@ -1068,13 +1064,13 @@ class infolog_bo
 	function link_titles(array $ids)
 	{
 		$titles = array();
-		foreach($this->search($params=array(
+		foreach ($this->search($params=array(
 			'col_filter' => array('info_id' => $ids),
 		)) as $info)
 		{
 			$titles[$info['info_id']] = $this->link_title($info);
 		}
-		foreach(array_diff($ids,array_keys($titles)) as $id)
+		foreach (array_diff($ids,array_keys($titles)) as $id)
 		{
 			$titles[$id] = false;	// we assume every not returned entry to be not readable, as we notify the link class about all deletes
 		}
@@ -1103,7 +1099,7 @@ class infolog_bo
 		$content = array();
 		if (is_array($ids))
 		{
-			foreach($ids as $id => $info )
+			foreach ($ids as $id => $info )
 			{
 				$content[$id] = $this->link_title($id);
 			}
@@ -1173,7 +1169,7 @@ class infolog_bo
 		}
 		while ($infos = $this->search($query))
 		{
-			foreach($infos as $info)
+			foreach ($infos as $info)
 			{
 				$start = new egw_time($info['info_startdate'],egw_time::$user_timezone);
 				$time = (int) $start->format('Hi');
@@ -1189,7 +1185,7 @@ class infolog_bo
 					$info['info_subject'];
 				$view = egw_link::view('infolog',$info['info_id']);
 				$content=array();
-				foreach($icons = array(
+				foreach ($icons = array(
 					$info['info_type']   => 'infolog',
 					$this->status[$info['info_type']][$info['info_status']] => 'infolog',
 				) as $name => $app)
@@ -1228,7 +1224,7 @@ class infolog_bo
 		if (isset($args['infolog']) && count($args['infolog']))
 		{
 			$icons = $this->so->get_status($args['infolog']);
-			foreach((array) $icons as $id => $status)
+			foreach ((array) $icons as $id => $status)
 			{
 				if ($status && substr($status,-1) != '%')
 				{
@@ -1262,11 +1258,11 @@ class infolog_bo
 			// preserve categories without users read access
 			$old_infolog = $this->read($info_id);
 			$old_categories = explode(',',$old_infolog['info_cat']);
-			if(is_array($old_categories) && count($old_categories) > 0)
+			if (is_array($old_categories) && count($old_categories) > 0)
 			{
-				foreach($old_categories as $cat_id)
+				foreach ($old_categories as $cat_id)
 				{
-					if($cat_id && !$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if ($cat_id && !$this->categories->check_perms(EGW_ACL_READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
@@ -1275,7 +1271,7 @@ class infolog_bo
 		}
 
 		$cat_id_list = array();
-		foreach ($catname_list as $cat_name)
+		foreach ((array)$catname_list as $cat_name)
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
@@ -1550,7 +1546,7 @@ class infolog_bo
 			&& ($egwData = $this->read($infoData['info_id'], true, 'server')))
 		{
 			// we only do a simple consistency check
-			if (strpos($egwData['info_subject'], $infoData['info_subject']) === 0)
+			if (!$relax || strpos($egwData['info_subject'], $infoData['info_subject']) === 0)
 			{
 				return array($egwData['info_id']);
 			}

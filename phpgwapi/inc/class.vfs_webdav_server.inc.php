@@ -263,7 +263,8 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		// type and size (caller already made sure that path exists)
 		if (is_dir($fspath)) {
 			// directory (WebDAV collection)
-			$info['props'][] = HTTP_WebDAV_Server::mkprop	('resourcetype', HTTP_WebDAV_Server::mkprop('collection',''));
+			$info['props'][] = HTTP_WebDAV_Server::mkprop	('resourcetype', array(
+			 	HTTP_WebDAV_Server::mkprop('collection', '')));
 			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', 'httpd/unix-directory');
 		} else {
 			// plain file (WebDAV resource)
