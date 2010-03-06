@@ -114,7 +114,7 @@ class infolog_ical extends infolog_bo
 	 * @param int|array $task infolog_id or infolog-tasks data
 	 * @param string $_version='2.0' could be '1.0' too
 	 * @param string $_method='PUBLISH'
-	 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
+	 * @return string|boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
 	function exportVTODO($task, $_version='2.0',$_method='PUBLISH')
 	{
