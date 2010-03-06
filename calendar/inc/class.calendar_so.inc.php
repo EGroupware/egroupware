@@ -419,10 +419,18 @@ class calendar_so
 		{
 			// allow apps to supply participants and/or icons
 			if (is_null($_cols)) $cols .= ',NULL AS participants,NULL AS icons';
+
+			// For deleted history
+			$history_id = $this->cal_table.'.cal_id';
+			// Postgres needs a cast
+			if($this->db->Type == 'postgres') {
+				$history_id = "CAST($history_id AS VARCHAR)";
+			}
+
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
 			$select = array(
 				'table' => $this->cal_table,
-				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id JOIN egw_api_content_history ON egw_api_content_history.sync_appname = 'calendar' AND CAST(egw_api_content_history.sync_contentid AS UNSIGNED)=$this->cal_table.cal_id",
+				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id JOIN egw_api_content_history ON egw_api_content_history.sync_appname = 'calendar' AND egw_api_content_history.sync_contentid = $history_id",
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
