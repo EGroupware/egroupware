@@ -92,6 +92,8 @@ Requires: %{name}-syncml          >= %{version}
 Requires: %{name}-timesheet       >= %{version}
 Requires: %{name}-tracker         >= %{version}
 Requires: %{name}-wiki            >= %{version}
+Requires: %{name}-icalsrv         >= %{version}
+Requires: %{name}-mydms           >= %{version}
 
 %description
 EGroupware is a web-based groupware suite written in PHP.
