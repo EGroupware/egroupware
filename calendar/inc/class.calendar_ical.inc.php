@@ -170,6 +170,13 @@ class calendar_ical extends calendar_boupdate
 	var $vCalendar;
 
 	/**
+	 * Addressbook BO instance
+	 *
+	 * @var array
+	 */
+	var $addressbook;
+
+	/**
 	 * Set Logging
 	 *
 	 * @var boolean
