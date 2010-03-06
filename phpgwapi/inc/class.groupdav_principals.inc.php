@@ -82,8 +82,8 @@ class groupdav_principals extends groupdav_handler
 		}
 		foreach($id ? array($this->accounts->read($id)) : $this->accounts->search(array('type' => 'accounts')) as $account)
 		{
-			$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
-				$GLOBALS['egw']->translation->charset(),'utf-8');
+			$displayname = $this->translation->convert($account['account_fullname'],
+				$this->translation->charset(),'utf-8');
 			$props = array(
 				HTTP_WebDAV_Server::mkprop('displayname',$displayname),
 				HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($account)),
@@ -136,8 +136,8 @@ class groupdav_principals extends groupdav_handler
 		}
 		else
 		{
-			if (!($id = $GLOBALS['egw']->accounts->name2id($name,'account_lid','u')) ||
-				!($account = $GLOBALS['egw']->accounts->read($id)))
+			if (!($id = $this->accounts->name2id($name,'account_lid','u')) ||
+				!($account = $this->accounts->read($id)))
 			{
 				return '404 Not Found';
 			}
@@ -191,8 +191,8 @@ class groupdav_principals extends groupdav_handler
 		}
 		else
 		{
-			if (!($id = $GLOBALS['egw']->accounts->name2id($name,'account_lid','g')) ||
-				!($account = $GLOBALS['egw']->accounts->read($id)))
+			if (!($id = $this->accounts->name2id($name,'account_lid','g')) ||
+				!($account = $this->accounts->read($id)))
 			{
 				return '404 Not Found';
 			}
@@ -225,8 +225,9 @@ class groupdav_principals extends groupdav_handler
 	protected function add_account(array $account)
 	{
 		//echo "<p>".__METHOD__."(".array2string($account).")</p>\n";
-		$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
-				$GLOBALS['egw']->translation->charset(),'utf-8');
+
+		$displayname = $this->translation->convert($account['account_fullname'],
+				$this->translation->charset(),'utf-8');
 		$memberships = array();
 		foreach($this->accounts->memberships($account['account_id']) as $gid => $group)
 		{
@@ -250,7 +251,7 @@ class groupdav_principals extends groupdav_handler
 			HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
 			HTTP_WebDAV_Server::mkprop('group-member-ship', $memberships),
-			HTTP_WebDAV_Server::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
+			HTTP_WebDAV_Server::mkprop('principal-URL',array(HTTP_WebDAV_Server::mkprop('href',$this->principalURL))),
 		);
 		if ($this->debug > 1) error_log(__METHOD__."($path) path=/principals/users/".$account['account_lid'].', props='.array2string($props));
 		return array(
@@ -267,8 +268,8 @@ class groupdav_principals extends groupdav_handler
 	 */
 	protected function add_group(array $account)
 	{
-		$displayname = $GLOBALS['egw']->translation->convert(lang('Group').' '.$account['account_lid'],
-			$GLOBALS['egw']->translation->charset(),'utf-8');
+		$displayname = $this->translation->convert(lang('Group').' '.$account['account_lid'],
+			$this->translation->charset(),'utf-8');
 		$members = array();
 		foreach($this->accounts->members($account['account_id']) as $gid => $user)
 		{
