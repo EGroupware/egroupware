@@ -1298,6 +1298,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 		}
+
 		if ($filter != 'master' && ($filter != 'exact' || empty($event['uid'])))
 		{
 			if (isset($event['whole_day']) && $event['whole_day'])
@@ -1404,7 +1405,7 @@ class calendar_boupdate extends calendar_bo
 				continue;
 			}
 
-			if (!empty($event['uid']) && $filter == 'exact') beak;
+			if (!empty($event['uid']) && $filter == 'exact') break;
 
 			// check times
 			if ($filter != 'relax')
