@@ -115,6 +115,13 @@ function do_obs()
 {
 	global $config,$verbose;
 
+	if (!is_dir($config['obs']))
+	{
+		usage("Path '$config[obs]' not found!");
+	}
+	if ($verbose) echo "Updating OBS checkout\n";
+	run_cmd('osc up '.$config['obs']);
+
 	$n = 0;
 	foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($config['obs'])) as $path)
 	{
@@ -132,7 +139,12 @@ function do_obs()
 			++$n;
 		}
 	}
-	if ($n) echo "$n files replaced in $config[obs] --> commit them now: osc addremove; osc commit\n";
+	if ($n)
+	{
+		echo "$n files updated in OBS checkout ($config[obs]), commting them now...\n";
+		run_cmd('osc addremove '.$config['obs'].'/*');
+		run_cmd('osc commit '.$config['obs']);
+	}
 }
 
 /**
