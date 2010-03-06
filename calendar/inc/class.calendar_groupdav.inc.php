@@ -58,7 +58,7 @@ class calendar_groupdav extends groupdav_handler
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param int $debug=null debug-level to set
 	 * @param string $base_uri=null base url of handler
-	 * @param string $principalURL=null pricipal url of handler
+	 * @param string $principalURL=null principal url of handler
 	 */
 	function __construct($app,$debug=null, $base_uri=null,$principalURL=null)
 	{
