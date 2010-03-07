@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package etemplate
  * @subpackage api
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -211,9 +211,10 @@ abstract class bo_tracking
 	 * @param int $user=null user who made the changes, default to current user
 	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undeleted
 	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param boolean $skip_notification=false do NOT send any notification
 	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
 	 */
-	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null)
+	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null,$skip_notification=false)
 	{
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
 
@@ -224,7 +225,7 @@ abstract class bo_tracking
 			$changes = $this->save_history($data,$old,$deleted,$changed_fields);
 		}
 		// do not run do_notifications if we have no changes
-		if ($changes && !$this->do_notifications($data,$old,$deleted))
+		if ($changes && !$skip_notification && !$this->do_notifications($data,$old,$deleted))
 		{
 			$changes = false;
 		}
