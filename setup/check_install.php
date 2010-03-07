@@ -176,7 +176,7 @@
 			if (isset($checks[$name]))
 			{
 				if ($checks[$name] == $data) continue;	// identical check --> ignore it
-				
+
 				if ($data['func'] == 'pear_check' || in_array($data['func'],array('extension_check','php_ini_check')) && !isset($data['warning']))
 				{
 					if (isset($checks[$name]['from']) && $checks[$name]['from'] && !is_array($checks[$name]['from']))
@@ -214,7 +214,7 @@
 	}
 	if ($checks) $sorted_checks += $checks;
 	$checks =& $sorted_checks;
-	
+
 	// some constants for pre php4.3
 	if (!defined('PHP_SHLIB_SUFFIX'))
 	{
@@ -224,7 +224,7 @@
 	{
 		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
 	}
-	
+
 	function php_version($name,$args)
 	{
 		global $passed_icon, $error_icon;
@@ -250,20 +250,20 @@
 			$pear_config = '/etc/php5/cli/pear.conf';
 		}
 		@include_once 'PEAR/Config.php';
-		
+
 		if (!class_exists('PEAR_Config')) return false;
-		
+
 		$config = new PEAR_Config('',$pear_config);
 		//echo "<pre>config = ".print_r($config,true)."</pre>\n";
 
 		$channel = $config->get('default_channel');
 		//echo "<pre>channel = ".print_r($channel,true)."</pre>\n";
-		
+
 		if (!method_exists($config,'getRegistry')) return false;	// PEAR version to old
 
 		$reg = &$config->getRegistry();
 		//echo "<pre>reg = ".print_r($reg,true)."</pre>\n";
-		
+
 		// a bug in pear causes an endless loop if the install-dir does not exist
 		// bug reported: http://pear.php.net/bugs/bug.php?id=11317
 		if (!file_exists($reg->install_dir)) return false;
@@ -277,21 +277,21 @@
 			$name = isset($package['package']) ? $package['package'] : $package['name'];
 			$version = $package['version'];
 			if (is_array($version)) $version = $version['release'];
-			
+
 			$packages[$name] = $version;
 		//	echo "<p>$name: ".print_r($package['version'],true)."</p>\n";
 		}
 		ksort($packages);
-		
+
 		return $packages;
 	}
-	
+
 	function pear_check($package,$args)
 	{
 		global $passed_icon, $warning_icon;
 		static $pear_available = null;
 		static $pear_packages = null;
-		
+
 		$min_version = isset($args['version']) ? $args['version'] : null;
 
 		if (is_null($pear_packages))
@@ -320,7 +320,7 @@
 			if (is_null($pear_available))
 			{
 				$pear_available = @include_once('PEAR.php');
-	
+
 				if (!class_exists('PEAR')) $pear_available = false;
 			}
 			if ($pear_available && $package)
@@ -328,21 +328,21 @@
 				$file = str_replace('_','/',$package).'.php';
 
 				$available = @include_once($file);
-	
+
 				if (!class_exists($package)) $available = false;
 			}
 		}
-		// is the right version availible 
+		// is the right version availible
 		$available = (@$available || $pear_available && !$package) && (!$min_version || version_compare($min_version,$version_available) <= 0);
 		echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
 			lang('Checking PEAR%1 is installed',($package?'::'.$package:'').($min_version?" ($min_version)":'')).': '.
-			($available ? ($version_available ? $version_available : lang('True')) : lang('False'))."</span></div>\n";		
+			($available ? ($version_available ? $version_available : lang('True')) : lang('False'))."</span></div>\n";
 
 		if (!$available)	// give further info only if not availible
 		{
 			echo '<div class="setup_info">' . lang('PEAR%1 is needed by: %2.',$package ? '::'.$package : '',
 				is_array($args['from']) ? implode(', ',$args['from']) : $args['from']);
-				
+
 			if (!$pear_available)
 			{
 				echo ' '.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
@@ -598,10 +598,10 @@
 	function mk_value($value)
 	{
 		if (!preg_match('/^([0-9]+)([mk]+)$/i',$value,$matches)) return $value;
-		
+
 		return (strtolower($matches[2]) == 'm' ? 1024*1024 : 1024) * (int) $matches[1];
 	}
-		
+
 	function php_ini_check($name,$args)
 	{
 		global $passed_icon, $error_icon, $warning_icon, $is_windows;
@@ -691,16 +691,16 @@
 		global $passed_icon, $warning_icon;
 
 		$available = (function_exists('imagecopyresampled')  || function_exists('imagecopyresized'));
-		
+
 		echo "<div>".($available ? $passed_icon : $warning_icon).' <span'.($available?'':' class="setup_warning"').'>'.lang('Checking for GD support...').': '.($available ? lang('True') : lang('False'))."</span></div>\n";
-		
+
 		if (!$available)
 		{
 			echo lang('Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.')."\n";
 		}
 		return $available;
 	}
-	
+
 	if ($run_by_webserver)
 	{
 		$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
@@ -711,7 +711,7 @@
 		));
 		$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
 		if (@$_GET['intro']) {
-			if($ConfigLang = get_var('ConfigLang',array('POST','COOKIE')))
+			if(($ConfigLang = setup::get_lang()))
 			{
 				$GLOBALS['egw_setup']->set_cookie('ConfigLang',$ConfigLang,(int) (time()+(1200*9)),'/');
 			}

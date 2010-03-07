@@ -19,7 +19,7 @@
 	class setup_translation
 	{
 		var $langarray = array();
-		
+
 		var $no_translation_marker = '*';
 
 		/**
@@ -29,7 +29,7 @@
 		 */
 		function setup_translation()
 		{
-			$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
+			$ConfigLang = setup::get_lang();
 
 			if(!$ConfigLang)
 			{
@@ -39,7 +39,7 @@
 			{
 				$lang = $ConfigLang;
 			}
-			
+
 			$fn = '.' . SEP . 'lang' . SEP . 'phpgw_' . $lang . '.lang';
 			if (!file_exists($fn))
 			{
@@ -55,7 +55,7 @@
 					$this->langarray[strtolower(trim($message_id))] = str_replace("\n",'',$content);
 				}
 				fclose($fp);
-				
+
 				if (!$GLOBALS['egw_setup']->system_charset)
 				{
 					$GLOBALS['egw_setup']->system_charset = $this->langarray['charset'];
@@ -69,7 +69,7 @@
 		 * @param $key  phrase to translate
 		 * @param $vars vars sent to lang function, passed to us
 		 */
-		function translate($key, $vars=False) 
+		function translate($key, $vars=False)
 		{
 			$ret = $key . $this->no_translation_marker;
 			$key = strtolower(trim($key));
@@ -123,7 +123,7 @@
 			$this->setup_translation_sql();
 			return $this->sql->add_langs($appname,$DEBUG,$force_langs);
 		}
-		
+
 		function drop_add_all_langs($langs=False)
 		{
 			$this->setup_translation_sql();
@@ -134,7 +134,7 @@
 			}
 			return $this->sql->install_langs($langs,'dumpold');
 		}
-		
+
 		/**
 		 * List availible charsets and it's supported languages
 		 * @param boolean/string $name=false name for selectbox or false to return an array
@@ -159,7 +159,7 @@
 							if ($phrase == 'charset')
 							{
 								$charset = trim(strtolower($charset));
-								
+
 								if ($charset != 'utf-8')
 								{
 									$charsets[$charset] .= (isset($charsets[$charset]) ? ', ' : $charset.': ') . $language;
@@ -177,8 +177,8 @@
 				return $charsets;
 			}
 			$html =& CreateObject('phpgwapi.html');
-			
+
 			return $html->select($name,trim(strtolower($selected)),$charsets,true);
-		}								
+		}
 	}
 ?>

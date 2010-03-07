@@ -14,7 +14,7 @@
  */
 
 	error_reporting(error_reporting() & ~E_NOTICE);
-	
+
 	// for an old header, we need to setup the reference before including it
 	$GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
 
@@ -78,15 +78,15 @@
 		{
 			$docroots = array(realpath(EGW_SERVER_ROOT),realpath($_SERVER['DOCUMENT_ROOT']));
 			$dir = realpath($dir);
-	
+
 			foreach ($docroots as $docroot)
 			{
 				$len = strlen($docroot);
-	
+
 				if ($docroot == substr($dir,0,$len) && $len>0)
 				{
 					$rest = substr($dir,$len);
-	
+
 					if (!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
 					{
 						$msg = lang('is in the webservers docroot');
@@ -145,7 +145,7 @@
 	{
 		if (!$ConfigLang)
 		{
-			$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
+			$ConfigLang = setup::get_lang();
 		}
 		$select = '<select name="ConfigLang"'.($onChange ? ' onchange="this.form.submit();"' : '').'>' . "\n";
 		$languages = get_langs();

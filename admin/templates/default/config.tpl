@@ -117,13 +117,6 @@
       <option value="True"{selected_enabled_spellcheck_True}>{lang_Yes}</option>
      </select>
     </td>
-   </tr>   
-
-   <tr class="row_on">
-    <td>{lang_Complete_path_to_aspell_program}:</td>
-    <td>
-     <input name="newsettings[aspell_path]" value="{value_aspell_path}" size="40">
-    </td>
    </tr>
 
    <tr class="th">
@@ -206,21 +199,21 @@
      <input name="newsettings[num_unsuccessful_id]" value="{value_num_unsuccessful_id}" size="5">
     </td>
    </tr>
-   
+
    <tr class="row_off">
     <td>{lang_After_how_many_unsuccessful_attempts_to_login,_an_IP_should_be_blocked_(default_3)_?}:</td>
     <td>
      <input name="newsettings[num_unsuccessful_ip]" value="{value_num_unsuccessful_ip}" size="5">
     </td>
    </tr>
-   
+
    <tr class="row_on">
     <td>{lang_How_many_minutes_should_an_account_or_IP_be_blocked_(default_30)_?}:</td>
     <td>
      <input name="newsettings[block_time]" value="{value_block_time}" size="5">
     </td>
    </tr>
-   
+
    <tr class="row_off">
     <td>{lang_Admin_email_addresses_(comma-separated)_to_be_notified_about_the_blocking_(empty_for_no_notify)}:</td>
     <td>

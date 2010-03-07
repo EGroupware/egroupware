@@ -55,7 +55,7 @@
 		 * @param string $type='new' defaults to new(install), could also be 'upgrade'
 		 * @param boolean $DEBUG=false print debugging info
 		 * @param boolean $force_en=false install english language files
-		 * @param string $system_charset=null charset to use	
+		 * @param string $system_charset=null charset to use
 		 */
 		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False)
 		{
@@ -178,7 +178,7 @@
 				$langs = false;
 				if ($method == 'new')
 				{
-					$langs[] = ($own_lang = get_var('ConfigLang',Array('POST','COOKIE')));
+					$langs[] = ($own_lang = setup::get_lang());
 					if ($own_lang != 'en') $langs[] = 'en';
 				}
 				$this->translation->drop_add_all_langs($langs);
@@ -194,7 +194,7 @@
 		function save_minimal_config()
 		{
 			$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
-		
+
 			$GLOBALS['current_config']['site_title'] = 'eGroupWare';
 			$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : 'localhost';
 
@@ -213,6 +213,7 @@
 				}
 				$GLOBALS['current_config']['files_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/files';
 				$GLOBALS['current_config']['backup_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/backup';
+				$GLOBALS['current_config']['aspell_path'] = '/usr/bin/aspell';
 			} else {
 				if(@is_dir('c:\\windows\\temp')) {
 					$GLOBALS['current_config']['temp_dir'] = 'c:\\windows\\temp';
@@ -221,14 +222,20 @@
 				}
 				$GLOBALS['current_config']['files_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
 				$GLOBALS['current_config']['backup_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
-			} 
+				$GLOBALS['current_config']['aspell_path'] = 'C:\\Program Files\\Aspell\\bin\\aspell.exe';
+			}
+			// only set aspell path, if it's installed
+			if (!is_executable($GLOBALS['current_config']['aspell_path']))
+			{
+				unset($GLOBALS['current_config']['aspell_path']);
+			}
 			$datetime =& CreateObject('phpgwapi.datetime');
 			$GLOBALS['current_config']['tz_offset'] = $datetime->getbestguess();
 			unset($datetime);
 
 			// RalfBecker: php.net recommend this for security reasons, it should be our default too
 			$GLOBALS['current_config']['usecookies'] = 'True';
-			
+
 			if ($GLOBALS['egw_setup']->system_charset)
 			{
 				$GLOBALS['current_config']['system_charset'] = $GLOBALS['egw_setup']->system_charset;
@@ -517,9 +524,9 @@
 				}
 
 				/* if upgrade required, or if we are running again after an upgrade or dependency failure */
-				if($DEBUG) 
-				{ 
-					echo '<div style="text-align: left; border: thin dashed black; margin-top: 5px;">'."process->upgrade(): Incoming : appname: $appname, version: $appdata[currentver], status: $appdata[status]\n"; 
+				if($DEBUG)
+				{
+					echo '<div style="text-align: left; border: thin dashed black; margin-top: 5px;">'."process->upgrade(): Incoming : appname: $appname, version: $appdata[currentver], status: $appdata[status]\n";
 				}
 				if($appdata['status'] == 'U' || $appdata['status'] == 'D' ||$appdata['status'] == 'V' || $appdata['status'] == '') // TODO this is not getting set for api upgrade, sometimes ???
 				{
@@ -534,7 +541,7 @@
 							include ($appdir . 'tables_update.inc.php');
 							$this->updateincluded[$appname] = True;
 						}
-						while ($currentver && $currentver != $targetver && 
+						while ($currentver && $currentver != $targetver &&
 							function_exists($function = $appname . '_upgrade' . str_replace('.','_',$currentver)))
 						{
 							if($DEBUG)
@@ -558,7 +565,7 @@
 							}
 						}
 						if ($currentver == $targetver)	// upgrades succesful
-						{	
+						{
 							if($DEBUG)
 							{
 								echo "<br>process->upgrade(): Upgrade of $appname to $targetver is completed.\n";
@@ -598,7 +605,7 @@
 							$GLOBALS['egw_setup']->register_hooks($appname);
 						}
 					}
-					
+
 				}
 				else
 				{
