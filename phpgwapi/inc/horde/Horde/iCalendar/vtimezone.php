@@ -12,6 +12,7 @@
  * @author  Mike Cochrane <mike@graftonhall.co.nz>
  * @since   Horde 3.0
  * @package Horde_iCalendar
+ * @changes	2010/02/26 Joerg Lehrke <jlehrke@noc.de>: Add RDATE support (for KDE 4.x)
  */
 class Horde_iCalendar_vtimezone extends Horde_iCalendar {
 
@@ -54,6 +55,20 @@ class Horde_iCalendar_vtimezone extends Horde_iCalendar {
             return false;
         }
 
+        $rdates = $child->getAttribute('RDATE');
+        if (!is_a($rdates, 'PEAR_Error')) {
+	        foreach ($rdates as $rdate) {
+		        $switch_time = $switch_time['value'];
+		        $switch_year = date("Y", $switch_time);
+		        if ($switch_year == $year) {
+			        $t = getdate($switch_time);
+			        $result['time'] = @gmmktime($t['hours'], $t['minutes'], $t['seconds'],
+				        $t['mon'], $t['mday'], $t['year']);
+			        return $result;
+		        }
+	        }
+        }
+
         $rrules = $child->getAttribute('RRULE');
         if (is_a($rrules, 'PEAR_Error')) {
             if (!is_int($switch_time)) {
@@ -68,7 +83,7 @@ class Horde_iCalendar_vtimezone extends Horde_iCalendar {
         }
 
         $switch_year = date("Y", $switch_time);
-        if ( $switch_year > $year ) {
+        if ($switch_year > $year) {
 	        return false;
         }
 
