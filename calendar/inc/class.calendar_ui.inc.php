@@ -146,7 +146,7 @@ class calendar_ui
 		$this->accountsel = $GLOBALS['egw']->uiaccountsel;
 
 		$this->categories = new categories($this->user,'calendar');
-		
+
 		$this->common_prefs	= &$GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs	= &$GLOBALS['egw_info']['user']['preferences']['calendar'];
 		$this->bo->check_set_default_prefs();
@@ -703,6 +703,7 @@ class calendar_ui
 			'accepted'    => array(lang('Accepted'), lang('Show only accepted events')),
 			'unknown'     => array(lang('Invitations'), lang('Show only invitations, not yet accepted or rejected')),
 			'tentative'   => array(lang('Tentative'), lang('Show only tentative accepted events')),
+			'delegated'   => array(lang('Delegated'), lang('Show only delegated events')),
 			'rejected'    => array(lang('Rejected'),lang('Show only rejected events')),
 			'owner'       => array(lang('Owner too'),lang('Show also events just owned by selected user')),
 			'all'         => array(lang('All incl. rejected'),lang('Show all status incl. rejected events')),

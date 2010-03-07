@@ -238,7 +238,7 @@ class calendar_uiforms extends calendar_ui
 				$event['end']['hour'] = 23; $event['end']['minute'] = $event['end']['second'] = 59; unset($event['end']['raw']);
 				$event['end'] = $this->bo->date2ts($event['end']);
 			}
-			// some checks for recurances, if you give a date, make it a weekly repeating event and visa versa
+			// some checks for recurrences, if you give a date, make it a weekly repeating event and visa versa
 			if ($event['recur_type'] == MCAL_RECUR_NONE && $event['recur_data']) $event['recur_type'] = MCAL_RECUR_WEEKLY;
 			if ($event['recur_type'] == MCAL_RECUR_WEEKLY && !$event['recur_data'])
 			{
@@ -579,6 +579,15 @@ class calendar_uiforms extends calendar_ui
 		case 'delete':
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
+				if ($content['reference'] == 0 && !$content['edit_single'])
+				{
+					// We delete a whole series
+					$recur_exceptions = $this->bo->so->get_related($event['uid']);
+					foreach ($recur_exceptions as $id)
+					{
+						$this->bo->delete($id);
+					}
+				}
 				$msg = lang('Event deleted');
 				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 					'msg' => $msg,
@@ -824,14 +833,11 @@ class calendar_uiforms extends calendar_ui
 					// check if we should create an exception
 					if ($_GET['exception'])
 					{
-						// exception: preserv participants of this event and merge it with the 0-recurrence
-						$participants = array('participants' => $event['participants'],'participant_types' => $event['participant_types']);
-						$event = array_merge($this->bo->read($cal_id,0,true),$participants);
 						$msg = $this->_create_exception($event,$preserv);
 					}
 					else
 					{
-						$event = $this->bo->read($cal_id,0,true); // read the 0-recurrence
+						$event = $this->bo->read($cal_id,0,true);
 					}
 				}
 			}

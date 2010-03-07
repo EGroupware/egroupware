@@ -41,6 +41,7 @@ class calendar_ical extends calendar_boupdate
 		'A' => 'ACCEPTED',
 		'R' => 'DECLINED',
 		'T' => 'TENTATIVE',
+		'D' => 'DELEGATED'
 	);
 	/**
 	 * @var array conversation of the participant status ical => egw
@@ -51,6 +52,8 @@ class calendar_ical extends calendar_boupdate
 		'ACCEPTED'     => 'A',
 		'DECLINED'     => 'R',
 		'TENTATIVE'    => 'T',
+		'DELEGATED'    => 'D',
+		'X-UNINVITED'  => 'G', // removed
 	);
 
 	/**
@@ -124,16 +127,13 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * user preference: Use this timezone for import from and export to device
 	 *
-	 * @var string
+	 * @var mixed
+	 * === false => use event's TZ
+	 * === null  => export in UTC
+	 * string    => device TZ
+	 *
 	 */
 	var $tzid = null;
-
-	/**
-	 * Cached timezone data
-	 *
-	 * @var array id => data
-	 */
-	protected static $tz_cache = array();
 
 	/**
 	 * Device CTCap Properties
@@ -148,6 +148,13 @@ class calendar_ical extends calendar_boupdate
 	 * @var array
 	 */
 	var $vCalendar;
+
+	/**
+	 * Addressbook BO instance
+	 *
+	 * @var array
+	 */
+	var $addressbook;
 
 	/**
 	 * Set Logging
@@ -169,21 +176,29 @@ class calendar_ical extends calendar_boupdate
 		if ($this->log) $this->logfile = $GLOBALS['egw_info']['server']['temp_dir']."/log-vcal";
 		$this->clientProperties = $_clientProperties;
 		$this->vCalendar = new Horde_iCalendar;
+		$this->addressbook = new addressbook_bo;
 	}
 
 
 	/**
 	 * Exports one calendar event to an iCalendar item
 	 *
-	 * @param int/array $events (array of) cal_id or array of the events
+	 * @param int|array $events (array of) cal_id or array of the events
 	 * @param string $version='1.0' could be '2.0' too
 	 * @param string $method='PUBLISH'
 	 * @param int $recur_date=0	if set export the next recurrence at or after the timestamp,
-	 *                          	default 0 => export whole series (or events, if not recurring)
-	 * @return string/boolean string with iCal or false on error (eg. no permission to read the event)
+	 *                          default 0 => export whole series (or events, if not recurring)
+	 * @param string $principalURL='' Used for CalDAV exports
+	 * @return string|boolean string with iCal or false on error (eg. no permission to read the event)
 	 */
-	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0)
+	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='')
 	{
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				"($version, $method, $recur_date, $principalURL)\n",
+				3, $this->logfile);
+		}
 		$egwSupportedFields = array(
 			'CLASS'			=> 'public',
 			'SUMMARY'		=> 'title',
@@ -201,6 +216,7 @@ class calendar_ical extends calendar_boupdate
 			'UID'			=> 'uid',
 			'RECURRENCE-ID' => 'recurrence',
 			'SEQUENCE'		=> 'etag',
+			'STATUS'		=> 'status',
 		);
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
@@ -215,30 +231,102 @@ class calendar_ical extends calendar_boupdate
 			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
 		$vcal->setAttribute('VERSION', $version);
 		$vcal->setAttribute('METHOD', $method);
+		$events_exported = false;
 
 		if (!is_array($events)) $events = array($events);
 
 		$vtimezones_added = array();
-		foreach($events as $event)
+		foreach ($events as $event)
 		{
-			$mailtoOrganizer = false;
+			$organizerURL = '';
 			$organizerCN = false;
+			$recurrence = $this->date2usertime($recur_date);
+			$tzid = null;
 
-			if (strpos($this->productName, 'palmos') !== false)
-			{
-				$date_format = 'ts';
-			}
-			else
-			{
-				$date_format = 'server';
-			}
 			if (!is_array($event)
-				&& !($event = $this->read($event, $recur_date, false, $date_format)))
+				&& !($event = $this->read($event, $recurrence, false, 'server')))
 			{
-				return false;	// no permission to read $cal_id
+				if ($this->read($event, $recurrence, true, 'server'))
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							'() User does not have the permission to read event ' . $event['id']. "\n",
+							3,$this->logfile);
+					}
+					return -1; // Permission denied
+				}
+				else
+				{
+					$retval = false;  // Entry does not exist
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"() Event $event not found.\n",
+							3, $this->logfile);
+					}
+				}
+				continue;
 			}
-			if ($recur_date)
+
+			if ($this->tzid)
 			{
+				// explicit device timezone
+				$tzid = $this->tzid;
+			}
+			elseif ($this->tzid === false)
+			{
+				// use event's timezone
+				$tzid = $event['tzid'];
+			}
+
+			if (!isset(self::$tz_cache[$event['tzid']]))
+			{
+				self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+			}
+
+			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
+
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					'(' . $event['id']. ',' . $recurrence . ")\n" .
+					array2string($event)."\n",3,$this->logfile);
+			}
+
+			if ($recurrence)
+			{
+				if (!($master = $this->read($event['id'], 0, true, 'server'))) continue;
+
+				if (!isset($this->supportedFields['participants']))
+				{
+					$days = $this->so->get_recurrence_exceptions($master, $tzid, 0, 0, 'tz_rrule');
+					if (isset($days[$recurrence]))
+					{
+						$recurrence = $days[$recurrence]; // use remote representation
+					}
+					else
+					{
+						// We don't need status only exceptions
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								"($_id, $recurrence) Gratuitous pseudo exception, skipped ...\n",
+								3,$this->logfile);
+						}
+						continue; // unsupported status only exception
+					}
+				}
+				else
+				{
+					$days = $this->so->get_recurrence_exceptions($master, $tzid, 0, 0, 'rrule');
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+							array2string($days)."\n",3,$this->logfile);
+					}
+					$recurrence = $days[$recurrence]; // use remote representation
+				}
 				// force single event
 				foreach (array('recur_enddate','recur_interval','recur_exception','recur_data','recur_date','id','etag') as $name)
 				{
@@ -249,34 +337,12 @@ class calendar_ical extends calendar_boupdate
 			elseif ($event['recur_enddate'])
 			{
 				$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
-				if (!isset(self::$tz_cache[$event['tzid']]))
-				{
-					self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
-				}
 				// all calculations in the event's timezone
 				$time->setTimezone(self::$tz_cache[$event['tzid']]);
 				$time->setTime(23, 59, 59);
-				$event['recur_enddate'] = $this->date2ts($time);
+				$event['recur_enddate'] = egw_time::to($time, 'server');
 			}
 
-			if ($this->log)
-			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
-					array2string($event)."\n",3,$this->logfile);
-			}
-
-			if ($this->tzid === false)
-			{
-				$tzid = null;
-			}
-			elseif ($this->tzid)
-			{
-				$tzid = $this->tzid;
-			}
-			else
-			{
-				$tzid = $event['tzid'];
-			}
 			// check if tzid of event (not only recuring ones) is already added to export
 			if ($tzid && $tzid != 'UTC' && !in_array($tzid,$vtimezones_added))
 			{
@@ -285,6 +351,7 @@ class calendar_ical extends calendar_boupdate
 				{
 					error_log(__METHOD__."() unknown TZID='$tzid', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
 					$vtimezone = calendar_timezones::tz2id($tzid=egw_time::$user_timezone->getName(),'component');
+					$tzid = null;
 				}
 				if (!isset(self::$tz_cache[$tzid]))
 				{
@@ -338,10 +405,62 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$exceptions = array();
+
+				// dont use "virtual" exceptions created by participant status for GroupDAV or file export
+				if (!in_array($this->productManufacturer,array('file','groupdav')))
+				{
+					$filter = isset($this->supportedFields['participants']) ? 'rrule' : 'tz_rrule';
+					$exceptions = $this->so->get_recurrence_exceptions($event, $tzid, 0, 0, $filter);
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(EXCEPTIONS)\n" .
+							array2string($exceptions)."\n",3,$this->logfile);
+					}
+				}
+				elseif (is_array($event['recur_exception']))
+				{
+					$exceptions = array_unique($event['recur_exception']);
+					sort($exceptions);
+				}
+				$event['recur_exception'] = $exceptions;
+				/*
+				// Adjust the event start -- must not be an exception
+				$length = $event['end'] - $event['start'];
+				$rriter = calendar_rrule::event2rrule($event, false, $tzid);
+				$rriter->rewind();
+				if ($rriter->valid())
+				{
+					$event['start'] = egw_time::to($rriter->current, 'server');
+					$event['end'] = $event['start'] + $length;
+					foreach($exceptions as $key => $day)
+					{
+						// remove leading exceptions
+						if ($day <= $event['start']) unset($exceptions[$key]);
+					}
+					$event['recur_exception'] = $exceptions;
+				}
+				else
+				{
+					// the series dissolved completely into exceptions
+					continue;
+				}*/
+			}
+
 			foreach ($egwSupportedFields as $icalFieldName => $egwFieldName)
 			{
-				if (!isset($this->supportedFields[$egwFieldName])) continue;
-
+				if (!isset($this->supportedFields[$egwFieldName]))
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							'(' . $event['id'] . ") [$icalFieldName] not supported\n",
+							3,$this->logfile);
+					}
+					continue;
+				}
 				$values[$icalFieldName] = array();
 				switch ($icalFieldName)
 				{
@@ -350,17 +469,17 @@ class calendar_ical extends calendar_boupdate
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
 							if (!($info = $this->resource_info($uid))) continue;
-							$mailtoParticipant = $info['email'] ? 'MAILTO:'.$info['email'] : '';
+							$participantURL = $info['email'] ? 'MAILTO:'.$info['email'] : '';
 							$participantCN = '"' . ($info['cn'] ? $info['cn'] : $info['name']) . '"';
 							calendar_so::split_status($status, $quantity, $role);
 							if ($role == 'CHAIR' && $uid != $this->user)
 							{
-								$mailtoOrganizer = $mailtoParticipant;
+								$organizerURL = $participantURL;
 								$organizerCN = $participantCN;
-								if ($status == 'U') continue; // saved ORGANIZER
+								$organizerUID = $uid;
 							}
 							// RB: MAILTO href contains only the email-address, NO cn!
-							$attributes['ATTENDEE'][]	= $mailtoParticipant;
+							$attributes['ATTENDEE'][]	= $participantURL;
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
 							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
@@ -408,34 +527,51 @@ class calendar_ical extends calendar_boupdate
 
     				case 'ORGANIZER':
     					// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-	    				if (!$organizerCN &&
-	    					($event['owner'] != $this->user
-	    						|| $this->productManufacturer != 'groupdav'))
+	    				if (!$organizerCN)
 	    				{
-		    				$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
-		    				$mailtoOrganizer = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
+		    				$organizerURL = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+		    				$organizerURL = $organizerURL ? 'MAILTO:'.$organizerURL : '';
 		    				$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
-		    								. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
+			    				. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
+			    			$organizerUID = $event['owner'];
+		    				if (!isset($event['participants'][$event['owner']]))
+		    				{
+			    				$attributes['ATTENDEE'][] = $organizerURL;
+			    				$parameters['ATTENDEE'][] = array(
+				    				'CN'       => $organizerCN,
+									'ROLE'     => 'CHAIR',
+									'PARTSTAT' => 'DELEGATED',
+									'CUTYPE'   => 'INDIVIDUAL',
+									'RSVP'     => 'FALSE',
+									'X-EGROUPWARE-UID' => $event['owner'],
+			    				);
+		    				}
 	    				}
-	    				if ($organizerCN)
+		    			if ($this->productManufacturer != 'groupdav'
+			    				|| !$this->check_perms(EGW_ACL_EDIT,$event['id']))
 	    				{
-		    				$attributes['ORGANIZER'] = $mailtoOrganizer;
+		    				$attributes['ORGANIZER'] = $organizerURL;
 		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
+		    				$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
 	    				}
 	    				break;
 
 					case 'DTSTART':
-						$attributes['DTSTART'] = self::getDateTime($event['start'],$tzid,$parameters['DTSTART']);
+						if (!isset($event['whole_day']))
+						{
+							$attributes['DTSTART'] = self::getDateTime($event['start'],$tzid,$parameters['DTSTART']);
+						}
 						break;
 
 					case 'DTEND':
 						// write start + end of whole day events as dates
-						if ($this->isWholeDay($event))
+						if (isset($event['whole_day']))
 						{
 							$event['end-nextday'] = $event['end'] + 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
 							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
-								$arr = $this->date2array($event[$f]);
+								$time = new egw_time($event[$f],egw_time::$server_timezone);
+								$arr = egw_time::to($time,'array');
 								$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
 									array('VALUE' => 'DATE'));
 							}
@@ -449,7 +585,7 @@ class calendar_ical extends calendar_boupdate
 
 					case 'RRULE':
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
-						$rriter = calendar_rrule::event2rrule($event,$date_format != 'server');
+						$rriter = calendar_rrule::event2rrule($event, false, $tzid);
 						$rrule = $rriter->generate_rrule($version);
 						if ($version == '1.0')
 						{
@@ -464,45 +600,35 @@ class calendar_ical extends calendar_boupdate
 
 					case 'EXDATE':
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;
-						$days = array();
-						// dont use "virtual" exceptions created by participant status for GroupDAV or file export
-						if (!in_array($this->productManufacturer,array('file','groupdav')))
+						if (!empty($event['recur_exception']))
 						{
-							$tz_id = ($tzid != $event['tzid'] ? $tzid : null);
-							$days = $this->so->get_recurrence_exceptions($event, $tz_id);
-						}
-						if (is_array($event['recur_exception']))
-						{
-							$days = array_merge($days,$event['recur_exception']);	// can NOT use +, as it overwrites numeric indexes
-						}
-						if (!empty($days))
-						{
-							$days = array_unique($days);
-							sort($days);
 							// use 'DATE' instead of 'DATE-TIME' on whole day events
-							if ($this->isWholeDay($event))
+							if (isset($event['whole_day']))
 							{
 								$value_type = 'DATE';
-								foreach ($days as $id => $timestamp)
+								foreach ($event['recur_exception'] as $id => $timestamp)
 								{
-									$arr = $this->date2array($timestamp);
+									$time = new egw_time($timestamp,egw_time::$server_timezone);
+									$time->setTimezone(self::$tz_cache[$event['tzid']]);
+									$arr = egw_time::to($time,'array');
 									$days[$id] = array(
 										'year'  => $arr['year'],
 										'month' => $arr['month'],
 										'mday'  => $arr['day'],
 									);
 								}
+								$event['recur_exception'] = $days;
 							}
 							else
 							{
 								$value_type = 'DATE-TIME';
-								foreach ($days as &$timestamp)
+								foreach ($event['recur_exception'] as $key => $timestamp)
 								{
-									$timestamp = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
+									$event['recur_exception'][$key] = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
 								}
 							}
 							$attributes['EXDATE'] = '';
-							$values['EXDATE'] = $days;
+							$values['EXDATE'] = $event['recur_exception'];
 							$parameters['EXDATE']['VALUE'] = $value_type;
 						}
 						break;
@@ -531,6 +657,10 @@ class calendar_ical extends calendar_boupdate
 						}
 						break;
 
+					case 'STATUS':
+						$attributes['STATUS'] = 'CONFIRMED';
+						break;
+
 					case 'CATEGORIES':
 						if ($event['category'] && ($values['CATEGORIES'] = $this->get_categories($event['category'])))
 						{
@@ -552,10 +682,12 @@ class calendar_ical extends calendar_boupdate
 						}
 						if ($recur_date)
 						{
-							// We handle a status only exception
-							if ($this->isWholeDay($event))
+							// We handle a pseudo exception
+							if (isset($event['whole_day']))
 							{
-								$arr = $this->date2array($recur_date);
+								$time = new egw_time($recur_date,egw_time::$server_timezone);
+								$time->setTimezone(self::$tz_cache[$event['tzid']]);
+								$arr = egw_time::to($time,'array');
 								$vevent->setAttribute($icalFieldName, array(
 									'year' => $arr['year'],
 									'month' => $arr['month'],
@@ -573,9 +705,11 @@ class calendar_ical extends calendar_boupdate
 							// $event['reference'] is a calendar_id, not a timestamp
 							if (!($revent = $this->read($event['reference']))) break;	// referenced event does not exist
 
-							if ($this->isWholeDay($revent))
+							if (isset($revent['whole_day']))
 							{
-								$arr = $this->date2array($event['recurrence']);
+								$time = new egw_time($event['recurrence'],egw_time::$server_timezone);
+								$time->setTimezone(self::$tz_cache[$event['tzid']]);
+								$arr = egw_time::to($time,'array');
 								$vevent->setAttribute($icalFieldName, array(
 									'year' => $arr['year'],
 									'month' => $arr['month'],
@@ -639,7 +773,6 @@ class calendar_ical extends calendar_boupdate
 						{
 							$attributes[$icalFieldName] = $value;
 						}
-					break;
 				}
 			}
 
@@ -675,14 +808,34 @@ class calendar_ical extends calendar_boupdate
 			$attributes['DTSTAMP'] = time();
 			foreach ($event['alarm'] as $alarmID => $alarmData)
 			{
+				// skip over alarms that don't have the minimum required info
+				if (!$alarmData['offset'] && !$alarmData['time']) continue;
+
 				// skip alarms not being set for all users and alarms owned by other users
 				if ($alarmData['all'] != true && $alarmData['owner'] != $this->user)
 				{
 					continue;
 				}
 
+				if ($alarmData['offset'])
+				{
+					$alarmData['time'] = $event['start'] - $alarmData['offset'];
+				}
+
+				$description = trim(preg_replace("/\r?\n?\\[[A-Z_]+:.*\\]/i", '', $event['description']));
+
 				if ($version == '1.0')
 				{
+					if ($event['title']) $description = $event['title'];
+					if ($description)
+					{
+						$values['DALARM']['snooze_time'] = '';
+						$values['DALARM']['repeat count'] = '';
+						$values['DALARM']['display text'] = $description;
+						$values['AALARM']['snooze_time'] = '';
+						$values['AALARM']['repeat count'] = '';
+						$values['AALARM']['display text'] = $description;
+					}
 					$attributes['DALARM'] = self::getDateTime($alarmData['time'],$tzid,$parameters['DALARM']);
 					$attributes['AALARM'] = self::getDateTime($alarmData['time'],$tzid,$parameters['AALARM']);
 					// lets take only the first alarm
@@ -692,15 +845,10 @@ class calendar_ical extends calendar_boupdate
 				{
 					// VCalendar 2.0 / RFC 2445
 
-					$description = trim(preg_replace("/\r?\n?\\[[A-Z_]+:.*\\]/i", '', $event['description']));
-
-					// skip over alarms that don't have the minimum required info
-					if (!$alarmData['offset'] && !$alarmData['time']) continue;
-
 					// RFC requires DESCRIPTION for DISPLAY
 					if (!$event['title'] && !$description) continue;
 
-					if ($this->isWholeDay($event) && $alarmData['offset'])
+					if (isset($event['whole_day']) && $alarmData['offset'])
 					{
 						$alarmData['time'] = $event['start'] - $alarmData['offset'];
 						$alarmData['offset'] = false;
@@ -727,7 +875,7 @@ class calendar_ical extends calendar_boupdate
 
 			foreach ($attributes as $key => $value)
 			{
-				foreach (is_array($value)&&$parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
+				foreach (is_array($value) && $parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
 				{
 					$valueData = $GLOBALS['egw']->translation->convert($valueData,$GLOBALS['egw']->translation->charset(),'UTF-8');
                     $paramData = (array) $GLOBALS['egw']->translation->convert(is_array($value) ?
@@ -735,8 +883,9 @@ class calendar_ical extends calendar_boupdate
                             $GLOBALS['egw']->translation->charset(),'UTF-8');
                     $valuesData = (array) $GLOBALS['egw']->translation->convert($values[$key],
                     		$GLOBALS['egw']->translation->charset(),'UTF-8');
+                    $content = $valueData . implode(';', $valuesData);
 
-					if (preg_match('/[^\x20-\x7F]/', $valueData) ||
+					if (preg_match('/[^\x20-\x7F]/', $content) ||
 						($paramData['CN'] && preg_match('/[^\x20-\x7F]/', $paramData['CN'])))
 					{
 						$paramData['CHARSET'] = 'UTF-8';
@@ -778,9 +927,10 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 			$vcal->addComponent($vevent);
+			$events_exported = true;
 		}
 
-		$retval = $vcal->exportvCalendar();
+		$retval = $events_exported ? $vcal->exportvCalendar() : false;
  		if ($this->log)
  		{
  			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
@@ -828,21 +978,36 @@ class calendar_ical extends calendar_boupdate
 	 * @param boolean $merge=false	merge data with existing entry
 	 * @param int $recur_date=0 if set, import the recurrence at this timestamp,
 	 *                          default 0 => import whole series (or events, if not recurring)
+	 * @param string $principalURL='' Used for CalDAV imports
+	 * @param int $user=null account_id of owner, default null
 	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag
 	 */
-	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0)
+	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null)
 	{
-		if ($this->log)
-		{
-			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
-				array2string($_vcalData)."\n",3,$this->logfile);
-		}
-
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
-		if (!($events = $this->icaltoegw($_vcalData,$cal_id,$etag,$recur_date)))
+		if (!($events = $this->icaltoegw($_vcalData, $principalURL)))
 		{
 			return false;
+		}
+
+		if ($cal_id > 0)
+		{
+			if (count($events) == 1)
+			{
+				$events[0]['id'] = $cal_id;
+				if (!is_null($etag)) $events[0]['etag'] = (int) $etag;
+				if ($recur_date) $events[0]['recurrence'] = $recur_date;
+			}
+			elseif (($foundEvent = $this->find_event(array('id' => $cal_id), 'exact')) &&
+					($eventId = array_shift($foundEvent)) &&
+					($egwEvent = $this->read($eventId)))
+			{
+				foreach ($events as $k => $event)
+				{
+					if (!isset($event['uid'])) $events[$k]['uid'] = $egwEvent['uid'];
+				}
+			}
 		}
 
 		// check if we are importing an event series with exceptions in CalDAV
@@ -858,38 +1023,56 @@ class calendar_ical extends calendar_boupdate
 		}
 		foreach ($events as $event)
 		{
+			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
+			if (is_array($event['category']))
+			{
+				$event['category'] = $this->find_or_add_categories($event['category'],
+					isset($event['id']) ? $event['id'] : -1);
+			}
 			if ($this->log)
 			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
-					array2string($event)."\n",3,$this->logfile);
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					."($cal_id, $etag, $recur_date, $principalURL, $user)\n"
+					. array2string($event)."\n",3,$this->logfile);
 			}
+
+			/*
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				// Adjust the event start -- no exceptions before and at the start
+				$length = $event['end'] - $event['start'];
+				$rriter = calendar_rrule::event2rrule($event, false);
+				$rriter->rewind();
+				if (!$rriter->valid()) continue; // completely disolved into exceptions
+
+				$newstart = egw_time::to($rriter->current, 'server');
+				if ($newstart != $event['start'])
+				{
+					// leading exceptions skiped
+					$event['start'] = $newstart;
+					$event['end'] = $newstart + $length;
+				}
+
+				$exceptions = $event['recur_exception'];
+				foreach($exceptions as $key => $day)
+				{
+					// remove leading exceptions
+					if ($day <= $event['start'])
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								'(): event SERIES-MASTER skip leading exception ' .
+								$day . "\n",3,$this->logfile);
+						}
+						unset($exceptions[$key]);
+					}
+				}
+				$event['recur_exception'] = $exceptions;
+			}
+			*/
 			$updated_id = false;
 			$event_info = $this->get_event_info($event);
-
-			// common adjustments for new events
-			if (!is_array($event_info['stored_event']))
-			{
-				// set non blocking all day depending on the user setting
-				if ($this->isWholeDay($event) && $this->nonBlockingAllday)
-				{
-					$event['non_blocking'] = 1;
-				}
-
-				// check if an owner is set and the current user has add rights
-				// for that owners calendar; if not set the current user
-				if (!isset($event['owner'])
-					|| !$this->check_perms(EGW_ACL_ADD, 0, $event['owner']))
-				{
-					$event['owner'] = $this->user;
-				}
-
-				if (!is_array($event['participants']) || !count($event['participants']))
-				{
-					$status = $event['owner'] == $this->user ? 'A' : 'U';
-					$status = calendar_so::combine_status($status, 1, 'CHAIR');
-					$event['participants'] = array($event['owner'] => $status);
-				}
-			}
 
 			// common adjustments for existing events
 			if (is_array($event_info['stored_event']))
@@ -904,6 +1087,12 @@ class calendar_ical extends calendar_boupdate
 				}
 				if ($merge)
 				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"()[MERGE]\n",3,$this->logfile);
+					}
+
 					// overwrite with server data for merge
 					foreach ($event_info['stored_event'] as $key => $value)
 					{
@@ -912,48 +1101,172 @@ class calendar_ical extends calendar_boupdate
 							case 'participants_types':
 								continue;
 
-								case 'participants':
+							case 'participants':
 								foreach ($event_info['stored_event']['participants'] as $uid => $status)
 								{
 									// Is a participant and no longer present in the event?
 									if (!isset($event['participants'][$uid]))
 									{
 										// Add it back in
-										$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
+										$event['participants'][$uid] = $status;
 									}
 								}
 								break;
 
-								default:
-								if (!empty($value))
-								{
-									$event[$key] = $value;
-								}
+							default:
+								if (!empty($value)) $event[$key] = $value;
 						}
 					}
 				}
 				else
 				{
-			 		// no merge
-					if (!isset($this->supportedFields['participants']) || !count($event['participants']))
+					// no merge
+					if(!isset($this->supportedFields['category']) || !isset($event['category']))
 					{
+						$event['category'] = $event_info['stored_event']['category'];
+					}
+					if (!isset($this->supportedFields['participants'])
+						|| !$event['participants']
+						|| !is_array($event['participants'])
+						|| !count($event['participants']))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"() No participants\n",3,$this->logfile);
+						}
+
 						// If this is an updated meeting, and the client doesn't support
 						// participants OR the event no longer contains participants, add them back
-						$event['participants'] = $event_info['stored_event']['participants'];
-						$event['participant_types'] = $event_info['stored_event']['participant_types'];
+						unset($event['participants']);
 					}
-
-					foreach ($event_info['stored_event']['participants'] as $uid => $status)
+					else
 					{
-						// Is it a resource and no longer present in the event?
-						if ( $uid[0] == 'r' && !isset($event['participants'][$uid]) )
+						// if the client does not return a status, we restore the original one
+						foreach ($event['participants'] as $uid => $status)
 						{
-							// Add it back in
-							$event['participants'][$uid] = $event['participant_types']['r'][substr($uid,1)] = $status;
+							// Is it a resource and no longer present in the event?
+							if ($status[0] == 'X')
+							{
+								if (isset($event_info['stored_event']['participants'][$uid]))
+								{
+									if ($this->log)
+									{
+										error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+											"() Restore status for $uid\n",3,$this->logfile);
+									}
+									$event['participants'][$uid] = $event_info['stored_event']['participants'][$uid];
+								}
+								else
+								{
+									$event['participants'][$uid] = calendar_so::combine_status('U');
+								}
+							}
+						}
+						foreach ($event_info['stored_event']['participants'] as $uid => $status)
+						{
+							// Is it a resource and no longer present in the event?
+							if ($uid[0] == 'r' && !isset($event['participants'][$uid]))
+							{
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+										"() Restore resource $uid to status $status\n",3,$this->logfile);
+								}
+								// Add it back in
+								$event['participants'][$uid] = $status;
+							}
 						}
 					}
+
+					if ($event['whole_day'] && $event['tzid'] != $event_info['stored_event']['tzid'])
+					{
+						// Adjust dates to original TZ
+						$time = new egw_time($event['start'],egw_time::$server_timezone);
+						$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
+						$event['start'] = egw_time::to($time,'server');
+						$time = new egw_time($event['end'],egw_time::$server_timezone);
+						$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
+						$time->setTime(23, 59, 59);
+						$event['end'] = egw_time::to($time,'server');
+						if ($event['recur_type'] != MCAL_RECUR_NONE)
+						{
+							foreach ($event['recur_exception'] as $key => $day)
+							{
+								$time = new egw_time($day,egw_time::$server_timezone);
+								$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
+								$event['recur_exception'][$key] = egw_time::to($time,'server');
+							}
+						}
+						elseif($event['recurrence'])
+						{
+							$time = new egw_time($event['recurrence'],egw_time::$server_timezone);
+							$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
+							$event['recurrence'] = egw_time::to($time,'server');
+						}
+					}
+
+					calendar_rrule::rrule2tz($event, $event_info['stored_event']['start'],
+						$event_info['stored_event']['tzid']);
+
+					$event['tzid'] = $event_info['stored_event']['tzid'];
 					// avoid that iCal changes the organizer, which is not allowed
 					$event['owner'] = $event_info['stored_event']['owner'];
+				}
+			}
+			else // common adjustments for new events
+			{
+				unset($event['id']);
+				// set non blocking all day depending on the user setting
+				if (isset($event['whole_day']) && $this->nonBlockingAllday)
+				{
+					$event['non_blocking'] = 1;
+				}
+
+				if (!is_null($user))
+				{
+					if ($this->check_perms(EGW_ACL_ADD, 0, $user))
+					{
+						$event['owner'] = $user;
+					}
+					else
+					{
+						return false; // no permission
+					}
+				}
+				// check if an owner is set and the current user has add rights
+				// for that owners calendar; if not set the current user
+				elseif (!isset($event['owner'])
+					|| !$this->check_perms(EGW_ACL_ADD, 0, $event['owner']))
+				{
+					$event['owner'] = $this->user;
+				}
+
+				if (!$event['participants']
+					|| !is_array($event['participants'])
+					|| !count($event['participants']))
+				{
+					$status = $event['owner'] == $this->user ? 'A' : 'U';
+					$status = calendar_so::combine_status($status, 1, 'CHAIR');
+					$event['participants'] = array($event['owner'] => $status);
+				}
+				else
+				{
+					foreach ($event['participants'] as $uid => $status)
+					{
+						// if the client did not give us a proper status => set default
+						if ($status[0] == 'X')
+						{
+							if ($uid == $event['owner'])
+							{
+								$event['participants']['uid'] = calendar_so::combine_status('A', 1, 'CHAIR');
+							}
+							else
+							{
+								$event['participants']['uid'] = calendar_so::combine_status('U');
+							}
+						}
+					}
 				}
 			}
 
@@ -999,7 +1312,7 @@ class calendar_ical extends calendar_boupdate
 						}
 						break;
 
-					case 'SERIES-EXCEPTION-STATUS':
+					case 'SERIES-PSEUDO-EXCEPTION':
 						// nothing to do here
 						break;
 				}
@@ -1026,16 +1339,14 @@ class calendar_ical extends calendar_boupdate
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 							"(): event SINGLE\n",3,$this->logfile);
 					}
-					//Horde::logMessage('importVCAL event SINGLE',
-					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// update the event
 					if ($event_info['acl_edit'])
 					{
 						// Force SINGLE
-						unset($event['recurrence']);
 						$event['reference'] = 0;
 						$event_to_store = $event; // prevent $event from being changed by the update method
+						$this->server2usertime($event_to_store);
 						$updated_id = $this->update($event_to_store, true);
 						unset($event_to_store);
 					}
@@ -1047,27 +1358,81 @@ class calendar_ical extends calendar_boupdate
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 							"(): event SERIES-MASTER\n",3,$this->logfile);
 					}
-					//Horde::logMessage('importVCAL event SERIES-MASTER',
-					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-					// remove all known "status only" exceptions and update the event
+					// remove all known pseudo exceptions and update the event
 					if ($event_info['acl_edit'])
 					{
-						$days = $this->so->get_recurrence_exceptions($event);
+						$filter = isset($this->supportedFields['participants']) ? 'map' : 'tz_map';
+						$days = $this->so->get_recurrence_exceptions($event_info['stored_event'], $this->tzid, 0, 0, $filter);
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(EXCEPTIONS MAPPING):\n" .
+								array2string($days)."\n",3,$this->logfile);
+						}
 						if (is_array($days))
 						{
 							$recur_exceptions = array();
+							/*
+							if (!isset($days[$event_info['stored_event']['start']]) &&
+								$event_info['stored_event']['start'] < $event['start'])
+							{
+								// We started with a pseudo exception and moved the
+								// event start therefore to the future; let's try to go back
+								$exceptions = $this->so->get_recurrence_exceptions($event_info['stored_event'], $this->tzid, 0, 0, 'rrule');
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(START ADJUSTMENT):\n" .
+										array2string($exceptions)."\n",3,$this->logfile);
+								}
+								$startdate = $event_info['stored_event']['start'];
+								$length = $event['end'] - $event['start'];
+								$rriter = calendar_rrule::event2rrule($event_info['stored_event'], false);
+								$rriter->rewind();
+								do
+								{
+									// start is a pseudo excpetion for sure
+									$rriter->next_no_exception();
+									$day = $this->date2ts($rriter->current());
+									if ($this->log)
+									{
+										error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+											'(): event SERIES-MASTER try leading pseudo exception ' .
+											$day . "\n",3,$this->logfile);
+									}
+									if ($day >= $event['start']) break;
+									if (!isset($exceptions[$day]))
+									{
+										// all leading occurrences have to be exceptions;
+										// if not -> no restore
+										if ($this->log)
+										{
+											error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+												'(): event SERIES-MASTER pseudo exception series broken at ' .
+												$rriter->current() . "!\n",3,$this->logfile);
+										}
+										$startdate = $event['start'];
+										$recur_exceptions = array();
+										break;
+									}
+									$recur_exceptions[] = $day;
+								} while ($rriter->valid());
+
+								$event['start'] = $startdate;
+								$event['end'] = $startdate + $length;
+							} */
+
 							foreach ($event['recur_exception'] as $recur_exception)
 							{
-								if (!in_array($recur_exception, $days))
+								if (isset($days[$recur_exception]))
 								{
-									$recur_exceptions[] = $recur_exception;
+									$recur_exceptions[] = $days[$recur_exception];
 								}
 							}
 							$event['recur_exception'] = $recur_exceptions;
 						}
 
 						$event_to_store = $event; // prevent $event from being changed by the update method
+						$this->server2usertime($event_to_store);
 						$updated_id = $this->update($event_to_store, true);
 						unset($event_to_store);
 					}
@@ -1080,8 +1445,6 @@ class calendar_ical extends calendar_boupdate
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 							"(): event SERIES-EXCEPTION\n",3,$this->logfile);
 					}
-					//Horde::logMessage('importVCAL event SERIES-EXCEPTION',
-					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					// update event
 					if ($event_info['acl_edit'])
@@ -1096,28 +1459,71 @@ class calendar_ical extends calendar_boupdate
 						{
 							// We create a new exception
 							unset($event['id']);
-							$event_info['master_event']['recur_exception'] = array_unique(array_merge($event_info['master_event']['recur_exception'], array($event['recurrence'])));
-							$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
-							$this->update($event_to_store, true);
-							unset($event_to_store);
+							unset($event_info['stored_event']);
+							$event['recur_type'] = MCAL_RECUR_NONE;
+							$event_info['master_event']['recur_exception'] =
+								array_unique(array_merge($event_info['master_event']['recur_exception'],
+									array($event['recurrence'])));
+							/*
+							// Adjust the event start -- must not be an exception
+							$length = $event_info['master_event']['end'] - $event_info['master_event']['start'];
+							$rriter = calendar_rrule::event2rrule($event_info['master_event'], false);
+							$rriter->rewind();
+							if ($rriter->valid())
+							{
+								$newstart = egw_time::to($rriter->current, 'server');
+								foreach($event_info['master_event']['recur_exception'] as $key => $day)
+								{
+									// remove leading exceptions
+									if ($day < $newstart)
+									{
+										if (($foundEvents = $this->find_event(
+											array('uid' => $event_info['master_event']['uid'],
+												'recurrence' => $day), 'exact')) &&
+												($eventId = array_shift($foundEvents)) &&
+												($exception = read($eventId, 0, 'server')))
+										{
+											// Unlink this exception
+											unset($exception['uid']);
+											$this->update($exception, true);
+										}
+										if ($event['recurrence'] == $day)
+										{
+											// Unlink this exception
+											unset($event['uid']);
+										}
+										unset($event_info['master_event']['recur_exception'][$key]);
+									}
+								}
+							}
+							if ($event_info['master_event']['start'] < $newstart)
+							{
+								$event_info['master_event']['start'] = $newstart;
+								$event_info['master_event']['end'] = $newstart + $length;
+							}*/
 							$event['reference'] = $event_info['master_event']['id'];
 							$event['category'] = $event_info['master_event']['category'];
 							$event['owner'] = $event_info['master_event']['owner'];
+							$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
+							$this->server2usertime($event_to_store);
+							$this->update($event_to_store, true);
+							unset($event_to_store);
 						}
 
 						$event_to_store = $event; // prevent $event from being changed by update method
-						$updated_id = $this->update($event_to_store, true, true, false, false);
+						$this->server2usertime($event_to_store);
+						$updated_id = $this->update($event_to_store, true);
 						unset($event_to_store);
 					}
 					break;
 
-				case 'SERIES-EXCEPTION-STATUS':
+				case 'SERIES-PSEUDO-EXCEPTION':
 					if ($this->log)
 					{
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							"(): event SERIES-EXCEPTION-STATUS\n",3,$this->logfile);
+							"(): event SERIES-PSEUDO-EXCEPTION\n",3,$this->logfile);
 					}
-					//Horde::logMessage('importVCAL event SERIES-EXCEPTION-STATUS',
+					//Horde::logMessage('importVCAL event SERIES-PSEUDO-EXCEPTION',
 					//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 					if ($event_info['acl_edit'])
@@ -1135,6 +1541,7 @@ class calendar_ical extends calendar_boupdate
 
 						// save the series master with the adjusted exceptions
 						$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
+						$this->server2usertime($event_to_store);
 						$updated_id = $this->update($event_to_store, true, true, false, false);
 						unset($event_to_store);
 					}
@@ -1145,48 +1552,52 @@ class calendar_ical extends calendar_boupdate
 			// read stored event into info array for fresh stored (new) events
 			if (!is_array($event_info['stored_event']) && $updated_id > 0)
 			{
-				$event_info['stored_event'] = $this->read($updated_id);
+				$event_info['stored_event'] = $this->read($updated_id, 0, false, 'server');
 			}
 
-			// update status depending on the given event type
-			switch ($event_info['type'])
+			if (isset($event['participants']))
 			{
-				case 'SINGLE':
-				case 'SERIES-MASTER':
-				case 'SERIES-EXCEPTION':
-				case 'SERIES-EXCEPTION-PROPAGATE':
-					if (is_array($event_info['stored_event'])) // status update requires a stored event
-					{
-						if ($event_info['acl_edit'])
+				// update status depending on the given event type
+				switch ($event_info['type'])
+				{
+					case 'SINGLE':
+					case 'SERIES-MASTER':
+					case 'SERIES-EXCEPTION':
+					case 'SERIES-EXCEPTION-PROPAGATE':
+						if (is_array($event_info['stored_event'])) // status update requires a stored event
 						{
-							// update all participants if we have the right to do that
-							$this->update_status($event, $event_info['stored_event']);
+							if ($event_info['acl_edit'])
+							{
+								// update all participants if we have the right to do that
+								$this->update_status($event, $event_info['stored_event']);
+							}
+							elseif (isset($event['participants'][$this->user]) || isset($event_info['stored_event']['participants'][$this->user]))
+							{
+								// update the users status only
+								$this->set_status($event_info['stored_event']['id'], $this->user,
+									($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), 0, true);
+							}
 						}
-						elseif (isset($event['participants'][$this->user]) || isset($event_info['stored_event']['participants'][$this->user]))
-						{
-							// update the users status only
-							$this->set_status($event_info['stored_event']['id'], $this->user,
-								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), 0, true);
-						}
-					}
-					break;
+						break;
 
-				case 'SERIES-EXCEPTION-STATUS':
-					if (is_array($event_info['master_event'])) // status update requires a stored master event
-					{
-						if ($event_info['acl_edit'])
+					case 'SERIES-PSEUDO-EXCEPTION':
+						if (is_array($event_info['master_event'])) // status update requires a stored master event
 						{
-							// update all participants if we have the right to do that
-							$this->update_status($event, $event_info['master_event'], $event['recurrence']);
+							$recurrence = $this->date2usertime($event['recurrence']);
+							if ($event_info['acl_edit'])
+							{
+								// update all participants if we have the right to do that
+								$this->update_status($event, $event_info['stored_event'], $recurrence);
+							}
+							elseif (isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
+							{
+								// update the users status only
+								$this->set_status($event_info['master_event']['id'], $this->user,
+									($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recurrence, true);
+							}
 						}
-						elseif (isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
-						{
-							// update the users status only
-							$this->set_status($event_info['master_event']['id'], $this->user,
-								($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $event['recurrence'], true);
-						}
-					}
-					break;
+						break;
+				}
 			}
 
 			// choose which id to return to the client
@@ -1198,7 +1609,7 @@ class calendar_ical extends calendar_boupdate
 					$return_id = is_array($event_info['stored_event']) ? $event_info['stored_event']['id'] : false;
 					break;
 
-				case 'SERIES-EXCEPTION-STATUS':
+				case 'SERIES-PSEUDO-EXCEPTION':
 					$return_id = is_array($event_info['master_event']) ? $event_info['master_event']['id'] . ':' . $event['recurrence'] : false;
 					break;
 
@@ -1211,7 +1622,7 @@ class calendar_ical extends calendar_boupdate
 					else
 					{
 						// we did not have sufficient rights to propagate the status only exception to a real one
-						// we have to keep the SERIES-EXCEPTION-STATUS id and keep the event untouched
+						// we have to keep the SERIES-PSEUDO-EXCEPTION id and keep the event untouched
 						$return_id = $event_info['master_event']['id'] . ':' . $event['recurrence'];
 					}
 					break;
@@ -1224,7 +1635,6 @@ class calendar_ical extends calendar_boupdate
 					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
-
 		return $return_id;
 	}
 
@@ -1314,6 +1724,13 @@ class calendar_ical extends calendar_boupdate
 
 		if (isset($deviceInfo) && is_array($deviceInfo))
 		{
+			/*
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					'() ' . array2string($deviceInfo) . "\n",3,$this->logfile);
+			}
+			*/
 			if (isset($deviceInfo['uidExtension']) &&
 				$deviceInfo['uidExtension'])
 			{
@@ -1327,11 +1744,31 @@ class calendar_ical extends calendar_boupdate
 			if (isset($deviceInfo['tzid']) &&
 				$deviceInfo['tzid'])
 			{
-				$this->tzid = $deviceInfo['tzid'];
+				switch ($deviceInfo['tzid'])
+				{
+					case 1:
+						$this->tzid = false; // use event's TZ
+						break;
+					case 2:
+						$this->tzid = null; // use UTC for export
+						break;
+					default:
+						$this->tzid = $deviceInfo['tzid'];
+				}
 			}
+			elseif (strpos($this->productName, 'palmos') !== false)
+			{
+				// for palmos we have to use user-time and NO timezone
+				$this->tzid = false;
+			}
+
 			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
 			{
 				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
+				if ($owner == 0)
+				{
+					$owner = $GLOBALS['egw_info']['user']['account_primary_group'];
+				}
 				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
 				{
 					$this->calendarOwner = $owner;
@@ -1348,16 +1785,6 @@ class calendar_ical extends calendar_boupdate
 				$this->productName = strtolower($deviceInfo['model']);
 			}
 		}
-
-		if ($this->log)
-		{
-			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				'(' . $this->productManufacturer .
-				', '. $this->productName . ")\n",3,$this->logfile);
-		}
-
-		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer
-		//		. ', ' . $this->productName .')', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
 		$defaultFields['minimal'] = array(
 			'public'			=> 'public',
@@ -1376,6 +1803,7 @@ class calendar_ical extends calendar_boupdate
 		$defaultFields['basic'] = $defaultFields['minimal'] + array(
 			'recur_exception'	=> 'recur_exception',
 			'priority'			=> 'priority',
+			'status'			=> 'status',
 		);
 
 		$defaultFields['nexthaus'] = $defaultFields['basic'] + array(
@@ -1487,6 +1915,7 @@ class calendar_ical extends calendar_boupdate
 					case 'd750i':
 					case 'p910i':
 					case 'g705i':
+					case 'w890i':
 						$this->supportedFields = $defaultFields['basic'];
 						break;
 					default:
@@ -1520,10 +1949,12 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
+				$this->tzid = false; // use event's TZ
 				$this->supportedFields = $defaultFields['full'];
 				break;
 
 			case 'groupdav':		// all GroupDAV access goes through here
+				$this->tzid = false; // use event's TZ
 				switch ($this->productName)
 				{
 					default:
@@ -1539,23 +1970,50 @@ class calendar_ical extends calendar_boupdate
 			default:
 				error_log("Unknown calendar SyncML client: manufacturer='$this->productManufacturer'  product='$this->productName'");
 				$this->supportedFields = $defaultFields['synthesis'];
-				break;
 		}
-		// for palmos we have to use user-time and NO timezone
-		if (strpos($this->productName, 'palmos') !== false)
+
+		if ($this->log)
 		{
-			$this->tzid = false;
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+				'(' . $this->productManufacturer .
+				', '. $this->productName .', ' .
+				($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .
+				")\n" , 3, $this->logfile);
 		}
+
+		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
+		//	. $this->productName .', ' .
+		//	($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .')',
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
-	function icaltoegw($_vcalData, $cal_id=-1, $etag=null, $recur_date=0)
+	/**
+	 * Convert vCalendar data in EGw events
+	 *
+	 * @param string $_vcalData
+	 * @param string $principalURL='' Used for CalDAV imports
+	 * @return array|boolean events on success, false on failure
+	 */
+	function icaltoegw($_vcalData, $principalURL='')
 	{
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($principalURL)\n" .
+				array2string($_vcalData)."\n",3,$this->logfile);
+		}
+
 		$events = array();
 
 		if ($this->tzid)
 		{
-			date_default_timezone_set($this->tzid);
+			$tzid = $this->tzid;
 		}
+		else
+		{
+			$tzid = egw_time::$user_timezone->getName();
+		}
+
+		date_default_timezone_set($tzid);
 
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData))
@@ -1578,7 +2036,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($component, 'Horde_iCalendar_vevent'))
 			{
-				if (($event = $this->vevent2egw($component, $version, $this->supportedFields, $cal_id)))
+				if (($event = $this->vevent2egw($component, $version, $this->supportedFields, $principalURL)))
 				{
 					//common adjustments
 					if ($this->productManufacturer == '' && $this->productName == ''
@@ -1603,21 +2061,25 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 					$event['alarm'] = $alarms;
+					if ($this->tzid || empty($event['tzid']))
+					{
+						$event['tzid'] = $tzid;
+					}
 
 					$events[] = $event;
 				}
 			}
+			else
+			{
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
+						get_class($component)." found\n",3,$this->logfile);
+				}
+			}
 		}
 
-		if ($this->tzid)
-		{
-			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-		}
-
-		// if cal_id, etag or recur_date is given, use/set it for 1. event
-		if ($cal_id > 0) $events[0]['id'] = $cal_id;
-		if (!is_null($etag)) $events[0]['etag'] = $etag;
-		if ($recur_date) $events[0]['recurrence'] = $recur_date;
+		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 
 		return $events;
 	}
@@ -1628,13 +2090,21 @@ class calendar_ical extends calendar_boupdate
 	 * @param array $component			VEVENT
 	 * @param string $version			vCal version (1.0/2.0)
 	 * @param array $supportedFields	supported fields of the device
-	 * @param int $cal_id				id of existing event in the content (only used to merge categories)
+	 * @param string $principalURL=''	Used for CalDAV imports
 	 *
 	 * @return array|boolean			event on success, false on failure
 	 */
-	function vevent2egw(&$component, $version, $supportedFields, $cal_id=-1)
+	function vevent2egw(&$component, $version, $supportedFields, $principalURL='')
 	{
-		if (!is_a($component, 'Horde_iCalendar_vevent')) return false;
+		if (!is_a($component, 'Horde_iCalendar_vevent'))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
+					get_class($component)." found\n",3,$this->logfile);
+			}
+			return false;
+		}
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
@@ -1665,32 +2135,34 @@ class calendar_ical extends calendar_boupdate
 					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 					$vcardData['start']	= $dtstart_ts;
 
-
 					if ($this->tzid)
 					{
-						// enforce device settings
 						$event['tzid'] = $this->tzid;
-					}
-					elseif (!empty($attributes['params']['TZID']))
-					{
-						// import TZID, if PHP understands it (we only care about TZID of starttime, as we store only a TZID for the whole event)
-						try
-						{
-							$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
-							$event['tzid'] = $tz->getName();
-						}
-						catch(Exception $e)
-						{
-							error_log(__METHOD__."() unknown TZID='{$attributes['params']['TZID']}', defaulting to user timezone '".egw_time::$user_timezone->getName()."'!");
-							$tz = egw_time::$user_timezone;
-							$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
-						}
 					}
 					else
 					{
-						$event['tzid'] = egw_time::$user_timezone->getName();	// default to user timezone
+						$event['tzid'] =  date_default_timezone_get();
+
+						if (!empty($attributes['params']['TZID']))
+						{
+							// import TZID, if PHP understands it (we only care about TZID of starttime,
+							// as we store only a TZID for the whole event)
+							try
+							{
+								$tz = calendar_timezones::DateTimeZone($attributes['params']['TZID']);
+								$event['tzid'] = $tz->getName();
+							}
+							catch(Exception $e)
+							{
+								error_log(__METHOD__ . '() unknown TZID='
+									. $attributes['params']['TZID'] . ', defaulting to timezone "'
+									. date_default_timezone_get() . '".');
+								$event['tzid'] = date_default_timezone_get();	// default to current timezone
+							}
+						}
 					}
 					break;
+
 				case 'DTEND':
 					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 					if (date('H:i:s',$dtend_ts) == '00:00:00')
@@ -1700,8 +2172,15 @@ class calendar_ical extends calendar_boupdate
 					$vcardData['end']	= $dtend_ts;
 			}
 		}
-		if (!isset($vcardData['start'])) return false; // not a valid entry
-
+		if (!isset($vcardData['start']))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. "() DTSTART missing!\n",3,$this->logfile);
+			}
+			return false; // not a valid entry
+		}
 		// lets see what we can get from the vcard
 		foreach ($component->_attributes as $attributes)
 		{
@@ -1715,10 +2194,10 @@ class calendar_ical extends calendar_boupdate
 					);
 					break;
 				case 'CLASS':
-					$vcardData['public']		= (int)(strtolower($attributes['value']) == 'public');
+					$vcardData['public'] = (int)(strtolower($attributes['value']) == 'public');
 					break;
 				case 'DESCRIPTION':
-					$vcardData['description']	= $attributes['value'];
+					$vcardData['description'] = str_replace("\r\n", "\n", $attributes['value']);
 					if (preg_match('/\s*\[UID:(.+)?\]/Usm', $attributes['value'], $matches))
 					{
 						if (!isset($vCardData['uid'])
@@ -1733,10 +2212,11 @@ class calendar_ical extends calendar_boupdate
 					$vcardData['recurrence'] = $attributes['value'];
 					break;
 				case 'LOCATION':
-					$vcardData['location']	= $attributes['value'];
+					$vcardData['location']	= str_replace("\r\n", "\n", $attributes['value']);
 					break;
 				case 'RRULE':
 					$recurence = $attributes['value'];
+					$vcardData['recur_interval'] = 1;
 					$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence[0];
 					// vCard 2.0 values for all types
 					if (preg_match('/UNTIL=([0-9TZ]+)/',$recurence,$matches))
@@ -1749,8 +2229,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					if (preg_match('/INTERVAL=([0-9]+)/',$recurence,$matches))
 					{
-						// 1 is invalid,, egw uses 0 for interval
-						$vcardData['recur_interval'] = (int) $matches[1] != 0 ? (int) $matches[1] : 0;
+						$vcardData['recur_interval'] = (int) $matches[1] ? (int) $matches[1] : 1;
 					}
 					$vcardData['recur_data'] = 0;
 					switch($type)
@@ -1758,34 +2237,27 @@ class calendar_ical extends calendar_boupdate
 						case 'W':
 						case 'WEEKLY':
 							$days = array();
-							if (preg_match('/W(\d+)((?i: [AEFHMORSTUW]*)+)?( +([^ ]*))$/',$recurence, $recurenceMatches))		// 1.0
+							if (preg_match('/W(\d+) *((?i: [AEFHMORSTUW]{2})+)?( +([^ ]*))$/',$recurence, $recurenceMatches))		// 1.0
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
 								if (empty($recurenceMatches[2]))
 								{
-									if (preg_match('/#(\d+)/',$recurenceMatches[4],$recurenceMatches))
-									{
-										if ($recurenceMatches[1]) $vcardData['recur_count'] = $recurenceMatches[1];
-									}
-									else
-									{
-										$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
-									}
 									$days[0] = strtoupper(substr(date('D', $vcardData['start']),0,2));
 								}
 								else
 								{
 									$days = explode(' ',trim($recurenceMatches[2]));
-
-									if (preg_match('/#(\d+)/',$recurenceMatches[4],$recurenceMatches))
-									{
-										if ($recurenceMatches[1]) $vcardData['recur_count'] = $recurenceMatches[1];
-									}
-									else
-									{
-										$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[4]);
-									}
 								}
+
+								if (preg_match('/#(\d+)/',$recurenceMatches[4],$repeatMatches))
+								{
+									if ($repeatMatches[1]) $vcardData['recur_count'] = $repeatMatches[1];
+								}
+								else
+								{
+									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[4]);
+								}
+
 								$recur_days = $this->recur_days_1_0;
 							}
 							elseif (preg_match('/BYDAY=([^;: ]+)/',$recurence,$recurenceMatches))	// 2.0
@@ -1841,7 +2313,7 @@ class calendar_ical extends calendar_boupdate
 							elseif (preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
+								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[2]));
 							}
 							else break;
 
@@ -1885,7 +2357,7 @@ class calendar_ical extends calendar_boupdate
 								{
 									$vcardData['recur_interval'] = $recurenceMatches[1];
 								}
-								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
+								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[2]));
 							}
 							elseif (preg_match('/MP(\d+) (.*) (.*) (.*)/',$recurence, $recurenceMatches))
 							{
@@ -1906,7 +2378,7 @@ class calendar_ical extends calendar_boupdate
 								}
 								else
 								{
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[4]);
+									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[4]));
 								}
 							}
 							break;
@@ -1947,7 +2419,7 @@ class calendar_ical extends calendar_boupdate
 								$vcardData['recur_interval'] = $recurenceMatches[1];
 								if ($recurenceMatches[2] != '#0')
 								{
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
+									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[2]));
 								}
 							} else break;
 
@@ -1996,7 +2468,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'SUMMARY':
-					$vcardData['title']		= $attributes['value'];
+					$vcardData['title'] = str_replace("\r\n", "\n", $attributes['value']);
 					break;
 				case 'UID':
 					if (strlen($attributes['value']) >= $minimum_uid_length)
@@ -2029,14 +2501,7 @@ class calendar_ical extends calendar_boupdate
 				case 'CATEGORIES':
 					if ($attributes['value'])
 					{
-						if($version == '1.0')
-						{
-							$vcardData['category'] = $this->find_or_add_categories(explode(';',$attributes['value']), $cal_id);
-						}
-						else
-						{
-							$vcardData['category'] = $this->find_or_add_categories(explode(',',$attributes['value']), $cal_id);
-						}
+						$vcardData['category'] = explode(',', $attributes['value']);
 					}
 					else
 					{
@@ -2044,7 +2509,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					break;
 				case 'ATTENDEE':
-				case 'ORGANIZER':	// will be written direct to the event
+				case 'ORGANIZER':
 					if (isset($attributes['params']['PARTSTAT']))
 				    {
 				    	$attributes['params']['STATUS'] = $attributes['params']['PARTSTAT'];
@@ -2052,19 +2517,70 @@ class calendar_ical extends calendar_boupdate
 				    if (isset($attributes['params']['STATUS']))
 					{
 						$status = $this->status_ical2egw[strtoupper($attributes['params']['STATUS'])];
+						if (empty($status)) $status = 'X';
 					}
 					else
 					{
-						$status = 'U';
+						$status = 'X'; // client did not return the status
 					}
-					$cn = '';
-					if (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
+					$uid = $email = $cn = '';
+					$quantity = 1;
+					$role = 'REQ-PARTICIPANT';
+					if (!empty($attributes['params']['ROLE']))
+					{
+						$role = $attributes['params']['ROLE'];
+					}
+					// try pricipal url from CalDAV
+					if (strpos($attributes['value'], 'http') === 0)
+					{
+						if (!empty($principalURL) && strstr($attributes['value'], $principalURL) !== false)
+						{
+							$uid = $this->user;
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. "(): Found myself: '$uid'\n",3,$this->logfile);
+							}
+						}
+						else
+						{
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. '(): Unknown URI: ' . $attributes['value']
+									. "\n",3,$this->logfile);
+							}
+							$attributes['value'] = '';
+						}
+					}
+					// try X-EGROUPWARE-UID
+					if (!$uid && !empty($attributes['params']['X-EGROUPWARE-UID']))
+					{
+						$uid = $attributes['params']['X-EGROUPWARE-UID'];
+						if (!empty($attributes['params']['X-EGROUPWARE-QUANTITY']))
+						{
+							$quantity = $attributes['params']['X-EGROUPWARE-QUANTITY'];
+						}
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. "(): Found X-EGROUPWARE-UID: '$uid'\n",3,$this->logfile);
+						}
+					}
+					elseif ($attributes['value'] == 'Unknown')
+					{
+							// we use the current user
+							$uid = $this->user;
+					}
+					// try to find an email address
+					elseif (preg_match('/MAILTO:([@.a-z0-9_-]+)|MAILTO:"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches))
 					{
 						$email = $matches[1] ? $matches[1] : $matches[3];
 						$cn = isset($matches[2]) ? $matches[2]: '';
 					}
-					elseif (preg_match('/"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
+					elseif (!empty($attributes['value']) &&
+						preg_match('/"?([.a-z0-9_ -]*)"?[ ]*<([@.a-z0-9_-]*)>/i',
 						$attributes['value'],$matches))
 					{
 						$cn = $matches[1];
@@ -2074,82 +2590,92 @@ class calendar_ical extends calendar_boupdate
 					{
 						$email = $attributes['value'];
 					}
-					else
+					if (!$uid && $email && ($uid = $GLOBALS['egw']->accounts->name2id($email, 'account_email')))
 					{
-						$email = false;	// no email given
-					}
-					$searcharray = array();
-					if ($email)
-					{
-						$searcharray = array('email' => $email, 'email_home' => $email);
-					}
-					if (isset($attributes['params']['CN']) && $attributes['params']['CN'])
-					{
-						if ($attributes['params']['CN'][0] == '"'
-							&& substr($attributes['params']['CN'],-1) == '"')
+						// we use the account we found
+						if ($this->log)
 						{
-							$attributes['params']['CN'] = substr($attributes['params']['CN'],1,-1);
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. "() Found account: '$uid', '$cn', '$email'\n",3,$this->logfile);
 						}
-						$searcharray['n_fn'] = $attributes['params']['CN'];
 					}
-					elseif ($cn)
+					if (!$uid)
 					{
-						$searcharray['n_fn'] = $cn;
-					}
-					if (($uid = $attributes['params']['X-EGROUPWARE-UID'])
-						&& ($info = $this->resource_info($uid))
-						&& (!$email || $info['email'] == $email))
-					{
-						// we use the (checked) X-EGROUPWARE-UID
-					}
-
-					//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
-					elseif (preg_match('/(.*) Group/', $searcharray['n_fn'], $matches))
-					{
-						if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
+						$searcharray = array();
+						// search for provided email address ...
+						if ($email)
 						{
-							//Horde::logMessage("vevent2egw: group participant $uid",
-							//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
-							if ($status != 'U')
+							$searcharray = array('email' => $email, 'email_home' => $email);
+						}
+						// ... and for provided CN
+						if (!empty($attributes['params']['CN']))
+						{
+							if ($attributes['params']['CN'][0] == '"'
+								&& substr($attributes['params']['CN'],-1) == '"')
 							{
-								// User tries to reply to the group invitiation
-								$members = $GLOBALS['egw']->accounts->members($uid, true);
-								if (in_array($this->user, $members))
+								$cn = substr($attributes['params']['CN'],1,-1);
+							}
+							$searcharray['n_fn'] = $cn;
+						}
+						elseif ($cn)
+						{
+							$searcharray['n_fn'] = $cn;
+						}
+
+						//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
+						if (preg_match('/(.*) Group/', $cn, $matches))
+						{
+							if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
+							{
+								//Horde::logMessage("vevent2egw: group participant $uid",
+								//			__FILE__, __LINE__, PEAR_LOG_DEBUG);
+								if (!isset($vcardData['participants'][$this->user]) &&
+									$status != 'X' && $status != 'U')
 								{
-									//Horde::logMessage("vevent2egw: set status to " . $status,
-									//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
-									$event['participants'][$this->user] =
-										calendar_so::combine_status($status);
+									// User tries to reply to the group invitiation
+									$members = $GLOBALS['egw']->accounts->members($uid, true);
+									if (in_array($this->user, $members))
+									{
+										//Horde::logMessage("vevent2egw: set status to " . $status,
+										//		__FILE__, __LINE__, PEAR_LOG_DEBUG);
+										$vcardData['participants'][$this->user] =
+											calendar_so::combine_status($status,$quantity,$role);
+									}
 								}
 								$status = 'U'; // keep the group
 							}
+							else continue; // can't find this group
 						}
-						else continue; // can't find this group
-					}
-					elseif ($attributes['value'] == 'Unknown')
-					{
-						$uid = $this->user;
-					}
-					elseif ($email && ($uid = $GLOBALS['egw']->accounts->name2id($email,'account_email')))
-					{
-						// we use the account we found
-					}
-					elseif (!$searcharray)
-					{
-						continue;	// participants without email AND CN --> ignore it
-					}
-					elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',$searcharray,
-						array('id','egw_addressbook.account_id as account_id','n_fn'),'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC','','',false,'OR')))
-					{
-						$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
-					}
-					else
-					{
-						if (!$email)
+						elseif (empty($searcharray))
 						{
-							$email = 'no-email@egroupware.org';	// set dummy email to store the CN
+							continue;	// participants without email AND CN --> ignore it
 						}
-						$uid = 'e'.($attributes['params']['CN'] ? $attributes['params']['CN'].' <'.$email.'>' : $email);
+						elseif ((list($data) = $this->addressbook->search($searcharray,
+							array('id','egw_addressbook.account_id as account_id','n_fn'),
+							'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC',
+							'','',false,'OR')))
+						{
+							// found an addressbook entry
+							$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. "() Found addressbook entry: '$uid', '$cn', '$email'\n",3,$this->logfile);
+							}
+						}
+						else
+						{
+							if (!$email)
+							{
+								$email = 'no-email@egroupware.org';	// set dummy email to store the CN
+							}
+							$uid = 'e'. ($cn ? '"' . $cn . '" <' . $email . '>' : $email);
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. "() Not Found, create dummy: '$uid', '$cn', '$email'\n",3,$this->logfile);
+							}
+						}
 					}
 					switch($attributes['name'])
 					{
@@ -2159,27 +2685,33 @@ class calendar_ical extends calendar_boupdate
 							{
 								$attributes['params']['ROLE'] = 'CHAIR';
 							}
-							if (!isset($event['participants'][$uid]) ||
-								$event['participants'][$uid][0] != 'A')
+							if (!isset($vcardData['participants'][$uid]) ||
+									$vcardData['participants'][$uid][0] != 'A')
 							{
 								// for multiple entries the ACCEPT wins
 								// add quantity and role
-								$event['participants'][$uid] =
-									calendar_so::combine_status($status,
-										$attributes['params']['X-EGROUPWARE-QUANTITY'],
-										$attributes['params']['ROLE']);
+								$vcardData['participants'][$uid] =
+									calendar_so::combine_status($status, $quantity, $role);
+
+								if (!$this->calendarOwner && is_numeric($uid) &&
+										$role == 'CHAIR' &&
+										is_a($component->getAttribute('ORGANIZER'), 'PEAR_Error'))
+								{
+									// we can store the ORGANIZER as event owner
+									$event['owner'] = $uid;
+								}
 							}
 							break;
 
 						case 'ORGANIZER':
-							if (isset($event['participants'][$uid]))
+							if (isset($vcardData['participants'][$uid]))
 							{
-								$status = $event['participants'][$uid];
+								$status = $vcardData['participants'][$uid];
 								calendar_so::split_status($status, $quantity, $role);
-								$event['participants'][$uid] =
+								$vcardData['participants'][$uid] =
 									calendar_so::combine_status($status, $quantity, 'CHAIR');
 							}
-							if (is_numeric($uid) && ($uid == $this->calendarOwner || !$this->calendarOwner))
+							if (!$this->calendarOwner && is_numeric($uid))
 							{
 								// we can store the ORGANIZER as event owner
 								$event['owner'] = $uid;
@@ -2188,11 +2720,11 @@ class calendar_ical extends calendar_boupdate
 							{
 								// we must insert a CHAIR participant to keep the ORGANIZER
 								$event['owner'] = $this->user;
-								if (!isset($event['participants'][$uid]))
+								if (!isset($vcardData['participants'][$uid]))
 								{
 									// save the ORGANIZER as event CHAIR
-									$event['participants'][$uid] =
-										calendar_so::combine_status('U', 1, 'CHAIR');
+									$vcardData['participants'][$uid] =
+										calendar_so::combine_status('D', 1, 'CHAIR');
 								}
 							}
 					}
@@ -2277,10 +2809,11 @@ class calendar_ical extends calendar_boupdate
 			$delta = $event['end'] - $event['start'];
 			$last->modify('+' . $delta . ' seconds');
 			$last->setTime(0, 0, 0);
-			$event['recur_enddate'] = $this->date2ts($last);
+			$event['recur_enddate'] = egw_time::to($last, 'server');
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
@@ -2293,16 +2826,30 @@ class calendar_ical extends calendar_boupdate
 
 	function search($_vcalData, $contentID=null, $relax=false)
 	{
-		if (($events = $this->icaltoegw($_vcalData,!is_null($contentID) ? $contentID : -1)))
+		if (($events = $this->icaltoegw($_vcalData)))
 		{
 			// this function only supports searching a single event
 			if (count($events) == 1)
 			{
+				$filter = $relax ? 'relax' : 'check';
 				$event = array_shift($events);
-				return $this->find_event($event, $relax);
+				$eventId = -1;
+				if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
+				if ($contentID)
+				{
+					$parts = preg_split('/:/', $contentID);
+					$event['id'] = $eventId = $parts[0];
+				}
+				$event['category'] = $this->find_or_add_categories($event['category'], $eventId);
+				return $this->find_event($event, $filter);
+			}
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."() found:\n" .
+					array2string($events)."\n",3,$this->logfile);
 			}
 		}
-		return false;
+		return array();
 	}
 
 	/**
@@ -2388,151 +2935,4 @@ class calendar_ical extends calendar_boupdate
 
 		return $vcal->exportvCalendar();
 	}
-
-	/**
-	 * update the status of all participant for a given recurrence or for all recurrences since now (includes recur_date=0)
-	 *
-	 * @param array $new_event event-array with the new stati
-	 * @param array $old_event event-array with the old stati
-	 * @param int $recur_date=0 date to change, or 0 = all since now
-	 */
-	function update_status($new_event, $old_event , $recur_date=0)
-	{
-		// check the old list against the new list
-		foreach ($old_event['participants'] as $userid => $status)
-  		{
-            if (!isset($new_event['participants'][$userid])){
-            	// Attendee will be deleted this way
-            	$new_event['participants'][$userid] = 'G';
-            }
-            elseif ($new_event['participants'][$userid] == $status)
-            {
-            	// Same status -- nothing to do.
-            	unset($new_event['participants'][$userid]);
-            }
-		}
-		// write the changes
-		foreach ($new_event['participants'] as $userid => $status)
-		{
-			$this->set_status($old_event, $userid, $status, $recur_date, true, false);
-		}
-    }
-
-    /**
-     * classifies an incoming event from the eGW point-of-view
-     *
-     * exceptions: unlike other calendar apps eGW does not create an event exception
-     * if just the participant state changes - therefore we have to distinguish between
-     * real exceptions and status only exceptions
-     *
-     * @param array $event the event to check
-     *
-     * @return array
-     * 	type =>
-     * 		SINGLE a single event
-     * 		SERIES-MASTER the series master
-     * 		SERIES-EXCEPTION event is a real exception
-	  * 		SERIES-EXCEPTION-STATUS event is a status only exception
-	  * 		SERIES-EXCEPTION-PROPAGATE event was a status only exception in the past and is now a real exception
-	  * 	stored_event => if event already exists in the database array with event data or false
-	  * 	master_event => for event type SERIES-EXCEPTION, SERIES-EXCEPTION-STATUS or SERIES-EXCEPTION-PROPAGATE
-	  * 		the corresponding series master event array
-	  * 		NOTE: this param is false if event is of type SERIES-MASTER
-     */
-    private function get_event_info($event)
-    {
-			$type = 'SINGLE'; // default
-			$return_master = false; //default
-
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
-			{
-				$type = 'SERIES-MASTER';
-			}
-			else
-			{
-				// SINGLE, SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
-				if (empty($event['uid']) && $event['id'] > 0 && ($stored_event = $this->read($event['id'])))
-				{
-					$event['uid'] = $stored_event['uid']; // restore the UID if it was not delivered
-				}
-
-				if (isset($event['uid'])
-					&& $event['recurrence']
-					&& ($master_event = $this->read($event['uid']))
-					&& isset($master_event['recur_type'])
-					&& $master_event['recur_type'] != MCAL_RECUR_NONE)
-				{
-					// SERIES-EXCEPTION OR SERIES-EXCEPTON-STATUS
-					$return_master = true; // we have a valid master and can return it
-
-					if (isset($event['id']) && $master_event['id'] != $event['id'])
-					{
-						$type = 'SERIES-EXCEPTION'; // this is an existing exception
-					}
-					else
-					{
-						$type = 'SERIES-EXCEPTION-STATUS'; // default if we cannot find a proof for a fundamental change
-						// the recurrence_event is the master event with start and end adjusted to the recurrence
-						$recurrence_event = $master_event;
-						$recurrence_event['start'] = $event['recurrence'];
-						$recurrence_event['end'] = $event['recurrence'] + ($master_event['end'] - $master_event['start']);
-						// check for changed data
-						foreach (array('start','end','uid','title','location',
-									'priority','public','special','non_blocking') as $key)
-						{
-							if (!empty($event[$key]) && $recurrence_event[$key] != $event[$key])
-							{
-								if (isset($event['id']))
-								{
-									$type = 'SERIES-EXCEPTION-PROPAGATE';
-								}
-								else
-								{
-									$type = 'SERIES-EXCEPTION'; // this is a new exception
-								}
-								break;
-							}
-						}
-						// the event id here is always the id of the master event
-						// unset it to prevent confusion of stored event and master event
-						unset($event['id']);
-					}
-				}
-				else
-				{
-					// SINGLE
-					$type = 'SINGLE';
-				}
-			}
-
-			// read existing event
-			if (isset($event['id']))
-			{
-				$stored_event = $this->read($event['id']);
-			}
-
-			// check ACL
-			if ($return_master)
-			{
-				$acl_edit = $this->check_perms(EGW_ACL_EDIT, $master_event['id']);
-			}
-			else
-			{
-				if (is_array($stored_event))
-				{
-					$acl_edit = $this->check_perms(EGW_ACL_EDIT, $stored_event['id']);
-				}
-				else
-				{
-					$acl_edit = true; // new event
-				}
-			}
-
-			return array(
-				'type' => $type,
-				'acl_edit' => $acl_edit,
-				'stored_event' => is_array($stored_event) ? $stored_event : false,
-				'master_event' => $return_master ? $master_event : false,
-			);
-    }
 }

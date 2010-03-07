@@ -16,6 +16,10 @@ if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_mes
 	define('ACL_TYPE_IDENTIFER','***ACL***');
 }
 
+define('HOUR_s',60*60);
+define('DAY_s',24*HOUR_s);
+define('WEEK_s',7*DAY_s);
+
 /**
  * Gives read access to the calendar, but all events the user is not participating are private!
  * Used by addressbook.
@@ -95,6 +99,7 @@ class calendar_bo
 		'R' => 'Rejected',
 		'T' => 'Tentative',
 		'U' => 'No Response',
+		'D' => 'Delegated',
 		'G' => 'Group invitation',
 	);
 	/**
@@ -291,9 +296,9 @@ class calendar_bo
 	 *	filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
-	 *	dayswise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
+	 *	daywise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
 	 *		(events spanning multiple days are returned each day again (!)) otherwise it returns one array with
-	 *		the events (default), not honored in a search ==> always returns an array of events !
+	 *		the events (default), not honored in a search ==> always returns an array of events!
 	 *	date_format string date-formats: 'ts'=timestamp (default), 'array'=array, or string with format for date
 	 *  offset boolean/int false (default) to return all entries or integer offset to return only a limited result
 	 *  enum_recuring boolean if true or not set (default) or daywise is set, each recurence of a recuring events is returned,
@@ -463,7 +468,7 @@ class calendar_bo
 				$this->debug_message('socalendar::search daywise sorting from %1 to %2 of %3',False,$start,$end,$events);
 			}
 			// create empty entries for each day in the reported time
-			for($ts = $start; $ts <= $end; $ts += DAY_s)
+			for($ts = $start; $ts <= $end; $ts += DAY_s) // good enough for array creation, but see while loop below.
 			{
 				$daysEvents[$this->date2string($ts)] = array();
 			}
@@ -474,9 +479,13 @@ class calendar_bo
 				$e_end   = min($this->date2ts($event['end'])-1,$end);
 
 				// add event to each day in the reported time
-				for($ts = $e_start; $ts <= $e_end; $ts += DAY_s)
+				$ts = $e_start;
+				//  $ts += DAY_s in a 'for' loop does not work for daylight savings in week view
+				// because the day is longer than DAY_s: Fullday events will be added twice.
+				while ($ts <= $e_end)
 				{
 					$daysEvents[$ymd = $this->date2string($ts)][] =& $events[$k];
+					$ts = strtotime("+1 day",$ts);
 				}
 				if ($ymd != ($last = $this->date2string($e_end)))
 				{
@@ -513,6 +522,59 @@ class calendar_bo
 			$this->debug_message('bocal::search(%1)=%2',True,$params,$events);
 		}
 		return $events;
+	}
+
+	/**
+	 * Get integration data for a given app of a part (value for a certain key) of it
+	 *
+	 * @param string $app
+	 * @param string $part
+	 * @return array
+	 */
+	static function integration_get_data($app,$part=null)
+	{
+		static $integration_data;
+
+		if (!isset($integration_data))
+		{
+			$integration_data = calendar_so::get_integration_data();
+		}
+
+		if (!isset($integration_data[$app])) return null;
+
+		return $part ? $integration_data[$app][$part] : $integration_data[$app];
+	}
+
+	/**
+	 * Get private attribute for an integration event
+	 *
+	 * Attribute 'is_private' is either a boolean value, eg. false to make all events of $app public
+	 * or an ExecMethod callback with parameters $id,$event
+	 *
+	 * @param string $app
+	 * @param int|string $id
+	 * @return string
+	 */
+	static function integration_get_private($app,$id,$event)
+	{
+		$app_data = self::integration_get_data($app,'is_private');
+
+		// no method, fall back to link title
+		if (is_null($app_data))
+		{
+			$is_private = !egw_link::title($app,$id);
+		}
+		// boolean value to make all events of $app public (false) or private (true)
+		elseif (is_bool($app_data))
+		{
+			$is_private = $app_data;
+		}
+		else
+		{
+			$is_private = (bool)ExecMethod2($app_data,$id,$event);
+		}
+		//echo '<p>'.__METHOD__."($app,$id,) app_data=".array2string($app_data).' returning '.array2string($is_private)."</p>\n";
+		return $is_private;
 	}
 
 	/**
@@ -569,7 +631,7 @@ class calendar_bo
 		$old_horizont = $this->config['horizont'];
 		$this->config['horizont'] = $new_horizont;
 
-		// create further recurrences for all recuring and not yet (at the old horizont) ended events
+		// create further recurrences for all recurring and not yet (at the old horizont) ended events
 		if (($recuring = $this->so->unfinished_recuring($old_horizont)))
 		{
 			foreach($this->read(array_keys($recuring)) as $cal_id => $event)
@@ -590,7 +652,7 @@ class calendar_bo
 	}
 
 	/**
-	 * set all recurrences for an event until defined horizont $this->config['horizont']
+	 * set all recurrences for an event until the defined horizont $this->config['horizont']
 	 *
 	 * This methods operates in usertime, while $this->config['horizont'] is in servertime!
 	 *
@@ -599,22 +661,23 @@ class calendar_bo
 	 */
 	function set_recurrences($event,$start=0)
 	{
- 		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
+		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
 		{
 			$this->debug_message('bocal::set_recurrences(%1,%2)',true,$event,$start);
 		}
-		// check if the caller gave the event start and end times and if not read them from the DB
-		if (!isset($event['start']) || !isset($event['end']))
-		{
-			$event_read=$this->read($event['id']);
-			$event['start'] = $event_read['start'];
-			$event['end'] = $event_read['end'];
-		}
- 		// check if the caller gave the participants and if not read them from the DB
-		if (!isset($event['participants']))
+		// check if the caller gave us enough information and if not read it from the DB
+		if (!isset($event['participants']) || !isset($event['start']) || !isset($event['end']))
 		{
 			list(,$event_read) = each($this->so->read($event['id']));
-			$event['participants'] = $event_read['participants'];
+			if (!isset($event['participants']))
+			{
+				$event['participants'] = $event_read['participants'];
+			}
+			if (!isset($event['start']) || !isset($event['end']))
+			{
+				$event['start'] = $event_read['start'];
+				$event['end'] = $event_read['end'];
+			}
 		}
 		if (!$start) $start = $event['start'];
 
@@ -644,10 +707,9 @@ class calendar_bo
 	function db2data(&$events,$date_format='ts')
 	{
 		if (!is_array($events)) echo "<p>bocal::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
-		foreach($events as $id => &$event)
+		foreach($events as &$event)
 		{
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
-			unset($event_timezone);
 			if (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id'])))
 			{
 				$event['tzid'] = egw_time::$server_timezone->getName();
@@ -662,7 +724,7 @@ class calendar_bo
 			// same with the recur exceptions
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 			{
-				foreach($event['recur_exception'] as $n => &$date)
+				foreach($event['recur_exception'] as &$date)
 				{
 					$date = $this->date2usertime($date,$date_format);
 				}
@@ -670,7 +732,7 @@ class calendar_bo
 			// same with the alarms
 			if (isset($event['alarm']) && is_array($event['alarm']))
 			{
-				foreach($event['alarm'] as $n => &$alarm)
+				foreach($event['alarm'] as &$alarm)
 				{
 					$alarm['time'] = $this->date2usertime($alarm['time'],$date_format);
 				}
@@ -699,7 +761,7 @@ class calendar_bo
 	 * @param mixed $date=null date to specify a single event of a series
 	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
-	 * @return boolean/array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
+	 * @return boolean|array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
 	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
 	{
@@ -915,7 +977,6 @@ class calendar_bo
 			$owner = $event['owner'];
 			$private = !$event['public'];
 		}
-		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$grants = $this->grants[$owner];
 		if (is_array($event) && $needed == EGW_ACL_READ)
 		{
@@ -926,11 +987,11 @@ class calendar_bo
 			{
 				foreach($event['participants'] as $uid => $accept)
 				{
-					if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true)))
+					if ($uid == $this->user || $uid < 0 && in_array($this->user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
 						// if we are a participant, we have an implicite READ and PRIVAT grant
 						// exept the group gives its members only EGW_ACL_FREEBUSY and the participant is not the current user
-						if ($this->grants[$uid] == EGW_ACL_FREEBUSY && $uid != $user) continue;
+						if ($this->grants[$uid] == EGW_ACL_FREEBUSY && $uid != $this->user) continue;
 
 						$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
 						break;
@@ -958,7 +1019,7 @@ class calendar_bo
 		}
 		else
 		{
-			$access = $user == $owner || $grants & $needed && (!$private || $grants & EGW_ACL_PRIVATE);
+			$access = $this->user == $owner || $grants & $needed && (!$private || $grants & EGW_ACL_PRIVATE);
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'check_perms'))
 		{
@@ -974,7 +1035,7 @@ class calendar_bo
 	 *	string (!) in form YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss or YYYYMMDDThhmmss
 	 *	int already a timestamp
 	 *	array with keys 'second', 'minute', 'hour', 'day' or 'mday' (depricated !), 'month' and 'year'
-	 * @param boolean $user2server_time conversation between user- and server-time default False == Off
+	 * @param boolean $user2server=False conversion between user- and server-time; default False == Off
 	 */
 	static function date2ts($date,$user2server=False)
 	{
@@ -1283,6 +1344,9 @@ class calendar_bo
 						break;
 					case 'U':	// no response = unknown
 						$status = html::image('calendar','cnr-pending',$this->verbose_status[$status]);
+						break;
+					case 'D':	// delegated
+						$status = html::image('calendar','forward',$this->verbose_status[$status]);
 						break;
 					case 'G':	// group invitation
 						// Todo: Image, seems not to be used
