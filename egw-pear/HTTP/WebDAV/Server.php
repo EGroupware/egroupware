@@ -43,7 +43,6 @@ class HTTP_WebDAV_Server
      */
     var $uri;
 
-
     /**
      * base URI for this request
      *
@@ -59,6 +58,18 @@ class HTTP_WebDAV_Server
      * @var boolean
      */
     var $client_require_href_as_url;
+
+     /**
+     * Set if client requires does not allow namespace redundacy.
+     * The XML Namespace specification does allow both
+     * But some clients can NOT deal with one or the other!
+     *
+     * @var boolean (client_refuses_redundand_namespace_declarations)
+     */
+    var $crrnd = false;
+
+    /**
+
 
     /**
      * URI path for this request
@@ -230,11 +241,18 @@ class HTTP_WebDAV_Server
             $this->$wrapper();  // call method by name
         } else { // method not found/implemented
             if ($this->_SERVER["REQUEST_METHOD"] == "LOCK") {
-                $this->http_status("412 Precondition failed");
+            	$error = '412 Precondition failed';
+                ;
             } else {
-                $this->http_status("405 Method not allowed");
+                $error = '405 Method not allowed';
                 header("Allow: ".join(", ", $this->_allow()));  // tell client what's allowed
             }
+            $this->http_status($error);
+            echo "<html><head><title>Error $error</title></head>\n";
+            echo "<body><h1>$error</h1>\n";
+            echo "The requested could not by handled by this server.\n";
+            echo '(URI ' . $this->_SERVER['REQUEST_URI'] . ")<br>\n<br>\n";
+            echo "</body></html>\n";
         }
     }
 
@@ -433,6 +451,26 @@ class HTTP_WebDAV_Server
     */
     // }}}
 
+    // {{{ ACL()
+
+    /**
+     * ACL implementation
+     *
+     * ACL implementation
+     *
+     * @abstract
+     * @param array &$params
+     * @returns int HTTP-Statuscode
+     */
+
+    /* abstract
+     function ACL()
+     {
+     // dummy entry for PHPDoc
+     }
+    */
+    // }}}
+
     // }}}
 
     // {{{ other abstract methods
@@ -566,7 +604,7 @@ class HTTP_WebDAV_Server
 			$options['other'] = $propinfo->other;
 
         // call user handler
-        if (!$this->$handler($options, $files)) {
+        if (!($retval =$this->$handler($options, $files))) {
             $files = array("files" => array());
             if (method_exists($this, "checkLock")) {
                 // is locked?
@@ -593,12 +631,42 @@ class HTTP_WebDAV_Server
         }
 
         // now we generate the reply header ...
-        $this->http_status("207 Multi-Status");
+		if ($retval === true)
+		{
+			$this->http_status('207 Multi-Status');
+		}
+		else
+		{
+			$this->http_status($retval);
+			header('Content-Type: text/html');
+			echo "<html><head><title>Error $retval</title></head>\n";
+			echo "<body><h1>$retval</h1>\n";
+			switch (substr($retval, 0 ,3))
+			{
+				case '501': // Not Implemented
+					echo "The requested feature is not (yet) supported by this server.\n";
+					break;
+				default:
+					echo "The request could not be handled by this server.\n";
+			}
+			echo '(URI ' . $this->_SERVER['REQUEST_URI'] . ")<br>\n<br>\n";
+			echo "</body></html>\n";
+			return;
+		}
+		// dav header
+        $dav = array(1);        // assume we are always dav class 1 compliant
+        $allow = false;
+
+        // allow extending class to modify DAV
+		if (method_exists($this,'OPTIONS')) {
+			$this->OPTIONS($this->path,$dav,$allow);
+		}
+        header("DAV: "  .join(", ", $dav));
         header('Content-Type: text/xml; charset="utf-8"');
 
         // ... and payload
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-        echo "<D:multistatus xmlns:D=\"DAV:\">\n";
+        echo ($this->crrnd?'<':'<D:')."multistatus xmlns:D=\"DAV:\">\n";
 
         // using an ArrayIterator to prevent foreach from copying the array,
         // as we cant loop by reference, when an iterator is given in $files['files']
@@ -715,7 +783,14 @@ class HTTP_WebDAV_Server
             $path = $file['path'];
             if (!is_string($path) || $path==="") continue;
 
-            echo " <D:response $ns_defs>\n";
+            if ($this->crrnd)
+            {
+            	echo " <response $ns_defs>\n";
+            }
+            else
+            {
+            	echo " <D:response $ns_defs>\n";
+            }
 
             /* TODO right now the user implementation has to make sure
              collections end in a slash, this should be done in here
@@ -723,12 +798,19 @@ class HTTP_WebDAV_Server
             // path needs to be urlencoded (only basic version of this class!)
 			$href = $this->_urlencode($this->_mergePathes($this->base_uri, $path));
 
-            echo "  <D:href>$href</D:href>\n";
+            if ($this->crrnd)
+            {
+            	echo "  <href>$href</href>\n";
+            }
+            else
+            {
+            	echo "  <D:href>$href</D:href>\n";
+            }
 
             // report all found properties and their values (if any)
             if (isset($file["props"]) && is_array($file["props"])) {
-                echo "   <D:propstat>\n";
-                echo "    <D:prop>\n";
+                echo '   <'.($this->crrnd?'':'D:')."propstat>\n";
+                echo '    <'.($this->crrnd?'':'D:')."prop>\n";
 
                 foreach ($file["props"] as &$prop) {
 
@@ -738,7 +820,7 @@ class HTTP_WebDAV_Server
                     if (!isset($prop["val"]) || $prop["val"] === "" || $prop["val"] === false) {
                         // empty properties (cannot use empty() for check as "0" is a legal value here)
                         if ($prop["ns"]=="DAV:") {
-                            echo "     <D:$prop[name]/>\n";
+                            echo '     <'.($this->crrnd?'':'D:')."$prop[name]/>\n";
                         } else if (!empty($prop["ns"])) {
                             echo "     <".$ns_hash[$prop["ns"]].":$prop[name]/>\n";
                         } else {
@@ -748,29 +830,34 @@ class HTTP_WebDAV_Server
                         // some WebDAV properties need special treatment
                         switch ($prop["name"]) {
                         case "creationdate":
-                            echo "     <D:creationdate ns0:dt=\"dateTime.tz\">"
+                            echo '     <'.($this->crrnd?'':'D:')."creationdate ns0:dt=\"dateTime.tz\">"
                                 . gmdate("Y-m-d\\TH:i:s\\Z", $prop['val'])
-                                . "</D:creationdate>\n";
+                                . '</'.($this->crrnd?'':'D:')."creationdate>\n";
                             break;
                         case "getlastmodified":
-                            echo "     <D:getlastmodified ns0:dt=\"dateTime.rfc1123\">"
+                            echo '     <'.($this->crrnd?'':'D:')."getlastmodified ns0:dt=\"dateTime.rfc1123\">"
                                 . gmdate("D, d M Y H:i:s ", $prop['val'])
-                                . "GMT</D:getlastmodified>\n";
+                                . "GMT</".($this->crrnd?'':'D:')."getlastmodified>\n";
                             break;
                         case "supportedlock":
-                            echo "     <D:supportedlock>$prop[val]</D:supportedlock>\n";
+                            echo '     <'.($this->crrnd?'':'D:')."supportedlock>$prop[val]</".($this->crrnd?'':'D:')."supportedlock>\n";
                             break;
                         case "lockdiscovery":
-                            echo "     <D:lockdiscovery>\n";
+                            echo '     <'.($this->crrnd?'':'D:')."lockdiscovery>\n";
                             echo $prop["val"];
-                            echo "     </D:lockdiscovery>\n";
+                            echo '     </'.($this->crrnd?'':'D:')."lockdiscovery>\n";
                             break;
                         default:
-                            echo "     <D:$prop[name]>".
-                            	(is_array($prop['val']) ?
-	                                $this->_hierarchical_prop_encode($prop['val']) : 
-	                                $this->_prop_encode(htmlspecialchars($prop['val']))).
-	                            "</D:$prop[name]>\n";
+                            if (is_array($prop['val']))
+                            {
+                            	$val = $this->_hierarchical_prop_encode($prop['val']);
+                            } elseif (isset($prop['raw'])) {
+                            	$val = $this->_prop_encode('<![CDATA['.$prop['val'].']]>');
+                            } else {
+	                    		$val = $this->_prop_encode(htmlspecialchars($prop['val']));
+                            }
+	                        echo '     <'.($this->crrnd?'':'D:')."$prop[name]>$val".
+	                        	'</'.($this->crrnd?'':'D:')."$prop[name]>\n";
                             break;
                         }
                     } else {
@@ -783,66 +870,90 @@ class HTTP_WebDAV_Server
                   			$vals = $extra_ns = '';
                     		foreach($prop['val'] as $subprop)
                     		{
-		                            if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
-									// register property namespace if not known yet
-                            		if (!isset($ns_hash[$subprop['ns']])) {
-		                                $ns_name = "ns".(count($ns_hash) + 1);
-		                                $ns_hash[$subprop['ns']] = $ns_name;
-                            		} else {
-                            			$ns_name = $ns_hash[$subprop['ns']];
-                            		}
-	                            	if (strchr($extra_ns,$extra=' xmlns:'.$ns_name.'="'.$subprop['ns'].'"') === false) {
-		                                $extra_ns .= $extra;
-	                            	}
-	                            	$ns_name .= ':';
-	                            } elseif ($subprop['ns'] == 'DAV:') {
-	                            	$ns_name = 'D:';
-	                            } else {
-	                            	$ns_name = '';
-	                            }
-	                            $vals .= "<$ns_name$subprop[name]";
-	                            if (is_array($subprop['val']))	// val contains only attributes, no value
-	                            {
-	                            	foreach($subprop['val'] as $attr => $val)
-	                            	{
-	                            		$vals .= ' '.$attr.'="'.htmlspecialchars($val).'"';
-	                            	}
-	                            	$vals .= '/>';
-	                            }
-	                            else
-	                            {
-	                            	$vals .= '>'.htmlspecialchars($subprop['val'])."</$ns_name$subprop[name]>";
-	                            }
-                   		    }
-                    		echo "     <".$ns_hash[$prop['ns']].":$prop[name]$extra_ns>$vals</".$ns_hash[$prop['ns']].":$prop[name]>\n";
-                        }
-                        else
-                        // properties from namespaces != "DAV:" or without any namespace
-                        if ($prop["ns"]) {
-                            echo "     <" . $ns_hash[$prop["ns"]] . ":$prop[name]>"
-                                . $this->_prop_encode(htmlspecialchars($prop['val']))
-                                . "</" . $ns_hash[$prop["ns"]] . ":$prop[name]>\n";
+	                    		if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
+		                    		// register property namespace if not known yet
+		                    		if (!isset($ns_hash[$subprop['ns']])) {
+			                    		$ns_name = "ns".(count($ns_hash) + 1);
+			                    		$ns_hash[$subprop['ns']] = $ns_name;
+		                    		} else {
+			                    		$ns_name = $ns_hash[$subprop['ns']];
+		                    		}
+		                    		if (strchr($extra_ns,$extra=' xmlns:'.$ns_name.'="'.$subprop['ns'].'"') === false) {
+			                    		$extra_ns .= $extra;
+		                    		}
+		                    		$ns_name .= ':';
+	                    		} elseif ($subprop['ns'] == 'DAV:') {
+		                    		$ns_name = 'D:';
+	                    		} else {
+		                    		$ns_name = '';
+	                    		}
+	                    		$vals .= "<$ns_name$subprop[name]";
+	                    		if (is_array($subprop['val']))	// val contains only attributes, no value
+	                    		{
+		                    		foreach($subprop['val'] as $attr => $val)
+									{
+			                    		$vals .= ' '.$attr.'="'.htmlspecialchars($val).'"';
+									}
+		                    		$vals .= '/>';
+	                    		}
+	                    		else
+	                    		{
+	                    			$vals .= '>';
+	                    			if (isset($subprop['raw'])) {
+	                    				$vals .= '<![CDATA['.$subprop['val'].']]>';
+	                    			} else {
+		                    			$vals .= htmlspecialchars($subprop['val']);
+	                    			}
+	                    			$vals .= "</$ns_name$subprop[name]>";
+	                    		}
+                    		}
+                    		echo '     <'.$ns_hash[$prop['ns']].":$prop[name]$extra_ns>$vals</".$ns_hash[$prop['ns']].":$prop[name]>\n";
                         } else {
-                            echo "     <$prop[name] xmlns=\"\">"
-                                . $this->_prop_encode(htmlspecialchars($prop['val']))
-                                . "</$prop[name]>\n";
+                        	if ($prop['raw'])
+                        	{
+                        		$val = '<![CDATA['.$prop['val'].']]>';
+                        	} else {
+                        		$val = htmlspecialchars($prop['val']);
+                        	}
+                        	$val = $this->_prop_encode($val);
+	                        // properties from namespaces != "DAV:" or without any namespace
+	                        if ($prop['ns']) {
+		                        if ($this->crrnd) {
+			                        echo "     <$prop[name] xmlns=".'"'.$prop["ns"].'">'
+									. $val . "</$prop[name]>\n";
+		                        } else {
+			                        echo "     <" . $ns_hash[$prop["ns"]] . ":$prop[name]>"
+									. $val . '</'.$ns_hash[$prop['ns']].":$prop[name]>\n";
+		                        }
+	                        } else {
+		                        echo "     <$prop[name] xmlns=\"\">$val</$prop[name]>\n";
+	                        }
                         }
                     }
                 }
 
-                echo "   </D:prop>\n";
-                echo "   <D:status>HTTP/1.1 200 OK</D:status>\n";
-                echo "  </D:propstat>\n";
+                if ($this->crrnd)
+                {
+	                echo "   </prop>\n";
+	                echo "   <status>HTTP/1.1 200 OK</status>\n";
+	                echo "  </propstat>\n";
+                }
+                else
+                {
+	                echo "   </D:prop>\n";
+	                echo "   <D:status>HTTP/1.1 200 OK</D:status>\n";
+	                echo "  </D:propstat>\n";
+                }
             }
 
             // now report all properties requested but not found
             if (isset($file["noprops"])) {
-                echo "   <D:propstat>\n";
-                echo "    <D:prop>\n";
+                echo '   <'.($this->crrnd?'':'D:')."propstat>\n";
+                echo '    <'.($this->crrnd?'':'D:')."prop>\n";
 
                 foreach ($file["noprops"] as &$prop) {
                     if ($prop["ns"] == "DAV:") {
-                        echo "     <D:$prop[name]/>\n";
+                        echo '     <'.($this->crrnd?'':'D:')."$prop[name]/>\n";
                     } else if ($prop["ns"] == "") {
                         echo "     <$prop[name] xmlns=\"\"/>\n";
                     } else {
@@ -850,15 +961,24 @@ class HTTP_WebDAV_Server
                     }
                 }
 
-                echo "   </D:prop>\n";
-                echo "   <D:status>HTTP/1.1 404 Not Found</D:status>\n";
-                echo "  </D:propstat>\n";
+                if ($this->crrnd)
+                {
+	                echo "   </prop>\n";
+	                echo "   <status>HTTP/1.1 404 Not Found</status>\n";
+	                echo "  </propstat>\n";
+                }
+                else
+                {
+	                echo "   </D:prop>\n";
+	                echo "   <D:status>HTTP/1.1 404 Not Found</D:status>\n";
+	                echo "  </D:propstat>\n";
+                }
             }
 
-            echo " </D:response>\n";
+            echo ' </'.($this->crrnd?'':'D:')."response>\n";
         }
 
-        echo "</D:multistatus>\n";
+        echo '</'.($this->crrnd?'':'D:')."multistatus>\n";
     }
 
 
@@ -896,24 +1016,24 @@ class HTTP_WebDAV_Server
             echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 
             echo "<D:multistatus xmlns:D=\"DAV:\">\n";
-            echo " <D:response>\n";
-            echo "  <D:href>".$this->_urlencode($this->_mergePathes($this->_SERVER["SCRIPT_NAME"], $this->path))."</D:href>\n";
+            echo ' <'.($this->crrnd?'':'D:')."response>\n";
+            echo '  <'.($this->crrnd?'':'D:')."href>".$this->_urlencode($this->_mergePathes($this->_SERVER["SCRIPT_NAME"], $this->path)).'</'.($this->crrnd?'':'D:')."href>\n";
 
             foreach ($options["props"] as $prop) {
-                echo "   <D:propstat>\n";
-                echo "    <D:prop><$prop[name] xmlns=\"$prop[ns]\"/></D:prop>\n";
-                echo "    <D:status>HTTP/1.1 $prop[status]</D:status>\n";
-                echo "   </D:propstat>\n";
+                echo '   <'.($this->crrnd?'':'D:')."propstat>\n";
+                echo '    <'.($this->crrnd?'':'D:')."prop><$prop[name] xmlns=\"$prop[ns]\"/></".($this->crrnd?'':'D:')."prop>\n";
+                echo '    <'.($this->crrnd?'':'D:')."status>HTTP/1.1 $prop[status]</".($this->crrnd?'':'D:')."status>\n";
+                echo '   </'.($this->crrnd?'':'D:')."propstat>\n";
             }
 
             if ($responsedescr) {
-                echo "  <D:responsedescription>".
+                echo '  <'.($this->crrnd?'':'D:')."responsedescription>".
                     $this->_prop_encode(htmlspecialchars($responsedescr)).
-                    "</D:responsedescription>\n";
+                    '</'.($this->crrnd?'':'D:')."responsedescription>\n";
             }
 
-            echo " </D:response>\n";
-            echo "</D:multistatus>\n";
+            echo ' </'.($this->crrnd?'':'D:')."response>\n";
+            echo '</'.($this->crrnd?'':'D:')."multistatus>\n";
         } else {
             $this->http_status("423 Locked");
         }
@@ -1503,17 +1623,17 @@ class HTTP_WebDAV_Server
             header("Lock-Token: <$options[locktoken]>");
             echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
             echo "<D:prop xmlns:D=\"DAV:\">\n";
-            echo " <D:lockdiscovery>\n";
-            echo "  <D:activelock>\n";
-            echo "   <D:lockscope><D:$options[scope]/></D:lockscope>\n";
-            echo "   <D:locktype><D:$options[type]/></D:locktype>\n";
-            echo "   <D:depth>$options[depth]</D:depth>\n";
-            echo "   <D:owner>$options[owner]</D:owner>\n";
-            echo "   <D:timeout>$timeout</D:timeout>\n";
-            echo "   <D:locktoken><D:href>$options[locktoken]</D:href></D:locktoken>\n";
-            echo "  </D:activelock>\n";
-            echo " </D:lockdiscovery>\n";
-            echo "</D:prop>\n\n";
+            echo ' <'.($this->crrnd?'':'D:')."lockdiscovery>\n";
+            echo '  <'.($this->crrnd?'':'D:')."activelock>\n";
+            echo '   <'.($this->crrnd?'':'D:')."lockscope><D:$options[scope]/></".($this->crrnd?'':'D:')."lockscope>\n";
+            echo '   <'.($this->crrnd?'':'D:')."locktype><D:$options[type]/></".($this->crrnd?'':'D:')."locktype>\n";
+            echo '   <'.($this->crrnd?'':'D:')."depth>$options[depth]</".($this->crrnd?'':'D:')."depth>\n";
+            echo '   <'.($this->crrnd?'':'D:')."owner>$options[owner]</".($this->crrnd?'':'D:')."owner>\n";
+            echo '   <'.($this->crrnd?'':'D:')."timeout>$timeout</".($this->crrnd?'':'D:')."timeout>\n";
+            echo '   <'.($this->crrnd?'':'D:')."locktoken><D:href>$options[locktoken]</D:href></".($this->crrnd?'':'D:')."locktoken>\n";
+            echo '  </'.($this->crrnd?'':'D:')."activelock>\n";
+            echo ' </'.($this->crrnd?'':'D:')."lockdiscovery>\n";
+            echo '</'.($this->crrnd?'':'D:')."prop>\n\n";
         }
     }
 
@@ -1546,6 +1666,49 @@ class HTTP_WebDAV_Server
         $stat = $this->UNLOCK($options);
 
         $this->http_status($stat);
+    }
+
+    // }}}
+
+    // {{{ http_ACL()
+
+	/**
+     * ACL method handler
+     *
+     * @param  void
+     * @return void
+     */
+    function http_ACL()
+    {
+        $options         = Array();
+        $options['path'] = $this->path;
+        $options['errors'] = array();
+
+        if (isset($this->_SERVER['HTTP_DEPTH'])) {
+            $options['depth'] = $this->_SERVER['HTTP_DEPTH'];
+        } else {
+            $options['depth'] = 'infinity';
+        }
+
+        // call user method
+        $status = $this->ACL($options);
+
+		// now we generate the reply header ...
+		$this->http_status($status);
+		$content = '';
+
+        if (is_array($options['errors']) && count($options['errors'])) {
+	        header('Content-Type: text/xml; charset="utf-8"');
+	        // ... and payload
+	        $content .= "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+	        $content .= "<D:error xmlns:D=\"DAV:\"> \n";
+	        foreach ($options['errors'] as $violation) {
+	        	$content .= '<'.($this->crrnd?'':'D:')."$violation/>\n";
+	        }
+	        $content .=  '</'.($this->crrnd?'':'D:')."error>\n";
+        }
+        header("Content-length: ".$this->bytes($content));
+        if ($content) echo $options['content'];
     }
 
     // }}}
@@ -1645,20 +1808,27 @@ class HTTP_WebDAV_Server
      * @param  string  XML namespace (optional)
      * @param  string  property name
      * @param  string  property value
+     * @praram boolen  property raw-flag
      * @return array   property array
      */
     function mkprop()
     {
-        $args = func_get_args();
-        if (count($args) == 3) {
-            return array("ns"   => $args[0],
-                         "name" => $args[1],
-                         "val"  => $args[2]);
-        } else {
-            return array("ns"   => "DAV:",
-                         "name" => $args[0],
-                         "val"  => $args[1]);
-        }
+	    $args = func_get_args();
+	    switch (count($args)) {
+		    case 4:
+			    return array('ns'   => $args[0],
+				    'name' => $args[1],
+					'val'  => $args[2],
+					'raw'	=> true);
+		    case 3:
+			    return array('ns'   => $args[0],
+				    'name' => $args[1],
+					'val'  => $args[2]);
+		    default:
+			    return array("ns"   => "DAV:",
+				    "name" => $args[0],
+					"val"  => $args[1]);
+	    }
     }
 
     // {{{ _check_auth
@@ -2005,16 +2175,32 @@ class HTTP_WebDAV_Server
             }
 
             // genreate response block
-            $activelocks.= "
-              <D:activelock>
-               <D:lockscope><D:$lock[scope]/></D:lockscope>
-               <D:locktype><D:$lock[type]/></D:locktype>
-               <D:depth>$lock[depth]</D:depth>
-               <D:owner>$lock[owner]</D:owner>
-               <D:timeout>$timeout</D:timeout>
-               <D:locktoken><D:href>$lock[token]</D:href></D:locktoken>
-              </D:activelock>
-             ";
+            if ($this->crrnd)
+            {
+	            $activelocks.= "
+		            <activelock>
+		            <lockscope><$lock[scope]/></lockscope>
+		            <locktype><$lock[type]/></locktype>
+		            <depth>$lock[depth]</depth>
+		            <owner>$lock[owner]</owner>
+		            <timeout>$timeout</timeout>
+		            <locktoken><href>$lock[token]</href></locktoken>
+		            </activelock>
+		            ";
+            }
+            else
+            {
+	            $activelocks.= "
+		            <D:activelock>
+		            <D:lockscope><D:$lock[scope]/></D:lockscope>
+		            <D:locktype><D:$lock[type]/></D:locktype>
+		            <D:depth>$lock[depth]</D:depth>
+		            <D:owner>$lock[owner]</D:owner>
+		            <D:timeout>$timeout</D:timeout>
+		            <D:locktoken><D:href>$lock[token]</D:href></D:locktoken>
+		            </D:activelock>
+		            ";
+            }
         }
 
         // return generated response
@@ -2087,7 +2273,7 @@ class HTTP_WebDAV_Server
 
     /**
      * Encode a hierarchical properties like:
-     * 
+     *
  	 * <D:supported-report-set>
 	 *    <supported-report>
 	 *       <report>
@@ -2100,7 +2286,7 @@ class HTTP_WebDAV_Server
 	 *       </report>
 	 *    </supported-report>
 	 * </D:supported-report-set>
-     * 
+     *
      * @param array $props
      * @return string
      */
@@ -2108,14 +2294,14 @@ class HTTP_WebDAV_Server
     {
     	//error_log(__METHOD__.'('.array2string($props).')');
     	if (isset($props['name'])) $props = array($props);
-    	
+
     	$ret = '';
     	foreach($props as $prop)
     	{
 	    	$ret .= '<'.$prop['name'].
 	    		($prop['ns'] != 'DAV:' ? ' xmlns="'.$prop['ns'].'"' : '').
 	    		(empty($prop['val']) ? ' />' : '>'.
-	    			(is_array($prop['val']) ? 
+	    			(is_array($prop['val']) ?
 	    				$this->_hierarchical_prop_encode($prop['val']) :
 	    				$this->_prop_encode($prop['val'])).
 	    			'</'.$prop['name'].'>');

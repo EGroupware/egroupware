@@ -38,6 +38,12 @@ abstract class groupdav_handler
 	 */
 	var $translation;
 	/**
+	 * Reference to the accounts class
+	 *
+	 * @var accounts
+	 */
+	var $accounts;
+	/**
 	 * Translates method names into ACL bits
 	 *
 	 * @var array
@@ -60,6 +66,12 @@ abstract class groupdav_handler
 	 */
 	var $base_uri;
 	/**
+	 * principal URL
+	 *
+	 * @var string
+	 */
+	var $principalURL;
+	/**
 	 * HTTP_IF_MATCH / etag of current request / last call to _common_get_put_delete() method
 	 *
 	 * @var string
@@ -78,17 +90,29 @@ abstract class groupdav_handler
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
 	 * @param int $debug=null debug-level to set
 	 * @param string $base_uri=null base url of handler
+	 * @param string $principalURL=null pricipal url of handler
 	 */
-	function __construct($app,$debug=null,$base_uri=null)
+	function __construct($app,$debug=null,$base_uri=null,$principalURL=null)
 	{
-	    //error_log(__METHOD__." called");
 		$this->app = $app;
-		#if (!is_null($debug)) $this->debug = $debug = 3;
+		if (!is_null($debug)) $this->debug = $debug;
 		$this->base_uri = is_null($base_uri) ? $base_uri : $_SERVER['SCRIPT_NAME'];
+		if (is_null($principalURL))
+		{
+			$this->principalURL = (@$_SERVER["HTTPS"] === "on" ? "https:" : "http:") .
+				'//'.$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/';
+		}
+		else
+		{
+			$this->principalURL = $principalURL.'principals/users/'.
+				$GLOBALS['egw_info']['user']['account_lid'].'/';
+		}
+
 		$this->agent = self::get_agent();
 
 		$this->translation =& $GLOBALS['egw']->translation;
 		$this->egw_charset = $this->translation->charset();
+		$this->accounts = $GLOBALS['egw']->accounts;
 	}
 
 	/**
@@ -105,12 +129,13 @@ abstract class groupdav_handler
 	/**
 	 * Propfind callback, if interator is used
 	 *
+	 * @param string $path
 	 * @param array $filter
 	 * @param array|boolean $start false=return all or array(start,num)
 	 * @param int &$total
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback(array $filter,$start,&$total) { }
+	function &propfind_callback($path, array $filter,$start,&$total) { }
 
 	/**
 	 * Handle get request for an applications entry
@@ -161,9 +186,11 @@ abstract class groupdav_handler
 	 * Add extra properties for collections
 	 *
 	 * @param array $props=array() regular props by the groupdav handler
+	 * @param string $displayname
+	 * @param string $base_uri=null base url of handler
 	 * @return array
 	 */
-	static function extra_properties(array $props=array())
+	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
 	{
 		return $props;
 	}
@@ -185,7 +212,7 @@ abstract class groupdav_handler
 		//	error_log(__METHOD__."(".array2string($entry).") Cant create etag!");
 			return false;
 		}
-		return '"'.$entry['id'].':'.(isset($entry['etag']) ? $entry['etag'] : $entry['modified']).'"';
+		return 'EGw-'.$entry['id'].':'.(isset($entry['etag']) ? $entry['etag'] : $entry['modified']).'-wGE';
 	}
 
 	/**
@@ -196,7 +223,7 @@ abstract class groupdav_handler
 	 */
 	static function etag2value($etag)
 	{
-		list(,$val) = explode(':',substr($etag,1,-1),2);
+		list(,$val) = explode(':',substr($etag,4,-4),2);
 
 		return $val;
 	}
@@ -211,7 +238,7 @@ abstract class groupdav_handler
 	 * @param array &$options
 	 * @param int $id
 	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
-	 * @return array/string entry on success, string with http-error-code on failure, null for PUT on an unknown id
+	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
 	function _common_get_put_delete($method,&$options,$id,&$return_no_access=false)
 	{
@@ -260,11 +287,13 @@ abstract class groupdav_handler
 	 *
 	 * @static
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
+	 * @param int $user=null owner of the collection, default current user
 	 * @param int $debug=null debug-level to set
 	 * @param string $base_uri=null base url of handler
+	 * @param string $principalURL=null pricipal url of handler
 	 * @return groupdav_handler
 	 */
-	static function &app_handler($app,$debug=null,$base_uri=null)
+	static function &app_handler($app,$debug=null,$base_uri=null,$principalURL=null)
 	{
 		static $handler_cache = array();
 
@@ -273,8 +302,14 @@ abstract class groupdav_handler
 			$class = $app.'_groupdav';
 			if (!class_exists($class) && !class_exists($class = 'groupdav_'.$app)) return null;
 
-			$handler_cache[$app] = new $class($app,$debug,$base_uri);
+			$handler_cache[$app] = new $class($app,$debug,$base_uri,$principalURL);
 		}
+		$handler_cache[$app]->$debug = $debug;
+		$handler_cache[$app]->$base_uri = $base_uri;
+		$handler_cache[$app]->$principalURL = $principalURL;
+
+		if ($debug) error_log(__METHOD__."('$app', '$base_uri', '$principalURL')");
+
 		return $handler_cache[$app];
 	}
 
@@ -294,6 +329,7 @@ abstract class groupdav_handler
 			$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 			foreach(array(
 				'davkit'            => 'davkit',	// Apple iCal
+				'cfnetwork'			=> 'cfnetwork',  // Apple Addressbook
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
 				'zideone'           => 'zideone',	// zideone outlook plugin
 				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
@@ -334,6 +370,13 @@ abstract class groupdav_handler
 class groupdav_propfind_iterator implements Iterator
 {
 	/**
+	 * current path
+	 *
+	 * @var string
+	 */
+	protected $path;
+
+	/**
 	 * Handler to call for entries
 	 *
 	 * @var groupdav_handler
@@ -352,7 +395,15 @@ class groupdav_propfind_iterator implements Iterator
 	 *
 	 * @var array
 	 */
+	protected $common_files;
+
+	/**
+	 * current chunk
+	 *
+	 * @var array
+	 */
 	protected $files;
+
 
 	/**
 	 * Start value for callback
@@ -375,19 +426,22 @@ class groupdav_propfind_iterator implements Iterator
 	public $debug = false;
 
 	/**
+
+	/**
 	 * Constructor
 	 *
 	 * @param groupdav_handler $handler
 	 * @param array $filter filter for propfind call
 	 * @param array $files=null extra files/responses to return too
 	 */
-	public function __construct(groupdav_handler $handler,array $filter,array &$files=null)
+	public function __construct(groupdav_handler $handler, $path, array $filter,array &$files=null)
 	{
-		if ($this->debug) error_log(__METHOD__."(,".array2string($filter).",)");
-
+		if ($this->debug) error_log(__METHOD__."('$path', ".array2string($filter).",)");
+		$this->path    = $path;
 		$this->handler = $handler;
 		$this->filter  = $filter;
 		$this->files   = $files;
+		$this->common_files = $files;
 		reset($this->files);
 	}
 
@@ -399,7 +453,6 @@ class groupdav_propfind_iterator implements Iterator
 	public function current()
 	{
 		if ($this->debug) error_log(__METHOD__."() returning ".array2string(current($this->files)));
-
 		return current($this->files);
 	}
 
@@ -410,7 +463,7 @@ class groupdav_propfind_iterator implements Iterator
 	 */
 	public function key()
 	{
-		$current = $this->current();
+		$current = current($this->files);
 
 		if ($this->debug) error_log(__METHOD__."() returning ".array2string($current['path']));
 		return $current['path'];	// we return path as key
@@ -424,21 +477,20 @@ class groupdav_propfind_iterator implements Iterator
 		if (next($this->files) !== false)
 		{
 			if ($this->debug) error_log(__METHOD__."() returning TRUE");
-
 			return true;
 		}
-		if (is_array($this->files) && count($this->files) < self::CHUNK_SIZE)	// less entries then asked --> no further available
+		if (is_array($this->files) && count($this->files) < self::CHUNK_SIZE)   // less entries then asked --> no further available
 		{
 			if ($this->debug) error_log(__METHOD__."() returning FALSE (no more entries)");
-
 			return false;	// no further entries
 		}
 		// try query further files via propfind callback of handler and store result in $this->files
-		$this->files = $this->handler->propfind_callback($this->filter,array($this->start,self::CHUNK_SIZE));
+		$this->files = $this->handler->propfind_callback($this->path,$this->filter,array($this->start,self::CHUNK_SIZE));
 		$this->start += self::CHUNK_SIZE;
 		reset($this->files);
 
 		if ($this->debug) error_log(__METHOD__."() returning ".array2string(current($this->files) !== false));
+
 		return current($this->files) !== false;
 	}
 
@@ -451,7 +503,8 @@ class groupdav_propfind_iterator implements Iterator
 
 		// query first set of files via propfind callback of handler and store result in $this->files
 		$this->start = 0;
-		$this->files = $this->handler->propfind_callback($this->filter,array($this->start,self::CHUNK_SIZE));
+		$files = $this->handler->propfind_callback($this->path,$this->filter,array($this->start,self::CHUNK_SIZE));
+		$this->files = $this->common_files + $files;
 		$this->start += self::CHUNK_SIZE;
 		reset($this->files);
 	}
