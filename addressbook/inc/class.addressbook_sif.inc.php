@@ -99,21 +99,26 @@ class addressbook_sif extends addressbook_bo
 	const xml_decl = '<?xml version="1.0" encoding="UTF-8"?>';
 	const SIF_decl = '<SIFVersion>1.1</SIFVersion>';
 
-	function startElement($_parser, $_tag, $_attributes) {
+	function startElement($_parser, $_tag, $_attributes)
+	{
 	}
 
-	function endElement($_parser, $_tag) {
-		if(!empty($this->sifMapping[$_tag])) {
+	function endElement($_parser, $_tag)
+	{
+		if (!empty($this->sifMapping[$_tag]))
+		{
 			$this->contact[$this->sifMapping[$_tag]] = trim($this->sifData);
 		}
 		unset($this->sifData);
 	}
 
-	function characterData($_parser, $_data) {
+	function characterData($_parser, $_data)
+	{
 		$this->sifData .= $_data;
 	}
 
-	function siftoegw($sifData, $_abID=null) {
+	function siftoegw($sifData, $_abID=null)
+	{
 
 		#$tmpfname = tempnam('/tmp/sync/contents','sifc_');
 
@@ -129,24 +134,26 @@ class addressbook_sif extends addressbook_bo
 		xml_set_element_handler($this->xml_parser, "startElement", "endElement");
 		xml_set_character_data_handler($this->xml_parser, "characterData");
 		$this->strXmlData = xml_parse($this->xml_parser, $sifData);
-		if(!$this->strXmlData) {
+		if (!$this->strXmlData)
+		{
 			error_log(sprintf("XML error: %s at line %d",
 				xml_error_string(xml_get_error_code($this->xml_parser)),
 				xml_get_current_line_number($this->xml_parser)));
 			return false;
 		}
 
-		foreach($this->contact as $key => $value) {
+		foreach ($this->contact as $key => $value)
+		{
 			$value = preg_replace('/<\!\[CDATA\[(.+)\]\]>/Usim', '$1', $value);
 			$value = $GLOBALS['egw']->translation->convert($value, 'utf-8');
-			switch($key) {
+			switch ($key) {
 				case 'cat_id':
-					if(!empty($value))
+					if (!empty($value))
 					{
 							$categories1 = explode(',', $value);
 							$categories2 = explode(';', $value);
 							$categories = count($categories1) > count($categories2) ? $categories1 : $categories2;
-						$finalContact[$key] = implode(",", $this->find_or_add_categories($categories, $_abID));
+						$finalContact[$key] = implode(',', $this->find_or_add_categories($categories, $_abID));
 					}
 					else
 					{
@@ -159,7 +166,7 @@ class addressbook_sif extends addressbook_bo
 					break;
 
 				default:
-					$finalContact[$key] = $value;
+					$finalContact[$key] = str_replace("\r\n", "\n", $value);
 					break;
 			}
 		}
@@ -173,18 +180,20 @@ class addressbook_sif extends addressbook_bo
 	 * Search an exactly matching entry (used for slow sync)
 	 *
 	 * @param string $_sifdata
-	 * @return boolean/int/string contact-id or false, if not found
+	 * @return array of matching contact-ids
 	 */
 	function search($_sifdata, $contentID=null, $relax=false)
 	{
-	  	$result = false;
+	  	$result = array();
 
-		if($contact = $this->siftoegw($_sifdata, $contentID)) {
-		        if ($contentID) {
-			        $contact['contact_id'] = $contentID;
-			}
-			$result = $this->find_contact($contact, $relax);
-		}
+	  	if (($contact = $this->siftoegw($_sifdata, $contentID)))
+	  	{
+		  	if ($contentID)
+		  	{
+			  	$contact['contact_id'] = $contentID;
+		  	}
+		  	$result = $this->find_contact($contact, $relax);
+	  	}
 		return $result;
 	}
 
@@ -198,22 +207,44 @@ class addressbook_sif extends addressbook_bo
 	*/
 	function addSIF($_sifdata, $_abID=null, $merge=false)
 	{
-		#error_log('ABID: '.$_abID);
-		#error_log(base64_decode($_sifdata));
-
-		if(!$contact = $this->siftoegw($_sifdata, $_abID)) {
+		if (!$contact = $this->siftoegw($_sifdata, $_abID))
+		{
 			return false;
 		}
 
-		if($_abID) {
+		if ($_abID)
+		{
+			if (($old_contact = $this->read($_abID)))
+			{
+				if ($merge)
+				{
+					foreach ($contact as $key => $value)
+					{
+						if (!empty($old_contact[$key]))
+						{
+							$contact[$key] = $old_contact[$key];
+						}
+					}
+				}
+				else
+				{
+					if (isset($old_contact['account_id']))
+					{
+						$contact['account_id'] = $old_contact['account_id'];
+					}
+				}
+			}
 			// update entry
 			$contact['id'] = $_abID;
 		}
 		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
     	{
     		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+    		if ($contact['owner'] == -1)
+    		{
+	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+    		}
     	}
-
 		return $this->save($contact);
 	}
 
@@ -230,9 +261,7 @@ class addressbook_sif extends addressbook_bo
 		$fields = array_unique(array_values($this->sifMapping));
 		sort($fields);
 
-		if(!($entry = $this->read($_id))) {
-			return false;
-		}
+		if (!($entry = $this->read($_id))) return false;
 
 		$sifContact = self::xml_decl . "\n<contact>" . self::SIF_decl;
 
@@ -241,16 +270,16 @@ class addressbook_sif extends addressbook_bo
 		// fillup some defaults such as n_fn and n_fileas is needed
 		$this->fixup_contact($entry);
 
-		foreach($this->sifMapping as $sifField => $egwField)
+		foreach ($this->sifMapping as $sifField => $egwField)
 		{
-			if(empty($egwField)) continue;
+			if (empty($egwField)) continue;
 
 			#error_log("$sifField => $egwField");
 			#error_log('VALUE1: '.$entry[0][$egwField]);
 			$value = $GLOBALS['egw']->translation->convert($entry[$egwField], $sysCharSet, 'utf-8');
 			#error_log('VALUE2: '.$value);
 
-			switch($sifField)
+			switch ($sifField)
 			{
 				case 'Sensitivity':
 					$value = 2 * $value;	// eGW private is 0 (public) or 1 (private)
@@ -263,7 +292,7 @@ class addressbook_sif extends addressbook_bo
 					break;
 
 				case 'Categories':
-					if(!empty($value)) {
+					if (!empty($value)) {
 						$value = implode(", ", $this->get_categories($value));
 						$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
 					} else {

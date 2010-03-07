@@ -1083,7 +1083,7 @@ class addressbook_ui extends addressbook_bo
 			// hide region for address format 'postcode_city'
 			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
 			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
-			
+
 			// respect category permissions
 			if(!empty($row['cat_id']))
 			{
@@ -1221,6 +1221,12 @@ class addressbook_ui extends addressbook_bo
 					if ($content['id'] && $content['org_name'] && $content['change_org'])
 					{
 						$old_org_entry = $this->read($content['id']);
+					}
+					if (isset($content['n_family']) && isset($content['n_given'])
+						&& $content['n_family'] != $old_org_entry['n_family']
+						&& $content['n_given'] != $old_org_entry['n_given'])
+					{
+						unset($content['n_fn']);
 					}
 					if ($this->save($content))
 					{
@@ -1618,7 +1624,7 @@ class addressbook_ui extends addressbook_bo
 				$content[$key.'2'] = $content[$key];
 			}
 		}
-		
+
 		// respect category permissions
 		if(!empty($content['cat_id']))
 		{
@@ -2025,7 +2031,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		common::egw_footer();
 	}
-	
+
 	/**
 	 * Cleanup all contacts of all users (called by Admin >> Addressbook >> Site configuration (Admin only)
 	 *

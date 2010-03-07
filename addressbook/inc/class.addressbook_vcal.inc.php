@@ -123,17 +123,13 @@ class addressbook_vcal extends addressbook_bo
 	*/
 	function addVCard($_vcard, $_abID=null, $merge=false)
 	{
-		if(!$contact = $this->vcardtoegw($_vcard, $_abID))
-		{
-			return false;
-		}
+		if (!($contact = $this->vcardtoegw($_vcard))) return false;
 
-		if($_abID)
+		if ($_abID)
 		{
-			if ($merge)
+			if (($old_contact = $this->read($_abID)))
 			{
-				$old_contact = $this->read($_abID);
-				if ($old_contact)
+				if ($merge)
 				{
 					foreach ($contact as $key => $value)
 					{
@@ -143,6 +139,22 @@ class addressbook_vcal extends addressbook_bo
 						}
 					}
 				}
+				else
+				{
+					if (isset($old_contact['account_id']))
+					{
+						$contact['account_id'] = $old_contact['account_id'];
+					}
+					if (is_array($contact['category']))
+					{
+						$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'], $_abID));
+					}
+					else
+					{
+						// restore from orignal
+						$contact['category'] = $old_contact['category'];
+					}
+				}
 			}
 			// update entry
 			$contact['id'] = $_abID;
@@ -150,6 +162,14 @@ class addressbook_vcal extends addressbook_bo
 		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
     	{
     		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+    		if ($contact['owner'] == -1)
+    		{
+	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+    		}
+    		if (is_array($contact['category']))
+			{
+				$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'], -1));
+			}
     	}
 		return $this->save($contact);
 	}
@@ -242,7 +262,7 @@ class addressbook_vcal extends addressbook_bo
 					$value = trim($entry[$databaseField]);
 				}
 
-				switch($databaseField)
+				switch ($databaseField)
 				{
 					case 'private':
 						$value = $value ? 'PRIVATE' : 'PUBLIC';
@@ -443,10 +463,15 @@ class addressbook_vcal extends addressbook_bo
 
 	function search($_vcard, $contentID=null, $relax=false)
 	{
-		$result = false;
+		$result = array();
 
-		if (($contact = $this->vcardtoegw($_vcard, $contentID)))
+		if (($contact = $this->vcardtoegw($_vcard)))
 		{
+			if (is_array($contact['category']))
+			{
+					$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'],
+						$contentID ? $contentID : -1));
+			}
 			if ($contentID)
 			{
 				$contact['id'] = $contentID;
@@ -465,7 +490,7 @@ class addressbook_vcal extends addressbook_bo
 		if (is_array($_supportedFields)) $this->supportedFields = $_supportedFields;
 	}
 
-	function vcardtoegw($_vcard, $_abID=null)
+	function vcardtoegw($_vcard)
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 		// be as flexible as possible
@@ -661,24 +686,24 @@ class addressbook_vcal extends addressbook_bo
 				}
 			}
 
-			if($rowName == 'EMAIL')
+			if ($rowName == 'EMAIL')
 			{
 				$rowName .= ';X-egw-Ref' . $email++;
 			}
 
-			if(($rowName == 'TEL;CELL') ||
+			if (($rowName == 'TEL;CELL') ||
 					($rowName == 'TEL;CELL;VOICE'))
 			{
 				$rowName = 'TEL;CELL;X-egw-Ref' . $cell++;
 			}
 
-			if(($rowName == 'TEL') ||
+			if (($rowName == 'TEL') ||
 					($rowName == 'TEL;VOICE'))
 			{
 				$rowName = 'TEL;X-egw-Ref' . $tel++;
 			}
 
-			if($rowName == 'URL')
+			if ($rowName == 'URL')
 			{
 				$rowName = 'URL;X-egw-Ref' . $url++;
 			}
@@ -701,7 +726,7 @@ class addressbook_vcal extends addressbook_bo
 
 		foreach ($rowNames as $vcardKey => $rowName)
 		{
-			switch($rowName)
+			switch ($rowName)
 			{
 				case 'VERSION':
 					break;
@@ -879,7 +904,7 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'cat_id':
-								$contact[$fieldName] = implode(',',$this->find_or_add_categories($vcardValues[$vcardKey]['values'], $_abID));
+								$contact[$fieldName] = $vcardValues[$vcardKey]['values'];
 								break;
 
 							case 'jpegphoto':
@@ -887,8 +912,7 @@ class addressbook_vcal extends addressbook_bo
 								break;
 
 							case 'note':
-								// note may contain ','s but maybe this needs to be fixed in vcard parser...
-								$contact[$fieldName] = $vcardValues[$vcardKey]['value'];
+								$contact[$fieldName] = str_replace("\r\n", "\n", $vcardValues[$vcardKey]['value']);
 								break;
 
 							case 'uid':

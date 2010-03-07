@@ -122,11 +122,11 @@ class addressbook_tracking extends bo_tracking
 		{
 			return lang('New contact submitted by %1 at %2',
 				$GLOBALS['egw']->common->grab_owner_name($data['creator']),
-				$this->datetime($data['created']-$this->tracker->tz_offset_s));
+				$this->datetime($data['created']));
 		}
 		return lang('Contact modified by %1 at %2',
 			$GLOBALS['egw']->common->grab_owner_name($data['modifier']),
-			$this->datetime($data['modified']-$this->tracker->tz_offset_s));
+			$this->datetime($data['modified']));
 	}
 
 	/**
@@ -149,9 +149,7 @@ class addressbook_tracking extends bo_tracking
 	 * Get the details of an entry
 	 *
 	 * @param array $data
-	 * @param string $datetime_format of user to notify, eg. 'Y-m-d H:i'
-	 * @param int $tz_offset_s offset in sec to be add to server-time to get the user-time of the user to notify
-	 * @return array of details as array with values for keys 'label','value','type'
+	 * return array of details as array with values for keys 'label','value','type'
 	 */
 	function get_details($data)
 	{
@@ -167,7 +165,7 @@ class addressbook_tracking extends bo_tracking
 				case 'created': case 'modified':
 					$details[$name] = array(
 						'label' => $label,
-						'value' => $this->datetime($data[$name]-$this->contacts->tz_offset_s),
+						'value' => $this->datetime($data[$name]),
 					);
 					break;
 				case 'bday':
