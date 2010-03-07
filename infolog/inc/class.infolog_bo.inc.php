@@ -30,16 +30,25 @@ class infolog_bo
 	var $vfs_basedir='/infolog';
 	var $link_pathes = array();
 	var $send_file_ips = array();
-
-	var $tz_offset = 0;
 	/**
-	 * offset in secconds between user and server-time,
-	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
+	 * Set Logging
+	 *
+	 * @var boolean
+	 */
+	var $log = false;
+	/**
+	 * Cached timezone data
+	 *
+	 * @var array id => data
+	 */
+	protected static $tz_cache = array();
+	/**
+	 * current time as timestamp in user-time and server-time
 	 *
 	 * @var int
 	 */
-	var $tz_offset_s = 0;
 	var $user_time_now;
+	var $now;
 	/**
 	 * name of timestamps in an InfoLog entry
 	 *
@@ -233,9 +242,8 @@ class infolog_bo
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
-		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-		$this->tz_offset_s = 60*60*$this->tz_offset;
-		$this->user_time_now = time() + $this->tz_offset_s;
+		$this->now = time();
+		$this->user_time_now = egw_time::server2user($this->now,'ts');
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
 		$this->so = new infolog_so($this->grants);
@@ -275,7 +283,7 @@ class infolog_bo
 	/**
 	 * check's if user has the requiered rights on entry $info_id
 	 *
-	 * @param int/array $info data or info_id of infolog entry to check
+	 * @param int|array $info data or info_id of infolog entry to check
 	 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
 	 * @return boolean
 	 */
@@ -406,14 +414,110 @@ class infolog_bo
 	}
 
 	/**
+	 * Convert the timestamps from given timezone to another and keep dates.
+	 * The timestamps are mostly expected to be in server-time
+	 * and $fromTZId is only used to qualify dates.
+	 *
+	 * @param array $values to modify
+	 * @param string $fromTZId=null
+	 * @param string $toTZId=false
+	 * 		TZID timezone name e.g. 'UTC'
+	 * 			or NULL for timestamps in user-time
+	 * 			or false for timestamps in server-time
+	 */
+	 function time2time(&$values, $fromTZId=false, $toTZId=null)
+	 {
+
+		if ($fromTZId === $toTZId) return;
+
+		$tz = egw_time::$server_timezone;
+
+	 	if ($fromTZId)
+		{
+			if (!isset(self::$tz_cache[$fromTZId]))
+			{
+				self::$tz_cache[$fromTZId] = calendar_timezones::DateTimeZone($fromTZId);
+			}
+			$fromTZ = self::$tz_cache[$fromTZId];
+		}
+		elseif (is_null($fromTZId))
+		{
+			$tz = egw_time::$user_timezone;
+			$fromTZ = egw_time::$user_timezone;
+		}
+		else
+		{
+			$fromTZ = egw_time::$server_timezone;
+		}
+		if ($toTZId)
+		{
+			if (!isset(self::$tz_cache[$toTZId]))
+			{
+				self::$tz_cache[$toTZId] = calendar_timezones::DateTimeZone($toTZId);
+			}
+			$toTZ = self::$tz_cache[$toTZId];
+		}
+		elseif (is_null($toTZId))
+		{
+			$toTZ = egw_time::$user_timezone;
+		}
+		else
+		{
+			$toTZ = egw_time::$server_timezone;
+		}
+
+	 	foreach($this->timestamps as $key)
+		{
+		 	if ($values[$key])
+		 	{
+			 	$time = new egw_time($values[$key], $tz);
+			 	$time->setTimezone($fromTZ);
+			 	if ($key == 'info_enddate')
+			 	{
+				 	// Set due date to 00:00
+				 	$time->setTime(0, 0, 0);
+			 	}
+			 	if ($time->format('Hi') == '0000')
+			 	{
+				 	// we keep dates the same in new timezone
+				 	$arr = egw_time::to($time,'array');
+				 	$time = new egw_time($arr, $toTZ);
+			 	}
+			 	else
+			 	{
+				 	$time->setTimezone($toTZ);
+			 	}
+			 	$values[$key] = egw_time::to($time,'ts');
+		 	}
+		}
+	 }
+
+	/**
+	 * convert a date from server to user-time
+	 *
+	 * @param int $ts timestamp in server-time
+	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
+	 * @return mixed depending of $date_format
+	 */
+	function date2usertime($ts,$date_format='ts')
+	{
+		if (empty($ts) || $date_format == 'server') return $ts;
+
+		return egw_time::server2user($ts,$date_format);
+	}
+
+	/**
 	 * Read an infolog entry specified by $info_id
 	 *
-	 * @param int/array $info_id integer id or array with key 'info_id' of the entry to read
+	 * @param int|array $info_id integer id or array with key 'info_id' of the entry to read
 	 * @param boolean $run_link_id2from=true should link_id2from run, default yes,
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
-	 * @return array/boolean infolog entry, null if not found or false if no permission to read it
+	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
+	 * 	'array'=array or string with date-format
+	 *
+	 * @return array|boolean infolog entry, null if not found or false if no permission to read it
 	 */
-	function &read($info_id,$run_link_id2from=true)
+	function &read($info_id,$run_link_id2from=true,$date_format='ts')
 	{
 		if (is_array($info_id))
 		{
@@ -437,13 +541,21 @@ class infolog_bo
 		}
 		if ($run_link_id2from) $this->link_id2from($data);
 
-		// convert system- to user-time
-		foreach($this->timestamps as $time)
+		// convert server- to user-time
+		if ($date_format == 'ts')
 		{
-			if ($data[$time]) $data[$time] += $this->tz_offset_s;
+			$this->time2time($data);
+
+			// pre-cache title and file access
+			self::set_link_cache($data);
 		}
-		// pre-cache title and file access
-		self::set_link_cache($data);
+		else
+		{
+			$time = new egw_time($data['info_enddate'], egw_time::$server_timezone);
+			// Set due date to 00:00
+			$time->setTime(0, 0, 0);
+			$data['info_enddate'] = egw_time::to($time,'ts');
+		}
 
 		return $data;
 	}
@@ -451,9 +563,9 @@ class infolog_bo
 	/**
 	 * Delete an infolog entry, evtl. incl. it's children / subs
 	 *
-	 * @param int/array $info_id int id
+	 * @param int|array $info_id int id
 	 * @param boolean $delete_children should the children be deleted
-	 * @param int/boolean $new_parent parent to use for not deleted children if > 0
+	 * @param int|boolean $new_parent parent to use for not deleted children if > 0
 	 * @return boolean True if delete was successful, False otherwise ($info_id does not exist or no rights)
 	 */
 	function delete($info_id,$delete_children=False,$new_parent=False)
@@ -488,7 +600,7 @@ class infolog_bo
 				}
 			}
 		}
-		if (!($info = $this->read($info_id))) return false;			// should not happen
+		if (!($info = $this->read($info_id, true, 'server'))) return false;			// should not happen
 
 		$deleted = $info;
 		$deleted['info_status'] = 'deleted';
@@ -532,9 +644,11 @@ class infolog_bo
 	* @param array &$values values to write
 	* @param boolean $check_defaults=true check and set certain defaults
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
+	* @param boolean $user2server=true conversion between user- and server-time necessary
+	*
 	* @return int/boolean info_id on a successfull write or false
 	*/
-	function write(&$values, $check_defaults=True, $touch_modified=True)
+	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
 		if ($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
@@ -572,13 +686,13 @@ class infolog_bo
 				'info_id'     => $values['info_id'],
 				'info_datemodified' => $values['info_datemodified'],
 			);
-			foreach($this->responsible_edit as $name)
+			foreach ($this->responsible_edit as $name)
 			{
 				if (isset($backup_values[$name])) $values[$name] = $backup_values[$name];
 			}
 			if ($set_completed)
 			{
-				$values['info_datecompleted'] = $this->user_time_now;
+				$values['info_datecompleted'] = $user2server ? $this->user_time_now : $this->now;
 				$values['info_percent'] = 100;
 				$forcestatus = true;
 				$status = 'done';
@@ -605,7 +719,7 @@ class infolog_bo
 			if (!$values['info_datecompleted'] &&
 				(in_array($values['info_status'],array('done','billed')) || (int)$values['info_percent'] == 100))
 			{
-				$values['info_datecompleted'] = $this->user_time_now;	// set date completed to today if status == done
+				$values['info_datecompleted'] = $user2server ? $this->user_time_now : $this->now;	// set date completed to today if status == done
 			}
 			if (in_array($values['info_status'],array('done','billed')))
 			{
@@ -651,44 +765,64 @@ class infolog_bo
 		{
 			$values['info_owner'] = $this->so->user;
 		}
+
 		if ($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from'])))
 		{
 			$values['info_from'] = $this->link_id2from($values);
 		}
+
+		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
+
+		$to_write = $values;
+		if ($user2server)
+		{
+			// convert user- to server-time
+			$this->time2time($to_write, null, false);
+			$time = new egw_time($values['info_enddate'], egw_time::$user_timezone);
+			// Set due date to 00:00
+			$time->setTime(0, 0, 0);
+			$values['info_enddate'] = egw_time::to($time,'ts');
+		}
+		else
+		{
+			$time = new egw_time($values['info_enddate'], egw_time::$server_timezone);
+			// Set due date to 00:00
+			$time->setTime(0, 0, 0);
+			$to_write['info_enddate'] = egw_time::to($time,'ts');
+			// convert server- to user-time
+			$this->time2time($values);
+		}
+
 		if ($touch_modified || !$values['info_datemodified'])
 		{
 			// Should only an entry be updated which includes the original modification date?
 			// Used in the web-GUI to check against a modification by an other user while editing the entry.
 			// It's now disabled for xmlrpc, as otherwise the xmlrpc code need to be changed!
 			$xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
-			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $values['info_datemodified']-$this->tz_offset_s : false;
+			$check_modified = $values['info_datemodified'] && !$xmlrpc ? $to_write['info_datemodified'] : false;
 			$values['info_datemodified'] = $this->user_time_now;
+			$to_write['info_datemodified'] = $this->now;
 		}
 		if ($touch_modified || !$values['info_modifier'])
 		{
 			$values['info_modifier'] = $this->so->user;
+			$to_write['info_modifier'] = $this->so->user;
 		}
 		//_debug_array($values);
 		// error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n".array2string($values)."\n",3,'/tmp/infolog');
-		$to_write = $values;
-		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
-		// convert user- to system-time
-		foreach($this->timestamps as $time)
-		{
-			if ($to_write[$time]) $to_write[$time] -= $this->tz_offset_s;
-		}
+
 		// we need to get the old values to update the links in customfields and for the tracking
 		if ($values['info_id'])
 		{
-			$old = $this->read($values['info_id'],false);
+			$old = $this->read($values['info_id'], false, 'server');
 		}
-		if(($info_id = $this->so->write($to_write,$check_modified)))
+		if (($info_id = $this->so->write($to_write,$check_modified)))
 		{
 			if (!isset($values['info_type']) || $status_only)
 			{
-				$values = $this->read($info_id);
+				$values = $this->read($info_id, true, 'server');
 			}
-			if($values['info_id'] && $old['info_status'] != 'deleted')
+			if ($values['info_id'] && $old['info_status'] != 'deleted')
 			{
 				// update
 				$GLOBALS['egw']->contenthistory->updateTimeStamp(
@@ -705,11 +839,13 @@ class infolog_bo
 				);
 			}
 			$values['info_id'] = $info_id;
+			$to_write['info_id'] = $info_id;
 			// if the info responbsible array is not passed, fetch it from old.
 			if (!array_key_exists('info_responsible',$values)) $values['info_responsible'] = $old['info_responsible'];
 			if (!is_array($values['info_responsible']))		// this should not happen, bug it does ;-)
 			{
 				$values['info_responsible'] = $values['info_responsible'] ? explode(',',$values['info_responsible']) : array();
+				$to_write['info_responsible'] = $values['info_responsible'];
 			}
 			// create (and remove) links in custom fields
 			customfields_widget::update_customfield_links('infolog',$values,$old,'info_id');
@@ -729,8 +865,9 @@ class infolog_bo
 			if ($old && ($missing_fields = array_diff_key($old,$values)))
 			{
 				$values = array_merge($values,$missing_fields);
+				$to_write = array_merge($to_write,$missing_fields);
 			}
-			$this->tracking->track($values,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
+			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
 		}
 		if ($info_from_set) $values['info_from'] = '';
 
@@ -764,18 +901,40 @@ class infolog_bo
 	function &search(&$query)
 	{
 		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
+		if (!empty($query['start']))
+		{
+			$query['start'] = egw_time::user2server($query['start'],'ts');
+		}
+
 		$ret = $this->so->search($query);
 
-		// convert system- to user-time
 		if (is_array($ret))
 		{
-			foreach($ret as $id => &$data)
+			foreach ($ret as $id => &$data)
 			{
-				if($this->tz_offset_s)
+				if (!$this->check_access($data,EGW_ACL_READ))
 				{
-					foreach($this->timestamps as $time)
+					unset($ret[$id]);
+					continue;
+				}
+				// convert system- to user-time
+				foreach ($this->timestamps as $key)
+				{
+					if ($data[$key])
 					{
-						if ($data[$time]) $data[$time] += $this->tz_offset_s;
+						$time = new egw_time($data[$key], egw_time::$server_timezone);
+						if ($key == 'info_enddate') $time->setTime(0, 0,0 ); // Set due date to 00:00
+						if ($time->format('Hi') == '0000')
+						{
+							// we keep dates the same in user-time
+							$arr = egw_time::to($time,'array');
+							$time = new egw_time($arr, egw_time::$user_timezone);
+						}
+						else
+						{
+							$time->setTimezone(egw_time::$user_timezone);
+						}
+						$data[$key] = egw_time::to($time,'ts');
 					}
 				}
 				// pre-cache title and file access
@@ -880,10 +1039,10 @@ class infolog_bo
 	 *
 	 * Is called as hook to participate in the linking
 	 *
-	 * @param int/array $info int info_id or array with infolog entry
-	 * @return string/boolean string with the title, null if $info not found, false if no perms to view
+	 * @param int|array $info int info_id or array with infolog entry
+	 * @return string|boolean string with the title, null if $info not found, false if no perms to view
 	 */
-	function link_title( $info )
+	function link_title($info)
 	{
 		if (!is_array($info))
 		{
@@ -902,16 +1061,16 @@ class infolog_bo
 	 *
 	 * @param array $ids
 	 */
-	function link_titles( array $ids )
+	function link_titles(array $ids)
 	{
 		$titles = array();
-		foreach($this->search($params=array(
+		foreach ($this->search($params=array(
 			'col_filter' => array('info_id' => $ids),
 		)) as $info)
 		{
 			$titles[$info['info_id']] = $this->link_title($info);
 		}
-		foreach(array_diff($ids,array_keys($titles)) as $id)
+		foreach (array_diff($ids,array_keys($titles)) as $id)
 		{
 			$titles[$id] = false;	// we assume every not returned entry to be not readable, as we notify the link class about all deletes
 		}
@@ -927,7 +1086,7 @@ class infolog_bo
 	 * @param array $options Array of options for the search
 	 * @return array with info_id - title pairs of the matching entries
 	 */
-	function link_query( $pattern, Array &$options = array() )
+	function link_query($pattern, Array &$options = array())
 	{
 		$query = array(
 			'search' => $pattern,
@@ -940,7 +1099,7 @@ class infolog_bo
 		$content = array();
 		if (is_array($ids))
 		{
-			foreach($ids as $id => $info )
+			foreach ($ids as $id => $info )
 			{
 				$content[$id] = $this->link_title($id);
 			}
@@ -1010,10 +1169,11 @@ class infolog_bo
 		}
 		while ($infos = $this->search($query))
 		{
-			foreach($infos as $info)
+			foreach ($infos as $info)
 			{
-				$time = (int) adodb_date('Hi',$info['info_startdate']);
-				$date = adodb_date('Y/m/d',$info['info_startdate']);
+				$start = new egw_time($info['info_startdate'],egw_time::$user_timezone);
+				$time = (int) $start->format('Hi');
+				$date = $start->format('Y/m/d');
 				/* As event-like infologs are not showen in current calendar,
 				we need to present all open infologs to the user! (2006-06-27 nelius)
 				if ($do_events && !$time ||
@@ -1021,11 +1181,11 @@ class infolog_bo
 				{
 					continue;
 				}*/
-				$title = ($do_events?$GLOBALS['egw']->common->formattime(adodb_date('H',$info['info_startdate']),adodb_date('i',$info['info_startdate'])).' ':'').
+				$title = ($do_events?common::formattime($start->format('H'),$start->format('i')).' ':'').
 					$info['info_subject'];
 				$view = egw_link::view('infolog',$info['info_id']);
 				$content=array();
-				foreach($icons = array(
+				foreach ($icons = array(
 					$info['info_type']   => 'infolog',
 					$this->status[$info['info_type']][$info['info_status']] => 'infolog',
 				) as $name => $app)
@@ -1064,7 +1224,7 @@ class infolog_bo
 		if (isset($args['infolog']) && count($args['infolog']))
 		{
 			$icons = $this->so->get_status($args['infolog']);
-			foreach((array) $icons as $id => $status)
+			foreach ((array) $icons as $id => $status)
 			{
 				if ($status && substr($status,-1) != '%')
 				{
@@ -1092,18 +1252,17 @@ class infolog_bo
 		{
 			$this->categories = new categories($this->user,'infolog');
 		}
-
-		if($info_id && $info_id > 0)
+		$old_cats_preserve = array();
+		if ($info_id && $info_id > 0)
 		{
 			// preserve categories without users read access
 			$old_infolog = $this->read($info_id);
 			$old_categories = explode(',',$old_infolog['info_cat']);
-			$old_cats_preserve = array();
-			if(is_array($old_categories) && count($old_categories) > 0)
+			if (is_array($old_categories) && count($old_categories) > 0)
 			{
-				foreach($old_categories as $cat_id)
+				foreach ($old_categories as $cat_id)
 				{
-					if($cat_id && !$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if ($cat_id && !$this->categories->check_perms(EGW_ACL_READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
@@ -1112,7 +1271,7 @@ class infolog_bo
 		}
 
 		$cat_id_list = array();
-		foreach($catname_list as $cat_name)
+		foreach ((array)$catname_list as $cat_name)
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
@@ -1133,7 +1292,7 @@ class infolog_bo
 			}
 		}
 
-		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
+		if (count($old_cats_preserve) > 0)
 		{
 			$cat_id_list = array_merge($old_cats_preserve, $cat_id_list);
 		}
@@ -1234,19 +1393,19 @@ class infolog_bo
 					{
 						case 'notify_due_responsible':
 							$info['message'] = lang('%1 you are responsible for is due at %2',$this->enums['type'][$info['info_type']],
-								$this->tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
+								$this->tracking->datetime($info['info_enddate'],false));
 							break;
 						case 'notify_due_delegated':
 							$info['message'] = lang('%1 you delegated is due at %2',$this->enums['type'][$info['info_type']],
-								$this->tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
+								$this->tracking->datetime($info['info_enddate'],false));
 							break;
 						case 'notify_start_responsible':
 							$info['message'] = lang('%1 you are responsible for is starting at %2',$this->enums['type'][$info['info_type']],
-								$this->tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
+								$this->tracking->datetime($info['info_startdate'],null));
 							break;
 						case 'notify_start_delegated':
 							$info['message'] = lang('%1 you delegated is starting at %2',$this->enums['type'][$info['info_type']],
-								$this->tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
+								$this->tracking->datetime($info['info_startdate'],null));
 							break;
 					}
 					//error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
@@ -1363,109 +1522,303 @@ class infolog_bo
 
 	/**
 	 * Try to find a matching db entry
+	 * This expects timestamps to be in server-time.
 	 *
-	 * @param array $egwData   the vTODO data we try to find
+	 * @param array $infoData   the infolog data we try to find
 	 * @param boolean $relax=false if asked to relax, we only match against some key fields
-	 * @return the infolog_id of the matching entry or false (if none matches)
+	 * @param string $tzid=null timezone, null => user time
+	 *
+	 * @return array of infolog_ids of matching entries
 	 */
-	function findVTODO($egwData, $relax=false)
+	function findInfo($infoData, $relax=false, $tzid=null)
 	{
-		if (!empty($egwData['info_uid']))
-		{
-			$filter = array('col_filter' => array('info_uid' => $egwData['info_uid']));
-			if (($found = $this->search($filter))
-					&& ($uidmatch = array_shift($found)))
-			{
-				return $uidmatch['info_id'];
-			}
-		}
-		unset($egwData['info_uid']);
-
+		$foundInfoLogs = array();
 		$filter = array();
 
-		$description = '';
-		if (!empty($egwData['info_des'])) {
-			$description = trim(preg_replace("/\r?\n?\\[[A-Z_]+:.*\\]/i", '', $egwData['info_des']));
-			unset($egwData['info_des']);
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+				. '('. ($relax ? 'RELAX, ': 'EXACT, ') . $tzid . ')[InfoData]:'
+				. array2string($infoData));
+		}
+
+		if ($infoData['info_id']
+			&& ($egwData = $this->read($infoData['info_id'], true, 'server')))
+		{
+			// we only do a simple consistency check
+			if (!$relax || strpos($egwData['info_subject'], $infoData['info_subject']) === 0)
+			{
+				return array($egwData['info_id']);
+			}
+			if (!$relax) return array();
+		}
+		unset($infoData['info_id']);
+
+		if (!$relax && !empty($infoData['info_uid']))
+		{
+			$filter = array('col_filter' => array('info_uid' => $infoData['info_uid']));
+			foreach($this->so->search($filter) as $egwData)
+			{
+				if (!$this->check_access($egwData,EGW_ACL_READ)) continue;
+				$foundInfoLogs[$egwData['info_id']] = $egwData['info_id'];
+			}
+			return $foundInfoLogs;
+		}
+		unset($infoData['info_uid']);
+
+		if (empty($infoData['info_des']))
+		{
+			$description = false;
+		}
+		else
+		{
+			// ignore meta information appendices
+			$description = trim(preg_replace('/\s*\[[A-Z_]+:.*\].*/im', '', $infoData['info_des']));
+			$text = trim(preg_replace('/\s*\[[A-Z_]+:.*\]/im', '', $infoData['info_des']));
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. "()[description]: $description");
+			}
 			// Avoid quotation problems
-			$description = preg_replace("/[^\x20-\x7F].*/", '', $description);
-			if (strlen($description)) {
-				$filter['search'] = $description;
-			}
-		}
-
-		if ($egwData['info_id']
-			&& ($found = $this->read($egwData['info_id'])))
-		{
-			// We only do a simple consistency check
-			if ($found['info_subject'] == $egwData['info_subject']
-				&& strpos($found['info_des'], $description) === 0)
+			if (preg_match_all('/[\x20-\x7F]*/m', $text, $matches, PREG_SET_ORDER))
 			{
-				return $found['info_id'];
+				$text = '';
+				foreach ($matches as $chunk)
+				{
+					if (strlen($text) <  strlen($chunk[0]))
+					{
+						$text = $chunk[0];
+					}
+				}
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+						. "()[search]: $text");
+				}
+				$filter['search'] = $text;
 			}
 		}
-		unset($egwData['info_id']);
+		$this->time2time($infoData, $tzid, false);
 
+		$filter['col_filter'] = $infoData;
 		// priority does not need to match
-		unset($egwData['info_priority']);
+		unset($filter['col_filter']['info_priority']);
+		// we ignore description and location first
+		unset($filter['col_filter']['info_des']);
+		unset($filter['col_filter']['info_location']);
 
-		$filter['col_filter'] = $egwData;
+		foreach ($this->so->search($filter) as $itemID => $egwData)
+		{
+			if (!$this->check_access($egwData,EGW_ACL_READ)) continue;
 
-		if($foundItems = $this->search($filter)) {
-			if(count($foundItems) > 0) {
-				$itemIDs = array_keys($foundItems);
-				return $itemIDs[0];
+			switch ($infoData['info_type'])
+			{
+				case 'task':
+					if (!empty($egwData['info_location']))
+					{
+						$egwData['info_location'] = str_replace("\r\n", "\n", $egwData['info_location']);
+					}
+					if (!$relax &&
+					!empty($infoData['info_location']) && (empty($egwData['info_location'])
+						|| strpos($egwData['info_location'], $infoData['info_location']) !== 0))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. '()[location mismatch]: '
+								. $infoData['info_location'] . ' <> ' . $egwData['info_location']);
+						}
+						continue;
+					}
+				default:
+					if (!empty($egwData['info_des']))
+					{
+						$egwData['info_des'] = str_replace("\r\n", "\n", $egwData['info_des']);
+					}
+					if (!$relax && ($description && empty($egwData['info_des'])
+						|| !empty($egwData['info_des']) && empty($infoData['info_des'])
+						|| strpos($egwData['info_des'], $description) === false))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. '()[description mismatch]: '
+								. $infoData['info_des'] . ' <> ' . $egwData['info_des']);
+						}
+						continue;
+					}
+					// no further criteria to match
+					$foundInfoLogs[$egwData['info_id']] = $egwData['info_id'];
 			}
 		}
 
-		$filter = array();
-
-		if (!$relax && strlen($description)) {
-			$filter['search'] = $description;
+		if (!$relax && !empty($foundInfoLogs))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+					. '()[FOUND]:' . array2string($foundInfoLogs));
+			}
+			return $foundInfoLogs;
 		}
 
-		$filter['col_filter'] = $egwData;
+		if ($relax)
+		{
+			unset($filter['search']);
+		}
 
-		// search for date only match
+		// search for matches by date only
 		unset($filter['col_filter']['info_startdate']);
+		unset($filter['col_filter']['info_enddate']);
 		unset($filter['col_filter']['info_datecompleted']);
+		// Some devices support lesser stati
+		unset($filter['col_filter']['info_status']);
 
 		// try tasks without category
 		unset($filter['col_filter']['info_cat']);
 
-		#Horde::logMessage("findVTODO Filter\n"
-		#		. print_r($filter, true),
-		#		__FILE__, __LINE__, PEAR_LOG_DEBUG);
-		foreach ($this->search($filter) as $itemID => $taskData) {
-		#	Horde::logMessage("findVTODO Trying\n"
-		#		. print_r($taskData, true),
-		#		__FILE__, __LINE__, PEAR_LOG_DEBUG);
-			if (isset($egwData['info_cat'])
-					&& isset($taskData['info_cat']) && $taskData['info_cat']
-					&& $egwData['info_cat'] != $taskData['info_cat']) continue;
-			if (isset($egwData['info_startdate'])
-					&& isset($taskData['info_startdate']) && $taskData['info_startdate']) {
-				$parts = @getdate($taskData['info_startdate']);
-				$startdate = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
-				if ($egwData['info_startdate'] != $startdate) continue;
+		// Horde::logMessage("findVTODO Filter\n"
+		//	. print_r($filter, true),
+		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+		foreach ($this->so->search($filter) as $itemID => $egwData)
+		{
+			if (!$this->check_access($egwData,EGW_ACL_READ)) continue;
+			// Horde::logMessage("findVTODO Trying\n"
+			//	. print_r($egwData, true),
+			//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+			if (isset($infoData['info_cat'])
+					&& isset($egwData['info_cat']) && $egwData['info_cat']
+															   && $infoData['info_cat'] != $egwData['info_cat'])
+			{
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+						. '()[category mismatch]: '
+						. $infoData['info_cat'] . ' <> ' . $egwData['info_cat']);
+				}
+				continue;
 			}
-			// some clients don't support DTSTART
-			if (isset($egwData['info_startdate'])
-					&& (!isset($taskData['info_startdate']) || !$taskData['info_startdate'])
-					&& !$relax) continue;
-			if (isset($egwData['info_datecompleted'])
-					&& isset($taskData['info_datecompleted']) && $taskData['info_datecompleted']) {
-				$parts = @getdate($taskData['info_datecompleted']);
-				$enddate = @mktime(0, 0, 0, $parts['mon'], $parts['mday'], $parts['year']);
-				if ($egwData['info_datecompleted'] != $enddate) continue;
+			if (isset($infoData['info_startdate']) && $infoData['info_startdate'])
+			{
+				// We got a startdate from client
+				if (isset($egwData['info_startdate']) && $egwData['info_startdate'])
+				{
+					// We compare the date only
+					$taskTime = new egw_time($infoData['info_startdate'],egw_time::$server_timezone);
+					$egwTime = new egw_time($egwData['info_startdate'],egw_time::$server_timezone);
+					if ($taskTime->format('Ymd') != $egwTime->format('Ymd'))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. '()[start mismatch]: '
+								. $taskTime->format('Ymd') . ' <> ' . $egwTime->format('Ymd'));
+						}
+						continue;
+					}
+				}
+				elseif (!$relax)
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+							. '()[start mismatch]');
+					}
+					continue;
+				}
 			}
-			if ((isset($egwData['info_datecompleted'])
-					&& (!isset($taskData['info_datecompleted']) || !$taskData['info_datecompleted'])) ||
-				(!isset($egwData['info_datecompleted'])
-					&& isset($taskData['info_datecompleted']) && $taskData['info_datecompleted'])
-					&& !$relax) continue;
-			return($itemID);
+			if ($infoData['info_type'] == 'task')
+			{
+				if (isset($infoData['info_status']) && isset($egwData['info_status'])
+						&& $egwData['info_status'] == 'done'
+							&& $infoData['info_status'] != 'done' ||
+								$egwData['info_status'] != 'done'
+									&& $infoData['info_status'] == 'done')
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+							. '()[status mismatch]: '
+							. $infoData['info_status'] . ' <> ' . $egwData['info_status']);
+					}
+					continue;
+				}
+				if (isset($infoData['info_enddate']) && $infoData['info_enddate'])
+				{
+					// We got a enddate from client
+					if (isset($egwData['info_enddate']) && $egwData['info_enddate'])
+					{
+						// We compare the date only
+						$taskTime = new egw_time($infoData['info_enddate'],egw_time::$server_timezone);
+						$egwTime = new egw_time($egwData['info_enddate'],egw_time::$server_timezone);
+						if ($taskTime->format('Ymd') != $egwTime->format('Ymd'))
+						{
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. '()[DUE mismatch]: '
+									. $taskTime->format('Ymd') . ' <> ' . $egwTime->format('Ymd'));
+							}
+							continue;
+						}
+					}
+					elseif (!$relax)
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. '()[DUE mismatch]');
+						}
+						continue;
+					}
+				}
+				if (isset($infoData['info_datecompleted']) && $infoData['info_datecompleted'])
+				{
+					// We got a completed date from client
+					if (isset($egwData['info_datecompleted']) && $egwData['info_datecompleted'])
+					{
+						// We compare the date only
+						$taskTime = new egw_time($infoData['info_datecompleted'],egw_time::$server_timezone);
+						$egwTime = new egw_time($egwData['info_datecompleted'],egw_time::$server_timezone);
+						if ($taskTime->format('Ymd') != $egwTime->format('Ymd'))
+						{
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. '()[completed mismatch]: '
+									. $taskTime->format('Ymd') . ' <> ' . $egwTime->format('Ymd'));
+							}
+							continue;
+						}
+					}
+					elseif (!$relax)
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. '()[completed mismatch]');
+						}
+						continue;
+					}
+				}
+				elseif (!$relax && isset($egwData['info_datecompleted']) && $egwData['info_datecompleted'])
+				{
+					if ($this->log)
+					{
+						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+							. '()[completed mismatch]');
+					}
+					continue;
+				}
+			}
+			$foundInfoLogs[$itemID] = $itemID;
 		}
-		return false;
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+				. '()[FOUND]:' . array2string($foundInfoLogs));
+		}
+		return $foundInfoLogs;
 	}
 }
