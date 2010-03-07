@@ -423,7 +423,7 @@ class calendar_so
 			// For deleted history
 			$history_id = $this->cal_table.'.cal_id';
 			// Postgres needs a cast
-			if($this->db->Type == 'postgres') {
+			if($this->db->Type == 'pgsql') {
 				$history_id = "CAST($history_id AS VARCHAR)";
 			}
 
