@@ -243,7 +243,8 @@ class groupdav_principals extends groupdav_handler
 			HTTP_WebDAV_Server::mkprop('resourcetype','principal'),
 			HTTP_WebDAV_Server::mkprop('alternate-URI-set',array(
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']))),
-			HTTP_WebDAV_Server::mkprop('principal-URL',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'),
+			HTTP_WebDAV_Server::mkprop('principal-URL',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'))),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/calendar/'))),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
@@ -251,7 +252,6 @@ class groupdav_principals extends groupdav_handler
 			HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
 			HTTP_WebDAV_Server::mkprop('group-member-ship', $memberships),
-			HTTP_WebDAV_Server::mkprop('principal-URL',array(HTTP_WebDAV_Server::mkprop('href',$this->principalURL))),
 		);
 		if ($this->debug > 1) error_log(__METHOD__."($path) path=/principals/users/".$account['account_lid'].', props='.array2string($props));
 		return array(
