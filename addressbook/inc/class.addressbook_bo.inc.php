@@ -441,8 +441,13 @@ class addressbook_bo extends addressbook_so
 	 */
 	function fullname($contact)
 	{
+		if (empty($contact['n_family']) && empty($contact['n_given'])) {
+			$cpart = array('org_name');
+		} else {
+			$cpart = array('n_prefix','n_given','n_middle','n_family','n_suffix');
+		}
 		$parts = array();
-		foreach(array('n_prefix','n_given','n_middle','n_family','n_suffix') as $n)
+		foreach($cpart as $n)
 		{
 			if ($contact[$n]) $parts[] = $contact[$n];
 		}
@@ -611,7 +616,7 @@ class addressbook_bo extends addressbook_so
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
 		// set full name and fileas from the content
-		if (isset($contact['n_family']) && isset($contact['n_given']))
+		if (!isset($contact['n_fn']) ) 
 		{
 			$contact['n_fn'] = $this->fullname($contact);
 			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
