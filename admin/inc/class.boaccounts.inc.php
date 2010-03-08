@@ -49,7 +49,7 @@
 			// delete all acl (and memberships) of group
 			$GLOBALS['egw']->acl->delete_account($account_id);
 
-			// make this information also available in the hook 
+			// make this information also available in the hook
 			$lid = $GLOBALS['egw']->accounts->id2name($account_id);
 
 			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values'] = array(
@@ -72,7 +72,7 @@
 
 			$accountid = (int)$account_id;
 			$account_id = get_account_id($accountid);
-			// make this information also available in the hook 
+			// make this information also available in the hook
 			$lid = $GLOBALS['egw']->accounts->id2name($account_id);
 
 			$GLOBALS['hook_values'] = array(
@@ -357,7 +357,7 @@
 			// and the message thereof
 			if($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
 			{
-				if (posix_getpwnam($_userData['account_lid']))
+				if (function_exists('posix_getpwnam') && posix_getpwnam($_userData['account_lid']))
 				{
 					$error[$totalerrors] = lang('There already is a system-user with this name. User\'s should not have the same name as a systemuser');
 					$totalerrors++;
