@@ -627,10 +627,11 @@ class calendar_rrule implements Iterator
 	 * @param boolean $usertime=true true: event timestamps are usertime (default for calendar_bo::(read|search), false: servertime
 	 * @param string $to_tz			timezone for exports (null for event's timezone)
 	 *
-	 * @return calendar_rrule
+	 * @return calendar_rrule		false on error
 	 */
 	public static function event2rrule(array $event,$usertime=true,$to_tz=null)
 	{
+		if (!is_array($event)  || !isset($event['tzid'])) return false;
 		if (!$to_tz) $to_tz = $event['tzid'];
 		$timestamp_tz = $usertime ? egw_time::$user_timezone : egw_time::$server_timezone;
 		$time = is_a($event['start'],'DateTime') ? $event['start'] : new egw_time($event['start'],$timestamp_tz);
