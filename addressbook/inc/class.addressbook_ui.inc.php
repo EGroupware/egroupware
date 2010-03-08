@@ -1218,13 +1218,13 @@ class addressbook_ui extends addressbook_bo
 					{
 						$links = $content['link_to']['to_id'];
 					}
+					$fullname = $old_fullname = parent::fullname($content);
 					if ($content['id'] && $content['org_name'] && $content['change_org'])
 					{
 						$old_org_entry = $this->read($content['id']);
+						$old_fullname = ($old_org_entry['n_fn'] ? $old_org_entry['n_fn'] : parent::fullname($old_org_entry));
 					}
-					if (isset($content['n_family']) && isset($content['n_given'])
-						&& $content['n_family'] != $old_org_entry['n_family']
-						&& $content['n_given'] != $old_org_entry['n_given'])
+					if ( $content['n_fn'] != $fullname ||  $fullname != $old_fullname)
 					{
 						unset($content['n_fn']);
 					}
