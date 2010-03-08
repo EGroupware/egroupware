@@ -1691,7 +1691,6 @@ class calendar_ical extends calendar_boupdate
 		$defaultFields['basic'] = $defaultFields['minimal'] + array(
 			'recur_exception'	=> 'recur_exception',
 			'priority'			=> 'priority',
-			'status'			=> 'status',
 		);
 
 		$defaultFields['nexthaus'] = $defaultFields['basic'] + array(
@@ -1736,6 +1735,7 @@ class calendar_ical extends calendar_boupdate
 			'uid'				=> 'uid',
 			'reference'			=> 'reference',
 			'etag'				=> 'etag',
+			'status'			=> 'status',
 		);
 
 
