@@ -130,7 +130,7 @@ class infolog_so
 			(!!($this->grants[$owner] & $required_rights) ||
 			$this->is_responsible($info) &&			// implicite rights for responsible user(s) and his memberships
 			($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
-			($info['info_access'] == 'public' || !!($this->grants[$owner] & EGW_ACL_PRIVATE));
+			($info['info_access'] == 'public' || !!($this->grants[$this->user] & EGW_ACL_PRIVATE));
 
 		//echo "<p align=right>check_access(info_id=$info_id,requited=$required_rights,implicit_edit=$implicit_edit) owner=$owner, responsible=(".implode(',',$info['info_responsible'])."): access".($access_ok?"Ok":"Denied")."</p>\n";
 		return $access_ok;
@@ -225,7 +225,7 @@ class infolog_so
 			}
 			$public_access = $this->db->expression($this->info_table,array('info_owner' => $public_user_list));
 			// implicit read-rights for responsible user
-			$filtermethod .= " OR (".$this->responsible_filter($this->user)." AND info_access='public')";
+			$filtermethod .= " OR (".$this->responsible_filter($this->user).')';
 
 			// private: own entries plus the one user is responsible for
 			if ($filter == 'private' || $filter == 'privat' || $filter == 'own')
