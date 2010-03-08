@@ -261,6 +261,15 @@ abstract class bo_merge
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
 		}
+		if ($mimetype == 'application/xml' &&
+			preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches))
+		{
+			$mso_application_progid = $matches[1];
+		}
+		else
+		{
+			$mso_application_progid = '';
+		}
 		// alternative syntax using double curly brackets (eg. {{cat_id}} instead $$cat_id$$),
 		// agressivly removing all xml-tags eg. Word adds within placeholders
 		$content = preg_replace_callback('/{{[^}]+}}/i',create_function('$p','return \'$$\'.strip_tags(substr($p[0],2,-2)).\'$$\';'),$content);
@@ -340,13 +349,13 @@ abstract class bo_merge
 					{
 						for($n = 0; ($row_replacements = ExecMethod2($callback,$plugin,$id,$n)); ++$n)
 						{
-							$repeats .= $this->replace($repeat,$row_replacements,$mimetype);
+							$repeats .= $this->replace($repeat,$row_replacements,$mimetype,$mso_application_progid);
 						}
 					}
 					$content = str_replace($match[0],$repeats,$content);
 				}
 			}
-			$content = $this->replace($content,$replacements,$mimetype);
+			$content = $this->replace($content,$replacements,$mimetype,$mso_application_progid);
 
 			if (strpos($content,'$$IF'))
 			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
@@ -450,9 +459,10 @@ abstract class bo_merge
 	 * @param string $content
 	 * @param array $replacements name => replacement pairs
 	 * @param string $mimetype mimetype of content
+	 * @param string $mso_application_progid='' MS Office 2003: 'Excel.Sheet' or 'Word.Document'
 	 * @return string
 	 */
-	protected function replace($content,array $replacements,$mimetype)
+	protected function replace($content,array $replacements,$mimetype,$mso_application_progid='')
 	{
 		switch($mimetype)
 		{
@@ -498,14 +508,42 @@ abstract class bo_merge
 				// remove all html tags, evtl. included
 				if (strpos($value,'<') !== false)
 				{
+					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
+					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
 					$value = strip_tags($value);
 				}
 				// replace all control chars (C0+C1) but CR, LF and TAB (eg. vertical tabulators) with space
 				// as they are not allowed in xml
 				$value = preg_replace('/[\000-\008,\010,\011,\013,\014,\016-\037,\177-\237]/u',' ',$value);
 			}
+			// replace CRLF with linebreak tag of given type
+			switch($mimetype.$mso_application_progid)
+			{
+				case 'application/vnd.oasis.opendocument.text':		// open office writer
+					$break = '<text:line-break/>';
+					break;
+				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+					$break = '<text:line-break/>';
+					break;
+				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007
+					$break = '<w:br/>';
+					break;
+				case 'application/xmlExcel.Sheet':	// Excel 2003
+					$break = '&#10;';
+					break;
+				case 'application/xmlWord.Document':	// Word 2003*/
+					$break = '<w:br/>';
+					break;
+				case 'text/html':
+					$break = '<br/>';
+					break;
+				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':	// ms excel 2007
+				default:
+					$break = "\r\n";
+					break;
+			}
 			// now decode &, < and >, which need to be encoded as entities in xml
-			$replacements = str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),$replacements);
+			$replacements = str_replace(array('&','<','>',"\r","\n"),array('&amp;','&lt;','&gt;','',$break),$replacements);
 		}
 		return str_replace(array_keys($replacements),array_values($replacements),$content);
 	}
