@@ -488,7 +488,7 @@ abstract class bo_merge
 				if (strpos($value,'&') !== false)
 				{
 					$value = html_entity_decode($value,ENT_QUOTES,$charset);
-					
+
 					// remove all non-decodable entities
 					if (strpos($value,'&') !== false)
 					{
@@ -500,6 +500,9 @@ abstract class bo_merge
 				{
 					$value = strip_tags($value);
 				}
+				// replace all control chars (C0+C1) but CR, LF and TAB (eg. vertical tabulators) with space
+				// as they are not allowed in xml
+				$value = preg_replace('/[\000-\008,\010,\011,\013,\014,\016-\037,\177-\237]/u',' ',$value);
 			}
 			// now decode &, < and >, which need to be encoded as entities in xml
 			$replacements = str_replace(array('&','<','>'),array('&amp;','&lt;','&gt;'),$replacements);
