@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package etemplate
  * @subpackage api
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -158,12 +158,6 @@ abstract class bo_tracking
 	 */
 	var $datetime_format;
 	/**
-	 * Offset to server-time of the currently notified user (send_notificaton)
-	 *
-	 * @var int
-	 */
-	var $tz_offset_s;
-	/**
 	 * Should the class allow html content (for notifications)
 	 *
 	 * @var boolean
@@ -215,7 +209,7 @@ abstract class bo_tracking
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param int $user=null user who made the changes, default to current user
-	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undeleted
 	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
 	 * @param boolean $skip_notification=false do NOT send any notification
 	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
@@ -531,22 +525,26 @@ abstract class bo_tracking
 	/**
 	 * Return date+time formatted for the currently notified user (prefs in $GLOBALS['egw_info']['user']['preferences'])
 	 *
-	 * @param int $timestamp
+	 * @param int|string|DateTime $timestamp in server-time
 	 * @param boolean $do_time=true true=allways (default), false=never print the time, null=print time if != 00:00
-	 * @todo implement timezone handling via 'tz' pref
+	 *
 	 * @return string
 	 */
 	public function datetime($timestamp,$do_time=true)
 	{
+		if (!is_a($timestamp,'DateTime'))
+		{
+			$timestamp = new egw_time($timestamp,egw_time::$server_timezone);
+		}
+		$timestamp->setTimezone(egw_time::$user_timezone);
 		if (is_null($do_time))
 		{
-			$do_time = date('H:i',$timestamp+$this->tz_offset_s) != '00:00';
+			$do_time = ($timestamp->format('Hi') != '0000');
 		}
 		$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 		if ($do_time) $format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] != 12 ? 'H:i' : 'h:i a');
 
-		//error_log("bo_tracking::datetime($timestamp,$do_time)=date('$format',$timestamp+$this->tz_offset_s)='".date($format,$timestamp+$this->tz_offset_s).'\')');
-		return date($format,$timestamp+3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']);
+		return $timestamp->format($format);
 	}
 
 	/**
