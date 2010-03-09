@@ -1482,8 +1482,6 @@ class calendar_boupdate extends calendar_bo
 
 		if ($filter == 'master')
 		{
-			// No chance to find a master without [U]ID
-			if (emtpy($event['uid']) && empty($event['id'])) return $matchingEvents;
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_recurrence'] = 0;
 		}
@@ -1534,6 +1532,9 @@ class calendar_boupdate extends calendar_bo
 			if (!empty($matchingEvents) || $filter == 'exact') return $matchingEvents;
 		}
 		unset($event['id']);
+
+		// No chance to find a master without [U]ID
+		if ($filter == 'master' && empty($event['uid'])) return $matchingEvents;
 
 		// only query calendars of users, we have READ-grants from
 		$users = array();
@@ -1623,7 +1624,15 @@ class calendar_boupdate extends calendar_bo
 					$query[] = ('cal_start<' . ($event['start'] + 2));
 				}
 			}
-			$matchFields = array('priority', 'public', 'non_blocking', 'recurrence');
+			if ($filter == 'relax')
+			{
+				$matchFields = array();
+			}
+			else
+			{
+				$matchFields = array('priority', 'public', 'non_blocking');
+			}
+			$matchFields[] = 'recurrence';
 			foreach ($matchFields as $key)
 			{
 				if (isset($event[$key])) $query['cal_'.$key] = $event[$key];
@@ -1700,7 +1709,7 @@ class calendar_boupdate extends calendar_bo
 				continue;
 			}
 
-			if (!empty($event['uid']) && $filter == 'exact') break;
+			if (!empty($event['uid']) && $filter == 'exact' || $filter == 'master') break;
 
 			// check times
 			if ($filter != 'relax')
@@ -1717,7 +1726,7 @@ class calendar_boupdate extends calendar_bo
 						continue;
 					}
 				}
-				elseif ($filter != 'master')
+				else
 				{
 					if (abs($event['end'] - $egwEvent['end']) >= 120)
 					{
@@ -1732,15 +1741,10 @@ class calendar_boupdate extends calendar_bo
 			}
 
 			// check for real match
-			$matchFields = array('title');
-			switch ($filter)
+			$matchFields = array('title', 'description');
+			if ($filter != 'relax')
 			{
-				case 'master':
-					break;
-				case 'relax':
-					$matchFields[] = 'location';
-				default:
-					$matchFields[] = 'description';
+				$matchFields[] = 'location';
 			}
 			foreach ($matchFields as $key)
 			{
@@ -1751,13 +1755,13 @@ class calendar_boupdate extends calendar_bo
 					{
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 							"() event[$key] differ: '" . $event[$key] .
-							"' <> '" . $egwEvent[$key]) . "'";
+							"' <> '" . $egwEvent[$key] . "'");
 					}
 					continue 2; // next foundEvent
 				}
 			}
 
-			if ($filter != 'master' && is_array($event['category']))
+			if (is_array($event['category']))
 			{
 				// check categories
 				$egwCategories = explode(',', $egwEvent['category']);
@@ -1786,7 +1790,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 
-			if ($filter != 'relax' && $filter != 'master')
+			if ($filter != 'relax')
 			{
 				// check participants
 				if (is_array($event['participants']))
@@ -1824,71 +1828,67 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 
-			if ($filter != 'master')
+			if ($event['recur_type'] == MCAL_RECUR_NONE)
 			{
-				if ($event['recur_type'] == MCAL_RECUR_NONE)
+				if ($egwEvent['recur_type'] != MCAL_RECUR_NONE)
 				{
-					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE)
-					{
-						// We found a pseudo Exception
-						$pseudos[] = $egwEvent['id'] . ':' . $event['start'];
-						continue;
-					}
+					// We found a pseudo Exception
+					$pseudos[] = $egwEvent['id'] . ':' . $event['start'];
+					continue;
 				}
-				elseif ($filter != 'relax')
+			}
+			elseif ($filter != 'relax')
+			{
+				// check exceptions
+				// $exceptions[$remote_ts] = $egw_ts
+				$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['$tzid'], 0, 0, 'map');
+				if (is_array($event['recur_exception']))
 				{
-					// check exceptions
-					// $exceptions[$remote_ts] = $egw_ts
-					$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['$tzid'], 0, 0, 'map');
-					if (is_array($event['recur_exception']))
+					foreach ($event['recur_exception'] as $key => $day)
 					{
-						foreach ($event['recur_exception'] as $key => $day)
+						if (isset($exceptions[$day]))
 						{
-							if (isset($exceptions[$day]))
-							{
-								unset($exceptions[$day]);
-							}
-							else
-							{
-								if ($this->log)
-								{
-									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-									"() additional event['recur_exception']: $day");
-								}
-								continue 2;
-							}
+							unset($exceptions[$day]);
 						}
-						if (!empty($exceptions))
+						else
 						{
 							if ($this->log)
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-									'() missing event[recur_exception]: ' .
-									array2string($event['recur_exception']));
-							}
-							continue;
-						}
-					}
-
-					// check recurrence information
-					foreach (array('recur_type', 'recur_interval', 'recur_enddate') as $key)
-					{
-						if (isset($event[$key])
-								&& $event[$key] != $egwEvent[$key])
-						{
-							if ($this->log)
-							{
-								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-									"() events[$key] differ: " . $event[$key] .
-									' <> ' . $egwEvent[$key]);
+								"() additional event['recur_exception']: $day");
 							}
 							continue 2;
 						}
 					}
+					if (!empty($exceptions))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								'() missing event[recur_exception]: ' .
+								array2string($event['recur_exception']));
+						}
+						continue;
+					}
+				}
+
+				// check recurrence information
+				foreach (array('recur_type', 'recur_interval', 'recur_enddate') as $key)
+				{
+					if (isset($event[$key])
+							&& $event[$key] != $egwEvent[$key])
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								"() events[$key] differ: " . $event[$key] .
+								' <> ' . $egwEvent[$key]);
+						}
+						continue 2;
+					}
 				}
 			}
 			$matchingEvents[] = $egwEvent['id']; // exact match
-			if ($filter = 'master') break;
 		}
 		// append pseudos as last entries
 		$matchingEvents = array_merge($matchingEvents, $pseudos);
