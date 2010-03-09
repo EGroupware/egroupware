@@ -1505,6 +1505,8 @@ class calendar_boupdate extends calendar_bo
 
 		if ($filter == 'master')
 		{
+			// No chance to find a master without [U]ID
+			if (emtpy($event['uid']) && empty($event['id'])) return $matchingEvents;
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_recurrence'] = 0;
 		}
