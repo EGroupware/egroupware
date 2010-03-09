@@ -1,6 +1,6 @@
 Name: eGroupware
 Version: 1.6.003
-Release:
+Release: 1
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
 License: GPLv2 with exception
@@ -438,12 +438,10 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files
 %defattr(-,root,root)
 %dir %{egwdir}
-%dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}
 
 %files core
 %defattr(-,root,root)
 %dir %attr(0755,root,root) %{egwdir}
-%dir %attr(0755,root,root) /var/lib/egroupware
 %{egwdir}/about.php
 %{egwdir}/anon_wrapper.php
 %{egwdir}/header.inc.php
