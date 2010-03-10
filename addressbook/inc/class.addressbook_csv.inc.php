@@ -4,7 +4,7 @@
  *
  * @link www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
  * @subpackage export
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -32,6 +32,11 @@ class addressbook_csv
 	);
 
 	/**
+	 * Number of individual category fields
+	 */
+	const CAT_MAX = 10;
+
+	/**
 	 * Constructor
 	 *
 	 * @param addressbook_bo $obj
@@ -43,7 +48,7 @@ class addressbook_csv
 		$this->obj = $obj;
 		$this->separator = $separator;
 		$this->charset_out = $charset;
-		$this->charset = $GLOBALS['egw']->translation->charset();
+		$this->charset = translation::charset();
 	}
 
 	/**
@@ -58,6 +63,14 @@ class addressbook_csv
 		if (is_null($fields))
 		{
 			$fields = $this->csv_fields();
+		}
+		// add fields for single categories
+		if (isset($fields['cat_id']))
+		{
+			for($n = 1; $n <= self::CAT_MAX; ++$n)
+			{
+				$fields['cat_'.$n] = lang('Category').' '.$n;
+			}
 		}
 		if (!$file)
 		{
@@ -120,7 +133,7 @@ class addressbook_csv
 
 		if ($this->charset_out && $this->charset != $this->charset_out)
 		{
-			$out = $GLOBALS['egw']->translation->convert($out,$this->charset,$this->charset_out);
+			$out = translation::convert($out,$this->charset,$this->charset_out);
 		}
 		return $out;
 	}
@@ -151,9 +164,9 @@ class addressbook_csv
 		if ($data['tel_prefer']) $data['tel_prefer'] = $fields[$data['tel_prefer']];
 
 		$cats = array();
-		foreach(explode(',',$data['cat_id']) as $cat_id)
+		foreach(explode(',',$data['cat_id']) as $n => $cat_id)
 		{
-			if ($cat_id) $cats[] = $GLOBALS['egw']->categories->id2name($cat_id);
+			if ($cat_id) $cats[] = $data['cat_'.($n+1)] = $GLOBALS['egw']->categories->id2name($cat_id);
 		}
 		$data['cat_id'] = implode('; ',$cats);
 
