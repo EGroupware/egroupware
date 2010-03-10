@@ -289,6 +289,7 @@ class egw_link extends solink
 	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 	 * @param string $order='link_lastmod DESC' defaults to newest links first
 	 * @param boolean $cache_titles=false should all titles be queryed and cached (allows to query each link app only once!)
+	 * 	This option also removes links not viewable by current user from the result!
 	 * @return array of links or empty array if no matching links found
 	 */
 	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC',$cache_titles=false )
@@ -333,12 +334,19 @@ class egw_link extends solink
 			{
 				$app_ids[$link['app']][] = $link['id'];
 			}
-			reset($ids);
-
 			foreach($app_ids as $appname => $a_ids)
 			{
 				self::titles($appname,array_unique($a_ids));
 			}
+			// remove links, current user has no access, from result
+			foreach($ids as $key => $link)
+			{
+				if (!self::title($link['app'],$link['id']))
+				{
+					unset($ids[$key]);
+				}
+			}
+			reset($ids);
 		}
 		return $ids;
 	}
@@ -762,7 +770,7 @@ class egw_link extends solink
 		}
 		$params = $reg['edit'];
 		$params[$reg['edit_id']] = $id;
-		
+
 		$popup = $reg['edit_popup'];
 
 		return $params;
