@@ -114,6 +114,9 @@ class calendar_groupdav extends groupdav_handler
 			'daywise' => false,
 			'date_format' => 'server',
 		);
+
+		if ($path != '/calendar/') $cal_filters['filter'] = 'owner';
+
 		/*
 		if ($this->client_shared_uid_exceptions)
 		{

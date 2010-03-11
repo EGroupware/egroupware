@@ -75,6 +75,15 @@ class infolog_groupdav extends groupdav_handler
 
 		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
 
+		if ($path == '/infolog/')
+		{
+			$task_filter= 'open';
+		}
+		else
+		{
+			$task_filter= 'own' . ($myself?'':'-open');
+		}
+
 		if ($options['filters'])
 		{
 
@@ -124,8 +133,8 @@ class infolog_groupdav extends groupdav_handler
 		if (($tasks =& $this->bo->search($params=array(
 			'order'		=> 'info_datemodified',
 			'sort'		=> 'DESC',
-			'filter'    => ($myself ? 'own' : 'own'),	// filter my: entries user is responsible for,
-														// filter own: entries the user own or is responsible for
+			'filter'    => $task_filter,	// filter my: entries user is responsible for,
+											// filter own: entries the user own or is responsible for
 			'date_format' => 'server',
 			'col_filter'	=> $filter,
 		))))
