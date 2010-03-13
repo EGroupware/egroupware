@@ -1066,19 +1066,19 @@ class calendar_uiforms extends calendar_ui
 								'uid'      => $member,
 								'status'   => 'G',
 							);
-							$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
-							$content['participants'][$row++]['title'] =
+							$content['participants'][$row]['title'] =
 								$GLOBALS['egw']->common->grab_owner_name($member);
 							// read access is enought to invite participants
 							// but you edit rights to change status
 							if (!$this->bo->check_perms(EGW_ACL_EDIT,0,$member))
 							{
-								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] =$readonlys[$row]['status']= true;
+								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = $readonlys[$row]['status']= true;
 							}
 							else
 							{
 								$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
 							}
+							++$row;
 						}
 					}
 				}
