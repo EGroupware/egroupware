@@ -370,11 +370,6 @@ class calendar_so
 					'cal_user_type' => $type,
 					'cal_user_id'   => $ids,
 				));
-				if ($type == 'u' && $show_rejected)
-				{
-					$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
-					$to_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
-				}
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
 
