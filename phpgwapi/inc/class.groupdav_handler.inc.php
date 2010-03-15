@@ -479,14 +479,14 @@ class groupdav_propfind_iterator implements Iterator
 			if ($this->debug) error_log(__METHOD__."() returning TRUE");
 			return true;
 		}
-		if (is_array($this->files) && count($this->files) < self::CHUNK_SIZE)   // less entries then asked --> no further available
+		// try query further files via propfind callback of handler and store result in $this->files
+		$this->files = $this->handler->propfind_callback($this->path,$this->filter,array($this->start,self::CHUNK_SIZE));
+		if (!is_array($this->files) || !($entries = count($this->files)))
 		{
 			if ($this->debug) error_log(__METHOD__."() returning FALSE (no more entries)");
 			return false;	// no further entries
 		}
-		// try query further files via propfind callback of handler and store result in $this->files
-		$this->files = $this->handler->propfind_callback($this->path,$this->filter,array($this->start,self::CHUNK_SIZE));
-		$this->start += self::CHUNK_SIZE;
+		$this->start += $entries;
 		reset($this->files);
 
 		if ($this->debug) error_log(__METHOD__."() returning ".array2string(current($this->files) !== false));
@@ -504,7 +504,7 @@ class groupdav_propfind_iterator implements Iterator
 		// query first set of files via propfind callback of handler and store result in $this->files
 		$this->start = 0;
 		$files = $this->handler->propfind_callback($this->path,$this->filter,array($this->start,self::CHUNK_SIZE));
-		$this->files = $this->common_files + $files;
+		$this->files = array_merge($this->common_files, $files);
 		$this->start += self::CHUNK_SIZE;
 		reset($this->files);
 	}

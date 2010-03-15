@@ -287,13 +287,21 @@ class infolog_bo
 	/**
 	 * check's if user has the requiered rights on entry $info_id
 	 *
-	 * @param int/array $info data or info_id of infolog entry to check
+	 * @param int|array $info data or info_id of infolog entry to check
 	 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
+	 * @param int $other uid to check (if info==0) or 0 to check against $this->user
 	 * @return boolean
 	 */
-	function check_access( $info,$required_rights )
+	function check_access($info,$required_rights,$other=0)
 	{
 		static $cache = array();
+
+		if (!$info)
+		{
+			$owner = $other ? $other : $this->user;
+			$grants = $this->grants[$owner];
+			return $grants & $required_rights;
+		}
 
 		$info_id = is_array($info) ? $info['info_id'] : $info;
 
@@ -485,9 +493,9 @@ class infolog_bo
 	/**
 	 * Delete an infolog entry, evtl. incl. it's children / subs
 	 *
-	 * @param int/array $info_id int id
+	 * @param int|array $info_id int id
 	 * @param boolean $delete_children should the children be deleted
-	 * @param int/boolean $new_parent parent to use for not deleted children if > 0
+	 * @param int|boolean $new_parent parent to use for not deleted children if > 0
 	 * @return boolean True if delete was successful, False otherwise ($info_id does not exist or no rights)
 	 */
 	function delete($info_id,$delete_children=False,$new_parent=False)
@@ -573,7 +581,10 @@ class infolog_bo
 	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
-		if ($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
+		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner'])
+			&& !$this->check_access(0,EGW_ACL_ADD,$values['info_owner'])) return false;
+
+		if (($status_only = $values['info_id']) && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
 		{
 			if (!isset($values['info_responsible']))
 			{
@@ -596,7 +607,7 @@ class infolog_bo
 		if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
 		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
 		{
-			return False;
+			return false;
 		}
 		if ($status_only && !$undelete)	// make sure only status gets writen
 		{
@@ -634,7 +645,7 @@ class infolog_bo
 				}
 				if ($forcestatus && !in_array($values['info_status'],array('done','billed','cancelled'))) $values['info_status'] = $status;
 			}
-			$check_defaults = False;
+			$check_defaults = false;
 		}
 		if ($check_defaults)
 		{
@@ -845,7 +856,6 @@ class infolog_bo
 
 		$ret = $this->so->search($query);
 
-
 		if (is_array($ret))
 		{
 			foreach ($ret as $id => &$data)
@@ -985,8 +995,8 @@ class infolog_bo
 	 *
 	 * Is called as hook to participate in the linking
 	 *
-	 * @param int/array $info int info_id or array with infolog entry
-	 * @return string/boolean string with the title, null if $info not found, false if no perms to view
+	 * @param int|array $info int info_id or array with infolog entry
+	 * @return string|boolean string with the title, null if $info not found, false if no perms to view
 	 */
 	function link_title($info)
 	{
@@ -1166,7 +1176,7 @@ class infolog_bo
 		if (isset($args['infolog']) && count($args['infolog']))
 		{
 			$icons = $this->so->get_status($args['infolog']);
-			foreach((array) $icons as $id => $status)
+			foreach ((array) $icons as $id => $status)
 			{
 				if ($status && substr($status,-1) != '%')
 				{
@@ -1202,7 +1212,7 @@ class infolog_bo
 			$old_categories = explode(',',$old_infolog['info_cat']);
 			if (is_array($old_categories) && count($old_categories) > 0)
 			{
-				foreach($old_categories as $cat_id)
+				foreach ($old_categories as $cat_id)
 				{
 					if ($cat_id && !$this->categories->check_perms(EGW_ACL_READ, $cat_id))
 					{

@@ -111,7 +111,6 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		// return iterator, calling ourself to return result in chunks
 		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
-
 		return true;
 	}
 

@@ -227,8 +227,9 @@ class boinfolog extends infolog_bo
 	/**
 	 * Convert an InfoLog entry into its xmlrpc representation, eg. convert timestamps to datetime.iso8601
 	 *
-	 * @param array $data infolog entry
-	 * @param array xmlrpc infolog entry
+	 * @param array $data infolog entry in db format
+	 *
+	 * @return array xmlrpc infolog entry
 	 */
 	function data2xmlrpc($data)
 	{
@@ -272,8 +273,9 @@ class boinfolog extends infolog_bo
 	/**
 	 * Convert an InfoLog xmlrpc representation into the internal one, eg. convert datetime.iso8601 to timestamps
 	 *
-	 * @param array $data infolog entry
-	 * @param array xmlrpc infolog entry
+	 * @param array $data infolog entry in xmlrpc representation
+	 *
+	 * @return array infolog entry in db format
 	 */
 	function xmlrpc2data($data)
 	{

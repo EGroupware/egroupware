@@ -102,11 +102,10 @@ class calendar_groupdav extends groupdav_handler
 		if ($this->debug)
 		{
 			error_log(__METHOD__."($path,".array2string($options).",,$user,$id)");
-			$starttime = microtime(true);
 		}
 
 		// ToDo: add parameter to only return id & etag
-		$cal_filters = array(
+		$filter = array(
 			'users' => $user,
 			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync  recurrences
 			'end' => time()+365*24*3600,	// default one year into the future +365
@@ -115,38 +114,66 @@ class calendar_groupdav extends groupdav_handler
 			'date_format' => 'server',
 		);
 
-		if ($path == '/calendar/') $cal_filters['show_rejected'] = false;
-
-		/*
-		if ($this->client_shared_uid_exceptions)
+		if ($path == '/calendar/')
 		{
-			$cal_filters['query']['cal_reference'] = 0;
+			$filter['show_rejected'] = true;
 		}
-		*/
+		else
+		{
+			$filter['show_rejected'] = false;
+		}
+
 		// process REPORT filters or multiget href's
-		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$cal_filters,$id))
+		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
 		{
 			return false;
 		}
 		if ($this->debug > 1)
 		{
-			error_log(__METHOD__."($path,,,$user,$id) cal_filters=".
-				array2string($cal_filters));
+			error_log(__METHOD__."($path,,,$user,$id) filter=".
+				array2string($filter));
 		}
 
 		// check if we have to return the full calendar data or just the etag's
-		if (!($calendar_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
+		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
+			$options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
 				if ($prop['name'] == 'calendar-data')
 				{
-					$calendar_data = true;
+					$filter['calendar_data'] = true;
 					break;
 				}
 			}
 		}
-		$events =& $this->bo->search($cal_filters);
+		// return iterator, calling ourself to return result in chunks
+		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+		return true;
+	}
+
+	/**
+	 * Callback for profind interator
+	 *
+	 * @param string $path
+	 * @param array $filter
+	 * @param array|boolean $start=false false=return all or array(start,num)
+	 * @return array with "files" array with values for keys path and props
+	 */
+	function propfind_callback($path,array $filter,$start=false)
+	{
+		if ($this->debug) $starttime = microtime(true);
+
+		$calendar_data = $filter['calendar_data'];
+		unset($filter['calendar_data']);
+		$files = array();
+
+		if (is_array($start))
+		{
+			$filter['offset'] = $start[0];
+			$filter['num_rows'] = $start[1];
+		}
+		$events =& $this->bo->search($filter);
 		if ($events)
 		{
 			// get all max user modified times at once
@@ -178,8 +205,6 @@ class calendar_groupdav extends groupdav_handler
 					HTTP_WebDAV_Server::mkprop('getlastmodified', $event['modified']),
 					HTTP_WebDAV_Server::mkprop('resourcetype',''),	// DAVKit requires that attribute!
 				);
-				//$props[] =  HTTP_WebDAV_Server::mkprop('current-user-principal',array(self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
-				//$props = self::current_user_privilege_set($props);
 				//error_log(__FILE__ . __METHOD__ . "Calendar Data : $calendar_data");
 				if ($calendar_data)
 				{
@@ -191,7 +216,7 @@ class calendar_groupdav extends groupdav_handler
 				{
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
-				$files['files'][] = array(
+				$files[] = array(
 	            	'path'  => $path.self::get_path($event),
 	            	'props' => $props,
 				);
@@ -200,9 +225,9 @@ class calendar_groupdav extends groupdav_handler
 		if ($this->debug)
 		{
 			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
-				' to return '.count($files['files']).' items');
+				' to return '.count($files).' items');
 		}
-		return true;
+		return $files;
 	}
 
 	/**
