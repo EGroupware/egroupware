@@ -300,7 +300,7 @@ class addressbook_sif extends addressbook_bo
 					}
 
 				default:
-					$value = @htmlspecialchars(trim($value), ENT_QUOTES, 'utf-8');
+					$value = @htmlspecialchars(trim($value), ENT_NOQUOTES, 'utf-8');
 					$sifContact .= "<$sifField>$value</$sifField>";
 					break;
 			}
