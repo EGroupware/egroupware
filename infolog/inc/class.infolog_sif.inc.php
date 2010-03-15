@@ -568,7 +568,7 @@ class infolog_sif extends infolog_bo
 							}
 
 						default:
-							$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
+							$value = @htmlspecialchars($value, ENT_NOQUOTES, 'utf-8');
 						$sifTask .= "<$sifField>$value</$sifField>";
 						break;
 					}

@@ -1150,7 +1150,7 @@ class calendar_sif extends calendar_boupdate
 					}
 
 				default:
-					$value = @htmlspecialchars($value, ENT_QUOTES, 'utf-8');
+					$value = @htmlspecialchars($value, ENT_NOQUOTES, 'utf-8');
 					$sifEvent .= "<$sifField>$value</$sifField>";
 			}
 		}
