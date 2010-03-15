@@ -23,6 +23,17 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	var $bo;
 
+	var $filter_prop2infolog = array(
+		'SUMMARY'	=> 'info_subject',
+		'UID'		=> 'info_uid',
+		'DTSTART'	=> 'info_startdate',
+		'DUE'		=> 'info_enddate',
+		'DESCRIPTION'	=> 'info_des',
+		'STATUS'	=> 'info_status',
+		'PRIORITY'	=> 'info_priority',
+		'LOCATION'	=> 'info_location',
+		'COMPLETED'	=> 'info_datecompleted',
+	);
 	/**
 	 * Constructor
 	 *
@@ -71,73 +82,102 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user,$id='')
 	{
-		$starttime = microtime(true);
-
 		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
 
 		if ($path == '/infolog/')
 		{
-			$task_filter= 'open';
+			$task_filter= 'own';
 		}
 		else
 		{
-			$task_filter= 'own' . ($myself?'':'-open');
-		}
-
-		if ($options['filters'])
-		{
-
-			foreach($options['filters'] as $filter)
+			if ($myself)
 			{
-				switch($filter['name'])
-				{
-					case 'comp-filter':
-						if ($this->debug > 1) error_log(__METHOD__."($options[path],...) comp-filter='{$filter['attrs']['name']}'");
-
-						switch($filter['attrs']['name'])
-						{
-							case 'VCALENDAR':
-								continue;
-							case 'VTODO':
-								break 3;
-							default: // We don't handle this
-								return false;
-						}
-				}
+				$task_filter = 'open';
 			}
-		}
-
-		// check if we have to return the full calendar data or just the etag's
-		if (!($calendar_data = $options['props'] == 'all' && $options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
-		{
-			foreach($options['props'] as $prop)
+			else
 			{
-				if ($prop['name'] == 'calendar-data')
-				{
-					$calendar_data = true;
-					break;
-				}
+				$task_filter = 'user' . $user. '-open';
 			}
 		}
 
 		// todo add a filter to limit how far back entries from the past get synced
 		$filter = array(
 			'info_type'	=> 'task',
+			'filter'	=> $task_filter,
 		);
 
-		//if (!$myself) $filter['info_owner'] = $user;
+		// process REPORT filters or multiget href's
+		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
+		{
+			return false;
+		}
+		if ($this->debug > 1)
+		{
+			error_log(__METHOD__."($path,,,$user,$id) filter=".
+				array2string($filter));
+		}
 
-		if ($id) $filter['info_id'] = $id;	// propfind on a single id
+		// check if we have to return the full calendar data or just the etag's
+		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
+			$options['root']['ns'] == groupdav::CALDAV) && is_array($options['props']))
+		{
+			foreach($options['props'] as $prop)
+			{
+				if ($prop['name'] == 'calendar-data')
+				{
+					$filter['calendar_data'] = true;
+					break;
+				}
+			}
+		}
 
-		// ToDo: add parameter to only return id & etag
-		if (($tasks =& $this->bo->search($params=array(
-			'order'		=> 'info_datemodified',
-			'sort'		=> 'DESC',
-			'filter'    => $task_filter,	// filter my: entries user is responsible for,
-											// filter own: entries the user own or is responsible for
-			'date_format' => 'server',
+		// return iterator, calling ourself to return result in chunks
+		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+		return true;
+	}
+
+	/**
+	 * Callback for profind interator
+	 *
+	 * @param string $path
+	 * @param array $filter
+	 * @param array|boolean $start=false false=return all or array(start,num)
+	 * @return array with "files" array with values for keys path and props
+	 */
+	function &propfind_callback($path,array $filter,$start=false)
+	{
+		if ($this->debug) $starttime = microtime(true);
+
+		if (($calendar_data = $filter['calendar_data']))
+		{
+			$handler = self::_get_handler();
+		}
+		unset($filter['calendar_data']);
+		$task_filter = $filter['filter'];
+		unset($filter['filter']);
+
+		$query = array(
+			'order'			=> 'info_datemodified',
+			'sort'			=> 'DESC',
+			'filter'    	=> $task_filter,
+			'date_format'	=> 'server',
 			'col_filter'	=> $filter,
-		))))
+		);
+
+		if (is_array($start))
+		{
+			$query['start'] = $offset = $start[0];
+			$query['num_rows'] = $start[1];
+		}
+		else
+		{
+			$offset = 0;
+		}
+
+		$files = array();
+		// ToDo: add parameter to only return id & etag
+		$tasks =& $this->bo->search($query);
+		if ($tasks && $offset == $query['start'])
 		{
 			foreach($tasks as &$task)
 			{
@@ -152,7 +192,6 @@ class infolog_groupdav extends groupdav_handler
 				);
 				if ($calendar_data)
 				{
-					$handler = $this->_get_handler();
 					$content = $handler->exportVTODO($task,'2.0','PUBLISH');
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength',bytes($content));
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
@@ -161,15 +200,110 @@ class infolog_groupdav extends groupdav_handler
 				{
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', ''); // expensive to calculate and no CalDAV client uses it
 				}
-				$files['files'][] = array(
+				$files[] = array(
 	            	'path'  => $path.self::get_path($task),
 	            	'props' => $props,
 				);
 			}
 		}
-		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files['files']).' items');
+		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files).' items');
+		return $files;
+	}
+
+	/**
+	 * Process the filters from the CalDAV REPORT request
+	 *
+	 * @param array $options
+	 * @param array &$cal_filters
+	 * @param string $id
+	 * @return boolean true if filter could be processed, false for requesting not here supported VTODO items
+	 */
+	function _report_filters($options,&$cal_filters,$id)
+	{
+		if ($options['filters'])
+		{
+			foreach($options['filters'] as $filter)
+			{
+				switch($filter['name'])
+				{
+					case 'comp-filter':
+						if ($this->debug > 1) error_log(__METHOD__."($options[path],...) comp-filter='{$filter['attrs']['name']}'");
+
+						switch($filter['attrs']['name'])
+						{
+							case 'VTODO':
+							//case 'VCALENDAR':
+								break;
+							default:
+								return false;
+						}
+						break;
+					case 'prop-filter':
+						if ($this->debug > 1) error_log(__METHOD__."($options[path],...) prop-filter='{$filter['attrs']['name']}'");
+						$prop_filter = $filter['attrs']['name'];
+						break;
+					case 'text-match':
+						if ($this->debug > 1) error_log(__METHOD__."($options[path],...) text-match: $prop_filter='{$filter['data']}'");
+						if (!isset($this->filter_prop2infolog[strtoupper($prop_filter)]))
+						{
+							if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown property '$prop_filter' --> ignored");
+						}
+						else
+						{
+							$cal_filters[$this->filter_prop2infolog[strtoupper($prop_filter)]] = $filter['data'];
+						}
+						unset($prop_filter);
+						break;
+					case 'param-filter':
+						if ($this->debug) error_log(__METHOD__."($options[path],...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
+						break;
+					case 'time-range':
+				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($options[path],...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
+						$cal_filters[] = 'info_startdate >= ' . $filter['attrs']['start'];
+						$cal_filters[] = 'info_startdate <= ' . $filter['attrs']['end'];
+						break;
+					default:
+						if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown filter --> ignored");
+						break;
+				}
+			}
+		}
+		// multiget or propfind on a given id
+		//error_log(__FILE__ . __METHOD__ . "multiget of propfind:");
+		if ($options['root']['name'] == 'calendar-multiget' || $id)
+		{
+			$ids = array();
+			if ($id)
+			{
+				if (is_numeric($id))
+				{
+					$cal_filters['info_id'] = $id;
+				}
+				else
+				{
+					$cal_filters['info_uid'] = basename($id,'.ics');
+				}
+			}
+			else	// fetch all given url's
+			{
+				foreach($options['other'] as $option)
+				{
+					if ($option['name'] == 'href')
+					{
+						$parts = explode('/',$option['data']);
+						if (is_numeric($id = basename(array_pop($parts),'.ics'))) $ids[] = $id;
+					}
+				}
+				if ($ids)
+				{
+					$cal_filters[] = 'info_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
+				}
+			}
+			if ($this->debug > 1) error_log(__METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids));
+		}
 		return true;
 	}
+
 
 	/**
 	 * Handle get request for a task / infolog entry
@@ -231,14 +365,14 @@ class infolog_groupdav extends groupdav_handler
 				else
 				{
 					// to be safe
-					$taskId = -1;
+					$taskId = 0;
 					$retval = '201 Created';
 				}
 			}
 			else
 			{
 				// new entry
-				$taskId = -1;
+				$taskId = 0;
 				$retval = '201 Created';
 			}
 		}
@@ -249,7 +383,42 @@ class infolog_groupdav extends groupdav_handler
 			return '403 Forbidden';
 		}
 
-		if ($infoId != $taskId) $retval = '201 Created';
+		/*
+		if (strstr($option['path'], '/infolog/') === 0)
+		{
+			$task_filter= 'own';
+		}
+		else
+		{
+			if ($myself)
+			{
+				$task_filter = 'open';
+			}
+			else
+			{
+				$task_filter = 'user' . $user. '-open';
+			}
+		}
+
+		$query = array(
+			'order'			=> 'info_datemodified',
+			'sort'			=> 'DESC',
+			'filter'    	=> $task_filter,
+			'date_format'	=> 'server',
+			'col_filter'	=> array('info_id' => $infoId),
+		);
+
+		if (!$this->bo->search($query))
+		{
+			$retval = '410 Gone';
+		}
+		else
+		*/
+		if ($infoId != $taskId)
+		{
+			$retval = '201 Created';
+
+		}
 
 		header('ETag: '.$this->get_etag($infoId));
 		if ($retval !== true)
@@ -285,7 +454,8 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function read($id)
 	{
-		return $this->bo->read($id,false,'server');
+		if (is_numeric($id)) return $this->bo->read($id,false,'server');
+		return null;
 	}
 
 	/**
@@ -297,6 +467,7 @@ class infolog_groupdav extends groupdav_handler
 	 */
 	function check_access($acl,$task)
 	{
+		if (is_null($task)) return true;
 		return $this->bo->check_access($task,$acl);
 	}
 
