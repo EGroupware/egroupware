@@ -698,6 +698,7 @@ class link_widget
 			foreach($found as $id => $option)
 			{
 				if (!is_array($option)) $option = array('label' => $option);
+				$option['label'] = str_replace(array("\r","\n"),array(" "," "),$option['label']);
 				$script .= "opt = select.options[select.options.length] = new Option('".addslashes($option['label'])."','".addslashes($id)."');\n";
 				if (count($option) > 1)
 				{
