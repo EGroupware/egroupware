@@ -263,9 +263,17 @@ class setup_process
 		{
 			$current_config['system_charset'] = $GLOBALS['egw_setup']->system_charset;
 		}
-		// storing default timezone as system timezone
-		$current_config['system_timezone'] = date_default_timezone_get();
-
+		// storing default timezone as server timezone
+		try
+		{
+			$tz = new DateTimeZone(date_default_timezone_get());
+			$current_config['server_timezone'] = $tz->getName();
+		}
+		catch(Exception $e)
+		{
+			// do nothing if new DateTimeZone fails (eg. 'System/Localtime' returned), specially do NOT store it!
+			error_log(__METHOD__."() NO valid 'date.timezone' set in your php.ini!");
+		}
 		$current_config['install_id'] = md5($_SERVER['HTTP_HOST'].microtime(true).$GLOBALS['egw_setup']->ConfigDomain);
 
 		$current_config['postpone_statistics_submit'] = time() + 2 * 30 * 3600;	// ask user in 2 month from now, when he has something to report

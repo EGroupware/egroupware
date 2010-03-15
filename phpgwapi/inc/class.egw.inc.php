@@ -55,7 +55,7 @@ class egw extends egw_minimal
 	 * @var hooks
 	 */
 	var $hooks;
-	
+
 	private $cat_cache;
 
 	/**
@@ -135,14 +135,20 @@ class egw extends egw_minimal
 
 		// if no server timezone set, use date_default_timezone_get() to determine it once
 		// it fills to log with deprecated warnings under 5.3 otherwise
-		if (empty($GLOBALS['egw_info']['server']['server_timezone']))
+		if (empty($GLOBALS['egw_info']['server']['server_timezone']) ||
+			$GLOBALS['egw_info']['server']['server_timezone'] == 'System/Localtime')	// treat invalid tz like empty!
 		{
-			$config = new config('phpgwapi');
-			$config->read_repository();
-			$config->save_value('server_timezone',
-				$GLOBALS['egw_info']['server']['server_timezone'] = date_default_timezone_get());
-			$config->save_repository();
-			error_log(__METHOD__."() stored server_timezone=".$GLOBALS['egw_info']['server']['server_timezone']);
+			try
+			{
+				$tz = new DateTimeZone(date_default_timezone_get());
+				config::save_value('server_timezone',$GLOBALS['egw_info']['server']['server_timezone'] = $tz->getName(),'phpgwapi');
+				error_log(__METHOD__."() stored server_timezone=".$GLOBALS['egw_info']['server']['server_timezone']);
+			}
+			catch(Exception $e)
+			{
+				// do nothing if new DateTimeZone fails (eg. 'System/Localtime' returned), specially do NOT store it!
+				error_log(__METHOD__."() NO valid 'date.timezone' set in your php.ini!");
+			}
 		}
 		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 
