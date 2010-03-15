@@ -912,9 +912,13 @@ class infolog_bo
 	function &search(&$query)
 	{
 		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
-		if (!empty($query['start']))
+		foreach ($this->timestamps as $key)
 		{
-			$query['start'] = egw_time::user2server($query['start'],'ts');
+			$key = substr($key, 5);
+			if (!empty($query[$key]))
+			{
+				$query[$key] = egw_time::user2server($query[$key],'ts');
+			}
 		}
 
 		$ret = $this->so->search($query);
