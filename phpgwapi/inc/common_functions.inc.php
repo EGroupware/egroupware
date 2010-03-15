@@ -1424,7 +1424,7 @@ function __autoload($class)
 
 /**
  * Clasify exception for a headline and log it to error_log, if not running as cli
- * 
+ *
  * @param Exception $e
  * @param string &$headline
  */
@@ -1468,7 +1468,7 @@ function egw_exception_handler(Exception $e)
 {
 	// logging all exceptions to the error_log (if not cli) and get headline
 	_egw_log_exception($e,$headline);
-	
+
 	// exception handler for cli (command line interface) clients, no html, no logging
 	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
 	{
@@ -1507,7 +1507,8 @@ function egw_exception_handler(Exception $e)
 	// exception handler sending message back to the client as basic auth message
 	elseif($GLOBALS['egw_info']['flags']['no_exception_handler'] == 'basic_auth')
 	{
-		header('WWW-Authenticate: Basic realm="'.$headline.' '.$e->getMessage().'"');
+		$error = str_replace(array("\r", "\n"), array('', ' | '), $e->getMessage());
+		header('WWW-Authenticate: Basic realm="'.$headline.' '.$error.'"');
 		header('HTTP/1.1 401 Unauthorized');
 		header('X-WebDAV-Status: 401 Unauthorized', true);
 	}
