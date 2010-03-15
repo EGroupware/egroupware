@@ -515,14 +515,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'CLASS':
-						if ($this->productManufacturer == 'funambol')
-						{
-							$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
-						}
-						else
-						{
-							$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'CONFIDENTIAL';
-						}
+						$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
 						break;
 
     				case 'ORGANIZER':
@@ -1796,12 +1789,12 @@ class calendar_ical extends calendar_boupdate
 			'recur_interval'	=> 'recur_interval',
 			'recur_data'		=> 'recur_data',
 			'recur_enddate'		=> 'recur_enddate',
+			'recur_exception'	=> 'recur_exception',
 			'title'				=> 'title',
 			'alarm'				=> 'alarm',
 		);
 
 		$defaultFields['basic'] = $defaultFields['minimal'] + array(
-			'recur_exception'	=> 'recur_exception',
 			'priority'			=> 'priority',
 		);
 
@@ -1899,6 +1892,7 @@ class calendar_ical extends calendar_boupdate
 					case 'e66':
 					case '6120c':
 					case 'nokia 6131':
+					case 'n97 mini':
 						$this->supportedFields = $defaultFields['s60'];
 						break;
 					default:
