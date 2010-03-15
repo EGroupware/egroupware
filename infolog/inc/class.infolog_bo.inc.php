@@ -285,11 +285,19 @@ class infolog_bo
 	 *
 	 * @param int|array $info data or info_id of infolog entry to check
 	 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
+	 * @param int $other uid to check (if info==0) or 0 to check against $this->user
 	 * @return boolean
 	 */
-	function check_access( $info,$required_rights )
+	function check_access($info,$required_rights,$other=0)
 	{
 		static $cache = array();
+
+		if (!$info)
+		{
+			$owner = $other ? $other : $this->user;
+			$grants = $this->grants[$owner];
+			return $grants & $required_rights;
+		}
 
 		$info_id = is_array($info) ? $info['info_id'] : $info;
 
@@ -328,7 +336,7 @@ class infolog_bo
 	}
 
 	/**
-	 * Check if use is responsible for an entry: he or one of his memberships is in responsible
+	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
 	 *
 	 * @param array $info infolog entry as array
 	 * @return boolean
@@ -651,7 +659,10 @@ class infolog_bo
 	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
-		if ($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
+		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner'])
+			&& !$this->check_access(0,EGW_ACL_ADD,$values['info_owner'])) return false;
+
+		if (($status_only = $values['info_id']) && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
 		{
 			if (!isset($values['info_responsible']))
 			{
@@ -674,7 +685,7 @@ class infolog_bo
 		if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
 		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
 		{
-			return False;
+			return false;
 		}
 		if ($status_only && !$undelete)	// make sure only status gets writen
 		{
@@ -712,7 +723,7 @@ class infolog_bo
 				}
 				if ($forcestatus && !in_array($values['info_status'],array('done','billed','cancelled'))) $values['info_status'] = $status;
 			}
-			$check_defaults = False;
+			$check_defaults = false;
 		}
 		if ($check_defaults)
 		{
