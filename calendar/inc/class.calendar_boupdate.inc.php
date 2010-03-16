@@ -141,6 +141,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			$event['created'] = $this->now_su;
 			$event['creator'] = $GLOBALS['egw_info']['user']['account_id'];
+			$old_event = array();
 		}
 		else
 		{
@@ -162,9 +163,13 @@ class calendar_boupdate extends calendar_bo
 		if ($event['category'])
 		{
 			if (!is_array($event['category'])) $event['category'] = explode(',',$event['category']);
-			if ($old_event && $old_event['category'] && !is_array($old_event['category']))
+			if (!$old_event || !isset($old_event['category']))
 			{
-				$old_event['category'] = explode(',',$old_event['category']);
+				$old_event['category'] = array();
+			}
+			elseif (!is_array($old_event['category']))
+			{
+				$old_event['category'] = explode(',', $old_event['category']);
 			}
 			foreach($event['category'] as $key => $cat_id)
 			{
@@ -1523,8 +1528,8 @@ class calendar_boupdate extends calendar_bo
 						}
 					}
 				} elseif ($event['recur_type'] == $egwEvent['recur_type'] &&
-							$filter != 'master' &&
-							strpos($egwEvent['title'], $event['title']) === 0)
+							$filter != 'master' && ($filter == 'exact' ||
+							strpos($egwEvent['title'], $event['title']) === 0))
 				{
 					$matchingEvents[] = $egwEvent['id']; // we found the event
 				}
