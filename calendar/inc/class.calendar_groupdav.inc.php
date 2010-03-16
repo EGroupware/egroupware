@@ -177,7 +177,7 @@ class calendar_groupdav extends groupdav_handler
 		if ($events)
 		{
 			// get all max user modified times at once
-			foreach($events as $k => &$event)
+			foreach($events as $k => $event)
 			{
 				if ($this->client_shared_uid_exceptions &&
 						$event['reference'] && $event['uid'] &&
@@ -193,7 +193,7 @@ class calendar_groupdav extends groupdav_handler
 			}
 			$max_user_modified = $this->bo->so->max_user_modified($ids);
 
-			foreach($events as &$event)
+			foreach($events as $event)
 			{
 				$event['max_user_modified'] = $max_user_modified[$event['id']];
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
