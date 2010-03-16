@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.6.001">
-		<grid>
+		<grid width="100%" height="245" border="0">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -19,7 +19,7 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.links" template="" lang="" group="0" version="1.3.001">
-		<grid width="100%" height="245">
+		<grid width="100%" height="245" overflow="auto">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -44,7 +44,7 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.3.001">
-		<grid width="100%" height="245" border="0">
+		<grid width="100%" height="245">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -80,7 +80,7 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
-		<grid width="100%" border="0" spacing="0" padding="0">
+		<grid width="100%" height="245">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -116,7 +116,7 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.customfields" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="245">
+		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -131,7 +131,7 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
-		<grid width="100%" height="245" overflow="auto">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -167,16 +167,6 @@
 					</hbox>
 				</row>
 				<row class="row">
-					<description value="Category" options=",,,info_cat"/>
-					<menulist>
-						<menupopup type="select-cat" options="None" id="info_cat" statustext="select a category for this entry"/>
-					</menulist>
-					<hbox span="all">
-						<description value="Parent"/>
-						<link-entry options="infolog" id="info_id_parent" align="right" class="noWrap"/>
-					</hbox>
-				</row>
-				<row class="row">
 					<description value="Contact" options=",,,info_from"/>
 					<vbox options="0,0">
 						<hbox options="0,0">
@@ -187,6 +177,16 @@
 					</vbox>
 					<description options=",,,info_addr" value="Phone/Email"/>
 					<textbox size="30" maxlength="255" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link" class="inputFullWidth"/>
+				</row>
+				<row class="row">
+					<description value="Category" options=",,,info_cat"/>
+					<menulist>
+						<menupopup type="select-cat" options="None" id="info_cat" statustext="select a category for this entry"/>
+					</menulist>
+					<hbox span="all">
+						<description value="Parent"/>
+						<link-entry options="infolog" id="info_id_parent" align="right" class="noWrap"/>
+					</hbox>
 				</row>
 				<row class="row">
 					<description value="Subject" options=",,,info_subject"/>
