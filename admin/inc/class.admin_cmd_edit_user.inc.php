@@ -7,13 +7,13 @@
  * @package admin
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * admin command: edit/add a user
  */
-class admin_cmd_edit_user extends admin_cmd_change_pw 
+class admin_cmd_edit_user extends admin_cmd_change_pw
 {
 	/**
 	 * Constructor
@@ -37,7 +37,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 
 	/**
 	 * change the password of a given user
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws egw_exception_no_admin
@@ -62,11 +62,18 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		{
 			throw new egw_exception_wrong_userinput(lang('You must enter a loginid'),9);
 		}
+		// Check if an account already exists as system user, and if it does deny creation
+		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
+			!$GLOBALS['egw_info']['server']['ldap_allow_systemusernames'] &&
+			function_exists('posix_getpwnam') && posix_getpwnam($data['account_lid']))
+		{
+			throw new egw_exception_wrong_userinput(lang('There already is a system-user with this name. User\'s should not have the same name as a systemuser'),99);
+		}
 		if (!$data['account_lastname'] && (!$this->account || !is_null($data['account_lastname'])))
 		{
 			throw new egw_exception_wrong_userinput(lang('You must enter a lastname'),9);
 		}
-		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','u')) && 
+		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','u')) &&
 			$id !== $data['account_id'])
 		{
 			throw new egw_exception_wrong_userinput(lang('That loginid has already been taken'),999);
@@ -77,10 +84,10 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		}
 		$data['account_expires'] = $expires = self::_parse_expired($data['account_expires'],(boolean)$this->account);
 		$data['account_status'] = is_null($expires) ? null : ($expires == -1 || $expires > time() ? 'A' : '');
-		
+
 		$data['changepassword'] = admin_cmd::parse_boolean($data['changepassword'],$this->account ? null : true);
 		$data['anonymous'] = admin_cmd::parse_boolean($data['anonymous'],$this->account ? null : false);
-		
+
 		if (!$data['account_primary_group'] && $this->account)
 		{
 			$data['account_primary_group'] = null;	// dont change
@@ -106,7 +113,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 			$data['account_groups'] = admin_cmd::parse_accounts($data['account_groups'],false);
 		}
 		if ($check_only) return true;
-		
+
 		if ($this->account)
 		{
 			if (!($old = admin_cmd::$accounts->read($data['account_id'])))
@@ -161,7 +168,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 			'location' => $this->account ? 'editaccount' : 'addaccount'
 		),False,True);	// called for every app now, not only enabled ones)
-		
+
 		return lang("Account %1 %2",$this->account ? $this->account : $data['account_lid'],
 			$this->account ? lang('updated') : lang("created with id #%1",$data['account_id']));
 	}
@@ -176,7 +183,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		return lang('%1 user %2',$this->account ? lang('Edit') : lang('Add'),
 			admin_cmd::display_account($this->account ? $this->account : $this->set['account_lid']));
 	}
-	
+
 	/**
 	 * parse the expired string and return the expired date as timestamp
 	 *
@@ -190,7 +197,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		switch($str)
 		{
 			case '':
-				if ($existing) return null;	
+				if ($existing) return null;
 				// fall through --> default for new accounts is never
 			case 'never':
 				return -1;

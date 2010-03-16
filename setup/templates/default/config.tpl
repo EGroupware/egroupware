@@ -74,7 +74,7 @@
      </select>
     </td>
    </tr>
-   
+
    <tr class="row_on">
     <td>{lang_Complete_path_to_aspell_program}:</td>
     <td>
@@ -467,7 +467,17 @@
     <td><input name="newsettings[ldap_account_shell]" value="{value_ldap_account_shell}" /></td>
    </tr>
 
-   <tr class="row_on" valign="top">
+   <tr class="row_on">
+     <td>{lang_Allow_usernames_identical_to_system_users?}:</td>
+     <td>
+      <select name="newsettings[ldap_allow_systemusernames]">
+       <option value="">{lang_No}</option>
+       <option value="True"{selected_ldap_allow_systemusernames_True}>{lang_Yes}</option>
+      </select>
+     </td>
+    </tr>
+
+   <tr class="row_off" valign="top">
     <td>
      <a href="account_migration.php"><b>{lang_Migration_between_eGroupWare_account_repositories}:</b></a>
     </td>
