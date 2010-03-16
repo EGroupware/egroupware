@@ -96,14 +96,15 @@ class infolog_groupdav extends groupdav_handler
 			}
 			else
 			{
-				$task_filter = 'user' . $user. '-open';
+				$task_filter = 'open-user' . $user;
 			}
 		}
 
 		// todo add a filter to limit how far back entries from the past get synced
 		$filter = array(
-			'info_type'	=> 'task',
-			'filter'	=> $task_filter,
+			'info_type'		=> 'task',
+			'filter'		=> $task_filter,
+			'calendar_data'	=> false,
 		);
 
 		// process REPORT filters or multiget href's
@@ -163,6 +164,11 @@ class infolog_groupdav extends groupdav_handler
 			'date_format'	=> 'server',
 			'col_filter'	=> $filter,
 		);
+
+		if ($calendar_data)
+		{
+			$query['cols'] = array('info_id', 'info_datemodified');
+		}
 
 		if (is_array($start))
 		{
