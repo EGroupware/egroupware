@@ -1237,8 +1237,8 @@ class calendar_boupdate extends calendar_bo
 						}
 					}
 				} elseif ($event['recur_type'] == $egwEvent['recur_type'] &&
-							$filter != 'master' &&
-							strpos($egwEvent['title'], $event['title']) === 0)
+							$filter != 'master' && ($filter == 'exact' ||
+							strpos($egwEvent['title'], $event['title']) === 0))
 				{
 					$matchingEvents[] = $egwEvent['id']; // we found the event
 				}
