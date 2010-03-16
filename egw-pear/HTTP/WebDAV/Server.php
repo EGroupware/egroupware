@@ -635,7 +635,7 @@ class HTTP_WebDAV_Server
 		{
 			$this->http_status('207 Multi-Status');
 		}
-		else
+		elseif (is_string($retval))
 		{
 			$this->http_status($retval);
 			header('Content-Type: text/html');
@@ -1328,7 +1328,16 @@ class HTTP_WebDAV_Server
         if ($this->_check_lock_status($this->path)) {
             $options                   = Array();
             $options["path"]           = $this->path;
-            $options["content_length"] = $this->_SERVER["CONTENT_LENGTH"];
+
+            if (isset($this->_SERVER['CONTENT_LENGTH']))
+            {
+            	$options['content_length'] = $this->_SERVER['CONTENT_LENGTH'];
+            }
+            elseif (isset($this->_SERVER['X-Expected-Entity-Length']))
+            {
+            	// MacOS gives us that hint
+            	$options['content_length'] = $this->_SERVER['X-Expected-Entity-Length'];
+            }
 
             // get the Content-type
             if (isset($this->_SERVER["CONTENT_TYPE"])) {
