@@ -512,9 +512,9 @@ abstract class bo_merge
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
 					$value = strip_tags($value);
 				}
-				// replace all control chars (C0+C1) but CR, LF and TAB (eg. vertical tabulators) with space
+				// replace all control chars (C0+C1) but CR (\015), LF (\012) and TAB (\011) (eg. vertical tabulators) with space
 				// as they are not allowed in xml
-				$value = preg_replace('/[\000-\008,\010,\011,\013,\014,\016-\037,\177-\237]/u',' ',$value);
+				$value = preg_replace('/[\000-\010\013\014\016-\037\177-\237]/u',' ',$value);
 			}
 			// replace CRLF with linebreak tag of given type
 			switch($mimetype.$mso_application_progid)
