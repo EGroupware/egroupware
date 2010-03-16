@@ -50,6 +50,7 @@ all languages (incl. not listed ones)	setup	de	alle Sprachen (einschl. nicht auf
 all users	setup	de	Alle Benutzer
 allow authentication via cookie	setup	de	Erlaube Benutzerauthentifizierung über ein Cookie
 allow password migration	setup	de	Erlaube Password Migration
+allow usernames identical to system users?	setup	de	Erlaube Benutzernamen identisch zu denen von Systembenutzern?
 allowed migration types (comma-separated)	setup	de	Erlauber Migrationstypen (Komma separiert)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	de	Auf Domains kann alternative auch durch Anmelden als <i>benutzer@domain</i> zugegriffen werden.
 and is up to date	setup	de	und ist aktuell
@@ -141,6 +142,7 @@ click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.p
 click here	setup	de	Hier klicken
 click here to re-run the installation tests	setup	de	zum Wiederholen der Installationstests hier klicken
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	de	Komma getrennte IP-Adressen oder Hostnamen, Vorgabe Zugriff von überall
+complete path to aspell program	setup	de	Vollständiger Pfad zum Programm ASPELL
 completed	setup	de	Abgeschlossen
 config password	setup	de	Konfigurationspasswort
 config username	setup	de	Konfigurationsbenutzername
@@ -241,6 +243,7 @@ egroupware configuration file header.inc.php already exists, you need to use --e
 egroupware domain/instance %1(%2):	setup	de	eGroupWare Domain/Instanz %1(%2):
 egroupware is already installed!	setup	de	eGroupWare ist bereits installiert!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	de	eGroupWare Quellen in '%1' sind nicht komplett, Datei '%2' fehlt !!!
+email (standard maildomain should be set)	setup	de	email (Standard Maildomaine muss gesetzt sein)
 emailadmin profile updated:	setup	de	EMailAdmin Profil aktualisiert:
 enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
 enable mcrypt	setup	de	MCrypt einschalten
@@ -547,6 +550,7 @@ tcp port number of database server	setup	de	TCP-Port des Datenbank-Servers
 text entry	setup	de	Texteingabe
 the %1 extension is needed from: %2.	setup	de	Die %1 Erweiterung (php-extension) wird benötigt von: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	de	Die %1 Erweiterung (php extension) wird benötigt, wenn Sie die %2 Datenbank einsetzen wollen.
+the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	de	Die ctype PHP Erweiterung wird von HTMLpurifier benutzt um FCKeditor Inhalte auf Cross Site Skripting zu überprüfen.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
 the file	setup	de	der Datei
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	de	Der erste Schritt bei Installation von eGroupWare ist sicherzustellen, dass Ihre Umgebung die notwendigen Einstellungen hat, um die Anwendung korrekt auszuführen.
@@ -557,6 +561,7 @@ the imagecreatefromjpeg function is supplied by the gd extension (complied with 
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	de	Die ldap Erweiterung (php extension) wird benötigt für LDAP as Benutzer oder Addressen Speicher, um gegen LDAP oder Aktive Directory zu authetifizieren. Es wird nicht benötigt für eine standard SQL Installation.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
+the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	de	Die mycrypt PHP Erweiterung wird benötigt um den Zustand von eTemplate Formularen sicher auf dem Klient zu speichern. Das ist die empfohlene Art sie zu speichern.
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	de	Die PDO Erweiterung plus ein Datenbank spezifischer Treiber werden vom VFS (virtuelem Datei System) benötigt!
 the session extension is needed to use php sessions (db-sessions work without).	setup	de	Die session Erweiterung (php extension) ist notwendig für PHP Sessions (Datenbank Sessions arbeiten ohne diese).
 the session extension is required!	setup	de	Die SESSION Erweiterung wird unbedingt benötigt!
@@ -681,4 +686,3 @@ your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden
 your temporary directory '%1' %2	setup	de	Ihr temporäres Verzeichnis '%1' %2
 {db | php(default) | php-restore}	setup	de	{db | php(Vorgabe) | php-restore}
 {off(default) | on}	setup	de	{off(Vorgabe) | on}
-complete path to aspell program	setup	de	Vollständiger Pfad zum Programm ASPELL
