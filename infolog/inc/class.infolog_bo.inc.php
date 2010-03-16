@@ -912,12 +912,17 @@ class infolog_bo
 	function &search(&$query)
 	{
 		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
-		foreach ($this->timestamps as $key)
+		if (!isset($query['date_format']) || $query['date_format'] != 'server')
 		{
-			$key = substr($key, 5);
-			if (!empty($query[$key]))
+			if (isset($query['col_filter']))
 			{
-				$query[$key] = egw_time::user2server($query[$key],'ts');
+				foreach ($this->timestamps as $key)
+				{
+					if (!empty($query['col_filter'][$key]))
+					{
+						$query['col_filter'][$key] = egw_time::user2server($query['col_filter'][$key],'ts');
+					}
+				}
 			}
 		}
 
@@ -939,15 +944,18 @@ class infolog_bo
 					{
 						$time = new egw_time($data[$key], egw_time::$server_timezone);
 						if ($key == 'info_enddate') $time->setTime(0, 0,0 ); // Set due date to 00:00
-						if ($time->format('Hi') == '0000')
+						if (!isset($query['date_format']) || $query['date_format'] != 'server')
 						{
-							// we keep dates the same in user-time
-							$arr = egw_time::to($time,'array');
-							$time = new egw_time($arr, egw_time::$user_timezone);
-						}
-						else
-						{
-							$time->setTimezone(egw_time::$user_timezone);
+							if ($time->format('Hi') == '0000')
+							{
+								// we keep dates the same in user-time
+								$arr = egw_time::to($time,'array');
+								$time = new egw_time($arr, egw_time::$user_timezone);
+							}
+							else
+							{
+								$time->setTimezone(egw_time::$user_timezone);
+							}
 						}
 						$data[$key] = egw_time::to($time,'ts');
 					}
