@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup
+ * Setup translation class
  *
  * @link http://www.egroupware.org
  * @package setup
@@ -19,11 +19,20 @@ if (!defined('MAX_MESSAGE_ID_LENGTH'))
 // Define prefix for langfiles (historically 'phpgw_')
 define('EGW_LANGFILE_PREFIX', 'egw_');
 
+/**
+ * Setup translation class
+ *
+ */
 class setup_translation
 {
 	var $langarray = array();
 
-	var $no_translation_marker = '*';
+	/**
+	 * Marker to show behind untranslated phrases, default none
+	 *
+	 * @var string
+	 */
+	var $no_translation_marker = '';//'*';
 
 	/**
 	 * constructor for the class, loads all phrases into langarray
