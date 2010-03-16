@@ -102,9 +102,8 @@ class infolog_groupdav extends groupdav_handler
 
 		// todo add a filter to limit how far back entries from the past get synced
 		$filter = array(
-			'info_type'		=> 'task',
-			'filter'		=> $task_filter,
-			'calendar_data'	=> false,
+			'info_type'	=> 'task',
+			'filter'	=> $task_filter,
 		);
 
 		// process REPORT filters or multiget href's
@@ -165,7 +164,7 @@ class infolog_groupdav extends groupdav_handler
 			'col_filter'	=> $filter,
 		);
 
-		if ($calendar_data)
+		if (!$calendar_data)
 		{
 			$query['cols'] = array('info_id', 'info_datemodified');
 		}
@@ -185,7 +184,7 @@ class infolog_groupdav extends groupdav_handler
 		$tasks =& $this->bo->search($query);
 		if ($tasks && $offset == $query['start'])
 		{
-			foreach($tasks as &$task)
+			foreach($tasks as $task)
 			{
 				$props = array(
 					HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($task)),
