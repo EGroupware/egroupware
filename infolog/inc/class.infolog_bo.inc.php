@@ -848,10 +848,19 @@ class infolog_bo
 	function &search(&$query)
 	{
 		//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
-		if (!empty($query['start']) &&
+		if ($this->tz_offset_s &&
 			(!isset($query['date_format']) || $query['date_format'] != 'server'))
 		{
-			$query['start'] -= $this->tz_offset_s;
+			if (isset($query['col_filter']))
+			{
+				foreach ($this->timestamps as $key)
+				{
+					if (!empty($query['col_filter'][$key]))
+					{
+						$query['col_filter'][$key] -= $this->tz_offset_s;
+					}
+				}
+			}
 		}
 
 		$ret = $this->so->search($query);
