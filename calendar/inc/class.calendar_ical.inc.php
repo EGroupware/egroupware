@@ -1943,7 +1943,21 @@ class calendar_ical extends calendar_boupdate
 				break;
 
 			case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
-				$this->tzid = false; // use event's TZ
+				if (isset($this->cal_prefs['export_timezone']))
+				{
+					switch ($this->cal_prefs['export_timezone'])
+					{
+						case 1:
+							$this->tzid = false; // use event's TZ
+							break;
+						default:
+							$this->tzid = $this->cal_prefs['export_timezone'];
+					}
+				}
+				else
+				{
+					$this->tzid = false; // use event's TZ
+				}
 				$this->supportedFields = $defaultFields['full'];
 				break;
 

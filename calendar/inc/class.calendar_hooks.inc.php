@@ -249,6 +249,10 @@ class calendar_hooks
 			$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.','<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>');
 		}
 
+		// Timezone for file exports
+		$export_tzs = array(1	=> 'Use Event TZ');
+		$export_tzs += egw_time::getTimezones();
+
 		return array(
 			'defaultcalendar' => array(
 				'type'   => 'select',
@@ -423,6 +427,16 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => 'ical',
+			),
+			'export_timezone' => array(
+				'type'   => 'select',
+				'label'  => 'Timezone of event exports',
+				'name'   => 'export_timezone',
+				'values' => $export_tzs,
+				'help'   => 'Use this timezone to export calendar data.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default' => '1', // Use event's TZ
 			),
 			'notifyAdded' => array(
 				'type'   => 'notify',
