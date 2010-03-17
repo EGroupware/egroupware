@@ -14,7 +14,7 @@
 /**
  * eGroupWare API: VFS - new DB based VFS stream wrapper
  *
- * The sqlfs stream wrapper has 3 operation modi:
+ * The sqlfs stream wrapper has 2 operation modi:
  * - content of files is stored in the filesystem (eGW's files_dir) (default)
  * - content of files is stored as BLOB in the DB (can be enabled by mounting sqlfs://...?storage=db)
  *   please note the current (php5.2.6) problems:
@@ -186,7 +186,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_path = $path;
 		$this->opened_mode = $mode = str_replace('b','',$mode);	// we are always binary, like every Linux system
 		$this->opened_stream = null;
-		
+
 		if (!is_null($overwrite_new) || !($stat = call_user_func(array($class,'url_stat'),$path,STREAM_URL_STAT_QUIET)) || $mode[0] == 'x')	// file not found or file should NOT exist
 		{
 			if ($mode[0] == 'r' ||	// does $mode require the file to exist (r,r+)
@@ -524,7 +524,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 
 		if (($ret = $stmt->execute(array('fs_id' => $stat['ino']))))
 		{
-			if (self::url2operation($url) == self::STORE2FS && 
+			if (self::url2operation($url) == self::STORE2FS &&
 				($stat['mode'] & self::MODE_LINK) != self::MODE_LINK)
 			{
 				unlink(self::_fs_path($stat['ino']));
@@ -562,7 +562,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		$operation = self::url2operation($url_from);
 
 		// we have to use array($class,'url_stat'), as $class.'::url_stat' requires PHP 5.2.3 and we currently only require 5.2+
-		if (!($from_stat = call_user_func(array($class,'url_stat'),$path_from,0)) || 
+		if (!($from_stat = call_user_func(array($class,'url_stat'),$path_from,0)) ||
 			!egw_vfs::check_access($from_dir,egw_vfs::WRITABLE,$from_dir_stat = call_user_func(array($class,'url_stat'),$from_dir,0)))
 		{
 			self::_remove_password($url_from);
@@ -1567,7 +1567,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		return $time;
 	}
-	
+
 	/**
 	 * Just a little abstration 'til I know how to organise stuff like that with PDO
 	 *
@@ -1799,6 +1799,80 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (self::LOG_LEVEL > 1) foreach((array)$props as $k => $v) error_log(__METHOD__."($path_ids,$ns) $k => ".array2string($v));
 		return $props;
+	}
+
+	/**
+	 * Migrate SQLFS content from DB to filesystem
+	 *
+	 * @param boolean $debug true to echo a message for each copied file
+	 */
+	static function migrate_db2fs($debug=false)
+	{
+		if (!is_object(self::$pdo))
+		{
+			self::_pdo();
+		}
+		$query = 'SELECT fs_id,fs_name,fs_size,fs_content'.
+			' FROM '.self::TABLE.' WHERE fs_content IS NOT NULL';
+
+		$stmt = self::$pdo->prepare($query);
+		$stmt->bindColumn(1,$fs_id);
+		$stmt->bindColumn(2,$fs_name);
+		$stmt->bindColumn(3,$fs_size);
+		$stmt->bindColumn(4,$fs_content,PDO::PARAM_LOB);
+
+		if ($stmt->execute())
+		{
+			foreach($stmt as $row)
+			{
+				// hack to work around a current php bug (http://bugs.php.net/bug.php?id=40913)
+				// PDOStatement::bindColumn(,,PDO::PARAM_LOB) is not working for MySQL, content is returned as string :-(
+				if (is_string($fs_content))
+				{
+					$name = md5($fs_name.$fs_id);
+					$GLOBALS[$name] =& $fs_content;
+					require_once(EGW_API_INC.'/class.global_stream_wrapper.inc.php');
+					$content = fopen('global://'.$name,'r');
+					if (!$content) echo "fopen('global://$name','w' failed, strlen(\$GLOBALS['$name'])=".strlen($GLOBALS[$name]).", \$GLOBALS['$name']=".substr($GLOBALS['$name'],0,100)."...\n";
+					unset($GLOBALS[$name]);	// unset it, so it does not use up memory, once the stream is closed
+				}
+				else
+				{
+					$content = $fs_content;
+				}
+				if (!is_resource($content))
+				{
+					throw new egw_exception_assertion_failed(__METHOD__."(): fs_id=$fs_id ($fs_name, $fs_size bytes) content is NO resource! ".array2string($content));
+				}
+				$filename = self::_fs_path($fs_id);
+				if (!file_exists($fs_dir=dirname($filename)))
+				{
+					self::mkdir_recursive($fs_dir,0700,true);
+				}
+				if (!($dest = fopen($filename,'w')))
+				{
+					throw new egw_exception_assertion_failed(__METHOD__."(): fopen($filename,'w') failed!");
+				}
+				if (($bytes = stream_copy_to_stream($content,$dest)) != $fs_size)
+				{
+					throw new egw_exception_assertion_failed(__METHOD__."(): fs_id=$fs_id ($fs_name) $bytes bytes copied != size of $fs_size bytes!");
+				}
+				if ($debug) echo "$fs_id: $fs_name: $bytes bytes copied to fs\n";
+				fclose($dest);
+				fclose($content); unset($content);
+
+				++$n;
+			}
+			unset($stmt);
+
+			if ($n)	// delete all content in DB, if there was some AND no error (exception thrown!)
+			{
+				$query = 'UPDATE '.self::TABLE.' SET fs_content=NULL WHERE fs_content IS NOT NULL';
+				$stmt = self::$pdo->prepare($query);
+				$stmt->execute();
+			}
+		}
+		return $n;
 	}
 }
 

@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  *
@@ -64,6 +64,7 @@ function usage($action=null,$ret=0)
 	echo "\t$cmd mount URL [path] (without path prints out the mounts)\n";
 	echo "\t$cmd umount [-a|--all (restores default mounts)] URL|path\n";
 	echo "\t$cmd eacl URL [rwx-] [user or group]\n";
+	echo "\tsudo -u apache $cmd migrate-db2fs --user root_admin --passwd password [--domain default] (migrates sqlfs content from DB to filesystem)\n";
 
 	echo "\nCommon options: --user user --password password [--domain domain] can be used to pass eGW credentials without using the URL writing.\n";
 	echo "\nURL: {vfs|sqlfs|filesystem}://user:password@domain/home/user/file[?option=value&...], /dir/file, ...\n";
@@ -252,6 +253,35 @@ switch($cmd)
 		rename($argv[0],$argv[1]);
 		break;
 
+	case 'migrate-db2fs':
+		if (empty($user) || empty($passwd) || !egw_vfs::$is_root)
+		{
+			die("\nYou need to be root to do that!\n\n");
+		}
+		if (!is_writable($GLOBALS['egw_info']['server']['files_dir'])) exit;	// we need write access, error msg already given
+		$fstab = egw_vfs::mount();
+		if (!is_array($fstab) || !isset($fstab['/']) || strpos($fstab['/'],'storage=db') === false)
+		{
+			foreach($fstab as $path => $url)
+			{
+				echo "$url\t$path\n";
+			}
+			die("\n/ NOT mounted with 'storage=db' --> no need to convert!\n\n");
+		}
+		$num_files = sqlfs_stream_wrapper::migrate_db2fs();	// throws exception on error
+		echo "\n$num_files files migrated from DB to filesystem.\n";
+		$new_url = preg_replace('/storage=db&?/','',$fstab['/']);
+		if (substr($new_url,-1) == '?') $new_url = substr($new_url,0,-1);
+		if (egw_vfs::mount($new_url,'/'))
+		{
+			echo "/ successful re-mounted on $new_url\n";
+		}
+		else
+		{
+			echo "\nre-mounting $new_url on / failed!\n\n";
+		}
+		break;
+
 	default:
 		while($argv)
 		{
@@ -435,7 +465,7 @@ switch($cmd)
 function load_wrapper($url)
 {
 	$scheme = parse_url($url,PHP_URL_SCHEME);
-	
+
 	if (!in_array($scheme,stream_get_wrappers()))
 	{
 		switch($scheme)
