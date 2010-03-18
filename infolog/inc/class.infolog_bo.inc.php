@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package infolog
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -557,7 +557,7 @@ class infolog_bo
 			// pre-cache title and file access
 			self::set_link_cache($data);
 		}
-		else
+		elseif (!empty($data['info_enddate']))
 		{
 			$time = new egw_time($data['info_enddate'], egw_time::$server_timezone);
 			// Set due date to 00:00
