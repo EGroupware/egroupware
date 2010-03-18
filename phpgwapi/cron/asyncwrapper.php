@@ -18,6 +18,6 @@ foreach(file($path_to_egroupware. '/header.inc.php') as $line)
 {
 	if(preg_match("/GLOBALS\['egw_domain']\['(.*)']/", $line, $matches))
 	{
-		system($php. ' -q -d memory_limit=32M '.$path_to_egroupware.'/phpgwapi/cron/asyncservices.php '. $matches[1]);
+		system($php. ' -q -d memory_limit=64M '.$path_to_egroupware.'/phpgwapi/cron/asyncservices.php '. $matches[1]);
 	}
 }
