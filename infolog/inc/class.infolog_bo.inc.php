@@ -659,10 +659,12 @@ class infolog_bo
 	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
-		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner'])
-			&& !$this->check_access(0,EGW_ACL_ADD,$values['info_owner'])) return false;
-
-		if (($status_only = $values['info_id']) && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
+		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner']) &&
+			!$this->check_access(0,EGW_ACL_ADD,$values['info_owner']))
+		{
+			return false;
+		}
+		if (($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT)))
 		{
 			if (!isset($values['info_responsible']))
 			{
