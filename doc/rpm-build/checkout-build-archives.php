@@ -20,9 +20,9 @@ $config = array(
 	'version' => '9.1',				// '1.6'
 	'packaging' => date('Ymd'),			// '001'
 	'egwdir' => 'egroupware',
-	'svndir' => '/tmp/build_root/epl_buildroot-svn',
-	'egw_buildroot' => '/tmp/build_root/epl_buildroot',
-	'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-9.1',
+	'svndir' => '/tmp/build_root/epl_9.2_buildroot-svn',
+	'egw_buildroot' => '/tmp/build_root/epl_9.2_buildroot',
+	'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-9.2',
 	'svnbase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
 	'egwbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
 	'svnbranch' => 'branches/Stylite-EPL-9.1',	// 'branches/1.6' or 'tags/1.6.001'
@@ -125,8 +125,10 @@ function do_obs()
 	$n = 0;
 	foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($config['obs'])) as $path)
 	{
-		if (basename(dirname($path)) != '.osc' &&
-			preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/',$path,$matches) &&
+		if (basename(dirname($path)) == '.osc') continue;
+		if (!preg_match('/\/'.preg_quote($config['packagename']).'[a-z-]*-'.preg_quote($config['version']).'/',$path)) continue;
+
+		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/',$path,$matches) &&
 			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
 		{
 			if (basename($path) != basename($new_name))
@@ -137,6 +139,25 @@ function do_obs()
 			copy($new_name,dirname($path).'/'.basename($new_name));
 			if ($verbose) echo "cp $new_name ".dirname($path)."/\n";
 			++$n;
+		}
+		// updating dsc and spec files
+		if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec')
+		{
+			$content = $content_was = file_get_contents($path);
+			$content = preg_replace('/^Version: '.preg_quote($config['version']).'\.[0-9]+/m','Version: '.$config['version'].'.'.$config['packaging'],$content);
+
+			if (substr($path,-4) == '.dsc')
+			{
+				$content = preg_replace('/^(Debtransform-Tar: '.preg_quote($config['packagename']).'[a-z-]*)-'.
+					preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/m',
+					'\\1-'.$config['version'].'.'.$config['packaging'].'\\2',$content);
+			}
+			if ($content != $content_was)
+			{
+				file_put_contents($path,$content);
+				if ($verbose) echo "Updated $path\n";
+				++$n;
+			}
 		}
 	}
 	if ($n)
