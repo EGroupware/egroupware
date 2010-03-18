@@ -35,6 +35,8 @@ $config = array(
 	'gpg' => '/usr/bin/gpg',
 	'packager' => 'packager@egroupware.org',
 	'obs' => false,
+	'changelog' => false,	// eg. '  * 1. Zeile\n  * 2. Zeile' for debian.changes
+	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'skip' => array(),
 	'run' => array('checkout','copy','virusscan','create','sign')
 );
@@ -139,17 +141,36 @@ function do_obs()
 			if ($verbose) echo "cp $new_name ".dirname($path)."/\n";
 			++$n;
 		}
-		// updating dsc and spec files
-		if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec')
+		// updating dsc, spec and changelog files
+		if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec' ||
+			!empty($config['changelog']) && basename($path) == 'debian.changes')
 		{
 			$content = $content_was = file_get_contents($path);
-			$content = preg_replace('/^Version: '.preg_quote($config['version']).'\.[0-9]+/m','Version: '.$config['version'].'.'.$config['packaging'],$content);
 
+			if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec')
+			{
+				$content = preg_replace('/^Version: '.preg_quote($config['version']).'\.[0-9]+/m','Version: '.$config['version'].'.'.$config['packaging'],$content);
+			}
 			if (substr($path,-4) == '.dsc')
 			{
 				$content = preg_replace('/^(Debtransform-Tar: '.preg_quote($config['packagename']).'[a-z-]*)-'.
 					preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/m',
 					'\\1-'.$config['version'].'.'.$config['packaging'].'\\2',$content);
+			}
+			if (basename($path) == 'debian.changes' && strpos($content,$config['version'].'.'.$config['packaging']) === false)
+			{
+				list($new_header) = explode("\n",$content);
+				$new_header = preg_replace('/\('.preg_quote($config['version']).'.[0-9]+(.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
+				if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
+				$content = $new_header."\n\n".$config['changelog'].
+					"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
+			}
+			if (!empty($config['changelog']) && substr($path,-5) == '.spec' &&
+				($pos_changelog = strpos($content,'%changelog')) !== false)
+			{
+				$pos_changelog += strlen("%changelog\n");
+				$content = substr($content,0,$pos_changelog).' *'.date('D M d Y').' '.$config['changelog_packager']."\n".
+					$config['changelog']."\n".substr($content,$pos_changelog);
 			}
 			if ($content != $content_was)
 			{
@@ -161,7 +182,8 @@ function do_obs()
 	}
 	if ($n)
 	{
-		echo "$n files updated in OBS checkout ($config[obs]), commting them now...\n";
+		echo "$n files updated in OBS checkout ($config[obs]), commiting them now...\n";
+		//run_cmd('osc status '.$config['obs']);
 		run_cmd('osc addremove '.$config['obs'].'/*');
 		run_cmd('osc commit '.$config['obs']);
 	}
