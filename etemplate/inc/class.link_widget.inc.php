@@ -698,7 +698,10 @@ class link_widget
 			foreach($found as $id => $option)
 			{
 				if (!is_array($option)) $option = array('label' => $option);
-				$option['label'] = str_replace(array("\r","\n"),array(" "," "),$option['label']);
+				// xajax uses xml to transport the label, therefore we have to replace not only CR, LF
+				// (not allowed unencoded in Javascript strings) but also all utf-8 C0 and C1 plus CR and LF
+				$option['label'] = preg_replace('/[\000-\037\177-\237]/u',' ',$option['label']);
+
 				$script .= "opt = select.options[select.options.length] = new Option('".addslashes($option['label'])."','".addslashes($id)."');\n";
 				if (count($option) > 1)
 				{
@@ -757,7 +760,8 @@ class link_widget
 
 		
 		$script = "var select = document.getElementById('$id_res');\nselect.options.length=0;\n";
-		if(is_array(egw_link::$app_register[$app]['types'])) {
+		if(is_array(egw_link::$app_register[$app]['types'])) 
+		{
 			$found = egw_link::$app_register[$app]['types'];
 			foreach(egw_link::$app_register[$app]['types'] as $id => $option)
 			{
@@ -772,7 +776,9 @@ class link_widget
 				}
 			}
 			$script .= "document.getElementById('$id_res').parentNode.style.display='inline';\n";
-		} else {
+		} 
+		else 
+		{
 			$script .= "document.getElementById('$id_res').parentNode.style.display='none';\n";
 		}
 		$response->addScript($script);
