@@ -1,0 +1,16 @@
+charset	utf-8
+
+regular (year=0):
+CR	Año Nuevo	1	1	0	0	0
+CR	Día de Juan Santamaría	11	4	0	0	0
+CR	Día Internacional del Trabajo	1	5	0	0	0
+CR	Anexión de Guanacaste	25	7	0	0	0
+CR	Día de la Virgen de los Ángeles 	2	8	0	0	0
+CR	Día de la Madre	15	8	0	0	0
+CR	Independencia de Costa Rica	15	9	0	0	0
+CR	Día de las Culturas	12	10	0	0	0
+CR	Navidad	25	12	0	0	0
+
+2010:
+CR	Jueves Santo	1	4	2010	0	0
+CR	Viernes Santo	2	4	2010	0	0
