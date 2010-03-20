@@ -74,12 +74,6 @@ class module_calendar_month extends Module
 				'type' => 'textfield',
 				'label' => lang('Search string for the events'),
 			),
-			'numEntries' => array(
-				'type' => 'textfield',
-				'label' => lang('Max. Number of entries to show (leave empty for no restriction)'),
-				'default' => '',
-				'params' => array('size' => 1),
-			),
 			'users' => array(
 				'type' => 'select',
 				'options' => array(),
@@ -232,7 +226,7 @@ class module_calendar_month extends Module
 		$this->ui->allowEdit = false;
 		$this->ui->use_time_grid = isset($arguments['grid']) ? $arguments['grid'] : false;
 
-		$weeks = $arguments['numWeeks'] ? (int) $arguments['numWeeks'] : 4;
+		$weeks = $arguments['numWeeks'] ? (int) $arguments['numWeeks'] : 2;
 
 		if (($arguments['acceptDateParam']) && (get_var('date',array('POST','GET'))))
 		{
@@ -248,8 +242,7 @@ class module_calendar_month extends Module
 					adodb_date('Y',$start),
 					adodb_date('m',$start),
 					adodb_date('d',$start));
-		$last = (int) ($first +
-				(60 * 60 * 24 * 7 * $weeks));
+		$last = strtotime("+$weeks weeks",$first) - 1;
 
 		if ($arguments['showTitle'])
 		{
@@ -261,7 +254,7 @@ class module_calendar_month extends Module
 		// set the search parameters
 		$search_params = Array
 		(
-			'offset' => 0, // should be false if you want no restrictions on the number of results
+			'offset' => false,
 			'order' => 'cal_start ASC',
 			'start' => $first,
 			'end' => $last,
@@ -279,14 +272,6 @@ class module_calendar_month extends Module
 		if ((is_array($arguments['users'])) && (count($arguments['users']) > 0))
 		{
 			$search_params['users'] = $arguments['users'];
-		}
-		if ($arguments['numEntries'])
-		{
-			$search_params['num_rows'] = (int) $arguments['numEntries'];
-		}
-		else
-		{
-			$search_params['offset'] = false;
 		}
 		$rows = $this->bo->search($search_params);
 		if ($arguments['showWeeks'])
