@@ -244,7 +244,7 @@ class accounts
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['app'] string with an app-name, to limit result on accounts with run-right for that app
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
-	 * @return array with uid / data pairs, data is an array with account_id, account_lid, account_firstname,
+	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
 	function search($param)
@@ -259,19 +259,18 @@ class accounts
 		{
 			$this->total = $account_search[$serial]['total'];
 		}
-		elseif ($this->config['account_repository'] == 'ldap')
-		//not correct for php<5.1 elseif ((method_exists($this,'search'))	// implements its on search function ==> use it
+		// no backend understands $param['app'] and sql does not understand group-parameters
+		// --> do an full search first and then filter and limit that search
+		elseif($param['app'] || $this->config['account_repository'] != 'ldap' &&
+			(is_numeric($param['type']) || $param['type'] == 'owngroups'))
 		{
-			$account_search[$serial]['data'] = $this->backend->search($param);
-			$account_search[$serial]['total'] = $this->total = $this->backend->total;
-		}
-		else
-		{
-			$serial2 = $serial;
-			if (is_numeric($param['type']) || $param['app'] || $param['type'] == 'owngroups')	// do we need to limit the search on a group or app?
+			$app = $param['app'];
+			unset($param['app']);
+			$start = $param['start'];
+			unset($param['start']);
+
+			if ($this->config['account_repository'] != 'ldap')
 			{
-				$app = $param['app'];
-				unset($param['app']);
 				if (is_numeric($param['type']))
 				{
 					$group = (int) $param['type'];
@@ -282,62 +281,63 @@ class accounts
 					$group = true;
 					$param['type'] = 'groups';
 				}
-				$start = $param['start'];
-				unset($param['start']);
-				$serial2 = serialize($param);
 			}
-			if (!isset($account_search[$serial2]))	// check if we already did this general search
+			// call ourself recursive to get (evtl. cached) full search
+			$full_search = $this->search($param);
+
+			// filter search now on accounts with run-rights for app or a group
+			$valid = array();
+			if ($app)
 			{
-				$account_search[$serial2]['data'] = array();
-				$accounts = $this->backend->get_list($param['type'],$param['start'],$param['sort'],$param['order'],$param['query'],$param['offset'],$param['query_type']);
-				if (!$accounts) $accounts = array();
-				foreach($accounts as $data)
-				{
-					$account_search[$serial2]['data'][$data['account_id']] = $data;
-				}
-				$account_search[$serial2]['total'] = $this->total = $this->backend->total;
+				$valid = $this->split_accounts($app,$param['type'] == 'both' ? 'merge' : $param['type']);
 			}
-			else
+			if ($group)
 			{
-				$this->total = $account_search[$serial2]['total'];
+				$members = is_int($group) ? $this->members($group,true) : $this->memberships($GLOBALS['egw_info']['user']['account_id'],true);
+				if (!$members) $members = array();
+				$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
 			}
-			//echo "$this->backend->get_list($param[type],$param[start],$param[sort],$param[order],$param[query],$param[offset],$param[query_type]) returned<pre>".print_r($account_search[$serial2],True)."</pre>\n";
-			if ($app || $group)	// limit the search on accounts with run-rights for app or a group
+			//echo "<p>limiting result to app='app' and/or group=$group valid-ids=".print_r($valid,true)."</p>\n";
+			$offset = $param['offset'] ? $param['offset'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			$stop = $start + $offset;
+			$n = 0;
+			$account_search[$serial]['data'] = array();
+			foreach ($full_search as $id => $data)
 			{
-				$valid = array();
-				if ($app)
+				if (!in_array($id,$valid))
 				{
-					$valid = $this->split_accounts($app,$param['type'] == 'both' ? 'merge' : $param['type']);
+					$this->total--;
+					continue;
 				}
-				if ($group)
+				// now we have a valid entry
+				if (!is_int($start) || $start <= $n && $n < $stop)
 				{
-					$members = is_int($group) ? $this->members($group,true) : $this->memberships($GLOBALS['egw_info']['user']['account_id'],true);
-					if (!$members) $members = array();
-					$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
+					$account_search[$serial]['data'][$id] = $data;
 				}
-				//echo "<p>limiting result to app='app' and/or group=$group valid-ids=".print_r($valid,true)."</p>\n";
-				$offset = $param['offset'] ? $param['offset'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
-				$stop = $start + $offset;
-				$n = 0;
-				$account_search[$serial]['data'] = array();
-				foreach ($account_search[$serial2]['data'] as $id => $data)
-				{
-					if (!in_array($id,$valid))
-					{
-						$this->total--;
-						continue;
-					}
-					// now we have a valid entry
-					if (!is_int($start) || $start <= $n && $n < $stop)
-					{
-						$account_search[$serial]['data'][$id] = $data;
-					}
-					$n++;
-				}
-				$account_search[$serial]['total'] = $this->total;
+				$n++;
 			}
+			$account_search[$serial]['total'] = $this->total;
 		}
-		//echo "<p>accounts::search('$serial')=<pre>".print_r($account_search[$serial]['data'],True).")</pre>\n";
+		// search via ldap backend
+		elseif ($this->config['account_repository'] == 'ldap')
+		//not correct for php<5.1 elseif ((method_exists($this,'search'))	// implements its on search function ==> use it
+		{
+			$account_search[$serial]['data'] = $this->backend->search($param);
+			$account_search[$serial]['total'] = $this->total = $this->backend->total;
+		}
+		// search by old accounts_sql backend
+		else
+		{
+			$account_search[$serial]['data'] = array();
+			$accounts = $this->backend->get_list($param['type'],$param['start'],$param['sort'],$param['order'],$param['query'],$param['offset'],$param['query_type']);
+			if (!$accounts) $accounts = array();
+			foreach($accounts as $data)
+			{
+				$account_search[$serial]['data'][$data['account_id']] = $data;
+			}
+			$account_search[$serial]['total'] = $this->total = $this->backend->total;
+		}
+		//echo "<p>accounts::search(".array2string(unserialize($serial)).")= returning ".count($account_search[$serial]['data'])." of $this->total entries<pre>".print_r($account_search[$serial]['data'],True)."</pre>\n";
 		//echo "<p>accounts::search() end: ".microtime()."</p>\n";
 		return $account_search[$serial]['data'];
 	}

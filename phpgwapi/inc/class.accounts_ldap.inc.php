@@ -505,8 +505,8 @@ class accounts_ldap
 			// 'account_lastlogin' => $data['phpgwaccountlastlogin'][0],
 			// 'account_lastloginfrom' => $data['phpgwaccountlastloginfrom'][0],
 			'person_id'         => $data['uid'][0],	// id of associated contact
-			'account_created' => isset($data['createtimestamp'][0]) ? $this->accounts_ldap2ts($data['createtimestamp'][0]) : null,
-			'account_modified' => isset($data['modifytimestamp'][0]) ? $this->accounts_ldap2ts($data['modifytimestamp'][0]) : null,
+			'account_created' => isset($data['createtimestamp'][0]) ? self::accounts_ldap2ts($data['createtimestamp'][0]) : null,
+			'account_modified' => isset($data['modifytimestamp'][0]) ? self::accounts_ldap2ts($data['modifytimestamp'][0]) : null,
 		);
 		//echo "<p align=right>accounts_ldap::_read_user($account_id): shadowexpire={$data['shadowexpire'][0]} --> account_expires=$user[account_expires]=".date('Y-m-d H:i',$user['account_expires'])."</p>\n";
 		if ($this->frontend->config['ldap_extra_attributes'])
@@ -621,7 +621,7 @@ class accounts_ldap
 	 *	'exact' - query all fields for exact $param[query]
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
-	 * @return array with uid / data pairs, data is an array with account_id, account_lid, account_firstname,
+	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
 	function search($param)
@@ -751,16 +751,16 @@ class accounts_ldap
 					$test = @$allVals['uid'][0];
 					if (!$this->frontend->config['global_denied_users'][$test] && $allVals['uid'][0])
 					{
-						$accounts[] = Array(
+						$accounts[$allVals['uidnumber'][0]] = Array(
 							'account_id'        => $allVals['uidnumber'][0],
-							'account_lid'       => $GLOBALS['egw']->translation->convert($allVals['uid'][0],'utf-8'),
+							'account_lid'       => translation::convert($allVals['uid'][0],'utf-8'),
 							'account_type'      => 'u',
-							'account_firstname' => $GLOBALS['egw']->translation->convert($allVals['givenname'][0],'utf-8'),
-							'account_lastname'  => $GLOBALS['egw']->translation->convert($allVals['sn'][0],'utf-8'),
+							'account_firstname' => translation::convert($allVals['givenname'][0],'utf-8'),
+							'account_lastname'  => translation::convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
 							'account_email'     => $allVals['mail'][0],
-							'account_created' => isset($allVals['createtimestamp'][0]) ? $this->accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
-							'account_modified' => isset($allVals['modifytimestamp'][0]) ? $this->accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
+							'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
+							'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
 
 						);
 					}
@@ -796,11 +796,11 @@ class accounts_ldap
 					$test = $allVals['cn'][0];
 					if (!$this->frontend->config['global_denied_groups'][$test] && $allVals['cn'][0])
 					{
-						$accounts[] = Array(
+						$accounts[(string)-$allVals['gidnumber'][0]] = Array(
 							'account_id'        => -$allVals['gidnumber'][0],
-							'account_lid'       => $GLOBALS['egw']->translation->convert($allVals['cn'][0],'utf-8'),
+							'account_lid'       => translation::convert($allVals['cn'][0],'utf-8'),
 							'account_type'      => 'g',
-							'account_firstname' => $GLOBALS['egw']->translation->convert($allVals['cn'][0],'utf-8'),
+							'account_firstname' => translation::convert($allVals['cn'][0],'utf-8'),
 							'account_lastname'  => lang('Group'),
 							'account_status'    => 'A',
 						);
@@ -808,12 +808,11 @@ class accounts_ldap
 				}
 			}
 			// sort the array
-			$arrayFunctions =& CreateObject('phpgwapi.arrayfunctions');
-			if(empty($param['order']))
-			{
-				$param['order'] = 'account_lid';
-			}
-			$account_search[$unl_serial]['data'] = $sortedAccounts = $arrayFunctions->arfsort($accounts,explode(',',$param['order']),$param['sort']);
+			$this->_callback_sort = strtoupper($param['sort']);
+			$this->_callback_order = empty($param['order']) ? array('account_lid') : explode(',',$param['order']);
+			uasort($sortedAccounts=$accounts,array($this,'_sort_callback'));
+			$account_search[$unl_serial]['data'] = $sortedAccounts;
+
 			$account_search[$unl_serial]['total'] = $this->total = isset($totalcount) ? $totalcount : count($accounts);
 		}
 		//echo "<p>accounts_ldap::search() found $this->total: ".microtime()."</p>\n";
@@ -828,15 +827,55 @@ class accounts_ldap
 	}
 
 	/**
+	 * DESC or ASC
+	 *
+	 * @var string
+	 */
+	private $_callback_sort = 'DESC';
+	/**
+	 * column_names to sort by
+	 *
+	 * @var array
+	 */
+	private $_callback_order = array('account_lid');
+
+	/**
+	 * Sort callback for uasort
+	 *
+	 * @param array $a
+	 * @param array $b
+	 * @return int
+	 */
+	function _sort_callback($a,$b)
+	{
+		foreach($this->_callback_order as $col )
+		{
+			if($this->_callback_sort == 'ASC')
+			{
+				$cmp = strcasecmp( $a[$col], $b[$col] );
+			}
+			else
+			{
+				$cmp = strcasecmp( $b[$col], $a[$col] );
+			}
+			if ( $cmp != 0 )
+			{
+				return $cmp;
+			}
+		}
+		return 0;
+	}
+
+	/**
 	 * Creates a timestamp from the date returned by the ldap server
 	 *
 	 * @internal
 	 * @param string $date YYYYmmddHHiiss
 	 * @return int
 	 */
-	protected function accounts_ldap2ts($date)
+	protected static function accounts_ldap2ts($date)
 	{
-		if (isset($date) && strlen($date)>0)
+		if (!empty($date))
 		{
 			return gmmktime(substr($date,8,2),substr($date,10,2),substr($date,12,2),
 				substr($date,4,2),substr($date,6,2),substr($date,0,4));
