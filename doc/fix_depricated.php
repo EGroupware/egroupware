@@ -10,6 +10,7 @@
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author RalfBecker@outdoor-training.de
+ * @copyright 2009/10 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -61,7 +62,7 @@ function fix_depricated($file,$replace_file=false)
 		$lines = strtr($lines,$replace);
 	}
 	// PHP Deprecated:  Function ereg() is deprecated
-	if (preg_match_all('/!?eregi? *\\(("[^"]+"[^,]*|\'[^\']+\'[^,]*), *(\$[A-Za-z0-9_]+)(, *\$[A-Za-z0-9_]+)?\)([ )&|]+)/m',$lines,$matches))
+	if (preg_match_all('/!?eregi? *\\(("[^"]+"[^,]*|\'[^\']+\'[^,]*), *(\$[A-Za-z0-9_\[\]\$\'\"]+)(, *\$[A-Za-z0-9_\[\]\$\'\"]+)?\)([ )&|]+)/m',$lines,$matches))
 	{
 		$replace = array();
 		//print_r($matches);
