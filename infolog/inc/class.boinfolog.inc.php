@@ -189,7 +189,7 @@ class boinfolog extends infolog_bo
 		{
 			$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 		}
-		return $info_id;
+		return $status;
 	}
 
 	/**
