@@ -754,10 +754,10 @@ class accounts_ldap
 					{
 						$accounts[$allVals['uidnumber'][0]] = Array(
 							'account_id'        => $allVals['uidnumber'][0],
-							'account_lid'       => translation::convert($allVals['uid'][0],'utf-8'),
+							'account_lid'       => $this->translation->convert($allVals['uid'][0],'utf-8'),
 							'account_type'      => 'u',
-							'account_firstname' => translation::convert($allVals['givenname'][0],'utf-8'),
-							'account_lastname'  => translation::convert($allVals['sn'][0],'utf-8'),
+							'account_firstname' => $this->translation->convert($allVals['givenname'][0],'utf-8'),
+							'account_lastname'  => $this->translation->convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
 							'account_email'     => $allVals['mail'][0],
 							'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
@@ -799,9 +799,9 @@ class accounts_ldap
 					{
 						$accounts[(string)-$allVals['gidnumber'][0]] = Array(
 							'account_id'        => -$allVals['gidnumber'][0],
-							'account_lid'       => translation::convert($allVals['cn'][0],'utf-8'),
+							'account_lid'       => $this->translation->convert($allVals['cn'][0],'utf-8'),
 							'account_type'      => 'g',
-							'account_firstname' => translation::convert($allVals['cn'][0],'utf-8'),
+							'account_firstname' => $this->translation->convert($allVals['cn'][0],'utf-8'),
 							'account_lastname'  => lang('Group'),
 							'account_status'    => 'A',
 						);
