@@ -94,7 +94,7 @@
 			if(isset($_REQUEST['query']))
 			{
 				// limit query to limit characters
-				//if(eregi('^[a-z_0-9]+$',$_REQUEST['query']))
+				//if(preg_match('/^[a-z_0-9]+$/i',$_REQUEST['query']))
 					$GLOBALS['query'] = $_REQUEST['query'];
 			}
 

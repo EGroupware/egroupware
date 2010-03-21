@@ -54,7 +54,7 @@
 	}
 	$headers = getallheaders();
 
-	if(ereg('Basic',$headers['Authorization']))
+	if(strpos($headers['Authorization'],'Basic') !== false)
 	{
 		$tmp = $headers['Authorization'];
 		$tmp = str_replace(' ','',$tmp);

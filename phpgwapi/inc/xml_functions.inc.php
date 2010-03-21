@@ -390,7 +390,7 @@
 					{
 						// we have a DOUBLE
 						// we must check that only 0123456789-.<space> are characters here
-						if (!ereg("^[+-]?[eE0123456789 \\t\\.]+$", $GLOBALS['_xh'][$parser]['ac']))
+						if (!preg_match('/^[+-]?[eE0123456789 \\t\\.]+$/', $GLOBALS['_xh'][$parser]['ac']))
 						{
 							// TODO: find a better way of throwing an error
 							// than this!
@@ -407,7 +407,7 @@
 					{
 						// we have an I4/INT
 						// we must check that only 0123456789-<space> are characters here
-						if (!ereg("^[+-]?[0123456789 \\t]+$", $GLOBALS['_xh'][$parser]['ac']))
+						if (!preg_match('/^[+-]?[0123456789 \\t]+$/', $GLOBALS['_xh'][$parser]['ac']))
 						{
 							// TODO: find a better way of throwing an error
 							// than this!

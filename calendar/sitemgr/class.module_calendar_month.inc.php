@@ -46,7 +46,7 @@ class module_calendar_month extends Module
 
 	function module_calendar_month()
 	{
-		$this->bo =& new calendar_bo();
+		$this->bo = new calendar_bo();
 		$this->arguments = array(
 			'category' => array(
 				'type' => 'select',
@@ -166,7 +166,7 @@ class module_calendar_month extends Module
 		{
 			$is_group = false;
 			$has_read_permissions = false;
-			$acl =& new acl($entry['account_id']);
+			$acl = new acl($entry['account_id']);
 			$acl->read_repository();
 			// get the rights for each account to check whether the anon user has read permissions.
 			$rights = $acl->get_rights($anon_user,'calendar');
@@ -222,7 +222,7 @@ class module_calendar_month extends Module
 	{
 		$html = "";
 		$GLOBALS['egw']->translation->add_app('calendar');
-		$this->ui =& new calendar_uiviews();
+		$this->ui = new calendar_uiviews();
 		$this->ui->allowEdit = false;
 		$this->ui->use_time_grid = isset($arguments['grid']) ? $arguments['grid'] : false;
 

@@ -31,7 +31,7 @@
 
 			while (list(,$value) = @each($values))
 			{
-				if (ereg('@',$value['session_lid']))
+				if (strpos($value['session_lid'],'@') !== false)
 				{
 					$t = explode('@',$value['session_lid']);
 					$session_lid = $t[0];

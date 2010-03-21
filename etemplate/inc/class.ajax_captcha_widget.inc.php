@@ -62,7 +62,7 @@ class ajax_captcha_widget
 		//sets main etemplate cell with data created in etemplate.captcha_widget
 		$cell['type'] = 'template';
 		$cell['size'] = $cell['name'];
-		$widget =& new etemplate('etemplate.captcha_widget');
+		$widget = new etemplate('etemplate.captcha_widget');
 		$widget->no_onclick = True;
 		$cell['obj'] = &$widget;
 		

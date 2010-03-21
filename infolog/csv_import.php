@@ -466,7 +466,7 @@ case 'import':
 		{
 			if (isset($values[$date]) && !is_numeric($date))
 			{
-				if (ereg('(.*)\.[0-9]+',$values[$date],$parts)) $values[$date] = $parts[1];
+				if (preg_match('/(.*)\.[0-9]+/',$values[$date],$parts)) $values[$date] = $parts[1];
 				$values[$date] = strtotime($values[$date]);
 			}
 		}

@@ -442,7 +442,7 @@ case 'import':
 					// convert german DD.MM.YYYY format into ISO YYYY-MM-DD format
 					$values[$date] = preg_replace('/([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})/','\3-\2-\1',$values[$date]);
 					// remove fractures of seconds if present at the end of the string
-					if (ereg('(.*)\.[0-9]+',$values[$date],$parts)) $values[$date] = $parts[1];
+					if (preg_match('/(.*)\.[0-9]+/',$values[$date],$parts)) $values[$date] = $parts[1];
 					$values[$date] = strtotime($values[$date]);
 				}
 			}

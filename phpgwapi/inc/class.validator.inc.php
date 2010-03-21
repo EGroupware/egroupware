@@ -144,7 +144,7 @@
 			if(@$uris[$url_elements['scheme']])
 			{
 				//echo ' is valid<br>host ' . $url_elements['host'];
-				if(eregi("[a-z]", $url_elements['host']))
+				if(preg_match('/[a-z]/i', $url_elements['host']))
 				{
 					//echo ' is name<br>';
 					return $this->is_hostname($url_elements['host']);
