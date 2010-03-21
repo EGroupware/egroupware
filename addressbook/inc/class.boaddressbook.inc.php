@@ -363,7 +363,7 @@ class boaddressbook
 				'contact_owner' => 0,
 			));
 		}
-		return $this->data2xmlrpc(array_merge($this->contacts->old_read(
+		$searchResults = $this->contacts->old_read(
 			(int) $param['start'],
 			(int) $param['limit'],
 			$param['fields'],
@@ -373,7 +373,10 @@ class boaddressbook
 			$param['order'],
 			$param['lastmod'] ? $param['lastmod'] : -1,
 			$param['cquery']
-		),$extra_accounts),$read_customfields);
+		);
+		if (!is_array($searchResults)) $searchResults = array();
+
+		return $this->data2xmlrpc(array_merge($searchResults,$extra_accounts),$read_customfields);
 	}
 
 	/**
