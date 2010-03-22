@@ -356,6 +356,7 @@ timeframe	calendar	de	Zeitrahmen
 timeframe to search	calendar	de	Zeitrahmen für die Suche
 timezone	calendar	de	Zeitzone
 timezone in which recurrences have identical time	calendar	de	Zeitzone in der Wiederholungen zu identischer Uhrzeit stattfinden
+timezone of event exports	calendar	de	Zeitzone des exportierten Termins
 timezones updated to version %1 (%2 records updated).	calendar	de	Zeitzonen aktualisiert zu Version %1 (%2 Datensätze aktualisiert).
 title of the event	calendar	de	Titel des Termin
 to many might exceed your execution-time-limit	calendar	de	zu viele können Ihre Laufzeitbeschränkung überschreiten
@@ -367,6 +368,7 @@ update timezones	calendar	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Popup
+use this timezone to export calendar data.	calendar	de	Diese Zeitzone zum exportieren von Kalenderdaten verwenden
 user or group	calendar	de	Benutzer oder Gruppe
 users + groups: inviting both allways requires an invite grant	admin	de	Benutzer + Gruppen: Einladungen beider brauchen eine Freigabe
 view exception	calendar	de	Ausnahme anzeigen

@@ -356,6 +356,7 @@ timeframe	calendar	en	Timeframe
 timeframe to search	calendar	en	Timeframe to search
 timezone	calendar	en	Timezone
 timezone in which recurrences have identical time	calendar	en	Timezone in which recurrences have identical time
+timezone of event exports	calendar	en	Timezone of event exports
 timezones updated to version %1 (%2 records updated).	calendar	en	Timezones updated to version %1 (%2 records updated).
 title of the event	calendar	en	Title of the event
 to many might exceed your execution-time-limit	calendar	en	too many might exceed your execution-time-limit
@@ -367,6 +368,7 @@ update timezones	calendar	en	Update timezones
 updated	calendar	en	Updated
 use end date	calendar	en	Use End date
 use the selected time and close the popup	calendar	en	Use the selected time and close the popup
+use this timezone to export calendar data.	calendar	en	Use this timezone to export calendar data.
 user or group	calendar	en	User or group
 users + groups: inviting both allways requires an invite grant	admin	en	Users + groups: inviting both always requires an invite grant
 view exception	calendar	en	View exception
