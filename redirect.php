@@ -36,7 +36,7 @@
 	{
 		$url= html_entity_decode(urldecode($_GET['go']));
 		unset($_GET['go']);
-		$url=$url."&".http_build_query($_GET);
+		if (!empty($_GET)) $url=$url."&".http_build_query($_GET);
 
 		Header('Location: ' . html_entity_decode(urldecode($url)));
 		exit;
