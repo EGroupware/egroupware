@@ -142,7 +142,7 @@ function do_obs()
 	{
 		echo "$n files updated in OBS checkout ($config[obs]), commting them now...\n";
 		run_cmd('osc addremove '.$config['obs'].'/*');
-		run_cmd('osc commit '.$config['obs']);
+		run_cmd('osc commit -m '.escapeshellarg('Version: '.$config['version'].'.'.$config['packaging'].":\n".$config['changelog']).' '.$config['obs']);
 	}
 }
 
