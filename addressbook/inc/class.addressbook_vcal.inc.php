@@ -119,11 +119,13 @@ class addressbook_vcal extends addressbook_bo
 	* @param string	$_vcard		the vcard
 	* @param int/string	$_abID=null		the internal addressbook id or !$_abID for a new enty
 	* @param boolean $merge=false	merge data with existing entry
+	* @param string $charset  The encoding charset for $text. Defaults to
+    *                         utf-8 for new format, iso-8859-1 for old format.
 	* @return int contact id
 	*/
-	function addVCard($_vcard, $_abID=null, $merge=false)
+	function addVCard($_vcard, $_abID=null, $merge=false, $charset=null)
 	{
-		if (!($contact = $this->vcardtoegw($_vcard))) return false;
+		if (!($contact = $this->vcardtoegw($_vcard, $charset))) return false;
 
 		if ($_abID)
 		{
@@ -159,9 +161,10 @@ class addressbook_vcal extends addressbook_bo
 			// update entry
 			$contact['id'] = $_abID;
 		}
-		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
+		elseif (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']) &&
+				(int)$GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'])
     	{
-    		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+    		$contact['owner'] = (int)$GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
     		if ($contact['owner'] == -1)
     		{
 	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
@@ -450,7 +453,7 @@ class addressbook_vcal extends addressbook_bo
 			//$vCard->setParameter($vcardField, $options);
 		}
 
-		$result = $vCard->exportvCalendar();
+		$result = $vCard->exportvCalendar($_charset);
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
@@ -461,11 +464,11 @@ class addressbook_vcal extends addressbook_bo
 		return $result;
 	}
 
-	function search($_vcard, $contentID=null, $relax=false)
+	function search($_vcard, $contentID=null, $relax=false, $charset=null)
 	{
 		$result = array();
 
-		if (($contact = $this->vcardtoegw($_vcard)))
+		if (($contact = $this->vcardtoegw($_vcard, $charset)))
 		{
 			if (is_array($contact['category']))
 			{
@@ -490,11 +493,19 @@ class addressbook_vcal extends addressbook_bo
 		if (is_array($_supportedFields)) $this->supportedFields = $_supportedFields;
 	}
 
-	function vcardtoegw($_vcard)
+	/**
+     * Parses a string containing vCard data.
+     *
+     * @param string $_vcard   The data to parse.
+     * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
+     *
+     * @return array|boolean   The contact data or false on errors.
+     */
+	function vcardtoegw($_vcard, $charset=null)
 	{
 		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 		// be as flexible as possible
-
 
 		$databaseFields = array(
 			'ADR;WORK'			=> array('','adr_one_street2','adr_one_street','adr_one_locality','adr_one_region',
@@ -539,14 +550,12 @@ class addressbook_vcal extends addressbook_bo
 				array2string($_vcard)."\n",3,$this->logfile);
 		}
 
-		//Horde::logMessage("vCalAddressbook vcardtoegw:\n$_vcard", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
 
 		$container = false;
 		$vCard = Horde_iCalendar::newComponent('vcard', $container);
 
-		if (!$vCard->parsevCalendar($_vcard, 'VCARD'))
+		if (!$vCard->parsevCalendar($_vcard, 'VCARD', $charset))
 		{
 			return False;
 		}

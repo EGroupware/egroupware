@@ -157,6 +157,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		$deviceUIDExtension = 'uidExtension-' . $this->_sourceURI;
 		$deviceNonBlockingAllday = 'nonBlockingAllday-' . $this->_sourceURI;
 		$deviceTimezone = 'tzid-' . $this->_sourceURI;
+		$deviceCharSet = 'charset-' . $this->_sourceURI;
 		if (isset($this->_clientDeviceInfo)
 				&& is_array($this->_clientDeviceInfo)) {
 			// update user preferences
@@ -164,6 +165,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			$this->_clientDeviceInfo['uidExtension'] = $syncml_prefs[$deviceUIDExtension];
 			$this->_clientDeviceInfo['nonBlockingAllday'] = $syncml_prefs[$deviceNonBlockingAllday];
 			$this->_clientDeviceInfo['tzid'] = $syncml_prefs[$deviceTimezone];
+			$this->_clientDeviceInfo['charset'] = $syncml_prefs[$deviceCharSet];
 			// use cached information
 			return $this->_clientDeviceInfo;
 		}
@@ -214,6 +216,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 					'uidExtension'        		=> $syncml_prefs[$deviceUIDExtension],
 					'nonBlockingAllday'			=> $syncml_prefs[$deviceNonBlockingAllday],
 					'tzid'						=> $syncml_prefs[$deviceTimezone],
+					'charset'					=> $syncml_prefs[$deviceCharSet],
 					'dataStore'					=> unserialize($row['dev_datastore']),
 				);
 				return $this->_clientDeviceInfo;

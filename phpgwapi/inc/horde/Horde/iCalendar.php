@@ -462,8 +462,11 @@ class Horde_iCalendar {
 
     /**
      * Export as vCalendar format.
+     *
+     * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, standard character set for old format.
      */
-    function exportvCalendar()
+    function exportvCalendar($charset = null)
     {
         // Default values.
         $requiredAttributes['PRODID'] = '-//The Horde Project//Horde_iCalendar Library' . (defined('HORDE_VERSION') ? ', Horde ' . constant('HORDE_VERSION') : '') . '//EN';
@@ -475,7 +478,7 @@ class Horde_iCalendar {
             }
         }
 
-        return $this->_exportvData('VCALENDAR');
+        return $this->_exportvData('VCALENDAR', $charset);
     }
 
     /**
@@ -881,10 +884,12 @@ class Horde_iCalendar {
      * Export this component in vCal format.
      *
      * @param string $base  The type of the base object.
+     * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, standard character set for old format.
      *
      * @return string  vCal format data.
      */
-    function _exportvData($base = 'VCALENDAR')
+    function _exportvData($base = 'VCALENDAR', $charset = null)
     {
     	$base = String::upper($base);
 
@@ -898,6 +903,15 @@ class Horde_iCalendar {
             // Ensure that version is the first attribute.
             $result .= 'VERSION:' . $this->_version . $this->_newline;
         }
+
+        if (empty($charset)) {
+        	if ($this->isOldFormat()) {
+        		$charset = NLS::getCharset();
+        	} else {
+        		$charset = 'utf-8';
+        	}
+        }
+
         foreach ($this->_attributes as $attribute) {
             $name = $attribute['name'];
             if ($name == 'VERSION') {
@@ -910,9 +924,12 @@ class Horde_iCalendar {
             if ($params) {
                 foreach ($params as $param_name => $param_value) {
                     /* Skip CHARSET for iCalendar 2.0 data, not allowed. */
-                    if ($param_name == 'CHARSET'
-                    		&& (!$this->isOldFormat() || empty($param_value))) {
-                        continue;
+                    if ($param_name == 'CHARSET') {
+                    	if (!$this->isOldFormat() || empty($param_value)) {
+                        	continue;
+                    	} else {
+                    		$param_value = String::Upper($param_value);
+                    	}
                     }
                     if ($param_name == 'ENCODING') {
                     	continue;
@@ -925,6 +942,11 @@ class Horde_iCalendar {
                     /* Skip TZID for iCalendar 1.0 data, not supported. */
 					if ($this->isOldFormat() && $param_name == 'TZID') {
                         continue;
+                    }
+                    // Skip CN in ATTENDEE adn ORGANIZER for vCalendar 1.0
+                    if ($this->isOldFormat() && $param_name == 'CN' &&
+                    	($name == 'ATTENDEE' || $name == 'ORGANIZER')) {
+                    	continue;
                     }
                     if ($param_value === null) {
                         $params_str .= ";$param_name";
@@ -945,8 +967,7 @@ class Horde_iCalendar {
                 $value = $this->_exportDateTime($value);
                 break;
 
-
-				// Support additional fields after date.
+			// Support additional fields after date.
  			case 'AALARM':
             case 'DALARM':
             	if (isset($params['VALUE'])) {
@@ -1143,7 +1164,7 @@ class Horde_iCalendar {
 		                    !isset($params['CHARSET'])) {
 	                    // Add CHARSET as well. At least the synthesis client
 	                    // gets confused otherwise
-	                    $params['CHARSET'] = NLS::getCharset();
+	                    $params['CHARSET'] = String::upper($charset);
 	                    $params_str .= ';CHARSET=' . $params['CHARSET'];
                     }
                 } else {
@@ -1209,7 +1230,7 @@ class Horde_iCalendar {
 			            $params_str .= ';ENCODING=' . $params['ENCODING'];
 			            $attr_string = $name . $params_str . ':' . $this->_newline . ' ' . $this->_base64Encode($value);
 			            $attr_string = String::wordwrap($attr_string, 75, $this->_newline . ' ',
-				            true, 'utf-8', true);
+				            true, 'utf-8', true); // charset does not matter
 			            $result .= $attr_string . $this->_newline;
 			            if ($this->isOldFormat()) {
 				            $result .= $this->_newline; // Append an empty line
@@ -1227,7 +1248,7 @@ class Horde_iCalendar {
                 }
                 if (!$this->isOldFormat()) {
                     $attr_string = String::wordwrap($attr_string, 75, $this->_newline . ' ',
-                                                    true, 'utf-8', true);
+                                                    true, $charset, true);
                 }
                 $result .= $attr_string . $this->_newline;
             }
@@ -1238,7 +1259,7 @@ class Horde_iCalendar {
     			// Not supported
 				continue;
         	}
-            $result .= $component->exportvCalendar();
+            $result .= $component->exportvCalendar($charset);
         }
 
         return $result . 'END:' . $base . $this->_newline;
