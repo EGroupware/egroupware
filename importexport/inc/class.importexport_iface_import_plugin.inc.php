@@ -24,7 +24,7 @@
  * So this interface just garanties the interaction with userinterfaces. It
  * has nothing to do with datatypes.
  */
-interface iface_import_plugin {
+interface importexport_iface_import_plugin {
 	
 	/**
 	 * imports entries according to given definition object.
@@ -33,7 +33,7 @@ interface iface_import_plugin {
 	 * @param definition $_definition
 	 * @return int number of successful imports
 	 */
-	public function import( $_stream, definition $_definition );
+	public function import( $_stream, importexport_definition $_definition );
 	
 	/**
 	 * returns translated name of plugin

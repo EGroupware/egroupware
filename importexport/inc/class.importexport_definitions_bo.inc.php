@@ -10,19 +10,17 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.arrayxml.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.import_export_helper_functions.inc.php');
 require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 /** bo to define {im|ex}ports
  *
  * @todo make this class an egw_record_pool!
  */
-class bodefinitions {
+class importexport_definitions_bo {
 
 	const _appname = 'importexport';
-	const _defintion_talbe = 'egw_importexport_definitions';
+	const _defintion_table = 'egw_importexport_definitions';
 
 	/**
 	 * @var so_sql holds so_sql
@@ -36,7 +34,7 @@ class bodefinitions {
 
 	public function __construct($_query=false)
 	{
-		$this->so_sql = new so_sql(self::_appname, self::_defintion_talbe );
+		$this->so_sql = new so_sql(self::_appname, self::_defintion_table );
 		if ($_query) {
 			$definitions = $this->so_sql->search($_query, true);
 			foreach ((array)$definitions as $definition) {
@@ -54,7 +52,7 @@ class bodefinitions {
 		return $this->definitions;
 	}
 	public function read($definition_id) {
-            $definition = new definition( $definition_id['name'] );
+            $definition = new importexport_definition( $definition_id['name'] );
             return $definition->get_record_array();
 	}
 	/**
@@ -76,7 +74,7 @@ class bodefinitions {
 	* @param definition $definition
 	*/
 	public function save(Array $data) {
-		$definition = new definition();
+		$definition = new importexport_definition();
 		$definition->set_record($data);
 		$definition->save($data['definition_id']);
 	}
@@ -117,7 +115,7 @@ class bodefinitions {
 
 		$export_data['definitions'] = array();
 		foreach ($keys as $definition_id) {
-			$definition = new definition( $definition_id );
+			$definition = new importexport_definition( $definition_id );
 			$export_data['definitions'][$definition->name] = $definition->get_record_array();
 			$export_data['definitions'][$definition->name]['allowed_users'] =
 				import_export_helper_functions::account_id2name(
@@ -166,10 +164,10 @@ class bodefinitions {
 		foreach ( $definitions as $name => $definition_data )
 		{
 			// convert allowed_user
-			$definition_data['allowed_users'] = import_export_helper_functions::account_name2id( $definition_data['allowed_users'] );
-			$definition_data['owner'] = import_export_helper_functions::account_name2id( $definition_data['owner'] );
+			$definition_data['allowed_users'] = importexport_helper_functions::account_name2id( $definition_data['allowed_users'] );
+			$definition_data['owner'] = importexport_helper_functions::account_name2id( $definition_data['owner'] );
 
-			$definition = new definition( $definition_data['name'] );
+			$definition = new importexport_definition( $definition_data['name'] );
 			$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
 
 			$definition->set_record( $definition_data );

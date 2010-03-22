@@ -11,7 +11,7 @@
  */
 
 /**
- * class iface_egw_record
+ * class importexport_iface_egw_record
  * This a the abstract interface of an egw record.
  * A record is e.g. a single address or or single event.
  * The idea behind is that we can have metaoperation over differnt apps by 
@@ -24,7 +24,7 @@
  * @todo functions for capabilities of object
  * @todo caching. e.g. only read name of object
  */
-interface iface_egw_record
+interface importexport_iface_egw_record
 {
 
 	/**

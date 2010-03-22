@@ -11,9 +11,6 @@
  * @version $Id$
  */
 
-require_once('class.iface_import_record.inc.php');
-require_once('class.import_export_helper_functions.inc.php');
-
 /**
  * class import_csv
  * This a an abstract implementation of interface iface_import_record
@@ -22,7 +19,7 @@ require_once('class.import_export_helper_functions.inc.php');
  * @todo Throw away spechial chars and trim() entries ?
  * @todo Check for XSS like userinput! (see common_functions)
  */
-class import_csv implements iface_import_record { //, Iterator {
+class importexport_import_csv implements importexport_iface_import_record { //, Iterator {
 
 	const csv_max_linelength = 8000;
 	
@@ -235,7 +232,7 @@ class import_csv implements iface_import_record { //, Iterator {
 	 * @return bool
 	 */
 	protected function do_conversions( ) {
-		if ( $record = import_export_helper_functions::conversion( $this->record, $this->conversion )) {
+		if ( $record = importexport_helper_functions::conversion( $this->record, $this->conversion )) {
 			$this->record = $record;
 			return;
 		}

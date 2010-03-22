@@ -10,9 +10,6 @@
  * @version $Id: class.importexport_import_ui.inc.php 27222 2009-06-08 16:21:14Z ralfbecker $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.bodefinitions.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
-
 
 /**
  * userinterface for admins to schedule imports or exports using async services
@@ -39,20 +36,23 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
 			}
 			$async_list = ExecMethod('phpgwapi.asyncservice.read', 'importexport%');
-			foreach($async_list as $id => $async) {
-				if(is_array($async['data']['errors'])) {
-					$async['data']['errors'] = implode("\n", $async['data']['errors']);
+			$data = array();
+			if(is_array($async_list)) {
+				foreach($async_list as $id => $async) {
+					if(is_array($async['data']['errors'])) {
+						$async['data']['errors'] = implode("\n", $async['data']['errors']);
+					}
+					if(is_numeric($async['data']['record_count'])) {
+						$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
+					}
+					$data['scheduled'][] = $async['data'] + array(
+						'id'	=>	$id,
+						'next'	=>	$async['next'],
+						'times'	=>	str_replace("\n", '', print_r($async['times'], true)),
+					);
 				}
-				if(is_numeric($async['data']['record_count'])) {
-					$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
-				}
-				$data['scheduled'][] = $async['data'] + array(
-					'id'	=>	$id,
-					'next'	=>	$async['next'],
-					'times'	=>	str_replace("\n", '', print_r($async['times'], true)),
-				);
+				array_unshift($data['scheduled'], false);
 			}
-			array_unshift($data['scheduled'], false);
 			$sel_options = self::get_select_options($data);
 			$this->template->read('importexport.schedule_index');
 
@@ -128,20 +128,20 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				)
 			);
 
-			(array)$apps = import_export_helper_functions::get_apps($data['type'] ? $data['type'] : 'all');
+			(array)$apps = importexport_helper_functions::get_apps($data['type'] ? $data['type'] : 'all');
 			if(count($apps)) {
 				$options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
 			}
 
 			if($data['appname']) {
-				$plugins = import_export_helper_functions::get_plugins($data['appname'], $data['type']);
+				$plugins = importexport_helper_functions::get_plugins($data['appname'], $data['type']);
 				if(is_array($plugins[$data['appname']][$data['type']])) {
 					foreach($plugins[$data['appname']][$data['type']] as $key => $title) {
 						$options['plugin'][$key] = $title;
 					}
 				}
 			} else {
-				$plugins = import_export_helper_functions::get_plugins('all', $data['type'] ? $data['type'] : 'all');
+				$plugins = importexport_helper_functions::get_plugins('all', $data['type'] ? $data['type'] : 'all');
 				if(is_array($plugins)) {
 					foreach($plugins as $appname => $_types) {
 						foreach($_types as $type => $plugins) {
@@ -164,9 +164,9 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 			if($data['type']) $query['type'] = $data['type'];
 			if($data['application']) $query['application'] = $data['application'];
 			if($data['plugin']) $query['plugin'] = $data['plugin'];
-			$definitions = new bodefinitions($query);
+			$definitions = new importexport_definitions_bo($query);
 			foreach ((array)$definitions->get_definitions() as $identifier) {
-					$definition = new definition($identifier);
+					$definition = new importexport_definition($identifier);
 					if ($title = $definition->get_title()) {
 						$options['definition'][$title] = $title;
 					}
@@ -186,7 +186,7 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				'name' => $data['definition']
 			);
 
-			$definitions = new bodefinitions($query);
+			$definitions = new importexport_definitions_bo($query);
 			$definition_list = ((array)$definitions->get_definitions());
 			
 			$id = 'importexport.'.$definition_list[0].'.'.$data['target'];
@@ -255,14 +255,13 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				exit();
 			}
 
-			$definition = new definition($data['definition']);
+			$definition = new importexport_definition($data['definition']);
 			if( $definition->get_identifier() < 1 ) {
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
 				exit();
 			}
 			$GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
 
-			require_once(EGW_INCLUDE_ROOT . "/$definition->application/importexport/class.$definition->plugin.inc.php");
 			$po = new $definition->plugin;
 
 			$type = $data['type'];
@@ -284,7 +283,7 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				unset($data['errors']);
 			}
 
-			if($po instanceof iface_import_plugin) {
+			if($po instanceof importexport_iface_import_plugin) {
 				if(is_numeric($result)) {
 					$data['record_count'] = $result;
 				}

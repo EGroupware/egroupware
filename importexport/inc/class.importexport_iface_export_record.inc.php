@@ -24,7 +24,7 @@
  * usable for other tasks.
  * 
  */
-interface iface_export_record
+interface importexport_iface_export_record
 {
 	/**
 	 * constructor
@@ -41,7 +41,7 @@ interface iface_export_record
 	 * @param object of interface egw_record _record
 	 * @return bool
 	 */
-	public function export_record( iface_egw_record $_record );
+	public function export_record( importexport_iface_egw_record $_record );
 
 	/**
 	 * Retruns total number of exported records.

@@ -7,7 +7,7 @@
  * 
  * For the mapping to work properly, you will have to fill $mapping_fields with the target fields for your application.
  * 
- * NB: Your wizard class must be in <appname>/importexport/class.wizzard_<plugin_name>.inc.php
+ * NB: Your wizard class must be in <appname>/inc/class.appname_wizard_<plugin_name>.inc.php
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package importexport
@@ -15,9 +15,7 @@
  * @author Nathan Gray
  */
 
-require_once(EGW_INCLUDE_ROOT.'/importexport/inc/class.basic_import_csv.inc.php');
-
-class wizzard_basic_import_csv 
+class importexport_wizard_basic_import_csv 
 {
 
 	const TEMPLATE_MARKER = '-eTemplate-';
@@ -31,10 +29,10 @@ class wizzard_basic_import_csv
 	* List of eTemplates to use for each step.  You can override this with your own etemplates steps.
 	*/
 	protected $step_templates = array(
-		'wizzard_step30' => 'importexport.wizard_basic_import_csv.sample_file',
-		'wizzard_step40' => 'importexport.wizard_basic_import_csv.choosesepncharset',
-		'wizzard_step50' => 'importexport.wizard_basic_import_csv.fieldmapping',
-		'wizzard_step55' => 'importexport.wizard_basic_import_csv.conditions'
+		'wizard_step30' => 'importexport.wizard_basic_import_csv.sample_file',
+		'wizard_step40' => 'importexport.wizard_basic_import_csv.choosesepncharset',
+		'wizard_step50' => 'importexport.wizard_basic_import_csv.fieldmapping',
+		'wizard_step55' => 'importexport.wizard_basic_import_csv.conditions'
 	);
 		
 
@@ -60,21 +58,21 @@ class wizzard_basic_import_csv
 	function __construct()
 	{
 		$this->steps = array(
-			'wizzard_step30' => lang('Load Sample file'),
-			'wizzard_step40' => lang('Choose seperator and charset'),
-			'wizzard_step50' => lang('Manage mapping'),
-			'wizzard_step55' => lang('Edit conditions'),
+			'wizard_step30' => lang('Load Sample file'),
+			'wizard_step40' => lang('Choose seperator and charset'),
+			'wizard_step50' => lang('Manage mapping'),
+			'wizard_step55' => lang('Edit conditions'),
 		);
 	}
 
 	/**
 	* Take a sample CSV file.  It will be processed in later steps
 	*/
-	function wizzard_step30(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step30(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if($this->debug) error_log(get_class($this) . '::wizzard_step30->$content '.print_r($content,true));
+		if($this->debug) error_log(get_class($this) . '::wizard_step30->$content '.print_r($content,true));
 		// return from step30
-		if ($content['step'] == 'wizzard_step30')
+		if ($content['step'] == 'wizard_step30')
 		{
 			switch (array_search('pressed', $content['button']))
 			{
@@ -86,20 +84,20 @@ class wizzard_basic_import_csv
 						$GLOBALS['egw']->session->appsession('csvfile','',$csvfile);
 					}
 					unset($content['file']);
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],1);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
 				case 'previous' :
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],-1);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],-1);
 				case 'finish':
-					return 'wizzard_finish';
+					return 'wizard_finish';
 				default :
-					return $this->wizzard_step30($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step30($content,$sel_options,$readonlys,$preserv);
 			}
 		}
 		// init step30
 		else
 		{
-			$content['msg'] = $this->steps['wizzard_step30'];
-			$content['step'] = 'wizzard_step30';
+			$content['msg'] = $this->steps['wizard_step30'];
+			$content['step'] = 'wizard_step30';
 			$preserv = $content;
 			unset ($preserv['button']);
 			$GLOBALS['egw']->js->set_onload("var btn = document.getElementById('exec[button][next]'); btn.attributes.removeNamedItem('onclick');");
@@ -117,11 +115,11 @@ class wizzard_basic_import_csv
 	 * @param array $preserv
 	 * @return string template name
 	 */
-	function wizzard_step40(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step40(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if($this->debug) error_log(get_class($this) . '::wizzard_step40->$content '.print_r($content,true));
+		if($this->debug) error_log(get_class($this) . '::wizard_step40->$content '.print_r($content,true));
 		// return from step40
-		if ($content['step'] == 'wizzard_step40') {
+		if ($content['step'] == 'wizard_step40') {
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -132,20 +130,20 @@ class wizzard_basic_import_csv
 					} elseif($content['plugin_options']['csv_fields']) {
 						$content['csv_fields'] = $content['plugin_options']['csv_fields'];
 					}
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],1);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
 				case 'previous' :
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],-1);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],-1);
 				case 'finish':
-					return 'wizzard_finish';
+					return 'wizard_finish';
 				default :
-					return $this->wizzard_step40($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step40($content,$sel_options,$readonlys,$preserv);
 			}
 		}
 		// init step40
 		else
 		{
-			$content['msg'] = $this->steps['wizzard_step40'];
-			$content['step'] = 'wizzard_step40';
+			$content['msg'] = $this->steps['wizard_step40'];
+			$content['step'] = 'wizard_step40';
 
 			// If editing an existing definition, these will be in plugin_options
 			if(!$content['fieldsep'] && $content['plugin_options']['fieldsep']) {
@@ -178,11 +176,11 @@ class wizzard_basic_import_csv
 	* 
 	* You can use the eTemplate 
 	*/
-	function wizzard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if($this->debug) error_log(get_class($this) . '::wizzard_step50->$content '.print_r($content,true));
+		if($this->debug) error_log(get_class($this) . '::wizard_step50->$content '.print_r($content,true));
 		// return from step50
-		if ($content['step'] == 'wizzard_step50')
+		if ($content['step'] == 'wizard_step50')
 		{
 			array_shift($content['csv_fields']);
 			array_shift($content['field_mapping']);
@@ -195,20 +193,20 @@ class wizzard_basic_import_csv
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],1);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
 				case 'previous' :
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],-1);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],-1);
 				case 'finish':
-					return 'wizzard_finish';
+					return 'wizard_finish';
 				default :
-					return $this->wizzard_step50($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step50($content,$sel_options,$readonlys,$preserv);
 			}
 		}
 		// init step50
 		else
 		{
-			$content['msg'] = $this->steps['wizzard_step50'];
-			$content['step'] = 'wizzard_step50';
+			$content['msg'] = $this->steps['wizard_step50'];
+			$content['step'] = 'wizard_step50';
 
 			if(!$content['field_mapping'] && $content['plugin_options']) {
 				$content['field_mapping'] = $content['plugin_options']['field_mapping'];
@@ -240,11 +238,11 @@ class wizzard_basic_import_csv
 	/**
 	* Edit conditions
 	*/
-	function wizzard_step55(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step55(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if($this->debug) error_log(get_class($this) . '::wizzard_step55->$content '.print_r($content,true));
+		if($this->debug) error_log(get_class($this) . '::wizard_step55->$content '.print_r($content,true));
 		// return from step55
-		if ($content['step'] == 'wizzard_step55')
+		if ($content['step'] == 'wizard_step55')
 		{
 			array_shift($content['conditions']);
 
@@ -259,21 +257,21 @@ class wizzard_basic_import_csv
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],1);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
 				case 'previous' :
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],-1);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],-1);
 				case 'finish':
-					return 'wizzard_finish';
+					return 'wizard_finish';
 				case 'add':
-					return $GLOBALS['egw']->uidefinitions->get_step($content['step'],0);
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],0);
 				default :
-					return $this->wizzard_step55($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step55($content,$sel_options,$readonlys,$preserv);
 					break;
 			}
 		}
 		// init step55
-		$content['msg'] = $this->steps['wizzard_step55'];
-		$content['step'] = 'wizzard_step55';
+		$content['msg'] = $this->steps['wizard_step55'];
+		$content['step'] = 'wizard_step55';
 
 		if(!$content['conditions'] && $content['plugin_options']['conditions']) {
 			$content['conditions'] = $content['plugin_options']['conditions'];
@@ -282,8 +280,8 @@ class wizzard_basic_import_csv
 		foreach($content['field_mapping'] as $field) {
 			$sel_options['string'][$field] = $this->mapping_fields[$field];
 		}
-		$sel_options['type'] = array_combine($this->conditions, $this->conditions);
-		$sel_options['action'] = array_combine($this->actions, $this->actions);
+		$sel_options['type'] = $this->conditions;
+		$sel_options['action'] = $this->actions;
 
 		// Make 3 empty conditions
 		$j = 1;

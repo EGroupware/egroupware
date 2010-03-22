@@ -28,4 +28,13 @@
 	{
 		return $GLOBALS['setup_info']['importexport']['currentver'] = '1.4';
 	}
+
+	$test[] = '1.4';
+	function importexport_upgrade1_4()
+	{
+		$sql = 'UPDATE egw_importexport_definitions SET plugin = CONCAT(application, "_", plugin)';
+
+		$GLOBALS['egw_setup']->db->query($sql, __LINE__, __FILE__);
+		return $GLOBALS['setup_info']['importexport']['currentver'] = '1.7.001';
+	}
 ?>

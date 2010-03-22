@@ -18,7 +18,7 @@
  * An record is e.g. a single address or or single event.
  * No mater where the records come from, at the end the get_entry method comes out
  */
-interface iface_import_record
+interface importexport_iface_import_record
 {
 	/**
 	 * Opens resource, returns false if something fails

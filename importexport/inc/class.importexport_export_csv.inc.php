@@ -10,9 +10,6 @@
  * @version $Id$
  */
 
-require_once('class.iface_export_record.inc.php');
-require_once('class.import_export_helper_functions.inc.php');
-require_once('class.iface_egw_record.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.translation.inc.php');
 
 /**
@@ -22,7 +19,7 @@ require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.translation.inc.php');
  * No mater where the records come from, at the end export_entry
  * stores it into the stream
  */
-class export_csv implements iface_export_record
+class importexport_export_csv implements importexport_iface_export_record
 {
 	/**
 	 * @var array array with field mapping in form egw_field_name => exported_field_name
@@ -111,10 +108,10 @@ class export_csv implements iface_export_record
 	/**
 	 * exports a record into resource of handle
 	 *
-	 * @param iface_egw_record record
+	 * @param importexport_iface_egw_record record
 	 * @return bool
 	 */
-	public function export_record( iface_egw_record $_record ) {
+	public function export_record( importexport_iface_egw_record $_record ) {
 		$this->record = $_record->get_record_array();
 		
 		// begin with fieldnames ?
@@ -126,7 +123,7 @@ class export_csv implements iface_export_record
 		
 		// do conversions
 		if ( !empty( $this->conversion )) {
-			$this->record = import_export_helper_functions::conversion( $this->record, $this->conversion );
+			$this->record = importexport_helper_functions::conversion( $this->record, $this->conversion );
 		}
 		
 		// do fieldmapping
@@ -171,7 +168,7 @@ class export_csv implements iface_export_record
 	 * @param char $delimiter
 	 * @param char $enclosure
 	 */
-	protected function fputcsv($filePointer, $dataArray, $delimiter, $enclosure){
+	protected function fputcsv($filePointer, Array $dataArray, $delimiter, $enclosure){
 		$string = "";
 		$writeDelimiter = false;
 		foreach($dataArray as $dataElement) {

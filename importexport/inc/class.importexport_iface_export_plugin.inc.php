@@ -11,7 +11,7 @@
  */
 
 /**
- * class iface_export_plugin
+ * class importexport_iface_export_plugin
  * This a the abstract interface for an export plugin of importexport
  * 
  * You need to implement this class in 
@@ -34,15 +34,15 @@
  *
  * get_selector();  //returns array 
  */
-interface iface_export_plugin {
+interface importexport_iface_export_plugin {
 	
 	/**
 	 * exports entries according to given definition object.
 	 *
 	 * @param stream $_stream
-	 * @param definition $_definition
+	 * @param importexport_definition $_definition
 	 */
-	public function export($_stream, definition $_definition);
+	public function export($_stream, importexport_definition $_definition);
 	
 	/**
 	 * returns translated name of plugin

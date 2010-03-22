@@ -8,9 +8,6 @@
  * @author Nathan Gray
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_import_plugin.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/importexport/inc/class.import_csv.inc.php');
-
 
 /**
  * A basic CSV import plugin.
@@ -18,9 +15,8 @@ require_once(EGW_INCLUDE_ROOT.'/importexport/inc/class.import_csv.inc.php');
  * You should extend this class to implement the various bits, but combined with the basic wizard 
  * should get you started on building a CSV plugin for an application fairly quickly.
  * 
- * NB: The name of your import plugin must start with import_.
  */
-abstract class basic_import_csv implements iface_import_plugin  {
+abstract class importexport_basic_import_csv implements importexport_iface_import_plugin  {
 
 	protected static $plugin_options = array(
 		'fieldsep', 		// char
@@ -97,8 +93,8 @@ abstract class basic_import_csv implements iface_import_plugin  {
 	 * @param string $_charset
 	 * @param definition $_definition
 	 */
-	public function import( $_stream, definition $_definition ) {
-		$import_csv = new import_csv( $_stream, array(
+	public function import( $_stream, importexport_definition $_definition ) {
+		$import_csv = new importexport_import_csv( $_stream, array(
 			'fieldsep' => $_definition->plugin_options['fieldsep'],
 			'charset' => $_definition->plugin_options['charset'],
 		));

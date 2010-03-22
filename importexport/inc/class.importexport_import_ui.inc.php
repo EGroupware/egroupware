@@ -10,10 +10,6 @@
  * @version $Id: class.importexport_import_ui.inc.php 27222 2009-06-08 16:21:14Z ralfbecker $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.import_export_helper_functions.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.bodefinitions.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
-
 
 /**
  * userinterface for imports
@@ -26,7 +22,6 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 
 		public $public_functions = array(
 			'import_dialog'	=>	true,
-			'download'	=>	true,
 		);
 
 		/**
@@ -38,7 +33,7 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 
 		public function __construct() {
 			$GLOBALS['egw']->js->validate_file('.','import_dialog','importexport');
-			$this->plugins = import_export_helper_functions::get_plugins('all','import');
+			$this->plugins = importexport_helper_functions::get_plugins('all','import');
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		}
 
@@ -51,7 +46,7 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 
 			if($content['import'] && $definition) {
 				try {
-					$definition_obj = new definition($content['definition']);
+					$definition_obj = new importexport_definition($content['definition']);
 					if($content['dry-run']) {
 						$definition_obj->plugin_options = $definition_obj->plugin_options + array('dry_run' => true);
 					}
@@ -75,7 +70,10 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				} catch (Exception $e) {
 					$this->message = $e->getMessage();
 				}
+			} elseif($content['cancel']) {
+				$GLOBALS['egw']->js->set_onload('window.close();');
 			}
+
 			$data['appname'] = $appname;
 			$data['definition'] = $definition;
 			$sel_options = self::get_select_options($data);
@@ -92,7 +90,7 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 		public static function get_select_options(Array $data) {
 			$options = array();
 
-			(array)$apps = import_export_helper_functions::get_apps('import');
+			(array)$apps = importexport_helper_functions::get_apps('import');
 			$options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
 
 			if($data['appname']) {
@@ -101,12 +99,12 @@ require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 				if($data['file'] && !is_array($data['file'])) {
 					$extension = substr($data['file'], -3);
 				}
-				$definitions = new bodefinitions(array(
+				$definitions = new importexport_definitions_bo(array(
 					'type' => 'import',
 					'application' => $data['appname']
 				));
 				foreach ((array)$definitions->get_definitions() as $identifier) {
-						$definition = new definition($identifier);
+						$definition = new importexport_definition($identifier);
 						if ($title = $definition->get_title()) {
 							$options['definition'][$title] = $title;
 						}

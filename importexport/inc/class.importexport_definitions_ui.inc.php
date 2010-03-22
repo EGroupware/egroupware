@@ -10,14 +10,12 @@
  * @version $Id$
  */
 
-require_once('class.bodefinitions.inc.php');
-
 /**
  * Userinterface to define {im|ex}ports
  *
  * @package importexport
  */
-class uidefinitions
+class importexport_definitions_ui
 {
 	const _debug = false;
 
@@ -26,7 +24,7 @@ class uidefinitions
 	public $public_functions = array(
 		'edit' => true,
 		'index' => true,
-		'wizzard' => true,
+		'wizard' => true,
 		'import_definition' => true,
 	);
 
@@ -51,7 +49,7 @@ class uidefinitions
 	 */
 	var $response = true;
 
-	function uidefinitions()
+	function __construct()
 	{
 		// we cant deal with notice and warnings, as we are on ajax!
 		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
@@ -62,14 +60,14 @@ class uidefinitions
 		$this->etpl = new etemplate();
 		$this->clock = html::image(self::_appname,'clock');
 		$this->steps = array(
-			'wizzard_step10' => lang('Choose an application'),
-			'wizzard_step20' => lang('Choose a plugin'),
-			'wizzard_step21' => lang('Choose a name for this definition'),
-			'wizzard_step90' => lang('Which users are allowed to use this definition'),
-			'wizzard_finish' => '',
+			'wizard_step10' => lang('Choose an application'),
+			'wizard_step20' => lang('Choose a plugin'),
+			'wizard_step21' => lang('Choose a name for this definition'),
+			'wizard_step90' => lang('Which users are allowed to use this definition'),
+			'wizard_finish' => '',
 		);
 		//register plugins
-		$this->plugins = import_export_helper_functions::get_plugins();
+		$this->plugins = importexport_helper_functions::get_plugins();
 	}
 
 	/**
@@ -79,7 +77,7 @@ class uidefinitions
 	 */
 	function index($content = null,$msg='')
 	{
-		$bodefinitions = new bodefinitions(array('name' => '*'));
+		$bodefinitions = new importexport_definitions_bo(array('name' => '*'));
 		if (is_array($content))
 		{
 			if (isset($content['delete']))
@@ -118,12 +116,12 @@ class uidefinitions
 		$definitions = array('row0');
 
 		foreach ($bodefinitions->get_definitions() as $identifier) {
-			$definition = new definition($identifier);
+			$definition = new importexport_definition($identifier);
 			$definitions[] = $definition->get_record_array();
 			unset($definition);
 		}
 		$content = $definitions;
-		return $etpl->exec( self::_appname.'.uidefinitions.index', $content, array(), $readonlys, $preserv );
+		return $etpl->exec( self::_appname.'.importexport_definitions_ui.index', $content, array(), $readonlys, $preserv );
 	}
 
 	function edit()
@@ -133,13 +131,13 @@ class uidefinitions
 			//close window
 		}
 		$definition = array('name' => $_definition);
-		$bodefinitions = new bodefinitions();
+		$bodefinitions = new importexport_definitions_bo();
 		$definition = $bodefinitions->read($definition);
 		$definition['edit'] = true;
-		$this->wizzard($definition);
+		$this->wizard($definition);
 	}
 
-	function wizzard($content = null, $msg='')
+	function wizard($content = null, $msg='')
 	{
 		$GLOBALS['egw_info']['flags']['java_script'] .=
 			"<script LANGUAGE='JavaScript'>
@@ -150,30 +148,40 @@ class uidefinitions
 				}
 			</script>";
 
-		$this->etpl->read('importexport.wizzardbox');
-		$this->wizzard_content_template =& $this->etpl->children[0]['data'][1]['A'][2][1]['name'];
+		$this->etpl->read('importexport.wizardbox');
+		$this->wizard_content_template =& $this->etpl->children[0]['data'][1]['A'][2][1]['name'];
 
 		if(is_array($content) &&! $content['edit'])
 		{
-			if(self::_debug) error_log('importexport.wizzard->$content '. print_r($content,true));
+			if(self::_debug) error_log('importexport.wizard->$content '. print_r($content,true));
 			// fetch plugin object
 			if($content['plugin'] && $content['application'])
 			{
-				// we need to deal with the wizzard object if exists
-				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizzard_'. $content['plugin'].'.inc.php'))
+				$wizard_name = $content['application'] . '_wizard_' . str_replace($content['application'] . '_', '', $content['plugin']);
+ 
+				// we need to deal with the wizard object if exists
+				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizzard_'. $content['plugin'].'.inc.php')) {
+error_log('Wizard has one z in english');
+}
+				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizard_'. $content['plugin'].'.inc.php'))
 				{
-					require_once(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizzard_'. $content['plugin'].'.inc.php');
-					$wizzard_plugin = 'wizzard_'.$content['plugin'];
+					require_once(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizard_'. $content['plugin'].'.inc.php');
+					$wizard_plugin = 'wizard_'.$content['plugin'];
+					error_log('Deprecated location for importexport wizard.  Please move it to app/inc/ and rename it to follow new conventions');
+				}
+				elseif (file_exists(EGW_SERVER_ROOT . '/'. $content['application']."/inc/class.$wizard_name.inc.php"))
+				{
+					$wizard_plugin = $wizard_name;
 				}
 				else
 				{
-					$wizzard_plugin = $content['plugin'];
+					$wizard_plugin = $content['plugin'];
 				}
-				$this->plugin = is_object($GLOBALS['egw']->$wizzard_plugin) ? $GLOBALS['egw']->$wizzard_plugin : new $wizzard_plugin;
+				$this->plugin = is_object($GLOBALS['egw']->$wizard_plugin) ? $GLOBALS['egw']->$wizard_plugin : new $wizard_plugin;
 
 				// Global object needs to be the same, or references to plugin don't work
-				if(!is_object($GLOBALS['egw']->uidefinitions) || $GLOBALS['egw']->uidefinitions !== $this) 
-					$GLOBALS['egw']->uidefinitions =& $this;
+				if(!is_object($GLOBALS['egw']->importexport_definitions_ui) || $GLOBALS['egw']->importexport_definitions_ui !== $this) 
+					$GLOBALS['egw']->importexport_definitions_ui =& $this;
 			}
 			// deal with buttons even if we are not on ajax
 			if(isset($content['button']) && array_search('pressed',$content['button']) === false && count($content['button']) == 1)
@@ -183,10 +191,14 @@ class uidefinitions
 			}
 
 			// post process submitted step
-			if(!key_exists($content['step'],$this->steps))
-				$next_step = $this->plugin->$content['step']($content);
-			else
-				$next_step = $this->$content['step']($content);
+			if($content['step']) {
+				if(!key_exists($content['step'],$this->steps))
+					$next_step = $this->plugin->$content['step']($content);
+				else
+					$next_step = $this->$content['step']($content);
+			} else {
+				die('Cannot find next step');
+			}
 
 			// pre precess next step
 			$sel_options = $readonlys = $preserv = array();
@@ -197,14 +209,14 @@ class uidefinitions
 			}
 			if(!key_exists($next_step,$this->steps))
 			{
-				$this->wizzard_content_template = $this->plugin->$next_step($content,$sel_options,$readonlys,$preserv);
+				$this->wizard_content_template = $this->plugin->$next_step($content,$sel_options,$readonlys,$preserv);
 			}
 			else
 			{
-				$this->wizzard_content_template = $this->$next_step($content,$sel_options,$readonlys,$preserv);
+				$this->wizard_content_template = $this->$next_step($content,$sel_options,$readonlys,$preserv);
 			}
 
-			$html = $this->etpl->exec(self::_appname.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
+			$html = $this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,1);
 		}
 		else
 		{
@@ -216,8 +228,8 @@ class uidefinitions
 			if($content['edit'])
 				unset ($content['edit']);
 
-			$this->wizzard_content_template = $this->wizzard_step10($content, $sel_options, $readonlys, $preserv);
-			$html = $this->etpl->exec(self::_appname.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
+			$this->wizard_content_template = $this->wizard_step10($content, $sel_options, $readonlys, $preserv);
+			$html = $this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,1);
 		}
 
 		if(class_exists('xajaxResponse'))
@@ -250,12 +262,12 @@ class uidefinitions
 			$GLOBALS['egw']->js->set_onload("document.getElementById('picturebox').style.display = 'none';");
 			$GLOBALS['egw']->common->egw_header();
 			echo '<div id="divMain">'."\n";
-			echo '<div><h3>{Im|Ex}port Wizzard</h3></div>';
+			echo '<div><h3>{Im|Ex}port Wizard</h3></div>';
 			// adding a manual icon to every popup
 			if ($GLOBALS['egw_info']['user']['apps']['manual'])
 			{
 				$manual = new etemplate('etemplate.popup.manual');
-				echo $manual->exec(self::_appname.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
+				echo $manual->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,1);
 				unset($manual);
 			}
 
@@ -293,54 +305,61 @@ class uidefinitions
 		}
 		$step_keys = array_keys($steps);
 		$nn = array_search($curr_step,$step_keys)+(int)$step_width;
-		return (key_exists($nn,$step_keys)) ? $step_keys[$nn] : 'wizzard_finish';
+		return (key_exists($nn,$step_keys)) ? $step_keys[$nn] : 'wizard_finish';
 	}
 
 
-	function wizzard_step10(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step10(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if(self::_debug) error_log('addressbook.importexport.addressbook_csv_import::wizzard_step10->$content '.print_r($content,true));
+		if(self::_debug) error_log('importexport.importexport_definitions_ui::wizard_step10->$content '.print_r($content,true));
 
 		// return from step10
-		if ($content['step'] == 'wizzard_step10')
+		if ($content['step'] == 'wizard_step10')
 		{
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
 					return $this->get_step($content['step'],1);
 				case 'finish':
-					return 'wizzard_finish';
+					return 'wizard_finish';
 				default :
-					return $this->wizzard_step10($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step10($content,$sel_options,$readonlys,$preserv);
 			}
 
 		}
 		// init step10
 		else
 		{
-			$content['msg'] = $this->steps['wizzard_step10'];
+			$content['msg'] = $this->steps['wizard_step10'];
 			foreach ($this->plugins as $appname => $options) $sel_options['application'][$appname] = lang($appname);
 			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][previous]');");
-			$content['step'] = 'wizzard_step10';
+			$content['step'] = 'wizard_step10';
 			$preserv = $content;
 			unset ($preserv['button']);
-			return 'importexport.wizzard_chooseapp';
+			return 'importexport.wizard_chooseapp';
 		}
 
 	}
 
 	// get plugin
-	function wizzard_step20(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step20(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if(self::_debug) error_log('addressbook.importexport.addressbook_csv_import::wizzard_step20->$content '.print_r($content,true));
+		if(self::_debug) error_log('importexport.' . get_class($this) . '::wizard_step20->$content '.print_r($content,true));
 
 		// return from step20
-		if ($content['step'] == 'wizzard_step20')
+		if ($content['step'] == 'wizard_step20')
 		{
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
-					$content['type'] = $this->plugin instanceof iface_import_plugin ? 'import' : 'export';
+					// There's no real reason the plugin has to come from any of these, as long as it has a $steps variable
+					if($this->plugin instanceof importexport_iface_import_plugin || $this->plugin instanceof importexport_wizard_basic_import_csv) {
+						$content['type'] = 'import';
+					} elseif($this->plugin instanceof importexport_iface_export_plugin) {
+						$content['type'] = 'export';
+					} else {
+						throw new egw_exception('Invalid plugin');
+					}
 					return $this->get_step($content['step'],1);
 				case 'previous' :
 					unset ($content['plugin']);
@@ -349,36 +368,36 @@ class uidefinitions
 					}
 					return $this->get_step($content['step'],-1);
 				case 'finish':
-					return 'wizzard_finish';
+					return 'wizard_finish';
 				default :
-					return $this->wizzard_step20($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step20($content,$sel_options,$readonlys,$preserv);
 			}
 		}
 		// init step20
 		else
 		{
-			$content['msg'] = $this->steps['wizzard_step20'];
+			$content['msg'] = $this->steps['wizard_step20'];
 			foreach ($this->plugins[$content['application']] as $type => $plugins) {
 				foreach($plugins as $plugin => $name) {
 					$sel_options['plugin'][$plugin] = $name;
 				}
 			}
-			$content['step'] = 'wizzard_step20';
+			$content['step'] = 'wizard_step20';
 			$preserv = $content;
 			unset ($preserv['button']);
-			return 'importexport.wizzard_chooseplugin';
+			return 'importexport.wizard_chooseplugin';
 		}
 
 
 	}
 
 	// name
-	function wizzard_step21(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step21(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if(self::_debug) error_log('importexport.uidefinitions::wizzard_step21->$content '.print_r($content,true));
+		if(self::_debug) error_log('importexport.importexport_definitions_ui::wizard_step21->$content '.print_r($content,true));
 
 		// return from step21
-		if ($content['step'] == 'wizzard_step21')
+		if ($content['step'] == 'wizard_step21')
 		{
 			switch (array_search('pressed', $content['button']))
 			{
@@ -387,29 +406,29 @@ class uidefinitions
 				case 'previous' :
 					return $this->get_step($content['step'],-1);
 				case 'finish':
-					return 'wizzard_finish';
+					return 'wizard_finish';
 				default :
-					return $this->wizzard_step21($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step21($content,$sel_options,$readonlys,$preserv);
 			}
 		}
 		// init step21
 		else
 		{
-			$content['msg'] = $this->steps['wizzard_step21'];
-			$content['step'] = 'wizzard_step21';
+			$content['msg'] = $this->steps['wizard_step21'];
+			$content['step'] = 'wizard_step21';
 			$preserv = $content;
 			unset ($preserv['button']);
-			return 'importexport.wizzard_choosename';
+			return 'importexport.wizard_choosename';
 		}
 	}
 
 	// allowed users
-	function wizzard_step90(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step90(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if(self::_debug) error_log('importexport.uidefinitions::wizzard_step90->$content '.print_r($content,true));
+		if(self::_debug) error_log('importexport.importexport_definitions_ui::wizard_step90->$content '.print_r($content,true));
 
 		// return from step90
-		if ($content['step'] == 'wizzard_step90')
+		if ($content['step'] == 'wizard_step90')
 		{
 			$content['allowed_users'] = implode(',',$content['allowed_users']);
 
@@ -420,45 +439,45 @@ class uidefinitions
 					return $this->get_step($content['step'],-1);
 				case 'next':
 				case 'finish':
-					return 'wizzard_finish';
+					return 'wizard_finish';
 				default :
-					return $this->wizzard_step90($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step90($content,$sel_options,$readonlys,$preserv);
 			}
 		}
 		// init step90
 		else
 		{
-			$content['msg'] = $this->steps['wizzard_step90'];
-			$content['step'] = 'wizzard_step90';
+			$content['msg'] = $this->steps['wizard_step90'];
+			$content['step'] = 'wizard_step90';
 			$preserv = $content;
 			unset ($preserv['button']);
 			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][next]');");
 			if(is_object($this->response)) {
 				$this->response->addAssign('exec[button][next]','style.display', 'none');
 			}
-			return 'importexport.wizzard_chooseallowedusers';
+			return 'importexport.wizard_chooseallowedusers';
 		}
 	}
 
-	function wizzard_finish(&$content)
+	function wizard_finish(&$content)
 	{
-		if(self::_debug) error_log('importexport.uidefinitions::wizzard_finish->$content '.print_r($content,true));
+		if(self::_debug) error_log('importexport.importexport_definitions_ui::wizard_finish->$content '.print_r($content,true));
 		// Take out some UI leavings
 		unset($content['msg']);
 		unset($content['step']);
 		unset($content['button']);
 
-		$bodefinitions = new bodefinitions();
+		$bodefinitions = new importexport_definitions_bo();
 		$bodefinitions->save($content);
 		// This message is displayed if browser cant close window
 		$content['msg'] = lang('ImportExport wizard finished successfully!');
 		$content['closewindow'] = true;
-		return 'importexport.wizzard_close';
+		return 'importexport.wizard_close';
 	}
 
 	function import_definition($content='')
 	{
-		$bodefinitions = new bodefinitions();
+		$bodefinitions = new importexport_definitions_bo();
 		if (is_array($content))
 		{
 			$bodefinitions->import($content['import_file']['tmp_name']);
@@ -468,7 +487,7 @@ class uidefinitions
 		else
 		{
 			$etpl = new etemplate(self::_appname.'.import_definition');
-			return $etpl->exec(self::_appname.'.uidefinitions.import_definition',$content,array(),$readonlys,$preserv);
+			return $etpl->exec(self::_appname.'.importexport_definitions_ui.import_definition',$content,array(),$readonlys,$preserv);
 		}
 	}
 }

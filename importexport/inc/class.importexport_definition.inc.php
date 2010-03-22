@@ -10,7 +10,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_egw_record.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.arrayxml.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.so_sql.inc.php');
 
@@ -22,7 +21,7 @@ require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.so_sql.inc.php');
  * are in one assiozative array which is complely managed by {Im|Ex}port plugins
  * @todo testing
  */
-class definition implements iface_egw_record {
+class importexport_definition implements importexport_iface_egw_record {
 	
 	const _appname = 'importexport';
 	const _defintion_talbe = 'egw_importexport_definitions';
@@ -209,9 +208,11 @@ class definition implements iface_egw_record {
 			}
 		}
 		
+		$this->plugin = $_record['plugin'];
+
 		// convert plugin_options into internal representation
 		$this->set_allowed_users( $this->definition['allowed_users'] );
-		$this->set_options( $this->definition['plugin_options'] );
+		$this->set_options( $this->definition['plugin_options'] ? $this->definition['plugin_options'] : array());
 	}
 	
 	/**

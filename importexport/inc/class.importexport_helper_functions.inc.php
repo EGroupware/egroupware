@@ -14,7 +14,7 @@
  * class import_export_helper_functions (only static methods)
  * use import_export_helper_functions::method
  */
-class import_export_helper_functions {
+class importexport_helper_functions {
 	
 	/**
 	 * nothing to construct here, only static functions!
@@ -272,7 +272,7 @@ class import_export_helper_functions {
 		$plugins = array();
 		
 		foreach ($appnames as $appname) {
-			$appdir = EGW_INCLUDE_ROOT. "/$appname/importexport";
+			$appdir = EGW_INCLUDE_ROOT. "/$appname/inc";
 			if(!is_dir($appdir)) continue;
 			$d = dir($appdir);
 			
@@ -282,19 +282,20 @@ class import_export_helper_functions {
 				$file = $appdir. '/'. $entry;
 				
 				foreach ($types as $type) {
-					if( !is_file($file) || substr($classname,0,7) != $type.'_' || $extension != 'php' ) continue;
+					if( !is_file($file) || strpos($entry, $type) === false || $extension != 'php' ) continue;
 					require_once($file);
-					
-					try {
-						$plugin_object = @new $classname;
-					}
-					catch (Exception $exception) {
-						continue;
-					}
-					if (is_a($plugin_object,'iface_'.$type.'_plugin')) {
+					$reflectionClass = new ReflectionClass($classname);
+					if($reflectionClass->IsInstantiable() && 
+							$reflectionClass->implementsInterface('importexport_iface_'.$type.'_plugin')) {
+						try {
+							$plugin_object = new $classname;
+						}
+						catch (Exception $exception) {
+							continue;
+						}
 						$plugins[$appname][$type][$classname] = $plugin_object->get_name();
+						unset ($plugin_object);
 					}
-					unset ($plugin_object);
 				}
 			}
 			$d->close();

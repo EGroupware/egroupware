@@ -42,7 +42,7 @@ class importexport_admin_prefs_sidebox_hooks
 				),
 				'Export'=> array(
 					'text' => 'Export',
-					'link' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.uiexport.export_dialog'),
+					'link' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_export_ui.export_dialog'),
 					'target' => 'new',
 					'icon' => 'export'
 				),
@@ -70,9 +70,9 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Import definitions' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.uidefinitions.import_definition'),
+				'Import definitions' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
 				'Define {im|ex}ports'  => $GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => 'importexport.uidefinitions.index',
+					'menuaction' => 'importexport.importexport_definitions_ui.index',
 				)),
 				'Schedule' => $GLOBALS['egw']->link('/index.php', array(
 					'menuaction' => 'importexport.importexport_schedule_ui.index'
