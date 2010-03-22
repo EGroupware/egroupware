@@ -839,7 +839,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		$parts = explode('/', $this->_unslashify($path));
 
-		if ($this->accounts->name2id($parts[0]))
+		if (($account_id = $this->accounts->name2id($parts[0], 'account_lid')))
 		{
 			// /$user/$app/...
 			$user = array_shift($parts);
@@ -850,7 +850,7 @@ class groupdav extends HTTP_WebDAV_Server
 		if ($user)
 		{
 			$user_prefix = '/'.$user;
-			$user = $this->accounts->name2id($user,'account_lid',$app != 'addressbook' ? 'u' : null);
+			$user = $account_id;
 		}
 		else
 		{
