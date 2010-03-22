@@ -448,12 +448,23 @@ class calendar_ical extends calendar_boupdate
 				switch ($icalFieldName)
 				{
 					case 'ATTENDEE':
-						//if (count($event['participants']) == 1 && isset($event['participants'][$this->user])) break;
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
 							if (!($info = $this->resource_info($uid))) continue;
-							$participantURL = $info['email'] ? 'MAILTO:'.$info['email'] : '';
-							$participantCN = '"' . ($info['cn'] ? $info['cn'] : $info['name']) . '"';
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+									'()attendee:' . array2string($info) ."\n",3,$this->logfile);
+							}
+							$participantCN = '"' . (empty($info['cn']) ? $info['name'] : $info['cn']) . '"';
+							if ($version == '1.0')
+							{
+								$participantURL = trim($participantCN . (empty($info['email']) ? '' : ' <' . $info['email'] .'>'));
+							}
+							else
+							{
+								$participantURL = empty($info['email']) ? '' : 'MAILTO:' . $info['email'];
+							}
 							calendar_so::split_status($status, $quantity, $role);
 							if ($uid == $event['owner'])
 							{
@@ -463,7 +474,6 @@ class calendar_ical extends calendar_boupdate
 							{
 								$role = 'REQ-PARTICIPANT';
 							}
-							// RB: MAILTO href contains only the email-address, NO cn!
 							$attributes['ATTENDEE'][]	= $participantURL;
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
 							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
@@ -504,10 +514,17 @@ class calendar_ical extends calendar_boupdate
 						break;
 
     				case 'ORGANIZER':
-	    				$organizerURL = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
-	    				$organizerURL = $organizerURL ? 'MAILTO:'.$organizerURL : '';
 	    				$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
 		    				. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
+	    				$organizerURL = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+	    				if ($version == '1.0')
+	    				{
+		    				$organizerURL = trim($organizerCN . (empty($organizerURL) ? '' : ' <' . $organizerURL .'>'));
+	    				}
+	    				else
+	    				{
+		    				$organizerURL = empty($organizerURL) ? '' : 'MAILTO:' . $organizerURL;
+	    				}
 	    				if (!isset($event['participants'][$event['owner']]))
 	    				{
 		    				$attributes['ATTENDEE'][] = $organizerURL;
