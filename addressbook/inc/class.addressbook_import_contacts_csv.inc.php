@@ -10,14 +10,11 @@
  * @version $Id: $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_import_plugin.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/importexport/inc/class.import_csv.inc.php');
-
 
 /**
  * class import_csv for addressbook
  */
-class import_contacts_csv implements iface_import_plugin  {
+class addressbook_import_contacts_csv implements importexport_iface_import_plugin  {
 
 	private static $plugin_options = array(
 		'fieldsep', 		// char
@@ -101,8 +98,8 @@ class import_contacts_csv implements iface_import_plugin  {
 	 * @param string $_charset
 	 * @param definition $_definition
 	 */
-	public function import( $_stream, definition $_definition ) {
-		$import_csv = new import_csv( $_stream, array(
+	public function import( $_stream, importexport_definition $_definition ) {
+		$import_csv = new importexport_import_csv( $_stream, array(
 			'fieldsep' => $_definition->plugin_options['fieldsep'],
 			'charset' => $_definition->plugin_options['charset'],
 		));
@@ -239,7 +236,9 @@ class import_contacts_csv implements iface_import_plugin  {
 					}
 					return $result;
 				}
-			case 'delete' :
+			default:
+				throw new egw_exception('Unsupported action');
+			
 		}
 	}
 

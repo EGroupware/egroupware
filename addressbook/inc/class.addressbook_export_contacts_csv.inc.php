@@ -11,21 +11,17 @@
  * @version $Id: $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.export_csv.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_export_plugin.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/addressbook/importexport/class.egw_addressbook_record.inc.php');
-
 /**
  * export plugin of addressbook
  */
-class export_contacts_csv implements iface_export_plugin {
+class addressbook_export_contacts_csv implements importexport_iface_export_plugin {
 
 	/**
 	 * Exports records as defined in $_definition
 	 *
 	 * @param egw_record $_definition
 	 */
-	public function export( $_stream, definition $_definition) {
+	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 
 		$uicontacts = new addressbook_ui();
@@ -43,13 +39,13 @@ class export_contacts_csv implements iface_export_plugin {
 			$selection = explode(',',$options['selection']);
 		}
 
-		$export_object = new export_csv($_stream, (array)$options);
+		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
 		foreach ($selection as $identifier) {
-			$contact = new egw_addressbook_record($identifier);
+			$contact = new addressbook_egw_record($identifier);
 			$export_object->export_record($contact);
 			unset($contact);
 		}
@@ -97,6 +93,6 @@ class export_contacts_csv implements iface_export_plugin {
 	 *
 	 */
 	public function get_selectors_etpl() {
-		return '<b>Selectors:</b>';
+		return 'addressbook.export_csv_selectors';
 	}
 }
