@@ -11,26 +11,20 @@
  * @version $Id: $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.etemplate.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.export_csv.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_export_plugin.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/timesheet/inc/class.egw_timesheet_record.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/timesheet/inc/class.uitimesheet.inc.php');
-
 /**
  * export plugin of addressbook
  */
-class export_timesheet_csv implements iface_export_plugin {
+class timesheet_export_csv implements importexport_iface_export_plugin {
 
 	/**
 	 * Exports records as defined in $_definition
 	 *
 	 * @param egw_record $_definition
 	 */
-	public static function export( $_stream, $_charset, definition $_definition) {
-		$options = $_definition->options;
+	public function export( $_stream, importexport_definition $_definition) {
+		$options = $_definition->plugin_options;
 
-		$uitimesheet = new uitimesheet();
+		$uitimesheet = new timesheet_ui();
 		$selection = array();
 
 		$query = $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP);
@@ -39,12 +33,12 @@ class export_timesheet_csv implements iface_export_plugin {
 		$uitimesheet->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
 
 		$options['begin_with_fieldnames'] = true;
-		$export_object = new export_csv($_stream, $charset, (array)$options);
+		$export_object = new importexport_export_csv($_stream, (array)$options);
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
 		foreach ($selection as $identifier) {
-			$timesheetentry = new egw_timesheet_record($identifier);
+			$timesheetentry = new timesheet_egw_record($identifier);
 			$export_object->export_record($timesheetentry);
 			unset($timesheetentry);
 		}
@@ -83,7 +77,7 @@ class export_timesheet_csv implements iface_export_plugin {
 	 *
 	 * @return string html
 	 */
-	public static function get_options_etpl() {
+	public function get_options_etpl() {
 		return 'timesheet.export_csv_options';
 	}
 
@@ -91,7 +85,7 @@ class export_timesheet_csv implements iface_export_plugin {
 	 * returns slectors of this plugin via xajax
 	 *
 	 */
-	public static function get_selectors_etpl() {
+	public function get_selectors_etpl() {
 		return '<b>Selectors:</b>';
 	}
 }

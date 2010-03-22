@@ -10,9 +10,6 @@
  * @version $Id: $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_export_record.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.import_export_helper_functions.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_egw_record.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/timesheet/inc/class.spreadsheet.inc.php');
 
 /**
@@ -22,7 +19,7 @@ require_once(EGW_INCLUDE_ROOT. '/timesheet/inc/class.spreadsheet.inc.php');
  * adapter to spreadsheet class
  *
  */
-class export_openoffice implements iface_export_record
+class export_openoffice implements importexport_iface_export_record
 {
 
 	/**
@@ -83,7 +80,7 @@ class export_openoffice implements iface_export_record
 	 * @return bool
 	 * @access public
 	 */
-	public function __construct( $_handle,  $_charset, array $_options=array() ) {
+	public function __construct( $_handle, array $_options ) {
 		$this->handle = $_handle;
 	}
 
@@ -113,7 +110,7 @@ class export_openoffice implements iface_export_record
 	 * @return bool
 	 * @access public
 	 */
-	public function export_record( iface_egw_record $_record ) {
+	public function export_record( importexport_iface_egw_record $_record ) {
 
 	}
 

@@ -11,13 +11,11 @@
  * @version $Id: class.egw_addressbook_record.inc.php 22827 2006-11-10 15:35:35Z nelius_weiss $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_egw_record.inc.php');
-
 /**
  * class egw_addressbook_record
  * compability layer for iface_egw_record needet for importexport
  */
-class egw_timesheet_record implements iface_egw_record
+class timesheet_egw_record implements importexport_iface_egw_record
 {
 
 	private $identifier = '';

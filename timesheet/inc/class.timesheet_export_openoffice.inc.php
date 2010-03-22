@@ -11,12 +11,10 @@
  * @version $Id: $
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_export_plugin.inc.php');
-
 /**
  * export plugin of addressbook
  */
-class export_timesheet_openoffice implements iface_export_plugin {
+class timesheet_export_openoffice implements importexport_iface_export_plugin {
 
 
 
@@ -25,7 +23,7 @@ class export_timesheet_openoffice implements iface_export_plugin {
 	 *
 	 * @param egw_record $_definition
 	 */
-	public static function export( $_stream, $_charset, definition $_definition) {
+	public function export( $_stream, importexport_definition $_definition) {
 
 		$options = $_definition->options;
 
@@ -186,7 +184,7 @@ class export_timesheet_openoffice implements iface_export_plugin {
 	 *
 	 * @return string html
 	 */
-	public static function get_options_etpl() {
+	public function get_options_etpl() {
 		return 'timesheet.export_openoffice_options';
 	}
 
@@ -194,7 +192,7 @@ class export_timesheet_openoffice implements iface_export_plugin {
 	 * returns slectors of this plugin via xajax
 	 *
 	 */
-	public static function get_selectors_etpl() {
+	public function get_selectors_etpl() {
 		return '<b>Selectors:</b>';
 	}
 }
