@@ -44,7 +44,7 @@
 					<description options=",,,ts_quantity" value="Quantity"/>
 					<textbox type="float" id="ts_quantity" statustext="empty if identical to duration" blur="@ts_quantity_blur" precision="3" span="all"/>
 				</row>
-				<row>
+				<row class="row" disabled="@no_ts_status">
 					<description value="Status"/>
 					<menulist>
 						<menupopup id="ts_status" statustext="select a status of the timesheet" options="please select"/>
@@ -179,7 +179,7 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row class="row" disabled="!@ts_modified">
+				<row disabled="!@ts_modified">
 					<description value="Last modified"/>
 					<hbox>
 						<date-time id="ts_modified" readonly="true"/>
