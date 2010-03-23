@@ -174,11 +174,11 @@ class emailadmin_smtp_ldap extends defaultsmtp
 			{
 				foreach($allValues[0]['mail'] as $key => $value)
 				{
-					if ($key == 'count') continue;
+					if ($key === 'count') continue;
 
 					$emailAddresses[] = array (
 						'name'		=> $realName,
-						'address'	=> $allValues[0]['mail'][0],
+						'address'	=> $value,
 						'type'		=> !$key ? 'default' : 'alternate',
 					);
 				}
@@ -187,7 +187,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 			{
 				foreach($allValues[0][$this->config['alias_attr']] as $key => $value)
 				{
-					if ($key == 'count') continue;
+					if ($key === 'count') continue;
 
 					$emailAddresses[] = array(
 						'name'		=> $realName,
