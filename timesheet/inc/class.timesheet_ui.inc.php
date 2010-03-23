@@ -62,7 +62,7 @@ class timesheet_ui extends timesheet_bo
 		if (!is_array($content))
 		{
 			if ($_GET['msg']) $msg = strip_tags($_GET['msg']);
-			
+
 			if ($view || (int)$_GET['ts_id'])
 			{
 				if (!$this->read((int)$_GET['ts_id']))
@@ -83,6 +83,7 @@ class timesheet_ui extends timesheet_bo
 					'end_time' => egw_time::to($this->now,'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id'   => (int) $_REQUEST['cat_id'],
+					'ts_status'=> $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
 				);
 			}
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] :
@@ -281,7 +282,7 @@ class timesheet_ui extends timesheet_bo
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
 			'start_time' => egw_time::to($this->data['ts_start'],'H:i'),
 			'pm_integration' => $this->pm_integration,
-			'ts_status' => ($preserv['ts_id'])? $preserv['ts_status'] : $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
+			'no_ts_status' => !$this->status_labels,
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
@@ -386,7 +387,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		if (!$this->customfields) $readonlys['tabs']['customfields'] = true;	// suppress tab if there are not customfields
 		if (!$this->data['ts_id']) $readonlys['tabs']['history']    = true;   //suppress history for the first loading without ID
-		
+
 		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.edit',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
@@ -462,6 +463,7 @@ class timesheet_ui extends timesheet_bo
 
 		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
 		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
+
 		//_debug_array($query['col_filter']);
 		//echo "PM Integration:".$this->pm_integration.'<br>';
 		// PM project filter for the PM integration
@@ -723,6 +725,7 @@ class timesheet_ui extends timesheet_bo
 			if ($query['selectcols'] && strpos($query['selectcols'],'ts_total')===false) $rows['no_ts_total'] = 1;
 		}
 		$rows['no_ts_status'] = $query['no_status'];
+
 		return $total;
 	}
 
@@ -795,7 +798,8 @@ class timesheet_ui extends timesheet_bo
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 			);
 		}
-		if($_GET['search']) {
+		if($_GET['search'])
+		{
 			$content['nm']['search'] = $_GET['search'];
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
@@ -807,7 +811,8 @@ class timesheet_ui extends timesheet_bo
 			'cat_id'     => array(lang('None')),
 			'ts_status'  => $this->status_labels+array(lang('No status')),
 		);
-		$content['nm']['no_status'] = !$sel_options['ts_status'];
+		$content['nm']['no_status'] = count($sel_options['ts_status']) <= 1;	// 1 because of 'No status'
+
 		$status =array();
 		$sel_options['action'] ['delete']= lang('Delete Timesheet');
 		foreach ($this->status_labels as $status_id => $label_status)
@@ -913,16 +918,11 @@ class timesheet_ui extends timesheet_bo
 		if (is_array($content))
 		{
 			list($button) = @each($content['button']);
+			unset ($content['button']);
 
 			switch($button)
 			{
 				case 'delete':
-					break;
-				case 'cancel':
-					$GLOBALS['egw']->redirect_link('/index.php',array(
-						'menuaction' => 'timesheet.timesheet_ui.index',
-						'msg' => $msg,
-					));
 					break;
 				case 'apply':
 				case 'save':
@@ -944,9 +944,16 @@ class timesheet_ui extends timesheet_bo
 						config::save_value('status_labels',$this->status_labels_config,TIMESHEET_APP);
 						$msg .= lang('Status updated.');
 					}
+					if ($button == 'apply') break;
+					// fall-through
+				case 'cancel':
+					$GLOBALS['egw']->redirect_link('/index.php',array(
+						'menuaction' => 'timesheet.timesheet_ui.index',
+						'msg' => $msg,
+					));
+					break;
 			}
 		}
-		if (isset($content['button'])) unset ($content['button']);
 		if (isset($content['statis']['delete']))
 		{
 			list($id) = each($content['statis']['delete']);
