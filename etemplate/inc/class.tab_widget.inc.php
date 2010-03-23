@@ -85,8 +85,6 @@
 					$labels = array_values($labels);
 				}
 			}
-			$all_names = implode('|',$names);
-
 			$tab_widget = new etemplate('etemplate.tab_widget');
 			$tab_widget->no_onclick = true;
 
@@ -105,6 +103,8 @@
 					$selected_tab = $name;
 				}
 			}
+			$all_names = implode('|',$names);
+
 			if (empty($selected_tab))
 			{
 				$value = $selected_tab = $names[0];
