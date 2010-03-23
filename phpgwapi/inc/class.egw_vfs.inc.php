@@ -1330,6 +1330,17 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
+	 * Get backend specific information (data and etemplate), to integrate as tab in filemanagers settings dialog
+	 *
+	 * @param string $path
+	 * @return array|boolean array with values for keys 'data','etemplate','name','label','help' or false if not supported by backend
+	 */
+	static function getExtraInfo($path)
+	{
+		return self::_call_on_backend('extra_info',array($path));
+	}
+
+	/**
 	 * Mapps entries of applications to a path for the locking
 	 *
 	 * @param string $app

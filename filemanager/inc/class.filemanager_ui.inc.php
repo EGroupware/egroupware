@@ -921,6 +921,17 @@ class filemanager_ui
 				'align' => 'right',
 			));
 		}
+		if (($extra_tab = egw_vfs::getExtraInfo($path)))
+		{
+			//_debug_array($extra_tab);
+			$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
+			$tabs['name'] .= '|'.$extra_tab['name'];
+			$tabs['label'] .= '|'.$extra_tab['label'];
+			if ($extra_tab['data'] && is_array($extra_tab['data']))
+			{
+				$content += $extra_tab['data'];
+			}
+		}
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.$path;
 
