@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.2.20100112
+Version: 9.2.20100322
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -60,7 +60,8 @@ Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-eventmgr-%{version}.tar.bz2
 Source4: %{name}-phpfreechat-%{version}.tar.bz2
 Source5: phpfreechat_data_public.tar.gz
-Source6: %{name}-rpmlintrc
+Source6: debian.changes
+Source7: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 Patch1: stylite-postfix-suse.patch
 BuildRoot: %{_tmppath}/%{name}-9.2-buildroot
@@ -525,6 +526,9 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 	cd %{buildroot}/usr/bin
 	ln -s php5 php
 %endif
+# copy current changelog to doc/rpm-build
+install -m 444 %{SOURCE6} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
+
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
