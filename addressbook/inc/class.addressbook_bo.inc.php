@@ -812,6 +812,8 @@ class addressbook_bo extends addressbook_so
 				$to_write['location'] = 'editaccountcontact';
 				$GLOBALS['egw']->hooks->process($to_write,False,True);	// called for every app now, not only enabled ones));
 			}
+			// Notify linked apps about changes in the contact data
+			egw_link::notify_update('addressbook',  $contact['id'], $contact);
 
 			// Record change history
 			$deleted = ($old['tid'] == addressbook_so::DELETED_TYPE || $contact['tid'] == addressbook_so::DELETED_TYPE);
