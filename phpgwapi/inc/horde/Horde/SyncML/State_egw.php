@@ -152,12 +152,13 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	function getClientDeviceInfo() {
 		#Horde::logMessage("SyncML: getClientDeviceInfo " . $this->_locName
 		#	. ", " . $this->_sourceURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
 		$syncml_prefs = $GLOBALS['egw_info']['user']['preferences']['syncml'];
-		$deviceMaxEntries = 'maxEntries-' . $this->_sourceURI;
-		$deviceUIDExtension = 'uidExtension-' . $this->_sourceURI;
-		$deviceNonBlockingAllday = 'nonBlockingAllday-' . $this->_sourceURI;
-		$deviceTimezone = 'tzid-' . $this->_sourceURI;
-		$deviceCharSet = 'charset-' . $this->_sourceURI;
+		$deviceMaxEntries = 'maxEntries-' . $this->_clientDeviceInfo['devId'];
+		$deviceUIDExtension = 'uidExtension-' . $this->_clientDeviceInfo['devId'];
+		$deviceNonBlockingAllday = 'nonBlockingAllday-' . $this->_clientDeviceInfo['devId'];
+		$deviceTimezone = 'tzid-' . $this->_clientDeviceInfo['devId'];
+		$deviceCharSet = 'charset-' . $this->_clientDeviceInfo['devId'];
 		if (isset($this->_clientDeviceInfo)
 				&& is_array($this->_clientDeviceInfo)) {
 			// update user preferences
@@ -169,58 +170,62 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			// use cached information
 			return $this->_clientDeviceInfo;
 		}
-
-		if (($deviceID = $GLOBALS['egw']->db->select('egw_syncmldeviceowner',
+		if (!($deviceID = $GLOBALS['egw']->db->select('egw_syncmldeviceowner',
 			'owner_devid',
 			array (
 				'owner_locname'		=> $this->_locName,
 				'owner_deviceid'	=> $this->_sourceURI,
 			), __LINE__, __FILE__, false, '', 'syncml')->fetchColumn())) {
-			$cols = array(
-				'dev_dtdversion',
-				'dev_numberofchanges',
-				'dev_largeobjs',
-				'dev_swversion',
-				'dev_fwversion',
-				'dev_hwversion',
-				'dev_oem',
-				'dev_model',
-				'dev_manufacturer',
-				'dev_devicetype',
-				'dev_datastore',
-				'dev_utc',
+			return false;
+		}
+
+		$cols = array(
+			'dev_dtdversion',
+			'dev_numberofchanges',
+			'dev_largeobjs',
+			'dev_swversion',
+			'dev_fwversion',
+			'dev_hwversion',
+			'dev_oem',
+			'dev_model',
+			'dev_manufacturer',
+			'dev_devicetype',
+			'dev_datastore',
+			'dev_utc',
+		);
+
+		#Horde::logMessage("SyncML: getClientDeviceInfo $deviceID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
+		$where = array(
+			'dev_id'		=> $deviceID,
+		);
+
+
+
+		if (($row = $GLOBALS['egw']->db->select('egw_syncmldevinfo',
+			$cols, $where, __LINE__, __FILE__, false, '', 'syncml')->fetch())) {
+			$this->_clientDeviceInfo = array (
+				'DTDVersion'				=> $row['dev_dtdversion'],
+				'supportNumberOfChanges'	=> $row['dev_numberofchanges'],
+				'supportLargeObjs'			=> $row['dev_largeobjs'],
+				'UTC'						=> $row['dev_utc'],
+				'softwareVersion'			=> $row['dev_swversion'],
+				'hardwareVersion'			=> $row['dev_hwversion'],
+				'firmwareVersion'			=> $row['dev_fwversion'],
+				'oem'						=> $row['dev_oem'],
+				'model'						=> $row['dev_model'],
+				'manufacturer'				=> $row['dev_manufacturer'],
+				'deviceType'				=> $row['dev_devicetype'],
+				'maxMsgSize'				=> $this->_maxMsgSize,
+				'maxEntries'        		=> $syncml_prefs[$deviceMaxEntries],
+				'uidExtension'        		=> $syncml_prefs[$deviceUIDExtension],
+				'nonBlockingAllday'			=> $syncml_prefs[$deviceNonBlockingAllday],
+				'tzid'						=> $syncml_prefs[$deviceTimezone],
+				'charset'					=> $syncml_prefs[$deviceCharSet],
+				'devId'						=> $deviceID,
+				'dataStore'					=> unserialize($row['dev_datastore']),
 			);
-
-			#Horde::logMessage("SyncML: getClientDeviceInfo $deviceID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-			$where = array(
-				'dev_id'		=> $deviceID,
-			);
-
-			if (($row = $GLOBALS['egw']->db->select('egw_syncmldevinfo',
-				$cols, $where, __LINE__, __FILE__, false, '', 'syncml')->fetch())) {
-				$this->_clientDeviceInfo = array (
-					'DTDVersion'				=> $row['dev_dtdversion'],
-					'supportNumberOfChanges'	=> $row['dev_numberofchanges'],
-					'supportLargeObjs'			=> $row['dev_largeobjs'],
-					'UTC'						=> $row['dev_utc'],
-					'softwareVersion'			=> $row['dev_swversion'],
-					'hardwareVersion'			=> $row['dev_hwversion'],
-					'firmwareVersion'			=> $row['dev_fwversion'],
-					'oem'						=> $row['dev_oem'],
-					'model'						=> $row['dev_model'],
-					'manufacturer'				=> $row['dev_manufacturer'],
-					'deviceType'				=> $row['dev_devicetype'],
-					'maxMsgSize'				=> $this->_maxMsgSize,
-					'maxEntries'        		=> $syncml_prefs[$deviceMaxEntries],
-					'uidExtension'        		=> $syncml_prefs[$deviceUIDExtension],
-					'nonBlockingAllday'			=> $syncml_prefs[$deviceNonBlockingAllday],
-					'tzid'						=> $syncml_prefs[$deviceTimezone],
-					'charset'					=> $syncml_prefs[$deviceCharSet],
-					'dataStore'					=> unserialize($row['dev_datastore']),
-				);
-				return $this->_clientDeviceInfo;
-			}
+			return $this->_clientDeviceInfo;
 		}
 		return false;
 	}
@@ -365,16 +370,44 @@ class EGW_SyncML_State extends Horde_SyncML_State
 					session_id($sessionID);
 					$GLOBALS['sessionid'] = $sessionID;
 					@session_start();
-
 					Horde::logMessage('SyncML_EGW[' . $GLOBALS['sessionid']
 						.']: Authentication of ' . $this->_locName . ' succeded',
 						__FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-					$config =& CreateObject('phpgwapi.config','syncml');
-					$config->read_repository();
-					$GLOBALS['config_syncml'] =& $config->config_data;
-					unset($config);
-
+					$syncml_prefs = $GLOBALS['egw_info']['user']['preferences']['syncml'];
+					if (($deviceID = $GLOBALS['egw']->db->select('egw_syncmldeviceowner',
+						'owner_devid',
+						array (
+							'owner_locname'		=> $this->_locName,
+							'owner_deviceid'	=> $this->_sourceURI,
+						), __LINE__, __FILE__, false, '', 'syncml')->fetchColumn())) {
+						$allowed_name = 'allowed-' . $deviceID;
+						if (isset($syncml_prefs[$allowed_name]))
+						{
+							$deviceAllowed = $syncml_prefs[$allowed_name];
+						}
+						else
+						{
+							$deviceAllowed = -1;
+						}
+					}
+					else
+					{
+						$deviceAllowed = -1; // Unkown device
+					}
+					if (!$GLOBALS['egw_info']['user']['apps']['admin'] &&
+						isset($syncml_prefs['deny_unknown_devices']) &&
+							$syncml_prefs['deny_unknown_devices'] != 0)
+					{
+						if ($syncml_prefs['deny_unknown_devices'] == -1 &&
+							$deviceAllowed != 1 ||
+							$syncml_prefs['deny_unknown_devices'] == 1 &&
+								$deviceAllowed == 0)
+						{
+							$this->_isAuthorized = -1;
+							Horde::logMessage('SyncML: Device is not allowed for user ' . $this->_locName,
+								__FILE__, __LINE__, PEAR_LOG_INFO);
+						}
+					}
 				}
 				else
 				{
