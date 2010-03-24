@@ -711,7 +711,7 @@ class infolog_bo
 				$status = 'done';
 				if (isset($values['info_type']) && !in_array($values['info_status'],array('done','billed','cancelled'))) {
 					$forcestatus = false;
-					echo "set_completed:"; _debug_array($this->status[$values['info_type']]);
+					//echo "set_completed:"; _debug_array($this->status[$values['info_type']]);
 					if (isset($this->status[$values['info_type']]['done'])) {
 						$forcestatus = true;
 						$status = 'done';
@@ -791,17 +791,24 @@ class infolog_bo
 		{
 			// convert user- to server-time
 			$this->time2time($to_write, null, false);
-			$time = new egw_time($values['info_enddate'], egw_time::$user_timezone);
-			// Set due date to 00:00
-			$time->setTime(0, 0, 0);
-			$values['info_enddate'] = egw_time::to($time,'ts');
+
+			if (!empty($values['info_enddate']))
+			{
+				$time = new egw_time($values['info_enddate'], egw_time::$user_timezone);
+				// Set due date to 00:00
+				$time->setTime(0, 0, 0);
+				$values['info_enddate'] = egw_time::to($time,'ts');
+			}
 		}
 		else
 		{
-			$time = new egw_time($values['info_enddate'], egw_time::$server_timezone);
-			// Set due date to 00:00
-			$time->setTime(0, 0, 0);
-			$to_write['info_enddate'] = egw_time::to($time,'ts');
+			if (!empty($values['info_enddate']))
+			{
+				$time = new egw_time($values['info_enddate'], egw_time::$server_timezone);
+				// Set due date to 00:00
+				$time->setTime(0, 0, 0);
+				$to_write['info_enddate'] = egw_time::to($time,'ts');
+			}
 			// convert server- to user-time
 			$this->time2time($values);
 		}
