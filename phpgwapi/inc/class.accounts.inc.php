@@ -289,7 +289,8 @@ class accounts
 			$valid = array();
 			if ($app)
 			{
-				$valid = $this->split_accounts($app,$param['type'] == 'both' ? 'merge' : $param['type']);
+				// we want the result merged, whatever it takes, as we only care for the ids
+				$valid = $this->split_accounts($app,'merge');//$param['type'] == 'both' ? 'merge' : $param['type']);
 			}
 			if ($group)
 			{
@@ -297,7 +298,7 @@ class accounts
 				if (!$members) $members = array();
 				$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
 			}
-			//echo "<p>limiting result to app='app' and/or group=$group valid-ids=".print_r($valid,true)."</p>\n";
+			//echo "<p>limiting result to app='$app' and/or group=$group valid-ids=".print_r($valid,true)."</p>\n";
 			$offset = $param['offset'] ? $param['offset'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			$stop = $start + $offset;
 			$n = 0;
