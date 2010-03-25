@@ -265,7 +265,7 @@ class calendar_boupdate extends calendar_bo
 				{
 					if ($overlap['participants'][$uid][0] == 'R')
 					{
-						unset($common_parts[$uid]);
+						unset($common_parts[$n]);
 						continue;
 					}
 					if (is_numeric($uid) || !in_array($uid[0],$types_with_quantity))
