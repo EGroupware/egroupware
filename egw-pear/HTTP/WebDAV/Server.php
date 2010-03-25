@@ -65,8 +65,10 @@ class HTTP_WebDAV_Server
      * But some clients can NOT deal with one or the other!
      *
      * @var boolean (client_refuses_redundand_namespace_declarations)
+     * @var boolean (client_needs_redundand_namespace_declarations)
      */
     var $crrnd = false;
+    var $cnrnd = false;
 
     /**
 
@@ -2307,7 +2309,7 @@ class HTTP_WebDAV_Server
     	$ret = '';
     	foreach($props as $prop)
     	{
-	    	$ret .= '<'.$prop['name'].
+	    	$ret .= '<'.(($prop['ns'] == 'DAV:' && $this->cnrnd) ? 'D:' : '').$prop['name'].
 	    		($prop['ns'] != 'DAV:' ? ' xmlns="'.$prop['ns'].'"' : '').
 	    		(empty($prop['val']) ? ' />' : '>'.
 	    			(is_array($prop['val']) ?

@@ -96,5 +96,11 @@ catch (egw_exception_no_permission_app $e)
 $GLOBALS['egw']->session->commit_session();
 
 $webdav_server = new vfs_webdav_server();
+$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+if (strstr($user_agent, 'microsoft-webdav') !== false)
+{
+	// Windows 7 special treatment
+	$webdav_server->cnrnd = true;
+}
 $webdav_server->ServeRequest();
 //error_log(sprintf("WebDAV %s request took %5.3f s (header include took %5.3f s)",$_SERVER['REQUEST_METHOD'],microtime(true)-$starttime,$headertime-$starttime));
