@@ -1,19 +1,19 @@
 <?php
 /**
  * API - accounts
- * 
+ *
  * This class extends a backend class (at them moment SQL or LDAP) and implements some
  * caching on to top of the backend functions. The cache is share for all instances of
- * the accounts class and for LDAP it is persistent through the whole session, for SQL 
+ * the accounts class and for LDAP it is persistent through the whole session, for SQL
  * it's only on a per request basis.
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and earlier modifications
- * 
- * Implements the (now depricated) interfaces on the former accounts class written by 
+ *
+ * Implements the (now depricated) interfaces on the former accounts class written by
  * Joseph Engo <jengo@phpgroupware.org> and Bettina Gille <ceb@phpgroupware.org>
  * Copyright (C) 2000 - 2002 Joseph Engo, Copyright (C) 2003 Joseph Engo, Bettina Gille
- * 
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
@@ -23,22 +23,22 @@
 
 /**
  * API - accounts
- * 
+ *
  * This class uses a backend class (at them moment SQL or LDAP) and implements some
  * caching on to top of the backend functions. The cache is share for all instances of
- * the accounts class and for LDAP it is persistent through the whole session, for SQL 
+ * the accounts class and for LDAP it is persistent through the whole session, for SQL
  * it's only on a per request basis.
- * 
- * The backend only implements the read, save, delete, name2id and the {set_}members{hips} methods. 
+ *
+ * The backend only implements the read, save, delete, name2id and the {set_}members{hips} methods.
  * The account class implements all other (eg. name2id, id2name) functions on top of these.
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006
- * 
- * Implements the (now depricated) interfaces on the former accounts class written by 
+ *
+ * Implements the (now depricated) interfaces on the former accounts class written by
  * Joseph Engo <jengo@phpgroupware.org> and Bettina Gille <ceb@phpgroupware.org>
  * Copyright (C) 2000 - 2002 Joseph Engo, Copyright (C) 2003 Joseph Engo, Bettina Gille
- * 
+ *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage accounts
@@ -67,11 +67,11 @@ class accounts
 	);
 	/**
 	 * enables the session-cache, done in the constructor for the LDAP backend only
-	 * 
+	 *
 	 * @var boolean $use_session_cache
 	 */
 	var $use_session_cache = true;
-	
+
 	/**
 	 * Depricated: Account this class was instanciated for
 	 *
@@ -106,39 +106,39 @@ class accounts
 		'firstname' => 'firstname',
 		'lastname' => 'lastname',
 		'lid' => 'LoginID',
-		'email' => 'email',	
+		'email' => 'email',
 		'start' => 'start with',
 		'exact' => 'exact',
 	);
-	
+
 	/**
 	 * Backend to use
 	 *
 	 * @var accounts_sql|accounts_ldap
 	 */
 	var $backend;
-	
+
 	/**
 	 * total number of found entries
 	 *
 	 * @var int
 	 */
 	var $total;
-	
+
 	/**
 	 * Current configuration
 	 *
 	 * @var array
 	 */
 	var $config;
-	
+
 	/**
 	 * hold an instance of the accounts class
 	 *
 	 * @var accounts the instance of the accounts class
 	 */
 	private static $_instance = NULL;
-	
+
 	/**
 	 * the singleton passtern
 	 *
@@ -151,11 +151,11 @@ class accounts
         }
 
         return self::$_instance;
-    }	
+    }
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string|array $backend=null string with backend 'sql'|'ldap', or whole config array, default read from global egw_info
 	 */
 	public function __construct($backend=null)
@@ -190,10 +190,10 @@ class accounts
 			$backend = $this->config['account_repository'];
 		}
 		$backend_class = 'accounts_'.$backend;
-		
+
 		$this->backend = new $backend_class($this);
 	}
-	
+
 	/**
 	 * Old constructor name
 	 *
@@ -206,7 +206,7 @@ class accounts
 
 		$this->__construct();
 	}
-	
+
 	/**
 	 * set the accountId
 	 *
@@ -218,7 +218,7 @@ class accounts
             $this->account_id = (int)$accountId;
         }
     }
-    
+
 	/**
 	 * Searches / lists accounts: users and/or groups
 	 *
@@ -244,7 +244,7 @@ class accounts
 		//echo "<p>accounts::search(".print_r($param,True).") start: ".microtime()."</p>\n";
 		$this->setup_cache();
 		$account_search = &$this->cache['account_search'];
-		
+
 		$serial = serialize($param);
 
 		if (isset($account_search[$serial]))
@@ -281,7 +281,8 @@ class accounts
 			$valid = array();
 			if ($app)
 			{
-				$valid = $this->split_accounts($app,$param['type'] == 'both' ? 'merge' : $param['type']);
+				// we want the result merged, whatever it takes, as we only care for the ids
+				$valid = $this->split_accounts($app,!in_array($param['type'],array('accounts','groups')) ? 'merge' : $param['type']);
 			}
 			if ($group)
 			{
@@ -333,14 +334,14 @@ class accounts
 		//echo "<p>accounts::search() end: ".microtime()."</p>\n";
 		return $account_search[$serial]['data'];
 	}
-	
+
 	/**
 	 * Reads the data of one account
 	 *
 	 * It's depricated to use read with out parameter to read the internal data of this class!!!
-	 * All key of the returned array use the 'account_' prefix. 
+	 * All key of the returned array use the 'account_' prefix.
 	 * For backward compatibility some values are additionaly availible without the prefix, using them is depricated!
-	 * 
+	 *
 	 * @param int/string $id numeric account_id or string with account_lid (use of default value of 0 is depricated!!!)
 	 * @param boolean $set_depricated_names=false set _additionaly_ the depricated keys without 'account_' prefix
 	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
@@ -356,7 +357,7 @@ class accounts
 			$id = $this->name2id($id);
 		}
 		if (!$id) return false;
-		
+
 		$this->setup_cache();
 		$account_data = &$this->cache['account_data'];
 
@@ -364,7 +365,7 @@ class accounts
 		{
 			$account_data[$id] = $this->backend->read($id);
 		}
-		if (!$account_data[$id] || !$set_depricated_names) 
+		if (!$account_data[$id] || !$set_depricated_names)
 		{
 			return $account_data[$id];
 		}
@@ -375,10 +376,10 @@ class accounts
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * Saves / adds the data of one account
-	 * 
+	 *
 	 * If no account_id is set in data the account is added and the new id is set in $data.
 	 *
 	 * @param array $data array with account-data
@@ -398,7 +399,7 @@ class accounts
 			}
 		}
 		if (($id = $this->backend->save($data)) && $data['account_type'] != 'g')
-		{ 
+		{
 			// if we are not on a pure LDAP system, we have to write the account-date via the contacts class now
 			if (($this->config['account_repository'] != 'ldap' ||
 				$this->config['contact_repository'] == 'sql-ldap') &&
@@ -420,7 +421,7 @@ class accounts
 				$GLOBALS['egw']->contacts->save($contact,true);		// true = ignore addressbook acl
 			}
 			// save primary group if necessary
-			if ($data['account_primary_group'] && (!($memberships = $this->memberships($id,true)) || 
+			if ($data['account_primary_group'] && (!($memberships = $this->memberships($id,true)) ||
 				!in_array($data['account_primary_group'],$memberships)))
 			{
 				$this->cache_invalidate($data['account_id']);
@@ -429,10 +430,10 @@ class accounts
 			}
 		}
 		$this->cache_invalidate($data['account_id']);
-		
+
 		return $id;
 	}
-	
+
 	/**
 	 * Delete one account, deletes also all acl-entries for that account
 	 *
@@ -449,10 +450,10 @@ class accounts
 
 		$this->cache_invalidate($id);
 		$this->backend->delete($id);
-		
+
 		// delete all acl_entries belonging to that user or group
 		$GLOBALS['egw']->acl->delete_account($id);
-		
+
 		return true;
 	}
 
@@ -477,7 +478,7 @@ class accounts
 	 * Please note:
 	 * - if a group and an user have the same account_lid the group will be returned (LDAP only)
 	 * - if multiple user have the same email address, the returned user is undefined
-	 * 
+	 *
 	 * @param string $name value to convert
 	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 	 * @param string $account_type=null u = user or g = group, or default null = try both
@@ -503,7 +504,7 @@ class accounts
 
 	/**
 	 * Convert an numeric account_id to any other value of that account (account_lid, account_email, ...)
-	 * 
+	 *
 	 * Uses the read method to fetch all data.
 	 *
 	 * @param int $account_id numerica account_id
@@ -513,7 +514,7 @@ class accounts
 	function id2name($account_id,$which='account_lid')
 	{
 		if (!($data = $this->read($account_id))) return false;
-		
+
 		//echo "<p>accounts::id2name($account_id,$which)='{$data[$which]}'";
 		return $data[$which];
 	}
@@ -521,7 +522,7 @@ class accounts
 	/**
 	 * get the type of an account: 'u' = user, 'g' = group
 	 *
-	 * @param int/string $accountid numeric account-id or alphanum. account-lid, 
+	 * @param int/string $accountid numeric account-id or alphanum. account-lid,
 	 *	if !$accountid account of the user of this session
 	 * @return string/false 'u' = user, 'g' = group or false on error ($accountid not found)
 	 */
@@ -533,12 +534,12 @@ class accounts
 		}
 		return $account_id > 0 ? 'u' : ($account_id < 0 ? 'g' : false);
 	}
-	
+
 	/**
 	 * check if an account exists and if it is an user or group
 	 *
 	 * @param int/string $account_id numeric account_id or account_lid
-	 * @return int 0 = acount does not exist, 1 = user, 2 = group 
+	 * @return int 0 = acount does not exist, 1 = user, 2 = group
 	 */
 	function exists($account_id)
 	{
@@ -594,7 +595,7 @@ class accounts
 	/**
 	 * Get all members of the group $account_id
 	 *
-	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid, 
+	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
 	 *	default account of the user of this session
 	 * @param boolean $just_id=false return just an array of id's and not id => lid pairs, default false
 	 * @return array with account_id ($just_id) or account_id => account_lid pairs (!$just_id)
@@ -618,7 +619,7 @@ class accounts
 
 	/**
 	 * Set the members of a group
-	 * 
+	 *
 	 * @param array $members array with uidnumber or uid's
 	 * @param int $gid gidnumber of group to set
 	 */
@@ -704,7 +705,7 @@ class accounts
 	 * Add an account for an authenticated user
 	 *
 	 * Expiration date and primary group are read from the system configuration.
-	 * 
+	 *
 	 * @param string $account_lid
 	 * @param string $passwd
 	 * @param array $GLOBALS['auto_create_acct'] values for 'firstname', 'lastname', 'email' and 'primary_group'
@@ -716,7 +717,7 @@ class accounts
 			$this->config['auto_create_expire'] == 'never' ? -1 :
 			time() + $this->config['auto_create_expire'] + 2;
 
-		
+
 		if (!($default_group_id = $this->name2id($this->config['default_group_lid'])))
 		{
 			$default_group_id = $this->name2id('Default');
@@ -737,8 +738,8 @@ class accounts
 			'account_primary_group' => $primary_group,
 		);
 		// use given account_id, if it's not already used
-		if (isset($GLOBALS['auto_create_acct']['account_id']) && 
-			is_numeric($GLOBALS['auto_create_acct']['account_id']) && 
+		if (isset($GLOBALS['auto_create_acct']['account_id']) &&
+			is_numeric($GLOBALS['auto_create_acct']['account_id']) &&
 			!$this->id2name($GLOBALS['auto_create_acct']['account_id']))
 		{
 			$data['account_id'] = $GLOBALS['auto_create_acct']['account_id'];
@@ -757,7 +758,7 @@ class accounts
 
 		return $data['account_id'];
 	}
-	
+
 	/**
 	 * Update the last login timestamps and the IP
 	 *
@@ -807,7 +808,7 @@ class accounts
 	 * Invalidate the cache (or parts of it) after change in $account_id
 	 *
 	 * Atm simplest approach - delete it all ;-)
-	 * 
+	 *
 	 * @param int $account_id for which account_id should the cache be invalid, default 0 = all
 	 */
 	function cache_invalidate($account_id=0)
@@ -824,18 +825,18 @@ class accounts
 			$GLOBALS['egw']->invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
 		}
 	}
-	
+
 	/**
 	 * Internal functions not meant to use outside this class!!!
 	 */
-	
+
 	/**
 	 * Sets up the account-data cache
 	 *
 	 * The cache is shared between all instances of the account-class and it can be save in the session,
 	 * if use_session_cache is set to True
-	 * 
-	 * @internal 
+	 *
+	 * @internal
 	 */
 	function setup_cache()
 	{
@@ -857,16 +858,16 @@ class accounts
 			$this->cache = array();
 		}
 	}
-	
+
 	/**
 	 * Magic function called if the object get's unserialized
-	 * 
+	 *
 	 * We unset our cache, which is a reference to the cache of the global account object in $GLOBALS['egw']->accounts,
 	 * as it will be no reference after wakeup (causes cache_invalidate to no longer work).
 	 * For the global accounts object the cache get unset too, as the object was stored in a early state of the framework
 	 * initialisation, and it the cache stored in the session by save_session_cache is a lot more up to date.
-	 * 
-	 * @internal 
+	 *
+	 * @internal
 	 */
 	function __wakeup()
 	{
@@ -877,20 +878,20 @@ class accounts
 	 * Saves the account-data cache in the session
 	 *
 	 * Gets called from common::egw_final()
-	 * 
-	 * @internal 
+	 *
+	 * @internal
 	 */
 	function save_session_cache()
 	{
 		if (is_object($GLOBALS['egw']->session) && is_array($GLOBALS['egw']->accounts->cache))
 		{
 			//echo "<p>save_session_cache() saving</p>\n";
-			$GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi',$GLOBALS['egw']->accounts->cache);		
+			$GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi',$GLOBALS['egw']->accounts->cache);
 		}
 	}
 
 	/**
-	 * Depricated functions of the old accounts class. 
+	 * Depricated functions of the old accounts class.
 	 *
 	 * Do NOT use them in new code, they will be removed after the next major release!!!
 	 */
@@ -908,7 +909,7 @@ class accounts
 
 	/**
 	 * saves the account-data in the internal data-structure of this class to the repository
-	 * 
+	 *
 	 * @deprecated use save of $GLOBALS['egw']->accounts and not own instances of the accounts class
 	 */
 	function save_repository()
@@ -940,7 +941,7 @@ class accounts
 
 	/**
 	 * Create a new account with the given $account_info
-	 * 
+	 *
 	 * @deprecated use save
 	 * @param array $data account data for the new account
 	 * @param booelan $default_prefs has no meaning any more, as we use "real" default prefs since 1.0
@@ -967,7 +968,7 @@ class accounts
 	 * Get all memberships of an account $accountid / groups the account is a member off
 	 *
 	 * @deprecated use memberships() which account_id => account_lid pairs
-	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid, 
+	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
 	 *	default account of the user of this session
 	 * @return array or arrays with keys 'account_id' and 'account_name' for the groups $accountid is a member of
 	 */
@@ -987,12 +988,12 @@ class accounts
 		//echo "<p>accounts::membership($accountid)="; _debug_array($old);
 		return $old;
 	}
-	
+
 	/**
 	 * Get all members of the group $accountid
 	 *
 	 * @deprecated use members which returns acount_id => account_lid pairs
-	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid, 
+	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
 	 *	default account of the user of this session
 	 * @return array of arrays with keys 'account_id' and 'account_name'
 	 */
@@ -1030,21 +1031,21 @@ class accounts
 	 * Gets account-name (lid), firstname and lastname of an account $accountid
 	 *
 	 * @deprecated use read to read account data
-	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid, 
+	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
 	 *	if !$accountid account of the user of this session
 	 * @param string &$lid on return: alphanumeric account-name (lid)
 	 * @param string &$fname on return: first name
 	 * @param string &$lname on return: last name
 	 * @return boolean true if $accountid was found, false otherwise
-	 */	 
+	 */
 	function get_account_name($accountid,&$lid,&$fname,&$lname)
 	{
 		if (!($data = $this->read($accountid))) return false;
-		
+
 		$lid   = $data['account_lid'];
 		$fname = $data['account_firstname'];
 		$lname = $data['account_lastname'];
-		
+
 		if (empty($fname)) $fname = $lid;
 		if (empty($lname)) $lname = $this->get_type($accountid) == 'g' ? lang('Group') : lang('user');
 
@@ -1057,7 +1058,7 @@ class accounts
 	 * Same effect as instanciating the class with that account, dont do it with $GLOBALS['egw']->account !!!
 	 *
 	 * @deprecated use read to read account data and store it in your own code
-	 * @param int $accountid numeric account-id 
+	 * @param int $accountid numeric account-id
 	 * @return array with keys lid, firstname, lastname, fullname, type
 	 */
 	function get_account_data($account_id)
