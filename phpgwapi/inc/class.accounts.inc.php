@@ -290,7 +290,7 @@ class accounts
 			if ($app)
 			{
 				// we want the result merged, whatever it takes, as we only care for the ids
-				$valid = $this->split_accounts($app,'merge');//$param['type'] == 'both' ? 'merge' : $param['type']);
+				$valid = $this->split_accounts($app,!in_array($param['type'],array('accounts','groups')) ? 'merge' : $param['type']);
 			}
 			if ($group)
 			{
