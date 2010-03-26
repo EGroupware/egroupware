@@ -152,7 +152,7 @@ function dropdown_menu_hack(el)
 {
 	if(el.runtimeStyle)
 	{
-		if(enable_ie_dropdownmenuhack) {
+		if(typeof(enable_ie_dropdownmenuhack) !== 'undefined') {
 			if (enable_ie_dropdownmenuhack==1){} else return;
 		} else {
 			return;
