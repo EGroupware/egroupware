@@ -273,7 +273,7 @@ class importexport_helper_functions {
 		
 		foreach ($appnames as $appname) {
 			$appdir = EGW_INCLUDE_ROOT. "/$appname/inc";
-			if(!is_dir($appdir) || !array_key_exists($GLOBALS['egw_info']['apps'], $appdir)) continue;
+			if(!is_dir($appdir) || !array_key_exists($appname, $GLOBALS['egw_info']['apps'])) continue;
 			$d = dir($appdir);
 			
 			// step through each file in appdir
