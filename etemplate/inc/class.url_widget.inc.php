@@ -223,17 +223,21 @@ class url_widget
 	 */
 	static function phone2link($number)
 	{
-		// for iPhone and Android: replace evtl. configured telephony integration link with tel: protocoll
-		if (strpos($_SERVER['HTTP_USER_AGENT'],'AppleWebKit') !== false &&
-			(strpos($_SERVER['HTTP_USER_AGENT'],'iPhone') !== false || strpos($_SERVER['HTTP_USER_AGENT'],'Android') !== false))
+		static $call_link;
+		if (is_null($call_link))
 		{
-			$call_link = 'tel:%1';
+			// for iPhone and Android: replace evtl. configured telephony integration link with tel: protocol
+			if (strpos($_SERVER['HTTP_USER_AGENT'],'AppleWebKit') !== false &&
+				(strpos($_SERVER['HTTP_USER_AGENT'],'iPhone') !== false || strpos($_SERVER['HTTP_USER_AGENT'],'Android') !== false))
+			{
+				$call_link = 'tel:%1';
+			}
+			else
+			{
+				$call_link = (string)$GLOBALS['egw_info']['server']['call_link'];
+			}
 		}
-		else
-		{
-			$call_link = $GLOBALS['egw_info']['server']['call_link'];
-		}
-		if (!$number || empty($call_link)) return false;
+		if (empty($number) || empty($call_link)) return false;
 
 		static $userphone;
 		if (is_null($userphone) && strpos($call_link,'%t') !== false)
