@@ -810,7 +810,8 @@ class accounts_ldap
 			// sort the array
 			$this->_callback_sort = strtoupper($param['sort']);
 			$this->_callback_order = empty($param['order']) ? array('account_lid') : explode(',',$param['order']);
-			uasort($sortedAccounts=$accounts,array($this,'_sort_callback'));
+			$sortedAccounts = $accounts;
+			uasort($sortedAccounts,array($this,'_sort_callback'));
 			$account_search[$unl_serial]['data'] = $sortedAccounts;
 
 			$account_search[$unl_serial]['total'] = $this->total = isset($totalcount) ? $totalcount : count($accounts);
