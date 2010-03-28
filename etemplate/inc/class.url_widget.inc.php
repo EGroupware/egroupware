@@ -223,10 +223,20 @@ class url_widget
 	 */
 	static function phone2link($number)
 	{
-		if (!$number || !$GLOBALS['egw_info']['server']['call_link']) return false;
+		// for iPhone and Android: replace evtl. configured telephony integration link with tel: protocoll
+		if (strpos($_SERVER['HTTP_USER_AGENT'],'AppleWebKit') !== false &&
+			(strpos($_SERVER['HTTP_USER_AGENT'],'iPhone') !== false || strpos($_SERVER['HTTP_USER_AGENT'],'Android') !== false))
+		{
+			$call_link = 'tel:%1';
+		}
+		else
+		{
+			$call_link = $GLOBALS['egw_info']['server']['call_link'];
+		}
+		if (!$number || empty($call_link)) return false;
 
 		static $userphone;
-		if (is_null($userphone) && strpos($GLOBALS['egw_info']['server']['call_link'],'%t') !== false)
+		if (is_null($userphone) && strpos($call_link,'%t') !== false)
 		{
 			$user = $GLOBALS['egw']->contacts->read('account:'.$GLOBALS['egw_info']['user']['account_id']);
 			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
@@ -234,6 +244,6 @@ class url_widget
 		$number = preg_replace('/[^0-9+]+/','',str_replace('&#9829;','',$number));	// remove number formatting chars messing up the links
 
 		return str_replace(array('%1','%u','%t'),array(urlencode($number),$GLOBALS['egw_info']['user']['account_lid'],$userphone),
-			$GLOBALS['egw_info']['server']['call_link']);
+			$call_link);
 	}
 }
