@@ -328,6 +328,7 @@ class infolog_customfields
 		unset($this->types[$content['type2']]);
 		unset($this->status[$content['type2']]);
 		unset($this->status['defaults'][$content['type2']]);
+		unset($this->group_owners[$content['type2']]);
 		list($content['type2']) = each($this->types);
 
 		// save changes to repository
