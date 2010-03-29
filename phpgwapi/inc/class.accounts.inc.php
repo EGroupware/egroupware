@@ -252,7 +252,6 @@ class accounts
 		//echo "<p>accounts::search(".print_r($param,True).") start: ".microtime()."</p>\n";
 		self::setup_cache();
 		$account_search = &self::$cache['account_search'];
-
 		$serial = serialize($param);
 
 		if (isset($account_search[$serial]))
@@ -725,10 +724,18 @@ class accounts
 			$this->config['auto_create_expire'] == 'never' ? -1 :
 			time() + $this->config['auto_create_expire'] + 2;
 
-
-		if (!($default_group_id = $this->name2id($this->config['default_group_lid'])))
+		if (!($default_group_id = $this->name2id($this->config['default_group_lid'],'account_lid','g')))
 		{
-			$default_group_id = $this->name2id('Default');
+			// check if we have a comma or semicolon delimited list of groups --> add first as primary and rest as memberships
+			foreach(preg_split('/[,;] */',$this->config['default_group_lid']) as $n => $group_lid)
+			{
+				if (($group_id = $this->name2id($group_lid,'account_lid','g')))
+				{
+					if (!$default_group_id) $default_group_id = $group_id;
+					$memberships[] = $group_id;
+				}
+			}
+			if (!$default_group_id) $default_group_id = $this->name2id('Default','account_lid','g');
 		}
 		$primary_group = $GLOBALS['auto_create_acct']['primary_group'] &&
 			$this->get_type((int)$GLOBALS['auto_create_acct']['primary_group']) === 'g' ?
@@ -764,6 +771,11 @@ class accounts
 			'order' => array('felamimail','fudforum'),
 		),False,True);  // called for every app now, not only enabled ones
 
+		// set memberships if given
+		if ($memberships)
+		{
+			$this->set_memberships($memberships,$data['account_id']);
+		}
 		return $data['account_id'];
 	}
 
