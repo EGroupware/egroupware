@@ -20,7 +20,7 @@
  * @todo deal with other types like objects
  * @static only namespace here
  */ 
-class arrayxml {
+class importexport_arrayxml {
 	
 	/**
 	 * converts a php array to an xml string

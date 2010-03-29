@@ -10,9 +10,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.arrayxml.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.so_sql.inc.php');
-
 /**
  * class definition
  * 
@@ -79,7 +76,7 @@ class importexport_definition implements importexport_iface_egw_record {
 			if ( !( in_array( $this->user, $this->get_allowed_users() ) || $this->definition['owner'] == $this->user || $this->is_admin)) {
 				throw new Exception('Error: User "'.$this->user.'" is not permitted to get definition with identifier "'.$_identifier.'"!');
 			}
-			$options_data = arrayxml::xml2array( $this->definition['plugin_options'] );
+			$options_data = importexport_arrayxml::xml2array( $this->definition['plugin_options'] );
 			$this->definition['plugin_options'] = $options_data['root'];
 		}
 	}
@@ -236,7 +233,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		}
 		
 		$this->so_sql->data = $this->definition;
-		$this->so_sql->data['plugin_options'] = arrayxml::array2xml( $this->definition['plugin_options'] );
+		$this->so_sql->data['plugin_options'] = importexport_arrayxml::array2xml( $this->definition['plugin_options'] );
 		if ($this->so_sql->save( array( 'definition_id' => $_dst_identifier ))) {
 			throw new Exception('Error: so_sql was not able to save definition: '.$this->get_identifier());
 		}

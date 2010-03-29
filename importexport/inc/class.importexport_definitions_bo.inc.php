@@ -10,9 +10,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.arrayxml.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
-
 /** bo to define {im|ex}ports
  *
  * @todo make this class an egw_record_pool!
@@ -118,11 +115,11 @@ class importexport_definitions_bo {
 			$definition = new importexport_definition( $definition_id );
 			$export_data['definitions'][$definition->name] = $definition->get_record_array();
 			$export_data['definitions'][$definition->name]['allowed_users'] =
-				import_export_helper_functions::account_id2name(
+				importexport_helper_functions::account_id2name(
 					$export_data['definitions'][$definition->name]['allowed_users']
 				);
 			$export_data['definitions'][$definition->name]['owner'] =
-				import_export_helper_functions::account_id2name(
+				importexport_helper_functions::account_id2name(
 					$export_data['definitions'][$definition->name]['owner']
 				);
 			unset($export_data['definitions'][$definition->name]['definition_id']);
@@ -130,7 +127,7 @@ class importexport_definitions_bo {
 		}
 
 
-		$xml = new arrayxml();
+		$xml = new importexport_arrayxml();
 		return $xml->array2xml($export_data, 'importExportDefinitions');
 	}
 

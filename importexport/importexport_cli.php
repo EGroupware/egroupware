@@ -137,8 +137,7 @@
 		exit(INVALID_OPTION); 
 	}
 	
-	require_once('inc/class.definition.inc.php');
-	$definition = new definition($definition);
+	$definition = new importexport_definition($definition);
 	if( $definition->get_identifier() < 1 ) {
 		fwrite(STDERR,"importexport_cli: Definition not found! \n"); 
 		exit(INVALID_OPTION);
@@ -149,8 +148,6 @@
 	$definition->plugin_options['dry_run'] = $dryrun;
 	$type = $definition->type;
 	
-	
-	require_once("$path_to_egroupware/$definition->application/importexport/class.$definition->plugin.inc.php");
 	$po = new $definition->plugin;
 	
 	$resource = fopen( $file, 'r' );

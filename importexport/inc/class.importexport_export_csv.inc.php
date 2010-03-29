@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.translation.inc.php');
-
 /**
  * class export_csv
  * This an record exporter.
@@ -97,7 +95,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	
 	/**
 	 * Sets conversion.
-	 * See import_export_helper_functions::conversion.
+	 * @see importexport_helper_functions::conversion.
 	 *
 	 * @param array $_conversion
 	 */

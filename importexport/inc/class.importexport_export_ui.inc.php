@@ -10,9 +10,6 @@
  * @version $Id$
  */
 
-require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.etemplate.inc.php');
-
-
 /**
  * userinterface for exports
  *

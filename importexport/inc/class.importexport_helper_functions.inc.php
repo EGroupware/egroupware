@@ -11,11 +11,23 @@
  */
 
 /**
- * class import_export_helper_functions (only static methods)
- * use import_export_helper_functions::method
+ * class importexport_helper_functions (only static methods)
+ * use importexport_helper_functions::method
  */
 class importexport_helper_functions {
 	
+	// Plugins are scanned and cached for all instances using this source path
+	const CACHE_EXPIRATION = 86400;
+
+	/**
+	* Files known to cause problems, and will be skipped in a plugin scan
+	* If you put appname => true, the whole app will be skipped.
+	*/
+	protected static $blacklist_files = array(
+		'news_admin' => array(
+			'class.news_admin_import.inc.php',
+		),
+	);
 	/**
 	 * nothing to construct here, only static functions!
 	 */
@@ -267,17 +279,40 @@ class importexport_helper_functions {
 	 * @return array(<appname> => array( <type> => array(<plugin> => <title>)))
 	 */
 	public static function get_plugins( $_appname = 'all', $_type = 'all' ) {
+		$plugins = egw_cache::getTree(
+			__CLASS__, 
+			'plugins', 
+			array('importexport_helper_functions','_get_plugins'), 
+			array(array_keys($GLOBALS['egw_info']['apps']), array('import', 'export')),
+			self::CACHE_EXPIRATION
+		);
+
 		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
 		$types = $_type == 'all' ? array('import','export') : (array)$_type;
+	
+		foreach($plugins as $appname => $types) {
+			if(!in_array($appname, $appnames)) unset($plugins['appname']);
+		}
+		foreach($plugins as $appname => $types) {
+			$plugins[$appname] = array_intersect_key($plugins[$appname], $types);
+		}
+		return $plugins;
+	}
+
+	protected static function _get_plugins(Array $appnames, Array $types) {
 		$plugins = array();
-		
 		foreach ($appnames as $appname) {
+			if(array_key_exists($appname, self::$blacklist_files) && self::$blacklist_files[$appname] === true) continue;
+
 			$appdir = EGW_INCLUDE_ROOT. "/$appname/inc";
-			if(!is_dir($appdir) || !array_key_exists($appname, $GLOBALS['egw_info']['apps'])) continue;
+			if(!is_dir($appdir)) continue;
 			$d = dir($appdir);
 			
 			// step through each file in appdir
 			while (false !== ($entry = $d->read())) {
+				// Blacklisted?
+				if(is_array(self::$blacklist_files[$appname]) && in_array($entry, self::$blacklist_files[$appname]))  continue;
+
 				list( ,$classname, ,$extension) = explode('.',$entry);
 				$file = $appdir. '/'. $entry;
 				
@@ -317,5 +352,5 @@ class importexport_helper_functions {
 	public static function guess_filetype( $_file ) {
 		
 	}
-} // end of import_export_helper_functions
+} // end of importexport_helper_functions
 ?>

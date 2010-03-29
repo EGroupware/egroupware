@@ -160,13 +160,8 @@ class importexport_definitions_ui
 				$wizard_name = $content['application'] . '_wizard_' . str_replace($content['application'] . '_', '', $content['plugin']);
  
 				// we need to deal with the wizard object if exists
-				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizzard_'. $content['plugin'].'.inc.php')) {
-error_log('Wizard has one z in english');
-}
 				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizard_'. $content['plugin'].'.inc.php'))
 				{
-					require_once(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizard_'. $content['plugin'].'.inc.php');
-					$wizard_plugin = 'wizard_'.$content['plugin'];
 					error_log('Deprecated location for importexport wizard.  Please move it to app/inc/ and rename it to follow new conventions');
 				}
 				elseif (file_exists(EGW_SERVER_ROOT . '/'. $content['application']."/inc/class.$wizard_name.inc.php"))
