@@ -14,7 +14,7 @@ if (!extension_loaded('dom'))
 	echo "<p>Required PHP DOM extension missing, installation of ImportExport definitions aborted.</p>\n";
 	return;	// otherwise we mess up the whole eGroupware install process
 }
-require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.bodefinitions.inc.php');
+require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.importexport_definitions_bo.inc.php');
 
 // This sets up $GLOBALS['egw']->accounts and $GLOBALS['egw']->db
 $GLOBALS['egw_setup']->setup_account_object();
@@ -31,6 +31,6 @@ while (false !== ($appdir = $egwdir->read())) {
 			$file = $defdir. '/'. $entry;
 			list( $filename, $extension) = explode('.',$entry);
 			if ( $extension != 'xml' ) continue;
-			bodefinitions::import( $file );
+			importexport_definitions_bo::import( $file );
 		}
 }
