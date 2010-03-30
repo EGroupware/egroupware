@@ -26,7 +26,7 @@ account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads 
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
 activate safe password check	setup	de	Aktiviere die "sichere Passwort" Überprüfung
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Grupper hinzufügen ("Default" wird versucht wenn nichts angegeben.)
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Gruppe hinzufügen ("Default" wird versucht wenn nichts angegeben.)
 add new database instance (egw domain)	setup	de	Neue Datenbankinstanz (eGW Domain) hinzufügen
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	de	Domain hinzufügen oder bearbeiten: [Domainname(default)],[DB-Name(egroupware)],[DB-Benutzer(egroupware)],DB-Passwort,[DB-Typ(mysql)],[DB-Host(localhost)],[DB-Port(DB spezifisch)],[Konfigurationsbenutzer(wie Header)],[Konfig-Passwort(wie Header)]
 adding, editing or deleting an egroupware domain / database instance:	setup	de	Hinzufügen, bearbeiten oder Löschen einer eGroupWare Domain / Datenbank Instanz
