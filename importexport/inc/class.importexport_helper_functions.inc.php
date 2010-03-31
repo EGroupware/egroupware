@@ -279,6 +279,7 @@ class importexport_helper_functions {
 	 * @return array(<appname> => array( <type> => array(<plugin> => <title>)))
 	 */
 	public static function get_plugins( $_appname = 'all', $_type = 'all' ) {
+		/*
 		$plugins = egw_cache::getTree(
 			__CLASS__, 
 			'plugins', 
@@ -286,6 +287,8 @@ class importexport_helper_functions {
 			array(array_keys($GLOBALS['egw_info']['apps']), array('import', 'export')),
 			self::CACHE_EXPIRATION
 		);
+		*/
+		$plugins = self::_get_plugins(array_keys($GLOBALS['egw_info']['apps']), array('import', 'export'));
 
 		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
 		$types = $_type == 'all' ? array('import','export') : (array)$_type;
