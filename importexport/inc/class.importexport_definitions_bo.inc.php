@@ -144,7 +144,7 @@ class importexport_definitions_bo {
 			throw new Exception("'$_import_file' does not exist or is not readable" );
 		}
 
-		$data = arrayxml::xml2array( file_get_contents( $_import_file ) );
+		$data = importexport_arrayxml::xml2array( file_get_contents( $_import_file ) );
 
 		$metainfo = $data['importExportDefinitions']['metainfo'];
 		$definitions = $data['importExportDefinitions']['definitions'];
