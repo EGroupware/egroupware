@@ -804,8 +804,9 @@ class infolog_so
 			// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
 			if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
+			$search = so_sql::search2criteria($query['search'], $wildcard, $op, null, $columns);
 			$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
-				implode($pattern.' OR ',$columns).$pattern.') ';
+				implode($op, $search) .')';
 
 			$join = ($cfcolfilter>0 ? '':'LEFT')." JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id ";
 			// mssql and others cant use DISTICT if text columns (info_des) are involved
