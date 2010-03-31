@@ -100,7 +100,7 @@ class importexport_wizard_basic_import_csv
 			$content['step'] = 'wizard_step30';
 			$preserv = $content;
 			unset ($preserv['button']);
-			$GLOBALS['egw']->js->set_onload("var btn = document.getElementById('exec[button][next]'); btn.attributes.removeNamedItem('onclick');");
+			$GLOBALS['egw']->js->set_onload("xajax_eT_wrapper_init();");
 			return $this->step_templates[$content['step']];
 		}
 		
