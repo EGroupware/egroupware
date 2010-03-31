@@ -782,7 +782,8 @@ class so_sql
 		// if extending class or instanciator set columns to search, convert string criteria to array
 		if ($criteria && !is_array($criteria))
 		{
-			$criteria = $this->search2criteria($criteria,$wildcard,$op);
+			$search = $this->search2criteria($criteria,$wildcard,$op);
+			$criteria = array($search);
 		}
 		if (!is_array($criteria))
 		{
@@ -1017,28 +1018,91 @@ class so_sql
 	 * @param string $extra_col=null extra column to search
 	 * @return array or column => value pairs
 	 */
-	protected function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null)
+	public function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
 	{
+		// This function can get called multiple times.  Make sure it doesn't re-process.
 		if (empty($pattern) || is_array($pattern)) return $pattern;
+		if(strpos($pattern, 'CONCAT') !== false) {
+			return $pattern;
+		}
 
-		// prepend and append extra wildcard %, if pattern does NOT already contain wildcards
-		if (strpos($pattern,'*') === false && strpos($pattern,'?') === false)
-		{
-			$wildcard = '%';	// if pattern contains no wildcards, add them before AND after the pattern
-		}
-		else
-		{
-			$wildcard = '';		// no extra wildcard, if pattern already contains some
-		}
-		if ($pattern[0] != '!') $op = 'OR';
 		$criteria = array();
-		foreach(is_null($this->columns_to_search) ? $this->db_cols : $this->columns_to_search as $col)
-		{
-			$criteria[$col] = $pattern;
+		$filter = array();
+		$columns = '';
+		$or_list = array();
+		if(!$search_cols) {
+			$search_cols = is_null($this->columns_to_search) ? $this->db_cols : $this->columns_to_search;
 		}
-		if ($extra_col) $criteria[$extra_col] = $pattern;
+		if(!$search_cols) return '';
 
-		return $criteria;
+		// Concat all fields to be searched together, so the conditions operate across the whole record
+		foreach($search_cols as $col)
+		{
+			$columns .= "CAST(COALESCE($col,'') AS char),";
+		}
+		if(strlen($columns) > 0) {
+			$columns = 'CONCAT(' . substr($columns, 0, -1) . ')';
+		}
+
+		// Break the search string into tokens
+		$break = ' ';
+		$token = strtok($pattern, $break);
+		
+		while($token) {
+			if($token == strtoupper(lang('AND'))) {
+				$token = '+'.strtok($break);
+			} elseif ($token == strtoupper(lang('OR'))) {
+				continue;
+			} elseif ($token == strtoupper(lang('NOT'))) {
+				$token = '-'.strtok($break);
+			}
+			if ($token[0]=='"') { 
+				$token = substr($token, 1,strlen($token));
+				$token .= ' '.strtok('"'); 
+			}
+
+			// prepend and append extra wildcard %, if pattern does NOT already contain wildcards
+			if (strpos($token,'*') === false && strpos($token,'?') === false)
+			{
+				$wildcard = '%';	// if pattern contains no wildcards, add them before AND after the pattern
+			}
+			else
+			{
+				$wildcard = '';		// no extra wildcard, if pattern already contains some
+			}
+			switch($token[0]) {
+				case '+':
+					$op = 'AND';
+					$token = substr($token, 1, strlen($token));
+					break;
+				case '-': 
+				case '!': 
+					$op = 'NOT';
+					$token = substr($token, 1, strlen($token));
+					break;
+				default:
+					$op = 'OR';
+					continue;
+			}
+			$criteria[$op][] = " $columns LIKE " . 
+				$GLOBALS['egw']->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token).$wildcard);
+
+			$token = strtok($break);
+		}
+		
+		if($criteria['NOT']) {
+			$filter[] = 'NOT (' . implode(' OR ', $criteria['NOT']) . ') ';
+		}
+		if($criteria['AND']) {
+			$filter[] = implode(' AND ', $criteria['AND']) . ' ';
+		}
+		if($criteria['OR']) {
+			$filter[] = '(' . implode(' OR ', $criteria['OR']) . ') ';
+		}
+
+		if ($extra_col) $filter[] = (strlen($filter) ? ' AND ' : ' ' ) . "$extra_col = $pattern";
+		$op = 'AND';
+		return $filter;
 	}
 
 	/**
