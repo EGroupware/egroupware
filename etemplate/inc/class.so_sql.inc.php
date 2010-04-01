@@ -1082,10 +1082,17 @@ class so_sql
 			{
 				$token = '-'.strtok($break);
 			}
-			if ($token[0]=='"') 
+			if ($token[0]=='"')
 			{
 				$token = substr($token, 1,strlen($token));
-				$token .= ' '.strtok('"'); 
+ 				if(substr($token, -1) != '"')
+				{
+					$token .= ' '.strtok('"');
+				}
+				else
+				{
+					$token = substr($token, 0, -1);
+				}
 			}
 
 			// prepend and append extra wildcard %, if pattern does NOT already contain wildcards
@@ -1189,8 +1196,14 @@ class so_sql
 		// Skip some numeric columns that don't make sense to search if we have to default to all columns
 		if(is_null($this->columns_to_search))
 		{
-			foreach($search_cols as $key => $col)
+			foreach($search_cols as $key => &$col)
 			{
+				// If the name as given isn't a real column name, and adding the prefix doesn't help, skip it
+				if(!$this->table_def['fd'][$col] && !($col = $this->prefix.array_search($col, $search_cols))) {
+					// Can't search this column
+					unset($search_cols[$key]);
+					continue;
+				}
 				if(in_array($this->table_def['fd'][$col]['type'], $numeric_types)) 
 				{
 					foreach($skip_columns_with as $bad) 
@@ -1202,6 +1215,8 @@ class so_sql
 						}
 					}
 				}
+				// Prefix with table name to avoid ambiguity
+				$col = $this->table_name.'.'.$col;
 			}
 		}
 		return $search_cols;
