@@ -1184,6 +1184,7 @@ class so_sql
 	{
 		$skip_columns_with = array('_id', 'modified', 'modifier', 'status', 'cat_id', 'owner');
 		$search_cols = is_null($this->columns_to_search) ? $this->db_cols : $this->columns_to_search;
+		$numeric_types = array('auto', 'int', 'float', 'double');
 		
 		// Skip some numeric columns that don't make sense to search if we have to default to all columns
 		if(is_null($this->columns_to_search))
