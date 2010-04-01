@@ -421,6 +421,8 @@ class so_sql_cf extends so_sql
 		}
 		if ($criteria && is_array($criteria))
 		{
+			$join .= $this->extra_join;
+
 			// check if we search in the custom fields
 			if (isset($criteria[$this->extra_value]))
 			{
@@ -432,7 +434,6 @@ class so_sql_cf extends so_sql
 					$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
 					$this->db->quote($wildcard.$criteria[$this->extra_value].$wildcard);
 				unset($criteria[$this->extra_value]);
-				$join .= $this->extra_join;
 			}
 			// replace ambiguous auto-id with (an exact match of) table_name.autoid
 			if (isset($criteria[$this->autoinc_id]))
@@ -505,6 +506,45 @@ class so_sql_cf extends so_sql
 		if (!empty($join) && !is_array($only_keys)) $only_keys = 'DISTINCT '.$only_keys;	// otherwise join returns rows more then once
 
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+	}
+
+	/**
+	 * Return criteria array for a given search pattern
+	 * Reimplemented to search custom fields
+	 *
+	 * @param string $pattern search pattern incl. * or ? as wildcard, if no wildcards used we append and prepend one!
+	 * @param string &$wildcard='' on return wildcard char to use, if pattern does not already contain wildcards!
+	 * @param string &$op='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
+	 * @param string $extra_col=null extra column to search
+	 * @param array $search_cols=array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
+	 * @return array or column => value pairs
+	 */
+	public function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
+	{
+		// This function can get called multiple times.  Make sure it doesn't re-process.
+		if (empty($pattern) || is_array($pattern)) return $pattern;
+		if(strpos($pattern, 'CONCAT') !== false)
+		{
+			return $pattern;
+		}
+
+		$pattern = trim($pattern);
+		$filter = array();
+		if(!$search_cols)
+		{
+			$search_cols = $this->get_default_search_columns();
+		}
+
+		// Add in custom field column, if it is not already there
+		if(!in_array($this->extra_table.'.'.$this->extra_value, $search_cols))
+		{
+			$search_cols[] = $this->extra_table.'.'.$this->extra_value;
+		}
+
+		// Let parent deal with the normal stuff
+		$criteria = parent::search2criteria($pattern, $wildcard, $op, $extra_col, $search_cols);
+
+		return $criteria;
 	}
 
 	/**

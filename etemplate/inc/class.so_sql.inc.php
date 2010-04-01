@@ -1016,6 +1016,7 @@ class so_sql
 	 * @param string &$wildcard='' on return wildcard char to use, if pattern does not already contain wildcards!
 	 * @param string &$op='AND' on return boolean operation to use, if pattern does not start with ! we use OR else AND
 	 * @param string $extra_col=null extra column to search
+	 * @param array $search_cols=array() List of columns to search.  If not provided, all columns in $this->db_cols will be considered
 	 * @return array or column => value pairs
 	 */
 	public function search2criteria($pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols = array())
@@ -1038,30 +1039,10 @@ class so_sql
 		*/
 		$numeric_types = array('auto', 'int', 'float', 'double');
 		$numeric_columns = array();
-		$skip_columns_with = array('_id', 'modified', 'modifier', 'status', 'cat_id', 'owner');
 
 		if(!$search_cols) 
 		{
-			$search_cols = is_null($this->columns_to_search) ? $this->db_cols : $this->columns_to_search;
-			
-			// Skip some numeric columns that don't make sense to search if we have to default to all columns
-			if(is_null($this->columns_to_search))
-			{
-				foreach($search_cols as $key => $col)
-				{
-					if(in_array($this->table_def['fd'][$col]['type'], $numeric_types)) 
-					{
-						foreach($skip_columns_with as $bad) 
-						{
-							if(strpos($col, $bad) !== false) 
-							{
-								unset($search_cols[$key]);
-								continue 2;
-							}
-						}
-					}
-				}
-			}
+			$search_cols = $this->get_default_search_columns();
 		}
 		if(!$search_cols) 
 		{
@@ -1141,7 +1122,7 @@ class so_sql
 				$numeric_filter = array();
 				foreach($numeric_columns as $col)
 				{
-					if(!$wildcard) 
+					if($wildcard == '')
 					{
 						// Token has a wildcard from user, use LIKE
 						$numeric_filter[] = "($col IS NOT NULL AND CAST($col AS CHAR) LIKE " .
@@ -1152,7 +1133,10 @@ class so_sql
 						$numeric_filter[] = "($col IS NOT NULL AND $col = $token)";
 					}
 				}
-				$token_filter = '(' . $token_filter . ' OR ' . implode(' OR ', $numeric_filter) . ')';
+				if(count($numeric_filter) > 0)
+				{
+					$token_filter = '(' . $token_filter . ' OR ' . implode(' OR ', $numeric_filter) . ')';
+				}
 			}
 			$criteria[$op][] = $token_filter;
 
@@ -1185,6 +1169,41 @@ class so_sql
 
 		$op = 'OR';
 		return array('(' . $result . ')');
+	}
+
+	/**
+	* Get a default list of columns to search
+	* This is to be used as a fallback, for when the extending class does not define
+	* $this->columns_to_search.  All the columns are considered, and any with $skip_columns_with in
+	* their name are discarded because these columns are expected to be foreign keys or other numeric
+	* values with no meaning to the user.
+	*
+	* @return array of column names
+	*/
+	protected function get_default_search_columns() 
+	{
+		$skip_columns_with = array('_id', 'modified', 'modifier', 'status', 'cat_id', 'owner');
+		$search_cols = is_null($this->columns_to_search) ? $this->db_cols : $this->columns_to_search;
+		
+		// Skip some numeric columns that don't make sense to search if we have to default to all columns
+		if(is_null($this->columns_to_search))
+		{
+			foreach($search_cols as $key => $col)
+			{
+				if(in_array($this->table_def['fd'][$col]['type'], $numeric_types)) 
+				{
+					foreach($skip_columns_with as $bad) 
+					{
+						if(strpos($col, $bad) !== false) 
+						{
+							unset($search_cols[$key]);
+							continue 2;
+						}
+					}
+				}
+			}
+		}
+		return $search_cols;
 	}
 
 	/**
@@ -1267,8 +1286,7 @@ class so_sql
 		$op = 'AND';
 		if ($query['search'])
 		{
-			$wildcard = '%';
-			$criteria = is_null($this->columns_to_search) ? $this->search2criteria($query['search'],$wildcard,$op) : $query['search'];
+			$criteria = $query['search'];
 		}
 		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',$extra_cols,
 			$wildcard,false,$op,$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
