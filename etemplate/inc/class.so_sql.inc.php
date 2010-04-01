@@ -1022,25 +1022,64 @@ class so_sql
 	{
 		// This function can get called multiple times.  Make sure it doesn't re-process.
 		if (empty($pattern) || is_array($pattern)) return $pattern;
-		if(strpos($pattern, 'CONCAT') !== false) {
+		if(strpos($pattern, 'CONCAT') !== false) 
+		{
 			return $pattern;
 		}
 
+		$pattern = trim($pattern);
 		$criteria = array();
 		$filter = array();
 		$columns = '';
-		$or_list = array();
-		if(!$search_cols) {
+
+		/* 
+		* Special handling for numeric columns.  They are only considered if the pattern is numeric.
+		* If the pattern is numeric, an equality search is used instead.
+		*/
+		$numeric_types = array('auto', 'int', 'float', 'double');
+		$numeric_columns = array();
+		$skip_columns_with = array('_id', 'modified', 'modifier', 'status', 'cat_id', 'owner');
+
+		if(!$search_cols) 
+		{
 			$search_cols = is_null($this->columns_to_search) ? $this->db_cols : $this->columns_to_search;
+			
+			// Skip some numeric columns that don't make sense to search if we have to default to all columns
+			if(is_null($this->columns_to_search))
+			{
+				foreach($search_cols as $key => $col)
+				{
+					if(in_array($this->table_def['fd'][$col]['type'], $numeric_types)) 
+					{
+						foreach($skip_columns_with as $bad) 
+						{
+							if(strpos($col, $bad) !== false) 
+							{
+								unset($search_cols[$key]);
+								continue 2;
+							}
+						}
+					}
+				}
+			}
 		}
-		if(!$search_cols) return '';
+		if(!$search_cols) 
+		{
+			return array();
+		}
 
 		// Concat all fields to be searched together, so the conditions operate across the whole record
 		foreach($search_cols as $col)
 		{
+			if($this->table_def['fd'][$col] && in_array($this->table_def['fd'][$col]['type'], $numeric_types))
+			{
+				$numeric_columns[] = $col;
+				continue;
+			}
 			$columns .= "CAST(COALESCE($col,'') AS char),";
 		}
-		if(strlen($columns) > 0) {
+		if(strlen($columns) > 0) 
+		{
 			$columns = 'CONCAT(' . substr($columns, 0, -1) . ')';
 		}
 
@@ -1048,15 +1087,22 @@ class so_sql
 		$break = ' ';
 		$token = strtok($pattern, $break);
 		
-		while($token) {
-			if($token == strtoupper(lang('AND'))) {
+		while($token) 
+		{
+			if($token == strtoupper(lang('AND'))) 
+			{
 				$token = '+'.strtok($break);
-			} elseif ($token == strtoupper(lang('OR'))) {
+			} 
+			elseif ($token == strtoupper(lang('OR'))) 
+			{
 				continue;
-			} elseif ($token == strtoupper(lang('NOT'))) {
+			} 
+			elseif ($token == strtoupper(lang('NOT'))) 
+			{
 				$token = '-'.strtok($break);
 			}
-			if ($token[0]=='"') { 
+			if ($token[0]=='"') 
+			{
 				$token = substr($token, 1,strlen($token));
 				$token .= ' '.strtok('"'); 
 			}
@@ -1070,7 +1116,9 @@ class so_sql
 			{
 				$wildcard = '';		// no extra wildcard, if pattern already contains some
 			}
-			switch($token[0]) {
+
+			switch($token[0]) 
+			{
 				case '+':
 					$op = 'AND';
 					$token = substr($token, 1, strlen($token));
@@ -1082,27 +1130,61 @@ class so_sql
 					break;
 				default:
 					$op = 'OR';
-					continue;
+					break;
 			}
-			$criteria[$op][] = " $columns LIKE " . 
+			$token_filter = " $columns LIKE " . 
 				$GLOBALS['egw']->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token).$wildcard);
+
+			// Compare numeric token as equality for numeric columns
+			if(is_numeric(str_replace(array('%','_','*','?'), '', $token)))
+			{
+				$numeric_filter = array();
+				foreach($numeric_columns as $col)
+				{
+					if(!$wildcard) 
+					{
+						// Token has a wildcard from user, use LIKE
+						$numeric_filter[] = "($col IS NOT NULL AND CAST($col AS CHAR) LIKE " .
+							$GLOBALS['egw']->db->quote(str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token)) . ')';
+					}
+					else 
+					{
+						$numeric_filter[] = "($col IS NOT NULL AND $col = $token)";
+					}
+				}
+				$token_filter = '(' . $token_filter . ' OR ' . implode(' OR ', $numeric_filter) . ')';
+			}
+			$criteria[$op][] = $token_filter;
 
 			$token = strtok($break);
 		}
-		
-		if($criteria['NOT']) {
+
+		if($criteria['NOT']) 
+		{
 			$filter[] = 'NOT (' . implode(' OR ', $criteria['NOT']) . ') ';
 		}
-		if($criteria['AND']) {
+		if($criteria['AND']) 
+		{
 			$filter[] = implode(' AND ', $criteria['AND']) . ' ';
 		}
-		if($criteria['OR']) {
+		if($criteria['OR']) 
+		{
 			$filter[] = '(' . implode(' OR ', $criteria['OR']) . ') ';
 		}
 
-		if ($extra_col) $filter[] = (strlen($filter) ? ' AND ' : ' ' ) . "$extra_col = $pattern";
-		$op = 'AND';
-		return $filter;
+		if(count($filter))
+		{
+			$result = '(' . implode(' AND ', $filter) . ')';
+		}
+		
+		// OR extra column on the end so a null or blank won't block a hit in the main columns
+		if ($extra_col) 
+		{
+			$result .= (strlen($result) ? ' OR ' : ' ') . "$extra_col = $pattern";
+		}
+
+		$op = 'OR';
+		return array('(' . $result . ')');
 	}
 
 	/**
