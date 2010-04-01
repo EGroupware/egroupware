@@ -24,6 +24,9 @@ class so_resources extends so_sql
 
 		$this->customfields = config::get_customfields('resources');
 		$this->soextra = new so_sql('resources','egw_resources_extra');
+
+		$this->columns_to_search = array('name','short_description','inventory_number','long_description','location');
+
 	}
 
 	/**
