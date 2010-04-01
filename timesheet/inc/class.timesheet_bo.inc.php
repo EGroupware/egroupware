@@ -153,6 +153,11 @@ class timesheet_bo extends so_sql_cf
 	 */
 	const EXTRA_TABLE = 'egw_timesheet_extra';
 
+	/**
+	* Columns to search when user does a text search
+	*/
+	var $columns_to_search = array('egw_timesheet.ts_id', 'ts_project', 'ts_title', 'ts_description', 'ts_duration', 'ts_quantity', 'ts_unitprice');
+
 	function __construct()
 	{
 		parent::__construct(TIMESHEET_APP,'egw_timesheet',self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
