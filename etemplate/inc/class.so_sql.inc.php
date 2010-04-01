@@ -1164,7 +1164,7 @@ class so_sql
 		// OR extra column on the end so a null or blank won't block a hit in the main columns
 		if ($extra_col) 
 		{
-			$result .= (strlen($result) ? ' OR ' : ' ') . "$extra_col = $pattern";
+			$result .= (strlen($result) ? ' OR ' : ' ') . "$extra_col = " . $GLOBALS['egw']->db->quote($pattern);
 		}
 
 		$op = 'OR';
