@@ -635,14 +635,32 @@ class addressbook_so
 			{
 				$cols = $this->account_cols_to_search;
 			}
+			if($backend instanceof addressbook_sql) 
+			{
+				foreach($cols as $key => &$col) 
+				{
+					if(!array_key_exists($col, $backend->db_cols)) 
+					{
+						if(!($col = array_search($col, $backend->db_cols))) 
+						{
+							// Can't search this column, it will error if we try
+							unset($cols[$key]);
+						}
+					}
+				}
+				$criteria = so_sql::search2criteria($search, $wildcard, $op, null, $cols);
+			} 
+			else
+			{
+				foreach($cols as $col)
+				{
+					$criteria[$col] = $search;
+				}
+			}
 			// search the customfields only if some exist, but only for sql!
 			if (get_class($backend) == 'addressbook_sql' && $this->customfields)
 			{
-				$cols[] = $this->extra_value;
-			}
-			foreach($cols as $col)
-			{
-				$criteria[$col] = $search;
+				$criteria[$this->extra_value] = $search;
 			}
 		}
 		if (is_array($criteria) && count($criteria))
