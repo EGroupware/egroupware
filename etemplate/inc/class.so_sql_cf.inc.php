@@ -417,7 +417,7 @@ class so_sql_cf extends so_sql
 		// if string given as criteria --> search in all (or $this->columns_to_search) columns including custom fields
 		if ($criteria && is_string($criteria))
 		{
-			$criteria = $this->search2criteria($criteria,$wildcard,$op,$this->extra_value);
+			$criteria = $this->search2criteria($criteria,$wildcard,$op);
 		}
 		if ($criteria && is_array($criteria))
 		{
