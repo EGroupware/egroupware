@@ -514,16 +514,14 @@ class calendar_ui
 		if ($Link_confirm_abort && $Link_confirm_text)
 		{
 			$returnvalue = 'javascript:var check=confirm(\''.$Link_confirm_text.'\');';
-			$returnvalue .=' if (check==true) {';
+			$returnvalue .=' if (check) ';
 			// open confirm =0kay
 			$returnvalue .= 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-			$returnvalue .= '}';
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes');";
 			//open confirm =Abort
-			$returnvalue .=' else {';
+			$returnvalue .=' else ';
 			$returnvalue .= 'egw_openWindowCentered2('.($Link_confirm_abort == 'this.href' ? $Link_confirm_abort : "'".$Link_confirm_abort."'").','.
-				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-			$returnvalue .= '}';
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes');";
 
 			return $returnvalue;
 		}
@@ -725,7 +723,7 @@ class calendar_ui
 		if($config['calendar_delete_history'] && $GLOBALS['egw_info']['user']['apps']['admin']) {
 			$options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
 		}
-		
+
 		$file[] = $this->_select_box('Filter','filter',$options,$baseurl ? $baseurl.'&filter=' : '');
 
 		// Calendarselection: User or Group
