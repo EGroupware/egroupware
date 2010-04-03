@@ -82,6 +82,7 @@ class egw_cache
 	 */
 	static public function setCache($level,$app,$location,$data,$expiration=0)
 	{
+		//error_log(__METHOD__."('$level','$app','$location',".array2string($data).",$expiration)");
 		switch($level)
 		{
 			case self::SESSION:
@@ -94,7 +95,7 @@ class egw_cache
 				{
 					return false;
 				}
-				return $provider->set(self::keys($level,$app,$location),$data);
+				return $provider->set(self::keys($level,$app,$location),$data,$expiration);
 		}
 		throw new egw_exception_wrong_parameter(__METHOD__."() unknown level '$level'!");
 	}
@@ -129,7 +130,7 @@ class egw_cache
 				{
 					//error_log(__METHOD__."($level,$app,$location,".array2string($callback).','.array2string($callback_params).",$expiration) calling calback to create data.");
 					$data = call_user_func_array($callback,$callback_params);
-					$provider->set($keys,$data);
+					$provider->set($keys,$data,$expiration);
 				}
 				return $data;
 		}
@@ -174,6 +175,7 @@ class egw_cache
 	 */
 	static public function setTree($app,$location,$data,$expiration=0)
 	{
+		//error_log(__METHOD__."('$app','$location',".array2string($data).",$expiration)");
 		return self::setCache(self::TREE,$app,$location,$data,$expiration);
 	}
 
