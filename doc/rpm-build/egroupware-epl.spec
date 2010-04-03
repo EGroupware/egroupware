@@ -39,7 +39,10 @@ Prefix: /usr/share
 %if 0%{?mandriva_version}
 	%define osversion %{?mandriva_version}
 	%define distribution Mandriva %{?mandriva_version}
-	%define extra_requires apache php-mysql php-dom
+	%define extra_requires apache php-mysql php-dom php-pdo_mysql php-pdo_sqlite
+# try to keep build from searching (for wrong) dependencys
+	%undefine __find_provides
+	%undefine __find_requires
 %endif
 %if 0%{?rhel_version}
 	%define osversion %{?rhel_version}
