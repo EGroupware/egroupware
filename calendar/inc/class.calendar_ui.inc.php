@@ -514,16 +514,14 @@ class calendar_ui
 		if ($Link_confirm_abort && $Link_confirm_text)
 		{
 			$returnvalue = 'javascript:var check=confirm(\''.$Link_confirm_text.'\');';
-			$returnvalue .=' if (check==true) {';
+			$returnvalue .=' if (check) ';
 			// open confirm =0kay
 			$returnvalue .= 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-			$returnvalue .= '}';
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes');";
 			//open confirm =Abort
-			$returnvalue .=' else {';
+			$returnvalue .=' else ';
 			$returnvalue .= 'egw_openWindowCentered2('.($Link_confirm_abort == 'this.href' ? $Link_confirm_abort : "'".$Link_confirm_abort."'").','.
-				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
-			$returnvalue .= '}';
+				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes');";
 
 			return $returnvalue;
 		}
