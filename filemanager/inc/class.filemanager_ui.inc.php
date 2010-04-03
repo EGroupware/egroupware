@@ -656,7 +656,9 @@ class filemanager_ui
 								$msg .= lang('Renamed %1 to %2.',$path,$to).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
-								$content['mime'] = mime_magic::filename2mime($path);    // recheck mime type
+								$mime_magic = new mime_magic();
+								$content['mime'] = $mime_magic->filename2mime($path);    // recheck mime type
+								unset($mime_magic);
 							}
 							else
 							{
