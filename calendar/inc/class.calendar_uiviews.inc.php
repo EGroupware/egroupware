@@ -1191,7 +1191,7 @@ class calendar_uiviews extends calendar_ui
 			}
 			else
 			{
-				$icons = $this->event_icons($event); 				
+				$icons = $this->event_icons($event);
 			}
 		}
 		$cats  = $this->bo->categories($this->categories->check_list(EGW_ACL_READ, $event['category']),$color);
@@ -1328,7 +1328,7 @@ class calendar_uiviews extends calendar_ui
 		else
 		{
 			$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
-			
+
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
@@ -1382,7 +1382,7 @@ class calendar_uiviews extends calendar_ui
 			}
 			else
 			{		$view_link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
-				
+
 					$style = 'top: '.$this->time2pos($event['start_m']).'%; height: '.$height.'%;';
 			}
 		}
@@ -1424,15 +1424,15 @@ class calendar_uiviews extends calendar_ui
 
 		return $html;
 	}
-	
+
 	/**
 	 * Get onclick attribute to open integration item for edit
-	 * 
+	 *
 	 * Name of the attribute is 'edit_link' and it should be an array with values for keys:
 	 * - 'edit'    => array('menuaction' => 'app.class.method')
 	 * - 'edit_id' => 'app_id'
 	 * - 'edit_popup' => '400x300' (optional)
-	 * 
+	 *
 	 * @param string $app
 	 * @param int|string $id
 	 * @return string
@@ -1440,7 +1440,7 @@ class calendar_uiviews extends calendar_ui
 	function integration_get_popup($app,$id)
 	{
 		$app_data = calendar_bo::integration_get_data($app,'edit_link');
-		
+
 		if (is_array($app_data) && isset($app_data['edit']))
 		{
 			$popup_size = $app_data['edit_popup'];
@@ -1454,7 +1454,7 @@ class calendar_uiviews extends calendar_ui
 		if ($edit)
 		{
 			$view_link = egw::link('/index.php',$edit);
-			
+
 			if ($popup_size)
 			{
 				list($w,$h) = explode('x',$popup_size);
@@ -1470,12 +1470,12 @@ class calendar_uiviews extends calendar_ui
 
 	/**
 	 * Get icons for an integration event
-	 * 
-	 * Attribute 'icons' is either null (--> navbar icon), false (--> no icon) 
+	 *
+	 * Attribute 'icons' is either null (--> navbar icon), false (--> no icon)
 	 * or a callback with parameters $id,$event
-	 * 
+	 *
 	 * Icons specified in $events['icons'] are always displayed!
-	 * 
+	 *
 	 * @param string $app
 	 * @param int|string $id
 	 * @param array $event
@@ -1661,14 +1661,37 @@ class calendar_uiviews extends calendar_ui
 		$rows = array();
 		if (!is_array($events)) $events = array();
 
+		if ($by_cat === 'user')	// planner by user
+		{
+			// convert filter to allowed status
+			switch($this->filter)
+			{
+				case 'unknown':
+					$status_to_show = array('U','G'); break;
+				case 'accepted':
+					$status_to_show = array('A'); break;
+				case 'tentative':
+					$status_to_show = array('T'); break;
+				case 'rejected':
+					$status_to_show = array('R'); break;
+				case 'delegated':
+					$status_to_show = array('D'); break;
+				case 'all':
+					$status_to_show = array('U','A','T','D','G','R'); break;
+				default:
+					$status_to_show = array('U','A','T','D','G'); break;
+			}
+		}
 		foreach($events as $key => $event)
 		{
 			if ($by_cat === 'user')	// planner by user
 			{
 				foreach($event['participants'] as $sort => $status)
 				{
-					// only show if participant has not rejected or user wants to see rejections
-					if (isset($sort2label[$sort]) && ($status != 'R' || $this->bo->cal_prefs['show_rejected']))
+					calendar_so::split_status($status,$nul,$nul);
+					// only show if participant with status visible with current filter
+					if (isset($sort2label[$sort]) && (in_array($status,$status_to_show) ||
+						$this->filter == 'owner' && $event['owner'] == $sort))	// owner too additionally uses owner
 					{
 						$rows[$sort][] =& $events[$key];
 					}
@@ -2007,20 +2030,20 @@ class calendar_uiviews extends calendar_ui
 
 		return $content;
 	}
-	
+
 	/**
 	 * Creates DayOfMonth scale for planner by month
-	 * 
+	 *
 	 * @param string $indent
 	 * @return string
 	 */
 	function plannerDayOfMonthScale($indent)
 	{
 		$day_width = round(100 / 31,2);
-		
+
 		// month scale with navigation
 		$content .= $indent.'<div class="plannerScale">'."\n";
-		
+
 		$title = lang(egw_time::to($this->first,'F')).' '.egw_time::to($this->first,'Y').' - '.
 			lang(egw_time::to($this->last,'F')).' '.egw_time::to($this->last,'Y');
 
@@ -2034,7 +2057,7 @@ class calendar_uiviews extends calendar_ui
 		$next_month = $time->format('Ymd');
 		$time->modify('+11month');
 		$next_year = $time->format('Ymd');
-		
+
 		$title = html::a_href(html::image('phpgwapi','first',lang('back one year'),$options=' alt="<<"'),array(
 				'menuaction' => $this->view_menuaction,
 				'date'       => $last_year,
@@ -2051,7 +2074,7 @@ class calendar_uiviews extends calendar_ui
 					'menuaction' => $this->view_menuaction,
 					'date'       => $next_year,
 				));
-		
+
 		$content .= $indent."\t".'<div class="plannerMonthScale th" style="left: 0; width: 100%;">'.
 				$title."</div>\n";
 		$content .= $indent."</div>\n";		// end of plannerScale
@@ -2149,7 +2172,7 @@ class calendar_uiviews extends calendar_ui
 			$content .= ' style="width: '.$width.'%;"';
 		}
 		$content .= ">\n";
-		
+
 		// mark weekends and other special days in yearly planner
 		if ($this->sortby == 'month')
 		{
@@ -2171,10 +2194,10 @@ class calendar_uiviews extends calendar_ui
 
 		return $content;
 	}
-	
+
 	/**
 	 * Mark weekends and other special days in yearly planner
-	 * 
+	 *
 	 * @param int $start timestamp of start of row
 	 * @param int $days number of days in month of row
 	 * @param string $indent=''
@@ -2186,7 +2209,7 @@ class calendar_uiviews extends calendar_ui
 		for($t = $start,$left = 0,$i = 0; $i < $days; $t += DAY_s,$left += $day_width,++$i)
 		{
 			$this->_day_class_holiday($this->bo->date2string($t),$class,$holidays,true);
-			
+
 			$class = trim(str_replace(array('row_on','row_off'),'',$class));
 			if ($class)	// no regular weekday
 			{
