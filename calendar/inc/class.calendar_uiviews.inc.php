@@ -1504,14 +1504,37 @@ class calendar_uiviews extends calendar_ui
 		}
 		if (!is_array($events)) $events = array();
 
+		if ($by_cat === 'user')	// planner by user
+		{
+			// convert filter to allowed status
+			switch($this->filter)
+			{
+				case 'unknown':
+					$status_to_show = array('U','G'); break;
+				case 'accepted':
+					$status_to_show = array('A'); break;
+				case 'tentative':
+					$status_to_show = array('T'); break;
+				case 'rejected':
+					$status_to_show = array('R'); break;
+				case 'delegated':
+					$status_to_show = array('D'); break;
+				case 'all':
+					$status_to_show = array('U','A','T','D','G','R'); break;
+				default:
+					$status_to_show = array('U','A','T','D','G'); break;
+			}
+		}
 		foreach($events as $key => $event)
 		{
 			if ($by_cat === false)	// planner by user
 			{
 				foreach($event['participants'] as $sort => $status)
 				{
-					// only show if participant has not rejected or user wants to see rejections
-					if (isset($sort2label[$sort]) && ($status != 'R' || $this->bo->cal_prefs['show_rejected']))
+					calendar_so::split_status($status,$nul,$nul);
+					// only show if participant with status visible with current filter
+					if (isset($sort2label[$sort]) && (in_array($status,$status_to_show) ||
+						$this->filter == 'owner' && $event['owner'] == $sort))	// owner too additionally uses owner
 					{
 						$rows[$sort][] =& $events[$key];
 					}
