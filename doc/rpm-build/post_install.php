@@ -83,7 +83,8 @@ function set_distro_defaults($distro=null)
 	global $config;
 	if (is_null($distro))
 	{
-		$distro = file_exists('/etc/SuSE-release') ? 'suse' : (file_exists('/etc/debian_version') ? 'debian' : 'rh');
+		$distro = file_exists('/etc/SuSE-release') ? 'suse' : (file_exists('/etc/debian_version') ? 'debian' :
+			(file_exists('/etc/mandriva-release') ? 'mandriva' : 'rh'));
 	}
 	switch (($config['distro'] = $distro))
 	{
@@ -105,6 +106,14 @@ function set_distro_defaults($distro=null)
 			$config['autostart_db'] = '/usr/sbin/update-rc.d mysql defaults';
 			$config['start_webserver'] = '/usr/sbin/service apache2';
 			$config['autostart_webserver'] = '/usr/sbin/update-rc.d apache2 defaults';
+			break;
+		case 'mandriva':
+			$config['ldap_suffix'] = 'dc=site';
+			$config['ldap_admin'] = $config['ldap_root_dn'] = 'uid=LDAP Admin,ou=System Accounts,$suffix';
+			$config['ldap_root_pw'] = '$admin_pw';
+			$config['ldap_base'] = '$suffix';
+			$config['ldap_context'] = 'ou=People,$base';
+			$config['ldap_group_context'] = 'ou=Group,$base';
 			break;
 		default:
 			$config['distro'] = 'rh';
@@ -206,7 +215,7 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	$extra_config = '';
 
 	// check for localhost if database server is started and start it (permanent) if not
-	if ($config['db_host'] == 'localhost' && file_exists($config['start_db']))
+	if ($config['db_host'] == 'localhost' && $config['start_db'])
 	{
 		if (exec($config['start_db'].' status',$dummy,$ret) && $ret)
 		{
@@ -290,7 +299,7 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	run_cmd($setup_admin);
 
 	// check if webserver is started and start it (permanent) if not
-	if (file_exists($config['start_webserver']))
+	if ($config['start_webserver'])
 	{
 		if (exec($config['start_webserver'].' status',$dummy,$ret) && $ret)
 		{
