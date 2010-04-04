@@ -166,7 +166,7 @@ class so_sql
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
-	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps, 
+	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps,
 	 * 	'object' use egw_time objects or 'string' use DB timestamp (Y-m-d H:i:s) string
 	 *
 	 * @return so_sql
@@ -200,10 +200,10 @@ class so_sql
 		}
 		$this->set_times($timestamp_type);
 	}
-	
+
 	/**
 	 * Set class vars timestamp_type, now and tz_offset_s
-	 * 
+	 *
 	 * @param string|boolean $timestamp_type=false default false do NOT set time_stamptype,
 	 * 	null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects,
 	 *  'string' use DB timestamp (Y-m-d H:i:s) string
@@ -438,7 +438,7 @@ class so_sql
 
 		return $this->data;
 	}
-	
+
 	/**
 	 * Name of automatically set user timezone field from read
 	 */
@@ -554,7 +554,7 @@ class so_sql
 		if ((int) $this->debug >= 4) echo "nothing found !!!</p>\n";
 
 		$this->db2data();
-		
+
 		return False;
 	}
 
@@ -568,7 +568,7 @@ class so_sql
 	function save($keys=null,$extra_where=null)
 	{
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
-		
+
 		// check if data contains user timezone during read AND user changed timezone since then
 		// --> load old timezone for the rest of this request
 		// this only a grude hack, better handle this situation in app code:
@@ -919,6 +919,11 @@ class so_sql
 		}
 		if ($extra_cols) $colums .= ($colums ? ',' : '').(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols);
 
+		// add table-name to otherwise ambiguous id over which we join (incl. "AS id" to return it with the right name)
+		if ($join && $this->autoinc_id && strpos($colums,$this->autoinc_id) !== false)
+		{
+			$colums = preg_replace('/([ ,]+)'.preg_quote($this->autoinc_id).'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
+		}
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
 
@@ -1023,7 +1028,7 @@ class so_sql
 	{
 		// This function can get called multiple times.  Make sure it doesn't re-process.
 		if (empty($pattern) || is_array($pattern)) return $pattern;
-		if(strpos($pattern, 'CONCAT') !== false) 
+		if(strpos($pattern, 'CONCAT') !== false)
 		{
 			return $pattern;
 		}
@@ -1033,18 +1038,18 @@ class so_sql
 		$filter = array();
 		$columns = '';
 
-		/* 
+		/*
 		* Special handling for numeric columns.  They are only considered if the pattern is numeric.
 		* If the pattern is numeric, an equality search is used instead.
 		*/
 		$numeric_types = array('auto', 'int', 'float', 'double');
 		$numeric_columns = array();
 
-		if(!$search_cols) 
+		if(!$search_cols)
 		{
 			$search_cols = $this->get_default_search_columns();
 		}
-		if(!$search_cols) 
+		if(!$search_cols)
 		{
 			return array();
 		}
@@ -1059,7 +1064,7 @@ class so_sql
 			}
 			$columns .= "CAST(COALESCE($col,'') AS char),";
 		}
-		if(strlen($columns) > 0) 
+		if(strlen($columns) > 0)
 		{
 			$columns = 'CONCAT(' . substr($columns, 0, -1) . ')';
 		}
@@ -1067,18 +1072,18 @@ class so_sql
 		// Break the search string into tokens
 		$break = ' ';
 		$token = strtok($pattern, $break);
-		
-		while($token) 
+
+		while($token)
 		{
-			if($token == strtoupper(lang('AND'))) 
+			if($token == strtoupper(lang('AND')))
 			{
 				$token = '+'.strtok($break);
-			} 
-			elseif ($token == strtoupper(lang('OR'))) 
+			}
+			elseif ($token == strtoupper(lang('OR')))
 			{
 				continue;
-			} 
-			elseif ($token == strtoupper(lang('NOT'))) 
+			}
+			elseif ($token == strtoupper(lang('NOT')))
 			{
 				$token = '-'.strtok($break);
 			}
@@ -1105,14 +1110,14 @@ class so_sql
 				$wildcard = '';		// no extra wildcard, if pattern already contains some
 			}
 
-			switch($token[0]) 
+			switch($token[0])
 			{
 				case '+':
 					$op = 'AND';
 					$token = substr($token, 1, strlen($token));
 					break;
-				case '-': 
-				case '!': 
+				case '-':
+				case '!':
 					$op = 'NOT';
 					$token = substr($token, 1, strlen($token));
 					break;
@@ -1120,7 +1125,7 @@ class so_sql
 					$op = 'OR';
 					break;
 			}
-			$token_filter = " $columns LIKE " . 
+			$token_filter = " $columns LIKE " .
 				$GLOBALS['egw']->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token).$wildcard);
 
 			// Compare numeric token as equality for numeric columns
@@ -1135,7 +1140,7 @@ class so_sql
 						$numeric_filter[] = "($col IS NOT NULL AND CAST($col AS CHAR) LIKE " .
 							$GLOBALS['egw']->db->quote(str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token)) . ')';
 					}
-					else 
+					else
 					{
 						$numeric_filter[] = "($col IS NOT NULL AND $col = $token)";
 					}
@@ -1150,15 +1155,15 @@ class so_sql
 			$token = strtok($break);
 		}
 
-		if($criteria['NOT']) 
+		if($criteria['NOT'])
 		{
 			$filter[] = 'NOT (' . implode(' OR ', $criteria['NOT']) . ') ';
 		}
-		if($criteria['AND']) 
+		if($criteria['AND'])
 		{
 			$filter[] = implode(' AND ', $criteria['AND']) . ' ';
 		}
-		if($criteria['OR']) 
+		if($criteria['OR'])
 		{
 			$filter[] = '(' . implode(' OR ', $criteria['OR']) . ') ';
 		}
@@ -1167,9 +1172,9 @@ class so_sql
 		{
 			$result = '(' . implode(' AND ', $filter) . ')';
 		}
-		
+
 		// OR extra column on the end so a null or blank won't block a hit in the main columns
-		if ($extra_col) 
+		if ($extra_col)
 		{
 			$result .= (strlen($result) ? ' OR ' : ' ') . "$extra_col = " . $GLOBALS['egw']->db->quote($pattern);
 		}
@@ -1187,12 +1192,12 @@ class so_sql
 	*
 	* @return array of column names
 	*/
-	protected function get_default_search_columns() 
+	protected function get_default_search_columns()
 	{
 		$skip_columns_with = array('_id', 'modified', 'modifier', 'status', 'cat_id', 'owner');
 		$search_cols = is_null($this->columns_to_search) ? $this->db_cols : $this->columns_to_search;
 		$numeric_types = array('auto', 'int', 'float', 'double');
-		
+
 		// Skip some numeric columns that don't make sense to search if we have to default to all columns
 		if(is_null($this->columns_to_search))
 		{
@@ -1204,11 +1209,11 @@ class so_sql
 					unset($search_cols[$key]);
 					continue;
 				}
-				if(in_array($this->table_def['fd'][$col]['type'], $numeric_types)) 
+				if(in_array($this->table_def['fd'][$col]['type'], $numeric_types))
 				{
-					foreach($skip_columns_with as $bad) 
+					foreach($skip_columns_with as $bad)
 					{
-						if(strpos($col, $bad) !== false) 
+						if(strpos($col, $bad) !== false)
 						{
 							unset($search_cols[$key]);
 							continue 2;
