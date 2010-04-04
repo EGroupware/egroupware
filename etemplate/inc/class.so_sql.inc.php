@@ -922,7 +922,7 @@ class so_sql
 		// add table-name to otherwise ambiguous id over which we join (incl. "AS id" to return it with the right name)
 		if ($join && $this->autoinc_id && strpos($colums,$this->autoinc_id) !== false)
 		{
-			$colums = preg_replace('/([ ,]+)'.preg_quote($this->autoinc_id).'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
+			$colums = preg_replace('/(?<! AS)([ ,]+)'.preg_quote($this->autoinc_id).'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
 		}
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
