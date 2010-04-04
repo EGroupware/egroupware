@@ -181,7 +181,7 @@ class infolog_ui
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
 			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id']))))
+			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id'],'link_lastmod DESC',true))))
 		{
 			$timesheets = array();
 			foreach ($info['links'] as $link)
@@ -392,7 +392,7 @@ class infolog_ui
 		// query all links and sub counts in one go
 		if ($infos && !$query['csv_export'])
 		{
-			$links = bolink::get_links_multiple('infolog',array_keys($infos));
+			$links = egw_link::get_links_multiple('infolog',array_keys($infos),true);
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
 		$readonlys = $rows = array();
