@@ -1,5 +1,6 @@
 Name: eGroupware
 Version: 1.6.003
+%define pack_no -2
 Release: 1
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -36,7 +37,10 @@ Prefix: /usr/share
 %if 0%{?mandriva_version}
 	%define osversion %{?mandriva_version}
 	%define distribution Mandriva %{?mandriva_version}
-	%define extra_requires apache php-mysql php-dom
+	%define extra_requires apache php-mysql php-dom php-pdo_mysql php-pdo_sqlite
+# try to keep build from searching (for wrong) dependencys
+	%undefine __find_provides
+	%undefine __find_requires
 %endif
 %if 0%{?rhel_version}
 	%define osversion %{?rhel_version}
@@ -51,11 +55,11 @@ Prefix: /usr/share
 
 Distribution: %{distribution}
 
-Source0: %{name}-%{version}.tar.bz2
-Source1: %{name}-egw-pear-%{version}.tar.bz2
-Source2: %{name}-icalsrv-%{version}.tar.bz2
-Source3: %{name}-mydms-%{version}.tar.bz2
-Source4: %{name}-gallery-%{version}.tar.bz2
+Source0: %{name}-%{version}%{pack_no}.tar.gz
+Source1: %{name}-egw-pear-%{version}%{pack_no}.tar.bz2
+Source2: %{name}-icalsrv-%{version}%{pack_no}.tar.bz2
+Source3: %{name}-mydms-%{version}%{pack_no}.tar.bz2
+Source4: %{name}-gallery-%{version}%{pack_no}.tar.bz2
 Source5: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{name}-buildroot
@@ -595,56 +599,3 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %files wiki
 %defattr(-,root,root)
 %{egwdir}/wiki
-
-%changelog
-* Tue Mar 9 2010 Ralf Becker <rb@stylite.de> 1.6.003
-- eGroupware 1.6.003 security and bugfix release
-- fixes 2 security problems:
-  + one is a serious remote command execution (allowing to run arbitrary
-    commands on the web server by simply issuing a HTTP request!)
-  + the other a reflected cross-site scripting (XSS)
-  Both require NO valid EGroupware account and work without being logged in!
-- SyncML 1.2 support and many SyncML bug fixes
-- many bugfixes since 1.6.002 release
-
-* Mon Jul 20 2009 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.002
-- eGroupware 1.6.002 security and bugfix release
-- fixes 3 security problems:
-  + FCKeditor (remote file upload)
-  + tracker (XSS problem)
-  + knowledgebase (SQL injection)
-- added HTML Purifier as preventive measure for FCKeditor content
-- tons of bugfixes since initial 1.6.001 release
-
-* Mon Nov 24 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.001
-- eGroupware 1.6.001 final 1.6 release
-
-* Sun Nov 16 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc5
-- eGroupware 1.6.rc5 5. release candidate for 1.6 release
-
-* Sun Nov 9 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc4
-- eGroupware 1.6.rc4 4. release candidate for 1.6 release
-
-* Wed Oct 29 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc3
-- eGroupware 1.6.rc3 3. release candidate for 1.6 release
-
-* Wed Oct 22 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc2
-- eGroupware 1.6.rc2 2. release candidate for 1.6 release
-
-* Fri Oct 10 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.rc1
-- eGroupware 1.6.rc1 first release candidate for 1.6 release
-
-* Tue Jul 22 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.6.pre1
-- eGroupware 1.6.pre1 first preview of upcomming 1.6 release
-
-* Mon Apr 15 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.004
-- eGroupware 1.4.004 FCKeditor update (2.6) & security release
-
-* Mon Mar 19 2008 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.003
-- eGroupware 1.4.003 security & maintainace release
-
-* Mon Sep 24 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.002
-- eGroupware 1.4.002 bugfix & maintainace release
-
-* Mon Jun 4 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.001
-- final eGroupware 1.4 release
