@@ -99,23 +99,28 @@ class calendar_uilist extends calendar_ui
 
 		if (is_array($content) && $content['nm']['rows']['delete'])
 		{
-			list($id) = each($content['nm']['rows']['delete']);
-
-			if ($this->bo->delete($id))
-			{
-				$msg = lang('Event deleted');
-			}
+			// handle a single delete like delete with the checkboxes
+			list($id) = @each($content['nm']['rows']['delete']);
+			$content['action'] = 'delete';
+			$content['nm']['rows']['checked'] = array($id);
 		}
-		//Delete all selected Entrys
-		if (is_array($content) && $content['deleteall'])
+		
+		// Handle actions
+		if ($content['action'] != '')
 		{
-			//_debug_array($content);
-
-			foreach($content['nm']['rows']['checked'] as $num => $id)
+			if (!count($content['nm']['rows']['checked']) && !$content['use_all']) {
+				$msg = lang('You need to select some events first');
+			}
+			else
 			{
-				if ($this->bo->delete($id))
+				if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
+					$success,$failed,$action_msg,'calendar_list',$msg))
 				{
-					$msg .= lang('Event deleted');
+					$msg .= lang('%1 event(s) %2',$success,$action_msg);
+				}
+				elseif(is_null($msg))
+				{
+					$msg .= lang('%1 event(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
 			}
 		}
@@ -146,9 +151,22 @@ class calendar_uilist extends calendar_ui
 		{
 			$this->adjust_for_search($_REQUEST['keywords'],$content['nm']);
 		}
-		return $etpl->exec('calendar.calendar_uilist.listview',$content,array(
-			'filter' => &$this->date_filters,
-		),$readonlys,'',$home ? -1 : 0);
+		$sel_options = array(
+			'action'     => array(
+				'delete' => array('label' => 'Delete', 'title' => 'Delete this event'),
+                                'ical' => array('label' => 'Export (iCal)', 'title' => 'Download this event as iCal'),
+                        ),
+			'filter'	=> &$this->date_filters
+		);
+		foreach($this->bo->verbose_status as $key => $value)
+		{
+			if($key == 'G') continue;
+			$sel_options['action'][lang('Change your participant status')]['status-'.$key] = $value;
+		}
+		unset($sel_options['action'][lang('Change your participant status')]['G']);
+		$GLOBALS['egw_info']['flags']['java_script'] .= $this->get_javascript();
+
+		return $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,'',$home ? -1 : 0);
 	}
 
 	/**
@@ -349,5 +367,121 @@ class calendar_uilist extends calendar_ui
 		}
 		//_debug_array($rows);
 		return $this->bo->total;
+	}
+
+	/**
+         * apply an action to multiple events
+         *
+         * @param string/int $action 'delete', 'ical', 'print', 'email'
+         * @param array $checked event id's to use if !$use_all
+         * @param boolean $use_all if true use all events of the current selection (in the session)
+         * @param int &$success number of succeded actions
+         * @param int &$failed number of failed actions (not enought permissions)
+         * @param string &$action_msg translated verb for the actions, to be used in a message like %1 events 'deleted'
+         * @param string/array $session_name 'calendar_list'
+         * @return boolean true if all actions succeded, false otherwise
+         */
+        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
+        {
+		//echo '<p>' . __METHOD__ . "('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
+		$success = $failed = 0;
+
+		// Split out combined values
+		if(strpos($action, 'status') !== false) {
+			list($action, $status) = explode('-', $action);
+		}
+
+                if ($use_all) 
+		{
+                        // get the whole selection
+                        $query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'calendar');
+			@set_time_limit(0);                     // switch off the execution time limit, as for big selections it's too small
+			$query['num_rows'] = -1;        // all
+			$this->get_rows($query,$checked,$readonlys,($action != 'ical'));       // true = only return the id's
+                } else {
+			// Pull the date for recurring events
+			$split = array();
+			foreach($checked as $key) {
+				list($id, $recur_date) = explode(':', $key);
+				$split[] = array(
+					'id'	=>	$id,
+					'recur_date'	=>	$recur_date
+				);
+			}
+			$checked = $split;
+		}
+
+		// Actions where one action is done to the group
+		switch($action) 
+		{
+			case 'ical':
+				$boical = new calendar_ical();
+				$ical =& $boical->exportVCal($checked,'2.0','PUBLISH',false);
+                                html::content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',bytes($ical));
+                                echo $ical;
+                                common::egw_exit();
+				break;
+			
+		}
+
+		// Actions where the action is applied to each entry
+		foreach($checked as $event) 
+		{
+			$id = $event['id'];
+			$recur_date = $event['recur_date'];
+			switch($action) 
+			{
+				case 'delete':
+					$action_msg = lang('deleted');
+                                        if ($this->bo->check_perms(EGW_ACL_DELETE,$id))
+					{
+						if($this->bo->delete($id, $recur_date)) 
+						{
+							$success++;
+						}
+					}
+					else
+					{
+						$failure++;
+					}
+					break;
+				case 'status':
+					$event = $this->bo->read($id, $recur_date);
+					$old_status = $event['participants'][$GLOBALS['egw_info']['user']['account_id']];
+					calendar_so::split_status($old_status, $quantity, $role);
+					if ($old_status != $status)
+					{
+						//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
+						$new_status = calendar_so::combine_status($status, $quantity, $role);
+						if ($this->bo->set_status($id,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date))
+						{
+							$success++;
+							$msg = lang('Status changed');
+						}
+					}
+					break;
+			}
+		}
+	}
+
+	public function get_javascript() 
+	{
+		return '<script LANGUAGE="JavaScript">
+		function do_action(selbox)
+		{
+			if (selbox.value != "")
+			{
+				if (selbox.value == "delete") 
+				{
+					if (confirm("' . lang('Delete') . '")) selbox.form.submit();
+				}
+				else
+				{
+					selbox.form.submit();
+				}
+			}
+				selbox.value = "";
+		}
+		</script>';
 	}
 }
