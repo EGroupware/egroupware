@@ -117,7 +117,7 @@ class addressbook_sif extends addressbook_bo
 		$this->sifData .= $_data;
 	}
 
-	function siftoegw($sifData)
+	function siftoegw($sifData, $_abID=null)
 	{
 
 		#$tmpfname = tempnam('/tmp/sync/contents','sifc_');
@@ -150,9 +150,14 @@ class addressbook_sif extends addressbook_bo
 				case 'cat_id':
 					if (!empty($value))
 					{
-						$categories1 = explode(',', $value);
-						$categories2 = explode(';', $value);
-						$finalContact[$key] = count($categories1) > count($categories2) ? $categories1 : $categories2;
+							$categories1 = explode(',', $value);
+							$categories2 = explode(';', $value);
+							$categories = count($categories1) > count($categories2) ? $categories1 : $categories2;
+						$finalContact[$key] = implode(',', $this->find_or_add_categories($categories, $_abID));
+					}
+					else
+					{
+						$finalContact[$key] = '';
 					}
 					break;
 
@@ -181,7 +186,7 @@ class addressbook_sif extends addressbook_bo
 	{
 	  	$result = array();
 
-	  	if (($contact = $this->siftoegw($_sifdata)))
+	  	if (($contact = $this->siftoegw($_sifdata, $contentID)))
 	  	{
 		  	if ($contentID)
 		  	{
@@ -202,7 +207,7 @@ class addressbook_sif extends addressbook_bo
 	*/
 	function addSIF($_sifdata, $_abID=null, $merge=false)
 	{
-		if (!$contact = $this->siftoegw($_sifdata))
+		if (!$contact = $this->siftoegw($_sifdata, $_abID))
 		{
 			return false;
 		}
@@ -227,41 +232,17 @@ class addressbook_sif extends addressbook_bo
 					{
 						$contact['account_id'] = $old_contact['account_id'];
 					}
-					if (is_array($contact['cat_id']))
-					{
-						$contact['cat_id'] = implode(',',$this->find_or_add_categories($contact['cat_id'], $_abID));
-					}
-					else
-					{
-						// restore from orignal
-						$contact['cat_id'] = $old_contact['cat_id'];
-					}
 				}
 			}
 			// update entry
 			$contact['id'] = $_abID;
 		}
-		else
+		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
     	{
-    		if (is_array($contact['cat_id']))
-			{
-				$contact['cat_id'] = implode(',',$this->find_or_add_categories($contact['cat_id'], -1));
-			}
-    		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']))
+    		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+    		if ($contact['owner'] == -1)
     		{
-	    		$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
-	    		switch ($owner)
-				{
-					case 'G':
-						$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
-					break;
-					case 'P':
-					case  0:
-						$contact['owner'] = $this->user;
-						break;
-					default:
-						$contact['owner'] = (int)$owner;
-				}
+	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
     		}
     	}
 		return $this->save($contact);

@@ -1758,13 +1758,11 @@ class calendar_ical extends calendar_boupdate
 			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
 			{
 				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
-				switch ($owner)
+				if ($owner == 0)
 				{
-					case 'G':
-					case 'P':
-						$owner = $this->user;
+					$owner = $GLOBALS['egw_info']['user']['account_primary_group'];
 				}
-				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT, 0, $owner))
+				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
 				{
 					$this->calendarOwner = $owner;
 				}
@@ -1981,7 +1979,7 @@ class calendar_ical extends calendar_boupdate
 				'(' . $this->productManufacturer .
 				', '. $this->productName .', ' .
 				($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .
-				', ' . $this->calendarOwner . ")\n" , 3, $this->logfile);
+				")\n" , 3, $this->logfile);
 		}
 
 		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
