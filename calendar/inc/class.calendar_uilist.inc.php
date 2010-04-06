@@ -158,6 +158,11 @@ class calendar_uilist extends calendar_ui
                         ),
 			'filter'	=> &$this->date_filters
 		);
+
+		// More actions
+		if($GLOBALS['egw_info']['apps']['timesheet']) {
+			$sel_options['action']['timesheet-add'] = array('label' => 'Create timesheet', 'title' => 'Create a timesheet entry from this event');
+		}
 		foreach($this->bo->verbose_status as $key => $value)
 		{
 			if($key == 'G') continue;
@@ -439,6 +444,9 @@ class calendar_uilist extends calendar_ui
 		}
 
 		// Actions where the action is applied to each entry
+		if(strpos($action, 'timesheet') !== false) {
+			$timesheet_bo = new timesheet_bo();
+		}
 		foreach($checked as $event) 
 		{
 			$id = $event['id'];
@@ -474,8 +482,33 @@ class calendar_uilist extends calendar_ui
 						}
 					}
 					break;
+				case 'timesheet-add':
+					$event = $this->bo->read($id, $recur_date);
+					$timesheet = array(
+						'ts_title'		=>	$event['title'],
+						'ts_description'	=>	$event['description'],
+						'ts_start'		=>	$event['start'],
+						'ts_duration'		=>	($event['end'] - $event['start']) / 60,
+						'ts_quantity'		=>	($event['end'] - $event['start']) / 3600,
+						'ts_owner'		=>	$GLOBALS['egw_info']['user']['account_id'],
+						'cat_id'		=>	null,
+						'pl_id'			=>	null
+					);
+					$timesheet_bo->data = array();
+					$err = $timesheet_bo->save($timesheet);
+					if(!$err) {
+						$success++;
+					} 
+					else
+					{
+						$failure++;
+					}
+					$msg = lang('Timesheet entries created for ');
+					break;
 			}
 		}
+
+		return ($failure == 0);
 	}
 
 	public function get_javascript() 
