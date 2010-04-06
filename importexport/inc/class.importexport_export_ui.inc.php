@@ -186,7 +186,6 @@ class importexport_export_ui {
 				$definition = new importexport_definition($_content['definition']);
 			}
 		
-_debug_array($_content);	
 			if(!is_array($definition->plugin_options)) {
 				$definition->plugin_options = array(
 					'mapping'	=>	array()
