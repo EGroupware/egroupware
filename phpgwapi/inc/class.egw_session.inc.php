@@ -167,55 +167,59 @@ class egw_session
 
 		$this->egw_domains = $domain_names;
 
-		// verfiy and if necessary create and save our config settings
-		//
-		$save_rep = false;
-		if (!isset($GLOBALS['egw_info']['server']['max_access_log_age']))
+		if (!isset($GLOBALS['egw_setup']))
 		{
-			$GLOBALS['egw_info']['server']['max_access_log_age'] = 90;	// default 90 days
-			$save_rep = true;
-		}
-		if (!isset($GLOBALS['egw_info']['server']['block_time']))
-		{
-			$GLOBALS['egw_info']['server']['block_time'] = 5;	// default 5min
-			$save_rep = true;
-		}
-		if (!isset($GLOBALS['egw_info']['server']['num_unsuccessful_id']))
-		{
-			$GLOBALS['egw_info']['server']['num_unsuccessful_id']  = 3;	// default 3 trys per id
-			$save_rep = true;
-		}
-		if (!isset($GLOBALS['egw_info']['server']['num_unsuccessful_ip']))
-		{
-			$GLOBALS['egw_info']['server']['num_unsuccessful_ip']  = $GLOBALS['egw_info']['server']['num_unsuccessful_id'];	// default same as for id
-			$save_rep = true;
-		}
-		if (!isset($GLOBALS['egw_info']['server']['install_id']))
-		{
-			$GLOBALS['egw_info']['server']['install_id']  = md5(common::randomstring(15));
-		}
-		if (!isset($GLOBALS['egw_info']['server']['sessions_timeout']))
-		{
-			$GLOBALS['egw_info']['server']['sessions_timeout'] = 14400;
-			$save_rep = true;
-		}
-		if (!isset($GLOBALS['egw_info']['server']['max_history']))
-		{
-			$GLOBALS['egw_info']['server']['max_history'] = 20;
-			$save_rep = true;
-		}
-		if ($save_rep)
-		{
-			$config = new config('phpgwapi');
-			$config->read_repository();
-			$config->value('max_access_log_age',$GLOBALS['egw_info']['server']['max_access_log_age']);
-			$config->value('block_time',$GLOBALS['egw_info']['server']['block_time']);
-			$config->value('num_unsuccessful_id',$GLOBALS['egw_info']['server']['num_unsuccessful_id']);
-			$config->value('num_unsuccessful_ip',$GLOBALS['egw_info']['server']['num_unsuccessful_ip']);
-			$config->value('install_id',$GLOBALS['egw_info']['server']['install_id']);
-			$config->value('sessions_timeout',$GLOBALS['egw_info']['server']['sessions_timeout']);
-			$config->value('max_history',$GLOBALS['egw_info']['server']['max_history']);
-			$config->save_repository();
+			// verfiy and if necessary create and save our config settings
+			//
+			$save_rep = false;
+			if (!isset($GLOBALS['egw_info']['server']['max_access_log_age']))
+			{
+				$GLOBALS['egw_info']['server']['max_access_log_age'] = 90;	// default 90 days
+				$save_rep = true;
+			}
+			if (!isset($GLOBALS['egw_info']['server']['block_time']))
+			{
+				$GLOBALS['egw_info']['server']['block_time'] = 5;	// default 5min
+				$save_rep = true;
+			}
+			if (!isset($GLOBALS['egw_info']['server']['num_unsuccessful_id']))
+			{
+				$GLOBALS['egw_info']['server']['num_unsuccessful_id']  = 3;	// default 3 trys per id
+				$save_rep = true;
+			}
+			if (!isset($GLOBALS['egw_info']['server']['num_unsuccessful_ip']))
+			{
+				$GLOBALS['egw_info']['server']['num_unsuccessful_ip']  = $GLOBALS['egw_info']['server']['num_unsuccessful_id'];	// default same as for id
+				$save_rep = true;
+			}
+			if (!isset($GLOBALS['egw_info']['server']['install_id']))
+			{
+				$GLOBALS['egw_info']['server']['install_id']  = md5(common::randomstring(15));
+			}
+			if (!isset($GLOBALS['egw_info']['server']['sessions_timeout']))
+			{
+				$GLOBALS['egw_info']['server']['sessions_timeout'] = 14400;
+				$save_rep = true;
+			}
+			if (!isset($GLOBALS['egw_info']['server']['max_history']))
+			{
+				$GLOBALS['egw_info']['server']['max_history'] = 20;
+				$save_rep = true;
+			}
+			
+			if ($save_rep)
+			{
+				$config = new config('phpgwapi');
+				$config->read_repository();
+				$config->value('max_access_log_age',$GLOBALS['egw_info']['server']['max_access_log_age']);
+				$config->value('block_time',$GLOBALS['egw_info']['server']['block_time']);
+				$config->value('num_unsuccessful_id',$GLOBALS['egw_info']['server']['num_unsuccessful_id']);
+				$config->value('num_unsuccessful_ip',$GLOBALS['egw_info']['server']['num_unsuccessful_ip']);
+				$config->value('install_id',$GLOBALS['egw_info']['server']['install_id']);
+				$config->value('sessions_timeout',$GLOBALS['egw_info']['server']['sessions_timeout']);
+				$config->value('max_history',$GLOBALS['egw_info']['server']['max_history']);
+				$config->save_repository();
+			}
 		}
 		self::set_cookiedomain();
       	ini_set('session.gc_maxlifetime', $GLOBALS['egw_info']['server']['sessions_timeout']);
