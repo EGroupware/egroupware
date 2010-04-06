@@ -1504,7 +1504,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		if (!is_array($events)) $events = array();
 
-		if ($by_cat === 'user')	// planner by user
+		if ($by_cat === false)	// planner by user
 		{
 			// convert filter to allowed status
 			switch($this->filter)
