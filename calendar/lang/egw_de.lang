@@ -30,8 +30,8 @@ all incl. rejected	calendar	de	Alle einschl. abgesagte
 all participants	calendar	de	Alle Teilnehmer
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
 apply the changes	calendar	de	Übernimmt die Änderungen
-are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen möchten ?
-are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen möchten ?
+are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen möchten?
+are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen möchten?
 back half a month	calendar	de	einen halben Monat zurück
 back one month	calendar	de	einen Monat zurück
 back one year	calendar	de	ein Jahr zurück
@@ -84,8 +84,8 @@ default appointment length (in minutes)	calendar	de	Standardlänge eines neuen K
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe für die Länge von neuen Kalendereinträgen. Die Länge ist in Minuten, z.B. 60 für 1 Stunde.
-default type of resources application selected in the calendar particpants research form.	calendar	de	Vorgabe für die gewählte Anwendung bei der Ressourcensuche im Kartenreiter Teilnehmer
-default type of resources selection	calendar	de	Vorgabe für die Ressourcensuche
+default type of resources application selected in the calendar particpants research form.	calendar	de	Vorgabe für die gewählte Anwendung bei der Ressourcen-Suche im Kartenreiter Teilnehmer
+default type of resources selection	calendar	de	Vorgabe für die Ressourcen-Suche
 default week view	calendar	de	Vorgabe Wochenansicht
 delete selected events	calendar	de	Ausgewählte Termine löschen
 delete series	calendar	de	Serie löschen
@@ -100,6 +100,7 @@ displayed view	calendar	de	Ansicht
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Soll Ihre Standard-Kalender-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
 do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wochenansicht mit oder ohne Wochenende?
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br />Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Absagen) zur Verfügung gestellt.
 do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	de	Möchten Sie den Termin der Serie als Ausnahme bearbeiten? Klicken Sie &quot;OK&quot; um den Termin als Einzeltermin (Ausnahme) zu bearbeiten, klicken Sie &quot;ABBRECHEN&quot; um die Terminserie zu bearbeiten.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre Standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet, wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
 do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
@@ -119,12 +120,12 @@ enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum u
 enddate of the export	calendar	de	Enddatum des Exports
 ends	calendar	de	endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
-error: importing the ical	calendar	de	Fehler: beim Importieren des iCal
-error: no participants selected !!!	calendar	de	Fehler: keine Teilnehmer ausgewählt !!!
-error: ressources reservation in private events is not allowed!!!	calendar	de	Fehler: die Reservierung von Ressourcen für private Termine ist nicht erlaubt !!!
-error: saving the event !!!	calendar	de	Fehler: beim Speichern des Termins !!!
-error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muß vor Endzeit liegen !!!
-error: the entry has been updated since you opened it for editing!	calendar	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
+error: importing the ical	calendar	de	Fehler beim Importieren des iCal
+error: no participants selected !!!	calendar	de	Fehler: Keine Teilnehmer ausgewählt !!!
+error: ressources reservation in private events is not allowed!!!	calendar	de	Fehler: Die Reservierung von Ressourcen für private Termine ist nicht erlaubt !!!
+error: saving the event !!!	calendar	de	Fehler beim Speichern des Termins !!!
+error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muss vor Endzeit liegen !!!
+error: the entry has been updated since you opened it for editing!	calendar	de	Fehler: Der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
 event copied - the copy can now be edited	calendar	de	Termin kopiert - die Kopie kann jetzt bearbeitet werden
 event deleted	calendar	de	Termin gelöscht
 event details follow	calendar	de	Details zum Termin folgen
@@ -183,7 +184,7 @@ ical export	calendar	de	iCal Export
 ical file	calendar	de	iCal Datei
 ical import	calendar	de	iCal Import
 ical successful imported	calendar	de	iCal erfolgreich importiert
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauffolgenden Montag nachgeholt.
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauf folgenden Montag nachgeholt.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
@@ -198,7 +199,7 @@ lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Pers
 length of the time interval	calendar	de	Länge des Zeitintervalls
 link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
 links	calendar	de	Verknüpfungen
-links, attachments	calendar	de	Verknüpfungen, Dateianhänge
+links, attachments	calendar	de	Verknüpfungen, Datei-Anhänge
 listview	calendar	de	Listenansicht
 location	calendar	de	Ort
 location to autoload from	admin	de	Von wo sollen sie geladen werden
@@ -224,14 +225,14 @@ no response	calendar	de	Keine Antwort
 non blocking	calendar	de	nicht blockierend
 not	calendar	de	nicht
 not rejected	calendar	de	Nicht abgesagt
-nothing to update, version is already %1.	calendar	de	Nichts upgedatet, Version ist bereits %1.
+nothing to update, version is already %1.	calendar	de	Nichts aktualisiert, Version ist bereits %1.
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
 notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
-notification messages for disinvited participants	calendar	de	Benachrichtigung für ausgeladene Teilnehmer
+notification messages for disinvited participants	calendar	de	Benachrichtigungstext für ausgeladene Teilnehmer
 notification messages for modified events	calendar	de	Benachrichtigungstext für geänderte Termine
 notification messages for your alarms	calendar	de	Benachrichtigungstext für Ihre Alarme
 notification messages for your responses	calendar	de	Benachrichtigungstext für Ihre Antworten
-number of records to read (%1)	calendar	de	Anzeil Datensätze zu lesen (%1)
+number of records to read (%1)	calendar	de	Anzahl der zu lesenden Datensätze (%1)
 number of weeks to show	calendar	de	Anzahl Wochen anzuzeigen
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
@@ -260,13 +261,13 @@ permission denied	calendar	de	Zugriff verweigert
 planner by category	calendar	de	Planer nach Kategorien
 planner by user	calendar	de	Planer nach Benutzern
 please note: you can configure the field assignments after you uploaded the file.	calendar	de	Bitte beachten: Die Feldzuordnung kann NACH dem Hochladen der Datei konfiguriert werden.
-preselected group for entering the planner	calendar	de	Vorausgewählte Gruppe beim Planeraufruf
+preselected group for entering the planner	calendar	de	Vorausgewählte Gruppe beim Planer-Aufruf
 previous	calendar	de	vorherig
 private and global public	calendar	de	Privat und Global öffentlich
 private and group public	calendar	de	Privat und Gruppen öffentlich
 private only	calendar	de	nur private
 quantity	calendar	de	Menge
-re-edit event	calendar	de	Event erneut bearbeiten
+re-edit event	calendar	de	Termin erneut bearbeiten
 receive email updates	calendar	de	Empfange E-Mail-Updates
 receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
 recurrence	calendar	de	Wiederholung
