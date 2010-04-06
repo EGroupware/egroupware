@@ -12,7 +12,7 @@ actions	calendar	de	Befehle
 actions...	calendar	de	Befehle...
 add alarm	calendar	de	Alarm zufügen
 added	calendar	de	Neuer Termin
-added by synchronisation	calendar	de	Durch Synchrosation hinzugefügt
+added by synchronisation	calendar	de	Durch Synchronisation hinzugefügt
 after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum
 alarm	calendar	de	Alarm
@@ -74,8 +74,8 @@ default appointment length (in minutes)	calendar	de	Standardlänge eines neuen K
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe für die Länge von neuen Kalendereinträgen. Die Länge ist in Minuten, zb. 60 für 1 Stunde.
-default type of resources application selected in the calendar particpants research form.	calendar	de	Vorgabe für die gewählte Anwendung bei der Ressourcensuche im Kartenreiter Teilnehmer
-default type of resources selection	calendar	de	Vorgabe für die Ressourcensuche
+default type of resources application selected in the calendar particpants research form.	calendar	de	Vorgabe für die gewählte Anwendung bei der Ressourcen-Suche im Kartenreiter Teilnehmer
+default type of resources selection	calendar	de	Vorgabe für die Ressourcen-Suche
 default week view	calendar	de	Vorgabe Wochenansicht
 delete series	calendar	de	Serie löschen
 delete this alarm	calendar	de	Diesen Alarm löschen
@@ -88,14 +88,14 @@ display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt Ihre Standard-Kalender-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
 do you want a weekview with or without weekend?	calendar	de	Wollen Sie eine Wochenansicht mit oder ohne Wochenende?
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtig.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüberliegenden. Alle Änderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtigt.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüber liegenden. Alle Änderungen umfasst den Titel, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Termins irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
 do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	de	Möchten Sie den Termin der Serie als Ausnahme bearbeiten? Klicken Sie OK um den Termin als Einzeltermin (Ausnahme) zu bearbeiten, Abbrechen um die Terminserie zu verändern.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre Standard-E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
 do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
 download	calendar	de	Herunterladen
 download this event as ical	calendar	de	Termin als iCal herunterladen
 duration of the meeting	calendar	de	Dauer des Termins
-edit exception	calendar	de	Ausname bearbeiten
+edit exception	calendar	de	Ausnahme bearbeiten
 edit series	calendar	de	Serie bearbeiten
 edit this event	calendar	de	Diesen Termin bearbeiten
 edit this series of recuring events	calendar	de	Diese Serie von wiederholenden Terminen bearbeiten
@@ -111,7 +111,7 @@ error: importing the ical	calendar	de	Fehler: beim Importieren des iCal
 error: no participants selected !!!	calendar	de	Fehler: keine Teilnehmer ausgewählt !!!
 error: ressources reservation in private events is not allowed!!!	calendar	de	Fehler: die Reservierung von Ressourcen für private Termine ist nicht erlaubt !!!
 error: saving the event !!!	calendar	de	Fehler: beim Speichern des Termins !!!
-error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muß vor Endzeit liegen !!!
+error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muss vor Endzeit liegen !!!
 error: the entry has been updated since you opened it for editing!	calendar	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
 event copied - the copy can now be edited	calendar	de	Termin kopiert - die Kopie kann jetzt bearbeitet werden
 event deleted	calendar	de	Termin gelöscht
@@ -121,7 +121,7 @@ event will occupy the whole day	calendar	de	Termin nimmt den ganzen Tag ein
 exception	calendar	de	Ausnahme
 exception created - you can now edit or delete it	calendar	de	Ausnahme erzeugt - Sie können sie jetzt bearbeiten oder löschen
 exceptions	calendar	de	Ausnahmen
-execute a further action for this entry	calendar	de	Führ einen weiteren Befehlt für diesen Eintrag aus
+execute a further action for this entry	calendar	de	Führe einen weiteren Befehlt für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
 export	calendar	de	Exportieren
 extended	calendar	de	Erweitert
@@ -137,7 +137,7 @@ format of event updates	calendar	de	Format der Benachrichtigungen
 forward half a month	calendar	de	einen halben Monat weiter
 forward one month	calendar	de	einen Monat weiter
 four days view	calendar	de	Vier-Tagesansicht
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Belegtzeiten: Unbekannter Benutzername '%1', falsches Passwort oder nicht verfügbar für nicht angemeldete Benutzer !!!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Belegtzeiten: Unbekannter Benutzername '%1', falsches Passwort oder nicht verfügbar für nicht angemeldete Benutzer!!!
 freetime search	calendar	de	Terminsuche
 fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
@@ -159,7 +159,7 @@ holiday management	calendar	de	Feiertagsverwaltung
 holidays	calendar	de	Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
-how many minutes should each interval last?	calendar	de	Wie viele Minute soll jedes Interval dauern?
+how many minutes should each interval last?	calendar	de	Wie viele Minute soll jedes Intervall dauern?
 how many weeks should the multiple week view show?	calendar	de	Wie viele Wochen soll die Mehrwochenansicht zeigen?
 ical	calendar	de	iCal
 ical / rfc2445	calendar	de	iCal / RFC2445
@@ -167,7 +167,7 @@ ical export	calendar	de	iCal Export
 ical file	calendar	de	iCal Datei
 ical import	calendar	de	iCal Import
 ical successful imported	calendar	de	iCal erfolgreich importiert
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauffolgenden Montag nachgeholt.
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauf folgenden Montag nachgeholt.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
@@ -177,10 +177,10 @@ interval	calendar	de	Intervall
 invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1" für Benutzer %2
 last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
-length of the time interval	calendar	de	Länge des Zeitintervals
+length of the time interval	calendar	de	Länge des Zeit-Intervals
 link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
 links	calendar	de	Verknüpfungen
-links, attachments	calendar	de	Verknüpfungen, Dateianhänge
+links, attachments	calendar	de	Verknüpfungen, Datei-Anhänge
 listview	calendar	de	Listenansicht
 location	calendar	de	Ort
 location to autoload from	admin	de	Von wo sollen sie geladen werden
@@ -204,11 +204,11 @@ non blocking	calendar	de	nicht blockierend
 not	calendar	de	nicht
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
 notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
-notification messages for disinvited participants	calendar	de	Benachrichtigung für ausgeladene Teilnehmer
+notification messages for disinvited participants	calendar	de	Benachrichtigungstext für ausgeladene Teilnehmer
 notification messages for modified events	calendar	de	Benachrichtigungstext für geänderte Termine
 notification messages for your alarms	calendar	de	Benachrichtigungstext für Ihre Alarme
 notification messages for your responses	calendar	de	Benachrichtigungstext für Ihre Antworten
-number of records to read (%1)	calendar	de	Anzeil Datensätze zu lesen (%1)
+number of records to read (%1)	calendar	de	Anzahl der zu lesenden Datensätze (%1)
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
 old startdate	calendar	de	Altes Startdatum
@@ -233,13 +233,13 @@ permission denied	calendar	de	Zugriff verweigert
 planner by category	calendar	de	Planer nach Kategorien
 planner by user	calendar	de	Planer nach Benutzern
 please note: you can configure the field assignments after you uploaded the file.	calendar	de	Bitte beachten: Die Feldzuordnung kann NACH dem Hochladen der Datei konfiguriert werden.
-preselected group for entering the planner	calendar	de	vorausgewählte Gruppe beim Planeraufruf
+preselected group for entering the planner	calendar	de	vorausgewählte Gruppe beim Planer-Aufruf
 previous	calendar	de	vorherig
 private and global public	calendar	de	Privat und Global öffentlich
 private and group public	calendar	de	Privat und Gruppen öffentlich
 private only	calendar	de	nur private
 quantity	calendar	de	Menge
-re-edit event	calendar	de	Event erneut bearbeiten
+re-edit event	calendar	de	Termin erneut bearbeiten
 receive email updates	calendar	de	Empfange E-Mail-Updates
 receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
 recurrence	calendar	de	Wiederholung
@@ -269,10 +269,10 @@ selected range	calendar	de	Ausgewählter Zeitraum
 set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige/unregelmäßige Feiertage das Jahr angeben.
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
 setting lock time calender	admin	de	Zeitintervall für Datensatzlock (default 1 sec.)
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	de	Sollen Einladungen welche von Ihnen abgelehnt wurden in Ihrem Kalender angezeigt werden?<br> Sie können diese Einladungen dann später akzeptieren (z. B. wenn Sie eine Terminkolission gelöst haben), wenn Sie in Ihrem Kalender noch vorhanden sind!
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	de	Sollen Einladungen welche von Ihnen abgelehnt wurden in Ihrem Kalender angezeigt werden?<br> Sie können diese Einladungen dann später akzeptieren (z. B. wenn Sie eine Termin-Kollision gelöst haben), wenn Sie in Ihrem Kalender noch vorhanden sind!
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten an denen sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist %1.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	de	Sollten Ihre Free/Bussy Zeiten nicht so geschützt sein das diese Daten nur bestimmten Personen zugänglich gemacht werden können? Sie können dafür ein Passwort, abweichend fom eGroupware Passwort vergeben. Die freebusy Information sind im iCal Format und nur dann inkludiert, wenn Sie keine Zeit haben. Die Eventnamen oder  die Veranstaltungsorte werden nicht mit übertragen. Die URL zu den freebusy Information ist <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	de	Sollten Ihre Free/Busy Zeiten ungeschützt sein, so dass diese Daten allen (nicht-angemeldeten) Personen zugänglich sind? Sie können ein Passwort, abweichend vom eGroupware Passwort, vergeben. Die freebusy-Information sind im iCal Format und nur die Zeiten, in denen Sie keine Zeit haben. Die Termin-Namen und die Veranstaltungsorte werden nicht mit übertragen. Die URL zu den freebusy Information ist <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	de	Soll der Planer eine leere Zeile für Benutzer oder Kategorien ohne einen Termin anzeigen.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	de	Soll der Status (Zugesagt,Abgesagt ...)der Termin- Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
 show birthdays from addressbook	admin	de	Zeige Geburtstage vom Adressbuch
@@ -301,14 +301,14 @@ this defines the end of your dayview. events after this time, are shown below th
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt.
 this entry is currently opened by %1!	calendar	de	Dieser Termin ist im Moment von %1 geöffnet!
 this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen Benutzer innerhalb des konfigurierten Zeitintervalls geöffnet worden:
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als Vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versandt.
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versandt.
 this message is sent to disinvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern geschickt.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Diese Nachricht wird an alle Teilnehmer der Termine die Sie anlegen versandt, die Benachrichtigungen wünschen.<br>Sie können verschiedene Variablen verwenden, welche durch die Daten des Termins ersetzt werden. Die erste Zeite ist der Betreff der E-Mail.
 this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder absagen.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Meldung wird ihnen gesandt, wenn sie einen Alarm für einen Termin setzen. Nehmen sie alle Information darin auf, die sie benötigen.
-this module displays the current month	calendar	de	Dieses Modul zeikt den aktuellen Monat an
+this module displays the current month	calendar	de	Dieses Modul zeigt den aktuellen Monat an
 three month	calendar	de	drei Monate
 thu	calendar	de	Do
 til	calendar	de	bis
