@@ -487,18 +487,22 @@ case 'import':
 			}
 			$action = $values['id'] ? 'updating' : 'adding';
 			//echo $action.'<pre>'.print_r($values,True)."</pre>\n";
+
+			// Keep links, $cal->update will remove them
+			$links = array(
+				'addr_id'	=>	'addressbook:' . $values['addr_id'],
+				'link_1'	=>	$values['link_1'],
+				'link_2'	=>	$values['link_2'],
+				'link_3'	=>	$values['link_3'],
+			);
 			if (!$_POST['debug'] &&
 				($cal_id = $cal->update($values,true,!$values['modified'],$is_admin)))	// ignoring conflicts and ACL (for admins) on import
 			{
-				foreach(array(
-					'addressbook:'.$values['addr_id'],
-					$values['link_1'],$values['link_2'],$values['link_3'],
-				) as $value)
-				{
+				foreach($links as $value) {
 					list($app,$app_id) = explode(':',$value);
 					if ($app && $app_id)
 					{
-						//echo "<p>linking infolog:$id with $app:$app_id</p>\n";
+						//echo "<p>linking calendar:$cal_id with $app:$app_id</p>\n";
 						egw_link::link('calendar',$cal_id,$app,$app_id);
 					}
 				}
