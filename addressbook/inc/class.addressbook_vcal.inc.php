@@ -145,32 +145,48 @@ class addressbook_vcal extends addressbook_bo
 					{
 						$contact['account_id'] = $old_contact['account_id'];
 					}
-					if (is_array($contact['category']))
+					if (is_array($contact['cat_id']))
 					{
-						$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'], $_abID));
+						$contact['cat_id'] = implode(',',$this->find_or_add_categories($contact['cat_id'], $_abID));
 					}
 					else
 					{
 						// restore from orignal
-						$contact['category'] = $old_contact['category'];
+						$contact['cat_id'] = $old_contact['cat_id'];
 					}
 				}
 			}
 			// update entry
 			$contact['id'] = $_abID;
 		}
-		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
-    	{
-    		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
-    		if ($contact['owner'] == -1)
-    		{
-	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
-    		}
-    		if (is_array($contact['category']))
+		else
+    	        {
+    	        	if (is_array($contact['cat_id']))
 			{
-				$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'], -1));
+				$contact['cat_id'] = implode(',',$this->find_or_add_categories($contact['cat_id'], -1));
 			}
-    	}
+			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']))
+    		        {
+	    		        $owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+	    		        switch ($owner)
+				{
+					case 'G':
+						$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+					break;
+					case 'P':
+					case  0:
+						$contact['owner'] = $this->user;
+						break;
+					default:
+						$contact['owner'] = (int)$owner;
+				}
+    		        }
+    	        }
+    	        if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
+				array2string($contact)."\n",3,$this->logfile);
+		}
 		return $this->save($contact);
 	}
 
@@ -866,7 +882,6 @@ class addressbook_vcal extends addressbook_bo
 			}
 		}
 
-
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
@@ -927,11 +942,6 @@ class addressbook_vcal extends addressbook_bo
 					}
 				}
 			}
-		}
-
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']))
-		{
-			$contact['owner'] = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
 		}
 
 		$this->fixup_contact($contact);
