@@ -314,7 +314,7 @@
 				if(!empty($singleIdentity->default)) {
 					#$defaultIdentity = $singleIdentity->id;
 					$defaultIdentity = $key;
-					$sessionData['signatureID'] = $singleIdentity->signature;
+					$sessionData['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $sessionData['signatureID']);
 				}
 			}
 			$selectFrom = html::select('identity', ($presetId ? $presetId : $defaultIdentity), $identities, true, "style='width:100%;' onchange='changeIdentity(this);'");

@@ -297,10 +297,10 @@
 			if ($account2retrieve != 'new') {
 				$accountData	= $this->bopreferences->getAccountData($preferences, $account2retrieve);
 				$icServer =& $accountData['icServer'];
-				#_debug_array($icServer);
+				//_debug_array($icServer);
 				$ogServer =& $accountData['ogServer'];
 				$identity =& $accountData['identity'];
-				#_debug_array($identity);
+				//_debug_array($identity);
 			}
 
 			if ($icServer) {
@@ -346,10 +346,14 @@
 			$allSignatures = array(
 				'-2' => lang('no signature')
 			);
+			$systemsig = false;
 			foreach ($signatures as $sigkey => $sig) {
+				//echo "Keys to check: $sigkey with ".$sig['fm_signatureid']."<br>";
+				if ($sig['fm_signatureid'] == -1) $systemsig = true;
 				$allSignatures[$sig['fm_signatureid']] = $sig['fm_description'];
 			}
-			$sigvalue = -2;
+			// if there is a system signature, then use the systemsignature as preset/default
+			$sigvalue = $defaultsig = ($systemsig ? -1 : -2);
 			if ($identity) {
 				foreach($identity as $key => $value) {
 					if(is_object($value) || is_array($value)) {
@@ -357,7 +361,8 @@
 					}
 					switch($key) {
 						case 'signature':
-							$sigvalue = $value;
+							// if empty, use the default
+							$sigvalue = (!empty($value)?$value:$defaultsig);
 							break;
 						default:
 							$this->t->set_var("identity[$key]", $value);
