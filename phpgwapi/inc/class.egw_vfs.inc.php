@@ -621,7 +621,7 @@ class egw_vfs extends vfs_stream_wrapper
 		if (isset($options['cmin']) && !self::_check_num(round((time()-$stat['ctime'])/60),$options['cmin']) ||
 			isset($options['mmin']) && !self::_check_num(round((time()-$stat['mtime'])/60),$options['mmin']) ||
 			isset($options['ctime']) && !self::_check_num(round((time()-$stat['ctime'])/86400),$options['ctime']) ||
-			isset($options['mtime']) && !self::_check_num(round((time()-$stat['ctime'])/86400),$options['mtime']))
+			isset($options['mtime']) && !self::_check_num(round((time()-$stat['mtime'])/86400),$options['mtime']))
 		{
 			return;	// not create/modified in the spezified time
 		}
