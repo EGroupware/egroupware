@@ -480,8 +480,21 @@ class so_sql_cf extends so_sql
 						}
 						else	// using egw_db::expression to allow to use array() with possible values or NULL
 						{
-							$sql_filter = str_replace($this->extra_value,'extra_filter.'.
-								$this->extra_value,$this->db->expression($this->extra_table,array($this->extra_value => $val)));
+							if($this->customfields[$this->get_cf_name($name)]['type'] == 'select' && 
+								$this->customfields[$this->get_cf_name($name)]['rows'] > 1)
+							{
+								// Multi-select - any entry with the filter value selected matches
+								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
+									$this->extra_value,$this->db->expression($this->extra_table,array(
+										"CONCAT(',',{$this->extra_value},',') LIKE '%,$val,%'"
+									))
+								);
+							}
+							else
+							{
+								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
+									$this->extra_value,$this->db->expression($this->extra_table,array($this->extra_value => $val)));
+							}
 						}
 						// need to use a LEFT JOIN for negative search or to allow NULL values
 						$need_left_join = $val[0] === '!' || strpos($sql_filter,'IS NULL') !== false ? ' LEFT ' : '';
