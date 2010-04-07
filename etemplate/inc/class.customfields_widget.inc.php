@@ -14,9 +14,11 @@
 /**
  * This widget generates a template for customfields based on definitions in egw_config table
  *
- * All widgets here have 2 comma-separated options ($cell[size]):
+ * All widgets here have 2+ comma-separated options ($cell[size]):
  * - sub-type to display only the cf's without subtype or with a matching one
  * - use-private to display only (non-)private cf's (0=regular ones, 1=private ones, default both)
+ * - field-name to display only the named custom field(s).  Use ! before to display all but given field(s).  
+ * Additional fields can be added with a comma between them
  *
  * Private cf's the user has no right to see (neither him nor his memberships are mentioned) are never displayed.
  */
@@ -100,15 +102,32 @@ class customfields_widget
 		{
 			self::__construct(null,$app);
 		}
-		list($type2,$use_private) = explode(',',$cell['size']);
+		list($type2,$use_private,$field_names) = explode(',',$cell['size'],3);
 		$fields_with_vals=array();
+
+		// Filter fields
+		if($field_names)
+		{
+			if($field_names[0] == '!') {
+				$negate_field_filter = true;
+				$field_names = substr($field_names,1);
+			}
+			$field_filter = explode(',', $field_names);
+		}
 
 		$fields = $this->customfields;
 
-		// remove private or non-private cf's, if only one kind should be displayed
 		foreach((array)$fields as $key => $field)
 		{
+			// remove private or non-private cf's, if only one kind should be displayed
 			if ((string)$use_private !== '' && (boolean)$field['private'] != (boolean)$use_private)
+			{
+				unset($fields[$key]);
+			}
+
+			// Remove filtered fields
+			if($field_filter && (!$negate_field_filter && !in_array($key, $field_filter) || 
+				$negate_field_filter && in_array($key, $field_filter)))
 			{
 				unset($fields[$key]);
 			}
