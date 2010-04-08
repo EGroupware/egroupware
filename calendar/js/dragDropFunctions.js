@@ -13,6 +13,9 @@ function dragEvent()
 {
 	if(minOffset())
 	{
+		// set a fixed width
+		dd.obj.css.width = dd.obj.w + dd.px;
+
 		// make a snapshot of the old (original) innerHTML of the dragged event
 		if(!dd.obj.oldInnerHTML)
 		{
@@ -62,6 +65,10 @@ function dropEvent()
 		{
 			dd.obj.div.innerHTML = dd.obj.oldInnerHTML;
 		}
+
+		// restore old width (calEvent width = 100%)
+		dd.obj.div.style.width = "100%";
+
 		dd.obj.moveTo(dd.obj.defx,dd.obj.defy);
 	}
 }
