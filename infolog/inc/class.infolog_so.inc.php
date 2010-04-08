@@ -760,11 +760,25 @@ class infolog_so
 				}
 				if ($col[0] == '#' &&  $query['custom_fields'] && $data)
 				{
-					$filtermethod .= " AND main.info_id IN (SELECT DISTINCT info_id FROM $this->extra_table WHERE ".
-						$this->db->expression($this->extra_table,array(
-							'info_extra_name'  => substr($col,1),
-							'info_extra_value' => $data,
+					$filtermethod .= " AND main.info_id IN (SELECT DISTINCT info_id FROM $this->extra_table WHERE ";
+					$custom_fields = config::get_customfields('infolog');
+
+					if($custom_fields[substr($col,1)]['type'] == 'select' && $custom_fields[substr($col,1)]['rows'] > 1)
+					{
+						// Multi-select - any entry with the filter value selected matches
+						$filtermethod .= $this->db->expression($this->extra_table, array(
+							'info_extra_name' => substr($col,1),
+							"CONCAT(',',info_extra_value,',') LIKE '%,$data,%'"
 						)).')';
+					}
+					else
+					{
+						$filtermethod .= $this->db->expression($this->extra_table,array(
+ 							'info_extra_name'  => substr($col,1),
+ 							'info_extra_value' => $data,
+ 						)).')';
+					}
+
 					$cfcolfilter++;
 				}
 			}
