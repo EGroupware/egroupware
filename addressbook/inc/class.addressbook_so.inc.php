@@ -297,7 +297,14 @@ class addressbook_so
 		// ToDo: it should be the other way arround, the backend should set the grants it uses
 		$this->somain->grants =& $this->grants;
 
-		$this->soextra = new so_sql('phpgwapi',$this->extra_table);
+		if($this->somain instanceof addressbook_sql)
+		{
+			$this->soextra =& $this->somain;
+		}
+		else
+		{
+			$this->soextra = new addressbook_sql();
+		}
 
 		$this->customfields = config::get_customfields('addressbook');
 		$this->content_types = config::get_content_types('addressbook');
@@ -345,30 +352,7 @@ class addressbook_so
 	 */
 	function read_customfields($ids,$field_names=null)
 	{
-		if ($this->contact_repository == 'ldap')
-		{
-			return array();	// ldap does not support custom-fields (non-nummeric uid)
-		}
-		if (is_null($field_names)) $field_names = array_keys($this->customfields);
-
-		if(!is_array($ids) && is_numeric($ids)) {
-			$ids = array((int)$ids);
-		}
-		foreach($ids as $key => $id)
-		{
-			if (!(int)$id) unset($ids[$key]);
-		}
-		if (!$ids || !$field_names) return array();	// nothing to do, eg. all these contacts are in ldap
-
-		$fields = array();
-		foreach((array)$this->soextra->search(array(
-			$this->extra_id => $ids,
-			$this->extra_key => $field_names,
-		),false) as $data)
-		{
-			if ($data) $fields[$data[$this->extra_id]][$data[$this->extra_key]] = $data[$this->extra_value];
-		}
-		return $fields;
+		return $this->soextra->read_customfields($ids,$fieldnames);
 	}
 
 	/**
@@ -448,7 +432,9 @@ class addressbook_so
 		if ($this->somain->delete($where))
 		{
 			// delete customfields, can return 0 if there are no customfields
-			$this->soextra->delete(array($this->extra_id => $contact));
+			if(!($this->somain instanceof addressbook_sql)) {
+				$this->soextra->delete(array($this->extra_id => $contact));
+			}
 
 			// delete from distribution list(s)
 			$this->remove_from_list($contact);
@@ -517,26 +503,9 @@ class addressbook_so
 		}
 		if($error_nr) return $error_nr;
 
-		// save customfields
-		foreach ((array)$this->customfields as $field => $options)
-		{
-			if (!isset($contact['#'.$field])) continue;
-
-			$data = array(
-				$this->extra_id    => $contact['id'],
-				$this->extra_owner => $contact['owner'],
-				$this->extra_key   => $field,
-			);
-			if((string) $contact['#'.$field] === '')	// dont write empty values
-			{
-				$this->soextra->delete($data);	// just delete them, in case they were previously set
-				continue;
-			}
-			$data[$this->extra_value] =  $contact['#'.$field];
-			if (($error_nr = $this->soextra->save($data)))
-			{
-				return $error_nr;
-			}
+		// save customfields, if not already done by somain->save();
+		if(!($this->somain instanceof addressbook_sql)) {
+			$this->soextra->save($this->data2db($contact));
 		}
 		return false;	// no error
 	}
@@ -558,18 +527,6 @@ class addressbook_so
 		if (!($contact = $backend->read($contact_id)))
 		{
 			return $contact;
-		}
-		// try reading customfields only if we have some (none for LDAP!)
-		if ($this->customfields && $this->contact_repository != 'ldap')
-		{
-			$customfields = $this->soextra->search(array(
-				$this->extra_id => $contact['id'],
-				$this->extra_key => array_keys($this->customfields),
-			),false);
-			foreach ((array)$customfields as $field)
-			{
-				$contact['#'.$field[$this->extra_key]] = $field[$this->extra_value];
-			}
 		}
 		$dl_list=$this->read_distributionlist(array($contact['id']));
 		if (count($dl_list)) $contact['distrib_lists']=implode("\n",$dl_list[$contact['id']]);
@@ -637,6 +594,9 @@ class addressbook_so
 			}
 			if($backend instanceof addressbook_sql) 
 			{
+				// Keep a string, let the parent handle it
+				$criteria = $search;
+
 				foreach($cols as $key => &$col) 
 				{
 					if(!array_key_exists($col, $backend->db_cols)) 
@@ -648,7 +608,8 @@ class addressbook_so
 						}
 					}
 				}
-				$criteria = so_sql::search2criteria($search, $wildcard, $op, null, $cols);
+
+				$backend->columns_to_search = $cols;
 			} 
 			else
 			{
@@ -656,11 +617,6 @@ class addressbook_so
 				{
 					$criteria[$col] = $search;
 				}
-			}
-			// search the customfields only if some exist, but only for sql!
-			if (get_class($backend) == 'addressbook_sql' && $this->customfields)
-			{
-				$criteria[$this->extra_value] = $search;
 			}
 		}
 		if (is_array($criteria) && count($criteria))
@@ -781,7 +737,9 @@ class addressbook_so
 		if (!$new_owner)
 		{
 			$this->somain->delete(array('owner' => $account_id));
-			$this->soextra->delete(array($this->extra_owner => $account_id));
+			if(!($this->somain instanceof addressbook_sql)) {
+				$this->soextra->delete(array($this->extra_owner => $account_id));
+			}
 		}
 		else
 		{

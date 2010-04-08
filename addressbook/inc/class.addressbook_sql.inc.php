@@ -10,22 +10,16 @@
  * @version $Id$
  */
 
-include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
-
 /**
  * SQL storage object of the adressbook
  */
-class addressbook_sql extends so_sql
+class addressbook_sql extends so_sql_cf
 {
 	/**
-	 * name of customefields table
+	 * name of custom fields table
 	 *
 	 * @var string
 	 */
-	var $extra_table = 'egw_addressbook_extra';
-	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
-	var $extra_join_order = ' LEFT JOIN egw_addressbook_extra extra_order ON egw_addressbook.contact_id=extra_order.contact_id';
-	var $extra_join_filter = ' JOIN egw_addressbook_extra extra_filter ON egw_addressbook.contact_id=extra_filter.contact_id';
 	var $account_repository = 'sql';
 	var $contact_repository = 'sql';
 	var $grants;
@@ -62,7 +56,10 @@ class addressbook_sql extends so_sql
 
 	function __construct()
 	{
-		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_',true);	// true = using the global db object, no clone!
+		parent::__construct('phpgwapi','egw_addressbook','egw_addressbook_extra','contact_');
+
+		// Get custom fields from addressbook instead of phpgwapi
+		$this->customfields = config::get_customfields('addressbook');
 
 		if ($GLOBALS['egw_info']['server']['account_repository'])
 		{
@@ -280,81 +277,6 @@ class addressbook_sql extends so_sql
 				$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR contact_private=0 AND $this->table_name.contact_owner IN (".
 					implode(',',array_keys($this->grants)).") OR $this->table_name.contact_owner IS NULL)";
-			}
-		}
-		$search_customfields = isset($criteria['contact_value']) && !empty($criteria['contact_value']);
-		if (is_array($criteria))
-		{
-			foreach($criteria as $col => $val)
-			{
-				if ($col[0] === '#')	// search for a value in a certain custom field
-				{
-					$valarray=array();
-					# val may be a list of values, constructed by multiple select fields, to be able to do the contains feature of adv-search
-					# we split the value and search for each part individually
-					if ($wildcard !='') {
-						$valarray=explode(',',$val);
-					} else {
-						$valarray[]=$val;
-					}
-					$negate = false;      //negate the search funktion
-					if ($criteria[$col][0] == '!') $negate = True;
-					unset($criteria[$col]);
-					foreach ($valarray as $vkey => $part)
-					{
-						$criteria[] =$this->table_name.'.contact_id'.($negate ? ' not '  :'').' in (select '.$this->extra_table.'.contact_id from '.$this->extra_table.' where '.
-							"(".$this->extra_table.".contact_name='".substr($col,1)."' AND ".$this->extra_table.".contact_value".(!$wildcard?' = ':' LIKE ')."'".$wildcard.($negate?substr($part,1):$part).$wildcard."'"."))";
-
-					}
-					$search_customfields = true;
-				}
-				elseif($col === 'cat_id')	// search in comma-sep. cat-column
-				{
-					$criteria = array_merge($criteria,$this->_cat_search($val));
-					unset($criteria[$col]);
-				}
-				elseif($col === 'contact_value')
-				{
-					if ($order_by[0] == '#')
-					{
-						$criteria =array_merge($criteria,array('extra_order.contact_value'=>$val));
-						unset($criteria[$col]);
-					}
-				}
-			}
-		}
-		if ($search_customfields)	// search the custom-fields
-		{
-			$join .= $this->extra_join;
-		}
-		// do we order by a cf?
-		if ($order_by[0] == '#')
-		{
-			list($val) = explode("<>''",$order_by);
-			$order_by = str_replace($val,'extra_order.contact_value',$order_by);
-			$join .= $this->extra_join_order.' AND extra_order.contact_name='.$this->db->quote(substr($val,1));
-		}
-		// do we filter by a cf?
-		$extra_filter = '';
-		foreach($filter as $name => $val)
-		{
-			if ($name[0] == '#')
-			{
-				if (!empty($val))	// empty -> dont filter
-				{
-					$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($name,1)).
-						' AND extra_filter.contact_value='.$this->db->quote($val));
-					++$extra_filter;
-				}
-				unset($filter[$name]);
-			}
-			elseif($val[0] == '#')	// lettersearch: #cfname like 's%'
-			{
-				list($cf) = explode(' ',$val);
-				$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($cf,1)).
-					' AND '.str_replace($cf,'extra_filter.contact_value',$val));
-				++$extra_filter;
-				unset($filter[$name]);
 			}
 		}
 		if (isset($filter['list']))
@@ -618,6 +540,14 @@ class addressbook_sql extends so_sql
 			$keys = array('contact_uid' => $keys);
 		}
 		$contact = parent::read($keys,$extra_cols,$join);
+
+		// Change autoinc_id to match $this->db_cols
+		$this->autoinc_id = $this->db_cols[$this->autoinc_id];
+		if(($id = (int)$this->data[$this->autoinc_id]) && $cfs = $this->read_customfields($keys)) {
+			$contact = array_merge($contact,$cfs[$id]);
+		}
+		$this->autoinc_id = array_search($this->autoinc_id, $this->db_cols);
+
 		// enforce a minium uid strength
 		if (is_array($contact) && (!isset($contact['uid'])
 				|| strlen($contact['uid']) < $minimum_uid_length)) {
@@ -666,6 +596,7 @@ class addressbook_sql extends so_sql
 				$this->data['etag'] = 0;
 			}
 		}
+
 		// enforce a minium uid strength
 		if (!$err && (!isset($this->data['uid'])
 				|| strlen($this->data['uid']) < $minimum_uid_length)) {
@@ -688,4 +619,40 @@ class addressbook_sql extends so_sql
 
 		return $this->db->select($this->lists_table,'*',array('list_id'=>$list),__LINE__,__FILE__)->fetch();
 	}
+
+	/**
+        * saves custom field data
+	* Re-implemented to deal with extra contact_owner column
+        *
+        * @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
+        * @return bool false on success, errornumber on failure
+        */
+        function save_customfields($data)
+        {
+                foreach ((array)$this->customfields as $name => $options)
+                {
+                        if (!isset($data[$field = $this->get_cf_field($name)])) continue;
+
+                        $where = array(
+                                $this->extra_id    => $data['id'],
+                                $this->extra_key   => $name,
+                        );
+                        $is_multiple = $this->is_multiple($name);
+
+                        // we explicitly need to delete fields, if value is empty or field allows multiple values or we have no unique index
+                        if(empty($data[$field]) || $is_multiple || !$this->extra_has_unique_index)
+                        {
+                                $this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);
+                                if (empty($data[$field])) continue;     // nothing else to do for empty values
+                        }
+                        foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : (array)$data[$field] as $value)
+                        {
+                                if (!$this->db->insert($this->extra_table,array($this->extra_value => $value, 'contact_owner' => $data['owner']),$where,__LINE__,__FILE__,$this->app))
+                                {
+                                        return $this->db->Errno;
+                                }
+                        }
+                }
+                return false;   // no error
+        }
 }

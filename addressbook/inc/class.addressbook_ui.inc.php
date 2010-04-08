@@ -916,7 +916,7 @@ class addressbook_ui extends addressbook_bo
 				default:
 					if ($query['order'][0] == '#')	// we order by a custom field
 					{
-						$order = "$query[order]<>'' DESC,$query[order] $sort,org_name $sort,n_family $sort,n_given $sort";
+						$order = "{$query['order']} $sort,org_name $sort,n_family $sort,n_given $sort";
 						break;
 					}
 					$query['order'] = 'n_family';
@@ -951,6 +951,7 @@ class addressbook_ui extends addressbook_bo
 				$wildcard = $query['advanced_search']['meth_select'];
 				unset($query['advanced_search']['meth_select']);
 			}
+
 			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 
@@ -1060,7 +1061,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					foreach($this->customfields as $name => $data)
 					{
-						$row['#'.$name] = $customfields[$row['id']][$name];
+						$row['#'.$name] = $customfields[$row['id']]['#'.$name];
 					}
 				}
 				if (isset($distributionlist[$row['id']]))
