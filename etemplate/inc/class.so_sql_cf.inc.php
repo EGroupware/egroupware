@@ -457,6 +457,15 @@ class so_sql_cf extends so_sql
 				}
 			}
 		}
+		// replace ambiguous column with (an exact match of) table_name.column
+		if(is_array($only_keys)) {
+			foreach($only_keys as $key => &$col) {
+				if(is_numeric($key) && in_array($col, $this->db_cols)) {
+					$col = $this->table_name .'.'.array_search($col, $this->db_cols);
+				}
+			}
+		}
+
 		// check if we order by a custom field --> join cf table for given cf and order by it's value
 		if (strpos($order_by,self::CF_PREFIX) !== false &&
 			preg_match('/'.self::CF_PREFIX.'([^ ]+) (asc|desc)/i',$order_by,$matches))
