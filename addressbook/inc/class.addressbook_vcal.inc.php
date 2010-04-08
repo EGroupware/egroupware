@@ -166,6 +166,8 @@ class addressbook_vcal extends addressbook_bo
     		{
 	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
     		}
+			// if there is a positive id as filter it is to be interpreted as "Personal Addressbook"
+			if ($contact['owner'] > 0) $contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
     		if (is_array($contact['category']))
 			{
 				$contact['category'] = implode(',',$this->find_or_add_categories($contact['category'], -1));
@@ -931,7 +933,14 @@ class addressbook_vcal extends addressbook_bo
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']))
 		{
-			$contact['owner'] = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+			//$contact['owner'] = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+			$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+			if ($contact['owner'] == -1)
+			{
+				$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+			}
+			// if there is a positive id as filter it is to be interpreted as "Personal Addressbook"
+			if ($contact['owner'] > 0) $contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 		}
 
 		$this->fixup_contact($contact);

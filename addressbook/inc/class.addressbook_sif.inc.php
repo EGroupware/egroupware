@@ -238,13 +238,15 @@ class addressbook_sif extends addressbook_bo
 			$contact['id'] = $_abID;
 		}
 		elseif (array_key_exists('filter_addressbook', $GLOBALS['egw_info']['user']['preferences']['syncml']))
-    	{
-    		$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
-    		if ($contact['owner'] == -1)
-    		{
-	    		$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
-    		}
-    	}
+		{
+			$contact['owner'] = (int) $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
+			if ($contact['owner'] == -1)
+			{
+				$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
+			}
+			// if there is a positive id as filter it is to be interpreted as "Personal Addressbook"
+			if ($contact['owner'] > 0) $contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
 		return $this->save($contact);
 	}
 
