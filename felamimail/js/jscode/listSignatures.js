@@ -10,7 +10,7 @@ function fm_getEditorContent()
 
 function fm_addSignature(_url)
 {
-	signatureEditWindow = egw_openWindowCentered(_url,'editSignature','600','230',window.outerWidth/2,window.outerHeight/2);
+	signatureEditWindow = egw_openWindowCentered(_url,'editSignature','750',egw_getWindowOuterHeight()/2,window.outerWidth/2,window.outerHeight/2);
 	if(signatureEditWindowTimer) {
 		window.clearTimeout(signatureEditWindowTimer);
 	}
