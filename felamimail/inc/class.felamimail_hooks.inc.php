@@ -387,6 +387,15 @@ class felamimail_hooks
 		        'xmlrpc' => True,
 		        'admin'  => False,
 		    ),
+			'showAllFoldersInFolderPane' => array(
+				'type'   => 'select',
+				'label'  => 'show all Folders (subscribed AND unsubscribed) in Main Screen Folder Pane',
+				'name'   => 'showAllFoldersInFolderPane',
+				'values' => $no_yes,
+				'xmlrpc' => True,
+				'default'=> 0,
+				'admin'  => False,
+			),
 			'sieveScriptName' => array(
 				'type'   => 'input',
 				'label'  => 'sieve script name',

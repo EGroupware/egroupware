@@ -1325,6 +1325,13 @@
 				*/
 				$inboxData->counter = self::getMailBoxCounters('INBOX');
 			}
+			// force unsubscribed by preference showAllFoldersInFolderPane
+			if ($_subscribedOnly == true && 
+				isset($this->mailPreferences->preferences['showAllFoldersInFolderPane']) && 
+				$this->mailPreferences->preferences['showAllFoldersInFolderPane']==1)
+			{
+				$_subscribedOnly = false;
+			} 
 			#$inboxData->attributes = 64;
 			$folders = array('INBOX' => $inboxData);
 			#_debug_array($folders);
@@ -1528,20 +1535,30 @@
 							$folderObject->subscribed	= true;
 						// translate the automatic Folders (Sent, Drafts, ...) like the INBOX
 						} elseif (in_array($shortName,$this->autoFolders)) {
-							$folderObject->displayName = $folderObject->shortDisplayName = lang($shortName);
+							$tmpfolderparts = explode($delimiter,$folderObject->folderName);
+							array_pop($tmpfolderparts);
+							$folderObject->displayName = $this->encodeFolderName(implode($delimiter,$tmpfolderparts).$delimiter.lang($shortName));
+							$folderObject->shortDisplayName = lang($shortName);
+							unset($tmpfolderparts);
 						} else {
 							$folderObject->displayName = $this->encodeFolderName($folderObject->folderName);
 							$folderObject->shortDisplayName = $this->encodeFolderName($shortName);
 						}
 						$folderName = $folderName;
 						$folders[$folderName] = $folderObject;
+						$sortby[$folderName] = $folderObject->displayName;
 					}
 				}
 			}
-
-			#_debug_array($folders); #exit;
-
+			uasort($folders,array($this,"sortByDisplayName"));
+			//_debug_array($folders); #exit;
 			return $folders;
+		}
+
+		function sortByDisplayName($a,$b)
+		{
+			// 0, 1 und -1
+			return strcasecmp($a->displayName,$b->displayName);
 		}
 
 		function getMailBoxCounters($folderName)
