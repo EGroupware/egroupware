@@ -212,11 +212,12 @@ dd.getWH = function(d_o)
 	d_o.h = dd.getDivH(d_o);
 	if(d_o.css)
 	{
-		d_o.css.width = d_o.w + dd.px;
+		// dont set the width at the beginning
+		//d_o.css.width = d_o.w + dd.px;
 		d_o.css.height = d_o.h + dd.px;
 		d_o.dw = dd.getDivW(d_o)-d_o.w;
 		d_o.dh = dd.getDivH(d_o)-d_o.h;
-		d_o.css.width = (d_o.w-d_o.dw) + dd.px;
+		//d_o.css.width = (d_o.w-d_o.dw) + dd.px;
 		d_o.css.height = (d_o.h-d_o.dh) + dd.px;
 	}
 	else d_o.dw = d_o.dh = 0;
