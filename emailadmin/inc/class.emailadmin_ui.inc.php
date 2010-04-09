@@ -359,8 +359,8 @@
 
 			$style="width:100%; border:0px; height:150px;";
 			$this->t->set_var('signature', html::fckEditorQuick(
-					'globalsettings[ea_default_signature]', 'simple',
-					$profileData['ea_default_signature'], '150px')
+					'globalsettings[ea_default_signature]', 'advanced',
+					$profileData['ea_default_signature'], '350px')
 			);
 			
 			// Stationery settings
