@@ -1546,7 +1546,6 @@
 						}
 						$folderName = $folderName;
 						$folders[$folderName] = $folderObject;
-						$sortby[$folderName] = $folderObject->displayName;
 					}
 				}
 			}
