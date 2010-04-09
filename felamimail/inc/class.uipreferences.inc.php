@@ -172,9 +172,9 @@
 				$this->t->set_var('signatureID', $signatureID);
 
 				$this->t->set_var('tinymce',html::fckEditorQuick(
-					'signature', 'simple', 
+					'signature', 'advanced', 
 					$signatureData->fm_signature, 
-					'150px')
+					'450px')
 				);
 
 				$this->t->set_var('checkbox_isDefaultSignature',html::checkbox(
@@ -185,7 +185,7 @@
 					)
 				);
 			} else {
-				$this->t->set_var('tinymce',html::fckEditorQuick('signature', 'simple', '', '150px'));
+				$this->t->set_var('tinymce',html::fckEditorQuick('signature', 'advanced', '', '450px'));
 
 				$this->t->set_var('checkbox_isDefaultSignature',html::checkbox(
 					'isDefaultSignature', false, 'true', 'id="isDefaultSignature"'

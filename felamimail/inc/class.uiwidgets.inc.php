@@ -210,7 +210,7 @@
 					$tableRows[] = array(
 						'1'	=> $signature['fm_signatureid'] != -1 ? html::checkbox('signatureID', false, $signature['fm_signatureid']) : '',
 						'.1'	=> 'style="width:30px"',
-						'2'	=> '<a href="" onclick="egw_openWindowCentered(\''. $urlEditSignature ."&signatureID=".$signature['fm_signatureid']. '\',\'felamiMailACL\',\'600\',\'230\'); return false;">'. @htmlspecialchars($description, ENT_QUOTES, $this->charset) .'</a>',
+						'2'	=> '<a href="" onclick="egw_openWindowCentered(\''. $urlEditSignature ."&signatureID=".$signature['fm_signatureid']. '\',\'felamiMailACL\',\'750\',egw_getWindowOuterHeight()/2); return false;">'. @htmlspecialchars($description, ENT_QUOTES, $this->charset) .'</a>',
 					);
 				}
 
