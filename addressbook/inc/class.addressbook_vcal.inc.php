@@ -974,8 +974,7 @@ class addressbook_vcal extends addressbook_bo
 	{
 		if (!$file)
 		{
-			$browser =& CreateObject('phpgwapi.browser');
-			$browser->content_header('addressbook.vcf','text/x-vcard');
+			html::content_header('addressbook.vcf','text/x-vcard');
 		}
 		if (!($fp = fopen($file ? $file : 'php://output','w')))
 		{
