@@ -7,7 +7,7 @@
  * @package admin
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
@@ -24,7 +24,7 @@ abstract class admin_cmd
 
 	/**
 	 * The status of the command, one of either scheduled, successful, failed or deleted
-	 * 
+	 *
 	 * @var int
 	 */
 	protected $status;
@@ -61,44 +61,44 @@ abstract class admin_cmd
 	 * @var array
 	 */
 	private $data = array();
-	
+
 	/**
 	 * Instance of the accounts class, after calling instanciate_accounts!
 	 *
 	 * @var accounts
 	 */
 	static protected $accounts;
-	
+
 	/**
 	 * Instance of the acl class, after calling instanciate_acl!
 	 *
 	 * @var acl
 	 */
 	static protected $acl;
-	
+
 	/**
 	 * Instance of so_sql for egw_admin_queue
 	 *
 	 * @var so_sql
 	 */
 	static private $sql;
-	
+
 	/**
 	 * Instance of so_sql for egw_admin_remote
 	 *
 	 * @var so_sql
 	 */
 	static private $remote;
-	
+
 	/**
 	 * Executes the command
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws Exception()
 	 */
 	protected abstract function exec($check_only=false);
-	
+
 	/**
 	 * Return a title / string representation for a given command, eg. to display it
 	 *
@@ -108,7 +108,7 @@ abstract class admin_cmd
 	{
 		return $this->type;
 	}
-	
+
 	/**
 	 * Constructor
 	 *
@@ -128,7 +128,7 @@ abstract class admin_cmd
 		}
 		//_debug_array($this); exit;
 	}
-	
+
 	/**
 	 * runs the command either immediatly ($time=null) or shedules it for the given time
 	 *
@@ -190,18 +190,18 @@ abstract class admin_cmd
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * Runs a command on a remote install
-	 * 
+	 *
 	 * This is a very basic remote procedure call to an other egw instance.
 	 * The payload / command data is send as POST request to the remote installs admin/remote.php script.
 	 * The remote domain (eGW instance) and the secret authenticating the request are send as GET parameters.
 	 *
-	 * To authenticate with the installation we use a secret, which is a md5 hash build from the uid 
-	 * of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash 
+	 * To authenticate with the installation we use a secret, which is a md5 hash build from the uid
+	 * of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash
 	 * of the md5 hash of the config password and the install_id (egw_admin_remote.remote_hash)
-	 * 
+	 *
 	 * @return string sussess message
 	 * @throws Exception(lang('Invalid remote id or name "%1"!',$id_or_name),997) or other Exceptions reported from remote
 	 */
@@ -216,7 +216,7 @@ abstract class admin_cmd
 			$this->save();	// to get the uid
 		}
 		$secret = md5($this->uid.$remote['remote_hash']);
-		
+
 		$postdata = $this->as_array();
 		if (is_object($GLOBALS['egw']->translation))
 		{
@@ -241,7 +241,7 @@ abstract class admin_cmd
 			throw new egw_exception(lang('Could not remote execute the command').': '.$http_response_header[0]);
 		}
 		//echo "got: $message\n";
-		
+
 		if (($value = unserialize($message)) !== false && $message !== serialize(false))
 		{
 			$message = $value;
@@ -256,7 +256,7 @@ abstract class admin_cmd
 		}
 		return $message;
 	}
-	
+
 	/**
 	 * Delete / canncels a scheduled command
 	 *
@@ -267,10 +267,10 @@ abstract class admin_cmd
 		if ($this->status != admin_cmd::scheduled) return false;
 
 		$this->status = admin_cmd::deleted;
-		
+
 		return $this->save();
 	}
-	
+
 	/**
 	 * Saving the object to the database
 	 *
@@ -280,7 +280,7 @@ abstract class admin_cmd
 	function save($set_modifier=true)
 	{
 		admin_cmd::_instanciate_sql();
-		
+
 		// check if uid already exists --> set the id to not try to insert it again (resulting in SQL error)
 		if (!$this->id && $this->uid && (list($other) = self::$sql->search(array('cmd_uid' => $this->uid))))
 		{
@@ -327,11 +327,11 @@ abstract class admin_cmd
 		}
 		return true;
 	}
-	
+
 	/**
 	 * reading a command from the queue returning the comand object
 	 *
-	 * @static 
+	 * @static
 	 * @param int/string $id id or uid of the command
 	 * @return admin_cmd or null if record not found
 	 * @throws Exception(lang('Unknown command %1!',$class),0);
@@ -347,11 +347,11 @@ abstract class admin_cmd
 		}
 		return admin_cmd::instanciate($data);
 	}
-	
+
 	/**
 	 * Instanciated the object / subclass using the given data
 	 *
-	 * @static 
+	 * @static
 	 * @param array $data
 	 * @return admin_cmd
 	 * @throws egw_exception_wrong_parameter if class does not exist or is no instance of admin_cmd
@@ -367,18 +367,18 @@ abstract class admin_cmd
 			throw new egw_exception_wrong_parameter(lang('Unknown command %1!',$class),0);
 		}
 		$cmd = new $class($data);
-		
+
 		if ($cmd instanceof admin_cmd)	// dont allow others classes to be executed that way!
 		{
 			return $cmd;
 		}
 		throw new egw_exception_wrong_parameter(lang('%1 is no command!',$class),0);
 	}
-	
+
 	/**
 	 * calling get_rows of our static so_sql instance
 	 *
-	 * @static 
+	 * @static
 	 * @param array $query
 	 * @param array &$rows
 	 * @param array $readonlys
@@ -398,9 +398,9 @@ abstract class admin_cmd
 	/**
 	 * calling search method of our static so_sql instance
 	 *
-	 * @static 
+	 * @static
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or 
+	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
@@ -421,7 +421,7 @@ abstract class admin_cmd
 	/**
 	 * Instanciate our static so_sql object for egw_admin_queue
 	 *
-	 * @static 
+	 * @static
 	 */
 	private static function _instanciate_sql()
 	{
@@ -430,11 +430,11 @@ abstract class admin_cmd
 			admin_cmd::$sql = new so_sql('admin','egw_admin_queue',null,'cmd_');
 		}
 	}
-	
+
 	/**
 	 * Instanciate our static so_sql object for egw_admin_remote
 	 *
-	 * @static 
+	 * @static
 	 */
 	private static function _instanciate_remote()
 	{
@@ -443,10 +443,10 @@ abstract class admin_cmd
 			admin_cmd::$remote = new so_sql('admin','egw_admin_remote');
 		}
 	}
-	
+
 	/**
 	 * magic method to read a property, all non admin-cmd properties are stored in the data array
-	 * 
+	 *
 	 * @param string $property
 	 * @return mixed
 	 */
@@ -467,7 +467,7 @@ abstract class admin_cmd
 
 	/**
 	 * magic method to check if a property is set, all non admin-cmd properties are stored in the data array
-	 * 
+	 *
 	 * @param string $property
 	 * @return boolean
 	 */
@@ -487,7 +487,7 @@ abstract class admin_cmd
 	 * @param mixed $value
 	 * @return mixed
 	 */
-	protected function __set($property,$value)
+	function __set($property,$value)
 	{
 		$this->data[$property] = $value;
 	}
@@ -497,7 +497,7 @@ abstract class admin_cmd
 	 *
 	 * @param string $property
 	 */
-	protected function __unset($property)
+	function __unset($property)
 	{
 		unset($this->data[$property]);
 	}
@@ -522,10 +522,10 @@ abstract class admin_cmd
 		}
 		unset($vars['data']);
 		if ($this->data) $vars = array_merge($this->data,$vars);
-		
+
 		return $vars;
 	}
-	
+
 	/**
 	 * Check if the creator is still admin and has the neccessary admin rights
 	 *
@@ -576,7 +576,7 @@ abstract class admin_cmd
 		}
 		return $apps;
 	}
-	
+
 	/**
 	 * parse account name or id
 	 *
@@ -590,7 +590,7 @@ abstract class admin_cmd
 	{
 		admin_cmd::_instanciate_accounts();
 
-		if (!($type = admin_cmd::$accounts->exists($account)) || 
+		if (!($type = admin_cmd::$accounts->exists($account)) ||
 			!is_numeric($id=$account) && !($id = admin_cmd::$accounts->name2id($account)))
 		{
 			throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$account),15);
@@ -600,10 +600,10 @@ abstract class admin_cmd
 			throw new egw_exception_wrong_userinput(lang("Wrong account type: %1 is NO %2 !!!",$account,$allow_only_user?lang('user'):lang('group')),15);
 		}
 		if ($type == 2 && $id > 0) $id = -$id;	// groups use negative id's internally, fix it, if user given the wrong sign
-	
+
 		return $id;
 	}
-	
+
 	/**
 	 * parse account names or ids
 	 *
@@ -616,7 +616,7 @@ abstract class admin_cmd
 	static function parse_accounts($accounts,$allow_only_user=null)
 	{
 		if (!$accounts) return null;
-		
+
 		$ids = array();
 		foreach(is_array($accounts) ? $accounts : explode(',',$accounts) as $account)
 		{
@@ -624,7 +624,7 @@ abstract class admin_cmd
 		}
 		return $ids;
 	}
-	
+
 	/**
 	 * Parses a date into an integer timestamp
 	 *
@@ -639,7 +639,7 @@ abstract class admin_cmd
 			$datein = $date;
 			// convert german DD.MM.YYYY format into ISO YYYY-MM-DD format
 			$date = preg_replace('/^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{4})$/','\3-\2-\1',$date);
-	
+
 			if (($date = strtotime($date))  === false)
 			{
 				throw new egw_exception_wrong_userinput(lang('Invalid formated date "%1"!',$datein),6);
@@ -647,7 +647,7 @@ abstract class admin_cmd
 		}
 		return (int)$date;
 	}
-	
+
 	/**
 	 * Parse a boolean value
 	 *
@@ -672,7 +672,7 @@ abstract class admin_cmd
 		}
 		throw new egw_exception_wrong_userinput(lang('Invalid value "%1" use yes or no!',$value),998);
 	}
-	
+
 	/**
 	 * Parse a remote id or name and return the remote_id
 	 *
@@ -683,7 +683,7 @@ abstract class admin_cmd
 	static function parse_remote($id_or_name)
 	{
 		admin_cmd::_instanciate_remote();
-		
+
 		if (!($remotes = admin_cmd::$remote->search(array(
 			'remote_id' => $id_or_name,
 			'remote_name' => $id_or_name,
@@ -739,7 +739,7 @@ abstract class admin_cmd
 			}
 		}
 	}
-	
+
 	/**
 	 * RFC822 email address of the an account, eg. "Ralf Becker <RalfBecker@egroupware.org>"
 	 *
@@ -761,7 +761,7 @@ abstract class admin_cmd
 		}
 		return $fullname . ($email ? ' <'.$email.'>' : '');
 	}
-	
+
 	/**
 	 * Semaphore to not permanently set new jobs, while we running the current ones
 	 *
@@ -772,9 +772,9 @@ abstract class admin_cmd
 
 	/**
 	 * Setup an async job to run the next scheduled command
-	 * 
+	 *
 	 * Only needs to be called if a new command gets scheduled
-	 * 
+	 *
 	 * @return boolean true if job installed, false if not necessary
 	 */
 	private static function _set_async_job()
@@ -796,15 +796,15 @@ abstract class admin_cmd
 		}
 		include_once(EGW_API_INC.'/class.asyncservice.inc.php');
 		$async = new asyncservice();
-		
+
 		// we cant use this class as callback, as it's abstract and ExecMethod used by the async service instanciated the class!
 		list($app) = explode('_',$class=$next['type']);
 		$callback = $app.'.'.$class.'.run_queued_jobs';
-		
+
 		$async->cancel_timer(admin_cmd::async_job_id);	// we delete it in case a job already exists
 		return $async->set_timer($time,admin_cmd::async_job_id,$callback,null,$next['creator']);
 	}
-	
+
 	/**
 	 * Callback for our async job
 	 *
@@ -840,7 +840,7 @@ abstract class admin_cmd
 
 		return admin_cmd::_set_async_job();
 	}
-	
+
 	/**
 	 * Return a list of defined remote instances
 	 *
@@ -849,7 +849,7 @@ abstract class admin_cmd
 	static function remote_sites()
 	{
 		admin_cmd::_instanciate_remote();
-		
+
 		$sites = array(lang('local'));
 		if ($remote = admin_cmd::$remote->query_list('remote_name','remote_id'))
 		{
@@ -857,7 +857,7 @@ abstract class admin_cmd
 		}
 		return $sites;
 	}
-	
+
 	/**
 	 * get_rows for remote instances
 	 *
@@ -869,10 +869,10 @@ abstract class admin_cmd
 	static function get_remotes($query,&$rows,&$readonlys)
 	{
 		admin_cmd::_instanciate_remote();
-		
+
 		return admin_cmd::$remote->get_rows($query,$rows,$readonlys);
 	}
-	
+
 	/**
 	 * Read data of a remote instance
 	 *
@@ -882,10 +882,10 @@ abstract class admin_cmd
 	static function read_remote($keys)
 	{
 		admin_cmd::_instanciate_remote();
-		
+
 		return admin_cmd::$remote->read($keys);
 	}
-	
+
 	/**
 	 * Save / adds a remote instance
 	 *
@@ -895,7 +895,7 @@ abstract class admin_cmd
 	static function save_remote(array $data)
 	{
 		admin_cmd::_instanciate_remote();
-		
+
 		if ($data['install_id'] && $data['config_passwd'])	// calculate hash
 		{
 			$data['remote_hash'] = self::remote_hash($data['install_id'],$data['config_passwd']);
@@ -906,7 +906,7 @@ abstract class admin_cmd
 		}
 		//_debug_array($data);
 		admin_cmd::$remote->init($data);
-		
+
 		// check if a unique key constrain would be violated by saving the entry
 		if (($num = admin_cmd::$remote->not_unique()))
 		{
@@ -919,7 +919,7 @@ abstract class admin_cmd
 		}
 		return admin_cmd::$remote->data['remote_id'];
 	}
-	
+
 	/**
 	 * Calculate the remote hash from install_id and config_passwd
 	 *
@@ -934,13 +934,13 @@ abstract class admin_cmd
 			throw new egw_exception_wrong_parameter(empty($config_passwd)?'Empty config password':'install_id no md5 hash');
 		}
 		if (!self::is_md5($config_passwd)) $config_passwd = md5($config_passwd);
-			
+
 		return md5($config_passwd.$install_id);
 	}
-	
+
 	/**
 	 * displays an account specified by it's id or lid
-	 * 
+	 *
 	 * We show the value given by the user, plus the full name in brackets.
 	 *
 	 * @param int/string $account
@@ -949,10 +949,10 @@ abstract class admin_cmd
 	static function display_account($account)
 	{
 		$id = is_numeric($account) ? $account : $GLOBALS['egw']->accounts->id2name($account);
-		
+
 		return $account.' ('.$GLOBALS['egw']->common->grab_owner_name($id).')';
 	}
-	
+
 	/**
 	 * Check if string is a md5 hash (32 chars of 0-9 or a-f)
 	 *
@@ -963,17 +963,17 @@ abstract class admin_cmd
 	{
 		return preg_match('/^[0-9a-f]{32}$/',$str);
 	}
-	
+
 	/**
 	 * Check if the current command has the right crediential to be excuted remotely
-	 * 
+	 *
 	 * Command can reimplement that method, to allow eg. anonymous execution.
 	 *
-	 * This default implementation use a secret to authenticate with the installation, 
-	 * which is a md5 hash build from the uid of the command (to not allow to send new 
-	 * commands with an earsdroped secret) and the md5 hash of the md5 hash of the 
+	 * This default implementation use a secret to authenticate with the installation,
+	 * which is a md5 hash build from the uid of the command (to not allow to send new
+	 * commands with an earsdroped secret) and the md5 hash of the md5 hash of the
 	 * config password and the install_id (egw_admin_remote.remote_hash)
-	 * 
+	 *
 	 * @param string $secret hash used to authenticate the command (
 	 * @param string $config_passwd of the current domain
 	 * @throws egw_exception_no_permission
@@ -983,9 +983,9 @@ abstract class admin_cmd
 		// as a security measure remote administration need to be enabled under Admin > Site configuration
 		list(,$remote_admin_install_id) = explode('-',$this->uid);
 		$allowed_remote_admin_ids = $GLOBALS['egw_info']['server']['allow_remote_admin'] ? explode(',',$GLOBALS['egw_info']['server']['allow_remote_admin']) : array();
-		
-		// to authenticate with the installation we use a secret, which is a md5 hash build from the uid 
-		// of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash 
+
+		// to authenticate with the installation we use a secret, which is a md5 hash build from the uid
+		// of the command (to not allow to send new commands with an earsdroped secret) and the md5 hash
 		// of the md5 hash of the config password and the install_id (egw_admin_remote.remote_hash)
 		if (is_null($config_passwd) || is_numeric($this->uid) || !in_array($remote_admin_install_id,$allowed_remote_admin_ids) ||
 			$secret != ($md5=md5($this->uid.$this->remote_hash($GLOBALS['egw_info']['server']['install_id'],$config_passwd))))
@@ -999,7 +999,7 @@ abstract class admin_cmd
 			throw new egw_exception_no_permission($msg,0);
 		}
 	}
-	
+
 	/**
 	 * Return a rand string, eg. to generate passwords
 	 *
