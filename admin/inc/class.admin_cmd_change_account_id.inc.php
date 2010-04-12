@@ -198,6 +198,8 @@ class admin_cmd_change_account_id extends admin_cmd
 		$total = 0;
 		foreach($this->columns2change as $app => $data)
 		{
+			if (!isset($GLOBALS['egw_info']['apps'][$app])) continue;	// $app is not installed
+
 			$db = clone($GLOBALS['egw']->db);
 			$db->set_app($app);
 
