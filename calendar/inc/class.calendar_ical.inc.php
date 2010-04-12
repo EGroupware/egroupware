@@ -2655,7 +2655,7 @@ class calendar_ical extends calendar_boupdate
 						}
 
 						//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
-						if (preg_match('/(.*) Group/', $cn, $matches))
+						if (preg_match('/(.*) '. lang('Group') . '/', $cn, $matches))
 						{
 							if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
 							{
