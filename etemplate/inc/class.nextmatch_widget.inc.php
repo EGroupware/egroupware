@@ -270,7 +270,7 @@ class nextmatch_widget
 
 		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 		if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
-		if (!isset($value['cat_app'])) $value['cat_app'] = $app;	// if no cat_app set, use the app from the get_rows func
+		if (!isset($value['cat_app'])) list($value['cat_app']) = explode('.',$value['get_rows']);	// if no cat_app set, use the app from the get_rows func
 
 		if (!($max = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $max = 15;
 		$row_options = array();
