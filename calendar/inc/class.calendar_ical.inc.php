@@ -2541,10 +2541,10 @@ class calendar_ical extends calendar_boupdate
 						// ... and for provided CN
 						if (!empty($attributes['params']['CN']))
 						{
-							if ($attributes['params']['CN'][0] == '"'
-								&& substr($attributes['params']['CN'],-1) == '"')
+							$cn = $attributes['params']['CN'];
+							if ($cn[0] == '"' && substr($cn,-1) == '"')
 							{
-								$cn = substr($attributes['params']['CN'],1,-1);
+								$cn = substr($cn,1,-1);
 							}
 							$searcharray['n_fn'] = $cn;
 						}
@@ -2553,9 +2553,21 @@ class calendar_ical extends calendar_boupdate
 							$searcharray['n_fn'] = $cn;
 						}
 
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+								. "() Search participant: '$cn', '$email'\n",3,$this->logfile);
+						}
+
 						//elseif (//$attributes['params']['CUTYPE'] == 'GROUP'
 						if (preg_match('/(.*) ' . lang('Group') . '/', $cn, $matches))
 						{
+							// we found a group
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+									. "() Found group: '$matches[1]', '$cn', '$email'\n",3,$this->logfile);
+							}
 							if (($uid =  $GLOBALS['egw']->accounts->name2id($matches[1], 'account_lid', 'g')))
 							{
 								//Horde::logMessage("vevent2egw: group participant $uid",
