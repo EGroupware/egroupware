@@ -234,10 +234,15 @@ class admin_categories
 		{
 			throw new egw_exception_assertion_failed(__METHOD__.'($query,...) $query[appname] NOT set!');
 		}
+		$globalcat = true;
+		if (isset($query['global_cats']) && $query['global_cats']===false)
+		{
+			$globalcat = false;
+		}
 		egw_cache::setSession(__CLASS__,'nm',$query);
 
 		$cats = new categories(categories::GLOBAL_ACCOUNT,$query['appname']);
-		$rows = $cats->return_sorted_array($query['start'],$query['num_rows'],$query['search'],$query['sort'],$query['order'],true,0,true);
+		$rows = $cats->return_sorted_array($query['start'],$query['num_rows'],$query['search'],$query['sort'],$query['order'],$globalcat,0,true);
 
 		foreach($rows as &$row)
 		{
@@ -302,6 +307,10 @@ class admin_categories
 				isset($GLOBALS['egw_info']['apps'][$_GET['appname']])))
 			{
 				$content['nm']['appname'] = $_GET['appname'];
+			}
+			if (isset($_GET['global_cats']) && empty($_GET['global_cats'] ))
+			{
+				$content['nm']['global_cats'] = false;
 			}
 		}
 		else
