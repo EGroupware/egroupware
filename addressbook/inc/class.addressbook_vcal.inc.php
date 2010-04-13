@@ -980,9 +980,17 @@ class addressbook_vcal extends addressbook_bo
 		{
 			return false;
 		}
+		if (isset($GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset']))
+		{
+			$charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
+		}
+		else
+		{
+			$charset = 'utf-8';
+		}
 		foreach ($ids as $id)
 		{
-			fwrite($fp,$this->getVCard($id));
+			fwrite($fp,$this->getVCard($id, $charset));
 		}
 		fclose($fp);
 
