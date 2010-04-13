@@ -1,4 +1,4 @@
-%1 already exists as a file	filemanager	fi	Tiedosto nimeltä %1 on jo olemassa
+%1 already exists as a file	filemanager	fi	Tiedosto nimellä %1 on jo olemassa
 %1 directories and %2 files copied.	filemanager	fi	%1 hakemisto(a) ja %2 tiedosto(a) kopioitu.
 %1 directories and %2 files deleted.	filemanager	fi	%1 hakemisto(a) ja %2 tiedosto(a) poistettu.
 %1 elements linked.	filemanager	fi	%1 elementti(ä) linkitetty.
@@ -12,23 +12,22 @@
 %1 files deleted.	filemanager	fi	%1 tiedosto(a) poistettu.
 %1 files moved.	filemanager	fi	%1 tiedosto(a) siirretty.
 %1 starts with '%2'	filemanager	fi	%1 alkaa '%2':lla.
-%1 successful uploaded.	filemanager	fi	%1 ladattu onnistuneesti.
+%1 successful uploaded.	filemanager	fi	%1 ladattu.
 %1 the following files into current directory	filemanager	fi	%1 seuraavat tiedostot nykyiseen hakemistoon.
 %1 urls %2 to clipboard.	filemanager	fi	%1 URL(:ää) %2 leikepöydälle.
-accessrights	filemanager	fi	Käyttöoikeudet (ACL)
+accessrights	filemanager	fi	ACL-käyttöoikeudet
 acl added.	filemanager	fi	ACL lisätty.
 acl deleted.	filemanager	fi	ACL poistettu.
-actions	filemanager	fi	Toimenpiteet
-add current path as favorite	filemanager	fi	Lisää näkymä suosikkeihin
+actions	filemanager	fi	Toiminnot
 all files	common	fi	Kaikki tiedostot
 allow a maximum of the above configured folderlinks to be configured in settings	admin	fi	Konfiguroitavien kansiolinkkien maksimimäärä asetuksissa.
-and all it's childeren	filemanager	fi	ja kaikki sen alaosastot (subit)
+and all it's childeren	filemanager	fi	ja kaikki sen aliosastot (subit)
 applications	common	fi	Sovellukset
-basedirectory	filemanager	fi	Juurihakemisto (Base directory)
+basedirectory	filemanager	fi	Kantahakemisto (Base directory)
 can't open directory %1!	filemanager	fi	Hakemistoa %1 ei voitu avata!
 cancel editing %1 without saving	filemanager	fi	Peru %1:n muokkaus tallentamatta muutoksia
 cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai päättyy välilyöntiin
-check all	filemanager	fi	Tarkista kaikki
+check all	filemanager	fi	Valitse kaikki
 clear search	filemanager	fi	Tyhjennä haku
 comment	filemanager	fi	Kommentti
 comments cannot contain "%1"	filemanager	fi	Kommentti ei saa sisältää "%1"
@@ -50,16 +49,17 @@ create directory	filemanager	fi	Luo hakemisto
 create file	filemanager	fi	Luo tiedosto
 create folder	filemanager	fi	Luo kansio
 created	filemanager	fi	Luotu
-created %1,%2	filemanager	fi	Luotu %1,%2
+created %1,%2	filemanager	fi	Luonut %1,%2
+created between	filemanager	fi	Luotu välillä
 created directory %1	filemanager	fi	Luotiin kansio %1
 current directory	filemanager	fi	Nykyinen hakemisto
-custom fields	filemanager	fi	Muokatut kentät
+custom fields	filemanager	fi	Lisäkentät
 cut	filemanager	fi	Leikkaa
 cut to clipboard	filemanager	fi	Leikkaa leikepöydälle
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	fi	Oletus on EI. Linkkiä ei näytetä, mutta voit silti navigoida osoitteeseen tai konfiguroida sen aloituskansioksi tai kansiolinkiksi.
 delete this file or directory	filemanager	fi	Poista tämä tiedosto tai hakemisto.
 deleted %1	filemanager	fi	Poistettiin %1
-directories sorted in	filemanager	fi	Hakemistot
+directories sorted in	filemanager	fi	Sisällytetyt hakemistot
 directory	filemanager	fi	Hakemisto
 directory %1 already exists	filemanager	fi	Hakemisto %1 on jo olemassa
 directory %1 does not exist	filemanager	fi	Hakemisto %1 ei ole
@@ -67,7 +67,7 @@ directory names cannot contain "%1"	filemanager	fi	Hakemiston nimessä ei saa ol
 directory not found or no permission to access it!	filemanager	fi	Hakemistoa ei löydy tai sinulla ei ole lukuoikeuksia kyseiseen hakemistoon!
 display and modification of content	filemanager	fi	Sisällön muokaus ja näyttö
 display of content	filemanager	fi	Sisällön näyttö (lukuoikeus)
-do you want to overwrite the existing file %1?	filemanager	fi	Haluatko tallentaa jo olemassaolevalla nimellä %1 (overwrite)?
+do you want to overwrite the existing file %1?	filemanager	fi	Haluatko tallentaa jo olemassaolevan tiedoston %1 päälle (overwrite)?
 download	filemanager	fi	Lataa
 edit comments	filemanager	fi	Muokkaa kommentteja
 edit settings	filemanager	fi	Muokkaa asetuksia
@@ -91,7 +91,7 @@ file %1 may be too big. contact your systemadministrator for further info	filema
 file deleted.	filemanager	fi	Tiedosto poistettu
 file names cannot contain "%1"	filemanager	fi	Tiedoston nimessä ei saa olla "%1"
 file or directory not found!	filemanager	fi	Tiedostoa tai hakemistoa ei löytynyt!
-file successful uploaded.	filemanager	fi	Tiedosto ladattu onnistuneesti
+file successful uploaded.	filemanager	fi	Tiedosto ladattu.
 filemanager	common	fi	Tiedostonhallinta
 filemanager configuration	admin	fi	Tiedostonhallinnan asetukset
 files from subdirectories	filemanager	fi	Alakansioiden tiedostot
@@ -109,9 +109,10 @@ link %1: %2	filemanager	fi	Linkki %1: %2
 link target %1 not found!	filemanager	fi	Linkkikohdetta %1 ei löytynyt!
 location	filemanager	fi	Sijainti
 log out as superuser	filemanager	fi	Kirjaudu ulos SuperUserina
-max folderlinks	admin	fi	maksimi kansiolinkit
+max folderlinks	admin	fi	Kansioiden maksimilinkkimäärä
 mime type	filemanager	fi	MIME-tyyppi
-modified	filemanager	fi	Muutettu
+modified	filemanager	fi	Muokattu
+modified between	filemanager	fi	Muokattu välillä
 modify all subdirectories and their content	filemanager	fi	Muokkaa kaikkia alahakemistoja ja niiden sisältöä
 move	filemanager	fi	Siirrä
 move to	filemanager	fi	Siirrä
@@ -131,26 +132,28 @@ preview	filemanager	fi	Esikatselu
 preview %1	filemanager	fi	Esikatsele %1
 preview of %1	filemanager	fi	%1 esikatselu
 projectmanager	filemanager	fi	Projektinhallinta
+properties saved.	filemanager	fi	Asetukset tallennettu.
 quick jump to	filemanager	fi	Mene
-read & write access	filemanager	fi	Luku ja kirjoitus oikeudet (ACL)
+read & write access	filemanager	fi	Luku- ja kirjoitusoikeudet (ACL)
 read access only	filemanager	fi	Ainoastaan lukuoikeus
-reload	filemanager	fi	lataa uudelleen
+reload	filemanager	fi	Lataa uudelleen
 rename of %1 to %2 failed!	filemanager	fi	%1:n uudelleennimeäminen %1:ksi epäonnistui!
 rename, change permissions or ownership	filemanager	fi	Nimeä uudelleen, Muuta ACL-oikeuksia tai omistajaa
 renamed %1 to %2	filemanager	fi	%1 nimettiin uudelleen %2
 renamed %1 to %2.	filemanager	fi	%1 nimettiin uudelleen %2
 replaced %1	filemanager	fi	Korvattiin %1
-rights	filemanager	fi	ACL oikeudet
+rights	filemanager	fi	ACL -oikeudet
 root	filemanager	fi	Root
-root access granted.	filemanager	fi	Root access myönnetty.
-root access stopped.	filemanager	fi	Root access katkaistu.
+root access granted.	filemanager	fi	Root -access myönnetty.
+root access stopped.	filemanager	fi	Root -access katkaistu.
 save %1	filemanager	fi	Tallenna %1
 save %1, and go back to file listing	filemanager	fi	Tallenna %1 ja palaa hakemistoon
 save changes	filemanager	fi	Tallenna muutokset
 saved %1	filemanager	fi	Tallennettiin %1
+saving properties failed!	filemanager	fi	Asetusten tallentaminen epäonnistui!
 search for '%1'	filemanager	fi	Hae '%1'
 searchstring	filemanager	fi	Hakumerkkijono
-select action...	filemanager	fi	Valitse toimenpide...
+select action...	filemanager	fi	Valitse toiminto...
 select file to upload in current directory	filemanager	fi	Valitse ladattava tiedosto
 show	filemanager	fi	Näytä
 show hidden files	filemanager	fi	Näytä piilotetut tiedostot
@@ -163,6 +166,7 @@ the default start folder is your personal folder. the default is used, if you le
 the requested path %1 is not available.	filemanager	fi	Polkua %1 ei löydy.
 there's already a directory with that name!	filemanager	fi	Hakemiston nimi on jo käytössä!
 there's already a file with that name!	filemanager	fi	Tiedoston nimi on jo käytössä!
+to overwrite the existing file store again.	filemanager	fi	Kirjoita olemassaoleva tietostovarasto uudelleen.
 total files	filemanager	fi	Tiedostoja
 unused space	filemanager	fi	Tilaa vapaana
 up	filemanager	fi	Ylös
@@ -177,5 +181,5 @@ you need to select an owner!	filemanager	fi	Valitse omistaja!
 you need to select some files first!	filemanager	fi	Valitse ensin tiedosto!
 you will be redirected to your home directory.	filemanager	fi	Jälleenohjautuu kotihakemistoon.
 you will be redirected to your start folder.	filemanager	fi	Jälleenohjautuu aloituskansioon.
-your home dir did not exist, egroupware created a new one.	filemanager	fi	Kotihakemistoa ei löytynyt, eGroupWare loi sen.
+your home dir did not exist, egroupware created a new one.	filemanager	fi	Kotihakemistoa ei löytynyt, järjestelmä loi uuden.
 your home directory	filemanager	fi	Kotihakemisto

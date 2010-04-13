@@ -144,7 +144,7 @@ embeded css styles, eg. '.red { background: red; }' (note the '.' before the cla
 enable javascript onchange submit	etemplate	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enter '' for an empty default, nothing mean no default	etemplate	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	etemplate	de	Suchmuster eingeben
-enter filename to upload and attach, use [browse...] to search for it	etemplate	de	Dateinamen zum Hochland oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
+enter filename to upload and attach, use [browse...] to search for it	etemplate	de	Dateinamen zum Hochladen oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
 enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 entry saved	etemplate	de	Eintrag gespeichert
