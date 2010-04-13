@@ -82,6 +82,11 @@ class admin_categories
 	 */
 	public function edit(array $content=null,$msg='')
 	{
+		// read the session, as the global_cats param is stored with it.
+		$session = egw_cache::getSession(__CLASS__,'nm');
+		$global_cats = $session['global_cats'];
+		unset($session);
+
 		if (!isset($content))
 		{
 			if (!(isset($_GET['cat_id']) && $_GET['cat_id'] > 0 && 
@@ -165,6 +170,7 @@ class admin_categories
 			$link = egw::link('/index.php',array(
 				'menuaction' => 'admin.admin_categories.index',
 				'msg' => $msg,
+				'global_cats' => (empty($global_cats)? false : true),
 			));
 			$js = "window.opener.location='$link';";
 			if ($button == 'save' || $button == 'delete')
