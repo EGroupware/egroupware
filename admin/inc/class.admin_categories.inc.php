@@ -82,6 +82,10 @@ class admin_categories
 	 */
 	public function edit(array $content=null,$msg='')
 	{
+		// read the session, as the global_cats param is stored with it.
+		$session = egw_cache::getSession(__CLASS__,'nm');
+		$global_cats = $session['global_cats'];
+		unset($session);
 		if (!isset($content))
 		{
 			if (!(isset($_GET['cat_id']) && $_GET['cat_id'] > 0 && 
@@ -165,6 +169,7 @@ class admin_categories
 			$link = egw::link('/index.php',array(
 				'menuaction' => 'admin.admin_categories.index',
 				'msg' => $msg,
+				'global_cats' => (empty($global_cats)? false : true),
 			));
 			$js = "window.opener.location='$link';";
 			if ($button == 'save' || $button == 'delete')
@@ -304,11 +309,16 @@ class admin_categories
 					'no_search'      => !self::$acl_search,
 				);
 			}
+			else
+			{
+				$content['nm']['start']=0;
+			}
 			if (isset($_GET['appname']) && ($_GET['appname'] == categories::GLOBAL_APPNAME ||
 				isset($GLOBALS['egw_info']['apps'][$_GET['appname']])))
 			{
 				$content['nm']['appname'] = $_GET['appname'];
 			}
+			$content['nm']['global_cats'] = true;
 			if (isset($_GET['global_cats']) && empty($_GET['global_cats'] ))
 			{
 				$content['nm']['global_cats'] = false;
