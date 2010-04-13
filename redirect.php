@@ -10,15 +10,15 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-	
+
 	/* $Id$ */
 
 	/*
 	  Use this script when you want to link to a external url.
 	  This way you don't send something like sessionid as referer
-	  
+
 	  Use this in your app:
-	  
+
 	  "<a href=\"$webserverURL/redirect.php?go=".htmlentities(urlencode('http://www.egroupware.org')).'">'
 	*/
 
@@ -32,17 +32,64 @@
 		}
 	}
 
-	if($_GET['go'])
-	{
-		$url= html_entity_decode(urldecode($_GET['go']));
-		unset($_GET['go']);
-		if (!empty($_GET)) $url=$url."&".http_build_query($_GET);
+	/* Only allow redirects with a valid session */
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader'   => True,
+			'nonavbar'   => True,
+			'currentapp' => 'home'
+		)
+	);
+	include('./header.inc.php');
 
-		Header('Location: ' . html_entity_decode(urldecode($url)));
-		exit;
+
+	/* Only allow redirects from inside this eGroupware installation. */
+	$valid_referer = array();
+	$path = preg_replace('/\/[^\/]*$/','',$_SERVER['PHP_SELF']) . '/';
+	array_push($valid_referer, $path);
+	array_push($valid_referer, ($_SERVER['HTTPS'] ? 'https://' : 'http://') . $_SERVER['SERVER_ADDR'] . $path);
+	array_push($valid_referer, ($_SERVER['HTTPS'] ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . $path);
+
+	$referrer = trim($_SERVER['HTTP_REFERER']);
+	if ((!isset($_SERVER['HTTP_REFERER'])) || (empty($referrer)))
+	{
+		echo "Only usable from within eGroupware.\n";
+	}
+	else if($_GET['go'])
+	{
+		$allow = false;
+		foreach ($valid_referer as $urlRoot)
+		{
+			/* Check if the referrer begins with a valid URL. */
+			if (strncmp($urlRoot, $referrer, strlen($urlRoot)) == 0)
+			{
+				$allow = true;
+				break;
+			}
+		}
+		if ($allow)
+		{
+			$url= html_entity_decode(urldecode($_GET['go']));
+			unset($_GET['go']);
+			/* Only add "&" if there is something to append. */
+			if (!empty($_GET))
+			{
+				$url=$url."&".http_build_query($_GET);
+			}
+
+			Header('Location: ' . html_entity_decode(urldecode($url)));
+			exit;
+		}
+		else
+		{
+			echo "Redirect not allowed for referrer '".$_SERVER['HTTP_REFERER']."'.\n";
+			echo "<pre>";
+			print_r($valid_referer);
+			echo "<pre>\n";
+		}
 	}
 	else
 	{
-		echo "this won't work!!";
+		echo "Error redirecting.";
 	}
 ?>
