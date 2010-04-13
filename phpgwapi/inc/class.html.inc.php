@@ -596,6 +596,11 @@ class html
 		$oFCKeditor->Config['FlashBrowser'] = $oFCKeditor->Config['FlashUpload'] = false;
 		$oFCKeditor->Config['ImageBrowser'] = $oFCKeditor->Config['ImageUpload'] = false;
 
+		if (!$GLOBALS['egw_info']['server']['usecookies'])
+		{
+			$extra = egw_session::EGW_SESSION_NAME.'='.$GLOBALS['egw']->session->sessionid.
+				'&kp3='.$GLOBALS['egw']->session->kp3.'&domain='.$GLOBALS['egw']->session->account_domain;
+		}
 		// Activate the image browser+upload, if $_base_href exists and is browsable by the webserver
 		if ($_base_href && is_dir($_SERVER['DOCUMENT_ROOT'].$_base_href) && file_exists($_SERVER['DOCUMENT_ROOT'].$_base_href.'/.'))
 		{
@@ -604,7 +609,7 @@ class html
 			// store the path and application in the session, to make sure it can't be called with arbitrary pathes
 			$GLOBALS['egw']->session->appsession($_base_href,'FCKeditor',$GLOBALS['egw_info']['flags']['currentapp']);
 
-			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=Image&Connector='.$oFCKeditor->BasePath.'editor/filemanager/connectors/php/connector.php';
+			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=Image&Connector='.$oFCKeditor->BasePath.'editor/filemanager/connectors/php/connector.php?'.$extra;
 			$oFCKeditor->Config['ImageBrowser'] = true;
 			$oFCKeditor->Config['ImageUpload'] = is_writable($_SERVER['DOCUMENT_ROOT'].$_base_href);
 		}
@@ -621,7 +626,7 @@ class html
 		{
 			$spell = '_spellcheck';
 			$oFCKeditor->Config['SpellChecker'] = 'SpellerPages';
-			$oFCKeditor->Config['SpellerPagesServerScript'] = 'server-scripts/spellchecker.php?enabled=1';
+			$oFCKeditor->Config['SpellerPagesServerScript'] = 'server-scripts/spellchecker.php?'.$extra;
 			$oFCKeditor->Config['FirefoxSpellChecker'] = false;
 		}
 		// Now setting the user preferences
