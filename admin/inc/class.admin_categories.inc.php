@@ -303,6 +303,10 @@ class admin_categories
 					'no_search'      => !self::$acl_search,
 				);
 			}
+			else
+			{
+				$content['nm']['start']=0;
+			}
 			if (isset($_GET['appname']) && ($_GET['appname'] == categories::GLOBAL_APPNAME ||
 				isset($GLOBALS['egw_info']['apps'][$_GET['appname']])))
 			{
