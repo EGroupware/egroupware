@@ -387,10 +387,10 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::DAV,'current-user-privilege-set',
 			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'privilege',
-				array(//HTTP_WebDAV_Server::mkprop(groupdav::DAV,'all',''),
+				array(
 					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'read-free-busy',''),
-					//HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read-current-user-privilege-set',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read-current-user-privilege-set',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'bind',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'unbind',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post',''),

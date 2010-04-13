@@ -647,6 +647,34 @@ class calendar_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Query ctag for calendar
+	 *
+	 * @return string
+	 */
+	public function getctag($path,$user)
+	{
+		$filter = array(
+			'users' => $user,
+			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync recurrences
+			'end' => time()+365*24*3600,	// default one year into the future +365
+			'enum_recuring' => false,
+			'daywise' => false,
+			'date_format' => 'server',
+			'order' => 'cal_modified DESC',
+			'offset' => 0,
+			'num_rows'	=> 1,
+		);
+
+		if ($path == '/calendar/') $filter['filter'] = 'owner';
+
+		$result =& $this->bo->search($filter);
+
+		$entry = array_shift($result);
+
+		return $this->get_etag($entry);
+	}
+
+	/**
 	 * Get the etag for an entry, reimplemented to include the participants and stati in the etag
 	 *
 	 * @param array/int $event array with event or cal_id
@@ -713,10 +741,10 @@ class calendar_groupdav extends groupdav_handler
 	{
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::DAV,'current-user-privilege-set',
 			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'privilege',
-				array(//HTTP_WebDAV_Server::mkprop(groupdav::DAV,'all',''),
+				array(
 					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'read-free-busy',''),
-					//HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read-current-user-privilege-set',''),
+					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'read-current-user-privilege-set',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'bind',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'unbind',''),
 					HTTP_WebDAV_Server::mkprop(groupdav::DAV,'schedule-post',''),
@@ -762,14 +790,19 @@ class calendar_groupdav extends groupdav_handler
 			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
 		// supported components, currently only VEVENT
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTIMEZONE')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
 		//	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),	// not yet supported
 		));
-
 		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget'))))));
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-data',array(
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/calendar', 'version'=> '2.0')),
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/x-calendar', 'version'=> '1.0'))));
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::ICAL,'calendar-color','#0040A0FF'); // TODO: make it configurable
 
 		//$props = self::current_user_privilege_set($props);
 		return $props;
