@@ -308,6 +308,7 @@ class admin_categories
 			{
 				$content['nm']['appname'] = $_GET['appname'];
 			}
+			$content['nm']['global_cats'] = true;
 			if (isset($_GET['global_cats']) && empty($_GET['global_cats'] ))
 			{
 				$content['nm']['global_cats'] = false;
