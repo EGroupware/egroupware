@@ -779,7 +779,7 @@ class calendar_bo
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
 				self::$cached_event_date_format != $date_format ||
-				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && self::$cached_event_date != $date || (!$date || self::$cached_event['start'] < $date))
+				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && self::$cached_event_date != $date)
 			{
 				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
 
@@ -802,7 +802,7 @@ class calendar_bo
 			}
 			else
 			{
-				$return =& self::$cached_event;
+				$return = self::$cached_event;
 			}
 		}
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'read'))
@@ -855,7 +855,7 @@ class calendar_bo
 			}
 
 			$ts_end = $ts + $event_length;
-			
+
 			// adjust ts_end for whole day events in case it does not fit due to
 			// spans over summer/wintertime adjusted days
 			if($event['whole_day'] && ($arr_end = $this->date2array($ts_end)) &&
@@ -874,7 +874,7 @@ class calendar_bo
 					$ts_end = $ts_end_guess; // $ts_end_guess was ok
 				}
 			}
-			
+
 			$event['start'] = $ts;
 			$event['end'] = $ts_end;
 			$events[] = $event;
