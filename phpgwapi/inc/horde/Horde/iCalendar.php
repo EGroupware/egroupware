@@ -620,7 +620,7 @@ class Horde_iCalendar {
         	// old formats force folding at whitespace which must therefore be preserved
         	$vCal = preg_replace('/[\r\n]+([ \t])/', '\1', $vCal);
         } else {
-        	$vCal = preg_replace('/[\r\n]+[ \t]/', '', $vCal);
+        	$vCal = preg_replace('/[\r\n]+[ \t]+/', '', $vCal);
         }
 
 		$isDate = false;
