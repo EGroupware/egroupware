@@ -452,7 +452,7 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 		// Find new participants ...
-		foreach($new_event['participants'] as $new_userid => $new_status)
+		foreach((array)$new_event['participants'] as $new_userid => $new_status)
 		{
 			if(!isset($old_event['participants'][$new_userid]))
 			{
