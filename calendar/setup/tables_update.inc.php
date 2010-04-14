@@ -1653,7 +1653,7 @@ function calendar_upgrade1_6()
 				',cal_modifier=NULL WHERE cal_id='.(int)$row['cal_id'],__LINE__,__FILE__);
 		}
 	}
-	
+
 	// Search series exception for nearest exception in series master and add that RECURRENCE-ID
 	// as cal_reference (for 1.6.003 and move it to new field cal_recurrence in 1.7.001)
 	foreach($GLOBALS['egw_setup']->db->query('SELECT egw_cal.cal_id,cal_start,recur_exception FROM egw_cal
@@ -1728,7 +1728,7 @@ function calendar_upgrade1_6_003()
 		'default' => '0',
 		'comment' => 'cal_start of original recurrence for exception'
 	));
-	
+
 	// move RECURRENCE-ID from temporarily (1.6.003)
 	// used field cal_reference to new field cal_recurrence
 	// and restore cal_reference field of series exceptions with id of the series master
@@ -1745,7 +1745,7 @@ function calendar_upgrade1_6_003()
 			', cal_reference='.(int)$row['cal_id_master'].
 			' WHERE cal_id='.(int)$row['cal_id_ex']);
 	}
-	
+
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.001';
 }
 
@@ -2011,17 +2011,17 @@ function calendar_upgrade1_7_006()
 		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal_dates SET cal_end=cal_end+59
 			WHERE cal_id='.(int)$row['cal_id'].' AND cal_start='.(int)$row['cal_start'],__LINE__,__FILE__);
 	}
-	
+
 	foreach($GLOBALS['egw_setup']->db->query('SELECT * FROM egw_cal_dates
 		WHERE cal_end-cal_start>0 AND (cal_end-cal_start)%86400=0',__LINE__,__FILE__) as $row)
 	{
 		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal_dates SET cal_end=cal_end-1
 			WHERE cal_id='.(int)$row['cal_id'].' AND cal_start='.(int)$row['cal_start'],__LINE__,__FILE__);
 	}
-    
+
     $GLOBALS['egw_setup']->db->query('UPDATE egw_cal_repeats SET recur_interval=1
 			WHERE recur_interval=0',__LINE__,__FILE__);
-	
+
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.007';
 }
 
@@ -2050,4 +2050,29 @@ function calendar_upgrade1_7_007()
 		}
 	}
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.008';
+}
+
+/**
+ * Create an index over egw_cal_user.cal_user_type and cal_user_id, to speed up calendar queries
+ *
+ * @return string
+ */
+function calendar_upgrade1_7_008()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal_user',array('cal_user_type','cal_user_id'));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.009';
+}
+
+/**
+ * Create an index over egw_cal.cal_uid and cal_owner, to speed up calendar queries specially sync
+ *
+ * @return string
+ */
+function calendar_upgrade1_7_009()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal','cal_uid');
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal','cal_owner');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.010';
 }
