@@ -1116,6 +1116,29 @@ class calendar_ical extends calendar_boupdate
 				{
 					$event['id'] = $event_info['stored_event']['id']; // CalDAV does only provide UIDs
 				}
+				if (is_array($event['participants']))
+				{
+					// if the client does not return a status, we restore the original one
+					foreach ($event['participants'] as $uid => $status)
+					{
+						if ($status[0] == 'X')
+						{
+							if (isset($event_info['stored_event']['participants'][$uid]))
+							{
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+										"() Restore status for $uid\n",3,$this->logfile);
+								}
+								$event['participants'][$uid] = $event_info['stored_event']['participants'][$uid];
+							}
+							else
+							{
+								$event['participants'][$uid] = calendar_so::combine_status('U');
+							}
+						}
+					}
+				}
 				if ($merge)
 				{
 					if ($this->log)
@@ -1173,26 +1196,6 @@ class calendar_ical extends calendar_boupdate
 					}
 					else
 					{
-						foreach ($event['participants'] as $uid => $status)
-						{
-							if ($status[0] == 'X')
-							{
-								// the client did not give us a proper status => restore original
-								if (isset($event_info['stored_event']['participants'][$uid]))
-								{
-									if ($this->log)
-									{
-										error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-											"() Restore status for $uid\n",3,$this->logfile);
-									}
-									$event['participants'][$uid] = $event_info['stored_event']['participants'][$uid];
-								}
-								else
-								{
-									$event['participants'][$uid] = calendar_so::combine_status('U');
-								}
-							}
-						}
 						foreach ($event_info['stored_event']['participants'] as $uid => $status)
 						{
 							// Is it a resource and no longer present in the event?
@@ -1258,11 +1261,11 @@ class calendar_ical extends calendar_boupdate
 						{
 							if ($uid == $event['owner'])
 							{
-								$event['participants']['uid'] = calendar_so::combine_status('A', 1, 'CHAIR');
+								$event['participants'][$uid] = calendar_so::combine_status('A', 1, 'CHAIR');
 							}
 							else
 							{
-								$event['participants']['uid'] = calendar_so::combine_status('U');
+								$event['participants'][$uid] = calendar_so::combine_status('U');
 							}
 						}
 					}
