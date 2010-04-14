@@ -405,10 +405,9 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
 
         $output->startElement($uri, 'Meta', $attrs);
 
-		if (!($maxMsgSize = $state->getMaxMsgSizeClient())) {
-			// Dummy MaxMsqSize, this is just put in to make the packet
-			// work, it is not our real value.
-			$maxMsgSize = 50000;
+		if (!($maxMsgSize = $state->getMaxMsgSizeClient()) || $maxMsgSize > 10000) {
+			// Use a realistic message size to cope with
+			$maxMsgSize = 10000;
 		}
         $output->startElement($uriMeta, 'MaxMsgSize', $attrs);
         $output->characters($maxMsgSize);
