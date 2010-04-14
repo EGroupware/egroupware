@@ -1,15 +1,15 @@
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
 %1 file	common	de	%1 Datei
 %1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	de	%1Anderes Verzeichnis auswählen%2<br />oder %3 vom Webserver beschreibbar machen
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1EGroupware%2 ist eine, in %3PHP%4 programmierte, webbasierende, mehrbenutzer Groupware Suite.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	de	%1Anderes Verzeichnis auswählen%2<br />oder %3 geben Sie dem Webserver Schreibrechte für dieses Verzeichnis.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1EGroupware%2 ist eine, in %3PHP%4 programmierte, webbasierte, Mehrbenutzer Groupware Suite.
 (session restored in %1 seconds)	common	de	(Sitzung in %1 Sekunden wiederhergestellt)
 (shift-)click or drag to change value	jscalendar	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
-- click on any of the time parts to increase it	jscalendar	de	- Auf Uhrzeit clicken um sie zu erhöhen
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	de	- für eine schnelle Auswahl die Maus gedrückt halten auf jedem der obigen Knöpfe
-- or click and drag for faster selection.	jscalendar	de	- oder clicken und ziehen für eine schnelle Auswahl
-- or shift-click to decrease it	jscalendar	de	- oder Umschalten-click um sie zu verkleinern
-- use the %1, %2 buttons to select month	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Monat auszuwählen
+- click on any of the time parts to increase it	jscalendar	de	- Auf Uhrzeit klicken um sie zu erhöhen
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	de	- für eine schnelle Auswahl die Maus gedrückt halten auf jedem der obigen Schalter
+- or click and drag for faster selection.	jscalendar	de	- oder klicken und ziehen für eine schnelle Auswahl
+- or shift-click to decrease it	jscalendar	de	- oder Shift-klick um sie zu verkleinern
+- use the %1, %2 buttons to select month	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um den Monat auszuwählen
 - use the %1, %2 buttons to select year	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Jahr auszuwählen
 00 (disable)	admin	de	00 (deaktiviert)
 1 day	common	de	1 Tag
@@ -49,10 +49,10 @@ all	common	de	alle
 all fields	common	de	alle Felder
 all languages	common	de	Alle Sprachen
 alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
-alternate style-sheet:	common	de	Alternatives Stylesheet
+alternate style-sheet:	common	de	Alternatives Style-sheet
 american samoa	common	de	AMERICANISCH SAMOA
-an error happened	common	de	Ein Fehler trat auf
-an existing and by the webserver readable directory enables the image browser and upload.	common	de	Ein existierendes UND vom Webserver lesbares Verzeichnis, schaltet den Bild Browser und Upload ein.
+an error happened	common	de	Ein Fehler ist aufgetreten.
+an existing and by the webserver readable directory enables the image browser and upload.	common	de	Ein existierendes, und vom Webserver lesbares Verzeichnis, schaltet den Bild Browser und Upload ein.
 andorra	common	de	ANDORRA
 angola	common	de	ANGOLA
 anguilla	common	de	ANGUILLA
@@ -61,9 +61,9 @@ antigua and barbuda	common	de	ANTIGUA UND BARBUDA
 application	common	de	Anwendung
 apply	common	de	Übernehmen
 april	common	de	April
-are you sure you want to delete these entries ?	common	de	Sind Sie sicher, daß Sie diese Einträge löschen wollen?
-are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
-argentina	common	de	ARGENTIEN
+are you sure you want to delete these entries ?	common	de	Sind Sie sicher, daß Sie diese Einträge löschen möchten?
+are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen möchten?
+argentina	common	de	ARGENTINIEN
 armenia	common	de	ARMENIEN
 aruba	common	de	ARUBA
 august	common	de	August
@@ -72,14 +72,14 @@ austria	common	de	ÖSTERREICH
 author	common	de	Autor
 autohide sidebox menu's	common	de	Linkes Navigationsmenü ausblenden
 autohide sidebox menus	common	de	Linkes Navigationsmenü ausblenden
-automatically hide the sidebox menu's?	common	de	Automatisch das linkes Navigationsmenü ausblenden
-automatically hide the sidebox menus?	common	de	Automatisch das linkes Navigationsmenü ausblenden
+automatically hide the sidebox menu's?	common	de	Automatisch linkes Navigationsmenü ausblenden?
+automatically hide the sidebox menus?	common	de	Automatisch linkes Navigationsmenü ausblenden?
 autosave default category	common	de	Standard-Kategorie automatisch speichern
 azerbaijan	common	de	ASERBAIDSCHAN
 back	common	de	Zurück
 back to user login	common	de	Zurück zur Benutzer Anmeldung
 background color:	common	de	Hintergrund Farbe:
-backupdir '%1' is not writeable by the webserver	common	de	Backupverzeichnis '%1' ist nicht vom Webserver beschreibbar
+backupdir '%1' is not writeable by the webserver	common	de	Der Webserver hat keine Schreibrechte auf das Backupverzeichnis '%1' .
 bad login or password	common	de	Falscher Benutzername oder Passwort
 bahamas	common	de	BAHAMAS
 bahrain	common	de	BAHRAIN
@@ -101,7 +101,7 @@ botswana	common	de	BOTSWANA
 bottom	common	de	Unten
 bouvet island	common	de	BOUVET INSELN
 brazil	common	de	BRASILIEN
-british indian ocean territory	common	de	BRITISCH INDIEN OZEAN TERRITORIUM
+british indian ocean territory	common	de	BRITISCH INDIEN OZEAN Thttp://213.183.76.121/egroupware/index.php?menuaction=developer_tools.uilangfile.editERRITORIUM
 brunei darussalam	common	de	BRUNEI DARUSSALAM
 bulgaria	common	de	BULGARIEN
 bulgarian	common	de	Bulgarisch
@@ -127,23 +127,23 @@ centered	common	de	zentriert
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
 change	common	de	ändern
-charset	common	de	utf-8
+charset	common	de	UTF-8
 check installation	common	de	Installation überprüfen
 check now	common	de	jetzt überprüfen
 chile	common	de	CHILE
 china	common	de	CHINA
 choose a background color	common	de	Wählen Sie eine Hintergrundfarbe
-choose a background color for the icons	common	de	Wählen Sie eine Hintergrundfarbe für die Knöpfe
+choose a background color for the icons	common	de	Wählen Sie eine Hintergrundfarbe für die Symbole
 choose a background image.	common	de	Wählen Sie ein Hintergrundbild.
 choose a background style.	common	de	Wählen Sie einen Hintergrundstil.
-choose a text color for the icons	common	de	Wählen Sie eine Textfarbe für die Knöpfe
+choose a text color for the icons	common	de	Wählen Sie eine Textfarbe für die Symbole
 choose the category	common	de	Kategorie auswählen
 choose the parent category	common	de	Wählen der übergeordneten Kategorie
 christmas island	common	de	WEIHNACHTS INSEL
 clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
 click	common	de	Klicken
-click here to resume your egroupware session.	common	de	Hier klicken um die EGroupware Sitzung wieder auf zu nehmen.
+click here to resume your egroupware session.	common	de	Hier klicken um die EGroupware Sitzung wieder aufzunehmen.
 click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
 click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen?
 click this image on the navbar: %1	common	de	Klicken Sie auf dieses Symbol in der Navigation: %1
@@ -161,7 +161,7 @@ cook islands	common	de	COOK INSELN
 copy	common	de	Kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
-could not contact server. operation timed out!	common	de	Konnte Sever nicht kontaktieren. Die Zeit lief ab!
+could not contact server. operation timed out!	common	de	Konnte Server nicht kontaktieren. Zeitüberschreitung!
 create	common	de	Erstellen
 created by	common	de	Erstellt von
 croatia	common	de	KROATIEN
@@ -176,7 +176,7 @@ database error!	common	de	Datenbank Fehler!
 date	common	de	Datum
 date due	common	de	fällig am
 date selection:	jscalendar	de	Datum auswählen:
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn sie Port 13 benützen, bitte die Regeln der Firewall entsprechend anpassen bevor sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
@@ -187,26 +187,26 @@ denmark	common	de	DÄNEMARK
 description	common	de	Beschreibung
 detail	common	de	Detail
 details	common	de	Details
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Ausführen des Bugfix-Scripts für Internet Explorer 5.5 und höher, zum Darstellen von transparenten PNG-Bildern abschalten?
-direction left to right	common	de	Richtung links nach rechts
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Deaktivieren des Fehlerbehebungsskripts für den Internetexplorer 5.5 und höher, um transparente PNG-Bilder anzuzeigen?
+direction left to right	common	de	Richtung von links nach rechts
 directory	common	de	Verzeichnis
-directory does not exist, is not readable by the webserver or is not relative to the document root!	common	de	Verzeichnis existiert nicht, ist nicht vom Webserver lesbar oder ist nicht relative zur Dokumentroot!
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	de	Verzeichnis existiert nicht, ist nicht vom Webserver lesbar oder ist nicht entsprechend zur Dokumentroot!
 disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG-Bilder-Bugfix abschalten
 disable slider effects	common	de	Schwebeeffekte des Navigationsmenüs abschalten
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim Anzeigen oder Verstecken des navigations Menüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Ausschalten des Fehlerbehebungsskripts für den Internetexplorer 5.5 und höher, um transparente PNG-Bilder anzuzeigen?
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim Anzeigen oder Verstecken des Navigationsmenüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Deaktivieren des Fehlerbehebungsskripts für den Internetexplorer 5.5 und höher, um transparente PNG-Bilder anzuzeigen?
 disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
-djibouti	common	de	DJIBOUTI
+djibouti	common	de	DSCHIBUTI
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 doctype:	common	de	DOCTYPE:
 document properties	common	de	Dokument Eigentschaften
-document title:	common	de	Title des Dokuments:
+document title:	common	de	Titel des Dokuments:
 domain	common	de	Domain
-domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, zB. "%1"
+domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, z.B. "%1"
 domestic	common	de	Inland
 dominica	common	de	DOMINICA
-dominican republic	common	de	DOMÄNIKANISCHE REPUBLIK
+dominican republic	common	de	DOMINIKANISCHE REPUBLIK
 done	common	de	Fertig
 drag to move	jscalendar	de	Ziehen um zu Bewegen
 e-mail	common	de	E-Mail
@@ -227,7 +227,7 @@ email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B.
 enabled	common	de	Verfügbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware   or   /egroupware<br><b> KEINEN Slash "/" am ende</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware   oder   /egroupware<br><b> KEINEN Slash "/" am ende</b>
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
 entry not found!	common	de	Eintrag nicht gefunden!
 entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
@@ -238,22 +238,22 @@ error creating %1 %2 directory	common	de	Fehler beim Erstellen des Verzeichnisse
 error deleting %1 %2 directory	common	de	Fehler beim Löschen des Verzeichnisses %1 %2
 error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
 estonia	common	de	ESTONIEN
-ethiopia	common	de	ETHIOPIEN
+ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Adminstrator wenn das fehlschlägt.
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Adminstrator wenn dies fehlschlägt.
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
 fax number	common	de	Fax Nummer
-features of the editor?	common	de	Features des Editors?
+features of the editor?	common	de	Funktionen des Editors?
 february	common	de	Februar
 fields	common	de	Felder
 fiji	common	de	FIJI
 files	common	de	Dateien
 filter	common	de	Filter
-finland	common	de	FINLAND
+finland	common	de	FINNLAND
 first name	common	de	Vorname
-first name of the user, eg. "%1"	common	de	Vorname des Benutzers, zB. "%1"
+first name of the user, eg. "%1"	common	de	Vorname des Benutzers, z.B. "%1"
 first page	common	de	Erste Seite
 firstname	common	de	Vorname
 fixme!	common	de	KORREGIER MICH!
@@ -261,14 +261,14 @@ folder already exists.	common	de	Verzeichnis existiert bereits.
 force selectbox	common	de	Auswahlfeld erzwingen
 forever	common	de	Für immer
 france	common	de	FRANKREICH
-french guiana	common	de	FRANZÖSISCH GUIANA
+french guiana	common	de	FRANZÖSISCH GUYANA
 french polynesia	common	de	FRANZÖSISCH POLYNESIEN
-french southern territories	common	de	FRENCH SOUTHERN TERRITORIES
+french southern territories	common	de	FRANZÖSISCHEN SÜD- und ANTARKTISGEBIETE
 friday	common	de	Freitag
 ftp	common	de	FTP
-fullname	common	de	Vor+Nachname
+fullname	common	de	Vor- und Nachname
 fullscreen mode	common	de	Vollbild Modus
-gabon	common	de	GABON
+gabon	common	de	GABUN
 gambia	common	de	GAMBIA
 general menu	common	de	Hauptmenü
 georgia	common	de	GEORGIEN
@@ -311,14 +311,14 @@ home	common	de	Home
 home email	common	de	private E-Mail
 honduras	common	de	HONDURAS
 hong kong	common	de	HONG KONG
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Nabigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
-how to show the general egroupware menu ?	common	de	Wie soll das allgemeine EGroupware Menü angezeigt werden
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Navigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
+how to show the general egroupware menu ?	common	de	Wie soll das allgemeine EGroupware Menü angezeigt werden?
 hungary	common	de	UNGARN
 iceland	common	de	ISLAND
 iespell not detected. click ok to go to download page.	common	de	ieSpell nicht gefunden. OK klicken um zur Download Seite zu gehen.
-if the clock is enabled would you like it to update it every second or every minute?	common	de	Wenn die Uhr eingeschaltet ist, wollen Sie dass sie sekündlich aktualisiert wird?
-if there are some images in the background folder you can choose the one you would like to see.	common	de	Wenn mehrere Bild im Hintergrund Ordner sind können Sie wählen welches Sie sehen wollen.
-image directory relative to document root (use / !), example:	common	de	Bildverzeichnis relative zur Dokumentroot (benutze / !), Beispliel:
+if the clock is enabled would you like it to update it every second or every minute?	common	de	Möchten Sie bei aktivierter Uhr, dass diese sekündlich aktualisiert wird?
+if there are some images in the background folder you can choose the one you would like to see.	common	de	Wenn mehrere Bilder im Hintergrund Ordner sind können Sie wählen, welches Sie sehen möchten.
+image directory relative to document root (use / !), example:	common	de	Bildverzeichnis entsprechend zur Dokumentroot (benutze / !), Beispiel:
 image url	common	de	Bild URL
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
@@ -332,10 +332,10 @@ invalid filename	common	de	Ungültiger Dateiname
 invalid ip address	common	de	Ungültige IP Adresse
 invalid password	common	de	Ungültiges Passwort
 iran, islamic republic of	common	de	IRAN, ISLAMISCHE REPUBLIC
-iraq	common	de	IRAQ
-ireland	common	de	IRELAND
+iraq	common	de	IRAK
+ireland	common	de	IRLAND
 israel	common	de	ISRAEL
-it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert
+it has been more then %1 days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht geändert.
 it is recommended that you run setup to upgrade your tables to the current version	common	de	Es ist notwendig, mit dem Setup-Programm die Tabellen zu aktualisieren.
 italic	common	de	Kursiv
 italy	common	de	ITALIEN
@@ -351,7 +351,7 @@ justify center	common	de	Ausrichtung mittig
 justify full	common	de	Ausrichtung im Block
 justify left	common	de	Ausrichtung links
 justify right	common	de	Ausrichtung rechts
-kazakstan	common	de	KAZAKSTAN
+kazakstan	common	de	KASACHSTAN
 kenya	common	de	KENIA
 keywords	common	de	Schlüsselwort
 kiribati	common	de	KIRIBATI
@@ -362,8 +362,8 @@ kuwait	common	de	KUWAIT
 kyrgyzstan	common	de	KYRGYZSTAN
 language	common	de	Sprache
 lao peoples democratic republic	common	de	LAOS, VOLKSREPUBLIK
-last name	common	de	Name
-last name of the user, eg. "%1"	common	de	Familienname des Benutzers, zB. "%1"
+last name	common	de	Nachname
+last name of the user, eg. "%1"	common	de	Nachname des Benutzers, z.B. "%1"
 last page	common	de	Letzte Seite
 lastname	common	de	Name
 latvia	common	de	LATVIA
@@ -387,22 +387,22 @@ logout	common	de	Abmelden
 lost login id	common	de	Anmeldenamen vergessen
 lost password	common	de	Anmeldepasswort vergessen
 low	common	de	Niedrig
-lowest	common	de	Niedrigst
+lowest	common	de	Niedrigste
 luxembourg	common	de	LUXEMBURG
 macau	common	de	MACAU
 macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
 madagascar	common	de	MADAGASCAR
-mail domain, eg. "%1"	common	de	Mail Domain, zB. "%1"
+mail domain, eg. "%1"	common	de	Mail Domain, z.B. "%1"
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
 maintainer	common	de	Maintainer
 malawi	common	de	MALAWI
 malaysia	common	de	MALAYSIA
-maldives	common	de	MALDIVEN
+maldives	common	de	MALEDIVEN
 mali	common	de	MALI
 malta	common	de	MALTA
 march	common	de	März
-marshall islands	common	de	MARSHALL ISLANDS
+marshall islands	common	de	MARSHALLINSELN
 martinique	common	de	MARTINIQUE
 mauritania	common	de	MAURITANIEN
 mauritius	common	de	MAURITIUS
@@ -421,13 +421,13 @@ monday	common	de	Montag
 mongolia	common	de	MONGOLEI
 montenegro	common	de	MONTENEGRO
 montserrat	common	de	MONTSERRA
-morocco	common	de	MAROCCO
+morocco	common	de	MAROKKO
 mozambique	common	de	MOZAMBIQUE
 multiple	common	de	mehrere
 myanmar	common	de	MYANMAR
 name	common	de	Name
-name of the user, eg. "%1"	common	de	Name des Benutzers, zB. "%1"
-namibia	common	de	NAMIBIEN
+name of the user, eg. "%1"	common	de	Name des Benutzers, z.B. "%1"
+namibia	common	de	NAMIBIA
 nauru	common	de	NAURU
 nepal	common	de	NEPAL
 netherlands	common	de	NIEDERLANDE
@@ -464,7 +464,7 @@ note	common	de	Notiz
 notes	common	de	Notizen
 notifications	common	de	Benachrichtigungen
 notify window	common	de	Benachrichtigungsfenster
-notify your administrator to correct this situation	common	de	Benachrichtigen Sie Ihren Administration um diese Situation zu lösen
+notify your administrator to correct this situation	common	de	Benachrichtigen Sie Ihren Administrator um diese Situation zu lösen
 november	common	de	November
 october	common	de	Oktober
 ok	common	de	OK
@@ -540,7 +540,7 @@ qatar	common	de	QATAR
 read	common	de	Lesen
 read this list of methods.	common	de	Diese Liste der Methoden lesen.
 reading	common	de	lesen
-register	common	de	Registieren
+register	common	de	Registrieren
 regular	common	de	Normal
 reject	common	de	Zurückweisen
 remember me	common	de	Mich erinnern
@@ -548,10 +548,10 @@ remove selected accounts	common	de	Ausgewähle Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
 rename	common	de	Umbenennen
 replace	common	de	Ersetzen
-replace with	common	de	Ersetzem durch
+replace with	common	de	Ersetzen durch
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
-returns an array of todo items	common	de	Liefert ein array mit ToDo Einträgen
-returns struct of users application access	common	de	Liefert Strucktur mit Benutzerzugriffsrechten auf Anwendungen
+returns an array of todo items	common	de	Liefert eine Aufstellung mit ToDo Einträgen
+returns struct of users application access	common	de	Liefert eine Struktur mit Benutzerzugriffsrechten auf Anwendungen
 reunion	common	de	REUNION
 right	common	de	Rechts
 romania	common	de	RUMÄNIEN
@@ -584,12 +584,12 @@ select group	common	de	Gruppe auswählen
 select home email address	common	de	private E-Mail-Adresse auswählen
 select multiple accounts	common	de	mehrere Benutzer auswählen
 select one	common	de	Eine(n) auswählen
-select the default height for the application windows	common	de	Vorgabewert für Höhe des Anwendungsfensters auswählen
-select the default width for the application windows	common	de	Vorgabewert für Breite des Anwendungsfensters auswählen
+select the default height for the application windows	common	de	Vorgabewert für die Höhe des Anwendungsfensters auswählen
+select the default width for the application windows	common	de	Vorgabewert für die Breite des Anwendungsfensters auswählen
 select user	common	de	Benutzer auswählen
 select work email address	common	de	geschäftl. E-Mail-Addresse auswählen
 selection	common	de	Auswahl
-send	common	de	Abschicken
+send	common	de	senden
 senegal	common	de	SENEGAL
 september	common	de	September
 serbia	common	de	SERBIEN
@@ -597,7 +597,7 @@ server %1 has been added	common	de	Server %1 wurde zugefügt
 server answered. processing response...	common	de	Server antwortet. Bearbeite Antwort...
 server contacted. waiting for response...	common	de	Server kontaktiert. Warte auf Antwort...
 server name	common	de	Server Name
-session has been killed	common	de	Session wurde gelöscht
+session has been killed	common	de	Session wurde beendet
 setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
@@ -605,14 +605,14 @@ show all	common	de	alle anzeigen
 show all categorys	common	de	Alle Kategorien anzeigen
 show as topmenu	common	de	Menü oben anzeigen
 show clock?	common	de	Uhr anzeigen?
-show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Knopf in Hauptnavigation Balken?
+show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Symbol im Hauptnavigations Balken?
 show in sidebox	common	de	In Seitenmenü anzeigen
 show logo's on the desktop.	common	de	Logos auf der Arbeitsfläche anzeigen.
 show menu	common	de	Menü anzeigen
 show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
 show page generation time on the bottom of the page?	common	de	Zeit zum Erstellen der Seite in der Fußzeile anzeigen
 show page generation time?	common	de	Erstellungszeit der Seite anzeigen?
-show the logo's of egroupware and x-desktop on the desktop.	common	de	Zeige Logos von EGroupware und x-desktop auf der Arbeitsfläche.
+show the logo's of egroupware and x-desktop on the desktop.	common	de	Zeige Logos von EGroupware und x-desktop auf dem Desktop.
 show_more_apps	common	de	Mehr Applikationen anzeigen
 showing %1	common	de	%1 Einträge
 showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
@@ -675,7 +675,7 @@ toggle first day of week	jscalendar	de	ersten Tag der Woche wechseln
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Versuche sich anzumelden: %1 für den Benutzer '%2', %3 für die IP %4
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Anmeldeversuche: %1 für den Benutzer '%2', %3 für die IP %4
 top	common	de	Oben
 total	common	de	Gesamt
 transparant bg for the icons?	common	de	Transparenter Hintergrund für Symbole
@@ -696,10 +696,10 @@ united states	common	de	VEREINIGTE STAATEN VON AMERIKA
 united states minor outlying islands	common	de	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	de	Unbekannt
 update	common	de	Aktualisieren
-update the clock per minute or per second	common	de	Uhr minütlich oder sekündlich aktualisieren
+update the clock per minute or per second	common	de	Uhr pro Minute oder pro Sekunde aktualisieren
 upload	common	de	Hochladen
-upload directory does not exist, or is not writeable by webserver	common	de	Das Verzeichnis zum Hochladen existiert nicht oder ist nicht vom Webserver beschreibbar.
-upload requires the directory to be writable by the webserver!	common	de	Der Upload verlangt, dass das Verzeich vom Webserver beschreibbar ist!
+upload directory does not exist, or is not writeable by webserver	common	de	Das Verzeichnis zum Hochladen existiert nicht oder der Webserver hat dort keine Schreibrechte.
+upload requires the directory to be writable by the webserver!	common	de	Der Upload verlangt, dass der Webserver Schreibrechte auf diesem Verzeichnis hat!
 url	common	de	Webseite
 uruguay	common	de	URUGUAY
 use button to search for	common	de	benutze Knopf zum suchen nach
@@ -727,20 +727,20 @@ western european	common	de	Westeuropäisch
 western sahara	common	de	WEST SAHARA
 what color should all the blank space on the desktop have	common	de	Welche Farbe soll der freie Platz auf der Arbeitsfläche haben
 what style would you like the image to have?	common	de	Welchen Stil soll das Bild haben?
-when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie das einschalten werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren,  werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
 which groups	common	de	Welche Gruppen
 width	common	de	Breite
 wk	jscalendar	de	KW
 work email	common	de	geschäftliche E-Mail
-would you like to display the page generation time at the bottom of every window?	common	de	Wollen Sie die Zeit zur Erstellung der Seite am Ende jedes Fensters anzeigen?
+would you like to display the page generation time at the bottom of every window?	common	de	Möchten Sie die Zeit zur Erstellung der Seite am Ende jedes Fensters anzeigen?
 writing	common	de	schreiben
-written by:	common	de	Geschrieben von:
+written by:	common	de	geschrieben von:
 year	common	de	Jahr
-yemen	common	de	YEMEN
+yemen	common	de	JEMEN
 yes	common	de	Ja
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
-you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen wieviele Icons und Toolbars der Editor anzeigt.
+you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen, wieviele Icons und Toolbars der Editor anzeigt.
 you have been successfully logged out	login	de	Abmelden erfolgreich
 you have not entered a title	common	de	Sie haben keinen Titel eingegeben
 you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben
@@ -750,10 +750,10 @@ you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gew�
 you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt !
 you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
-you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware administrator sein, um auf diese Funktion zuzugreifen!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, aber Sie haben keine Rechte dazu.
+you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
-your message has been sent	common	de	Ihre Nachricht wurde versandt
+your message has been sent	common	de	Ihre Nachricht wurde versendet
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
