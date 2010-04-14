@@ -127,11 +127,11 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * user preference: Use this timezone for import from and export to device
 	 *
-	 * @var mixed
 	 * === false => use event's TZ
 	 * === null  => export in UTC
 	 * string    => device TZ
 	 *
+	 * @var string|boolean
 	 */
 	var $tzid = null;
 
@@ -981,6 +981,13 @@ class calendar_ical extends calendar_boupdate
 	}
 
 	/**
+	 * Number of events imported in last call to importVCal
+	 *
+	 * @var int
+	 */
+	var $events_imported;
+
+	/**
 	 * Import an iCal
 	 *
 	 * @param string $_vcalData
@@ -997,12 +1004,15 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null)
 	{
+		$this->events_imported = 0;
+
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
 		if (!($events = $this->icaltoegw($_vcalData, $principalURL, $charset)))
 		{
 			return false;
 		}
+		if (!is_array($events)) $cal_id = -1;	// just to be sure, as iterator does NOT allow array access (eg. $events[0])
 
 		if ($cal_id > 0)
 		{
@@ -1036,6 +1046,8 @@ class calendar_ical extends calendar_boupdate
 		}
 		foreach ($events as $event)
 		{
+			++$this->events_imported;
+
 			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
 			if (is_array($event['category']))
 			{
@@ -1648,6 +1660,10 @@ class calendar_ical extends calendar_boupdate
 					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
+		if (is_resource($_vcalData))
+		{
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+		}
 		return $return_id;
 	}
 
@@ -2020,11 +2036,11 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * Convert vCalendar data in EGw events
 	 *
-	 * @param string $_vcalData
+	 * @param string|resource $_vcalData
 	 * @param string $principalURL='' Used for CalDAV imports
 	 * @param string $charset  The encoding charset for $text. Defaults to
      *                         utf-8 for new format, iso-8859-1 for old format.
-	 * @return array|boolean events on success, false on failure
+	 * @return Iterator|array|boolean Iterator if resource given or array of events on success, false on failure
 	 */
 	function icaltoegw($_vcalData, $principalURL='', $charset=null)
 	{
@@ -2033,8 +2049,6 @@ class calendar_ical extends calendar_boupdate
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($principalURL, $charset)\n" .
 				array2string($_vcalData)."\n",3,$this->logfile);
 		}
-
-		$events = array();
 
 		if ($this->tzid)
 		{
@@ -2047,6 +2061,14 @@ class calendar_ical extends calendar_boupdate
 
 		date_default_timezone_set($tzid);
 
+		if (!is_array($this->supportedFields)) $this->setSupportedFields();
+
+		// we use egw_ical_iterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
+		if (is_resource($_vcalData))
+		{
+			return new egw_ical_iterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($tzid,$principalURL));
+		}
+		$events = array();
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset))
 		{
@@ -2062,58 +2084,67 @@ class calendar_ical extends calendar_boupdate
 			return false;
 		}
 		$version = $vcal->getAttribute('VERSION');
-		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
-		foreach ($vcal->getComponents() as $component)
+		foreach ($vcal->getComponents() as $n => $component)
 		{
-			if (is_a($component, 'Horde_iCalendar_vevent'))
+			if (($event = $this->_ical2egw_callback($component,$tzid,$principalURL)))
 			{
-				if (($event = $this->vevent2egw($component, $version, $this->supportedFields, $principalURL)))
-				{
-					//common adjustments
-					if ($this->productManufacturer == '' && $this->productName == ''
-						&& !empty($event['recur_enddate']))
-					{
-						// syncevolution needs an adjusted recur_enddate
-						$event['recur_enddate'] = (int)$event['recur_enddate'] + 86400;
-					}
- 					if ($event['recur_type'] != MCAL_RECUR_NONE)
- 					{
- 						// No reference or RECURRENCE-ID for the series master
- 						$event['reference'] = $event['recurrence'] = 0;
- 					}
-
- 					// handle the alarms
- 					$alarms = $event['alarm'];
-					foreach ($component->getComponents() as $valarm)
-					{
-						if (is_a($valarm, 'Horde_iCalendar_valarm'))
-						{
-							$this->valarm2egw($alarms, $valarm);
-						}
-					}
-					$event['alarm'] = $alarms;
-					if ($this->tzid || empty($event['tzid']))
-					{
-						$event['tzid'] = $tzid;
-					}
-
 					$events[] = $event;
-				}
-			}
-			else
-			{
-				if ($this->log)
-				{
-					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
-						get_class($component)." found\n",3,$this->logfile);
-				}
 			}
 		}
-
 		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 
 		return $events;
+	}
+
+	/**
+	 * Callback for egw_ical_iterator to convert Horde_iCalendar_vevent to EGw event array
+	 *
+	 * @param Horde_iCalendar $component
+	 * @param string $tzid timezone
+	 * @param string $principalURL='' Used for CalDAV imports
+	 * @return array|boolean event array or false if $component is no Horde_iCalendar_vevent
+	 */
+	function _ical2egw_callback(Horde_iCalendar $component,$tzid,$principalURL='')
+	{
+		//unset($component->_container); _debug_array($component);
+
+		if (!is_a($component, 'Horde_iCalendar_vevent') ||
+			!($event = $this->vevent2egw($component, $component->getAttribute('VERSION'), $this->supportedFields, $principalURL)))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
+			}
+			return false;
+		}
+		//common adjustments
+		if ($this->productManufacturer == '' && $this->productName == '' && !empty($event['recur_enddate']))
+		{
+			// syncevolution needs an adjusted recur_enddate
+			$event['recur_enddate'] = (int)$event['recur_enddate'] + 86400;
+		}
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		{
+			// No reference or RECURRENCE-ID for the series master
+			$event['reference'] = $event['recurrence'] = 0;
+		}
+
+		// handle the alarms
+		$alarms = $event['alarm'];
+		foreach ($component->getComponents() as $valarm)
+		{
+			if (is_a($valarm, 'Horde_iCalendar_valarm'))
+			{
+				$this->valarm2egw($alarms, $valarm);
+			}
+		}
+		$event['alarm'] = $alarms;
+		if ($this->tzid || empty($event['tzid']))
+		{
+			$event['tzid'] = $tzid;
+		}
+		return $event;
 	}
 
 	/**
@@ -2138,7 +2169,8 @@ class calendar_ical extends calendar_boupdate
 			return false;
 		}
 
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
+		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
 		}
 		else
@@ -2780,7 +2812,6 @@ class calendar_ical extends calendar_boupdate
 					$event['modified'] = $attributes['value'];
 			}
 		}
-
 		// check if the entry is a birthday
 		// this field is only set from NOKIA clients
 		$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
