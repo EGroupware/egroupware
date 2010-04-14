@@ -34,7 +34,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
-		'ix' => array(),
+		'ix' => array('cal_uid','cal_owner'),
 		'uc' => array()
 	),
 	'egw_cal_holidays' => array(
