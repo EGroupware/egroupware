@@ -256,6 +256,7 @@ class addressbook_sif extends addressbook_bo
 						$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
 					break;
 					case 'P':
+					case 'N':
 					case  0:
 						$contact['owner'] = $this->user;
 						break;

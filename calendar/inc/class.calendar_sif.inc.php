@@ -1015,12 +1015,14 @@ class calendar_sif extends calendar_boupdate
 				{
 					case 'G':
 					case 'P':
+					case 0:
 						$owner = $this->user;
 						break;
-				}
-				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT, 0, $owner))
-				{
-					$this->calendarOwner = $owner;
+					default:
+						if ((int)$owner && $this->check_perms(EGW_ACL_EDIT, 0, $owner))
+						{
+							$this->calendarOwner = $owner;
+						}
 				}
 			}
 		}
