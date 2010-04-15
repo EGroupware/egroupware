@@ -365,7 +365,7 @@ class calendar_so
 				}
 			}
 			$to_or = $user_or = $owner_or = array();
-			$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
+			$useUnionQuery = false; //= $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
 			$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
 			foreach($users_by_type as $type => $ids)
 			{
@@ -432,7 +432,7 @@ class calendar_so
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
 		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injection
-
+$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
 		if ($useUnionQuery)
 		{
 			// allow apps to supply participants and/or icons
