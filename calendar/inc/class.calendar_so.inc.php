@@ -364,21 +364,39 @@ class calendar_so
 					$users_by_type[$user[0]][] = (int) substr($user,1);
 				}
 			}
-			$to_or = array();
+			$to_or = $user_or = $owner_or = array();
+			$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
 			$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
 			foreach($users_by_type as $type => $ids)
 			{
-				$to_or[] = $this->db->expression($table_def,array(
-					'cal_user_type' => $type,
-					'cal_user_id'   => $ids,
-				));
-				if ($type == 'u' && ($filter == 'owner'))
+				// when we are able to use Union Querys, we do not OR our query, we save the needed parts for later construction of the union
+				if ($useUnionQuery)
 				{
-					$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
-					$to_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
+					$user_or[] = $this->db->expression($table_def,array(
+						'cal_user_type' => $type,
+						'cal_user_id'   => $ids,
+					));
+					if ($type == 'u' && ($filter == 'owner'))
+					{
+						$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
+						$owner_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
+					}
+				}
+				else
+				{
+					$to_or[] = $this->db->expression($table_def,array(
+						'cal_user_type' => $type,
+						'cal_user_id'   => $ids,
+					));
+					if ($type == 'u' && ($filter == 'owner'))
+					{
+						$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
+						$to_or[] = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
+					}
 				}
 			}
-			$where[] = '('.implode(' OR ',$to_or).')';
+			// this is only used, when we cannot use UNIONS
+			if (!$useUnionQuery) $where[] = '('.implode(' OR ',$to_or).')';
 
 			if($filter != 'deleted') {
 				$where[] = "sync_deleted IS NULL";
@@ -415,7 +433,7 @@ class calendar_so
 
 		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injection
 
-		if ($this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'])
+		if ($useUnionQuery)
 		{
 			// allow apps to supply participants and/or icons
 			if (is_null($_cols)) $cols .= ',NULL AS participants,NULL AS icons';
@@ -436,20 +454,53 @@ class calendar_so
 				'app'   => 'calendar',
 				'append'=> $append,
 			);
-			$selects = array($select,$select);
-			$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-			$selects[1]['where'][] = 'cal_recur_date=cal_start';
-
+			// we check if there are parts to use for the construction of our UNION query, 
+			// as replace the OR by construction of a suitable UNION for performance reasons
+			if (!empty($owner_or)||!empty($user_or))
+			{
+				if (!empty($owner_or) && !empty($user_or))
+				{
+					// if the query is to be filtered by owner OR user we need 4 selects for the union
+					//_debug_array($owner_or);
+					$selects = array($select,$select,$select,$select);
+					$selects[0]['where'][] = $user_or;
+					$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+					$selects[1]['where'][] = $owner_or;
+					$selects[1]['where'][] = 'cal_recur_date=cal_start';
+					$selects[2]['where'][] = $user_or;
+					$selects[2]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+					$selects[3]['where'][] = $owner_or;
+					$selects[3]['where'][] = 'cal_recur_date=cal_start';
+				}
+				else
+				{
+					// if the query is to be filtered only by user we need 2 selects for the union
+					$selects = array($select,$select);
+					$selects[0]['where'][] = $user_or;
+					$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+					$selects[1]['where'][] = $user_or;
+					$selects[1]['where'][] = 'cal_recur_date=cal_start';
+				}
+			}
+			else
+			{
+				// if the query is to be filtered by neither by user nor owner (should not happen?) we need 2 selects for the union
+				$selects = array($select,$select);
+				$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+				$selects[1]['where'][] = 'cal_recur_date=cal_start';
+			}
 			if (is_numeric($offset))	// get the total too
 			{
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
-				$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
+				foreach(array_keys($selects) as $key) $selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";  
+				//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 				if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 
-				$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
-				$selects = array($selects[0],$selects[1]);
+				foreach(array_keys($selects) as $key) $selects[$key]['cols'] = $select['cols']; // restore the original cols
+				//$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
+				//$selects = array($selects[0],$selects[1]); // what is this one used for?
 			}
 			if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
 
