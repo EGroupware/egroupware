@@ -446,14 +446,14 @@ class so_sql_cf extends so_sql
 				unset($criteria[$this->autoinc_id]);
 			}
 			// replace ambiguous column with (an exact match of) table_name.column
-			elseif (is_string($name) && $val!=null && in_array($name, $this->db_cols))
+			foreach($criteria as $name => $val)
 			{
 				$extra_columns = $this->db->get_table_definitions($app, $this->extra_table);
 				if($extra_columns['fd'][array_search($name, $this->db_cols)]) {
-					$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
+					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
 						array_search($name, $this->db_cols) => $val,
 					));
-					unset($filter[$name]);
+					unset($criteria[$name]);
 				}
 			}
 		}
