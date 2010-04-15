@@ -365,7 +365,7 @@ class calendar_so
 				}
 			}
 			$to_or = $user_or = $owner_or = array();
-			$useUnionQuery = false; //= $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
+			$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
 			$table_def = $this->db->get_table_definitions('calendar',$this->user_table);
 			foreach($users_by_type as $type => $ids)
 			{
@@ -432,7 +432,7 @@ class calendar_so
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
 		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injection
-$useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'];
+
 		if ($useUnionQuery)
 		{
 			// allow apps to supply participants and/or icons
@@ -462,24 +462,36 @@ $useUnionQuery = $this->db->capabilities['distinct_on_text'] && $this->db->capab
 				{
 					// if the query is to be filtered by owner OR user we need 4 selects for the union
 					//_debug_array($owner_or);
-					$selects = array($select,$select,$select,$select);
-					$selects[0]['where'][] = $user_or;
-					$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-					$selects[1]['where'][] = $owner_or;
-					$selects[1]['where'][] = 'cal_recur_date=cal_start';
-					$selects[2]['where'][] = $user_or;
-					$selects[2]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-					$selects[3]['where'][] = $owner_or;
-					$selects[3]['where'][] = 'cal_recur_date=cal_start';
+					$selects = array();
+					foreach(array_keys($user_or) as $key) 
+					{
+						array_push($selects,$select);
+						$selects[count($selects)-1]['where'][] = $user_or[$key];
+						$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+						array_push($selects,$select);
+						$selects[count($selects)-1]['where'][] = $user_or[$key];
+						$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
+					}
+					array_push($selects,$select);
+					$selects[count($selects)-1]['where'][] = $owner_or;
+					$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+					array_push($selects,$select);
+					$selects[count($selects)-1]['where'][] = $owner_or;
+					$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
 				}
 				else
 				{
 					// if the query is to be filtered only by user we need 2 selects for the union
-					$selects = array($select,$select);
-					$selects[0]['where'][] = $user_or;
-					$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-					$selects[1]['where'][] = $user_or;
-					$selects[1]['where'][] = 'cal_recur_date=cal_start';
+					$selects = array();
+					foreach(array_keys($user_or) as $key)
+					{
+						array_push($selects,$select);
+						$selects[count($selects)-1]['where'][] = $user_or[$key];
+						$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+						array_push($selects,$select);
+						$selects[count($selects)-1]['where'][] = $user_or[$key];
+						$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
+					}
 				}
 			}
 			else
