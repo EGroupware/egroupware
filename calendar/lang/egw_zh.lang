@@ -84,7 +84,6 @@ displayed view	calendar	zh	显示视图
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zh	在首页显示您的默认日历视图 (您登录 egroupWare 的第一个页面或点击'首页图标'时显示的页面)？
 do you want a weekview with or without weekend?	calendar	zh	您想在周视图上包含或不包含周末？
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself. <br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zh	您希望通知管理系统在新增或改变约会时通知您吗？同样您也通知您自己您所做的更改。<br>您可以限制通知管理系统只提醒确定的改变。每个项目包含了所有关于它的通知列表。所有的修改包括标题、描述、参与者的改变，但不包括参与者回复。如果事件发起人要求任何通知，他会随时收到参与者接受或是拒绝的回复。
-do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	zh	您想要编辑序列事件或者例外吗？- Ok = 编辑例外，Abort = 编辑序列
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zh	您希望通过邮件接收您的约会的规则概要吗？<br>该概要是在当天早上或者在每个周一的每周概要发到您的标准信箱。<br>它只会在当您有约会的那一天或是那一周发出。
 do you wish to autoload calendar holidays files dynamically?	admin	zh	您希望动态地自动加载日历的假期文件吗？
 download	calendar	zh	下载

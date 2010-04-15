@@ -10,7 +10,6 @@ accepted	calendar	de	Zugesagt
 access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 verweigert !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion, welche die Benachrichtigung verursacht hat: Zugefügt, Storniert, Zugesagt, Abgesagt
 actions	calendar	de	Befehle
-actions...	calendar	de	Befehle...
 add alarm	calendar	de	Alarm zufügen
 added	calendar	de	Neuer Termin
 added by synchronisation	calendar	de	Durch Synchronisation hinzugefügt
@@ -29,6 +28,7 @@ all future	calendar	de	Alle zukünftigen
 all incl. rejected	calendar	de	Alle einschl. abgesagte
 all participants	calendar	de	Alle Teilnehmer
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
+apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die ganze Abfrage anwenden, NICHT nur auf die angezeigten Termine
 apply the changes	calendar	de	Übernimmt die Änderungen
 are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen möchten?
 are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen möchten?
@@ -56,6 +56,7 @@ category %1 removed because of missing rights	calendar	de	Kategorie %1 entfernt 
 category acl	calendar	de	Kategorie Rechte
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
 chair	calendar	de	Vorsitz
+change history	calendar	de	Änderungshistorie
 charset of file	calendar	de	Zeichensatz der Datei
 check all	calendar	de	Alle auswählen
 close the window	calendar	de	Schließt das Fenster
@@ -101,7 +102,7 @@ displays your default calendar view on the startpage (page you get when you ente
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
 do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wochenansicht mit oder ohne Wochenende?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br />Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Absagen) zur Verfügung gestellt.
-do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	de	Möchten Sie den Termin der Serie als Ausnahme bearbeiten? Klicken Sie &quot;OK&quot; um den Termin als Einzeltermin (Ausnahme) zu bearbeiten, klicken Sie &quot;ABBRECHEN&quot; um die Terminserie zu bearbeiten.
+do you want to edit this event as an exception or the whole series?	calendar	de	Wollen Sie diesen Termin als Ausnahme bearbeiten oder die ganze Serie?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre Standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet, wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
 do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
 download	calendar	de	Herunterladen
@@ -171,6 +172,7 @@ h	calendar	de	h
 here is your requested alarm.	calendar	de	Hier ist Ihr bestellter Alarm.
 hide private infos	calendar	de	Private Informationen ausblenden
 high priority	calendar	de	Hohe Priorität
+history	calendar	de	Historie
 holiday	calendar	de	Feiertag
 holiday management	calendar	de	Feiertagsverwaltung
 holidays	calendar	de	Feiertage
@@ -297,6 +299,7 @@ saves the event ignoring the conflict	calendar	de	Speichert den Konflikt ignorie
 scheduling conflict	calendar	de	Terminüberschneidung
 select a %1	calendar	de	%1 auswählen
 select a time	calendar	de	eine Zeit auswählen
+select an action	calendar	de	Befehl auswählen
 select multiple contacts for a further action	calendar	de	mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
@@ -344,6 +347,7 @@ this defines the end of your dayview. events after this time, are shown below th
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt.
 this entry is currently opened by %1!	calendar	de	Dieser Termin ist im Moment von %1 geöffnet!
 this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen Benutzer innerhalb des konfigurierten Zeitintervalls geöffnet worden:
+this event is part of a series	calendar	de	Dieser Termin ist Teil einer Serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als Vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versendet.
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versendet.
@@ -392,6 +396,7 @@ weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
 which events do you want to see when you enter the calendar.	calendar	de	Welche Termine möchten Sie angezeigt bekommen wenn Sie den Kalender öffnen?
 which of calendar view do you want to see, when you start calendar ?	calendar	de	Welche der möglichen Ansichten des Kalenders möchten Sie als Standard sehen, wenn der Kalender geöffnet wird?
 whole day	calendar	de	ganztägig
+whole query	calendar	de	Ganze Abfrage
 wk	calendar	de	KW
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um

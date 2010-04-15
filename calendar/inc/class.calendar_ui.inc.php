@@ -508,23 +508,8 @@ class calendar_ui
 	 * @param int $height=400 height of the window
 	 * @return string javascript (using single quotes)
 	 */
-	function popup($link,$target='_blank',$width=750,$height=410,$Link_confirm_abort='',$Link_confirm_text='')
+	function popup($link,$target='_blank',$width=750,$height=410)
  	{
-		//Handle Exception for Calandar
-		if ($Link_confirm_abort && $Link_confirm_text)
-		{
-			$returnvalue = 'javascript:var check=confirm(\''.$Link_confirm_text.'\');';
-			$returnvalue .=' if (check) ';
-			// open confirm =0kay
-			$returnvalue .= 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes');";
-			//open confirm =Abort
-			$returnvalue .=' else ';
-			$returnvalue .= 'egw_openWindowCentered2('.($Link_confirm_abort == 'this.href' ? $Link_confirm_abort : "'".$Link_confirm_abort."'").','.
-				($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes');";
-
-			return $returnvalue;
-		}
 		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
 			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
  	}

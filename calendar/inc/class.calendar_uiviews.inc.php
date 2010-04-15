@@ -297,6 +297,8 @@ class calendar_uiviews extends calendar_ui
 
 		$content =& $this->plannerWidget($events,$this->first,$this->last,$this->sortby != 'category' ? $this->sortby : (int) $this->cat_id);
 
+		$content .= $this->edit_series();
+
 		if (!$home)
 		{
 			$this->do_header();
@@ -348,7 +350,7 @@ class calendar_uiviews extends calendar_ui
 			'end'     => $this->last,
 		)+$this->search_params);
 
-		$content = '';
+		$content = $this->edit_series();
 		// we add DAY_s/2 to $this->first (using 12h), to deal with daylight saving changes
 		for ($week_start = $this->first; $week_start < $this->last; $week_start = strtotime("+1 week",$week_start))
 		{
@@ -499,7 +501,7 @@ class calendar_uiviews extends calendar_ui
 
 		if (count($users) == 1 || count($users) > 5)	// for more then 3 users, show all in one row
 		{
-			$content =& $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),$this->cal_prefs['interval']);
+			$content = $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),$this->cal_prefs['interval']);
 		}
 		else
 		{
@@ -512,6 +514,8 @@ class calendar_uiviews extends calendar_ui
 					count($users) * $this->cal_prefs['interval'],400 / count($users),'','',$uid);
 			}
 		}
+		$content .= $this->edit_series();
+
 		if (!$home)
 		{
 			$this->do_header();
@@ -568,6 +572,8 @@ class calendar_uiviews extends calendar_ui
 			$cols = array();
 			$cols[0] =& $this->timeGridWidget($this->tagWholeDayOnTop($dayEvents),$this->cal_prefs['interval'],450,'','',$owner);
 
+			$cols[0] .= $this->edit_series();
+
 			// only show todo's for a single user
 			if (count($users) == 1 && ($todos = $this->get_todos($todo_label)) !== false)
 			{
@@ -600,12 +606,50 @@ class calendar_uiviews extends calendar_ui
 		else
 		{
 			$content = $this->timeGridWidget($this->bo->search($this->search_params),$this->cal_prefs['interval'],300);
+			$content .= $this->edit_series();
 
 			// make wz_dragdrop elements work
 			if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
 
 			return $content;
 		}
+	}
+
+	/**
+	 * Return HTML and Javascript to query user about editing an event series or create an exception
+	 *
+	 * Layout is defined in eTemplate 'calendar.edit_series'
+	 *
+	 * @param string $link=null url without cal_id and date GET parameters, default calendar.calendar_uiforms.edit
+	 * @param string $target='_blank' target
+	 * @return string
+	 */
+	function edit_series($link=null,$target='_blank')
+	{
+		if (is_null($link)) $link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit'));
+
+		$tpl = new etemplate('calendar.edit_series');
+
+		return $tpl->show().'<script type="text/javascript">
+var calendar_edit_id;
+var calendar_edit_date;
+function edit_series(id,date)
+{
+	calendar_edit_id = id;
+	calendar_edit_date = date;
+
+	document.getElementById("edit_series").style.display = "inline";
+}
+function open_edit(series)
+{
+	document.getElementById("edit_series").style.display = "none";
+
+	var extra = "&cal_id="+calendar_edit_id+"&date="+calendar_edit_date;
+	if (!series) extra += "&exception=1";
+
+	'.$this->popup($link."'+extra+'").';
+}
+</script>';
 	}
 
 	/**
@@ -1316,7 +1360,6 @@ class calendar_uiviews extends calendar_ui
 		$tooltip = $tpl->fp('tooltip','event_tooltip');
 		$html = $tpl->fp('out',$block);
 
-
 		if ($is_private || !$this->allowEdit)
 		{
 			$popup = '';
@@ -1327,16 +1370,14 @@ class calendar_uiviews extends calendar_ui
 		}
 		else
 		{
-			$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
-
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
-				$view_link_confirm_text=lang('do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
-				$popup = ' onclick="'.$this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;"';
+				$popup = ' onclick="edit_series('.$event['id'].','.$this->bo->date2string($event['start']).');"';
 			}
 			else
 			{
+				$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
+
 				$popup = ' onclick="'.$this->popup($view_link).'; return false;"';
 			}
 		}
