@@ -237,14 +237,10 @@ class calendar_hooks
 		);
 		if (!$hook_data['setup'])	// does not work at setup time
 		{
-			$groups = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']);
 			$options = array('0' => lang('none'));
-			if (is_array($groups))
+			foreach($GLOBALS['egw']->accounts->search(array('type' => 'owngroups','app' => 'calendar')) as $group)
 			{
-				foreach($groups as $group)
-				{
-					$options[$group['account_id']] = $GLOBALS['egw']->common->grab_owner_name($group['account_id']);
-				}
+				$options[$group['account_id']] = common::grab_owner_name($group['account_id']);
 			}
 			$freebusy_url = calendar_bo::freebusy_url($GLOBALS['egw_info']['user']['account_lid'],$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw']);
 			$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.','<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>');
