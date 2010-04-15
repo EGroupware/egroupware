@@ -132,7 +132,7 @@ class infolog_so
 			($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)); // &&
 			//($info['info_access'] == 'public' || !!($this->grants[$this->user] & EGW_ACL_PRIVATE));
 
-		//echo "<p align=right>check_access(info_id=$info_id,requited=$required_rights,implicit_edit=$implicit_edit) owner=$owner, responsible=(".implode(',',$info['info_responsible'])."): access".($access_ok?"Ok":"Denied")."</p>\n";
+		//echo "<p align=right>check_access(info_id=".$info['info_id'].",required=$required_rights,implicit_edit=$implicit_edit) owner=$owner, responsible=(".implode(',',$info['info_responsible'])."): access".($access_ok?"Ok":"Denied")."</p>\n";
 		return $access_ok;
 	}
 
