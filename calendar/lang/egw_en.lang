@@ -10,7 +10,6 @@ accepted	calendar	en	Accepted
 access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
 actions	calendar	en	Actions
-actions...	calendar	en	Actions...
 add alarm	calendar	en	Add alarm
 added	calendar	en	Added
 added by synchronisation	calendar	en	Added by synchronisation
@@ -29,6 +28,7 @@ all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
 allows to edit the event again	calendar	en	Allows to edit the event again
+apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events
 apply the changes	calendar	en	apply the changes
 are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this Country ?
 are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday ?
@@ -55,6 +55,7 @@ category %1 removed because of missing rights	calendar	en	Category %1 removed be
 category acl	calendar	en	Category ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	en	Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!
 chair	calendar	en	Chair
+change history	calendar	en	Change history
 charset of file	calendar	en	Charset of file
 check all	calendar	en	Check all
 close the window	calendar	en	Close the window
@@ -100,7 +101,7 @@ displays your default calendar view on the startpage (page you get when you ente
 do not include events of group members	calendar	en	Do not include events of group members
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You are NOT notified about changes you made yourself.<br>You can limit the notifications to certain changes only. Each item includes all notifications listed above. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifications, he will always get participant responses like acceptions or rejections too.
-do you want to edit serialevent als exception? - ok = edit exception, abort = edit serial	calendar	en	Do you want to change the event for this particular day, or for all days?\nOK = Make a one-time change (create an Exception)\nCANCEL = Change the event for all scheduled days
+do you want to edit this event as an exception or the whole series?	calendar	en	Do you want to edit this event as an exception or the whole series?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	en	Do you want to receive regularly a summary of your appointments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summaries.<br>It is only sent when you have any appointments on that day or week.
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to auto-load calendar holidays files dynamically?
 download	calendar	en	Download
@@ -169,6 +170,7 @@ h	calendar	en	h
 here is your requested alarm.	calendar	en	Here is your requested alarm.
 hide private infos	calendar	en	Hide private infos
 high priority	calendar	en	High priority
+history	calendar	en	History
 holiday	calendar	en	Holiday
 holiday management	calendar	en	Holiday Management
 holidays	calendar	en	Holidays
@@ -294,6 +296,7 @@ saves the event ignoring the conflict	calendar	en	Saves the event ignoring the c
 scheduling conflict	calendar	en	Scheduling conflict
 select a %1	calendar	en	Select a %1
 select a time	calendar	en	Select a time
+select an action	calendar	en	Select an action
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
 select who should get the alarm	calendar	en	Select who should get the alarm
@@ -341,6 +344,7 @@ this defines the end of your dayview. events after this time, are shown below th
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	en	This defines the start of your day view. Events before this time, are shown above the day view.<br>This time is also used as a default start time for new events.
 this entry is currently opened by %1!	calendar	en	This entry is currently opened by %1!
 this entry is opened by user:	calendar	en	This entry was opened within the configured time interval by user:
+this event is part of a series	calendar	en	This event is part of a series
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner anytime you want.
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.
 this message is sent for modified or moved events.	calendar	en	This message is sent for modified or moved events.
@@ -389,6 +393,7 @@ weekview without weekend	calendar	en	Weekview without weekend
 which events do you want to see when you enter the calendar.	calendar	en	Which events do you want to see when you enter the calendar.
 which of calendar view do you want to see, when you start calendar ?	calendar	en	Which of calendar views do you want to see, when you start calendar ?
 whole day	calendar	en	Whole day
+whole query	calendar	en	whole query
 wk	calendar	en	Wk
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
