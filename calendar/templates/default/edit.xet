@@ -111,7 +111,7 @@
 					<menulist>
 						<menupopup id="${row}[status]" no_lang="1" onchange="1"/>
 					</menulist>
-					<button rows="1" cols="2" id="delete[$row_cont[uid]]" align="center" label="Delete" onchange="1" image="delete"/>
+					<button rows="1" cols="2" id="delete[$row_cont[delete_id]]" align="center" label="Delete" onchange="1" image="delete"/>
 				</row>
 			</rows>
 		</grid>
@@ -119,7 +119,7 @@
 			.selectRole select { width: 100%; }
 		</styles>
 	</template>
-	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.7.002">
+	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.7.003">
 		<grid width="100%" height="210">
 			<columns>
 				<column width="95"/>
@@ -143,7 +143,7 @@
 				<row class="row" height="12">
 					<description options=",,,recur_type" value="Repeat type"/>
 					<menulist>
-						<menupopup id="recur_type"/>
+						<menupopup id="recur_type" onchange="check_recur_type('recur_type', 2);"/>
 					</menulist>
 					<description options=",,,recur_interval" value="Interval"/>
 					<menulist>

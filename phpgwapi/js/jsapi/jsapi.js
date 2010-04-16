@@ -39,6 +39,42 @@ else if (document.layers)
 	is_ns4 = true;
 }
 
+function egw_set_checkbox_multiselect_enabled(_id, _enabled)
+{
+	//Retrieve the checkbox_multiselect base div
+	var ms = document.getElementById('exec['+_id+']');
+	if (ms !== null)
+	{
+		//Set the background color
+		var label_color = "";
+		if (_enabled)
+		{
+			ms.style.backgroundColor = "white";
+			label_color = "black";
+		}
+		else
+		{
+			ms.style.backgroundColor = "#EEEEEE";
+			label_color = "gray"
+		}
+		
+		//Enable/Disable all children input elements
+		for (var i = 0; i <ms.childNodes.length; i++)
+		{
+			if (ms.childNodes[i].nodeName == 'LABEL')
+			{
+				ms.childNodes[i].style.color = label_color;
+				if ((ms.childNodes[i].childNodes.length >= 1) &&
+					(ms.childNodes[i].childNodes[0].nodeName == 'INPUT'))
+				{
+					ms.childNodes[i].childNodes[0].disabled = !_enabled;
+					ms.childNodes[i].childNodes[0].checked &= _enabled;
+				}
+			}
+		}
+	}
+}
+
 // works only correctly in Mozilla/FF and Konqueror
 function egw_openWindowCentered2(_url, _windowName, _width, _height, _status)
 {
