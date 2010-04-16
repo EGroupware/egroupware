@@ -247,7 +247,7 @@ class html
 		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
 					'font[size|color],'.
 					'ul[type],ol[type|start],li,'.
-					'h1,h2,h3,'.
+					'h1,h2,h3,h4,h5,h6,'.
 					'span[class|style],'.
 					'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
 					'tbody,thead,tfoot,colgroup,'.
