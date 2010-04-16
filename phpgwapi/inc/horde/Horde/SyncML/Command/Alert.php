@@ -141,7 +141,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
                 // Check if anchor sent from client matches our own stored
                 // data.
                 if ($clientlast == $this->_metaAnchorLast) {
-                    // Last sync anchors matche, TwoWaySync will do.
+                    // Last sync anchors match, TwoWaySync will do.
                     $anchormatch = true;
                     Horde::logMessage('SyncML: Anchor timestamps match, TwoWaySync possible. Syncing data since '
                         . date('Y-m-d H:i:s', $serverAnchorLast),
