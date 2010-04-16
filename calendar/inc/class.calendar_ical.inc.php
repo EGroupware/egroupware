@@ -1800,6 +1800,7 @@ class calendar_ical extends calendar_boupdate
 					case 'G':
 					case 'P':
 					case 0:
+					case -1:
 						$owner = $this->user;
 						break;
 					default:
