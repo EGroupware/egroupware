@@ -339,7 +339,7 @@ class calendar_uiforms extends calendar_ui
 						{
 							$$name = $data[$name];
 						}
-						if ($content['participants']['delete'][$uid])
+						if ($content['participants']['delete'][$uid] || $content['participants']['delete'][md5($uid)])
 						{
 							$uid = false;	// entry has been deleted
 						}
@@ -943,6 +943,7 @@ class calendar_uiforms extends calendar_ui
 				{
 					$content['participants'][$row]['role_label'] = lang(str_replace('X-','',$role));
 				}
+				$content['participants'][$row]['delete_id'] = strpbrk($uid,'"\'<>') !== false ? md5($uid) : $uid;
 				//echo "<p>$uid ($quantity): $role --> {$content['participants'][$row]['role']}</p>\n";
 				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
 				$readonlys["delete[$uid]"] = $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_EDIT,$event);
@@ -1254,7 +1255,8 @@ class calendar_uiforms extends calendar_ui
 		);
 		foreach($edit_content['participants'] as $key => $data)
 		{
-			if (is_numeric($key) && !$edit_content['participants']['delete'][$data['uid']])
+			if (is_numeric($key) && !$edit_content['participants']['delete'][$data['uid']] &&
+				!$edit_content['participants']['delete'][md5($data['uid'])])
 			{
 				$content['participants'][] = $data['uid'];
 			}
