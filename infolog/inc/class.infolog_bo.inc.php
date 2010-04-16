@@ -889,7 +889,6 @@ class infolog_bo
 			// Add keys missing in the $to_write array
 			if ($missing_fields = array_diff_key($values,$to_write))
 			{
-
 				$to_write = array_merge($to_write,$missing_fields);
 			}
 			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');

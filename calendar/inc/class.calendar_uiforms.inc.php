@@ -1627,14 +1627,20 @@ class calendar_uiforms extends calendar_ui
 		{
 			if (is_array($content['ical_file']) && is_uploaded_file($content['ical_file']['tmp_name']))
 			{
-				if (!ExecMethod('calendar.calendar_ical.importVCal',file_get_contents($content['ical_file']['tmp_name'])))
+				@set_time_limit(0);	// try switching execution time limit off
+				$start = microtime(true);
+
+				$calendar_ical = new calendar_ical;
+				if (!$calendar_ical->importVCal($f=fopen($content['ical_file']['tmp_name'],'r')))
 				{
 					$msg = lang('Error: importing the iCal');
 				}
 				else
 				{
-					$msg = lang('iCal successful imported');
+					$msg = lang('iCal successful imported').' '.lang('(%1 events in %2 seconds)',
+						$calendar_ical->events_imported,number_format(microtime(true)-$start,1));
 				}
+				if ($f) fclose($f);
 			}
 			else
 			{
@@ -1645,7 +1651,7 @@ class calendar_uiforms extends calendar_ui
 			'msg' => $msg,
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Import');
-		$etpl = CreateObject('etemplate.etemplate','calendar.import');
+		$etpl = new etemplate('calendar.import');
 
 		$etpl->exec('calendar.calendar_uiforms.import',$content);
 	}

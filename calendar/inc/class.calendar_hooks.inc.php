@@ -426,10 +426,10 @@ class calendar_hooks
 			),
 			'export_timezone' => array(
 				'type'   => 'select',
-				'label'  => 'Timezone of event exports',
+				'label'  => 'Timezone of event iCal file import/export',
 				'name'   => 'export_timezone',
 				'values' => $export_tzs,
-				'help'   => 'Use this timezone to export calendar data.',
+				'help'   => 'Use this timezone to import/export calendar data.',
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default' => '0', // Use event's TZ

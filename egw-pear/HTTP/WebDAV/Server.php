@@ -680,10 +680,10 @@ class HTTP_WebDAV_Server
         foreach ($files['files'] as $file) {
 
 	        // collect namespaces here
-	        $ns_hash = array();
+	        $ns_hash = array('DAV:' => 'D');
 
 	        // Microsoft Clients need this special namespace for date and time values
-	        $ns_defs = "xmlns:ns0=\"urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/\"";
+	        $ns_defs = 'xmlns:ns0="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/"';
 
             // nothing to do if no properties were returend for a file
 			if (isset($file["props"]) && is_array($file["props"])) {
@@ -730,7 +730,7 @@ class HTTP_WebDAV_Server
 	                // namespace handling
 	                if (empty($prop["ns"])) continue; // no namespace
 	                $ns = $prop["ns"];
-	                if ($ns == "DAV:") continue; // default namespace
+	                //if ($ns == "DAV:") continue; // default namespace
 	                if (isset($ns_hash[$ns])) continue; // already known
 
 	                // register namespace
@@ -850,15 +850,17 @@ class HTTP_WebDAV_Server
                             echo '     </'.($this->crrnd?'':'D:')."lockdiscovery>\n";
                             break;
                         default:
+                        	$ns_defs = '';
                             if (is_array($prop['val']))
                             {
-                            	$val = $this->_hierarchical_prop_encode($prop['val']);
+                            	$hns_hash = $ns_hash;
+                            	$val = $this->_hierarchical_prop_encode($prop['val'], 'DAV:', $ns_defs, $hns_hash);
                             } elseif (isset($prop['raw'])) {
                             	$val = $this->_prop_encode('<![CDATA['.$prop['val'].']]>');
                             } else {
 	                    		$val = $this->_prop_encode(htmlspecialchars($prop['val']));
                             }
-	                        echo '     <'.($this->crrnd?'':'D:')."$prop[name]>$val".
+	                        echo '     <'.($this->crrnd?'':'D:')."$prop[name]$ns_defs>$val".
 	                        	'</'.($this->crrnd?'':'D:')."$prop[name]>\n";
                             break;
                         }
@@ -1836,9 +1838,9 @@ class HTTP_WebDAV_Server
 				    'name' => $args[1],
 					'val'  => $args[2]);
 		    default:
-			    return array("ns"   => "DAV:",
-				    "name" => $args[0],
-					"val"  => $args[1]);
+			    return array('ns'   => 'DAV:',
+				    'name' => $args[0],
+					'val'  => $args[1]);
 	    }
     }
 
@@ -2299,24 +2301,69 @@ class HTTP_WebDAV_Server
 	 * </D:supported-report-set>
      *
      * @param array $props
+     * @param string $ns
+     * @param strin $ns_defs
+     * @param array $ns_hash
      * @return string
      */
-	function _hierarchical_prop_encode(array $props)
+	function _hierarchical_prop_encode(array $props, $ns, &$ns_defs, array &$ns_hash)
     {
+    	$ret = '';
+
     	//error_log(__METHOD__.'('.array2string($props).')');
     	if (isset($props['name'])) $props = array($props);
 
-    	$ret = '';
     	foreach($props as $prop)
-    	{
-	    	$ret .= '<'.(($prop['ns'] == 'DAV:' && $this->cnrnd) ? 'D:' : '').$prop['name'].
-	    		($prop['ns'] != 'DAV:' ? ' xmlns="'.$prop['ns'].'"' : '').
-	    		(empty($prop['val']) ? ' />' : '>'.
-	    			(is_array($prop['val']) ?
-	    				$this->_hierarchical_prop_encode($prop['val']) :
-	    				$this->_prop_encode($prop['val'])).
-	    			'</'.$prop['name'].'>');
-    	}
+		{
+	    	if (!isset($ns_hash[$prop['ns']])) // unknown namespace
+	    	{
+		    	// register namespace
+		    	$ns_name = 'ns'.(count($ns_hash) + 1);
+		    	$ns_hash[$prop['ns']] = $ns_name;
+		    	$ns_defs .= ' xmlns:'.$ns_name.'="'.$prop['ns'].'"';
+	    	}
+	    	if (is_array($prop['val']))
+	    	{
+	    		$subprop = $prop['val'];
+		    	if (isset($subprop['ns']))
+		    	{
+			    	$ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
+						(empty($prop['val']) ? '/>' : '>'.$this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs, $ns_hash).
+						'</'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : ($this->crrnd ? '' : $ns_hash[$prop['ns']].':')).$prop['name'].'>');
+		    	}
+		    	else // val contains only attributes, no value
+		    	{
+			    	$vals = '';
+
+			    	foreach($subprop as $attr => $val)
+					{
+				    	$vals .= ' '.$attr.'="'.htmlspecialchars($val).'"';
+					}
+
+		             $ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
+				    	$vals .'/>';
+		    	}
+	    	}
+	    	else
+	    	{
+		    	if (empty($prop['val']))
+		    	{
+			    	$val = '';
+		    	}
+		    	else
+		    	{
+			    	if(isset($prop['raw']))
+					{
+						$val = $this->_prop_encode('<![CDATA['.$prop['val'].']]>');
+					} else {
+						$val = $this->_prop_encode(htmlspecialchars($prop['val']));
+					}            }
+
+		    	$ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
+			    	(empty($prop['val']) ? ' />' : '>'.$val.'</'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : ($this->crrnd ? '' : $ns_hash[$prop['ns']].':')).$prop['name'].'>');
+	    	}
+		}
+
     	//error_log(__METHOD__.'('.array2string($props).') = '.array2string($ret));
     	return $ret;
     }

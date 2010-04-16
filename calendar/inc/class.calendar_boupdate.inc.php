@@ -67,6 +67,7 @@ class calendar_boupdate extends calendar_bo
 	 * @var boolean
 	 */
 	var $log = false;
+	var $logfile = '/tmp/log-calendar-boupdate';
 
 	/**
 	 * Cached timezone data
@@ -451,7 +452,7 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 		// Find new participants ...
-		foreach($new_event['participants'] as $new_userid => $new_status)
+		foreach((array)$new_event['participants'] as $new_userid => $new_status)
 		{
 			if(!isset($old_event['participants'][$new_userid]))
 			{
@@ -1068,7 +1069,7 @@ class calendar_boupdate extends calendar_bo
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				"($cal_id, $uid, $status, $recur_date)");
+				"($cal_id, $uid, $status, $recur_date)\n",3,$this->logfile);
 		}
 		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],
 				is_numeric($uid)?$uid:substr($uid,1),$status,
@@ -1482,7 +1483,7 @@ class calendar_boupdate extends calendar_bo
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				"($filter)[EVENT]:" . array2string($event));
+				"($filter)[EVENT]:" . array2string($event)."\n",3,$this->logfile);
 		}
 
 		if ($filter == 'master')
@@ -1498,14 +1499,14 @@ class calendar_boupdate extends calendar_bo
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-					'(' . $event['id'] . ")[EventID]");
+					'(' . $event['id'] . ")[EventID]\n",3,$this->logfile);
 			}
 			if (($egwEvent = $this->read($event['id'], 0, false, 'server')))
 			{
 				if ($this->log)
 				{
 					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-						'()[FOUND]:' . array2string($egwEvent));
+						'()[FOUND]:' . array2string($egwEvent)."\n",3,$this->logfile);
 				}
 				if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
 					(empty($event['uid']) || $event['uid'] == $egwEvent['uid']))
@@ -1649,14 +1650,14 @@ class calendar_boupdate extends calendar_bo
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-					'(' . $event['uid'] . ')[EventUID]');
+					'(' . $event['uid'] . ")[EventUID]\n",3,$this->logfile);
 			}
 		}
 
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				'[QUERY]: ' . array2string($query));
+				'[QUERY]: ' . array2string($query)."\n",3,$this->logfile);
 		}
 		if (!count($users) || !($foundEvents =
 			$this->so->search(null, null, $users, 0, 'owner', $query)))
@@ -1664,7 +1665,7 @@ class calendar_boupdate extends calendar_bo
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				'[NO MATCH]');
+				"[NO MATCH]\n",3,$this->logfile);
 			}
 			return $matchingEvents;
 		}
@@ -1676,7 +1677,7 @@ class calendar_boupdate extends calendar_bo
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-					'[FOUND]: ' . array2string($egwEvent));
+					'[FOUND]: ' . array2string($egwEvent)."\n",3,$this->logfile);
 			}
 			if (in_array($egwEvent['id'], $matchingEvents)) continue;
 
@@ -1726,7 +1727,7 @@ class calendar_boupdate extends calendar_bo
 						if ($this->log)
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							'() egwEvent is not a whole-day event!');
+							"() egwEvent is not a whole-day event!\n",3,$this->logfile);
 						}
 						continue;
 					}
@@ -1738,7 +1739,7 @@ class calendar_boupdate extends calendar_bo
 						if ($this->log)
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							'() egwEvent length does not match!');
+							"() egwEvent length does not match!\n",3,$this->logfile);
 						}
 						continue;
 					}
@@ -1760,7 +1761,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 							"() event[$key] differ: '" . $event[$key] .
-							"' <> '" . $egwEvent[$key] . "'");
+							"' <> '" . $egwEvent[$key] . "'\n",3,$this->logfile);
 					}
 					continue 2; // next foundEvent
 				}
@@ -1778,7 +1779,7 @@ class calendar_boupdate extends calendar_bo
 						if ($this->log)
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							"() egwEvent category $cat_id is missing!");
+							"() egwEvent category $cat_id is missing!\n",3,$this->logfile);
 						}
 						continue 2;
 					}
@@ -1789,7 +1790,8 @@ class calendar_boupdate extends calendar_bo
 					if ($this->log)
 					{
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							'() event has additional categories:' . array2string($newCategories));
+							'() event has additional categories:'
+							. array2string($newCategories)."\n",3,$this->logfile);
 					}
 					continue;
 				}
@@ -1809,7 +1811,7 @@ class calendar_boupdate extends calendar_bo
 							if ($this->log)
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-								"() additional event['participants']: $attendee");
+								"() additional event['participants']: $attendee\n",3,$this->logfile);
 							}
 							continue 2;
 						}
@@ -1826,7 +1828,7 @@ class calendar_boupdate extends calendar_bo
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 								'() missing event[participants]: ' .
-								array2string($egwEvent['participants']));
+								array2string($egwEvent['participants'])."\n",3,$this->logfile);
 						}
 						continue;
 					}
@@ -1860,7 +1862,7 @@ class calendar_boupdate extends calendar_bo
 							if ($this->log)
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-								"() additional event['recur_exception']: $day");
+								"() additional event['recur_exception']: $day\n",3,$this->logfile);
 							}
 							continue 2;
 						}
@@ -1887,7 +1889,7 @@ class calendar_boupdate extends calendar_bo
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 								"() events[$key] differ: " . $event[$key] .
-								' <> ' . $egwEvent[$key]);
+								' <> ' . $egwEvent[$key]."\n",3,$this->logfile);
 						}
 						continue 2;
 					}
@@ -1901,7 +1903,7 @@ class calendar_boupdate extends calendar_bo
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				'[MATCHES]:' . array2string($matchingEvents));
+				'[MATCHES]:' . array2string($matchingEvents)."\n",3,$this->logfile);
 		}
 		return $matchingEvents;
 	}
@@ -1974,7 +1976,7 @@ class calendar_boupdate extends calendar_bo
 				if ($this->log)
 				{
 					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-					"()[MASTER]: $eventID");
+					"()[MASTER]: $eventID\n",3,$this->logfile);
 				}
 				if (($master_event = $this->read($eventID, 0, false, 'server')))
 				{
@@ -2011,7 +2013,8 @@ class calendar_boupdate extends calendar_bo
 							if ($this->log)
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-									'() try occurrence ' . $egw_rrule->current() . " ($occurrence)");
+									'() try occurrence ' . $egw_rrule->current()
+									. " ($occurrence)\n",3,$this->logfile);
 							}
 							if ($event['start'] == $occurrence)
 							{

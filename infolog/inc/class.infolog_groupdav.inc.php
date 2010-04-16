@@ -477,6 +477,48 @@ class infolog_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Query ctag for infolog
+	 *
+	 * @return string
+	 */
+	public function getctag($path,$user)
+	{
+		$myself = ($user == $GLOBALS['egw_info']['user']['account_id']);
+
+		if ($path == '/infolog/')
+		{
+			$task_filter= 'own';
+		}
+		else
+		{
+			if ($myself)
+			{
+				$task_filter = 'open';
+			}
+			else
+			{
+				$task_filter = 'open-user' . $user;
+			}
+		}
+
+		$query = array(
+			'order'			=> 'info_datemodified',
+			'sort'			=> 'DESC',
+			'filter'    	=> $task_filter,
+			'date_format'	=> 'server',
+			'col_filter'	=> array('info_type' => 'task'),
+			'start'			=> 0,
+			'num_rows'		=> 1,
+		);
+
+		$result =& $this->bo->search($query);
+
+		$entry = array_shift($result);
+
+		return $this->get_etag($entry);
+	}
+
+	/**
 	 * Get the etag for an infolog entry
 	 *
 	 * @param array/int $info array with infolog entry or info_id
@@ -516,13 +558,15 @@ class infolog_groupdav extends groupdav_handler
 		// supported components, currently only VEVENT
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
 			// HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VEVENT')),
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTIMEZONE')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),
 		));
 
 		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget'))))));
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))))));
 
 		return $props;
 	}

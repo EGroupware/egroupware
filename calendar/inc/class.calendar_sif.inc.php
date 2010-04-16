@@ -1213,13 +1213,19 @@ class calendar_sif extends calendar_boupdate
 			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
 			{
 				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
-				if ($owner == 0)
+				switch ($owner)
 				{
-					$owner = $GLOBALS['egw_info']['user']['account_primary_group'];
-				}
-				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
-				{
-					$this->calendarOwner = $owner;
+					case 'G':
+					case 'P':
+					case 0:
+					case -1:
+						$owner = $this->user;
+						break;
+					default:
+						if ((int)$owner && $this->check_perms(EGW_ACL_EDIT, 0, $owner))
+						{
+							$this->calendarOwner = $owner;
+						}
 				}
 			}
 		}

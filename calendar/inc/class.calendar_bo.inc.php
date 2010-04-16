@@ -771,7 +771,7 @@ class calendar_bo
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
 				self::$cached_event_date_format != $date_format ||
-				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && self::$cached_event_date != $date || (!$date || self::$cached_event['start'] < $date))
+				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && self::$cached_event_date != $date)
 			{
 				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
 
@@ -794,7 +794,7 @@ class calendar_bo
 			}
 			else
 			{
-				$return =& self::$cached_event;
+				$return = self::$cached_event;
 			}
 		}
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'read'))
@@ -845,9 +845,30 @@ class calendar_bo
 				//echo "<p>".$time." --> ignored as $ts < $start-$event_length</p>\n";
 				continue;	// to early or original event (returned by interator too)
 			}
-			//echo "<p>".$time." --> adding recurrence</p>\n";
+
+			$ts_end = $ts + $event_length;
+
+			// adjust ts_end for whole day events in case it does not fit due to
+			// spans over summer/wintertime adjusted days
+			if($event['whole_day'] && ($arr_end = $this->date2array($ts_end)) &&
+				!($arr_end['hour'] == 23 && $arr_end['minute'] == 59 && $arr_end['second'] == 59))
+			{
+				$arr_end['hour'] = 23;
+				$arr_end['minute'] = 59;
+				$arr_end['second'] = 59;
+				$ts_end_guess = $this->date2ts($arr_end);
+				if($ts_end_guess - $ts_end > DAY_s/2)
+				{
+					$ts_end = $ts_end_guess - DAY_s; // $ts_end_guess was one day too far in the future
+				}
+				else
+				{
+					$ts_end = $ts_end_guess; // $ts_end_guess was ok
+				}
+			}
+
 			$event['start'] = $ts;
-			$event['end'] = $ts + $event_length;
+			$event['end'] = $ts_end;
 			$events[] = $event;
 		}
 		if ($this->debug && ((int) $this->debug > 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_recurrences'))
@@ -1029,7 +1050,7 @@ class calendar_bo
 	}
 
 	/**
-	 * Converts several date-types to a timestamp and optionaly converts user- to server-time
+	 * Converts several date-types to a timestamp and optionally converts user- to server-time
 	 *
 	 * @param mixed $date date to convert, should be one of the following types
 	 *	string (!) in form YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss or YYYYMMDDThhmmss
@@ -1043,7 +1064,7 @@ class calendar_bo
 	}
 
 	/**
-	 * Converts a date to an array and optionaly converts server- to user-time
+	 * Converts a date to an array and optionally converts server- to user-time
 	 *
 	 * @param mixed $date date to convert
 	 * @param boolean $server2user_time conversation between user- and server-time default False == Off

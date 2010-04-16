@@ -127,11 +127,11 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * user preference: Use this timezone for import from and export to device
 	 *
-	 * @var mixed
 	 * === false => use event's TZ
 	 * === null  => export in UTC
 	 * string    => device TZ
 	 *
+	 * @var string|boolean
 	 */
 	var $tzid = null;
 
@@ -189,14 +189,15 @@ class calendar_ical extends calendar_boupdate
 	 * @param int $recur_date=0	if set export the next recurrence at or after the timestamp,
 	 *                          default 0 => export whole series (or events, if not recurring)
 	 * @param string $principalURL='' Used for CalDAV exports
-	 * @return string|boolean string with iCal or false on error (eg. no permission to read the event)
+	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
+	 * @return string|boolean string with iCal or false on error (e.g. no permission to read the event)
 	 */
-	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='')
+	function &exportVCal($events, $version='1.0', $method='PUBLISH', $recur_date=0, $principalURL='', $charset='UTF-8')
 	{
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-				"($version, $method, $recur_date, $principalURL)\n",
+				"($version, $method, $recur_date, $principalURL, $charset)\n",
 				3, $this->logfile);
 		}
 		$egwSupportedFields = array(
@@ -465,20 +466,30 @@ class calendar_ical extends calendar_boupdate
 				switch ($icalFieldName)
 				{
 					case 'ATTENDEE':
-						//if (count($event['participants']) == 1 && isset($event['participants'][$this->user])) break;
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
 							if (!($info = $this->resource_info($uid))) continue;
-							$participantURL = $info['email'] ? 'MAILTO:'.$info['email'] : '';
-							$participantCN = '"' . ($info['cn'] ? $info['cn'] : $info['name']) . '"';
+							if ($this->log)
+							{
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
+									'()attendee:' . array2string($info) ."\n",3,$this->logfile);
+							}
+							$participantCN = '"' . (empty($info['cn']) ? $info['name'] : $info['cn']) . '"';
+							if ($version == '1.0')
+							{
+								$participantURL = trim($participantCN . (empty($info['email']) ? '' : ' <' . $info['email'] .'>'));
+							}
+							else
+							{
+								$participantURL = empty($info['email']) ? '' : 'MAILTO:' . $info['email'];
+							}
 							calendar_so::split_status($status, $quantity, $role);
-							if ($role == 'CHAIR' && $uid != $this->user)
+							if ($role == 'CHAIR')
 							{
 								$organizerURL = $participantURL;
 								$organizerCN = $participantCN;
 								$organizerUID = $uid;
 							}
-							// RB: MAILTO href contains only the email-address, NO cn!
 							$attributes['ATTENDEE'][]	= $participantURL;
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
 							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
@@ -522,10 +533,17 @@ class calendar_ical extends calendar_boupdate
     					// according to iCalendar standard, ORGANIZER not used for events in the own calendar
 	    				if (!$organizerCN)
 	    				{
-		    				$organizerURL = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
-		    				$organizerURL = $organizerURL ? 'MAILTO:'.$organizerURL : '';
-		    				$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
+	    					$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
 			    				. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
+			    			$organizerURL = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+			    			if ($version == '1.0')
+			    			{
+		    					$organizerURL = trim($organizerCN . (empty($organizerURL) ? '' : ' <' . $organizerURL .'>'));
+			    			}
+			    			else
+			    			{
+		    					$organizerURL = empty($organizerURL) ? '' : 'MAILTO:' . $organizerURL;
+			    			}
 			    			$organizerUID = $event['owner'];
 		    				if (!isset($event['participants'][$event['owner']]))
 		    				{
@@ -870,18 +888,18 @@ class calendar_ical extends calendar_boupdate
 			{
 				foreach (is_array($value) && $parameters[$key]['VALUE']!='DATE' ? $value : array($value) as $valueID => $valueData)
 				{
-					$valueData = $GLOBALS['egw']->translation->convert($valueData,$GLOBALS['egw']->translation->charset(),'UTF-8');
+					$valueData = $GLOBALS['egw']->translation->convert($valueData,$GLOBALS['egw']->translation->charset(),$charset);
                     $paramData = (array) $GLOBALS['egw']->translation->convert(is_array($value) ?
                     		$parameters[$key][$valueID] : $parameters[$key],
-                            $GLOBALS['egw']->translation->charset(),'UTF-8');
+                            $GLOBALS['egw']->translation->charset(),$charset);
                     $valuesData = (array) $GLOBALS['egw']->translation->convert($values[$key],
-                    		$GLOBALS['egw']->translation->charset(),'UTF-8');
+                    		$GLOBALS['egw']->translation->charset(),$charset);
                     $content = $valueData . implode(';', $valuesData);
 
 					if (preg_match('/[^\x20-\x7F]/', $content) ||
 						($paramData['CN'] && preg_match('/[^\x20-\x7F]/', $paramData['CN'])))
 					{
-						$paramData['CHARSET'] = 'UTF-8';
+						$paramData['CHARSET'] = $charset;
 						switch ($this->productManufacturer)
 						{
 							case 'groupdav':
@@ -963,6 +981,13 @@ class calendar_ical extends calendar_boupdate
 	}
 
 	/**
+	 * Number of events imported in last call to importVCal
+	 *
+	 * @var int
+	 */
+	var $events_imported;
+
+	/**
 	 * Import an iCal
 	 *
 	 * @param string $_vcalData
@@ -973,16 +998,21 @@ class calendar_ical extends calendar_boupdate
 	 *                          default 0 => import whole series (or events, if not recurring)
 	 * @param string $principalURL='' Used for CalDAV imports
 	 * @param int $user=null account_id of owner, default null
+	 * @param string $charset  The encoding charset for $text. Defaults to
+	 *                         utf-8 for new format, iso-8859-1 for old format.
 	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag
 	 */
-	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null)
+	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null)
 	{
+		$this->events_imported = 0;
+
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
-		if (!($events = $this->icaltoegw($_vcalData, $principalURL)))
+		if (!($events = $this->icaltoegw($_vcalData, $principalURL, $charset)))
 		{
 			return false;
 		}
+		if (!is_array($events)) $cal_id = -1;	// just to be sure, as iterator does NOT allow array access (eg. $events[0])
 
 		if ($cal_id > 0)
 		{
@@ -1016,6 +1046,8 @@ class calendar_ical extends calendar_boupdate
 		}
 		foreach ($events as $event)
 		{
+			++$this->events_imported;
+
 			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
 			if (is_array($event['category']))
 			{
@@ -1025,7 +1057,7 @@ class calendar_ical extends calendar_boupdate
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
-					."($cal_id, $etag, $recur_date, $principalURL, $user)\n"
+					."($cal_id, $etag, $recur_date, $principalURL, $user, $charset)\n"
 					. array2string($event)."\n",3,$this->logfile);
 			}
 
@@ -1078,6 +1110,29 @@ class calendar_ical extends calendar_boupdate
 				{
 					$event['id'] = $event_info['stored_event']['id']; // CalDAV does only provide UIDs
 				}
+				if (is_array($event['participants']))
+				{
+					// if the client does not return a status, we restore the original one
+					foreach ($event['participants'] as $uid => $status)
+					{
+						if ($status[0] == 'X')
+						{
+							if (isset($event_info['stored_event']['participants'][$uid]))
+							{
+								if ($this->log)
+								{
+									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+										"() Restore status for $uid\n",3,$this->logfile);
+								}
+								$event['participants'][$uid] = $event_info['stored_event']['participants'][$uid];
+							}
+							else
+							{
+								$event['participants'][$uid] = calendar_so::combine_status('U');
+							}
+						}
+					}
+				}
 				if ($merge)
 				{
 					if ($this->log)
@@ -1085,7 +1140,6 @@ class calendar_ical extends calendar_boupdate
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 							"()[MERGE]\n",3,$this->logfile);
 					}
-
 					// overwrite with server data for merge
 					foreach ($event_info['stored_event'] as $key => $value)
 					{
@@ -1135,27 +1189,6 @@ class calendar_ical extends calendar_boupdate
 					}
 					else
 					{
-						// if the client does not return a status, we restore the original one
-						foreach ($event['participants'] as $uid => $status)
-						{
-							// Is it a resource and no longer present in the event?
-							if ($status[0] == 'X')
-							{
-								if (isset($event_info['stored_event']['participants'][$uid]))
-								{
-									if ($this->log)
-									{
-										error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-											"() Restore status for $uid\n",3,$this->logfile);
-									}
-									$event['participants'][$uid] = $event_info['stored_event']['participants'][$uid];
-								}
-								else
-								{
-									$event['participants'][$uid] = calendar_so::combine_status('U');
-								}
-							}
-						}
 						foreach ($event_info['stored_event']['participants'] as $uid => $status)
 						{
 							// Is it a resource and no longer present in the event?
@@ -1252,11 +1285,11 @@ class calendar_ical extends calendar_boupdate
 						{
 							if ($uid == $event['owner'])
 							{
-								$event['participants']['uid'] = calendar_so::combine_status('A', 1, 'CHAIR');
+								$event['participants'][$uid] = calendar_so::combine_status('A', 1, 'CHAIR');
 							}
 							else
 							{
-								$event['participants']['uid'] = calendar_so::combine_status('U');
+								$event['participants'][$uid] = calendar_so::combine_status('U');
 							}
 						}
 					}
@@ -1628,6 +1661,10 @@ class calendar_ical extends calendar_boupdate
 					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
+		if (is_resource($_vcalData))
+		{
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+		}
 		return $return_id;
 	}
 
@@ -1739,10 +1776,10 @@ class calendar_ical extends calendar_boupdate
 			{
 				switch ($deviceInfo['tzid'])
 				{
-					case 1:
+					case -1:
 						$this->tzid = false; // use event's TZ
 						break;
-					case 2:
+					case -2:
 						$this->tzid = null; // use UTC for export
 						break;
 					default:
@@ -1758,13 +1795,19 @@ class calendar_ical extends calendar_boupdate
 			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner']))
 			{
 				$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['calendar_owner'];
-				if ($owner == 0)
+				switch ($owner)
 				{
-					$owner = $GLOBALS['egw_info']['user']['account_primary_group'];
-				}
-				if (0 < (int)$owner && $this->check_perms(EGW_ACL_EDIT,0,$owner))
-				{
-					$this->calendarOwner = $owner;
+					case 'G':
+					case 'P':
+					case 0:
+					case -1:
+						$owner = $this->user;
+						break;
+					default:
+						if ((int)$owner && $this->check_perms(EGW_ACL_EDIT, 0, $owner))
+						{
+							$this->calendarOwner = $owner;
+						}
 				}
 			}
 			if (!isset($this->productManufacturer) ||
@@ -1986,7 +2029,7 @@ class calendar_ical extends calendar_boupdate
 				'(' . $this->productManufacturer .
 				', '. $this->productName .', ' .
 				($this->tzid ? $this->tzid : egw_time::$user_timezone->getName()) .
-				")\n" , 3, $this->logfile);
+				', ' . $this->calendarOwner . ")\n" , 3, $this->logfile);
 		}
 
 		//Horde::logMessage('setSupportedFields(' . $this->productManufacturer . ', '
@@ -1998,19 +2041,19 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * Convert vCalendar data in EGw events
 	 *
-	 * @param string $_vcalData
+	 * @param string|resource $_vcalData
 	 * @param string $principalURL='' Used for CalDAV imports
-	 * @return array|boolean events on success, false on failure
+	 * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
+	 * @return Iterator|array|boolean Iterator if resource given or array of events on success, false on failure
 	 */
-	function icaltoegw($_vcalData, $principalURL='')
+	function icaltoegw($_vcalData, $principalURL='', $charset=null)
 	{
 		if ($this->log)
 		{
-			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($principalURL)\n" .
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($principalURL, $charset)\n" .
 				array2string($_vcalData)."\n",3,$this->logfile);
 		}
-
-		$events = array();
 
 		if ($this->tzid)
 		{
@@ -2023,8 +2066,16 @@ class calendar_ical extends calendar_boupdate
 
 		date_default_timezone_set($tzid);
 
+		if (!is_array($this->supportedFields)) $this->setSupportedFields();
+
+		// we use egw_ical_iterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
+		if (is_resource($_vcalData))
+		{
+			return new egw_ical_iterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($tzid,$principalURL));
+		}
+		$events = array();
 		$vcal = new Horde_iCalendar;
-		if (!$vcal->parsevCalendar($_vcalData))
+		if (!$vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset))
 		{
 			if ($this->log)
 			{
@@ -2038,58 +2089,67 @@ class calendar_ical extends calendar_boupdate
 			return false;
 		}
 		$version = $vcal->getAttribute('VERSION');
-		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
-		foreach ($vcal->getComponents() as $component)
+		foreach ($vcal->getComponents() as $n => $component)
 		{
-			if (is_a($component, 'Horde_iCalendar_vevent'))
+			if (($event = $this->_ical2egw_callback($component,$tzid,$principalURL)))
 			{
-				if (($event = $this->vevent2egw($component, $version, $this->supportedFields, $principalURL)))
-				{
-					//common adjustments
-					if ($this->productManufacturer == '' && $this->productName == ''
-						&& !empty($event['recur_enddate']))
-					{
-						// syncevolution needs an adjusted recur_enddate
-						$event['recur_enddate'] = (int)$event['recur_enddate'] + 86400;
-					}
- 					if ($event['recur_type'] != MCAL_RECUR_NONE)
- 					{
- 						// No reference or RECURRENCE-ID for the series master
- 						$event['reference'] = $event['recurrence'] = 0;
- 					}
-
- 					// handle the alarms
- 					$alarms = $event['alarm'];
-					foreach ($component->getComponents() as $valarm)
-					{
-						if (is_a($valarm, 'Horde_iCalendar_valarm'))
-						{
-							$this->valarm2egw($alarms, $valarm);
-						}
-					}
-					$event['alarm'] = $alarms;
-					if ($this->tzid || empty($event['tzid']))
-					{
-						$event['tzid'] = $tzid;
-					}
-
 					$events[] = $event;
-				}
-			}
-			else
-			{
-				if ($this->log)
-				{
-					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
-						get_class($component)." found\n",3,$this->logfile);
-				}
 			}
 		}
-
 		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 
 		return $events;
+	}
+
+	/**
+	 * Callback for egw_ical_iterator to convert Horde_iCalendar_vevent to EGw event array
+	 *
+	 * @param Horde_iCalendar $component
+	 * @param string $tzid timezone
+	 * @param string $principalURL='' Used for CalDAV imports
+	 * @return array|boolean event array or false if $component is no Horde_iCalendar_vevent
+	 */
+	function _ical2egw_callback(Horde_iCalendar $component,$tzid,$principalURL='')
+	{
+		//unset($component->_container); _debug_array($component);
+
+		if (!is_a($component, 'Horde_iCalendar_vevent') ||
+			!($event = $this->vevent2egw($component, $component->getAttribute('VERSION'), $this->supportedFields, $principalURL)))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
+			}
+			return false;
+		}
+		//common adjustments
+		if ($this->productManufacturer == '' && $this->productName == '' && !empty($event['recur_enddate']))
+		{
+			// syncevolution needs an adjusted recur_enddate
+			$event['recur_enddate'] = (int)$event['recur_enddate'] + 86400;
+		}
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		{
+			// No reference or RECURRENCE-ID for the series master
+			$event['reference'] = $event['recurrence'] = 0;
+		}
+
+		// handle the alarms
+		$alarms = $event['alarm'];
+		foreach ($component->getComponents() as $valarm)
+		{
+			if (is_a($valarm, 'Horde_iCalendar_valarm'))
+			{
+				$this->valarm2egw($alarms, $valarm);
+			}
+		}
+		$event['alarm'] = $alarms;
+		if ($this->tzid || empty($event['tzid']))
+		{
+			$event['tzid'] = $tzid;
+		}
+		return $event;
 	}
 
 	/**
@@ -2114,7 +2174,8 @@ class calendar_ical extends calendar_boupdate
 			return false;
 		}
 
-		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'])) {
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
+		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
 		}
 		else
@@ -2756,7 +2817,6 @@ class calendar_ical extends calendar_boupdate
 					$event['modified'] = $attributes['value'];
 			}
 		}
-
 		// check if the entry is a birthday
 		// this field is only set from NOKIA clients
 		$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
@@ -2844,9 +2904,9 @@ class calendar_ical extends calendar_boupdate
 		return $event;
 	}
 
-	function search($_vcalData, $contentID=null, $relax=false)
+	function search($_vcalData, $contentID=null, $relax=false, $charset=null)
 	{
-		if (($events = $this->icaltoegw($_vcalData)))
+		if (($events = $this->icaltoegw($_vcalData, $charset)))
 		{
 			// this function only supports searching a single event
 			if (count($events) == 1)
@@ -2878,9 +2938,10 @@ class calendar_ical extends calendar_boupdate
 	 * @param int $user account_id
 	 * @param mixed $end=null end-date, default now+1 month
 	 * @param boolean $utc=true if false, use severtime for dates
+	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
 	 * @return string
 	 */
-	function freebusy($user,$end=null,$utc=true)
+	function freebusy($user,$end=null,$utc=true, $charset='UTF-8')
 	{
 		if (!$end) $end = $this->now_su + 100*DAY_s;	// default next 100 days
 
@@ -2894,7 +2955,7 @@ class calendar_ical extends calendar_boupdate
 			'ORGANIZER' => $GLOBALS['egw']->translation->convert(
 				$GLOBALS['egw']->accounts->id2name($user,'account_firstname').' '.
 				$GLOBALS['egw']->accounts->id2name($user,'account_lastname'),
-				$GLOBALS['egw']->translation->charset(),'utf-8'),
+				$GLOBALS['egw']->translation->charset(),$charset),
 		);
 		if ($utc)
 		{
@@ -2953,6 +3014,6 @@ class calendar_ical extends calendar_boupdate
 		}
 		$vcal->addComponent($vfreebusy);
 
-		return $vcal->exportvCalendar();
+		return $vcal->exportvCalendar($charset);
 	}
 }

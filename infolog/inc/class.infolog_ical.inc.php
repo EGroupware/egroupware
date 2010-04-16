@@ -114,9 +114,11 @@ class infolog_ical extends infolog_bo
 	 * @param int|array $task infolog_id or infolog-tasks data
 	 * @param string $_version='2.0' could be '1.0' too
 	 * @param string $_method='PUBLISH'
-	 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
+	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
+	 *
+	 * @return string|boolean string with vCal or false on error (eg. no permission to read the event)
 	 */
-	function exportVTODO($task, $_version='2.0',$_method='PUBLISH')
+	function exportVTODO($task, $_version='2.0',$_method='PUBLISH', $charset='UTF-8')
 	{
 		if (is_array($task))
 		{
@@ -156,7 +158,7 @@ class infolog_ical extends infolog_bo
 		}
 
 		$taskData = $GLOBALS['egw']->translation->convert($taskData,
-			$GLOBALS['egw']->translation->charset(), 'UTF-8');
+			$GLOBALS['egw']->translation->charset(), $charset);
 
 		if ($this->log)
 		{
@@ -275,7 +277,7 @@ class infolog_ical extends infolog_bo
 
 			if (preg_match('/[^\x20-\x7F]/', $value))
 			{
-				$options['CHARSET']	= 'UTF-8';
+				$options['CHARSET']	= $charset;
 				switch ($this->productManufacturer)
 				{
 					case 'groupdav':
@@ -421,16 +423,19 @@ class infolog_ical extends infolog_bo
 	 * @param int $_taskID=-1 info_id, default -1 = new entry
 	 * @param boolean $merge=false	merge data with existing entry
 	 * @param int $user=null delegate new task to this account_id, default null
+	 * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
+     *
 	 * @return int|boolean integer info_id or false on error
 	 */
-	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null)
+	function importVTODO(&$_vcalData, $_taskID=-1, $merge=false, $user=null, $charset=null)
 	{
 
 		if ($this->tzid)
 		{
 			date_default_timezone_set($this->tzid);
 		}
-		$taskData = $this->vtodotoegw($_vcalData,$_taskID);
+		$taskData = $this->vtodotoegw($_vcalData,$_taskID, $charset);
 		if ($this->tzid)
 		{
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
@@ -472,10 +477,12 @@ class infolog_ical extends infolog_bo
 	 * @param string $_vcalData		VTODO
 	 * @param int $contentID=null 	infolog_id (or null, if unkown)
 	 * @param boolean $relax=false 	if true, a weaker match algorithm is used
+	 * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
 	 *
 	 * @return array of infolog_ids of matching entries
 	 */
-	function searchVTODO($_vcalData, $contentID=null, $relax=false)
+	function searchVTODO($_vcalData, $contentID=null, $relax=false, $charset=null)
 	{
 		$result = array();
 
@@ -483,7 +490,7 @@ class infolog_ical extends infolog_bo
 		{
 			date_default_timezone_set($this->tzid);
 		}
-		$taskData = $this->vtodotoegw($_vcalData,$contentID);
+		$taskData = $this->vtodotoegw($_vcalData, $contentID, $charset);
 		if ($this->tzid)
 		{
 			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
@@ -504,9 +511,12 @@ class infolog_ical extends infolog_bo
 	 *
 	 * @param string $_vcalData 	VTODO data
 	 * @param int $_taskID=-1		infolog_id of the entry
+	 * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
+     *
 	 * @return array infolog entry or false on error
 	 */
-	function vtodotoegw($_vcalData, $_taskID=-1)
+	function vtodotoegw($_vcalData, $_taskID=-1, $charset=null)
 	{
 		if ($this->log)
 		{
@@ -515,7 +525,7 @@ class infolog_ical extends infolog_bo
 		}
 
 		$vcal = new Horde_iCalendar;
-		if (!($vcal->parsevCalendar($_vcalData)))
+		if (!($vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset)))
 		{
 			if ($this->log)
 			{
@@ -683,14 +693,16 @@ class infolog_ical extends infolog_bo
 	 *
 	 * @param int $_noteID		the infolog_id of the entry
 	 * @param string $_type		content type (e.g. text/plain)
-	 * @return string VNOTE representation of the infolog entry
+	 * @param string $charset='UTF-8' encoding of the vcalendar, default UTF-8
+	 *
+	 * @return string|boolean VNOTE representation of the infolog entry or false on error
 	 */
-	function exportVNOTE($_noteID, $_type)
+	function exportVNOTE($_noteID, $_type, $charset='UTF-8')
 	{
 		if(!($note = $this->read($_noteID, true, 'server'))) return false;
 
 		$note = $GLOBALS['egw']->translation->convert($note,
-			$GLOBALS['egw']->translation->charset(), 'UTF-8');
+			$GLOBALS['egw']->translation->charset(), $charset);
 
 		switch	($_type)
 		{
@@ -703,7 +715,7 @@ class infolog_ical extends infolog_bo
 				{
 					$cats = $this->get_categories(array($note['info_cat']));
 					$note['info_cat'] = $GLOBALS['egw']->translation->convert($cats[0],
-						$GLOBALS['egw']->translation->charset(), 'UTF-8');
+						$GLOBALS['egw']->translation->charset(), $charset);
 				}
 				$vnote = new Horde_iCalendar_vnote();
 				$vNote->setAttribute('VERSION', '1.1');
@@ -715,7 +727,7 @@ class infolog_ical extends infolog_bo
 					$options = array();
 					if (preg_match('/[^\x20-\x7F]/', $value))
 					{
-						$options['CHARSET']	= 'UTF-8';
+						$options['CHARSET']	= $charset;
 						switch ($this->productManufacturer)
 						{
 							case 'groupdav':
@@ -773,9 +785,12 @@ class infolog_ical extends infolog_bo
 	 * @param string $_type		content type (eg.g text/plain)
 	 * @param int $_noteID=-1 info_id, default -1 = new entry
 	 * @param boolean $merge=false	merge data with existing entry
+	 * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
+     *
 	 * @return int|boolean integer info_id or false on error
 	 */
-	function importVNOTE(&$_vcalData, $_type, $_noteID=-1, $merge=false)
+	function importVNOTE(&$_vcalData, $_type, $_noteID=-1, $merge=false, $charset=null)
 	{
 		if ($this->log)
 		{
@@ -783,7 +798,7 @@ class infolog_ical extends infolog_bo
 				array2string($_vcalData)."\n",3,$this->logfile);
 		}
 
-		if (!($note = $this->vnotetoegw($_vcalData, $_type, $_noteID))) return false;
+		if (!($note = $this->vnotetoegw($_vcalData, $_type, $_noteID, $charset))) return false;
 
 		if($_noteID > 0) $note['info_id'] = $_noteID;
 
@@ -804,12 +819,14 @@ class infolog_ical extends infolog_bo
 	 * @param string $_vcalData		VNOTE
 	 * @param int $contentID=null 	infolog_id (or null, if unkown)
 	 * @param boolean $relax=false 	if true, a weaker match algorithm is used
+	 * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
 	 *
 	 * @return infolog_id of a matching entry or false, if nothing was found
 	 */
-	function searchVNOTE($_vcalData, $_type, $contentID=null, $relax=false)
+	function searchVNOTE($_vcalData, $_type, $contentID=null, $relax=false, $charset=null)
 	{
-		if (!($note = $this->vnotetoegw($_vcalData,$_type,$contentID))) return array();
+		if (!($note = $this->vnotetoegw($_vcalData, $_type, $contentID, $charset))) return array();
 
 		if ($contentID)	$note['info_id'] = $contentID;
 
@@ -824,9 +841,12 @@ class infolog_ical extends infolog_bo
 	 * @param string $_data 	VNOTE data
 	 * @param string $_type		content type (eg.g text/plain)
 	 * @param int $_noteID=-1	infolog_id of the entry
+	 * @param string $charset  The encoding charset for $text. Defaults to
+     *                         utf-8 for new format, iso-8859-1 for old format.
+     *
 	 * @return array infolog entry or false on error
 	 */
-	function vnotetoegw($_data, $_type, $_noteID=-1)
+	function vnotetoegw($_data, $_type, $_noteID=-1, $charset=null)
 	{
 		if ($this->log)
 		{
@@ -840,8 +860,7 @@ class infolog_ical extends infolog_bo
 			case 'text/plain':
 				$note = array();
 				$note['info_type'] = 'note';
-				$botranslation  =& CreateObject('phpgwapi.translation');
-				$txt = $botranslation->convert($_data, 'utf-8');
+				$txt = $GLOBALS['egw']->translation->convert($_data, $charset);
 				$txt = str_replace("\r\n", "\n", $txt);
 
 				if (preg_match('/([^\n]+)\n\n(.*)/m', $txt, $match))
@@ -857,7 +876,7 @@ class infolog_ical extends infolog_bo
 
 			case 'text/x-vnote':
 				$vnote = new Horde_iCalendar;
-				if (!$vcal->parsevCalendar($_data))	return false;
+				if (!$vcal->parsevCalendar($_data, 'VCALENDAR', $charset))	return false;
 				$version = $vcal->getAttribute('VERSION');
 
 				$components = $vnote->getComponent();
