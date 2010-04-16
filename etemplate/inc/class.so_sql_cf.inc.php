@@ -449,7 +449,7 @@ class so_sql_cf extends so_sql
 			foreach($criteria as $name => $val)
 			{
 				$extra_columns = $this->db->get_table_definitions($app, $this->extra_table);
-				if($extra_columns['fd'][array_search($name, $this->db_cols)]) {
+				if(is_string($name) && $extra_columns['fd'][array_search($name, $this->db_cols)]) {
 					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
 						array_search($name, $this->db_cols) => $val,
 					));
