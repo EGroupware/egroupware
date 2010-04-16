@@ -214,7 +214,6 @@ class calendar_sif extends calendar_boupdate
 			error_log(sprintf("XML error: %s at line %d",
 				xml_error_string(xml_get_error_code($this->xml_parser)),
 				xml_get_current_line_number($this->xml_parser)));
-			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 			return false;
 		}
 
@@ -354,8 +353,6 @@ class calendar_sif extends calendar_boupdate
 		}
 
 		if ($this->calendarOwner) $finalEvent['owner'] = $this->calendarOwner;
-
-		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 
 		if ($_calID > 0) $finalEvent['id'] = $_calID;
 
@@ -1016,6 +1013,7 @@ class calendar_sif extends calendar_boupdate
 					case 'G':
 					case 'P':
 					case 0:
+					case -1:
 						$owner = $this->user;
 						break;
 					default:
