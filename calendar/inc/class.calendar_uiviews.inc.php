@@ -618,7 +618,7 @@ class calendar_uiviews extends calendar_ui
 
 		$tpl = new etemplate('calendar.edit_series');
 
-		return $tpl->show().'<script type="text/javascript">
+		return $tpl->show(array()).'<script type="text/javascript">
 var calendar_edit_id;
 var calendar_edit_date;
 function edit_series(id,date)
