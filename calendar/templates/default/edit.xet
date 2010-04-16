@@ -111,7 +111,7 @@
 					<menulist>
 						<menupopup id="${row}[status]" no_lang="1" onchange="1"/>
 					</menulist>
-					<button rows="1" cols="2" id="delete[$row_cont[uid]]" align="center" label="Delete" onchange="1" image="delete"/>
+					<button rows="1" cols="2" id="delete[$row_cont[delete_id]]" align="center" label="Delete" onchange="1" image="delete"/>
 				</row>
 			</rows>
 		</grid>
@@ -276,7 +276,19 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit" template="" lang="" group="0" version="1.7.001">
+	<template id="calendar.edit.history" template="" lang="" group="0" version="1.7.002">
+		<grid width="100%" height="250" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<historylog id="history" options="history_status"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit" template="" lang="" group="0" version="1.7.002">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -296,7 +308,7 @@
 					<textbox size="80" maxlength="255" id="title" span="all" needed="1"/>
 				</row>
 				<row>
-					<tabbox span="all" id="general|description|participants|recurrence|custom|links|alarms">
+					<tabbox span="all" id="general|description|participants|recurrence|custom|links|alarms|history">
 						<tabs>
 							<tab label="General" statustext="Location, Start- and Endtimes, ..."/>
 							<tab label="Description" statustext="Full description"/>
@@ -305,6 +317,7 @@
 							<tab label="Custom" statustext="Custom fields"/>
 							<tab label="Links" statustext="Links, Attachments"/>
 							<tab label="Alarms" statustext="Alarm management"/>
+							<tab label="History" statustext="Change history"/>
 						</tabs>
 						<tabpanels>
 							<template id="calendar.edit.general"/>
@@ -314,6 +327,7 @@
 							<template id="calendar.edit.custom"/>
 							<template id="calendar.edit.links"/>
 							<template id="calendar.edit.alarms"/>
+							<template id="calendar.edit.history"/>
 						</tabpanels>
 					</tabbox>
 				</row>
