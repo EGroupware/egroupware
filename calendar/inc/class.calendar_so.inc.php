@@ -465,17 +465,17 @@ class calendar_so
 					$selects = array();
 					foreach(array_keys($user_or) as $key) 
 					{
-						array_push($selects,$select);
+						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $user_or[$key];
 						$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-						array_push($selects,$select);
+						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $user_or[$key];
 						$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
 					}
-					array_push($selects,$select);
+					$selects[] = $select;
 					$selects[count($selects)-1]['where'][] = $owner_or;
 					$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-					array_push($selects,$select);
+					$selects[] = $select;
 					$selects[count($selects)-1]['where'][] = $owner_or;
 					$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
 				}
@@ -485,10 +485,10 @@ class calendar_so
 					$selects = array();
 					foreach(array_keys($user_or) as $key)
 					{
-						array_push($selects,$select);
+						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $user_or[$key];
 						$selects[count($selects)-1]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-						array_push($selects,$select);
+						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $user_or[$key];
 						$selects[count($selects)-1]['where'][] = 'cal_recur_date=cal_start';
 					}
@@ -504,15 +504,33 @@ class calendar_so
 			if (is_numeric($offset))	// get the total too
 			{
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
-				foreach(array_keys($selects) as $key) $selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";  
-				//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
+				$countSelects = count($selects);
+				foreach(array_keys($selects) as $key) 
+				{
+					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";  
+					//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
+				}
 				if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
+				$i = 0;
+				foreach(array_keys($selects) as $key) 
+				{
+					if ($i >= $countSelects) continue;
+					$i ++;
+					$selects[$key]['cols'] = $select['cols']; // restore the original cols
+					//$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
+				}
+				$i = 0;
+				$selections = array();
+				foreach(array_keys($selects) as $key)
+				{
+					if ($i >= $countSelects) continue;
+					$i++;
+					$selections[] = $selects[$key];
+				}
 
-				foreach(array_keys($selects) as $key) $selects[$key]['cols'] = $select['cols']; // restore the original cols
-				//$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
-				//$selects = array($selects[0],$selects[1]); // what is this one used for?
+				$selects = $selections;
 			}
 			if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
 
