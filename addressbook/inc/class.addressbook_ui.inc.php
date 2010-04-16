@@ -979,7 +979,7 @@ class addressbook_ui extends addressbook_bo
 						}
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
-					if ($show_calendar) $calendar = $this->read_calendar($ids);
+					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($ids);
 					// distributionlist memership for the entrys
 					//_debug_array($this->get_lists(EGW_ACL_EDIT));
 					if ($show_distributionlist && $available_distib_lists)
@@ -1697,7 +1697,7 @@ class addressbook_ui extends addressbook_bo
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
 		// last and next calendar date
-		list(,$dates) = each($this->read_calendar(array($content['id']),false));
+		if (!empty($content['id'])) list(,$dates) = each($this->read_calendar(array($content['id']),false));
 		if(is_array($dates)) $content += $dates;
 
 		// set id for automatic linking via quick add
