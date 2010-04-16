@@ -80,7 +80,7 @@ class addressbook_tracking extends bo_tracking
 
 		$this->contacts =& $bocontacts;
 
-		if (is_object($bocontacts->somain))
+		if (is_object($bocontacts->somain) && is_array($bocontacts->somain->db_cols))
 		{
 			$this->field2history = array_combine($bocontacts->somain->db_cols, $bocontacts->somain->db_cols);
 			unset($this->field2history['modified']);

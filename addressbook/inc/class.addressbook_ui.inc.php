@@ -1443,6 +1443,7 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['tabs']['custom'] = !$this->customfields;
 		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
+		$readonlys['tabs']['history'] = $this->account_repository == 'ldap' && $content['account_id'];
 		$readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 

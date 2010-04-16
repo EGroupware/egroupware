@@ -815,9 +815,11 @@ class addressbook_bo extends addressbook_so
 			// Notify linked apps about changes in the contact data
 			egw_link::notify_update('addressbook',  $contact['id'], $contact);
 
-			// Record change history
-			$deleted = ($old['tid'] == addressbook_so::DELETED_TYPE || $contact['tid'] == addressbook_so::DELETED_TYPE);
-			$this->tracking->track($to_write, $old, null, $deleted);
+			// Record change history for sql - doesn't work for LDAP accounts
+			if(!$contact['account_id'] || $contact['account_id'] && $this->account_repository == 'sql') {
+				$deleted = ($old['tid'] == addressbook_so::DELETED_TYPE || $contact['tid'] == addressbook_so::DELETED_TYPE);
+				$this->tracking->track($to_write, $old, null, $deleted);
+			}
 		}
 
 		return $this->error ? false : $contact['id'];
