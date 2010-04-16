@@ -190,7 +190,7 @@ function tt_Hide()
 		tt_OpReHref();
 		if(tt_iState & 0x2)
 		{
-			tt_aElt[0].style.visibility = "hidden";
+			tt_aElt[0].style.display = "none";
 			tt_ExtCallFncs(0, "Hide");
 		}
 		tt_tShow.EndTimer();
@@ -412,7 +412,7 @@ function tt_GetMainDivRefs()
 	{
 		var css = tt_aElt[0].style;
 
-		css.visibility = "hidden";
+		css.display = "none";
 		css.position = "absolute";
 		css.overflow = "hidden";
 		return true;
@@ -423,7 +423,6 @@ function tt_ResetMainDiv()
 {
 	tt_SetTipPos(0, 0);
 	tt_aElt[0].innerHTML = "";
-	tt_aElt[0].style.width = "0px";
 	tt_h = 0;
 }
 function tt_IsW3cBox()
@@ -431,7 +430,6 @@ function tt_IsW3cBox()
 	var css = tt_aElt[0].style;
 
 	css.padding = "10px";
-	css.width = "40px";
 	tt_bBoxOld = (tt_GetDivW(tt_aElt[0]) == 40);
 	css.padding = "0px";
 	tt_ResetMainDiv();
@@ -549,6 +547,7 @@ function tt_Tip(arg, t2t)
 	tt_maxPosX = tt_GetClientW() + tt_GetScrollX() - tt_w - 1;
 	tt_maxPosY = tt_GetClientH() + tt_GetScrollY() - tt_h - 1;
 	tt_AdaptConfig2();
+	
 	// Ensure the tip be shown and positioned before the first onmousemove
 	tt_OverInit();
 	tt_ShowInit();
@@ -635,7 +634,6 @@ function tt_MkTipSubDivs()
 	var sCss = 'position:relative;margin:0px;padding:0px;border-width:0px;left:0px;top:0px;line-height:normal;width:auto;',
 	sTbTrTd = ' cellspacing="0" cellpadding="0" border="0" style="' + sCss + '"><tbody style="' + sCss + '"><tr><td ';
 
-	tt_aElt[0].style.width = tt_GetClientW() + "px";
 	tt_aElt[0].innerHTML =
 		(''
 		+ (tt_aV[TITLE].length ?
@@ -707,26 +705,15 @@ function tt_FormatTip()
 			css.fontSize = tt_aV[TITLEFONTSIZE];
 			css.fontWeight = "bold";
 		}
-		if(tt_aV[WIDTH] > 0)
-			tt_w = tt_aV[WIDTH];
-		else
-		{
-			tt_w = tt_GetDivW(tt_aElt[3]) + tt_GetDivW(tt_aElt[4]);
-			// Some spacing between title DIV and closebutton
-			if(tt_aElt[4])
-				tt_w += pad;
-			// Restrict auto width to max width
-			if(tt_aV[WIDTH] < -1 && tt_w > -tt_aV[WIDTH])
-				tt_w = -tt_aV[WIDTH];
-		}
 		// Ensure the top border of the body DIV be covered by the title DIV
 		iOffY = -wBrd;
 	}
 	else
 	{
-		tt_w = 0;
 		iOffY = 0;
 	}
+	
+	tt_w = Math.abs(tt_aV[WIDTH]);
 
 	//-------- Body DIV ------------
 	css = tt_aElt[5].style;
@@ -802,27 +789,37 @@ function tt_FormatTip()
 	tt_SetTipOpa(tt_aV[FADEIN] ? 0 : tt_aV[OPACITY]);
 	tt_FixSize(iOffY, iOffSh);
 }
+
+function tt_set_elem_maxwidth(elem, w)
+{
+	if (tt_ie56)
+		elem.style.width = w + "px";
+	else
+		elem.style.maxWidth = w + "px";
+}
+
 // Fixate the size so it can't dynamically change while the tooltip is moving.
 function tt_FixSize(iOffY, iOffSh)
 {
 	var wIn, wOut, h, add, pad = tt_aV[PADDING], wBrd = tt_aV[BORDERWIDTH], i;
 
-	tt_aElt[0].style.width = tt_w + "px";
-	tt_aElt[0].style.pixelWidth = tt_w;
+	tt_set_elem_maxwidth(tt_aElt[0], tt_w);
 	wOut = tt_w - ((tt_aV[SHADOW]) ? tt_aV[SHADOWWIDTH] : 0);
 	// Body
 	wIn = wOut;
 	if(!tt_bBoxOld)
 		wIn -= (pad + wBrd) << 1;
-	tt_aElt[5].style.width = wIn + "px";
+	
+	tt_set_elem_maxwidth(tt_aElt[5], wIn);
 	// Title
 	if(tt_aElt[1])
 	{
 		wIn = wOut - ((tt_aV[TITLEPADDING] + 2) << 1);
 		if(!tt_bBoxOld)
 			wOut = wIn;
-		tt_aElt[1].style.width = wOut + "px";
-		tt_aElt[2].style.width = wIn + "px";
+		
+		tt_set_elem_maxwidth(tt_aElt[1], wOut);
+		tt_set_elem_maxwidth(tt_aElt[2], wIn);
 	}
 	// Max height specified
 	if(tt_h)
@@ -832,6 +829,7 @@ function tt_FixSize(iOffY, iOffSh)
 		{
 			if(!tt_bBoxOld)
 				tt_h -= (pad + wBrd) << 1;
+			
 			tt_aElt[5].style.height = tt_h + "px";
 		}
 	}
@@ -842,7 +840,7 @@ function tt_FixSize(iOffY, iOffSh)
 	i = tt_aElt.length - 1;
 	if(tt_aElt[i])
 	{
-		tt_aElt[i].style.width = tt_w + "px";
+		tt_set_elem_maxwidth(tt_aElt[i], tt_w);
 		tt_aElt[i].style.height = tt_h + "px";
 	}
 }
@@ -954,11 +952,12 @@ function tt_Show()
 	if(tt_aV[DURATION] > 0)
 		tt_tDurt.Timer("tt_HideInit()", tt_aV[DURATION], true);
 	tt_ExtCallFncs(0, "Show")
-	css.visibility = "visible";
+	css.display = "block";
 	tt_iState |= 0x2;
 	if(tt_aV[FADEIN])
 		tt_Fade(0, 0, tt_aV[OPACITY], Math.round(tt_aV[FADEIN] / tt_aV[FADEINTERVAL]));
 	tt_ShowIfrm();
+	tt_AdjustTipSize();
 }
 function tt_ShowIfrm()
 {
@@ -1135,6 +1134,25 @@ function tt_Fade(a, now, z, n)
 	}
 	now ? tt_SetTipOpa(now) : tt_Hide();
 }
+
+function tt_AdjustTipSize()
+{
+	//As this function is called on fade in, adjust the width of the div, when using ie56
+	if ((tt_aV[WIDTH] < 0) && tt_ie56) //!!!!!!! replace true with tt_ie56
+	{
+		var elm = tt_GetElt('WzBoDyI');
+		if (elm)
+		{
+			var w = tt_GetDivW(elm);
+			if ((w > 10) && (w < -tt_aV[WIDTH]))
+			{
+				tt_w = w;
+				tt_FixSize(0, 0);
+			}
+		}
+	}	
+}
+
 function tt_SetTipOpa(opa)
 {
 	// To circumvent the opacity nesting flaws of IE, we set the opacity
@@ -1233,15 +1251,15 @@ function tt_SetOpa(el, opa)
 				el.filtNo = css.filter;
 			// 2.) A DIV cannot be made visible in a single step if an
 			// opacity < 100 has been applied while the DIV was hidden
-			var bVis = css.visibility != "hidden";
+			var bVis = css.display != "none";
 			// 3.) In IE6, applying an opacity < 100 has no effect if the
 			//	   element has no layout (position, size, zoom, ...)
 			css.zoom = "100%";
 			if(!bVis)
-				css.visibility = "visible";
+				css.display = "block";
 			css.filter = "alpha(opacity=" + opa + ")";
 			if(!bVis)
-				css.visibility = "hidden";
+				css.display = "none";
 		}
 		else if(typeof(el.filtNo) != tt_u)
 			// Restore 'non-filter'
