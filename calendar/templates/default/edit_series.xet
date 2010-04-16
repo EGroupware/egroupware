@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.edit_series" template="" lang="" group="0" version="1.7.001">
+	<template id="calendar.edit_series" template="" lang="" group="0" version="1.7.002">
 		<groupbox rows="1" cols="1" class="editSeries" id="edit_series">
 			<caption label="This event is part of a series"/>
 			<description value="Do you want to edit this event as an exception or the whole series?"/>
@@ -13,7 +13,7 @@
 		</groupbox>
 		<styles>
 			#edit_series {
-   position: absolute;
+   position: fixed;
    top: 200px;
    left: 500px;
    background-color: white;
