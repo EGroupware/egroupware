@@ -1138,7 +1138,7 @@ function tt_Fade(a, now, z, n)
 function tt_AdjustTipSize()
 {
 	//As this function is called on fade in, adjust the width of the div, when using ie56
-	if ((tt_aV[WIDTH] < 0) && tt_ie56) //!!!!!!! replace true with tt_ie56
+	if (tt_aV[WIDTH] < 0)
 	{
 		var elm = tt_GetElt('WzBoDyI');
 		if (elm)
@@ -1148,6 +1148,12 @@ function tt_AdjustTipSize()
 			{
 				tt_w = w;
 				tt_FixSize(0, 0);
+				nmpx = tt_GetClientW() + tt_GetScrollX() - tt_w - 1;
+				if (nmpx != tt_maxPosX)
+				{
+					tt_maxPosX = nmpx;
+					tt_SetTipPos(tt_Pos(0), tt_Pos(1));
+				}
 			}
 		}
 	}	
