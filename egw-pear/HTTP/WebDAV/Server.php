@@ -2325,7 +2325,7 @@ class HTTP_WebDAV_Server
 	    	if (is_array($prop['val']))
 	    	{
 	    		$subprop = $prop['val'];
-		    	if (isset($subprop['ns']))
+		    	if (isset($subprop['ns']) || isset($subprop[0]['ns']))
 		    	{
 			    	$ret .= '<'.($prop['ns'] == $ns ? ($this->cnrnd ? $ns_hash[$ns].':' : '') : $ns_hash[$prop['ns']].':').$prop['name'].
 						(empty($prop['val']) ? '/>' : '>'.$this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs, $ns_hash).
