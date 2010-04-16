@@ -96,8 +96,9 @@ class accounts_ldap
 	 */
 	var $group_mail_classes = array(
 		'dbmailforwardingaddress' => 'mailforwardingaddress',
-		'dbmailuser' => 'mailforwardingaddress',
-		'qmailuser' => 'mailforwardingaddress',
+		'dbmailuser' => array('mailforwardingaddress','uid'),
+		'qmailuser' => array('mailforwardingaddress','uid'),
+		'mailaccount' => 'mailalias',
 	);
 
 	/**
@@ -270,6 +271,8 @@ class accounts_ldap
 				if ($this->ldapServerInfo->supportsObjectClass($objectclass) &&
 					($old && in_array($objectclass,$old['objectclass']) || $data_utf8['account_email'] || $old['mail']))
 				{
+					$extra_attr = false;
+					if (is_array($forward)) list($forward,$extra_attr) = each($forward);
 					if ($data_utf8['account_email'])	// setting an email
 					{
 						if (!in_array($objectclass,$old ? $old['objectclass'] : $to_write['objectclass']))
@@ -277,7 +280,7 @@ class accounts_ldap
 							if ($old) $to_write['objectclass'] = $old['objectclass'];
 							$to_write['objectclass'][] = $objectclass;
 						}
-						if ($objectclass != 'dbmailforwardingaddress') $to_write['uid'] = $data_utf8['account_lid'];
+						if ($extra_attr) $to_write[$extra_attr] = $data_utf8['account_lid'];
 						$to_write['mail'] = $data_utf8['account_email'];
 
 						if (!$members) $members = $this->members($data['account_id']);
@@ -293,7 +296,7 @@ class accounts_ldap
 					elseif($old)	// remove the mail and forwards only for existing entries
 					{
 						$to_write['mail'] = $to_write[$forward] = array();
-						if ($objectclass != 'dbmailforwardingaddress') $to_write['uid'] = array();
+						if ($extra_attr) $to_write[$extra_attr] = array();
 						if (($key = array_search($objectclass,$old['objectclass'])))
 						{
 							$to_write['objectclass'] = $old['objectclass'];
@@ -346,6 +349,7 @@ class accounts_ldap
 			}
 			if ($err)
 			{
+				error_log(__METHOD__."() ldap_".($old ? 'modify' : 'add')."(,'$dn',".array2string($to_write).") --> ldap_error()=".ldap_error($this->ds));
 				echo "ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")\n";
 				echo ldap_error($this->ds);
 				return false;
