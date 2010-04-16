@@ -383,7 +383,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 
         $output->startElement($state->getURIMeta(), 'Last', $attrs);
         $chars = $state->getServerAnchorLast($type);
-        $output->characters($chars);
+        $output->characters($chars ? $chars : '0'); // Some devices don't like empty anchors
         $output->endElement($state->getURIMeta(), 'Last');
 
         $output->startElement($state->getURIMeta(), 'Next', $attrs);
