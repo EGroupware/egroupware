@@ -375,11 +375,9 @@ class groupdav extends HTTP_WebDAV_Server
 		$props = array(
 			self::mkprop('current-user-principal',array(self::mkprop('href',$this->principalURL))),
 			self::mkprop('owner',array(self::mkprop('href',$this->base_uri.'/principals/users/'.$account_lid.'/'))),
-			self::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
+			//self::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
 			self::mkprop('alternate-URI-set',array(
 				self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']))),
-			self::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-						self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']))),
 			self::mkprop('principal-collection-set',array(
 				self::mkprop('href',$this->base_uri.'/principals/users/'),
 				self::mkprop('href',$this->base_uri.'/principals/groups/'),
@@ -388,6 +386,10 @@ class groupdav extends HTTP_WebDAV_Server
 
 		switch ($app)
 		{
+			case 'calendar':
+				$props[] = self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
+					self::mkprop('href',$this->base_uri.$path.'calendar/')));
+				break;
 			case 'infolog':
 				$props[] = self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
 					self::mkprop('href',$this->base_uri.$path.'infolog/')));
