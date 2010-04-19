@@ -1457,7 +1457,7 @@ function open_edit(series)
 						'errorImage'=>addslashes(html::image('phpgwapi','dialog_error',false,'style="width: 16px;"')),
 						'loaderImage'=>addslashes(html::image('phpgwapi','ajax-loader')),
 					),
-					'calend false to make all events of $app publicar.dragDropFunctions.dragEvent',
+					'calendar.dragDropFunctions.dragEvent',
 					'calendar.dragDropFunctions.dropEvent',
 					'top center 2'
 			);
