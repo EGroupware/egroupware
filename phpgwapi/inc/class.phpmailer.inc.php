@@ -790,6 +790,11 @@ class PHPMailer {
           $host = $hosts[$index];
           $port = $this->Port;
         }
+        $hostA = explode("://", $host);
+        if (strtolower($hostA[0]) == 'tls' || strtolower($hostA[0]) == 'ssl') {
+          $this->SMTPSecure = strtolower($hostA[0]);
+          $host = $hostA[1];
+        }
 
         $tls = ($this->SMTPSecure == 'tls');
         $ssl = ($this->SMTPSecure == 'ssl');
@@ -1057,6 +1062,7 @@ class PHPMailer {
     switch($this->message_type) {
       case 'alt':
       case 'alt_attachments':
+	  case 'alt_extended':
         $this->AltBody = $this->WrapText($this->AltBody, $this->WordWrap);
         break;
       default:
@@ -1162,6 +1168,7 @@ class PHPMailer {
         break;
       case 'attachments':
       case 'alt_attachments':
+	  case 'alt_extended':
         if($this->InlineImageExists()){
           $result .= sprintf("Content-Type: %s;%s\ttype=\"text/html\";%s\tboundary=\"%s\"%s", 'multipart/related', $this->LE, $this->LE, $this->boundary[1], $this->LE);
         } else {
@@ -1227,6 +1234,22 @@ class PHPMailer {
         $body .= $this->EndBoundary($this->boundary[2]);
         $body .= $this->AttachAll();
         break;
+      case 'alt_extended':
+        $body .= sprintf("--%s%s", $this->boundary[1], $this->LE);
+        $body .= sprintf("Content-Type: %s;%s" . "\tboundary=\"%s\"%s", 'multipart/alternative', $this->LE, $this->boundary[2], $this->LE.$this->LE);
+        $body .= $this->GetBoundary($this->boundary[2], '', 'text/plain', '') . $this->LE; // Create text body
+        $body .= $this->EncodeString($this->AltBody, $this->Encoding);
+        $body .= $this->LE.$this->LE;
+        $body .= $this->GetBoundary($this->boundary[2], '', 'text/html', '') . $this->LE; // Create the HTML body
+        $body .= $this->EncodeString($this->Body, $this->Encoding);
+        $body .= $this->LE.$this->LE;
+		// Create the extended body for an attached text/calendar
+        $body .= $this->GetBoundary($this->boundary[2], '', $this->attachment[0][4], '') . $this->LE; 
+        $body .= $this->EncodeString($this->attachment[0][0], $this->attachment[0][3]);
+        $body .= $this->LE.$this->LE;
+        $body .= $this->EndBoundary($this->boundary[2]);
+        $body .= $this->AttachAll();
+        break;
     }
 
     if ($this->IsError()) {
@@ -1272,7 +1295,7 @@ class PHPMailer {
       $encoding = $this->Encoding;
     }
     $result .= $this->TextLine('--' . $boundary);
-    $result .= sprintf("Content-Type: %s; charset = \"%s\"", $contentType, $charSet);
+    $result .= sprintf("Content-Type: %s; charset =\"%s\"", $contentType, $charSet);
     $result .= $this->LE;
     $result .= $this->HeaderLine('Content-Transfer-Encoding', $encoding);
     $result .= $this->LE;
@@ -1305,6 +1328,9 @@ class PHPMailer {
       }
       if(strlen($this->AltBody) > 0 && count($this->attachment) > 0) {
         $this->message_type = 'alt_attachments';
+      }
+      if(strlen($this->AltBody) > 0 && count($this->attachment) > 0 && stripos($this->attachment[0][4],'text/calendar')!==false) {
+        $this->message_type = 'alt_extended';
       }
     }
   }
@@ -1417,14 +1443,22 @@ class PHPMailer {
       $cidUniq[$cid] = true;
 
       $mime[] = sprintf("--%s%s", $this->boundary[1], $this->LE);
-      $mime[] = sprintf("Content-Type: %s; name=\"%s\"%s", $type, $this->EncodeHeader($this->SecureHeader($name)), $this->LE);
+	  if($disposition == 'part') {
+		$mime[] = sprintf("Content-Type: %s; charset=\"%s\"%s", $type, $this->CharSet, $this->LE);
+	  } else {
+		$mime[] = sprintf("Content-Type: %s; name=\"%s\"%s", $type, $this->EncodeHeader($this->SecureHeader($name)), $this->LE);
+	  }
       $mime[] = sprintf("Content-Transfer-Encoding: %s%s", $encoding, $this->LE);
 
       if($disposition == 'inline') {
         $mime[] = sprintf("Content-ID: <%s>%s", $cid, $this->LE);
       }
 
-      $mime[] = sprintf("Content-Disposition: %s; filename=\"%s\"%s", $disposition, $this->EncodeHeader($this->SecureHeader($name)), $this->LE.$this->LE);
+	  if($disposition != "part") {
+		$mime[] = sprintf("Content-Disposition: %s; filename=\"%s\"%s", $disposition, $this->EncodeHeader($this->SecureHeader($name)), $this->LE.$this->LE);
+	  } else {
+		$mime[] = sprintf("%s", $this->LE);
+	  }
 
       // Encode as string attachment
       if($bString) {
@@ -1768,6 +1802,30 @@ class PHPMailer {
   }
 
   /**
+   * Adds a string or binary attachment (non-filesystem) to the list.
+   * This method can be used to attach ascii or binary data,
+   * such as a BLOB record from a database.
+   * @param string $string String attachment data.
+   * @param string $filename Name of the attachment.
+   * @param string $encoding File encoding (see $Encoding).
+   * @param string $type File extension (MIME) type.
+   * @return void
+   */
+  function AddStringPart($string, $filename, $encoding = "base64", $type = "application/octet-stream") {
+      // Append to $attachment array
+      $this->attachment[] = array(
+      	0 => $string,
+      	1 => $filename,
+      	2 => $filename,
+      	3 => $encoding,
+      	4 => $type,
+      	5 => true, // isString
+      	6 => "part",
+      	7 => 0
+	  );
+  }
+
+  /**
    * Adds an embedded attachment.  This can include images, sounds, and
    * just about any other document.  Make sure to set the $type to an
    * image type.  For JPEG images use "image/jpeg" and for GIF images
@@ -1893,6 +1951,32 @@ class PHPMailer {
    */
   public function ClearCustomHeaders() {
     $this->CustomHeader = array();
+  }
+
+  public function getMessageHeader() {
+	if(!isset($this->sentHeader)) {
+		// Set whether the message is multipart/alternative
+		if(!empty($this->AltBody)) $this->ContentType = "multipart/alternative";
+
+		$this->SetMessageType();
+		$header = $this->CreateHeader();
+		$this->sentHeader = $header;
+	}
+
+	return $this->sentHeader;
+  }
+
+  public function getMessageBody() {
+	if(!isset($this->sentBody)) {
+		// Set whether the message is multipart/alternative
+		if(!empty($this->AltBody)) $this->ContentType = "multipart/alternative";
+
+		$this->SetMessageType();
+		$body = $this->CreateBody();
+		$this->sentBody = $body;
+	}
+
+	return $this->sentBody;
   }
 
   /////////////////////////////////////////////////
