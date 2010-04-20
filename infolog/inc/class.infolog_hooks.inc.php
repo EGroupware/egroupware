@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -16,6 +16,19 @@
 class infolog_hooks
 {
 	/**
+	 * For which groups should no group acl be used: infolog group owners
+	 *
+	 * @param string|array $data
+	 * @return boolean|array true, false or array with group-account_id's
+	 */
+	static function not_enum_group_acls($data)
+	{
+		$config = config::read('infolog');
+
+		return $config['group_owners'];
+	}
+
+	/**
 	 * Hook called by link-class to include infolog in the appregistry of the linkage
 	 *
 	 * @param array/string $location location and other parameters (not used)
@@ -23,6 +36,15 @@ class infolog_hooks
 	 */
 	static function search_link($location)
 	{
+		// register our not_enum_group_acls hook, if not already registered
+		// can be removed after next infolog version update after 1.6
+		if ($GLOBALS['egw']->hooks->single('not_enum_group_acls',$acl_app) === false)
+		{
+			include(EGW_INCLUDE_ROOT.'/infolog/setup/setup.inc.php');
+			$GLOBALS['egw']->hooks->register_hooks('infolog',$setup_info['infolog']['hooks']);
+			unset($setup_info);
+		}
+
 		return array(
 			'query'      => 'infolog.infolog_bo.link_query',
 			'title'      => 'infolog.infolog_bo.link_title',
