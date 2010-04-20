@@ -79,7 +79,7 @@ class html
 	/**
 	* Created an input-field with an attached color-picker
 	*
-	* Please note: it need to be called before the call to egw_header() !!!
+	* Please note: it need to be called before the call to phpgw_header() !!!
 	*
 	* @param string $name the name of the input-field
 	* @param string $value the actual value for the input-field, default ''
@@ -89,8 +89,8 @@ class html
 	static function inputColor($name,$value='',$title='')
 	{
 		$id = str_replace(array('[',']'),array('_',''),$name).'_colorpicker';
-		$onclick = "javascript:window.open('".self::$api_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+encodeURIComponent(document.getElementById('$id').value),'colorPicker','width=240,height=187,scrollbars=no,resizable=no,toolbar=no');";
-		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.self::htmlspecialchars($value).'" size="7" maxsize="7" /> '.
+		$onclick = "javascript:window.open('".self::$api_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+document.getElementById('$id').value,'colorPicker','width=240,height=187,scrollbars=no,resizable=no,toolbar=no');";
+		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.self::htmlspecialchars($value).'" /> '.
 			'<a href="#" onclick="'.$onclick.'">'.
 			'<img src="'.self::$api_js_url.'/colorpicker/ed_color_bg.gif'.'"'.($title ? ' title="'.self::htmlspecialchars($title).'"' : '')." /></a>";
 	}
@@ -100,7 +100,8 @@ class html
 	*
 	* Note: The wz_tooltip.js file gets automaticaly loaded at the end of the page
 	*
-	* @param string $text text or html for the tooltip, all chars allowed, they will be quoted approperiate
+	* @param string/boolean $text text or html for the tooltip, all chars allowed, they will be quoted approperiate
+	*	Or if False the content (innerHTML) of the element itself is used.
 	* @param boolean $do_lang (default False) should the text be run though lang()
 	* @param array $options param/value pairs, eg. 'TITLE' => 'I am the title'. Some common parameters:
 	*  title (string) gives extra title-row, width (int,'auto') , padding (int), above (bool), bgcolor (color), bgimg (URL)
@@ -109,35 +110,28 @@ class html
 	*/
 	static function tooltip($text,$do_lang=False,$options=False)
 	{
+		if (!self::$wz_tooltip_included)
+		{
+			if (strpos($GLOBALS['egw_info']['flags']['need_footer'],'wz_tooltip')===false)
+			{
+				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.self::$api_js_url.'/wz_tooltip/wz_tooltip.js"></script>'."\n";
+			}
+			self::$wz_tooltip_included = True;
+		}
 		if ($do_lang) $text = lang($text);
 
-		$ttip = ' onmouseover="Tip(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\'';
-		
-		$sticky = false;
+		$opt_out = 'this.T_WIDTH = 200;';
 		if (is_array($options))
 		{
 			foreach($options as $option => $value)
 			{
-				$option = strtoupper($option);
-				if ($option == 'STICKY') $sticky = (bool)$value;
-
-				switch(gettype($value))
-				{
-					case 'boolean':
-						$value = $value ? 'true' : 'false';
-						break;
-					case 'string':
-						if (stripos($value,"'")===false) $value = "'$value'";
-						break;
-				}
-				$ttip .= ','.$option.','.$value;
+				$opt_out .= 'this.T_'.strtoupper($option).'='.(is_bool($value)?($value?'true':'false'):
+					(is_numeric($value)?$value:"'".str_replace(array("'",'"'),array("\\'",'&quot;'),$value)."'")).'; ';
 			}
 		}
-		$ttip .= ')"';
+		if ($text === False) return ' onmouseover="'.$opt_out.'return escape(this.innerHTML);"';
 
-		$ttip .= ' onmouseout="UnTip()"';
-
-		return $ttip;
+		return ' onmouseover="'.$opt_out.'return escape(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\')"';
 	}
 
 	/**
@@ -149,7 +143,7 @@ class html
 	static function activate_links($content)
 	{
 		if (!$content || strlen($content) < 20) return $content;	// performance
-		
+
 		// Exclude everything which is already a link
 		$NotAnchor = '(?<!"|href=|href\s=\s|href=\s|href\s=)';
 
@@ -173,97 +167,6 @@ class html
 		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . '/i';
 
 		return preg_replace( $Expr, "<a href=\"http://$0\" target=\"_blank\">$0</a>", $result );
-	}
-
-	/**
-	 * activates URLs in a text, URLs get replaced by html-links using htmlpurify
-	 *
-	 * @param string $content text containing URLs
-	 * @return string html with activated links
-	 */
-	static function activateLinks($content)
-	{
-		if (!$content || strlen($content) < 20) return $content;	// performance
-
-		// spamsaver emailaddress
-		$result = preg_replace('/'.$NotAnchor.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
-			'<a href="#" onclick="document.location=\'mai\'+\'lto:\\1\'+unescape(\'%40\')+\'\\2.\\3\'; return false;">\\1 AT \\2 DOT \\3</a>',
-			$content);
-
-		$config = self::purifyCreateDefaultConfig();
-		$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));
-		// maybe the two following lines are useful for caching???
-		$config->set('HTML.DefinitionID', 'activatelinks');
-		$config->set('HTML.DefinitionRev', 1);
-		// doctype and tidylevel
-			$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-		$config->set('HTML.TidyLevel', 'light');
-		// EnableID is needed for anchor tags
-		$config->set('Attr.EnableID',true);
-		// actual allowed tags and attributes
-		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true));
-		$config->set('AutoFormat.RemoveEmpty', true);
-		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
-					'font[size|color],'.
-					'ul[type],ol[type|start],li,'.
-					'h1,h2,h3,'.
-					'span[class|style],'.
-					'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
-					'tbody,thead,tfoot,colgroup,'.
-					'col[width|span],'.
-					'blockquote[class|cite|dir],'.
-					'tr[class|style|align|bgcolor|align|valign],'.
-					'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'a[href|target|name|title],'.
-					'img[src|alt|title]');
-		$config->set('Attr.DefaultInvalidImage', 'Image removed by htmlpurify');
-		$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
-		$config->set('AutoFormat.Linkify',true);
-		return self::purify($result,$config);
-	}
-
-	/**
-	 * deactivates URLs in a text, URLs get replaced by html-links using htmlpurify
-	 *
-	 * @param string $content text containing URLs
-	 * @return string html with activated links
-	 */
-	static function deactivateLinks($_html)
-	{
-		$config = self::purifyCreateDefaultConfig();
-		$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));
-		// maybe the two following lines are useful for caching???
-		$config->set('HTML.DefinitionID', 'deactivatelinks');
-		$config->set('HTML.DefinitionRev', 1);
-		// doctype and tidylevel
-			$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
-		$config->set('HTML.TidyLevel', 'light');
-		// EnableID is needed for anchor tags
-		$config->set('Attr.EnableID',true);
-		// actual allowed tags and attributes
-		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true));
-		$config->set('AutoFormat.RemoveEmpty', true);
-		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
-					'font[size|color],'.
-					'ul[type],ol[type|start],li,'.
-					'h1,h2,h3,'.
-					'span[class|style],'.
-					'table[class|border|cellpadding|cellspacing|width|style|align|bgcolor|align],'.
-					'tbody,thead,tfoot,colgroup,'.
-					'col[width|span],'.
-					'blockquote[class|cite|dir],'.
-					'tr[class|style|align|bgcolor|align|valign],'.
-					'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-					'a[href|target|name|title],'.
-					'img[src|alt|title]');
-		$config->set('Attr.DefaultInvalidImage', 'Image removed by htmlpurify');
-		$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
-
-		$config->set('AutoFormat.DisplayLinkURI',true);
-		$_html = self::purify($_html,$config);
-		return $_html;
 	}
 
 	/**
@@ -316,18 +219,6 @@ class html
 		elseif($multiple < 0)
 		{
 			$options .= ' size="'.abs($multiple).'"';
-		}
-		// fix width for MSIE in/for selectboxes
-		if (self::$user_agent == 'msie') 
-		{
-			if (stripos($options,'onfocus="') === false)
-			{
-				$options .= ' onfocus="window.dropdown_menu_hack(this);" ';
-			}
-			else
-			{
-				$options = str_ireplace('onfocus="','onfocus="window.dropdown_menu_hack(this);',$options);
-			}
 		}
 		$out = "<select name=\"$name\" $options>\n";
 
@@ -665,12 +556,11 @@ class html
 	* @param string $_name name and id of the input-field
 	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
 	* @param string $_content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
-	* @param string $_height='400px'
-	* @param string $_width='100%'
-	* @param boolean $_purify=true
+	* @param string $style='' initial css for the style attribute
+	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	*/
-	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true)
+	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%')
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -678,7 +568,7 @@ class html
 		}
 		else
 		{
-			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width,'',$_purify);
+			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width);
 		}
 	}
 
@@ -840,24 +730,11 @@ class html
 		return self::form(self::submit_button($name,$label),$hidden_vars,$url,$url_vars,$form_name,'',$method);
 	}
 
-	const THEAD = 1;
-	const TFOOT = 2;
-	const TBODY = 3;
-	static $part2tag = array(
-		self::THEAD => 'thead',
-		self::TFOOT => 'tfoot',
-		self::TBODY => 'tbody',
-	);
-
 	/**
 	 * creates table from array of rows
 	 *
 	 * abstracts the html stuff for the table creation
 	 * Example: $rows = array (
-	 *  'h1' => array(	// optional header row(s)
-	 *  ),
-	 *  'f1' => array(	// optional footer row(s)
-	 *  ),
 	 *	'1'  => array(
 	 *		1 => 'cell1', '.1' => 'colspan=3',
 	 *		2 => 'cell2',
@@ -874,19 +751,11 @@ class html
 	{
 		$html = $no_table_tr ? '' : "<table $options>\n";
 
-		$part = 0;
 		foreach($rows as $key => $row)
 		{
 			if (!is_array($row))
 			{
 				continue;					// parameter
-			}
-			// get the current part from the optional 'h' or 'f' prefix of the key
-			$p = $key[0] == 'h' ? html::THEAD : ($key[0] == 'f' ? html::TFOOT : html::TBODY);
-			if ($part < $p && ($part || $p < self::TBODY))	// add only allowed and neccessary transitions
-			{
-				if ($part) $html .= '</'.self::$part2tag[$part].">\n";
-				$html .= '<'.self::$part2tag[$part=$p].">\n";
 			}
 			$html .= $no_table_tr && $key == 1 ? '' : "\t<tr ".$rows['.'.$key].">\n";
 
@@ -912,10 +781,6 @@ class html
 		if (!is_array($rows))
 		{
 			echo "<p>".function_backtrace()."</p>\n";
-		}
-		if ($part)	// close current part
-		{
-			$html .= "</".self::$part2tag[$part].">\n";
 		}
 		$html .= "</table>\n";
 
@@ -988,17 +853,16 @@ class html
 	 */
 	static function image( $app,$name,$title='',$options='' )
 	{
-		if (is_array($name))	// menuaction and other get-vars
-		{
-			$name = $GLOBALS['egw']->link('/index.php',$name);
-		}
 		if (substr($name,0,5) == 'vfs:/')	// vfs pseudo protocoll
 		{
 			$name = egw::link(egw_vfs::download_url(substr($name,4)));
 		}
-		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://' || stripos($name,'etemplate/thumbnail.php') )
+		if (is_array($name))	// menuaction and other get-vars
 		{
-			if (!($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://')) $name = '/'.$name;
+			$name = $GLOBALS['egw']->link('/index.php',$name);
+		}
+		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://')
+		{
 			$url = $name;
 		}
 		else	// no URL, so try searching the image
@@ -1020,7 +884,7 @@ class html
 				$path = EGW_SERVER_ROOT.$url;
 			}
 
-			if (is_null($path) || (!@is_readable($path) && stripos($path,'webdav.php')===false))
+			if (is_null($path) || !@is_readable($path))
 			{
 				// if the image-name is a percentage, use a progressbar
 				if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
@@ -1353,24 +1217,6 @@ class html
 	}
 
 	/**
-	 * creates the HTMLPurifier default config
-	 *
-	 * @return HTMLPurifier_Config object
-	 */
-	static function purifyCreateDefaultConfig()
-	{
-		// add htmlpurifiers library to include_path
-		require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.path.php');
-		// include most of the required files, for best performance with bytecode caches
-		require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.includes.php');
-		// installs an autoloader for other files
-		require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.autoload.php');
-		// testcase to test the processing of purify
-		//$html = "<h1 onclick=\"alert('hallo');\"> h1 </h1>".$html;
-		return HTMLPurifier_Config::createDefault();
-	}
-
-	/**
 	 * Runs HTMLPurifier over supplied html to remove malicious code
 	 *
 	 * @param string $html
@@ -1390,12 +1236,11 @@ class html
 			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.includes.php');
 			// installs an autoloader for other files
 			require_once(EGW_API_INC.'/htmlpurifier/library/HTMLPurifier.autoload.php');
-			// testcase to test the processing of purify
-			//$html = "<h1 onclick=\"alert('hallo');\"> h1 </h1>".$html;
+
 			if (is_null($config))
 			{
 				$config = HTMLPurifier_Config::createDefault();
-				$config->set('Core.Encoding', (self::$charset?self::$charset:'UTF-8'));
+				$config->set('Core.Encoding', self::$charset);
 				// maybe the two following lines are useful for caching???
 				$config->set('HTML.DefinitionID', 'egroupware');
 				$config->set('HTML.DefinitionRev', 1);
@@ -1417,15 +1262,13 @@ class html
 							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'a[href|target|name|title],img[src|alt|title]');
-				$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
+				$config->set('Cache.SerializerPath', $GLOBALS['egw_info']['server']['temp_dir']);
 			}
 			$purifier = new HTMLPurifier($config);
 			// the latter may enable you to modify the config later on, but by now
 			// the effort for e.g.  enabling anchor tags is already included above
 			//$def =& $purifier->config->getHTMLDefinition(true);
 			//$def->addAttribute('a', 'name', 'Text');
-
-
 		}
     	return $purifier->purify( $html );
 	}
