@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -48,6 +48,7 @@ $setup_info['infolog']['hooks']['preferences'] = 'infolog_hooks::all_hooks';
 $setup_info['infolog']['hooks']['settings'] = 'infolog_hooks::settings';
 $setup_info['infolog']['hooks']['verify_settings'] = 'infolog_hooks::verify_settings';
 $setup_info['infolog']['hooks']['admin'] = 'infolog_hooks::all_hooks';
+$setup_info['infolog']['hooks']['not_enum_group_acls'] = 'infolog_hooks::not_enum_group_acls';
 $setup_info['infolog']['hooks']['deleteaccount'] = 'infolog.infolog_so.change_delete_owner';
 $setup_info['infolog']['hooks'][] = 'home';
 $setup_info['infolog']['hooks']['addressbook_view'] = 'infolog.infolog_ui.hook_view';

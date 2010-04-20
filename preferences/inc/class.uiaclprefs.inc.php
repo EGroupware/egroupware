@@ -99,7 +99,9 @@ class uiaclprefs
 			$no_privat_grants = $owner != $GLOBALS['egw_info']['user']['account_id'];
 		}
 		$this->acl = new acl((int)$owner);
-		$this->acl->read_repository();
+		// should we enumerate group acl (does app use it), eg. addressbook does NOT use group ACL's but group addressbooks
+		$not_enum_group_acls = $acl_app == 'addressbook' ? true : $GLOBALS['egw']->hooks->single('not_enum_group_acls',$acl_app);
+		$this->acl->read_repository($not_enum_group_acls);
 
 		if ($_POST['save'] || $_POST['apply'])
 		{
@@ -223,7 +225,15 @@ class uiaclprefs
 		$totalentries = $GLOBALS['egw']->accounts->total;
 		$shownentries = count($accounts);
 
-		$memberships = $GLOBALS['egw']->accounts->memberships($owner,true);
+		if ($not_enum_group_acls === true)
+		{
+			$memberships = array();
+		}
+		else
+		{
+			$memberships = $GLOBALS['egw']->accounts->memberships($owner,true);
+			if (is_array($not_enum_group_acls)) $memberships = array_diff($memberships,$not_enum_group_acls);
+		}
 		$header_type = '';
 		$processed = Array();
 		foreach((array)$accounts as $uid => $data)
