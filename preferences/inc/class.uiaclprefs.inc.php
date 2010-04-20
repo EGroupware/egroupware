@@ -202,7 +202,7 @@
 				'start'	=> $start,
 				'query'	=> $query,
 				'query_type' => $search_type, //KL 20061204 added to have query_type available
-				'order' => 'account_type,account_lid',
+				'order' => 'account_type,account_fullname',
 				'sort'	=> 'ASC',
 			));
 			$totalentries = $GLOBALS['egw']->accounts->total;
@@ -324,7 +324,7 @@
 			) as $right => $name)
 			{
 				$is_group_set = False;
-				if ($is_group)
+				if ($memberships)
 				{
 					$grantors = $this->acl->get_ids_for_location($id,$right,$GLOBALS['egw_info']['flags']['currentapp']);
 					if (is_array($grantors))
