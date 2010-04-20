@@ -328,7 +328,14 @@ class accounts_sql
 			'account_lastname'  => 'n_family',
 			'account_email'     => 'contact_email',
 		);
-		if (isset($order2contact[$order])) $order = $order2contact[$order];
+
+		// fetch order of account_fullname from common::display_fullname
+		if (strpos($order,'account_fullname') !== false)
+		{
+			$order = str_replace('account_fullname',preg_replace('/[ ,]+/',',',str_replace(array('[',']'),'',
+				common::display_fullname('account_lid','account_firstname','account_lastname'))),$order);
+		}
+		$order = str_replace(array_keys($order2contact),array_values($order2contact),$order);
 		if ($sort) $order .= ' '.$sort;
 
 		switch($_type)
