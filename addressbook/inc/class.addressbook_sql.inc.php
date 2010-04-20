@@ -655,4 +655,13 @@ class addressbook_sql extends so_sql_cf
 		}
 		return false;   // no error
 	}
+
+	/**
+	* Deletes custom field data
+	* Implemented to deal with LDAP backend, which saves CFs in SQL, but the account record is in LDAP
+	*/
+	function delete_customfields($data)
+	{
+		$this->db->delete($this->extra_table,$data,__LINE__,__FILE__);
+	}
 }

@@ -432,8 +432,9 @@ class addressbook_so
 		if ($this->somain->delete($where))
 		{
 			// delete customfields, can return 0 if there are no customfields
-			if(!($this->somain instanceof addressbook_sql)) {
-				$this->soextra->delete(array($this->extra_id => $contact));
+			if(!($this->somain instanceof addressbook_sql))
+			{
+				$this->soextra->delete_customfields(array($this->extra_id => $contact));
 			}
 
 			// delete from distribution list(s)
@@ -504,8 +505,9 @@ class addressbook_so
 		if($error_nr) return $error_nr;
 
 		// save customfields, if not already done by somain->save();
-		if(!($this->somain instanceof addressbook_sql)) {
-			$this->soextra->save($this->data2db($contact));
+		if(!($this->somain instanceof addressbook_sql))
+		{
+			$this->soextra->save_customfields($this->data2db($contact));
 		}
 		return false;	// no error
 	}
@@ -737,8 +739,9 @@ class addressbook_so
 		if (!$new_owner)
 		{
 			$this->somain->delete(array('owner' => $account_id));
-			if(!($this->somain instanceof addressbook_sql)) {
-				$this->soextra->delete(array($this->extra_owner => $account_id));
+			if(!($this->somain instanceof addressbook_sql)) 
+			{
+				$this->soextra->delete_customfields(array($this->extra_owner => $account_id));
 			}
 		}
 		else
