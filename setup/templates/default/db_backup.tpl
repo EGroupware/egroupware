@@ -85,14 +85,14 @@
 			<table style="border: 1px solid black; border-collapse: collapse;" border="1" width="100%">
 				<tr align="center">
 					<td>{lang_filename}</td>
-					<td>{lang_date}</td>
+					<td>{lang_mod}</td>
 					<td>{lang_size}</td>
 					<td>{lang_actions}</td>
 				</tr>
 <!-- BEGIN set_row -->
 				<tr align="center">
 					<td>{filename}</td>
-					<td>{date}</td>
+					<td>{mod}</td>
 					<td>{size}</td>
 					<td>{actions}</td>
 				</tr>

@@ -224,18 +224,18 @@ while($handle && ($file = readdir($handle)))
 {
 	if ($file != '.' && $file != '..')
 	{
-		$files[filectime($db_backup->backup_dir.'/'.$file)] = $file;
+		$files[$file] = filectime($db_backup->backup_dir.'/'.$file);
 	}
 }
 if ($handle) closedir($handle);
 
-krsort($files);
-foreach($files as $ctime => $file)
+arsort($files);
+foreach($files as $file => $ctime)
 {
 	$size = filesize($db_backup->backup_dir.'/'.$file);
 	$setup_tpl->set_var(array(
 		'filename'	=> $file,
-		'date'		=> date('Y-m-d H:i',$ctime),
+		'mod'		=> date('Y-m-d H:i',$ctime),
 		'size'		=> sprintf('%3.1lf MB (%d)',$size/(1024*1024),$size),
 		'actions'	=> '<input type="submit" name="download['.$file.']" value="'.htmlspecialchars(lang('download')).'" />&nbsp;'."\n".
 			'<input type="submit" name="delete['.$file.']" value="'.htmlspecialchars(lang('delete')).'" onclick="return confirm(\''.
@@ -264,6 +264,7 @@ $setup_tpl->set_var(array(
 	'lang_backup_files'  => lang('check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)'),
 	'lang_filename'			=> lang('filename'),
 	'lang_date'				=> lang('created'),
+	'lang_mod'				=> lang('modified'),
 	'lang_size'				=> lang('size'),
 ));
 
