@@ -133,7 +133,7 @@ class acl
 		{
 			$this->acl();
 		}
-		if ($no_groups === true)
+		if ($no_groups === true || !$this->account_id)
 		{
 			$acl_acc_list = $this->account_id;
 		}
