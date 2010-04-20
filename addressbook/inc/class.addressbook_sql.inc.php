@@ -121,8 +121,8 @@ class addressbook_sql extends so_sql_cf
 				{
 					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
 				}
-				$filter[] = "(contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
-					" OR contact_private=0 AND contact_owner IN (".
+				$filter[] = "(".$this->table_name.".contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+					" OR contact_private=0 AND ".$this->table_name.".contact_owner IN (".
 					implode(',',array_keys($this->grants))."))";
 			}
 		}
@@ -621,38 +621,38 @@ class addressbook_sql extends so_sql_cf
 	}
 
 	/**
-        * saves custom field data
-	* Re-implemented to deal with extra contact_owner column
-        *
-        * @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
-        * @return bool false on success, errornumber on failure
-        */
-        function save_customfields($data)
-        {
-                foreach ((array)$this->customfields as $name => $options)
-                {
-                        if (!isset($data[$field = $this->get_cf_field($name)])) continue;
+	 * saves custom field data
+	 * Re-implemented to deal with extra contact_owner column
+	 *
+	 * @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
+	 * @return bool false on success, errornumber on failure
+	 */
+	function save_customfields($data)
+	{
+		foreach ((array)$this->customfields as $name => $options)
+		{
+			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
 
-                        $where = array(
-                                $this->extra_id    => $data['id'],
-                                $this->extra_key   => $name,
-                        );
-                        $is_multiple = $this->is_multiple($name);
+			$where = array(
+					$this->extra_id    => $data['id'],
+					$this->extra_key   => $name,
+				);
+			$is_multiple = $this->is_multiple($name);
 
-                        // we explicitly need to delete fields, if value is empty or field allows multiple values or we have no unique index
-                        if(empty($data[$field]) || $is_multiple || !$this->extra_has_unique_index)
-                        {
-                                $this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);
-                                if (empty($data[$field])) continue;     // nothing else to do for empty values
-                        }
-                        foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : (array)$data[$field] as $value)
-                        {
-                                if (!$this->db->insert($this->extra_table,array($this->extra_value => $value, 'contact_owner' => $data['owner']),$where,__LINE__,__FILE__,$this->app))
-                                {
-                                        return $this->db->Errno;
-                                }
-                        }
-                }
-                return false;   // no error
-        }
+			// we explicitly need to delete fields, if value is empty or field allows multiple values or we have no unique index
+			if(empty($data[$field]) || $is_multiple || !$this->extra_has_unique_index)
+			{
+				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);
+				if (empty($data[$field])) continue;     // nothing else to do for empty values
+			}
+			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : (array)$data[$field] as $value)
+			{
+				if (!$this->db->insert($this->extra_table,array($this->extra_value => $value, 'contact_owner' => $data['owner']),$where,__LINE__,__FILE__,$this->app))
+				{
+					return $this->db->Errno;
+				}
+			}
+		}
+		return false;   // no error
+	}
 }
