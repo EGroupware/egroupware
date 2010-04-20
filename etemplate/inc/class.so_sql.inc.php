@@ -1005,7 +1005,7 @@ class so_sql
 			$data = array();
 			foreach($cols as $db_col => $col)
 			{
-				$data[$col] = $row[$db_col];
+				$data[$col] = (isset($row[$db_col]) ? $row[$db_col] : $row[$col]);
 			}
 			$arr[] = $this->db2data($data);
 			$n++;
