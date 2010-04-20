@@ -33,7 +33,6 @@
 			$owner		= get_var('owner',array('POST','GET'),$GLOBALS['egw_info']['user']['account_id']);
 			$search_type= get_var('search_type',array('POST','GET'));
 
-
 			if (!$acl_app)
 			{
 				$acl_app            = 'preferences';
@@ -224,8 +223,6 @@
 		        {
 			        if ($data['account_type'] == 'u' && $data['account_id'] == $owner)
 				{
-					$shownentries--;
-					$totalentries--;
 					continue;	/* no need to grant to self if user */
 				}
 				if ($data['account_type'] != $header_type)
