@@ -218,7 +218,7 @@ class uiaclprefs
 			'start'	=> $start,
 			'query'	=> $query,
 			'query_type' => $search_type, //KL 20061204 added to have query_type available
-			'order' => 'account_type,account_lid',
+			'order' => 'account_type,account_fullname',
 			'sort'	=> 'ASC',
 		));
 		$totalentries = $GLOBALS['egw']->accounts->total;
@@ -346,7 +346,6 @@ class uiaclprefs
 		$this->template->set_var('row_class',$tr_class);
 		$this->template->set_var('user',$name);
 		$rights = $this->acl->get_rights($id,$GLOBALS['egw_info']['flags']['currentapp']);
-		$is_group = $GLOBALS['egw']->accounts->get_type($id) == 'g';
 
 		foreach(array(
 			EGW_ACL_READ		=> 'read',
@@ -360,7 +359,7 @@ class uiaclprefs
 		) as $right => $name)
 		{
 			$is_group_set = False;
-			if ($is_group)
+			if ($memberships)
 			{
 				$grantors = $this->acl->get_ids_for_location($id,$right,$GLOBALS['egw_info']['flags']['currentapp']);
 				if (is_array($grantors))
