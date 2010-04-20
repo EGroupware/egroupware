@@ -986,7 +986,6 @@ class so_sql
 			}
 			$rs = $this->db->select($this->table_name,$mysql_calc_rows.$colums,$query,__LINE__,__FILE__,
 				$start,$order_by,$this->app,$num_rows,$join);
-
 			$cols = $this->_get_columns($only_keys,$extra_cols);
 		}
 		if ((int) $this->debug >= 4) echo "<p>sql='{$this->db->Query_ID->sql}'</p>\n";
@@ -1253,7 +1252,12 @@ class so_sql
 				}
 				else	// only the specified columns
 				{
-					if (stripos($col,'as')!==false) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
+					if (stripos($col,'as'))	// if there's already an explicit naming of the column, just use it
+					{
+						$col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
+						$cols[$col] = $col;
+						continue;
+					}
 					if (($db_col = array_search($col,$this->db_cols)) !== false)
 					{
 						$cols[$db_col] = $col;
