@@ -449,7 +449,8 @@ class so_sql_cf extends so_sql
 			foreach($criteria as $name => $val)
 			{
 				$extra_columns = $this->db->get_table_definitions($app, $this->extra_table);
-				if(is_string($name) && $extra_columns['fd'][array_search($name, $this->db_cols)]) {
+				if(is_string($name) && $extra_columns['fd'][array_search($name, $this->db_cols)])
+				{
 					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
 						array_search($name, $this->db_cols) => $val,
 					));
@@ -458,10 +459,13 @@ class so_sql_cf extends so_sql
 			}
 		}
 		// replace ambiguous column with (an exact match of) table_name.column
-		if(is_array($only_keys)) {
-			foreach($only_keys as $key => &$col) {
-				if(is_numeric($key) && in_array($col, $this->db_cols)) {
-					$col = $this->table_name .'.'.array_search($col, $this->db_cols);
+		if(is_array($only_keys))
+		{
+			foreach($only_keys as $key => &$col)
+			{
+				if(is_numeric($key) && in_array($col, $this->db_cols))
+				{
+					$col = $this->table_name .'.'.array_search($col, $this->db_cols).' AS '.$col;
 				}
 			}
 		}
@@ -511,7 +515,7 @@ class so_sql_cf extends so_sql
 						}
 						else	// using egw_db::expression to allow to use array() with possible values or NULL
 						{
-							if($this->customfields[$this->get_cf_name($name)]['type'] == 'select' && 
+							if($this->customfields[$this->get_cf_name($name)]['type'] == 'select' &&
 								$this->customfields[$this->get_cf_name($name)]['rows'] > 1)
 							{
 								// Multi-select - any entry with the filter value selected matches
