@@ -1490,29 +1490,36 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  private function EncodeFile($path, $encoding = 'base64') {
+  private function EncodeFile($path, $encoding = 'base64') 
+  {
+	if (function_exists('get_magic_quotes')) 
+	{
+		function get_magic_quotes() 
+		{
+			return false;
+		}
+	}
+	if (PHP_VERSION < 6) 
+	{
+		$magic_quotes = get_magic_quotes_runtime();
+		set_magic_quotes_runtime(0);
+	}
 	try {
-		if (!@$fd = fopen($path,'rb')) {
+		if ((@$file_buffer  = file_get_contents($path."bak"))===false)
+		{
 			throw new phpmailerException($this->Lang('file_open') . $path, self::STOP_CONTINUE);
 		}
-		if (function_exists('get_magic_quotes')) {
-			function get_magic_quotes() {
-				return false;
-			}
-		}
-		if (PHP_VERSION < 6) {
-			$magic_quotes = get_magic_quotes_runtime();
-			set_magic_quotes_runtime(0);
-		}
-		$file_buffer  = file_get_contents($path);
-		fclose($fd);
 		$file_buffer  = $this->EncodeString($file_buffer, $encoding);
 		if (PHP_VERSION < 6) 
 		{
 			set_magic_quotes_runtime($magic_quotes);
-		}
+		}		
 		return $file_buffer;
 	} catch (Exception $e) {
+		if (PHP_VERSION < 6) 
+		{
+			set_magic_quotes_runtime($magic_quotes);
+		}
 		$this->SetError($e->getMessage());
 		return '';
 	}
