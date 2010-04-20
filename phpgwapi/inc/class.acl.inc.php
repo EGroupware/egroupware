@@ -122,10 +122,10 @@ class acl
 	/**
 	 * Read acl records for $acl->account_id from reposity
 	 *
-	 * @internal
+	 * @param boolean|array $no_groups=false if true, do not use memberships, if array do not use given groups
 	 * @return array along with storing it in $acl->data.  <br>
 	 */
-	function read_repository()
+	function read_repository($no_groups=false)
 	{
 		// For some reason, calling this via XML-RPC doesn't call the constructor.
 		// Here is yet another work around(tm) (jengo)
@@ -133,9 +133,16 @@ class acl
 		{
 			$this->acl();
 		}
-		$acl_acc_list = $GLOBALS['egw']->accounts->memberships($this->account_id,true);
-			@array_unshift($acl_acc_list,$this->account_id);
-
+		if ($no_groups === true)
+		{
+			$acl_acc_list = $this->account_id;
+		}
+		else
+		{
+			$acl_acc_list = $GLOBALS['egw']->accounts->memberships($this->account_id,true);
+			if (is_array($no_groups)) $acl_acc_list = array_diff($acl_acc_list,$no_groups);
+			array_unshift($acl_acc_list,$this->account_id);
+		}
 
 		$this->data = Array();
 		foreach($this->db->select(acl::TABLE,'*',array('acl_account' => $acl_acc_list ),__LINE__,__FILE__) as $row)
