@@ -693,69 +693,60 @@ class accounts_ldap
 				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				$filter .= ')';
 
-				// folw:
-				// - first query only few attributes for sorting and throwing away not needed results
-				// - throw away & sort
-				// - fetch relevant accounts with full information
-				// - map and resolve
-				$propertyMap = array(
-					'account_id'        => 'uidnumber',
-					'account_lid'       => 'uid',
-					'account_firstname' => 'givenname',
-					'account_lastname'  => 'sn',
-					'account_email'     => 'email'
-				);
-				$order = $propertyMap[$param['order']] ? $propertyMap[$param['order']] : 'uid';
-				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid', $order));
-				$fullSet = array();
-				foreach ((array)ldap_get_entries($this->ds, $sri) as $key => $entry)
+				if ($param['type'] != 'both')
 				{
-					if ($key !== 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
-				}
-
-				if (is_numeric($param['type'])) // return only group-members
-				{
-					$relevantAccounts = array();
-					$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" . abs($param['type']) . "))",array('memberuid'));
-					$group = ldap_get_entries($this->ds, $sri);
-
-					if (isset($group[0]['memberuid']))
+					// folw:
+					// - first query only few attributes for sorting and throwing away not needed results
+					// - throw away & sort
+					// - fetch relevant accounts with full information
+					// - map and resolve
+					$propertyMap = array(
+						'account_id'        => 'uidnumber',
+						'account_lid'       => 'uid',
+						'account_firstname' => 'givenname',
+						'account_lastname'  => 'sn',
+						'account_email'     => 'email',
+						'account_fullname'  => 'cn',
+					);
+					$orders = explode(',',$param['order']);
+					$order = isset($propertyMap[$orders[0]]) ? $propertyMap[$orders[0]] : 'uid';
+					$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid', $order));
+					$fullSet = array();
+					foreach ((array)ldap_get_entries($this->ds, $sri) as $key => $entry)
 					{
-						$fullSet = array_intersect_key($fullSet, array_flip($group[0]['memberuid']));
+						if ($key !== 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
 					}
+	
+					if (is_numeric($param['type'])) // return only group-members
+					{
+						$relevantAccounts = array();
+						$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" . abs($param['type']) . "))",array('memberuid'));
+						$group = ldap_get_entries($this->ds, $sri);
+	
+						if (isset($group[0]['memberuid']))
+						{
+							$fullSet = array_intersect_key($fullSet, array_flip($group[0]['memberuid']));
+						}
+					}
+					$totalcount = count($fullSet);
+	
+					$sortFn = $param['sort'] == 'DESC' ? 'arsort' : 'asort';
+					$sortFn($fullSet);
+					$relevantAccounts = is_numeric($start) ? array_slice(array_keys($fullSet), $start, $offset) : array_keys($fullSet);
+					$filter = '(&(objectclass=posixaccount)(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter.')';
+					$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				}
-				$totalcount = count($fullSet);
-
-				$sortFn = $param['sort'] == 'DESC' ? 'arsort' : 'asort';
-				$sortFn($fullSet);
-				$relevantAccounts = is_numeric($start) ? array_slice(array_keys($fullSet), $start, $offset) : array_keys($fullSet);
-				// if we do not have a start, or want the members of a certain group, we want all, that way we dont want to or the uids
-				// since if we have a whole lot of members, it slows the query down
-				// if you work with very big groups, it may present a problem
-				if (is_numeric($start) || is_numeric($param['type']))
-				{
-					$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";
-				}
-				else
-				{
-					$filter = "(" . "&(objectclass=posixaccount)" . $this->account_filter . ")";
-				}
-
-				$filter = "(" . "&(objectclass=posixaccount)" . '(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter . ")";
-				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
-
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire','createtimestamp','modifytimestamp'));
 				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
-				$allValues = ldap_get_entries($this->ds, $sri);
 
 				$utc_diff = date('Z');
-				while (list($null,$allVals) = @each($allValues))
+				foreach(ldap_get_entries($this->ds, $sri) as $allVals)
 				{
 					settype($allVals,'array');
 					$test = @$allVals['uid'][0];
 					if (!$this->frontend->config['global_denied_users'][$test] && $allVals['uid'][0])
 					{
-						$accounts[$allVals['uidnumber'][0]] = Array(
+						$account = Array(
 							'account_id'        => $allVals['uidnumber'][0],
 							'account_lid'       => translation::convert($allVals['uid'][0],'utf-8'),
 							'account_type'      => 'u',
@@ -765,8 +756,9 @@ class accounts_ldap
 							'account_email'     => $allVals['mail'][0],
 							'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
 							'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
-
 						);
+						$account['account_fullname'] = common::display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname']);
+						$accounts[$account['account_id']] = $account;
 					}
 				}
 			}
@@ -793,8 +785,7 @@ class accounts_ldap
 					$filter = "(&(objectclass=posixgroup)(cn=$query))";
 				}
 				$sri = ldap_search($this->ds, $this->group_context, $filter,array('cn','gidNumber'));
-				$allValues = ldap_get_entries($this->ds, $sri);
-				while (list($null,$allVals) = @each($allValues))
+				foreach((array)ldap_get_entries($this->ds, $sri) as $allVals)
 				{
 					settype($allVals,'array');
 					$test = $allVals['cn'][0];
@@ -807,7 +798,9 @@ class accounts_ldap
 							'account_firstname' => translation::convert($allVals['cn'][0],'utf-8'),
 							'account_lastname'  => lang('Group'),
 							'account_status'    => 'A',
+							'account_fullname'  => translation::convert($allVals['cn'][0],'utf-8'),
 						);
+						if (isset($totalcount)) ++$totalcount;
 					}
 				}
 			}
