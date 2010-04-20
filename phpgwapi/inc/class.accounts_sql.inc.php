@@ -341,7 +341,7 @@ class accounts_sql
 				break;
 			default:
 			case 'both':
-				$filter = "(contact_owner=0 OR contact_owner IS NULL)";
+				$filter = "(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)";
 				break;
 		}
 		$criteria = array();
@@ -384,7 +384,7 @@ class accounts_sql
 		$accounts = array();
 		foreach((array) $GLOBALS['egw']->contacts->search($criteria,"1,n_given,n_family,email,id,created,modified,$this->table.account_id AS account_id",
 			$order,"account_lid,account_type,account_status",
-			$wildcard,false,'OR',$offset ? array($start,$offset) : is_null($start) ? false : $start,
+			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',$offset ? array($start,$offset) : is_null($start) ? false : $start,
 			$filter,$this->contacts_join) as $contact)
 		{
 			if ($contact)
