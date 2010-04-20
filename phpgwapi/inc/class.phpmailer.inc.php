@@ -1490,7 +1490,7 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  private function EncodeFile($path, $encoding = 'base64') 
+  private function &EncodeFile($path, $encoding = 'base64') 
   {
 	if (function_exists('get_magic_quotes')) 
 	{
@@ -1505,7 +1505,7 @@ class PHPMailer {
 		set_magic_quotes_runtime(0);
 	}
 	try {
-		if ((@$file_buffer  = file_get_contents($path."bak"))===false)
+		if ((@$file_buffer  = file_get_contents($path))===false)
 		{
 			throw new phpmailerException($this->Lang('file_open') . $path, self::STOP_CONTINUE);
 		}
@@ -1533,7 +1533,7 @@ class PHPMailer {
    * @access public
    * @return string
    */
-  public function EncodeString ($str, $encoding = 'base64') {
+  public function &EncodeString ($str, $encoding = 'base64') {
     $encoded = '';
     switch(strtolower($encoding)) {
       case 'base64':
