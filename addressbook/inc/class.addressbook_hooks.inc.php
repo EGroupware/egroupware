@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package addressbook
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2006-9 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2006-10 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -364,5 +364,16 @@ class addressbook_hooks
 	{
 		// addressbook uses group-acl, only if contacts-backend is NOT LDAP, as the ACL can not be modified there
 		return $GLOBALS['egw_info']['server']['contact_repository'] != 'ldap';
+	}
+
+	/**
+	 * For which groups should no group acl be used: addressbook always
+	 *
+	 * @param string|array $data
+	 * @return boolean|array true, false or array with group-account_id's
+	 */
+	static function not_enum_group_acls($data)
+	{
+		return true;
 	}
 }
