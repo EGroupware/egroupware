@@ -136,8 +136,8 @@ class groupdav extends HTTP_WebDAV_Server
 			case 'davkit':	// iCal app in OS X 10.6 created wrong request, if full url given
 				$this->client_require_href_as_url = false;
 				break;
-			case 'cfnetwork':
-				$this->crrnd = true; // Apple Addressbook.app does not cope with namespace redundancy
+			case 'cfnetwork_old':
+				$this->crrnd = true; // Older Apple Addressbook.app does not cope with namespace redundancy
 		}
 		parent::HTTP_WebDAV_Server();
 
