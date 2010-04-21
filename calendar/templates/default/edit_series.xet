@@ -4,29 +4,15 @@
 	<template id="calendar.edit_series" template="" lang="" group="0" version="1.7.002">
 		<groupbox rows="1" cols="1" class="editSeries" id="edit_series">
 			<caption label="This event is part of a series"/>
-			<description value="Do you want to edit this event as an exception or the whole series?"/>
+			<hbox>
+				<image src="dialog_help"/>
+				<description value="Do you want to edit this event as an exception or the whole series?"/>
+			</hbox>
 			<hbox align="center">
 				<buttononly label="Edit exception" onclick="open_edit(false);"/>
 				<buttononly label="Edit series" onclick="open_edit(true);"/>
 				<buttononly label="Cancel" onclick="document.getElementById('edit_series').style.display = 'none';"/>
 			</hbox>
 		</groupbox>
-		<styles>
-			#edit_series {
-   position: fixed;
-   top: 200px;
-   left: 500px;
-   background-color: white;
-   z-index: 100;
-   display: none;
-   padding: 10px;
-}
-#edit_series input {
-   margin: 8px;
-}
-#edit_series legend {
-   font-weight: bold;
-}
-		</styles>
 	</template>
 </overlay>
