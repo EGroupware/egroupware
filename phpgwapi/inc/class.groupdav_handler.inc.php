@@ -329,7 +329,7 @@ abstract class groupdav_handler
 			$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 			foreach(array(
 				'davkit'            => 'davkit',	// Apple iCal
-				'cfnetwork'			=> 'cfnetwork',  // Apple Addressbook
+				'cfnetwork'			=> 'cfnetwork', // Apple Addressbook
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
 				'zideone'           => 'zideone',	// zideone outlook plugin
 				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
@@ -346,6 +346,17 @@ abstract class groupdav_handler
 			if (!$agent)
 			{
 				error_log("Unrecogniced GroupDAV client: HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]'!");
+			}
+			else
+			{
+				switch ($agent)
+				{
+					case 'cfnetwork':
+						if (preg_match('/address%20book\/([0-9.]+)/', $user_agent, $matches))
+						{
+							if ((int)$matches[1] < 868) $agent .= '_old';
+						}
+				}
 			}
 		}
 		return $agent;
