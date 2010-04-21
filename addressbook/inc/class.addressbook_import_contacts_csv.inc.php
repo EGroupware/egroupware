@@ -158,8 +158,11 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 						// exists
 						case 'exists' :
 							$contacts = $this->bocontacts->search(
-								array( $condition['string'] => $record[$condition['string']],),
-								$_definition->plugin_options['update_cats'] == 'add' ? false : true
+								//array( $condition['string'] => $record[$condition['string']],),
+								'', 
+								$_definition->plugin_options['update_cats'] == 'add' ? false : true,
+								'', '', '', false, 'AND', false,
+								array( $condition['string'] => $record[$condition['string']],)
 							);
 
 							if ( is_array( $contacts ) && count( array_keys( $contacts ) >= 1 ) ) {
