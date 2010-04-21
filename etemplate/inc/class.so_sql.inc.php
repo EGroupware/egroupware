@@ -166,7 +166,7 @@ class so_sql
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 * @param boolean $no_clone=false can we avoid to clone the db-object, default no
 	 * 	new code using appnames and foreach(select(...,$app) can set it to avoid an extra instance of the db object
-	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps, 
+	 * @param string $timestamp_type=null default null=leave them as is, 'ts'|'integer' use integer unix timestamps,
 	 * 	'object' use egw_time objects or 'string' use DB timestamp (Y-m-d H:i:s) string
 	 *
 	 * @return so_sql
@@ -200,10 +200,10 @@ class so_sql
 		}
 		$this->set_times($timestamp_type);
 	}
-	
+
 	/**
 	 * Set class vars timestamp_type, now and tz_offset_s
-	 * 
+	 *
 	 * @param string|boolean $timestamp_type=false default false do NOT set time_stamptype,
 	 * 	null=leave them as is, 'ts'|'integer' use integer unix timestamps, 'object' use egw_time objects,
 	 *  'string' use DB timestamp (Y-m-d H:i:s) string
@@ -438,7 +438,7 @@ class so_sql
 
 		return $this->data;
 	}
-	
+
 	/**
 	 * Name of automatically set user timezone field from read
 	 */
@@ -554,7 +554,7 @@ class so_sql
 		if ((int) $this->debug >= 4) echo "nothing found !!!</p>\n";
 
 		$this->db2data();
-		
+
 		return False;
 	}
 
@@ -568,7 +568,7 @@ class so_sql
 	function save($keys=null,$extra_where=null)
 	{
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
-		
+
 		// check if data contains user timezone during read AND user changed timezone since then
 		// --> load old timezone for the rest of this request
 		// this only a grude hack, better handle this situation in app code:
@@ -803,7 +803,21 @@ class so_sql
 					{
 						$db_col = $col;
 					}
-					if ($wildcard || $criteria[$col][0] == '!' ||
+					if ($val === '')
+					{
+						if (isset($this->table_def['fd'][$db_col]) &&
+							$this->table_def['fd'][$db_col]['type'] == 'varchar' &&
+							$this->table_def['fd'][$db_col]['nullable'] !== false)
+						{
+							unset($criteria[$col]);
+							$query[] =  '(' . $db_col . ' IS NULL OR ' . $db_col . " = '')";
+						}
+						else
+						{
+							$query[$db_col] = '';
+						}
+					}
+					elseif ($wildcard || $criteria[$col][0] == '!' ||
 						is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
 					{
 						$cmp_op = ' '.$this->db->capabilities['case_insensitive_like'].' ';
@@ -825,16 +839,14 @@ class so_sql
 					{
 						list($table,$only_col) = explode('.',$db_col);
 
-						$table_def = $this->db->get_table_definitions(true,$table);
-
 						if (is_array($val) && count($val) > 1)
 						{
-							array_walk($val,array($this->db,'quote'),$table_def['fd'][$only_col]['type']);
+							array_walk($val,array($this->db,'quote'),$this->table_def['fd'][$only_col]['type']);
 							$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
 						}
 						else
 						{
-							$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$table_def['fd'][$only_col]['type']);
+							$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$this->table_def['fd'][$only_col]['type']);
 						}
 					}
 					else
@@ -995,6 +1007,7 @@ class so_sql
 			return new so_sql_db2data_iterator($this,$rs);
 		}
 		$arr = array();
+		$n = 0;
 		if ($rs) foreach($rs as $row)
 		{
 			$data = array();
