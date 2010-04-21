@@ -316,7 +316,7 @@ class addressbook_sql extends so_sql_cf
 				$filter[] = $this->table_name.'.contact_owner='.(int)$filter['owner'];
 				unset($filter['owner']);
 			}
-			if (is_array($criteria) && array_key_exists('owner',$criteria))
+			if (is_array($criteria) && isset($criteria['owner']))
 			{
 				$criteria[] = $this->table_name.'.contact_owner='.(int)$criteria['owner'];
 				unset($criteria['owner']);
