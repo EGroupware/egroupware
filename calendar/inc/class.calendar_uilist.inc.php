@@ -494,6 +494,21 @@ class calendar_uilist extends calendar_ui
 						'cat_id'		=>	null,
 						'pl_id'			=>	null
 					);
+
+					// Add global categories
+					$categories = explode(',',$event['category']);
+					$global_categories = array();
+					foreach($categories as $cat_id) 
+					{
+						if($GLOBALS['egw']->categories->is_global($cat_id))
+						{
+							$global_categories[] = $cat_id;
+						}
+					}
+					if(count($global_categories)) 
+					{
+						$timesheet['cat_id'] = implode(',', $global_categories);
+					}
 					$timesheet_bo->data = array();
 					$err = $timesheet_bo->save($timesheet);
 					if(!$err) {
