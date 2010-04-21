@@ -239,7 +239,7 @@
 			$tropen=1;
 		}
 
-		$small = ($thisd>1) && (count($neworder) > $index + 1) && ($searchlist[$neworder[$index + 1]] > 1);
+		$small = ($thisd>1) && (count($neworder) >= $index + 1) && ($searchlist[$neworder[$index + 1]] > 1 || $searchlist[$neworder[$index - 1]] > 1);
 		$var['tdwidth'] = $small ? '50' : '100';
 		$var['colspan'] = $small ? '1' : '2';
 
