@@ -795,7 +795,7 @@ class accounts_ldap
 							'account_firstname' => $this->translation->convert($allVals['cn'][0],'utf-8'),
 							'account_lastname'  => lang('Group'),
 							'account_status'    => 'A',
-							'account_fullname'  => translation::convert($allVals['cn'][0],'utf-8'),
+							'account_fullname'  => $this->translation->convert($allVals['cn'][0],'utf-8'),
 						);
 						if (isset($totalcount)) ++$totalcount;
 					}
