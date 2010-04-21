@@ -25,7 +25,8 @@
 
 	function move_boxes($curr_position,$new_order,$offset,$value_to_check,$max_num)
 	{
-		//echo "MOVE: $curr_position,$new_order,$offset,$value_to_check,$max_num<br>";
+		//error_log(__METHOD__."MOVE: $curr_position,$new_order,$offset,$value_to_check,$max_num<br>");
+		$move_app_id = (int)$GLOBALS['egw_info']['user']['preferences']['portal_order'][$curr_position];
 		if(isset($GLOBALS['egw_info']['user']['preferences']['portal_order'][$new_order]))
 		{
 			if($new_order == $max_num)
@@ -38,24 +39,21 @@
 				{
 					@krsort($GLOBALS['egw_info']['user']['preferences']['portal_order']);
 				}
-				while(list($seq_order,$appid) = each($GLOBALS['egw_info']['user']['preferences']['portal_order']))
+				foreach($GLOBALS['egw_info']['user']['preferences']['portal_order'] as $seq_order => $appid)
 				{
 					if($seq_order != $value_to_check)
 					{
 						$prev_seq = $seq_order + $offset;
-						$GLOBALS['egw']->preferences->delete('portal_order',$prev_seq);
 						$GLOBALS['egw']->preferences->add('portal_order',$prev_seq,$appid);
 					}
 				}
 			}
 			else
 			{
-				$GLOBALS['egw']->preferences->delete('portal_order',$curr_position);
 				$GLOBALS['egw']->preferences->add('portal_order',$curr_position,(int)$GLOBALS['egw_info']['user']['preferences']['portal_order'][$new_order]);
 			}
 		}
-		$GLOBALS['egw']->preferences->delete('portal_order',$new_order);
-		$GLOBALS['egw']->preferences->add('portal_order',$new_order,(int)$_GET['app']);
+		$GLOBALS['egw']->preferences->add('portal_order',$new_order,$move_app_id);
 
 		$GLOBALS['egw']->preferences->save_repository();
 	}
@@ -93,8 +91,11 @@
 			move_boxes($curr_position,$new_order,$offset,$max_count,0);
 			break;
 		case 'close':
-			$GLOBALS['egw']->preferences->add($GLOBALS['egw']->applications->id2name($_GET['app']), 'homepage_display', 0);
-			$GLOBALS['egw']->preferences->save_repository();
+			$portal_varnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest','mainscreen_showmail','mainscreen_showbirthdays','mainscreen_show_new_updated','homepage_display');
+			$appname = $GLOBALS['egw']->applications->id2name($_GET['app']);
+			foreach($portal_varnames as $varname)
+				$GLOBALS['egw']->preferences->add($appname, $varname, 0);
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->save_repository();
 			break;
 		case 'edit':
 		case 'question':

@@ -92,22 +92,6 @@
 		$GLOBALS['tpl']->pfp('out','notify_window');
 	}
 
-	/* This initializes the users portal_order preference if it does not exist. */
-	if(!is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']) && $GLOBALS['egw_info']['apps'])
-	{
-		$GLOBALS['egw']->preferences->delete('portal_order');
-		@reset($GLOBALS['egw_info']['apps']);
-		$order = 0;
-		while (list(,$p) = each($GLOBALS['egw_info']['apps']))
-		{
-			if($GLOBALS['egw_info']['user']['apps'][$p['name']])
-			{
-				$GLOBALS['egw']->preferences->add('portal_order',$order++,$p['id']);
-			}
-		}
-		$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->save_repository();
-	}
-
 	if(is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']))
 	{
 		$app_check = Array();
@@ -134,7 +118,10 @@
 	// Now add the rest of the user's apps, to make sure we pick up any additions to the home display
 	foreach($GLOBALS['egw_info']['user']['apps'] as $app)
 	{
-		$sorted_apps[] = $app['name'];
+		if(!in_array($app['name'], $sorted_apps))
+		{
+			$sorted_apps[] = $app['name'];
+		}
 	}
 	//$GLOBALS['egw']->hooks->process('home',$sorted_apps);
 
@@ -208,6 +195,7 @@
 	$lastd = 0;
 	$numcols = 2;
 	$curcol = 1;
+	$searchlist = array();
 	foreach($sorted_apps as $appname)
 	{
 		if((int)$done[$appname] == 1 || empty($appname))
@@ -230,45 +218,53 @@
 		//echo "$appname: $thisd<br>";
 		if($thisd>0)
 		{
-			if((($curcol++>$numcols) || ($thisd+$lastd==3)) && $tropen==1)
-			{
-				$GLOBALS['tpl']->pfp('out','end_row');
-				$tropen = 0;
-				//$curcol = 1;
-			}
-			if(!$tropen)
-			{
-				$GLOBALS['tpl']->pfp('out','begin_row');
-				$tropen=1;
-			}
-			$var['tdwidth'] = ($thisd==2)?'50':'100';
-			$var['colspan'] = ($thisd==2)?'1':'2';
-
-			ob_start();
-			$var['content'] = $GLOBALS['egw']->hooks->single('home',$appname);
-			if (!$var['content'] || $var['content'] == 1)	// content has been echoed and not returned
-			{
-				$var['content'] = ob_get_contents();
-				ob_end_clean();
-			}
-			$GLOBALS['tpl']->set_var($var);
-
-			$GLOBALS['tpl']->pfp('out','cell');
-
-			if(($thisd!=2 || ($thisd==2&&$lastd==2)) && $tropen)
-			{
-				$GLOBALS['tpl']->pfp('out','end_row');
-				$tropen = 0;
-				$lastd = 0;
-				$curcol = 1;
-			}
-			else
-			{
-				$lastd = $thisd;
-			}
+			$searchlist[$appname] = $thisd;
 			$neworder[] = $appname;
+			$done[$appname] = 1;
 		}
-		$done[$appname] = 1;
+	}
+	foreach($neworder as $index => $appname)
+	{
+		$thisd = $searchlist[$appname];
+		//echo "$appname: $thisd<br>";
+		if((($curcol++>$numcols) || ($thisd==1)) && $tropen==1)
+		{
+			$GLOBALS['tpl']->pfp('out','end_row');
+			$tropen = 0;
+			//$curcol = 1;
+		}
+		if(!$tropen)
+		{
+			$GLOBALS['tpl']->pfp('out','begin_row');
+			$tropen=1;
+		}
+
+		$small = ($thisd>1) && (count($neworder) > $index + 1) && ($searchlist[$neworder[$index + 1]] > 1);
+		$var['tdwidth'] = $small ? '50' : '100';
+		$var['colspan'] = $small ? '1' : '2';
+
+		ob_start();
+		$var['content'] = $GLOBALS['egw']->hooks->single('home',$appname);
+		if (!$var['content'] || $var['content'] == 1)	// content has been echoed and not returned
+		{
+			$var['content'] = ob_get_contents();
+			ob_end_clean();
+		}
+		$GLOBALS['tpl']->set_var($var);
+
+		$GLOBALS['tpl']->pfp('out','cell');
+
+		if(($thisd<=1 || ($thisd>1&&$lastd>1)) && $tropen && $var['content'])
+		{
+			$GLOBALS['tpl']->pfp('out','end_row');
+			$tropen = 0;
+			$lastd = 0;
+			$curcol = 1;
+ 		}
+		else
+		{
+			$lastd = $thisd;
+		}
 	}
 
 	$GLOBALS['tpl']->pfp('out','end_table');
