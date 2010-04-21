@@ -57,6 +57,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		if ($this->account)	// existing account
 		{
 			$data['account_id'] = admin_cmd::parse_account($this->account);
+			$data['old_loginid'] = admin_cmd::$accounts->id2name($data['account_id']);
 		}
 		if (!$data['account_lid'] && (!$this->account || !is_null($data['account_lid'])))
 		{

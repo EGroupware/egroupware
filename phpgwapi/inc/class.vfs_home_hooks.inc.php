@@ -61,8 +61,10 @@ class vfs_home_hooks
 	static function editAccount($data)
 	{
 		if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($data).')');
-		if ($data['account_lid'] == $data['old_loginid']) return;	// nothing to do here
-
+		if (empty($data['account_lid']) || empty($data['old_loginid']) || $data['account_lid'] == $data['old_loginid'])
+		{
+			return;	// nothing to do here
+		}
 		// rename the user-dir
 		egw_vfs::$is_root = true;
 		egw_vfs::rename('/home/'.$data['old_loginid'],'/home/'.$data['account_lid']);
