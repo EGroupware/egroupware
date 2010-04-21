@@ -95,6 +95,7 @@ class addressbook_bo extends addressbook_so
 	 * @var boolean
 	 */
 	var $log = false;
+	var $logfile = '/tmp/log-addressbook_bo';
 
 	/**
 	 * Number and message of last error or false if no error, atm. only used for saving
@@ -146,6 +147,12 @@ class addressbook_bo extends addressbook_so
 	function __construct($contact_app='addressbook')
 	{
 		parent::__construct($contact_app);
+		if ($this->log)
+		{
+			$this->logfile = $GLOBALS['egw_info']['server']['temp_dir'].'/log-addressbook_bo';
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."($contact_app)\n", 3 ,$this->logfile);
+		}
+
 		$this->now_su = egw_time::to('now','ts');
 
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
@@ -1693,19 +1700,6 @@ class addressbook_bo extends addressbook_so
 		}
 	}
 
-	function all_empty(&$_contact, &$fields)
-	{
-		$retval = true;
-		foreach ($fields as $field) {
-			if (isset($_contact[$field]) && !empty($_contact[$field])) {
-				$retval = false;
-				break;
-			}
-		}
-		return $retval;
-	}
-
-
 	/**
 	 * Try to find a matching db entry
 	 *
@@ -1715,11 +1709,14 @@ class addressbook_bo extends addressbook_so
 	 */
 	function find_contact($contact, $relax=false)
 	{
+		$empty_addr_one = $empty_addr_two = true;
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
 				. '('. ($relax ? 'RELAX': 'EXACT') . ')[ContactData]:'
-				. array2string($contact));
+				. array2string($contact)
+				. "\n", 3, $this->logfile);
 		}
 
 		$matchingContacts = array();
@@ -1728,7 +1725,8 @@ class addressbook_bo extends addressbook_so
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
-					. '()[ContactID]: ' . $contact['id']);
+					. '()[ContactID]: ' . $contact['id']
+					. "\n", 3, $this->logfile);
 			}
 			// We only do a simple consistency check
 			if (!$relax || ((empty($found['n_family']) || $found['n_family'] == $contact['n_family'])
@@ -1745,7 +1743,8 @@ class addressbook_bo extends addressbook_so
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
-					. '()[ContactUID]: ' . $contact['uid']);
+					. '()[ContactUID]: ' . $contact['uid']
+					. "\n", 3, $this->logfile);
 			}
 			// Try the given UID first
 			$criteria = array ('contact_uid' => $contact['uid']);
@@ -1772,124 +1771,75 @@ class addressbook_bo extends addressbook_so
 		$addr_two_fields = array('adr_two_street',
 					 'adr_two_locality', 'adr_two_region',
 					 'adr_two_postalcode', 'adr_two_countryname');
-		$no_addr_one = array();
-		$no_addr_two = array();
 
 		if (!empty($contact['owner']))
 		{
 			$columns_to_search += array('owner');
 		}
 
-		$backend =& $this->get_backend();
-
-		// define filter for empty address one
-		foreach ($addr_one_fields as $field)
-		{
-			if (!($db_col = array_search($field, $backend->db_cols)))
-			{
-				$db_col = $field;
-			}
-			$no_addr_one[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
-		}
-
-		// define filter for empty address two
-		foreach ($addr_two_fields as $field)
-		{
-			if (!($db_col = array_search($field, $backend->db_cols)))
-			{
-				$db_col = $field;
-			}
-			$no_addr_two[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
-		}
-
 		$result = false;
 
 		$criteria = array();
-		$empty_columns = array();
+
 		foreach ($columns_to_search as $field)
 		{
-			if (!isset($contact[$field]) || empty($contact[$field])) {
+			if ($relax && in_array($field, $tolerance_fields)) continue;
+
+			if (empty($contact[$field]))
+			{
 				// Not every device supports all fields
 				if (!in_array($field, $tolerance_fields))
 				{
-					if (!($db_col = array_search($field, $backend->db_cols)))
-					{
-						$db_col = $field;
-					}
-					$empty_columns[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
+					$criteria[$field] = '';
 				}
 			}
 			else
 			{
-				if (!$relax || !in_array($field, $tolerance_fields))
-				{
-					$criteria[$field] = $contact[$field];
-				}
+				$criteria[$field] = $contact[$field];
 			}
 		}
-
-		$filter = $empty_columns;
 
 		if (!$relax)
 		{
 			// We use addresses only for strong matching
 
-			if ($this->all_empty($contact, $addr_one_fields))
+			foreach ($addr_one_fields as $field)
 			{
-				$filter = $filter + $no_addr_one;
-			}
-			else
-			{
-				foreach ($addr_one_fields as $field)
+				if (empty($contact[$field]))
 				{
-					if (!isset($contact[$field]) || empty($contact[$field]))
-					{
-						if (!($db_col = array_search($field, $backend->db_cols)))
-						{
-							$db_col = $field;
-						}
-						$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
-					}
-					else
-					{
-						$criteria[$field] = $contact[$field];
-					}
+					$criteria[$field] = '';
+				}
+				else
+				{
+					$empty_addr_one = false;
+					$criteria[$field] = $contact[$field];
 				}
 			}
 
-			if ($this->all_empty($contact, $addr_two_fields))
+			foreach ($addr_two_fields as $field)
 			{
-				$filter = $filter + $no_addr_two;
-			}
-			else
-			{
-				foreach ($addr_two_fields as $field)
+				if (empty($contact[$field]))
 				{
-					if (!isset($contact[$field]) || empty($contact[$field]))
-					{
-						if (!($db_col = array_search($field, $backend->db_cols)))
-						{
-							$db_col = $field;
-						}
-						$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
-					}
-					else
-					{
-						$criteria[$field] = $contact[$field];
-					}
+					$criteria[$field] = '';
+				}
+				else
+				{
+					$empty_addr_two = false;
+					$criteria[$field] = $contact[$field];
 				}
 			}
 		}
+
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
 				. '()[Addressbook FIND Step 1]: '
-				. 'FILTER:' . array2string($filter)
-				. 'CRITERIA' . array2string($criteria));
+				. 'CRITERIA = ' . array2string($criteria)
+				. "\n", 3, $this->logfile);
 		}
 
 		// first try full match
-		if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
+		if (($foundContacts = parent::search($criteria, true, '', '', '', true)))
 		{
 			foreach ($foundContacts as $egwContact)
 			{
@@ -1898,24 +1848,26 @@ class addressbook_bo extends addressbook_so
 		}
 
 		// No need for more searches for relaxed matching
-		if (!$relax || count($matchingContacts)) return $matchingContacts;
+		if ($relax || count($matchingContacts)) return $matchingContacts;
 
 
-		if (!$this->all_empty($contact, $addr_one_fields)
-				&& $this->all_empty($contact, $addr_two_fields))
+		if (!$empty_addr_one && $empty_addr_two)
 		{
 			// try given address and ignore the second one in EGW
-			$filter = array_diff($filter, $no_addr_two);
+			foreach ($addr_two_fields as $field)
+			{
+				unset($criteria[$field]);
+			}
 
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
 					. '()[Addressbook FIND Step 2]: '
-					. 'FILTER:' . array2string($filter)
-					. 'CRITERIA' . array2string($criteria));
+					. 'CRITERIA = ' . array2string($criteria)
+					. "\n", 3, $this->logfile);
 			}
 
-			if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
+			if (($foundContacts = parent::search($criteria, true, '', '', '', true)))
 			{
 				foreach ($foundContacts as $egwContact)
 				{
@@ -1925,35 +1877,21 @@ class addressbook_bo extends addressbook_so
 			else
 			{
 				// try address as home address -- some devices don't qualify addresses
-				$filter = $empty_columns;
 				foreach ($addr_two_fields as $key => $field)
 				{
-					if (isset($criteria[$addr_one_fields[$key]]))
-					{
-						$criteria[$field] = $criteria[$addr_one_fields[$key]];
-						unset($criteria[$addr_one_fields[$key]]);
-					}
-					else
-					{
-						if (!($db_col = array_search($field,$backend->db_cols)))
-						{
-							$db_col = $field;
-						}
-						$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
-					}
+					$criteria[$field] = $criteria[$addr_one_fields[$key]];
+					unset($criteria[$addr_one_fields[$key]]);
 				}
-
-				$filter = $filter + $no_addr_one;
 
 				if ($this->log)
 				{
 					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
 						. '()[Addressbook FIND Step 3]: '
-						. 'FILTER:' . array2string($filter)
-						. 'CRITERIA' . array2string($criteria));
+						. 'CRITERIA = ' . array2string($criteria)
+						. "\n", 3, $this->logfile);
 				}
 
-				if (($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
+				if (($foundContacts = parent::search($criteria, true, '', '', '', true)))
 				{
 					foreach ($foundContacts as $egwContact)
 					{
@@ -1962,54 +1900,23 @@ class addressbook_bo extends addressbook_so
 				}
 			}
 		}
-		else
+		elseif (!$empty_addr_one && !$empty_addr_two)
 		{ // try again after address swap
-
-			$filter = $empty_columns;
 
 			foreach ($addr_one_fields as $key => $field)
 			{
-				$_temp_set = false;
-				if (isset($criteria[$field]))
-				{
-					$_temp = $criteria[$field];
-					$_temp_set = true;
-					unset($criteria[$field]);
-				}
-				if (isset($criteria[$addr_two_fields[$key]]))
-				{
-					$criteria[$field] = $criteria[$addr_two_fields[$key]];
-					unset($criteria[$addr_two_fields[$key]]);
-				}
-				else
-				{
-					if (!($db_col = array_search($field,$backend->db_cols)))
-					{
-						$db_col = $field;
-					}
-					$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
-				}
-				if ($_temp_set)
-				{
-					$criteria[$addr_two_fields[$key]] = $_temp;
-				}
-				else
-				{
-					if (!($db_col = array_search($addr_two_fields[$key],$backend->db_cols)))
-					{
-						$db_col = $field;
-					}
-					$filter[] = "(" . $db_col . " IS NULL OR " . $db_col . " = '')";
-				}
+				$_temp = $criteria[$field];
+				$criteria[$field] = $criteria[$addr_two_fields[$key]];
+				$criteria[$addr_two_fields[$key]] = $_temp;
 			}
 			if ($this->log)
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
 					. '()[Addressbook FIND Step 4]: '
-					. 'FILTER:' . array2string($filter)
-					. 'CRITERIA' . array2string($criteria));
+					. 'CRITERIA = ' . array2string($criteria)
+					. "\n", 3, $this->logfile);
 			}
-			if(($foundContacts = parent::search($criteria, true, '', '', '', False, 'AND', false, $filter)))
+			if (($foundContacts = parent::search($criteria, true, '', '', '', true)))
 			{
 				foreach ($foundContacts as $egwContact)
 				{
@@ -2020,7 +1927,8 @@ class addressbook_bo extends addressbook_so
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
-				. '()[FOUND]:' . array2string($matchingContacts));
+				. '()[FOUND]: ' . array2string($matchingContacts)
+				. "\n", 3, $this->logfile);
 		}
 		return $matchingContacts;
 	}

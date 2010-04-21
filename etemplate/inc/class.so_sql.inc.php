@@ -804,7 +804,21 @@ class so_sql
 					{
 						$db_col = $col;
 					}
-					if ($wildcard || $criteria[$col][0] == '!' ||
+					if ($val === '')
+					{
+						if (isset($this->table_def['fd'][$db_col]) &&
+							$this->table_def['fd'][$db_col]['type'] == 'varchar' &&
+							$this->table_def['fd'][$db_col]['nullable'] !== false)
+						{
+							unset($criteria[$col]);
+							$query[] =  '(' . $db_col . ' IS NULL OR ' . $db_col . " = '')";
+						}
+						else
+						{
+							$query[$db_col] = '';
+						}
+					}
+					elseif ($wildcard || $criteria[$col][0] == '!' ||
 						is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
 					{
 						$cmp_op = ' '.$this->db->capabilities['case_insensitive_like'].' ';
@@ -826,16 +840,14 @@ class so_sql
 					{
 						list($table,$only_col) = explode('.',$db_col);
 
-						$table_def = $this->db->get_table_definitions(true,$table);
-
 						if (is_array($val) && count($val) > 1)
 						{
-							array_walk($val,array($this->db,'quote'),$table_def['fd'][$only_col]['type']);
+							array_walk($val,array($this->db,'quote'),$this->table_def['fd'][$only_col]['type']);
 							$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
 						}
 						else
 						{
-							$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$table_def['fd'][$only_col]['type']);
+							$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$this->table_def['fd'][$only_col]['type']);
 						}
 					}
 					else
@@ -1002,6 +1014,7 @@ class so_sql
 			return new so_sql_db2data_iterator($this,$rs);
 		}
 		$arr = array();
+		$n = 0;
 		if ($rs) foreach($rs as $row)
 		{
 			$data = array();
@@ -1316,7 +1329,7 @@ class so_sql
 			$criteria = $query['search'];
 		}
 		$rows = $this->search($criteria,$only_keys,$query['order']?$query['order'].' '.$query['sort']:'',$extra_cols,
-			$wildcard,false,$op,$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
+			'',false,$op,$query['num_rows']?array((int)$query['start'],$query['num_rows']):(int)$query['start'],
 			$query['col_filter'],$join,$need_full_no_count);
 
 		if (!$rows) $rows = array();	// otherwise false returned from search would be returned as array(false)
