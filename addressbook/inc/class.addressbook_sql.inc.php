@@ -289,9 +289,7 @@ class addressbook_sql extends so_sql_cf
 			switch(gettype($only_keys))
 			{
 				case 'boolean':
-					// only return the egw_addressbook columns, to not generate dublicates by the left join
-					// and to not return the NULL for contact_{id|owner} of not found custom fields!
-					$only_keys = (strpos($join,$this->extra_table)!==false?'DISTINCT ':'').$this->table_name.'.'.($only_keys ? 'contact_id AS contact_id' : '*');
+					// Correctly handled by parent class
 					break;
 				case 'string':
 					$only_keys = explode(',',$only_keys);
