@@ -1244,7 +1244,7 @@ function function_backtrace($remove=0)
 			if ($remove-- < 0)
 			{
 				$ret[] = (isset($level['class'])?$level['class'].$level['type']:'').$level['function'].
-					($n > 0 ? '('.$backtrace[$n-1]['line'].')' : '').	// add line number of call
+					($n > 0 && isset($backtrace[$n-1]['line']) ? ':'.$backtrace[$n-1]['line'] : '').	// add line number of call
 					(!$level['class'] && !is_object($level['args'][0]) && $level['function'] != 'unserialize' ?
 					'('.substr(str_replace(EGW_SERVER_ROOT,'',(string)$level['args'][0]),0,64).')' : '');
 			}
