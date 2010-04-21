@@ -899,6 +899,7 @@ class so_sql
 		if ($only_keys === true)
 		{
 			$colums = implode(',',array_keys($this->db_key_cols));
+			if (!empty($colums)) $colums = ' DISTINCT '.$colums;
 		}
 		elseif (is_array($only_keys))
 		{
@@ -908,6 +909,7 @@ class so_sql
 				$colums[] = ($db_col = array_search($col,$this->db_cols)) ? $db_col : $col;
 			}
 			$colums = implode(',',$colums);
+			if (!empty($colums)) $colums = ' DISTINCT '.$colums;
 		}
 		elseif (!$only_keys)
 		{
