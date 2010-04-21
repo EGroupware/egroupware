@@ -458,6 +458,10 @@ class so_sql_cf extends so_sql
 				}
 			}
 		}
+		if($only_keys === true) {
+			// Expand to keys here, so table_name can be prepended below
+			$only_keys = array_values($this->db_key_cols);
+		}
 		// replace ambiguous column with (an exact match of) table_name.column
 		if(is_array($only_keys))
 		{
