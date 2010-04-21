@@ -7,9 +7,19 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id: class.sqlfs_stream_wrapper.inc.php 24997 2008-03-02 21:44:15Z ralfbecker $
  */
+
+/**
+ * Define parent for links_stream_wrapper, if not already defined
+ *
+ * Allows to base links_stream_wrapper on an other wrapper
+ */
+if (!class_exists('links_stream_wrapper_parent',false))
+{
+	class links_stream_wrapper_parent extends sqlfs_stream_wrapper {}
+}
 
 /**
  * eGroupWare API: stream wrapper for linked files
@@ -30,7 +40,7 @@
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
-class links_stream_wrapper extends sqlfs_stream_wrapper
+class links_stream_wrapper extends links_stream_wrapper_parent
 {
 	/**
 	 * Scheme / protocoll used for this stream-wrapper
