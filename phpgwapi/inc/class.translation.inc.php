@@ -845,5 +845,5 @@ class translation
 /*
 $msg = 'Bitte %1hier%2 clicken!';
 $replace = array('<a href="http://index.php?referer=%2Findex.php">','</a>');
-echo "<p>".htmlspecialchars(translation::translate($msg,$replace))."</p>\n";
+echo "<p>".htmlspecialchars(this->translate($msg,$replace))."</p>\n";
 */
