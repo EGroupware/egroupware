@@ -2077,3 +2077,16 @@ function calendar_upgrade1_7_009()
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.010';
 }
+
+function calendar_upgrade1_7_010()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_deleted',array(
+		'type' => 'bool',
+		'nullable' => False,
+		'default' => '0',
+		'comment' => '1 if the event has been deleted, but you want to keep it around'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.011';
+}
+

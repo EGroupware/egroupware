@@ -1165,8 +1165,14 @@ class calendar_boupdate extends calendar_bo
 		if (!$recur_date || $event['recur_type'] == MCAL_RECUR_NONE)
 		{
 			$config = config::read('phpgwapi');
-			if(!$config['calendar_delete_history'] || $GLOBALS['egw']->contenthistory->getTSforAction('calendar', $cal_id, 'delete')) {
+			if(!$config['calendar_delete_history'] || $event['deleted'])
+			{
 				$this->so->delete($cal_id);
+			}
+			elseif ($config['calendar_delete_history'])
+			{
+				$event['deleted'] = true;
+				$this->save($event);
 			}
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
 
