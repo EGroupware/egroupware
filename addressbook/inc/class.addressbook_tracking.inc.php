@@ -86,6 +86,7 @@ class addressbook_tracking extends bo_tracking
 			unset($this->field2history['modified']);
 			unset($this->field2history['modifier']);
 			unset($this->field2history['etag']);
+			unset($this->field2history['jpegphoto']);
 		}
 		$custom = config::get_customfields('addressbook', true);
 		if(is_array($custom)) {
