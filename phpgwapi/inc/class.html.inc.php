@@ -203,7 +203,7 @@ class html
 		// actual allowed tags and attributes
 		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true));
 		$config->set('AutoFormat.RemoveEmpty', true);
-		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
+		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align|style],hr[class|style],'.
 					'font[size|color],'.
 					'ul[type],ol[type|start],li,'.
 					'h1,h2,h3,h4,h5,h6,'.
@@ -244,7 +244,7 @@ class html
 		// actual allowed tags and attributes
 		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true));
 		$config->set('AutoFormat.RemoveEmpty', true);
-		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
+		$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align|style],hr[class|style],'.
 					'font[size|color],'.
 					'ul[type],ol[type|start],li,'.
 					'h1,h2,h3,h4,h5,h6,'.
@@ -1405,7 +1405,7 @@ class html
 				// EnableID is needed for anchor tags
 				$config->set('Attr.EnableID',true);
 				// actual allowed tags and attributes
-				$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align],hr[class|style],'.
+				$config->set('HTML.Allowed', 'br,p[align],b,i,u,s,em,pre,tt,strong,strike,center,div[align|style],hr[class|style],'.
 							'ul[type],ol[type|start],li,'.
 							'h1,h2,h3,h4,h5,h6,'.
 							'span[class|style],'.
