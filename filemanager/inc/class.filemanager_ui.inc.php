@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -633,9 +633,13 @@ class filemanager_ui
 
 		if (!is_array($content))
 		{
+			if (isset($_GET['msg']))
+			{
+				$msg .= $_GET['msg'];
+			}
 			if (!($path = $_GET['path']) || !($stat = egw_vfs::lstat($path)))
 			{
-				$content['msg'] = lang('File or directory not found!');
+				$msg .= lang('File or directory not found!');
 			}
 			else
 			{
@@ -921,9 +925,8 @@ class filemanager_ui
 				'align' => 'right',
 			));
 		}
-		if (($extra_tab = egw_vfs::getExtraInfo($path)))
+		if (($extra_tab = egw_vfs::getExtraInfo($path,$content)))
 		{
-			//_debug_array($extra_tab);
 			$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
 			$tabs['name'] .= '|'.$extra_tab['name'];
 			$tabs['label'] .= '|'.$extra_tab['label'];

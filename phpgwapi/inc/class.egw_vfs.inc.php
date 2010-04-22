@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -1333,11 +1333,12 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Get backend specific information (data and etemplate), to integrate as tab in filemanagers settings dialog
 	 *
 	 * @param string $path
+	 * @param array $content=null
 	 * @return array|boolean array with values for keys 'data','etemplate','name','label','help' or false if not supported by backend
 	 */
-	static function getExtraInfo($path)
+	static function getExtraInfo($path,array $content=null)
 	{
-		return self::_call_on_backend('extra_info',array($path));
+		return self::_call_on_backend('extra_info',array($path,$content));
 	}
 
 	/**
