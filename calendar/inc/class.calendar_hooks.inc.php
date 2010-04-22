@@ -531,4 +531,27 @@ class calendar_hooks
 			)
 		);
 	}
+
+	public static function config_validate() {
+		$GLOBALS['egw_info']['server']['found_validation_hook'] = True;
+	}
+}
+
+// Not part of the class, since config hooks are still using the old style
+function calendar_purge_old($config) {
+	$id = 'calendar_purge';
+
+	// Cancel old purge
+	ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
+
+	$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
+		array('month' => '*', 'day' => 1),
+		$id,
+		'calendar.calendar_boupdate.purge',
+		(int)$config
+	);
+	if(!$result)
+	{
+		$GLOBALS['config_error'] = 'Unable to schedule purge';
+	}
 }

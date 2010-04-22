@@ -41,6 +41,7 @@ $setup_info['calendar']['hooks']['preferences'] = 'calendar_hooks::preferences';
 $setup_info['calendar']['hooks']['settings'] = 'calendar_hooks::settings';
 $setup_info['calendar']['hooks']['sidebox_menu'] = 'calendar.calendar_ui.sidebox_menu';
 $setup_info['calendar']['hooks']['search_link'] = 'calendar_hooks::search_link';
+$setup_info['calendar']['hooks']['config_validate'] = 'calendar_hooks::config_validate';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(

@@ -68,6 +68,20 @@
      </select>
     </td>
    </tr>
+   <tr class="row_off">
+    <td>&nbsp;{lang_Automatically_purge_old_events_after}</td>
+    <td>
+     <select name="newsettings[calendar_purge_old]">
+      <option value="">{lang_No_automatic_purging}</option>
+      <option value="1"{selected_calendar_purge_old_1}>1 {lang_year}</option>
+      <option value="2"{selected_calendar_purge_old_2}>2 {lang_years}</option>
+      <option value="3"{selected_calendar_purge_old_3}>3 {lang_years}</option>
+      <option value="4"{selected_calendar_purge_old_4}>4 {lang_years}</option>
+      <option value="5"{selected_calendar_purge_old_5}>5 {lang_years}</option>
+      <option value="10"{selected_calendar_purge_old_10}>10 {lang_years}</option>
+     </select>
+    </td>
+   </tr>
    <tr class="th">
     <td colspan="2"><b>{lang_Birthdays}</b></td>
    </tr>

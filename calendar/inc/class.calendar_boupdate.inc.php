@@ -2160,4 +2160,41 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
     }
+	/**
+	* Delete events that are more than $age years old
+	*
+	* Purges old events from the database
+	*
+	* @param int $age How many years old the event must be before it is deleted
+	*/
+	function purge($age)
+	{
+		$query = array(
+			'end'		=>	strtotime("-$age years", time()),
+			'enum_recuring'	=>	false
+		);
+		$events = $this->search($query);
+		foreach($events as $event)
+		{
+			// Delete single events or recurring events where all ocurrences are old enough
+			if(!$event['recur_type'] || $event['recur_type'] && $event['recur_enddate'] && $event['recur_enddate'] <= $query['end'])
+			{
+				$this->delete($event['id'], 0, true);
+			}
+		}
+
+		// If preserve history is on, we'll need to do this again to completely remove it
+		$config = config::read('phpgwapi');
+		if($config['calendar_delete_history']) {
+			$query['filter'] = 'deleted';
+			$events = $this->search($query);
+			foreach($events as $event)
+			{
+				if(!$event['recur_type'] || $event['recur_type'] && $event['recur_enddate'] && $event['recur_enddate'] <= $query['end'])
+				{
+					$this->delete($event['id'], 0, true);
+				}
+			}
+		}
+	}
 }
