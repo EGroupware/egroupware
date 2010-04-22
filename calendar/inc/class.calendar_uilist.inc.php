@@ -171,7 +171,12 @@ class calendar_uilist extends calendar_ui
 		unset($sel_options['action'][lang('Change your participant status')]['G']);
 		$GLOBALS['egw_info']['flags']['java_script'] .= $this->get_javascript();
 
-		return $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,'',$home ? -1 : 0);
+		$html = $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,'',$home ? -1 : 0);
+
+		// Not sure why this has to be echoed instead of appended, but that's what works.
+		echo calendar_uiviews::edit_series();
+
+		return $html;
 	}
 
 	/**
@@ -350,9 +355,7 @@ class calendar_uilist extends calendar_ui
 
                         if ($event['recur_type'] != MCAL_RECUR_NONE)
                         {
-                                $view_link_confirm_abort = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start']),'exception'=>1));
-                                $view_link_confirm_text=lang('do you want to edit serialevent als exception? - Ok = Edit Exception, Abort = Edit Serial');
-                                $event['edit_link'] = $this->popup($view_link_confirm_abort,null,750,410,$view_link,$view_link_confirm_text).'; return false;';
+                                $event['edit_link'] = "edit_series({$event['id']}, {$event['start']});return false;";
                         }
                         else
                         {
