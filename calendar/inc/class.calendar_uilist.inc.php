@@ -516,6 +516,12 @@ class calendar_uilist extends calendar_ui
 					$err = $timesheet_bo->save($timesheet);
 					if(!$err) {
 						$success++;
+
+						// Can't link to just one of a recurring series of events
+						if(!$recur_date) {
+							// Create link
+							egw_link::link('calendar', $id, 'timesheet', $timesheet_bo->data['ts_id']);
+						}
 					} 
 					else
 					{
