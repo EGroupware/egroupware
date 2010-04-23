@@ -722,19 +722,54 @@ class calendar_bo
 			{
 				$event['tzid'] = egw_time::$server_timezone->getName();
 			}
-			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
-			foreach(array('start','end','modified','created','recur_enddate','recurrence') as $ts)
+			if (($event['whole_day'] = $this->so->isWholeDay($event)) &&
+					$date_format != 'server')
 			{
-				if (empty($event[$ts])) continue;
-
-				$event[$ts] = $this->date2usertime($event[$ts],$date_format);
+				// Adjust dates to user TZ
+				$time = new egw_time($event['start'], egw_time::$server_timezone);
+				$time =& $this->so->startOfDay($time, $event['tzid']);
+				$event['start'] = egw_time::to($time, $date_format);
+				$time = new egw_time($event['end'], egw_time::$server_timezone);
+				$time =& $this->so->startOfDay($time, $event['tzid']);
+				$time->setTime(23, 59, 59);
+				$event['end'] = egw_time::to($time, $date_format);
+				$time = new egw_time($event['recurrence'], egw_time::$server_timezone);
+				$time =& $this->so->startOfDay($time, $event['tzid']);
+				$event['recurrence'] = egw_time::to($time, $date_format);
+				$time = new egw_time($event['recur_enddate'], egw_time::$server_timezone);
+				$time =& $this->so->startOfDay($time, $event['tzid']);
+				$time->setTime(23, 59, 59);
+				$event['recur_enddate'] = egw_time::to($time, $date_format);
+				$timestamps = array('modified','created');
+			}
+			else
+			{
+				$timestamps = array('start','end','modified','created','recur_enddate','recurrence');
+			}
+			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
+			foreach ($timestamps as $ts)
+			{
+				if (!empty($event[$ts]))
+				{
+					$event[$ts] = $this->date2usertime($event[$ts],$date_format);
+				}
 			}
 			// same with the recur exceptions
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 			{
 				foreach($event['recur_exception'] as &$date)
 				{
-					$date = $this->date2usertime($date,$date_format);
+					if ($event['whole_day'] && $date_format != 'server')
+					{
+						// Adjust dates to user TZ
+						$time = new egw_time($date, egw_time::$server_timezone);
+						$time =& $this->so->startOfDay($time, $event['tzid']);
+						$date = egw_time::to($time, $date_format);
+					}
+					else
+					{
+						$date = $this->date2usertime($date,$date_format);
+					}
 				}
 			}
 			// same with the alarms

@@ -852,8 +852,30 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		$save_event = $event;
+		if (!isset($event['whole_day']) && ($event['whole_day'] = $this->isWholeDay($event)))
+		{
+			$time = new egw_time($event['start'], egw_time::$user_timezone);
+			$time =& $this->so->startOfDay($time);
+			$event['start'] = egw_time::to($time, 'ts');
+			$time = new egw_time($event['end'], egw_time::$user_timezone);
+			$time =& $this->so->startOfDay($time);
+			$time->setTime(23, 59, 59);
+			$event['end'] = egw_time::to($time, 'ts');
+			$time = new egw_time($event['recurrence'], egw_time::$user_timezone);
+			$time =& $this->so->startOfDay($time);
+			$event['recurrence'] = egw_time::to($time, 'ts');
+			$time = new egw_time($event['recur_enddate'], egw_time::$user_timezone);
+			$time =& $this->so->startOfDay($time);
+			$time->setTime(23, 59, 59);
+			$event['recur_enddate'] = egw_time::to($time, 'ts');
+			$timestamps = array('modified','created');
+		}
+		else
+		{
+			$timestamps = array('start','end','modified','created','recur_enddate','recurrence');
+		}
 		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
-		foreach(array('start','end','modified','created','recur_enddate','recurrence') as $ts)
+		foreach($timestamps as $ts)
 		{
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
@@ -868,7 +890,16 @@ class calendar_boupdate extends calendar_bo
 		{
 			foreach($event['recur_exception'] as $n => $date)
 			{
-				$event['recur_exception'][$n] = $this->date2ts($date,true);
+				if ($event['whole_day'])
+				{
+					$time = new egw_time($date, egw_time::$user_timezone);
+					$time =& $this->so->startOfDay($time);
+					$date = egw_time::to($time, 'ts');
+				}
+				else
+				{
+					$event['recur_exception'][$n] = $this->date2ts($date,true);
+				}
 			}
 		}
 		// same with the alarms
