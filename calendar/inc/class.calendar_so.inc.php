@@ -454,7 +454,7 @@ class calendar_so
 				'app'   => 'calendar',
 				'append'=> $append,
 			);
-			// we check if there are parts to use for the construction of our UNION query, 
+			// we check if there are parts to use for the construction of our UNION query,
 			// as replace the OR by construction of a suitable UNION for performance reasons
 			if (!empty($owner_or)||!empty($user_or))
 			{
@@ -463,7 +463,7 @@ class calendar_so
 					// if the query is to be filtered by owner OR user we need 4 selects for the union
 					//_debug_array($owner_or);
 					$selects = array();
-					foreach(array_keys($user_or) as $key) 
+					foreach(array_keys($user_or) as $key)
 					{
 						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $user_or[$key];
@@ -505,16 +505,16 @@ class calendar_so
 			{
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
 				$countSelects = count($selects);
-				foreach(array_keys($selects) as $key) 
+				foreach(array_keys($selects) as $key)
 				{
-					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";  
+					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 					//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 				}
 				if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 				$i = 0;
-				foreach(array_keys($selects) as $key) 
+				foreach(array_keys($selects) as $key)
 				{
 					if ($i >= $countSelects) continue;
 					$i ++;
@@ -699,6 +699,81 @@ class calendar_so
 	public static function get_integration_data()
 	{
 		return self::$integration_data;
+	}
+
+	/**
+	 * Return union cols constructed from application cols and required cols
+	 *
+	 * Every col not supplied in $app_cols get returned as NULL.
+	 *
+	 * @param array $app_cols required name => own name pairs
+	 * @param string|array $required array or comma separated column names or table.*
+	 * @param string $required_app='calendar'
+	 * @return string cols for union query to match ones supplied in $required
+	 */
+	public static function union_cols(array $app_cols,$required,$required_app='calendar')
+	{
+		// remove evtl. used DISTINCT, we currently dont need it
+		if (($distinct = substr($required,0,9) == 'DISTINCT '))
+		{
+			$required = substr($required,9);
+		}
+		$return_cols = array();
+		foreach(is_array($required) ? $required : explode(',',$required) as $cols)
+		{
+			if (substr($cols,-2) == '.*')
+			{
+				$cols = self::get_columns($required_app,substr($cols,0,-2));
+			}
+			elseif (strpos($cols,' AS ') !== false)
+			{
+				list(,$cols) = explode(' AS ',$cols);
+			}
+			foreach((array)$cols as $col)
+			{
+				if (substr($col,0,7) == 'egw_cal')	// remove table name
+				{
+					$col = preg_replace('/^egw_cal[a-z_]*\.','',$col);
+				}
+				if (isset($app_cols[$col]))
+				{
+					$return_cols[] = $app_cols[$col];
+				}
+				else
+				{
+					$return_cols[] = 'NULL';
+				}
+			}
+		}
+		return implode(',',$return_cols);
+	}
+
+	/**
+	 * Get columns of given table, taking into account historically different column order of egw_cal table
+	 *
+	 * @param string $app
+	 * @param string $table
+	 * @return array of column names
+	 */
+	static private function get_columns($app,$table)
+	{
+		if ($table != 'egw_cal')
+		{
+			$table_def = $GLOBALS['egw']->db->get_table_definitions($app,$table);
+			$cols = array_keys($table_def['fd']);
+		}
+		else
+		{
+			// special handling for egw_cal, as old databases have a different column order!!!
+			$cols =& egw_cache::getSession(__CLASS__,$table);
+
+			if (is_null($cols))
+			{
+				$meta = $GLOBALS['egw']->db->metadata($table,true);
+				$cols = array_keys($meta['meta']);
+			}
+		}
+		return $cols;
 	}
 
 	/**
