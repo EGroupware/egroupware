@@ -71,7 +71,7 @@ class importexport_admin_prefs_sidebox_hooks
 		{
 			$file = Array(
 				'Import definitions' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
-				'Define {im|ex}ports'  => $GLOBALS['egw']->link('/index.php',array(
+				'Define imports|exports'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'importexport.importexport_definitions_ui.index',
 				)),
 				'Schedule' => $GLOBALS['egw']->link('/index.php', array(
