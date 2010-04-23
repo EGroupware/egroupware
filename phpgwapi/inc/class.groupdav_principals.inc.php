@@ -124,7 +124,7 @@ class groupdav_principals extends groupdav_handler
 			// add /pricipals/users/ entry
 			$files[] = $this->add_collection('/principals/users/',array(
 				HTTP_WebDAV_Server::mkprop('current-user-principal',array(
-					HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
+					HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
 			));
 			if ($options['depth'])
 			{
@@ -179,7 +179,7 @@ class groupdav_principals extends groupdav_handler
 			// add /pricipals/users/ entry
 			$files[] = $this->add_collection('/principals/groups/',array(
 				HTTP_WebDAV_Server::mkprop('current-user-principal',array(
-					HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
+					HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/'))),
 			));
 			if ($options['depth'])
 			{
