@@ -1936,6 +1936,7 @@ class calendar_ical extends calendar_boupdate
 					case '6120c':
 					case 'nokia 6131':
 					case 'n97 mini':
+					case '5800 XpressMusic':
 						$this->supportedFields = $defaultFields['s60'];
 						break;
 					default:
