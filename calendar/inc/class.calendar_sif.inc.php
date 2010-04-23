@@ -490,7 +490,7 @@ class calendar_sif extends calendar_boupdate
 				// not merge
 				// SIF clients do not support participants => add them back
 				unset($event['participants']);
-				if ($event['whole_day'] && $event['tzid'] != $event_info['stored_event']['tzid'])
+				if (!empty($event['whole_day']) && $event['tzid'] != $event_info['stored_event']['tzid'])
 				{
 					if (!isset(self::$tz_cache[$event_info['stored_event']['tzid']]))
 					{
@@ -524,9 +524,7 @@ class calendar_sif extends calendar_boupdate
 		else // common adjustments for new events
 		{
 			// set non blocking all day depending on the user setting
-			if (isset($event['whole_day'])
-				&& $event['whole_day']
-				&& $this->nonBlockingAllday)
+			if (!empty($event['whole_day'])	&& $this->nonBlockingAllday)
 			{
 				$event['non_blocking'] = 1;
 			}
@@ -906,7 +904,7 @@ class calendar_sif extends calendar_boupdate
 		}
 		elseif (!$recur_date &&
 			$event['recur_type'] != MCAL_RECUR_NONE &&
-			!isset($event['whole_day'])) // whole-day events are not shifted
+			empty($event['whole_day'])) // whole-day events are not shifted
 		{
 			// Add the timezone transition related pseudo exceptions
 			$exceptions = $this->so->get_recurrence_exceptions($event, $tzid, 0, 0, 'tz_rrule');
@@ -1059,16 +1057,7 @@ class calendar_sif extends calendar_boupdate
 						$sifEvent .= '<Exceptions>';
 						foreach ($event['recur_exception'] as $day)
 						{
-							if (isset($event['whole_day']))
-							{
-								if (!is_a($day,'DateTime'))
-								{
-									$day = new egw_time($day,egw_time::$server_timezone);
-									$day->setTimezone(self::$tz_cache[$event['tzid']]);
-								}
-								$sifEvent .= '<ExcludeDate>' . $day->format('Y-m-d') . '</ExcludeDate>';
-							}
-							else
+							if (empty($event['whole_day']))
 							{
 								if ($this->log && is_a($day,'DateTime'))
 								{
@@ -1077,6 +1066,15 @@ class calendar_sif extends calendar_boupdate
 										$day->format('Ymd\THis') . "\n",3,$this->logfile);
 								}
 								$sifEvent .= '<ExcludeDate>' . self::getDateTime($day,$tzid) . '</ExcludeDate>';
+							}
+							else
+							{
+								if (!is_a($day,'DateTime'))
+								{
+									$day = new egw_time($day,egw_time::$server_timezone);
+									$day->setTimezone(self::$tz_cache[$event['tzid']]);
+								}
+								$sifEvent .= '<ExcludeDate>' . $day->format('Y-m-d') . '</ExcludeDate>';
 							}
 						}
 						$sifEvent .= '</Exceptions>';
@@ -1099,7 +1097,13 @@ class calendar_sif extends calendar_boupdate
 					break;
 
 				case 'Start':
-					if (isset($event['whole_day']))
+					if (empty($event['whole_day']))
+					{
+						$sifEvent .= '<Start>' . self::getDateTime($event['start'],$tzid) . '</Start>';
+						$sifEvent .= '<End>' . self::getDateTime($event['end'],$tzid) . '</End>';
+						$sifEvent .= "<AllDayEvent>0</AllDayEvent>";
+					}
+					else
 					{
 						// for whole-day events we use the date in event timezone
 						$time = new egw_time($event['start'],egw_time::$server_timezone);
@@ -1109,12 +1113,6 @@ class calendar_sif extends calendar_boupdate
 						$time->setTimezone(self::$tz_cache[$event['tzid']]);
 						$sifEvent .= '<End>' . $time->format('Y-m-d') . '</End>';
 						$sifEvent .= "<AllDayEvent>1</AllDayEvent>";
-					}
-					else
-					{
-						$sifEvent .= '<Start>' . self::getDateTime($event['start'],$tzid) . '</Start>';
-						$sifEvent .= '<End>' . self::getDateTime($event['end'],$tzid) . '</End>';
-						$sifEvent .= "<AllDayEvent>0</AllDayEvent>";
 					}
 					break;
 

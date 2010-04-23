@@ -1657,7 +1657,7 @@ class calendar_boupdate extends calendar_bo
 
 		if ($filter != 'master' && ($filter != 'exact' || empty($event['uid'])))
 		{
-			if (isset($event['whole_day']) && $event['whole_day'])
+			if (!empty($event['whole_day']))
 			{
 				if ($filter == 'relax')
 				{
@@ -1781,19 +1781,7 @@ class calendar_boupdate extends calendar_bo
 			// check times
 			if ($filter != 'relax')
 			{
-				if (isset($event['whole_day'])&& $event['whole_day'])
-				{
-					if (!$this->so->isWholeDay($egwEvent))
-					{
-						if ($this->log)
-						{
-							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							"() egwEvent is not a whole-day event!\n",3,$this->logfile);
-						}
-						continue;
-					}
-				}
-				else
+				if (empty($event['whole_day']))
 				{
 					if (abs($event['end'] - $egwEvent['end']) >= 120)
 					{
@@ -1801,6 +1789,18 @@ class calendar_boupdate extends calendar_bo
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 							"() egwEvent length does not match!\n",3,$this->logfile);
+						}
+						continue;
+					}
+				}
+				else
+				{
+					if (!$this->so->isWholeDay($egwEvent))
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+							"() egwEvent is not a whole-day event!\n",3,$this->logfile);
 						}
 						continue;
 					}
