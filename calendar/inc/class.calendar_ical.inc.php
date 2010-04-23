@@ -244,9 +244,8 @@ class calendar_ical extends calendar_boupdate
 			$recurrence = $this->date2usertime($recur_date);
 			$tzid = null;
 
-			if (is_array($event) && empty($event['tzid'])) $event = $event['id'];
-
-			if (!($event = $this->read($event, $recurrence, false, 'server')))
+			if ((!is_array($event) || empty($event['tzid']) && ($event = $event['id'])) &&
+				!($event = $this->read($event, $recurrence, false, 'server')))
 			{
 				if ($this->read($event, $recurrence, true, 'server'))
 				{
