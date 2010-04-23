@@ -268,18 +268,15 @@ class accounts
 			$start = $param['start'];
 			unset($param['start']);
 
-			if ($this->config['account_repository'] != 'ldap')
+			if ($this->config['account_repository'] != 'ldap' && is_numeric($param['type']))
 			{
-				if (is_numeric($param['type']))
-				{
-					$group = (int) $param['type'];
-					$param['type'] = 'accounts';
-				}
-				elseif ($param['type'] == 'owngroups')
-				{
-					$group = true;
-					$param['type'] = 'groups';
-				}
+				$group = (int) $param['type'];
+				$param['type'] = 'accounts';
+			}
+			elseif ($param['type'] == 'owngroups')
+			{
+				$group = true;
+				$param['type'] = 'groups';
 			}
 			// call ourself recursive to get (evtl. cached) full search
 			$full_search = $this->search($param);
