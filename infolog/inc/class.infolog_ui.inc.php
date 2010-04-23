@@ -1749,12 +1749,15 @@ class infolog_ui
 			'info_status'        => lang('Status'),
 			'info_percent'       => lang('Completed'),
 			'info_datecompleted' => lang('Date completed'),
+			'info_datemodified'  => lang('Last modified'),
+			'info_modifier'      => array('label' => lang('Modifier'),'type' => 'select-account'),
 			'info_location'      => lang('Location'),
 			'info_startdate'     => lang('Startdate'),
 			'info_enddate'       => lang('Enddate'),
 			'info_responsible'   => array('label' => lang('Responsible'),'type' => 'select-account'),
 			'info_subject'       => lang('Subject'),
 			'info_des'           => lang('Description'),
+			'info_id'            => lang('Id'),
 			// PM fields
 			'info_planned_time'  => lang('planned time'),
 			'info_used_time'     => lang('used time'),
@@ -1767,7 +1770,7 @@ class infolog_ui
 		}
 		foreach($this->bo->customfields as $name => $data)
 		{
-			if ($data['type2'] && $type && $data['type2'] != $type) continue;
+			if ($data['type2'] && $type && !in_array($type,explode(',',$data['type2']))) continue;
 
 			$fields['#'.$name] = array(
 				'label' => $data['label'],
