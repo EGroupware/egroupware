@@ -398,13 +398,14 @@ class calendar_so
 			// this is only used, when we cannot use UNIONS
 			if (!$useUnionQuery) $where[] = '('.implode(' OR ',$to_or).')';
 
-			if($filter != 'deleted') {
-				$where[] = "!cal_deleted";
+			if($filter != 'deleted')
+			{
+				$where[] = 'cal_deleted='.$this->db->quote(false,'bool');
 			}
 			switch($filter)
 			{
 				case 'deleted':
-					$where[] = "cal_deleted"; break;
+					$where[] = 'cal_deleted='.$this->db->quote(true,'bool');
 				case 'unknown':
 					$where[] = "cal_status='U'"; break;
 				case 'accepted':
