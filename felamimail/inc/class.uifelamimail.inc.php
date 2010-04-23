@@ -452,8 +452,8 @@
 		function viewMainScreen()
 		{
 			// get passed messages
-			if (!empty($_GET["msg"])) $message[] = $_GET["msg"];
-			if (!empty($_GET["message"])) $message[] = $_GET["message"];
+			if (!empty($_GET["msg"])) $message[] = html::purify($_GET["msg"]);
+			if (!empty($_GET["message"])) $message[] = html::purify($_GET["message"]);
 			unset($_GET["msg"]);
 			unset($_GET["message"]);
 			#printf ("this->uifelamimail->viewMainScreen() start: %s<br>",date("H:i:s",mktime()));
