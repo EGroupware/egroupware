@@ -715,15 +715,15 @@ class calendar_bo
 	function db2data(&$events,$date_format='ts')
 	{
 		if (!is_array($events)) echo "<p>bocal::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
-		foreach($events as &$event)
+		foreach ($events as &$event)
 		{
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
 			if (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id'])))
 			{
 				$event['tzid'] = egw_time::$server_timezone->getName();
 			}
-			if (($event['whole_day'] = $this->so->isWholeDay($event)) &&
-					$date_format != 'server')
+			$event['whole_day'] = $this->isWholeDay($event);
+			if ($event['whole_day'] && $date_format != 'server')
 			{
 				// Adjust dates to user TZ
 				$time = new egw_time($event['start'], egw_time::$server_timezone);

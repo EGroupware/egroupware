@@ -568,16 +568,20 @@ class calendar_ical extends calendar_boupdate
 	    				break;
 
 					case 'DTSTART':
-						if (!isset($event['whole_day']))
+						if (empty($event['whole_day']))
 						{
 							$attributes['DTSTART'] = self::getDateTime($event['start'],$tzid,$parameters['DTSTART']);
 						}
 						break;
 
 					case 'DTEND':
-						// write start + end of whole day events as dates
-						if (isset($event['whole_day']))
+						if (empty($event['whole_day']))
 						{
+							$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
+						}
+						else
+						{
+							// write start + end of whole day events as dates
 							$event['end-nextday'] = $event['end'] + 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
 							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
@@ -587,10 +591,6 @@ class calendar_ical extends calendar_boupdate
 									array('VALUE' => 'DATE'));
 							}
 							unset($attributes['DTSTART']);
-						}
-						else
-						{
-							$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
 						}
 						break;
 
@@ -613,9 +613,17 @@ class calendar_ical extends calendar_boupdate
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;
 						if (!empty($event['recur_exception']))
 						{
-							// use 'DATE' instead of 'DATE-TIME' on whole day events
-							if (isset($event['whole_day']))
+							if (empty($event['whole_day']))
 							{
+								$value_type = 'DATE-TIME';
+								foreach ($event['recur_exception'] as $key => $timestamp)
+								{
+									$event['recur_exception'][$key] = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
+								}
+							}
+							else
+							{
+								// use 'DATE' instead of 'DATE-TIME' on whole day events
 								$value_type = 'DATE';
 								foreach ($event['recur_exception'] as $id => $timestamp)
 								{
@@ -630,14 +638,7 @@ class calendar_ical extends calendar_boupdate
 								}
 								$event['recur_exception'] = $days;
 							}
-							else
-							{
-								$value_type = 'DATE-TIME';
-								foreach ($event['recur_exception'] as $key => $timestamp)
-								{
-									$event['recur_exception'][$key] = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
-								}
-							}
+
 							$attributes['EXDATE'] = '';
 							$values['EXDATE'] = $event['recur_exception'];
 							$parameters['EXDATE']['VALUE'] = $value_type;
@@ -694,7 +695,11 @@ class calendar_ical extends calendar_boupdate
 						if ($recur_date)
 						{
 							// We handle a pseudo exception
-							if (isset($event['whole_day']))
+							if (empty($event['whole_day']))
+							{
+								$attributes[$icalFieldName] = self::getDateTime($recur_date,$tzid,$parameters[$icalFieldName]);
+							}
+							else
 							{
 								$time = new egw_time($recur_date,egw_time::$server_timezone);
 								$time->setTimezone(self::$tz_cache[$event['tzid']]);
@@ -706,17 +711,17 @@ class calendar_ical extends calendar_boupdate
 									array('VALUE' => 'DATE')
 								);
 							}
-							else
-							{
-								$attributes[$icalFieldName] = self::getDateTime($recur_date,$tzid,$parameters[$icalFieldName]);
-							}
 						}
 						elseif ($event['recurrence'] && $event['reference'])
 						{
 							// $event['reference'] is a calendar_id, not a timestamp
 							if (!($revent = $this->read($event['reference']))) break;	// referenced event does not exist
 
-							if (isset($revent['whole_day']))
+							if (empty($revent['whole_day']))
+							{
+								$attributes[$icalFieldName] = self::getDateTime($event['recurrence'],$tzid,$parameters[$icalFieldName]);
+							}
+							else
 							{
 								$time = new egw_time($event['recurrence'],egw_time::$server_timezone);
 								$time->setTimezone(self::$tz_cache[$event['tzid']]);
@@ -728,10 +733,7 @@ class calendar_ical extends calendar_boupdate
 									array('VALUE' => 'DATE')
 								);
 							}
-							else
-							{
-								$attributes[$icalFieldName] = self::getDateTime($event['recurrence'],$tzid,$parameters[$icalFieldName]);
-							}
+
 							unset($revent);
 						}
 						break;
@@ -859,7 +861,7 @@ class calendar_ical extends calendar_boupdate
 					// RFC requires DESCRIPTION for DISPLAY
 					if (!$event['title'] && !$description) continue;
 
-					if (isset($event['whole_day']) && $alarmData['offset'])
+					if (!empty($event['whole_day']) && $alarmData['offset'])
 					{
 						$alarmData['time'] = $event['start'] - $alarmData['offset'];
 						$alarmData['offset'] = false;
@@ -1205,7 +1207,7 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 
-					if ($event['whole_day'] && $event['tzid'] != $event_info['stored_event']['tzid'])
+					if (!empty($event['whole_day']) && $event['tzid'] != $event_info['stored_event']['tzid'])
 					{
 						// Adjust dates to original TZ
 						$time = new egw_time($event['start'],egw_time::$server_timezone);
@@ -1224,7 +1226,7 @@ class calendar_ical extends calendar_boupdate
 								$event['recur_exception'][$key] = egw_time::to($time,'server');
 							}
 						}
-						elseif($event['recurrence'])
+						elseif ($event['recurrence'])
 						{
 							$time = new egw_time($event['recurrence'],egw_time::$server_timezone);
 							$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
@@ -1244,7 +1246,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				unset($event['id']);
 				// set non blocking all day depending on the user setting
-				if (isset($event['whole_day']) && $this->nonBlockingAllday)
+				if (!empty($event['whole_day']) && $this->nonBlockingAllday)
 				{
 					$event['non_blocking'] = 1;
 				}

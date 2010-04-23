@@ -852,7 +852,8 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		$save_event = $event;
-		if (!isset($event['whole_day']) && ($event['whole_day'] = $this->isWholeDay($event)))
+		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
+		if ($event['whole_day'])
 		{
 			$time = new egw_time($event['start'], egw_time::$user_timezone);
 			$time =& $this->so->startOfDay($time);
