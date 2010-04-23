@@ -183,7 +183,7 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * Exports one calendar event to an iCalendar item
 	 *
-	 * @param int|array $events (array of) cal_id or array of the events
+	 * @param int|array $events (array of) cal_id or array of the events with timestamps in server time
 	 * @param string $version='1.0' could be '2.0' too
 	 * @param string $method='PUBLISH'
 	 * @param int $recur_date=0	if set export the next recurrence at or after the timestamp,
@@ -244,8 +244,9 @@ class calendar_ical extends calendar_boupdate
 			$recurrence = $this->date2usertime($recur_date);
 			$tzid = null;
 
-			if (!is_array($event)
-				&& !($event = $this->read($event, $recurrence, false, 'server')))
+			if (is_array($event) && empty($event['tzid'])) $event = $event['id'];
+
+			if (!($event = $this->read($event, $recurrence, false, 'server')))
 			{
 				if ($this->read($event, $recurrence, true, 'server'))
 				{
