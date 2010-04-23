@@ -35,6 +35,7 @@ apply the action on the whole query, not only the shown events	calendar	en	Apply
 apply the changes	calendar	en	apply the changes
 are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this Country ?
 are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday ?
+automatically purge old events after	admin	en	Automatically purge old events after
 back half a month	calendar	en	back half a month
 back one month	calendar	en	back one month
 back one year	calendar	en	back one year
@@ -207,6 +208,7 @@ ignore conflict	calendar	en	Ignore conflict
 import	calendar	en	Import
 import csv-file	common	en	Import CSV-File
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options Tab you can also choose other separators.
+initially year aligned	calendar	en	initially year aligned
 interval	calendar	en	Interval
 invalid email-address "%1" for user %2	calendar	en	Invalid email-address "%1" for user %2
 invitations	calendar	en	Invitations
@@ -235,6 +237,7 @@ monthview	calendar	en	Month view
 multiple week view	calendar	en	Multiple week view
 needs action	calendar	en	Needs action
 new search with the above parameters	calendar	en	New search with the above parameters
+no automatic purging	admin	en	No automatic purging
 no events found	calendar	en	No events found
 no filter	calendar	en	No filter
 no matches found	calendar	en	No matches found
@@ -441,6 +444,7 @@ workday	calendar	en	Work day
 workdays	calendar	en	Work days
 yearly	calendar	en	Yearly
 yearly planner	calendar	en	Yearly planner
+years	admin	en	years
 yearview	calendar	en	Year view
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:

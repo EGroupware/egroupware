@@ -35,6 +35,7 @@ apply the action on the whole query, not only the shown events	calendar	de	Befeh
 apply the changes	calendar	de	Übernimmt die Änderungen
 are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen möchten?
 are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen möchten?
+automatically purge old events after	admin	de	Bereinigt bzw. löschet alte Termine automatisch nach
 back half a month	calendar	de	einen halben Monat zurück
 back one month	calendar	de	einen Monat zurück
 back one year	calendar	de	ein Jahr zurück
@@ -207,6 +208,7 @@ ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
 import csv-file	common	de	CSV-Datei importieren
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	de	Importieren von Terminen von einer CSV Datei. CSV bedeutet: mit Komma getrennte Werte. Sie können in den Optionen des Import ebenso einen anderen Separator (Tab) wählen.
+initially year aligned	calendar	de	Anfangsjahr ausgerichtet
 interval	calendar	de	Intervall
 invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1" für Benutzer %2
 invitations	calendar	de	Einladungen
@@ -235,6 +237,7 @@ monthview	calendar	de	Monatsansicht
 multiple week view	calendar	de	Mehrwochenansicht
 needs action	calendar	de	Zu erledigen
 new search with the above parameters	calendar	de	neue Suche mit den obigen Parametern
+no automatic purging	admin	de	Keine automatische Bereinigung alter Termine
 no events found	calendar	de	Keine Termine gefunden
 no filter	calendar	de	Kein Filter
 no matches found	calendar	de	Keine Treffer gefunden
@@ -426,6 +429,7 @@ weekdays	calendar	de	Wochentage
 weekdays to use in search	calendar	de	Wochentage für die Suche
 weekly	calendar	de	Wöchentlich
 weeks in multiple week view	calendar	de	Wochen in der Mehrwochenansicht
+weeks offset (for multi-column display)	calendar	de	Wochen Anfangswert (für Mehrspaltenansicht)
 weekview	calendar	de	Wochenansicht
 weekview with weekend	calendar	de	Wochenansicht mit Wochenende
 weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
@@ -440,6 +444,7 @@ workday	calendar	de	Arbeitstag
 workdays	calendar	de	Arbeitstage
 yearly	calendar	de	Jährlich
 yearly planner	calendar	de	Jahresplaner
+years	admin	de	Jahre
 yearview	calendar	de	Jahresansicht
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
 you are not allowed to book the resource selected:	calendar	de	Sie sind nicht berechtigt die ausgewählte Ressource zu buchen.
