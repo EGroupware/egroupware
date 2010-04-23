@@ -598,9 +598,9 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			$value = htmlspecialchars(array2string($value));
 		}
-		elseif (preg_match('/^https?:\/\//',$value))
+		elseif (preg_match('/\<(D:)?href\>[^<]+\<\/(D:)?href\>/i',$value))
 		{
-			$value = html::a_href($value,$value);
+			$value = preg_replace('/\<(D:)?href\>([^<]+)\<\/(D:)?href\>/i','&lt;\\1href&gt;<a href="\\2">\\2</a>&lt;/\\3href&gt;<br />',$value);
 		}
 		else
 		{
