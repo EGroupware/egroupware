@@ -433,6 +433,10 @@ class EGW_SyncML_State extends Horde_SyncML_State
 					. ') could not be not verified' ,
 					__FILE__, __LINE__, PEAR_LOG_ERROR);
 			}
+			if (empty($GLOBALS['egw_info']['user']['passwd']))
+			{
+				$GLOBALS['egw_info']['user']['passwd'] = $this->_password;
+			}
 		}
 		return ($this->_isAuthorized > 0);
 	}
