@@ -794,7 +794,7 @@ class calendar_ical extends calendar_boupdate
 					$attributes['X-EPOCAGENDAENTRYTYPE'] = 'ANNIVERSARY';
 					$attributes['DTEND'] = $attributes['DTSTART'];
 				}
-				elseif ($event['special'] == '2')
+				elseif ($event['special'] == '2' || !empty($event['whole_day']))
 				{
 					$attributes['X-EPOCAGENDAENTRYTYPE'] = 'EVENT';
 				}
