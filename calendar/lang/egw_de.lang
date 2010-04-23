@@ -60,7 +60,7 @@ can't add alarms in the past !!!	calendar	de	Kann keine Alarme in der Vergangenh
 can't aquire lock!	calendar	de	Kann Termin nicht sperren!
 canceled	calendar	de	Abgesagt
 category %1 removed because of missing rights	calendar	de	Kategorie %1 entfernt wegen fehlender Rechte
-category acl	calendar	de	Kategorie Rechte
+category acl	common	de	Kategorie Rechte
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	de	Kategorie Rechte beschränken nur das Hinzufügen einer Kategorie zu einem Termin oder das Ändern des Status eines Teilnehmers. Sie ändern NICHT die Sichtbarkeit eines Termins!
 chair	calendar	de	Vorsitz
 change history	calendar	de	Änderungshistorie
@@ -407,7 +407,7 @@ translation	calendar	de	Übersetzung
 tue	calendar	de	Di
 two weeks	calendar	de	zwei Wochen
 type of planner	calendar	de	Planer Typ
-update timezones	calendar	de	Zeitzonen aktualisieren
+update timezones	common	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Popup

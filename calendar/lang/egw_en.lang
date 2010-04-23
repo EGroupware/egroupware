@@ -60,7 +60,7 @@ can't add alarms in the past !!!	calendar	en	Can't add alarms in the past !!!
 can't aquire lock!	calendar	en	Can't aquire lock!
 canceled	calendar	en	Canceled
 category %1 removed because of missing rights	calendar	en	Category %1 removed because of missing rights
-category acl	calendar	en	Category ACL
+category acl	common	en	Category ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	en	Category ACL only restrict adding a category to an event or changing status of a participant. It does NOT change the visibility of an event!
 chair	calendar	en	Chair
 change history	calendar	en	Change history
@@ -407,7 +407,7 @@ translation	calendar	en	Translation
 tue	calendar	en	Tue
 two weeks	calendar	en	Two weeks
 type of planner	calendar	en	Type of planner
-update timezones	calendar	en	Update timezones
+update timezones	common	en	Update timezones
 updated	calendar	en	Updated
 use end date	calendar	en	Use End date
 use the selected time and close the popup	calendar	en	Use the selected time and close the popup
