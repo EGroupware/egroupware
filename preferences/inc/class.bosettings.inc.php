@@ -89,7 +89,7 @@
 			}
 
 			// calling settings hook all apps can answer (for a specific app)
-			foreach($GLOBALS['egw']->hooks->process('settings_'.$this->appname,$this->appname) as $app => $settings)
+			foreach($GLOBALS['egw']->hooks->process('settings_'.$this->appname,$this->appname,true) as $app => $settings)
 			{
 				if (isset($settings) && is_array($settings) && $settings)
 				{
