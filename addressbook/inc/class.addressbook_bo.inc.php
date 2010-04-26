@@ -1181,10 +1181,7 @@ class addressbook_bo extends addressbook_so
 		$limit = false;
 		if ($pattern)
 		{
-			foreach($this->columns_to_search as $col)
-			{
-				$criteria[$col] = is_array($pattern) ? $pattern['search'] : $pattern;
-			}
+			$criteria = is_array($pattern) ? $pattern['search'] : $pattern;
 		}
 		if($options['start'] || $options['num_rows']) {
 			$limit = array($options['start'], $options['num_rows']);
