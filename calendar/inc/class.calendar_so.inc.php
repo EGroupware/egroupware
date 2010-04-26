@@ -405,7 +405,8 @@ class calendar_so
 			switch($filter)
 			{
 				case 'showonlypublic':
-					$where[] = "cal_public=1"; break;
+					$where[] = "cal_public=1"; 
+					$where[] = "cal_status != 'R'"; break;
 				case 'deleted':
 					$where[] = 'cal_deleted='.$this->db->quote(true,'bool');
 				case 'unknown':
