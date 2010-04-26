@@ -350,15 +350,36 @@ class calendar_uilist extends calendar_ui
 				$event['category'] = $this->categories->check_list(EGW_ACL_READ, $event['category']);
 			}
 
-			// Edit link
-			$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
+			if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
+			{
+				$app = $matches[1];
+				$app_id = $matches[2];
+				$icons = array();
+				if (($is_private = calendar_bo::integration_get_private($app,$app_id,$event)))
+				{
+					$icons[] = html::image('calendar','private');
+				}
+				else
+				{
+					//$icons = self::integration_get_icons($app,$app_id,$event);
+				}
+			}
 
-                        if ($event['recur_type'] != MCAL_RECUR_NONE)
+			// Edit link
+			if($app && $app_id)
+			{
+				$popup = calendar_uiviews::integration_get_popup($app,$app_id);
+				
+				// Need to strip off 'onclick'
+				$event['edit_link'] = preg_replace('/ ?onclick="(.+)"/i', '$1', $popup);
+			}
+                        elseif ($event['recur_type'] != MCAL_RECUR_NONE)
                         {
                                 $event['edit_link'] = "edit_series({$event['id']}, {$event['start']});return false;";
                         }
                         else
                         {
+				$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
                                 $event['edit_link'] = $this->popup($view_link).'; return false;';
                         }
 
