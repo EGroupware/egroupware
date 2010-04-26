@@ -104,7 +104,14 @@ class calendar_uilist extends calendar_ui
 			$content['action'] = 'delete';
 			$content['nm']['rows']['checked'] = array($id);
 		}
-		
+		if (is_array($content) && $content['nm']['rows']['timesheet'])
+		{
+			// handle a single timesheet like timesheet with the checkboxes
+			list($id) = @each($content['nm']['rows']['timesheet']);
+			$content['action'] = 'timesheet-add';
+			$content['nm']['rows']['checked'] = array($id);
+		}
+	
 		// Handle actions
 		if ($content['action'] != '')
 		{
@@ -123,6 +130,7 @@ class calendar_uilist extends calendar_ui
 					$msg .= lang('%1 event(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 				}
 			}
+			$content['nm']['rows']['checked'] = array();
 		}
 		$content = array(
 			'nm'  => egw_session::appsession('calendar_list','calendar'),
@@ -329,7 +337,8 @@ class calendar_uilist extends calendar_ui
 		foreach((array) $this->bo->search($search_params) as $event)
 		{
 			$readonlys['view['.$event['id'].']'] = !($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event));
-			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event);
+			// Delete disabled for other applications
+			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']);
 
 			$event['recure'] = $this->bo->recure2string($event);
 			if ($params['csv_export'])
@@ -473,13 +482,19 @@ class calendar_uilist extends calendar_ui
 		}
 		foreach($checked as $event) 
 		{
-			$id = $event['id'];
-			$recur_date = $event['recur_date'];
+			if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
+			{
+				$app = $matches[1];
+				$app_id = $matches[2];
+			} else {
+				$id = $event['id'];
+				$recur_date = $event['recur_date'];
+			}
 			switch($action) 
 			{
 				case 'delete':
 					$action_msg = lang('deleted');
-                                        if ($this->bo->check_perms(EGW_ACL_DELETE,$id))
+                                        if ($id && $this->bo->check_perms(EGW_ACL_DELETE,$id))
 					{
 						if($this->bo->delete($id, $recur_date)) 
 						{
@@ -492,22 +507,42 @@ class calendar_uilist extends calendar_ui
 					}
 					break;
 				case 'status':
-					$event = $this->bo->read($id, $recur_date);
-					$old_status = $event['participants'][$GLOBALS['egw_info']['user']['account_id']];
-					calendar_so::split_status($old_status, $quantity, $role);
-					if ($old_status != $status)
+					if($id && $event = $this->bo->read($id, $recur_date)) 
 					{
-						//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
-						$new_status = calendar_so::combine_status($status, $quantity, $role);
-						if ($this->bo->set_status($id,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date))
+						$old_status = $event['participants'][$GLOBALS['egw_info']['user']['account_id']];
+						calendar_so::split_status($old_status, $quantity, $role);
+						if ($old_status != $status)
 						{
-							$success++;
-							$msg = lang('Status changed');
+							//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
+							$new_status = calendar_so::combine_status($status, $quantity, $role);
+							if ($this->bo->set_status($id,$GLOBALS['egw_info']['user']['account_id'],$new_status,$recur_date))
+							{
+								$success++;
+								$msg = lang('Status changed');
+							}
 						}
+					} else {
+						$failure++;
 					}
 					break;
 				case 'timesheet-add':
-					$event = $this->bo->read($id, $recur_date);
+					if($id && !$app)
+					{
+						$event = $this->bo->read($id, $recur_date);
+					}
+					elseif ($app)
+					{
+						$query = egw_session::appsession('calendar_list','calendar');
+						$query['query'] = $app_id;
+						$query['search'] = $app_id;
+						$result = $this->bo->search($query);
+						$event = $result[$app.$app_id];
+					}
+					if(!$event) 
+					{
+						$failure++;
+						continue;
+					}
 					$timesheet = array(
 						'ts_title'		=>	$event['title'],
 						'ts_description'	=>	$event['description'],
@@ -539,9 +574,10 @@ class calendar_uilist extends calendar_ui
 						$success++;
 
 						// Can't link to just one of a recurring series of events
-						if(!$recur_date) {
+						if(!$recur_date || $app) {
 							// Create link
-							egw_link::link('calendar', $id, 'timesheet', $timesheet_bo->data['ts_id']);
+							$link_id = $app ? $app_id : $id;
+							egw_link::link($app ? $app : 'calendar', $link_id, 'timesheet', $timesheet_bo->data['ts_id']);
 						}
 					} 
 					else
