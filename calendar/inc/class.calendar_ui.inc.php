@@ -696,6 +696,7 @@ class calendar_ui
 			'owner'       => array(lang('Owner too'),lang('Show also events just owned by selected user')),
 			'all'         => array(lang('All incl. rejected'),lang('Show all status incl. rejected events')),
 			'hideprivate' => array(lang('Hide private infos'),lang('Show all events, as if they were private')),
+			'showonlypublic' =>  array(lang('Hide private events'),lang('Show only events flagged as public, (not checked as private)')),
 			'no-enum-groups' => array(lang('only group-events'),lang('Do not include events of group members')),
 		) as $value => $label)
 		{
