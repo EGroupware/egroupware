@@ -835,7 +835,7 @@ class soetemplate
 		{
 			$this->modified = time();
 		}
-		if (is_null($this->group) && !is_int($this->group)) $this->group = 0;
+		if (is_null($this->group) || !is_int($this->group)) $this->group = 0;
 
 		$this->db->insert(self::TABLE,$this->as_array(3,true),$this->as_array(-1,true),__LINE__,__FILE__,'etemplate');
 
