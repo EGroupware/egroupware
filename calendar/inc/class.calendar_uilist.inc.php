@@ -176,6 +176,13 @@ class calendar_uilist extends calendar_ui
 			if($key == 'G') continue;
 			$sel_options['action'][lang('Change your participant status')]['status-'.$key] = $value;
 		}
+		// add scrollbar to long describtion, if user choose so in his prefs
+		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
+		{
+			$content['css'] .= '<style type="text/css">@media screen { .listDescription {  max-height: '.
+				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).       // dono why em is not real lines
+				'em; overflow: auto; }}</style>';
+		}
 		unset($sel_options['action'][lang('Change your participant status')]['G']);
 		$GLOBALS['egw_info']['flags']['java_script'] .= $this->get_javascript();
 

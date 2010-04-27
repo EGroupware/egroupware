@@ -386,6 +386,15 @@ class calendar_hooks
 				'admin'  => False,
 				'forced' => 'user',
 			),
+			'limit_des_lines' => array(
+				'type'   => 'input',
+				'size'   => 5,
+				'label'  => 'Limit number of description lines in list view (default 5, 0 for no limit)',
+				'name'   => 'limit_des_lines',
+				'help'   => 'How many describtion lines should be directly visible. Further lines are available via a scrollbar.',
+				'xmlrpc' => True,
+				'admin'  => False
+			),
 			'default_private' => array(
 				'type'  => 'check',
 				'label' => 'Set new events to private',
