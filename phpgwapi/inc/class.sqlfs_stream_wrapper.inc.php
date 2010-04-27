@@ -244,6 +244,17 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				self::mkdir_recursive($fs_dir,0700,true);
 			}
 		}
+		// check if opend file is a directory
+		elseif($stat && ($stat['mode'] & self::MODE_DIR) == self::MODE_DIR)
+		{
+				if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) Is a directory!");
+				if (($options & STREAM_REPORT_ERRORS))
+				{
+					trigger_error(__METHOD__."($url,$mode,$options) Is a directory!",E_USER_WARNING);
+				}
+				$this->opened_stream = $this->opened_path = $this->opened_mode = null;
+				return false;
+		}
 		else
 		{
 			if ($mode == 'r' && !egw_vfs::check_access($url,egw_vfs::READABLE ,$stat) ||// we are not allowed to read
@@ -993,7 +1004,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function url_stat ( $url, $flags, $eacl_access=null )
 	{
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags)");
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags,$eacl_access)");
 
 		$path = parse_url($url,PHP_URL_PATH);
 
