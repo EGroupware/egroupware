@@ -927,7 +927,7 @@ class egw_link extends solink
 	{
 		if ((int)$app > 0)	// is file_id
 		{
-			$url = links_stream_wrapper::PREFIX.links_stream_wrapper::id2path($app);
+			$url = egw_vfs::resolve_url(sqlfs_stream_wrapper::id2path($app));
 		}
 		else
 		{
@@ -987,8 +987,8 @@ class egw_link extends solink
 	{
 		if (!is_array($fileinfo))
 		{
-			$url = links_stream_wrapper::id2path($fileinfo);
-			if (!($fileinfo = links_stream_wrapper::url_stat($url,STREAM_URL_STAT_QUIET)))
+			$url = sqlfs_stream_wrapper::id2path($fileinfo);
+			if (!($fileinfo = egw_vfs::url_stat($url,STREAM_URL_STAT_QUIET)))
 			{
 				return false;
 			}
