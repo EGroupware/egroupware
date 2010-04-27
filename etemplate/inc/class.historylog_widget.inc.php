@@ -134,7 +134,7 @@ class historylog_widget
 
 		$status = 'status';
 		// allow to set a diffent name for status (field-name), eg. because status is already used for something else
-		if (!empty($cell['size']) && isset($tmpl->sel_options[$cell['size']]))
+		if (!empty($cell['size']) && isset($tmpl->sel_options[$cell['size']]) && is_array($value))
 		{
 			$status = $cell['size'];
 			foreach($value as &$row)
