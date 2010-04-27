@@ -737,7 +737,7 @@ class calendar_so
 			{
 				if (substr($col,0,7) == 'egw_cal')	// remove table name
 				{
-					$col = preg_replace('/^egw_cal[a-z_]*\.','',$col);
+					$col = preg_replace('/^egw_cal[a-z_]*\./','',$col);
 				}
 				if (isset($app_cols[$col]))
 				{
