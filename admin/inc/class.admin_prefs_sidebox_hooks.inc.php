@@ -16,6 +16,15 @@
 class admin_prefs_sidebox_hooks
 {
 	/**
+	 * Functions callable via menuaction
+	 *
+	 * @var unknown_type
+	 */
+	var $public_functions = array(
+		'register_all_hooks' => True
+	);
+
+	/**
 	 * hooks to build projectmanager's sidebox-menu plus the admin and preferences sections
 	 *
 	 * @param string/array $args hook args
@@ -53,11 +62,6 @@ class admin_prefs_sidebox_hooks
 				$file['User Groups']                = egw::link('/index.php','menuaction=admin.uiaccounts.list_groups');
 			}
 
-			if (! $GLOBALS['egw']->acl->check('applications_access',1,'admin'))
-			{
-				$file['Applications']               = egw::link('/index.php','menuaction=admin.uiapplications.get_list');
-			}
-
 			if (! $GLOBALS['egw']->acl->check('global_categories_access',1,'admin'))
 			{
 				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw');
@@ -85,7 +89,7 @@ class admin_prefs_sidebox_hooks
 
 			if (! $GLOBALS['egw']->acl->check('applications_access',16,'admin'))
 			{
-				$file['Find and Register all Application Hooks'] = egw::link('/index.php','menuaction=admin.uiapplications.register_all_hooks');
+				$file['Find and Register all Application Hooks'] = egw::link('/index.php','menuaction=admin.admin_prefs_sidebox_hooks.register_all_hooks');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('asyncservice_access',1,'admin'))
@@ -116,5 +120,23 @@ class admin_prefs_sidebox_hooks
 				display_sidebox($appname,lang('Admin'),$file);
 			}
 		}
+	}
+
+	/**
+	 * Register all hooks
+	 */
+	function register_all_hooks()
+	{
+		if ($GLOBALS['egw']->acl->check('applications_access',16,'admin'))
+		{
+			$GLOBALS['egw']->redirect_link('/index.php');
+		}
+		$GLOBALS['egw']->hooks->register_all_hooks();
+
+		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		{
+			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
+		}
+		$GLOBALS['egw']->redirect_link('/admin/index.php');
 	}
 }

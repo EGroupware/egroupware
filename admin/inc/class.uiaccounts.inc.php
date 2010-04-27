@@ -973,7 +973,9 @@
 				'lang_firstname'     => lang('First Name'),
 				'lang_lastlogin'     => lang('Last login'),
 				'lang_lastloginfrom' => lang('Last login from'),
-				'lang_expires' => lang('Expires')
+				'lang_expires' => lang('Expires'),
+				'lang_app' => lang('application'),
+				'lang_acl' => lang('enabled'),
 			);
 
 			$t->parse('password_fields','form_logininfo',True);
@@ -1055,16 +1057,21 @@
 			$i = 0;
 
 			$availableApps = $GLOBALS['egw_info']['apps'];
-			@asort($availableApps);
-			@reset($availableApps);
 			foreach($availableApps as $app => $data)
 			{
-				if ($data['enabled'] && $data['status'] != 2)
+				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
 				{
-					$perm_display[$i]['appName'] = $app;
-					$perm_display[$i]['title']   = $data['title'];
-					$i++;
+					unset($availableApps[$app]);	// do NOT show disabled apps, or our API (status = 3)
 				}
+			}
+			uasort($availableApps,create_function('$a,$b','return strcasecmp($a["title"],$b["title"]);'));
+
+			foreach($availableApps as $app => $data)
+			{
+				$perm_display[] = array(
+					'appName' => $app,
+					'title'   => $data['title'],
+				);
 			}
 
 			// create apps output
@@ -1091,7 +1098,7 @@
 					$part2 = '<td colspan="2">&nbsp;</td>';
 				}
 
-				$appRightsOutput .= sprintf("<tr bgcolor=\"%s\">$part1$part2</tr>\n",$GLOBALS['egw_info']['theme']['row_on']);
+				$appRightsOutput .= sprintf("<tr class=\"%s\">$part1$part2</tr>\n",$this->nextmatchs->alternate_row_color('',true));
 			}
 
 			$var['permissions_list'] = $appRightsOutput;
@@ -1190,26 +1197,24 @@
 					'email' => html::input('account_email',$group_repository['account_email'],'',' style="width: 100%;"'),
 				));
 			}
-			reset($GLOBALS['egw_info']['apps']);
-			$sorted_apps = $GLOBALS['egw_info']['apps'];
-			foreach ($sorted_apps as $key => $values) {
-				$sortarray[$key] = strtolower($values['title']);
-			}
-			unset($key); unset($values);
-			@asort($sortarray);
-			@reset($sortarray);
-
-			foreach ($sortarray as $key => $value)
+			$availableApps = $GLOBALS['egw_info']['apps'];
+			foreach($availableApps as $app => $data)
 			{
-				if ($sorted_apps[$key]['enabled'] && $sorted_apps[$key]['status'] != 3)
+				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
 				{
-					$perm_display[] = Array(
-						$key,
-						$sorted_apps[$key]['title']
-					);
+					unset($availableApps[$app]);	// do NOT show disabled apps, or our API (status = 3)
 				}
 			}
-			unset($key); unset($value);
+			uasort($availableApps,create_function('$a,$b','return strcasecmp($a["title"],$b["title"]);'));
+
+			foreach ($availableApps as $app => $data)
+			{
+				$perm_display[] = Array(
+					$app,
+					$data['title']
+				);
+			}
+			unset($app); unset($data);
 
 			$perm_html = '<td width="35%">'.lang('Application').'</td><td width="15%">'.lang('enabled').' / '.lang('ACL').'</td>';
 			$perm_html = '<tr class="th">'.
@@ -1513,16 +1518,19 @@
 			$db_perms = $apps->read_account_specific();
 
 			$availableApps = $GLOBALS['egw_info']['apps'];
+			foreach($availableApps as $app => $data)
+			{
+				if (!$data['enabled'] || !$data['status'] || $data['status'] == 3)
+				{
+					unset($availableApps[$app]);	// do NOT show disabled apps, or our API (status = 3)
+				}
+			}
 			uasort($availableApps,create_function('$a,$b','return strcasecmp($a["title"],$b["title"]);'));
 
 			$appRightsOutput = '';
 			$i = 0;
 			foreach($availableApps as $app => $data)
 			{
-				if (!$data['enabled'] || $data['status'] == 3)
-				{
-					continue;
-				}
 				$checked = (@$userData['account_permissions'][$app] || @$db_perms[$app]) && $_account_id ? ' checked="1"' : '';
 				$acl_action = self::_acl_action($app,$_account_id,$userData['account_lid'],$options);
 				$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s>',
@@ -1533,14 +1541,14 @@
 
 				if ($i & 1)
 				{
-					$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color(), $part[0], $part[1]);
+					$appRightsOutput .= sprintf('<tr class="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color('',true), $part[0], $part[1]);
 				}
 				++$i;
 			}
 			if ($i & 1)
 			{
 				$part[1] = '<td colspan="3">&nbsp;</td>';
-				$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color(), $part[0], $part[1]);
+				$appRightsOutput .= sprintf('<tr class="%s">%s%s</tr>',$this->nextmatchs->alternate_row_color('',true), $part[0], $part[1]);
 			}
 
 			$var = Array(
