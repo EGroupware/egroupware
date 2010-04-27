@@ -339,6 +339,8 @@ class calendar_uilist extends calendar_ui
 			$readonlys['view['.$event['id'].']'] = !($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event));
 			// Delete disabled for other applications
 			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']);
+			// Filemanager disabled for other applications
+			$readonlys['filemanager['.$event['id'].']'] = !is_numeric($event['id']);
 
 			$event['recure'] = $this->bo->recure2string($event);
 			if ($params['csv_export'])
@@ -370,9 +372,12 @@ class calendar_uilist extends calendar_ui
 				}
 				else
 				{
-					//$icons = self::integration_get_icons($app,$app_id,$event);
+					$icons = calendar_uiviews::integration_get_icons($app,$app_id,$event);
 				}
 			}
+
+			$event['app'] = 'calendar';
+			$event['app_id'] = $event['id'];
 
 			// Edit link
 			if($app && $app_id)
@@ -381,6 +386,9 @@ class calendar_uilist extends calendar_ui
 				
 				// Need to strip off 'onclick'
 				$event['edit_link'] = preg_replace('/ ?onclick="(.+)"/i', '$1', $popup);
+
+				$event['app'] = $app;
+				$event['app_id'] = $app_id;
 			}
                         elseif ($event['recur_type'] != MCAL_RECUR_NONE)
                         {
