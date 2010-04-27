@@ -304,6 +304,20 @@ class timesheet_ui extends timesheet_bo
 							// a preserved title blur is only set for other (non-project) links, it stays with Save&New!
 							$preserv['ts_title_blur'] = egw_link::title('infolog',$link_id);
 							break;
+						case 'calendar':
+							$calendar_bo = new calendar_bo();
+							$event = $calendar_bo->read($link_id);
+							if(!$event['recur_type'])
+							{
+								$content['ts_start'] = $event['start'];
+							}
+							$content['ts_description'] = $event['description'];
+							$content['ts_duration']	= ($event['end'] - $event['start']) / 60;
+							$content['ts_quantity'] = ($event['end'] - $event['start']) / 3600;
+							unset($content['end_time']);
+						default:
+							$preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
+							break;
 					}
 				}
 			}
