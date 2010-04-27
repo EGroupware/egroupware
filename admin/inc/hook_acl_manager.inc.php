@@ -60,10 +60,12 @@
 	$GLOBALS['acl_manager']['admin']['applications_access'] = array(
 		'name' => 'Deny access to applications',
 		'rights' => array(
+/* not usefull --> setup
 			'Applications list' => 1,
 			'Add application'   => 2,
 			'Edit application'  => 4,
 			'Delete application'  => 8,
+*/
 			'Register application hooks' => 16
 		)
 	);	// added and working ralfbecker
