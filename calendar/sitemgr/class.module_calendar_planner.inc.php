@@ -58,6 +58,12 @@ class module_calendar_planner extends Module
 				),
 				'default' => 'default',
 			),
+			'date' => array(
+				'type' => 'textfield',
+				'label' => 'Startdate as YYYYmmdd (empty for current date)',
+				'default' => '',
+				'params' => array('size' => 10),
+			),
 		);
 		$this->title = lang('Calendar - Planner');
 		$this->description = lang('This module displays a planner calendar.');
@@ -73,7 +79,7 @@ class module_calendar_planner extends Module
 		{
 			$this->arguments['cat_id']['options'][$cat['id']] = str_repeat('&nbsp; ',$cat['level']).$cat['name'];
 		}
-		if (count($cat_ids) > 5) 
+		if (count($cat_ids) > 5)
 		{
 			$this->arguments['cat_id']['multiple'] = 5;
 		}
@@ -82,15 +88,19 @@ class module_calendar_planner extends Module
 
 	/**
 	 * Get block content
-	 * 
+	 *
 	 * @param $arguments
 	 * @param $properties
 	 */
 	function get_content(&$arguments,$properties)
 	{
 		translation::add_app('calendar');
-		
+
 		$arguments['view'] = 'planner';
+		if (empty($arguments['date']))
+		{
+			$arguments['date'] = date('Ymd');
+		}
 		if ($arguments['sortby'] == 'yearly')
 		{
 			$arguments['sortby'] = 'month';
@@ -114,7 +124,7 @@ class module_calendar_planner extends Module
 		$html .= str_replace($GLOBALS['egw_info']['server']['webserver_url'].'/index.php?',
 			$this->link().'&',
 			$uiviews->planner(true));
-		
+
 		return $html;
 	}
 }
