@@ -113,6 +113,7 @@ cameroon	common	en	CAMEROON
 canada	common	en	CANADA
 cancel	common	en	Cancel
 cannot replace %1 because it is a directory	common	en	Cannot replace %1 because it is a directory
+cant open %1, needs ziparchive	common	en	Cant open %1, needs ZipArchive
 cant open '%1' for %2	common	en	Cant open '%1' for %2
 cape verde	common	en	CAPE VERDE
 caption	common	en	Caption
@@ -150,6 +151,8 @@ click this image on the navbar: %1	common	en	Click this image on the navbar: %1
 close	common	en	Close
 close sidebox	common	en	Close sidebox
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
+collection empty.	common	en	Collection empty.
+collection listing	common	en	Collection listing
 colombia	common	en	COLOMBIA
 common preferences	common	en	Common preferences
 comoros	common	en	COMOROS
@@ -157,6 +160,7 @@ company	common	en	Company
 congo	common	en	CONGO
 congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 contacting server...	common	en	Contacting Server...
+content type	common	en	Content type
 cook islands	common	en	COOK ISLANDS
 copy	common	en	Copy
 costa rica	common	en	COSTA RICA
@@ -238,6 +242,7 @@ error creating %1 %2 directory	common	en	Error creating %1 %2 directory
 error deleting %1 %2 directory	common	en	Error deleting %1 %2 directory
 error renaming %1 %2 directory	common	en	Error renaming %1 %2 directory
 estonia	common	en	ESTONIA
+etag	common	en	ETag
 ethiopia	common	en	ETHIOPIA
 everything	common	en	Everything
 exact	common	en	exact
@@ -363,6 +368,7 @@ kyrgyzstan	common	en	KYRGYZSTAN
 language	common	en	Language
 language_direction_rtl	common	en	language_direction_rtl
 lao peoples democratic republic	common	en	LAO PEOPLES DEMOCRATIC REPUBLIC
+last modified	common	en	Last modified
 last name	common	en	Last name
 last name of the user, eg. "%1"	common	en	last name of the user, eg. "%1"
 last page	common	en	Last page
@@ -428,6 +434,7 @@ multiple	common	en	multiple
 myanmar	common	en	MYANMAR
 name	common	en	Name
 name of the user, eg. "%1"	common	en	name of the user, eg. "%1"
+namespace	common	en	Namespace
 namibia	common	en	NAMIBIA
 nauru	common	en	NAURU
 nepal	common	en	NEPAL
@@ -505,6 +512,7 @@ password must have at least %1 characters	common	en	Password must have at least 
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 permission denied!	common	en	Permission denied!
 permissions to the files/users directory	common	en	permissions to the files/users directory
+permisson denied!	common	en	Permisson denied!
 personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
@@ -535,6 +543,7 @@ priority	common	en	Priority
 private	common	en	Private
 programs	common	en	Programs
 project	common	en	Project
+properties	common	en	Properties
 public	common	en	public
 puerto rico	common	en	PUERTO RICO
 qatar	common	en	QATAR
@@ -550,6 +559,8 @@ remove shortcut	common	en	Remove Shortcut
 rename	common	en	Rename
 replace	common	en	Replace
 replace with	common	en	Replace with
+resource type	common	en	Resource type
+restore failed	common	en	Restore failed
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system.  Warning: This is return can be quite large
 returns an array of todo items	common	en	Returns an array of todo items
 returns struct of users application access	common	en	Returns struct of users application access
@@ -621,6 +632,7 @@ sierra leone	common	en	SIERRA LEONE
 simple	common	en	Simple
 singapore	common	en	SINGAPORE
 site configuration	common	en	Site configuration
+size	common	en	Size
 slovakia	common	en	SLOVAKIA
 slovenia	common	en	SLOVENIA
 solomon islands	common	en	SOLOMON ISLANDS
@@ -647,6 +659,7 @@ swaziland	common	en	SWAZILAND
 sweden	common	en	SWEDEN
 switzerland	common	en	SWITZERLAND
 syrian arab republic	common	en	SYRIAN ARAB REPUBLIC
+table %1 is excluded from backup and restore. data will not be restored.	common	en	Table %1 is excluded from backup and restore. Data will not be restored.
 table properties	common	en	Table properties
 taiwan	common	en	TAIWAN/TAIPEI
 tajikistan	common	en	TAJIKISTAN
@@ -657,6 +670,7 @@ the api is current	common	en	The API is current
 the api requires an upgrade	common	en	The API requires an upgrade
 the following applications require upgrades	common	en	The following applications require upgrades
 the mail server returned	common	en	The mail server returned
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system-user with this name. User's should not have the same name as a systemuser
 this application is current	common	en	This application is current
 this application requires an upgrade	common	en	This application requires an upgrade
 this name has been used already	common	en	This name has been used already !
@@ -714,6 +728,7 @@ username	common	en	Username
 users	common	en	users
 users choice	common	en	Users Choice
 uzbekistan	common	en	UZBEKISTAN
+value	common	en	Value
 vanuatu	common	en	VANUATU
 venezuela	common	en	VENEZUELA
 version	common	en	Version
@@ -750,6 +765,7 @@ you have not entered participants	common	en	You have not entered participants
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
 you have successfully logged out	common	en	You have successfully logged out
+you need to %1set your timezone preference%2.	common	en	You need to %1set your timezone preference%2.
 you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the webserver user '%1' to the group '%2'.
 you need to be an egroupware administrator to access this functionality!	common	en	You need to be an eGroupWare administrator to access this functionality!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You've tried to open the eGroupWare application: %1, but you have no permission to access this application.

@@ -3,6 +3,7 @@
 %1 is not executable by the webserver !!!	common	fi	%1 ei ole www-palvelimen suoritettavissa !!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	fi	%1Valitse muu hakemisto%2<bt />tai muokkaa %3 oikeudet niin että Web-palvelin voi kirjoittaa siihen (www-data)
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fi	%1eGroupWare%2 on %3PHP%4-kielellä kirjoitettu monen käyttäjän työryhmäohjelmisto.
+(session restored in %1 seconds)	common	fi	(istunto palautettu %1 sekunnissa)
 (shift-)click or drag to change value	jscalendar	fi	(Shift-)Napsauta tai vedä muuttaaksesi arvoa
 - click on any of the time parts to increase it	jscalendar	fi	- Napsauta mitä tahansa ajan osaa muuttaaksesi sitä suuremmaksi
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	fi	- Pidä hiiren painiketta painettuna allaolevissa painikkeissa, niin voit valita nopeammin.
@@ -102,6 +103,7 @@ brazil	common	fi	BRASILIA
 british indian ocean territory	common	fi	BRITTILÄISEN INTIAN VALTAMEREN ALUE
 brunei darussalam	common	fi	BRUNEI DARUSSALAM
 bulgaria	common	fi	BULGARIA
+bulgarian	common	fi	Bulgarian
 burkina faso	common	fi	BURKINA FASO
 burundi	common	fi	BURUNDI
 calendar	common	fi	Kalenteri
@@ -110,6 +112,7 @@ cameroon	common	fi	KAMERUN
 canada	common	fi	KANADA
 cancel	common	fi	keskeytä
 cannot replace %1 because it is a directory	common	fi	Ei voida korvata %1, koska se on hakemisto
+cant open %1, needs ziparchive	common	fi	'%1' ei voida avata, ZipArchive vaaditaan
 cant open '%1' for %2	common	fi	Ei voida avata '%1' %2
 cape verde	common	fi	CAP VERDE
 caption	common	fi	Otsikko
@@ -154,6 +157,7 @@ company	common	fi	Yritys
 congo	common	fi	KONGO
 congo, the democratic republic of the	common	fi	KONGON DEMOKRAATTINEN KANSANTASAVALTA
 contacting server...	common	fi	Otetaan yhteyttä palvelimeen...
+content type	common	fi	Sisällön tyyppi
 cook islands	common	fi	COOKSAARET
 copy	common	fi	Kopioi
 costa rica	common	fi	COSTA RICA
@@ -208,6 +212,7 @@ done	common	fi	Valmis
 drag to move	jscalendar	fi	Vedä siirtääksesi
 e-mail	common	fi	Sähköposti
 east timor	common	fi	ITÄTIMORI
+eastern european	common	fi	Eastern european
 ecuador	common	fi	ECUADOR
 edit	common	fi	Muokkaa
 edit %1 category for	common	fi	Muokkaa %1 kategoriaa
@@ -234,6 +239,7 @@ error creating %1 %2 directory	common	fi	Virhe luotaessa hakemistoa %1 %2
 error deleting %1 %2 directory	common	fi	Virhe poistettaessa hakemistoa %1 %2
 error renaming %1 %2 directory	common	fi	Virhe nimettäessä hakemistoa uudelleen %1 %2
 estonia	common	fi	VIRO
+etag	common	fi	ETag
 ethiopia	common	fi	ETIOPIA
 everything	common	fi	Kaikki
 exact	common	fi	Täsmällinen
@@ -268,7 +274,7 @@ gabon	common	fi	GABON
 gambia	common	fi	GAMBIA
 general menu	common	fi	Päävalikko
 georgia	common	fi	GEORGIA
-german	common	fi	Saksaksi
+german	common	fi	Deutsche
 germany	common	fi	SAKSA
 ghana	common	fi	GHANA
 gibraltar	common	fi	GIBRALTAR
@@ -277,6 +283,7 @@ global public	common	fi	Yleinen julkinen
 go today	jscalendar	fi	Siirry tähän päivään
 grant access	common	fi	Myönnä ACL-oikeuksia
 greece	common	fi	KREIKKA
+greek	common	fi	Greek
 greenland	common	fi	GRÖNLANTI
 grenada	common	fi	GRENADA
 group	common	fi	Ryhmä
@@ -337,6 +344,7 @@ italy	common	fi	ITALIA
 jamaica	common	fi	JAMAIKA
 january	common	fi	Tammikuu
 japan	common	fi	JAPANI
+japanese	common	fi	Japanese
 jordan	common	fi	JORDANIA
 july	common	fi	Heinäkuu
 jun	common	fi	Kes
@@ -351,11 +359,13 @@ keywords	common	fi	Avainsanat
 kiribati	common	fi	KIRIBATI
 korea, democratic peoples republic of	common	fi	KOREAN DEMOKRAATTINEN KANSANTASAVALTA
 korea, republic of	common	fi	KOREAN TASAVALTA
+korean	common	fi	Korean
 kuwait	common	fi	KUWAIT
 kyrgyzstan	common	fi	KIRGISTAN
 language	common	fi	Kieli
 language_direction_rtl	common	fi	language_direction_rtl
 lao peoples democratic republic	common	fi	LAON DEMOKRAATTINEN KANSANTASAVALTA
+last modified	common	fi	Viimeksi muokattu
 last name	common	fi	Sukunimi
 last name of the user, eg. "%1"	common	fi	käyttäjän sukunimi, esim. "%1"
 last page	common	fi	Viimeinen sivu
@@ -421,6 +431,7 @@ multiple	common	fi	usea
 myanmar	common	fi	MYANMAR
 name	common	fi	Nimi
 name of the user, eg. "%1"	common	fi	Käyttäjän nimi, esim. "%1"
+namespace	common	fi	Nimikenttä
 namibia	common	fi	NAMIBIA
 nauru	common	fi	NAURU
 nepal	common	fi	NEPAL
@@ -498,6 +509,7 @@ password must have at least %1 characters	common	fi	Salasanassa pitää olla vä
 path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA www-palvelimen asiakirjajuuren ulkopuolella!!!
 permission denied!	common	fi	Käyttöoikeus estetty!
 permissions to the files/users directory	common	fi	Tiedostojen/käyttäjien hakemiston käyttöoikeudet
+permisson denied!	common	fi	Käyttöoikeus estetty!
 personal	common	fi	Henkilökohtainen
 peru	common	fi	PERU
 philippines	common	fi	FILIPPIINIT
@@ -543,12 +555,15 @@ remove shortcut	common	fi	Poista pikakuvake
 rename	common	fi	Nimeä uudelleen
 replace	common	fi	Korvaa
 replace with	common	fi	Korvataan merkkijonolla:
+resource type	common	fi	Resurssin tyyppi
+restore failed	common	fi	Palautus epäonnistui!
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fi	Palauttaa täyden käyttäjäluettelon järjestelmästä. Varoitus: palautus voi olla aika suuri.
 returns an array of todo items	common	fi	Palauttaa tehtävien taulukon
 returns struct of users application access	common	fi	Palauttaa käyttäjien oikeudet sovelluksiin
 reunion	common	fi	REUNION
 right	common	fi	Oikea
 romania	common	fi	ROMANIA
+russian	common	fi	Russian
 russian federation	common	fi	VENÄJÄN FEDERAATIO
 rwanda	common	fi	RUANDA
 saint helena	common	fi	SAINT HELENA
@@ -613,6 +628,7 @@ sierra leone	common	fi	SIERRA LEONE
 simple	common	fi	Yksinkertainen
 singapore	common	fi	SINGAPORE
 site configuration	common	fi	Palvelun asetukset
+size	common	fi	Koko
 slovakia	common	fi	SLOVAKIA
 slovenia	common	fi	SLOVENIA
 solomon islands	common	fi	SALOMONSAARET
@@ -639,6 +655,7 @@ swaziland	common	fi	SWAZIMAA
 sweden	common	fi	RUOTSI
 switzerland	common	fi	SVEITSI
 syrian arab republic	common	fi	SYYRIAN ARABITASAVALTA
+table %1 is excluded from backup and restore. data will not be restored.	common	fi	Taulu 51 ei sisälly varmuuskopioon eikä palautukseen. Tietoja ei palauteta.
 table properties	common	fi	Taulukon ominaisuudet
 taiwan	common	fi	TAIWAN / TAIPEI
 tajikistan	common	fi	TAJIKISTAN
@@ -649,6 +666,7 @@ the api is current	common	fi	API on ajan tasalla
 the api requires an upgrade	common	fi	API tarvitsee päivityksen
 the following applications require upgrades	common	fi	Seuraavat sovellukset tarvitsevat päivityksen
 the mail server returned	common	fi	Sähköpostipalvelin palautti
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	fi	Käyttäjänimi on jo käytössä. Käyttäjillä täytyy olla eri tunnukset kuin järjestelmän ylläpitäjillä.
 this application is current	common	fi	Tämä sovellus on ajan tasalla
 this application requires an upgrade	common	fi	Tämä sovellus tarvitsee päivityksen
 this name has been used already	common	fi	Nimi on jo käytössä!
@@ -706,6 +724,7 @@ username	common	fi	Käyttäjänimi
 users	common	fi	käyttäjät
 users choice	common	fi	Käyttäjän valinta
 uzbekistan	common	fi	UZBEKISTAN
+value	common	fi	Arvo
 vanuatu	common	fi	VANUATU
 venezuela	common	fi	VENEZUELA
 version	common	fi	Versio
@@ -716,6 +735,7 @@ virgin islands, u.s.	common	fi	NEITSYTSAARET, U.S.
 wallis and futuna	common	fi	WALLIS JA FUTUNA
 wednesday	common	fi	Keskiviikko
 welcome	common	fi	Tervetuloa
+western european	common	fi	Western european
 western sahara	common	fi	LÄNSISAHARA
 what color should all the blank space on the desktop have	common	fi	Minkä värisinä kaikki työpöydän tyhjät kohdat näytetään?
 what style would you like the image to have?	common	fi	Minkä tyylin haluat kuvaan?
@@ -741,6 +761,7 @@ you have not entered participants	common	fi	Et ole määritellyt osallistujia
 you have selected an invalid date	common	fi	Olet valinnut virheellisen päivämäärän!
 you have selected an invalid main category	common	fi	Olet valinnut virheellisen pääluokan!
 you have successfully logged out	common	fi	Olet kirjautunut ulos
+you need to %1set your timezone preference%2.	common	fi	Määrittele %1aikavyöhykkeesi asetuksissa%2.
 you need to add the webserver user '%1' to the group '%2'.	common	fi	Lisää www-palvelimen käyttäjä '%1' ryhmään '%2'.
 you need to be an egroupware administrator to access this functionality!	common	fi	Vain ylläpitäjillä on käyttöoikeus tähän!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fi	Sinulla ei ole käyttöoikeutta sovellukseen %1!

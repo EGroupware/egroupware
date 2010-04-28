@@ -130,5 +130,7 @@ a:link, a:visited, select, input, textarea {
 }
 .divLoginboxHeader {
 	background-image: url(../images/gradient22.png);
-
 }
+/* new dialog style */
+.prompt {background:#fff url(../../default/images/prompt_bg.jpg) bottom right no-repeat; border:1px solid #4f6d81;}
+.promptheader {background:url(../../default/images/prompt_header.gif) repeat-x; color:#355468; border:1px solid #4f6d81; border-bottom:none; height:24px}
