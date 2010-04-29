@@ -323,8 +323,9 @@ class addressbook_sql extends so_sql_cf
 			if ($this->db->Type != 'mysql' && preg_match("/([a-zA-Z_.]+)<>''/",$order_by,$matches))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
-				$extra_cols[] = $matches[1];
-				$extra_cols[] = $matches[1]."<>''";
+				$table = $matches[1] == $this->extra_value ? $this->extra_table : $this->table_name;
+				$extra_cols[] = $table.'.'.$matches[1];
+				$extra_cols[] = $table.'.'.$matches[1]."<>''";
 			}
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
