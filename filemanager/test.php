@@ -44,24 +44,29 @@ if (isset($path) && !empty($path))
 
 	$time = microtime(true);
 	$stat = egw_vfs::stat($path);
-	$time = number_format(1000*(microtime(true)-$time),1);
+	$stime = number_format(1000*(microtime(true)-$time),1);
 
-	if ($is_dir && ($d = egw_vfs::opendir($path)))
+	$time = microtime(true);
+	if ($is_dir)// && ($d = egw_vfs::opendir($path)))
 	{
 		$files = array();
-		while(($file = readdir($d)))
+		//while(($file = readdir($d)))
+		foreach(egw_vfs::scandir($path) as $file)
 		{
 			if (egw_vfs::is_readable($fpath=egw_vfs::concat($path,$file)))
 			{
 				$file = html::a_href($file,'/filemanager/test.php',array('path'=>$fpath));
 			}
+			$file .= ' ('.egw_vfs::mime_content_type($fpath).')';
 			$files[] = $file;
 		}
-		closedir($d);
-		echo ($files ? '<ol><li>'.implode("</li>\n<li>",$files).'</ol>' : '<p>Empty directory</p>')."\n";
+		//closedir($d);
+		$time = number_format(1000*(microtime(true)-$time),1);
+		echo "<p>".($files ? 'Directory' : 'Empty directory')." took $time ms</p>\n";
+		if($files) echo '<ol><li>'.implode("</li>\n<li>",$files).'</ol>'."\n";
 	}
 
-	echo "<p><b>stat('$path')</b> took $time ms (mode = ".(isset($stat['mode'])?sprintf('%o',$stat['mode']).' = '.egw_vfs::int2mode($stat['mode']):'NULL').')';
+	echo "<p><b>stat('$path')</b> took $stime ms (mode = ".(isset($stat['mode'])?sprintf('%o',$stat['mode']).' = '.egw_vfs::int2mode($stat['mode']):'NULL').')';
 	if (is_array($stat))
 	{
 		_debug_array($stat);
