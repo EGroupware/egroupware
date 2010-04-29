@@ -313,7 +313,7 @@ class calendar_rrule implements Iterator
 	{
 		list($year,$month) = explode('-',$time->format('Y-m'));
 		$last_day = new egw_time();
-		$last_day->setDate($year,$month-1,0);
+		$last_day->setDate($year,$month+1,0);
 
 		return (int)$last_day->format('d');
 	}
@@ -568,8 +568,9 @@ class calendar_rrule implements Iterator
 					break;
 
 				case self::MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}+ {MO..SO}
-					$rrule['BYDAY'] = $this->monthly_byday_num . '+ ' .
-						strtoupper(substr($this->time->format('l'),0,2));
+					$rrule['BYDAY'] = abs($this->monthly_byday_num);
+					$rrule['BYDAY'] .= ($this->monthly_byday_num < 0) ? '- ' : '+ ';
+					$rrule['BYDAY'] .= strtoupper(substr($this->time->format('l'),0,2));
 					$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
 					break;
 			}
