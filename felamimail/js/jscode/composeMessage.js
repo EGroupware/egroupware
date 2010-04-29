@@ -349,7 +349,12 @@ function keypressed(keycode, keyvalue) {
 					selectSuggestion(0);
 				}
 			} else {
-				focusToNextInputField();
+				rv = focusToNextInputField();
+				if (rv == 'fm_compose_subject') 
+				{
+					currentKeyCode = 13;
+					//alert(currentKeyCode);
+				}
 			}
 			break;
 		
@@ -399,6 +404,7 @@ function selectSuggestion(_selectedSuggestion) {
 }
 
 function keycodePressed(_keyCode) {
+	//alert(currentKeyCode +'=='+ _keyCode);
 	if(currentKeyCode == _keyCode) {
 		return false;
 	} else {
@@ -435,9 +441,11 @@ function focusToNextInputField() {
 			inputElements = nextRow.getElementsByTagName('input');
 			inputElements[0].focus();
 		}
+		return 'addressinput';
 	} else {
 		document.getElementById('fm_compose_subject').focus();
 		//document.doit.fm_compose_subject.focus();
+		return 'fm_compose_subject';
 	}
 }
 
