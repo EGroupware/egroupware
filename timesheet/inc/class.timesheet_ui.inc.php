@@ -294,7 +294,6 @@ class timesheet_ui extends timesheet_bo
 				$link_id = $link_ids[$n];
 				if (preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// gard against XSS
 				{
-					egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
 					switch ($link_app)
 					{
 						case 'projectmanager':
@@ -306,19 +305,20 @@ class timesheet_ui extends timesheet_bo
 							break;
 						case 'calendar':
 							$calendar_bo = new calendar_bo();
-							$event = $calendar_bo->read($link_id);
-							if(!$event['recur_type'])
-							{
-								$content['ts_start'] = $event['start'];
-							}
+							list($link_id, $recurrence) = explode(':', $link_id);
+							$event = $calendar_bo->read($link_id, $recurrence);
+							$content['ts_start'] = $event['start'];
+							$content['ts_title'] = $calendar_bo->link_title($event);
 							$content['ts_description'] = $event['description'];
 							$content['ts_duration']	= ($event['end'] - $event['start']) / 60;
 							$content['ts_quantity'] = ($event['end'] - $event['start']) / 3600;
 							unset($content['end_time']);
+							break;
 						default:
 							$preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
 							break;
 					}
+					egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
 				}
 			}
 		}
