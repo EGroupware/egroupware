@@ -397,17 +397,19 @@ class calendar_uilist extends calendar_ui
 				$event['app'] = $app;
 				$event['app_id'] = $app_id;
 			}
-                        elseif ($event['recur_type'] != MCAL_RECUR_NONE)
-                        {
-                                $event['edit_link'] = "edit_series({$event['id']}, {$event['start']});return false;";
-                        }
-                        else
-                        {
+			elseif ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$event['edit_link'] = "edit_series({$event['id']}, {$event['start']});return false;";
+			}
+			else
+			{
 				$view_link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
                                 $event['edit_link'] = $this->popup($view_link).'; return false;';
-                        }
+			}
 
 			$rows[] = $event;
+			unset($app);
+			unset($app_id);
 		}
 		$wv=0;
 		$dv=0;
@@ -602,6 +604,8 @@ class calendar_uilist extends calendar_ui
 					$msg = lang('Timesheet entries created for ');
 					break;
 			}
+			unset($app);
+			unset($app_id);
 		}
 
 		return ($failure == 0);
