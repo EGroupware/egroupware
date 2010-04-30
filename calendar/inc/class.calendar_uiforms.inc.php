@@ -428,6 +428,16 @@ class calendar_uiforms extends calendar_ui
 			unset($event['modified']);
 			unset($event['modifier']);
 			$event['owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
+
+			// Clear participant stati
+			foreach($event['participant_types'] as $type => &$participants) {
+				foreach($participants as $id => &$response)
+				{
+					if($type == 'u' && $id == $event['owner']) continue;
+					calendar_so::split_status($status, $quantity, $role);
+					$response = calendar_so::combine_status('U',$quantity,$role);
+				}
+			}
 			$preserv['view'] = $preserv['edit_single'] = false;
 			$msg = lang('Event copied - the copy can now be edited');
 			$event['title'] = lang('Copy of:').' '.$event['title'];
