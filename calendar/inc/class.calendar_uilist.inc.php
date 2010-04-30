@@ -400,6 +400,7 @@ class calendar_uilist extends calendar_ui
 			elseif ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$event['edit_link'] = "edit_series({$event['id']}, {$event['start']});return false;";
+				$event['app_id'] .= ':'.$event['recur_date'];
 			}
 			else
 			{
