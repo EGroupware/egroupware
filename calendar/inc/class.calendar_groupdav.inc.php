@@ -114,7 +114,14 @@ class calendar_groupdav extends groupdav_handler
 			'date_format' => 'server',
 		);
 
-		if ($path == '/calendar/') $filter['filter'] = 'owner';
+		if ($path == '/calendar/')
+		{
+			$filter['filter'] = 'owner';
+		}
+		else
+		{
+			$filter['filter'] = 'default'; // not rejected
+		}
 
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
