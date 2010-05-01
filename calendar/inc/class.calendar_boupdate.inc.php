@@ -851,25 +851,34 @@ class calendar_boupdate extends calendar_bo
 			$old_event = null;
 		}
 
-		$save_event = $event;
 		if (!isset($event['whole_day'])) $event['whole_day'] = $this->isWholeDay($event);
+		$save_event = $event;
 		if ($event['whole_day'])
 		{
 			$time = new egw_time($event['start'], egw_time::$user_timezone);
 			$time =& $this->so->startOfDay($time);
 			$event['start'] = egw_time::to($time, 'ts');
+			$save_event['start'] = $time;
 			$time = new egw_time($event['end'], egw_time::$user_timezone);
 			$time =& $this->so->startOfDay($time);
 			$time->setTime(23, 59, 59);
 			$event['end'] = egw_time::to($time, 'ts');
-			$time = new egw_time($event['recurrence'], egw_time::$user_timezone);
-			$time =& $this->so->startOfDay($time);
-			$event['recurrence'] = egw_time::to($time, 'ts');
-			$time = new egw_time($event['recur_enddate'], egw_time::$user_timezone);
-			$time =& $this->so->startOfDay($time);
-			$time->setTime(23, 59, 59);
-			$event['recur_enddate'] = egw_time::to($time, 'ts');
+			if (!empty($event['recurrence']))
+			{
+				$time = new egw_time($event['recurrence'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$event['recurrence'] = egw_time::to($time, 'ts');
+			}
+			if (!empty($event['recur_enddate']))
+			{
+				$time = new egw_time($event['recur_enddate'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$event['recur_enddate'] = egw_time::to($time, 'ts');
+				$save_event['recur_enddate'] = $event['recur_enddate'];
+			}
 			$timestamps = array('modified','created');
+			// all-day events are handled in server time
+			$event['tzid'] = $save_event['tzid'] = egw_time::$server_timezone->getName();
 		}
 		else
 		{

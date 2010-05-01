@@ -696,13 +696,24 @@ class calendar_bo
 		//error_log('set_recurrences: days=' . array2string($days) );
 		foreach($events as $event)
 		{
-			$start_servertime = $this->date2ts($event['start'],true);
-			if (in_array($start_servertime, (array)$days))
+			$start = $this->date2ts($event['start'],true);
+			if (in_array($start, (array)$days))
 			{
 				// we don't change the stati of recurrence exceptions
 				$event['participants'] = array();
 			}
-			$this->so->recurrence($event['id'],$start_servertime,$this->date2ts($event['end'],true),$event['participants']);
+			if ($event['whole_day'])
+			{
+				$time = new egw_time($event['end'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$time->setTime(23, 59, 59);
+				$end = $this->date2ts($time,true);
+			}
+			else
+			{
+				$end = $this->date2ts($event['end'],true);
+			}
+			$this->so->recurrence($event['id'],$start,$end,$event['participants']);
 		}
 	}
 
@@ -879,7 +890,7 @@ class calendar_bo
 			$event['recur_enddate'] = $end;
 		}
 		// loop over all recurrences and insert them, if they are after $start
-		$rrule = calendar_rrule::event2rrule($event,true);	// true = we operate in usertime, like the rest of calendar_bo
+		$rrule = calendar_rrule::event2rrule($event, true);	// true = we operate in usertime, like the rest of calendar_bo
 		foreach($rrule as $time)
 		{
 			$time->setUser();	// $time is in timezone of event, convert it to usertime used here
