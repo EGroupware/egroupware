@@ -7,7 +7,7 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009/10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -66,9 +66,12 @@ class egw_cache
 	 * $GLOBALS['egw_info']['server']['cache_provider_instance'] and optional
 	 * $GLOBALS['egw_info']['server']['cache_provider_tree'] (defaults to instance)
 	 *
+	 * Default is set (if not set here) after class definition to egw_cache_apc or egw_cache_files,
+	 * depending on function 'apc_fetch' exists or not
+	 *
 	 * @var array
 	 */
-	static $default_provider = array('egw_cache_files');// array('egw_cache_memcache','localhost');
+	static $default_provider;	// = array('egw_cache_files');// array('egw_cache_memcache','localhost');
 
 	/**
 	 * Set some data in the cache
@@ -508,6 +511,12 @@ class egw_cache
 	{
 		throw new egw_exception_wrong_parameter("All methods of class ".__CLASS__." should be called static!");
 	}
+}
+
+// setting apc as default provide, if apc_fetch function exists
+if (is_null(egw_cache::$default_provider))
+{
+	egw_cache::$default_provider = function_exists('apc_fetch') ? 'egw_cache_apc' : 'egw_cache_files';
 }
 
 /**
