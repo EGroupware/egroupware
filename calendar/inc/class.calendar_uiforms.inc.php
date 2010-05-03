@@ -837,25 +837,22 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
-				if (!empty($event['whole_day']) && $event['recur_type'] != MCAL_RECUR_NONE && $_GET['exception'])
-				{
-					$date = new egw_time((int)$_GET['date'], egw_time::$user_timezone);
-					$date =& $this->bo->so->startOfDay($date);
-					$date->setUser();
-					$event = $this->bo->read($cal_id, $date);
-				}
 				$preserv['actual_date'] = $event['start'];		// remember the date clicked
-				if ($event['recur_type'] != MCAL_RECUR_NONE)
+				if ($event['recur_type'] != MCAL_RECUR_NONE && $_GET['exception'])
 				{
-					// check if we should create an exception
-					if ($_GET['exception'])
+					if (empty($event['whole_day']))
 					{
-						$msg = $this->_create_exception($event,$preserv);
+						$date = $_GET['date'];
 					}
 					else
 					{
-						$event = $this->bo->read($cal_id,0,true);
+						$date = new egw_time($_GET['date'], egw_time::$user_timezone);
+						$date =& $this->bo->so->startOfDay($date);
+						$date->setUser();
 					}
+					$event = $this->bo->read($cal_id, $date, true);
+					$preserv['actual_date'] = $event['start'];		// remember the date clicked
+					$msg = $this->_create_exception($event,$preserv);
 				}
 			}
 			// set new start and end if given by $_GET
