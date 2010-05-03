@@ -874,7 +874,8 @@ class calendar_boupdate extends calendar_bo
 				$time = new egw_time($event['recur_enddate'], egw_time::$user_timezone);
 				$time =& $this->so->startOfDay($time);
 				$event['recur_enddate'] = egw_time::to($time, 'ts');
-				$save_event['recur_enddate'] = $event['recur_enddate'];
+				$time->setUser();
+				$save_event['recur_enddate'] = egw_time::to($time, 'ts');
 			}
 			$timestamps = array('modified','created');
 			// all-day events are handled in server time
