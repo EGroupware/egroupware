@@ -97,12 +97,13 @@ class hooks
 		$location = is_array($args) ? $args['location'] : $args;
 
 		$hooks = $this->locations[$location];
-		if (!isset($hooks)) return array();	// not a single app implements that hook
+		if (!isset($hooks) || empty($hooks)) return array();	// not a single app implements that hook
 
 		$apps = array_keys($hooks);
 		if (!$no_permission_check)
 		{
-			$apps = array_intersect($apps,array_keys($GLOBALS['egw_info']['user']['apps']));
+			// on install of a new egroupware both hook-apps and user apps may be empty/not set
+			$apps = array_intersect((array)$apps,(array)array_keys($GLOBALS['egw_info']['user']['apps']));
 		}
 		if ($order)
 		{
