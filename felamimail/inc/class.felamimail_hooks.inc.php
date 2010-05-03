@@ -83,6 +83,7 @@ class felamimail_hooks
 			'0' => lang('no'),
 			'1' => lang('yes')
 		);
+		$no_yes_copy = array_merge($no_yes,array('2'=>lang('yes, offer copy option')));
 
 		$prefAllowManageFolders = $no_yes;
 
@@ -102,10 +103,9 @@ class felamimail_hooks
 			'6' => lang('size(...->0)')
 		);
 
-		$selectOptions = array(
-			'0' => lang('no'),
-			'1' => lang('yes'),
-			'2' => lang('yes') . ' - ' . lang('small view')
+		$selectOptions = array_merge(
+			$no_yes,
+			array('2' => lang('yes') . ' - ' . lang('small view'))
 		);
 
 		$newWindowOptions = array(
@@ -184,7 +184,7 @@ class felamimail_hooks
 		        'type'   => 'select',
 		        'label'  => 'Do you want to be asked for confirmation before moving selected messages to another folder?',
 		        'name'   => 'prefaskformove',
-		        'values' => $no_yes,
+		        'values' => $no_yes_copy,
 		        'xmlrpc' => True,
 		        'admin'  => False,
 		        'forced' => '1',

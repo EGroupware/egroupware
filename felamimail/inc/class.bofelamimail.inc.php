@@ -2501,7 +2501,7 @@
 			}
 		}
 
-		function moveMessages($_foldername, $_messageUID)
+		function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true)
 		{
 			$msglist = '';
 
@@ -2511,15 +2511,19 @@
 				return false;
 			}
 			// mark messages as deleted
-			if ( PEAR::isError($this->icServer->deleteMessages($_messageUID, true))) {
-				return false;
-			}
+			if ($deleteAfterMove === true)
+			{
+				if ( PEAR::isError($this->icServer->deleteMessages($_messageUID, true))) 
+				{
+					return false;
+				}
 
-			if($deleteOptions != "mark_as_deleted") {
-				// delete the messages finaly
-				$this->icServer->expunge();
+				if($deleteOptions != "mark_as_deleted") 
+				{
+					// delete the messages finaly
+					$this->icServer->expunge();
+				}
 			}
-
 			return true;
 		}
 

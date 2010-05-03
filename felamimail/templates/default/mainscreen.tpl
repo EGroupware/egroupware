@@ -5,8 +5,14 @@ var sURL = unescape(window.location.pathname);
 // some translations needed for javascript functions
 
 var movingMessages		= '{lang_moving_messages_to}';
+var copyingMessages		= '{lang_copying_messages_to}';
 var lang_askformove			= '{lang_askformove}';
 var prefAskForMove			= '{prefaskformove}';
+var CopyOrMove				= true;
+var lang_MoveCopyTitle = '{lang_MoveCopyTitle}';
+var lang_copy = '{lang_copy}';
+var lang_move = '{lang_move}';
+var lang_cancel = '{lang_cancel}';
 
 var lang_emptyTrashFolder	= '{lang_empty_trash}';
 var lang_compressingFolder	= '{lang_compress_folder}';
@@ -47,7 +53,6 @@ fm_startTimerFolderStatusUpdate(refreshTimeOut);
 fm_startTimerMessageListUpdate(refreshTimeOut);
 
 </script>
-
 <TABLE WIDTH="100%" CELLPADDING="0" CELLSPACING="0" style="border: solid #aaaaaa 1px; border-right: solid black 1px; ">
 	<tr class="navbarBackground">
 		<td align="left" width="180px">
@@ -127,7 +132,6 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 		</TD>
 	</TR>
 </table>
-
 <!-- END main -->
 
 <!-- BEGIN message_table -->
@@ -139,6 +143,7 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 <span id="spanMessagePreview">
 	{IFrameForPreview}
 </span>
+
 <!-- END message_table -->
 
 <!-- BEGIN status_row_tpl -->

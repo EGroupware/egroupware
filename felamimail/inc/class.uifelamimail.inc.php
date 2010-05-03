@@ -620,6 +620,7 @@
 			$this->t->set_var('refreshTime',$refreshTime*60*1000);
 			// other settings
 			$prefaskformove = intval($userPreferences['prefaskformove']) ? intval($userPreferences['prefaskformove']) : 0;
+
 			$this->t->set_var('prefaskformove',$prefaskformove);	
 			#// set the url to open when refreshing
 			#$linkData = array
@@ -974,7 +975,12 @@
 			$this->t->set_var('lang_open_all',lang("open all"));
 			$this->t->set_var('lang_close_all',lang("close all"));
 			$this->t->set_var('lang_moving_messages_to',lang('moving messages to'));
-			$this->t->set_var('lang_askformove',lang('Do you really want to move the selected messages to folder:'));
+			$this->t->set_var('lang_copying_messages_to',lang('copying messages to'));
+			$this->t->set_var('lang_MoveCopyTitle',($GLOBALS['egw_info']['user']['preferences']['felamimail']['prefaskformove']==2?lang('Copy or Move Messages?'):lang('Move Messages?')));
+			$this->t->set_var('lang_askformove',($GLOBALS['egw_info']['user']['preferences']['felamimail']['prefaskformove']==2?lang('Do you really want to move or copy the selected messages to folder:'):lang('Do you really want to move the selected messages to folder:')));
+			$this->t->set_var('lang_move',lang("Move"));
+			$this->t->set_var('lang_copy',lang("Copy"));
+			$this->t->set_var('lang_cancel',lang("Cancel"));
 			$this->t->set_var('lang_mark_all_messages',lang('all messages in folder'));
 			$this->t->set_var('lang_confirm_all_messages',lang('The action will be applied to all messages of the current folder.\nDo you want to proceed?'));
 			$this->t->set_var('lang_empty_trash',lang('empty trash'));

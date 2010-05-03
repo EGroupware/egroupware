@@ -665,6 +665,42 @@
 			}
 		}
 
+		/*
+		* copy messages to another folder
+		*
+		* @param string _folder name of the target folder
+		* @param array _selectedMessages UID's of the messages to copy
+		*
+		* @return xajax response
+		*/
+		function copyMessages($_folderName, $_selectedMessages)
+		{
+			if($this->_debug) error_log(__METHOD__." called with Messages ".print_r($_selectedMessages,true));
+			$messageCount = 0;
+			if(is_array($_selectedMessages) && count($_selectedMessages['msg']) > 0) $messageCount = count($_selectedMessages['msg']);
+			$folderName = $this->_decodeEntityFolderName($_folderName);
+			if ($_selectedMessages == 'all' || !empty( $_selectedMessages['msg']) && !empty($folderName)) {
+				if ($this->sessionData['mailbox'] != $folderName) 
+				{
+					$deleteAfterMove = false;
+					$this->bofelamimail->moveMessages($folderName, ($_selectedMessages == 'all'? null:$_selectedMessages['msg']),$deleteAfterMove);
+				} 
+				else 
+				{
+					  if($this->_debug) error_log("ajaxfelamimail::copyMessages-> same folder than current selected");
+				}
+
+				return $this->generateMessageList($this->sessionData['mailbox'],($_selectedMessages == 'all'?0:(-1*$messageCount)));
+			} else {
+				$response = new xajaxResponse();
+				$response->addScript('resetMessageSelect();');
+				$response->addScript('tellUser("'.lang('No messages selected, or lost selection. Changing to folder ').'","'.$_folderName.'");');
+				$response->addScript('onNodeSelect("'.$_folderName.'");');
+				return $response->getXML();
+
+			}
+		}
+
 		function quickSearch($_searchType, $_searchString, $_status)
 		{
 			// save the filter
