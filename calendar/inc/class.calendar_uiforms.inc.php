@@ -819,7 +819,7 @@ class calendar_uiforms extends calendar_ui
 			);
 			$cal_id = (int) $_GET['cal_id'];
 
-			if (!$cal_id || $cal_id && !($event = $this->bo->read($cal_id,$_GET['date'])) || !$this->bo->check_perms(EGW_ACL_READ,$event))
+			if (!$cal_id || $cal_id && !($event = $this->bo->read($cal_id)))
 			{
 				if ($cal_id)
 				{
@@ -837,6 +837,13 @@ class calendar_uiforms extends calendar_ui
 			}
 			else
 			{
+				if (!empty($event['whole_day']) && $event['recur_type'] != MCAL_RECUR_NONE && $_GET['exception'])
+				{
+					$date = new egw_time((int)$_GET['date'], egw_time::$user_timezone);
+					$date =& $this->bo->so->startOfDay($date);
+					$date->setUser();
+					$event = $this->bo->read($cal_id, $date);
+				}
 				$preserv['actual_date'] = $event['start'];		// remember the date clicked
 				if ($event['recur_type'] != MCAL_RECUR_NONE)
 				{
