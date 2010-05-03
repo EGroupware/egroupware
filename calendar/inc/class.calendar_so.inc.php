@@ -400,6 +400,9 @@ class calendar_so
 
 			switch($filter)
 			{
+				case 'showonlypublic':
+					$where[] = "cal_public=1"; 
+					$where[] = "cal_status != 'R'"; break;
 				case 'unknown':
 					$where[] = "cal_status='U'"; break;
 				case 'accepted':
