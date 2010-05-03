@@ -622,15 +622,20 @@ class calendar_bo
 		}
 		$new_horizont = $this->date2ts($new_horizont,true);	// now we are in server-time, where this function operates
 
-		if ($new_horizont > time()+1000*DAY_s)		// some user tries to "look" more then 1000 days in the future
-		{
-			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 new horizont more then 1000 days from now --> ignoring it',true,$new_horizont,$this->config['horizont']);
-			return;
-		}
 		if ($new_horizont <= $this->config['horizont'])	// no move necessary
 		{
 			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,$this->config['horizont']);
 			return;
+		}
+		if (!empty($GLOBALS['egw_info']['server']['calendar_horizont']))
+		{
+			$maxdays = abs($GLOBALS['egw_info']['server']['calendar_horizont']);
+		}
+		if (empty($maxdays)) $maxdays = 1000; // old default
+		if ($new_horizont > time()+$maxdays*DAY_s)		// some user tries to "look" more then the maximum number of days in the future
+		{
+			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 new horizont more then 1000 days from now --> ignoring it',true,$new_horizont,$this->config['horizont']);
+			$new_horizont = time()+$maxdays*DAY_s;
 		}
 		if ($new_horizont < time()+31*DAY_s)
 		{
@@ -747,10 +752,13 @@ class calendar_bo
 				$time = new egw_time($event['recurrence'], egw_time::$server_timezone);
 				$time =& $this->so->startOfDay($time, $event['tzid']);
 				$event['recurrence'] = egw_time::to($time, $date_format);
-				$time = new egw_time($event['recur_enddate'], egw_time::$server_timezone);
-				$time =& $this->so->startOfDay($time, $event['tzid']);
-				$time->setTime(23, 59, 59);
-				$event['recur_enddate'] = egw_time::to($time, $date_format);
+				if (!empty($event['recur_enddate']))
+				{
+					$time = new egw_time($event['recur_enddate'], egw_time::$server_timezone);
+					$time =& $this->so->startOfDay($time, $event['tzid']);
+					$time->setTime(23, 59, 59);
+					$event['recur_enddate'] = egw_time::to($time, $date_format);
+				}
 				$timestamps = array('modified','created');
 			}
 			else

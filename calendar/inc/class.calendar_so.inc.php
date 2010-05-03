@@ -405,7 +405,7 @@ class calendar_so
 			switch($filter)
 			{
 				case 'showonlypublic':
-					$where[] = "cal_public=1"; 
+					$where[] = 'cal_public=1';
 					$where[] = "cal_status != 'R'"; break;
 				case 'deleted':
 					$where[] = 'cal_deleted='.$this->db->quote(true,'bool');
@@ -2116,7 +2116,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @return DateTime
 	 */
-	function &startOfDay(egw_time $time, $tz_id)
+	function &startOfDay(egw_time $time, $tz_id=null)
 	{
 		if (empty($tz_id))
 		{
