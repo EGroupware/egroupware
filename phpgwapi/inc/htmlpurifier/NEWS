@@ -9,6 +9,17 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
     . Internal change
 ==========================
 
+4.1.0, released 2010-04-26
+! Support proprietary height attribute on table element
+! Support YouTube slideshows that contain /cp/ in their URL.
+! Support for data: URI scheme; not enabled by default, add it using
+  %URI.AllowedSchemes
+! Support flashvars when using %HTML.SafeObject and %HTML.SafeEmbed.
+! Support for Internet Explorer compatibility with %HTML.SafeObject
+  using %Output.FlashCompat.
+! Handle <ol><ol> properly, by inserting the necessary <li> tag.
+- Always quote the insides of url(...) in CSS.
+
 4.0.0, released 2009-07-07
 # APIs for ConfigSchema subsystem have substantially changed. See
   docs/dev-config-bcbreaks.txt for details; in essence, anything that
