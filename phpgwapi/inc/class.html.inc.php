@@ -216,7 +216,7 @@ class html
 					'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 					'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 					'a[href|target|name|title],'.
-					'img[src|alt|title]');
+					'img[src|alt|title|align|style|width|height]');
 		$config->set('Attr.DefaultInvalidImage', 'Image removed by htmlpurify');
 		$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
 		$config->set('AutoFormat.Linkify',true);
@@ -257,7 +257,7 @@ class html
 					'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 					'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 					'a[href|target|name|title],'.
-					'img[src|alt|title]');
+					'img[src|alt|title|align|style|width|height]');
 		$config->set('Attr.DefaultInvalidImage', 'Image removed by htmlpurify');
 		$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
 
@@ -1416,7 +1416,7 @@ class html
 							'tr[class|style|align|bgcolor|align|valign],'.
 							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-							'a[href|target|name|title],img[src|alt|title]');
+							'a[href|target|name|title],img[src|alt|title|align|style|width|height]');
 				$config->set('Cache.SerializerPath', ($GLOBALS['egw_info']['server']['temp_dir']?$GLOBALS['egw_info']['server']['temp_dir']:sys_get_temp_dir()));
 			}
 			$purifier = new HTMLPurifier($config);
@@ -1427,6 +1427,7 @@ class html
 
 
 		}
+		//error_log(__METHOD__.$purifier->version);
     	return $purifier->purify( $html );
 	}
 
