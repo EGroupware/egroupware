@@ -1261,7 +1261,7 @@ class html
 							'tr[class|style|align|bgcolor|align|valign],'.
 							'td[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
 							'th[class|colspan|rowspan|width|style|align|bgcolor|align|valign|nowrap],'.
-							'a[href|target|name|title],img[src|alt|title]');
+							'a[href|target|name|title],img[src|alt|title|align|style|width|height]');
 				$config->set('Cache.SerializerPath', $GLOBALS['egw_info']['server']['temp_dir']);
 			}
 			$purifier = new HTMLPurifier($config);
