@@ -588,12 +588,12 @@ class infolog_sif extends infolog_bo
 					switch ($sifField)
 					{
 						case 'Date':
-							$sifNote .= '<$sifField>';
+							$sifNote .= "<$sifField>";
 							if (!empty($value))
 							{
 								$sifNote .= $this->getDateTime($value, $this->tzid);
 							}
-							$sifNote .= '</$sifField>';
+							$sifNote .= "</$sifField>";
 							break;
 
 						case 'Categories':
