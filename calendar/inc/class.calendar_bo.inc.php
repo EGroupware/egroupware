@@ -800,10 +800,8 @@ class calendar_bo
 				}
 			}
 
-			// Check for deleted flag
-			if(!is_numeric($event['deleted']) && $event['deleted'] == 'f') {
-				$event['deleted'] = false;
-			}
+			// Fix deleted flag
+			$event['deleted'] = egw_db::from_bool($event['deleted']);
 		}
 	}
 
