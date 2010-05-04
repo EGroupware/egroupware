@@ -799,6 +799,11 @@ class calendar_bo
 					$alarm['time'] = $this->date2usertime($alarm['time'],$date_format);
 				}
 			}
+
+			// Check for deleted flag
+			if(!is_numeric($event['deleted']) && $event['deleted'] == 'f') {
+				$event['deleted'] = false;
+			}
 		}
 	}
 
