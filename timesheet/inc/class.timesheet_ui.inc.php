@@ -739,7 +739,7 @@ class timesheet_ui extends timesheet_bo
 			if ($query['selectcols'] && strpos($query['selectcols'],'ts_unitprice')===false) $rows['no_ts_unitprice'] = 1;
 			if ($query['selectcols'] && strpos($query['selectcols'],'ts_total')===false) $rows['no_ts_total'] = 1;
 		}
-		$rows['no_ts_status'] = $query['no_status'];
+		$rows['no_ts_status'] = strpos($query['selectcols'], 'ts_status') === false || $query['no_status'];
 
 		return $total;
 	}
