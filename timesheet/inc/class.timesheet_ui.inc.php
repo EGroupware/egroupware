@@ -308,6 +308,7 @@ class timesheet_ui extends timesheet_bo
 							list($link_id, $recurrence) = explode(':', $link_id);
 							$event = $calendar_bo->read($link_id, $recurrence);
 							$content['ts_start'] = $event['start'];
+							$content['start_time'] = egw_time::to($event['start'],'H:i');
 							$content['ts_title'] = $calendar_bo->link_title($event);
 							$content['ts_description'] = $event['description'];
 							$content['ts_duration']	= ($event['end'] - $event['start']) / 60;
