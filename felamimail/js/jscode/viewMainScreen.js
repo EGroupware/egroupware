@@ -1,3 +1,20 @@
+function parentRefreshListRowStyle(oldID, newID)
+{
+	var trElement;
+	var aElements;
+	trElement = document.getElementById('row_'+oldID);
+	trElement.style.fontWeight='normal';
+	aElements = trElement.getElementsByTagName("a");
+	aElements[0].style.fontWeight='normal';
+	aElements[1].style.fontWeight='normal';	
+	trElement = document.getElementById('row_'+newID);
+	trElement.style.fontWeight='normal';
+	aElements = trElement.getElementsByTagName("a");
+	aElements[0].style.fontWeight='normal';
+	aElements[1].style.fontWeight='normal';	
+
+}
+
 function setStatusMessage(_message) {
 	document.getElementById('messageCounter').innerHTML = '<table cellpadding="0" cellspacing="0"><tr><td><img src="'+ activityImagePath +'"></td><td>&nbsp;' + _message + '</td></tr></table>';
 }

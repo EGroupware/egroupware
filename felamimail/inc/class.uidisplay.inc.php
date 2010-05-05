@@ -509,13 +509,17 @@
 					'mailbox'	=> base64_encode($this->mailbox)
 				);
 				$previousURL = $GLOBALS['egw']->link('/index.php',$linkData);
-				$previousURL = "window.location.href = '$previousURL'";
+				$previousURL = "goToMessage('$previousURL')";
 				$navbarImages['up.button']	= array(
 					'action'	=> $previousURL,
 					'tooltip'	=> lang('previous message'),
 				);
 			} else {
-				$previousURL = '';
+				$previousURL = '#';
+				$navbarImages['up.grey']  = array(
+					'action'    => $previousURL,
+					'tooltip'   => lang('previous message'),
+				);
 			}
 
 			if($nextMessage['next']) {
@@ -526,13 +530,17 @@
 					'mailbox'	=> base64_encode($this->mailbox)
 				);
 				$nextURL = $GLOBALS['egw']->link('/index.php',$linkData);
-				$nextURL = "window.location.href = '$nextURL'";
+				$nextURL = "goToMessage('$nextURL')";
 				$navbarImages['down.button']	= array(
 					'action'	=> $nextURL,
 					'tooltip'	=> lang('next message'),
 				);
 			} else {
-				$nextURL = '';
+				$nextURL = '#';
+				$navbarImages['down.grey']    = array(
+					#'action'    => $nextURL,
+					'tooltip'   => lang('next message'),
+				);
 			}
 
 
