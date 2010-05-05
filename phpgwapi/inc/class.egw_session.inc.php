@@ -206,7 +206,7 @@ class egw_session
 				$GLOBALS['egw_info']['server']['max_history'] = 20;
 				$save_rep = true;
 			}
-			
+
 			if ($save_rep)
 			{
 				$config = new config('phpgwapi');
@@ -741,6 +741,15 @@ class egw_session
 			// we generate a pseudo-sessionid from the basic auth credentials
 			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT.':'.self::getuser_ip());
 		}
+		// same for digest auth
+		elseif (isset($_SERVER['PHP_AUTH_DIGEST']) &&
+			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php')))
+		{
+			// we generate a pseudo-sessionid from the digest username, realm and nounce
+			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
+			$data = egw_digest_auth::parse_digest($_SERVER['PHP_AUTH_DIGEST']);
+			$sessionid = md5($data['username'].':'.$data['realm'].':'.$data['nonce'].':'.$_SERVER['HTTP_HOST'].':'.EGW_SERVER_ROOT.':'.self::getuser_ip());
+		}
 		elseif(!$only_basic_auth && isset($_REQUEST[self::EGW_SESSION_NAME]))
 		{
 			$sessionid = $_REQUEST[self::EGW_SESSION_NAME];
@@ -1254,7 +1263,7 @@ class egw_session
 	public static function search_instance($login,$domain_requested,&$default_domain,$server_name,array $domains=null)
 	{
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$login','$domain_requested',".array2string($default_domain).".'$server_name'.".array2string($domains).")");
-		
+
 		if (is_null($domains)) $domains = $GLOBALS['egw_domain'];
 
 		if (!isset($default_domain) || !isset($domains[$default_domain]))	// allow to overwrite the default domain
@@ -1299,7 +1308,7 @@ class egw_session
 			$domain = $default_domain;
 		}
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() default_domain=".array2string($default_domain).', login='.array2string($login)." returning ".array2string($domain));
-		
+
 		return $domain;
 	}
 

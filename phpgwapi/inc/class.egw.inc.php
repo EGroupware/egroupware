@@ -301,8 +301,8 @@ class egw extends egw_minimal
 		// check if we have a session, if not try to automatic create one
 		if ($this->session->verify()) return true;
 
-		if (($account_callback = $GLOBALS['egw_info']['flags']['autocreate_session_callback']) && function_exists($account_callback) &&
-			($sessionid = $account_callback($account)) === true)	// $account_call_back returns true, false or a session-id
+		if (($account_callback = $GLOBALS['egw_info']['flags']['autocreate_session_callback']) && is_callable($account_callback) &&
+			($sessionid = call_user_func_array($account_callback,array(&$account))) === true)	// $account_call_back returns true, false or a session-id
 		{
 			$sessionid = $this->session->create($account);
 		}
@@ -481,6 +481,10 @@ class egw extends egw_minimal
 			print("\n\n");
 		}
 		@ob_flush(); flush();
+
+		// commit session (if existing), to fix timing problems sometimes preventing session creation ("Your session can not be verified")
+		if (isset($GLOBALS['egw']->session)) $GLOBALS['egw']->session->commit_session();
+
 		exit;
 	}
 

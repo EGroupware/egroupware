@@ -9,7 +9,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -25,25 +25,11 @@ $starttime = microtime(true);
  */
 function check_access(&$account)
 {
-	if (isset($_SERVER['PHP_AUTH_USER']))
+	if (isset($_GET['auth']))
 	{
-		$user = $_SERVER['PHP_AUTH_USER'];
-		$pass = $_SERVER['PHP_AUTH_PW'];
+		list($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']) = explode(':',base64_decode($_GET['auth']),2);
 	}
-	elseif(isset($_GET['auth']))
-	{
-		list($user,$pass) = explode(':',base64_decode($_GET['auth']),2);
-	}
-	if (!isset($user) || !($sessionid = $GLOBALS['egw']->session->create($user,$pass,'text')))
-	{
-		header('WWW-Authenticate: Basic realm="'.vfs_webdav_server::REALM.
-			// if the session class gives a reason why the login failed --> append it to the REALM
-			($GLOBALS['egw']->session->reason ? ': '.$GLOBALS['egw']->session->reason : '').'"');
-		header("HTTP/1.1 401 Unauthorized");
-		header("X-WebDAV-Status: 401 Unauthorized", true);
-		exit;
-	}
-	return $sessionid;
+	return egw_digest_auth::autocreate_session_callback($account);
 }
 
 // if we are called with a /apps/$app path, use that $app as currentapp, to not require filemanager rights for the links
@@ -68,8 +54,11 @@ $GLOBALS['egw_info'] = array(
 		'currentapp' => $app,
 		'autocreate_session_callback' => 'check_access',
 		'no_exception_handler' => 'basic_auth',	// we use a basic auth exception handler (sends exception message as basic auth realm)
+		'auth_realm' => 'EGroupware WebDAV server',	// cant use vfs_webdav_server::REALM as autoloading and include path not yet setup!
 	)
 );
+require_once('phpgwapi/inc/class.egw_digest_auth.inc.php');
+
 // if you move this file somewhere else, you need to adapt the path to the header!
 try
 {
