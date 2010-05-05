@@ -575,10 +575,11 @@ class infolog_bo
 	* @param boolean $check_defaults=true check and set certain defaults
 	* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
 	* @param boolean $user2server=true conversion between user- and server-time necessary
+	* @param boolean $skip_notification=false true = do NOT send notification, false (default) = send notifications
 	*
 	* @return int/boolean info_id on a successfull write or false
 	*/
-	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true)
+	function write(&$values, $check_defaults=true, $touch_modified=true, $user2server=true, $skip_notification=false)
 	{
 		//echo "boinfolog::write()values="; _debug_array($values);
 		if (!$values['info_id'] && !$this->check_access(0,EGW_ACL_EDIT,$values['info_owner']) &&
@@ -816,7 +817,8 @@ class infolog_bo
 				$values = array_merge($values,$missing_fields);
 				$to_write = array_merge($to_write,$missing_fields);
 			}
-			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
+			$this->tracking->track($to_write,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted',
+				null,$skip_notification);
 		}
 		if ($info_from_set) $values['info_from'] = '';
 
