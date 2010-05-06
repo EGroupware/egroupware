@@ -19,6 +19,7 @@ accessrights	filemanager	en	Accessrights
 acl added.	filemanager	en	ACL added.
 acl deleted.	filemanager	en	ACL deleted.
 actions	filemanager	en	Actions
+add to current clipboard	filemanager	en	Add to current clipboard
 all files	common	en	All files
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	allow a maximum of the above configured folder links to be configured in settings
 and all it's childeren	filemanager	en	and all it's childeren
@@ -79,6 +80,7 @@ enter the complete vfs path to specify your desired start folder.	filemanager	en
 error adding the acl!	filemanager	en	Error adding the ACL!
 error creating symlink to target %1!	filemanager	en	Error creating symlink to target %1!
 error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!
+error uploading file!	filemanager	en	Error uploading file!
 executable	filemanager	en	Executable
 extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
@@ -110,6 +112,7 @@ link %1: %2	filemanager	en	Link %1: %2
 link target %1 not found!	filemanager	en	Link target %1 not found!
 location	filemanager	en	Location
 log out as superuser	filemanager	en	Log out as superuser
+mail files	filemanager	en	Mail files
 max folderlinks	admin	en	max folderlinks
 mime type	filemanager	en	mime type
 modified	filemanager	en	modified

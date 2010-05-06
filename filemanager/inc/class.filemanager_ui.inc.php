@@ -259,10 +259,14 @@ class filemanager_ui
 			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
 		$content['linkpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
 			lang('link')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
+		$content['mailpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('Mail files').
+			':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
+		$content['mailpaste_files'] = $clipboard_files ? '&preset[file][]=vfs://default'.implode('&preset[file][]=vfs://default',$clipboard_files) : '';
 		$content['upload_size'] = etemplate::max_upload_size_message();
 		//_debug_array($content);
 
 		$readonlys['button[linkpaste]'] = $readonlys['button[paste]'] = !$clipboard_files || !$dir_is_writable;
+		$readonlys['button[mailpaste]'] = !$clipboard_files || !isset($GLOBALS['egw_info']['user']['apps']['felamimail']);
 		$readonlys['button[createdir]'] = !$dir_is_writable;
 		$readonlys['button[symlink]'] = !$dir_is_writable;
 		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
@@ -270,6 +274,7 @@ class filemanager_ui
 		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['delete'] = lang('Delete');
 		$sel_options['action']['copy'] = lang('Copy to clipboard');
 		if ($dir_is_writable || !$content['nm']['filter']) $sel_options['action']['cut'] = lang('Cut to clipboard');
+		if ($clipboard_files) $sel_options['action']['add'] = lang('Add to current clipboard');
 
 		$sel_options['filter'] = array(
 			'1' => 'Current directory',
@@ -277,6 +282,32 @@ class filemanager_ui
 			'3' => 'Show hidden files',
 			''  => 'Files from subdirectories',
 		);
+		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
+		{
+			$sel_options['action']['mail'] = lang('Mail files');
+			$GLOBALS['egw_info']['flags']['java_script'] .= "<script>
+	function do_action(selbox)
+	{
+		if (selbox.value != '')
+		{
+			if (selbox.value == 'mail' && (ids = get_selected_array(selbox.form,'[rows][checked][]')))
+			{
+				link = '".egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose'))."';
+				for(i=0; i < ids.length; i++)
+				{
+				   link += '&preset[file][]='+encodeURIComponent('vfs://default'+ids[i]);
+				}
+				egw_openWindowCentered2(link, '_blank', '700', '800', 'yes');
+			}
+			else
+			{
+				selbox.form.submit();
+			}
+			selbox.value = '';
+		}
+	}
+</script>";
+		}
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
@@ -360,6 +391,19 @@ class filemanager_ui
 		$errs = $dirs = $files = 0;
 		switch($action)
 		{
+			case 'mail':
+				$link = egw::link('/index.php',array(
+					'menuaction' => 'felamimail.uicompose.compose',
+				));
+				foreach($selected as $path)
+				{
+					$link .= '&preset[file][]=vfs://default'.$path;
+				}
+				$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n\talert(\"egw_openWindowCentered2('$link', '_blank', '700', '800', 'yes');\");\n</script>\n";
+				//$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n\talert('hi ralf!');\n\tegw_openWindowCentered2('$link', '_blank', '700', '800', 'yes');\n\talert('hi ralf!');\n</script>\n";
+				//$GLOBALS['egw_info']['flags']['java_script'] .= "<script>alert('hi ralf!');</script>\n";
+				return '';
+
 			case 'delete':
 				$dirs = $files = $errs = 0;
 				// we first delete all selected links (and files)
@@ -417,6 +461,12 @@ class filemanager_ui
 					return lang('%1 directories and %2 files deleted.',$dirs,$files);
 				}
 				return $files == 1 ? lang('File deleted.') : lang('%1 files deleted.',$files);
+
+			case 'add':
+				$files = egw_session::appsession('clipboard_files','filemanager');
+				egw_session::appsession('clipboard_files','filemanager',$files ? array_unique(array_merge($files,$selected)) : $selected);
+				egw_session::appsession('clipboard_type','filemanager','copy');	// always switch to copy, to be on the save side
+				return lang('%1 URLs %2 to clipboard.',count($selected),lang('copied'));
 
 			case 'copy':
 			case 'cut':
@@ -581,6 +631,10 @@ class filemanager_ui
 			if (!$dir_is_writable[$dir])
 			{
 				$readonlys["delete[$path]"] = true;	// no rights to delete the file
+			}
+			if (egw_vfs::is_dir($path) || !egw_vfs::is_readable($path))
+			{
+				$readonlys["mail[$path]"] = true;
 			}
 		}
 		// query comments and cf's for the displayed rows

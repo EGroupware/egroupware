@@ -19,6 +19,7 @@ accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
 acl deleted.	filemanager	de	Zugriffsrecht gelöscht.
 actions	filemanager	de	Befehle
+add to current clipboard	filemanager	de	Zur aktuellen Zwischenablage hinzufügen
 all files	common	de	Alle Dateien
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
 and all it's childeren	filemanager	de	und alle seine Kinder
@@ -79,6 +80,7 @@ enter the complete vfs path to specify your desired start folder.	filemanager	de
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
+error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 executable	filemanager	de	Ausführbar
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte ACL
@@ -110,6 +112,7 @@ link %1: %2	filemanager	de	%1. Verknüpfung: %2
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
+mail files	filemanager	de	Dateien per EMail versenden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	verändert

@@ -263,6 +263,18 @@ function get_selected(form,suffix) {
 	return selected;
 }
 
+// returns selected checkboxes from given 'var form' which REAL names end with 'var suffix'
+function get_selected_array(form,suffix) {
+	selected = new Array();
+	el = form.getElementsByTagName('input');
+	for (var i = n = 0; i < el.length; i++)	{
+		if(el[i].name.substr(el[i].name.length-suffix.length,el[i].name.length) == suffix && el[i].checked) {
+			selected[n++] = el[i].value;
+		}
+	}
+	return selected;
+}
+
 // set certain comma-separated values in a multiselection (div with checkboxes, used as replacement for a multiselection)
 function set_multiselection(name,values,reset)
 {
