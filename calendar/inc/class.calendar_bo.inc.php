@@ -749,9 +749,12 @@ class calendar_bo
 				$time =& $this->so->startOfDay($time, $event['tzid']);
 				$time->setTime(23, 59, 59);
 				$event['end'] = egw_time::to($time, $date_format);
-				$time = new egw_time($event['recurrence'], egw_time::$server_timezone);
-				$time =& $this->so->startOfDay($time, $event['tzid']);
-				$event['recurrence'] = egw_time::to($time, $date_format);
+				if (!empty($event['recurrence']))
+				{
+					$time = new egw_time($event['recurrence'], egw_time::$server_timezone);
+					$time =& $this->so->startOfDay($time, $event['tzid']);
+					$event['recurrence'] = egw_time::to($time, $date_format);
+				}
 				if (!empty($event['recur_enddate']))
 				{
 					$time = new egw_time($event['recur_enddate'], egw_time::$server_timezone);
