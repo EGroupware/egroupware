@@ -665,12 +665,16 @@ class timesheet_ui extends timesheet_bo
 			if ($row['ts_id'] <= 0)	// sums
 			{
 				$readonlys["view[$row[ts_id]]"] = $readonlys["edit[$row[ts_id]]"] = $readonlys["delete[$row[ts_id]]"] = true;
+				$readonlys["checked[{$row[ts_id]}]"] = true;
 				if ($query['sort'] == 'ASC') $row['ts_start'] -= 7200;	// fix for DSL change
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
 						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.$GLOBALS['egw']->common->show_date($row['ts_start'],
 						$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
+
+						// For some reason day sum checkbox on the etemplate is checked[1] instead of checked[0]
+						$readonlys["checked[1]"] = true;
 						break;
 					case -1:	// week-sum
 						$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
