@@ -122,7 +122,8 @@ function OnLoadingStart(_nodeID) {
 //}
 
 function callNodeSelect(_nodeIDfc, mode) {
-//alert("callNodeSelect:"+_nodeIDfc);
+	_nodeIDfc = _nodeIDfc.replace(/#ampersand#/g,"&amp;");
+	//alert("callNodeSelect:"+_nodeIDfc);
 	var buff = prefAskForMove;
 	if (mode == 0) // cancel
 	{
@@ -157,10 +158,11 @@ function onNodeSelect(_nodeID) {
 			{
 				//Check = confirm(lang_askformove + tree.getUserData(_nodeID, 'folderName'));
 				title = lang_MoveCopyTitle;
+				node2call = _nodeID.replace(/&amp;/g,'#ampersand#');
 				message = lang_askformove + tree.getUserData(_nodeID, 'folderName');
-				message = message + "<p><button onclick=\"callNodeSelect('"+_nodeID+"', 1);hideDialog();\">"+lang_move+"</button>";
-				if (prefAskForMove == 2) message = message + "&nbsp;<button onclick=\"callNodeSelect('"+_nodeID+"', 2);hideDialog();\">"+lang_copy+"</button>";
-				message = message + "&nbsp;<button onclick=\"callNodeSelect('"+_nodeID+"', 0);hideDialog();\">"+lang_cancel+"</button>";
+				message = message + "<p><button onclick=\"callNodeSelect('"+node2call+"', 1);hideDialog();\">"+lang_move+"</button>";
+				if (prefAskForMove == 2) message = message + "&nbsp;<button onclick=\"callNodeSelect('"+node2call+"', 2);hideDialog();\">"+lang_copy+"</button>";
+				message = message + "&nbsp;<button onclick=\"callNodeSelect('"+node2call+"', 0);hideDialog();\">"+lang_cancel+"</button>";
 				type = 'prompt';
 				autohide = 0;
 				showDialog(title,message,type,autohide);

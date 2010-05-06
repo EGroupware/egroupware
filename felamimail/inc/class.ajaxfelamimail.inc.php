@@ -643,7 +643,7 @@
 		*/
 		function moveMessages($_folderName, $_selectedMessages)
 		{
-			if($this->_debug) error_log(__METHOD__." called with Messages ".print_r($_selectedMessages,true));
+			if($this->_debug) error_log(__METHOD__." move to $_folderName called with Messages ".print_r($_selectedMessages,true));
 			$messageCount = 0;
 			if(is_array($_selectedMessages) && count($_selectedMessages['msg']) > 0) $messageCount = count($_selectedMessages['msg']);
 			$folderName = $this->_decodeEntityFolderName($_folderName);
@@ -653,7 +653,7 @@
 				} else {
 					  if($this->_debug) error_log("ajaxfelamimail::moveMessages-> same folder than current selected");
 				}
-
+				if($this->_debug) error_log(__METHOD__." Rebuild MessageList for Folder:".$this->sessionData['mailbox']);
 				return $this->generateMessageList($this->sessionData['mailbox'],($_selectedMessages == 'all'?0:(-1*$messageCount)));
 			} else {
 				$response = new xajaxResponse();
