@@ -403,7 +403,7 @@ abstract class egw_framework
 			if (($popup = egw_link::is_popup($app,'add')))
 			{
 				list($w,$h) = explode('x',$popup);
-				$action = "window.open('$link','_blank','width=$w,height=$h,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');";
+				$action = "window.open('$link','_blank','width='+$w+',height='+$h+',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');";
 			}
 			else
 			{
@@ -679,14 +679,14 @@ abstract class egw_framework
 		if ($GLOBALS['egw_info']['flags']['include_xajax'])
 		{
 			require_once(EGW_API_INC.'/xajax/xajax_core/xajax.inc.php');
-			
+
 			$xajax = new xajax();
 			$xajax->configure('requestURI', egw::link('/xajax.php'));
 			$xajax->configure('javascript URI',$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/inc/xajax');
  			$xajax->configure('waitCursor',false);
  			$xajax->register(XAJAX_FUNCTION,'doXMLHTTP');
  			$xajax->register(XAJAX_FUNCTION,'doXMLHTTP',array('mode' => "'synchronous'",'alias' => 'doXMLHTTPsync'));
- 			
+
  			$java_script .= $xajax->getJavascript();
 		}
 
