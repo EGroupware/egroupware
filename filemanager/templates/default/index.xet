@@ -46,7 +46,7 @@
 					<customfields-list id="$row" class="customfields"/>
 					<hbox align="right">
 						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
-						<buttononly options="mail_post_to" id="mail[$row_cont[path]]" onclick="window.open(egw::link('/index.php','menuaction=felamimail.uicompose.compose&amp;preset[file]=vfs://default$row_cont[path]'),'_blank','dependent=yes,width=700,height=800,scrollbars=yes,status=yes'); return false;" align="center"/>
+						<buttononly options="mail_post_to" id="mail[$row_cont[path]]" onclick="open_mail('$row_cont[path]'); return false;" align="center"/>
 						<button id="delete[$row_cont[path]]" image="delete" label="Delete" statustext="Delete this file or directory" onclick="return confirm('Delete this file or directory');" align="center"/>
 						<checkbox id="checked[]" align="right" options="&quot;$row_cont[path]&quot;"/>
 					</hbox>
@@ -77,7 +77,7 @@
 						<button image="link" ro_image="link_disabled" label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;"/>
 						<button id="button[paste]" image="editpaste" ro_image="editpaste_disabled" statustext="$cont[paste_tooltip]"/>
 						<button id="button[linkpaste]" image="linkpaste" ro_image="linkpaste_disabled" statustext="$cont[linkpaste_tooltip]"/>
-						<button id="button[mailpaste]" image="mailpaste" ro_image="mailpaste_disabled" statustext="$cont[mailpaste_tooltip]" onclick="window.open(egw::link('/index.php','menuaction=felamimail.uicompose.compose$cont[mailpaste_files]'),'_blank','dependent=yes,width=700,height=800,scrollbars=yes,status=yes'); return false;"/>
+						<button id="button[mailpaste]" image="mailpaste" ro_image="mailpaste_disabled" statustext="$cont[mailpaste_tooltip]" onclick="open_mail('$cont[mailpaste_files]'); return false;"/>
 					</hbox>
 				</row>
 				<row>

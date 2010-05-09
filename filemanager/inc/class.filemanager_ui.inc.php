@@ -261,7 +261,7 @@ class filemanager_ui
 			lang('link')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
 		$content['mailpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('Mail files').
 			':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
-		$content['mailpaste_files'] = $clipboard_files ? '&preset[file][]=vfs://default'.implode('&preset[file][]=vfs://default',$clipboard_files) : '';
+		$content['mailpaste_files'] = $clipboard_files;
 		$content['upload_size'] = etemplate::max_upload_size_message();
 		//_debug_array($content);
 
@@ -285,19 +285,27 @@ class filemanager_ui
 		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
 		{
 			$sel_options['action']['mail'] = lang('Mail files');
+			list($width,$height) = explode('x',egw_link::get_registry('felamimail','add_popup'));
 			$GLOBALS['egw_info']['flags']['java_script'] .= "<script>
+	function open_mail(attachments)
+	{
+		var link = '".egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose'))."';
+
+		if (!(attachments instanceof Array)) attachments = [ attachments ];
+
+		for(i=0; i < attachments.length; i++)
+		{
+		   link += '&preset[file][]='+encodeURIComponent('vfs://default'+attachments[i]);
+		}
+		egw_openWindowCentered2(link, '_blank', $width, $height, 'yes');
+	}
 	function do_action(selbox)
 	{
 		if (selbox.value != '')
 		{
 			if (selbox.value == 'mail' && (ids = get_selected_array(selbox.form,'[rows][checked][]')))
 			{
-				link = '".egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose'))."';
-				for(i=0; i < ids.length; i++)
-				{
-				   link += '&preset[file][]='+encodeURIComponent('vfs://default'+ids[i]);
-				}
-				egw_openWindowCentered2(link, '_blank', '700', '800', 'yes');
+				open_mail(ids);
 			}
 			else
 			{
