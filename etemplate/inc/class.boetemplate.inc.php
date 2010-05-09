@@ -157,7 +157,7 @@ class boetemplate extends soetemplate
 	static function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
 	{
 		$is_index_in_content = $name[0] == '@';
-		if (strpos($name,'$') !== false)
+		if (($pos_var=strpos($name,'$')) !== false)
 		{
 			if (!$cont)
 			{
@@ -169,6 +169,43 @@ class boetemplate extends soetemplate
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
 
+			// check if name is enclosed in single quotes as argument eg. to an event handler --> quote contained quotes (' or ")
+			if ($name[$pos_var-1] == "'" && preg_match('/\'(\$[A-Za-z0-9_\[\]]+)\'/',$name,$matches))
+			{
+				eval('$value = '.$matches[1].';');
+				if (is_array($value))
+				{
+					foreach($value as &$val)
+					{
+						$val = "'".str_replace(array("'",'"'),array('\\\'','&quot;'),$val)."'";
+					}
+					$value = '[ '.implode(', ',$value).' ]';
+					$name = str_replace("'".$matches[1]."'",$value,$name);
+				}
+				else
+				{
+					$value = str_replace(array("'",'"'),array('\\\'','&quot;'),$value);
+					$name = str_replace($matches[1],$value,$name);
+				}
+			}
+			// check if name is assigned in an url --> urlendcode contained & as %26, as egw::link
+			if ($name[$pos_var-1] == '=' && preg_match('/&([A-Za-z0-9_\[\]]+)=(\$[A-Za-z0-9_\[\]]+)/',$name,$matches))
+			{
+				eval('$value = '.$matches[2].';');
+				if (is_array($value))	// works only reasonable, if get-parameter uses array notation, eg. &file[]=$cont[filenames]
+				{
+					foreach($value as &$val)
+					{
+						$val = str_replace('&',urlencode('&'),$val);
+					}
+					$name = str_replace($matches[2],implode('&'.$matches[1].'=',$value),$name);
+				}
+				else
+				{
+					$value = str_replace('&',urlencode('&'),$value);
+					$name = str_replace($matches[2],$value,$name);
+				}
+			}
 			eval('$name = "'.str_replace('"','\\"',$name).'";');
 		}
 		if ($is_index_in_content)

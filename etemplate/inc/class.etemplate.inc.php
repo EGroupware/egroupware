@@ -432,7 +432,7 @@ class etemplate extends boetemplate
 			if (!$_POST && $_SERVER['REQUEST_METHOD'] == 'POST')
 			{
 				$redirect['post_empty'] = 1;
-				// check if we have a failed upload, because user tried to uploaded a file 
+				// check if we have a failed upload, because user tried to uploaded a file
 				// bigger then php.ini setting post_max_size
 				// in that case the webserver calls PHP with $_POST === array()
 				if (substr($_SERVER['CONTENT_TYPE'],0,19) == 'multipart/form-data' &&
@@ -659,7 +659,7 @@ class etemplate extends boetemplate
 		// make the content availible as class-public for extensions
 		$this->content =& $content;
 
-		$html = "\n\n<!-- BEGIN eTemplate $this->name -->\n<div id=\"$this->name\">\n\n";
+		$html = "\n\n<!-- BEGIN eTemplate $this->name -->\n<div id=\"".str_replace('"','&quot;',$this->name)."\">\n\n";
 		if (!self::$styles_included[$this->name])
 		{
 			self::$styles_included[$this->name] = True;
@@ -874,7 +874,7 @@ class etemplate extends boetemplate
 						$onclick = $this->expand_name($onclick,$c,$r,$content['.c'],$content['.row'],$content);
 					}
 					$row_data[".$col"] .= ' onclick="'.$this->js_pseudo_funcs($onclick,$cname).'"' .
-						($cell['id'] ? ' id="'.$cell['id'].'"' : '');
+						($cell['id'] ? ' id="'.str_replace('"','&quot;',$cell['id']).'"' : '');
 				}
 				$colspan = $span == 'all' ? $grid['cols']-$c : 0+$span;
 				if ($colspan > 1)
@@ -1171,7 +1171,7 @@ class etemplate extends boetemplate
 		}
 		if ($form_name != '')
 		{
-			$options = 'id="'.($cell['id'] ? $cell['id'] : $form_name).'" '.$options;
+			$options = 'id="'.str_replace('"','&quot;',$cell['id'] ? $cell['id'] : $form_name).'" '.$options;
 		}
 		switch ($type)
 		{
@@ -1374,7 +1374,7 @@ class etemplate extends boetemplate
 				{
 					$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
 						(((string)$cell['onchange'] === '1' || $img) ?
-						'return submitit('.self::$name_form.",'".addslashes($form_name)."');" : $cell['onchange']).'; return false;';
+						'return submitit('.self::$name_form.",'".str_replace(array('"','\''),array('&quot','\\\''),$form_name)."');" : $cell['onchange']).'; return false;';
 
 					if (!html::$netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 					{
@@ -1601,7 +1601,7 @@ class etemplate extends boetemplate
 				}
 				$html .= html::image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,
 					'border="0"'.($imagemap?' usemap="#'.html::htmlspecialchars($imagemap).'"':'').
-					($id || $value ? ' id="'.($id ? $id : $name).'"' : ''));
+					($id || $value ? ' id="'.str_replace('"','&quot;',$id ? $id : $name).'"' : ''));
 				$extra_label = False;
 				break;
 			case 'file':	// size: size of the filename field
@@ -1670,7 +1670,7 @@ class etemplate extends boetemplate
 						if (strlen($child['onclick']) > 1)
 						{
 							$rows[$box_row]['.'.$box_col] .= ' onclick="'.$this->js_pseudo_funcs($child['onclick'],$cname).'"'.
-								($child['id'] ? ' id="'.$child['id'].'"' : '');
+								($child['id'] ? ' id="'.str_replace('"','&quot;',$child['id']).'"' : '');
 						}
 						// allow to set further attributes in the tablecell, beside the class
 						if (is_array($cl))
@@ -1693,7 +1693,7 @@ class etemplate extends boetemplate
 				{
 					$html = html::table($rows,html::formatOptions($cell_options,',,cellpadding,cellspacing').
 						($type != 'groupbox' ? html::formatOptions($class,'class').
-							($cell['name'] ? ' id="'.$form_name.'"' : '') : '').
+							($cell['name'] ? ' id="'.str_replace('"','&quot;',$form_name).'"' : '') : '').
 						($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' width="100%"' : ''));	// alignment only works if table has full width
 					if ($type != 'groupbox') $class = '';	// otherwise we create an extra div
 				}
@@ -1708,7 +1708,7 @@ class etemplate extends boetemplate
 					{
 						$label = lang($label);
 					}
-					$html = html::fieldset($html,$label,($cell['name'] ? ' id="'.$form_name.'"' : '').
+					$html = html::fieldset($html,$label,($cell['name'] ? ' id="'.str_replace('"','&quot;',$form_name).'"' : '').
 						($class ? ' class="'.$class.'"' : ''));
 					$class = '';	// otherwise we create an extra div
 				}
@@ -1972,8 +1972,10 @@ class etemplate extends boetemplate
 				}
 			}
 
-			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches)) {
-				foreach($matches[1] as $n => $matche_name) {
+			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches))
+			{
+				foreach($matches[1] as $n => $matche_name)
+				{
 					$matches[1][$n] = '\''.self::form_name($cname,$matche_name).'\'';
 				}
 				$on = str_replace($matches[0],$matches[1],$on);
@@ -1993,18 +1995,24 @@ class etemplate extends boetemplate
 				$on = str_replace($matches[0],"'<style>".str_replace(array("\n","\r"),'',$tpl->style)."</style>'",$on);
 			}
 		}
-		if (strpos($on,'confirm(') !== false && preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/U',$on,$matches)) {
+
+		// translate messages in confirm()
+		if (strpos($on,'confirm(') !== false && preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/U',$on,$matches))
+		{
 			$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
 			$on = str_replace($matches[0],'confirm(\''.str_replace("'","\\'",$question).'\')',$on);
 		}
 
-		if (strpos($on,'window.open(') !== false && preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=(.*),height=(.*),scrollbars=yes,status=(.*)'\)/",$on,$matches)) {
-			$on = str_replace($matches[0], "egw_openWindowCentered2('{$matches[1]}', '{$matches[2]}', '{$matches[3]}', '{$matches[4]}', '{$matches[5]}')", $on);
+		// replace window.open() with EGw's egw_openWindowCentered2()
+		if (strpos($on,'window.open(') !== false && preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=(.*),height=(.*),scrollbars=yes,status=(.*)'\)/",$on,$matches))
+		{
+			$on = str_replace($matches[0], "egw_openWindowCentered2('$matches[1]', '$matches[2]', $matches[3], $matches[4], '$matches[5]')", $on);
 		}
 
 		// replace xajax calls to code in widgets, with the "etemplate" handler,
 		// this allows to call widgets with the current app, otherwise everyone would need etemplate run rights
-		if (strpos($on,"xajax_doXMLHTTP('etemplate.") !== false) {
+		if (strpos($on,"xajax_doXMLHTTP('etemplate.") !== false)
+		{
 			$on = preg_replace("/^xajax_doXMLHTTP\('etemplate\.([a-z]+_widget\.[a-zA-Z0-9_]+)\'/",'xajax_doXMLHTTP(\''.$GLOBALS['egw_info']['flags']['currentapp'].'.\\1.etemplate\'',$on);
 		}
 
