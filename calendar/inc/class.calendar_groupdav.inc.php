@@ -73,7 +73,7 @@ class calendar_groupdav extends groupdav_handler
 	 * @param array|int $event
 	 * @return string
 	 */
-	static function get_path($event)
+	function get_path($event)
 	{
 		if (is_numeric($event) && self::PATH_ATTRIBUTE == 'id')
 		{
@@ -217,7 +217,7 @@ class calendar_groupdav extends groupdav_handler
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
 				$files[] = array(
-	            	'path'  => $path.self::get_path($event),
+	            	'path'  => $path.$this->get_path($event),
 	            	'props' => $props,
 				);
 			}
@@ -535,7 +535,7 @@ class calendar_groupdav extends groupdav_handler
 		{
 			$path = preg_replace('|(.*)/[^/]*|', '\1/', $options['path']);
 			if ($this->debug) error_log(__METHOD__."(,$id,$user) cal_id=$cal_id: $retval");
-			header('Location: '.$this->base_uri.$path.self::get_path($cal_id));
+			header('Location: '.$this->base_uri.$path.$this->get_path($cal_id));
 			return $retval;
 		}
 		return true;
