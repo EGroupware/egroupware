@@ -1023,7 +1023,8 @@ class egw_session
 	 * Please note, the values of the query get url encoded!
 	 *
 	 * @param string $url a url relative to the egroupware install root, it can contain a query too
-	 * @param array/string $extravars query string arguements as string or array (prefered)
+	 * @param array|string $extravars query string arguements as string or array (prefered)
+	 * 	if string is used ambersands in vars have to be already urlencoded as '%26', function ensures they get NOT double encoded
 	 * @return string generated url
 	 */
 	public static function link($url, $extravars = '')
@@ -1073,7 +1074,7 @@ class egw_session
 		}
 
 		// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
-		list($url,$othervars) = explode('?',$url);
+		list($url,$othervars) = explode('?',$url,2);
 		if ($extravars && is_array($extravars))
 		{
 			$vars += $extravars;
@@ -1090,6 +1091,7 @@ class egw_session
 			foreach(explode('&',$extravars) as $expr)
 			{
 				list($var,$val) = explode('=', $expr,2);
+				if (strpos($val,'%26') != false) $val = str_replace('%26','&',$val);	// make sure to not double encode &
 				if (substr($var,-2) == '[]')
 				{
 					$vars[substr($var,0,-2)][] = $val;
