@@ -135,7 +135,7 @@ class egw_link extends solink
 		// for performance reasons, we do it only once / cache it in the session
 		if (!($search_link_hooks = $GLOBALS['egw']->session->appsession('search_link_hooks','phpgwapi')))
 		{
-			$search_link_hooks = $GLOBALS['egw']->hooks->process('search_link');
+			$search_link_hooks = $GLOBALS['egw']->hooks->process('search_link', array(), true);
 			$GLOBALS['egw']->session->appsession('search_link_hooks','phpgwapi',$search_link_hooks);
 		}
 		if (is_array($search_link_hooks))
