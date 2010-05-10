@@ -43,7 +43,7 @@ class egw_digest_auth
 	 *  1 = no cleartext passwords
 	 *  2 = all
 	 */
-	const ERROR_LOG = 1;
+	const ERROR_LOG = 0;
 
 	/**
 	 * Callback to be used to create session via header include authenticated via basic or digest auth
@@ -104,7 +104,17 @@ class egw_digest_auth
 		}
 		if (substr($user_pw,0,7) == '{PLAIN}') $user_pw = substr($user_pw,7);
 
-		if (self::ERROR_LOG) error_log(__METHOD__."('$realm','$username','$user_pw') return true");
+		if (self::ERROR_LOG)
+		{
+			if (self::ERROR_LOG > 1)
+			{
+				error_log(__METHOD__."('$realm','$username','$user_pw') return true");
+			}
+			else
+			{
+				error_log(__METHOD__."('$realm','$username',\$user_pw) return true");
+			}
+		}
 		return true;
 	}
 
