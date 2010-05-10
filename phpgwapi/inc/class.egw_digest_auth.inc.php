@@ -53,7 +53,11 @@ class egw_digest_auth
 	 */
 	static public function autocreate_session_callback(&$account)
 	{
-		if (self::ERROR_LOG) error_log(__METHOD__.'() PHP_AUTH_USER='.array2string($_SERVER['PHP_AUTH_USER']).', PHP_AUTH_PW='.array2string($_SERVER['PHP_AUTH_PW']).', PHP_AUTH_DIGEST='.array2string($_SERVER['PHP_AUTH_DIGEST']));
+		if (self::ERROR_LOG)
+		{
+			$pw = self::ERROR_LOG > 1 ? $_SERVER['PHP_AUTH_PW'] : '**********';
+			error_log(__METHOD__.'() PHP_AUTH_USER='.array2string($_SERVER['PHP_AUTH_USER']).', PHP_AUTH_PW='.array2string($pw).', PHP_AUTH_DIGEST='.array2string($_SERVER['PHP_AUTH_DIGEST']));
+		}
 		$realm = $GLOBALS['egw_info']['flags']['auth_realm'];
 		if (empty($realm)) $realm = 'EGroupware';
 
@@ -106,14 +110,8 @@ class egw_digest_auth
 
 		if (self::ERROR_LOG)
 		{
-			if (self::ERROR_LOG > 1)
-			{
-				error_log(__METHOD__."('$realm','$username','$user_pw') return true");
-			}
-			else
-			{
-				error_log(__METHOD__."('$realm','$username',\$user_pw) return true");
-			}
+			$pw = self::ERROR_LOG > 1 ? $user_pw : '**********';
+			error_log(__METHOD__."('$realm','$username','$pw') return true");
 		}
 		return true;
 	}
