@@ -21,7 +21,6 @@
  * - user:  uid or user-name owning the path, default root
  * - group: gid or group-name owning the path, default root
  * - mode:  mode bit for the path, default 0005 (read and execute for nobody)
- * - all:   false (default) = ignore files starting with a dot '.', true = show all files (. and .. are always ignored!)
  * - exec:	false (default) = do NOT allow to upload or modify scripts, true = allow it (if docroot is mounted, this allows to run scripts!)
  * 			scripts are considered every file having a script-extension (eg. .php, .pl, .py), defined with SCRIPT_EXTENSION_PREG constant
  *
@@ -81,13 +80,6 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 * @var string
 	 */
 	private $opened_dir_url;
-
-	/**
-	 * Should dir show all files, or only the ones NOT starting with a dot (. and .. are never shown)
-	 *
-	 * @var boolean
-	 */
-	private $dir_show_all = false;
 
 	/**
 	 * How much should be logged to the apache error-log
@@ -496,8 +488,6 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		$this->opened_dir = null;
 
 		$parts = parse_url($this->opened_dir_url = $url);
-		parse_str($parts['query'],$get);
-		$this->dir_show_all = (bool)$get['all'];
 
 		// ToDo: check access rights
 
@@ -577,9 +567,8 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		do {
 			$file = readdir($this->opened_dir);
 
-			$ignore = !($file === false ||									// stop if no more dirs or
-				$file[0] != '.' ||											// file does NOT start with a dot '.' or
-				($this->dir_show_all && $file != '.' && $file != '..' ));	// file not . or .. or dir_show_all set
+			$ignore = !($file === false ||							// stop if no more dirs or
+				($file != '.' && $file != '..' ));					// file not . or ..
 			if (self::LOG_LEVEL > 1 && $ignore) error_log(__METHOD__.'() ignoring '.array2string($file));
 		}
 		while ($ignore);
