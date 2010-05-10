@@ -1517,13 +1517,20 @@ class HTTP_WebDAV_Server
 
         if ($http_stat{0} == 2) { // 2xx states are ok
             if ($options["timeout"]) {
-                // more than a million is considered an absolute timestamp
-                // less is more likely a relative value
-                if ($options["timeout"]>1000000) {
-                    $timeout = "Second-".($options['timeout']-time());
-                } else {
-                    $timeout = "Second-$options[timeout]";
-                }
+				if (is_numeric($options["timeout"]))
+				{
+					// more than a million is considered an absolute timestamp
+					// less is more likely a relative value
+					if ($options["timeout"]>1000000) {
+						$timeout = "Second-".($options['timeout']-time());
+					} else {
+						$timeout = "Second-$options[timeout]";
+					}
+				}
+				else
+				{
+					$timeout = $options[timeout];
+				}
             } else {
                 $timeout = "Infinite";
             }
