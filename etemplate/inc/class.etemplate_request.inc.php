@@ -198,6 +198,9 @@ class etemplate_request
 		//echo '<p>'.__METHOD__."($form_name,$type,".array2string($data).")</p>\n";
 		$data['type'] = $type;
 
+		// unquote single and double quotes, as this is how they get returned in $_POST
+		$form_name = str_replace(array('\\\'','&quot;'),array('\'','"'),$form_name);
+
 		$this->data['to_process'][$form_name] = $data;
 		$this->data_modified = true;
 	}
@@ -214,6 +217,9 @@ class etemplate_request
 	{
 		//echo '<p>'.__METHOD__."($form_name,$attribute,$value,$add_to_array)</p>\n";
 		if (!$form_name) return;
+
+		// unquote single and double quotes, as this is how they get returned in $_POST
+		$form_name = str_replace(array('\\\'','&quot;'),array('\'','"'),$form_name);
 
 		if ($add_to_array)
 		{

@@ -169,11 +169,12 @@ class boetemplate extends soetemplate
 			$row_cont = $cont[$row];
 			$col_row_cont = $cont[$col.$row];
 
-			// check if name is enclosed in single quotes as argument eg. to an event handler --> quote contained quotes (' or ")
-			if ($name[$pos_var-1] == "'" && preg_match('/\'(\$[A-Za-z0-9_\[\]]+)\'/',$name,$matches))
+			// check if name is enclosed in single quotes as argument eg. to an event handler or
+			// used as name for a button like "delete[$row_cont[something]]" --> quote contained quotes (' or ")
+			if (in_array($name[$pos_var-1],array('[',"'")) && preg_match('/[\'\[](\$[A-Za-z0-9_\[\]]+)[\'\]]+/',$name,$matches))
 			{
 				eval('$value = '.$matches[1].';');
-				if (is_array($value))
+				if (is_array($value) && $name[$pos_var-1] == "'")	// arrays are only supported for '
 				{
 					foreach($value as &$val)
 					{
