@@ -339,14 +339,15 @@
 			}
 		}
 
-		function displayRule($_ruleID, $_ruleData) {
+		function displayRule($_ruleID, $_ruleData, $msg='') {
+			$preferences = $this->mailPreferences;
 			// display the header
 			$this->display_app_header();
-
+			$msg = html::purify($msg);
 			// initialize the template
 			$this->t->set_file(array("filterForm" => "sieveEditForm.tpl"));
 			$this->t->set_block('filterForm','main');
-
+			$this->t->set_var('message',$msg);
 			$linkData = array
 			(
 				'menuaction'	=> 'felamimail.uisieve.editRule',
@@ -368,6 +369,8 @@
 					$this->t->set_var('keep_checked','checked');
 				if($_ruleData['regexp'])
 					$this->t->set_var('regexp_checked','checked');
+				if(intval($_ruleData['anyof'])==1) 
+					$_ruleData['anyof'] = 4; // set the anyof to 4 if set at all, as the template var anyof_selected is anyof_selected0 or anyof_selected4
 				$this->t->set_var('anyof_selected'.intval($_ruleData['anyof']),'selected');
 				$this->t->set_var('value_from',htmlspecialchars($_ruleData['from'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
 				$this->t->set_var('value_to',htmlspecialchars($_ruleData['to'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
@@ -382,9 +385,9 @@
 				{
 					$this->t->set_var('folderName',$_ruleData['action_arg']);
 				}
-				if (($_ruleData['action'] == 'address') ||
-					(empty($preferences->preferences['prefpreventforwarding']) ||
-                    $preferences->preferences['prefpreventforwarding'] == 0 ))
+				if (($_ruleData['action'] == 'address') &&
+					(!empty($preferences->preferences['prefpreventforwarding']) &&
+					$preferences->preferences['prefpreventforwarding'] == 1 ))
 				{
 					$this->t->set_var('checked_action_address','');
 					$this->t->set_var('value_address',lang('not allowed'));
@@ -411,6 +414,9 @@
 
 		function editRule()
 		{
+			$preferences = $this->mailPreferences;
+			$msg = '';
+			$error = 0;
 			$this->getRules();	/* ADDED BY GHORTH */
 
 			$ruleType = get_var('ruletype',array('GET'));
@@ -465,6 +471,11 @@
 							$newRule['action']	= 'address';
 							$newRule['action_arg']	= get_var('address',array('POST'));
 						}
+						else
+						{
+							$msg .= lang('Error creating rule while trying to use forward/redirect.');
+							$error++;
+						}
 						break;
 
 					case 'discard':
@@ -478,14 +489,17 @@
 					$this->bosieve->setRules($this->scriptName, $this->rules);
 
 					$this->saveSessionData();
+				} else {
+					$msg .= "\n".lang("Error: Could not save rule");
+					$error++;
 				}
 				// refresh the list
 				$js = "opener.location.href = '".addslashes(egw::link('/index.php','menuaction=felamimail.uisieve.listRules'))."';";
-				if(isset($_POST['save'])) {
+				if(isset($_POST['save']) && $error == 0) {
 					echo "<script type=\"text/javascript\">$js\nwindow.close();\n</script>\n";
 				} else {
 					$GLOBALS['egw']->js->set_onload($js);
-					$this->displayRule($ruleID, $newRule);
+					$this->displayRule($ruleID, $newRule, $msg);
 				}
 			}
 			else

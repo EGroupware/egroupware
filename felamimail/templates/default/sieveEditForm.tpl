@@ -12,6 +12,7 @@ function SubmitForm(a)
 }
 
 </script>
+<div style="color:red;">{message}</div>
 <form ACTION="{action_url}" METHOD="post" NAME="thisRule">
 
 	<fieldset style="width:680px;" class="row_on"><legend>{lang_condition}</legend>
