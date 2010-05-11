@@ -323,9 +323,18 @@ class egw extends egw_minimal
 			}
 			// this removes the sessiondata if its saved in the URL
 			$query = preg_replace('/[&]?sessionid(=|%3D)[^&]+&kp3(=|%3D)[^&]+&domain=.*$/','',$_SERVER['QUERY_STRING']);
-			$redirect = '/login.php?cd=10&';
-			if ($GLOBALS['egw_info']['server']['http_auth_types']) $redirect = '/phpgwapi/ntlm/index.php?';
-			Header('Location: '.$GLOBALS['egw_info']['server']['webserver_url'].$redirect.'phpgw_forward='.urlencode($relpath.(!empty($query) ? '?'.$query : '')));
+			if ($GLOBALS['egw_info']['server']['http_auth_types'])
+			{
+				$redirect = '/phpgwapi/ntlm/index.php?';
+			}
+			else
+			{
+				$redirect = '/login.php?';
+				// only add "your session could not be verified", if a sessionid is given (cookie or on url)
+				if (egw_session::get_sessionid()) $redirect .= 'cd=10&';
+			}
+			if ($relpath) $redirect .= 'phpgw_forward='.urlencode($relpath.(!empty($query) ? '?'.$query : ''));
+			Header('Location: '.$GLOBALS['egw_info']['server']['webserver_url'].$redirect);
 			exit;
 		}
 	}
