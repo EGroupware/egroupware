@@ -535,6 +535,10 @@ class translation
 				case 'windows-1257':
 					$from = 'iso-8859-13';
 					break;
+				case 'windows-874':
+				case 'tis-620':
+					$prefer_iconv = true;
+					break;
 			}
 			if (!$to)
 			{
@@ -561,7 +565,7 @@ class translation
 		{
 			return utf8_decode($data);
 		}
-		if (self::$mbstring && ($data = @mb_convert_encoding($data,$to,$from)) != '')
+		if (self::$mbstring && !$prefer_iconv && ($data = @mb_convert_encoding($data,$to,$from)) != '')
 		{
 			return $data;
 		}
@@ -589,7 +593,7 @@ class translation
 			// in an email on the first Traditional/Japanese/Korean character,
 			// but in reality when people send mails in GB2312, UMA mostly use
 			// extended GB13000/GB18030 which allow T/Jap/Korean characters.
-			if($from == 'EUC-CN')
+			if($from == 'euc-cn')
 			{
 				$from = 'gb18030';
 			}
@@ -1055,7 +1059,7 @@ class translation
 	 * @param string $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
 	 *				without the enclosing brackets
 	 * @param string $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
-	 * @param bool $addbbracesforendtag if endtag is given, you may decide if the </ and > braces are to be added, 
+	 * @param bool $addbbracesforendtag if endtag is given, you may decide if the </ and > braces are to be added,
 	 *				or if you want the string to be matched as is
 	 * @return void the modified text is passed via reference
 	 */
