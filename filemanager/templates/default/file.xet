@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.file.general" template="" lang="" group="0" version="1.7.001">
+	<template id="filemanager.file.general" template="" lang="" group="0" version="1.7.002">
 		<grid width="450" height="300" spacing="10">
 			<columns>
 				<column width="80"/>
@@ -10,7 +10,7 @@
 			<rows>
 				<row height="60">
 					<image src="icon" class="mimeHuge" align="center"/>
-					<textbox id="name" needed="1" class="fileName"/>
+					<vfs-name id="name" needed="1" class="fileName"/>
 				</row>
 				<row>
 					<hrule span="all"/>
@@ -203,7 +203,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.file" template="" lang="" group="0" version="1.7.001">
+	<template id="filemanager.file" template="" lang="" group="0" version="1.5.004">
 		<grid>
 			<columns>
 				<column/>
@@ -213,7 +213,7 @@
 					<description span="all" class="redItalic" id="msg"/>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all">
+					<tabbox id="general|perms|eacl|preview|custom" span="all">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Permissions" statustext=""/>

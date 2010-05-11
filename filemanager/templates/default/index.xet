@@ -69,7 +69,7 @@
 					<hbox span="all">
 						<image label="Up" src="goup" options="filemanager.filemanager_ui.index&amp;path=.."/>
 						<image src="gohome" options="filemanager.filemanager_ui.index&amp;path=~" label="Go to your home directory"/>
-						<textbox id="nm[path]" size="80" label="Path" onchange="1" class="address"/>
+						<vfs-name id="nm[path]" options="80,,1" label="Path" onchange="1" class="address"/>
 						<button id="button[go]" image="key_enter" label="Go to"/>
 						<image src="buttonseparator"/>
 						<button image="edit" label="Edit settings" id="edit[{$cont[nm][path]}]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>

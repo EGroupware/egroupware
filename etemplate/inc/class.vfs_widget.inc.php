@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @copyright 2008/9 by RalfBecker@outdoor-training.de
+ * @copyright 2008-10 by RalfBecker@outdoor-training.de
  * @package etemplate
  * @subpackage extensions
  * @version $Id$
@@ -16,6 +16,7 @@
  *
  * Contains the following widgets:
  * - vfs      aka File name+link:	clickable filename, with evtl. clickable path-components
+ * - vfs-name aka Filename:         filename automatically urlencoded on return (urldecoded on display to user)
  * - vfs-size aka File size:		human readable filesize, eg. 1.4k
  * - vfs-mode aka File mode:		posix mode as string eg. drwxr-x---
  * - vfs-mime aka File icon:	    mime type icon or thumbnail (if configured AND enabled in the user-prefs)
@@ -51,6 +52,7 @@ class vfs_widget
 	 */
 	var $human_name = array(
 		'vfs'      => 'File name+link',	// clickable filename, with evtl. clickable path-components
+		'vfs-name' => 'File name',		// filename automatically urlencoded
 		'vfs-size' => 'File size',		// human readable filesize
 		'vfs-mode' => 'File mode',		// posix mode as string eg. drwxr-x---
 		'vfs-mime' => 'File icon',		// mime type icon or thumbnail
@@ -76,14 +78,14 @@ class vfs_widget
 	{
 		//echo "<p>".__METHOD__."($form_name,$value,".array2string($cell).",...)</p>\n";
 		$type = $cell['type'];
-		if ($type != 'vfs-upload') $cell['readonly'] = true;	// to not call post-process
+		if (!in_array($type,array('vfs-name','vfs-upload'))) $cell['readonly'] = true;	// to not call post-process
 
 		// check if we have a path and not the raw value, in that case we have to do a stat first
 		if (in_array($type,array('vfs-size','vfs-mode','vfs-uid','vfs-gid')) && !is_numeric($value) || $type == 'vfs' && !$value)
 		{
 			if (!$value || !($stat = egw_vfs::stat($value)))
 			{
-				if ($value) $value = lang("File '%1' not found!",$value);
+				if ($value) $value = lang("File '%1' not found!",urldecode($value));
 				$cell = etemplate::empty_cell();
 				return true;	// allow extra value;
 			}
@@ -206,7 +208,7 @@ class vfs_widget
 						soetemplate::add_child($cell,$sep);
 						unset($sep);
 					}
-					$value['c'.$n] = $component !== '' ? $component : '/';
+					$value['c'.$n] = $component !== '' ? urldecode($component) : '/';
 					$path .= ($path != '/' ? '/' : '').$component;
 					// replace id's in /apps again with human readable titles
 					$path_parts = explode('/',$path);
@@ -262,6 +264,15 @@ class vfs_widget
 				}
 				unset($cell['onclick']);	// otherwise it's handled by the grid too
 				//_debug_array($comps); _debug_array($cell); _debug_array($value);
+				break;
+
+			case 'vfs-name':	// size: [length][,maxLength[,allowPath]]
+				$cell['type'] = 'text';
+				list($length,$maxLength,$allowPath) = $options = explode(',',$cell['size']);
+				$preg = $allowPath ? '' : '/[^\\/]/';	// no slash '/' allowed, if not allowPath set
+				$cell['size'] = "$length,$maxLength,$preg";
+				$value = urldecode($value);
+				$extension_data = array('type' => $type,'allowPath' => $allowPath);
 				break;
 
 			case 'vfs-mime':
@@ -322,7 +333,7 @@ class vfs_widget
 					list($span,$class) = explode(',',$cell['span'],2);
 					$class .= ($class ? ' ' : '') . ($broken ? 'vfsIsBrokenLink' : 'vfsIsLink');
 					$cell['span'] = $span.','.$class;
-					$cell['label'] = ($broken ? lang('Broken link') : lang('Link')).': '.egw_vfs::readlink($path).
+					$cell['label'] = ($broken ? lang('Broken link') : lang('Link')).': '.urldecode(egw_vfs::readlink($path)).
 						(!$broken ? ' ('.$cell['label'].')' : '');
 				}
 				break;
@@ -344,7 +355,7 @@ class vfs_widget
 	 */
 	static function file_widget(&$value,$path,$name,$label=null)
 	{
-		$value = empty($label) ? basename($path) : lang($label);	// display (translated) Label or filename (if label empty)
+		$value = empty($label) ? urldecode(egw_vfs::basename($path)) : lang($label);	// display (translated) Label or filename (if label empty)
 
 		$vfs_link = etemplate::empty_cell('label',$name,array(
 			'size' => ','.egw_vfs::download_url($path).',,,_blank,,'.$path,
@@ -420,11 +431,25 @@ class vfs_widget
 	 */
 	function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 	{
-		if (!$extension_data || $extension_data['type'] != 'vfs-upload')
+		error_log(__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in).')');
+		//echo '<p>'.__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in).")</p>\n";
+
+		if (!$extension_data) return false;
+
+		switch($extension_data['type'])
 		{
-			return false;
+			case 'vfs-name':
+				$value = $extension_data['allowPath'] ? egw_vfs::encodePath($value_in) : egw_vfs::encodePathComponent($value_in);
+				error_log(__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in).')');
+				return true;
+
+			case 'vfs-upload':
+				break;	// handeled below
+
+			default:
+				return false;
 		}
-		//echo '<p>'.__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in)."</p>\n";
+		// from here on vfs-upload only!
 
 		// check if delete icon clicked
 		if ($_POST['submit_button'] == ($fname = str_replace($extension_data['value'],$extension_data['path'],$name)) ||
@@ -438,7 +463,7 @@ class vfs_widget
 					{
 						if (!egw_vfs::unlink($extension_data['path'].$file))
 						{
-							etemplate::set_validation_error($name,lang('Error deleting %1!',$extension_data['path'].$file));
+							etemplate::set_validation_error($name,lang('Error deleting %1!',urldecode($extension_data['path'].$file)));
 						}
 						break;
 					}
@@ -446,7 +471,7 @@ class vfs_widget
 			}
 			elseif (!egw_vfs::unlink($extension_data['path']))
 			{
-				etemplate::set_validation_error($name,lang('Error deleting %1!',$extension_data['path']));
+				etemplate::set_validation_error($name,lang('Error deleting %1!',urldecode($extension_data['path'])));
 			}
 			$loop = true;
 			return false;
@@ -495,11 +520,11 @@ class vfs_widget
 		}
 		else	// multiple upload with dir given (trailing slash)
 		{
-			$path .= $filename;
+			$path .= egw_vfs::encodePathComponent($filename);
 		}
 		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
 		{
-			etemplate::set_validation_error($name,lang('Error create parent directory %1!',$dir));
+			etemplate::set_validation_error($name,lang('Error create parent directory %1!',urldecode($dir)));
 			return false;
 		}
 		if (!copy($tmp_name,egw_vfs::PREFIX.$path))

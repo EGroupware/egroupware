@@ -1162,7 +1162,9 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$path = parse_url($path,PHP_URL_PATH);
 		}
-		return '/webdav.php'.strtr($path,array('%' => '%25','+' => '%2B',' ' => '%20'));
+		// we do NOT need to encode % itself, as our path are already url encoded, with the exception of ' ' and '+'
+		// we urlencode double quotes '"', as that fixes many problems in html markup
+		return '/webdav.php'.strtr($path,array('+' => '%2B',' ' => '%20','"' => '%22'));
 	}
 
 	/**
@@ -1338,7 +1340,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function getExtraInfo($path,array $content=null)
 	{
-		return self::_call_on_backend('extra_info',array($path,$content));
+		return self::_call_on_backend('extra_info',array($path,$content),true);	// true = fail silent if backend does NOT support it
 	}
 
 	/**
@@ -1351,6 +1353,46 @@ class egw_vfs extends vfs_stream_wrapper
 	static function app_entry_lock_path($app,$id)
 	{
 		return "/apps/$app/entry/$id";
+	}
+
+	/**
+	 * Encoding of various special characters, which can NOT be unencoded in file-names, as they have special meanings in URL's
+	 *
+	 * @var array
+	 */
+	static public $encode = array(
+		'%' => '%25',
+		'#' => '%23',
+		'?' => '%3F',
+		'/' => '',	// better remove it completly
+	);
+
+	/**
+	 * Encode a path component: replacing certain chars with their urlencoded counterparts
+	 *
+	 * Not all chars get encoded, slashes '/' are silently removed!
+	 *
+	 * To reverse the encoding, eg. to display a filename to the user, you can use urldecode()
+	 *
+	 * @param string|array $component
+	 * @return string|array
+	 */
+	static public function encodePathComponent($component)
+	{
+		return str_replace(array_keys(self::$encode),array_values(self::$encode),$component);
+	}
+
+	/**
+	 * Encode a path: replacing certain chars with their urlencoded counterparts
+	 *
+	 * To reverse the encoding, eg. to display a filename to the user, you can use urldecode()
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	static public function encodePath($path)
+	{
+		return implode('/',self::encodePathComponent(explode('/',$path)));
 	}
 
 	/**
