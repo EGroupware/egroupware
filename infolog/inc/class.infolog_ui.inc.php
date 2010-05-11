@@ -442,7 +442,7 @@ class infolog_ui
 			$rows['sel_options']['info_status'] = array();
 			foreach($this->bo->status as $typ => $stati)
 			{
-				if ($typ != 'defaults') $rows['sel_options']['info_status'] += $stati;
+				if ($typ != 'defaults' && !empty($stati)) $rows['sel_options']['info_status'] += $stati;
 			}
 		}
 		if ($this->bo->history)

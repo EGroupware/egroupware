@@ -1,4 +1,4 @@
-%1 days in advance	infolog	fi	%1 päivä(ä) etukäteen
+%1 days in advance	infolog	fi	%1 päivää etukäteen
 %1 deleted	infolog	fi	%1 poistettu
 %1 deleted by %2 at %3	infolog	fi	%1 poistanut: %2, klo %3
 %1 modified	infolog	fi	%1 muokattu
@@ -198,6 +198,7 @@ location	infolog	fi	Sijainti
 longer textual description	infolog	fi	Pitempi tekstikuvaus
 low	infolog	fi	Matala
 max length of the input [, length of the inputfield (optional)]	infolog	fi	Kentän tekstin maksimipituus [, kentän maksimi pituus(vaihtoehtoinen)]
+modifier	infolog	fi	Muokkaaja
 modifierer	infolog	fi	Muokkaaja
 name must not be empty !!!	infolog	fi	Nimikenttä ei saa olla tyhjä !!!
 name of new type to create	infolog	fi	Luotavan tyypin nimi
@@ -332,6 +333,7 @@ sub-entries become subs of the parent or main entries, if there's no parent	info
 subject	infolog	fi	Aihe
 sum	infolog	fi	Summa
 task	infolog	fi	Tehtävä
+tasks of	infolog	fi	Tehtävät:
 template	infolog	fi	Mallipohja
 test import (show importable records <u>only</u> in browser)	infolog	fi	Testi Tuonti (näytä tuotavat tietueet <u>vain</u> selaimessa)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	fi	Nimi on sisäisessä käytössä (<= 10 merkkiä), sen muuttaminen aiheuttaa nykyisen tiedon menettämisen.
@@ -359,7 +361,7 @@ urgent	infolog	fi	Tärkeä
 used time	infolog	fi	Käytetty aika
 valid path on clientside<br>eg. \\server\share or e:\	infolog	fi	polku asiakkaan puolella<br>eg. \\Server\Share tai e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	fi	polku asiakkaan puolella<br>eg. \\Server\Share tai e:\
-valid path on clientside<br>eg. servershare or e:	infolog	fi	Polku asiakkaan puolella<br>eg. \\Server\Share tai e:\
+valid path on clientside<br>eg. servershare or e:	infolog	fi	polku asiakkaan puolella<br>eg. \\Server\Share tai e:\
 values for selectbox	infolog	fi	Valintalaatikon arvot
 view all subs of this entry	infolog	fi	Näytä kaikki tämän merkinnän alimerkinnät
 view other subs	infolog	fi	Näytä muut alimerkinnät

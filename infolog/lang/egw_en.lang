@@ -205,6 +205,7 @@ location	infolog	en	Location
 longer textual description	infolog	en	longer textual description
 low	infolog	en	low
 max length of the input [, length of the inputfield (optional)]	infolog	en	max length of the input [, length of the input field (optional)]
+modifier	infolog	en	Modifier
 modifierer	infolog	en	Modifierer
 name must not be empty !!!	infolog	en	Name must not be empty !!!
 name of new type to create	infolog	en	name of new type to create
@@ -339,6 +340,7 @@ sub-entries become subs of the parent or main entries, if there's no parent	info
 subject	infolog	en	Subject
 sum	infolog	en	Sum
 task	infolog	en	ToDo
+tasks of	infolog	en	Tasks of
 template	infolog	en	Template
 test import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	the name used internally (<= 10 chars), changing it makes existing data unavailable

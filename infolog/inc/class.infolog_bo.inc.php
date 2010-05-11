@@ -191,7 +191,7 @@ class infolog_bo
 					{
 						$this->status[$key] = array();
 					}
-					$this->status[$key] = array_merge($this->status[$key],$config_data['status'][$key]);
+					$this->status[$key] = array_merge($this->status[$key],(array)$config_data['status'][$key]);
 				}
 			}
 			if (isset($config_data['types']) && is_array($config_data['types']))
