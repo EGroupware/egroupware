@@ -431,7 +431,7 @@ class vfs_widget
 	 */
 	function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 	{
-		error_log(__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in).')');
+		//error_log(__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in).')');
 		//echo '<p>'.__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in).")</p>\n";
 
 		if (!$extension_data) return false;
@@ -440,7 +440,6 @@ class vfs_widget
 		{
 			case 'vfs-name':
 				$value = $extension_data['allowPath'] ? egw_vfs::encodePath($value_in) : egw_vfs::encodePathComponent($value_in);
-				error_log(__METHOD__."('$name',".array2string($value).','.array2string($extension_data).",$loop,,".array2string($value_in).')');
 				return true;
 
 			case 'vfs-upload':
