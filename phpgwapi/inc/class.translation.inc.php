@@ -435,6 +435,11 @@ class translation
 			case 'windows-1257':
 				$from = 'iso-8859-13';
 				break;
+			case 'windows-874':
+			case 'tis-620':
+				$prefer_iconv = true;
+				break;
+
 		}
 		if (!$to)
 		{
@@ -452,9 +457,9 @@ class translation
 		{
 			return utf8_decode($data);
 		}
-		if ($this->mbstring && @mb_convert_encoding($data,$to,$from)!="")
+		if ($this->mbstring && !$prefer_iconv && ($data = @mb_convert_encoding($data,$to,$from)) != '')
 		{
-			return @mb_convert_encoding($data,$to,$from);
+			return $data;
 		}
 		if(function_exists('iconv'))
 		{
@@ -480,7 +485,7 @@ class translation
 			// in an email on the first Traditional/Japanese/Korean character,
 			// but in reality when people send mails in GB2312, UMA mostly use
 			// extended GB13000/GB18030 which allow T/Jap/Korean characters.
-			if($from=='EUC-CN')
+			if($from == 'euc-cn')
 			{
 				$from='gb18030';
 			}
