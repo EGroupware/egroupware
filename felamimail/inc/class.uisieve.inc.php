@@ -369,6 +369,8 @@
 					$this->t->set_var('keep_checked','checked');
 				if($_ruleData['regexp'])
 					$this->t->set_var('regexp_checked','checked');
+				if(intval($_ruleData['anyof'])==1)
+					$_ruleData['anyof'] = 4; // set the anyof to 4 if set at all, as the template var anyof_selected is anyof_selected0 or anyof_selected4
 				$this->t->set_var('anyof_selected'.intval($_ruleData['anyof']),'selected');
 				$this->t->set_var('value_from',htmlspecialchars($_ruleData['from'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
 				$this->t->set_var('value_to',htmlspecialchars($_ruleData['to'], ENT_QUOTES, $GLOBALS['egw']->translation->charset()));
