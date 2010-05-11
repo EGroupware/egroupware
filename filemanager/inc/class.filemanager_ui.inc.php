@@ -791,14 +791,14 @@ class filemanager_ui
 							}
 							if (egw_vfs::rename($path,$to))
 							{
-								$msg .= lang('Renamed %1 to %2.',basename($path),basename($to)).' ';
+								$msg .= lang('Renamed %1 to %2.',urldecode(basename($path)),urldecode(basename($to))).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
 								$content['mime'] = mime_magic::filename2mime($path);	// recheck mime type
 							}
 							else
 							{
-								$msg .= lang('Rename of %1 to %2 failed!',basename($path),basename($to)).' ';
+								$msg .= lang('Rename of %1 to %2 failed!',urldecode(basename($path)),urldecode(basename($to))).' ';
 								if (egw_vfs::deny_script($to))
 								{
 									$msg .= lang('You are NOT allowed to upload a script!').' ';
