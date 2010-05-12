@@ -154,7 +154,7 @@ class filemanager_ui
 		$clipboard_type = egw_session::appsession('clipboard_type','filemanager');
 
 		// be tolerant with (in previous versions) not correct urlencoded pathes
-		if (!egw_vfs::stat($content['nm']['path'],true) && egw_vfs::stat(urldecode($content['nm']['path'])))
+		if ($content['nm']['path'][0] == '/' && !egw_vfs::stat($content['nm']['path'],true) && egw_vfs::stat(urldecode($content['nm']['path'])))
 		{
 			$content['nm']['path'] = urldecode($content['nm']['path']);
 		}
@@ -183,7 +183,7 @@ class filemanager_ui
 					{
 						$ses = egw_session::appsession('index','filemanager');
 						$old_path = $ses['path'];
-						$content['nm']['path'] = egw_vfs::concat($old_path,egw_vfs::encodePath($content['nm']['path']));
+						$content['nm']['path'] = egw_vfs::concat($old_path,$content['nm']['path']);
 					}
 					if (!@egw_vfs::mkdir($content['nm']['path'],null,STREAM_MKDIR_RECURSIVE))
 					{
