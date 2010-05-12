@@ -858,25 +858,19 @@ class infolog_ui
 
 					// Get links to be copied
 					$content['link_to']['to_id'] = egw_link::get_links($content['link_to']['to_app'], $content['link_to']['to_id']);
-					if(is_array($content['link_to']['to_id']))
+					// Special mangling for files so the files get copied
+					foreach($content['link_to']['to_id'] as $link_id => &$link)
 					{
-						// Special mangling for files so the files get copied
-						foreach($content['link_to']['to_id'] as $link_id => &$link)
+						if ($link['app'] == egw_link::VFS_APPNAME)
 						{
-							if($link['app'] != 'file')
-							{
-								continue;
-							}
-							else
-							{
-								$link['id'] = $link + array(
-									'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
-									'name' => $link['id'],
-								);
-							}
+							$link['id'] = $link + array(
+								'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+								'name' => $link['id'],
+							);
 						}
 					}
-					if($content['info_link_id']) {
+					if($content['info_link_id'])
+					{
 						$info_link_id = $content['info_link_id'];
 						unset($content['info_link_id']);
 					}
