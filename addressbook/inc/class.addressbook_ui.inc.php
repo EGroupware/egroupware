@@ -911,7 +911,7 @@ class addressbook_ui extends addressbook_bo
 			switch($query['order'])		// "xxx<>'' DESC" sorts contacts with empty order-criteria always at the end
 			{							// we don't exclude them, as the total would otherwise depend on the order-criteria
 				case 'org_name':
-					$order = "org_name<>'' DESC,org_name $sort,n_family $sort,n_given $sort";
+					$order = "egw_addressbook.org_name<>''DESC,egw_addressbook.org_name $sort,n_family $sort,n_given $sort";
 					break;
 				default:
 					if ($query['order'][0] == '#')	// we order by a custom field
