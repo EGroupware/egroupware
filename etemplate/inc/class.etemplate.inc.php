@@ -2004,7 +2004,7 @@ class etemplate extends boetemplate
 		}
 
 		// replace window.open() with EGw's egw_openWindowCentered2()
-		if (strpos($on,'window.open(') !== false && preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=(.*),height=(.*),scrollbars=yes,status=(.*)'\)/",$on,$matches))
+		if (strpos($on,'window.open(') !== false && preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=([^,]*),height=([^,]*),scrollbars=yes,status=(.*)'\)/",$on,$matches))
 		{
 			$on = str_replace($matches[0], "egw_openWindowCentered2('$matches[1]', '$matches[2]', $matches[3], $matches[4], '$matches[5]')", $on);
 		}
