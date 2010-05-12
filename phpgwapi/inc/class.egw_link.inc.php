@@ -655,7 +655,7 @@ class egw_link extends solink
 				$title .= ': '.$link['type'] . ' '.egw_vfs::hsize($link['size']);
 			}*/
 			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (file)</p>\n";
-			return $title;
+			return urldecode($title);
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['title']))
 		{
@@ -902,7 +902,7 @@ class egw_link extends solink
 		}
 		if (file_exists($entry_dir) || ($Ok = mkdir($entry_dir,0,true)))
 		{
-			if (($Ok = copy($file['tmp_name'],$fname = egw_vfs::concat($entry_dir,$file['name'])) &&
+			if (($Ok = copy($file['tmp_name'],$fname = egw_vfs::concat($entry_dir,egw_vfs::encodePathComponent($file['name']))) &&
 				($stat = egw_vfs::url_stat($fname,0))) && $comment)
 			{
 				egw_vfs::proppatch(parse_url($fname,PHP_URL_PATH),array(array('name'=>'comment','val'=>$comment)));	// set comment
