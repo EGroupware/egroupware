@@ -1374,7 +1374,7 @@ class etemplate extends boetemplate
 				{
 					$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
 						(((string)$cell['onchange'] === '1' || $img) ?
-						'return submitit('.self::$name_form.",'".str_replace(array('"','\''),array('&quot','\\\''),$form_name)."');" : $cell['onchange']).'; return false;';
+						'return submitit('.self::$name_form.",'".$form_name."');" : $cell['onchange']).'; return false;';
 
 					if (!html::$netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 					{

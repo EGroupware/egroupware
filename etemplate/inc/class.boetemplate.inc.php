@@ -128,6 +128,14 @@ class boetemplate extends soetemplate
 	}
 
 	/**
+	 * Regular expression matching a PHP variable in a string, eg.
+	 *
+	 *	"replies[$row][reply_message]" should only match $row
+	 *	"delete[$row_cont[path]]" should match $row_cont[path]
+	 */
+	const PHP_VAR_PREG = '\$[A-Za-z0-9_]+(\[[A-Za-z0-9_]+\])*';
+
+	/**
 	 * allows a few variables (eg. row-number) to be used in field-names
 	 *
 	 * This is mainly used for autorepeat, but other use is possible.
@@ -171,7 +179,7 @@ class boetemplate extends soetemplate
 
 			// check if name is enclosed in single quotes as argument eg. to an event handler or
 			// used as name for a button like "delete[$row_cont[something]]" --> quote contained quotes (' or ")
-			if (in_array($name[$pos_var-1],array('[',"'")) && preg_match('/[\'\[](\$[A-Za-z0-9_\[\]]+)[\'\]]+/',$name,$matches))
+			if (in_array($name[$pos_var-1],array('[',"'")) && preg_match('/[\'\[]('.self::PHP_VAR_PREG.')[\'\]]+/',$name,$matches))
 			{
 				eval('$value = '.$matches[1].';');
 				if (is_array($value) && $name[$pos_var-1] == "'")	// arrays are only supported for '
@@ -189,22 +197,22 @@ class boetemplate extends soetemplate
 					$name = str_replace($matches[1],$value,$name);
 				}
 			}
-			// check if name is assigned in an url --> urlendcode contained & as %26, as egw::link
-			if ($name[$pos_var-1] == '=' && preg_match('/&([A-Za-z0-9_\[\]]+)=(\$[A-Za-z0-9_\[\]]+)/',$name,$matches))
+			// check if name is assigned in an url --> urlendcode contained & as %26, as egw::link explodes it on &
+			if ($name[$pos_var-1] == '=' && preg_match('/[&?]([A-Za-z0-9_]+(\[[A-Za-z0-9_]+\])*)=('.self::PHP_VAR_PREG.')/',$name,$matches))
 			{
-				eval('$value = '.$matches[2].';');
+				eval('$value = '.$matches[3].';');
 				if (is_array($value))	// works only reasonable, if get-parameter uses array notation, eg. &file[]=$cont[filenames]
 				{
 					foreach($value as &$val)
 					{
 						$val = str_replace('&',urlencode('&'),$val);
 					}
-					$name = str_replace($matches[2],implode('&'.$matches[1].'=',$value),$name);
+					$name = str_replace($matches[3],implode('&'.$matches[1].'=',$value),$name);
 				}
 				else
 				{
 					$value = str_replace('&',urlencode('&'),$value);
-					$name = str_replace($matches[2],$value,$name);
+					$name = str_replace($matches[3],$value,$name);
 				}
 			}
 			eval('$name = "'.str_replace('"','\\"',$name).'";');
