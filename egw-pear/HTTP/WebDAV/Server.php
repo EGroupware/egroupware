@@ -177,11 +177,15 @@ class HTTP_WebDAV_Server
 
         $this->base_uri = $uri;
         $this->uri      = $uri . $path_info;
-
         // set path
         // $_SERVER['PATH_INFO'] is already urldecoded
         //$this->path = $this->_urldecode($path_info);
-        $this->path = $path_info;
+        // quote '#' (e.g. OpenOffice uses this for lock-files)
+        $this->path = strtr($path_info,array(
+        	'%' => '%25',
+        	'#' => '%23',
+        	'?' => '%3F',
+        ));
         if (!strlen($this->path)) {
             if ($this->_SERVER["REQUEST_METHOD"] == "GET") {
                 // redirect clients that try to GET a collection

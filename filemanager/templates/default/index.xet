@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.5.002">
+	<template id="filemanager.index.rows" template="" lang="" group="0" version="1.7.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -43,7 +43,7 @@
 					<vfs-uid id="${row}[uid]" no_lang="1"/>
 					<vfs-gid id="${row}[gid]" no_lang="1"/>
 					<description id="${row}[comment]"/>
-					<customfields-list readonly="true" id="$row"/>
+					<customfields-list id="$row" class="customfields"/>
 					<hbox align="right">
 						<button image="edit" label="Edit settings" id="edit[$row_cont[path]]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path=$row_cont[path]'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>
 						<button id="delete[$row_cont[path]]" image="delete" label="Delete" statustext="Delete this file or directory" onclick="return confirm('Delete this file or directory');" align="center"/>
@@ -68,7 +68,7 @@
 					<hbox span="all">
 						<image label="Up" src="goup" options="filemanager.filemanager_ui.index&amp;path=.."/>
 						<image src="gohome" options="filemanager.filemanager_ui.index&amp;path=~" label="Go to your home directory"/>
-						<textbox id="nm[path]" size="80" label="Path" onchange="1" class="address"/>
+						<vfs-name id="nm[path]" options="80,,1" label="Path" onchange="1" class="address"/>
 						<button id="button[go]" image="key_enter" label="Go to"/>
 						<image src="buttonseparator"/>
 						<button image="edit" label="Edit settings" id="edit[{$cont[nm][path]}]" statustext="Rename, change permissions or ownership" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;"/>

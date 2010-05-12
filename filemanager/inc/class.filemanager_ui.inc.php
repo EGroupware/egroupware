@@ -127,7 +127,7 @@ class filemanager_ui
 				}
 				else
 				{
-					$msg .= lang('The requested path %1 is not available.',$path);
+					$msg .= lang('The requested path %1 is not available.',urldecode($path));
 				}
 				// reset lettersearch as it confuses users (they think the dir is empty)
 				$content['nm']['searchletter'] = false;
@@ -153,6 +153,11 @@ class filemanager_ui
 		$clipboard_files = egw_session::appsession('clipboard_files','filemanager');
 		$clipboard_type = egw_session::appsession('clipboard_type','filemanager');
 
+		// be tolerant with (in previous versions) not correct urlencoded pathes
+		if ($content['nm']['path'][0] == '/' && !egw_vfs::stat($content['nm']['path'],true) && egw_vfs::stat(urldecode($content['nm']['path'])))
+		{
+			$content['nm']['path'] = urldecode($content['nm']['path']);
+		}
 		if ($content['button'])
 		{
 			if ($content['button'])
@@ -200,11 +205,11 @@ class filemanager_ui
 					$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($content['nm']['path'],$target);
 					if (!egw_vfs::stat($abs_target))
 					{
-						$content['nm']['msg'] = lang('Link target %1 not found!',$abs_target);
+						$content['nm']['msg'] = lang('Link target %1 not found!',urldecode($abs_target));
 						break;
 					}
 					$content['nm']['msg'] = egw_vfs::symlink($target,$link) ?
-						lang('Symlink to %1 created.',$target) : lang('Error creating symlink to target %1!',$target);
+						lang('Symlink to %1 created.',$target) : lang('Error creating symlink to target %1!',urldecode($target));
 					break;
 				case 'paste':
 					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
@@ -221,8 +226,9 @@ class filemanager_ui
 					$upload_success = $upload_failure = array();
 					foreach(isset($content['upload'][0]) ? $content['upload'] : array($content['upload']) as $upload)
 					{
-						// strip '?', '/' and '#' from filenames, as they are forbidden for sqlfs / make problems
-						$to = egw_vfs::concat($content['nm']['path'],str_replace(array('?','/','#'),'',$upload['name']));
+						// encode chars which special meaning in url/vfs (some like / get removed!)
+						$to = egw_vfs::concat($content['nm']['path'],egw_vfs::encodePathComponent($upload['name']));
+
 						if ($upload && is_uploaded_file($upload['tmp_name']) &&
 							(egw_vfs::is_writable($content['nm']['path']) || egw_vfs::is_writable($to)) &&
 							copy($upload['tmp_name'],egw_vfs::PREFIX.$to))
@@ -238,7 +244,7 @@ class filemanager_ui
 					if ($upload_success)
 					{
 						$content['nm']['msg'] = count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
-							lang('%1 successful uploaded.',implode(', ',$upload_success));
+							lang('%1 successful uploaded.',urldecode(implode(', ',$upload_success)));
 					}
 					if ($upload_failure)
 					{
@@ -256,9 +262,9 @@ class filemanager_ui
 			$dir_is_writable = egw_vfs::is_writable($content['nm']['path']);
 		}
 		$content['paste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
-			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
+			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.urldecode(implode('<br />',$clipboard_files)).'</p>' : '';
 		$content['linkpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
-			lang('link')).':</b><br />'.implode('<br />',$clipboard_files).'</p>' : '';
+			lang('link')).':</b><br />'.urldecode(implode('<br />',$clipboard_files)).'</p>' : '';
 		$content['upload_size'] = etemplate::max_upload_size_message();
 		//_debug_array($content);
 
@@ -297,8 +303,8 @@ class filemanager_ui
 		$name = explode('/',str_replace('\\','/',$name));	// in case of win clients
 		$name = array_pop($name);
 
-		// strip '?', '/' and '#' from filenames, as they are forbidden for sqlfs / make problems
-		$path = egw_vfs::concat($dir,str_replace(array('?','/','#'),'',$name));
+		// encode chars which special meaning in url/vfs (some like / get removed!)
+		$path = egw_vfs::concat($dir,egw_vfs::encodePathComponent($name));
 
 		if(egw_vfs::deny_script($path))
 		{
@@ -314,7 +320,7 @@ class filemanager_ui
 			}
 			else
 			{
-				$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',$path))."')) document.getElementById('$id').value='';");
+				$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',urldecode($path)))."')) document.getElementById('$id').value='';");
 			}
 		}
 		else
@@ -386,7 +392,7 @@ class filemanager_ui
 					{
 						if (preg_match('/^\/?(home|apps|)\/*$/',$path))
 						{
-							return lang("Cautiously rejecting to remove folder '$path'!");
+							return lang("Cautiously rejecting to remove folder '%1'!",urldecode($path));
 						}
 					}
 					// now we use find to loop through all files and dirs: (selected only contains dirs now)
@@ -530,13 +536,18 @@ class filemanager_ui
 		}
 		egw_session::appsession('index','filemanager',$query);
 
+		// be tolerant with (in previous versions) not correct urlencoded pathes
+		if (!egw_vfs::stat($query['path'],true) && egw_vfs::stat(urldecode($query['path'])))
+		{
+			$query['path'] = urldecode($query['path']);
+		}
 		if (!egw_vfs::stat($query['path'],true) || !egw_vfs::is_dir($query['path']) || !egw_vfs::check_access($query['path'],egw_vfs::READABLE))
 		{
 			// we will leave here, since we are not allowed, or the location does not exist. Index must handle that, and give
 			// an appropriate message
 			egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
 				'path' => self::get_home_dir(),
-				'msg' => lang('The requested path %1 is not available.',$query['path']),
+				'msg' => lang('The requested path %1 is not available.',urldecode($query['path'])),
 			));
 		}
 		$rows = $dir_is_writable = array();
@@ -616,7 +627,7 @@ class filemanager_ui
 		}
 		else
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('Filemanager').': '.$query['path'];
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Filemanager').': '.urldecode($query['path']);
 		}
 		return egw_vfs::$find_total;
 	}
@@ -682,10 +693,12 @@ class filemanager_ui
 			$path =& $content['path'];
 
 			list($button) = @each($content['button']); unset($content['button']);
-			if ($button == 'sudo' || $content['sudo']['user'])
+			// need to check 'setup' button (submit button in sudo popup), as some browsers (eg. chrome) also fill the hidden field
+			if ($button == 'sudo' && egw_vfs::$is_root || $button == 'setup' && $content['sudo']['user'])
 			{
-				$msg = $this->sudo($content['sudo']['user'],$content['sudo']['passwd']) ? lang('Root access granted.') :
-					($content['sudo']['user'] ? lang('Wrong username or password!') : lang('Root access stopped.'));
+				$msg = $this->sudo($button == 'setup' ? $content['sudo']['user'] : '',$content['sudo']['passwd']) ?
+					lang('Root access granted.') : ($button == 'setup' && $content['sudo']['user'] ?
+					lang('Wrong username or password!') : lang('Root access stopped.'));
 				unset($content['sudo']);
 				$content['is_owner'] = egw_vfs::has_owner_rights($path);
 			}
@@ -712,14 +725,14 @@ class filemanager_ui
 							}
 							if (egw_vfs::rename($path,$to))
 							{
-								$msg .= lang('Renamed %1 to %2.',basename($path),basename($to)).' ';
+								$msg .= lang('Renamed %1 to %2.',urldecode(basename($path)),urldecode(basename($to))).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
 								$content['mime'] = mime_magic::filename2mime($path);	// recheck mime type
 							}
 							else
 							{
-								$msg .= lang('Rename of %1 to %2 failed!',basename($path),basename($to)).' ';
+								$msg .= lang('Rename of %1 to %2 failed!',urldecode(basename($path)),urldecode(basename($to))).' ';
 								if (egw_vfs::deny_script($to))
 								{
 									$msg .= lang('You are NOT allowed to upload a script!').' ';
@@ -922,7 +935,7 @@ class filemanager_ui
 			));
 		}
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.$path;
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.urldecode($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
 	}

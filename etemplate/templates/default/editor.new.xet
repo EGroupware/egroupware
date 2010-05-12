@@ -19,7 +19,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.editor.new" template="" lang="" group="0" version="1.0.1.004">
+	<template id="etemplate.editor.new" template="" lang="" group="0" version="1.7.001">
 		<grid>
 			<columns>
 				<column/>
@@ -44,7 +44,7 @@
 				</row>
 				<row>
 					<hbox span="all">
-						<button id="styles" label="CSS-Styles" statustext="edit embeded CSS styles or of the applications app.css file" onclick="window.open(egw::link('/index.php','menuaction=etemplate.editor.styles&amp;name=$cont[name]&amp;template=$cont[template]&amp;lang=$cont[lang]&amp;version=$cont[version]'),'etemplate_editor_styles','dependent=yes,width=600,height=450,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
+						<button id="styles" label="CSS-Styles" statustext="edit embeded CSS styles or of the applications app.css file" onclick="window.open(egw::link('/index.php','menuaction=etemplate.editor.styles&amp;name=$cont[name]&amp;template=$cont[template]&amp;lang=$cont[lang]&amp;version=$cont[version]'),'etemplate_editor_styles','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Show values" id="values" statustext="shows / allows you to enter values into the eTemplate for testing"/>
 						<button label="Dump4Setup" id="dump" statustext="writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app"/>
 						<button label="Write Langfile" id="langfile" statustext="creates an english ('en') langfile from label and helptexts (for application in Name)"/>
