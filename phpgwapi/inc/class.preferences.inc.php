@@ -21,7 +21,7 @@
  *   $group the stored prefs of users primary groupd, only used for manipulating and storeing the user prefs
  * 	 $default the default preferences, always used when the user has no own preference set
  * 	 $forced forced preferences set by the admin, they take precedence over user or default prefs
- * 
+ *
  * To update the prefs of a certain group, not just the primary group of the user, you have to
  * create a new instance of preferences class, with the given id of the group. This takes into
  * account the offset of DEFAULT_ID, we are using currently for groups (as -1, and -2) are already
@@ -520,15 +520,14 @@ class preferences
 		}
 		$pref = &$this->$type;
 
-		//if (($all = (is_string($var) && $var == ''))) // old condition replaced, as all  ($all) means that var is not a string and does not have content
 		if (($all = empty($var))) // to check if $var is regarded as empty (false, 0, '', null, array() should do the trick
 		{
-			$pref[$app_name] = null;
+			unset($pref[$app_name]);
 			unset($this->data[$app_name]);
 		}
 		else
 		{
-			$pref[$app_name][$var] = null;
+			unset($pref[$app_name][$var]);
 			unset($this->data[$app_name][$var]);
 		}
 		// set the effectiv pref again if needed
