@@ -170,6 +170,8 @@ class calendar_uiforms extends calendar_ui
 		{
 			return $this->edit(null,null,strip_tags($_GET['msg']));
 		}
+		$messages = null;
+		$msg_permission_denied_added = false;
 		$referer = !empty($content['referer']) ? $content['referer'] : '/index.php?menuaction='.$this->view_menuaction;
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
@@ -591,14 +593,34 @@ class calendar_uiforms extends calendar_ui
 			{
 				if ($content['reference'] == 0 && !$content['edit_single'])
 				{
-					// We delete a whole series
+					$msg = lang('Series deleted');
+					$exceptions_kept = false;
+					// Handle the exceptions
 					$recur_exceptions = $this->bo->so->get_related($event['uid']);
 					foreach ($recur_exceptions as $id)
 					{
-						$this->bo->delete($id);
+						if (empty($content['exceptions']))
+						{
+							if (!($exception = $this->bo->read($id))) continue;
+							$exception['uid'] = common::generate_uid('calendar', $id);
+							$exception['reference'] = $exception['recurrence'] = 0;
+							$this->bo->update($exception, true);
+							$exceptions_kept = true;
+						}
+						else
+						{
+							$this->bo->delete($id);
+						}
+					}
+					if ($exceptions_kept)
+					{
+						$msg .= lang(', exceptions preserved');
 					}
 				}
-				$msg = lang('Event deleted');
+				else
+				{
+					$msg = lang('Event deleted');
+				}
 				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 					'msg' => $msg,
 				))).'\';';
@@ -855,6 +877,10 @@ class calendar_uiforms extends calendar_ui
 					$msg = $this->_create_exception($event,$preserv);
 				}
 			}
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				//$js .= $this->delete_series();
+			}
 			// set new start and end if given by $_GET
 			if(isset($_GET['start'])) { $event['start'] = $_GET['start']; }
 			if(isset($_GET['end'])) { $event['end'] = $_GET['end']; }
@@ -1098,6 +1124,7 @@ class calendar_uiforms extends calendar_ui
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
+				// $onclick = 'delete_series('.$event['id'].');';
 				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
 
 				// some fundamental values of an existing series should not be changed by the user
@@ -1186,6 +1213,23 @@ class calendar_uiforms extends calendar_ui
 		else
 		{
 			$etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
+			/*
+			$html = $etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,-1);
+			if (!$preserv['no_popup'])
+			{
+				$this->do_header();
+			}
+
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$html .= '<script type="text/javascript">' . $this->delete_series() . '</script>';
+				$tpl = new etemplate('calendar.delete_series');
+				$html .=  $tpl->show(array());
+			}
+
+			$html .= '</body></hmtl>';
+			echo $html;
+			*/
 		}
 	}
 
@@ -1823,5 +1867,39 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 		}
+	}
+
+	/**
+	 * Return HTML and Javascript to query user how to handle the exceptions while deleting the series
+	 *
+	 * Layout is defined in eTemplate 'calendar.delete_series'
+	 *
+	 * @param string $link=null url without cal_id and date GET parameters, default calendar.calendar_uiforms.edit
+	 * @param string $target='_blank' target
+	 * @return string
+	 */
+	function delete_series($link=null, $target='_blank')
+	{
+		if (is_null($link)) $link = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiforms.edit'));
+
+		return '
+var calendar_edit_id;
+function delete_series(id)
+{
+	calendar_edit_id = id;
+
+	document.getElementById("delete_series").style.display = "inline";
+
+	return false;
+}
+function delete_exceptions(delete)
+{
+	document.getElementById("delete_series").style.display = "none";
+
+	var extra = "&cal_id="+calendar_edit_id+"&action=delete";
+	if (delete) extra += "&exceptions=1";
+
+	'.$this->popup($link."'+extra+'").';
+}';
 	}
 }
