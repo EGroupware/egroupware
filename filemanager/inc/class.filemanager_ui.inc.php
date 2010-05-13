@@ -406,17 +406,7 @@ class filemanager_ui
 		switch($action)
 		{
 			case 'mail':
-				$link = egw::link('/index.php',array(
-					'menuaction' => 'felamimail.uicompose.compose',
-				));
-				foreach($selected as $path)
-				{
-					$link .= '&preset[file][]=vfs://default'.$path;
-				}
-				$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n\talert(\"egw_openWindowCentered2('$link', '_blank', '700', '800', 'yes');\");\n</script>\n";
-				//$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n\talert('hi ralf!');\n\tegw_openWindowCentered2('$link', '_blank', '700', '800', 'yes');\n\talert('hi ralf!');\n</script>\n";
-				//$GLOBALS['egw_info']['flags']['java_script'] .= "<script>alert('hi ralf!');</script>\n";
-				return '';
+				throw new egw_exception_assertion_failed('Implemented on clientside!');
 
 			case 'delete':
 				$dirs = $files = $errs = 0;
@@ -965,7 +955,6 @@ class filemanager_ui
 				array_unshift($content['eacl'],false);	// make the keys start with 1, not 0
 				$content['eacl']['owner'] = 0;
 				$content['eacl']['rights'] = 5;
-				//unset($sel_options['rights'][0]);	// there's no "No access" for eACL, as you can only add rights
 			}
 		}
 		else
