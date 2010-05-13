@@ -61,6 +61,15 @@ class egw_digest_auth
 		$realm = $GLOBALS['egw_info']['flags']['auth_realm'];
 		if (empty($realm)) $realm = 'EGroupware';
 
+		// Support for basic auth when using PHP CGI (what about digest auth?)
+		if (!isset($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['Authorization']) && strpos($_SERVER['Authorization'],'Basic ') === 0)
+		{
+			$hash = base64_decode(substr($_SERVER['Authorization'],6));
+			if (strpos($hash, ':') !== false)
+			{
+				list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $hash, 2);
+			}
+		}
 		if (!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['PHP_AUTH_DIGEST']) ||
 			isset($_SERVER['PHP_AUTH_DIGEST']) && (!self::is_valid($realm,$_SERVER['PHP_AUTH_DIGEST'],$username,$password) ||
 				!($sessionid = $GLOBALS['egw']->session->create($username,$password,'text'))) ||
