@@ -289,7 +289,6 @@ class auth
 	 */
 	static function encrypt_sql($password)
 	{
-error_log(__METHOD__."('$password') \$GLOBALS['egw_info']['server']['sql_encryption_type']=".array2string($GLOBALS['egw_info']['server']['sql_encryption_type']));
 		/* Grab configured type, or default to md5() (old method) */
 		$type = @$GLOBALS['egw_info']['server']['sql_encryption_type']
 			? strtolower($GLOBALS['egw_info']['server']['sql_encryption_type'])
