@@ -203,7 +203,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="filemanager.file" template="" lang="" group="0" version="1.5.004">
+	<template id="filemanager.file" template="" lang="" group="0" version="1.7.001">
 		<grid>
 			<columns>
 				<column/>
@@ -213,7 +213,7 @@
 					<description span="all" class="redItalic" id="msg"/>
 				</row>
 				<row>
-					<tabbox id="general|perms|eacl|preview|custom" span="all">
+					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Permissions" statustext=""/>
