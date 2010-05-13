@@ -998,6 +998,10 @@ class filemanager_ui
 			{
 				$content += $extra_tab['data'];
 			}
+			if ($extra_tab['readonlys'] && is_array($extra_tab['readonlys']))
+			{
+				$readonlys += $extra_tab['readonlys'];
+			}
 		}
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.urldecode($path);
