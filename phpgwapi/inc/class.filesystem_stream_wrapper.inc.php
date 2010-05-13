@@ -91,7 +91,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 * 1 = only errors
 	 * 2 = all function calls and errors (contains passwords too!)
 	 */
-	const LOG_LEVEL = 2;
+	const LOG_LEVEL = 1;
 
 	/**
 	 * Regular expression identifying scripts, to NOT allow updating them if exec mount option is NOT set
