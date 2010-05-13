@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -23,6 +23,9 @@
  * - mode:  mode bit for the path, default 0005 (read and execute for nobody)
  * - exec:	false (default) = do NOT allow to upload or modify scripts, true = allow it (if docroot is mounted, this allows to run scripts!)
  * 			scripts are considered every file having a script-extension (eg. .php, .pl, .py), defined with SCRIPT_EXTENSION_PREG constant
+ *
+ * To correctly support characters with special meaning in url's (#?%), we urlencode them with egw_vfs::encodePathComponent
+ * and urldecode all path again, before passing them to php's filesystem functions.
  *
  * @link http://www.php.net/manual/en/function.stream-wrapper-register.php
  */
@@ -88,7 +91,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 * 1 = only errors
 	 * 2 = all function calls and errors (contains passwords too!)
 	 */
-	const LOG_LEVEL = 1;
+	const LOG_LEVEL = 2;
 
 	/**
 	 * Regular expression identifying scripts, to NOT allow updating them if exec mount option is NOT set
@@ -148,7 +151,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		}
 
 		// open the "real" file
-		if (!($this->opened_stream = fopen($path=parse_url($url,PHP_URL_PATH),$mode,$options)))
+		if (!($this->opened_stream = fopen($path=urldecode(parse_url($url,PHP_URL_PATH)),$mode,$options)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) fopen('$path','$mode',$options) returned false!");
 			return false;
@@ -290,7 +293,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function unlink ( $url )
 	{
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = urldecode(parse_url($url,PHP_URL_PATH));
 
 		// check access rights (file need to exist and directory need to be writable
 		if (!file_exists($path) || is_dir($path) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
@@ -350,7 +353,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
 			return false;
 		}
-		return rename($from['path'],$to['path']);
+		return rename(urldecode($from['path']),urldecode($to['path']));
 	}
 
 	/**
@@ -366,7 +369,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function mkdir ( $url, $mode, $options )
 	{
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = urldecode(parse_url($url,PHP_URL_PATH));
 		$recursive = (bool)($options & STREAM_MKDIR_RECURSIVE);
 
 		// find the real parent (might be more then one level if $recursive!)
@@ -398,7 +401,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rmdir ( $url, $options )
 	{
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = urldecode(parse_url($url,PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
@@ -420,7 +423,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function touch($url,$time=null,$atime=null)
 	{
-		$path = parse_url($url,PHP_URL_PATH);
+		$path = urldecode(parse_url($url,PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
@@ -487,13 +490,13 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 
 		$this->opened_dir = null;
 
-		$parts = parse_url($this->opened_dir_url = $url);
+		$path = urldecode(parse_url($this->opened_dir_url = $url,PHP_URL_PATH));
 
 		// ToDo: check access rights
 
-		if (!($this->opened_dir = opendir($parts['path'])))
+		if (!($this->opened_dir = opendir($path)))
 		{
-			if (self::LOG_LEVEL > 0) error_log(__METHOD__."($url,$options) opendir('$parts[path]') failed!");
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."($url,$options) opendir('$path') failed!");
 			return false;
 		}
 		return true;
@@ -528,8 +531,9 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	static function url_stat ( $url, $flags )
 	{
 		$parts = parse_url($url);
+		$path = urldecode($parts['path']);
 
-		$stat = @stat($parts['path']);	// suppressed the stat failed warnings
+		$stat = @stat($path);	// suppressed the stat failed warnings
 
 		if ($stat)
 		{
@@ -543,12 +547,12 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			$stat['gid'] = $stat[5] = $gid;
 			$stat['mode'] = $stat[2] = $stat['mode'] & self::MODE_DIR ? self::MODE_DIR | $mode : self::MODE_FILE | ($mode & ~0111);
 			// write rights also depend on the write rights of the webserver
-			if (!is_writable($parts['path']))
+			if (!is_writable($path))
 			{
 				$stat['mode'] = $stat[2] = $stat['mode'] & ~0222;
 			}
 		}
-		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags) path=$parts[path], mount_mode=".sprintf('0%o',$mode).", mode=".sprintf('0%o',$stat['mode']).'='.egw_vfs::int2mode($stat['mode']));
+		if (self::LOG_LEVEL > 1) error_log(__METHOD__."($url,$flags) path=$path, mount_mode=".sprintf('0%o',$mode).", mode=".sprintf('0%o',$stat['mode']).'='.egw_vfs::int2mode($stat['mode']));
 		return $stat;
 	}
 
@@ -572,6 +576,9 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL > 1 && $ignore) error_log(__METHOD__.'() ignoring '.array2string($file));
 		}
 		while ($ignore);
+
+		// encode special chars messing up url's
+		if ($file !== false) $file = egw_vfs::encodePathComponent($file);
 
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'() returning '.array2string($file));
 
