@@ -187,28 +187,16 @@ class auth extends auth_
 				$e_password = '{md5}' . base64_encode(pack("H*",md5($password)));
 				break;
 			case 'smd5':
-				if(!function_exists('mhash'))
-				{
-					return False;
-				}
 				$salt = self::randomstring(8);
-				$hash = mhash(MHASH_MD5, $password . $salt);
+				$hash = md5($password . $salt,true);
 				$e_password = '{SMD5}' . base64_encode($hash . $salt);
 				break;
 			case 'sha':
-				if(!function_exists('mhash'))
-				{
-					return False;
-				}
-				$e_password = '{SHA}' . base64_encode(mhash(MHASH_SHA1, $password));
+				$e_password = '{SHA}' . base64_encode(sha1($password,true));
 				break;
 			case 'ssha':
-				if(!function_exists('mhash'))
-				{
-					return False;
-				}
 				$salt = self::randomstring(8);
-				$hash = mhash(MHASH_SHA1, $password . $salt);
+				$hash = sha1($password . $salt,true);
 				$e_password = '{SSHA}' . base64_encode($hash . $salt);
 				break;
 			case 'plain':
@@ -299,28 +287,14 @@ class auth extends auth_
 				self::$error = 'no ext crypt';
 				break;
 			case 'smd5':
-				if(!function_exists('mhash'))
-				{
-					return False;
-				}
 				$salt = self::randomstring(8);
-				$hash = mhash(MHASH_MD5, $password . $salt);
+				$hash = md5($password . $salt,true);
 				return '{SMD5}' . base64_encode($hash . $salt);
 			case 'sha':
-				if(!function_exists('mhash'))
-				{
-					self::$error = 'no sha';
-					return False;
-				}
-				return '{SHA}' . base64_encode(mhash(MHASH_SHA1,$password));
+				return '{SHA}' . base64_encode(sha1($password,true));
 			case 'ssha':
-				if(!function_exists('mhash'))
-				{
-					self::$error = 'no ssha';
-					return False;
-				}
 				$salt = self::randomstring(8);
-				$hash = mhash(MHASH_SHA1, $password . $salt);
+				$hash = sha1($password . $salt,true);
 				return '{SSHA}' . base64_encode($hash . $salt);
 			case 'md5':
 			default:
@@ -387,7 +361,7 @@ class auth extends auth_
 		$orig_hash = substr($hash, 0, 16);
 		$salt = substr($hash, 16);
 
-		$new_hash = mhash(MHASH_MD5,$form_val . $salt);
+		$new_hash = md5($form_val . $salt,true);
 		//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
 
 		return strcmp($orig_hash,$new_hash) == 0;
@@ -404,7 +378,7 @@ class auth extends auth_
 	{
 		/* Start with the first char after {SHA} */
 		$hash = base64_decode(substr($db_val,5));
-		$new_hash = mhash(MHASH_SHA1,$form_val);
+		$new_hash = sha1($form_val,true);
 		//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
 
 		return strcmp($hash,$new_hash) == 0;
@@ -425,7 +399,7 @@ class auth extends auth_
 		// SHA-1 hashes are 160 bits long
 		$orig_hash = substr($hash, 0, 20);
 		$salt = substr($hash, 20);
-		$new_hash = mhash(MHASH_SHA1, $form_val . $salt);
+		$new_hash = sha1($form_val . $salt,true);
 
 		return strcmp($orig_hash,$new_hash) == 0;
 	}
