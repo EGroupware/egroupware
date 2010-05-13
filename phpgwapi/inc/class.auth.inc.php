@@ -35,20 +35,20 @@ if(empty($GLOBALS['egw_info']['server']['auth_type']))
 class auth
 {
 	static $error;
-	
+
 	/**
 	 * Holds instance of backend
-	 * 
+	 *
 	 * @var auth_backend
 	 */
 	private $backend;
-	
+
 	function __construct()
 	{
 		$backend_class = 'auth_'.$GLOBALS['egw_info']['server']['auth_type'];
-		
+
 		$this->backend = new $backend_class;
-		
+
 		if (!is_a($this->backend,'auth_backend'))
 		{
 			throw new egw_exception_assertion_failed("Auth backend class $backend_class is NO auth_backend!");
@@ -67,7 +67,7 @@ class auth
 	{
 		return $this->backend->authenticate($username, $passwd, $passwd_type);
 	}
-	
+
 	/**
 	 * changes password in sql datababse
 	 *
@@ -80,7 +80,7 @@ class auth
 	{
 		return $this->backend->change_password($old_passwd, $new_passwd, $account_id);
 	}
-	
+
 	/**
 	 * return a random string of size $size
 	 *
@@ -232,28 +232,16 @@ class auth
 				$e_password = '{md5}' . base64_encode(pack("H*",md5($password)));
 				break;
 			case 'smd5':
-				if(!function_exists('mhash'))
-				{
-					return False;
-				}
 				$salt = self::randomstring(8);
-				$hash = mhash(MHASH_MD5, $password . $salt);
+				$hash = md5($password . $salt,true);
 				$e_password = '{SMD5}' . base64_encode($hash . $salt);
 				break;
 			case 'sha':
-				if(!function_exists('mhash'))
-				{
-					return False;
-				}
-				$e_password = '{SHA}' . base64_encode(mhash(MHASH_SHA1, $password));
+				$e_password = '{SHA}' . base64_encode(sha1($password,true));
 				break;
 			case 'ssha':
-				if(!function_exists('mhash'))
-				{
-					return False;
-				}
 				$salt = self::randomstring(8);
-				$hash = mhash(MHASH_SHA1, $password . $salt);
+				$hash = sha1($password . $salt,true);
 				$e_password = '{SSHA}' . base64_encode($hash . $salt);
 				break;
 			case 'plain':
@@ -301,6 +289,7 @@ class auth
 	 */
 	static function encrypt_sql($password)
 	{
+error_log(__METHOD__."('$password') \$GLOBALS['egw_info']['server']['sql_encryption_type']=".array2string($GLOBALS['egw_info']['server']['sql_encryption_type']));
 		/* Grab configured type, or default to md5() (old method) */
 		$type = @$GLOBALS['egw_info']['server']['sql_encryption_type']
 			? strtolower($GLOBALS['egw_info']['server']['sql_encryption_type'])
@@ -344,28 +333,14 @@ class auth
 				self::$error = 'no ext crypt';
 				break;
 			case 'smd5':
-				if(!function_exists('mhash'))
-				{
-					return False;
-				}
 				$salt = self::randomstring(8);
-				$hash = mhash(MHASH_MD5, $password . $salt);
+				$hash = md5($password . $salt,true);
 				return '{SMD5}' . base64_encode($hash . $salt);
 			case 'sha':
-				if(!function_exists('mhash'))
-				{
-					self::$error = 'no sha';
-					return False;
-				}
-				return '{SHA}' . base64_encode(mhash(MHASH_SHA1,$password));
+				return '{SHA}' . base64_encode(sha1($password,true));
 			case 'ssha':
-				if(!function_exists('mhash'))
-				{
-					self::$error = 'no ssha';
-					return False;
-				}
 				$salt = self::randomstring(8);
-				$hash = mhash(MHASH_SHA1, $password . $salt);
+				$hash = sha1($password . $salt,true);
 				return '{SSHA}' . base64_encode($hash . $salt);
 			case 'md5':
 			default:
@@ -432,7 +407,7 @@ class auth
 		$orig_hash = substr($hash, 0, 16);
 		$salt = substr($hash, 16);
 
-		$new_hash = mhash(MHASH_MD5,$form_val . $salt);
+		$new_hash = md5($form_val . $salt,true);
 		//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
 
 		return strcmp($orig_hash,$new_hash) == 0;
@@ -449,7 +424,7 @@ class auth
 	{
 		/* Start with the first char after {SHA} */
 		$hash = base64_decode(substr($db_val,5));
-		$new_hash = mhash(MHASH_SHA1,$form_val);
+		$new_hash = sha1($form_val,true);
 		//echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
 
 		return strcmp($hash,$new_hash) == 0;
@@ -470,7 +445,7 @@ class auth
 		// SHA-1 hashes are 160 bits long
 		$orig_hash = substr($hash, 0, 20);
 		$salt = substr($hash, 20);
-		$new_hash = mhash(MHASH_SHA1, $form_val . $salt);
+		$new_hash = sha1($form_val . $salt,true);
 
 		return strcmp($orig_hash,$new_hash) == 0;
 	}
@@ -531,7 +506,7 @@ interface auth_backend
 	 * @return boolean true if successful authenticated, false otherwise
 	 */
 	function authenticate($username, $passwd, $passwd_type='text');
-	
+
 	/**
 	 * changes password in sql datababse
 	 *

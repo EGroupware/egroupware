@@ -146,17 +146,10 @@ function passwdhashes($config)
 {
 	$hashes = array(
 		'des' => 'des',
-		'md5' => 'md5'
-	);
-	if(@function_exists('mhash'))
-	{
-		$hashes += array(
-			'smd5' => 'smd5',
-			'sha'  => 'sha',
-			'ssha' => 'ssha'
-		);
-	}
-	$hashes += array(
+		'md5' => 'md5',
+		'smd5' => 'smd5',
+		'sha'  => 'sha',
+		'ssha' => 'ssha',
 		'plain' => 'plain',
 	);
 	/* Check for available crypt methods based on what is defined by php */
@@ -173,7 +166,7 @@ function passwdhashes($config)
 		$hashes['ext_crypt'] = 'ext_crypt';
 	}
 
-	while(list($key, $value) = each($hashes))
+	foreach($hashes as $key => $value)
 	{
 		if($config['ldap_encryption_type'] == $value)
 		{
@@ -214,19 +207,14 @@ function sql_passwdhashes($config)
 		$hashes['crypt'] = 'crypt';
 	}
 
-	if(@function_exists('mhash'))
-	{
-		$hashes += array(
-			'smd5' => 'smd5',
-			'sha'  => 'sha',
-			'ssha' => 'ssha'
-		);
-	}
 	$hashes += array(
+		'smd5' => 'smd5',
+		'sha'  => 'sha',
+		'ssha' => 'ssha',
 		'plain' => 'plain',
 	);
 
-	while(list($key, $value) = each($hashes))
+	foreach($hashes as $key => $value)
 	{
 		if($config['sql_encryption_type'] == $value)
 		{
