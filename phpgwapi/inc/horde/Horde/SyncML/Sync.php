@@ -212,9 +212,8 @@ class Horde_SyncML_Sync {
 
 			$contentSize = strlen($syncItem->_content);
 			if ((($size = $syncItem->getContentSize()) !== false) &&
-					($contentSize != $size) &&
-					($contentSize + 1 != $size)) {
-				Horde::logMessage('SyncML: content size missmatch for LocURI '
+					abs($contentSize - $size) > 3) {
+				Horde::logMessage('SyncML: content size mismatch for LocURI '
 					. $syncItem->getLocURI() . ": $contentSize ($size)",
 					__FILE__, __LINE__, PEAR_LOG_ERROR);
 				$command->setStatus(RESPONSE_SIZE_MISMATCH);
