@@ -2752,7 +2752,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								$email = 'no-email@egroupware.org';	// set dummy email to store the CN
 							}
-							$uid = 'e'. ($cn ? '"' . $cn . '" <' . $email . '>' : $email);
+							$uid = 'e'. ($cn ? $cn . ' <' . $email . '>' : $email);
 							if ($this->log)
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
