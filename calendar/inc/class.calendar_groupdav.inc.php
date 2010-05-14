@@ -650,7 +650,13 @@ class calendar_groupdav extends groupdav_handler
 	function read($id)
 	{
 		if ($this->debug > 1) error_log("bo-ical read  :$id:");
-		return $this->bo->read($id,null,false,'server');
+		if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server')) return false;
+		$event = $this->bo->read($id,null,true,'server');
+		if (!$this->bo->check_perms(EGW_ACL_READ, $id, 0, 'server'))
+		{
+			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
+		}
+		return $event;
 	}
 
 	/**
@@ -672,7 +678,14 @@ class calendar_groupdav extends groupdav_handler
 			'num_rows'	=> 1,
 		);
 
-		if ($path == '/calendar/') $filter['filter'] = 'owner';
+		if ($path == '/calendar/')
+		{
+			$filter['filter'] = 'owner';
+		}
+		else
+		{
+			$filter['filter'] = 'default'; // not rejected
+		}
 
 		$result =& $this->bo->search($filter);
 
@@ -691,7 +704,8 @@ class calendar_groupdav extends groupdav_handler
 	{
 		if (!is_array($entry))
 		{
-			$entry = $this->read($entry);
+			if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
+			$entry = $this->read($entry, null, true, 'server');
 		}
 		$etag = $entry['id'].':'.$entry['etag'];
 
@@ -735,6 +749,11 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	function check_access($acl,$event)
 	{
+		if ($acl == EGW_ACL_READ)
+		{
+			// we need at least EGW_ACL_FREEBUSY to get some information
+			$acl = EGW_ACL_FREEBUSY;
+		}
 		return $this->bo->check_perms($acl,$event,0,'server');
 	}
 

@@ -249,13 +249,20 @@ class calendar_ical extends calendar_boupdate
 			{
 				if ($this->read($event, $recurrence, true, 'server'))
 				{
-					if ($this->log)
+					if ($this->bo->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))
 					{
-						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							'() User does not have the permission to read event ' . $event['id']. "\n",
-							3,$this->logfile);
+						$this->bo->clear_private_infos($event, array($this->user, $event['owner']));
 					}
-					return -1; // Permission denied
+					else
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								'() User does not have the permission to read event ' . $event['id']. "\n",
+								3,$this->logfile);
+						}
+						return -1; // Permission denied
+					}
 				}
 				else
 				{
