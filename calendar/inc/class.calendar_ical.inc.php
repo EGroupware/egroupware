@@ -2356,9 +2356,14 @@ class calendar_ical extends calendar_boupdate
 							elseif (preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if ($recurenceMatches[2] != '#0')
+								$enddate = trim($recurenceMatches[2]);
+								if ($enddate != '#0')
 								{
-									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[2]));
+									if (preg_match('/([\d,]+) (.*)/', $enddate, $fixMatches))
+									{
+										$enddate = trim($fixMatches[2]);
+									}
+									$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($enddate);
 								}
 							} else break;
 
