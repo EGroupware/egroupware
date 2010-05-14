@@ -1707,7 +1707,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			else
 			{
-				$matchFields = array('priority', 'public', 'non_blocking');
+				$matchFields = array('priority', 'public');
 			}
 			$matchFields[] = 'recurrence';
 			foreach ($matchFields as $key)

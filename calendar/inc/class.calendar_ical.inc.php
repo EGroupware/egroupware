@@ -2843,7 +2843,6 @@ class calendar_ical extends calendar_boupdate
 			elseif (strtolower($agendaEntryType) == 'event')
 			{
 				$event['special'] = '2';
-				$event['non_blocking'] = 1;
 			}
 		}
 
