@@ -1456,7 +1456,7 @@ class calendar_boupdate extends calendar_bo
 			foreach ($matchFields as $key)
 			{
 				if (!empty($event[$key]) && (empty($egwEvent[$key])
-						|| strpos($egwEvent[$key], $event[$key]) !== 0))
+						|| strpos(str_replace("\r\n", "\n", $egwEvent[$key]), $event[$key]) !== 0))
 				{
 					if ($this->log)
 					{
@@ -1553,6 +1553,7 @@ class calendar_boupdate extends calendar_bo
 				$exceptions = array_merge($egwEvent['recur_exception'], $exceptions);
 				if (is_array($event['recur_exception']))
 				{
+					$exceptions = array_flip($exceptions);
 					foreach ($event['recur_exception'] as $key => $day)
 					{
 						if (isset($exceptions[$day]))
