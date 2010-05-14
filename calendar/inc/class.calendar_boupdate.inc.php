@@ -1826,7 +1826,7 @@ class calendar_boupdate extends calendar_bo
 			foreach ($matchFields as $key)
 			{
 				if (!empty($event[$key]) && (empty($egwEvent[$key])
-						|| strpos($egwEvent[$key], $event[$key]) !== 0))
+						|| strpos(str_replace("\r\n", "\n", $egwEvent[$key]), $event[$key]) !== 0))
 				{
 					if ($this->log)
 					{
