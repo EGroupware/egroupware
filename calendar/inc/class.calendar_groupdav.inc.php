@@ -147,11 +147,12 @@ class calendar_groupdav extends groupdav_handler
 				}
 			}
 		}
+/* disabling not working iterator
 		// return iterator, calling ourself to return result in chunks
 		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
 		return true;
 	}
-
+*/
 	/**
 	 * Callback for profind interator
 	 *
@@ -160,12 +161,14 @@ class calendar_groupdav extends groupdav_handler
 	 * @param array|boolean $start=false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
+/* disabling not working iterator
 	function propfind_callback($path,array $filter,$start=false)
 	{
 		if ($this->debug) $starttime = microtime(true);
-
+*/
 		$calendar_data = $filter['calendar_data'];
 		unset($filter['calendar_data']);
+/* disabling not working iterator
 		$files = array();
 
 		if (is_array($start))
@@ -173,6 +176,8 @@ class calendar_groupdav extends groupdav_handler
 			$filter['offset'] = $start[0];
 			$filter['num_rows'] = $start[1];
 		}
+error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($filter));
+*/
 		$events =& $this->bo->search($filter);
 		if ($events)
 		{
@@ -216,7 +221,10 @@ class calendar_groupdav extends groupdav_handler
 				{
 					$props[] = HTTP_WebDAV_Server::mkprop('getcontentlength', '');		// expensive to calculate and no CalDAV client uses it
 				}
+/* disabling not working iterator
 				$files[] = array(
+*/
+				$files['files'][] = array(
 	            	'path'  => $path.$this->get_path($event),
 	            	'props' => $props,
 				);
@@ -227,7 +235,10 @@ class calendar_groupdav extends groupdav_handler
 			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
 				' to return '.count($files).' items');
 		}
+/* disabling not working iterator
 		return $files;
+*/
+		return true;
 	}
 
 	/**
