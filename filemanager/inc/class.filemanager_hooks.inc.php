@@ -69,10 +69,20 @@ class filemanager_hooks
 	 */
 	static function admin($location = 'admin')
 	{
+		if (is_array($location)) $location = $location['location'];
+
         $file = Array(
             'Site Configuration' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
             'Custom fields' => $GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname='.self::$appname),
         );
+        // add other administration links, eg. of filesystem backends like versioning
+        if (($other = $GLOBALS['egw']->hooks->process('filemanager_admin',array(),true)))
+        {
+        	foreach($other as $app => $file_data)
+        	{
+        		$file += $file_data;
+        	}
+        }
 		if ($location == 'admin')
 		{
         	display_section(self::$appname,$file);
@@ -90,6 +100,8 @@ class filemanager_hooks
 	 */
 	static function preferences($location = 'preferences')
 	{
+		if (is_array($location)) $location = $location['location'];
+
 		$file = array(
 			'Preferences' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname='.self::$appname),
 		);
