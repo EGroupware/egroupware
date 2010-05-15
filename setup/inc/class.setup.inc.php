@@ -197,10 +197,10 @@ class setup
 		}
 		setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain);
 	}
-	
+
 	/**
 	 * Get configuration language from $_POST or $_COOKIE and validate it
-	 * 
+	 *
 	 * @return string
 	 */
 	static function get_lang()
@@ -998,7 +998,7 @@ class setup
 
 				while(($row = $this->db->row(true)))
 				{
-					$config[$row['config_name']] = $row['config_value'];
+					$GLOBALS['egw_info']['server'][$row['config_name']] = $config[$row['config_name']] = $row['config_value'];
 				}
 			}
 			$this->accounts = new accounts($config);
