@@ -317,7 +317,11 @@ class egw_vfs extends vfs_stream_wrapper
 
 		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-
+		// invalidate session cache
+		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		{
+			$GLOBALS['egw']->invalidate_session_cache();
+		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful new mount).');
 		return true;
 	}
@@ -343,7 +347,11 @@ class egw_vfs extends vfs_stream_wrapper
 
 		config::save_value('vfs_fstab',self::$fstab,'phpgwapi');
 		$GLOBALS['egw_info']['server']['vfs_fstab'] = self::$fstab;
-
+		// invalidate session cache
+		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		{
+			$GLOBALS['egw']->invalidate_session_cache();
+		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') returns true (successful unmount).');
 		return true;
 	}
