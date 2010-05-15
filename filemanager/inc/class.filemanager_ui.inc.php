@@ -51,7 +51,7 @@ class filemanager_ui
 	 * @param string $user='' setup config user to become root or '' to log off as root
 	 * @param string $password=null setup config password to become root
 	 */
-	private function sudo($user='',$password=null)
+	protected function sudo($user='',$password=null)
 	{
 		if (!$user)
 		{
