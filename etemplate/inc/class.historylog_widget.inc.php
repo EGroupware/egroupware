@@ -85,12 +85,14 @@ class historylog_widget
 					foreach($type as $n => $t)
 					{
 						$opt = '';
-						if(is_array($t)) {
+						if(is_array($t))
+						{
 							$sel_options = $t;
-						}
-						list($t,$opt) = explode(':',$t);
-						if(is_array($sel_options)) {
 							$t = 'select';
+						}
+						else
+						{
+							list($t,$opt) = explode(':',$t);
 						}
 						$child = etemplate::empty_cell($t,$cell['name']."[$n]",array('readonly' => true,'no_lang' => true,'size' => $opt));
 						$child['sel_options'] = $sel_options;
