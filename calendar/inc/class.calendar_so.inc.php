@@ -521,7 +521,7 @@ class calendar_so
 				foreach(array_keys($selects) as $key)
 				{
 					if ($i >= $countSelects) continue;
-					$i ++;
+					$i++;
 					$selects[$key]['cols'] = $select['cols']; // restore the original cols
 					//$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
 				}
