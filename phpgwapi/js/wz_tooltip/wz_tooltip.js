@@ -852,8 +852,8 @@ function tt_DeAlt(el)
 	{
 		if(el.alt)
 			el.alt = "";
-		if(el.title)
-			el.title = "";
+/*		if(el.title)
+			el.title = "";*/
 		aKid = el.childNodes || el.children || null;
 		if(aKid)
 		{
