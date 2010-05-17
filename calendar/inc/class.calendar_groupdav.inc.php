@@ -553,6 +553,19 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	}
 
 	/**
+	 * Handle post request for a schedule entry
+	 *
+	 * @param array &$options
+	 * @param int $id
+	 * @param int $user=null account_id of owner, default null
+	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
+	 */
+	function post(&$options,$id,$user=null)
+	{
+		return true;
+	}
+
+	/**
 	 * Fix event series with exceptions, called by calendar_ical::importVCal():
 	 *	a) only series master = first event got cal_id from URL
 	 *	b) exceptions need to be checked if they are already in DB or new
@@ -637,7 +650,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function delete(&$options,$id)
 	{
-		$return_no_access=true;	// to allow to check if current use is a participant and reject the event for him
+		$return_no_access = true;	// to allow to check if current use is a participant and reject the event for him
 		if (!is_array($event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access)) || !$return_no_access)
 		{
 			if (!$return_no_access)
