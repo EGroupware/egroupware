@@ -436,7 +436,7 @@ class calendar_bo
 		//echo "<p align=right>remove_rejected_by_user=$remove_rejected_by_user, filter=$filter, params[users]=".print_r($param['users'])."</p>\n";
 		foreach($events as $id => $event)
 		{
-			if (isset($start) && $event['start'] < $start)
+			if (isset($start) && $event['end'] < $start)
 			{
 				unset($events[$id]);	// remove former events (e.g. whole day) 
 				$this->total--;
