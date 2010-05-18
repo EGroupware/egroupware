@@ -334,7 +334,7 @@ abstract class groupdav_handler
 				'zideone'           => 'zideone',	// zideone outlook plugin
 				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
 				'khtml'             => 'kde',		// KDE clients
-				'cadaver'           => 'cadaver',
+				'neon'				=> 'neon'
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)
