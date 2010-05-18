@@ -628,14 +628,14 @@ class Horde_iCalendar {
         // Parse the remaining attributes.
         if (preg_match_all('/^((?:[^":]+|(?:"[^"]*")+)*):([^\r\n]*)\r?$/m', $vCal, $matches)) {
             foreach ($matches[0] as $attribute) {
-                preg_match('/([^;^:]*)((;(?:[^":]+|(?:"[^"]*")+)*)?):([^\r\n]*)[\r\n]*/', $attribute, $parts);
+                preg_match('/([^:;]*)((;(?:(?:[^":\\\]*(?:\\\.)?)+|(?:"[^"]*")+)*)?):([^\r\n]*)[\r\n]*/', $attribute, $parts);
                 $tag = trim(String::upper($parts[1]));
                 $value = $parts[4];
                 $params = array();
 
                 // Parse parameters.
                 if (!empty($parts[2])) {
-                    preg_match_all('/;(([^;=]*)(=([^;]*))?)/', $parts[2], $param_parts);
+                    preg_match_all('/;(([^;=]*)(=((?:[^;\\\]*(?:\\\.)?)*))?)/', $parts[2], $param_parts);
                     foreach ($param_parts[2] as $key => $paramName) {
                         $paramName = String::upper($paramName);
                         $paramValue = $param_parts[4][$key];

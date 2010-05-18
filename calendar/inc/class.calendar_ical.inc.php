@@ -481,10 +481,13 @@ class calendar_ical extends calendar_boupdate
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ .
 									'()attendee:' . array2string($info) ."\n",3,$this->logfile);
 							}
-							$participantCN = '"' . (empty($info['cn']) ? $info['name'] : $info['cn']) . '"';
+							$participantCN = trim(empty($info['cn']) ? $info['name'] : $info['cn']);
+							$participantCN = str_replace(array('\\', ',', ';', ':'),
+												array('\\\\', '\\,', '\\;', '\\:'),
+												$participantCN);
 							if ($version == '1.0')
 							{
-								$participantURL = trim($participantCN . (empty($info['email']) ? '' : ' <' . $info['email'] .'>'));
+								$participantURL = trim('"' . $participantCN . '"' . (empty($info['email']) ? '' : ' <' . $info['email'] .'>'));
 							}
 							else
 							{
@@ -495,7 +498,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								$organizerURL = $participantURL;
 								$organizerCN = $participantCN;
-								$organizerUID = $uid;
+								$organizerUID = ($info['type'] != 'e' ? $uid : '');
 							}
 							$attributes['ATTENDEE'][]	= $participantURL;
 							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
@@ -570,7 +573,10 @@ class calendar_ical extends calendar_boupdate
 	    				{
 		    				$attributes['ORGANIZER'] = $organizerURL;
 		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
-		    				$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
+		    				if (!empty($organizerUID))
+		    				{
+		    					$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
+		    				}
 	    				}
 	    				break;
 
@@ -2695,7 +2701,9 @@ class calendar_ical extends calendar_boupdate
 						// ... and for provided CN
 						if (!empty($attributes['params']['CN']))
 						{
-							$cn = $attributes['params']['CN'];
+							$cn = str_replace(array('\\,', '\\;', '\\:', '\\\\'),
+										array(',', ';', ':', '\\'),
+										$attributes['params']['CN']);
 							if ($cn[0] == '"' && substr($cn,-1) == '"')
 							{
 								$cn = substr($cn,1,-1);
