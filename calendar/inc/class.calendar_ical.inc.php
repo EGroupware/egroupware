@@ -832,7 +832,7 @@ class calendar_ical extends calendar_boupdate
 				$attributes['LAST-MODIFIED'] = $modified;
 			}
 			$attributes['DTSTAMP'] = time();
-			foreach ($event['alarm'] as $alarmID => $alarmData)
+			foreach ((array)$event['alarm'] as $alarmID => $alarmData)
 			{
 				// skip over alarms that don't have the minimum required info
 				if (!$alarmData['offset'] && !$alarmData['time']) continue;
@@ -873,13 +873,27 @@ class calendar_ical extends calendar_boupdate
 
 					// RFC requires DESCRIPTION for DISPLAY
 					if (!$event['title'] && !$description) continue;
+					
+					if ($this->productName == 'lightning')
+					{
+						// return only future alarms to lightning
+						if (($nextOccurence = $this->read($event['id'], $this->now_su + $alarmData['offset'], false, 'server')))
+						{
+							$alarmData['time'] = $nextOccurence['start'] - $alarmData['offset'];
+							$alarmData['offset'] = false;	
+						}
+						else
+						{
+							continue;
+						}
+					}
 
-					if (!empty($event['whole_day']) && $alarmData['offset'])
+					if (!empty($event['whole_day']) && $alarmData['offset'])		
 					{
 						$alarmData['time'] = $event['start'] - $alarmData['offset'];
 						$alarmData['offset'] = false;
-					}
-
+					} 
+					
 					$valarm = Horde_iCalendar::newComponent('VALARM',$vevent);
 					if ($alarmData['offset'])
 					{
@@ -1015,7 +1029,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param int $user=null account_id of owner, default null
 	 * @param string $charset  The encoding charset for $text. Defaults to
 	 *                         utf-8 for new format, iso-8859-1 for old format.
-	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag
+	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag|permission denied
 	 */
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null)
 	{
@@ -1272,7 +1286,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					else
 					{
-						return false; // no permission
+						return 0; // no permission
 					}
 				}
 				// check if an owner is set and the current user has add rights
@@ -2187,6 +2201,17 @@ class calendar_ical extends calendar_boupdate
 			{
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
 					get_class($component)." found\n",3,$this->logfile);
+			}
+			return false;
+		}
+		
+		$mozillaACK = $component->getAttribute('X-MOZ-LASTACK');
+		if (!is_a($mozillaACK, 'PEAR_Error'))
+		{
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'()' .
+					"X-MOZ-LASTACK found\n",3,$this->logfile);
 			}
 			return false;
 		}

@@ -538,7 +538,16 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
-			return '403 Forbidden';
+			if ($eventId && $cal_id === false)
+			{
+				// ignore import failures
+				$cal_id = $eventId;
+				$retval = true;
+			}
+			else
+			{
+				return '403 Forbidden';
+			}
 		}
 
 		header('ETag: '.$this->get_etag($cal_id));
