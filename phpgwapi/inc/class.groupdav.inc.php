@@ -389,6 +389,9 @@ class groupdav extends HTTP_WebDAV_Server
 			case 'calendar':
 				$props[] = self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
 					self::mkprop('href',$this->base_uri.$path.'calendar/')));
+				// OUTBOX URLs of the current user
+				$props[] =	self::mkprop(groupdav::CALDAV,'schedule-outbox-URL',
+					array(self::mkprop(groupdav::DAV,'href',$this->base_uri.'/calendar/')));
 				break;
 			case 'infolog':
 				$props[] = self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
@@ -645,6 +648,34 @@ class groupdav extends HTTP_WebDAV_Server
 		return $arr;
 	}
 
+	/**
+	 * POST method handler
+	 *
+	 * @param  array  parameter passing array
+	 * @return bool   true on success
+	 */
+	function POST(&$options)
+	{
+		// read the content in a string, if a stream is given
+		if (isset($options['stream']))
+		{
+			$options['content'] = '';
+			while(!feof($options['stream']))
+			{
+				$options['content'] .= fread($options['stream'],8192);
+			}
+		}
+		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
+		
+		$this->_parse_path($options['path'],$id,$app,$user);
+		
+		if (($handler = self::app_handler($app)) &&	method_exists($handler, 'post'))
+		{
+			return $handler->post($options,$id,$user);
+		}
+		return '501 Not Implemented';
+	}
+	
 	/**
 	 * PUT method handler
 	 *

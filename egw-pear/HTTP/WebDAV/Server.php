@@ -1322,6 +1322,45 @@ class HTTP_WebDAV_Server
     }
 
     // }}}
+    
+    // {{{ http_POST()
+
+    /**
+     * POST method handler
+     *
+     * @param  void
+     * @return void
+     */
+    function http_POST()
+    {
+        $status          = '405 Method not allowed';
+        $options         = Array();
+        $options['path'] = $this->path;
+
+        if (!isset($options['mimetype'])) {
+            $options['mimetype'] = "application/octet-stream";
+        }
+        header("Content-type: $options[mimetype]");
+
+        if (isset($options['mtime'])) {
+            header("Last-modified:".gmdate("D, d M Y H:i:s ", $options['mtime'])."GMT");
+        }
+
+        if (isset($options['size'])) {
+            header("Content-length: ".$options['size']);
+        }
+        
+        if (method_exists($this, 'POST')) {
+            $status = $this->POST($options);
+        }
+
+        if ($status === true)  $status = '200 OK';
+        if ($status === false) $status = '400 Something went wrong';
+
+        $this->http_status($status);
+    }
+
+    // }}}
 
     // {{{ http_PUT()
 
