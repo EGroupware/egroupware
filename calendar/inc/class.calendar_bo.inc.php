@@ -432,10 +432,16 @@ class calendar_bo
 
 		// socal::search() returns rejected group-invitations, as only the user not also the group is rejected
 		// as we cant remove them efficiantly in SQL, we kick them out here, but only if just one user is displayed
-		$remove_rejected_by_user = !in_array($filter,array('all','rejected')) && count($params['users']) == 1 ? $params['users'][0] : false;
+		$remove_rejected_by_user = !in_array($filter,array('all','rejected','owner')) && count($params['users']) == 1 ? $params['users'][0] : false;
 		//echo "<p align=right>remove_rejected_by_user=$remove_rejected_by_user, filter=$filter, params[users]=".print_r($param['users'])."</p>\n";
 		foreach($events as $id => $event)
 		{
+			if (isset($start) && $event['start'] < $start)
+			{
+				unset($events[$id]);	// remove former events (e.g. whole day) 
+				$this->total--;
+				continue;
+			}
 			if ($remove_rejected_by_user && $event['participants'][$remove_rejected_by_user] == 'R')
 			{
 				unset($events[$id]);	// remove the rejected event
