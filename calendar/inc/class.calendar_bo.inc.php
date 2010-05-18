@@ -772,6 +772,8 @@ class calendar_bo
 	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
 	{
 		if ($date) $date = $this->date2ts($date);
+		
+		$return = null;
 
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))
 		{
@@ -991,7 +993,7 @@ class calendar_bo
 		{
 			if (!is_array($event))
 			{
-				$event = $this->read($event,$date_to_read,True,$date_format);	// = no ACL check !!!
+				$event = $this->read($event,$date_to_read,true,$date_format);	// = no ACL check !!!
 			}
 			if (!is_array($event))
 			{

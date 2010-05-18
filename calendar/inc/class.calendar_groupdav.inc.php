@@ -470,7 +470,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 
-		$return_no_access=true;	// as handled by importVCal anyway and allows it to set the status for participants
+		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 		if (!is_null($oldEvent) && !is_array($oldEvent))
 		{
@@ -667,7 +667,13 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	function read($id)
 	{
 		if ($this->debug > 1) error_log("bo-ical read  :$id:");
-		return $this->bo->read($id,null,false,'server');
+		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server'))) return $retval;
+		$event = $this->bo->read($id, null, true, 'server');
+		if (!$this->bo->check_perms(EGW_ACL_READ, $id, 0, 'server'))
+		{
+			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
+		}
+		return $event;
 	}
 
 	/**
