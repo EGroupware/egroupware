@@ -180,6 +180,43 @@ function dateChanged(calendar) {
  window.location = "'.$url.'&date=" + calendar.date.print("%Y%m%d");
 }
 };
+
+function todayClicked(calendar) {
+	var parts = window.location.search.split("&");
+	var newsearch = "";
+	var hasdate = false;
+
+	/* Assemble the new search string, if the "date" property is found, replace its value
+	   with the current date */
+	for (i = 0; i < parts.length; i++)
+	{
+		var split = parts[i].split("=");
+		if (split[0] && split[0] == "date") {
+			split[1] = "'.date('Ymd').'";
+			hasdate = true;
+		}
+		
+		if (split[1])
+			newsearch += split[0] + "=" + split[1];
+		else
+			newsearch += split[0];
+
+		if (i < parts.length - 1)
+			newsearch += "&"
+	}
+
+	/* If the date property hasn\'t been found, add it to the search string */
+	if (!hasdate) {
+		if (parts.length == 0)
+			newsearch = "?";
+		else
+			newsearch += "&";
+		newsearch += "date='.date('Ymd').'";
+	}
+
+	window.location.search = newsearch;
+}
+
 '.($weekUrl ? '
 function weekClicked(calendar,weekstart) {
  window.location = "'.$weekUrl.'&date=" + weekstart.print("%Y%m%d");
@@ -198,6 +235,7 @@ function monthClicked(calendar,monthstart) {
   		flatWeekTTip : "'.addslashes($weekTTip).'"' : '').($monthUrl ? ',
   		flatMonthCallback : monthClicked' : '').($monthTTip ? ',
   		flatMonthTTip : "'.addslashes($monthTTip).'"' : '').($date ? ',
+		flatTodayCallback : todayClicked,
  		date : "'.$date.'"
 		' : '').'
 	}

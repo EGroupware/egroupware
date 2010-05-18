@@ -693,6 +693,7 @@ Calendar.cellClick = function(el, ev) {
 			return;
 		    case 0:
 			// TODAY will bring us here
+			cal.callTodayHandler();
 			if ((typeof cal.getDateStatus == "function") && cal.getDateStatus(date, date.getFullYear(), date.getMonth(), date.getDate())) {
 				// remember, "date" was previously set to new
 				// Date() if TODAY was clicked; thus, it
@@ -1250,6 +1251,17 @@ Calendar.prototype.callMonthHandler = function () {
 		this.params.flatMonthCallback(this, monthstart);
 	}
 };
+
+/** Calls the today-clicked user handler (selectedHandler) */
+Calendar.prototype.hasTodayHandler = function () {
+	return this.params && this.params.flat && this.params.flatTodayCallback;
+}
+
+Calendar.prototype.callTodayHandler = function () {
+	if (this.hasTodayHandler()) {
+		this.params.flatTodayCallback(this);
+	}
+}
 
 /** Calls the second user handler (closeHandler). */
 Calendar.prototype.callCloseHandler = function () {
