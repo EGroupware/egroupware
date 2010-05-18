@@ -89,7 +89,7 @@ $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 if (strstr($user_agent, 'microsoft-webdav') !== false ||
 	strstr($user_agent, 'neon') !== false)
 {
-	// Neon & Windows 7 special treatment
+	// neon & Windows 7 special treatment
 	$webdav_server->cnrnd = true;
 }
 $webdav_server->ServeRequest();

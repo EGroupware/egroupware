@@ -138,6 +138,9 @@ class groupdav extends HTTP_WebDAV_Server
 				break;
 			case 'cfnetwork_old':
 				$this->crrnd = true; // Older Apple Addressbook.app does not cope with namespace redundancy
+				break;
+			case 'neon':
+				$this->cnrnd = true; // neon clients like cadaver
 		}
 		parent::HTTP_WebDAV_Server();
 
