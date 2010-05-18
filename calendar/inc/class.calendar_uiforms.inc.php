@@ -895,8 +895,33 @@ class calendar_uiforms extends calendar_ui
 			}
 			elseif(egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',false,false))
 			{
-				// install ajax handler to unlock the entry again, if the window get's closed by the user
-				$GLOBALS['egw']->js->set_onunload("xajax_doXMLHTTP('calendar.calendar_uiforms.ajax_unlock',$event[id],'$preserv[lock_token]');");
+				// install ajax handler to unlock the entry again, if the window get's closed by the user (X of window or our [Close] button)
+				$GLOBALS['egw']->js->set_onunload("if (do_onunload) xajax_doXMLHTTPsync('calendar.calendar_uiforms.ajax_unlock',$event[id],'$preserv[lock_token]');");
+				$GLOBALS['egw']->js->set_onload("replace_eTemplate_onsubmit();");
+
+				// overwrite submit method of eTemplate form AND onSubmit event, to switch off onUnload handler for regular form submits
+				// selectboxes use onchange(this.form.submit()) which does not fire onSubmit event --> need to overwrite submit() method
+				// regular submit buttons dont call submit(), but trigger onSubmit event --> need to overwrite onSubmit event
+				$GLOBALS['egw_info']['flags']['java_script'] .= '
+<script>
+var do_onunload = true;
+function replace_eTemplate_onsubmit()
+{
+	document.eTemplate.old_submit = document.eTemplate.submit;
+	document.eTemplate.submit = function()
+	{
+		do_onunload = false;
+		this.old_submit();
+	}
+	document.eTemplate.old_onsubmit = document.eTemplate.onsubmit;
+	document.eTemplate.onsubmit = function()
+	{
+		do_onunload = false;
+		this.old_onsubmit();
+	}
+}
+</script>
+';
 			}
 			else
 			{
