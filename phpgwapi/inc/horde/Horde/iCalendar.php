@@ -635,7 +635,7 @@ class Horde_iCalendar {
 
                 // Parse parameters.
                 if (!empty($parts[2])) {
-                    preg_match_all('/;(([^;=]*)(=((?:[^;\\\]*(?:\\\.)?)*))?)/', $parts[2], $param_parts);
+                    preg_match_all('/;(([^;=]*)(=("[^"]*"|(?:[^;\\\]*(?:\\\.)?)*))?)/', $parts[2], $param_parts);
                     foreach ($param_parts[2] as $key => $paramName) {
                         $paramName = String::upper($paramName);
                         $paramValue = $param_parts[4][$key];
