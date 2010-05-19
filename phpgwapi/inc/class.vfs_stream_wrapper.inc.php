@@ -141,7 +141,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @param boolean $do_symlink=true is a direct match allowed, default yes (must be false for a lstat or readlink!)
 	 * @return string|boolean false if the url cant be resolved, should not happen if fstab has a root entry
 	 */
-	static function resolve_url($path,$do_symlink=true)
+	static function resolve_url($path,$do_symlink=true,$use_symlinkcache=true)
 	{
 		static $cache = array();
 
@@ -154,7 +154,8 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			return $cache[$path];
 		}
 		// check if we can already resolve path (or a part of it) with a known symlinks
-		$path = self::symlinkCache_resolve($path,$do_symlink);
+		if ($use_symlinkcache)
+			$path = self::symlinkCache_resolve($path,$do_symlink);
 
 		// setting default user, passwd and domain, if it's not contained int the url
 		static $defaults;
@@ -720,7 +721,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components)");
 
-		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK))))
+		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
 			return false;
