@@ -267,7 +267,7 @@ function WaitForActive( editorInstance, newStatus )
 
 // Gecko browsers doesn't calculate well the IFRAME size so we must
 // recalculate it every time the window size changes.
-if ( FCKBrowserInfo.IsGecko && !FCKBrowserInfo.IsOpera )
+if ((FCKBrowserInfo.IsGecko || FCKBrowserInfo.IsSafari) && !FCKBrowserInfo.IsOpera )
 {
 	window.onresize = function( e )
 	{
@@ -282,8 +282,11 @@ if ( FCKBrowserInfo.IsGecko && !FCKBrowserInfo.IsOpera )
 		var eInnerElement = oCell.firstChild ;
 		if ( eInnerElement )
 		{
-			eInnerElement.style.height = '0px' ;
-			eInnerElement.style.height = ( oCell.scrollHeight - 2 ) + 'px' ;
+			eInnerElement.style.height = '0px';
+			if (FCKBrowserInfo.IsGecko)
+				eInnerElement.style.height = ( oCell.scrollHeight - 2 ) + 'px' ;
+			else
+				eInnerElement.style.height = ( oCell.scrollHeight - 16 ) + 'px' ;
 		}
 	}
 }
