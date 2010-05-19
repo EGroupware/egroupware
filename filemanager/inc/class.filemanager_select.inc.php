@@ -178,6 +178,7 @@ class filemanager_select
 				}
 				++$n;
 			}
+			if (!$n) $readonlys['selected[]'] = true;	// remove checkbox from empty line
 			closedir($d);
 		}
 		$content['js'] = '<script type="text/javascript">
