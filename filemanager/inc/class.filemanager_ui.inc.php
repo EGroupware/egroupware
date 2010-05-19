@@ -50,21 +50,26 @@ class filemanager_ui
 	 *
 	 * @param string $user='' setup config user to become root or '' to log off as root
 	 * @param string $password=null setup config password to become root
+	 * @param boolean &$is_setup=null on return true if authenticated user is setup config user, false otherwise
+	 * @return boolean true is root user given, false otherwise (including logout / empty $user)
 	 */
-	protected function sudo($user='',$password=null)
+	protected function sudo($user='',$password=null,&$is_setup=null)
 	{
 		if (!$user)
 		{
-			$is_root = false;
+			$is_root = $is_setup = false;
 		}
 		else
 		{
-			$is_root = egw_session::user_pw_hash($user,$password) === $GLOBALS['egw_info']['server']['config_hash'] ||	// config user&password
-				$GLOBALS['egw_info']['server']['vfs_root_user'] && 							// vfs root user from setup >> configuration
-				in_array($user,split(', *',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
+			// config user & password
+			$is_setup = egw_session::user_pw_hash($user,$password) === $GLOBALS['egw_info']['server']['config_hash'];
+			// or vfs root user from setup >> configuration
+			$is_root = $is_setup ||	$GLOBALS['egw_info']['server']['vfs_root_user'] &&
+				in_array($user,preg_split('/, */',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
 				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
 		}
-		//echo "<p>".__METHOD__."('$user','$password') user_pw_hash(...)='".egw_session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
+		//echo "<p>".__METHOD__."('$user','$password',$is_setup) user_pw_hash(...)='".egw_session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
+		egw_session::appsession('is_setup','filemanager',$is_setup);
 		return egw_session::appsession('is_root','filemanager',egw_vfs::$is_root = $is_root);
 	}
 
