@@ -1037,7 +1037,7 @@ class egw_vfs extends vfs_stream_wrapper
 	}
 
 	/**
-	 * Human readable size values in k or M
+	 * Human readable size values in k, M or G
 	 *
 	 * @param int $size
 	 * @return string
@@ -1046,7 +1046,8 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		if ($size < 1024) return $size;
 		if ($size < 1024*1024) return sprintf('%3.1lfk',(float)$size/1024);
-		return sprintf('%3.1lfM',(float)$size/(1024*1024));
+		if ($size < 1024*1024*1024) return sprintf('%3.1lfM',(float)$size/(1024*1024));
+		return sprintf('%3.1lfG',(float)$size/(1024*1024*1024));
 	}
 
 	/**
