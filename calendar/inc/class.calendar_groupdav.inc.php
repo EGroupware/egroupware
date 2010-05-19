@@ -424,6 +424,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 
 		$events =& $bo->search(array(
 			'query' => array('cal_uid' => $uid),
+			'filter' => 'owner',  // return all possible entries
 			'daywise' => false,
 			'date_format' => 'server',
 		));
@@ -699,6 +700,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	public function getctag($path,$user)
 	{
+		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user]");
+		
 		$filter = array(
 			'users' => $user,
 			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync recurrences
@@ -706,12 +709,12 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
-			'order' => 'cal_modified DESC',
+			'order' => 'cal_modified DESC,cal_etag DESC',
 			'offset' => 0,
 			'num_rows'	=> 1,
 		);
 
-		if ($path == '/calendar/')
+		if (strpos($path, '/calendar') === 0)
 		{
 			$filter['filter'] = 'owner';
 		}
@@ -745,18 +748,20 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
 		if (isset($entry['max_user_modified']))
 		{
-			$etag .= ':'.$entry['max_user_modified'];
+			$modified = max($entry['max_user_modified'], $entry['modified']);			
 		}
 		else
 		{
-			$etag .= ':'.$this->bo->so->max_user_modified($entry['id']);
+			$modified = max($this->bo->so->max_user_modified($entry['id']), $entry['modified']);
 		}
+		$etag .= ':' . $modified;
 		// include exception etags into our own etag, if exceptions are included
 		if ($this->client_shared_uid_exceptions && !empty($entry['uid']) &&
 			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
 		{
 			$events =& $this->bo->search(array(
 				'query' => array('cal_uid' => $entry['uid']),
+				'filter' => 'owner',  // return all possible entries
 				'daywise' => false,
 				'enum_recuring' => false,
 				'date_format' => 'server',
