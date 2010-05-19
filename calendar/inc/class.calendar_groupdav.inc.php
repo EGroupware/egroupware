@@ -616,13 +616,13 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			$org_recurrence = $org_recurrences[$recurrence['recurrence']];
 			if (isset($org_recurrence))	// already existing recurrence
 			{
-				error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
+				//error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
 				$recurrence['id'] = $org_recurrence['id'];
 
 				// re-add (non-virtual) exceptions to master's recur_exception
 				if ($recurrence['id'] != $master['id'])
 				{
-					error_log(__METHOD__.'() re-adding recur_exception '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']));
+					//error_log(__METHOD__.'() re-adding recur_exception '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']));
 					$exceptions[] = $recurrence['recurrence'];
 				}
 				// remove recurrence to be able to detect deleted exceptions
@@ -641,7 +641,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			}
 			else	// virtual recurrence
 			{
-				//error_log(__METHOD__.'() ToDO: delete virtual exception '.$org_recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$org_recurrence['recurrence']));
+				//error_log(__METHOD__.'() delete virtual exception '.$org_recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$org_recurrence['recurrence']));
 				$bo->update_status($master, $org_recurrence, $org_recurrence['recurrence']);
 			}
 		}
