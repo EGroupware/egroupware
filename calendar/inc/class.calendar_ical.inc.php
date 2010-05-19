@@ -1131,6 +1131,12 @@ class calendar_ical extends calendar_boupdate
 			// common adjustments for existing events
 			if (is_array($event_info['stored_event']))
 			{
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+						. "(UPDATE Event)\n"
+						. array2string($event_info['stored_event'])."\n",3,$this->logfile);
+				}
 				if (empty($event['uid']))
 				{
 					$event['uid'] = $event_info['stored_event']['uid']; // restore the UID if it was not delivered
@@ -1383,6 +1389,13 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 				}
+			}
+			
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ . '('
+					. $event_info['type'] . ")\n"
+					. array2string($event)."\n",3,$this->logfile);
 			}
 
 			// save event depending on the given event type
