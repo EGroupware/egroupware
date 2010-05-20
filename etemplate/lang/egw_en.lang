@@ -6,6 +6,7 @@
 %1 matches on search criteria	etemplate	en	%1 matches on search criteria
 %1 more...	etemplate	en	%1 more...
 %1 new etemplates imported for application '%2'	etemplate	en	%1 new eTemplates imported for Application '%2'
+%1 not implemented for %2!	etemplate	en	%1 not implemented for %2!
 %s disabled	etemplate	en	%s disabled
 %s needed	etemplate	en	%s needed
 %s notranslation	etemplate	en	%s NoTranslation
@@ -37,8 +38,10 @@ all operations save the template!	etemplate	en	all operations save the template!
 allowed file type: %1	etemplate	en	Allowed file type: %1
 am	etemplate	en	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
+and	etemplate	en	AND
 application	etemplate	en	Application
 application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates !!!
+applications	etemplate	en	Applications
 applies the changes made	etemplate	en	applies the changes made
 applies the changes to the given version of the template	etemplate	en	applies the changes to the given version of the template
 as default	etemplate	en	as default
@@ -51,6 +54,7 @@ border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for t
 bottom	etemplate	en	Bottom
 box	etemplate	en	Box
 box...	etemplate	en	Box...
+broken link	etemplate	en	Broken link
 can not have special sql-value null	etemplate	en	can not have special SQL-value NULL
 cancel	etemplate	en	Cancel
 cant delete a single widget from a grid !!!	etemplate	en	cant delete a single widget from a grid !!!
@@ -125,6 +129,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
 displayed in the top line of the groupbox (legend)	etemplate	en	displayed in the top line of the groupbox (legend)
 do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
+document '%1' does not exist or is not readable for you!	etemplate	en	Document '%1' does not exist or is not readable for you!
 documentation	etemplate	en	Documentation
 doesn't matter	etemplate	en	doesn't matter
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
@@ -151,6 +156,7 @@ entry saved	etemplate	en	Entry saved
 error copying uploaded file to vfs!	etemplate	en	Error copying uploaded file to vfs!
 error create parent directory %1!	etemplate	en	Error create parent directory %1!
 error deleting %1!	etemplate	en	Error deleting %1!
+error uploading file!	filemanager	en	Error uploading file!
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: webserver is not allowed to write into '%1' !!!
 error: while saving !!!	etemplate	en	Error: while saving !!!
@@ -176,6 +182,7 @@ file writen	etemplate	en	File writen
 fileupload	etemplate	en	FileUpload
 first	etemplate	en	First
 floating point	etemplate	en	Floating Point
+for more then one contact in a document use the tag pagerepeat!	etemplate	en	for more then one contact in a document use the tag pagerepeat!
 foreign key	etemplate	en	Foreign Key
 formatted text (html)	etemplate	en	Formatted Text (HTML)
 go to the first entry	etemplate	en	go to the first entry
@@ -235,6 +242,7 @@ linklist	etemplate	en	LinkList
 linkstring	etemplate	en	LinkString
 linkto	etemplate	en	LinkTo
 load this template into the editor	etemplate	en	load this template into the editor
+maximum size for uploads	filemanager	en	Maximum size for uploads
 message ...	etemplate	en	Message ...
 middle	etemplate	en	Middle
 minute	etemplate	en	Minute
@@ -277,6 +285,7 @@ open the online help.	etemplate	en	Open the online help.
 operator	etemplate	en	Operator
 optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
+or	etemplate	en	OR
 order to navigating by tab key through the form	etemplate	en	Order to navigating by tab key through the form
 overflow	etemplate	en	Overflow
 padding	etemplate	en	Padding
@@ -309,6 +318,7 @@ saves the template with given version number and closes the window	etemplate	en	
 scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
 search	etemplate	en	Search
+search...	etemplate	en	Search...
 select a category	etemplate	en	select a Category
 select a primary contact, to show in the list	etemplate	en	Select a primary contact, to show in the list
 select access	etemplate	en	Select Access
@@ -420,5 +430,4 @@ xslt template	etemplate	en	XSLT Template
 year	etemplate	en	Year
 you are not allowed to export more then %1 entries!	etemplate	en	You are not allowed to export more then %1 entries!
 you can respond by visiting:	etemplate	en	You can respond by visiting:
-error uploading file!	filemanager	en	Error uploading file!
-maximum size for uploads	filemanager	en	Maximum size for uploads
+your code is incorrect !!!	etemplate	en	Your code is incorrect !!!
