@@ -1,3 +1,4 @@
+$label	preferences	en	$label
 %1 - preferences	preferences	en	%1 - Preferences
 %1 hours	preferences	en	%1 hours
 12 hour	preferences	en	12 hour
@@ -7,6 +8,7 @@ a theme defines the colors and fonts used by the template.	preferences	en	A them
 acl grants have been updated	preferences	en	ACL grants have been updated
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in eGroupWare will show you this number of entries or lines per page.<br>Too many slow down the page display, too less will cost you the overview.
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
+br	preferences	en	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	en	Change a user password by passing the old and new passwords.  Returns TRUE on success, FALSE on failure.
 change your password	preferences	en	Change your Password
 change your profile	preferences	en	Change your profile
@@ -30,6 +32,7 @@ enable drag and drop functionality (experimental)	preferences	en	Enable drag and
 enable selectbox dropdown resizing for ie (experimental)	preferences	en	Enable selectbox-dropdown-menu resizing for IE (experimental)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	en	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically. This feature is experimental at the moment.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox-dropdown-menu resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
 enter your new password	preferences	en	Enter your new password
 enter your old password	preferences	en	Enter your old password
 failed to change password.  please contact your administrator.	preferences	en	Failed to change password.  Please contact your administrator.
@@ -79,7 +82,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	en	Should the number of active sessions be displayed for you all the time.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	en	Should these help messages always display when modifying preferences, or only on request.
 show helpmessages by default	preferences	en	Show help messages by default
-show links between egroupware aps as	addressbook	en	Show links between eGroupWare aps as
+show links between egroupware aps as	common	en	Show links between eGroupWare aps as
 show navigation bar as	preferences	en	Show navigation bar as
 show number of current users	preferences	en	Show number of current users
 show text on navigation icons	preferences	en	Show text on navigation icons
@@ -104,7 +107,7 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	en	Which currency symbol or name should be used in eGroupWare.
 write prefs for the specified application.	preferences	en	Write prefs for the specified application.
 you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	en	You can show the linked entries with icons only, icons with app-name or both.
+you can show the linked entries with icons only, icons with app-name or both.	common	en	You can show the linked entries with icons only, icons with app-name or both.
 you do not have permission to set acl's in this mode!	preferences	en	You do not have permission to set ACL's in this mode!
 you must enter a password	preferences	en	You must enter a password
 your current theme is: %1	preferences	en	your current theme is: %1
