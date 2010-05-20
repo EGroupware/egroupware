@@ -20,14 +20,15 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 
 	var $_luid;
 	var $_guid;
-	var $_contentSize;
+	var $_contentSize = 0;
 	var $_contentType;
 	var $_contentFormat;
 	var $_status = RESPONSE_OK;
 	var $_curItem;
 	var $_items = array();
+	var $_failed = array();
 	var $_moreData = false;
-        var $_command = false;
+	var $_command = false;
 
 	function &factory($command, $params = null) {
 		include_once 'Horde/SyncML/Command/Sync/SyncElementItem.php';
@@ -89,26 +90,36 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 				break;
 			case 2;
 				if($element == 'Item') {
-					if($this->_luid) {
+					if ($this->_luid) {
 						$this->_curItem->setLocURI($this->_luid);
 						$this->_curItem->setContentType($this->_contentType);
 						$this->_curItem->setContentFormat($this->_contentFormat);
 						$this->_curItem->setCommand($this->_command);
 
-						if($this->_contentSize)
+						if ($this->_contentSize)
 							$this->_curItem->setContentSize($this->_contentSize);
-						if($this->_moreData) {
+						if ($this->_moreData) {
 							$state->curSyncItem = &$this->_curItem;
 							Horde::logMessage('SyncML: moreData item saved for LocURI ' . $this->_curItem->_luid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 						} else {
-							if (strtolower($this->_curItem->getContentFormat()) == 'b64') {
-								$content = $this->_curItem->getContent();
-								$content =  ($content ? base64_decode($content) : '');
-								$this->_curItem->setContent($content);
-								#Horde::logMessage('SyncML: BASE64 encoded item for LocURI '
-								#	. $this->_curItem->_luid . ":\n $content", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+							$content = $this->_curItem->getContent();
+							$contentSize = strlen($content);
+							if ((($size = $this->_curItem->getContentSize()) !== false) &&
+								abs($contentSize - $size) > 3) {
+								Horde::logMessage('SyncML: content size mismatch for LocURI ' . $this->_luid .
+								": $contentSize ($size) : " . $content,
+								__FILE__, __LINE__, PEAR_LOG_WARNING);
+								$this->_failed[$this->_luid] = $this->_curItem;
+							} else {
+								if (strtolower($this->_curItem->getContentFormat()) == 'b64') {
+									$content =  ($content ? base64_decode($content) : '');
+									$this->_curItem->setContent($content);
+									#Horde::logMessage('SyncML: BASE64 encoded item for LocURI '
+									#	. $this->_curItem->_luid . ":\n $content", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+								}
+								#Horde::logMessage('SyncML: Data for ' . $this->_luid . ': ' . $this->_curItem->getContent(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+								$this->_items[$this->_luid] = $this->_curItem;
 							}
-							$this->_items[$this->_luid] = $this->_curItem;
 						}
 					}
 					unset($this->_contentSize);
@@ -118,13 +129,16 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 			case 3:
 				switch ($element) {
 					case 'Data':
-						$this->_curItem->_content .= $this->_chars;
+						$content = $this->_chars;
+						if ($this->_contentFormat == 'b64') $content = trim($content);
+						#Horde::logMessage('SyncML: Data for ' . $this->_luid . ': ' . $content, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+						$this->_curItem->_content .= $content;
 						break;
 					case 'MoreData':
 						$this->_moreData = true;
 						break;
 					case 'Type':
-						if(empty($this->_contentType)) {
+						if (empty($this->_contentType)) {
 							$this->_contentType = trim($this->_chars);
 						}
 						break;
@@ -132,7 +146,7 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 						$this->_contentFormat = strtolower(trim($this->_chars));
 						break;
 					case 'Size':
-						$this->_contentSize = $this->_chars;
+						$this->_contentSize = trim($this->_chars);
 						break;
 				}
 				break;
@@ -162,6 +176,10 @@ class Horde_SyncML_Command_Sync_SyncElement extends Horde_SyncML_Command {
 
     function getSyncElementItems() {
          return (array)$this->_items;
+    }
+    
+    function getSyncElementFailures() {
+         return (array)$this->_failed;
     }
 
     function getLocURI()

@@ -50,7 +50,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			if (!is_a($cmd, 'Horde_SyncML_Command_Sync_ContentSyncElement')) {
 				// Conflict with other datastore
 				Horde :: logMessage("SyncML: handleSync($currentCmdID, $hordeType, $syncType) moreData conflict found",
-						__FILE__, __LINE__, PEAR_LOG_DEBUG);
+						__FILE__, __LINE__, PEAR_LOG_WARNING);
 				$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 				return $currentCmdID;
 			}
@@ -202,12 +202,6 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 		$history = $GLOBALS['egw']->contenthistory;
 		$state = &$_SESSION['SyncML.state'];
 
-		if ($command->hasMoreData()) {
-			Horde::logMessage('SyncML: moreData: TRUE', __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			$command->setStatus(RESPONSE_CHUNKED_ITEM_ACCEPTED_AND_BUFFERED);
-			return true;
-		}
-
 		$type = $this->_targetLocURI;
 
 		$syncml_prefs = $GLOBALS['egw_info']['user']['preferences']['syncml'];
@@ -222,15 +216,6 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 		$syncElementItems = $command->getSyncElementItems();
 
 		foreach($syncElementItems as $syncItem) {
-
-			$contentSize = strlen($syncItem->_content);
-			if ((($size = $syncItem->getContentSize()) !== false) &&
-					abs($contentSize - $size) > 3) {
-				Horde::logMessage('SyncML: content size mismatch for LocURI ' . $syncItem->_luid .
-					": $contentSize ($size)", __FILE__, __LINE__, PEAR_LOG_ERROR);
-				$command->setStatus(RESPONSE_SIZE_MISMATCH);
-				return;
-			}
 
 			if(!$contentType = $syncItem->getContentType()) {
 				$contentType = $state->getPreferedContentType($type);
@@ -248,7 +233,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			$guid = $registry->call($hordeType . '/search',
 				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType, $oguid, $type));
 
-			if ($guid) {
+			if (!is_a($guid, 'PEAR_Error') && $guid) {
 				// Check if the found entry came from the client
 				$guid_ts = $state->getSyncTSforAction($guid, 'add');
 				$sync_ts = $state->getChangeTS($type, $guid);
@@ -292,7 +277,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 				__FILE__, __LINE__, PEAR_LOG_DEBUG);
 			$guid = $registry->call($hordeType . '/import',
 				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
-			if (!is_a($guid, 'PEAR_Error') && $guid != false) {
+			if (!is_a($guid, 'PEAR_Error') && $guid) {
 				$state->setUID($type, $syncItem->getLocURI(), $guid);
 				$state->log("Client-AddReplace");
 				Horde::logMessage('SyncML: replaced/added client entry as ' . $guid,
@@ -303,8 +288,6 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 				$state->log("Client-AddFailure");
 			}
 		}
-
-		return true;
 	}
 
 	function loadData() {
