@@ -607,22 +607,23 @@ class calendar_uiforms extends calendar_ui
 				if ($content['reference'] == 0 && !$content['edit_single'])
 				{
 					$msg = lang('Series deleted');
+					$delete_exceptions = $button == 'delete_exceptions';
 					$exceptions_kept = false;
 					// Handle the exceptions
 					$recur_exceptions = $this->bo->so->get_related($event['uid']);
 					foreach ($recur_exceptions as $id)
 					{
-						if (empty($content['exceptions']))
+						if ($delete_exceptions)
+						{
+							$this->bo->delete($id);
+						}
+						else
 						{
 							if (!($exception = $this->bo->read($id))) continue;
 							$exception['uid'] = common::generate_uid('calendar', $id);
 							$exception['reference'] = $exception['recurrence'] = 0;
 							$this->bo->update($exception, true);
 							$exceptions_kept = true;
-						}
-						else
-						{
-							$this->bo->delete($id);
 						}
 					}
 					if ($exceptions_kept)
