@@ -13,10 +13,10 @@ apply the action on the whole query, not only the shown timesheets!!!	timesheet	
 both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien käyttö
 changed status	timesheet	fi	Tila muutettu
 check all	timesheet	fi	Valitse kaikki
-comment by %1 at %2:	timesheet	fi	Kommentotu: %1, %1
+comment by %1 at %2:	timesheet	fi	Kommentoinut: %1, %1
 create new links	timesheet	fi	Luo uusi linkki
 creates a new field	timesheet	fi	Luo uusi kenttä
-creating new entry	timesheet	fi	Luo uusi merkintä
+creating new entry	timesheet	fi	Uutta merkintää luodaan
 custom fields	timesheet	fi	Lisäkentät
 delete this entry	timesheet	fi	Poista tämä merkintä
 delete this status	timesheet	fi	Poista tämä tila
@@ -38,7 +38,7 @@ export	timesheet	fi	Vienti
 export to openoffice spreadsheet	timesheet	fi	Vie OpenOffice Spreadsheetiin
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöja Ajanmerkinnästä CSV tiedostoon. CSV-'Comma Seperated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
 field must not be empty !!!	timesheet	fi	Kenttää ei voi jättää tyhjäksi!!
-full: use only projectmanager	admin	fi	Täydet: käytä vain projektinhallintaa
+full: use only projectmanager	admin	fi	Täydellinen: Käytä vain projektinhallintaa
 general	timesheet	fi	Yleinen
 global categories	timesheet	fi	Yleiset kategoriat
 history	timesheet	fi	Historia
@@ -59,11 +59,12 @@ no details	timesheet	fi	Ei lisätietoja
 no project	timesheet	fi	Ei projektia
 no status	timesheet	fi	Ei tilaa
 none: use only free project-names	admin	fi	Ei mitään: käytä vain vapaita projektinimiä
-number of row for a multiline inputfield or line of a multi-select-box	timesheet	fi	rivien määrä useariviseen merkintäkenttään tai multi-valintalaatikkoon
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	fi	Rivien määrä useariviseen merkintäkenttään tai multi-valintalaatikkoon
 only admin	timesheet	fi	Vain Admin
 only admin can edit this status	timesheet	fi	Vain ylläpitäjät voivat muokata tätä tilaa.
-or endtime	timesheet	fi	ei päättymishetkeä
+or endtime	timesheet	fi	tai päättymisaika
 order	timesheet	fi	Järjestys
+parent	timesheet	fi	Pää-
 permission denied!!!	timesheet	fi	Pääsy estetty!!!
 price	timesheet	fi	Hinta
 projectmanager integration	admin	fi	Projektinhallinnan integrointi
@@ -78,7 +79,9 @@ select a status of the timesheet	timesheet	fi	Valitse tila
 select action	timesheet	fi	Valitse toimenpide
 select infolog	timesheet	fi	Valitse InfoLog
 select multiple timeshhets for a further action	timesheet	fi	Valitse useampi merkintä jatkaaksesi
-select the predefined status, whan creating a new timesheet	timesheet	fi	Valitse oletustila uutta merkintää luotaessa.
+select the predefined status, whan creating a new timesheet	preferences	fi	Valitse oletustila uutta merkintää luotaessa.
+select the predefined status, when creating a new timesheet	preferences	fi	Valitse käytettävä (oletus-)tila uutta Ajanseurannan merkintää luotaessa
+show a quantity sum (eg. to sum up negative overtime)	admin	fi	Näytä määrän summa (esim. negatiivisen ylityön summa)
 start	timesheet	fi	Alku
 starttime	timesheet	fi	Aloitusaika
 starttime has to be before endtime !!!	timesheet	fi	Aloitusajan pitää olla ennen päättymiaikaa
@@ -86,7 +89,7 @@ status deleted.	timesheet	fi	Tila poistettu.
 status of created timesheets	timesheet	fi	Luotujen merkintöjen tila.
 status updated.	timesheet	fi	Tila päivitetty.
 sum %1:	timesheet	fi	Summa %1:
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fi	Nimeä käytetään tietokannassa (DB) (<=20 merkkiä). ÄLÄ muuta nimeä, tai jo olemassa olevia tietoja ei voi löytää.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fi	Nimeä käytetään tietokannassa (<=20 merkkiä). ÄLÄ muuta nimeä, tai jo olemassa olevia tietoja ei voi enää löytää.
 the text displayed to the user	timesheet	fi	Käyttäjälle näkyvä nimi
 this month	timesheet	fi	Tässä kuussa
 this week	timesheet	fi	Tällä viikolla
@@ -99,7 +102,7 @@ timesheet openoffice export	timesheet	fi	Ajanseurannan OpenOffice-vienti
 timesheet status-%1 '%2' added.	timesheet	fi	Tila-%1 '%2' lisätty.
 timesheet-%1 '%2' updated.	timesheet	fi	Merkintä-%1 '%2' päivitetty.
 timesheet-%1 deleted.	timesheet	fi	Merkintä-%1 poistettu.
-tracker	timesheet	fi	HeplDesk
+tracker	timesheet	fi	HelpDesk
 unitprice	timesheet	fi	Yksikköhinta
 values for selectbox	timesheet	fi	Valintalaatikon arvot
 view this entry	timesheet	fi	Näytä tämä merkintä
