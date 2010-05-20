@@ -118,7 +118,7 @@ else
 	}
 
 	// Group perms for the default group
-	$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','felamimail','filemanager','preferences','home','manual','groupdav'),'run',$defaultgroupid);
+	$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','felamimail','filemanager','preferences','home','manual','groupdav','notifications','syncml'),'run',$defaultgroupid);
 
 	$apps = array();
 	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled < 3',__LINE__,__FILE__);
