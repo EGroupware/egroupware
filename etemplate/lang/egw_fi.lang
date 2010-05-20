@@ -6,6 +6,7 @@
 %1 matches on search criteria	etemplate	fi	Hakuehdolla löytyi %1 kpl
 %1 more...	etemplate	fi	%1 lisää...
 %1 new etemplates imported for application '%2'	etemplate	fi	%1 sovelluksen %2 uutta eMallipohjaa tuotu
+%1 not implemented for %2!	etemplate	fi	%1 ei ole implementoitu '%2':een
 %s disabled	etemplate	fi	%s ei käytössä
 %s needed	etemplate	fi	%s tarvitaan
 %s notranslation	etemplate	fi	%s Ei käännöstä
@@ -37,8 +38,10 @@ all operations save the template!	etemplate	fi	Kaikki toiminnot tallentavat mall
 allowed file type: %1	etemplate	fi	Sallittu tiedostotyyppi: %1
 am	etemplate	fi	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fi	Indeksoitu sarake nopeuttaa kyselyjen käyttöä sarakkeessa (maksaa tilaa levyllä !!!)
+and	etemplate	fi	JA
 application	etemplate	fi	Sovellus
 application name needed to write a langfile or dump the etemplates !!!	etemplate	fi	Sovelluksen nimi pitää kirjoittaa kielitiedostoon tai vedostaa eMallipohjat !!!
+applications	etemplate	fi	Sovellukset
 applies the changes made	etemplate	fi	Hyväksytään tehdyt muutokset
 applies the changes to the given version of the template	etemplate	fi	Hyväksy muutokset annetun version pohjaan.
 as default	etemplate	fi	Oletuksena
@@ -51,7 +54,8 @@ border-line-thickness for the table-tag	etemplate	fi	Reunaviivan paksuus
 bottom	etemplate	fi	Alareuna
 box	etemplate	fi	Valintalaatikko
 box...	etemplate	fi	Valintalaatikko...
-can not have special sql-value null	etemplate	fi	ei voi olla arvoltaan SQL erityinen tyhjämerkki
+broken link	etemplate	fi	Virheellinen linkki
+can not have special sql-value null	etemplate	fi	ei voi olla SQL-value NULL
 cancel	etemplate	fi	Keskeytä
 cant delete a single widget from a grid !!!	etemplate	fi	Yksittäistä Widgetiä ei voi poistaa ruudukosta!!
 cant delete the only column of a grid !!!	etemplate	fi	Ainoata saraketta ei voi poistaa ruudukosta!!
@@ -72,6 +76,7 @@ click here to attach the file	etemplate	fi	Liitä tiedosto
 click here to create the link	etemplate	fi	Luo linkki
 click here to start the search	etemplate	fi	Aloita haku
 click here to upload the file	etemplate	fi	Lataa tiedosto
+click to order after that criteria	etemplate	fi	Järjestä kriteerin jälkeen
 clickable path	etemplate	fi	Klikattava polku
 closes the window without saving the changes	etemplate	fi	Sulje ikkuna tallentamatta muutoksia
 column...	etemplate	fi	Sarake...
@@ -120,6 +125,7 @@ deletes this index	etemplate	fi	Poistaa tämän indeksin
 discard changes	etemplate	fi	Hylkää muutokset
 displayed in the top line of the groupbox (legend)	etemplate	fi	Näytetään ryhmävalintalaatikon ylärivillä (legend)
 do you want to save the changes you made in table %s?	etemplate	fi	Tallennetaanko tekemäsi muutokset taulukkoon %s?
+document '%1' does not exist or is not readable for you!	etemplate	fi	Tiedostoa '%1' ei ole olemassa tai sinulla ei ole lukuoikeutta!
 documentation	etemplate	fi	Dokumentointi
 doesn't matter	etemplate	fi	Ei väliä
 drop a table - this can not be undone	etemplate	fi	Poista tietokannan taulu - tätä EI voi peruuttaa
@@ -172,6 +178,7 @@ file writen	etemplate	fi	Tiedostoa kirjoitetaan
 fileupload	etemplate	fi	Tiedostoa ladataan
 first	etemplate	fi	Ensimmäinen
 floating point	etemplate	fi	Liukuva pilkku
+for more then one contact in a document use the tag pagerepeat!	etemplate	fi	Käytä sivuntoisto -komentoa useammalle kuin yhdelle yhteystiedolle!
 foreign key	etemplate	fi	Viiteavain
 formatted text (html)	etemplate	fi	Muotoiltu teksti (HTML)
 go to the first entry	etemplate	fi	Mene ensimmäiseen merkintään
@@ -238,7 +245,7 @@ name of table to add	etemplate	fi	Lisää taulukon nimi
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	fi	Mallipohjan nimi, täytyy olla lomakkeessa sovellus.funktio[.alimalli]
 new search	common	fi	Uusi haku
 new table created	etemplate	fi	Uusi taulukon nimi
-newer version '%1' exists !!!	etemplate	fi	uudempi versio %1 havaittu !!!
+newer version '%1' exists !!!	etemplate	fi	Uudempi versio %1 havaittu !!!
 no column to swap with !!!	etemplate	fi	Ei saraketta johon voisi vaihtaa !!!
 no file	etemplate	fi	Ei tiedostoa
 no filename given or selected via browse...	etemplate	fi	Tiedostonimeä ei annettu tai valittu Selaa... -valinnan kautta
@@ -257,6 +264,8 @@ open the online help.	etemplate	fi	Avaa Online-tuki
 operator	etemplate	fi	Operaattori
 optional note about the link	etemplate	fi	Linkin kuvaus (vapaaehtoinen)
 options	etemplate	fi	Asetukset
+or	etemplate	fi	TAI
+order to navigating by tab key through the form	etemplate	fi	Tabulaattorin liikkumajärjestys
 overflow	etemplate	fi	Ylivuoto
 padding	etemplate	fi	Padding
 parent is a '%1' !!!	etemplate	fi	'%1' on isäntä !!!
@@ -287,6 +296,7 @@ saves changes to tables_current.inc.php	etemplate	fi	Tallenna muutokset taulukko
 saves the template with given version number and closes the window	etemplate	fi	Tallenna mallipohja annetulla versionumerolla ja sulje ikkuna.
 scale	etemplate	fi	Skaalaa
 search	etemplate	fi	Haku
+search...	etemplate	fi	Haku...
 select a category	etemplate	fi	Valitse kategoria
 select a primary contact, to show in the list	etemplate	fi	Valitse ensisijainen yhteystieto näytettäväksi listalla
 select access	etemplate	fi	Valitse käyttöoikeus
