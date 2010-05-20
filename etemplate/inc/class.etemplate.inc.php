@@ -873,8 +873,7 @@ class etemplate extends boetemplate
 					{
 						$onclick = $this->expand_name($onclick,$c,$r,$content['.c'],$content['.row'],$content);
 					}
-					$row_data[".$col"] .= ' onclick="'.$this->js_pseudo_funcs($onclick,$cname).'"' .
-						($cell['id'] ? ' id="'.str_replace('"','&quot;',$cell['id']).'"' : '');
+					$row_data[".$col"] .= ' onclick="'.$this->js_pseudo_funcs($onclick,$cname).'"' .self::get_id('',$cell['name'],$cell['id']);
 				}
 				$colspan = $span == 'all' ? $grid['cols']-$c : 0+$span;
 				if ($colspan > 1)
@@ -1171,7 +1170,7 @@ class etemplate extends boetemplate
 		}
 		if ($form_name != '')
 		{
-			$options = 'id="'.str_replace('"','&quot;',$cell['id'] ? $cell['id'] : $form_name).'" '.$options;
+			$options = self::get_id($form_name,$cell['name'],$cell['id']).' '.$options;
 		}
 		switch ($type)
 		{
@@ -1601,7 +1600,7 @@ class etemplate extends boetemplate
 				}
 				$html .= html::image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,
 					'border="0"'.($imagemap?' usemap="#'.html::htmlspecialchars($imagemap).'"':'').
-					($id || $value ? ' id="'.str_replace('"','&quot;',$id ? $id : $name).'"' : ''));
+					($id || $value ? self::get_id($name,$cell['name'],$id) : ''));
 				$extra_label = False;
 				break;
 			case 'file':	// size: size of the filename field
@@ -1670,7 +1669,7 @@ class etemplate extends boetemplate
 						if (strlen($child['onclick']) > 1)
 						{
 							$rows[$box_row]['.'.$box_col] .= ' onclick="'.$this->js_pseudo_funcs($child['onclick'],$cname).'"'.
-								($child['id'] ? ' id="'.str_replace('"','&quot;',$child['id']).'"' : '');
+								self::get_id('',$child['name'],$child['id']);
 						}
 						// allow to set further attributes in the tablecell, beside the class
 						if (is_array($cl))
@@ -1693,7 +1692,7 @@ class etemplate extends boetemplate
 				{
 					$html = html::table($rows,html::formatOptions($cell_options,',,cellpadding,cellspacing').
 						($type != 'groupbox' ? html::formatOptions($class,'class').
-							($cell['name'] ? ' id="'.str_replace('"','&quot;',$form_name).'"' : '') : '').
+							self::get_id($form_name,$cell['name'],$cell['id']) : '').
 						($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' width="100%"' : ''));	// alignment only works if table has full width
 					if ($type != 'groupbox') $class = '';	// otherwise we create an extra div
 				}
@@ -1708,7 +1707,7 @@ class etemplate extends boetemplate
 					{
 						$label = lang($label);
 					}
-					$html = html::fieldset($html,$label,($cell['name'] ? ' id="'.str_replace('"','&quot;',$form_name).'"' : '').
+					$html = html::fieldset($html,$label,self::get_id($form_name,$cell['name'],$cell['id']).
 						($class ? ' class="'.$class.'"' : ''));
 					$class = '';	// otherwise we create an extra div
 				}
@@ -1719,8 +1718,7 @@ class etemplate extends boetemplate
 							$cell['height'],
 							$cell['width'],
 							$class,
-							$cell['name'] ? $form_name : '',
-						),'height,width,class,id')). ($html ? '' : '</div>');
+						),'height,width,class').self::get_id($form_name,$cell['name'],$cell['id'])). ($html ? '' : '</div>');
 					$class = '';	// otherwise we create an extra div
 				}
 				if ($box_anz > 1)	// small docu in the html-source
@@ -1867,6 +1865,38 @@ class etemplate extends boetemplate
 			return html::div($html,' ondblclick="'.$handler.'"','clickWidgetToEdit');
 		}
 		return $html;
+	}
+
+	/**
+	 * Return id="..." attribute, using the following order to determine the id:
+	 *	- $id if not empty
+	 *  - $name if starting with a hash (#), without the hash of cause
+	 *	- $form_name otherwise
+	 *
+	 * This is necessary to not break backward compatibility: if you want to specify
+	 * a certain id, you can use now "#something" as name to get id="something",
+	 * otherwise the $form_name "exec[something]" is used.
+	 * (If no id is directly supplied internally.)
+	 *
+	 * @param string $form_name
+	 * @param string $name=null
+	 * @param string $id=null
+	 * @return string ' id="..."' or '' if no id found
+	 */
+	static public function get_id($form_name,$name=null,$id=null)
+	{
+		if (empty($id))
+		{
+			if ($name[0] == '#')
+			{
+				$id = substr($name,1);
+			}
+			else
+			{
+				$id = $form_name;
+			}
+		}
+		return !empty($id) ? ' id="'.str_replace('"','&quot;',$id).'"' : '';
 	}
 
 	/**
