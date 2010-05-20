@@ -6,6 +6,7 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
 %1 weeks	calendar	en	%1 weeks
 (%1 events in %2 seconds)	calendar	en	(%1 events in %2 seconds)
+, exceptions preserved	calendar	en	, exceptions preserved
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	en	<b>Please note</b>: The calendar use the holidays of your country, which is set to %1. You can change it in your %2.<br />Holidays are %3 automatic installed from %4. You can change it in %5.
 a non blocking event will not conflict with other events	calendar	en	A non blocking event will not conflict with other events
 accept or reject an invitation	calendar	en	Accept or reject an invitation
@@ -184,6 +185,7 @@ groupmember(s) %1 not included, because you have no access.	calendar	en	Group me
 groups: other users can allways be invited, only groups require an invite grant	admin	en	Groups: other users can always be invited, only groups require an invite grant.
 h	calendar	en	h
 here is your requested alarm.	calendar	en	Here is your requested alarm.
+hide private events	calendar	en	Hide private events
 hide private infos	calendar	en	Hide private infos
 high priority	calendar	en	High priority
 history	calendar	en	History
@@ -193,6 +195,7 @@ holiday management	calendar	en	Holiday Management
 holidays	calendar	en	Holidays
 hours	calendar	en	hours
 how far to search (from startdate)	calendar	en	How far to search (from start date)
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many describtion lines should be directly visible. Further lines are available via a scrollbar.
 how many minutes should each interval last?	calendar	en	How many minutes should each interval last?
 how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?
 how much entries to skip	calendar	en	How much entries to skip
@@ -216,6 +219,7 @@ invite	calendar	en	Invite
 last	calendar	en	Last
 lastname of person to notify	calendar	en	Last name of a person to notify
 length of the time interval	calendar	en	Length of the time interval
+limit number of description lines in list view (default 5, 0 for no limit)	calendar	en	Limit number of description lines in list view (default 5, 0 for no limit)
 link to view the event	calendar	en	Link to view the event
 links	calendar	en	Links
 links, attachments	calendar	en	Links, Attachments
@@ -326,12 +330,14 @@ select multiple contacts for a further action	calendar	en	Select multiple contac
 select resources	calendar	en	Select resources
 select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
+series deleted	calendar	en	Series deleted
 set a year only for one-time / non-regular holidays.	calendar	en	Set a Year only for one-time / non-regular holidays.
 set new events to private	calendar	en	Set new events to private
 setting lock time calender	admin	en	Setting Data lock Time for Calendar (default 1 sec.)
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted (e.g. from calendar module)?
 should new events created as private by default ?	calendar	en	Should new events created as private by default ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	en	Should not logged in persons be able to see your Free/Busy information? You can set an extra password, different from your normal password, to protect this information. The Free/Busy information is in iCal format and only includes the times when you are busy. It does not include the event-name, description or locations. The URL to your Free/Busy information is %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk" target="_blank">http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk" target="_blank">http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk</a>.
 should the grid be shown in the calendar	calendar	en	Should the grid be shown in the calendar
 should the number of weeks be shown on top of the calendar	calendar	en	Should the number of weeks be shown on top of the calendar
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	en	Should the number of weeks be shown on top of the calendar (only if offset = 0)
@@ -349,6 +355,7 @@ show events that have been deleted	calendar	en	Show events that have been delete
 show list of upcoming events	calendar	en	Show list of upcoming events
 show only accepted events	calendar	en	Show only accepted events
 show only delegated events	calendar	en	Show only delegated events
+show only events flagged as public, (not checked as private)	calendar	en	Show only events flagged as public, (not checked as private)
 show only invitations, not yet accepted or rejected	calendar	en	Show only invitations, not yet accepted or rejected
 show only rejected events	calendar	en	Show only rejected events
 show only tentative accepted events	calendar	en	Show only tentative accepted events
