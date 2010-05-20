@@ -249,7 +249,7 @@ class addressbook_hooks
 			'help'   => 'Hides accounts completly from the adressbook.',
 			'xmlrpc' => True,
 			'admin'  => false,
-			'default'=> false,
+			'default'=> '1',
 		);
 		$settings['distributionListPreferredMail'] = array(
 			'type'   => 'select',
