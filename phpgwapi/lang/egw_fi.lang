@@ -51,6 +51,7 @@ all languages	common	fi	Kaikki kielet
 alphabet	common	fi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
 alternate style-sheet:	common	fi	Vaihtoehtoinen tyylisivu:
 american samoa	common	fi	AMERIKAN SAMOA
+an error happened	common	fi	Virheellinen toiminto
 an existing and by the webserver readable directory enables the image browser and upload.	common	fi	Olemassa oleva JA palvelimen lukuoikeudet omaava hakemisto sallii kuvien selaamisen ja lataamisen.
 andorra	common	fi	ANDORRA
 angola	common	fi	ANGOLA
@@ -91,7 +92,7 @@ belize	common	fi	BELIZE
 benin	common	fi	BENIN
 bermuda	common	fi	BERMUDA
 bhutan	common	fi	BHUTAN
-blocked, too many attempts	common	fi	Pääsy estetty, liian monta yritystä
+blocked, too many attempts	common	fi	Pääsy estetty, liian monta yritystä!
 bold	common	fi	Lihavoi
 bolivia	common	fi	BOLIVIA
 border	common	fi	Reuna
@@ -110,8 +111,8 @@ calendar	common	fi	Kalenteri
 cambodia	common	fi	KAMPUTSEA
 cameroon	common	fi	KAMERUN
 canada	common	fi	KANADA
-cancel	common	fi	keskeytä
-cannot replace %1 because it is a directory	common	fi	Ei voida korvata %1, koska se on hakemisto
+cancel	common	fi	Keskeytä
+cannot replace %1 because it is a directory	common	fi	'%1' ei voida korvata , koska se on hakemisto
 cant open %1, needs ziparchive	common	fi	'%1' ei voida avata, ZipArchive vaaditaan
 cant open '%1' for %2	common	fi	Ei voida avata '%1' %2
 cape verde	common	fi	CAP VERDE
@@ -144,8 +145,8 @@ clear	common	fi	Tyhjennä
 clear form	common	fi	Tyhjennä lomake
 click	common	fi	Napsauta
 click here to resume your egroupware session.	common	fi	Palaa istuntoon.
-click or mouse over to show menus	common	fi	Napsauta tai näytä valikot kun osoitetaan hiirellä
-click or mouse over to show menus?	common	fi	Napsauta tai näytä valikot kun osoitetaan hiirellä?
+click or mouse over to show menus	common	fi	Näytetäänkö valikot napsauttamalla vai osoittamalla hiirellä?
+click or mouse over to show menus?	common	fi	Näytetäänkö valikot napsauttamalla vai osoittamalla hiirellä?
 click this image on the navbar: %1	common	fi	Napsauta navigointipalkin kuvaa: %1
 close	common	fi	Sulje
 close sidebox	common	fi	Sulje sivuvalikko
@@ -173,7 +174,7 @@ current users	common	fi	Nykyiset käyttäjät
 cyprus	common	fi	KYPROS
 czech republic	common	fi	TSEKKI
 database error	common	fi	Virhe tietokannassa
-database error!	common	fi	Virhe tietokannassa
+database error!	common	fi	Virhe tietokannassa!
 date	common	fi	Päivämäärä
 date due	common	fi	Eräpäivä
 date selection:	jscalendar	fi	Päivämäärän valinta:
@@ -191,7 +192,7 @@ details	common	fi	Yksityiskohdat
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Ota Internet Explorer 5.5 ja uudempien png-bugin korjausskripti pois käytöstä?
 direction left to right	common	fi	Suunta vasemmalta oikealle
 directory	common	fi	Hakemisto
-directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fi	Hakemistoa ei ole, siihen ei ole lukuoikeuksia tai se ei ole suhteellinen dokumentin juurihakemisto
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fi	Hakemistoa ei ole, Web-palvelin ei voi lukea sitä tai se ei vastaa juurihakemistoa.
 disable internet explorer png-image-bugfix	common	fi	Ota Internet Explorerin png-bugin korjausskripti pois käytöstä
 disable slider effects	common	fi	Ota liukuefektit pois käytöstä
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fi	Otetaanko valikoiden näyttämisen ja piilottamisen liukuefekti pois käytöstä? Operan ja Konquerorin käyttäjät haluavat tämän yleensä pois.
@@ -228,7 +229,7 @@ email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, e
 enabled	common	fi	Käytössä
 end date	common	fi	Loppumispäivä
 end time	common	fi	Loppumisaika
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna eGroupWaren URL.<br>Esimerkki: http://www.yritys.com/egroupware  tai  /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna EGroupwaren URL.<br>Esimerkki: http://www.yritys.com/egroupware  tai  /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
 entry has been deleted sucessfully	common	fi	Kohde poistettu
 entry not found!	common	fi	Kohdetta ei löytynyt!
 entry updated sucessfully	common	fi	Kohde päivitetty
@@ -260,7 +261,7 @@ first page	common	fi	Ensimmäinen sivu
 firstname	common	fi	Etunimi
 fixme!	common	fi	KORJAA MINUT!
 folder already exists.	common	fi	Kansio on jo olemassa
-force selectbox	common	fi	Näytä valintaluettelo
+force selectbox	common	fi	Näytä valintalista
 forever	common	fi	Ikuisesti
 france	common	fi	RANSKA
 french guiana	common	fi	RANSKAN GUANA
@@ -309,7 +310,7 @@ help	common	fi	Tuki
 high	common	fi	Korkea
 highest	common	fi	Korkein
 holy see (vatican city state)	common	fi	VATIKAANI
-home	common	fi	Koti
+home	common	fi	Etusivu
 home email	common	fi	Kotisähköposti
 honduras	common	fi	HONDURAS
 hong kong	common	fi	HONG KONG
@@ -320,7 +321,7 @@ iceland	common	fi	ISLANTI
 iespell not detected. click ok to go to download page.	common	fi	ieSpell:ä ei havaittu, paina Ok siirtyäksesi lataussivulle.
 if the clock is enabled would you like it to update it every second or every minute?	common	fi	Jos kello on käytössä, päivitetäänkö se sekunnin vai minuutin välein?
 if there are some images in the background folder you can choose the one you would like to see.	common	fi	Jos taustakuvahakemistossa on kuvia, voit valita mitä kuvaa haluat käyttää.
-image directory relative to document root (use / !), example:	common	fi	Kuvahakemiston  suhteellinen dokumentin juurihakemisto (use / !), esimerkiksi:
+image directory relative to document root (use / !), example:	common	fi	Kuvahakemiston  suhteellinen dokumentin juurihakemisto (käytä / !), esimerkiksi:
 image url	common	fi	Kuvan URL
 india	common	fi	INTIA
 indonesia	common	fi	INDONEESIA
@@ -347,7 +348,7 @@ japan	common	fi	JAPANI
 japanese	common	fi	Japanese
 jordan	common	fi	JORDANIA
 july	common	fi	Heinäkuu
-jun	common	fi	Kes
+jun	common	fi	Kesäkuu
 june	common	fi	Kesäkuu
 justify center	common	fi	Keskitä
 justify full	common	fi	Tasaa molemmat reunat
@@ -367,7 +368,7 @@ language_direction_rtl	common	fi	language_direction_rtl
 lao peoples democratic republic	common	fi	LAON DEMOKRAATTINEN KANSANTASAVALTA
 last modified	common	fi	Viimeksi muokattu
 last name	common	fi	Sukunimi
-last name of the user, eg. "%1"	common	fi	käyttäjän sukunimi, esim. "%1"
+last name of the user, eg. "%1"	common	fi	Käyttäjän sukunimi, esim. "%1"
 last page	common	fi	Viimeinen sivu
 lastname	common	fi	Sukunimi
 latvia	common	fi	LATVIA
@@ -464,19 +465,19 @@ norway	common	fi	NORJA
 not	common	fi	Ei
 not a user yet? register now	common	fi	Ei vielä käyttäjätiliä? Kirjaudu nyt!
 not assigned	common	fi	Ei osoitettu
-not readable %1 entry of user %2	common	fi	Tietue %1 ei luettavissa henkilölle:
+not readable %1 entry of user %2	common	fi	Henkilön %2 tietue %1 ei luettavissa
 note	common	fi	Muistiinpano
 notes	common	fi	Muistiinpanot
 notifications	common	fi	Huomautusviestit
 notify window	common	fi	Huomautusikkuna
-notify your administrator to correct this situation	common	fi	Ilmoita tästä ylläpitäjälle, jotta tilanne voidaan korjata.
+notify your administrator to correct this situation	common	fi	Ilmoita tästä ylläpitäjille tilanteen korjaamiseksi.
 november	common	fi	Marraskuu
 october	common	fi	Lokakuu
 ok	common	fi	OK
 old value	common	fi	Vanha arvo
 oman	common	fi	OMAN
 on *nix systems please type: %1	common	fi	*nix-järjestelmissä voit kirjoittaa: %1
-on mouse over	common	fi	Hiiri osoittaa
+on mouse over	common	fi	Hiirellä osoittamalla
 only private	common	fi	Vain yksityiset
 only yours	common	fi	Vain omat
 oops! you caught us in the middle of system maintainance.	common	fi	Hups... Huoltokatko meneillään!
@@ -506,7 +507,7 @@ password must contain at least %1 numbers	common	fi	Salasanassa pitää olla vä
 password must contain at least %1 special characters	common	fi	Salasanassa pitää olla vähintään %1 erikoismerkkiä.
 password must contain at least %1 uppercase letters	common	fi	Salasanassa pitää olla vähintään %1 isoa kirjainta.
 password must have at least %1 characters	common	fi	Salasanassa pitää olla vähintään %1 merkkiä.
-path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA www-palvelimen asiakirjajuuren ulkopuolella!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA www-palvelimen juurihakemiston ulkopuolella!!!
 permission denied!	common	fi	Käyttöoikeus estetty!
 permissions to the files/users directory	common	fi	Tiedostojen/käyttäjien hakemiston käyttöoikeudet
 permisson denied!	common	fi	Käyttöoikeus estetty!
@@ -540,13 +541,14 @@ priority	common	fi	Tärkeys
 private	common	fi	Yksityinen
 programs	common	fi	Ohjelmat
 project	common	fi	Projekti
+properties	common	fi	Ominaisuudet
 public	common	fi	Julkinen
 puerto rico	common	fi	PUERTO RICO
 qatar	common	fi	QATAR
 read	common	fi	Lue
 read this list of methods.	common	fi	Lue metodien luettelo.
 reading	common	fi	Luetaan
-register	common	fi	Kirjaudu
+register	common	fi	Rekisteröidy
 regular	common	fi	Tavallinen
 reject	common	fi	Hylkää
 remember me	common	fi	Muista minut
@@ -613,27 +615,27 @@ show all	common	fi	Näytä kaikki
 show all categorys	common	fi	Näytä kaikki kategoriat
 show as topmenu	common	fi	Näytä ylävalikossa
 show clock?	common	fi	Näytetäänkö kello?
-show home and logout button in main application bar?	common	fi	Näytetäänkö etusivu- ja kirjautumispainike päävalikossa?
+show home and logout button in main application bar?	common	fi	Näytetäänkö etusivu- ja uloskirjautumispainike päävalikossa?
 show in sidebox	common	fi	Näytä sivuvalikossa
 show logo's on the desktop.	common	fi	Näytä logo työpöydällä
 show menu	common	fi	Näytä valikko
 show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
-show page generation time on the bottom of the page?	common	fi	Näytä sivun tekemiseen kulunut aika sivun alareunassa?
-show page generation time?	common	fi	Näytä kauanko sivua luotiin?
+show page generation time on the bottom of the page?	common	fi	Näytetäänkö sivun tekemiseen kulunut aika sivun alareunassa?
+show page generation time?	common	fi	Näytetäänkö sivun tekemiseen kulunut aika?
 show the logo's of egroupware and x-desktop on the desktop.	common	fi	Näytä EGroupwaren ja X-Desktopin logot työpöydällä
 show_more_apps	common	fi	show_more_apps
-showing %1	common	fi	näytetään %1
-showing %1 - %2 of %3	common	fi	näytetään %1 - %2 of %3
+showing %1	common	fi	Näytetään %1
+showing %1 - %2 of %3	common	fi	Näytetään %1 - %2 / %3
 sierra leone	common	fi	SIERRA LEONE
 simple	common	fi	Yksinkertainen
 singapore	common	fi	SINGAPORE
-site configuration	common	fi	Palvelun asetukset
+site configuration	common	fi	Konfigurointi
 size	common	fi	Koko
 slovakia	common	fi	SLOVAKIA
 slovenia	common	fi	SLOVENIA
 solomon islands	common	fi	SALOMONSAARET
 somalia	common	fi	SOMALIA
-sorry, your login has expired	login	fi	Istuntosi on vanhentunut
+sorry, your login has expired	login	fi	Käyttäjätilisi on vanhentunut
 south africa	common	fi	ETELÄAFRIKKA
 south georgia and the south sandwich islands	common	fi	ETELÄ-GEORGIA JA ETELÄISET SANDWICH-SAARET
 spain	common	fi	ESPANJA
@@ -682,12 +684,12 @@ to correct this error for the future you will need to properly set the	common	fi
 to go back to the msg list, click <a href= %1 >here</a>	common	fi	Siirtyäksesi takaisin viestiluetteloon napsauta <a href="%1">tästä</a>
 today	common	fi	Tänään
 todays date, eg. "%1"	common	fi	Tämä päivämäärä, esim. "%1"
-toggle first day of week	jscalendar	fi	Vaihda viikon alkupäivää
+toggle first day of week	jscalendar	fi	Vaihda viikon aloituspäivää
 togo	common	fi	TOGO
 tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjällä '%2', %3 IP-osoitteesta %4
-top	common	fi	Top
+top	common	fi	Ylös
 total	common	fi	Yhteensä
 transparant bg for the icons?	common	fi	Ikoneilla on läpinäkyvä taustaväri?
 trinidad and tobago	common	fi	TRINIDAD JA TOBAGO
@@ -706,7 +708,7 @@ united kingdom	common	fi	YHDISTYNYT KUNINGASKUNTA
 united states	common	fi	YHDYSVALLAT
 united states minor outlying islands	common	fi	YHDYSVALTOJEN SAARIOSAVALTIOT
 unknown	common	fi	Tuntematon
-update	common	fi	Lisää
+update	common	fi	Päivitä
 update the clock per minute or per second	common	fi	Päivitetäänkö kello minuutin vai sekunnin välein?
 upload	common	fi	Lataa
 upload directory does not exist, or is not writeable by webserver	common	fi	Lataus hakemistoa ei löydy tai palvelin ei voi kirjoittaa sinne.
@@ -740,12 +742,12 @@ western sahara	common	fi	LÄNSISAHARA
 what color should all the blank space on the desktop have	common	fi	Minkä värisinä kaikki työpöydän tyhjät kohdat näytetään?
 what style would you like the image to have?	common	fi	Minkä tyylin haluat kuvaan?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fi	Kun vastaat Kyllä, kotisivu- ja uloskirjautumispainike näkyvät yläreunan valikossa, kuten sovellukset.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	fi	Missä ja kuinka Asetus, Tietoja ja Kirjaudu Ulos -linkit tulisi näyttää?
+where and how will the egroupware links like preferences, about and logout be displayed.	common	fi	Missä ja kuinka Asetukset, Tietoja ja Kirjaudu Ulos -linkit tulisi näyttää?
 which groups	common	fi	Mitkä ryhmät
 width	common	fi	Leveys
 wk	jscalendar	fi	vk
 work email	common	fi	Työsähköposti
-would you like to display the page generation time at the bottom of every window?	common	fi	Näytetään sivun alalaidassa kuinka kauan sivua luotiin?
+would you like to display the page generation time at the bottom of every window?	common	fi	Näytetäänkö jokaisen ikkunan alareunassa sivun luomiseen kulunut aika?
 writing	common	fi	Kirjoitetaan
 written by:	common	fi	Kirjoittanut:
 year	common	fi	Vuosi
@@ -754,12 +756,12 @@ yes	common	fi	Kyllä
 you are required to change your password during your first login	common	fi	Salasanasi on vaihdettava ensimmäisen sisäänkirjautumisen yhteydessä.
 you can customize how many icons and toolbars the editor shows.	common	fi	Määritele montako ikonia ja työkaluriviä editori näyttää.
 you have been successfully logged out	login	fi	Olet kirjautunut ulos
-you have not entered a title	common	fi	Et antanut otsikkoa
+you have not entered a title	common	fi	Et määritellyt otsikkoa
 you have not entered a valid date	common	fi	Olet määritellyt virheellisen päivämäärän
 you have not entered a valid time of day	common	fi	Olet määritellyt virheellisen kellonajan
 you have not entered participants	common	fi	Et ole määritellyt osallistujia
 you have selected an invalid date	common	fi	Olet valinnut virheellisen päivämäärän!
-you have selected an invalid main category	common	fi	Olet valinnut virheellisen pääluokan!
+you have selected an invalid main category	common	fi	Olet valinnut virheellisen pääkategorian!
 you have successfully logged out	common	fi	Olet kirjautunut ulos
 you need to %1set your timezone preference%2.	common	fi	Määrittele %1aikavyöhykkeesi asetuksissa%2.
 you need to add the webserver user '%1' to the group '%2'.	common	fi	Lisää www-palvelimen käyttäjä '%1' ryhmään '%2'.
@@ -767,10 +769,10 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fi	Sinulla ei ole käyttöoikeutta sovellukseen %1!
 your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
 your message has been sent	common	fi	Viesti on lähetetty
-your search returned %1 matchs	common	fi	haku palautti %1 osumaa
-your search returned 1 match	common	fi	haku palautti yhden osuman
+your search returned %1 matchs	common	fi	Haku palautti %1 osumaa
+your search returned 1 match	common	fi	Haku palautti yhden osuman
 your session could not be verified.	login	fi	Istuntoasi ei voitu varmentaa.
 your settings have been updated	common	fi	Asetukset päivitetty
 zambia	common	fi	ZAMBIA
 zimbabwe	common	fi	ZIMBABWE
-zoom	common	fi	Zoomaa
+zoom	common	fi	Suurenna
