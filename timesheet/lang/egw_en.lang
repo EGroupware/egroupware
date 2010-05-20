@@ -80,7 +80,8 @@ select a status of the timesheet	timesheet	en	select a status of the timesheet
 select action	timesheet	en	Select action
 select infolog	timesheet	en	select Infolog
 select multiple timeshhets for a further action	timesheet	en	Select multiple timeshhets for a further action
-select the predefined status, whan creating a new timesheet	timesheet	en	Select the predefined status, whan creating a new timesheet
+select the predefined status, whan creating a new timesheet	preferences	en	Select the predefined status, whan creating a new timesheet
+select the predefined status, when creating a new timesheet	preferences	en	Select the predefined status, when creating a new timesheet
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum (eg. to sum up negative overtime)
 start	timesheet	en	Start
 starttime	timesheet	en	Starttime
