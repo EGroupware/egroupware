@@ -28,10 +28,7 @@ basedirectory	filemanager	en	Basedirectory
 can't open directory %1!	filemanager	en	Can't open directory %1!
 cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
 cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
-cautiously rejecting to remove folder '$path'!	filemanager	en	Cautiously rejecting to remove folder '$path'!
-cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting to remove folder '%1'!
 check all	filemanager	en	Check all
-choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	en	Choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates
 choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	en	Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date
 clear search	filemanager	en	clear search
 comment	filemanager	en	Comment
@@ -90,7 +87,6 @@ extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
 failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
 failed to create directory!	filemanager	en	Failed to create directory!
-fake base dir did not exist, egroupware created a new one.	filemanager	en	Fake Base Dir did not exist, eGroupWare created a new one.
 favorites	filemanager	en	Favorites
 file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.

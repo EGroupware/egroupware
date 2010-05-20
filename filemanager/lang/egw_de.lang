@@ -29,6 +29,7 @@ can't open directory %1!	filemanager	de	Kann Verzeichnis %1 nicht öffnen!
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
 check all	filemanager	de	Alle auswählen
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	de	Wenn Sie nur ein Datum auswählen (von/bis), erhalten Sie in den Suchergebnissen alle einträge die älter/neuer, als das eingetragene Datum sind.
 clear search	filemanager	de	Suchfelder zurücksetzen
 comment	filemanager	de	Kommentar
 comments cannot contain "%1"	filemanager	de	Kommentare dürfen "%1" nicht enthalten
@@ -175,8 +176,12 @@ total files	filemanager	de	Gesamtanzahl Dateien
 unused space	filemanager	de	Nicht benutzter Platz
 up	filemanager	de	Nach oben
 updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
+upload fields	filemanager	de	Dateien hochladen
+upload files	filemanager	de	Dateien hochladen
 used space	filemanager	de	Benutzter Platz
 users and groups	filemanager	de	Benutzer und Gruppen
+versioning	filemanager	de	Versionierung
+who	filemanager	de	Wer
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!
 you can only grant additional rights, you can not take rights away!	filemanager	de	Sie könnnen nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
