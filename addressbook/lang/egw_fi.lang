@@ -12,6 +12,7 @@
 (empty = use global limit, no = no export at all)	admin	fi	(tyhjä = käytä yleistä rajoitusta, ei = ei vientiä)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fi	<b>Muunnostyyppiä <none> ei löydy.</b> Valitse muunnostyyppi listasta.
 @-eval() is only availible to admins!!!	addressbook	fi	@-eval() on vain ylläpitäjien käytettävissä!
+account id	addressbook	fi	Käyttäjätilin ID
 account repository	admin	fi	Käyttäjätilien varasto
 accounts	addressbook	fi	Käyttäjätilit
 actions	addressbook	fi	Toiminnot
@@ -37,8 +38,10 @@ address line 2	addressbook	fi	Osoiterivi 2
 address type	addressbook	fi	Osoitteen tyyppi
 addressbook	common	fi	Osoitekirja
 addressbook csv export	addressbook	fi	Osoitekirjan CSV-vienti
+addressbook csv import	addressbook	fi	Osoitekirjan CSV-vienti
 addressbook field	addressbook	fi	Osoitekirjan kenttä
 addressbook menu	addressbook	fi	Osoitekirjan valikko
+addressbook of	addressbook	fi	Osoitekirja:
 addressbook preferences	addressbook	fi	Osoitekirjan asetukset
 addressbook the contact should be saved to	addressbook	fi	Osoitekirja, johon yhteystiedot tulisi tallentaa
 addressbook the contact should be shown	addressbook	fi	Osoitekirja, jossa yhteystiedot tulisi olla
@@ -81,6 +84,7 @@ category tree	admin	fi	Kategorian runko
 cell phone	addressbook	fi	Matkapuhelin
 change all organisation members	addressbook	fi	Vaihda kaikki organisaation jäsenet
 charset for the csv export	addressbook	fi	CSV -viennissä käytettävä merkistö
+charset for the vcard export	addressbook	fi	vCard -viennissä käytettävä merkistö
 charset of file	addressbook	fi	Tiedoston merkistö
 check all	addressbook	fi	Valitse kaikki
 choose an icon for this contact type	admin	fi	Valitse kuvake tälle yhteystietotyypille
@@ -99,6 +103,7 @@ contact deleted	addressbook	fi	Yhteystieto poistettu
 contact fields to show	addressbook	fi	Näytä yhteytietojen kentät
 contact fields:	addressbook	fi	Yhteystiedon kentät:
 contact id	addressbook	fi	Yhteystiedon ID
+contact id cannot be changed by import	addressbook	fi	Yhteystiedon ID:tä ei voi muuttaa tuonnissa
 contact maintenance	admin	fi	Yhteystietojen huolto ja hallinta
 contact modified by %1 at %2	addressbook	fi	Yhteystieto muokattu: %1, %2
 contact not found!	addressbook	fi	Yhteystietoa ei löytynyt!
@@ -161,7 +166,7 @@ edit custom field	addressbook	fi	Muokkaa lisäkenttiä
 edit custom fields	admin	fi	Muokkaa lisäkenttiä
 edit extra account-data in the addressbook	admin	fi	Muokkaa extra-käyttäjätilitietoja osoitekirjassa
 edit phonenumbers -	addressbook	fi	Muokkaa puhelinnumeroita
-either the configured email addesses are wrong or the mail configuration.	addressbook	fi	Joko sähköpostiosoitte tai sähköpostitili on konfiguroitu virheellisesti.
+either the configured email addesses are wrong or the mail configuration.	addressbook	fi	Joko sähköpostiosoite tai sähköpostitili on konfiguroitu virheellisesti.
 email & internet	addressbook	fi	Sähköposti ja Internet
 email addresses (comma separated) to send the contact data	addressbook	fi	Sähköpostiosoitteet (pilkulla eroitetut) joihin yhteystiedot lähetetään
 empty	admin	fi	Tyhjä
@@ -173,7 +178,12 @@ error deleting the contact !!!	addressbook	fi	Virhe poistettaessa yhteystietoa !
 error saving the contact !!!	addressbook	fi	Virhe tallennettaessa yhteystietoa !!!
 error: the entry has been updated since you opened it for editing!	addressbook	fi	Virhe: Yhteystietoa on jo päivitetty sen jälkeen, kun avasit sen muokattavaksi!
 example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	fi	Esim. $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms. You can also use a field name instead a fix value. Example: $$IFadr_one_countryname~DEUTSCHLAND~~adr_one_countryname$$
+example $$letterprefix$$ - gives a letter prefix without double spaces, if the title is emty for  example	addressbook	fi	Esimerkki $$LETTERPREFIX$$ - Etuliite ilman tyhjiä välejä jos tuotavaa artikkelia (etuliite /titteli) ei löytynyt.
+example $$letterprefixcustom n_prefix title n_family$$ - example: mr dr. james miller	addressbook	fi	Esimerkki $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Esimerkiksi Mr Dr. James Miller
+example $$nelf role$$ - if field role is not empty, you will get a new line with the value of field role	addressbook	fi	Esimerkki $$NELF role$$ - jos kenttä "Rooli" ei ole tyhjä, sen arvo näytetään uudella rivillä.
+example $$nelfnv role$$ - if field role is not empty, set a lf without any value of the field	addressbook	fi	Esimerkki $$NELFNV role$$ - Jos kenttä "Rooli" ei ole tyhjä, aseta LF ilman mitään arvoa.
 existing links	addressbook	fi	Olemassaolevat linkit
+exists	addressbook	fi	Olemassaoleva
 export	addressbook	fi	Vienti
 export as csv	addressbook	fi	Vie CSV -muodossa
 export as vcard	addressbook	fi	Vie VCard -muodossa
@@ -210,6 +220,7 @@ group %1	addressbook	fi	Ryhmä %1
 h	addressbook	fi	t
 hide accounts from addressbook	addressbook	fi	Piiloita käyttäjätilit osoitekirjasta
 hides accounts completly from the adressbook.	addressbook	fi	Piiloita käyttäjätilit kokonaan osoitekirjasta.
+history logging	admin	fi	Historialoki
 home address	addressbook	fi	Kotiosoite
 home address, birthday, ...	addressbook	fi	Kotiosoite, syntymäpäivä, ...
 home city	addressbook	fi	Kaupunki
@@ -240,6 +251,7 @@ imports contacts into your addressbook from a csv file. csv means 'comma seperat
 in %1 days (%2) is %3's birthday.	addressbook	fi	%1:n päivän kuluttua (%2) on syntymäpäivä henkilöllä %3.
 income	addressbook	fi	Tulo
 infolog	addressbook	fi	InfoLog
+insert	addressbook	fi	Syötä
 insert in document	addressbook	fi	Syötä asiakirja
 insufficent rights to delete this list!	addressbook	fi	Puuttelliset ACL-oikeudet listan poistamiseksi!
 international	addressbook	fi	Kansainvälinen
@@ -315,6 +327,7 @@ preferred email address to use in distribution lists	addressbook	fi	Ensisijainen
 preferred phone	addressbook	fi	Ensisijainen puhelin
 preferred type of email address to add for distribution lists	addressbook	fi	Ensisijainen sähköpostiosoite jakelulistoilla käytettäväksi.
 prefix	addressbook	fi	Etuliite
+prevent deleting of contacts	admin	fi	Estä yhteystietojen poistaminen
 private custom fields	addressbook	fi	Yksityiset lisätiedot
 public key	addressbook	fi	Julkinen avain
 publish into groups:	addressbook	fi	Julkaise ryhmissä
@@ -346,6 +359,7 @@ select the type of conversion	addressbook	fi	Valitse muunnoksen tyyppi
 select the type of conversion:	addressbook	fi	Valitse muunnoksen tyyppi:
 select where you want to store / retrieve contacts	admin	fi	Valitse minne varastoit / palautat yhteystiedot
 selected contacts	addressbook	fi	Valitse yhteystiedot
+send emailcopy to receiver	addressbook	fi	Lähetä sähköpostikopio vastaanottajalle
 seperator	addressbook	fi	Erotin (Separator)
 set full name and file as field in contacts of all users (either all or only empty values)	admin	fi	Aseta "koko nimi" ja "tiedosto nimellä" (File as) kenttä kaikille käyttäjille. (joko kaikki tai tyhjä).
 set only full name	addressbook	fi	Ainoastaan koko nimi
@@ -372,11 +386,13 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	fi	Tuntematon käyttäjä tarvitsee lisäämiseen tarvittavat ACL-oikeudet!
 the anonymous user needs read it!	addressbook	fi	Tuntematon käyttäjä tarvitsee lukemiseen tarvittavat ACL-oikeudet!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	fi	Asiakirja voi sisältää komentoja (placeholder) kuten $$n_fn$$, mitkä täytetään yhteystiedoilla (%1lista kaikista komennoista%2).
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	fi	Zip extension vaaditaan OpenOffice ja MSOffice tiedostoille (yhteystietojen syöttämiseen).
 there was an error saving your data :-(	addressbook	fi	Virhe tallennettaessa!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	fi	Tämä moduuli näyttää yhteydenottokaavakkeen, mikä varastoi osoitteen suoraan osoitekirjaan.
 this person's first name was not in the address book.	addressbook	fi	Etunimeä ei ole osoitekirjassa.
 this person's last name was not in the address book.	addressbook	fi	Sukunimeä ei ole osoitekirjassa.
 timezone	addressbook	fi	Aikavyöhyke
+title	addressbook	fi	Titteli
 to many might exceed your execution-time-limit	addressbook	fi	Liian moni saattaa ylittää suoritusajan
 today is %1's birthday!	common	fi	Tänään syntymäpäiväänsä viettää %1!
 tomorrow is %1's birthday.	common	fi	Huomenna syntymäpäiväänsä viettää %1.
@@ -403,11 +419,12 @@ warning!! ldap is valid only if you are not using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	fi	VAROITUS: Kaikki löytyneet osoitteet poistetaan!
 warning: template "%1" not found, using default template instead.	addressbook	fi	VAROITUS: Mallipohjaa "%1" ei löytynyt, käyttää oletusmallipohjaa sen sijaan.
 weekday	addressbook	fi	Viikonpäivä
-what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fi	Mitä osoitekirjan linkin tulisi sisältää muissa applikaatioissa esim. InfoLogissa. Tyhjiä kenttiä ei kuitenkaan näytetä. Kirjaudu sisään uudellen, jos muutat tätä asetusta!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	fi	Mitä osoitekirjan linkin tulisi sisältää muissa sovelluksissa esim. InfoLogissa. Tyhjiä kenttiä ei kuitenkaan näytetä. Kirjaudu sisään uudellen, jos muutat tätä asetusta!
 where to add the email address	addressbook	fi	Mihin sähköpostiosoite tulisi lisätä?
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	fi	Mitä osoitteen muotoa osoitekirja käyttää maista joiden osoitemuoto on tuntematon. Jos maan osoitemuoto on tiedossa, se käyttää sitä riippumatta tästä asetuksesta.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	fi	Mihin osoitekirjaan yhteystiedot lisätään, JOS sinulla ei ole ACL-oikeuksia lisätä yhteystietoja valitsemaasi/haluamaasi osoitekirjaan.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fi	Mitä merkistökoodausta käytetään CSV -viennissä. Järjestelmän oletus on merkistökoodaus, joka määriteltiin asennuksen yhteydessä.
+which charset should be used for the vcard export.	addressbook	fi	Mitä merkistöä käytetään vCard-viennissä?
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	fi	Mitkä kentät voidaan viedä. Kaikki tarkoittaa jokaista kenttää, jotka osoitekirjasta löytyy, sisältäen lisäkentät. Työ- tai kotiosoite sisältävät vain nimen, yrityksen ja valitut osoitekentät.
 whole query	addressbook	fi	Koko kysely
 work email if given, else home email	addressbook	fi	Työsähköpostiosoite, jos mahdollista, muutoin kotisähköpostiosoite.
@@ -417,6 +434,7 @@ yes, for the next three days	addressbook	fi	Kyllä, seuraavan 3 päivän ajalta
 yes, for the next two weeks	addressbook	fi	Kyllä, seuraavan 2 viikon ajalta
 yes, for the next week	addressbook	fi	Kyllä, seuraavan viikon ajalta
 yes, for today and tomorrow	addressbook	fi	Kyllä, tämän päivän ja huomisen ajalta
+yes, only admins can purge deleted items	admin	fi	Kyllä, ainoastaan ylläpitäjät voivat (lopullisesti) poistaa tapahtumia
 you are not permitted to delete contact %1	addressbook	fi	Sinulla ei ole oikeutta poistaa kontaktia %1
 you are not permittet to delete this contact	addressbook	fi	Sinulla ei ole oikeutta poistaa tätä kontaktia
 you are not permittet to edit this contact	addressbook	fi	Sinulla ei ole oikeutta muokata tätä kontaktia
