@@ -97,12 +97,15 @@ bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 bottom	admin	de	unten
 calculate next run	admin	de	nächste Ausführung berechnen
+calendar recurrence horizont in days (default 1000)	admin	de	Kalender Wiederholungs Bereich in Tagen (Vorgabe sind 1000)
 can change password	admin	de	darf Passwort ändern
 cancel testjob!	admin	de	Test-Job abbrechen!
 cancel this scheduled command	admin	de	Diesen geplanten Befehl abbrechen
 categories list	admin	de	Liste der Kategorien
 category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert
+category deleted.	admin	de	Kategorie gelöscht
 category list	admin	de	Kategorieliste
+category saved.	admin	de	Kategorie gespeichert
 change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
@@ -167,7 +170,9 @@ deny access to peer servers	admin	de	Zugriff auf Serververbund verbieten
 deny access to phpinfo	admin	de	Zugriff auf phpinfo verbieten
 deny access to site configuration	admin	de	Zugriff auf Konfiguration der Anwendung verbieten
 deny access to user accounts	admin	de	Zugriff auf Benutzerkonten verbieten
+deny all users access to create and manage private categories ?	admin	de	Allen Benutzern verbieten, private Kategorien anzulegen und zu verwalten?
 deny all users access to grant other users access to their entries ?	admin	de	Allen Benutzern verbieten, anderen Benutzern Zugriff zu ihren Daten zu gewähren?
+deny all users access to preferences ?	admin	de	Allen Benutzer Zugriff auf die Einstellungen verbieten?
 description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein!
 determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
@@ -558,6 +563,7 @@ wrong account type: %1 is no %2 !!!	admin	de	Falscher Konten Typ: %1 ist kein(e)
 wrong admin-account or -password !!!	admin	de	Falscher Admin-Account oder Passwort !!!
 xml-rpc	admin	de	XML-RPC
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
+you have no email address for your user set !!!	admin	de	Sie haben noch keine E-Mail für den Benutzer vergeben.
 you have to enter a name, to create a new field!!!	admin	de	Sie müssen einen Namen angeben um ein neues Feld anzulegen!!!
 you have to enter a name, to create a new type!!!	admin	de	Sie müssen einen Namen angeben um einen neuen Typ anzulegen!!!
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
