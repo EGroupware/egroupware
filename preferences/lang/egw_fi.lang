@@ -1,3 +1,4 @@
+$label	preferences	fi	$label
 %1 - preferences	preferences	fi	%1 - Asetukset
 %1 hours	preferences	fi	%1 tunti(a)
 12 hour	preferences	fi	12 tuntia
@@ -27,9 +28,10 @@ div	preferences	fi	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fi	Haluatko näyttää kellonajan 24 tunnin muodossa, vai näyttää 12 tuntia ja am/pm -lyhenteen?
 edit custom fields	preferences	fi	Muokkaa lisäkenttiä
 enable drag and drop functionality (experimental)	preferences	fi	Ota käyttöön 'drag and drop'  toiminto. (Vielä kokeiluasteella oleva toiminto!)
-enable selectbox dropdown resizing for ie (experimental)	preferences	fi	Ota käyttöön valintalistan pudotusvalikon koonmääritys toiminto IE:lle. (Vielä kokeiluasteella oleva toiminto!)
+enable selectbox dropdown resizing for ie (experimental)	preferences	fi	Ota käyttöön valintalaatikon pudotusvalikon koonmääritys toiminto IE:lle. (Vielä kokeiluasteella oleva toiminto!)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	fi	Ota käyttöön / pois käytöstä 'drag and drop' toiminto kaikissa sovelluksissa. Jos selain ei tue toimintoa, se otetaan pois käytöstä automaattisesti. (Vielä kokeiluasteella oleva toiminto!)
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fi	Ota käyttöön valintalaatikon pudotusvalikon koonmääritys toiminto kaikissa sovelluksissa IE:lle. Jos selain ei ole IE, toiminto otetaan pois käytöstä automaattisesti. (Vielä kokeiluasteella oleva toiminto!)
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fi	Ota käyttöön valintalaatikon pudotusvalikon koonmääritys toiminto kaikissa sovelluksissa IE:lle. Jos selain ei ole IE, toiminto otetaan pois käytöstä automaattisesti. (Vielä kokeiluasteella oleva toiminto!)
 enter your new password	preferences	fi	Anna uusi salasana
 enter your old password	preferences	fi	Anna vanha salasana
 failed to change password.  please contact your administrator.	preferences	fi	Salasanan vaihto ei onnistunut. Ota yhteys pääkäyttäjään.
@@ -79,7 +81,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	fi	Näytetäänkö aktiivisten istuntojen määrä koko ajan.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	fi	Näytetäänkö ohjeviestit aina, vai vain silloin kun niitä kysytään.
 show helpmessages by default	preferences	fi	Näytä ohjeviestit oletuksena
-show links between egroupware aps as	addressbook	fi	Näytä sovellusten kuvakkeet...
+show links between egroupware aps as	common	fi	Näytä sovellusten kuvakkeet
 show navigation bar as	preferences	fi	Näytä navigaatiopalkissa
 show number of current users	preferences	fi	Näytä käyttäjien määrä
 show text on navigation icons	preferences	fi	Näytä navigaatiokuvakkeiden teksti
@@ -89,8 +91,8 @@ spellchecker language	addressbook	fi	Oikolukuohjelman kieli
 text only	preferences	fi	Vain teksti
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fi	Oletus sovellus käynnistyy kun kirjaudut eGroupWareen tai painat etusivu ikonia.<br>Sinulla voi olla enemmän kuin yksi sovellus etusivullasi (pitää asettaa sovelluskohtaisesti), jollet määrittele tiettyä sovellusta tähän.
 the old password is not correct	preferences	fi	Vanha salasana ei ole oikein
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fi	Valintaruutu näyttää kaikki käyttäjätilit (saattaa hidastaa järjestelmää, jos käyttäjätilejä on paljon). Käyttäjiä ja ryhmiä voidaan etsiä ponnahdusikkunassa.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fi	Valintaruutu näyttää kaikki käyttäjätilit (saattaa hidastaa järjestelmää, jos käyttäjätilejä on paljon). Käyttäjiä ja ryhmiä voidaan etsiä ponnahdusikkunassa.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fi	Valintalista näyttää kaikki käyttäjätilit (saattaa hidastaa järjestelmää, jos käyttäjätilejä on paljon). Käyttäjiä ja ryhmiä voidaan etsiä ponnahdusikkunassa.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fi	Valintalista näyttää kaikki käyttäjätilit (saattaa hidastaa järjestelmää, jos käyttäjätilejä on paljon). Käyttäjiä ja ryhmiä voidaan etsiä ponnahdusikkunassa.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fi	Kaksi viimeistä vaihtoehtoa rajoittavat näkyvyyttä käyttäjille. Niitä EI tule asettaa ylläpitäjille.
 the two passwords are not the same	preferences	fi	Salasanat eivät ole samoja
 theme (colors/fonts) selection	preferences	fi	Teeman (värit / fontit) valinta
@@ -104,7 +106,7 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	fi	Mitä rahayksikköä käytetään?
 write prefs for the specified application.	preferences	fi	Kirjoitusoikeudet tiettyyn sovellukseen.
 you can show the applications as icons only, icons with app-name or both.	preferences	fi	Voit näyttää sovellukset kuvakkeina, sovelluksen nimellä tai molemmilla.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeena ja kuvakkeen nimellä -tai molemmilla.
+you can show the linked entries with icons only, icons with app-name or both.	common	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molemmilla.
 you do not have permission to set acl's in this mode!	preferences	fi	Et voi määritellä ACL-oikeuksia tässä tilassa!
 you must enter a password	preferences	fi	Anna salasana
 your current theme is: %1	preferences	fi	Nykyinen teema on: %1
