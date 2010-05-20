@@ -494,7 +494,7 @@ function do_usage($what='')
 	{
 		echo '	--files-dir, --backup-dir, --temp-dir '.lang('path to various directories: have to exist and be writeable by the webserver')."\n";
 		echo '	--webserver-url '.lang('eg. /egroupware or http://domain.com/egroupware, default: %1',str_replace('/setup/setup-cli.php','',$_SERVER['PHP_SELF']))."\n";
-		echo '	--mailserver '.lang('host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]')."\n";
+		echo '	--mailserver '.lang('host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]')."\n";
 		echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password]')."\n";
 		echo '	--postfix '.lang('Postfix with LDAP: [yes(user edit forwarding)]')."\n";
 		echo '	--cyrus '.lang('Cyrus IMAP: Admin user,Password')."\n";
