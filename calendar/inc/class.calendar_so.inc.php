@@ -538,7 +538,7 @@ class calendar_so
 
 				$selects = $selections;
 			}
-			if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
+			if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query,$params['users']);
 
 			// error_log("calendar_so_search:\n" . print_r($selects, true));
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
