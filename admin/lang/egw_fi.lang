@@ -90,11 +90,14 @@ bi-dir passthrough	admin	fi	Kaksisuuntainen läpäisy
 bi-directional	admin	fi	Kaksisuuntainen
 bottom	admin	fi	Alas
 calculate next run	admin	fi	Laske seuraava suoritusaika
+calendar recurrence horizont in days (default 1000)	admin	fi	Kalenterin toistuvien tapahtumien takaraja päivinä (oletus 1000)
 can change password	admin	fi	Voi vaihtaa salasanaa
 cancel testjob!	admin	fi	Peruuta TestiTyö!
 categories list	admin	fi	Kategorialuettelo
 category %1 has been saved !	admin	fi	Kategoria %1 on tallennettu !
+category deleted.	admin	fi	Kategoria poistettu!
 category list	admin	fi	Kategorialuettelo
+category saved.	admin	fi	Kategoria tallennettu.
 change account_id	admin	fi	Vaihda account_id
 change acl rights	admin	fi	Muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
@@ -154,7 +157,9 @@ deny access to peer servers	admin	fi	Estä pääsy rinnakkaispalvelimille
 deny access to phpinfo	admin	fi	Estä pääsy phpsysinfoon
 deny access to site configuration	admin	fi	Estä pääsy palvelun asetuksiin
 deny access to user accounts	admin	fi	Estä pääsy käyttäjätileihin
+deny all users access to create and manage private categories ?	admin	fi	Estetäänkö kaikilta käyttäjiltä pääsy yksityisten kategorioiden hallintaan?
 deny all users access to grant other users access to their entries ?	admin	fi	Estä kaikilta käyttäjiltä ACL-oikeuksien myöntäminen?
+deny all users access to preferences ?	admin	fi	Estetäänkö kaikilta käyttäjiltä pääsy asetuksiin?
 description can not exceed 255 characters in length !	admin	fi	Kuvaus ei voi ylittää 255 merkkiä!
 determines the order the fields are displayed	admin	fi	Määrittelee järjestyksen, jossa kentät näytetään.
 disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaattinen täyttö" ei käytössä.
@@ -336,6 +341,7 @@ modified	admin	fi	Muokattu
 month	admin	fi	Kuukausi
 more secure	admin	fi	Lisää turvallisuutta
 name must not be empty !!!	admin	fi	Nimi ei saa olla tyhjä !!!
+name of the egroupware instance, eg. default	admin	fi	Palvelun nimi esim. yrityksesi nimi
 new group name	admin	fi	Uuden ryhmän nimi
 new name	admin	fi	Uusi nimi
 new password [ leave blank for no change ]	admin	fi	Uusi salasana [ Tyhjä = ei muutosta ]
@@ -529,6 +535,7 @@ wrong account type: %1 is no %2 !!!	admin	fi	Virheellinen tilityyppi: %1 ei ole 
 wrong admin-account or -password !!!	admin	fi	Virheellinen Admin-tunnus tai salasana!!
 xml-rpc	admin	fi	XML-RPC
 you have entered an invalid expiration date	admin	fi	Virheellinen vanhenemispäivä!
+you have no email address for your user set !!!	admin	fi	Sähköpostiosoitetta ei ole määritelty käyttäjälle!
 you have to enter a name, to create a new field!!!	admin	fi	Sinun pitää antaa nimi luodaksesi kenttä!!!
 you have to enter a name, to create a new type!!!	admin	fi	Sinun pitää antaa nimi luodaksesi tyyppi!!!
 you must add at least 1 permission or group to this account	admin	fi	Lisää käyttäjätiliin ainakin yksi ACL-oikeus tai ryhmä.
