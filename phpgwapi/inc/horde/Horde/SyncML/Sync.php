@@ -209,16 +209,6 @@ class Horde_SyncML_Sync {
 
 			$guid = false;
 
-			$contentSize = strlen($syncItem->_content);
-			if ((($size = $syncItem->getContentSize()) !== false) &&
-					abs($contentSize - $size) > 3) {
-				Horde::logMessage('SyncML: content size mismatch for LocURI ' . $syncItem->_luid .
-					": $contentSize ($size) : " . $syncItem->_content,
-					__FILE__, __LINE__, PEAR_LOG_WARNING);
-				//$command->setStatus(RESPONSE_SIZE_MISMATCH);
-				continue;
-			}
-
 			if (is_a($command, 'Horde_SyncML_Command_Sync_Add')) {
 				if ($sync_conflicts > CONFLICT_RESOLVED_WITH_DUPLICATE) {
 					// We enforce the client not to change anything
