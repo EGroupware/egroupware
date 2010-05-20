@@ -182,7 +182,8 @@ class infolog_hooks
 				'values' => $filters,
 				'help'   => 'This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'none',
 			),
 			'homeShowEvents' => array(
 				'type'   => 'select',
@@ -191,7 +192,8 @@ class infolog_hooks
 				'values' => $show_home,
 				'help'   => 'Should InfoLog show up on the main screen and with which filter. Works only if you dont selected an application for the main screen (in your preferences).',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'responsible-open-today',
 			),
 			'listNoSubs' => array(
 				'type'   => 'check',
@@ -199,7 +201,8 @@ class infolog_hooks
 				'name'   => 'listNoSubs',
 				'help'   => 'Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the Subs via there parent.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> '0',	// No = List subs
 			),
 			'show_links' => array(
 				'type'   => 'select',
@@ -208,7 +211,8 @@ class infolog_hooks
 				'values' => $show_links,
 				'help'   => 'Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'all',
 			),
 			'never_hide' => array(
 				'type'   => 'check',
@@ -216,7 +220,8 @@ class infolog_hooks
 				'name'   => 'never_hide',
 				'help'   => 'If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> '1',
 			),
 			'show_percent' => array(
 				'type'   => 'select',
@@ -225,7 +230,8 @@ class infolog_hooks
 				'values' => $show_details,
 				'help'   => 'Should the Infolog list show the percent done only for status ongoing or two separate icons.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 1,	// Yes
 			),
 			'show_id' => array(
 				'type'   => 'select',
@@ -234,7 +240,8 @@ class infolog_hooks
 				'values' => $show_details,
 				'help'   => 'Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> '1',	// Yes
 			),
 			'limit_des_lines' => array(
 				'type'   => 'input',
@@ -243,7 +250,8 @@ class infolog_hooks
 				'name'   => 'limit_des_lines',
 				'help'   => 'How many describtion lines should be directly visible. Further lines are available via a scrollbar.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 5,
 			),
 			'set_start' => array(
 				'type'   => 'select',
@@ -256,7 +264,8 @@ class infolog_hooks
 				),
 				'help'   => 'To what should the startdate of new entries be set.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'date',
 			),
 			'cal_show' => array(
 				'type'   => 'multiselect',
@@ -265,7 +274,8 @@ class infolog_hooks
 				'values' => $info->enums['type'],
 				'help'   => 'Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
+				'default'=> 'tasks,phone',
 			),
 			'cat_add_default' => array(
 				'type'   => 'select',
@@ -274,7 +284,7 @@ class infolog_hooks
 				'values' => self::all_cats(),
 				'help'   => 'You can choose a categorie to be preselected, when you create a new Infolog entry',
 				'xmlrpc' => True,
-				'admin'  => False
+				'admin'  => False,
 			),
 
 		);
@@ -287,6 +297,7 @@ class infolog_hooks
 			'help'   => 'Do you want a notification, if items you created get updated?',
 			'xmlrpc' => True,
 			'admin'  => False,
+			'default'=> '1',	// Yes
 		);
 		$settings['notify_assigned'] = array(
 			'type'   => 'select',
@@ -300,6 +311,7 @@ class infolog_hooks
 			),
 			'xmlrpc' => True,
 			'admin'  => False,
+			'default'=> '1',	// Yes
 		);
 
 		// to add options for more then 3 days back or in advance, you need to update soinfolog::users_with_open_entries()!
@@ -319,6 +331,7 @@ class infolog_hooks
 			'values' => $options,
 			'xmlrpc' => True,
 			'admin'  => False,
+			'default'=> '0',	// No
 		);
 		$settings['notify_due_responsible'] = array(
 			'type'   => 'select',
@@ -328,6 +341,7 @@ class infolog_hooks
 			'values' => $options,
 			'xmlrpc' => True,
 			'admin'  => False,
+			'default'=> '0d',	// Same day
 		);
 		$settings['notify_start_delegated'] = array(
 			'type'   => 'select',
@@ -337,6 +351,7 @@ class infolog_hooks
 			'values' => $options,
 			'xmlrpc' => True,
 			'admin'  => False,
+			'default'=> '0',	// No
 		);
 		$settings['notify_start_responsible'] = array(
 			'type'   => 'select',
@@ -346,6 +361,7 @@ class infolog_hooks
 			'values' => $options,
 			'xmlrpc' => True,
 			'admin'  => False,
+			'default'=> '0d',	// Same day
 		);
 
 		return $settings;
