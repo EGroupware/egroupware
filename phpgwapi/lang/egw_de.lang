@@ -113,6 +113,7 @@ cameroon	common	de	KAMERUN
 canada	common	de	KANADA
 cancel	common	de	Abbrechen
 cannot replace %1 because it is a directory	common	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
+cant open %1, needs ziparchive	common	de	Kann die %1 nicht öffnen, benötigt ZipAchive
 cant open '%1' for %2	common	de	Kann '%1' nicht zum %2 öffnen
 cape verde	common	de	KAP VERDE
 caption	common	de	Text
@@ -150,6 +151,8 @@ click this image on the navbar: %1	common	de	Klicken Sie auf dieses Symbol in de
 close	common	de	Schließen
 close sidebox	common	de	Seitenmenü schließen
 cocos (keeling) islands	common	de	COCOS INSELN
+collection empty.	common	de	Collection ist leer
+collection listing	common	de	Auflistung der Collection
 colombia	common	de	KOLUMBIEN
 common preferences	common	de	Allgemeine Einstellungen
 comoros	common	de	KOMOREN
@@ -157,6 +160,7 @@ company	common	de	Unternehmen
 congo	common	de	KONGO
 congo, the democratic republic of the	common	de	KONGO, DIE DEMOKRATISCHE REPUBLIK DES
 contacting server...	common	de	Kontaktiere Server...
+content type	common	de	Content Typ
 cook islands	common	de	COOK INSELN
 copy	common	de	Kopieren
 costa rica	common	de	COSTA RICA
@@ -238,6 +242,7 @@ error creating %1 %2 directory	common	de	Fehler beim Erstellen des Verzeichnisse
 error deleting %1 %2 directory	common	de	Fehler beim Löschen des Verzeichnisses %1 %2
 error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
 estonia	common	de	ESTONIEN
+etag	common	de	ETag
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
@@ -362,6 +367,7 @@ kuwait	common	de	KUWAIT
 kyrgyzstan	common	de	KYRGYZSTAN
 language	common	de	Sprache
 lao peoples democratic republic	common	de	LAOS, VOLKSREPUBLIK
+last modified	common	de	Letzte Änderung
 last name	common	de	Nachname
 last name of the user, eg. "%1"	common	de	Nachname des Benutzers, z.B. "%1"
 last page	common	de	Letzte Seite
@@ -427,6 +433,7 @@ multiple	common	de	mehrere
 myanmar	common	de	MYANMAR
 name	common	de	Name
 name of the user, eg. "%1"	common	de	Name des Benutzers, z.B. "%1"
+namespace	common	de	Namensraum
 namibia	common	de	NAMIBIA
 nauru	common	de	NAURU
 nepal	common	de	NEPAL
@@ -504,6 +511,7 @@ password must have at least %1 characters	common	de	Das Passwort muss mindestens
 path to user and group files has to be outside of the webservers document-root!!!	common	de	Der Pfad für Benutzer oder Gruppen Ordner muss ausserhalb des Webserver Root Verzeichnisses liegen (Webserver Root = /var/www/html; Pfad für Benutzer/Gruppen Ordner /var/www
 permission denied!	common	de	Zugriff verweigert!
 permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien / Benutzerverzeichnissen
+permisson denied!	common	de	Zugriff verweigert!
 personal	common	de	persönlich
 peru	common	de	PERU
 philippines	common	de	PHILIPPINEN
@@ -534,6 +542,7 @@ priority	common	de	Priorität
 private	common	de	Privat
 programs	common	de	Programme
 project	common	de	Projekt
+properties	common	de	Eigenschaften
 public	common	de	öffentlich
 puerto rico	common	de	PUERTO RICO
 qatar	common	de	QATAR
@@ -549,6 +558,8 @@ remove shortcut	common	de	Abkürzung entfernen
 rename	common	de	Umbenennen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
+resource type	common	de	Ressource Typ
+restore failed	common	de	Wiederherstellung fehlgeschlagen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
 returns an array of todo items	common	de	Liefert eine Aufstellung mit ToDo Einträgen
 returns struct of users application access	common	de	Liefert eine Struktur mit Benutzerzugriffsrechten auf Anwendungen
@@ -620,6 +631,7 @@ sierra leone	common	de	SIERRA LEONE
 simple	common	de	Einfach
 singapore	common	de	SINGAPUR
 site configuration	common	de	Konfiguration der Anwendung
+size	common	de	Größe
 slovakia	common	de	SLOVAKEI
 slovenia	common	de	SLOVENIEN
 solomon islands	common	de	SOLOMON INSELN
@@ -646,6 +658,7 @@ swaziland	common	de	SWAZILAND
 sweden	common	de	SCHWEDEN
 switzerland	common	de	SCHWEIZ
 syrian arab republic	common	de	SYRIEN, ARABISCHE REPUBLIK
+table %1 is excluded from backup and restore. data will not be restored.	common	de	Tabelle %1 ist ausgeschlossen von der Datensicherung und der Wiederherstellung. Die Daten werden nicht wiederhergestellt.
 table properties	common	de	Tabelleneigenschaften
 taiwan	common	de	TAIWAN/TAIPEI
 tajikistan	common	de	TAJIKISTAN
@@ -656,6 +669,7 @@ the api is current	common	de	Die API ist aktuell
 the api requires an upgrade	common	de	Die API benötigt eine Aktualisierung
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
 the mail server returned	common	de	Der E-Mail-Server liefert zurück
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen system Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
 this application is current	common	de	Diese Anwendung ist aktuell
 this application requires an upgrade	common	de	Diese Anwendung benötigt eine Aktualisierung
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
@@ -713,6 +727,7 @@ username	common	de	Benutzername
 users	common	de	Benutzer
 users choice	common	de	Benutzerauswahl
 uzbekistan	common	de	UZBEKISTAN
+value	common	de	Wert
 vanuatu	common	de	VANUATU
 venezuela	common	de	VENEZUELA
 version	common	de	Version
@@ -749,6 +764,7 @@ you have not entered participants	common	de	Sie haben keine Teilnehmer eingegebe
 you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gewählt !
 you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt !
 you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
+you need to %1set your timezone preference%2.	common	de	Sie müssen %1Ihre Zeitzone in den Einstellungen setzen%2
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
 you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
