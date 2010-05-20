@@ -599,7 +599,9 @@ class calendar_uiforms extends calendar_ui
 			}
 			break;
 
-		case 'delete':
+		case 'delete':					// delete of regular event
+		case 'delete_keep_exceptions':	// series and user selected to keep the exceptions
+		case 'delete_exceptions':		// series and user selected to delete the exceptions too
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
 				if ($content['reference'] == 0 && !$content['edit_single'])
@@ -683,7 +685,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			break;
 		}
-		if (in_array($button,array('cancel','save','delete')) && $noerror)
+		if (in_array($button,array('cancel','save','delete','delete_exceptions','delete_keep_exceptions')) && $noerror)
 		{
 			if ($content['lock_token'])	// remove an existing lock
 			{
@@ -1249,23 +1251,6 @@ function replace_eTemplate_onsubmit()
 		else
 		{
 			$etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
-			/*
-			$html = $etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,-1);
-			if (!$preserv['no_popup'])
-			{
-				$this->do_header();
-			}
-
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
-			{
-				$html .= '<script type="text/javascript">' . $this->delete_series() . '</script>';
-				$tpl = new etemplate('calendar.delete_series');
-				$html .=  $tpl->show(array());
-			}
-
-			$html .= '</body></hmtl>';
-			echo $html;
-			*/
 		}
 	}
 

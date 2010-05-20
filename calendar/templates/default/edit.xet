@@ -130,24 +130,24 @@
 			<rows>
 				<row class="row" disabled="!@reference">
 					<description value="Exception"/>
-					<date-time class="gray" readonly="true" id="recurrence"/>
-					<description class="gray" id="reference"/>
-					<description class="gray" id="uid"/>
+					<date-time readonly="true" id="recurrence" class="gray"/>
+					<description id="reference" class="gray"/>
+					<description id="uid" class="gray"/>
 				</row>
 				<row class="th" height="12">
 					<description span="all" class="gray" value="Repeating Event Information"/>
-					<description value="be back soon ;-)"/>
+					<description/>
 					<description/>
 					<description/>
 				</row>
 				<row class="row" height="12">
 					<description options=",,,recur_type" value="Repeat type"/>
 					<menulist>
-						<menupopup id="recur_type" onchange="check_recur_type('recur_type', 2);"/>
+						<menupopup onchange="check_recur_type('recur_type', 2);" id="recur_type"/>
 					</menulist>
 					<description options=",,,recur_interval" value="Interval"/>
 					<menulist>
-						<menupopup type="select-number" id="recur_interval" statustext="repeating interval, eg. 2 to repeat every second week" options="None,2,31"/>
+						<menupopup type="select-number" id="recur_interval" options="None,2,31" statustext="repeating interval, eg. 2 to repeat every second week"/>
 					</menulist>
 				</row>
 				<row class="row" height="12">
@@ -160,20 +160,20 @@
 				</row>
 				<row class="row" valign="top">
 					<description options=",,,recur_data" value="Repeat days"/>
-					<listbox type="select-dow" rows="6" options="1" id="recur_data" statustext="Days of the week for a weekly repeated event"/>
+					<listbox type="select-dow" id="recur_data" rows="6" options="1" statustext="Days of the week for a weekly repeated event"/>
 					<vbox options="0,0">
 						<description value="Exceptions"/>
-						<button id="button[exception]" label="@exception_label" statustext="Create an exception for the given date" no_lang="1"/>
+						<button label="@exception_label" no_lang="1" id="button[exception]" statustext="Create an exception for the given date"/>
 					</vbox>
-					<grid id="recur_exception">
+					<grid>
 						<columns>
 							<column/>
 							<column/>
 						</columns>
 						<rows>
 							<row>
-								<date-time id="$row" readonly="true"/>
-								<button label="Delete" image="delete" id="delete_exception[$row_cont]" statustext="Delete this exception" onclick="return confirm('Delete this exception');"/>
+								<date-time readonly="true" id="$row"/>
+								<button label="Delete" onclick="return confirm('Delete this exception');" id="delete_exception[$row_cont]" image="delete" statustext="Delete this exception"/>
 							</row>
 						</rows>
 					</grid>
@@ -288,7 +288,22 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit" template="" lang="" group="0" version="1.7.002">
+	<template id="calendar.delete_series" template="" lang="" group="0" version="1.7.003">
+		<vbox rows="1" cols="1" id="#delete_series">
+			<hbox id="#dialog-header" class="promptheader">
+				<description value="This event is part of a series"/>
+			</hbox>
+			<vbox class="prompt" id="dialog-content">
+				<description value="Do you want to keep the series exceptions in your calendar?"/>
+				<hbox align="center">
+					<button label="Keep exceptions" statustext="All exceptions are converted into single events." id="button[delete_keep_exceptions]"/>
+					<button label="Delete exceptions" statustext="The exceptions are deleted together with the series." id="button[delete_exceptions]"/>
+					<buttononly label="Cancel" onclick="document.getElementById('delete_series').style.display = 'none';"/>
+				</hbox>
+			</vbox>
+		</vbox>
+	</template>
+	<template id="calendar.edit" template="" lang="" group="0" version="1.7.003">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -298,17 +313,17 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<html span="all" class="redItalic" id="msg" no_lang="1" align="center"/>
+					<html span="all" class="redItalic" no_lang="1" align="center" id="msg"/>
 					<description/>
 					<description/>
 					<description/>
 				</row>
 				<row class="th" height="28">
 					<description value="Title"/>
-					<textbox size="80" maxlength="255" id="title" span="all" needed="1"/>
+					<textbox size="80" maxlength="255" span="all" needed="1" id="title"/>
 				</row>
 				<row>
-					<tabbox span="all" id="general|description|participants|recurrence|custom|links|alarms|history">
+					<tabbox span="all" id="calendar.edit.general|calendar.edit.description|calendar.edit.participants|calendar.edit.recurrence|calendar.edit.custom|calendar.edit.links|calendar.edit.alarms|calendar.edit.history">
 						<tabs>
 							<tab label="General" statustext="Location, Start- and Endtimes, ..."/>
 							<tab label="Description" statustext="Full description"/>
@@ -334,23 +349,26 @@
 				<row disabled="!@owner">
 					<description value="Owner"/>
 					<menulist>
-						<menupopup type="select-account" id="owner" readonly="true"/>
+						<menupopup type="select-account" readonly="true" id="owner"/>
 					</menulist>
-					<date-time label="Updated" id="modified" readonly="true" no_lang="1" align="right" class="noBreak"/>
-					<menulist class="noBreak">
-						<menupopup type="select-account" label="by" id="modifier" readonly="true" align="right"/>
+					<date-time label="Updated" readonly="true" no_lang="1" align="right" id="modified" class="noBreak"/>
+					<menulist>
+						<menupopup type="select-account" class="noBreak" label="by" readonly="true" align="right" id="modifier"/>
 					</menulist>
 				</row>
 				<row>
 					<hbox span="3">
 						<button label="Save" id="button[save]" statustext="saves the changes made"/>
-						<button id="button[apply]" label="Apply" statustext="apply the changes"/>
-						<button id="button[cancel]" label="Cancel" statustext="Close the window" onclick="window.close();"/>
+						<button label="Apply" id="button[apply]" statustext="apply the changes"/>
+						<button label="Cancel" onclick="window.close();" id="button[cancel]" statustext="Close the window"/>
 						<menulist>
-							<menupopup id="action" statustext="Execute a further action for this entry" options="Actions..." onchange="this.form.submit(); this.value='';"/>
+							<menupopup onchange="this.form.submit(); this.value='';" id="action" options="Actions..." statustext="Execute a further action for this entry"/>
 						</menulist>
 					</hbox>
-					<button label="Delete" id="button[delete]" statustext="Delete this event" onclick="return confirm('Delete this event');" align="right"/>
+					<button label="Delete" onclick="if ($cont[recur_type]) { getElementById('delete_series').style.display='block'; return false; } else return confirm('Delete this event');" align="right" id="button[delete]" statustext="Delete this event"/>
+				</row>
+				<row disabled="!@recur_type">
+					<template span="all" id="calendar.delete_series"/>
 				</row>
 			</rows>
 		</grid>

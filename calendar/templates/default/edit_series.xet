@@ -1,18 +1,19 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.edit_series" template="" lang="" group="0" version="1.7.002">
-		<groupbox rows="1" cols="1" class="editSeries" id="edit_series">
-			<caption label="This event is part of a series"/>
-			<hbox>
-				<image src="dialog_help"/>
+	<template id="calendar.edit_series" template="" lang="" group="0" version="1.7.003">
+		<vbox rows="1" cols="1" id="edit_series">
+			<hbox id="dialog-header" class="promptheader">
+				<description value="This event is part of a series"/>
+			</hbox>
+			<vbox class="prompt" id="dialog-content">
 				<description value="Do you want to edit this event as an exception or the whole series?"/>
-			</hbox>
-			<hbox align="center">
-				<buttononly label="Edit exception" onclick="open_edit(false);"/>
-				<buttononly label="Edit series" onclick="open_edit(true);"/>
-				<buttononly label="Cancel" onclick="document.getElementById('edit_series').style.display = 'none';"/>
-			</hbox>
-		</groupbox>
+				<hbox align="center">
+					<buttononly label="Edit exception" onclick="open_edit(false);"/>
+					<buttononly label="Edit series" onclick="open_edit(true);"/>
+					<buttononly label="Cancel" onclick="document.getElementById('edit_series').style.display = 'none';"/>
+				</hbox>
+			</vbox>
+		</vbox>
 	</template>
 </overlay>
