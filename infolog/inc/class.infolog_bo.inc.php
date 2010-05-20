@@ -1424,24 +1424,27 @@ class infolog_bo
 
 					if (is_null($this->tracking) || $this->tracking->user != $user)
 					{
-						require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
 						$this->tracking = new infolog_tracking($this);
 					}
 					switch($pref)
 					{
 						case 'notify_due_responsible':
+							$info['prefix'] = lang('Due %1',$this->enums['type'][$info['info_type']]);
 							$info['message'] = lang('%1 you are responsible for is due at %2',$this->enums['type'][$info['info_type']],
 								$this->tracking->datetime($info['info_enddate'],false));
 							break;
 						case 'notify_due_delegated':
+							$info['prefix'] = lang('Due %1',$this->enums['type'][$info['info_type']]);
 							$info['message'] = lang('%1 you delegated is due at %2',$this->enums['type'][$info['info_type']],
 								$this->tracking->datetime($info['info_enddate'],false));
 							break;
 						case 'notify_start_responsible':
+							$info['prefix'] = lang('Starting %1',$this->enums['type'][$info['info_type']]);
 							$info['message'] = lang('%1 you are responsible for is starting at %2',$this->enums['type'][$info['info_type']],
 								$this->tracking->datetime($info['info_startdate'],null));
 							break;
 						case 'notify_start_delegated':
+							$info['prefix'] = lang('Starting %1',$this->enums['type'][$info['info_type']]);
 							$info['message'] = lang('%1 you delegated is starting at %2',$this->enums['type'][$info['info_type']],
 								$this->tracking->datetime($info['info_startdate'],null));
 							break;

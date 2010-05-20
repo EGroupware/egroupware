@@ -136,7 +136,11 @@ class infolog_tracking extends bo_tracking
 	 */
 	function get_subject($data,$old)
 	{
-		if (!$old || $old['info_status'] == 'deleted')
+		if ($data['prefix'])
+		{
+			$prefix = $data['prefix'];	// async notification
+		}
+		elseif (!$old || $old['info_status'] == 'deleted')
 		{
 			$prefix = lang('New %1',lang($this->infolog->enums['type'][$data['info_type']]));
 		}
@@ -254,7 +258,7 @@ class infolog_tracking extends bo_tracking
 
 	/**
 	 * Track changes
-	 * 
+	 *
 	 * Overrides parent to log the modified date in the history, but not to send a notification
 	 *
          * @param array $data current entry

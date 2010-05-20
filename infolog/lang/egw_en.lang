@@ -130,6 +130,7 @@ do you want to receive notifications as html-mails or plain text?	infolog	en	Do 
 don't show infolog	infolog	en	DON'T show InfoLog
 done	infolog	en	done
 download	infolog	en	Download
+due %1	infolog	en	Due %1
 duration	infolog	en	Duration
 e-mail:	infolog	en	E-mail:
 each value is a line like <id>[=<label>]	infolog	en	Each value is a line like <id>[=<label>]
@@ -205,8 +206,6 @@ location	infolog	en	Location
 longer textual description	infolog	en	longer textual description
 low	infolog	en	low
 max length of the input [, length of the inputfield (optional)]	infolog	en	max length of the input [, length of the input field (optional)]
-modifier	infolog	en	Modifier
-modifierer	infolog	en	Modifierer
 name must not be empty !!!	infolog	en	Name must not be empty !!!
 name of new type to create	infolog	en	name of new type to create
 never hide search and filters	infolog	en	Never hide search and filters
@@ -332,6 +331,7 @@ start a new search, cancel this link	infolog	en	start a new search, cancel this 
 startdate	infolog	en	Start Date
 startdate enddate	infolog	en	Start Date Due Date
 startdate for new entries	infolog	en	Startdate for new entries
+starting %1	infolog	en	Starting %1
 startrecord	infolog	en	Startrecord
 status	infolog	en	Status
 status ...	infolog	en	Status ...
