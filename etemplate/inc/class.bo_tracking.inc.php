@@ -468,7 +468,7 @@ abstract class bo_tracking
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
 		{
 			$GLOBALS['egw']->preferences->__construct($user_or_lang);
-			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
 
 			if ($check && $this->check2pref) $check = $this->check2pref[$check];
 			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$check])
@@ -490,7 +490,7 @@ abstract class bo_tracking
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->default;
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $user_or_lang;
 		}
-		if ($lang != translation::$userlang)	// load the right language if needed
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != translation::$userlang)	// load the right language if needed
 		{
 			translation::init();
 		}

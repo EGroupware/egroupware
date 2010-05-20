@@ -274,12 +274,12 @@ class preferences
 	 *
 	 * the function ready all 3 prefs user/default/forced and merges them to the effective ones
 	 *
-	 * @internal private function should only be called from within this class
+	 * @param boolean $use_session=true should the session prefs get used (default true) or not (false)
 	 * @return array with effective prefs ($this->data)
 	 */
-	function read_repository()
+	function read_repository($use_session=true)
 	{
-		$this->session = $GLOBALS['egw']->session->appsession('preferences','preferences');
+		$this->session = $use_session ? $GLOBALS['egw']->session->appsession('preferences','preferences') : array();
 		if (!is_array($this->session))
 		{
 			$this->session = array();

@@ -173,6 +173,7 @@ class translation
 
 		if ($load_translations)
 		{
+			self::$lang_arr = self::$loaded_apps = array();
 			if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{
 				self::$userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
