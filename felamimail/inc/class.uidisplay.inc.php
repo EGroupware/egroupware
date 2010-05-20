@@ -1327,7 +1327,18 @@
 			$folder = $this->mailbox;
 			// the folder for callfromcompose is hardcoded, because the message to be printed from the compose window is saved as draft, and can be
 			// reopened for composing (only) from there
-			if ($callfromcompose) $folder = $GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
+			if ($callfromcompose)
+			{
+				if (isset($this->mailPreferences->preferences['draftFolder']) &&
+                	$this->mailPreferences->preferences['draftFolder'] != 'none')
+				{
+					$folder = $this->mailPreferences->preferences['draftFolder']; 
+				}
+				else
+				{
+					$folder = $GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
+				}
+			}
 			$this->bofelamimail->reopen($folder);
 #			print "$this->mailbox, $this->uid, $partID<br>";
 			$headers	= $this->bofelamimail->getMessageHeader($this->uid, $partID);
