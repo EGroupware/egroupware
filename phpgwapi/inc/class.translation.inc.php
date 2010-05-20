@@ -132,10 +132,7 @@ class translation
 	 */
 	function init()
 	{
-		if (!is_array(@$this->lang_arr))
-		{
-			$this->lang_arr = array();
-		}
+		$this->lang_arr = $this->loaded_apps = array();
 
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 		{
