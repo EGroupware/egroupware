@@ -19,8 +19,10 @@ check all	resources	fi	Valitse kaikki
 choose categories admin	resources	fi	Valitse kategorioiden ylläpitäjä
 clear selection	resources	fi	Poista valinnat
 configure access permissions	admin	fi	Myönnä ACL-oikeuksia
+conflict	resources	fi	Konflikti
 create new accessory for this resource	resources	fi	Luo uusi lisätarvike tälle resurssille
 create new links	resources	fi	Luo uusi linkki
+custom fields	resources	fi	Lisäkentät
 delete selected resources	resources	fi	Poista valitut resurssit
 delete this entry	resources	fi	Poista tämä merkintä
 description (short)	resources	fi	Kuvaus (lyhyt)
@@ -31,6 +33,7 @@ existing links	resources	fi	Olemassa olevat linkit
 general	resources	fi	Yleinen
 general informations about resource	resources	fi	Yleistä tietoa resurssista
 gernal resource	resources	fi	Yleinen resurssi
+global categories	resources	fi	Yleiset kategoriat
 how many of the resources are useable?	resources	fi	Kuinka moni resurssi on käytettävissä?
 how many of them are useable?	resources	fi	Kuinka moni niistä on käytettävissä?
 how many of this resource are usable	resources	fi	Kuinka moni näistä resursseista on käytettävissä?
