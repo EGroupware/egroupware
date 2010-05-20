@@ -514,9 +514,10 @@ unknown option '%1' !!!	setup	fi	Tuntematon määritelmä '%1'!!
 update finished.	setup	fi	Päivitys päättynyt
 upgrade	setup	fi	Päivitä
 upgrade all	setup	fi	Päivitä kaikki
-upgraded	setup	fi	päivitetty
+upgraded	setup	fi	Päivitetty
 upgrading tables	setup	fi	Päivitetää tauluja
-upload backup	setup	fi	lataa varmuuskopio
+upload backup	setup	fi	Lataa varmuuskopio
+uploads a backup and installs it on your db	setup	fi	Lataa varmuuskopion ja asentaa sen tietokantaan
 use cookies to pass sessionid	setup	fi	Välitä istunnon tunniste evästeessä
 use pure html compliant code (not fully working yet)	setup	fi	Käytä täysin HTML-yhteensopivaa koodia (ei toimi täysin vielä)
 user	setup	fi	Käyttäjä
@@ -540,6 +541,7 @@ would you like egroupware to check for a new version<br />when admins login ?	se
 would you like to show each application's upgrade status ?	setup	fi	Haluatko näyttää kunkin sovelluksen päivitystilan?
 writable by the webserver	setup	fi	www-palvelimen kirjoitettavissa
 write	setup	fi	Kirjoita
+wrong credentials to access the header.inc.php file!	setup	fi	Virheellinen tunnus tai salasana header.inc.php tiedostoon!
 year	setup	fi	Vuosi
 yes	setup	fi	Kyllä
 yes, with lowercase usernames	setup	fi	Kyllä, pienellä kirjoitetut käyttäjätunnukset
@@ -548,6 +550,7 @@ you appear to be running an old version of php <br />it its recommend that you u
 you appear to be running version %1 of egroupware	setup	fi	Ajat eGroupWaren versiota %1
 you appear to have xml support enabled	setup	fi	XML on käytettävissä
 you are ready for this stage, but this stage is not yet written.<br />	setup	fi	Olet valmis tätä vaihetta varten, mutta tätä vaihetta ei ole vielä kirjoitettu.<br />
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	fi	Käytät PHP versiota %1. EGroupware vaatii %2 tai uudemman, suositus on PHP %3.
 you didn't enter a config password for domain %1	setup	fi	Et määritellyt konfiguraatiosalasanaa toimialueelle %1
 you didn't enter a config username for domain %1	setup	fi	Et määritellyt konfiguraatiotunnusta toimialueelle %1
 you didn't enter a header admin password	setup	fi	Et määritellyt header-ylläpidon salasanaa
@@ -556,7 +559,11 @@ you do not have any languages installed. please install one now <br />	setup	fi	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	fi	Et ole luonut tiedostoa header.inc.php!<br /> Voit luoda sen nyt.
 you have successfully logged out	setup	fi	Olet poistunut järjestelmästä
 you must enter a username for the admin	setup	fi	Anna ylläpidon käyttäjätunnus
+you need to configure egroupware:	setup	fi	Konfiguroi EGroupware:
+you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	fi	Konfigurointitiedostoa header.inc.php ei voida kirjoittaa ennenkuin korjaat virheet!
+you need to save the settings you made here first!	setup	fi	Tallenna ensin tekemäsi asetukset!
 you need to select your current charset!	setup	fi	Määrittele nykyinen merkistö!
+you need to specify a password!	setup	fi	Määrittele salasana!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	fi	Se täytyy poistaa ja asentaa uudelleen, tai korjata käsin
 you're using an old configuration file format...	setup	fi	Käytät vanhaa konfiguraatiotiedostomuotoa...
 your applications are current	setup	fi	Sovellukset ovat ajan tasalla
