@@ -42,7 +42,7 @@ class Horde_SyncML_Sync_RefreshFromServerSync extends Horde_SyncML_Sync_TwoWaySy
 			if (!is_a($cmd, 'Horde_SyncML_Command_Sync_ContentSyncElement')) {
 				// Conflict with other datastore
 				Horde :: logMessage("SyncML: handleSync($currentCmdID, $hordeType, $syncType) moreData conflict found",
-						__FILE__, __LINE__, PEAR_LOG_DEBUG);
+						__FILE__, __LINE__, PEAR_LOG_WARNING);
 				$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 				return $currentCmdID;
 			}

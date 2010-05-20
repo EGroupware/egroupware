@@ -90,7 +90,11 @@ class Horde_SyncML_Sync {
 	}
 
 	function nextSyncCommand($currentCmdID, &$syncCommand, &$output) {
-		$result = $this->runSyncCommand($syncCommand);
+		$this->runSyncCommand($syncCommand);
+		if ($syncCommand->hasMoreData()) {
+			Horde::logMessage('SyncML: moreData: TRUE', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			$syncCommand->setStatus(RESPONSE_CHUNKED_ITEM_ACCEPTED_AND_BUFFERED);
+		}
 		return $syncCommand->output($currentCmdID, $output);
 	}
 
@@ -157,11 +161,6 @@ class Horde_SyncML_Sync {
 		$history = $GLOBALS['egw']->contenthistory;
 		$state = &$_SESSION['SyncML.state'];
 
-		if ($command->hasMoreData()) {
-			Horde::logMessage('SyncML: moreData: TRUE', __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			$command->setStatus(RESPONSE_CHUNKED_ITEM_ACCEPTED_AND_BUFFERED);
-			return true;
-		}
 
 		$type = $this->_targetLocURI;
 
@@ -213,11 +212,11 @@ class Horde_SyncML_Sync {
 			$contentSize = strlen($syncItem->_content);
 			if ((($size = $syncItem->getContentSize()) !== false) &&
 					abs($contentSize - $size) > 3) {
-				Horde::logMessage('SyncML: content size mismatch for LocURI '
-					. $syncItem->getLocURI() . ": $contentSize ($size)",
-					__FILE__, __LINE__, PEAR_LOG_ERROR);
-				$command->setStatus(RESPONSE_SIZE_MISMATCH);
-				return false;
+				Horde::logMessage('SyncML: content size mismatch for LocURI ' . $syncItem->_luid .
+					": $contentSize ($size) : " . $syncItem->_content,
+					__FILE__, __LINE__, PEAR_LOG_WARNING);
+				//$command->setStatus(RESPONSE_SIZE_MISMATCH);
+				continue;
 			}
 
 			if (is_a($command, 'Horde_SyncML_Command_Sync_Add')) {
@@ -454,6 +453,5 @@ class Horde_SyncML_Sync {
 				}
 			}
 		}
-		return $guid;
 	}
 }

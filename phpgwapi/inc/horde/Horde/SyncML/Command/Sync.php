@@ -106,14 +106,14 @@ class Horde_SyncML_Command_Sync extends Horde_SyncML_Command {
         parent::startElement($uri, $element, $attrs);
 
         switch (count($this->_stack)) {
-        case 2:
-            if ($element == 'Replace' ||
-                $element == 'Add' ||
-                $element == 'Delete') {
-		Horde::logMessage("SyncML: sync element $element found", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-                $this->_curItem = &Horde_SyncML_Command_Sync_SyncElement::factory($element);
-            }
-            break;
+	        case 2:
+		        if ($element == 'Replace' ||
+			        $element == 'Add' ||
+				        $element == 'Delete') {
+			        Horde::logMessage("SyncML: sync element $element found", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			        $this->_curItem = &Horde_SyncML_Command_Sync_SyncElement::factory($element);
+		        }
+		        break;
         }
         if (isset($this->_curItem)) {
             $this->_curItem->startElement($uri, $element, $attrs);
