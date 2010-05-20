@@ -421,7 +421,7 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$params['sql_filter'],$params['cols'],$params['append'],$params['cfs']);
+			$users,$cat_id,$filter,$offset,(int)$params['num_rows'],$params);
 
 		if (isset($params['cols']))
 		{
@@ -438,7 +438,7 @@ class calendar_bo
 		{
 			if (isset($start) && $event['end'] < $start)
 			{
-				unset($events[$id]);	// remove former events (e.g. whole day) 
+				unset($events[$id]);	// remove former events (e.g. whole day)
 				$this->total--;
 				continue;
 			}
@@ -845,7 +845,7 @@ class calendar_bo
 	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
 	{
 		if ($date) $date = $this->date2ts($date);
-		
+
 		$return = null;
 
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))

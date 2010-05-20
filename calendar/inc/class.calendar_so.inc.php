@@ -313,42 +313,44 @@ class calendar_so
 	 * @param int $cat_id=0 mixed category-id or array of cat-id's, default 0 = all
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
 	 * @param string $filter='all' string filter-name: all (not rejected), accepted, unknown, tentative, rejected or hideprivate (handled elsewhere!)
-	 * @param string $query='' pattern so search for, if unset or empty all matching entries are returned (no search)
-	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 * @param int|boolean $offset=False offset for a limited query or False (default)
 	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
-	 * @param string $order='cal_start' column-names plus optional DESC|ASC separted by comma
-	 * @param string $sql_filter='' sql to be and'ed into query (fully quoted)
-	 * @param string|array $_cols=null what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+	 * @param array $params=array()
+	 * @param string $params['query'] pattern so search for, if unset or empty all matching entries are returned (no search)
+	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
+	 * @param string $params['order']='cal_start' column-names plus optional DESC|ASC separted by comma
+	 * @param string $params['sql_filter'] sql to be and'ed into query (fully quoted)
+	 * @param string|array $params['cols'] what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
 	 * 						if specified and not false an iterator for the rows is returned
-	 * @param string $append='' SQL to append to the query before $order, eg. for a GROUP BY clause
-	 * @param array $cfs=null custom fields to query, null = none, array() = all, or array with cfs names
+	 * @param string $params['append'] SQL to append to the query before $order, eg. for a GROUP BY clause
+	 * @param array $params['cfs'] custom fields to query, null = none, array() = all, or array with cfs names
+	 * @param array $params['users'] raw parameter as passed to calendar_bo::search() no memberships resolved!
 	 * @return array of cal_ids, or false if error in the parameters
 	 *
 	 * ToDo: search custom-fields too
 	 */
-	function &search($start,$end,$users,$cat_id=0,$filter='all',$query='',$offset=False,$num_rows=0,$order='cal_start',$sql_filter='',$_cols=null,$append='',$cfs=null)
+	function &search($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array())
 	{
-		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($query).",$offset,$num_rows,$order,$show_rejected,".array2string($_cols).",$append,".array2string($cfs).")</p>\n";
+		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',,$offset,$num_rows,".array2string($params).")</p>\n";
 
-		$cols = !is_null($_cols) ? $_cols : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
+		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
 
 		$where = array();
-		if (is_array($query))
+		if (is_array($params['query']))
 		{
-			$where = $query;
+			$where = $params['query'];
 		}
-		elseif ($query)
+		elseif ($params['query'])
 		{
 			foreach(array('cal_title','cal_description','cal_location') as $col)
 			{
-				$to_or[] = $col . ' LIKE ' . $this->db->quote('%'.$query.'%');
+				$to_or[] = $col . ' LIKE ' . $this->db->quote('%'.$params['query'].'%');
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
 		}
-		if (!empty($sql_filter) && is_string($sql_filter))
+		if (!empty($params['sql_filter']) && is_string($params['sql_filter']))
 		{
-			$where[] = $sql_filter;
+			$where[] = $params['sql_filter'];
 		}
 		if ($users)
 		{
@@ -400,15 +402,15 @@ class calendar_so
 
 			if($filter != 'deleted')
 			{
-				$where[] = 'cal_deleted='.$this->db->quote(false,'bool');
+				$where['cal_deleted'] = false;
 			}
 			switch($filter)
 			{
 				case 'showonlypublic':
-					$where[] = 'cal_public=1';
+					$where['cal_public'] = 1;
 					$where[] = "cal_status != 'R'"; break;
 				case 'deleted':
-					$where[] = 'cal_deleted='.$this->db->quote(true,'bool');
+					$where['cal_deleted'] = true;
 				case 'unknown':
 					$where[] = "cal_status='U'"; break;
 				case 'accepted':
@@ -423,7 +425,6 @@ class calendar_so
 				case 'owner':
 					break;
 				default:
-					//if (!$show_rejected)	// not longer used
 					$where[] = "cal_status != 'R'";
 					break;
 			}
@@ -435,7 +436,7 @@ class calendar_so
 		if ($start) $where[] = (int)$start.' < cal_end';
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
-		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injection
+		if (!preg_match('/^[a-z_ ,]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
 
 		if ($useUnionQuery)
 		{
@@ -445,7 +446,8 @@ class calendar_so
 			// For deleted history
 			$history_id = $this->cal_table.'.cal_id';
 			// Postgres needs a cast
-			if($this->db->Type == 'pgsql') {
+			if($this->db->Type == 'pgsql')
+			{
 				$history_id = "CAST($history_id AS VARCHAR)";
 			}
 
@@ -456,7 +458,7 @@ class calendar_so
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
-				'append'=> $append,
+				'append'=> $params['append'],
 			);
 			// we check if there are parts to use for the construction of our UNION query,
 			// as replace the OR by construction of a suitable UNION for performance reasons
@@ -514,7 +516,7 @@ class calendar_so
 					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 					//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 				}
-				if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
+				if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query,$params['users']);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 				$i = 0;
@@ -539,7 +541,7 @@ class calendar_so
 			if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query);
 
 			// error_log("calendar_so_search:\n" . print_r($selects, true));
-			$rs = $this->db->union($selects,__LINE__,__FILE__,$order,$offset,$num_rows);
+			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
 		}
 		else	// MsSQL oder MySQL 3.23
 		{
@@ -554,7 +556,7 @@ class calendar_so
 					"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id")->NumRows();
 			}
 			$rs = $this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').$cols,
-				$where,__LINE__,__FILE__,$offset,$append.' ORDER BY '.$order,'calendar',$num_rows,
+				$where,__LINE__,__FILE__,$offset,$params['append'].' ORDER BY '.$params['order'],'calendar',$num_rows,
 				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
 		}
 		if (!is_null($_cols))
@@ -612,10 +614,10 @@ class calendar_so
 					self::combine_status($row['cal_status'],$row['cal_quantity'],$row['cal_role']);
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
-			if (!is_null($cfs))
+			if (!is_null($params['cfs']))
 			{
 				$where = array('cal_id' => $ids);
-				if ($cfs) $where['cal_extra_name'] = $cfs;
+				if ($params['cfs']) $where['cal_extra_name'] = $params['cfs'];
 				foreach($this->db->select($this->extra_table,'*',$where,
 					__LINE__,__FILE__,false,'','calendar') as $row)
 				{
@@ -664,12 +666,13 @@ class calendar_so
 	 * @param &$selects parts of union query
 	 * @param $start see search()
 	 * @param $end
-	 * @param $users
+	 * @param $users as used in calendar_so ($users_raw plus all members and memberships added by calendar_bo)
 	 * @param $cat_id
 	 * @param $filter
 	 * @param $query
+	 * @param $users_raw as passed to calendar_bo::search (no members and memberships added)
 	 */
-	private static function get_union_selects(array &$selects,$start,$end,$users,$cat_id,$filter,$query)
+	private static function get_union_selects(array &$selects,$start,$end,$users,$cat_id,$filter,$query,$users_raw)
 	{
 		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','rpc.php','xmlrpc.php')) || $GLOBALS['egw_info']['flags']['currentapp'] != 'calendar')
 		{
@@ -681,6 +684,7 @@ class calendar_so
 			'start' => $start,
 			'end'   => $end,
 			'users' => $users,
+			'users_raw' => $users_raw,
 			'cat_id'=> $cat_id,
 			'filter'=> $filter,
 			'query' => $query,
