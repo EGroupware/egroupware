@@ -12,6 +12,7 @@
 (empty = use global limit, no = no export at all)	admin	de	(leer = globale Begrenzung verwenden, nein = gar kein Export)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur für Administratoren verfügbar !!!
+account id	addressbook	de	Benutzerkonten ID
 account repository	admin	de	Speicherort für Benutzerkonten
 accounts	addressbook	de	Benutzerkonten
 actions	addressbook	de	Befehle
@@ -37,8 +38,10 @@ address line 2	addressbook	de	Adresszeile 2
 address type	addressbook	de	Adresstyp
 addressbook	common	de	Adressbuch
 addressbook csv export	addressbook	de	Adressbuch CSV Export
+addressbook csv import	addressbook	de	Adressbuch CSV Import
 addressbook field	addressbook	de	Adressbuch Feld
 addressbook menu	addressbook	de	Adressbuch Menü
+addressbook of	addressbook	de	Adressbuch von
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook the contact should be saved to	addressbook	de	Adressbuch in dem der Kontakt gespeichert werden soll
 addressbook the contact should be shown	addressbook	de	Adressbuch in dem der Kontakt angezeit werden soll
@@ -81,6 +84,7 @@ category tree	admin	de	Kategoriebaum
 cell phone	addressbook	de	Mobiltelefon
 change all organisation members	addressbook	de	Alle Mitglieder der Organisation ändern
 charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
+charset for the vcard export	addressbook	de	Zeichensatz für den vCard Export
 charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
@@ -99,6 +103,7 @@ contact deleted	addressbook	de	Kontakt gelöscht
 contact fields to show	addressbook	de	Kontaktfelder die angezeigt werden sollen
 contact fields:	addressbook	de	Kontaktfelder:
 contact id	addressbook	de	Kontakt ID
+contact id cannot be changed by import	addressbook	de	Kontakt ID kann nicht beim Import verändert werden
 contact maintenance	admin	de	Kontakt Wartung
 contact modified by %1 at %2	addressbook	de	Kontakt geändert von %1 am %2
 contact not found!	addressbook	de	Kontakt nicht gefunden!
@@ -174,7 +179,12 @@ error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts 
 error saving the contact !!!	addressbook	de	Fehler beim Speichern des Kontakts !!!
 error: the entry has been updated since you opened it for editing!	addressbook	de	Fehler: der Eintrag wurde geändert, seit Sie ihn zum Bearbeiten geöffnet haben!
 example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	de	Beispiel: "$$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel(Land wird nur dann angezeit, denn es nicht DEUTSCHLAND ist: $$IFadr_one_countryname~DEUTSCHLAND~~adr_one_countryname$$
+example $$letterprefix$$ - gives a letter prefix without double spaces, if the title is emty for  example	addressbook	de	Beispiel $$LETTERPREFIX$$ - Erzeugt die Briefanrede ohne doppelten Leerzeichen, wenn z.B. der Titel nicht vorhanden ist.
+example $$letterprefixcustom n_prefix title n_family$$ - example: mr dr. james miller	addressbook	de	Besipiel für $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Beispiel: Herr Dr. James Miller
+example $$nelf role$$ - if field role is not empty, you will get a new line with the value of field role	addressbook	de	Beispiel $$NELF role$$ - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role nach dem Zeilenumbruch ausgegeben.
+example $$nelfnv role$$ - if field role is not empty, set a lf without any value of the field	addressbook	de	Beispiel $$NELFNV role$$ -Erzeugt einen Zeilenumbruch, wenn das Feld role einen Wert besitzt. Der Wert role wird auch bei vorhandensein des Feldes role nicht ausgegeben.
 existing links	addressbook	de	Bestehende Verknüpfungen
+exists	addressbook	de	besteht bereits
 export	addressbook	de	Export
 export as csv	addressbook	de	Exportieren als CSV
 export as vcard	addressbook	de	Exportieren als VCard
@@ -211,6 +221,7 @@ group %1	addressbook	de	Gruppe %1
 h	addressbook	de	h
 hide accounts from addressbook	addressbook	de	Benutzer im Adressbuch ausblenden
 hides accounts completly from the adressbook.	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch.
+history logging	admin	de	Verfolgung der Änderungen
 home address	addressbook	de	Privatadresse
 home address, birthday, ...	addressbook	de	Privatadresse, Geburtstag, ...
 home city	addressbook	de	Stadt privat
@@ -225,7 +236,9 @@ how many contacts should non-admins be able to export	admin	de	Wieviele Kontakte
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das Adressbuch einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted. the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (<a href="/egroupware/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">full list of placeholder names</a>). at the moment the following document-types are supported:*.rtf, *.txt	addressbook	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das Adressbuch ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen. Diese Dokument an Platzhalter wie $$n_fn$$$ beinhalten, die dann durch die Daten aus der Adresse ersetzt werden (<a href="/egroupware/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">Liste der Platzhalter</a>). Zur Zeit werden die folgenden Dateitypen unterstützt: *.rtf,*.txt
 if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das Adressbuch ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted. the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (<a href="/egroupware/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">full list of placeholder names</a>). at the moment the following document-types are supported:*.rtf, *.txt	addressbook	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das Adressbuch ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen. Diese Dokument an Platzhalter wie $$n_fn$$$ beinhalten, die dann durch die Daten aus der Adresse ersetzt werden (<a href="/egroupware/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">Liste der Platzhalter</a>). Zur Zeit werden die folgenden Dateitypen unterstützt: *.rtf,*.txt
 ignore first line	addressbook	de	Erste Zeile ignorieren
 import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
@@ -241,6 +254,7 @@ imports contacts into your addressbook from a csv file. csv means 'comma seperat
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
 infolog	addressbook	de	InfoLog
+insert	addressbook	de	einfügen
 insert in document	addressbook	de	Einfügen in Dokument
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!
 international	addressbook	de	International
@@ -316,6 +330,7 @@ preferred email address to use in distribution lists	addressbook	de	Bevorzugte E
 preferred phone	addressbook	de	bevorzugte Telefonnummer
 preferred type of email address to add for distribution lists	addressbook	de	bevorzugter Typ der E-Mailadresse für Verteilerlisten
 prefix	addressbook	de	Anrede
+prevent deleting of contacts	admin	de	Das Löschen von Adressen verhindern
 private custom fields	addressbook	de	Private Benutzerdefinierte Felder
 public key	addressbook	de	öffentlicher Schlüssel
 publish into groups:	addressbook	de	In folgenden Gruppen veröffentlichen:
@@ -347,6 +362,7 @@ select the type of conversion	addressbook	de	Typ der Umwandlung auswählen
 select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern möchten
 selected contacts	addressbook	de	ausgewählte Kontakte
+send emailcopy to receiver	addressbook	de	Versendet eine Kopie der E-Mail zu dem Empfänger
 seperator	addressbook	de	Feldtrenner
 set full name and file as field in contacts of all users (either all or only empty values)	admin	de	Setzt vollen Namen und eigene Sortierung in Kontakten aller Benutzer (entweder alle oder nur leere Werte)
 set only full name	addressbook	de	Nur vollen Namen setzen
@@ -374,12 +390,14 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	de	Der Anonymous Benutzer benötigt Hinzufügen Rechte dafür!
 the anonymous user needs read it!	addressbook	de	Der Anonymous Benutzer muss dies lesen können
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	de	Das Dokument kann Platzhalter wie $$n_fn$$ enthalten, die mit den Kontaktdaten ersetzt werden (%1komplette Liste der Platzhalter%2).
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	de	Die zip Erweiterung (Extension) wird benötigt, um Daten in eine OpenOffice oder MsOffice Dokument einzufügen.
 there was an error saving your data :-(	addressbook	de	Beim Speichern Ihrer Daten ist ein Fehler aufgetreten :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	de	Dieses Modul ist ein Kontaktformular, welches direkt in das Adressbuch speichert.
 this module displays block from a adddressbook group.	addressbook	de	Dieses Modul zeigt einen Block vom Adressbuch an.
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch vorhanden.
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch vorhanden.
 timezone	addressbook	de	Zeitzone
+title	addressbook	de	Title
 to many might exceed your execution-time-limit	addressbook	de	Zu viele können Ihre Laufzeitbeschränkung überschreiten
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
@@ -413,6 +431,7 @@ where to add the email address	addressbook	de	wo soll die E-Mailadresse hinzugef
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden, deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhängig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll beim Hinzufügen von Kontakten ausgewählt sein, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der EGroupware Installation.
+which charset should be used for the vcard export.	addressbook	de	Welcher Zeichensatz soll für den vCard Export verwendet werden?
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. 'Alle' bedeutet jedes Feld, welches im Adressbuch gespeichert ist, einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.
 whole query	addressbook	de	gesamte Abfrage
 work email if given, else home email	addressbook	de	Geschäftliche E-Mail wenn vorhanden, ansonsten private E-Mail
@@ -423,6 +442,7 @@ yes, for the next three days	addressbook	de	Ja, für die nächsten drei Tage
 yes, for the next two weeks	addressbook	de	Ja, für die nächsten zwei Wochen
 yes, for the next week	addressbook	de	Ja, für die nächste Woche
 yes, for today and tomorrow	addressbook	de	Ja, für heute und morgen
+yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
 you are not permitted to delete contact %1	addressbook	de	Sie haben keine Berechtigungen um den Kontakt %1 zu löschen
 you are not permittet to delete this contact	addressbook	de	Sie haben keine Berechtigung diesen Kontakt zu löschen
 you are not permittet to edit this contact	addressbook	de	Sie haben keine Berechtigung diesen Kontakt zu bearbeiten
