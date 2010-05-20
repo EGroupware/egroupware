@@ -30,6 +30,7 @@ preferences for notification	notifications	fi	Huomautuksen asetukset
 received	notifications	fi	Vastaanotettu
 sms backend	admin	fi	Tekstiviesti backend
 sms only	notifications	fi	Vain tekstiviesti
+this egroupware notification has been sent to you by mail because your	notifications	fi	Tämä huomautusviesti on lähetetty sähköpostilla, koska
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	fi	Tämä huomautusviesti on lähetetty sähköpostilla, koska ylläpitäjät eivät salli valitsemaasi huomautusviestiketjua. Valitse asetuksissa toinen huomautusviestiketju!
 windows-popup and e-mail	notifications	fi	Windows-Popup ja sähköposti
 windows-popup backend	admin	fi	Windows-Popup backend
