@@ -217,16 +217,6 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 
 		foreach($syncElementItems as $syncItem) {
 
-			$contentSize = strlen($syncItem->_content);
-			if ((($size = $syncItem->getContentSize()) !== false) &&
-					abs($contentSize - $size) > 3) {
-				Horde::logMessage('SyncML: content size mismatch for LocURI ' . $syncItem->_luid .
-					": $contentSize ($size) : " . $syncItem->_content,
-					__FILE__, __LINE__, PEAR_LOG_WARNING);
-				//$command->setStatus(RESPONSE_SIZE_MISMATCH);
-				continue;
-			}
-
 			if(!$contentType = $syncItem->getContentType()) {
 				$contentType = $state->getPreferedContentType($type);
 			}
