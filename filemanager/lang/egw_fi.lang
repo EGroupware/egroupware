@@ -19,6 +19,7 @@ accessrights	filemanager	fi	ACL-käyttöoikeudet
 acl added.	filemanager	fi	ACL lisätty.
 acl deleted.	filemanager	fi	ACL poistettu.
 actions	filemanager	fi	Toiminnot
+add to current clipboard	filemanager	fi	Lisää leikepöydälle
 all files	common	fi	Kaikki tiedostot
 allow a maximum of the above configured folderlinks to be configured in settings	admin	fi	Konfiguroitavien kansiolinkkien maksimimäärä asetuksissa.
 and all it's childeren	filemanager	fi	ja kaikki sen aliosastot (subit)
@@ -28,6 +29,8 @@ can't open directory %1!	filemanager	fi	Hakemistoa %1 ei voitu avata!
 cancel editing %1 without saving	filemanager	fi	Peru %1:n muokkaus tallentamatta muutoksia
 cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai päättyy välilyöntiin
 check all	filemanager	fi	Valitse kaikki
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	fi	Asettamalla haussa (päivästä x päivään y) jälkimmäisen päivämäärän (y) vanhemmaksi kuin ensimmäisen (x), haku palauttaa tuloksena KAIKKI MUUT paitsi kyseisen aikavälin tapahtumat.
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	fi	Asettamalla ainoastaan yhden päivän haussa (Haku päivästä x päivään y) antaa hakutulokseksi kaikki tietueet ENNEN ja JÄLKEEN kyseistä päivämäärää.
 clear search	filemanager	fi	Tyhjennä haku
 comment	filemanager	fi	Kommentti
 comments cannot contain "%1"	filemanager	fi	Kommentti ei saa sisältää "%1"
@@ -79,10 +82,12 @@ enter the complete vfs path to specify your desired start folder.	filemanager	fi
 error adding the acl!	filemanager	fi	Virhe ACL -oikeuksia lisättäessä!
 error creating symlink to target %1!	filemanager	fi	Virhe luotaessa symlinkkiä kohteeseen %1!
 error deleting the acl entry!	filemanager	fi	Virhe ACL -oikeuksia poistettaessa!
+error uploading file!	filemanager	fi	Virhe ladattaessa tiedostoa!
 extended access control list	filemanager	fi	Laajennetut ACL -oikeudet
 extended acl	filemanager	fi	Laajennetut ACL -oikeudet
 failed to change permissions of %1!	filemanager	fi	%1, oikeuksien myöntäminen epäonnistui!
 failed to create directory!	filemanager	fi	Hakemiston luominen epäonnistui
+fake base dir did not exist, egroupware created a new one.	filemanager	fi	Fake Base Dir:ä ei ollut olemassa, EGroupware loi uuden.
 favorites	filemanager	fi	Suosikit
 file	filemanager	fi	Tiedosto
 file %1 already exists. please edit it or delete it first.	filemanager	fi	Tiedosto %1 on jo olemassa. Muokkaa sitä tai poista se.
@@ -109,6 +114,7 @@ link %1: %2	filemanager	fi	Linkki %1: %2
 link target %1 not found!	filemanager	fi	Linkkikohdetta %1 ei löytynyt!
 location	filemanager	fi	Sijainti
 log out as superuser	filemanager	fi	Kirjaudu ulos SuperUserina
+mail files	filemanager	fi	Lähetä sähköpostilla
 max folderlinks	admin	fi	Kansioiden maksimilinkkimäärä
 mime type	filemanager	fi	MIME-tyyppi
 modified	filemanager	fi	Muokattu
@@ -157,7 +163,7 @@ select action...	filemanager	fi	Valitse toiminto...
 select file to upload in current directory	filemanager	fi	Valitse ladattava tiedosto
 show	filemanager	fi	Näytä
 show hidden files	filemanager	fi	Näytä piilotetut tiedostot
-show link to filemanagers basedirectory (/) in side box menu?	filemanager	fi	Näytetäänkö linkki Tiedostonhallinnan juurihakemistoon (base directory) (/) sivuvalikossa?
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	fi	Näytetäänkö linkki Tiedostonhallinnan kantahakemistoon (base directory) (/) sivuvalikossa?
 size	filemanager	fi	Koko
 start search	filemanager	fi	Aloita haku
 superuser	filemanager	fi	SuperUser
@@ -171,8 +177,12 @@ total files	filemanager	fi	Tiedostoja
 unused space	filemanager	fi	Tilaa vapaana
 up	filemanager	fi	Ylös
 updated comment for %1	filemanager	fi	Päivitettiin %1 kommentit
+upload fields	filemanager	fi	Lataa kenttiä
+upload files	filemanager	fi	Lataa tiedostoja
 used space	filemanager	fi	Käytetty tila
 users and groups	filemanager	fi	Käyttäjät ja ryhmät
+versioning	filemanager	fi	Versiointi
+who	filemanager	fi	Kuka
 wrong username or password!	filemanager	fi	Väärä käyttäjätunnus tai salasana!
 you are not allowed to upload a script!	filemanager	fi	Sinulla ei ole riittäviä oikeuksia ladata skriptiä!
 you can only grant additional rights, you can not take rights away!	filemanager	fi	Voit ainoastaan antaa lisää oikeuksia, et voi vähentää/ottaa niitä pois!
