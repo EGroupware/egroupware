@@ -32,6 +32,7 @@ preferences for notification	notifications	de	Benachrichtigungs-Einstellungen
 received	notifications	de	Erhalten
 sms backend	admin	de	SMS Schnittstelle
 sms only	notifications	de	nur SMS
+this egroupware notification has been sent to you by mail because your	notifications	de	Diese EGroupware-Benachrichtigung wurde Ihnen per Mail zugesandt.
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	de	Diese EGroupware-Benachrichtigung wurde Ihnen per Mail zugesandt, da Ihre gewählte Benachrichtigungskette vom Administrator deaktiviert wurde. Bitte wählen Sie eine andere Benachrichtigungskette in Ihren Einstellungen!
 windows-popup and e-mail	notifications	de	Windows-Popup und E-Mail
 windows-popup backend	admin	de	Windows-Popup Schnittstelle
