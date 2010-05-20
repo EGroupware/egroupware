@@ -12,6 +12,7 @@
 (empty = use global limit, no = no export at all)	admin	en	(empty = use global limit, no = no export at all)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type <none> could be located.</b>  Please choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
+account id	addressbook	en	Account ID
 account repository	admin	en	Account repository
 accounts	addressbook	en	Accounts
 actions	addressbook	en	Actions
@@ -37,8 +38,10 @@ address line 2	addressbook	en	Address Line 2
 address type	addressbook	en	Address Type
 addressbook	common	en	Addressbook
 addressbook csv export	addressbook	en	Addressbook CSV export
+addressbook csv import	addressbook	en	Addressbook CSV import
 addressbook field	addressbook	en	Addressbook Field
 addressbook menu	addressbook	en	Addressbook menu
+addressbook of	addressbook	en	Addressbook of
 addressbook preferences	addressbook	en	Addressbook preferences
 addressbook the contact should be saved to	addressbook	en	Addressbook the contact should be saved to
 addressbook the contact should be shown	addressbook	en	Addressbook the contact should be shown
@@ -81,6 +84,7 @@ category tree	admin	en	Category tree
 cell phone	addressbook	en	Mobile phone
 change all organisation members	addressbook	en	change all organisation members
 charset for the csv export	addressbook	en	Charset for the CSV export
+charset for the vcard export	addressbook	en	Charset for the vCard export
 charset of file	addressbook	en	Charset of file
 check all	addressbook	en	Check all
 choose an icon for this contact type	admin	en	Choose an icon for this contact type
@@ -99,6 +103,7 @@ contact deleted	addressbook	en	Contact deleted
 contact fields to show	addressbook	en	Contact fields to show
 contact fields:	addressbook	en	Contact fields:
 contact id	addressbook	en	Contact ID
+contact id cannot be changed by import	addressbook	en	Contact ID cannot be changed by import
 contact maintenance	admin	en	Contact maintenance
 contact modified by %1 at %2	addressbook	en	Contact modified by %1 at %2
 contact not found!	addressbook	en	Contact not found!
@@ -174,7 +179,12 @@ error deleting the contact !!!	addressbook	en	Error deleting the contact !!!
 error saving the contact !!!	addressbook	en	Error saving the contact !!!
 error: the entry has been updated since you opened it for editing!	addressbook	en	Error: the entry has been updated since you opened it for editing!
 example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	en	Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms. You can also use a field name instead a fix value. Example: $$IFadr_one_countryname~DEUTSCHLAND~~adr_one_countryname$$
+example $$letterprefix$$ - gives a letter prefix without double spaces, if the title is emty for  example	addressbook	en	Example $$LETTERPREFIX$$ - Gives a letter prefix without double spaces, if the title is emty for  example
+example $$letterprefixcustom n_prefix title n_family$$ - example: mr dr. james miller	addressbook	en	Example $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Example: Mr Dr. James Miller
+example $$nelf role$$ - if field role is not empty, you will get a new line with the value of field role	addressbook	en	Example $$NELF role$$ - if field role is not empty, you will get a new line with the value of field role
+example $$nelfnv role$$ - if field role is not empty, set a lf without any value of the field	addressbook	en	Example $$NELFNV role$$ - if field role is not empty, set a LF without any value of the field
 existing links	addressbook	en	Existing links
+exists	addressbook	en	exists
 export	addressbook	en	export
 export as csv	addressbook	en	Export as CSV
 export as vcard	addressbook	en	Export as VCard
@@ -211,6 +221,7 @@ group %1	addressbook	en	Group %1
 h	addressbook	en	h
 hide accounts from addressbook	addressbook	en	Hide accounts from addressbook
 hides accounts completly from the adressbook.	addressbook	en	Hides accounts completly from the adressbook.
+history logging	admin	en	History logging
 home address	addressbook	en	Home address
 home address, birthday, ...	addressbook	en	Home address, Birthday, ...
 home city	addressbook	en	Home City
@@ -241,6 +252,7 @@ imports contacts into your addressbook from a csv file. csv means 'comma seperat
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
 infolog	addressbook	en	InfoLog
+insert	addressbook	en	insert
 insert in document	addressbook	en	Insert in document
 insufficent rights to delete this list!	addressbook	en	Insufficent rights to delete this list!
 international	addressbook	en	International
@@ -316,6 +328,7 @@ preferred email address to use in distribution lists	addressbook	en	Preferred em
 preferred phone	addressbook	en	preferred phone
 preferred type of email address to add for distribution lists	addressbook	en	preferred type of email address to add for distribution lists
 prefix	addressbook	en	Prefix
+prevent deleting of contacts	admin	en	Prevent deleting of contacts
 private custom fields	addressbook	en	Private custom fields
 public key	addressbook	en	Public Key
 publish into groups:	addressbook	en	Publish into groups:
@@ -347,6 +360,7 @@ select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store / retrieve contacts	admin	en	Select where you want to store / retrieve contacts
 selected contacts	addressbook	en	Selected contacts
+send emailcopy to receiver	addressbook	en	Send emailcopy to receiver
 seperator	addressbook	en	Seperator
 set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and file as field in contacts of all users (either all or only empty values)
 set only full name	addressbook	en	Set only full name
@@ -374,12 +388,14 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights for it!
 the anonymous user needs read it!	addressbook	en	The anonymous user needs read it!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	en	The document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in OpenOffice or MSOffice documents.
 there was an error saving your data :-(	addressbook	en	There was an error saving your data :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contact form, that stores directly into the address book.
 this module displays block from a adddressbook group.	addressbook	en	This module displays Block from a Address book Group.
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
 timezone	addressbook	en	Timezone
+title	addressbook	en	title
 to many might exceed your execution-time-limit	addressbook	en	too many might exceed your execution-time-limit
 today is %1's birthday!	common	en	Today is %1's birthday!
 tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
@@ -413,6 +429,7 @@ where to add the email address	addressbook	en	where to add the email address
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Which address format should the address book use for countries it does not know the address format. If the address format of a country is known, it uses it independent of this setting.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which address book should be selected when adding a contact AND you have no add rights to the current address book.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.
+which charset should be used for the vcard export.	addressbook	en	Which charset should be used for the vCard export.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	en	Which fields should be exported. All means every field stored in the address book incl. the custom fields. The business or home address only contains name, company and the selected address.
 whole query	addressbook	en	whole query
 work email if given, else home email	addressbook	en	Work email if given, else home email
@@ -423,6 +440,7 @@ yes, for the next three days	addressbook	en	Yes, for the next three days
 yes, for the next two weeks	addressbook	en	Yes, for the next two weeks
 yes, for the next week	addressbook	en	Yes, for the next week
 yes, for today and tomorrow	addressbook	en	Yes, for today and tomorrow
+yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 you are not permitted to delete contact %1	addressbook	en	You are not permitted to delete contact %1
 you are not permittet to delete this contact	addressbook	en	You are not permitted to delete this contact
 you are not permittet to edit this contact	addressbook	en	You are not permitted to edit this contact
