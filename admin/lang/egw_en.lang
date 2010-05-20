@@ -97,12 +97,15 @@ bi-dir passthrough	admin	en	bi-dir passthrough
 bi-directional	admin	en	bi-directional
 bottom	admin	en	bottom
 calculate next run	admin	en	Calculate next run
+calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizont in days (default 1000)
 can change password	admin	en	Can change password
 cancel testjob!	admin	en	Cancel TestJob!
 cancel this scheduled command	admin	en	Cancel this scheduled command
 categories list	admin	en	Categories list
 category %1 has been saved !	admin	en	Category %1 has been saved !
+category deleted.	admin	en	Category deleted.
 category list	admin	en	Category list
+category saved.	admin	en	Category saved.
 change account_id	admin	en	Change account_id
 change acl rights	admin	en	change ACL Rights
 change config settings	admin	en	Change config settings
@@ -167,7 +170,9 @@ deny access to peer servers	admin	en	Deny access to peer servers
 deny access to phpinfo	admin	en	Deny access to phpinfo
 deny access to site configuration	admin	en	Deny access to site configuration
 deny access to user accounts	admin	en	Deny access to user accounts
+deny all users access to create and manage private categories ?	admin	en	Deny all users access to create and manage private categories ?
 deny all users access to grant other users access to their entries ?	admin	en	Deny all users access to grant other users access to their entries ?
+deny all users access to preferences ?	admin	en	Deny all users access to preferences ?
 description can not exceed 255 characters in length !	admin	en	Description can not exceed 255 characters in length !
 determines the order the fields are displayed	admin	en	determines the order the fields are displayed
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
@@ -558,6 +563,7 @@ wrong account type: %1 is no %2 !!!	admin	en	Wrong account type: %1 is NO %2 !!!
 wrong admin-account or -password !!!	admin	en	Wrong admin-account or -password !!!
 xml-rpc	admin	en	XML-RPC
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
+you have no email address for your user set !!!	admin	en	You have no email address for your user set !!!
 you have to enter a name, to create a new field!!!	admin	en	You have to enter a name, to create a new field!!!
 you have to enter a name, to create a new type!!!	admin	en	You have to enter a name, to create a new type!!!
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
