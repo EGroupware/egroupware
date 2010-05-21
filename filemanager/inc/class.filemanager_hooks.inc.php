@@ -135,8 +135,8 @@ class filemanager_hooks
 				'type'		=> 'select',
 				'name'		=> 'showbase',
 				'values'	=> $yes_no,
-				'label' 	=> lang('Show link to filemanagers basedirectory (/) in side box menu?'),
-				'help'		=> lang('Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.'),
+				'label' 	=> 'Show link to filemanagers basedirectory (/) in side box menu?',
+				'help'		=> 'Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.',
 				'xmlrpc'	=> True,
 				'admin'		=> False,
 				'default'   => 'no',
@@ -145,8 +145,8 @@ class filemanager_hooks
 				'type'		=> 'input',
 				'name'		=> 'startfolder',
 				'size'		=> 60,
-				'label' 	=> lang('Enter the complete VFS path to specify your desired start folder.'),
-				'help'		=> lang('The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.'),
+				'label' 	=> 'Enter the complete VFS path to specify your desired start folder.',
+				'help'		=> 'The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.',
 				'xmlrpc'	=> True,
 				'admin'		=> False,
 			),
@@ -159,6 +159,7 @@ class filemanager_hooks
 				'size'		=> 60,
 				'default'	=> '',
 				'label' 	=> lang('Enter the complete VFS path to specify a fast access link to a folder').' ('.$i.').',
+				'run_lang'  => -1,	// -1 = no lang on label
 				'xmlrpc'	=> True,
 				'admin'		=> False
 			);
