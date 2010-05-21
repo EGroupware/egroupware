@@ -599,6 +599,11 @@ class calendar_bo
 			'end'   => $event['end'],
 			'tzid'  => $event['tzid'],
 			'title' => lang('private'),
+			'modified'	=> $event['modified'],
+			'owner'		=> $event['owner'],
+			'recur_type' => MCAL_RECUR_NONE,
+			'etag'	=> $event['etag'],
+			'max_user_modified' => $event['max_user_modified'],
 			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
 			'public'=> 0,
 			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
@@ -1007,7 +1012,7 @@ class calendar_bo
 			$private = !$event['public'];
 		}
 		$grants = $this->grants[$owner];
-		if (is_array($event) && $needed == EGW_ACL_READ)
+		if (is_array($event) && ($needed == EGW_ACL_READ || $needed == EGW_ACL_FREEBUSY))
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
 			// in that case he has an implicite READ grant for that event
@@ -1018,6 +1023,7 @@ class calendar_bo
 				{
 					if ($uid == $this->user || $uid < 0 && in_array($this->user,$GLOBALS['egw']->accounts->members($uid,true)))
 					{
+						$grants |= EGW_ACL_FREEBUSY;
 						// if we are a participant, we have an implicite READ and PRIVAT grant
 						// exept the group gives its members only EGW_ACL_FREEBUSY and the participant is not the current user
 						if ($this->grants[$uid] == EGW_ACL_FREEBUSY && $uid != $this->user) continue;
@@ -1048,7 +1054,8 @@ class calendar_bo
 		}
 		else
 		{
-			$access = $this->user == $owner || $grants & $needed && (!$private || $grants & EGW_ACL_PRIVATE);
+			$access = $this->user == $owner || $grants & $needed
+				&& ($needed == EGW_ACL_FREEBUSY || !$private || $grants & EGW_ACL_PRIVATE);
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'check_perms'))
 		{

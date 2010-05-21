@@ -114,7 +114,14 @@ class calendar_groupdav extends groupdav_handler
 			'date_format' => 'server',
 		);
 
-		if ($path == '/calendar/') $filter['filter'] = 'owner';
+		if ($path == '/calendar/')
+		{
+			$filter['filter'] = 'owner';
+		}
+		else
+		{
+			$filter['filter'] = 'default'; // not rejected
+		}
 
 		// process REPORT filters or multiget href's
 		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
@@ -417,6 +424,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 
 		$events =& $bo->search(array(
 			'query' => array('cal_uid' => $uid),
+			'filter' => 'owner',  // return all possible entries
 			'daywise' => false,
 			'date_format' => 'server',
 		));
@@ -608,13 +616,13 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			$org_recurrence = $org_recurrences[$recurrence['recurrence']];
 			if (isset($org_recurrence))	// already existing recurrence
 			{
-				error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
+				//error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
 				$recurrence['id'] = $org_recurrence['id'];
 
 				// re-add (non-virtual) exceptions to master's recur_exception
 				if ($recurrence['id'] != $master['id'])
 				{
-					error_log(__METHOD__.'() re-adding recur_exception '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']));
+					//error_log(__METHOD__.'() re-adding recur_exception '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']));
 					$exceptions[] = $recurrence['recurrence'];
 				}
 				// remove recurrence to be able to detect deleted exceptions
@@ -633,7 +641,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			}
 			else	// virtual recurrence
 			{
-				//error_log(__METHOD__.'() ToDO: delete virtual exception '.$org_recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$org_recurrence['recurrence']));
+				//error_log(__METHOD__.'() delete virtual exception '.$org_recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$org_recurrence['recurrence']));
 				$bo->update_status($master, $org_recurrence, $org_recurrence['recurrence']);
 			}
 		}
@@ -692,6 +700,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	public function getctag($path,$user)
 	{
+		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user]");
+		
 		$filter = array(
 			'users' => $user,
 			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync recurrences
@@ -699,12 +709,19 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
-			'order' => 'cal_modified DESC',
+			'order' => 'cal_modified DESC,cal_etag DESC',
 			'offset' => 0,
 			'num_rows'	=> 1,
 		);
 
-		if ($path == '/calendar/') $filter['filter'] = 'owner';
+		if (strpos($path, '/calendar') === 0)
+		{
+			$filter['filter'] = 'owner';
+		}
+		else
+		{
+			$filter['filter'] = 'default'; // not rejected
+		}
 
 		$result =& $this->bo->search($filter);
 
@@ -723,25 +740,28 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	{
 		if (!is_array($entry))
 		{
-			$entry = $this->read($entry);
+			if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
+			$entry = $this->read($entry, null, true, 'server');
 		}
 		$etag = $entry['id'].':'.$entry['etag'];
 
 		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
 		if (isset($entry['max_user_modified']))
 		{
-			$etag .= ':'.$entry['max_user_modified'];
+			$modified = max($entry['max_user_modified'], $entry['modified']);			
 		}
 		else
 		{
-			$etag .= ':'.$this->bo->so->max_user_modified($entry['id']);
+			$modified = max($this->bo->so->max_user_modified($entry['id']), $entry['modified']);
 		}
+		$etag .= ':' . $modified;
 		// include exception etags into our own etag, if exceptions are included
 		if ($this->client_shared_uid_exceptions && !empty($entry['uid']) &&
 			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
 		{
 			$events =& $this->bo->search(array(
 				'query' => array('cal_uid' => $entry['uid']),
+				'filter' => 'owner',  // return all possible entries
 				'daywise' => false,
 				'enum_recuring' => false,
 				'date_format' => 'server',
@@ -767,6 +787,11 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function check_access($acl,$event)
 	{
+		if ($acl == EGW_ACL_READ)
+		{
+			// we need at least EGW_ACL_FREEBUSY to get some information
+			$acl = EGW_ACL_FREEBUSY;
+		}
 		return $this->bo->check_perms($acl,$event,0,'server');
 	}
 
