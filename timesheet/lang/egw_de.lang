@@ -80,7 +80,8 @@ select a status of the timesheet	timesheet	de	einen status auswählen
 select action	timesheet	de	Bitte eine Aktion auswählen
 select infolog	timesheet	de	Infolog auswählen
 select multiple timeshhets for a further action	timesheet	de	Wählen Sie mehrere Stundenzettel für einen weitere Aktion aus
-select the predefined status, whan creating a new timesheet	timesheet	de	Wählen Sie einen Status als Vorgabe für neu zu erstellende Stundenzettel aus
+select the predefined status, whan creating a new timesheet	preferences	de	Wählen Sie einen Status als Vorgabe für neu zu erstellende Stundenzettel aus
+select the predefined status, when creating a new timesheet	preferences	de	Wählen Sie hier einen Status aus, der bei neu erstellten Stundenzetteln automatisch vorausgewählt wird.
 show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengensumme (z.B. um negative Überstunden zu summieren)
 start	timesheet	de	Start
 starttime	timesheet	de	Startzeit
