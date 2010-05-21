@@ -295,6 +295,7 @@ hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
 host information	setup	de	Host Informationen
 host,[smtp port],[smtp user],[smtp password]	setup	de	Host,[SMTP Port],[SMTP Benutzer],[SMTP Passwort]
+host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	de	host,{imap | imaps },[domain],[{standard(Vorgabe)|vmailmgr = Hinzufügen einer Domain für Mailserver Anmeldung }]
 host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	de	Host,{imap | pop3 | imaps | pop3s},[Domain],[{standard(Vorgabe)|vmailmgr = Domain für Mailserver Anmeldung anhängen|email = eMail Adresse der Benutzer (Default MailDomain sollte gesetzt sein)}]
 host/ip domain controler	setup	de	Hostname / IP des Domain Controler
 hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
@@ -380,6 +381,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer-ID (z.
 minute	setup	de	Minute
 missing or uncomplete mailserver configuration	setup	de	Fehlende oder nicht komplette Mailserver Konfiguration
 modifications have been completed!	setup	de	Änderung ist abgeschlossen!
+modified	setup	de	geändert
 modify	setup	de	Ändern
 month	setup	de	Monat
 multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
