@@ -410,7 +410,7 @@ class calendar_so
 					$where['cal_public'] = 1;
 					$where[] = "cal_status != 'R'"; break;
 				case 'deleted':
-					$where['cal_deleted'] = true;
+					$where['cal_deleted'] = true; break;
 				case 'unknown':
 					$where[] = "cal_status='U'"; break;
 				case 'accepted':
