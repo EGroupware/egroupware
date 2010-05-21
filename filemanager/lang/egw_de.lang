@@ -28,31 +28,26 @@ basedirectory	filemanager	de	Basisverzeichnis
 can't open directory %1!	filemanager	de	Kann Verzeichnis %1 nicht öffnen!
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
+cautiously rejecting to remove folder '%1'!	filemanager	de	Löschen des Verzeichnisses '%1' aus Vorsicht zurück gewiesen!
 check all	filemanager	de	Alle auswählen
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	de	Wenn Sie nur ein Datum auswählen (von/bis), erhalten Sie in den Suchergebnissen alle einträge die älter/neuer, als das eingetragene Datum sind.
 clear search	filemanager	de	Suchfelder zurücksetzen
 comment	filemanager	de	Kommentar
-comments cannot contain "%1"	filemanager	de	Kommentare dürfen "%1" nicht enthalten
 copied	filemanager	de	kopiert
 copied %1 to %2	filemanager	de	%1 nach %2 kopiert
 copy	filemanager	de	Kopieren
 copy to	filemanager	de	Kopieren nach
 copy to clipboard	filemanager	de	Kopieren in die Zwischenablage
 could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
-could not copy file because no destination directory is given	filemanager	de	Die Datei konnte nicht kopiert werden, da kein Zielverzeichnis angegeben ist.
 could not create %1	filemanager	de	Konnte %1 nicht erstellen
 could not delete %1	filemanager	de	Konnte %1 nicht löschen
 could not move %1 to %2	filemanager	de	Konnte %1 nicht nach %2 verschieben
-could not move file because no destination directory is given	filemanager	de	Die Datei konnte nicht verschoben werden, da kein Zielverzeichnis angegeben ist.
 could not rename %1 to %2	filemanager	de	Konnte %1 nicht in %2 umbenennen
-could not save %1	filemanager	de	Konnte %1 nicht speichern
 create a link	filemanager	de	Verknüpfung anlegen
 create directory	filemanager	de	Verzeichnis anlegen
 create file	filemanager	de	Datei erstellen
 create folder	filemanager	de	Verzeichnis erstellen
 created	filemanager	de	erstellt
 created %1,%2	filemanager	de	erstellt %1, %2
-created between	filemanager	de	erstellt zwischen
 created directory %1	filemanager	de	Verzeichis %1 erstellt
 current directory	filemanager	de	Aktuelles Verzeichnis
 custom fields	filemanager	de	Benutzerdefinierte Felder
@@ -65,7 +60,6 @@ directories sorted in	filemanager	de	Verzeichnisse einsortiert
 directory	filemanager	de	Verzeichnis
 directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
 directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
-directory names cannot contain "%1"	filemanager	de	Verzeichnisnamen dürfen kein "%1" enthalten
 directory not found or no permission to access it!	filemanager	de	Verzeichnis wurde nicht gefunden oder Sie haben keine Rechte um darauf zuzugreifen!
 display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
 display of content	filemanager	de	Anzeigen des Inhaltes
@@ -76,7 +70,6 @@ edit settings	filemanager	de	Einstellungen bearbeiten
 enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
 enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu bekommen
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
-enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	de	Geben Sie den kompletten Pfad ein, um einen Schnelle Zugangsverknüpfung zu einem Verzeichnis zu erzeugen (1)
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
 error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
@@ -89,7 +82,6 @@ failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 
 failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
 favorites	filemanager	de	Favoriten
 file	filemanager	de	Datei
-file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte editieren Sie diese, oder löschen Sie sie.
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
 file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu gross. Kontaktieren Sie Ihren Systemadministrator für weiterreichende Informationen.
 file deleted.	filemanager	de	Datei gelöscht.
@@ -181,7 +173,6 @@ upload files	filemanager	de	Dateien hochladen
 used space	filemanager	de	Benutzter Platz
 users and groups	filemanager	de	Benutzer und Gruppen
 versioning	filemanager	de	Versionierung
-who	filemanager	de	Wer
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!
 you can only grant additional rights, you can not take rights away!	filemanager	de	Sie könnnen nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!

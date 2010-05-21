@@ -28,31 +28,26 @@ basedirectory	filemanager	en	Basedirectory
 can't open directory %1!	filemanager	en	Can't open directory %1!
 cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
 cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
+cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting to remove folder '%1'!
 check all	filemanager	en	Check all
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	en	Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date
 clear search	filemanager	en	clear search
 comment	filemanager	en	Comment
-comments cannot contain "%1"	filemanager	en	Comments cannot contain "%1"
 copied	filemanager	en	copied
 copied %1 to %2	filemanager	en	Copied %1 to %2
 copy	filemanager	en	Copy
 copy to	filemanager	en	Copy to
 copy to clipboard	filemanager	en	Copy to clipboard
 could not copy %1 to %2	filemanager	en	Could not copy %1 to %2
-could not copy file because no destination directory is given	filemanager	en	Could not copy file because no destination directory is given
 could not create %1	filemanager	en	Could not create %1
 could not delete %1	filemanager	en	Could not delete %1
 could not move %1 to %2	filemanager	en	Could not move %1 to %2
-could not move file because no destination directory is given	filemanager	en	Could not move file because no destination directory is given
 could not rename %1 to %2	filemanager	en	Could not rename %1 to %2
-could not save %1	filemanager	en	Could not save %1
 create a link	filemanager	en	Create a link
 create directory	filemanager	en	Create directory
 create file	filemanager	en	Create File
 create folder	filemanager	en	Create Folder
 created	filemanager	en	created
 created %1,%2	filemanager	en	Created %1,%2
-created between	filemanager	en	created between
 created directory %1	filemanager	en	Created directory %1
 current directory	filemanager	en	Current directory
 custom fields	filemanager	en	Custom fields
@@ -65,7 +60,6 @@ directories sorted in	filemanager	en	Directories sorted in
 directory	filemanager	en	Directory
 directory %1 already exists	filemanager	en	Directory %1 already exists
 directory %1 does not exist	filemanager	en	Directory %1 does not exist
-directory names cannot contain "%1"	filemanager	en	Directory names cannot contain "%1"
 directory not found or no permission to access it!	filemanager	en	Directory not found or no permission to access it!
 display and modification of content	filemanager	en	Display and modification of content
 display of content	filemanager	en	Display of content
@@ -76,7 +70,6 @@ edit settings	filemanager	en	Edit settings
 enter setup user and password	filemanager	en	Enter setup user and password
 enter setup user and password to get root rights	filemanager	en	Enter setup user and password to get root rights
 enter the complete vfs path to specify a fast access link to a folder	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder
-enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	en	Enter the complete VFS path to specify a fast access link to a folder (1).
 enter the complete vfs path to specify your desired start folder.	filemanager	en	Enter the complete VFS path to specify your desired start folder.
 error adding the acl!	filemanager	en	Error adding the ACL!
 error creating symlink to target %1!	filemanager	en	Error creating symlink to target %1!
@@ -89,7 +82,6 @@ failed to change permissions of %1!	filemanager	en	Failed to change permissions 
 failed to create directory!	filemanager	en	Failed to create directory!
 favorites	filemanager	en	Favorites
 file	filemanager	en	File
-file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file %1 could not be created.	filemanager	en	File %1 could not be created.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 may be too big. Contact your System administrator for further info
 file deleted.	filemanager	en	File deleted.
@@ -181,7 +173,6 @@ upload files	filemanager	en	Upload files
 used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
 versioning	filemanager	en	Versioning
-who	filemanager	en	Who
 wrong username or password!	filemanager	en	Wrong username or password!
 you are not allowed to upload a script!	filemanager	en	You are NOT allowed to upload a script!
 you can only grant additional rights, you can not take rights away!	filemanager	en	You can only grant additional rights, you can NOT take rights away!
