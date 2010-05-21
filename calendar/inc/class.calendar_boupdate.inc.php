@@ -1528,8 +1528,8 @@ class calendar_boupdate extends calendar_bo
 							$matchingEvents[] = $egwEvent['id'] . ':' . (int)$event['recurrence'];
 						}
 					}
-				} elseif ($event['recur_type'] == $egwEvent['recur_type'] &&
-							$filter != 'master' && ($filter == 'exact' ||
+				} elseif ($filter != 'master' && ($filter == 'exact' ||
+							$event['recur_type'] == $egwEvent['recur_type'] &&
 							strpos($egwEvent['title'], $event['title']) === 0))
 				{
 					$matchingEvents[] = $egwEvent['id']; // we found the event
