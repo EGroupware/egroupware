@@ -6,6 +6,7 @@
 %1 matches on search criteria	etemplate	de	%1 Treffer bei der Suche
 %1 more...	etemplate	de	%1 mehr...
 %1 new etemplates imported for application '%2'	etemplate	de	%1 neue eTemplates importiert für die Anwendung '%2'
+%1 not implemented for %2!	etemplate	de	%1 ist nicht  implementiert für '%2'
 %s disabled	etemplate	de	%s deaktiviert
 %s needed	etemplate	de	%s benötigt
 %s notranslation	etemplate	de	%s nicht übersetzen
@@ -37,8 +38,10 @@ all operations save the template!	etemplate	de	alle Operation speichern das Temp
 allowed file type: %1	etemplate	de	Erlaubter Dateityp: %1
 am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
+and	etemplate	de	UND
 application	etemplate	de	Anwendung
 application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
+applications	etemplate	de	Anwendungen
 applies the changes made	etemplate	de	übernimmt die Änderungen
 applies the changes to the given version of the template	etemplate	de	übernimmt die Änderungen in die angegebene Version des Templates
 as default	etemplate	de	als Vorgabe
@@ -51,6 +54,7 @@ border-line-thickness for the table-tag	etemplate	de	Randbreite (border) für di
 bottom	etemplate	de	Unten
 box	etemplate	de	Box
 box...	etemplate	de	Box...
+broken link	etemplate	de	Beschädigte Verknüpfung (Broken Link)
 can not have special sql-value null	etemplate	de	darf nicht den speziellen SQL Wert NULL annehmen
 cancel	etemplate	de	Abbruch
 cant delete a single widget from a grid !!!	etemplate	de	Kann kein einzelnes Widget aus einer Tabelle löschen !!!
@@ -125,6 +129,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeit, wenn das Eingabefeld angesprochen wird
 displayed in the top line of the groupbox (legend)	etemplate	de	wird oben in der Umrandung der Gruppierung angezeigt (Legende)
 do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
+document '%1' does not exist or is not readable for you!	etemplate	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
 documentation	etemplate	de	Dokumentation
 doesn't matter	etemplate	de	spielt keine Rolle
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
@@ -151,6 +156,7 @@ entry saved	etemplate	de	Eintrag gespeichert
 error copying uploaded file to vfs!	etemplate	de	Fehler beim Kopieren der hochgeladenen Datei ins VFS!
 error create parent directory %1!	etemplate	de	Fehler beim Anlegen des Elternverzeichnisses %1!
 error deleting %1!	etemplate	de	Fehler beim Löschen von %1!
+error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 error: template not found !!!	etemplate	de	Fehler: eTemplate nicht gefunden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
 error: while saving !!!	etemplate	de	Fehler: beim Speichern !!!
@@ -176,6 +182,7 @@ file writen	etemplate	de	Datei geschrieben
 fileupload	etemplate	de	DateiUpload
 first	etemplate	de	Zuerst
 floating point	etemplate	de	Gleitkommawert
+for more then one contact in a document use the tag pagerepeat!	etemplate	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
 foreign key	etemplate	de	Foreign Key
 formatted text (html)	etemplate	de	Formatierter Text (HTML)
 go to the first entry	etemplate	de	gehe zum ersten Eintrag
@@ -235,6 +242,7 @@ linklist	etemplate	de	VerknüpfungListe
 linkstring	etemplate	de	VerknüpfungZeichenkette
 linkto	etemplate	de	VerknüpfungZu
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
+maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
 message ...	etemplate	de	Nachricht ...
 middle	etemplate	de	Mittig
 minute	etemplate	de	Minute
@@ -277,6 +285,7 @@ open the online help.	etemplate	de	Öffnet die online Hilfe.
 operator	etemplate	de	Operator
 optional note about the link	etemplate	de	optionale Notiz zur Verknüpfung
 options	etemplate	de	Optionen
+or	etemplate	de	ODER
 order to navigating by tab key through the form	etemplate	de	Reihenfolger bei der Navigation mit der Tabulator Taste durch das Formular
 overflow	etemplate	de	Überbreite
 padding	etemplate	de	Innenabstand
@@ -309,6 +318,7 @@ saves the template with given version number and closes the window	etemplate	de	
 scale	etemplate	de	Scale
 scale for float	etemplate	de	Nachkommastellen für Gleitkommawerte
 search	etemplate	de	Suchen
+search...	etemplate	de	Suchen...
 select a category	etemplate	de	eine Kategorie auswählen
 select a primary contact, to show in the list	etemplate	de	einen Hauptkontakt auswählen, der in der Auflistung mit angezeigt wird
 select access	etemplate	de	Zugriff auswählen
@@ -420,5 +430,4 @@ xslt template	etemplate	de	XSLT Template
 year	etemplate	de	Jahr
 you are not allowed to export more then %1 entries!	etemplate	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
 you can respond by visiting:	etemplate	de	Sie können unter dem folgenden Verweis antworten:
-error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
-maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
+your code is incorrect !!!	etemplate	de	Ihr Code ist nicht richtig!!!
