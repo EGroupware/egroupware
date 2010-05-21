@@ -41,12 +41,12 @@
 		*/
 		function send()
 		{
+			if ($this->debug && is_numeric($this->debug)) $this->SMTPDebug = $this->debug;
 			if ($this->Subject || $this->Body || count($this->to))
 			{
 				if ($this->debug) error_log(__METHOD__." ".print_r($this->Subject,true)." to be send");
 				return PHPMailer::Send();
 			}
-			if ($this->debug && is_numeric($this->debug)) $this->SMTPDebug = $this->debug;
 			$this->CharSet = $GLOBALS['egw']->translation->charset();
 			list($lang,$nation) = explode('-',$GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 			$lang_path = EGW_SERVER_ROOT.'/phpgwapi/setup/';
