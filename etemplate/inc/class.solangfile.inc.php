@@ -172,7 +172,11 @@ class solangfile
 			{
 				if (isset($data[$key]) && !empty($data[$key]))
 				{
-					$this->plist[$data[$key]] = $app;
+					// run_lang: NULL, true --> help + label, false --> help only, -1 => none
+					if (!isset($data['run_lang']) || !$data['run_lang'] && $key == 'help' || $data['run_lang'] != -1)
+					{
+						$this->plist[$data[$key]] = $app;
+					}
 				}
 			}
 		}
