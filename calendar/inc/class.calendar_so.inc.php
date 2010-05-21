@@ -441,7 +441,7 @@ class calendar_so
 		if ($useUnionQuery)
 		{
 			// allow apps to supply participants and/or icons
-			if (is_null($_cols)) $cols .= ',NULL AS participants,NULL AS icons';
+			if (!isset($params['cols'])) $cols .= ',NULL AS participants,NULL AS icons';
 
 			// For deleted history
 			$history_id = $this->cal_table.'.cal_id';
@@ -516,7 +516,7 @@ class calendar_so
 					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 					//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 				}
-				if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query,$params['users']);
+				if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query,$params['users']);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 				$i = 0;
@@ -538,7 +538,7 @@ class calendar_so
 
 				$selects = $selections;
 			}
-			if (is_null($_cols)) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query,$params['users']);
+			if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query,$params['users']);
 
 			// error_log("calendar_so_search:\n" . print_r($selects, true));
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
@@ -559,7 +559,7 @@ class calendar_so
 				$where,__LINE__,__FILE__,$offset,$params['append'].' ORDER BY '.$params['order'],'calendar',$num_rows,
 				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
 		}
-		if (!is_null($_cols))
+		if (!!isset($params['cols']))
 		{
 			return $rs;	// if colums are specified we return the recordset / iterator
 		}
@@ -674,7 +674,8 @@ class calendar_so
 	 */
 	private static function get_union_selects(array &$selects,$start,$end,$users,$cat_id,$filter,$query,$users_raw)
 	{
-		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','rpc.php','xmlrpc.php')) || $GLOBALS['egw_info']['flags']['currentapp'] != 'calendar')
+		if (in_array(basename($_SERVER['SCRIPT_FILENAME']),array('groupdav.php','rpc.php','xmlrpc.php')) ||
+			!in_array($GLOBALS['egw_info']['flags']['currentapp'],array('calendar','home')))
 		{
 			return;    // disable integration for GroupDAV, SyncML, ...
 		}
