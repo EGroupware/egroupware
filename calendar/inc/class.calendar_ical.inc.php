@@ -249,13 +249,20 @@ class calendar_ical extends calendar_boupdate
 			{
 				if ($this->read($event, $recurrence, true, 'server'))
 				{
-					if ($this->log)
+					if ($this->bo->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))
 					{
-						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-							'() User does not have the permission to read event ' . $event['id']. "\n",
-							3,$this->logfile);
+						$this->bo->clear_private_infos($event, array($this->user, $event['owner']));
 					}
-					return -1; // Permission denied
+					else
+					{
+						if ($this->log)
+						{
+							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+								'() User does not have the permission to read event ' . $event['id']. "\n",
+								3,$this->logfile);
+						}
+						return -1; // Permission denied
+					}
 				}
 				else
 				{
@@ -574,16 +581,20 @@ class calendar_ical extends calendar_boupdate
 	    				break;
 
 					case 'DTSTART':
-						if (!isset($event['whole_day']))
+						if (empty($event['whole_day']))
 						{
 							$attributes['DTSTART'] = self::getDateTime($event['start'],$tzid,$parameters['DTSTART']);
 						}
 						break;
 
 					case 'DTEND':
-						// write start + end of whole day events as dates
-						if (isset($event['whole_day']))
+						if (empty($event['whole_day']))
 						{
+							$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
+						}
+						else
+						{
+							// write start + end of whole day events as dates
 							$event['end-nextday'] = $event['end'] + 12*3600;	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
 							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
@@ -593,10 +604,6 @@ class calendar_ical extends calendar_boupdate
 									array('VALUE' => 'DATE'));
 							}
 							unset($attributes['DTSTART']);
-						}
-						else
-						{
-							$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
 						}
 						break;
 
@@ -619,9 +626,17 @@ class calendar_ical extends calendar_boupdate
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;
 						if (!empty($event['recur_exception']))
 						{
-							// use 'DATE' instead of 'DATE-TIME' on whole day events
-							if (isset($event['whole_day']))
+							if (empty($event['whole_day']))
 							{
+								$value_type = 'DATE-TIME';
+								foreach ($event['recur_exception'] as $key => $timestamp)
+								{
+									$event['recur_exception'][$key] = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
+								}
+							}
+							else
+							{
+								// use 'DATE' instead of 'DATE-TIME' on whole day events
 								$value_type = 'DATE';
 								foreach ($event['recur_exception'] as $id => $timestamp)
 								{
@@ -636,14 +651,7 @@ class calendar_ical extends calendar_boupdate
 								}
 								$event['recur_exception'] = $days;
 							}
-							else
-							{
-								$value_type = 'DATE-TIME';
-								foreach ($event['recur_exception'] as $key => $timestamp)
-								{
-									$event['recur_exception'][$key] = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
-								}
-							}
+
 							$attributes['EXDATE'] = '';
 							$values['EXDATE'] = $event['recur_exception'];
 							$parameters['EXDATE']['VALUE'] = $value_type;
@@ -700,7 +708,11 @@ class calendar_ical extends calendar_boupdate
 						if ($recur_date)
 						{
 							// We handle a pseudo exception
-							if (isset($event['whole_day']))
+							if (empty($event['whole_day']))
+							{
+								$attributes[$icalFieldName] = self::getDateTime($recur_date,$tzid,$parameters[$icalFieldName]);
+							}
+							else
 							{
 								$time = new egw_time($recur_date,egw_time::$server_timezone);
 								$time->setTimezone(self::$tz_cache[$event['tzid']]);
@@ -712,17 +724,17 @@ class calendar_ical extends calendar_boupdate
 									array('VALUE' => 'DATE')
 								);
 							}
-							else
-							{
-								$attributes[$icalFieldName] = self::getDateTime($recur_date,$tzid,$parameters[$icalFieldName]);
-							}
 						}
 						elseif ($event['recurrence'] && $event['reference'])
 						{
 							// $event['reference'] is a calendar_id, not a timestamp
 							if (!($revent = $this->read($event['reference']))) break;	// referenced event does not exist
 
-							if (isset($revent['whole_day']))
+							if (empty($revent['whole_day']))
+							{
+								$attributes[$icalFieldName] = self::getDateTime($event['recurrence'],$tzid,$parameters[$icalFieldName]);
+							}
+							else
 							{
 								$time = new egw_time($event['recurrence'],egw_time::$server_timezone);
 								$time->setTimezone(self::$tz_cache[$event['tzid']]);
@@ -734,10 +746,7 @@ class calendar_ical extends calendar_boupdate
 									array('VALUE' => 'DATE')
 								);
 							}
-							else
-							{
-								$attributes[$icalFieldName] = self::getDateTime($event['recurrence'],$tzid,$parameters[$icalFieldName]);
-							}
+
 							unset($revent);
 						}
 						break;
@@ -1059,13 +1068,25 @@ class calendar_ical extends calendar_boupdate
 		// and for real (not status only) exceptions their recurrence-id need
 		// to be included as recur_exception to the master
 		if ($this->productManufacturer == 'groupdav' && $cal_id > 0 &&
-			count($events) > 1 && !$events[1]['id'] &&
 			$events[0]['recur_type'] != MCAL_RECUR_NONE)
 		{
 			calendar_groupdav::fix_series($events);
 		}
+		
+		if ($this->tzid)
+		{
+			$tzid = $this->tzid;
+		}
+		else
+		{
+			$tzid = egw_time::$user_timezone->getName();
+		}
+		
+		date_default_timezone_set($tzid);
+		
 		foreach ($events as $event)
 		{
+			if (!is_array($event)) continue; // the iterator may return false
 			++$this->events_imported;
 
 			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
@@ -1122,6 +1143,12 @@ class calendar_ical extends calendar_boupdate
 			// common adjustments for existing events
 			if (is_array($event_info['stored_event']))
 			{
+				if ($this->log)
+				{
+					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__
+						. "(UPDATE Event)\n"
+						. array2string($event_info['stored_event'])."\n",3,$this->logfile);
+				}
 				if (empty($event['uid']))
 				{
 					$event['uid'] = $event_info['stored_event']['uid']; // restore the UID if it was not delivered
@@ -1225,7 +1252,7 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 
-					if ($event['whole_day'] && $event['tzid'] != $event_info['stored_event']['tzid'])
+					if (!empty($event['whole_day']) && $event['tzid'] != $event_info['stored_event']['tzid'])
 					{
 						// Adjust dates to original TZ
 						$time = new egw_time($event['start'],egw_time::$server_timezone);
@@ -1244,7 +1271,7 @@ class calendar_ical extends calendar_boupdate
 								$event['recur_exception'][$key] = egw_time::to($time,'server');
 							}
 						}
-						elseif($event['recurrence'])
+						elseif ($event['recurrence'])
 						{
 							$time = new egw_time($event['recurrence'],egw_time::$server_timezone);
 							$time =& $this->so->startOfDay($time, $event_info['stored_event']['tzid']);
@@ -1264,7 +1291,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				unset($event['id']);
 				// set non blocking all day depending on the user setting
-				if (isset($event['whole_day']) && $this->nonBlockingAllday)
+				if (!empty($event['whole_day']) && $this->nonBlockingAllday)
 				{
 					$event['non_blocking'] = 1;
 				}
@@ -1277,6 +1304,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					else
 					{
+						date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 						return 0; // no permission
 					}
 				}
@@ -1374,6 +1402,13 @@ class calendar_ical extends calendar_boupdate
 						}
 					}
 				}
+			}
+			
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__ . '('
+					. $event_info['type'] . ")\n"
+					. array2string($event)."\n",3,$this->logfile);
 			}
 
 			// save event depending on the given event type
@@ -1681,10 +1716,7 @@ class calendar_ical extends calendar_boupdate
 					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
-		if (is_resource($_vcalData))
-		{
-			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-		}
+		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		return $return_id;
 	}
 
@@ -2077,6 +2109,14 @@ class calendar_ical extends calendar_boupdate
 				array2string($_vcalData)."\n",3,$this->logfile);
 		}
 
+		if (!is_array($this->supportedFields)) $this->setSupportedFields();
+
+		// we use egw_ical_iterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
+		if (is_resource($_vcalData))
+		{
+			return new egw_ical_iterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($this->tzid,$principalURL));
+		}
+		
 		if ($this->tzid)
 		{
 			$tzid = $this->tzid;
@@ -2085,16 +2125,9 @@ class calendar_ical extends calendar_boupdate
 		{
 			$tzid = egw_time::$user_timezone->getName();
 		}
-
+		
 		date_default_timezone_set($tzid);
-
-		if (!is_array($this->supportedFields)) $this->setSupportedFields();
-
-		// we use egw_ical_iterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
-		if (is_resource($_vcalData))
-		{
-			return new egw_ical_iterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($tzid,$principalURL));
-		}
+		
 		$events = array();
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset))
@@ -2104,17 +2137,14 @@ class calendar_ical extends calendar_boupdate
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					"(): No vCalendar Container found!\n",3,$this->logfile);
 			}
-			if ($this->tzid)
-			{
-				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-			}
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 			return false;
 		}
 		$version = $vcal->getAttribute('VERSION');
 
 		foreach ($vcal->getComponents() as $n => $component)
 		{
-			if (($event = $this->_ical2egw_callback($component,$tzid,$principalURL)))
+			if (($event = $this->_ical2egw_callback($component,$this->tzid,$principalURL)))
 			{
 					$events[] = $event;
 			}
@@ -2132,17 +2162,18 @@ class calendar_ical extends calendar_boupdate
 	 * @param string $principalURL='' Used for CalDAV imports
 	 * @return array|boolean event array or false if $component is no Horde_iCalendar_vevent
 	 */
-	function _ical2egw_callback(Horde_iCalendar $component,$tzid,$principalURL='')
+	function _ical2egw_callback(Horde_iCalendar &$component, $tzid, $principalURL='')
 	{
 		//unset($component->_container); _debug_array($component);
+		
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
+		}
 
 		if (!is_a($component, 'Horde_iCalendar_vevent') ||
 			!($event = $this->vevent2egw($component, $component->getAttribute('VERSION'), $this->supportedFields, $principalURL)))
 		{
-			if ($this->log)
-			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
-			}
 			return false;
 		}
 		//common adjustments
@@ -2167,7 +2198,7 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 		$event['alarm'] = $alarms;
-		if ($this->tzid || empty($event['tzid']))
+		if ($tzid || empty($event['tzid']))
 		{
 			$event['tzid'] = $tzid;
 		}
@@ -2197,7 +2228,7 @@ class calendar_ical extends calendar_boupdate
 		}
 		
 		$mozillaACK = $component->getAttribute('X-MOZ-LASTACK');
-		if (!is_a($mozillaACK, 'PEAR_Error'))
+		if ($this->productName == 'lightning' && !is_a($mozillaACK, 'PEAR_Error'))
 		{
 			if ($this->log)
 			{

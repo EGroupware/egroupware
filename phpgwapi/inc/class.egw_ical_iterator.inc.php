@@ -193,8 +193,10 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 		//error_log(__METHOD__."() returning a ".gettype($this->component));
 		if ($this->callback)
 		{
+			$ret = is_a($this->component,'Horde_iCalendar');
 			do {
 				if ($ret === false) $this->next();
+				if (!is_a($this->component,'Horde_iCalendar')) return false;
 				$params = $this->callback_params;
 				array_unshift($params,$this->component);
 			}
@@ -248,6 +250,7 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
         if ($this->component === false)
         {
         	error_log(__METHOD__."() Horde_iCalendar::newComponent('$type', \$this) returned FALSE");
+        	return;
             //return PEAR::raiseError("Unable to create object for type $type");
         }
 		//error_log(__METHOD__."() about to call parsevCalendar('".substr($data,0,100)."...','$type','$this->charset')");
@@ -292,7 +295,7 @@ class egw_ical_iterator extends Horde_iCalendar implements Iterator
 			}
 			$data .= $line;
 		}
-		// fake end of container, to get it parsed by Horde code
+		// fake end of container to get it parsed by Horde code
 		if ($this->container)
 		{
 			$data .= "END:$this->base\n";
