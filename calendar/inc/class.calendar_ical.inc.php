@@ -1072,8 +1072,21 @@ class calendar_ical extends calendar_boupdate
 		{
 			calendar_groupdav::fix_series($events);
 		}
+		
+		if ($this->tzid)
+		{
+			$tzid = $this->tzid;
+		}
+		else
+		{
+			$tzid = egw_time::$user_timezone->getName();
+		}
+		
+		date_default_timezone_set($tzid);
+		
 		foreach ($events as $event)
 		{
+			if (!is_array($event)) continue; // the iterator may return false
 			++$this->events_imported;
 
 			if ($this->so->isWholeDay($event)) $event['whole_day'] = true;
@@ -1291,6 +1304,7 @@ class calendar_ical extends calendar_boupdate
 					}
 					else
 					{
+						date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 						return 0; // no permission
 					}
 				}
@@ -1702,10 +1716,7 @@ class calendar_ical extends calendar_boupdate
 					array2string($event_info['stored_event'])."\n",3,$this->logfile);
 			}
 		}
-		if (is_resource($_vcalData))
-		{
-			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-		}
+		date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		return $return_id;
 	}
 
@@ -2098,6 +2109,14 @@ class calendar_ical extends calendar_boupdate
 				array2string($_vcalData)."\n",3,$this->logfile);
 		}
 
+		if (!is_array($this->supportedFields)) $this->setSupportedFields();
+
+		// we use egw_ical_iterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
+		if (is_resource($_vcalData))
+		{
+			return new egw_ical_iterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($this->tzid,$principalURL));
+		}
+		
 		if ($this->tzid)
 		{
 			$tzid = $this->tzid;
@@ -2106,16 +2125,9 @@ class calendar_ical extends calendar_boupdate
 		{
 			$tzid = egw_time::$user_timezone->getName();
 		}
-
+		
 		date_default_timezone_set($tzid);
-
-		if (!is_array($this->supportedFields)) $this->setSupportedFields();
-
-		// we use egw_ical_iterator only on resources, as calling importVCal() accesses single events like an array (eg. $events[0])
-		if (is_resource($_vcalData))
-		{
-			return new egw_ical_iterator($_vcalData,'VCALENDAR',$charset,array($this,'_ical2egw_callback'),array($tzid,$principalURL));
-		}
+		
 		$events = array();
 		$vcal = new Horde_iCalendar;
 		if (!$vcal->parsevCalendar($_vcalData, 'VCALENDAR', $charset))
@@ -2125,17 +2137,14 @@ class calendar_ical extends calendar_boupdate
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					"(): No vCalendar Container found!\n",3,$this->logfile);
 			}
-			if ($this->tzid)
-			{
-				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-			}
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 			return false;
 		}
 		$version = $vcal->getAttribute('VERSION');
 
 		foreach ($vcal->getComponents() as $n => $component)
 		{
-			if (($event = $this->_ical2egw_callback($component,$tzid,$principalURL)))
+			if (($event = $this->_ical2egw_callback($component,$this->tzid,$principalURL)))
 			{
 					$events[] = $event;
 			}
@@ -2153,17 +2162,18 @@ class calendar_ical extends calendar_boupdate
 	 * @param string $principalURL='' Used for CalDAV imports
 	 * @return array|boolean event array or false if $component is no Horde_iCalendar_vevent
 	 */
-	function _ical2egw_callback(Horde_iCalendar $component,$tzid,$principalURL='')
+	function _ical2egw_callback(Horde_iCalendar &$component, $tzid, $principalURL='')
 	{
 		//unset($component->_container); _debug_array($component);
+		
+		if ($this->log)
+		{
+			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
+		}
 
 		if (!is_a($component, 'Horde_iCalendar_vevent') ||
 			!($event = $this->vevent2egw($component, $component->getAttribute('VERSION'), $this->supportedFields, $principalURL)))
 		{
-			if ($this->log)
-			{
-				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.'() '.get_class($component)." found\n",3,$this->logfile);
-			}
 			return false;
 		}
 		//common adjustments
@@ -2188,7 +2198,7 @@ class calendar_ical extends calendar_boupdate
 			}
 		}
 		$event['alarm'] = $alarms;
-		if ($this->tzid || empty($event['tzid']))
+		if ($tzid || empty($event['tzid']))
 		{
 			$event['tzid'] = $tzid;
 		}
@@ -2218,7 +2228,7 @@ class calendar_ical extends calendar_boupdate
 		}
 		
 		$mozillaACK = $component->getAttribute('X-MOZ-LASTACK');
-		if (!is_a($mozillaACK, 'PEAR_Error'))
+		if ($this->productName == 'lightning' && !is_a($mozillaACK, 'PEAR_Error'))
 		{
 			if ($this->log)
 			{

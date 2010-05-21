@@ -1739,6 +1739,7 @@ function replace_eTemplate_onsubmit()
 				$start = microtime(true);
 
 				$calendar_ical = new calendar_ical;
+				$calendar_ical->setSupportedFields('file', '');
 				if (!$calendar_ical->importVCal($f=fopen($content['ical_file']['tmp_name'],'r')))
 				{
 					$msg = lang('Error: importing the iCal');
