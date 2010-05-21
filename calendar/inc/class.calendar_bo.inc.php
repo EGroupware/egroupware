@@ -1080,7 +1080,7 @@ class calendar_bo
 			$private = !$event['public'];
 		}
 		$grants = $this->grants[$owner];
-		if (is_array($event) && $needed == EGW_ACL_READ)
+		if (is_array($event) && ($needed == EGW_ACL_READ || $needed == EGW_ACL_FREEBUSY))
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
 			// in that case he has an implicite READ grant for that event
