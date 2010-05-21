@@ -187,6 +187,17 @@ class calendar_uiforms extends calendar_ui
 			unset($content['recur_exception']['delete_exception']);
 			if (($key = array_search($date,$content['recur_exception'])) !== false)
 			{
+				// propagate the exception to a single event
+				$recur_exceptions = $this->bo->so->get_related($content['uid']);
+				foreach ($recur_exceptions as $id)
+				{
+					if (!($exception = $this->bo->read($id)) ||
+							$exception['recurrence'] != $content['recur_exception'][$key]) continue;
+					$exception['uid'] = common::generate_uid('calendar', $id);
+					$exception['reference'] = $exception['recurrence'] = 0;
+					$this->bo->update($exception, true);
+					break;
+				}
 				unset($content['recur_exception'][$key]);
 				$content['recur_exception'] = array_values($content['recur_exception']);
 			}
@@ -591,14 +602,35 @@ class calendar_uiforms extends calendar_ui
 			{
 				if ($content['reference'] == 0 && !$content['edit_single'])
 				{
-					// We delete a whole series
+					$msg = lang('Series deleted');
+					$delete_exceptions = false;
+					$exceptions_kept = false;
+					// Handle the exceptions
 					$recur_exceptions = $this->bo->so->get_related($event['uid']);
 					foreach ($recur_exceptions as $id)
 					{
-						$this->bo->delete($id);
+						if ($delete_exceptions)
+						{
+							$this->bo->delete($id);
+						}
+						else
+						{
+							if (!($exception = $this->bo->read($id))) continue;
+							$exception['uid'] = common::generate_uid('calendar', $id);
+							$exception['reference'] = $exception['recurrence'] = 0;
+							$this->bo->update($exception, true);
+							$exceptions_kept = true;
+						}
+					}
+					if ($exceptions_kept)
+					{
+						$msg .= lang(', exceptions preserved');
 					}
 				}
-				$msg = lang('Event deleted');
+				else
+				{
+					$msg = lang('Event deleted');
+				}
 				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 					'msg' => $msg,
 				))).'\';';
