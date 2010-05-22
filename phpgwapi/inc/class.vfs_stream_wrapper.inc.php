@@ -721,7 +721,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @param boolean $check_symlink_components=true check if path contains symlinks in path components other then the last one
 	 * @return array
 	 */
-	static function url_stat ( $path, $flags=0, $try_create_home=false, $check_symlink_components=true )
+	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true )
 	{
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$path',$flags,try_create_home=$try_create_home,check_symlink_components=$check_symlink_components)");
 
