@@ -19,7 +19,7 @@ enabled chains	notifications	fi	Sallitut ketjut
 folder	notifications	fi	Kansio
 from	notifications	fi	Lähettäjä
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	fi	Kuinka voimakas EGroupware-Popupin tulisi olla?<br />Matala: Näytä "huomautuskello" ylävalikossa (Ylävalikon on oltava käyttöönotettu!).<br />Normaali: Tuo huomautusikkuna eteen.<br />Voimakas: Tuo huomautusikkuna eteen ja salli selaimen tuotaa merkkiääni (tai jokin muu toiminto).
-linked entries:	notifications	fi	Linkitetyt tietueet:
+linked entries:	common	fi	Linkitetyt tietueet:
 maximum sms messages per notification	admin	fi	Maksimi tekstiviestien määrä per huomautus
 message from	notifications	fi	Viesti henkilöltä:
 minutes	notifications	fi	Minuuttia

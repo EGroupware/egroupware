@@ -20,7 +20,7 @@ folder	notifications	sk	Priečinok
 from	notifications	sk	Od
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	sk	Nakoľko podrobné má byť Vyskakovacie okno eGroupWare, keď sa používateľovi posiela pripomienka:<br />málo: len zobraziť zvonček v hornej ponuke - horná ponuka musí byť zapnutá! <br />stredne: presunúť okno pripomienok dopredu<br />veľmi: presunúť okno pripomienok dopredu a použiť funkcie prehliadača, aby na seba upozornil.
 if set, embedded links get rendered special for external clients	notifications	sk	Ak je nastavené, pripojené odkazy sa vykreslia špeciálne pre vonkajších klientov
-linked entries:	notifications	sk	Pripojené záznamy:
+linked entries:	common	sk	Pripojené záznamy:
 maximum sms messages per notification	admin	sk	Maximálny počet SMS pre jednu pripomienku
 message from	notifications	sk	Správa od
 minutes	notifications	sk	minút

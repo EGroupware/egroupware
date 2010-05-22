@@ -20,7 +20,7 @@ folder	notifications	es-es	Carpeta
 from	notifications	es-es	De
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	es-es	Cuánta cantidad de información debe enviar la ventana emergente de eGroupWare al usuario:<br />baja: sólo mostrar la campana de notificación en el menú superior (para lo cual hay que activar el menú superior)<br />media: traer la ventana de notificación al frente<br />alta: traer la ventana de notificación al frente y permitir al navegador hacer algo para anunciarse.
 if set, embedded links get rendered special for external clients	notifications	es-es	Si está activado, los enlaces embebidos se visualizan de una forma especial para los clientes externos
-linked entries:	notifications	es-es	Entradas vinculadas:
+linked entries:	common	es-es	Entradas vinculadas:
 maximum sms messages per notification	admin	es-es	Número máximo de mensajes SMS por notificación
 message from	notifications	es-es	Mensaje desde
 minutes	notifications	es-es	minutos
