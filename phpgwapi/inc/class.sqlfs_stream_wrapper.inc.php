@@ -1220,7 +1220,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 			') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_link)';
 		if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
 		$stmt = self::$pdo->prepare($query);
-		unset(self::$stat_cache[$link]);
+		unset(self::$stat_cache[parse_url($link,PHP_URL_PATH)]);
 
 		return !!$stmt->execute(array(
 			'fs_name' => egw_vfs::basename($link),
