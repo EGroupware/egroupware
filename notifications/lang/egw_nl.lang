@@ -11,7 +11,7 @@ enable windows-popup backend	admin	nl	Windows popup backend inschakelen
 enabled chains	notifications	nl	Ingeschakelde lijsten
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	nl	Hoe uitgebreid moet de eGroupWare-Popup zijn wanneer een melding aan de gebruiker wordt gegeven:<br />laag: toon alleen de meldingbel in het bovenste menu - het bovenste menu moet dan ingeschakeld zijn!<br />middel: haal het meldingvenster naar voren<br />hoog: haal het meldingvenster naar voren en laat de browser iets doen om het aan te kondigen
 if set, embedded links get rendered special for external clients	notifications	nl	Indien ingesteld, embedded links worden op een speciale manier samengesteld voor externe clients
-linked entries:	notifications	nl	Gekoppelde items:
+linked entries:	common	nl	Gekoppelde items:
 maximum sms messages per notification	admin	nl	Maximaal aantal SMS berichten per melding
 message from	notifications	nl	Bericht van
 notification	common	nl	Melding

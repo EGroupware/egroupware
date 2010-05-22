@@ -11,7 +11,7 @@ enable windows-popup backend	admin	ru	Включить обработчик вс
 enabled chains	notifications	ru	Включить цепочки
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	ru	Насколько многословно должны себя вести всплавающие окна eGroupware если уведомление выслано пользователю:<br />низкий: только показать звонок уведомления в верхнем меню - верхнее меню должно быть разрешено !<br />средний: показать окно уведомления поверх<br />высокий: показать окно уведомления поверх и разрешить браузеру выполнить что-то для объявления себя.
 if set, embedded links get rendered special for external clients	notifications	ru	Если установлено, внутренние ссылки преобразуются для использования внешними клиентами
-linked entries:	notifications	ru	Связанные записи:
+linked entries:	common	ru	Связанные записи:
 maximum sms messages per notification	admin	ru	Максимальное количество СМСок на сообщение
 message from	notifications	ru	Сообщение от
 notification	common	ru	Извещения

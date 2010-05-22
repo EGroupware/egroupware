@@ -11,7 +11,7 @@ enable windows-popup backend	admin	pt-br	Habilitar método Windows-Popup
 enabled chains	notifications	pt-br	Séries habilitadas
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	pt-br	Qual o nível de detalhe do método eGroupWare-Popup deve possuir se uma notificação for enviada ao usuário: <br/>baixo: exibir apenas o sino de notificação no menu superior - o menu superior deverá estar habilitado!<br/>médio: trazer a janela de notificação para frente<br/>alto: trazer a janela de notificação para frente e deixar o navegador fazer algo para anunciá-la.
 if set, embedded links get rendered special for external clients	notifications	pt-br	Se definido, links embutidos serão exibidos de forma especial para clientes externos
-linked entries:	notifications	pt-br	Registros linkados:
+linked entries:	common	pt-br	Registros linkados:
 maximum sms messages per notification	admin	pt-br	Máximo de mensagens SMS por notificação
 message from	notifications	pt-br	Mensagem de
 notification	common	pt-br	Notificação

@@ -11,7 +11,7 @@ egroupware-popup verbosity	notifications	zh	系统弹出窗口冗长
 egroupware-poupup and windows-popup	notifications	zh	系统弹出窗口和 Windows 弹出窗口
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	zh	系统弹出窗口应该如何表现冗长的内容，如果一个通知发送到用户：<br />低：正好在顶部菜单显示通知闹铃-必须启用顶部菜单！<br />中：在前面弹出通知窗口<br />高：在前面弹出通知窗口并让浏览器做它自己的某些别的事
 if set, embedded links get rendered special for external clients	notifications	zh	如果设置，指定的外部客户能购获得嵌入链接
-linked entries:	notifications	zh	链接的条目：
+linked entries:	common	zh	链接的条目：
 message from	notifications	zh	发件人
 notification	common	zh	通知管理
 notification backends</b> (preferences for enabling/disabling will follow soon)	admin	zh	通知系统后端</b> (启用功能参数选择/随后必须立即禁用)

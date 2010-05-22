@@ -20,7 +20,7 @@ folder	notifications	cs	Složka
 from	notifications	cs	Od
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	cs	Jak důrazně se mají překryvná okna eGroupWaru chovat, když je uživateli zasláno upozornění:<br />nízká: jen zobrazit zvoneček v horním menu - horní menu musí být povoleno!<br />střední: na popředí zobrazit okno s upozorněním<br />vysoká: na popředí zobrazit okno s upozorněním a nechat prohlížeč, ať na sebe nějak upozorní
 if set, embedded links get rendered special for external clients	notifications	cs	Pokud je nastaveno, vložené odkazy jsou speciálně renderovány pro externí klienty
-linked entries:	notifications	cs	Odkazované záznamy:
+linked entries:	common	cs	Odkazované záznamy:
 maximum sms messages per notification	admin	cs	Maximální počet SMS zpráv na jedno upozornění
 message from	notifications	cs	Zpráva od
 minutes	notifications	cs	minut

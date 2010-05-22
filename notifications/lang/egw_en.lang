@@ -20,7 +20,7 @@ folder	notifications	en	folder
 from	notifications	en	from
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	en	How verbose should the EGroupware-Popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself
 if set, embedded links get rendered special for external clients	notifications	en	If set, embedded links get rendered special for external clients
-linked entries:	notifications	en	linked entries:
+linked entries:	common	en	linked entries:
 maximum sms messages per notification	admin	en	maximum SMS messages per notification
 message from	notifications	en	message from
 minutes	notifications	en	minutes
