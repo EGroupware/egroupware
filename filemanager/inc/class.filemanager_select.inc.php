@@ -69,12 +69,22 @@ class filemanager_select
 				throw new egw_exception_wrong_parameter("Wrong or unset required mode parameter!");
 			}
 			$content['path'] = $_GET['path'];
-			if (!isset($content['path']))
+			if (!empty($content['path']))
 			{
 				$content['path'] = egw_session::appsession('select_path','filemanger');
 			}
 			$content['name'] = (string)$_GET['name'];
 			$content['method'] = $_GET['method'];
+			if ($content['method'] == 'ckeditor_return')
+			{
+				if (isset($_GET['CKEditorFuncNum']) && is_numeric($_GET['CKEditorFuncNum']))
+				{
+					$content['ckeditorfuncnum'] = $_GET['CKEditorFuncNum'];
+					$content['method'] = 'ckeditor_return';
+				}
+				else
+					throw new egw_exception_wrong_parameter("chkeditor_return has been specified as a method but some parameters are missing or invalid.");
+			}
 			$content['id']     = $_GET['id'];
 			$content['label'] = isset($_GET['label']) ? $_GET['label'] : lang('Open');
 			if (($content['options-mime'] = isset($_GET['mime'])))
@@ -107,6 +117,41 @@ class filemanager_select
 					$content['path'] = filemanager_ui::get_home_dir();
 					break;
 				case 'ok':
+					$copy_result = null;
+					if (isset($content['file_upload']['name']))
+					{
+						$copy_result = false;
+
+						//Set the "content" name filed accordingly to the uploaded file
+						$content['name'] = $content['file_upload']['name'];
+
+						//Assemble the "from" and "to" paths and open the files
+						$from_path = $content['file_upload']['tmp_name'];
+						$to_path = egw_vfs::concat($content['path'],$content['name']);
+
+						$from = @fopen($from_path,'r');
+						$to = @egw_vfs::fopen($to_path,'w');
+
+						//Perform the copy operation						
+						if ($from && $to)
+						{
+							$copy_result = stream_copy_to_stream($from,$to) == $content['file_upload']['size'];
+						}						
+					}
+
+					//Break on an error condition					
+					if ((($content['mode'] == 'open' || $content['mode'] == 'saveas') && ($content['name'] == '')) || ($copy_result === false))
+					{
+						if ($copy_result === false)
+							$content['msg'] = lang("Error while processing your upload request.");
+						else
+							$content['msg'] = lang("The name field may not be empty.");
+
+						$content['name'] = '';
+
+						break;
+					}
+
 					switch($content['mode'])
 					{
 						case 'open-multiple':
@@ -114,6 +159,11 @@ class filemanager_select
 							{
 								$files[] = egw_vfs::concat($content['path'],$name);
 							}
+
+							//Add an uploaded file to the files result array2string
+							if ($copy_result === true)
+								$files[] = $to_path;
+
 							break;
 						case 'select-dir':
 							$files = $content['path'];
@@ -122,7 +172,16 @@ class filemanager_select
 							$files = egw_vfs::concat($content['path'],$content['name']);
 							break;
 					}
-					$js = ExecMethod2($content['method'],$content['id'],$files);
+
+					if ($content['method'] != 'ckeditor_return')
+						$js = ExecMethod2($content['method'],$content['id'],$files);
+					else
+						$js = "window.opener.CKEDITOR.tools.callFunction(".
+							$content['ckeditorfuncnum'].",'".
+							egw::link(egw_vfs::download_url(egw_vfs::concat($content['path'],htmlspecialchars($content['name']))))."',".
+							"'');\nwindow.close();";
+
+					header('content-type: text/html; charset=utf-8');
 					echo "<html>\n<head>\n<script type='text/javascript'>\n$js\n</script>\n</head>\n</html>\n";
 					$GLOBALS['egw']->common->egw_exit();
 			}
@@ -132,6 +191,12 @@ class filemanager_select
 			list($app) = each($content['apps']);
 			if ($app == 'home') $content['path'] = filemanager_ui::get_home_dir();
 		}
+
+		//Deactivate the opload field if the current directory is not writeable or
+		//we're currently not in the single file open mode.
+		$content['no_upload'] = (!egw_vfs::is_writable($content['path']) ||
+			!in_array($content['mode'],array('open')));
+
 		$content['apps'] = array_keys(self::get_apps());
 
 		if (isset($app))
@@ -181,6 +246,7 @@ class filemanager_select
 			if (!$n) $readonlys['selected[]'] = true;	// remove checkbox from empty line
 			closedir($d);
 		}
+
 		$content['js'] = '<script type="text/javascript">
 function select_goto(to)
 {
@@ -191,8 +257,8 @@ function select_goto(to)
 }
 function select_show(file)
 {
-	name = document.getElementById("exec[name]");
-	name.value = file;
+	var editfield = document.getElementById("exec[name]");
+	editfield.value = file;
 	return false;
 }
 function select_toggle(file)
@@ -209,14 +275,22 @@ function select_toggle(file)
 		//_debug_array($readonlys);
 		egw_session::appsession('select_path','filemanger',$content['path']);
 		$tpl = new etemplate('filemanager.select');
-		$tpl->exec('filemanager.filemanager_select.select',$content,$sel_options,$readonlys,array(
+		$preserve = array(
 			'mode'   => $content['mode'],
 			'method' => $content['method'],
 			'id'     => $content['id'],
 			'label'  => $content['label'],
 			'mime'   => $content['mime'],
 			'options-mime' => $content['options-mime'],
-		),2);
+		);
+
+		if (isset($content['ckeditorfuncnum']))
+		{
+			$preserve['ckeditorfuncnum'] = $content['ckeditorfuncnum'];
+			$preserve['ckeditor'] = $content['ckeditor'];
+		}
+
+		$tpl->exec('filemanager.filemanager_select.select',$content,$sel_options,$readonlys,$preserve,2);
 	}
 
 	/**
