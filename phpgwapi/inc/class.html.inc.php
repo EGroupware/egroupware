@@ -643,7 +643,11 @@ class html
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_skin']))
 		{
-			$oCKeditor->config['skin'] = $GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'];
+			$skin = $GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'];
+
+			//Check whether the skin actually exists
+			if (file_exists($basePath.'skins/'.$skin) || file_exists($skin))
+				$oCKeditor->config['skin'] = $skin;
 		}
 
 		//$oCKeditor->config['spellchecker'] = 'SpellCheck';
