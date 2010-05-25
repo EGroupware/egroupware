@@ -459,8 +459,9 @@ function do_svntag()
 	$config['modules'] = array();
 	foreach($output as $line)
 	{
-		if ($line[0] == '#') continue;
-		list($path,$url) = preg_split('/[ \t\r\n]+/',trim($line));
+		$line = trim($line);
+		if (empty($line) || $line[0] == '#') continue;
+		list($path,$url) = preg_split('/[ \t\r\n]+/',$line);
 		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die("Invalid SVN URL: $url\n");
 		$repo = $matches[1];
 		$config['modules'][$repo][$path] = $url;
@@ -483,7 +484,7 @@ function do_svntag()
 	foreach($config['modules'] as $repo => $modules)
 	{
 		if ($repo == 'http://svn.egroupware.org/egroupware') $repo = 'svn+ssh://svn@dev.egroupware.org/egroupware';
-		$cmd = $svn.' cp '.implode(' ',$modules).' '.$repo.'/'.$config['svntag'].'/';
+		$cmd = $svn.' cp --parents -m '.escapeshellarg('Creating '.$config['svntag']).' '.implode(' ',$modules).' '.$repo.'/'.$config['svntag'].'/';
 		run_cmd($cmd);
 	}
 }
