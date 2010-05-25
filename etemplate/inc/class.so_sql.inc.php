@@ -1089,15 +1089,15 @@ class so_sql
 
 		while($token)
 		{
-			if($token == strtoupper(lang('AND')))
+			if($token == strtoupper(lang('AND')) || $token == 'AND')
 			{
 				$token = '+'.strtok($break);
 			}
-			elseif ($token == strtoupper(lang('OR')))
+			elseif ($token == strtoupper(lang('OR')) || $token == 'OR')
 			{
 				continue;
 			}
-			elseif ($token == strtoupper(lang('NOT')))
+			elseif ($token == strtoupper(lang('NOT')) || $token == 'NOT')
 			{
 				$token = '-'.strtok($break);
 			}
