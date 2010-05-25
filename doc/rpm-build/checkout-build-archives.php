@@ -13,6 +13,7 @@ if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling setup-c
 {
 	die('<h1>checkout-build-tgz.php must NOT be called as web-page --> exiting !!!</h1>');
 }
+date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 
 $verbose = 0;
 $config = array(
@@ -35,8 +36,9 @@ $config = array(
 	'gpg' => '/usr/bin/gpg',
 	'packager' => 'packager@egroupware.org',
 	'obs' => false,
-	'changelog' => false,	// eg. '  * 1. Zeile\n  * 2. Zeile' for debian.changes
+	'changelog' => false,	// eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
+	'svntag' => false,	// eg. '$version.$packaging'
 	'skip' => array(),
 	'run' => array('checkout','copy','virusscan','create','sign')
 );
@@ -76,6 +78,11 @@ while(($arg = array_shift($argv)))
 				{
 					$config[$name] = array_unique(preg_split('/[ ,]+/',$value));
 				}
+				break;
+
+			case 'svntag':
+				$config[$name] = $value;
+				array_unshift($config['run'],'svntag');
 				break;
 
 			case 'obs':
@@ -353,6 +360,39 @@ function do_checkout()
 		throw new Exception("svn checkout directory '{$config['svndir']} exists and is NO directory or NOT writable!");
 	}
 	chdir($config['svndir']);
+	
+	// do we use a just created tag --> list of taged modules
+	if ($config['svntag'] && isset($config['modules']))
+	{
+		if (file_exists($config['aliasdir']))
+		{
+			system('/bin/rm -rf .svn '.$config['aliasdir']);	// --> remove the whole checkout, as we dont implement switching tags
+			clearstatcache();
+		}
+		foreach($config['modules'] as $repo => $modules)
+		{
+			$cmd = $svn.' co ';
+			foreach($modules as $path => $url)
+			{
+				if ($path == $config['aliasdir'])
+				{
+					$cmd = $svn.' co '.$repo.'/'.$config['svntag'].'/'.$path;
+					run_cmd($cmd);
+					chdir($path);
+					$cmd = $svn.' co ';
+					continue;
+				}
+				if(file_exists($config['aliasdir']))
+				{
+					die('"egroupware" applications must be first one in externals!');
+				}
+				$cmd .= ' '.$repo.'/'.$config['svntag'].'/'.basename($path);
+			}
+			run_cmd($cmd);
+		}
+		return;
+	}
+	// regular branch update, without tag
 	$svnbranch = $config['svnbase'].'/'.$config['svnbranch'];
 	if (file_exists($config['aliasdir']))
 	{
@@ -390,6 +430,59 @@ function do_checkout()
 		$url = strpos($module,'://') === false ? $svnbranch.'/' : '';
 		$url .= $module;
 		$cmd = $svn.' co '.$url;
+		run_cmd($cmd);
+	}
+}
+
+/**
+ * Create svn tag or branch
+ */
+function do_svntag()
+{
+	global $config,$svn,$verbose;
+
+	$translate = array();
+	foreach($config as $name => $value) $translate['$'.$name] = $value;
+
+	if (strpos($config['svntag'],'$') !== false)	// allow to use config vars like $version in tag
+	{
+		$config['svntag'] = strtr($config['svntag'],$translate);
+	}
+	echo "Creating SVN tag $config[svntag]\n";
+
+	// process alias/externals
+	$svnbranch = $config['svnbase'].'/'.$config['svnbranch'];
+	$url = $svnbranch.'/'.$config['svnalias'];
+	$cmd = $svn.' propget svn:externals --strict '.$url;
+	if ($verbose) echo $cmd."\n";
+	exec($cmd,$output,$ret);
+	$config['modules'] = array();
+	foreach($output as $line)
+	{
+		list($path,$url) = preg_split('/[ \t\r\n]+/',trim($line));
+		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die('Invalid SVN URL!');
+		$repo = $matches[1];
+		$config['modules'][$repo][$path] = $url;
+	}
+	// process extra modules
+	foreach($config['extra'] as $module)
+	{
+		if (strpos($module,'$') !== false)	// allow to use config vars like $svnbranch in module
+		{
+			$module = strtr($module,$translate);
+		}
+		$url = strpos($module,'://') === false ? $svnbranch.'/' : '';
+		$url .= $module;
+		if (strpos($module,'://') !== false) $module = basename($module);
+		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die('Invalid SVN URL!');
+		$repo = $matches[1];
+		$config['modules'][$repo][$config['aliasdir'].'/'.$module] = $url;
+	}
+	// create tags (per repo)
+	foreach($config['modules'] as $repo => $modules)
+	{
+		if ($repo == 'http://svn.egroupware.org/egroupware') $repo = 'svn+ssh://svn@dev.egroupware.org/egroupware';
+		$cmd = $svn.' cp '.implode(' ',$modules).' '.$repo.'/'.$config['svntag'].'/';
 		run_cmd($cmd);
 	}
 }
