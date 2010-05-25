@@ -1692,7 +1692,7 @@ class etemplate extends boetemplate
 				{
 					$html = html::table($rows,html::formatOptions($cell_options,',,cellpadding,cellspacing').
 						($type != 'groupbox' ? html::formatOptions($class,'class').
-							self::get_id($form_name,$cell['name'],$cell['id']) : '').
+							 ($cell['name'] ? self::get_id($form_name,$cell['name'],$cell['id']) : '') : '').
 						($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' width="100%"' : ''));	// alignment only works if table has full width
 					if ($type != 'groupbox') $class = '';	// otherwise we create an extra div
 				}
