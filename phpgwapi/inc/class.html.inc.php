@@ -539,10 +539,13 @@ class html
 	 */
 	static function htmlarea_availible()
 	{
-		require_once(EGW_INCLUDE_ROOT.'/phpgwapi/js/fckeditor/fckeditor.php');
+/*		require_once(EGW_INCLUDE_ROOT.'/phpgwapi/js/fckeditor/fckeditor.php');
 
 		// use FCKeditor's own check
-		return FCKeditor_IsCompatibleBrowser();
+		return FCKeditor_IsCompatibleBrowser();*/
+
+		//CKeditor3 will check availability for us
+		return true;
 	}
 
 	/**
@@ -552,10 +555,10 @@ class html
 	 */
 	static function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
 	{
-		if (!self::htmlarea_availible())
+		/*if (!self::htmlarea_availible())
 		{
 			return self::textarea($name,$content,'style="'.$style.'"');
-		}
+		}*/
 		return self::fckEditor($name, $content, ($style ? $style : 'extended'), array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
 	}
 
@@ -568,12 +571,12 @@ class html
 	* @param array  $_options (toolbar_expanded true/false)
 	* @param string $_height='400px'
 	* @param string $_width='100%'
-	* @param string $_base_href='' if passed activates the browser for image at absolute path passed
+	* @param string $_start_path='' if passed activates the browser for image at absolute path passed
 	* @param boolean $_purify=true run $_content through htmlpurifier before handing it to fckEditor
 	* @return string the necessary html for the textarea
 	*/
 	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
-		$_height='400px', $_width='100%',$_base_href='',$_purify=true)
+		$_height='400px', $_width='100%',$_start_path='',$_purify=true)
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -582,79 +585,85 @@ class html
 		// run content through htmlpurifier
 		if ($_purify && !empty($_content)) $_content = self::purify($_content);
 
-		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
+		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/ckeditor3/ckeditor.php");
 
-		$oFCKeditor = new FCKeditor($_name) ;
-		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
-		$oFCKeditor->Config['CustomConfigurationsPath'] = $oFCKeditor->BasePath . 'fckeditor.egwconfig.js' ;
-		$oFCKeditor->Value	= $_content;
-		$oFCKeditor->Width	= str_replace('px','',$_width);	// FCK adds px if width contains no %
-		$oFCKeditor->Height	= str_replace('px','',$_height);
+		//Get the ckeditor base url
+		$basePath = 'phpgwapi/js/ckeditor3/';
 
-		// by default switch all browsers and uploads off
-		$oFCKeditor->Config['LinkBrowser'] = $oFCKeditor->Config['LinkUpload'] = false;
-		$oFCKeditor->Config['FlashBrowser'] = $oFCKeditor->Config['FlashUpload'] = false;
-		$oFCKeditor->Config['ImageBrowser'] = $oFCKeditor->Config['ImageUpload'] = false;
+		$oCKeditor = new CKeditor($basePath);
+		$oCKeditor->returnOutput = true;
 
-		if (!$GLOBALS['egw_info']['server']['usecookies'])
-		{
-			$extra = egw_session::EGW_SESSION_NAME.'='.$GLOBALS['egw']->session->sessionid.
-				'&kp3='.$GLOBALS['egw']->session->kp3.'&domain='.$GLOBALS['egw']->session->account_domain;
-		}
-		// Activate the image browser+upload, if $_base_href exists and is browsable by the webserver
-		if ($_base_href && is_dir($_SERVER['DOCUMENT_ROOT'].$_base_href) && file_exists($_SERVER['DOCUMENT_ROOT'].$_base_href.'/.'))
-		{
-			// Only images for now
-			if (substr($_base_href,-1) != '/') $_base_href .= '/' ;
-			// store the path and application in the session, to make sure it can't be called with arbitrary pathes
-			$GLOBALS['egw']->session->appsession($_base_href,'FCKeditor',$GLOBALS['egw_info']['flags']['currentapp']);
+		//Only heights with "px" set are supported		
+		$pxheight = (strpos('px', $_height) === false) ? 400 : str_replace('px', '', $_height);
+		
+		$oCKeditor->config['customConfig'] = 'ckeditor.egwconfig.js';
+		$oCKeditor->config['height'] = $pxheight;
 
-			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=Image&Connector='.$oFCKeditor->BasePath.'editor/filemanager/connectors/php/connector.php?'.$extra;
-			$oFCKeditor->Config['ImageBrowser'] = true;
-			$oFCKeditor->Config['ImageUpload'] = is_writable($_SERVER['DOCUMENT_ROOT'].$_base_href);
-		}
+		$oCKeditor->config['resize_enabled'] = false;
+		//switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
+		$oCKeditor->config['entities'] = true;
+		$oCKeditor->config['entities_latin'] = true;
+		$oCKeditor->config['entities_processNumerical'] = true;
+
+		$oCKeditor->config['editingBlock'] = true;
+		$oCKeditor->config['filebrowserBrowseUrl'] = 'index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return&path='.urlencode($_start_path);
+		$oCKeditor->config['filebrowserWindowWidth'] = 640;
+		$oCKeditor->config['filebrowserWindowHeight'] = 580;
+
 		// By default the editor start expanded
 		if ($_options['toolbar_expanded'] == 'false')
-		{
-			$oFCKeditor->Config['ToolbarStartExpanded'] = $_options['toolbar_expanded'];
-		}
-		// switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
-		$oFCKeditor->Config['ProcessHTMLEntities'] = false;
+			$oCKeditor->config['toolbarStartupExpanded'] = false;
+
 		// Now setting the admin settings
-		$spell = '';
+/*		$spell = '';
 		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
 		{
 			$spell = '_spellcheck';
 			$oFCKeditor->Config['SpellChecker'] = 'SpellerPages';
 			$oFCKeditor->Config['SpellerPagesServerScript'] = 'server-scripts/spellchecker.php?'.$extra;
 			$oFCKeditor->Config['FirefoxSpellChecker'] = false;
-		}
+		}*/
+
 		// Now setting the user preferences
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode']))
 		{
-			$oFCKeditor->Config['EnterMode'] = $GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode'];
+			switch ($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode'])
+			{
+				case 'p':
+					$oCKeditor->config['enterMode'] = '@@CKEDITOR.ENTER_P';
+					break;
+				case 'br':
+					$oCKeditor->config['enterMode'] = '@@CKEDITOR.ENTER_BR';
+					break;
+				case 'div':
+					$oCKeditor->config['enterMode'] = '@@CKEDITOR.ENTER_DIV';
+					break;
+			}
 		}
+
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_skin']))
 		{
-			$oFCKeditor->Config['SkinPath'] = $oFCKeditor->BasePath.'editor/skins/'.$GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'].'/';
+			$oCKeditor->config['skin'] = $GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'];
 		}
+
+		//$oCKeditor->config['spellchecker'] = 'SpellCheck';
 
 		switch($_mode) {
 			case 'simple':
-				$oFCKeditor->ToolbarSet = 'egw_simple'.$spell;
-				$oFCKeditor->Config['ContextMenu'] = false;
+				$oCKeditor->config['toolbar'] = 'egw_simple';
+				$oCKeditor->config['menu_groups'] = '';
 				break;
-
 			default:
 			case 'extended':
-				$oFCKeditor->ToolbarSet = 'egw_extended'.$spell;
+				$oCKeditor->config['toolbar'] = 'egw_extended';
 				break;
 
 			case 'advanced':
-				$oFCKeditor->ToolbarSet = 'egw_advanced'.$spell;
+				$oCKeditor->config['toolbar'] = 'egw_advanced';
 				break;
 		}
-		return $oFCKeditor->CreateHTML();
+
+		return $oCKeditor->editor($_name, $_content);
 	}
 
 	/**
@@ -1427,8 +1436,11 @@ class html
 
 
 		}
+
+		$result = $purifier->purify( $html );
+
 		//error_log(__METHOD__.$purifier->version);
-    	return $purifier->purify( $html );
+    	return $result;
 	}
 
 	/**
