@@ -384,7 +384,7 @@ function do_checkout()
 				}
 				if(file_exists($config['aliasdir']))
 				{
-					die('"egroupware" applications must be first one in externals!');
+					die("'egroupware' applications must be first one in externals!\n");
 				}
 				$cmd .= ' '.$repo.'/'.$config['svntag'].'/'.basename($path);
 			}
@@ -459,8 +459,9 @@ function do_svntag()
 	$config['modules'] = array();
 	foreach($output as $line)
 	{
+		if ($line[0] == '#') continue;
 		list($path,$url) = preg_split('/[ \t\r\n]+/',trim($line));
-		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die('Invalid SVN URL!');
+		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die("Invalid SVN URL: $url\n");
 		$repo = $matches[1];
 		$config['modules'][$repo][$path] = $url;
 	}
@@ -474,7 +475,7 @@ function do_svntag()
 		$url = strpos($module,'://') === false ? $svnbranch.'/' : '';
 		$url .= $module;
 		if (strpos($module,'://') !== false) $module = basename($module);
-		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die('Invalid SVN URL!');
+		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die("Invalid SVN URL: $url\n");
 		$repo = $matches[1];
 		$config['modules'][$repo][$config['aliasdir'].'/'.$module] = $url;
 	}
