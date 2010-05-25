@@ -81,9 +81,9 @@ class preferences_hooks
 		);
 
 		$rich_text_editor_skins = array(
-			'default'    => lang ('Default theme'),
+			'kama'    => lang ('Default theme'),
 			'office2003' => lang ('Office 2003 theme'),
-			'silver'     => lang ('Silver theme')
+			'v2'     => lang ('Silver theme')
 		);
 
 		$user_apps = array();
