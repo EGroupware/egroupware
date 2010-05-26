@@ -1042,7 +1042,7 @@ class so_sql
 	{
 		// This function can get called multiple times.  Make sure it doesn't re-process.
 		if (empty($pattern) || is_array($pattern)) return $pattern;
-		if(strpos($pattern, 'CONCAT') !== false)
+		if(strpos($pattern, 'CAST(COALESCE(') !== false)
 		{
 			return $pattern;
 		}
@@ -1050,7 +1050,7 @@ class so_sql
 		$pattern = trim($pattern);
 		$criteria = array();
 		$filter = array();
-		$columns = '';
+		$columns = array();
 
 		/*
 		* Special handling for numeric columns.  They are only considered if the pattern is numeric.
@@ -1076,11 +1076,11 @@ class so_sql
 				$numeric_columns[] = $col;
 				continue;
 			}
-			$columns .= "CAST(COALESCE($col,'') AS char),";
+			$columns[] = "CAST(COALESCE($col,'') AS char)";
 		}
-		if(strlen($columns) > 0)
+		if($columns)
 		{
-			$columns = 'CONCAT(' . substr($columns, 0, -1) . ')';
+			$columns = call_user_func_array(array($this->db,'concat'),$columns);
 		}
 
 		// Break the search string into tokens

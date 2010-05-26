@@ -525,7 +525,7 @@ class so_sql_cf extends so_sql
 								// Multi-select - any entry with the filter value selected matches
 								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
 									$this->extra_value,$this->db->expression($this->extra_table,array(
-										"CONCAT(',',{$this->extra_value},',') LIKE '%,$val,%'"
+										$this->db->concat("','",$this->extra_value,"','").' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%,'.$val.',%')
 									))
 								);
 							}
@@ -575,7 +575,7 @@ class so_sql_cf extends so_sql
 	{
 		// This function can get called multiple times.  Make sure it doesn't re-process.
 		if (empty($pattern) || is_array($pattern)) return $pattern;
-		if(strpos($pattern, 'CONCAT') !== false)
+		if(strpos($pattern, 'CAST(COALESCE(') !== false)
 		{
 			return $pattern;
 		}
