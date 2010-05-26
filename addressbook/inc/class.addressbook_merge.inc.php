@@ -318,9 +318,9 @@ class addressbook_merge	// extends bo_merge
 			{
 				$replacements += $this->contact_replacements($user,'user');
 			}
-			if (strpos($content,'$$calendar/') !== null)
+			if (!(strpos($content,'$$calendar/') === false))
 			{
-				$replacements += $this->calendar_replacements($id,strpos($content,'$$calendar/-1/') !== null);
+				$replacements += $this->calendar_replacements($id,!(strpos($content,'$$calendar/-1/') === false));
 			}
 			$replacements['$$date$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],time()+$this->contacts->tz_offset_s);
 
