@@ -588,7 +588,7 @@ class html
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/ckeditor3/ckeditor.php");
 
 		//Get the ckeditor base url
-		$basePath = 'phpgwapi/js/ckeditor3/';
+		$basePath = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/';
 
 		$oCKeditor = new CKeditor($basePath);
 		$oCKeditor->returnOutput = true;
