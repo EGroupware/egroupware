@@ -768,7 +768,7 @@ class infolog_so
 						// Multi-select - any entry with the filter value selected matches
 						$filtermethod .= $this->db->expression($this->extra_table, array(
 							'info_extra_name' => substr($col,1),
-							"CONCAT(',',info_extra_value,',') LIKE '%,$data,%'"
+							$this->db->concat("','",'info_extra_value',"','").' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%,'.$data.',%'),
 						)).')';
 					}
 					else
