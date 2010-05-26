@@ -45,9 +45,9 @@ class addressbook_merge extends bo_merge
 		{
 			return false;
 		}
-		if (strpos($content,'$$calendar/') !== null)
+		if (!(strpos($content,'$$calendar/') === false))
 		{
-			$replacements += $this->calendar_replacements($id,strpos($content,'$$calendar/-1/') !== null);
+			$replacements += $this->calendar_replacements($id,!(strpos($content,'$$calendar/-1/') === false));
 		}
 		return $replacements;
 	}
