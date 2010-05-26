@@ -69,7 +69,7 @@ class filemanager_select
 				throw new egw_exception_wrong_parameter("Wrong or unset required mode parameter!");
 			}
 			$content['path'] = $_GET['path'];
-			if (!empty($content['path']))
+			if (empty($content['path']))
 			{
 				$content['path'] = egw_session::appsession('select_path','filemanger');
 			}
@@ -194,8 +194,8 @@ class filemanager_select
 
 		//Deactivate the opload field if the current directory is not writeable or
 		//we're currently not in the single file open mode.
-		$content['no_upload'] = (!egw_vfs::is_writable($content['path']) ||
-			!in_array($content['mode'],array('open')));
+		$content['no_upload'] = !egw_vfs::is_writable($content['path']) ||
+			!in_array($content['mode'],array('open'));
 
 		$content['apps'] = array_keys(self::get_apps());
 
