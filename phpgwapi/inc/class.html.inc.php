@@ -641,30 +641,28 @@ class html
 			}
 		}
 
-		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_skin']))
+		$skin = $GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'];
+
+		//Convert old fckeditor skin names to new ones
+		switch ($skin)
 		{
-			$skin = $GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'];
-
-			//Convert old fckeditor skin names to new ones
-			switch ($skin)
-			{
-				case 'silver':
-					$skin = "v2";
-					break;
-				case 'default':
-					$skin = "kama";
-					break;
-				case 'office2003':
-					$skin = "office2003";
-					break;				
-			}
-
-			//Check whether the skin actually exists, if not, switch to a default
-			if (!(file_exists($basePath.'skins/'.$skin) || file_exists($skin)))
+			case 'silver':
+				$skin = "v2";
+				break;
+			case 'default':
+				$skin = "kama";
+				break;
+			case 'office2003':
 				$skin = "office2003";
-
-			$oCKeditor->config['skin'] = $skin;
+				break;				
 		}
+
+		//Check whether the skin actually exists, if not, switch to a default
+		if (!(file_exists($basePath.'skins/'.$skin) || file_exists($skin) || !empty($skin)))
+			$skin = "office2003";
+
+		$oCKeditor->config['skin'] = $skin;
+
 
 		//$oCKeditor->config['spellchecker'] = 'SpellCheck';
 
