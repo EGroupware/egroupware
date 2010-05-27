@@ -584,7 +584,13 @@ class html
 		}
 		// run content through htmlpurifier
 		if ($_purify && !empty($_content)) $_content = self::purify($_content);
+		$oCKeditor = self::initCKEditor($_height, $_mode);
+		
+		return $oCKeditor->editor($_name, $_content);
+	}
 
+	static function &initCKEditor($_height, $_mode)
+	{
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/ckeditor3/ckeditor.php");
 
 		//Get the ckeditor base url
@@ -592,12 +598,8 @@ class html
 
 		$oCKeditor = new CKeditor($basePath);
 		$oCKeditor->returnOutput = true;
-
-		//Only heights with "px" set are supported		
-		$pxheight = (strpos('px', $_height) === false) ? 400 : str_replace('px', '', $_height);
 		
 		$oCKeditor->config['customConfig'] = 'ckeditor.egwconfig.js';
-		$oCKeditor->config['height'] = $pxheight;
 
 		$oCKeditor->config['resize_enabled'] = false;
 		//switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
@@ -609,6 +611,9 @@ class html
 		$oCKeditor->config['filebrowserBrowseUrl'] = 'index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return&path='.urlencode($_start_path);
 		$oCKeditor->config['filebrowserWindowWidth'] = 640;
 		$oCKeditor->config['filebrowserWindowHeight'] = 580;
+		//Only heights with "px" set are supported		
+		$pxheight = (strpos('px', $_height) === false) ? 400 : str_replace('px', '', $_height);
+		$oCKeditor->config['height'] = $pxheight;
 
 		// By default the editor start expanded
 		if ($_options['toolbar_expanded'] == 'false')
@@ -630,13 +635,13 @@ class html
 			switch ($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode'])
 			{
 				case 'p':
-					$oCKeditor->config['enterMode'] = '@@CKEDITOR.ENTER_P';
+					$oCKeditor->config['enterMode'] = 1;//'@@CKEDITOR.ENTER_P';
 					break;
 				case 'br':
-					$oCKeditor->config['enterMode'] = '@@CKEDITOR.ENTER_BR';
+					$oCKeditor->config['enterMode'] = 2;//'@@CKEDITOR.ENTER_BR';
 					break;
 				case 'div':
-					$oCKeditor->config['enterMode'] = '@@CKEDITOR.ENTER_DIV';
+					$oCKeditor->config['enterMode'] = 3;//'@@CKEDITOR.ENTER_DIV';
 					break;
 			}
 		}
@@ -680,8 +685,7 @@ class html
 				$oCKeditor->config['toolbar'] = 'egw_advanced';
 				break;
 		}
-
-		return $oCKeditor->editor($_name, $_content);
+		return $oCKeditor;
 	}
 
 	/**

@@ -431,7 +431,7 @@ class CKEditor
 	/**
 	 * Initializes CKEditor (executed only once).
 	 */
-	private function init()
+	public function init()
 	{
 		static $initComplete;
 		$out = "";
@@ -522,7 +522,7 @@ class CKEditor
 	 * @param mixed $val
 	 * @return string
 	 */
-	private function jsEncode($val)
+	public function jsEncode($val)
 	{
 		if (is_null($val)) {
 			return 'null';

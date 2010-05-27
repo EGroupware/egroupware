@@ -1,0 +1,30 @@
+--------------- step 1 --------------------------------------
+removed _samples directory
+--------------- step 2 --------------------------------------
+making functions init() and jsEncode Public
+(used in felamimail/inc/class.uicompose.inc.php to initalize the ckeditor in any case (plaintext/html))
+see patch below:
+
+Index: phpgwapi/js/ckeditor3/ckeditor_php5.php
+===================================================================
+--- phpgwapi/js/ckeditor3/ckeditor_php5.php	(Revision 30397)
++++ phpgwapi/js/ckeditor3/ckeditor_php5.php	(Arbeitskopie)
+@@ -431,7 +431,7 @@
+ 	/**
+ 	 * Initializes CKEditor (executed only once).
+ 	 */
+-	private function init()
++	public function init()
+ 	{
+ 		static $initComplete;
+ 		$out = "";
+@@ -522,7 +522,7 @@
+ 	 * @param mixed $val
+ 	 * @return string
+ 	 */
+-	private function jsEncode($val)
++	public function jsEncode($val)
+ 	{
+ 		if (is_null($val)) {
+ 			return 'null';
+
