@@ -63,6 +63,14 @@ class filemanager_select
 		if (!is_array($content))
 		{
 			$content = array();
+			// recover from a failed upload in CkEditor, eg. > max_uploadsize
+			if ($_GET['failed_upload'] && $_GET['msg'])
+			{
+				$content['msg'] = $_GET['msg'];
+				$_GET['mode'] = 'open';
+				$_GET['method'] = 'ckeditor_return';
+				$_GET['CKEditorFuncNum'] = egw_cache::getSession('filemanager','ckeditorfuncnum');
+			}
 			$content['mode'] = $_GET['mode'];
 			if (!in_array($content['mode'],array('open','open-multiple','saveas','select-dir')))
 			{
@@ -79,11 +87,13 @@ class filemanager_select
 			{
 				if (isset($_GET['CKEditorFuncNum']) && is_numeric($_GET['CKEditorFuncNum']))
 				{
-					$content['ckeditorfuncnum'] = $_GET['CKEditorFuncNum'];
-					$content['method'] = 'ckeditor_return';
+					egw_cache::setSession('filemanager','ckeditorfuncnum',
+						$content['ckeditorfuncnum'] = $_GET['CKEditorFuncNum']);
 				}
 				else
+				{
 					throw new egw_exception_wrong_parameter("chkeditor_return has been specified as a method but some parameters are missing or invalid.");
+				}
 			}
 			$content['id']     = $_GET['id'];
 			$content['label'] = isset($_GET['label']) ? $_GET['label'] : lang('Open');
@@ -118,35 +128,28 @@ class filemanager_select
 					break;
 				case 'ok':
 					$copy_result = null;
-					if (isset($content['file_upload']['name']))
+					if (isset($content['file_upload']['name']) && is_uploaded_file($content['file_upload']['tmp_name']))
 					{
-						$copy_result = false;
-
 						//Set the "content" name filed accordingly to the uploaded file
-						$content['name'] = $content['file_upload']['name'];
-
-						//Assemble the "from" and "to" paths and open the files
-						$from_path = $content['file_upload']['tmp_name'];
+						// encode chars which special meaning in url/vfs (some like / get removed!)
+						$content['name'] = egw_vfs::encodePathComponent($content['file_upload']['name']);
 						$to_path = egw_vfs::concat($content['path'],$content['name']);
-
-						$from = @fopen($from_path,'r');
-						$to = @egw_vfs::fopen($to_path,'w');
-
-						//Perform the copy operation						
-						if ($from && $to)
-						{
-							$copy_result = stream_copy_to_stream($from,$to) == $content['file_upload']['size'];
-						}						
+					
+						$copy_result = (egw_vfs::is_writable($content['path']) || egw_vfs::is_writable($to)) &&
+							copy($content['file_upload']['tmp_name'],egw_vfs::PREFIX.$to_path);
 					}
 
 					//Break on an error condition					
 					if ((($content['mode'] == 'open' || $content['mode'] == 'saveas') && ($content['name'] == '')) || ($copy_result === false))
 					{
 						if ($copy_result === false)
+						{
 							$content['msg'] = lang("Error while processing your upload request.");
+						}
 						else
+						{
 							$content['msg'] = lang("The name field may not be empty.");
-
+						}
 						$content['name'] = '';
 
 						break;
@@ -159,31 +162,33 @@ class filemanager_select
 							{
 								$files[] = egw_vfs::concat($content['path'],$name);
 							}
-
 							//Add an uploaded file to the files result array2string
-							if ($copy_result === true)
-								$files[] = $to_path;
-
+							if ($copy_result === true) $files[] = $to_path;
 							break;
+
 						case 'select-dir':
 							$files = $content['path'];
 							break;
+
 						default:
 							$files = egw_vfs::concat($content['path'],$content['name']);
 							break;
 					}
 
 					if ($content['method'] != 'ckeditor_return')
+					{
 						$js = ExecMethod2($content['method'],$content['id'],$files);
+					}
 					else
+					{
 						$js = "window.opener.CKEDITOR.tools.callFunction(".
 							$content['ckeditorfuncnum'].",'".
-							egw::link(egw_vfs::download_url(egw_vfs::concat($content['path'],htmlspecialchars($content['name']))))."',".
+							htmlspecialchars(egw::link(egw_vfs::download_url(egw_vfs::concat($content['path'],$content['name']))))."',".
 							"'');\nwindow.close();";
-
-					header('content-type: text/html; charset=utf-8');
+					}
+					header('Content-type: text/html; charset='.translation::charset());
 					echo "<html>\n<head>\n<script type='text/javascript'>\n$js\n</script>\n</head>\n</html>\n";
-					$GLOBALS['egw']->common->egw_exit();
+					common::egw_exit();
 			}
 		}
 		elseif(isset($content['apps']))
