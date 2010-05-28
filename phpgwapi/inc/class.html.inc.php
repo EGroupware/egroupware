@@ -612,7 +612,7 @@ class html
 		$oCKeditor->config['filebrowserWindowWidth'] = 640;
 		$oCKeditor->config['filebrowserWindowHeight'] = 580;
 		//Only heights with "px" set are supported		
-		$pxheight = (strpos('px', $_height) === false) ? 400 : str_replace('px', '', $_height);
+		$pxheight = (strpos('px', $_height) === false) ? (empty($_height)?400:$_height) : str_replace('px', '', $_height);
 		$oCKeditor->config['height'] = $pxheight;
 
 		// By default the editor start expanded
