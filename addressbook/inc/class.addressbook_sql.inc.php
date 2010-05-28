@@ -264,7 +264,7 @@ class addressbook_sql extends so_sql_cf
 			// we have no private grants in addressbook at the moment, they have then to be added here too
 			if (isset($filter['owner']))
 			{
-				if (!$this->grants[(int) $filter['owner']]) return false;	// we have no access to that addressbook
+				if (!($filter['owner'] = array_intersect((array)$filter['owner'],array_keys($this->grants)))) return false;
 
 				$filter['private'] = 0;
 			}
@@ -308,16 +308,6 @@ class addressbook_sql extends so_sql_cf
 						}
 					}
 					break;
-			}
-			if (isset($filter['owner']))
-			{
-				$filter[] = $this->table_name.'.contact_owner='.(int)$filter['owner'];
-				unset($filter['owner']);
-			}
-			if (is_array($criteria) && isset($criteria['owner']))
-			{
-				$criteria[] = $this->table_name.'.contact_owner='.(int)$criteria['owner'];
-				unset($criteria['owner']);
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
 			if ($this->db->Type != 'mysql' && preg_match("/([a-zA-Z_.]+)<>''/",$order_by,$matches))
