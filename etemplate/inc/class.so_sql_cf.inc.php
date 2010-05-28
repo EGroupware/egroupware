@@ -488,7 +488,7 @@ class so_sql_cf extends so_sql
 			foreach($filter as $name => $val)
 			{
 				// replace ambiguous auto-id with (an exact match of) table_name.autoid
-				if ($name == $this->autoinc_id)
+				if (is_string($name) && $name == $this->autoinc_id)
 				{
 					if ((int)$filter[$this->autoinc_id])
 					{
