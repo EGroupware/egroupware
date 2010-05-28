@@ -1215,6 +1215,14 @@ class calendar_boupdate extends calendar_bo
 			{
 				$event['deleted'] = true;
 				$this->save($event);
+				// Actually delete alarms
+				if (isset($event['alarm']) && is_array($event['alarm']))
+				{
+					foreach($event['alarm'] as $id => $alarm)
+					{
+						$this->delete_alarm($id);
+					}
+				}
 			}
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
 
