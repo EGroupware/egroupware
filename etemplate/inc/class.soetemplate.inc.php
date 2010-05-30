@@ -842,8 +842,6 @@ class soetemplate
 		if (!($rows = $this->db->affected_rows()))
 		{
 			echo "<p>soetemplate::save('$this->name','$this->template','$this->lang',$this->group,'$this->version') <b>nothing written!!!</b></p>\n";
-			function_backtrace();
-			_debug_array($this->db);
 		}
 		return $rows;
 	}
