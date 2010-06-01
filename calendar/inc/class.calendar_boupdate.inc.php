@@ -6,7 +6,7 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-10 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -1739,7 +1739,7 @@ class calendar_boupdate extends calendar_bo
 				'[QUERY]: ' . array2string($query)."\n",3,$this->logfile);
 		}
 		if (!count($users) || !($foundEvents =
-			$this->so->search(null, null, $users, 0, 'owner', $query)))
+			$this->so->search(null, null, $users, 0, 'owner', false, 0, array('query' => $query))))
 		{
 			if ($this->log)
 			{
