@@ -51,10 +51,9 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 	//Assemble the actual request string
 	var request  = '{';
 	request += '"request":{';
-	request += '"menuaction":"' + this.menuaction + '"';
 	if (this.parameters)
 	{
-		request += ',"parameters":[';
+		request += '"parameters":[';
 		for (var i = 0; i < this.parameters.length; i++)
 		{
 			if (i > 0)
@@ -71,7 +70,7 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 	request_obj.json_data = request;
 
 	//Send the request via the jquery AJAX interface to the server
-	$.ajax({url: this.url,
+	$.ajax({url: this.url + '?menuaction=' + this.menuaction,
 		async: is_async,
 		context: this,
 		data: request_obj,
@@ -122,7 +121,10 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 					break;
 				case 'data':
 					//Callback the caller in order to allow him to handle the data
-					this.callback.call(this.sender, data.response[i].data);
+					if (this.callback)
+					{
+						this.callback.call(this.sender, data.response[i].data);
+					}
 					hasResponse = true;
 					break;
 				case 'script':

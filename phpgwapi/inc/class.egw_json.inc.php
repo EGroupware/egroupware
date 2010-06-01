@@ -4,10 +4,10 @@
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package api
+ * @package api$request['menuaction'], $parameters
  * @subpackage ajax
  * @author Andreas Stoeckel
- * @version $Id:$
+ * @version $Id$
  */
 
 /* Class which handles JSON requests to the server */
@@ -18,33 +18,99 @@ class egw_json_request
 	@param string $input_data is the RAW input data as it was received from the client
 	@param callback $callback(string $menuaction, array $parameters) called when a valid request has been received. The result of the callback function will be returned by parseRequest
 	@returns NULL if parsing the request failed, or the result of the callback function if the request has been successfully decoded.*/
-	public function parseRequest($input_data, $callback)
+	public function parseRequest($menuaction, $input_data)
 	{
-		//Decode the JSON input data into associative arrays		
-		if ($json = json_decode(stripslashes($input_data), true))
+		if (empty($input_data))
 		{
-			//Get the request array
-			if (isset($json['request']))
+			$this->handleRequest($menuaction, array());
+ 		}
+		else
+		{
+			//Decode the JSON input data into associative arrays		
+			if ($json = json_decode(stripslashes($input_data[0]), true))
 			{
-				$request = $json['request'];
-				
-				//Check whether the "menuaction" string exists
-				if (isset($request['menuaction']))
+				//Get the request array
+				if (isset($json['request']))
 				{
+					$request = $json['request'];
+				
 					//Check whether any parameters were supplied along with the request
 					$parameters = array();
 					if (isset($request['parameters']))
-						$parameters = $request['parameters'];
+						$parameters = array_stripslashes($request['parameters']);
 
 					//Call the supplied callback function along with the menuaction and the passed parameters
-					return call_user_func($callback, $request['menuaction'], $parameters);
+					$this->handleRequest($menuaction, $parameters);
 				}
 			}
-		}
+		}	
 
 		return NULL;
 	}
 
+	public function handleRequest($menuaction, $parameters)
+	{
+		if (strpos($menuaction,'::') !== false && strpos($menuaction,'.') === false)	// static method name app_something::method
+		{
+			@list($className,$functionName,$handler) = explode('::',$menuaction);
+			list($appName) = explode('_',$className);
+		}
+		else
+		{
+			@list($appName, $className, $functionName, $handler) = explode('.',$menuaction);
+		}
+		error_log("xajax.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
+
+		switch($handler)
+		{
+/*			case '/etemplate/process_exec':
+				$menuaction = $appName.'.'.$className.'.'.$functionName;
+				$appName = $className = 'etemplate';
+				$functionName = 'process_exec';
+				$menuaction = 'etemplate.etemplate.process_exec';
+
+				$argList = array(
+					$argList[0]['etemplate_exec_id'],
+					$argList[0]['submit_button'],
+					$argList[0],
+					'xajaxResponse',
+				);
+				//error_log("xajax_doXMLHTTP() /etemplate/process_exec handler: arg0='$menuaction', menuaction='$_GET[menuaction]'");
+				break;*/
+			case 'etemplate':	// eg. ajax code in an eTemplate widget
+				$menuaction = ($appName = 'etemplate').'.'.$className.'.'.$functionName;
+				break;
+			case 'template':
+				$menuaction = $appName.'.'.$className.'.'.$functionName;
+				list($template) = explode('_', $className);
+				break;
+		}
+
+		if(substr($className,0,4) != 'ajax' && substr($className,-4) != 'ajax' &&
+			$menuaction != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
+			!preg_match('/^[A-Za-z0-9_]+(\.[A-Za-z0-9_]+\.|::)[A-Za-z0-9_]+$/',$menuaction))
+		{
+			// stopped for security reasons
+			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$menuaction.' is not valid. class- or function-name must start with ajax!!!');
+			// send message also to the user
+			throw new Exception($_SERVER['PHP_SELF']. ' stopped for security reason. '.$menuaction.' is not valid. class- or function-name must start with ajax!!!');
+			exit;
+		}
+
+		if (isset($template))
+		{
+			require_once(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$template.'/class.'.$className.'.inc.php');
+			$ajaxClass = new $className;
+		}
+		else
+		{
+			$ajaxClass = CreateObject($appName.'.'.$className);		
+		}
+		
+		$parameters = translation::convert($parameters, 'utf-8');
+
+		call_user_func_array(array($ajaxClass, $functionName), $parameters);
+	}
 }
 
 class egw_json_response
@@ -57,6 +123,31 @@ class egw_json_response
 	function is called */
 	protected $responseArray = array();
 
+	private static $response = null;
+
+	public static function get()
+	{
+		if (!isset(self::$response))
+		{
+			self::$response = new egw_json_response();
+		}
+		return self::$response;
+	}
+
+	/* Private function used to send the HTTP header of the JSON response */
+	private function sendHeader()
+	{
+		//Send the character encoding header
+		header('content-type: application/json; charset='.translation::charset());
+	}
+
+	/* Privade function which is used to send the result via HTTP */
+	private function sendResult()
+	{
+		$this->sendHeader();
+		echo $this->getJSON();
+	}
+
 	/* Adds any type of data to the response array */
 	protected function addGeneric($key, $data)
 	{
@@ -68,7 +159,7 @@ class egw_json_response
 	/* Adds a "data" response to the json response. This function may only be called once
 	for a single JSON response object.
 	@param object/array/string $data can be of any data type and will be added JSON Encoded to your response.*/
-	public function addData($data)
+	public function data($data)
 	{
 		/* Only allow adding the data response once */
 		if (!$this->hasData)
@@ -86,7 +177,7 @@ class egw_json_response
 	the text supplied here with the JavaScript function "alert".
 	@param string $message contains the actual message being sent to the client.
 	@param string $details (optional) can be used to inform the user on the client side about additional details about the error. This might be information how the error can be resolved/why it was raised or simply some debug data.*/
-	public function addAlert($message, $details = '')
+	public function alert($message, $details = '')
 	{
 		if (is_string($message) && is_string($details))
 		{
@@ -103,7 +194,7 @@ class egw_json_response
 	/* Allows you to add a generic java script to the response which will be executed upon the request gets received. Deprecated.
 	@deprecated
 	@param string $script the script code which should be executed upon receiving*/	
-	public function addScript($script)
+	public function script($script)
 	{
 		if (is_string($script))
 		{
@@ -120,7 +211,7 @@ class egw_json_response
 	@param string $id the identifier of the html element in which the assign shall take place
 	@param string $key the key in the html element which should be modified when the assign takes place.
 	@param string $value the value which should be assigned to the given key*/
-	public function addAssign($id, $key, $value)
+	public function assign($id, $key, $value)
 	{
 		if (is_string($id) && is_string($key) && (is_string($value) || is_numeric($value)))
 		{
@@ -141,5 +232,10 @@ class egw_json_response
 		/* Wrap the result array into a parent "response" Object */
 		$res['response'] = $this->responseArray;
 		return json_encode($res, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+	}
+
+	public function __destruct()
+	{
+		$this->sendResult();
 	}
 }
