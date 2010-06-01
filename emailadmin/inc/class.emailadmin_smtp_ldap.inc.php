@@ -375,7 +375,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 		{
 			$newData = array();
 			$allValues = ldap_get_entries($ds, $sri);
-
+			$objectClasses  = $allValues[0]['objectclass'];
 			$newData['objectclass']	= $allValues[0]['objectclass'];
 
 			unset($newData['objectclass']['count']);
