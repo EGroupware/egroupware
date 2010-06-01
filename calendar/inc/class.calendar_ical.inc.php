@@ -568,9 +568,9 @@ class calendar_ical extends calendar_boupdate
 			    				);
 		    				}
 	    				}
-		    			if ($this->productManufacturer != 'groupdav'
-			    				|| !$this->check_perms(EGW_ACL_EDIT,$event['id']))
-	    				{
+		    			if ($this->productManufacturer != 'groupdav' ||
+			    			!$this->check_perms(EGW_ACL_EDIT,$event))
+			    			{
 		    				$attributes['ORGANIZER'] = $organizerURL;
 		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
 		    				if (!empty($organizerUID))
