@@ -316,8 +316,9 @@ class calendar_so
 	 * @param int|boolean $offset=False offset for a limited query or False (default)
 	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @param array $params=array()
-	 * @param string $params['query'] pattern so search for, if unset or empty all matching entries are returned (no search)
+	 * @param string|array $params['query'] string: pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
+	 *      array: everything is directly used as $where
 	 * @param string $params['order']='cal_start' column-names plus optional DESC|ASC separted by comma
 	 * @param string $params['sql_filter'] sql to be and'ed into query (fully quoted)
 	 * @param string|array $params['cols'] what to select, default "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
@@ -331,7 +332,7 @@ class calendar_so
 	 */
 	function &search($start,$end,$users,$cat_id=0,$filter='all',$offset=False,$num_rows=0,array $params=array())
 	{
-		//echo '<p>'.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',,$offset,$num_rows,".array2string($params).")</p>\n";
+		//error_log('*** '.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
 
 		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
 
@@ -437,19 +438,11 @@ class calendar_so
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
 		if (!preg_match('/^[a-z_ ,]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
-
+		
 		if ($useUnionQuery)
 		{
 			// allow apps to supply participants and/or icons
 			if (!isset($params['cols'])) $cols .= ',NULL AS participants,NULL AS icons';
-
-			// For deleted history
-			$history_id = $this->cal_table.'.cal_id';
-			// Postgres needs a cast
-			if($this->db->Type == 'pgsql')
-			{
-				$history_id = "CAST($history_id AS VARCHAR)";
-			}
 
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
 			$select = array(
@@ -516,7 +509,7 @@ class calendar_so
 					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 					//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 				}
-				if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query,$params['users']);
+				if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
 
 				$this->total = $this->db->union($selects,__LINE__,__FILE__)->NumRows();
 				$i = 0;
@@ -538,9 +531,8 @@ class calendar_so
 
 				$selects = $selections;
 			}
-			if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$query,$params['users']);
-
-			// error_log("calendar_so_search:\n" . print_r($selects, true));
+			if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
+			
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
 		}
 		else	// MsSQL oder MySQL 3.23
@@ -559,7 +551,7 @@ class calendar_so
 				$where,__LINE__,__FILE__,$offset,$params['append'].' ORDER BY '.$params['order'],'calendar',$num_rows,
 				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
 		}
-		if (!!isset($params['cols']))
+		if (isset($params['cols']))
 		{
 			return $rs;	// if colums are specified we return the recordset / iterator
 		}
