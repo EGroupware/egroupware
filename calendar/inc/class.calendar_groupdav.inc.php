@@ -684,9 +684,9 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	function read($id)
 	{
 		if ($this->debug > 1) error_log("bo-ical read  :$id:");
-		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server'))) return $retval;
 		$event = $this->bo->read($id, null, true, 'server');
-		if (!$this->bo->check_perms(EGW_ACL_READ, $id, 0, 'server'))
+		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))) return $retval;
+		if (!$this->bo->check_perms(EGW_ACL_READ, $event, 0, 'server'))
 		{
 			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
 		}
