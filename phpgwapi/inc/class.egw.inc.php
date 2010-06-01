@@ -440,7 +440,7 @@ class egw extends egw_minimal
 	 */
 	static function link($url = '', $extravars = '')
 	{
-		return $GLOBALS['egw']->session->link($url, $extravars);
+		return $GLOBALS['egw']->framework->link($url, $extravars);
 	}
 
 	/**
@@ -452,7 +452,7 @@ class egw extends egw_minimal
 	 */
 	static function redirect_link($url = '',$extravars='')
 	{
-		self::redirect($GLOBALS['egw']->session->link($url, $extravars));
+		return $GLOBALS['egw']->framework->redirect_link($url, $extravars);
 	}
 
 	/**

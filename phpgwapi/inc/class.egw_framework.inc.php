@@ -65,7 +65,7 @@ abstract class egw_framework
 	 *
 	 * @return egw_framework
 	 */
-	function egw_framework($template)
+	function __construct($template)
 	{
 		$this->template = $template;
 
@@ -73,6 +73,42 @@ abstract class egw_framework
 		{
 			$GLOBALS['egw']->framework = $this;
 		}
+	}
+
+	/**
+	 * PHP4-Constructor
+	 *
+	 * The constructor instanciates the class in $GLOBALS['egw']->framework, from where it should be used
+	 *
+	 * @deprecated use __construct()
+	 */
+	function egw_framework($template)
+	{
+		self::__construct($template);
+	}
+	
+	/**
+	 * Link url generator
+	 *
+	 * @param string	$string	The url the link is for
+	 * @param string/array	$extravars	Extra params to be passed to the url
+	 * @return string	The full url after processing
+	 */
+	static function link($url = '', $extravars = '')
+	{
+		return $GLOBALS['egw']->session->link($url, $extravars);
+	}
+
+	/**
+	 * Redirects direct to a generated link
+	 *
+	 * @param string	$string	The url the link is for
+	 * @param string/array	$extravars	Extra params to be passed to the url
+	 * @return string	The full url after processing
+	 */
+	static function redirect_link($url = '',$extravars='')
+	{
+		egw::redirect(self::link($url, $extravars));
 	}
 
 	/**
