@@ -1,16 +1,29 @@
 <?php
 /**
- * eGroupWare - JSON gateway
+ * eGroupWare - general JSON handler for EGroupware
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage ajax
- * @author Andreas Stoeckel
+ * @author Andreas Stoeckel <as@stylite.de>
  * @version $Id$
  */
 
-require_once('./phpgwapi/inc/class.egw_json.inc.php');
+/**
+ * callback if the session-check fails, redirects via xajax to login.php
+ *
+ * @param array &$anon_account anon account_info with keys 'login', 'passwd' and optional 'passwd_type'
+ * @return boolean/string true if we allow anon access and anon_account is set, a sessionid or false otherwise
+ */
+function xajax_redirect(&$anon_account)
+{
+	$response = new egw_json_response();
+	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10');
+	$response->printOutput();
+
+	common::egw_exit();
+}
 
 /**
  * Exception handler for xajax, return the message (and trace, if enabled) as alert() to the user
@@ -21,7 +34,27 @@ require_once('./phpgwapi/inc/class.egw_json.inc.php');
  */
 function ajax_exception_handler(Exception $e)
 {
-	//Exceptions should be returned
+	// logging all exceptions to the error_log
+	if (function_exists('_egw_log_exception'))
+	{
+		_egw_log_exception($e,$message);
+	}
+	$response = new egw_json_response();
+	$message .= ($message ? "\n\n" : '').$e->getMessage();
+	
+	// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
+	if ($GLOBALS['egw_info']['server']['exception_show_trace'])
+	{
+		$message .= "\n\n".$e->getTraceAsString();
+	}
+	$response->addAlert($message);
+	$response->printOutput();
+
+	if (is_object($GLOBALS['egw']))
+	{
+		common::egw_exit();
+	}
+	exit;
 }
 
 // set our own exception handler, to not get the html from eGW's default one
@@ -58,9 +91,7 @@ if (isset($_GET['menuaction']))
 
 	//Check whether the request data is set
 	$json->parseRequest($_GET['menuaction'], (array)$_POST['json_data']);
-	exit;
+	common::egw_exit();
 }
 
-throw new Exception($_SERVER['PHP_SELF'] . "Invalid AJAX JSON Request");
-
-
+throw new Exception($_SERVER['PHP_SELF'] . ' Invalid AJAX JSON Request');

@@ -5,8 +5,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage ajax
- * @author Andreas Stoeckel
- * @version $Id:$
+ * @author Andreas Stoeckel <as@stylite.de>
+ * @version $Id$
  */
 
 /* The egw_json_request is the javaScript side implementation of class.egw_json.inc.php.*/
