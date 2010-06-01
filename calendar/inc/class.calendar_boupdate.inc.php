@@ -1214,7 +1214,7 @@ class calendar_boupdate extends calendar_bo
 			elseif ($config['calendar_delete_history'])
 			{
 				$event['deleted'] = true;
-				$this->save($event);
+				$this->save($event, $ignore_acl);
 				// Actually delete alarms
 				if (isset($event['alarm']) && is_array($event['alarm']))
 				{
@@ -2221,8 +2221,10 @@ class calendar_boupdate extends calendar_bo
 	{
 		$query = array(
 			'end'		=>	strtotime("-$age years", time()),
-			'enum_recuring'	=>	false
+			'enum_recuring'	=>	false,
+			'users'		=>	array_keys($GLOBALS['egw']->accounts->search(array()))
 		);
+
 		$events = $this->search($query);
 		foreach($events as $event)
 		{
