@@ -29,21 +29,12 @@ class addressbook_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$file = array(
-				array(
-					'text' => '<a class="textSidebox" href="'.egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit')).
-						'" onclick="egw_openWindowCentered2(this.href,\'_blank\',850,440,\'yes\');
-						return false;">'.lang('Add').'</a>',
-					'no_lang' => true,
-					'link' => false
-				),
-				array(
-					'text' => '<a class="textSidebox" href="'.egw::link('/index.php',array(
-						'menuaction' => 'addressbook.addressbook_ui.search',)).
-						'" onclick="egw_openWindowCentered2(this.href,\'advanced_search\',850,480,\'yes\');
-						return false;">'.lang('Advanced search').'</a>',
-					'no_lang' => true,
-					'link' => false
-				),
+				'Add'             => "javascript:egw_openWindowCentered2('".
+					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit'),false).
+					"','_blank',850,440,'yes')",
+				'Advanced search' => "javascript:egw_openWindowCentered2('".
+					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.search'),false).
+					"','_blank',850,480,'yes')",
 				'CSV-Import'      => egw::link('/addressbook/csv_import.php')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
