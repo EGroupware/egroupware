@@ -743,7 +743,7 @@ class common
 	 */
 	static function find_image($appname,$image)
 	{
-		if ($appname != 'phpgwapi')
+		if ($appname == 'phpgwapi')
 		{
 			$imagedir = $GLOBALS['egw']->framework->template_dir.'/images';
 		}
