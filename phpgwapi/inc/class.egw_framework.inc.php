@@ -837,7 +837,7 @@ abstract class egw_framework
 		while (($entry=$d->read()))
 		{
 			if ($entry != '..' && !isset($GLOBALS['egw_info']['apps'][$entry]) &&
-				file_exists(EGW_SERVER_ROOT . '/' . $entry .'/setup/setup.inc.php'))
+				file_exists($f = EGW_SERVER_ROOT . '/' . $entry .'/setup/setup.inc.php'))
 			{
 				include($f);
 				if (isset($GLOBALS['egw_info']['template'][$entry]))
