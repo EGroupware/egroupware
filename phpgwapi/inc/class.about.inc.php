@@ -108,31 +108,31 @@ class about
 				'appMaintainer'	=> $info['maintainer'],
 				'appVersion'	=> $info['version'],
 				'appLicense'	=> $this->_linkLicense($info['license']),
-				'appDetails'	=> '<a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php?app='.$app.'&nonavbar=true" onclick="egw_openWindowCentered2(this.href,this.target,750,410,'."'yes'".'); return false;"><img src="'.$GLOBALS['egw']->common->image('phpgwapi','view.png').'" /></a>'
+				'appDetails'	=> '<a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php?app='.$app.'&nonavbar=true" onclick="egw_openWindowCentered2(this.href,this.target,750,410,'."'yes'".'); return false;"><img src="'.common::image('phpgwapi','view.png').'" /></a>'
 				);
 		}
 
 		// get informations about the templates
 		$templates = array();
 		$templates[] = ''; // first empty row for eTemplate
-		foreach($GLOBALS['egw']->common->list_templates() as $template => $templateinfo) {
-			$info = $this->_getParsedTemplateInfo($template);
+		foreach($GLOBALS['egw']->framework->list_templates(true) as $template => $info) {
+			$info = $this->_getParsedTemplateInfo($info);
 			$templates[] = array(
 				'templateImage'		=> '<img src="'.$info['image'].'" />',
-				'templateName'		=> $templateinfo['name'],
+				'templateName'		=> $info['title'],
 				'templateAuthor'	=> $info['author'],
 				'templateMaintainer'=> $info['maintainer'],
 				'templateVersion'	=> $info['version'],
 				'templateLicense'	=> $this->_linkLicense($info['license']),
-				'templateDetails'	=> '<a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php?template='.$template.'&nonavbar=true" onclick="egw_openWindowCentered2(this.href,this.target,750,410,'."'yes'".'); return false;"><img src="'.$GLOBALS['egw']->common->image('phpgwapi','view.png').'" /></a>'
+				'templateDetails'	=> '<a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php?template='.$template.'&nonavbar=true" onclick="egw_openWindowCentered2(this.href,this.target,750,410,'."'yes'".'); return false;"><img src="'.common::image('phpgwapi','view.png').'" /></a>'
 				);
 		}
 
 		// get informations about installed languages
 		$translations = array();
 		$translations[] = ''; // first empty row for eTemplate
-		$langs = $GLOBALS['egw']->translation->get_installed_langs();
-		foreach($GLOBALS['egw']->translation->get_installed_langs() as $translation => $translationinfo) {
+		$langs = translation::get_installed_langs();
+		foreach(translation::get_installed_langs() as $translation => $translationinfo) {
 			$translations[] = array(
 				'langName'	=>	$translationinfo.' ('.$translation.')'
 				);
@@ -147,7 +147,7 @@ class about
 			'translations'	=> $translations
 			);
 
-		$tmpl =& CreateObject('etemplate.etemplate', 'phpgwapi.about.index');
+		$tmpl = new etemplate('phpgwapi.about.index');
 		$tmpl->exec('phpgwapi.about.index', $content);
 	}
 
@@ -171,7 +171,8 @@ class about
 				$info = $this->_getParsedAppInfo($name);
 				break;
 			case 'template':
-				$info = $this->_getParsedTemplateInfo($name);
+				$templates = $GLOBALS['egw']->framework->list_templates(true);
+				$info = $this->_getParsedTemplateInfo($templates[$name]);
 				break;
 		}
 
@@ -207,7 +208,7 @@ class about
 	/**
 	 * parse template informations from setup.inc.php file
 	 *
-	 * @param   string  $template	template template name
+	 * @param   array  $info	template template info
 	 * @return  array   html formated informations about author(s),
 	 *                  maintainer(s), version, license of the
 	 *                  given application
@@ -215,33 +216,14 @@ class about
 	 * @access  private
 	 * @since   1.4
 	 */
-	function _getParsedTemplateInfo($template)
+	function _getParsedTemplateInfo($info)
 	{
 		// define the return array
-		$ret = array(
-		'image'			=> (file_exists($GLOBALS['egw_info']['template'][$template]['icon'])) ? $GLOBALS['egw_info']['template'][$template]['icon'] : $GLOBALS['egw']->common->image('thisdoesnotexist',array('navbar','nonav')),
-			'author'        => '',
-			'maintainer'    => '',
-			'version'       => '',
-			'license'       => '',
-			'description'	=> '',
-			'note'			=> ''
-		);
+		$info['image'] = file_exists(EGW_SERVER_ROOT.'/'.$info['icon']) ? '/'.$info['icon'] : common::image('thisdoesnotexist',array('navbar','nonav'));
+		$info['author'] = $this->_getHtmlPersonalInfo($info, 'author');
+		$info['maintainer'] = $this->_getHtmlPersonalInfo($info, 'maintainer');
 
-		if (!file_exists(EGW_INCLUDE_ROOT . "/phpgwapi/templates/$template/setup/setup.inc.php")) {
-			return $ret;
-		}
-
-		include(EGW_INCLUDE_ROOT . "/phpgwapi/templates/$template/setup/setup.inc.php");
-
-		$ret['author'] = $this->_getHtmlPersonalInfo($GLOBALS['egw_info']['template'][$template], 'author');
-		$ret['maintainer'] = $this->_getHtmlPersonalInfo($GLOBALS['egw_info']['template'][$template], 'maintainer');
-		$ret['version'] = $GLOBALS['egw_info']['template'][$template]['version'];
-		$ret['license'] = $GLOBALS['egw_info']['template'][$template]['license'];
-		$ret['description'] = $GLOBALS['egw_info']['template'][$template]['description'];
-		$ret['note'] = $GLOBALS['egw_info']['template'][$template]['note'];
-
-		return $ret;
+		return $info;
 	}
 
 
@@ -274,7 +256,7 @@ class about
 
 		// define the return array
 		$ret = array(
-			'image'			=> $GLOBALS['egw']->common->image(isset($app_info['icon_app'])?$app_info['icon_app']:$app,
+			'image'			=> common::image(isset($app_info['icon_app'])?$app_info['icon_app']:$app,
 				isset($app_info['icon'])?$app_info['icon']:array('navbar','nonav')),
 			'author'		=> '',
 			'maintainer'	=> '',

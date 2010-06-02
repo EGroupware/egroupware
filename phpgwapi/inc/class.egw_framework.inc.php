@@ -198,7 +198,7 @@ abstract class egw_framework
 	protected function _get_footer()
 	{
 		$var = Array(
-			'img_root'       => $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images',
+			'img_root'       => $GLOBALS['egw_info']['server']['webserver_url'] . $this->template_dir.'/images',
 			'version'        => $GLOBALS['egw_info']['server']['versions']['phpgwapi']
 		);
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
@@ -213,7 +213,7 @@ abstract class egw_framework
 			}
 			$var['page_generation_time'] .= '</span></div>';
 		}
-		$var['powered_by'] = lang('Powered by').' <a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php">eGroupWare</a> '.lang('version').' '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'];
+		$var['powered_by'] = lang('Powered by').' <a href="'.egw::link('/about.php','','about').'">EGroupware</a> '.lang('version').' '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'];
 
 		return $var;
 	}
@@ -579,7 +579,7 @@ abstract class egw_framework
 		}
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['egw_info']['flags']['currentapp'] == 'about')
 		{
-			$app = $app_title = 'eGroupWare';
+			$app = $app_title = 'EGroupware';
 		}
 		else
 		{
@@ -810,9 +810,10 @@ abstract class egw_framework
 	/**
 	 * List available templates
 	 *
+	 * @param boolean $full_data=false true: value is array with values for keys 'name', 'title', ...
 	 * @returns array alphabetically sorted list of templates
 	 */
-	static function list_templates()
+	static function list_templates($full_data=false)
 	{
 		$list = array();
 		// templates packaged in the api
@@ -824,11 +825,15 @@ abstract class egw_framework
 				if (file_exists ($f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php'))
 				{
 					include($f);
-					$list[$entry] = $GLOBALS['egw_info']['template'][$entry]['title'];
+					$list[$entry] = $full_data ? $GLOBALS['egw_info']['template'][$entry] : 
+						$GLOBALS['egw_info']['template'][$entry]['title'];
 				}
 				else
 				{
-					$list[$entry] = $entry;
+					$list[$entry] = $full_data ? array(
+						'name'  => $entry,
+						'title' => $entry,
+					) : $entry;
 				}
 			}
 		}
@@ -843,7 +848,8 @@ abstract class egw_framework
 				include($f);
 				if (isset($GLOBALS['egw_info']['template'][$entry]))
 				{
-					$list[$entry] = $GLOBALS['egw_info']['template'][$entry]['title'];
+					$list[$entry] = $full_data ? $GLOBALS['egw_info']['template'][$entry] : 
+						$GLOBALS['egw_info']['template'][$entry]['title'];
 				}
 			}
 		}
@@ -852,7 +858,6 @@ abstract class egw_framework
 
 		return $list;
 	}
-
 }
 
 /**
