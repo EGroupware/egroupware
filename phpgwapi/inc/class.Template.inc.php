@@ -148,7 +148,7 @@
 			if (!preg_match($reg,$str,$match))
 			{
 				// unfortunaly some apps set non-existing blocks, therefor I have to disable this diagnostics again for now
-				// $this->halt("set_block: unable to find block '$handle' in '$parent'.");
+				$this->halt("set_block: unable to find block '$handle' in '$parent'=<pre>".htmlspecialchars($str)."</pre> this->root=$this->root");
 				// return False;
 			}
 			$this->set_var($handle,$match[1]);
@@ -442,7 +442,7 @@
 			}
 			$filename = $this->file[$handle];
 
-			$str = implode('', @file($filename));
+			$str = file_get_contents($filename);
 			if (empty($str))
 			{
 				$this->halt("loadfile: While loading $handle, $filename does not exist or is empty.");
