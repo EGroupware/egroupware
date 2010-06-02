@@ -743,7 +743,14 @@ class common
 	 */
 	static function find_image($appname,$image)
 	{
-		$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
+		if ($appname != 'phpgwapi')
+		{
+			$imagedir = $GLOBALS['egw']->framework->template_dir.'/images';
+		}
+		else
+		{
+			$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
+		}
 		$vfs_imagedir = $GLOBALS['egw_info']['server']['vfs_image_dir'];
 
 		if (!isset(self::$found_files[$appname]))
