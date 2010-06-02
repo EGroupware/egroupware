@@ -70,7 +70,7 @@ class egw_json_request
 		{
 			@list($appName, $className, $functionName, $handler) = explode('.',$menuaction);
 		}
-		error_log("xajax.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
+		//error_log("json.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
 
 		switch($handler)
 		{
@@ -110,7 +110,7 @@ class egw_json_request
 
 		if (isset($template))
 		{
-			require_once(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$template.'/class.'.$className.'.inc.php');
+			if (!class_exists($className)) require_once(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$template.'/class.'.$className.'.inc.php');
 			$ajaxClass = new $className;
 		}
 		else
@@ -309,7 +309,7 @@ class egw_json_response
 		/* Wrap the result array into a parent "response" Object */
 		$res = array('response' => $this->responseArray);
 		
-		return json_encode($res, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+		return json_encode($res);	//PHP5.3+, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
 	}
 
 	/**
