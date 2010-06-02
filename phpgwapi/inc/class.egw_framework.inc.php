@@ -780,6 +780,78 @@ abstract class egw_framework
 			return '';
 		}
 	}
+
+	/**
+	 * List available themes
+	 *
+	 * Themes are css file in the template directory
+	 * 
+	 * @param string $themes_dir='css'
+	 */
+	function list_themes()
+	{
+		$list = array();
+		if (($dh = @opendir(EGW_SERVER_ROOT.$this->template_dir . SEP . 'css')))
+		{
+			while (($file = readdir($dh)))
+			{
+				if (preg_match('/'."\.css$".'/i', $file))
+				{
+					list($name) = explode('.',$file);
+					$list[$name] = $name;
+				}
+			}
+			closedir($dh);
+		}
+		return $list;
+	}
+
+	/**
+	 * List available templates
+	 *
+	 * @returns array alphabetically sorted list of templates
+	 */
+	static function list_templates()
+	{
+		$list = array();
+		// templates packaged in the api
+		$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
+		while (($entry=$d->read()))
+		{
+			if ($entry != '..' && file_exists(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/class.'.$entry.'_framework.inc.php'))
+			{
+				if (file_exists ($f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php'))
+				{
+					include($f);
+					$list[$entry] = $GLOBALS['egw_info']['template'][$entry]['title'];
+				}
+				else
+				{
+					$list[$entry] = $entry;
+				}
+			}
+		}
+		$d->close();
+		// templates packaged like apps in own directories (containing as setup/setup.inc.php file!)
+		$d = dir(EGW_SERVER_ROOT);
+		while (($entry=$d->read()))
+		{
+			if ($entry != '..' && !isset($GLOBALS['egw_info']['apps'][$entry]) &&
+				file_exists(EGW_SERVER_ROOT . '/' . $entry .'/setup/setup.inc.php'))
+			{
+				include($f);
+				if (isset($GLOBALS['egw_info']['template'][$entry]))
+				{
+					$list[$entry] = $GLOBALS['egw_info']['template'][$entry]['title'];
+				}
+			}
+		}
+		$d->close();
+		ksort($list);
+
+		return $list;
+	}
+
 }
 
 /**

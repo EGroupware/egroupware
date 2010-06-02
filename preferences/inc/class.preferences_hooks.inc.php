@@ -21,19 +21,6 @@ class preferences_hooks
 	 */
 	static public function settings($hook_data)
 	{
-		// Setup some values to fill the array of this app's settings below
-		$templates = common::list_templates();
-		foreach($templates as $var => $value)
-		{
-			$_templates[$var] = $templates[$var]['title'];
-		}
-
-		$themes = common::list_themes();
-		foreach($themes as $value)
-		{
-			$_themes[$value] = $value;
-		}
-
 		$navbar_format = array(
 			'icons'          => lang('Icons only'),
 			'icons_and_text' => lang('Icons and text'),
@@ -135,7 +122,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Interface/Template Selection',
 				'name'   => 'template_set',
-				'values' => $_templates,
+				'values' => egw_framework::list_templates(),
 				'help'   => 'A template defines the layout of eGroupWare and it contains icons for each application.',
 				'xmlrpc' => True,
 				'admin'  => False,
@@ -145,7 +132,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Theme (colors/fonts) Selection',
 				'name'   => 'theme',
-				'values' => $_themes,
+				'values' => isset($GLOBALS['egw']->framework) ? $GLOBALS['egw']->framework->list_themes() : array(),
 				'help'   => 'A theme defines the colors and fonts used by the template.',
 				'xmlrpc' => True,
 				'admin'  => False,
