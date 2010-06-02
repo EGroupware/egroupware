@@ -28,3 +28,10 @@ Index: phpgwapi/js/ckeditor3/ckeditor_php5.php
  		if (is_null($val)) {
  			return 'null';
 
+--------------- step 3 --------------------------------------
+-added aspell as plugin, as it is not available by default anymore.
+ phpgwapi/js/ckeditor3/plugins/aspell
+-changed phpgwapi/js/ckeditor3/plugins/aspell/spellerpages/server-scripts/spellchecker.php
+ to allow only configured aspell, tmp dirs and language settings
+-removed other than php spellchecker pages from phpgwapi/js/ckeditor3/plugins/aspell/spellerpages/server-scripts/
+-added toolbar options to reflect the use/change of calls of SpellCheck(er) via toolbar button

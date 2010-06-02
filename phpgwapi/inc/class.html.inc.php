@@ -598,7 +598,11 @@ class html
 	static function &initCKEditor($_height, $_mode)
 	{
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/ckeditor3/ckeditor_php5.php");
-
+		// use the lang and country information to construct a possible lang info for CKEditor UI and scayt_slang
+		$lang = ($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'] ? $GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']: $GLOBALS['egw_info']['user']['preferences']['common']['lang']);
+		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
+		if (!(strpos($lang,'-')===false)) list($lang,$country) = explode('-',$lang);
+		
 		//Get the ckeditor base url
 		$basePath = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/';
 
@@ -606,7 +610,7 @@ class html
 		$oCKeditor->returnOutput = true;
 		
 		$oCKeditor->config['customConfig'] = 'ckeditor.egwconfig.js';
-
+		$oCKeditor->config['language'] = $lang;
 		$oCKeditor->config['resize_enabled'] = false;
 		//switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
 		$oCKeditor->config['entities'] = true;
@@ -626,14 +630,20 @@ class html
 			$oCKeditor->config['toolbarStartupExpanded'] = false;
 
 		// Now setting the admin settings
-/*		$spell = '';
+		$spell = '';
 		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
 		{
 			$spell = '_spellcheck';
-			$oFCKeditor->Config['SpellChecker'] = 'SpellerPages';
-			$oFCKeditor->Config['SpellerPagesServerScript'] = 'server-scripts/spellchecker.php?'.$extra;
-			$oFCKeditor->Config['FirefoxSpellChecker'] = false;
-		}*/
+			if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
+				is_executable($GLOBALS['egw_info']['server']['aspell_path']))
+			{
+				$spell = '_aspell';
+				$oCKeditor->config['extraPlugins'] = 'aspell';
+			}
+			$oCKeditor->config['scayt_autoStartup']=true;
+			$oCKeditor->config['scayt_sLang']=$lang.'_'.strtoupper($country);			
+		}
+		$oCKeditor->config['disableNativeSpellChecker'] = true;
 
 		// Now setting the user preferences
 		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode']))
@@ -675,20 +685,18 @@ class html
 		$oCKeditor->config['skin'] = $skin;
 
 
-		//$oCKeditor->config['spellchecker'] = 'SpellCheck';
-
 		switch($_mode) {
 			case 'simple':
-				$oCKeditor->config['toolbar'] = 'egw_simple';
+				$oCKeditor->config['toolbar'] = 'egw_simple'.$spell;
 				$oCKeditor->config['menu_groups'] = '';
 				break;
 			default:
 			case 'extended':
-				$oCKeditor->config['toolbar'] = 'egw_extended';
+				$oCKeditor->config['toolbar'] = 'egw_extended'.$spell;
 				break;
 
 			case 'advanced':
-				$oCKeditor->config['toolbar'] = 'egw_advanced';
+				$oCKeditor->config['toolbar'] = 'egw_advanced'.$spell;
 				break;
 		}
 		return $oCKeditor;
