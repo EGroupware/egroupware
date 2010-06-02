@@ -2068,7 +2068,7 @@
 					{
 						$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart), $attachments);
 					}
-					continue;
+					if (!($subPart->type=='TEXT' && $subPart->disposition =='INLINE' && $subPart->filename)) continue;
 				}
 
 			   	// fetch the subparts for this part
