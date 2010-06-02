@@ -34,7 +34,6 @@
 
 		function header()
 		{
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 		}

@@ -26,7 +26,6 @@ class uiasyncservice
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Asynchronous timed services');
 
-		$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 		$GLOBALS['egw']->common->egw_header();
 		echo parse_navbar();
 

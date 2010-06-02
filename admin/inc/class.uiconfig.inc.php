@@ -144,9 +144,6 @@
 				$t->set_var('error','');
 				$t->set_var('th_err',$GLOBALS['egw_info']['theme']['th_bg']);
 			}
-
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
-
 			// set currentapp to our calling app, to show the right sidebox-menu
 			$GLOBALS['egw_info']['flags']['currentapp'] = $show_app;
 			$GLOBALS['egw']->common->egw_header();

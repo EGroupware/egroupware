@@ -129,7 +129,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['admin']['title'].' - '.
 				lang('User groups');
 			$GLOBALS['egw']->common->egw_header();
@@ -332,7 +331,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['admin']['title'].' - '.
 				lang('User accounts');
 			$GLOBALS['egw']->common->egw_header();
@@ -618,7 +616,6 @@
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
 			$p =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
@@ -696,7 +693,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
 			$t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
@@ -946,7 +942,6 @@
 			}
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
 			$t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
@@ -1150,7 +1145,6 @@
 		{
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
 			$p =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
@@ -1298,7 +1292,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 
 			$GLOBALS['egw']->common->egw_header();
 
@@ -1631,7 +1624,6 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 			$GLOBALS['egw']->common->egw_header();
 
 			$t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
