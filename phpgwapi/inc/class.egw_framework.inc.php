@@ -46,6 +46,13 @@ abstract class egw_framework
 	var $template;
 
 	/**
+	 * Path relative to EGW_SERVER_ROOT for the template directory
+	 *
+	 * @var string
+	 */
+	var $template_dir;
+
+	/**
 	* true if $this->header() was called
 	*
 	* @var boolean
@@ -73,6 +80,7 @@ abstract class egw_framework
 		{
 			$GLOBALS['egw']->framework = $this;
 		}
+		$this->template_dir = '/phpgwapi/templates/'.$template;
 	}
 
 	/**
@@ -647,14 +655,14 @@ abstract class egw_framework
 			}
 		}
 		#_debug_array($GLOBALS['egw_info']['user']['preferences']['common']);
-		$theme_css = '/phpgwapi/templates/'.$this->template.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
+		$theme_css = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
 		if(!file_exists(EGW_SERVER_ROOT.$theme_css))
 		{
-			$theme_css = '/phpgwapi/templates/'.$this->template.'/css/'.$this->template.'.css';
+			$theme_css = $this->template_dir.'/css/'.$this->template.'.css';
 		}
 		$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . $theme_css .'?'.filemtime(EGW_SERVER_ROOT.$theme_css);
 
-		$print_css = '/phpgwapi/templates/'.$this->template.'/print.css';
+		$print_css = $this->template_dir.'/print.css';
 		if(!file_exists(EGW_SERVER_ROOT.$print_css))
 		{
 			$print_css = '/phpgwapi/templates/idots/print.css';

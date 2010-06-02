@@ -644,8 +644,7 @@ class common
 	 * get template dir of an application
 	 *
 	 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-	 * @static
-	 * @return string/boolean dir or false if no dir is found
+	 * @return string|boolean dir or false if no dir is found
 	 */
 	static function get_tpl_dir($appname = '')
 	{
@@ -675,7 +674,9 @@ class common
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
 		}
-		if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.
+		if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi/templates/'.basename($GLOBALS['egw_info']['server']['template_set']).'/class.'.
+			$GLOBALS['egw_info']['server']['template_set'].'_framework.inc.php') &&
+			!file_exists(EGW_SERVER_ROOT.'/'.basename($GLOBALS['egw_info']['server']['template_set']).'/inc/class.'.
 			$GLOBALS['egw_info']['server']['template_set'].'_framework.inc.php'))
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = 'idots';
@@ -691,10 +692,7 @@ class common
 		{
 			return $tpldir_default;
 		}
-		else
-		{
-			return False;
-		}
+		return False;
 	}
 
 	/**

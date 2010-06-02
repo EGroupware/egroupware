@@ -1,15 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare                                                               *
-* http://www.egroupware.org                                                *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * EGroupware index page
+ *
+ * Starts all applications using $_GET[menuaction]
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @version $Id$
+ */
 
 // forward for not existing or empty header to setup
 if(!file_exists('header.inc.php') || !filesize('header.inc.php'))
@@ -72,17 +71,17 @@ if (isset($_GET['tz']))
 // 	Check if we are using windows or normal webpage
 $windowed = false;
 $tpl_info = EGW_SERVER_ROOT . '/phpgwapi/templates/' . basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
-
+if (!file_exists($tpl_info))
+{
+	$tpl_info = EGW_SERVER_ROOT.'/'.basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
+}
 if(@file_exists($tpl_info))
 {
-   include_once($tpl_info);
-//	   if(isset($template_info))
-//	   {
-	  if($GLOBALS['egw_info']['template'][$GLOBALS['egw_info']['user']['preferences']['common']['template_set']]['windowed'])
-	  {
-		 $windowed = true;
-	  }
-//	   }
+	include_once($tpl_info);
+	if($GLOBALS['egw_info']['template'][$GLOBALS['egw_info']['user']['preferences']['common']['template_set']]['windowed'])
+	{
+		$windowed = true;
+	}
 }
 
 if($app == 'home' && !$api_requested && !$windowed)
@@ -93,13 +92,13 @@ if($app == 'home' && !$api_requested && !$windowed)
 	}
 	if($GLOBALS['egw_info']['user']['preferences']['common']['default_app'] && !$hasupdates)
 	{
-		$GLOBALS['egw']->redirect(egw_framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']));
+		egw::redirect(egw_framework::index($GLOBALS['egw_info']['user']['preferences']['common']['default_app']));
 	}
 	else
 	{
-	   $GLOBALS['egw']->redirect_link('/home/index.php');
+		egw::redirect_link('/home/index.php');
 	}
- }
+}
 
 if($windowed && $_GET['cd'] == 'yes')
 {
@@ -108,9 +107,8 @@ if($windowed && $_GET['cd'] == 'yes')
 		'nonavbar'   => False,
 		'currentapp' => 'eGroupWare'
 	);
-	$GLOBALS['egw']->common->egw_header();
-	$GLOBALS['egw']->common->egw_footer();
-
+	common::egw_header();
+	common::egw_footer();
 }
 else
 {
@@ -166,6 +164,6 @@ else
 
 	if(!isset($GLOBALS['egw_info']['nofooter']))
 	{
-		$GLOBALS['egw']->common->egw_footer();
+		common::egw_footer();
 	}
 }

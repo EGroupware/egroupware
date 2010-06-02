@@ -618,10 +618,13 @@ class egw_minimal
 			case 'framework':
 				// setup the new eGW framework (template sets)
 				$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
-				require_once($file=EGW_INCLUDE_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.$class.'.inc.php');
-				if (!in_array($file,(array)$_SESSION['egw_required_files']))
+				if (!class_exists($class))	// first try to autoload the class
 				{
-					$_SESSION['egw_required_files'][] = $file;	// automatic load the used framework class, when the object get's restored
+					require_once($file=EGW_INCLUDE_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.$class.'.inc.php');
+					if (!in_array($file,(array)$_SESSION['egw_required_files']))
+					{
+						$_SESSION['egw_required_files'][] = $file;	// automatic load the used framework class, when the object get's restored
+					}
 				}
 				break;
 			case 'template':	// need to be instancated for the current app
