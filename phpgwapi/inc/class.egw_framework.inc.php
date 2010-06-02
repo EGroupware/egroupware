@@ -376,7 +376,8 @@ abstract class egw_framework
 			$var['messages'] = $api_messages . '<br />' . checkcode($cd);
 		}
 
-		if (substr($GLOBALS['egw_info']['server']['login_logo_file'],0,4) == 'http')
+		if (substr($GLOBALS['egw_info']['server']['login_logo_file'],0,4) == 'http' ||
+			$GLOBALS['egw_info']['server']['login_logo_file'][0] == '/')
 		{
 			$var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
 		}
