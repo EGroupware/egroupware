@@ -320,6 +320,7 @@ abstract class egw_framework
 			'meta_robots'		=> $robots,
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
 			'include_wz_tooltip'=> $include_wz_tooltip,
+			'webserver_url'     => $GLOBALS['egw_info']['server']['webserver_url'],
 		);
 	}
 

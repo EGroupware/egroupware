@@ -295,7 +295,8 @@ class egw_json_response
 	 */
 	public function redirect($url)
 	{
-		self::script("location.href = '$url';");
+		//self::script("location.href = '$url';");
+		$this->addGeneric('redirect', $url);
 	}
 
 	/**

@@ -12,16 +12,15 @@
 /* The egw_json_request is the javaScript side implementation of class.egw_json.inc.php.*/
 
 /* The constructor of the egw_json_request class.
- * @param string _url the url of the AJAX handler on the server
  * @param string _menuaction the menuaction function which should be called and which handles the actual request
  * @param array _parameters which should be passed to the menuaction function.
 */
-function egw_json_request(_url, _menuaction, _parameters)
+function egw_json_request(_menuaction, _parameters)
 {
 	//Copy the supplied parameters
 	this.menuaction = _menuaction;
 	this.parameters = _parameters;
-	this.url = _url;
+	this.url = window.egw_webserverUrl + '/json.php';
 	this.sender = null;
 	this.callback = null;
 	this.alertHandler = this.alertFunc;
@@ -132,6 +131,12 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 					{
 						eval(data.response[i].data);
 						hasResponse = true;
+					}
+					break;
+				case 'redirect':
+					if (typeof data.response[i].data == 'string')
+					{
+						window.location.href = data.response[i].data;
 					}
 					break;
 			}
