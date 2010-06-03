@@ -106,11 +106,14 @@ else
 	$GLOBALS['egw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
 
 	$class = $GLOBALS['egw_info']['login_template_set'].'_framework';
-	if(!file_exists($framework = $GLOBALS['egw_info']['server']['template_dir'].'/class.'.$class.'.inc.php'))
+	if (!class_exists($class))
 	{
-		$framework = EGW_SERVER_ROOT . '/phpgwapi/templates/idots/class.'.($class='idots_framework').'.inc.php';
+		if(!file_exists($framework = $GLOBALS['egw_info']['server']['template_dir'].'/class.'.$class.'.inc.php'))
+		{
+			$framework = EGW_SERVER_ROOT . '/phpgwapi/templates/idots/class.'.($class='idots_framework').'.inc.php';
+		}
+		require_once($framework);
 	}
-	require_once($framework);
 	$GLOBALS['egw']->framework = new $class($GLOBALS['egw_info']['login_template_set']);
 	unset($framework); unset($class);
 
@@ -333,6 +336,7 @@ else
 			else
 			{
 				list($forward,$extra_vars) = explode('?',$forward,2);
+				$extra_vars .= ($extra_vars ? '&' : '').'cd=yes';
 			}
 
 			if(strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
