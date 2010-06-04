@@ -458,13 +458,13 @@ class calendar_ui
 		if ($baseurl)	// we append the value to the baseurl
 		{
 			if (substr($baseurl,-1) != '=') $baseurl .= strpos($baseurl,'?') === False ? '?' : '&';
-			$onchange="location='$baseurl'+this.value;";
+			$onchange="egw_appWindow('calendar').location='$baseurl'+this.value;";
 		}
 		else			// we add $name=value to the actual location
 		{
-			$onchange="location=location+(location.search.length ? '&' : '?')+'".$name."='+this.value;";
+			$onchange="var win=egw_appWindow('calendar'); win.location=win.location+(win.location.search.length ? '&' : '?')+'".$name."='+this.value;";
 		}
-		$select = ' <select style="width: 185px;" name="'.$name.'" onchange="'.$onchange.'" title="'.
+		$select = ' <select style="width: 100%;" name="'.$name.'" onchange="'.$onchange.'" title="'.
 			lang('Select a %1',lang($title)).'">'.
 			$options."</select>\n";
 
@@ -633,13 +633,13 @@ class calendar_ui
 		{
 			$options .= '<option value="'.$data['value'].'"'.($data['selected'] ? ' selected="1"' : '').'>'.html::htmlspecialchars($data['text'])."</option>\n";
 		}
-		$file[++$n] = $this->_select_box('displayed view','view',$options,$GLOBALS['egw']->link('/index.php'));
+		$file[++$n] = $this->_select_box('displayed view','view',$options,egw::link('/index.php','',false));
 
 		// Search
 		$blur = addslashes(html::htmlspecialchars(lang('Search').'...'));
 		$value = @$_POST['keywords'] ? html::htmlspecialchars($_POST['keywords']) : $blur;
 		$file[++$n] = array(
-			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 185px;"'.
+			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 100%;"'.
 				' onFocus="if(this.value==\''.$blur.'\') this.value=\'\';"'.
 				' onBlur="if(this.value==\'\') this.value=\''.$blur.'\';" title="'.lang('Search').'">',
 				'','/index.php',array('menuaction'=>'calendar.calendar_uilist.listview')),
@@ -676,7 +676,7 @@ class calendar_ui
 				$link_vars['menuaction'] = $menuaction;
 			}
 			unset($link_vars['date']);	// gets set in jscal
-			$link[$view] = $l = egw::link('/index.php',$link_vars);
+			$link[$view] = $l = egw::link('/index.php',$link_vars,false);
 		}
 		$jscalendar = $GLOBALS['egw']->jscalendar->flat($link['day'],$this->date,
 			$link['week'],lang('show this week'),$link['month'],lang('show this month'));
@@ -685,7 +685,7 @@ class calendar_ui
 		// set a baseurl for selectboxes, if we are not running inside calendar (eg. prefs or admin)
 		if (substr($_GET['menuaction'],0,9) != 'calendar.')
 		{
-			$baseurl = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiviews.index'));
+			$baseurl = egw::link('/index.php',array('menuaction'=>'calendar.calendar_uiviews.index'),false);
 		}
 		// Category Selection
 		$file[++$n] = $this->_select_box('Category','cat_id',
@@ -747,7 +747,7 @@ function load_cal(url,id) {
 		}
 	}
 	if (owner) {
-		location=url+'&owner='+owner;
+		egw_appWindow('calendar').location=url+'&owner='+owner;
 	}
 }
 </script>
@@ -755,10 +755,10 @@ function load_cal(url,id) {
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
 					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '100%' : '165px').';"'.
 					' title="'.lang('select a %1',lang('user')).'" onchange="load_cal(\''.
-					$GLOBALS['egw']->link('/index.php',array(
+					egw::link('/index.php',array(
 						'menuaction' => $this->view_menuaction,
 						'date' => $this->date,
-					)).'\',\'uical_select_owner\');"','',$grants),
+					),false).'\',\'uical_select_owner\');"','',$grants),
 				'no_lang' => True,
 				'link' => False
 			);
@@ -787,7 +787,7 @@ function load_cal(url,id) {
 		{
 			$file[] = array(
 				'text'	=> 'pdf-export / print',
-				'link'	=> $GLOBALS['egw']->link('/index.php',array(
+				'link'	=> egw::link('/index.php',array(
 					'menuaction' => $print_functions[$_GET['menuaction']],
 					'date' => $this->date,
 				)),
@@ -815,9 +815,9 @@ function load_cal(url,id) {
 		{
 			$menu_title = lang('Preferences');
 			$file = Array(
-				'Calendar preferences'=>$GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=calendar'),
-				'Grant Access'=>$GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=calendar'),
-				'Edit Categories' =>$GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=calendar&cats_level=True&global_cats=True'),
+				'Calendar preferences'=>egw::link('/index.php','menuaction=preferences.uisettings.index&appname=calendar'),
+				'Grant Access'=>egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=calendar'),
+				'Edit Categories' =>egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=calendar&cats_level=True&global_cats=True'),
 			);
 			display_sidebox($appname,$menu_title,$file);
 		}
@@ -826,10 +826,10 @@ function load_cal(url,id) {
 		{
 			$menu_title = lang('Administration');
 			$file = Array(
-				'Configuration'=>$GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
-				'Custom Fields'=>$GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname=calendar'),
-				'Holiday Management'=>$GLOBALS['egw']->link('/index.php','menuaction=calendar.uiholiday.admin'),
-				'Global Categories' =>$GLOBALS['egw']->link('/index.php','menuaction=admin.uicategories.index&appname=calendar'),
+				'Configuration'=>egw::link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
+				'Custom Fields'=>egw::link('/index.php','menuaction=admin.customfields.edit&appname=calendar'),
+				'Holiday Management'=>egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
+				'Global Categories' =>egw::link('/index.php','menuaction=admin.uicategories.index&appname=calendar'),
 			);
 			display_sidebox($appname,$menu_title,$file);
 		}
