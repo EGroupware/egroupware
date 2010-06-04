@@ -24,9 +24,9 @@ function egw_json_request(_menuaction, _parameters)
 	this.sender = null;
 	this.callback = null;
 	this.alertHandler = this.alertFunc;
-	if (document.alertHandler)
+	if (window.egw_alertHandler)
 	{
-		this.alertHandler = document.alertHandler;
+		this.alertHandler = window.egw_alertHandler;
 	}
 }
 
