@@ -600,6 +600,7 @@ abstract class egw_framework
 		$apps['about']['url']   = egw::link('/about.php','app='.$app);
 		$apps['about']['icon']  = common::image('phpgwapi',Array('about','nonav'));
 		$apps['about']['icon_hover']  = common::image_on('phpgwapi',Array('about','nonav'),'-over');
+		$apps['about']['name'] = 'about';
 
 		$apps['logout']['title'] = lang('Logout');
 		$apps['logout']['url']   = egw::link('/logout.php');
