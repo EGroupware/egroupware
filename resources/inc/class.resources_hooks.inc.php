@@ -27,38 +27,24 @@ class resources_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$title = $GLOBALS['egw_info']['apps']['resources']['title'].' '.lang('Menu');
-			$file[] = array(
-					'text' => lang('resources list'),
-					'no_lang' => true,
-					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_resources.index' )),
-// 					'icon' =>
+			$file = array(
+				'Resources list' => egw::link('/index.php',array('menuaction' => 'resources.ui_resources.index' )),
 			);
-
 			if($this->acl->get_cats(EGW_ACL_ADD))
 			{
-				$file[] = array(
-					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_resources.edit')).
-						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=800,height=600,scrollbars=yes,status=yes\');
-						return false;">'.lang('add resource').'</a>',
-					'no_lang' => true,
-					'link' => false
-				);
+				$file['Add resource'] = "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
+						'menuaction' => 'resources.ui_resources.edit',
+					),false)."','_blank',800,600,'yes')";
 			}
-// 			$file[] = array(
-// 					'text' => lang('planer'),
-// 					'no_lang' => true,
-// 					'link' => $GLOBALS['egw']->link('/index.php',array('menuaction' => 'resources.ui_calviews.planer' )),
-// 					'icon' =>
-// 			);
 			display_sidebox($appname,$title,$file);
 		}
 
 /*		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
 		{
 			$file = array(
-				'Preferences'     => $GLOBALS['egw']->link('/preferences/preferences.php','appname='.$appname),
-				'Grant Access'    => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
+				'Preferences'     => egw::link('/preferences/preferences.php','appname='.$appname),
+				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
+				'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
 			if ($location == 'preferences')
 			{
@@ -73,13 +59,13 @@ class resources_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
+				'Global Categories'  => egw::link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
 					'global_cats'=> true)),
-				'Configure Access Permissions' => $GLOBALS['egw']->link('/index.php',
+				'Configure Access Permissions' => egw::link('/index.php',
 					'menuaction=resources.ui_acl.acllist'),
-				'Custom Fields'=>$GLOBALS['egw']->link('/index.php',
+				'Custom Fields'=>egw::link('/index.php',
 					'menuaction=admin.customfields.edit&appname=resources'),
 			);
 			if ($location == 'admin')
