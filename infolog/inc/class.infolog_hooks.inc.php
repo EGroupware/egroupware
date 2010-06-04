@@ -85,14 +85,11 @@ class infolog_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$file = array(
-				'infolog list' => $GLOBALS['egw']->link('/index.php',array(
+				'infolog list' => egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.index' )),
-				array(
-					'text' => '<a class="textSidebox" href="'.htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
-							'menuaction' => 'infolog.infolog_ui.edit',
-						))).'" target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=550,scrollbars=yes,status=yes\'); return false;">'.lang('Add').'</a>',
-					'no_lang' => true,
-				)
+				'Add' => "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
+					'menuaction' => 'infolog.infolog_ui.edit',
+				),false)."','_blank',750,410,'yes');",
 			);
 			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
 		}
@@ -100,9 +97,9 @@ class infolog_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
 		{
 			$file = array(
-				'Preferences'     => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
-				'Grant Access'    => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
+				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
+				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
+				'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
 			if ($location == 'preferences')
 			{
@@ -117,15 +114,15 @@ class infolog_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Site configuration' => $GLOBALS['egw']->link('/index.php',array(
+				'Site configuration' => egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.admin' )),
-				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
+				'Global Categories'  => egw::link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
-				'Custom fields, typ and status' => $GLOBALS['egw']->link('/index.php',array(
+				'Custom fields, typ and status' => egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_customfields.edit')),
-				'CSV-Import'         => $GLOBALS['egw']->link('/infolog/csv_import.php')
+				'CSV-Import'         => egw::link('/infolog/csv_import.php'),
 			);
 			if ($location == 'admin')
 			{
