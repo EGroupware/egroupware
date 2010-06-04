@@ -9,6 +9,21 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
     . Internal change
 ==========================
 
+4.1.1, released 2010-05-31
+- Fix undefined index warnings in maintenance scripts.
+- Fix bug in DirectLex for parsing elements with a single attribute
+  with entities.
+- Rewrite CSS output logic for font-family and url().  Thanks Mario
+  Heiderich <mario.heiderich@googlemail.com> for reporting and Takeshi
+  Terada <t-terada@violet.plala.or.jp> for suggesting the fix.
+- Emit an error for CollectErrors if a body is extracted
+- Fix bug where in background-position for center keyword handling.
+- Fix infinite loop when a wrapper element is inserted in a context
+  where it's not allowed.  Thanks Lars <lars@renoz.dk> for reporting.
+- Remove +x bit and shebang from index.php; only supported mode is to
+  explicitly call it with php.
+- Make test script less chatty when log_errors is on.
+
 4.1.0, released 2010-04-26
 ! Support proprietary height attribute on table element
 ! Support YouTube slideshows that contain /cp/ in their URL.
