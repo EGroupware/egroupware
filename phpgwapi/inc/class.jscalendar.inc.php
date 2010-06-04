@@ -181,12 +181,12 @@ function dateChanged(calendar) {
 // clicked you can use the dateClicked property of the calendar:
 // redirect to $url extended with a &date=YYYYMMDD
 '    if (calendar.dateClicked) {
- window.location = "'.$url.'&date=" + calendar.date.print("%Y%m%d");
+	egw_appWindow("calendar").location = "'.$url.'&date=" + calendar.date.print("%Y%m%d");
 }
 };
 
 function todayClicked(calendar) {
-	var parts = window.location.search.split("&");
+	var parts = egw_appWindow("calendar").location.search.split("&");
 	var newsearch = "";
 	var hasdate = false;
 
@@ -218,16 +218,16 @@ function todayClicked(calendar) {
 		newsearch += "date='.egw_time::to('now','Ymd').'";
 	}
 
-	window.location.search = newsearch;
+	egw_appWindow("calendar").location.search = newsearch;
 }
 
 '.($weekUrl ? '
 function weekClicked(calendar,weekstart) {
- window.location = "'.$weekUrl.'&date=" + weekstart.print("%Y%m%d");
+	egw_appWindow("calendar").location = "'.$weekUrl.'&date=" + weekstart.print("%Y%m%d");
 }
 ' : '').($monthUrl ? '
 function monthClicked(calendar,monthstart) {
- window.location = "'.$monthUrl.'&date=" + monthstart.print("%Y%m%d");
+	egw_appWindow("calendar").location = "'.$monthUrl.'&date=" + monthstart.print("%Y%m%d");
 }
 ' : '').'
 
