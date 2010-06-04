@@ -339,7 +339,7 @@
 			$this->t->set_block('displayMsg','message_attachement_row');
 			$this->t->set_block('displayMsg','previous_message_block');
 			$this->t->set_block('displayMsg','next_message_block');
-			$this->t->set_block('displayMsg','message_org');
+			//$this->t->set_block('displayMsg','message_org');
 
 			$this->t->egroupware_hack = False;
 
