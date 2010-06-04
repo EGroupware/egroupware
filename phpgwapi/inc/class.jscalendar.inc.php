@@ -5,9 +5,9 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  * @package api
  * @subpackage html
+ * @version $Id$
  */
 
 /**
@@ -64,10 +64,11 @@ class jscalendar
 	 */
 	function get_javascript()
 	{
+		$args = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'],array('lang'=>1,'dateformat'=>1));
 		return
 '<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-blue.css" title="blue" />
 <script type="text/javascript" src="'.$this->jscalendar_url.'/calendar.js"></script>
-<script type="text/javascript" src="'.$GLOBALS['egw']->link('/phpgwapi/inc/jscalendar-setup.php',$args).'"></script>
+<script type="text/javascript" src="'.egw::link('/phpgwapi/inc/jscalendar-setup.php',$args,false).'"></script>
 ';
 	}
 
@@ -161,7 +162,10 @@ Calendar.setup(
 	 */
 	function flat($url,$date=null,$weekUrl='',$weekTTip='',$monthUrl='',$monthTTip='',$id='calendar-container')
 	{
-		$javascript = $this->get_javascript();
+		if (strpos($GLOBALS['egw_info']['flags']['java_script'],'jscalendar') === false)
+		{
+			$javascript = $this->get_javascript();
+		}
 		if ($date)	// string if format YYYYmmdd or timestamp
 		{
 			$date = is_int($date) ? adodb_date('m/d/Y',$date) :
@@ -192,7 +196,7 @@ function todayClicked(calendar) {
 	{
 		var split = parts[i].split("=");
 		if (split[0] && split[0] == "date") {
-			split[1] = "'.date('Ymd').'";
+			split[1] = "'.egw_time::to('now','Ymd').'";
 			hasdate = true;
 		}
 		
@@ -211,7 +215,7 @@ function todayClicked(calendar) {
 			newsearch = "?";
 		else
 			newsearch += "&";
-		newsearch += "date='.date('Ymd').'";
+		newsearch += "date='.egw_time::to('now','Ymd').'";
 	}
 
 	window.location.search = newsearch;
