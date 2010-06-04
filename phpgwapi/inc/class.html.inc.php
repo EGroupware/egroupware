@@ -1292,8 +1292,6 @@ class html
 			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
 		}
 
-		$html = self::div("\n",'id="'.$tree.'"',$_divClass);
-
 		static $tree_initialised=false;
 		if (!$tree_initialised)
 		{
@@ -1301,7 +1299,9 @@ class html
 			$html .= "<script type='text/javascript' src='{$GLOBALS['egw_info']['server']['webserver_url']}/phpgwapi/js/dhtmlxtree/js/dhtmlXCommon.js'></script>\n";
 			$html .= "<script type='text/javascript' src='{$GLOBALS['egw_info']['server']['webserver_url']}/phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js'></script>\n";
 			$tree_initialised = true;
+			if (!$_folders) return $html;
 		}
+		$html = self::div("\n",'id="'.$tree.'"',$_divClass).$html;
 		$html .= "<script type='text/javascript'>\n";
 		$html .= "var $tree = new dhtmlXTreeObject('$tree','100%','100%',0);\n";
 		$html .= "$tree.setImagePath('$folderImageDir/dhtmlxtree/');\n";
