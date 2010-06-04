@@ -551,8 +551,16 @@ class calendar_ui
 			$vars = array_merge($link_vars,$data);
 
 			$icon = html::image('calendar',$icon,lang($title),"class=sideboxstar");  //to avoid jscadender from not displaying with pngfix
-			$link = $view == 'add' ? $this->add_link($icon) : html::a_href($icon,'/index.php',$vars);
-
+			if ($view == 'add')
+			{
+				$link = html::a_href($icon,'javascript:'.$this->popup(egw::link('/index.php',array(
+					'menuaction' => 'calendar.calendar_uiforms.edit',
+				),false)));
+			}
+			else
+			{
+				$link = html::a_href($icon,'/index.php',$vars);
+			}
 			$views .= '<td align="center">'.$link."</td>\n";
 		}
 		$views .= "</tr></table>\n";
@@ -668,7 +676,7 @@ class calendar_ui
 				$link_vars['menuaction'] = $menuaction;
 			}
 			unset($link_vars['date']);	// gets set in jscal
-			$link[$view] = $l = $GLOBALS['egw']->link('/index.php',$link_vars);
+			$link[$view] = $l = egw::link('/index.php',$link_vars);
 		}
 		$jscalendar = $GLOBALS['egw']->jscalendar->flat($link['day'],$this->date,
 			$link['week'],lang('show this week'),$link['month'],lang('show this month'));
