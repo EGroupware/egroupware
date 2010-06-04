@@ -166,20 +166,15 @@ class addressbook_hooks
 			'default'=> 'iso-8859-1',
 		);
 
-		$selectCharSet = array(
-			'utf-8'			=> 'UTF-8',
-			'iso-8859-1'	=> 'ISO-8859-1',
-		);
-
 		$settings['vcard_charset'] = array(
 			'type'   => 'select',
 			'label'  => 'Charset for the vCard export',
 			'name'   => 'vcard_charset',
-			'values' => $selectCharSet,
+			'values' => translation::get_installed_charsets(),
 			'help'   => 'Which charset should be used for the vCard export.',
 			'xmlrpc' => True,
 			'admin'  => false,
-			'default'=> 'utf-8',
+			'default'=> 'iso-8859-1',
 		);
 
 		if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
