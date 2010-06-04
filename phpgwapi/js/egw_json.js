@@ -86,7 +86,7 @@ egw_json_request.prototype.alertFunc = function(_message, _details)
 /* Internal function which handles the response from the server */
 egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRequest)
 {
-	if (data.response)
+	if (data && data.response)
 	{
 		var hasResponse = false;
 		for (var i = 0; i < data.response.length; i++)
