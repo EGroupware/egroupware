@@ -39,6 +39,15 @@ else if (document.layers)
 	is_ns4 = true;
 }
 
+/**
+ * Returns the window object of the current application 
+ * @param string _app is the name of the application which requests the window object
+ */
+function egw_appWindow(_app)
+{
+	return window;
+}
+
 function egw_set_checkbox_multiselect_enabled(_id, _enabled)
 {
 	//Retrieve the checkbox_multiselect base div
