@@ -234,7 +234,7 @@ else
 	   !isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 	   {
 		  $GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
-		  $GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=5'));
+		  egw::redirect_link('/login.php','cd=5');
 	   }
 		#if(!isset($_COOKIE['eGroupWareLoginTime']))
 		#{
@@ -280,7 +280,7 @@ else
 		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
 			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
-			$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'] . '/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
+			egw::redirect_link('/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
 		{
@@ -346,23 +346,25 @@ else
 			}
 
 			// Check for save passwd
-			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $GLOBALS['egw']->acl->check('changepassword', 1, 'preferences') && $unsave_msg = $GLOBALS['egw']->auth->crackcheck($passwd))
+			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $GLOBALS['egw']->acl->check('changepassword', 1, 'preferences') && 
+				($unsave_msg = $GLOBALS['egw']->auth->crackcheck($passwd)))
 			{
 				$GLOBALS['egw']->log->write(array('text'=>'D-message, User '. $login. ' authenticated with an unsave password','file' => __FILE__,'line'=>__LINE__));
-				$message = '<font color="red">'. lang('eGroupWare checked your password for saftyness. You have to change your password for the following reason:').'<br>';
-				$GLOBALS['egw']->redirect_link('/index.php', array('menuaction' => 'preferences.uipassword.change','message' => $message. $unsave_msg. '</font>'));
+				$message = lang('eGroupWare checked your password for safetyness. You have to change your password for the following reason:')."\n";
+				egw::redirect_link('/index.php', array(
+					'menuaction' => 'preferences.uipassword.change',
+					'message' => $message . $unsave_msg,
+					'cd' => 'yes',
+				));
 			}
 			else
 			{
-				$GLOBALS['egw']->redirect_link($forward,$extra_vars);
+				egw::redirect_link($forward,$extra_vars);
 			}
 		}
 	}
 	else
 	{
-		// !!! DONT CHANGE THESE LINES !!!
-		// If there is something wrong with this code TELL ME!
-		// Commenting out the code will not fix it. (jengo)
 		if(isset($_COOKIE['last_loginid']))
 		{
 			$accounts =& CreateObject('phpgwapi.accounts');
