@@ -950,6 +950,20 @@ abstract class egw_framework
 		self::$top_menu_extra[$id] = $entry;
 	}
 
+	/**
+	 * Call and return content of 'after_navbar' hook
+	 * 
+	 * @return string
+	 */
+	protected function _get_after_navbar()
+	{
+		ob_start();
+		$GLOBALS['egw']->hooks->process('after_navbar',null,true);
+		$content = ob_get_contents();
+		ob_end_clean();
+
+		return $content;
+	}
 }
 
 /**
