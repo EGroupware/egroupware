@@ -82,11 +82,11 @@
 			{
 				$link['referer'] = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 			}
-			$link = $GLOBALS['egw']->link('/index.php',$link);
+			$link = egw::link('/index.php',$link);
 
 			$cell['type'] = 'button';
 			$cell['size'] = 'manual-small';
-			$cell['onclick'] = "window.open('$link','manual','width=800,height=600,scrollbars=yes,resizable=yes'); return false;";
+			$cell['onclick'] = $GLOBALS['egw']->framework->open_manual_js($link).'; return false;';
 			if (!$cell['label']) $cell['label'] = 'Manual';
 			if (!$cell['help']) $cell['help'] = /*lang(*/'Open the online help.'/*)*/;
 			

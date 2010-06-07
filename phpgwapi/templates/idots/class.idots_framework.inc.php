@@ -746,4 +746,15 @@ class idots_framework extends egw_framework
 		}
 		return $this->tpl->parse('out',$block);
 	}
+	
+	/**
+	 * Return javascript (eg. for onClick) to open manual with given url
+	 * 
+	 * @param string $url
+	 * @return string
+	 */
+	function open_manual_js($url)
+	{
+		return "egw_openWindowCentered2('$url','manual',800,600,'yes')";
+	}
 }

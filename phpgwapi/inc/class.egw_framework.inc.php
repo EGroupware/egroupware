@@ -964,6 +964,13 @@ abstract class egw_framework
 
 		return $content;
 	}
+	
+	/**
+	 * Return javascript (eg. for onClick) to open manual with given url
+	 * 
+	 * @param string $url
+	 */
+	abstract function open_manual_js($url);
 }
 
 /**
