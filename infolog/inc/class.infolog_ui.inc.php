@@ -491,7 +491,7 @@ class infolog_ui
 		}
 		elseif ($own_referer === '')
 		{
-			$own_referer = $GLOBALS['egw']->common->get_referer();
+			$own_referer = common::get_referer();
 			if (strpos($own_referer,'menuaction=infolog.infolog_ui.edit') !== false)
 			{
 				$own_referer = $GLOBALS['egw']->session->appsession('own_session','infolog');
@@ -917,7 +917,7 @@ class infolog_ui
 						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
 							lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-								htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
+								htmlspecialchars(egw::link('/index.php',array(
 									'menuaction' => 'infolog.infolog_ui.edit',
 									'info_id'    => $content['info_id'],
 									'no_popup'   => $no_popup,
@@ -929,10 +929,7 @@ class infolog_ui
 					else
 					{
 						$content['msg'] = lang('InfoLog entry saved');
-						if ($referer !== false)
-						{
-							$content['js'] = "opener.location.href='".($link=$GLOBALS['egw']->link($referer,array('msg' => $content['msg'])))."';";
-						}
+						$content['js'] = "opener.location.search += (opener.location.search ? '&msg=' : '?msg=')+'{$content['msg']}';";
 					}
 					$content[$tabs] = $active_tab;
 					if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
@@ -995,22 +992,22 @@ class infolog_ui
 					);
 					if (!($content['msg'] = $this->delete($info_id,$referer,'edit'))) return;	// checks ACL first
 
-					$content['js'] = "opener.location.href='".$GLOBALS['egw']->link($referer,array('msg' => $content['msg']))."';";
+					$content['js'] = "opener.location.href='".egw::link($referer,array('msg' => $content['msg']))."';";
 				}
 				// called again after delete confirmation dialog
 				elseif ($button == 'deleted'  && $content['msg'])
 				{
-					$content['js'] = "opener.location.href='".$GLOBALS['egw']->link($referer,array('msg' => $content['msg']))."';";
+					$content['js'] = "opener.location.href='".egw::link($referer,array('msg' => $content['msg']))."';";
 				}
 				if ($button == 'save' || $button == 'cancel' || $button == 'delete' || $button == 'deleted')
 				{
 					if ($no_popup)
 					{
-						$GLOBALS['egw']->redirect_link($referer,array('msg' => $content['msg']));
+						egw::redirect_link($referer,array('msg' => $content['msg']));
 					}
 					$content['js'] .= 'window.close();';
 					echo '<html><body onload="'.$content['js'].'"></body></html>';
-					$GLOBALS['egw']->common->egw_exit();
+					common::egw_exit();
 				}
 				if ($content['js']) $content['js'] = '<script>'.$content['js'].'</script>';
 			}
@@ -1029,7 +1026,7 @@ class infolog_ui
 			$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 			$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
 			$ref=$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
-				$GLOBALS['egw']->common->get_referer('/index.php?menuaction=infolog.infolog_ui.index'));
+				common::get_referer('/index.php?menuaction=infolog.infolog_ui.index'));
 			$referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
 			$no_popup  = $_GET['no_popup'];
 			$print = (int) $_REQUEST['print'];
@@ -1100,14 +1097,14 @@ class infolog_ui
 				{
 					if ($no_popup)
 					{
-						$GLOBALS['egw']->common->egw_header();
+						common::egw_header();
 						parse_navbar();
 						echo '<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n";
-						$GLOBALS['egw']->common->egw_exit();
+						common::egw_exit();
 					}
 					$js = "alert('".lang('Permission denied')."'); window.close();";
 					echo '<html><body onload="'.$js.'"></body></html>';
-					$GLOBALS['egw']->common->egw_exit();
+					common::egw_exit();
 				}
 			}
 			$content['links'] = $content['link_to'] = array(
@@ -1333,7 +1330,7 @@ class infolog_ui
 		{
 			$icon = $this->icons[$cat][$id];
 		}
-		if ($icon && !is_readable($GLOBALS['egw']->common->get_image_dir() . '/' . $icon))
+		if ($icon && !is_readable(common::get_image_dir() . '/' . $icon))
 		{
 			$icon = False;
 		}
@@ -1407,11 +1404,11 @@ class infolog_ui
 		}
 		if($_POST['cancel'] || $_POST['save'])
 		{
-			$GLOBALS['egw']->redirect_link('/infolog/index.php');
+			egw::redirect_link('/infolog/index.php');
 		}
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Site configuration');
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 
 		$GLOBALS['egw']->template->set_file(array('info_admin_t' => 'admin.tpl'));
 		$GLOBALS['egw']->template->set_block('info_admin_t', 'admin_line');
@@ -1536,9 +1533,9 @@ class infolog_ui
 				strtotime($mailcontent['headers']['DATE'])
 			));
 		}
-		$GLOBALS['egw']->common->egw_header();
+		common::egw_header();
 		echo "<script> window.close(); alert('Error: no mail (Mailbox / UID) given!');</script>";
-		$GLOBALS['egw']->common->egw_exit();
+		common::egw_exit();
 		exit;
 	}
 
