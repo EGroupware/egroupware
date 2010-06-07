@@ -842,6 +842,10 @@ class Horde_SyncML_State {
 			case 'text/x-s4j-sifn':
 				$res['ContentFormat'] = 'b64';
 				break;
+			case 'text/vcard':
+				if (isset($res['ContentVersion']) &&  $res['ContentVersion'] == '2.1') {
+					$res['ContentType'] = 'text/x-vcard';
+				}
 		}
 		return $res;
 	}
@@ -976,10 +980,11 @@ class Horde_SyncML_State {
 				$cprops['UID']['NoTruncate'] = true;
 			}
 			$clientPrefs = array(
-				'ContentType'	=>	$ctype,
-				'ContentFormat'	=>	$cfrmt,
-				'mayFragment'	=>	1,
-				'Properties'	=>	$cprops,
+				'ContentType'		=>	$ctype,
+				'ContentVersion'	=>	$cvers,
+				'ContentFormat'		=>	$cfrmt,
+				'mayFragment'		=>	1,
+				'Properties'		=>	$cprops,
 				);
 			#Horde::logMessage('SyncML: sourceLocURI ' . $_sourceLocURI . " clientPrefs:\n"
 			#	. print_r($clientPrefs, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
