@@ -693,8 +693,13 @@ abstract class egw_framework
 	{
 		$java_script = '';
 
+		// allways load jquery (not -ui) and egw_json
+		$GLOBALS['egw']->js->validate_file('jquery','jquery');
+		$GLOBALS['egw']->js->validate_file('.','egw_json');
+
 		// always include javascript helper functions
 		$GLOBALS['egw']->js->validate_file('jsapi','jsapi');
+
 		// GLOBAL var to tell egroupware wether or not to enable the IE selectBox resize hack
 		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_ie_dropdownmenuhack'])
 		{
