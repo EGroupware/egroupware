@@ -671,9 +671,17 @@ class addressbook_so
 		{
 			$search = $param['search'];
 			$param['search'] = array();
-			foreach($this->columns_to_search as $col)
+			if($this->somain instanceof addressbook_sql)
 			{
-				if ($col != 'contact_value') $param['search'][$col] = $search;	// we dont search the customfields
+				// Keep the string, let the parent deal with it
+				$param['search'] = $search;
+			}
+			else
+			{
+				foreach($this->columns_to_search as $col)
+				{
+					if ($col != 'contact_value') $param['search'][$col] = $search;	// we dont search the customfields
+				}
 			}
 		}
 		if (is_array($param['search']) && count($param['search']))
