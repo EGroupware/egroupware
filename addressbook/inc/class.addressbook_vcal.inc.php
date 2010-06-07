@@ -187,7 +187,7 @@ class addressbook_vcal extends addressbook_bo
     	}
     	if ($contact['owner'] != $this->user)
     	{
-    		unset($contact['private']);	// only my own contacts may be private!
+    		$contact['private'] = 0;	// foreign contacts are never private!
     	}
     	if ($this->log)
 		{
