@@ -449,11 +449,11 @@ abstract class egw_framework
 			if (($popup = egw_link::is_popup($app,'add')))
 			{
 				list($w,$h) = explode('x',$popup);
-				$action = "window.open('$link','_blank','width='+$w+',height='+$h+',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');";
+				$action = "egw_openWindowCentered2('$link','_blank',$w,$h,'yes','$app');";
 			}
 			else
 			{
-				$action = "location.href = '$link';";
+				$action = "egw_link_handler('$link','$app');";
 			}
 			$options[$action] = $label;
 		}
