@@ -84,7 +84,7 @@ if(@file_exists($tpl_info))
 	}
 }
 
-if($app == 'home' && !$api_requested && !$windowed)
+if($app == 'home' && !$api_requested && !($windowed && $_GET['cd'] == 'yes'))
 {
 	if ($GLOBALS['egw_info']['server']['force_default_app'] && $GLOBALS['egw_info']['server']['force_default_app'] != 'user_choice')
 	{
