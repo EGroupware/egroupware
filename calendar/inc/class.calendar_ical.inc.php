@@ -1984,6 +1984,8 @@ class calendar_ical extends calendar_boupdate
 					case 'e51':
 					case 'e90':
 					case 'e71':
+					case 'e72-1':
+					case 'e75-1':
 					case 'e66':
 					case '6120c':
 					case 'nokia 6131':
