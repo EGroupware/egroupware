@@ -63,8 +63,8 @@
       <option value="first-dot-last"{selected_email_address_format_first-dot-last}>{lang_Firstname}.{lang_Lastname}@domain.com</option>
       <option value="first-last"{selected_email_address_format_first-last}>{lang_Firstname}{lang_Lastname}@domain.com</option>
       <option value="first-underscore-last"{selected_email_address_format_first-underscore-last}>{lang_Firstname}_{lang_Lastname}@domain.com</option>
-      <option value="initial-last"{selected_email_address_format_inital-last}>{lang_Initial}{lang_Lastname}@domain.com</option>
-      <option value="initial-dot-last"{selected_email_address_format_inital-dot-last}>{lang_Initial}.{lang_Lastname}@domain.com</option>
+      <option value="initial-last"{selected_email_address_format_initial-last}>{lang_Initial}{lang_Lastname}@domain.com</option>
+      <option value="initial-dot-last"{selected_email_address_format_initial-dot-last}>{lang_Initial}.{lang_Lastname}@domain.com</option>
       <option value="last-dot-first"{selected_email_address_format_last-dot-first}>{lang_Lastname}.{lang_Firstname}@domain.com</option>
       <option value="last-first"{selected_email_address_format_last-first}>{lang_Lastname}{lang_Firstname}@domain.com</option>
       <option value="last-underscore-first"{selected_email_address_format_last-underscore-first}>{lang_Lastname}_{lang_Firstname}@domain.com</option>
