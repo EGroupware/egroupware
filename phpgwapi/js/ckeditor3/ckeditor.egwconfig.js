@@ -4,7 +4,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbar_egw_simple = [
 		['Bold','Italic','Underline'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','Outdent','Indent','Undo','Redo'],
+		['BulletedList','NumberedList','Outdent','Indent','Undo','Redo'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Maximize'],
 		'/',
@@ -16,7 +16,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbar_egw_simple_spellcheck = [
 		['Bold','Italic','Underline'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','Outdent','Indent','Undo','Redo'],
+		['BulletedList','NumberedList','Outdent','Indent','Undo','Redo'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Maximize','SpellChecker'],
 		'/',
@@ -28,7 +28,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbar_egw_simple_aspell = [
 		['Bold','Italic','Underline'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','Outdent','Indent','Undo','Redo'],
+		['BulletedList','NumberedList','Outdent','Indent','Undo','Redo'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Maximize','SpellCheck'],
 		'/',
@@ -47,7 +47,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbar_egw_extended = [
 		['Bold','Italic','Underline'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','Outdent','Indent','Undo','Redo'],
+		['BulletedList','NumberedList','Outdent','Indent','Undo','Redo'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Link','Unlink','Anchor'],
 		['Find','Replace'],
@@ -61,7 +61,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbar_egw_extended_spellcheck = [
 		['Bold','Italic','Underline'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','Outdent','Indent','Undo','Redo'],
+		['BulletedList','NumberedList','Outdent','Indent','Undo','Redo'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Link','Unlink','Anchor'],
 		['Find','Replace'],
@@ -75,7 +75,7 @@ CKEDITOR.editorConfig = function( config )
 	config.toolbar_egw_extended_aspell = [
 		['Bold','Italic','Underline'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','Outdent','Indent','Undo','Redo'],
+		['BulletedList','NumberedList','Outdent','Indent','Undo','Redo'],
 		['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
 		['Link','Unlink','Anchor'],
 		['Find','Replace'],
@@ -93,7 +93,7 @@ CKEDITOR.editorConfig = function( config )
 		'/',
 		['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','-','Outdent','Indent'],
+		['BulletedList','NumberedList','-','Outdent','Indent'],
 		['Link','Unlink','Anchor'],
 		['Maximize','Image',/*'Flash',*/'Table','HorizontalRule',/*'Smiley',*/'SpecialChar','PageBreak'], //,'UniversalKey'
 		'/',
@@ -109,7 +109,7 @@ CKEDITOR.editorConfig = function( config )
 		'/',
 		['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','-','Outdent','Indent'],
+		['BulletedList','NumberedList','-','Outdent','Indent'],
 		['Link','Unlink','Anchor'],
 		['Maximize','Image',/*'Flash',*/'Table','HorizontalRule',/*'Smiley',*/'SpecialChar','PageBreak'], //,'UniversalKey'
 		'/',
@@ -125,7 +125,7 @@ CKEDITOR.editorConfig = function( config )
 		'/',
 		['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
 		['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-		['BulletList','NumberedList','-','Outdent','Indent'],
+		['BulletedList','NumberedList','-','Outdent','Indent'],
 		['Link','Unlink','Anchor'],
 		['Maximize','Image',/*'Flash',*/'Table','HorizontalRule',/*'Smiley',*/'SpecialChar','PageBreak'], //,'UniversalKey'
 		'/',

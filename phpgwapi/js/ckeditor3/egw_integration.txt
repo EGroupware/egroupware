@@ -35,3 +35,5 @@ Index: phpgwapi/js/ckeditor3/ckeditor_php5.php
  to allow only configured aspell, tmp dirs and language settings
 -removed other than php spellchecker pages from phpgwapi/js/ckeditor3/plugins/aspell/spellerpages/server-scripts/
 -added toolbar options to reflect the use/change of calls of SpellCheck(er) via toolbar button
+--------------- step 4 --------------------------------------
+-changed BulletList to BulletedList in ckeditor.egwconfig.js
