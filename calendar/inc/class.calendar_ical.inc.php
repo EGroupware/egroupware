@@ -1995,8 +1995,17 @@ class calendar_ical extends calendar_boupdate
 						$this->supportedFields = $defaultFields['s60'];
 						break;
 					default:
-						error_log("Unknown Nokia phone '$_productName', assuming E61");
-						$this->supportedFields = $defaultFields['minimal'];
+						if ($this->productName[0] == 'e')
+						{
+							$model = 'E90';
+							$this->supportedFields = $defaultFields['s60'];
+						}
+						else
+						{
+							$model = 'E61';
+							$this->supportedFields = $defaultFields['minimal'];
+						}
+						error_log("Unknown Nokia phone '$_productName', assuming same as '$model'");
 						break;
 				}
 				break;
