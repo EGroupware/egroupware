@@ -9,7 +9,7 @@ var headerDIVHeight;
 var bodyDIVTop;
 
 function sendNotify (uid) {
-	ret = confirm(lang_sendnotify)
+	ret = confirm(lang_sendnotify);
 	xajax_doXMLHTTP("felamimail.ajaxfelamimail.sendNotify",uid,ret);	
 }
 

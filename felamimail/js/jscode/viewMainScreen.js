@@ -2,6 +2,11 @@ function setStatusMessage(_message) {
 	document.getElementById('messageCounter').innerHTML = '<table cellpadding="0" cellspacing="0"><tr><td><img src="'+ activityImagePath +'"></td><td>&nbsp;' + _message + '</td></tr></table>';
 }
 
+function sendNotifyMS (uid) {
+	ret = confirm(lang_sendnotify);
+	xajax_doXMLHTTP("felamimail.ajaxfelamimail.sendNotify",uid,ret);	
+}
+
 function changeSorting(_sort, _aNode) {
 
 	resetMessageSelect();

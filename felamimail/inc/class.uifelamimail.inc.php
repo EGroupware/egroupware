@@ -990,6 +990,7 @@
 			$this->t->set_var('lang_jumping_to_start',lang('jumping to start'));
 			$this->t->set_var('lang_jumping_to_end',lang('jumping to end'));
 			$this->t->set_var('lang_updating_view',lang('updating view'));
+			$this->t->set_var('lang_sendnotify',lang('The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?'));
 		}
 	}
 ?>

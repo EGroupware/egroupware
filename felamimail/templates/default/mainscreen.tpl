@@ -27,6 +27,7 @@ var lang_jumping_to_start 	= '{lang_jumping_to_start}';
 var lang_updating_view 		= '{lang_updating_view}';
 var lang_mark_all_messages 	= '{lang_mark_all_messages}';
 var lang_confirm_all_messages = '{lang_confirm_all_messages}';
+var lang_sendnotify = "{lang_sendnotify}";
 
 var MessageBuffer;
 // global vars to store server and active folder info
