@@ -157,6 +157,7 @@ show hidden files	filemanager	en	Show hidden files
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side box menu?
 size	filemanager	en	Size
 start search	filemanager	en	start search
+startfolder	filemanager	en	Startfolder
 superuser	filemanager	en	Superuser
 symlink to %1 created.	filemanager	en	Symlink to %1 created.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal Folder. The default is used, if you leave this empty, the path does not exist or you lack the necessary access permissions.
