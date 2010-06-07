@@ -1326,7 +1326,11 @@ Calendar.prototype.show = function () {
 		Calendar.addEvent(document, "keypress", Calendar._keyEvent);
 		Calendar.addEvent(document, "mousedown", Calendar._checkCalendar);
 	}
-	this.hideShowCovered();
+
+	if (this.isPopup && this.is_ie)
+	{
+		this.hideShowCovered();
+	}
 
 	if (Calendar.is_ie5_mac && !this.isPopup)
 		this.refresh();		// else the layout is broken
@@ -1344,7 +1348,11 @@ Calendar.prototype.hide = function () {
 	}
 	this.element.style.display = "none";
 	this.hidden = true;
-	this.hideShowCovered();
+
+	if (this.isPopup && this.is_ie)
+	{
+		this.hideShowCovered();
+	}
 };
 
 /**
