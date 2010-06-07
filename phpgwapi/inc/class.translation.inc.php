@@ -985,17 +985,35 @@ class translation
 		//error_log(__FILE__.','.__METHOD__.':'."called with $_string and CHARSET $displayCharset");
 		if(function_exists(imap_mime_header_decode))
 		{
+			// some characterreplacements, as they fail to translate
+			$sar = array(
+				'@(\x84|\x93|\x94)@',
+				'@(\x96|\x97)@',
+				'@(\x91|\x92)@',
+				'@(\x85)@',
+				'@(\x86)@',
+			);
+			$rar = array(
+				'"',
+				'-',
+				'\'',
+				'...',
+				'+',
+			);
+
 			$newString = '';
 
 			$string = preg_replace('/\?=\s+=\?/', '?= =?', $_string);
 
 			$elements=imap_mime_header_decode($string);
+
 			$convertAtEnd = false;
 			foreach((array)$elements as $element)
 			{
 				if ($element->charset == 'default') $element->charset = 'iso-8859-1';
 				if ($element->charset != 'x-unknown')
 				{
+					if( strtoupper($element->charset) != 'UTF-8') $element->text = preg_replace($sar,$rar,$element->text);
 					$newString .= self::convert($element->text,$element->charset);
 				}
 				else
