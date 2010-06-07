@@ -652,7 +652,7 @@ class calendar_uiforms extends calendar_ui
 				$offset = DAY_s * $content['new_alarm']['days'] + HOUR_s * $content['new_alarm']['hours'] + 60 * $content['new_alarm']['mins'];
 				$alarm = array(
 					'offset' => $offset,
-					'time'   => ($content['actual_date'] ? $content['actual_date'] : $content['start']) - $offset,
+					'time'   => $content['start'] - $offset,
 					'all'    => !$content['new_alarm']['owner'],
 					'owner'  => $content['new_alarm']['owner'] ? $content['new_alarm']['owner'] : $this->user,
 				);
@@ -1094,24 +1094,36 @@ function replace_eTemplate_onsubmit()
 		{
 			// makes keys of the alarm-array starting with 1
 			$content['alarm'] = array(false);
-			foreach(array_values($event['alarm']) as $id => $alarm)
+			if (!$content['edit_single'])
 			{
-				if (!$alarm['all'] && !$this->bo->check_perms(EGW_ACL_READ,0,$alarm['owner']))
+				foreach(array_values($event['alarm']) as $id => $alarm)
 				{
-					continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
+					if (!$alarm['all'] && !$this->bo->check_perms(EGW_ACL_READ,0,$alarm['owner']))
+					{
+						continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
+					}
+					$alarm['all'] = (int) $alarm['all'];
+					$days = (int) ($alarm['offset'] / DAY_s);
+					$hours = (int) (($alarm['offset'] % DAY_s) / HOUR_s);
+					$minutes = (int) (($alarm['offset'] % HOUR_s) / 60);
+					$label = array();
+					if ($days) $label[] = $days.' '.lang('days');
+					if ($hours) $label[] = $hours.' '.lang('hours');
+					if ($minutes) $label[] = $minutes.' '.lang('Minutes');
+					$alarm['offset'] = implode(', ',$label);
+					$content['alarm'][] = $alarm;
+					
+					$readonlys['delete_alarm['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
 				}
-				$alarm['all'] = (int) $alarm['all'];
-				$days = (int) ($alarm['offset'] / DAY_s);
-				$hours = (int) (($alarm['offset'] % DAY_s) / HOUR_s);
-				$minutes = (int) (($alarm['offset'] % HOUR_s) / 60);
-				$label = array();
-				if ($days) $label[] = $days.' '.lang('days');
-				if ($hours) $label[] = $hours.' '.lang('hours');
-				if ($minutes) $label[] = $minutes.' '.lang('Minutes');
-				$alarm['offset'] = implode(', ',$label);
-				$content['alarm'][] = $alarm;
-
-				$readonlys['delete_alarm['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
+			}
+			else
+			{
+				// disable the alarm tab
+				$readonlys['button[add_alarm]'] = true;
+				$readonlys['new_alarm[days]'] = true;
+				$readonlys['new_alarm[hours]'] = true;
+				$readonlys['new_alarm[mins]'] = true;
+				$readonlys['new_alarm[owner]'] = true;
 			}
 			if (count($content['alarm']) == 1)
 			{

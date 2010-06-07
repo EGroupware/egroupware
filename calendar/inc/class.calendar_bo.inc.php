@@ -67,6 +67,11 @@ class calendar_bo
 	var $debug=false;
 
 	/**
+	 * @var int $now timestamp in server-time
+	 */
+	var $now;
+	
+	/**
 	 * @var int $now_su timestamp of actual user-time
 	 */
 	var $now_su;
@@ -189,7 +194,8 @@ class calendar_bo
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
 
-		$this->now_su = egw_time::to('now','ts');
+		$this->now = time();
+		$this->now_su = egw_time::server2user($this->now,'ts');
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 

@@ -1537,10 +1537,10 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param int $cal_id Id of the calendar-entry
 	 * @param array $alarm array with fields: text, owner, enabled, ..
-	 * @param timestamp $now_su=0 timestamp for modification of related event
+	 * @param timestamp $now=0 timestamp for modification of related event
 	 * @return string id of the alarm
 	 */
-	function save_alarm($cal_id, $alarm, $now_su = 0)
+	function save_alarm($cal_id, $alarm, $now=0)
 	{
 		//echo "<p>save_alarm(cal_id=$cal_id, alarm="; print_r($alarm); echo ")</p>\n";
 		if (!($id = $alarm['id']))
@@ -1566,8 +1566,7 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 
 		// update the modification information of the related event
-		$datetime = $GLOBALS['egw']->datetime;
-		$now = ($now_su ? $now_su : time() + $datetime->this->tz_offset);
+		if (!$now) $now = time();
 		$modifier = $GLOBALS['egw_info']['user']['account_id'];
 		$this->db->update($this->cal_table, array('cal_modified' => $now, 'cal_modifier' => $modifier),
 			array('cal_id' => $cal_id), __LINE__, __FILE__, 'calendar');
@@ -1596,17 +1595,16 @@ ORDER BY cal_user_type, cal_usre_id
 	 * delete one alarms identified by its id
 	 *
 	 * @param string $id alarm-id is a string of 'cal:'.$cal_id.':'.$alarm_nr, it is used as the job-id too
-	 * @param timestamp $now_su=0 timestamp for modification of related event
+	 * @param timestamp $now=0 timestamp for modification of related event
 	 * @return int number of alarms deleted
 	 */
-	function delete_alarm($id, $now_su = 0)
+	function delete_alarm($id, $now=0)
 	{
 		// update the modification information of the related event
 		list(,$cal_id) = explode(':',$id);
 		if ($cal_id)
 		{
-			$datetime = $GLOBALS['egw']->datetime;
-			$now = ($now_su ? $now_su : time() + $datetime->this->tz_offset);
+			if (!$now) $now = time();
 			$modifier = $GLOBALS['egw_info']['user']['account_id'];
 			$this->db->update($this->cal_table, array('cal_modified' => $now, 'cal_modifier' => $modifier),
 				array('cal_id' => $cal_id), __LINE__, __FILE__, 'calendar');
