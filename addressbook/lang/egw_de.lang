@@ -395,7 +395,7 @@ this module displays block from a adddressbook group.	addressbook	de	Dieses Modu
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch vorhanden.
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch vorhanden.
 timezone	addressbook	de	Zeitzone
-title	addressbook	de	Title
+title	addressbook	de	Titel
 to many might exceed your execution-time-limit	addressbook	de	Zu viele können Ihre Laufzeitbeschränkung überschreiten
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
