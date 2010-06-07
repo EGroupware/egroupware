@@ -185,6 +185,10 @@ class addressbook_vcal extends addressbook_bo
 				}
     		}
     	}
+    	if ($contact['owner'] != $this->user)
+    	{
+    		unset($contact['private']);	// only my own contacts may be private!
+    	}
     	if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
