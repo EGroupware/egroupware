@@ -859,6 +859,92 @@ abstract class egw_framework
 
 		return $list;
 	}
+
+	/**
+	* Compile entries for topmenu:
+	* - regular items: links
+	* - info items
+	*
+	* @param array $vars
+	* @param array $apps
+	*/
+	function topmenu(array $vars,array $apps)
+	{
+		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
+		{
+			$this->_add_topmenu_item($apps['home']);
+		}
+
+		if($GLOBALS['egw_info']['user']['apps']['preferences'])
+		{
+			$this->_add_topmenu_item($apps['preferences']);
+		}
+
+		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
+		{
+			$this->_add_topmenu_item($apps['manual']);
+		}
+
+		$GLOBALS['egw']->hooks->process('topmenu_info',array(),true);
+		// Add extra items added by hooks
+		foreach(self::$top_menu_extra as $extra_item) {
+			$this->_add_topmenu_item($extra_item);
+		}
+
+		$this->_add_topmenu_item($apps['logout']);
+
+		if($GLOBALS['egw_info']['user']['apps']['notifications'])
+		{
+			$this->_add_topmenu_info_item(self::_get_notification_bell());
+		}
+		$this->_add_topmenu_info_item($vars['user_info']);
+		$this->_add_topmenu_info_item($vars['current_users']);
+		$this->_add_topmenu_info_item($vars['quick_add']);
+	}
+
+	/**
+	* Add menu items to the topmenu template class to be displayed
+	*
+	* @param array $app application data
+	* @param mixed $alt_label string with alternative menu item label default value = null
+	* @param string $urlextra string with alternate additional code inside <a>-tag
+	* @access protected
+	* @return void
+	*/
+	abstract function _add_topmenu_item(array $app_data,$alt_label=null);
+
+	/**
+	* Add info items to the topmenu template class to be displayed
+	*
+	* @param string $content html of item
+	* @access protected
+	* @return void
+	*/
+	abstract function _add_topmenu_info_item($content);
+
+	static $top_menu_extra;
+
+	/**
+	* Called by hooks to add an entry in the topmenu location.
+	* Extra entries will be added just before Logout.
+	*
+	* @param string $id unique element id
+	* @param string $url Address for the entry to link to
+	* @param string $title Text displayed for the entry
+	* @param string $target Optional, so the entry can open in a new page or popup
+	* @access public
+	* @return void
+	*/
+	public static function add_topmenu_item($id,$url,$title,$target = '')
+	{
+		$entry['name'] = $id;
+		$entry['url'] = $url;
+		$entry['title'] = $title;
+		$entry['target'] = $target;
+
+		self::$top_menu_extra[$id] = $entry;
+	}
+
 }
 
 /**
