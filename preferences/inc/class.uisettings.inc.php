@@ -61,7 +61,13 @@
 		function index()
 		{
 			// make preferences called via sidebox menu of an app, to behave like a part of that app
-			$referer = $GLOBALS['egw']->common->get_referer('/preferences/index.php');
+			$referer = common::get_referer('/preferences/index.php');
+			// for framed templates, use the index page to return, instead of the referer
+			if (strpos($referer,'cd=yes') !== false)
+			{
+				$referer = substr(egw_framework::index($_GET['appname']),
+					strlen($GLOBALS['egw_info']['server']['webserver_url']));
+			}
 			if (!preg_match('/(preferences.php|menuaction=preferences.uisettings.index)+/i',$referer))
 			{
 				$this->bo->session_data['referer'] = $referer;
@@ -73,7 +79,7 @@
 			}
 			if($_POST['cancel'])
 			{
-				$GLOBALS['egw']->redirect_link($this->bo->session_data['referer']);
+				egw::redirect_link($this->bo->session_data['referer']);
 			}
 			if (substr($_SERVER['PHP_SELF'],-15) == 'preferences.php')
 			{
@@ -98,7 +104,7 @@
 			$forced  = get_var('forced',Array('POST'));
 			$default = get_var('default',Array('POST'));
 
-			$this->t =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('preferences'));
+			$this->t =& CreateObject('phpgwapi.Template',common::get_tpl_dir('preferences'));
 			$this->t->set_file(array(
 				'preferences' => 'preferences.tpl'
 			));
@@ -288,9 +294,9 @@
 			}
 
 			$GLOBALS['egw_info']['flags']['app_header'] = ($this->is_admin() && (int) $_GET['account_id'] ?
-				$GLOBALS['egw']->common->grab_owner_name((int) $_GET['account_id']).': ' : '').($_GET['appname'] == 'preferences' ?
+				common::grab_owner_name((int) $_GET['account_id']).': ' : '').($_GET['appname'] == 'preferences' ?
 				lang('Common preferences') : lang('%1 - Preferences',$GLOBALS['egw_info']['apps'][$_GET['appname']]['title']));
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 			echo parse_navbar();
 
 			if(count($this->notifies))	// there have been notifies in the hook, we need to save in the session
@@ -307,7 +313,7 @@
 						lang('Common preferences')."</p>\n";
 				}
 				$tabs[] = array(
-					'label' => (int) $_GET['account_id'] ? $GLOBALS['egw']->common->grab_owner_name($_GET['account_id']) : lang('Your preferences'),
+					'label' => (int) $_GET['account_id'] ? common::grab_owner_name($_GET['account_id']) : lang('Your preferences'),
 					'link'  => $GLOBALS['egw']->link($pref_link,$link_params+array('type'=>'user')),
 				);
 				$tabs[] = array(
@@ -325,7 +331,7 @@
 					case 'default': $selected = 1; break;
 					case 'forced':  $selected = 2; break;
 				}
-				$this->t->set_var('tabs',$GLOBALS['egw']->common->create_tabs($tabs,$selected));
+				$this->t->set_var('tabs',common::create_tabs($tabs,$selected));
 			}
 			$this->t->set_var('lang_save', lang('save'));
 			$this->t->set_var('lang_apply', lang('apply'));
@@ -346,7 +352,7 @@
 			}
 			//echo '<pre style="text-align: left;">'; print_r($GLOBALS['egw']->preferences->data); echo "</pre>\n";
 
-			$GLOBALS['egw']->common->egw_footer();
+			common::egw_footer();
 		}
 
 		/* Make things a little easier to follow */
