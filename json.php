@@ -47,7 +47,7 @@ function ajax_exception_handler(Exception $e)
 	{
 		$message .= "\n\n".$e->getTraceAsString();
 	}
-	$response->addAlert($message);
+	$response->alert($message);
 	$response->printOutput();
 
 	if (is_object($GLOBALS['egw']))
