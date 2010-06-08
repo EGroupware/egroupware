@@ -753,7 +753,7 @@ function load_cal(url,id) {
 </script>
 ".
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
-					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '100%' : '165px').';"'.
+					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '100%' : '87%').';"'.
 					' title="'.lang('select a %1',lang('user')).'" onchange="load_cal(\''.
 					egw::link('/index.php',array(
 						'menuaction' => $this->view_menuaction,
