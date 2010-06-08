@@ -424,6 +424,7 @@ class calendar_uiforms extends calendar_ui
 			'template'      => $content['template'],
 		);
 		$noerror=true;
+		//error_log(__METHOD__.$button.'#'.array2string($content['edit_single']).'#');
 		switch((string)$button)
 		{
 		case 'exception':	// create an exception in a recuring event
@@ -604,7 +605,7 @@ class calendar_uiforms extends calendar_ui
 		case 'delete_exceptions':		// series and user selected to delete the exceptions too
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
-				if ($content['reference'] == 0 && !$content['edit_single'])
+				if ($content['reference'] == 0 && !$content['edit_single'] && $button != 'delete')
 				{
 					$msg = lang('Series deleted');
 					$delete_exceptions = $button == 'delete_exceptions';
