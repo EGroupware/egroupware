@@ -1066,13 +1066,12 @@ ORDER BY cal_user_type, cal_usre_id
 				}
 			}
 		}
-		// updating or saving the alarms, new alarms have a temporary numeric id!
-		// ToDo: recuring events !!!
+		// updating or saving the alarms; new alarms have a temporary numeric id!
 		if (is_array($event['alarm']))
 		{
 			foreach ($event['alarm'] as $id => $alarm)
 			{
-				if (is_numeric($id)) unset($alarm['id']);	// unset the temporary id, to add the alarm
+				if (is_numeric($id)) unset($alarm['id']);	// unset the temporary id to add the alarm
 
 				if(!isset($alarm['offset']))
 				{
@@ -1083,12 +1082,18 @@ ORDER BY cal_user_type, cal_usre_id
 					$alarm['time'] = $event['cal_start'] - $alarm['offset'];
 				}
 
-				//pgoerzen: don't add an alarm if it is before the current date.
-				/*if ($event['recur_type'] && ($tmp_event = $this->read($eventID, time() + $alarm['offset'])))
+				//pgoerzen: don't add an alarm in the past
+				if ($event['recur_type'] != MCAL_RECUR_NONE)
 				{
-					$alarm['time'] = $tmp_event['cal_start'] - $alarm['offset'];
-				} */
-
+					$where = array('cal_id'	=>	$cal_id);
+					$where[] = 'cal_start >= ' . (int)(time() + $alarm['offset']);
+					if (($next_occurrence = (int) $this->db->select($this->dates_table,'MIN(cal_start)',$where,__LINE__,__FILE__,false,'','calendar')->fetchColumn())
+						&& ($time = $next_occurrence - $alarm['offset']) > $alarm['time'])
+					{
+						$alarm['time'] = $time;
+					}
+					else continue;
+				}
 				$this->save_alarm($cal_id,$alarm);
 			}
 		}

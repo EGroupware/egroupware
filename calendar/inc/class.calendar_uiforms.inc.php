@@ -216,6 +216,9 @@ class calendar_uiforms extends calendar_ui
 				{
 					$msg = lang('Alarm deleted');
 					unset($content['alarm'][$id]);
+					$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
+						'msg' => $msg,
+					))).'\';';
 				}
 				else
 				{
@@ -393,7 +396,7 @@ class calendar_uiforms extends calendar_ui
 											$msg = lang('Status changed');
 										}
 									}
-									if (!$preserv['no_popup'])
+									if (!$content['no_popup'])
 									{
 										$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
 											'msg' => $msg,
@@ -424,7 +427,9 @@ class calendar_uiforms extends calendar_ui
 			'template'      => $content['template'],
 		);
 		$noerror=true;
+		
 		//error_log(__METHOD__.$button.'#'.array2string($content['edit_single']).'#');
+		
 		switch((string)$button)
 		{
 		case 'exception':	// create an exception in a recuring event
@@ -605,7 +610,7 @@ class calendar_uiforms extends calendar_ui
 		case 'delete_exceptions':		// series and user selected to delete the exceptions too
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
-				if ($content['reference'] == 0 && !$content['edit_single'] && $button != 'delete')
+				if ($event['recur_type'] != MCAL_RECUR_NONE && $content['reference'] == 0 && !$content['edit_single'])
 				{
 					$msg = lang('Series deleted');
 					$delete_exceptions = $button == 'delete_exceptions';
@@ -648,12 +653,20 @@ class calendar_uiforms extends calendar_ui
 			break;
 
 		case 'add_alarm':
+			$time = ($content['actual_date'] ? $content['actual_date'] : $content['start']);
+			if ($event['recur_type'] != MCAL_RECUR_NONE &&
+				($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su, true)) &&
+				$time < $next_occurrence['start'])
+			{
+				$time = $next_occurrence['start'];
+			}
 			if ($this->bo->check_perms(EGW_ACL_EDIT,!$content['new_alarm']['owner'] ? $event : 0,$content['new_alarm']['owner']))
 			{
 				$offset = DAY_s * $content['new_alarm']['days'] + HOUR_s * $content['new_alarm']['hours'] + 60 * $content['new_alarm']['mins'];
 				$alarm = array(
 					'offset' => $offset,
-					'time'   => $content['start'] - $offset,
+					//'time'   => $content['start'] - $offset,
+					'time'   => $time - $offset,
 					'all'    => !$content['new_alarm']['owner'],
 					'owner'  => $content['new_alarm']['owner'] ? $content['new_alarm']['owner'] : $this->user,
 				);
@@ -669,6 +682,9 @@ class calendar_uiforms extends calendar_ui
 						$event['alarm'][$alarm_id] = $alarm;
 
 						$msg = lang('Alarm added');
+						$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
+							'msg' => $msg,
+						))).'\';';
 					}
 					else
 					{
@@ -875,7 +891,7 @@ class calendar_uiforms extends calendar_ui
 			else
 			{
 				$preserv['actual_date'] = $event['start'];		// remember the date clicked
-				if ($event['recur_type'] != MCAL_RECUR_NONE && $_GET['exception'])
+				if ($event['recur_type'] != MCAL_RECUR_NONE)
 				{
 					if (empty($event['whole_day']))
 					{
@@ -889,7 +905,14 @@ class calendar_uiforms extends calendar_ui
 					}
 					$event = $this->bo->read($cal_id, $date, true);
 					$preserv['actual_date'] = $event['start'];		// remember the date clicked
-					$msg = $this->_create_exception($event,$preserv);
+					if ($_GET['exception'])
+					{
+						$msg = $this->_create_exception($event,$preserv);
+					}
+					else
+					{
+						$event = $this->bo->read($cal_id, null, true);
+					}
 				}
 			}
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
