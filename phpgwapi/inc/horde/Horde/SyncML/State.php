@@ -843,8 +843,15 @@ class Horde_SyncML_State {
 				$res['ContentFormat'] = 'b64';
 				break;
 			case 'text/vcard':
-				if (isset($res['ContentVersion']) &&  $res['ContentVersion'] == '2.1') {
+				if ($manufacturer == 'nokia' ||
+					isset($res['ContentVersion']) &&  $res['ContentVersion'] == '2.1') {
 					$res['ContentType'] = 'text/x-vcard';
+				}
+				break;
+			case 'text/calendar':
+				if ($manufacturer == 'nokia' ||
+					isset($res['ContentVersion']) &&  $res['ContentVersion'] == '1.0') {
+					$res['ContentType'] = 'text/x-vcalendar';
 				}
 		}
 		return $res;
