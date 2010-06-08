@@ -219,7 +219,7 @@ class about
 	function _getParsedTemplateInfo($info)
 	{
 		// define the return array
-		$info['image'] = file_exists(EGW_SERVER_ROOT.'/'.$info['icon']) ? '/'.$info['icon'] : common::image('thisdoesnotexist',array('navbar','nonav'));
+		$info['image'] = file_exists(EGW_SERVER_ROOT.'/'.$info['icon']) ? $GLOBALS['egw_info']['server']['webserver_url'].'/'.$info['icon'] : common::image('thisdoesnotexist',array('navbar','nonav'));
 		$info['author'] = $this->_getHtmlPersonalInfo($info, 'author');
 		$info['maintainer'] = $this->_getHtmlPersonalInfo($info, 'maintainer');
 
