@@ -911,6 +911,7 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 		$etpl = new etemplate();
+		$onload = '';
 		if (!$etpl->read($preserv['template']))
 		{
 			$etpl->read($preserv['template'] = 'calendar.edit');
@@ -1118,7 +1119,10 @@ function replace_eTemplate_onsubmit()
 			}
 			else
 			{
-				// disable the alarm tab
+				// hide the alarm tab for newly created exceptions
+				$onload .= " document.getElementById('calendar.edit.alarms-tab').style.display = 'none';";
+				
+				// disable the alarm tab functionality
 				$readonlys['button[add_alarm]'] = true;
 				$readonlys['new_alarm[days]'] = true;
 				$readonlys['new_alarm[hours]'] = true;
@@ -1163,7 +1167,7 @@ function replace_eTemplate_onsubmit()
 		{
 			//Add the check_recur_type function to onload, which disables recur_data function
 			//if recur_type is not repeat weekly.
-			$onload = "check_recur_type('recur_type',2);";
+			$onload .= " check_recur_type('recur_type',2);";
 			// We hide the enddate if one of our predefined durations fits
 			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
 			$onload .= " set_style_by_class('table','end_hide','display','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'none' : 'block')."');";
