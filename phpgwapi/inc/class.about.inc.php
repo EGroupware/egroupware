@@ -252,7 +252,7 @@ class about
 				}
 			}
 		}
-		$app_info  = $GLOBALS['egw_info']['apps'][$app];
+		$app_info  = array_merge($GLOBALS['egw_info']['apps'][$app],$setup_info[$app]);
 
 		// define the return array
 		$ret = array(
