@@ -20,7 +20,15 @@ function egw_json_request(_menuaction, _parameters)
 	//Copy the supplied parameters
 	this.menuaction = _menuaction;
 	this.parameters = _parameters;
-	this.url = window.egw_webserverUrl + '/json.php';
+	var url = window.egw_webserverUrl;
+
+	// Search up to parent if the current window is in a frame
+	if(typeof url == "undefined")
+	{
+		url = top.egw_webserverUrl;
+	}
+
+	this.url = url + '/json.php';
 	this.sender = null;
 	this.callback = null;
 	this.alertHandler = this.alertFunc;
