@@ -184,6 +184,26 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 						hasResponse = true;
 					}
 					break;
+				case 'each':
+					if (typeof data.response[i].select == 'string' && typeof data.response[i].func == 'string')
+					{
+						try
+						{
+							var func = data.response[i].func;
+							// todo: for N>2
+							$(data.response[i].select).each(func.call(data.response[i].parms[0],data.response[i].parms[1],data.response[i].parms[2]));
+						}
+						catch (e)
+						{
+							if (typeof console != "undefined" && typeof console.log != "undefined")
+							{
+								e.code = data.response[i];
+								console.log(e);
+							}
+						}
+						hasResponse = true;
+					}
+					break;
 				case 'redirect':
 					if (typeof data.response[i].data == 'string')
 					{

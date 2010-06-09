@@ -272,9 +272,29 @@ class egw_json_response
 	}
 
 	/**
+	 * Allows to add a global javascript function with giben parameters
+	 * 
+	 * @param string $script the script code which should be executed upon receiving
+	 */	
+	public function each($selector,$method,array $parameters=array())
+	{
+		if (is_string($selector) && is_string($method))
+		{
+			$this->addGeneric('each', array(
+				'select' => $selector,
+				'func'   => $method,
+				'params' => $parameters,
+			));
+		}
+		else
+		{
+			throw new Exception("Invalid parameters supplied.");
+		}
+	}
+
+	/**
 	 * Adds an html assign to the response, which is excecuted upon the request is received.
 	 *  
-	 * @deprecated just for compatibility with XAJAX
 	 * @param string $id id of dom element to modify
 	 * @param string $key attribute name of dom element which should be modified
 	 * @param string $value the value which should be assigned to the given attribute
