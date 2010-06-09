@@ -206,20 +206,20 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 /**
  * Deprecated legacy xajax wrapper functions for the new egw_json interface
  */
-
+/*
 _xajax_doXMLHTTP = function(_async, _menuaction, _arguments)
 {
-	/* Assemble the parameter array */
+	/* Assemble the parameter array *//*
 	var paramarray = new Array();
 	for (var i = 1; i < _arguments.length; i++)
 	{
 		paramarray[paramarray.length] = _arguments[i];
 	}
 
-	/* Create a new request, passing the menuaction and the parameter array */
+	/* Create a new request, passing the menuaction and the parameter array *//*
 	var request = new egw_json_request(_menuaction, paramarray);
 
-	/* Send the request */
+	/* Send the request *//*
 	request.sendRequest(_async);
 
 	return request;
@@ -252,4 +252,4 @@ window.xajax = {
 		alert("\nSerialized:\n" + serialized);
 		return serialized;
 	}
-};
+};*/
