@@ -10,19 +10,9 @@
  * @version $Id$
  */
 
-$app = 'home'; // home can be granted to anyone. Can't be phpgwapi, nor jscalendar (no own directory)
-if (isset($_GET['app']))
-{
-	$app = $_GET['app'];
-}
-elseif (isset($_POST['app']))
-{
-	$app = $_POST['app'];
-}
-
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
-		'currentapp'  => $app,
+		'currentapp'  => 'home',
 		'noheader'    => True,
 		'nonavbar'    => True,
 		'noappheader' => True,
@@ -31,11 +21,17 @@ $GLOBALS['egw_info'] = array(
 		'nocachecontrol' => True			// allow cacheing
 	)
 );
+try {
+	include('../../header.inc.php');
+} 
+catch (egw_exception_no_permission_app $e) {
+	// ignore exception, if home is not allowed, eg. for sitemgr
+}
 
 include('../../header.inc.php');
 
-header('Content-type: text/javascript; charset='.$GLOBALS['egw']->translation->charset());
-$GLOBALS['egw']->translation->add_app('jscalendar');
+header('Content-type: text/javascript; charset='.translation::charset());
+translation::add_app('jscalendar');
 
 $dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 if (empty($dateformat)) $dateformat = 'Y-m-d';
