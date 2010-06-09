@@ -123,7 +123,7 @@ class calendar_ui
 	/**
 	 * @var array $states_to_save all states that will be saved to the user prefs
 	 */
-	var $states_to_save = array('owner','filter');
+	var $states_to_save = array('owner','filter','cat_id','view','sortby','planner_days');
 
 	/**
 	 * Constructor

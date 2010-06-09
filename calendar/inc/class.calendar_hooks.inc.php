@@ -251,7 +251,8 @@ class calendar_hooks
 		}
 
 		return array(
-			'defaultcalendar' => array(
+/* not longer used, as we store whole state in prefs
+ 			'defaultcalendar' => array(
 				'type'   => 'select',
 				'label'  => 'default calendar view',
 				'name'   => 'defaultcalendar',
@@ -261,6 +262,7 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> 'week',
 			),
+*/
 			'days_in_weekview' => array(
 				'type'   => 'select',
 				'label'  => 'default week view',
