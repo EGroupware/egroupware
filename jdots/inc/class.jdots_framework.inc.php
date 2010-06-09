@@ -167,7 +167,7 @@ class jdots_framework extends egw_framework
 	}';
 
 			//Register the global key press handler
-			$content .= "
+/*			$content .= "
 	window.keyPressHandler = function(event) {
 		if (event.keyCode == 112)
 		{
@@ -176,7 +176,7 @@ class jdots_framework extends egw_framework
 		}
 	}
 	$(document).keypress(keyPressHandler);\n";
-
+*/
 			// if manual is enabled, assamble manual url and define global callManual() function
 			if ($GLOBALS['egw_info']['user']['apps']['manual'])
 			{

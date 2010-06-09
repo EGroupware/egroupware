@@ -53,7 +53,7 @@ function egw_fw(_sidemenuId, _tabsId, _webserverUrl)
 	window.egw_alertHandler = this.alertHandler;
 
 	//Register the key press handler
-	$(document).keypress(this.keyPressHandler);
+	//$(document).keypress(this.keyPressHandler);
 
 	//Override the old egw_openWindowCentered2
 	window.egw_openWindowCentered2 = this.egw_openWindowCentered2;
