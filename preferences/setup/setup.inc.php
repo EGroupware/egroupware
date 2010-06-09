@@ -15,6 +15,7 @@ $setup_info['preferences']['version']   = '1.7';
 $setup_info['preferences']['app_order'] = 1;
 $setup_info['preferences']['tables']    = '';
 $setup_info['preferences']['enable']    = 2;
+$setup_info['preferences']['license']   = 'GPL';
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['preferences']['hooks']['deleteaccount'] = 'preferences_hooks::deleteaccount';
