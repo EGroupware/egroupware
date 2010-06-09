@@ -112,7 +112,7 @@
 				/* Here we include the settings hook file for the current template, if it exists.
 					 This is not handled by the hooks class and is only valid if not using xml-rpc.
 				 */
-				$tmpl_settings = EGW_TEMPLATE_DIR . '/hook_settings.inc.php';
+				$tmpl_settings = EGW_SERVER_ROOT.$GLOBALS['egw']->framework->template_dir.'/hook_settings.inc.php';
 				if($this->appname == 'preferences' && file_exists($tmpl_settings))
 				{
 					include($tmpl_settings);
