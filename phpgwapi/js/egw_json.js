@@ -11,6 +11,38 @@
 
 /* The egw_json_request is the javaScript side implementation of class.egw_json.inc.php.*/
 
+function egw_json_encode(input)
+{
+	if (!input) return 'null';
+
+	switch (input.constructor) {
+		case String:
+			return '"' + input + '"';
+
+		case Number:
+			return input.toString();
+
+		case Boolean:
+			return input ? 'true' : 'false';
+
+		case Array :
+			var buf = [];
+			for (var i = 0; i < input.length; i++)
+				buf.push(egw_json_encode(input[i]));
+			return '[' + buf.join(',') + ']';
+
+		case Object:
+			var buf = [];
+			for (var k in input)
+					buf.push('"' + k + '":' + egw_json_encode(input[k]));
+			return '{' + buf.join(',') + '}';
+
+		default:
+			return 'null';
+	}
+}
+
+
 /* The constructor of the egw_json_request class.
  * @param string _menuaction the menuaction function which should be called and which handles the actual request
  * @param array _parameters which should be passed to the menuaction function.
@@ -19,7 +51,16 @@ function egw_json_request(_menuaction, _parameters)
 {
 	//Copy the supplied parameters
 	this.menuaction = _menuaction;
-	this.parameters = _parameters;
+
+	if (typeof _parameters != 'undefined')
+	{
+		this.parameters = _parameters;
+	}
+	else
+	{
+		this.parameters = new Array;
+	}
+
 	var url = window.egw_webserverUrl;
 
 	// Search up to parent if the current window is in a frame
@@ -29,6 +70,7 @@ function egw_json_request(_menuaction, _parameters)
 	}
 
 	this.url = url + '/json.php';
+
 	this.sender = null;
 	this.callback = null;
 	this.alertHandler = this.alertFunc;
@@ -55,17 +97,14 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 	if (typeof _async != "undefined")
 		is_async = _async;
 
-	//Assemble the actual request object
-	var request_obj = new Object();
-	request_obj.json_data = new Object();
-	request_obj.json_data.request = new Object();
-	if(this.parameters)
-	{
-		request_obj.json_data.request.parameters = new Array();
-		for (var i = 0; i < this.parameters.length; i++)
+	//Assemble the actual request object containing the json data string
+	var request_obj = {
+		"json_data": egw_json_encode(
 		{
-			request_obj.json_data.request.parameters.push(this.parameters[i]);
-		}
+			"request": {
+				"parameters": this.parameters
+			}
+		})
 	}
 
 	//Send the request via the jquery AJAX interface to the server
@@ -114,8 +153,8 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 						if (obj)
 						{
 							obj[data.response[i].data.key] = data.response[i].data.value;
+							hasResponse = true;
 						}
-						hasResponse = true;
 					}
 					break;
 				case 'data':
@@ -123,13 +162,25 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 					if (this.callback)
 					{
 						this.callback.call(this.sender, data.response[i].data);
+						hasResponse = true;
 					}
-					hasResponse = true;
 					break;
 				case 'script':
 					if (typeof data.response[i].data == 'string')
 					{
-						eval(data.response[i].data);
+						try
+						{
+							var func = function() {eval(data.response[i].data);};
+							func.call(window);
+						}
+						catch (e)
+						{
+							if (typeof console != "undefined" && typeof console.log != "undefined")
+							{
+								e.code = data.response[i].data;
+								console.log(e);
+							}
+						}
 						hasResponse = true;
 					}
 					break;
@@ -149,3 +200,56 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 		}
 	}
 }
+
+
+
+/**
+ * Deprecated legacy xajax wrapper functions for the new egw_json interface
+ */
+
+_xajax_doXMLHTTP = function(_async, _menuaction, _arguments)
+{
+	/* Assemble the parameter array */
+	var paramarray = new Array();
+	for (var i = 1; i < _arguments.length; i++)
+	{
+		paramarray[paramarray.length] = _arguments[i];
+	}
+
+	/* Create a new request, passing the menuaction and the parameter array */
+	var request = new egw_json_request(_menuaction, paramarray);
+
+	/* Send the request */
+	request.sendRequest(_async);
+
+	return request;
+}
+
+xajax_doXMLHTTP = function(_menuaction)
+{
+	return _xajax_doXMLHTTP(true, _menuaction, arguments);
+}
+
+xajax_doXMLHTTPsync = function(_menuaction)
+{
+	return _xajax_doXMLHTTP(false, _menuaction, arguments);
+};
+
+window.xajax = {
+	"getFormValues": function(_form)
+	{		
+		var elem = null;
+		if (typeof _form == 'object')
+		{
+			elem = _form;
+		}
+		else
+		{
+			elem = document.getElementsByName(_form)[0];
+		}
+
+		var serialized = $(_form).serializeArray();
+		alert("\nSerialized:\n" + serialized);
+		return serialized;
+	}
+};
