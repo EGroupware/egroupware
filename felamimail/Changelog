@@ -1,0 +1,229 @@
+2007-06-19 Lars Kneschke  <l.kneschke@metaways.de>
+	* added support for signatures managed by admin aka forced signatures
+
+2007-03-05 Lars Kneschke  <l.kneschke@metaways.de>
+	* fixed not working disabling of STARTTLS
+	* fixed borken FeLaMiMail preferences translations
+	* fixed full stop on Sieve connection error
+	* made INBOX counter on homepage working again (based on patch from Pavel Šorejs)
+	* display 0 instead of &nbsp; on empty folders (based on patch from Pavel Šorejs)
+	* removed some not longer needed files
+
+2007-02-28 Lars Kneschke  <l.kneschke@metaways.de>
+	* rewrote logic to encode header, to handle wrongly encoded header
+
+2007-02-26 Lars Kneschke  <l.kneschke@metaways.de>
+	* added support for messages containing only attachments (application/..., audio/...)
+
+2007-02-16 Lars Kneschke  <l.kneschke@metaways.de>
+	* fix for loosing formating of centering, right-justification, text coloring and italics when composing from draft
+	* fixed my emailaddress in changelog file
+
+2007-02-15 Lars Kneschke  <l.kneschke@metaways.de>
+	* enabled sieve support for custom email account settings
+
+2007-02-14 Lars Kneschke  <l.kneschke@metaways.de>
+	* improved foldermanagement for server not supporting acl
+	* extended imap test script
+
+2007-02-13 Lars Kneschke  <l.kneschke@metaways.de>
+	* updated imap server test script
+
+2007-02-12 Lars Kneschke  <l.kneschke@metaways.de>
+	* added a script to test imap servers
+
+2007-01-24 Lars Kneschke  <l.kneschke@metaways.de>
+	* removed some old code, which got not used anymore, but created problems (the blind gut of FeLaMiMail :-))
+
+2007-01-13 Lars Kneschke  <l.kneschke@metaways.de>
+	* finally added support the in-reply-to header
+
+2007-01-11 Lars Kneschke  <l.kneschke@metaways.de>
+	* added support for serverside sort
+	* you make one signature the default one
+	* added support for searching content of message body
+
+2007-01-05 Lars Kneschke  <l.kneschke@metaways.de>
+	* fetch quota from imap server only, if imap server supports quota
+	* improved autocreation of folders
+
+2006-12-31 Lars Kneschke  <l.kneschke@metaways.de>
+	* major rewrite of the imap backend. php-imap is mostly gone. all imap code
+	  is now based on the PEAR class Net_IMAP
+	* drafts keep their formating
+	* saving a message is working now
+	* improved folder handling
+	* signatures can now be managed from IE too
+	* make FeLaMiMail dependent on egw-pear
+
+2006-11-20 Lars Kneschke  <l.kneschke@metaways.de>
+	* passwords are now hidden, when editing account settings
+
+2006-11-08  Lars Kneschke  <l.kneschke@metaways.de>
+	* edit signature is now using fckeditor too
+	* improved generating multipart messages again
+
+2006-11-07  Lars Kneschke  <l.kneschke@metaways.de>
+	* switched to fckeditor for writing html emails
+	* fixed login problem, when using userdefined accounts(loginname was not sent)
+	* improved generating multipart messages
+
+20061027
+- fixed printing when email conatains a cc
+- signature description was always "undefined" when using internet explorer
+- reorganized compose dialog a little bit. The folder select button as now
+  directly beside the select box for from, to, cc, reply to and folder
+- fixed a JS error, when selecting the folder from the folder tree
+
+20061026
+- added some more logic, to also import the organisation, when importing addresses by
+  clicking at the icon behind the emailaddresses
+
+20061025
+- made printing working again
+- fixed some IE only Javascript problems
+
+20061004
+- completly finnished rewrite of signature handling
+- fixed display of messages. You get not the same font also used everwhere in eGW 
+
+20060928
+- finished signature handling rewrite mostly. You can now define multiple signatures
+  and select them while writing a email.
+
+20060914
+- removed (temporarly) the dbcache. FeLaMiMail now works completly against the imapserver.
+  This requires a server with search and sort functionality. Big folders
+  should be displayed now very fast.
+- you can sort by message status now
+- updating trash folder counter and quota display when deleting messages
+
+20060821
+- added support for composing html emails
+- fixed some minor internet explorer only display problems
+- messages gets now displayed in a separate iframe. This allows to display html emails, whitout breaking css styles of the main display window. Also only the iframe gets a scrollbar now. That stops the "jumping buttons". In the past they were jumping to the left, when the email was to long and a scrollbar got displayed on the right.
+
+20060802
+- fixed bug [ 1487161 ] felamimail <> UTF-8 <> Postgres trouble
+- fixed bug [ 1451287 ] Database error when accessing some folders
+
+20060801
+- added support for saving drafts
+- removed debug code from the javascript code
+- current inputfield is blinking now, when livesearch starts
+- removed unneeded admin section
+
+20051128
+- fixed compose link in sidebox menu
+- added action to cancel button on edit forwarding page
+- removed admin section, any configuration is now done in emailadmin
+
+20051121
+- fixed the display of messages. messages now always open in new windows
+- fixed navbar and replaced text with icons
+
+20051120
+- removed dependency on email
+
+20051018
+- fixed Bug where nodisplayable characters got displayed and broke caching
+  in the database
+
+20051013
+- added feature to let Postfix LDAP users edit there own email forwarding settings
+  feature can be enabled/disabled by settings in emailadmin
+
+20051012
+- fixed a bug, which triggered when compressing the folder
+
+20051011
+- fixed handling of "empty trash" and "compress folder"
+  the links got moved to the sidebox and are using ajax too
+- fixed the header of the address row in the main view
+  the sent folder displays "to" all other folders are diplaying "from"
+
+Version 1.0
+- updated FeLaMiMail to use AJAX
+- reworked the way the UI works. Most UI actions now don't need any reload
+anymore.
+
+Version 0.9.6
+
+- displaying of subfolders with hyphen was broken Bug #1195101
+- patch from Regis Regis Leroy to display counters on folders and improve
+  folder handling
+- improved folder management. You can create now subfolders in the top
+  level. This should also improve support for UW IMAP
+- fixed charset bug in folder management pages
+- added support for javascript based folder tree
+
+Version 0.9.5
+
+- ported Smartsieve to FeLaMiMail
+- added highlighting for quotes (copied from horde)
+- fixed sorting
+	- added all needed options to preferences
+	- can now be sorted by size too
+- forwarding messages now as message/rfc822
+- improved mainview
+	- javascript selectbutton to select all messages
+	- fixed layout
+	- support colors from selected layout
+- added support for emailadmin
+- updated PHPMailer to version 0.7.1
+- added support for localized smtp error messages
+- improved mime type handling
+- also forward attachments
+- support for �... in folder names
+- support html emails(most evil tags get removed)
+- code cleanup
+- added Sidebox for Idots
+- added user defined EMail accounts again, can be deactivated by admin
+
+Version 0.9.3/0.9.4
+
+- added usefull error messsages, if login to imap server fails
+- imaps support(encryption only and encryption with authentication)
+- added smtp auth support
+- print function; displays the page without the phpgw navbar, so will
+  print only the email
+- removed old Squirrelmail code again
+- the code to display emails is rewriten too, it's all based 
+  on phpGW now
+- rewrote folder management
+- removed images, they where not always helpfull                  
+
+- filter dialog improved again
+	- you can store multiple filters now
+	- added quicksearch
+	
+- integration of sieve-php
+	- you can manage sieve scripts on a sieve enables imap server
+	
+- internal code cleanup
+- modified linux-at-work.de template
+- updated preferences dialog to do it the phpgroupware way
+- you can define a refresh time for the mailbox message list
+- fixed a nasty bug, when replying to emails which contain " or , in the
+  to,cc or bcc fields
+- fixed quoted printable en/decoding in the 
+  headers/subject(it was time to read the rfc's :) )
+- highlithing of web and email urls
+- enabled vmailmgr login again
+- don't halt smtp error messages anymore, but display the error
+  and go back to the compose window
+- display the organization when showing the mail
+- fixed download/save of attachment under IE and SSL
+
+Version 0.9.2
+
+- improved filter dialog
+	- added a easy way to enable/disable the filter
+	- you can search for from, to, subject
+	
+- updated the linux-at-work temmplate
+
+- fixed some bugs, where the mainview where broken, because of missing templates
+
+- the user preferences where not working correctly
+

@@ -1,0 +1,85 @@
+add profile	emailadmin	pt	Adicionar perfil
+admin dn	emailadmin	pt	DN do administrador
+admin password	emailadmin	pt	Senha do administrador
+admin passwort	emailadmin	pt	Senha do administrador
+admin username	emailadmin	pt	Nome do utilizador do administrador
+advanced options	emailadmin	pt	Opções avançadas
+alternate email address	emailadmin	pt	Endereço de correio electrónico alternativo
+any application	emailadmin	pt	Qualquer aplicação
+any group	emailadmin	pt	Qualquer grupo
+can be used by application	emailadmin	pt	Pode ser utilizado pela aplicação
+can be used by group	emailadmin	pt	Pode ser utilizado pelo grupo
+cyrus imap server	emailadmin	pt	Servidor IMAP Cyrus
+cyrus imap server administration	emailadmin	pt	Administração do servidor IMAP Cyrus
+default	emailadmin	pt	Por omissão
+deliver extern	emailadmin	pt	Entrega externa
+do you really want to delete this profile	emailadmin	pt	Deseja relamente eliminar este perfil
+domainname	emailadmin	pt	Nome de domínio
+edit email settings	emailadmin	pt	Editar configurações do correio electrónico
+email account active	emailadmin	pt	Conta de correio electrónico activa
+email address	emailadmin	pt	Endereço de correio electrónico
+enable cyrus imap server administration	emailadmin	pt	Activar administração do servidor IMAP Cyrus
+enable sieve	emailadmin	pt	Activar Sieve
+encryption settings	emailadmin	pt	Definições de cifragem
+enter your default mail domain (from: user@domain)	emailadmin	pt	Insira o seu domínio de correio electrónico por omissão (de: utilizador@domínio)
+forward also to	emailadmin	pt	Reencaminhar também para
+forward email's to	emailadmin	pt	Reencaminhar mensagens para
+forward only	emailadmin	pt	Reencaminhar apenas
+global options	emailadmin	pt	Opções gerais
+imap admin password	admin	pt	Senha do administrador IMAP
+imap admin user	admin	pt	Utilizador do administrador IMAP
+imap c-client version < 2001	emailadmin	pt	Versão C-Client IMAP < 2001
+imap server hostname or ip address	emailadmin	pt	Nome do servidor ou endereço IP do servidor IMAP
+imap server logintyp	emailadmin	pt	Tipo de acesso do servidor IMAP
+imap server port	emailadmin	pt	Porto do servidor IMAP
+imap/pop3 server name	emailadmin	pt	Nome do servidor IMAP/POP3
+in mbyte	emailadmin	pt	em MBytes
+ldap basedn	emailadmin	pt	Base DN LDAP
+ldap server	emailadmin	pt	Servidor LDAP
+ldap server accounts dn	emailadmin	pt	DN das contas de servidor LDAP
+ldap server admin dn	emailadmin	pt	DN do administrador de servidor LDAP
+ldap server admin password	emailadmin	pt	Senha do administrador de servidor LDAP
+ldap server hostname or ip address	emailadmin	pt	Nome do servidor ou endereço IP do servidor LDAP
+ldap settings	emailadmin	pt	Configurações do LDAP
+leave empty for no quota	emailadmin	pt	Deixar vazio para quota sem limites
+mail settings	admin	pt	Configurações do correio electrónico
+name of organisation	emailadmin	pt	Nome da empresa
+no alternate email address	emailadmin	pt	Sem endereço de correio electrónico alternativo
+no forwarding email address	emailadmin	pt	Sem endereço de correio electrónico para reencaminhamento
+order	emailadmin	pt	Ordem
+organisation	emailadmin	pt	Empresa
+pop3 server hostname or ip address	emailadmin	pt	Nome do servidor ou endereço IP do servidor POP3
+pop3 server port	emailadmin	pt	Porto de servidor POP3
+postfix with ldap	emailadmin	pt	Postfix com LDAP
+profile access rights	emailadmin	pt	Perfil de direitos de acesso
+profile list	emailadmin	pt	Lista de perfis
+profile name	emailadmin	pt	Nome do perfil
+qmaildotmode	emailadmin	pt	Quota do correio electrónico no modo Idot
+qouta size in mbyte	emailadmin	pt	Quota em MBytes
+quota settings	emailadmin	pt	Configurações da quota
+remove	emailadmin	pt	Remover
+select type of imap/pop3 server	emailadmin	pt	Seleccionar tipo de servidor IMAP/POP3
+select type of smtp server	emailadmin	pt	Seleccionar tipo de servidor SMTP
+server settings	emailadmin	pt	Definições do servidor
+sieve server hostname or ip address	emailadmin	pt	Nome do servidor ou endereço IP do servidor Sieve
+sieve server port	emailadmin	pt	Porto do servidor Sieve
+sieve settings	emailadmin	pt	Configurações do SIeve
+smtp authentication	emailadmin	pt	Autenticação SMTP
+smtp options	emailadmin	pt	Opções do SMTP
+smtp server name	emailadmin	pt	Nome do servidor SMTP
+smtp settings	emailadmin	pt	Definições do SMTP
+smtp-server hostname or ip address	emailadmin	pt	Nome do servidor ou endereço IP do servidor SMTP
+smtp-server port	emailadmin	pt	Porto do servidor SMTP
+standard	emailadmin	pt	Por omissão
+standard imap server	emailadmin	pt	Servidor IMAP por omissão
+standard pop3 server	emailadmin	pt	Servidor POP3 por omissão
+standard smtp-server	emailadmin	pt	Servidor SMTP por omissão
+use ldap defaults	emailadmin	pt	Utilizar definições por omissão do LDAP
+use smtp auth	emailadmin	pt	Utilizar autenticação SMTP
+use tls authentication	emailadmin	pt	Utilizar autenticação TLS
+use tls encryption	emailadmin	pt	Utilizar cifra TLS
+user can edit forwarding address	emailadmin	pt	O utilizador pode editar endereços reencaminhados
+username (standard)	emailadmin	pt	Nome de utilizador (por omissão)
+username@domainname (virtual mail manager)	emailadmin	pt	utilizador@dominio (Gestor virtual de correio electrónico)
+users can define their own emailaccounts	emailadmin	pt	Os utilizadores podem definir as suas contas de correio electrónico
+virtual mail manager	emailadmin	pt	Gestor virtual de correio electrónico

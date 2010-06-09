@@ -1,0 +1,138 @@
+account '%1' not found !!!	emailadmin	sl	Račun '%1' ni bil najden!
+add new email address:	emailadmin	sl	Dodaj nov e-naslov:
+add profile	emailadmin	sl	Dodaj profil
+admin dn	emailadmin	sl	Oskrbnikov dn
+admin password	emailadmin	sl	Oskrbnikovo geslo
+admin username	emailadmin	sl	Oskrbnikovo uporabniško ime
+advanced options	emailadmin	sl	Napredne izbire
+alternate email address	emailadmin	sl	Alternativen E-naslov
+any application	emailadmin	sl	Katerakoli aplikacija
+any group	emailadmin	sl	Katerakoli skupina
+any user	emailadmin	sl	Katerikoli uporabnik
+back to admin/grouplist	emailadmin	sl	Nazaj na Admin/Seznam skupin
+back to admin/userlist	emailadmin	sl	Nazaj na Admin/Seznam uporabnikov
+bad login name or password.	emailadmin	sl	Napačno uporabniško ime ali geslo.
+bad or malformed request. server responded: %s	emailadmin	sl	Napačna ali napačno oblikovana zahteva. Odgovor strežnika: %s
+bad request: %s	emailadmin	sl	Napačna zahteva: %s
+can be used by application	emailadmin	sl	Je lahko uporabljen iz aplikacije
+can be used by group	emailadmin	sl	Je lahko uporabljen iz skupine
+can be used by user	emailadmin	sl	Lahko uporablja uporabnik
+connection dropped by imap server.	emailadmin	sl	Strežnik IMAP je prekinil povezavo.
+could not complete request. reason given: %s	emailadmin	sl	Ne morem dokončati zahteve. Podan vzrok: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	sl	Ne morem odpreti varne povezave s strežnikom IMAP. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	sl	CRAM-MD5 ali DIGEST-MD5 zahteva, da je nameščen paket Auth_SASL.
+cyrus imap server	emailadmin	sl	Cyrus IMAP strežnik
+cyrus imap server administration	emailadmin	sl	Upravljanje Cyrus IMAP strežnika
+default	emailadmin	sl	Privzeto
+deliver extern	emailadmin	sl	Zunanja dostava
+do not validate certificate	emailadmin	sl	Ne preverjaj certifikata
+do you really want to delete this profile	emailadmin	sl	Ali res želite izbrisati ta profil?
+do you really want to reset the filter for the profile listing	emailadmin	sl	Res želite ponastaviti filter za listanje profilov?
+domainname	emailadmin	sl	Ime domene
+edit email settings	emailadmin	sl	Uredi nastavitve E-pošte
+email account active	emailadmin	sl	Nabiralnik E-pošte je aktiven
+email address	emailadmin	sl	E-naslov
+email settings	common	sl	Nastavitve E-pošte
+emailadmin	emailadmin	sl	EMailAdmin
+emailadmin: group assigned profile	common	sl	eMailAdmin: profil, dodeljen skupini
+emailadmin: user assigned profile	common	sl	eMailAdmin: profil, dodeljen uprabniku
+enable cyrus imap server administration	emailadmin	sl	Omogoči upravljanje Cyrus IMAP strežnika
+enable sieve	emailadmin	sl	Omogoči Sieve
+encrypted connection	emailadmin	sl	Kodirana povezava
+encryption settings	emailadmin	sl	Nastavitve šifriranja
+enter your default mail domain (from: user@domain)	emailadmin	sl	Vnesite privzeto domeno (oblika: uporabnik@domena)
+error connecting to imap server. %s : %s.	emailadmin	sl	Napaka pri povezavi s strežnikom IMAP. %s: %s.
+error connecting to imap server: [%s] %s.	emailadmin	sl	Napaka pri povezavi s strežnikom IMAP: [%s] %s.
+filtered by account	emailadmin	sl	Filtrirano s strani računa
+filtered by group	emailadmin	sl	Filtrirano s strani skupine
+forward also to	emailadmin	sl	Posreduj tudi
+forward email's to	emailadmin	sl	Posreduj sporočila k
+forward only	emailadmin	sl	Samo posreduj
+global options	emailadmin	sl	Globalne možnosti
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	sl	Če uporabljate SSL ali TLS, morate imeti naloženo razširitev PHP openssl
+imap admin password	admin	sl	Geslo oskrbnika IMAPa
+imap admin user	admin	sl	Uporabniško ime oskrbnika IMAP-a
+imap c-client version < 2001	emailadmin	sl	IMAP C-klient različica pred 2001
+imap server closed the connection.	emailadmin	sl	Strežnik IMAP je prekinil povezavo.
+imap server closed the connection. server responded: %s	emailadmin	sl	Strežnik IMAP je prekinil povezavo. Odgovor strežnika: %s
+imap server hostname or ip address	emailadmin	sl	Ime ali IP strežnika IMAP
+imap server logintyp	emailadmin	sl	Način prijave strežnik IMAP
+imap server name	emailadmin	sl	Ime strežnika IMAP
+imap server port	emailadmin	sl	Vrata strežnika IMAP
+imap/pop3 server name	emailadmin	sl	Ime strežnika IMAP/POP3
+in mbyte	emailadmin	sl	v MB
+inactive	emailadmin	sl	Neaktivno
+ldap basedn	emailadmin	sl	Osnovni DN LDAP
+ldap server	emailadmin	sl	Strežnik LDAP
+ldap server accounts dn	emailadmin	sl	DN računov LDAP strežnika
+ldap server admin dn	emailadmin	sl	Oskrbnikov DN LDAP strežnika
+ldap server admin password	emailadmin	sl	Geslo oskrbnika LDAP strežnika
+ldap server hostname or ip address	emailadmin	sl	Ime ali IP strežnika LDAP
+ldap settings	emailadmin	sl	Nastavitve LDAP
+leave empty for no quota	emailadmin	sl	Pustite prazno za neomejeno
+mail settings	admin	sl	Nastavitve E-pošte
+name of organisation	emailadmin	sl	Ime organizacije
+no alternate email address	emailadmin	sl	Ni alternativnega E-naslova
+no encryption	emailadmin	sl	Brez šifriranja
+no forwarding email address	emailadmin	sl	Ni E-naslova za posredovanje
+no message returned.	emailadmin	sl	Ni vrnjenega sporočila.
+no supported imap authentication method could be found.	emailadmin	sl	Ni najdena metoda avtentikacije IMAP.
+order	emailadmin	sl	Vrstni red
+organisation	emailadmin	sl	Organizacija
+plesk can't rename users --> request ignored	emailadmin	sl	Plesk ne more preimenovati uporabnikov --> zahteva preslišana
+plesk imap server (courier)	emailadmin	sl	Strežnik Plesk IMAP (Courier)
+plesk mail script '%1' not found !!!	emailadmin	sl	Poštni skript Plesk '%1' ni bil najden!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	sl	Plesk zahteva geslo, dolga najmanj 5 znakov in ne sme vsebovati imena računa --> geslo ni bilo nastavljeno!
+plesk smtp-server (qmail)	emailadmin	sl	Strežnik Plesk IMAP (Qmail)
+pop3 server hostname or ip address	emailadmin	sl	Ime ali IP POP3 strežnika
+pop3 server port	emailadmin	sl	Vrata POP3 strežnika
+postfix with ldap	emailadmin	sl	Končnica pri LDAP
+profile access rights	emailadmin	sl	Pravice dostopa do profila
+profile is active	emailadmin	sl	Profil je aktiven
+profile list	emailadmin	sl	Seznam profilov
+profile name	emailadmin	sl	Ime profila
+qmaildotmode	emailadmin	sl	Način za qmaildot
+qouta size in mbyte	emailadmin	sl	Kvota v MB
+quota settings	emailadmin	sl	Nastavitvev kvote
+remove	emailadmin	sl	Odstrani
+reset filter	emailadmin	sl	Ponastavi filter
+select type of imap server	emailadmin	sl	Izberite vrsto strežnika IMAP
+select type of imap/pop3 server	emailadmin	sl	Izberite tip IMAP/POP3 strežnika
+select type of smtp server	emailadmin	sl	Izberite tip SMTP strežnika
+server settings	emailadmin	sl	Nastavitve strežnika
+sieve server hostname or ip address	emailadmin	sl	IP ali naslov strežnika za sito (Sieve)
+sieve server port	emailadmin	sl	Vrata strežnika za sito (Sieve)
+sieve settings	emailadmin	sl	Nastavitve sita (Sieve)
+smtp authentication	emailadmin	sl	SMTP avtentikacija
+smtp options	emailadmin	sl	SMTP možnosti
+smtp server name	emailadmin	sl	ime SMTP strežnika
+smtp settings	emailadmin	sl	SMTP nastavitve
+smtp-server hostname or ip address	emailadmin	sl	Ime ali IP SMTP strežnika
+smtp-server port	emailadmin	sl	Vrata SMTP strežnika
+standard	emailadmin	sl	Standarden
+standard imap server	emailadmin	sl	Standardni IMAP strežnik
+standard pop3 server	emailadmin	sl	Standardni POP3 strežnik
+standard smtp-server	emailadmin	sl	Standardni SMTP strežnik
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	sl	Strežnik IMAP ne podpira izbrane metode avtentikacije. Kontaktirajte sistemskega upravitelja.
+this php has no imap support compiled in!!	emailadmin	sl	Ta PHP ne vsebuje podpore za IMAP!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	sl	Če želite uporabljati povezavo TLS, morate imeti nameščeno različico PHP 5.1.0 ali višjo.
+unexpected response from server to authenticate command.	emailadmin	sl	Nepričakovan odgovor strežnika na ukaz AUTHENTICATE.
+unexpected response from server to digest-md5 response.	emailadmin	sl	Nepričakovan odgovor strežnika na odgovor Digest-MD5.
+unexpected response from server to login command.	emailadmin	sl	Nepričakovan odgovor strežnika na ukaz LOGIN.
+unknown imap response from the server. server responded: %s	emailadmin	sl	Neznan odgovor IMAP s strani strežnika. Odgovor strežnika: %s
+unsupported action '%1' !!!	emailadmin	sl	Nepodprto dejanje '%1'!
+update current email address:	emailadmin	sl	Posodobi trenutni e-naslov:
+use ldap defaults	emailadmin	sl	Uporabi privzeto za LDAP
+use predefined username and password defined below	emailadmin	sl	Uporabi spodnje, vnaprej določeno uporabniško ime in geslo
+use smtp auth	emailadmin	sl	Uporabi SMTP avtentikacijo
+use tls authentication	emailadmin	sl	Uporabi TLS avtentikacijo
+use tls encryption	emailadmin	sl	Uporabi TLS enkripcijo
+user can edit forwarding address	emailadmin	sl	Uporabnik lahko določa posredovalni naslov
+username (standard)	emailadmin	sl	Uporabnik (standardno)
+username/password defined by admin	emailadmin	sl	Uporabniško ime/geslo dodeljeno s strani administratorja
+username@domainname (virtual mail manager)	emailadmin	sl	uporabnik@domena (Virtual MAIL ManaGeR)
+users can define their own emailaccounts	emailadmin	sl	Uporabniki lahko določajo lastne E-poštne predale
+users can define their own identities	emailadmin	sl	Uporabniki lahko določijo lastne identitete
+users can define their own signatures	emailadmin	sl	Uporabniki lahko določijo lastne podpise
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	sl	Nastavitev sporočila o odsotnosti z začetnim in končnim datumom zahteva nastavljen administratorski račun!
+virtual mail manager	emailadmin	sl	Virtualni upravljalec E-pošte

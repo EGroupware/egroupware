@@ -1,0 +1,143 @@
+account '%1' not found !!!	emailadmin	es-es	¡No se encontró la cuenta '%1'!
+active templates	emailadmin	es-es	Plantillas activas
+add new email address:	emailadmin	es-es	Añadir nueva dirección de correo
+add profile	emailadmin	es-es	Añadir perfil
+admin dn	emailadmin	es-es	dn del administrador
+admin password	emailadmin	es-es	contraseña del administrador
+admin username	emailadmin	es-es	usuario del administrador
+advanced options	emailadmin	es-es	opciones avanzadas
+alternate email address	emailadmin	es-es	dirección de correo alternativa
+any application	emailadmin	es-es	cualquier aplicación
+any group	emailadmin	es-es	cualquier grupo
+any user	emailadmin	es-es	cualquier usuario
+back to admin/grouplist	emailadmin	es-es	Volver a Administración/Lista de grupos
+back to admin/userlist	emailadmin	es-es	Volver a Administración/Lista de usuarios
+bad login name or password.	emailadmin	es-es	Nombre de usuario o contraseña incorrectos
+bad or malformed request. server responded: %s	emailadmin	es-es	Petición errónea o mal formado. El servidor respondió: %s
+bad request: %s	emailadmin	es-es	Petición errónea: %s
+can be used by application	emailadmin	es-es	puede usarse por la aplicación
+can be used by group	emailadmin	es-es	puede usarse por el grupo
+can be used by user	emailadmin	es-es	puede usarse por el usuario
+connection dropped by imap server.	emailadmin	es-es	El servidor IMAP ha interrumpido la conexión
+could not complete request. reason given: %s	emailadmin	es-es	No se pudo completar la solicitud. Motivo: %s
+could not open secure connection to the imap server. %s : %s.	emailadmin	es-es	No se pudo abrir una conexión segura con el servidor IMAP. %s: %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	es-es	CRAM-MD5 o DIGEST-MD5 necesitan el paquete Auth_SASL para estar instalado.
+cyrus imap server	emailadmin	es-es	Servidor IMAP Cyrus
+cyrus imap server administration	emailadmin	es-es	Administración del servidor IMAP Cyrus
+default	emailadmin	es-es	predeterminada
+deliver extern	emailadmin	es-es	entrega externa
+do not validate certificate	emailadmin	es-es	No validar el certificado
+do you really want to delete this profile	emailadmin	es-es	¿Realmente desea borrar este perfil?
+do you really want to reset the filter for the profile listing	emailadmin	es-es	Realmente desea restablecer el filtro para la lista de perfiles
+domainname	emailadmin	es-es	nombre del dominio
+edit email settings	emailadmin	es-es	editar configuración de la cuenta
+email account active	emailadmin	es-es	cuenta de correo electrónico activa
+email address	emailadmin	es-es	dirección de correo electrónico
+email settings	common	es-es	Configuración del correo electrónico
+emailadmin	emailadmin	es-es	Administración del correo electrónico
+emailadmin: group assigned profile	common	es-es	eMailAdmin: perfil asignado al grupo
+emailadmin: user assigned profile	common	es-es	eMailAdmin: perfil asignado al usuario
+enable cyrus imap server administration	emailadmin	es-es	activar administración del servidor Cyrus IMAP
+enable sieve	emailadmin	es-es	activar Sieve
+encrypted connection	emailadmin	es-es	conexión cifrada
+encryption settings	emailadmin	es-es	configuración del cifrado
+enter your default mail domain (from: user@domain)	emailadmin	es-es	introduzca el dominio predeterminado (de usuario@dominio)
+error connecting to imap server. %s : %s.	emailadmin	es-es	Error al conectar con el servidor IMAP. %s: %s.
+error connecting to imap server: [%s] %s.	emailadmin	es-es	Error al conectar con el servidor IMAP: [%s] %s.
+filtered by account	emailadmin	es-es	filtrado por cuenta
+filtered by group	emailadmin	es-es	filtrado por grupo
+forward also to	emailadmin	es-es	reenviar también a
+forward email's to	emailadmin	es-es	reenviar correos a
+forward only	emailadmin	es-es	sólo reenviar
+global options	emailadmin	es-es	opciones globales
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	es-es	Si usa SSL o TLS, debe tener cargada la extensión openssl de PHP.
+imap admin password	admin	es-es	contraseña del administrador IMAP
+imap admin user	admin	es-es	usuario administrador IMAP
+imap c-client version < 2001	emailadmin	es-es	Versión C-Cliente IMAP < 2001
+imap server closed the connection.	emailadmin	es-es	El servidor IMAP cerró la conexión.
+imap server closed the connection. server responded: %s	emailadmin	es-es	El servidor IMAP cerró la conexión. El servidor respondió: %s
+imap server hostname or ip address	emailadmin	es-es	Servidor IMAP o dirección IP
+imap server logintyp	emailadmin	es-es	Tipo de sesión del servidor IMAP
+imap server name	emailadmin	es-es	Nombre del servidor IMAP
+imap server port	emailadmin	es-es	Puerto del servidor IMAP
+imap/pop3 server name	emailadmin	es-es	Nombre del servidor POP/IMAP
+in mbyte	emailadmin	es-es	en MBytes
+inactive	emailadmin	es-es	inactivo
+ldap basedn	emailadmin	es-es	basedn para LDAP
+ldap server	emailadmin	es-es	servidor LDAP
+ldap server accounts dn	emailadmin	es-es	DN para cuentas del servidor LDAP
+ldap server admin dn	emailadmin	es-es	DN del administrador del servidor LDAP
+ldap server admin password	emailadmin	es-es	contraseña del administrador del servidor LDAP
+ldap server hostname or ip address	emailadmin	es-es	Nombre del servidor LDAP o dirección IP
+ldap settings	emailadmin	es-es	Configuración LDAP
+leave empty for no quota	emailadmin	es-es	Dejar en blanco para no poner cuota
+mail settings	admin	es-es	Configuración del correo.
+manage stationery templates	emailadmin	es-es	Gestionar plantillas preimpresas
+name of organisation	emailadmin	es-es	Nombre de la organización
+no alternate email address	emailadmin	es-es	Sin dirección de correo alternativa
+no encryption	emailadmin	es-es	Sin cifrar
+no forwarding email address	emailadmin	es-es	Sin dirección de correo para reenviar
+no message returned.	emailadmin	es-es	No se devolvió ningún mensaje.
+no supported imap authentication method could be found.	emailadmin	es-es	No se pudo encontrar ningún método soportado de identificación IMAP.
+order	emailadmin	es-es	orden
+organisation	emailadmin	es-es	organización
+plesk can't rename users --> request ignored	emailadmin	es-es	Plesk no puede renombrar usuarios --> Se ignora la solicitud
+plesk imap server (courier)	emailadmin	es-es	Servidor IMAP Plesk (Courier)
+plesk mail script '%1' not found !!!	emailadmin	es-es	¡No se encontró el script de correo de Plesk '%1'!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	es-es	Plesk requiere que las contraseñas tengan al menos 5 caracteres y no contengan el nombre de la cuenta --> NO se establece la contraseña
+plesk smtp-server (qmail)	emailadmin	es-es	Servidor SMTP de Plesk (Qmail)
+pop3 server hostname or ip address	emailadmin	es-es	Nombre del servidor POP3 o dirección IP
+pop3 server port	emailadmin	es-es	Puerto del servidor POP3
+postfix with ldap	emailadmin	es-es	Postfix con LDAP
+profile access rights	emailadmin	es-es	Derechos de acceso del perfil
+profile is active	emailadmin	es-es	el perfil está activo
+profile list	emailadmin	es-es	Lista de perfiles
+profile name	emailadmin	es-es	Nombre del perfil
+qmaildotmode	emailadmin	es-es	Modo de punto de qmail
+qouta size in mbyte	emailadmin	es-es	Tamaño de la cuota en MBytes
+quota settings	emailadmin	es-es	Configuración de las cuotas
+remove	emailadmin	es-es	borrar
+reset filter	emailadmin	es-es	restablecer filtro
+select type of imap server	emailadmin	es-es	Seleccione el tipo de servidor IMAP
+select type of imap/pop3 server	emailadmin	es-es	Seleccione el tipo de servidor IMAP/POP3
+select type of smtp server	emailadmin	es-es	Seleccione el tipo de servidor SMTP
+send using this email-address	emailadmin	es-es	enviar usando esta dirección de correo electrónico
+server settings	emailadmin	es-es	configuración del servidor
+sieve server hostname or ip address	emailadmin	es-es	Nombre del servidor Sieve o dirección IP
+sieve server port	emailadmin	es-es	Puerto del servidor Sieve
+sieve settings	emailadmin	es-es	Configuración de Sieve
+smtp authentication	emailadmin	es-es	identificación SMTP
+smtp options	emailadmin	es-es	opciones SMTP
+smtp server name	emailadmin	es-es	Nombre del servidor SMTP
+smtp settings	emailadmin	es-es	configuración SMTP
+smtp-server hostname or ip address	emailadmin	es-es	Nombre del servidor SMTP o dirección IP
+smtp-server port	emailadmin	es-es	Puerto del servidor SMTP
+standard	emailadmin	es-es	Estándar
+standard imap server	emailadmin	es-es	Servidor IMAP estándar
+standard pop3 server	emailadmin	es-es	Servidor POP3 estándar
+standard smtp-server	emailadmin	es-es	Servidor SMTP estándar
+stationery	emailadmin	es-es	material preimpreso
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	es-es	El servidor IMAP no parece soportar el método de identificación seleccionado. Por favor, póngase en contacto el administrador de su sistema.
+this php has no imap support compiled in!!	emailadmin	es-es	¡¡Esta instalación de PHP no tiene soporte IMAP!!
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	es-es	Para usar una conexión TLS, debe ejecutar una versión de PHP 5.1.0 o superior.
+unexpected response from server to authenticate command.	emailadmin	es-es	Respuesta inesperada del servidor al comando AUTHENTICATE.
+unexpected response from server to digest-md5 response.	emailadmin	es-es	Respuesta inesperada del servidor a la respuesta Digest-MD5.
+unexpected response from server to login command.	emailadmin	es-es	Respuesta inesperada del servidor al comando LOGIN.
+unknown imap response from the server. server responded: %s	emailadmin	es-es	Respuesta IMAP desconocida del servidor. El servidor respondió: %s
+unsupported action '%1' !!!	emailadmin	es-es	¡La acción '%1' no está soportada!
+update current email address:	emailadmin	es-es	Actualizar la dirección de correo actual:
+use ldap defaults	emailadmin	es-es	usar las opciones predeterminadas para LDAP
+use predefined username and password defined below	emailadmin	es-es	Usar el usuario predefinido y las contraseñas definidas debajo
+use smtp auth	emailadmin	es-es	Usar identificación SMTP
+use tls authentication	emailadmin	es-es	Usar identificación TLS
+use tls encryption	emailadmin	es-es	Usar cifrado TLS
+user can edit forwarding address	emailadmin	es-es	El usuario puede editar la dirección de reenvío
+username (standard)	emailadmin	es-es	usuario (estándar)
+username/password defined by admin	emailadmin	es-es	Usuario/contraseña definida por el administrador
+username@domainname (virtual mail manager)	emailadmin	es-es	usuario@dominio (Gestor de correo virtual)
+users can define their own emailaccounts	emailadmin	es-es	Los usuarios pueden definir sus propias cuentas de correo
+users can define their own identities	emailadmin	es-es	Los usuarios pueden definir sus propias identidades
+users can define their own signatures	emailadmin	es-es	Los usuarios pueden definir sus propias firmas
+users can utilize these stationery templates	emailadmin	es-es	Los usuarios pueden utilizar estas plantillas preimpresas
+vaction messages with start- and end-date require an admin account to be set!	emailadmin	es-es	Los mensajes con fecha de inicio y fin requieren establecer una cuenta de administrador
+virtual mail manager	emailadmin	es-es	Gestor de correo virtual

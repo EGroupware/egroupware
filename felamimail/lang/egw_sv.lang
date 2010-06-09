@@ -1,0 +1,417 @@
+(no subject)	felamimail	sv	(ingen rubrik)
+(only cc/bcc)	felamimail	sv	(endast Cc/Bcc)
+(unknown sender)	felamimail	sv	(okänd avsändare)
+activate	felamimail	sv	Aktivera
+activate script	felamimail	sv	Aktivera skript
+add acl	felamimail	sv	Lägg till ACL
+add address	felamimail	sv	Lägg till adress
+add rule	felamimail	sv	Lägg till regel
+add script	felamimail	sv	Lägg till skript
+add to %1	felamimail	sv	Lägg till %1
+add to address book	felamimail	sv	Lägg till i Adressbok
+add to addressbook	felamimail	sv	Lägg till i Adressbok
+adding file to message. please wait!	felamimail	sv	Bifogar fil i meddelandet. Var god och vänta!
+additional info	felamimail	sv	Övrig information
+address book	felamimail	sv	Adressbok
+address book search	felamimail	sv	Sök i Adressbok
+after message body	felamimail	sv	Efter meddelandets innehåll
+all address books	felamimail	sv	Alla adressböcker
+all folders	felamimail	sv	Alla kataloger
+all of	felamimail	sv	Alla
+allways a new window	felamimail	sv	Alltid nytt fönster
+always show html emails	felamimail	sv	Visa alltid HTML e-post
+and	felamimail	sv	Och
+any of	felamimail	sv	Någon av
+any status	felamimail	sv	Alla status
+anyone	felamimail	sv	Alla
+as a subfolder of	felamimail	sv	Som underkatalog till
+attachments	felamimail	sv	Bilagor
+authentication required	felamimail	sv	Autentisering krävs
+auto refresh folder list	felamimail	sv	Auto uppdatera katalog lista
+back to folder	felamimail	sv	Tillbaks till katalog
+bad login name or password.	felamimail	sv	Ogiltigt användarna eller lösenord
+bad or malformed request. server responded: %s	felamimail	sv	Ogiltig eller ofullständig förfrågan. Server svarade: %s
+bad request: %s	felamimail	sv	Ogiltig förfrågan: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	sv	Baserat på given kriteria kan inkommande meddelanden ha olika bakgrundsfärg i meddelande listan. Detta är hjälper till att skilja på meddelande typ/avsändare.
+bcc	felamimail	sv	Bcc
+before headers	felamimail	sv	Före brevhuvud
+between headers and message body	felamimail	sv	Mellan brevhuvud och meddelandets innehåll
+body part	felamimail	sv	Meddelandeinnehåll
+can't connect to inbox!!	felamimail	sv	Kan inte ansluta till Inkorg
+cc	felamimail	sv	Cc
+change folder	felamimail	sv	Byt katalog
+check message against next rule also	felamimail	sv	Verifiera meddelande även mot nästa regel
+checkbox	felamimail	sv	Kryssruta
+clear search	felamimail	sv	Rensa sökning
+click here to log back in.	felamimail	sv	Till inloggningen
+click here to return to %1	felamimail	sv	Återgå till %1
+close all	felamimail	sv	Stäng alla
+close this page	felamimail	sv	Stäng sidan
+close window	felamimail	sv	Stäng fönster
+color	felamimail	sv	Färg
+compose	felamimail	sv	Skriv
+compress folder	felamimail	sv	Komprimera katalog
+condition	felamimail	sv	vilkor
+configuration	felamimail	sv	Alternativ
+connection dropped by imap server.	felamimail	sv	Anslutningen stängd av IMAP server
+contains	felamimail	sv	Innehåller
+could not complete request. reason given: %s	felamimail	sv	Kunde inte fullfölja förfrågan. Svaret: %s
+could not open secure connection to the imap server. %s : %s.	felamimail	sv	Kunde inte öppna en söker anslutning till IMAP servern. %s: %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	sv	CRAM-MD5 och DIGEST-MD5 kräver att Auth_SASL paketet installerats
+create	felamimail	sv	Skapa
+create folder	felamimail	sv	Skapa Katalog
+create sent	felamimail	sv	Skapa Skickat
+create subfolder	felamimail	sv	Skapa Underkatalog
+create trash	felamimail	sv	Skapa Borttaget
+created folder successfully!	felamimail	sv	Skapade katalog
+dark blue	felamimail	sv	Mörk Blå
+dark cyan	felamimail	sv	Mörk Cyan
+dark gray	felamimail	sv	Mörk Grå
+dark green	felamimail	sv	Mörk Grön
+dark magenta	felamimail	sv	Mörk Magenta
+dark yellow	felamimail	sv	Mörk Gul
+date(newest first)	felamimail	sv	Datum (nyaste först)
+date(oldest first)	felamimail	sv	Datum (äldsta först)
+days	felamimail	sv	Dagar
+deactivate script	felamimail	sv	Inaktivera skript
+default signature	felamimail	sv	Standard signatur
+default sorting order	felamimail	sv	Standard sorterings ordning
+delete all	felamimail	sv	Radera alla
+delete folder	felamimail	sv	Radera katalog
+delete script	felamimail	sv	Radera skript
+delete selected	felamimail	sv	Radera valda
+delete selected messages	felamimail	sv	Radera valad meddelanden
+deleted	felamimail	sv	Raderade
+deleted folder successfully!	felamimail	sv	Katalog raderad
+deleting messages	felamimail	sv	Raderar meddelanden
+disable	felamimail	sv	Inaktivera
+discard	felamimail	sv	Ignorera
+discard message	felamimail	sv	Ignorera meddelande
+display message in new window	felamimail	sv	Visa meddelanden i nytt fönster
+display messages in multiple windows	felamimail	sv	Visa meddelanden i flera fönster
+display of html emails	felamimail	sv	Visning av HTML e-post
+display only when no plain text is available	felamimail	sv	Visa endast när textformat inte är tillgängligt
+display preferences	felamimail	sv	Visa alternativ
+displaying html messages is disabled	felamimail	sv	Cisa HTML meddelanden är inaktiverat
+do it!	felamimail	sv	Gör Det!
+do not use sent	felamimail	sv	Använd inte Skickat
+do not use trash	felamimail	sv	Använd inte Borttaget
+do not validate certificate	felamimail	sv	Validera inte certifikat
+do you really want to delete the '%1' folder?	felamimail	sv	Vill du verkligen radera katalogen '%1'?
+do you really want to delete the selected signatures?	felamimail	sv	Vill du verkligen radera vald signatur?
+does not contain	felamimail	sv	Innehåller inte
+does not match	felamimail	sv	Matchar inte
+does not match regexp	felamimail	sv	Matchar inte regexp
+don't use draft folder	felamimail	sv	Använd inte Utkast
+don't use sent	felamimail	sv	Använd inte Skickat
+don't use trash	felamimail	sv	Använd inte Borttaget
+down	felamimail	sv	Ner
+download	felamimail	sv	Ladda ner
+download this as a file	felamimail	sv	Ladda ner som fil
+draft folder	felamimail	sv	Utkast katalog
+e-mail	felamimail	sv	E-post
+e-mail address	felamimail	sv	E-post adress
+e-mail folders	felamimail	sv	E-post katalog
+edit email forwarding address	felamimail	sv	Ändra e-post vidarebefodrings adressen
+edit filter	felamimail	sv	Ändra filter
+edit rule	felamimail	sv	Ändra regler
+edit selected	felamimail	sv	Ändra valda
+edit vacation settings	felamimail	sv	Ändra frånvaro alternativ
+email address	felamimail	sv	E-post adress
+email forwarding address	felamimail	sv	E-post vidarebefodrings adress
+email signature	felamimail	sv	E-post signatur
+emailaddress	felamimail	sv	E-post adress
+empty trash	felamimail	sv	Töm Borttaget
+enable	felamimail	sv	Aktivera
+encrypted connection	felamimail	sv	Krypterad anslutning
+enter your default mail domain ( from: user@domain )	admin	sv	Standard e-post domän (From: user@domain)
+enter your imap mail server hostname or ip address	admin	sv	IMAP e-post server värdnamn eller IP adress
+enter your sieve server hostname or ip address	admin	sv	SIEVE server värdnamn eller IP adress
+enter your sieve server port	admin	sv	SIEVE server port
+enter your smtp server hostname or ip address	admin	sv	SMTP server värdnamn eller IP adress
+enter your smtp server port	admin	sv	SMTP server port
+error	felamimail	sv	FEL
+error connecting to imap serv	felamimail	sv	Fel: Kunde inte ansluta till IMAP server
+error connecting to imap server. %s : %s.	felamimail	sv	Kunde inte ansluta till IMAP server %s : %s
+error connecting to imap server: [%s] %s.	felamimail	sv	Kunde inte ansluta till IMAP server [%s] %s
+error opening	felamimail	sv	Fel: Kunde inte öppna
+every	felamimail	sv	Varje
+every %1 days	felamimail	sv	Var %1 dag
+expunge	felamimail	sv	Utplåna
+extended	felamimail	sv	Utökad
+felamimail	common	sv	FelaMiMail
+file into	felamimail	sv	Flytta till
+files	felamimail	sv	Filer
+filter active	felamimail	sv	Aktiva filter
+filter name	felamimail	sv	Filter namn
+filter rules	felamimail	sv	Filter regler
+first name	felamimail	sv	Förnamn
+flagged	felamimail	sv	Flaggad
+flags	felamimail	sv	Flaggor
+folder acl	felamimail	sv	Katalog ACL
+folder name	felamimail	sv	Katalognamn
+folder path	felamimail	sv	Katalogsökväg
+folder preferences	felamimail	sv	Katalog alternativ
+folder settings	felamimail	sv	Katalog alternativ
+folder status	felamimail	sv	Katalog status
+folderlist	felamimail	sv	Kataloglista
+foldername	felamimail	sv	Katalognamn
+folders	felamimail	sv	Kataloger
+folders created successfully!	felamimail	sv	Katalogen skapad
+follow	felamimail	sv	Följ
+for mail to be send - not functional yet	felamimail	sv	För meddelande att skicka - inte ännu funktionell
+for received mail	felamimail	sv	För mottagna meddelanden
+forward	felamimail	sv	Vidarebefodra
+forward to	felamimail	sv	Vidarebefodra till
+forward to address	felamimail	sv	Vidarebefodra till adress
+forwarding	felamimail	sv	Vidarebefodrar
+found	felamimail	sv	Hittade
+fri	felamimail	sv	Fre
+from	felamimail	sv	Från
+from(a->z)	felamimail	sv	Från (A->Ö)
+from(z->a)	felamimail	sv	Från (Ö->A)
+full name	felamimail	sv	Fullständigt namn
+greater than	felamimail	sv	Större än
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	sv	Se vidare på adressen <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> för att läsa mer om Squirrelmail.<br>
+header lines	felamimail	sv	Brevhuvud
+hide header	felamimail	sv	Göm brevhuvud
+hostname / address	felamimail	sv	värdnamn / adress
+html	felamimail	sv	HTML
+icons and text	felamimail	sv	Ikoner och text
+icons only	felamimail	sv	Ikoner endast
+identifying name	felamimail	sv	ID namn
+identity	felamimail	sv	Identitet
+if	felamimail	sv	OM
+if from contains	felamimail	sv	om Från innehåller
+if mail header	felamimail	sv	om brevhuvud
+if message size	felamimail	sv	om meddelande storlek
+if subject contains	felamimail	sv	om Ämne innehåller
+if to contains	felamimail	sv	om Till innehåller
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	sv	Om du vill använda SSL eller TLS måste PHP openssl stödet laddas
+illegal folder name.  please select a different name.	felamimail	sv	Ogiltigt katalognamn, var god och välj annat.
+imap	felamimail	sv	IMAP
+imap server	felamimail	sv	IMAP Server
+imap server address	felamimail	sv	IMAP Server Adress
+imap server closed the connection.	felamimail	sv	IMAP server stängde anslutningen
+imap server closed the connection. server responded: %s	felamimail	sv	IMAP server stängde anslutningen. Serverna svarade: %s
+imap server password	felamimail	sv	IMAP Server lösenord
+imap server type	felamimail	sv	IMAP Server typ
+imap server username	felamimail	sv	IMAP Server användarnamn
+imaps authentication	felamimail	sv	IMAPS Autentisering
+imaps encryption only	felamimail	sv	IMAPS Kryptering endast
+in	felamimail	sv	den
+inbox	felamimail	sv	Inkorg
+incoming mail server(imap)	felamimail	sv	Inkommande e-post server (IMAP)
+index order	felamimail	sv	Index Ordning
+info	felamimail	sv	Info
+invalid user name or password	felamimail	sv	Oglitigt användarnamn eller lösenord
+javascript	felamimail	sv	JavaScript
+jumping to end	felamimail	sv	Hoppa till slutet
+jumping to start	felamimail	sv	Hoppa till början
+keep a copy of the message in your inbox	felamimail	sv	Spara en kopia av brev i din Inkorg
+keep local copy of email	felamimail	sv	Spara en lokal kopia av brev
+kilobytes	felamimail	sv	Kb
+language	felamimail	sv	Språk
+last name	felamimail	sv	Efternamn
+left	felamimail	sv	Vänster
+less	felamimail	sv	Färre
+less than	felamimail	sv	Mindre än
+light gray	felamimail	sv	Ljus Grå
+list all	felamimail	sv	Lista alla
+loading	felamimail	sv	Laddar
+location of buttons when composing	felamimail	sv	Knapp placering medans man skriver meddelande
+mail server login type	admin	sv	E-post server inloggnings typ
+mail settings	felamimail	sv	E-post alternativ
+mainmessage	felamimail	sv	huvudmeddelande
+manage emailaccounts	felamimail	sv	Hantera e-postkonton
+manage emailfilter / vacation	preferences	sv	Hantera E-postfilter / Frånvaro
+manage folders	common	sv	Katalog hantering
+manage sieve	common	sv	Hantera Sieve skript
+manage signatures	felamimail	sv	Hantera signaturer
+mark as deleted	felamimail	sv	Markera som raderad
+mark messages as	felamimail	sv	Markera valda meddelanden som
+mark selected as flagged	felamimail	sv	Flagga för uppföljning
+mark selected as read	felamimail	sv	Markera som läst
+mark selected as unflagged	felamimail	sv	Ta bort flagga
+mark selected as unread	felamimail	sv	Markera som oläst
+match	felamimail	sv	Matcha
+matches	felamimail	sv	Matchar
+matches regexp	felamimail	sv	Matchar regexp
+max uploadsize	felamimail	sv	Max uppladdnings storlek
+message highlighting	felamimail	sv	Meddelande fokusering
+message list	felamimail	sv	Meddelande lista
+messages	felamimail	sv	Meddelanden
+mon	felamimail	sv	Mån
+move	felamimail	sv	Flytta
+move messages	felamimail	sv	Flytta meddelanden
+move selected to	felamimail	sv	Flytta valda till
+move to trash	felamimail	sv	Flytta till Borttaget
+moving messages to	felamimail	sv	Flyttar meddelanden till
+name	felamimail	sv	Namn
+never display html emails	felamimail	sv	Visa inte HTML meddelanden
+new	common	sv	Nya
+new filter	felamimail	sv	Nytt filter
+next	felamimail	sv	Nästa
+next message	felamimail	sv	Nästa meddelande
+no active imap server found!!	felamimail	sv	Hittade ingen IMAP server!
+no encryption	felamimail	sv	Ingen kryptering
+no filter	felamimail	sv	Inga filter
+no folders found	felamimail	sv	Ingen katalog funnen
+no folders were found to subscribe to!	felamimail	sv	Inga kataloger hittades att prenumerera
+no folders were found to unsubscribe from!	felamimail	sv	Inga kataloger hittades att avprenumerera
+no highlighting is defined	felamimail	sv	Ingen fokusering definierad
+no message returned.	felamimail	sv	Inget svar meddelandes
+no messages found...	felamimail	sv	Inga meddelanden ...
+no messages were selected.	felamimail	sv	Inga meddelanden valda
+no plain text part found	felamimail	sv	Hittade inget textfält
+no previous message	felamimail	sv	Inga tidigare meddelanden
+no supported imap authentication method could be found.	felamimail	sv	Kunde inte hitta supporterad IMAP autentiserings metod
+no valid emailprofile selected!!	felamimail	sv	Ingen giltig e-post profil vald
+none	felamimail	sv	Inga
+on behalf of	felamimail	sv	Företräder
+one address is not valid	felamimail	sv	En adress är ogiltig
+only inbox	felamimail	sv	Endast Inkorg
+only one window	felamimail	sv	Endast ett fönster
+only unseen	felamimail	sv	Endast olästa
+open all	felamimail	sv	Öpnna alla
+options	felamimail	sv	Alternativ
+or	felamimail	sv	eller
+organisation	felamimail	sv	Organisation
+organization	felamimail	sv	Organisation
+organization name	admin	sv	Organisations namn
+outgoing mail server(smtp)	felamimail	sv	Utgående e-post server (SMTP)
+participants	felamimail	sv	Deltagare
+personal information	felamimail	sv	Personlig information
+please select a address	felamimail	sv	Välj adress
+please select the number of days to wait between responses	felamimail	sv	Antal dagar mellan svar
+please supply the message to send with auto-responses	felamimail	sv	Meddelande att skicka med autosvar
+port	felamimail	sv	Port
+posting	felamimail	sv	Postat
+previous	felamimail	sv	Tidigare
+previous message	felamimail	sv	Tidigare meddelande
+print it	felamimail	sv	Skriv ut
+print this page	felamimail	sv	Skriv ut sida
+quicksearch	felamimail	sv	Snabbsök
+read	felamimail	sv	Läst
+reading	felamimail	sv	Läser
+receive notification	felamimail	sv	Mottag notifieringar
+recent	felamimail	sv	Tidigare
+refresh time in minutes	felamimail	sv	Uppdaterings intervall i minuter
+reject with	felamimail	sv	Avvisa med
+remove	felamimail	sv	Radera
+remove immediately	felamimail	sv	Radera omedelbart
+rename	felamimail	sv	Byt namn
+rename a folder	felamimail	sv	Byt namn på katalog
+rename folder	felamimail	sv	Byt namn på katalog
+renamed successfully!	felamimail	sv	Namnet bytt
+replied	felamimail	sv	Svarade
+reply	felamimail	sv	Svara
+reply all	felamimail	sv	Svara alla
+reply to	felamimail	sv	Svara till
+replyto	felamimail	sv	Svara till
+respond	felamimail	sv	Svara
+respond to mail sent to	felamimail	sv	Svars meddelande skickat till
+return	felamimail	sv	Återvänd
+return to options page	felamimail	sv	Återvänd till alternativ
+right	felamimail	sv	Höger
+row order style	felamimail	sv	Rad sortering
+rule	felamimail	sv	Regel
+sat	felamimail	sv	Lör
+save	felamimail	sv	Spara
+save as draft	felamimail	sv	Spara som utkast
+save as infolog	felamimail	sv	Spara som InfoLogg
+save changes	felamimail	sv	Spara ändringar
+save message to disk	felamimail	sv	Spara meddelanden till disk
+script name	felamimail	sv	Skript namn
+script status	felamimail	sv	Skript status
+search	felamimail	sv	Sök
+search for	felamimail	sv	Sök efter
+select	felamimail	sv	Välj
+select all	felamimail	sv	Välj alla
+select emailprofile	felamimail	sv	Välj e-post profil
+select folder	felamimail	sv	Välj katalog
+select your mail server type	admin	sv	Välj e-post server typ
+send	felamimail	sv	Skicka
+send a reject message	felamimail	sv	Skicka ett nekande meddelande
+sent folder	felamimail	sv	Skickat katalog
+show header	felamimail	sv	Visa brevhuvud
+show new messages on main screen	felamimail	sv	Visa nya meddelanden på Startsidan
+sieve script name	felamimail	sv	Sieve skript namn
+sieve settings	admin	sv	Sieve alternativ
+signature	felamimail	sv	Signatur
+simply click the target-folder	felamimail	sv	Välj målkatalog
+size	felamimail	sv	Storlek
+size of editor window	felamimail	sv	Editor fönster storlek
+size(...->0)	felamimail	sv	Storlek (...->0)
+size(0->...)	felamimail	sv	Storlek (0->...)
+skipping forward	felamimail	sv	Hoppar framåt
+skipping previous	felamimail	sv	Hoppar bakåt
+small view	felamimail	sv	Liten vy
+smtp settings	admin	sv	SMTP alternativ
+subject	felamimail	sv	Ämne
+subject(a->z)	felamimail	sv	Ämne (A->Ö)
+subject(z->a)	felamimail	sv	Ämne (Ö->A)
+submit	felamimail	sv	Skicka
+subscribe	felamimail	sv	Prenumerera
+subscribed	felamimail	sv	Prenumererad
+subscribed successfully!	felamimail	sv	Prenumeration lyckad
+sun	felamimail	sv	Sön
+table of contents	felamimail	sv	Innehåll
+text only	felamimail	sv	Text endast
+the connection to the imap server failed!!	felamimail	sv	Anslutningen till IMAP servern misslyckades
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	sv	IMAP servern verkar inte stödja den autentiserings metod du valt. Var god och kontakta administratör.
+the mimeparser can not parse this message.	felamimail	sv	MIME-tolken kunde inte tolka meddelandet
+then	felamimail	sv	SEN
+this folder is empty	felamimail	sv	Katalogen är tom
+this php has no imap support compiled in!!	felamimail	sv	Denna installation har inte IMAP stöd kompilerat i PHP.
+thu	felamimail	sv	Tor
+to	felamimail	sv	Till
+to mail sent to	felamimail	sv	Till meddelande skickat till
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	sv	För att använda TLS anslutning måste du ha PHP version 5.1.0 eller högre
+translation preferences	felamimail	sv	Översättnings alternativ
+translation server	felamimail	sv	Översättnings server
+trash fold	felamimail	sv	Borttaget
+trash folder	felamimail	sv	Borttaget
+tue	felamimail	sv	Tis
+type	felamimail	sv	Typ
+unexpected response from server to authenticate command.	felamimail	sv	Oväntat svar från servern på AUTENTISERINGS kommandot
+unexpected response from server to digest-md5 response.	felamimail	sv	Oväntat svar från servern på Digest-MD5
+unexpected response from server to login command.	felamimail	sv	Oväntat svar från servern på INLOGGINGS kommandot
+unflagged	felamimail	sv	Oflaggad
+unknown err	felamimail	sv	Okänt fel
+unknown error	felamimail	sv	Okänt fel
+unknown imap response from the server. server responded: %s	felamimail	sv	Okänt IMAP svar från server. Svarade: %s
+unknown sender	felamimail	sv	Okänd avsändare
+unknown user or password incorrect.	felamimail	sv	Ogiltig användare eller fel lösenord
+unread	common	sv	Oläst
+unseen	felamimail	sv	Oläst
+unselect all	felamimail	sv	Avmarkera alla
+unsubscribe	felamimail	sv	Avprenumerera
+unsubscribed	felamimail	sv	Avprenumererad
+unsubscribed successfully!	felamimail	sv	Avprenumererad
+up	felamimail	sv	Upp
+updating message status	felamimail	sv	Uppdaterar meddelande status
+updating view	felamimail	sv	Uppdaterar vy
+use <a href="%1">emailadmin</a> to create profiles	felamimail	sv	Använd <a href="%1">E-post Admin</a> för att skapa profiler
+use a signature	felamimail	sv	Använd signatur
+use a signature?	felamimail	sv	Använd signatur?
+use addresses	felamimail	sv	Använd adresser
+use custom settings	felamimail	sv	Använd anpassade inställningar
+use regular expressions	felamimail	sv	Använd regexp
+use smtp auth	admin	sv	Använd SMTP autentisering
+users can define their own emailaccounts	admin	sv	Användare kan definiera egna epost konton
+vacation notice	felamimail	sv	Frånvaro meddelande
+validate certificate	felamimail	sv	Validera certifikat
+view full header	felamimail	sv	Visa hela brevhuvudet
+view header lines	felamimail	sv	Visa brevhuvudet
+view message	felamimail	sv	Visa meddelandet
+viewing full header	felamimail	sv	Visar hela brevhuvudet
+viewing message	felamimail	sv	Visar meddelandet
+viewing messages	felamimail	sv	Visar meddelanden
+wed	felamimail	sv	Ons
+when deleting messages	felamimail	sv	Vid meddelande radering
+with message	felamimail	sv	Med meddelande
+with message "%1"	felamimail	sv	Med meddelande "%1"
+wrap incoming text at	felamimail	sv	Avrunda inkommande text vid
+writing	felamimail	sv	Skriver
+wrote	felamimail	sv	Skrev

@@ -1,0 +1,66 @@
+add profile	emailadmin	fa	افزودن مجموعه تنظیمات
+admin dn	emailadmin	fa	dn مدیر
+admin password	emailadmin	fa	گذرواژه مدیر
+admin passwort	emailadmin	fa	گذرواژه مدیر
+admin username	emailadmin	fa	نام کاربری مدیر
+advanced options	emailadmin	fa	تنظیمات پیشرفته
+alternate email address	emailadmin	fa	نشانی پست الکترونیکی دیگر
+any application	emailadmin	fa	همه کاربردها
+any group	emailadmin	fa	همه گروهها
+can be used by application	emailadmin	fa	استفاده شود توسط کاربرد
+can be used by group	emailadmin	fa	استفاده شود توسط گروه
+default	emailadmin	fa	پیش فرض
+deliver extern	emailadmin	fa	حمل بیرونی
+do you really want to delete this profile	emailadmin	fa	آیا واقعا می خواهید این مجموعه تنظیمات را حذف کنید؟
+domainname	emailadmin	fa	نام حوزه
+edit email settings	emailadmin	fa	ویرایش تنظیمات نامه الکترونیکی
+email account active	emailadmin	fa	حساب نامه الکترونیکی فعال
+email address	emailadmin	fa	نشانی الکترونیکی
+emailadmin	emailadmin	fa	مدیر رایانامه
+enable sieve	emailadmin	fa	فعالسازی Sieve
+encryption settings	emailadmin	fa	تنظیمات رمز نگاری
+enter your default mail domain (from: user@domain)	emailadmin	fa	حوزه پیش فرض خود را وارد کنید:(مثلا: fgpars.net)
+forward also to	emailadmin	fa	همچنین ارسال به
+forward email's to	emailadmin	fa	ارسال نامه ها به
+forward only	emailadmin	fa	فقط ارسال به
+global options	emailadmin	fa	گزینه های عمومی
+imap admin password	admin	fa	گذرواژه مدیر IMAP
+imap admin user	admin	fa	کاربر مدیر IMAP
+imap server hostname or ip address	emailadmin	fa	نام میزبان یا نشانی IP کارگزار IMAP
+imap server logintyp	emailadmin	fa	نوع ورود کارگزار IMAP
+imap server port	emailadmin	fa	درگاه کارگزار IMAP
+imap/pop3 server name	emailadmin	fa	نام کارگزار IMAP/POP3
+in mbyte	emailadmin	fa	به مگابایت
+leave empty for no quota	emailadmin	fa	برای بدون سهمیه بودن، خالی بگذارید
+mail settings	admin	fa	تنظیمات نامه
+name of organisation	emailadmin	fa	نام سازمان
+no alternate email address	emailadmin	fa	بدون نشانی نامه الکترونیکی دیگر
+no forwarding email address	emailadmin	fa	بدون نشانی نامه الکترونیکی ارسال به دیگری
+order	emailadmin	fa	ترتیب
+organisation	emailadmin	fa	سازمان
+pop3 server hostname or ip address	emailadmin	fa	نام میزبان یا نشانی IP کارگزار POP3
+pop3 server port	emailadmin	fa	درگاه کارگزار POP3
+profile access rights	emailadmin	fa	حقوق دسترسی مجموعه تنظیمات
+profile list	emailadmin	fa	لیست مجموعه تنظیمات
+profile name	emailadmin	fa	نام مجموعه تنظیمات
+qouta size in mbyte	emailadmin	fa	اندازه سهمیه به مگابایت
+quota settings	emailadmin	fa	تنظیمات سهمیه
+remove	emailadmin	fa	حذف
+select type of imap/pop3 server	emailadmin	fa	نوع کارگزار IMAP/POP3 را انتخاب کنید
+select type of smtp server	emailadmin	fa	نوع کارگزار SMTP را انتخاب کنید
+server settings	emailadmin	fa	تنظیمات کارگزار
+sieve server hostname or ip address	emailadmin	fa	نام میزبان یا نشانی IP کارگزار Sieve
+sieve server port	emailadmin	fa	درگاه کارگزار Sieve
+sieve settings	emailadmin	fa	تنظیمات Sieve
+smtp authentication	emailadmin	fa	تصدیق smtp
+smtp server name	emailadmin	fa	نام کارگزار SMTP
+smtp settings	emailadmin	fa	تنظیمات smtp
+smtp-server hostname or ip address	emailadmin	fa	نشانی IP یا نام میزبان SMTP
+smtp-server port	emailadmin	fa	درگاه کارگزار SMTP
+standard	emailadmin	fa	استاندارد
+standard imap server	emailadmin	fa	کارگزار استاندارد IMAP
+standard pop3 server	emailadmin	fa	کارگزار استاندارد POP3
+standard smtp-server	emailadmin	fa	کارگزار استاندارد SMTP
+use ldap defaults	emailadmin	fa	از پیش فرضهای LDAP استفاده شود
+use smtp auth	emailadmin	fa	استفاده از تصدیق در SMTP
+users can define their own emailaccounts	emailadmin	fa	کاربران می توانند حسابهای کاربری را خودشان تعریف کنند

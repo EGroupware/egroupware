@@ -1,0 +1,61 @@
+add profile	emailadmin	lv	Pievienot profilu
+admin dn	emailadmin	lv	administratora dn
+admin password	emailadmin	lv	administratora parole
+admin username	emailadmin	lv	administratora lietotājvārds
+advanced options	emailadmin	lv	uzlabotās iespējas
+alternate email address	emailadmin	lv	alternatīvas e-pasta adreses
+cyrus imap server	emailadmin	lv	Cyrus IMAP serveris
+cyrus imap server administration	emailadmin	lv	Cyrus IMAP servera administrēšana
+default	emailadmin	lv	noklusējums
+do you really want to delete this profile	emailadmin	lv	Vai tu tiešām vēlies dzēst šo profilu?
+domainname	emailadmin	lv	domēna vārds
+edit email settings	emailadmin	lv	rediģēt e-pasta uzstādījumus
+email account active	emailadmin	lv	e-pasta konts aktīvs
+email address	emailadmin	lv	e-pasta adrese
+enable cyrus imap server administration	emailadmin	lv	atļaut Cyrus IMAP servera administrēšanu
+enable sieve	emailadmin	lv	atļaut Sieve
+enter your default mail domain (from: user@domain)	emailadmin	lv	Ievadi noklusēto pasta domēnu (no: lietotājs@domēns)
+forward also to	emailadmin	lv	pārsūtīt arī
+forward email's to	emailadmin	lv	pārsūtīt e-pasta vēstules
+forward only	emailadmin	lv	tikai pārsūtīt
+imap admin password	admin	lv	IMAP administratora parole
+imap admin user	admin	lv	IMAP administrators
+imap c-client version < 2001	emailadmin	lv	IMAP C-Client Version <2001
+imap server hostname or ip address	emailadmin	lv	IMAP servera hosta vārds vai IP adrese
+imap server logintyp	emailadmin	lv	IMAP servera autorizācijas veids
+imap server port	emailadmin	lv	IMAP servera ports
+imap/pop3 server name	emailadmin	lv	IMAP/POP3 servera nosaukums
+ldap basedn	emailadmin	lv	LDAP bāzes dn
+ldap server	emailadmin	lv	LDAP serveris
+ldap server accounts dn	emailadmin	lv	LDAP servera konti DN
+ldap server admin dn	emailadmin	lv	LDAP servera administratora DN
+ldap server admin password	emailadmin	lv	LDAP servera administratora parole
+ldap server hostname or ip address	emailadmin	lv	LDAP servera hosta vārds vai IP adrese
+ldap settings	emailadmin	lv	LDAP uzstādījumi
+mail settings	admin	lv	Pasta uzstādījumi
+name of organisation	emailadmin	lv	Organizācijas nosaukums
+no alternate email address	emailadmin	lv	nav alternatīvas e-pasta adreses
+no forwarding email address	emailadmin	lv	nav pārsūtāmās e-pasta adreses
+pop3 server hostname or ip address	emailadmin	lv	POP3 servera hosta vārds vai IP adrese
+pop3 server port	emailadmin	lv	POP3 servera ports
+profile list	emailadmin	lv	Profila saraksts
+profile name	emailadmin	lv	Profila vārds
+remove	emailadmin	lv	pārvietot
+select type of imap/pop3 server	emailadmin	lv	Atzīmēt IMAP/POP3 servera tipu
+select type of smtp server	emailadmin	lv	Atzīmēt SMTP servera tipu
+sieve server hostname or ip address	emailadmin	lv	<b>?Sieve?</b> servera hosta vārds vai IP adrese
+sieve server port	emailadmin	lv	Sieve servera ports
+sieve settings	emailadmin	lv	Sieve uzstadījumi
+smtp server name	emailadmin	lv	SMTP servera nosaukums
+smtp-server hostname or ip address	emailadmin	lv	SMTP servera hosta vārds vai IP adrese
+smtp-server port	emailadmin	lv	SMTP servera ports
+standard	emailadmin	lv	Standarta
+standard imap server	emailadmin	lv	Standarta IMAP serveris
+standard pop3 server	emailadmin	lv	Standarta POP3 serveris
+standard smtp-server	emailadmin	lv	Standarta SMTP serveris
+use ldap defaults	emailadmin	lv	lieto LDAP noklusējumus
+use smtp auth	emailadmin	lv	Lieto SMTP autentifikāciju
+use tls authentication	emailadmin	lv	Lieto TLS autentifikāciju
+use tls encryption	emailadmin	lv	Lieto TLS šifrēšanu
+users can define their own emailaccounts	emailadmin	lv	LIetotāji  paši var definēt savus e-pasta kontus
+virtual mail manager	emailadmin	lv	VIrtuālais MAIL ManaGeR
