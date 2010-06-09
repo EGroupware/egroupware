@@ -237,7 +237,7 @@ class infolog_groupdav extends groupdav_handler
 						switch($filter['attrs']['name'])
 						{
 							case 'VTODO':
-							//case 'VCALENDAR':
+							case 'VCALENDAR':
 								break;
 							default:
 								return false;
