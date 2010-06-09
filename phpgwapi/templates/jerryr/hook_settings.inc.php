@@ -27,7 +27,8 @@
    $GLOBALS['settings'] = array(
 	  'prefssection' => array(
 		 'type'  => 'section',
-		 'title' => 'Preferences for the jerryr template set',
+		 'title' => lang('Preferences for the %1 template set','jerryr'),
+   		 'no_lang'=> true,
 		 'xmlrpc' => False,
 		 'admin'  => False
 	  ),

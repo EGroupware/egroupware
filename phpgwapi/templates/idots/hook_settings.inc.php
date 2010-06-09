@@ -27,8 +27,9 @@
    $GLOBALS['settings'] = array(
 	  'prefssection' => array(
 		 'type'  => 'section',
-		 'title' => 'Preferences for the idots template set',
-		 'xmlrpc' => False,
+		 'title' => lang('Preferences for the %1 template set','Idots'),
+   		 'no_lang'=> true,
+   		 'xmlrpc' => False,
 		 'admin'  => False,
 	  ),
 	  'show_general_menu' => array(

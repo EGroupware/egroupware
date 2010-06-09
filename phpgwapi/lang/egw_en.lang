@@ -533,7 +533,7 @@ postal	common	en	Postal
 powered by	common	en	Powered by
 powered by egroupware version %1	common	en	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
 preferences	common	en	Preferences
-preferences for the idots template set	common	en	Preferences for the idots template set
+preferences for the %1 template set	preferences	en	Preferences for the %1 template set
 prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
 prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
 previous page	common	en	Previous page
