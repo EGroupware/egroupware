@@ -1,0 +1,604 @@
+%1 email addresses inserted	common	id	%1 alamat email disisipkan
+%1 file	common	id	berkas %1
+(shift-)click or drag to change value	jscalendar	id	(Shift-)Klik atau seret untuk mengubah nilai
+00 (disable)	admin	id	00 (disable)
+1 day	common	id	1 Hari
+1 hour	common	id	1 Jam
+1 month	common	id	1 Bulan
+1 week	common	id	1 Minggu
+13 (ntp)	admin	id	13 (ntp)
+80 (http)	admin	id	80 (http)
+about	common	id	Tentang
+about %1	common	id	Tentang %1
+about egroupware	common	id	Tentang eGroupware
+about the calendar	jscalendar	id	Tentang Kalender
+access	common	id	Akses
+access not permitted	common	id	Akses tidak diijinkan
+account is expired	common	id	Akoun kadaluarsa
+accounts	common	id	Akoun
+acl	common	id	ACL
+action	common	id	Tindakan
+active	common	id	Aktif
+add	common	id	Tambah
+add %1 category for	common	id	Tambah %1 kategori untuk
+add category	common	id	Tambah kategori
+add shortcut	common	id	Tambah Shortcut
+add sub	common	id	Tambah sub
+addressbook	common	id	Buku Alamat
+admin	common	id	Admin
+administration	common	id	Administrasi
+afghanistan	common	id	AFGHANISTAN
+albania	common	id	ALBANIA
+algeria	common	id	ALJAZAIR
+all	common	id	Semua
+all fields	common	id	semua field
+all languages	common	id	semua bahasa
+alphabet	common	id	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	id	Alternate style-sheet:
+american samoa	common	id	SAMOA AMERIKA
+an error happened	common	id	Terjadi kesalahan
+andorra	common	id	ANDORA
+angola	common	id	ANGOLA
+anguilla	common	id	ANGUILA
+antarctica	common	id	ANTARTIKA
+antigua and barbuda	common	id	ANTIGUA DAN BARBUDA
+application	common	id	Aplikasi
+apply	common	id	Terapkan
+april	common	id	April
+argentina	common	id	ARGENTINA
+armenia	common	id	ARMENIA
+aruba	common	id	ARUBA
+august	common	id	Agustus
+australia	common	id	AUSTRALIA
+austria	common	id	AUSTRIA
+author	common	id	Penulis
+autosave default category	common	id	Simpan otomatis Kategori Bawaan
+azerbaijan	common	id	AZERBAIJAN
+back	common	id	Kembali
+background color:	common	id	Warna Belakang:
+bahamas	common	id	BAHAMA
+bahrain	common	id	BAHRAIN
+bangladesh	common	id	BANGLADESH
+barbados	common	id	BARBADOS
+bcc	common	id	BCC
+belarus	common	id	BELARUSIA
+belgium	common	id	BELGIA
+belize	common	id	BELIZE
+benin	common	id	BENIN
+bermuda	common	id	BERMUDA
+bhutan	common	id	BHUTAN
+bold	common	id	Bold
+bolivia	common	id	BOLIVIA
+border	common	id	Border
+bosnia and herzegovina	common	id	BOSNIA DAN HERZEGOVINA
+botswana	common	id	BOTSWANA
+bottom	common	id	Bawah
+bouvet island	common	id	KEPULAUAN BOUVET
+brazil	common	id	BRASIL
+british indian ocean territory	common	id	TERITORI SAMUDERA INDIA INGGRIS
+brunei darussalam	common	id	BRUNEI DARUSALAM
+bulgaria	common	id	BULGARIA
+bulgarian	common	id	Bulgaria
+burkina faso	common	id	BURKINA FASO
+burundi	common	id	BURUNDI
+calendar	common	id	Kalender
+cambodia	common	id	KAMBOJA
+cameroon	common	id	KAMERUN
+canada	common	id	KANADA
+cancel	common	id	Batal
+cape verde	common	id	CAPE VERDE
+caption	common	id	Caption
+categories	common	id	Kategori
+categories for	common	id	kategori untuk
+category	common	id	Kategori
+category %1 has been added !	common	id	Kategori %1 telah ditambahkan!
+category %1 has been updated !	common	id	Kategori %1 telah dikinikan!
+cayman islands	common	id	KEPULAUAN CAYMAN
+cc	common	id	CC
+centered	common	id	tengah
+central african republic	common	id	REPUBLIK AFRIKA TENGAH
+chad	common	id	CHAD
+change	common	id	Perubahan
+charset	common	id	utf-8
+check installation	common	id	Cek instalasi
+check now	common	id	Cek Sekarang
+chile	common	id	CHILI
+china	common	id	CHINA
+choose the category	common	id	Pilih kategori
+christmas island	common	id	KEPULAUAN NATAL
+clear	common	id	Bersihkan
+clear form	common	id	Kosongkan Form
+click	common	id	Klik
+close	common	id	Tutup
+close sidebox	common	id	Tutup sidebox
+cocos (keeling) islands	common	id	KEPULAUAN COCOS (KEELING)
+collection empty.	common	id	Koleksi kosong.
+collection listing	common	id	Daftar Koleksi
+colombia	common	id	KOLOMBIA
+common preferences	common	id	Kesukaan Bersama
+comoros	common	id	KOMORO
+company	common	id	Kompani
+congo	common	id	KONGO
+congo, the democratic republic of the	common	id	REPUBLIK DEMOKRATIK KONGO
+contacting server...	common	id	Menghubungi Server...
+content type	common	id	Content type
+cook islands	common	id	KEPULAUAN COOK
+copy	common	id	Salin
+costa rica	common	id	KOSTA RIKA
+cote d ivoire	common	id	PANTAI GADING
+create	common	id	Bikin
+created by	common	id	Dibikin Oleh
+croatia	common	id	KROASIA
+cuba	common	id	KUBA
+currency	common	id	Matauang
+current	common	id	Current
+current users	common	id	Pengguna saat ini
+cyprus	common	id	SIPRUS
+czech republic	common	id	REPUBLIK CESNYA
+database error	common	id	Database error
+database error!	common	id	Database error!
+date	common	id	Tanggal
+date due	common	id	Tanggal Berakhir
+date selection:	jscalendar	id	Pemilihan tanggal:
+december	common	id	Desember
+default category	common	id	Kategori Bawaan
+delete	common	id	Hapus
+delete row	common	id	Hapus baris
+denmark	common	id	DENMARK
+description	common	id	Uraian
+detail	common	id	Detil
+details	common	id	Detil
+directory	common	id	Direktori
+disable slider effects	common	id	Disable slider effects
+disabled	common	id	Disabled
+display %s first	jscalendar	id	Tampilkan %s lebih dulu
+djibouti	common	id	DJIBOUTI
+doctype:	common	id	DOCTYPE:
+document properties	common	id	Properti Dokumen
+document title:	common	id	Judul Dokumen:
+domain	common	id	Domain
+domestic	common	id	Domestik
+dominica	common	id	DOMINIKA
+dominican republic	common	id	REPUBLIK DOMINIKA
+done	common	id	Selesai
+drag to move	jscalendar	id	Seretlah untuk memindahkan
+e-mail	common	id	E-Mail
+east timor	common	id	TIMOR LESTE
+eastern european	common	id	Eropa Timur
+ecuador	common	id	EKUADOR
+edit	common	id	Edit
+edit %1 category for	common	id	Edit kategori %1 untuk
+edit categories	common	id	Edit Kategori
+edit category	common	id	Edit kategori
+egroupware	common	id	eGroupWare
+egroupware api version	common	id	Versi API eGroupWare
+egypt	common	id	MESIR
+el salvador	common	id	EL SALVADOR
+email	common	id	E-Mail
+enabled	common	id	Enabled
+end date	common	id	Tanggal berakhir
+end time	common	id	Waktu berakhir
+entry not found!	common	id	Entri tidak ditemukan!
+entry updated sucessfully	common	id	Entri sukses dikinikan
+equatorial guinea	common	id	GUINEA KHATULISTIWA
+eritrea	common	id	ERITREA
+error	common	id	Error
+estonia	common	id	ESTONIA
+etag	common	id	ETag
+ethiopia	common	id	ETHIOPIA
+everything	common	id	Segalanya
+exact	common	id	eksak
+falkland islands (malvinas)	common	id	KEPULAUAN FALKLAND (MALVINAS)
+faroe islands	common	id	KEPULAUAN FAROE
+fax number	common	id	nomor fax
+february	common	id	Pebruari
+fields	common	id	Field
+fiji	common	id	FIJI
+files	common	id	Berkas
+filter	common	id	Saringan
+finland	common	id	FINLANDIA
+first name	common	id	Nama depan
+first name of the user, eg. "%1"	common	id	nama depan pengguna, mis. "%1"
+first page	common	id	Halaman awal
+firstname	common	id	Namadepan
+fixme!	common	id	FIXME!
+folder already exists.	common	id	Folder sudah ada.
+force selectbox	common	id	Force SelectBox
+forever	common	id	Selamanya
+france	common	id	PERANCIS
+french guiana	common	id	GUYANA PERANCIS
+french polynesia	common	id	POLYNESIA PERANCIS
+french southern territories	common	id	TERITORI SELATAN PERANCIS
+friday	common	id	Jumat
+ftp	common	id	FTP
+fullname	common	id	Namalengkap
+fullscreen mode	common	id	Mode Layarpenuh
+gabon	common	id	GABON
+gambia	common	id	GAMBIA
+general menu	common	id	Menu Umum
+georgia	common	id	GEORGIA
+german	common	id	Jerman
+germany	common	id	JERMAN
+ghana	common	id	GHANA
+gibraltar	common	id	GIBRALTAR
+global	common	id	Global
+global public	common	id	Global Publik
+go today	jscalendar	id	Ke Hari ini
+grant access	common	id	Berikan Akses
+greece	common	id	YUNANI
+greek	common	id	Yunani
+greenland	common	id	GREENLAND
+grenada	common	id	GRENADA
+group	common	id	Kelompok
+group access	common	id	Akses Kelompok
+group name	common	id	Nama kelompok
+group public	common	id	Kelompok Publik
+groups	common	id	Kelompok
+guadeloupe	common	id	GUADELOUPE
+guam	common	id	GUAM
+guatemala	common	id	GUATEMALA
+guinea	common	id	GUINEA
+guinea-bissau	common	id	GUINEA-BISSAU
+guyana	common	id	GUYANA
+haiti	common	id	HAITI
+heard island and mcdonald islands	common	id	PULAU HEARD DAN KEPULAUAN MCDONALD
+height	common	id	Tinggi (H)
+help	common	id	Bantuan
+high	common	id	Tinggi
+highest	common	id	Tertinggi
+holy see (vatican city state)	common	id	HOLY SEE (NEGARA KOTA VATICAN)
+home	common	id	Beranda
+home email	common	id	email rumah
+honduras	common	id	HONDURAS
+hong kong	common	id	HONG KONG
+hungary	common	id	HONGARIA
+iceland	common	id	ISLANDIA
+image url	common	id	Image URL
+india	common	id	INDIA
+indonesia	common	id	INDONESIA
+insert column after	common	id	Sisipkan kolom setelah
+insert column before	common	id	Sisipkan kolom sebelum
+insert row after	common	id	Sisipkan baris setelah
+insert row before	common	id	Sisipkan baris sebelum
+invalid filename	common	id	Nama berkas salah
+invalid ip address	common	id	Alamat IP salah
+invalid password	common	id	Password salah
+iran, islamic republic of	common	id	IRAN
+iraq	common	id	IRAK
+ireland	common	id	IRLANDIA
+israel	common	id	ISRAEL
+italic	common	id	Italic
+italy	common	id	ITALIA
+jamaica	common	id	JAMAIKA
+january	common	id	Januari
+japan	common	id	JEPANG
+japanese	common	id	Jepang
+jordan	common	id	YORDANIA
+july	common	id	Juli
+jun	common	id	Jun
+june	common	id	Juni
+justify center	common	id	Rata Tengah
+justify full	common	id	Rata Penuh
+justify left	common	id	Rata Kiri
+justify right	common	id	Rata Kanan
+kazakstan	common	id	KAZAKSTAN
+kenya	common	id	KENYA
+keywords	common	id	Katakunci
+kiribati	common	id	KIRIBATI
+korea, democratic peoples republic of	common	id	KOREA UTARA
+korea, republic of	common	id	KOREA SELATAN
+korean	common	id	Korea
+kuwait	common	id	KUWAIT
+kyrgyzstan	common	id	KYRGYZSTAN
+language	common	id	Bahasa
+lao peoples democratic republic	common	id	LAOS
+last modified	common	id	Pengubahan terakhir
+last name	common	id	Nama belakang
+last name of the user, eg. "%1"	common	id	nama belakang pengguna, mis. "%1"
+last page	common	id	Halaman akhir
+lastname	common	id	Namabelakang
+latvia	common	id	LATVIA
+ldap-mgr	common	id	LDAP-Manager
+lebanon	common	id	LEBANON
+left	common	id	Kiri
+lesotho	common	id	LESOTHO
+liberia	common	id	LIBERIA
+libyan arab jamahiriya	common	id	LIBYAN ARAB JAMAHIRIYA
+license	common	id	Lisensi
+liechtenstein	common	id	LIECHTENSTEIN
+list	common	id	Daftar
+list members	common	id	Daftar anggota
+lithuania	common	id	LITHUANIA
+local	common	id	Lokal
+login	common	id	Masuk
+loginid	common	id	LoginID
+logout	common	id	Keluar
+lost login id	common	id	Lupa LoginID
+lost password	common	id	Lupa password
+low	common	id	Rendah
+lowest	common	id	Terendah
+luxembourg	common	id	LUXEMBOURG
+macau	common	id	MACAU
+macedonia, the former yugoslav republic of	common	id	MACEDONIA, BEKAS REPUBLIK YUGOSLAVIA
+madagascar	common	id	MADAGASKAR
+main category	common	id	Kategori Utama
+main screen	common	id	Layar Utama
+maintainer	common	id	Pemelihara
+malawi	common	id	MALAWI
+malaysia	common	id	MALAYSIA
+maldives	common	id	MALADEWA
+mali	common	id	MALI
+malta	common	id	MALTA
+march	common	id	Maret
+marshall islands	common	id	KEPULAUAN MARSHALL
+martinique	common	id	MARTINIQUE
+mauritania	common	id	MAURITANIA
+mauritius	common	id	MAURITIUS
+may	common	id	Mei
+mayotte	common	id	MAYOTTE
+medium	common	id	Medium
+menu	common	id	Menu
+message	common	id	Pesan
+mexico	common	id	MEKSIKO
+micronesia, federated states of	common	id	FEDERASI NEGARA MICRONESIA
+minute	common	id	menit
+moldova, republic of	common	id	REPUBLIK MOLDOVA
+monaco	common	id	MONACO
+monday	common	id	Senin
+mongolia	common	id	MONGOLIA
+montenegro	common	id	MONTENEGRO
+montserrat	common	id	MONTSERRAT
+morocco	common	id	MAROKO
+mozambique	common	id	MOZAMBIQUE
+multiple	common	id	jamak
+myanmar	common	id	MYANMAR
+name	common	id	Nama
+name of the user, eg. "%1"	common	id	nama pengguna, mis. "%1"
+namibia	common	id	NAMIBIA
+nauru	common	id	NAURU
+nepal	common	id	NEPAL
+netherlands	common	id	BELANDA
+netherlands antilles	common	id	ANTILLES BELANDA
+never	common	id	Never*
+new caledonia	common	id	KALEDONIA BARU
+new main category	common	id	Kategori Utama baru
+new value	common	id	Nilai Baru
+new zealand	common	id	SELANDIA BARU
+next	common	id	Lanjut
+next month (hold for menu)	jscalendar	id	Bulan mendatang (tekan, menu)
+next page	common	id	Halaman selanjutnya
+next year (hold for menu)	jscalendar	id	Tahun mendatang (tekan, menu)
+nicaragua	common	id	NIKARAGUA
+niger	common	id	NIGER
+nigeria	common	id	NIGERIA
+niue	common	id	NIUE
+no	common	id	Tidak
+no subject	common	id	Tanpa Subyek
+none	common	id	Tiada
+norfolk island	common	id	KEPULAUAN NORFOLK
+normal	common	id	Normal
+northern mariana islands	common	id	KEPULAUAN MARIANA UTARA
+norway	common	id	NORWEGIA
+not	common	id	not
+not assigned	common	id	not assigned
+note	common	id	Catatan
+notes	common	id	Catatan
+notifications	common	id	notifikasi
+notify window	common	id	Jendela Pemberitahuan
+november	common	id	November
+october	common	id	Oktober
+ok	common	id	OK
+old value	common	id	Nilai Lama
+oman	common	id	OMAN
+on mouse over	common	id	On Mouse Over
+only private	common	id	hanya privat
+only yours	common	id	hanya milik anda
+open notify window	common	id	Buka jendela pemberitahuan
+open popup window	common	id	Buka jendela popup
+open sidebox	common	id	Buka sidebox
+ordered list	common	id	Daftar Teratur
+original	common	id	Asal-Muasal
+other	common	id	Lainnya
+overview	common	id	Sekilas
+owner	common	id	Pemilik
+page	common	id	Halaman
+pakistan	common	id	PAKISTAN
+palau	common	id	PALAU
+palestinian territory, occupied	common	id	PALESTINA
+panama	common	id	PANAMA
+papua new guinea	common	id	PAPUA NUGINI
+paraguay	common	id	PARAGUAY
+parcel	common	id	Parsel
+password	common	id	Password
+permission denied!	common	id	Ijin ditolak!
+personal	common	id	Pribadi
+peru	common	id	PERU
+philippines	common	id	FILIPINA
+phone number	common	id	nomor telepon
+phpgwapi	common	id	eGroupWare API
+pitcairn	common	id	PITCAIRN
+please select	common	id	Pilihlah
+please wait...	common	id	Tunggu...
+poland	common	id	POLANDIA
+portugal	common	id	PORTUGAL
+postal	common	id	Pos
+powered by	common	id	Digerakan oleh
+powered by egroupware version %1	common	id	Digerakan oleh <a href="http://www.egroupware.org">eGroupWare</a> versi %1
+preferences	common	id	Kesukaan
+prev. month (hold for menu)	jscalendar	id	Bulan lalu (tekan, menu)
+prev. year (hold for menu)	jscalendar	id	Tahun lalu (tekan, menu)
+previous page	common	id	Halaman Sebelumnya
+primary style-sheet:	common	id	Primary style-sheet:
+print	common	id	Cetak
+priority	common	id	Prioritas
+private	common	id	Privat
+programs	common	id	Program
+project	common	id	Proyek
+properties	common	id	Properti
+public	common	id	publik
+puerto rico	common	id	PUERTO RICO
+qatar	common	id	QATAR
+read	common	id	Baca
+reading	common	id	membaca
+register	common	id	Daftar
+regular	common	id	Reguler
+reject	common	id	Tolak
+remember me	common	id	Ingat saya
+remove selected accounts	common	id	buang akoun terpilih
+remove shortcut	common	id	Buang Shortcut
+rename	common	id	Ubah
+replace	common	id	Ganti
+replace with	common	id	Ganti dengan
+reunion	common	id	REUNION
+right	common	id	Kanan
+romania	common	id	RUMANIA
+russian	common	id	Rusia
+russian federation	common	id	FEDERASI RUSIA
+rwanda	common	id	RWANDA
+saint helena	common	id	SAINT HELENA
+saint kitts and nevis	common	id	SAINT KITTS DAN NEVIS
+saint lucia	common	id	SAINT LUCIA
+saint pierre and miquelon	common	id	SAINT PIERRE DAN MIQUELON
+saint vincent and the grenadines	common	id	SAINT VINCENT DAN THE GRENADINES
+samoa	common	id	SAMOA
+san marino	common	id	SAN MARINO
+sao tome and principe	common	id	SAO TOME DAN PRINCIPE
+saturday	common	id	Sabtu
+saudi arabia	common	id	ARAB SAUDI
+save	common	id	Simpan
+search	common	id	Cari
+search %1 '%2'	common	id	Mencari %1 '%2'
+search accounts	common	id	Cari akoun
+search or select accounts	common	id	cari atau pilih akoun
+second	common	id	detik
+section	common	id	Seksi
+select	common	id	Pilih
+select all %1 %2 for %3	common	id	Pilih semua %1 %2 untuk %3
+select category	common	id	Pilih Kategori
+select date	common	id	Pilih tanggal
+select group	common	id	Pilih kelompok
+select home email address	common	id	Pilih alamat email rumah
+select multiple accounts	common	id	Pilih beberapa akoun
+select one	common	id	Pilih satu
+select user	common	id	Pilih pengguna
+select work email address	common	id	Pilih alamat email kerja
+selection	common	id	Pemilihan
+send	common	id	Kirim
+senegal	common	id	SENEGAL
+september	common	id	September
+serbia	common	id	SERBIA
+server name	common	id	Nama Server
+setup	common	id	Setup
+setup main menu	common	id	Menu Utama Setup
+seychelles	common	id	SEYCHELLES
+show all	common	id	tampilkan semua
+show all categorys	common	id	Tampilkan semua kategori
+show as topmenu	common	id	Tampilkan sebagai Topmenu
+show clock?	common	id	Tampilkan Jam?
+show in sidebox	common	id	Tampilkan pada sidebox
+show menu	common	id	tampilkan menu
+showing %1	common	id	menampilkan %1
+showing %1 - %2 of %3	common	id	menampilkan %1 - %2 dari %3
+sierra leone	common	id	SIERRA LEONE
+singapore	common	id	SINGAPURA
+site configuration	common	id	Konfigurasi Situs
+size	common	id	Ukuran
+slovakia	common	id	SLOVAKIA
+slovenia	common	id	SLOVENIA
+solomon islands	common	id	KEPULAUAN SOLOMON
+somalia	common	id	SOMALIA
+sorry, your login has expired	login	id	Sorry, your login has expired
+south africa	common	id	AFRIKA SELATAN
+south georgia and the south sandwich islands	common	id	GEORGIA SELATAN DAN KEPULAUAN SANDWICH SELATAN
+spain	common	id	SPANYOL
+sri lanka	common	id	SRI LANKA
+start date	common	id	Tanggal memulai
+start time	common	id	Jam memulai
+start with	common	id	Memulai dengan
+starting up...	common	id	Memulai...
+status	common	id	Status
+subject	common	id	Subyek
+submit	common	id	Kirimkan
+sudan	common	id	SUDAN
+sunday	common	id	Minggu
+suriname	common	id	SURINAME
+svalbard and jan mayen	common	id	SVALBARD DAN JAN MAYEN
+swaziland	common	id	SWAZILAND
+sweden	common	id	SWEDIA
+switzerland	common	id	SWISS
+syrian arab republic	common	id	REPUBLIK ARAB SYRIA
+table properties	common	id	Properti Tabel
+taiwan	common	id	TAIWAN/TAIPEI
+tajikistan	common	id	TAJIKISTAN
+tanzania, united republic of	common	id	REPUBLIK TANZANIA
+text color:	common	id	Warna Teks:
+thailand	common	id	THAILAND
+thursday	common	id	Kamis
+tiled	common	id	tiled
+time	common	id	Waktu
+time selection:	jscalendar	id	Pemilihan waktu:
+time zone	common	id	Zonawaktu
+time zone offset	common	id	Offset zonawaktu
+title	common	id	Judul
+to	common	id	Kepada
+today	common	id	Hari ini
+todays date, eg. "%1"	common	id	tanggal sekarang, mis. "%1"
+togo	common	id	TOGO
+tokelau	common	id	TOKELAU
+tonga	common	id	TONGA
+top	common	id	Atas
+total	common	id	Total
+trinidad and tobago	common	id	TRINIDAD DAN TOBAGO
+tuesday	common	id	Selasa
+tunisia	common	id	TUNISIA
+turkey	common	id	TURKI
+turkmenistan	common	id	TURKMENISTAN
+turks and caicos islands	common	id	KEPULAUAN TURKS DAN CAICOS
+tuvalu	common	id	TUVALU
+type	common	id	Tipe
+uganda	common	id	UGANDA
+ukraine	common	id	UKRANIA
+united arab emirates	common	id	UNI EMIRAT ARAB
+united kingdom	common	id	KERAJAAN INGGRIS
+united states	common	id	AMERIKA SERIKAT
+united states minor outlying islands	common	id	AMERIKA SERIKAT TANPA KEPULAUAN LUAR
+unknown	common	id	Takdikenal
+update	common	id	Perbarui
+upload	common	id	Unggah
+url	common	id	URL
+uruguay	common	id	URUGUAY
+user	common	id	Pengguna
+user accounts	common	id	Akoun*
+user groups	common	id	Kelompok*
+username	common	id	Pengguna
+users	common	id	pengguna
+users choice	common	id	Pilihan pengguna
+uzbekistan	common	id	UZBEKISTAN
+value	common	id	Nilai
+vanuatu	common	id	VANUATU
+venezuela	common	id	VENEZUELA
+version	common	id	Versi
+viet nam	common	id	VIETNAM
+view	common	id	View
+virgin islands, british	common	id	KEPULAUAN VIRGIN, INGGRIS
+virgin islands, u.s.	common	id	KEPULAUAN VIRGIN, AS.
+wallis and futuna	common	id	WALLIS AND FUTUNA
+wednesday	common	id	Rabu
+welcome	common	id	Selamat Datang
+western european	common	id	Eropa Barat
+western sahara	common	id	SAHARA BARAT
+width	common	id	Lebar (W)
+wk	jscalendar	id	mg
+work email	common	id	email kerja
+writing	common	id	Menulis
+written by:	common	id	Ditulis oleh:
+year	common	id	Tahun
+yemen	common	id	YAMAN
+yes	common	id	Ya
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	id	Anda mencoba Aplikasi eGroupWare: %1, namun anda tidak memiliki ijin untuk mengakses aplikasi ini.
+your message could <b>not</b> be sent!<br>	common	id	Pesan anda <b>tidak</b> dapat dikirimkan!<br>
+your message has been sent	common	id	Pesan telah terkirim
+your session could not be verified.	login	id	Sesi anda tidak dapat diperiksa.
+zambia	common	id	ZAMBIA
+zimbabwe	common	id	ZIMBABWE
+zoom	common	id	Zoom

@@ -1,0 +1,287 @@
+%1 added	addressbook	id	%1 ditambahkan
+%1 contact(s) %2	addressbook	id	%1 kontak %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	id	%1 kontak %2, %3 gagal karena kurang kewenangan !!!
+%1 contacts updated (%2 errors).	addressbook	id	%1 kontak dikinikan (%2 kesalahan).
+%1 fields in %2 other organisation member(s) changed	addressbook	id	%1 field dalam %2 anggota organisasi lain diubah
+%1 not implemented for %2!	addressbook	id	%1 tidak di-implementasikan untuk %2!
+%1 records imported	addressbook	id	%1 rekaman diimpor
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	id	%1 rekaman dibaca (belum diimpor, anda dapat %2kembali%3 dan kosongkan Tes impor)
+%1 starts with '%2'	addressbook	id	%1 diawali dengan '%2'
+(e.g. 1969)	addressbook	id	(mis. 1969)
+(empty = use global limit, no = no export at all)	admin	id	(empty = gunakan pembatasan global, no = tidak ada ekspor sama sekali)
+@-eval() is only availible to admins!!!	addressbook	id	@-eval() hanya tersedia untuk admin!!!
+account repository	admin	id	Tempat Akoun
+accounts	addressbook	id	Akoun
+actions	addressbook	id	Tindakan
+add %1	addressbook	id	Tambah %1
+add a contact to this organisation	addressbook	id	Tambah kontak untuk organisasi ini
+add a new contact	addressbook	id	Tambah kontak baru
+add a new infolog	addressbook	id	Tambah InfoLog baru
+add a new list	addressbook	id	Tambah daftar baru
+add or delete categories	addressbook	id	Tambah atau hapus Kategori
+add to distribution list:	addressbook	id	Masukkan ke daftar distribusi:
+added	addressbook	id	ditambahkan
+address book	common	id	Buku Alamat
+address book - vcard in	addressbook	id	Buku Alamat - vCard in
+address book - view	addressbook	id	Buku Alamat - lihat
+address line 2	addressbook	id	Alamat Baris 2
+address type	addressbook	id	Tipe Alamat
+addressbook	addressbook	id	Buku Alamat
+addressbook csv export	addressbook	id	Ekspor CSV Buku Alamat
+addressbook field	addressbook	id	Field Buku Alamat
+addressbook menu	addressbook	id	Menu Buku Alamat
+addressbook preferences	addressbook	id	Kesukaan Buku Alamat
+addressbook the contact should be saved to	addressbook	id	Kontak Buku Alamat disimpan ke
+addressbook the contact should be shown	addressbook	id	Kontak Buku Alamat ditampilkan
+addressbook-fieldname	addressbook	id	Nama field Buku Alamat
+addvcard	addressbook	id	Tambah vCard
+advanced search	addressbook	id	Pencarian Canggih
+all contacts	addressbook	id	Semua kontak
+always	addressbook	id	selalu
+are you shure you want to delete this contact?	addressbook	id	Anda yakin mau menghapus kontak ini?
+assistent	addressbook	id	Asisten
+assistent phone	addressbook	id	Telepon Asisten
+at the moment the following document-types are supported:	addressbook	id	Saat ini, tipe dokumen yang didukung adalah sebagai berikut:
+birthday	common	id	HUT
+birthdays	common	id	HUT
+blank	addressbook	id	Kosong
+business	common	id	Bisnis
+business address	addressbook	id	Alamat Bisnis
+business city	addressbook	id	Kota Bisnis
+business country	addressbook	id	Negara Bisnis
+business email	addressbook	id	Email Bisnis
+business fax	addressbook	id	Fax Bisnis
+business phone	addressbook	id	Telepon Bisnis
+business state	addressbook	id	Provinsi Bisnis
+business street	addressbook	id	Jalan Bisnis
+business zip code	addressbook	id	Kodepos Bisnis
+calendar fields:	addressbook	id	Field Kalender:
+calendar uri	addressbook	id	URI Kalender
+car phone	addressbook	id	Telepon Kendaraan
+categorie	addressbook	id	kategori
+categorie added	addressbook	id	Kategori ditambahkan
+categorie delete	addressbook	id	Kategori dihapus
+categories, notes, ...	addressbook	id	Kategori, Catatan, ...
+category tree	admin	id	Pohon Kategori
+cell phone	addressbook	id	Telepon Seluler
+change all organisation members	addressbook	id	ubah semua anggota organisasi
+check all	addressbook	id	Contreng semua
+city	common	id	Kota
+company	common	id	Lembaga
+company name	addressbook	id	nama lembaga
+configuration	common	id	Konfigurasi
+contact	common	id	Kontak
+contact application	admin	id	Aplikasi Kontak
+contact copied	addressbook	id	Kontak disalin
+contact deleted	addressbook	id	Kontak dihapus
+contact id	addressbook	id	ID Kontak
+contact maintenance	admin	id	Pemeliharaan kontak
+contact modified by %1 at %2	addressbook	id	Kontak diubah oleh %1 pada %2
+contact not found!	addressbook	id	Kontak tidak ditemukan!
+contact repository	admin	id	Tempat Kontak
+contact saved	addressbook	id	Kontak disimpan
+contact settings	admin	id	Pengaturan Kontak
+contactform	addressbook	id	Formulir kontak
+contains	addressbook	id	mengandung
+copied by %1, from record #%2.	addressbook	id	Disalin oleh %1, dari rekaman #%2.
+country	common	id	Negara
+create new links	addressbook	id	Bikin tautan baru
+created	addressbook	id	Dibikin
+credit	addressbook	id	Kredit
+custom	addressbook	id	Custom
+default	addressbook	id	bawaan
+default address format	addressbook	id	Format alamat bawaan
+default addressbook for adding contacts	addressbook	id	Buku alamat bawaan untuk penambahan kontak
+default file as format	addressbook	id	Format <em>file as</em> bawaan
+default filter	addressbook	id	Saringan Bawaan
+delete selected distribution list!	addressbook	id	Hapus daftar distribusi terpilih!
+delete this contact	addressbook	id	Hapus kontak ini
+deleted	addressbook	id	terhapus
+deletes the photo	addressbook	id	Hapus foto
+department	common	id	Departemen
+departments	addressbook	id	departemen
+display contact	addressbook	id	Tampilkan Kontak
+distribution list deleted	addressbook	id	Daftar distribusi dihapus
+distribution lists	addressbook	id	Daftar Distribusi
+distribution lists, ...	addressbook	id	Daftar Distribusi, ...
+do your really want to delete this contact?	addressbook	id	Anda sungguh ingin menghapus kontak ini?
+document '%1' does not exist or is not readable for you!	addressbook	id	Dokumen '%1' tidak ada atau tidak terbaca oleh anda!
+doesn't matter	addressbook	id	tidak penting
+domestic	addressbook	id	Domestik
+don't hide empty columns	addressbook	id	Jangan sembunyikan kolom kosong
+download	addressbook	id	Unduh
+download this contact as vcard file	addressbook	id	unduh kontak sebagai vCard
+duration	addressbook	id	Durasi
+edit phonenumbers -	addressbook	id	Edit Nomor telepon -
+email & internet	addressbook	id	Email & Internet
+email addresses (comma separated) to send the contact data	addressbook	id	Alamat Email (dipisahkan koma) untuk mengirim data-data kontak
+empty	admin	id	Kosong
+empty for all	addressbook	id	kosongkan untuk semuanya
+end	addressbook	id	Akhir
+existing links	addressbook	id	Tautan yang ada
+export	addressbook	id	ekspor
+export as csv	addressbook	id	Ekspor sebagai CSV
+export as vcard	addressbook	id	Ekspor sebagai vCard
+export contacts	addressbook	id	Ekspor Kontak
+export file name	addressbook	id	Nama berkas ekspor
+export from addressbook	addressbook	id	Ekspor dari Buku Alamat
+export selection	addressbook	id	Ekspor pilihan
+exported	addressbook	id	diekspor
+extra	addressbook	id	Tambahan
+extra private	addressbook	id	Privat tambahan
+fax	addressbook	id	Fax
+fax number	common	id	Nomor Fax
+field %1 has been added !	addressbook	id	Field %1 telah ditambahkan!
+field %1 has been updated !	addressbook	id	Field %1 telah dikinikan!
+field name	addressbook	id	Nama Field
+fields to show in address list	addressbook	id	Field yang ditampilkan dalam daftar alamat
+fieldseparator	addressbook	id	Pemisah field
+fieldseperator	addressbook	id	Pemisah field
+freebusy uri	addressbook	id	URI Senggang/sibuk
+full name	addressbook	id	Nama Lengkap
+general	addressbook	id	Umum
+general fields:	addressbook	id	Field Umum:
+geo	addressbook	id	GEO
+global categories	addressbook	id	Kategori Global
+grant addressbook access	common	id	Ijinkan Akses BukuAlamat
+group %1	addressbook	id	Kelompok %1
+h	addressbook	id	h
+hide accounts from addressbook	addressbook	id	Sembunyikan akoun dari bukualamat
+hides accounts completly from the adressbook.	addressbook	id	Sembunyikan sama sekali dari buku alamat.
+home address	addressbook	id	Alamat Rumah
+home address, birthday, ...	addressbook	id	Alamat Rumah, HUT, ...
+home city	addressbook	id	Kota Rumah
+home country	addressbook	id	Negara Rumah
+home email	addressbook	id	EMail Rumah
+home phone	addressbook	id	Telepon Rumah
+home state	addressbook	id	Provinsi Rumah
+home street	addressbook	id	Jalan Rumah
+home zip code	addressbook	id	Kodepos Rumah
+icon	addressbook	id	Ikon
+ignore first line	addressbook	id	abaikan baris pertama
+import	addressbook	id	Impor
+import contacts	addressbook	id	Impor Kontak
+import csv-file into addressbook	addressbook	id	Impor berkas-CSV ke Buku Alamat
+import file	addressbook	id	Impor Berkas
+import from	addressbook	id	Impor dari
+import from ldif, csv, or vcard	addressbook	id	Impor dari LDIF, CSV, atau vCard
+import from outlook	addressbook	id	Impor dari Outlook
+import multiple vcard	addressbook	id	Impor beberapa vCard
+in %1 days (%2) is %3's birthday.	addressbook	id	Tinggal %1 hari (%2) adalah HUT %3.
+infolog	addressbook	id	InfoLog
+insert in document	addressbook	id	Sisipkan dalam dokumen
+international	addressbook	id	Internasional
+internet	addressbook	id	Internet
+label	addressbook	id	Label
+last date	addressbook	id	Tanggal terakhir
+last modified	addressbook	id	Diubah terakhir
+last modified by	addressbook	id	Diubah terakhir oleh
+ldif	addressbook	id	LDIF
+line 2	addressbook	id	Baris 2
+links	addressbook	id	Tautan
+list all categories	addressbook	id	Daftar semua kategori
+list already exists!	addressbook	id	Daftar telah ada!
+list created	addressbook	id	Daftar dibuat
+load sample file	addressbook	id	Muatkan berkas contoh
+load vcard	addressbook	id	Muatkan vCard
+location	addressbook	id	Lokasi
+locations	addressbook	id	lokasi
+manage mapping	addressbook	id	Mengelola pemetaan
+mark records as private	addressbook	id	Tandai rekaman sebagai privat
+merged	addressbook	id	digabung
+message after submitting the form	addressbook	id	Pesan setelah mengirimkan formulir
+middle name	addressbook	id	Nama Tengah
+migration finished	addressbook	id	Migrasi selesai
+migration to ldap	admin	id	Migrasi ke LDAP
+mobile	addressbook	id	Bergerak
+mobile phone	addressbook	id	Telepon Bergerak
+modem phone	addressbook	id	Telepon Modem
+more ...	addressbook	id	Selebihnya...
+move to addressbook:	addressbook	id	Pindahkan ke buku alamat:
+moved	addressbook	id	dipindahkan
+multiple vcard	addressbook	id	Beberapa VCard
+name for the distribution list	addressbook	id	Nama daftar distribusi
+name, address	addressbook	id	Nama, Alamat
+new contact submitted by %1 at %2	addressbook	id	Kontak baru dikirim oleh %1 pada %2
+next date	addressbook	id	Tanggal selanjutnya
+no categories selected	addressbook	id	Tiada kategori yang dipilih
+no vcard	addressbook	id	Tiada vCard
+number	addressbook	id	Nomor
+number of records to read (%1)	addressbook	id	Jumlah rekord yang dibaca (%1)
+options for type	admin	id	Opsi Tipe
+organisation	addressbook	id	Organisasi
+organisations	addressbook	id	Organisasi
+organisations by departments	addressbook	id	Organisasi, departemen
+organisations by location	addressbook	id	Organisasi, lokasi
+other number	addressbook	id	Nomor Lain
+other phone	addressbook	id	Telepon Lain
+own sorting	addressbook	id	Pengurutan pribadi
+pager	common	id	Pager
+parcel	addressbook	id	Parsel
+participants	addressbook	id	Peserta
+permission denied !!!	addressbook	id	Ijin ditolak !!!
+phone number	common	id	Nomor Telepon
+phone numbers	common	id	Nomor Telepon
+photo	addressbook	id	Foto
+please select only one category	addressbook	id	Mohon hanya memilih satu kategori
+postal	common	id	Pos
+pref	addressbook	id	kesukaan
+preferred email address to use in distribution lists	addressbook	id	Alamat email yang disukai untuk digunakan pada daftar distribusi
+preferred phone	addressbook	id	telepon kesukaan
+preferred type of email address to add for distribution lists	addressbook	id	Tipe alamat email yang disukai untuk ditambahkan pada daftar distribusi
+prefix	addressbook	id	Sebutan/Gelar
+public key	addressbook	id	Kunci Publik
+read only	addressbook	id	hanya baca
+record access	addressbook	id	Akses Rekaman
+record owner	addressbook	id	Pemilik Rekaman
+region	addressbook	id	Kawasan
+remove selected contacts from distribution list	addressbook	id	Buang kontak terpilih dari daftar distribusi
+removed from distribution list	addressbook	id	Dibuang dari daftar distribusi
+repetition	addressbook	id	Pengulangan
+required fields *	addressbook	id	Field diperlukan *
+role	addressbook	id	Peran
+room	addressbook	id	Ruang
+search for '%1'	addressbook	id	Mencari '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	id	Select a portrait format jpeg photo. It will be resized to 60 pixel width.
+select a view	addressbook	id	Pilih tampilan
+select addressbook type	addressbook	id	Pilih tipe buku alamat
+select all	addressbook	id	Pilih semua
+select migration type	admin	id	Pilih tipe migrasi
+selected contacts	addressbook	id	Kontak terpilih
+seperator	addressbook	id	Pemisah
+show	addressbook	id	Tampilkan
+stadt	addressbook	id	Mulai
+start	admin	id	Mulai
+startrecord	addressbook	id	Awal rekaman
+state	common	id	Provinsi
+street	common	id	Jalan
+subject for email	addressbook	id	Subyek email
+suffix	addressbook	id	Akhiran/Gelar
+tel home	addressbook	id	Tel rumah
+telephony integration	admin	id	Keterpaduan telepon
+thank you for contacting us.	addressbook	id	Terimakasih telah menghubungi kami.
+that field name has been used already !	addressbook	id	Nama field tersebut telah digunakan!
+there was an error saving your data :-(	addressbook	id	Ada kesalahan dalam menyimpan data anda :-(
+timezone	addressbook	id	Zonawaktu
+today is %1's birthday!	common	id	Hari ini adalah HUT %1!
+tomorrow is %1's birthday.	common	id	Esok adalah HUT %1!
+translation	addressbook	id	Terjemahan
+two of: %1	addressbook	id	dua dari: %1
+type	addressbook	id	Tipe
+unique id (uid)	addressbook	id	Unique ID (UID)
+updated	addressbook	id	Dikinikan
+upload or delete the photo	addressbook	id	Unggah atau hapus foto
+use country list	addressbook	id	Gunakan Daftar Negara
+vcard	common	id	vCard
+verification	addressbook	id	Pengujian
+view linked infolog entries	addressbook	id	Lihat entri InfoLog terkait
+weekday	addressbook	id	Hari kerja
+whole query	addressbook	id	seluruh query
+work phone	addressbook	id	Telepon Kerja
+wrong - try again ...	addressbook	id	Keliru - coba lagi...
+you can respond by visiting:	addressbook	id	Untuk melihatnya, kunjungi:
+you must select a vcard. (*.vcf)	addressbook	id	Anda musti memilih vCard. (*.vcf)
+you must select at least 1 column to display	addressbook	id	Anda musti memilih sedikitnya 1 kolom untuk menampilkan
+you need to select a distribution list	addressbook	id	Anda perlu memilih daftar distribusi
+you need to select some contacts first	addressbook	id	Anda perlu memilih beberapa kontak
+zip code	common	id	Kodepos

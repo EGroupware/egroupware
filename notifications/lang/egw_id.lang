@@ -1,0 +1,21 @@
+common chains	notifications	id	common chains
+disabled chains	notifications	id	disabled chains
+e-mail only	notifications	id	Hanya E-Mail
+egroupware-popup backend	admin	id	EGroupware-Popup backend
+egroupware-popup only	notifications	id	EGroupware-Popup only
+egroupware-popup verbosity	notifications	id	EGroupware-Popup verbosity
+enabled chains	notifications	id	enabled chains
+folder	notifications	id	folder
+from	notifications	id	dari
+linked entries:	notifications	id	entri terkait:
+message from	notifications	id	pesan dari
+minutes	notifications	id	menit
+notification	common	id	notifikasi
+poll interval	notifications	id	poll interval
+preferences for notification	notifications	id	kesukaan untuk notifikasi
+received	notifications	id	received
+sms backend	admin	id	SMS backend
+sms only	notifications	id	Hanya SMS
+windows-popup backend	admin	id	Windows-Popup backend
+windows-popup only	notifications	id	Hanya Windows-Popup
+you've got new mail	notifications	id	Anda mendapat email baru
