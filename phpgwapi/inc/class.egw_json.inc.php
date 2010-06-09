@@ -31,8 +31,16 @@ class egw_json_request
  		}
 		else
 		{
-			//Decode the JSON input data into associative arrays		
-			if (($json = json_decode(stripslashes($input_data[0]), true)))
+			if(!is_array($input_data))
+			{
+				//Decode the JSON input data into associative arrays
+				$json = json_decode($input_data, true);
+			}
+			else
+			{
+				$json = $input_data;
+			}
+			if(is_array($json))
 			{
 				//Get the request array
 				if (isset($json['request']))
