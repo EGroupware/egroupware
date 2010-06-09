@@ -484,7 +484,7 @@ abstract class egw_framework
 	 * @param string $app
 	 * @return string
 	 */
-	public function index($app)
+	public static function index($app)
 	{
 		$data =& $GLOBALS['egw_info']['user']['apps'][$app];
 		if (!isset($data))
@@ -693,36 +693,11 @@ abstract class egw_framework
 	{
 		$java_script = '';
 
-		// allways load jquery (not -ui) and egw_json
-		$GLOBALS['egw']->js->validate_file('jquery','jquery');
-		$GLOBALS['egw']->js->validate_file('.','egw_json');
-
-		// always include javascript helper functions
-		$GLOBALS['egw']->js->validate_file('jsapi','jsapi');
-
 		// GLOBAL var to tell egroupware wether or not to enable the IE selectBox resize hack
 		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_ie_dropdownmenuhack'])
 		{
 			$java_script .= "<script type=\"text/javascript\">\nvar enable_ie_dropdownmenuhack=1;\n</script>\n";
 		}
-		//viniciuscb: in Concisus this condition is inexistent, and in all
-		//pages the javascript globals are inserted. Today, because
-		//filescenter needs these javascript globals, this
-		//include_jsbackend is a must to the javascript globals be
-		//included.
-		if ($GLOBALS['egw_info']['flags']['include_jsbackend'])
-		{
-			if (!$GLOBALS['egw_info']['flags']['nojsapi'])
-			{
-				$GLOBALS['egw']->js->validate_jsapi();
-			}
-
-			if(@is_object($GLOBALS['egw']->js))
-			{
-				$java_script .= $GLOBALS['egw']->js->get_javascript_globals();
-			}
-		}
-
 		if ($GLOBALS['egw']->acl->check('run',1,'notifications') && !$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxpopup'])
 		{
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
@@ -749,10 +724,7 @@ abstract class egw_framework
 			$java_script .= $GLOBALS['egw_info']['flags']['java_script_thirst'] . "\n";
 		}
 
-		if(@is_object($GLOBALS['egw']->js))
-		{
-			$java_script .= $GLOBALS['egw']->js->get_script_links();
-		}
+		$java_script .= self::get_script_links();
 
 		if(@isset($_GET['menuaction']))
 		{
@@ -768,24 +740,6 @@ abstract class egw_framework
 			$java_script .= $GLOBALS['egw_info']['flags']['java_script'] . "\n";
 		}
 		return $java_script;
-	}
-
-	/**
-	 * Returns on(Un)Load attributes from js class
-	 *
-	 * @author Dave Hall - skwashd at egroupware.org
-	 * @returns string body attributes
-	 */
-	protected static function _get_body_attribs()
-	{
-		if(@is_object($GLOBALS['egw']->js))
-		{
-			return $GLOBALS['egw']->js->get_body_attribs();
-		}
-		else
-		{
-			return '';
-		}
 	}
 
 	/**
@@ -971,6 +925,128 @@ abstract class egw_framework
 	 * @param string $url
 	 */
 	abstract function open_manual_js($url);
+	
+	/**
+	 * Methods to add javascript to framework
+	 */
+
+	/**
+	 * Body tags for onLoad, onUnload and onResize
+	 * 
+	 * @var array
+	 */
+	protected static $body_tags = array();
+	
+	/**
+	* Sets an onLoad action for a page
+	*
+	* @param string javascript to be used
+	*/
+	static function set_onload($code)
+	{
+		self::$body_tags['onLoad'] .= $code;
+	}
+
+	/**
+	* Sets an onUnload action for a page
+	*
+	* @param string javascript to be used
+	*/
+	static function set_onunload($code)
+	{
+		self::$body_tags['onUnload'] .= $code;
+	}
+
+	/**
+	* Sets an onResize action for a page
+	*
+	* @param string javascript to be used
+	*/
+	static function set_onresize($code)
+	{
+		self::$body_tags['onResize'] .= $code;
+	}
+	
+	/**
+	* Adds on(Un)Load= attributes to the body tag of a page
+	*
+	* @returns string the attributes to be used
+	*/
+	static protected function _get_body_attribs()
+	{
+		$js = '';
+		foreach(self::$body_tags as $what => $data)
+		{
+			if (!empty($data))
+			{
+				$js .= ' '.$what.'="' . str_replace(array('\\\'','"','\\','&#39;'),array('&#39;','\\"','\\\\','\\\''),$data) . '"';
+			}
+		}
+		return $js;
+	}
+	
+	/**
+	 * Content from validate_file calls plus preloaded files
+	 * 
+	 * @var array
+	 */
+	protected static $js_include_files = array(
+		// allways load jquery (not -ui) and egw_json first
+		'/phpgwapi/js/jquery/jquery.js',
+		'/phpgwapi/js/./egw_json.js',
+		// always include javascript helper functions
+		'/phpgwapi/js/jsapi/jsapi.js',
+	);
+
+	/**
+	* Checks to make sure a valid package and file name is provided
+	*
+	* @param string $package package to be included
+	* @param string $file file to be included - no ".js" on the end
+	* @param string $app application directory to search - default = phpgwapi
+	* @param boolean $append=true should the file be added 
+	*
+	* @discuss The browser specific option loads the file which is in the correct
+	*          browser folder. Supported folder are those supported by class.browser.inc.php
+	*
+	* @returns bool was the file found?
+	*/
+	static function validate_file($package, $file, $app='phpgwapi')
+	{
+		//echo "<p>".__METHOD__."($package,$file,$app) --> ".EGW_INCLUDE_ROOT ."/$app/js/$package/$file.js</p>\n";
+		if (is_readable(EGW_INCLUDE_ROOT.($path="/$app/js/$package/$file.js")) ||
+			$app != 'phpgwapi' && is_readable(EGW_INCLUDE_ROOT.($path="/phpgwapi/js/$package/$file.js")))
+		{
+			if (!self::$js_include_files || !in_array($path,self::$js_include_files))
+			{
+				self::$js_include_files[] = $path;
+			}
+			return True;
+		}
+		return False;
+	}
+	
+	/**
+	* Used for generating the list of external js files to be included in the head of a page
+	*
+	* NOTE: This method should only be called by the template class.
+	* The validation is done when the file is added so we don't have to worry now
+	*
+	* @returns string the html needed for importing the js into a page
+	*/
+	static protected function get_script_links()
+	{
+		$links  = "\n";
+		if(!empty(self::$js_include_files) && is_array(self::$js_include_files))
+		{
+			foreach(self::$js_include_files as $file)
+			{
+				$file .= '?'. filectime(EGW_INCLUDE_ROOT.$file);
+				$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $file.'">'."</script>\n";
+			}
+		}
+		return $links."\n";
+	}
 }
 
 /**
