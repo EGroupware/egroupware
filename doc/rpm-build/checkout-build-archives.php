@@ -17,30 +17,31 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 
 $verbose = 0;
 $config = array(
-	'packagename' => 'eGroupware',
-	'version' => 'trunk',				// '1.6'
+	'packagename' => 'egroupware-epl',
+	'version' => '10.1',				// '1.6'
 	'packaging' => date('Ymd'),			// '001'
 	'egwdir' => 'egroupware',
-	'svndir' => '/tmp/build_root/egw_buildroot-svn',
-	'egw_buildroot' => '/tmp/build_root/egw_buildroot',
-	'sourcedir' => '~/rpm/SOURCES',
-	'svnbase' => 'http://svn.egroupware.org/egroupware',
-	'svnbranch' => 'trunk',				// 'branches/1.6' or 'tags/1.6.001'
-	'svnalias' => 'aliases/default',	// default alias
+	'svndir' => '/tmp/build_root/epl_10.1_buildroot-svn',
+	'egw_buildroot' => '/tmp/build_root/epl_10.1_buildroot',
+	'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-10.1',
+	'svnbase' => 'svn+ssh://stylite@svn.stylite.de/stylite',
+	'egwbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
+	'svnbranch' => 'branches/Stylite-EPL-10.1',	// 'branches/1.6' or 'tags/1.6.001'
+	'svnalias' => 'epl-ssh',			// default alias
 	'aliasdir' => 'egroupware',			// directory created by the alias
-	'extra' => array('egw-pear','gallery','mydms','icalsrv'),
+	'extra' => array('stylite','$egwbase/$svnbranch/egw-pear','$egwbase/$svnbranch/gallery','$egwbase/$svnbranch/phpfreechat','svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
-	'packager' => 'packager@egroupware.org',
+	'packager' => 'build@stylite.de',
 	'obs' => false,
 	'changelog' => false,	// eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
-	'svntag' => false,	// eg. '$version.$packaging'
+	'svntag' => 'Stylite-EPL-$version.$packaging',	// eg. '$version.$packaging'
 	'skip' => array(),
-	'run' => array('checkout','copy','virusscan','create','sign')
+	'run' => array('svntag','checkout','copy','virusscan','create','sign')
 );
 
 // process config from command line
