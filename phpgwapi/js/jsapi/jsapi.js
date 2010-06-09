@@ -40,6 +40,21 @@ else if (document.layers)
 }
 
 /**
+ * Returns the top window which contains the current egw_instance, even for popup windows
+ */
+function egw_topWindow()
+{
+	if (window.opener)
+	{
+		return window.opener.top;
+	}
+	else
+	{
+		return window.top;
+	}
+}
+
+/**
  * Returns the window object of the current application 
  * @param string _app is the name of the application which requests the window object
  */
