@@ -55,26 +55,18 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 	if (typeof _async != "undefined")
 		is_async = _async;
 
-	//Assemble the actual request string
-	var request  = '{';
-	request += '"request":{';
-	if (this.parameters)
+	//Assemble the actual request object
+	var request_obj = new Object();
+	request_obj.json_data = new Object();
+	request_obj.json_data.request = new Object();
+	if(this.parameters)
 	{
-		request += '"parameters":[';
+		request_obj.json_data.request.parameters = new Array();
 		for (var i = 0; i < this.parameters.length; i++)
 		{
-			if (i > 0)
-			{
-				request += ',';
-			}
-			request += '"' + this.parameters[i] + '"';
+			request_obj.json_data.request.parameters.push(this.parameters[i]);
 		}
-		request += ']';
 	}
-	request += '}}';
-
-	var request_obj = new Object();
-	request_obj.json_data = request;
 
 	//Send the request via the jquery AJAX interface to the server
 	$.ajax({url: this.url + '?menuaction=' + this.menuaction,
