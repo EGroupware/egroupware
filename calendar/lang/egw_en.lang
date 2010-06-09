@@ -14,7 +14,9 @@ accepted	calendar	en	Accepted
 access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
 actions	calendar	en	Actions
+actions...	calendar	en	Actions...
 add alarm	calendar	en	Add alarm
+add timesheet entry	calendar	en	Add timesheet entry
 added	calendar	en	Added
 added by synchronisation	calendar	en	Added by synchronisation
 after %1	calendar	en	After %1
@@ -28,6 +30,7 @@ alarms	calendar	en	Alarms
 all categories	calendar	en	All categories
 all day	calendar	en	All day
 all events	calendar	en	All events
+all exceptions are converted into single events.	calendar	en	All exceptions are converted into single events.
 all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
@@ -77,6 +80,7 @@ copy this event	calendar	en	Copy this event
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
 countries	calendar	en	Countries
 country	calendar	en	Country
+create a new series	calendar	en	Create a new series
 create an exception for the given date	calendar	en	Create an exception for the given date
 create exception	calendar	en	Create exception
 create new links	calendar	en	Create new links
@@ -99,6 +103,7 @@ default type of resources application selected in the calendar particpants resea
 default type of resources selection	calendar	en	Default type of resources selection
 default week view	calendar	en	Default week view
 delegated	calendar	en	Delegated
+delete exceptions	calendar	en	Delete exceptions
 delete selected events	calendar	en	Delete selected events
 delete series	calendar	en	Delete series
 delete this alarm	calendar	en	Delete this alarm
@@ -112,11 +117,13 @@ display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	en	Displays your default calendar view on the start page (page you get when you enter eGroupWare or click on the homepage icon)?
 do not include events of group members	calendar	en	Do not include events of group members
+do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	en	Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
 do you want to be notified about changes of appointments you modified?	calendar	en	Do you want to be notified about changes of appointments you modified?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You are NOT notified about changes you made yourself.<br>You can limit the notifications to certain changes only. Each item includes all notifications listed above. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifications, he will always get participant responses like acceptions or rejections too.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.
 do you want to edit this event as an exception or the whole series?	calendar	en	Do you want to edit this event as an exception or the whole series?
+do you want to keep the series exceptions in your calendar?	calendar	en	Do you want to keep the series exceptions in your calendar?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	en	Do you want to receive regularly a summary of your appointments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summaries.<br>It is only sent when you have any appointments on that day or week.
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to auto-load calendar holidays files dynamically?
 download	calendar	en	Download
@@ -156,6 +163,7 @@ export	calendar	en	Export
 extended	calendar	en	Extended
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	en	Extended updates always include the complete event-details. iCal's can be imported by certain other calendar-applications.
 fieldseparator	calendar	en	Field separator
+filemanager	calendar	en	Filemanager
 filename	calendar	en	File name
 filename of the download	calendar	en	File name of the download
 find free timeslots where the selected participants are availible for the given timespan	calendar	en	Find free time slots where the selected participants are available for the given time span
@@ -216,6 +224,8 @@ interval	calendar	en	Interval
 invalid email-address "%1" for user %2	calendar	en	Invalid email-address "%1" for user %2
 invitations	calendar	en	Invitations
 invite	calendar	en	Invite
+keep exceptions	calendar	en	Keep exceptions
+keep the series unchanged.	calendar	en	Keep the series unchanged.
 last	calendar	en	Last
 lastname of person to notify	calendar	en	Last name of a person to notify
 length of the time interval	calendar	en	Length of the time interval
@@ -240,6 +250,7 @@ monthly (by day)	calendar	en	Monthly (by day)
 monthview	calendar	en	Month view
 multiple week view	calendar	en	Multiple week view
 needs action	calendar	en	Needs action
+new	calendar	en	New
 new search with the above parameters	calendar	en	New search with the above parameters
 no automatic purging	admin	en	No automatic purging
 no events found	calendar	en	No events found
@@ -326,6 +337,7 @@ search string for the events	calendar	en	Search string for the events
 select a %1	calendar	en	Select a %1
 select a time	calendar	en	Select a time
 select an action	calendar	en	Select an action
+select an action...	calendar	en	Select an action...
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
 select who should get the alarm	calendar	en	Select who should get the alarm
@@ -378,6 +390,8 @@ submit to repository	calendar	en	Submit to Repository
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	en	Test Import (show importable records <u>only</u> in browser)
+the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.
+the original series will be terminated today and a new series be created.	calendar	en	The original series will be terminated today and a new series be created.
 the resource you selected is already overbooked:	calendar	en	The resource you selected is already overbooked:
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	en	This defines the end of your day view. Events after this time, are shown below the day view.

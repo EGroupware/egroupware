@@ -239,7 +239,7 @@ class calendar_uiforms extends calendar_ui
 		unset($event['alarm']['delete_alarm']);
 		unset($event['duration']);
 
-		if (in_array($button,array('ignore','freetime','reedit')))	// called from conflict display
+		if (in_array($button,array('ignore','freetime','reedit','confirm_edit_single')))
 		{
 			// no conversation necessary, event is already in the right format
 		}
@@ -430,6 +430,22 @@ class calendar_uiforms extends calendar_ui
 		
 		//error_log(__METHOD__.$button.'#'.array2string($content['edit_single']).'#');
 		
+		$ignore_conflicts = $edit_series_confirmed = false;
+		
+		switch((string)$button)
+		{
+			case 'ignore':
+				$ignore_conflicts = true;
+				$button = $event['button_was'];	// save or apply
+				unset($event['button_was']);
+				break;
+				
+			case 'confirm_edit_series':
+				$edit_series_confirmed = true;
+				$button = $event['button_was'];	// save or apply
+				unset($event['button_was']);		
+		}
+		
 		switch((string)$button)
 		{
 		case 'exception':	// create an exception in a recuring event
@@ -462,11 +478,6 @@ class calendar_uiforms extends calendar_ui
 			$event['title'] = lang('Copy of:').' '.$event['title'];
 			break;
 
-		case 'ignore':
-			$ignore_conflicts = true;
-			$button = $event['button_was'];	// save or apply
-			unset($event['button_was']);
-			// fall through
 		case 'mail':
 		case 'save':
 		case 'print':
@@ -543,6 +554,93 @@ class calendar_uiforms extends calendar_ui
 			}
 			else	// we edited a non-reccuring event or the whole series
 			{
+				if ($event['recur_type'] != MCAL_RECUR_NONE &&
+					($old_event = $this->bo->read($event['id'])))
+				{
+					// we edit a existing series event
+					if ($event['start'] != $old_event['start'] ||
+						$event['whole_day'] != $old_event['whole_day'])
+					{
+						if(!($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + 1, true)))
+						{
+							$msg = lang("Error: You can't shift a series from the past!");
+							$noerror = false;
+							break;
+						}
+						if ($edit_series_confirmed)
+						{
+							if (!empty($event['whole_day']))
+							{
+								// Adjust start to 0:00
+								$time = new egw_time($event['start']);
+								$time->setTime(0, 0, 0);
+								$event['start'] = egw_time::to($time, 'ts');
+								$time = new egw_time($next_occurrence['start']);
+								$time->setTime(0, 0, 0);
+								$next_occurrence['start'] = egw_time::to($time, 'ts');
+							}
+							$orig_event = $event;
+							$time = new egw_time($this->bo->now_su);
+							$time->setTime(0, 0, 0);
+							$old_event['recur_enddate'] = egw_time::to($time, 'ts');
+							$offset = $event['start'] - $old_event['start'];
+							$event['start'] = $next_occurrence['start'] + $offset;
+							$event['end'] = $next_occurrence['end'] + $offset;
+							foreach ($old_event['recur_exception'] as $key => $exdate)
+							{
+								if ($exdate > $this->bo->now_su)
+								{
+									unset($old_event['recur_exception'][$key]);
+									$event['recur_exception'][$key] += $offset;
+								}
+								else
+								{
+									unset($event['recur_exception'][$key]);
+								}
+							}
+							if ($old_event['start'] > $this->bo->now_su)
+							{
+								// delete the original event
+								if (!$this->bo->delete($old_event['id']))
+								{
+									$msg = lang("Error: Can't delete original series!");
+									$noerror = false;
+									break;
+								}
+							}
+							elseif (!$this->bo->update($old_event,true))
+							{
+								$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+									lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+										htmlspecialchars(egw::link('/index.php',array(
+											'menuaction' => 'calendar.calendar_uiforms.edit',
+											'cal_id'    => $content['id'],
+											'referer'    => $referer,
+										))).'">','</a>');
+								$noerror = false;
+								$event = $orig_event;
+								break;
+							}
+							unset($orig_event);
+							unset($event['uid']);
+							unset($event['id']);
+							$event['alarm'] = array();
+						}
+						else
+						{
+							$event['button_was'] = $button;	// remember for confirm
+							return $this->confirm_edit_series($event,$preserv);
+						}
+					}
+					else
+					{
+						$edit_series_confirmed = false;
+					}
+				}
+				else
+				{
+					$edit_series_confirmed = false;
+				}
 				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages);
 				unset($event['ignore']);
 			}
@@ -565,10 +663,54 @@ class calendar_uiforms extends calendar_ui
 								'cal_id'    => $content['id'],
 								'referer'    => $referer,
 							))).'">','</a>');
-				$noerror=false;
+				$noerror = false;
 			}
 			elseif ($conflicts > 0)
 			{
+				if ($edit_series_confirmed &&
+					($event = $this->bo->read($conflicts)))
+				{
+					// set the alarms again
+					foreach ($old_event['alarm'] as $alarm)
+					{
+						$alarm['time'] += $offset;
+						unset($alarm['id']);
+						if (($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $offset, true)) &&
+							$alarm['time'] < $next_occurrence['start'])
+						{
+							$alarm['time'] =  $next_occurrence['start'] - $alarm['offset'];					
+						}
+						$this->bo->save_alarm($event['id'], $alarm);
+					}
+					// attach all future exceptions to the new series
+					$events =& $this->bo->search(array(
+						'query' => array('cal_uid' => $old_event['uid']),
+						'filter' => 'owner',  // return all possible entries
+						'daywise' => false,
+						'date_format' => 'ts',
+					));
+					foreach ((array)$events as $exception)
+					{
+						if ($exception['recurrence'] > $this->bo->now_su)
+						{
+							$exception['recurrence'] += $offset;
+							$exception['reference'] = $event['id'];
+							$exception['uid'] = $event['uid'];
+							$exception['start'] += $offset;
+							$exception['end'] += $offset;
+							$exception['whole_day'] = $event['whole_day'];
+							$alarms = array();
+							foreach ($exception['alarm'] as $id => &$alarm)
+							{
+								$alarm['time'] = $exception['start'] - $alarm['offset'];
+								$alarms[] = $alarm;
+							}
+							$event['alarm'] = $alarms;
+							$this->bo->update($exception, true, true, true);
+						}
+					}
+				}
+				
 				$msg = lang('Event saved').($msg ? ', '.$msg : '');
 
 				// writing links for new entry, existing ones are handled by the widget itself
@@ -654,15 +796,15 @@ class calendar_uiforms extends calendar_ui
 
 		case 'add_alarm':
 			$time = ($content['actual_date'] ? $content['actual_date'] : $content['start']);
+			$offset = DAY_s * $content['new_alarm']['days'] + HOUR_s * $content['new_alarm']['hours'] + 60 * $content['new_alarm']['mins'];
 			if ($event['recur_type'] != MCAL_RECUR_NONE &&
-				($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su, true)) &&
+				($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $offset, true)) &&
 				$time < $next_occurrence['start'])
 			{
 				$time = $next_occurrence['start'];
 			}
 			if ($this->bo->check_perms(EGW_ACL_EDIT,!$content['new_alarm']['owner'] ? $event : 0,$content['new_alarm']['owner']))
 			{
-				$offset = DAY_s * $content['new_alarm']['days'] + HOUR_s * $content['new_alarm']['hours'] + 60 * $content['new_alarm']['mins'];
 				$alarm = array(
 					'offset' => $offset,
 					'time'   => $time - $offset,
@@ -675,7 +817,7 @@ class calendar_uiforms extends calendar_ui
 				}
 				elseif ($event['id'])	// save the alarm immediatly
 				{
-					if(($alarm_id = $this->bo->save_alarm($event['id'],$alarm)))
+					if (($alarm_id = $this->bo->save_alarm($event['id'],$alarm)))
 					{
 						$alarm['id'] = $alarm_id;
 						$event['alarm'][$alarm_id] = $alarm;
@@ -1196,16 +1338,17 @@ function replace_eTemplate_onsubmit()
 
 			$GLOBALS['egw']->js->set_onload($onload);
 
-			$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
+			$readonlys['recur_exception'] = true;
 
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
+				$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
 				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
 				// $onclick = 'delete_series('.$event['id'].');';
 				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
 
 				// some fundamental values of an existing series should not be changed by the user
-				$readonlys['start'] = $readonlys['whole_day'] = true;
+				//$readonlys['start'] = $readonlys['whole_day'] = true;
 				$readonlys['recur_type'] = $readonlys['recur_data'] = true;
 				$readonlys['recur_interval'] = $readonlys['tzid'] = true;
 			}
@@ -1343,6 +1486,21 @@ function replace_eTemplate_onsubmit()
 			'conflicts' => array_values($conflicts),	// conflicts have id-start as key
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
+
+		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,false,false,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
+	}
+	
+	/**
+	 * displays a confirmation window for changed start dates of series events
+	 *
+	 * @param array $event
+	 * @param array $preserv data to preserv
+	 */
+	function confirm_edit_series($event,$preserv)
+	{
+		$etpl = CreateObject('etemplate.etemplate','calendar.confirm_edit_series');
+
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Start of Series Event Changed');
 
 		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,false,false,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
 	}

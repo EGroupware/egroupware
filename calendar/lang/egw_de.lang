@@ -6,7 +6,7 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 Datensätze gelesen (noch nicht importiert, Sie können zurück gehen und Test Import ausschalten)
 %1 weeks	calendar	de	%1 Wochen
 (%1 events in %2 seconds)	calendar	de	(%1 Termine in %2 Sekunden
-, exceptions preserved	calendar	de	 und Ausnahmen erhalten
+, exceptions preserved	calendar	de	und Ausnahmen erhalten
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	de	<b>Bitte beachten</b>: Der Kalender verwendet die Feiertages des Landes, welches auf %1 eingestellt ist. Das können Sie in Ihren %2 ändern.<br />Feiertage werden %3 automatisch von %4 installiert, was in %5 änderbar ist.
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keine Konflikt mit anderen Terminen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
@@ -80,6 +80,7 @@ copy this event	calendar	de	Kopiert diesen Termin
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 countries	calendar	de	Länder
 country	calendar	de	Land
+create a new series	calendar	de	Neu Serie anlegen
 create an exception for the given date	calendar	de	Erzeugt eine Ausnahme am angegebenen Datum
 create exception	calendar	de	Ausnahme erzeugen
 create new links	calendar	de	Neue Verknüpfung erstellen
@@ -116,12 +117,13 @@ display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Soll Ihre Standard-Kalender-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
+do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	de	Wollen Sie wirklich den Beginn dieses Serientermins ändern? Wenn Sie das tun, so wird die bestehende Serie heute beendet und fü die Zukunft ein neuer Wiederholungstermin mit Ihren Änderungen erzeugt.
 do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wochenansicht mit oder ohne Wochenende?
 do you want to be notified about changes of appointments you modified?	calendar	de	Wollen Sie auch über eigene Änderungen Benachrichtigt werden?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br />Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Absagen) zur Verfügung gestellt.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Möchten Sie über neue oder geänderte Termine informiert werden? Sie werden NICHT über Änderungen informiert, die Sie selbst anwenden.<br />Sie können die Benachrichtigungen auf bestimmte Änderungen beschränken. Jede Auswahl beinhaltet die oben aufgeführten Benachrichtigungen. Alle Änderungen beinhalten Änderungen des Titels, der Beschreibung, der Teilnehmer, aber keine Antworten der Teilnehmer. Falls der Besitzer eines Termins eine Benachrichtigung angefordert hat, werden auch die Teilnehmer-Antworten (Annahmen oder Absagen) zur Verfügung gestellt.
 do you want to edit this event as an exception or the whole series?	calendar	de	Wollen Sie diesen Termin als Ausnahme bearbeiten oder die ganze Serie?
-do you want to keep the series exceptions in your calendar?	calendar	de	Wollen Sie die Ausnahmen dieses Serientermins behalten?
+do you want to keep the series exceptions in your calendar?	calendar	de	Wollen Sie die Ausnahmen dieses Serientermins in Ihrem Kalender behalten?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre Standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet, wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
 do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die Feiertage automatisch geladen werden?
 download	calendar	de	Herunterladen
@@ -223,6 +225,7 @@ invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1
 invitations	calendar	de	Einladungen
 invite	calendar	de	Einladen
 keep exceptions	calendar	de	Ausnahmen behalten
+keep the series unchanged.	calendar	de	Terminserie unverändert lassen.
 last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervalls
@@ -387,7 +390,8 @@ submit to repository	calendar	de	Übertragen zu EGroupware.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
-the exceptions are deleted together with the series.	calendar	de	Die Ausnahmen werden mit dem Serientermin gelöscht.
+the exceptions are deleted together with the series.	calendar	de	Die Ausnahmen werden mit der Terminserie gelöscht.
+the original series will be terminated today and a new series be created.	calendar	de	Der bestehende Serietermin wird heute beendet und eine neue Terminserie erstellt.
 the resource you selected is already overbooked:	calendar	de	Die Ressource, die Sie buchen möchten, ist bereits überbucht.
 this day is shown as first day in the week or month view.	calendar	de	Dieser Tag wird als erster in der Wochen- oder Monatsansicht angezeigt
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht. Alle späteren Einträge werden darunter dargestellt.
