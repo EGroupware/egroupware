@@ -31,30 +31,29 @@ class egw_json_request
  		}
 		else
 		{
-			if(!is_array($input_data))
+			if (get_magic_quotes_gpc())
 			{
-				//Decode the JSON input data into associative arrays
-				$json = json_decode($input_data, true);
+				$input_data[0] = stripslashes($input_data[0]);
 			}
-			else
+
+			//Decode the JSON input data into associative arrays
+			if (($json = json_decode($input_data[0], true)) !== false)
 			{
-				$json = $input_data;
-			}
-			if(is_array($json))
-			{
+				$parameters = array();
+
 				//Get the request array
 				if (isset($json['request']))
 				{
 					$request = $json['request'];
 				
 					//Check whether any parameters were supplied along with the request
-					$parameters = array();
 					if (isset($request['parameters']))
-						$parameters = array_stripslashes($request['parameters']);
-
-					//Call the supplied callback function along with the menuaction and the passed parameters
-					$this->handleRequest($menuaction, $parameters);
+						$parameters = $request['parameters'];
+						/*$parameters = array_stripslashes($request['parameters']);*/
 				}
+
+				//Call the supplied callback function along with the menuaction and the passed parameters
+				$this->handleRequest($menuaction, $parameters);
 			}
 		}	
 
@@ -82,20 +81,20 @@ class egw_json_request
 
 		switch($handler)
 		{
-/*			case '/etemplate/process_exec':
+			case '/etemplate/process_exec':
 				$menuaction = $appName.'.'.$className.'.'.$functionName;
 				$appName = $className = 'etemplate';
 				$functionName = 'process_exec';
 				$menuaction = 'etemplate.etemplate.process_exec';
 
-				$argList = array(
+				$parameters = array(
 					$argList[0]['etemplate_exec_id'],
 					$argList[0]['submit_button'],
 					$argList[0],
 					'xajaxResponse',
 				);
 				//error_log("xajax_doXMLHTTP() /etemplate/process_exec handler: arg0='$menuaction', menuaction='$_GET[menuaction]'");
-				break;*/
+				break;
 			case 'etemplate':	// eg. ajax code in an eTemplate widget
 				$menuaction = ($appName = 'etemplate').'.'.$className.'.'.$functionName;
 				break;
@@ -326,5 +325,37 @@ class egw_json_response
 	public function __destruct()
 	{
 		$this->sendResult();
+	}
+}
+
+/**
+ * Deprecated legacy xajax wrapper functions for the new egw_json interface
+ */
+
+class xajaxResponse extends egw_json_response
+{
+	public function addScript($script)
+	{
+		$this->script($script);
+	}
+
+	public function addAlert($message)
+	{
+		$this->alert($message, '');
+	}
+
+	public function addAssign($id, $key, $value)
+	{
+		$this->assign($id, $key, $value);
+	}
+
+	public function addRedirect($url)
+	{
+		$this->redirect($url);
+	}
+
+	public function getXML()
+	{
+		return '';
 	}
 }
