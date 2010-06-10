@@ -269,6 +269,11 @@ A.header_row_FAS, A.header_row_FS
 	font-family : Arial;
 }
 
+body
+{
+    background-image:url(../default/images/body-background.png);;
+}
+
 .body
 {
 	FONT-SIZE: 12px;
