@@ -698,24 +698,6 @@ abstract class egw_framework
 		{
 			$java_script .= "<script type=\"text/javascript\">\nvar enable_ie_dropdownmenuhack=1;\n</script>\n";
 		}
-		if ($GLOBALS['egw']->acl->check('run',1,'notifications') && !$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxpopup'])
-		{
-			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		}
-
-		if ($GLOBALS['egw_info']['flags']['include_xajax'])
-		{
-			require_once(EGW_API_INC.'/xajax/xajax_core/xajax.inc.php');
-
-			$xajax = new xajax();
-			$xajax->configure('requestURI', egw::link('/xajax.php'));
-			$xajax->configure('javascript URI',$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/inc/xajax');
- 			$xajax->configure('waitCursor',false);
- 			$xajax->register(XAJAX_FUNCTION,'doXMLHTTP');
- 			$xajax->register(XAJAX_FUNCTION,'doXMLHTTP',array('mode' => "'synchronous'",'alias' => 'doXMLHTTPsync'));
-
- 			$java_script .= $xajax->getJavascript();
-		}
 
 		/* this flag is for all javascript code that has to be put before other jscode.
 		Think of conf vars etc...  (pim@lingewoud.nl) */
