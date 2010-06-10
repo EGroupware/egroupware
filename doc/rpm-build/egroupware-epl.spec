@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 9.2.20100504
+Version: 10.1.20100610
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -62,9 +62,10 @@ Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-eventmgr-%{version}.tar.bz2
 Source4: %{name}-phpfreechat-%{version}.tar.bz2
-Source5: phpfreechat_data_public.tar.gz
-Source6: debian.changes
-Source7: %{name}-rpmlintrc
+Source5: %{name}-jdots-%{version}.tar.bz2
+Source6: phpfreechat_data_public.tar.gz
+Source7: debian.changes
+Source8: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 Patch1: stylite-postfix-suse.patch
 #Patch2: mandriva_upload_tmp_dir.patch
@@ -88,6 +89,7 @@ Requires: %{name}-felamimail      >= %{version}
 Requires: %{name}-filemanager     >= %{version}
 Requires: %{name}-infolog         >= %{version}
 Requires: %{name}-importexport    >= %{version}
+Requires: %{name}-jdots           >= %{version}
 Requires: %{name}-manual          >= %{version}
 Requires: %{name}-news_admin      >= %{version}
 Requires: %{name}-notifications   >= %{version}
@@ -294,6 +296,15 @@ Requires: egw-core >= %{version}
 Obsoletes: %{egw_packagename}-importexport
 %description importexport
 This is the importexport app for EGroupware. It includes a comandline client.
+
+%package jdots
+Version: %{version}
+Summary: New jQuery based Stylite template for EGroupware
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}
+%description jdots
+Stylite template is a preview to the new jQuery based user interface coming later this year.
 
 %package manual
 Version: %{version}
@@ -505,6 +516,7 @@ for Thomson-Reuters.
 %setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
 %setup5 -T -D -a 5 -n %{egwdirname}
+%setup6 -T -D -a 6 -n %{egwdirname}
 %patch0 -p 0
 %patch1 -p 0
 #%patch2 -p 0
@@ -631,6 +643,10 @@ install -m 444 %{SOURCE6} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %files importexport
 %defattr(-,root,root)
 %{egwdir}/importexport
+
+%files jdots
+%defattr(-,root,root)
+%{egwdir}/jdots
 
 %files manual
 %defattr(-,root,root)
