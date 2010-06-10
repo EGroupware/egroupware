@@ -83,17 +83,6 @@ function doXMLHTTP()
 	$argList	= func_get_args();
 	$arg0		= array_shift($argList);
 
-	if(get_magic_quotes_gpc()) {
-		foreach($argList as $key => $value) {
-			if(is_array($value)) {
-				foreach($argList as $key1 => $value1) {
-					$argList[$key][$key1] = stripslashes($value1);
-				}
-			} else {
-				$argList[$key] = stripslashes($value);
-			}
-		}
-	}
 	//error_log("xajax_doXMLHTTP('$arg0',...)".print_r($argList,true));
 
 	if (strpos($arg0,'::') !== false && strpos($arg0,'.') === false)	// static method name app_something::method
@@ -118,6 +107,10 @@ function doXMLHTTP()
 		)
 	);
 	include('./header.inc.php');
+
+	if(get_magic_quotes_gpc()) {
+		$argList = array_stripslashes($argList);
+	}
 
 	// now the header is included, we can set the charset
 	$GLOBALS['xajax']->configure('characterEncoding',translation::charset());
