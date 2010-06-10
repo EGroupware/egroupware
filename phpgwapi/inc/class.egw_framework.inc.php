@@ -863,7 +863,7 @@ abstract class egw_framework
 	*/
 	abstract function _add_topmenu_info_item($content);
 
-	static $top_menu_extra;
+	static $top_menu_extra = array();
 
 	/**
 	* Called by hooks to add an entry in the topmenu location.
