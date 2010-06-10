@@ -51,7 +51,6 @@ class egw_json_request
 						$parameters = $request['parameters'];
 						/*$parameters = array_stripslashes($request['parameters']);*/
 				}
-
 				//Call the supplied callback function along with the menuaction and the passed parameters
 				$this->handleRequest($menuaction, $parameters);
 			}
@@ -82,15 +81,15 @@ class egw_json_request
 		switch($handler)
 		{
 			case '/etemplate/process_exec':
-				$menuaction = $appName.'.'.$className.'.'.$functionName;
+				$_GET['menuaction'] = $appName.'.'.$className.'.'.$functionName;
 				$appName = $className = 'etemplate';
 				$functionName = 'process_exec';
 				$menuaction = 'etemplate.etemplate.process_exec';
 
 				$parameters = array(
-					$argList[0]['etemplate_exec_id'],
-					$argList[0]['submit_button'],
-					$argList[0],
+					$parameters[0]['etemplate_exec_id'],
+					$parameters[0]['submit_button'],
+					$parameters[0],
 					'xajaxResponse',
 				);
 				//error_log("xajax_doXMLHTTP() /etemplate/process_exec handler: arg0='$menuaction', menuaction='$_GET[menuaction]'");
@@ -126,6 +125,10 @@ class egw_json_request
 		}
 		
 		$parameters = translation::convert($parameters, 'utf-8');
+
+//		error_log(print_r($parameters, true));
+
+//		_debug_array($parameters);
 
 		call_user_func_array(array($ajaxClass, $functionName), $parameters);
 	}

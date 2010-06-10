@@ -320,10 +320,11 @@ function _egw_json_getFormValue(serialized, child)
 	}
 	
 	var name = child.name;
-	var values = new Array;
+	var values = null;	
 
  	if ('select-multiple' == child.type)
 	{
+		values = new Array;
  		for (var j = 0; j < child.length; ++j)
 		{
  			var option = child.options[j];
@@ -344,7 +345,7 @@ function _egw_json_getFormValue(serialized, child)
 		var k = n.substr(0, n.indexOf('['));
 		var a = n.substr(n.indexOf('['));
 		if (typeof serialized[k] == 'undefined')
-			serialized[k] = [];
+			serialized[k] = new Object;
 		var p = serialized; // pointer reset
 		while (a.length != 0) {
 			var sa = a.substr(0, a.indexOf(']')+1);
@@ -364,7 +365,7 @@ function _egw_json_getFormValue(serialized, child)
 				}
 			}
 			if (typeof p[k] == 'undefined')
-				p[k] = []; 
+				p[k] = new Object; 
 		}
 		p[k] = values;
 	} else {
