@@ -97,7 +97,7 @@ class idots_framework extends egw_framework
 
 		// the instanciation of the template has to be here and not in the constructor,
 		// as the old Template class has problems if restored from the session (php-restore)
-		$this->tpl = new Template(EGW_TEMPLATE_DIR);
+		$this->tpl = new Template(EGW_TEMPLATE_DIR,'keep');
 		$this->tpl->set_file(array('_head' => 'head.tpl'));
 		$this->tpl->set_block('_head','head');
 

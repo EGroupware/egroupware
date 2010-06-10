@@ -979,7 +979,7 @@ abstract class egw_framework
 		{
 			if (!empty($data))
 			{
-				$js .= ' '.$what.'="' . str_replace(array('\\\'','"','\\','&#39;'),array('&#39;','\\"','\\\\','\\\''),$data) . '"';
+				$js .= ' '.$what.'="' . htmlspecialchars($data) . '"';
 			}
 		}
 		return $js;
