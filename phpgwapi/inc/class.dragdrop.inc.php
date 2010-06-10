@@ -323,6 +323,7 @@ class dragdrop
 		{
 			if($this->browserTestMode || $clientBrowser->get_agent() == $validatedBrowser)
 			{
+				egw_framework::validate_file('wz_dragdrop', 'wz_dragdrop');
 				return true;
 			}
 			
