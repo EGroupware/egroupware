@@ -111,7 +111,7 @@ class jdots_framework extends egw_framework
 		// the instanciation of the template has to be here and not in the constructor,
 		// as the old Template class has problems if restored from the session (php-restore)
 		// todo: check if this is still true
-		$this->tpl = new Template(common::get_tpl_dir('jdots'));
+		$this->tpl = new Template(common::get_tpl_dir('jdots'),'keep');
 		$this->tpl->set_file(array('_head' => 'head.tpl'));
 		$this->tpl->set_block('_head','head');
 		$this->tpl->set_block('_head','framework');
