@@ -97,6 +97,8 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 	if (typeof _async != "undefined")
 		is_async = _async;
 
+	window.console.log(this);
+
 	//Assemble the actual request object containing the json data string
 	var request_obj = {
 		"json_data": egw_json_encode(
@@ -115,6 +117,27 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 		dataType: 'json',
 		type: 'POST', 
 		success: this.handleResponse});
+}
+
+egw_json_request.prototype.getFormValues = function(_form)
+{
+	var elem = null;
+	if (typeof _form == 'object')
+	{
+		elem = _form;
+	}
+	else
+	{
+		elem = document.getElementsByName(_form)[0];
+	}
+
+	var serialized = new Object;
+	if (typeof elem != "undefined" && elem && elem.childNodes)
+	{
+		_egw_json_getFormValues(serialized, elem.childNodes)
+	}
+
+	return serialized;
 }
 
 egw_json_request.prototype.alertFunc = function(_message, _details)
@@ -222,7 +245,6 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 }
 
 
-
 /**
  * Deprecated legacy xajax wrapper functions for the new egw_json interface
  */
@@ -256,19 +278,102 @@ xajax_doXMLHTTPsync = function(_menuaction)
 
 window.xajax = {
 	"getFormValues": function(_form)
-	{		
-		var elem = null;
-		if (typeof _form == 'object')
-		{
-			elem = _form;
-		}
-		else
-		{
-			elem = document.getElementsByName(_form)[0];
-		}
-
-		var serialized = $(_form).serializeArray();
-		//alert("\nSerialized:\n" + serialized);
-		return serialized;
+	{
+		return egw_json_request.prototype.getFormValues(_form);
 	}
 };
+
+/*
+	The following code is adapted from the xajax project which is licensed under
+	the following license
+	@copyright Copyright (c) 2005-2007 by Jared White & J. Max Wilson
+	@copyright Copyright (c) 2008-2009 by Joseph Woolley, Steffen Konerow, Jared White  & J. Max Wilson
+	@license http://www.xajaxproject.org/bsd_license.txt BSD License
+*/
+
+/**
+ * used internally by the legacy "egw_json_response.getFormValues" to recursively
+ * run over all form elements
+ * @param serialized is the object which will contain the form data
+ * @param children is the children node of the form we're runing over
+ */
+function _egw_json_getFormValues(serialized, children)
+{
+	for (var i = 0; i < children.length; ++i) {
+		var child = children[i];
+
+		if (typeof child.childNodes != "undefined")
+			_egw_json_getFormValues(serialized, child.childNodes);
+
+		_egw_json_getFormValue(serialized, child);
+	}
+}
+
+/**
+ * used internally to serialize 
+ */
+function _egw_json_getFormValue(serialized, child)
+{
+	//Return if the child doesn't have a name, is disabled, or is a radio-/checkbox and not checked
+	if ((!child.name) || (child.disabled && child.disabled == true) ||				
+		(child.type && (child.type == 'radio' || child.type == 'checkbox') && (!child.checked)))
+	{
+		return;
+	}
+	
+	var name = child.name;
+	var values = new Array;
+
+ 	if ('select-multiple' == child.type)
+	{
+ 		for (var j = 0; j < child.length; ++j)
+		{
+ 			var option = child.options[j];
+ 			if (option.selected == true)
+ 				values.push(option.value);
+ 		}
+ 	}
+	else
+	{
+ 		values = child.value;
+ 	}
+
+	//Special treatment if the name of the child contains a [] - then all theese
+	//values are added to an array.
+	var keyBegin = name.indexOf('[');
+	if (0 <= keyBegin) {
+		var n = name;
+		var k = n.substr(0, n.indexOf('['));
+		var a = n.substr(n.indexOf('['));
+		if (typeof serialized[k] == 'undefined')
+			serialized[k] = [];
+		var p = serialized; // pointer reset
+		while (a.length != 0) {
+			var sa = a.substr(0, a.indexOf(']')+1);
+			
+			var lk = k; //save last key
+			var lp = p; //save last pointer
+			
+			a = a.substr(a.indexOf(']')+1);
+			p = p[k];
+			k = sa.substr(1, sa.length-2);
+			if (k == '') {
+				if ('select-multiple' == child.type) {
+					k = lk; //restore last key
+					p = lp;
+				} else {
+					k = p.length;
+				}
+			}
+			if (typeof p[k] == 'undefined')
+				p[k] = []; 
+		}
+		p[k] = values;
+	} else {
+		//Add the value to the result object with the given name
+		if (typeof values != "undefined")
+		{
+			serialized[name] = values;
+		}
+	}
+}
