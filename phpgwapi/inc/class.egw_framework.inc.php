@@ -699,6 +699,10 @@ abstract class egw_framework
 			$java_script .= "<script type=\"text/javascript\">\nvar enable_ie_dropdownmenuhack=1;\n</script>\n";
 		}
 
+		// set webserver_url for json
+		$java_script .= "<script type=\"text/javascript\">\nwindow.egw_webserverUrl = '".
+			$GLOBALS['egw_info']['server']['webserver_url']."';\n</script>\n";
+		
 		/* this flag is for all javascript code that has to be put before other jscode.
 		Think of conf vars etc...  (pim@lingewoud.nl) */
 		if (isset($GLOBALS['egw_info']['flags']['java_script_thirst']))
