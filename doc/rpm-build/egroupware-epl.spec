@@ -67,7 +67,7 @@ Source6: phpfreechat_data_public.tar.gz
 Source7: debian.changes
 Source8: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
-Patch1: stylite-postfix-suse.patch
+#Patch1: stylite-postfix-suse.patch
 #Patch2: mandriva_upload_tmp_dir.patch
 BuildRoot: %{_tmppath}/%{name}-9.2-buildroot
 
@@ -518,7 +518,7 @@ for Thomson-Reuters.
 %setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
 %patch0 -p 0
-%patch1 -p 0
+#%patch1 -p 0
 #%patch2 -p 0
 
 %build
@@ -544,7 +544,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 	ln -s php5 php
 %endif
 # copy current changelog to doc/rpm-build
-install -m 444 %{SOURCE6} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
+install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
