@@ -97,8 +97,6 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 	if (typeof _async != "undefined")
 		is_async = _async;
 
-	window.console.log(this);
-
 	//Assemble the actual request object containing the json data string
 	var request_obj = {
 		"json_data": egw_json_encode(
