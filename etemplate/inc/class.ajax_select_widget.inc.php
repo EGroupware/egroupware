@@ -235,11 +235,11 @@ class ajax_select_widget
 				unset($options[$key]);
 			}
 		}
-		$options = $GLOBALS['egw']->js->convert_phparray_jsarray("options['$name']", $options, true);
+		$options = json_encode($options);
 		$GLOBALS['egw']->js->set_onload("if(!options) {
 				var options = new Object();
 			}\n
-			$options;\n
+			options['$name'] = $options;
 			ajax_select_widget_setup('$name', '$onchange', options['$name'], '" . $GLOBALS['egw_info']['flags']['currentapp'] . "');
 		");
 		$GLOBALS['egw']->js->validate_file('.', 'ajax_select', 'etemplate');
