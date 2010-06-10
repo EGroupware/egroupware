@@ -256,6 +256,9 @@ class setup_process
 		{
 			unset($current_config['aspell_path']);
 		}
+		// always enable spellchecker, ckeditor now uses spell-as-you-type via a public webservice
+		$current_config['enabled_spellcheck'] = 'True';
+
 		// RalfBecker: php.net recommend this for security reasons, it should be our default too
 		$current_config['usecookies'] = 'True';
 
