@@ -511,7 +511,7 @@ class calendar_ui
 	function popup($link,$target='_blank',$width=750,$height=410)
  	{
 		return 'egw_openWindowCentered2('.($link == 'this.href' ? $link : "'".$link."'").','.
-			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes')";
+			($target == 'this.target' ? $target : "'".$target."'").",$width,$height,'yes','calendar')";
  	}
 
 	/**
