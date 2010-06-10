@@ -351,7 +351,6 @@ class egw_json_response
 /**
  * Deprecated legacy xajax wrapper functions for the new egw_json interface
  */
-/*
 class xajaxResponse extends egw_json_response
 {
 	public function addScript($script)
@@ -378,4 +377,4 @@ class xajaxResponse extends egw_json_response
 	{
 		return '';
 	}
-}*/
+}
