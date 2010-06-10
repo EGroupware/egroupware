@@ -595,7 +595,7 @@ class html
 		return $oCKeditor->editor($_name, $_content, null, $events);
 	}
 
-	static function &initCKEditor($_height, $_mode, $_options)
+	static function &initCKEditor($_height, $_mode, $_options=array())
 	{
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/ckeditor3/ckeditor_php5.php");
 		// use the lang and country information to construct a possible lang info for CKEditor UI and scayt_slang
