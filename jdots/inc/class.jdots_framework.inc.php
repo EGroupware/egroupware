@@ -574,7 +574,9 @@ class jdots_framework extends egw_framework
 		{
 			$vars = $this->_get_footer();
 		}
-		return "\n{$vars['page_generation_time']}\n</body>\n</html>\n";
+		return "\n".$vars['page_generation_time']."\n".
+			$GLOBALS['egw_info']['flags']['need_footer']."\n".	// eg. javascript, which need to be at the end of the page 
+			"</body>\n</html>\n";
 	}
 	
 	/**
