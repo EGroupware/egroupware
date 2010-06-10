@@ -78,7 +78,6 @@
 			$p->set_block('locales','list','list');
 			$p->set_block('locales','row','row');
 			$p->set_block('locales','row_empty','row_empty');
-			$p->set_block('locales','submit_column','submit_column');
 
 			$var = Array(
 				'th_bg'		=> $GLOBALS['egw_info']['theme']['th_bg'],
