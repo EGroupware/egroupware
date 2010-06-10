@@ -512,8 +512,7 @@
 
 				$this->t->parse("out","main");
 				print $this->t->get('out','main');
-
-				$GLOBALS['egw']->common->egw_footer();
+				$GLOBALS['egw']->framework->footer(false);
 				exit;
 			}
 			$this->t->set_var('activeFolder',$urlMailbox);
@@ -861,8 +860,7 @@
 			
 			$this->t->parse("out","main");
 			print $this->t->get('out','main');
-			
-			$GLOBALS['egw']->common->egw_footer();
+			$GLOBALS['egw']->framework->footer(false);	
 		}
 
 		function array_merge_replace( $array, $newValues ) 

@@ -436,10 +436,10 @@ DIV.divButton {
 }
 
 #subjectDIV {
-	position:absolute; 
+	position:fixed; 
 	background-color:#ffffff; 
 	top:32px; 
-	height:20px; 
+	min-height:20px; 
 	width:100%; 
 	font-weight:bold; 
 	text-align:left; 
@@ -478,10 +478,11 @@ DIV.divButton {
 }
 
 #attachmentDIV {
-	position:absolute; 
+	position:fixed; 
 	background-color:#efefdf; 
 	bottom:0px; 
-	height:80px; 
+	min-height:80px;
+	max-height:240px; 
 	width:100%; 
 	border-top: 1px solid silver; 
 	overflow:auto;
