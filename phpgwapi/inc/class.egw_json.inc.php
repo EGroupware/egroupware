@@ -279,14 +279,14 @@ class egw_json_response
 	 * 
 	 * @param string $script the script code which should be executed upon receiving
 	 */	
-	public function each($selector,$method,array $parameters=array())
+	public function jquery($selector,$method,array $parameters=array())
 	{
 		if (is_string($selector) && is_string($method))
 		{
-			$this->addGeneric('each', array(
+			$this->addGeneric('jquery', array(
 				'select' => $selector,
 				'func'   => $method,
-				'params' => $parameters,
+				'parms' => $parameters,
 			));
 		}
 		else

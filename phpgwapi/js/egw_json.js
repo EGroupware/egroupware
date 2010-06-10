@@ -25,7 +25,7 @@ function egw_json_encode(input)
 		case Boolean:
 			return input ? 'true' : 'false';
 
-		case Array :
+		case Array:
 			var buf = [];
 			for (var i = 0; i < input.length; i++)
 				buf.push(egw_json_encode(input[i]));
@@ -143,6 +143,14 @@ egw_json_request.prototype.alertFunc = function(_message, _details)
 	alert(_message);
 }
 
+function _egw_json_debug_log(_msg)
+{
+	if (typeof console != "undefined" && typeof console.log != "undefined")
+	{
+		console.log(_msg);
+	}
+}
+
 /* Internal function which handles the response from the server */
 egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRequest)
 {
@@ -151,29 +159,31 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 		var hasResponse = false;
 		for (var i = 0; i < data.response.length; i++)
 		{
+			var res = data.response[i];				
+
 			switch (data.response[i].type)
 			{
 				case 'alert':
 					//Check whether all needed parameters have been passed and call the alertHandler function
-					if ((typeof data.response[i].data.message != 'undefined') && 
-						(typeof data.response[i].data.details != 'undefined'))
+					if ((typeof res.data.message != 'undefined') && 
+						(typeof res.data.details != 'undefined'))
 					{					
 						this.alertHandler(
-							data.response[i].data.message,
-							data.response[i].data.details)
+							res.data.message,
+							res.data.details)
 						hasResponse = true;
 					}
 					break;
 				case 'assign':
 					//Check whether all needed parameters have been passed and call the alertHandler function
-					if ((typeof data.response[i].data.id != 'undefined') && 
-						(typeof data.response[i].data.key != 'undefined') &&
-						(typeof data.response[i].data.value != 'undefined'))
+					if ((typeof res.data.id != 'undefined') && 
+						(typeof res.data.key != 'undefined') &&
+						(typeof res.data.value != 'undefined'))
 					{					
-						var obj = document.getElementById(data.response[i].data.id);
+						var obj = document.getElementById(res.data.id);
 						if (obj)
 						{
-							obj[data.response[i].data.key] = data.response[i].data.value;
+							obj[res.data.key] = res.data.value;
 							hasResponse = true;
 						}
 					}
@@ -182,53 +192,46 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 					//Callback the caller in order to allow him to handle the data
 					if (this.callback)
 					{
-						this.callback.call(this.sender, data.response[i].data);
+						this.callback.call(this.sender, res.data);
 						hasResponse = true;
 					}
 					break;
 				case 'script':
-					if (typeof data.response[i].data == 'string')
+					if (typeof res.data == 'string')
 					{
 						try
 						{
-							var func = function() {eval(data.response[i].data);};
+							var func = function() {eval(res.data);};
 							func.call(window);
 						}
 						catch (e)
 						{
-							if (typeof console != "undefined" && typeof console.log != "undefined")
-							{
-								e.code = data.response[i].data;
-								console.log(e);
-							}
+							e.code = res.data;
+							_egw_json_debug_log(e);
 						}
 						hasResponse = true;
 					}
 					break;
-				case 'each':
-					if (typeof data.response[i].select == 'string' && typeof data.response[i].func == 'string')
+				case 'jquery':
+					if (typeof res.data.select == 'string' &&
+					    typeof res.data.func == 'string')
 					{
 						try
 						{
-							var func = data.response[i].func;
-							// todo: for N>2
-							$(data.response[i].select).each(func.call(data.response[i].parms[0],data.response[i].parms[1],data.response[i].parms[2]));
+							var jQueryObject = $(res.data.select);
+							jQueryObject[res.data.func].apply(jQueryObject,	res.data.parms);
 						}
 						catch (e)
 						{
-							if (typeof console != "undefined" && typeof console.log != "undefined")
-							{
-								e.code = data.response[i];
-								console.log(e);
-							}
+							_egw_json_debug_log(e);
 						}
 						hasResponse = true;
 					}
 					break;
 				case 'redirect':
-					if (typeof data.response[i].data == 'string')
+					if (typeof res.data == 'string')
 					{
-						window.location.href = data.response[i].data;
+						window.location.href = res.data;
 					}
 					break;
 			}
@@ -313,7 +316,7 @@ function _egw_json_getFormValues(serialized, children)
 function _egw_json_getFormValue(serialized, child)
 {
 	//Return if the child doesn't have a name, is disabled, or is a radio-/checkbox and not checked
-	if ((!child.name) || (child.disabled && child.disabled == true) ||				
+	if ((typeof child.name == "undefined") || (child.disabled && child.disabled == true) ||				
 		(child.type && (child.type == 'radio' || child.type == 'checkbox') && (!child.checked)))
 	{
 		return;
