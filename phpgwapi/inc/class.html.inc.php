@@ -584,7 +584,7 @@ class html
 		}
 		// run content through htmlpurifier
 		if ($_purify && !empty($_content)) $_content = self::purify($_content);
-		$oCKeditor = self::initCKEditor($_height, $_mode);
+		$oCKeditor = self::initCKEditor($_height, $_mode, $_options);
 
 		/* Resize the editor to the actual size delivered by the $_height parameter once it is initialized */
 		$pxheight = (strpos('px', $_height) === false) ? (empty($_height)?400:$_height) : str_replace('px', '', $_height);
@@ -595,7 +595,7 @@ class html
 		return $oCKeditor->editor($_name, $_content, null, $events);
 	}
 
-	static function &initCKEditor($_height, $_mode)
+	static function &initCKEditor($_height, $_mode, $_options)
 	{
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/ckeditor3/ckeditor_php5.php");
 		// use the lang and country information to construct a possible lang info for CKEditor UI and scayt_slang
