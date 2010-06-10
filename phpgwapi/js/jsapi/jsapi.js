@@ -112,7 +112,8 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status)
 		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
 		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 
-	return windowID;
+	// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
+	//return windowID;
 }
 
 function egw_openWindowCentered(_url, _windowName, _width, _height)
