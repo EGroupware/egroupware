@@ -474,6 +474,10 @@ class idots_framework extends egw_framework
 				));
 			}
 		}
+		else
+		{
+			$this->tpl->set_var('upper_tabs','');
+		}
 
 		if (!($max_icons=$GLOBALS['egw_info']['user']['preferences']['common']['max_icons']))
 		{
