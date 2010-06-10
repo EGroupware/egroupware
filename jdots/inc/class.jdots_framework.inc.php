@@ -568,6 +568,8 @@ class jdots_framework extends egw_framework
 	function footer($no_framework=true)
 	{
 		static $footer_done;
+		if (!(!isset($GLOBALS['egw_info']['flags']['nofooter']) || !$GLOBALS['egw_info']['flags']['nofooter'])) return;
+		//error_log(__METHOD__.array2string(function_backtrace()));
 		if ($footer_done++) return;	// prevent multiple footers, not sure we still need this (RalfBecker)
 
 		if($no_framework && $GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
