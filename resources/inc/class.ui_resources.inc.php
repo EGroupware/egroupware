@@ -534,8 +534,8 @@ class ui_resources
 			$selected,
 			array_merge($resources,$res_cats),
 			$no_lang=true,
-			$options='style="width: 165px;" onchange="load_cal(\''.
-				$GLOBALS['egw']->link('/index.php',$param).'\',\'uical_select_resource\');" id="uical_select_resource"',
+			$options='style="width: 100%;" onchange="load_cal(\''.
+				egw::link('/index.php',$param,false).'\',\'uical_select_resource\');" id="uical_select_resource"',
 			$multiple=count($selected) ? 4 : 0
 		);
 		return array(
