@@ -172,7 +172,6 @@ class calendar_uiforms extends calendar_ui
 		}
 		$messages = null;
 		$msg_permission_denied_added = false;
-		$referer = !empty($content['referer']) ? $content['referer'] : '/index.php?menuaction='.$this->view_menuaction;
 		list($button) = @each($content['button']);
 		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
 		unset($content['button']); unset($content['action']);
@@ -216,9 +215,8 @@ class calendar_uiforms extends calendar_ui
 				{
 					$msg = lang('Alarm deleted');
 					unset($content['alarm'][$id]);
-					$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
-						'msg' => $msg,
-					))).'\';';
+					$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
+						addslashes($msg)."';";
 				}
 				else
 				{
@@ -398,9 +396,8 @@ class calendar_uiforms extends calendar_ui
 									}
 									if (!$content['no_popup'])
 									{
-										$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
-											'msg' => $msg,
-										))).'\';';
+										$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
+											addslashes($msg)."';";
 									}
 								}
 							}
@@ -421,7 +418,6 @@ class calendar_uiforms extends calendar_ui
 			'reference'		=> $content['reference'],
 			'recurrence'	=> $content['recurrence'],
 			'actual_date'	=> $content['actual_date'],
-			'referer'		=> $referer,
 			'no_popup'		=> $content['no_popup'],
 			$this->tabs		=> $content[$this->tabs],
 			'template'      => $content['template'],
@@ -615,7 +611,6 @@ class calendar_uiforms extends calendar_ui
 										htmlspecialchars(egw::link('/index.php',array(
 											'menuaction' => 'calendar.calendar_uiforms.edit',
 											'cal_id'    => $content['id'],
-											'referer'    => $referer,
 										))).'">','</a>');
 								$noerror = false;
 								$event = $orig_event;
@@ -661,7 +656,6 @@ class calendar_uiforms extends calendar_ui
 								htmlspecialchars(egw::link('/index.php',array(
 								'menuaction' => 'calendar.calendar_uiforms.edit',
 								'cal_id'    => $content['id'],
-								'referer'    => $referer,
 							))).'">','</a>');
 				$noerror = false;
 			}
@@ -718,9 +712,8 @@ class calendar_uiforms extends calendar_ui
 				{
 					egw_link::link('calendar',$event['id'],$content['link_to']['to_id']);
 				}
-				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
-					'msg' => $msg,
-				))).'\';';
+				$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
+					addslashes($msg)."';";
 
 				if ($button == 'print')
 				{
@@ -741,9 +734,8 @@ class calendar_uiforms extends calendar_ui
 		case 'cancel':
 			if($content['cancel_needs_refresh'])
 			{
-				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
-					'msg' => $msg,
-				))).'\';';
+				$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
+					addslashes($msg)."';";
 			}
 			break;
 
@@ -783,9 +775,8 @@ class calendar_uiforms extends calendar_ui
 				{
 					$msg = lang('Event deleted');
 				}
-				$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
-					'msg' => $msg,
-				))).'\';';
+				$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
+					addslashes($msg)."';";
 			}
 			break;
 
@@ -823,9 +814,8 @@ class calendar_uiforms extends calendar_ui
 						$event['alarm'][$alarm_id] = $alarm;
 
 						$msg = lang('Alarm added');
-						$js = 'opener.location.href=\''.addslashes(egw::link($referer,array(
-							'msg' => $msg,
-						))).'\';';
+						$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
+							addslashes($msg)."';";
 					}
 					else
 					{
@@ -852,7 +842,8 @@ class calendar_uiforms extends calendar_ui
 			}
 			if ($content['no_popup'])
 			{
-				$GLOBALS['egw']->redirect_link($referer,array(
+				egw::redirect_link('/index.php',array(
+					'menuaction' => 'calendar.calendar_uiviews.index',
 					'msg'        => $msg,
 				));
 			}
@@ -982,7 +973,6 @@ class calendar_uiforms extends calendar_ui
 	 * @param array $perserv=null following keys:
 	 *	view boolean view-mode, if no edit-access we automatic fallback to view-mode
 	 *	hide_delete boolean hide delete button
-	 *	referer string menuaction of the referer
 	 *	no_popup boolean use a popup or not
 	 *	edit_single int timestamp of single event edited, unset/null otherwise
 	 * @param string $msg='' msg to display
@@ -1008,7 +998,6 @@ class calendar_uiforms extends calendar_ui
 		{
 			$preserv = array(
 				'no_popup' => isset($_GET['no_popup']),
-				'referer'  => common::get_referer('/index.php?menuaction='.$this->view_menuaction),
 				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
 			$cal_id = (int) $_GET['cal_id'];
