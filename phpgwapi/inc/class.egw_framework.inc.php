@@ -201,6 +201,7 @@ abstract class egw_framework
 			'img_root'       => $GLOBALS['egw_info']['server']['webserver_url'] . $this->template_dir.'/images',
 			'version'        => $GLOBALS['egw_info']['server']['versions']['phpgwapi']
 		);
+		$var['page_generation_time'] = '';
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
 		{
 			$totaltime = sprintf('%4.2lf',microtime(true) - $GLOBALS['egw_info']['flags']['page_start_time']);
