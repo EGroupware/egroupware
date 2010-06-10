@@ -228,14 +228,14 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
  */
 _xajax_doXMLHTTP = function(_async, _menuaction, _arguments)
 {
-	/* Assemble the parameter array *//*
+	/* Assemble the parameter array */
 	var paramarray = new Array();
 	for (var i = 1; i < _arguments.length; i++)
 	{
 		paramarray[paramarray.length] = _arguments[i];
 	}
 
-	/* Create a new request, passing the menuaction and the parameter array *//*
+	/* Create a new request, passing the menuaction and the parameter array */
 	var request = new egw_json_request(_menuaction, paramarray);
 
 	/* Send the request */
@@ -268,7 +268,7 @@ window.xajax = {
 		}
 
 		var serialized = $(_form).serializeArray();
-		alert("\nSerialized:\n" + serialized);
+		//alert("\nSerialized:\n" + serialized);
 		return serialized;
 	}
 };
