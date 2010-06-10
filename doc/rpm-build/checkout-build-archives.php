@@ -39,7 +39,7 @@ $config = array(
 	'obs' => false,
 	'changelog' => false,	// eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
-	'svntag' => 'Stylite-EPL-$version.$packaging',	// eg. '$version.$packaging'
+	'svntag' => 'tags/Stylite-EPL-$version.$packaging',	// eg. '$version.$packaging'
 	'skip' => array(),
 	'run' => array('svntag','checkout','copy','virusscan','create','sign')
 );
@@ -77,7 +77,7 @@ while(($arg = array_shift($argv)))
 				}
 				else
 				{
-					$config[$name] = array_unique(preg_split('/[ ,]+/',$value));
+					$config[$name] = array_unique(split('[ ,]+',$value));
 				}
 				break;
 
@@ -150,7 +150,7 @@ function do_obs()
 			++$n;
 		}
 		// updating dsc, spec and changelog files
-		if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec' ||
+		if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec' || 
 			!empty($config['changelog']) && basename($path) == 'debian.changes')
 		{
 			$content = $content_was = file_get_contents($path);
