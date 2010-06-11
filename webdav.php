@@ -98,9 +98,10 @@ $GLOBALS['egw']->session->commit_session();
 $webdav_server = new vfs_webdav_server();
 $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 if (strstr($user_agent, 'microsoft-webdav') !== false ||
-	strstr($user_agent, 'neon') !== false)
+	strstr($user_agent, 'neon') !== false ||
+	strstr($user_agent, 'bitkinex') !== false)
 {
-	// neon & Windows 7 special treatment
+	// Windows 7 et.al. special treatment
 	$webdav_server->cnrnd = true;
 }
 $webdav_server->ServeRequest();
