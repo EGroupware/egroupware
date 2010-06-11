@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 10.1.20100610
+Version: 10.1.20100611
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -163,7 +163,7 @@ Further contributed applications are available as separate packages.
 Summary: The EGroupware core
 Group: Web/Database
 Requires: %{php} >= 5.2.1
-Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{php}-posix %{extra_requires} %{cron} zip
+Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{php}-posix %{extra_requires} %{cron} zip %{php}-json
 Provides: egw-core %{version}
 Provides: egw-etemplate %{version}
 Provides: egw-addressbook %{version}
@@ -563,6 +563,7 @@ install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %{egwdir}/header.inc.php
 %{egwdir}/header.inc.php.template
 %{egwdir}/index.php
+%{egwdir}/json.php
 %{egwdir}/login.php
 %{egwdir}/logout.php
 %{egwdir}/notify.php
