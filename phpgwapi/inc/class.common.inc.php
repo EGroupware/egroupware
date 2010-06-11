@@ -973,7 +973,7 @@ class common
 	/**
 	 * load the eGW footer
 	 *
-	 * @deprecated use egw_framework::footer() or egw_framework::render($content)
+	 * @deprecated use $GLOBALS['egw']->framework->footer() or egw_framework::render($content)
 	 */
 	static function egw_footer()
 	{
