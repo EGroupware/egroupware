@@ -54,7 +54,7 @@ $config = array(
 	'ldap_context'  => 'ou=accounts,$base',
 	'ldap_search_filter' => '(uid=%user)',
 	'ldap_group_context' => 'ou=groups,$base',
-	'mailserver'    => 'localhost,imap,$domain',
+	'mailserver'    => '',
 	'smtpserver'    => 'localhost,25',
 	'postfix'       => '',	// see setup-cli.php --help config
 	'cyrus'         => '',
