@@ -178,8 +178,6 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 		})
 	}
 
-	console.log(request_obj);
-
 	//Send the request via the jquery AJAX interface to the server
 	$.ajax({url: this.url + '?menuaction=' + this.menuaction,
 		async: is_async,
