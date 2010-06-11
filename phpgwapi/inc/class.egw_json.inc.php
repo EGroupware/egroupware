@@ -323,10 +323,16 @@ class egw_json_response
 	 * 
 	 * @param string $url
 	 */
-	public function redirect($url)
+	public function redirect($url, $global = false)
 	{
-		//self::script("location.href = '$url';");
-		$this->addGeneric('redirect', $url);
+		if (is_string($url) && is_bool($global))
+		{
+			//self::script("location.href = '$url';");
+			$this->addGeneric('redirect', array(
+				'url' => $url,
+				'global' => $global,
+			));
+		}
 	}
 
 	/**

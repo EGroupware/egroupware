@@ -229,9 +229,21 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 					}
 					break;
 				case 'redirect':
-					if (typeof res.data == 'string')
+					if (typeof res.data.url == 'string' &&
+						typeof res.data.global == 'boolean')
 					{
-						window.location.href = res.data;
+						//Special handling for framework reload
+						if (res.data.url.indexOf("?cd=10") > 0)
+							res.data.global = true;
+
+						if (res.data.global)
+						{
+							egw_topWindow().location.href = res.data.url;
+						}
+						else
+						{
+							window.location.href = res.data.url;
+						}
 					}
 					break;
 			}
