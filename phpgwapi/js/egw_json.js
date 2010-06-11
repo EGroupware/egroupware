@@ -11,12 +11,61 @@
 
 /* The egw_json_request is the javaScript side implementation of class.egw_json.inc.php.*/
 
-function egw_json_encode_simple(input)
+function _egw_json_escape_string(input)
+{
+	var len = input.length;
+	var res = "";
+
+	for (var i = 0; i < len; i++)
+	{
+		switch (input[i])
+		{
+			case '"':
+				res += '\\"';
+				break;
+
+			case '\n':
+				res += '\\n';
+				break;
+
+			case '\r':
+				res += '\\r';
+				break;
+
+			case '\\':
+				res += '\\\\';
+				break;
+
+			case '\/':
+				res += '\\/';
+				break;
+
+			case '\b':
+				res += '\\b';
+				break;
+
+			case '\f':
+				res += '\\f';
+				break;
+
+			case '\t':
+				res += '\\t';
+				break;
+
+			default:
+				res += input[i];
+		}
+	}
+
+	return res;
+}
+
+function _egw_json_encode_simple(input)
 {
 	switch (input.constructor)
 	{
 		case String:
-			return '"' + input + '"';		
+			return '"' + _egw_json_escape_string(input) + '"';
 
 		case Number:
 			return input.toString();
@@ -33,7 +82,7 @@ function egw_json_encode(input)
 {
 	if (!input) return 'null';
 
-	var simple_res = egw_json_encode_simple(input);
+	var simple_res = _egw_json_encode_simple(input);
 	if (simple_res == null)
 	{
 		switch (input.constructor)
@@ -50,7 +99,7 @@ function egw_json_encode(input)
 				var buf = [];
 				for (var k in input)
 				{
-					buf.push(egw_json_encode_simple(k) + ':' + egw_json_encode(input[k]));
+					buf.push(_egw_json_encode_simple(k) + ':' + egw_json_encode(input[k]));
 				}
 				return '{' + buf.join(',') + '}';
 
@@ -128,6 +177,8 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 			}
 		})
 	}
+
+	console.log(request_obj);
 
 	//Send the request via the jquery AJAX interface to the server
 	$.ajax({url: this.url + '?menuaction=' + this.menuaction,
