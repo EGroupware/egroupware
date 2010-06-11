@@ -347,7 +347,17 @@ class calendar_ical extends calendar_boupdate
 				$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
 				// all calculations in the event's timezone
 				$time->setTimezone(self::$tz_cache[$event['tzid']]);
-				$time->setTime(23, 59, 59);
+				if (empty($event['whole_day']) && !empty($event['end']))
+				{
+					$end = new egw_time($event['end'],egw_time::$server_timezone);
+					$end->setTimezone(self::$tz_cache[$event['tzid']]);
+					$arr = egw_time::to($end,'array');
+					$time->setTime($arr['hour'],$arr['minute'],$arr['second']);
+				}
+				else
+				{
+					$time->setTime(23, 59, 59);
+				}
 				$event['recur_enddate'] = egw_time::to($time, 'server');
 			}
 
@@ -613,6 +623,10 @@ class calendar_ical extends calendar_boupdate
 						$rrule = $rriter->generate_rrule($version);
 						if ($version == '1.0')
 						{
+							if ($event['recur_enddate'])
+							{	
+								$rrule['UNTIL'] = self::getDateTime($event['recur_enddate'],$tzid);
+							}
 							$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
 						}
 						else // $version == '2.0'
