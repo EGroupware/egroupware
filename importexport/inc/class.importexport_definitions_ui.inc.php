@@ -184,6 +184,10 @@ class importexport_definitions_ui
 				$button = array_keys($content['button']);
 				$content['button'] = array($button[0] => 'pressed');
 			}
+			// Override next button on step 30
+			if($content['step'] == '30') {
+				$this->etpl->set_cell_attribute('button[next]', 'onclick', '');
+			}
 
 			// post process submitted step
 			if($content['step']) {
@@ -243,10 +247,6 @@ class importexport_definitions_ui
 				$this->response->addAssign('exec[button][cancel]','style.display', 'none');
 			}
 			$this->response->addAssign('contentbox', 'innerHTML', $html);
-			if (isset($GLOBALS['egw']->js) && $GLOBALS['egw']->js->body['onLoad'])
-			{
-				$this->response->addScript($GLOBALS['egw']->js->body['onLoad']);
-			}
 			$this->response->addAssign('picturebox', 'style.display', 'none');
 			$this->response->addScript("set_style_by_class('div','popupManual','display','inline');");
 
