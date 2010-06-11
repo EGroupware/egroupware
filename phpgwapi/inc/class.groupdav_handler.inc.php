@@ -267,13 +267,16 @@ abstract class groupdav_handler
 			$etag = $this->get_etag($entry);
 			// If the clients sends an "If-Match" header ($_SERVER['HTTP_IF_MATCH']) we check with the current etag
 			// of the calendar --> on failure we return 412 Precondition failed, to not overwrite the modifications
-			if (isset($_SERVER['HTTP_IF_MATCH']) && ($this->http_if_match = $_SERVER['HTTP_IF_MATCH']) != $etag)
+			if (isset($_SERVER['HTTP_IF_MATCH']) &&
+				($this->http_if_match = (strstr($_SERVER['HTTP_IF_MATCH'], $etag) === false)))
 			{
 				if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_MATCH='$_SERVER[HTTP_IF_MATCH]', etag='$etag': 412 Precondition failed");
 				return '412 Precondition Failed';
 			}
 			// if an IF_NONE_MATCH is given, check if we need to send a new export, or the current one is still up-to-date
-			if ($method == 'GET' && isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag)
+			if ($method == 'GET' &&
+				isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
+				strstr($_SERVER['HTTP_IF_MATCH'], $etag) !== false)
 			{
 				if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 304 Not Modified");
 				return '304 Not Modified';
