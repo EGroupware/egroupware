@@ -103,8 +103,10 @@ function egw_set_checkbox_multiselect_enabled(_id, _enabled)
 }
 
 // works only correctly in Mozilla/FF and Konqueror
-function egw_openWindowCentered2(_url, _windowName, _width, _height, _status)
+function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _app, _returnID)
 {
+	if (typeof(_app) == 'undefined') _app = false;
+	if (typeof(_returnID) == 'undefined') _returnID = false;
 	windowWidth = egw_getWindowOuterWidth();
 	windowHeight = egw_getWindowOuterHeight();
 
@@ -116,12 +118,19 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status)
 		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 
 	// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
-	//return windowID;
+	if (_returnID === false)
+	{
+		// return nothing
+	}
+	else
+	{
+		return windowID;
+	}
 }
 
 function egw_openWindowCentered(_url, _windowName, _width, _height)
 {
-	return egw_openWindowCentered2(_url, _windowName, _width, _height, 'no');
+	return egw_openWindowCentered2(_url, _windowName, _width, _height, 'no', false, true);
 }
 
 // return the left position of the window
