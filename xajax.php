@@ -26,7 +26,7 @@ function xajax_redirect(&$anon_account)
 	define('XAJAX_DEFAULT_CHAR_ENCODING',translation::charset());
 
 	$response = new xajaxResponse();
-	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10');
+	$response->script("egw_topWindow().location.href='".$GLOBALS['egw_info']['server']['webserver_url']."/login.php?cd=10';");
 	$response->printOutput();
 
 	common::egw_exit();
