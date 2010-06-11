@@ -54,7 +54,7 @@ class egw_json_request
 				//Call the supplied callback function along with the menuaction and the passed parameters
 				$this->handleRequest($menuaction, $parameters);
 			}
-		}	
+		}
 
 		return NULL;
 	}
@@ -380,6 +380,14 @@ class xajaxResponse extends egw_json_response
 	public function addRedirect($url)
 	{
 		$this->redirect($url);
+	}
+
+	public function addScriptCall($func)
+	{
+		$args = func_get_args();
+		$func = array_shift($args);
+
+		$this->script("$func(".implode(",", $args).");");
 	}
 
 	public function getXML()
