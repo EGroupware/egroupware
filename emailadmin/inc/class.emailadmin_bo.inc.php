@@ -134,6 +134,44 @@
 				'smtpcapabilities'	=> 'default|forward',
 				'classname'     => 'postfixdbmailuser'
 			),
+			'stylite_postfixmandriva'     => array(
+				'fieldNames'    => array(
+					'smtpServer',
+					'smtpPort',
+					'smtpAuth',
+					'ea_smtp_auth_username',
+					'ea_smtp_auth_password',
+					'smtpType',
+					'editforwardingaddress',
+					'smtpLDAPServer',
+					'smtpLDAPAdminDN',
+					'smtpLDAPAdminPW',
+					'smtpLDAPBaseDN',
+					'smtpLDAPUseDefault'
+				),
+				'description'   => 'Postfix (Mandriva mailAccount schema)',
+				'smtpcapabilities'	=> 'default|forward',
+				'classname'     => 'stylite_postfixmandriva'
+			),
+			'stylite_postfixsuse' 	=> array(
+				'fieldNames'	=> array(
+					'smtpServer',
+					'smtpPort',
+					'smtpAuth',
+					'ea_smtp_auth_username',
+					'ea_smtp_auth_password',
+					'smtpType',
+					'editforwardingaddress',
+					'smtpLDAPServer',
+					'smtpLDAPAdminDN',
+					'smtpLDAPAdminPW',
+					'smtpLDAPBaseDN',
+					'smtpLDAPUseDefault'
+				),
+				'description'   => 'Postfix (SuseMailServer schema)',
+				'smtpcapabilities'	=> 'default|forward',
+				'classname'     => 'stylite_postfixsuse'
+			),
 		);
 		//var $IMAPServerType = array();		// holds a list of config options
 		static $IMAPServerType = array(

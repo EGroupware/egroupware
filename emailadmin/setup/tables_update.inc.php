@@ -291,7 +291,7 @@ function emailadmin_upgrade1_7_003()
 		'type' => 'varchar',
 		'precision' => 56,
 	));
-	foreach (array('1'=>'defaultsmtp', '2'=>'postfixldap', '3'=>'postfixinetorgperson', '4'=>'smtpplesk', '5' =>'postfixdbmailuser') as $id => $newtype)
+	foreach (array('1'=>'defaultsmtp', '2'=>'postfixldap', '3'=>'postfixinetorgperson', '4'=>'stylite_postfixmandriva', '5' =>'stylite_postfixsuse') as $id => $newtype)
 	{
 		$GLOBALS['egw_setup']->oProc->query('update egw_emailadmin set ea_smtp_type=\''.$newtype.'\' where ea_smtp_type=\''.$id.'\'',__LINE__,__FILE__);
 	}
