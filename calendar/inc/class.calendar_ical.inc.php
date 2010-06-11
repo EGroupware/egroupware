@@ -623,7 +623,7 @@ class calendar_ical extends calendar_boupdate
 						$rrule = $rriter->generate_rrule($version);
 						if ($version == '1.0')
 						{
-							if ($event['recur_enddate'])
+							if ($event['recur_enddate'] && $tzid)
 							{	
 								$rrule['UNTIL'] = self::getDateTime($event['recur_enddate'],$tzid);
 							}
