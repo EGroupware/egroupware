@@ -11,13 +11,12 @@
 
 /* The egw_json_request is the javaScript side implementation of class.egw_json.inc.php.*/
 
-function egw_json_encode(input)
+function egw_json_encode_simple(input)
 {
-	if (!input) return 'null';
-
-	switch (input.constructor) {
+	switch (input.constructor)
+	{
 		case String:
-			return '"' + input + '"';
+			return '"' + input + '"';		
 
 		case Number:
 			return input.toString();
@@ -25,20 +24,43 @@ function egw_json_encode(input)
 		case Boolean:
 			return input ? 'true' : 'false';
 
-		case Array:
-			var buf = [];
-			for (var i = 0; i < input.length; i++)
-				buf.push(egw_json_encode(input[i]));
-			return '[' + buf.join(',') + ']';
-
-		case Object:
-			var buf = [];
-			for (var k in input)
-					buf.push('"' + k + '":' + egw_json_encode(input[k]));
-			return '{' + buf.join(',') + '}';
-
 		default:
-			return 'null';
+			return null;
+	}
+}
+
+function egw_json_encode(input)
+{
+	if (!input) return 'null';
+
+	var simple_res = egw_json_encode_simple(input);
+	if (simple_res == null)
+	{
+		switch (input.constructor)
+		{
+			case Array:
+				var buf = [];
+				for (var k in input)
+				{
+					buf.push(egw_json_encode(input[k]));
+				}
+				return '[' + buf.join(',') + ']';
+
+			case Object:
+				var buf = [];
+				for (var k in input)
+				{
+					buf.push(egw_json_encode_simple(k) + ':' + egw_json_encode(input[k]));
+				}
+				return '{' + buf.join(',') + '}';
+
+			default:
+				return 'null';
+		}
+	}
+	else
+	{
+		return simple_res;
 	}
 }
 
@@ -322,6 +344,17 @@ function _egw_json_getFormValues(serialized, children)
 	}
 }
 
+function _egw_json_getObjectLength(_obj)
+{
+	var res = 0;
+	for (key in _obj)
+	{
+		if (_obj.hasOwnProperty(key))
+			res++;
+	}
+	return res;
+}
+
 /**
  * used internally to serialize 
  */
@@ -361,6 +394,7 @@ function _egw_json_getFormValue(serialized, child)
 		var a = n.substr(n.indexOf('['));
 		if (typeof serialized[k] == 'undefined')
 			serialized[k] = new Object;
+
 		var p = serialized; // pointer reset
 		while (a.length != 0) {
 			var sa = a.substr(0, a.indexOf(']')+1);
@@ -376,11 +410,13 @@ function _egw_json_getFormValue(serialized, child)
 					k = lk; //restore last key
 					p = lp;
 				} else {
-					k = p.length;
+					k = _egw_json_getObjectLength(p);
 				}
 			}
 			if (typeof p[k] == 'undefined')
+			{
 				p[k] = new Object; 
+			}
 		}
 		p[k] = values;
 	} else {

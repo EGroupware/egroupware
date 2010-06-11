@@ -44,14 +44,17 @@ else if (document.layers)
  */
 function egw_topWindow()
 {
-	if (window.opener)
+	if (typeof window.parent != "undefined" && typeof window.parent.top != "undefined")
+	{
+		return window.parent.top;
+	}
+
+	if (typeof window.opener != "undefined" && typeof window.opener.top != "undefined")
 	{
 		return window.opener.top;
 	}
-	else
-	{
-		return window.top;
-	}
+
+	return window.top;
 }
 
 /**
