@@ -279,14 +279,14 @@ class egw_json_response
 	 * 
 	 * @param string $script the script code which should be executed upon receiving
 	 */	
-	public function each($selector,$method,array $parameters=array())
+	public function jquery($selector,$method,array $parameters=array())
 	{
 		if (is_string($selector) && is_string($method))
 		{
-			$this->addGeneric('each', array(
+			$this->addGeneric('jquery', array(
 				'select' => $selector,
 				'func'   => $method,
-				'params' => $parameters,
+				'parms' => $parameters,
 			));
 		}
 		else
@@ -323,10 +323,16 @@ class egw_json_response
 	 * 
 	 * @param string $url
 	 */
-	public function redirect($url)
+	public function redirect($url, $global = false)
 	{
-		//self::script("location.href = '$url';");
-		$this->addGeneric('redirect', $url);
+		if (is_string($url) && is_bool($global))
+		{
+			//self::script("location.href = '$url';");
+			$this->addGeneric('redirect', array(
+				'url' => $url,
+				'global' => $global,
+			));
+		}
 	}
 
 	/**
