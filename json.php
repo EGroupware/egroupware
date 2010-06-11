@@ -19,7 +19,7 @@
 function xajax_redirect(&$anon_account)
 {
 	$response = new egw_json_response();
-	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php', true);
+	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
 	$response->printOutput();
 
 	common::egw_exit();
