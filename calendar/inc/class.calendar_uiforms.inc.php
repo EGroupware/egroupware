@@ -565,6 +565,7 @@ class calendar_uiforms extends calendar_ui
 						}
 						if ($edit_series_confirmed)
 						{
+							$orig_event = $event;
 							if (!empty($event['whole_day']))
 							{
 								// Adjust start to 0:00
@@ -575,10 +576,6 @@ class calendar_uiforms extends calendar_ui
 								$time->setTime(0, 0, 0);
 								$next_occurrence['start'] = egw_time::to($time, 'ts');
 							}
-							$orig_event = $event;
-							$time = new egw_time($this->bo->now_su);
-							$time->setTime(0, 0, 0);
-							$old_event['recur_enddate'] = egw_time::to($time, 'ts');
 							$offset = $event['start'] - $old_event['start'];
 							$event['start'] = $next_occurrence['start'] + $offset;
 							$event['end'] = $next_occurrence['end'] + $offset;
@@ -601,20 +598,38 @@ class calendar_uiforms extends calendar_ui
 								{
 									$msg = lang("Error: Can't delete original series!");
 									$noerror = false;
+									$event = $orig_event;
 									break;
 								}
 							}
-							elseif (!$this->bo->update($old_event,true))
+							else
 							{
-								$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
-									lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-										htmlspecialchars(egw::link('/index.php',array(
-											'menuaction' => 'calendar.calendar_uiforms.edit',
-											'cal_id'    => $content['id'],
-										))).'">','</a>');
-								$noerror = false;
-								$event = $orig_event;
-								break;
+								$rriter = calendar_rrule::event2rrule($old_event, true);
+								$rriter->rewind();
+								$last = $rriter->current();
+								do
+								{
+									$rriter->next_no_exception();
+									$occurrence = $rriter->current();
+								}
+								while ($rriter->valid() &&
+										egw_time::to($occurrence, 'ts') < $this->bo->now_su &&
+										($last = $occurrence));
+								$last->setTime(0, 0, 0);
+								$old_event['recur_enddate'] = egw_time::to($last, 'ts');
+								if (!$this->bo->update($old_event,true))
+								{
+									$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+										lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+											htmlspecialchars(egw::link('/index.php',array(
+												'menuaction' => 'calendar.calendar_uiforms.edit',
+												'cal_id'    => $content['id'],
+												'referer'    => $referer,
+											))).'">','</a>');
+									$noerror = false;
+									$event = $orig_event;
+									break;
+								}
 							}
 							unset($orig_event);
 							unset($event['uid']);
@@ -667,9 +682,14 @@ class calendar_uiforms extends calendar_ui
 					// set the alarms again
 					foreach ($old_event['alarm'] as $alarm)
 					{
+						if ($alarm['time'] > $this->bo->now_su)
+						{
+							// delete future alarm of the old series
+							$this->bo->delete_alarm($alarm['id']);
+						}
 						$alarm['time'] += $offset;
 						unset($alarm['id']);
-						if (($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $offset, true)) &&
+						if (($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $alarm['offset'], true)) &&
 							$alarm['time'] < $next_occurrence['start'])
 						{
 							$alarm['time'] =  $next_occurrence['start'] - $alarm['offset'];					
