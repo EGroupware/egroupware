@@ -538,13 +538,6 @@ class calendar_rrule implements Iterator
 		$repeat_days = array();
 		$rrule = array();
 
-		if (!isset(self::$tz_cache['UTC']))
-		{
-			self::$tz_cache['UTC'] = calendar_timezones::DateTimeZone('UTC');
-		}
-
-		$utc = self::$tz_cache['UTC'];
-
 		if ($this->type == self::NONE) return false;	// no recuring event
 
 		if ($version == '1.0')
@@ -613,9 +606,15 @@ class calendar_rrule implements Iterator
 
 		if ($this->enddate)
 		{
-			$enddate = clone $this->enddate;
-			$enddate->setTimezone($utc);
-			$rrule['UNTIL'] = $enddate->format('Ymd\THis\Z');
+			$this->rewind();
+			$enddate = $this->current();
+			do
+			{
+				$this->next_no_exception();
+				$occurrence = $this->current();
+			}
+			while ($this->valid() && ($enddate = $occurrence));
+			$rrule['UNTIL'] = $enddate;
 		}
 
 		return $rrule;

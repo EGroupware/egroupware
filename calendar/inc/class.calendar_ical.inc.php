@@ -342,24 +342,6 @@ class calendar_ical extends calendar_boupdate
 				}
 				$event['recur_type'] = MCAL_RECUR_NONE;
 			}
-			elseif ($event['recur_enddate'])
-			{
-				$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
-				// all calculations in the event's timezone
-				$time->setTimezone(self::$tz_cache[$event['tzid']]);
-				if (empty($event['whole_day']) && !empty($event['end']))
-				{
-					$end = new egw_time($event['end'],egw_time::$server_timezone);
-					$end->setTimezone(self::$tz_cache[$event['tzid']]);
-					$arr = egw_time::to($end,'array');
-					$time->setTime($arr['hour'],$arr['minute'],$arr['second']);
-				}
-				else
-				{
-					$time->setTime(23, 59, 59);
-				}
-				$event['recur_enddate'] = egw_time::to($time, 'server');
-			}
 
 			// check if tzid of event (not only recuring ones) is already added to export
 			if ($tzid && $tzid != 'UTC' && !in_array($tzid,$vtimezones_added))
@@ -621,11 +603,23 @@ class calendar_ical extends calendar_boupdate
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
 						$rriter = calendar_rrule::event2rrule($event, false, $tzid);
 						$rrule = $rriter->generate_rrule($version);
+						if ($event['recur_enddate'])
+						{
+							if ($tzid || $version != '1.0')
+							{
+								if (!isset(self::$tz_cache['UTC']))
+								{
+									self::$tz_cache['UTC'] = calendar_timezones::DateTimeZone('UTC');
+								}
+								$rrule['UNTIL']->setTimezone(self::$tz_cache['UTC']);
+								$rrule['UNTIL'] = $rrule['UNTIL']->format('Ymd\THis\Z');
+							}
+						}
 						if ($version == '1.0')
 						{
 							if ($event['recur_enddate'] && $tzid)
 							{	
-								$rrule['UNTIL'] = self::getDateTime($event['recur_enddate'],$tzid);
+								$rrule['UNTIL'] = self::getDateTime($rrule['UNTIL'],$tzid);
 							}
 							$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
 						}
