@@ -209,6 +209,10 @@ $checks = array(
 		'func' => 'extension_check',
 		'warning' => lang('The mcrypt extension is used, to store eTemplate form state on the client, which is the prefered way to store it.'),
 	),
+	'json' => array(
+		'func' => 'extension_check',
+		'error' => lang('The json extension is required by EGroupware for AJAX.'),
+	),
 );
 if (extension_loaded('session') && ini_get('session.save_handler') == 'files' && ($session_path = realpath(session_save_path())))
 {
