@@ -1783,7 +1783,7 @@
 		function getTextPart($_uid, $_structure, $_htmlMode = '')
 		{
 			$bodyPart = array();
-			//_debug_array($_structure);
+			if (self::$debug) _debug_array(array($_structure,function_backtrace()));
 			$partID = $_structure->partID;
 			$mimePartBody = $this->icServer->getBodyPart($_uid, $partID, true);
 			//_debug_array($mimePartBody);
@@ -2260,7 +2260,18 @@
 
 				#return $attachments;
 			}
-
+			// outlook sometimes sends a TEXT/CALENDAR;REQUEST as plain ics, nothing more.
+			if ($structure->type == 'TEXT' && $structure->subType == 'CALENDAR' && 
+				isset($structure->parameters['METHOD'] ) && $structure->parameters['METHOD'] == 'REQUEST')
+			{
+				$newAttachment = array();
+				$newAttachment['name']      = 'event.ics';
+				$newAttachment['size']      = $structure->bytes;
+				$newAttachment['mimeType']  = $structure->type .'/'. $structure->subType.';'.$structure->parameters['METHOD'];
+				$newAttachment['partID']    = $structure->partID;
+				$newAttachment['encoding']      = $structure->encoding;
+				$attachments[] = $newAttachment;
+			}
 			// this kind of message can have no attachments
 			if(($structure->type == 'TEXT' && !($structure->disposition == 'INLINE' && $structure->dparameters['FILENAME'])) ||
 			   ($structure->type == 'MULTIPART' && $structure->subType == 'ALTERNATIVE' && !is_array($structure->subParts)) ||
@@ -2271,7 +2282,7 @@
 
 			#$attachments = array();
 
-			foreach($structure->subParts as $subPart) {
+			foreach((array)$structure->subParts as $subPart) {
 				// skip all non attachment parts
 				if(($subPart->type == 'TEXT' && ($subPart->subType == 'PLAIN' || $subPart->subType == 'HTML') && ($subPart->disposition != 'ATTACHMENT' &&
 					!($subPart->disposition == 'INLINE' && $subPart->dparameters['FILENAME']))) ||

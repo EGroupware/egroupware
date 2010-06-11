@@ -369,11 +369,12 @@
 					$this->t->set_var('header_subject', @htmlspecialchars('('. lang('no subject') .')', ENT_QUOTES, $this->displayCharset));
 				}
 
-				#_debug_array($header);
+				//_debug_array($header);
 				if($header['mimetype'] == 'multipart/mixed' ||
-				   $header['mimetype'] == 'multipart/related' ||
-				   substr($header['mimetype'],0,11) == 'application' ||
-				   substr($header['mimetype'],0,5) == 'audio') {
+					$header['mimetype'] == 'multipart/related' ||
+					$header['mimetype'] == 'text/calendar' ||
+					substr($header['mimetype'],0,11) == 'application' ||
+					substr($header['mimetype'],0,5) == 'audio') {
 					$image = html::image('felamimail','attach');
 					$this->t->set_var('attachment_image', $image);
 				} else {
@@ -634,6 +635,7 @@
 				$windowName =  'displayMessage_'.$headerData['uid'];
 				if($headerData['mimetype'] == 'multipart/mixed' ||
 					$headerData['mimetype'] == 'multipart/related' ||
+					$headerData['mimetype'] == 'text/calendar' ||
 					substr($headerData['mimetype'],0,11) == 'application' ||
 					substr($headerData['mimetype'],0,5) == 'audio') {
 					$image = html::image('felamimail','attach');
