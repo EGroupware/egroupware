@@ -753,6 +753,7 @@
 			//$response->addScript("document.getElementById('messageCounter').innerHTML ='';");
 			$response->addScript("fm_previewMessageID=".$headerData['uid'].";");
 			$response->addAssign('spanMessagePreview', 'innerHTML', $this->uiwidgets->updateMessagePreview($headerData,$_folderType, $this->sessionData['mailbox']));
+			$response->addScript('if (typeof handleResize != "undefined") handleResize();');
 			return $response->getXML();
 		}
 
