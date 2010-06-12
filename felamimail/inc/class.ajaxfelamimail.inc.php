@@ -950,8 +950,8 @@
 						#$hasChildren = false;
 						#if ($folderStatus['attributes'][0]=="\\HasChildren") $hasChildren=true;
 					}
-					$response->addScript("egw_topWindow().tree.deleteItem('$_oldFolderName',0);");
-					$response->addScript("egw_topWindow().tree.insertNewItem('$_parentFolder','$newFolderName','$folderName',onNodeSelect,'folderClosed.gif',0,0,'CHILD,CHECKED,SELECT,CALL');");
+					$response->addScript("window.tree.deleteItem('$_oldFolderName',0);");
+					$response->addScript("window.tree.insertNewItem('$_parentFolder','$newFolderName','$folderName',onNodeSelect,'MailFolderPlain.png',0,0,'CHILD,CHECKED,SELECT,CALL');");
 				}
 			}
 			return $response->getXML();
