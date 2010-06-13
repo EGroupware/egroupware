@@ -928,30 +928,33 @@ abstract class egw_framework
 	* Sets an onLoad action for a page
 	*
 	* @param string javascript to be used
+	* @return string content of onXXX tag after adding code
 	*/
 	static function set_onload($code)
 	{
-		self::$body_tags['onLoad'] .= $code;
+		return self::$body_tags['onLoad'] .= $code;
 	}
 
 	/**
 	* Sets an onUnload action for a page
 	*
 	* @param string javascript to be used
+	* @return string content of onXXX tag after adding code
 	*/
 	static function set_onunload($code)
 	{
-		self::$body_tags['onUnload'] .= $code;
+		return self::$body_tags['onUnload'] .= $code;
 	}
 
 	/**
 	* Sets an onResize action for a page
 	*
 	* @param string javascript to be used
+	* @return string content of onXXX tag after adding code
 	*/
 	static function set_onresize($code)
 	{
-		self::$body_tags['onResize'] .= $code;
+		return self::$body_tags['onResize'] .= $code;
 	}
 	
 	/**
