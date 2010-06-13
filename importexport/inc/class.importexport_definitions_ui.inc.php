@@ -140,7 +140,7 @@ class importexport_definitions_ui
 	function wizard($content = null, $msg='')
 	{
 		$GLOBALS['egw_info']['flags']['java_script'] .=
-			"<script LANGUAGE='JavaScript'>
+			"<script type='text/javascript'>
 				function xajax_eT_wrapper_init() {
 					//window.resizeTo(document.documentElement.scrollWidth+20,document.documentElement.offsetHeight+40);
 					window.moveTo(screen.availWidth/2 - window.outerWidth/2,
@@ -184,8 +184,8 @@ class importexport_definitions_ui
 				$button = array_keys($content['button']);
 				$content['button'] = array($button[0] => 'pressed');
 			}
-			// Override next button on step 30
-			if($content['step'] == '30') {
+			// Override next button on step 21, to do a regular submit for the file upload
+			if($content['step'] == 'wizard_step21') {
 				$this->etpl->set_cell_attribute('button[next]', 'onclick', '');
 			}
 
@@ -247,6 +247,10 @@ class importexport_definitions_ui
 				$this->response->addAssign('exec[button][cancel]','style.display', 'none');
 			}
 			$this->response->addAssign('contentbox', 'innerHTML', $html);
+			if (($onload = $GLOBALS['egw']->js->set_onload(''))) 
+			{ 	 
+				$this->response->addScript($onload); 	 
+			}			
 			$this->response->addAssign('picturebox', 'style.display', 'none');
 			$this->response->addScript("set_style_by_class('div','popupManual','display','inline');");
 
