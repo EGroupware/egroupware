@@ -51,6 +51,7 @@ alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	fr	Feuille de style alternative:
 american samoa	common	fr	SAMOA AMERICAINES
 andorra	common	fr	ANDORRE
+and	common	fr	et
 angola	common	fr	ANGOLA
 anguilla	common	fr	ANGUILLA
 antarctica	common	fr	ANTARCTIQUE
@@ -475,6 +476,7 @@ oops! you caught us in the middle of system maintainance.	common	fr	Oups! Vous �
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
 open sidebox	common	fr	Ouvrir la barre de menu latérale
+or	common	fr	ou
 ordered list	common	fr	Liste ordonnées (numéros)
 original	common	fr	Original
 other	common	fr	Autre
