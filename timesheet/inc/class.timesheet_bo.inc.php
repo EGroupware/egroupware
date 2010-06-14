@@ -676,19 +676,14 @@ class timesheet_bo extends so_sql_cf
 	 */
 	function link_query( $pattern, Array &$options = array() )
 	{
-		$criteria = array();
 		$limit = false;
 		$need_count = false;
-		foreach(array('ts_project','ts_title','ts_description') as $col)
-		{
-			$criteria[$col] = $pattern;
-		}
 		if($options['start'] || $options['num_rows']) {
 			$limit = array($options['start'], $options['num_rows']);
 			$need_count = true;
 		}
 		$result = array();
-		foreach((array) $this->search($criteria,false,'','','%',false,'OR', $limit, null, '', $need_count) as $ts )
+		foreach((array) $this->search($pattern,false,'','','%',false,'OR', $limit, null, '', $need_count) as $ts )
 		{
 			if ($ts) $result[$ts['ts_id']] = $this->link_title($ts);
 		}
