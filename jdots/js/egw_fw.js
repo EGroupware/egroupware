@@ -452,7 +452,8 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
  */
 egw_fw.prototype.setWebsiteTitle = function(_app,_title)
 {
-	document.title = _app.website_title = _title;
+	document.title = _title;
+	if (_app) _app.website_title = _title;
 }
 
 /**
