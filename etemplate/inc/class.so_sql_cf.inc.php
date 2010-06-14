@@ -456,6 +456,20 @@ class so_sql_cf extends so_sql
 					));
 					unset($criteria[$name]);
 				}
+				elseif (is_string($name) && $this->is_cf($name))
+				{
+					$name = substr($name, 1);
+					if (($negate = $criteria[$name][0] === '!'))
+					{
+						$val = substr($val,1);
+					}
+					$criteria[] = '(' . $this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
+						$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
+						$this->db->quote($wildcard.$val.$wildcard) . ' AND ' .
+						$this->extra_table.'.'.$this->extra_value . ' = ' . $this->db->quote($name) .
+						')';
+					unset($criteria[self::CF_PREFIX.$name]);
+				}
 			}
 		}
 		if($only_keys === true) {
