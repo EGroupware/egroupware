@@ -1058,7 +1058,7 @@ function open_edit(series)
 				if ($owner) $linkData['owner'] = $owner;
 
 				$droppableDateTime = $linkData['date'] . "T" . $linkData['hour'] . $linkData['minute'];
-				$droppableID='drop_'.$droppableDateTime.'_O'.$owner;
+				$droppableID='drop_'.$droppableDateTime.'_O'.($owner<0?str_replace('-','group',$owner):$owner);
 
 				$html .= $indent."\t".'<div id="' . $droppableID . '" style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
 					'%;" class="calAddEvent"';
@@ -1394,7 +1394,7 @@ function open_edit(series)
 			);
 		}
 
-		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.$owner;
+		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.($owner<0?str_replace('-','group',$owner):$owner);
 
 		$ttip_options = array(
 			'BorderWidth' => 0,		// as we use our round borders
