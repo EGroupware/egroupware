@@ -18,7 +18,7 @@ function _egw_json_escape_string(input)
 
 	for (var i = 0; i < len; i++)
 	{
-		switch (input[i])
+		switch (input.charAt(i))
 		{
 			case '"':
 				res += '\\"';
@@ -53,7 +53,7 @@ function _egw_json_escape_string(input)
 				break;
 
 			default:
-				res += input[i];
+				res += input.charAt(i);
 		}
 	}
 
