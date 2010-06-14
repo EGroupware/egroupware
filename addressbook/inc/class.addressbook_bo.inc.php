@@ -1606,17 +1606,17 @@ class addressbook_bo extends addressbook_so
 	 */
 	function find_or_add_categories($catname_list, $contact_id=null)
 	{
-		if($contact_id && $contact_id > 0)
+		if ($contact_id && $contact_id > 0)
 		{
 			// preserve categories without users read access
 			$old_contact = $this->read($contact_id);
 			$old_categories = explode(',',$old_contact['cat_id']);
 			$old_cats_preserve = array();
-			if(is_array($old_categories) && count($old_categories) > 0)
+			if (is_array($old_categories) && count($old_categories) > 0)
 			{
-				foreach($old_categories as $cat_id)
+				foreach ($old_categories as $cat_id)
 				{
-					if(!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
+					if (!$this->categories->check_perms(EGW_ACL_READ, $cat_id))
 					{
 						$old_cats_preserve[] = $cat_id;
 					}
@@ -1625,11 +1625,10 @@ class addressbook_bo extends addressbook_so
 		}
 
 		$cat_id_list = array();
-		foreach($catname_list as $cat_name)
+		foreach ((array)$catname_list as $cat_name)
 		{
 			$cat_name = trim($cat_name);
 			$cat_id = $this->categories->name2id($cat_name, 'X-');
-
 			if (!$cat_id)
 			{
 				// some SyncML clients (mostly phones) add an X- to the category names
@@ -1646,7 +1645,7 @@ class addressbook_bo extends addressbook_so
 			}
 		}
 
-		if(is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
+		if (is_array($old_cats_preserve) && count($old_cats_preserve) > 0)
 		{
 			$cat_id_list = array_merge($cat_id_list, $old_cats_preserve);
 		}

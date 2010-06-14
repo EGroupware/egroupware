@@ -250,6 +250,7 @@ class addressbook_groupdav extends groupdav_handler
 		}
 		$handler = self::_get_handler();
 		$options['data'] = $handler->getVCard($contact['id'],$this->charset,false);
+		// e.g. Evolution does not understand 'text/vcard'
 		$options['mimetype'] = 'text/x-vcard; charset='.$this->charset;
 		header('Content-Encoding: identity');
 		header('ETag: '.$this->get_etag($contact));
@@ -276,6 +277,25 @@ class addressbook_groupdav extends groupdav_handler
 
 		$handler = self::_get_handler();
 		$vCard = htmlspecialchars_decode($options['content']);
+		$charset = null;
+		if (!empty($options['content_type']))
+		{
+			$content_type = explode(';', $options['content_type']);
+			if (count($content_type) > 1)
+			{
+				array_shift($content_type);
+				foreach ($content_type as $attribute)
+				{
+					trim($attribute);
+					list($key, $value) = explode('=', $attribute);
+					switch (strtolower($key))
+					{
+						case 'charset':
+							$charset = strtoupper(substr($value,1,-1));
+					}
+				}
+			} 
+		}
 
 		if (is_array($oldContact))
 		{
@@ -285,7 +305,7 @@ class addressbook_groupdav extends groupdav_handler
 		else
 		{
 			// new entry?
-			if (($foundContacts = $handler->search($vCard)))
+			if (($foundContacts = $handler->search($vCard, null, false, $charset)))
 			{
 				if (($contactId = array_shift($foundContacts)) &&
 					($oldContact = $this->bo->read($contactId)))
@@ -307,15 +327,15 @@ class addressbook_groupdav extends groupdav_handler
 			}
 		}
 
-		$contact = $handler->vcardtoegw($vCard);
+		$contact = $handler->vcardtoegw($vCard, $charset);
 
-		if (is_array($contact['category']))
+		if (is_array($contact['cat_id']))
 		{
-			$contact['category'] = implode(',',$this->bo->find_or_add_categories($contact['category'], $contactId));
+			$contact['cat_id'] = implode(',',$this->bo->find_or_add_categories($contact['cat_id'], $contactId));
 		}
 		elseif ($contactId > 0)
 		{
-			$contact['category'] = $oldContact['category'];
+			$contact['cat_id'] = $oldContact['cat_id'];
 		}
 		if (is_array($oldContact))
 		{
