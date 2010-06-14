@@ -605,7 +605,7 @@ class calendar_ical extends calendar_boupdate
 						$rrule = $rriter->generate_rrule($version);
 						if ($event['recur_enddate'])
 						{
-							if ($tzid || $version != '1.0')
+							if (!$tzid || $version != '1.0')
 							{
 								if (!isset(self::$tz_cache['UTC']))
 								{
