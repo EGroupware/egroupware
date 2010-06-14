@@ -495,6 +495,25 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 
 		$handler = $this->_get_handler();
 		$vCalendar = htmlspecialchars_decode($options['content']);
+		$charset = null;
+		if (!empty($options['content_type']))
+		{
+			$content_type = explode(';', $options['content_type']);
+			if (count($content_type) > 1)
+			{
+				array_shift($content_type);
+				foreach ($content_type as $attribute)
+				{
+					trim($attribute);
+					list($key, $value) = explode('=', $attribute);
+					switch (strtolower($key))
+					{
+						case 'charset':
+							$charset = strtoupper(substr($value,1,-1));
+					}
+				}
+			} 
+		}
 
 		if (is_array($oldEvent))
 		{
@@ -512,7 +531,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		else
 		{
 			// new entry?
-			if (($foundEvents = $handler->search($vCalendar)))
+			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
 			{
 				if (($eventId = array_shift($foundEvents)) &&
 					(list($eventId) = explode(':', $eventId)) &&
@@ -536,7 +555,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		}
 
 		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
-			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user)))
+			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user, $charset)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
 			if ($eventId && $cal_id === false)
