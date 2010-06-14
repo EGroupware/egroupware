@@ -352,7 +352,7 @@ class addressbook_so
 	 */
 	function read_customfields($ids,$field_names=null)
 	{
-		return $this->soextra->read_customfields($ids,$fieldnames);
+		return $this->soextra->read_customfields($ids,$field_names);
 	}
 
 	/**
