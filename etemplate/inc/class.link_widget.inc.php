@@ -473,7 +473,7 @@ class link_widget
 	 * @param mixed &$value the extension returns here it's input, if there's any
 	 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
 	 * @param boolean &$loop can be set to true to request a re-submision of the form/dialog
-	 * @param object &$tmpl the eTemplate the widget belongs too
+	 * @param etemplate &$tmpl the eTemplate the widget belongs too
 	 * @param mixed &value_in the posted values (already striped of magic-quotes)
 	 * @return boolean true if $value has valid content, on false no content will be returned!
 	 */
@@ -554,6 +554,7 @@ class link_widget
 				break;
 
 			case 'attach':
+				$name = preg_replace('/^exec\[([^]]+)\](.*)$/','\\1\\2',$name);	// remove exec prefix
 				if (is_array($value['file']) && $value['to_app'] &&
 					!empty($value['file']['tmp_name']) && $value['file']['tmp_name'] != 'none')
 				{
@@ -570,20 +571,26 @@ class link_widget
 						move_uploaded_file($value['file']['tmp_name'],$new_file);
 						$value['file']['tmp_name'] = $new_file;
 					}
-					$link_id = egw_link::link($value['to_app'],$value['to_id'],
-						egw_link::VFS_APPNAME,$value['file'],$value['remark']);
-					$value['remark'] = '';
-
-					if (isset($value['primary']) && !$value['anz_links'] )
+					if (!($link_id = egw_link::link($value['to_app'],$value['to_id'],
+						egw_link::VFS_APPNAME,$value['file'],$value['remark'])))
 					{
-						$value['primary'] = $link_id;
+						etemplate::set_validation_error($name.'[file]',lang('Error copying uploaded file to vfs!'));
 					}
-					unset($value['comment']);
-					unset($value['file']);
+					else
+					{
+						$value['remark'] = '';
+	
+						if (isset($value['primary']) && !$value['anz_links'] )
+						{
+							$value['primary'] = $link_id;
+						}
+						unset($value['comment']);
+						unset($value['file']);
+					}
 				}
 				else
 				{
-					$value['msg'] = 'You need to select a file first!';
+					etemplate::set_validation_error($name.'[file]',lang('You need to select a file first!'));
 				}
 				$extension_data = $value;
 				$loop = True;
