@@ -204,6 +204,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				return false;
 			}
 			// new file --> create it in the DB
+			$new_file = true;
 			$query = 'INSERT INTO '.self::TABLE.' (fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_created,fs_modified,fs_creator,fs_mime,fs_size,fs_active'.
 				') VALUES (:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_created,:fs_modified,:fs_creator,:fs_mime,:fs_size,:fs_active)';
 			if (self::LOG_LEVEL > 2) $query = '/* '.__METHOD__.': '.__LINE__.' */ '.$query;
@@ -291,11 +292,17 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				//echo 'gettype($this->opened_stream)='; var_dump($this->opened_stream);
 			}
 		}
-		// do we operate directly on the filesystem
+		// do we operate directly on the filesystem --> open file from there
 		if ($this->operation == self::STORE2FS)
 		{
 			if (self::LOG_LEVEL > 1) error_log(__METHOD__." fopen (may create a directory? mkdir) ($this->opened_fs_id,$mode,$options)");
-			$this->opened_stream = fopen(self::_fs_path($this->opened_fs_id),$mode);
+			if (!($this->opened_stream = fopen(self::_fs_path($this->opened_fs_id),$mode)) && $new_file)
+			{
+				// delete db entry again, if we are not able to open a new(!) file
+				unset($stmt);
+				$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
+				$stmt->execute(array('fs_id' => $this->opened_fs_id));
+			}
 		}
 		if ($mode[0] == 'a')	// append modes: a, a+
 		{
