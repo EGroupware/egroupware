@@ -2219,34 +2219,7 @@ class calendar_boupdate extends calendar_bo
 	*/
 	function purge($age)
 	{
-		$query = array(
-			'end'		=>	strtotime("-$age years", time()),
-			'enum_recuring'	=>	false,
-			'users'		=>	array_keys($GLOBALS['egw']->accounts->search(array()))
-		);
-
-		$events = $this->search($query);
-		foreach($events as $event)
-		{
-			// Delete single events or recurring events where all ocurrences are old enough
-			if(!$event['recur_type'] || $event['recur_type'] && $event['recur_enddate'] && $event['recur_enddate'] <= $query['end'])
-			{
-				$this->delete($event['id'], 0, true);
-			}
-		}
-
-		// If preserve history is on, we'll need to do this again to completely remove it
-		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history']) {
-			$query['filter'] = 'deleted';
-			$events = $this->search($query);
-			foreach($events as $event)
-			{
-				if(!$event['recur_type'] || $event['recur_type'] && $event['recur_enddate'] && $event['recur_enddate'] <= $query['end'])
-				{
-					$this->delete($event['id'], 0, true);
-				}
-			}
-		}
+		$time = strtotime("-$age years", time());
+		$this->so->purge($time);
 	}
 }

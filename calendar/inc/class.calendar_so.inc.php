@@ -1491,6 +1491,54 @@ ORDER BY cal_user_type, cal_usre_id
 	}
 
 	/**
+	 * Delete all events that were before the given date.
+	 *
+	 * Recurring events that finished before the date will be deleted.
+	 * Recurring events that span the date will be ignored.  Non-recurring
+	 * events before the date will be deleted.
+	 *
+	 * @param int $date
+	 */
+	function purge($date)
+	{
+		// Start with egw_cal, it's the easiest
+		$sql = "DELETE egw_cal.* FROM egw_cal
+			LEFT JOIN egw_cal_repeats ON
+			    egw_cal_repeats.cal_id = egw_cal.cal_id
+			WHERE egw_cal_repeats.cal_id IS NULL || (recur_enddate < $date && recur_enddate != 0)";
+		$this->db->query($sql, __LINE__, __FILE__);
+
+		// Get a list of what we just deleted for links
+		$ids = array();
+		foreach($this->db->select(
+			'egw_cal_dates',
+			array('cal_id'),
+			array('cal_id NOT IN (SELECT cal_id FROM egw_cal)'),
+			__LINE__, __FILE__, false
+		) as $row)
+		{
+			$ids[] = $row['cal_id'];
+		}
+
+		// Cascade to other tables
+		foreach($this->all_tables as $table)
+		{
+			if($table == 'egw_cal') continue;
+			$this->db->delete($table, array('cal_id NOT IN (SELECT cal_id FROM egw_cal)'), __LINE__, __FILE__, 'calendar');
+		}
+
+		// Sync
+		$sql = 'UPDATE egw_api_content_history
+			SET sync_deleted=NOW()
+			WHERE sync_appname = \'calendar\'
+			    AND sync_contentid NOT IN (SELECT cal_id from egw_cal)';
+		$this->db->query($sql, __LINE__, __FILE__);
+			
+		// Links
+		egw_link::unlink('', 'calendar', $ids);
+	}
+
+	/**
 	 * read the alarms of a calendar-event specified by $cal_id
 	 *
 	 * alarm-id is a string of 'cal:'.$cal_id.':'.$alarm_nr, it is used as the job-id too
