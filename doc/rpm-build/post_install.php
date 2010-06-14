@@ -102,9 +102,18 @@ function set_distro_defaults($distro=null)
 			$config['ldap_group_context'] = 'ou=group,$base';
 			break;
 		case 'debian':
-			$config['start_db'] = '/usr/sbin/service mysql';
+			// service not in Debian5, only newer Ubuntu, which complains about /etc/init.d/xx
+			if (file_exists('/usr/sbin/service'))
+			{
+				$config['start_db'] = '/usr/sbin/service mysql';
+				$config['start_webserver'] = '/usr/sbin/service apache2';
+			}
+			else
+			{	
+				$config['start_db'] = '/etc/init.d/mysql';
+				$config['start_webserver'] = '/etc/init.d/apache2';
+			}
 			$config['autostart_db'] = '/usr/sbin/update-rc.d mysql defaults';
-			$config['start_webserver'] = '/usr/sbin/service apache2';
 			$config['autostart_webserver'] = '/usr/sbin/update-rc.d apache2 defaults';
 			break;
 		case 'mandriva':
