@@ -188,27 +188,6 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 		success: this.handleResponse});
 }
 
-egw_json_request.prototype.getFormValues = function(_form)
-{
-	var elem = null;
-	if (typeof _form == 'object')
-	{
-		elem = _form;
-	}
-	else
-	{
-		elem = document.getElementsByName(_form)[0];
-	}
-
-	var serialized = new Object;
-	if (typeof elem != "undefined" && elem && elem.childNodes)
-	{
-		_egw_json_getFormValues(serialized, elem.childNodes)
-	}
-
-	return serialized;
-}
-
 egw_json_request.prototype.alertFunc = function(_message, _details)
 {
 	alert(_message);
@@ -328,6 +307,26 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 	}
 }
 
+function egw_json_getFormValues(_form)
+{
+	var elem = null;
+	if (typeof _form == 'object')
+	{
+		elem = _form;
+	}
+	else
+	{
+		elem = document.getElementsByName(_form)[0];
+	}
+
+	var serialized = new Object;
+	if (typeof elem != "undefined" && elem && elem.childNodes)
+	{
+		_egw_json_getFormValues(serialized, elem.childNodes)
+	}
+
+	return serialized;
+}
 
 /**
  * Deprecated legacy xajax wrapper functions for the new egw_json interface
@@ -363,7 +362,7 @@ xajax_doXMLHTTPsync = function(_menuaction)
 window.xajax = {
 	"getFormValues": function(_form)
 	{
-		return egw_json_request.prototype.getFormValues(_form);
+		return egw_json_getFormValues(_form);
 	}
 };
 
