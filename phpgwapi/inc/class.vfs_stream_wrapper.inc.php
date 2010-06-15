@@ -682,9 +682,12 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		$this->opened_dir_writable = egw_vfs::check_access($this->opened_dir_url,egw_vfs::WRITABLE);
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = parse_url($path,PHP_URL_PATH);
-		foreach(self::$fstab as $mounted => $nul)
+		foreach(self::$fstab as $mounted => $url)
 		{
-			if ((dirname($mounted) == $basepath || dirname($mounted).'/' == $basepath) && $mounted != '/')
+			if (((dirname($mounted) == $basepath || dirname($mounted).'/' == $basepath) && $mounted != '/') &&
+				// only return children readable by the user, if dir is not writable
+				(!self::HIDE_UNREADABLES || $this->opened_dir_writable || 
+					egw_vfs::check_access($mounted,egw_vfs::READABLE)))
 			{
 				$this->extra_dirs[] = basename($mounted);
 			}
@@ -922,24 +925,21 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	function dir_readdir ( )
 	{
-		// only return children readable by the user, if dir is not writable
-		do {
-			if ($this->extra_dirs && count($this->extra_dirs) > $this->extra_dir_ptr)
-			{
-				$file = $this->extra_dirs[$this->extra_dir_ptr++];
-			}
-			else
-			{
-				// do not return files in $this->extra_dir twice
-				do {
-					$file = readdir($this->opened_dir);
-				}
-				while($file !== false && (is_array($this->extra_dirs) && in_array($file,$this->extra_dirs)));	// dont return mountpoints twice
-			}
+		if ($this->extra_dirs && count($this->extra_dirs) > $this->extra_dir_ptr)
+		{
+			$file = $this->extra_dirs[$this->extra_dir_ptr++];
 		}
-		while($file !== false && self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
-				!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE));
-
+		else
+		{
+			 // only return children readable by the user, if dir is not writable
+			do {
+				$file = readdir($this->opened_dir);
+			}
+			while($file !== false && 
+				(is_array($this->extra_dirs) && in_array($file,$this->extra_dirs) || // do NOT return extra_dirs twice
+				self::HIDE_UNREADABLES && !$this->opened_dir_writable &&
+				!egw_vfs::check_access(egw_vfs::concat($this->opened_dir_url,$file),egw_vfs::READABLE)));
+		}		
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."( $this->opened_dir ) = '$file'");
 		return $file;
 	}
