@@ -973,11 +973,12 @@ class common
 	/**
 	 * load the eGW footer
 	 *
-	 * @deprecated use $GLOBALS['egw']->framework->footer() or egw_framework::render($content)
+	 * @deprecated use echo $GLOBALS['egw']->framework->footer() or egw_framework::render($content)
 	 */
 	static function egw_footer()
 	{
-		if(is_object($GLOBALS['egw']->framework)) {
+		if(is_object($GLOBALS['egw']->framework))
+		{
 			echo $GLOBALS['egw']->framework->footer();
 		}
 	}
