@@ -925,43 +925,70 @@ abstract class egw_framework
 	protected static $body_tags = array();
 	
 	/**
-	* Sets an onLoad action for a page
-	*
-	* @param string javascript to be used
-	* @return string content of onXXX tag after adding code
-	*/
-	static function set_onload($code)
+	 * Sets an onLoad action for a page
+	 *
+	 * @param string $code='' javascript to be used
+	 * @param boolean $replace=false false: append to existing, true: replace existing tag
+	 * @return string content of onXXX tag after adding code
+	 */
+	static function set_onload($code='',$replace=false)
 	{
-		return self::$body_tags['onLoad'] .= $code;
+		if ($replace)
+		{
+			self::$body_tags['onLoad'] = $code;
+		}
+		else
+		{
+			self::$body_tags['onLoad'] .= $code;
+		}
+		return self::$body_tags['onLoad'];
 	}
 
 	/**
-	* Sets an onUnload action for a page
-	*
-	* @param string javascript to be used
-	* @return string content of onXXX tag after adding code
-	*/
-	static function set_onunload($code)
+	 * Sets an onUnload action for a page
+	 *
+	 * @param string $code='' javascript to be used
+	 * @param boolean $replace=false false: append to existing, true: replace existing tag
+	 * @return string content of onXXX tag after adding code
+	 */
+	static function set_onunload($code='',$replace=false)
 	{
-		return self::$body_tags['onUnload'] .= $code;
+		if ($replace)
+		{
+			self::$body_tags['onUnload'] = $code;
+		}
+		else
+		{
+			self::$body_tags['onUnload'] .= $code;
+		}
+		return self::$body_tags['onUnload'];
 	}
 
 	/**
 	* Sets an onResize action for a page
 	*
-	* @param string javascript to be used
+	* @param string $code='' javascript to be used
+	* @param boolean $replace=false false: append to existing, true: replace existing tag
 	* @return string content of onXXX tag after adding code
 	*/
-	static function set_onresize($code)
+	static function set_onresize($code='',$replace=false)
 	{
-		return self::$body_tags['onResize'] .= $code;
+		if ($replace)
+		{
+			self::$body_tags['onResize'] = $code;
+		}
+		else
+		{
+			self::$body_tags['onResize'] .= $code;
+		}
+		return self::$body_tags['onResize'];
 	}
-	
+
 	/**
-	* Adds on(Un)Load= attributes to the body tag of a page
-	*
-	* @returns string the attributes to be used
-	*/
+	 * Adds on(Un)Load= attributes to the body tag of a page
+	 *
+	 * @returns string the attributes to be used
+	 */
 	static protected function _get_body_attribs()
 	{
 		$js = '';
@@ -1014,6 +1041,21 @@ abstract class egw_framework
 			return True;
 		}
 		return False;
+	}
+	
+	/**
+	 * Set or return all javascript files set via validate_file
+	 * 
+	 * @param array $files=null array with pathes relative to EGW_SERVER_ROOT, eg. /phpgwapi/js/jquery/jquery.js
+	 * @return array with pathes relative to EGW_SERVER_ROOT
+	 */
+	static function js_files(array $files=null)
+	{
+		if (isset($files) && is_array($files))
+		{
+			self::$js_include_files = $files;
+		}
+		return self::$js_include_files;
 	}
 	
 	/**
