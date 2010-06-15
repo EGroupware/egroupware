@@ -7,7 +7,7 @@
  * @copyright (c) 2006 by Christian Binder <christian.binder@freakmail.de>
  * @package phpgwapi
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.dragdrop.inc.php 22783 2006-11-02 13:52:24Z jaytraxx $ 
+ * @version $Id$ 
  */
 
 require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.browser.inc.php');
