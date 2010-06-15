@@ -860,7 +860,7 @@
 			
 			$this->t->parse("out","main");
 			print $this->t->get('out','main');
-			$GLOBALS['egw']->framework->footer(false);	
+			echo $GLOBALS['egw']->framework->footer(false);
 		}
 
 		function array_merge_replace( $array, $newValues ) 
