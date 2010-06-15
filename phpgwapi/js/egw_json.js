@@ -307,7 +307,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 	}
 }
 
-function egw_json_getFormValues(_form)
+function egw_json_getFormValues(_form, _filterClass)
 {
 	var elem = null;
 	if (typeof _form == 'object')
@@ -322,7 +322,10 @@ function egw_json_getFormValues(_form)
 	var serialized = new Object;
 	if (typeof elem != "undefined" && elem && elem.childNodes)
 	{
-		_egw_json_getFormValues(serialized, elem.childNodes)
+		if (typeof _filterClass == 'undefined')
+			var _filterClass = null;
+
+		_egw_json_getFormValues(serialized, elem.childNodes, _filterClass)
 	}
 
 	return serialized;
@@ -380,7 +383,7 @@ window.xajax = {
  * @param serialized is the object which will contain the form data
  * @param children is the children node of the form we're runing over
  */
-function _egw_json_getFormValues(serialized, children)
+function _egw_json_getFormValues(serialized, children, _filterClass)
 {
 	for (var i = 0; i < children.length; ++i) {
 		var child = children[i];
@@ -388,7 +391,8 @@ function _egw_json_getFormValues(serialized, children)
 		if (typeof child.childNodes != "undefined")
 			_egw_json_getFormValues(serialized, child.childNodes);
 
-		_egw_json_getFormValue(serialized, child);
+		if (!_filterClass || $(child).hasClass(_filterClass))
+			_egw_json_getFormValue(serialized, child);
 	}
 }
 
