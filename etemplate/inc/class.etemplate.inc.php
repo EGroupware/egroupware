@@ -260,15 +260,19 @@ class etemplate extends boetemplate
 
 		self::$request->java_script = self::$java_script;
 		self::$request->java_script_from_flags = $GLOBALS['egw_info']['flags']['java_script'];
-		self::$request->java_script_body_tags = $GLOBALS['egw']->js->body;
-		self::$request->java_script_files = $GLOBALS['egw']->js->files;
+		self::$request->java_script_body_tags = array(
+			'onload'   => egw_framework::set_onload(),
+			'onunload' => egw_framework::set_onunload(),
+			'onresize' => egw_framework::set_onresize(),
+		);
+		self::$request->java_script_files = egw_framework::js_files();
 		self::$request->include_xajax = $GLOBALS['egw_info']['flags']['include_xajax'];
 
 		// check if application of template has a app.js file --> load it
 		list($app) = explode('.',$this->name);
 		if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
 		{
-			$GLOBALS['egw']->js->validate_file('.','app',$app,false);
+			egw_framework::validate_file('.','app',$app,false);
 		}
 
 		if (!$this->sitemgr)
@@ -515,14 +519,21 @@ class etemplate extends boetemplate
 			{
 				foreach (self::$request->java_script_body_tags as $tag => $code)
 				{
-					//error_log($GLOBALS['egw']->js->body[$tag]);
-					$GLOBALS['egw']->js->body[$tag] .= $code;
+					call_user_func('egw_framework::set_'.$tag,$code);
 				}
 			}
 			if (is_array(self::$request->java_script_files))
 			{
-				$GLOBALS['egw']->js->files = !is_array($GLOBALS['egw']->js->files) ? self::$request->java_script_files :
-					self::complete_array_merge($GLOBALS['egw']->js->files,self::$request->java_script_files);
+				$files = egw_framework::js_files();
+				if (is_array($files))
+				{
+					$files = array_unique(array_merge($files,self::$request->java_script_files));
+				}
+				else
+				{
+					$files = self::$request->java_script_files;
+				}
+				egw_framework::js_files($files);
 			}
 
 			//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array(self::complete_array_merge(self::$request->content,$content));

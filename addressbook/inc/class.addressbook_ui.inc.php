@@ -438,7 +438,7 @@ class addressbook_ui extends addressbook_bo
 
 		$response = new xajaxResponse();
 
-		if ($success) $response->addScript($GLOBALS['egw']->js->body['onLoad']);
+		if ($success) $response->addScript(egw_framework::set_onload(''));
 
 		// close window only if no errors AND something added
 		if ($failed || !$success)
@@ -589,7 +589,7 @@ class addressbook_ui extends addressbook_bo
 			case 'infolog_add':
 				if ($use_all)	// !$use_all is handled purely in javascript
 				{
-					$GLOBALS['egw']->js->set_onload(
+					egw_framework::set_onload(
 						"win=window.open('".egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').implode(',',$checked)."','_blank','width=750,height=550,left=100,top=200'); win.focus();");
 				}
 				$msg = lang('New window opened to edit Infolog for your selection ');
@@ -694,7 +694,7 @@ class addressbook_ui extends addressbook_bo
 						if($email)
 						{
 							$contact['n_fn'] = str_replace(',',' ',$contact['n_fn']);
-							$GLOBALS['egw']->js->set_onload("addEmail('".addslashes(
+							egw_framework::set_onload("addEmail('".addslashes(
 								$contact['n_fn'] ? $contact['n_fn'].' <'.$email.'>' : $email)."');");
 							$Ok = true;
 						}
@@ -798,9 +798,9 @@ class addressbook_ui extends addressbook_bo
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
-		if ($do_email && etemplate::$loop && is_object($GLOBALS['egw']->js))
+		if ($do_email && etemplate::$loop)
 		{	// remove previous addEmail() calls, otherwise they will be run again
-			$GLOBALS['egw']->js->body['onLoad'] = preg_replace('/addEmail\([^)]+\);/','',$GLOBALS['egw']->js->body['onLoad']);
+			egw_framework::set_onload(preg_replace('/addEmail\([^)]+\);/','',egw_framework::set_onload()),true);
 		}
 		//echo "<p>uicontacts::get_rows(".print_r($query,true).")</p>\n";
 		if (!$id_only)
