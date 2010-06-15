@@ -2234,7 +2234,7 @@
 			if (self::$debug) _debug_array($structure);
 			$attachments = array();
 			// this kind of messages contain only the attachment and no body
-			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'IMAGE') 
+			if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'VIDEO' || $structure->type == 'IMAGE') 
 			{
 				$newAttachment = array();
 				$newAttachment['name']		= self::getFileNameFromStructure($structure);
@@ -2394,6 +2394,7 @@
 					}
 
 					break;
+				case 'VIDEO':
 				case 'AUDIO': // some servers send audiofiles and imagesfiles directly, without any stuff surround it
 				case 'IMAGE': // they are displayed as Attachment NOT INLINE
 					return array(

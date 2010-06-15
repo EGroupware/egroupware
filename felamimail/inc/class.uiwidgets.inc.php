@@ -374,7 +374,8 @@
 					$header['mimetype'] == 'multipart/related' ||
 					$header['mimetype'] == 'text/calendar' ||
 					substr($header['mimetype'],0,11) == 'application' ||
-					substr($header['mimetype'],0,5) == 'audio') {
+					substr($header['mimetype'],0,5) == 'audio' ||
+					substr($header['mimetype'],0,5) == 'video') {
 					$image = html::image('felamimail','attach');
 					$this->t->set_var('attachment_image', $image);
 				} else {
@@ -637,7 +638,8 @@
 					$headerData['mimetype'] == 'multipart/related' ||
 					$headerData['mimetype'] == 'text/calendar' ||
 					substr($headerData['mimetype'],0,11) == 'application' ||
-					substr($headerData['mimetype'],0,5) == 'audio') {
+					substr($headerData['mimetype'],0,5) == 'audio' ||
+					substr($headerData['mimetype'],0,5) == 'video') {
 					$image = html::image('felamimail','attach');
 
 					$image = "<a name=\"subject_url\" href=\"#\" 

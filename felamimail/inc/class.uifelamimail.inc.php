@@ -512,7 +512,7 @@
 
 				$this->t->parse("out","main");
 				print $this->t->get('out','main');
-				$GLOBALS['egw']->framework->footer(false);
+				echo $GLOBALS['egw']->framework->footer(false);
 				exit;
 			}
 			$this->t->set_var('activeFolder',$urlMailbox);
