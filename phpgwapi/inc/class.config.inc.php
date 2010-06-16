@@ -128,6 +128,7 @@ class config
 		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
 		if (!$app || isset($this) && is_a($this,__CLASS__) && $app == $this->appname)
 		{
+			$app = $this->appname;
 			$this->config_data[$name] = $value;
 		}
 		//echo "<p>config::save_value('$name','".print_r($value,True)."','$app')</p>\n";
