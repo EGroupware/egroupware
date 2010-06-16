@@ -87,11 +87,13 @@ function egw_json_encode(input)
 	{
 		switch (input.constructor)
 		{
-			case Array:
+			case Array:		
 				var buf = [];
 				for (var k in input)
 				{
-					buf.push(egw_json_encode(input[k]));
+					//Filter the remove function, which is added to arrays in egw_fw_classes
+					if (k != 'remove')
+						buf.push(egw_json_encode(input[k]));
 				}
 				return '[' + buf.join(',') + ']';
 
