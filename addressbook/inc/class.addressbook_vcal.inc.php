@@ -56,7 +56,7 @@ class addressbook_vcal extends addressbook_bo
 			'TEL;CELL;WORK'		=> array('tel_cell'),
 			'TEL;CELL;HOME'		=> array('tel_cell_private'),
 			'TEL;CAR'			=> array('tel_car'),
-			'TEL;OTHER;VOICE'	=> array('tel_other'),
+			'TEL;OTHER'			=> array('tel_other'),
 			'TEL;VOICE;WORK'	=> array('tel_work'),
 			'TEL;FAX;WORK'		=> array('tel_fax'),
 			'TEL;HOME;VOICE'	=> array('tel_home'),
@@ -554,7 +554,7 @@ class addressbook_vcal extends addressbook_bo
 			'TEL;CELL;WORK'		=> array('tel_cell'),
 			'TEL;CELL;HOME'		=> array('tel_cell_private'),
 			'TEL;CAR'			=> array('tel_car'),
-			'TEL;OTHER;VOICE'	=> array('tel_other'),
+			'TEL;OTHER'			=> array('tel_other'),
 			'TEL;VOICE;WORK'	=> array('tel_work'),
 			'TEL;FAX;WORK'		=> array('tel_fax'),
 			'TEL;HOME;VOICE'	=> array('tel_home'),
@@ -805,13 +805,21 @@ class addressbook_vcal extends addressbook_bo
 						$finalRowNames['TEL;HOME;VOICE'] = $vcardKey;
 					}
 					break;
-				case 'TEL;OTHER':
-				    if (!in_array('TEL;OTHER;VOICE', $rowNames)
-							&& !isset($finalRowNames['TEL;OTHER;VOICE']))
+				case 'TEL;OTHER;VOICE':
+				    if (!in_array('TEL;OTHER', $rowNames)
+							&& !isset($finalRowNames['TEL;OTHER']))
 					{
-						$finalRowNames['TEL;OTHER;VOICE'] = $vcardKey;
+						$finalRowNames['TEL;OTHER'] = $vcardKey;
 					}
-					break;
+					break;	
+				case 'TEL;PAGER;WORK':
+				case 'TEL;PAGER;HOME':
+					if (!in_array('TEL;PAGER', $rowNames)
+							&& !isset($finalRowNames['TEL;PAGER']))
+					{
+						$finalRowNames['TEL;PAGER'] = $vcardKey;
+					}
+					break;	
 				case 'TEL;CAR;VOICE':
 				case 'TEL;CAR;CELL':
 				case 'TEL;CAR;CELL;VOICE':
@@ -834,6 +842,14 @@ class addressbook_vcal extends addressbook_bo
 							&& !isset($finalRowNames['TEL;HOME;VOICE']))
 					{
 						$finalRowNames['TEL;HOME;VOICE'] = $vcardKey;
+					}
+					break;
+					case 'TEL;X-egw-Ref3':
+					if (!in_array('TEL;OTHER', $rowNames)
+							&& !in_array('TEL;OTHER;VOICE', $rowNames)
+							&& !isset($finalRowNames['TEL;OTHER']))
+					{
+						$finalRowNames['TEL;OTHER'] = $vcardKey;
 					}
 					break;
 				case 'TEL;CELL;X-egw-Ref1':
