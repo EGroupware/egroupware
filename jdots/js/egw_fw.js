@@ -21,12 +21,15 @@
  * @param string _tabsId specifies the name of the div container which should cotain the tab area
  * @param string _webserverUrl specifies the egroupware root url
  */
-function egw_fw(_sidemenuId, _tabsId, _webserverUrl)
+function egw_fw(_sidemenuId, _tabsId, _splitterId, _webserverUrl, _sideboxSizeCallback,
+	_sideboxStartSize)
 {
 	/* Get the base div */
 	this.sidemenuDiv = document.getElementById(_sidemenuId);
 	this.tabsDiv = document.getElementById(_tabsId);
+	this.splitterDiv = document.getElementById(_splitterId);
 	this.webserverUrl = _webserverUrl;
+	this.sideboxSizeCallback = _sideboxSizeCallback;
 	window.egw_webserverUrl = _webserverUrl;
 
 	this.sidemenuUi = null;
@@ -37,14 +40,30 @@ function egw_fw(_sidemenuId, _tabsId, _webserverUrl)
 	this.applications = new Object();
 	this.activeApp = null;
 
-	if (this.sidemenuDiv && this.tabsDiv)
+	if (this.sidemenuDiv && this.tabsDiv && this.splitterDiv)
 	{
-		//Create the sidemenu and the tabs area
-		this.sidemenuUi = new egw_fw_ui_sidemenu(this.sidemenuDiv);
+		//Wrap a scroll area handler around the applications
+		this.scrollAreaUi = new egw_fw_ui_scrollarea(this.sidemenuDiv);
+
+		//Create the sidemenu, the tabs area and the splitter
+		this.sidemenuUi = new egw_fw_ui_sidemenu(this.scrollAreaUi.contentDiv,
+			this.sortCallback);
 		this.tabsUi = new egw_fw_ui_tabs(this.tabsDiv);
+		this.splitterUi = new egw_fw_ui_splitter(this.splitterDiv,
+			EGW_SPLITTER_VERTICAL, this.splitterResize, 
+			[
+				{
+					"size": _sideboxStartSize,
+					"minsize": 225,
+					"maxsize": 0
+				},
+			], this);
+		
 
 		this.loadApplications("home.jdots_framework.ajax_navbar_apps");
 	}
+
+	_sideboxSizeCallback(_sideboxStartSize);
 
 	//Register the resize handler
 	$(window).resize(function(){window.framework.resizeHandler()});
@@ -98,6 +117,97 @@ egw_fw.prototype.keyPressHandler = function(event)
 }
 
 /**
+ * Sets the active framework application to the application specified by _app
+ */
+egw_fw.prototype.setActiveApp = function(_app)
+{
+	//Only perform the following commands if a new application is activated
+	if (_app != this.activeApp)
+	{
+		this.activeApp = _app;
+
+		//Set the sidebox width if a application specific sidebox width is set
+		if (_app.sideboxWidth !== false)
+		{
+			this.sideboxSizeCallback(_app.sideboxWidth);
+			this.splitterUi.constraints[0].size = _app.sideboxWidth;
+		}
+
+		//Open the sidemenuUi that belongs to the app, if no sidemenu is attached
+		//to the app, close the sidemenuUi
+		if (_app.sidemenuEntry)
+		{
+			if (_app.hasSideboxMenuContent)
+			{
+				this.sidemenuUi.open(_app.sidemenuEntry);
+			}
+		}
+		else
+		{
+			this.sidemenuUi.open(null);
+		}
+
+		//Set the website title
+		if (_app.website_title)
+		{
+			document.title = _app.website_title;
+		}
+
+		//Show the application tab
+		if (_app.tab)
+		{
+			this.tabsUi.showTab(_app.tab);
+		}
+
+		//Resize the scroll area...
+		this.scrollAreaUi.update();
+
+		//...and scroll to the top
+		this.scrollAreaUi.setScrollPos(0);
+	}
+}
+
+/**
+ * Function called whenever the sidemenu entries are sorted
+ */
+egw_fw.prototype.sortCallback = function(_entriesArray)
+{
+	//Create an array with the names of the applications in their sort order	
+	var name_array = new Array();
+	for (var i = 0; i < _entriesArray.length; i++)
+	{
+		name_array.push(_entriesArray[i].tag.appName);
+	}
+	
+	//Send the sort order to the server via ajax
+	var req = new egw_json_request('home.jdots_framework.ajax_appsort',
+		[name_array]);
+	req.sendRequest(true);
+}
+
+/**
+ * Function called whenever the sidebox is resized
+ */
+egw_fw.prototype.splitterResize = function(_width)
+{
+	if (this.tag.activeApp)
+	{
+		app_name = this.tag.activeApp.appName;
+		var req = new egw_json_request(app_name + '.jdots_framework.ajax_sideboxwidth',
+			[app_name, _width]);
+		req.sendRequest(true);
+
+		//If there are no global application width values, set the sidebox width of
+		//the application every time the splitter is resized
+		if (this.tag.activeApp.sideboxWidth !== false)
+		{
+			this.tag.activeApp.sideboxWidth = _width;
+		}
+	}
+	this.tag.sideboxSizeCallback(_width);
+}
+
+/**
  * tabCloseClickCallback is used internally by egw_fw in order to handle clicks
  * on the close button of every tab.
  *
@@ -116,8 +226,8 @@ egw_fw.prototype.tabCloseClickCallback = function(_sender)
 		app.tab = null;
 		app.iframe = null;
 
-		//Activate the new application in the sidebar menu
-		app.parentFw.sidemenuUi.open(tabsUi.activeTab.tag.sidemenuEntry);
+		//Set the active application to the application of the currently active tab
+		app.parentFw.setActiveApp(tabsUi.activeTab.tag);
 	}
 
 	tabsUi.setCloseable(tabsUi.tabs.length > 1);
@@ -134,6 +244,8 @@ egw_fw.prototype.resizeHandler = function()
 		{
 			this.applications[app].iframe.style.height = this.getIFrameHeight() + 'px';
 		}
+
+		this.scrollAreaUi.update();
 	}
 }
 
@@ -152,12 +264,8 @@ egw_fw.prototype.getIFrameHeight = function()
  */
 egw_fw.prototype.tabClickCallback = function(_sender)
 {
-	this.parent.showTab(this);
-	this.tag.parentFw.sidemenuUi.open(this.tag.sidemenuEntry);
-	document.title = this.tag.website_title ? this.tag.website_title : this.tag.appName;
-
-	//Set this application as the active application
-	this.tag.parentFw.activeApp = this.tag;
+	//Set the active application in the framework
+	this.tag.parentFw.setActiveApp(this.tag);
 }
 
 /**
@@ -202,24 +310,7 @@ egw_fw.prototype.applicationTabNavigate = function(_app, _url)
 	//Set the iframe location
 	_app.iframe.src = typeof(_url) == "undefined" ? _app.execName : _url;
 
-	//Set this application as the active application
-	_app.parentFw.activeApp = _app;
-
-	//Show the tab
-	this.tabsUi.showTab(_app.tab);
-
-	if (_app.sidemenuEntry != null)
-	{
-		//Open the sidemenu entry content
-		if (_app.hasSideboxMenuContent)
-		{
-			_app.sidemenuEntry.parent.open(_app.sidemenuEntry);
-		}
-	}
-	else
-	{
-		_app.parentFw.sidemenuUi.open(null);
-	}
+	_app.parentFw.setActiveApp(_app);
 }
 
 /**
@@ -248,7 +339,7 @@ egw_fw.prototype.loadApplicationsCallback = function(apps)
 		var app = apps[i];
 
 		appData = new egw_fw_class_application(this, 
-			app.name, app.title, app.icon, app.url);
+			app.name, app.title, app.icon, app.url, app.sideboxwidth);
 
 		//Create a sidebox menu entry for each application
 		if (!app.noNavbar)
@@ -282,6 +373,8 @@ egw_fw.prototype.loadApplicationsCallback = function(apps)
 	{
 		this.applicationTabNavigate(defaultApp);
 	}
+
+	this.scrollAreaUi.update();
 }
 
 /**
@@ -359,6 +452,12 @@ egw_fw.prototype.categoryOpenCloseCallback = function(_opened)
 
 	/* Store the state of the category lokaly */	
 	this.tag.parentFw.categoryOpenCache[this.tag.appName + '#' + this.catName] = _opened;
+//	this.tag.parentFw.scrollAreaUi.update();
+}
+
+egw_fw.prototype.categoryAnimationCallback = function()
+{
+	this.tag.parentFw.scrollAreaUi.update();
 }
 
 /**
@@ -415,7 +514,8 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
 				if (catContent != '')
 				{
 					var categoryUi = new egw_fw_ui_category(contDiv,_data[i].menu_name,
-						_data[i].title, catContent, this.categoryOpenCloseCallback, _app);
+						_data[i].title, catContent, this.categoryOpenCloseCallback, 
+						this.categoryAnimationCallback, _app);
 
 					//Lookup whether this entry was opened before. If no data is
 					//stored about this, use the information we got from the server
@@ -442,6 +542,9 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
 
 		_app.hasSideboxMenuContent = true;
 		_app.sidemenuEntry.parent.open(_app.sidemenuEntry);
+
+		_app.parentFw.scrollAreaUi.update();
+		_app.parentFw.scrollAreaUi.setScrollPos(0);
 	}
 }
 

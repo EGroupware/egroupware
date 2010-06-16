@@ -26,14 +26,17 @@
  * @param function(_sender) _callback specifies the function which should be called when the entry is clicked. The _sender parameter passed is a reference to this egw_fw_ui_sidemenu_entry element.
  * @param object _tag can be used to attach any user data to the object. Inside egw_fw _tag is used to attach an egw_fw_class_application to each sidemenu entry.
  */
-function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _name, _icon, _callback, _tag)
+function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _callback,
+	_tag)
 {
 	this.baseDiv = _baseDiv;
+	this.elemDiv = _elemDiv;
 	this.entryName = _name;
 	this.icon = _icon;
 	this.tag = _tag;
 	this.parent = _parent;
 	this.atTop = false;
+	this.isDraged = false;
 
 	//Add a new div for the new entry to the base div
 	this.headerDiv = document.createElement("div");
@@ -58,9 +61,13 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _name, _icon, _callback, _t
 	$(this.headerDiv).append(iconDiv);
 	$(this.headerDiv).append(entryH1);
 	$(this.headerDiv).append(this.ajaxloader);
+	this.headerDiv._parent = this;
 	this.headerDiv._callbackObject = new egw_fw_class_callback(this, _callback);
 	$(this.headerDiv).click(function(){
-		this._callbackObject.call(this);
+		if (!this._parent.isDraged)
+			this._callbackObject.call(this);
+		this._parent.isDraged = false;
+		return true;
 	});
 
 	//Create the content div
@@ -72,12 +79,48 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _name, _icon, _callback, _t
 
 	//Add in invisible marker to store the original position of this element in the DOM tree
 	this.marker = document.createElement("div");
+	this.marker._parent = this;
+	this.marker.className = 'egw_fw_ui_sidemenu_marker';
+	var entryH1 = document.createElement("h1");
+	$(entryH1).append(this.entryName);
+	$(this.marker).append(entryH1);
 	$(this.marker).hide();
 
+	//Create a container which contains all generated elements and is then added
+	//to the baseDiv
+	this.containerDiv = document.createElement("div");
+	this.containerDiv._parent = this;
+	$(this.containerDiv).append(this.marker);
+	$(this.containerDiv).append(this.headerDiv);
+	$(this.containerDiv).append(this.contentDiv);
+
 	//Append header and content div to the base div
-	$(this.baseDiv).append(this.marker);
-	$(this.baseDiv).append(this.headerDiv);
-	$(this.baseDiv).append(this.contentDiv);
+	$(this.elemDiv).append(this.containerDiv);
+
+	//Make the base Div sortable. Set all elements with the style "egw_fw_ui_sidemenu_entry_header"
+	//as handle
+	$(this.elemDiv).sortable("destroy");
+	$(this.elemDiv).sortable({
+		handle: ".egw_fw_ui_sidemenu_entry_header",
+		distance: 15,
+		start: function(event, ui)
+		{
+			var parent = ui.item.context._parent;
+			parent.isDraged = true;
+			parent.parent.startDrag.call(parent.parent);
+		},
+		stop: function(event, ui)
+		{
+			var parent = ui.item.context._parent;
+			parent.parent.stopDrag.call(parent.parent);
+			parent.parent.refreshSort.call(parent.parent);
+		},
+		
+		opacity: 0.7,
+//		appendTo: 'body',
+//		helper: 'clone',
+		axis: 'y'
+	});
 }
 
 /**
@@ -143,7 +186,7 @@ egw_fw_ui_sidemenu_entry.prototype.close = function()
 	$(this.contentDiv).hide();
 }
 
-/**
+/**egw_fw_ui_sidemenu_entry_header_active
  * showAjaxLoader shows the AjaxLoader animation which should be displayed when
  * the content of the sidemenu entry is just being loaded.
  */
@@ -181,10 +224,65 @@ egw_fw_ui_sidemenu_entry.prototype.remove = function()
  *
  * @param object _baseDiv specifies the "div" in which all entries added by the addEntry function should be displayed.
  */
-function egw_fw_ui_sidemenu(_baseDiv)
+function egw_fw_ui_sidemenu(_baseDiv, _sortCallback)
 {
 	this.baseDiv = _baseDiv;
+	this.elemDiv = document.createElement('div');
+	this.sortCallback = _sortCallback;
+	$(this.baseDiv).append(this.elemDiv);
 	this.entries = new Array();
+	this.activeEntry = null;
+}
+
+/**
+ * Funtion used internally to recursively step through a dom tree and add all appliction
+ * markers in their order of appereance
+ */
+egw_fw_ui_sidemenu.prototype._searchMarkers = function(_resultArray, _children)
+{
+	for (var i = 0; i < _children.length; i++)
+	{
+		var child = _children[i];
+		
+		if (child.className == 'egw_fw_ui_sidemenu_marker' && typeof child._parent != 'undefined')
+		{
+			_resultArray.push(child._parent);
+		}
+
+		this._searchMarkers(_resultArray, child.childNodes);
+	}
+}
+
+egw_fw_ui_sidemenu.prototype.startDrag = function()
+{
+	if (this.activeEntry)
+	{
+		$(this.activeEntry.marker).show();
+		$(this.elemDiv).sortable("refresh");
+	}
+}
+
+egw_fw_ui_sidemenu.prototype.stopDrag = function()
+{
+	if (this.activeEntry)
+	{
+		$(this.activeEntry.marker).hide();
+		$(this.elemDiv).sortable("refresh");
+	}
+}
+
+/**
+ * Called by the sidemenu elements whenever they were sorted. An array containing 
+ * the sidemenu_entries ui-objects is generated and passed to the sort callback
+ */
+egw_fw_ui_sidemenu.prototype.refreshSort = function()
+{
+	//Step through all children of elemDiv and add all markers to the result array
+	var resultArray = new Array();
+	this._searchMarkers(resultArray, this.elemDiv.childNodes);
+
+	//Call the sort callback with the array containing the sidemenu_entries
+	this.sortCallback(resultArray);
 }
 
 /**
@@ -197,9 +295,10 @@ function egw_fw_ui_sidemenu(_baseDiv)
 egw_fw_ui_sidemenu.prototype.addEntry = function(_name, _icon, _callback, _tag)
 {
 	//Create a new sidemenu entry and add it to the list
-	var entry = new egw_fw_ui_sidemenu_entry(this, this.baseDiv, _name, _icon, _callback, _tag);
+	var entry = new egw_fw_ui_sidemenu_entry(this, this.baseDiv, this.elemDiv, _name, _icon,
+		_callback, _tag);
 	this.entries[this.entries.length] = entry;
-	
+
 	return entry;
 }
 
@@ -223,6 +322,8 @@ egw_fw_ui_sidemenu.prototype.open = function(_entry)
 	{
 		_entry.open();
 	}
+
+	this.activeEntry = _entry;
 }
 
 
@@ -286,9 +387,10 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 			if (!$(this).hasClass("egw_fw_ui_tab_header_active"))
 				$(this).addClass("egw_fw_ui_tab_header_hover");
 		},
-		function() {http://localhost/egroupware/index.php?menuaction=addressbook.addressbook_ui.index
+		function() {var parent = ui.item.context._parent;
 			$(this).removeClass("egw_fw_ui_tab_header_hover")
-		});
+		}
+	);
 		
 	//Create the icon and append it to the header div
 	var icon = document.createElement("img");
@@ -574,12 +676,13 @@ egw_fw_ui_tabs.prototype.clean = function()
  */
 
 
-function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _tag)
+function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _animationCallback, _tag)
 {
 	//Copy the parameters
 	this.contDiv = _contDiv;
 	this.catName = _name;
 	this.callback = _callback;
+	this.animationCallback = _animationCallback;
 	this.tag = _tag;
 
 	//Create the ui divs
@@ -593,6 +696,7 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _tag)
 
 	//Add the content
 	this.contentDiv = document.createElement('div');
+	this.contentDiv._parent = this;
 	$(this.contentDiv).addClass('egw_fw_ui_category_content');
 	$(this.contentDiv).append(_content);
 	$(this.contentDiv).hide();
@@ -622,10 +726,13 @@ egw_fw_ui_category.prototype.open = function(_instantly)
 	if (_instantly)
 	{
 		$(this.contentDiv).show();
+		this.animationCallback();
 	}
 	else
 	{
-		$(this.contentDiv).slideDown();
+		$(this.contentDiv).slideDown(200, function() {
+			this._parent.animationCallback.call(this._parent);
+		});
 	}
 }
 
@@ -637,10 +744,13 @@ egw_fw_ui_category.prototype.close = function(_instantly)
 	if (_instantly)
 	{
 		$(this.contentDiv).hide();
+		this.animationCallback();
 	}
 	else
 	{
-		$(this.contentDiv).slideUp();
+		$(this.contentDiv).slideUp(200, function() {
+			this._parent.animationCallback.call(this._parent);
+		});
 	}
 }
 
@@ -651,3 +761,383 @@ egw_fw_ui_category.prototype.remove = function()
 	$(this.headerDiv).remove();
 }
 
+/**
+ * egw_fw_ui_scrollarea class
+ */
+
+function egw_fw_ui_scrollarea(_contDiv)
+{
+	this.startScrollSpeed = 50.0; //in px/sec
+	this.endScrollSpeed = 250.0; //in px/sec
+	this.scrollSpeedAccel = 75.0; //in px/sec^2
+	this.timerInterval = 0.04; //in seconds  //20ms is the timer base timer resolution on windows systems
+
+	this.contDiv = _contDiv;
+	this.contHeight = 0;
+	this.boxHeight = 0;
+	this.scrollPos = 0;
+	this.buttonScrollOffs = 0;
+	this.maxScrollPos = 0;
+	this.buttonsVisible = true;
+	this.mouseOver = false;
+	this.scrollTime = 0.0;
+	this.btnUpEnabled = true;
+	this.btnDownEnabled = true;
+
+	//Wrap a new "scroll" div around the content of the content div
+	this.scrollDiv = document.createElement("div");
+	this.scrollDiv.style.position = "relative";
+	$(this.scrollDiv).addClass("egw_fw_ui_scrollarea");
+
+	//Create a container which contains the up/down buttons and the scrollDiv
+	this.outerDiv = document.createElement("div");
+	$(this.outerDiv).addClass("egw_fw_ui_scrollarea_outerdiv");
+	$(this.outerDiv).append(this.scrollDiv);
+
+	$(this.contDiv).children().appendTo(this.scrollDiv);
+	$(this.contDiv).append(this.outerDiv);
+	this.contentDiv = this.scrollDiv;
+
+	//Create the "up" and the "down" button
+	this.btnUp = document.createElement("span");
+	$(this.btnUp).addClass("egw_fw_ui_scrollarea_button");
+	$(this.btnUp).addClass("egw_fw_ui_scrollarea_button_up");
+	$(this.btnUp).hide();
+
+	this.btnUp._parent = this;
+	$(this.btnUp).mouseenter(function(){
+		this._parent.mouseOverToggle(true, -1);
+		$(this).addClass("egw_fw_ui_scrollarea_button_hover");
+	});
+	$(this.btnUp).click(function(){
+		this._parent.setScrollPos(0);
+	});
+	$(this.btnUp).mouseleave(function(){
+		this._parent.mouseOverToggle(false, -1);
+		$(this).removeClass("egw_fw_ui_scrollarea_button_hover");
+	});
+
+	$(this.outerDiv).prepend(this.btnUp);
+
+	this.btnDown = document.createElement("span");
+	$(this.btnDown).addClass("egw_fw_ui_scrollarea_button");
+	$(this.btnDown).addClass("egw_fw_ui_scrollarea_button_down");
+	$(this.btnDown).hide();
+
+	this.btnDown._parent = this;
+	$(this.btnDown).mouseenter(function(){
+		this._parent.mouseOverToggle(true, 1);
+		$(this).addClass("egw_fw_ui_scrollarea_button_hover");
+	});
+	$(this.btnDown).click(function() {
+		this._parent.setScrollPos(this._parent.maxScrollPos);
+	});
+	$(this.btnDown).mouseleave(function(){
+		this._parent.mouseOverToggle(false, 1);
+		$(this).removeClass("egw_fw_ui_scrollarea_button_hover");
+	});
+
+	$(this.outerDiv).prepend(this.btnDown);
+
+	//Update - read height of the children elements etc.
+	this.update();
+}
+
+egw_fw_ui_scrollarea.prototype.setScrollPos = function(_pos)
+{
+	if (this.buttonsVisible)
+	{
+		if (_pos <= 0)
+		{			
+			if (this.btnUpEnabled)
+				$(this.btnUp).addClass("egw_fw_ui_scrollarea_button_disabled");
+			if (!this.btnDownEnabled)
+				$(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
+			this.btnDownEnabled = true;
+			this.btnUpEnabled = false;
+
+			_pos = 0;
+		}
+		else if (_pos >= this.maxScrollPos)
+		{
+			if (this.btnDownEnabled)
+				$(this.btnDown).addClass("egw_fw_ui_scrollarea_button_disabled");
+			if (!this.btnUpEnabled)
+				$(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
+			this.btnDownEnabled = false;
+			this.btnUpEnabled = true;
+
+			_pos = this.maxScrollPos;
+		}
+		else
+		{
+			if (!this.btnUpEnabled)
+				$(this.btnUp).removeClass("egw_fw_ui_scrollarea_button_disabled");
+			if (!this.btnDownEnabled)
+				$(this.btnDown).removeClass("egw_fw_ui_scrollarea_button_disabled");
+			this.btnUpEnabled = true;
+			this.btnDownEnabled = true;
+		}
+
+		this.scrollPos = _pos;
+
+		//Apply the calculated scroll position to the scrollDiv
+		this.scrollDiv.style.top = Math.round(-_pos) + 'px';
+	}
+}
+
+egw_fw_ui_scrollarea.prototype.scrollDelta = function(_delta)
+{
+	this.setScrollPos(this.scrollPos + _delta);
+}
+
+egw_fw_ui_scrollarea.prototype.toggleButtons = function(_visible)
+{
+	if (_visible)
+	{
+		$(this.btnDown).show();
+		$(this.btnUp).show();
+		this.buttonHeight = $(this.btnDown).outerHeight();
+		this.maxScrollPos = this.contHeight - this.boxHeight;
+		this.setScrollPos(this.scrollPos);
+	}
+	else
+	{
+		this.scrollDiv.style.top = '0';
+		$(this.btnDown).hide();
+		$(this.btnUp).hide();
+	}
+
+	this.buttonsVisible = _visible;
+}
+
+egw_fw_ui_scrollarea.prototype.update = function()
+{
+	//Get the height of the content and the outer box
+	this.contHeight = $(this.scrollDiv).outerHeight();
+	this.boxHeight = $(this.outerDiv).height();
+
+	this.toggleButtons(this.contHeight > this.boxHeight);
+	this.setScrollPos(this.scrollPos);
+}
+
+egw_fw_ui_scrollarea.prototype.getScrollDelta = function(_timeGap)
+{
+	//Calculate the current scroll speed
+	var curScrollSpeed = this.startScrollSpeed + this.scrollSpeedAccel * this.scrollTime;
+	if (curScrollSpeed > this.endScrollSpeed)
+	{
+		curScrollSpeed = this.endScrollSpeed;
+	}
+
+	//Increment the scroll time counter
+	this.scrollTime = this.scrollTime + _timeGap;
+
+	//Return the actual delta value
+	return curScrollSpeed * _timeGap;
+}
+
+egw_fw_ui_scrollarea.prototype.mouseOverCallback = function(_context)
+{
+	//Do the scrolling
+	_context.scrollDelta(_context.getScrollDelta(_context.timerInterval) * 
+		_context.dir);
+
+	if (_context.mouseOver)
+	{
+		//Set the next timeout
+		window.setTimeout(_context.mouseOverCallback, Math.round(_context.timerInterval * 1000),
+			_context);
+	}
+}
+
+egw_fw_ui_scrollarea.prototype.mouseOverToggle = function(_over, _dir)
+{
+	this.mouseOver = _over;
+	this.dir = _dir;
+
+	if (_over)
+	{
+		window.setTimeout(this.mouseOverCallback, Math.round(this.timerInterval * 1000),
+			this);
+	}
+	else
+	{
+		this.scrollTime = 0.0;
+	}
+}
+
+/**
+ * egw_fw_ui_splitter class
+ */
+
+var EGW_SPLITTER_HORIZONTAL = 0;
+var EGW_SPLITTER_VERTICAL = 1;
+
+function egw_fw_ui_splitter(_contDiv, _orientation, _resizeCallback, _constraints, _tag)
+{
+	//Copy the parameters
+	this.tag = _tag;
+	this.contDiv = _contDiv;
+	this.orientation = _orientation;
+	this.resizeCallback = _resizeCallback;
+	this.startPos = 0;
+	this.constraints =
+	[
+		{
+			"size": 0,
+			"minsize": 0,
+			"maxsize": 0
+		},
+		{
+			"size": 0,
+			"minsize": 0,
+			"maxsize": 0
+		}
+	];
+
+	//Copy the given constraints parameter, keeping the default values set above
+	if (_constraints.constructor == Array)
+	{
+		for (var i = 0; i < 2; i++)
+		{		
+			if (typeof _constraints[i] != 'undefined')
+			{
+				if (typeof _constraints[i].size != 'undefined')
+					this.constraints[i].size = _constraints[i].size;
+				if (typeof _constraints[i].minsize != 'undefined')
+					this.constraints[i].minsize = _constraints[i].minsize;
+				if (typeof _constraints[i].maxsize != 'undefined')
+					this.constraints[i].maxsize = _constraints[i].maxsize;
+			}
+		}
+	}
+
+	//Create the actual splitter div
+	this.splitterDiv = document.createElement('div');
+	this.splitterDiv._parent = this;
+	$(this.splitterDiv).addClass("egw_fw_ui_splitter");
+
+	//Setup the options for the dragable object
+	var dragoptions = {
+		opacity: 0.7,
+		helper: 'clone',
+		start: function(event, ui) {
+			return this._parent.dragStartHandler.call(this._parent, event, ui);
+		},
+		drag: function(event, ui) {
+			return this._parent.dragHandler.call(this._parent, event, ui);
+		},
+		stop: function(event, ui) {
+			return this._parent.dragStopHandler.call(this._parent, event, ui);
+		},
+		containment: 'document',
+		appendTo: 'body',
+		axis: 'y',
+		iframeFix: true,
+		zIndex: 10000
+	};
+
+	switch (this.orientation)
+	{
+		case EGW_SPLITTER_HORIZONTAL:
+			dragoptions.axis = 'y';
+			$(this.splitterDiv).addClass("egw_fw_ui_splitter_horizontal");
+			break;
+		case EGW_SPLITTER_VERTICAL:
+			dragoptions.axis = 'x';
+			$(this.splitterDiv).addClass("egw_fw_ui_splitter_vertical");
+			break;
+	}
+	$(this.splitterDiv).draggable(dragoptions);
+
+	//Handle mouse hovering of the splitter div
+	$(this.splitterDiv).mouseenter(function() {
+		$(this).addClass("egw_fw_ui_splitter_hover");
+	});
+	$(this.splitterDiv).mouseleave(function() {
+		$(this).removeClass("egw_fw_ui_splitter_hover");
+	});
+
+	$(this.contDiv).append(this.splitterDiv);
+}
+
+egw_fw_ui_splitter.prototype.clipDelta = function(_delta)
+{
+	var result = _delta;
+
+	for (var i = 0; i < 2; i++)
+	{
+		var mul = (i == 0) ? 1 : -1;
+
+		if (this.constraints[i].maxsize > 0)
+		{
+			var size = this.constraints[i].size + mul * result;
+			if (size > this.constraints[i].maxsize)
+				result += mul * (this.constraints[i].maxsize - size);
+		}
+
+		if (this.constraints[i].minsize > 0)
+		{
+			var size = this.constraints[i].size + mul * result;
+			if (size < this.constraints[i].minsize)
+				result += mul * (this.constraints[i].minsize - size);
+		}
+	}
+
+	return result;
+}
+
+egw_fw_ui_splitter.prototype.dragStartHandler = function(event, ui)
+{
+	switch (this.orientation)
+	{
+		case EGW_SPLITTER_HORIZONTAL:
+			this.startPos = ui.offset.top;
+			break;
+		case EGW_SPLITTER_VERTICAL:
+			this.startPos = ui.offset.left;
+			break;
+	}
+}
+
+egw_fw_ui_splitter.prototype.dragHandler = function(event, ui)
+{
+/*	var delta = 0;
+	switch (this.orientation)
+	{
+		case EGW_SPLITTER_HORIZONTAL:
+			var old = ui.offset.top - this.startPos;
+			clipped = this.clipDelta(old);
+			$(this.splitterDiv).data('draggable').offset.click.top += (old - clipped);
+			break;
+		case EGW_SPLITTER_VERTICAL:
+			var old = ui.offset.left - this.startPos;
+			clipped = this.clipDelta(old);
+			$(this.splitterDiv).data('draggable').offset.click.left += (old - clipped);
+			break;
+	}*/
+}
+
+
+egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
+{
+	var delta = 0;
+	switch (this.orientation)
+	{
+		case EGW_SPLITTER_HORIZONTAL:
+			delta = ui.offset.top - this.startPos;
+			break;
+		case EGW_SPLITTER_VERTICAL:
+			delta = ui.offset.left - this.startPos;
+			break;
+	}
+
+	//Clip the delta value
+	delta = this.clipDelta(delta);
+
+	this.constraints[0].size += delta;
+	this.constraints[1].size -= delta;
+
+	this.resizeCallback(this.constraints[0].size, this.constraints[1].size);
+}

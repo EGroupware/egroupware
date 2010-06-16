@@ -25,12 +25,13 @@
 		{include_wz_tooltip}
 <!-- END head -->
 <!-- BEGIN framework -->
+		{hook_after_navbar}
 		<div id="egw_fw_basecontainer">
 			<div id="egw_fw_sidebar">
 				<div id="egw_divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" title="{logo_title}" alt="EGroupware"/></a></div>
 				<div id="egw_fw_sidemenu"></div>
+				<div id="egw_fw_splitter"></div>
 			</div>
-{hook_after_navbar}
 			<div id="egw_fw_main">
 				<div id="egw_fw_topmenu">
 					<div id="egw_fw_topmenu_items">{topmenu_items}</div>
@@ -45,8 +46,15 @@
 			var
 				framework = null;
 
+			function egw_setSideboxSize(_size)
+			{
+				document.getElementById('egw_fw_main').style.marginLeft = _size + 'px';
+				document.getElementById('egw_fw_sidebar').style.width = _size + 'px';
+			}
+
 			$(document).ready(function() {
-				framework = new egw_fw("egw_fw_sidemenu", "egw_fw_tabs", "{webserver_url}");
+				framework = new egw_fw("egw_fw_sidemenu", "egw_fw_tabs", "egw_fw_splitter",
+					"{webserver_url}", egw_setSideboxSize, {sidebox_width});
 			}
 			);
 		</script>

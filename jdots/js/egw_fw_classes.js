@@ -10,7 +10,8 @@
   Class egw_fw_class_application
   ----------------------------*/
 
-function egw_fw_class_application(_parentFw, _appName, _displayName, _icon, _execName)
+function egw_fw_class_application(_parentFw, _appName, _displayName, _icon,
+	_execName, _sideboxWidth)
 {
 	//Copy the application properties
 	this.appName = _appName;
@@ -18,6 +19,8 @@ function egw_fw_class_application(_parentFw, _appName, _displayName, _icon, _exe
 	this.icon = _icon;
 	this.execName = _execName;
 	this.sidebox_md5 = '';
+
+	this.sideboxWidth = _sideboxWidth;
 
 	//Setup a link to the parent framework class
 	this.parentFw = _parentFw;

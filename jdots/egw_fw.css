@@ -32,13 +32,10 @@ body {
 	position: fixed;
 	overflow: hidden;
 
-	left: 0px;
 	top: 0px;
+	left: 0px;
 	bottom: 20px;
-	width: 225px;
-
-	padding: 0px 4px 4px 4px;
-	margin: 0px 0px 0px 0px;
+/*	width: 225px;*/
 }
 
 #egw_divLogo {
@@ -65,9 +62,22 @@ body {
 }
 
 #egw_fw_sidemenu {
-	display: block;
-	width: 205px;
-	padding-top: 3px;
+	position: absolute;
+	top: 53px;
+	bottom: 4px;
+	left: 4px;
+	right: 8px;
+	overflow: hidden;
+	z-index: 0;
+}
+
+#egw_fw_splitter {
+	position: absolute;
+/*	background-color: RGB(200, 200, 255);*/
+/*	width: 5px;*/
+	top: 53px;
+	bottom: 4px;
+	right: 6px;
 }
 
 #egw_fw_topmenu {
@@ -115,19 +125,18 @@ body {
 }
 
 #egw_fw_main {
-	margin-left: 225px;
+/*	margin-left: 240px;*/
 }
 
 #egw_fw_tabs {
-/*	margin: 5px 5px 5px 0px;	*/
+/*	margin: 5px 5px 5px 0px;*/
 }
 
 .egw_fw_ui_sidemenu_entry_header {
 	display: block;
-	width: 195px;
 	height: 20px;
 	padding: 2px 5px 2px 5px;
-	margin: 0px 5px 0px 5px;
+	margin: 0;
 	border-width: 0px 1px 0px 1px;
 	border-style: solid;
 	border-color: #c6ced6;
@@ -160,8 +169,9 @@ body {
 }
 
 .egw_fw_ui_sidemenu_entry_content {
-	width: 203px;
-	margin: 0px 5px 0px 5px;
+/*	width: 203px;*/
+	display: block;
+	margin: 0;
 	border-style: solid;
 	border-color: #b4c5e6;
 	border-width: 2px;
@@ -206,10 +216,26 @@ body {
 	float: right;
 }
 
-.egw_fw_ui_sidemenu_entry_header h1 {
+.egw_fw_ui_sidemenu_entry_header h1, .egw_fw_ui_sidemenu_marker h1{
 	display: inline;
 	font-size: 10pt;
 	font-weight: bold;
+}
+
+.egw_fw_ui_sidemenu_marker {
+	display: block;
+	height: 20px;
+	padding: 2px 5px 2px 34px;
+	margin: 0;
+	border-width: 0px 1px 0px 1px;
+	border-style: solid;
+	border-color: #c6ced6;
+	cursor: pointer;
+	color: gray;
+	background-color: RGB(250, 250, 250);
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
 }
 
 .egw_fw_ui_tab_header {
@@ -339,4 +365,83 @@ body {
 	width: 12px;
 	height: 12px;
 	float: left;
+}
+
+.egw_fw_ui_scrollarea
+{
+	overflow: hidden;
+	z-index: 0;
+}
+
+.egw_fw_ui_scrollarea_button
+{
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 12px;
+	z-index: 2;	
+}
+
+.egw_fw_ui_scrollarea_button_up.egw_fw_ui_scrollarea_button_hover
+{
+	background-image:url(images/gradient_scroll_up_hover.png);
+}
+
+.egw_fw_ui_scrollarea_button_down.egw_fw_ui_scrollarea_button_hover
+{
+	background-image:url(images/gradient_scroll_down_hover.png);
+}
+
+.egw_fw_ui_scrollarea_button_disabled
+{
+	display: none !important;
+}
+
+.egw_fw_ui_scrollarea_button_up
+{
+	top: 0px;
+	background-image:url(images/gradient_scroll_up.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.egw_fw_ui_scrollarea_button_down
+{
+	bottom: 0px;
+	background-image:url(images/gradient_scroll_down.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.egw_fw_ui_scrollarea_outerdiv
+{
+	height: 100%;
+}
+
+.egw_fw_ui_splitter {
+	background-color: RGB(250, 250, 250);
+}
+
+.egw_fw_ui_splitter_hover {
+	background-color: RGB(220, 220, 220);
+}
+
+.egw_fw_ui_splitter_horizontal {
+	background-image:url(images/splitter_horz.png);
+	background-position:center;
+	background-repeat:no-repeat;
+	position: absolute;
+	width: 100%;
+	height: 5px;
+	cursor: row-resize;
+}
+
+.egw_fw_ui_splitter_vertical {
+	background-image:url(images/splitter_vert.png);
+	background-position:center;
+	background-repeat:no-repeat;
+	position: absolute;
+	width: 5px;
+	height: 100%;
+	cursor: col-resize;
 }

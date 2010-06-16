@@ -32,8 +32,76 @@ class jdots_framework extends egw_framework
 	function __construct($template='jdots')
 	{
 		parent::__construct($template);		// call the constructor of the extended class
-		
+
 		$this->template_dir = '/jdots';		// we are packaged as an application
+	}
+
+	/**
+	 * Reads an returns the width of the sidebox or false if the width is not set
+	 */
+	private static function get_sidebar_width($app)
+	{
+		//If the global_sidebar_width option is set, we'll simply return false
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['app_specific_sidebar_width'])
+		{
+			$width = 225;
+
+			//Check whether the width had been stored explicitly for the jdots template, use that value
+			if ($GLOBALS['egw_info']['user']['preferences'][$app]['jdotssideboxwidth'])
+			{
+				$width = (int)$GLOBALS['egw_info']['user']['preferences'][$app]['jdotssideboxwidth'];
+//				error_log(__METHOD__.__LINE__."($app):$width --> reading jdotssideboxwidth");
+			}
+			//Otherwise use the legacy "idotssideboxwidth" value
+			else if ($GLOBALS['egw_info']['user']['preferences'][$app]['idotssideboxwidth'])
+			{
+				$width = (int)$GLOBALS['egw_info']['user']['preferences'][$app]['idotssideboxwidth'];
+//				error_log(__METHOD__.__LINE__."($app):$width --> reading idotssideboxwidth");
+			}
+
+			//Width may not be smaller than 225
+			if ($width < 225)
+				$width = 225;
+
+			return $width;
+		}
+		return false;
+	}
+
+	/**
+	 * Returns the global width of the sidebox. If the app_specific_sidebar_width had been switched
+	 * on, the default width will be returned
+	 */
+	private static function get_global_sidebar_width()
+	{
+		if (!$GLOBALS['egw_info']['user']['preferences']['common']['app_specific_sidebar_width'] &&
+		    $GLOBALS['egw_info']['user']['preferences']['common']['global_sidebar_width_value'])
+		{
+			return $GLOBALS['egw_info']['user']['preferences']['common']['global_sidebar_width_value'];
+		}
+
+		return 225;
+	}
+
+
+	/**
+	 * Sets the sidebox width accoringly to the app_specific_sidebar_width setting, either
+     * in the current application or globaly
+	 */
+	private static function set_sidebar_width($app, $val)
+	{
+		$GLOBALS['egw']->preferences->read_repository();
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['app_specific_sidebar_width'])
+		{
+//			error_log(__METHOD__.__LINE__."($app, $val) --> setting jdotssideboxwidth");
+			$GLOBALS['egw']->preferences->change($app, 'jdotssideboxwidth', $val);
+		}
+		else
+		{
+//			error_log(__METHOD__.__LINE__."($app, $val) --> setting global sidebar width value");
+			$GLOBALS['egw']->preferences->change('common', 'global_sidebar_width_value', $val);
+		}
+		$GLOBALS['egw']->preferences->save_repository(True);
 	}
 	
 	/**
@@ -122,6 +190,7 @@ class jdots_framework extends egw_framework
 		if ($do_framework)
 		{
 			// framework javascript classes only need for framework
+			self::validate_file('jquery','jquery-ui');
 			self::validate_file('.','egw_fw','jdots');
 			self::validate_file('.','egw_fw_ui','jdots');
 			self::validate_file('.','egw_fw_classes','jdots');
@@ -214,6 +283,9 @@ class jdots_framework extends egw_framework
 		
 		// hook after_navbar (eg. notifications)
 		$this->tpl->set_var('hook_after_navbar',$this->_get_after_navbar());
+
+		//Global sidebar width
+		$this->tpl->set_var('sidebox_width', self::get_global_sidebar_width());
 
 		// add framework div's
 		$this->tpl->set_var($this->_get_footer());
@@ -520,6 +592,46 @@ class jdots_framework extends egw_framework
 	}
 
 	/**
+	 * Stores the width of the sidebox menu depending on the sidebox menu settings
+	 * @param $appname the name of the application
+	 * @param $width the width set
+	 */
+	public function ajax_sideboxwidth($appname, $width)
+	{
+		error_log(__METHOD__."($appname, $width)");
+		//Check whether the supplied parameters are valid
+		if (is_int($width) && $GLOBALS['egw_info']['user']['apps'][$appname])
+		{
+			self::set_sidebar_width($appname, $width);
+		}
+	}
+
+	/**
+	 * Stores the user defined sorting of the applications inside the preferences
+	*/
+	public function ajax_appsort($apps)
+	{
+		$order = array();
+		$i = 0;
+
+		//Parse the "$apps" array for valid content (security)
+		foreach($apps as $app)
+		{
+			//Check whether the app really exists and add it to the $app_arr var
+			if ($GLOBALS['egw_info']['user']['apps'][$app])
+			{
+				$order[$app] = $i;
+				$i++;
+			}
+		}
+
+		//Store the order array inside the common user preferences
+		$GLOBALS['egw']->preferences->read_repository();
+		$GLOBALS['egw']->preferences->change('common', 'user_apporder', serialize($order));
+		$GLOBALS['egw']->preferences->save_repository(true);
+	}
+
+	/**
 	 * Prepare an array with apps used to render the navbar
 	 * 
 	 * @return array of array(
@@ -535,6 +647,12 @@ class jdots_framework extends egw_framework
 	public function ajax_navbar_apps()
 	{
 		$apps = parent::_get_navbar_apps();
+
+		//Add its sidebox width to each app
+		foreach ($apps as $key => $value)
+		{
+			$apps[$key]['sideboxwidth'] = self::get_sidebar_width($key);
+		}
 
 		unset($apps['logout']);	// never display it
 		if (isset($apps['about'])) $apps['about']['noNavbar'] = true;
