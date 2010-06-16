@@ -508,6 +508,35 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Used internally to store unserialized value of $GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']
+	 */
+	private static $user_apporder = array();
+
+	/**
+	 * Internal usort callback function used to sort an array according to the
+	 * user sort order
+	 */
+	private static function _sort_apparray($a, $b)
+	{
+		//Unserialize the user_apporder array
+		$arr = self::$user_apporder;
+
+		$ind_a = isset($arr[$a['name']]) ? $arr[$a['name']] : null;
+		$ind_b = isset($arr[$b['name']]) ? $arr[$b['name']] : null;
+
+		if ($ind_a == $ind_b)
+			return 0;
+
+		if ($ind_a == null)
+			return -1;
+
+		if ($ind_b == null)
+			return 1;
+
+		return $ind_a > $ind_b ? 1 : -1;
+	}
+
+	/**
 	 * Prepare an array with apps used to render the navbar
 	 *
 	 * This is similar to the former common::navbar() method - though it returns the vars and does not place them in global scope.
@@ -578,6 +607,16 @@ abstract class egw_framework
 				}
 			}
 		}
+
+		//Sort the applications accordingly to their user sort setting
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder'])
+		{
+			//Sort the application array using the user_apporder array as sort index
+			self::$user_apporder =
+				unserialize($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']);
+			uasort($apps, 'egw_framework::_sort_apparray');
+		}
+
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['egw_info']['flags']['currentapp'] == 'about')
 		{
 			$app = $app_title = 'EGroupware';

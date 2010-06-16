@@ -87,11 +87,13 @@ function egw_json_encode(input)
 	{
 		switch (input.constructor)
 		{
-			case Array:
+			case Array:		
 				var buf = [];
 				for (var k in input)
 				{
-					buf.push(egw_json_encode(input[k]));
+					//Filter the remove function, which is added to arrays in egw_fw_classes
+					if (k != 'remove')
+						buf.push(egw_json_encode(input[k]));
 				}
 				return '[' + buf.join(',') + ']';
 
@@ -307,7 +309,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 	}
 }
 
-function egw_json_getFormValues(_form)
+function egw_json_getFormValues(_form, _filterClass)
 {
 	var elem = null;
 	if (typeof _form == 'object')
@@ -322,7 +324,10 @@ function egw_json_getFormValues(_form)
 	var serialized = new Object;
 	if (typeof elem != "undefined" && elem && elem.childNodes)
 	{
-		_egw_json_getFormValues(serialized, elem.childNodes)
+		if (typeof _filterClass == 'undefined')
+			_filterClass = null;
+
+		_egw_json_getFormValues(serialized, elem.childNodes, _filterClass)
 	}
 
 	return serialized;
@@ -379,16 +384,22 @@ window.xajax = {
  * run over all form elements
  * @param serialized is the object which will contain the form data
  * @param children is the children node of the form we're runing over
+ * @param string _filterClass if given only return 
  */
-function _egw_json_getFormValues(serialized, children)
+function _egw_json_getFormValues(serialized, children, _filterClass)
 {
+	//alert('_egw_json_getFormValues(,,'+_filterClass+')');
 	for (var i = 0; i < children.length; ++i) {
 		var child = children[i];
 
 		if (typeof child.childNodes != "undefined")
-			_egw_json_getFormValues(serialized, child.childNodes);
+			_egw_json_getFormValues(serialized, child.childNodes, _filterClass);
 
-		_egw_json_getFormValue(serialized, child);
+		if ((!_filterClass || $(child).hasClass(_filterClass)) && typeof child.name != "undefined")
+		{
+			//alert('_egw_json_getFormValues(,,'+_filterClass+') calling _egw_json_getFormValue for name='+child.name+', class='+child.class+', value='+child.value);
+			_egw_json_getFormValue(serialized, child);
+		}
 	}
 }
 
