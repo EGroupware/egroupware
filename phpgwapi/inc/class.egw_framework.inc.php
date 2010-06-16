@@ -508,13 +508,18 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Used internally to store unserialized value of $GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']
+	 */
+	private static $user_apporder = array();
+
+	/**
 	 * Internal usort callback function used to sort an array according to the
 	 * user sort order
 	 */
 	private static function _sort_apparray($a, $b)
 	{
 		//Unserialize the user_apporder array
-		$arr = unserialize($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']);
+		$arr = self::$user_apporder;
 
 		$ind_a = isset($arr[$a['name']]) ? $arr[$a['name']] : null;
 		$ind_b = isset($arr[$b['name']]) ? $arr[$b['name']] : null;
@@ -607,9 +612,10 @@ abstract class egw_framework
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder'])
 		{
 			//Sort the application array using the user_apporder array as sort index
+			self::$user_apporder =
+				unserialize($GLOBALS['egw_info']['user']['preferences']['common']['user_apporder']);
 			uasort($apps, 'egw_framework::_sort_apparray');
 		}
-
 
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['egw_info']['flags']['currentapp'] == 'about')
 		{
