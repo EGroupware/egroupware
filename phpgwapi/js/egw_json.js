@@ -323,7 +323,7 @@ function egw_json_getFormValues(_form, _filterClass)
 	if (typeof elem != "undefined" && elem && elem.childNodes)
 	{
 		if (typeof _filterClass == 'undefined')
-			var _filterClass = null;
+			_filterClass = null;
 
 		_egw_json_getFormValues(serialized, elem.childNodes, _filterClass)
 	}
@@ -382,17 +382,22 @@ window.xajax = {
  * run over all form elements
  * @param serialized is the object which will contain the form data
  * @param children is the children node of the form we're runing over
+ * @param string _filterClass if given only return 
  */
 function _egw_json_getFormValues(serialized, children, _filterClass)
 {
+	//alert('_egw_json_getFormValues(,,'+_filterClass+')');
 	for (var i = 0; i < children.length; ++i) {
 		var child = children[i];
 
 		if (typeof child.childNodes != "undefined")
-			_egw_json_getFormValues(serialized, child.childNodes);
+			_egw_json_getFormValues(serialized, child.childNodes, _filterClass);
 
-		if (!_filterClass || $(child).hasClass(_filterClass))
+		if ((!_filterClass || $(child).hasClass(_filterClass)) && typeof child.name != "undefined")
+		{
+			//alert('_egw_json_getFormValues(,,'+_filterClass+') calling _egw_json_getFormValue for name='+child.name+', class='+child.class+', value='+child.value);
 			_egw_json_getFormValue(serialized, child);
+		}
 	}
 }
 
