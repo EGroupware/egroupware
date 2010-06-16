@@ -237,12 +237,13 @@ class calendar_uiforms extends calendar_ui
 		unset($event['alarm']['delete_alarm']);
 		unset($event['duration']);
 
-		if (in_array($button,array('ignore','freetime','reedit','confirm_edit_single')))
+		if (in_array($button,array('ignore','freetime','reedit')))
 		{
 			// no conversation necessary, event is already in the right format
 		}
-		elseif (isset($content['participants']))	// convert content => event
+		else
 		{
+			// convert content => event
 			if ($content['whole_day'])
 			{
 				$event['start'] = $this->bo->date2array($event['start']);
@@ -258,83 +259,86 @@ class calendar_uiforms extends calendar_ui
 			{
 				$event['recur_data'] = 1 << (int)date('w',$event['start']);
 			}
-			$event['participants'] = $event['participant_types'] = array();
-
-			foreach($content['participants'] as $key => $data)
+			if (isset($content['participants']))	
 			{
-				switch($key)
+				
+				$event['participants'] = $event['participant_types'] = array();
+				
+				foreach($content['participants'] as $key => $data)
 				{
-					case 'delete':		// handled in default
-					case 'quantity':	// handled in new_resource
-					case 'role':		// handled in add, account or resource
-					case 'cal_resources':
-					case 'status_date':
-						break;
-
-					case 'add':
-						// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>") in the search field
-						// ToDo: get eTemplate to return that field
-						if (($email = $_POST['exec']['participants']['resource']['query']) &&
-							(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
-						{
-							$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
-							// check if email belongs to account or contact --> prefer them over just emails (if we are allowed to invite him)
-							if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')) && $this->bo->check_acl_invite($data))
+					switch($key)
+					{
+						case 'delete':		// handled in default
+						case 'quantity':	// handled in new_resource
+						case 'role':		// handled in add, account or resource
+						case 'cal_resources':
+						case 'status_date':
+							break;
+							
+						case 'add':
+							// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>") in the search field
+							// ToDo: get eTemplate to return that field
+							if (($email = $_POST['exec']['participants']['resource']['query']) &&
+									(preg_match('/^(.*<)?([a-z0-9_.-]+@[a-z0-9_.-]{5,})>?$/i',$email,$matches)))
 							{
-								$event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
+								$status = calendar_so::combine_status('U',$content['participants']['quantity'],$content['participants']['role']);
+								// check if email belongs to account or contact --> prefer them over just emails (if we are allowed to invite him)
+								if (($data = $GLOBALS['egw']->accounts->name2id($matches[2],'account_email')) && $this->bo->check_acl_invite($data))
+								{
+									$event['participants'][$data] = $event['participant_types']['u'][$data] = $status;
+								}
+								elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
+									'email' => $matches[2],
+									'email_home' => $matches[2],
+								),true,'','','',false,'OR')))
+								{
+									$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = $status;
+								}
+								else
+								{
+									$event['participants']['e'.$email] = $event['participant_types']['e'][$email] = $status;
+								}
 							}
-							elseif ((list($data) = ExecMethod2('addressbook.addressbook_bo.search',array(
-								'email' => $matches[2],
-								'email_home' => $matches[2],
-							),true,'','','',false,'OR')))
+							elseif (!$content['participants']['account'] && !$content['participants']['resource'])
 							{
-								$event['participants']['c'.$data['id']] = $event['participant_types']['c'][$data['id']] = $status;
+								$msg = lang('You need to select an account, contact or resource first!');
+							}
+							break;
+							
+						case 'resource':
+							if (is_array($data) && isset($data['current']) )
+							{
+								list($app,$id) = explode(':',$data['current']);
 							}
 							else
 							{
-								$event['participants']['e'.$email] = $event['participant_types']['e'][$email] = $status;
+								list($app,$id) = explode(':',$data);
 							}
-						}
-						elseif (!$content['participants']['account'] && !$content['participants']['resource'])
-						{
-							$msg = lang('You need to select an account, contact or resource first!');
-						}
-						break;
-
-					case 'resource':
-						if (is_array($data) && isset($data['current']) )
-						{
-							list($app,$id) = explode(':',$data['current']);
-						}
-						else
-						{
-							list($app,$id) = explode(':',$data);
-						}
-						foreach($this->bo->resources as $type => $data) if ($data['app'] == $app) break;
-						$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
-						// check if new entry is no account (or contact entry of an account)
-						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')) || !$this->bo->check_acl_invite($data))
-						{
-							if ($uid && $id)
+							foreach($this->bo->resources as $type => $data) if ($data['app'] == $app) break;
+							$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
+							// check if new entry is no account (or contact entry of an account)
+							if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')) || !$this->bo->check_acl_invite($data))
 							{
-								$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
-								if ($status)
+								if ($uid && $id)
 								{
-									$event['participants'][$uid] = $event['participant_types'][$type][$id] =
-										calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+									$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
+									if ($status)
+									{
+										$event['participants'][$uid] = $event['participant_types'][$type][$id] =
+											calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+									}
+									elseif(!$msg_permission_denied_added)
+									{
+										$msg .= lang('Permission denied!');
+										$msg_permission_denied_added = true;
+									}
 								}
-								elseif(!$msg_permission_denied_added)
-								{
-									$msg .= lang('Permission denied!');
-									$msg_permission_denied_added = true;
-								}
+								break;
 							}
-							break;
-						}
-						// fall-through for accounts entered as contact
-					case 'account':
-						foreach(is_array($data) ? $data : explode(',',$data) as $uid)
-						{
+							// fall-through for accounts entered as contact
+						case 'account':
+							foreach(is_array($data) ? $data : explode(',',$data) as $uid)
+							{
 							if ($uid && $this->bo->check_acl_invite($uid))
 							{
 								$event['participants'][$uid] = $event['participant_types']['u'][$uid] =
@@ -345,14 +349,14 @@ class calendar_uiforms extends calendar_ui
 								$msg .= lang('Permission denied!');
 								$msg_permission_denied_added = true;
 							}
-						}
-						break;
-
-					default:		// existing participant row
-						foreach(array('uid','status','quantity','role') as $name)
-						{
+							}
+							break;
+							
+						default:		// existing participant row
+							foreach(array('uid','status','quantity','role') as $name)
+							{
 							$$name = $data[$name];
-						}
+							}
 						if ($content['participants']['delete'][$uid] || $content['participants']['delete'][md5($uid)])
 						{
 							$uid = false;	// entry has been deleted
@@ -408,6 +412,7 @@ class calendar_uiforms extends calendar_ui
 							}
 						}
 						break;
+					}
 				}
 			}
 		}
@@ -461,7 +466,8 @@ class calendar_uiforms extends calendar_ui
 			$event['owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
 
 			// Clear participant stati
-			foreach($event['participant_types'] as $type => &$participants) {
+			foreach($event['participant_types'] as $type => &$participants)
+			{
 				foreach($participants as $id => &$response)
 				{
 					if($type == 'u' && $id == $event['owner']) continue;
@@ -566,19 +572,11 @@ class calendar_uiforms extends calendar_ui
 						if ($edit_series_confirmed)
 						{
 							$orig_event = $event;
-							if (!empty($event['whole_day']))
-							{
-								// Adjust start to 0:00
-								$time = new egw_time($event['start']);
-								$time->setTime(0, 0, 0);
-								$event['start'] = egw_time::to($time, 'ts');
-								$time = new egw_time($next_occurrence['start']);
-								$time->setTime(0, 0, 0);
-								$next_occurrence['start'] = egw_time::to($time, 'ts');
-							}
+							
 							$offset = $event['start'] - $old_event['start'];
 							$event['start'] = $next_occurrence['start'] + $offset;
 							$event['end'] = $next_occurrence['end'] + $offset;
+							$event['participants'] = $old_event['participants'];
 							foreach ($old_event['recur_exception'] as $key => $exdate)
 							{
 								if ($exdate > $this->bo->now_su)
