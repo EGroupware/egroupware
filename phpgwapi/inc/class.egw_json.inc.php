@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package api$request['menuaction'], $parameters
+ * @package api
  * @subpackage ajax
  * @author Andreas Stoeckel <as@stylite.de>
  * @version $Id$
@@ -21,7 +21,6 @@ class egw_json_request
 	 *
 	 * @param string menuaction to call
 	 * @param string $input_data is the RAW input data as it was received from the client
-	 * @returns NULL if parsing the request failed, or the result of the callback function if the request has been successfully decoded.
 	 */
 	public function parseRequest($menuaction, $input_data)
 	{
@@ -48,15 +47,14 @@ class egw_json_request
 
 					//Check whether any parameters were supplied along with the request
 					if (isset($request['parameters']))
+					{
 						$parameters = $request['parameters'];
-						/*$parameters = array_stripslashes($request['parameters']);*/
+					}
 				}
 				//Call the supplied callback function along with the menuaction and the passed parameters
 				$this->handleRequest($menuaction, $parameters);
 			}
 		}
-
-		return NULL;
 	}
 
 	/**
@@ -126,10 +124,6 @@ class egw_json_request
 
 		$parameters = translation::convert($parameters, 'utf-8');
 
-//		error_log(print_r($parameters, true));
-
-//		_debug_array($parameters);
-
 		call_user_func_array(array($ajaxClass, $functionName), $parameters);
 	}
 }
@@ -191,7 +185,8 @@ class egw_json_response
 	public function sendResult()
 	{
 		$this->sendHeader();
-		echo($this->getJSON());
+
+		echo $this->getJSON();
 	}
 
 	/**
