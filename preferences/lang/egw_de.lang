@@ -83,8 +83,10 @@ show helpmessages by default	preferences	de	Hilfetexte standardmäßig anzeigen
 show links between egroupware aps as	common	de	Zeige Verknüpfungen zwischen EGroupware Anwendungen als
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
 show number of current users	preferences	de	Anzahl gegenwärtiger Benutzer anzeigen
+show page generation time on the bottom of the page?	preferences	de	Zeige die Dauer der Seitengenerierung am Seitenende an
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
 show_more_apps	common	de	Mehr Anwendungen anzeigen
+sidebar width stored for each application	preferences	de	Seitenmenübreite für jede Anwendung speichern
 silver theme	preferences	de	Silbern
 spellchecker language	addressbook	de	Sprache Rechtschreibprüfung
 text only	preferences	de	nur Text
@@ -100,6 +102,7 @@ thousands separator is only used for displaying and not for editing numbers.	pre
 time format	preferences	de	Zeitformat
 use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
+when set, the width of the sidebar menu is not stored globaly but independently for each application	preferences	de	Falls gesetzt, wird die Breite des Seitemenüs für jede einzelne Anwendung und nicht global gespeichert
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in eGroupWare verwendet werden.
