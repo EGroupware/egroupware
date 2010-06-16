@@ -1177,7 +1177,7 @@ class addressbook_bo extends addressbook_so
 	 */
 	function link_query($pattern, Array &$options = array())
 	{
-		$result = $criteria = array();
+		$filter = $result = $criteria = array();
 		$limit = false;
 		if ($pattern)
 		{
@@ -1186,7 +1186,8 @@ class addressbook_bo extends addressbook_so
 		if($options['start'] || $options['num_rows']) {
 			$limit = array($options['start'], $options['num_rows']);
 		}
-		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR', $limit)))
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
+		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR', $limit, $filter)))
 		{
 			foreach($contacts as $contact)
 			{
