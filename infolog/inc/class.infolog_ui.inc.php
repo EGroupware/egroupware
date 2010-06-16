@@ -1402,7 +1402,6 @@ class infolog_ui
 		$GLOBALS['egw']->common->egw_header();
 
 		$GLOBALS['egw']->template->set_file(array('info_admin_t' => 'admin.tpl'));
-		$GLOBALS['egw']->template->set_block('info_admin_t', 'admin_line');
 		$GLOBALS['egw']->template->set_block('info_admin_t', 'info_admin');
 
 		$GLOBALS['egw']->template->set_var(Array(
