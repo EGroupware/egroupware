@@ -274,6 +274,7 @@ function displayResultBox() {
 		resultBox.style.top=top + 'px';
 		resultBox.style.left=left + 'px';
 		resultBox.style.width=width + 'px';
+		resultBox.style.zIndex = 100000;
 
 		resultBox.className = 'resultBoxVisible';
 	}
