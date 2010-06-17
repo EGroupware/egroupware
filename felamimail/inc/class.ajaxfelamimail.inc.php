@@ -497,8 +497,11 @@
 			$response->addAssign("divMessageList", "innerHTML", $headerTable);
 
 			if($quota = $this->bofelamimail->getQuotaRoot()) {
-				$quotaDisplay = $this->uiwidgets->quotaDisplay($quota['usage'], $quota['limit']);
-				$response->addAssign('quotaDisplay', 'innerHTML', $quotaDisplay);
+				if (isset($quota['usage']) && is_int($quota['usage']))
+				{ 
+					$quotaDisplay = $this->uiwidgets->quotaDisplay($quota['usage'], $quota['limit']);
+					$response->addAssign('quotaDisplay', 'innerHTML', $quotaDisplay);
+				}
 			}
 
 			if($folderStatus = $this->bofelamimail->getFolderStatus($_folderName)) {
