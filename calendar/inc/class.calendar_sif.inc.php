@@ -1198,10 +1198,10 @@ class calendar_sif extends calendar_boupdate
 			{
 				switch ($deviceInfo['tzid'])
 				{
-					case 1:
+					case -1:
 						$this->tzid = false;
 						break;
-					case 2:
+					case -2:
 						$this->tzid = null;
 						break;
 					default:

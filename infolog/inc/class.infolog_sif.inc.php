@@ -644,10 +644,10 @@ class infolog_sif extends infolog_bo
 			{
 				switch ($deviceInfo['tzid'])
 				{
-					case 1:
+					case -1:
 						$this->tzid = false;
 						break;
-					case 2:
+					case -2:
 						$this->tzid = null;
 						break;
 					default:
