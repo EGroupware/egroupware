@@ -382,14 +382,9 @@ body {
 	z-index: 2;	
 }
 
-.egw_fw_ui_scrollarea_button_up.egw_fw_ui_scrollarea_button_hover
+.egw_fw_ui_scrollarea_button_up.egw_fw_ui_scrollarea_button_hover, .egw_fw_ui_scrollarea_button_down.egw_fw_ui_scrollarea_button_hover
 {
-	background-image:url(images/gradient_scroll_up_hover.png);
-}
-
-.egw_fw_ui_scrollarea_button_down.egw_fw_ui_scrollarea_button_hover
-{
-	background-image:url(images/gradient_scroll_down_hover.png);
+	background-image:url(images/scroll_hover.png);
 }
 
 .egw_fw_ui_scrollarea_button_disabled
@@ -397,20 +392,23 @@ body {
 	display: none !important;
 }
 
+.egw_fw_ui_scrollarea_button_up, .egw_fw_ui_scrollarea_button_down
+{
+	height: 14px;
+	background-image:url(images/scroll.png);
+	background-color: white;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
 .egw_fw_ui_scrollarea_button_up
 {
 	top: 0px;
-	background-image:url(images/gradient_scroll_up.png);
-	background-repeat: no-repeat;
-	background-position: center;
 }
 
 .egw_fw_ui_scrollarea_button_down
 {
 	bottom: 0px;
-	background-image:url(images/gradient_scroll_down.png);
-	background-repeat: no-repeat;
-	background-position: center;
 }
 
 .egw_fw_ui_scrollarea_outerdiv
