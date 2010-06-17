@@ -382,6 +382,8 @@ div.resultBoxVisible {
 	position: absolute; 
 	display: block; 
 	background: white;
+	max-height: 25%;
+	overflow: auto;
 }
 
 button.menuButton {

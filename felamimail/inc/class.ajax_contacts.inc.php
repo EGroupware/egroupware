@@ -28,7 +28,7 @@
 						'n_fn'       => $_searchString,
 						'email'      => $_searchString,
 						'email_home' => $_searchString,
-					),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,20));
+					),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100));
 
 					// additionally search the accounts, if the contact storage is not the account storage
 					if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
@@ -38,7 +38,7 @@
 							'n_fn'       => $_searchString,
 							'email'      => $_searchString,
 							'email_home' => $_searchString,
-						),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,20),array('owner' => 0));
+						),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
 						
 						if ($contacts && $accounts)
 						{

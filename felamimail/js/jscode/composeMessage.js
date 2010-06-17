@@ -272,6 +272,7 @@ function displayResultBox() {
 		resultBox.style.top=top + 'px';
 		resultBox.style.left=left + 'px';
 		resultBox.style.width=width + 'px';
+		resultBox.scrollTop=0;
 
 		resultBox.className = 'resultBoxVisible';
 	}
