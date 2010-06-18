@@ -598,7 +598,16 @@ class so_sql
 					{
 						continue;	// no need to write that (unset) column
 					}
-					$data[$db_col] = (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
+					if ($this->table_def['fd'][$db_col]['type'] == 'varchar' &&
+						strlen($this->data[$col]) > $this->table_def['fd'][$db_col]['precision'])
+					{
+						// truncate the field to mamimum length, if upper layers didn't care
+						$data[$db_col] = substr($this->data[$col],0,$this->table_def['fd'][$db_col]['precision']);
+					}
+					else
+					{
+						$data[$db_col] = (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
+					}
 				}
 			}
 			$this->db->insert($this->table_name,$data,false,__LINE__,__FILE__,$this->app);
