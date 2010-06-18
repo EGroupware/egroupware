@@ -125,10 +125,14 @@ var egw_json_files = {};
  * @param string _menuaction the menuaction function which should be called and which handles the actual request
  * @param array _parameters which should be passed to the menuaction function.
  */
-function egw_json_request(_menuaction, _parameters)
+function egw_json_request(_menuaction, _parameters, _context)
 {
 	//Copy the supplied parameters
 	this.menuaction = _menuaction;
+
+	this.context = window.document;
+	if (typeof _context != 'undefined')
+		this.context = _context;
 
 	if (typeof _parameters != 'undefined')
 	{
@@ -275,7 +279,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 					{
 						try
 						{
-							var jQueryObject = $(res.data.select);
+							var jQueryObject = $(res.data.select, this.context);
 							jQueryObject[res.data.func].apply(jQueryObject,	res.data.parms);
 						}
 						catch (e)
