@@ -679,22 +679,13 @@ abstract class egw_framework
 		}
 
 		// search for app specific css file
-		if(@isset($GLOBALS['egw_info']['flags']['currentapp']))
+		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
+		
+		// add all css files from self::includeCSS
+		foreach(self::$css_include_files as $path)
 		{
-			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-
-			$css_file = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/app.css';
-			if (!file_exists(EGW_SERVER_ROOT.$css_file))
-			{
-				$css_file = '/'.$appname.'/templates/default/app.css';
-
-				if (!file_exists(EGW_SERVER_ROOT.$css_file)) $css_file = '';
-			}
-			if($css_file)
-			{
-				$css_file = '<LINK href="'.$GLOBALS['egw_info']['server']['webserver_url'].
-					$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type=text/css rel=StyleSheet>';
-			}
+			$css_file .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
+				$path.'?'.filemtime(EGW_SERVER_ROOT.$path).'" type="text/css" rel="StyleSheet" />'."\n";
 		}
 		#_debug_array($GLOBALS['egw_info']['user']['preferences']['common']);
 		$theme_css = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
@@ -1117,6 +1108,42 @@ abstract class egw_framework
 			}
 		}
 		return $links."\n";
+	}
+	
+	/**
+	 * Content from includeCSS calls
+	 * 
+	 * @var array
+	 */
+	protected static $css_include_files = array();
+
+	/**
+	 * Include a css file, either speicified by it's path (relative to EGW_SERVER_ROOT) or appname and css file name
+	 * 
+	 * @param string $path path (relative to EGW_SERVER_ROOT) or appname (if !is_null($name))
+	 * @param string $name=null name of css file in $app/templates/{default|$this->template}/$name.css
+	 * @return boolean false: css file not found, true: file found
+	 */
+	public static function includeCSS($path,$name=null)
+	{
+		if (!is_null($name))
+		{
+			$app = basename($path);
+			$path = '/'.$app.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/'.$name.'.css';
+			if (!file_exists(EGW_SERVER_ROOT.$path))
+			{
+				$path = '/'.$app.'/templates/default/'.$name.'.css';
+			}
+		}
+		if (!file_exists(EGW_SERVER_ROOT.$path))
+		{
+			return false;
+		}
+		if (!in_array($path,self::$css_include_files))
+		{
+			self::$css_include_files[] = $path;
+		}
+		return true;
 	}
 }
 
