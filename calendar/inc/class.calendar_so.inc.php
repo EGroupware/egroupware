@@ -1092,7 +1092,10 @@ ORDER BY cal_user_type, cal_usre_id
 					{
 						$alarm['time'] = $time;
 					}
-					else continue;
+					elseif (!$next_occurrence)
+					{
+						continue;
+					}
 				}
 				$this->save_alarm($cal_id,$alarm);
 			}
