@@ -1369,7 +1369,7 @@ class calendar_ical extends calendar_boupdate
 								{
 									$alarm['offset'] = $event['start'] - $alarm['time'];
 								}
-								if (!isset($alarm['time']) && isset($alarm['offset']))
+								elseif (!isset($alarm['time']) && isset($alarm['offset']))
 								{
 									$alarm['time'] = $event['start'] - $alarm['offset'];
 								}
@@ -1381,12 +1381,12 @@ class calendar_ical extends calendar_boupdate
 								{
 									foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
 									{
-										if ($alarm['time'] == $alarm_data['time'] &&
+										if ($alarm['offset'] == $alarm_data['offset'] &&
 											($alarm_data['all'] || $alarm_data['owner'] == $this->user))
 										{
 											unset($event['alarm'][$newid]);
 											unset($event_info['stored_event']['alarm'][$alarm_id]);
-											continue;
+											continue 2;
 										}
 									}
 								}
