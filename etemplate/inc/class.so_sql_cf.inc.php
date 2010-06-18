@@ -466,7 +466,7 @@ class so_sql_cf extends so_sql
 					$criteria[] = '(' . $this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
 						$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
 						$this->db->quote($wildcard.$val.$wildcard) . ' AND ' .
-						$this->extra_table.'.'.$this->extra_value . ' = ' . $this->db->quote($name) .
+						$this->extra_table.'.'.$this->extra_key . ' = ' . $this->db->quote($name) .
 						')';
 					unset($criteria[self::CF_PREFIX.$name]);
 				}
