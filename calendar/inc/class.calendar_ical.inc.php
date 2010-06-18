@@ -342,14 +342,6 @@ class calendar_ical extends calendar_boupdate
 				}
 				$event['recur_type'] = MCAL_RECUR_NONE;
 			}
-			elseif ($event['recur_enddate'])
-			{
-				$time = new egw_time($event['recur_enddate'],egw_time::$server_timezone);
-				// all calculations in the event's timezone
-				$time->setTimezone(self::$tz_cache[$event['tzid']]);
-				$time->setTime(23, 59, 59);
-				$event['recur_enddate'] = egw_time::to($time, 'server');
-			}
 
 			// check if tzid of event (not only recuring ones) is already added to export
 			if ($tzid && $tzid != 'UTC' && !in_array($tzid,$vtimezones_added))
@@ -568,9 +560,9 @@ class calendar_ical extends calendar_boupdate
 			    				);
 		    				}
 	    				}
-		    			if ($this->productManufacturer != 'groupdav'
-			    				|| !$this->check_perms(EGW_ACL_EDIT,$event['id']))
-	    				{
+		    			if ($this->productManufacturer != 'groupdav' ||
+			    			!$this->check_perms(EGW_ACL_EDIT,$event))
+			    			{
 		    				$attributes['ORGANIZER'] = $organizerURL;
 		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
 		    				if (!empty($organizerUID))
@@ -611,8 +603,24 @@ class calendar_ical extends calendar_boupdate
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
 						$rriter = calendar_rrule::event2rrule($event, false, $tzid);
 						$rrule = $rriter->generate_rrule($version);
+						if ($event['recur_enddate'])
+						{
+							if (!$tzid || $version != '1.0')
+							{
+								if (!isset(self::$tz_cache['UTC']))
+								{
+									self::$tz_cache['UTC'] = calendar_timezones::DateTimeZone('UTC');
+								}
+								$rrule['UNTIL']->setTimezone(self::$tz_cache['UTC']);
+								$rrule['UNTIL'] = $rrule['UNTIL']->format('Ymd\THis\Z');
+							}
+						}
 						if ($version == '1.0')
 						{
+							if ($event['recur_enddate'] && $tzid)
+							{	
+								$rrule['UNTIL'] = self::getDateTime($rrule['UNTIL'],$tzid);
+							}
 							$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
 						}
 						else // $version == '2.0'
@@ -1361,7 +1369,7 @@ class calendar_ical extends calendar_boupdate
 								{
 									$alarm['offset'] = $event['start'] - $alarm['time'];
 								}
-								if (!isset($alarm['time']) && isset($alarm['offset']))
+								elseif (!isset($alarm['time']) && isset($alarm['offset']))
 								{
 									$alarm['time'] = $event['start'] - $alarm['offset'];
 								}
@@ -1373,12 +1381,12 @@ class calendar_ical extends calendar_boupdate
 								{
 									foreach ($event_info['stored_event']['alarm'] as $alarm_id => $alarm_data)
 									{
-										if ($alarm['time'] == $alarm_data['time'] &&
+										if ($alarm['offset'] == $alarm_data['offset'] &&
 											($alarm_data['all'] || $alarm_data['owner'] == $this->user))
 										{
 											unset($event['alarm'][$newid]);
 											unset($event_info['stored_event']['alarm'][$alarm_id]);
-											continue;
+											continue 2;
 										}
 									}
 								}
@@ -1984,6 +1992,8 @@ class calendar_ical extends calendar_boupdate
 					case 'e51':
 					case 'e90':
 					case 'e71':
+					case 'e72-1':
+					case 'e75-1':
 					case 'e66':
 					case '6120c':
 					case 'nokia 6131':
@@ -1993,8 +2003,17 @@ class calendar_ical extends calendar_boupdate
 						$this->supportedFields = $defaultFields['s60'];
 						break;
 					default:
-						error_log("Unknown Nokia phone '$_productName', assuming E61");
-						$this->supportedFields = $defaultFields['minimal'];
+						if ($this->productName[0] == 'e')
+						{
+							$model = 'E90';
+							$this->supportedFields = $defaultFields['s60'];
+						}
+						else
+						{
+							$model = 'E61';
+							$this->supportedFields = $defaultFields['minimal'];
+						}
+						error_log("Unknown Nokia phone '$_productName', assuming same as '$model'");
 						break;
 				}
 				break;
