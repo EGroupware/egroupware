@@ -721,6 +721,16 @@ class Net_IMAPProtocol {
             }
             $serverMethods=implode(',' ,$this->_serverAuthMethods);
             $myMethods=implode(',' ,$this->supportedAuthMethods);
+            if (!empty($userMethod) && !in_array($userMethod,$this->_serverAuthMethods))
+            {
+               foreach ( $this->supportedAuthMethods as $method ) {
+                       if ( in_array( $method , $this->_serverAuthMethods ) ) {
+                               error_log(__METHOD__." UserMethod $userMethod not supported by server; trying best ServerMethod $method");
+                                return $method;
+                       }
+               }
+            } 
+
             return new PEAR_Error("$method NOT supported authentication method!. This IMAP server " .
                 "supports these methods: $serverMethods, but I support $myMethods");
         }else{
