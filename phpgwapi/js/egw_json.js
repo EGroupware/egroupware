@@ -116,10 +116,15 @@ function egw_json_encode(input)
 }
 
 
-/* The constructor of the egw_json_request class.
+/**
+ * Some variables needed to store which JS and CSS files have already be included
+ */
+var egw_json_files = {};
+
+/** The constructor of the egw_json_request class.
  * @param string _menuaction the menuaction function which should be called and which handles the actual request
  * @param array _parameters which should be passed to the menuaction function.
-*/
+ */
 function egw_json_request(_menuaction, _parameters)
 {
 	//Copy the supplied parameters
@@ -296,6 +301,45 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 						{
 							window.location.href = res.data.url;
 						}
+
+						hasResponse = true;
+					}
+					break;
+				case 'css':
+					if (typeof res.data == 'string')
+					{
+						//Check whether the requested file had already be included
+						if (!egw_json_files[res.data])
+						{
+							egw_json_files[res.data] = true;
+
+							//Get the head node and append a new link node with the stylesheet url to it
+							var headID = document.getElementsByTagName('head')[0];
+							var cssnode = document.createElement('link');
+							cssnode.type = "text/css";
+							cssnode.rel = "stylesheet";
+							cssnode.href = res.data;
+							headID.appendChild(cssnode);
+						}
+						hasResponse = true;
+					}				
+					break;
+				case 'js':
+					if (typeof res.data == 'string')
+					{
+						//Check whether the requested file had already be included
+						if (!egw_json_files[res.data])
+						{
+							egw_json_files[res.data] = true;
+
+							//Get the head node and append a new script node with the js file to it
+							var headID = document.getElementsByTagName('head')[0];
+							var scriptnode = document.createElement('script');
+							scriptnode.type = "text/javascript";
+							scriptnode.src = res.data;
+							headID.appendChild(scriptnode);
+						}
+						hasResponse = true;
 					}
 					break;
 			}
