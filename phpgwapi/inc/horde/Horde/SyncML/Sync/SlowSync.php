@@ -227,8 +227,9 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			}
 
 			$guid = false;
+			$locURI = $syncItem->getLocURI();
 
-			$oguid = $state->getGlobalUID($type, $syncItem->getLocURI());
+			$oguid = $state->getGlobalUID($type, $locURI);
 
 			$guid = $registry->call($hordeType . '/search',
 				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType, $oguid, $type));
@@ -247,10 +248,9 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 					}
 				} else {
 					# Entry exists in database already. Just update the mapping
-					Horde::logMessage('SyncML: adding mapping for locuri:'
-						. $syncItem->getLocURI() . ' and guid:' . $guid,
+					Horde::logMessage("SyncML: adding mapping for locuri: $locURI and guid: $guid",
 						__FILE__, __LINE__, PEAR_LOG_DEBUG);
-						$state->setUID($type, $syncItem->getLocURI(), $guid);
+						$state->setUID($type, $locURI, $guid);
 						$state->log("Client-Map");
 						continue;
 				}
@@ -259,9 +259,9 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 				// We enforce the client not to change anything
 				if ($sync_conflicts > CONFLICT_CLIENT_CHANGES_IGNORED) {
 					// delete this item from client
-					Horde::logMessage('SyncML: Server RO! REMOVE ' . $syncItem->getLocURI()
-					. ' from client', __FILE__, __LINE__, PEAR_LOG_WARNING);
-					$state->addConflictItem($type, $syncItem->getLocURI());
+					Horde::logMessage("SyncML: Server RO! REMOVE $locURI from client",
+						__FILE__, __LINE__, PEAR_LOG_WARNING);
+					$state->addConflictItem($type, $locURI);
 				} else {
 					Horde::logMessage('SyncML: Server RO! REJECT all client changes',
 						__FILE__, __LINE__, PEAR_LOG_WARNING);
@@ -272,18 +272,22 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			}
 
 			// Add entry to the database.
-			$state->removeUID($type, $syncItem->getLocURI());
-			Horde::logMessage('SyncML: try to add contentype ' . $contentType .' to '. $hordeType,
+			$state->removeUID($type, $locURI);
+			Horde::logMessage("SyncML: try to add $locURI with contentype $contentType to $hordeType",
 				__FILE__, __LINE__, PEAR_LOG_DEBUG);
 			$guid = $registry->call($hordeType . '/import',
 				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
 			if (!is_a($guid, 'PEAR_Error') && $guid) {
-				$state->setUID($type, $syncItem->getLocURI(), $guid);
+				// first we try the modification timestamp then the creation ts
+				if (!($ts = $state->getSyncTSforAction($guid, 'modify'))) {
+					$ts = $state->getSyncTSforAction($guid, 'add');
+				}
+				$state->setUID($type, $locURI, $guid, $ts);
 				$state->log("Client-AddReplace");
-				Horde::logMessage('SyncML: replaced/added client entry as ' . $guid,
+				Horde::logMessage("SyncML: replaced/added client entry $locURI as $guid",
 					__FILE__, __LINE__, PEAR_LOG_DEBUG);
 			} else {
-				Horde::logMessage('SyncML: Error in replacing/add client entry:' . $guid->message,
+				Horde::logMessage('SyncML: Error in replacing/add client entry ' . $locURI . ': '. $guid->message,
 					__FILE__, __LINE__, PEAR_LOG_ERR);
 				$state->log("Client-AddFailure");
 			}
