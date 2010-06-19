@@ -208,16 +208,16 @@ class Horde_SyncML_Sync {
 		foreach($syncElementItems as $syncItem) {
 
 			$guid = false;
+			$locURI = $syncItem->getLocURI();
 
 			if (is_a($command, 'Horde_SyncML_Command_Sync_Add')) {
 				if ($sync_conflicts > CONFLICT_RESOLVED_WITH_DUPLICATE) {
 					// We enforce the client not to change anything
 					if ($sync_conflicts > CONFLICT_CLIENT_CHANGES_IGNORED) {
 						// delete this item from client
-						Horde::logMessage('SyncML: Server RO! REMOVE '
-							. $syncItem->getLocURI() . ' from client',
+						Horde::logMessage("SyncML: Server RO! REMOVE $locURI from client",
 							__FILE__, __LINE__, PEAR_LOG_WARNING);
-						$state->addConflictItem($type, $syncItem->getLocURI());
+						$state->addConflictItem($type, $locURI);
 					} else {
 						Horde::logMessage('SyncML: Server RO! '
 							. 'REJECT all client changes',
@@ -232,22 +232,22 @@ class Horde_SyncML_Sync {
 
 				if (!is_a($guid, 'PEAR_Error') && $guid != false) {
 					$ts = $state->getSyncTSforAction($guid, 'add');
-					$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+					$state->setUID($type, $locURI, $guid, $ts);
 					$state->log('Client-Add');
-					Horde::logMessage('SyncML: added client entry as '
-						. $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					Horde::logMessage("SyncML: added client entry $locURI as $guid",
+						__FILE__, __LINE__, PEAR_LOG_DEBUG);
 				} else {
 					$state->log('Client-AddFailure');
-					Horde::logMessage('SyncML: Error in adding client entry: '
+					Horde::logMessage('SyncML: Error in adding client entry ' . $locURI . ': '
 						. $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
 				}
 			} elseif (is_a($command, 'Horde_SyncML_Command_Sync_Delete')) {
-				$guid = $state->removeUID($type, $syncItem->getLocURI());
+				$guid = $state->removeUID($type, $locURI);
 				if (!$guid) {
 					// the entry is no longer on the server
 					$state->log('Client-DeleteFailure');
-					Horde::logMessage('SyncML: Failure deleting client entry, '
-						. 'gone already on server!',
+					Horde::logMessage('SyncML: Failure deleting client entry ' . $locURI
+						. ', gone on server already!',
 						__FILE__, __LINE__, PEAR_LOG_ERR);
 					continue;
 				}
@@ -292,28 +292,28 @@ class Horde_SyncML_Sync {
 				if (!is_a($guid, 'PEAR_Error') && $guid != false) {
 					$registry->call($hordeType . '/delete', array($guid));
 					$ts = $state->getSyncTSforAction($guid, 'delete');
-					$state->setUID($type, $syncItem->getLocURI(), $guid, $ts, 1);
+					$state->setUID($type, $locURI, $guid, $ts, 1);
 					$state->log('Client-Delete');
 					Horde::logMessage('SyncML: deleted entry '
 						. $guid . ' due to client request',
 						__FILE__, __LINE__, PEAR_LOG_DEBUG);
 				} else {
 					$state->log('Client-DeleteFailure');
-					Horde::logMessage('SyncML: Failure deleting client entry, '
-						. 'maybe gone already on server. msg: '
+					Horde::logMessage('SyncML: Failure deleting client entry ' . $locURI
+						. ', maybe gone on server already: '
 						. $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
 				}
 			} elseif (is_a($command, 'Horde_SyncML_Command_Sync_Replace')) {
-				$guid = $state->getGlobalUID($type, $syncItem->getLocURI());
+				$guid = $state->getGlobalUID($type, $locURI);
 				$replace = true;
 				$ok = false;
 				$merge = false;
 				if ($guid)
 				{
-					Horde::logMessage('SyncML: locuri '. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					Horde::logMessage('SyncML: locuri '. $locURI . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 					if (($sync_conflicts > CONFLICT_RESOLVED_WITH_DUPLICATE) || in_array($guid, $changes))
 					{
-						Horde::logMessage('SyncML: CONFLICT for locuri '. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_WARNING);
+						Horde::logMessage('SyncML: CONFLICT for locuri ' . $locURI . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_WARNING);
 						switch ($sync_conflicts)
 						{
 							case CONFLICT_CLIENT_WINNING:
@@ -321,7 +321,7 @@ class Horde_SyncML_Sync {
 								break;
 							case CONFLICT_SERVER_WINNING:
 								Horde::logMessage('SyncML: REJECT client change for locuri ' .
-									$syncItem->getLocURI() . ' guid ' . $guid ,
+									$locURI . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
 								$ok = true;
 								$replace = false;
@@ -329,7 +329,7 @@ class Horde_SyncML_Sync {
 								break;
 							case CONFLICT_MERGE_DATA:
 								Horde::logMessage('SyncML: Merge server and client data for locuri ' .
-									$syncItem->getLocURI() . ' guid ' . $guid ,
+									$locURI . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
 							    $merge = true;
 								break;
@@ -338,17 +338,17 @@ class Horde_SyncML_Sync {
 								break;
 							case CONFLICT_CLIENT_CHANGES_IGNORED:
 								Horde::logMessage('SyncML: Server RO! REJECT client change for locuri ' .
-									$syncItem->getLocURI() . ' guid ' . $guid ,
+									$locURI . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
 								$ok = true;
 								$replace = false;
 								$ts = $state->getSyncTSforAction($guid, 'modify');
-								$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+								$state->setUID($type, $locURI, $guid, $ts);
 								$state->log('Client-AddReplaceIgnored');
 								break;
 							default: // We enforce our data on client
 								Horde::logMessage('SyncML: Server RO! UNDO client change for locuri ' .
-									$syncItem->getLocURI() . ' guid ' . $guid ,
+									$locURI . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
 								$state->pushChangedItem($type, $guid);
 								$ok = true;
@@ -358,7 +358,7 @@ class Horde_SyncML_Sync {
 					elseif ($sync_conflicts == CONFLICT_MERGE_DATA)
 					{
 						Horde::logMessage('SyncML: Merge server and client data for locuri ' .
-							$syncItem->getLocURI() . ' guid ' . $guid ,
+							$locURI . ' guid ' . $guid ,
 							__FILE__, __LINE__, PEAR_LOG_WARNING);
 						$merge = true;
 					}
@@ -372,15 +372,15 @@ class Horde_SyncML_Sync {
 						if (!is_a($ok, 'PEAR_Error') && $ok != false)
 						{
 							$ts = $state->getSyncTSforAction($guid, 'modify');
-							$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+							$state->setUID($type, $locURI, $guid, $ts);
 							if ($merge)
 							{
-								Horde::logMessage('SyncML: Merged entry due to client request guid: ' .
+								Horde::logMessage('SyncML: Merged entry ' . $locURI . ' due to client request guid: ' .
 									$guid . ' ts: ' . $ts, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 							}
 							else
 							{
-								Horde::logMessage('SyncML: replaced entry due to client request guid: ' .
+								Horde::logMessage('SyncML: replaced entry ' . $locURI . ' due to client request guid: ' .
 									$guid . ' ts: ' . $ts, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 							}
 							$state->log('Client-Replace');
@@ -401,7 +401,7 @@ class Horde_SyncML_Sync {
 						// We enforce the client not to change anything
 						if ($sync_conflicts > CONFLICT_CLIENT_CHANGES_IGNORED) {
 							// delete this item from client
-							Horde::logMessage('SyncML: Server RO! REMOVE ' . $syncItem->getLocURI() . ' from client',
+							Horde::logMessage('SyncML: Server RO! REMOVE ' . $locURI . ' from client',
 								__FILE__, __LINE__, PEAR_LOG_WARNING);
 							$state->addConflictItem($type, $syncItem->getLocURI());
 						} else {
@@ -411,7 +411,7 @@ class Horde_SyncML_Sync {
 						continue;
 					}
 					Horde::logMessage('SyncML: try to add contentype '
-						. $contentType . ' for locuri ' . $syncItem->getLocURI(),
+						. $contentType . ' for locuri ' . $locURI,
 						__FILE__, __LINE__, PEAR_LOG_DEBUG);
 					//continue;
 					$oguid = $guid;
@@ -421,22 +421,22 @@ class Horde_SyncML_Sync {
 						if ($oguid != $guid) {
 							// We add a new entry
 							$ts = $state->getSyncTSforAction($guid, 'add');
-							Horde::logMessage('SyncML: added entry '
+							Horde::logMessage('SyncML: added entry ' . $locURI . ' guid '
 								. $guid . ' from client',
 								__FILE__, __LINE__, PEAR_LOG_DEBUG);
 							$state->log('Client-Add');
 						} else {
 							// We replaced an entry
 							$ts = $state->getSyncTSforAction($guid, 'modify');
-							Horde::logMessage('SyncML: replaced entry '
+							Horde::logMessage('SyncML: replaced entry ' . $locURI . ' guid '
 								. $guid . ' from client',
 								__FILE__, __LINE__, PEAR_LOG_DEBUG);
 							$state->log('Client-Replace');
 						}
-						$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+						$state->setUID($type, $locURI, $guid, $ts);
 					} else {
 						Horde::logMessage('SyncML: Error in replacing/'
-							. 'add client entry:' . $guid->message,
+							. 'add client entry ' . $locURI . ' : ' . $guid->message,
 							__FILE__, __LINE__, PEAR_LOG_ERR);
 						$state->log('Client-AddFailure');
 					}
