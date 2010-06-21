@@ -618,7 +618,7 @@ class html
 		$oCKeditor->config['entities_processNumerical'] = true;
 
 		$oCKeditor->config['editingBlock'] = true;
-		$oCKeditor->config['filebrowserBrowseUrl'] = 'index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return&path='.urlencode($_start_path);
+		$oCKeditor->config['filebrowserBrowseUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return'.urlencode($_start_path);
 		$oCKeditor->config['filebrowserWindowWidth'] = 640;
 		$oCKeditor->config['filebrowserWindowHeight'] = 580;
 		//Only heights with "px" set are supported		
