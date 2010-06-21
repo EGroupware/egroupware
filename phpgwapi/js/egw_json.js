@@ -204,12 +204,22 @@ egw_json_request.prototype.alertFunc = function(_message, _details)
 	alert(_message);
 }
 
-function _egw_json_debug_log(_msg)
+function _egw_json_debug_log(_msg, _e)
 {
 	if (typeof console != "undefined" && typeof console.log != "undefined")
 	{
-		console.log(_msg);
+		console.log(_msg, _e);
 	}
+}
+
+/* Displays an json error message */
+egw_json_request.prototype.jsonError = function(_msg, _e)
+{
+	var msg = 'EGW JSON Error: '._msg;
+
+	//Log and show the error message
+	_egw_json_bebug_log(msg, _e);
+	this.alertHandler(msg);
 }
 
 /* Internal function which handles the response from the server */
@@ -220,132 +230,152 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 		var hasResponse = false;
 		for (var i = 0; i < data.response.length; i++)
 		{
-			var res = data.response[i];				
-
-			switch (data.response[i].type)
+			try
 			{
-				case 'alert':
-					//Check whether all needed parameters have been passed and call the alertHandler function
-					if ((typeof res.data.message != 'undefined') && 
-						(typeof res.data.details != 'undefined'))
-					{					
-						this.alertHandler(
-							res.data.message,
-							res.data.details)
-						hasResponse = true;
-					}
-					break;
-				case 'assign':
-					//Check whether all needed parameters have been passed and call the alertHandler function
-					if ((typeof res.data.id != 'undefined') && 
-						(typeof res.data.key != 'undefined') &&
-						(typeof res.data.value != 'undefined'))
-					{					
-						var obj = document.getElementById(res.data.id);
-						if (obj)
+				var res = data.response[i];				
+
+				switch (data.response[i].type)
+				{
+					case 'alert':
+						//Check whether all needed parameters have been passed and call the alertHandler function
+						if ((typeof res.data.message != 'undefined') && 
+							(typeof res.data.details != 'undefined'))
+						{					
+							this.alertHandler(
+								res.data.message,
+								res.data.details)
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
+					case 'assign':
+						//Check whether all needed parameters have been passed and call the alertHandler function
+						if ((typeof res.data.id != 'undefined') && 
+							(typeof res.data.key != 'undefined') &&
+							(typeof res.data.value != 'undefined'))
+						{					
+							var obj = document.getElementById(res.data.id);
+							if (obj)
+							{
+								obj[res.data.key] = res.data.value;
+								hasResponse = true;
+							}
+						} else
+							throw 'Invalid parameters';
+						break;
+					case 'data':
+						//Callback the caller in order to allow him to handle the data
+						if (this.callback)
 						{
-							obj[res.data.key] = res.data.value;
+							this.callback.call(this.sender, res.data);
 							hasResponse = true;
 						}
-					}
-					break;
-				case 'data':
-					//Callback the caller in order to allow him to handle the data
-					if (this.callback)
-					{
-						this.callback.call(this.sender, res.data);
-						hasResponse = true;
-					}
-					break;
-				case 'script':
-					if (typeof res.data == 'string')
-					{
-						try
+						break;
+					case 'script':
+						if (typeof res.data == 'string')
 						{
-							var func = function() {eval(res.data);};
-							func.call(window);
-						}
-						catch (e)
+							try
+							{
+								var func = function() {eval(res.data);};
+								func.call(window);
+							}
+							catch (e)
+							{
+								e.code = res.data;
+								_egw_json_debug_log(e);
+							}
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
+					case 'jquery':
+						if (typeof res.data.select == 'string' &&
+							typeof res.data.func == 'string')
 						{
-							e.code = res.data;
-							_egw_json_debug_log(e);
-						}
-						hasResponse = true;
-					}
-					break;
-				case 'jquery':
-					if (typeof res.data.select == 'string' &&
-					    typeof res.data.func == 'string')
-					{
-						try
+							try
+							{
+								var jQueryObject = $(res.data.select, this.context);
+								jQueryObject[res.data.func].apply(jQueryObject,	res.data.parms);
+							}
+							catch (e)
+							{
+								_egw_json_debug_log(e);
+							}
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
+					case 'redirect':
+						if (typeof res.data.url == 'string' &&
+							typeof res.data.global == 'boolean')
 						{
-							var jQueryObject = $(res.data.select, this.context);
-							jQueryObject[res.data.func].apply(jQueryObject,	res.data.parms);
-						}
-						catch (e)
-						{
-							_egw_json_debug_log(e);
-						}
-						hasResponse = true;
-					}
-					break;
-				case 'redirect':
-					if (typeof res.data.url == 'string' &&
-						typeof res.data.global == 'boolean')
-					{
-						//Special handling for framework reload
-						if (res.data.url.indexOf("?cd=10") > 0)
-							res.data.global = true;
+							//Special handling for framework reload
+							if (res.data.url.indexOf("?cd=10") > 0)
+								res.data.global = true;
 
-						if (res.data.global)
-						{
-							egw_topWindow().location.href = res.data.url;
-						}
-						else
-						{
-							window.location.href = res.data.url;
-						}
+							if (res.data.global)
+							{
+								egw_topWindow().location.href = res.data.url;
+							}
+							else
+							{
+								window.location.href = res.data.url;
+							}
 
-						hasResponse = true;
-					}
-					break;
-				case 'css':
-					if (typeof res.data == 'string')
-					{
-						//Check whether the requested file had already be included
-						if (!egw_json_files[res.data])
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
+					case 'css':
+						if (typeof res.data == 'string')
 						{
-							egw_json_files[res.data] = true;
+							//Check whether the requested file had already be included
+							if (!egw_json_files[res.data])
+							{
+								egw_json_files[res.data] = true;
 
-							//Get the head node and append a new link node with the stylesheet url to it
-							var headID = document.getElementsByTagName('head')[0];
-							var cssnode = document.createElement('link');
-							cssnode.type = "text/css";
-							cssnode.rel = "stylesheet";
-							cssnode.href = res.data;
-							headID.appendChild(cssnode);
-						}
-						hasResponse = true;
-					}				
-					break;
-				case 'js':
-					if (typeof res.data == 'string')
-					{
-						//Check whether the requested file had already be included
-						if (!egw_json_files[res.data])
+								//Get the head node and append a new link node with the stylesheet url to it
+								var headID = document.getElementsByTagName('head')[0];
+								var cssnode = document.createElement('link');
+								cssnode.type = "text/css";
+								cssnode.rel = "stylesheet";
+								cssnode.href = res.data;
+								headID.appendChild(cssnode);
+							}
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
+					case 'js':
+						if (typeof res.data == 'string')
 						{
-							egw_json_files[res.data] = true;
+							//Check whether the requested file had already be included
+							if (!egw_json_files[res.data])
+							{
+								egw_json_files[res.data] = true;
 
-							//Get the head node and append a new script node with the js file to it
-							var headID = document.getElementsByTagName('head')[0];
-							var scriptnode = document.createElement('script');
-							scriptnode.type = "text/javascript";
-							scriptnode.src = res.data;
-							headID.appendChild(scriptnode);
-						}
-						hasResponse = true;
-					}
-					break;
+								//Get the head node and append a new script node with the js file to it
+								var headID = document.getElementsByTagName('head')[0];
+								var scriptnode = document.createElement('script');
+								scriptnode.type = "text/javascript";
+								scriptnode.src = res.data;
+								headID.appendChild(scriptnode);
+							}
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
+					case 'error':
+						if (typeof res.data == 'string')
+						{
+							this.jsonError(res.data);
+							hasResponse = true;
+						} else
+							throw 'Invalid parameters';
+						break;
+				}
+			} catch(e) {
+				this.jsonError('Internal JSON handler error', e);
 			}
 		}
 

@@ -333,6 +333,17 @@ class egw_json_response
 	}
 
 	/**
+	 * Displays an error message on the client
+	 */
+	public function error($msg)
+	{
+		if (is_string($msg))
+		{
+			$this->addGeneric('error', $msg);
+		}
+	}
+
+	/**
 	 * Includes the given CSS file. Every url can only be included once.
 	 *
 	 * @param string $url specifies the url to the css file to include
