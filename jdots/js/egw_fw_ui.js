@@ -394,18 +394,6 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 		}
 	);
 		
-	//Create the icon and append it to the header div
-	var icon = document.createElement("img");
-	$(icon).addClass("egw_fw_ui_tab_icon");
-	icon.src = _icon;
-	icon.alt = 'Tab icon';
-	$(this.headerDiv).append(icon);
-
-	//Create the title h1 and append it to the header div
-	this.headerH1 = document.createElement("h1");	
-	this.setTitle('');
-	$(this.headerDiv).append(this.headerH1);
-
 	//Create the close button and append it to the header div
 	this.closeButton = document.createElement("span");
 	this.closeButton._callbackObject = new egw_fw_class_callback(this, _closeCallback);
@@ -426,9 +414,28 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	{
 		this.closeButton.style.styleFloat = 'none';
 	}
+	else
+	{
+		$(this.headerDiv).append(this.closeButton);
+	}
 
-	$(this.headerDiv).append(this.closeButton);
-		
+	//Create the icon and append it to the header div
+	var icon = document.createElement("img");
+	$(icon).addClass("egw_fw_ui_tab_icon");
+	icon.src = _icon;
+	icon.alt = 'Tab icon';
+	$(this.headerDiv).append(icon);
+
+	//Create the title h1 and append it to the header div
+	this.headerH1 = document.createElement("h1");	
+	this.setTitle('');
+	$(this.headerDiv).append(this.headerH1);
+
+	if (typeof jQuery.browser['msie'] != 'undefined')
+	{
+		$(this.headerDiv).append(this.closeButton);
+	}
+
 	this.contentDiv = document.createElement("div");
 	$(this.contentDiv).addClass("egw_fw_ui_tab_content");
 	$(this.contentDiv).hide();
