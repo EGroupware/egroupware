@@ -611,8 +611,14 @@ class calendar_ical extends calendar_boupdate
 								{
 									self::$tz_cache['UTC'] = calendar_timezones::DateTimeZone('UTC');
 								}
-								$rrule['UNTIL']->setTimezone(self::$tz_cache['UTC']);
-								$rrule['UNTIL'] = $rrule['UNTIL']->format('Ymd\THis\Z');
+								//error_log(__METHOD__.array2string($rrule));
+								//error_log(__METHOD__.array2string(self::$tz_cache['UTC']));
+ 								if (is_a($rrule['UNTIL'],'DateTime')) 
+								{
+									$rrule['UNTIL']->setTimezone(self::$tz_cache['UTC']);
+									$rrule['UNTIL'] = $rrule['UNTIL']->format('Ymd\THis\Z');
+								}
+								//error_log(__METHOD__.array2string($rrule));
 							}
 						}
 						if ($version == '1.0')
