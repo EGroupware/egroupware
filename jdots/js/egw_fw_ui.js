@@ -55,7 +55,7 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _ca
 
 	//Create the entry name header
 	var entryH1 = document.createElement("h1");
-	$(entryH1).append(this.entryName);
+	$(entryH1).text(this.entryName);
 
 	//Append icon, name, and ajax loader
 	$(this.headerDiv).append(iconDiv);
@@ -65,7 +65,9 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _ca
 	this.headerDiv._callbackObject = new egw_fw_class_callback(this, _callback);
 	$(this.headerDiv).click(function(){
 		if (!this._parent.isDraged)
+		{
 			this._callbackObject.call(this);
+		}
 		this._parent.isDraged = false;
 		return true;
 	});
@@ -81,9 +83,9 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _ca
 	this.marker = document.createElement("div");
 	this.marker._parent = this;
 	this.marker.className = 'egw_fw_ui_sidemenu_marker';
-	var entryH1 = document.createElement("h1");
-	$(entryH1).append(this.entryName);
-	$(this.marker).append(entryH1);
+	var entryH1_ = document.createElement("h1");
+	$(entryH1_).text(this.entryName);
+	$(this.marker).append(entryH1_);
 	$(this.marker).hide();
 
 	//Create a container which contains all generated elements and is then added
@@ -387,7 +389,7 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 			if (!$(this).hasClass("egw_fw_ui_tab_header_active"))
 				$(this).addClass("egw_fw_ui_tab_header_hover");
 		},
-		function() {var parent = ui.item.context._parent;
+		function() {
 			$(this).removeClass("egw_fw_ui_tab_header_hover")
 		}
 	);
@@ -443,8 +445,8 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 egw_fw_ui_tab.prototype.setTitle = function(_title)
 {
 	this.title = _title;
-	$(this.headerH1).empty;
-	$(this.headerH1).append(_title);
+	$(this.headerH1).empty();
+	$(this.headerH1).text(_title);
 }
 
 /**
@@ -691,7 +693,7 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 	
 	//Add the text	
 	var entryH1 = document.createElement('h1');
-	$(entryH1).append(_title);
+	$(entryH1).text(_title);
 	$(this.headerDiv).append(entryH1);
 
 	//Add the content
@@ -915,7 +917,7 @@ egw_fw_ui_scrollarea.prototype.update = function()
 {
 	//Get the height of the content and the outer box
 	this.contHeight = $(this.scrollDiv).outerHeight();
-	this.boxHeight = $(this.outerDiv).height();
+	this.boxHeight = $(this.contDiv).height();
 
 	this.toggleButtons(this.contHeight > this.boxHeight);
 	this.setScrollPos(this.scrollPos);
@@ -946,8 +948,8 @@ egw_fw_ui_scrollarea.prototype.mouseOverCallback = function(_context)
 	if (_context.mouseOver)
 	{
 		//Set the next timeout
-		window.setTimeout(_context.mouseOverCallback, Math.round(_context.timerInterval * 1000),
-			_context);
+		setTimeout(function(){_context.mouseOverCallback(_context)},
+			Math.round(_context.timerInterval * 1000));
 	}
 }
 
@@ -958,8 +960,9 @@ egw_fw_ui_scrollarea.prototype.mouseOverToggle = function(_over, _dir)
 
 	if (_over)
 	{
-		window.setTimeout(this.mouseOverCallback, Math.round(this.timerInterval * 1000),
-			this);
+		var _context = this;
+		setTimeout(function(){_context.mouseOverCallback(_context)},
+			Math.round(_context.timerInterval * 1000));
 	}
 	else
 	{
@@ -1141,3 +1144,4 @@ egw_fw_ui_splitter.prototype.dragStopHandler = function(event, ui)
 
 	this.resizeCallback(this.constraints[0].size, this.constraints[1].size);
 }
+

@@ -8,6 +8,14 @@
 
 
 /**
+ * Some constant definitions
+ */
+
+EGW_LINK_SOURCE_FRAMEWORK = 0;
+EGW_LINK_SOURCE_LEGACY_IFRAME = 1;
+EGW_LINK_SOURCE_POPUP = 2;
+
+/**
  * Class: egw_fw
  * The egw_fw class is the base framework class. It wraps around all egw_fw_ui and
  * egw_fw_classes. It creates both, a side bar and a tab area and cares about linking.
@@ -224,7 +232,10 @@ egw_fw.prototype.tabCloseClickCallback = function(_sender)
 	{
 		tabsUi.removeTab(this);
 		app.tab = null;
-		app.iframe = null;
+		app.browser = null;
+
+		if (app.sidemenuEntry)
+			app.sidemenuEntry.hideAjaxLoader();
 
 		//Set the active application to the application of the currently active tab
 		app.parentFw.setActiveApp(tabsUi.activeTab.tag);
@@ -232,21 +243,23 @@ egw_fw.prototype.tabCloseClickCallback = function(_sender)
 
 	tabsUi.setCloseable(tabsUi.tabs.length > 1);
 
-	/* As a new tab might remove a row from the tab header, we have to resize all iframes */
+	//As a new tab might remove a row from the tab header, we have to resize all tab content browsers
 	this.tag.parentFw.resizeHandler();
 }
 
 egw_fw.prototype.resizeHandler = function()
 {
+	//Resize the browser area of the applications
 	for (var app in this.applications)
 	{
-		if (this.applications[app].iframe != null)
+		if (this.applications[app].browser != null)
 		{
-			this.applications[app].iframe.style.height = this.getIFrameHeight() + 'px';
+			this.applications[app].browser.resize();
 		}
-
-		this.scrollAreaUi.update();
 	}
+
+	//Update the scroll area
+	this.scrollAreaUi.update();
 }
 
 egw_fw.prototype.getIFrameHeight = function()
@@ -276,41 +289,88 @@ egw_fw.prototype.tabClickCallback = function(_sender)
  */
 egw_fw.prototype.applicationClickCallback = function(_sender)
 {
-	this.tag.parentFw.applicationTabNavigate(this.tag, this.tag.execName);
+	this.tag.parentFw.applicationTabNavigate(this.tag, this.tag.indexUrl);
 }
 
 /**
- * navigate to tab of an applications (opening the tab if not yet open)
- * 
- * @param egw_fw_class_application _app
- * @param string _url optional url, default index page of app
+ * Checks whether the application already owns a tab and creates one if it doesn't exist
  */
-egw_fw.prototype.applicationTabNavigate = function(_app, _url)
+egw_fw.prototype.createApplicationTab = function(_app)
 {
-	//Create the tab if it isn't already there
-	if ((_app.iframe == null) || (_app.tab == null))
+	if (_app.tab == null)
 	{
+		//Create the tab
 		_app.tab = this.tabsUi.addTab(_app.icon, this.tabClickCallback, this.tabCloseClickCallback,
 			_app);
 		_app.tab.setTitle(_app.displayName);
 
-		_app.iframe = document.createElement('iframe');
-		_app.iframe.style.width = "100%";
-		_app.iframe.style.borderWidth = 0;
-		_app.iframe.style.height = this.getIFrameHeight() + 'px';
-		_app.iframe.frameBorder = 0;
-		_app.tab.setContent(_app.iframe);
-		
+		//Set the tab closeable if there's more than one tab
 		this.tabsUi.setCloseable(this.tabsUi.tabs.length > 1);
+	}
+}
 
-		/* As a new tab might add a new row in the tab header, we have to resize all iframes */
-		this.resizeHandler();
+/**
+ * Navigate to the tab of an application (opening the tab if not yet open)
+ * 
+ * @param egw_fw_class_application _app
+ * @param string _url optional url, default index page of app
+ */
+egw_fw.prototype.applicationTabNavigate = function(_app, _url, _useIframe)
+{
+	//Create the tab for that application
+	this.createApplicationTab(_app);
+
+	if (typeof _url == 'undefined')
+		_url = _app.indexUrl;
+
+	if (typeof _useIframe == 'undefined')
+	{
+		if (!_url.match(/menuaction=/))
+		{
+			_useIframe = true;
+		}
+		else
+		{
+			_useIframe = _app.legacyApp;
+		}
 	}
 
-	//Set the iframe location
-	_app.iframe.src = typeof(_url) == "undefined" ? _app.execName : _url;
+	if (_app.browser == null)
+	{
+		//Create a new browser ui and set it as application tab callback
+		var callback = new egw_fw_class_callback(this, this.getIFrameHeight);
+		_app.browser = new egw_fw_content_browser(_app, callback);
+		_app.tab.setContent(_app.browser.baseDiv);
+	}
 
-	_app.parentFw.setActiveApp(_app);
+	_app.browser.browse(_url, true);//_useIframe);
+
+	this.setActiveApp(_app);
+}
+
+/**
+ * Tries to obtain the application from a menuaction
+ */
+egw_fw.prototype.parseAppFromUrl = function(_url)
+{
+	var _app = null;
+
+	//Read the menuaction parts from the url and check whether the first part
+	//of the url contains a valid app name	
+	var matches = _url.match(/menuaction=([a-z0-9_-]+)\./i);
+	if (matches && (_app = this.getApplicationByName(matches[1])))
+	{
+		return _app;
+	}
+
+	//Check the url for a scheme of "/app/something.php" and check this one for a valid app
+	//name
+	var matches = _url.match(/\/([^\/]+)\/[^\/]+\.php/i);
+	if (matches && (_app = this.getApplicationByName(matches[1])))
+	{
+		return _app;
+	}
+	return null;
 }
 
 /**
@@ -338,8 +398,13 @@ egw_fw.prototype.loadApplicationsCallback = function(apps)
 	{
 		var app = apps[i];
 
+		//Check for the "legacyApp" flag - if it is not set, default it to true
+		var legacyApp = true;
+		if (typeof app.legacyApp != 'undefined')
+			legacyApp = app.legacyApp;
+
 		appData = new egw_fw_class_application(this, 
-			app.name, app.title, app.icon, app.url, app.sideboxwidth);
+			app.name, app.title, app.icon, app.url, app.sideboxwidth, legacyApp);
 
 		//Create a sidebox menu entry for each application
 		if (!app.noNavbar)
@@ -359,14 +424,11 @@ egw_fw.prototype.loadApplicationsCallback = function(apps)
 	}
 
 	// check if a menuaction or app is specified in the url --> display that
-	var matches = location.search.match(/menuaction=([a-z0-9_-]+)\./i);
-	var _app,_url;
-	if (matches && (_app = this.getApplicationByName(matches[1])) ||
-		(matches = location.href.match(/\/([^\/]+)\/[^\/]+\.php/i)) &&
-			(_app = this.getApplicationByName(matches[1])))
+	var _app = this.parseAppFromUrl(window.location.href);
+	if (_app)
 	{
 		_url = window.location.href.replace(/&?cd=yes/,'');
-		this.applicationTabNavigate(_app,_url);
+		this.applicationTabNavigate(_app, _url);
 	}
 	// else display the default application
 	else if (defaultApp)
@@ -404,7 +466,7 @@ egw_fw.prototype.getApplicationByName = function(_name)
 {
 	if (typeof this.applications[_name] != 'undefined')
 	{
-		return this.applications[_name]
+		return this.applications[_name];
 	}
 
 	return null;
@@ -569,22 +631,45 @@ egw_fw.prototype.tzSelection = function(_tz)
 	var req = new egw_json_request('home.jdots_framework.ajax_tz_selection.template',[_tz]);
 	req.sendRequest(false);		// false = synchron
 	
-	if (this.activeApp)
+	if (this.activeApp.browser)
 	{
-		this.activeApp.iframe.contentDocument.location.reload();
+		this.activeApp.browser.relode();
 	}
 }
 
-egw_fw.prototype.linkHandler = function(_link, _app)
+egw_fw.prototype.linkHandler = function(_link, _app, _useIframe, _linkSource)
 {
-	var app = this.getApplicationByName(_app);
-	if (app != null)
+	//Determine the app string from the application parameter
+	var app = null;
+	if (_app && typeof _app == 'string')
+	{
+		app = this.getApplicationByName(_app);
+	}
+
+	if (!app)
+	{
+		//The app parameter was false or not a string or the application specified did not exists.
+		//Determine the target application from the link that had been passed to this function 
+		app = this.parseAppFromUrl(_link);		
+	}
+
+	if (app)
 	{
 		this.applicationTabNavigate(app, _link);
 	}
 	else
 	{
-		egw_alertHandler('Application "' + _app + '" not found.', 'The application "' + _app + '" the link "' + _link + '" points to is not registered.');
+		//Display some error messages to have visible feedback
+		if (typeof _app == 'string')
+		{
+			egw_alertHandler('Application "' + _app + '" not found.',
+				'The application "' + _app + '" the link "' + _link + '" points to is not registered.');
+		}
+		else
+		{
+			egw_alertHandler("No appropriate target application has been found.", 
+				"Target link: " + _link);
+		}
 	}
 }
 
@@ -603,10 +688,10 @@ egw_fw.prototype.egw_openWindowCentered2 = function(_url, _windowName, _width, _
 	if (typeof _app != 'undefined' && _app !== false)
 	{
 		var appEntry = framework.getApplicationByName(_app);
-		if (appEntry && appEntry.iframe == null)
+		if (appEntry && appEntry.browser == null)
 		{
 			navigate = true;
-			framework.applicationTabNavigate(appEntry, 'about:blank');
+			framework.applicationTabNavigate(appEntry, 'about:blank', appEntry.legacyApp);
 		}
 	}
 	else
@@ -614,8 +699,8 @@ egw_fw.prototype.egw_openWindowCentered2 = function(_url, _windowName, _width, _
 		var appEntry = framework.activeApp;
 	}
 
-	if (appEntry != null && appEntry.iframe != null)
-		parentWindow = appEntry.iframe.contentWindow;
+	if (appEntry != null && appEntry.browser.iframe != null)
+		parentWindow = appEntry.browser.iframe.contentWindow;
 
 	windowID = parentWindow.open(_url, _windowName, "width=" + _width + ",height=" + _height +
 		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
@@ -623,8 +708,9 @@ egw_fw.prototype.egw_openWindowCentered2 = function(_url, _windowName, _width, _
 
 	if (navigate)
 	{
-		window.setTimeout("framework.applicationTabNavigate(framework.activeApp, framework.activeApp.execName);", 500);
+		window.setTimeout("framework.applicationTabNavigate(framework.activeApp, framework.activeApp.indexUrl);", 500);
 	}
+
 	if (_returnID === false)
 	{
 		// return nothing
@@ -639,32 +725,193 @@ egw_fw.prototype.egw_appWindow = function(_app)
 {
 	var app = framework.getApplicationByName(_app);
 	var result = null;
-	if (app != null && app.iframe != null)
+	if (app != null && app.browser != null && app.browser.iframe != null)
 	{
-		result = app.iframe.contentWindow;
+		result = app.browser.iframe.contentWindow;
 	}
 	return result;
 }
 
-window.egw_link_handler = function(_link, _app)
+/**
+ * egw_fw_content_browser class
+ */
+
+EGW_BROWSER_TYPE_NONE = 0;
+EGW_BROWSER_TYPE_IFRAME = 1;
+EGW_BROWSER_TYPE_DIV = 2;
+
+/**
+ * Creates a new content browser ui, _heightCallback must either be a function
+ * or an egw_fw_class_callback object.
+ */
+function egw_fw_content_browser(_app, _heightCallback)
 {
-	/*var frmwrk = getFramwork();
-	if (frmwrk != null)
+	//Create a div which contains both, the legacy iframe and the contentDiv
+	this.baseDiv = document.createElement('div');
+	this.type = EGW_BROWSER_TYPE_NONE;
+	this.iframe = null;
+	this.contentDiv = null;
+	this.heightCallback = _heightCallback;
+	this.app = _app;
+}
+
+/**
+ * Resizes both, the contentDiv and the iframe to the size returned from the heightCallback
+ */
+egw_fw_content_browser.prototype.resize = function()
+{
+	var height = this.heightCallback.call() + 'px';
+
+	//Set the height of the content div or the iframe
+	if (this.contentDiv)
 	{
-		frmwrk.linkHandler(_link, _app)
+		this.contentDiv.style.height = height;
+	}
+	if (this.iframe)
+	{
+		this.iframe.style.height = height;
+	}
+}
+
+egw_fw_content_browser.prototype.setBrowserType = function(_type)
+{
+	//Only do anything if the browser type has changed
+	if (_type != this.type)
+	{
+		//Destroy the iframe and/or the contentDiv
+		$(this.baseDiv).empty();
+		this.iframe = null;
+		this.contentDiv = null;
+		this.ajaxLoaderDiv = null;
+		
+		switch (_type)
+		{
+			//Create the div for displaying the content
+			case EGW_BROWSER_TYPE_DIV:
+				this.contentDiv = document.createElement('div');
+				$(this.contentDiv).addClass('egw_fw_content_browser_div');
+				$(this.baseDiv).append(this.contentDiv);
+				
+				break;
+			
+			case EGW_BROWSER_TYPE_IFRAME:
+				//Create the iframe
+				this.iframe = document.createElement('iframe');
+				this.iframe.style.width = "100%";
+				this.iframe.style.borderWidth = 0;
+				this.iframe.frameBorder = 0;
+				$(this.iframe).addClass('egw_fw_content_browser_iframe');
+				$(this.baseDiv).append(this.iframe);
+
+				break;
+		}
+
+		this.resize();
+		this.type = _type;
+	}
+}
+
+egw_fw_content_browser.prototype.browse = function(_url, _useIframe)
+{
+	//Set the browser type
+	if (_useIframe)
+	{
+		this.setBrowserType(EGW_BROWSER_TYPE_IFRAME);
+
+		//Perform the actual "navigation"
+		this.iframe.src = _url;
+
+		//Set the "_legacy_iframe" flag to allow link handlers to easily determine
+		//the type of the link source
+		this.iframe.contentWindow._legacy_iframe = true;		
 	}
 	else
 	{
-		window.location = _link;
-	}*/
+		this.setBrowserType(EGW_BROWSER_TYPE_DIV)
 
-	if (typeof window.framework != "undefined")
-	{
-		window.framework.linkHandler(_link, _app);
+		//Special treatement of "about:blank"
+		if (_url == "about:blank")
+		{
+			$(this.contentDiv).empty();
+		}
+		else
+		{
+			//Perform an AJAX request loading application output
+			if (this.app.sidemenuEntry)
+				this.app.sidemenuEntry.showAjaxLoader();
+			var req = new egw_json_request(
+				this.app.appName + '.jdots_framework.ajax_exec',
+				[_url], this.contentDiv);
+			req.sendRequest(true, this.browse_callback, this);
+		}
 	}
-	else if (typeof window.parent.framework != "undefined")
+}
+
+egw_fw_content_browser.prototype.browse_callback = function(_data)
+{
+	if (this.app.sidemenuEntry)
+		this.app.sidemenuEntry.hideAjaxLoader();
+	$(this.contentDiv).empty();
+	$(this.contentDiv).append(_data);
+//	console.log(_data);
+}
+
+egw_fw_content_browser.prototype.reload = function()
+{
+	switch (_type)
 	{
-		window.parent.framework.linkHandler(_link, _app);
+		case EGW_BROWSER_TYPE_DIV:
+
+			break;
+
+		case EGW_BROWSER_TYPE_IFRAME:
+			//Do a simple reload in the iframe case
+			this.iframe.contentWindow.location.reload();
+			break;
+	}
+}
+
+egw_fw_content_browser.prototype.blank = function()
+{
+	this.browse('about:blank', this.type = EGW_BROWSER_TYPE_IFRAME);
+}
+
+/**
+ * Global funcitons
+ */
+
+window.egw_link_handler = function(_link, _app)
+{
+	//Determine where the link came from
+	var link_source = EGW_LINK_SOURCE_FRAMEWORK;
+	if (window.framework == 'undefined')
+	{
+		if (typeof window._legacy_iframe != 'undefined')
+		{
+			var link_source = EGW_LINK_SOURCE_LEGACY_IFRAME //1, iframe ==> legacy application
+		}
+		else
+		{
+			var link_source = EGW_LINK_SOURCE_POPUP; //2, popup
+		}
+	}
+
+	//Default the application parameter to false
+	if (typeof _app == 'undefined')
+	{
+		_app = false;
+	}
+
+	//Default the _useIframe parameter to true
+	if (typeof _useIframe == 'undefined')
+	{
+		_useIframe = true;
+	}
+
+	var frmwrk = getFramework();
+	if (frmwrk != null)
+	{
+		frmwrk.linkHandler(_link, _app, link_source)
 	}
 	else
 	{
