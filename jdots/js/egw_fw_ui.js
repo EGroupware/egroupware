@@ -693,7 +693,7 @@ function egw_fw_ui_category(_contDiv, _name, _title, _content, _callback, _anima
 	
 	//Add the text	
 	var entryH1 = document.createElement('h1');
-	$(entryH1).text(_title);
+	$(entryH1).append(_title);
 	$(this.headerDiv).append(entryH1);
 
 	//Add the content
