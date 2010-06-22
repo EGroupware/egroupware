@@ -134,16 +134,15 @@ class jscalendar
 		}
 		return
 '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.htmlspecialchars($date).'"'.$options.'/>
-<script type="text/javascript">'.(!$useicon ? '
-document.getElementById("'.$name.'").readOnly=true;
-' : '
-document.writeln(\'<img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');').'
-Calendar.setup(
-{
-	inputField  : "'.$name.'",'.(!$useicon ? '' : '
-	button      : "'.$name.'-trigger"').'
-}
-);
+'.($useicon ? '<img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;">' : '').
+'<script type="text/javascript">
+	'.(!$useicon ? 'document.getElementById("'.$name.'").readOnly=true;' : '').
+	'Calendar.setup(
+		{
+			inputField  : "'.$name.'",'.(!$useicon ? '' : '
+			button      : "'.$name.'-trigger"').'
+		}
+	);
 </script>
 ';
 	}
