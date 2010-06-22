@@ -504,7 +504,7 @@ class egw_db
 				$this->capabilities[self::CAPABILITY_NAME_CASE] = 'lower';
 				$this->capabilities[self::CAPABILITY_CLIENT_ENCODING] = (float) $db_version >= 7.4;
 				$this->capabilities[self::CAPABILITY_OUTER_JOIN] = true;
-				$this->capabilities[self::CAPABILITY_CASE_INSENSITIV_LIKE] = 'ILIKE';
+				$this->capabilities[self::CAPABILITY_CASE_INSENSITIV_LIKE] = '::text ILIKE';
 				$this->capabilities[self::CAPABILITY_REQUIRE_TRUNCATE_VARCHAR] = true;
 				break;
 
