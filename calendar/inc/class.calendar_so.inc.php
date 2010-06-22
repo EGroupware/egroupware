@@ -342,7 +342,7 @@ class calendar_so
 		{
 			foreach(array('cal_title','cal_description','cal_location') as $col)
 			{
-				$to_or[] = $col . ' LIKE ' . $this->db->quote('%'.$query.'%');
+				$to_or[] = $col.' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote('%'.$query.'%');
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
 		}
