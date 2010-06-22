@@ -965,8 +965,7 @@ class translation
 	 */
 	static function get_message_id($translation,$app=null,$lang=null)
 	{
-		$like = self::$db->Type == 'pgsql' ? 'ILIKE' : 'LIKE';
-		$where = array('content '.$like.' '.self::$db->quote($translation));	// like to be case-insensitive
+		$where = array('content '.self::$db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.self::$db->quote($translation));
 		if ($app) $where['app_name'] = $app;
 		if ($lang) $where['lang'] = $lang;
 
