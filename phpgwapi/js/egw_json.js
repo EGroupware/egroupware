@@ -196,7 +196,9 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 		data: request_obj,
 		dataType: 'json',
 		type: 'POST', 
-		success: this.handleResponse});
+		success: this.handleResponse,
+		error: function(_xmlhttp,_err) { alert('Ajax request to '+this.url+'?menuaction='+this.menuaction+' failed: '+_err); }
+	});
 }
 
 egw_json_request.prototype.alertFunc = function(_message, _details)
