@@ -7,6 +7,7 @@
 %1 weeks	calendar	en	%1 weeks
 (%1 events in %2 seconds)	calendar	en	(%1 events in %2 seconds)
 , exceptions preserved	calendar	en	, exceptions preserved
+, stati of participants reset	calendar	en	, stati of participants reset
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	en	<b>Please note</b>: The calendar use the holidays of your country, which is set to %1. You can change it in your %2.<br />Holidays are %3 automatic installed from %4. You can change it in %5.
 a non blocking event will not conflict with other events	calendar	en	A non blocking event will not conflict with other events
 accept or reject an invitation	calendar	en	Accept or reject an invitation
@@ -35,6 +36,7 @@ all future	calendar	en	All future
 all incl. rejected	calendar	en	All incl. rejected
 all participants	calendar	en	All participants
 allows to edit the event again	calendar	en	Allows to edit the event again
+always	calendar	en	Always
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events
 apply the changes	calendar	en	apply the changes
 are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this Country ?
@@ -142,12 +144,14 @@ enddate / -time of the meeting, eg. for more then one day	calendar	en	End date /
 enddate of the export	calendar	en	End date of the export
 ends	calendar	en	ends
 error adding the alarm	calendar	en	Error adding the alarm
+error: can't delete original series!	calendar	en	Error: Can't delete original series!
 error: importing the ical	calendar	en	Error: importing the iCal
 error: no participants selected !!!	calendar	en	Error: no participants selected !!!
 error: ressources reservation in private events is not allowed!!!	calendar	en	Error: Resources reservation in private events is not allowed !!!
 error: saving the event !!!	calendar	en	Error: saving the event !!!
 error: starttime has to be before the endtime !!!	calendar	en	Error: Start time has to be before the end time !!!
 error: the entry has been updated since you opened it for editing!	calendar	en	Error: The entry has been updated since you opened it for editing!
+error: you can't shift a series from the past!	calendar	en	Error: You can't shift a series from the past!
 event copied - the copy can now be edited	calendar	en	Event copied - the copy can now be edited
 event deleted	calendar	en	Event deleted
 event details follow	calendar	en	Event Details follow
@@ -214,6 +218,7 @@ ical file	calendar	en	iCal file
 ical import	calendar	en	iCal Import
 ical successful imported	calendar	en	iCal successful imported
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	en	If checked holidays are falling on a weekend, they are taken on the Monday after.
+if start day differs	calendar	en	If start day differs
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!!!
 ignore conflict	calendar	en	Ignore conflict
 import	calendar	en	Import
@@ -321,6 +326,7 @@ repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
 requested	calendar	en	Requested
 require an acl grant to invite other users and groups	admin	en	Require an ACL grant to invite other users and groups
 reset	calendar	en	Reset
+reset participant stati on event shifts	calendar	en	Reset participant stati on event shifts
 resources	calendar	en	Resources
 resources except conflicting ones	calendar	en	Resources except conflicting ones
 resources with conflict detection	calendar	en	Resources with conflict detection
@@ -340,6 +346,7 @@ select an action	calendar	en	Select an action
 select an action...	calendar	en	Select an action...
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
+select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	en	Select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.
 select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
 series deleted	calendar	en	Series deleted
@@ -350,6 +357,7 @@ shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Sh
 should new events created as private by default ?	calendar	en	Should new events created as private by default ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	en	Should not logged in persons be able to see your Free/Busy information? You can set an extra password, different from your normal password, to protect this information. The Free/Busy information is in iCal format and only includes the times when you are busy. It does not include the event-name, description or locations. The URL to your Free/Busy information is %1.
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk" target="_blank">http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk" target="_blank">http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk</a>.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://www.serveahead.de/trunk/calendar/freebusy.php?user=admin" target="_blank">https://www.serveahead.de/trunk/calendar/freebusy.php?user=admin</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="https://www.serveahead.de/trunk/calendar/freebusy.php?user=admin" target="_blank">https://www.serveahead.de/trunk/calendar/freebusy.php?user=admin</a>.
 should the grid be shown in the calendar	calendar	en	Should the grid be shown in the calendar
 should the number of weeks be shown on top of the calendar	calendar	en	Should the number of weeks be shown on top of the calendar
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	en	Should the number of weeks be shown on top of the calendar (only if offset = 0)
@@ -378,6 +386,7 @@ single event	calendar	en	Single event
 specify where url of the day links to	calendar	en	Specify where URL of the day links to
 start	calendar	en	Start
 start date/time	calendar	en	Start Date/Time
+start of series event changed	calendar	en	Start of Series Event Changed
 startdate / -time	calendar	en	Start date / -time
 startdate and -time of the search	calendar	en	Start date and -time of the search
 startdate of the export	calendar	en	Start date of the export

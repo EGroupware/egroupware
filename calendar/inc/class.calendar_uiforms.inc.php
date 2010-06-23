@@ -431,7 +431,7 @@ class calendar_uiforms extends calendar_ui
 		
 		//error_log(__METHOD__.$button.'#'.array2string($content['edit_single']).'#');
 		
-		$ignore_conflicts = $edit_series_confirmed = false;
+		$ignore_conflicts = $edit_series_confirmed = $status_reset_to_unknown = false;
 		
 		switch((string)$button)
 		{
@@ -556,99 +556,120 @@ class calendar_uiforms extends calendar_ui
 			}
 			else	// we edited a non-reccuring event or the whole series
 			{
-				if ($event['recur_type'] != MCAL_RECUR_NONE &&
-					($old_event = $this->bo->read($event['id'])))
+				if ($old_event = $this->bo->read($event['id']))
 				{
-					// we edit a existing series event
-					if ($event['start'] != $old_event['start'] ||
-						$event['whole_day'] != $old_event['whole_day'])
+					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
-						if(!($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + 1, true)))
+						// we edit a existing series event
+						if ($event['start'] != $old_event['start'] ||
+							$event['whole_day'] != $old_event['whole_day'])
 						{
-							$msg = lang("Error: You can't shift a series from the past!");
-							$noerror = false;
-							break;
-						}
-						if ($edit_series_confirmed)
-						{
-							$orig_event = $event;
-							
-							$offset = $event['start'] - $old_event['start'];
-							$event['start'] = $next_occurrence['start'] + $offset;
-							$event['end'] = $next_occurrence['end'] + $offset;
-							$event['participants'] = $old_event['participants'];
-							foreach ($old_event['recur_exception'] as $key => $exdate)
+							if(!($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + 1, true)))
 							{
-								if ($exdate > $this->bo->now_su)
+								$msg = lang("Error: You can't shift a series from the past!");
+								$noerror = false;
+								break;
+							}
+							if ($edit_series_confirmed)
+							{
+								$orig_event = $event;
+								
+								$offset = $event['start'] - $old_event['start'];
+								$event['start'] = $next_occurrence['start'] + $offset;
+								$event['end'] = $next_occurrence['end'] + $offset;
+								$event['participants'] = $old_event['participants'];
+								foreach ($old_event['recur_exception'] as $key => $exdate)
 								{
-									unset($old_event['recur_exception'][$key]);
-									$event['recur_exception'][$key] += $offset;
+									if ($exdate > $this->bo->now_su)
+									{
+										unset($old_event['recur_exception'][$key]);
+										$event['recur_exception'][$key] += $offset;
+									}
+									else
+									{
+										unset($event['recur_exception'][$key]);
+									}
+								}
+								if ($old_event['start'] > $this->bo->now_su)
+								{
+									// delete the original event
+									if (!$this->bo->delete($old_event['id']))
+									{
+										$msg = lang("Error: Can't delete original series!");
+										$noerror = false;
+										$event = $orig_event;
+										break;
+									}
 								}
 								else
 								{
-									unset($event['recur_exception'][$key]);
+									$rriter = calendar_rrule::event2rrule($old_event, true);
+									$rriter->rewind();
+									$last = $rriter->current();
+									do
+									{
+										$rriter->next_no_exception();
+										$occurrence = $rriter->current();
+									}
+									while ($rriter->valid() &&
+											egw_time::to($occurrence, 'ts') < $this->bo->now_su &&
+											($last = $occurrence));
+									$last->setTime(0, 0, 0);
+									$old_event['recur_enddate'] = egw_time::to($last, 'ts');
+									if (!$this->bo->update($old_event,true))
+									{
+										$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+											lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+												htmlspecialchars(egw::link('/index.php',array(
+													'menuaction' => 'calendar.calendar_uiforms.edit',
+													'cal_id'    => $content['id'],
+													'referer'    => $referer,
+												))).'">','</a>');
+										$noerror = false;
+										$event = $orig_event;
+										break;
+									}
 								}
-							}
-							if ($old_event['start'] > $this->bo->now_su)
-							{
-								// delete the original event
-								if (!$this->bo->delete($old_event['id']))
-								{
-									$msg = lang("Error: Can't delete original series!");
-									$noerror = false;
-									$event = $orig_event;
-									break;
-								}
+								unset($orig_event);
+								unset($event['uid']);
+								unset($event['id']);
+								$event['alarm'] = array();
 							}
 							else
 							{
-								$rriter = calendar_rrule::event2rrule($old_event, true);
-								$rriter->rewind();
-								$last = $rriter->current();
-								do
-								{
-									$rriter->next_no_exception();
-									$occurrence = $rriter->current();
-								}
-								while ($rriter->valid() &&
-										egw_time::to($occurrence, 'ts') < $this->bo->now_su &&
-										($last = $occurrence));
-								$last->setTime(0, 0, 0);
-								$old_event['recur_enddate'] = egw_time::to($last, 'ts');
-								if (!$this->bo->update($old_event,true))
-								{
-									$msg .= ($msg ? ', ' : '') .lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
-										lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
-											htmlspecialchars(egw::link('/index.php',array(
-												'menuaction' => 'calendar.calendar_uiforms.edit',
-												'cal_id'    => $content['id'],
-												'referer'    => $referer,
-											))).'">','</a>');
-									$noerror = false;
-									$event = $orig_event;
-									break;
-								}
+								$event['button_was'] = $button;	// remember for confirm
+								return $this->confirm_edit_series($event,$preserv);
 							}
-							unset($orig_event);
-							unset($event['uid']);
-							unset($event['id']);
-							$event['alarm'] = array();
-						}
-						else
-						{
-							$event['button_was'] = $button;	// remember for confirm
-							return $this->confirm_edit_series($event,$preserv);
 						}
 					}
 					else
 					{
-						$edit_series_confirmed = false;
+						if ($old_event['start'] != $event['start'] ||
+							$old_event['end'] != $event['end'] ||
+							$event['whole_day'] != $old_event['whole_day'])
+						{
+							switch ($this->bo->cal_prefs['reset_stati'])
+							{
+								case 'no':
+									break;
+								case 'startday':
+									if (date('Ymd', $old_event['start']) == date('Ymd', $event['start'])) break;
+								default:
+									$status_reset_to_unknown = true;
+									foreach((array)$event['participants'] as $uid => $status)
+									{
+										calendar_so::split_status($status,$q,$r);
+										if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
+										{
+											$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
+											// todo: report reset status to user
+										}
+									}
+							}
+						}
 					}
 				}
-				else
-				{
-					$edit_series_confirmed = false;
-				}
+				$edit_series_confirmed = false;
 				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages);
 				unset($event['ignore']);
 			}
@@ -723,7 +744,22 @@ class calendar_uiforms extends calendar_ui
 					}
 				}
 				
-				$msg = lang('Event saved').($msg ? ', '.$msg : '');
+				$message = lang('Event saved');
+				if ($status_reset_to_unknown)
+				{
+					foreach((array)$event['participants'] as $uid => $status)
+					{
+						if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user)
+						{
+							calendar_so::split_status($status,$q,$r);
+							$status = calendar_so::combine_status('U',$q,$r);
+							$this->bo->set_status($event['id'], $uid, $status, 0);
+						}
+					}
+					$message .= lang(', stati of participants reset');
+				}
+				
+				$msg = $message . ($msg ? ', ' . $msg : '');
 
 				// writing links for new entry, existing ones are handled by the widget itself
 				if (!$content['id'] && is_array($content['link_to']['to_id']))
