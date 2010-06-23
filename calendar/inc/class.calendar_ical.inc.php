@@ -276,6 +276,13 @@ class calendar_ical extends calendar_boupdate
 				}
 				continue;
 			}
+			
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					'() export event UID: ' . $event['uid'] . ".\n",
+					3, $this->logfile);
+			}
 
 			if ($this->tzid)
 			{
@@ -1550,9 +1557,38 @@ class calendar_ical extends calendar_boupdate
 							unset($event['id']);
 							unset($event_info['stored_event']);
 							$event['recur_type'] = MCAL_RECUR_NONE;
-							$event_info['master_event']['recur_exception'] =
-								array_unique(array_merge($event_info['master_event']['recur_exception'],
-									array($event['recurrence'])));
+							if (empty($event['recurrence']))
+							{
+								// find an existing exception slot
+								$occurence = $exception = false;
+								foreach ($event_info['master_event']['recur_exception'] as $exception)
+								{
+									if ($exception > $event['start']) break;
+									$occurence = $exception;
+								}
+								if (!$occurence)
+								{
+									if (!$exception)
+									{
+										// use start as dummy recurrence
+										$event['recurrence'] = $event['start'];
+									}
+									else
+									{
+										$event['recurrence'] = $exception;
+									}
+								}
+								else
+								{
+									$event['recurrence'] = $occurence;
+								}
+							}
+							else
+							{
+								$event_info['master_event']['recur_exception'] =
+									array_unique(array_merge($event_info['master_event']['recur_exception'],
+										array($event['recurrence'])));
+							}
 							/*
 							// Adjust the event start -- must not be an exception
 							$length = $event_info['master_event']['end'] - $event_info['master_event']['start'];
