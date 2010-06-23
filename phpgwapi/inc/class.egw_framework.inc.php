@@ -1048,9 +1048,15 @@ abstract class egw_framework
 	/**
 	* Checks to make sure a valid package and file name is provided
 	*
-	* @param string $package package to be included
-	* @param string $file file to be included - no ".js" on the end
-	* @param string $app application directory to search - default = phpgwapi
+	* Example call syntax:
+	* a) egw_framework::validate_file('jscalendar','calendar') 
+	*    --> /phpgwapi/js/jscalendar/calendar.js
+	* b) egw_framework::validate_file('/phpgwapi/inc/calendar-setup.js',array('lang'=>'de'))
+	*    --> /phpgwapi/inc/calendar-setup.js?lang=de
+	*    
+	* @param string $package package or complete path (relative to EGW_SERVER_ROOT) to be included
+	* @param string|array $file=null file to be included - no ".js" on the end or array with get params
+	* @param string $app='phpgwapi' application directory to search - default = phpgwapi
 	* @param boolean $append=true should the file be added 
 	*
 	* @discuss The browser specific option loads the file which is in the correct
@@ -1058,18 +1064,28 @@ abstract class egw_framework
 	*
 	* @returns bool was the file found?
 	*/
-	static function validate_file($package, $file, $app='phpgwapi')
+	static function validate_file($package, $file=null, $app='phpgwapi')
 	{
 		//echo "<p>".__METHOD__."($package,$file,$app) --> ".EGW_INCLUDE_ROOT ."/$app/js/$package/$file.js</p>\n";
-		if (is_readable(EGW_INCLUDE_ROOT.($path="/$app/js/$package/$file.js")) ||
-			$app != 'phpgwapi' && is_readable(EGW_INCLUDE_ROOT.($path="/phpgwapi/js/$package/$file.js")))
+		if ($package[0] == '/' && is_readable(EGW_SERVER_ROOT.($path = $package)) ||
+			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
+			$app != 'phpgwapi' && is_readable(EGW_SERVER_ROOT.($path="/phpgwapi/js/$package/$file.js")))
 		{
+			if (is_array($file))
+			{
+				foreach($file as $name => $val)
+				{
+					$args .= (empty($args) ? '?' : '&').$name.'='.urlencode($val);
+				}
+				$path .= $args;
+			}
 			if (!self::$js_include_files || !in_array($path,self::$js_include_files))
 			{
 				self::$js_include_files[] = $path;
 			}
 			return True;
 		}
+		error_log(__METHOD__."($package,$file,$app) $path NOT found!");
 		return False;
 	}
 	
@@ -1103,7 +1119,8 @@ abstract class egw_framework
 		{
 			foreach(self::$js_include_files as $file)
 			{
-				$file .= '?'. filectime(EGW_INCLUDE_ROOT.$file);
+				list($file,$params) = explode('?',$file,2);
+				$file .= '?'. filectime(EGW_INCLUDE_ROOT.$file).($params ? '&'.$params : '');
 				$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $file.'">'."</script>\n";
 			}
 		}
@@ -1120,23 +1137,27 @@ abstract class egw_framework
 	/**
 	 * Include a css file, either speicified by it's path (relative to EGW_SERVER_ROOT) or appname and css file name
 	 * 
-	 * @param string $path path (relative to EGW_SERVER_ROOT) or appname (if !is_null($name))
+	 * @param string $app path (relative to EGW_SERVER_ROOT) or appname (if !is_null($name))
 	 * @param string $name=null name of css file in $app/templates/{default|$this->template}/$name.css
 	 * @return boolean false: css file not found, true: file found
 	 */
-	public static function includeCSS($path,$name=null)
+	public static function includeCSS($app,$name=null)
 	{
 		if (!is_null($name))
 		{
-			$app = basename($path);
 			$path = '/'.$app.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/'.$name.'.css';
 			if (!file_exists(EGW_SERVER_ROOT.$path))
 			{
 				$path = '/'.$app.'/templates/default/'.$name.'.css';
 			}
 		}
+		else
+		{
+			$path = $app;
+		}
 		if (!file_exists(EGW_SERVER_ROOT.$path))
 		{
+			error_log(__METHOD__."($app,$name) $path NOT found!");
 			return false;
 		}
 		if (!in_array($path,self::$css_include_files))
@@ -1144,6 +1165,33 @@ abstract class egw_framework
 			self::$css_include_files[] = $path;
 		}
 		return true;
+	}
+	
+	/**
+	 * Add registered CSS and javascript to ajax response
+	 */
+	public static function include_css_js_response()
+	{
+		$response = egw_json_response::get();
+		$app = $GLOBALS['egw_info']['flags']['currentapp'];
+		
+		// try to add app specific css file
+		self::includeCSS($app,'app');
+
+		// add all css files from egw_framework::includeCSS()
+		foreach(self::$css_include_files as $path)
+		{
+			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
+		}
+		
+		// try to add app specific js file
+		self::validate_file('.', 'app', $app);
+
+		// add all js files from egw_framework::validate_file()
+		foreach(self::$js_include_files as $path)
+		{
+			$response->includeScript($GLOBALS['egw_info']['server']['webserver_url'].$path);
+		}
 	}
 }
 

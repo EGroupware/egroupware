@@ -51,24 +51,29 @@ class jscalendar
 		{
 			$args['app'] = 'home'; // home can be granted to anyone.
 		}
-		if ($do_header && (strpos($GLOBALS['egw_info']['flags']['java_script'],'jscalendar')===false))
+		if ($do_header)
 		{
-			$GLOBALS['egw_info']['flags']['java_script'] .= $this->get_javascript();
+			egw_framework::includeCSS('/phpgwapi/js/jscalendar/calendar-blue.css');
+			egw_framework::validate_file('jscalendar','calendar');
+			$args = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'],array('lang'=>1,'dateformat'=>1));
+			egw_framework::validate_file('/phpgwapi/inc/jscalendar-setup.php',$args);
 		}
 	}
 
-	/**
+	/**                                                                                                                                 
 	 * return javascript needed for jscalendar
-	 *
-	 * @return string
-	 */
-	function get_javascript()
-	{
-		$args = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'],array('lang'=>1,'dateformat'=>1));
-		return
-'<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-blue.css" title="blue" />
-<script type="text/javascript" src="'.$this->jscalendar_url.'/calendar.js"></script>
-<script type="text/javascript" src="'.egw::link('/phpgwapi/inc/jscalendar-setup.php',$args,false).'"></script>
+	 * 
+	 * Only needed if jscalendar runs outside of egw_framework, eg. in sitemgr                                                                                        
+	 *                                                                                                                                  
+	 * @return string                                                                                                                   
+	 */                                                                                                                                 
+	function get_javascript()                                                                                                           
+	{                                                                                                                                   
+		$args = array_intersect_key($GLOBALS['egw_info']['user']['preferences']['common'],array('lang'=>1,'dateformat'=>1));        
+		return                                                                                                                      
+'<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-blue.css" title="blue" />                     
+<script type="text/javascript" src="'.$this->jscalendar_url.'/calendar.js"></script>                                                       
+<script type="text/javascript" src="'.egw::link('/phpgwapi/inc/jscalendar-setup.php',$args,false).'"></script>                             
 ';
 	}
 
@@ -161,10 +166,6 @@ class jscalendar
 	 */
 	function flat($url,$date=null,$weekUrl='',$weekTTip='',$monthUrl='',$monthTTip='',$id='calendar-container')
 	{
-		if (strpos($GLOBALS['egw_info']['flags']['java_script'],'jscalendar') === false)
-		{
-			$javascript = $this->get_javascript();
-		}
 		if ($date)	// string if format YYYYmmdd or timestamp
 		{
 			$date = is_int($date) ? adodb_date('m/d/Y',$date) :
@@ -172,7 +173,6 @@ class jscalendar
 		}
 		return '
 <div id="'.$id.'"></div>
-'.$javascript.'
 <script type="text/javascript">
 function dateChanged(calendar) {
 '.  // Beware that this function is called even if the end-user only

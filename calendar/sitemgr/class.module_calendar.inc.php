@@ -1,16 +1,17 @@
 <?php
-/**************************************************************************\
-* eGroupWare SiteMgr - Web Content Management                              *
-* http://www.egroupware.org                                                *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
+/**
+ * eGroupWare - Calendar planner block for sitemgr
+ *
+ * @link http://www.egroupware.org
+ * @package calendar
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
-/* $Id$ */
-
+/**
+ * Calendar day selection for sitemgr
+ */
 class module_calendar extends Module 
 {
 	function module_calendar()  
@@ -28,12 +29,10 @@ class module_calendar extends Module
 
 	function get_content(&$arguments,$properties)
 	{
-		if (!is_object($GLOBALS['egw']->jscalendar))
-		{
-			$GLOBALS['egw']->jscalendar =& CreateObject('phpgwapi.jscalendar');
-		}
 		$date = (int) (strtotime(get_var('date',array('POST','GET'))));
 		$redirect = $arguments['redirect'] ? $arguments['redirect'] : '#';
-		return $GLOBALS['egw']->jscalendar->flat($redirect,$date);
+
+		return $GLOBALS['egw']->jscalendar->get_javascript().
+			$GLOBALS['egw']->jscalendar->flat($redirect,$date);
 	}
 }
