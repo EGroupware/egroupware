@@ -598,7 +598,6 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
 
 			//Rewrite all form actions if they contain some javascript
 			var forms = $('form', contDiv).toArray();
-			console.log(forms);
 			for (var i = 0; i < forms.length; ++i)
 			{
 				var form = forms[i];
