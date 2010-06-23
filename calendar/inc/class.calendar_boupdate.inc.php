@@ -118,6 +118,8 @@ class calendar_boupdate extends calendar_bo
 			return false;
 		}
 
+		$status_reset_to_unknown = false;
+		
 		if (($new_event = !$event['id']))	// some defaults for new entries
 		{
 			// if no owner given, set user to owner
@@ -855,14 +857,20 @@ class calendar_boupdate extends calendar_bo
 		$save_event = $event;
 		if ($event['whole_day'])
 		{
-			$time = new egw_time($event['start'], egw_time::$user_timezone);
-			$time =& $this->so->startOfDay($time);
-			$event['start'] = egw_time::to($time, 'ts');
-			$save_event['start'] = $time;
-			$time = new egw_time($event['end'], egw_time::$user_timezone);
-			$time =& $this->so->startOfDay($time);
-			$time->setTime(23, 59, 59);
-			$event['end'] = egw_time::to($time, 'ts');
+			if (!empty($event['start']))
+			{
+				$time = new egw_time($event['start'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$event['start'] = egw_time::to($time, 'ts');
+				$save_event['start'] = $time;
+			}
+			if (!empty($event['end']))
+			{
+				$time = new egw_time($event['end'], egw_time::$user_timezone);
+				$time =& $this->so->startOfDay($time);
+				$time->setTime(23, 59, 59);
+				$event['end'] = egw_time::to($time, 'ts');
+			}
 			if (!empty($event['recurrence']))
 			{
 				$time = new egw_time($event['recurrence'], egw_time::$user_timezone);
@@ -1758,43 +1766,85 @@ class calendar_boupdate extends calendar_bo
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'[FOUND]: ' . array2string($egwEvent)."\n",3,$this->logfile);
 			}
+			
 			if (in_array($egwEvent['id'], $matchingEvents)) continue;
-
+			
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
 			if (!$egwEvent['tz_id'] || !($egwEvent['tzid'] = calendar_timezones::id2tz($egwEvent['tz_id'])))
 			{
 				$egwEvent['tzid'] = egw_time::$server_timezone->getName();
 			}
-
-			if (in_array($filter, array('exact', 'master')) && !empty($event['uid']))
+			if (!isset(self::$tz_cache[$egwEvent['tzid']]))
 			{
-				// UID found
-				if ($egwEvent['recurrence'] == $event['recurrence'])
-				{
-					// We found the exact match
-					$matchingEvents[] = $egwEvent['id'];
-					break;
-				}
-				if (!$egwEvent['recurrence'] && $event['recurrence'])
+				self::$tz_cache[$egwEvent['tzid']] = calendar_timezones::DateTimeZone($egwEvent['tzid']);
+			}
+			if (!$event['tzid'])
+			{
+				$event['tzid'] = egw_time::$server_timezone->getName();
+			}
+			if (!isset(self::$tz_cache[$event['tzid']]))
+			{
+				self::$tz_cache[$event['tzid']] = calendar_timezones::DateTimeZone($event['tzid']);
+			}
+			
+			if (!empty($event['uid']))
+			{
+				if ($filter == 'master')
 				{
 					// We found the master
-					if ($filter == 'master')
+					$matchingEvents = array($egwEvent['id']);;
+					break;
+				}	
+				if ($filter == 'exact') 
+				{
+					// UID found
+					if (empty($event['recurrence']))
 					{
-						$matchingEvents[] = $egwEvent['id'];
+						$egwstart = new egw_time($egwEvent['start'], egw_time::$server_timezone);
+						$egwstart->setTimezone(self::$tz_cache[$egwEvent['tzid']]);
+						$dtstart = new egw_time($event['start'], egw_time::$server_timezone);
+						$dtstart->setTimezone(self::$tz_cache[$event['tzid']]);
+						if ($egwEvent['recur_type'] == MCAL_RECUR_NONE &&
+							$event['recur_type'] == MCAL_RECUR_NONE ||	
+								$egwEvent['recur_type'] != MCAL_RECUR_NONE &&
+									$event['recur_type'] != MCAL_RECUR_NONE)
+						{
+							if ($egwEvent['recur_type'] == MCAL_RECUR_NONE &&
+								$egwstart->format('Ymd') == $dtstart->format('Ymd') ||
+									$egwEvent['recur_type'] != MCAL_RECUR_NONE)
+							{
+								// We found an exact match
+								$matchingEvents = array($egwEvent['id']);
+								break;
+							}
+							else
+							{
+								$matchingEvents[] = $egwEvent['id'];	
+							}
+						}
+						continue;
+					}
+					elseif ($egwEvent['recurrence'] == $event['recurrence'])
+					{
+						// We found an exact match
+						$matchingEvents = array($egwEvent['id']);
 						break;
 					}
-					$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid']);
-					if (in_array($event['recurrence'], $exceptions))
+					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
+						$event['recur_type'] == MCAL_RECUR_NONE &&
+							!$egwEvent['recurrence'] && $event['recurrence'])
 					{
-						// We found a pseudo exception
-						$matchingEvents[] = $egwEvent['id'] . ':' . (int)$event['recurrence'];
-						break;
+						$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid']);
+						if (in_array($event['recurrence'], $exceptions))
+						{
+							// We found a pseudo exception
+							$matchingEvents = array($egwEvent['id'] . ':' . (int)$event['recurrence']);
+							break;
+						}
 					}
+					continue;
 				}
-				continue;
 			}
-
-			if (!empty($event['uid']) && $filter == 'exact' || $filter == 'master') break;
 
 			// check times
 			if ($filter != 'relax')
@@ -1976,6 +2026,21 @@ class calendar_boupdate extends calendar_bo
 			}
 			$matchingEvents[] = $egwEvent['id']; // exact match
 		}
+		if (!empty($event['uid']) &&
+			count($matchingEvents) > 1 || $filter != 'master' &&
+			$egwEvent['recur_type'] != MCAL_RECUR_NONE &&
+			empty($event['recur_type']))
+		{
+			
+			// Unknown exception for existing series
+			if ($this->log)
+			{
+				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+					"() new exception for series found.\n",3,$this->logfile);
+			}
+			$matchingEvents = array();
+		}
+		
 		// append pseudos as last entries
 		$matchingEvents = array_merge($matchingEvents, $pseudos);
 
@@ -2057,12 +2122,13 @@ class calendar_boupdate extends calendar_bo
 					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					"()[MASTER]: $eventID\n",3,$this->logfile);
 				}
+				$type = 'SERIES-EXCEPTION';
 				if (($master_event = $this->read($eventID, 0, false, 'server')))
 				{
-					if (isset($stored_event['id']) && $master_event['id'] != $stored_event['id'])
+					if (isset($stored_event['id']) &&
+						$master_event['id'] != $stored_event['id'])
 					{
-						$type = 'SERIES-EXCEPTION'; // this is an existing exception
-						break;
+						break; // this is an existing exception
 					}
 					elseif (isset($event['recurrence']) &&
 						in_array($event['recurrence'], $master_event['recur_exception']))
