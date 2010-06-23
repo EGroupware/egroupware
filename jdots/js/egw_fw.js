@@ -586,7 +586,7 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
 				{
 					var action = form.action.match(/\('([^']*)/)[0].substr(2);
 					form.action = action;
-					form.target = this.parseAppFromUrl(action).appName;
+					form.target = 'egw_app_iframe_' + this.parseAppFromUrl(action).appName;
 				}
 			}
 
@@ -794,7 +794,7 @@ egw_fw_content_browser.prototype.setBrowserType = function(_type)
 				this.iframe.style.width = "100%";
 				this.iframe.style.borderWidth = 0;
 				this.iframe.frameBorder = 0;
-				this.iframe.name = this.app.appName;
+				this.iframe.name = 'egw_app_iframe_' + this.app.appName;
 				$(this.iframe).addClass('egw_fw_content_browser_iframe');
 				$(this.baseDiv).append(this.iframe);
 
