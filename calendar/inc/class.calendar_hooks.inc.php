@@ -235,6 +235,11 @@ class calendar_hooks
 			'resources'     => lang('resources'),
 			'addressbook'   => lang('addressbook')
 		);
+		$reset_stati_on_shifts = array(
+			'no'		=> lang('Never'),
+			'all'		=> lang('Always'),
+			'startday'	=> lang('If start day differs'),
+		);
 		if (!$hook_data['setup'])	// does not work at setup time
 		{
 			$options = array('0' => lang('none'));
@@ -445,6 +450,16 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default' => '0', // Use event's TZ
+			),
+			'reset_stati'	=> array(
+				'type'   => 'select',
+				'label'  => 'Reset participant stati on event shifts',
+				'name'   => 'reset_stati',
+				'help'   => 'Select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.',
+				'values' => $reset_stati_on_shifts,
+				'default' => 'no',
+				'xmlrpc' => True,
+				'admin'  => False,
 			),
 			'notifyAdded' => array(
 				'type'   => 'notify',

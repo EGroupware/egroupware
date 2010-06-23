@@ -7,6 +7,7 @@
 %1 weeks	calendar	de	%1 Wochen
 (%1 events in %2 seconds)	calendar	de	(%1 Termine in %2 Sekunden
 , exceptions preserved	calendar	de	und Ausnahmen erhalten
+, stati of participants reset	calendar	de	, Stati der Teilnehmer zurückgesetzt
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	de	<b>Bitte beachten</b>: Der Kalender verwendet die Feiertages des Landes, welches auf %1 eingestellt ist. Das können Sie in Ihren %2 ändern.<br />Feiertage werden %3 automatisch von %4 installiert, was in %5 änderbar ist.
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keine Konflikt mit anderen Terminen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
@@ -35,6 +36,7 @@ all future	calendar	de	Alle zukünftigen
 all incl. rejected	calendar	de	Alle einschl. abgesagte
 all participants	calendar	de	Alle Teilnehmer
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
+always	calendar	de	Immer
 apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die ganze Abfrage anwenden, NICHT nur auf die angezeigten Termine
 apply the changes	calendar	de	Übernimmt die Änderungen
 are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen möchten?
@@ -142,12 +144,14 @@ enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum u
 enddate of the export	calendar	de	Enddatum des Exports
 ends	calendar	de	endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
+error: can't delete original series!	calendar	de	Fehler beim Löschen der bestehenden Serie
 error: importing the ical	calendar	de	Fehler beim Importieren des iCal
 error: no participants selected !!!	calendar	de	Fehler: Keine Teilnehmer ausgewählt !!!
 error: ressources reservation in private events is not allowed!!!	calendar	de	Fehler: Die Reservierung von Ressourcen für private Termine ist nicht erlaubt !!!
 error: saving the event !!!	calendar	de	Fehler beim Speichern des Termins !!!
 error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muss vor Endzeit liegen !!!
 error: the entry has been updated since you opened it for editing!	calendar	de	Fehler: Der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
+error: you can't shift a series from the past!	calendar	de	Eine abgelaufene Serie kann nicht mehr verschoben werden!
 event copied - the copy can now be edited	calendar	de	Termin kopiert - die Kopie kann jetzt bearbeitet werden
 event deleted	calendar	de	Termin gelöscht
 event details follow	calendar	de	Details zum Termin folgen
@@ -214,6 +218,7 @@ ical file	calendar	de	iCal Datei
 ical import	calendar	de	iCal Import
 ical successful imported	calendar	de	iCal erfolgreich importiert
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauf folgenden Montag nachgeholt.
+if start day differs	calendar	de	Wenn die Starttage abweichen
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
@@ -321,6 +326,7 @@ repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 requested	calendar	de	Erforderlich
 require an acl grant to invite other users and groups	admin	de	Freigabe um andere Benutzer oder Gruppen einzuladen erforderlich
 reset	calendar	de	Zurücksetzen
+reset participant stati on event shifts	calendar	de	Rücksetzen der Teilnehmerstati beim Verschieben von Terminen
 resources	calendar	de	Ressourcen
 resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
 resources with conflict detection	calendar	de	Ressourcen mit bereits gebuchten
@@ -340,6 +346,7 @@ select an action	calendar	de	Befehl auswählen
 select an action...	calendar	de	Aktion auswählen...
 select multiple contacts for a further action	calendar	de	mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
+select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall die Teilnehmerstati zurückgesetzt werden sollen, wenn ein Termin verschoben wird.
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum
 series deleted	calendar	de	Serientermin wurde gelöscht
@@ -378,6 +385,7 @@ single event	calendar	de	Einzelner Termin
 specify where url of the day links to	calendar	de	Gegen Sie an, wohin die URL des Tages linken soll
 start	calendar	de	Start
 start date/time	calendar	de	Startdatum/ -zeit
+start of series event changed	calendar	de	Starttermin der Serie wurde geändert
 startdate / -time	calendar	de	Startdatum / -zeit
 startdate and -time of the search	calendar	de	Startdatum und -zeit der Suche
 startdate of the export	calendar	de	Startdatum des Exports
