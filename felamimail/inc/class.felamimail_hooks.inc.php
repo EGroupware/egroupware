@@ -493,7 +493,7 @@ class felamimail_hooks
 				'menuaction'    => 'felamimail.uicompose.compose'
 			);
 			$file += array(
-				'Compose' => "javascript:egw_openWindowCentered('".egw::link('/index.php', $linkData,false)."','compose',700,750);",
+				'Compose' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','compose',700,750,'no','$appname');",
 			);
 		}
 		// buttons
