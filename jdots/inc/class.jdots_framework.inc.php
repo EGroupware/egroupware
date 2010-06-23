@@ -15,6 +15,8 @@
 */
 class jdots_framework extends egw_framework
 {
+	const MIN_SIDEBAR_WIDTH = 185;
+	const DEFAULT_SIDEBAR_WIDTH = 225;
 	/**
 	 * Whether javascript:egw_link_handler calls (including given app) should be returned by the "link" function
 	 * or just the link
@@ -44,7 +46,7 @@ class jdots_framework extends egw_framework
 		//If the global_sidebar_width option is set, we'll simply return false
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['app_specific_sidebar_width'])
 		{
-			$width = 225;
+			$width = self::DEFAULT_SIDEBAR_WIDTH;
 
 			//Check whether the width had been stored explicitly for the jdots template, use that value
 			if ($GLOBALS['egw_info']['user']['preferences'][$app]['jdotssideboxwidth'])
@@ -59,9 +61,9 @@ class jdots_framework extends egw_framework
 //				error_log(__METHOD__.__LINE__."($app):$width --> reading idotssideboxwidth");
 			}
 
-			//Width may not be smaller than 225
-			if ($width < 225)
-				$width = 225;
+			//Width may not be smaller than MIN_SIDEBAR_WIDTH
+			if ($width < self::MIN_SIDEBAR_WIDTH)
+				$width = self::MIN_SIDEBAR_WIDTH;
 
 			return $width;
 		}
@@ -80,7 +82,7 @@ class jdots_framework extends egw_framework
 			return $GLOBALS['egw_info']['user']['preferences']['common']['global_sidebar_width_value'];
 		}
 
-		return 225;
+		return self::DEFAULT_SIDEBAR_WIDTH;
 	}
 
 
@@ -286,6 +288,7 @@ class jdots_framework extends egw_framework
 
 		//Global sidebar width
 		$this->tpl->set_var('sidebox_width', self::get_global_sidebar_width());
+		$this->tpl->set_var('sidebox_min_width', self::MIN_SIDEBAR_WIDTH);
 
 		// add framework div's
 		$this->tpl->set_var($this->_get_footer());
