@@ -94,6 +94,17 @@ egw_fw.prototype.alertHandler = function(_message, _details)
 	alert('Error:\n ' + _message + '\n\nDetails:\n ' + _details);
 }
 
+egw_fw.prototype.callManual = function()
+{
+	if (this.activeApp)
+	{
+		if (this.activeApp.browser.iframe)
+		{
+			this.activeApp.browser.iframe.contentWindow.callManual();
+		}
+	}
+}
+
 /**
  * Function called whenever F1 is pressed inside the framework
  * @returns boolean true if the call manual function could be called, false if the manual is not available
@@ -473,36 +484,6 @@ egw_fw.prototype.getApplicationByName = function(_name)
 }
 
 /**
- * Seperates all script tags from the given html code and returns the seperately
- * @param object _html object that the html code from which the script should be seperated. The html code has to be stored in _html.html, the result js will be written to _html.js
- */
-
-egw_fw.prototype.seperateJavaScript = function(_html)
-{
-	var html = _html.html;
-	
-	var in_pos = html.search(/<script/im);
-	var out_pos = html.search(/<\/script>/im);
-	while (in_pos > -1 && out_pos > -1)
-	{
-		/*Seperate the whole <script...</script> tag */
-		var js_str = html.substring(in_pos, out_pos+9);
-
-		/*Remove the initial tag */
-		/*js_str = js_str.substring(js_str.search(/>/) + 1);*/
-		_html.js += js_str;
-
-		
-		html = html.substring(0, in_pos - 1) + html.substring(out_pos + 9);
-
-		var in_pos = html.search(/<script/im);
-		var out_pos = html.search(/<\/script>/im);
-	}
-
-	_html.html = html;
-}
-
-/**
  * Sends sidemenu entry category open/close information to the server using an AJAX request
  */
 egw_fw.prototype.categoryOpenCloseCallback = function(_opened)
@@ -549,7 +530,7 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
 					html.html = _data[i].entries[j].lang_item;
 					html.js = '';
 
-					this.seperateJavaScript(html);
+					egw_seperateJavaScript(html);
 					contJS += html.js;//contJS.concat(html.js);
 
 					if (_data[i].entries[j].icon_or_star)
