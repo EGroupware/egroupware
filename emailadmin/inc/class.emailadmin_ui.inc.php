@@ -205,7 +205,7 @@
 			$filteredby = '';
 			if ($query['searchletter']) // only show rows if the order-criteria starts with the given letter
 			{
-				$query['col_filter'][] = (in_array($query['order'],parent::$numericfields) ? 'ea_description' : $query['order']).' '.
+				$query['col_filter'][] = (in_array($query['order'],parent::$numericfields) || (is_string($query['order']) && !(strpos($query['order'],',')===false)) ? 'ea_description' : $query['order']).' '.
 					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
 				if (in_array($query['order'],parent::$numericfields)) $query_in['order'] = $query['order'] = 'ea_description';
 				$filteredby = $query['order'].' '.lang('starts with').' '.$query['searchletter'];
