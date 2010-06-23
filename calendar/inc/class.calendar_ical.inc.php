@@ -472,8 +472,12 @@ class calendar_ical extends calendar_boupdate
 				switch ($icalFieldName)
 				{
 					case 'ATTENDEE':
+						$attendees = count($event['participants']);
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
+							calendar_so::split_status($status, $quantity, $role);
+							if ($attendees == 1 &&
+								$uid == $this->user && $status == 'A') continue;
 							if (!($info = $this->resource_info($uid))) continue;
 							if ($this->log)
 							{
@@ -492,7 +496,6 @@ class calendar_ical extends calendar_boupdate
 							{
 								$participantURL = empty($info['email']) ? '' : 'MAILTO:' . $info['email'];
 							}
-							calendar_so::split_status($status, $quantity, $role);
 							if ($role == 'CHAIR')
 							{
 								$organizerURL = $participantURL;
