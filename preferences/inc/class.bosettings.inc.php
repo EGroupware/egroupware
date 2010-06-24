@@ -119,9 +119,28 @@
 					$this->settings = array_merge($this->settings,$GLOBALS['settings']);
 				}
 			}
+			// check if we have a default/forced value from the settings hook, 
+			// which is NOT stored as default currently
+			// --> store it as default, to allow to propagate defaults to existing installations
+			if ($appname == 'preferences') $appname = 'common';
+			foreach ($this->settings as $name => $data)
+			{
+				if ((string)$GLOBALS['egw']->preferences->default[$appname][$name] === '' &&
+					((string)$data['default'] !== '' || (string)$data['forced'] !== ''))
+				{
+					$default = (string)$data['forced'] !== '' ? $data['forced'] : $data['default'];
+					//echo "<p>".__METHOD__."($appname) $this->appname/$appname/$name=$default NOT yet set!</p>\n";
+					$GLOBALS['egw']->preferences->default[$appname][$name] = $default;
+					$need_update = true;
+				}
+			}
+			if ($need_update)
+			{
+				$GLOBALS['egw']->preferences->save_repository(false,'default',true);
+			}
 			if($this->debug)
 			{
-			//	_debug_array($this->settings);
+				_debug_array($this->settings);
 			}
 			return True;
 		}
