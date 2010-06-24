@@ -753,7 +753,7 @@ class calendar_uiforms extends calendar_ui
 						{
 							calendar_so::split_status($status,$q,$r);
 							$status = calendar_so::combine_status('U',$q,$r);
-							$this->bo->set_status($event['id'], $uid, $status, 0);
+							$this->bo->set_status($event['id'], $uid, $status, 0, true);
 						}
 					}
 					$message .= lang(', stati of participants reset');
