@@ -81,6 +81,14 @@ abstract class egw_framework
 			$GLOBALS['egw']->framework = $this;
 		}
 		$this->template_dir = '/phpgwapi/templates/'.$template;
+		
+		// for Ajax: no need to load the "standard" files, they are already loaded
+		// in fact jquery has a problem if loaded twice
+		if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
+		{
+			self::$js_include_files = array();
+		}
+		error_log(array2string($_SERVER));
 	}
 
 	/**
@@ -1117,11 +1125,12 @@ abstract class egw_framework
 		$links  = "\n";
 		if(!empty(self::$js_include_files) && is_array(self::$js_include_files))
 		{
-			foreach(self::$js_include_files as $file)
+			foreach(self::$js_include_files as $path)
 			{
-				list($file,$params) = explode('?',$file,2);
-				$file .= '?'. filectime(EGW_INCLUDE_ROOT.$file).($params ? '&'.$params : '');
-				$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $file.'">'."</script>\n";
+				$query = '';
+				list($path,$query) = explode('?',$path,2);
+				$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
+				$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $path.'">'."</script>\n";
 			}
 		}
 		return $links."\n";
@@ -1181,6 +1190,9 @@ abstract class egw_framework
 		// add all css files from egw_framework::includeCSS()
 		foreach(self::$css_include_files as $path)
 		{
+			$query = '';
+			list($path,$query) = explode('?',$path,2);
+			$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
 			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 		
@@ -1190,6 +1202,9 @@ abstract class egw_framework
 		// add all js files from egw_framework::validate_file()
 		foreach(self::$js_include_files as $path)
 		{
+			$query = '';
+			list($path,$query) = explode('?',$path,2);
+			$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
 			$response->includeScript($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 	}
