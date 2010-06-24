@@ -122,6 +122,10 @@ class egw_json_request
 			$ajaxClass = CreateObject($appName.'.'.$className);
 		}
 
+		// for Ajax: no need to load the "standard" javascript files, 
+		// they are already loaded, in fact jquery has a problem if loaded twice
+		egw_framework::js_files(array());
+
 		$parameters = translation::convert($parameters, 'utf-8');
 
 		call_user_func_array(array($ajaxClass, $functionName), $parameters);

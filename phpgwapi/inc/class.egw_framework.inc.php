@@ -81,14 +81,6 @@ abstract class egw_framework
 			$GLOBALS['egw']->framework = $this;
 		}
 		$this->template_dir = '/phpgwapi/templates/'.$template;
-		
-		// for Ajax: no need to load the "standard" files, they are already loaded
-		// in fact jquery has a problem if loaded twice
-		if ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
-		{
-			self::$js_include_files = array();
-		}
-		error_log(array2string($_SERVER));
 	}
 
 	/**
