@@ -599,17 +599,24 @@ class html
 	{
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/ckeditor3/ckeditor_php5.php");
 		// use the lang and country information to construct a possible lang info for CKEditor UI and scayt_slang
-		$lang = ($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'] ? $GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']: $GLOBALS['egw_info']['user']['preferences']['common']['lang']);
+/*		$lang = ($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'] ? $GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']: $GLOBALS['egw_info']['user']['preferences']['common']['lang']);
 		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
-		if (!(strpos($lang,'-')===false)) list($lang,$country) = explode('-',$lang);
+		if (!(strpos($lang,'-')===false)) list($lang,$country) = explode('-',$lang);*/
 		
 		//Get the ckeditor base url
 		$basePath = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/';
 
 		$oCKeditor = new CKeditor($basePath);
 		$oCKeditor->returnOutput = true;
+
+		// By default the editor start expanded
+		$et = '1';
+		if ($_options['toolbar_expanded'] == 'false')
+			$et = '0';
 		
-		$oCKeditor->config['customConfig'] = 'ckeditor.egwconfig.js';
+		$oCKeditor->config['customConfig'] = $GLOBALS['egw_info']['server']['webserver_url']."/phpgwapi/inc/ckeditor-setup.php?height=$_height&mode=$_mode&expanded_toolbar=$et";
+		
+/*		$oCKeditor->config['customConfig'] = 'ckeditor.egwconfig.js';
 		$oCKeditor->config['language'] = $lang;
 		$oCKeditor->config['resize_enabled'] = false;
 		//switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
@@ -698,7 +705,7 @@ class html
 			case 'advanced':
 				$oCKeditor->config['toolbar'] = 'egw_advanced'.$spell;
 				break;
-		}
+		}*/
 		return $oCKeditor;
 	}
 
