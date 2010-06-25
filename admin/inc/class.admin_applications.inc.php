@@ -6,7 +6,7 @@
  * @author Christian Füller <cf@stylite.de>
  * @package admin
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.admin_register_hooks.inc.php 29103 2010-05-25 15:30:25Z füller $
+ * @version $Id$
  */
 
 class admin_applications
