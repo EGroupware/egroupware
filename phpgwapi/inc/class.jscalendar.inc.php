@@ -145,7 +145,8 @@ class jscalendar
 	'Calendar.setup(
 		{
 			inputField  : "'.$name.'",'.(!$useicon ? '' : '
-			button      : "'.$name.'-trigger"').'
+			button      : "'.$name.'-trigger"').',
+			onUpdate    : function(){var input = document.getElementById("'.$name.'"); $(input).change(); }
 		}
 	);
 </script>
