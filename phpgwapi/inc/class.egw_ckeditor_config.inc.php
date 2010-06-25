@@ -154,7 +154,7 @@ class egw_ckeditor_config
 		$config['editingBlock'] = true;
 		$config['disableNativeSpellChecker'] = true;
 
-		$config['expanded_toolbar'] = $expanded_toolbar;
+		$config['toolbarStartupExpanded'] = $expanded_toolbar;
 
 		$config['filebrowserBrowseUrl'] = self::get_filebrowserBrowseUrl($start_path);
 		$config['filebrowserWindowHeight'] = 640;
@@ -252,6 +252,21 @@ class egw_ckeditor_config
 	}
 
 	/**
+	 * @see get_ckeditor_config
+	 */
+	public static function get_ckeditor_config_array($mode = 'simple', $height = 400, $expanded_toolbar = true, $start_path = '')
+	{
+		$config = array();
+		$spellchecker_button = null;
+
+		self::add_default_options($config, $height, $expanded_toolbar, $start_path);
+		self::add_spellchecker_options($config, $spellchecker_button);
+		self::add_toolbar_options($config, $mode, $spellchecker_button);
+
+		return $config;
+	}
+
+	/**
 	 * Returns a json encoded string containing the configuration for the ckeditor.
 	 * @param string $mode specifies the count of toolbar buttons available to the user. Possible
 	 * values are 'simple', 'extended' and 'advanced'. All other values will default to 'simple'
@@ -261,13 +276,6 @@ class egw_ckeditor_config
 	 */
 	public static function get_ckeditor_config($mode = 'simple', $height = 400, $expanded_toolbar = true, $start_path = '')
 	{
-		$config = array();
-		$spellchecker_button = null;
-
-		self::add_default_options($config, $height, $expanded_toolbar, $start_path);
-		self::add_spellchecker_options($config, $spellchecker_button);
-		self::add_toolbar_options($config, $mode, $spellchecker_button);
-
-		return json_encode($config);
+		return json_encode(self::get_ckeditor_config_array($mode, $height, $expanded_toolbar, $start_path));
 	}
 }
