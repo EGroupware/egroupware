@@ -582,131 +582,37 @@ class html
 		{
 			return self::textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';"');
 		}
+
+		//include the ckeditor js file
+		egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
+
 		// run content through htmlpurifier
-		if ($_purify && !empty($_content)) $_content = self::purify($_content);
-		$oCKeditor = self::initCKEditor($_height, $_mode, $_options);
+		if ($_purify && !empty($_content))
+			$_content = self::purify($_content);
 
-		/* Resize the editor to the actual size delivered by the $_height parameter once it is initialized */
-		$pxheight = (strpos('px', $_height) === false) ? (empty($_height)?400:$_height) : str_replace('px', '', $_height);
-		$events['instanceReady'] = 'function (ev) {
+		// By default the editor start expanded
+		$expanded = isset($_options['toolbarStartupExpanded']) ?
+			$_options['toolbarStartupExpanded'] != 'false' : true;
+
+		//Get the height in pixels from the pixels parameter
+		$pxheight = (strpos('px', $_height) === false) ?
+			(empty($_height) ? 400 : $_height) : str_replace('px', '', $_height);
+		
+		return '
+<textarea name="'.$_name.'">'.htmlspecialchars($_content).'</textarea>
+<script type="text/javascript">
+	window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/";
+	CKEDITOR.replace("'.$_name.'", '.egw_ckeditor_config::get_ckeditor_config($_mode,
+		$pxheight, $expanded, $_start_path).');
+	CKEDITOR.instances["'.$_name.'"].on(
+		"instanceReady",
+		function (ev)
+		{
 			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
-		}';
-
-		return $oCKeditor->editor($_name, $_content, null, $events);
-	}
-
-	static function &initCKEditor($_height, $_mode, $_options=array())
-	{
-		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/ckeditor3/ckeditor_php5.php");
-		// use the lang and country information to construct a possible lang info for CKEditor UI and scayt_slang
-/*		$lang = ($GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang'] ? $GLOBALS['egw_info']['user']['preferences']['common']['spellchecker_lang']: $GLOBALS['egw_info']['user']['preferences']['common']['lang']);
-		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
-		if (!(strpos($lang,'-')===false)) list($lang,$country) = explode('-',$lang);*/
-		
-		//Get the ckeditor base url
-		$basePath = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/';
-
-		$oCKeditor = new CKeditor($basePath);
-		$oCKeditor->returnOutput = true;
-
-		// By default the editor start expanded
-		$et = '1';
-		if ($_options['toolbar_expanded'] == 'false')
-			$et = '0';
-		
-		$oCKeditor->config['customConfig'] = $GLOBALS['egw_info']['server']['webserver_url']."/phpgwapi/inc/ckeditor-setup.php?height=$_height&mode=$_mode&expanded_toolbar=$et";
-		
-/*		$oCKeditor->config['customConfig'] = 'ckeditor.egwconfig.js';
-		$oCKeditor->config['language'] = $lang;
-		$oCKeditor->config['resize_enabled'] = false;
-		//switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
-		$oCKeditor->config['entities'] = true;
-		$oCKeditor->config['entities_latin'] = true;
-		$oCKeditor->config['entities_processNumerical'] = true;
-
-		$oCKeditor->config['editingBlock'] = true;
-		$oCKeditor->config['filebrowserBrowseUrl'] = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=filemanager.filemanager_select.select&mode=open&method=ckeditor_return'.urlencode($_start_path);
-		$oCKeditor->config['filebrowserWindowWidth'] = 640;
-		$oCKeditor->config['filebrowserWindowHeight'] = 580;
-		//Only heights with "px" set are supported		
-		$pxheight = (strpos('px', $_height) === false) ? (empty($_height)?400:$_height) : str_replace('px', '', $_height);
-		$oCKeditor->config['height'] = $pxheight;
-
-		// By default the editor start expanded
-		if ($_options['toolbar_expanded'] == 'false')
-			$oCKeditor->config['toolbarStartupExpanded'] = false;
-
-		// Now setting the admin settings
-		$spell = '';
-		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
-		{
-			$spell = '_spellcheck';
-			if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
-				is_executable($GLOBALS['egw_info']['server']['aspell_path']))
-			{
-				$spell = '_aspell';
-				$oCKeditor->config['extraPlugins'] = 'aspell';
-			}
-			$oCKeditor->config['scayt_autoStartup']=true;
-			$oCKeditor->config['scayt_sLang']=$lang.'_'.strtoupper($country);			
 		}
-		$oCKeditor->config['disableNativeSpellChecker'] = true;
-
-		// Now setting the user preferences
-		if (isset($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode']))
-		{
-			switch ($GLOBALS['egw_info']['user']['preferences']['common']['rte_enter_mode'])
-			{
-				case 'p':
-					$oCKeditor->config['enterMode'] = 1;//'@@CKEDITOR.ENTER_P';
-					break;
-				case 'br':
-					$oCKeditor->config['enterMode'] = 2;//'@@CKEDITOR.ENTER_BR';
-					break;
-				case 'div':
-					$oCKeditor->config['enterMode'] = 3;//'@@CKEDITOR.ENTER_DIV';
-					break;
-			}
-		}
-
-		$skin = $GLOBALS['egw_info']['user']['preferences']['common']['rte_skin'];
-
-		//Convert old fckeditor skin names to new ones
-		switch ($skin)
-		{
-			case 'silver':
-				$skin = "v2";
-				break;
-			case 'default':
-				$skin = "kama";
-				break;
-			case 'office2003':
-				$skin = "office2003";
-				break;				
-		}
-
-		//Check whether the skin actually exists, if not, switch to a default
-		if (!(file_exists($basePath.'skins/'.$skin) || file_exists($skin) || !empty($skin)))
-			$skin = "office2003";
-
-		$oCKeditor->config['skin'] = $skin;
-
-
-		switch($_mode) {
-			case 'simple':
-				$oCKeditor->config['toolbar'] = 'egw_simple'.$spell;
-				$oCKeditor->config['menu_groups'] = '';
-				break;
-			default:
-			case 'extended':
-				$oCKeditor->config['toolbar'] = 'egw_extended'.$spell;
-				break;
-
-			case 'advanced':
-				$oCKeditor->config['toolbar'] = 'egw_advanced'.$spell;
-				break;
-		}*/
-		return $oCKeditor;
+	);
+</script>
+';
 	}
 
 	/**
