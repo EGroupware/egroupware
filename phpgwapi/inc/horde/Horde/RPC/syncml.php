@@ -92,7 +92,8 @@ class Horde_RPC_syncml extends Horde_RPC {
         $this->_output = new XML_WBXML_ContentHandler();
 
         $this->_parse($request);
-        $response = $this->_output->getOutput();
+        $response = '<?xml version="1.0" encoding="' . $this->_charset . '"?>';
+        $response .= $this->_output->getOutput();
 
         /* Very useful for debugging. */
         if (!empty($this->_debugDir) && is_dir($this->_debugDir)) {

@@ -88,8 +88,7 @@ class Horde_SyncML_Command_Sync extends Horde_SyncML_Command {
 
         $currentCmdID = $status->output($currentCmdID, $output);
 
-        if ($this->_targetURI != "configuration" && // Fix Funambol issue
-        	($sync = &$state->getSync($this->_targetURI))) {
+        if (($sync = &$state->getSync($this->_targetURI))) {
             $currentCmdID = $sync->startSync($currentCmdID, $output);
 
             foreach ($this->_syncElements as $element) {

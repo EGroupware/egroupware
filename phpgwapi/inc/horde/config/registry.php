@@ -151,3 +151,13 @@ $this->applications['egwcaltaskssync'] = array(
     'menu_parent' => 'organizing'
 );
 
+$this->applications['egwconfigurationsync'] = array(
+    'fileroot' => EGW_SERVER_ROOT.'/syncml/configuration',
+    'webroot' => $this->applications['horde']['webroot'] . '/mnemo',
+    'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
+    'name' => _("Funambol Configurations"),
+    'status' => 'active',
+    'provides' => array('configuration'),
+    'menu_parent' => 'organizing'
+);
+

@@ -401,47 +401,6 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 
         $currentCmdID++;
 
-        if ($state->_devinfoRequested == false &&
-            $this->_sourceLocURI != null &&
-            is_a($state->getPreferedContentTypeClient($this->_sourceLocURI), 'PEAR_Error')) {
-
-            Horde::logMessage("SyncML: PreferedContentTypeClient missing, sending <Get>", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-            $output->startElement($state->getURI(), 'Get', $attrs);
-
-            $output->startElement($state->getURI(), 'CmdID', $attrs);
-            $output->characters($currentCmdID);
-            $currentCmdID++;
-            $output->endElement($state->getURI(), 'CmdID');
-
-            $output->startElement($state->getURI(), 'Meta', $attrs);
-            $output->startElement($state->getURIMeta(), 'Type', $attrs);
-            if (is_a($output, 'XML_WBXML_Encoder')) {
-                $output->characters('application/vnd.syncml-devinf+wbxml');
-            } else {
-                $output->characters('application/vnd.syncml-devinf+xml');
-            }
-            $output->endElement($state->getURIMeta(), 'Type');
-            $output->endElement($state->getURI(), 'Meta');
-
-            $output->startElement($state->getURI(), 'Item', $attrs);
-            $output->startElement($state->getURI(), 'Target', $attrs);
-            $output->startElement($state->getURI(), 'LocURI', $attrs);
-	    if ($state->getVersion() == 2) {
-                $output->characters('./devinf12');
-            } elseif ($state->getVersion() == 1) {
-                $output->characters('./devinf11');
-            } else {
-                $output->characters('./devinf10');
-            }
-            $output->endElement($state->getURI(), 'LocURI');
-            $output->endElement($state->getURI(), 'Target');
-            $output->endElement($state->getURI(), 'Item');
-
-            $output->endElement($state->getURI(), 'Get');
-
-            $state->_devinfoRequested = true;
-        }
         return $currentCmdID;
     }
 
