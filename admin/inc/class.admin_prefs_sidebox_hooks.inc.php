@@ -62,6 +62,10 @@ class admin_prefs_sidebox_hooks
 				$file['User Groups']                = egw::link('/index.php','menuaction=admin.uiaccounts.list_groups');
 			}
 
+			if (! $GLOBALS['egw']->acl->check('applications_access',1,'admin'))
+			{
+				$file['Applications']               = egw::link('/index.php','menuaction=admin.admin_applications.index');
+			}
 			if (! $GLOBALS['egw']->acl->check('global_categories_access',1,'admin'))
 			{
 				$file['Global Categories']          = egw::link('/index.php','menuaction=admin.admin_categories.index&appname=phpgw');
