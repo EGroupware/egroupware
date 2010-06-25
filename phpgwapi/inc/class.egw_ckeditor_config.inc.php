@@ -179,6 +179,7 @@ class egw_ckeditor_config
 			{
 				$spellchecker_button = 'SpellCheck';
 				$config['extraPlugins'] = "aspell";
+				$config['scayt_autoStartup'] = false;
 			}
 			else
 			{
@@ -201,7 +202,7 @@ class egw_ckeditor_config
 				$config['toolbar'][] = array('Source','DocProps','-','Save','NewPage','Preview','-','Templates');
 				$config['toolbar'][] = array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print');
 				if ($spellchecker_button)
-					$config['toolbar'][count($config['toolbar'])][] = $spellchecker_button;
+					$config['toolbar'][count($config['toolbar']) - 1][] = $spellchecker_button;
 				$config['toolbar'][] = array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat');
 
 				$config['toolbar'][] = '/';
@@ -230,9 +231,9 @@ class egw_ckeditor_config
 					$config['toolbar'][] = array('Link','Unlink','Anchor');
 					$config['toolbar'][] = array('Find', 'Replace');
 					if ($spellchecker_button)
-						$this['toolbar'][] = array('Maximize', $spellchecker_button, 'Image', 'Table');
+						$config['toolbar'][] = array('Maximize', $spellchecker_button, 'Image', 'Table');
 					else
-						$this['toolbar'][] = array('Maximize', 'Image', 'Table');
+						$config['toolbar'][] = array('Maximize', 'Image', 'Table');
 				}
 				else
 				{
