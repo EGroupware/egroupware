@@ -183,8 +183,8 @@ class egw_ckeditor_config
 			}
 			else
 			{
-				$config['scaty_autoStartup'] = true;
-				$config['scaty_sLang'] = self::get_lang().'_'.self::get_country();
+				$config['scayt_autoStartup'] = true;
+				$config['scayt_sLang'] = self::get_lang().'_'.self::get_country();
 			}
 		}
 	}
