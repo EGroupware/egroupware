@@ -15,7 +15,7 @@
  */
 include_once 'Horde/SyncML/Command.php';
 
-class Horde_SyncML_Command_Final extends Horde_SyncML_Command {
+class Horde_SyncML_Command_Replace extends Horde_SyncML_Command {
 
     /**
      * Name of the command.

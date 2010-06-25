@@ -20,6 +20,13 @@ include_once 'Horde/SyncML/Command.php';
 include_once 'Horde/SyncML/Command/Results.php';
 
 class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
+	
+	 /**
+     * Name of the command.
+     *
+     * @var string
+     */
+	var $_cmdName = 'Get';
 
     function output($currentCmdID, &$output)
     {
@@ -33,7 +40,7 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
             $ref = './devinf10';
         }
 
-        $status = new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Get');
+        $status = new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), $this->_cmdName);
         $status->setCmdRef($this->_cmdID);
         $status->setTargetRef($ref);
         $currentCmdID = $status->output($currentCmdID, $output);
@@ -80,16 +87,31 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
             $output->startElement($state->getURIDevInf() , 'DevInf', $attrs);
             $output->startElement($state->getURIDevInf() , 'VerDTD', $attrs);
             if ($state->getVersion() == 2) {
-		$output->characters('1.2');
+	            $output->characters('1.2');
             } elseif($state->getVersion() == 1) {
-		$output->characters('1.1');
+	            $output->characters('1.1');
             } else {
-		$output->characters('1.0');
+	            $output->characters('1.0');
             }
             $output->endElement($state->getURIDevInf() , 'VerDTD', $attrs);
             $output->startElement($state->getURIDevInf() , 'Man', $attrs);
             $output->characters('www.egroupware.org');
             $output->endElement($state->getURIDevInf() , 'Man', $attrs);
+            $output->startElement($state->getURIDevInf() , 'Mod', $attrs);
+            $output->characters('DS Server');
+            $output->endElement($state->getURIDevInf() , 'Mod', $attrs);
+            $output->startElement($state->getURIDevInf() , 'OEM', $attrs);
+            $output->characters('-');
+            $output->endElement($state->getURIDevInf() , 'OEM', $attrs);
+            $output->startElement($state->getURIDevInf() , 'FwV', $attrs);
+            $output->characters('-');
+            $output->endElement($state->getURIDevInf() , 'FwV', $attrs);
+            $output->startElement($state->getURIDevInf() , 'SwV', $attrs);
+            $output->characters('1.7.x');
+            $output->endElement($state->getURIDevInf() , 'SwV', $attrs);
+            $output->startElement($state->getURIDevInf() , 'HwV', $attrs);
+            $output->characters('-');
+            $output->endElement($state->getURIDevInf() , 'HwV', $attrs);
             $output->startElement($state->getURIDevInf() , 'DevID', $attrs);
             $output->characters($_SERVER['HTTP_HOST']);
             $output->endElement($state->getURIDevInf() , 'DevID', $attrs);
@@ -102,28 +124,36 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
             $output->endElement($state->getURIDevInf() , 'SupportNumberOfChanges', $attrs);
             $output->startElement($state->getURIDevInf() , 'SupportLargeObjs', $attrs);
             $output->endElement($state->getURIDevInf() , 'SupportLargeObjs', $attrs);
-            $this->_writeDataStore('./notes', 'text/x-vnote', '1.1', $output,
+            $this->_writeDataStore('notes', 'text/x-vnote', '1.1', $output,
                                    array('text/plain' => '1.0'));
-            $this->_writeDataStore('./contacts', 'text/vcard', '3.0', $output,
+            $this->_writeDataStore('contacts', 'text/vcard', '3.0', $output,
                                    array('text/x-vcard' => '2.1'));
-            $this->_writeDataStore('./card', 'text/vcard', '3.0', $output,
+            $this->_writeDataStore('card', 'text/vcard', '3.0', $output,
                                    array('text/x-vcard' => '2.1'));
-            $this->_writeDataStore('./tasks', 'text/calendar', '2.0', $output,
+            $this->_writeDataStore('tasks', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));
-            $this->_writeDataStore('./jobs', 'text/calendar', '2.0', $output,
+            $this->_writeDataStore('jobs', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));
-            $this->_writeDataStore('./calendar', 'text/calendar', '2.0', $output,
+            $this->_writeDataStore('calendar', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));
-            $this->_writeDataStore('./events', 'text/calendar', '2.0', $output,
+            $this->_writeDataStore('events', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));
-            $this->_writeDataStore('./caltasks', 'text/calendar', '2.0', $output,
+            $this->_writeDataStore('caltasks', 'text/calendar', '2.0', $output,
                                    array('text/x-vcalendar' => '1.0'));
+            // Funambol special Datastore
+            $this->_writeDataStore('configuration', 'text/plain', '1.0', $output);
             $output->endElement($state->getURIDevInf() , 'DevInf', $attrs);
 
             $output->endElement($state->getURI(), 'Data');
             $output->endElement($state->getURI(), 'Item');
             $output->endElement($state->getURI(), 'Results');
-
+            /*
+			$output->startElement($state->getURIDevInf() , 'Ext', $attrs);
+			$output->startElement($state->getURIDevInf() , 'XNam', $attrs);
+			$output->characters('X-funambol-smartslow');
+            $output->endElement($state->getURIDevInf() , 'XNam', $attrs);
+            $output->endElement($state->getURIDevInf() , 'Ext', $attrs);
+            */
             $currentCmdID++;
         }
 
@@ -151,6 +181,9 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
         $output->startElement($state->getURIDevInf() , 'SourceRef', $attrs);
         $output->characters($sourceref);
         $output->endElement($state->getURIDevInf() , 'SourceRef', $attrs);
+        $output->startElement($state->getURIDevInf() , 'DisplayName', $attrs);
+        $output->characters($sourceref);
+        $output->endElement($state->getURIDevInf() , 'DisplayName', $attrs);
         $output->startElement($state->getURIDevInf() , 'MaxGUIDSize', $attrs);
         $output->characters(255);
         $output->endElement($state->getURIDevInf() , 'MaxGUIDSize', $attrs);

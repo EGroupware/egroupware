@@ -69,7 +69,7 @@ define('RESPONSE_NO_CONTENT', 204);
 define('RESPONSE_RESET_CONTENT', 205);
 define('RESPONSE_PARTIAL_CONTENT', 206);
 define('RESPONSE_CONFLICT_RESOLVED_WITH_MERGE', 207);
-define('RESPONSE_CONFLICT_RESOLVED_WITH_CLIENT_WINNING', 208);
+define('RESPONSE_CONFLICT_RESOLVED_WITH_CLIENT_WINS', 208);
 define('RESPONSE_CONFILCT_RESOLVED_WITH_DUPLICATE', 209);
 define('RESPONSE_DELETE_WITHOUT_ARCHIVE', 210);
 define('RESPONSE_ITEM_NO_DELETED', 211);
@@ -80,60 +80,60 @@ define('RESPONSE_NO_EXECUTED', 215);
 define('RESPONSE_ATOMIC_ROLL_BACK_OK', 216);
 
 define('RESPONSE_MULTIPLE_CHOICES', 300);
-// Need to change names.
-// define('RESPONSE_MULTIPLE_CHOICES', 301);
-// define('RESPONSE_MULTIPLE_CHOICES', 302);
-// define('RESPONSE_MULTIPLE_CHOICES', 303);
-// define('RESPONSE_MULTIPLE_CHOICES', 304);
+define('RESPONSE_MOVED_PERMANENTLY', 301);
+define('RESPONSE_FOUND', 302);
+define('RESPONSE_SEE_OTHER', 303);
+define('RESPONSE_NOT_MODIFIED', 304);
 define('RESPONSE_USE_PROXY', 305);
 
 define('RESPONSE_BAD_REQUEST', 400);
 define('RESPONSE_INVALID_CREDENTIALS', 401);
-// Need to change names.
-// define('RESPONSE_INVALID_CREDENTIALS', 402);
-// define('RESPONSE_INVALID_CREDENTIALS', 403);
+define('RESPONSE_PAYMENT_NEEDED', 402);
+define('RESPONSE_FORBIDDEN', 403);
 define('RESPONSE_NOT_FOUND', 404);
-// Need to change names.
-// define('RESPONSE_INVALID_CREDENTIALS', 405);
-// define('RESPONSE_INVALID_CREDENTIALS', 406);
+define('RESPONSE_COMMAND_DENIED', 405);
+define('RESPONSE_FEATURE_NOT_SUPPORTED', 406);
 define('RESPONSE_MISSING_CREDENTIALS', 407);
-// define('RESPONSE_INVALID_CREDENTIALS', 408);
-// define('RESPONSE_INVALID_CREDENTIALS', 409);
-// define('RESPONSE_INVALID_CREDENTIALS', 410);
-// define('RESPONSE_INVALID_CREDENTIALS', 411);
-// define('RESPONSE_INVALID_CREDENTIALS', 412);
-// define('RESPONSE_INVALID_CREDENTIALS', 413);
-// define('RESPONSE_INVALID_CREDENTIALS', 414);
-// define('RESPONSE_INVALID_CREDENTIALS', 415);
+define('RESPONSE_REQUEST_TIMEOUT', 408);
+define('RESPONSE_CONFLICT_DETECTED', 409);
+define('RESPONSE_ITEM_GONE', 410);
+define('RESPONSE_SIZE_REQUIRED', 411);
+define('RESPONSE_INCOMPLETE_COMMAND', 412);
+define('RESPONSE_ENTITY_TO_LARGE', 413);
+define('RESPONSE_URI_TOO_LONG', 414);
+define('RESPONSE_UNSUPPORTED_MEDIA_TYPE', 415);
 define('RESPONSE_REQUEST_SIZE_TOO_BIG', 416);
-// Need to change names.
-// define('RESPONSE_INVALID_CREDENTIALS', 417);
-// define('RESPONSE_INVALID_CREDENTIALS', 418);
-// define('RESPONSE_INVALID_CREDENTIALS', 419);
-// define('RESPONSE_INVALID_CREDENTIALS', 420);
-// define('RESPONSE_INVALID_CREDENTIALS', 421);
-// define('RESPONSE_INVALID_CREDENTIALS', 422);
-// define('RESPONSE_INVALID_CREDENTIALS', 423);
+define('RESPONSE_RETRY_LATER', 417);
+define('RESPONSE_ALREADY_EXISITS', 418);
+define('RESPONSE_CONFLICT_RESOLVED_WITH_SERVER_WINS', 419);
+define('RESPONSE_DEVICE_FULL', 420);
+define('RESPONSE_UNKNOWN_SEARCH_GRAMMAR', 421);
+define('RESPONSE_BAD_CGI', 422);
+define('RESPONSE_SOFT_DELETE_CONFICT', 423);
 define('RESPONSE_SIZE_MISMATCH', 424);
+define('RESPONSE_PERMISSION_DENIED', 425);
+define('RESPONSE_PARTIAL_ITEM_NOT_ACCEPTED', 426);
+define('RESPONSE_ITEM_NOT_EMPTY', 427);
+define('RESPONSE_MOVE_FAILED', 428);
 
 define('RESPONSE_COMMAND_FAILED', 500);
-// Need to change names.
-// define('RESPONSE_COMMAND_FAILED', 501);
-// define('RESPONSE_COMMAND_FAILED', 502);
-// define('RESPONSE_COMMAND_FAILED', 503);
-// define('RESPONSE_COMMAND_FAILED', 504);
-// define('RESPONSE_COMMAND_FAILED', 505);
-// define('RESPONSE_COMMAND_FAILED', 506);
-// define('RESPONSE_COMMAND_FAILED', 507);
+define('RESPONSE_COMMAND_NOT_IMPLEMENTED', 501);
+define('RESPONSE_BAD_GATEWAY', 502);
+define('RESPONSE_SERVICE_UNAVAILABLE', 503);
+define('RESPONSE_GATEWAY_TIMEOUT', 504);
+define('RESPONSE_DTD_VERSION_NOT_SUPPORTED', 505);
+define('RESPONSE_PROCESSING_ERROR', 506);
+define('RESPONSE_ATOMIC_FAILED', 507);
 define('RESPONSE_REFRESH_REQUIRED', 508);
-// define('RESPONSE_COMMAND_FAILED', 509);
-// define('RESPONSE_COMMAND_FAILED', 510);
-// define('RESPONSE_COMMAND_FAILED', 511);
-// define('RESPONSE_COMMAND_FAILED', 512);
-// define('RESPONSE_COMMAND_FAILED', 513);
-// define('RESPONSE_COMMAND_FAILED', 514);
-// define('RESPONSE_COMMAND_FAILED', 515);
+// define('RESPONSE_FUTURE_USE', 509);
+define('RESPONSE_DATASTORE_FAILURE', 510);
+define('RESPONSE_SERVER_FAILURE', 511);
+define('RESPONSE_SYNCHRONIZATION_FAILED', 512);
+define('RESPONSE_PROTOCOL_VERSION_NOT_SUPPORTED', 513);
+define('RESPONSE_OPERATION_CANCELLED', 514);
+define('RESPONSE_COMMAND_FAILED', 515);
 define('RESPONSE_ATOMIC_ROLL_BACK_FAILED', 516);
+define('RESPONSE_ATOMIC_RESPONSE_TOO_LARGE', 517);
 
 define('NAME_SPACE_URI_SYNCML_1_0', 'syncml:syncml1.0');
 define('NAME_SPACE_URI_SYNCML_1_1', 'syncml:syncml1.1');
@@ -629,6 +629,29 @@ class Horde_SyncML_State {
 
     	return $targets;
     }
+    
+    function needDeviceInfo()
+    {
+    	if ($this->_devinfoRequested || count($this->_syncs) < 1) return false;
+    		
+		$sendGetRequest = false;
+		
+    	foreach($this->_syncs as $sync)
+    	{
+    		if (($source = $sync->getSourceLocURI()) &&
+    			is_a($this->getPreferedContentTypeClient($source), 'PEAR_Error')) {
+    			$sendGetRequest = true;
+				break;
+    		}
+    	}
+
+    	return $sendGetRequest;
+    }
+    
+    function deviceInfoRequested()
+    {
+    	$this->_devinfoRequested = true;
+    }
 
     function getURI()
     {
@@ -912,53 +935,45 @@ class Horde_SyncML_State {
 			case 'contacts':
 			case 'card':
 				return 'contacts';
-				break;
 
 			case 'notes':
 				return 'notes';
-				break;
 
 			case 'tasks':
 			case 'jobs':
 				return 'tasks';
-				break;
 
 			case 'events':
 			case 'calendar':
 				return 'calendar';
-				break;
 
 			case 'caltasks':
 				return 'caltasks';
-				break;
 
 			# funambol related types
-
 			case 'sifcalendar':
 			case 'scal':
 				return 'sifcalendar';
-				break;
 
 			case 'sifcontacts':
 			case 'scard':
 				return 'sifcontacts';
-				break;
 
 			case 'siftasks':
 			case 'stask':
 				return 'siftasks';
-				break;
 
 			case 'sifnotes':
 			case 'snote':
 				return 'sifnotes';
-				break;
+				
+			case 'configuration':
+				return 'configuration';
 
 			default:
 				Horde::logMessage("SyncML: unknown hordeType for type=$type ($_type)", __FILE__, __LINE__, PEAR_LOG_INFO);
-				return $_type;
-				break;
 		}
+		return $_type;
 	}
 
 	/**
@@ -993,6 +1008,9 @@ class Horde_SyncML_State {
 				'mayFragment'		=>	1,
 				'Properties'		=>	$cprops,
 				);
+				
+			if ($_targetLocURI == 'configuration') $clientPrefs['ContentFormat'] = 'b64';
+			
 			#Horde::logMessage('SyncML: sourceLocURI ' . $_sourceLocURI . " clientPrefs:\n"
 			#	. print_r($clientPrefs, true), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			return $this->adjustContentType($clientPrefs, $_targetLocURI);
