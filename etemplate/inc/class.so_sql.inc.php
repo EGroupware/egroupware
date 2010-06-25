@@ -830,6 +830,11 @@ class so_sql
 					elseif ($wildcard || $criteria[$col][0] == '!' ||
 						is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
 					{
+						// if search pattern alread contains a wildcard, do NOT add further ones automatic
+						if (is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
+						{
+							$wildcard = '';
+						}
 						$cmp_op = ' '.$this->db->capabilities['case_insensitive_like'].' ';
 						$negate = false;
 						if ($criteria[$col][0] == '!')
