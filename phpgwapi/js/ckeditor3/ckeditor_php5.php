@@ -20,11 +20,11 @@ class CKEditor
 	/**
 	 * The version of %CKEditor.
 	 */
-	const version = '3.2.1';
+	const version = '3.3.1';
 	/**
 	 * A constant string unique for each release of %CKEditor.
 	 */
-	const timestamp = 'A39E';
+	const timestamp = 'A5AB4B6';
 
 	/**
 	 * URL to the %CKEditor installation directory (absolute or relative to document root).
@@ -78,7 +78,7 @@ class CKEditor
 	 * A string indicating the creation date of %CKEditor.
 	 * Do not change it unless you want to force browsers to not use previously cached version of %CKEditor.
 	 */
-	public $timestamp = "A39E";
+	public $timestamp = "A5AB4B6";
 	/**
 	 * An array that holds event listeners.
 	 */
@@ -431,7 +431,7 @@ class CKEditor
 	/**
 	 * Initializes CKEditor (executed only once).
 	 */
-	public function init()
+	private function init()
 	{
 		static $initComplete;
 		$out = "";
@@ -522,7 +522,7 @@ class CKEditor
 	 * @param mixed $val
 	 * @return string
 	 */
-	public function jsEncode($val)
+	private function jsEncode($val)
 	{
 		if (is_null($val)) {
 			return 'null';
