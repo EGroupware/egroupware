@@ -133,7 +133,7 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 						break;
 
 					case 'SourceRef':
-						$this->_sourceReference = trim($this->_chars);
+						$this->_sourceReference = strtolower(trim($this->_chars));
 						break;
 
 					case 'Tx-Pref':

@@ -153,6 +153,7 @@ class Horde_SyncML_Command {
         }
         if (class_exists($class)) {
             $cmd = new $class($params);
+            if (empty($cmd->_cmdName)) $cmd->_cmdName = $command;
         } else {
             $msg = 'SyncML: Class definition of ' . $class . ' not found.';
             Horde::logMessage($msg, __FILE__, __LINE__, PEAR_LOG_ERR);

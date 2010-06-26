@@ -569,7 +569,8 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 					}
 					$state->setAlert222Received(false);
 				}
-
+				
+				if ($state->needDeviceInfo()) $this->outputGetRequest();
 
 				// send the sync reply
 				// we do still have some data to send OR
@@ -700,5 +701,52 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 			$this->_currentCommand->characters($str);
 		}
 	}
+	
+	function outputGetRequest()
+    {
+    	$attrs = array();
 
+        $state =& $_SESSION['SyncML.state'];
+
+        $uri = $state->getURI();
+        $uriMeta = $state->getURIMeta();
+        
+        Horde::logMessage('SyncML: PreferedContentTypeClient missing, sending <Get>',
+        	__FILE__, __LINE__, PEAR_LOG_DEBUG);
+
+        $this->_output->startElement($uri, 'Get', $attrs);
+        
+        $this->_output->startElement($uri, 'CmdID', $attrs);
+        $this->_output->characters($this->_currentCmdID);
+        $this->_currentCmdID++;
+        $this->_output->endElement($uri, 'CmdID');
+        
+        $this->_output->startElement($uri, 'Meta', $attrs);
+        $this->_output->startElement($uriMeta, 'Type', $attrs);
+        if (is_a($this->_output, 'XML_WBXML_Encoder')) {
+	        $this->_output->characters('application/vnd.syncml-devinf+wbxml');
+        } else {
+	        $this->_output->characters('application/vnd.syncml-devinf+xml');
+        }
+        $this->_output->endElement($uriMeta, 'Type');
+        $this->_output->endElement($uri, 'Meta');
+        
+        $this->_output->startElement($uri, 'Item', $attrs);
+        $this->_output->startElement($uri, 'Target', $attrs);
+        $this->_output->startElement($uri, 'LocURI', $attrs);
+        if ($state->getVersion() == 2) {
+	        $this->_output->characters('./devinf12');
+        } elseif ($state->getVersion() == 1) {
+	        $this->_output->characters('./devinf11');
+        } else {
+	        $this->_output->characters('./devinf10');
+        }
+        $this->_output->endElement($uri, 'LocURI');
+        $this->_output->endElement($uri, 'Target');
+        $this->_output->endElement($uri, 'Item');
+        
+        $this->_output->endElement($uri, 'Get');
+        
+        $state->deviceInfoRequested();
+    }
 }

@@ -244,6 +244,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 						. ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_WARNING);
 					if 	($sync_conflicts != CONFLICT_RESOLVED_WITH_DUPLICATE) {
 						$state->log("Client-AddReplaceIgnored");
+						$command->setStatus(RESPONSE_CONFILCT_RESOLVED_WITH_DUPLICATE);
 						continue;
 					}
 				} else {
@@ -252,6 +253,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 						__FILE__, __LINE__, PEAR_LOG_DEBUG);
 						$state->setUID($type, $locURI, $guid);
 						$state->log("Client-Map");
+						$command->setStatus(RESPONSE_ALREADY_EXISITS);
 						continue;
 				}
 			}

@@ -114,6 +114,18 @@ class Horde_SyncML_Sync {
 	function setSourceLocURI($sourceURI) {
 		$this->_sourceLocURI = $sourceURI;
 	}
+	
+	/**
+	 * Get sourceURI.
+	 *
+	 * @return string $sourceURI or false on error.
+	 */
+	function getSourceLocURI() {
+		if (empty($this->_sourceLocURI)) {
+			return false;
+		}
+		return $this->_sourceLocURI;	
+	}
 
 	/**
 	 * Setter for property targetURI.
@@ -308,6 +320,10 @@ class Horde_SyncML_Sync {
 				$replace = true;
 				$ok = false;
 				$merge = false;
+				if ($hordeType == 'configuration')
+				{
+					$command->setStatus(RESPONSE_ALREADY_EXISITS);
+				}
 				if ($guid)
 				{
 					Horde::logMessage('SyncML: locuri '. $locURI . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_DEBUG);
@@ -317,12 +333,13 @@ class Horde_SyncML_Sync {
 						switch ($sync_conflicts)
 						{
 							case CONFLICT_CLIENT_WINNING:
-								$command->setStatus(RESPONSE_CONFLICT_RESOLVED_WITH_CLIENT_WINNING);
+								$command->setStatus(RESPONSE_CONFLICT_RESOLVED_WITH_CLIENT_WINS);
 								break;
 							case CONFLICT_SERVER_WINNING:
 								Horde::logMessage('SyncML: REJECT client change for locuri ' .
 									$locURI . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
+								$command->setStatus(RESPONSE_CONFLICT_RESOLVED_WITH_SERVER_WINS);
 								$ok = true;
 								$replace = false;
 								$state->log('Client-AddReplaceIgnored');
@@ -331,6 +348,7 @@ class Horde_SyncML_Sync {
 								Horde::logMessage('SyncML: Merge server and client data for locuri ' .
 									$locURI . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
+								$command->setStatus(RESPONSE_CONFLICT_RESOLVED_WITH_MERGE);
 							    $merge = true;
 								break;
 							case CONFLICT_RESOLVED_WITH_DUPLICATE:
@@ -340,6 +358,7 @@ class Horde_SyncML_Sync {
 								Horde::logMessage('SyncML: Server RO! REJECT client change for locuri ' .
 									$locURI . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
+								$command->setStatus(RESPONSE_PERMISSION_DENIED);
 								$ok = true;
 								$replace = false;
 								$ts = $state->getSyncTSforAction($guid, 'modify');
@@ -350,6 +369,7 @@ class Horde_SyncML_Sync {
 								Horde::logMessage('SyncML: Server RO! UNDO client change for locuri ' .
 									$locURI . ' guid ' . $guid ,
 									__FILE__, __LINE__, PEAR_LOG_WARNING);
+								$command->setStatus(RESPONSE_PERMISSION_DENIED);
 								$state->pushChangedItem($type, $guid);
 								$ok = true;
 								$replace = false;
