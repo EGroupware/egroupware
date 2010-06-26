@@ -985,6 +985,7 @@ class Horde_SyncML_State {
 
 	function getPreferedContentTypeClient($_sourceLocURI, $_targetLocURI = null) {
 		$deviceInfo = $this->getClientDeviceInfo();
+		$_sourceLocURI = strtolower($_sourceLocURI);
 
 		if(isset($deviceInfo['dataStore'][$_sourceLocURI]['maxGUIDSize']['contentType'])) {
 			$this->_maxGUIDSize = $deviceInfo['dataStore'][$this->_sourceURI]['maxGUIDSize']['contentType'];
