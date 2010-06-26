@@ -28,6 +28,8 @@ $GLOBALS['egw_info'] = array(
 require_once('phpgwapi/inc/class.egw_digest_auth.inc.php');
 include(dirname(__FILE__).'/header.inc.php');
 
+$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+
 $headertime = microtime(true);
 
 $groupdav = new groupdav();

@@ -607,6 +607,8 @@ class addressbook_bo extends addressbook_so
 	 */
 	function db2data($data, $date_format='ts')
 	{
+		static $fb_url = false;
+		
 		// convert timestamps from server-time in the db to user-time
 		foreach ($this->timestamps as $name)
 		{
@@ -620,10 +622,12 @@ class addressbook_bo extends addressbook_so
 		// set freebusy_uri for accounts
 		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
 		{
-			static $fb_url;
-			if (!$fb_url && @is_dir(EGW_SERVER_ROOT.'/calendar/inc')) $fb_url = calendar_bo::freebusy_url('');
-			if ($fb_url) $data['freebusy_uri'] = $fb_url.urlencode(
-				isset($data['account_lid']) ? $data['account_lid'] : $GLOBALS['egw']->accounts->id2name($data['account_id']));
+			if ($fb_url || @is_dir(EGW_SERVER_ROOT.'/calendar/inc'))
+			{
+				$fb_url = true;
+				$user = isset($data['account_lid']) ? $data['account_lid'] : $GLOBALS['egw']->accounts->id2name($data['account_id']);
+				$data['freebusy_uri'] = calendar_bo::freebusy_url($user);
+			}
 		}
 		return $data;
 	}

@@ -180,7 +180,7 @@ forward one month	calendar	en	forward one month
 forward one year	calendar	en	forward one year
 four days view	calendar	en	Four days view
 freebusy	common	en	Free/Busy
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	Free/Busy: Unknown user '%1', wrong password or not available to not logged in users !!!
+freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	en	freebusy: Unknow user '%1', or not available for unauthenticated users!
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
@@ -355,9 +355,7 @@ set new events to private	calendar	en	Set new events to private
 setting lock time calender	admin	en	Setting Data lock Time for Calendar (default 1 sec.)
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted (e.g. from calendar module)?
 should new events created as private by default ?	calendar	en	Should new events created as private by default ?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	en	Should not logged in persons be able to see your Free/Busy information? You can set an extra password, different from your normal password, to protect this information. The Free/Busy information is in iCal format and only includes the times when you are busy. It does not include the event-name, description or locations. The URL to your Free/Busy information is %1.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk" target="_blank">http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk" target="_blank">http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk</a>.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://www.serveahead.de/trunk/calendar/freebusy.php?user=admin" target="_blank">https://www.serveahead.de/trunk/calendar/freebusy.php?user=admin</a>.	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="https://www.serveahead.de/trunk/calendar/freebusy.php?user=admin" target="_blank">https://www.serveahead.de/trunk/calendar/freebusy.php?user=admin</a>.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is
 should the grid be shown in the calendar	calendar	en	Should the grid be shown in the calendar
 should the number of weeks be shown on top of the calendar	calendar	en	Should the number of weeks be shown on top of the calendar
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	en	Should the number of weeks be shown on top of the calendar (only if offset = 0)
@@ -467,6 +465,7 @@ which events do you want to see when you enter the calendar.	calendar	en	Which e
 which of calendar view do you want to see, when you start calendar ?	calendar	en	Which of calendar views do you want to see, when you start calendar ?
 whole day	calendar	en	Whole day
 whole query	calendar	en	whole query
+with credentials included	calendar	en	With credentials included
 wk	calendar	en	Wk
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
