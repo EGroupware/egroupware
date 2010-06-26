@@ -914,8 +914,23 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->db->update($this->cal_table, array('cal_uid' => $event['cal_uid']),
 				array('cal_id' => $event['cal_id']),__LINE__,__FILE__,'calendar');
 		}
-		// write information about recuring event, if recur_type is present in the array
-		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		
+		if ($event['recur_type'] == MCAL_RECUR_NONE)
+		{
+			$this->db->delete($this->dates_table,array(
+				'cal_id' => $cal_id),
+				__LINE__,__FILE__,'calendar');
+			
+			// delete all user-records, with recur-date != 0
+			$this->db->delete($this->user_table,array(
+				'cal_id' => $cal_id, 'cal_recur_date != 0'),
+				__LINE__,__FILE__,'calendar');
+			
+			$this->db->delete($this->repeats_table,array(
+				'cal_id' => $cal_id),
+				__LINE__,__FILE__,'calendar');
+		}
+		else // write information about recuring event, if recur_type is present in the array
 		{
 			// fetch information about the currently saved (old) event
 			$old_min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
@@ -1024,14 +1039,7 @@ ORDER BY cal_user_type, cal_usre_id
 			// write the repeats table
 			$event['recur_exception'] = empty($event['recur_exception']) ? null : implode(',',$event['recur_exception']);
 			unset($event[0]);	// unset the 'etag=etag+1', as it's not in the repeats table
-			if($event['recur_type'] != MCAL_RECUR_NONE)
-			{
-				$this->db->insert($this->repeats_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
-			}
-			else
-			{
-				$this->db->delete($this->repeats_table,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
-			}
+			$this->db->insert($this->repeats_table,$event,array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 		}
 		// update start- and endtime if present in the event-array, evtl. we need to move all recurrences
 		if (isset($event['cal_start']) && isset($event['cal_end']))
