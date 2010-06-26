@@ -240,6 +240,11 @@ class calendar_hooks
 			'all'		=> lang('Always'),
 			'startday'	=> lang('If start day differs'),
 		);
+		$freebusy_values = array(
+			0		=> lang('No'),
+			1		=> lang('Yes'),
+			2		=> lang('With credentials included'),
+		);
 		if (!$hook_data['setup'])	// does not work at setup time
 		{
 			$options = array('0' => lang('none'));
@@ -248,7 +253,9 @@ class calendar_hooks
 				$options[$group['account_id']] = common::grab_owner_name($group['account_id']);
 			}
 			$freebusy_url = calendar_bo::freebusy_url($GLOBALS['egw_info']['user']['account_lid'],$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw']);
-			$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.','<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>');
+			$freebusy_url = '<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>';
+			$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is');
+			$freebusy_help .= ' ' . $freebusy_url;
 
 			// Timezone for file exports
 			$export_tzs = array('0' => 'Use Event TZ');
@@ -536,15 +543,16 @@ class calendar_hooks
 				'admin'  => False,
 			),
 			'freebusy' => array(
-				'type'  => 'check',
+				'type'  => 'select',
 				'label' => 'Make freebusy information available to not loged in persons?',
 				'name'  => 'freebusy',
 				'help'  => $freebusy_help,
+				'values'	=> $freebusy_values,
 				'run_lang' => false,
 				'subst_help' => False,
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => false,
+				'forced' => 0,
 			),
 			'freebusy_pw' => array(
 				'type'  => 'input',
@@ -553,7 +561,7 @@ class calendar_hooks
 				'help'  => 'If you dont set a password here, the information is available to everyone, who knows the URL!!!',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'no'
+				'forced' => ''
 			)
 		);
 	}

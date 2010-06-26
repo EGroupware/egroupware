@@ -1772,14 +1772,25 @@ class calendar_bo
 	 * @param int|string $user account_id or account_lid
 	 * @param string $pw=null password
 	 */
-	static function freebusy_url($user,$pw=null)
+	static function freebusy_url($user='',$pw=null)
 	{
 		if (is_numeric($user)) $user = $GLOBALS['egw']->accounts->id2name($user);
-
+		
+		$credentials = '';
+		
+		if ($pw)
+		{
+			$credentials = '&password='.urlencode($pw);
+		}
+		elseif ($GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy'] == 2)
+		{
+			$credentials = $GLOBALS['egw_info']['user']['account_lid']
+				. ':' . $GLOBALS['egw_info']['user']['passwd'];
+			$credentials = '&cred=' . base64_encode($credentials);
+		}
 		return (!$GLOBALS['egw_info']['server']['webserver_url'] || $GLOBALS['egw_info']['server']['webserver_url'][0] == '/' ?
 			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
-			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
-			($pw ? '&password='.urlencode($pw) : '');
+			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php/?user='.urlencode($user).$credentials;
 	}
 
 	/**

@@ -43,6 +43,7 @@ if (strpos($_SERVER['QUERY_STRING'],'=3D') !== false && substr($_GET['user'],0,2
 {
 	$_GET['user'] = substr($_GET['user'],2);
 	if (isset($_GET['password'])) $_GET['password'] = substr($_GET['password'],2);
+	if (isset($_GET['cred'])) $_GET['cred'] = substr($_GET['cred'],2);
 }
 if (!is_numeric($user = $_GET['user']))
 {
@@ -58,15 +59,46 @@ if ($user === false || !($username = $GLOBALS['egw']->accounts->id2name($user)))
 }
 if (!$loged_in)
 {
-	$GLOBALS['egw']->preferences->account_id = $user;
-	$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-	$GLOBALS['egw_info']['user']['account_id'] = $user;
-	$GLOBALS['egw_info']['user']['account_lid'] = $username;
-
-	$cal_prefs = &$GLOBALS['egw_info']['user']['preferences']['calendar'];
-	if (!$cal_prefs['freebusy'] || !empty($cal_prefs['freebusy_pw']) && $cal_prefs['freebusy_pw'] != $_GET['password'])
+	if (empty($_GET['cred']))
 	{
-		fail_exit(lang("freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!",$_GET['user']));
+		$GLOBALS['egw_info']['user']['account_id'] = $user;
+		$GLOBALS['egw_info']['user']['account_lid'] = $username;
+		$GLOBALS['egw']->preferences->account_id = $user;
+		$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+		$cal_prefs = &$GLOBALS['egw_info']['user']['preferences']['calendar'];
+		$loged_in = !empty($cal_prefs['freebusy']) &&
+			(empty($cal_prefs['freebusy_pw']) || $cal_prefs['freebusy_pw'] == $_GET['password']);
+	}
+	else
+	{
+		$credentials = base64_decode($_GET['cred']);
+		list($authuser, $password) = explode(':', $credentials, 2);
+		if (strpos($authuser, '@') === false)
+		{
+			$domain = $GLOBALS['egw_info']['server']['default_domain'];
+			$authuser .= '@' . $domain;
+		}
+		else
+		{
+			list(, $domain) = explode('@',$authuser, 2);
+		}
+		if (array_key_exists($domain, $GLOBALS['egw_domain']))
+		{
+			$_POST['login'] = $authname;
+			$_REQUEST['domain'] = $domain;
+			$GLOBALS['egw_info']['server']['default_domain'] = $domain;
+			$GLOBALS['egw_info']['user']['domain'] = $domain;
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
+			$GLOBALS['egw_info']['flags']['noapi'] = false;
+			require_once(EGW_API_INC . '/functions.inc.php');
+			$loged_in =  $GLOBALS['egw']->session->create($authuser, $password, 'text');
+			session_unset();
+			session_destroy();
+		}
+	}
+	if (!$loged_in)
+	{
+		fail_exit(lang("freebusy: Unknow user '%1', or not available for unauthenticated users!", $_GET['user']));
 	}
 }
 if ($_GET['debug'])

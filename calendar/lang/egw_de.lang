@@ -180,7 +180,7 @@ forward one month	calendar	de	einen Monat weiter
 forward one year	calendar	de	ein Jahr weiter
 four days view	calendar	de	Vier-Tagesansicht
 freebusy	common	de	frei / belegt
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Frei / Belegt: Unbekannter Benutzername '%1', falsches Passwort oder nicht verfügbar für nicht angemeldete Benutzer !!!
+freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	de	Free/Busy: Unbekannter Benutzer '%1', oder Daten ohne Authentisierung nicht verfügbar!
 freetime search	calendar	de	Terminsuche
 fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
@@ -355,8 +355,7 @@ set new events to private	calendar	de	Neue Termine als private Termine eintragen
 setting lock time calender	admin	de	Zeitintervall für Datensatzlock (default 1 sec.)
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	de	Soll der Parameter Datum akzeptiert werden (z.B. vom Kalender Modul)?
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen Ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten, an denen Sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist %1.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk" target="_blank">http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk</a>.	calendar	de	Soll Ihre Verfügbarkeit auch ohne Anmeldung sichtbar sein? Sie können auch ein separates Passwort zum Schutz dieser Information vergeben. Ihre Verfügbarkeit wird im iCal-Format veröffnetlicht und enthält nur die Zeiten, zu denen sie bereits gebucht sind. Titel, Beschreibung und Ort sind so nicht einsehbar.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	de	Sollen nicht angemeldete Personen Ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthaltena usschließlich die Zeiten, an denen Sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist
 should the grid be shown in the calendar	calendar	de	Soll das Gitternetz im Kalender angezeigt werden?
 should the number of weeks be shown on top of the calendar	calendar	de	Soll die Wochenanzahl im Kalander oben abgezeigt werden?
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	de	Soll die Kalenderwoche im oberen Teil des Kalenders angezeigt werden (Nur wenn Abstabd=0)
@@ -466,6 +465,7 @@ which events do you want to see when you enter the calendar.	calendar	de	Welche 
 which of calendar view do you want to see, when you start calendar ?	calendar	de	Welche der möglichen Ansichten des Kalenders möchten Sie als Standard sehen, wenn der Kalender geöffnet wird?
 whole day	calendar	de	ganztägig
 whole query	calendar	de	Ganze Abfrage
+with credentials included	calendar	de	Mit Zugangsdaten im URL
 wk	calendar	de	KW
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
