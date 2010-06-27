@@ -591,6 +591,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function post(&$options,$id,$user=null)
 	{
+		$status = $this->put($options,$id,$user);
+		// error_log("CalDAV POST: $status" . print_r($options, true));
 		return true;
 	}
 
@@ -869,8 +871,12 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
 		*/
 		// email of the current user, see caldav-sheduling draft
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']),
+			HTTP_WebDAV_Server::mkprop('href',$base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/'),
+			HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.$GLOBALS['egw_info']['user']['account_lid'])));
+		//$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+		//	HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
 		// supported components, currently only VEVENT
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
@@ -886,6 +892,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/calendar', 'version'=> '2.0')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/x-calendar', 'version'=> '1.0'))));
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::ICAL,'calendar-color','#0040A0FF'); // TODO: make it configurable
+		//$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'publish-url',array(
+		//	HTTP_WebDAV_Server::mkprop('href',$base_uri.'/calendar/')));
 
 		//$props = self::current_user_privilege_set($props);
 		return $props;

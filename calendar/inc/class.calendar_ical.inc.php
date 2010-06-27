@@ -433,27 +433,6 @@ class calendar_ical extends calendar_boupdate
 					sort($exceptions);
 				}
 				$event['recur_exception'] = $exceptions;
-				/*
-				// Adjust the event start -- must not be an exception
-				$length = $event['end'] - $event['start'];
-				$rriter = calendar_rrule::event2rrule($event, false, $tzid);
-				$rriter->rewind();
-				if ($rriter->valid())
-				{
-					$event['start'] = egw_time::to($rriter->current, 'server');
-					$event['end'] = $event['start'] + $length;
-					foreach($exceptions as $key => $day)
-					{
-						// remove leading exceptions
-						if ($day <= $event['start']) unset($exceptions[$key]);
-					}
-					$event['recur_exception'] = $exceptions;
-				}
-				else
-				{
-					// the series dissolved completely into exceptions
-					continue;
-				}*/
 			}
 
 			foreach ($egwSupportedFields as $icalFieldName => $egwFieldName)
@@ -496,15 +475,15 @@ class calendar_ical extends calendar_boupdate
 							{
 								$participantURL = empty($info['email']) ? '' : 'MAILTO:' . $info['email'];
 							}
+							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
+							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							if ($role == 'CHAIR')
 							{
 								$organizerURL = $participantURL;
+								$rsvp = '';
 								$organizerCN = $participantCN;
 								$organizerUID = ($info['type'] != 'e' ? $uid : '');
 							}
-							$attributes['ATTENDEE'][]	= $participantURL;
-							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
-							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
 							$status = $this->status_egw2ical[$status];
 							// CUTYPE={INDIVIDUAL|GROUP|RESOURCE|ROOM|UNKNOWN}
@@ -512,6 +491,11 @@ class calendar_ical extends calendar_boupdate
 							{
 								case 'g':
 									$cutype = 'GROUP';
+									if ($this->productManufacturer == 'groupdav')
+									{
+										$participantURL = 'invalid:nomail';
+										$cutype = 'INDIVIDUAL';
+									}
 									break;
 								case 'r':
 									$cutype = 'RESOURCE';
@@ -526,14 +510,17 @@ class calendar_ical extends calendar_boupdate
 									break;
 							};
 							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
-							$parameters['ATTENDEE'][] = array(
-								'CN'       => $participantCN,
-								'ROLE'     => $role,
-								'PARTSTAT' => $status,
-								'CUTYPE'   => $cutype,
-								'RSVP'     => $rsvp,
-							)+($info['type'] != 'e' ? array('X-EGROUPWARE-UID' => $uid) : array())+
-							($quantity > 1 ? array('X-EGROUPWARE-QUANTITY' => $quantity) : array());
+							$options = array();
+							if (!empty($participantCN)) $options['CN'] = $participantCN;
+							if (!empty($role)) $options['ROLE'] = $role;
+							if (!empty($status)) $options['PARTSTAT'] = $status;
+							if (!empty($cutype)) $options['CUTYPE'] = $cutype;
+							if (!empty($rsvp)) $options['RSVP'] = $rsvp;
+							if (!empty($info['email'])) $options['EMAIL'] = $info['email'];
+							if ($info['type'] != 'e') $options['X-EGROUPWARE-UID'] = $uid;
+							if ($quantity > 1) $options['X-EGROUPWARE-QUANTITY'] = $quantity;
+							$attributes['ATTENDEE'][]	= $participantURL;
+							$parameters['ATTENDEE'][] = $options;
 						}
 						break;
 
@@ -547,37 +534,38 @@ class calendar_ical extends calendar_boupdate
 	    				{
 	    					$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
 			    				. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
-			    			$organizerURL = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+			    			$organizerEMail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 			    			if ($version == '1.0')
 			    			{
 		    					$organizerURL = trim($organizerCN . (empty($organizerURL) ? '' : ' <' . $organizerURL .'>'));
 			    			}
 			    			else
 			    			{
-		    					$organizerURL = empty($organizerURL) ? '' : 'MAILTO:' . $organizerURL;
+		    					$organizerURL = empty($organizerEMail) ? '' : 'MAILTO:' . $organizerEMail;
 			    			}
 			    			$organizerUID = $event['owner'];
 		    				if (!isset($event['participants'][$event['owner']]))
 		    				{
-			    				$attributes['ATTENDEE'][] = $organizerURL;
-			    				$parameters['ATTENDEE'][] = array(
-				    				'CN'       => $organizerCN,
+			    				$options = array(
 									'ROLE'     => 'CHAIR',
 									'PARTSTAT' => 'DELEGATED',
 									'CUTYPE'   => 'INDIVIDUAL',
-									'RSVP'     => 'FALSE',
-									'X-EGROUPWARE-UID' => $event['owner'],
-			    				);
+									//'RSVP'     => 'FALSE',
+									);
+								if (!empty($organizerCN)) $options['CN'] = $organizerCN;	
+								if (!empty($organizerEMail)) $options['EMAIL'] = $organizerEMail;
+								if (!empty($event['owner'])) $options['X-EGROUPWARE-UID'] = $event['owner'];
+								$attributes['ATTENDEE'][] = $organizerURL;
+			    				$parameters['ATTENDEE'][] = $options;
 		    				}
 	    				}
-		    			if ($this->productManufacturer != 'groupdav' ||
-			    			!$this->check_perms(EGW_ACL_EDIT,$event))
-			    			{
+	    				if ($this->productManufacturer != 'groupdav' ||	!$this->check_perms(EGW_ACL_EDIT,$event))
+	    				{
 		    				$attributes['ORGANIZER'] = $organizerURL;
 		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
 		    				if (!empty($organizerUID))
 		    				{
-		    					$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
+			    				$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
 		    				}
 	    				}
 	    				break;
@@ -615,7 +603,7 @@ class calendar_ical extends calendar_boupdate
 						$rrule = $rriter->generate_rrule($version);
 						if ($event['recur_enddate'])
 						{
-							$length = $event['end'] - $event['start'];
+							$length = ($event['end'] - $event['start']) / 2;
 							$rrule['UNTIL']->modify($length . ' second');
 							if (!$tzid || $version != '1.0')
 							{
