@@ -391,9 +391,9 @@ class addressbook_groupdav extends groupdav_handler
 		// should we hide the accounts addressbook
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 
-		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','','','',$filter);
+		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','',false,'AND',false,$filter);
 
-		$ctag = 'EGw-'.$result[0]['modified'].'-wGE';
+		$ctag = 'EGw-'.$result[0]['contact_modified'].'-wGE';
 		return $ctag;
 	}
 
