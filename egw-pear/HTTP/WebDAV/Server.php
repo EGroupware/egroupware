@@ -1350,13 +1350,41 @@ class HTTP_WebDAV_Server
             header("Content-length: ".$options['size']);
         }
         
+        $options["stream"] = fopen("php://input", "r");
+        
         if (method_exists($this, 'POST')) {
-            $status = $this->POST($options);
+	        $status = $this->POST($options);
+	        
+	        if ($status === false) {
+		        $status = '400 Something went wrong';
+	        } else if ($status === true) {
+	        	$status = '200 OK';
+	        } else if (is_resource($status) && get_resource_type($status) == "stream") {
+		        $stream = $status;
+		        
+		        $status = empty($options["new"]) ? '200 OK' : '201 Created';
+		        
+		        if (!empty($options["ranges"])) {
+			        // TODO multipart support is missing (see also above)
+			        if (0 == fseek($stream, $range[0]["start"], SEEK_SET)) {
+				        $length = $range[0]["end"]-$range[0]["start"]+1;
+				        if (!fwrite($stream, fread($options["stream"], $length))) {
+					        $status = '403 Forbidden';
+				        }
+			        } else {
+				        $status = '403 Forbidden';
+			        }
+		        } else {
+			        while (!feof($options["stream"])) {
+				        if (false === fwrite($stream, fread($options["stream"], 4096))) {
+					        $status = '403 Forbidden';
+					        break;
+				        }
+			        }
+		        }
+		        fclose($stream);
+	        }
         }
-
-        if ($status === true)  $status = '200 OK';
-        if ($status === false) $status = '400 Something went wrong';
-
         $this->http_status($status);
     }
 
