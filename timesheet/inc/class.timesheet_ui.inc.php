@@ -122,7 +122,7 @@ class timesheet_ui extends timesheet_bo
 				case 'save':
 				case 'save_new':
 				case 'apply':
-					if (!$this->data['ts_quantity'] && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
+					if ((!$this->data['ts_quantity'] || $this->ts_viewtype == 'short') && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
 						$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0;
 					}
