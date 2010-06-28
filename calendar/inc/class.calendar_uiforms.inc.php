@@ -1445,6 +1445,15 @@ function replace_eTemplate_onsubmit()
 			$etpl->set_cell_attribute('button[cancel]','onclick','');
 		}
 
+		// Allow admins to restore deleted events
+		$config = config::read('phpgwapi');
+		if($config['calendar_delete_history'] && $event['deleted'] && $GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			$content['deleted'] = $preserv['deleted'] = false;
+			$etpl->set_cell_attribute('button[save]', 'label', 'recover');
+			$etpl->set_cell_attribute('button[apply]', 'disabled', true);
+		}
+
 		// Setup history tab
 		$this->setup_history($content, $sel_options);
 
