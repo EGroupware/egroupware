@@ -37,7 +37,9 @@
 					<div id="egw_fw_topmenu_items">{topmenu_items}</div>
 					<div id="egw_fw_topmenu_info_items">{topmenu_info_items}</div>
 				</div>
-				<div id="egw_fw_tabs"></div>
+				<div id="egw_fw_tabs">
+					<div id="egw_fw_print" title="{title_print}" onclick="framework.print();"></div>
+				</div>
 			</div>
 		</div>
 		<div id="egw_fw_footer">{powered_by}</div>

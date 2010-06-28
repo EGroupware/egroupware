@@ -105,6 +105,18 @@ egw_fw.prototype.callManual = function()
 	}
 }
 
+egw_fw.prototype.print = function()
+{
+	if (this.activeApp)
+	{
+		if (this.activeApp.browser.iframe)
+		{
+			this.activeApp.browser.iframe.contentWindow.focus();
+			this.activeApp.browser.iframe.contentWindow.print();
+		}
+	}
+}
+
 /**
  * Function called whenever F1 is pressed inside the framework
  * @returns boolean true if the call manual function could be called, false if the manual is not available

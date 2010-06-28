@@ -132,6 +132,19 @@ body {
 /*	margin: 5px 5px 5px 0px;*/
 }
 
+#egw_fw_print {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	float: right;
+	margin-right: 5px;
+	margin-top: 15px;
+	background-image:url(images/print.png);
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	cursor: pointer;
+}
+
 .egw_fw_ui_sidemenu_entry_header {
 	display: block;
 	height: 20px;
