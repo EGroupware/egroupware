@@ -433,27 +433,6 @@ class calendar_ical extends calendar_boupdate
 					sort($exceptions);
 				}
 				$event['recur_exception'] = $exceptions;
-				/*
-				// Adjust the event start -- must not be an exception
-				$length = $event['end'] - $event['start'];
-				$rriter = calendar_rrule::event2rrule($event, false, $tzid);
-				$rriter->rewind();
-				if ($rriter->valid())
-				{
-					$event['start'] = egw_time::to($rriter->current, 'server');
-					$event['end'] = $event['start'] + $length;
-					foreach($exceptions as $key => $day)
-					{
-						// remove leading exceptions
-						if ($day <= $event['start']) unset($exceptions[$key]);
-					}
-					$event['recur_exception'] = $exceptions;
-				}
-				else
-				{
-					// the series dissolved completely into exceptions
-					continue;
-				}*/
 			}
 
 			foreach ($egwSupportedFields as $icalFieldName => $egwFieldName)
@@ -472,8 +451,12 @@ class calendar_ical extends calendar_boupdate
 				switch ($icalFieldName)
 				{
 					case 'ATTENDEE':
+						$attendees = count($event['participants']);
 						foreach ((array)$event['participants'] as $uid => $status)
 						{
+							calendar_so::split_status($status, $quantity, $role);
+							if ($attendees == 1 &&
+								$uid == $this->user && $status == 'A') continue;
 							if (!($info = $this->resource_info($uid))) continue;
 							if ($this->log)
 							{
@@ -492,16 +475,15 @@ class calendar_ical extends calendar_boupdate
 							{
 								$participantURL = empty($info['email']) ? '' : 'MAILTO:' . $info['email'];
 							}
-							calendar_so::split_status($status, $quantity, $role);
+							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
+							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							if ($role == 'CHAIR')
 							{
 								$organizerURL = $participantURL;
+								$rsvp = '';
 								$organizerCN = $participantCN;
 								$organizerUID = ($info['type'] != 'e' ? $uid : '');
 							}
-							$attributes['ATTENDEE'][]	= $participantURL;
-							// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
-							$rsvp = $status == 'U' ? 'TRUE' : 'FALSE';
 							// PARTSTAT={NEEDS-ACTION|ACCEPTED|DECLINED|TENTATIVE|DELEGATED|COMPLETED|IN-PROGRESS} everything from delegated is NOT used by eGW atm.
 							$status = $this->status_egw2ical[$status];
 							// CUTYPE={INDIVIDUAL|GROUP|RESOURCE|ROOM|UNKNOWN}
@@ -509,6 +491,27 @@ class calendar_ical extends calendar_boupdate
 							{
 								case 'g':
 									$cutype = 'GROUP';
+									if ($this->productManufacturer == 'groupdav')
+									{
+										$participantURL = 'invalid:nomail';
+										$cutype = 'INDIVIDUAL';
+									}
+									$members = $GLOBALS['egw']->accounts->members($uid, true);
+									if (!isset($event['participants'][$this->user]) && in_array($this->user, $members))
+									{
+										$user = $this->resource_info($this->user);
+										$attributes['ATTENDEE'][] = 'MAILTO:' . $user['email'];
+			    						$parameters['ATTENDEE'][] = array(
+			    							'CN'		=>	$user['name'],
+			    							'ROLE'		=> 'REQ-PARTICIPANT',
+											'PARTSTAT'	=> 'NEEDS-ACTION',
+											'CUTYPE'	=> 'INDIVIDUAL',
+											'RSVP'		=> 'TRUE',
+											'X-EGROUPWARE-UID'	=> $this->user,
+											'EMAIL'		=>	$user['email'],
+			    							);
+			    						$event['participants'][$this->user] = true;
+									}
 									break;
 								case 'r':
 									$cutype = 'RESOURCE';
@@ -523,14 +526,17 @@ class calendar_ical extends calendar_boupdate
 									break;
 							};
 							// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT|X-*}
-							$parameters['ATTENDEE'][] = array(
-								'CN'       => $participantCN,
-								'ROLE'     => $role,
-								'PARTSTAT' => $status,
-								'CUTYPE'   => $cutype,
-								'RSVP'     => $rsvp,
-							)+($info['type'] != 'e' ? array('X-EGROUPWARE-UID' => $uid) : array())+
-							($quantity > 1 ? array('X-EGROUPWARE-QUANTITY' => $quantity) : array());
+							$options = array();
+							if (!empty($participantCN)) $options['CN'] = $participantCN;
+							if (!empty($role)) $options['ROLE'] = $role;
+							if (!empty($status)) $options['PARTSTAT'] = $status;
+							if (!empty($cutype)) $options['CUTYPE'] = $cutype;
+							if (!empty($rsvp)) $options['RSVP'] = $rsvp;
+							if (!empty($info['email'])) $options['EMAIL'] = $info['email'];
+							if ($info['type'] != 'e') $options['X-EGROUPWARE-UID'] = $uid;
+							if ($quantity > 1) $options['X-EGROUPWARE-QUANTITY'] = $quantity;
+							$attributes['ATTENDEE'][]	= $participantURL;
+							$parameters['ATTENDEE'][] = $options;
 						}
 						break;
 
@@ -544,37 +550,38 @@ class calendar_ical extends calendar_boupdate
 	    				{
 	    					$organizerCN = '"' . trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname')
 			    				. ' ' . $GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname')) . '"';
-			    			$organizerURL = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+			    			$organizerEMail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 			    			if ($version == '1.0')
 			    			{
 		    					$organizerURL = trim($organizerCN . (empty($organizerURL) ? '' : ' <' . $organizerURL .'>'));
 			    			}
 			    			else
 			    			{
-		    					$organizerURL = empty($organizerURL) ? '' : 'MAILTO:' . $organizerURL;
+		    					$organizerURL = empty($organizerEMail) ? '' : 'MAILTO:' . $organizerEMail;
 			    			}
 			    			$organizerUID = $event['owner'];
 		    				if (!isset($event['participants'][$event['owner']]))
 		    				{
-			    				$attributes['ATTENDEE'][] = $organizerURL;
-			    				$parameters['ATTENDEE'][] = array(
-				    				'CN'       => $organizerCN,
+			    				$options = array(
 									'ROLE'     => 'CHAIR',
 									'PARTSTAT' => 'DELEGATED',
 									'CUTYPE'   => 'INDIVIDUAL',
-									'RSVP'     => 'FALSE',
-									'X-EGROUPWARE-UID' => $event['owner'],
-			    				);
+									//'RSVP'     => 'FALSE',
+									);
+								if (!empty($organizerCN)) $options['CN'] = $organizerCN;	
+								if (!empty($organizerEMail)) $options['EMAIL'] = $organizerEMail;
+								if (!empty($event['owner'])) $options['X-EGROUPWARE-UID'] = $event['owner'];
+								$attributes['ATTENDEE'][] = $organizerURL;
+			    				$parameters['ATTENDEE'][] = $options;
 		    				}
 	    				}
-		    			if ($this->productManufacturer != 'groupdav' ||
-			    			!$this->check_perms(EGW_ACL_EDIT,$event))
-			    			{
+	    				if ($this->productManufacturer != 'groupdav' ||	!$this->check_perms(EGW_ACL_EDIT,$event))
+	    				{
 		    				$attributes['ORGANIZER'] = $organizerURL;
 		    				$parameters['ORGANIZER']['CN'] = $organizerCN;
 		    				if (!empty($organizerUID))
 		    				{
-		    					$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
+			    				$parameters['ORGANIZER']['X-EGROUPWARE-UID'] = $organizerUID;
 		    				}
 	    				}
 	    				break;
@@ -612,6 +619,8 @@ class calendar_ical extends calendar_boupdate
 						$rrule = $rriter->generate_rrule($version);
 						if ($event['recur_enddate'])
 						{
+							$length = ($event['end'] - $event['start']) / 2;
+							$rrule['UNTIL']->modify($length . ' second');
 							if (!$tzid || $version != '1.0')
 							{
 								if (!isset(self::$tz_cache['UTC']))
@@ -1049,6 +1058,7 @@ class calendar_ical extends calendar_boupdate
 	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null)
 	{
 		$this->events_imported = 0;
+		$replace = $delete_exceptions= false;
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
 
@@ -1062,6 +1072,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (count($events) == 1)
 			{
+				$replace = $recur_date == 0;
 				$events[0]['id'] = $cal_id;
 				if (!is_null($etag)) $events[0]['etag'] = (int) $etag;
 				if ($recur_date) $events[0]['recurrence'] = $recur_date;
@@ -1117,43 +1128,42 @@ class calendar_ical extends calendar_boupdate
 					. array2string($event)."\n",3,$this->logfile);
 			}
 
-			/*
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			$updated_id = false;
+			
+			if ($replace)
 			{
-				// Adjust the event start -- no exceptions before and at the start
-				$length = $event['end'] - $event['start'];
-				$rriter = calendar_rrule::event2rrule($event, false);
-				$rriter->rewind();
-				if (!$rriter->valid()) continue; // completely disolved into exceptions
-
-				$newstart = egw_time::to($rriter->current, 'server');
-				if ($newstart != $event['start'])
+				$event_info['type'] = $event['recur_type'] == MCAL_RECUR_NONE ?
+					'SINGLE' : 'SERIES-MASTER';
+				$event_info['acl_edit'] = $this->check_perms(EGW_ACL_EDIT, $cal_id);
+				if (($event_info['stored_event'] = $this->read($cal_id, 0, false, 'server')) &&
+					$event_info['stored_event']['recur_type'] != MCAL_RECUR_NONE &&
+					($event_info['stored_event']['recur_type'] != $event['recur_type']
+					|| $event_info['stored_event']['recur_interval'] != $event['recur_interval']
+					|| $event_info['stored_event']['recur_data'] != $event['recur_data']
+					|| $event_info['stored_event']['start'] != $event['start']))
 				{
-					// leading exceptions skiped
-					$event['start'] = $newstart;
-					$event['end'] = $newstart + $length;
-				}
-
-				$exceptions = $event['recur_exception'];
-				foreach($exceptions as $key => $day)
-				{
-					// remove leading exceptions
-					if ($day <= $event['start'])
+					// handle the old exceptions
+					$recur_exceptions = $this->so->get_related($event_info['stored_event']['uid']);
+					foreach ($recur_exceptions as $id)
 					{
-						if ($this->log)
+						if ($delete_exceptions)
 						{
-							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-								'(): event SERIES-MASTER skip leading exception ' .
-								$day . "\n",3,$this->logfile);
+							$this->delete($id);
 						}
-						unset($exceptions[$key]);
+						else
+						{
+							if (!($exception = $this->read($id))) continue;
+							$exception['uid'] = common::generate_uid('calendar', $id);
+							$exception['reference'] = $exception['recurrence'] = 0;
+							$this->update($exception, true);
+						}
 					}
 				}
-				$event['recur_exception'] = $exceptions;
 			}
-			*/
-			$updated_id = false;
-			$event_info = $this->get_event_info($event);
+			else
+			{
+				$event_info = $this->get_event_info($event);
+			}
 
 			// common adjustments for existing events
 			if (is_array($event_info['stored_event']))
@@ -1468,55 +1478,7 @@ class calendar_ical extends calendar_boupdate
 						if (is_array($days))
 						{
 							$recur_exceptions = array();
-							/*
-							if (!isset($days[$event_info['stored_event']['start']]) &&
-								$event_info['stored_event']['start'] < $event['start'])
-							{
-								// We started with a pseudo exception and moved the
-								// event start therefore to the future; let's try to go back
-								$exceptions = $this->so->get_recurrence_exceptions($event_info['stored_event'], $this->tzid, 0, 0, 'rrule');
-								if ($this->log)
-								{
-									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(START ADJUSTMENT):\n" .
-										array2string($exceptions)."\n",3,$this->logfile);
-								}
-								$startdate = $event_info['stored_event']['start'];
-								$length = $event['end'] - $event['start'];
-								$rriter = calendar_rrule::event2rrule($event_info['stored_event'], false);
-								$rriter->rewind();
-								do
-								{
-									// start is a pseudo excpetion for sure
-									$rriter->next_no_exception();
-									$day = $this->date2ts($rriter->current());
-									if ($this->log)
-									{
-										error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-											'(): event SERIES-MASTER try leading pseudo exception ' .
-											$day . "\n",3,$this->logfile);
-									}
-									if ($day >= $event['start']) break;
-									if (!isset($exceptions[$day]))
-									{
-										// all leading occurrences have to be exceptions;
-										// if not -> no restore
-										if ($this->log)
-										{
-											error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-												'(): event SERIES-MASTER pseudo exception series broken at ' .
-												$rriter->current() . "!\n",3,$this->logfile);
-										}
-										$startdate = $event['start'];
-										$recur_exceptions = array();
-										break;
-									}
-									$recur_exceptions[] = $day;
-								} while ($rriter->valid());
-
-								$event['start'] = $startdate;
-								$event['end'] = $startdate + $length;
-							} */
-
+							
 							foreach ($event['recur_exception'] as $recur_exception)
 							{
 								if (isset($days[$recur_exception]))
@@ -1589,43 +1551,7 @@ class calendar_ical extends calendar_boupdate
 									array_unique(array_merge($event_info['master_event']['recur_exception'],
 										array($event['recurrence'])));
 							}
-							/*
-							// Adjust the event start -- must not be an exception
-							$length = $event_info['master_event']['end'] - $event_info['master_event']['start'];
-							$rriter = calendar_rrule::event2rrule($event_info['master_event'], false);
-							$rriter->rewind();
-							if ($rriter->valid())
-							{
-								$newstart = egw_time::to($rriter->current, 'server');
-								foreach($event_info['master_event']['recur_exception'] as $key => $day)
-								{
-									// remove leading exceptions
-									if ($day < $newstart)
-									{
-										if (($foundEvents = $this->find_event(
-											array('uid' => $event_info['master_event']['uid'],
-												'recurrence' => $day), 'exact')) &&
-												($eventId = array_shift($foundEvents)) &&
-												($exception = read($eventId, 0, 'server')))
-										{
-											// Unlink this exception
-											unset($exception['uid']);
-											$this->update($exception, true);
-										}
-										if ($event['recurrence'] == $day)
-										{
-											// Unlink this exception
-											unset($event['uid']);
-										}
-										unset($event_info['master_event']['recur_exception'][$key]);
-									}
-								}
-							}
-							if ($event_info['master_event']['start'] < $newstart)
-							{
-								$event_info['master_event']['start'] = $newstart;
-								$event_info['master_event']['end'] = $newstart + $length;
-							}*/
+							
 							$event['reference'] = $event_info['master_event']['id'];
 							$event['category'] = $event_info['master_event']['category'];
 							$event['owner'] = $event_info['master_event']['owner'];
