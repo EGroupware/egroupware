@@ -1556,6 +1556,7 @@ class common
 	 * @param string $default='' default to use if referer is not set by webserver or not determinable
 	 * @param string $referer='' referer string to use, default ('') use $_SERVER['HTTP_REFERER']
 	 * @return string
+	 * @todo get "real" referer for jDots template
 	 */
 	static function get_referer($default='',$referer='')
 	{
@@ -1573,7 +1574,7 @@ class common
 		}
 		$referer = str_replace('/etemplate/process_exec.php','/index.php',$referer);
 
-		if (empty($referer)) $referer = $default;
+		if (empty($referer) || strpos($referer,'cd=yes') !== false) $referer = $default;
 
 		return $referer;
 	}
