@@ -495,6 +495,25 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 
 		$handler = $this->_get_handler();
 		$vCalendar = htmlspecialchars_decode($options['content']);
+		$charset = null;
+		if (!empty($options['content_type']))
+		{
+			$content_type = explode(';', $options['content_type']);
+			if (count($content_type) > 1)
+			{
+				array_shift($content_type);
+				foreach ($content_type as $attribute)
+				{
+					trim($attribute);
+					list($key, $value) = explode('=', $attribute);
+					switch (strtolower($key))
+					{
+						case 'charset':
+							$charset = strtoupper(substr($value,1,-1));
+					}
+				}
+			} 
+		}
 
 		if (is_array($oldEvent))
 		{
@@ -512,7 +531,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		else
 		{
 			// new entry?
-			if (($foundEvents = $handler->search($vCalendar)))
+			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
 			{
 				if (($eventId = array_shift($foundEvents)) &&
 					(list($eventId) = explode(':', $eventId)) &&
@@ -536,7 +555,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		}
 
 		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
-			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user)))
+			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user, $charset)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
 			if ($eventId && $cal_id === false)
@@ -572,6 +591,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function post(&$options,$id,$user=null)
 	{
+		$status = $this->put($options,$id,$user);
+		// error_log("CalDAV POST: $status" . print_r($options, true));
 		return true;
 	}
 
@@ -684,9 +705,9 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	function read($id)
 	{
 		if ($this->debug > 1) error_log("bo-ical read  :$id:");
-		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server'))) return $retval;
 		$event = $this->bo->read($id, null, true, 'server');
-		if (!$this->bo->check_perms(EGW_ACL_READ, $id, 0, 'server'))
+		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))) return $retval;
+		if (!$this->bo->check_perms(EGW_ACL_READ, $event, 0, 'server'))
 		{
 			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
 		}
@@ -850,8 +871,12 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			array(HTTP_WebDAV_Server::mkprop(groupdav::DAV,'href',$base_uri.'/calendar/')));
 		*/
 		// email of the current user, see caldav-sheduling draft
-		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
-			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+			HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']),
+			HTTP_WebDAV_Server::mkprop('href',$base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/'),
+			HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.$GLOBALS['egw_info']['user']['account_lid'])));
+		//$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+		//	HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email'])));
 		// supported components, currently only VEVENT
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-component-set',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VCALENDAR')),
@@ -867,6 +892,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/calendar', 'version'=> '2.0')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/x-calendar', 'version'=> '1.0'))));
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::ICAL,'calendar-color','#0040A0FF'); // TODO: make it configurable
+		//$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'publish-url',array(
+		//	HTTP_WebDAV_Server::mkprop('href',$base_uri.'/calendar/')));
 
 		//$props = self::current_user_privilege_set($props);
 		return $props;
