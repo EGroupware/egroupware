@@ -496,6 +496,22 @@ class calendar_ical extends calendar_boupdate
 										$participantURL = 'invalid:nomail';
 										$cutype = 'INDIVIDUAL';
 									}
+									$members = $GLOBALS['egw']->accounts->members($uid, true);
+									if (!isset($event['participants'][$this->user]) && in_array($this->user, $members))
+									{
+										$user = $this->resource_info($this->user);
+										$attributes['ATTENDEE'][] = 'MAILTO:' . $user['email'];
+			    						$parameters['ATTENDEE'][] = array(
+			    							'CN'		=>	$user['name'],
+			    							'ROLE'		=> 'REQ-PARTICIPANT',
+											'PARTSTAT'	=> 'NEEDS-ACTION',
+											'CUTYPE'	=> 'INDIVIDUAL',
+											'RSVP'		=> 'TRUE',
+											'X-EGROUPWARE-UID'	=> $this->user,
+											'EMAIL'		=>	$user['email'],
+			    							);
+			    						$event['participants'][$this->user] = true;
+									}
 									break;
 								case 'r':
 									$cutype = 'RESOURCE';
