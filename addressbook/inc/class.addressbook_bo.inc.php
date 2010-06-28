@@ -341,14 +341,30 @@ class addressbook_bo extends addressbook_so
 	 *
 	 * @param array $contact
 	 * @param string $type=null file_as type, default null to read it from the contact, unknown/not set type default to the first one
+	 * @param boolean $update=false If true, reads the old record for any not set fields
 	 * @return string
 	 */
-	function fileas($contact,$type=null)
+	function fileas($contact,$type=null, $isUpdate=false)
 	{
 		if (is_null($type)) $type = $contact['fileas_type'];
 		if (!$type) $type = $this->prefs['fileas_default'] ? $this->prefs['fileas_default'] : $this->fileas_types[0];
 
 		if (strpos($type,'n_fn') !== false) $contact['n_fn'] = $this->fullname($contact);
+
+		if($isUpdate)
+		{
+			$fileas_fields = array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality');
+			$old = null;
+			foreach($fileas_fields as $field)
+			{
+				if(!isset($contact[$field]))
+				{
+					if(is_null($old)) $old = $this->read($contact['id']);
+					$contact[$field] = $old[$field];
+				}
+			}
+			unset($old);
+		}
 
 		$fileas = str_replace(array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality'),
 			array($contact['n_prefix'],$contact['n_given'],$contact['n_middle'],$contact['n_family'],$contact['n_suffix'],
@@ -787,8 +803,9 @@ class addressbook_bo extends addressbook_so
 		if (!isset($contact['n_fn']))
 		{
 			$contact['n_fn'] = $this->fullname($contact);
-			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
+		if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact, null, false);
+
 		$to_write = $contact;
 		// (non-admin) user editing his own account, make sure he does not change fields he is not allowed to (eg. via SyncML or xmlrpc)
 		if (!$ignore_acl && !$contact['owner'] && !$this->is_admin($contact))
