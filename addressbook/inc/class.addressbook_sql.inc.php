@@ -246,6 +246,12 @@ class addressbook_sql extends so_sql_cf
 
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
+		// fix cat_id criteria to search in comma-separated multiple cats and return subcats
+		if (($cats = $criteria['cat_id']))
+		{
+			$criteria += $this->_cat_search($criteria['cat_id'],$not);
+			unset($criteria['cat_id']);
+		}
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
 		if (($cats = $filter['cat_id']))
 		{
