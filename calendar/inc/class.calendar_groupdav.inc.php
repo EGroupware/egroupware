@@ -591,8 +591,11 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function post(&$options,$id,$user=null)
 	{
-		$status = $this->put($options,$id,$user);
-		// error_log("CalDAV POST: $status" . print_r($options, true));
+		if (preg_match('/^METHOD:PUBLISH(\r\n|\r|\n)/im', $options['content']))
+		{
+			$status = $this->put($options,$id,$user);
+			// error_log("CalDAV POST: $status" . print_r($options, true));
+		}
 		return true;
 	}
 
