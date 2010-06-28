@@ -398,6 +398,7 @@ class infolog_ui
 		$readonlys = $rows = array();
 		foreach($infos as $id => $info)
 		{
+			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
 			if (!$query['csv_export'])
 			{
 				$info['links'] =& $links[$id];
@@ -1033,6 +1034,7 @@ class infolog_ui
 			//echo "<p>infolog_ui::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 			$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
+			if (!(strpos($content['info_addr'],',')===false) && strpos($content['info_addr'],', ')===false) $content['info_addr'] = str_replace(',',', ',$content['info_addr']);
 			if (is_numeric($_REQUEST['cat_id']))
 			{
 				$content['info_cat'] = (int) $_REQUEST['cat_id'];
