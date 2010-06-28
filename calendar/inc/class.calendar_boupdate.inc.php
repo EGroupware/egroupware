@@ -1210,7 +1210,12 @@ class calendar_boupdate extends calendar_bo
 		{
 			return false;
 		}
-		$this->send_update(MSG_DELETED,$event['participants'],$event);
+
+		// Don't send notification if the event has already been deleted
+		if(!$event['deleted'])
+		{
+			$this->send_update(MSG_DELETED,$event['participants'],$event);
+		}
 
 		if (!$recur_date || $event['recur_type'] == MCAL_RECUR_NONE)
 		{
