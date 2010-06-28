@@ -316,7 +316,10 @@ class timesheet_ui extends timesheet_bo
 							unset($content['end_time']);
 							break;
 						default:
-							$preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
+							if(!$preserv['ts_title_blur'])
+							{
+								$preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
+							}
 							break;
 					}
 					egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
