@@ -165,7 +165,7 @@
 						<description value="Exceptions"/>
 						<button label="@exception_label" no_lang="1" id="button[exception]" statustext="Create an exception for the given date"/>
 					</vbox>
-					<grid>
+					<grid id="recur_exception">
 						<columns>
 							<column/>
 							<column/>
