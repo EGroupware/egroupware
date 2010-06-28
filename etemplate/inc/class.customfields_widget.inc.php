@@ -438,6 +438,7 @@ class customfields_widget
 					{
 						$cell = $input;
 						if ($type == 'customfields') $cell['label'] = $field['label'];
+						$value = $value[$this->prefix.$lname];
 						return true;
 					}
 					etemplate::add_child($cell,$input);
