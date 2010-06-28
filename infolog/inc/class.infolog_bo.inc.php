@@ -1013,8 +1013,8 @@ class infolog_bo
 		$info = array(
 			'info_id' => 0,
 			'info_type' => $type,
-			'info_from' => implode(',',$name),
-			'info_addr' => implode(',',$email),
+			'info_from' => implode(', ',$name),
+			'info_addr' => implode(', ',$email),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
 			'info_startdate' => $_date,
