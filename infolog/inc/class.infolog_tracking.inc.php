@@ -280,19 +280,20 @@ class infolog_tracking extends bo_tracking
 		if(is_null($changed_fields))
 		{
 			$changed_fields = $this->changed_fields($data, $old);
+			$changes = count($changed_fields); // we need that since TRUE evaluates to 1
 		}
 		if(is_array($changed_fields) && $changes == 1 && in_array('info_datemodified', $changed_fields))
 		{
 			return count($changes);
 		}
 
-                // do not run do_notifications if we have no changes
-                if ($changes && !$skip_notification && !$this->do_notifications($data,$old,$deleted))
-                {
-                        $changes = false;
-                }
-                return $changes;
-        }
+		// do not run do_notifications if we have no changes
+		if ($changes && !$skip_notification && !$this->do_notifications($data,$old,$deleted))
+		{
+			$changes = false;
+		}
+		return $changes;
+	}
 
 	/**
 	 * Save changes to the history log
