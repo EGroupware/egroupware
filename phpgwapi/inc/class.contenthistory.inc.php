@@ -170,4 +170,32 @@ class contenthistory
 		}
 		return true;
 	}
+	
+	/**
+	 * get the timestamp of last change for appname
+	 *
+	 * find which content changed since $_ts for application $_appName
+	 *
+	 * @param string$_appName the appname example: infolog_notes
+	 * 
+	 * @return timestamp of last change for this application
+	 */
+	function getLastChange($_appName)
+	{
+		$max = 0;
+		
+		$where = array('sync_appname' => $_appName);
+
+		foreach (array('modified','deleted','added') as $action)
+		{
+			if (($ts = $this->db->select(self::TABLE,'MAX(sync_'.$action.')',$where,__LINE__,__FILE__)->fetchColumn()))
+			{
+				$ts = $this->db->from_timestamp($ts);
+				if ($ts > $max) $max = $ts;
+			}
+		}
+			
+		return $max;
+	}
+	
 }

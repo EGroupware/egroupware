@@ -758,34 +758,11 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	public function getctag($path,$user)
 	{
-		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user]");
+		$ctag = $GLOBALS['egw']->contenthistory->getLastChange('calendar');
+
+		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
 		
-		$filter = array(
-			'users' => $user,
-			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync recurrences
-			'end' => time()+365*24*3600,	// default one year into the future +365
-			'enum_recuring' => false,
-			'daywise' => false,
-			'date_format' => 'server',
-			'order' => 'cal_modified DESC,cal_etag DESC',
-			'offset' => 0,
-			'num_rows'	=> 1,
-		);
-
-		if (strpos($path, '/calendar') === 0)
-		{
-			$filter['filter'] = 'owner';
-		}
-		else
-		{
-			$filter['filter'] = 'default'; // not rejected
-		}
-
-		$result =& $this->bo->search($filter);
-
-		$entry = array_shift($result);
-
-		return $this->get_etag($entry);
+		return 'EGw-'.$ctag.'-wGE';
 	}
 
 	/**

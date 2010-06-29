@@ -392,9 +392,17 @@ class addressbook_groupdav extends groupdav_handler
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 
 		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','',false,'AND',false,$filter);
-
-		$ctag = 'EGw-'.$result[0]['contact_modified'].'-wGE';
-		return $ctag;
+		
+		if (empty($result))
+		{
+			$ctag = $result[0]['contact_modified'];
+		}
+		else
+		{
+			$ctag = time();
+		}
+				
+		return 'EGw-'.$ctag.'-wGE';
 	}
 
 	/**
