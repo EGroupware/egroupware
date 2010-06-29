@@ -842,9 +842,9 @@ class addressbook_vcal extends addressbook_bo
 							&& !isset($finalRowNames['TEL;HOME;VOICE']))
 					{
 						$finalRowNames['TEL;HOME;VOICE'] = $vcardKey;
+						break;
 					}
-					break;
-					case 'TEL;X-egw-Ref3':
+				case 'TEL;X-egw-Ref3':
 					if (!in_array('TEL;OTHER', $rowNames)
 							&& !in_array('TEL;OTHER;VOICE', $rowNames)
 							&& !isset($finalRowNames['TEL;OTHER']))
