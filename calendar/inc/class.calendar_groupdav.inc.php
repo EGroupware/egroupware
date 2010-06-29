@@ -482,7 +482,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 		if (!is_null($oldEvent) && !is_array($oldEvent))
 		{
-			if ($this->debug) error_log(__METHOD__.print_r($oldEvent,true).function_backtrace());
+			if ($this->debug) error_log(__METHOD__.': '.print_r($oldEvent,true).function_backtrace());
 			return $oldEvent;
 		}
 
@@ -591,10 +591,44 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function post(&$options,$id,$user=null)
 	{
-		if (preg_match('/^METHOD:PUBLISH(\r\n|\r|\n)/im', $options['content']))
+		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
+		
+		if (preg_match('/^METHOD:(PUBLISH|REQUEST)(\r\n|\r|\n)(.*)^BEGIN:VEVENT/ism', $options['content']))
 		{
-			$status = $this->put($options,$id,$user);
-			// error_log("CalDAV POST: $status" . print_r($options, true));
+			$handler = $this->_get_handler();
+			$vCalendar = htmlspecialchars_decode($options['content']);
+			$charset = null;
+			if (!empty($options['content_type']))
+			{
+				$content_type = explode(';', $options['content_type']);
+				if (count($content_type) > 1)
+				{
+					array_shift($content_type);
+					foreach ($content_type as $attribute)
+					{
+						trim($attribute);
+						list($key, $value) = explode('=', $attribute);
+						switch (strtolower($key))
+						{
+							case 'charset':
+								$charset = strtoupper(substr($value,1,-1));
+						}
+					}
+				} 
+			}
+			
+			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
+			{
+				$eventId = array_shift($foundEvents);
+				list($eventId) = explode(':', $eventId);
+				
+				if (!($cal_id = $handler->importVCal($vCalendar, $eventId, null,
+					false, 0, $this->principalURL, $user, $charset)))
+				{
+					if ($this->debug) error_log(__METHOD__."() importVCal($eventId) returned false");
+				}
+				header('ETag: '.$this->get_etag($eventId));
+			}
 		}
 		return true;
 	}

@@ -1336,21 +1336,103 @@ class HTTP_WebDAV_Server
         $status          = '405 Method not allowed';
         $options         = Array();
         $options['path'] = $this->path;
-
-        if (!isset($options['mimetype'])) {
-            $options['mimetype'] = "application/octet-stream";
+        
+        error_log('WebDAV POST: ' . $this->path);
+        
+        if (isset($this->_SERVER['CONTENT_LENGTH']))
+        {
+	        $options['content_length'] = $this->_SERVER['CONTENT_LENGTH'];
         }
-        header("Content-type: $options[mimetype]");
-
-        if (isset($options['mtime'])) {
-            header("Last-modified:".gmdate("D, d M Y H:i:s ", $options['mtime'])."GMT");
-        }
-
-        if (isset($options['size'])) {
-            header("Content-length: ".$options['size']);
+        elseif (isset($this->_SERVER['X-Expected-Entity-Length']))
+		{
+	        // MacOS gives us that hint
+	        $options['content_length'] = $this->_SERVER['X-Expected-Entity-Length'];
+		}
+        
+        // get the Content-type
+        if (isset($this->_SERVER["CONTENT_TYPE"])) {
+	        // for now we do not support any sort of multipart requests
+	        if (!strncmp($this->_SERVER["CONTENT_TYPE"], 'multipart/', 10)) {
+		        $this->http_status('501 not implemented');
+		        echo 'The service does not support mulipart POST requests';
+		        return;
+	        }
+	        $options['content_type'] = $this->_SERVER['CONTENT_TYPE'];
+        } else {
+	        // default content type if none given
+	        $options['content_type'] = 'application/octet-stream';
         }
         
-        $options["stream"] = fopen("php://input", "r");
+        /* RFC 2616 2.6 says: "The recipient of the entity MUST NOT
+         ignore any Content-* (e.g. Content-Range) headers that it
+         does not understand or implement and MUST return a 501
+         (Not Implemented) response in such cases."
+         */
+        foreach ($this->_SERVER as $key => $val) {
+	        if (strncmp($key, 'HTTP_CONTENT', 11)) continue;
+	        switch ($key) {
+		        case 'HTTP_CONTENT_ENCODING': // RFC 2616 14.11
+			        // TODO support this if ext/zlib filters are available
+			        $this->http_status('501 not implemented');
+			        echo "The service does not support '$val' content encoding";
+			        return;
+			        
+		        case 'HTTP_CONTENT_LANGUAGE': // RFC 2616 14.12
+			        // we assume it is not critical if this one is ignored
+			        // in the actual POST implementation ...
+			        $options['content_language'] = $val;
+			        break;
+			        
+		        case 'HTTP_CONTENT_LENGTH':
+			        // defined on IIS and has the same value as CONTENT_LENGTH
+			        break;
+			        
+		        case 'HTTP_CONTENT_LOCATION': // RFC 2616 14.14
+			        /* The meaning of the Content-Location header in PUT
+			         or POST requests is undefined; servers are free
+			         to ignore it in those cases. */
+			        break;
+			        
+		        case 'HTTP_CONTENT_RANGE':    // RFC 2616 14.16
+			        // single byte range requests are supported
+			        // the header format is also specified in RFC 2616 14.16
+			        // TODO we have to ensure that implementations support this or send 501 instead
+			        if (!preg_match('@bytes\s+(\d+)-(\d+)/((\d+)|\*)@', $val, $matches)) {
+				        $this->http_status('400 bad request');
+				        echo 'The service does only support single byte ranges';
+				        return;
+			        }
+			        
+			        $range = array('start'=>$matches[1], 'end'=>$matches[2]);
+			        if (is_numeric($matches[3])) {
+				        $range['total_length'] = $matches[3];
+			        }
+			        $option['ranges'][] = $range;
+			        
+			        // TODO make sure the implementation supports partial POST
+			        // this has to be done in advance to avoid data being overwritten
+			        // on implementations that do not support this ...
+			        break;
+			        
+		        case 'HTTP_CONTENT_TYPE':
+			        // defined on IIS and has the same value as CONTENT_TYPE
+			        break;
+			        
+		        case 'HTTP_CONTENT_MD5':      // RFC 2616 14.15
+			        // TODO: maybe we can just pretend here?
+			        $this->http_status('501 not implemented');
+			        echo 'The service does not support content MD5 checksum verification';
+			        return;
+			        
+		        default:
+			        // any other unknown Content-* headers
+			        $this->http_status('501 not implemented');
+		        echo "The service does not support '$key'";
+		        return;
+	        }
+        }
+        
+        $options['stream'] = fopen('php://input', 'r');
         
         if (method_exists($this, 'POST')) {
 	        $status = $this->POST($options);
@@ -1359,24 +1441,24 @@ class HTTP_WebDAV_Server
 		        $status = '400 Something went wrong';
 	        } else if ($status === true) {
 	        	$status = '200 OK';
-	        } else if (is_resource($status) && get_resource_type($status) == "stream") {
+	        } else if (is_resource($status) && get_resource_type($status) == 'stream') {
 		        $stream = $status;
 		        
-		        $status = empty($options["new"]) ? '200 OK' : '201 Created';
+		        $status = empty($options['new']) ? '200 OK' : '201 Created';
 		        
-		        if (!empty($options["ranges"])) {
+		        if (!empty($options['ranges'])) {
 			        // TODO multipart support is missing (see also above)
-			        if (0 == fseek($stream, $range[0]["start"], SEEK_SET)) {
-				        $length = $range[0]["end"]-$range[0]["start"]+1;
-				        if (!fwrite($stream, fread($options["stream"], $length))) {
+			        if (0 == fseek($stream, $range[0]['start'], SEEK_SET)) {
+				        $length = $range[0]['end']-$range[0]['start']+1;
+				        if (!fwrite($stream, fread($options['stream'], $length))) {
 					        $status = '403 Forbidden';
 				        }
 			        } else {
 				        $status = '403 Forbidden';
 			        }
 		        } else {
-			        while (!feof($options["stream"])) {
-				        if (false === fwrite($stream, fread($options["stream"], 4096))) {
+			        while (!feof($options['stream'])) {
+				        if (false === fwrite($stream, fread($options['stream'], 4096))) {
 					        $status = '403 Forbidden';
 					        break;
 				        }
