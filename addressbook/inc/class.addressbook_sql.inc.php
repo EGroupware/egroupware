@@ -249,7 +249,7 @@ class addressbook_sql extends so_sql_cf
 		// fix cat_id criteria to search in comma-separated multiple cats and return subcats
 		if (is_array($criteria) && ($cats = $criteria['cat_id']))
 		{
-			$criteria += $this->_cat_search($criteria['cat_id'],$not);
+			$criteria = array_merge($criteria, $this->_cat_search($criteria['cat_id']));
 			unset($criteria['cat_id']);
 		}
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
