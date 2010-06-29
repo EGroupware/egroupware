@@ -90,6 +90,10 @@ if (isset($_GET['menuaction']))
 	$json = new egw_json_request();
 
 	//Check whether the request data is set
+	if (isset($GLOBALS['egw_unset_vars']['_POST[json_data]']))
+	{
+		throw new egw_exception_assertion_failed("JSON Data contains script tags. Aborting...");
+	}
 	$json->parseRequest($_GET['menuaction'], (array)$_POST['json_data']);
 	common::egw_exit();
 }
