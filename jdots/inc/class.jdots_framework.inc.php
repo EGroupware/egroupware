@@ -222,7 +222,18 @@ class jdots_framework extends egw_framework
 		window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
 	}
 </script>';
+			// app header for print (different from website_title, which also contains app header)
+			if ($GLOBALS['egw_info']['flags']['app_header'])
+			{
+				$app_header = $GLOBALS['egw_info']['flags']['app_header'];
+			}
+			else
+			{
+				$app = $GLOBALS['egw_info']['flags']['currentapp'];
+				$app_header = isset($GLOBALS['egw_info']['apps'][$app]) ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
+			}
 		}
+		$this->tpl->set_var('app_header',(string)$app_header);
 		$this->tpl->set_var($vars = $this->_get_header());
 		$content .= $this->tpl->fp('out','head').$content;
 		
