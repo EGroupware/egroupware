@@ -22,7 +22,12 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 
-include('../../header.inc.php');
+try {
+	include('../../header.inc.php');
+} 
+catch (egw_exception_no_permission_app $e) {
+	// ignore exception, if home is not allowed, eg. for sitemgr
+}
 
 header('Content-type: text/javascript; charset='.$GLOBALS['egw']->translation->charset());
 $GLOBALS['egw']->translation->add_app('jscalendar');
