@@ -69,6 +69,7 @@
 			{
 				case 'felamimail.uipreferences.editSignature':
 					$GLOBALS['egw']->js->validate_file('jscode','listSignatures','felamimail');
+					egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
 					#$GLOBALS['egw']->js->set_onload('fm_initEditLayout();');
 					break;
 				case 'felamimail.uipreferences.listAccountData':
@@ -185,6 +186,7 @@
 					)
 				);
 			} else {
+				$this->t->set_var('description','');
 				$this->t->set_var('tinymce',html::fckEditorQuick('signature', 'advanced', '', $height));
 
 				$this->t->set_var('checkbox_isDefaultSignature',html::checkbox(
@@ -193,8 +195,7 @@
 
 			}
 
-			$this->t->parse("out","main");
-			print $this->t->get('out','main');
+			$this->t->pparse("out","main");
 		}
 		
 		function editAccountData($msg='')
