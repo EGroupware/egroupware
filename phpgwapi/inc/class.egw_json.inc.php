@@ -146,6 +146,11 @@ class egw_json_response
 	private $hasData = false;
 
 	/**
+	 * Array containing all beforeSendData callbacks
+	 */
+	protected $beforeSendDataProcs = array();
+
+	/**
 	 * Holds the actual response data which is then encoded to JSON
 	 * once the "getJSON" function is called
 	 *
@@ -190,7 +195,12 @@ class egw_json_response
 	{
 		$inst = self::get();
 
+		//Call each attached before send data proc
+		foreach ($inst->beforeSendDataProcs as $proc)
+			call_user_func_array($proc['proc'], $proc['params']);
+
 		$inst->sendHeader();
+
 		echo $inst->getJSON();
 	}
 
@@ -388,6 +398,28 @@ class egw_json_response
 		$res = array('response' => $inst->responseArray);
 
 		return json_encode($res);	//PHP5.3+, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+	}
+
+	/**
+	 * Function which can be used to add an event listener callback function to
+	 * the "beforeSendData" callback. This callback might be used to add a response
+	 * which always has to be added after all other responses.
+	 * @param callback Callback function or method which should be called before the response gets sent
+	 * @param mixed n Optional parameters which get passed to the callback function.
+	 */
+	public function addBeforeSendDataCallback($proc)
+	{
+		//Get the current instance
+		$inst = self::get();
+
+		//Get all parameters passed to the function and delete the first one
+		$params = func_get_args();
+		array_shift($params);
+
+		$inst->beforeSendDataProcs[] = array(
+			'proc' => $proc,
+			'params' => $params
+		);
 	}
 
 	/**

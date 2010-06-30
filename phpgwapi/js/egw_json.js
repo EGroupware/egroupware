@@ -187,7 +187,7 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 				"parameters": this.parameters
 			}
 		})
-	}
+	};
 
 	//Send the request via the jquery AJAX interface to the server
 	$.ajax({url: this.url + '?menuaction=' + this.menuaction,
