@@ -28,8 +28,6 @@ catch (egw_exception_no_permission_app $e) {
 	// ignore exception, if home is not allowed, eg. for sitemgr
 }
 
-include('../../header.inc.php');
-
 header('Content-type: text/javascript; charset='.translation::charset());
 translation::add_app('jscalendar');
 
