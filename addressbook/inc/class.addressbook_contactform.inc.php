@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007/8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -64,7 +64,13 @@ class addressbook_contactform
 						{
 							if (is_array($value) && isset($value['tmp_name']) && is_readable($value['tmp_name']))
 							{
+								// do no further permission check, as this would require_once
+								// the anonymous user to have run rights for addressbook AND
+								// edit rights for the addressbook used to store the new entry,
+								// which is clearly not wanted securitywise
+								egw_vfs::$is_root = true;
 								egw_link::link('addressbook',$id,egw_link::VFS_APPNAME,$value,$name);
+								egw_vfs::$is_root = false;
 							}
 						}
 						unset($content['modified']); unset($content['modifier']);	// not interesting for new entries
