@@ -165,11 +165,11 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 			   if the iframe stays maximized. */
 			if (window.parent && typeof window.parent.framework != 'undefined')
 			{
-				var height = $(window).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 58;
+				var height = $(window).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 70;
 			}
 			else
 			{
-				var height = $(window).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 75;
+				var height = $(window).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 90;
 			}
 
 			/* Tableheight specifies the rendered size of the table,
