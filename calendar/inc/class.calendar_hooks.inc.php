@@ -578,12 +578,14 @@ function calendar_purge_old($config) {
 	// Cancel old purge
 	ExecMethod('phpgwapi.asyncservice.cancel_timer', $id);
 
-	$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
-		array('month' => '*', 'day' => 1),
-		$id,
-		'calendar.calendar_boupdate.purge',
-		(int)$config
-	);
+	if((int)$config > 0) {
+		$result = ExecMethod2('phpgwapi.asyncservice.set_timer',
+			array('month' => '*', 'day' => 1),
+			$id,
+			'calendar.calendar_boupdate.purge',
+			(int)$config
+		);
+	}
 	if(!$result)
 	{
 		$GLOBALS['config_error'] = 'Unable to schedule purge';

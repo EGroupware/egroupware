@@ -1516,7 +1516,9 @@ ORDER BY cal_user_type, cal_usre_id
 		$sql = "DELETE egw_cal.* FROM egw_cal
 			LEFT JOIN egw_cal_repeats ON
 			    egw_cal_repeats.cal_id = egw_cal.cal_id
-			WHERE egw_cal_repeats.cal_id IS NULL || (recur_enddate < $date && recur_enddate != 0)";
+			JOIN egw_cal_dates ON
+				egw_cal.cal_id = egw_cal_dates.cal_id
+			WHERE cal_end < $date AND (egw_cal_repeats.cal_id IS NULL || (recur_enddate < $date && recur_enddate != 0))";
 		$this->db->query($sql, __LINE__, __FILE__);
 
 		// Get a list of what we just deleted for links
