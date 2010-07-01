@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 10.1.20100611
+Version: 10.1.20100630
 Release:
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -69,7 +69,7 @@ Source8: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 #Patch1: stylite-postfix-suse.patch
 #Patch2: mandriva_upload_tmp_dir.patch
-BuildRoot: %{_tmppath}/%{name}-9.2-buildroot
+BuildRoot: %{_tmppath}/%{name}-buildroot
 
 #otherwise build fails because of jar files in G2
 BuildRequires: unzip sed
@@ -566,9 +566,6 @@ install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %{egwdir}/json.php
 %{egwdir}/login.php
 %{egwdir}/logout.php
-%{egwdir}/notify.php
-%{egwdir}/notify_simple.php
-%{egwdir}/notifyxml.php
 %{egwdir}/redirect.php
 %{egwdir}/rpc.php
 %{egwdir}/set_box.php
