@@ -632,7 +632,7 @@ class egw_link extends solink
 		if (!$id) return '';
 
 		$title =& self::get_cache($app,$id);
-		if (isset($title) && !is_array($id))
+		if (isset($title) && !empty($title) && !is_array($id))
 		{
 			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (from cache)</p>\n";
 			return $title;
