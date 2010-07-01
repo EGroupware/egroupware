@@ -40,6 +40,23 @@ else if (document.layers)
 }
 
 /**
+ * Check whether the console object is defined - if not, define one
+ */
+if (typeof window.console == 'undefined')
+{
+	window.console = {
+		'log': function() {
+		},
+		'warn': function() {
+		},
+		'error': function() {
+		},
+		'info': function() {
+		}
+	}
+}
+
+/**
  * Seperates all script tags from the given html code and returns the seperately
  * @param object _html object that the html code from which the script should be seperated. The html code has to be stored in _html.html, the result js will be written to _html.js
  */
