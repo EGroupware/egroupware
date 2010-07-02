@@ -567,8 +567,8 @@ class infolog_groupdav extends groupdav_handler
 
 		$props[] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))))));
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget','')))))));
 
 		return $props;
 	}

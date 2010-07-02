@@ -273,8 +273,8 @@ class groupdav_principals extends groupdav_handler
 			HTTP_WebDAV_Server::mkprop('group-member-ship', $memberships),
 			HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',
-					HTTP_WebDAV_Server::mkprop('acl-principal-prop-set')))))),
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop('acl-principal-prop-set'))))))),
 		);
 		if ($this->debug > 1) error_log(__METHOD__."($path) path=/principals/users/".$account['account_lid'].', props='.array2string($props));
 		return array(
