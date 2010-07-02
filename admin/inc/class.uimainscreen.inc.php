@@ -20,7 +20,6 @@
 			$section     = $_POST['section'];
 			$select_lang = $_POST['select_lang'];
 			$message     = get_magic_quotes_gpc() ? stripslashes($_POST['message']) : $_POST['message'];
-
 			$acl_ok = array();
 			if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',1,'admin'))
 			{
@@ -35,6 +34,8 @@
 			{
 				$GLOBALS['egw']->redirect_link('/admin/index.php');
 			}
+
+			egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
 
 			$GLOBALS['egw']->template->set_file(array('message' => 'mainscreen_message.tpl'));
 			$GLOBALS['egw']->template->set_block('message','form','form');
@@ -127,8 +128,7 @@
 					 $htmlarea_button='<input type="submit" name="htmlarea" onclick="self.location.href=\''.
 						$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.
 						lang('activate WYSIWYG-editor').'">';
-
-				}			   
+				}
 				$GLOBALS['egw']->common->egw_header();
 				echo parse_navbar();
 				
@@ -158,7 +158,7 @@
 
 			$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
 			$GLOBALS['egw']->template->set_var('error_message',$feedback_message);
-			$GLOBALS['egw']->template->pfp('out','form');
+			$GLOBALS['egw']->template->pparse('out','form');
 		}
 	}
 ?>
