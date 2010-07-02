@@ -467,11 +467,11 @@ class addressbook_groupdav extends groupdav_handler
 		// supported reports (required property for CardDAV)
 		$props[] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',
-					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-query','')))),
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-query',''))))),
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
-				HTTP_WebDAV_Server::mkprop('report',
-					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget','')))),
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget',''))))),
 		));
 		//$props = self::current_user_privilege_set($props);
 		return $props;
