@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Christian Binder <christian-AT-jaytraxx.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-9 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-10 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -1513,7 +1513,7 @@ ORDER BY cal_user_type, cal_usre_id
 	function purge($date)
 	{
 		// Start with egw_cal, it's the easiest
-		$sql = "DELETE egw_cal.* FROM egw_cal
+		$sql = "DELETE FROM egw_cal
 			LEFT JOIN egw_cal_repeats ON
 			    egw_cal_repeats.cal_id = egw_cal.cal_id
 			JOIN egw_cal_dates ON
