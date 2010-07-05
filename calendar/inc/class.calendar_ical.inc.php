@@ -678,7 +678,10 @@ class calendar_ical extends calendar_boupdate
 
 							$attributes['EXDATE'] = '';
 							$values['EXDATE'] = $event['recur_exception'];
-							$parameters['EXDATE']['VALUE'] = $value_type;
+							if ($version != '1.0')
+							{
+								$parameters['EXDATE']['VALUE'] = $value_type;
+							}
 						}
 						break;
 
