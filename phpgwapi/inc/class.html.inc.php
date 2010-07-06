@@ -200,6 +200,8 @@ class html
 		$config->set('HTML.TidyLevel', 'light');
 		// EnableID is needed for anchor tags
 		$config->set('Attr.EnableID',true);
+		// enable target attributes
+		$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
 		// actual allowed tags and attributes
 		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true));
 		$config->set('AutoFormat.RemoveEmpty', true);
@@ -241,6 +243,8 @@ class html
 		$config->set('HTML.TidyLevel', 'light');
 		// EnableID is needed for anchor tags
 		$config->set('Attr.EnableID',true);
+		// enable target attributes
+		$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
 		// actual allowed tags and attributes
 		$config->set('URI.AllowedSchemes', array('http'=>true, 'https'=>true, 'ftp'=>true, 'file'=>true, 'cid'=>true));
 		$config->set('AutoFormat.RemoveEmpty', true);
@@ -1362,6 +1366,8 @@ class html
 				$config->set('HTML.TidyLevel', 'light');
 				// EnableID is needed for anchor tags
 				$config->set('Attr.EnableID',true);
+				// enable target attributes
+				$config->set('Attr.AllowedFrameTargets','_blank,_top,_self,_parent');
 				// actual allowed tags and attributes
 				$config->set('HTML.Allowed', 'br,p[align|style],b,i,u,s,em,pre,tt,strong,strike,center,div[align|style],hr[class|style],'.
 							'ul[type],ol[type|start],li,'.
