@@ -1186,7 +1186,7 @@
 
 			#_debug_array($bodyParts); exit;
 
-			foreach($bodyParts as $singleBodyPart) {
+			foreach((array)$bodyParts as $singleBodyPart) {
 				if (!isset($singleBodyPart['body'])) {
 					$singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart);
 					$body .= $singleBodyPart['body'];
