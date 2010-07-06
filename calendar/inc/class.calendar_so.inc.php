@@ -1513,42 +1513,34 @@ ORDER BY cal_user_type, cal_usre_id
 	function purge($date)
 	{
 		// Start with egw_cal, it's the easiest
-		$sql = "DELETE FROM egw_cal
+		$sql = "(SELECT egw_cal.cal_id FROM egw_cal
 			LEFT JOIN egw_cal_repeats ON
-			    egw_cal_repeats.cal_id = egw_cal.cal_id
+				egw_cal_repeats.cal_id = egw_cal.cal_id
 			JOIN egw_cal_dates ON
 				egw_cal.cal_id = egw_cal_dates.cal_id
-			WHERE cal_end < $date AND (egw_cal_repeats.cal_id IS NULL || (recur_enddate < $date && recur_enddate != 0))";
-		$this->db->query($sql, __LINE__, __FILE__);
+			WHERE cal_end < $date AND (egw_cal_repeats.cal_id IS NULL OR (recur_enddate < $date AND recur_enddate != 0))) AS TOPROCESS";
 
-		// Get a list of what we just deleted for links
-		$ids = array();
+		// Get what we want to delete for all tables and links
 		foreach($this->db->select(
-			'egw_cal_dates',
+			$sql,
 			array('cal_id'),
-			array('cal_id NOT IN (SELECT cal_id FROM egw_cal)'),
+			null,
 			__LINE__, __FILE__, false
-		) as $row)
+			) as $row)
 		{
-			$ids[] = $row['cal_id'];
+			//echo __METHOD__." About to delete".$row['cal_id']."\r\n";
+			foreach($this->all_tables as $table)
+			{
+				$this->db->delete($table, array('cal_id'=>$row['cal_id']), __LINE__, __FILE__, 'calendar');
+			}
+			// handle sync
+			$this->db->query('UPDATE egw_api_content_history
+				SET sync_deleted=NOW()
+				WHERE sync_appname = \'calendar\'
+					AND sync_contentid ='.$row['cal_id'], __LINE__, __FILE__);
+			// handle links
+			egw_link::unlink('', 'calendar', $row['cal_id']);
 		}
-
-		// Cascade to other tables
-		foreach($this->all_tables as $table)
-		{
-			if($table == 'egw_cal') continue;
-			$this->db->delete($table, array('cal_id NOT IN (SELECT cal_id FROM egw_cal)'), __LINE__, __FILE__, 'calendar');
-		}
-
-		// Sync
-		$sql = 'UPDATE egw_api_content_history
-			SET sync_deleted=NOW()
-			WHERE sync_appname = \'calendar\'
-			    AND sync_contentid NOT IN (SELECT cal_id from egw_cal)';
-		$this->db->query($sql, __LINE__, __FILE__);
-			
-		// Links
-		egw_link::unlink('', 'calendar', $ids);
 	}
 
 	/**
