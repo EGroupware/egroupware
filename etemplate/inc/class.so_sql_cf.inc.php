@@ -458,19 +458,29 @@ class so_sql_cf extends so_sql
 				}
 				elseif (is_string($name) && $this->is_cf($name))
 				{
-					$name = substr($name, 1);
-					if (($negate = $criteria[$name][0] === '!'))
+					if ($op != 'AND')
 					{
-						$val = substr($val,1);
+						$name = substr($name, 1);
+						if (($negate = $criteria[$name][0] === '!'))
+						{
+							$val = substr($val,1);
+						}
+						$cfcriteria[] = '(' . $this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
+							$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
+							$this->db->quote($wildcard.$val.$wildcard) . ' AND ' .
+							$this->extra_table.'.'.$this->extra_key . ' = ' . $this->db->quote($name) .
+							')';
+						unset($criteria[self::CF_PREFIX.$name]);
 					}
-					$criteria[] = '(' . $this->extra_table.'.'.$this->extra_value . ' ' .($negate ? 'NOT ' : '').
-						$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]. ' ' .
-						$this->db->quote($wildcard.$val.$wildcard) . ' AND ' .
-						$this->extra_table.'.'.$this->extra_key . ' = ' . $this->db->quote($name) .
-						')';
-					unset($criteria[self::CF_PREFIX.$name]);
+					else
+					{
+						// criteria operator is AND we remap the criteria to be transformed to filters
+						$filter[$name] = $val;
+						unset($criteria[$name]);
+					}
 				}
 			}
+			if ($cfcriteria && $op =='OR') $criteria[] = implode(' OR ',$cfcriteria);
 		}
 		if($only_keys === true) {
 			// Expand to keys here, so table_name can be prepended below
