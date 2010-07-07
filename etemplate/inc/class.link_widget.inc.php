@@ -19,7 +19,8 @@
  * If run in a popup and the app uses no popups, a target will be set, to open a new full decorated window.
  *
  * The class contains the following widgets:
- * - link: Show a link to one linked entry specified by an array with keys app, id and optional title and help-message
+ * - link: Show a link to one linked entry specified by an array with keys app, id and optional title,
+ *         help-message and extra_args (array with additional get parameters)
  *         Optionally the application can be specified as option and the value can be just the id.
  * - link-to: Widget to create links to an other entries of link-aware apps
  *	If the variables $data['widget_id']['to_app'] = $app and $data['widget_id']['to_id'] = $entry_id
@@ -160,6 +161,13 @@ class link_widget
 				foreach($view as $var => $val)
 				{
 					$link .= '&'.$var.'='.$val;
+				}
+				if (isset($value['extra_args']))
+				{
+					foreach($value['extra_args'] as $var => $val)
+					{
+						$link .= '&'.$var.'='.$val;
+					}
 				}
 				if (!($popup = egw_link::is_popup($value['app'],'view')) &&
 					etemplate::$request->output_mode == 2)	// we are in a popup
