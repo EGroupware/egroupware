@@ -553,6 +553,14 @@ class so_sql_cf extends so_sql
 									))
 								);
 							}
+							elseif ($this->customfields[$this->get_cf_name($name)]['type'] == 'text')
+							{
+								$sql_filter = str_replace($this->extra_value,'extra_filter.'.$this->extra_value,
+										$this->db->expression($this->extra_table,array(
+										$this->extra_value.' '.$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' '.$this->db->quote($wildcard.$val.$wildcard)
+									))
+								);
+							}
 							else
 							{
 								$sql_filter = str_replace($this->extra_value,'extra_filter.'.
