@@ -1312,6 +1312,9 @@ class addressbook_bo extends addressbook_so
 							'id' => $event['id'],
 							'app' => 'calendar',
 							'title' => $bocal->link_title($event),
+							'extra_args' => array(
+								'date' => date('Ymd',$event['start']),
+							),
 						);
 						if ($extra_title)
 						{
@@ -1330,6 +1333,9 @@ class addressbook_bo extends addressbook_so
 							'id' => $event['id'],
 							'app' => 'calendar',
 							'title' => $bocal->link_title($event),
+							'extra_args' => array(
+								'date' => date('Ymd',$event['start']),
+							),
 						);
 						if ($extra_title)
 						{
@@ -1341,7 +1347,6 @@ class addressbook_bo extends addressbook_so
 				}
 			}
 		}
-		//_debug_array($calendars);
 		return $calendars;
 	}
 
