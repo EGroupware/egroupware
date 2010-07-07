@@ -211,7 +211,7 @@ class egw_ckeditor_config
 				$config['toolbar'][] = array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock');
 				$config['toolbar'][] = array('BulletedList','NumberedList','-','Outdent','Indent');
 				$config['toolbar'][] = array('Link','Unlink','Anchor');
-				$config['toolbar'][] = array('Maximize','Image','Table','SpecialChar','PageBreak');
+				$config['toolbar'][] = array('Maximize','Image','Table','HorizontalRule','SpecialChar','PageBreak');
 
 				$config['toolbar'][] = '/';
 
