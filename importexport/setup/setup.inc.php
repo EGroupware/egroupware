@@ -26,11 +26,9 @@ $setup_info['importexport']['note'] =
 '';
 
 /* The hooks this app includes, needed for hooks registration */
-//$setup_info['importexport']['hooks']['preferences'] = 'importexport'.'.admin_prefs_sidebox_hooks.all_hooks';
-//$setup_info['importexport']['hooks']['settings'] = 'importexport'.'.admin_prefs_sidebox_hooks.settings';
-$setup_info['importexport']['hooks']['admin'] = 'importexport'.'.importexport_admin_prefs_sidebox_hooks.all_hooks';
-$setup_info['importexport']['hooks']['sidebox_menu'] = 'importexport'.'.importexport_admin_prefs_sidebox_hooks.all_hooks';
-//$setup_info['importexport']['hooks']['search_link'] = 'importexport'.'.bomyterra.search_link';
+$setup_info['importexport']['hooks']['preferences'] =
+$setup_info['importexport']['hooks']['admin'] =
+$setup_info['importexport']['hooks']['sidebox_menu'] = 'importexport_admin_prefs_sidebox_hooks::all_hooks';
 
 /* Dependencies for this app to work */
 $setup_info['importexport']['depends'][] = array(
