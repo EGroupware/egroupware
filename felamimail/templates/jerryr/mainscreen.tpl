@@ -170,11 +170,11 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 			   if the iframe stays maximized. */
 			if (window.parent && typeof window.parent.framework != 'undefined') /* jdots template, does not apply here, as it is using default templates */
 			{
-				var height = $(window).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 85;
+				var height = $(document).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 85;
 			}
 			else
 			{
-				var height = $(window).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 112;
+				var height = $(document).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 112;
 			}
 
 			/* Tableheight specifies the rendered size of the table,
