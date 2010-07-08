@@ -550,7 +550,7 @@ class Net_IMAP extends Net_IMAPProtocol {
         }
         $ret2=$ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"][0];
 		// sometimes we get an [COMMAND] => OK with $ret["PARSED"][0] and no $ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"]
-		if (is_array($ret) && empty($ret2)) {
+		if (is_array($ret) && empty($ret2) && isset($ret["PARSED"])) {
 			foreach($ret["PARSED"] as $substruct) {
 				if ($substruct["COMMAND"] == "FETCH") {
 					$ret2=$substruct["EXT"]["BODYSTRUCTURE"][0];
