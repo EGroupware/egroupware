@@ -121,6 +121,50 @@ function egw_json_encode(input)
  */
 var egw_json_files = {};
 
+/**
+ * Variable which stores all currently registered plugins
+ */
+var _egw_json_plugins = [];
+
+/**
+ * Register a plugin for the egw_json handler
+ */
+function egw_json_register_plugin(_callback, _context)
+{
+	//Default the context parameter to "window"
+	if (typeof _context == 'undefined') {
+		_context = window;
+	}
+
+	//Add a plugin object to the plugins array
+	_egw_json_plugins[_egw_json_plugins.length] = {
+		'callback': _callback,
+		'context': _context
+	};
+}
+
+/**
+ * Function used internally to pass a response to all registered plugins
+ */
+function _egw_json_plugin_handle(_type, _response) {
+	for (var i = 0; i < _egw_json_plugins.length; i++)
+	{
+		try {
+			var plugin = _egw_json_plugins[i];
+			if (plugin.callback.call(plugin.context, _type, _response)) {
+				return true;
+			}
+		} catch (e) {
+			if (typeof console != 'undefined')
+			{
+				console.log(e);
+			}
+		}
+	}
+
+	return false;
+}
+
 /** The constructor of the egw_json_request class.
  * @param string _menuaction the menuaction function which should be called and which handles the actual request
  * @param array _parameters which should be passed to the menuaction function.
@@ -376,6 +420,9 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							throw 'Invalid parameters';
 						break;
 				}
+
+				//Try to handle the json response with all registered plugins
+				hasResponse |= _egw_json_plugin_handle(data.response[i].type, res);
 			} catch(e) {
 				this.jsonError('Internal JSON handler error', e);
 			}

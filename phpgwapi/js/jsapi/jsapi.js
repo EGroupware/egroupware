@@ -114,6 +114,23 @@ function egw_appWindow(_app)
 	return window;
 }
 
+window.egw_getFramework = function()
+{
+	if (typeof window.framework != 'undefined')
+	{
+		return framework;
+	}
+	else if (typeof window.parent.egw_getFramework != "undefined")
+	{
+		return window.parent.egw_getFramework();
+	}
+	else
+	{
+		return null;
+	}
+}
+
+
 function egw_set_checkbox_multiselect_enabled(_id, _enabled)
 {
 	//Retrieve the checkbox_multiselect base div

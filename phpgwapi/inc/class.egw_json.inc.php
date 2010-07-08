@@ -306,6 +306,18 @@ class egw_json_response
 		}
 	}
 
+	public function generic($type, array $parameters = array())
+	{
+		if (is_string($type))
+		{
+			$this->addGeneric($type, $parameters);
+		}
+		else
+		{
+			throw new Exception("Invalid parameters supplied.");
+		}
+	}
+
 	/**
 	 * Adds an html assign to the response, which is excecuted upon the request is received.
 	 *
