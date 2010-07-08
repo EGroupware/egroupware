@@ -725,7 +725,7 @@ class Net_IMAPProtocol {
             {
                foreach ( $this->supportedAuthMethods as $method ) {
                        if ( in_array( $method , $this->_serverAuthMethods ) ) {
-                               error_log(__METHOD__." UserMethod $userMethod not supported by server; trying best ServerMethod $method");
+                               if ($this->_debug) error_log(__METHOD__." UserMethod $userMethod not supported by server; trying best ServerMethod $method");
                                 return $method;
                        }
                }
