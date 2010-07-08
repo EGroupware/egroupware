@@ -24,16 +24,18 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
 		{
 			$file = array(
-				'Import'=> array(
+				array(
 					'text' => 'Import',
-					'link' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_import_ui.import_dialog'),
-					'target' => 'new',
+					'link' => "javascript:egw_openWindowCentered2('".
+						egw::link('/index.php','menuaction=importexport.importexport_import_ui.import_dialog',false).
+						"','_blank',850,440,'yes')",
 					'icon' => 'import'
 				),
-				'Export'=> array(
+				array(
 					'text' => 'Export',
-					'link' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_export_ui.export_dialog'),
-					'target' => 'new',
+					'link' => "javascript:egw_openWindowCentered2('".
+						egw::link('/index.php','menuaction=importexport.importexport_export_ui.export_dialog',false).
+						"','_blank',850,440,'yes')",
 					'icon' => 'export'
 				),
 			);
@@ -50,11 +52,11 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Import definitions' => $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
-				'Define imports|exports'  => $GLOBALS['egw']->link('/index.php',array(
+				'Import definitions' => egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
+				'Define imports|exports'  => egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_definitions_ui.index',
 				)),
-				'Schedule' => $GLOBALS['egw']->link('/index.php', array(
+				'Schedule' => egw::link('/index.php', array(
 					'menuaction' => 'importexport.importexport_schedule_ui.index'
 				)),
 			);
