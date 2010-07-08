@@ -497,15 +497,24 @@ class so_sql_cf extends so_sql
 				}
 			}
 		}
-
 		// check if we order by a custom field --> join cf table for given cf and order by it's value
-		if (strpos($order_by,self::CF_PREFIX) !== false &&
-			preg_match('/'.self::CF_PREFIX.'([^ ]+) (asc|desc)/i',$order_by,$matches))
+		if (strpos($order_by,self::CF_PREFIX) !== false)
 		{
-			$order_by = str_replace($matches[0],'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.$this->extra_value.' '.$matches[2],$order_by);
-			$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote($matches[1]);
+			// fields to order by, as cutomfields may have names with spaces, we examine each order by criteria
+			$fields2order = explode(',',$order_by);
+			foreach($fields2order as $k => $v)
+			{
+				if (strpos($v,self::CF_PREFIX) !== false)
+				{
+					// we found a customfield, so we split that part by space char in order to get Sorting Direction and Fieldname
+					$buff = explode(' ',trim($v));
+					$orderDir = array_pop($buff);
+					$key = trim(implode(' ',$buff));
+					$order_by = str_replace($v,'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.$this->extra_value.' '.$orderDir,$order_by);
+					$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote(substr($key,1));
+				}
+			}
 		}
-
 		// check if we filter by a custom field
 		if (is_array($filter))
 		{
