@@ -358,7 +358,7 @@ abstract class groupdav_handler
 			}
 			if (!$agent)
 			{
-				if ($this->debug) error_log("Unrecogniced GroupDAV client: HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]'!");
+				//error_log("Unrecogniced GroupDAV client: HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]'!");
 			}
 			else
 			{
