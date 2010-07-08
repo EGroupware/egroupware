@@ -90,6 +90,9 @@ class bo_resources
 		{
 			$filter['cat_id'] = array_keys($readcats);
 		}
+		// if there is no catfilter -> this means you have no rights, so set the cat filter to null
+		if (!isset($filter['cat_id']) || empty($filter['cat_id'])) $filter['cat_id'] = NUll;
+
 		if ($query['show_bookable'])
 		{
 			$filter['bookable'] = true;
