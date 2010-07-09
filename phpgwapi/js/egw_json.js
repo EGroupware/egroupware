@@ -248,6 +248,7 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 egw_json_request.prototype.alertFunc = function(_message, _details)
 {
 	alert(_message);
+	if(_details) _egw_json_debug_log(_message, _details);
 }
 
 function _egw_json_debug_log(_msg, _e)
@@ -264,7 +265,7 @@ egw_json_request.prototype.jsonError = function(_msg, _e)
 	var msg = 'EGW JSON Error: '._msg;
 
 	//Log and show the error message
-	_egw_json_bebug_log(msg, _e);
+	_egw_json_debug_log(msg, _e);
 	this.alertHandler(msg);
 }
 
