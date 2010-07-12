@@ -45,6 +45,7 @@
 <form method="post" name="doit" action="{link_action}" ENCTYPE="multipart/form-data" onsubmit="return check_data();">
 <input type="hidden" id="saveAsDraft" name="saveAsDraft" value="0">
 <input type="hidden" id="printit" name="printit" value="0">
+<input type="hidden" id="mySigID" name="mySigID" value="{mySigID}">
 <TABLE WIDTH="99%" CELLPADDING="1" CELLSPACING="0" style="border: solid #aaaaaa 1px; border-right: solid black 1px; border-bottom: solid black 1px;">
 	<tr class="navbarBackground">
 		<td align="left" width="270px">

@@ -1000,6 +1000,66 @@
 
 			$response = new xajaxResponse();
 			$response->addScript('setSignature('.$Identities->signature.');');
+
+			return $response->getXML();
+		}
+
+		function changeComposeSignature($_composeID,$_oldSig,$_signatureID,$_currentMode,$_content)
+		{
+			// we need a lot of encoding/decoding transforming here to get at least some acceptable result
+			// the changing does not work with all sigs, as the old Signature may not match the Signaturepart in Content
+			
+			if($this->_debug) error_log(__METHOD__.$_oldSig.','.$_signatureID.'#');
+			$bocompose  = CreateObject('felamimail.bocompose', $_composeID);
+			// prepare signatures, the selected sig may be used on top of the body
+			require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc.php');
+			$boSignatures = new felamimail_bosignatures();
+			$oldSignature = $boSignatures->getSignature($_oldSig);
+			$oldSigText = $oldSignature->fm_signature;
+			$signature = $boSignatures->getSignature($_signatureID);
+			$sigText = $signature->fm_signature;
+
+			if ($_currentMode == 'plain') 
+			{
+				$oldSigText = $bocompose->convertHTMLToText($oldSigText);
+				$sigText = $bocompose->convertHTMLToText($sigText);
+				$_content = utf8_decode($_content);
+				if($this->_debug) error_log(__METHOD__." Old signature:".$oldSigText);
+			}
+
+			$oldSigText = bofelamimail::merge($oldSigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+			$sigText = bofelamimail::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+			$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText):$oldSigText));
+			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content):$_content));
+			$found = strpos($_content,trim($oldSigText));
+			if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) =='')) 
+			{
+				$_content = substr_replace($_content,$sigText,$found,mb_strlen($oldSigText));
+			}
+			if ($_oldSig == -2 && (empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
+			{
+				// if there is no sig selected, there is no way to replace a signature
+			}
+			if ($found === false)
+			{
+				if($this->_debug) error_log(__METHOD__." Old Signature failed to match:".$oldSigText);
+				if($this->_debug) error_log(__METHOD__." Compare content:".$_content);
+			}
+			$response = new xajaxResponse();
+			if ($_currentMode == 'html') $_content = utf8_decode($_content);
+			$escaped = utf8_encode(str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content));
+			//error_log(__METHOD__.$escaped);
+			if ($_currentMode == 'html')
+				$response->addScript("showHTMLEditor('$escaped');");
+			else
+				$response->addScript("showPlainEditor('$escaped');");
+			/*
+			if ($found===false)
+			{
+				$warning = lang("Switching of Signatures failed");
+				$response->addScript('alert('.$warning.');');
+			}
+			*/
 			return $response->getXML();
 		}
 

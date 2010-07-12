@@ -102,6 +102,7 @@ deleted	felamimail	de	gelöscht
 deleted folder successfully!	felamimail	de	Ordner erfolgreich gelöscht
 deleting messages	felamimail	de	lösche Nachrichten
 disable	felamimail	de	Deaktivieren
+disable Ruler for separation of mailbody and signature when adding signature to composed message (this is not according to RFC).<br>If you use templates, this option is only applied to the text part of the message.	felamimail	de	Deaktiviere den automatisch hinzugefügten Trenner zwischen EMailkörper und Signatur (Achtung: Dies ist nicht RFC konform). <br>Wenn Sie Templates zur Formatierung Ihrer EMail benutzen, wird diese Option nur dann Auswirkungen haben, wenn Sie die Signatur am Anfang der EMail eifügen lassen.  
 discard	felamimail	de	verwerfen
 discard message	felamimail	de	Nachricht verwerfen
 display message in new window	felamimail	de	Nachricht in neuem Fenster anzeigen
@@ -251,6 +252,7 @@ inbox	felamimail	de	Posteingang
 incoming mail server(imap)	felamimail	de	eingehender Mailserver (IMAP)
 index order	felamimail	de	Spaltenanordnung
 info	felamimail	de	Info
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	de	Einfügen der Signatur am Anfang einer neuen EMail (auch Antworten/Weiterleiten). <br>Die Signatur ist dann Teil der EMail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden.
 invalid user name or password	felamimail	de	Falscher Benutzername oder Pasword
 javascript	felamimail	de	JavaScript
 jumping to end	felamimail	de	springe zum Ende

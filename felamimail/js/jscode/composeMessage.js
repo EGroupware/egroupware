@@ -515,6 +515,48 @@ function fm_compose_changeInputType(_selectBox) {
 	}
 
 	var tdElements	= selectBoxRow.getElementsByTagName('td');
+	if (_selectBox.name = 'signatureID') {
+		var sigBox = document.getElementById('signatureID');
+		//alert(sigBox);
+		// if we find the id, signature is inserted at the top of the message on compose start.
+		if (sigBox == null) 
+		{
+			//alert ("could not find sigBox");
+		}
+		else 
+		{
+			var currSig = document.getElementById('mySigID');
+			currentSig = currSig.value;
+			// we try to change the signature
+			fm_compose_changeSignature(currentSig,_selectBox.value); 
+		}
+	}
+}
+
+function fm_compose_changeSignature(_oldSig,_signatureID) {
+	//alert ("found sigBox");
+	var htmlFlag = document.getElementsByName('_is_html')[0];
+	var currentEditor = htmlFlag.value;
+	var content = '';
+	var currentMode ='';
+	if (_oldSig != _signatureID)
+	{
+		if (currentEditor == 1)
+		{
+			currentMode='html';
+			var ckeditor = CKEDITOR.instances['body'];
+			var content = ckeditor.getData();
+		}
+		else
+		{
+			currentMode='plain';
+			var plaineditor = document.getElementsByName('body')[0];
+			content = plaineditor.value;
+		}
+
+		xajax_doXMLHTTP("felamimail.ajaxfelamimail.changeComposeSignature",composeID,_oldSig,_signatureID,currentMode,content);
+		document.getElementById('mySigID').value = _signatureID;
+	}
 }
 
 function fm_compose_setFolderSelectValue(_folderName) {
@@ -794,14 +836,36 @@ function removeFCK(fieldId)
 
 function changeIdentity(SelectedId)
 {
-	//alert(SelectedId.value);
+	// we do the old style (just changing the id, (to be inserted after compose before sending))
+	// but setSignature may try to initiate a switch of the signature within the email body if conditions match
 	xajax_doXMLHTTP("felamimail.ajaxfelamimail.setComposeSignature", SelectedId.value);
 }
 function setSignature(SelectedId)
 {
+	//alert("IS:"+document.getElementById('mySigID').value);
+	var sigBox = document.getElementById('mySigID');
+	currentSig = sigBox.value;
+
 	for (i = 0; i < document.doit.signatureID.length; ++i)
 		if (document.doit.signatureID.options[i].value == SelectedId)
+		{
 			document.doit.signatureID.options[i].selected = true;
+			document.getElementById('mySigID').value = SelectedId;
+		}
 		//else
 		//	document.doit.signatureID.options[i].selected = false;
+
+	//alert("Now:"+document.getElementById('mySigID').value);
+	var sigBox = document.getElementById('signatureID');
+	//alert(sigBox);
+	// if we find the id, signature is inserted at the top of the message on compose start.
+	// so we try toi switch, ...
+	if (sigBox == null) 
+	{
+	}
+	else
+	{
+		// we try to change the signature
+		if (currentSig != SelectedId) fm_compose_changeSignature(currentSig,SelectedId);
+	}
 }

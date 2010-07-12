@@ -102,6 +102,7 @@ deleted	felamimail	en	deleted
 deleted folder successfully!	felamimail	en	Deleted folder successfully!
 deleting messages	felamimail	en	deleting messages
 disable	felamimail	en	Disable
+disable Ruler for separation of mailbody and signature when adding signature to composed message (this is not according to RFC).<br>If you use templates, this option is only applied to the text part of the message.	felamimail	en	disable Ruler for separation of mailbody and signature when adding signature to composed message (this is not according to RFC).<br>If you use templates, this option is only applied to the text part of the message.
 discard	felamimail	en	discard
 discard message	felamimail	en	discard message
 display message in new window	felamimail	en	Display message in new window
@@ -254,6 +255,7 @@ inbox	felamimail	en	INBOX
 incoming mail server(imap)	felamimail	en	incoming mail server(IMAP)
 index order	felamimail	en	Index Order
 info	felamimail	en	Info
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 invalid user name or password	felamimail	en	Invalid user name or password
 javascript	felamimail	en	JavaScript
 jumping to end	felamimail	en	jumping to end

@@ -777,8 +777,21 @@
 				$_formData['body'] = preg_replace('/=\r\n/', '', $_formData['body']);
 				$_formData['body'] = quoted_printable_decode($_formData['body']);
 			}
+			$disableRuler = false;
 			#if ($realCharset != $this->displayCharset) error_log("Error: bocompose::createMessage found Charset ($realCharset) differs from DisplayCharset (".$this->displayCharset.")");
 			$signature = $_signature->fm_signature;
+			if ((isset($this->preferencesArray['insertSignatureAtTopOfMessage']) && $this->preferencesArray['insertSignatureAtTopOfMessage']))
+			{
+				// note: if you use stationery ' s the insert signatures at the top does not apply here anymore, as the signature 
+				// is already part of the body, so the signature part of the teplate will not be applied.
+				$signature = null; // note: no signature, no ruler!!!!
+			}
+			if ((isset($this->preferencesArray['disableRulerForSignatureSeparation']) && 
+				$this->preferencesArray['disableRulerForSignatureSeparation']) || 
+				empty($signature) || trim($this->convertHTMLToText($signature)) =='')
+			{
+				$disableRuler = true;
+			}
 			$signature = bofelamimail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			if($_formData['mimeType'] =='html') {
 				$_mailObject->IsHTML(true);
@@ -788,10 +801,12 @@
 						$bostationery = new felamimail_bostationery();
 						$_mailObject->Body = $bostationery->render($this->sessionData['stationeryID'],$_formData['body'],$signature);
 					} else {
-						$_mailObject->Body = $_formData['body'] .'<hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">'. $signature;
+						$_mailObject->Body = $_formData['body'] .
+							($disableRuler ?'<br>':'<hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">'). 
+							$signature;
 					}
 					$_mailObject->AltBody = $this->convertHTMLToText($_formData['body']).
-						"\r\n-- \r\n".
+						($disableRuler ?"\r\n":"\r\n-- \r\n").
 						$this->convertHTMLToText($signature);
 					#print "<pre>$_mailObject->AltBody</pre>";
 					#print htmlentities($_signature['signature']);
@@ -809,7 +824,8 @@
 				$_mailObject->Body = $this->convertHTMLToText($_formData['body'],false);
 				#$_mailObject->Body = $_formData['body'];
 				if(!empty($signature)) {
-					$_mailObject->Body .= "\r\n-- \r\n". $this->convertHTMLToText($signature);
+					$_mailObject->Body .= ($disableRuler ?"\r\n":"\r\n-- \r\n"). 
+						$this->convertHTMLToText($signature);
 				}
 			}
 

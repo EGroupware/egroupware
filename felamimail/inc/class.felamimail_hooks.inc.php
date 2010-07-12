@@ -85,7 +85,7 @@ class felamimail_hooks
 		);
 		$no_yes_copy = array_merge($no_yes,array('2'=>lang('yes, offer copy option')));
 
-		$prefAllowManageFolders = $no_yes;
+ 		$prefAllowManageFolders = $no_yes;
 
 		$forwardOptions = array(
 			'asmail' => lang('forward as attachment'),
@@ -390,6 +390,24 @@ class felamimail_hooks
 				'type'   => 'select',
 				'label'  => 'show all Folders (subscribed AND unsubscribed) in Main Screen Folder Pane',
 				'name'   => 'showAllFoldersInFolderPane',
+				'values' => $no_yes,
+				'xmlrpc' => True,
+				'default'=> 0,
+				'admin'  => False,
+			),
+			'disableRulerForSignatureSeparation' => array(
+				'type'   => 'select',
+				'label'  => 'disable Ruler for separation of mailbody and signature when adding signature to composed message (this is not according to RFC).<br>If you use templates, this option is only applied to the text part of the message.',
+				'name'   => 'disableRulerForSignatureSeparation',
+				'values' => $no_yes,
+				'xmlrpc' => True,
+				'default'=> 0,
+				'admin'  => False,
+			),
+			'insertSignatureAtTopOfMessage' => array(
+				'type'   => 'select',
+				'label'  => 'insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)',
+				'name'   => 'insertSignatureAtTopOfMessage',
 				'values' => $no_yes,
 				'xmlrpc' => True,
 				'default'=> 0,
