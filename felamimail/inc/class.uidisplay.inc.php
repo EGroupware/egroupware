@@ -794,6 +794,7 @@
 						case 'TEXT/PLAIN':
 						case 'TEXT/HTML':
 						case 'TEXT/CALENDAR':
+						case 'TEXT/X-VCALENDAR':
 						case 'TEXT/X-VCARD':
 							$linkData = array
 							(
@@ -806,7 +807,7 @@
 							$windowName = 'displayAttachment_'. $this->uid;
 							$reg = '800x600';
 							// handle calendar/vcard
-							if (strtoupper($value['mimeType'])=='TEXT/CALENDAR') 
+							if (strtoupper($value['mimeType'])=='TEXT/CALENDAR' || strtoupper($value['mimeType'])=='TEXT/X-VCALENDAR') 
 							{
 								$windowName = 'displayEvent_'. $this->uid;
 								$reg2 = egw_link::get_registry('calendar','view_popup');
@@ -1114,13 +1115,14 @@
 			if ($_GET['mode'] != "save")
 			{
 				//error_log(__METHOD__.print_r($attachment,true));
-				if (strtoupper($attachment['type']) == 'TEXT/CALENDAR')
+				if (strtoupper($attachment['type']) == 'TEXT/CALENDAR' || strtoupper($attachment['type']) == 'TEXT/X-VCALENDAR')
 				{
 					//error_log(__METHOD__."about to call calendar_ical");
 					$calendar_ical = new calendar_ical();
 					$eventid = $calendar_ical->search($attachment['attachment'],-1);
+					//error_log(__METHOD__.array2string($eventid));
 					if (!$eventid) $eventid = -1;
-					$event = $calendar_ical->importVCal($attachment['attachment'],$eventid,null,true);
+					$event = $calendar_ical->importVCal($attachment['attachment'],(is_array($eventid)?$eventid[0]:$eventid),null,true);
 					//error_log(__METHOD__.$event);
 					if ((int)$event > 0)
 					{
