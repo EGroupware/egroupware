@@ -1094,7 +1094,7 @@ class so_sql
 		}
 		if($columns)
 		{
-			$columns = call_user_func_array(array($this->db,'concat'),$columns);
+			$columns = call_user_func_array(array($GLOBALS['egw']->db,'concat'),$columns);
 		}
 
 		// Break the search string into tokens
