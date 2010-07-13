@@ -2124,7 +2124,7 @@ class etemplate extends boetemplate
 				case 'text':
 				case 'textarea':
 				case 'colorpicker':
-					if ($value === '' && $attr['needed'] && !$attr['blur'])
+					if ((string)$value === '' && $attr['needed'] && !$attr['blur'])
 					{
 						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 					}
@@ -2149,7 +2149,7 @@ class etemplate extends boetemplate
 					}
 					elseif ($type == 'int' || $type == 'float')	// cast int and float and check range
 					{
-						if ($value !== '' || $attr['needed'])	// empty values are Ok if needed is not set
+						if ((string)$value !== '' || $attr['needed'])	// empty values are Ok if needed is not set
 						{
 							$value = $type == 'int' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
 
