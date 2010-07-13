@@ -578,7 +578,7 @@ class calendar_sif extends calendar_boupdate
 									break;
 								}
 							}
-							if (isset($alarmData)) $event['alarm'][] = $alarmData;
+							if (isset($alarmData)&&is_array($alarmData)) $event['alarm'][] = $alarmData;
 						}
 					}
 					break;
