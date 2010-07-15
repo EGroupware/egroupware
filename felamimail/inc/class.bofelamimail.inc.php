@@ -1661,7 +1661,7 @@
 			// as attachment AND as abstracted ical information (we use our notification style here).
 			$partText = false;
 			$partHTML = false;
-			if (self::$debug) _debug_array($_structure);
+			if (self::$debug) _debug_array(array("METHOD"=>__METHOD__,"LINE"=>__LINE__,"STRUCTURE"=>$_structure));
 			foreach($_structure as $mimePart) {
 				if($mimePart->type == 'TEXT' && ($mimePart->subType == 'PLAIN' || $mimePart->subType == 'CALENDAR') && $mimePart->bytes > 0) {
 					if ($mimePart->subType == 'CALENDAR' && $partText === false) $partText = $mimePart; // only if there is no partText set already
@@ -1673,6 +1673,9 @@
 					#$partHTML = array($mimePart);
 					error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
 					$partHTML = $mimePart;
+				} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'ALTERNATIVE' && is_array($mimePart->subParts)) {
+					//cascading multipartAlternative structure, assuming only the first one is to be used
+					return $this->getMultipartAlternative($_uid,$mimePart->subParts,$_htmlMode);
 				}
 			}
 
