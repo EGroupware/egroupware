@@ -295,7 +295,7 @@ class infolog_so
 	 */
 	function dateFilter($filter = '')
 	{
-		preg_match('/(upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$filter,$vars);
+		preg_match('/(open-upcoming|upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$filter,$vars);
 		$filter = $vars[1];
 
 		if (isset($vars[2]) && !empty($vars[2]) && ($date = preg_split('/[-\\/.]/',$vars[2])))
@@ -310,6 +310,8 @@ class infolog_so
 		}
 		switch ($filter)
 		{
+			case 'open-upcoming':
+				return  "AND (info_startdate >= $tomorrow OR NOT (info_status IN ('done','billed','cancelled','deleted','template','nonactive','archive')))";
 			case 'upcoming':
 				return " AND info_startdate >= $tomorrow";
 			case 'today':

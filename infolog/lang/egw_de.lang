@@ -104,6 +104,7 @@ default filter for infolog	infolog	de	Standard-Filter für InfoLog
 default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen Eintrags
 delegated	infolog	de	delegiert
 delegated open	infolog	de	delegiert offen
+delegated open and upcoming	infolog	de	delegiert offene und zukünftige
 delegated overdue	infolog	de	delegiert überfällig
 delegated upcomming	infolog	de	delegiert zukünftig
 delegation	infolog	de	Delegation
@@ -238,12 +239,14 @@ only if i get assigned or removed	infolog	de	Nur wenn ich zugewiesen oder entfer
 only the attachments	infolog	de	nur die Anhänge
 only the links	infolog	de	nur die Verknüpfungen
 open	infolog	de	offen
+open and upcoming	infolog	de	zukünftige und offene
 optional note to the link	infolog	de	zusätzliche Notiz zur Verknüfung
 order	infolog	de	Reihenfolge
 organization	infolog	de	Organisation
 overdue	infolog	de	überfällig
 own	infolog	de	eigene
 own open	infolog	de	eigene offen
+own open and upcoming	infolog	de	eigene offene und zukünftige
 own overdue	infolog	de	eigene überfällig
 own upcoming	infolog	de	eigene zukünftig
 parent	infolog	de	Elterneintrag
@@ -285,6 +288,7 @@ remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
 responsible	infolog	de	verantwortlich
 responsible open	infolog	de	verantwortlich offen
+responsible open and upcoming	infolog	de	verantwortlich offene und zukünftige
 responsible overdue	infolog	de	verantwortlich überfällig
 responsible upcoming	infolog	de	verantwortlich zukünftig
 responsible user, priority	infolog	de	Verantwortlicher, Priorität

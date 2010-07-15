@@ -104,6 +104,7 @@ default filter for infolog	infolog	en	Default Filter for InfoLog
 default status for a new log entry	infolog	en	default status for a new log entry
 delegated	infolog	en	delegated
 delegated open	infolog	en	delegated open
+delegated open and upcoming	infolog	en	delegated open and upcoming
 delegated overdue	infolog	en	delegated overdue
 delegated upcomming	infolog	en	delegated upcomming
 delegation	infolog	en	Delegation
@@ -238,12 +239,14 @@ only if i get assigned or removed	infolog	en	Only if I get assigned or removed
 only the attachments	infolog	en	only the attachments
 only the links	infolog	en	only the links
 open	infolog	en	open
+open and upcoming	infolog	en	open and upcoming
 optional note to the link	infolog	en	optional note to the Link
 order	infolog	en	Order
 organization	infolog	en	Organization
 overdue	infolog	en	overdue
 own	infolog	en	own
 own open	infolog	en	own open
+own open and upcoming	infolog	en	own open and upcoming
 own overdue	infolog	en	own overdue
 own upcoming	infolog	en	own upcoming
 parent	infolog	en	Parent
@@ -285,6 +288,7 @@ remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
 responsible	infolog	en	responsible
 responsible open	infolog	en	responsible open
+responsible open and upcoming	infolog	en	responsible open and upcoming
 responsible overdue	infolog	en	responsible overdue
 responsible upcoming	infolog	en	responsible upcoming
 responsible user, priority	infolog	en	responsible user, priority
