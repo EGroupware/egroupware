@@ -29,31 +29,24 @@ can't open directory %1!	filemanager	fi	Hakemistoa %1 ei voitu avata!
 cancel editing %1 without saving	filemanager	fi	Peru %1:n muokkaus tallentamatta muutoksia
 cannot create directory because it begins or ends in a space	filemanager	fi	Hakemistoa ei voi luoda, koska nimi alkaa tai päättyy välilyöntiin
 check all	filemanager	fi	Valitse kaikki
-choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	fi	Asettamalla haussa (päivästä x päivään y) jälkimmäisen päivämäärän (y) vanhemmaksi kuin ensimmäisen (x), haku palauttaa tuloksena KAIKKI MUUT paitsi kyseisen aikavälin tapahtumat.
-choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	fi	Asettamalla ainoastaan yhden päivän haussa (Haku päivästä x päivään y) antaa hakutulokseksi kaikki tietueet ENNEN ja JÄLKEEN kyseistä päivämäärää.
 clear search	filemanager	fi	Tyhjennä haku
 comment	filemanager	fi	Kommentti
-comments cannot contain "%1"	filemanager	fi	Kommentti ei saa sisältää "%1"
 copied	filemanager	fi	Kopioitu
 copied %1 to %2	filemanager	fi	%1 kopioitu %2
 copy	filemanager	fi	Kopioi
 copy to	filemanager	fi	Kopioi kohteeseen
 copy to clipboard	filemanager	fi	Kopioi leikepöydälle
 could not copy %1 to %2	filemanager	fi	%1 ei voitu kopioida %2
-could not copy file because no destination directory is given	filemanager	fi	Ei voitu kopioida, koska kohdehakemistoa ei annettu
 could not create %1	filemanager	fi	Ei voitu luoda %1
 could not delete %1	filemanager	fi	Ei voitu poistaa %1
 could not move %1 to %2	filemanager	fi	%1 ei voitu siirtää %2
-could not move file because no destination directory is given	filemanager	fi	Ei voitu siirtää, koska kohdehakemistoa ei annettu
 could not rename %1 to %2	filemanager	fi	%1 ei voitu nimetä %2
-could not save %1	filemanager	fi	%1 ei voitu tallentaa
 create a link	filemanager	fi	Luo linkki
 create directory	filemanager	fi	Luo hakemisto
 create file	filemanager	fi	Luo tiedosto
 create folder	filemanager	fi	Luo kansio
 created	filemanager	fi	Luotu
 created %1,%2	filemanager	fi	Luonut %1,%2
-created between	filemanager	fi	Luotu välillä
 created directory %1	filemanager	fi	Luotiin kansio %1
 current directory	filemanager	fi	Nykyinen hakemisto
 custom fields	filemanager	fi	Lisäkentät
@@ -66,7 +59,6 @@ directories sorted in	filemanager	fi	Sisällytetyt hakemistot
 directory	filemanager	fi	Hakemisto
 directory %1 already exists	filemanager	fi	Hakemisto %1 on jo olemassa
 directory %1 does not exist	filemanager	fi	Hakemisto %1 ei ole
-directory names cannot contain "%1"	filemanager	fi	Hakemiston nimessä ei saa olla "%1"
 directory not found or no permission to access it!	filemanager	fi	Hakemistoa ei löydy tai sinulla ei ole lukuoikeuksia kyseiseen hakemistoon!
 display and modification of content	filemanager	fi	Sisällön muokaus ja näyttö
 display of content	filemanager	fi	Sisällön näyttö (lukuoikeus)
@@ -77,7 +69,6 @@ edit settings	filemanager	fi	Muokkaa asetuksia
 enter setup user and password	filemanager	fi	Anna käyttäjänimi ja salasana
 enter setup user and password to get root rights	filemanager	fi	Anna ROOT käyttäjänimi ja salasana
 enter the complete vfs path to specify a fast access link to a folder	filemanager	fi	Anna täydellinen VFS polku kansiolinkille.
-enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	fi	Anna täydellinen VFS polku kansiolinkille (1).
 enter the complete vfs path to specify your desired start folder.	filemanager	fi	Anna täydellinen VFS polku aloituskansiolle.
 error adding the acl!	filemanager	fi	Virhe ACL -oikeuksia lisättäessä!
 error creating symlink to target %1!	filemanager	fi	Virhe luotaessa symlinkkiä kohteeseen %1!
@@ -87,10 +78,8 @@ extended access control list	filemanager	fi	Laajennetut ACL -oikeudet
 extended acl	filemanager	fi	Laajennetut ACL -oikeudet
 failed to change permissions of %1!	filemanager	fi	%1, oikeuksien myöntäminen epäonnistui!
 failed to create directory!	filemanager	fi	Hakemiston luominen epäonnistui
-fake base dir did not exist, egroupware created a new one.	filemanager	fi	Fake Base Dir:ä ei ollut olemassa, EGroupware loi uuden.
 favorites	filemanager	fi	Suosikit
 file	filemanager	fi	Tiedosto
-file %1 already exists. please edit it or delete it first.	filemanager	fi	Tiedosto %1 on jo olemassa. Muokkaa sitä tai poista se.
 file %1 could not be created.	filemanager	fi	Tiedostoa %1 ei voitu luoda.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	fi	Tiedosto %1 voi olla liian suuri. Ota yhteys ylläpitäjiin lisätietojen saamiseksi!
 file deleted.	filemanager	fi	Tiedosto poistettu
@@ -166,6 +155,7 @@ show hidden files	filemanager	fi	Näytä piilotetut tiedostot
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	fi	Näytetäänkö linkki Tiedostonhallinnan kantahakemistoon (base directory) (/) sivuvalikossa?
 size	filemanager	fi	Koko
 start search	filemanager	fi	Aloita haku
+startfolder	filemanager	fi	Aloituskansio
 superuser	filemanager	fi	SuperUser
 symlink to %1 created.	filemanager	fi	Symlink kohteeseen %1 luotu.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	fi	Aloituskansioksi on oletuksena yksityinen kansiosi. Oletusta käytetään, jos tämä jätetään tyhjäksi, polkua ei löydy tai sinulla ei ole tarvittavia ACL-oikeuksia määrittelemääsi kansioon.
@@ -182,7 +172,6 @@ upload files	filemanager	fi	Lataa tiedostoja
 used space	filemanager	fi	Käytetty tila
 users and groups	filemanager	fi	Käyttäjät ja ryhmät
 versioning	filemanager	fi	Versiointi
-who	filemanager	fi	Kuka
 wrong username or password!	filemanager	fi	Väärä käyttäjätunnus tai salasana!
 you are not allowed to upload a script!	filemanager	fi	Sinulla ei ole riittäviä oikeuksia ladata skriptiä!
 you can only grant additional rights, you can not take rights away!	filemanager	fi	Voit ainoastaan antaa lisää oikeuksia, et voi vähentää/ottaa niitä pois!
