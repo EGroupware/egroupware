@@ -14,7 +14,9 @@ accepted	calendar	fi	Hyväksytyt
 access denied to the calendar of %1 !!!	calendar	fi	Pääsy kalenteriin '%1' estetty !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	fi	Toimenpide, joka aiheutti huomautuksen: Lisätty, Keskeytetty, Hyväksytty, Hylätty ...
 actions	calendar	fi	Toiminnot
+actions...	calendar	fi	Toiminnot
 add alarm	calendar	fi	Lisää hälytys
+add timesheet entry	calendar	fi	Lisää ajanhallinnan merkintä
 added	calendar	fi	Lisätty
 added by synchronisation	calendar	fi	Lisätty synkronoinnin yhteydessä
 after %1	calendar	fi	%1 jälkeen
@@ -28,10 +30,12 @@ alarms	calendar	fi	Hälytykset
 all categories	calendar	fi	Kaikki kategoriat
 all day	calendar	fi	Koko päivä
 all events	calendar	fi	Kaikki tapahtumat
+all exceptions are converted into single events.	calendar	fi	Kaikki poikkeukset ovat muutettu yksittäisiksi tapahtumiksi
 all future	calendar	fi	Kaikki tulevat
 all incl. rejected	calendar	fi	Kaikki, myös torjutut
 all participants	calendar	fi	Kaikki osallistujat
 allows to edit the event again	calendar	fi	Salli tapahtuman muokkaaminen uudelleen
+always	calendar	fi	Aina
 apply the action on the whole query, not only the shown events	calendar	fi	Suorita toiminto koko kyselylle, ei vain niille jotka näkyvät listalla.
 apply the changes	calendar	fi	Lisää muutokset
 are you sure you want to delete this country ?	calendar	fi	Haluatko varmasti poistaa tämän maan?
@@ -76,6 +80,7 @@ copy this event	calendar	fi	Kopioi tämä tapahtuma
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	fi	Kopioi muutokset leikepöydälle, %1päivitä merkintä%2 ja sulauta ne.
 countries	calendar	fi	Maat
 country	calendar	fi	Maa
+create a new series	calendar	fi	Luo uusi toistuva tapahtuma
 create an exception for the given date	calendar	fi	Luo poikkeava tapahtuma annetulle päivälle
 create exception	calendar	fi	Luo poikkeus
 create new links	calendar	fi	Luo uusia linkkejä
@@ -98,6 +103,7 @@ default type of resources application selected in the calendar particpants resea
 default type of resources selection	calendar	fi	Oletusresurssi
 default week view	calendar	fi	Oletus viikkonäkymä
 delegated	calendar	fi	Delegoidut
+delete exceptions	calendar	fi	Poista poikkeukset
 delete selected events	calendar	fi	Poista valitut tapahtumat
 delete series	calendar	fi	Poista sarjat
 delete this alarm	calendar	fi	Poista tämä hälytys
@@ -111,11 +117,13 @@ display status of events	calendar	fi	Näytä tapahtumien tila
 displayed view	calendar	fi	Valittu näkymä
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	fi	Näyttää kalenterin oletusnäkymän etusivulla?
 do not include events of group members	calendar	fi	Ei ryhmänjäsenten tapahtumia
+do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	fi	Haluatko varmasti muuttaa tapahtuman aloitusajankohtaa? Jos muutat, alkuperäinen tapahtumasarja päättyy tähän päivään ja luodaan uusi sarja muutoksineen.
 do you want a weekview with or without weekend?	calendar	fi	Haluatko viikkonäkymän viikonlopun kanssa vai ilman?
 do you want to be notified about changes of appointments you modified?	calendar	fi	Haluatko, että sinua huomautetaan tapahtumista, joita itse muokkasit?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	fi	Haluatko, että sinua huomautetaan uusista tai muuttuneista tapahtumista? Sinua EI huomauteta muutoksista, jotka teit itse.<br>Voit rajoittaa huomautukset vain jonkin tyyppisiin muutoksiin. Kaikki muutokset tarkoittavat muutoksia otsikossa, kuvauksessa ja osanottajissa, mutta ei osallistujien vastauksista. Jos tapahtuman omistaja on pyytänyt huomautuksia, hän saa niitä myös osanottajien vastauksista (hyväksymiset tai hylkäykset).
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	fi	Haluatko, että sinua huomautetaan uusista tai muuttuneista tapahtumista? Sinua huomautetaa muutoksista, jotka teit itse.<br>Voit rajoittaa huomautukset vain jonkin tyyppisiin muutoksiin. Kaikki muutokset tarkoittavat muutoksia otsikossa, kuvauksessa ja osanottajissa, mutta ei osallistujien vastauksista. Jos tapahtuman omistaja on pyytänyt huomautuksia, hän saa niitä myös osanottajien vastauksista (hyväksymiset tai hylkäykset).
 do you want to edit this event as an exception or the whole series?	calendar	fi	Haluatko muokata tapahtumaa poikkeuksena vai muokkaatko koko tapahtumasarjaa?
+do you want to keep the series exceptions in your calendar?	calendar	fi	Haluatko säilyttää tapahtuman poikkeukset kalenterissasi?
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fi	Haluatko vastaanottaa säännöllisen yhteenvedon tapaamisistasi sähköpostilla?<br>Yhteenveto lähetetään sähköpostiosoitteeseesi joka aamu, tai maanantaina jos kyseessä on viikoittainen yhteenveto.<br>Yhteenveto lähetetään vain, jos  sinulla on tapaamisia kyseisenä päivänä tai kyseisellä viikolla.
 do you wish to autoload calendar holidays files dynamically?	admin	fi	Haluatko ladata kalenterin juhlapäivätiedostot automaattisesti?
 download	calendar	fi	Lataa
@@ -134,6 +142,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	fi	Tapahtuman
 enddate of the export	calendar	fi	Viennin päättymispäivä
 ends	calendar	fi	Päättyy
 error adding the alarm	calendar	fi	Virhe hälytystä lisättäessä
+error: can't delete original series!	calendar	fi	Virhe: Alkuperäistä tapahtumasarjaa ei voitu poistaa!
 error: importing the ical	calendar	fi	Virhe tuotaessa iCal-tiedostoa
 error: no participants selected !!!	calendar	fi	Virhe: osallistujia ei valittuna !!!
 error: ressources reservation in private events is not allowed!!!	calendar	fi	Virhe: Resurssien varaaminen henkilökohtaisiin tapahtumiin ei ole sallittua!
@@ -155,6 +164,7 @@ export	calendar	fi	Vienti
 extended	calendar	fi	Laajennettu
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	fi	Laajennetuissa päivityksissä on aina täydelliset tapahtuman yksityiskohdat. iCal-tiedoston voi viedä muihin kalenterisovelluksiin.
 fieldseparator	calendar	fi	Kentän erotin
+filemanager	calendar	fi	Tiedostonhallinta
 filename	calendar	fi	Tiedostonimi
 filename of the download	calendar	fi	Latauksen tiedostonimi
 find free timeslots where the selected participants are availible for the given timespan	calendar	fi	Etsi vapaa aika, jolloin osallistujat ovat saatavilla valitulla aikavälillä.
@@ -167,7 +177,7 @@ forward one month	calendar	fi	Kuukausi eteenpäin
 forward one year	calendar	fi	Vuosi eteenpäin
 four days view	calendar	fi	4 päivän näkymä
 freebusy	common	fi	Vapaa/Varattu
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	fi	Vapaat/Varatut ajat: Tuntematon käyttäjä '%1', väärä salasana tai tiedosto ei ole saatavilla kirjautumattomalle käyttäjille !!!
+freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	fi	Vapaa/Varattu: Tuntematon käyttäjä '%1', tai tieto ei ole saatavilla tuntemattomille käyttäjille.
 freetime search	calendar	fi	Vapaan ajan haku
 fri	calendar	fi	Pe
 full description	calendar	fi	Koko kuvaus
@@ -205,6 +215,7 @@ ical file	calendar	fi	iCal -Tiedosto
 ical import	calendar	fi	iCal -Tuonti
 ical successful imported	calendar	fi	iCal -Tuonti onnistui!
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	fi	Jos valitut lomapäivät osuvat viikonlopulle, ne otetaan seuraavasta maanantaista.
+if start day differs	calendar	fi	Jos aloituspäivä eroaa
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fi	Jos et aseta tänne salasanaa, tieto on saatavilla kaikille jotka tietävät osoitteen (URL)!!!
 ignore conflict	calendar	fi	Ohita päällekkäisyys
 import	calendar	fi	Tuonti
@@ -214,6 +225,8 @@ interval	calendar	fi	Jakso
 invalid email-address "%1" for user %2	calendar	fi	Virheellinen sähköpostiosoite "%1" käyttäjälle %2
 invitations	calendar	fi	Kutsut
 invite	calendar	fi	Kutsu
+keep exceptions	calendar	fi	Säilytä poikkeukset
+keep the series unchanged.	calendar	fi	Älä muuta tapahtumasarjaa
 last	calendar	fi	Viimeinen
 lastname of person to notify	calendar	fi	Huomautettavan henkilön sukunimi
 length of the time interval	calendar	fi	Aikajakson pituus
@@ -238,6 +251,7 @@ monthly (by day)	calendar	fi	Kuukausittain (päivän mukaan)
 monthview	calendar	fi	Kuukausinäkymä
 multiple week view	calendar	fi	Usean viikon näkymä
 needs action	calendar	fi	Vaatii toimenpiteen
+new	calendar	fi	Uusi
 new search with the above parameters	calendar	fi	Uusi haku yllä olevilla parametreillä
 no automatic purging	admin	fi	Ei automaattista poistoa
 no events found	calendar	fi	Tapahtumia ei löytynyt
@@ -295,6 +309,7 @@ re-edit event	calendar	fi	Muokkaa tapahtumaa uudelleen
 receive email updates	calendar	fi	Vastaanota päivityksiä sähköpostilla
 receive notifications about events you created/modified/deleted	calendar	fi	Vastaanota huomautuksia tapahtumista jotka itse luot, muokkaat tai poistat.
 receive summary of appointments	calendar	fi	Vastaanota tapaamisten yhteenveto
+recover	calendar	fi	Palauta
 recurrence	calendar	fi	Toistuvuus
 recurring event	calendar	fi	Toistuva tapahtuma
 rejected	calendar	fi	Hylätyt
@@ -324,6 +339,7 @@ search string for the events	calendar	fi	Haun merkkijono tapahtumille
 select a %1	calendar	fi	Valitse %1
 select a time	calendar	fi	Valitse aika
 select an action	calendar	fi	Valitse toiminto
+select an action...	calendar	fi	Valitse toiminto
 select multiple contacts for a further action	calendar	fi	Valitse useampi yhteystieto jatkaaksesi
 select resources	calendar	fi	Valitse resurssit
 select who should get the alarm	calendar	fi	Valitse kuka saa hälytyksen
@@ -333,8 +349,7 @@ set a year only for one-time / non-regular holidays.	calendar	fi	Määrittele "v
 set new events to private	calendar	fi	Määrittele uudet tapahtumat yksityisiksi
 setting lock time calender	admin	fi	Aseta Data lock -aika kalenteriin (oletus 1 sek.)
 should new events created as private by default ?	calendar	fi	Luodaanko uudet tapahtumat oletuksena yksityiseksi?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	fi	Voivatko kirjautumattomat käyttäjät nähdä Vapaat/Varatut aikasi? Voit asettaa ylimääräisen salasanan (eri kun normaali salasanasi) suojaamaan tätä tietoa. Vapaat/Varatut ajat ovat iCal muodossa ja näyttävät vain ajat jolloin olet varattu. Se ei näytä tapahtuman nimeä, kuvausta tai sijaintia. Vapaiden/Varattujen aikojen URL on %1.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk" target="_blank">http://213.183.76.121/egroupware/calendar/freebusy.php?user=mkk</a>.	calendar	fi	Voivatko kirjautumattomat käyttäjät nähdä Vapaat/Varatut aikasi? Voit asettaa ylimääräisen salasanan (eri kun normaali salasanasi) suojaamaan tätä tietoa. Vapaat/Varatut ajat ovat iCal muodossa ja näyttävät vain ajat jolloin olet varattu. Se ei näytä tapahtuman nimeä, kuvausta tai sijaintia. Vapaiden/Varattujen aikojen URL on %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	fi	Sallitaanko sisään kirjautumattonien henkilöiden nähdä Vapaa/Varattu tieto? Voit asettaa sille toisen salasanan (eri kuin normaali sisäänkirjautumissalasanasi). Vapaa/Varattu tieto on iCal muodossa ja sisältää ainoastaan ajat jolloin olet varattu. Vapaa/Varattu tieto ei sisällä tapahtumien yksityiskohtaisia tietoja (nimi, aika, paikka...). Vapaa/Varattu tiedon URL on
 should the grid be shown in the calendar	calendar	fi	Näytetäänkö kalenterin gridi?
 should the number of weeks be shown on top of the calendar	calendar	fi	Näytetäänkö viikon lukumäärä kalenterin yläpuolella?
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	fi	Näytetäänkö viikon lukumäärä kalenterin yläpuolella? (vain jos offset = 0)
@@ -375,6 +390,8 @@ submit to repository	calendar	fi	Lähetä varastoon
 sun	calendar	fi	Su
 tentative	calendar	fi	Alustavat
 test import (show importable records <u>only</u> in browser)	calendar	fi	Testi Tuonti (näytä tuotavat taulut <u>vain</u> selaimessa)
+the exceptions are deleted together with the series.	calendar	fi	Poikkeukset on poistettu yhdessä tapahtumasarjan kanssa
+the original series will be terminated today and a new series be created.	calendar	fi	Alkuperäinen tapahtumasarja päättyy tähän päivään ja uusi sarja luodaan.
 the resource you selected is already overbooked:	calendar	fi	Valitsemasi resurssi on jo varattu
 this day is shown as first day in the week or month view.	calendar	fi	Valitsemasi päivä näytetään viikon tai kuukausinäkymän ensimmäisenä päivänä
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	fi	Määrittele päivänäkymän päättymisaika. Tämän ajan jälkeiset tapahtumat näytetään päivänäkymän alaosassa.
