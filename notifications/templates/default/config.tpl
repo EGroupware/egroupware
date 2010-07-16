@@ -66,6 +66,9 @@
      </select>
     </td>
    </tr>
+   <tr class="th">
+    <td colspan="2">&nbsp;<b>{lang_Mail_backend}</b></td>
+   </tr>
    <tr class="row_on">
     <td>{lang_choose_from_mailsettings_used_for_notification}</td>
     <td>
