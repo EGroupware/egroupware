@@ -66,6 +66,15 @@
      </select>
     </td>
    </tr>
+   <tr class="row_on">
+    <td>{lang_choose_from_mailsettings_used_for_notification}</td>
+    <td>
+     <select name="newsettings[dontUseUserDefinedProfiles]">
+      <option value=""{selected_dontUseUserDefinedProfiles_False}>{lang_Check_both_(first_try_(active)_User_defined_account,_if_none_use_emailadmin_profile)}</option>
+      <option value="True"{selected_dontUseUserDefinedProfiles_True}>{lang_Emailadmin_Profile_only_(Do_not_use_User_defined_(active)_Mail_Profiles_for_Notification)}</option>
+     </select>
+    </td>
+   </tr>
    <!-- END body -->
 <!-- BEGIN footer -->
   <tr valign="bottom" style="height: 30px;">
