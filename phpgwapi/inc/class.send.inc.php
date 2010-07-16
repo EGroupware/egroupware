@@ -56,11 +56,15 @@
 			}
 			$this->SetLanguage($lang,$lang_path);
 			$this->IsSmtp();
-
-			$bopreferences    =& CreateObject('felamimail.bopreferences');
+			$restoreSession = $getUserDefinedProfiles = true;
+			// if dontUseUserDefinedProfiles is set to yes/true/1 dont restore the session AND dont retrieve UserdefinedAccount settings
+			$notification_config = config::read('notifications');
+			if ($notification_config['dontUseUserDefinedProfiles']) $restoreSession = $getUserDefinedProfiles = false;
+			$bopreferences    =& CreateObject('felamimail.bopreferences',$restoreSession);
 			if ($bopreferences) {
 				if ($this->debug) error_log(__METHOD__." using felamimail preferences for mailing.");
-				$preferences  = $bopreferences->getPreferences();
+				// if dontUseUserDefinedProfiles is set to yes/true/1  dont retrieve UserdefinedAccount settings
+				$preferences  = $bopreferences->getPreferences($getUserDefinedProfiles);
 				if ($preferences) {
 					$ogServer = $preferences->getOutgoingServer(0);
 					if ($ogServer) {
