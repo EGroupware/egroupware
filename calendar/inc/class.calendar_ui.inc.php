@@ -371,16 +371,19 @@ class calendar_ui
 		$this->view_menuaction = $this->view == 'listview' ? 'calendar.calendar_uilist.listview' : 'calendar.calendar_uiviews.'.$this->view;
 
 		if ($this->debug > 0 || $this->debug == 'manage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
-		// save the states in the session
-		$GLOBALS['egw']->session->appsession('session_data','calendar',$states);
-		// save defined states into the user-prefs
-		if(!empty($states) && is_array($states))
+		// save the states in the session only when we are in calendar
+		if ($GLOBALS['egw_info']['flags']['currentapp']=='calendar')
 		{
-			$saved_states = serialize(array_intersect_key($states,array_flip($this->states_to_save)));
-			if ($saved_states != $this->cal_prefs['saved_states'])
+			$GLOBALS['egw']->session->appsession('session_data','calendar',$states);
+			// save defined states into the user-prefs
+			if(!empty($states) && is_array($states))
 			{
-				$GLOBALS['egw']->preferences->add('calendar','saved_states',$saved_states);
-				$GLOBALS['egw']->preferences->save_repository(false,'user',true);
+				$saved_states = serialize(array_intersect_key($states,array_flip($this->states_to_save)));
+				if ($saved_states != $this->cal_prefs['saved_states'])
+				{
+					$GLOBALS['egw']->preferences->add('calendar','saved_states',$saved_states);
+					$GLOBALS['egw']->preferences->save_repository(false,'user',true);
+				}
 			}
 		}
 	}
