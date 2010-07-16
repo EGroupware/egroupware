@@ -1035,6 +1035,21 @@ class infolog_ui
 
 			$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
 			if (!(strpos($content['info_addr'],',')===false) && strpos($content['info_addr'],', ')===false) $content['info_addr'] = str_replace(',',', ',$content['info_addr']);
+			foreach(array('info_subject', 'info_des') as $key)
+			{
+				if(!isset($content[$key]) || strlen($content[$key]) < 75)
+				{
+					continue;
+				}
+				foreach(array(',' => ', ', '.' => '. ') as $pattern => $replace)	// set blank behind all , and .
+				{
+					if(strpos($content[$key], $replace) === false)
+					{
+						$content[$key] = str_replace($pattern, $replace, $content[$key]);
+					}
+				}
+				$content[$key] = wordwrap($content[$key], 75, ' ', true);
+			}
 			if (is_numeric($_REQUEST['cat_id']))
 			{
 				$content['info_cat'] = (int) $_REQUEST['cat_id'];
