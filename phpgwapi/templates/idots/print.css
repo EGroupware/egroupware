@@ -71,3 +71,11 @@ body {
 /* MSIE needs these styles to repeat table header and footer part on each page */
 thead { display: table-header-group; }
 tfoot { display: table-footer-group; }
+
+/**
+ * remove border and use black color for input elements
+ */
+input, select, textarea {
+	border: none;
+	color: black;
+}
