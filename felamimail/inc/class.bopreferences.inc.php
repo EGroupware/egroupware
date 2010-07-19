@@ -202,7 +202,7 @@
 			return array();
 		}
 
-		function getPreferences()
+		function getPreferences($getUserDefinedProfiles=true)
 		{
 			if (isset($this->sessionData['profileData']) && is_a($this->sessionData['profileData'],'ea_preferences')) {
 				$this->profileData = $this->sessionData['profileData'];
@@ -214,7 +214,7 @@
 				if(!is_a($profileData, 'ea_preferences') || !is_a($profileData->ic_server[0], 'defaultimap')) {
 					return false;
 				}
-				if($profileData->userDefinedAccounts && $GLOBALS['egw_info']['user']['apps']['felamimail']) {
+				if($profileData->userDefinedAccounts && $GLOBALS['egw_info']['user']['apps']['felamimail'] && $getUserDefinedProfiles) {
 					// get user defined accounts
 					$accountData = $this->getAccountData($profileData);
 
