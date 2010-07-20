@@ -416,7 +416,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 								//Increment the includedJSFiles count
 								this.loadedJSFiles[res.data] = false;
 
-								if (typeof console != 'undefined')
+								if (typeof console != 'undefined' && typeof console.log != 'undefined')
 									console.log("Requested JS file '%s' from server", [res.data]);
 
 								var self = this;
@@ -424,7 +424,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 								//FF, Opera, Chrome
 								scriptnode.onload = function(e) {
 									var file = e.target._originalSrc;
-									if (typeof console != 'undefined')
+									if (typeof console != 'undefined' && typeof console.log != 'undefined')
 										console.log("Retrieved JS file '%s' from server", [file]);
 
 									self.loadedJSFiles[file] = true;
@@ -436,7 +436,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 									var node = window.event.srcElement;
 									if (node.readyState == 'complete') {
 										var file = node._originalSrc;
-										if (typeof console != 'undefined')
+										if (typeof console != 'undefined' && typeof console.log != 'undefined')
 											console.log("Retrieved JS file '%s' from server", [file]);
 
 										self.loadedJSFiles[file] = true;
@@ -477,6 +477,10 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 	}
 }
 
+/**
+ * The "onLoadFinish" handler gets called after all JS-files have been loaded
+ * successfully
+ */
 egw_json_request.prototype.checkLoadFinish = function()
 {
 	var complete = true;
@@ -485,7 +489,6 @@ egw_json_request.prototype.checkLoadFinish = function()
 
 	if (complete && this.onLoadFinish && this.handleResponseDone)
 	{
-		console.log("Call onLoadFinish");
 		this.onLoadFinish.call(this.sender);
 	}
 }
