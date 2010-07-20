@@ -1346,7 +1346,7 @@ class XML
                 }
             
                 // Perform an axis action.
-                $contexts = call_user_method($method, &$this, $axis, $context);
+                $contexts = call_user_func(array( &$this,$method), $axis, $context);
             
                 // Check whether there are predicates.
                 if ( count($axis["predicate"]) > 0 )
@@ -1411,7 +1411,7 @@ class XML
         }
         
         // Return the result of the function.
-        return call_user_method($method, &$this, $node, $arguments);
+        return call_user_func(array( &$this,$method), $node, $arguments);
     }
     
     /**

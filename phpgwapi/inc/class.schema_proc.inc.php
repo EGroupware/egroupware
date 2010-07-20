@@ -858,7 +858,7 @@ class schema_proc
 			$debug_params = func_get_args();
 			array_shift($debug_params);
 			array_shift($debug_params);
-			call_user_method_array('debug_message',$this,$debug_params);
+			call_user_func_array(array($this,'debug_message'),$debug_params);
 			if ($retval < 2 && !$this->dict->debug)
 			{
 				echo '<p><b>'.$this->adodb->ErrorMsg()."</b></p>\n";
