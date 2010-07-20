@@ -200,6 +200,9 @@ function egw_json_request(_menuaction, _parameters, _context)
 	this.sender = null;
 	this.callback = null;
 	this.alertHandler = this.alertFunc;
+	this.onLoadFinish = null;
+	this.loadedJSFiles = {};
+	this.handleResponseDone = false;
 	if (window.egw_alertHandler)
 	{
 		this.alertHandler = window.egw_alertHandler;
@@ -272,6 +275,7 @@ egw_json_request.prototype.jsonError = function(_msg, _e)
 /* Internal function which handles the response from the server */
 egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRequest)
 {
+	this.handleResponseDone = false;
 	if (data && data.response)
 	{
 		var hasResponse = false;
@@ -406,7 +410,39 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 								var scriptnode = document.createElement('script');
 								scriptnode.type = "text/javascript";
 								scriptnode.src = res.data;
+								scriptnode._originalSrc = res.data;
 								headID.appendChild(scriptnode);
+
+								//Increment the includedJSFiles count
+								this.loadedJSFiles[res.data] = false;
+
+								if (typeof console != 'undefined')
+									console.log("Requested JS file '%s' from server", [res.data]);
+
+								var self = this;
+
+								//FF, Opera, Chrome
+								scriptnode.onload = function(e) {
+									var file = e.target._originalSrc;
+									if (typeof console != 'undefined')
+										console.log("Retrieved JS file '%s' from server", [file]);
+
+									self.loadedJSFiles[file] = true;
+									self.checkLoadFinish();
+								};
+
+								//IE
+								scriptnode.onreadystatechange = function() {
+									var node = window.event.srcElement;
+									if (node.readyState == 'complete') {
+										var file = node._originalSrc;
+										if (typeof console != 'undefined')
+											console.log("Retrieved JS file '%s' from server", [file]);
+
+										self.loadedJSFiles[file] = true;
+										self.checkLoadFinish();
+									}
+								};
 							}
 							hasResponse = true;
 						} else
@@ -434,6 +470,23 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 		{			
 			this.callback.call(this.sender, data.response[i].data);			
 		}
+
+		this.handleResponseDone = true;
+
+		this.checkLoadFinish();
+	}
+}
+
+egw_json_request.prototype.checkLoadFinish = function()
+{
+	var complete = true;
+	for (var key in this.loadedJSFiles)
+		complete = complete && this.loadedJSFiles[key];
+
+	if (complete && this.onLoadFinish && this.handleResponseDone)
+	{
+		console.log("Call onLoadFinish");
+		this.onLoadFinish.call(this.sender);
 	}
 }
 
