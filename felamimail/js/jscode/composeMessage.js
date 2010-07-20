@@ -515,7 +515,7 @@ function fm_compose_changeInputType(_selectBox) {
 	}
 
 	var tdElements	= selectBoxRow.getElementsByTagName('td');
-	if (_selectBox.name = 'signatureID') {
+	if (_selectBox.name == 'signatureID') {
 		var sigBox = document.getElementById('signatureID');
 		//alert(sigBox);
 		// if we find the id, signature is inserted at the top of the message on compose start.
