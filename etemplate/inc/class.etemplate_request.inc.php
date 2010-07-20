@@ -108,7 +108,7 @@ class etemplate_request
 		}
 		if (self::$request_class != __CLASS__)
 		{
-			return call_user_method('read',self::$request_class,$id);
+			return call_user_func(array(self::$request_class,'read'),$id);
 		}
 		$request = new etemplate_request();
 
