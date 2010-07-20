@@ -193,7 +193,7 @@
 							{
 								if (is_object($obj))
 								{
-									$code = "\$method_response = call_user_method($method,$obj,";
+									$code = "\$method_response = call_user_func(array($obj,$method),";
 									$this->debug("about to call object method '$class\-\>$method' with args");
 								}
 								else
@@ -234,7 +234,7 @@
 								if (is_object($obj))
 								{
 									$this->debug("about to call object method '$obj\-\>$method'");
-									if(!$method_response = call_user_method($method,$obj))
+									if(!$method_response = call_user_func(array($obj,$method)))
 									{
 										$this->make_fault("Server","Method call failed for '$obj->method' with no params");
 										return $this->fault();
@@ -257,7 +257,7 @@
 							if($request_data)
 							{
 								/* call method with parameters */
-								$code = "\$method_response = call_user_method(\$method,\$obj,";
+								$code = "\$method_response = call_user_func(array(\$obj,\$method),";
 								while(list($x,$y) = each($request_data))
 								{
 									$code .= "\$request_data[$x]" . ',';
@@ -272,7 +272,7 @@
 								if(is_object($obj))
 								{
 									$this->debug("about to call object method '$obj\-\>$method'");
-									call_user_method($method,$obj);
+									call_user_func(array($obj,$method));
 								}
 								else
 								{

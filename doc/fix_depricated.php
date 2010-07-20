@@ -119,6 +119,13 @@ function fix_depricated($file,$replace_file=false)
 
 	// fix call to not longer existing PDO method $result->fetchSingle()
 	$lines = str_replace('->fetchSingle(','->fetchColumn(',$lines);
+	
+	// fix calls to deprecated call_user_method(_array)?(method,object[,args])
+	if (preg_match('/call_user_method(_array)?\(/',$lines,$matches))
+	{
+		$lines = preg_replace('/call_user_method\(([^,]+),([^,\)]+)([,)])/','call_user_func(array(\\2,\\1)\\3',$lines);
+		$lines = preg_replace('/call_user_method_array\(([^,]+),([^,\)]+)([,)])/','call_user_func_array(array(\\2,\\1)\\3',$lines);
+	}
 
 	if ($lines != $orig)
 	{
