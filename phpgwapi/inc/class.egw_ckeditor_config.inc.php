@@ -179,13 +179,10 @@ class egw_ckeditor_config
 			{
 				$spellchecker_button = 'SpellCheck';
 				$config['extraPlugins'] = "aspell";
-				$config['scayt_autoStartup'] = false;
 			}
-			else
-			{
-				$config['scayt_autoStartup'] = true;
-				$config['scayt_sLang'] = self::get_lang().'_'.self::get_country();
-			}
+			$config['scayt_autoStartup'] = true;
+			$config['scayt_sLang'] = self::get_lang().'_'.self::get_country();
+			
 		}
 		else
 		{
