@@ -595,8 +595,8 @@ class html
 			$_content = self::purify($_content);
 
 		// By default the editor start expanded
-		$expanded = isset($_options['toolbarStartupExpanded']) ?
-			$_options['toolbarStartupExpanded'] != 'false' : true;
+		$expanded = isset($_options['toolbar_expanded']) ?
+			$_options['toolbar_expanded'] == 'true' : true;
 
 		//Get the height in pixels from the pixels parameter
 		$pxheight = (strpos('px', $_height) === false) ?

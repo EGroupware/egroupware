@@ -154,6 +154,8 @@ class egw_ckeditor_config
 		$config['editingBlock'] = true;
 		$config['disableNativeSpellChecker'] = true;
 
+		$config['removePlugins'] = 'elementspath';
+
 		$config['toolbarStartupExpanded'] = $expanded_toolbar;
 
 		$config['filebrowserBrowseUrl'] = self::get_filebrowserBrowseUrl($start_path);
