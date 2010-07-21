@@ -439,7 +439,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 									{
 										scriptnode.onreadystatechange = function() {
 											var node = window.event.srcElement;
-											if (node.readyState == 'complete' || node.readState == 'loaded') {
+											if (node.readyState == 'complete' || node.readyState == 'loaded') {
 												var file = node._originalSrc;
 												if (typeof console != 'undefined' && typeof console.log != 'undefined')
 													console.log("Retrieved JS file '%s' from server", [file]);
