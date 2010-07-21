@@ -272,7 +272,7 @@ class accounts_ldap
 					($old && in_array($objectclass,$old['objectclass']) || $data_utf8['account_email'] || $old['mail']))
 				{
 					$extra_attr = false;
-					if (is_array($forward)) list($forward,$extra_attr) = each($forward);
+					if (is_array($forward)) list($forward,$extra_attr) = $forward;
 					if ($data_utf8['account_email'])	// setting an email
 					{
 						if (!in_array($objectclass,$old ? $old['objectclass'] : $to_write['objectclass']))
@@ -1093,14 +1093,13 @@ class accounts_ldap
 		if ($this->id2name($gid,'account_email') &&	($objectclass = $this->id2name($gid,'mailAllowed')))
 		{
 			$forward = $this->group_mail_classes[$objectclass];
-			if (is_array($forward)) list($forward,$extra_attr) = each($forward);
+			if (is_array($forward)) list($forward,$extra_attr) = $forward;
+			if ($extra_attr && ($uid = $this->id2name($gid))) $to_write[$extra_attr] = $uid;
 			
 			$to_write[$forward] = array();
-			if ($extra_attr) $to_write[$extra_attr] = array();
 			foreach($members as $key => $member)
 			{
 				if (($email = $this->id2name($member,'account_email')))	$to_write[$forward][] = $email;
-				if ($extra_attr && ($uid = $this->id2name($member,'account_lid'))) $to_write[$extra_attr] = $uid;
 			}
 		}
 		if (!ldap_modify($this->ds,'cn='.ldap::quote($cn).','.$this->group_context,$to_write))
