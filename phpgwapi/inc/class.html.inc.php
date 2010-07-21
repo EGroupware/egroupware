@@ -628,6 +628,7 @@ class html
 		//Only heights with "px" set are supported		
 		$pxheight = (strpos('px', $_height) === false) ? (empty($_height)?400:$_height) : str_replace('px', '', $_height);
 		$oCKeditor->config['height'] = $pxheight;
+		$oCKeditor->config['removePlugins'] = 'elementspath';
 
 		// By default the editor start expanded
 		if ($_options['toolbar_expanded'] == 'false')
@@ -645,7 +646,7 @@ class html
 				$oCKeditor->config['extraPlugins'] = 'aspell';
 			}
 			$oCKeditor->config['scayt_autoStartup']=true;
-			$oCKeditor->config['scayt_sLang']=$lang.'_'.strtoupper($country);			
+			$oCKeditor->config['scayt_sLang']=$lang.'_'.strtoupper($country);
 		}
 		$oCKeditor->config['disableNativeSpellChecker'] = true;
 
