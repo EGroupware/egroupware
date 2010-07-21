@@ -1326,6 +1326,7 @@ class etemplate extends boetemplate
 						self::$request->set_to_process($form_name,$cell['type'],array(
 							'unset_value' => $unset_val,
 							'multiple'    => $multiple,
+							'needed'      => $cell['needed'],
 						));
 					}
 					self::$request->set_to_process_attribute($form_name,'values',$set_val,true);
@@ -1351,7 +1352,9 @@ class etemplate extends boetemplate
 				else
 				{
 					$html .= html::input($form_name,$set_val,'RADIO',$options);
-					self::$request->set_to_process($form_name,$cell['type']);
+					self::$request->set_to_process($form_name,$cell['type'],array(
+						'needed' => $cell['needed'],
+					));
 				}
 				break;
 			case 'button':
@@ -1626,7 +1629,9 @@ class etemplate extends boetemplate
 						self::$form_options = " enctype=\"multipart/form-data\" onsubmit=\"set_element2(this,'$path_name','$form_name')\"";
 					}
 					$html .= html::input($form_name,'','file',$options);
-					self::$request->set_to_process($form_name,$cell['type']);
+					self::$request->set_to_process($form_name,$cell['type'],array(
+						'needed' => $cell['needed'],
+					));
 				}
 				break;
 			case 'vbox':
@@ -2202,8 +2207,12 @@ class etemplate extends boetemplate
 					self::set_array($content,$form_name,$value);
 					break;
 				case 'checkbox':
-					if ($value === false)	// get_array() returns false for not set
+					if (!$value)
 					{
+						if ($attr['needed'])
+						{
+							self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
+						}
 						self::set_array($content,$form_name,$attr['multiple'] ? array() : $attr['unset_value']);	// need to be reported too
 					}
 					else
@@ -2255,6 +2264,10 @@ class etemplate extends boetemplate
 					//echo $form_name; _debug_array($value);
 					// fall-throught
 				default:
+					if ($attr['needed'] && !$value)
+					{
+						self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
+					}
 					self::set_array($content,$form_name,$value);
 					break;
 			}
