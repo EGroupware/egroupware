@@ -432,17 +432,28 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 								};
 
 								//IE
-								scriptnode.onreadystatechange = function() {
-									var node = window.event.srcElement;
-									if (node.readyState == 'complete') {
-										var file = node._originalSrc;
-										if (typeof console != 'undefined' && typeof console.log != 'undefined')
-											console.log("Retrieved JS file '%s' from server", [file]);
+								if (typeof scriptnode.readyState != 'undefined')
+								{
+									if (scriptnode.readyState != 'complete' &&
+									    scriptnode.readyState != 'loaded')
+									{
+										scriptnode.onreadystatechange = function() {
+											var node = window.event.srcElement;
+											if (node.readyState == 'complete' || node.readState == 'loaded') {
+												var file = node._originalSrc;
+												if (typeof console != 'undefined' && typeof console.log != 'undefined')
+													console.log("Retrieved JS file '%s' from server", [file]);
 
-										self.loadedJSFiles[file] = true;
-										self.checkLoadFinish();
+												self.loadedJSFiles[file] = true;
+												self.checkLoadFinish();
+											}
+										};
 									}
-								};
+									else
+									{
+										this.loadedJSFiles[res.data] = true;
+									}
+								}								
 							}
 							hasResponse = true;
 						} else
