@@ -845,7 +845,7 @@ class boetemplate extends soetemplate
 		egw_cache::unsetInstance('etemplate',$this->cache_name());
 	}
 
-	static private $import_tested = array();
+	static private $import_tested;
 
 	/**
 	 * Test if new template-import necessary for app and does the import
@@ -861,15 +861,20 @@ class boetemplate extends soetemplate
 		if (is_array($app)) $app = $app['name'];
 		list($app) = explode('.',$app);
 
+		if (is_null(self::$import_tested))
+		{
+			self::$import_tested =& egw_cache::getSession('etemplate','import_tested');
+			if (is_null(self::$import_tested)) self::$import_tested = array();
+		}
 		if (!$app || self::$import_tested[$app])
 		{
-			return '';	// ensure test is done only once per call and app
+			return '';	// ensure test is done only once per session and app
 		}
 		self::$import_tested[$app] = True;	// need to be done before new ...
 
 		$path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php";
 
-		if ($time = @filemtime($path))
+		if (($time = @filemtime($path)))
 		{
 			$templ = new boetemplate(array('name' => '.'.$app,'lang' => '##'));
 			if ($templ->lang != '##' || $templ->modified < $time) // need to import
@@ -932,13 +937,18 @@ class boetemplate extends soetemplate
 		// check if new import necessary, currently on every request
 		$msg = self::test_import($name);
 		//if ($msg) echo "<p>".__METHOD__."($name,$template,$lang,$group,$version) self::test_import($name) returning $msg</p>\n";
-
-		$data = egw_cache::getInstance('etemplate',$cname=self::cache_name($name,$template,$lang));
+		
 		if (is_array($name))
 		{
 			$version = $name['version'];
+			$lang = $name['lang'];
+			$template = $name['template'];
 			$name = $name['name'];
 		}
+		// templates starting with . (as the import timestamp) never use the cache
+		if ($name[0] == '.') return false;
+
+		$data = egw_cache::getInstance('etemplate',$cname=self::cache_name($name,$template,$lang));
 		//echo "<p>".__METHOD__.'('.array2string($name).",$template,$lang,$group,$version) egw_cache::getInstance('etemplate','$cname')=".array2string(array('name'=>$data['name'],'version'=>$data['version'],'modified'=>$data['modified']))."</p>\n";
 
 		if (!is_null($data) && (empty($version) || $data['version'] == $version))
