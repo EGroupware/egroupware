@@ -327,7 +327,7 @@ class egw_json_response
 	 */
 	public function assign($id, $key, $value)
 	{
-		if (is_string($id) && is_string($key) && (is_string($value) || is_numeric($value)))
+		if (is_string($id) && is_string($key) && (is_string($value) || is_numeric($value) || is_null($value)))
 		{
 			$this->addGeneric('assign', array(
 				'id' => $id,
