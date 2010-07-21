@@ -1093,11 +1093,14 @@ class accounts_ldap
 		if ($this->id2name($gid,'account_email') &&	($objectclass = $this->id2name($gid,'mailAllowed')))
 		{
 			$forward = $this->group_mail_classes[$objectclass];
-
+			if (is_array($forward)) list($forward,$extra_attr) = each($forward);
+			
 			$to_write[$forward] = array();
+			if ($extra_attr) $to_write[$extra_attr] = array();
 			foreach($members as $key => $member)
 			{
 				if (($email = $this->id2name($member,'account_email')))	$to_write[$forward][] = $email;
+				if ($extra_attr && ($uid = $this->id2name($member,'account_lid'))) $to_write[$extra_attr] = $uid;
 			}
 		}
 		if (!ldap_modify($this->ds,'cn='.ldap::quote($cn).','.$this->group_context,$to_write))
