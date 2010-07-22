@@ -2248,12 +2248,12 @@ class etemplate extends boetemplate
 					self::set_array($content,$form_name,$value);
 					break;
 				case 'checkbox':
-					if (!$value)
+					if (!$value && $attr['needed'])
 					{
-						if ($attr['needed'])
-						{
-							self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
-						}
+						self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
+					}
+					if ($value === false)
+					{
 						self::set_array($content,$form_name,$attr['multiple'] ? array() : $attr['unset_value']);	// need to be reported too
 					}
 					else
