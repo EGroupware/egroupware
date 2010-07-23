@@ -342,13 +342,11 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['id'] = $oldContact['id'];
 			// dont allow the client to overwrite certain values
 			$contact['uid'] = $oldContact['uid'];
-			$contact['owner'] = $oldContact['owner'];
+			//$contact['owner'] = $oldContact['owner'];
 			$contact['private'] = $oldContact['private'];
 		}
-		else
-		{
-			$contact['owner'] = $user;
-		}
+		
+		$contact['owner'] = $user;
 
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
