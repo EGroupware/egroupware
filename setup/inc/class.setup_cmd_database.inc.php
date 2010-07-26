@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -262,7 +262,8 @@ class setup_cmd_database extends setup_cmd
 			}
 			if (strpos($this->$name,'$domain') !== false)
 			{
-				$this->set_defaults[$name] = $this->$name = str_replace(array('$domain','.','-'),array($this->domain,'_','_'),$this->$name);
+				// limit names to 16 chars (16 char is user-name limit in MySQL)
+				$this->set_defaults[$name] = $this->$name = substr(str_replace(array('$domain','.','-'),array($this->domain,'_','_'),$this->$name),0,16);
 			}
 		}
 	}

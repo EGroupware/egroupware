@@ -231,7 +231,7 @@ abstract class setup_cmd extends admin_cmd
 
 		if (!$versions['phpgwapi'])
 		{
-			if (!include('../phpgwapi/setup/setup.inc.php'))
+			if (!include(EGW_INCLUDE_ROOT.'/phpgwapi/setup/setup.inc.php'))
 			{
 				throw new egw_exception_wrong_userinput(lang("eGroupWare sources in '%1' are not complete, file '%2' missing !!!",realpath('..'),'phpgwapi/setup/setup.inc.php'),99);	// should not happen ;-)
 			}

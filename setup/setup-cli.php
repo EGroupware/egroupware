@@ -110,7 +110,7 @@ switch($action)
 	default:
 		// we allow to call admin_cmd classes directly, if they define the constant SETUP_CLI_CALLABLE
 		if (substr($action,0,2) == '--' && class_exists($class = str_replace('-','_',substr($action,2))) &&
-			is_subclass_of($class,'admin_cmd') && constant($class.'::SETUP_CLI_CALLABLE'))
+			is_subclass_of($class,'admin_cmd') && @constant($class.'::SETUP_CLI_CALLABLE'))
 		{
 			$args = array();
 			$args['domain'] = array_shift($arguments);	// domain must be first argument, to ensure right domain get's selected in header-include

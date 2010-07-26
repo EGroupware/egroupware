@@ -18,6 +18,11 @@
 class setup_cmd_admin extends setup_cmd
 {
 	/**
+	 * Allow to run this command via setup-cli
+	 */
+	const SETUP_CLI_CALLABLE = true;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string|array $domain domain-name or array with all parameters
