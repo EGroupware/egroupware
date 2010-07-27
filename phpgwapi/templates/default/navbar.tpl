@@ -128,7 +128,7 @@
 <div class="divSidebox">
 	<div class="divSideboxHeader"><span>{lang_title}</span></div>
 	<div>
-		<table width="100%" cellspacing="0" cellpadding="0">
+		<table width="99.9%" cellspacing="0" cellpadding="0">
 <!-- END extra_blocks_header -->
 
 
