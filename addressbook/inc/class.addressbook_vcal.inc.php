@@ -679,6 +679,7 @@ class addressbook_vcal extends addressbook_bo
 					case 'VOICE':
 					case 'OTHER':
 					case 'CELL':
+						if ($rowName != 'TEL') break;
 					case 'WORK':
 					case 'HOME':
 						$rowName .= ';' . $pname;
