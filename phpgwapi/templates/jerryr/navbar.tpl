@@ -149,7 +149,7 @@
                 </table>
         </div>
 	<div>
-		<table class="sideboxDrop" width="100%" cellspacing="0" cellpadding="0">
+		<table class="sideboxDrop" width="99.9%" cellspacing="0" cellpadding="0">
 <!-- END extra_blocks_header -->
 
 
