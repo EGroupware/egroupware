@@ -434,7 +434,7 @@ _xajax_doXMLHTTP = function(_async, _menuaction, _arguments)
 	return request;
 }
 
-/*xajax_doXMLHTTP = function(_menuaction)
+xajax_doXMLHTTP = function(_menuaction)
 {
 	return _xajax_doXMLHTTP(true, _menuaction, arguments);
 }
@@ -449,7 +449,7 @@ window.xajax = {
 	{
 		return egw_json_getFormValues(_form);
 	}
-};*/
+};
 
 /*
 	The following code is adapted from the xajax project which is licensed under
