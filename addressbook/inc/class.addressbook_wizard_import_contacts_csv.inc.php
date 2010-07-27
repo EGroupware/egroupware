@@ -63,7 +63,6 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
-					unset($content['csv_fields']);
 					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
 				case 'previous' :
 					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],-1);
