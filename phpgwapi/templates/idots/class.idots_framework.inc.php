@@ -567,7 +567,7 @@ class idots_framework extends egw_framework
 		$_item['url'] = $app_data['url'];
 		$_item['urlextra'] = $app_data['target'];
 		$_item['label'] = ($alt_label?$alt_label:$app_data['title']);
-		$this->tplsav2->menuitems[$app_data['name']] = $_item;
+		$this->tplsav2->menuitems[] = $_item;
 		$this->tplsav2->icon_or_star = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png';
 	}
 

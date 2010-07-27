@@ -850,12 +850,20 @@ abstract class egw_framework
 		{
 			$this->_add_topmenu_item($apps['home']);
 		}
-
 		if($GLOBALS['egw_info']['user']['apps']['preferences'])
 		{
 			$this->_add_topmenu_item($apps['preferences']);
 		}
-
+		elseif(($pw_app = $GLOBALS['egw_info']['user']['apps']['password']) && 
+			!$GLOBALS['egw']->acl->check('nopasswordchange', 1))
+		{
+			$this->_add_topmenu_item(array(
+				'title' => $pw_app['title'],
+				'url'   => egw::link($pw_app['index']),
+				'icon'  => common::image($pw_app['icon'],$pw_app['icon_app']),
+			));
+		}
+		
 		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
 		{
 			$this->_add_topmenu_item($apps['manual']);
