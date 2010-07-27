@@ -477,7 +477,9 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	function put(&$options,$id,$user=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-
+		
+		if (!preg_match('/^METHOD:(PUBLISH|REQUEST)(\r\n|\r|\n)(.*)^BEGIN:VEVENT/ism', $options['content'])) return true;
+		
 		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 		if (!is_null($oldEvent) && !is_array($oldEvent))
