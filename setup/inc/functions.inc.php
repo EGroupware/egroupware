@@ -75,65 +75,6 @@ function lang($key,$vars=null)
 	return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
 }
 
-/**
- * returns array of languages we support, with enabled set to True if the lang file exists
- */
-function get_langs()
-{
-	$f = fopen('./lang/languages','rb');
-	while($line = fgets($f,200))
-	{
-		list($x,$y) = explode("\t",$line);
-		$languages[$x]['lang']  = trim($x);
-		$languages[$x]['descr'] = trim($y);
-		$languages[$x]['available'] = False;
-	}
-	fclose($f);
-
-	$d = dir('./lang');
-	while($file=$d->read())
-	{
-		if(preg_match('/^(php|e)gw_([-a-z]+).lang$/i',$file,$matches))
-		{
-			$languages[$matches[2]]['available'] = True;
-		}
-	}
-	$d->close();
-
-	//print_r($languages);
-	return $languages;
-}
-
-function lang_select($onChange=False,$ConfigLang='')
-{
-	if (!$ConfigLang)
-	{
-		$ConfigLang = setup::get_lang();
-	}
-	$select = '<select name="ConfigLang"'.($onChange ? ' onchange="this.form.submit();"' : '').'>' . "\n";
-	$languages = get_langs();
-	usort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
-	foreach($languages as $data)
-	{
-		if($data['available'] && !empty($data['lang']))
-		{
-			$short = substr($data['lang'],0,2);
-			if ($short == $ConfigLang || $data['lang'] == $ConfigLang || empty($ConfigLang) && $short == substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2))
-			{
-				$selected = ' selected';
-			}
-			else
-			{
-				$selected = '';
-			}
-			$select .= '<option value="' . $data['lang'] . '"' . $selected . '>' . $data['descr'] . '</option>' . "\n";
-		}
-	}
-	$select .= '</select>' . "\n";
-
-	return $select;
-}
-
 if(file_exists(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'))
 {
 	include(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); /* To set the current core version */
