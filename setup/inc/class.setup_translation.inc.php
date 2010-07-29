@@ -101,22 +101,22 @@ class setup_translation
 		return $ret;
 	}
 
-	function get_langs($DEBUG=False)
+	static function get_langs($DEBUG=False)
 	{
 		return translation::get_langs($DEBUG);
 	}
 
-	function drop_langs($appname,$DEBUG=False)
+	static function drop_langs($appname,$DEBUG=False)
 	{
 		return translation::drop_langs($appname,$DEBUG);
 	}
 
-	function add_langs($appname,$DEBUG=False,$force_langs=False)
+	static function add_langs($appname,$DEBUG=False,$force_langs=False)
 	{
 		return translation::add_langs($appname,$DEBUG,$force_langs);
 	}
 
-	function drop_add_all_langs($langs=False)
+	static function drop_add_all_langs($langs=False)
 	{
 		if (!$langs && !count($langs = translation::get_langs()))
 		{
@@ -126,12 +126,59 @@ class setup_translation
 	}
 
 	/**
+	 * Languages we support (alphabetically sorted)
+	 * 
+	 * @param boolean $array_values=true true: values are an array, false values are just the descriptiong
+	 * @return array
+	 */
+	static function get_supported_langs($array_values=true)
+	{
+		$f = fopen(EGW_SERVER_ROOT.'/setup/lang/languages','rb');
+		while(($line = fgets($f)))
+		{
+			list($lang,$descr) = explode("\t",$line,2);
+			$lang = trim($lang);
+			if ($array_values)
+			{
+				$languages[$lang]['lang']  = $lang;
+				$languages[$lang]['descr'] = trim($descr);
+				$languages[$lang]['available'] = False;
+			}
+			else
+			{
+				$languages[$lang] = trim($descr);
+			}
+		}
+		fclose($f);
+	
+		if ($array_values)
+		{
+			$d = dir(EGW_SERVER_ROOT.'/setup/lang');
+			while(($file = $d->read()))
+			{
+				if(preg_match('/^(php|e)gw_([-a-z]+).lang$/i',$file,$matches))
+				{
+					$languages[$matches[2]]['available'] = True;
+				}
+			}
+			$d->close();
+			uasort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
+		}
+		else
+		{
+			asort($languages);
+		}
+		//_debug_array($languages);
+		return $languages;
+	}
+
+	/**
 	 * List availible charsets and it's supported languages
 	 * @param boolean/string $name=false name for selectbox or false to return an array
 	 * @param string $selected selected charset
 	 * @return string/array html for a selectbox or array with charset / languages pairs
 	 */
-	function get_charsets($name=false,$selected='')
+	static function get_charsets($name=false,$selected='')
 	{
 		$charsets = array(
 			'utf-8' => 'utf-8: '.lang('all languages (incl. not listed ones)'),
