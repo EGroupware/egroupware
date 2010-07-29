@@ -55,8 +55,7 @@ if (!@$newinstall && !isset($GLOBALS['egw_info']['setup']['installed_langs']))
 }
 $select_box_desc = lang('Select which languages you would like to use');
 $select_box = '';
-$languages = get_langs();
-uasort($languages,create_function('$a,$b','return strcmp(@$a[\'descr\'],@$b[\'descr\']);'));
+$languages = setup_translation::get_supported_langs();
 foreach($languages as $id => $data)
 {
 	$select_box_langs =
