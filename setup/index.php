@@ -480,7 +480,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['lang'])
 		break;
 	case 10:
 		$langs_list = array();
-		$languages = get_langs();
+		$languages = setup_translation::get_supported_langs();
 		foreach ($GLOBALS['egw_info']['setup']['installed_langs'] as $key => $value)
 		{
 			$langs_list[] = isset($languages[$key]) ? $languages[$key]['descr'] : $value;
