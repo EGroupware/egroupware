@@ -17,6 +17,13 @@
 class addressbook_contactform
 {
 	/**
+	 * Callback as variable for easier extending
+	 * 
+	 * @var string
+	 */
+	var $callback = 'addressbook.addressbook_contactform.display';
+
+	/**
 	 * Shows the contactform and stores the submitted data
 	 *
 	 * @param array $content=null submitted eTemplate content
@@ -29,7 +36,7 @@ class addressbook_contactform
 	 * @param string $copytoreceiver=false send a copy of notification to receiver
 	 * @return string html content
 	 */
-	function display($content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false)
+	function display(array &$content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false,$sel_options=array())
 	{
 		#error_log( "<p>addressbook_contactform::display(".print_r($content,true).",$addressbook,".print_r($fields,true).",$msg,$tpl_name)</p>\n");
 		if (empty($tpl_name) && !empty($content['tpl_form_name'])) $tpl_name =$content['tpl_form_name'];
@@ -53,6 +60,7 @@ class addressbook_contactform
 				$contact = new addressbook_bo();
 				if ($content['owner'])	// save the contact in the addressbook
 				{
+					$content['private'] = 0;	// in case default_private is set
 					if (($id = $contact->save($content)))
 					{
 						// check for fileuploads and attach the found files
@@ -70,7 +78,7 @@ class addressbook_contactform
 							}
 						}
 
-						return '<p align="center">'.$content['msg'].'</p>';
+						return '<p align="center">'.($msg ? $msg : $content['msg']).'</p>';
 					}
 					else
 					{
@@ -110,7 +118,7 @@ class addressbook_contactform
 			$custom = 1;
 			foreach($fields as $name)
 			{
-				if ($name{0} == '#')	// custom field
+				if ($name[0] == '#')	// custom field
 				{
 					static $contact;
 					if (is_null($contact))
@@ -135,15 +143,17 @@ class addressbook_contactform
 				}
 			}
 			$preserv['start_time'] = time();
+			$content['lang'] = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		}
-		if (is_array($content) && $submitted == 'truebutfalse') {
+		elseif ($submitted == 'truebutfalse') 
+		{
 			$preserv['tpl_form_name'] = $tpl_name;
 			unset($content['submitit']);
 			$custom = 1;
 			// fieldnames are "defined" by the commit attempt, that way, we do not have to remember them
 			foreach($content as $name => $value) {
 				$preserv[$name]=$value;
-				if ($name{0} == '#')     // custom field
+				if ($name[0] == '#')     // custom field
 				{
 					static $contact;
 					if (is_null($contact)) $contact = new addressbook_bo();
@@ -184,6 +194,6 @@ class addressbook_contactform
 			$content['captcha_task'] = sprintf('%d - %d =',$num1,$num2);
 			$preserv['captcha_result'] = $num1-$num2;
 		}
-		return $tpl->exec('addressbook.addressbook_contactform.display',$content,$sel_options,$readonlys,$preserv);
+		return $tpl->exec($this->callback,$content,$sel_options,$readonlys,$preserv);
 	}
 }
