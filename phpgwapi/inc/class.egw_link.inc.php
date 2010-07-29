@@ -595,7 +595,7 @@ class egw_link extends solink
 		}
 		if(is_callable($method))        // php5.3+ call
 		{
-			$result = $method($pattern,$options);
+			$result = call_user_func($method,$pattern,$options);
 		}
 		elseif(is_object($obj) && method_exists($obj,$method))
 		{
@@ -910,7 +910,7 @@ class egw_link extends solink
 		}
 		else
 		{
-			error_log(__METHOD__."($app,$id,$file,$comment) Can't mkdir $entry_dir!");
+			error_log(__METHOD__."($app,$id,".array2string($file).",$comment) Can't mkdir $entry_dir!");
 		}
 		return $Ok ? -$stat['ino'] : false;
 	}
