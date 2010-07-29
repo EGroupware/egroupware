@@ -103,17 +103,17 @@ class setup_translation
 
 	function get_langs($DEBUG=False)
 	{
-		return translaton::get_langs($DEBUG);
+		return translation::get_langs($DEBUG);
 	}
 
 	function drop_langs($appname,$DEBUG=False)
 	{
-		return translaton::drop_langs($appname,$DEBUG);
+		return translation::drop_langs($appname,$DEBUG);
 	}
 
 	function add_langs($appname,$DEBUG=False,$force_langs=False)
 	{
-		return translaton::add_langs($appname,$DEBUG,$force_langs);
+		return translation::add_langs($appname,$DEBUG,$force_langs);
 	}
 
 	function drop_add_all_langs($langs=False)
