@@ -350,6 +350,8 @@ else
 			}
 			else
 			{
+				// commiting the session, before redirecting might fix racecondition in session creation
+				$GLOBALS['egw']->session->commit_session();
 				$GLOBALS['egw']->redirect_link($forward,$extra_vars);
 			}
 		}
