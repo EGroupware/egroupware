@@ -1003,7 +1003,7 @@ class infolog_ui
 				if ($content['js']) $content['js'] = '<script>'.$content['js'].'</script>';
 			}
 			// on a type-change, set the status to the default status of that type, if the actual status is not supported by the new type
-			if (!in_array($content['info_status'],$this->bo->status[$content['info_type']]))
+			if (!array_key_exists($content['info_status'],$this->bo->status[$content['info_type']]))
 			{
 				$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 				if ($content['info_status'] != 'done') $content['info_datecompleted'] = '';
