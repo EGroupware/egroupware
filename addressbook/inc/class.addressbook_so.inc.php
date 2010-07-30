@@ -6,7 +6,7 @@
  * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -205,9 +205,15 @@ class addressbook_so
 	var $sodistrib_list;
 	var $backend;
 
-	function __construct($contact_app='addressbook')
+	/**
+	 * Constructor
+	 *
+	 * @param string $contact_app='addressbook' used for acl->get_grants()
+	 * @param egw_db $db=null
+	 */
+	function __construct($contact_app='addressbook',egw_db $db=null)
 	{
-		$this->db     = $GLOBALS['egw']->db;
+		$this->db     = is_null($db) ? $GLOBALS['egw']->db : $db;
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		$this->memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
@@ -244,7 +250,7 @@ class addressbook_so
 			{
 				$this->contact_repository = 'sql-ldap';
 			}
-			$this->somain = new addressbook_sql();
+			$this->somain = new addressbook_sql($db);
 
 			if ($this->user)	// not set eg. in setup
 			{
@@ -303,7 +309,7 @@ class addressbook_so
 		}
 		else
 		{
-			$this->soextra = new addressbook_sql();
+			$this->soextra = new addressbook_sql($db);
 		}
 
 		$this->customfields = config::get_customfields('addressbook');
