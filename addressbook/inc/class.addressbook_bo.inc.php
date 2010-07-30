@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
  * @package addressbook
- * @copyright (c) 2005-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -144,9 +144,15 @@ class addressbook_bo extends addressbook_so
  	*/
 	protected $delete_history = '';
 
-	function __construct($contact_app='addressbook')
+	/**
+	 * Constructor
+	 *
+	 * @param string $contact_app='addressbook' used for acl->get_grants()
+	 * @param egw_db $db=null
+	 */
+	function __construct($contact_app='addressbook',egw_db $db=null)
 	{
-		parent::__construct($contact_app);
+		parent::__construct($contact_app,$db);
 		if ($this->log)
 		{
 			$this->logfile = $GLOBALS['egw_info']['server']['temp_dir'].'/log-addressbook_bo';
@@ -1207,6 +1213,7 @@ class addressbook_bo extends addressbook_so
 		if($options['start'] || $options['num_rows']) {
 			$limit = array($options['start'], $options['num_rows']);
 		}
+		$filter = (array)$options['filter'];
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR', $limit, $filter)))
 		{

@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2006-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -54,9 +54,15 @@ class addressbook_sql extends so_sql_cf
 	 */
 	var $ab2list_table = 'egw_addressbook2list';
 
-	function __construct()
+	/**
+	 * Constructor
+	 *
+	 * @param egw_db $db=null
+	 */
+	function __construct(egw_db $db=null)
 	{
-		parent::__construct('phpgwapi','egw_addressbook','egw_addressbook_extra','contact_');
+		parent::__construct('phpgwapi','egw_addressbook','egw_addressbook_extra','contact_',
+			$extra_key='_name',$extra_value='_value',$extra_id='_id',$db);
 
 		// Get custom fields from addressbook instead of phpgwapi
 		$this->customfields = config::get_customfields('addressbook');
