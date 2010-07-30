@@ -1013,7 +1013,7 @@ class infolog_ui
 				if ($content['js']) $content['js'] = '<script>'.$content['js'].'</script>';
 			}
 			// on a type-change, set the status to the default status of that type, if the actual status is not supported by the new type
-			if (!in_array($content['info_status'],$this->bo->status[$content['info_type']]))
+			if (!array_key_exists($content['info_status'],$this->bo->status[$content['info_type']]))
 			{
 				$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 				if ($content['info_status'] != 'done') $content['info_datecompleted'] = '';
@@ -1041,14 +1041,21 @@ class infolog_ui
 				{
 					continue;
 				}
-				foreach(array(',' => ', ', '.' => '. ') as $pattern => $replace)	// set blank behind all , and .
+				$cont = split(' ', $content[$key]);
+				$ckarray = array();
+				foreach($cont as &$word)
 				{
-					if(strpos($content[$key], $replace) === false)
+					// set blank behind all , and . if words are too long, apply wordwrap afterwards to make sure we get
+					if (strlen($word)>75)
 					{
-						$content[$key] = str_replace($pattern, $replace, $content[$key]);
+						if (!(strpos($word,',')===false) && strpos($word,', ')===false) $word = str_replace(',',', ',$word);
+						if (!(strpos($word,'.')===false) && strpos($word,'. ')===false) $word = str_replace('.','. ',$word);
+						$word = wordwrap($word, 75, ' ', true);
 					}
+					$ckarray[] =$word;
 				}
-				$content[$key] = wordwrap($content[$key], 75, ' ', true);
+				$content[$key] = join(' ',$ckarray);
+				unset($ckarray);
 			}
 			if (is_numeric($_REQUEST['cat_id']))
 			{
