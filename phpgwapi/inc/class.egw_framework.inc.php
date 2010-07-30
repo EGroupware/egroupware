@@ -1166,7 +1166,7 @@ abstract class egw_framework
 		}
 		if (!file_exists(EGW_SERVER_ROOT.$path))
 		{
-			error_log(__METHOD__."($app,$name) $path NOT found!");
+			//error_log(__METHOD__."($app,$name) $path NOT found!");
 			return false;
 		}
 		if (!in_array($path,self::$css_include_files))
