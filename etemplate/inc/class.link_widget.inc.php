@@ -420,7 +420,7 @@ class link_widget
 				'no_app_sel' => !!$extension_data['app'],
 				'id'         => is_array($value) ? $value['current'] : $id,
 				'query'      => is_array($value) ? $value['query'] : '',
-				'blur'       => $cell['label'] ? $cell['label'] : 
+				'blur'       => $cell['label'] ? lang($cell['label']) : 
 					(count($options) == 1 ? lang($app) : lang('Search')),
 				'extra'      => $cell['onchange'] ? ','.self::AJAX_NEED_ONCHANGE : null,	// store flang for ajax_search, to display extra_line required by onchange
 			);
