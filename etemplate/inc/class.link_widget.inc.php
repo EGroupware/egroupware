@@ -219,22 +219,7 @@ class link_widget
 			{
 				foreach ($value as $link)
 				{
-					$options .= " onMouseOver=\"self.status='".addslashes(html::htmlspecialchars($help))."'; return true;\"";
-					$options .= " onMouseOut=\"self.status=''; return true;\"";
-
-					if (($popup = egw_link::is_popup($link['app'],'view')))
-					{
-						list($w,$h) = explode('x',$popup);
-						$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
-					}
-					elseif (etemplate::$request->output_mode == 2 || 	// we are in a popup
-						$link['app'] == egw_link::VFS_APPNAME)	// or it's a link to an attachment
-					{
-						$options = ' target="_blank"';
-					}
-					$str .= ($str !== '' ? ', ' : '') . html::a_href(
-						html::htmlspecialchars(egw_link::title($link['app'],$link['id'])),
-						egw_link::view($link['app'],$link['id'],$link),'',$options);
+					$str .= ($str !== '' ? ', ' : '') . self::link2a_href($link,$help);
 				}
 			}
 			$cell['type'] = 'html';
@@ -341,6 +326,15 @@ class link_widget
 			break;
 
 		case 'link-entry':
+			if ($cell['readonly'] || $readonlys)
+			{
+				if(!is_array($value)) $value = array('app' => $cell['size'],'id' => $value);
+				$value = self::link2a_href($value,$help);
+				$cell['type'] = 'html';
+				$cell['readonly'] = true;
+				$extension_data = null;
+				return true;
+			}
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 			$tpl = new etemplate('etemplate.link_widget.entry');
 			$options = $cell['size'] ? explode(',',$cell['size']) : array();
@@ -468,6 +462,36 @@ class link_widget
 			echo "<p>end: $type"."[$name]::pre_process: value ="; _debug_array($value);
 		}
 		return True;	// extra Label is ok
+	}
+
+	/**
+	 * return a_href to view a linked entry
+	 * 
+	 * @param array $link array with values for keys 'id' and 'app'
+	 * @param string $help=''
+	 * @return string
+	 */
+	static function link2a_href(array $link,$help='')
+	{
+		if (($popup = egw_link::is_popup($link['app'],'view')))
+		{
+			list($w,$h) = explode('x',$popup);
+			$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
+		}
+		elseif (etemplate::$request->output_mode == 2 || 	// we are in a popup
+			$link['app'] == egw_link::VFS_APPNAME ||		// or it's a link to an attachment
+			($target = egw_link::get_registry($link['app'],'view_target')))	// or explicit target set
+		{
+			$options = ' target="'.($target ? $target : '_blank').'"';
+		}
+		if ($help)
+		{
+			$options .= " onMouseOver=\"self.status='".addslashes(html::htmlspecialchars($help))."'; return true;\"";
+			$options .= " onMouseOut=\"self.status=''; return true;\"";
+		}
+		return html::a_href(
+			html::htmlspecialchars(egw_link::title($link['app'],$link['id'])),
+			egw_link::view($link['app'],$link['id'],$link),'',$options);
 	}
 
 	/**
