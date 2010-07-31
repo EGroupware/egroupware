@@ -32,6 +32,7 @@ class calendar_uiviews extends calendar_ui
 		'week'  => True,
 		'weekN' => True,
 		'month' => True,
+		'year'  => True,
 		'planner' => True,
 		'index' => True,
 	);
@@ -67,14 +68,14 @@ class calendar_uiviews extends calendar_ui
 	var $timeRow_width = 40;
 
 	/**
-	 * how many rows per day get displayed, gets set be the timeGridWidget
+	 * how many rows per day get displayed, gets set by the timeGridWidget
 	 *
 	 * @var int
 	 */
 	var $rowsToDisplay;
 
 	/**
-	 * height in percent of one row, gets set be the timeGridWidget
+	 * height in percent of one row, gets set by the timeGridWidget
 	 *
 	 * @var int
 	 */
@@ -137,6 +138,7 @@ class calendar_uiviews extends calendar_ui
 			'4day'  => lang('Four days view'),
 			'week'  => lang('Weekview'),
 			'month' => lang('Monthview'),
+			'year' => lang('yearview'),
 			'planner' => lang('Group planner'),
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].
@@ -216,6 +218,9 @@ class calendar_uiviews extends calendar_ui
 			case 'planner_cat':
 			case 'planner':
 				return $group_warning.$this->planner(true);
+
+			case 'year':
+				return $group_warning.$this->year(true);
 
 			case 'month':
 				return $group_warning.$this->month(0,true);
@@ -320,6 +325,230 @@ class calendar_uiviews extends calendar_ui
 		return $this->month($num,$home);
 	}
 
+	/** Month column width (usually 3 or 4) in year view */
+	const YEARVIEW_COLS = 3;
+
+	/**
+	 * Displays a year view
+	 *
+	 * @param boolean $home=false if true return content suitable for home-page
+	 */
+	function &year($home=false)
+	{
+		if ($this->debug > 0) $this->bo->debug_message('uiviews::year date=%2',True,$this->date);
+
+		$content = $this->edit_series();
+
+		$this->_month_align_year($this->first,$this->last);
+
+		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$this->year;
+
+		$days =& $this->bo->search(array(
+			'start'   => $this->first,
+			'end'     => $this->last,
+		) + $this->search_params);
+
+		/* Loop through the week-aligned months. */
+		for ($month = 1; $month <= 12; $month++)
+		{
+			// The first date entry in the view may be in the last month.
+			if (($month - 1) % self::YEARVIEW_COLS == 0)
+			{
+				$content .= '<div class="calTimeGrid" style="height: 162px;">'."\n";
+				$content .= "\t".'<div class="calDayColsNoGrip">'."\n";
+			}
+
+			$month_start = $this->datetime->get_weekday_start($this->year,$month,1);
+			// Beginning of the last week in the month
+			$month_end = $this->datetime->get_weekday_start(
+							$this->year,
+							$month,
+							$this->datetime->days_in_month($month,$this->year));
+			// End of the last week in month
+			$month_end = strtotime("+6 days",$month_end);
+
+			$content .= "\t\t".'<div class="calDayCol" style="left: '.
+				((($month - 1) % self::YEARVIEW_COLS) * (100 / self::YEARVIEW_COLS)).'%; width: '.
+				((100 / self::YEARVIEW_COLS) - 0).'%;";>'."\n";
+
+			// Year Header
+			$content .= "\t\t\t".'<div class="calDayColHeader '.($month % 2 == 0 ? "th" : "row_on").'"'.
+				' style="height: 20px; line-height: 20px; z-index: 0;" title="'.lang(adodb_date('F',strtotime("+1 week",$month_start))).' '.adodb_date('Y',strtotime("+1 week",$month_start)).'">'."\n";
+			if (($month) == 1)
+			{
+				$content .= '<span style="position: absolute; left: 0px;">';
+				$content .= html::a_href(html::image('phpgwapi','first',lang('previous'),$options=' alt="<<"'),array(
+					'menuaction' => $this->view_menuaction,
+					'date'       => date('Ymd',strtotime('-1 year',strtotime($this->date))),
+				));
+				$content .= '</span>'."\n";
+			}
+			$content .= "\t\t\t\t".'<a href="'.$GLOBALS['egw']->link('/index.php',
+				array('menuaction'=>'calendar.calendar_uiviews.month',
+				'date'=>$this->year.$month.'01')).
+				'" title="'.lang('Monthview').'">'.lang(adodb_date('F',strtotime("+1 week",$month_start))).'</a>'."\n";
+			if ($month == self::YEARVIEW_COLS)
+			{
+				$content .= '<span style="position: absolute; right: 0px;">';
+				$content .= html::a_href(html::image('phpgwapi','last',lang('next'),$options=' alt=">>"'),array(
+					'menuaction' => $this->view_menuaction,
+					'date'       => date('Ymd',strtotime('+1 year',strtotime($this->date))),
+				));
+				$content .= '</span>'."\n";
+			}
+			$content .= "\t\t\t".'</div>'."\n";
+
+			$content .= "\t\t\t".'<div'.
+					' style="position: absolute; width: 100%; height: 16px;'.
+					' top: 24px;">'."\n";
+			$content .= "\t\t\t\t".'<div class="cal_year_legend"'.
+				' style="text-align: center; position: absolute; width: 11.5%; height: 16px; left: 0.5%;">'.lang('Wk').'</div>'."\n";
+			// Day Columns, Legend
+			for ($i = 0; $i <= 6; $i++)
+			{
+				$day_date = ($i ? strtotime("+$i days",$month_start) : $month_start);
+				if (adodb_date('w',$day_date) % 6 == 0)
+				{
+					$style = 'cal_year_legend_weekend';
+				}
+				else
+				{
+					$style = 'cal_year_legend';
+				}
+
+				$content .= "\t\t\t\t".'<div class="'.$style.'"'.
+					' style="text-align: center; position: absolute; width: 11.5%; height: 16px; left: '.((($i + 1) * 12.5) + 0.5).'%;">'.
+					lang(adodb_date('D',$day_date)).'</div>'."\n";
+			}
+			$content .= "\t\t\t".'</div>'."\n";
+
+			// Week rows in month
+			$week_start = $month_start;
+			for ($week_in_month = 1; $week_in_month <= 6; $week_in_month ++)
+			{
+				$content .= "\t\t\t".'<div'.
+						' style="position: absolute; width: 100%; height: 16px;'.
+						' top: '.((($week_in_month + 1) * 20) + 2).'px;">'."\n";
+
+				$content .= "\t\t\t\t".'<div class="cal_year_legend"'.
+					' style="text-align: center;position: absolute; width: 11.5%; height: 16px; left: 0.5%;" '.
+					'title="'.lang('Wk').' '.adodb_date('W',$week_start).'/'.adodb_date('Y',$week_start).'">'."\n";
+				$content .= "\t\t\t\t\t".
+					'<a href="'.$GLOBALS['egw']->link('/index.php',
+								array('menuaction'=>'calendar.calendar_uiviews.week',
+								'date'=>$this->bo->date2string($week_start)));
+				$content .= '">'.adodb_date('W',$week_start)."</a>\n";
+				$content .= "\t\t\t\t".'</div>'."\n";
+				// Day columns in week row
+				for ($i = 0; $i <= 6; $i++)
+				{
+					$day_date = $i ? strtotime("+$i days",$week_start) : $week_start;
+					$day_ymd = $this->bo->date2string($day_date);
+					$eventcount = count($days[$day_ymd]);
+					$in_month = true;
+					$css_class = "";
+					$this->_day_class_holiday($day_ymd,$class,$holidays,false,false);
+					if (adodb_date('n',$day_date) != $month)
+					{
+						$css_class .= 'cal_year_legend';
+						$in_month = false;
+					}
+					else
+					{
+						$css_class .= 'calEvent calEventAllAccepted';
+						if (adodb_date('w',$day_date) % 6 == 0)
+						{
+							$css_class .= ' cal_year_weekend';
+						}
+						else
+						{
+							if ($holidays)
+							{
+								$css_class .= ' calHoliday';
+							}
+							else
+							{
+								$css_class .= ' cal_year_free';
+							}
+						}
+
+						if ($day_ymd == $this->bo->date2string($this->bo->now_su))
+						{
+							$css_class .= ' cal_year_today';
+						}
+					}
+					$content .= "\t\t\t\t".'<!-- Day cell -->'."\n";
+					$content .= "\t\t\t\t".'<div class="'.$css_class.'"'.
+						' style="position: absolute; width: 11.5%; height: 16px;'.
+						' line-height: 16px; left: '.((($i + 1) * 12.5) + 0.5).'%;'.
+						' "';
+					if ($holidays)
+					{
+						$content .= ' title="'.$holidays.'"';
+					}
+					$content .= '>'.adodb_date('d',$day_date).'</div>'."\n";
+
+
+					if (($in_month) && (count($days[$day_ymd])))
+					{
+						$eventCols = $this->getEventCols($day_ymd,$days[$day_ymd]);
+						// displaying all event columns of the day
+						$row_height = 100 / count($eventCols);
+						$space_left = 4; //%
+						$space_right = 1; //%
+						$row_width = 11.5 - $space_left - $space_right;
+						// settings for time2pos
+						$this->scroll_to_wdstart = false;
+						$this->wd_start = 0;
+						$this->wd_end = 24*60;
+						$this->granularity_m = 24 * 60;
+						$this->extraRows = -1;
+						$this->rowHeight = $row_width;
+						foreach($eventCols as $n => $eventCol)
+						{
+							foreach ($eventCol as $event)
+							{
+								$indent = "\t\t\t\t";
+								// some fields set by the dayColWidget for the other views
+								unset($event['whole_day_on_top']);
+								$data = $this->eventWidget($event,25,$indent,$this->owner,true,'planner_event');
+
+								$left = ((($i + 1) * 12.5) + 0.5 + $space_left + $this->time2pos($event['start_m']));
+								$width = $this->time2pos($event['end_m'] - $event['start_m']);
+								$color = $data['color'] ? $data['color'] : 'gray';
+
+								$content .= $indent.'<div class="plannerEvent'.($data['private'] ? 'Private' : '').
+									'" style="position: absolute; left: '.$left.'%; width: '.$width.'%; height: '.
+									$row_height.'%; top: '.($n * $row_height).'%;'.
+									'background-color: '.$color.';" '.$data['popup'].' '.
+									html::tooltip($data['tooltip'],False,array('BorderWidth'=>0,'Padding'=>0)).
+									'>'."\n".$data['html'].$indent."</div>\n";
+							}
+						}
+					}
+				}
+				$week_start = strtotime("+1 week",$week_start);
+				$content .= "\t\t\t".'</div>'."\n";
+			}
+			$content .= "\t\t".'</div>'."\n";
+
+			if (($month) % self::YEARVIEW_COLS == 0)
+			{
+				$content .= "\t</div>\n";
+				$content .= "</div>\n";
+			}
+		}
+
+		if (!$home)
+		{
+			$this->do_header();
+
+			echo $content;
+		}
+
+		return $content;
+	}
+
 	/**
 	 * Displays the monthview or a multiple week-view
 	 *
@@ -404,6 +633,27 @@ class calendar_uiviews extends calendar_ui
 		{
 			$last = $this->datetime->get_weekday_start($this->year,$this->month+1,$day);
 		}
+		// now we need to calculate the end of the last day of that week
+		// as simple $last += WEEK_s - 1; does NOT work, if daylight saving changes in that week!!!
+		$last = $this->bo->date2array($last);
+		$last['day'] += 6;
+		$last['hour'] = 23;
+		$last['min'] = $last['sec'] = 59;
+		unset($last['raw']);	// otherwise date2ts does not calc raw new, but uses it
+		$last = $this->bo->date2ts($last);
+	}
+
+	/**
+	 * Get start and end of a year aligned to full months
+	 *
+	 * @param int &$first timestamp 0h of first day of week containing the first of the current year
+	 * @param int &$last timestamp 23:59:59 of last day of week containg the last day of the current year
+	 */
+	function _month_align_year(&$first,&$last)
+	{
+		$first = $this->datetime->get_weekday_start($this->year,$this->month=1,$this->day=1);
+		$last = $this->datetime->get_weekday_start($this->year,$this->month+12,
+				$this->datetime->days_in_month($this->month+12,$this->year));
 		// now we need to calculate the end of the last day of that week
 		// as simple $last += WEEK_s - 1; does NOT work, if daylight saving changes in that week!!!
 		$last = $this->bo->date2array($last);
@@ -763,7 +1013,7 @@ function open_edit(series)
 	}
 
 	/**
-	 * Calculates the height of a differenc between 2 times
+	 * Calculates the height of a difference between 2 times
 	 *
 	 * workday start- and end-time, is taken into account, as well as timeGrids px_m - minutes per pixel param
 	 *
@@ -927,23 +1177,14 @@ function open_edit(series)
 	}
 
 	/**
-	 * Creates (if necessary multiple) columns for the events of a day
-	 *
-	 * Uses the eventColWidget to display each column.
+	 * Sorts the events of a day into columns with non-overlapping events, the events
+	 * are already sorted by start-time
 	 *
 	 * @param string/int $day_ymd date as Ymd
-	 * @param array $events of events to show
-	 * @param int $left start of the widget
-	 * @param int $width width of the widget
-	 * @param string $indent string for correct indention
-	 * @param boolean/string $short_title=True should we add a label (weekday, day) with link to the day-view above each day or string with title
-	 * @param boolean $on_off=false start with row_on or row_off, default false=row_off
-	 * @param int $owner=0 if != 0 owner to add to the add-event link
+	 * @param array &$events events to split into non-overlapping groups
 	 */
-	function dayColWidget($day_ymd,$events,$left,$width,$indent,$short_title=True,$on_off=False,$owner=0)
+	function getEventCols($day_ymd, &$events)
 	{
-		if ($this->debug > 1 || $this->debug==='dayColWidget') $this->bo->debug_message('uiviews::dayColWidget(%1,%2,left=%3,width=%4,)',False,$day_ymd,$events,$left,$width);
-
 		$day_start = $this->bo->date2ts((string)$day_ymd);
 
 		// if daylight saving is switched on or off, correct $day_start
@@ -952,7 +1193,7 @@ function open_edit(series)
 		{
 			$day_start -= $daylight_diff;
 		}
-		// sorting the event into columns with none-overlapping events, the events are already sorted by start-time
+
 		$eventCols = $col_ends = array();
 		foreach($events as $event)
 		{
@@ -980,6 +1221,26 @@ function open_edit(series)
 			}
 			$eventCols[$c][] = $event;
 		}
+		return $eventCols;
+	}
+
+	/**
+	 * Creates (if necessary multiple) columns for the events of a day
+	 *
+	 * Uses the eventColWidget to display each column.
+	 *
+	 * @param string/int $day_ymd date as Ymd
+	 * @param array $events of events to show
+	 * @param int $left start of the widget
+	 * @param int $width width of the widget
+	 * @param string $indent string for correct indention
+	 * @param boolean/string $short_title=True should we add a label (weekday, day) with link to the day-view above each day or string with title
+	 * @param boolean $on_off=false start with row_on or row_off, default false=row_off
+	 * @param int $owner=0 if != 0 owner to add to the add-event link
+	 */
+	function dayColWidget($day_ymd,$events,$left,$width,$indent,$short_title=True,$on_off=False,$owner=0)
+	{
+		if ($this->debug > 1 || $this->debug==='dayColWidget') $this->bo->debug_message('uiviews::dayColWidget(%1,%2,left=%3,width=%4,)',False,$day_ymd,$events,$left,$width);
 
 		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calDayCol" style="left: '.$left.
 			'%; width: '.$width.'%;">'."\n";
@@ -995,7 +1256,7 @@ function open_edit(series)
 		);
 		$this->_day_class_holiday($day_ymd,$class,$holidays);
 		// the weekday and date
-		if (!$short_title && $holidays) $title .= ': '.$holidays;
+		if (!$short_title && $holidays) $title .= html::htmlspecialchars(': '.$holidays);
 
 		if ($short_title === true)
 		{
@@ -1027,8 +1288,10 @@ function open_edit(series)
 				$title .= ' &nbsp; '.$day_view;
 			}
 		}
-		$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calDayColHeader '.$class.'"'.($holidays ? ' title="'.$holidays.'"':'').'>'.
-			$title."</div>\n";
+		if (is_bool($short_title) || ($short_title != "")) {
+			$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calDayColHeader '.$class.'"'.
+				($holidays ? ' title="'.html::htmlspecialchars($holidays).'"':'').'>'.$title."</div>\n";
+		}
 
 		if ($this->use_time_grid)
 		{
@@ -1045,7 +1308,7 @@ function open_edit(series)
 				}
 			}
 			// adding divs to click on for each row / time-span
-			for($t = $this->scroll_to_wdstart ? 0 : $this->wd_start,$i = 1+$this->extraRows;
+			for($t = $this->scroll_to_wdstart ? 0 : $this->wd_start,$i = 1 + $this->extraRows;
 				$t <= $this->wd_end || $this->scroll_to_wdstart && $t < 24*60;
 				$t += $this->granularity_m,++$i)
 			{
@@ -1079,6 +1342,8 @@ function open_edit(series)
 				}
 			}
 		}
+
+		$eventCols = $this->getEventCols($day_ymd,$events);
 		// displaying all event columns of the day
 		foreach($eventCols as $n => $eventCol)
 		{
@@ -1098,26 +1363,35 @@ function open_edit(series)
 	 * @param string &$class class to use
 	 * @param string &$holidays commaseparted holidays or empty if none
 	 * @param boolean $only_weekend=false show only the weekend in header-color, otherwise every second days is shown too
+	 * @param boolean $show_bdays=true If available, also show birthdays (or hide Bdays)
+	 *        Note that this is not the place to disable a preference.
+	 *        If the preferences allow birthdays to be displayed, they are cached within the holidays structure.
+	 *        This setting just suppressing the available data in the view.
 	 */
-	function _day_class_holiday($day_ymd,&$class,&$holidays,$only_weekend=false)
+	function _day_class_holiday($day_ymd,&$class,&$holidays,$only_weekend=false,$show_bdays=true)
 	{
 		$class = $holidays = '';
 		$bday = false;
 		if (isset($this->holidays[$day_ymd]))
 		{
+			$h = array();
 			foreach($this->holidays[$day_ymd] as $holiday)
 			{
 				if (isset($holiday['birthyear']))
 				{
-					$bday = true;
+					if ($show_bdays)
+					{
+						$bday = true;
+						$h[] = $holiday['name'];
+					}
 				}
 				else
 				{
 					$class = 'calHoliday';
+					$h[] = $holiday['name'];
 				}
-				$holidays[] = $holiday['name'];
 			}
-			$holidays = implode(', ',$holidays);
+			$holidays = implode(', ',$h);
 		}
 		if (!$class)
 		{
@@ -1243,7 +1517,10 @@ function open_edit(series)
 		$small_trigger_width = 120 + 20*count($icons);
 		$corner_radius=$width > $small_trigger_width ? 10 : 5;
 		$header_height=$width > $small_trigger_width ? 19 : 12;	// multi_3 icon has a height of 19=16+2*1padding+1border !
-		if (!$return_array) $height = $this->times2height($event['start_m'],$event['end_m'],$header_height);
+		if (!$return_array)
+		{
+			$height = $this->times2height($event['start_m'],$event['end_m'],$header_height);
+		}
 		//$body_height = max(0,$height - $header_height - $corner_radius);
 		$border=1;
 		$headerbgcolor = $color ? $color : '#808080';

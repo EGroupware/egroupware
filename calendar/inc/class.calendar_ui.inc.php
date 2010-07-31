@@ -545,6 +545,7 @@ class calendar_ui
 			'week' => array('icon'=>'week','text'=>'Weekview','menuaction' => 'calendar.calendar_uiviews.week'),
 			'weekN' => array('icon'=>'multiweek','text'=>'Multiple week view','menuaction' => 'calendar.calendar_uiviews.weekN'),
 			'month' => array('icon'=>'month','text'=>'Monthview','menuaction' => 'calendar.calendar_uiviews.month'),
+			//'year' => array('icon'=>'year','text'=>'yearview','menuaction' => 'calendar.calendar_uiviews.year'),
 			'planner' => array('icon'=>'planner','text'=>'Group planner','menuaction' => 'calendar.calendar_uiviews.planner','sortby' => $this->sortby),
 			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.calendar_uilist.listview'),
 		) as $view => $data)
@@ -609,6 +610,11 @@ class calendar_ui
 				'text' => lang('monthview'),
 				'value' => 'menuaction=calendar.calendar_uiviews.month',
 				'selected' => $this->view == 'month',
+			),
+			array(
+				'text' => lang('yearview'),
+				'value' => 'menuaction=calendar.calendar_uiviews.year',
+				'selected' => $this->view == 'year',
 			),
 			array(
 				'text' => lang('planner by category'),

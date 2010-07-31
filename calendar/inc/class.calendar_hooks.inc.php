@@ -153,6 +153,7 @@ class calendar_hooks
 			'week'         => lang('Weekview'),
 			'weekN'        => lang('Multiple week view'),
 			'month'        => lang('Monthview'),
+			'year'         => lang('yearview'),
 			'planner_cat'  => lang('Planner by category'),
 			'planner_user' => lang('Planner by user'),
 			'listview'     => lang('Listview'),
