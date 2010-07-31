@@ -432,7 +432,7 @@ class db_backup
 				$this->schemas = unserialize(trim(substr($line,8)));
 				foreach($this->schemas as $table_name => $schema)
 				{
-					echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
+					//echo "<pre>$table_name => ".self::write_array($schema,1)."</pre>\n";
 					$this->schema_proc->CreateTable($table_name,$schema);
 				}
 				// make the schemas availible for the db-class
