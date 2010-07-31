@@ -346,6 +346,8 @@ function addOption(id,label,value,do_onchange)
 		$GLOBALS['egw']->template->set_file(array('accounts_list_t' => 'uiaccountsel.tpl'));
 		$GLOBALS['egw']->template->set_block('accounts_list_t','letter_search','letter_search_cells');
 		$GLOBALS['egw']->template->set_block('accounts_list_t','group_cal','cal');
+		$GLOBALS['egw']->template->set_block('accounts_list_t','group_selectAll','selectAllGroups');
+		$GLOBALS['egw']->template->set_block('accounts_list_t','groups_multiple','multipleGroups');
 		$GLOBALS['egw']->template->set_block('accounts_list_t','group_other','other');
 		$GLOBALS['egw']->template->set_block('accounts_list_t','group_all','all');
 
@@ -353,12 +355,15 @@ function addOption(id,label,value,do_onchange)
 		$GLOBALS['egw']->template->set_block('accounts_list_t','other_intro','iother');
 		$GLOBALS['egw']->template->set_block('accounts_list_t','all_intro','iall');
 
+		$GLOBALS['egw']->template->set_block('accounts_list_t','accounts_selectAll','selectAllAccounts');
+		$GLOBALS['egw']->template->set_block('accounts_list_t','accounts_multiple','multipleAccounts');
 		$GLOBALS['egw']->template->set_block('accounts_list_t','accounts_list','list');
 
 		$GLOBALS['egw']->template->set_var('font',$GLOBALS['egw_info']['theme']['font']);
 		$GLOBALS['egw']->template->set_var('lang_search',lang('search'));
 		$GLOBALS['egw']->template->set_var('lang_groups',lang('user groups'));
 		$GLOBALS['egw']->template->set_var('lang_accounts',lang('user accounts'));
+		$GLOBALS['egw']->template->set_var('lang_all',lang('all'));
 
 		$GLOBALS['egw']->template->set_var('img',common::image('phpgwapi','select'));
 		$GLOBALS['egw']->template->set_var('lang_select_user',lang('Select user'));
@@ -418,6 +423,11 @@ function addOption(id,label,value,do_onchange)
 		$GLOBALS['egw']->template->set_var('lang_firstname',lang('firstname'));
 		$GLOBALS['egw']->template->set_var('lang_lastname',lang('lastname'));
 
+		if ($multiple)
+		{
+			$GLOBALS['egw']->template->fp('multipleGroups','groups_multiple',True);
+		}
+
 		if ($app)
 		{
 			$app_groups = $this->accounts->split_accounts($app,'groups');
@@ -442,6 +452,10 @@ function addOption(id,label,value,do_onchange)
 				if($use == 'both')	// allow selection of groups
 				{
 					$GLOBALS['egw']->template->fp('cal','group_cal',True);
+					$GLOBALS['egw']->template->set_var('js_addAllGroups',"addOption('$element_id','".
+						$GLOBALS['egw']->common->grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
+						(!$multiple ? '; window.close();' : ';'));
+					$GLOBALS['egw']->template->fp('selectAllGroups','group_selectAll',True);
 				}
 				else
 				{
@@ -485,6 +499,11 @@ function addOption(id,label,value,do_onchange)
 		$GLOBALS['egw']->template->set_var('lang_firstname', lang("firstname"));
 		$GLOBALS['egw']->template->set_var('lang_lastname', lang("lastname"));
 
+		if ($multiple)
+		{
+			$GLOBALS['egw']->template->fp('multipleAccounts','accounts_multiple',True);
+		}
+
 		foreach($users as $user)
 		{
 			$GLOBALS['egw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
@@ -500,6 +519,10 @@ function addOption(id,label,value,do_onchange)
 					(!$multiple ? '; window.close()' : ''),
 			));
 			$GLOBALS['egw']->template->fp('list','accounts_list',True);
+			$GLOBALS['egw']->template->set_var('js_addAllAccounts',"addOption('$element_id','".
+					$GLOBALS['egw']->common->grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
+					(!$multiple ? '; window.close()' : ';'));
+			$GLOBALS['egw']->template->fp('selectAllAccounts','accounts_selectAll',True);
 		}
 
 		$GLOBALS['egw']->template->set_var('accountsel_icon',html::image('phpgwapi','users-big'));

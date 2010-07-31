@@ -23,6 +23,20 @@
 		}
 	}
 
+	function addAllGroups()
+	{
+<!-- BEGIN group_selectAll -->
+		{js_addAllGroups}
+<!-- END group_selectAll -->
+	}
+
+	function addAllAccounts()
+	{
+<!-- BEGIN accounts_selectAll -->
+		{js_addAllAccounts}
+<!-- END accounts_selectAll -->
+	}
+
 	function removeSelectedOptions(id)
 	{
 		openerSelectBox = opener.document.getElementById(id);
@@ -134,7 +148,12 @@
 				</tr>
 <!-- BEGIN bla_intro -->
 				<tr>
-					<td class="th" colspan="2">{lang_perm}</td>
+					<td class="th">{lang_perm}</td>
+					<td class="th" align="center">
+<!-- BEGIN groups_multiple -->
+						<input type="image" src="{img}" style="width: 16px;" onclick="addAllGroups(); return false;" title="{lang_all}">
+<!-- END groups_multiple -->
+					</td>
 				</tr>
 
 <!-- END bla_intro -->
@@ -192,7 +211,11 @@
 					<td align="center">{sort_lid}</td>
 					<td align="center">{sort_firstname}</td>
 					<td align="center">{sort_lastname}</td>
-					<td width="10%">&nbsp;</td>
+					<td align="center" width="10%">
+<!-- BEGIN accounts_multiple -->
+						<input type="image" src="{img}" style="width: 16px;" onclick="addAllAccounts(); return false;" title="{lang_all}">
+<!-- END accounts_multiple -->
+					</td>
 				</tr>
 
 <!-- BEGIN accounts_list -->
