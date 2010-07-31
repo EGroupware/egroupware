@@ -25,9 +25,9 @@ there if your are not familiar with the overal concept.</p>
 <p>There are two possibilities now to create an eTemplate:</p>
 <ol>
 	<li>Use the eTemplate-Editor (as descript in the <a href="etemplate.html">Tutorial</a>) to interactivly
-		design your template.
+		design your template.</li>
 	<li>Write a xml-file in a Syntax similar to XUL (the mozilla UI-interface definition language) and import
-		it into the database with the eTemplate-Editor
+		it into the database with the eTemplate-Editor</li>
 </ol>
 <hr>
 <h1>The xml-interface to the eTemplates</h1>
@@ -36,58 +36,58 @@ an eTemplate from the example app in the <a href="etemplate.html">Tutorial</a>
 (here are screenshots of the template in the <a href="editor.gif">editor</a> and the
 <a href="show.gif">show-function</a>):</p>
 <pre>
-&lt;?xml version="1.0"?>
-<span>&lt;!-- $Id$ --></span>
-&lt;overlay>
-  &lt;template id="et_media.edit" template="" lang="" group="" version="">
-    &lt;grid width="100%">
-      &lt;columns>
-        &lt;column/>
-        &lt;column/>
-        &lt;column/>
-        &lt;column/>
-      &lt;/columns>
-      &lt;rows>
-        &lt;row>
-          &lt;description options="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
-        &lt;/row>
-        &lt;row>
-          &lt;hrule span="all"/>
-        &lt;/row>
-        &lt;row>
-          &lt;description span="all"/>
-        &lt;/row>
-        &lt;row>
-          &lt;description value="Name"/>
-          &lt;textbox size="100" maxlength="100" span="all" id="name" statustext="here goes the name of the publication / record"/>
-        &lt;/row>
-        &lt;row>
-          &lt;description value="Author"/>
-          &lt;textbox size="100" maxlength="100" span="all" id="author" statustext="please use Name, First Name"/>
-        &lt;/row>
-        &lt;row>
-          &lt;description value="Type"/>
-          &lt;menulist span="all" statustext="select the type fitting most">
-            &lt;menupopup id="type"/>
-          &lt;/menulist>
-        &lt;/row>
-        &lt;row>
-          &lt;description value="Description"/>
-          &lt;textbox ="" cols="3" rows="100" span="all" id="descr" statustext="we have a fulltext search using that description"/>
-        &lt;/row>
-        &lt;row>
-        &lt;description span="all"/>
-        &lt;/row>
-        &lt;row>
-          &lt;button label="Read" id="read" statustext="reads or searches for entries matching the criteria above"/>
-          &lt;button label="Save" id="save" statustext="saves the change to the db"/>
-          &lt;button label="Cancel" id="cancel" statustext="clears the form, without changing anything"/>
-          &lt;button label="Delete" id="delete" statustext="deletes an entry"/>
-        &lt;/row>
-      &lt;/rows>
-    &lt;/grid>
-  &lt;/template>
-&lt;/overlay>
+&lt;?xml version="1.0"?&gt;
+&lt;!-- $Id$ --&gt;
+&lt;overlay&gt;
+  &lt;template id="et_media.edit" template="" lang="" group="" version=""&gt;
+    &lt;grid width="100%"&gt;
+      &lt;columns&gt;
+        &lt;column/&gt;
+        &lt;column/&gt;
+        &lt;column/&gt;
+        &lt;column/&gt;
+      &lt;/columns&gt;
+      &lt;rows&gt;
+        &lt;row&gt;
+          &lt;description options="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+          &lt;hrule span="all"/&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+          &lt;description span="all"/&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+          &lt;description value="Name"/&gt;
+          &lt;textbox size="100" maxlength="100" span="all" id="name" statustext="here goes the name of the publication / record"/&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+          &lt;description value="Author"/&gt;
+          &lt;textbox size="100" maxlength="100" span="all" id="author" statustext="please use Name, First Name"/&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+          &lt;description value="Type"/&gt;
+          &lt;menulist span="all" statustext="select the type fitting most"&gt;
+            &lt;menupopup id="type"/&gt;
+          &lt;/menulist&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+          &lt;description value="Description"/&gt;
+          &lt;textbox ="" cols="3" rows="100" span="all" id="descr" statustext="we have a fulltext search using that description"/&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+        &lt;description span="all"/&gt;
+        &lt;/row&gt;
+        &lt;row&gt;
+          &lt;button label="Read" id="read" statustext="reads or searches for entries matching the criteria above"/&gt;
+          &lt;button label="Save" id="save" statustext="saves the change to the db"/&gt;
+          &lt;button label="Cancel" id="cancel" statustext="clears the form, without changing anything"/&gt;
+          &lt;button label="Delete" id="delete" statustext="deletes an entry"/&gt;
+        &lt;/row&gt;
+      &lt;/rows&gt;
+    &lt;/grid&gt;
+  &lt;/template&gt;
+&lt;/overlay&gt;
 </pre>
 <p>The tags / widget-names and attributes / parameters used are as close as possible to XUL. For more
 information about XUL refer to <a href="http://www.xulplanet.com">www.xulplanet.com</a> or the Mozilla docs
@@ -95,22 +95,22 @@ information about XUL refer to <a href="http://www.xulplanet.com">www.xulplanet.
 <p>Please keep in mind that the xml-files used to store the eTemplates are only similar to XUL and
 implement only a subset of XUL. Here are the main differences:</p>
 <ul>
-	<li>only certain widgets and widget attributes are implemented
+	<li>only certain widgets and widget attributes are implemented</li>
 	<li>xul-files can contain the actual content or refer to it via a datasources (RDF's) and use a
-		different template syntax to fill in content from a variable: &lt;label value="?label"/><br />
+		different template syntax to fill in content from a variable: &lt;label value="?label"/&gt;<br />
 		eTemplates get there content from an array passed to the exec or show-function of the template-object
-		and reference to the content by the id / name-field of each widget.
+		and reference to the content by the id / name-field of each widget.</li>
 	<li>xul-files can contain an unlimited number of nested elements, the xml-root-node of an eTemplates has to
-		be an overlay, containing multiple (non-xul) &lt;template>'s. That templates can contain now (HEAD)
-		a tree of other widgets, but not other templates direct. You can use &lt;template id="app.template_name" /> 
-		to load an other template by its name.</i>
+		be an overlay, containing multiple (non-xul) &lt;template&gt;'s. That templates can contain now (HEAD)
+		a tree of other widgets, but not other templates direct. You can use &lt;template id="app.template_name" /&gt;
+		to load an other template by its name.</i></li>
 </ul>
 <p>Like XUL the eTemplate-xml-files are quite strict with the xml-syntax:</p>
 <ul>
-	<li>All tags and attributes must be written in lowercase
-	<li>All strings must be double quoted, like id="string"
-	<li>Every XUL widget must use close tags (either &lt;tag>&lt;/tag> or &lt;tag/>) to be well-formed
-	<li>All attributes must have a value, no &lt;tag attr> it has to be &lt;tag attr="1">
+	<li>All tags and attributes must be written in lowercase</li>
+	<li>All strings must be double quoted, like id="string"</li>
+	<li>Every XUL widget must use close tags (either &lt;tag&gt;&lt;/tag&gt; or &lt;tag/&gt;) to be well-formed</li>
+	<li>All attributes must have a value, no &lt;tag attr&gt; it has to be &lt;tag attr="1"&gt;</li>
 </ul>
 <hr>
 <a name="reference"></a>
@@ -161,12 +161,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 			<td><b>$cont</b></td>
 			<td>the content-array the (sub-)template, on auto-repeated row's this could eg. be
 				used to generate button-names with id-values in it: "del[$cont[id]]" expands to "del[123]",
-				if $cont = array('id' => 123)</td>
+				if $cont = array('id' =&gt; 123)</td>
 		</tr><tr>
 			<td><b>$row_cont</b></td>
 			<td>the sub-array indexed by $row of the content-array, on auto-repeated row's this could eg. be
 				used to generate button-names with id-values in it: "del[$row_cont[id]]" expands to "del[123]",
-				if $cont = array('1' => array('id' => 123),'2' => array('id' => 456)) and $row = 1</td>
+				if $cont = array('1' =&gt; array('id' =&gt; 123),'2' =&gt; array('id' =&gt; 456)) and $row = 1</td>
 		</tr><tr>
 			<td><b>$c_<br />$col_<br />$row_</b></td>
 			<td>are the respective values of the previous template-inclusion,
@@ -375,7 +375,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Label</b></td>
-	<td>&lt;description /></td>
+	<td>&lt;description /&gt;</td>
 	<td>yes</td>
 	<td>label</td>
 	<td>
@@ -385,7 +385,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>Options</b> has 5 comma-separated fields:<br />
 		<b>1.</b> if it contains a 'i' and/or a 'b' the content (not the label) is rendered
 		in italic and/or bold.<br />
-		<b>2.</b> link: if set to a menuaction string or an array with get-params (via the content-arry), 
+		<b>2.</b> link: if set to a menuaction string or an array with get-params (via the content-arry),
 			a link to that methode = app.class.method is put around the label<br />
 		<b>3.</b> if set URLs in the content get activated<br />
 		<b>4.</b> name of form-element the label is for: gives focus to that element if the label gets clicked<br />
@@ -396,12 +396,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Text</b></td>
-	<td>&lt;textbox /></td>
+	<td>&lt;textbox /&gt;</td>
 	<td>yes</td>
 	<td>text</td>
 	<td>
 		<b>a single-line input field for text</b><br />
-		In the html-UI this is rendered as &lt;input ...><p>
+		In the html-UI this is rendered as &lt;input ...&gt;<p>
 		<b>Options</b> has 3 comma-separated fields:<br />
 		xml: <b>size</b>: the length in chars of the input-field<br />
 		xml: <b>maxlength</b>: the maximum length of the input<br />
@@ -410,12 +410,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Integer</b></td>
-	<td>&lt;textbox<br />type="int" /></td>
+	<td>&lt;textbox<br />type="int" /&gt;</td>
 	<td>?</td>
 	<td>int</td>
 	<td>
 		<b>a input-field to enter an integer</b><br />
-		In the html-UI this is rendered as &lt;input ...>. <i>The input-validation is done at the moment only on server-side,
+		In the html-UI this is rendered as &lt;input ...&gt;. <i>The input-validation is done at the moment only on server-side,
 		clientside validation and input-restriction to only numbers is planed.</i><p>
 		<b>Options</b> has 3 comma-separated fields:<br />
 		xml: <b>min</b>: minimum value, default none, empty values are Ok, as long as <b>needed</b> is not set<br />
@@ -425,12 +425,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Float</b></td>
-	<td>&lt;textbox<br />type="float"/></td>
+	<td>&lt;textbox<br />type="float"/&gt;</td>
 	<td>?</td>
 	<td>float</td>
 	<td>
 		<b>a input-field to enter a float</b><br />
-		In the html-UI this is rendered as &lt;input ...>. <i>The input-validation is done at the moment only on server-side,
+		In the html-UI this is rendered as &lt;input ...&gt;. <i>The input-validation is done at the moment only on server-side,
 		clientside validation and input-restriction to only numbers is planed.</i><p>
 		<b>Options</b> has 4 comma-separated fields:<br />
 		xml: <b>min</b>: minimum value, default none, empty values are Ok, as long as <b>needed</b> is not set<br />
@@ -441,12 +441,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Textarea</b></td>
-	<td>&lt;textbox<br />multiline="true" /></td>
+	<td>&lt;textbox<br />multiline="true" /&gt;</td>
 	<td>yes</td>
 	<td>textarea</td>
 	<td>
 		<b>a multiline input-field for text</b><br />
-		In the html-UI this is rendered as &lt;textarea ...>.<p>
+		In the html-UI this is rendered as &lt;textarea ...&gt;.<p>
 		<b>Options</b> has 2 comma-separated fields:<br />
 		xml: <b>cols</b>: the width of the field in chars<br />
 		xml: <b>rows</b>: the number of rows
@@ -454,12 +454,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Formatted Text</b><br />(HTML)</td>
-	<td>&lt;htmlarea /></td>
+	<td>&lt;htmlarea /&gt;</td>
 	<td>no</td>
 	<td>htmlarea</td>
 	<td>
 		<b>a multiline input-field for formatted (HTML) text</b><br />
-		In the html-UI this is rendered as &lt;textarea ...> and the HTMLarea javascript editor is used.<p>
+		In the html-UI this is rendered as &lt;textarea ...&gt; and the HTMLarea javascript editor is used.<p>
 		<b>Options</b> has 5 comma-separated fields:<br />
 		xml: <b>mode</b>: {ascii|simple|extended|advanced}<br />
 		xml: <b>height</b>: height of htmlarea<br />
@@ -470,15 +470,15 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Checkbox</b></td>
-	<td>&lt;checkbox /></td>
+	<td>&lt;checkbox /&gt;</td>
 	<td>yes</td>
 	<td>checkbox</td>
 	<td>
 		<b>a widget that can be checked or unchecked</b><br />
-		In the html-UI this is rendered as &lt;input type="checkbox" ...>.
-		<p>Multiple checkboxes can have an identical name ending with [], in that case the value will be an array with the set_value's 
-		of the checked boxes. You can use a button with a custom javascript onclick action of eg. 
-		"toggle_all(this.form,form::name('nm[rows][checkbox][]')); return false;" and a set_value of "$row_cont[id]" to toggle 
+		In the html-UI this is rendered as &lt;input type="checkbox" ...&gt;.
+		<p>Multiple checkboxes can have an identical name ending with [], in that case the value will be an array with the set_value's
+		of the checked boxes. You can use a button with a custom javascript onclick action of eg.
+		"toggle_all(this.form,form::name('nm[rows][checkbox][]')); return false;" and a set_value of "$row_cont[id]" to toggle
 		all checkboxes in the lines of a nextmatch widget. The <b>form::name( )</b> function translate the name used
 		in the template into the name used in the form. <i>If the button is an image-button, check needed to render it as button
 		and not as image with link, which has no this.form property!</i></p>
@@ -491,12 +491,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Radiobutton</b></td>
-	<td>&lt;radio /></td>
+	<td>&lt;radio /&gt;</td>
 	<td>?</td>
 	<td>radio</td>
 	<td>
 		<b>a widget in a group of which only one can be checked</b><br />
-		In the html-UI this is rendered as &lt;input type="radio" ...><br />
+		In the html-UI this is rendered as &lt;input type="radio" ...&gt;<br />
 		Unlike XUL (and like html) the radio-buttons are grouped by giving them the same name / id.<br />
 		<b>Options</b>: [set_value][,ro_true[,ro_false]]<br />
 		<b>set_value</b>: which value in the content represents the checked state, default=1<br />
@@ -507,15 +507,15 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Submitbutton</b></td>
-	<td>&lt;button image="img.gif" ro_image="img-grey.gif" /></td>
+	<td>&lt;button image="img.gif" ro_image="img-grey.gif" /&gt;</td>
 	<td>yes</td>
 	<td>button</td>
 	<td>
 		<b>a button to submit the form / end the dialog</b><br />
-		In the html-UI this is rendered as &lt;input type="submit" ...>.<br />
+		In the html-UI this is rendered as &lt;input type="submit" ...&gt;.<br />
 		If a button is set readonly (via seting its id in the $readonlys array passed to exec) it is not rendered
 		at all (if no ro_image is given), like it would be disabled.<p>
-		<b>needed</b>: if set and the user has JavaScript enabled the button is renderd as a link around the label 
+		<b>needed</b>: if set and the user has JavaScript enabled the button is renderd as a link around the label
 		and a hidden input to set id if the link is clicked.<br />
 		<b>Options</b> xml: <b>image, ro_image</b>: Image to use instead of a Button with a label. There will
 		be no button around the image. If a ro_image is given (separated by a comma in the editors options)
@@ -523,35 +523,35 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>onclick</b>: specify some java-script to be called if the button gets pressed/clicked: <br />
 		a) general javascript: "window.close();"<br />
 		b) confirmation: "return window.confirm('<message>');" (message get run through lang()!)<br />
-		c) popup: app.class.func&id=$cont[id],target(default _blank),width (default 600),height (default 450)
-		You can use $cont[<name>] or $row_cont[<name>] (note no quotes!) to pass further information to the popup 
+		c) popup: app.class.func&amp;id=$cont[id],target(default _blank),width (default 600),height (default 450)
+		You can use $cont[<name>] or $row_cont[<name>] (note no quotes!) to pass further information to the popup
 		via the content array.)
 	</td>
 </tr>
 <tr>
 	<td><b>Button</b></td>
-	<td>&lt;buttononly image="img.gif" ro_image="img-grey.gif" /></td>
+	<td>&lt;buttononly image="img.gif" ro_image="img-grey.gif" /&gt;</td>
 	<td>no</td>
 	<td>buttononly</a>
 	<td>
 		<b>a button</b><br />
-		Same as <b>Submitbutton</b> but it is rendered as &lt;input type="button" ...> in the html-UI
+		Same as <b>Submitbutton</b> but it is rendered as &lt;input type="button" ...&gt; in the html-UI
 	</td>
 </tr>
 <tr>
 	<td><b>Horizonatal Rule</b></td>
-	<td>&lt;hrule /></td>
+	<td>&lt;hrule /&gt;</td>
 	<td>no</td>
 	<td>hrule</td>
 	<td>
 		<b>a horizontal rule / line</b><br />
-		In the html-UI this is rendered as &lt;hr ...><br />
+		In the html-UI this is rendered as &lt;hr ...&gt;<br />
 		<b>Options</b> can contain a width of the rule, default is 100%
 	</td>
 </tr>
 <tr>
 	<td><b>Template</b></td>
-	<td>&lt;template id="app.name" content="subarr" /></td>
+	<td>&lt;template id="app.name" content="subarr" /&gt;</td>
 	<td>yes</td>
 	<td>template</td>
 	<td>
@@ -565,7 +565,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Image</b></td>
-	<td>&lt;image src="foo.gif" label="Get a foo" options="app.class.method" /></td>
+	<td>&lt;image src="foo.gif" label="Get a foo" options="app.class.method" /&gt;</td>
 	<td>yes</td>
 	<td>image</td>
 	<td>
@@ -582,16 +582,16 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>Selectbox</b></td>
 	<td>
-		&lt;menulist><br />
-		&nbsp; &lt;menupopup id="name" options="Select one" /><br />
-		&lt;/menulist><p>
+		&lt;menulist&gt;<br />
+		&nbsp; &lt;menupopup id="name" options="Select one" /&gt;<br />
+		&lt;/menulist&gt;<p>
 		<i>multiselect: <b>options</b> > 1</i><br />
-		&lt;listbox rows="#"/><p>
+		&lt;listbox rows="#"/&gt;<p>
 		<i>Examples for predefined selectboxes</i>:<p>
-		&lt;listbox type="select-cat" rows="5"/><p>
-		&lt;menulist><br />
-		&nbsp; &lt;menupopup type="select-account" options="All,both,2"/><br />
-		&lt;/menulist><p>
+		&lt;listbox type="select-cat" rows="5"/&gt;<p>
+		&lt;menulist&gt;<br />
+		&nbsp; &lt;menupopup type="select-account" options="All,both,2"/&gt;<br />
+		&lt;/menulist&gt;<p>
 
 
 	</td>
@@ -601,11 +601,11 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>shows a selectbox</b><br />
 		The content of the selectbox / the options have to be in an array which can be in 2 locations:
 		<ol>
-			<li>in $content["options-$name"]
+			<li>in $content["options-$name"]</li>
 			<li>or in an separate array only for select-box-options under the index name, this array is passed
-				to the exec or show function of the etemplate-class
+				to the exec or show function of the etemplate-class</li>
 		</ol>
-		<b>Options</b> <i>in the editor</i>: if set and > 1 the selectbox is a multiselection with options number of lines<p>
+		<b>Options</b> <i>in the editor</i>: if set and &gt; 1 the selectbox is a multiselection with options number of lines<p>
 		xml: <b>rows</b>: <i>only for &lt;listbox></i>: number of rows to show<p>
 		xml <b>options</b>: <i>only for &lt;menupopup/></i>: textual label for a first Row, e.g. 'All' or 'None'
 			(id will be ''), additional attr see sub-types<p>
@@ -621,7 +621,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 				as you expect by the name<br />
 			<b>select-year, select-month, select-day</b>:<br />
 				options for year: ,start,end (start and end can be a number of
-				years from now or if > 100 a absolut year)<br />
+				years from now or if &gt; 100 a absolut year)<br />
 			<b>select-number</b>:<br />
 				Select a number out of a range specified by the options-field:<br />
 				,{start (default=1)},{end (incl., default=10)},{decrement (default={padding zeros}1)},{suffix}.<br />
@@ -636,7 +636,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>FileUpload</b></td>
 	<td>
-		&lt;file id="name"/><br />
+		&lt;file id="name"/&gt;<br />
 	</td>
 	<td>no</td>
 	<td>file</td>
@@ -649,33 +649,33 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>Date</b></td>
 	<td>
-		&lt;date options="Y-m-d,1"/><p>
-		&lt;date type="date-time"/><p>
-		&lt;date type="date-timeonly" options="H:i"/><p>
-		&lt;date type="date-houronly"/><p>
-		&lt;date type="date-duration"/>
+		&lt;date options="Y-m-d,1"/&gt;<p>
+		&lt;date type="date-time"/&gt;<p>
+		&lt;date type="date-timeonly" options="H:i"/&gt;<p>
+		&lt;date type="date-houronly"/&gt;<p>
+		&lt;date type="date-duration"/&gt;
 	</td>
 	<td>no</td>
 	<td>date</td>
 	<td>
 		<b>Date-/Time-input</b> via selectboxes or a field for the year<br />
 		The order of the input-fields is determined by the prefs of the user.<br />
-		<b>Options</b>: [datetime-storage-format] [,&1=year-no-selectbox|&2=today-button|&4=one-min-steps|&8=ro-suppress-0h0]<br />
-		<b>datetime-storage-format</b> is the format, in which the date is stored in the variable: 
-		empty means an unix-timestamp (in GMT), or a string containing the letters <b>Y</b>, <b>m</b>, 
-		<b>d</b>, <b>H</b>, <b>i</b> plus separators, eg. 'Y-m-d': 2002-12-31. The storage format 
+		<b>Options</b>: [datetime-storage-format] [,&amp;1=year-no-selectbox|&amp;2=today-button|&amp;4=one-min-steps|&amp;8=ro-suppress-0h0]<br />
+		<b>datetime-storage-format</b> is the format, in which the date is stored in the variable:
+		empty means an unix-timestamp (in GMT), or a string containing the letters <b>Y</b>, <b>m</b>,
+		<b>d</b>, <b>H</b>, <b>i</b> plus separators, eg. 'Y-m-d': 2002-12-31. The storage format
 		for times is always 24h or timestamp with date 1.1.1970 (if no date used). (This has nothing
 		to do with the format of the display, which is only determined by the users preferences.)<br />
-		<b>year-no-selectbox</b> if set (&1) an int-widget (input-field) is used instead of a 
+		<b>year-no-selectbox</b> if set (&amp;1) an int-widget (input-field) is used instead of a
 		select-year widget.<br />
-		<b>today-button</b>: if set (&2) a [Today] button is displayed which sets the fields to 
+		<b>today-button</b>: if set (&amp;2) a [Today] button is displayed which sets the fields to
 		the up-to-date date (via javascript)<br />
-		<b>one-min-steps</b>: if set (&4) the minute-selectbox uses one minutes steps, default 5min steps<br />
-		<b>ro-suppress-0h0</b>: if set (&8) the time is suppressed for readonly and a time of 0h0<br />
-		<b>day-of-week-prefix</b>: if set (&16) readonly dates get prefixed with the day of week<br />
-		<b>week-number-prefix</b>: if set (&32) readonly dates get prefixed with lang('Wk') & weeknumber<br />
+		<b>one-min-steps</b>: if set (&amp;4) the minute-selectbox uses one minutes steps, default 5min steps<br />
+		<b>ro-suppress-0h0</b>: if set (&amp;8) the time is suppressed for readonly and a time of 0h0<br />
+		<b>day-of-week-prefix</b>: if set (&amp;16) readonly dates get prefixed with the day of week<br />
+		<b>week-number-prefix</b>: if set (&amp;32) readonly dates get prefixed with lang('Wk') &amp; weeknumber<br />
 		<b>Sub-widgets</b>: <b>date-time</b>: a date and a time and <b>date-timeonly</b> or <b>date-houronly</b>: only a time / hour<br />
-		These widgets allow the input of times too or only, they use 12h am/pm or 24h format as 
+		These widgets allow the input of times too or only, they use 12h am/pm or 24h format as
 		specified in the user prefs.<br />
 		<i>If readonly is set, this widget can be used to display a date, without the need to convert it.</i><p>
 		<b>Duration</b> a floating point input with an optional selectbox for the unit (hours or days)<br>
@@ -689,18 +689,18 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>VBox, HBox, Box</b></td>
 	<td>
-		&lt;vbox><br />
-		&nbsp; &lt;widget ...><br />
-		&nbsp; &lt;widget ...><br />
-		&lt;/vbox><p>
-		&lt;hbox span="all"><br />
-		&nbsp; &lt;widget ...><br />
-		&nbsp; &lt;widget ...><br />
-		&lt;/hbox><p>
-		&lt;box orient="horizontal"><br />
-		&nbsp; &lt;widget ...><br />
-		&nbsp; &lt;widget ...><br />
-		&lt;/box>
+		&lt;vbox&gt;<br />
+		&nbsp; &lt;widget ...&gt;<br />
+		&nbsp; &lt;widget ...&gt;<br />
+		&lt;/vbox&gt;<p>
+		&lt;hbox span="all"&gt;<br />
+		&nbsp; &lt;widget ...&gt;<br />
+		&nbsp; &lt;widget ...&gt;<br />
+		&lt;/hbox&gt;<p>
+		&lt;box orient="horizontal"&gt;<br />
+		&nbsp; &lt;widget ...&gt;<br />
+		&nbsp; &lt;widget ...&gt;<br />
+		&lt;/box&gt;
 	</td>
 	<td>yes</td>
 	<td>vbox, hbox, box</td>
@@ -718,11 +718,11 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>GroupBox</b></td>
 	<td>
-		&lt;groupbox><br />
-		&nbsp; &lt;caption label="Legend"/><br />
-		&nbsp; &lt;widget ...><br />
-		&nbsp; &lt;widget ...><br />
-		&lt;/groupbox><p>
+		&lt;groupbox&gt;<br />
+		&nbsp; &lt;caption label="Legend"/&gt;<br />
+		&nbsp; &lt;widget ...&gt;<br />
+		&nbsp; &lt;widget ...&gt;<br />
+		&lt;/groupbox&gt;<p>
 	</td>
 	<td>yes</td>
 	<td>groupbox</td>
@@ -738,16 +738,16 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>Tabs</b></td>
 	<td>
-		&lt;tabbox id="name"><br />
-		&nbsp; &lt;tabs><br />
-		&nbsp; &nbsp; &lt;tab label="Tab 1" statustext="Help"/><br />
+		&lt;tabbox id="name"&gt;<br />
+		&nbsp; &lt;tabs&gt;<br />
+		&nbsp; &nbsp; &lt;tab label="Tab 1" statustext="Help"/&gt;<br />
 		&nbsp; &nbsp; ...<br />
-		&nbsp; &lt;/tabs><br />
-		&nbsp; &lt;tabpanels><br />
-		&nbsp; &nbsp; &lt;grid id="app.name.tab1"/><br />
+		&nbsp; &lt;/tabs&gt;<br />
+		&nbsp; &lt;tabpanels&gt;<br />
+		&nbsp; &nbsp; &lt;grid id="app.name.tab1"/&gt;<br />
 		&nbsp; &nbsp; ...<br />
-		&nbsp; &lt;/tabpanels><br />
-		&lt;/tabbox>
+		&nbsp; &lt;/tabpanels&gt;<br />
+		&lt;/tabbox&gt;
 	</td>
 	<td>yes</td>
 	<td>tab</td>
@@ -765,7 +765,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>Manual</b></td>
 	<td>
-		&lt;manual>
+		&lt;manual&gt;
 	</td>
 	<td>no</td>
 	<td>manual</td>
@@ -778,19 +778,19 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td><b>Custom fields</b></td>
 	<td>
-		&lt;custom_fields>
+		&lt;custom_fields&gt;
 	</td>
 	<td>no</td>
 	<td>custom_fields</td>
 	<td>
-		<b>display custom fields</b>: the fields can be configured with admin.customfields.edit&appname={app}<p>
+		<b>display custom fields</b>: the fields can be configured with admin.customfields.edit&amp;appname={app}<p>
 		The indexes of the custom fields in content are prefixed with a hash (#).
 	</td>
 </tr>
 <tr>
 	<td><b>NextMatch</b></td>
 	<td>
-		&lt;nextmatch options="notes.index.rows" id="nm"/>
+		&lt;nextmatch options="notes.index.rows" id="nm"/&gt;
 	</td>
 	<td>yes</td>
 	<td>tab</td>
@@ -805,57 +805,57 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td colspan="5">
 <pre>
 $content[$id] = array(		<span>// I = value set by the app, 0 = value on return / output</span>
-	'get_rows'       =>	<span>// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'</span>
-	'filter_label'   =>	<span>// I  label for filter    (optional)</span>
-	'filter_help'    =>	<span>// I  help-msg for filter (optional)</span>
-	'no_filter'      => True<span>// I  disable the 1. filter</span>
-	'no_filter2'     => True<span>// I  disable the 2. filter (params are the same as for filter)</span>
-	'no_cat'         => True<span>// I  disable the cat-selectbox</span>
-	'cat_app'        =>     <span>// I  application the cat's should be from, default app in get_rows</span>
-	'template'       =>	<span>// I  template to use for the rows, if not set via options</span>
-	'header_left'    =>	<span>// I  template to show left of the range-value, left-aligned (optional)</span>
-	'header_right'   =>	<span>// I  template to show right of the range-value, right-aligned (optional)</span>
-	'bottom_too'     => True<span>// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows</span>
-	'never_hide'     => True<span>// I  never hide the nextmatch-line if less then maxmatch entrie</span>
-	'lettersearch'   => True<span>// I  show a lettersearch</span>
-	'searchletter'   =>	<span>// I0 active letter of the lettersearch or false for [all]</span>
-	'start'          =>	<span>// IO position in list</span>
-	'num_rows'       =>	<span>// IO number of rows to show, defaults to maxmatches from the general prefs</span>
-	'cat_id'         =>	<span>// IO category, if not 'no_cat' => True</span>
-	'search'         =>	<span>// IO search pattern</span>
-	'order'          =>	<span>// IO name of the column to sort after (optional for the sortheaders)</span>
-	'sort'           =>	<span>// IO direction of the sort: 'ASC' or 'DESC'</span>
-	'col_filter'     =>	<span>// IO array of column-name value pairs (optional for the filterheaders)</span>
-	'filter'         =>	<span>// IO filter, if not 'no_filter' => True</span>
-	'filter_no_lang' => True<span>// I  set no_lang for filter (=dont translate the options)</span>
-	'filter_onchange'=> 'this.form.submit();'<span>// I onChange action for filter, default: this.form.submit();</span>
-	'filter2'        =>	<span>// IO filter2, if not 'no_filter2' => True</span>
-	'filter2_no_lang'=> True<span>// I  set no_lang for filter2 (=dont translate the options)</span>
-	'filter2_onchange'=> 'this.form.submit();'<span>// I onChange action for filter, default: this.form.submit();</span>
-	'rows'           =>	<span>//  O content set by callback</span>
-	'total'          =>	<span>//  O the total number of entries</span>
-	'sel_options'    =>	<span>//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options</span>
-	'no_columnselection' => <span>// I  turns off the columnselection completly, turned on by default</span>
-	'columnselection-pref' => <span>// I  name of the preference (plus 'nextmatch-' prefix), default = template-name</span>
-	'default_cols'   => 	<span>// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns</span>
-	'options-selectcols' => <span>// I  array with name/label pairs for the column-selection, this gets autodetected by default. 
-					A name => false hides the column from the column-selection.  
+	'get_rows'       =&gt;	<span>// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'</span>
+	'filter_label'   =&gt;	<span>// I  label for filter    (optional)</span>
+	'filter_help'    =&gt;	<span>// I  help-msg for filter (optional)</span>
+	'no_filter'      =&gt; True<span>// I  disable the 1. filter</span>
+	'no_filter2'     =&gt; True<span>// I  disable the 2. filter (params are the same as for filter)</span>
+	'no_cat'         =&gt; True<span>// I  disable the cat-selectbox</span>
+	'cat_app'        =&gt;     <span>// I  application the cat's should be from, default app in get_rows</span>
+	'template'       =&gt;	<span>// I  template to use for the rows, if not set via options</span>
+	'header_left'    =&gt;	<span>// I  template to show left of the range-value, left-aligned (optional)</span>
+	'header_right'   =&gt;	<span>// I  template to show right of the range-value, right-aligned (optional)</span>
+	'bottom_too'     =&gt; True<span>// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows</span>
+	'never_hide'     =&gt; True<span>// I  never hide the nextmatch-line if less then maxmatch entrie</span>
+	'lettersearch'   =&gt; True<span>// I  show a lettersearch</span>
+	'searchletter'   =&gt;	<span>// I0 active letter of the lettersearch or false for [all]</span>
+	'start'          =&gt;	<span>// IO position in list</span>
+	'num_rows'       =&gt;	<span>// IO number of rows to show, defaults to maxmatches from the general prefs</span>
+	'cat_id'         =&gt;	<span>// IO category, if not 'no_cat' =&gt; True</span>
+	'search'         =&gt;	<span>// IO search pattern</span>
+	'order'          =&gt;	<span>// IO name of the column to sort after (optional for the sortheaders)</span>
+	'sort'           =&gt;	<span>// IO direction of the sort: 'ASC' or 'DESC'</span>
+	'col_filter'     =&gt;	<span>// IO array of column-name value pairs (optional for the filterheaders)</span>
+	'filter'         =&gt;	<span>// IO filter, if not 'no_filter' =&gt; True</span>
+	'filter_no_lang' =&gt; True<span>// I  set no_lang for filter (=dont translate the options)</span>
+	'filter_onchange'=&gt; 'this.form.submit();'<span>// I onChange action for filter, default: this.form.submit();</span>
+	'filter2'        =&gt;	<span>// IO filter2, if not 'no_filter2' =&gt; True</span>
+	'filter2_no_lang'=&gt; True<span>// I  set no_lang for filter2 (=dont translate the options)</span>
+	'filter2_onchange'=&gt; 'this.form.submit();'<span>// I onChange action for filter, default: this.form.submit();</span>
+	'rows'           =&gt;	<span>//  O content set by callback</span>
+	'total'          =&gt;	<span>//  O the total number of entries</span>
+	'sel_options'    =&gt;	<span>//  O additional or changed sel_options set by the callback and merged into $tmpl-&gt;sel_options</span>
+	'no_columnselection' =&gt; <span>// I  turns off the columnselection completly, turned on by default</span>
+	'columnselection-pref' =&gt; <span>// I  name of the preference (plus 'nextmatch-' prefix), default = template-name</span>
+	'default_cols'   =&gt; 	<span>// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns</span>
+	'options-selectcols' =&gt; <span>// I  array with name/label pairs for the column-selection, this gets autodetected by default.
+					A name =&gt; false hides the column from the column-selection.
 					To completely hide a column, you need to use the Grid column attributes - disabled in eTemplate, and have your get_rows function
-					set a key that matches.  
-					For example, if your column name is private_phone, use the eTemplate editor to set column disabled to @no_private_phone, 
+					set a key that matches.
+					For example, if your column name is private_phone, use the eTemplate editor to set column disabled to @no_private_phone,
 					and have your get_rows function set $rows['no_private_phone'] = true (or some calculated condition).
 					</span>
-	'return'         =>     <span>// IO allows to return something from the get_rows function if $query is a var-param!</span>
-	'csv_fields'     =>	<span>// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames, 
-					or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)</span>
+	'return'         =&gt;     <span>// IO allows to return something from the get_rows function if $query is a var-param!</span>
+	'csv_fields'     =&gt;	<span>// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
+					or array with name=&gt;label or name=&gt;array('label'=&gt;label,'type'=&gt;type) pairs (type is a eT widget-type)</span>
 );
 
 <span>/*
  * example: the get_rows function from notes.bo.get_rows (has to be in public_functions !)
  */</span>
-function get_rows($query,&$rows,&$readonlys)
+function get_rows($query,&amp;$rows,&amp;$readonlys)
 {
-	$rows = $this->read($query['start'],$query['search'],$query['filter'],$query['cat_id']);
+	$rows = $this-&gt;read($query['start'],$query['search'],$query['filter'],$query['cat_id']);
 	if (!is_array($rows))
 	{
 		$rows = array( );
@@ -863,16 +863,16 @@ function get_rows($query,&$rows,&$readonlys)
 	$readonlys = array( );	<span>// set readonlys to enable/disable our edit/delete-buttons</span>
 	while (list($n,$note) = each($rows))
 	{
-		if (!$this->check_perms($this->grants[$note['owner_id']],PHPGW_ACL_EDIT))
+		if (!$this-&gt;check_perms($this-&gt;grants[$note['owner_id']],PHPGW_ACL_EDIT))
 		{
 			$readonlys["edit[$note[id]]"] = True;
 		}
-		if (!$this->check_perms($this->grants[$note['owner_id']],PHPGW_ACL_DELETE))
+		if (!$this-&gt;check_perms($this-&gt;grants[$note['owner_id']],PHPGW_ACL_DELETE))
 		{
 			$readonlys["delete[$note[id]]"] = True;
 		}
 	}
-	return $this->total_records;
+	return $this-&gt;total_records;
 }
 
 <span>/*
@@ -882,35 +882,35 @@ function index($content = 0)
 {
 	if (!is_array($content))
 	{
-		$content = array('nm' => $this->session_data); <span>// restore settings from the session</span>
+		$content = array('nm' =&gt; $this-&gt;session_data); <span>// restore settings from the session</span>
 	}
 	if (isset($content['nm']['rows']))		<span>// one of the buttons in the rows is pressed</span>
 	{
-		$this->session_data = $values['nm'];	<span>// save the settings in the session</span>
-		unset($this->session_data['rows']);	<span>// we dont want to save the content of the rows</span>
-		$this->save_sessiondata();
+		$this-&gt;session_data = $values['nm'];	<span>// save the settings in the session</span>
+		unset($this-&gt;session_data['rows']);	<span>// we dont want to save the content of the rows</span>
+		$this-&gt;save_sessiondata();
 
 		if (isset($values['nm']['rows']['edit']))
 		{
 			list($id) = each($values['nm']['rows']['edit']);
-			return $this->edit($id);
+			return $this-&gt;edit($id);
 		}
 		elseif (isset($values['nm']['rows']['delete']))
 		{
 			list($id) = each($values['nm']['rows']['delete']);
-			return $this->delete($id);
+			return $this-&gt;delete($id);
 		}
 	}
 	$values['nm']['options-filter'] = array (	<span>// set up the data for our filter</span>
-		'all'			=> 'Show all',
-		'public'		=> 'Only yours',
-		'private'	=> 'Private'
+		'all'			=&gt; 'Show all',
+		'public'		=&gt; 'Only yours',
+		'private'	=&gt; 'Private'
 	);
 	$values['nm']['get_rows'] = 'notes.bo.get_rows';
 	$values['nm']['no_filter2'] = True;		<span>// disable the 2. filter</span>
 
-	$this->tpl->read('notes.index');
-	$this->tpl->exec('notes.ui.index',$values);
+	$this-&gt;tpl-&gt;read('notes.index');
+	$this-&gt;tpl-&gt;exec('notes.ui.index',$values);
 }
 </pre>
 	</td>
@@ -918,10 +918,10 @@ function index($content = 0)
 <tr>
 	<td><b>Nextmatch-<br />SortHeader</b><p><b>Nextmatch-<br />FilterHeader</b><p><b>Nextmatch-<br />Custom FilterHeader</b><p><b>Nextmatch-<br />AccountFilter</b></td>
 	<td>
-		&lt;nextmatch type="nextmatch-sortheader" id="col-name" options="DESC" label="ColLabel"/><p>
-		&lt;nextmatch type="nextmatch-filterheader" id="col-name"/><p>
-		&lt;nextmatch type="nextmatch-customfilter" id="col-name" options="select-precent"/><p>
-		&lt;nextmatch type="nextmatch-accountfilter" id="col-name"/>
+		&lt;nextmatch type="nextmatch-sortheader" id="col-name" options="DESC" label="ColLabel"/&gt;<p>
+		&lt;nextmatch type="nextmatch-filterheader" id="col-name"/&gt;<p>
+		&lt;nextmatch type="nextmatch-customfilter" id="col-name" options="select-precent"/&gt;<p>
+		&lt;nextmatch type="nextmatch-accountfilter" id="col-name"/&gt;
 	</td>
 	<td>no</td>
 	<td>nextmatch-<br />sortheader<p>nextmatch-<br />filterheader<p>nextmatch-<br />customfilter<p>nextmatch-<br />accountfilter<p>nextmatch-<br />header</td>
@@ -930,7 +930,7 @@ function index($content = 0)
 		<b>nextmatch-sortheader</b><br />
 		Widget to be placed as a colum-header in the headerline of a nextmatch-template. It allows, by clicking on it,
 		to order the lines of the nextmatch after a certain column. The column-name is given as <b>name</b> (xml:id) the
-		<b>label</b> is show as a link of button (no javascript). One can specify a default sorting: <b>options</b>={DESC|ASC} (default=ASC), 
+		<b>label</b> is show as a link of button (no javascript). One can specify a default sorting: <b>options</b>={DESC|ASC} (default=ASC),
 		to be used when the header is clicked for the first time. Consecutive click on the header change the sorting
 		direction, indicated by a little up- or down-arrow. As a second comma-separated parameter one can specify an extra
 		label for the column-selection.<p>
@@ -943,7 +943,7 @@ function index($content = 0)
 		The custom filterheader allows to use other (select-)widgets to filter by them. They have to be specified as the first
 		parameter in the comma-separated options attribute. In all other aspects it is identical to the filterheader.<p>
 		<b>nextmatch-accountfilter</b><br />
-		The Accountfilter allows to select users (via the prefered user-selection-method) to filter by them. 
+		The Accountfilter allows to select users (via the prefered user-selection-method) to filter by them.
 		It's identical to a <b>nextmatch-customfilter</b> with options="select-account".<p>
 		<b>nextmatch-header</b><br />
 		Just a header-label for a nextmatch column. It names the column for the column for the column-selection (in difference to the label).
@@ -956,9 +956,9 @@ function index($content = 0)
 <tr>
 	<td><b>LinkWidgets</b></td>
 	<td>
-		&lt;link type="link-to" id="name"/><p>
-		&lt;link type="link-list" id="name"/><p>
-		&lt;link type="link-string" id="name"/><p>
+		&lt;link type="link-to" id="name"/&gt;<p>
+		&lt;link type="link-list" id="name"/&gt;<p>
+		&lt;link type="link-string" id="name"/&gt;<p>
 	</td>
 	<td>no</td>
 	<td>link-to<p>link-list<p>link-string</td>
@@ -1000,15 +1000,15 @@ $data['links']['to_id'] = $record_id;
 'view_id'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'link_id',&nbsp;
 	// name of the id variable provided to the view function above
 'add'&nbsp;&nbsp; =&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; array('menuaction' =&gt; 'myapp.ui_myapp.new_entry'),&nbsp;
-	// Function to add a new entry 
+	// Function to add a new entry
 );
 </pre>
 		<p>Also, make sure that the declared methods are implemented and methods from the UI class are listed in its $public_methods attribute:
 <pre>
 class ui_myapp {
 	var $public_methods = array(
-		'view' => true,
-		'add' => true
+		'view' =&gt; true,
+		'add' =&gt; true
 	);
 ...
 }
@@ -1021,14 +1021,14 @@ class ui_myapp {
 <td>
 <p>The Ajax Select is a Combo Box.  It lets the user type anything they want, and choose from a list of options that are presented below.  The user is not limited to the choices, but there is
 some checking done.  If what they type returns several results, and they don't choose one, for example.  You can reject
-any values you don't like in your UI code.  It is best used where you might normally want to use a selectbox but your list of data is too large.  You can have several on one page, but the name 
+any values you don't like in your UI code.  It is best used where you might normally want to use a selectbox but your list of data is too large.  You can have several on one page, but the name
 must be different for each.</p>
 <p><b>Options</b> can be found under the "AJAX Select options" section of the pop-up. </p>
 <p><b>Data Source</b>: the list options, can be any function that can provide data for a nextmatch widget.</p>
 <p><b>Title Source</b>: When an option from the list is selected, the text in the search function is replaced with the result of this function.  The ID Field is passed.  link_title() functions work well.</p>
 <p><b>ID Field</b>: Data Source is expected to return an array as for a nextmatch, with several columns.  This is the key of the column you actually want returned for a value.</p>
 <p><b>Result row template</b>: (Optional) You can provide a custom eTemplate to use for the list options.  It should be constructed similarly to a row template for a nextmatch, and will be repeated for each option.</p>
-<p><b>Link</b>: (Optional) If the field is read-only, and Link is provided, the widget will turn into a link.  Link should look like: perp_ap.ui_perp_supplier.edit&supplier_id=${cont[supplier_id]} where ID Field is supplier_id.</p>
+<p><b>Link</b>: (Optional) If the field is read-only, and Link is provided, the widget will turn into a link.  Link should look like: perp_ap.ui_perp_supplier.edit&amp;supplier_id=${cont[supplier_id]} where ID Field is supplier_id.</p>
 <p><b>Icon</b>: (Optional) An icon placed to the left of the search box, to help indicate what the user is searching (addresses, suppliers, etc.).  It will be automatically resized.</p>
 </td>
 </tr>
@@ -1037,11 +1037,11 @@ must be different for each.</p>
 The following eTemplate Widgets are parsing its content before displaying through <b>htmlspecialchars()</b> to
 correctly display the content and to gard against malecious data (like scripts etc.):
 <ul>
-	<li>Label
-	<li>Text, Textarea
-	<li>Integer, Float
-	<li>SelectBoxes (it's options-strings)
-	<li>LinkWidgets: link-to, link-list, link-string
+	<li>Label</li>
+	<li>Text, Textarea</li>
+	<li>Integer, Float</li>
+	<li>SelectBoxes (it's options-strings)</li>
+	<li>LinkWidgets: link-to, link-list, link-string</li>
 </ul>
 This is done in most cases by the underlaying html-class and not direct in eTemplate.
 <p>
