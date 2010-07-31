@@ -19,6 +19,13 @@ class setup_cmd_database extends setup_cmd
 	 * Allow to run this command via setup-cli
 	 */
 	const SETUP_CLI_CALLABLE = true;
+	
+	/**
+	 * Maximum length of database name (at least for MySQL this is the limit)
+	 * 
+	 * @var int
+	 */
+	const MAX_DB_NAME_LEN = 16;
 
 	/**
 	 * Instance of egw_db to connect or create the db
@@ -41,9 +48,11 @@ class setup_cmd_database extends setup_cmd
 	 * @param string $db_root_pw=null
 	 * @param string $sub_command='create_db' 'create_db', 'test_db', 'test_db_root'
 	 * @param string $db_grant_host='localhost' host/ip of webserver for grant
+	 * @param boolean $make_db_name_unique=false true: if create fails because db exists,
+	 * 	try creating a unique name by shortening the name and adding a number to it
 	 */
 	function __construct($domain,$db_type=null,$db_host=null,$db_port=null,$db_name=null,$db_user=null,$db_pass=null,
-		$db_root=null,$db_root_pw=null,$sub_command='create_db',$db_grant_host='localhost')
+		$db_root=null,$db_root_pw=null,$sub_command='create_db',$db_grant_host='localhost',$make_db_name_unique=false)
 	{
 		if (!is_array($domain))
 		{
@@ -59,9 +68,10 @@ class setup_cmd_database extends setup_cmd
 				'db_root_pw' => $db_root_pw,
 				'sub_command' => $sub_command,
 				'db_grant_host' => $db_grant_host,
+				'make_db_name_unique' => $make_db_name_unique, 
 			);
 		}
-		//echo __CLASS__.'::__construct()'; _debug_array($domain);
+		//error_log(__METHOD__.'('.array2string($domain).") make_db_name_unique=".array2string($domain['make_db_name_unique']));
 		admin_cmd::__construct($domain);
 	}
 
@@ -153,12 +163,17 @@ class setup_cmd_database extends setup_cmd
 	 * Check and if does not yet exist create the new database and user
 	 *
 	 * The check will fail if the database exists, but already contains tables
+	 * 
+	 * if $this->make_db_name_unique is set, a decrementing nummeric prefix gets
+	 * added to $this->db_name AND $this->db_user, if db already exists.
 	 *
 	 * @return string with success message
 	 * @throws egw_exception_wrong_userinput
 	 */
 	private function create()
 	{
+		static $try_make_unique = 0;	// to limit trials to create a unique name
+
 		try {
 			$msg = $this->connect();
 		}
@@ -168,9 +183,36 @@ class setup_cmd_database extends setup_cmd
 				$this->test_db->create_database($this->db_root,$this->db_root_pw,$this->db_charset,$this->db_grant_host);
 				$this->connect();
 			}
-			catch(egw_exception_wrong_userinput $e) {
-				// try connect as root to check if that's the problem
+			catch(egw_exception_db $e) {	// catches failed to create database
+				// try connect as root to check if wrong root/root_pw is the problem
 				$this->connect($this->db_root,$this->db_root_pw,$this->db_meta);
+				
+				// if we should create a db with a unique name (try it only N times, not endless!)
+				if ($this->make_db_name_unique && $try_make_unique++ < 20)
+				{
+					// check if we can connect as root to the db to create --> db exists already
+					try {
+						$this->connect($this->db_root,$this->db_root_pw);
+						// create new db_name by incrementing an existing numeric postfix
+						if (preg_match('/([0-9]+)$/',$this->db_name,$matches))
+						{
+							$num = (string)(++$matches[1]);
+						}
+						else	// or adding one starting with 2
+						{
+							$num = '2';
+						}
+						$this->set_defaults['db_name'] = $this->db_name = 
+						$this->set_defaults['db_user'] = $this->db_user = // change user too (otherwise existing user/db could not connect any more!)
+							substr($this->db_name,0,self::MAX_DB_NAME_LEN-strlen($num)).$num;
+	
+							return $this->create();
+					}
+					catch (egw_exception_wrong_userinput $e2)
+					{
+						// we can NOT connect to db as root --> ignore exception to give general error
+					}
+				}
 				// if not give general error
 				throw new egw_exception_wrong_userinput(lang('Can not create %1 database %2 on %3 for user %4!',
 					$this->db_type,$this->db_name,$this->db_host.($this->db_port?':'.$this->db_port:''),$this->db_user));
@@ -263,7 +305,9 @@ class setup_cmd_database extends setup_cmd
 			if (strpos($this->$name,'$domain') !== false)
 			{
 				// limit names to 16 chars (16 char is user-name limit in MySQL)
-				$this->set_defaults[$name] = $this->$name = substr(str_replace(array('$domain','.','-'),array($this->domain,'_','_'),$this->$name),0,16);
+				$this->set_defaults[$name] = $this->$name = 
+					substr(str_replace(array('$domain','.','-'),array($this->domain,'_','_'),$this->$name),
+					0,self::MAX_DB_NAME_LEN);
 			}
 		}
 	}
