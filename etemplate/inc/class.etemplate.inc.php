@@ -1602,7 +1602,7 @@ class etemplate extends boetemplate
 				break;
 			case 'image':	// size: [link],[link_target],[imagemap],[link_popup],[id]
 				$image = $value != '' ? $value : $name;
-				list($app,$img) = explode('/',$image,2);
+				if (!is_array($image)) list($app,$img) = explode('/',$image,2);
 				if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
 				{
 					$img = $image;
