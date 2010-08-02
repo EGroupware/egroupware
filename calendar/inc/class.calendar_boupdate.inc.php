@@ -362,7 +362,6 @@ class calendar_boupdate extends calendar_bo
 		else // update existing event
 		{
 			$this->check4update($event,$old_event);
-
 		}
 		// notify the link-class about the update, as other apps may be subscribt to it
 		egw_link::notify_update('calendar',$cal_id,$event);
@@ -432,9 +431,11 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $new_event the updated event
 	 * @param array $old_event the event before the update
+	 * @todo check if there is a real change, not assume every save is a change
 	 */
 	function check4update($new_event,$old_event)
 	{
+		//error_log(__METHOD__."($new_event[title])");
 		$modified = $added = $deleted = array();
 
 		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
@@ -502,12 +503,9 @@ class calendar_boupdate extends calendar_bo
 		switch($ru = $part_prefs['calendar']['receive_updates'])
 		{
 			case 'responses':
-				if ($msg_is_response)
-				{
-					++$want_update;
-				}
+				++$want_update;
 			case 'modifications':
-				if ($msg_type == MSG_MODIFIED)
+				if (!$msg_is_response)
 				{
 					++$want_update;
 				}
@@ -530,7 +528,7 @@ class calendar_boupdate extends calendar_bo
 			case 'no':
 				break;
 		}
-		//echo "<p>calendar_boupdate::update_requested(user=$userid,pref=".$part_prefs['calendar']['receive_updates'] .",msg_type=$msg_type,".($old_event?$old_event['title']:'False').",".($old_event?$old_event['title']:'False').") = $want_update</p>\n";
+		//error_log(__METHOD__."(userid=$userid,,msg_type=$msg_type,...) msg_is_response=$msg_is_response, want_update=$want_update");
 		return $want_update > 0;
 	}
 
@@ -546,7 +544,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
 	{
-		//echo "<p>".__METHOD__."($msg_type,".array2string($to_notify).",,$new_event[title],$user)</p>\n";
+		//error_log(__METHOD__."($msg_type,".array2string($to_notify).",...)");
 		if (!is_array($to_notify))
 		{
 			$to_notify = array();
