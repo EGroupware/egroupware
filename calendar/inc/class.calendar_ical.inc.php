@@ -846,17 +846,13 @@ class calendar_ical extends calendar_boupdate
 				}
 			}
 
-			$modified = $GLOBALS['egw']->contenthistory->getTSforAction('calendar',$event['id'],'modify');
-			$created = $GLOBALS['egw']->contenthistory->getTSforAction('calendar',$event['id'],'add');
-			if (!$created && !$modified) $created = $event['modified'];
-			if ($created)
+			if ($event['created'] || $event['modified'])
 			{
-				$attributes['CREATED'] = $created;
+				$attributes['CREATED'] = $event['created'] ? $event['created'] : $event['modified'];
 			}
-			if (!$modified) $modified = $event['modified'];
-			if ($modified)
+			if ($event['modified'])
 			{
-				$attributes['LAST-MODIFIED'] = $modified;
+				$attributes['LAST-MODIFIED'] = $event['modified'];
 			}
 			$attributes['DTSTAMP'] = time();
 			foreach ((array)$event['alarm'] as $alarmID => $alarmData)
