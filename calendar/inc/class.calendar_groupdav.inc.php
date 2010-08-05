@@ -164,8 +164,9 @@ class calendar_groupdav extends groupdav_handler
 /* disabling not working iterator
 	function propfind_callback($path,array $filter,$start=false)
 	{
-		if ($this->debug) $starttime = microtime(true);
 */
+		if ($this->debug) $starttime = microtime(true);
+
 		$calendar_data = $filter['calendar_data'];
 		unset($filter['calendar_data']);
 /* disabling not working iterator
@@ -184,10 +185,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			// get all max user modified times at once
 			foreach($events as $k => $event)
 			{
-				if ($this->client_shared_uid_exceptions &&
-						$event['reference'] &&
-						($master = $this->bo->read($event['reference'], 0, false, 'server')) &&
-						array_search($event['recurrence'], $master['recur_exception']) !== false)
+				if ($this->client_shared_uid_exceptions && $event['reference'])
 				{
 					// this exception will be handled with the series master
 					unset($events[$k]);
@@ -232,7 +230,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		if ($this->debug)
 		{
 			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
-				' to return '.count($files).' items');
+				' to return '.count($files['files']).' items');
 		}
 /* disabling not working iterator
 		return $files;
