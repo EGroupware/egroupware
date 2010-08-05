@@ -227,7 +227,7 @@ egroupware api version	common	en	eGroupWare API version
 egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
-email	common	en	E-Mail
+email	common	en	Email
 email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1"
 enabled	common	en	Enabled
 end date	common	en	End date
