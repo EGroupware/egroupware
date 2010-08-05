@@ -436,6 +436,7 @@ class customfields_widget
 					}
 					if ($singlefield)	// a single field, can & need to be returned instead of the cell (no grid)
 					{
+						$input['span'] = $cell['span'];	// set span & class from original cell
 						$cell = $input;
 						if ($type == 'customfields') $cell['label'] = $field['label'];
 						$value = $value[$this->prefix.$lname];
