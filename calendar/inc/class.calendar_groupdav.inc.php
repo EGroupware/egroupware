@@ -185,10 +185,11 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			foreach($events as $k => $event)
 			{
 				if ($this->client_shared_uid_exceptions &&
-						$event['reference'] && $event['uid'] &&
-						($masterId = array_shift($this->bo->find_event(array('uid' => $event['uid']), 'master'))) &&
-						($master = $this->bo->read($masterId, 0, false, 'server')) &&
-						array_search($event['reference'], $master['recur_exception']) !== false)
+						$event['reference'] && $event['uid']// &&
+						//($masterId = array_shift($this->bo->find_event(array('uid' => $event['uid']), 'master'))) &&
+						//($master = $this->bo->read($masterId, 0, false, 'server')) &&
+						//array_search($event['reference'], $master['recur_exception']) !== false
+				)
 				{
 					// this exception will be handled with the series master
 					unset($events[$k]);
