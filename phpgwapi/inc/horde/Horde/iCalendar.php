@@ -650,233 +650,238 @@ class Horde_iCalendar {
                 }
 
                 // Charset and encoding handling.
-		if (isset($params['QUOTED-PRINTABLE'])) {
-			$params['ENCODING'] = 'QUOTED-PRINTABLE';
-		}
-		if (isset($params['BASE64'])) {
-			$params['ENCODING'] = 'BASE64';
-		}
-		if (isset($params['ENCODING'])) {
-			switch (String::upper($params['ENCODING'])) {
-				case 'Q':
-				case 'QUOTED-PRINTABLE':
-					$value = quoted_printable_decode($value);
-					if (isset($params['CHARSET'])) {
-						$value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
-					} else {
-						$value = $GLOBALS['egw']->translation->convert($value,
-							empty($charset) ? ($this->isOldFormat() ? 'iso-8859-1' : 'utf-8') : $charset);
-					}
-					// Funambol hack :-(
-					$value = str_replace('\\\\n', "\n", $value);
-					break;
-				case 'B':
-				case 'BASE64':
-					$value = base64_decode($value);
-					break;
-			}
-		} elseif (isset($params['CHARSET'])) {
-			$value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
-		} else {
-			// As per RFC 2279, assume UTF8 if we don't have an
-			// explicit charset parameter.
-			$value = $GLOBALS['egw']->translation->convert($value,
-				empty($charset) ? ($this->isOldFormat() ? 'iso-8859-1' : 'utf-8') : $charset);
-		}
-
-		// Get timezone info for date fields from $params.
-		$tzid = isset($params['TZID']) ? trim($params['TZID'], '\"') : false;
-
-		switch ($tag) {
-			case 'VERSION': // already processed
-				break;
-				// Date fields.
-			case 'COMPLETED':
-			case 'CREATED':
-			case 'LAST-MODIFIED':
-				$this->setAttribute($tag, $this->_parseDateTime($value, $tzid), $params);
-				break;
-
-			case 'BDAY':
-			case 'X-SYNCJE-ANNIVERSARY':
-				$this->setAttribute($tag, $value, $params, true, $this->_parseDate($value));
-				break;
-
-			case 'DTEND':
-			case 'DTSTART':
-			case 'DTSTAMP':
-			case 'DUE':
-			case 'AALARM':
-			case 'DALARM':
-			case 'RECURRENCE-ID':
-			case 'X-RECURRENCE-ID':
-				// types like AALARM may contain additional data after a ;
-				// ignore these.
-				$ts = explode(';', $value);
-				if (isset($params['VALUE']) && $params['VALUE'] == 'DATE') {
-					$isDate = true;
-					$this->setAttribute($tag, $this->_parseDateTime($ts[0], $tzid), $params, true, $this->_parseDate($ts[0]));
-				} else {
-					$this->setAttribute($tag, $this->_parseDateTime($ts[0], $tzid), $params);
-				}
-				break;
-
-			case 'TRIGGER':
-				if (isset($params['VALUE'])) {
-					if ($params['VALUE'] == 'DATE-TIME') {
-						$this->setAttribute($tag, $this->_parseDateTime($value, $tzid), $params);
-					} else {
-						$this->setAttribute($tag, $this->_parseDuration($value), $params);
-					}
-				} else {
-					$this->setAttribute($tag, $this->_parseDuration($value), $params);
-				}
-				break;
-
-				// Comma or semicolon seperated dates.
-			case 'EXDATE':
-			case 'RDATE':
-				$dates = array();
-				preg_match_all('/[;,]([^;,]*)/', ';' . $value, $values);
-
-				foreach ($values[1] as $value) {
-					if ((isset($params['VALUE'])
-							&& $params['VALUE'] == 'DATE') || (!isset($params['VALUE']) && $isDate)) {
-						$dates[] = $this->_parseDate(trim($value));
-					} else {
-						$dates[] = $this->_parseDateTime(trim($value), $tzid);
-					}
-				}
-				$this->setAttribute($tag, isset($dates[0]) ? $dates[0] : null, $params, true, $dates);
-				break;
-
-				// Duration fields.
-			case 'DURATION':
-				$this->setAttribute($tag, $this->_parseDuration($value), $params);
-				break;
-
-				// Period of time fields.
-			case 'FREEBUSY':
-				$periods = array();
-				preg_match_all('/,([^,]*)/', ',' . $value, $values);
-				foreach ($values[1] as $value) {
-					$periods[] = $this->_parsePeriod($value);
-				}
-
-				$this->setAttribute($tag, isset($periods[0]) ? $periods[0] : null, $params, true, $periods);
-				break;
-
-				// UTC offset fields.
-			case 'TZOFFSETFROM':
-			case 'TZOFFSETTO':
-				$this->setAttribute($tag, $this->_parseUtcOffset($value), $params);
-				break;
-
-				// Integer fields.
-			case 'PERCENT-COMPLETE':
-			case 'PRIORITY':
-			case 'REPEAT':
-			case 'SEQUENCE':
-				$this->setAttribute($tag, intval($value), $params);
-				break;
-
-				// Geo fields.
-			case 'GEO':
-				if ($this->isOldFormat()) {
-					$floats = explode(',', $value);
-					$value = array('latitude' => floatval($floats[1]),
-						'longitude' => floatval($floats[0]));
-				} else {
-					$floats = explode(';', $value);
-					$value = array('latitude' => floatval($floats[0]),
-						'longitude' => floatval($floats[1]));
-				}
-				$this->setAttribute($tag, $value, $params);
-				break;
-
-				// Recursion fields. # add more flexibility
-				#case 'EXRULE':
-				#case 'RRULE':
-				#    $this->setAttribute($tag, trim($value), $params);
-				#    break;
-
-				// Binary fields.
-			case 'PHOTO':
-				$this->setAttribute($tag, $value, $params);
-				break;
-
-				// ADR, ORG and N are lists seperated by unescaped semicolons
-				// with a specific number of slots.
-			case 'ADR':
-			case 'N':
-			case 'ORG':
-				$value = trim($value);
-				// As of rfc 2426 2.4.2 semicolon, comma, and colon must
-				// be escaped (comma is unescaped after splitting below).
-				$value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
-					array("\n", "\n", ';', ':'),
-					$value);
-
-				// Split by unescaped semicolons:
-				$values = preg_split('/(?<!\\\\);/', $value);
-				$value = str_replace('\\;', ';', $value);
-				$values = str_replace('\\;', ';', $values);
-				$value = str_replace('\\,', ',', $value);
-				$values = str_replace('\\,', ',', $values);
-				$this->setAttribute($tag, trim($value), $params, true, $values);
-				break;
-
-				// CATEGORIES is a lists seperated by unescaped commas
-				// with a unspecific number of slots.
-			case 'CATEGORIES':
-				$value = trim($value);
-				// As of rfc 2426 2.4.2 semicolon, comma, and colon must
-				// be escaped (semicolon is unescaped after splitting below).
-				$value = str_replace(array('\\n', '\\N', '\\,', '\\:'),
-					array("\n", "\n", ',', ':'),
-					$value);
-
-				// Split by unescaped commas:
-				$values = preg_split('/(?<!\\\\),/', $value);
-				$value = str_replace('\\;', ';', $value);
-				$values = str_replace('\\;', ';', $values);
-				$value = str_replace('\\,', ',', $value);
-				$values = str_replace('\\,', ',', $values);
-				$this->setAttribute($tag, trim($value), $params, true, $values);
-				break;
-
-				// String fields.
-			default:
-				if ($this->isOldFormat()) {
-					// vCalendar 1.0 and vCard 2.1 only escape semicolons
-					// and use unescaped semicolons to create lists.
-					$value = trim($value);
-					// Split by unescaped semicolons:
-					$values = preg_split('/(?<!\\\\);/', $value);
-					$value = str_replace('\\;', ';', $value);
-					$values = str_replace('\\;', ';', $values);
-					$this->setAttribute($tag, trim($value), $params, true, $values);
-				} else {
-					$value = trim($value);
-					// As of rfc 2426 2.4.2 semicolon, comma, and colon
-					// must be escaped (comma is unescaped after splitting
-					// below).
-					$value = str_replace(array('\\n', '\\N', '\\;', '\\:', '\\\\'),
-						array("\n", "\n", ';', ':', '\\'),
-						$value);
-
-					// Split by unescaped commas.
-					$values = preg_split('/(?<!\\\\),/', $value);
-					$value = str_replace('\\,', ',', $value);
-					$values = str_replace('\\,', ',', $values);
-
-					$this->setAttribute($tag, trim($value), $params, true, $values);
-				}
-			break;
-		}
+                if (isset($params['QUOTED-PRINTABLE'])) {
+	                $params['ENCODING'] = 'QUOTED-PRINTABLE';
+                }
+                if (isset($params['BASE64'])) {
+	                $params['ENCODING'] = 'BASE64';
+                }
+                if (isset($params['ENCODING'])) {
+	                switch (String::upper($params['ENCODING'])) {
+		                case 'Q':
+		                case 'QUOTED-PRINTABLE':
+			                $value = quoted_printable_decode($value);
+			                if (isset($params['CHARSET'])) {
+				                $value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
+			                } else {
+				                $value = $GLOBALS['egw']->translation->convert($value,
+					                empty($charset) ? ($this->isOldFormat() ? 'iso-8859-1' : 'utf-8') : $charset);
+			                }
+			                // Funambol hack :-(
+			                $value = str_replace('\\\\n', "\n", $value);
+			                break;
+		                case 'B':
+		                case 'BASE64':
+			                $value = base64_decode($value);
+			                break;
+	                }
+                } elseif (isset($params['CHARSET'])) {
+	                $value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
+                } else {
+	                // As per RFC 2279, assume UTF8 if we don't have an
+	                // explicit charset parameter.
+	                $value = $GLOBALS['egw']->translation->convert($value,
+		                empty($charset) ? ($this->isOldFormat() ? 'iso-8859-1' : 'utf-8') : $charset);
+                }
+                
+                // Get timezone info for date fields from $params.
+                $tzid = isset($params['TZID']) ? trim($params['TZID'], '\"') : false;
+                
+                switch ($tag) {
+	                case 'VERSION': // already processed
+		                break;
+		                // Date fields.
+	                case 'COMPLETED':
+	                case 'CREATED':
+	                case 'LAST-MODIFIED':
+		                $this->setAttribute($tag, $this->_parseDateTime($value, $tzid), $params);
+		                break;
+		                
+	                case 'BDAY':
+	                case 'X-SYNCJE-ANNIVERSARY':
+		                $this->setAttribute($tag, $value, $params, true, $this->_parseDate($value));
+		                break;
+		                
+	                case 'DTEND':
+	                case 'DTSTART':
+	                case 'DTSTAMP':
+	                case 'DUE':
+	                case 'AALARM':
+	                case 'DALARM':
+	                case 'RECURRENCE-ID':
+	                case 'X-RECURRENCE-ID':
+		                // types like AALARM may contain additional data after a ;
+		                // ignore these.
+		                $ts = explode(';', $value);
+		                if (isset($params['VALUE']) && $params['VALUE'] == 'DATE') {
+			                $isDate = true;
+			                $this->setAttribute($tag, $this->_parseDateTime($ts[0], $tzid), $params, true, $this->_parseDate($ts[0]));
+		                } else {
+			                $this->setAttribute($tag, $this->_parseDateTime($ts[0], $tzid), $params);
+		                }
+		                break;
+		                
+	                case 'TRIGGER':
+		                if (isset($params['VALUE'])) {
+			                if ($params['VALUE'] == 'DATE-TIME') {
+				                $this->setAttribute($tag, $this->_parseDateTime($value, $tzid), $params);
+			                } else {
+				                $this->setAttribute($tag, $this->_parseDuration($value), $params);
+			                }
+		                } else {
+			                $this->setAttribute($tag, $this->_parseDuration($value), $params);
+		                }
+		                break;
+		                
+		                // Comma or semicolon seperated dates.
+	                case 'EXDATE':
+	                case 'RDATE':
+		                $dates = array();
+		                preg_match_all('/[;,]([^;,]*)/', ';' . $value, $values);
+		                
+		                foreach ($values[1] as $value) {
+			                if ((isset($params['VALUE'])
+					                && $params['VALUE'] == 'DATE') || (!isset($params['VALUE']) && $isDate)) {
+				                $dates[] = $this->_parseDate(trim($value));
+			                } else {
+				                $dates[] = $this->_parseDateTime(trim($value), $tzid);
+			                }
+		                }
+		                $this->setAttribute($tag, isset($dates[0]) ? $dates[0] : null, $params, true, $dates);
+		                break;
+		                
+		                // Duration fields.
+	                case 'DURATION':
+		                $this->setAttribute($tag, $this->_parseDuration($value), $params);
+		                break;
+		                
+		                // Period of time fields.
+	                case 'FREEBUSY':
+		                $periods = array();
+		                preg_match_all('/,([^,]*)/', ',' . $value, $values);
+		                foreach ($values[1] as $value) {
+			                $periods[] = $this->_parsePeriod($value);
+		                }
+		                
+		                $this->setAttribute($tag, isset($periods[0]) ? $periods[0] : null, $params, true, $periods);
+		                break;
+		                
+		                // UTC offset fields.
+	                case 'TZOFFSETFROM':
+	                case 'TZOFFSETTO':
+		                $this->setAttribute($tag, $this->_parseUtcOffset($value), $params);
+		                break;
+		                
+		                // Integer fields.
+	                case 'PERCENT-COMPLETE':
+	                case 'PRIORITY':
+	                case 'REPEAT':
+	                case 'SEQUENCE':
+		                $this->setAttribute($tag, intval($value), $params);
+		                break;
+		                
+		                // Geo fields.
+	                case 'GEO':
+		                if ($this->isOldFormat()) {
+			                $floats = explode(',', $value);
+			                $value = array('latitude' => floatval($floats[1]),
+				                'longitude' => floatval($floats[0]));
+		                } else {
+			                $floats = explode(';', $value);
+			                $value = array('latitude' => floatval($floats[0]),
+				                'longitude' => floatval($floats[1]));
+		                }
+		                $this->setAttribute($tag, $value, $params);
+		                break;
+		                
+		                // Recursion fields. # add more flexibility
+		                #case 'EXRULE':
+		                #case 'RRULE':
+		                #    $this->setAttribute($tag, trim($value), $params);
+		                #    break;
+		                
+		                // Binary fields.
+	                case 'PHOTO':
+		                $this->setAttribute($tag, $value, $params);
+		                break;
+		                
+		                // ADR, ORG and N are lists seperated by unescaped semicolons
+		                // with a specific number of slots.
+	                case 'ADR':
+	                case 'N':
+	                case 'ORG':
+		                $value = trim($value);
+		                // As of rfc 2426 2.4.2 semicolon, comma, and colon must
+		                // be escaped (comma is unescaped after splitting below).
+		                $value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
+			                array("\n", "\n", ';', ':'),
+							$value);
+		                
+		                // Split by unescaped semicolons:
+		                $values = preg_split('/(?<!\\\\);/', $value);
+		                $value = str_replace('\\;', ';', $value);
+		                $values = str_replace('\\;', ';', $values);
+		                $value = str_replace('\\,', ',', $value);
+		                $values = str_replace('\\,', ',', $values);
+		                $this->setAttribute($tag, trim($value), $params, true, $values);
+		                break;
+		                
+		                // CATEGORIES is a lists seperated by unescaped commas
+		                // with a unspecific number of slots.
+	                case 'CATEGORIES':
+		                $value = trim($value);
+		                // As of rfc 2426 2.4.2 semicolon, comma, and colon must
+		                // be escaped (semicolon is unescaped after splitting below).
+		                $value = str_replace(array('\\n', '\\N', '\\,', '\\:'),
+			                array("\n", "\n", ',', ':'),
+							$value);
+		                
+		                // Split by unescaped commas:
+		                $values = preg_split('/(?<!\\\\),/', $value);
+		                $value = str_replace('\\;', ';', $value);
+		                $values = str_replace('\\;', ';', $values);
+		                $value = str_replace('\\,', ',', $value);
+		                $values = str_replace('\\,', ',', $values);
+		                $this->setAttribute($tag, trim($value), $params, true, $values);
+		                break;
+		                
+		                // String fields.
+	                default:
+		                if ($this->isOldFormat()) {
+			                $value = trim($value);
+			                // vCalendar 1.0 and vCard 2.1 only escape semicolons
+			                // and use unescaped semicolons to create lists.
+			                $value = str_replace(array('\\n', '\\N', '\\;', '\\:'),
+				                array("\n", "\n", ';', ':'),
+								$value);
+			                
+			                // Split by unescaped semicolons:
+			                $values = preg_split('/(?<!\\\\);/', $value);
+			                $value = str_replace('\\;', ';', $value);
+			                $values = str_replace('\\;', ';', $values);
+			                $value = str_replace('\\,', ',', $value);
+			                $values = str_replace('\\,', ',', $values);
+			                $this->setAttribute($tag, trim($value), $params, true, $values); 
+		                } else {
+			                $value = trim($value);
+			                // As of rfc 2426 2.4.2 semicolon, comma, and colon
+			                // must be escaped (comma is unescaped after splitting
+			                // below).
+			                $value = str_replace(array('\\n', '\\N', '\\;', '\\:', '\\\\'),
+				                array("\n", "\n", ';', ':', '\\'),
+								$value);
+			                
+			                // Split by unescaped commas.
+			                $values = preg_split('/(?<!\\\\),/', $value);
+			                $value = str_replace('\\,', ',', $value);
+			                $values = str_replace('\\,', ',', $values);
+			                $this->setAttribute($tag, trim($value), $params, true, $values);
+		                }
+	                break;
+                }
             }
         }
-
+        
         return true;
     }
 
