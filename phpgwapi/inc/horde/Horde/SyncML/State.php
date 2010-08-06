@@ -851,17 +851,21 @@ class Horde_SyncML_State {
 		$_type = str_replace('./','',$type);
 		switch (strtolower($_type)) {
 			case 'contacts':
+			case 'contact':
 			case 'card':
 				return 'text/vcard';
 				break;
 
 			case 'notes':
+			case 'note':
 				return 'text/x-vnote';
 				break;
 
 			case 'calendar':
 			case 'events':
+			case 'event':
 			case 'tasks':
+			case 'task':
 			case 'jobs':
 			case 'caltasks':
 				return 'text/calendar';
@@ -899,20 +903,24 @@ class Horde_SyncML_State {
 		switch(strtolower($_type))
 		{
 			case 'contacts':
+			case 'contact':
 			case 'card':
 				return 'contacts';
 				break;
 
 			case 'notes':
+			case 'note':
 				return 'notes';
 				break;
 
 			case 'tasks':
+			case 'task':
 			case 'jobs':
 				return 'tasks';
 				break;
 
 			case 'events':
+			case 'event':
 			case 'calendar':
 				return 'calendar';
 				break;
