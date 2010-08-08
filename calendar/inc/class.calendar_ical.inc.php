@@ -2207,6 +2207,7 @@ class calendar_ical extends calendar_boupdate
 			return false;
 		}
 		
+		/*
 		$mozillaACK = $component->getAttribute('X-MOZ-LASTACK');
 		if ($this->productName == 'lightning' && !is_a($mozillaACK, 'PEAR_Error'))
 		{
@@ -2217,6 +2218,7 @@ class calendar_ical extends calendar_boupdate
 			}
 			return false;
 		}
+		*/
 
 		if (!empty($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
