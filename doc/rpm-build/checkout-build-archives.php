@@ -39,7 +39,9 @@ $config = array(
 	'obs' => false,
 	'changelog' => false,	// eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
-	'svntag' => 'Stylite-EPL-$version.$packaging',	// eg. '$version.$packaging'
+	'editsvnchangelog' => '* ',
+	'editor' => '/usr/bin/vi',
+	'svntag' => 'tags/Stylite-EPL-$version.$packaging',	// eg. '$version.$packaging'
 	'skip' => array(),
 	'run' => array('svntag','checkout','copy','virusscan','create','sign')
 );
@@ -85,6 +87,14 @@ while(($arg = array_shift($argv)))
 				$config[$name] = $value;
 				array_unshift($config['run'],'svntag');
 				break;
+				
+			case 'editsvnchangelog':
+				$config[$name] = $value ? $value : true;
+				if (!in_array('editsvnchangelog',$config['run']))
+				{
+					array_unshift($config['run'],'editsvnchanglog');
+				}
+				break;
 
 			case 'obs':
 				if (!is_dir($value))
@@ -112,8 +122,152 @@ $svn = $config['svn'];
 
 foreach(array_diff($config['run'],$config['skip']) as $func)
 {
-	$func = 'do_'.$func;
-	$func();
+	call_user_func('do_'.$func);
+}
+
+/**
+ * Query changelog from svn and let user edit it
+ */
+function do_editsvnchangelog()
+{
+	global $config,$svn,$verbose;
+
+	echo "Querying changelog from SVN\n";
+	if (!isset($config['modules']))
+	{
+		get_modules_per_repro();
+	}
+	// query changelog per repo
+	$changelog = '';
+	foreach($config['modules'] as $repo => $modules)
+	{
+		$branch_url = '';
+		$revision = null;
+		foreach($modules as $path => $url)
+		{
+			$module = basename($path);
+			$burl = substr($url,0,-strlen($module)-1);
+			if (empty($branch_url) || $burl != $branch_url)
+			{
+				if (empty($branch_url)) $url = $branch_url = $burl;
+				//if (count($config['modules']) > 1) $changelog .= $url."\n";
+				$changelog .= get_changelog_from_svn($url,$config['editsvnchangelog'],$revision);
+			}
+		}
+	}
+	$logfile = tempnam('/tmp','checkout-build-archives');
+	file_put_contents($logfile,$changelog);
+	$cmd = $config['editor'].' '.escapeshellarg($logfile);
+	passthru($cmd);
+	$config['changlog'] = file_get_contents($logfile);
+	// allow user to abort, by deleting the changelog
+	if (strlen($config['changlog']) <= 2)
+	{
+		die("\nChangelog must not be empty --> aborting\n\n");
+	}
+}
+
+/**
+ * Read changelog for given branch from (last) tag or given revision from svn
+ * 
+ * @param string $branch_url='svn+ssh://svn@svn.stylite.de/egroupware/branches/Stylite-EPL-10.1'
+ * @param string $log_pattern=null	a preg regular expression or start of line a log message must match, to be returned
+ * 	if regular perl regular expression given only first expression in brackets \\1 is used,
+ * 	for a start of line match, only the first line is used, otherwise whole message is used
+ * @param string $revision=null from which to HEAD the log should be retrieved, default search revision of latest tag in ^/tags
+ * @param string $prefix='* ' prefix, which if not presend should be added to all log messages
+ */
+function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix='* ')
+{
+	//echo __FUNCTION__."('$branch_url','$log_pattern','$revision','$prefix')\n";
+	global $config,$verbose,$svn;
+	
+	if (is_null($revision))
+	{
+		list($tags_url,$branch) = explode('/branches/',$branch_url);
+		$tags_url .= '/tags';
+		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.\d{8})/');
+		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
+		$tag = $matches[1];
+	}
+	elseif(!is_numeric($revision))
+	{
+		$revision = get_last_svn_tag($tags_url,$tag=$revision);
+	}
+	$cmd = $svn.' log --xml -r '.escapeshellarg($revision.':HEAD').' '.escapeshellarg($branch_url);
+	if (($v = $verbose))
+	{
+		echo "Querying SVN for log from r$revision".($tag ? " ($tag)" : '').":\n$cmd\n";
+		$verbose = false;	// otherwise no $output!
+	}
+	$output = array();
+	run_cmd($cmd,$output);
+	$verbose = $v;
+	array_shift($output);	// remove the command
+	
+	$xml = simplexml_load_string($output=implode("\n",$output));
+	$message = '';
+	$pattern_len = strlen($log_pattern);
+	$prefix_len = strlen($prefix);
+	foreach($xml as $log)
+	{
+		$msg = $log->msg;
+		if ($log_pattern[0] == '/' && preg_match($log_pattern,$msg,$matches))
+		{
+			$msg = $matches[1];
+		}
+		elseif($log_pattern && $log_pattern[0] != '/' && substr($msg,0,$pattern_len) == $log_pattern)
+		{
+			list($msg) = explode("\n",$msg);
+		}
+		elseif($log_pattern)
+		{
+			continue;	// no match --> ignore
+		}
+		if ($prefix_len && substr($msg,0,$prefix_len) != $prefix) $msg = $prefix.$msg;
+		$message .= $msg."\n";
+	}
+	if ($verbose) echo $message;
+
+	return $message;
+}
+
+/**
+ * Get revision of last svn tag matching a given pattern in the log message
+ * 
+ * @param string $tags_url
+ * @param string $pattern which has to be contained in the log message (NOT the tag itself)
+ * 	or (perl) regular expression against which log message is matched
+ * @param array &$matches=null on return matches of preg_match
+ * @return int revision of last svn tag matching pattern
+ */
+function get_last_svn_tag($tags_url,$pattern,&$matches=null)
+{
+	global $config,$verbose,$svn;
+	
+	$cmd = $svn.' log --xml --limit 10 '.escapeshellarg($tags_url);
+	if (($v = $verbose))
+	{
+		echo "Querying SVN for last tags\n$cmd\n";
+		$verbose = false;	// otherwise no $output!
+	}
+	$output = array();
+	run_cmd($cmd,$output);
+	$verbose = $v;
+	array_shift($output);	// remove the command
+	
+	$xml = simplexml_load_string($output=implode("\n",$output));
+	foreach($xml as $log)
+	{
+		//print_r($log);
+		if ($pattern[0] != '/' && strpos($log->msg,$pattern) !== false ||
+			$pattern[0] == '/' && preg_match($pattern,$log->msg,$matches))
+		{
+			if ($verbose) echo "Revision {$log['revision']} matches".($matches?': '.$matches[1] : '')."\n";
+			return (int)$log['revision'];
+		}
+	}
+	return null;
 }
 
 /**
@@ -436,9 +590,11 @@ function do_checkout()
 }
 
 /**
- * Create svn tag or branch
+ * Get module name per svn repro
+ * 
+ * @return array with $repro_url => array(module1, ..., moduleN) pairs
  */
-function do_svntag()
+function get_modules_per_repro()
 {
 	global $config,$svn,$verbose;
 
@@ -449,7 +605,6 @@ function do_svntag()
 	{
 		$config['svntag'] = strtr($config['svntag'],$translate);
 	}
-	echo "Creating SVN tag $config[svntag]\n";
 
 	// process alias/externals
 	$svnbranch = $config['svnbase'].'/'.$config['svnbranch'];
@@ -465,6 +620,7 @@ function do_svntag()
 		list($path,$url) = preg_split('/[ \t\r\n]+/',$line);
 		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die("Invalid SVN URL: $url\n");
 		$repo = $matches[1];
+		if ($repo == 'http://svn.egroupware.org/egroupware') $repo = 'svn+ssh://svn@dev.egroupware.org/egroupware';
 		$config['modules'][$repo][$path] = $url;
 	}
 	// process extra modules
@@ -479,12 +635,27 @@ function do_svntag()
 		if (strpos($module,'://') !== false) $module = basename($module);
 		if (!preg_match('/([a-z+]+:\/\/[a-z@.]+\/[a-z]+)\/(branches|tags|trunk)/',$url,$matches)) die("Invalid SVN URL: $url\n");
 		$repo = $matches[1];
+		if ($repo == 'http://svn.egroupware.org/egroupware') $repo = 'svn+ssh://svn@dev.egroupware.org/egroupware';
 		$config['modules'][$repo][$config['aliasdir'].'/'.$module] = $url;
+	}
+	return $config['modules'];
+}
+
+/**
+ * Create svn tag or branch
+ */
+function do_svntag()
+{
+	global $config,$svn,$verbose;
+
+	echo "Creating SVN tag $config[svntag]\n";
+	if (!isset($config['modules']))
+	{
+		get_modules_per_repro();
 	}
 	// create tags (per repo)
 	foreach($config['modules'] as $repo => $modules)
 	{
-		if ($repo == 'http://svn.egroupware.org/egroupware') $repo = 'svn+ssh://svn@dev.egroupware.org/egroupware';
 		$cmd = $svn.' cp --parents -m '.escapeshellarg('Creating '.$config['svntag']).' '.implode(' ',$modules).' '.$repo.'/'.$config['svntag'].'/';
 		run_cmd($cmd);
 	}
@@ -494,7 +665,7 @@ function do_svntag()
  * Runs given shell command, exists with error-code after echoing the output of the failed command (if not already running verbose)
  *
  * @param string $cmd
- * @param array &$output=null $output of command
+ * @param array &$output=null $output of command, only if !$verbose !!!
  * @param int|array $no_bailout=null exit code(s) to NOT bail out
  * @return int exit code of $cmd
  */
