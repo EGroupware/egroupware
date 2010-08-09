@@ -161,7 +161,7 @@ function do_editsvnchangelog()
 	passthru($cmd);
 	$config['changelog'] = file_get_contents($logfile);
 	// allow user to abort, by deleting the changelog
-	if (strlen($config['changlog']) <= 2)
+	if (strlen($config['changelog']) <= 2)
 	{
 		die("\nChangelog must not be empty --> aborting\n\n");
 	}
