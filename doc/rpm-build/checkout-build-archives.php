@@ -159,7 +159,7 @@ function do_editsvnchangelog()
 	file_put_contents($logfile,$changelog);
 	$cmd = $config['editor'].' '.escapeshellarg($logfile);
 	passthru($cmd);
-	$config['changlog'] = file_get_contents($logfile);
+	$config['changelog'] = file_get_contents($logfile);
 	// allow user to abort, by deleting the changelog
 	if (strlen($config['changlog']) <= 2)
 	{
