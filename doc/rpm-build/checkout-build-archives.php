@@ -92,7 +92,7 @@ while(($arg = array_shift($argv)))
 				$config[$name] = $value ? $value : true;
 				if (!in_array('editsvnchangelog',$config['run']))
 				{
-					array_unshift($config['run'],'editsvnchanglog');
+					array_unshift($config['run'],'editsvnchangelog');
 				}
 				break;
 
@@ -601,11 +601,6 @@ function get_modules_per_repro()
 	$translate = array();
 	foreach($config as $name => $value) $translate['$'.$name] = $value;
 
-	if (strpos($config['svntag'],'$') !== false)	// allow to use config vars like $version in tag
-	{
-		$config['svntag'] = strtr($config['svntag'],$translate);
-	}
-
 	// process alias/externals
 	$svnbranch = $config['svnbase'].'/'.$config['svnbranch'];
 	$url = $svnbranch.'/'.$config['svnalias'];
@@ -648,6 +643,13 @@ function do_svntag()
 {
 	global $config,$svn,$verbose;
 
+	$translate = array();
+	foreach($config as $name => $value) $translate['$'.$name] = $value;
+
+	if (strpos($config['svntag'],'$') !== false)	// allow to use config vars like $version in tag
+	{
+		$config['svntag'] = strtr($config['svntag'],$translate);
+	}
 	echo "Creating SVN tag $config[svntag]\n";
 	if (!isset($config['modules']))
 	{
