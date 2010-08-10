@@ -162,6 +162,50 @@ class historylog
 	}
 
 	/**
+	 * Get a slice of history records
+	 * 
+	 * Similar to search(), except this one can take a start and a number of records
+	 */
+	public static function get_rows(&$query, &$rows) {
+		$filter = array();
+		$rows = array();
+		$filter['history_appname'] = $query['appname'];
+		$filter['history_record_id'] = $query['record_id'];
+		if(is_array($query['colfilter'])) {
+			foreach($query['colfilter'] as $column => $value) {
+				$filter[$column] = $value;
+			}
+		}
+		if ($GLOBALS['egw']->db->Type == 'mysql' && $GLOBALS['egw']->db->ServerInfo['version'] >= 4.0)
+		{
+			$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
+		}
+		else
+		{
+			$total = $GLOBALS['egw']->db->select(self::TABLE,'COUNT(*)',$filter,__LINE__,__FILE__,false,'','phpgwapi',0)->fetchColumn();
+		}
+		foreach($GLOBALS['egw']->db->select(
+			self::TABLE,
+			$mysql_calc_rows.'*',
+			$filter,
+			__LINE__, __FILE__, 
+			$query['start'],
+			'ORDER BY ' . ($query['order'] ? $query['order'] : 'history_id') . ' ' . ($query['sort'] ? $query['sort'] : 'DESC'), 
+			'phpgwapi',
+			$query['num_rows']
+		) as $row) {
+			$row['user_ts'] = $GLOBALS['egw']->db->from_timestamp($row['history_timestamp']) + 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+			$rows[] = egw_db::strip_array_keys($row,'history_');
+		}
+		if ($mysql_calc_rows)
+                {
+                        $total = $GLOBALS['egw']->db->query('SELECT FOUND_ROWS()')->fetchColumn();
+                }
+
+		return $total;
+	}
+
+	/**
 	 * return history-log for one record of $this->appname
 	 *
 	 * @deprecated use search
