@@ -159,9 +159,14 @@ function do_editsvnchangelog()
 	file_put_contents($logfile,$changelog);
 	$cmd = $config['editor'].' '.escapeshellarg($logfile);
 	passthru($cmd);
-	$config['changlog'] = file_get_contents($logfile);
+	$config['changelog'] = file_get_contents($logfile);
+	// remove trailing newlines
+	while (substr($config['changelog'],-1) == "\n")
+	{
+		$config['changelog'] = substr($config['changelog'],0,-1);
+	}
 	// allow user to abort, by deleting the changelog
-	if (strlen($config['changlog']) <= 2)
+	if (strlen($config['changelog']) <= 2)
 	{
 		die("\nChangelog must not be empty --> aborting\n\n");
 	}
