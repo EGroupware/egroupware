@@ -1089,21 +1089,23 @@ ORDER BY cal_user_type, cal_usre_id
 				{
 					$alarm['time'] = $event['cal_start'] - $alarm['offset'];
 				}
-
-				//pgoerzen: don't add an alarm in the past
-				if ($event['recur_type'] != MCAL_RECUR_NONE)
+				
+				$start = (int)time() + $alarm['offset'];
+				if ($alarm['time'] < $start)
 				{
-					$where = array('cal_id'	=>	$cal_id);
-					$where[] = 'cal_start >= ' . (int)(time() + $alarm['offset']);
-					if (($next_occurrence = (int) $this->db->select($this->dates_table,'MIN(cal_start)',$where,__LINE__,__FILE__,false,'','calendar')->fetchColumn())
-						&& ($time = $next_occurrence - $alarm['offset']) > $alarm['time'])
+					//pgoerzen: don't add an alarm in the past
+					if ($event['recur_type'] == MCAL_RECUR_NONE) continue;
+					$event['start'] = $event['cal_start'];
+					$event['end'] = $event['cal_end'];
+					$event['tzid'] = $event['cal_tzid'];
+					$rrule = calendar_rrule::event2rrule($event, false);
+					foreach ($rrule as $time)
 					{
-						$alarm['time'] = $time;
+						if ($start< ($ts = egw_time::to($time,'server'))) break;
+						$ts = 0;
 					}
-					elseif (!$next_occurrence)
-					{
-						continue;
-					}
+					if (!$ts) continue;
+					$alarm['time'] = $ts - $alarm['offset'];
 				}
 				$this->save_alarm($cal_id,$alarm);
 			}
@@ -1601,6 +1603,7 @@ ORDER BY cal_user_type, cal_usre_id
 	function save_alarm($cal_id, $alarm, $now=0)
 	{
 		//echo "<p>save_alarm(cal_id=$cal_id, alarm="; print_r($alarm); echo ")</p>\n";
+		//error_log(__METHOD__."(.$cal_id,$now,".array2string($alarm).')');
 		if (!($id = $alarm['id']))
 		{
 			$alarms = $this->read_alarms($cal_id);	// find a free alarm#
