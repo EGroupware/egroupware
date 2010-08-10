@@ -80,7 +80,7 @@ function _egw_json_encode_simple(input)
 
 function egw_json_encode(input)
 {
-	if (!input) return 'null';
+	if (input == null || !input && input.length == 0) return 'null';
 
 	var simple_res = _egw_json_encode_simple(input);
 	if (simple_res == null)
@@ -197,6 +197,7 @@ function egw_json_request(_menuaction, _parameters, _context)
 
 	this.url = url + '/json.php';
 
+	this.request = null;
 	this.sender = null;
 	this.callback = null;
 	this.alertHandler = this.alertFunc;
@@ -237,7 +238,7 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 	};
 
 	//Send the request via the jquery AJAX interface to the server
-	$.ajax({url: this.url + '?menuaction=' + this.menuaction,
+	this.request = $.ajax({url: this.url + '?menuaction=' + this.menuaction,
 		async: is_async,
 		context: this,
 		data: request_obj,
@@ -246,6 +247,11 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 		success: this.handleResponse,
 		error: function(_xmlhttp,_err) { alert('Ajax request to '+this.url+'?menuaction='+this.menuaction+' failed: '+_err); }
 	});
+}
+
+egw_json_request.prototype.abort = function()
+{
+	this.request.abort();
 }
 
 egw_json_request.prototype.alertFunc = function(_message, _details)
@@ -350,7 +356,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							}
 							catch (e)
 							{
-								_egw_json_debug_log(e);
+								_egw_json_debug_log(e, {'Function': res.data.func, 'Parameters': res.data.params});
 							}
 							hasResponse = true;
 						} else
@@ -453,7 +459,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 									{
 										this.loadedJSFiles[res.data] = true;
 									}
-								}								
+								}
 							}
 							hasResponse = true;
 						} else
@@ -477,7 +483,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 		}
 
 		/* If no explicit response has been specified, call the callback (if one was set) */
-		if (!hasResponse && this.callback)
+		if (!hasResponse && this.callback && data.response[i])
 		{			
 			this.callback.call(this.sender, data.response[i].data);			
 		}
