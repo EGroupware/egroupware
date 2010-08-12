@@ -1133,7 +1133,7 @@ class etemplate extends boetemplate
 		{
 			if ($blur)
 			{
-				if (empty($value))
+				if ((string)$value === '')
 				{
 					$value = $blur;
 				}
