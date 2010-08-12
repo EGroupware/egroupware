@@ -62,12 +62,13 @@ class asyncservice
 	 * @param mixed $data This data is passed back when the method is called. It might simply be an
 	 * 	integer id, but it can also be a complete array.
 	 * @param int $account_id account_id, under which the methode should be called or False for the actual user
+	 * @param boolean $debug=false
 	 * @return boolean False if $id already exists, else True
 	 */
-	function set_timer($times,$id,$method,$data,$account_id=False)
+	function set_timer($times,$id,$method,$data,$account_id=False,$debug=false)
 	{
 		if (empty($id) || empty($method) || $this->read($id) ||
-				!($next = $this->next_run($times)))
+				!($next = $this->next_run($times,$debug)))
 		{
 			return False;
 		}
@@ -447,9 +448,13 @@ class asyncservice
 	 *
 	 * @param string $id =0 reads all expired rows / jobs ready to run\
 	 * 	!= 0 reads all rows/jobs matching $id (sql-wildcards '%' and '_' can be used)
+	 * @param array|string $cols='*' string or array of column-names / select-expressions
+	 * @param int|bool $offset=False offset for a limited query or False (default)
+	 * @param string $append string to append to the end of the query, eg. ORDER BY ...
+	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @return array/boolean db-rows / jobs as array or False if no matches
 	 */
-	function read($id=0)
+	function read($id=0,$cols='*',$offset=False,$append='',$num_rows=0)
 	{
 		if (!is_array($id) && (strpos($id,'%') !== False || strpos($id,'_') !== False))
 		{
@@ -465,7 +470,7 @@ class asyncservice
 			$where = array('async_id' => $id);
 		}
 		$jobs = array();
-		foreach($this->db->select($this->db_table,'*',$where,__LINE__,__FILE__) as $row)
+		foreach($this->db->select($this->db_table,$cols,$where,__LINE__,__FILE__,$offset,'',False,$num_rows) as $row)
 		{
 			$row['async_times'] = unserialize($row['async_times']);
 			$row['async_data'] = unserialize($row['async_data']);
