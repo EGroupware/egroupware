@@ -2938,8 +2938,8 @@ class calendar_ical extends calendar_boupdate
 				$last = clone $rriter->current;
 				$rriter->next_no_exception();
 			}
-			$delta = $event['end'] - $event['start'];
-			$last->modify('+' . $delta . ' seconds');
+			//$delta = $event['end'] - $event['start'];
+			//$last->modify('+' . $delta . ' seconds');
 			$last->setTime(0, 0, 0);
 			$event['recur_enddate'] = egw_time::to($last, 'server');
 		}
