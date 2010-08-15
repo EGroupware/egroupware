@@ -341,6 +341,7 @@ abstract class groupdav_handler
 			// identify the agent (GroupDAV client) from the HTTP_USER_AGENT header
 			$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 			foreach(array(
+				'iphone'			=> 'iphone',	// Apple iPhone iCal
 				'davkit'            => 'davkit',	// Apple iCal
 				'cfnetwork'			=> 'cfnetwork', // Apple Addressbook
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
@@ -372,6 +373,9 @@ abstract class groupdav_handler
 				}
 			}
 		}
+		
+		if ($debug) error_log(__METHOD__."GroupDAV client: $agent");
+		
 		return $agent;
 	}
 }
