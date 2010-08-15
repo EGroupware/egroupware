@@ -37,8 +37,7 @@ if ($_POST['download'])
 	list($file) = each($_POST['download']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
 	ob_end_clean();
-	$browser = CreateObject('phpgwapi.browser');
-	$browser->content_header(basename($file));
+	html::content_header(basename($file));
 	$f = fopen($file,'rb');
 	fpassthru($f);
 	fclose($f);
@@ -68,8 +67,9 @@ else
 	$setup_tpl->set_block('T_db_backup','setup_header');
 	$setup_tpl->set_var('setup_header','');
 	$GLOBALS['egw_info']['flags']['app_header'] = $stage_title;
-	$GLOBALS['egw']->common->phpgw_header();
+	common::egw_header();
 	parse_navbar();
+	$run_in_egw = true;
 }
 // save backup housekeeping settings
 if ($_POST['save_backup_settings'])
@@ -178,6 +178,14 @@ if ($_POST['restore'])
 		echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
 		$db_backup->restore($f, FALSE, $file);
 		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file));
+		if ($run_in_egw)
+		{
+			// updating the backup
+			$cmd = new setup_cmd_update($GLOBALS['egw']->session->account_domain,
+				$GLOBALS['egw_info']['server']['header_admin_user']='admin',
+				$GLOBALS['egw_info']['server']['header_admin_password']=uniqid('pw',true),false,true);
+			echo $cmd->run()."\n";
+		}
 	}
 	else
 	{
@@ -271,7 +279,11 @@ $setup_tpl->set_var(array(
 $setup_tpl->set_var('self',$self);
 $setup_tpl->pparse('out','T_db_backup');
 
-if (is_object($GLOBALS['egw_setup']->html))
+if ($run_in_egw)
+{
+	common::egw_footer();
+}
+else
 {
 	$GLOBALS['egw_setup']->html->show_footer();
 }

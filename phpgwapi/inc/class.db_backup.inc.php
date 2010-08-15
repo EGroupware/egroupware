@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -328,8 +328,26 @@ class db_backup
 		$this->backup_mincount = $minCount;
 		$this->backup_files = (bool)$backupFiles;
 		// Update session cache
-		$GLOBALS['egw']->invalidate_session_cache();
+		if (is_a($GLOBALS['egw'],'egw')) $GLOBALS['egw']->invalidate_session_cache();
 	}
+	
+	/**
+	 * Certain config settings NOT to restore (because they break a working system)
+	 * 
+	 * @var array
+	 */
+	static $system_config = array(
+		'files_dir',
+		'temp_dir',
+		'backup_dir',
+		'webserver_url',
+		'aspell_path',
+		'hostname',
+		'httpproxy_server',
+		'httpproxy_port',
+		'httpproxy_server_username',
+		'httpproxy_server_password',
+	);
 
 	/**
 	 * Backup all data in the form of a (compressed) csv file
@@ -337,14 +355,26 @@ class db_backup
 	 * @param resource $f file opened with fopen for reading
 	 * @param boolean $convert_to_system_charset=false convert the restored data to the selected system-charset
 	 * @param string $filename='' gives the file name which is used in case of a zip archive.
+	 * @param boolean $protect_system_config=true should above system_config values be protected (NOT overwritten)
 	 *
 	 * @returns An empty string or an error message in case of failure.
 	 */
-	function restore($f,$convert_to_system_charset=false,$filename='')
+	function restore($f,$convert_to_system_charset=false,$filename='',$protect_system_config=true)
 	{
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);
-
+		
+		if ($protect_system_config)
+		{
+			$system_config = array();
+			foreach($this->db->select(self::TABLE,'*',array(
+				'config_app' => 'phpgwapi',
+				'config_name' => self::$system_config,
+			),__LINE__,__FILE__) as $row)
+			{
+				$system_config[] = $row;
+			}
+		}
 		$this->db->transaction_begin();
 
 		// drop all existing tables
@@ -468,8 +498,8 @@ class db_backup
 				$import = true;
 				$data = self::csv_split($line,$cols);
 				if ($table == 'egw_async' && in_array('##last-check-run##',$data)) {
-					echo '<p>'.lang("Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
-					echo 'data=<pre>'.print_r($data,true)."</pre>\n";
+					//echo '<p>'.lang("Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>",$n,$line,$table)."</p>\n";
+					//echo 'data=<pre>'.print_r($data,true)."</pre>\n";
 					$import = false;
 				}
 				if (in_array($table,$this->exclude_tables))
@@ -477,7 +507,8 @@ class db_backup
 					echo '<p><b>'.lang("Table %1 is excluded from backup and restore. Data will not be restored.",$table)."</b></p>\n";
 					$import = false; // dont restore data of excluded tables
 				}
-				if ($import) {
+				if ($import)
+				{
 					if (count($data) == count($cols))
 					{
 						if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
@@ -523,6 +554,16 @@ class db_backup
 			$f = $save_f;
 			unlink($name);
 			rmdir($dir.'/database_backup');
+		}
+		if ($protect_system_config)
+		{
+			foreach($system_config as $row)
+			{
+				$this->db->insert(self::TABLE,array('config_value'=>$row['config_value']),array(
+					'config_name' => $row['config_name'],
+					'config_app'  => $row['config_app'],
+				),__LINE__,__FILE__);
+			}
 		}
 		if (!$this->db->transaction_commit())
 		{
@@ -738,12 +779,12 @@ class db_backup
 	 * gets a list of all files on $f
 	 *
 	 * @param string file $f
-	 * [@param int $cnt]
-	 * [@param string $path_name]
+	 * @param int $cnt=0
+	 * @param string $path_name=''
 	 *
 	 * @return array (list of files)
 	 */
-	function get_file_list($f, $cnt = 0, $path_name = "")
+	function get_file_list($f, $cnt = 0, $path_name = '')
 	{
 		//chdir($f);
 		//echo "Processing $f <br>";
