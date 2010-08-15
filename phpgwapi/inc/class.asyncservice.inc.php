@@ -409,7 +409,7 @@ class asyncservice
 						if ($lang != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 						{
 							unset($GLOBALS['lang']);
-							$GLOBALS['egw']->translation->add_app('common');
+							translation::add_app('common');
 						}
 					}
 					else
@@ -417,8 +417,9 @@ class asyncservice
 						$GLOBALS['egw_info']['user']['domain'] = $domain;
 					}
 				}
-				list($app) = explode('.',$job['method']);
-				$GLOBALS['egw']->translation->add_app($app);
+				list($app) = strpos($job['method'],'::') !== false ? explode('_',$job['method']) :
+					explode('.',$job['method']);
+				translation::add_app($app);
 				ExecMethod($job['method'],$job['data']);
 
 				// re-read job, in case it had been updated or even deleted in the method
@@ -470,7 +471,7 @@ class asyncservice
 			$where = array('async_id' => $id);
 		}
 		$jobs = array();
-		foreach($this->db->select($this->db_table,$cols,$where,__LINE__,__FILE__,$offset,'',False,$num_rows) as $row)
+		foreach($this->db->select($this->db_table,$cols,$where,__LINE__,__FILE__,$offset,$append,False,$num_rows) as $row)
 		{
 			$row['async_times'] = unserialize($row['async_times']);
 			$row['async_data'] = unserialize($row['async_data']);
