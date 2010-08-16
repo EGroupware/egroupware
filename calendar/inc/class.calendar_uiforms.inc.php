@@ -41,13 +41,6 @@ class calendar_uiforms extends calendar_ui
 	var $durations = array();
 
 	/**
-	 * Name of the tabs used in edit
-	 *
-	 * @var string
-	 */
-	var $tabs = 'general|description|participants|recurrence|custom|links|alarms|history';
-
-	/**
 	 * default locking time for entries, that are opened by another user
 	 *
 	 * @var locktime in seconds
@@ -424,7 +417,7 @@ class calendar_uiforms extends calendar_ui
 			'recurrence'	=> $content['recurrence'],
 			'actual_date'	=> $content['actual_date'],
 			'no_popup'		=> $content['no_popup'],
-			$this->tabs		=> $content[$this->tabs],
+			'tabs'			=> $content['tabs'],
 			'template'      => $content['template'],
 		);
 		$noerror=true;
@@ -1188,7 +1181,7 @@ function replace_eTemplate_onsubmit()
 				'to_app' => 'calendar',
 			),
 			'edit_single' => $preserv['edit_single'],	// need to be in content too, as it is used in the template
-			$this->tabs   => $preserv[$this->tabs],
+			'tabs'   => $preserv['tabs'],
 			'view' => $view,
 			'msg' => $msg,
 		));
@@ -1327,7 +1320,7 @@ function replace_eTemplate_onsubmit()
 			else
 			{
 				// hide the alarm tab for newly created exceptions
-				$readonlys[$this->tabs]['alarms'] = true;
+				$readonlys['tabs']['alarms'] = true;
 				
 				// disable the alarm tab functionality
 				$readonlys['button[add_alarm]'] = true;
@@ -1354,7 +1347,7 @@ function replace_eTemplate_onsubmit()
 				if ($key != 'alarm') $readonlys[$key] = true;
 			}
 			// we need to unset the tab itself, as this would make all content (incl. the change-status selects) readonly
-			unset($readonlys[$this->tabs]);
+			unset($readonlys['tabs']);
 			// participants are handled individual
 			unset($readonlys['participants']);
 
@@ -1402,7 +1395,7 @@ function replace_eTemplate_onsubmit()
 			}
 		}
 		// disabling the custom fields tab, if there are none
-		$readonlys[$this->tabs] = array(
+		$readonlys['tabs'] = array(
 			'custom' => !count($this->bo->config['customfields']),
 			'participants' => $this->accountsel->account_selection == 'none',
 		);
