@@ -7,7 +7,7 @@
  * @subpackage extensions
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-9 by RalfBecker@outdoor-training.de
+ * @copyright 2002-10 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -414,11 +414,10 @@ class link_widget
 				'no_app_sel' => !!$extension_data['app'],
 				'id'         => is_array($value) ? $value['current'] : $id,
 				'query'      => is_array($value) ? $value['query'] : '',
-				'blur'       => $cell['label'] ? lang($cell['label']) : 
+				'blur'       => $cell['blur'] ? lang($cell['blur']) : 
 					(count($options) == 1 ? lang($app) : lang('Search')),
 				'extra'      => $cell['onchange'] ? ','.self::AJAX_NEED_ONCHANGE : null,	// store flang for ajax_search, to display extra_line required by onchange
 			);
-			$cell['label'] = '';	// displayed as blur text
 
 			if ($options)	// limit the app-selectbox to the given apps
 			{
