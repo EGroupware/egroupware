@@ -323,7 +323,7 @@
 					<textbox size="80" maxlength="255" span="all" needed="1" id="title"/>
 				</row>
 				<row>
-					<tabbox span="all" id="calendar.edit.general|calendar.edit.description|calendar.edit.participants|calendar.edit.recurrence|calendar.edit.custom|calendar.edit.links|calendar.edit.alarms|calendar.edit.history">
+					<tabbox span="all" id="tabs">
 						<tabs>
 							<tab label="General" statustext="Location, Start- and Endtimes, ..."/>
 							<tab label="Description" statustext="Full description"/>
