@@ -232,7 +232,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 					unset($_data['id']);
 				}
 				if ( $this->dry_run ) {
-					print_r($_data);
+					//print_r($_data);
 					$this->results[$_action]++;
 					return true;
 				} else {
