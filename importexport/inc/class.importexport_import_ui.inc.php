@@ -48,7 +48,7 @@
 				try {
 					$definition_obj = new importexport_definition($content['definition']);
 					if($content['dry-run']) {
-						$definition_obj->plugin_options = $definition_obj->plugin_options + array('dry_run' => true);
+						$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 					}
 					$plugin = new $definition_obj->plugin;
 					$file = fopen($content['file']['tmp_name'], 'r');
