@@ -376,23 +376,6 @@
 			}
 		}
 
-		function getIMAPServerTypes($extended=true) 
-		{
-			foreach(self::$IMAPServerType as $key => $value) {
-				if ($extended)
-				{
-					$retData[$key]['description']	= $value['description'];
-					$retData[$key]['protocol']	= $value['protocol'];
-				}
-				else
-				{
-					$retData[$key]	= $value['description'];
-				}
-			}
-
-			return $retData;
-		}
-
 		function getLDAPStorageData($_serverid)
 		{
 			$storageData = $this->soemailadmin->getLDAPStorageData($_serverid);
@@ -506,11 +489,56 @@
 			}
 		}
 
-		function getSMTPServerTypes()
+		/**
+		 * Get a list of supported SMTP servers
+		 * 
+		 * Calls hook "smtp_server_types" to allow applications to supply own server-types
+		 * 
+		 * @return array classname => label pairs
+		 */
+		static public function getSMTPServerTypes()
 		{
+			$retData = array();
 			foreach(self::$SMTPServerType as $key => $value)
 			{
 				$retData[$key] = $value['description'];
+			}
+			foreach($GLOBALS['egw']->hooks->process('smtp_server_types') as $app => $data)
+			{
+				if ($data) $retData += $data;
+			}
+			return $retData;
+		}
+
+		/**
+		 * Get a list of supported SMTP servers
+		 * 
+		 * Calls hook "imap_server_types" to allow applications to supply own server-types
+		 * 
+		 * @param boolean $extended=true
+		 * @return array classname => label pairs
+		 */
+		static public function getIMAPServerTypes($extended=true) 
+		{
+			$retData = array();
+			foreach(self::$IMAPServerType as $key => $value)
+			{
+				if ($extended)
+				{
+					$retData[$key]['description']	= $value['description'];
+					$retData[$key]['protocol']	= $value['protocol'];
+				}
+				else
+				{
+					$retData[$key]	= $value['description'];
+				}
+			}
+			foreach($GLOBALS['egw']->hooks->process(array(
+				'location' => 'imap_server_types',
+				'extended' => $extended,
+			)) as $app => $data)
+			{
+				if ($data) $retData += $data;
 			}
 			return $retData;
 		}
@@ -833,7 +861,10 @@
 		function saveSessionData()
 		{
 			// serializing the session data, for the sake of objects
-			$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(self::$sessionData));
+			if (is_object($GLOBALS['egw']->session))	// otherwise setup(-cli) fails
+			{
+				$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(self::$sessionData));
+			}
 			#$GLOBALS['egw']->session->appsession('user_session_data','',$this->userSessionData);
 		}
 
