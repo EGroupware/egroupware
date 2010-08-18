@@ -1518,7 +1518,7 @@ class Net_IMAPProtocol {
         }
         $mailbox_name=sprintf("%s",$this->utf_7_encode($mailbox_name) );
         $ret = $this->_genericCommand('GETQUOTA', $mailbox_name );
-        if(isset( $ret["PARSED"] ) ){
+        if(!is_object($ret) && isset( $ret["PARSED"] ) ){
         // remove the array index because the quota response returns only 1 line of output
             $ret['PARSED']=$ret["PARSED"][0];
         }
@@ -1545,7 +1545,7 @@ class Net_IMAPProtocol {
         $mailbox_name=sprintf("%s",$this->utf_7_encode($mailbox_name) );
         $ret = $this->_genericCommand('GETQUOTAROOT', $mailbox_name );
 
-        if(isset( $ret["PARSED"] ) ){
+        if(!is_object($ret) && isset( $ret["PARSED"] ) ){
         // remove the array index because the quota response returns only 1 line of output
             $ret['PARSED']=$ret["PARSED"][1];
         }
