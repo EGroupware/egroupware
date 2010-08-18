@@ -89,7 +89,7 @@ class emailadmin_hooks
 			$profileList = $boemailadmin->getProfileList($profileID,$appName,$groupID,(int) $data['account_id']);
 			if (is_array($profileList)) {
 				foreach ($profileList as $key => $value) {
-					$boemailadmin->deleteProfile($value['profileID']);
+					$boemailadmin->delete($value['profileID']);
 				}
 			}
 		}
