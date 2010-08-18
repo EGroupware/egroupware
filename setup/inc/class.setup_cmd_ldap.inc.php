@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -173,7 +173,7 @@ class setup_cmd_ldap extends setup_cmd
 	static $requiredObjectclasses = array(
 		'o' => 'organization',
 		'ou' => 'organizationalUnit',
-		'cn' => array('namedObject','simpleSecurityObject'),
+		'cn' => array('organizationalRole','simpleSecurityObject'),
 		'dc' => array('organization','dcObject'),
 	);
 
