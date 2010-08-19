@@ -146,7 +146,7 @@ class addressbook_sql extends so_sql_cf
 		if (!$by)
 		{
 			$extra = array(
-				'COUNT(org_name) AS org_count',
+				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
 			);
@@ -161,7 +161,7 @@ class addressbook_sql extends so_sql_cf
 			parent::search($param['search'],array('org_name'),$append,array(
 				"NULL AS $by",
 				'1 AS is_main',
-				'COUNT(org_name) AS org_count',
+				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
 			),'%',false,'OR','UNION',$filter);
@@ -170,7 +170,7 @@ class addressbook_sql extends so_sql_cf
 			parent::search($param['search'],array('org_name'),$append,array(
 				"CASE WHEN $by IS NULL THEN '' ELSE $by END AS $by",
 				'0 AS is_main',
-				'COUNT(org_name) AS org_count',
+				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
 			),'%',false,'OR','UNION',$filter);
