@@ -503,7 +503,7 @@
 			{
 				$retData[$key] = $value['description'];
 			}
-			foreach($GLOBALS['egw']->hooks->process('smtp_server_types') as $app => $data)
+			foreach($GLOBALS['egw']->hooks->process('smtp_server_types',array(),true) as $app => $data)
 			{
 				if ($data) $retData += $data;
 			}
@@ -536,7 +536,7 @@
 			foreach($GLOBALS['egw']->hooks->process(array(
 				'location' => 'imap_server_types',
 				'extended' => $extended,
-			)) as $app => $data)
+			),array(),true) as $app => $data)
 			{
 				if ($data) $retData += $data;
 			}
