@@ -1,13 +1,21 @@
 <?php
-/*
- * $Id$
- *
- * Copyright 2002 Stephen Grier <stephengrier@users.sourceforge.net>
+/**
+ * EGroupware EMailAdmin: Support for Sieve scripts
  *
  * See the inclosed smartsieve-NOTICE file for conditions of use and distribution.
+ * 
+ * @link http://www.egroupware.org
+ * @package emailadmin
+ * @author Stephen Grier <stephengrier@users.sourceforge.net>
+ * @copyright 2002 by Stephen Grier <stephengrier@users.sourceforge.net>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
  */
 
-class Script {
+/**
+ * Support for Sieve scripts
+ */
+class emailadmin_script {
 
 	var $name;         /* filename of script. */
 	var $script;       /* full ascii text of script from server. */
@@ -28,7 +36,7 @@ class Script {
 	var $debug=false;
 
 	// class constructor
-	function Script ($scriptname) {
+	function __construct ($scriptname) {
 		$this->name = $scriptname;
 		$this->script = '';
 		$this->size = 0;

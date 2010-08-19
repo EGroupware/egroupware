@@ -528,9 +528,8 @@
 			$this->t->set_var('reloadView',$refreshURL);
 			// display a warning if vacation notice is active
 			if(is_a($imapServer,'defaultimap') && $imapServer->enableSieve) {
-				$this->bosieve		= CreateObject('felamimail.bosieve',$imapServer);
-				$this->bosieve->retrieveRules($this->bosieve->scriptName);
-				$vacation = $this->bosieve->getVacation($this->bosieve->scriptName);
+				$imapServer->retrieveRules($imapServer->scriptName);
+				$vacation = $imapServer->getVacation($imapServer->scriptName);
 				//_debug_array($vacation);
 				//    [status] => can be: on, off, by_date
 				//    [end_date] => 1247522400 (timestamp, use showdate for visualisation)

@@ -609,6 +609,7 @@
 				if ($imapAuthType == 'email' || $icServer->loginType == 'email') {
 					$icServer->username = $icServer->loginName = $GLOBALS['egw_info']['user']['account_email'];
 				}
+				if (method_exists($icServer,'init')) $icServer->init();
 				$eaPreferences->setIncomingServer($icServer);
 
 				// fetch the SMTP / outgoing server data
@@ -644,7 +645,7 @@
 						$ogServer->password     = $GLOBALS['egw_info']['user']['passwd'];
 					}
 				}
-
+				if (method_exists($ogServer,'init')) $ogServer->init();
 				$eaPreferences->setOutgoingServer($ogServer);
 
 				foreach($ogServer->getAccountEmailAddress($GLOBALS['egw_info']['user']['account_lid']) as $emailAddresses)

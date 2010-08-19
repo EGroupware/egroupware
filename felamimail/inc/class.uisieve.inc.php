@@ -44,7 +44,7 @@
 		//var $scriptName = 'felamimail';
 
 		/**
-		 * @var bosieve
+		 * @var emailadmin_sieve
 		 */
 		var $bosieve;
 
@@ -73,7 +73,7 @@
 			$icServer = $this->mailPreferences->getIncomingServer(0);
 
 			if(is_a($icServer,'defaultimap') && $icServer->enableSieve) {
-				$this->bosieve		=& CreateObject('felamimail.bosieve',$icServer);
+				$this->bosieve		= $icServer;
 				$this->timed_vacation = is_a($icServer,'cyrusimap') && $icServer->enableCyrusAdmin &&
 					$icServer->adminUsername && $icServer->adminPassword;
 			} else {
