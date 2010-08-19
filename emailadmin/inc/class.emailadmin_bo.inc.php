@@ -543,6 +543,13 @@
 			return $retData;
 		}
 
+		/**
+		 * Get EMailAdmin profile for a user
+		 * 
+		 * @param string $_appName=''
+		 * @param int|array $_groups=''
+		 * @return ea_preferences
+		 */
 		function getUserProfile($_appName='', $_groups='')
 		{
 			if (!(is_array(self::$sessionData) && (count(self::$sessionData)>0))) $this->restoreSessionData();
@@ -565,14 +572,20 @@
 				$groups = $_groups;
 			}
 
-			if($data = $this->soemailadmin->getUserProfile($appName, $groups,$GLOBALS['egw_info']['user']['account_id'])) {
-
+			if($data = $this->soemailadmin->getUserProfile($appName, $groups,$GLOBALS['egw_info']['user']['account_id']))
+			{
 				$eaPreferences = CreateObject('emailadmin.ea_preferences');
 
 				// fetch the IMAP / incomming server data
-				$icClass = isset(self::$IMAPServerType[$data['imapType']]) ? self::$IMAPServerType[$data['imapType']]['classname'] : 'defaultimap';
-
-				$icServer = CreateObject('emailadmin.'.$icClass);
+				if (!class_exists($icClass=$data['imapType']))
+				{
+					if (!file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$icClass.'.inc.php'))
+					{
+						$file = EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.($icClass='defaultimap').'.inc.php';
+					}
+					include_once($file);
+				}
+				$icServer = new $icClass;
 				$icServer->encryption	= ($data['imapTLSEncryption'] == 'yes' ? 1 : (int)$data['imapTLSEncryption']);
 				$icServer->host		= $data['imapServer'];
 				$icServer->port 	= $data['imapPort'];
@@ -599,10 +612,13 @@
 				$eaPreferences->setIncomingServer($icServer);
 
 				// fetch the SMTP / outgoing server data
-				$ogClass = isset(self::$SMTPServerType[$data['smtpType']]) ? self::$SMTPServerType[$data['smtpType']]['classname'] : 'defaultsmtp';
-				if (!class_exists($ogClass))
+				if (!class_exists($ogClass=$data['smtpType']))
 				{
-					include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$ogClass.'.inc.php');
+					if (!file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$ogClass.'.inc.php'))
+					{
+						$file = EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.($ogClass='defaultsmtp').'.inc.php';
+					}
+					include_once($file);
 				}
 				$ogServer = new $ogClass($icServer->domainName);
 				$ogServer->host		= $data['smtpServer'];
@@ -672,7 +688,7 @@
 					$ogUserData = $ogServer->getUserData($_accountID);
 				}
 
-				return $icUserData + $ogUserData;
+				return (array)$icUserData + (array)$ogUserData;
 
 			}
 
