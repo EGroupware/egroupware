@@ -347,22 +347,25 @@ class db_backup
 		'httpproxy_port',
 		'httpproxy_server_username',
 		'httpproxy_server_password',
+		'system_charset',
 	);
 
 	/**
 	 * Backup all data in the form of a (compressed) csv file
 	 *
 	 * @param resource $f file opened with fopen for reading
-	 * @param boolean $convert_to_system_charset=false convert the restored data to the selected system-charset
+	 * @param boolean $convert_to_system_charset=true convert the restored data to the selected system-charset
 	 * @param string $filename='' gives the file name which is used in case of a zip archive.
 	 * @param boolean $protect_system_config=true should above system_config values be protected (NOT overwritten)
 	 *
 	 * @returns An empty string or an error message in case of failure.
 	 */
-	function restore($f,$convert_to_system_charset=false,$filename='',$protect_system_config=true)
+	function restore($f,$convert_to_system_charset=true,$filename='',$protect_system_config=true)
 	{
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);
+		
+		$convert_to_system_charset = true;	// enforce now utf-8 as system charset restores of old backups
 		
 		if ($protect_system_config)
 		{
@@ -418,6 +421,12 @@ class db_backup
 			{
 				return lang("Cant open '%1' for %2", $filename, lang("reading"))."<br>\n";
 			}
+		}
+		// do not stop if for whatever reason some sql statement fails
+		if ($this->db->Halt_On_Error != 'no')
+		{
+			$backup_db_halt_on_error = $this->db->Halt_On_Error;
+			$this->db->Halt_On_Error = 'no';
 		}
 		$table = False;
 		$n = 0;
@@ -547,14 +556,7 @@ class db_backup
 				'config_name' => 'system_charset',
 			),__LINE__,__FILE__);
 		}
-		// zip?
-		if($type == 'zip')
-		{
-			fclose($f);
-			$f = $save_f;
-			unlink($name);
-			rmdir($dir.'/database_backup');
-		}
+		// restore protected system config
 		if ($protect_system_config)
 		{
 			foreach($system_config as $row)
@@ -564,6 +566,19 @@ class db_backup
 					'config_app'  => $row['config_app'],
 				),__LINE__,__FILE__);
 			}
+		}
+		// restore original Halt_On_Error state (if changed)
+		if ($backup_db_halt_on_error)
+		{
+			$this->db->Halt_On_Error = $backup_db_halt_on_error;
+		}
+		// zip?
+		if($type == 'zip')
+		{
+			fclose($f);
+			$f = $save_f;
+			unlink($name);
+			rmdir($dir.'/database_backup');
 		}
 		if (!$this->db->transaction_commit())
 		{
