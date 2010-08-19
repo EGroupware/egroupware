@@ -17,6 +17,11 @@ class postfixdbmailuser extends emailadmin_smtp_ldap
 //class emailadmin_smtp_dbmailuser extends emailadmin_smtp_ldap
 {
 	/**
+	 * Capabilities of this class (pipe-separated): default, forward
+	 */
+	const CAPABILITIES = 'default|forward';
+
+	/**
 	 * Name of schema, has to be the correct case!
 	 */
 	const SCHEMA = 'dbmailUser';

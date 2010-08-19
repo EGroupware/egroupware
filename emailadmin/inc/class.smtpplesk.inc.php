@@ -26,6 +26,11 @@ include_once(EGW_SERVER_ROOT."/emailadmin/inc/class.pleskimap.inc.php");
 class smtpplesk extends defaultsmtp
 {
 	/**
+	 * Capabilities of this class (pipe-separated): default, forward
+	 */
+	const CAPABILITIES = 'default|forward';
+
+	/**
 	 * @var string/boolean $error string with last error-message or false
 	 */
 	var $error = false;

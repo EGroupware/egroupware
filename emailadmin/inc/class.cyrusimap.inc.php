@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware EMailAdmin: Support for Cyrus IMAP (or other IMAP Server supporting Sieve)
+ * EGroupware EMailAdmin: Support for Cyrus IMAP
  *
  * @link http://www.stylite.de
  * @package emailadmin
@@ -15,12 +15,14 @@ include_once(EGW_SERVER_ROOT."/emailadmin/inc/class.defaultimap.inc.php");
 
 /**
  * Manages connection to Cyrus IMAP server
- * 
- * Also proxies Sieve calls to emailadmin_sieve (eg. it behaves like the former felamimail bosieve),
- * to allow IMAP plugins to also manage Sieve connection.
  */
 class cyrusimap extends defaultimap
 {
+	/**
+	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail
+	 */
+	const CAPABILITIES = 'default|sieve|admin|logintypeemail';
+	
 	// mailbox delimiter
 	var $mailboxDelimiter = '.';
 
@@ -32,12 +34,6 @@ class cyrusimap extends defaultimap
 	var $cyrusAdminUsername;
 	
 	var $cyrusAdminPassword;
-	
-	var $enableSieve = false;
-	
-	var $sieveHost;
-	
-	var $sievePort;
 	
 	function addAccount($_hookValues) 
 	{
@@ -166,51 +162,5 @@ class cyrusimap extends defaultimap
 			}
 		}
 		$this->disconnect();
-	}
-	
-	/**
-	 * Instance of emailadmin_sieve
-	 * 
-	 * @var emailadmin_sieve
-	 */
-	private $sieve;
-	
-	public $scriptName;
-	public $error;
-	
-	//public $error;
-
-	/**
-	 * Proxy former felamimail bosieve methods to internal emailadmin_sieve instance
-	 * 
-	 * @param string $name
-	 * @param array $params
-	 */
-	public function __call($name,array $params=null)
-	{
-		switch($name)
-		{
-			case 'installScript':
-			case 'getScript':
-			case 'setActive':
-			case 'setEmailNotification':
-			case 'getEmailNotification':
-			case 'setRules':
-			case 'getRules':
-			case 'retrieveRules':
-			case 'getVacation':
-			case 'setVacation':
-			case 'setVacationUser':
-				if (is_null($this->sieve))
-				{
-					$this->sieve = new emailadmin_sieve($this);
-					$this->scriptName =& $this->sieve->scriptName;
-					$this->error =& $this->sieve->error;
-				}
-				$ret = call_user_func_array(array($this->sieve,$name),$params);
-				error_log(__CLASS__.'->'.$name.'('.array2string($params).') returns '.array2string($ret));
-				return $ret;
-		}
-		throw new egw_exception_wrong_parameter("No method '$name' implemented!");
 	}
 }

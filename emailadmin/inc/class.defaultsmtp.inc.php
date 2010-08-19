@@ -13,6 +13,11 @@
 
 	class defaultsmtp
 	{
+		/**
+		 * Capabilities of this class (pipe-separated): default, forward
+		 */
+		const CAPABILITIES = 'default';
+
 		var $smtpAuth = false;
 		
 		var $editForwardingAddress = false;		

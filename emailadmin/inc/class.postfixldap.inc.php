@@ -17,6 +17,11 @@ class postfixldap extends emailadmin_smtp_ldap
 //class emailadmin_smtp_qmailuser extends emailadmin_smtp_ldap
 {
 	/**
+	 * Capabilities of this class (pipe-separated): default, forward
+	 */
+	const CAPABILITIES = 'default|forward';
+
+	/**
 	 * Name of schema, has to be in the right case!
 	 */
 	const SCHEMA = 'qmailUser';
