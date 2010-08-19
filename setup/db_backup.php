@@ -28,8 +28,8 @@ if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$self = 'db_backup.php';
 }
-$db_backup = CreateObject('phpgwapi.db_backup');
-$asyncservice = CreateObject('phpgwapi.asyncservice');
+$db_backup = new db_backup();
+$asyncservice = new asyncservice();
 
 // download a backup, has to be before any output !!!
 if ($_POST['download'])
@@ -176,7 +176,7 @@ if ($_POST['restore'])
 	if (is_resource($f = $db_backup->fopen_backup($file,true)))
 	{
 		echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
-		$db_backup->restore($f, FALSE, $file);
+		$db_backup->restore($f, true, $file);	// allways convert to current system charset on restore
 		$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file));
 		if ($run_in_egw)
 		{
@@ -185,6 +185,7 @@ if ($_POST['restore'])
 				$GLOBALS['egw_info']['server']['header_admin_user']='admin',
 				$GLOBALS['egw_info']['server']['header_admin_password']=uniqid('pw',true),false,true);
 			echo $cmd->run()."\n";
+			echo '<h3>'.lang('You should %1log out%2 and in again, to update your current session!','<a href="'.egw::link('/logout.php').'" target="_parent">','</a>')."</h3>\n";
 		}
 	}
 	else
