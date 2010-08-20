@@ -103,9 +103,9 @@ class setup_cmd_admin extends setup_cmd
 		}
 		$this->restore_db();
 		
-		// run admin/admin-cli.php --edit-user to store the new accounts once in EGroupware 
+		// run admin/admin-cli.php --add-user to store the new accounts once in EGroupware 
 		// to run all hooks (some of them can NOT run inside setup)
-		$cmd = EGW_SERVER_ROOT.'/admin/admin-cli.php --edit-user '.
+		$cmd = EGW_SERVER_ROOT.'/admin/admin-cli.php --add-user '.
 			escapeshellarg($this->admin_user.'@'.$this->domain.','.$this->admin_password.','.$this->admin_user);
 		exec($cmd,$output,$ret);
 		$output = implode("\n",$output);
