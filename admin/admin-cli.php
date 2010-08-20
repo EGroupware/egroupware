@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package admin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006/7 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -53,6 +53,9 @@ switch($action)
 {
 	case '--edit-user':
 		return do_edit_user($arg0s);
+
+	case '--add-user':	// like --edit-account, but always runs addaccount hook
+		return do_edit_user($arg0s,true);
 
 	case '--change-pw':
 		return do_change_pw($arg0s);
@@ -280,8 +283,9 @@ function do_change_pw($args)
  * Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!
  *                    1:                     2:             3:                         4:         5:        6:       7:    8:                                         9:                                 10:                            11:                                  12
  * @param array $args admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{true(default)|false},anon-user{true|false(default)},primary-group{Default(default)|...}[,groups,...][,homedirectory,loginshell]
+ * @param boolean $run_addaccount_hook=null default run hook depending on account existence, true=allways run addaccount hook
  */
-function do_edit_user($args)
+function do_edit_user($args,$run_addaccount_hook=null)
 {
 	array_shift($args);	// admin-account
 	array_shift($args);	// admin-pw
@@ -321,7 +325,7 @@ function do_edit_user($args)
 		$data['account_lid'] = $account;
 		$account = false;
 	};
-	run_command(new admin_cmd_edit_user($account,$data));
+	run_command(new admin_cmd_edit_user($account,$data,null,$run_addaccount_hook));
 }
 
 /**
@@ -412,9 +416,7 @@ function do_subscribe_other($account_lid,$pw=null)
 		'account_lid' => $account_lid,
 		'passwd' => $pw,
 	);
-	include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.bo.inc.php');
-
-	$emailadmin = new bo();
+	$emailadmin = new emailadmin_bo();
 	$user_profile = $emailadmin->getUserProfile('felamimail');
 	unset($emailadmin);
 

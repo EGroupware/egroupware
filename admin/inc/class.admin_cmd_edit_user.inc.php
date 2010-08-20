@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -21,8 +21,9 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 	 * @param string/int/array $account account name or id (!$account to add a new account), or array with all parameters
 	 * @param array $set=null array with all data to change
 	 * @param string $password=null password
+	 * @param boolean $run_addaccount_hook=null default run addaccount for new accounts and editaccount for existing ones
 	 */
-	function __construct($account,$set=null,$password=null)
+	function __construct($account,$set=null,$password=null,$run_addaccount_hook=null)
 	{
 		if (!is_array($account))
 		{
@@ -30,6 +31,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 				'account' => $account,
 				'set' => $set,
 				'password' => is_null($password) ? $set['account_passwd'] : $password,
+				'run_addaccount_hook' => $run_addaccount_hook,
 			);
 		}
 		admin_cmd::__construct($account);
@@ -167,7 +169,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		$data['account_passwd'] = $this->password;
 		$GLOBALS['hook_values'] =& $data;
 		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-			'location' => $this->account ? 'editaccount' : 'addaccount'
+			'location' => $this->account && $this->run_addaccount_hook !== true ? 'editaccount' : 'addaccount'
 		),False,True);	// called for every app now, not only enabled ones)
 
 		return lang("Account %1 %2",$this->account ? $this->account : $data['account_lid'],
