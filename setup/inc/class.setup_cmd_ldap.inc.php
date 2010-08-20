@@ -96,7 +96,10 @@ class setup_cmd_ldap extends setup_cmd
 				$msg = $this->connect();
 				break;
 			case 'delete_ldap':
-				$msg = $this->delete();
+				$msg = $this->delete_base();
+				break;
+			case 'users_ldap':
+				$msg = $this->users();
 				break;
 			case 'create_ldap':
 			default:
@@ -138,7 +141,32 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		return lang('Successful connected to LDAP server on %1 using DN %2.',$this->ldap_host,$dn);
 	}
-
+	
+	/**
+	 * Count active (not expired) users
+	 *
+	 * @return int number of active users
+	 * @throws egw_exception_wrong_userinput
+	 */
+	private function users()
+	{
+		$this->connect();
+	
+		$sr = ldap_list($this->test_ldap->ds,$this->ldap_context,'ObjectClass=posixAccount',array('dn','shadowExpire'));
+		if (!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
+		{
+			throw new egw_exception('Error listing "dn=%1"!',$this->ldap_context);
+		}
+		$num = 0;
+		foreach($entries as $n => $entry)
+		{
+			if ($n === 'count') continue;
+			if (isset($entry['shadowexpire']) && $entry['shadowexpire'][0]*24*3600 < time()) continue;
+			++$num;
+		}
+		return $num;
+	}
+		
 	/**
 	 * Check and if does not yet exist create the new database and user
 	 *
@@ -172,7 +200,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * @return string with success message
 	 * @throws egw_exception if dn not found, not listable or delete fails
 	 */
-	private function delete()
+	private function delete_base()
 	{
 		$this->connect($this->ldap_admin,$this->ldap_admin_pw);
 		
@@ -184,12 +212,12 @@ class setup_cmd_ldap extends setup_cmd
 		// some precausion to not delete whole ldap tree!
 		if (count(explode(',',$this->ldap_base)) < 2)
 		{
-			throw new egw_exception_assertion_failed('Refusing to delete dn "%1"!',$this->ldap_base);
+			throw new egw_exception_assertion_failed(lang('Refusing to delete dn "%1"!',$this->ldap_base));
 		}
 		// check if base does exist
 		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
 		{
-			throw new egw_exception_wrong_userinput('Base dn "%1" NOT found!',$this->ldap_base);
+			throw new egw_exception_wrong_userinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
 		}
 		return lang('LDAP dn="%1" with %2 entries deleted.',
 			$this->ldap_base,$this->rdelete($this->ldap_base));
@@ -204,19 +232,19 @@ class setup_cmd_ldap extends setup_cmd
 	 */
 	private function rdelete($dn)
 	{
-		$sr = ldap_list($this->test_ldap->ds,$dn,'ObjectClass=*',array(''));
-		if (!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
+		if (!($sr = ldap_list($this->test_ldap->ds,$dn,'ObjectClass=*',array(''))) ||
+			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
-			throw new egw_exception('Error listing "dn=%1"!',$dn);
+			throw new egw_exception(lang('Error listing "dn=%1"!',$dn));
 		}
 		foreach($entries as $n => $entry)
 		{
-			if ($n == 'count') continue;
-			$this->rdelete($this->test_ldap->ds,$entry['dn']);
+			if ($n === 'count') continue;
+			$this->rdelete($entry['dn']);
 		}
 		if (!ldap_delete($this->test_ldap->ds,$dn))
 		{
-			throw new egw_exception('Error deleting "dn=%1"!',$dn);
+			throw new egw_exception(lang('Error deleting "dn=%1"!',$dn));
 		}
 		return 1 + $entries['count'];
 	}
@@ -304,6 +332,10 @@ class setup_cmd_ldap extends setup_cmd
 	{
 		foreach(self::defaults() as $name => $default)
 		{
+			if ($this->sub_command == 'delete_ldap' && in_array($name,array('ldap_base','ldap_context')))
+			{
+				continue;	// no default on what to delete!
+			}
 			if (!$this->$name)
 			{
 				//echo "<p>setting $name='{$this->$name}' to it's default='$default'</p>\n";
