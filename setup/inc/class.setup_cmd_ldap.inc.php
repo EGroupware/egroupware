@@ -95,6 +95,9 @@ class setup_cmd_ldap extends setup_cmd
 			case 'test_ldap':
 				$msg = $this->connect();
 				break;
+			case 'delete_ldap':
+				$msg = $this->delete();
+				break;
 			case 'create_ldap':
 			default:
 				$msg = $this->create();
@@ -139,8 +142,6 @@ class setup_cmd_ldap extends setup_cmd
 	/**
 	 * Check and if does not yet exist create the new database and user
 	 *
-	 * The check will fail if the database exists, but already contains tables
-	 *
 	 * @return string with success message
 	 * @throws egw_exception_wrong_userinput
 	 */
@@ -163,6 +164,61 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		return lang('Successful connected to LDAP server on %1 and created/checked required structur %2.',
 			$this->ldap_host,$this->ldap_base);
+	}
+
+	/**
+	 * Delete whole LDAP tree of an instance dn=$this->ldap_base using $this->ldap_admin/_pw
+	 *
+	 * @return string with success message
+	 * @throws egw_exception if dn not found, not listable or delete fails
+	 */
+	private function delete()
+	{
+		$this->connect($this->ldap_admin,$this->ldap_admin_pw);
+		
+		// if base not set, use context minus one hierarchy, eg. ou=accounts,(o=domain,dc=local)
+		if (empty($this->ldap_base) && $this->ldap_context)
+		{
+			list(,$this->ldap_base) = explode(',',$this->ldap_context,2);
+		}
+		// some precausion to not delete whole ldap tree!
+		if (count(explode(',',$this->ldap_base)) < 2)
+		{
+			throw new egw_exception_assertion_failed('Refusing to delete dn "%1"!',$this->ldap_base);
+		}
+		// check if base does exist
+		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
+		{
+			throw new egw_exception_wrong_userinput('Base dn "%1" NOT found!',$this->ldap_base);
+		}
+		return lang('LDAP dn="%1" with %2 entries deleted.',
+			$this->ldap_base,$this->rdelete($this->ldap_base));
+	}
+	
+	/**
+	 * Recursive delete a dn
+	 * 
+	 * @param string $dn
+	 * @return int integer number of deleted entries
+	 * @throws egw_exception if dn not listable or delete fails
+	 */
+	private function rdelete($dn)
+	{
+		$sr = ldap_list($this->test_ldap->ds,$dn,'ObjectClass=*',array(''));
+		if (!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
+		{
+			throw new egw_exception('Error listing "dn=%1"!',$dn);
+		}
+		foreach($entries as $n => $entry)
+		{
+			if ($n == 'count') continue;
+			$this->rdelete($this->test_ldap->ds,$entry['dn']);
+		}
+		if (!ldap_delete($this->test_ldap->ds,$dn))
+		{
+			throw new egw_exception('Error deleting "dn=%1"!',$dn);
+		}
+		return 1 + $entries['count'];
 	}
 
 	/**
