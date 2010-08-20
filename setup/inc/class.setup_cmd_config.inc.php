@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -140,13 +140,14 @@ class setup_cmd_config extends setup_cmd
 			array('name' => 'mail_login_type','allowed'  => array(
 				'username (standard)' => 'standard',
 				'username@domain (virtual mail manager)' => 'vmailmgr',
+				'Username/Password defined by admin' => 'admin',
 				'email (Standard Maildomain should be set)' => 'email',
 			),'default'=>'standard'),
 		),
 		'--cyrus' => array(
 			'imapAdminUsername',
 			'imapAdminPW',
-			array('name' => 'imapType','default' => 3),
+			array('name' => 'imapType','default' => 'cyrusimap'),
 			array('name' => 'imapEnableCyrusAdmin','default' => 'yes'),
 		),
 		'--sieve' => array(
@@ -156,7 +157,7 @@ class setup_cmd_config extends setup_cmd
 		),
 		'--postfix' => array(
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
-			array('name' => 'smtpType','default' => 2),
+			array('name' => 'smtpType','default' => 'postfixldap'),
 		),
 		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password]
 			'smtp_server',array('name' => 'smtp_port','default' => 25),'smtp_auth_user','smtp_auth_passwd',''
