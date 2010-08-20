@@ -470,28 +470,15 @@ class defaultimap extends Net_IMAP
 	
 	/**
 	 * returns information about a user
-	 * currently only supported information is the current quota
+	 * 
+	 * Only a stub, as admin connection requires, which is only supported for Cyrus
 	 *
 	 * @param string $_username
 	 * @return array userdata
 	 */
 	function getUserData($_username) 
 	{
-		if($this->_connected === true) {
-			//error_log(__METHOD__."try to disconnect");
-			$this->disconnect();
-		}
-
-		$this->openConnection(true);
-		$userData = array();
-
-		if($quota = $this->getQuotaByUser($_username)) {
-			$userData['quotaLimit'] = $quota / 1024;
-		}
-		
-		$this->disconnect();
-		
-		return $userData;
+		return array();
 	}
 	
 	/**

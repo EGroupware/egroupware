@@ -35,11 +35,21 @@ class cyrusimap extends defaultimap
 	
 	var $cyrusAdminPassword;
 	
+	/**
+	 * Updates an account
+	 * 
+	 * @param array $_hookValues only value for key 'account_lid' and 'new_passwd' is used
+	 */
 	function addAccount($_hookValues) 
 	{
 		return $this->updateAccount($_hookValues);
 	}
 	
+	/**
+	 * Delete an account
+	 * 
+	 * @param array $_hookValues only value for key 'account_lid' is used
+	 */
 	function deleteAccount($_hookValues)
 	{
 		if(!$this->enableCyrusAdmin) {
@@ -77,6 +87,7 @@ class cyrusimap extends defaultimap
 
 	/**
 	 * Create mailbox string from given mailbox-name and user-name
+	 * 
 	 * @param string $_username
 	 * @param string $_folderName='' 
 	 * @return string utf-7 encoded (done in getMailboxName)
@@ -98,6 +109,39 @@ class cyrusimap extends defaultimap
 		return $mailboxString;
 	}
 
+	/**
+	 * returns information about a user
+	 * currently only supported information is the current quota
+	 *
+	 * @param string $_username
+	 * @return array userdata
+	 */
+	function getUserData($_username) 
+	{
+		if($this->_connected === true) {
+			//error_log(__METHOD__."try to disconnect");
+			$this->disconnect();
+		}
+
+		$this->openConnection(true);
+		$userData = array();
+
+		if($quota = $this->getQuotaByUser($_username)) {
+			$userData['quotaLimit'] = $quota / 1024;
+		}
+		
+		$this->disconnect();
+		
+		return $userData;
+	}
+	
+	/**
+	 * Set information about a user
+	 * currently only supported information is the current quota
+	 * 
+	 * @param string $_username
+	 * @param int $_quota
+	 */
 	function setUserData($_username, $_quota) 
 	{
 		if(!$this->enableCyrusAdmin) {
@@ -126,9 +170,13 @@ class cyrusimap extends defaultimap
 		$this->disconnect();
 
 		return true;
-		
 	}
 
+	/**
+	 * Updates an account
+	 * 
+	 * @param array $_hookValues only value for key 'account_lid' and 'new_passwd' is used
+	 */
 	function updateAccount($_hookValues) 
 	{
 		if(!$this->enableCyrusAdmin) { 
