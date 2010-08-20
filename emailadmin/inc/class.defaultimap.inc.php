@@ -624,7 +624,7 @@ class defaultimap extends Net_IMAP
 					$this->error =& $this->sieve->error;
 				}
 				$ret = call_user_func_array(array($this->sieve,$name),$params);
-				error_log(__CLASS__.'->'.$name.'('.array2string($params).') returns '.array2string($ret));
+				//error_log(__CLASS__.'->'.$name.'('.array2string($params).') returns '.array2string($ret));
 				return $ret;
 		}
 		throw new egw_exception_wrong_parameter("No method '$name' implemented!");
