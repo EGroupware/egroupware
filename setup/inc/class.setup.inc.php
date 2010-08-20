@@ -1053,14 +1053,28 @@ class setup
 				error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') failed! accountid=$accountid");
 				return false;
 			}
-			// call add{account|group} hook to create the vfs-home-dirs
+			// call vfs_home_hooks::add{account|group} hook to create the vfs-home-dirs
+			// calling general add{account|group} hook fails, as we are only in setup
+			// --> setup_cmd_admin execs "admin/admin-cli.php --edit-user" to run them
 			if ($primary_group)
 			{
 				vfs_home_hooks::addAccount($account);
+/*				
+ 				$GLOBALS['hook_values'] = $account + array('new_passwd' => $account['account_passwd']);
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'addaccount'
+				),False,True);	// called for every app now, not only enabled ones
+*/
 			}
 			else
 			{
 				vfs_home_hooks::addGroup($account+array('account_name' => $account['account_lid']));
+/*				
+				$GLOBALS['hook_values'] = $account+(array('account_name' => $account['account_lid']));
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'addgroup'
+				),False,True);  // called for every app now, not only enabled ones)
+*/
 			}
 		}
 		if ($primary_group)	// only for users, NOT groups

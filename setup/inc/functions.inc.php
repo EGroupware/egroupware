@@ -59,6 +59,13 @@ if(!defined('EGW_SERVER_ROOT') && !defined('EGW_INCLUDE_ROOT'))
 
 require_once(EGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
 
+// check if eGW's pear repository is installed and prefer it over the regular one
+if (is_dir(EGW_SERVER_ROOT.'/egw-pear'))
+{
+	set_include_path(EGW_SERVER_ROOT.'/egw-pear'.PATH_SEPARATOR.get_include_path());
+	//echo "<p align=right>include_path='".get_include_path()."'</p>\n";
+}
+
 define('SEP',filesystem_separator());
 
 /**

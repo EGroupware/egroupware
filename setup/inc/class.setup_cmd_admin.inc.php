@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -76,7 +76,12 @@ class setup_cmd_admin extends setup_cmd
 
 		if (!$this->admin_firstname) $this->set_defaults['admin_firstname'] = $this->admin_firstname = lang('Admin');
 		if (!$this->admin_lastname) $this->set_defaults['admin_lastname'] = $this->admin_lastname = lang('User');
-
+		if (strpos($this->admin_email,'$') !== false) 
+		{
+			$this->set_defaults['email'] = $this->admin_email = str_replace(
+				array('$domain','$uid','$account_lid'),
+				array($this->domain,$this->admin_user,$this->admin_user),$this->admin_email);
+		}
 		$_POST['username'] = $this->admin_user;
 		$_POST['passwd2']  = $_POST['passwd'] = $this->admin_password;
 		$_POST['fname']    = $this->admin_firstname;
@@ -97,7 +102,18 @@ class setup_cmd_admin extends setup_cmd
 				throw new egw_exception_wrong_userinput(lang('Error in group-creation !!!'),42);
 		}
 		$this->restore_db();
-
+		
+		// run admin/admin-cli.php --edit-user to store the new accounts once in EGroupware 
+		// to run all hooks (some of them can NOT run inside setup)
+		$cmd = EGW_SERVER_ROOT.'/admin/admin-cli.php --edit-user '.
+			escapeshellarg($this->admin_user.'@'.$this->domain.','.$this->admin_password.','.$this->admin_user);
+		exec($cmd,$output,$ret);
+		$output = implode("\n",$output);
+		//echo "ret=$ret\n".$output;
+		if ($ret)
+		{
+			throw new egw_exception ($output,$ret);
+		}
 		return lang('Admin account successful created.');
 	}
 }
