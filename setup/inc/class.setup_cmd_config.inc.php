@@ -151,7 +151,7 @@ class setup_cmd_config extends setup_cmd
 			array('name' => 'imapEnableCyrusAdmin','default' => 'yes'),
 		),
 		'--sieve' => array(
-			array('name' => 'imapSieveServer','default' => 'localhost'),
+			array('name' => 'imapSieveServer'),
 			array('name' => 'imapSievePort','default' => 2000),
 			array('name' => 'imapEnableSieve','default' => 'yes'),	// null or yes
 		),
@@ -365,8 +365,8 @@ class setup_cmd_config extends setup_cmd
 		$defaults['mail_suffix'] = '$domain';
 		$defaults['imapAdminUsername'] = 'cyrus@$domain';
 		$defaults['imapAdminPW'] = self::randomstring();
-		$defaults['imapType'] = 2;	// standard IMAP
-		$defaults['smtpType'] = 1;	// standard SMTP
+		$defaults['imapType'] = 'defaultimap';	// standard IMAP
+		$defaults['smtpType'] = 'defaultsmtp';	// standard SMTP
 
 		return $defaults;
 	}
