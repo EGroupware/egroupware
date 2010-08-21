@@ -1241,7 +1241,7 @@ class calendar_ical extends calendar_boupdate
 				}
 				// check if an owner is set and the current user has add rights
 				// for that owners calendar; if not set the current user
-				elseif (!isset($event['owner'])
+				elseif (!isset($event['owner']) || $event['owner'][0] == 'e'
 					|| !$this->check_perms(EGW_ACL_ADD, 0, $event['owner']))
 				{
 					$event['owner'] = $this->user;
