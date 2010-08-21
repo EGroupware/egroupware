@@ -52,37 +52,56 @@ class cyrusimap extends defaultimap
 	 */
 	function deleteAccount($_hookValues)
 	{
-		if(!$this->enableCyrusAdmin) {
+		// some precausion to really delete just _one_ account
+		if (strpos($_hookValues['account_lid'],'%') !== false ||
+			strpos($_hookValues['account_lid'],'*') !== false)
+		{
+			return false;
+		}
+		return !!$this->deleteUsers($_hookValues['account_lid']);
+	}
+
+	/**
+	 * Delete multiple (user-)mailboxes via a wildcard, eg. '%' for whole domain
+	 * 
+	 * Domain is the configured domain and it uses the Cyrus admin user
+	 * 
+	 * @return string $username='%' username containing wildcards, default '%' for all users of a domain
+	 * @return int|boolean number of deleted mailboxes on success or false on error
+	 */
+	function deleteUsers($username='%')
+	{
+		if(!$this->enableCyrusAdmin || empty($username)) {
 			return false;
 		}
 
-		if($this->_connected === true) {
-			$this->disconnect();
-		}
-		
 		// we need a admin connection
-		if(!$this->openConnection(true)) {
-			return false;
+		if($this->_connected === true && !$this->isAdminConnection) {
+			$this->disconnect();
+			if(!$this->openConnection(true)) {
+				return false;
+			}
 		}
-
-		$username = $_hookValues['account_lid'];
-	
 		$mailboxName = $this->getUserMailboxString($username);
-
-		// give the admin account the rights to delete this mailbox
-		if(PEAR::isError($this->setACL($mailboxName, $this->adminUsername, 'lrswipcda'))) {
-			$this->disconnect();
-			return false;
-		}
-
-		if(PEAR::isError($this->deleteMailbox($mailboxName))) {
-			$this->disconnect();
-			return false;
-		}
+		list($reference,$restriction) = explode($username,$mailboxName,2);
+		$mboxes = $this->getMailboxes($reference,$username.$restriction);
+		//error_log(__METHOD__."('$username') getMailboxes('$reference','$username$restriction') = ".array2string($mboxes));
 		
+		foreach($mboxes as $mbox) {
+			// give the admin account the rights to delete this mailbox
+			if(PEAR::isError($this->setACL($mbox, $this->adminUsername, 'lrswipcda'))) {
+				$this->disconnect();
+				return false;
+			}
+	
+			if(PEAR::isError($this->deleteMailbox($mbox))) {
+				$this->disconnect();
+				return false;
+			}
+		}
 		$this->disconnect();
 
-		return true;
+		return count($mboxes);
 	}
 
 	/**
