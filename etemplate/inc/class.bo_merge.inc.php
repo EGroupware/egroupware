@@ -472,22 +472,20 @@ abstract class bo_merge
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 			case 'application/xml':
 			case 'text/xml':
+			case 'text/html':
 				$is_xml = true;
 				$charset = 'utf-8';	// xml files --> always use utf-8
 				break;
 
-			case 'text/html':
-				$is_xml = true;
-				// fall through
 			default:	// div. text files --> use our export-charset, defined in addressbook prefs
 				$charset = $this->contacts->prefs['csv_charset'];
 				break;
 		}
-		//error_log(__METHOD__."('$document', ... ,$mimetype) --> $charset (egw=".$GLOBALS['egw']->translation->charset().', export='.$this->contacts->prefs['csv_charset'].')');
+		//error_log(__METHOD__."('$document', ... ,$mimetype) --> $charset (egw=".translation::charset().', export='.$this->contacts->prefs['csv_charset'].')');
 		// do we need to convert charset
-		if ($charset && $charset != $GLOBALS['egw']->translation->charset())
+		if ($charset && $charset != translation::charset())
 		{
-			$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$charset);
+			$replacements = translation::convert($replacements,translation::charset(),$charset);
 		}
 		if ($is_xml)	// zip'ed xml document (eg. OO)
 		{
