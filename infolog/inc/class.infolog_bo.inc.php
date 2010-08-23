@@ -1090,8 +1090,8 @@ class infolog_bo
 		{
 			return $info;
 		}
-		return !empty($info['info_subject']) ? $info['info_subject'] :
-			self::subject_from_des($info['info_descr']);
+		$title = !empty($info['info_subject']) ? $info['info_subject'] :self::subject_from_des($info['info_descr']);
+		return $title.($GLOBALS['egw_info']['user']['preferences']['infolog']['show_id']?' (#'.$info['info_id'].')':'');
 	}
 
 	/**
