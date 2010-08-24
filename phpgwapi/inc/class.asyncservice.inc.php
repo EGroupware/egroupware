@@ -29,6 +29,12 @@ class asyncservice
 	var $db;
 	var $db_table = 'egw_async';
 	var $debug = 0;
+	/**
+	 * Line in crontab set by constructor with absolute path
+	 * 
+	 * @var string
+	 */
+	var $cronline = '/phpgwapi/cron/asyncservices.php default';
 
 	/**
 	 * constructor of the class
@@ -676,7 +682,8 @@ class asyncservice
 				{
 					$cronline .= (isset($times[$cu]) ? $times[$cu] : '*') . ' ';
 				}
-				$cronline .= $this->php.' -qC '.$this->cronline."\n";
+				// -d memory_limit=-1 --> no memory limit
+				$cronline .= $this->php.' -q -d memory_limit=-1 '.$this->cronline."\n";
 				//echo "<p>Installing: '$cronline'</p>\n";
 				fwrite($crontab,$cronline);
 			}
