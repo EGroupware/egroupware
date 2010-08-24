@@ -23,7 +23,9 @@ function check_password(id)
 	if (password && (password2 || id == 'password2') && password != password2)
 	{
 		alert('{lang_passwds_unequal}');
-		document.getElementById('password2').focus();
+		document.getElementById('password2').value = '';
+		document.getElementById('password').select();
+		document.getElementById('password').focus();
 		return false;
 	}
 	return true;
