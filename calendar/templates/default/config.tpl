@@ -95,6 +95,11 @@
      </select>
     </td>
    </tr>
+   <tr class="row_on">
+    <td>{lang_Calendar_recurrence_horizont_in_days_(default_1000)}:</td>
+    <td><input size="5" name="newsettings[calendar_horizont]" value="{value_calendar_horizont}"></td>
+   </tr>
+
 <!-- END body -->
 
 <!-- BEGIN footer -->

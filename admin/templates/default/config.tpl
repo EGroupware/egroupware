@@ -26,11 +26,6 @@
     <td><input size="8" name="newsettings[sessions_app_timeout]" value="{value_sessions_app_timeout}"></td>
    </tr>
    
-   <tr class="row_off">
-    <td>{lang_Calendar_recurrence_horizont_in_days_(default_1000)}:</td>
-    <td><input size="5" name="newsettings[calendar_horizont]" value="{value_calendar_horizont}"></td>
-   </tr>
-
    <tr class="row_on">
     <td>{lang_Would_you_like_to_show_each_application's_upgrade_status_?}:</td><td>
      <select name="newsettings[checkappversions]">
