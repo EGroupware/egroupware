@@ -171,6 +171,12 @@ class calendar_uilist extends calendar_ui
 		if($GLOBALS['egw_info']['apps']['timesheet']) {
 			$sel_options['action']['timesheet-add'] = array('label' => 'Create timesheet', 'title' => 'Create a timesheet entry from this event');
 		}
+		// Add in deleted for admins
+		$config = config::read('phpgwapi');
+		if($config['calendar_delete_history'] && $GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			$sel_options['action']['undelete'] = array('label' => 'Un-Delete', 'title' => 'Recover this event');
+		}
 		foreach($this->bo->verbose_status as $key => $value)
 		{
 			if($key == 'G') continue;
@@ -523,6 +529,20 @@ class calendar_uilist extends calendar_ui
 					{
 						$failure++;
 					}
+					break;
+				case 'undelete':
+					$action_msg = lang('recovered');
+                                        if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id) &&
+						is_array($event) && $event['deleted'])
+					{
+						$event['deleted'] = false;
+						if($this->bo->save($event))
+						{
+							$success++;
+							break;
+						}
+					}
+					$failure++;
 					break;
 				case 'status':
 					if($id && $event = $this->bo->read($id, $recur_date)) 
