@@ -54,6 +54,12 @@
     </td>
    </tr>
    <tr class="row_on">
+    <td>&nbsp;{lang_Fields_to_copy_when_copying_an_address?}</td>
+    <td>
+    {hook_copy_fields}
+    </td>
+   </tr>
+   <tr class="row_off">
     <td>&nbsp;{lang_Use_an_extra_tab_for_private_custom_fields?}</td>
     <td>
      <select name="newsettings[private_cf_tab]">

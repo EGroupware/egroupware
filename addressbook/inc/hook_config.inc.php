@@ -110,3 +110,52 @@ function org_fileds_to_update($config)
 	return html::checkbox_multiselect('newsettings[org_fileds_to_update]',
 		$config['org_fileds_to_update'] ? $config['org_fileds_to_update'] : $bocontacts->org_fields,$fields,true,'',4);
 }
+
+/**
+ * Hook to get a multiselect box with all fieleds of fields used for copying for addressbook config
+ *
+ * @param array $config
+ * @return string html
+ */
+function copy_fields($config)
+{
+	$bocontacts = new addressbook_bo();
+	$supported_fields = $bocontacts->get_fields('supported',null,0);	// fields supported by the backend (ldap schemas!)
+	// get the list of account fields
+	$fields = array();
+	foreach($bocontacts->contact_fields as $field => $label)
+	{
+		// some fields the user should never be allowed to copy or are coverted by an other attribute (n_fn for all n_*)
+		if (!in_array($field,array('id','tid','created','creator','modified','modifier','n_prefix','n_given','n_middle','n_family','n_suffix', 'account_id', 'uid')))
+		{
+			$fields[$field] = $label;
+		}
+	}
+	$fields['link_to'] = 'Links';
+
+	if ($config['account_repository'] != 'ldap')	// no custom-fields in ldap
+	{
+		foreach(config::get_customfields('addressbook') as $name => $data)
+		{
+			$fields['#'.$name] = $data['label'];
+		}
+	}
+	$default = array(
+		'company',
+		'department',
+		'adr_one_street',
+		'adr_one_street2',
+		'adr_one_locality',
+		'adr_one_region',
+		'adr_one_postalcode',
+		'adr_one_countryname',
+		'email',
+		'url',
+		'tel_work',
+		'cat_id'
+	);
+	return html::checkbox_multiselect('newsettings[copy_fields]',
+		$config['copy_fields'] ? $config['copy_fields'] : $default,
+		$fields,true,'',4
+	);
+}
