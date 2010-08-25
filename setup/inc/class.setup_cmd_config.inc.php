@@ -387,7 +387,7 @@ class setup_cmd_config extends setup_cmd
 			}
 			if (strpos($this->$name,'$') !== false)
 			{
-				$this->$name = str_replace(array(
+				$this->set_defaults[$name] = $this->$name = str_replace(array(
 					'$domain',
 				),array(
 					$this->domain,
