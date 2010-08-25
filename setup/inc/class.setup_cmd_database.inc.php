@@ -174,6 +174,13 @@ class setup_cmd_database extends setup_cmd
 	{
 		static $try_make_unique = 0;	// to limit trials to create a unique name
 
+		// shorten db-name/-user to self::MAX_DB_NAME_LEN chars
+		if ($this->make_db_name_unique && strlen($this->db_name) > self::MAX_DB_NAME_LEN)
+		{
+			$this->set_defaults['db_name'] = $this->db_name = 
+			$this->set_defaults['db_user'] = $this->db_user = // change user too (otherwise existing user/db could not connect any more!)
+				substr($this->db_name,0,self::MAX_DB_NAME_LEN);
+		}
 		try {
 			$msg = $this->connect();
 		}
@@ -206,7 +213,7 @@ class setup_cmd_database extends setup_cmd
 						$this->set_defaults['db_user'] = $this->db_user = // change user too (otherwise existing user/db could not connect any more!)
 							substr($this->db_name,0,self::MAX_DB_NAME_LEN-strlen($num)).$num;
 	
-							return $this->create();
+						return $this->create();
 					}
 					catch (egw_exception_wrong_userinput $e2)
 					{
