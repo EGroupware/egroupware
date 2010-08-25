@@ -1,0 +1,304 @@
+%1 - %2 of %3 user accounts	admin	id	%1 - %2 dari %3 akoun pengguna
+%1 - %2 of %3 user groups	admin	id	%1 - %2 dari %3 kelompok pengguna
+%1 group %2	admin	id	%1 kelompok %2
+%1 user %2	admin	id	%1 pengguna %2
+-  type	admin	id	- tipe
+account %1 %2	admin	id	Akoun %1 %2
+account '%1' deleted.	admin	id	Akoun '%1' dihapus.
+account active	admin	id	Akoun aktif
+account has been created	common	id	Akoun telah dibuat
+account has been deleted	common	id	Akoun telah dihapus
+account has been updated	common	id	Akoun telah dikinikan
+account list	admin	id	Daftar Akoun
+account permissions	admin	id	Ijin-ijin Akoun
+account preferences	admin	id	Kesukaan Akoun
+acl manager	admin	id	Manajer ACL
+acl rights	common	id	Hak-hak ACL
+action	admin	id	Tindakan
+actions	admin	id	Tindakan
+activate wysiwyg-editor	admin	id	mengaktifkan WYSIWYG-editor
+add a category	admin	id	tambah kategori
+add a group	admin	id	tambah kelompok
+add a subcategory	admin	id	tambah subkategori
+add a user	admin	id	tambah pengguna
+add account	admin	id	Tambah akoun
+add application	admin	id	Tambah aplikasi
+add global category	admin	id	Tambah kategori global
+add global category for %1	admin	id	Tambah kategori global untuk %1
+add group	admin	id	Tambah kelompok
+add new account	admin	id	Tambah akoun baru
+add new application	admin	id	Tambah aplikasi baru
+add peer server	admin	id	Tambah Peer Server
+add sub-category	admin	id	Tambah sub-kategori
+admin email	admin	id	Email Admin
+admin name	admin	id	Nama Admin
+administration	admin	id	Administrasi
+admins	admin	id	Admins
+advanced options	admin	id	Opsi canggih
+aliases	admin	id	Alias
+all users	admin	id	Semua pengguna
+alternate email address	admin	id	alamat email pengganti
+anonymous user	admin	id	Anonymous user
+appearance	admin	id	Penampakan
+application	admin	id	Aplikasi
+application '%1' not found (maybe not installed or misspelled)!	admin	id	Aplikasi '%1' tidak ditemukan (mungkin belum diinstal atau salah ketik)!
+application name	admin	id	Nama Aplikasi
+application title	admin	id	Judul Aplikasi
+applications	admin	id	Aplikasi
+applications list	admin	id	Daftar Aplikasi
+applies the changes	admin	id	terapkan perubahan
+apply the changes	admin	id	Terapkan perubahan
+asynchronous timed services	admin	id	Asynchronous timed services
+authentication / accounts	admin	id	Otentikasi / Akoun
+back to the list	admin	id	kembali ke daftar
+bi-dir passthrough	admin	id	bi-dir passthrough
+bi-directional	admin	id	bi-directional
+bottom	admin	id	bawah
+calculate next run	admin	id	Calculate next run
+can change password	admin	id	Can change password
+cancel testjob!	admin	id	Batalkan TestJob!
+categories list	admin	id	Daftar Kategori
+category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
+category list	admin	id	Daftar Kategori
+change account_id	admin	id	Ubah account_id
+change acl rights	admin	id	Ubah Hak-hak ACL
+change config settings	admin	id	Ubah seting konfigurasi
+change main screen message	admin	id	Ubah pesan pada layar utama
+children	admin	id	Children
+click to select a color	admin	id	Klik untuk memilih warna
+color	admin	id	Warna
+country	admin	id	Negara
+country selection	admin	id	Pemilihan Negara
+create group	admin	id	Bikin Kelompok
+created	admin	id	Dibuat
+created with id #%1	admin	id	dibuat dengan ID #%1
+crontab only (recomended)	admin	id	hanya crontab (rekomendasi)
+custom fields	admin	id	Custom fields
+cyrus imap server	admin	id	Cyrus IMAP Server
+data	admin	id	Data
+day	admin	id	Hari
+day of week<br>(0-6, 0=sun)	admin	id	Hari-hari<br>(0-6, 0=Min)
+default	admin	id	Bawaan
+deinstall crontab	admin	id	Deinstall crontab
+delete account	admin	id	Hapus akoun
+delete account %1	admin	id	Hapus akoun %1
+delete all records	admin	id	Hapus semua Rekaman
+delete application	admin	id	Hapus aplikasi
+delete category	admin	id	Hapus kategori
+delete group	admin	id	Hapus kelompok
+delete peer server	admin	id	Hapus peer server
+delete selected entries	admin	id	Hapus entri terpilih
+delete the category	admin	id	hapus kategori
+delete the group	admin	id	hapus kelompok
+delete this category	admin	id	hapus kategori ini
+delete this group	admin	id	hapus kelompok ini
+delete this log entry	admin	id	Hapus entri log ini
+delete this user	admin	id	hapus pengguna ini
+deletes this field	admin	id	hapus field ini
+deliver extern	admin	id	deliver extern
+disable wysiwyg-editor	admin	id	disable WYSIWYG-editor
+disabled (not recomended)	admin	id	disabled (not recomended)
+display	admin	id	Tampilan
+document root (default)	admin	id	Document root (default)
+edit account	admin	id	Edit akoun
+edit application	admin	id	Edit aplikasi
+edit email settings	admin	id	edit pengaturan email
+edit global category	admin	id	Edit kategori global
+edit global category for %1	admin	id	Edit kategori global untuk %1
+edit group	admin	id	Edit Kelompok
+edit group acl's	admin	id	edit ACL kelompok
+edit login screen message	admin	id	Edit pesan layar <em>login</em>
+edit main screen message	admin	id	Edit pesan layar utama
+edit peer server	admin	id	Edit Peer Server
+edit table format	admin	id	Edit format Tabel
+edit this category	admin	id	edit kategori ini
+edit this group	admin	id	edit kelompok ini
+edit this user	admin	id	edit pengguna ini
+edit user	admin	id	edit pengguna
+edit user account	admin	id	Edit akoun pengguna
+egroupware directory	admin	id	direktori eGroupWare
+egroupware version	admin	id	Versi EGroupware
+email account active	admin	id	akoun email aktif
+email address	admin	id	alamat email
+enable debug-messages	admin	id	Enable debug-messages
+error saving	admin	id	Error menyimpan
+error saving account!	admin	id	Error menyimpan akoun!
+expires	admin	id	Kadaluarsa
+false	admin	id	false
+file space	admin	id	File space
+global categories	common	id	Kategori Global
+group ?	admin	id	kelompok?
+group has been added	common	id	Kelompok telah dibuat
+group has been deleted	common	id	Kelompok telah dihapus
+group has been updated	common	id	Kelompok telah dikinikan
+group list	admin	id	Daftar Kelompok
+group manager	admin	id	Manajer Kelompok
+group name	admin	id	Nama Kelompok
+hash	admin	id	Hash
+hide php information	admin	id	hide php information
+home directory	admin	id	Home directory
+host information	admin	id	Host information
+hour<br>(0-23)	admin	id	Jam<br>(0-23)
+icon	admin	id	Ikon
+idle	admin	id	idle
+in mbyte	admin	id	dalam MByte
+inbound	admin	id	inbound
+initial	admin	id	Initial
+install crontab	admin	id	Pasang crontab
+install id	admin	id	Install ID
+installation type	admin	id	Tipe Instalasi
+installed applications	common	id	Aplikasi terpasang
+installed crontab	admin	id	Installed crontab
+instance	admin	id	Instance
+interface	admin	id	Interface
+ip	admin	id	IP
+jobs	admin	id	Jobs*
+kill	admin	id	Kill*
+kill session	admin	id	Kill session*
+last %1 logins	admin	id	Last %1 logins*
+last %1 logins for %2	admin	id	Last %1 logins for %2*
+last login	admin	id	last login*
+last login from	admin	id	last login from*
+last submission:	admin	id	Last submission:*
+last time read	admin	id	Last Time Read*
+ldap accounts context	admin	id	LDAP accounts context*
+ldap encryption type	admin	id	LDAP encryption type
+ldap groups context	admin	id	LDAP groups context
+ldap host	admin	id	LDAP host
+ldap root password	admin	id	LDAP root password
+ldap rootdn	admin	id	LDAP rootdn
+leave without saveing the entry	admin	id	tinggalkan tanpa menyimpan entri
+leaves without saveing	admin	id	tinggalkan tanpa menyimpan
+length<br>rows	admin	id	Length<br>Rows
+limit to members of	admin	id	Terbatas untuk anggota dari
+list config settings	admin	id	Daftar pengaturan konfigurasi
+list current sessions	admin	id	Daftar sesi sekarang
+list of current users	admin	id	daftar pengguna sekarang
+logged out	admin	id	logged out
+login history	admin	id	Riwayat Login
+login message	admin	id	Login message
+login screen	admin	id	Login screen
+login shell	admin	id	Login shell
+login time	admin	id	Login Time
+login-status	admin	id	Login-Status
+loginid	admin	id	LoginID
+logintime	admin	id	Logintime
+logoutime	admin	id	Logoutime
+mail settings	admin	id	Pengaturan Mail
+main email-address	admin	id	Alamat eMail Utama
+main screen message	admin	id	Pesan layar utama
+manager	admin	id	Manajer
+method	admin	id	Metode
+minute	admin	id	Menit
+mode	admin	id	Mode
+modified	admin	id	Diubah
+month	admin	id	Bulan
+more secure	admin	id	lebih aman
+new group name	admin	id	Nama kelompok baru
+new name	admin	id	nama baru
+next run	admin	id	Next run
+no algorithms available	admin	id	no algorithms available
+no matches found	admin	id	No matches found
+no modes available	admin	id	no modes available
+one day	admin	id	satu hari
+one hour	admin	id	satu jam
+one month	admin	id	satu bulan
+one week	admin	id	satu minggu
+operating system	admin	id	Sistem Operasi
+order	admin	id	Urutan
+outbound	admin	id	outbound
+own install id:	admin	id	Own install ID:
+passthrough	admin	id	passthrough
+password for smtp-authentication	admin	id	Password for SMTP-authentication
+password updated	admin	id	Password updated
+path information	admin	id	Path information
+peer server list	admin	id	Peer server list
+peer servers	admin	id	Peer servers
+permission denied	admin	id	Ijin ditolak
+permission denied !!!	admin	id	Ijin ditolak !!!
+permissions	admin	id	Perijinan
+personal: eg. within a family	admin	id	Personal: eg. within a family
+php version	admin	id	PHP Version
+phpinfo	admin	id	PHP information
+please enter a name	admin	id	Mohon masukan nama
+please select	admin	id	Mohon Pilih
+postfix with ldap	admin	id	Postfix with LDAP
+postpone for	admin	id	Postpone for
+preferences	admin	id	Kesukaan
+primary group	admin	id	Kelompok utama
+qmaildotmode	admin	id	qmaildotmode
+quota settings	admin	id	pengaturan kuota
+quota size in mbyte	admin	id	ukuran kuota dalam MByte
+re-enter password	admin	id	Masukan-ulang password
+remove	admin	id	buang
+requested	admin	id	Diminta
+save the category	admin	id	simpan kategori ini
+saves this entry	admin	id	Simpan entri ini
+search accounts	admin	id	Cari akoun
+search categories	admin	id	Cari kategori
+search groups	admin	id	Cari kelompok
+search peer servers	admin	id	Cari peer servers
+security	admin	id	Kemanan
+select group managers	admin	id	Pilih Manajer Kelompok
+selectbox	admin	id	Selectbox
+server list	admin	id	Server List
+server password	admin	id	Server Password
+server type(mode)	admin	id	Server Type(mode)
+server url	admin	id	Server URL
+server username	admin	id	Server Username
+set preference values.	admin	id	Set preference values.
+show access log	admin	id	Tampilkan log akses
+show an asterisk (*) to mark untranslated strings	admin	id	Show an asterisk (*) to mark untranslated strings
+show current action	admin	id	Tampilkan tindakan saat ini
+show error log	admin	id	Tampilkan log error
+show phpinfo()	admin	id	Tampilkan phpinfo()
+site	admin	id	Situs
+soap	admin	id	SOAP
+sort the entries	admin	id	urutkan entri
+ssl	admin	id	SSL
+standard	admin	id	standar
+standard imap server	admin	id	standard IMAP server
+standard pop3 server	admin	id	standard POP3 server
+standard smtp-server	admin	id	standard SMTP-Server
+start testjob!	admin	id	Start TestJob!
+submit changes	admin	id	Submit Changes
+submit displayed information?	admin	id	Submit displayed information?
+submit statistic information	admin	id	Submit statistic information
+submit to egroupware.org	admin	id	Submit to egroupware.org
+subtype	admin	id	Subtype
+subversion checkout	admin	id	Subversion checkout
+success	admin	id	sukses
+template selection	admin	id	Pemilihan Templat
+text entry	admin	id	Text Entry
+the api is current	admin	id	The API is current
+the users bellow are still members of group %1	admin	id	pengguna berikut ini masih menjadi anggota kelompok %1
+times	admin	id	Times
+top	admin	id	atas
+total records	admin	id	Total rekaman
+true	admin	id	true
+trust level	admin	id	Trust Level
+trust relationship	admin	id	Trust Relationship
+two days	admin	id	dua hari
+two hours	admin	id	dua jam
+two months	admin	id	dua bulan
+two weeks	admin	id	dua minggu
+type of customfield	admin	id	Type of customfield
+unknown account: %1 !!!	admin	id	Akoun takdikenal: %1 !!!
+unknown command %1!	admin	id	Perintah %1 tak dikenal!
+unknown option %1	admin	id	Opsi %1 tak dikenal
+updated	admin	id	dikinikan
+use theme	admin	id	Gunakan tema
+user accounts	admin	id	Akoun pengguna
+user data	common	id	Data Pengguna
+user groups	admin	id	Kelompok Pengguna
+userdata	admin	id	data pengguna
+users choice	admin	id	Pilihan Pengguna
+view access log	admin	id	Lihat log akses
+view account	admin	id	Lihat akoun
+view category	admin	id	Lihat kategori
+view error log	admin	id	Lihat log error
+view sessions	admin	id	Lihat sesi
+view this user	admin	id	lihat pengguna ini
+view user account	admin	id	Lihat akoun pengguna
+xml-rpc	admin	id	XML-RPC
+your session could not be verified.	admin	id	Sesi anda tidak dapat diperiksa.

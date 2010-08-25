@@ -1,0 +1,286 @@
+%1 %2 in %3	calendar	id	%1 %2 dalam %3
+%1 event(s) %2	calendar	id	%1 kegiatan %2
+%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	id	%1 kegiatan %2, %3 gagal karena kurang kewenangan !!!
+%1 participants removed because of missing invite grants	calendar	id	%1 peserta dibuang karena tiada hak mengundang
+%1 records imported	calendar	id	%1 rekaman diimpor
+%1 weeks	calendar	id	%1 minggu
+(%1 events in %2 seconds)	calendar	id	(%1 kegiatan dalam %2 detik)
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	id	<b>Mohon dicatat</b>: Kalender menggunakan Hari Raya untuk negara anda, yaitu %1. Anda dapat mengubahnya pada %2 anda.<br />Hari Raya %3 diinstal otomatis dari %4. Anda dapat mengubahnya pada %5.
+a non blocking event will not conflict with other events	calendar	id	Kegiatan yang <em>non blocking</em> tidak akan konflik dengan kegiatan lainnya
+accept or reject an invitation	calendar	id	Terima atau tolak undangan
+accepted	calendar	id	Diterima
+access denied to the calendar of %1 !!!	calendar	id	Akses ditolak untuk kalender dari %1 !!!
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	id	Tindakan yang mengakibatkan notifikasi: Penambahan, Pembatalan, Penerimaan, Penolakan, ...
+actions	calendar	id	Tindakan
+add alarm	calendar	id	Tambah alarm
+added	calendar	id	Ditambahkan
+added by synchronisation	calendar	id	Penambahan karena sinkronisasi
+after %1	calendar	id	Setelah %1
+after current date	calendar	id	Setelah tanggal sekarang
+alarm	calendar	id	Alarm
+alarm added	calendar	id	Alarm ditambahkan
+alarm deleted	calendar	id	Alarm dibuang
+alarm for %1 at %2 in %3	calendar	id	Alarm untuk %1 pada %2 dalam %3
+alarm management	calendar	id	Pengelolaan alarm
+alarms	calendar	id	Alarm
+all categories	calendar	id	Semua kategori
+all day	calendar	id	Seharian
+all events	calendar	id	Semua kegiatan
+all future	calendar	id	Mendatang
+all incl. rejected	calendar	id	Semua termasuk yang ditolak
+all participants	calendar	id	Semua peserta
+apply the changes	calendar	id	Terapkan perubahan
+are you sure you want to delete this country ?	calendar	id	Anda sudah yakin akan menghapus Negara ini?
+are you sure you want to delete this holiday ?	calendar	id	Anda sudah yakin akan menghapus hari-raya ini?
+back half a month	calendar	id	mundur setengah bulan
+back one month	calendar	id	mundur sebulan
+back one year	calendar	id	mundur setahun
+before %1	calendar	id	Sebelum %1
+before current date	calendar	id	Sebelum tanggal sekarang
+before the event	calendar	id	Sebelum kegiatan
+birthday	calendar	id	HUT
+birthdays	admin	id	HUT
+busy	calendar	id	sibuk
+by	calendar	id	oleh
+calendar - list	calendar	id	Kalender - Daftar
+calendar - multi-weekly	calendar	id	Kalender - Beberapa Minggu
+calendar - planner	calendar	id	Kalender - Planner
+calendar csv export	calendar	id	Ekspor CSV Kalender
+calendar event	calendar	id	Kegiatan Kalender
+calendar holiday management	admin	id	Pengelolaan Hari Raya Kalender
+calendar menu	calendar	id	Menu Kalender
+calendar preferences	calendar	id	Kesukaan Kalender
+calendar settings	admin	id	Pengaturan Kalender
+calendar-fieldname	calendar	id	Nama Field Kalender
+canceled	calendar	id	Dibatalkan
+category %1 removed because of missing rights	calendar	id	Kategori %1 dibuang karena tiada hak
+category acl	common	id	Kategori ACL
+chair	calendar	id	Pimpinan
+change history	calendar	id	Riwayat pengubahan
+change your participant status	calendar	id	Ubah status peserta
+charset of file	calendar	id	Charset of file
+check all	calendar	id	Contreng semua
+choose a category	calendar	id	Pilih kategori
+close the window	calendar	id	Tutup jendela
+compose a mail to all participants after the event is saved	calendar	id	Tulis surat ke seluruh peserta setelah kegiatan disimpan
+conflict	calendar	id	Konflik
+copy of:	calendar	id	Salinan dari:
+copy this event	calendar	id	Salin kegiatan ini
+countries	calendar	id	Negara
+country	calendar	id	Negara
+create an exception for the given date	calendar	id	Bikin pengecualian untuk tanggal tertentu
+create exception	calendar	id	Bikin pengecualian
+create new links	calendar	id	Bikin tautan baru
+csv	calendar	id	CSV
+csv-fieldname	calendar	id	Nama field-CSV
+csv-filename	calendar	id	Nama berkas CSV
+custom fields	common	id	Custom fields
+custom_2	common	id	Senggang/Sibuk
+daily	calendar	id	Harian
+day	calendar	id	hari
+days	calendar	id	hari
+days of the week for a weekly repeated event	calendar	id	Hari-hari untuk kegiatan yang berulang setiap minggu
+days repeated	calendar	id	hari-hari pengulangan
+dayview	calendar	id	Tampilan Harian
+delegated	calendar	id	Didelegasikan
+delete selected events	calendar	id	Hapus kegiatan terpilih
+delete series	calendar	id	Hapus runtun
+delete this alarm	calendar	id	Hapus alarm ini
+delete this event	calendar	id	Hapus kegiatan ini
+delete this exception	calendar	id	Hapus pengecualian ini
+delete this series of recuring events	calendar	id	Hapus runtun kegiatan yang berulang ini
+deleted	calendar	id	Dihapus
+disinvited	calendar	id	Batal diundang
+display status of events	calendar	id	Tampilkan status kegiatan
+download	calendar	id	Unduh
+download this event as ical	calendar	id	Unduh kegiatan ini sebagai iCal
+duration of the meeting	calendar	id	Durasi pertemuan/rapat
+edit exception	calendar	id	Edit pengecualian
+edit series	calendar	id	Edit runtun
+edit status or alarms for this particular day	calendar	id	Edit status atau alarm untuk hari tersebut
+edit this event	calendar	id	Edit kegiatan ini
+edit this series of recuring events	calendar	id	Edit runtun kegiatan yang berulang ini
+empty for all	calendar	id	Kosongkan semua
+end	calendar	id	Akhir
+end date/time	calendar	id	Tanggal/Jam berakhir
+enddate	calendar	id	Tanggal berakhir
+enddate of the export	calendar	id	Tanggal akhir untuk ekspor
+ends	calendar	id	selesai
+event deleted	calendar	id	Kegiatan dihapus
+event details follow	calendar	id	Berikut adalah detil Kegiatan
+event saved	calendar	id	Kegiatan disimpan
+event will occupy the whole day	calendar	id	Kegiatan akan berlangsung sehari penuh
+exception	calendar	id	Pengecualian
+exceptions	calendar	id	Pengecualian
+existing links	calendar	id	Tautan yang ada
+export	calendar	id	Ekspor
+extended	calendar	id	Extended
+fieldseparator	calendar	id	Pemisah field
+filename	calendar	id	Nama berkas
+filename of the download	calendar	id	Nama berkas untuk unduhan
+for	calendar	id	untuk
+forward half a month	calendar	id	maju setengah bulan
+forward one month	calendar	id	maju sebulan
+forward one year	calendar	id	maju setahun
+four days view	calendar	id	Tampilan empat-harian
+freebusy	common	id	Senggang/Sibuk
+freetime search	calendar	id	Mencari waktu Senggang
+fri	calendar	id	Jum
+full description	calendar	id	Uraian lengkap
+general	calendar	id	Umum
+global categories	calendar	id	Kategori Global
+group invitation	calendar	id	Undangan secara Kelompok
+group planner	calendar	id	Group planner
+h	calendar	id	h
+here is your requested alarm.	calendar	id	Ini alarm yang anda minta.
+hide private infos	calendar	id	Sembunyikan info privat
+high priority	calendar	id	Prioritas tinggi
+history	calendar	id	Riwayat
+history logging	admin	id	Catatan riwayat
+holiday	calendar	id	Hari Raya
+holiday management	calendar	id	Pengelolaan Hari Raya
+holidays	calendar	id	Hari Raya
+hours	calendar	id	jam
+ical	calendar	id	iCal
+ical / rfc2445	calendar	id	iCal / rfc2445
+ical export	calendar	id	Ekspor iCal
+ical file	calendar	id	Berkas iCal
+ical import	calendar	id	Impor iCal
+ical successful imported	calendar	id	iCal sukses diimpor
+ignore conflict	calendar	id	Abaikan konflik
+import	calendar	id	Impor
+import csv-file	common	id	Impor berkas-CSV
+interval	calendar	id	Interval
+invalid email-address "%1" for user %2	calendar	id	alamat email "%1" untuk pengguna %2 keliru
+invitations	calendar	id	Undangan
+invite	calendar	id	Undang
+last	calendar	id	Akhir
+link to view the event	calendar	id	Tautan untuk melihat kegiatan
+links	calendar	id	Tautan
+links, attachments	calendar	id	Tautan, Lampiran
+listview	calendar	id	Tampilan Daftar
+location	calendar	id	Lokasi
+location, start- and endtimes, ...	calendar	id	Lokasi, Waktu memulai dan berakhir, ...
+mail all participants	calendar	id	Surati semua peserta
+minutes	calendar	id	Menit
+modified	calendar	id	Diubah
+mon	calendar	id	Sen
+month	calendar	id	Bulan
+monthly	calendar	id	Bulanan
+monthly (by date)	calendar	id	Bulanan (urut tanggal)
+monthly (by day)	calendar	id	Bulanan (urut hari)
+monthview	calendar	id	Tampilan Bulanan
+needs action	calendar	id	Perlu tindakan
+no events found	calendar	id	Tidak ditemukan kegiatan
+no filter	calendar	id	Tiada saringan
+no matches found	calendar	id	Tiada yang cocok
+no recurrence	calendar	id	Tiada perulangan
+no response	calendar	id	Tiada tanggapan
+non blocking	calendar	id	non blocking
+not	calendar	id	not
+not rejected	calendar	id	Tidak ditolak
+observance rule	calendar	id	Aturan Observance
+occurence	calendar	id	Occurence
+old startdate	calendar	id	Tanggal memulai yang lama
+on %1 %2 %3 your meeting request for %4	calendar	id	Permintaan rapat anda untuk %4 %3 %2 pada %1
+one month	calendar	id	sebulan
+one week	calendar	id	seminggu
+one year	calendar	id	setahun
+only group-events	calendar	id	Hanya kegiatan-kelompok
+open todo's:	calendar	id	Buka ToDo:
+optional	calendar	id	Opsional
+overlap holiday	calendar	id	Overlap holiday
+owner too	calendar	id	Termasuk Pemilik
+participants	calendar	id	Peserta
+participants disinvited from an event	calendar	id	Peserta yang batal diundang dari kegiatan
+participants, resources, ...	calendar	id	Peserta, Sumber Daya, ...
+people holiday	calendar	id	People holiday
+permission denied	calendar	id	Ijin Ditolak
+planner by category	calendar	id	Planner menurut kategori
+planner by user	calendar	id	Planner menurut pengguna
+previous	calendar	id	sebelumnya
+private only	calendar	id	Hanya Privat
+quantity	calendar	id	Quantity
+re-edit event	calendar	id	Edit-ulang Kegiatan
+recurrence	calendar	id	Berulang
+recurring event	calendar	id	Kegiatan berulang
+rejected	calendar	id	Ditolak
+repeat days	calendar	id	Hari-hari pengulangan
+repeat type	calendar	id	Tipe pengulangan
+repeating event information	calendar	id	Informasi Kegiatan Berulang
+repetition	calendar	id	Pengulangan
+requested	calendar	id	Permintaan
+reset	calendar	id	Reset
+resources	calendar	id	Sumberdaya
+role	calendar	id	Role
+rule	calendar	id	Rule
+sat	calendar	id	Sab
+saves the changes made	calendar	id	Simpan pengubahan
+saves the event ignoring the conflict	calendar	id	Simpan kegiatan - abaikan konflik
+scheduling conflict	calendar	id	Penjadualan Konflik
+select a %1	calendar	id	Pilih %1
+select a time	calendar	id	Pilih waktu
+select an action	calendar	id	Pilih tindakan
+select multiple contacts for a further action	calendar	id	Pilih beberapa kontak untuk tindakan selanjutnya
+select resources	calendar	id	Pilih sumber daya
+select who should get the alarm	calendar	id	Pilih siapa saja yang akan menerima alarm
+selected range	calendar	id	Jangkah terpilih
+set new events to private	calendar	id	Tetapkan kegiatan baru sebagai privat
+show a calendar title	calendar	id	Tampilkan judul kalender
+show this month	calendar	id	Tampilkan bulan ini
+show this week	calendar	id	Tampilkan minggu ini
+single event	calendar	id	Kegiatan tunggal
+start	calendar	id	Mulai
+start date/time	calendar	id	Tanggal/Waktu memulai
+startdate / -time	calendar	id	Tanggal / -waktu mulai
+startdate and -time of the search	calendar	id	Tanggal dan -waktu untuk memulai pencarian
+startdate of the export	calendar	id	Tanggal awal untuk ekspor
+startrecord	calendar	id	Awal Rekaman
+status changed	calendar	id	Status berubah
+sun	calendar	id	Min
+tentative	calendar	id	Tentative
+test import (show importable records <u>only</u> in browser)	calendar	id	Tes Impor (tampilkan rekaman yang dapat diimpor <em>hanya</em> dalam browser)
+the resource you selected is already overbooked:	calendar	id	Sumber daya yang anda pilih sudah dipesan:
+this day is shown as first day in the week or month view.	calendar	id	Hari tersebut akan ditampilkan sebagai hari pertama pada tampilann mingguan atau bulanan
+this entry is currently opened by %1!	calendar	id	Entri ini sedang dibuka oleh %1!
+three month	calendar	id	Tiga bulan
+thu	calendar	id	Kam
+til	calendar	id	hingga
+timeframe	calendar	id	Kerangka waktu
+timeframe to search	calendar	id	Kerangka waktu untuk pencarian
+timezone	calendar	id	Zona waktu
+title of the event	calendar	id	Judul kegiatan
+tomorrow	calendar	id	Esok
+translation	calendar	id	Terjemahan
+tue	calendar	id	Sel
+two weeks	calendar	id	Dua minggu
+update timezones	common	id	Perbarui zonawaktu
+updated	calendar	id	Diperbarui
+use end date	calendar	id	Gunakan tanggal berakhir
+user or group	calendar	id	Pengguna atau Kelompok
+view exception	calendar	id	Lihat pengecualian
+view series	calendar	id	Lihat runtun
+view this event	calendar	id	Lihat kegiatan ini
+wed	calendar	id	Rab
+week	calendar	id	Minggu
+weekday	calendar	id	Weekday
+weekday starts on	calendar	id	Weekday dimulai pada
+weekdays	calendar	id	Weekdays
+weekly	calendar	id	Mingguan
+weekview	calendar	id	Tampilan mingguan
+whole day	calendar	id	Sepanjang hari
+whole query	calendar	id	seluruh query
+wk	calendar	id	Mg
+work day ends on	calendar	id	Jam Kerja Berakhir
+work day starts on	calendar	id	Jam Kerja Dimulai
+workday	calendar	id	Hari Kerja
+workdays	calendar	id	Hari Kerja
+yearly	calendar	id	Tahunan
+yearly planner	calendar	id	Planner Tahunan
+years	admin	id	tahun
+yearview	calendar	id	Tampilan Tahunan
+you are not allowed to book the resource selected:	calendar	id	Anda tidak dibolehkan memesan sumberdaya terpilih:
+you have a meeting scheduled for %1	calendar	id	Anda dijadualkan rapat pada %1
+you have been disinvited from the meeting at %1	calendar	id	Anda batal diundang rapat pada %1
+your meeting scheduled for %1 has been canceled	calendar	id	Rapat anda yang dijadualkan pada %1 telah dibatalkan
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	id	Rapat anda yang dijadualkan pada %1 telah dijadual-ulang menjadi %2

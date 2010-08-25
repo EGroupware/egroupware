@@ -1,0 +1,84 @@
+accessories of	resources	id	aksesori dari
+accessories:	resources	id	Aksesori:
+actions	resources	id	Tindakan
+add accessory	resources	id	Tambah aksesori
+add resource	resources	id	Tambah Sumberdaya
+add resources	resources	id	Tambah Sumberdaya
+administrator	resources	id	Administrator
+all categories	resources	id	semua kategori
+book	resources	id	Pesan
+book selected resources	resources	id	pesan sumberdaya terpilih
+book this resource	resources	id	pesan sumberdaya ini
+bookable	resources	id	Dapat dipesan
+buy this article	resources	id	Beli artikel ini
+buy this resource	resources	id	Beli sumberdaya ini
+buyable	resources	id	Dapat dibeli
+categories admin	resources	id	Admin kategori
+category:	resources	id	Kategori:
+check all	resources	id	Contreng semua
+choose categories admin	resources	id	pilih admin kategori
+clear selection	resources	id	bersihkan pilihan
+configure access permissions	admin	id	Pengaturan Ijin Akses
+create new accessory for this resource	resources	id	Bikin aksesori baru untuk sumberdaya ini
+create new links	resources	id	Bikin tautan baru
+delete selected resources	resources	id	hapus sumberdaya terpilih
+delete this entry	resources	id	Hapus entri ini
+description (short)	resources	id	Uraian (ringkas)
+direct booking permissions	resources	id	Ijin pemesanan langsung
+edit this entry	resources	id	Edit entri ini
+existing links	resources	id	Tautan yang ada
+general	resources	id	Umum
+general informations about resource	resources	id	Informasi umum mengenai sumberdaya
+gernal resource	resources	id	sumberdaya umum
+information about storage	resources	id	Informasi mengenai penyimpanan
+informations about the location of resource	resources	id	Informasi mengenai lokasi penyimpanan
+inventory number	resources	id	Nomor Inventaris
+inventory number:	resources	id	Nomor Inventaris:
+is resource bookable?	resources	id	Apakah sumberdaya dapat dipesan?
+is resource buyable?	resources	id	Apakah sumberdaya dapat dibeli?
+is this resource bookable?	resources	id	Apakah sumberdaya ini dapat dipesan?
+is this resource buyable?	resources	id	Apakah sumberdaya ini dapat dibeli?
+links	resources	id	Tautan
+location	resources	id	Lokasi
+location of resource	resources	id	Lokasi sumberdaya
+location:	resources	id	Lokasi:
+name of resource	resources	id	Nama Sumberdaya
+name:	resources	id	Nama:
+no description available	resources	id	tanpa uraian
+no resources selected	resources	id	Tiada sumberdaya dipilih
+picture	resources	id	Gambar
+picture source	resources	id	sumber gambar
+picture type is not supported, sorry!	resources	id	Maaf, tipe gambar tidak didukung!
+pictures or resource	resources	id	Gambar atau sumberdaya
+planer	resources	id	planer
+prizeing information for booking or buying	resources	id	Informasi harga untuk pemesanan atau pembelian
+quantity	resources	id	Quantity
+quantity of resource	resources	id	Quantity dari sumberdaya
+quantity:	resources	id	Quantity:
+read calendar permissions	resources	id	Ijin Membaca Kalender
+read permissions	resources	id	Ijin Membaca
+related links	resources	id	Tautan yang terkait
+resources	common	id	Sumberdaya
+resources list	resources	id	Daftar Sumberdaya
+responsible:	resources	id	Penanggungjawab:
+saves entry and exits	resources	id	Simpan entri dan keluar
+select a category	resources	id	Pilih kategori
+select resource	resources	id	pilih sumberdaya
+select resources	common	id	Pilih sumberdaya
+select/deselect all	resources	id	pilih/batalkan semua
+short description	resources	id	Uraian singkat
+short description of resource	resources	id	Uraian singkat dari sumberdaya
+show calendar of resource	resources	id	Tampilkan kalender dari sumberdaya
+storage information	resources	id	Informasi penyimpanan
+storage information:	resources	id	Informasi penyimpanan:
+the calendar of this resource	resources	id	Kalender dari sumberdaya ini
+use general resources icon	resources	id	Gunakan ikon sumberdaya umum
+use own picture	resources	id	Gunakan gambar sendiri
+use the category's icon	resources	id	Gunakan ikon kategori
+useable	resources	id	dapat digunakan
+useable:	resources	id	Dapat digunakan:
+view accessories for this resource	resources	id	Lihat aksesori untuk sumberdaya ini
+view this entry	resources	id	Lihat entri ini
+where to find this resource?	resources	id	Dimana menemukan sumberdaya ini
+write permissions	resources	id	Ijin Menulis
+you chose more resources than available	resources	id	Anda memilih lebih banyak sumberdaya dari yang tersedia

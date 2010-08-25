@@ -1,0 +1,203 @@
+are you sure?	setup	id	ANDA YAKIN?
+file	setup	id	FILE
+ok	setup	id	OK
+00 (disable)	setup	id	00 (disable / recomended)
+13 (ntp)	setup	id	13 (ntp)
+80 (http)	setup	id	80 (http)
+[header-password],[header-user],[new-password],[new-user]	setup	id	[header-password],[header-user],[new-password],[new-user]
+accounts existing	setup	id	Accounts existing
+actions	setup	id	Tindakan
+additional settings	setup	id	Pengaturan Tambahan
+admin password	setup	id	Password Admin
+admin username	setup	id	Nama Admin
+admins	setup	id	Admins
+all applications	setup	id	all applications
+all users	setup	id	All Users
+app details	setup	id	App details
+app install/remove/upgrade	setup	id	App install/remove/upgrade
+app process	setup	id	App process
+application data	setup	id	Application Data
+application list	setup	id	Application List
+application management	setup	id	Application Management
+application title	setup	id	Application Title
+authentification mode:	setup	id	Authentification mode:
+available version	setup	id	Available Version
+backup failed	setup	id	Backup failed
+backup finished	setup	id	backup finished
+backup housekeeping	setup	id	Backups with a standard name can be cleaned up automatically. Rename backup files to exclude them from cleanup.
+backup now	setup	id	backup now
+backup sets	setup	id	backup sets
+backup skipped!	setup	id	Backup skipped!
+bottom	setup	id	bottom
+ca certificate	setup	id	CA certificate
+cancel	setup	id	Batal
+change system-charset	setup	id	Change system-charset
+charset	setup	id	utf-8
+check installation	setup	id	Cek instalasi
+checking php.ini	setup	id	Checking php.ini
+click here	setup	id	Klik disini
+completed	setup	id	Tuntas
+config password	setup	id	Config Password
+config username	setup	id	Config Username
+configuration	setup	id	Konfigurasi
+configuration changed.	setup	id	Konfigurasi changed.
+configuration completed	setup	id	Konfigurasi completed
+configuration errors:	setup	id	Konfigurasi errors:
+configuration password	setup	id	Konfigurasi Password
+configuration user	setup	id	Konfigurasi User
+configure now	setup	id	Configure Now
+contain	setup	id	mengandung
+continue	setup	id	Lanjutkan
+convert	setup	id	Convert
+country selection	setup	id	Pemilihan Negara
+create	setup	id	Bikin
+create database	setup	id	Bikin Database
+created	setup	id	created
+created header.inc.php!	setup	id	Created header.inc.php!
+creating tables	setup	id	Creating Tables
+current configuration:	setup	id	Current configuration:
+current system-charset	setup	id	Current system-charset
+current version	setup	id	Current Version
+database	setup	id	Database
+day	setup	id	hari
+db host	setup	id	DB Host
+db name	setup	id	DB Name
+db password	setup	id	DB Password
+db port	setup	id	DB Port
+db type	setup	id	DB Type
+db user	setup	id	DB User
+default	setup	id	recommended default
+delete	setup	id	Hapus
+deleting tables	setup	id	Menghapus Tables
+deny access	setup	id	Deny Access
+dependency failure	setup	id	Dependency Failure
+deregistered	setup	id	deregistered
+domain	setup	id	Domain
+domain name	setup	id	Domain name
+domain-name	setup	id	domain-name
+download	setup	id	Unduh
+enable mcrypt	setup	id	Enable MCrypt
+false	setup	id	False
+filename	setup	id	filename
+filesystem	setup	id	Filesystem
+filesystem (default)	setup	id	Filesystem (default)
+force selectbox	setup	id	Force Selectbox
+go back	setup	id	Go back
+go to	setup	id	Go to
+grant access	setup	id	Grant Access
+group	setup	id	group
+header password	setup	id	Header Password
+header username	setup	id	Header Username
+header-password[,header-user(admin)]	setup	id	header-password[,header-user(admin)]
+historylog removed	setup	id	Historylog removed
+hooks deregistered	setup	id	hooks deregistered
+hooks registered	setup	id	hooks registered
+host information	setup	id	Host information
+hour (0-24)	setup	id	jam (0-24)
+install	setup	id	Instal
+install all	setup	id	Instal Semuanya
+install applications	setup	id	Instal Aplikasi
+install backup	setup	id	install backup
+install language	setup	id	Instal Bahasa
+installation finished	setup	id	Instalasi Selesai
+installed	setup	id	installed
+invalid password	setup	id	Invalid password
+is broken	setup	id	is broken
+is disabled	setup	id	is disabled
+languages updated.	setup	id	Bahasa updated.
+ldap config	setup	id	LDAP Config
+ldap host	setup	id	LDAP host
+ldap import	setup	id	LDAP Import
+ldap rootdn	setup	id	LDAP rootdn
+limit access	setup	id	Limit access
+logout	setup	id	Keluar
+manage applications	setup	id	Manage Applications
+manage languages	setup	id	Manage Languages
+minute	setup	id	menit
+modify	setup	id	Modify
+month	setup	id	bulan
+never	setup	id	never
+new	setup	id	Baru
+next run	setup	id	next run
+no	setup	id	Tidak
+not	setup	id	not
+not complete	setup	id	not complete
+not completed	setup	id	Not Completed
+not set	setup	id	not set
+one month	setup	id	satu bulan
+one week	setup	id	satu minggu
+or	setup	id	atau
+path information	setup	id	Path information
+pem certificate	setup	id	PEM certificate
+persistent connections	setup	id	Persistent connections
+php client	setup	id	PHP client
+php proxy	setup	id	PHP proxy
+please install	setup	id	Mohon instal
+please login	setup	id	Mohon login
+please wait...	setup	id	Mohon Tunggu...
+possible reasons	setup	id	Possible Reasons
+possible solutions	setup	id	Possible Solutions
+potential problem	setup	id	Potensi Masalah
+preferences	setup	id	Kesukaan
+problem resolution	setup	id	Penyelesaian Masalah
+process	setup	id	Proses
+re-enter password	setup	id	Re-enter password
+registered	setup	id	terdaftar
+rejected lines	setup	id	Rejected lines
+remove	setup	id	Buang
+remove all	setup	id	Buang Semuanya
+rename	setup	id	rename
+requires upgrade	setup	id	Requires upgrade
+resolve	setup	id	Resolve
+restore	setup	id	restore
+restore failed	setup	id	Restore failed
+restore finished	setup	id	restore finished
+save	setup	id	Simpan
+schedule	setup	id	schedule
+scheduled backups	setup	id	scheduled backups
+select one...	setup	id	select satu...
+selectbox	setup	id	Selectbox
+server root	setup	id	Server Root
+sessions handler	setup	id	Sessions Handler
+set	setup	id	set
+settings	setup	id	Seting
+setup	setup	id	Setup
+sieve: host[,port(2000)]	setup	id	Sieve: Host[,Port(2000)]
+size	setup	id	size
+sources deleted/missing	setup	id	Sources deleted/missing
+ssl validation:	setup	id	SSL validation:
+status	setup	id	Status
+tables dropped	setup	id	tables dropped
+tables upgraded	setup	id	tables upgraded
+target version	setup	id	Target Version
+text entry	setup	id	Text Entry
+the file	setup	id	the file
+the tables	setup	id	the tables
+top	setup	id	top
+translations added	setup	id	Translations Added
+translations removed	setup	id	Translations Removed
+translations upgraded	setup	id	Translations Upgraded
+true	setup	id	True
+two weeks	setup	id	dua minggu
+uninstall	setup	id	uninstall
+uninstalled	setup	id	uninstalled
+update finished.	setup	id	Update finished.
+upgrade	setup	id	Upgrade
+upgrade all	setup	id	Upgrade All
+upgraded	setup	id	upgraded
+upgrading tables	setup	id	Upgrading Tables
+upload backup	setup	id	upload backup
+user	setup	id	user
+users choice	setup	id	Pilihan Pengguna
+utf-8 (unicode)	setup	id	utf-8 (Unicode)
+validation errors	setup	id	Validation errors
+version	setup	id	versi
+version mismatch	setup	id	Versi Tidak Sesuai
+view	setup	id	View
+virtual filesystem	setup	id	Virtual filesystem
+warning!	setup	id	Peringatan!
+world readable	setup	id	world readable
+world writable	setup	id	world writable
+write	setup	id	Tulis
+year	setup	id	tahun
+yes	setup	id	Ya

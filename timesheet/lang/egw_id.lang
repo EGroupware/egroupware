@@ -1,0 +1,103 @@
+%1 timesheets(s) %2	timesheet	id	%1 lembarwaktu %2
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	id	%1 lembarwaktu %2, %3 gagal karena tidak cukup kewenangan !!!
+--> enter new name	timesheet	id	--> masukan nama baru
+2 month ago	timesheet	id	2 bulan yang lalu
+2 years ago	timesheet	id	2 tahun yang lalu
+3 years ago	timesheet	id	3 tahun yang lalu
+actions	timesheet	id	Tindakan
+all projects	timesheet	id	Semua Proyek
+all status	timesheet	id	Semua status
+and its members	timesheet	id	dan anggotanya
+applies the changes	timesheet	id	terapkan pengubahan
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	id	Tindakan berlaku untuk seluruh query, TIDAK cuma yang ditampilkan!!!
+both: allow to use projectmanager and free project-names	admin	id	Both: boleh menggunakan ManajerProyek dan proyek lain
+by	timesheet	id	oleh
+changed status	timesheet	id	status yang diubah
+check all	timesheet	id	Contreng semua
+comment by %1 at %2:	timesheet	id	Komentar oleh %1 pada %2:
+create new links	timesheet	id	Bikin tautan baru
+creates a new field	timesheet	id	bikin field baru
+creating new entry	timesheet	id	membuat entri baru
+custom fields	timesheet	id	Custom fields
+delete this entry	timesheet	id	Hapus entri ini
+delete this status	timesheet	id	Hapus status ini
+delete timesheet	timesheet	id	Hapus LembarWaktu
+deleted	timesheet	id	terhapus
+deletes this field	timesheet	id	hapus field ini
+determines the order the fields are displayed	timesheet	id	menentukan urutan field ditampilkan
+each value is a line like <id>[=<label>]	timesheet	id	setiap nilai adalah sebuah baris seperti <id>[=<label>]
+edit status	timesheet	id	Edit status
+edit this entry	timesheet	id	Edit entri ini
+empty if identical to duration	timesheet	id	kosongkan jika sama dengan durasi
+end	timesheet	id	Akhir
+entry deleted	timesheet	id	Entri dihapus
+entry saved	timesheet	id	Entri disimpan
+error deleting the entry!!!	timesheet	id	Error deleting the entry!!!
+error saving the entry!!!	timesheet	id	Error saving the entry!!!
+existing links	timesheet	id	Tautan yang ada
+export	timesheet	id	Ekspor
+export to openoffice spreadsheet	timesheet	id	Expor ke OpenOffice Spreadsheet
+field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
+full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
+general	timesheet	id	Umum
+global categories	timesheet	id	Kategori Global
+history	timesheet	id	Riwayat
+id	timesheet	id	ID
+last modified	timesheet	id	Pengubahan terakhir
+last month	timesheet	id	Bulan lalu
+last week	timesheet	id	Minggu lalu
+last year	timesheet	id	Tahun lalu
+leave it empty for a full week	timesheet	id	Biarkan kosong bila seminggu penuh
+leaves without saveing	timesheet	id	tinggalkan tanpa menyimpan
+links	timesheet	id	Tautan
+modify the status of the timesheet	timesheet	id	Ubah Status LembarWaktu
+new ticket submitted by %1 at %2	timesheet	id	Tiket baru dikirimkan oleh %1 pada %2
+new timesheet submitted by %1 at %2	timesheet	id	LembarWaktu baru dikirim oleh %1 pada %2
+no details	timesheet	id	tiada kejelasan
+no project	timesheet	id	Tiada proyek
+no status	timesheet	id	Tiada status
+none: use only free project-names	admin	id	None: menggunakan segala proyek
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	id	number of row for a multiline inputfield or line of a multi-select-box
+only admin	timesheet	id	Hanya Admin
+only admin can edit this status	timesheet	id	hanya Admin yang dapat meng-edit status ini
+or endtime	timesheet	id	atau Waktu berakhir
+order	timesheet	id	Urutan
+parent	timesheet	id	Parent
+permission denied!!!	timesheet	id	Ijin ditolak!!!
+price	timesheet	id	Harga
+projectmanager integration	admin	id	Terpadu dengan ManajerProyek
+quantity	timesheet	id	Quantity
+save & new	timesheet	id	Simpan & Bikin baru
+saves the changes made	timesheet	id	Simpan perubahan
+saves the changes made and leaves	timesheet	id	simpan perubahan dan tinggalkan
+saves this entry and add a new one	timesheet	id	Simpan entri ini dan bikin baru
+select a price	timesheet	id	Pilih harga
+select a project	timesheet	id	Pilih proyek
+select a status of the timesheet	timesheet	id	pilih status LembarWaktu
+select action	timesheet	id	Pilih tindakan
+select infolog	timesheet	id	pilih InfoLog
+select multiple timeshhets for a further action	timesheet	id	Pilih beberapa lembarwaktu untuk tindakan berikutnya
+start	timesheet	id	Mulai
+starttime	timesheet	id	Waktu memulai
+starttime has to be before endtime !!!	timesheet	id	Waktu memulai harus sebelum waktu berakhir!!!
+status deleted.	timesheet	id	Status dihapus.
+status of created timesheets	timesheet	id	Status lembarwaktu yang dibikin
+status updated.	timesheet	id	Status diperbarui.
+sum %1:	timesheet	id	Jumlah %1:
+this month	timesheet	id	Bulan ini
+this week	timesheet	id	Minggu ini
+this year	timesheet	id	Tahun ini
+ticket modified by %1 at %2	timesheet	id	Tiket diubah oleh %1 pada %2
+timesheet	common	id	Lembaran Waktu
+timesheet csv export	timesheet	id	Ekspor CSV LembarWaktu
+timesheet modified by %1 at %2	timesheet	id	LembarWaktu diubah oleh %1 pada %2
+timesheet openoffice export	timesheet	id	Ekspor LembarWaktu ke OpenOffice
+timesheet status-%1 '%2' added.	timesheet	id	Status-%1 LembarWaktu '%2' ditambahkan.
+timesheet-%1 '%2' updated.	timesheet	id	LembarWaktu-%1 '%2' diperbarui.
+timesheet-%1 deleted.	timesheet	id	LembarWaktu-%1 dihapus.
+tracker	timesheet	id	Tracker
+unitprice	timesheet	id	Satuan harga
+view this entry	timesheet	id	Tampilkan entri ini
+week	timesheet	id	Minggu
+whole query	timesheet	id	seluruh query
+yesterday	timesheet	id	Kemarin

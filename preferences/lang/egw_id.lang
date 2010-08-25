@@ -1,0 +1,90 @@
+$label	preferences	id	$label
+%1 - preferences	preferences	id	Kesukaan - %1
+%1 hours	preferences	id	%1 jam
+12 hour	preferences	id	12 jam
+24 hour	preferences	id	24 jam
+a template defines the layout of egroupware and it contains icons for each application.	preferences	id	Templat menentukan tata-letak eGroupWare dan mengandung ikon untuk setiap aplikasi.
+a theme defines the colors and fonts used by the template.	preferences	id	Tema menentukan warna dan huruf yang digunakan pada templat.
+acl grants have been updated	preferences	id	Ijin ACL telah dikinikan
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	id	Setiap daftar pada eGroupWare akan menampilkan sejumlah entri atau baris per halaman.<br>Terlalu banyak akan memperlambat, terlalu sedikit akan mengurangi penampilan.
+are you sure you want to delete this category ?	preferences	id	Anda yakin ingin menghapus kategori ini?
+br	preferences	id	br
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	id	Ubah password pengguna dengan mengisikan password lama dan baru. Memberikan nilai TRUE jika sukses, FALSE jika gagal.
+change your password	preferences	id	Ubah password anda
+change your profile	preferences	id	Ubah profil anda
+change your settings	preferences	id	Ubah pengaturan anda
+charset for the csv export	addressbook	id	Charset untuk ekspor CSV
+click to select a color	preferences	id	Klik untuk memilih warna
+color	preferences	id	Warna
+country	preferences	id	Negara
+date format	preferences	id	Format tanggal
+default	preferences	id	bawaan
+default application	preferences	id	Aplikasi Bawaan
+default preferences	preferences	id	Kesukaan Bawaan
+default theme	preferences	id	Tema Bawaan
+delete categories	preferences	id	Hapus Kategori
+description can not exceed 255 characters in length !	preferences	id	Panjang uraian tidak boleh melebihi 255 karakter!
+display thumbnails for linked images	preferences	id	Tampilkan <em>thumbnail</em> gambar terkait
+div	preferences	id	div
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	id	Apakah anda lebih suka tampilan waktu 24 jam, atau 12 jam dengan simbol am/pm.
+edit custom fields	preferences	id	edit custom fields
+enter your new password	preferences	id	Masukan password baru anda
+enter your old password	preferences	id	Masukan password lama anda
+failed to change password.  please contact your administrator.	preferences	id	Gagal mengubah password. Silahkan hubungi administrator anda.
+forced preferences	preferences	id	Kesukaan Dipaksakan
+help off	preferences	id	Help off
+hours	preferences	id	jam
+how do you like to display accounts	preferences	id	Tampilan akoun sesuai kesukaan anda
+how do you like to select accounts	preferences	id	Pilihan akoun sesuai kesukaan anda
+how should egroupware display dates for you.	preferences	id	Bagaimana seharusnya eGroupWare menampilkan tanggal.
+icon	preferences	id	Ikon
+icons and text	preferences	id	Ikon dan teks
+icons only	preferences	id	hanya ikon
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	id	Gambar terkait pada suatu entri dapat ditampilkan dalam <em>thumbnails.</em> Anda dapat mematikannya untuk mempercepat tampilan halaman.
+in which country are you. this is used to set certain defaults for you.	preferences	id	Negara anda. Ini digunakan untuk menentukan bawaan tertentu.
+interface/template selection	preferences	id	Pemilihan Antarmuka/Templat
+language	preferences	id	Bahasa
+max matches per page	preferences	id	Maks. pencocokan per halaman
+max number of icons in navbar	preferences	id	Maks. jumlah ikon pada baris navigasi
+no default	preferences	id	Tanpa bawaan
+no user-selection at all	common	id	Tanpa pilihan pengguna
+note: this feature does *not* change your email password. this will	preferences	id	catatan: Fitur ini *tidak" mengubah password email anda. Ini harus
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	id	catatan: Fitur ini *tidak" mengubah password email anda. Ini harus dikerjakan sendiri.
+number format	preferences	id	Format bilangan
+office 2003 theme	preferences	id	Office 2003 theme
+p: paragraph	preferences	id	p: Paragraph
+permanent time zone selection	preferences	id	Pilihan zona-waktu tetap
+please select your timezone.	preferences	id	Pilih zonawaktu anda.
+please, select a new theme	preferences	id	Pilih tema yang baru
+popup with search	preferences	id	Popup dengan pencarian
+re-enter your password	preferences	id	Ulangi masukan password
+rich text editor theme	preferences	id	Tema editor Rich text
+select different theme	preferences	id	Pilih tema berbeda
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	id	Pilihlah bagaimana editor rich text akan menghasilkan <em>enter tag</em> (pemutus baris).
+select one	preferences	id	Pilih satu
+selectbox	preferences	id	Kotak pilihan
+selectbox with groupmembers	common	id	Kotak pilihan dengan anggota kelompok
+selectbox with primary group and search	preferences	id	Kotak pilihan dengan pencarian kelompok utama
+show helpmessages by default	preferences	id	Tampilkan pesan bantuan menurut bawaan
+show links between egroupware aps as	addressbook	id	Tampilkan tautan antar aplikasi eGroupWare sebagai
+show navigation bar as	preferences	id	Tampilkan baris navigasi sebagai
+show number of current users	preferences	id	Tampilkan jumlah pengguna saat ini
+show text on navigation icons	preferences	id	Tampilkan teks pada ikon navigasi
+show_more_apps	common	id	Tunjukan Lebih banyak Aplikasi
+silver theme	preferences	id	Silver theme
+spellchecker language	addressbook	id	Bahasa untuk Cek ejaan
+text only	preferences	id	Hanya teks
+the old password is not correct	preferences	id	Password lama keliru
+the two passwords are not the same	preferences	id	Kedua password tidak sama
+theme (colors/fonts) selection	preferences	id	Pemilihan Tema (warna/huruf)
+this server is located in the %1 timezone	preferences	id	Server ini terletak pada zonawaktu %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	id	Pemisah ribuan hanya untuk tampilan dan bukan untuk pengubahan angka-angka.
+time format	preferences	id	Format waktu
+use default	preferences	id	Gunakan bawaan
+users choice	preferences	id	Pilihan pengguna
+which currency symbol or name should be used in egroupware.	preferences	id	Simbol atau nama matauang yang digunakan pada eGroupWare.
+write prefs for the specified application.	preferences	id	Tulis kesukaan untuk aplikasi
+you do not have permission to set acl's in this mode!	preferences	id	Anda tidak memiliki ijin untuk mengatur ACL!
+you must enter a password	preferences	id	Anda harus mengisikan password
+your current theme is: %1	preferences	id	Tema anda saat ini adalah: %1
+your preferences	preferences	id	Kesukaan Anda
