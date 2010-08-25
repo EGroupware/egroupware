@@ -53,6 +53,7 @@ alternate style-sheet:	common	fi	Vaihtoehtoinen tyylisivu:
 american samoa	common	fi	AMERIKAN SAMOA
 an error happened	common	fi	Virheellinen toiminto
 an existing and by the webserver readable directory enables the image browser and upload.	common	fi	Olemassa oleva JA palvelimen lukuoikeudet omaava hakemisto sallii kuvien selaamisen ja lataamisen.
+and	common	fi	ja
 andorra	common	fi	ANDORRA
 angola	common	fi	ANGOLA
 anguilla	common	fi	ANGUILLA
@@ -484,6 +485,7 @@ oops! you caught us in the middle of system maintainance.	common	fi	Hups... Huol
 open notify window	common	fi	Avaa huomautusikkuna
 open popup window	common	fi	Avaa ponnahdusikkuna
 open sidebox	common	fi	Avaa sivuvalikko
+or	common	fi	tai
 ordered list	common	fi	Listajärjestys
 original	common	fi	Alkuperäinen
 other	common	fi	Muu
@@ -531,7 +533,7 @@ postal	common	fi	Posti
 powered by	common	fi	Kehittänyt
 powered by egroupware version %1	common	fi	Tämä on <a href="http://www.egroupware.org">EGroupware</a> versio %1
 preferences	common	fi	Asetukset
-preferences for the idots template set	common	fi	Idots-mallipohjan asetukset
+preferences for the %1 template set	preferences	fi	Asetukset mallipohjalle: %1
 prev. month (hold for menu)	jscalendar	fi	Edellinen kuukausi (pidä alhaalla, niin näet valikon)
 prev. year (hold for menu)	jscalendar	fi	Edellinen vuosi (pidä alhaalla, niin näet valikon)
 previous page	common	fi	Edelliselle sivu
