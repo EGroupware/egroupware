@@ -108,6 +108,7 @@ class emailadmin_sieve extends Net_Sieve
 
 	function setRules($_scriptName, $_rules) 
 	{
+		if (!$_scriptName) $_scriptName = $this->scriptName;
 		$script = new emailadmin_script($_scriptName);
 		$script->debug = $this->debug;
 
@@ -123,6 +124,7 @@ class emailadmin_sieve extends Net_Sieve
 
 	function setVacation($_scriptName, $_vacation) 
 	{
+		if (!$_scriptName) $_scriptName = $this->scriptName;
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__."($_scriptName,".print_r($_vacation,true).')');
 		$script = new emailadmin_script($_scriptName);
 		$script->debug = $this->debug;
@@ -158,6 +160,7 @@ class emailadmin_sieve extends Net_Sieve
 	 */
 	function setVactionUser($_euser, $_scriptName, $_vaction)
 	{
+		if (!$_scriptName) $_scriptName = $this->scriptName;
 		if ($this->_connect($this->icServer,$_euser) === true) {			
 			$this->setVacation($_scriptName,$_vacation);
 			// we need to logout, so further vacation's get processed
@@ -169,6 +172,7 @@ class emailadmin_sieve extends Net_Sieve
 	}
 	
 	function setEmailNotification($_scriptName, $_emailNotification) {
+		if (!$_scriptName) $_scriptName = $this->scriptName;
     	if ($_emailNotification['externalEmail'] == '' || !preg_match("/\@/",$_emailNotification['externalEmail'])) {
     		$_emailNotification['status'] = 'off';
     		$_emailNotification['externalEmail'] = '';
@@ -183,6 +187,7 @@ class emailadmin_sieve extends Net_Sieve
 	}
 
 	function retrieveRules($_scriptName) {
+		if (!$_scriptName) $_scriptName = $this->scriptName;
 		$script = new emailadmin_script($_scriptName);
 		
 		if($script->retrieveRules($this)) {
