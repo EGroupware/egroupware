@@ -1379,11 +1379,18 @@ class addressbook_ui extends addressbook_bo
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
 				// create a new contact with the content of the old
-				foreach(array('id','modified','modifier','account_id','uid','cat_id','etag') as $key)
+				$copy_fields = unserialize($this->config['copy_fields']);
+				foreach($content as $key => $value)
 				{
-					unset($content[$key]);
+					if(!in_array($key, $copy_fields) || in_array($key, array('etag')))
+					{
+						unset($content[$key]);
+					}
 				}
-				$content['owner'] = $this->default_private ? $this->user.'p' : $this->default_addressbook;
+				if(!isset($content['owner']))
+				{
+					$this->default_private ? $this->user.'p' : $this->default_addressbook;
+				}
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
 				$content['msg'] = lang('Contact copied');
