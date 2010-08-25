@@ -1,3 +1,4 @@
+%1 is not writable by you!	felamimail	sk	na %1 NEmáte právo zápisu!
 (no subject)	felamimail	sk	(bez predmetu)
 (only cc/bcc)	felamimail	sk	(iba Kópia/Skrytá kópia)
 (separate multiple addresses by comma)	felamimail	sk	(oddeliť viacero adries čiarkou)
@@ -28,6 +29,7 @@ any of	felamimail	sk	ktorýkoľvek z
 any status	felamimail	sk	ktorýkoľvek stav
 anyone	felamimail	sk	ktokoľvek
 as a subfolder of	felamimail	sk	ako podpriečinok (čoho)
+attach	felamimail	sk	Priložiť
 attachments	felamimail	sk	Prílohy
 authentication required	felamimail	sk	požaduje sa overenie
 auto refresh folder list	felamimail	sk	Automaticky obnoviť zoznam priečinkov
@@ -55,12 +57,16 @@ close this page	felamimail	sk	zavrieť túto stránku
 close window	felamimail	sk	Zavrieť okno
 color	felamimail	sk	Farba
 compose	felamimail	sk	Nová správa
+compose as new	felamimail	sk	vytvoriť ako nové
 compress folder	felamimail	sk	Zhutniť priečinok
 condition	felamimail	sk	okolnosť
 configuration	felamimail	sk	Konfigurácia
+configure a valid imap server in emailadmin for the profile you are using.	felamimail	sk	Nakonfigurujte v emailadmin platný IMAP server pre profil, ktorý používate.
 connection dropped by imap server.	felamimail	sk	Spojenie prerušené IMAP serverom.
+contact not found!	felamimail	sk	Kontakt sa nenašiel!
 contains	felamimail	sk	obsahuje
 could not complete request. reason given: %s	felamimail	sk	Nepodarilo sa dokončiť požiadavku. Dôvod: %s
+could not import message:	felamimail	sk	Nepodarilo sa importovať správu:
 could not open secure connection to the imap server. %s : %s.	felamimail	sk	Nepodarilo sa nadviazať zabezpečené spojenie k IMAP serveru. %s : %s.
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	sk	CRAM-MD5 alebo DIGEST-MD5 vyžaduje, aby bol nainštalovaný balík Auth_SASL.
 create	felamimail	sk	Vytvoriť
@@ -104,16 +110,24 @@ do not use sent	felamimail	sk	Nepoužívať [Odoslana pošta]
 do not use trash	felamimail	sk	Nepoužívať [Odpadkový kôš]
 do not validate certificate	felamimail	sk	Nepotvrdiť certifikát
 do you really want to delete the '%1' folder?	felamimail	sk	Naozaj chcete odstrániť priečinok '%1'?
+do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	sk	Naozaj chcete odstrániť vybrané nastavenia účtu a súvisiacu Identitu?
 do you really want to delete the selected signatures?	felamimail	sk	Naozaj chcete odstrániť označené podpisy?
 do you really want to move the selected messages to folder:	felamimail	sk	Ste si istý, že chcete presunúť vybrané správy do priečinka:
 do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	sk	Chcete, aby sa vyžadovalo potvrdenie pred presunutím vybraných správ do iného priečinka?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	sk	Naozaj chcete zabrániť úpravám/nastaveniam pre preposielanie pošty pomocou nastavení (, aj keď je povolený SIEVE)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	sk	Naozaj chcete zabrániť úpravám/nastaveniam pre filtrovacie pravidlá (, aj keď je povolený SIEVE)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	sk	Naozaj chcete zabrániť úpravám/nastaveniam pre e-mailové upozornenia na iné e-mailové adresy (, aj keď je povolený SIEVE)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	sk	Naozaj chcete zabrániť úpravám/nastaveniam pre oznámenia o absencii/dovolenke (, aj keď je povolený SIEVE)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	sk	Naozaj chcete zabrániť správe priečinkov (vytváranie, prístupové práva A členstvo)?
 does not contain	felamimail	sk	neobsahuje
+does not exist on imap server.	felamimail	sk	neexistuje na IMAP serveri.
 does not match	felamimail	sk	nezodpovedá
 does not match regexp	felamimail	sk	nezodpovedá regulárnemu výrazu
 don't use draft folder	felamimail	sk	Nepoužívať priečinok návrhov
 don't use sent	felamimail	sk	Nepoužívať [Odoslana pošta]
 don't use template folder	felamimail	sk	Nepoužívať [Šablóny]
 don't use trash	felamimail	sk	Nepoužívať [Odpadkový kôš]
+dont strip any tags	felamimail	sk	neodstraňovať značky
 down	felamimail	sk	dole
 download	felamimail	sk	Stiahnuť
 download this as a file	felamimail	sk	Stiahnuť to do súboru
@@ -130,6 +144,7 @@ edit vacation settings	felamimail	sk	upraviť nastavenia vyprázdňovania
 editor type	felamimail	sk	Typ editora
 email address	felamimail	sk	E-mailová adresa
 email forwarding address	felamimail	sk	preposielacia adresa E-mailu
+email notification update failed	felamimail	sk	zlyhala e-mailová aktualizácia upozornenia
 email signature	felamimail	sk	E-mailový podpis
 emailaddress	felamimail	sk	E-mailová adresa
 empty trash	felamimail	sk	Vyprázdniť Odpadkový kôš
@@ -146,12 +161,17 @@ error connecting to imap serv	felamimail	sk	Chyba počas pripájania na IMAP ser
 error connecting to imap server. %s : %s.	felamimail	sk	Chyba počas pripájania k IMAP serveru. %s : %s.
 error connecting to imap server: [%s] %s.	felamimail	sk	Chyba počas pripájania k IMAP serveru: [%s] %s.
 error opening	felamimail	sk	Chyba pri otváraní
+error saving %1!	felamimail	sk	Chyba počas ukladania %1!
+error:	felamimail	sk	Chyba:
+error: could not save message as draft	felamimail	sk	Chyba: Nepodarilo sa uložiť správu ako Návrh
+error: message could not be displayed.	felamimail	sk	CHYBA: Správa sa nedá zobraziť.
 every	felamimail	sk	každý
 every %1 days	felamimail	sk	každých
 expunge	felamimail	sk	Odstrániť
 extended	felamimail	sk	Rozšírené
 felamimail	common	sk	FelaMiMail
 file into	felamimail	sk	súbor do
+filemanager	felamimail	sk	Správca súborov
 files	felamimail	sk	súbory
 filter active	felamimail	sk	filter aktívny
 filter name	felamimail	sk	Názov filtra
@@ -159,6 +179,7 @@ filter rules	common	sk	pravidlá filtra
 first name	felamimail	sk	Krstné meno
 flagged	felamimail	sk	označené
 flags	felamimail	sk	Príznaky
+folder	felamimail	sk	priečinok
 folder acl	felamimail	sk	prístupové práva (acl) priečinku
 folder name	felamimail	sk	Názov priečinku
 folder path	felamimail	sk	Cesta k priečinku
@@ -200,6 +221,7 @@ if	felamimail	sk	AK
 if from contains	felamimail	sk	ak Od obsahuje
 if mail header	felamimail	sk	ak hlavička správu
 if message size	felamimail	sk	ak veľkosť správy
+if shown, which folders should appear on main screen	felamimail	sk	ak je zobrazené, ktoré priečinky sa majú objaviť na hlavnej obrazovke
 if subject contains	felamimail	sk	ak predmet obsahuje
 if to contains	felamimail	sk	ak Komu obsahuje
 if using ssl or tls, you must have the php openssl extension loaded.	felamimail	sk	Ak používate SSL alebo TLS, musíte mať nahraté rozšírenie PHP openssl.
@@ -214,6 +236,8 @@ imap server type	felamimail	sk	Typ IMAP servera
 imap server username	felamimail	sk	Používateľské meno pre IMAP server
 imaps authentication	felamimail	sk	IMAPS overovanie
 imaps encryption only	felamimail	sk	Iba IMAPS šifrovanie
+import	felamimail	sk	Import
+import mail	felamimail	sk	Import Správy
 in	felamimail	sk	v
 inbox	felamimail	sk	Doručená pošta
 incoming mail server(imap)	felamimail	sk	Príchodzí mail server (IMAP)
@@ -239,6 +263,7 @@ location of buttons when composing	felamimail	sk	Rozmiestnenie tlačidiel pri p�
 mail server login type	admin	sk	Typ prihlásenia poštového servera
 mail settings	felamimail	sk	Nastavenia pošty
 mainmessage	felamimail	sk	hlavná správa
+manage email accounts and identities	common	sk	Správa E-mailových Priečinkov a Identít
 manage emailaccounts	common	sk	Správa E-mailových účtov
 manage emailfilter / vacation	preferences	sk	Správa E-mailového filtra / Odstraňovania
 manage folders	common	sk	Správa priečinkov
@@ -259,6 +284,7 @@ message list	felamimail	sk	Zoznam správ
 messages	felamimail	sk	správy
 mon	felamimail	sk	Pon
 move	felamimail	sk	presunúť
+move folder	felamimail	sk	presunúť priečinok
 move messages	felamimail	sk	presunúť správy
 move selected to	felamimail	sk	presunúť vybrané do
 move to trash	felamimail	sk	Presunúť do Odpadkového koša
@@ -270,14 +296,18 @@ new filter	felamimail	sk	Nový filter
 next	felamimail	sk	Ďalší
 next message	felamimail	sk	ďalšia správa
 no active imap server found!!	felamimail	sk	Nenašiel sa žiadny aktívny IMAP server !!
+no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	sk	Nebola zadaná adresa KOMU/KÓPIA/SLEPÁ KÓPIA, ani priečinok pre uloženie správy.
 no encryption	felamimail	sk	bez šifrovania
 no filter	felamimail	sk	Žiadny filter
+no folders	felamimail	sk	žiadne priečinky
 no folders found	felamimail	sk	Žiadne priečinky sa nenašli
 no folders were found to subscribe to!	felamimail	sk	Nenašli sa priečinky pre prihlásenie!
 no folders were found to unsubscribe from!	felamimail	sk	Nenašli sa priečinky pre odhlásenie!
 no highlighting is defined	felamimail	sk	Nebolo nastavené zvýrazňovanie
+no imap server host configured!!	felamimail	sk	Nebola nastavená host adresa IMAP servera!!
 no message returned.	felamimail	sk	Žiadna správa sa nevrátila.
 no messages found...	felamimail	sk	žiadne správy sa nenašli
+no messages selected, or lost selection. changing to folder	felamimail	sk	Neboli označené žiadne správy, alebo sa označenie stratilo. Prechádzam do priečinku
 no messages were selected.	felamimail	sk	Neboli vybrané žiadne správy
 no plain text part found	felamimail	sk	Nebola nájdená žiadna čisto textová časť
 no previous message	felamimail	sk	žiadna predchádzajúca správa
@@ -287,6 +317,8 @@ no subject given!	felamimail	sk	Nebol zadaný predmet sprrávy!
 no supported imap authentication method could be found.	felamimail	sk	Nenašla sa žiadna z podporovaných metód IMAP overovania.
 no valid emailprofile selected!!	felamimail	sk	Nebol vybratý platný E-mailový profil!
 none	felamimail	sk	žiadne
+none, create all	felamimail	sk	žiadne, vytvoriť všetko
+notify when new mails arrive on these folders	felamimail	sk	upozorniť, keď do týchto priečinkov príde správa
 on	felamimail	sk	ohľadom
 on behalf of	felamimail	sk	pre koho
 one address is not valid	felamimail	sk	Jedna adresa je neplatná
@@ -296,6 +328,7 @@ only unseen	felamimail	sk	Iba neprečítané
 open all	felamimail	sk	otvoriť všetko
 options	felamimail	sk	Voľby
 or	felamimail	sk	alebo
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	felamimail	sk	alebo nastavte platné pripojenie na IMAP server pomocou predvolieb v Správe Účtov/Identít v postrannej ponuke.
 organisation	felamimail	sk	organizácia
 organization	felamimail	sk	organizácia
 organization name	admin	sk	Názov organizácie
@@ -303,6 +336,7 @@ original message	felamimail	sk	Pôvodná správa
 outgoing mail server(smtp)	felamimail	sk	Odchodzí mail server (SMTP)
 participants	felamimail	sk	Účastníci
 personal information	felamimail	sk	Osobné informácie
+please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	sk	Prosím požiadajte správcu, aby opravil nastavenia IMAP servera.
 please select a address	felamimail	sk	Prosím vyberte adresu
 please select the number of days to wait between responses	felamimail	sk	Prosím vyberte počet dní, koľko čakať medzi odpoveďami
 please supply the message to send with auto-responses	felamimail	sk	Prosím zadajte správu, ktorá sa má posielať v rámci automatickej odpovede
@@ -340,6 +374,7 @@ row order style	felamimail	sk	Štýl usporiadania riadkov
 rule	felamimail	sk	Pravidlo
 sat	felamimail	sk	Sob
 save	felamimail	sk	Uložiť
+save all	felamimail	sk	Uložiť všetko
 save as draft	felamimail	sk	uložiť ako návrh
 save as infolog	felamimail	sk	uložiť do Záznamníka
 save changes	felamimail	sk	uložiť zmeny
@@ -363,6 +398,7 @@ show header	felamimail	sk	zobraziť hlavičku
 show new messages on main screen	felamimail	sk	Zobrazovať nové správy na hlavnej stránke
 sieve script name	felamimail	sk	Názov Sieve skriptu
 sieve settings	admin	sk	Nastavenia Sieve
+signatur	felamimail	sk	Podpis
 signature	felamimail	sk	Podpis
 simply click the target-folder	felamimail	sk	Jednoducho kliknúť na cieľový priečinok
 size	felamimail	sk	Veľkosť
@@ -373,6 +409,7 @@ skipping forward	felamimail	sk	preskočiť vpred
 skipping previous	felamimail	sk	preskočiť späť
 small view	felamimail	sk	zmenšený pohľad
 smtp settings	admin	sk	Nastavenia SMTP
+start new messages with mime type plain/text or html?	felamimail	sk	vytvárať nové správy pomocou mime typu plain/text, alebo html?
 subject	felamimail	sk	Predmet
 subject(a->z)	felamimail	sk	Predmet (A->Z)
 subject(z->a)	felamimail	sk	Predmet (Z->A)
@@ -386,11 +423,13 @@ table of contents	felamimail	sk	Obsahová tabuľka
 template folder	felamimail	sk	Priečinok Šablóny
 templates	felamimail	sk	Šablóny
 text only	felamimail	sk	Iba text
+text/plain	felamimail	sk	text/plain
 the connection to the imap server failed!!	felamimail	sk	Pripojenie na IMAP server sa nepodarilo!!!
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	sk	Tento IMAP server nepodporuje vybranú metódu overovania. Prosím kontaktujte správcu systému.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	sk	Odosielateľ správy si vyžiadal potvrdenie o tom, že ste si jeho správu už prečítali. Chcete, aby sa mu toto potvrdenie odoslalo?
 the mimeparser can not parse this message.	felamimail	sk	Analyzátor MIME nedokázal spracovať túto správu.
 then	felamimail	sk	TAK
+there is no imap server configured.	felamimail	sk	Nie je nastavený žiadny IMAP server.
 this folder is empty	felamimail	sk	TENTO PRIEČINOK JE PRÁZDNY
 this php has no imap support compiled in!!	felamimail	sk	Tento PHP nemá zakompilovanú podporu IMAP!!
 thu	felamimail	sk	Štv
@@ -426,6 +465,7 @@ use <a href="%1">emailadmin</a> to create profiles	felamimail	sk	pre vytváranie
 use a signature	felamimail	sk	Použiť podpis
 use a signature?	felamimail	sk	Použiť podpis?
 use addresses	felamimail	sk	Použiť adresy
+use custom identities	felamimail	sk	použiť používateľské identity
 use custom settings	felamimail	sk	Použiť používateľské nastavenia
 use regular expressions	felamimail	sk	použiť regulérne výrazy
 use smtp auth	admin	sk	Použiť SMTP overovanie
@@ -442,10 +482,13 @@ viewing message	felamimail	sk	Zobrazujem správu
 viewing messages	felamimail	sk	Zobrazujem správy
 wed	felamimail	sk	Str
 when deleting messages	felamimail	sk	Ako odstraňovať správy
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	sk	ktoré priečinky (popri priečinku Odoslané) sa majú zobrazovať pomocou schémy Zobrazenie Priečinka Odoslaných správ
+which folders - in general - should not be automatically created, if not existing	felamimail	sk	ktoré priečinky - vo všeobecnosti - sa NEMAJÚ vytvárať automaticky, keď neexistujú
 with message	felamimail	sk	so správou
 with message "%1"	felamimail	sk	so správou "%1"
 wrap incoming text at	felamimail	sk	Zarovnať príchodzí text:
 writing	felamimail	sk	zapisuje sa
 wrote	felamimail	sk	zapísal
 you can use %1 for the above start-date and %2 for the end-date.	felamimail	sk	Môžete použiť %1 pre vyššieuvedený dátum začiatku a %2 pre dátum konca.
+you have received a new message on the	felamimail	sk	Dostali ste novú správu:
 your message to %1 was displayed.	felamimail	sk	Vaša správa adresátovi %1 bola zobrazená.

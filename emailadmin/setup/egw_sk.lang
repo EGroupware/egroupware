@@ -9,6 +9,8 @@ alternate email address	emailadmin	sk	Alternatívna E-mailová adresa
 any application	emailadmin	sk	Ktorákoľvek aplikácia
 any group	emailadmin	sk	Ktorákoľvek skupina
 any user	emailadmin	sk	Ktorýkoľvek používateľ
+back to admin/grouplist	emailadmin	sk	Späť na Správu/Skupiny
+back to admin/userlist	emailadmin	sk	Späť na Správu/Používateľov
 bad login name or password.	emailadmin	sk	Chybné prihlasovacie meno alebo heslo.
 bad or malformed request. server responded: %s	emailadmin	sk	Chybná požiadavka. Odpoveď servera: %s
 bad request: %s	emailadmin	sk	Chybná požiadavka: %s
@@ -25,12 +27,15 @@ default	emailadmin	sk	predvolené
 deliver extern	emailadmin	sk	doručiť extern
 do not validate certificate	emailadmin	sk	neoveriť certifikát
 do you really want to delete this profile	emailadmin	sk	Naozaj chcete odstrániť tento Profil
+do you really want to reset the filter for the profile listing	emailadmin	sk	Naozaj chcete vynulovať filter pre výpis profilu?
 domainname	emailadmin	sk	názov domény
 edit email settings	emailadmin	sk	upraviť nastavenia E-mailu
 email account active	emailadmin	sk	E-mailový účet je aktívny
 email address	emailadmin	sk	E-mailová adresa
 email settings	common	sk	Nastavenia E-mailu
 emailadmin	emailadmin	sk	EMailAdmin
+emailadmin: group assigned profile	common	sk	eMailAdmin: skupinovo priradený Profil
+emailadmin: user assigned profile	common	sk	eMailAdmin: používateľsky priradený Profil
 enable cyrus imap server administration	emailadmin	sk	zapnúť správu servera Cyrus IMAP
 enable sieve	emailadmin	sk	zapnúť Sieve
 encrypted connection	emailadmin	sk	šifrované spojenie
@@ -38,6 +43,8 @@ encryption settings	emailadmin	sk	nastavenia šifrovania
 enter your default mail domain (from: user@domain)	emailadmin	sk	Zadajte vašu predvolenú doménu (z tvaru: user@domain)
 error connecting to imap server. %s : %s.	emailadmin	sk	Chyba počas pripájania k IMAP serveru. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	sk	Chyba počas pripájania k IMAP serveru: [%s] %s.
+filtered by account	emailadmin	sk	filtrované podľa Účtu
+filtered by group	emailadmin	sk	filtrované podľa Skupiny
 forward also to	emailadmin	sk	preposlať taktiež (komu)
 forward email's to	emailadmin	sk	preposlať emaily (kam)
 forward only	emailadmin	sk	preposlať iba
@@ -88,9 +95,11 @@ qmaildotmode	emailadmin	sk	qmail bodkový režim
 qouta size in mbyte	emailadmin	sk	Neľkosť kvóty v Megabajtoch
 quota settings	emailadmin	sk	Nastavenia kvóty
 remove	emailadmin	sk	Odstrániť
+reset filter	emailadmin	sk	vynulovať filter
 select type of imap server	emailadmin	sk	Vyberte typ IMAP servera
 select type of imap/pop3 server	emailadmin	sk	Vyberte typ IMAP/POP3 servera
 select type of smtp server	emailadmin	sk	Vyberte typ SMTP servera
+send using this email-address	emailadmin	sk	odoslať pomocou tejto e-mailovej adresy
 server settings	emailadmin	sk	Nastavenia servera
 sieve server hostname or ip address	emailadmin	sk	Názov (hostname) alebo IP Sieve servera
 sieve server port	emailadmin	sk	Nort Sieve servera

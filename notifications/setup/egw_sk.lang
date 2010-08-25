@@ -7,7 +7,7 @@ egroupware-popup backend	admin	sk	eGroupWare vyskakovací mechanizmus
 egroupware-popup verbosity	notifications	sk	Podrobnosť vyskakovacieho mechanizmu
 enable egroupware-popup backend	admin	sk	Povoliť vyskakovací mechanizmus eGroupWare
 enable sms backend	admin	sk	Povoliť SMS mechanizmus
-enable windows-popup backend	admin	sk	Povoliť Windows vyskakovací mechanizmus
+enable windows-popup backend	admin	sk	Povoliť vyskakovací mechanizmus Windows
 enabled chains	notifications	sk	Povolené reťazce
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled !<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	sk	Do akých podrobností má eGroupware vyskakovací mechanizmus vystupovať, keď sa používateľovi posiela pripomienka:<br />nízka: iba zobraziť zvonček pripomienky vo vrchnej ponuke - táto musí byť povolená!<br />stredná: preniesť okno pripomienky do popredia<br />vysoká: preniesť okno pripomienky do popredia a spôsobiť, aby prehliadač na seba nejako upozornil
 if set, embedded links get rendered special for external clients	notifications	sk	Ak je nastavené, pripojené odkazy sa vykreslia špeciálne pre vonkajších klientov
@@ -20,4 +20,4 @@ optimize e-mails for external mail client	notifications	sk	Optimizovať E-Maily 
 preferences for notification	notifications	sk	Predvoľby pre Pripomienky
 sms backend	admin	sk	Mechanizmus SMS
 this egroupware notification has been sent to you by mail because your	notifications	sk	Táto pripomienka eGroupWare vám bola zaslaná prostredníctvom mailu, pretože váš
-windows-popup backend	admin	sk	Windows vyskakovací mechanizmus
+windows-popup backend	admin	sk	Vyskakovací mechanizmus Windows

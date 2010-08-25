@@ -52,6 +52,7 @@ canceled	calendar	sk	Zrušené
 charset of file	calendar	sk	Znaková sada súboru
 close the window	calendar	sk	Zavrieť okno
 compose a mail to all participants after the event is saved	calendar	sk	po uložení udalosti napísať E-mail všetkým účastníkom
+conflict	calendar	sk	Konflikt
 copy of:	calendar	sk	Kópia (čoho):
 copy this event	calendar	sk	Kopírovať udalosť
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	sk	Kopírovať vaše zmeny do schránky, %1znovunačítať záznam%2 a zlúčiť ich.
@@ -73,12 +74,15 @@ default appointment length (in minutes)	calendar	sk	Predvolená dĺžka udalost�
 default calendar filter	calendar	sk	Predvolený filter kalendára
 default calendar view	calendar	sk	Predvolený pohľad na kalendár
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	sk	Predvolená dĺžka novovytvorených udalostí, v minútach.
+default type of resources application selected in the calendar particpants research form.	calendar	sk	Predvolený typ aplikácie zdrojov vybratý vo vyhľadávacom formulári účastníkov v Kalendári.
+default type of resources selection	calendar	sk	Predvolený typ výberu zdrojov
 default week view	calendar	sk	Predvolený týždenný pohľad
 delete series	calendar	sk	Odstrániť sériu
 delete this alarm	calendar	sk	Odstrániť túto pripomienku
 delete this event	calendar	sk	Odstrániť túto udalosť
 delete this exception	calendar	sk	Odstrániť túto výnimku
 delete this series of recuring events	calendar	sk	Odstrániť túto sériu pravidelných udalostí
+deny ressources reservation for private events	calendar	sk	Zakázať rezerváciu zdrojov pre súkromné udalosti
 disinvited	calendar	sk	Zrušená pozvánka
 display status of events	calendar	sk	Zobraziť stav udalostí
 displayed view	calendar	sk	zobrazený pohľad
@@ -105,6 +109,7 @@ ends	calendar	sk	končí
 error adding the alarm	calendar	sk	Chyba počas pridávania pripomienky
 error: importing the ical	calendar	sk	Chyba: import iCal-u
 error: no participants selected !!!	calendar	sk	Chyba: Neboli vybraní účastníci!!!
+error: ressources reservation in private events is not allowed!!!	calendar	sk	Chyba: rezervácia zdrojov nie je povolená pre súkromné udalosti!
 error: saving the event !!!	calendar	sk	Chyba: ukladanie udalosti!!!
 error: starttime has to be before the endtime !!!	calendar	sk	Chyba: Čas začiatku by mal byť PRED časom konca!!!
 error: the entry has been updated since you opened it for editing!	calendar	sk	Chyba: tento záznam bol aktualizovaný v čase, odkedy ho máte otvorený pre úpravy!
@@ -138,6 +143,7 @@ fri	calendar	sk	Pi
 full description	calendar	sk	Opis
 fullname of person to notify	calendar	sk	Celé meno upozorňovanej osoby
 general	calendar	sk	Hlavné
+global categories	calendar	sk	Globálne kategórie
 global public and group public	calendar	sk	Verejná - globálne i pre skupinu
 global public only	calendar	sk	Iba globálne verejná
 group invitation	calendar	sk	Pozvanie skupiny
@@ -248,6 +254,8 @@ repetition	calendar	sk	Opakovanie
 repetitiondetails (or empty)	calendar	sk	Detaily o opakovaní (alebo nič)
 reset	calendar	sk	Vynulovať
 resources	calendar	sk	Zdroje
+resources except conflicting ones	calendar	sk	Zdroje okrem konfliktných
+resources with conflict detection	calendar	sk	Zdroje so zisťovaním konfliktov
 rule	calendar	sk	Pravidlo
 sat	calendar	sk	So
 saves the changes made	calendar	sk	uloží vykonané zmeny
@@ -264,6 +272,7 @@ setting lock time calender	admin	sk	Nastavenie Datalock času pre Kalendár (pre
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sk	Majú se odmietnuté pozvánky stále zobrazovať v kalendári?<br>Môžete ich prijať neskôr (napríklad keď sa vyrieši konflikt plánovania), ale len ak sú stále zobrazené vo vašom kalendári!
 should new events created as private by default ?	calendar	sk	Majú sa nové udalosti štandardne vytvárať ako súkromné?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sk	Chcete, aby informácie o Vašom zaneprázdnení či voľnom čase boli dostupné aj pre neprihlásené osoby? Ak chcete tieto údaje chrániť, môžete si nastaviť aj dodatočné heslo, odlišné od Vašeho bežného hesla. Údaje sú vo formáte iCal a obsahujú iba časy vašej zaneprázdnenosti, bez zbytočných podrobností ako napr. názvov udalostí, opisov alebo miest. Odkaz na tieto informácie je %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.	calendar	sk	Môžu neprihlásené osoby vidieť informáciu o vašom zaneprázdnení? Ak chcete tieto informácie chrániť, môžete zadať samostatné heslo, odlišné od vášho prihlasovacieho hesla. Informácia o zaneprázdnení je vo formáte iCal a obsahuje iba informácie o tom, kedy ste zaneprázdnení. Neobsahuje názov udalosti, opis ani miesto. Adresa URL vašich informácií o zaneprázdnení je<a href="http://localhost/egroupware/calendar/freebusy.php?user=stivi" target="_blank">http://localhost/egroupware/calendar/freebusy.php?user=stivi</a>.
 should the planner display an empty row for users or categories without any appointment.	calendar	sk	Chcete, aby plánovač zobrazoval prázdny riadok pri používateľoch, ktorí nemajú žiadnu udalosť?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sk	Má se za menom používateľa zobrazovať jeho vzťah k udalosti (prijal, odmietol, ...)?
 show birthdays from addressbook	admin	sk	Zobraziť narodeniny z Adresára
@@ -286,6 +295,7 @@ submit to repository	calendar	sk	Uložiť do databázy
 sun	calendar	sk	Ne
 tentative	calendar	sk	Predbežne prijal
 test import (show importable records <u>only</u> in browser)	calendar	sk	Otestovať import (importované záznamy sa zobrazia <u>len</u> v prehliadači)
+the resource you selected is already overbooked:	calendar	sk	Zdroj, ktorý ste vybrali, je už obsadený:
 this day is shown as first day in the week or month view.	calendar	sk	Tento deň sa zobrazuje ako prvý v týždennom či mesačnom pohľade.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sk	Touto hodinou sa končí denný pohľad. Udalosti po tejto hodine se zobrazia až za denným pohľadom.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sk	Touto hodinou sa začína denný pohľad. Udalosti pred touto hodinou se zobrazia pred denným pohľadom.<br>Zároveň sa táto hodina použije ako východzia pre nové udalosti.
@@ -334,6 +344,7 @@ work day ends on	calendar	sk	Pracovný deň končí o
 work day starts on	calendar	sk	Pracovný deň začína o
 yearly	calendar	sk	Ročne
 yearview	calendar	sk	Ročný pohľad
+you are not allowed to book the resource selected:	calendar	sk	Nemáte oprávnenie rezervovať nasledovný zdroj:
 you can either set a year or a occurence, not both !!!	calendar	sk	Môžete zadať buď rok, alebo výskyt, ale nie obidvoje !!!
 you can only set a year or a occurence !!!	calendar	sk	Môžete zadať buď rok alebo výskyt, ale nie obidvoje!!!
 you do not have permission to read this record!	calendar	sk	Nemáte právo čítať tento záznam!
@@ -342,5 +353,6 @@ you have been disinvited from the meeting at %1	calendar	sk	Vaše pozvanie na st
 you need to select an account, contact or resource first!	calendar	sk	Najprv treba vybrať účet, kontakt alebo zdroj!
 you need to select an ical file first	calendar	sk	Najprv treba vybrať súbor iCal.
 you need to set either a day or a occurence !!!	calendar	sk	Musíte nastaviť buď deň alebo výskyt!!!
+you requested more than available for the selected resource:	calendar	sk	Požadujete viac než je z vybraného zdroja dostupné:
 your meeting scheduled for %1 has been canceled	calendar	sk	Stretnutie, ktoré bolo naplánované na %1, bolo zrušené
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	sk	Stretnutie, pôvodne plánované na %1, bolo preložené na %2.

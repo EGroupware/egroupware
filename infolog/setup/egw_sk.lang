@@ -41,6 +41,7 @@ add:	infolog	sk	Pridať:
 all	infolog	sk	Všetko
 all links and attachments	infolog	sk	Všetky odkazy a prílohy
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sk	umožňuje nastaviť stav záznamu, napr. nastaviť Úlohu ktorá sa má vykonať po ukončení (hodnoty závisia na type záznamu)
+applies the changes	infolog	sk	Uplatní zmeny
 apply the changes	infolog	sk	Uplatniť zmeny
 archive	infolog	sk	Archív
 are you shure you want to delete this entry ?	infolog	sk	Naozaj chcete odstrániť tento záznam?
@@ -56,6 +57,7 @@ cancel	infolog	sk	Zrušiť
 cancelled	infolog	sk	Zrušené
 categories	infolog	sk	Kategórie
 category	infolog	sk	Kategória
+change history	infolog	sk	História zmien
 change the status of an entry, eg. close it	infolog	sk	Zmeniť stav záznamu, napr. uzavrieť ho
 charset of file	infolog	sk	Znaková sada súboru
 check to set startday	infolog	sk	Ak chcete zadať dátum začiatku, označte to
@@ -148,8 +150,10 @@ finish	infolog	sk	Koniec
 for which types should this field be used	infolog	sk	Pre ktoré typy sa má použiť toto pole
 from	infolog	sk	Od
 general	infolog	sk	Hlavné
+global categories	infolog	sk	Globálne kategórie
 group owner for	infolog	sk	Skupinový vlastník pre
 high	infolog	sk	Vysoká
+history	infolog	sk	História
 history logging	infolog	sk	Zaznamenávanie histórie
 history logging and deleting of items	infolog	sk	Zaznamenávanie histórie a odstránených položiek
 id	infolog	sk	ID
@@ -176,6 +180,7 @@ invalid filename	infolog	sk	Chybný názov súboru
 label<br>helptext	infolog	sk	Označenie<br>Pomocný text
 last changed	infolog	sk	Naposledy zmenený
 last modified	infolog	sk	Naposledy upravil
+leave blank to get the used time calculated by timesheet entries	infolog	sk	Ak chcete mať čas vypočítaný pomocou záznamov v Harmonograme, ponechajte prázdne
 leave it empty	infolog	sk	Ponechať prázdne
 leave without saveing the entry	infolog	sk	Odísť bez uloženia záznamu
 leaves without saveing	infolog	sk	Odísť bez uloženia
@@ -247,6 +252,9 @@ priority	infolog	sk	Priorita
 private	infolog	sk	Súkromné
 project	infolog	sk	Projekt
 project settings: price, times	infolog	sk	Nastavenia Projektu: cena, časy
+projectmanager	infolog	sk	Projektovník
+re-planned	infolog	sk	Pre-plánované
+re-planned time	infolog	sk	Pre-plánovaný čas
 re:	infolog	sk	Re:
 read one record by passing its id.	infolog	sk	Načítaj jednotlivý záznam zadaním id.
 read rights (default)	infolog	sk	Právo na čítanie (predvolené)
@@ -301,7 +309,6 @@ show last modified	infolog	sk	Zobraziť čas poslednej úpravy
 show status and percent done separate	infolog	sk	Zobraziť samostatne stav záznamu a percentuálny stav vybavenia
 show ticket id	infolog	sk	Zobraziť ID problému
 show times	infolog	sk	Zobraziť časy
-site configuration	infolog	sk	Konfigurácia stránky
 small view	infolog	sk	Zmenšený pohľad
 start a new search, cancel this link	infolog	sk	Spustiť nové vyhľadávanie, zrušiť tento odkaz
 startdate	infolog	sk	Dátum začatia
@@ -342,7 +349,6 @@ urgent	infolog	sk	Súrna
 used time	infolog	sk	Použitý čas
 valid path on clientside<br>eg. \\server\share or e:\	infolog	sk	platná cesta na strane klienta<br>napr. \\Server\Share alebo e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	sk	platná cesta na strane klienta<br>napr. \\Server\Share alebo e:\
-valid path on clientside<br>eg. servershare or e:	infolog	sk	platná cesta na strane klienta<br>napr. \\Server\Share alebo e:\
 values for selectbox	infolog	sk	Hodnoty pre výberovú ponuku
 view all subs of this entry	infolog	sk	Zobraziť všetky podradené záznamy
 view other subs	infolog	sk	Zobraziť ostatné Podradené záznamy

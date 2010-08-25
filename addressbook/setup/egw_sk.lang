@@ -7,6 +7,7 @@
 %1 starts with '%2'	addressbook	sk	%1 začína na '%2'
 %s please calculate the result	addressbook	sk	%s prosím spočítajte výsledok
 (e.g. 1969)	addressbook	sk	(napr. 1969)
+(empty = use global limit, no = no export at all)	admin	sk	(prázdne = použiť globálny limit, nie = úplne bez exportu)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sk	<b>Nevybrali ste žiadny typ prevodu.</b> Prosím, vyberte ho zo zoznamu.
 @-eval() is only availible to admins!!!	addressbook	sk	Iba správci môžu použiť @-eval() !!!
 account repository	admin	sk	Zdroj pre účty
@@ -122,7 +123,9 @@ default	addressbook	sk	predvolené
 default address format	addressbook	sk	Predvolený formát adresy
 default addressbook for adding contacts	addressbook	sk	Predvolený adresár pre pridávanie kontaktov
 default document to insert contacts	addressbook	sk	Predvolený dokument pre vloženie kontaktov
+default file as format	addressbook	sk	Predvolený formát pre súbor ako
 default filter	addressbook	sk	Štandardný filter
+default format for fileas, eg. for new entries.	addressbook	sk	Predvolený formát pre súbor ako, napr. pre nové položky
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	sk	Definuje, ktorá E-mailová adresa (pracovná alebo domáca) sa má používať ako predvolená v distribučnom zozname Emailu.
 delete a single entry by passing the id.	addressbook	sk	Odstráni záznam podľa zadaného id.
 delete selected distribution list!	addressbook	sk	Odstráň vybraný distribučný zoznam!
@@ -206,7 +209,7 @@ home phone	addressbook	sk	Domov - Telefón
 home state	addressbook	sk	Domov - Štát
 home street	addressbook	sk	Domov - Ulica
 home zip code	addressbook	sk	Domov - PSČ
-how many contacts should non-admins be able to export (empty = no limit)	admin	sk	Koľko kontaktov môže exportovať používateľ, ktorý nie je správcom (prázdne = bez obmedzení)
+how many contacts should non-admins be able to export	admin	sk	Koľko kontaktov smú vyexportovať nie-admini
 icon	addressbook	sk	Ikona
 if accounts are already in ldap	admin	sk	ak sú účty už v LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	sk	Ak zadáte adresár (plnú VFS cestu), Adresár zobrazí akciu pre každý dokument. Táto akcia umožní stiahnuť určený dokument s vloženými kontaktnými údajmi.
