@@ -405,7 +405,7 @@
 			$this->sessionData['forwardFlag']='forwarded';
 			$this->sessionData['forwardedUID']=$_uid;
 			if  ($this->preferencesArray['message_forwarding'] == 'asmail') {
-				$this->sessionData['mimeType']  = 'html';
+				$this->sessionData['mimeType']  = $this->preferencesArray['composeOptions'];
 				if($headers['SIZE'])
 					$size				= $headers['SIZE'];
 				else
