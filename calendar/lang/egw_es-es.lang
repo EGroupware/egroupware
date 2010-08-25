@@ -1,7 +1,13 @@
 %1 %2 in %3	calendar	es-es	%1 %2 en %3
+%1 event(s) %2	calendar	es-es	%1 eventos %2
+%1 event(s) %2, %3 failed because of insufficent rights !!!	calendar	es-es	%1 eventos %2, fallo en %3 por privilegios insuficientes
+%1 participants removed because of missing invite grants	calendar	es-es	%1 participantes eliminados por faltar acceso a la invitación
 %1 records imported	calendar	es-es	%1 registros importados
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	es-es	%1 registros leídos (todavía sin importar, puede volver atrás y desmarcar Probar Importar)
 %1 weeks	calendar	es-es	%1 semanas
+(%1 events in %2 seconds)	calendar	es-es	(%1 eventos en %2 segundos)
+, exceptions preserved	calendar	es-es	, excepciones preservadas
+, stati of participants reset	calendar	es-es	, estados de los participantes restablecidos
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	es-es	<b>Por favor, tenga en cuenta lo siguiente</b>: El calendario usa las fiestas de su país, que es %1. Puede cambiarlo en su %2.<br />Las vacaciones %3 se instalan automáticamente desde %4. Lo puede cambiar en %5.
 a non blocking event will not conflict with other events	calendar	es-es	Un evento que no bloquea no entrará en conflicto con otros eventos
 accept or reject an invitation	calendar	es-es	Aceptar o rechazar una invitación
@@ -11,6 +17,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	es-es	Acciones
 actions...	calendar	es-es	Acciones...
 add alarm	calendar	es-es	Añadir alarma
+add timesheet entry	calendar	es-es	Añadir entrada en la hoja de tiempos
 added	calendar	es-es	Añadido
 added by synchronisation	calendar	es-es	añadido por sincronización
 after %1	calendar	es-es	Después de %1
@@ -24,15 +31,20 @@ alarms	calendar	es-es	Alarmas
 all categories	calendar	es-es	Todas las categorías
 all day	calendar	es-es	Todo el día
 all events	calendar	es-es	Todos los eventos
+all exceptions are converted into single events.	calendar	es-es	Todas las excepciones se convierten en eventos simples
 all future	calendar	es-es	Todos los futuros
 all incl. rejected	calendar	es-es	Todos, incluso los rechazados
 all participants	calendar	es-es	Todos los participantes
 allows to edit the event again	calendar	es-es	Permite volver a editar el evento
+always	calendar	es-es	Siempre
+apply the action on the whole query, not only the shown events	calendar	es-es	Aplicar la acción en toda la consulta, NO sólo en los eventos mostrados
 apply the changes	calendar	es-es	Aplicar los cambios
 are you sure you want to delete this country ?	calendar	es-es	¿Seguro que quiere borrar este país?
 are you sure you want to delete this holiday ?	calendar	es-es	¿Seguro que desea borrar esta fiesta?
+automatically purge old events after	admin	es-es	Purgar automáticamente eventos antiguos después de
 back half a month	calendar	es-es	medio mes hacia atrás
 back one month	calendar	es-es	un mes hacia atrás
+back one year	calendar	es-es	un año atrás
 before %1	calendar	es-es	Antes de %1
 before current date	calendar	es-es	Antes de la fecha actual
 before the event	calendar	es-es	antes del evento
@@ -40,6 +52,9 @@ birthday	calendar	es-es	Cumpleaños
 birthdays	admin	es-es	Cumpleaños
 busy	calendar	es-es	ocupado
 by	calendar	es-es	por
+calendar - list	calendar	es-es	Calendario - Lista
+calendar - multi-weekly	calendar	es-es	Calendario - Múltiples semanas
+calendar - planner	calendar	es-es	Calendario - Planificador
 calendar csv export	calendar	es-es	Exportar el calendario a CSV
 calendar event	calendar	es-es	Evento de calendario
 calendar holiday management	admin	es-es	Gestión de días festivos
@@ -50,9 +65,15 @@ calendar-fieldname	calendar	es-es	Calendario - Nombre de campo
 can't add alarms in the past !!!	calendar	es-es	¡¡No se pueden añadir alarmas en el pasado!!
 can't aquire lock!	calendar	es-es	¡No se ha podido obtener un bloqueo!
 canceled	calendar	es-es	Cancelado
+category %1 removed because of missing rights	calendar	es-es	Se ha eliminado la categoría %1 por falta de permisos
+category acl	common	es-es	ACL de la categoría
+category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	es-es	La ACL de la categoría sólo restringe añadir una categoría a un evento o cambiar el estado de un participante. ¡Esto NO cambia la visibilidad de un evento!
 chair	calendar	es-es	Silla
+change history	calendar	es-es	Cambiar historial
+change your participant status	calendar	es-es	Cambiar su estado de participante
 charset of file	calendar	es-es	Juego de caracteres del fichero
 check all	calendar	es-es	Marcar todo
+choose a category	calendar	es-es	Elija una categoría
 close the window	calendar	es-es	Cerrar la ventana
 compose a mail to all participants after the event is saved	calendar	es-es	redactar un correo para todos los participantes después de guardar el evento
 conflict	calendar	es-es	Conflicto
@@ -61,6 +82,7 @@ copy this event	calendar	es-es	Copiar este evento
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	es-es	Copiar sus cambios al portapapeles, %1recargar la entrada%2 y mezclarla.
 countries	calendar	es-es	Paises
 country	calendar	es-es	País
+create a new series	calendar	es-es	Crear una serie nueva
 create an exception for the given date	calendar	es-es	Crear una excepción para la fecha indicada
 create exception	calendar	es-es	Crear excepción
 create new links	calendar	es-es	Crear enlaces nuevos
@@ -82,12 +104,15 @@ default length of newly created events. the length is in minutes, eg. 60 for 1 h
 default type of resources application selected in the calendar particpants research form.	calendar	es-es	Tipo predeterminado para la aplicación de recursos seleccionada en el formulario de búsqueda de participantes en el calendario.
 default type of resources selection	calendar	es-es	Tipo predeterminado de selección de recursos
 default week view	calendar	es-es	Vista semanal predeterminada
+delegated	calendar	es-es	Delegado
+delete exceptions	calendar	es-es	Borrar excepciones
 delete selected events	calendar	es-es	Borrar los eventos seleccionados
 delete series	calendar	es-es	Borrar series
 delete this alarm	calendar	es-es	Borrar esta alarma
 delete this event	calendar	es-es	Borrar este evento
 delete this exception	calendar	es-es	Borrar esta excepción
 delete this series of recuring events	calendar	es-es	Borrar esta serie de eventos recurrentes
+deleted	calendar	es-es	Borrado
 deny ressources reservation for private events	calendar	es-es	Denegar la reserva de recursos para eventos privados
 disinvited	calendar	es-es	Ya no está invitado
 display status of events	calendar	es-es	Mostrar estado de los eventos
@@ -146,7 +171,6 @@ forward half a month	calendar	es-es	medio mes hacia adelante
 forward one month	calendar	es-es	un mes hacia adelante
 four days view	calendar	es-es	vista de cuatro días
 freebusy	common	es-es	Libre/Ocupado
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	es-es	Disponibilidad: Usuario desconocido "%1", contraseña incorrecta o no está disponible
 freetime search	calendar	es-es	Buscar en el tiempo libre
 fri	calendar	es-es	Vie
 full description	calendar	es-es	Descripción completa
@@ -295,7 +319,6 @@ set a year only for one-time / non-regular holidays.	calendar	es-es	Establecer u
 set new events to private	calendar	es-es	Poner los eventos nuevos como privados
 setting lock time calender	admin	es-es	Estableciendo el tiempo de bloqueo para el calendario (predeterminado: 1 segundo)
 should new events created as private by default ?	calendar	es-es	¿Crear nuevos eventos como privados?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	es-es	¿Deben ver las personas que no inicien sesión la información de ocupación? Se puede poner una contraseña extra, distinta a la normal, para proteger esta información. La información de ocupación está en formato iCal y sólo incluye las horas en las que está ocupado. No incluye el nombre del evento, descripción o sitios. La URL para su información de ocupación es %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	es-es	¿Debe mostrarse en el planificador una fila vacía para los usuarios o categorías sin ninguna cita?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	es-es	¿Mostrar el estado de cada evento (aceptar, rechazar, etc) entre corchetes detrás del nombre de cada participante?
 show all events, as if they were private	calendar	es-es	Mostrar todos los eventos, como si fueran privados
@@ -355,7 +378,7 @@ tomorrow	calendar	es-es	Mañana
 translation	calendar	es-es	Traducción
 tue	calendar	es-es	Mar
 two weeks	calendar	es-es	dos semanas
-update timezones	calendar	es-es	Actualizar zonas horarias
+update timezones	common	es-es	Actualizar zonas horarias
 updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
 use the selected time and close the popup	calendar	es-es	usar la hora seleccionada y cerrar la ventana

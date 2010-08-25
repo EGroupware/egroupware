@@ -97,12 +97,15 @@ bi-dir passthrough	admin	es-es	bidireccional passthrough
 bi-directional	admin	es-es	bidireccional
 bottom	admin	es-es	parte inferior
 calculate next run	admin	es-es	Calcular la siguiente ejecución
+calendar recurrence horizont in days (default 1000)	admin	es-es	Horizonte de recurrencia del calendario en días (predeterminado: 1000)
 can change password	admin	es-es	Puede cambiar la contraseña
 cancel testjob!	admin	es-es	Cancelar trabajo de prueba
 cancel this scheduled command	admin	es-es	Cancelar este comando programado
 categories list	admin	es-es	Lista de categorías
 category %1 has been saved !	admin	es-es	La categoría %1 ha sido guardada
+category deleted.	admin	es-es	Se ha borrado la categoría
 category list	admin	es-es	Lista de categorías
+category saved.	admin	es-es	Se ha guardado la categoria
 change account_id	admin	es-es	Cambiar el campo account_id
 change acl rights	admin	es-es	cambiar permisos de ACL
 change config settings	admin	es-es	Cambiar opciones de configuración
@@ -111,6 +114,7 @@ change password for %1	admin	es-es	cambiar la contraseña para %1
 check acl for entries of not (longer) existing accounts	admin	es-es	Comprobar las ACL para las entradas de cuentas que no existen
 check ip address of all sessions	admin	es-es	Comprobar  la IP de todas las sesiones
 check items to <b>%1</b> to %2 for %3	admin	es-es	Seleccionar los elementos para <b>%1</b> a %2 para %3
+children	admin	es-es	Hijos
 click to select a color	admin	es-es	Pulse para seleccionar un color
 color	admin	es-es	Color
 command scheduled to run at %1	admin	es-es	El comando se ha planificado para ejecutarse a %1
@@ -166,7 +170,9 @@ deny access to peer servers	admin	es-es	Denegar acceso a servidores 'peer'
 deny access to phpinfo	admin	es-es	Denegar acceso a phpinfo
 deny access to site configuration	admin	es-es	Denegar acceso a la configuración del sitio
 deny access to user accounts	admin	es-es	Denegar acceso a las cuentas de usuario
+deny all users access to create and manage private categories ?	admin	es-es	¿Denegar a todos los usuarios el acceso para crear y gestionar las categorías privadas?
 deny all users access to grant other users access to their entries ?	admin	es-es	¿Denegar a los usuarios conceder acceso a otros usuarios para sus registros?
+deny all users access to preferences ?	admin	es-es	¿Denegar a todos los usuarios el acceso a las preferencias?
 description can not exceed 255 characters in length !	admin	es-es	¡La descripción no puede exceder de 255 caracteres de longitud!
 determines the order the fields are displayed	admin	es-es	determina el orden en que se muestran los campos
 disable "auto completion" of the login form	admin	es-es	Desactivar completado automático en el formulario de inicio de sesión
@@ -213,7 +219,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	es
 enter the background color for the login page	admin	es-es	Introduzca el color de fondo para la página de inicio de sesión
 enter the background color for the site title	admin	es-es	Introduzca el color de fondo para el título del sitio
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es-es	Introduzca la ruta completa para los archivos temporales.<br> Ejemplos: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	es-es	Introduzca la ruta completa para los archivos temporales.<br> Ejemplos: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	es-es	Introduzca el nombre de la máquina sobre la cual se está ejecutando este servidor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de eGroupWare.<br>Ejemplo: http://www.dominio.com/egroupware o /egroupware.<br><b>Sin barra al final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	es-es	Introduzca la cadena de búsqueda. Para mostrar todas las entradas, vacíe este campo y pulse de nuevo el botón ENVIAR.
@@ -320,6 +328,8 @@ leave the group untouched and return back to the list	admin	es-es	Dejar el grupo
 leave without saveing the entry	admin	es-es	salir sin guardar la entrada
 leaves without saveing	admin	es-es	sale sin guardar
 length<br>rows	admin	es-es	Longitud<br>Filas
+limit global category to members of a certain group	admin	es-es	Limitar la categoría global a los miembros de cierto grupo
+limit to members of	admin	es-es	Limitar a los miembros de
 list config settings	admin	es-es	Lista de las opciones de configuración
 list current sessions	admin	es-es	Lista de las sesiones actuales
 list of current users	admin	es-es	Lista de usuarios actuales
@@ -553,6 +563,7 @@ wrong account type: %1 is no %2 !!!	admin	es-es	Tipo de cuenta incorrecta: ¡%1 
 wrong admin-account or -password !!!	admin	es-es	¡La cuenta de administración o la contraseña son incorrectas!
 xml-rpc	admin	es-es	XML-RPC
 you have entered an invalid expiration date	admin	es-es	Ha introducido una fecha de expiración que no es válida
+you have no email address for your user set !!!	admin	es-es	¡No se ha establecido todavía una dirección de correo para su usuario!
 you have to enter a name, to create a new field!!!	admin	es-es	Tiene que introducir un nombre para crear un nuevo campo
 you have to enter a name, to create a new type!!!	admin	es-es	¡Tiene que introducir un nombre para crear un tipo nuevo!
 you must add at least 1 permission or group to this account	admin	es-es	Debe añadir al menos 1 permiso o grupo para esta cuenta

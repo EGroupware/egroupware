@@ -53,6 +53,7 @@ alternate style-sheet:	common	es-es	Hola de estilo alternativa:
 american samoa	common	es-es	AMERICAN SAMOA
 an error happened	common	es-es	Ha ocurrido un error
 an existing and by the webserver readable directory enables the image browser and upload.	common	es-es	Un directorio existente Y donde el servidor web pueda leer activa el navegar por imágenes, y también subirlas al servidor.
+and	common	es-es	y
 andorra	common	es-es	ANDORRA
 angola	common	es-es	ANGOLA
 anguilla	common	es-es	ANGUILLA
@@ -113,6 +114,7 @@ cameroon	common	es-es	Camerún
 canada	common	es-es	Canadá
 cancel	common	es-es	Cancelar
 cannot replace %1 because it is a directory	common	es-es	No se puede sustituir %1 porque es un directorio
+cant open %1, needs ziparchive	common	es-es	No se puede abrir %1, se necesita ZipArchive
 cant open '%1' for %2	common	es-es	No se puede abrir '%1' para '%2'
 cape verde	common	es-es	Cabo Verde
 caption	common	es-es	Título
@@ -150,6 +152,8 @@ click this image on the navbar: %1	common	es-es	Pulse esta imagen en la barra de
 close	common	es-es	Cerrar
 close sidebox	common	es-es	Cerrar caja lateral
 cocos (keeling) islands	common	es-es	COCOS (KEELING) ISLANDS
+collection empty.	common	es-es	La colección está vacía
+collection listing	common	es-es	Listado de colecciones
 colombia	common	es-es	COLOMBIA
 common preferences	common	es-es	Preferencias comunes
 comoros	common	es-es	COMOROS
@@ -157,6 +161,7 @@ company	common	es-es	Compañía
 congo	common	es-es	CONGO
 congo, the democratic republic of the	common	es-es	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 contacting server...	common	es-es	Conectando con el servidor...
+content type	common	es-es	Tipo de contenido
 cook islands	common	es-es	COOK ISLANDS
 copy	common	es-es	Copiar
 costa rica	common	es-es	COSTA RICA
@@ -363,6 +368,7 @@ kyrgyzstan	common	es-es	KYRGYZSTAN
 language	common	es-es	Idioma
 language_direction_rtl	common	es-es	Idioma de derecha a izquierda
 lao peoples democratic republic	common	es-es	LAO PEOPLES DEMOCRATIC REPUBLIC
+last modified	common	es-es	Última modificación
 last name	common	es-es	Apellido
 last name of the user, eg. "%1"	common	es-es	Apellido del usuario, p.ej. "%1"
 last page	common	es-es	Última página
@@ -428,6 +434,7 @@ multiple	common	es-es	múltiple
 myanmar	common	es-es	MYANMAR
 name	common	es-es	Nombre
 name of the user, eg. "%1"	common	es-es	Nombre del usuario, p.ej. "%1"
+namespace	common	es-es	Espacio de nombres
 namibia	common	es-es	NAMIBIA
 nauru	common	es-es	NAURU
 nepal	common	es-es	NEPAL
@@ -479,6 +486,7 @@ oops! you caught us in the middle of system maintainance.	common	es-es	¡Ups! No
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
 open sidebox	common	es-es	Abrir caja lateral
+or	common	es-es	o
 ordered list	common	es-es	Lista ordenada
 original	common	es-es	Original
 other	common	es-es	Otros
@@ -505,6 +513,7 @@ password must have at least %1 characters	common	es-es	La contraseña debe tener
 path to user and group files has to be outside of the webservers document-root!!!	common	es-es	¡¡La ruta a los ficheros de usuario y grupos DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
 permission denied!	common	es-es	¡Permiso denegado!
 permissions to the files/users directory	common	es-es	permisos a los directorios de archivos/usuarios
+permisson denied!	common	es-es	Permiso denegado
 personal	common	es-es	Personal
 peru	common	es-es	PERU
 philippines	common	es-es	FILIPINAS
@@ -525,7 +534,7 @@ postal	common	es-es	Postal
 powered by	common	es-es	Proporcionado por
 powered by egroupware version %1	common	es-es	Proporcionado por <a href="http://www.egroupware.org">eGroupWare</a> versión %1
 preferences	common	es-es	Preferencias
-preferences for the idots template set	common	es-es	Preferencias para las plantillas de idots
+preferences for the %1 template set	preferences	es-es	Se han establecido las preferencias para la plantilla %1
 prev. month (hold for menu)	jscalendar	es-es	Mes anterior (mantener para menú)
 prev. year (hold for menu)	jscalendar	es-es	Año anterior (mantener para menú)
 previous page	common	es-es	Página anterior
@@ -535,6 +544,7 @@ priority	common	es-es	Prioridad
 private	common	es-es	Privado
 programs	common	es-es	Programas
 project	common	es-es	Proyecto
+properties	common	es-es	Propiedades
 public	common	es-es	público
 puerto rico	common	es-es	PUERTO RICO
 qatar	common	es-es	QATAR
@@ -550,6 +560,8 @@ remove shortcut	common	es-es	Eliminar acceso directo
 rename	common	es-es	Renombrar
 replace	common	es-es	Sustituir
 replace with	common	es-es	Sustituir por
+resource type	common	es-es	Tipo de recurso
+restore failed	common	es-es	Fallo al restaurar
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	es-es	Devuelve una lista completa de las cuentas del sistema. Aviso: puede ser bastante largo
 returns an array of todo items	common	es-es	Devuelve un array de elementos pendientes
 returns struct of users application access	common	es-es	Devuelve la estructura del acceso de los usuarios a la aplicación
@@ -621,6 +633,7 @@ sierra leone	common	es-es	SIERRA LEONA
 simple	common	es-es	Simple
 singapore	common	es-es	SINGAPUR
 site configuration	common	es-es	Configuración del sitio
+size	common	es-es	Tamaño
 slovakia	common	es-es	ESLOVAQUIA
 slovenia	common	es-es	ESLOVENIA
 solomon islands	common	es-es	SOLOMON ISLANDS
@@ -647,6 +660,7 @@ swaziland	common	es-es	SWAZILAND
 sweden	common	es-es	SUECIA
 switzerland	common	es-es	SUIZA
 syrian arab republic	common	es-es	SYRIAN ARAB REPUBLIC
+table %1 is excluded from backup and restore. data will not be restored.	common	es-es	La tabla %1 se ha excluido de la copia de seguridad y la restauración. Los datos no se restaurarán.
 table properties	common	es-es	Propiedades de la tabla
 taiwan	common	es-es	TAIWAN/TAIPEI
 tajikistan	common	es-es	TAJIKISTAN
@@ -657,6 +671,7 @@ the api is current	common	es-es	La API esta al dia
 the api requires an upgrade	common	es-es	La API requiere una actualizacion
 the following applications require upgrades	common	es-es	Las siguientes aplicaciones requieren actualizaciones
 the mail server returned	common	es-es	El servidor de correo devolvió
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	es-es	Ya hay un usuario de sistema con este nombre. Los usuarios no deben tener el mismo nombre que un usuario de sistema.
 this application is current	common	es-es	Esta aplicación está actualizada
 this application requires an upgrade	common	es-es	Esta aplicación requiere una actualización
 this name has been used already	common	es-es	¡Este nombre ya ha sido usado!
@@ -714,6 +729,7 @@ username	common	es-es	Nombre de usuario
 users	common	es-es	usuarios
 users choice	common	es-es	A elegir por el usuario
 uzbekistan	common	es-es	UZBEKISTAN
+value	common	es-es	Valor
 vanuatu	common	es-es	VANUATU
 venezuela	common	es-es	VENEZUELA
 version	common	es-es	Versión
@@ -750,6 +766,7 @@ you have not entered participants	common	es-es	No ha introducido participantes
 you have selected an invalid date	common	es-es	La fecha seleccionada no es válida
 you have selected an invalid main category	common	es-es	La categoría principal seleccionada no es válida
 you have successfully logged out	common	es-es	Ha terminado la sesión correctamente
+you need to %1set your timezone preference%2.	common	es-es	Necesita %1 establecer su preferencia de zona horaria%2.
 you need to add the webserver user '%1' to the group '%2'.	common	es-es	Necesita añadir el usuario del servidor web '%1' al grupo '%2'.
 you need to be an egroupware administrator to access this functionality!	common	es-es	¡Necesita ser administrador de eGroupWare para acceder a esta funcionalidad!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de eGroupWare %1, pero no tiene permiso para acceder a esta aplicación.

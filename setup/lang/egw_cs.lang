@@ -50,6 +50,7 @@ all languages (incl. not listed ones)	setup	cs	všechny jazyky (včetně těch c
 all users	setup	cs	Všichni uživatelé
 allow authentication via cookie	setup	cs	Povolit autentikaci prostřednictvím cookies
 allow password migration	setup	cs	Povolit migraci hesel
+allow usernames identical to system users?	setup	cs	Povolit uživatelská jména shodná se systémovými uživateli?
 allowed migration types (comma-separated)	setup	cs	Povolené typy migrace (oddělené čárkou)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	cs	Alternativně je možné k doménám přistupovat přes přihlášení ve tvaru <i>uživatel@doména</i>.
 and is up to date	setup	cs	a je aktuální
@@ -141,6 +142,7 @@ click <a href="index.php">here</a> to return to setup.	setup	cs	klikněte <a hre
 click here	setup	cs	Klikněte sem
 click here to re-run the installation tests	setup	cs	Klikněte sem pro opakované spuštění instalačních testů
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	cs	IP adresy nebo DNS jména oddělené čárkou, výchozí je přístup k Instalátoru odkudkoli
+complete path to aspell program	setup	cs	Celá cesta k programu aspell
 completed	setup	cs	Hotovo
 config password	setup	cs	Heslo administrátora konfigurace
 config username	setup	cs	Uživatelské jméno administrátora konfigurace
@@ -241,6 +243,7 @@ egroupware configuration file header.inc.php already exists, you need to use --e
 egroupware domain/instance %1(%2):	setup	cs	eGroupWare doména/instance %1(%2):
 egroupware is already installed!	setup	cs	eGroupWare jej již nainstalován!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	cs	Zdrojové soubory eGroupWaru v '%1' nejsou kompletní, soubor '%2' chybí !!!
+email (standard maildomain should be set)	setup	cs	e-mail (měla by být nastavena standardní poštovní doména)
 emailadmin profile updated:	setup	cs	Profil Administrátora pošty aktualizován:
 enable for extra debug-messages	setup	cs	zaškrtněte pro více debugovacích zpráv
 enable mcrypt	setup	cs	Povolit MCrypt
@@ -545,6 +548,7 @@ tcp port number of database server	setup	cs	Číslo TCP portu databázového ser
 text entry	setup	cs	Textový záznam
 the %1 extension is needed from: %2.	setup	cs	Rozšíření %1 je vyžadováno (čím): %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	cs	Rozšíření %1 je zapotřebí, pokud plánujete použít databázi %2.
+the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	cs	Rozšíření ctype je zapotřebí, aby mohl HTMLpurifier kontrolovat obsah vytvořený FCK editorem proti Cross Site Skriptingu.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	cs	Parametr db_type ve výchozích nastaveních (%1) není na tomto serveru podporován. Použiji první podporovaný typ.
 the file	setup	cs	soubor
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	cs	V prvním kroku instalace eGroupWaru je třeba zajistit, aby Vaše prostředí mělo všechny parametry potřebné pro běh aplikace.
@@ -555,6 +559,7 @@ the imagecreatefromjpeg function is supplied by the gd extension (complied with 
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	cs	Rozšíření pro LDAP je zapotřebí v případě, pokud chcete LDAP používat pro ukládání uživatelských účtů nebo kontaktů nebo se chcete autentikovat vůči LDAP či Active Directory. Není potřeba pro standardní SQL instalaci.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Rozšíření mbstring je zapotřebí pro plnou podporu unicode (utf-8) a dalších vícebajtových znakových sad.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Parametr mbstring.func_overload = 7 musí být nastaven pro plnou podporu unicode (utf-8) a dalších vícebajtových znakových sad.
+the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	cs	Rozšíření mcrypt je zapotřebí, aby mohl být stav formulářů vytvořených v eŠabloně ukládán na straně klienta, což je preferovaný způsob.
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	cs	Rozšíření PDO a databázový ovladač jsou zapotřebí pro VFS (virtuální souborový systém)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	cs	Rozšíření session je zapotřebí pro použití php relací (databázové relace fungují i bez něj).
 the session extension is required!	setup	cs	Je vyžadováno rozšíření session.
@@ -679,4 +684,3 @@ your tables will be dropped and you will lose data	setup	cs	Vaše tabulky budou 
 your temporary directory '%1' %2	setup	cs	Váš dočasný adresář '%1' %2
 {db | php(default) | php-restore}	setup	cs	{db | php(výchozí) | php-restore}
 {off(default) | on}	setup	cs	{off(výchozí) | on}
-complete path to aspell program	setup	cs	Celá cesta k programu aspell
