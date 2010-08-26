@@ -591,7 +591,7 @@ class defaultimap extends Net_IMAP
 	 */
 	public function __call($name,array $params=null)
 	{
-		//error_log(__METHOD__.'->'.$name.' with params:'.array2string($params));
+		if ($this->debug) error_log(__METHOD__.'->'.$name.' with params:'.array2string($params));
 		switch($name)
 		{
 			case 'installScript':
@@ -619,6 +619,7 @@ class defaultimap extends Net_IMAP
 
 	public function setVacationUser($_euser, $_scriptName, $_vacation)
 	{
+		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.' User:'.array2string($_euser).' Scriptname:'.array2string($_scriptName).' VacationMessage:'.array2string($_vacation));
 		if (is_null($this->sieve))
 		{
 			$this->sieve = new emailadmin_sieve();
