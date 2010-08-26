@@ -158,7 +158,7 @@ class emailadmin_sieve extends Net_Sieve
 	 * @param string $_vaction
 	 * @return boolean true on success false otherwise
 	 */
-	function setVactionUser($_euser, $_scriptName, $_vaction)
+	function setVacationUser($_euser, $_scriptName, $_vacation)
 	{
 		if (!$_scriptName) $_scriptName = $this->scriptName;
 		if ($this->_connect($this->icServer,$_euser) === true) {			

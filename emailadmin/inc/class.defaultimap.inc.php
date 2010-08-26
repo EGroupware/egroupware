@@ -591,6 +591,7 @@ class defaultimap extends Net_IMAP
 	 */
 	public function __call($name,array $params=null)
 	{
+		error_log(__METHOD__.'->'.$name.' with params:'.array2string($params));
 		switch($name)
 		{
 			case 'installScript':
@@ -603,7 +604,6 @@ class defaultimap extends Net_IMAP
 			case 'retrieveRules':
 			case 'getVacation':
 			case 'setVacation':
-			case 'setVacationUser':
 				if (is_null($this->sieve))
 				{
 					$this->sieve = new emailadmin_sieve($this);
@@ -615,5 +615,16 @@ class defaultimap extends Net_IMAP
 				return $ret;
 		}
 		throw new egw_exception_wrong_parameter("No method '$name' implemented!");
+	}
+
+	public function setVacationUser($_euser, $_scriptName, $_vacation)
+	{
+		if (is_null($this->sieve))
+		{
+			$this->sieve = new emailadmin_sieve();
+			$this->scriptName =& $this->sieve->scriptName;
+			$this->error =& $this->sieve->error;
+		}
+		return $this->sieve->setVacationUser($_euser, $_scriptName, $_vacation);
 	}
 }
