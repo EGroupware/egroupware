@@ -67,6 +67,7 @@ class emailadmin_sieve extends Net_Sieve
 	 */
 	function _connect($_icServer,$euser='')
 	{
+		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($euser));
 		if(is_a($_icServer,'defaultimap') && $_icServer->enableSieve) {
 			$sieveHost		= $_icServer->host;
 			$sievePort		= $_icServer->sievePort;
@@ -88,6 +89,7 @@ class emailadmin_sieve extends Net_Sieve
 			return false;
 		}
 		if(PEAR::isError($this->error = $this->login($username, $password, null, $euser) ) ){
+			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.array2string($this->icServer));
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.": error in login($username,$password,null,$euser): ".$this->error->getMessage());
 			return false;
 		}
@@ -160,6 +162,7 @@ class emailadmin_sieve extends Net_Sieve
 	 */
 	function setVacationUser($_euser, $_scriptName, $_vacation)
 	{
+		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.' User:'.array2string($_euser).' Scriptname:'.array2string($_scriptName).' VacationMessage:'.array2string($_vacation));
 		if (!$_scriptName) $_scriptName = $this->scriptName;
 		if ($this->_connect($this->icServer,$_euser) === true) {			
 			$this->setVacation($_scriptName,$_vacation);

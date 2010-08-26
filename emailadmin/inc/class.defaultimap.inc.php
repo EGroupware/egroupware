@@ -591,7 +591,7 @@ class defaultimap extends Net_IMAP
 	 */
 	public function __call($name,array $params=null)
 	{
-		error_log(__METHOD__.'->'.$name.' with params:'.array2string($params));
+		//error_log(__METHOD__.'->'.$name.' with params:'.array2string($params));
 		switch($name)
 		{
 			case 'installScript':
