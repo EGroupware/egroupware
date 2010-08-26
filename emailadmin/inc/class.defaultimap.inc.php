@@ -625,6 +625,7 @@ class defaultimap extends Net_IMAP
 			$this->sieve = new emailadmin_sieve();
 			$this->scriptName =& $this->sieve->scriptName;
 			$this->error =& $this->sieve->error;
+			$this->sieve->icServer = $this;
 		}
 		return $this->sieve->setVacationUser($_euser, $_scriptName, $_vacation);
 	}
