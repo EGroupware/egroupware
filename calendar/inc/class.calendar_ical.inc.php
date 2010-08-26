@@ -663,16 +663,19 @@ class calendar_ical extends calendar_boupdate
 						{
 							if (empty($event['whole_day']))
 							{
-								$value_type = 'DATE-TIME';
 								foreach ($event['recur_exception'] as $key => $timestamp)
 								{
 									$event['recur_exception'][$key] = self::getDateTime($timestamp,$tzid,$parameters['EXDATE']);
+								}
+								if ($version != '1.0')
+								{
+									$parameters['EXDATE']['VALUE'] = 'DATE-TIME';
+									if (!empty($tzid)) $parameters['EXDATE']['TZID'] = $tzid;
 								}
 							}
 							else
 							{
 								// use 'DATE' instead of 'DATE-TIME' on whole day events
-								$value_type = 'DATE';
 								foreach ($event['recur_exception'] as $id => $timestamp)
 								{
 									$time = new egw_time($timestamp,egw_time::$server_timezone);
@@ -685,13 +688,20 @@ class calendar_ical extends calendar_boupdate
 									);
 								}
 								$event['recur_exception'] = $days;
+								if ($version != '1.0') $parameters['EXDATE']['VALUE'] = 'DATE';
 							}
-
-							$attributes['EXDATE'] = '';
-							$values['EXDATE'] = $event['recur_exception'];
-							if ($version != '1.0')
+							if ($this->productManufacturer == 'groupdav' && 
+								($this->productName == 'iphone' || $this->productName == 'davkit'))
 							{
-								$parameters['EXDATE']['VALUE'] = $value_type;
+								foreach ($event['recur_exception'] as $exdate)
+								{
+									$vevent->setAttribute('EXDATE', $exdate, $parameters['EXDATE']);
+								}
+							}
+							else
+							{
+								$attributes['EXDATE'] = '';
+								$values['EXDATE'] = $event['recur_exception'];
 							}
 						}
 						break;
