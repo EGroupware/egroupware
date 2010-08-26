@@ -45,7 +45,7 @@ class setup_cmd_ldap extends setup_cmd
 	 */
 	function __construct($domain,$ldap_host=null,$ldap_suffix=null,$ldap_admin=null,$ldap_admin_pw=null,
 		$ldap_base=null,$ldap_root_dn=null,$ldap_root_pw=null,$ldap_context=null,$ldap_search_filter=null,
-		$ldap_group_context=null,$sub_command='create_ldap')
+		$ldap_group_context=null,$sub_command='create_ldap',$ldap_encryption_type='des')
 	{
 		if (!is_array($domain))
 		{
@@ -61,7 +61,8 @@ class setup_cmd_ldap extends setup_cmd
 				'ldap_context'  => $ldap_context,
 				'ldap_search_filter' => $ldap_search_filter,
 				'ldap_group_context' => $ldap_group_context,
-				'sub_command'   => $sub_command
+				'sub_command'   => $sub_command,
+				'ldap_encryption_type' => $ldap_encryption_type,
 			);
 		}
 		//echo __CLASS__.'::__construct()'; _debug_array($domain);
@@ -101,12 +102,220 @@ class setup_cmd_ldap extends setup_cmd
 			case 'users_ldap':
 				$msg = $this->users();
 				break;
+			case 'migrate_to_ldap':
+			case 'migrate_to_sql':
+				$msg = $this->migrate($this->sub_command == 'migrate_to_ldap');
+				break;
 			case 'create_ldap':
 			default:
 				$msg = $this->create();
 				break;
 		}
 		return $msg;
+	}
+	
+	/**
+	 * Migrate to other account storage
+	 * 
+	 * @param boolean $to_ldap true: sql --> ldap, false: ldap --> sql
+	 * @return string with success message
+	 * @throws Exception on error
+	 */
+	private function migrate($to_ldap)
+	{
+		$msg = array();
+		// if migrating to ldap, check ldap and create context if not yet exiting
+		if ($to_ldap)
+		{
+			$msg[] = $this->create();
+		}
+		else
+		{
+			$msg[] = $this->connect();
+		}
+		// read accounts from old store
+		$accounts = $this->accounts(!$to_ldap);
+		
+		// instanciate accounts obj for new store
+		$accounts_obj = $this->accounts_obj($to_ldap);
+		
+		$accounts_created = $groups_created = $errors = 0;
+		$target = $to_ldap ? 'LDAP' : 'SQL';
+		foreach($accounts as $account_id => $account)
+		{
+			if (isset($this->only) && !in_array($account_id,$this->only))
+			{
+				continue;
+			}
+			$what = ($account['account_type'] == 'u' ? lang('User') : lang('Group')).' '.
+				$account_id.' ('.$account['account_lid'].')';
+
+			if ($account['account_type'] == 'u')
+			{
+				if ($accounts_obj->exists($account_id))
+				{
+					$msg[] = lang('%1 already exists in %2.',$what,$target);
+					$errors++;
+					continue;
+				}
+				if ($to_ldap)
+				{
+					if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
+					{
+						$account['homedirectory'] = $GLOBALS['egw_info']['server']['ldap_account_home'] . '/' . $account['account_lid'];
+						$account['loginshell'] = $GLOBALS['egw_info']['server']['ldap_account_shell'];
+					}
+					$account['account_passwd'] = self::hash_sql2ldap($account['account_pwd']);
+				}
+				else
+				{
+					if ($account['account_pwd'][0] != '{')	// plain has to be explicitly specified for sql, in ldap it's the default
+					{
+						$account['account_passwd'] = '{PLAIN}'.$account['account_pwd'];
+					}
+					else
+					{
+						$account['account_passwd'] = $account['account_pwd'];
+					}
+				}
+				unset($account['person_id']);
+	
+				if (!$accounts_obj->save($account))
+				{
+					$msg[] = lang('Creation of %1 in %2 failed !!!',$what,$target);
+					$errors++;
+					continue;
+				}
+				$accounts_obj->set_memberships($account['memberships'],$account_id);
+				$msg[] = lang('%1 created in %2.',$what,$target);
+				$accounts_created++;
+			}
+			else
+			{
+				// check if group already exists
+				if (!$accounts_obj->exists($account_id))
+				{
+					if (!$accounts_obj->save($account))
+					{
+						$msg[] = lang('Creation of %1 in %2 failed !!!',$what,$target);
+						++$errors;
+						continue;
+					}
+					$msg[] = lang('%1 created in %2.',$what,$target);
+					$groups_created++;
+				}
+				else
+				{
+					$msg[] = lang('%1 already exists in %2.',$what,$target);
+	
+					if ($accounts_obj->id2name($account_id) != $account['account_lid'])
+					{
+						++$errors;
+						continue;	// different group under that gidnumber!
+					}
+				}
+				// now saving / updating the memberships
+				$accounts_obj->set_members($account['members'],$account_id);
+			}
+		}
+		return lang('%1 users and %2 groups created, %3 errors',$accounts_created,$groups_created,$errors).
+			($errors || $this->verbose ? "\n- ".implode("\n- ",$msg) : '');
+	}
+	
+	/**
+	 * Convert SQL hash to LDAP hash
+	 * 
+	 * @param string $hash
+	 * @return string
+	 */
+	public static function hash_sql2ldap($hash)
+	{
+		$type = $GLOBALS['egw_info']['server']['sql_encryption_type'];
+	
+		if (preg_match('/^\\{(.*)\\}(.*)$/',$hash,$matches))
+		{
+			$type = $matches[1];
+			$hash = $matches[2];
+		}
+		switch(strtolower($type))
+		{
+			case '':	// not set sql_encryption_type
+			case 'md5':
+				$hash = '{md5}' . base64_encode(pack("H*",$hash));
+				break;
+			case 'crypt':
+				$hash = '{crypt}' . $hash;
+				break;
+	
+			case 'plain':
+				break;
+		}
+		return $hash;
+	}
+
+	/**
+	 * Read all accounts from sql or ldap
+	 * 
+	 * @param boolean $from_ldap=true true: ldap, false: sql
+	 * @return array
+	 */
+	public function accounts($from_ldap=true)
+	{
+		$accounts_obj = $this->accounts_obj($from_ldap);
+		//error_log(__METHOD__."(from_ldap=".array2string($from_ldap).') get_class(accounts_obj->backend)='.get_class($accounts_obj->backend));
+		
+		$accounts = $accounts_obj->search(array('type' => 'both'));
+
+		foreach($accounts as $account_id => &$account)
+		{
+			if ($account_id != $account['account_id'])	// not all backends have as key the account_id
+			{
+				unset($account);
+				$account_id = $account['account_id'];
+			}
+			$account = $accounts_obj->read($account_id);
+	
+			if ($account['account_type'] == 'g')
+			{
+				$account['members'] = $accounts_obj->members($account_id,true);
+			}
+			else
+			{
+				$account['memberships'] = $accounts_obj->memberships($account_id,true);
+			}
+		}
+		return $accounts;
+	}
+	
+	/**
+	 * Instancate accounts object from either sql of ldap
+	 * 
+	 * @param boolean $ldap true: ldap, false: sql
+	 * @return accounts
+	 */
+	private function accounts_obj($ldap)
+	{
+		static $enviroment_setup;
+		if (!$enviroment_setup) 
+		{
+			parent::_setup_enviroment($this->domain);
+			$enviroment_setup = true;
+		}
+		if ($ldap) $this->connect();	// throws exception, if it can NOT connect
+
+		// otherwise search does NOT work, as accounts_sql uses addressbook_bo for it
+		$GLOBALS['egw_info']['server']['account_repository'] = $ldap ? 'ldap' : 'sql';
+
+		if (!self::$egw_setup->setup_account_object(
+			array(
+				'account_repository' => $GLOBALS['egw_info']['server']['account_repository'],
+			) + $this->as_array()) ||
+			!is_a(self::$egw_setup->accounts,'accounts') ||
+			!is_a(self::$egw_setup->accounts->backend,'accounts_'.($ldap?'ldap':'sql')))
+		{
+			throw new Exception(lang("Can NOT instancate accounts object for %1",$ldap?'LDAP':'SQL'));
+		}
+		return self::$egw_setup->accounts;
 	}
 
 	/**

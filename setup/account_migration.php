@@ -21,15 +21,6 @@ if (!$GLOBALS['egw_setup']->auth('Config') || $_POST['cancel'])
 }
 // Does not return unless user is authorized
 
-// the migration script needs a session to store the accounts
-session_name('setup_session');
-session_set_cookie_params(0,'/',$GLOBALS['egw_setup']->cookie_domain);
-if (isset($_REQUEST['setup_session']))
-{
-    session_id($_REQUEST['setup_session']);
-}
-session_start();
-
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 $setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 $setup_tpl->set_file(array(
@@ -69,7 +60,7 @@ if (!is_object($GLOBALS['egw_setup']->db))
 {
 	$GLOBALS['egw_setup']->loaddb();
 }
-// Load configuration values account_repository and auth_type, a setup has not yet done so
+// Load configuration values account_repository and auth_type, as setup has not yet done so
 foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',
 	"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",
 	__LINE__,__FILE__) as $row)
@@ -87,40 +78,23 @@ $direction = strtoupper($from).' --> '.strtoupper($to);
 $GLOBALS['egw_setup']->html->show_header($direction,False,'config',$GLOBALS['egw_setup']->ConfigDomain .
 	'(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 
+// create base one level off ldap_context
+$base_parts = explode(',',$GLOBALS['egw_info']['server']['ldap_context']);
+array_shift($base_parts);
+
+$cmd = new setup_cmd_ldap(array(
+	'domain' => $GLOBALS['egw_setup']->ConfigDomain,
+	'sub_command' => 'migrate_to_'.$to,
+	// in regular setup we only support one ldap root user, setting him as admin user too
+	'ldap_admin' => $GLOBALS['egw_info']['server']['ldap_root_dn'],
+	'ldap_admin_pw' => $GLOBALS['egw_info']['server']['ldap_root_pw'],
+	'ldap_base' => implode(',',$base_parts),
+)+$GLOBALS['egw_info']['server']);
+
 if (!$_POST['migrate'])
 {
-	// fetch and display the accounts of the NOT set $from repository
-	$GLOBALS['egw_info']['server']['account_repository'] = $from;
-	$GLOBALS['egw_setup']->setup_account_object($GLOBALS['egw_info']['server']);
-
-	// fetch all users and groups
-	$accounts = $GLOBALS['egw_setup']->accounts->search(array(
-		'type' => 'both',
-	));
-	// fetch the complete data (search reads not everything), plus the members(hips)
-	foreach($accounts as $account_id => $account)
-	{
-		if ($account_id != $account['account_id'])      // not all backends have as key the account_id
-		{
-			unset($accounts[$account_id]);
-			$account_id = $account['account_id'];
-		}
-		$accounts[$account_id] = $GLOBALS['egw_setup']->accounts->read($account_id);
-
-		if ($account['account_type'] == 'g')
-		{
-			$accounts[$account_id]['members'] = $GLOBALS['egw_setup']->accounts->members($account_id,true);
-		}
-		else
-		{
-			$accounts[$account_id]['memberships'] = $GLOBALS['egw_setup']->accounts->memberships($account_id,true);
-		}
-	}
-	//_debug_array($accounts);
-	// store the complete info in the session to be availible after user selected what to migrate
-	// we cant instanciate to account-repositories at the same time, as the backend-classes have identical names
-	$_SESSION['all_accounts'] =& $accounts;
-
+	$accounts = $cmd->accounts($from == 'ldap');
+	
 	// now outputting the account selection
 	$setup_tpl->set_block('migration','header','header');
 	$setup_tpl->set_block('migration','user_list','user_list');
@@ -166,85 +140,9 @@ if (!$_POST['migrate'])
 }
 else	// do the migration
 {
-	$GLOBALS['egw_info']['server']['account_repository'] = $to;
-	$GLOBALS['egw_setup']->setup_account_object($GLOBALS['egw_info']['server']);
-
-	$target = strtoupper($to);
-	$accounts =& $_SESSION['all_accounts'];
-
-	if($_POST['users'])
-	{
-		foreach($_POST['users'] as $account_id)
-		{
-			if (!isset($accounts[$account_id])) continue;
-
-			// check if user already exists
-			if ($GLOBALS['egw_setup']->accounts->exists($account_id))
-			{
-				echo '<p>'.lang('%1 already exists in %2.',lang('User')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
-				continue;
-			}
-			if ($to == 'ldap')
-			{
-				if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
-				{
-					$accounts[$account_id]['homedirectory'] = $GLOBALS['egw_info']['server']['ldap_account_home'] . '/' . $accounts[$account_id]['account_lid'];
-					$accounts[$account_id]['loginshell'] = $GLOBALS['egw_info']['server']['ldap_account_shell'];
-				}
-				$accounts[$account_id]['account_passwd'] = hash_sql2ldap($accounts[$account_id]['account_pwd']);
-			}
-			else
-			{
-				if ($accounts[$account_id]['account_pwd'][0] != '{')	// plain has to be explicitly specified for sql, in ldap it's the default
-				{
-					$accounts[$account_id]['account_passwd'] = '{PLAIN}'.$accounts[$account_id]['account_pwd'];
-				}
-				else
-				{
-					$accounts[$account_id]['account_passwd'] = $accounts[$account_id]['account_pwd'];
-				}
-			}
-			unset($accounts[$account_id]['person_id']);
-
-			if (!$GLOBALS['egw_setup']->accounts->save($accounts[$account_id]))
-			{
-				echo '<p>'.lang('Creation of %1 in %2 failed !!!',lang('User')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
-				continue;
-			}
-			$GLOBALS['egw_setup']->accounts->set_memberships($accounts[$account_id]['memberships'],$account_id);
-			echo '<p>'.lang('%1 created in %2.',lang('User')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
-		}
-	}
-	if($_POST['groups'])
-	{
-		foreach($_POST['groups'] as $account_id)
-		{
-			if (!isset($accounts[$account_id])) continue;
-
-			// check if group already exists
-			if (!$GLOBALS['egw_setup']->accounts->exists($account_id))
-			{
-				if (!$GLOBALS['egw_setup']->accounts->save($accounts[$account_id]))
-				{
-					echo '<p>'.lang('Creation of %1 in %2 failed !!!',lang('Group')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
-					continue;
-				}
-				echo '<p>'.lang('%1 created in %2.',lang('Group')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
-			}
-			else
-			{
-				echo '<p>'.lang('%1 already exists in %2.',lang('Group')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
-
-				if ($GLOBALS['egw_setup']->accounts->id2name($account_id) != $accounts[$account_id]['account_lid'])
-				{
-					continue;	// different group under that gidnumber!
-				}
-			}
-			// now saving / updating the memberships
-			$GLOBALS['egw_setup']->accounts->set_members($accounts[$account_id]['members'],$account_id);
-		}
-	}
-	echo '<p align="center">'.lang('Export has been completed!')."</p>\n";
+	$cmd->only = array_merge((array)$_POST['users'],(array)$_POST['groups']);
+	$cmd->verbose = true;
+	echo '<p align="center">'.str_replace("\n","</p>\n<p align='center'>",$cmd->run())."</p>\n";
 	echo '<p align="center">'.lang('Click <a href="index.php">here</a> to return to setup.')."</p>\n";
 }
 
