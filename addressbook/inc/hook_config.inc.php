@@ -141,8 +141,8 @@ function copy_fields($config)
 		}
 	}
 	$default = array(
-		'company',
-		'department',
+		'org_name',
+		'org_unit',
 		'adr_one_street',
 		'adr_one_street2',
 		'adr_one_locality',
