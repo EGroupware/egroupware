@@ -103,7 +103,7 @@
 			<table border="0" width="100%" cellpadding=2 cellspacing=0>
 				<tr>
 					<td colspan="3">
-						<form id="editACL">
+						<form id="editACL" name="editACL">
 						<span id="aclTable"></span>
 					</td>
 				</tr>
@@ -373,7 +373,7 @@
 <!-- END mainFolder_settings -->
 
 <!-- BEGIN add_acl -->
-	<form id="formAddACL" >
+	<form id="formAddACL" name="formAddACL">
 		<table border="0" width="100%" bgcolor="#FFFFFF">
 			<tr class="th">
 				<td>
