@@ -105,6 +105,10 @@ class ldap
 			$passwd = $GLOBALS['egw_info']['server']['ldap_root_pw'];
 		}
 
+                if (($use_tls = substr($host,0,6) == 'tls://'))
+                {
+                        $host = parse_url($host,PHP_URL_HOST);
+                }
 		// connects to ldap server
 		if(!$this->ds = ldap_connect($host))
 		{
@@ -128,6 +132,7 @@ class ldap
 		{
 			$supportedLDAPVersion = 2;
 		}
+                if ($use_tls) ldap_start_tls($this->ds);
 
 		if(!isset($this->ldapServerInfo[$host]))
 		{
@@ -255,6 +260,7 @@ class ldap
 			$this->ldapServerInfo = (array) unserialize($GLOBALS['egw']->session->appsession('ldapServerInfo'));
 		}
 	}
+
 	/**
 	 * save the session data
 	 */
