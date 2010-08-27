@@ -2077,7 +2077,7 @@
 
 					$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 					$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
-					$retValue['header'][$sortOrder[$uid]]['date']		= strtotime($headerObject['DATE']);
+					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE']);
 					$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
 					$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
 					$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
@@ -2895,7 +2895,7 @@
 				if ( preg_match('/\b'.$identity->emailAddress.'\b/',$headers['TO']) ) {
 					$send->From = $identity->emailAddress;
 					$send->FromName = $identity->realName;
-					error_log('Not Default '.$send->From);
+					error_log('using identity for send from:'.$send->From.' to match header information:'.$headers['TO']);
 					break;
 				}
 				if($identity->default) {
@@ -3017,5 +3017,23 @@
 		static function detect_qp(&$sting) {
 			$needle = '/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/';
 			return preg_match("$needle",$string);
+		}
+		/**
+		 * Helper function to handle wrong or unrecognized timezones
+		 */
+		static function _strtotime($date='')
+		{
+			if (strtotime($date)===false)
+			{
+				$dtarr = explode(' ',$date);
+				$test = false;
+				while ($test===false) 
+				{
+					array_pop($dtarr);
+					$test=strtotime(implode(' ',$dtarr));
+					if ($test) $date = implode(' ',$dtarr); 
+				}
+			}
+			return $date;
 		}
 	}
