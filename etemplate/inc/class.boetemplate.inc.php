@@ -478,6 +478,17 @@ class boetemplate extends soetemplate
 		return (self::$extensions[$type] || $this->loadExtension($type,$ui)) &&
 						($function == '' || self::$extensions[$type]->public_functions[$function]);
 	}
+	
+	/**
+	 * Check if we have a widget of type $type
+	 * 
+	 * @param string $type
+	 * @return boolean true widget exists, false unknow widget type
+	 */
+	public function widgetExists($type)
+	{
+		return isset(self::$types[$tpye]) || $this->haveExtension($type);
+	}
 
 	/**
 	 * executes the pre_process-function of the extension $cell[type]
