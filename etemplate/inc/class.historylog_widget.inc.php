@@ -77,7 +77,8 @@ class historylog_widget
 			$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
 			if (is_array($type))
 			{
-				if (isset($type[0]))	// numeric indexed array --> multiple values of 1:N releation
+				if (isset($type[0]) &&	// numeric indexed array --> multiple values of 1:N releation
+					$tmpl->widgetExists($type[0]))
 				{
 					$cell['type'] = 'vbox';
 					$cell['size'] = '0,,0,0';
