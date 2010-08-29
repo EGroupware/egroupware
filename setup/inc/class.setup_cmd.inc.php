@@ -168,7 +168,7 @@ abstract class setup_cmd extends admin_cmd
 			if (!is_null(self::$egw_accounts_backup))
 			{
 				$GLOBALS['egw']->accounts = self::$egw_accounts_backup;
-				$GLOBALS['egw']->accounts->cache_invalidate();
+				accounts::cache_invalidate();
 				unset(self::$egw_accounts_backup);
 			}
 		}

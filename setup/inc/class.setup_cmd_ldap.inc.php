@@ -42,6 +42,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * @param string $ldap_search_filter=null search-filter for accounts, default "(uid=%user)"
 	 * @param string $ldap_group_context=null ou for groups, default "ou=groups,$base"
 	 * @param string $sub_command='create_ldap' 'create_ldap', 'test_ldap', 'test_ldap_root'
+	 * @param string $ldap_encryption_type='des'
 	 */
 	function __construct($domain,$ldap_host=null,$ldap_suffix=null,$ldap_admin=null,$ldap_admin_pw=null,
 		$ldap_base=null,$ldap_root_dn=null,$ldap_root_pw=null,$ldap_context=null,$ldap_search_filter=null,
@@ -125,7 +126,7 @@ class setup_cmd_ldap extends setup_cmd
 	{
 		$msg = array();
 		// if migrating to ldap, check ldap and create context if not yet exiting
-		if ($to_ldap)
+		if ($to_ldap && !empty($this->ldap_admin_pw))
 		{
 			$msg[] = $this->create();
 		}
@@ -169,14 +170,7 @@ class setup_cmd_ldap extends setup_cmd
 				}
 				else
 				{
-					if ($account['account_pwd'][0] != '{')	// plain has to be explicitly specified for sql, in ldap it's the default
-					{
-						$account['account_passwd'] = '{PLAIN}'.$account['account_pwd'];
-					}
-					else
-					{
-						$account['account_passwd'] = $account['account_pwd'];
-					}
+					$account['account_passwd'] = self::hash_ldap2sql($account['account_pwd']);
 				}
 				unset($account['person_id']);
 	
@@ -189,6 +183,29 @@ class setup_cmd_ldap extends setup_cmd
 				$accounts_obj->set_memberships($account['memberships'],$account_id);
 				$msg[] = lang('%1 created in %2.',$what,$target);
 				$accounts_created++;
+				
+				// should we run any or some addAccount hooks
+				if ($this->add_account_hook)
+				{
+					try 
+					{
+						$account['location'] = 'addAccount';
+						// running all addAccount hooks (currently NOT working, as not all work in setup)
+						if ($this->add_account_hook === true)
+						{
+							$GLOBALS['egw']->hooks->process($account,array(),true);
+						}
+						elseif(is_callable($this->add_account_hook))
+						{
+							call_user_func($this->add_account_hook,$account);
+						}
+					}
+					catch(Exception $e) 
+					{
+						$msg[] = $e->getMessage();
+						$errors++;
+					}
+				}
 			}
 			else
 			{
@@ -207,9 +224,11 @@ class setup_cmd_ldap extends setup_cmd
 				else
 				{
 					$msg[] = lang('%1 already exists in %2.',$what,$target);
-	
+					$errors++;
+
 					if ($accounts_obj->id2name($account_id) != $account['account_lid'])
 					{
+						$msg[] = lang("==> different group '%1' under that gidNumber %2, NOT setting memberships!",$account['account_lid'],$account_id);
 						++$errors;
 						continue;	// different group under that gidnumber!
 					}
@@ -218,6 +237,8 @@ class setup_cmd_ldap extends setup_cmd
 				$accounts_obj->set_members($account['members'],$account_id);
 			}
 		}
+		$this->restore_db();
+
 		return lang('%1 users and %2 groups created, %3 errors',$accounts_created,$groups_created,$errors).
 			($errors || $this->verbose ? "\n- ".implode("\n- ",$msg) : '');
 	}
@@ -254,6 +275,21 @@ class setup_cmd_ldap extends setup_cmd
 	}
 
 	/**
+	 * Convert LDAP hash to SQL hash
+	 * 
+	 * @param string $hash
+	 * @return string
+	 */
+	public static function hash_ldap2sql($hash)
+	{
+		if ($hash[0] != '{')	// plain has to be explicitly specified for sql, in ldap it's the default
+		{
+			$hash = '{PLAIN}'.$hash;
+		}
+		return $hash;
+	}
+
+	/**
 	 * Read all accounts from sql or ldap
 	 * 
 	 * @param boolean $from_ldap=true true: ldap, false: sql
@@ -284,6 +320,8 @@ class setup_cmd_ldap extends setup_cmd
 				$account['memberships'] = $accounts_obj->memberships($account_id,true);
 			}
 		}
+		accounts::cache_invalidate();
+
 		return $accounts;
 	}
 	
@@ -446,16 +484,17 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			throw new egw_exception(lang('Error listing "dn=%1"!',$dn));
 		}
+		$deleted = 0;
 		foreach($entries as $n => $entry)
 		{
 			if ($n === 'count') continue;
-			$this->rdelete($entry['dn']);
+			$deleted += $this->rdelete($entry['dn']);
 		}
 		if (!ldap_delete($this->test_ldap->ds,$dn))
 		{
 			throw new egw_exception(lang('Error deleting "dn=%1"!',$dn));
 		}
-		return 1 + $entries['count'];
+		return ++$deleted;
 	}
 
 	/**
