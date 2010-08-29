@@ -832,10 +832,11 @@ class accounts
 	{
 		//echo "<p>accounts::cache_invalidate($account_id)</p>\n";
 		if (self::$cache) self::$cache = array();
+		egw_cache::unsetSession('accounts_cache','phpgwapi');
 
 		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 		{
-			$GLOBALS['egw']->invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
+			egw::invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
 		}
 	}
 
