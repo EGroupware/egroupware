@@ -146,9 +146,14 @@ class emailadmin_smtp_ldap extends defaultsmtp
 		{
 			$newData[$this->config['mailbox_attr']] = $_hookValues['account_lid'].'@'.$this->defaultDomain;
 		}
-		if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
-		return ldap_mod_replace($ds, $accountDN, $newData);
+		if (!($ret = ldap_mod_replace($ds, $accountDN, $newData)) || $this->debug)
+		{
+			error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".
+				array2string($newData).') returning '.array2string($ret).
+				(!$ret?' ('.ldap_error($ds).')':''));
+		}
+		return $ret;
 	}
 
 	/**
