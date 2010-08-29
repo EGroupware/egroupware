@@ -1003,7 +1003,7 @@ class setup
 			}
 			$this->accounts = new accounts($config);
 			if (!isset($GLOBALS['egw']->accounts)) $GLOBALS['egw']->accounts = $this->accounts;
-			$this->accounts->cache_invalidate();	// the cache is shared for all instances of the class
+			accounts::cache_invalidate();	// the cache is shared for all instances of the class
 
 			if($this->accounts->backend instanceof accounts_ldap && !$this->accounts->backend->ds)
 			{
