@@ -722,7 +722,7 @@ class emailadmin_bo extends so_sql
 	 * called by the validation hook in setup
 	 *
 	 * @param array $settings following keys: mail_server, mail_server_type {IMAP|IMAPS|POP-3|POP-3S},
-	 *	mail_login_type {standard|vmailmgr}, mail_suffix (domain), smtp_server, smpt_port, smtp_auth_user, smtp_auth_passwd
+	 *	mail_login_type {standard|vmailmgr}, mail_suffix (domain), smtp_server, smtp_port, smtp_auth_user, smtp_auth_passwd
 	 */
 	function setDefaultProfile($settings)
 	{
@@ -763,7 +763,7 @@ class emailadmin_bo extends so_sql
 			'mail_login_type' => 'imapLoginType',
 			'mail_suffix' => 'defaultDomain',
 			'smtp_server' => 'smtpServer',
-			'smpt_port' => 'smtpPort',
+			'smtp_port' => 'smtpPort',
 			'smtp_auth_user' => 'ea_smtp_auth_username',
 			'smtp_auth_passwd' => 'ea_smtp_auth_password',
 		) as $setup_name => $ea_name_data)
@@ -831,7 +831,7 @@ class emailadmin_bo extends so_sql
 				'imapLoginType' => 'mail_login_type',
 				'defaultDomain' => 'mail_suffix',
 				'smtpServer'    => 'smtp_server',
-				'smtpPort'      => 'smpt_port',
+				'smtpPort'      => 'smtp_port',
 			)+($all['smtpAuth'] ? array(
 				'ea_smtp_auth_username' => 'smtp_auth_user',
 				'ea_smtp_auth_password' => 'smtp_auth_passwd',
