@@ -45,6 +45,26 @@ class addressbook_ui extends addressbook_bo
 	protected $config;
 
 	/**
+	 * Fields to copy, default if nothing specified in config
+	 * 
+	 * @var array
+	 */
+	static public $copy_fields = array(
+		'org_name',
+		'org_unit',
+		'adr_one_street',
+		'adr_one_street2',
+		'adr_one_locality',
+		'adr_one_region',
+		'adr_one_postalcode',
+		'adr_one_countryname',
+		'email',
+		'url',
+		'tel_work',
+		'cat_id'
+	);
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $contact_app
@@ -79,6 +99,10 @@ class addressbook_ui extends addressbook_bo
 		else	// if not use the global one
 		{
 			$this->config['contact_export_limit'] = $this->config['export_limit'];
+		}
+		if ($this->config['copy_fields'] && ($fields = unserialize($this->config['copy_fields'])))
+		{
+			self::$copy_fields = $fields;
 		}
 	}
 
@@ -1379,10 +1403,9 @@ class addressbook_ui extends addressbook_bo
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
 				// create a new contact with the content of the old
-				$copy_fields = unserialize($this->config['copy_fields']);
 				foreach($content as $key => $value)
 				{
-					if(!in_array($key, $copy_fields) || in_array($key, array('etag')))
+					if(!in_array($key, self::$copy_fields) || in_array($key, array('etag')))
 					{
 						unset($content[$key]);
 					}

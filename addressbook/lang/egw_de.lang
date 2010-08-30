@@ -204,6 +204,7 @@ field %1 has been updated !	addressbook	de	Feld %1 wurde aktualisiert !
 field name	addressbook	de	Feldname
 fields for the csv export	addressbook	de	Felder für den CSV Export
 fields the user is allowed to edit himself	admin	de	Felder, die der Benutzer selbst bearbeiten darf
+fields to copy when copying an address?	admin	de	Welche Felder sollen beim Kopieren berücksichtigt werden?
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
 fieldseperator	addressbook	de	Feldtrenner

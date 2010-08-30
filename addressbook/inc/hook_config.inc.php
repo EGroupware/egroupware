@@ -140,22 +140,9 @@ function copy_fields($config)
 			$fields['#'.$name] = $data['label'];
 		}
 	}
-	$default = array(
-		'org_name',
-		'org_unit',
-		'adr_one_street',
-		'adr_one_street2',
-		'adr_one_locality',
-		'adr_one_region',
-		'adr_one_postalcode',
-		'adr_one_countryname',
-		'email',
-		'url',
-		'tel_work',
-		'cat_id'
-	);
+
 	return html::checkbox_multiselect('newsettings[copy_fields]',
-		$config['copy_fields'] ? $config['copy_fields'] : $default,
+		$config['copy_fields'] ? $config['copy_fields'] : addressbook_ui::$copy_fields,
 		$fields,true,'',4
 	);
 }

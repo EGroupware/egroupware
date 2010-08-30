@@ -204,6 +204,7 @@ field %1 has been updated !	addressbook	en	Field %1 has been updated !
 field name	addressbook	en	Field Name
 fields for the csv export	addressbook	en	Fields for the CSV export
 fields the user is allowed to edit himself	admin	en	Fields the user is allowed to edit himself
+fields to copy when copying an address?	admin	en	Fields to copy when copying an address?
 fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Fieldseparator
 fieldseperator	addressbook	en	Fieldseperator
