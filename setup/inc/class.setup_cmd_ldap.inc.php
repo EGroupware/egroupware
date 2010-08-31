@@ -549,7 +549,7 @@ class setup_cmd_ldap extends setup_cmd
 				'account_id' => $entry['uidnumber'][0],
 				'account_lid' => $entry['uid'][0],
 				'account_email' => $entry['mail'][0],
-			),$mail_login_type,$this->domain);
+			),$this->domain,$mail_login_type);
 
 			if ($mbox === $entry[$mbox_attr][0]) continue;	// nothing to change
 
