@@ -12,6 +12,11 @@
 
 /**
  * setup command: test or create the ldap connection and hierarchy
+ * 
+ * All commands can be run via setup-cli eg:
+ * 
+ * setup/setup-cli.php --setup_cmd_ldap stylite.de,config-user,config-pw sub_command=set_mailbox \
+ * 	ldap_base=dc=local ldap_admin=cn=admin,dc=local ldap_admin_pw=secret ldap_host=localhost test=1
  */
 class setup_cmd_ldap extends setup_cmd
 {
@@ -106,6 +111,9 @@ class setup_cmd_ldap extends setup_cmd
 			case 'migrate_to_ldap':
 			case 'migrate_to_sql':
 				$msg = $this->migrate($this->sub_command == 'migrate_to_ldap');
+				break;
+			case 'set_mailbox':
+				$msg = $this->set_mailbox();
 				break;
 			case 'create_ldap':
 			default:
@@ -497,6 +505,78 @@ class setup_cmd_ldap extends setup_cmd
 		return ++$deleted;
 	}
 
+	/**
+	 * Set mailbox attribute in $this->ldap_base according to given format
+	 *
+	 * Uses $this->ldap_host, $this->ldap_admin and $this->ldap_admin_pw to connect.
+	 * 
+	 * @param string $this->object_class='qmailUser'
+	 * @param string $this->mbox_attr='mailmessagestore' lowercase!!!
+	 * @param string $this->mail_login_format='email' 'email', 'vmailmgr', 'standard' or 'uidNumber'
+	 * @return string with success message N entries modified
+	 * @throws egw_exception if dn not found, not listable or delete fails
+	 */
+	private function set_mailbox()
+	{
+		$this->connect($this->ldap_admin,$this->ldap_admin_pw);
+		
+		// if base not set, use context minus one hierarchy, eg. ou=accounts,(o=domain,dc=local)
+		if (empty($this->ldap_base) && $this->ldap_context)
+		{
+			list(,$this->ldap_base) = explode(',',$this->ldap_context,2);
+		}
+		// check if base does exist
+		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
+		{
+			throw new egw_exception_wrong_userinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+		}
+		$object_class = $this->object_class ? $this->object_class : 'qmailUser';
+		$mbox_attr = $this->mbox_attr ? $this->mbox_attr : 'mailmessagestore';
+		$mail_login_format = $this->mail_login_format ? $this->mail_login_format : 'email';
+
+		// translate EGroupware mail_login_format into ldap attribute names
+		switch($mail_login_format)
+		{
+			case 'email':     $mbox_format = 'mail'; break;
+			case 'vmailmgr':  $mbox_format = 'uid@domain'; break;
+			case 'standard':  $mbox_format = 'uid'; break;
+			case 'uidNumber': $mbox_format = 'uuidnumber@domain'; break;	// uu to get u123
+			default: throw new egw_exception('Unknown mail_login_format "%1"!',$mail_login_format);
+		}
+
+		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
+				'objectClass='.$object_class,array('mail','uidNumber','uid',$mbox_attr))) ||
+			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
+		{
+			throw new egw_exception(lang('Error listing "dn=%1"!',$this->ldap_base));
+		}
+		$modified = 0;
+		foreach($entries as $n => $entry)
+		{
+			if ($n === 'count') continue;
+
+			$replace = array(
+				'mail' => $entry['mail'][0],
+				'uidnumber' => $entry['uidnumber'][0],
+				'uid' => $entry['uid'][0],
+				'domain' => $this->domain,
+			);
+			$mbox = strtolower(str_replace(array_keys($replace),$replace,$mbox_format));
+			if ($mbox === $entry[$mbox_attr][0]) continue;	// nothing to change
+
+			if (!$this->test && !ldap_modify($this->test_ldap->ds,$entry['dn'],array(
+				$mbox_attr => $mbox,
+			)))
+			{
+				throw new egw_exception(lang("Error modifying dn=%1: %2='%3'!",$dn,$mbox_attr,$mbox));
+			}
+			++$modified;
+			if ($this->test) echo "$modified: $entry[dn]: $mbox_attr={$entry[$mbox_attr][0]} --> $mbox\n";
+		}
+		return $this->test ? lang('%1 entries would have been modified.',$modified) :
+			lang('%1 entries modified.',$modified);
+	}
+	
 	/**
 	 * array with objectclasses for the objects we can create
 	 *
