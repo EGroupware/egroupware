@@ -29,14 +29,11 @@ class emailadmin_bo extends so_sql
 	 */
 	static $numericfields = array(
 		'ea_profile_id',
-		'ea_smtp_type',
 		'ea_smtp_port',
 		'ea_smtp_auth',
 		'ea_editforwardingaddress',
 		'ea_smtp_ldap_use_default',
-		'ea_imap_type',
 		'ea_imap_port',
-		'ea_imap_login_type',
 		'ea_imap_tsl_auth',
 		'ea_imap_tsl_encryption',
 		'ea_imap_enable_cyrus',
