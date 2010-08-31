@@ -230,3 +230,29 @@ function sql_passwdhashes($config)
 	}
 	return $out;
 }
+
+/**
+ * Make mail-login-types from emailadmin available to config template
+ * 
+ * @param array $config
+ * @return string
+ */
+function mail_login_type($config)
+{
+	$types = emailadmin_ui::getIMAPLoginTypes('cyrusimap');
+	unset($types['admin']);
+	
+	foreach($types as $value => $label)
+	{
+		if($config['mail_login_type'] == $value)
+		{
+			$selected = ' selected="selected"';
+		}
+		else
+		{
+			$selected = '';
+		}
+		$out .= '<option value="' . $value . '"' . $selected . '>' . $label . '</option>' . "\n";
+	}
+	return $out;
+}
