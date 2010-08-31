@@ -423,6 +423,8 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	/**
 	 * Build mailbox address for given account and mail_addr_type
 	 * 
+	 * If $account is an array (with values for keys account_(id|lid|email), it does NOT call accounts class
+	 *  
 	 * @param int|array $account account_id or whole account array with values for keys 
 	 * @param string $domain=null domain, default use $this->defaultDomain
 	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email or uidNumber,
@@ -437,20 +439,26 @@ class emailadmin_smtp_ldap extends defaultsmtp
 		switch($mail_login_type)
 		{
 			case 'email':
-				return is_array($account) ? $account['account_email'] : $GLOBALS['egw']->accounts->id2name($account,'account_email');
+				$mbox = is_array($account) ? $account['account_email'] : $GLOBALS['egw']->accounts->id2name($account,'account_email');
+				break;
 
 			case 'uidNumber':
 				if (is_array($account)) $account = $account['account_id'];
-				return 'u'.$account.'@'.$domain;
+				$mbox = 'u'.$account.'@'.$domain;
+				break;
 				
 			case 'standard':
-				if (is_array($account)) $account = $account['account_id'];
-				return $GLOBALS['egw']->accounts->id2name($account);
+				$mbox = is_array($account) ? $account['account_lid'] : $GLOBALS['egw']->accounts->id2name($account);
+				break;
 
 			case 'vmailmgr':
 			default:
-				if (is_array($account)) $account = $account['account_id'];
-				return $GLOBALS['egw']->accounts->id2name($account).'@'.$domain;
+				$mbox = is_array($account) ? $account['account_lid'] : $GLOBALS['egw']->accounts->id2name($account);
+				$mbox .= '@'.$domain;
+				break;
 		}
+		$mbox = strtolower($mbox);
+		
+		return $mbox;
 	}
 }

@@ -141,6 +141,7 @@ class setup_cmd_config extends setup_cmd
 				'username (standard)' => 'standard',
 				'username@domain (virtual mail manager)' => 'vmailmgr',
 				'Username/Password defined by admin' => 'admin',
+				'userId@domain eg. u123@domain' => 'uidNumber',
 				'email (Standard Maildomain should be set)' => 'email',
 			),'default'=>'standard'),
 		),

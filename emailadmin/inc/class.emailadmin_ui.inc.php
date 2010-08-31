@@ -238,6 +238,10 @@ class emailadmin_ui extends emailadmin_bo
 			'admin'		=> lang('Username/Password defined by admin'),
 			'uidNumber' => lang('UserId@domain eg. u1234@domain'),
 		);
+		if (strpos($serverclass,'_') === false)
+		{
+			include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$serverclass.'.inc.php');
+		}
 		if (!empty($serverclass) && stripos(constant($serverclass.'::CAPABILITIES'),'logintypeemail') !== false)
 		{
 			$returnval['email']	= lang('use Users eMail-Address (as seen in Useraccount)');

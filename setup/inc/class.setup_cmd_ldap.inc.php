@@ -512,7 +512,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * 
 	 * @param string $this->object_class='qmailUser'
 	 * @param string $this->mbox_attr='mailmessagestore' lowercase!!!
-	 * @param string $this->mail_login_format='email' 'email', 'vmailmgr', 'standard' or 'uidNumber'
+	 * @param string $this->mail_login_type='email' 'email', 'vmailmgr', 'standard' or 'uidNumber'
 	 * @return string with success message N entries modified
 	 * @throws egw_exception if dn not found, not listable or delete fails
 	 */
@@ -532,17 +532,7 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		$object_class = $this->object_class ? $this->object_class : 'qmailUser';
 		$mbox_attr = $this->mbox_attr ? $this->mbox_attr : 'mailmessagestore';
-		$mail_login_format = $this->mail_login_format ? $this->mail_login_format : 'email';
-
-		// translate EGroupware mail_login_format into ldap attribute names
-		switch($mail_login_format)
-		{
-			case 'email':     $mbox_format = 'mail'; break;
-			case 'vmailmgr':  $mbox_format = 'uid@domain'; break;
-			case 'standard':  $mbox_format = 'uid'; break;
-			case 'uidNumber': $mbox_format = 'uuidnumber@domain'; break;	// uu to get u123
-			default: throw new egw_exception('Unknown mail_login_format "%1"!',$mail_login_format);
-		}
+		$mail_login_type = $this->mail_login_type ? $this->mail_login_type : 'email';
 
 		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
 				'objectClass='.$object_class,array('mail','uidNumber','uid',$mbox_attr))) ||
@@ -555,13 +545,12 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			if ($n === 'count') continue;
 
-			$replace = array(
-				'mail' => $entry['mail'][0],
-				'uidnumber' => $entry['uidnumber'][0],
-				'uid' => $entry['uid'][0],
-				'domain' => $this->domain,
-			);
-			$mbox = strtolower(str_replace(array_keys($replace),$replace,$mbox_format));
+			$mbox = emailadmin_smtp_ldap::mailbox_addr(array(
+				'account_id' => $entry['uidnumber'][0],
+				'account_lid' => $entry['uid'][0],
+				'account_email' => $entry['mail'][0],
+			),$mail_login_type,$this->domain);
+
 			if ($mbox === $entry[$mbox_attr][0]) continue;	// nothing to change
 
 			if (!$this->test && !ldap_modify($this->test_ldap->ds,$entry['dn'],array(

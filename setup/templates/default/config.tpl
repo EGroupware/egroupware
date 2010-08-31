@@ -176,11 +176,7 @@
    <tr class="row_on"">
     <td>{lang_Mail_server_login_type}:</td>
     <td>
-     <select name="newsettings[mail_login_type]">
-      <option value="standard" {selected_mail_login_type_standard}>{lang_standard (login-name_identical_to_eGroupWare_user-name)}</option>
-      <option value="vmailmgr" {selected_mail_login_type_vmailmgr}>{lang_Virtual_mail_manager_(login-name_includes_domain)}</option>
-      <option value="email" {selected_mail_login_type_email}>{lang_email_(Standard_Maildomain_should_be_set)}</option>
-     </select>
+     <select name="newsettings[mail_login_type]">{hook_mail_login_type}</select>
     </td>
    </tr>
    <tr class="row_off"">
