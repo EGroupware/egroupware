@@ -1139,6 +1139,7 @@ class translation
 			'@&(pound|#163);@i',              //   Pound
 			'@&(copy|#169);@i',               //   Copyright
 			'@&(reg|#174);@i',                //   Registered
+			'@&#39;@i',                       //   singleQuote
 		);
 		$Replace = array ('',
 			'"',
@@ -1151,11 +1152,26 @@ class translation
 			chr(163),
 			chr(169),
 			chr(174),
+			"'",
 		);
 		$_html = preg_replace($Rules, $Replace, $_html);
 
-		//   removing carriage return linefeeds
-		if ($stripcrl === true ) $_html = preg_replace('@(\r\n)@i',' ',$_html);
+		//   removing carriage return linefeeds, preserve those enclosed in <pre> </pre> tags
+		if ($stripcrl === true ) 
+		{
+			if (stripos($_html,'<pre>')!==false)
+			{
+				$contentArr = html::splithtmlByPRE($_html);
+				foreach ($contentArr as $k =>&$elem)
+				{
+					if (stripos($elem,'<pre>')===false) 
+					{
+						$elem = preg_replace('@(\r\n)@i',' ',$elem);
+					}
+				}
+				$_html = implode('',$contentArr);
+			}
+		}
 		$tags = array (
 			0 => '~<h[123][^>]*>\r*\n*~si',
 			1 => '~<h[456][^>]*>\r*\n*~si',
@@ -1168,6 +1184,9 @@ class translation
 			8 => '~<div[^>]*>\r*\n*~si',
 			9 => '~<hr[^>]*>\r*\n*~si',
 			10 => '/<blockquote type="cite">/',
+			11 => '/<blockquote>/',
+			12 => '~</blockquote>~si',
+			13 => '~<blockquote[^>]*>~si',
 		);
 		$Replace = array (
 			0 => "\r\n",
@@ -1181,6 +1200,9 @@ class translation
 			8 => "\r\n",
 			9 => "\r\n__________________________________________________\r\n",
 			10 => '#blockquote#type#cite#',
+			11 => '#blockquote#type#cite#',
+			12 => '#blockquote#end#cite#',
+			13 => '#blockquote#type#cite#',
 		);
 		$_html = preg_replace($tags,$Replace,$_html);
 		$_html = preg_replace('~</t(d|h)>\s*<t(d|h)[^>]*>~si',' - ',$_html);
@@ -1200,7 +1222,7 @@ class translation
 		#$_html = preg_replace('~^\s+~m','',$_html);
 		#$_html = preg_replace('~\s+$~m','',$_html);
 		// restoring the preserved blockquote
-		$_html = preg_replace('~#blockquote#type#cite#~s','<blockquote type="cite">',$_html);
+		//$_html = str_replace('#blockquote#type#cite#','<blockquote type="cite">',$_html);
 
 
 		$_html = html_entity_decode($_html, ENT_COMPAT, $displayCharset);
@@ -1214,14 +1236,15 @@ class translation
 			$indent = 0;
 			$indentString = '';
 
-			$quoteParts = preg_split('/<blockquote type="cite">/', $_html, -1, PREG_SPLIT_OFFSET_CAPTURE);
-
+			//$quoteParts = preg_split('/<blockquote type="cite">/', $_html, -1, PREG_SPLIT_OFFSET_CAPTURE);
+			$quoteParts = preg_split('/#blockquote#type#cite#/', $_html, -1, PREG_SPLIT_OFFSET_CAPTURE);
 			foreach($quoteParts as $quotePart) {
 				if($quotePart[1] > 0) {
 					$indent++;
 					$indentString .= '>';
 				}
-				$quoteParts2 = preg_split('/<\/blockquote>/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
+				//$quoteParts2 = preg_split('/<\/blockquote>/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
+				$quoteParts2 = preg_split('/#blockquote#end#cite#/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
 
 				foreach($quoteParts2 as $quotePart2) {
 					if($quotePart2[1] > 0) {
