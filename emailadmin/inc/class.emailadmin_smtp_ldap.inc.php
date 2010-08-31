@@ -141,10 +141,10 @@ class emailadmin_smtp_ldap extends defaultsmtp
 		{
 			$newData[$this->config['mail_enable_attr']] = $this->config['mail_enabled'];
 		}
-		// does schema support an explicit mailbox name --> set it with $uid@$domain
+		// does schema support an explicit mailbox name --> set it
 		if ($this->config['mailbox_attr'])
 		{
-			$newData[$this->config['mailbox_attr']] = $_hookValues['account_lid'].'@'.$this->defaultDomain;
+			$newData[$this->config['mailbox_attr']] = self::mailbox_addr($_hookValues);
 		}
 
 		if (!($ret = ldap_mod_replace($ds, $accountDN, $newData)) || $this->debug)
@@ -417,6 +417,40 @@ class emailadmin_smtp_ldap extends defaultsmtp
 			if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
 			return ldap_modify ($ds, $allValues[0]['dn'], $newData);
+		}
+	}
+	
+	/**
+	 * Build mailbox address for given account and mail_addr_type
+	 * 
+	 * @param int|array $account account_id or whole account array with values for keys 
+	 * @param string $domain=null domain, default use $this->defaultDomain
+	 * @param string $mail_login_type=null standard(uid), vmailmgr(uid@domain), email or uidNumber,
+	 * 	default use $GLOBALS['egw_info']['server']['mail_login_type']
+	 * @return string
+	 */
+	static public function mailbox_addr($account,$domain=null,$mail_login_type=null)
+	{
+		if (is_null($domain)) $domain = $this->domain;
+		if (is_null($mail_login_type)) $mail_login_type = $GLOBALS['egw_info']['server']['mail_login_type'];
+
+		switch($mail_login_type)
+		{
+			case 'email':
+				return is_array($account) ? $account['account_email'] : $GLOBALS['egw']->accounts->id2name($account,'account_email');
+
+			case 'uidNumber':
+				if (is_array($account)) $account = $account['account_id'];
+				return 'u'.$account.'@'.$domain;
+				
+			case 'standard':
+				if (is_array($account)) $account = $account['account_id'];
+				return $GLOBALS['egw']->accounts->id2name($account);
+
+			case 'vmailmgr':
+			default:
+				if (is_array($account)) $account = $account['account_id'];
+				return $GLOBALS['egw']->accounts->id2name($account).'@'.$domain;
 		}
 	}
 }

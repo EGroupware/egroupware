@@ -337,20 +337,26 @@ class defaultimap extends Net_IMAP
 	 */
 	function getMailBoxUserName($_username)
 	{
-		if ($this->loginType == 'email')
+		switch ($this->loginType)
 		{
-			$_username = $_username;
-			$accountID = $GLOBALS['egw']->accounts->name2id($_username);
-			$accountemail = $GLOBALS['egw']->accounts->id2name($accountID,'account_email');
-			//$accountemail = $GLOBALS['egw']->accounts->read($GLOBALS['egw']->accounts->name2id($_username,'account_email'));
-			if (!empty($accountemail))
-			{
-				list($lusername,$domain) = explode('@',$accountemail,2);
-				if (strtolower($domain) == strtolower($this->domainName) && !empty($lusername))
+			case 'email':
+				$_username = $_username;
+				$accountID = $GLOBALS['egw']->accounts->name2id($_username);
+				$accountemail = $GLOBALS['egw']->accounts->id2name($accountID,'account_email');
+				//$accountemail = $GLOBALS['egw']->accounts->read($GLOBALS['egw']->accounts->name2id($_username,'account_email'));
+				if (!empty($accountemail))
 				{
-					$_username = $lusername;
+					list($lusername,$domain) = explode('@',$accountemail,2);
+					if (strtolower($domain) == strtolower($this->domainName) && !empty($lusername))
+					{
+						$_username = $lusername;
+					}
 				}
-			}
+				break;
+				
+			case 'uidNumber':
+				$_username = 'u'.$GLOBALS['egw']->accounts->name2id($_username);
+				break;
 		}
 		return $_username;
 	}
@@ -370,7 +376,7 @@ class defaultimap extends Net_IMAP
 		}
 		
 		$_username = $this->getMailBoxUserName($_username);
-		if($this->loginType == 'vmailmgr' || $this->loginType == 'email') {
+		if($this->loginType == 'vmailmgr' || $this->loginType == 'email' || $this->loginType == 'uidNumber') {
 			$_username .= '@'. $this->domainName;
 		}
 

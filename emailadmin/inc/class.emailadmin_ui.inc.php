@@ -233,9 +233,10 @@ class emailadmin_ui extends emailadmin_bo
 	{
 		//error_log(__METHOD__.' called with:'.$serverclass." with capabilities:".parent::$IMAPServerType[$serverclass]['imapcapabilities']);
 		$returnval = array(
-				'standard'	=>lang('username (standard)'),
-				'vmailmgr'	=>lang('username@domainname (Virtual MAIL ManaGeR)'),
-				'admin'		=>lang('Username/Password defined by admin'),
+			'standard'	=> lang('username (standard)'),
+			'vmailmgr'	=> lang('username@domainname (Virtual MAIL ManaGeR)'),
+			'admin'		=> lang('Username/Password defined by admin'),
+			'uidNumber' => lang('UserId@domain eg. u1234@domain'),
 		);
 		if (!empty($serverclass) && stripos(constant($serverclass.'::CAPABILITIES'),'logintypeemail') !== false)
 		{
