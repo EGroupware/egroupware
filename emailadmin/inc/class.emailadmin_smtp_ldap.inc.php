@@ -431,7 +431,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	 * 	default use $GLOBALS['egw_info']['server']['mail_login_type']
 	 * @return string
 	 */
-	static public function mailbox_addr($account,$domain=null,$mail_login_type=null)
+	/*static*/ public function mailbox_addr($account,$domain=null,$mail_login_type=null)
 	{
 		if (is_null($domain)) $domain = $this->domain;
 		if (is_null($mail_login_type)) $mail_login_type = $GLOBALS['egw_info']['server']['mail_login_type'];

@@ -585,7 +585,8 @@ class emailadmin_bo extends so_sql
 			list($data['imapLoginType'],$imapAuthType) = explode('#',$data['imapLoginType'],2);
 			$icServer->loginType	= $data['imapLoginType'];
 			$icServer->domainName	= $data['defaultDomain'];
-			$icServer->loginName 	= $data['imapLoginType'] == 'standard' ? $GLOBALS['egw_info']['user']['account_lid'] : $GLOBALS['egw_info']['user']['account_lid'].'@'.$data['defaultDomain'];
+//			$icServer->loginName 	= $data['imapLoginType'] == 'standard' ? $GLOBALS['egw_info']['user']['account_lid'] : $GLOBALS['egw_info']['user']['account_lid'].'@'.$data['defaultDomain'];
+			$icServer->loginName 	= emailadmin_smtp_ldap::mailbox_addr($GLOBALS['egw_info']['user'],$data['defaultDomain'],$data['imapLoginType']);
 			$icServer->enableCyrusAdmin = ($data['imapEnableCyrusAdmin'] == 'yes');
 			$icServer->adminUsername = $data['imapAdminUsername'];
 			$icServer->adminPassword = $data['imapAdminPW'];
