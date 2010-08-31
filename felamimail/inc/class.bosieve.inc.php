@@ -32,6 +32,7 @@ class bosieve
 		$bopreferences    = CreateObject('felamimail.bopreferences',$_restoreSession);
 		$mailPreferences  = $bopreferences->getPreferences();
 		$icServer = $mailPreferences->getIncomingServer(0);
+		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.'->LoginName:'.$icServer->loginName);
 		$icServer->setVacationUser($icServer->loginName,$_vacation['scriptName'],$_vacation);
 	}
 }

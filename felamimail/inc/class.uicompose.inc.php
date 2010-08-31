@@ -64,8 +64,6 @@
 
 			$this->rowColor[0] = $GLOBALS['egw_info']["theme"]["bg01"];
 			$this->rowColor[1] = $GLOBALS['egw_info']["theme"]["bg02"];
-
-
 		}
 
 		function unhtmlentities ($string)
@@ -440,7 +438,10 @@
 				$disableRuler = true;
 			}
 			$insertSigOnTop = false;
-			if (isset($this->bocompose->preferencesArray['insertSignatureAtTopOfMessage']) && $this->bocompose->preferencesArray['insertSignatureAtTopOfMessage'])
+			if (isset($this->bocompose->preferencesArray['insertSignatureAtTopOfMessage']) && 
+				$this->bocompose->preferencesArray['insertSignatureAtTopOfMessage'] &&
+				!(isset($_POST['mySigID']) && !empty($_POST['mySigID']))
+			)
 			{
 				$insertSigOnTop = true;
 				if($sessionData['mimeType'] == 'html') {
@@ -453,7 +454,6 @@
 				$sigText = bofelamimail::merge($signature->fm_signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 				$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText)).$inbetween.$sessionData['body'];
 			}
-
 			// prepare body
 			if($sessionData['mimeType'] == 'html') {
 				$mode = 'simple';

@@ -1665,6 +1665,7 @@ class infolog_ui
 
 			if ($bodyParts[$i]['mimeType'] == 'text/html') {
 				// convert HTML to text, as we dont want HTML in infologs
+				$newBody = html::purify($newBody);
 				$newBody = $bofelamimail->convertHTMLToText($newBody,true);
 				$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
 				$message .= $newBody;

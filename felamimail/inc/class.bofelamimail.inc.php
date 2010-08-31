@@ -2795,7 +2795,7 @@
 			return $userACL;
 		}
 
-		static function wordwrap($str, $cols, $cut)
+		static function wordwrap($str, $cols, $cut, $dontbreaklinesstartingwith=false)
 		{
 			$lines = explode("\n", $str);
 			$newStr = '';
@@ -2805,7 +2805,15 @@
 				//$line = str_replace("\t","        ",$line);
 				//$newStr .= wordwrap($line, $cols, $cut);
 				$allowedLength = $cols-strlen($cut);
-				if (strlen($line) > $allowedLength) {
+				if (strlen($line) > $allowedLength && 
+					($dontbreaklinesstartingwith==false || 
+					 ($dontbreaklinesstartingwith && 
+					  strlen($dontbreaklinesstartingwith)>=1 &&
+					  substr($line,0,strlen($dontbreaklinesstartingwith)) != $dontbreaklinesstartingwith
+					 )
+					)
+				   ) 
+				{
 					$s=explode(" ", $line);
 					$line = "";
 					$linecnt = 0;

@@ -49,7 +49,7 @@
 
 		function addACL($_accountName, $_aclData)
 		{
-			if($this->_debug) error_log("ajaxfelamimail::addACL");
+			if($this->_debug) error_log("ajaxfelamimail::addACL for ".$_accountName."->".array2string($_aclData));
 			$response = new xajaxResponse();
 
 			if(!empty($_accountName)) {
@@ -252,7 +252,15 @@
 				$bocompose->replaceEmailAdresses($_content);
 			} else {
 				$this->sessionData['mimeType'] = 'text';
-				$_content = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$_content);
+				if (stripos($_content,'<pre>')!==false)
+				{
+					$contentArr = html::splithtmlByPRE($_content);
+					foreach ($contentArr as $k =>&$elem)
+					{
+						if (stripos($elem,'<pre>')!==false) $elem = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$elem);
+					}
+					$_content = implode('',$contentArr);
+				}
 				$_content = $bocompose->_getCleanHTML($_content);
 				$_content = $bocompose->convertHTMLToText($_content);
 			}

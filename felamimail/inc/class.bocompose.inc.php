@@ -634,7 +634,7 @@
 						$numberOfChars = strspn(trim($value), ">");
 						$appendString = str_repeat('>', $numberOfChars + 1);
 
-						$bodyAppend = $this->bofelamimail->wordwrap($value, 76-strlen("\r\n$appendString "), "\r\n$appendString ");
+						$bodyAppend = $this->bofelamimail->wordwrap($value, 76-strlen("\r\n$appendString "), "\r\n$appendString ",'>');
 
 						if($bodyAppend[0] == '>') {
 							$bodyAppend = '>'. $bodyAppend;
