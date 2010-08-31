@@ -327,6 +327,10 @@ class filemanager_ui
 	}
 </script>";
 		}
+		else
+		{
+			$tpl->set_cell_attribute('action','onchange','this.form.submit()');
+		}
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
