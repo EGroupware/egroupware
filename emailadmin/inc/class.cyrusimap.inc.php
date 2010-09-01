@@ -105,30 +105,6 @@ class cyrusimap extends defaultimap
 	}
 
 	/**
-	 * Create mailbox string from given mailbox-name and user-name
-	 * 
-	 * @param string $_username
-	 * @param string $_folderName='' 
-	 * @return string utf-7 encoded (done in getMailboxName)
-	 */
-	function getUserMailboxString($_username, $_folderName='') 
-	{
-		$nameSpaces = $this->getNameSpaces();
-
-		if(!isset($nameSpaces['others'])) {
-			return false;
-		}
-		$_username = $this->getMailBoxUserName($_username);
-		$mailboxString = $nameSpaces['others'][0]['name'] . strtolower($_username) . (!empty($_folderName) ? $nameSpaces['others'][0]['delimiter'] . $_folderName : '');
-		
-		if($this->loginType == 'vmailmgr' || $this->loginType == 'email') {
-			$mailboxString .= '@'.$this->domainName;
-		}
-
-		return $mailboxString;
-	}
-
-	/**
 	 * returns information about a user
 	 * currently only supported information is the current quota
 	 *

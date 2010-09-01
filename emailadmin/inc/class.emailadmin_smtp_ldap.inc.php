@@ -351,7 +351,11 @@ class emailadmin_smtp_ldap extends defaultsmtp
 		// does schema support an explicit mailbox name --> set it with $uid@$domain
 		if ($this->config['mailbox_attr'])
 		{
-			$newData[$this->config['mailbox_attr']] = $uid.'@'.$this->defaultDomain;
+			$newData[$this->config['mailbox_attr']] = self::mailbox_addr(array(
+				'account_id' => $_uidnumber,
+				'account_lid' => $uid,
+				'account_email' => $_mailLocalAddress,
+			));
 		}
 		if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
@@ -433,7 +437,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	 */
 	/*static*/ public function mailbox_addr($account,$domain=null,$mail_login_type=null)
 	{
-		if (is_null($domain)) $domain = $this->domain;
+		if (is_null($domain)) $domain = $this->defaultDomain;
 		if (is_null($mail_login_type)) $mail_login_type = $GLOBALS['egw_info']['server']['mail_login_type'];
 
 		switch($mail_login_type)
@@ -457,9 +461,8 @@ class emailadmin_smtp_ldap extends defaultsmtp
 				$mbox .= '@'.$domain;
 				break;
 		}
-		//strtolower breaks CaseSensitive Authentication
-		//$mbox = strtolower($mbox);
-		
+		if ($this->debug) error_log(__METHOD__."(".array2string($account).",'$domain','$mail_login_type') = '$mbox'");
+
 		return $mbox;
 	}
 }
