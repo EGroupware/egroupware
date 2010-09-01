@@ -457,7 +457,8 @@ class emailadmin_smtp_ldap extends defaultsmtp
 				$mbox .= '@'.$domain;
 				break;
 		}
-		$mbox = strtolower($mbox);
+		//strtolower breaks CaseSensitive Authentication
+		//$mbox = strtolower($mbox);
 		
 		return $mbox;
 	}
