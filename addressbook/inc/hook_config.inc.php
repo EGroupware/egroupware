@@ -100,7 +100,7 @@ function org_fileds_to_update($config)
 		}
 	}
 
-	if ($config['account_repository'] != 'ldap')	// no custom-fields in ldap
+	if ($config['contact_repository'] != 'ldap')	// no custom-fields in ldap
 	{
 		foreach(config::get_customfields('addressbook') as $name => $data)
 		{
@@ -126,14 +126,12 @@ function copy_fields($config)
 	foreach($bocontacts->contact_fields as $field => $label)
 	{
 		// some fields the user should never be allowed to copy or are coverted by an other attribute (n_fn for all n_*)
-		if (!in_array($field,array('id','tid','created','creator','modified','modifier','n_prefix','n_given','n_middle','n_family','n_suffix', 'account_id', 'uid')))
+		if (!in_array($field,array('id','tid','created','creator','modified','modifier','account_id','uid','etag','n_fn')))
 		{
 			$fields[$field] = $label;
 		}
 	}
-	$fields['link_to'] = 'Links';
-
-	if ($config['account_repository'] != 'ldap')	// no custom-fields in ldap
+	if ($config['contact_repository'] != 'ldap')	// no custom-fields in ldap
 	{
 		foreach(config::get_customfields('addressbook') as $name => $data)
 		{
