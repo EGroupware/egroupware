@@ -259,14 +259,17 @@ class emailadmin_ui extends emailadmin_bo
 			$filter = array();
 			if(is_int(intval($_GET['account_id'])) && !empty($_GET['account_id']))
 			{
+				$GLOBALS['egw']->accounts->get_account_name(intval($_GET['account_id']),$lid,$fname,$lname);
 				if ( intval($_GET['account_id']) < 0 ) {
 					$groupID =  intval($_GET['account_id']);
 					$content['ea_group'] = $filter['ea_group'] = $groupID;
-					
 				} else {
 					$accountID = intval($_GET['account_id']);
 					$content['ea_user'] = $filter['ea_user'] = $accountID;
 				}
+				$content['ea_active'] = 'yes';
+				$content['ea_imap_login_type'] = 'admin';
+				$content['ea_description'] = common::display_fullname($lid,$fname,$lname,intval($_GET['account_id']));
 			}
 			if (!empty($_GET['profileid']))
 			{
