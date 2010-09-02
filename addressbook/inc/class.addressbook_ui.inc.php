@@ -975,6 +975,7 @@ class addressbook_ui extends addressbook_bo
 				$wildcard = $query['advanced_search']['meth_select'];
 				unset($query['advanced_search']['meth_select']);
 			}
+			//if ($do_email ) $email_only = array('id','owner','tid','n_fn','n_family','n_given','org_name','email','email_home'); 
 
 			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
@@ -1412,7 +1413,7 @@ class addressbook_ui extends addressbook_bo
 				}
 				if(!isset($content['owner']))
 				{
-					$this->default_private ? $this->user.'p' : $this->default_addressbook;
+					$content['owner'] = $this->default_private ? $this->user.'p' : $this->default_addressbook;
 				}
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
