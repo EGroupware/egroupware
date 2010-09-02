@@ -1221,6 +1221,9 @@ class calendar_boupdate extends calendar_bo
 			if(!$config['calendar_delete_history'] || $event['deleted'])
 			{
 				$this->so->delete($cal_id);
+
+				// delete all links to the event
+				egw_link::unlink(0,'calendar',$cal_id);
 			}
 			elseif ($config['calendar_delete_history'])
 			{
@@ -1236,9 +1239,6 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
-
-			// delete all links to the event
-			egw_link::unlink(0,'calendar',$cal_id);
 		}
 		else
 		{
