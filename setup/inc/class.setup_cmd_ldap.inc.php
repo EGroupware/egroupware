@@ -195,6 +195,15 @@ class setup_cmd_ldap extends setup_cmd
 				// should we run any or some addAccount hooks
 				if ($this->add_account_hook)
 				{
+					// setting up egw_info array with new ldap information, so hook can use ldap::ldapConnect()
+					if (!$egw_info_set++)
+					{
+						foreach(array('ldap_host','ldap_root_dn','ldap_root_pw','ldap_context','ldap_group_context','ldap_search_filter','ldap_encryptin_type','mail_suffix','mail_login_type') as $name)
+						{
+							 if (!empty($this->$name)) $GLOBALS['egw_info']['server'][$name] = $this->$name;
+						}
+						//error_log(__METHOD__."() setup up egw_info[server]: ldap_host='{$GLOBALS['egw_info']['server']['ldap_host']}', ldap_root_dn='{$GLOBALS['egw_info']['server']['ldap_root_dn']}', ldap_root_pw='{$GLOBALS['egw_info']['server']['ldap_root_pw']}', ldap_context='{$GLOBALS['egw_info']['server']['ldap_context']}', mail_suffix='{$GLOBALS['egw_info']['server']['mail_suffix']}', mail_logig_type='{$GLOBALS['egw_info']['server']['mail_login-type']}'");
+					}
 					try 
 					{
 						$account['location'] = 'addAccount';
