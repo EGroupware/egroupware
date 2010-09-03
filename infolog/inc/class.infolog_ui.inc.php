@@ -973,12 +973,12 @@ class infolog_ui
 								'info_id'      => $content['info_id'],
 								'info_link_id' => $content['info_link_id'],
 								'info_from'    => $content['info_from'],
+								'info_type'    => $content['info_type'],
 								'info_owner'   => $content['info_owner'],
 								'info_custom_from' => $content['info_custom_from'],
 							);
 							//echo "<p>updating info_link_id: ".print_r($to_write,true)."</p>\n";
 							$this->bo->write($to_write,False,true,true,true);	// last true = no notifications, as no real change
-
 							// we need eg. the new modification date, for further updates
 							$content = array_merge($content,$to_write);
 						}
