@@ -963,6 +963,7 @@ class infolog_ui
 								'info_id'      => $content['info_id'],
 								'info_link_id' => $content['info_link_id'],
 								'info_from'    => $content['info_from'],
+								'info_type'    => $content['info_type'],
 								'info_owner'   => $content['info_owner'],
 								'info_custom_from' => $content['info_custom_from'],
 							);
