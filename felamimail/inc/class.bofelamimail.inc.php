@@ -226,7 +226,10 @@
 		{
 			$icServer = $this->mailPreferences->getIncomingServer(0);
 			if(is_a($icServer,'defaultimap')) {
+				// if not connected, try opening an admin connection
+				if (!$icServer->_connected) $this->openConnection(0,true);
 				$icServer->addAccount($_hookValues);
+				if ($icServer->_connected) $this->closeConnection(); // close connection afterwards
 			}
 
 			$ogServer = $this->mailPreferences->getOutgoingServer(0);
@@ -511,7 +514,10 @@
 		{
 			$icServer = $this->mailPreferences->getIncomingServer(0);
 			if(is_a($icServer,'defaultimap')) {
+				//try to connect with admin rights, when not connected
+				if (!$icServer->_connected) $this->openConnection(0,true);
 				$icServer->deleteAccount($_hookValues);
+				if ($icServer->_connected) $this->closeConnection(); // close connection
 			}
 
 			$ogServer = $this->mailPreferences->getOutgoingServer(0);
@@ -2950,7 +2956,10 @@
 
 			$header = rtrim($send->CreateHeader())."\r\n"."Content-Type: multipart/report; report-type=disposition-notification;\r\n".
 				"\tboundary=\"".$sep."\"\r\n\r\n";
-			return $send->SmtpSend($header,$body);
+			//error_log(__METHOD__.array2string($send));
+			$rv = $send->SmtpSend($header,$body);
+			//error_log(__METHOD__.'#'.array2string($rv).'#');
+			return $rv;
 		}
 
 		/**
