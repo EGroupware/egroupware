@@ -1,0 +1,40 @@
+%1 records processed	importexport	cs	%1 záznamů zpracováno
+allowed users	importexport	cs	Oprávnění uživatelé
+automatically created by importexport	importexport	cs	Automaticky vytvořeno aplikací ImportExport
+basic csv import	importexport	cs	Základní CSV import
+choose a name for this definition	importexport	cs	Zvolte název pro tuto definici
+choose a plugin	importexport	cs	Zvolte plugin
+choose an application	importexport	cs	Zvolte aplikaci
+choose seperator and charset	importexport	cs	Vybrat oddělovač a znakovou sadu
+define imports|exports	common	cs	Definovat importy|exporty
+delete all selected definitions	importexport	cs	Smazat VŠECHNY vybrané definice
+edit conditions	importexport	cs	Editovat podmínky
+expert options	importexport	cs	Rozšířené volby
+export	importexport	cs	Exportovat
+export all selected definitions	importexport	cs	Exportovat VŠECHNY vybrané definice
+finish	importexport	cs	Dokončit
+general	importexport	cs	Obecné
+import	importexport	cs	import
+import definitions	common	cs	Definice importu
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	cs	Importovat definice (Pozor: Stávající definice téhož jména budou přepsány!!!)
+importexport	common	cs	Import a export
+importexport wizard finished successfully!	importexport	cs	Průvodce aplikace ImportExport úspěšně dokončen!
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	cs	Importuje informace z CSV souboru. Jedná se o základní úroveň, program nic nedělá na vlastní pěst.
+load sample file	importexport	cs	Nahrát ukázkový soubor
+manage mapping	importexport	cs	Spravovat mapování
+next	importexport	cs	Další
+no records selected	importexport	cs	Nebyly vybrány žádné záznamy
+preview	importexport	cs	Náhled
+previous	importexport	cs	Předchozí
+save as definition	importexport	cs	Uložit jako definici
+schedule	common	cs	Plán
+schedule import / export	common	cs	Plánovat import / export
+schedule not found	importexport	cs	Nebyl nalezen žádný plán
+select definition	importexport	cs	Vybrat definici
+select plugin	importexport	cs	Vybrat plugin
+some nice text	importexport	cs	nějaký pěkný text
+unable to import:	importexport	cs	Nebylo možné importovat:
+unable to schedule	importexport	cs	Není možné naplánovat
+which useres are allowed for this definition	importexport	cs	Oprávnění uživatelé této definice
+which users are allowed to use this definition	importexport	cs	Kteří uživatelé mohou použít tuto definici
+you need to select an app and format first!	importexport	cs	Nejprve musíte vybrat aplikaci a formát!

@@ -1,0 +1,22 @@
+allowed users	importexport	ru	Пользователи имеющие доступ
+automatically created by importexport	importexport	ru	Автоматически создано ИмпортЭкспорт'ом
+choose a name for this definition	importexport	ru	Выберите название для этого определения
+choose a plugin	importexport	ru	Выберите модуль расширения
+choose an application	importexport	ru	Выберите приложение
+delete all selected definitions	importexport	ru	удаление ВСЕХ выбранных определений
+expert options	importexport	ru	Настройки для эксперта
+export	importexport	ru	Экспорт
+export all selected definitions	importexport	ru	экспорт ВСЕХ выбранных определений
+finish	importexport	ru	конец
+general	importexport	ru	Общее
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	ru	Импорт определений (Внимание: Существующие определения с совпадающими именами будут перезаписаны !!!)
+importexport wizard finished successfully!	importexport	ru	Мастер настройки ИмпортЭкспорта завершил работу успешно!
+next	importexport	ru	следующий
+preview	importexport	ru	Предварительный просмотр
+previous	importexport	ru	Предыдущий
+save as definition	importexport	ru	Сохранить как определение
+select definition	importexport	ru	Выбор определения
+select plugin	importexport	ru	Выбор модуля расширения
+some nice text	importexport	ru	некий приятный текст
+which useres are allowed for this definition	importexport	ru	Какие пользователи меют доступ к этому определению
+you need to select an app and format first!	importexport	ru	Вы должны сначала выбрать приложение и формат!

@@ -1,0 +1,19 @@
+allowed users	importexport	id	Pengguna yang dibolehkan
+define imports|exports	common	id	Definisi impor|ekspor
+edit conditions	importexport	id	Edit conditions
+expert options	importexport	id	Expert options
+export	importexport	id	Ekspor
+finish	importexport	id	selesai
+general	importexport	id	Umum
+import	importexport	id	Impor
+import definitions	common	id	Impor definisi
+importexport	common	id	ImporEkspor
+load sample file	importexport	id	Muatkan berkas contoh
+manage mapping	importexport	id	Pengelolaan pemetaan
+next	importexport	id	berikutnya
+preview	importexport	id	Preview
+previous	importexport	id	sebelumnya
+schedule	common	id	Jadual
+schedule import / export	common	id	Jadualkan impor/ekspor
+select definition	importexport	id	Pilih definisi
+select plugin	importexport	id	Pilih plugin

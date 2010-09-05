@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.export_dialog.general_tab_content" template="" lang="" group="0" version="">
+		<grid height="200px">
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description span="all" value="some nice text"/>
+				</row>
+				<row class="select_appname">
+					<description value="Select application"/>
+					<menulist>
+						<menupopup no_lang="1" id="appname" onchange="xajax_doXMLHTTP('importexport.uiexport.ajax_get_plugins',this.value);"/>
+					</menulist>
+				</row>
+				<row class="select_plugin">
+					<description value="Select format"/>
+					<menulist>
+						<menupopup no_lang="1" id="plugin" onchange="xajax_doXMLHTTP('importexport.uiexport.ajax_get_plugin_options',this.value);"/>
+					</menulist>
+				</row>
+				<row>
+					<box span="all" id="plugin_description" needed="1">
+						<description span="all" needed="1" id="plugin_description" no_lang="1"/>
+					</box>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="importexport.export_dialog.general_tab" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<image src="export"/>
+					<template id="importexport.export_dialog.general_tab_content"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="importexport.export_dialog.selection_tab" template="" lang="" group="0" version="">
+		<grid height="200px">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<html id="plugin_selectors_html" no_lang="1"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="importexport.export_dialog.options_tab" template="" lang="" group="0" version="">
+		<grid height="200px">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<html id="plugin_options_html" no_lang="1"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="importexport.export_dialog.templates_tab" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Select a template"/>
+				</row>
+				<row>
+					<listbox no_lang="1" id="templates" rows="5"/>
+				</row>
+				<row>
+					<description value="Description"/>
+				</row>
+				<row>
+					<description id="description"/>
+				</row>
+				<row>
+					<button label="Load" id="load"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="importexport.export_dialog" template="" lang="" group="0" version="">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg"/>
+				</row>
+				<row>
+					<tabbox>
+						<tabs>
+							<tab label="General" statustext=""/>
+							<tab label="Selection" statustext=""/>
+							<tab label="Options" statustext=""/>
+							<tab label="Templates" statustext=""/>
+						</tabs>
+						<tabpanels>
+							<template id="importexport.export_dialog.general_tab"/>
+							<template id="importexport.export_dialog.selection_tab"/>
+							<template id="importexport.export_dialog.options_tab"/>
+							<template id="importexport.export_dialog.templates_tab"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row>
+					<checkbox label="Save as template" id="save_as_template"/>
+				</row>
+				<row>
+					<hbox span="all">
+						<hbox>
+							<button label="Export" id="export" onclick="xajax_eT_wrapper(this);return false;"/>
+							<button label="Preview" id="preview" onclick="xajax_eT_wrapper(this);return false;"/>
+						</hbox>
+						<button label="Cancel" align="right" id="cancel" onclick="window.close(); return false;"/>
+					</hbox>
+				</row>
+				<row>
+					<box id="preview-box" needed="1" class="preview-box">
+						<description/>
+					</box>
+				</row>
+				<row>
+					<box class="preview-box-buttons" id="preview-box-buttons" needed="1" align="center">
+						<button label="OK" align="center" onclick="document.getElementById('divPoweredBy').style.display='block'; document.getElementById(form::name('preview-box')).style.display='none'; document.getElementById(form::name('preview-box-buttons')).style.display='none'; return false;"/>
+					</box>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.preview-box {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 400px;
+  height: 360px;
+  overflow: scroll;
+  background-color: white;
+  z-index: 999;
+  display: none;
+}
+.preview-box-buttons {
+  position: absolute;
+  top: 365px;
+  left: 0px;
+  width: 400px;
+  height: 20px;
+
+  z-index: 999;
+  display: none;
+}
+		</styles>
+	</template>
+</overlay>

@@ -1,0 +1,40 @@
+%1 records processed	importexport	en	%1 records processed
+allowed users	importexport	en	Allowed users
+automatically created by importexport	importexport	en	Automatically created by importexport
+basic csv import	importexport	en	Basic CSV import
+choose a name for this definition	importexport	en	Choose a name for this definition
+choose a plugin	importexport	en	Choose a plugin
+choose an application	importexport	en	Choose an application
+choose seperator and charset	importexport	en	Choose seperator and charset
+define imports|exports	common	en	Define imports|exports
+delete all selected definitions	importexport	en	delete ALL selected definitions
+edit conditions	importexport	en	Edit conditions
+expert options	importexport	en	Expert options
+export	importexport	en	Export
+export all selected definitions	importexport	en	export ALL selected definitions
+finish	importexport	en	finish
+general	importexport	en	General
+import	importexport	en	import
+import definitions	common	en	Import definitions
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	en	Import definitions (Attension: Existing definitions with equal names will be overwritten!!!)
+importexport	common	en	importexport
+importexport wizard finished successfully!	importexport	en	ImportExport wizard finished successfully!
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	en	Imports information from a CSV file.  This is only a base class, and doesn't do anything on its own.
+load sample file	importexport	en	Load Sample file
+manage mapping	importexport	en	Manage mapping
+next	importexport	en	next
+no records selected	importexport	en	No records selected
+preview	importexport	en	Preview
+previous	importexport	en	previous
+save as definition	importexport	en	Save as definition
+schedule	common	en	Schedule
+schedule import / export	common	en	Schedule import / export
+schedule not found	importexport	en	Schedule not found
+select definition	importexport	en	Select definition
+select plugin	importexport	en	Select plugin
+some nice text	importexport	en	some nice text
+unable to import:	importexport	en	Unable to import:
+unable to schedule	importexport	en	Unable to schedule
+which useres are allowed for this definition	importexport	en	Which useres are allowed for this definition
+which users are allowed to use this definition	importexport	en	Which users are allowed to use this definition
+you need to select an app and format first!	importexport	en	You need to select an app and format first!

@@ -1,0 +1,33 @@
+allowed users	importexport	fi	Sallittu käyttäjille
+automatically created by importexport	importexport	fi	Luotu automaattisesti tuonnissa/viennissä.
+basic csv import	importexport	fi	Perus CSV -tuonti
+choose a name for this definition	importexport	fi	Valitse nimi tälle selitteelle
+choose a plugin	importexport	fi	Valitse liitännäinen
+choose an application	importexport	fi	Valitse sovellus
+choose seperator and charset	importexport	fi	Valitse erotin ja merkistökoodaus
+define imports|exports	common	fi	Määrittele tuonti | vienti
+delete all selected definitions	importexport	fi	Poista kaikki selitteet
+edit conditions	importexport	fi	Muokkaa ehtoja
+expert options	importexport	fi	Vie optiot
+export	importexport	fi	Vienti
+export all selected definitions	importexport	fi	Vie kaikki valitut selitteet
+finish	importexport	fi	Valmis
+general	importexport	fi	Yleinen
+import	importexport	fi	Tuonti
+import definitions	common	fi	Tuo selitteet
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	fi	Tuo selitteet (Huomio: Olemassaolevat samannimiset selitteet ylikirjoitetaan (overwrite)!!!
+importexport	common	fi	Tuonti|Vienti
+importexport wizard finished successfully!	importexport	fi	Tuonti|Vienti wizard lopetettu onnistuneesti!
+load sample file	importexport	fi	Lataa esimerkkitiedosto
+next	importexport	fi	Seuraava
+no records selected	importexport	fi	Tietueita ei ole valittu
+preview	importexport	fi	Esinäkymä
+previous	importexport	fi	Edellinen
+save as definition	importexport	fi	Tallenna selitteenä
+select definition	importexport	fi	Valitse selite
+select plugin	importexport	fi	Valitse PlugIn
+some nice text	importexport	fi	jotain kivaa tekstiä
+unable to import:	importexport	fi	Tuonti ei voitu suorittaa:
+which useres are allowed for this definition	importexport	fi	Kenellä on oikeus käyttää tätä selitettä
+which users are allowed to use this definition	importexport	fi	Kenellä on oikeus käyttää tätä selitettä
+you need to select an app and format first!	importexport	fi	Valitse ensin sovellus ja formaatti!
