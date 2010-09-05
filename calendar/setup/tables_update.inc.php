@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Calendar setup
+ * EGroupware - Calendar setup
  *
  * @link http://www.egroupware.org
  * @package calendar
@@ -2087,6 +2087,18 @@ function calendar_upgrade1_7_010()
 		'comment' => '1 if the event has been deleted, but you want to keep it around'
 	));
 
-	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.7.011';
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.001';	// was 1.7.011
+}
+
+function calendar_upgrade1_7_011()
+{
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.001';
+}
+	
+function calendar_upgrade1_8()
+{
+	calendar_upgrade1_7_010();
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.001';
 }
 

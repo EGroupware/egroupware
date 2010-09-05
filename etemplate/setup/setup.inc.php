@@ -12,7 +12,7 @@
  */
 
 $setup_info['etemplate']['name']      = 'etemplate';
-$setup_info['etemplate']['version']   = '1.6';
+$setup_info['etemplate']['version']   = '1.8';
 $setup_info['etemplate']['app_order'] = 60;	// just behind the developers-tools
 $setup_info['etemplate']['tables']    = array('egw_etemplate');
 $setup_info['etemplate']['enable']    = 1;
@@ -39,6 +39,5 @@ $setup_info['etemplate']['hooks'][] = 'sidebox_menu';
 /* Dependencies for this app to work */
 $setup_info['etemplate']['depends'][] = array(
 	 'appname' => 'phpgwapi',
-	 'versions' => Array('1.5','1.6','1.7')
+	 'versions' => Array('1.7','1.8','1.9')
 );
-

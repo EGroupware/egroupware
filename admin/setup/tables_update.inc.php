@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Setup
+ * EGroupware - Setup
  *
  * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de
  *
@@ -83,4 +83,10 @@ function admin_upgrade1_5_002()
 function admin_upgrade1_5_003()
 {
 	return $GLOBALS['setup_info']['admin']['currentver'] = '1.6';
+}
+
+
+function admin_upgrade1_6()
+{
+	return $GLOBALS['setup_info']['admin']['currentver'] = '1.8';
 }

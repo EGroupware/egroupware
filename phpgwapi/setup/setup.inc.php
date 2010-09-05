@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - API Setup
+ * EGroupware - API Setup
  *
  * @link http://www.egroupware.org
  * @package api
@@ -12,7 +12,7 @@
 /* Basic information about this app */
 $setup_info['phpgwapi']['name']      = 'phpgwapi';
 $setup_info['phpgwapi']['title']     = 'eGroupWare API';
-$setup_info['phpgwapi']['version']   = '1.7.003';
+$setup_info['phpgwapi']['version']   = '1.9.001';
 $setup_info['phpgwapi']['versions']['current_header'] = '1.29';
 $setup_info['phpgwapi']['enable']    = 3;
 $setup_info['phpgwapi']['app_order'] = 1;
@@ -65,7 +65,7 @@ $setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home_hooks.editGr
 
 /* CalDAV/CardDAV/GroupDAV app */
 $setup_info['groupdav']['name']      = 'groupdav';
-$setup_info['groupdav']['version']   = '1.6';
+$setup_info['groupdav']['version']   = '1.8';
 $setup_info['groupdav']['enable']    = 2;
 $setup_info['groupdav']['app_order'] = 1;
 $setup_info['groupdav']['icon']      = 'groupdav';

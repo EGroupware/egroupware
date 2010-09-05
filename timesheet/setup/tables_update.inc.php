@@ -1,12 +1,12 @@
 <?php
 /**
- * TimeSheet - setup table updates
+ * EGroupware - TimeSheet - setup table updates
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
  * @subpackage setup
- * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -55,6 +55,7 @@ function timesheet_upgrade1_4()
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.6';
 }
 
+
 function timesheet_upgrade1_6()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_timesheet','ts_status',array(
@@ -67,3 +68,8 @@ function timesheet_upgrade1_6()
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.7.001';
 }
 
+
+function timesheet_upgrade1_7_001()
+{
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.8';
+}

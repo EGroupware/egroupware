@@ -1,12 +1,12 @@
 <?php
 /**
- * TimeSheet - setup definitions
+ * EGroupware - TimeSheet - setup definitions
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
  * @subpackage setup
- * @copyright (c) 2005/6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -17,7 +17,7 @@ if (!defined('TIMESHEET_APP'))
 }
 
 $setup_info[TIMESHEET_APP]['name']      = TIMESHEET_APP;
-$setup_info[TIMESHEET_APP]['version']   = '1.7.001';
+$setup_info[TIMESHEET_APP]['version']   = '1.8';
 $setup_info[TIMESHEET_APP]['app_order'] = 5;
 $setup_info[TIMESHEET_APP]['tables']    = array('egw_timesheet','egw_timesheet_extra');
 $setup_info[TIMESHEET_APP]['enable']    = 1;
@@ -47,9 +47,9 @@ $setup_info[TIMESHEET_APP]['hooks']['pm_cumulate'] = 'timesheet_hooks::cumulate'
 /* Dependencies for this app to work */
 $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'phpgwapi',
-	 'versions' => Array('1.5','1.6','1.7')
+	 'versions' => Array('1.7','1.8','1.9')
 );
 $setup_info[TIMESHEET_APP]['depends'][] = array(
 	 'appname' => 'etemplate',
-	 'versions' => Array('1.5','1.6','1.7')
+	 'versions' => Array('1.7','1.8','1.9')
 );

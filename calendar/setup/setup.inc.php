@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Calendar setup
+ * EGroupware - Calendar
  *
  * @link http://www.egroupware.org
  * @package calendar
@@ -10,7 +10,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '1.7.011';
+$setup_info['calendar']['version'] = '1.9.001';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index';
@@ -46,11 +46,11 @@ $setup_info['calendar']['hooks']['config_validate'] = 'calendar_hooks::config_va
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(
 	 'appname' => 'phpgwapi',
-	 'versions' => Array('1.3','1.4','1.5','1.6','1.7')
+	 'versions' => Array('1.7','1.8','1.9')
 );
 $setup_info['calendar']['depends'][] = array(
 	 'appname' => 'etemplate',
-	 'versions' => Array('1.3','1.4','1.5','1.6','1.7')
+	 'versions' => Array('1.7','1.8','1.9')
 );
 
 // installation checks for calendar

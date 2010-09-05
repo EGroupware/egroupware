@@ -1,6 +1,6 @@
 <?php
 /**
- * Addressbook - setup config
+ * EGroupware - Addressbook
  *
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -10,7 +10,7 @@
 /* Basic information about this app */
 $setup_info['addressbook']['name']      = 'addressbook';
 $setup_info['addressbook']['title']     = 'Addressbook';
-$setup_info['addressbook']['version']   = '1.6';
+$setup_info['addressbook']['version']   = '1.8';
 $setup_info['addressbook']['app_order'] = 4;
 $setup_info['addressbook']['enable']    = 1;
 
@@ -48,11 +48,11 @@ $setup_info['addressbook']['hooks']['not_enum_group_acls'] = 'addressbook_hooks:
 /* Dependencies for this app to work */
 $setup_info['addressbook']['depends'][] = array(
 	'appname' => 'phpgwapi',
-	'versions' => Array('1.5','1.6','1.7')
+	'versions' => Array('1.7','1.8','1.9')
 );
 $setup_info['addressbook']['depends'][] = array(
 	'appname' => 'etemplate',
-	'versions' => Array('1.5','1.6','1.7')
+	'versions' => Array('1.7','1.8','1.9')
 );
 
 // installation checks for addresbook

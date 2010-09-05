@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Admin
+ * EGroupware - Admin
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -10,7 +10,7 @@
  */
 
 $setup_info['admin']['name']      = 'admin';
-$setup_info['admin']['version']   = '1.6';
+$setup_info['admin']['version']   = '1.8';
 $setup_info['admin']['app_order'] = 1;
 $setup_info['admin']['tables']    = array('egw_admin_queue','egw_admin_remote');
 $setup_info['admin']['enable']    = 1;
@@ -27,7 +27,7 @@ $setup_info['admin']['maintainer'][] = array(
 );
 
 $setup_info['admin']['license']  = 'GPL';
-$setup_info['admin']['description'] = 'eGroupWare administration application';
+$setup_info['admin']['description'] = 'EGroupware administration application';
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['admin']['hooks'] = array(
@@ -48,9 +48,9 @@ $setup_info['admin']['hooks']['sidebox_menu'] =$setup_info['admin']['name'].'.ad
 /* Dependencies for this app to work */
 $setup_info['admin']['depends'][] = array(
 	'appname' => 'phpgwapi',
-	'versions' => Array('1.5','1.6','1.7')
+	'versions' => Array('1.7','1.8','1.9')
 );
 $setup_info['admin']['depends'][] = array(
 	'appname' => 'etemplate',
-	'versions' => Array('1.5','1.6','1.7')
+	'versions' => Array('1.7','1.8','1.9')
 );
