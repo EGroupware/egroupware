@@ -118,3 +118,9 @@ function etemplate_upgrade1_5_001()
 {
 	return $GLOBALS['setup_info']['etemplate']['currentver'] = '1.6';
 }
+
+
+function etemplate_upgrade1_6()
+{
+	return $GLOBALS['setup_info']['etemplate']['currentver'] = '1.8';
+}

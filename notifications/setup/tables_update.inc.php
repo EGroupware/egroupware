@@ -32,3 +32,9 @@ function notifications_upgrade1_4()
 {
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.6';
 }
+
+
+function notifications_upgrade1_6()
+{
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.8';
+}

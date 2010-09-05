@@ -1,12 +1,12 @@
 <?php
 /**
- * InfoLog - Setup
+ * EGroupware - InfoLog - Setup
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
  * @subpackage setup
- * @copyright (c) 2003-8 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -627,4 +627,10 @@ function infolog_upgrade1_5_003()
 function infolog_upgrade1_5_004()
 {
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.6';
+}
+
+
+function infolog_upgrade1_6()
+{
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.8';
 }

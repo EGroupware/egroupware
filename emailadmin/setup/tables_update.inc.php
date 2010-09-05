@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupware EMailAdmin - DB schema
+ * EGroupware EMailAdmin - DB schema
  *
  * @link http://www.egroupware.org
  * @author Lars Kneschke
@@ -278,7 +278,7 @@ function emailadmin_upgrade1_6_001()
 		'type' => 'text'
 	));
 
-	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.7.003';
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.8';	// was '1.7.003';
 }
 
 function emailadmin_upgrade1_7_003()
@@ -299,5 +299,17 @@ function emailadmin_upgrade1_7_003()
 	{
 		$GLOBALS['egw_setup']->oProc->query('update egw_emailadmin set ea_imap_type=\''.$newtype.'\' where ea_imap_type=\''.$id.'\'',__LINE__,__FILE__);
 	}
-	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.7.004';
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.001';	// was '1.7.004';
+}
+
+function emailadmin_upgrade1_8()
+{
+	emailadmin_upgrade1_7_003();
+	
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.001';
+}
+	
+function emailadmin_upgrade1_7_004()
+{
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.001';
 }

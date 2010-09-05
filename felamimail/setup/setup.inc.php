@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - FeLaMiMail
+ * EGroupware - FMail
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -11,7 +11,7 @@
 
 $setup_info['felamimail']['name']      		= 'felamimail';
 $setup_info['felamimail']['title']     		= 'FeLaMiMail';
-$setup_info['felamimail']['version']     	= '1.7.001';
+$setup_info['felamimail']['version']     	= '1.8';
 $setup_info['felamimail']['app_order'] 		= 2;
 $setup_info['felamimail']['enable']    		= 1;
 $setup_info['felamimail']['index']    		= 'felamimail.uifelamimail.viewMainScreen';
@@ -39,15 +39,15 @@ $setup_info['felamimail']['hooks']['search_link'] = 'felamimail_hooks::search_li
 /* Dependencies for this app to work */
 $setup_info['felamimail']['depends'][] = array(
 	'appname'  => 'phpgwapi',
-	'versions' => Array('1.3','1.4','1.5','1.6','1.7')
+	'versions' => Array('1.7','1.8','1.9')
 );
 $setup_info['felamimail']['depends'][] = array(
 	'appname'  => 'emailadmin',
-	'versions' => Array('1.3','1.4','1.5','1.6','1.7')
+	'versions' => Array('1.7','1.8','1.9')
 );
 $setup_info['felamimail']['depends'][] = array(
 	'appname'  => 'egw-pear',
-	'versions' => Array('1.4.000','1.5','1.6','1.7')
+	'versions' => Array('1.8','1.9')
 );
 // installation checks for felamimail
 $setup_info['felamimail']['check_install'] = array(

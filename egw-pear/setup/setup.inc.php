@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - PEAR
+ * EGroupware - modified PEAR modules
  *
  * @link http://www.egroupware.org
  * @package egw-pear
@@ -11,7 +11,7 @@
 
 $setup_info['egw-pear']['name']		= 'egw-pear';
 $setup_info['egw-pear']['title']	= 'egw-pear';
-$setup_info['egw-pear']['version']	= '1.4.000';
+$setup_info['egw-pear']['version']	= '1.8';
 $setup_info['egw-pear']['app_order']	= 99;
 $setup_info['egw-pear']['enable']	= 0;	// no need to show anywhere in EGroupware
 
@@ -39,11 +39,11 @@ $setup_info['egw-pear']['check_install'] = array(
 	// we need pear itself to be installed
 	'' => array(
 		'func' => 'pear_check',
-		'from' => 'FeLaMiMail',
+		'from' => 'FMail',
 	),
 	// Net_Socket is required from Net_IMAP & Net_Sieve
 	'Net_Socket' => array(
 		'func' => 'pear_check',
-		'from' => 'FeLaMiMail',
+		'from' => 'FMail',
 	),
 );

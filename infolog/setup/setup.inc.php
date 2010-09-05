@@ -1,6 +1,6 @@
 <?php
 /**
- * InfoLog - Setup
+ * EGroupware - InfoLog - Setup
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -12,7 +12,7 @@
  */
 
 $setup_info['infolog']['name']      = 'infolog';
-$setup_info['infolog']['version']   = '1.6';
+$setup_info['infolog']['version']   = '1.8';
 $setup_info['infolog']['app_order'] = 5;
 $setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
 $setup_info['infolog']['enable']    = 1;
@@ -64,9 +64,9 @@ $setup_info['infolog']['hooks']['pm_custom_app_icons'] = 'infolog.infolog_bo.pm_
 /* Dependencies for this app to work */
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'phpgwapi',
-	'versions' => Array('1.5','1.6','1.7')
+	'versions' => Array('1.7','1.8','1.9')
 );
 $setup_info['infolog']['depends'][] = array(
 	'appname' => 'etemplate',
-	'versions' => Array('1.5','1.6','1.7')
+	'versions' => Array('1.7','1.8','1.9')
 );
