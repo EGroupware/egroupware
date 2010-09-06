@@ -2931,6 +2931,7 @@
 		}
 		/**
 		 * Helper function to handle wrong or unrecognized timezones
+		 * returns the date as it is parseable by strtotime, or current timestamp if everything failes
 		 */
 		static function _strtotime($date='')
 		{
@@ -2938,12 +2939,13 @@
 			{
 				$dtarr = explode(' ',$date);
 				$test = false;
-				while ($test===false) 
+				while ($test===false && count($dtarr)>=1) 
 				{
 					array_pop($dtarr);
 					$test=strtotime(implode(' ',$dtarr));
 					if ($test) $date = implode(' ',$dtarr); 
 				}
+				if ($test===false) $date = strtotime('now');
 			}
 			return $date;
 		}
