@@ -345,7 +345,7 @@ class SMTP {
       error_log(__METHOD__.' Line:'.__LINE__."->". "SMTP -> FROM SERVER:" . $rply . $this->CRLF );
     }
 
-    if($code != 354) {
+    if($code != 354 && $code != 250) {
       $this->error =
         array("error" => "DATA command not accepted from server",
               "smtp_code" => $code,
