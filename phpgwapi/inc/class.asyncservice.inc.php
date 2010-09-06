@@ -426,7 +426,7 @@ class asyncservice
 				list($app) = strpos($job['method'],'::') !== false ? explode('_',$job['method']) :
 					explode('.',$job['method']);
 				translation::add_app($app);
-				ExecMethod($job['method'],$job['data']);
+				ExecMethod($job['method'],$job['data']+array_diff_key($job,array('data' => false)));
 
 				// re-read job, in case it had been updated or even deleted in the method
 				$updated = $this->read($id);
