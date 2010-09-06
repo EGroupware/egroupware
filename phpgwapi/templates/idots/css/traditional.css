@@ -210,7 +210,7 @@ a.textSidebox
 {
 	padding-top:3px;
 	padding-bottom:3px;
-	padding-left: 2px;
+	padding-left: 1px;
 	border-top: solid #aaaaaa 1px;
 	overflow: auto;
 }
