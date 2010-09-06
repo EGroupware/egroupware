@@ -301,7 +301,7 @@ class filemanager_ui
 	function open_mail(attachments)
 	{
 		var link = '".egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose'))."';
-
+		var i = 0;
 		if (!(attachments instanceof Array)) attachments = [ attachments ];
 
 		for(i=0; i < attachments.length; i++)
