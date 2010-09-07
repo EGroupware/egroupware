@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entry type="array" name="importExportDefinitions">
+  <entry type="array" name="metainfo">
+    <entry type="string" name="type">importexport definitions</entry>
+    <entry type="string" name="charset">utf-8</entry>
+    <entry type="integer" name="entries">1</entry>
+  </entry>
+  <entry type="array" name="definitions">
+    <entry type="array" name="outlook_csv_finish">
+      <entry type="string" name="name">outlook_csv_finish</entry>
+      <entry type="string" name="application">addressbook</entry>
+      <entry type="string" name="plugin">addressbook_export_contacts_csv</entry>
+      <entry type="string" name="type">export</entry>
+      <entry type="array" name="allowed_users">
+        <entry type="string" name="0">Default</entry>
+      </entry>
+      <entry type="array" name="plugin_options">
+        <entry type="boolean" name="begin_with_fieldnames">TRUE</entry>
+        <entry type="string" name="charset">iso-8859-15</entry>
+        <entry type="array" name="mapping">
+          <entry type="string" name="title">Tehtävänimike</entry>
+          <entry type="string" name="n_given">Etunimi</entry>
+          <entry type="string" name="n_middle">Toinen nimi</entry>
+          <entry type="string" name="n_family">Sukunimi</entry>
+          <entry type="string" name="n_suffix">Jälkiliite</entry>
+          <entry type="string" name="org_name">Yritys</entry>
+          <entry type="string" name="org_unit">Osasto</entry>
+          <entry type="string" name="adr_one_street">Lähiosoite (työ)</entry>
+          <entry type="string" name="Business Street 2">Lähiosoite (työ) 2</entry>
+          <entry type="string" name="Business Street 3">Lähiosoite (työ) 3</entry>
+          <entry type="string" name="Business City">Postitoimipaikka (työ)</entry>
+          <entry type="string" name="Business State">Sijaintitiedot (työ)</entry>
+          <entry type="string" name="Business Postal Code">Postinumero (työ)</entry>
+          <entry type="string" name="Business Country">Maa (työ)</entry>
+          <entry type="string" name="Home Street">Lähiosoite (koti)</entry>
+          <entry type="string" name="Home City">Postitoimipaikka (koti)</entry>
+          <entry type="string" name="Home State">Sijaintitiedot (koti)</entry>
+          <entry type="string" name="Home Postal Code">Postinumero (koti)</entry>
+          <entry type="string" name="Home Country">Maa (koti)</entry>
+          <entry type="string" name="Business Fax">Työfaksi</entry>
+          <entry type="string" name="Business Phone">Työpuhelin</entry>
+          <entry type="string" name="Assistant's Phone">Avustajan puhelinnumero</entry>
+          <entry type="string" name="Car Phone">Autopuhelin</entry>
+          <entry type="string" name="ISDN">ISDN</entry>
+          <entry type="string" name="Home Phone">Kotipuhelin</entry>
+          <entry type="string" name="Mobile Phone">Matkapuhelin</entry>
+          <entry type="string" name="Pager">Hakulaite</entry>
+          <entry type="string" name="Business Phone 2">Työpuhelin 2</entry>
+          <entry type="string" name="Birthday">Syntymäpäivä</entry>
+          <entry type="string" name="E-mail Address">Sähköpostiosoite</entry>
+          <entry type="string" name="E-mail Address 2">Säköpostiosoite 2</entry>
+          <entry type="string" name="Web Page">Web-sivu</entry>
+          <entry type="string" name="Notes">Muistilaput</entry>
+        </entry>
+      </entry>
+      <entry type="string" name="owner">admin</entry>
+      <entry type="NULL" name="description"/>
+    </entry>
+  </entry>
+</entry>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entry type="array" name="importExportDefinitions">
+  <entry type="array" name="metainfo">
+    <entry type="string" name="type">importexport definitions</entry>
+    <entry type="string" name="charset">utf-8</entry>
+    <entry type="integer" name="entries">1</entry>
+  </entry>
+  <entry type="array" name="definitions">
+    <entry type="array" name="outlook_csv_french">
+      <entry type="string" name="name">outlook_csv_french</entry>
+      <entry type="string" name="application">addressbook</entry>
+      <entry type="string" name="plugin">addressbook_export_contacts_csv</entry>
+      <entry type="string" name="type">export</entry>
+      <entry type="array" name="allowed_users">
+        <entry type="string" name="0">Default</entry>
+      </entry>
+      <entry type="array" name="plugin_options">
+        <entry type="boolean" name="begin_with_fieldnames">TRUE</entry>
+        <entry type="string" name="charset">iso-8859-15</entry>
+        <entry type="array" name="mapping">
+          <entry type="string" name="title">Fonction</entry>
+          <entry type="string" name="n_given">Prénom</entry>
+          <entry type="string" name="n_middle">Deuxième prénom</entry>
+          <entry type="string" name="n_family">Nom</entry>
+          <entry type="string" name="n_suffix">Suffixe</entry>
+          <entry type="string" name="org_name">Société</entry>
+          <entry type="string" name="org_unit">Service</entry>
+          <entry type="string" name="adr_one_street">Rue (bureau)</entry>
+          <entry type="string" name="address2">Rue (bureau) 2</entry>
+          <entry type="string" name="address3">Rue (bureau) 3</entry>
+          <entry type="string" name="adr_one_locality">Ville (bureau)</entry>
+          <entry type="string" name="adr_one_region">État/Prov (bureau)</entry>
+          <entry type="string" name="adr_one_postalcode">Code postal (bureau)</entry>
+          <entry type="string" name="adr_one_countryname">Pays (bureau)</entry>
+          <entry type="string" name="adr_two_street">Rue (domicile)</entry>
+          <entry type="string" name="adr_two_locality">Ville (domicile)</entry>
+          <entry type="string" name="adr_two_region">État/Prov (domicile)</entry>
+          <entry type="string" name="adr_two_postalcode">Code postal (domicile)</entry>
+          <entry type="string" name="adr_two_countryname">Pays (domicile)</entry>
+          <entry type="string" name="tel_fax">Télécopie (bureau)</entry>
+          <entry type="string" name="tel_work">Téléphone (bureau)</entry>
+          <entry type="string" name="tel_msg">Téléphone de l'assistant(e)</entry>
+          <entry type="string" name="tel_car">Téléphone (voiture)</entry>
+          <entry type="string" name="tel_isdn">RNIS</entry>
+          <entry type="string" name="tel_home">Téléphone (domicile)</entry>
+          <entry type="string" name="tel_cell">Tél. mobile</entry>
+          <entry type="string" name="tel_pager">Récepteur de radiomessagerie</entry>
+          <entry type="string" name="ophone">Téléphone 2 (bureau)</entry>
+          <entry type="string" name="bday">Anniversaire</entry>
+          <entry type="string" name="email">Adresse e-mail</entry>
+          <entry type="string" name="email_home">Adresse e-mail 2</entry>
+          <entry type="string" name="url">Page Web</entry>
+          <entry type="string" name="note">Notes</entry>
+        </entry>
+      </entry>
+      <entry type="string" name="owner">admin</entry>
+      <entry type="NULL" name="description"/>
+    </entry>
+  </entry>
+</entry>
