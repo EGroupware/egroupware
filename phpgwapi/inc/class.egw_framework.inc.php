@@ -930,6 +930,19 @@ abstract class egw_framework
 	}
 
 	/**
+	* called by hooks to add an icon in the topmenu info location
+	*
+	* @param string $id unique element id
+	* @param string $icon_src src of the icon image. Make sure this nog height then 18pixels
+	* @param string $iconlink where the icon links to
+	* @param booleon $blink set true to make the icon blink
+	* @param mixed $tooltip string containing the tooltip html, or null of no tooltip
+	* @access public
+	* @return void
+	*/
+	abstract function topmenu_info_icon($id,$icon_src,$iconlink,$blink=false,$tooltip=null);
+
+	/**
 	 * Call and return content of 'after_navbar' hook
 	 * 
 	 * @return string
