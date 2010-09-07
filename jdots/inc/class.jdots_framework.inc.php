@@ -339,6 +339,21 @@ class jdots_framework extends egw_framework
 		return $vars;
 	}
 
+	/**
+	* called by hooks to add an icon in the topmenu info location
+	*
+	* @param string $id unique element id
+	* @param string $icon_src src of the icon image. Make sure this nog height then 18pixels
+	* @param string $iconlink where the icon links to
+	* @param booleon $blink set true to make the icon blink
+	* @param mixed $tooltip string containing the tooltip html, or null of no tooltip
+	* @todo implement in a reasonable way for jdots
+	* @return void
+	*/
+	function topmenu_info_icon($id,$icon_src,$iconlink,$blink=false,$tooltip=null)
+	{
+		// not yet implemented, only used in admin/inc/hook_topmenu_info.inc.php to notify about pending updates
+	}
 
 	/**
 	* Add menu items to the topmenu template class to be displayed
