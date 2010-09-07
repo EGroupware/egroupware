@@ -136,7 +136,33 @@ class infolog_datasource extends datasource
 			}
 			egw_link::link('infolog',$info['info_id'],$link['app'],$link['id'],$link['remark']);
 		}
-		return array($info['info_id'],$info['info_link_id']);
+		$ret = array($info['info_id'],$info['info_link_id']);
+
+		// if we have a parent set, return our callback to modify the parent id, after all entries are copied
+		if ($info['info_id_parent'])
+		{
+			$ret[] = array($this,'copy_callback');	// callback
+			$ret[] = array($info['info_id'],$info['info_id_parent']);	// $param
+		}
+		return $ret;
+	}
+	
+	/**
+	 * Callback called after copying of all datasource, used to:
+	 * - fix parent id's
+	 *
+	 * @param array $param array($info_id,$info_id_parent)
+	 * @param array $apps_copied array('infolog' => array($old_info_id => $new_info_id))
+	 */
+	public function copy_callback(array $param, array $apps_copied)
+	{
+		//error_log(__METHOD__."(".array2string($param).', '.array2string($apps_copied).')');
+		list($info_id,$parent_id) = $param;
+		if (isset($apps_copied['infolog'][$parent_id]) && ($info = $this->infolog_bo->read($info_id)))
+		{
+			$info['info_id_parent'] = $apps_copied['infolog'][$parent_id];
+			$this->infolog_bo->write($info,false,true,true,true);	// no default and no notification
+		}
 	}
 
 	/**
