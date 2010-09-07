@@ -211,6 +211,11 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 				// Only update if there are changes
 				$old = $this->bocontacts->read($_data['id']);
 
+				// Don't change a user account into a contact
+				if($old['owner'] == 0) {
+					unset($_data['owner']);
+				}
+
 				// Merge to deal with fields not in import record
 				$_data = array_merge($old, $_data);
 				$changed = $this->tracking->changed_fields($_data, $old);
