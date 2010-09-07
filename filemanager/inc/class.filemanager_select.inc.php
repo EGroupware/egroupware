@@ -181,9 +181,11 @@ class filemanager_select
 					}
 					else
 					{
+						$download_url = egw_vfs::download_url(egw_vfs::concat($content['path'],$content['name']));
+						if ($download_url[0] == '/') $download_url = egw::link($download_url);
 						$js = "window.opener.CKEDITOR.tools.callFunction(".
 							$content['ckeditorfuncnum'].",'".
-							htmlspecialchars(egw::link(egw_vfs::download_url(egw_vfs::concat($content['path'],$content['name']))))."',".
+							htmlspecialchars($download_url)."',".
 							"'');\nwindow.close();";
 					}
 					header('Content-type: text/html; charset='.translation::charset());
