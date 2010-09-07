@@ -648,7 +648,7 @@ class calendar_ui
 		$blur = addslashes(html::htmlspecialchars(lang('Search').'...'));
 		$value = @$_POST['keywords'] ? html::htmlspecialchars($_POST['keywords']) : $blur;
 		$file[++$n] = array(
-			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 100%;"'.
+			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 97.5%;"'.
 				' onFocus="if(this.value==\''.$blur.'\') this.value=\'\';"'.
 				' onBlur="if(this.value==\'\') this.value=\''.$blur.'\';" title="'.lang('Search').'">',
 				'','/index.php',array('menuaction'=>'calendar.calendar_uilist.listview')),
@@ -749,6 +749,7 @@ class calendar_ui
 <script type=\"text/javascript\">
 function load_cal(url,id) {
 	var owner='';
+	var i = 0;
 	selectBox = document.getElementById(id);
 	for(i=0; i < selectBox.length; ++i) {
 		if (selectBox.options[i].selected) {
