@@ -65,13 +65,13 @@ class asyncservice
 	 * 	eg. '<app><id>X' where id is the internal id of app and X might indicate the action.
 	 * @param string $method Method to be called via ExecMethod($method,$data). $method has the form
 	 * 	'<app>.<class>.<public function>'.
-	 * @param mixed $data This data is passed back when the method is called. It might simply be an
-	 * 	integer id, but it can also be a complete array.
+	 * @param array $data=null This data is passed back when the method is called. EGroupware adds the
+	 *                          rest of the job parameters like id, next (sheduled exec time), times, ...
 	 * @param int $account_id account_id, under which the methode should be called or False for the actual user
 	 * @param boolean $debug=false
 	 * @return boolean False if $id already exists, else True
 	 */
-	function set_timer($times,$id,$method,$data,$account_id=False,$debug=false)
+	function set_timer($times,$id,$method,array $data=null,$account_id=False,$debug=false)
 	{
 		if (empty($id) || empty($method) || $this->read($id) ||
 				!($next = $this->next_run($times,$debug)))
@@ -426,7 +426,7 @@ class asyncservice
 				list($app) = strpos($job['method'],'::') !== false ? explode('_',$job['method']) :
 					explode('.',$job['method']);
 				translation::add_app($app);
-				ExecMethod($job['method'],$job['data']+array_diff_key($job,array('data' => false)));
+				ExecMethod($job['method'],(array)$job['data']+array_diff_key($job,array('data' => false)));
 
 				// re-read job, in case it had been updated or even deleted in the method
 				$updated = $this->read($id);
