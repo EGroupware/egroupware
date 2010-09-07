@@ -1167,6 +1167,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function download_url($path,$force_download=false)
 	{
+		if (($url = self::_call_on_backend('download_url',array($path,$force_download),true)))
+		{
+			return $url;
+		}
 		if ($path[0] != '/')
 		{
 			$path = parse_url($path,PHP_URL_PATH);
