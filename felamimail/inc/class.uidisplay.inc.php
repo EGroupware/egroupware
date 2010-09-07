@@ -127,12 +127,15 @@
 			global $Email_RegExp_Match;
 			$sbody     = $body;
 			$addresses = array();
-
+			$i = 0;
 			/* Find all the email addresses in the body */
-			while(preg_match($Email_RegExp_Match, $sbody, $regs)) {
+			// stop cold after 100 adresses, as this is very time consuming
+			while(preg_match($Email_RegExp_Match, $sbody, $regs) && $i<=100) {
+				//_debug_array($regs);
 				$addresses[$regs[0]] = strtr($regs[0], array('&amp;' => '&'));
 				$start = strpos($sbody, $regs[0]) + strlen($regs[0]);
 				$sbody = substr($sbody, $start);
+				$i++;
 			}
 
 			/* Replace each email address with a compose URL */
@@ -140,10 +143,11 @@
 			if (is_array($addresses)) ksort($addresses);
 			foreach ($addresses as $text => $email) {
 				if ($lmail == $email) next($addresses);
-				#echo $text."#<br>";
-				#echo $email."#<br>";
+				//echo __METHOD__.' Text:'.$text."#<br>";
+				//echo $email."#<br>";
 				$comp_uri = $this->makeComposeLink($email, $text);
-				$body = preg_replace("/\s".$text."/sim", $comp_uri, $body);
+				//echo __METHOD__.' Uri:'.$comp_uri.'#<br>';
+				$body = str_replace($text, $comp_uri, $body);
 				$lmail=$email;
 			}
 
@@ -166,12 +170,14 @@
 			#$pattern = "^".$domain.$dir.$trailingslash.$page.$getstring."$";
 			$pattern = "~\<a href=\"".$domain.".*?\"~i";
 			$sbody = $body;
-			while(@preg_match($pattern, $sbody, $regs)) {
-				#_debug_array($regs);
+			$i = 0;
+			while(@preg_match($pattern, $sbody, $regs) && $i <=100) {
+				//_debug_array($regs);
 				$key=$regs[1].$regs[3].$regs[4].$regs[5];
 				$addresses[$key] = $regs[1].$regs[3].$regs[4].$regs[5];
 				$start = strpos($sbody, $regs[0]) + strlen($regs[0]);
 				$sbody = substr($sbody, $start);
+				$i++;
 			}
 			$llink='';
 			//_debug_array($addresses);
@@ -445,9 +451,8 @@
 			} else {
 				$this->t->set_var("bcc_data_part",'');
 			}
-			$headerdate = new egw_time(bofelamimail::_strtotime($headers['DATE']));
 			$this->t->set_var("date_received",
-				@htmlspecialchars($headerdate->format($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' - '.$headerdate->format('H:i:s'),
+				@htmlspecialchars(bofelamimail::_strtotime($headers['DATE'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' - '.bofelamimail::_strtotime($headers['DATE'],'H:i:s'),
 				ENT_QUOTES,$this->displayCharset));
 
 			$this->t->set_var("subject_data",
@@ -1186,7 +1191,7 @@
 
 			$body = '';
 
-			#_debug_array($bodyParts); exit;
+			//error_log(__METHOD__.array2string($bodyParts)); //exit;
 
 			foreach((array)$bodyParts as $singleBodyPart) {
 				if (!isset($singleBodyPart['body'])) {
@@ -1199,12 +1204,12 @@
 				}
 				#_debug_array($singleBodyPart['charSet']);
 				#_debug_array($singleBodyPart['mimeType']);
-				#error_log($singleBodyPart['body']);
+				//error_log($singleBodyPart['body']);
 				// some characterreplacements, as they fail to translate
 				$sar = array(
 					'@(\x84|\x93|\x94)@',
 					'@(\x96|\x97)@',
-					'@(\x91|\x92)@',
+					'@(\x82|\x91|\x92)@',
 					'@(\x85)@',
 					'@(\x86)@',
 				);
@@ -1251,8 +1256,10 @@
 					// to display a mailpart of mimetype plain/text, may be better taged as preformatted
 					#$newBody	= nl2br($newBody);
 					// since we do not display the message as HTML anymore we may want to insert good linebreaking (for visibility).
-					$newBody	= "<pre>".bofelamimail::wordwrap($newBody,85,"\n")."</pre>";
-					#$newBody   = "<pre>".$newBody."</pre>";
+					//error_log($newBody);
+					// dont break lines that start with > (&gt; as the text was processed with htmlentities before)
+					$newBody	= "<pre>".bofelamimail::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
+					//$newBody   = "<pre>".$newBody."</pre>";
 				}
 				else
 				{
@@ -1426,9 +1433,8 @@
 			} else {
 				$this->t->set_var("cc_data_part",'');
 			}
-			$headerdate = new egw_time(bofelamimail::_strtotime($headers['DATE']));
 			$this->t->set_var("date_data",
-				@htmlspecialchars($headerdate->format($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' - '.$headerdate->format('H:i:s'), ENT_QUOTES,$this->displayCharset));
+				@htmlspecialchars(bofelamimail::_strtotime($headers['DATE'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' - '.bofelamimail::_strtotime($headers['DATE'],'H:i:s'), ENT_QUOTES,$this->displayCharset));
 
 			// link to go back to the message view. the link differs if the print was called from a normal viewing window, or from compose
 			$subject = @htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters, '', $envelope['SUBJECT'])), ENT_QUOTES, $this->displayCharset);

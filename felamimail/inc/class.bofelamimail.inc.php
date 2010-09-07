@@ -3038,21 +3038,26 @@
 		/**
 		 * Helper function to handle wrong or unrecognized timezones
 		 * returns the date as it is parseable by strtotime, or current timestamp if everything failes
+		 * @param string date to be parsed/formatted
+		 * @param string format string, if none is passed, use the users common dateformat supplemented by the time hour:minute:second
+		 * @return string returns the date as it is parseable by strtotime, or current timestamp if everything failes
 		 */
-		static function _strtotime($date='')
+		static function _strtotime($date='',$format=NULL)
 		{
-			if (strtotime($date)===false)
+			if ($format==NULL) $format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.'H:i:s';
+			$date2return = egw_time::to($date,$format);
+			if ($date2return==null)
 			{
 				$dtarr = explode(' ',$date);
-				$test = false;
-				while ($test===false && count($dtarr)>=1) 
+				$test = null;
+				while ($test===null && count($dtarr)>=1) 
 				{
 					array_pop($dtarr);
-					$test=strtotime(implode(' ',$dtarr));
-					if ($test) $date = implode(' ',$dtarr); 
+					$test= egw_time::to(implode(' ',$dtarr),$format);
+					if ($test) $date2return = $test; 
 				}
-				if ($test===false) $date = strtotime('now');
+				if ($test===null) $date2return = egw_time::to('now',$format);
 			}
-			return $date;
+			return $date2return;
 		}
 	}
