@@ -278,7 +278,8 @@ class addressbook_sql extends so_sql_cf
 			{
 				if (!($filter['owner'] = array_intersect((array)$filter['owner'],array_keys($this->grants)))) return false;
 
-				$filter['private'] = 0;
+				// for an owner filter, which is NOT the current user, filter out private entries
+				if ($filter['owner'] != $GLOBALS['egw_info']['user']['account_id']) $filter['private'] = 0;
 			}
 			else	// search all addressbooks, incl. accounts
 			{
