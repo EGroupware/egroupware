@@ -201,6 +201,25 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		trigger_error(__METHOD__."($path) can't resolve path!\n",E_USER_WARNING);
 		return false;
 	}
+	
+	/**
+	 * Returns mount url of a full url returned by resolve_url
+	 * 
+	 * @param string $fullurl full url returned by resolve_url
+	 * @return string|NULL mount url or null if not found
+	 */
+	static function mount_url($fullurl)
+	{
+		foreach(array_reverse(self::$fstab) as $mounted => $url)
+		{
+			list($url_no_query) = explode('?',$url);
+			if (substr($fullurl,0,1+strlen($url_no_query)) === $url_no_query.'/')
+			{
+				return $url;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * This method is called immediately after your stream object is created.

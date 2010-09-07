@@ -23,6 +23,8 @@
  * - mode:  mode bit for the path, default 0005 (read and execute for nobody)
  * - exec:	false (default) = do NOT allow to upload or modify scripts, true = allow it (if docroot is mounted, this allows to run scripts!)
  * 			scripts are considered every file having a script-extension (eg. .php, .pl, .py), defined with SCRIPT_EXTENSION_PREG constant
+ * - url:   download url, if NOT a regular webdav.php download should be used, eg. because directory already
+ *          lies within the docroot or is mapped via an alias
  *
  * To correctly support characters with special meaning in url's (#?%), we urlencode them with egw_vfs::encodePathComponent
  * and urldecode all path again, before passing them to php's filesystem functions.
@@ -683,6 +685,9 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 				case 'mode':
 					$mode = egw_vfs::mode2int($value);
 					break;
+				case 'url':
+					// ignored, only used for download_url method
+					break;
 				default:
 					error_log(__METHOD__."('$query') unknown option '$name'!");
 					break;
@@ -710,6 +715,40 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			error_log(__METHOD__."($url) returning ".array2string($deny));
 		}
 		return $deny;
+	}
+
+	/**
+	 * URL to download a file
+	 *
+	 * We use our webdav handler as download url instead of an own download method.
+	 * The webdav hander (filemanager/webdav.php) recognices eGW's session cookie and of cause understands regular GET requests.
+	 *
+	 * @param string $url
+	 * @param boolean $force_download=false add header('Content-disposition: filename="' . basename($path) . '"'), currently not supported!
+	 * @todo get $force_download working through webdav
+	 * @return string|false string with full download url or false to use default webdav.php url
+	 */
+	static function download_url($url,$force_download=false)
+	{
+		list(,$query) = explode('?',$url,2);
+		parse_str($query,$get);
+		if (empty($get['url'])) return false;	// no download url given for this mount-point
+		
+		if (!($mount_url = egw_vfs::mount_url($url))) return false;	// no mount url found, should not happen
+		list($mount_url) = explode('?',$mount_url);
+		
+		list($url,$query) = explode('?',$url,2);
+		$relpath = substr($url,strlen($mount_url));
+		
+		$download_url = egw_vfs::concat($get['url'],$relpath);
+		if ($download_url[0] == '/')
+		{
+			$download_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
+				$_SERVER['HTTP_HOST'].$download_url;
+		}
+		
+		//die(__METHOD__."('$url') --> relpath = $relpath --> $download_url");
+		return $download_url;
 	}
 }
 
