@@ -109,7 +109,8 @@ class setup_process
 			/* stuff the rest of the apps, but only those with available upgrades */
 			foreach($setup_info as $key => $value)
 			{
-				if (isset($value['only_db']) && (
+				// check if app is either installed or supports the used database
+				if (!isset($value['currentver']) && isset($value['only_db']) && (
 					is_array($value['only_db']) && !in_array($GLOBALS['egw_setup']->db->Type,$value['only_db']) ||
 					!is_array($value['only_db']) && $GLOBALS['egw_setup']->db->Type != $value['only_db']))
 				{
