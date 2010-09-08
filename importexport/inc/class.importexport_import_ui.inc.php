@@ -32,7 +32,6 @@
 		private $plugins;
 
 		public function __construct() {
-			$GLOBALS['egw']->js->validate_file('.','import_dialog','importexport');
 			$this->plugins = importexport_helper_functions::get_plugins('all','import');
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		}
@@ -127,7 +126,6 @@
 				}
 			}
 			$response = new xajaxResponse();
-			$response->addScript('import_dialog.change_definition(document.getElementId(\'exec[definition]\'));');
 			$response->addAssign('exec[definition]','innerHTML',$sel_options['definition']);
 			return $response->getXML();
 		}
