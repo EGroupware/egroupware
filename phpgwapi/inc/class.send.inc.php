@@ -29,10 +29,51 @@
 	*/
 	class send extends PHPMailer
 	{
+		/**
+		 * Log mails to log file specified in $GLOBALS['egw_info']['server']['log_mail']
+		 * or regular error_log for true (can be set either in DB or header.inc.php).
+		 * 
+		 * We can NOT supply this method as callback to phpMailer, as phpMailer only accepts
+		 * functions (not methods) and from a function we can NOT access $this->ErrorInfo.
+		 * 
+		 * @param boolean $isSent
+		 * @param string $to
+		 * @param string $cc
+		 * @param string $bcc
+		 * @param string $subject
+		 * @param string $body
+		 */
+  		protected function doCallback($isSent,$to,$cc,$bcc,$subject,$body)
+		{
+			if ($GLOBALS['egw_info']['server']['log_mail'])
+			{
+				$msg = $GLOBALS['egw_info']['server']['log_mail'] !== true ? date('Y-m-d H:i:s').': ' : '';
+				$msg .= ($isSent ? 'Mail send' : 'Mail NOT send').
+					' to '.$to.' with subject: "'.trim($subject).'"';
+
+				if ($GLOBALS['egw_info']['user']['account_id'])
+				{
+					$msg .= ' from user #'.$GLOBALS['egw_info']['user']['account_id'].' ('.
+						common::grab_owner_name($GLOBALS['egw_info']['user']['account_id']).')';
+				}
+				if (!$isSent)
+				{
+					$this->SetError('');	// queries error from (private) smtp and stores it in $this->ErrorInfo
+					$msg .= ': ERROR '.str_replace(array('Language string failed to load: smtp_error',"\n","\r"),'',
+						strip_tags($this->ErrorInfo));
+				}
+				error_log($msg,$GLOBALS['egw_info']['server']['log_mail'] === true ? 0 : 1,
+					$GLOBALS['egw_info']['server']['log_mail']);
+			}
+			// calling the orginal callback of phpMailer
+			parent::doCallback($isSent,$to,$cc,$bcc,$subject,$body);
+		}
+
 		var $err    = array();
 		var $to_res = array();
 		// switching on debug with a numeric value other than 0, switches debug in PHPMailer/SMTP Class on
-		var $debug  = false; // false;
+		var $debug  = false;
+
 		/**
 		* eGW specific initialisation of the PHPMailer: charset, language, smtp-host, ...
 		*
@@ -41,6 +82,8 @@
 		*/
 		function send()
 		{
+			parent::__construct(true);	// throw exceptions instead of echoing errors
+
 			if ($this->debug && is_numeric($this->debug)) $this->SMTPDebug = $this->debug;
 			if ($this->Subject || $this->Body || count($this->to))
 			{
