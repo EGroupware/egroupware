@@ -259,7 +259,7 @@ class importexport_definitions_ui
 		else
 		{
 			$GLOBALS['egw']->js->set_onload("document.getElementById('picturebox').style.display = 'none';");
-			egw_framework::validate_file('.', 'etemplate', 'etemplate');
+			$GLOBALS['egw']->js->validate_file('.', 'etemplate', 'etemplate');
 			$GLOBALS['egw']->common->egw_header();
 			echo '<div id="divMain">'."\n";
 			echo '<div><h3>{Im|Ex}port Wizard</h3></div>';

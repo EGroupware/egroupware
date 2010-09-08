@@ -333,7 +333,7 @@ class importexport_helper_functions {
 			}
 			$d->close();
 		}
-		//error_log(__CLASS__.__FUNCTION__.print_r($plugins,true));
+		error_log(__CLASS__.__FUNCTION__.print_r($plugins,true));
 		return $plugins;
 	}
 
