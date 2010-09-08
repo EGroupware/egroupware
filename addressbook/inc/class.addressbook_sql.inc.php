@@ -278,8 +278,18 @@ class addressbook_sql extends so_sql_cf
 			{
 				if (!($filter['owner'] = array_intersect((array)$filter['owner'],array_keys($this->grants)))) return false;
 
-				// for an owner filter, which is NOT the current user, filter out private entries
-				if ($filter['owner'] != $GLOBALS['egw_info']['user']['account_id']) $filter['private'] = 0;
+				// for an owner filter, which does NOT include current user, filter out private entries
+				if (!in_array($GLOBALS['egw_info']['user']['account_id'],$filter['owner']))
+				{
+					$filter['private'] = 0;
+				}
+				// if multiple addressbooks (incl. current owner) are searched, we need full acl filter
+				elseif(count($filter['owner']) > 1)
+				{
+					$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+						" OR contact_private=0 AND $this->table_name.contact_owner IN (".
+						implode(',',array_keys($this->grants)).") OR $this->table_name.contact_owner IS NULL)";
+				}
 			}
 			else	// search all addressbooks, incl. accounts
 			{
