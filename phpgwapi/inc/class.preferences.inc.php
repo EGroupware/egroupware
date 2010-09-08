@@ -405,7 +405,7 @@ class preferences
 			//echo "<p>".__METHOD__."() tz=$prefs[tz] --> tz_offset={$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']}</p>\n";
 
 			// ToDo: get rid of that
-			if (isset($GLOBALS['egw']) && is_object($GLOBALS['egw']))
+			if (isset($GLOBALS['egw']) && is_a($GLOBALS['egw'],'egw'))
 			{
 				$GLOBALS['egw']->unset_datetime();	// to force an update
 			}
