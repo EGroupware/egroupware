@@ -47,7 +47,7 @@
 		{
 			if ($GLOBALS['egw_info']['server']['log_mail'])
 			{
-				$msg = $GLOBALS['egw_info']['server']['log_mail'] !== true ? date('Y-m-d H:i:s').': ' : '';
+				$msg = $GLOBALS['egw_info']['server']['log_mail'] !== true ? date('Y-m-d H:i:s')."\n" : '';
 				$msg .= ($isSent ? 'Mail send' : 'Mail NOT send').
 					' to '.$to.' with subject: "'.trim($subject).'"';
 
@@ -59,10 +59,13 @@
 				if (!$isSent)
 				{
 					$this->SetError('');	// queries error from (private) smtp and stores it in $this->ErrorInfo
-					$msg .= ': ERROR '.str_replace(array('Language string failed to load: smtp_error',"\n","\r"),'',
+					$msg .= $GLOBALS['egw_info']['server']['log_mail'] !== true ? "\n" : ': ';
+					$msg .= 'ERROR '.str_replace(array('Language string failed to load: smtp_error',"\n","\r"),'',
 						strip_tags($this->ErrorInfo));
 				}
-				error_log($msg,$GLOBALS['egw_info']['server']['log_mail'] === true ? 0 : 1,
+				if ($GLOBALS['egw_info']['server']['log_mail'] !== true) $msg .= "\n\n";
+
+				error_log($msg,$GLOBALS['egw_info']['server']['log_mail'] === true ? 0 : 3,
 					$GLOBALS['egw_info']['server']['log_mail']);
 			}
 			// calling the orginal callback of phpMailer
