@@ -183,9 +183,19 @@ class importexport_wizard_basic_import_csv
 		if ($content['step'] == 'wizard_step50')
 		{
 			array_shift($content['csv_fields']);
-			array_shift($content['field_mapping']);
-			array_shift($content['field_conversion']);
-
+			// Need to move everything down 1 to remove header, but shift will re-key
+			unset($content['field_mapping'][0]);
+			unset($content['field_conversion'][0]);
+			foreach(array('field_mapping', 'field_conversion') as $field) {
+				foreach($content[$field] as $key => $value)
+				{
+					if($value) {
+						$content[$field][$key-1] = $content[$field][$key];
+					}
+					unset($content[$field][$key]);
+				}
+				ksort($content[$field]);
+			}
 			foreach($content['field_conversion'] as $field => $convert) {
 				if(!trim($convert)) unset($content['field_conversion'][$field]);
 			}
@@ -212,10 +222,21 @@ class importexport_wizard_basic_import_csv
 				$content['field_mapping'] = $content['plugin_options']['field_mapping'];
 				$content['field_conversion'] = $content['plugin_options']['field_conversion'];
 			}
-			array_unshift($content['csv_fields'],array('row0'));
-			array_unshift($content['field_mapping'],array('row0'));
-			array_unshift($content['field_conversion'],array('row0'));
-			
+
+			array_unshift($content['csv_fields'], array('row0'));
+			// Need to move everything down 1 to make room for header, but unshift will re-key
+			// which causes problems if you skip a field.
+			foreach(array('field_mapping', 'field_conversion') as $field) {
+				foreach(array_reverse($content[$field], true) as $key => $value)
+				{
+					if($value) {
+						$content[$field][$key+1] = $content[$field][$key];
+					}
+					unset($content[$field][$key]);
+				}
+				ksort($content[$field]);
+			}
+
 			$j = 1;
 			foreach ($content['csv_fields'] as $field)
 			{
