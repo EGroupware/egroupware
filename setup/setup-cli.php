@@ -236,12 +236,11 @@ function do_backup($arg,$quite_check=false)
 		}
 		else
 		{
-			$db_backup =& CreateObject('phpgwapi.db_backup');
+			$db_backup = new db_backup();
 			if (is_resource($f = $db_backup->fopen_backup($backup)))
 			{
 				echo lang('Backup started, this might take a few minutes ...')."\n";
 				$db_backup->backup($f);
-				fclose($f);
 				echo lang('Backup finished')."\n";
 			}
 			else	// backup failed ==> dont start the upgrade
@@ -507,7 +506,7 @@ function do_usage($what='')
 		echo '--admin '.lang('creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]')."\n";
 		echo '--language '.lang('install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones')."\n";
 		echo '--backup '.lang('domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]')."\n";
-		echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password')."\n";
+		echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password').'[,no = no backup]'."\n";
 		echo lang('You can use the header user and password for every domain too. If the password is not set via the commandline, it is read from the enviroment variable EGW_CLI_PASSWORD or queried from the user.')."\n";
 	}
 	if (!$what || $what == 'header')
