@@ -193,7 +193,7 @@ class addressbook_vcal extends addressbook_bo
 				}
     		}
     	}
-    	if ($contact['owner'] != $this->user)
+    	if (isset($contact['owner']) && $contact['owner'] != $this->user)
     	{
     		$contact['private'] = 0;	// foreign contacts are never private!
     	}
@@ -983,7 +983,7 @@ class addressbook_vcal extends addressbook_bo
 		}
 
 		$this->fixup_contact($contact);
-
+		
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__	.
