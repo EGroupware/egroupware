@@ -1143,7 +1143,7 @@ class translation
 		);
 		$Replace = array ('',
 			'"',
-			'+',
+			'#amper#sand#',
 			'<',
 			'>',
 			' ',
@@ -1221,29 +1221,25 @@ class translation
 		// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
 		#$_html = preg_replace('~^\s+~m','',$_html);
 		#$_html = preg_replace('~\s+$~m','',$_html);
-		// restoring the preserved blockquote
-		//$_html = str_replace('#blockquote#type#cite#','<blockquote type="cite">',$_html);
-
-
+		// restoring ampersands
+		$_html = str_replace('#amper#sand#','&',$_html);
 		$_html = html_entity_decode($_html, ENT_COMPAT, $displayCharset);
 		//self::replaceEmailAdresses($_html);
 		#error_log($text);
 		$pos = strpos($_html, 'blockquote');
-		#error_log("convert HTML2Text");
+		//error_log("convert HTML2Text: $_html");
 		if($pos === false) {
 			return $_html;
 		} else {
 			$indent = 0;
 			$indentString = '';
 
-			//$quoteParts = preg_split('/<blockquote type="cite">/', $_html, -1, PREG_SPLIT_OFFSET_CAPTURE);
 			$quoteParts = preg_split('/#blockquote#type#cite#/', $_html, -1, PREG_SPLIT_OFFSET_CAPTURE);
 			foreach($quoteParts as $quotePart) {
 				if($quotePart[1] > 0) {
 					$indent++;
 					$indentString .= '>';
 				}
-				//$quoteParts2 = preg_split('/<\/blockquote>/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
 				$quoteParts2 = preg_split('/#blockquote#end#cite#/', $quotePart[0], -1, PREG_SPLIT_OFFSET_CAPTURE);
 
 				foreach($quoteParts2 as $quotePart2) {
@@ -1255,9 +1251,10 @@ class translation
 					$quoteParts3 = explode("\r\n", $quotePart2[0]);
 
 					foreach($quoteParts3 as $quotePart3) {
+						//error_log(__METHOD__.__LINE__.'Line:'.$quotePart3);
 						$allowedLength = 76-strlen("\r\n$indentString");
 						// only break lines, if not already indented
-						if ($quotePart3[0] != $indentString)
+						if (substr($quotePart3,0,strlen($indentString)) != $indentString)
 						{
 							if (strlen($quotePart3) > $allowedLength) {
 								$s=explode(" ", $quotePart3);
@@ -1268,11 +1265,13 @@ class translation
 									// only break long words within the wordboundaries,
 									// but it may destroy links, so we check for href and dont do it if we find it
 									if($cnt > $allowedLength && stripos($v,'href=')===false) {
+										//error_log(__METHOD__.__LINE__.'LongWordFound:'.$v);
 										$v=wordwrap($v, $allowedLength, "\r\n$indentString", true);
 									}
 									// the rest should be broken at the start of the new word that exceeds the limit
 									if ($linecnt+$cnt > $allowedLength) {
 										$v="\r\n$indentString$v";
+										//error_log(__METHOD__.__LINE__.'breaking here:'.$v);
 										$linecnt = 0;
 									} else {
 										$linecnt += $cnt;
@@ -1281,6 +1280,7 @@ class translation
 								}
 							}
 						}
+						//error_log(__METHOD__.__LINE__.'partString to return:'.$indentString . $quotePart3);
 						$asciiTextBuff[] = $indentString . $quotePart3 ;
 					}
 				}
