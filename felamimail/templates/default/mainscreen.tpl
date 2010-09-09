@@ -150,6 +150,7 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 
 	function handleResize()
 	{
+		if (navigator.appName == 'Microsoft Internet Explorer') return true; // dont resize when IE
 		/* Constant values */
 		var MIN_TABLE_HEIGHT = 100;
 		var MAX_TABLE_WHITESPACE = 25;
@@ -158,31 +159,40 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 		var iframe = document.getElementById('messageIFRAME');
 		var tdiframe = document.getElementById('tdmessageIFRAME');
 		var tableMessageTableList = document.getElementById('tableMessageTableList');
-
-		if (typeof divMessageTableList != 'undefined')
+		var iframeheight = felamimail_iframe_height;
+		if (isNaN(iframeheight)) iframeheight = 0;
+		if (typeof divMessageTableList != 'undefined' && divMessageTableList != null)
 		{
 			/* The height parameter specifies how many height is left for the message list
 			   if the iframe stays maximized. */
 			if (window.parent && typeof window.parent.framework != 'undefined')
 			{
-				var height = $(document).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 70;
+				var height = $(document).height() - iframeheight - $(divMessageTableList).offset().top - 70;
 			}
 			else
 			{
-				var height = $(document).height() - felamimail_iframe_height - $(divMessageTableList).offset().top - 90;
+				var height = $(document).height() - iframeheight - $(divMessageTableList).offset().top - 90;
 			}
-
+			//alert('available height for messagelist:'+height);
 			/* Tableheight specifies the rendered size of the table,
 			   iframeheight the height of the message preview,
 			   divheight the end size height of the table outer div */
+			var tabnotavail = false;
 			var tableheight = $(tableMessageTableList).height();
-			var iframeheight = felamimail_iframe_height;
+			if (tableheight == 0 || isNaN(tableheight)) // set defaults to compute with, if the property is not set
+			{
+				tabnotavail = true;
+				if (iframeheight<=0) tableheight = $(document).height() - 200; // full height butballow space for header and footer
+				if (iframeheight>0) tableheight = iframeheight; // iframe and table are set to the same size
+			}
+			//alert('tableheight:'+tableheight);
 			var divheight = height;
-
+			if (typeof divheight == 'undefined' || isNaN(divheight)) divheight=0;
 			/* If the remaining height is smaller than MIN_TABLE_HEIGHT, the iframe
 			   will be scaled to a smaller size */
 			if (height < MIN_TABLE_HEIGHT)
 			{
+				//alert('height smaller than minheight');
 				divheight = MIN_TABLE_HEIGHT;
 				iframeheight = iframeheight + (height - MIN_TABLE_HEIGHT);
 			}
@@ -191,19 +201,30 @@ fm_startTimerMessageListUpdate(refreshTimeOut);
 			   scale the divheight smaller and increase the size of the iframe */
 			if (divheight > tableheight + MAX_TABLE_WHITESPACE)
 			{
+				//alert('divheight is greater than tableheight');
 				var oh = divheight;
 				divheight = tableheight + MAX_TABLE_WHITESPACE;
-				iframeheight = iframeheight + (oh - divheight);
+				if (tabnotavail==false) 
+				{
+					iframeheight = iframeheight + (oh - divheight);
+				}
+				else
+				{
+					divheight = divheight - MAX_TABLE_WHITESPACE;
+				}
 			}
 
 			/* Set the sizes */
+			//alert('divMessageList Height:'+divheight);
+			//alert('iframe height:'+iframeheight);
 			divMessageTableList.style.height = divheight + 'px';
-			if (typeof iframe != 'undefined' && typeof tdiframe != 'undefined')
+			if (typeof iframe != 'undefined' && typeof tdiframe != 'undefined' && iframe != null && tdiframe != null)
 			{
 				tdiframe.height = iframeheight;
 				iframe.height = iframeheight;
 			}
 		}
+		return true;
 	}
 
 	//Resize the elements
