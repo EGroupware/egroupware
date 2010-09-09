@@ -165,6 +165,9 @@ class contenthistory
 					'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
 					$_action == 'delete' ? 'sync_deleted' : 'sync_modified' => $this->db->to_timestamp($_ts),
 				);
+				// if deleted entry get's modified, removed deleted timestamp, as it got recovered
+				if ($_action == 'modify') $newData['sync_deleted'] = null;
+				
 				$this->db->update(self::TABLE, $newData, $where,__LINE__,__FILE__);
 				break;
 		}
