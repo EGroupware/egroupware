@@ -766,7 +766,7 @@
 				}
 			}
 
-			$_mailObject->WordWrap = 76;
+			//$_mailObject->WordWrap = 76; // as we break lines ourself, we will not need/use the buildin WordWrap
 			#$_mailObject->Subject = $bofelamimail->encodeHeader($_formData['subject'], 'q');
 			$_mailObject->Subject = $_formData['subject'];
 			#$realCharset = mb_detect_encoding($_formData['body'] . 'a' , strtoupper($this->displayCharset).',UTF-8, ISO-8859-1');
