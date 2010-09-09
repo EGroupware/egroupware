@@ -1233,6 +1233,28 @@ class egw_db
 	}
 
 	/**
+	 * Convert a DB specific timestamp in a unix timestamp stored as integer, like MySQL: UNIX_TIMESTAMP(ts)
+	 *
+	 * @param string $expr name of an integer column or integer expression
+	 * @return string SQL expression of type timestamp
+	 */
+	function unix_timestamp($expr)
+	{
+		switch($this->Type)
+		{
+			case 'mysql':
+				return "UNIX_TIMESTAMP($expr)";
+
+			case 'pgsql':
+				return "DATE_PART('epoch',$expr)";
+
+			case 'mssql':
+				return "DATEDIFF(second,'1970-01-01',($expr))";
+		}
+		
+	}
+
+	/**
 	 * Convert a unix timestamp stored as integer in the db into a db timestamp, like MySQL: FROM_UNIXTIME(ts)
 	 *
 	 * @param string $expr name of an integer column or integer expression
