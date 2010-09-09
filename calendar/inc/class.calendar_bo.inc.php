@@ -819,9 +819,6 @@ class calendar_bo
 					$alarm['time'] = $this->date2usertime($alarm['time'],$date_format);
 				}
 			}
-
-			// Fix deleted flag
-			$event['deleted'] = egw_db::from_bool($event['deleted']);
 		}
 	}
 

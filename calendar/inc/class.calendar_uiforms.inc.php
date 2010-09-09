@@ -1442,8 +1442,8 @@ function replace_eTemplate_onsubmit()
 		$config = config::read('phpgwapi');
 		if($config['calendar_delete_history'] && $event['deleted'] && $GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			$content['deleted'] = $preserv['deleted'] = false;
-			$etpl->set_cell_attribute('button[save]', 'label', 'recover');
+			$content['deleted'] = $preserv['deleted'] = null;
+			$etpl->set_cell_attribute('button[save]', 'label', 'Recover');
 			$etpl->set_cell_attribute('button[apply]', 'disabled', true);
 		}
 

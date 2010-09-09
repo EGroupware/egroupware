@@ -403,7 +403,7 @@ class calendar_so
 
 			if($filter != 'deleted')
 			{
-				$where['cal_deleted'] = false;
+				$where[] = 'cal_deleted IS NULL';
 			}
 			switch($filter)
 			{
@@ -411,7 +411,7 @@ class calendar_so
 					$where['cal_public'] = 1;
 					$where[] = "cal_status != 'R'"; break;
 				case 'deleted':
-					$where['cal_deleted'] = true; break;
+					$where[] = 'cal_deleted IS NOT NULL'; break;
 				case 'unknown':
 					$where[] = "cal_status='U'"; break;
 				case 'accepted':

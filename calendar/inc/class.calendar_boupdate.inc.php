@@ -1227,7 +1227,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			elseif ($config['calendar_delete_history'])
 			{
-				$event['deleted'] = true;
+				$event['deleted'] = time();
 				$this->save($event, $ignore_acl);
 				// Actually delete alarms
 				if (isset($event['alarm']) && is_array($event['alarm']))

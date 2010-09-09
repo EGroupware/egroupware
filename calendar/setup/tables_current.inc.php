@@ -31,11 +31,11 @@ $phpgw_baseline = array(
 			'cal_created' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'creation time of event'),
 			'cal_recurrence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception'),
 			'tz_id' => array('type' => 'int','precision' => '4','comment' => 'key into egw_cal_timezones'),
-			'cal_deleted' => array('type' => 'bool','nullable' => False,'default' => '0','comment' => '1 if the event has been deleted, but you want to keep it around')
+			'cal_deleted' => array('type' => 'int','precision' => '8','comment' => 'ts when event was deleted')
 		),
 		'pk' => array('cal_id'),
 		'fk' => array(),
-		'ix' => array('cal_uid','cal_owner'),
+		'ix' => array('cal_uid','cal_owner','cal_deleted'),
 		'uc' => array()
 	),
 	'egw_cal_holidays' => array(

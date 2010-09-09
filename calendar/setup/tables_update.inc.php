@@ -2102,3 +2102,53 @@ function calendar_upgrade1_8()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.001';
 }
 
+/**
+ * Convert bool column cal_deleted with egw_api_content_history table to a unix timestamp
+ * 
+ * @return string
+ */
+function calendar_upgrade1_9_001()
+{
+	/* done by RefreshTable() anyway
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','cal_deleted',array(
+		'type' => 'int',
+		'precision' => '8',
+		'comment' => 'ts when event was deleted'
+	));*/
+	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_cal',array(
+		'fd' => array(
+			'cal_id' => array('type' => 'auto','nullable' => False),
+			'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'unique id of event(-series)'),
+			'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'event owner / calendar'),
+			'cal_category' => array('type' => 'varchar','precision' => '30','comment' => 'category id'),
+			'cal_modified' => array('type' => 'int','precision' => '8','comment' => 'ts of last modification'),
+			'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
+			'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1','comment' => '1=public, 0=private event'),
+			'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '1'),
+			'cal_description' => array('type' => 'text'),
+			'cal_location' => array('type' => 'varchar','precision' => '255'),
+			'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'cal_id of series for exception'),
+			'cal_modifier' => array('type' => 'int','precision' => '4','comment' => 'user who last modified event'),
+			'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0','comment' => '1 for non-blocking events'),
+			'cal_special' => array('type' => 'int','precision' => '2','default' => '0'),
+			'cal_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag for optimistic locking'),
+			'cal_creator' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'creating user'),
+			'cal_created' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'creation time of event'),
+			'cal_recurrence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception'),
+			'tz_id' => array('type' => 'int','precision' => '4','comment' => 'key into egw_cal_timezones'),
+			'cal_deleted' => array('type' => 'int','precision' => '8','comment' => 'ts when event was deleted')
+		),
+		'pk' => array('cal_id'),
+		'fk' => array(),
+		'ix' => array('cal_uid','cal_owner','cal_deleted'),
+		'uc' => array()
+	),array(
+		'cal_deleted' => 'CASE cal_deleted WHEN '.$GLOBALS['egw_setup']->db->quote(true,'bool').' THEN '.
+			'(SELECT '.$GLOBALS['egw_setup']->db->unix_timestamp('sync_deleted').
+			" FROM egw_api_content_history WHERE sync_appname='calendar' AND sync_contentid=cal_id)".
+			' ELSE NULL END',
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.002';
+}
+
