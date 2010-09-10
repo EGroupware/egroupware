@@ -438,19 +438,36 @@
 			}
 		}
 
+		/**
+		 * decode header (or envelope information
+		 * if array given, note that only values will be converted 
+		 * @param $_string mixed input to be converted, if array call decode_header recursively on each value
+		 * @returns mixed - based on the input type
+		 */
 		static function decode_header($_string)
 		{
-			return $GLOBALS['egw']->translation->decodeMailHeader($_string,self::$displayCharset);
+			if (is_array($_string))
+			{
+				foreach($_string as $k=>$v)
+				{
+					$_string[$k] = self::decode_header($v);
+				}
+				return $_string;
+			}
+			else
+			{
+				return $GLOBALS['egw']->translation->decodeMailHeader($_string,self::$displayCharset);
+			}
 		}
 
-		function decode_subject($_string)
+		function decode_subject($_string,$decode=true)
 		{
 			#$string = $_string;
-			$_string = self::decode_header($_string);
 			if($_string=='NIL')
 			{
-				$_string = 'No Subject';
+				return 'No Subject';
 			}
+			if ($decode) $_string = self::decode_header($_string);
 			return $_string;
 
 		}
@@ -1963,14 +1980,14 @@
 			return $sortResult;
 		}
 
-		function getMessageEnvelope($_uid, $_partID = '')
+		function getMessageEnvelope($_uid, $_partID = '',$decode=false)
 		{
 			if($_partID == '') {
 				if( PEAR::isError($envelope = $this->icServer->getEnvelope('', $_uid, true)) ) {
 					return false;
 				}
 
-				return $envelope[0];
+				return ($decode ? self::decode_header($envelope[0]): $envelope[0]);
 			} else {
 				if( PEAR::isError($headers = $this->icServer->getParsedHeaders($_uid, true, $_partID, true)) ) {
 					return false;
@@ -1986,6 +2003,7 @@
 				$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY_TO');
 				foreach($recepientList as $recepientType) {
 					if(isset($headers[$recepientType])) {
+						if ($decode) $headers[$recepientType] =  self::decode_header($headers[$recepientType]);
 						$addresses = imap_rfc822_parse_adrlist($headers[$recepientType], '');
 						foreach($addresses as $singleAddress) {
 							$addressData = array(
@@ -2453,11 +2471,11 @@
 			}
 		}
 
-		function getMessageHeader($_uid, $_partID = '')
+		function getMessageHeader($_uid, $_partID = '',$decode=false)
 		{
 			$retValue = $this->icServer->getParsedHeaders($_uid, true, $_partID, true);
 
-			return $retValue;
+			return ($decode ? self::decode_header($retValue):$retValue);
 		}
 
 		function getMessageRawBody($_uid, $_partID = '')
