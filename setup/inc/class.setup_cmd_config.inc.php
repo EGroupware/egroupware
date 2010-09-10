@@ -59,6 +59,9 @@ class setup_cmd_config extends setup_cmd
 
 		$this->check_installed($this->domain,15,$this->verbose);
 
+		// fixing authtypes in self::$options
+		self::auth_types(true);
+		
 		$values = array();
 		if ($this->arguments)	// we have command line arguments
 		{
@@ -317,6 +320,11 @@ class setup_cmd_config extends setup_cmd
 				{
 					if (is_array($data) && isset($data['allowed']))
 					{
+						if ($data['name'] == 'auth_type')
+						{
+							$options[$data['name']] = self::auth_types();
+							continue;
+						}
 						foreach($data['allowed'] as $label => $value)
 						{
 							if (is_int($label))
@@ -330,6 +338,47 @@ class setup_cmd_config extends setup_cmd
 			}
 		}
 		return $options;
+	}
+	
+	/**
+	 * Read auth-types (existing auth backends) from filesystem and fix our $options array
+	 * 
+	 * @return array
+	 */
+	static function auth_types()
+	{
+		// default backends in order of importance
+		static $auth_types = array(
+			'sql'  => 'SQL',
+			'ldap' => 'LDAP',
+			'mail' => 'Mail',
+			'ads'  => 'Active Directory',
+			'http' => 'HTTP',
+			'fallback' => 'Fallback LDAP --> SQL',
+			'sqlssl' => 'SQL / SSL',
+		);
+		static $scan_done;
+		if (!$scan_done++)
+		{
+			// now add auth backends found in filesystem
+			foreach(scandir(EGW_INCLUDE_ROOT.'/phpgwapi/inc') as $class)
+			{
+				if (preg_match('/^class\.auth_([a-z]+)\.inc\.php$/',$class,$matches) &&
+					!isset($auth_types[$matches[1]]))
+				{
+					$auth_types[$matches[1]] = ucfirst($matches[1]);
+				}
+			}
+			foreach(self::$options['--account-auth'] as &$param)
+			{
+				if ($param['name'] == 'auth_type')
+				{
+					$param['allowed'] = array_keys($auth_types);
+					break;
+				}
+			}
+		}
+		return $auth_types;
 	}
 
 	/**

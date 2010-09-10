@@ -239,20 +239,41 @@ function sql_passwdhashes($config)
  */
 function mail_login_type($config)
 {
-	$types = emailadmin_ui::getIMAPLoginTypes('cyrusimap');
-	unset($types['admin']);
-	
-	foreach($types as $value => $label)
+	return _options_from(emailadmin_ui::getIMAPLoginTypes('cyrusimap'),$config['mail_login_type']);
+}
+
+/**
+ * Make auth-types from setup_cmd_config available
+ * 
+ * @param array $config
+ * @return string
+ */
+function auth_type($config)
+{
+	return _options_from(setup_cmd_config::auth_types(),$config['auth_type']);
+}
+function auth_type_syncml($config)
+{
+	return _options_from(setup_cmd_config::auth_types(),$config['auth_type_syncml']);
+}
+function auth_type_groupdav($config)
+{
+	return _options_from(setup_cmd_config::auth_types(),$config['auth_type_groupdav']);
+}
+
+/**
+ * Returns options string
+ * 
+ * @param array $options value => label pairs
+ * @param string $selected value of selected optino
+ * @return string
+ */
+function _options_from(array $options,$selected)
+{
+	foreach($options as $value => $label)
 	{
-		if($config['mail_login_type'] == $value)
-		{
-			$selected = ' selected="selected"';
-		}
-		else
-		{
-			$selected = '';
-		}
-		$out .= '<option value="' . $value . '"' . $selected . '>' . $label . '</option>' . "\n";
+		$out .= '<option value="' . htmlspecialchars($value) . '"' . 
+			($selected == $value ? ' selected="selected"' : '') . '>' . $label . '</option>' . "\n";
 	}
 	return $out;
 }

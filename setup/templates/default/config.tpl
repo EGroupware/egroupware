@@ -213,16 +213,7 @@
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
-      <option value="sql"{selected_auth_type_sql}>SQL</option>
-      <option value="sqlssl"{selected_auth_type_sqlssl}>SQL / SSL</option>
-      <option value="ldap"{selected_auth_type_ldap}>LDAP</option>
-      <option value="ads"{selected_auth_type_ads}>ADS</option>
-      <option value="mail"{selected_auth_type_mail}>Mail</option>
-      <option value="http"{selected_auth_type_http}>HTTP</option>
-      <option value="nis"{selected_auth_type_nis}>NIS</option>
-      <option value="pam"{selected_auth_type_pam}>PAM</option>
-      <option value="cas"{selected_auth_type_cas}>CAS</option>
-      <option value="fallback"{selected_auth_type_fallback}>Fallback LDAP -> SQL</option>
+{hook_auth_type}
      </select>
     </td>
    </tr>
@@ -232,15 +223,7 @@
     <td>
      <select name="newsettings[auth_type_syncml]">
       <option value="">{lang_Standard,_as_defined_above}</option>
-      <option value="sql"{selected_auth_type_syncml_sql}>SQL</option>
-      <option value="sqlssl"{selected_auth_type_syncml_sqlssl}>SQL / SSL</option>
-      <option value="ldap"{selected_auth_type_syncml_ldap}>LDAP</option>
-      <option value="ads"{selected_auth_type_syncml_ads}>ADS</option>
-      <option value="mail"{selected_auth_type_syncml_mail}>Mail</option>
-      <option value="http"{selected_auth_type_syncml_http}>HTTP</option>
-      <option value="nis"{selected_auth_type_syncml_nis}>NIS</option>
-      <option value="pam"{selected_auth_type_syncml_pam}>PAM</option>
-      <option value="fallback"{selected_auth_type_fallback}>Fallback LDAP -> SQL</option>
+{hook_auth_type_syncml}
      </select>
     </td>
    </tr>
@@ -250,15 +233,7 @@
     <td>
      <select name="newsettings[auth_type_groupdav]">
       <option value="">{lang_Standard,_as_defined_above}</option>
-      <option value="sql"{selected_auth_type_groupdav_sql}>SQL</option>
-      <option value="sqlssl"{selected_auth_type_groupdav_sqlssl}>SQL / SSL</option>
-      <option value="ldap"{selected_auth_type_groupdav_ldap}>LDAP</option>
-      <option value="ads"{selected_auth_type_groupdav_ads}>ADS</option>
-      <option value="mail"{selected_auth_type_groupdav_mail}>Mail</option>
-      <option value="http"{selected_auth_type_groupdav_http}>HTTP</option>
-      <option value="nis"{selected_auth_type_groupdav_nis}>NIS</option>
-      <option value="pam"{selected_auth_type_groupdav_pam}>PAM</option>
-      <option value="fallback"{selected_auth_type_fallback}>Fallback LDAP -> SQL</option>
+{hook_auth_type_groupdav}
      </select>
     </td>
    </tr>
