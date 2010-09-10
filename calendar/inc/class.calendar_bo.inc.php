@@ -316,14 +316,15 @@ class calendar_bo
 	 *  cols string|array columns to select, if set an iterator will be returned
 	 *  append string to append to the query, eg. GROUP BY
 	 *  cfs array if set, query given custom fields or all for empty array, none are returned, if not set (default)
+	 * @param string $sql_filter=null sql to be and'ed into query (fully quoted), default none
 	 * @return iterator|array|boolean array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
 	 *	or false if there are no read-grants from _any_ of the requested users or iterator/recordset if cols are given
 	 */
-	function &search($params)
+	function &search($params,$sql_filter=null)
 	{
 		$params_in = $params;
 
-		unset($params['sql_filter']);	// dont allow to set it via UI or xmlrpc
+		$params['sql_filter'] = $sql_filter;	// dont allow to set it via UI or xmlrpc
 
 		// check if any resource wants to hook into
 		foreach($this->resources as $app => $data)
