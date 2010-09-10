@@ -2145,7 +2145,7 @@ function calendar_upgrade1_9_001()
 	),array(
 		'cal_deleted' => 'CASE cal_deleted WHEN '.$GLOBALS['egw_setup']->db->quote(true,'bool').' THEN '.
 			'(SELECT '.$GLOBALS['egw_setup']->db->unix_timestamp('sync_deleted').
-			" FROM egw_api_content_history WHERE sync_appname='calendar' AND sync_contentid=cal_id)".
+			" FROM egw_api_content_history WHERE sync_appname='calendar' AND ".$GLOBALS['egw_setup']->db->to_int('sync_contentid').'=cal_id)'.
 			' ELSE NULL END',
 	));
 

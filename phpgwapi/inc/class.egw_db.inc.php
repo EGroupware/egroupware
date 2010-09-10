@@ -1312,6 +1312,22 @@ class egw_db
 		}
 		return false;
 	}
+	
+	/**
+	 * Cast a column or sql expression to integer, necessary at least for postgreSQL
+	 * 
+	 * @param string $expr
+	 * @return string
+	 */
+	function to_int($expr)
+	{
+		switch($this->Type)
+		{
+			case 'pgsql':
+				return $expr.'::integer';
+		}
+		return $expr;
+	}
 
 	/**
 	* Correctly Quote Identifiers like table- or colmnnames for use in SQL-statements
