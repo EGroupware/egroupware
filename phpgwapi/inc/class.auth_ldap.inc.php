@@ -127,7 +127,7 @@ class auth_ldap implements auth_backend
 			$username = translation::convert($GLOBALS['egw']->accounts->id2name($account_id),
 				translation::charset(),'utf-8');
 		}
-		//echo "<p>auth_ldap::change_password('$old_password','$new_passwd',$account_id) username='$username'</p>\n";
+		//echo "<p>auth_ldap::change_password('$old_passwd','$new_passwd',$account_id) username='$username'</p>\n";
 
 		$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 		$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
