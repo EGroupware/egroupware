@@ -432,6 +432,14 @@
 
 		function decode_header($_string)
 		{
+			if (is_array($_string))
+			{
+				foreach($_string as $k=>$v)
+				{
+					$_string[$k] = self::decode_header($v);
+				}
+				return $_string;
+			}
 			if(function_exists(imap_mime_header_decode)) {
 				$newString = '';
 
@@ -475,14 +483,14 @@
 			return preg_replace('/([\000-\012\015\016\020-\037\075])/','',$_string);
 		}
 
-		function decode_subject($_string)
+		function decode_subject($_string,$decode=true)
 		{
 			#$string = $_string;
-			$_string = self::decode_header($_string);
 			if($_string=='NIL')
 			{
-				$_string = 'No Subject';
+				return 'No Subject';
 			}
+			if ($decode) $_string = self::decode_header($_string);
 			return $_string;
 
 		}
@@ -1809,14 +1817,14 @@
 			return $sortResult;
 		}
 
-		function getMessageEnvelope($_uid, $_partID = '')
+		function getMessageEnvelope($_uid, $_partID = '',$decode=false)
 		{
 			if($_partID == '') {
 				if( PEAR::isError($envelope = $this->icServer->getEnvelope('', $_uid, true)) ) {
 					return false;
 				}
 
-				return $envelope[0];
+				return ($decode ? self::decode_header($envelope[0]): $envelope[0]);
 			} else {
 				if( PEAR::isError($headers = $this->icServer->getParsedHeaders($_uid, true, $_partID, true)) ) {
 					return false;
@@ -1832,6 +1840,7 @@
 				$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY_TO');
 				foreach($recepientList as $recepientType) {
 					if(isset($headers[$recepientType])) {
+						if ($decode) $headers[$recepientType] = self::decode_header($headers[$recepientType]);
 						$addresses = imap_rfc822_parse_adrlist($headers[$recepientType], '');
 						foreach($addresses as $singleAddress) {
 							$addressData = array(

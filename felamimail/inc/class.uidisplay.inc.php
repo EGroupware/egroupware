@@ -257,7 +257,7 @@
 			#_debug_array($rawheaders);exit;
 			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid, $partID);
 			#_debug_array($attachments); exit;
-			$envelope	= $this->bofelamimail->getMessageEnvelope($this->uid, $partID);
+			$envelope	= $this->bofelamimail->getMessageEnvelope($this->uid, $partID,true);
 			#_debug_array($envelope); exit;
 			// if not using iFrames, we need to retrieve the messageBody here
 			// by now this is a fixed value and controls the use/loading of the template and how the vars are set.
@@ -595,7 +595,7 @@
 				ENT_QUOTES,$this->displayCharset));
 
 			$this->t->set_var("subject_data",
-				@htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT'])),
+				@htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
 				ENT_QUOTES,$this->displayCharset));
 
 			$this->t->parse("header","message_header",True);
@@ -1150,7 +1150,7 @@
 			$this->bofelamimail->reopen($folder);
 #			print "$this->mailbox, $this->uid, $partID<br>";
 			$headers	= $this->bofelamimail->getMessageHeader($this->uid, $partID);
-			$envelope   = $this->bofelamimail->getMessageEnvelope($this->uid, $partID);
+			$envelope   = $this->bofelamimail->getMessageEnvelope($this->uid, $partID,true);
 #			_debug_array($headers);exit;
 			$rawheaders	= $this->bofelamimail->getMessageRawHeader($this->uid, $partID);
 			$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,'',$partID);
@@ -1236,7 +1236,7 @@
 				@htmlspecialchars($GLOBALS['egw']->common->show_date(strtotime($headers['DATE'])), ENT_QUOTES,$this->displayCharset));
 			
 			// link to go back to the message view. the link differs if the print was called from a normal viewing window, or from compose 
-			$subject = @htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters, '', $envelope['SUBJECT'])), ENT_QUOTES, $this->displayCharset);
+			$subject = @htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters, '', $envelope['SUBJECT']),false), ENT_QUOTES, $this->displayCharset);
 			$this->t->set_var("subject_data", $subject);
 			$this->t->set_var("full_subject_data", $subject);
 			$linkData = array (
