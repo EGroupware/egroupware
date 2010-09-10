@@ -1833,7 +1833,7 @@
 				#_debug_array($headers);
 				$newData = array(
 					'DATE'		=> $headers['DATE'],
-					'SUBJECT'	=> $headers['SUBJECT'],
+					'SUBJECT'	=> ($decode ? self::decode_header($headers['SUBJECT']):$headers['SUBJECT']),
 					'MESSAGE_ID'	=> $headers['MESSAGE-ID']
 				);
 

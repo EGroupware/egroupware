@@ -557,24 +557,24 @@
 			// sent by a mailinglist??
 			// parse the from header
 			if($envelope['FROM'][0] != $envelope['SENDER'][0]) {
-				$senderAddress = $this->emailAddressToHTML($envelope['SENDER']);
-				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization);
+				$senderAddress = $this->emailAddressToHTML($envelope['SENDER'],'',false,true,false);
+				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization,false,true,false);
 				$this->t->set_var("from_data",$senderAddress);
 				$this->t->set_var("onbehalfof_data",$fromAddress);
 				$this->t->parse('on_behalf_of_part','message_onbehalfof',True);
 			} else {
-				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization);
+				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization,false,true,false);
 				$this->t->set_var("from_data", $fromAddress);
 				$this->t->set_var('on_behalf_of_part','');
 			}
 
 			// parse the to header
-			$toAddress = $this->emailAddressToHTML($envelope['TO']);
+			$toAddress = $this->emailAddressToHTML($envelope['TO'],'',false,true,false);
 			$this->t->set_var("to_data",$toAddress);
 
 			// parse the cc header
 			if(count($envelope['CC'])) {
-				$ccAddress = $this->emailAddressToHTML($envelope['CC']);
+				$ccAddress = $this->emailAddressToHTML($envelope['CC'],'',false,true,false);
 				$this->t->set_var("cc_data",$ccAddress);
 				$this->t->parse('cc_data_part','message_cc',True);
 			} else {
@@ -583,7 +583,7 @@
 
 			// parse the bcc header
 			if(count($envelope['BCC'])) {
-				$bccAddress = $this->emailAddressToHTML($envelope['BCC']);
+				$bccAddress = $this->emailAddressToHTML($envelope['BCC'],false,true,false);
 				$this->t->set_var("bcc_data",$bccAddress);
 				$this->t->parse('bcc_data_part','message_bcc',True);
 			} else {
@@ -845,7 +845,7 @@
 			$GLOBALS['egw']->common->egw_header();
 		}
 
-		function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true) {
+		function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true,$decode=true) {
 			#_debug_array($_emailAddress);
 			// create some nice formated HTML for senderaddress
 			#if($_emailAddress['EMAIL'] == 'undisclosed-recipients: ;')
@@ -870,8 +870,8 @@
 
 					if($addressData['PERSONAL_NAME'] != 'NIL') {
 						$newSenderAddress = $addressData['RFC822_EMAIL'] != 'NIL' ? $addressData['RFC822_EMAIL'] : $addressData['EMAIL'];
-						$newSenderAddress = $this->bofelamimail->decode_header($newSenderAddress);
-						$decodedPersonalName = $this->bofelamimail->decode_header($addressData['PERSONAL_NAME']);
+						if ($decode) $newSenderAddress = $this->bofelamimail->decode_header($newSenderAddress);
+						$decodedPersonalName = ($decode ? $this->bofelamimail->decode_header($addressData['PERSONAL_NAME']):$addressData['PERSONAL_NAME']);
 
 						$realName =  $decodedPersonalName;
 						// add mailaddress
@@ -1208,24 +1208,24 @@
 			$this->translate();
 
 			if($envelope['FROM'][0] != $envelope['SENDER'][0]) {
-				$senderAddress = $this->emailAddressToHTML($envelope['SENDER'], '', true, false);
-				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization, true, false);
+				$senderAddress = $this->emailAddressToHTML($envelope['SENDER'], '', true, false,false);
+				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization, true, false,false);
 				$this->t->set_var("from_data",$senderAddress);
 				$this->t->set_var("onbehalfof_data",$fromAddress);
 				$this->t->parse('on_behalf_of_part','message_onbehalfof',True);
 			} else {
-				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization, true, false);
+				$fromAddress   = $this->emailAddressToHTML($envelope['FROM'], $organization, true, false,false);
 				$this->t->set_var("from_data", $fromAddress);
 				$this->t->set_var('on_behalf_of_part','');
 			}
 
 			// parse the to header
-			$toAddress = $this->emailAddressToHTML($envelope['TO'], '', true, false);
+			$toAddress = $this->emailAddressToHTML($envelope['TO'], '', true, false,false);
 			$this->t->set_var("to_data",$toAddress);
 
 			// parse the cc header
 			if(count($envelope['CC'])) {
-				$ccAddress = $this->emailAddressToHTML($envelope['CC'], '', true, false);
+				$ccAddress = $this->emailAddressToHTML($envelope['CC'], '', true, false,false);
 				$this->t->set_var("cc_data",$ccAddress);
 				$this->t->parse('cc_data_part','message_cc',True);
 			} else {
