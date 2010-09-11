@@ -253,25 +253,28 @@ select viewname,'V' from pg_views where viewname like $mask";
 		return $ret;
 	}
 
-	/*
 	// if magic quotes disabled, use pg_escape_string()
 	function qstr($s,$magic_quotes=false)
 	{
+		if (is_bool($s)) return $s ? 'true' : 'false';
+		 
 		if (!$magic_quotes) {
+			if (ADODB_PHPVER >= 0x5200) {
+				return  "'".pg_escape_string($this->_connectionID,$s)."'";
+			} 
 			if (ADODB_PHPVER >= 0x4200) {
 				return  "'".pg_escape_string($s)."'";
 			}
 			if ($this->replaceQuote[0] == '\\'){
-				$s = adodb_str_replace(array('\\',"\0"),array('\\\\',"\\\0"),$s);
+				$s = adodb_str_replace(array('\\',"\0"),array('\\\\',"\\\\000"),$s);
 			}
-			return  "'".str_replace("'",$this->replaceQuote,$s)."'";
+			return  "'".str_replace("'",$this->replaceQuote,$s)."'"; 
 		}
-
+		
 		// undo magic quotes for "
 		$s = str_replace('\\"','"',$s);
 		return "'$s'";
 	}
-	*/
 
 
 	// Format date column in sql string given an input format that understands Y M D
