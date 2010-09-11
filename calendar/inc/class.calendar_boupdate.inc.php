@@ -143,7 +143,7 @@ class calendar_boupdate extends calendar_bo
 		if ($new_event)
 		{
 			$event['created'] = $this->now_su;
-			$event['creator'] = $GLOBALS['egw_info']['user']['account_id'];
+			$event['creator'] = $this->user;
 			$old_event = array();
 		}
 		else
@@ -339,7 +339,7 @@ class calendar_boupdate extends calendar_bo
 		if ($touch_modified)
 		{
 			$event['modified'] = $this->now_su;	// we are still in user-time
-			$event['modifier'] = $GLOBALS['egw_info']['user']['account_id'];
+			$event['modifier'] = $this->user;
 		}
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
@@ -927,6 +927,16 @@ class calendar_boupdate extends calendar_bo
 				$event['alarm'][$id]['time'] = $this->date2ts($alarm['time'],true);
 			}
 		}
+		if (!isset($event['modified']))
+		{
+			$event['modified'] = $this->now;
+			$event['modifier'] = $this->user;
+		}
+		if (empty($event['id']) && !isset($event['created']))
+		{
+			$event['created'] = $this->now;
+			$event['creator'] = $this->user;
+		}
 		$set_recurrences = false;
 		$set_recurrences_start = 0;
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
@@ -936,7 +946,7 @@ class calendar_boupdate extends calendar_bo
 			unset($save_event['participants']);
 			$this->set_recurrences($save_event, $set_recurrences_start);
 		}
-		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,$event['id'] ? 'modify' : 'add',time());
+		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, $event['id'] ? 'modify' : 'add', $this->now);
 
 		// Update history
 		$tracking = new calendar_tracking($this);
@@ -1138,8 +1148,12 @@ class calendar_boupdate extends calendar_bo
 				is_numeric($uid)?$uid:substr($uid,1),$status,
 				$recur_date?$this->date2ts($recur_date,true):0,$role)))
 		{
-			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
-
+			if ($updateTS)
+			{
+				$GLOBALS['egw']->content ->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
+				$this->so->updateModified($cal_id, $this->now, $this->user);
+			}
+			
 			static $status2msg = array(
 				'R' => MSG_REJECTED,
 				'T' => MSG_TENTATIVE,
@@ -1238,7 +1252,7 @@ class calendar_boupdate extends calendar_bo
 					}
 				}
 			}
-			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
+			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'delete', $this->now);
 		}
 		else
 		{
@@ -1446,7 +1460,8 @@ class calendar_boupdate extends calendar_bo
 		}
 		$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
 
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id, 'modify', time());
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
+		$this->so->updateModified($cal_id, $this->now, $this->user);
 
 		return $this->so->save_alarm($cal_id,$alarm, $this->now);
 	}
@@ -1466,7 +1481,8 @@ class calendar_boupdate extends calendar_bo
 			return false;	// no rights to delete the alarm
 		}
 
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id, 'modify', time());
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
+		$this->so->updateModified($cal_id, $this->now, $this->user);
 
 		return $this->so->delete_alarm($id, $this->now);
 	}

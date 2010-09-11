@@ -107,8 +107,8 @@ class calendar_groupdav extends groupdav_handler
 		// ToDo: add parameter to only return id & etag
 		$filter = array(
 			'users' => $user,
-			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync recurrences
-			'end' => time()+365*24*3600,	// default one year into the future +365
+			'start' => $this->bo->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
+			'end' => $this->bo->now + 365*24*3600,	// default one year into the future +365
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
@@ -756,7 +756,39 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	public function getctag($path,$user)
 	{
-		$ctag = $GLOBALS['egw']->contenthistory->getLastChange('calendar');
+		$filter = array(
+			'users' => $user,
+			'start' => $this->bo->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
+			'end' => $this->bo->now + 365*24*3600,	// default one year into the future +365
+			'enum_recuring' => false,
+			'daywise' => false,
+			'date_format' => 'server',
+			'cols'		=> array('cal_modified'),
+			'order'     => 'cal_modified DESC',
+			'num_rows'	=> 1,
+		);
+		
+		if ($path == '/calendar/')
+		{
+			$filter['filter'] = 'owner';
+		}
+		else
+		{
+			$filter['filter'] = 'default'; // not rejected
+		}
+		
+		if (($events =& $this->bo->search($filter)))
+		{
+			foreach ($events as $event)
+			{
+				$ctag = $event['cal_modified'];
+				break;
+			}
+		}
+		else
+		{
+			$ctag = '0';
+		}
 
 		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
 		

@@ -2190,4 +2190,19 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		return new egw_time($time->format('Y-m-d 00:00:00'), $timezone);
 	}
+	
+	/**
+	 * Udates the modification timestamp 
+	 *
+	 * @param id		event id
+	 * @param time		new timestamp
+	 * @param modifier	uid of the modifier
+	 * 
+	 */
+	function updateModified($id, $time, $modifier)
+	{
+		$this->db->update($this->cal_table,
+			array('cal_modified' => $time, 'cal_modifier' => $modifier),
+			array('cal_id' => $id), __LINE__,__FILE__, 'calendar');
+	}
 }
