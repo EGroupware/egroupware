@@ -1241,7 +1241,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			elseif ($config['calendar_delete_history'])
 			{
-				$event['deleted'] = time();
+				$event['deleted'] = $this->now;
 				$this->save($event, $ignore_acl);
 				// Actually delete alarms
 				if (isset($event['alarm']) && is_array($event['alarm']))
@@ -1592,14 +1592,20 @@ class calendar_boupdate extends calendar_bo
 				"($filter)[EVENT]:" . array2string($event)."\n",3,$this->logfile);
 		}
 
+		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
+		
 		if ($filter == 'master')
 		{
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_recurrence'] = 0;
 		}
+		else
+		{
+			$query[] = 'recur_type='.$event['recur_type'];
+			$query['cal_recurrence'] = $event['recurrence'];	
+		}
 
-		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
-
+		
 		if ($event['id'])
 		{
 			if ($this->log)
@@ -1723,7 +1729,6 @@ class calendar_boupdate extends calendar_bo
 			}
 			elseif (isset($event['start']))
 			{
-
 				if ($filter == 'relax')
 				{
 					$query[] = ('cal_start>' . ($event['start'] - 3600));
@@ -1744,12 +1749,12 @@ class calendar_boupdate extends calendar_bo
 			{
 				$matchFields = array('priority', 'public');
 			}
-			$matchFields[] = 'recurrence';
 			foreach ($matchFields as $key)
 			{
 				if (isset($event[$key])) $query['cal_'.$key] = $event[$key];
 			}
 		}
+
 		if (!empty($event['uid']))
 		{
 			$query['cal_uid'] = $event['uid'];
