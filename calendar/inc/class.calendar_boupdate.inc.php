@@ -143,7 +143,7 @@ class calendar_boupdate extends calendar_bo
 		if ($new_event)
 		{
 			$event['created'] = $this->now_su;
-			$event['creator'] = $GLOBALS['egw_info']['user']['account_id'];
+			$event['creator'] = $this->user;
 			$old_event = array();
 		}
 		else
@@ -339,7 +339,7 @@ class calendar_boupdate extends calendar_bo
 		if ($touch_modified)
 		{
 			$event['modified'] = $this->now_su;	// we are still in user-time
-			$event['modifier'] = $GLOBALS['egw_info']['user']['account_id'];
+			$event['modifier'] = $this->user;
 		}
 		//echo "saving $event[id]="; _debug_array($event);
 		$event2save = $event;
@@ -936,7 +936,7 @@ class calendar_boupdate extends calendar_bo
 			unset($save_event['participants']);
 			$this->set_recurrences($save_event, $set_recurrences_start);
 		}
-		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,$event['id'] ? 'modify' : 'add',time());
+		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, $event['id'] ? 'modify' : 'add', $this->now);
 
 		// Update history
 		$tracking = new calendar_tracking($this);
@@ -1138,7 +1138,7 @@ class calendar_boupdate extends calendar_bo
 				is_numeric($uid)?$uid:substr($uid,1),$status,
 				$recur_date?$this->date2ts($recur_date,true):0,$role)))
 		{
-			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
+			if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
 
 			static $status2msg = array(
 				'R' => MSG_REJECTED,
@@ -1235,7 +1235,7 @@ class calendar_boupdate extends calendar_bo
 					}
 				}
 			}
-			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'delete',time());
+			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'delete', $this->now);
 
 			// delete all links to the event
 			egw_link::unlink(0,'calendar',$cal_id);
@@ -1446,7 +1446,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
 
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id, 'modify', time());
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
 
 		return $this->so->save_alarm($cal_id,$alarm, $this->now);
 	}
@@ -1466,7 +1466,7 @@ class calendar_boupdate extends calendar_bo
 			return false;	// no rights to delete the alarm
 		}
 
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id, 'modify', time());
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
 
 		return $this->so->delete_alarm($id, $this->now);
 	}
@@ -1576,13 +1576,18 @@ class calendar_boupdate extends calendar_bo
 				"($filter)[EVENT]:" . array2string($event)."\n",3,$this->logfile);
 		}
 
+		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
+		
 		if ($filter == 'master')
 		{
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_recurrence'] = 0;
 		}
-
-		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
+		else
+		{
+			$query[] = 'recur_type='.$event['recur_type'];
+			$query['cal_recurrence'] = $event['recurrence'];	
+		}
 
 		if ($event['id'])
 		{
@@ -1707,7 +1712,6 @@ class calendar_boupdate extends calendar_bo
 			}
 			elseif (isset($event['start']))
 			{
-
 				if ($filter == 'relax')
 				{
 					$query[] = ('cal_start>' . ($event['start'] - 3600));
@@ -1728,12 +1732,12 @@ class calendar_boupdate extends calendar_bo
 			{
 				$matchFields = array('priority', 'public');
 			}
-			$matchFields[] = 'recurrence';
 			foreach ($matchFields as $key)
 			{
 				if (isset($event[$key])) $query['cal_'.$key] = $event[$key];
 			}
 		}
+		
 		if (!empty($event['uid']))
 		{
 			$query['cal_uid'] = $event['uid'];
