@@ -58,31 +58,48 @@ class contenthistory
 	 * @param string$_appName the appname example: infolog_notes
 	 * @param string $_action can be modify, add or delete
 	 * @param string $_ts timestamp where to start searching from
+	 * @param array $readableItems	(optional) readable items of current user
 	 * @return array containing contentIds with changes
 	 */
-	function getHistory($_appName, $_action, $_ts)
+	function getHistory($_appName, $_action, $_ts, $readableItems = false)
 	{
 		$where = array('sync_appname' => $_appName);
-
+		$ts = $this->db->to_timestamp($_ts);
+		$idList = array();
+		
 		switch($_action)
 		{
 			case 'modify':
-				$where[] = "sync_modified > '".$this->db->to_timestamp($_ts)."' AND sync_deleted IS NULL";
+				$where[] = "sync_modified > '".$ts."' AND sync_deleted IS NULL";
 				break;
 			case 'delete':
-				$where[] = "sync_deleted > '".$this->db->to_timestamp($_ts)."'";
+				$where[] = "sync_deleted > '".$ts."'";
 				break;
 			case 'add':
-				$where[] = "sync_added > '".$this->db->to_timestamp($_ts)."' AND sync_deleted IS NULL AND sync_modified IS NULL";
+				$where[] = "sync_added > '".$ts."' AND sync_deleted IS NULL AND sync_modified IS NULL";
 				break;
 			default:
 				// no valid $_action set
 				return array();
 		}
-		$idList = array();
-		foreach($this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__) as $row)
+		
+		if (is_array($readableItems))
 		{
-			$idList[] = $row['sync_contentid'];
+			foreach ($readableItems as $id)
+			{
+				$where['sync_contentid'] = $id;
+				if (!$this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__))
+				{
+					$idList[] = $id;
+				}	
+			}
+		}
+		else
+		{
+			foreach ($this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__) as $row)
+			{
+				$idList[] = $row['sync_contentid'];
+			}
 		}
 
 		return $idList;
@@ -116,6 +133,7 @@ class contenthistory
 			'sync_contentid' => $_id,
 		);
 
+		$ts = false;
 		if (($ts = $this->db->select(self::TABLE,$col,$where,__LINE__,__FILE__)->fetchColumn()))
 		{
 			$ts = $this->db->from_timestamp($ts);
@@ -165,9 +183,6 @@ class contenthistory
 					'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
 					$_action == 'delete' ? 'sync_deleted' : 'sync_modified' => $this->db->to_timestamp($_ts),
 				);
-				// if deleted entry get's modified, removed deleted timestamp, as it got recovered
-				if ($_action == 'modify') $newData['sync_deleted'] = null;
-				
 				$this->db->update(self::TABLE, $newData, $where,__LINE__,__FILE__);
 				break;
 		}
