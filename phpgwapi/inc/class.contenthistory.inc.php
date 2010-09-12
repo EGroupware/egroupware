@@ -88,7 +88,7 @@ class contenthistory
 			foreach ($readableItems as $id)
 			{
 				$where['sync_contentid'] = $id;
-				if (!$this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__))
+				if ($this->db->select(self::TABLE,'sync_contentid',$where,__LINE__,__FILE__)->fetchColumn())
 				{
 					$idList[] = $id;
 				}	
