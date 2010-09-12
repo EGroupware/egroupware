@@ -1585,7 +1585,14 @@ class calendar_boupdate extends calendar_bo
 		}
 		else
 		{
-			$query[] = 'recur_type='.$event['recur_type'];
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$query[] = 'recur_type='.$event['recur_type'];
+			}
+			else
+			{
+				$query[] = 'recur_type IS NULL';
+			}
 			$query['cal_recurrence'] = $event['recurrence'];	
 		}
 
