@@ -1,0 +1,111 @@
+%1 - preferences	preferences	es-es	%1 - Preferencias
+%1 hours	preferences	es-es	%1 horas
+12 hour	preferences	es-es	12 horas
+24 hour	preferences	es-es	24 horas
+a template defines the layout of egroupware and it contains icons for each application.	preferences	es-es	Una plantilla define el formato de eGroupWare y contiene iconos para cada aplicación.
+a theme defines the colors and fonts used by the template.	preferences	es-es	Un tema define los colores y los tipos de letra usados en la plantilla
+acl grants have been updated	preferences	es-es	Los permisos de la LCA se han actualizado
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-es	Cualquier listado en eGW le mostrará este número de entradas o líneas por página.<br>Demasiadas ralentizan la página, demasiado pocas pueden ser malo.
+are you sure you want to delete this category ?	preferences	es-es	¿Seguro que desea borrar esta categoría?
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	es-es	Cambia la contraseña de un usuario pasando la contraseña anterior y la nueva. Si es correcto, devuelve TRUE, y si no, FALSE.
+change your password	preferences	es-es	Cambiar su contraseña
+change your profile	preferences	es-es	Cambiar su perfil
+change your settings	preferences	es-es	Cambiar su configuración
+charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
+click to select a color	preferences	es-es	Pulse para seleccionar un color
+color	preferences	es-es	Color
+country	preferences	es-es	País
+date format	preferences	es-es	Formato de la fecha
+default	preferences	es-es	predeterminado
+default application	preferences	es-es	Aplicación predeterminada
+default preferences	preferences	es-es	Preferencias predeterminadas
+default theme	preferences	es-es	Tema predeterminado
+delete categories	preferences	es-es	Borrar categorías
+description can not exceed 255 characters in length !	preferences	es-es	La descripción no puede exceder de 255 caracteres
+display thumbnails for linked images	preferences	es-es	Mostrar miniaturas para las imágenes vinculadas
+div	preferences	es-es	div
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	es-es	¿Prefiere el formato de 24 horas o el de 12 con am/pm detrás?
+edit custom fields	preferences	es-es	Editar campos personalizados
+enable drag and drop functionality (experimental)	preferences	es-es	Activar la funcionalidad de arrastrar y soltar (experimental)
+enable selectbox dropdown resizing for ie (experimental)	preferences	es-es	Activar el menú desplegable redimensionable para IE (experimental)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	es-es	Activa o desactiva las funciones de arrastrar y soltar en todas las aplicaciones. Si el navegador no soporta arrastrar y soltar, se desactivará automáticamente. Esta característica es experimental en este instante.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	es-es	Activa o desactiva el menú desplegable redimensionable para IE en todas las aplicaciones. Si el navegador no es IE, la opción no se aplica. Esta característica es experimental en este instante.
+enter your new password	preferences	es-es	Introduzca la contraseña nueva
+enter your old password	preferences	es-es	Introduzca la contraseña anterior
+failed to change password.  please contact your administrator.	preferences	es-es	Fallo al cambiar la contraseña. Por favor, póngase en contacto con su administrador.
+forced preferences	preferences	es-es	Preferencias forzadas
+help off	preferences	es-es	Desactivar ayuda
+hours	preferences	es-es	horas
+how do you like to display accounts	preferences	es-es	¿Cómo desea ver las cuentas?
+how do you like to select accounts	preferences	es-es	¿Cómo desea seleccionar las cuentas?
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	es-es	Cuántas horas va por delante o por detrás de la zona horaria del servidor.<br>Si está en la misma zona horaria, seleccione 0 horas; si no, seleccione su fecha y hora local.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	es-es	Número de iconos a mostrar en la barra de navegación en la parte superior de la página. Los iconos adicionales van en un menú desplegable, en la parte derecha de la barra de navegación.
+how should egroupware display dates for you.	preferences	es-es	Forma de mostrar las fechas
+icon	preferences	es-es	Icono
+icons and text	preferences	es-es	Iconos y texto
+icons only	preferences	es-es	Sólo iconos
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	es-es	Las imágenes vinculadas a una entrada pueden mostrarse como miniaturas. Puede desactivar este comportamiento para acelerar la carga de la página.
+in which country are you. this is used to set certain defaults for you.	preferences	es-es	País en el que se encuentra. Se utiliza para configurar ciertos detalles.
+interface/template selection	preferences	es-es	Selección de interfaz/plantilla
+language	preferences	es-es	Idioma
+max matches per page	preferences	es-es	Número máximo de coincidencias por página
+max number of icons in navbar	preferences	es-es	Número máximo de iconos en la barra de navegación
+no default	preferences	es-es	Sin valor predeterminado
+no user-selection at all	common	es-es	No hay ninguna selección del usuario
+note: this feature does *not* change your email password. this will	preferences	es-es	nota: Esta característica *no* cambia su contraseña de coreo.
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	es-es	Nota: Esta opción *no* cambia la contraseña de su correo electrónico. Esto deberá hacerse manualmente.
+number format	preferences	es-es	Formato de los números
+office 2003 theme	preferences	es-es	Tema Office 2003
+p: paragraph	preferences	es-es	p: Párrafo
+permanent time zone selection	preferences	es-es	Selección permanente de zona horaria
+please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	es-es	Por favor, seleccione las zonas horarias entre las que desee cambiar répidamente. El cambio NO se muestra si se seleccionan menos de dos.
+please select your timezone.	preferences	es-es	Por favor, seleccione su zona horaria.
+please, select a new theme	preferences	es-es	Por favor, seleccione un nuevo tema
+popup with search	preferences	es-es	Ventana emergente con búsqueda
+re-enter your password	preferences	es-es	Confirme su contraseña
+read prefs for the specified application.	preferences	es-es	Leer las preferencias para la aplicación especificada.
+rich text editor enter mode	preferences	es-es	Modo de edición del editor de texto enriquecido
+rich text editor theme	preferences	es-es	Tema del editor de texto enriquecido
+select different theme	preferences	es-es	Seleccione un tema diferente
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	es-es	Seleccionar cómo el editor de texto enriquecido generará la etiqueta de enter (salto de línea).
+select one	preferences	es-es	Seleccione uno
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes en eGroupWare.<br>Algunos idiomas puede que no tengan todos los mensajes, en cuyo caso verá el mensaje en inglés.
+select the language of the spellchecker integrated into the rich text editor.	preferences	es-es	Seleccionar el idioma del corrector ortográfico en el editor de texto enriquecido.
+select the theme (visualization) of the rich text editor.	preferences	es-es	Seleccionar el tema (visualización) del editor de texto enriquecido.
+selectbox	preferences	es-es	Cuadro de selección
+selectbox with groupmembers	common	es-es	Lista desplegable con los miembros del grupo
+selectbox with primary group and search	preferences	es-es	Cuadro de selección con grupo principal y búsqueda
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	es-es	Ponga esto a su gusto. Por razones de seguridad, puede no querer mostrar su usuario en público.
+should the number of active sessions be displayed for you all the time.	preferences	es-es	¿Mostrar el número de sesiones activas todo el tiempo?
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	es-es	¿Mostrar estos mensajes de ayuda al modificar preferencias, o sólo cuando lo solicite?
+show helpmessages by default	preferences	es-es	Mostrar mensajes de ayuda por defecto
+show links between egroupware aps as	addressbook	es-es	Mostrar los enlaces entre aplicaciones de eGroupWare como
+show navigation bar as	preferences	es-es	Mostrar la barra de navegación como
+show number of current users	preferences	es-es	Mostrar el número actual de usuarios
+show text on navigation icons	preferences	es-es	Mostrar descripción sobre los iconos
+show_more_apps	common	es-es	Mostrar más aplicaciones
+silver theme	preferences	es-es	Tema Silver
+spellchecker language	addressbook	es-es	Idioma del corrector ortográfico
+text only	preferences	es-es	Sólo texto
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se mostará al iniciar la sesión en eGroupWare o pulsar en el icono de la página de inicio.<br>También puede tener más de una aplicación en la página de inicio, si no elige una aplicación específica aquí, configurándolo en las preferencias de cada aplicación.
+the old password is not correct	preferences	es-es	La contraseña anterior no es correcta
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	es-es	La caja de selección muestra todos los usuarios disponibles (puede ser muy lento en grandes instalaciones con muchos usuarios). La ventana emergente puede buscar usuarios por nombre o grupo.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	es-es	El cuadro de selección muestra todos los usuarios disponibles (puede ser muy lento en instalaciones grandes con muchos usuarios). La ventana emergente puede buscar usuarios por nombre o por grupo. Las dos últimas opciones limitan la visibilidad de otros usuarios. Por tanto, deben ser forzadas y aplicar NO a los administradores.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	es-es	Las últimas dos opciones limitan la visibilidad de otros usuarios. Están para forzarse, pero No se aplican a los administradores.
+the two passwords are not the same	preferences	es-es	Las dos contraseñas son distintas
+theme (colors/fonts) selection	preferences	es-es	Selección de temas (colores/tipos de letra)
+this server is located in the %1 timezone	preferences	es-es	Este servidor se encuentra en la zona horaria %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	es-es	El separador de miles se usa sólo para mostrar y no para editar números.
+time format	preferences	es-es	Formato de la hora
+use default	preferences	es-es	Usar predeterminado
+users choice	preferences	es-es	Elegido por el usuario
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-es	Si se indica Sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra de aplicaciones principal.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	es-es	Símbolo de moneda o nombre que debe usar eGroupWare
+write prefs for the specified application.	preferences	es-es	Escribir las preferencias para la aplicación especificada.
+you can show the applications as icons only, icons with app-name or both.	preferences	es-es	Puede ver las aplicaciones como iconos sólo, iconos con el nombre, o ambos.
+you can show the linked entries with icons only, icons with app-name or both.	addressbook	es-es	Puede mostrar las entradas vinculadas sólo con iconos, iconos con el nombre de la aplicación, o ambos.
+you do not have permission to set acl's in this mode!	preferences	es-es	Usted no tiene permisos para poner ACLs en este modo
+you must enter a password	preferences	es-es	Debe introducir una contraseña
+your current theme is: %1	preferences	es-es	Su actual tema es: %1
+your preferences	preferences	es-es	Sus preferencias
