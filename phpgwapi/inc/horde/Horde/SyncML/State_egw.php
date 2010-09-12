@@ -77,12 +77,26 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	 * @param string$_appName the appname example: infolog_notes
 	 * @param string $_action can be modify, add or delete
 	 * @param string $_ts timestamp where to start searching from
+	 * @param array $readableItems	(optional) readable items of current user
 	 * @return array containing syncIDs with changes
 	 */
-	function getHistory($_appName, $_action, $_ts) {
-		$guidList = array ();
-		$syncIdList = array ();
-		$idList = $GLOBALS['egw']->contenthistory->getHistory($_appName, $_action, $_ts);
+	function getHistory($_appName, $_action, $_ts, $readableItems = false) {
+		$guidList = array();
+		$syncIdList = array();
+		$userItems = false;
+		if (is_array($readableItems))
+		{
+			$userItems = array();
+			foreach($readableItems as $guid)
+			{
+				if (preg_match('/'.$_appName.'-(\d+)$/', $guid, $matches))
+				{
+					// We use only the real items' ids
+					$userItems[] = $matches[1];
+				}
+			}
+		}
+		$idList = $GLOBALS['egw']->contenthistory->getHistory($_appName, $_action, $_ts, $userItems);
 		foreach ($idList as $idItem)
 		{
 			if ($idItem) // ignore inconsistent entries
@@ -244,7 +258,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		), __LINE__, __FILE__, false, '', 'syncml') as $row) {
 			$guids[] = $row['map_guid'];
 		}
-		return $guids ? $guids : false;
+		return $guids;
 	}
 
 	/**
