@@ -1583,7 +1583,7 @@ class calendar_boupdate extends calendar_bo
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_recurrence'] = 0;
 		}
-		else
+		elseif ($filter == 'exact')
 		{
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
@@ -1963,8 +1963,15 @@ class calendar_boupdate extends calendar_bo
 							unset($egwEvent['participants'][$attendee]);
 						}
 					}
-					// ORGANIZER is maybe missing
+					// ORGANIZER and Groups may be missing
 					unset($egwEvent['participants'][$egwEvent['owner']]);
+					foreach ($egwEvent['participants'] as $attendee => $status)
+					{
+						if (is_numeric($attendee) && $attendee < 0)
+						{
+							unset($egwEvent['participants'][$attendee]);
+						}
+					}
 					if (!empty($egwEvent['participants']))
 					{
 						if ($this->log)
@@ -2016,7 +2023,7 @@ class calendar_boupdate extends calendar_bo
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 								'() missing event[recur_exception]: ' .
-								array2string($event['recur_exception']));
+								array2string($event['recur_exception'])."\n",3,$this->logfile);
 						}
 						continue;
 					}
@@ -2040,12 +2047,10 @@ class calendar_boupdate extends calendar_bo
 			}
 			$matchingEvents[] = $egwEvent['id']; // exact match
 		}
-		if (!empty($event['uid']) &&
-			count($matchingEvents) > 1 || $filter != 'master' &&
-			$egwEvent['recur_type'] != MCAL_RECUR_NONE &&
-			empty($event['recur_type']))
+		
+		if ($filter == 'exact' && !empty($event['uid']) && count($matchingEvents) > 1
+			|| $filter != 'master' && !empty($egwEvent['recur_type']) && empty($event['recur_type']))
 		{
-			
 			// Unknown exception for existing series
 			if ($this->log)
 			{
