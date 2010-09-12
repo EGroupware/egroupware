@@ -89,12 +89,13 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			$userItems = array();
 			foreach($readableItems as $guid)
 			{
-				if (preg_match('/'.$_appName.'-(\d+)$/', $guid, $matches))
+				if (preg_match('/'.$_appName.'-(\d+)(:(\d+))?/', $guid, $matches))
 				{
 					// We use only the real items' ids
 					$userItems[] = $matches[1];
 				}
 			}
+			$userItems = array_unique($userItems);
 		}
 		$idList = $GLOBALS['egw']->contenthistory->getHistory($_appName, $_action, $_ts, $userItems);
 		foreach ($idList as $idItem)
@@ -603,14 +604,18 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		$GLOBALS['egw']->db->delete('egw_contentmap', $where,
 			__LINE__, __FILE__, 'syncml');
 
-		// delete all EGw id's
+		// expire old EGw id's
 		$where = array(
 			'map_id'	=> $mapID,
 			'map_guid'	=> $guid,
 		);
 		$GLOBALS['egw']->db->delete('egw_contentmap', $where,
 			__LINE__, __FILE__, 'syncml');
-
+		/*	
+		$data = array ('map_expired' => true);
+		$GLOBALS['egw']->db->update('egw_contentmap', $data, $where,
+			__LINE__, __FILE__, 'syncml');
+		*/
 		$data = $where + array(
 			'map_locuid'	=> $locid,
 			'map_timestamp'	=> $ts,

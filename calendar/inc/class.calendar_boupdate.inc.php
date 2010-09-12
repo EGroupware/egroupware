@@ -927,12 +927,12 @@ class calendar_boupdate extends calendar_bo
 				$event['alarm'][$id]['time'] = $this->date2ts($alarm['time'],true);
 			}
 		}
-		if (!isset($event['modified']))
+		if (!isset($event['modified']) || $event['modified'] > $this->now)
 		{
 			$event['modified'] = $this->now;
 			$event['modifier'] = $this->user;
 		}
-		if (empty($event['id']) && !isset($event['created']))
+		if (empty($event['id']) && (!isset($event['created']) || $event['created'] > $this->now))
 		{
 			$event['created'] = $this->now;
 			$event['creator'] = $this->user;
@@ -1150,8 +1150,8 @@ class calendar_boupdate extends calendar_bo
 		{
 			if ($updateTS)
 			{
-				$GLOBALS['egw']->content ->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
-				$this->so->updateModified($cal_id, $this->now, $this->user);
+				$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
+				//$this->so->updateModified($cal_id, $this->now, $this->user);
 			}
 			
 			static $status2msg = array(
@@ -1461,7 +1461,7 @@ class calendar_boupdate extends calendar_bo
 		$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
 
 		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
-		$this->so->updateModified($cal_id, $this->now, $this->user);
+		//$this->so->updateModified($cal_id, $this->now, $this->user);
 
 		return $this->so->save_alarm($cal_id,$alarm, $this->now);
 	}
@@ -1482,7 +1482,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
-		$this->so->updateModified($cal_id, $this->now, $this->user);
+		//$this->so->updateModified($cal_id, $this->now, $this->user);
 
 		return $this->so->delete_alarm($id, $this->now);
 	}
@@ -1599,12 +1599,18 @@ class calendar_boupdate extends calendar_bo
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_recurrence'] = 0;
 		}
-		else
+		elseif ($filter == 'exact')
 		{
-			$query[] = 'recur_type='.$event['recur_type'];
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$query[] = 'recur_type='.$event['recur_type'];
+			}
+			else
+			{
+				$query[] = 'recur_type IS NULL';
+			}
 			$query['cal_recurrence'] = $event['recurrence'];	
 		}
-
 		
 		if ($event['id'])
 		{
@@ -1973,8 +1979,15 @@ class calendar_boupdate extends calendar_bo
 							unset($egwEvent['participants'][$attendee]);
 						}
 					}
-					// ORGANIZER is maybe missing
+					// ORGANIZER and Groups may be missing
 					unset($egwEvent['participants'][$egwEvent['owner']]);
+					foreach ($egwEvent['participants'] as $attendee => $status)
+					{
+						if (is_numeric($attendee) && $attendee < 0)
+						{
+							unset($egwEvent['participants'][$attendee]);
+						}
+					}
 					if (!empty($egwEvent['participants']))
 					{
 						if ($this->log)
@@ -2026,7 +2039,7 @@ class calendar_boupdate extends calendar_bo
 						{
 							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 								'() missing event[recur_exception]: ' .
-								array2string($event['recur_exception']));
+								array2string($event['recur_exception'])."\n",3,$this->logfile);
 						}
 						continue;
 					}
@@ -2050,12 +2063,10 @@ class calendar_boupdate extends calendar_bo
 			}
 			$matchingEvents[] = $egwEvent['id']; // exact match
 		}
-		if (!empty($event['uid']) &&
-			count($matchingEvents) > 1 || $filter != 'master' &&
-			$egwEvent['recur_type'] != MCAL_RECUR_NONE &&
-			empty($event['recur_type']))
+		
+		if ($filter == 'exact' && !empty($event['uid']) && count($matchingEvents) > 1
+			|| $filter != 'master' && !empty($egwEvent['recur_type']) && empty($event['recur_type']))
 		{
-			
 			// Unknown exception for existing series
 			if ($this->log)
 			{

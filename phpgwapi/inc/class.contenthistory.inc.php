@@ -133,7 +133,6 @@ class contenthistory
 			'sync_contentid' => $_id,
 		);
 
-		$ts = false;
 		if (($ts = $this->db->select(self::TABLE,$col,$where,__LINE__,__FILE__)->fetchColumn()))
 		{
 			$ts = $this->db->from_timestamp($ts);
