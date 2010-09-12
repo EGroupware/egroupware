@@ -763,9 +763,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
-			'cols'		=> array('cal_modified'),
-			'order'     => 'cal_modified DESC',
-			'num_rows'	=> 1,
+			'cols'		=> array('egw_cal.cal_id', 'cal_start', 'cal_modified'),
 		);
 		
 		if ($path == '/calendar/')
@@ -777,17 +775,16 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			$filter['filter'] = 'default'; // not rejected
 		}
 		
+		$ctag = 0;
+		
 		if (($events =& $this->bo->search($filter)))
 		{
 			foreach ($events as $event)
 			{
-				$ctag = $event['cal_modified'];
+				$modified = max($this->bo->so->max_user_modified($event['cal_id']), $event['cal_modified']);
+				if ($ctag < $modified) $ctag = $modified;
 				break;
 			}
-		}
-		else
-		{
-			$ctag = '0';
 		}
 
 		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
