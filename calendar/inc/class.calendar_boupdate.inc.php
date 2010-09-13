@@ -927,6 +927,16 @@ class calendar_boupdate extends calendar_bo
 				$event['alarm'][$id]['time'] = $this->date2ts($alarm['time'],true);
 			}
 		}
+		if (!isset($event['modified']) || $event['modified'] > $this->now)
+		{
+			$event['modified'] = $this->now;
+			$event['modifier'] = $this->user;
+		}
+		if (empty($event['id']) && (!isset($event['created']) || $event['created'] > $this->now))
+		{
+			$event['created'] = $this->now;
+			$event['creator'] = $this->user;
+		}
 		$set_recurrences = false;
 		$set_recurrences_start = 0;
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
@@ -1595,7 +1605,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			$query['cal_recurrence'] = $event['recurrence'];	
 		}
-
+		
 		if ($event['id'])
 		{
 			if ($this->log)
@@ -1744,7 +1754,7 @@ class calendar_boupdate extends calendar_bo
 				if (isset($event[$key])) $query['cal_'.$key] = $event[$key];
 			}
 		}
-		
+
 		if (!empty($event['uid']))
 		{
 			$query['cal_uid'] = $event['uid'];
