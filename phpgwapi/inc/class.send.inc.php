@@ -213,14 +213,14 @@
 			{
 				if ($$adr)
 				{
-					if (preg_match_all('/"?(.+)"?<(.+)>,?/',$$adr,$matches))
+					if (is_string($$adr) && preg_match_all('/"?(.+)"?<(.+)>,?/',$$adr,$matches))
 					{
 						$names = $matches[1];
 						$addresses = $matches[2];
 					}
 					else
 					{
-						$addresses = explode(',',trim($$adr));
+						$addresses = (is_string($$adr) ? explode(',',trim($$adr)) : explode(',',trim($$adr[0])));
 						$names = array();
 					}
 					$method = 'Add'.($adr == 'to' ? 'Address' : $adr);
