@@ -59,7 +59,7 @@ class uiasyncservice
 				{
 					echo '<p><b>'.lang("You have no email address for your user set !!!")."</b></p>\n";
 				}
-				elseif (!$async->set_timer($times,'test','admin.uiasyncservice.test',$GLOBALS['egw_info']['user']['email']))
+				elseif (!$async->set_timer($times,'test','admin.uiasyncservice.test',(array)$GLOBALS['egw_info']['user']['email']))
 				{
 					echo '<p><b>'.lang("Error setting timer, wrong syntax or maybe there's one already running !!!")."</b></p>\n";
 				}
