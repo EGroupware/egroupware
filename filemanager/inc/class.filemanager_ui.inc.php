@@ -646,13 +646,15 @@ class filemanager_ui
 			{
 				$dir_is_writable[$dir] = egw_vfs::is_writable($dir);
 			}
+			$path_quoted = str_replace(array('"',"'"),array('&quot;',"\\'"),$path);
 			if (!$dir_is_writable[$dir])
 			{
-				$readonlys["delete[$path]"] = true;	// no rights to delete the file
+				$readonlys["delete[$path_quoted]"] = true;	// no rights to delete the file
 			}
-			if (egw_vfs::is_dir($path) || !egw_vfs::is_readable($path))
+			if (egw_vfs::is_dir($path) || !egw_vfs::is_readable($path) || 
+				!$GLOBALS['egw_info']['user']['apps']['felamimail'])
 			{
-				$readonlys["mail[$path]"] = true;
+				$readonlys["mail[$path_quoted]"] = true;
 			}
 		}
 		// query comments and cf's for the displayed rows
