@@ -199,7 +199,7 @@ class importexport_wizard_basic_import_csv
 			foreach($content['field_conversion'] as $field => $convert) {
 				if(!trim($convert)) unset($content['field_conversion'][$field]);
 			}
-			
+
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -267,11 +267,11 @@ class importexport_wizard_basic_import_csv
 		{
 			array_shift($content['conditions']);
 
-			foreach($content['conditions'] as $key => &$condition) {
-				// Clear empties
-				if($condition['string'] == '') {
+			// Clear conditions that don't do anything
+			foreach($content['conditions'] as $key => $condition) {
+				if($condition['true']['action'] == 'none' && !$condition['true']['stop']
+					&& $condition['false']['action'] == 'none' && !$condition['false']['stop']) {
 					unset($content['conditions'][$key]);
-					continue;
 				}
 			}
 			
