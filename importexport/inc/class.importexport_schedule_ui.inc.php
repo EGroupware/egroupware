@@ -111,6 +111,7 @@
 			}
 
 			$sel_options = self::get_select_options($data);
+			$GLOBALS['egw']->js->validate_file('.','importexport','importexport');
 
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Schedule import / export');
 			$this->template->read('importexport.schedule_edit');
@@ -203,8 +204,9 @@
 				$response = new xajaxResponse();
 			}
 			$options = self::get_select_options(array('type' => $type, 'appname'=>$appname));
-			if(is_array($options['plugins'])) {
-				foreach ($options['plugins'] as $value => $title) {
+			$response->addScript("clear_options('exec[plugin]');");
+			if(is_array($options['plugin'])) {
+				foreach ($options['plugin'] as $value => $title) {
 					$response->addScript("selectbox_add_option('exec[plugin]','$title', '$value',false);");
 				}
 			}
@@ -216,13 +218,13 @@
 		*/
 		public function ajax_get_definitions($appname, $plugin) {
 			$options = self::get_select_options(array('appname'=>$appname, 'plugin'=>$plugin));
+			$response = new xajaxResponse();
+			$response->addScript("clear_options('exec[definition]');");
 			if(is_array($options['definition'])) {
 				foreach ($options['definition'] as $value => $title) {
-					$sel_options['definition'] .= '<option value="'. $value. '" >'. $title. '</option>';
+					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',false);");
 				}
 			}
-			$response = new xajaxResponse();
-			$response->addAssign('exec[definition]','innerHTML',$sel_options['definition']);
 			return $response->getXML();
 		}
 

@@ -78,6 +78,7 @@
 			$sel_options = self::get_select_options($data);
 
 			$data['message'] = $this->message;
+			$GLOBALS['egw']->js->validate_file('.','importexport','importexport');
 
 			$template = new etemplate('importexport.import_dialog');
 			$template->exec('importexport.importexport_import_ui.import_dialog', $data, $sel_options, $readonlys, $preserve, 2);
@@ -120,13 +121,13 @@
 		*/
 		public function ajax_get_definitions($appname, $file=null) {
 			$options = self::get_select_options(array('appname'=>$appname, 'file'=>$file));
+			$response = new xajaxResponse();
+			$response->addScript("clear_options('exec[definition]');");
 			if(is_array($options['definition'])) {
 				foreach ($options['definition'] as $value => $title) {
-					$sel_options['definition'] .= '<option value="'. $value. '" >'. $title. '</option>';
+					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',false);");
 				}
 			}
-			$response = new xajaxResponse();
-			$response->addAssign('exec[definition]','innerHTML',$sel_options['definition']);
 			return $response->getXML();
 		}
 	}
