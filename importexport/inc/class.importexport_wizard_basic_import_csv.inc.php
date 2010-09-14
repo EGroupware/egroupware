@@ -185,7 +185,7 @@ class importexport_wizard_basic_import_csv
 			array_shift($content['csv_fields']);
 			// Need to move everything down 1 to remove header, but shift will re-key
 			unset($content['field_mapping'][0]);
-			unset($content['field_conversion'][0]);
+			if(is_array($content['field_conversion'])) unset($content['field_conversion'][0]);
 			foreach(array('field_mapping', 'field_conversion') as $field) {
 				foreach($content[$field] as $key => $value)
 				{
