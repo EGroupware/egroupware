@@ -178,8 +178,9 @@ class boetemplate extends soetemplate
 			$col_row_cont = $cont[$col.$row];
 
 			// check if name is enclosed in single quotes as argument eg. to an event handler or
+			// variable name is contained in quotes and curly brackets, eg. "'{$cont[nm][path]}'" or
 			// used as name for a button like "delete[$row_cont[something]]" --> quote contained quotes (' or ")
-			if (in_array($name[$pos_var-1],array('[',"'")) && preg_match('/[\'\[]('.self::PHP_VAR_PREG.')[\'\]]+/',$name,$matches))
+			if (in_array($name[$pos_var-1],array('[',"'",'{')) && preg_match('/[\'\[]{?('.self::PHP_VAR_PREG.')}?[\'\]]+/',$name,$matches))
 			{
 				eval('$value = '.$matches[1].';');
 				if (is_array($value) && $name[$pos_var-1] == "'")	// arrays are only supported for '
@@ -194,7 +195,7 @@ class boetemplate extends soetemplate
 				else
 				{
 					$value = str_replace(array("'",'"'),array('\\\'','&quot;'),$value);
-					$name = str_replace($matches[1],$value,$name);
+					$name = str_replace(array('{'.$matches[1].'}',$matches[1]),$value,$name);
 				}
 			}
 			// check if name is assigned in an url --> urlendcode contained & as %26, as egw::link explodes it on &
