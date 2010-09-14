@@ -35,6 +35,7 @@ class importexport_export_ui {
 	public function __construct() {
 		$this->js = $GLOBALS['egw']->js = is_object($GLOBALS['egw']->js) ? $GLOBALS['egw']->js : CreateObject('phpgwapi.javascript');
 		$this->js->validate_file('.','export_dialog','importexport');
+		$this->js->validate_file('.','importexport','importexport');
 		$this->user = $GLOBALS['egw_info']['user']['user_id'];
 		$this->export_plugins = importexport_helper_functions::get_plugins('all','export');
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
@@ -278,24 +279,23 @@ class importexport_export_ui {
 			'type' => 'export',
 			'application' => $_appname
 		));
+		$response->addScript("clear_options('exec[definition]');");
 		foreach ((array)$definitions->get_definitions() as $identifier) {
 				$definition = new importexport_definition($identifier);
 				if ($title = $definition->get_title()) {
 					if (!$selected_plugin) $selected_plugin = $title;
-					$sel_options['definition'] .= '<option ' . ($selected_plugin == $title ? 'selected="selected" ' : '') .
-						'value="'. $title. '" >'. $title. '</option>';
+					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',$selected_plugin == $title);");
 				}
 				unset($definition);
 		}
 		unset($definitions);
-		$sel_options['definition'] .= '<option value="expert">' . lang('Expert options') . '</option';
+		$response->addScript("selectbox_add_option('exec[definition]','" . lang('Expert options') . "', 'expert',$selected_plugin == $title);");
 		
 		if($selected_plugin == 'expert') {
 			$this->ajax_get_plugins($_appname, $response);
 		} else {
 			$response->addScript("set_style_by_class('tr','select_plugin','display','none');");
 		}
-		$response->addAssign('exec[definition]','innerHTML',$sel_options['definition']);
 		$response->addScript('export_dialog.change_definition(document.getElementById("exec[definition]"));');
 		$response->addScript("set_style_by_class('tr','select_definition','display','table-row');");
 		return $no_return ? '' : $response->getXML();
@@ -314,15 +314,15 @@ class importexport_export_ui {
 		
 		(array)$plugins = importexport_helper_functions::get_plugins($_appname,'export');
 		$sel_options['plugin'] = '';
+		$response->addScript("clear_options('exec[plugin]');");
 		foreach ($plugins[$_appname]['export'] as $plugin => $plugin_name) {
 			if (!$selected_plugin) $selected_plugin = $plugin;
-			$sel_options['plugin'] .= '<option value="'. $plugin. '" >'. $plugin_name. '</option>';
+			$response->addScript("selectbox_add_option('exec[plugin]','$plugin_name', '$plugin',$selected_plugin == $plugin);");
 		}
 		
 		$this->ajax_get_plugin_description($selected_plugin,$response);
 		$this->ajax_get_plugin_options($selected_plugin, $response, $_definition);
 		$this->ajax_get_plugin_selectors($selected_plugin, $response, $_definition);
-		$response->addAssign('exec[plugin]','innerHTML',$sel_options['plugin']);
 		$response->addScript("set_style_by_class('tr','select_plugin','display','table-row');");
 		return $no_return ? '' : $response->getXML();
 	}
