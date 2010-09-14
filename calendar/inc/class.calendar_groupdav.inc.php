@@ -783,7 +783,6 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			{
 				$modified = max($this->bo->so->max_user_modified($event['cal_id']), $event['cal_modified']);
 				if ($ctag < $modified) $ctag = $modified;
-				break;
 			}
 		}
 
