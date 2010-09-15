@@ -195,7 +195,7 @@ class hooks
 	 *
 	 * @param string $appname Application 'name'
 	 * @param array $hooks=null hooks to register, eg $setup_info[$app]['hooks'] or not used for only deregister the hooks
-	 * @return boolean false on error, true otherwise
+	 * @return boolean|int false on error, true if new hooks are supplied and registed or number of removed hooks
 	 */
 	function register_hooks($appname,$hooks=null)
 	{
@@ -207,7 +207,7 @@ class hooks
 
 		if (!is_array($hooks) || !count($hooks))	// only deregister
 		{
-			return True;
+			return $this->db->affected_rows();
 		}
 		//echo "<p>ADDING hooks for: $appname</p>";
 		foreach($hooks as $key => $hook)
