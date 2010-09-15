@@ -1,17 +1,73 @@
 <?php
 /**************************************************************************\
- * eGroupWare SiteMgr - Web Content Management                              *
- * http://www.egroupware.org                                                *
- * --------------------------------------------                             *
- *  This program is free software; you can redistribute it and/or modify it *
- *  under the terms of the GNU General Public License as published by the   *
- *  Free Software Foundation; either version 2 of the License, or (at your  *
- *  option) any later version.                                              *
- \**************************************************************************/
+* eGroupWare SiteMgr - Web Content Management                              *
+* http://www.egroupware.org                                                *
+* --------------------------------------------                             *
+*  This program is free software; you can redistribute it and/or modify it *
+*  under the terms of the GNU General Public License as published by the   *
+*  Free Software Foundation; either version 2 of the License, or (at your  *
+*  option) any later version.                                              *
+\**************************************************************************/
 
-/* $Id: class.module_calendar_month.inc.php,v 1.7 2008-12-30 15:38:33 hjtappe Exp $ */
+/* $Id: class.module_calendar_list.inc.php,v 1.9 2008-12-30 17:56:19 hjtappe Exp $ */
 
-class module_calendar_month extends Module
+/*
+// AN EXAMPLE STYLESHEET
+.cal_list_event {
+ padding-bottom: 5px;
+}
+
+.cal_list_title {
+ clear: both;
+ font-weight: bold;
+}
+
+.cal_list_date {
+ clear: both;
+ padding-left:15px;
+}
+
+.cal_list_weekday {
+}
+
+.cal_list_descr {
+ clear: both;
+ padding-left: 15px;
+ font-style: italic;
+}
+
+.cal_list_end {
+  display: none;
+}
+
+.cal_event_even {
+  background: #F1F1F1;
+}
+
+.cal_event_uneven {
+}
+
+.cal_list_weeksplit {
+  width = 80%;
+  vertical-align: center;
+  border-top-width: 1px;
+}
+
+.cal_list_weektop {
+}
+
+.cal_list_weeksplit {
+  width: 100%;
+  border-top: 1px;
+  border-top-style: solid;
+}
+
+.cal_list_weekbottom {
+}
+
+*/
+
+class module_calendar_list extends Module
 {
 	/**
 	 * Instance of the business object of calendar
@@ -25,28 +81,9 @@ class module_calendar_month extends Module
 	 * @var ui
 	 */
 	var $ui;
-	/**
-	 * Instance of the user interface object of calendar
-	 *
-	 * @var ui
-	 */
-	var $uiviews;
-	/**
-	 * Instance of the accounts object
-	 *
-	 * @var accounts
-	 */
-	var $accounts;
-	/**
-	 * Default CSS style
-	 *
-	 * @var default_css
-	 */
-	var $default_css = '/calendar/templates/default/app.css';
 
-	function module_calendar_month()
+	function module_calendar_list()
 	{
-		$this->bo = new calendar_bo();
 		$this->arguments = array(
 			'category' => array(
 				'type' => 'select',
@@ -57,22 +94,35 @@ class module_calendar_month extends Module
 			'numWeeks' => array(
 				'type' => 'textfield',
 				'label' => lang('Number of weeks to show'),
-				'default' => 2,
-				'params' => array('size' => 1)
-			),
-			'showWeeks' => array(
-				'type' => 'checkbox',
-				'label' => lang('Should the number of weeks be shown on top of the calendar'),
-				'default' => false,
+				'default' => '4',
+				'params' => array('size' => 1),
 			),
 			'showTitle' => array(
 				'type' => 'checkbox',
 				'label' => lang('Show a calendar title'),
 				'default' => false,
 			),
+			'offset' => array(
+				'type' => 'textfield',
+				'label' => lang('Weeks offset (for multi-column display)'),
+				'default' => '0',
+				'params' => array('size' => 1),
+			),
 			'search' => array(
 				'type' => 'textfield',
 				'label' => lang('Search string for the events'),
+			),
+			'numEntries' => array(
+				'type' => 'textfield',
+				'label' => lang('Max. Number of entries to show (leave empty for no restriction)'),
+				'default' => '',
+				'params' => array('size' => 1),
+			),
+			'entryOffset' => array(
+				'type' => 'textfield',
+				'label' => lang('How much entries to skip'),
+				'default' => '0',
+				'params' => array('size' => 1),
 			),
 			'users' => array(
 				'type' => 'select',
@@ -80,15 +130,15 @@ class module_calendar_month extends Module
 				'label' => lang('Group(s) or user(s) whose calendars to show (if ACL exists)'),
 				// 'multiple' => true, is set in the get_user_interface function.
 			),
-			'grid' => array(
+			'showWeeks' => array(
 				'type' => 'checkbox',
-				'label' => lang('Should the grid be shown in the calendar'),
+				'label' => lang('Should the number of weeks be shown on top of the calendar (only if offset = 0)'),
 				'default' => false,
 			),
-			'css' => array(
-				'type' => 'textfield',
-				'label' => lang('User selectable CSS file for the calendar setup'),
-				'default' => $this->default_css,
+			'useWeekStart' => array(
+				'type' => 'checkbox',
+				'label' => lang('Use weekday start'),
+				'default' => false,
 			),
 			'acceptDateParam' => array(
 				'type' => 'checkbox',
@@ -96,8 +146,8 @@ class module_calendar_month extends Module
 				'default' => false,
 			),
 		);
-		$this->title = lang('Calendar - Multi-Weekly');
-		$this->description = lang("This module displays a user's calendar as multiple weeks. Don't give calendar application access to the anon user!");
+		$this->title = lang('Calendar - List');
+		$this->description = lang("This module displays calendar events as a list.");
 	}
 
 	function get_user_interface()
@@ -222,31 +272,38 @@ class module_calendar_month extends Module
 	{
 		$html = "";
 		$GLOBALS['egw']->translation->add_app('calendar');
+		$this->bo = new calendar_bo();
 		$this->ui = new calendar_uiviews();
 		$this->ui->allowEdit = false;
 		$this->ui->use_time_grid = isset($arguments['grid']) ? $arguments['grid'] : false;
 
-		$weeks = $arguments['numWeeks'] ? (int) $arguments['numWeeks'] : 2;
+		$weeks = $arguments['numWeeks'] ? (int) $arguments['numWeeks'] : 4;
+		$dateOffset = $arguments['offset'] ? (int) $arguments['offset'] : 0;
 
 		if (($arguments['acceptDateParam']) && (get_var('date',array('POST','GET'))))
 		{
-			$start = (int) (strtotime(get_var('date',array('POST','GET'))) +
+			$first = $start = (int) (strtotime(get_var('date',array('POST','GET'))) +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
 		else
 		{
-			$start = (int) ($this->bo->now_su +
+			$first = $start = (int) ($this->bo->now_su +
 					(60 * 60 * 24 * 7 * $dateOffset));
 		}
-		$first = $this->ui->datetime->get_weekday_start(
-					adodb_date('Y',$start),
-					adodb_date('m',$start),
-					adodb_date('d',$start));
-		$last = strtotime("+$weeks weeks",$first) - 1;
+		if ($arguments['useWeekStart']) 
+		{
+			$first = $this->ui->datetime->get_weekday_start(
+				adodb_date('Y',$start),
+				adodb_date('m',$start),
+				adodb_date('d',$start));
+		}
+
+		$last = (int) ($first +
+				(60 * 60 * 24 * 7 * $weeks));
 
 		if ($arguments['showTitle'])
 		{
-			$html .= '<div id="divAppboxHeader">'.$GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Weekview').": ";
+			$html .= '<div id="divAppboxHeader">'.$GLOBALS['egw_info']['apps']['calendar']['title'].' - ';
 			$html .= lang('After %1',$this->bo->long_date($first));
 			$html .= "</div>";
 		}
@@ -254,11 +311,10 @@ class module_calendar_month extends Module
 		// set the search parameters
 		$search_params = Array
 		(
-			'offset' => false,
+			'offset' => $arguments['entryOffset'] ? (int) $arguments['entryOffset'] : false,
 			'order' => 'cal_start ASC',
 			'start' => $first,
 			'end' => $last,
-			'daywise' => true,
 		);
 		$search_string = trim($arguments['search']);
 		if ($search_string != "")
@@ -273,43 +329,69 @@ class module_calendar_month extends Module
 		{
 			$search_params['users'] = $arguments['users'];
 		}
-		$rows = $this->bo->search($search_params);
-		if ($arguments['showWeeks'])
+		if ($arguments['numEntries'])
+		{
+			$search_params['num_rows'] = (int) $arguments['numEntries'];
+			$search_params['offset'] =  $arguments['entryOffset'] ? (int) $arguments['entryOffset'] :0;
+		}
+		$rows = array();
+
+		foreach((array) $this->bo->search($search_params) as $event)
+		{
+			$event['date'] = $this->bo->date2string($event['start']);
+			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
+			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
+			$rows[] = $event;
+		}
+		if (($arguments['showWeeks']) && ((int)$arguments['offset'] == 0))
 		{
 			$html .= "<div>".lang('Next')." ".lang('%1 weeks', $weeks).":</div>\n";
 		}
-		$css_file = isset($arguments['css']) ? $arguments['css'] : $this->default_css;
-		$html .= '<!-- BEGIN Calendar info -->'."\n";
-		$html .= '<style type="text/css">'."\n";
-		$html .= '<!--'."\n";
-		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.");\n";
-		$html .= '-->'."\n";
-		$html .= '</style>'."\n";
-		$html .= '<!-- END Calendar info -->'."\n";
-		unset($css_file);
-		// we add DAY_s/2 to $this->first (using 12h), to deal with daylight saving changes
-		for ($week_start = $first; $week_start < $last; $week_start = strtotime("+1 week",$week_start))
+		if (($search_params['offset'] && $this->bo->total == 0) || count($rows)==0)
 		{
-			$week = array();
-			for ($i = 0; $i < 7; ++$i)
-			{
-				$day_ymd = $this->bo->date2string($i ? strtotime("+$i days",$week_start) : $week_start);
-				$week[$day_ymd] = array_shift($rows);
-			}
-			$week_view = array(
-				'menuaction' => false,
-				'date' => $this->bo->date2string($week_start),
-			);
-			$title = lang('Wk').' '.adodb_date('W',$week_start);
-			if (!isset($GLOBALS['egw']->template))
-			{
-				$GLOBALS['egw']->template = new Template;
-			}
-			$html .= $this->ui->timeGridWidget($this->ui->tagWholeDayOnTop($week),$weeks == 2 ? 30 : 60,200,'',$title,0,$week_start+WEEK_s >= $last);
+			$html .= "<div>".lang("no events found")."</div>";
 		}
-		// Initialize Tooltips
-		$html .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js"></script>'."\n";
+		else
+		{
+			$event_count = 0;
+			$last_week = 0;
 
+			$html .= "\n<div>\n";
+			$html .= '  <div class="cal_list_weektop"></div>'."\n";
+			foreach ($rows as $event)
+			{
+				if (($last_week != 0) && (adodb_date('W-Y',$event['start']) != $last_week))
+				{
+					$html .= '  <div class="cal_list_weeksplit"></div>'."\n";
+				}
+				$last_week = adodb_date('W-Y',$event['start']);
+				$html .= "  <!-- Event -->\n";
+				if ($event_count % 2 == 0) {
+					$html .= '  <div class="cal_list_event cal_event_even">'."\n";
+				}
+				else
+				{
+					$html .= '  <div class="cal_list_event cal_event_uneven">'."\n";
+				}
+				$html .= '    <div class="cal_list_title">'.$event['title']."</div>\n";
+				$html .= '    <div class="cal_list_date">';
+				$html .= '<span class="cal_list_start">';
+				$html .= '<span class="cal_list_weekday">'.lang(adodb_date('D',$event['start'])).".".($this->bo->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ')."</span>";
+				$html .= $this->bo->format_date($event['start'])."</span>";
+				$html .= '<span class="cal_list_end"> - ';
+				$html .= '<span class="cal_list_weekday">'.lang(adodb_date('D',$event['end'])).".".($this->bo->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ')."</span>";
+				$html .= $this->bo->format_date($event['end'])."</span></div>\n";
+				$descr = trim($event['description']);
+				if (! empty($descr)) {
+					$html .= "    <div class=\"cal_list_descr\">\n".preg_replace('/\\n/',"<br>\n",$event['description'])."</div>\n";
+				}
+				$html .= "  </div><!-- cal_list_event -->\n";
+				$event_count ++;
+			}
+			$html .= '  <div class="cal_list_weekbottom"></div>'."\n";
+			$html .= "<!-- End module -->\n";
+			$html .= "</div>\n";
+		}
 		return $html;
 	}
 }
