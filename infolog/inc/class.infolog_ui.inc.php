@@ -1327,6 +1327,8 @@ class infolog_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 			($content['status_only'] ? lang('Edit Status') : lang('Edit'));
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
+		//error_log(substr($content['info_des'],1793,10));
+		//$content['info_des'] = substr($content['info_des'],0,1793);
 		//echo "<p>infolog_ui.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 		$this->tmpl->exec('infolog.infolog_ui.edit',$content,array(
 			'info_type'     => $types,
@@ -1581,6 +1583,8 @@ class infolog_ui
 			$subject = $bofelamimail->decode_header($headers['SUBJECT']);
 
 			$message = self::getdisplayableBody($bofelamimail, $bodyParts);
+			$headdata = self::createHeaderInfoSection($headers);
+			$message = $headdata.$message;
 			//echo __METHOD__.'<br>';
 			//_debug_array($attachments);
 			if (is_array($attachments))
@@ -1596,16 +1600,7 @@ class infolog_ui
 						$headdata ='';
 						if ($mailcontent['headers'])
 						{
-							if ($mailcontent['headers']['SUBJECT']) $headdata = lang('subject').': '.$mailcontent['headers']['SUBJECT']."\n";
-							if ($mailcontent['headers']['FROM']) $headdata .= lang('from').': '.$mailcontent['headers']['FROM']."\n";
-							if ($mailcontent['headers']['SENDER']) $headdata .= lang('sender').': '.$mailcontent['headers']['SENDER']."\n";
-							if ($mailcontent['headers']['TO']) $headdata .= lang('to').': '.$mailcontent['headers']['TO']."\n";
-							if ($mailcontent['headers']['CC']) $headdata .= lang('cc').': '.$mailcontent['headers']['CC']."\n";
-							if ($mailcontent['headers']['DATE']) $headdata .= lang('date').': '.$mailcontent['headers']['DATE']."\n";
-							if ($mailcontent['headers']['PRIORITY'] && $mailcontent['headers']['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$mailcontent['headers']['PRIORITY']."\n";
-							if ($mailcontent['headers']['IMPORTANCE'] && $mailcontent['headers']['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$mailcontent['headers']['IMPORTANCE']."\n";
-							//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\n";
-							if (!empty($headdata)) $headdata .= "--------------------------------------------------------\n";
+							$headdata = self::createHeaderInfoSection($mailcontent['headers']);
 						}
 						if ($mailcontent['message'])
 						{
@@ -1648,6 +1643,30 @@ class infolog_ui
 					'attachments'=>$attachments,
 					'headers'=>$headers,
 					);
+	}
+
+	static function createHeaderInfoSection($header)
+	{
+		$headdata = null;
+		if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT']."\n";
+		if ($header['FROM']) $headdata .= lang('from').': '.$header['FROM']."\n";
+		if ($header['SENDER']) $headdata .= lang('sender').': '.$header['SENDER']."\n";
+		if ($header['TO']) $headdata .= lang('to').': '.$header['TO']."\n";
+		if ($header['CC']) $headdata .= lang('cc').': '.$header['CC']."\n";
+		if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE']."\n";
+		if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY']."\n";
+		if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE']."\n";
+		//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
+		if (!empty($headdata)) 
+		{
+			$headdata = "--------------------------------------------------------\n".$headdata;
+			$headdata .= "--------------------------------------------------------\n";
+		}
+		else
+		{
+			$headdata = "--------------------------------------------------------\n";
+		}
+		return $headdata;
 	}
 
 	static function &getdisplayableBody(&$bofelamimail, $bodyParts)
