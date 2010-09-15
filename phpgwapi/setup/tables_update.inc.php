@@ -65,6 +65,9 @@ function phpgwapi_upgrade1_7_002()
 
 function phpgwapi_upgrade1_7_003()
 {
+	// resetting owner for all global (and group) cats to -1
+	$GLOBALS['egw_setup']->db->update('egw_categories',array('cat_owner' => -1),'cat_owner <= 0',__LINE__,__FILE__);
+	
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.001';
 }
 
@@ -75,9 +78,9 @@ function phpgwapi_upgrade1_7_003()
  */
 function phpgwapi_upgrade1_9_001()
 {
-	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.001';
+	return phpgwapi_upgrade1_7_003();
 }
 function phpgwapi_upgrade1_9_002()
 {
-	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.001';
+	return phpgwapi_upgrade1_7_003();
 }
