@@ -1915,7 +1915,7 @@
 		* @param array $_filter the search filter
 		* @return bool
 		*/
-		function getSortedList($_folderName, $_sort, $_reverse, $_filter)
+		function getSortedList($_folderName, $_sort, $_reverse, $_filter, &$resultByUid=true)
 		{
 			if(PEAR::isError($folderStatus = $this->icServer->examineMailbox($_folderName))) {
 				return false;
@@ -1938,16 +1938,17 @@
 					if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability");
 					$sortOrder = $this->_getSortString($_sort);
 					if (!empty(self::$displayCharset)) {
-						$sortResult = $this->icServer->sort($sortOrder, strtoupper( self::$displayCharset ), $filter, true);
+						$sortResult = $this->icServer->sort($sortOrder, strtoupper( self::$displayCharset ), $filter, $resultByUid);
 					}
 					if (PEAR::isError($sortResult) || empty(self::$displayCharset)) {
-						$sortResult = $this->icServer->sort($sortOrder, 'US-ASCII', $filter, true);
+						$sortResult = $this->icServer->sort($sortOrder, 'US-ASCII', $filter, $resultByUid);
 						// if there is an PEAR Error, we assume that the server is not capable of sorting
 						if (PEAR::isError($sortResult)) {
 							$advFilter = 'CHARSET '. strtoupper(self::$displayCharset) .' '.$filter;
 							if (PEAR::isError($sortResult)) 
 							{
-								$sortResult = $this->icServer->search($filter, false);
+								$resultByUid = false;
+								$sortResult = $this->icServer->search($filter, $resultByUid);
 								if (PEAR::isError($sortResult))
 								{
 									$sortResult = $this->sessionData['folderStatus'][0][$_folderName]['sortResult'];
@@ -1959,8 +1960,22 @@
 				} else {
 					if (self::$debug) error_log(__METHOD__." Mailserver has NO SORT Capability");
 					$advFilter = 'CHARSET '. strtoupper(self::$displayCharset) .' '.$filter;
-					$sortResult = $this->icServer->search($advFilter, true);
-					if (PEAR::isError($sortResult)) $sortResult = $this->icServer->search($filter, true);
+					$sortResult = $this->icServer->search($advFilter, $resultByUid);
+					if (PEAR::isError($sortResult)) 
+					{
+						$sortResult = $this->icServer->search($filter, $resultByUid);
+						if (PEAR::isError($sortResult))
+						{
+							// some servers are not replying on a search for uids, so try this one
+							$resultByUid = false;
+							$sortResult = $this->icServer->search('*', $resultByUid);
+							if (PEAR::isError($sortResult))
+							{
+								error_log(__METHOD__.__LINE__.' PEAR_Error:'.array2string($sortResult->message));
+								$sortResult = null;
+							}
+						}
+					}
 					if(is_array($sortResult)) {
 							sort($sortResult, SORT_NUMERIC);
 					}
@@ -2040,12 +2055,12 @@
 			// get the list of messages to fetch
 			$this->reopen($_folderName);
 			//$this->icServer->selectMailbox($_folderName);
-
+			$rByUid = true; // try searching by uid. this var will be passed by reference to getSortedList, and may be set to false, if UID retrieval fails
 			#print "<pre>";
 			#$this->icServer->setDebug(true);
 			if ($_thisUIDOnly === null)
 			{
-				$sortResult = $this->getSortedList($_folderName, $_sort, $_reverse, $_filter);
+				$sortResult = $this->getSortedList($_folderName, $_sort, $_reverse, $_filter, $rByUid);
 				#$this->icServer->setDebug(false);
 				#print "</pre>";
 				// nothing found
@@ -2080,8 +2095,19 @@
 
 			$queryString = implode(',', $sortResult);
 			// fetch the data for the selected messages
-			$headersNew = $this->icServer->getSummary($queryString, true);
-
+			$headersNew = $this->icServer->getSummary($queryString, $rByUid);
+			if ($headersNew == null)
+			{
+				// message retrieval via uid failed try one by one via message number
+				$rByUid = false;
+				foreach($sortResult as $k => $v)
+				{
+					if (self::$debug) error_log(__METHOD__.__LINE__.' Query:'.$v.':*');
+					$rv = $this->icServer->getSummary($v.':*', $rByUid);
+					$headersNew[] = $rv[0];
+				}
+			}
+			if (self::$debug) error_log(__METHOD__.__LINE__.' Query:'.$queryString.' Result:'.array2string($headersNew));
 			$count = 0;
 
 			foreach((array)$sortResult as $uid) {
@@ -2093,7 +2119,7 @@
 				foreach((array)$headersNew as $headerObject) {
 					#if($count == 0) _debug_array($headerObject);
 					if (empty($headerObject['UID'])) continue;
-					$uid = $headerObject['UID'];
+					$uid = ($rByUid ? $headerObject['UID'] : $headerObject['MSG_NUM']);
 					// make dates like "Mon, 23 Apr 2007 10:11:06 UT" working with strtotime
 					if(substr($headerObject['DATE'],-2) === 'UT') {
 						$headerObject['DATE'] .= 'C';
@@ -2474,6 +2500,11 @@
 		function getMessageHeader($_uid, $_partID = '',$decode=false)
 		{
 			$retValue = $this->icServer->getParsedHeaders($_uid, true, $_partID, true);
+			if (PEAR::isError($retValue))
+			{
+				error_log(__METHOD__.__LINE__.array2string($retValue->message));
+				$retValue = null;
+			}
 
 			return ($decode ? self::decode_header($retValue):$retValue);
 		}
@@ -2492,7 +2523,11 @@
 		function getMessageRawHeader($_uid, $_partID = '')
 		{
 			$retValue = $this->icServer->getRawHeaders($_uid, $_partID, true);
-
+			if (PEAR::isError($retValue))
+			{
+				error_log(__METHOD__.__LINE__.array2string($retValue->message));
+				$retValue = "Could not retrieve RawHeaders in ".__METHOD__.__LINE__." PEAR::Error:".array2string($retValue->message);
+			}
 			return $retValue;
 		}
 
