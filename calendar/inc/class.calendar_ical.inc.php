@@ -2163,7 +2163,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param string $principalURL='' Used for CalDAV imports
 	 * @return array|boolean event array or false if $component is no Horde_iCalendar_vevent
 	 */
-	function _ical2egw_callback(Horde_iCalendar &$component, $tzid, $principalURL='')
+	function _ical2egw_callback(Horde_iCalendar $component, $tzid, $principalURL='')
 	{
 		//unset($component->_container); _debug_array($component);
 		
