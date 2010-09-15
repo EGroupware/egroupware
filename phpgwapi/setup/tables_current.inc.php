@@ -403,7 +403,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('contact_id','contact_name'),
 		'fk' => array(),
-		'ix' => array(),
+		'ix' => array(array('contact_name','contact_value(32)')),
 		'uc' => array()
 	),
 	'egw_addressbook_lists' => array(
