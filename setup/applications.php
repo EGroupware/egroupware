@@ -433,7 +433,7 @@ else
 							$setup_tpl->set_var('resolution','');
 							$status = lang('OK') . ' - ' . $value['status'];
 						}
-						else
+						elseif($key != 'egw-pear')
 						{
 							if ($value['tables'][0] != '')
 							{
