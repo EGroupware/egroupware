@@ -67,3 +67,17 @@ function phpgwapi_upgrade1_7_003()
 {
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.001';
 }
+
+/**
+ * Downgrade from trunk
+ * 
+ * @return string
+ */
+function phpgwapi_upgrade1_9_001()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.001';
+}
+function phpgwapi_upgrade1_9_002()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.001';
+}

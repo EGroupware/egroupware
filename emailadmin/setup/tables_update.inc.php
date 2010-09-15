@@ -285,3 +285,25 @@ function emailadmin_upgrade1_7_003()
 {
 	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.8';
 }
+
+/**
+ * Downgrade from Trunk (modified columns do not matter for using Sitemgr)
+ * 
+ * @return string
+ */
+function emailadmin_upgrade1_7_004()
+{
+	foreach (array('1'=>'defaultsmtp', '2'=>'postfixldap', '3'=>'postfixinetorgperson', '4'=>'smtpplesk', '5' =>'postfixdbmailuser') as $id => $newtype)
+	{
+		$GLOBALS['egw_setup']->oProc->query('update egw_emailadmin set ea_smtp_type=\''.$id.'\' where ea_smtp_type=\''.$newtype.'\'',__LINE__,__FILE__);
+	}
+	foreach (array('2'=>'defaultimap', '3'=>'cyrusimap', '4'=>'dbmailqmailuser', '5'=>'pleskimap', '6' =>'dbmaildbmailuser') as $id => $newtype)
+	{
+		$GLOBALS['egw_setup']->oProc->query('update egw_emailadmin set ea_imap_type=\''.$id.'\' where ea_imap_type=\''.$newtype.'\'',__LINE__,__FILE__);
+	}
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.8';
+}
+function emailadmin_upgrade1_9_001()
+{
+	return emailadmin_upgrade1_7_004();
+}

@@ -2081,3 +2081,57 @@ function calendar_upgrade1_7_010()
 {
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.8';
 }
+
+/**
+ * Downgrade from Trunk / EPL 10.1 to 1.8: droping cal_deleted
+ * 
+ * @return string
+ */
+function calendar_upgrade1_7_011()
+{
+	$deleted = 'cal_deleted=1 OR cal_deleted IS NOT NULL AND cal_deleted != 0';
+	foreach(array('egw_cal_dates','egw_cal_extra','egw_cal_repeats','egw_cal_user') as $table)
+	{
+		$GLOBALS['egw_setup']->db->delete($table,"cal_id IN (SELECT cal_id FROM egw_cal WHERE $deleted)",__LINE__,__FILE__,'calendar');
+	}
+	$GLOBALS['egw_setup']->db->delete('egw_cal',$deleted,__LINE__,__FILE__);
+	
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal',array(
+		'fd' => array(
+			'cal_id' => array('type' => 'auto','nullable' => False),
+			'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'unique id of event(-series)'),
+			'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'event owner / calendar'),
+			'cal_category' => array('type' => 'varchar','precision' => '30','comment' => 'category id'),
+			'cal_modified' => array('type' => 'int','precision' => '8','comment' => 'ts of last modification'),
+			'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
+			'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1','comment' => '1=public, 0=private event'),
+			'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '1'),
+			'cal_description' => array('type' => 'text'),
+			'cal_location' => array('type' => 'varchar','precision' => '255'),
+			'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'cal_id of series for exception'),
+			'cal_modifier' => array('type' => 'int','precision' => '4','comment' => 'user who last modified event'),
+			'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0','comment' => '1 for non-blocking events'),
+			'cal_special' => array('type' => 'int','precision' => '2','default' => '0'),
+			'cal_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag for optimistic locking'),
+			'cal_creator' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'creating user'),
+			'cal_created' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'creation time of event'),
+			'cal_recurrence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception'),
+			'tz_id' => array('type' => 'int','precision' => '4','comment' => 'key into egw_cal_timezones'),
+			'cal_deleted' => array('type' => 'int','precision' => '8','comment' => 'ts when event was deleted')
+		),
+		'pk' => array('cal_id'),
+		'fk' => array(),
+		'ix' => array('cal_uid','cal_owner','cal_deleted'),
+		'uc' => array()
+	),'cal_deleted');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.8';
+}
+function calendar_upgrade1_9_001()
+{
+	return calendar_upgrade1_7_011();
+}
+function calendar_upgrade1_9_002()
+{
+	return calendar_upgrade1_7_011();
+}
