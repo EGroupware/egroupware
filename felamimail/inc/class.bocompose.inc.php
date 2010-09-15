@@ -330,7 +330,7 @@
 			$searchfor = '/^\['.lang('printview').':\]/';
 			$this->sessionData['subject'] = preg_replace($searchfor,'',$this->sessionData['subject']);
 			$bodyParts = $bofelamimail->getMessageBody($_uid, $this->preferencesArray['always_display'], $_partID);
-			#_debug_array($bodyParts);
+			//_debug_array($bodyParts);
 
 			#$fromAddress = ($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL'];
 			if($bodyParts['0']['mimeType'] == 'text/html') {
@@ -435,15 +435,27 @@
 			$this->saveSessionData();
 		}
 
+		/**
+		 * getRandomString - function to be used to fetch a random string and md5 encode that one
+		 * @param none
+		 * @returns string - a random number which is md5 encoded
+		 */
 		function getRandomString() {
 			mt_srand((float) microtime() * 1000000);
 			return md5(mt_rand (100000, 999999));
 		}
 
-		// $_mode can be:
-		// single: for a reply to one address
-		// all: for a reply to all
-		// forward: inlineforwarding of a message with its attachments
+		/**
+		 * getReplyData - function to gather the replyData and save it with the session, to be used then.
+		 * @param $_mode can be:
+		 * 		single: for a reply to one address
+		 * 		all: for a reply to all
+		 * 		forward: inlineforwarding of a message with its attachments
+		 * @param $_icServer number (0 as it is the active Profile)
+		 * @param $_folder string 
+		 * @param $_uid number
+		 * @param $_partID number
+		 */
 		function getReplyData($_mode, $_icServer, $_folder, $_uid, $_partID)
 		{
 			$foundAddresses = array();
