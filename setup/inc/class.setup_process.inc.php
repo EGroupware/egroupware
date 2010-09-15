@@ -101,7 +101,7 @@ class setup_process
 			if($DEBUG) { echo '<br>process->pass(): #' . $i . ' for ' . $method . ' processing' . "\n"; }
 			/* Check current versions and dependencies */
 			$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
-			$setup_info = $GLOBALS['egw_setup']->detection->compare_versions($setup_info);
+			$setup_info = $GLOBALS['egw_setup']->detection->compare_versions($setup_info,true);
 			//_debug_array($setup_info);exit;
 			$setup_info = $GLOBALS['egw_setup']->detection->check_depends($setup_info);
 			//if($i==2) { _debug_array($passed);exit; }

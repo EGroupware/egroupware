@@ -123,7 +123,7 @@ class setup_detection
 	 * 	V	Version mismatch at end of upgrade (Not used, proposed only)
 	 * 	M	Missing files at start of upgrade (Not used, proposed only)
 	 */
-	function compare_versions($setup_info)
+	function compare_versions($setup_info,$try_downgrade=false)
 	{
 		foreach($setup_info as $key => $value)
 		{
@@ -132,7 +132,8 @@ class setup_detection
 			if(!( (@$value['status'] == 'F') || (@$value['status'] == 'C') ))
 			{
 				//if ($setup_info[$key]['currentver'] > $setup_info[$key]['version'])
-				if($GLOBALS['egw_setup']->amorethanb($value['currentver'],@$value['version']))
+				if(!$try_downgrade && $GLOBALS['egw_setup']->amorethanb($value['currentver'],@$value['version']) ||
+					$value['version'] == 'deleted')
 				{
 					$setup_info[$key]['status'] = 'V';
 				}
