@@ -138,9 +138,8 @@ if(@get_var('submit',Array('POST')))
 			$GLOBALS['egw_setup']->deregister_app($setup_info[$appname]['name']);
 			echo '<br />' . $app_title . ' ' . lang('deregistered') . '.';
 
-			if ($setup_info[$appname]['hooks'])
+			if ($GLOBALS['egw_setup']->deregister_hooks($setup_info[$appname]['name']))
 			{
-				$GLOBALS['egw_setup']->deregister_hooks($setup_info[$appname]['name']);
 				echo '<br />' . $app_title . ' ' . lang('hooks deregistered') . '.';
 			}
 			$do_langs = true;

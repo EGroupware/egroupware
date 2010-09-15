@@ -772,6 +772,7 @@ class setup
 	 * de-Register an application's hooks
 	 *
 	 * @param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
+	 * @return boolean|int false on error or number of removed hooks
 	 */
 	function deregister_hooks($appname)
 	{
@@ -790,7 +791,7 @@ class setup
 		{
 			$this->hooks =& CreateObject('phpgwapi.hooks',$this->db,$this->hooks_table);
 		}
-		$this->hooks->register_hooks($appname);
+		return $this->hooks->register_hooks($appname);
 	}
 
 	/**
