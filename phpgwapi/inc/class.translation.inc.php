@@ -1139,7 +1139,9 @@ class translation
 			'@&(pound|#163);@i',              //   Pound
 			'@&(copy|#169);@i',               //   Copyright
 			'@&(reg|#174);@i',                //   Registered
+			'@&(trade|#8482);@i',             //   trade
 			'@&#39;@i',                       //   singleQuote
+			'@(\xc2\xa0)@',                   //   nbsp or tab (encoded windows-style)
 		);
 		$Replace = array ('',
 			'"',
@@ -1150,9 +1152,11 @@ class translation
 			chr(161),
 			chr(162),
 			chr(163),
-			chr(169),
-			chr(174),
+			'(C)',//chr(169),// copyrighgt
+			'(R)',//chr(174),// registered
+			'(TM)',// trade
 			"'",
+			' ',
 		);
 		$_html = preg_replace($Rules, $Replace, $_html);
 
