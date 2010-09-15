@@ -696,13 +696,6 @@
 		function createMessage(&$_mailObject, $_formData, $_identity, $_signature = false)
 		{
 			$bofelamimail	=& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
-			$userLang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-			$langFile = EGW_SERVER_ROOT."/phpgwapi/setup/phpmailer.lang-$userLang.php";
-			if(file_exists($langFile)) {
-				$_mailObject->SetLanguage($userLang, EGW_SERVER_ROOT."/phpgwapi/setup/");
-			} else {
-				$_mailObject->SetLanguage("en", EGW_SERVER_ROOT."/phpgwapi/setup/");
-			}
 			$_mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
 			$activeMailProfile = $this->preferences->getIdentity(0);
 			$_mailObject->IsSMTP();
@@ -854,7 +847,7 @@
 		function saveAsDraft($_formData)
 		{
 			$bofelamimail	=& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
-			$mail		= CreateObject('phpgwapi.phpmailer');
+			$mail		= new egw_mailer();
 			$identity	= $this->preferences->getIdentity((int)$this->sessionData['identity']);
 			$flags = '\\Seen \\Draft';
 			$BCCmail = '';
@@ -912,7 +905,7 @@
 		function send($_formData)
 		{
 			$bofelamimail	=& $this->bofelamimail; //CreateObject('felamimail.bofelamimail',$this->displayCharset);
-			$mail 		=& CreateObject('phpgwapi.phpmailer');
+			$mail 		= new egw_mailer();
 			$messageIsDraft	=  false;
 
 			$this->sessionData['identity']	= $_formData['identity'];
@@ -978,8 +971,11 @@
 			//$mail->SMTPDebug = 10;
 			#error_log("Folder:".count(array($this->sessionData['folder']))."To:".count((array)$this->sessionData['to'])."CC:". count((array)$this->sessionData['cc']) ."bcc:".count((array)$this->sessionData['bcc']));
 			if(count((array)$this->sessionData['to']) > 0 || count((array)$this->sessionData['cc']) > 0 || count((array)$this->sessionData['bcc']) > 0) {
-				if(!$mail->Send()) {
-					$this->errorInfo = $mail->ErrorInfo;
+				try {
+					$mail->Send();
+				}
+				catch(phpmailerException $e) {
+					$this->errorInfo = $e->getMessage();
 					#error_log($this->errorInfo);
 					return false;
 				}
