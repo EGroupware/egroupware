@@ -2962,7 +2962,7 @@
 				if ( preg_match('/\b'.$identity->emailAddress.'\b/',$headers['TO']) ) {
 					$send->From = $identity->emailAddress;
 					$send->FromName = $identity->realName;
-					error_log('using identity for send from:'.$send->From.' to match header information:'.$headers['TO']);
+					error_log(__METHOD__.__LINE__.' using identity for send from:'.$send->From.' to match header information:'.$headers['TO']);
 					break;
 				}
 				if($identity->default) {
@@ -2972,13 +2972,15 @@
 			}
 
 			if (isset($headers['DISPOSITION-NOTIFICATION-TO'])) {
-				$send->AddAddress( $headers['DISPOSITION-NOTIFICATION-TO'] );
+				$toAddr = $headers['DISPOSITION-NOTIFICATION-TO'];
 			} else if ( isset($headers['RETURN-RECEIPT-TO']) ) {
-				$send->AddAddress( $headers['RETURN-RECEIPT-TO']);
+				$toAddr = $headers['RETURN-RECEIPT-TO'];
 			} else if ( isset($headers['X-CONFIRM-READING-TO']) ) {
-				$send->AddAddress( $headers['X-CONFIRM-READING-TO']);
+				$toAddr = $headers['X-CONFIRM-READING-TO'];
 			} else return false;
-
+			$singleAddress = imap_rfc822_parse_adrlist($toAddr,'');
+			if (self::$debug) error_log(__METHOD__.__LINE__.' To Address:'.$singleAddress[0]->mailbox."@".$singleAddress[0]->host.", ".$singleAddress[0]->personal);
+			$send->AddAddress($singleAddress[0]->mailbox."@".$singleAddress[0]->host, $singleAddress[0]->personal);	
 			$send->AddCustomHeader('References: '.$headers['MESSAGE-ID']);
 			$send->Subject = $send->encode_subject( lang('Read')." : ".$headers['SUBJECT'] );
 
