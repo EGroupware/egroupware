@@ -1212,6 +1212,8 @@
 					'@(\x82|\x91|\x92)@',
 					'@(\x85)@',
 					'@(\x86)@',
+					'@(\x99)@',
+					'@(\xae)@',
 				);
 				$rar = array(
 					'"',
@@ -1219,6 +1221,8 @@
 					'\'',
 					'...',
 					'&',
+					'(TM)',
+					'(R)',
 				);
 				if(($singleBodyPart['mimeType'] == 'text/html' || $singleBodyPart['mimeType'] == 'text/plain') && 
 					strtoupper($singleBodyPart['charSet']) != 'UTF-8') 
