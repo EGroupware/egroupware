@@ -238,10 +238,20 @@ class ADODB_DataDict {
 			return $quote . $matches[1] . $quote;
 		}
 		
-		// if name contains special characters, quote it
-		/*$regex = ($allowBrackets) ? $this->nameRegexBrackets : $this->nameRegex;
+		// if brackets are allowed, quote only the rest, 
+		// to allow to limit indexes on colums, eg "column(32)"
+		if ($allowBrackets && preg_match('/^(.*) *(\(\d+\))$/',$name,$matches)) {
+			return $quote . $matches[1] . $quote . ' '. $matches[2];
+		}
+		return $quote . $name . $quote;
+
+		// not used stock ADOdb code, which only quotes names with special chars,
+		// which does not help with column names using reserved words, eg. "timestamp" in phpfreechat
 		
-		if ( !preg_match('/^[' . $regex . ']+$/', $name) )*/ {
+		// if name contains special characters, quote it
+		$regex = ($allowBrackets) ? $this->nameRegexBrackets : $this->nameRegex;
+		
+		if ( !preg_match('/^[' . $regex . ']+$/', $name) ) {
 			return $quote . $name . $quote;
 		}
 		

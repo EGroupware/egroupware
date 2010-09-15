@@ -918,6 +918,8 @@ class schema_proc
 		$aColumnNames = str_replace($remove,'',$aColumnNames);
 
 		$name = $sTableName.'_'.(is_array($aColumnNames) ? implode('_',$aColumnNames) : $aColumnNames);
+		// remove length limits from column names
+		$name = preg_replace('/ *\(\d+\)/','',$name);
 
 		// this code creates a fixed short index-names (30 chars) from the long and unique name, eg. for MaxDB or Oracle
 		if (isset($this->max_index_length[$this->sType]) && $this->max_index_length[$this->sType] <= 32 && strlen($name) > 30 ||
