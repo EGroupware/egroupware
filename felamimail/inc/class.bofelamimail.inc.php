@@ -2310,21 +2310,21 @@
 				case 'MULTIPART':
 					switch($structure->subType) {
 						case 'ALTERNATIVE':
-							return array($this->getMultipartAlternative($_uid, $structure->subParts, $this->htmlOptions));
+							$bodyParts = array($this->getMultipartAlternative($_uid, $structure->subParts, $this->htmlOptions));
 
 							break;
 
 						case 'MIXED':
 						case 'REPORT':
 						case 'SIGNED':
-							return $this->getMultipartMixed($_uid, $structure->subParts, $this->htmlOptions);
+							$bodyParts = $this->getMultipartMixed($_uid, $structure->subParts, $this->htmlOptions);
 							break;
 
 						case 'RELATED':
-							return $this->getMultipartRelated($_uid, $structure->subParts, $this->htmlOptions);
+							$bodyParts = $this->getMultipartRelated($_uid, $structure->subParts, $this->htmlOptions);
 							break;
 					}
-
+					return self::normalizeBodyParts($bodyParts);
 					break;
 				case 'AUDIO': // some servers send audiofiles and imagesfiles directly, without any stuff surround it
 				case 'IMAGE': // they are displayed as Attachment NOT INLINE
@@ -2353,13 +2353,13 @@
 					} else {
 						// what if the structure->disposition is attachment ,...
 					}
-					return $bodyPart;
+					return self::normalizeBodyParts($bodyPart);
 					break;
 				case 'MESSAGE':
 					switch($structure->subType) {
 						case 'RFC822':
 							$newStructure = array_shift($structure->subParts);
-							return $this->getMessageBody($_uid, $_htmlOptions, $newStructure->partID, $newStructure);
+							return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure->partID, $newStructure));
 							break;
 					}
 					break;
@@ -2373,6 +2373,32 @@
 					);
 					break;
 			}
+		}
+
+		/**
+		 * normalizeBodyParts - function to gather and normalize all body Information
+		 * @param _bodyParts - Body Array
+		 * @returns array - a normalized Bodyarray
+		 */
+		static function normalizeBodyParts($_bodyParts) 
+		{
+			if (is_array($_bodyParts))
+			{
+				foreach($_bodyParts as $singleBodyPart) 
+				{
+					if (!isset($singleBodyPart['body'])) {
+						$buff = self::normalizeBodyParts($singleBodyPart);
+						foreach ($buff as $val)	$body2return[] = $val;
+						continue;
+					}
+					$body2return[] = $singleBodyPart;
+				}
+			}
+			else
+			{
+				$body2return = $_bodyParts;
+			}
+			return $body2return;
 		}
 
 		function getMessageHeader($_uid, $_partID = '',$decode=false)
