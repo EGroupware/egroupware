@@ -28,3 +28,16 @@ function phpgwapi_upgrade1_8_001()
 {
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.001';
 }
+
+/**
+ * Add index to improve import of contacts using a custom field as primary key
+ * 
+ * @return string
+ */
+function phpgwapi_upgrade1_9_001()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook_extra',
+		array('contact_name','contact_value(32)'));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.002';
+}
