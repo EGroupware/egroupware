@@ -203,6 +203,7 @@ a.appTitles,.appTitles
 
 a.textSidebox
 {
+	padding: 0;
 	border-top: 0;
 }
 
