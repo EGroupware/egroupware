@@ -1,0 +1,532 @@
+/*
+	font styling
+	allowed attributes: font-family,font-size,color,font-weight
+*/
+
+body,td,textarea
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+select,input,button
+{
+	color: #006699;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:110%;
+}
+
+select
+{
+	font-size:100%;
+}
+
+a:link,a:visited
+{
+	cursor:pointer;
+	color: #006699;
+	text-decoration: none;
+}
+
+a:hover,a:active
+{
+	cursor:pointer;
+	color: #ff9933;
+	text-decoration: underline;
+}
+.divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
+{
+	font-size:90%;
+}
+
+.prefSection
+{
+	font-weight:bold;
+	font-size:145%;
+	line-height:40px;
+}
+
+#divAppboxHeader
+{
+	line-height:28px;
+	font-size:125%;
+	font-weight:bold;
+	color:#666666;
+}
+
+#divGenTime,#divPoweredBy
+{
+	font-size: 80%;
+	color: #ff0000;
+}
+
+#divPoweredBy
+{
+	color: #000000;
+}
+
+/*
+	other styling
+*/
+
+body
+{
+	background-image:url(../images/body-background.png);
+}
+
+form
+{
+	margin:0px;
+	padding:0px;
+}
+
+img
+{
+	border:0;
+}
+
+
+input,button,select
+{
+	border: solid 1px #bbbbbb;
+}
+
+input[type=submit],input[type=button],input[type=reset],button,.egwbutton
+
+{
+	background-color:#c5c5c5;
+	border:  outset 1px #dcdad5;
+	background-color:#b9d5e3;
+	border:  outset 1px #b9d5e3;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer;
+	color:  #004e7d;
+}
+
+input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
+{
+	background-color:#94bfd4;
+	border:  outset 1px #b9d5e3;
+	color:  #006699;
+	color:  #004e7d;
+}
+
+input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
+
+{
+	border:  inset 1px #bbbbbb;
+}
+
+input.egwbutton
+{
+	background-color:#c5c5c5;
+	border:  outset 1px #dcdad5;
+	background-color:#b9d5e3;
+	border:  outset 1px #b9d5e3;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer;
+	color:  #004e7d;
+}
+
+input.egwbutton:hover
+{
+   background-color:#94bfd4;
+   border:  outset 1px #b9d5e3;
+   color:  #006699;
+   color:  #004e7d;
+
+}
+input.egwbutton:active
+{
+   border:  inset 1px #bbbbbb;
+}
+
+input[type=image]
+{
+	cursor: pointer;
+	border: 0;
+}
+
+#thesideboxcolumn
+{
+	width: 177px;
+	position:relative;
+}
+
+#sideresize
+{
+	background-image:url(../images/resize.png);
+	width:13px;
+	height:13px;
+	right:1px;
+	top:1px;
+	position:absolute;
+	z-index:9999;
+}
+
+.divLoginbox
+{
+	position:relative;
+	width: 370px;
+	border: #9c9c9c 1px solid;
+}
+
+.divSidebox
+{
+	position:relative;
+  	border: #9c9c9c 1px solid;
+	overflow:auto;
+}
+
+.divSideboxHeader,.divLoginboxHeader
+{
+	text-align:center;
+	background-color:#dddddd;
+	padding-top:2px;
+	color:#666666;
+}
+
+a.divSideboxEntry, .divSideboxEntry
+{
+	text-align:left;
+	background-color:#FDFDFD;
+}
+
+a.appTitles,.appTitles
+{
+	height:18px;
+	padding-top:2px;
+	padding-bottom:2px;
+}
+
+a.textSidebox
+{
+	padding: 0;
+	border-top: 0;
+}
+
+.textSidebox
+{
+	padding-top:3px;
+	padding-bottom:3px;
+	border-top: solid #aaaaaa 1px;
+	overflow: auto;
+}
+
+.sideboxSpace
+{
+	height:9px;
+}
+
+.greyLine
+{
+	margin:1px;
+	border-top:solid 1px #7e7e7e;
+	height:1px;
+}
+
+#extraIcons
+{
+	background-color:#eeeeee;
+	border:solid 1px #7e7e7e;
+}
+
+.extraIconsRow
+{
+	border:solid 1px #dddddd;
+	padding:2px;
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+}
+
+#divMain,#loginMainDiv,#popupMainDiv
+{
+	background-color: white;
+	padding: 8px;
+	border-bottom: solid 1px #7e7e7e;
+}
+/*
+ ** Popups
+ */
+#popupMainDiv
+{
+	margin: 8px;
+	border: solid 1px #7e7e7e;
+	padding-bottom: 0px;
+}
+
+#divLogo
+{
+	position:absolute;
+	left:30px;
+	top:20px;
+	z-index:999;
+}
+
+#topmenu
+{
+	background-color: #0081c1;
+	background-image: url(../images/bgtopmenu2.png);
+	color:#006699;
+	/*border-top: solid 1px #7e7e7e;*/
+	border-bottom: solid #5793ff 1px;
+	height:20px;
+	padding-top:4px ;
+	line-height:16px;
+}
+#topmenu a
+{
+	color:#006699;
+}
+
+#topmenu_items
+{
+	float:left;
+}
+#topmenu_info
+{
+	float:right;
+}
+
+#divUpperTabs
+{
+	text-align:right;
+	height: 15px;
+	margin-right: 10px;
+}
+
+#divUpperTabs ul
+{
+	display:inline;
+	margin:0;
+	padding:10px 10px 0 1px;
+	list-style:none;
+}
+
+#divUpperTabs li
+{
+	float:right;
+	margin:0 5px 0 0;;
+	padding:0 5px 0 5px;
+	border:solid 1px #9c9c9c;
+	border-bottom: 0px;
+}
+
+#divAppIconBar
+{
+	background-color:silver;
+	border:solid 1px #9c9c9c;
+	background-image: url(../images/background-icon-bar.png);
+	background-repeat: repeat-x;
+	overflow:visible;
+	height: 45px; /* prevents text line to show in IE7+8(Compatibilitymode) */
+}
+/* Star-Plus-HTML Hack fix for the above */
+*:first-child+html #divAppIconBar
+{
+	height: 60px;
+}
+
+#divAppTextBar
+{
+	background-color:white;
+}
+
+#divStatusBar
+{
+	background-color:white;
+	height:18px;
+	padding-left:3px;
+}
+
+#tdSidebox
+{
+	width:170px;
+	background-color:white;
+	overflow:visible;
+}
+
+#tdAppbox
+{
+	background-color:white;
+	padding-left:5px;
+	width: 100%;
+}
+
+#divAppboxHeader
+{
+	background-image:url(../images/appbox-header-background.png);
+	background-repeat: repeat-x;
+	height: 25px;
+	border-bottom:solid 1px #c0c0c0;
+	text-align:center;
+	padding-bottom:0px;
+	border-top:solid 1px #9c9c9c;
+	border-left:solid 1px #9c9c9c;
+	border-right:solid 1px #9c9c9c;
+}
+
+#divAppbox
+{
+	background-color:#ffffff;
+	padding:5px;
+	border-bottom:solid 1px #9c9c9c;
+	border-left:solid 1px #9c9c9c;
+	border-right:solid 1px #9c9c9c;
+}
+
+#divGenTime,#divPoweredBy
+{
+	bottom:4px;
+	text-align:center;
+	width:99%;
+}
+
+/*
+	Table formatting
+*/
+.th {
+	color: black; background-color: #D3DCE3;
+}
+.row_on {
+	color: black;
+	background-color: #F1F1F1;
+}
+.row_off {
+	color: black;
+	background-color: #ffffff;
+}
+.narrow_column { width: 1%; white-space: nowrap; }
+
+/*
+	Printing
+*/
+@media screen {	.onlyPrint { display: none; } }
+@media print {	.noPrint { display: none; } }
+
+/*
+	Portal_box as used in home
+*/
+.portal_box {
+	border: #9c9c9c 1px solid;
+}
+
+.portal_box table {
+	border: 1px solid black;
+}
+
+.portal_box_header {
+	height: 15px;
+	padding-top: 0px;
+}
+
+/*
+	Login page
+*/
+#loginMainDiv {
+	padding-top: 24px;
+	height: 700px;	/* 95% does not work */
+	position: relative;
+	background-repeat: no-repeat;
+	background-position: center 80px;
+	background-image: url(../images/login-background.jpg);
+}
+#loginScreenMessage {
+	text-align: center;
+	padding: 10px;
+}
+#loginCdMessage {
+	text-align: center;
+	padding-bottom: 10px;
+	color: red;
+	font-style: italic;
+}
+.divLoginboxHeader {
+	text-align: center;
+	border: #9c9c9c 1px solid;	/* does NOT work */
+	padding: 0px;
+}
+
+/*
+Preferences tabs
+*/
+.tablink {
+	white-space: nowrap;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+/* eGroupWare popup */
+#egwpopup {
+	background-color: #ffffff;
+	border: 1px solid #d3d3d3;
+}
+
+#egwpopup hr {
+	border: none;
+	border-top: 1px solid #d3d3d3;
+	height: 1px;
+}
+
+#egwpopup_header {
+	background-image: url(../images/gradient22.png);
+	height: 18px;
+	line-height: 18px;
+	margin: 0;
+	padding: 0;
+	font-size:12px;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+	border-bottom: 1px solid #d3d3d3;
+}
+
+#egwpopup_message {
+	margin: 0;
+	padding: 7px;
+	overflow: auto;
+}
+
+#egwpopup_message > table {
+	font-size: 95%;
+}
+
+#egwpopup_message .link {
+	cursor: pointer;
+}
+
+#egwpopup_footer {
+	margin: 0;
+	padding: 7px;
+	border: none;
+	border-top: 1px solid #d3d3d3;
+	text-align: center;
+}
+
+.selectbg
+{
+	position:absolute;
+	z-index:10;
+	overflow:hidden;
+	width:250px;
+}
+.iframeforselectbox
+{
+	display:block;
+	height:150px;
+	left:10pt;
+	position:absolute;
+	top:0pt;
+	width:235px;
+	z-index:-1;
+	border: 0px;
+}
+
+.bdforselection {
+	padding:12px;
+}
