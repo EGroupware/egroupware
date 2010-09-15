@@ -491,6 +491,7 @@ else
 					$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 					if ($value['version'] == 'deleted')
 					{
+						$setup_tpl->set_var('bg_color','CCAAAA');
 						$setup_tpl->set_var('upgrade','&nbsp;');
 						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&deleted=True">' . lang('Possible Solutions') . '</a>');
 						$status = lang('Sources deleted/missing') . ' - ' . $value['status'];
