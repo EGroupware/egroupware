@@ -517,6 +517,11 @@ class schema_proc
 	 */
 	function CreateIndex($sTableName,$aColumnNames,$bUnique=false,$options='',$sIdxName='')
 	{
+		// remove length limits from column names, if DB type is NOT MySQL
+		if ($this->sType != 'mysql')
+		{
+			$aColumnNames = preg_replace('/ *\(\d+\)$/','',$aColumnNames);
+		}
 		if (!$sIdxName || is_numeric($sIdxName))
 		{
 			$sIdxName = $this->_index_name($sTableName,$aColumnNames);
