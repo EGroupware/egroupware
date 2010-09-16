@@ -1,0 +1,523 @@
+%1 email addresses inserted	common	fa	%1 آدرس رایانامه وارد شده
+%1 is not executable by the webserver !!!	common	fa	%1 قابل اجرا توسط وب سرور نمی باشد !!!
+%1 manual	common	fa	راهنمای %1
+%1 start	common	fa	شروع %1
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fa	%1گروه افزار%2 یک محیط کارمشترک مبتنی بر وب و چند کاربره است که در %3PHP%4نوشته شده است.
+(shift-)click or drag to change value	jscalendar	fa	(تبدیل-) کلیک کنید یا بکشید تا مقدار را تغییر دهید
+- click on any of the time parts to increase it	jscalendar	fa	روی هر بخشی از زمان کلیک کنید تا زیادش کنید
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	fa	برای انتخاب سریعتر دکمه موشواره را روی هر کدام از کلیدهای بالا نگه دارید
+- or click and drag for faster selection.	jscalendar	fa	یا برای انتخاب سریعتر کلیک کنید و بکشید
+- or shift-click to decrease it	jscalendar	fa	یا تبدیل-کلیک کنید تا کم شود
+00 (disable)	admin	fa	(غیر فعال) ۰۰
+1 day	login	fa	یک روز
+1 hour	login	fa	یک ساعت
+1 month	login	fa	یک ماه
+about	common	fa	درباره
+about %1	common	fa	درباره %1
+about egroupware	common	fa	درباره گروه افزار
+about the calendar	jscalendar	fa	درباره تقویم
+access	common	fa	دست یابی
+access not permitted	common	fa	اجازه دستیابی وجود ندارد
+account has been created	common	fa	حساب ايجاد شده است
+account has been deleted	common	fa	حساب حذف شده است
+account has been updated	common	fa	حساب ويرايش شده است
+account is expired	common	fa	حساب منقضی شده است
+acl	common	fa	لیست کنترل دسترسی
+action	common	fa	عمل
+active	common	fa	فعال
+add	common	fa	افزودن
+add %1 category for	common	fa	افزودن %1 دسته برای
+add category	common	fa	افزودن دسته
+add shortcut	common	fa	افزودن میانبر
+add sub	common	fa	افزودن زیرمجموعه
+addressbook	common	fa	اطلاعات اشخاص
+admin	common	fa	مدیر
+administration	common	fa	اداره
+afghanistan	common	fa	افغانستان
+albania	common	fa	آلبانی
+algeria	common	fa	الجزاير
+all	common	fa	همه
+all fields	common	fa	همه فیلدها
+alphabet	common	fa	ا,آ,ب,پ,ت,ث,ج,چ,ح,خ,د,ذ,ر,ز,ژ,س,ش,ص,ض,ط,ظ,ع,غ,ف,ق,ک,گ,ل,م,ن,و,ه,ی
+alternate style-sheet:	common	fa	برگه سبک دیگر:
+andorra	common	fa	آندورا
+angola	common	fa	آنگولا
+application	common	fa	برنامه
+apply	common	fa	اعمال
+april	common	fa	آوريل
+are you sure you want to delete these entries ?	common	fa	آيا شما مطمئن هستيد که می خواهيد اين وروديها را حذف کنيد
+are you sure you want to delete this entry ?	common	fa	آيا شما مطمئن هستيد که می خواهيد اين ورودی را حذف کنيد
+argentina	common	fa	آرژانتين
+armenia	common	fa	ارمنستان
+august	common	fa	آگوست
+australia	common	fa	استراليا
+austria	common	fa	اتريش
+author	common	fa	ناشر
+autohide sidebox menu's	common	fa	پنهان سازی خودکار فهرست کناری
+autohide sidebox menus	common	fa	پنهان سازی خودکار فهرست کناری
+automatically hide the sidebox menu's?	common	fa	فهرست کناری بطور خودکار پنهان شود؟
+automatically hide the sidebox menus?	common	fa	فهرست کناری بطور خودکار پنهان شود؟
+autosave default category	common	fa	ذخیره خودکار دسته پیش فرض
+azerbaijan	common	fa	آذربايجان
+back	common	fa	بازگشت
+back to user login	common	fa	بازگشت به ورودی کاربر
+background color:	common	fa	رنگ پس زمینه:
+backupdir '%1' is not writeable by the webserver	common	fa	پوشه پشتیبان '%1' بوسیله کارگزار وب قابل نوشتن نیست
+bad login or password	common	fa	نام کاربری یا رمزعبور اشتباه
+bahrain	common	fa	بحرين
+bangladesh	common	fa	بنگلادش
+bcc	common	fa	رونوشت مخفی
+blocked, too many attempts	common	fa	بلاک شده، تلاش زياد
+bold	common	fa	درشت
+border	common	fa	کادر
+bosnia and herzegovina	common	fa	بوسنی و هرز گوين
+bottom	common	fa	پایین
+brazil	common	fa	برزيل
+bulgaria	common	fa	بلغارستان
+calendar	common	fa	تقویم
+cameroon	common	fa	کامرون
+canada	common	fa	کانادا
+cancel	common	fa	بستن
+cannot replace %1 because it is a directory	common	fa	%1 را نمی توانم جایگزین کنم چون پوشه است
+cant open '%1' for %2	common	fa	نمیتوانم '%1' را برای %2 باز کنم
+caption	common	fa	عنوان
+categories	common	fa	دسته ها
+categories for	common	fa	دسته ها برای
+category	common	fa	دسته
+category %1 has been added !	common	fa	دسته 1% اضافه شده است
+category %1 has been updated !	common	fa	دسته 1% به روز رسانی شده است
+cc	common	fa	رونوشت
+centered	common	fa	وسط
+central african republic	common	fa	جمهوری آفريقای مرکزی
+change	common	fa	تغییر
+charset	common	fa	UTF-8
+check installation	common	fa	بررسی نصب
+check now	common	fa	حالا بررسی شود
+chile	common	fa	شيلی
+china	common	fa	چين
+choose a background color	common	fa	یک رنگ زمینه انتخاب کنید
+choose a background color for the icons	common	fa	یک رنگ زمینه برای نمایه ها انتخاب کنید
+choose a background image.	common	fa	یک تصویر برای زمینه انتخاب کنید
+choose a background style.	common	fa	یک سبک برای زمینه انتخاب کنید
+choose a text color for the icons	common	fa	یک رنگ قلم برای نمایه ها انتخاب کنید
+choose the category	common	fa	دسته را انتخاب کنيد
+choose the parent category	common	fa	دسته والد را انتخاب کنيد
+clear	common	fa	پاک کردن
+clear form	common	fa	پاک کردن فرم
+click	common	fa	کلیک
+click or mouse over to show menus	common	fa	برای نمایش فهرستها کلیک شود یا موشواره روی آن برود
+click or mouse over to show menus?	common	fa	برای نمایش فهرستها کلیک شود یا موشواره روی آن برود؟
+close	common	fa	بستن
+close sidebox	common	fa	بستن جعبه کناری
+colombia	common	fa	کلمبيا
+common preferences	common	fa	تنظیمات عمومی
+company	common	fa	شرکت
+congo	common	fa	کنگو
+congo, the democratic republic of the	common	fa	کنگو، جمهوری دموکراتيک
+contacting server...	common	fa	تماس با کارگزار
+copy	common	fa	نسخه برداری
+costa rica	common	fa	کاستاريکا
+could not contact server. operation timed out!	common	fa	ناتوان از تماس با کارگزار. عملیات خارج از زمان شد
+create	common	fa	ایجاد
+created by	common	fa	ایجاد شده توسط
+cuba	common	fa	کوبا
+currency	common	fa	پول رایج
+current	common	fa	جاری
+current users	common	fa	کاربران جاری
+date	common	fa	تاریخ
+date due	common	fa	تاریخ انجام
+date selection:	jscalendar	fa	انتخاب تاریخ:
+december	common	fa	دسامبر
+default category	common	fa	دسته پيش فرض
+default height for the windows	common	fa	ارتفاع پیش فرض برای پنجره ها
+default width for the windows	common	fa	عرض پیش فرض برای پنجره ها
+delete	common	fa	حذف
+delete row	common	fa	حذف سطر
+denmark	common	fa	دانمارک
+description	common	fa	توصيف
+detail	common	fa	شرح
+details	common	fa	جزئیات
+direction left to right	common	fa	جهت چپ به راست
+disable internet explorer png-image-bugfix	common	fa	غیر فعال کردن png-image-bugfix در برنامه Internet Explorer
+disable slider effects	common	fa	غیر فعال کردن جلوه های فهرست
+disabled	common	fa	غیر فعال شده
+display %s first	jscalendar	fa	نمايش S% ابتدا
+do you also want to delete all subcategories ?	common	fa	آيا شما همچنين می خواهيد همه زير دسته ها را حذف کنيد
+doctype:	common	fa	نوع سند:
+document properties	common	fa	ویژگی سند
+document title:	common	fa	عنوان سند
+domain	common	fa	دامنه
+domain name for mail-address, eg. "%1"	common	fa	نام حوزه برای نشانی نامه الکترونیکی، مثلا:"%1"
+domestic	common	fa	خانگی
+done	common	fa	انجام شد
+drag to move	jscalendar	fa	برای حرکت بکشید
+e-mail	common	fa	رایانامه
+edit	common	fa	ویراستن
+edit %1 category for	common	fa	ويراستن 1% دسته برای
+edit categories	common	fa	ويراستن دسته ها
+edit category	common	fa	ويراستن دسته
+egroupware api version %1	common	fa	نسخه eGroupWare API معادل %1 است
+egroupware: login blocked for user '%1', ip %2	common	fa	ورود برای کاربر '%1' با آدرس  شبکه %2 قفل شده
+egypt	common	fa	مصر
+el salvador	common	fa	السالوادر
+email	common	fa	رایانامه
+email-address of the user, eg. "%1"	common	fa	آدرس رایانامه کاربر، به عنوان مثال1%
+emailadmin	common	fa	مدیر رایانامه
+enabled	common	fa	فعال شده
+end date	common	fa	تاریخ پایان
+end time	common	fa	زمان پایان
+entry has been deleted sucessfully	common	fa	وارده با موفقيت حذف شده است
+entry updated sucessfully	common	fa	وارده با موفقيت به روز رسانی شده است
+error	common	fa	خطا
+error creating %1 %2 directory	common	fa	خطای ايجاد 1% 2% پوشه
+error deleting %1 %2 directory	common	fa	خطای حذف 1% 2% پوشه
+error renaming %1 %2 directory	common	fa	خطای دوباره نامگذاری 1% 2% پوشه
+etemplate	common	fa	فرم ساز
+exact	common	fa	دقیقا
+fax number	common	fa	شماره نمابر
+february	common	fa	فوريه
+fields	common	fa	فیلدها
+fiji	common	fa	فیجی
+files	common	fa	پرونده ها
+filter	common	fa	صافی
+first name	common	fa	نام
+first name of the user, eg. "%1"	common	fa	نام کوچک کاربر، به عنوان مثال"1%"
+first page	common	fa	صفحه اول
+firstname	common	fa	نام کوچک
+folder already exists.	common	fa	پوشه وجود دارد
+force selectbox	common	fa	حتما جعبه انتخاب باشد
+forever	login	fa	همیشگی
+france	common	fa	فرانسه
+friday	common	fa	جمعه
+ftp	common	fa	پروتکل انتقال پرونده (FTP)
+fullname	common	fa	نام کامل
+fullscreen mode	common	fa	شیوه تمام صفحه
+general menu	common	fa	فهرست عمومی
+german	common	fa	آلمانی
+germany	common	fa	آلمان
+global	common	fa	عمومی
+global public	common	fa	عمومی
+go today	jscalendar	fa	برو به امروز
+grant access	common	fa	دسترسی دادن
+greece	common	fa	يونان
+group	common	fa	گروه
+group access	common	fa	دستيابی گروه
+group has been added	common	fa	گروه اضافه شده است
+group has been deleted	common	fa	گروه حذف شده است
+group has been updated	common	fa	گروه به روز رسانی شده است
+group name	common	fa	نام گروه
+group public	common	fa	گروه عمومی
+groups	common	fa	گروهها
+groups with permission for %1	common	fa	گروهها با اجازه برای %1
+groups without permission for %1	common	fa	گروهها بدون اجازه برای %1
+haiti	common	fa	هائیتی
+height	common	fa	ارتفاع
+help	common	fa	کمک
+high	common	fa	بالا
+highest	common	fa	بالاترین
+home	common	fa	خانه
+home email	common	fa	رایانامه خانه
+honduras	common	fa	هندوراس
+hong kong	common	fa	هنگ کنگ
+iceland	common	fa	ايسلند
+image url	common	fa	نشانی URL تصویر
+india	common	fa	هند
+indonesia	common	fa	اندونزی
+insert	tinymce	fa	درج
+insert 'return false'	common	fa	درج با خطا برگشت
+insert all %1 addresses of the %2 contacts in %3	common	fa	درج همه %1 نشانی ها از %2 مخاطب در %3
+insert column after	common	fa	درج ستون بعد از
+insert column before	common	fa	درج ستون قبل از
+insert row after	common	fa	درج سطر بعد از
+insert row before	common	fa	درج سطر قبل از
+international	common	fa	بين المللی
+invalid filename	common	fa	نام پرونده نامعتبر
+invalid ip address	common	fa	آدرسIP  نا معتبر
+invalid password	common	fa	رمز عبور نامعتبر
+iran, islamic republic of	common	fa	جمهوری اسلامی ایران
+iraq	common	fa	عراق
+ireland	common	fa	ايرلند
+israel	common	fa	اسرائيل
+it has been more then %1 days since you changed your password	common	fa	بیش از %1 روز از تغییر گذرواژه شما میگذرد
+it is recommended that you run setup to upgrade your tables to the current version	common	fa	توصیه می شود برنامه برپاسازی را اجرا کنید تا جداولتان به نسخه جاری بهنگام شوند
+italic	common	fa	مورب
+january	common	fa	ژانویه
+july	common	fa	جولای
+jun	common	fa	جون
+june	common	fa	ژوئن
+justify center	common	fa	تنظیم دوطرفه از وسط
+justify full	common	fa	تنظیم دوطرفه کامل
+justify left	common	fa	تنظیم دوطرفه از چپ
+justify right	common	fa	تنظیم دوطرفه از راست
+kazakstan	common	fa	قزاقستان
+kenya	common	fa	کنیا
+keywords	common	fa	کلیدواژه
+korea, republic of	common	fa	جمهوری کره
+kuwait	common	fa	کویت
+language	common	fa	زبان
+last name	common	fa	نام خانوادگی
+last name of the user, eg. "%1"	common	fa	نام خانوادگی کاربر مثلا:"%1"
+last page	common	fa	صفحه آخر
+lastname	common	fa	نام خانوادگی
+lebanon	common	fa	لبنان
+left	common	fa	چپ
+license	common	fa	مجوز
+list	common	fa	فهرست
+list members	common	fa	فهرست اعضا
+local	common	fa	محلی
+login	common	fa	ورود
+loginid	common	fa	شناسه کاربری
+logout	common	fa	خروج
+low	common	fa	کم
+lowest	common	fa	کمترین
+luxembourg	common	fa	لوکزامبورگ
+madagascar	common	fa	ماداگاسکار
+mail domain, eg. "%1"	common	fa	حوزه پستی مثلا:"%1"
+main category	common	fa	دسته اصلی
+main screen	common	fa	صفحه اصلی
+maintainer	common	fa	نگهدارنده
+malaysia	common	fa	مالزی
+march	common	fa	مارس
+max number of icons in navbar	common	fa	حداکثر نمایه هایی که در نوار ناوبری نمایش داده می شوند
+may	common	fa	می
+medium	common	fa	میانه
+menu	common	fa	(فهرست)
+message	common	fa	پیغام
+minute	common	fa	دقیقه
+monaco	common	fa	موناکو
+monday	common	fa	دوشنبه
+multiple	common	fa	چندتائی
+myanmar	common	fa	میانمار
+name	common	fa	نام
+name of the user, eg. "%1"	common	fa	نام کاربر مثلا:"%1"
+namibia	common	fa	نامیبیا
+nepal	common	fa	نپال
+never	common	fa	هرگز
+new entry added sucessfully	common	fa	ورودی جدید با موفقیت اضافه شد
+new main category	common	fa	دسته اصلی جدید
+new value	common	fa	مقدار جدید
+new zealand	common	fa	نیوزیلند
+next	common	fa	بعدی
+next page	common	fa	صفحه بعدی
+nicaragua	common	fa	نیکاراگوئه
+niger	common	fa	نیجر
+nigeria	common	fa	نیجریه
+no	common	fa	خیر
+no entries found, try again ...	common	fa	ورودی پیدا نشد، مجددا سعی کنید
+no history for this record	common	fa	برای این رکورد سابقه ای نیست
+no savant2 template directories were found in:	common	fa	پوشه قالب Savant2 پیدا نشد
+no subject	common	fa	بدون عنوان
+none	common	fa	هیچکدام
+normal	common	fa	معمولی
+norway	common	fa	نروژ
+not assigned	common	fa	اختصاص نیافته
+note	common	fa	یادداشت
+notes	common	fa	یادداشتها
+notify window	common	fa	پنجره نکته
+notify your administrator to correct this situation	common	fa	به مدیر سیستم برای رفع این مشکل خبر دهید
+november	common	fa	نوامبر
+october	common	fa	اکتبر
+ok	common	fa	تأیید
+old value	common	fa	مقدار قبلی
+oman	common	fa	عمان
+on *nix systems please type: %1	common	fa	روی سیستمهای nix* لطفا تایپ کنید: %1
+on mouse over	common	fa	وقتی موشواره رو قرار می گیرد
+only private	common	fa	فقط خصوصی
+only yours	common	fa	فقط برای شما
+open notify window	common	fa	باز کردن پنجره آگاهی
+open popup window	common	fa	باز کردن پنجره جدا
+open sidebox	common	fa	باز کردن جعبه کناری
+ordered list	common	fa	لیست مرتب شده
+original	common	fa	اصلی
+other	common	fa	دیگر
+overview	common	fa	مرور
+owner	common	fa	مالک
+page	common	fa	صفحه
+page was generated in %1 seconds	common	fa	صفحه در %1 ثانیه ایجاد شد
+pakistan	common	fa	پاکستان
+panama	common	fa	پاناما
+parent category	common	fa	دسته والد
+password	common	fa	گذرواژه
+password could not be changed	common	fa	گذرواژه نمی تواند عوض شود
+password has been updated	common	fa	گذرواژه بهنگام شد
+password must contain at least %1 lowercase letters	common	fa	گذرواژه باید حداقل %1 حرف کوچک داشته باشد
+password must contain at least %1 numbers	common	fa	گذرواژه باید حداقل %1 عدد داشته باشد
+password must contain at least %1 special charactars	common	fa	گذرواژه باید حداقل %1 کاراکتر ویژه داشته باشد
+password must contain at least %1 uppercase letters	common	fa	گذرواژه باید حداقل %1 حرف بزرگ داشته باشد
+password must have at least %1 characters	common	fa	گذرواژه باید حداقل %1 کاراکتر داشته باشد
+pattern for search in addressbook	common	fa	الگوی جستجوی دفتر نشانی
+pattern for search in calendar	common	fa	الگوی جستجوی تقویم
+pattern for search in projects	common	fa	الگوی جستجوی پروژه ها
+permissions to the files/users directory	common	fa	مجوزها به پوشه پرونده ها / کاربران
+personal	common	fa	شخصی
+peru	common	fa	پرو
+philippines	common	fa	فیلیپین
+phone number	common	fa	شماره تلفن
+please %1 by hand	common	fa	لطفا %1 را دستی انجام دهید
+please enter a name	common	fa	لطفا یک نام وارد کنید!
+please run setup to become current	common	fa	لطفا برپاسازی را اجرا کنید تا جاری شوید
+please select	common	fa	لطفا انتخاب کنید
+please set your global preferences	common	fa	لطفا تنظیمات عمومی خود را انجام دهید
+please set your preferences for this application	common	fa	لطفا تنظیمات خود را برای این برنامه انجام دهید
+please wait...	common	fa	لطفا صبر کنید...
+pnu	common	fa	اطلاعات پایه
+pnureport	common	fa	گزارشات
+pnutadvin	common	fa	اطلاعات پایه تدوین
+portugal	common	fa	پرتغال
+postal	common	fa	پستی
+preferences	common	fa	تنظیمات
+previous page	common	fa	صفحه قبلی
+primary style-sheet:	common	fa	برگ سبک اولیه:
+print	common	fa	چاپ
+priority	common	fa	اولویت
+private	common	fa	خصوصی
+programs	common	fa	برنامه ها
+project	common	fa	پروژه
+public	common	fa	عمومی
+qatar	common	fa	قطر
+read	common	fa	خواندن
+read this list of methods.	common	fa	این لیست شیوه ها را بخوانید
+reading	common	fa	در حال خواندن
+reject	common	fa	رد کردن
+remember me	login	fa	ورود را حفظ کن
+remove selected accounts	common	fa	حسابهای انتخاب شده را حذف کن
+remove shortcut	common	fa	میانبر را حذف کن
+rename	common	fa	تغییر نام
+replace	common	fa	جابجایی
+replace with	common	fa	جابجایی با
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	fa	لیست کامل حسابهای موجود روی سیستم. هشدار این لیست ممکن است بزرگ و طولانی باشد
+returns an array of todo items	common	fa	آرایه ای از موارد انجام کار بر می گرداند
+returns struct of users application access	common	fa	ساختار دسترسی به برنامه ها را بر می گرداند
+right	common	fa	راست
+romania	common	fa	رومانی
+saturday	common	fa	شنبه
+save	common	fa	ذخیره
+search	common	fa	جستجو
+search %1 '%2'	common	fa	جستجوی %1 '%2'
+search or select accounts	common	fa	جستجو یا انتخاب حسابها
+search or select multiple accounts	common	fa	جستجو یا انتخاب چندین حسابها
+second	common	fa	ثانیه
+section	common	fa	بخش
+select	common	fa	انتخاب
+select all %1 %2 for %3	common	fa	همه %1 %2 ها را برای %3 انتخاب کن
+select category	common	fa	انتخاب دسته
+select date	common	fa	انتخاب تاریخ
+select group	common	fa	انتخاب گروه
+select home email address	common	fa	انتخاب نشانی رایانامه خانه
+select multiple accounts	common	fa	انتخاب چند حساب
+select one	common	fa	یکی را انتخاب کن
+select the default height for the application windows	common	fa	ارتفاع پیش فرض برای پنجره برنامه را انتخاب کنید
+select the default width for the application windows	common	fa	عرض پیش فرض برای پنجره برنامه را انتخاب کنید
+select user	common	fa	انتخاب کاربر
+select work email address	common	fa	انتخاب نشانی نامه الکترونیک کاری
+selection	common	fa	انتخاب
+send	common	fa	ارسال
+senegal	common	fa	سنگال
+september	common	fa	سپتامبر
+server %1 has been added	common	fa	کارگزار %1 اضافه شد
+server answered. processing response...	common	fa	کارگزار پاسخ داد، در حال پردازش پاسخ...
+server contacted. waiting for response...	common	fa	کارگزار متصل شد، منتظر پاسخ ...
+server name	common	fa	نام میزبان
+session has been killed	common	fa	نشست از بین رفت
+setup	common	fa	نصب
+setup main menu	common	fa	فهرست اصلی نصب
+show all	common	fa	همه را نشان بده
+show all categorys	common	fa	نمایش همه دسته ها
+show clock?	common	fa	نمایش ساعت؟
+show home and logout button in main application bar?	common	fa	نمایش دکمه های خروج و خانه در نوار اصلی برنامه؟
+show logo's on the desktop.	common	fa	نمایش لوگو روی رومیزی
+show menu	common	fa	فهرست را نشان بده
+show page generation time	common	fa	زمان تولید صفحه را نشان بده
+show page generation time on the bottom of the page?	common	fa	نمایش زمان ایجاد صفحه در پایین هر صفحه؟
+show page generation time?	common	fa	نمایش زمان ایجاد صفحه
+show the logo's of egroupware and x-desktop on the desktop.	common	fa	نمایش لوگوی گروه افزار و x-desktop روی رومیزی
+showing %1	common	fa	درحال نشان دادن %1
+showing %1 - %2 of %3	common	fa	نمایش %1 - %2 از %3
+slovakia	common	fa	اسلوواکی
+somalia	common	fa	سومالی
+sorry, your login has expired	login	fa	متأسفم ورود شما منقضی شد
+spain	common	fa	اسپانیا
+sri lanka	common	fa	سریلانکا
+start date	common	fa	تاریخ شروع
+start time	common	fa	زمان شروع
+start with	common	fa	شروع با
+starting up...	common	fa	در حال شروع
+status	common	fa	وضعیت
+stretched	common	fa	کشیده شده
+subject	common	fa	موضوع
+submit	common	fa	ثبت
+sudan	common	fa	سودان
+sunday	common	fa	یکشنبه
+tajikistan	common	fa	تاجیکستان
+text color:	common	fa	رنگ متن:
+thailand	common	fa	تایلند
+the following applications require upgrades	common	fa	برنامه های زیر بهنگام سازی نیاز دارند
+the mail server returned	common	fa	کارگزار نامه می گوید
+this application requires an upgrade	common	fa	این برنامه بهنگام سازی می خواهد
+this name has been used already	common	fa	این نام قبلا استفاده شده!
+thursday	common	fa	پنجشنبه
+tiled	common	fa	کاشی
+time	common	fa	زمان
+time zone	common	fa	منطقه زمانی
+time zone offset	common	fa	اختلاف منطقه زمانی
+title	common	fa	عنوان
+to	common	fa	به
+today	common	fa	امروز
+todays date, eg. "%1"	common	fa	تاریخ امروز، مثلا:"%1"
+top	common	fa	بالا
+total	common	fa	جمع
+tuesday	common	fa	سه شنبه
+type	common	fa	نوع
+underline	common	fa	زیرخط دار
+united arab emirates	common	fa	امارات متحده عربی
+united kingdom	common	fa	انگلستان
+united states	common	fa	امارات متحده
+unknown	common	fa	ناشناخته
+update	common	fa	به روز
+update the clock per minute or per second	common	fa	ساعت را در دقیقه یا در ثانیه بهنگام کند
+upload	common	fa	ارسال
+upload directory does not exist, or is not writeable by webserver	common	fa	پوشه ارسال موجود نیست، یا بوسیله کارگزار وب قابل نوشتن نیست.
+use button to search for	common	fa	از دکمه برای جستجو استفاده کنید
+user	common	fa	کاربر
+user accounts	common	fa	حسابهای کاربری
+user groups	common	fa	گروههای کاربری
+user openinstance	common	fa	فرمهای باز کاربر
+username	common	fa	نام کاربری
+users	common	fa	کاربرها
+users choice	common	fa	پسند کاربرها
+uzbekistan	common	fa	ازبکستان
+venezuela	common	fa	ونزوئلا
+version	common	fa	نسخه
+viet nam	common	fa	ویتنام
+view	common	fa	نما
+wednesday	common	fa	چهارشنبه
+welcome	common	fa	خوش آمدید
+which groups	common	fa	کدام گروهها
+width	common	fa	عرض
+work email	common	fa	نشانی نامه الکترونیکی کاری
+would you like to display the page generation time at the bottom of every window?	common	fa	آیا میخواهید که زمان ایجاد صفحه در زیر هر صفحه نوشته شود؟
+writing	common	fa	در حال نوشتن
+written by:	common	fa	نوشته شده توسط:
+year	common	fa	سال
+yemen	common	fa	یمن
+yes	common	fa	بله
+you are required to change your password during your first login	common	fa	از شما خواسته شده در اولین ورود به سیستم، گذرواژه خود را تغییر دهید
+you have been successfully logged out	login	fa	شما با موفقیت از سیستم خارج شدید
+you have not entered a title	common	fa	شما عنوانی وارد نکردید
+you have not entered a valid date	common	fa	شما تاریخ معتبری وارد نکردید
+you have not entered a valid time of day	common	fa	شما ساعت معتبری از روز را وارد نکردید
+you have not entered participants	common	fa	شما همراهان را وارد نکردید
+you have selected an invalid date	common	fa	شما تاریخ نامعتبر انتخاب کردید!
+you have selected an invalid main category	common	fa	شما دسته اصلی نامعتبر انتخاب کردید
+you have successfully logged out	common	fa	شما با موفقیت خارج شدید
+your message could <b>not</b> be sent!<br>	common	fa	پیامتان نمیتواند ارسال شود.
+your message has been sent	common	fa	پیغام شما ارسال شد
+your search returned %1 matchs	common	fa	جستجوی شما %1 نتیجه داشت
+your search returned 1 match	common	fa	جستجوی شما یک نتیجه داشت
+your session could not be verified.	login	fa	نشست شما نمی تواند بررسی شود
+your settings have been updated	common	fa	تنظیمات شما بهنگام شد
+yugoslavia	common	fa	یوگوسلاوی
+zambia	common	fa	زامبیا
+zimbabwe	common	fa	زیمباوه
+zoom	common	fa	بزرگنمایی
+site configuration	common	fa	پیکربندی سایت

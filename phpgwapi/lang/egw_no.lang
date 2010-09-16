@@ -1,0 +1,638 @@
+%1 email addresses inserted	common	no	%1 email adresser lagt til
+%1 is not executable by the webserver !!!	common	no	%1 er ikke eksekverbar på webtjener !!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	no	%1eGroupWare%2 er en flerbruker, web-basert gruppevare skrevet i %3PHP%4.
+(shift-)click or drag to change value	jscalendar	no	(Shift-)klikk eller dra for å endre verdi
+- click on any of the time parts to increase it	jscalendar	no	- Klikk en av tidsdelene for å øke
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	no	- Trykk og hold nede musknappen på knappene over for raskere utvalg
+- or click and drag for faster selection.	jscalendar	no	- eller kikk og dra for raskere utvalg
+- or shift-click to decrease it	jscalendar	no	- eller Shift-Klikk for å redusere utvalg
+- use the %1, %2 buttons to select month	jscalendar	no	- Bruk %1, %2 knappene for å velge måned
+- use the %1, %2 buttons to select year	jscalendar	no	- Bruk %1, %2 knappene for å velge år
+00 (disable)	admin	no	00 (frakoblet)
+13 (ntp)	admin	no	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	no	3 karakterer for dag
+3 number of chars for month-shortcut	jscalendar	no	3 karakterer for måned
+80 (http)	admin	no	80 (http)
+about	common	no	Om
+about %1	common	no	Om %1
+about the calendar	jscalendar	no	Om kalenderen
+access	common	no	Tilgang
+access not permitted	common	no	Ingen tilgang
+account has been created	common	no	Brukerkonto har blitt opprettet
+account has been deleted	common	no	Brukerkonto har blitt slettet
+account has been updated	common	no	Brukerkonto har blitt oppdatert
+account is expired	common	no	Brukerkonto har utløpt på dato
+acl	common	no	Tlgangskontroll
+action	common	no	Funksjon
+active	common	no	Aktiv
+add	common	no	Legg til
+add %1 category for	common	no	Legg til %1 kategori for
+add category	common	no	Legg til kategori
+add sub	common	no	Legg til underkategori
+addressbook	common	no	Adresseliste
+admin	common	no	Admin
+administration	common	no	Administrasjon
+afghanistan	common	no	AFGANISTAN
+albania	common	no	ALBANIA
+algeria	common	no	ALGERIE
+all	common	no	Alle
+all fields	common	no	alle felt
+alphabet	common	no	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,x,z
+alternate style-sheet:	common	no	Alternativt Style Sheet
+american samoa	common	no	SAMOA
+andorra	common	no	ANDORRA
+angola	common	no	ANGOLA
+anguilla	common	no	ANGUILLA
+antarctica	common	no	ANTARKTIS
+antigua and barbuda	common	no	ANTIGUA OG BARBUDA
+apply	common	no	Utfør
+april	common	no	April
+are you sure you want to delete these entries ?	common	no	Er du sikkert på at du vil slette disse innslagene?
+are you sure you want to delete this entry ?	common	no	Er du sikker du vil slette dette innslaget ?
+argentina	common	no	ARGENTINA
+armenia	common	no	ARMENIA
+aruba	common	no	ARUBA
+august	common	no	August
+australia	common	no	AUSTRALIA
+austria	common	no	ØSTERRIKE
+author	common	no	Forfatter
+autohide sidebox menus	common	no	Gjem side-menyene automatisk
+automatically hide the sidebox menus?	common	no	Automatisk gjemme side-menyene?
+autosave default category	common	no	Autolagre standard kategori
+azerbaijan	common	no	AZERBADSJAN
+back	common	no	Tilbake
+back to user login	common	no	Tilbake til brukerpålogging
+background color:	common	no	Bakgrunnsfarge:
+bad login or password	common	no	Ugyldig login eller passord
+bahamas	common	no	BAHAMAS
+bahrain	common	no	BAHRAIN
+bangladesh	common	no	BANGLADESH
+barbados	common	no	BARBADOS
+bcc	common	no	Bcc
+belarus	common	no	HVITERUSSLAND
+belgium	common	no	BELGIA
+belize	common	no	BELIZE
+benin	common	no	BENIN
+bermuda	common	no	BERMUDA
+bhutan	common	no	BHUTAN
+blocked, too many attempts	common	no	Sperret, for mange forsøk
+bold	common	no	Uthevet
+bolivia	common	no	BOLIVIA
+border	common	no	Rammebredde
+bosnia and herzegovina	common	no	BOSNIA-HERZEGOVINA
+botswana	common	no	BOTSWANA
+bottom	common	no	Bottom
+bouvet island	common	no	BOUVETØYA
+brazil	common	no	BRASIL
+british indian ocean territory	common	no	BRITISK INDISKE HAVTERRITORIUM
+brunei darussalam	common	no	BRUNEI
+bulgaria	common	no	BULGARIA
+burkina faso	common	no	BURKINA FASO
+burundi	common	no	BURUNDI
+calendar	common	no	Kalender
+cambodia	common	no	KAMBODSJA
+cameroon	common	no	KAMERUN
+canada	common	no	CANADA
+cancel	common	no	Avbryt
+cape verde	common	no	KAPP VERDE
+caption	common	no	Overskrift
+categories	common	no	Kategorier
+categories for	common	no	kategorier for
+category	common	no	Kategori
+category %1 has been added !	common	no	Kategori %1 ble lagt til!
+category %1 has been updated !	common	no	Kategori %1 ble oppdatert!
+cayman islands	common	no	CAYMAN-ØYENE
+cc	common	no	Cc
+central african republic	common	no	SENTRALAFRIKANSKE REPUBLIKK
+chad	common	no	CHAD
+change	common	no	Endre
+charset	common	no	utf-8
+check installation	common	no	Sjekk installasjon
+check now	common	no	Sjekk nå
+chile	common	no	CHILE
+china	common	no	KINA
+choose the category	common	no	Velg kategori
+choose the parent category	common	no	Velg overordnet kategori
+christmas island	common	no	CHRISTMAS ISLAND
+clear	common	no	Tøm
+clear form	common	no	Tøm skjema
+click	common	no	Klikk
+click or mouse over to show menus	common	no	Klikk eller hold peker over for å vise menyene
+click or mouse over to show menus?	common	no	Klikk eller hold peker over for å vise menyene?
+close	common	no	Lukk
+cocos (keeling) islands	common	no	COCOS (KEELING) ØYENE
+colombia	common	no	COLOMBIA
+comoros	common	no	COMOROS
+company	common	no	Firma
+congo	common	no	KONGO
+congo, the democratic republic of the	common	no	KONGO, Den demokratiske republikk
+cook islands	common	no	COOK ØYENE
+copy	common	no	Kopier
+costa rica	common	no	COSTA RICA
+cote d ivoire	common	no	ELFENBENSKYSTEN
+create	common	no	Opprett
+created by	common	no	Opprettet av
+croatia	common	no	KROATIA
+cuba	common	no	CUBA
+currency	common	no	Myntenhet
+current	common	no	Nåværende
+current users	common	no	Nåværende brukere
+cyprus	common	no	KYPROS
+czech republic	common	no	TSJEKKIA
+date	common	no	Dato
+date due	common	no	Dato Ferdig
+date selection:	jscalendar	no	Dato utvalg
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	no	Datetime port.<br>Hvis port 13 brukes, vennligst påse at brannmur-reglene er riktige før du oppdaterer denne siden.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	no	Desember
+default category	common	no	Standard kategori
+delete	common	no	Slett
+delete row	common	no	Fjern rad
+denmark	common	no	DANMARK
+description	common	no	Beskrivelse
+detail	common	no	Detalj
+details	common	no	Detaljer
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	no	Koble ut bugscriptfix for Internet Explorer 5.5 og høyere for å vise gjennomsiktige PNG-bilder?
+disable internet explorer png-image-bugfix	common	no	Koble ut Internet Explorer png-bilde bugfix
+disable slider effects	common	no	Slå av skyve-effektene
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	no	Slå av de animerte skyver-effektene under visning eller skjuling av menyene på siden? Opera og Konqueror brukere bør sannsynligvis velge dette.
+disabled	common	no	Utkoblet
+display %s first	jscalendar	no	Vis %s først
+djibouti	common	no	DJIBOUTI
+do you also want to delete all subcategories ?	common	no	Vil du slette alle underkategoriene?
+doctype:	common	no	Dok.type:
+document properties	common	no	Dokumentegenskaper
+document title:	common	no	Dokumenttittel
+domain	common	no	Domene
+domain name for mail-address, eg. "%1"	common	no	domene navn for mail adresser, f.eks:"%1"
+domestic	common	no	Innenlands
+dominica	common	no	DOMINICA
+dominican republic	common	no	DOMINIKANSKE REPUBLIKK
+done	common	no	Ferdig
+drag to move	jscalendar	no	Dra for å flytte
+e-mail	common	no	E-Post
+east timor	common	no	ØST TIMOR
+ecuador	common	no	ECUADOR
+edit	common	no	Endre
+edit %1 category for	common	no	Endre %1 kategori for
+edit categories	common	no	Endre kategorier
+edit category	common	no	Endre kategori
+egroupware api version %1	common	no	eGroupWare API version %1
+egroupware: login blocked for user '%1', ip %2	common	no	eGroupWare: pålogging blokkert for bruker '%1', IP %2
+egypt	common	no	EGYPT
+el salvador	common	no	EL SALVADOR
+email	common	no	Epost
+email-address of the user, eg. "%1"	common	no	brukerens epost-adresse, f.eks: "%1"
+enabled	common	no	Påslått
+end date	common	no	Sluttdato
+end time	common	no	Slutt tidspunkt
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn eGroupWares Internett adresse (URL).<br> F.eks: http://www.domain.com/egroupware   or   /egroupware<br><b>Ingen avsluttende skråstrek</b>
+entry has been deleted sucessfully	common	no	Innslaget ble slettet
+entry updated sucessfully	common	no	Innslaget ble oppdatert
+equatorial guinea	common	no	EKVATORIAL-GUINEA
+eritrea	common	no	ERITREA
+error	common	no	Feil
+error creating %1 %2 directory	common	no	Feil under opprettelse av %1 %2 mappe
+error deleting %1 %2 directory	common	no	Feil under sletting av %1 %2 mappe
+error renaming %1 %2 directory	common	no	Feil under omdøping av %1 %2 mappe
+estonia	common	no	ESTLAND
+ethiopia	common	no	ETIOPIA
+exact	common	no	eksakt
+falkland islands (malvinas)	common	no	FALKLANDSØYENE
+faroe islands	common	no	FÆRØYENE
+fax number	common	no	Telefaksnummer
+february	common	no	Februar
+fields	common	no	Felter
+fiji	common	no	FIJI
+files	common	no	Filer
+filter	common	no	Filter
+finland	common	no	FINLAND
+first name	common	no	Fornavn
+first name of the user, eg. "%1"	common	no	brukerens fornavn, f.eks: "%1"
+first page	common	no	Første side
+firstname	common	no	Fornavn
+fixme!	common	no	FIXMEG!
+force selectbox	common	no	Tvungen utvalgsboks
+france	common	no	FRANKRIKE
+french guiana	common	no	FRANSKE GUYANA
+french polynesia	common	no	FRANSK POLYNESIA
+french southern territories	common	no	FRANSKE SYDTERRITORIUM
+friday	common	no	Fredag
+ftp	common	no	FTP
+fullname	common	no	Fullt navn
+gabon	common	no	GABUN
+gambia	common	no	GAMBIA
+general menu	common	no	Hovedmeny
+georgia	common	no	GEORGIA
+germany	common	no	TYSKLAND
+ghana	common	no	GHANA
+gibraltar	common	no	GIBRALTAR
+global	common	no	Global
+global public	common	no	Global offentlig
+go today	jscalendar	no	Gå i dag
+grant access	common	no	Gi tilgang
+greece	common	no	HELLAS
+greenland	common	no	GRØNLAND
+grenada	common	no	GRANADA
+group	common	no	Gruppe
+group access	common	no	Gruppetilgang
+group has been added	common	no	Gruppen ble lagt til
+group has been deleted	common	no	Gruppen ble slettet
+group has been updated	common	no	Gruppe har blitt oppdatert
+group name	common	no	gruppenavn
+group public	common	no	Gruppe Offentlig
+groups	common	no	Grupper
+groups with permission for %1	common	no	Grupper med tilgang til %1
+groups without permission for %1	common	no	Grupper uten tilgang til %1
+guadeloupe	common	no	GUADELOUPE
+guam	common	no	GUAM
+guatemala	common	no	GUATEMALA
+guinea	common	no	GUINEA
+guinea-bissau	common	no	GUINEA BISSAU
+guyana	common	no	GUYANA
+haiti	common	no	HAITI
+heard island and mcdonald islands	common	no	HEARD OG MCDONALD ØYENE
+height	common	no	Høyde
+high	common	no	Høy
+highest	common	no	Høyest
+holy see (vatican city state)	common	no	VATIKANET
+home	common	no	Hjem
+home email	common	no	hjemme epost
+honduras	common	no	HONDURAS
+hong kong	common	no	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	no	Hvor mange ikoner som skal vises på navigasjonslinjen (på toppen av siden). Ekstra ikoner vises i en rullegardinmeny ved å trykke på ikonet lengst til høyre på navigasjonslinjen.
+hungary	common	no	UNGARN
+iceland	common	no	ISLAND
+image url	common	no	Bildets URL
+india	common	no	INDIA
+indonesia	common	no	INONESIA
+insert all %1 addresses of the %2 contacts in %3	common	no	Legg til alle %1 adresser fra %2 kontakter i %3
+insert column after	common	no	Opprett kolonne etter
+insert column before	common	no	Opprett kolonne før
+insert row after	common	no	Opprett rad etter
+insert row before	common	no	Opprett rad før
+international	common	no	Internasjonal
+invalid ip address	common	no	Ugyldig IP adresse
+invalid password	common	no	Ugyldig passord
+iran, islamic republic of	common	no	IRAN
+iraq	common	no	IRAK
+ireland	common	no	IRLAND
+israel	common	no	ISRAEL
+it has been more then %1 days since you changed your password	common	no	Det er mer enn %1 dager siden du endret passordet ditt
+it is recommended that you run setup to upgrade your tables to the current version	common	no	Det er anbefalt at du kjører setup for å oppgradere til den gjeldende versjonen.
+italic	common	no	Kursiv
+italy	common	no	ITALIA
+jamaica	common	no	JAMAICA
+january	common	no	Januar
+japan	common	no	JAPAN
+jordan	common	no	JORDAN
+july	common	no	Juli
+jun	common	no	Jun
+june	common	no	Juni
+justify center	common	no	Senterjustèr
+justify full	common	no	Fulljustèring
+justify left	common	no	Venstrejustèr
+justify right	common	no	Høyrejustèr
+kazakstan	common	no	KAZAKSTAN
+kenya	common	no	KENYA
+keywords	common	no	Nøkkelord
+kiribati	common	no	KIRIBATI
+korea, democratic peoples republic of	common	no	NORD KOREA
+korea, republic of	common	no	SØR KOREA
+kuwait	common	no	QUWAIT
+kyrgyzstan	common	no	KYRGYZSTAN
+language	common	no	Språk
+lao peoples democratic republic	common	no	LAO
+last name	common	no	Etternavn
+last name of the user, eg. "%1"	common	no	Brukerens etternavn, f.eks: "%1"
+last page	common	no	siste side
+lastname	common	no	Etternavn
+latvia	common	no	LATVIA
+ldap-mgr	common	no	LDAP Betjening
+lebanon	common	no	LIBANON
+left	common	no	Venstre
+lesotho	common	no	LESOTHO
+liberia	common	no	LIBERIA
+libyan arab jamahiriya	common	no	LIBYA
+license	common	no	Lisens
+liechtenstein	common	no	LIECHTENSTEIN
+list	common	no	Liste
+list members	common	no	Liste medlemmer
+lithuania	common	no	LITAUEN
+local	common	no	Lokal
+login	common	no	Login
+loginid	common	no	LoginID
+logout	common	no	Logg ut
+low	common	no	Lav
+lowest	common	no	Lavest
+luxembourg	common	no	LUXEMBURG
+macau	common	no	MACAO
+macedonia, the former yugoslav republic of	common	no	MAKEDONIA
+madagascar	common	no	MADAGASKAR
+mail domain, eg. "%1"	common	no	mail domene, f.eks: "%1"
+main category	common	no	Hovedkategori
+main screen	common	no	Forside
+maintainer	common	no	Vedlikeholdsansvarlig
+malawi	common	no	MALAWI
+malaysia	common	no	MALAYSIA
+maldives	common	no	MALDIVENE
+mali	common	no	MALI
+malta	common	no	MALTA
+march	common	no	Mars
+marshall islands	common	no	MARSHALL-ØYENE
+martinique	common	no	MARTINIQUE
+mauritania	common	no	MAURITANIA
+mauritius	common	no	MAURITIUS
+max number of icons in navbar	common	no	Maks antall ikoner på navigasjonslinje
+may	common	no	Mai
+mayotte	common	no	MAYOTTE
+medium	common	no	Medium
+menu	common	no	Meny
+message	common	no	Melding
+mexico	common	no	MEXICO
+micronesia, federated states of	common	no	MIKRONESIA
+moldova, republic of	common	no	MOLDOVA
+monaco	common	no	MONACO
+monday	common	no	Mandag
+mongolia	common	no	MONGOLIA
+montserrat	common	no	MONTSERRAT
+morocco	common	no	MAROKKO
+mozambique	common	no	MOSAMBIK
+myanmar	common	no	MYANMAR
+name	common	no	Navn
+name of the user, eg. "%1"	common	no	Brukerens navn, f.eks: "%1"
+namibia	common	no	NAMIBIA
+nauru	common	no	NAURU
+nepal	common	no	NEPAL
+netherlands	common	no	NEDERLAND
+netherlands antilles	common	no	NEDERLANDSKE ANTILLER
+never	common	no	Aldri
+new caledonia	common	no	NY KALEDONIA
+new entry added sucessfully	common	no	Ny innslag ble lagt til
+new main category	common	no	Ny hovedkategori
+new value	common	no	Ny verdi
+new zealand	common	no	NEW ZEALAND
+next	common	no	Neste
+next month (hold for menu)	jscalendar	no	Neste måned (hold nede for meny)
+next page	common	no	Neste side
+next year (hold for menu)	jscalendar	no	Neste side (hold nede for meny)
+nicaragua	common	no	NICARAGUA
+niger	common	no	NIGER
+nigeria	common	no	NIGERIA
+niue	common	no	NIUE
+no	common	no	Nei
+no entries found, try again ...	common	no	ingen treff prøv igjen ...
+no history for this record	common	no	Ingen historie for denne posten
+no subject	common	no	Ingen Overskrift
+none	common	no	Ingen
+norfolk island	common	no	NORFOLK-ØYA
+normal	common	no	Normal
+northern mariana islands	common	no	NORDRE MARIANA ØYENE
+norway	common	no	NORGE
+not assigned	common	no	ikke tildelt
+note	common	no	Notat
+notes	common	no	Notater
+notify window	common	no	Meldingsvindu
+november	common	no	November
+october	common	no	Oktober
+ok	common	no	OK
+old value	common	no	Gammel verdi
+oman	common	no	OMAN
+on *nix systems please type: %1	common	no	På *nix systemer tast: %1
+on mouse over	common	no	On Mouse Over
+only private	common	no	kun private
+only yours	common	no	kun dine
+open notify window	common	no	Åpne varslingsvindu
+open popup window	common	no	Åpne pop-up vindu
+ordered list	common	no	Nummerliste
+original	common	no	Orginal
+other	common	no	Annet
+overview	common	no	Oversikt
+owner	common	no	Eier
+page	common	no	Side
+page was generated in %1 seconds	common	no	Siden ble generert på %1 sekunder
+pakistan	common	no	PAKISTAN
+palau	common	no	PALAU
+palestinian territory, occupied	common	no	PALESTINSK OKKUPERT TERRITORIE
+panama	common	no	PANAMA
+papua new guinea	common	no	PAPUA NEW GUINEA
+paraguay	common	no	PARAGUAY
+parcel	common	no	Pakke
+parent category	common	no	Overordnet kategori
+password	common	no	Passord
+password could not be changed	common	no	Passord kunne ikke endres
+password has been updated	common	no	Passord har blitt oppdatert
+path to user and group files has to be outside of the webservers document-root!!!	common	no	Sti til bruker- og gruppe-filer. MÅ VÆRE UTENFOR webserverens dokument-rot!!!
+permissions to the files/users directory	common	no	tilgang til filmapper / brukermapper
+personal	common	no	Personlig
+peru	common	no	PERU
+philippines	common	no	FILIPPINENE
+phone number	common	no	Telefonnummer
+pitcairn	common	no	PITCAIRN
+please %1 by hand	common	no	Vennligst %1 for hånd
+please enter a name	common	no	Vennligst tast inn et navn !
+please run setup to become current	common	no	Vennligst kjør setup for å oppdatere til siste versjon
+please select	common	no	Velg
+please set your global preferences	common	no	Sett dine globale preferanser
+please set your preferences for this application	common	no	Sett dine preferanser for denne applikasjonen
+please wait...	common	no	Vennligst vent...
+poland	common	no	POLEN
+portugal	common	no	PORTUGAL
+postal	common	no	Post
+preferences	common	no	Preferanser
+preferences for the idots template set	common	no	Innstillinger for idots malen
+prev. month (hold for menu)	jscalendar	no	Forrige måned (hold for meny)
+prev. year (hold for menu)	jscalendar	no	Forrige år (hold for meny)
+previous page	common	no	Forrige side
+primary style-sheet:	common	no	Primær style-sheet:
+print	common	no	Skriv ut
+priority	common	no	Prioritet
+private	common	no	Privat
+project	common	no	Prosjekt
+public	common	no	offentlig
+puerto rico	common	no	PUERTO RICO
+qatar	common	no	QATAR
+read	common	no	Les
+read this list of methods.	common	no	Les metode-listen.
+reject	common	no	Avvis
+remove selected accounts	common	no	fjern valgte konti
+rename	common	no	Endre navn
+replace	common	no	Erstatt
+replace with	common	no	Erstatt med
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	no	Returner en komplett liste av brukerkontoer på systemet. Advarsel: Denne listen kan bli svært lang
+returns an array of todo items	common	no	Viser en tabell med gjøremål
+returns struct of users application access	common	no	Viser en struktur over brukeres tilgang til applikasjonene
+reunion	common	no	REUNION
+right	common	no	Høyre
+romania	common	no	ROMANIA
+russian federation	common	no	RUSSISKE FØDERASJON
+rwanda	common	no	RUANDA
+saint helena	common	no	SAINT HELENA
+saint kitts and nevis	common	no	SAINT KITTS & NEVIS ANGUILLA
+saint lucia	common	no	SAINT HELENA
+saint pierre and miquelon	common	no	SAINT PIERRE OG MIQUELON
+saint vincent and the grenadines	common	no	SAINT VINCENT AND OG GRENADINENE
+samoa	common	no	SAMOA
+san marino	common	no	SAN MARINO
+sao tome and principe	common	no	SAINT TOME OG PRINCIPE
+saturday	common	no	Lørdag
+saudi arabia	common	no	SAUDI-ARABIA
+save	common	no	Lagre
+search	common	no	Søk
+search %1 '%2'	common	no	Søk %1 '%2'
+search or select accounts	common	no	Søk eller velg konti
+search or select multiple accounts	common	no	SSøk eller velg flere konti
+section	common	no	Avsnitt
+select	common	no	Velg
+select all %1 %2 for %3	common	no	Velg alle %1 %2 for %3
+select category	common	no	Velg kategori
+select date	common	no	Velg dato
+select group	common	no	Velg gruppe
+select home email address	common	no	Velg hjemme-epost adresse
+select multiple accounts	common	no	velg flere konti
+select one	common	no	Velg en
+select user	common	no	Velg bruker
+select work email address	common	no	Velg jobb-epost adresse
+selection	common	no	Valg
+send	common	no	Send
+senegal	common	no	SENEGAL
+september	common	no	September
+server %1 has been added	common	no	Tjener %1 ble lagt til
+server name	common	no	Tjenernavn
+session has been killed	common	no	Sesjonen ble avsluttet
+setup	common	no	Oppsett
+setup main menu	common	no	Hovedoppsett meny
+seychelles	common	no	SEYCHELLENE
+show all	common	no	vis alle
+show all categorys	common	no	Vis alle kategorier
+show menu	common	no	vis meny
+show page generation time	common	no	Vis sidegenereringstid
+show page generation time on the bottom of the page?	common	no	Vise sidegenereringstid på bunn av siden?
+show_more_apps	common	no	vis_flere_applikasjoner
+showing %1	common	no	viser %1
+showing %1 - %2 of %3	common	no	viser %1 - %2 of %3
+sierra leone	common	no	SIERRA LEONE
+singapore	common	no	SINGAPORE
+slovakia	common	no	SLOVAKIA
+slovenia	common	no	SLOVENIA
+solomon islands	common	no	SOLOMON ØYENE
+somalia	common	no	SOMALIA
+sorry, your login has expired	login	no	Beklager, din bruker har gått ut på dato
+south africa	common	no	SØR_AFRIKA
+south georgia and the south sandwich islands	common	no	SØR GEORGIA OG SØR SANDWICH ØYENE
+spain	common	no	SPANIA
+sri lanka	common	no	SRI LANKA
+start date	common	no	Startdato
+start time	common	no	Start tid
+start with	common	no	Start med
+status	common	no	Status
+subject	common	no	Emne
+submit	common	no	Send
+substitutions and their meanings:	common	no	Erstatninger og deres betydninger:
+sudan	common	no	SUDAN
+sunday	common	no	Søndag
+suriname	common	no	SURINAM
+svalbard and jan mayen	common	no	SVALBARD OG JAN MAYEN
+swaziland	common	no	SWAZILAND
+sweden	common	no	SVERIGE
+switzerland	common	no	SVEITS
+syrian arab republic	common	no	SYRIA
+table properties	common	no	Table properties
+taiwan	common	no	TAIWAN/TAIPEI
+tajikistan	common	no	TADJIKISTAN
+tanzania, united republic of	common	no	TANZANIA
+text color:	common	no	Tekstfarge:
+thailand	common	no	THAILAND
+the api is current	common	no	API er oppdatert
+the api requires an upgrade	common	no	API trenger oppgradering
+the following applications require upgrades	common	no	De følgende applikasjonene trenger oppgradering
+the mail server returned	common	no	Epost tjener returnerte
+this application is current	common	no	Applikasjonen er oppdatert
+this application requires an upgrade	common	no	Applikasjonen trenger oppgradering
+this name has been used already	common	no	Dette navnet er allerede i bruk !
+thursday	common	no	Torsdag
+time	common	no	Tid
+time selection:	jscalendar	no	Valg av tid:
+time zone	common	no	Tidssone
+time zone offset	common	no	Tidsforskjell
+title	common	no	Tittel
+to	common	no	Til
+to correct this error for the future you will need to properly set the	common	no	For å unngå denne feilen i framtiden må du sette
+to go back to the msg list, click <a href= %1?sessionid=36fd5dd75a4d144ab9a930c30210bdb5 >here</a>	common	no	For å gå tilbake til meldingslisten, klikk <a hre="%1?sessionid=36fd5dd75a4d144ab9a930c30210bdb5">her</a>
+today	common	no	Idag
+todays date, eg. "%1"	common	no	Dagens dato, f.eks: "%1"
+toggle first day of week	jscalendar	no	Velg føste ukedag
+togo	common	no	TOGO
+tokelau	common	no	TOKELAU
+tonga	common	no	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	no	For mange mislykkede påloggings-forsøk: %1 av brukeren '%2', %3 på IP %4
+top	common	no	Top
+total	common	no	Total
+trinidad and tobago	common	no	TRINIDAD OG TOBAGO
+tuesday	common	no	Tirsdag
+tunisia	common	no	TUNIS
+turkey	common	no	TYRKIA
+turkmenistan	common	no	TURKMENISTAN
+turks and caicos islands	common	no	TURKS OG CAICOS ØYENE
+tuvalu	common	no	TUVALU
+uganda	common	no	UGANDA
+ukraine	common	no	UKRAINA
+underline	common	no	Understreket
+united arab emirates	common	no	FORENEDE ARABISKE EMIRATER
+united kingdom	common	no	STORBRITANIA
+united states	common	no	USA
+united states minor outlying islands	common	no	USA-ØYER
+unknown	common	no	Ukjent
+update	common	no	Opprett
+upload	common	no	Last opp
+url	common	no	URL
+uruguay	common	no	URUGUAY
+use button to search for	common	no	trykk for å søke etter
+use button to search for address	common	no	trykk for å søke etter adresser
+use button to search for calendarevent	common	no	trykk for å søke etter avtaler
+use button to search for project	common	no	trykk for å søke etter prosjekter
+user	common	no	Bruker
+user accounts	common	no	brukerkonto
+user groups	common	no	brukergrupper
+username	common	no	Brukernavn
+users	common	no	brukere
+users choice	common	no	Brukervalg
+uzbekistan	common	no	USBEKISTAN
+vanuatu	common	no	VANUATU
+venezuela	common	no	VENEZUELA
+version	common	no	Versjon
+viet nam	common	no	VIETNAM
+view	common	no	Vis
+virgin islands, british	common	no	JOMFRUØYENE (BR.)
+virgin islands, u.s.	common	no	JOMFRUØYENE (USA)
+wallis and futuna	common	no	WALLIS OG FUTUNA ØYENE
+wednesday	common	no	Onsdag
+welcome	common	no	Velkommen
+western sahara	common	no	VEST-SAHARA
+which groups	common	no	Hvilke grupper
+width	common	no	Bredde
+wk	jscalendar	no	wk
+work email	common	no	arbeids-epost
+written by:	common	no	Skrevet av:
+year	common	no	År
+yemen	common	no	JEMEN
+yes	common	no	Ja
+you are required to change your password during your first login	common	no	Du må endre passord etter din første innlogging
+you have been successfully logged out	login	no	Du har nå logget ut
+you have not entered a title	common	no	Du har ikke tastet inn en tittel
+you have not entered a valid date	common	no	Du har ikke tastet inn en gyldig dato
+you have not entered a valid time of day	common	no	Du har ikke tastet inn et gyldig tidspunkt
+you have not entered participants	common	no	Du har ikke tastet inn deltagere
+you have selected an invalid date	common	no	Du har valgt en ugyldig dato !
+you have selected an invalid main category	common	no	Du har valgt en ugyldig hovedkategori !
+you have successfully logged out	common	no	Du har logget ut
+you need to add the webserver user '%1' to the group '%2'.	common	no	Du må melde brukeren '%1' inn i '%2' gruppen på webtjener.
+your message could <b>not</b> be sent!<br>	common	no	Meldingen kunne <b>ikke</b> sendes!<br>
+your message has been sent	common	no	Din melding har blitt sent
+your search returned %1 matchs	common	no	ditt søk gav %1 treff
+your search returned 1 match	common	no	ditt søk gav 1 treff
+your session could not be verified.	login	no	Din sesjon kunne ikke bekreftes
+your settings have been updated	common	no	Dine innstillinger har blitt oppdatert
+yugoslavia	common	no	JUGOSLAVIA
+zambia	common	no	ZAMBIA
+zimbabwe	common	no	ZIMBABWE
+site configuration	common	no	Konfigurasjon av nettsted

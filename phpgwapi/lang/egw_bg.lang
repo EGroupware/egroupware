@@ -1,0 +1,752 @@
+%1 email addresses inserted	common	bg	Вмъкнати %1 e-mail адреса
+%1 is not executable by the webserver !!!	common	bg	%1 не е изпълним за WEB сървъра!!!
+%1 manual	common	bg	%1 ръководство
+%1 start	common	bg	%1 старт
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	bg	%1Изберете друга директория%2<br />или позволете в %3 запис на WEB сървъра
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	bg	%1eGroupWare%2 е многопотребителска, web-базирана система за работа в екип, написана на %3PHP%4.
+(session restored in %1 seconds)	common	bg	(сесията възстановена за %1 секунди)
+(shift-)click or drag to change value	jscalendar	bg	(Shift-)Кликнете или провлачете за промяна на стойността
+- click on any of the time parts to increase it	jscalendar	bg	- Кликнете някой от времевите периоди за да го увеличите
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	bg	- Задръжте бутона на мишката или някой от бутоните за по-бърз избор
+- or click and drag for faster selection.	jscalendar	bg	- или кликнете и провлачете за по-бърз избор
+- or shift-click to decrease it	jscalendar	bg	- или Shift+клик за намаляване
+- use the %1, %2 buttons to select month	jscalendar	bg	- Използвайте бутоните %1, %2 за избор на месец
+- use the %1, %2 buttons to select year	jscalendar	bg	- Използвайте бутоните %1, %2 за избор на година
+00 (disable)	admin	bg	00 (забранен)
+1 day	common	bg	1 ден
+1 hour	common	bg	1 час
+1 month	common	bg	1 месец
+1 week	common	bg	1 седмица
+13 (ntp)	admin	bg	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	bg	3 брой символи за ден
+3 number of chars for month-shortcut	jscalendar	bg	3 брой символи за месец
+80 (http)	admin	bg	80 (http)
+about	common	bg	За
+about %1	common	bg	За %1
+about egroupware	common	bg	За eGroupware
+about the calendar	jscalendar	bg	За календара
+access	common	bg	Достъп
+access not permitted	common	bg	Достъпът не е позволен
+account has been created	common	bg	Акаунтът е създаден
+account has been deleted	common	bg	Акаунтът е изтрит
+account has been updated	common	bg	Акаунтът е обновен
+account is expired	common	bg	Акаунтът е изтекъл
+accounts	common	bg	Акаунти
+acl	common	bg	Списък за контрол на достъпа
+action	common	bg	Действие
+active	common	bg	Активен
+add	common	bg	Добави
+add %1 category for	common	bg	Добави %1 категория за
+add category	common	bg	Добави категория
+add shortcut	common	bg	Добави пряк път
+add sub	common	bg	Добави подкатегория
+addressbook	common	bg	Адресен указател
+admin	common	bg	Админ
+administration	common	bg	Администрация
+afghanistan	common	bg	Афганистан
+albania	common	bg	Албания
+algeria	common	bg	Алжир
+all	common	bg	Всички
+all fields	common	bg	всички полета
+alphabet	common	bg	а,б,в,г,д,е,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ь,ю,я
+alternate style-sheet:	common	bg	Алтернативен style-sheet:
+american samoa	common	bg	Американска Самоа
+an error happened	common	bg	Възникнала е грешка
+an existing and by the webserver readable directory enables the image browser and upload.	common	bg	Браузърът за изображения и ъплоудът се разрешават чрез съществуваща И достъпна за четене от WEB сървъра директория
+andorra	common	bg	Андора
+angola	common	bg	Ангола
+anguilla	common	bg	Ангуила
+antarctica	common	bg	Антарктика
+antigua and barbuda	common	bg	Антигуа и Барбуда
+application	common	bg	Приложение
+apply	common	bg	Приложи
+april	common	bg	Април
+are you sure you want to delete these entries ?	common	bg	Наистина ли искате да изтриете тези записи?
+are you sure you want to delete this entry ?	common	bg	Наистина ли искате да изтриете този запис?
+argentina	common	bg	Аржентина
+armenia	common	bg	Армения
+aruba	common	bg	Аруба
+august	common	bg	Август
+australia	common	bg	Австралия
+austria	common	bg	Автсрия
+author	common	bg	Автор
+autohide sidebox menu's	common	bg	Автоматично скриване на страничното меню
+autohide sidebox menus	common	bg	Автоматично скриване на страничните менюта
+automatically hide the sidebox menu's?	common	bg	Автоматично скриване на страничното меню?
+automatically hide the sidebox menus?	common	bg	Автоматично скриване на страничните менюта?
+autosave default category	common	bg	Автоматично запазване на категория Default
+azerbaijan	common	bg	Азербайджан
+back	common	bg	Назад
+back to user login	common	bg	Назад към входа за потребители
+background color:	common	bg	Цвят за фон:
+backupdir '%1' is not writeable by the webserver	common	bg	Директорията за архиви '%1' не достъпна за запис от WEB сървъра
+bad login or password	common	bg	Грешно потребителско име или парола
+bahamas	common	bg	Бахамски острови
+bahrain	common	bg	Бахрейн
+bangladesh	common	bg	Бангладеш
+barbados	common	bg	Барбадос
+bcc	common	bg	Bcc
+belarus	common	bg	Беларус
+belgium	common	bg	Белгия
+belize	common	bg	Белиз
+benin	common	bg	Бенин
+bermuda	common	bg	Бермуда
+bhutan	common	bg	Бутан
+blocked, too many attempts	common	bg	Блокирани сте заради твърде много грешни опити
+bold	common	bg	Удебелен
+bolivia	common	bg	Боливия
+border	common	bg	Граница
+bosnia and herzegovina	common	bg	Босна и Херцеговина
+botswana	common	bg	Ботсвана
+bottom	common	bg	Долна част
+bouvet island	common	bg	Остров Буве
+brazil	common	bg	Бразилия
+british indian ocean territory	common	bg	Британски територии в Индийския океан
+brunei darussalam	common	bg	Бруней Дарусалам
+bulgaria	common	bg	България
+burkina faso	common	bg	Буркина Фасо
+burundi	common	bg	Бурунди
+calendar	common	bg	Календар
+cambodia	common	bg	Камбоджа
+cameroon	common	bg	Камерун
+canada	common	bg	Канада
+cancel	common	bg	Отказ
+cannot replace %1 because it is a directory	common	bg	Не може да се припокрие %1, понеже е директория
+cant open '%1' for %2	common	bg	Не може да се отвори '%1' за %2
+cape verde	common	bg	Острови Зелени Нос
+caption	common	bg	Пояснение
+categories	common	bg	Категории
+categories for	common	bg	категории за
+category	common	bg	Категория
+category %1 has been added !	common	bg	Категорията %1 беше добавена!
+category %1 has been updated !	common	bg	Категорията %1 беше обновена!
+cayman islands	common	bg	Каймански острови
+cc	common	bg	Cc
+centered	common	bg	центриран
+central african republic	common	bg	Централноафриканска Републикя
+chad	common	bg	Чад
+change	common	bg	Промяна
+charset	common	bg	utf-8
+check installation	common	bg	Проверка на инсталацията
+check now	common	bg	Провери сега
+chile	common	bg	Чили
+china	common	bg	Китай
+choose a background color	common	bg	Изберете цвят за фона
+choose a background color for the icons	common	bg	Изберете цвят за фона на иконите
+choose a background image.	common	bg	Изберете изображение за фона
+choose a background style.	common	bg	Изберете стил за фона
+choose a text color for the icons	common	bg	Изберете цвят на текста за иконите
+choose the category	common	bg	Изберете категорията
+choose the parent category	common	bg	Изберете 'родителска' категория
+christmas island	common	bg	Великденски острови
+clear	common	bg	Изчистване
+clear form	common	bg	Изчистване на формата
+click	common	bg	Кликнете
+click here to resume your egroupware session.	common	bg	Кликнете за възстановяване на сесията Ви в eGroupWare
+click or mouse over to show menus	common	bg	Кликнете или доближете мишката за показване на менюта
+click or mouse over to show menus?	common	bg	Клик или доближaване с мишката за показване на менюта?
+click this image on the navbar: %1	common	bg	Кликнете това изображение на лентата за навигация: %1
+close	common	bg	Затвори
+close sidebox	common	bg	Затвори стр.кутия (sidebox)
+cocos (keeling) islands	common	bg	Кокосови острови (о-ви Кийлинг)
+colombia	common	bg	Колумбия
+common preferences	common	bg	Общи настройки
+comoros	common	bg	Коморски оствори
+company	common	bg	Фирма
+congo	common	bg	Конго
+congo, the democratic republic of the	common	bg	Демократична Република Конго
+contacting server...	common	bg	Свързване със сървъра...
+cook islands	common	bg	Острови Кук
+copy	common	bg	Копиране
+costa rica	common	bg	Коста Рика
+cote d ivoire	common	bg	Бряг на Слоновата Кост
+could not contact server. operation timed out!	common	bg	Неуспех при връзка със сървъра поради таймаут!
+create	common	bg	Създаване
+created by	common	bg	Създадено от
+croatia	common	bg	Хърватска
+cuba	common	bg	Куба
+currency	common	bg	Валута
+current	common	bg	Текущ
+current users	common	bg	Включени потребители
+cyprus	common	bg	Кипър
+czech republic	common	bg	Чешка Република
+database error	common	bg	Грешка в базата данни
+database error!	common	bg	Грешка в базата данни!
+date	common	bg	Дата
+date due	common	bg	Краен срок
+date selection:	jscalendar	bg	Избор на дата:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	bg	Порт за Datetime.<br>Ако използвате порт 13, моля настройте правилата на firewall-а правилно преди изпращане на тази страница.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	bg	Декември
+default category	common	bg	Категория по подразбиране
+default height for the windows	common	bg	Височина на прозорците по подразбиране
+default width for the windows	common	bg	Ширина на прозорците по подразбиране
+delete	common	bg	Изтриване
+delete row	common	bg	Изтриване на ред
+denmark	common	bg	Дания
+description	common	bg	Описание
+detail	common	bg	Детайл
+details	common	bg	Детайли
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	bg	Да се забрани изпълнението на скрипта за корекция на грешки при показване на прозрачност при PNG изображения в IE 5.5 и по-високи?
+direction left to right	common	bg	Посока от ляво надясно
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	bg	Директорията не съществува, не е позволено четенето и от WEB сървъра или не е даден относителният път спрямо document root!
+disable internet explorer png-image-bugfix	common	bg	Забрани Internet Explorer png-image-bugfix
+disable slider effects	common	bg	Забрани slider-ефектите
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	bg	Да се забранят анимираните slider ефекти при показване или скриване на менютата в страницата? Следва да се използва за потребители на Opera и Konqueror.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	bg	Да се забрани изпълнението на скрипта за корекция на грешки при показване на прозрачност при PNG изображения в IE 5.5 и по-високи?
+disabled	common	bg	Забранено
+display %s first	jscalendar	bg	Покажи %s първо
+djibouti	common	bg	Джибути
+do you also want to delete all subcategories ?	common	bg	Искате ли също така да изтриете и всички подкатегории?
+doctype:	common	bg	Тип документ:
+document properties	common	bg	Свойства на документа
+document title:	common	bg	Заглавие на документа:
+domain	common	bg	Домейн
+domain name for mail-address, eg. "%1"	common	bg	Име на домейн за e-mail адреси, напр. "%1"
+domestic	common	bg	Домашен
+dominica	common	bg	Доминика
+dominican republic	common	bg	Доминиканска Република
+done	common	bg	Готово
+drag to move	jscalendar	bg	Провлачете за преместване
+e-mail	common	bg	E-Mail
+east timor	common	bg	Източен Тимур
+ecuador	common	bg	Еквадор
+edit	common	bg	Редактиране
+edit %1 category for	common	bg	Редактиране на %1 категория за
+edit categories	common	bg	Редактиране на категориите
+edit category	common	bg	Редактиране на категория
+egroupware	common	bg	eGroupWare
+egroupware api version	common	bg	версия на eGroupWare API
+egroupware api version %1	common	bg	eGroupWare: версия на API - %1
+egroupware: login blocked for user '%1', ip %2	common	bg	eGroupWare: влизането блокирано за потребител '%1' от IP-адрес %2
+egypt	common	bg	Египет
+el salvador	common	bg	Ел Салвадор
+email	common	bg	E-Mail
+email-address of the user, eg. "%1"	common	bg	e-mail адрес на потребителя, напр. "%1"
+enabled	common	bg	Разрешено
+end date	common	bg	Крайна дата
+end time	common	bg	Краен час
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	bg	Въведете URL на eGroupWare.<br>Пример: http://www.domain.com/egroupware  или   /egroupware<br><b>Да не завършва с "/"!!!</b>
+entry has been deleted sucessfully	common	bg	Записът беше изтрит успешно
+entry not found!	common	bg	Записът не е намерен!
+entry updated sucessfully	common	bg	Записът беше обновен успешно
+equatorial guinea	common	bg	Екваториална Гвинея
+eritrea	common	bg	Еритрея
+error	common	bg	Грешка
+error creating %1 %2 directory	common	bg	Грешка при създаване на директория %1 %2
+error deleting %1 %2 directory	common	bg	Грешка при изтриване на директория %1 %2
+error renaming %1 %2 directory	common	bg	Грешка при преименуване на директория %1 %2
+estonia	common	bg	Естония
+ethiopia	common	bg	Етиопия
+everything	common	bg	Всичко
+exact	common	bg	точно
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	bg	Грешка при връзка със сървъра или невалиден отговор от него. Опитайте да влезете отново. В случай на проблем се свържете с администратора.
+falkland islands (malvinas)	common	bg	Фолклендски (Малвински) острови
+faroe islands	common	bg	Фаройски острови
+fax number	common	bg	номер на факс
+features of the editor?	common	bg	Допълнителни възможности на редактора?
+february	common	bg	Февруари
+fields	common	bg	Полета
+fiji	common	bg	Острови Фиджи
+files	common	bg	Файлове
+filter	common	bg	Филтър
+finland	common	bg	Финландия
+first name	common	bg	Първо име
+first name of the user, eg. "%1"	common	bg	Първо име на потребителя, напр. "%1"
+first page	common	bg	Първа страница
+firstname	common	bg	Първо име
+fixme!	common	bg	ПОПРАВИ МЕ!
+folder already exists.	common	bg	Директорията вече съществува.
+force selectbox	common	bg	Принудително SelectBox
+forever	common	bg	Завинаги
+france	common	bg	Франция
+french guiana	common	bg	Френска Гвиана
+french polynesia	common	bg	Френска Полинезия
+french southern territories	common	bg	Френски Южни Територии
+friday	common	bg	Петък
+ftp	common	bg	FTP
+fullname	common	bg	Пълно име
+fullscreen mode	common	bg	Режим на цял екран
+gabon	common	bg	Габон
+gambia	common	bg	Гамбия
+general menu	common	bg	Основно меню
+georgia	common	bg	Грузия
+german	common	bg	Немски
+germany	common	bg	Германия
+ghana	common	bg	Гана
+gibraltar	common	bg	Гибралтар
+global	common	bg	Глобален
+global public	common	bg	Глобален Public (общ)
+go today	jscalendar	bg	към Днес
+grant access	common	bg	Разрешаване на достъп
+greece	common	bg	Гърция
+greenland	common	bg	Гренландия
+grenada	common	bg	Гренада
+group	common	bg	Група
+group access	common	bg	Достъп на групи
+group has been added	common	bg	Групата беше добавена
+group has been deleted	common	bg	Групата беше изтрита
+group has been updated	common	bg	Групата беше обновена
+group name	common	bg	име на групата
+group public	common	bg	Група Общи (Public)
+groups	common	bg	Групи
+groups with permission for %1	common	bg	Групи с права за %1
+groups without permission for %1	common	bg	Групи без права за %1
+guadeloupe	common	bg	Гваделупа
+guam	common	bg	Гуам
+guatemala	common	bg	Гватемала
+guinea	common	bg	Гвинея
+guinea-bissau	common	bg	Гвинея-Бисау
+guyana	common	bg	Гвиана
+haiti	common	bg	Хаити
+heard island and mcdonald islands	common	bg	Острови Хърд и Макдоналд
+height	common	bg	Височина
+help	common	bg	Помощ
+high	common	bg	Висок
+highest	common	bg	Най-висок
+holy see (vatican city state)	common	bg	Ватикана
+home	common	bg	Начало
+home email	common	bg	домашен e-mail
+honduras	common	bg	Хондурас
+hong kong	common	bg	Хонг-Конг
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	bg	Колко икони да се покажат в лентата за навигация (горе на страницата)? Останалите икони се показват чрез падащо меню, активирано чрез иконата в крайната дясна част на лентата.
+how to show the general egroupware menu ?	common	bg	Как да се покаже общото меню на eGroupWare ?
+hungary	common	bg	Унгария
+iceland	common	bg	Исландия
+iespell not detected. click ok to go to download page.	common	bg	Не е открит   ieSpell. Кликнете OK за пренасочване към страницата за изтеглянето му.
+if the clock is enabled would you like it to update it every second or every minute?	common	bg	Ако часовникът е разрешен как да се обновява - на всяка секунда или на всяка минута?
+if there are some images in the background folder you can choose the one you would like to see.	common	bg	Ако има изображения в директорията за фон може да изберете кое да виждате.
+image directory relative to document root (use / !), example:	common	bg	Директория за изображенията, относително спрямо document root (използвайте / !), например:
+image url	common	bg	URL на изображението
+india	common	bg	Индия
+indonesia	common	bg	Индонезия
+insert all %1 addresses of the %2 contacts in %3	common	bg	Вмъкване на всички %1 адреси на %2 контакти в %3
+insert column after	common	bg	Вмъкни колона след
+insert column before	common	bg	Вмъкни колона преди
+insert row after	common	bg	Вмъкни ред след
+insert row before	common	bg	Вмъкни ред преди
+international	common	bg	Международен
+invalid filename	common	bg	Грешно име на файл
+invalid ip address	common	bg	Невалиден IP адрес
+invalid password	common	bg	Грешна парола
+iran, islamic republic of	common	bg	Ислямска Република Иран
+iraq	common	bg	Ирак
+ireland	common	bg	Ейре
+israel	common	bg	Израел
+it has been more then %1 days since you changed your password	common	bg	Изминали са повече от %1 дни, откакто сте променяли паролата си
+it is recommended that you run setup to upgrade your tables to the current version	common	bg	Препоръчително е да преминете през "инсталация" (setup), за да обновите таблиците си до текущата версия.
+italic	common	bg	Курсив
+italy	common	bg	Италия
+jamaica	common	bg	Ямайка
+january	common	bg	Януари
+japan	common	bg	Япония
+jordan	common	bg	Йордания
+july	common	bg	Юли
+jun	common	bg	Юни
+june	common	bg	Юни
+justify center	common	bg	Центриране
+justify full	common	bg	Подравняване от край до край
+justify left	common	bg	Ляво изравняване
+justify right	common	bg	Дясно изравняване
+kazakstan	common	bg	Казахстан
+kenya	common	bg	Кения
+keywords	common	bg	Ключови думи
+kiribati	common	bg	Кирибати
+korea, democratic peoples republic of	common	bg	Народно Демократична Република Корея
+korea, republic of	common	bg	Република Корея
+kuwait	common	bg	Кувейт
+kyrgyzstan	common	bg	Киргизстан
+language	common	bg	Език
+lao peoples democratic republic	common	bg	Лаос
+last name	common	bg	Фамилно име
+last name of the user, eg. "%1"	common	bg	фамилията на потребителя, например "%1"
+last page	common	bg	Последна страница
+lastname	common	bg	Фамилия
+latvia	common	bg	Латвия
+ldap-mgr	common	bg	LDAP-мениджър
+lebanon	common	bg	Ливан
+left	common	bg	Ляво
+lesotho	common	bg	Лесото
+liberia	common	bg	Либерия
+libyan arab jamahiriya	common	bg	Либийска Арабска Джамахирия
+license	common	bg	Лиценз
+liechtenstein	common	bg	Лихтенщайн
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv съдържат ##last-check-run## на таблица %3 ==> игнориран</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv не съвпадат с броя на колоните в таблицата %3 ==> игнориран</b>
+list	common	bg	Списък
+list members	common	bg	Списък с членове
+lithuania	common	bg	Литва
+local	common	bg	Локален
+login	common	bg	Влизане (Login)
+loginid	common	bg	Име на потребител
+logout	common	bg	Изход
+lost login id	common	bg	Загубено име на потребител
+lost password	common	bg	Загубена парола
+low	common	bg	Нисък
+lowest	common	bg	Най-ниско
+luxembourg	common	bg	Люксембург
+macau	common	bg	Макао
+macedonia, the former yugoslav republic of	common	bg	Македония
+madagascar	common	bg	Мадагаскар
+mail domain, eg. "%1"	common	bg	пощенски домейн, например "%1"
+main category	common	bg	Основна категория
+main screen	common	bg	Основен екран
+maintainer	common	bg	Поддържа се от
+malawi	common	bg	Малави
+malaysia	common	bg	Малайзия
+maldives	common	bg	Малдивски острови
+mali	common	bg	Мали
+malta	common	bg	Малта
+march	common	bg	Март
+marshall islands	common	bg	Маршалски острови
+martinique	common	bg	Мартиника
+mauritania	common	bg	Мавритания
+mauritius	common	bg	Мавриций
+max number of icons in navbar	common	bg	Максимален брой икони в лентата за управление
+may	common	bg	Май
+mayotte	common	bg	Майот
+medium	common	bg	Средно
+menu	common	bg	Меню
+message	common	bg	Съобщение
+mexico	common	bg	Мексико
+micronesia, federated states of	common	bg	Микронезия
+minute	common	bg	минута
+moldova, republic of	common	bg	Молдовска Република
+monaco	common	bg	Монако
+monday	common	bg	Понеделник
+mongolia	common	bg	Монголия
+montenegro	common	bg	Черна гора
+montserrat	common	bg	Монтсерат
+morocco	common	bg	Мароко
+mozambique	common	bg	Мозамбик
+multiple	common	bg	множество
+myanmar	common	bg	Мианмар
+name	common	bg	Име
+name of the user, eg. "%1"	common	bg	Име на потребителя, например "%1"
+namibia	common	bg	Намибия
+nauru	common	bg	Науру
+nepal	common	bg	Непал
+netherlands	common	bg	Холандия
+netherlands antilles	common	bg	Холандски Антили
+never	common	bg	Никога
+new caledonia	common	bg	Нова Каледония
+new entry added sucessfully	common	bg	Новият запис е добавен успешно
+new main category	common	bg	Нова основна категория
+new value	common	bg	Нова стойност
+new zealand	common	bg	Нова Зеландия
+next	common	bg	Следващ
+next month (hold for menu)	jscalendar	bg	Следващ месец (задръжте за списък)
+next page	common	bg	Следваща страница
+next year (hold for menu)	jscalendar	bg	Следваща година (задръжте за списък)
+nicaragua	common	bg	Никарагуа
+niger	common	bg	Нигер
+nigeria	common	bg	Нигерия
+niue	common	bg	Ниуе
+no	common	bg	Не
+no entries found, try again ...	common	bg	няма резултати, опитайте отново...
+no history for this record	common	bg	Няма история за този запис
+no savant2 template directories were found in:	common	bg	Не са намерени Savant2 template директории в:
+no subject	common	bg	Няма Относно
+none	common	bg	Няма
+norfolk island	common	bg	Остров Норфолк
+normal	common	bg	Нормален
+northern mariana islands	common	bg	Северни Мариански острови
+norway	common	bg	Норвегия
+not	common	bg	не е
+not a user yet? register now	common	bg	Все още не сте потребител? Регистрирайте се сега
+not assigned	common	bg	не е назначен
+not readable %1 entry of user %2	common	bg	Не е позволено четене на %1 от потребител %2
+note	common	bg	Бележка
+notes	common	bg	Бележки
+notifications	common	bg	известяване
+notify window	common	bg	Прозорец за известяване
+notify your administrator to correct this situation	common	bg	Съобщете на Вашия Администратор да коригира този проблем
+november	common	bg	Ноември
+october	common	bg	Октомври
+ok	common	bg	OK
+old value	common	bg	Стара стойност
+oman	common	bg	Оман
+on *nix systems please type: %1	common	bg	На *nix системи напишете: %1
+on mouse over	common	bg	При посочване с мишката
+only private	common	bg	само "лични"
+only yours	common	bg	само Вашите
+oops! you caught us in the middle of system maintainance.	common	bg	Съжалаваме, в момента се извършва профилактика на системата.
+open notify window	common	bg	Отваряне на прозореца за известяване
+open popup window	common	bg	Отваряне на "изскачащ" прозорец
+open sidebox	common	bg	Отваряне на страничната кутия
+ordered list	common	bg	Подреден списък
+original	common	bg	Оригинал
+other	common	bg	Други
+overview	common	bg	Преглед
+owner	common	bg	Собственик
+page	common	bg	Страница
+page was generated in %1 seconds	common	bg	Страницата беше създадена за %1 секунди
+pakistan	common	bg	Пакистан
+palau	common	bg	Палау
+palestinian territory, occupied	common	bg	Окупирани Палестински Територии
+panama	common	bg	Панама
+papua new guinea	common	bg	Папуа Нова Гвинея
+paraguay	common	bg	Парагвай
+parcel	common	bg	Колет
+parent category	common	bg	"Родителска" категория
+password	common	bg	Парола
+password could not be changed	common	bg	Паролата не може да бъде сменена
+password has been updated	common	bg	Паролата беше обновена
+password must contain at least %1 lowercase letters	common	bg	Паролата трябва да съдържа поне %1 малки букви
+password must contain at least %1 numbers	common	bg	Паролата трябва да съдържа поне %1 цифри
+password must contain at least %1 special characters	common	bg	Паролата трябва да съдържа поне %1 специални символа
+password must contain at least %1 uppercase letters	common	bg	Паролата трябва да съдържа поне %1 главни букви
+password must have at least %1 characters	common	bg	Паролата трябва да съдържа поне %1символа
+path to user and group files has to be outside of the webservers document-root!!!	common	bg	Пътят до файловете на потребители и групи ТРЯБВА ДА БЪДЕ ИЗВЪН Document Root на WEB сървъра!!!
+permission denied!	common	bg	Нямате право на достъп!
+permissions to the files/users directory	common	bg	Права на файловете / потребителите на директория
+permisson denied!	common	bg	Нямате право на достъп!
+personal	common	bg	Личен
+peru	common	bg	Перу
+philippines	common	bg	Филипини
+phone number	common	bg	телефонен номер
+pitcairn	common	bg	Острови Питкерн
+please %1 by hand	common	bg	Моля %1 ръчно
+please enter a name	common	bg	Моля въведете име!
+please run setup to become current	common	bg	Моля минете през "инсталация", за да обновите
+please select	common	bg	Моля изберете
+please set your global preferences	common	bg	Моля задайте общите си настройки!
+please set your preferences for this application	common	bg	Моля задайте настройките си за това приложение!
+please wait...	common	bg	Моля изчакайте...
+please, check back with us shortly.	common	bg	Моля, опитайте след малко.
+poland	common	bg	Полша
+portugal	common	bg	Португалия
+postal	common	bg	Пощенски
+powered by	common	bg	Работи с
+preferences	common	bg	Настройки
+preferences for the idots template set	common	bg	Настройки за набор шаблони idots
+prev. month (hold for menu)	jscalendar	bg	Предишен месец (задръжте за списък)
+prev. year (hold for menu)	jscalendar	bg	Предишна година (задръжте за списък)
+previous page	common	bg	Предишна страница
+primary style-sheet:	common	bg	Основен набор стилове (style-sheet):
+print	common	bg	Печат
+priority	common	bg	Приоритет
+private	common	bg	Личен
+programs	common	bg	Програми
+project	common	bg	Проект
+public	common	bg	общ
+puerto rico	common	bg	Пуерто Рико
+qatar	common	bg	Катар
+read	common	bg	Четене
+read this list of methods.	common	bg	Четене на списъкът с методи.
+reading	common	bg	четене
+register	common	bg	Регистрация
+regular	common	bg	Стандартен
+reject	common	bg	Отхвърляне
+remember me	common	bg	Запомни ме
+remove selected accounts	common	bg	премахване на избраните акаунти
+remove shortcut	common	bg	Премахване на Shortcut-и
+rename	common	bg	Преименуване
+replace	common	bg	Замяна
+replace with	common	bg	Замяна с
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	bg	Пълен списък на потребителите на системата. Внимание: списъкът може да бъде много дълъг!
+returns an array of todo items	common	bg	Връща масив с Предстоящи
+returns struct of users application access	common	bg	Връща структура с достъпа на потребителите до приложенията
+reunion	common	bg	Реюнион
+right	common	bg	Дясно
+romania	common	bg	Румъния
+russian federation	common	bg	Руска Федерация
+rwanda	common	bg	Руанда
+saint helena	common	bg	Света Елена
+saint kitts and nevis	common	bg	Сейнт Китс и Невис
+saint lucia	common	bg	Санта Лучия
+saint pierre and miquelon	common	bg	Сейнт Пиер и Микелон
+saint vincent and the grenadines	common	bg	Сейнт Винсент и Гренадини
+samoa	common	bg	Самоа
+san marino	common	bg	Сан Марино
+sao tome and principe	common	bg	Сао Томе и Принсипе
+saturday	common	bg	Събота
+saudi arabia	common	bg	Саудитска Арабия
+save	common	bg	Запис
+search	common	bg	Търсене
+search %1 '%2'	common	bg	Търсене на %1 '%2'
+search accounts	common	bg	Търсене в акаунтите
+search or select accounts	common	bg	търсене или избор на акаунти
+second	common	bg	секунда
+section	common	bg	Секция
+select	common	bg	Изберете
+select all %1 %2 for %3	common	bg	Избор на всички %1 %2 за %3
+select category	common	bg	Изберете категория
+select date	common	bg	Изберете дата
+select group	common	bg	Изберете група
+select home email address	common	bg	Изберете домашен e-mail адрес
+select multiple accounts	common	bg	изберете няколко акаунта
+select one	common	bg	Моля, изберете
+select the default height for the application windows	common	bg	Изберете височина по подразбиране за прозорците на приложението
+select the default width for the application windows	common	bg	Изберете ширина по подразбиране за прозорците на приложението
+select user	common	bg	Изберете потребител
+select work email address	common	bg	Изберете служебен e-mail адрес
+selection	common	bg	Избор
+send	common	bg	Изпращане
+senegal	common	bg	Сенегал
+september	common	bg	Септември
+serbia	common	bg	Сърбия
+server %1 has been added	common	bg	Сървърът %1 е добавен
+server answered. processing response...	common	bg	Получен отговор от сървъра. Обработка...
+server contacted. waiting for response...	common	bg	Установена връзка със сървъра. Очакваме отговор...
+server name	common	bg	Име на сървър
+session has been killed	common	bg	Сесията е премахната
+setup	common	bg	Настройка
+setup main menu	common	bg	Главно меню за настройка
+seychelles	common	bg	Сейшелски острови
+show all	common	bg	показване на всички
+show all categorys	common	bg	Показване на всички категории
+show as topmenu	common	bg	Показване като горно меню
+show clock?	common	bg	Показване на часовник?
+show home and logout button in main application bar?	common	bg	Показване на бутони home и logout в главната лента на приложението?
+show in sidebox	common	bg	Показване в страничната кутия
+show logo's on the desktop.	common	bg	Показване на логото на desktop-a.
+show menu	common	bg	Показване на меню
+show page generation time	common	bg	Показване на времето за създаване на страниците
+show page generation time on the bottom of the page?	common	bg	Да се показва ли най-отдолу времето за създаване на страниците?
+show page generation time?	common	bg	Да се показва ли времето за генериране на страниците?
+show the logo's of egroupware and x-desktop on the desktop.	common	bg	Показване на логото на eGroupware и x-desktop на desktop-а.
+showing %1	common	bg	показване на %1
+showing %1 - %2 of %3	common	bg	показване на %1 до %2 от %3
+sierra leone	common	bg	Сиера Леоне
+simple	common	bg	Опростен
+singapore	common	bg	Сингапур
+site configuration	common	bg	Конфиргурация на системата
+slovakia	common	bg	Словакия
+slovenia	common	bg	Словения
+solomon islands	common	bg	Соломонови острови
+somalia	common	bg	Сомалия
+sorry, your login has expired	login	bg	Съжаляваме, сесията Ви е изтекла
+south africa	common	bg	Южна Африка
+south georgia and the south sandwich islands	common	bg	Южна Джорджия и Южни Сандвичеви острови
+spain	common	bg	Испания
+sri lanka	common	bg	Шри-Ланка
+start date	common	bg	Начална дата
+start time	common	bg	Начален час
+start with	common	bg	започва с
+starting up...	common	bg	Стартиране...
+status	common	bg	Състояние
+stretched	common	bg	разтегнат
+subject	common	bg	Относно
+submit	common	bg	Изпращане
+substitutions and their meanings:	common	bg	Замествания и тяхното значение:
+sudan	common	bg	Судан
+sunday	common	bg	Неделя
+suriname	common	bg	Суринам
+svalbard and jan mayen	common	bg	Шпицберген и Ян Майен
+swaziland	common	bg	Свазиленд
+sweden	common	bg	Швеция
+switzerland	common	bg	Швейцария
+syrian arab republic	common	bg	Сирия
+table properties	common	bg	Свойства на таблицата
+taiwan	common	bg	Тайван/Тайпе
+tajikistan	common	bg	Таджикистан
+tanzania, united republic of	common	bg	Обединена Република Танзания
+text color:	common	bg	Цвят на текста:
+thailand	common	bg	Тайланд
+the api is current	common	bg	API е последна версия
+the api requires an upgrade	common	bg	API има нужда от обновяване
+the following applications require upgrades	common	bg	Следните приложения имат нужда от обновяване
+the mail server returned	common	bg	Пощенският сървър върна следното съобщение
+this application is current	common	bg	Приложението е последна версия
+this application requires an upgrade	common	bg	Приложението има нужда от обновяване
+this name has been used already	common	bg	Това име вече е използвано !
+thursday	common	bg	Четвъртък
+time	common	bg	Време
+time selection:	jscalendar	bg	Избор на време:
+time zone	common	bg	Часови пояс
+time zone offset	common	bg	Отместване на часовия пояс
+title	common	bg	Заглавие
+to	common	bg	До
+to correct this error for the future you will need to properly set the	common	bg	За да отстраните тази грешка е необходимо правилно да настроите
+to go back to the msg list, click <a href= %1 >here</a>	common	bg	За връщане към списъка със съобщения, натиснете <a href="%1">тук</a>
+today	common	bg	Днес
+todays date, eg. "%1"	common	bg	днешна дата, напр. "%1"
+toggle first day of week	jscalendar	bg	Настройка на първия ден на седмицата
+togo	common	bg	Того
+tokelau	common	bg	Токелау
+tonga	common	bg	Тонга
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	bg	Твърде много неуспешни опита за влизане: %1 за потребител '%2', %3 от IP адрес %4
+top	common	bg	Горе
+total	common	bg	общо
+transparant bg for the icons?	common	bg	Прозрачен фон за иконите?
+trinidad and tobago	common	bg	Тринидад и Тобаго
+tuesday	common	bg	Вторник
+tunisia	common	bg	Тунис
+turkey	common	bg	Турция
+turkmenistan	common	bg	Туркменистан
+turks and caicos islands	common	bg	Острови Търкс и Кайкос
+tuvalu	common	bg	Тувалу
+type	common	bg	Тип
+uganda	common	bg	Уганда
+ukraine	common	bg	Украйна
+underline	common	bg	Подчертаване
+united arab emirates	common	bg	Обединени Арабски Емирства
+united kingdom	common	bg	Великобритания
+united states	common	bg	Съединени Американски Щати
+united states minor outlying islands	common	bg	Малки далечни острови на САЩ
+unknown	common	bg	Неизвестен
+update	common	bg	Обновяване
+update the clock per minute or per second	common	bg	Обновяване на часовника на всяка минута или секунда
+upload	common	bg	Качване
+upload directory does not exist, or is not writeable by webserver	common	bg	Директорията за Upload не съществува или не е позволен запис за WEB сървъра
+upload requires the directory to be writable by the webserver!	common	bg	За Upload е необходим достъп за запис от WEB сървъра!
+url	common	bg	WEB адр.
+uruguay	common	bg	Уругвай
+use button to search for	common	bg	Използвайте бутона за търсене на
+use button to search for address	common	bg	Използвайте бутона за търсене на адрес
+use button to search for calendarevent	common	bg	Използвайте бутона за търсене на събитие в календара
+use button to search for project	common	bg	Използвайте бутона за търсене на Проект
+user	common	bg	Потребител
+user accounts	common	bg	потребителски акаунти
+user groups	common	bg	групи
+username	common	bg	Потребителско име
+users	common	bg	потребители
+users choice	common	bg	По избор на потребителя
+uzbekistan	common	bg	Узбекистан
+vanuatu	common	bg	Вануату
+venezuela	common	bg	Венецуела
+version	common	bg	Версия
+viet nam	common	bg	Виетнам
+view	common	bg	Преглед
+virgin islands, british	common	bg	Британски Вирджински острови
+virgin islands, u.s.	common	bg	Американски Вирджински острови
+wallis and futuna	common	bg	Уолис и Футуна
+wednesday	common	bg	Сряда
+welcome	common	bg	Добре дошли
+western sahara	common	bg	Западна Сахара
+what color should all the blank space on the desktop have	common	bg	С какъв цвят да бъде запълнено празното пространство на desktop-а
+what style would you like the image to have?	common	bg	Какъв стил да бъде назначен на изображението?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	bg	Ако отговорите ДА бутоните Home и Logout ще се появят като приложения в горната главна лента на приложенията
+where and how will the egroupware links like preferences, about and logout be displayed.	common	bg	Къде и как да се изобразяват връзките на eGroupWare като настройки, "относно" и Logout.
+which groups	common	bg	Кои групи
+width	common	bg	Ширина
+wk	jscalendar	bg	сед
+work email	common	bg	служебен e-mail
+would you like to display the page generation time at the bottom of every window?	common	bg	Желаете ли да се изобразява времето за генериране на страницата в долната част на всеки прозорец?
+writing	common	bg	запис
+written by:	common	bg	Написано от:
+year	common	bg	Година
+yemen	common	bg	Йемен
+yes	common	bg	Да
+you are required to change your password during your first login	common	bg	Трябва да смените паролата си при първото влизане
+you can customize how many icons and toolbars the editor shows.	common	bg	Може да определите колко икони и ленти с инструменти да показва Редактора.
+you have been successfully logged out	login	bg	Излизането ви от системата приключи успешно
+you have not entered a title	common	bg	Не сте въвели заглавие
+you have not entered a valid date	common	bg	Не сте въвели валидна дата
+you have not entered a valid time of day	common	bg	Не сте въвели валидно часово време
+you have not entered participants	common	bg	Не сте въвели участници
+you have selected an invalid date	common	bg	Избрали сте невалидна дата!
+you have selected an invalid main category	common	bg	Избрали сте невалидна основна категория!
+you have successfully logged out	common	bg	Излязохте успешно
+you need to add the webserver user '%1' to the group '%2'.	common	bg	Необходимо е да добавите потребителя на WEB сървъра '%1' към групата '%2'
+you need to be an egroupware administrator to access this functionality!	common	bg	Необходимо е да сте администратор в eGroupWare за достъп до тези функции!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	bg	Опитахте да отворите приложение на eGroupWare: %1, но нямате права за достъп до него.
+your message could <b>not</b> be sent!<br>	common	bg	Писмото ви <b>не може</b> да бъде изпратено!<br>
+your message has been sent	common	bg	Писмото ви беше изпратено
+your search returned %1 matchs	common	bg	търсенето ви върна %1 съвпадения
+your search returned 1 match	common	bg	търсенето ви върна 1 съвпадение
+your session could not be verified.	login	bg	Сесията ви не може да бъде проверена.
+your settings have been updated	common	bg	Настройките ви са обновени
+zambia	common	bg	Замбия
+zimbabwe	common	bg	Зимбабве
+zoom	common	bg	Увеличаване/намаляне

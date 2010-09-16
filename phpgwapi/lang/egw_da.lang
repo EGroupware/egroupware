@@ -1,0 +1,642 @@
+%1 email addresses inserted	common	da	%1 e-mail adresser insat
+%1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af Web server
+%1 manual	common	da	%1 manual
+%1 start	common	da	%1 start
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br/>eller gør %3 skrivbar for Web server
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1eGroupWare%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
+(shift-)click or drag to change value	jscalendar	da	(Shift)Klik eller træk for at ændre værdien
+- click on any of the time parts to increase it	jscalendar	da	- Klik på hvilken som helst tidsandelerne for at forøge den
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	da	- Hold musse knappen på hvilken som helst af de overstående knapper for hurtigere udvælgelse.
+- or click and drag for faster selection.	jscalendar	da	- eller klik og træk for hurtigere udvælgelse
+- or shift-click to decrease it	jscalendar	da	- eller Shift-klik for at forminske den
+- use the %1, %2 buttons to select month	jscalendar	da	- Brug %1, %2 knapperne for at vælge måned
+- use the %1, %2 buttons to select year	jscalendar	da	- Brug %1, %2 knapperne for at vælge år
+00 (disable)	admin	da	00 (deaktiveret)
+13 (ntp)	admin	da	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	da	3 antal tegn for dag-forkortelse
+3 number of chars for month-shortcut	jscalendar	da	3 antal tegn for måneds-forkortelse
+80 (http)	admin	da	80 (http)
+about	common	da	Om
+about %1	common	da	Om %1
+about egroupware	common	da	Om eGroupWare
+about the calendar	jscalendar	da	Om kalenderen
+access	common	da	Adgang
+access not permitted	common	da	Ingen adgang
+account has been created	common	da	Kontoen er oprettet
+account has been deleted	common	da	Kontoen er slettet
+account has been updated	common	da	Kontoen er opdateret
+account is expired	common	da	Kontoen er udløbet
+acl	common	da	ACL
+action	common	da	Handling
+active	common	da	Aktiv
+add	common	da	Tilføj
+add %1 category for	common	da	Tilføj kategorien %1 for
+add category	common	da	Tilføj kategori
+add shortcut	common	da	Tilføj forkortelse
+add sub	common	da	Tilføj underkategori
+addressbook	common	da	Adressebog
+admin	common	da	Admin
+administration	common	da	Administration
+afghanistan	common	da	Afghanistan
+albania	common	da	Albanien
+algeria	common	da	Algeriet
+all	common	da	Alle
+all fields	common	da	alle felter
+alphabet	common	da	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,x,y,z
+alternate style-sheet:	common	da	Alternativt style-sheet
+american samoa	common	da	Amerikansk Samoa
+andorra	common	da	Andorra
+angola	common	da	Angola
+anguilla	common	da	Anguilla
+antarctica	common	da	Antarktis
+antigua and barbuda	common	da	Antigua og Barbuda
+application	common	da	Applikation
+apply	common	da	Anvend
+april	common	da	April
+are you sure you want to delete these entries ?	common	da	Vil du virkelige slette disse felter?
+are you sure you want to delete this entry ?	common	da	Vil Du virkelig slette dette felt?
+argentina	common	da	Argentina
+armenia	common	da	Armenien
+aruba	common	da	Aruba
+august	common	da	August
+australia	common	da	Australien
+austria	common	da	Østrig
+author	common	da	Forfatter
+autohide sidebox menus	common	da	Gem automatisk sidemenuen
+automatically hide the sidebox menus?	common	da	Skal sidemenuen automatisk gemmes?
+autosave default category	common	da	Autogem Standard Kategori
+azerbaijan	common	da	Azerbaijan
+back	common	da	Tilbage
+back to user login	common	da	Tilbage til bruger login
+background color:	common	da	Baggrunds farve:
+backupdir '%1' is not writeable by the webserver	common	da	Web server kan ikke skrive i backup folder '%1'
+bad login or password	common	da	Forkert brugernavn eller password
+bahamas	common	da	Bahamas
+bahrain	common	da	Bahrain
+bangladesh	common	da	Bangladesh
+barbados	common	da	Barbados
+bcc	common	da	BCC
+belarus	common	da	Belarus
+belgium	common	da	Belgien
+belize	common	da	Belize
+benin	common	da	Benin
+bermuda	common	da	Bermuda
+bhutan	common	da	Bhutan
+blocked, too many attempts	common	da	Afvist, for mange forsøg
+bold	common	da	Fed
+bolivia	common	da	Bolivia
+border	common	da	Kant
+bosnia and herzegovina	common	da	Bosnien og Herzegovina
+botswana	common	da	Botswana
+bottom	common	da	Bottom
+bouvet island	common	da	Bouvet Øen
+brazil	common	da	Brazilien
+british indian ocean territory	common	da	Britisk Indiske ocean
+brunei darussalam	common	da	Brunei Darussalam
+bulgaria	common	da	Bulgarien
+burkina faso	common	da	Burkina Faso
+burundi	common	da	Burundi
+calendar	common	da	Kalender
+cambodia	common	da	Cambodia
+cameroon	common	da	Cameroon
+canada	common	da	Canada
+cancel	common	da	Fortryd
+cannot replace %1 because it is a directory	common	da	Kan ikke erstatte %1, fordi det er en folder
+cant open '%1' for %2	common	da	Kan ikke åbne '%1' for %2
+cape verde	common	da	Cape Verde
+categories	common	da	Kategorier
+categories for	common	da	kategorier for
+category	common	da	Kategori
+category %1 has been added !	common	da	Kategorien %1 er blevet tilføjet!
+category %1 has been updated !	common	da	Kategorien %1 er blevet opdateret!
+cayman islands	common	da	Cayman Øerne
+cc	common	da	CC
+centered	common	da	Centreret
+central african republic	common	da	Centralafrikanske Republik
+chad	common	da	Chad
+change	common	da	Ændre
+charset	common	da	utf-8
+check installation	common	da	Kontroller installation
+check now	common	da	Check nu
+chile	common	da	Chile
+china	common	da	Kina
+choose a background color	common	da	Vælg en baggrundsfarve
+choose a background color for the icons	common	da	Vælg en baggrundsfarve for ikonerne
+choose a background image.	common	da	Vælg et baggrundsbillede.
+choose a background style.	common	da	Vælg en baggrundsstil.
+choose a text color for the icons	common	da	Vælg ikonernes tekstfarve
+choose the category	common	da	Vælg kategorien
+choose the parent category	common	da	Vælg ovenstående kategori
+christmas island	common	da	Juleøen
+clear	common	da	Slet
+clear form	common	da	Slet formular
+click	common	da	Klik
+click or mouse over to show menus	common	da	Klik eller før musen over til sidemenuen
+click or mouse over to show menus?	common	da	Klik eller før musen over til sidemenuen?
+close	common	da	Luk
+cocos (keeling) islands	common	da	Cocos (Keeling) øerne
+colombia	common	da	Columbia
+common preferences	common	da	Fælles præferencer
+comoros	common	da	Comoros
+company	common	da	Firma
+congo	common	da	Congo
+congo, the democratic republic of the	common	da	Congo, Den Demokratiske Republik
+contacting server...	common	da	Kontakter server...
+cook islands	common	da	Cook øerne
+copy	common	da	Kopiér
+costa rica	common	da	Costa Rica
+cote d ivoire	common	da	Elfenbenskysten
+could not contact server. operation timed out!	common	da	Kan ikke kontakte server. Operationen fik time-out!
+create	common	da	Opret
+created by	common	da	Lavet af
+croatia	common	da	Kroatien
+cuba	common	da	Cuba
+currency	common	da	Valutaenhed
+current	common	da	Nuværende
+current users	common	da	Nuværende antal brugere
+cyprus	common	da	Cupern
+czech republic	common	da	Tjekkiet
+date	common	da	Dato
+date due	common	da	Skal være færdig
+date selection:	jscalendar	da	Dato valg:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	da	December
+default category	common	da	Standard Kategori
+default height for the windows	common	da	Standard højde for vinduer
+default width for the windows	common	da	Standard bredde for vinduer
+delete	common	da	Slet
+delete row	common	da	Slet række
+denmark	common	da	Danmark
+description	common	da	Beskrivelse
+detail	common	da	Detalje
+details	common	da	Detaljer
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktivere udførelsen af bugfixscripts for Internet Explorer 5.5 og nyere, for visning af gennemsigtige PNG-billeder?
+direction left to right	common	da	Retning venstre til højre
+disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer PNG-image-bugfix?
+disable slider effects	common	da	Deaktiver glide-effekter?
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktiver kørsel af fejlfindingsscript for Internet Explorer 5.5 eller nyere for at vise det transparente i PNG billeder?
+disabled	common	da	Slået fra
+display %s first	jscalendar	da	Vis %s først
+djibouti	common	da	Djibouti
+do you also want to delete all subcategories ?	common	da	Ønsker du at slette alle underkategorierne?
+doctype:	common	da	Dokument type:
+document properties	common	da	Dokument egenskaber
+document title:	common	da	Dokument titel:
+domain	common	da	Domæne
+domain name for mail-address, eg. "%1"	common	da	domænenavn til e-mail adresser, f.eks "%1"
+domestic	common	da	Indenrigs
+dominica	common	da	Dominica
+dominican republic	common	da	Dominikanske Republik
+done	common	da	Udført
+drag to move	jscalendar	da	Træk for at flytte
+e-mail	common	da	E-mail
+east timor	common	da	Øst Timor
+ecuador	common	da	Ecuador
+edit	common	da	Redigér
+edit %1 category for	common	da	Redigér kategorien %1 for
+edit categories	common	da	Redigér Kategorier
+edit category	common	da	Redigér kategori
+egroupware api version %1	common	da	eGroupWare API version %1
+egroupware: login blocked for user '%1', ip %2	common	da	eGroupWare: login blokeret for bruger '%1', IP %2
+egypt	common	da	Egypten
+el salvador	common	da	El Salvador
+email	common	da	E-mail
+email-address of the user, eg. "%1"	common	da	email-adresse for brugeren, f.eks. "%1"
+enabled	common	da	Slået til
+end date	common	da	Slutdato
+end time	common	da	Sluttid
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware   eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
+entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
+entry updated sucessfully	common	da	Emnet er succesrigt opdateret
+equatorial guinea	common	da	Equatorial Guinea
+eritrea	common	da	Eritrea
+error	common	da	Fejl
+error creating %1 %2 directory	common	da	Fejl ved oprettelsen af biblioteket %1 %2
+error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %2
+error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2
+estonia	common	da	Estland
+ethiopia	common	da	Etiopien
+exact	common	da	nøjagtig
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	da	Kan ikke kontakte server eller ugyldigt svar fra server. Prøv at logge ind igen. Kontakt administrator i tilfælde af fejl.
+falkland islands (malvinas)	common	da	Falklands Øerne
+faroe islands	common	da	Færøerne
+fax number	common	da	Fax nummer
+february	common	da	Februar
+fields	common	da	Felter
+fiji	common	da	Fiji
+files	common	da	Filer
+filter	common	da	Filter
+finland	common	da	Finland
+first name	common	da	Fornavn
+first name of the user, eg. "%1"	common	da	fornavn på brugeren, f.eks. "%1"
+first page	common	da	Første side
+firstname	common	da	Fornavn
+fixme!	common	da	RETMIG!
+force selectbox	common	da	Påtving Valgbox
+france	common	da	Frankrig
+french guiana	common	da	Fransk Guinea
+french polynesia	common	da	Fransk Polynesien
+french southern territories	common	da	Franske Sydlige Territorier
+friday	common	da	Fredag
+ftp	common	da	FTP
+fullname	common	da	Fuldenavn
+gabon	common	da	Gabon
+gambia	common	da	Gambia
+general menu	common	da	Hoved menu
+georgia	common	da	Georgien
+germany	common	da	Tyskland
+ghana	common	da	Ghana
+gibraltar	common	da	Gibraltar
+global	common	da	Global
+global public	common	da	Global adgang
+go today	jscalendar	da	Gå i dag
+grant access	common	da	Giv adgang
+greece	common	da	Grækenland
+greenland	common	da	Grønland
+grenada	common	da	Grenada
+group	common	da	Gruppe
+group access	common	da	Gruppeadgang
+group has been added	common	da	Gruppe er tilføjet
+group has been deleted	common	da	Gruppe er slettet
+group has been updated	common	da	Gruppe er opdateret
+group name	common	da	gruppe navn
+group public	common	da	Adgang til gruppe
+groups	common	da	Grupper
+groups with permission for %1	common	da	Grupper med rettigheder til %1
+groups without permission for %1	common	da	Grupper uden rettigheder til %1
+guadeloupe	common	da	Guadeloupe
+guam	common	da	Guam
+guatemala	common	da	Guatemala
+guinea	common	da	Guinea
+guinea-bissau	common	da	Guinea-Bissau
+guyana	common	da	Guyana
+haiti	common	da	Haiti
+heard island and mcdonald islands	common	da	Heard Øen og McDonald øerne
+height	common	da	Højde
+help	common	da	Hjælp
+high	common	da	Høj
+highest	common	da	Højeste
+holy see (vatican city state)	common	da	Vatikanet
+home	common	da	Startside
+home email	common	da	privat e-mail
+honduras	common	da	Honduras
+hong kong	common	da	Hong Kong
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
+hungary	common	da	Ungarn
+iceland	common	da	Island
+image url	common	da	Billedets adresse
+india	common	da	Indien
+indonesia	common	da	Indonesien
+insert all %1 addresses of the %2 contacts in %3	common	da	Indsæt alle %1 adresserne fra %2 kontakterne i %3
+insert column after	common	da	Indslt kolonne efter
+insert column before	common	da	Indsæt kolonne foran
+insert row after	common	da	Indsæt række efter
+insert row before	common	da	Indsæt række foran
+international	common	da	International
+invalid ip address	common	da	Ugyldig IP
+invalid password	common	da	Ugyldig adgangskode
+iran, islamic republic of	common	da	Iran, Den Islamiske Republik
+iraq	common	da	Irak
+ireland	common	da	Irland
+israel	common	da	Israel
+it has been more then %1 days since you changed your password	common	da	Det er mere end %1 dage siden du sidst ændrede dit password
+it is recommended that you run setup to upgrade your tables to the current version	common	da	Det anbefales at du kører setup for at opgradere dine tabeller til den nuværende version.
+italic	common	da	Kursiv
+italy	common	da	Italien
+jamaica	common	da	Jamaica
+january	common	da	Januar
+japan	common	da	Japan
+jordan	common	da	Jordan
+july	common	da	Juli
+june	common	da	Juni
+kazakstan	common	da	Kazakstan
+kenya	common	da	Kenia
+keywords	common	da	Stikord
+kiribati	common	da	Kiribati
+korea, democratic peoples republic of	common	da	Korea, Det Demokratiske Folks Republik
+korea, republic of	common	da	Korea, Republikken
+kuwait	common	da	Kuwait
+kyrgyzstan	common	da	Kyrgystan
+language	common	da	Sprog
+lao peoples democratic republic	common	da	Lao, Folkets Demokratiske Republik
+last name	common	da	Efternavn
+last name of the user, eg. "%1"	common	da	efternavn på brugeren, f.eks. "%1"
+last page	common	da	Sidste side
+lastname	common	da	Efternavn
+latvia	common	da	Letland
+lebanon	common	da	Libanon
+left	common	da	Venstre
+lesotho	common	da	Lesotho
+liberia	common	da	Liberia
+libyan arab jamahiriya	common	da	Libyen
+license	common	da	Licens
+liechtenstein	common	da	Liechenstein
+list	common	da	Liste
+lithuania	common	da	Lithuania
+local	common	da	Lokal
+login	common	da	Login
+loginid	common	da	LoginID
+logout	common	da	Log ud
+low	common	da	Lav
+lowest	common	da	Laveste
+luxembourg	common	da	Luxembourg
+macau	common	da	Macau
+macedonia, the former yugoslav republic of	common	da	Makedonien, Tidl. Jugoslaviske Republik
+madagascar	common	da	Madagaskar
+mail domain, eg. "%1"	common	da	post domæne, f.eks. "%1"
+main category	common	da	Hovedkategori
+main screen	common	da	Hovedside
+maintainer	common	da	Vedligeholder
+malawi	common	da	Malawi
+malaysia	common	da	Malaysia
+maldives	common	da	Maldiverne
+mali	common	da	Mali
+malta	common	da	Malta
+march	common	da	Marts
+marshall islands	common	da	Marshall Øerne
+martinique	common	da	Martinique
+mauritania	common	da	Mauritanien
+mauritius	common	da	Mauritius
+max number of icons in navbar	common	da	Maksimal antal ikoner i navigations bjælken.
+may	common	da	Maj
+mayotte	common	da	Mayotte
+medium	common	da	Medium
+menu	common	da	Menu
+message	common	da	Besked
+mexico	common	da	Mexico
+micronesia, federated states of	common	da	Mikronesien, Den Føderale Stat
+moldova, republic of	common	da	Moldova, Republikken
+monaco	common	da	Monaco
+monday	common	da	Mandag
+mongolia	common	da	Mongoliet
+montserrat	common	da	Montserrat
+morocco	common	da	Morokko
+mozambique	common	da	Mozambique
+myanmar	common	da	Myanmar
+name	common	da	Navn
+name of the user, eg. "%1"	common	da	fornavnet på brugeren, f.eks. "%1"
+namibia	common	da	Namibia
+nauru	common	da	Nauru
+nepal	common	da	Nepal
+netherlands	common	da	Holland
+netherlands antilles	common	da	Hollandsk Antilles
+never	common	da	Aldrig
+new caledonia	common	da	Ny Caledonien
+new entry added sucessfully	common	da	Nyt punkt succesrigt tilføjet
+new main category	common	da	Ny hovedkategori
+new value	common	da	Ny Værdi
+new zealand	common	da	New Zealand
+next	common	da	Næste
+next month (hold for menu)	jscalendar	da	Næste måned (hold knap nede for menu)
+next page	common	da	Næste side
+next year (hold for menu)	jscalendar	da	Næste år (hold knap nede for menu)
+nicaragua	common	da	Nicaragua
+niger	common	da	Niger
+nigeria	common	da	Nigeria
+niue	common	da	Niue
+no	common	da	Nej
+no entries found, try again ...	common	da	ingen resultater fundet, prøv igen....
+no history for this record	common	da	Ingen historie fundet for denne post
+no subject	common	da	Intet Emne
+none	common	da	Ingen
+norfolk island	common	da	Norfolk Øen
+normal	common	da	Normal
+northern mariana islands	common	da	Nordligt Mariana Øerne
+norway	common	da	Norge
+not assigned	common	da	ikke tildelt
+note	common	da	Note
+notes	common	da	Noter
+notify window	common	da	Notificer vindue
+november	common	da	November
+october	common	da	Oktober
+ok	common	da	OK
+old value	common	da	Gammel Værdi
+oman	common	da	Oman
+on *nix systems please type: %1	common	da	På *nix systemer skriver Du: %1
+on mouse over	common	da	Ved mus over
+only private	common	da	kun private
+only yours	common	da	Kun Din
+open notify window	common	da	Åben Notificer Vindue
+open popup window	common	da	åben popup vindue
+ordered list	common	da	Nummerliste
+original	common	da	Original
+other	common	da	Anden
+overview	common	da	Oversigt
+owner	common	da	Ejer
+page was generated in %1 seconds	common	da	Siden var genereret på %1 sekunder
+pakistan	common	da	Pakistan
+palau	common	da	Palau
+palestinian territory, occupied	common	da	Palestina, Besatte Territorie
+panama	common	da	Panama
+papua new guinea	common	da	Papua Ny Guinea
+paraguay	common	da	Paraguay
+parcel	common	da	Pakke
+parent category	common	da	Ovenstående Kategori
+password	common	da	Adgangskode
+password could not be changed	common	da	Adgangskoden kunne ikke ændres
+password has been updated	common	da	Password er opdateret
+path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!!!
+pattern for search in addressbook	common	da	Mønster for søg i Adressebog
+pattern for search in calendar	common	da	Mønster for søg i Kalender
+pattern for search in projects	common	da	Mønster for søg i Projekter
+permissions to the files/users directory	common	da	Rettigheder for fil/bruger mappen
+personal	common	da	Personlig
+peru	common	da	Peru
+philippines	common	da	Fillipinerne
+phone number	common	da	Telefonnummer
+pitcairn	common	da	Pitcairn
+please %1 by hand	common	da	Udfør venligst %1 manuelt
+please enter a name	common	da	Indtast venligst et navn!
+please run setup to become current	common	da	Kør venligst setup for at blive opdateret
+please select	common	da	Vælg venligst
+please set your global preferences	common	da	Indstil venligst dine globale indstillinger!
+please set your preferences for this application	common	da	Indtast venligst dine præferencer for denne applikation
+please wait...	common	da	Vent venligst...
+poland	common	da	Polen
+portugal	common	da	Portugal
+postal	common	da	Post
+preferences	common	da	Præferencer
+preferences for the idots template set	common	da	Præferencer for idots skabelonen
+prev. month (hold for menu)	jscalendar	da	Sidste måned (hold knap nede for menu)
+prev. year (hold for menu)	jscalendar	da	Sidste år (hold knap nede for menu)
+previous page	common	da	Forrige side
+print	common	da	Udskriv
+priority	common	da	Prioritet
+private	common	da	Privat
+project	common	da	Projekt
+public	common	da	offentlig
+puerto rico	common	da	Puerto Rico
+qatar	common	da	Qatar
+read	common	da	Læs
+read this list of methods.	common	da	Læs denne liste over metoder
+reject	common	da	Afvis
+rename	common	da	Omdøb
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
+returns an array of todo items	common	da	Returnere et array af opgaver
+returns struct of users application access	common	da	Returnere en struct af brugerapplikations adgang
+reunion	common	da	Reunion
+right	common	da	Højre
+romania	common	da	Romanien
+russian federation	common	da	Rusland
+rwanda	common	da	Rwanda
+saint helena	common	da	Sankt Helena
+saint kitts and nevis	common	da	Sankt Kitts og Nevis
+saint lucia	common	da	Sankt Lucia
+saint pierre and miquelon	common	da	Sankt Pierre og Miquelon
+saint vincent and the grenadines	common	da	Sankt Vincent og Grenadinerne
+samoa	common	da	Samoa
+san marino	common	da	San Marino
+sao tome and principe	common	da	Sao Tome og Principe
+saturday	common	da	Lørdag
+saudi arabia	common	da	Saudi Arabien
+save	common	da	Gem
+search	common	da	Søg
+section	common	da	Sektion
+select	common	da	Vælg
+select all %1 %2 for %3	common	da	Vælg alle %1 %2 for %3
+select category	common	da	Vælg Kategori
+select date	common	da	Vælg dato
+select group	common	da	Vælg gruppe
+select home email address	common	da	Vælg privat e-mail adresse
+select one	common	da	Vælg en
+select user	common	da	Vælg bruger
+select work email address	common	da	Vælg arbejds e-mail adresse
+send	common	da	Send
+senegal	common	da	Senegal
+september	common	da	September
+server %1 has been added	common	da	Server %1 er tilføjet
+server name	common	da	Servernavn
+session has been killed	common	da	Sessionen er afsluttet
+setup	common	da	Setup
+setup main menu	common	da	Setup Hoved menu
+seychelles	common	da	Seychellerne
+show all	common	da	Vis alt
+show all categorys	common	da	Vis alle kategorier
+show menu	common	da	vis menu
+show page generation time	common	da	Vis side generations tid
+show page generation time on the bottom of the page?	common	da	Vis side generations tiden i bunden af siden?
+show_more_apps	common	da	vis_flere_applikationer
+showing %1	common	da	Viser: %1
+showing %1 - %2 of %3	common	da	Viser: %1 - %2 ud af %3
+sierra leone	common	da	Sierra Leone
+singapore	common	da	Singapore
+slovakia	common	da	Slovakiet
+slovenia	common	da	Slovenien
+solomon islands	common	da	Solomon Øerne
+somalia	common	da	Somalia
+sorry, your login has expired	login	da	Desværre, Din session er udløbet
+south africa	common	da	Syd Afrika
+south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
+spain	common	da	Spanien
+sri lanka	common	da	Sri Lanka
+start date	common	da	Startdato
+start time	common	da	Starttid
+status	common	da	Status
+subject	common	da	Emne
+submit	common	da	Send
+sudan	common	da	Sudan
+sunday	common	da	Søndag
+suriname	common	da	Suriname
+svalbard and jan mayen	common	da	Svalbard og Jan Mayen
+swaziland	common	da	Swaziland
+sweden	common	da	Sverige
+switzerland	common	da	Schweiz
+syrian arab republic	common	da	Syrien, Den Arabiske Republik
+table properties	common	da	Table properties
+taiwan	common	da	Taiwan/Taipei
+tajikistan	common	da	Tajikistan
+tanzania, united republic of	common	da	Tanzania, Den forenede Republik
+thailand	common	da	Thailand
+the api is current	common	da	APIen er up-to-date
+the api requires an upgrade	common	da	APIen skal opdateres
+the following applications require upgrades	common	da	Følgende applikationer skal opdateres
+the mail server returned	common	da	Postserveren retunerede
+this application is current	common	da	Denne applikation er up-to-date
+this application requires an upgrade	common	da	Denne applikation skal opdateres
+this name has been used already	common	da	Dette navn er allerede i brug!
+thursday	common	da	Torsdag
+time	common	da	Tid
+time selection:	jscalendar	da	Tid valgt:
+time zone	common	da	Tidszone
+time zone offset	common	da	Tidszone forskel
+title	common	da	Titel
+to	common	da	Til
+to correct this error for the future you will need to properly set the	common	da	For at rette denne fejl for fremtiden skal Du korrekt opsætte
+to go back to the msg list, click <a href= %1 >here</a>	common	da	For at gå tilbage til beskedlisten, klik <a href="%1">her</a>
+today	common	da	I dag
+todays date, eg. "%1"	common	da	i dags dato, f.eks. "%1"
+toggle first day of week	jscalendar	da	Toogle første dag på ugen
+togo	common	da	Togo
+tokelau	common	da	Tokelau
+tonga	common	da	Tonga
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	da	For mange fejlede forsøg på at logge ind: %1 fra brugeren '%2', %3 fra IP'en %4
+top	common	da	Top
+total	common	da	Total
+trinidad and tobago	common	da	Trinidad og Tobago
+tuesday	common	da	Tirsdag
+tunisia	common	da	Tunesien
+turkey	common	da	Tyrkiet
+turkmenistan	common	da	Turkmenistan
+turks and caicos islands	common	da	Tyrkiske og Caicos Øerne
+tuvalu	common	da	Tuvalu
+uganda	common	da	Uganda
+ukraine	common	da	Ukraine
+underline	common	da	Understreg
+united arab emirates	common	da	Forenede Arabiske Emirater
+united kingdom	common	da	England
+united states	common	da	USA
+united states minor outlying islands	common	da	USA Mindre omkringliggende øer
+unknown	common	da	Ukendt
+update	common	da	Opdater
+url	common	da	URL
+uruguay	common	da	Uruguay
+use button to search for	common	da	brug knappen for at søge efter
+use button to search for address	common	da	brug knappen for at søge efter adresser
+use button to search for calendarevent	common	da	brug knappen for at søge efter kalender hændelser
+use button to search for project	common	da	brug knappen for at søge efter projekter
+user	common	da	Bruger
+user accounts	common	da	bruger kontoer
+user groups	common	da	bruger grupper
+username	common	da	Brugernavn
+users	common	da	Brugere
+users choice	common	da	Brugerens Valg
+uzbekistan	common	da	Uzbekistan
+vanuatu	common	da	Vanuatu
+venezuela	common	da	Venezuela
+version	common	da	Version
+viet nam	common	da	Viet Nam
+view	common	da	Se
+virgin islands, british	common	da	Jomfru Øer, De Britiske
+virgin islands, u.s.	common	da	Jomfru Øer, De Amerikanske
+wallis and futuna	common	da	Wallis og Futuna
+wednesday	common	da	Onsdag
+welcome	common	da	Velkommen
+western sahara	common	da	Vest Sahara
+which groups	common	da	Hvilke grupper
+width	common	da	Bredde
+wk	jscalendar	da	uge
+work email	common	da	arbejds e-mail
+written by:	common	da	Skrevet af:
+year	common	da	År
+yemen	common	da	Yemen
+yes	common	da	Ja
+you are required to change your password during your first login	common	da	Du skal ændre Dit password ved Din første log ind
+you have been successfully logged out	login	da	Du er nu logget ud
+you have not entered a title	common	da	Du har ikke indtastet en titel
+you have not entered a valid date	common	da	Du har ikke indtastet en gyldig dato
+you have not entered a valid time of day	common	da	Du har ikke indtastet en gyldig tidspunkt
+you have not entered participants	common	da	Du har ikke indtastet deltagere
+you have selected an invalid date	common	da	Du har valgt en ugyldig dato!
+you have selected an invalid main category	common	da	Du har valgt en ugyldig hovedkategori!
+you have successfully logged out	common	da	Du har logget ud
+your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!
+your message has been sent	common	da	Din besked er afsendt
+your search returned %1 matchs	common	da	Søgningen leverede %1 resultater
+your search returned 1 match	common	da	Søgningen leverede 1 resultat
+your session could not be verified.	login	da	Din session kunne ikke verificeres
+your settings have been updated	common	da	Dine indstillinger er opdateret
+yugoslavia	common	da	Jugoslavien
+zambia	common	da	Zambia
+zimbabwe	common	da	Zimbabwe
+site configuration	common	da	Site konfiguration

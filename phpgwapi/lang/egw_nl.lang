@@ -1,0 +1,763 @@
+%1 email addresses inserted	common	nl	%1 emailadres ingevoerd
+%1 file	common	nl	%1 bestand
+%1 is not executable by the webserver !!!	common	nl	%1 kan niet door de webserver uitgevoerd worden !!!
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2<br />of maak %3 schrijfbaar voor de webserver
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1eGroupWare%2 is een multi-user, web-gebaseerde groupware suite, geschreven in %3PHP%4.
+(session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
+(shift-)click or drag to change value	jscalendar	nl	(Shift-)Klik of sleep om waarde te wijzigen
+- click on any of the time parts to increase it	jscalendar	nl	- Klik op een willekeurig tijdsonderdeel om het te verhogen
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	nl	- Hou de muisknop op een van de knoppen hierboven voor een snellere selectie.
+- or click and drag for faster selection.	jscalendar	nl	- of klik en sleep voor snellere selectie
+- or shift-click to decrease it	jscalendar	nl	- of Shift-klik om het te verlagen
+- use the %1, %2 buttons to select month	jscalendar	nl	- Gebruik de %1, %2 knoppen om de maand te kiezen
+- use the %1, %2 buttons to select year	jscalendar	nl	- Gebruik de %1, %2 knoppen om het jaar te kiezen
+00 (disable)	admin	nl	00 (uitschakelen)
+1 day	common	nl	1 dag
+1 hour	common	nl	1 uur
+1 month	common	nl	1 maand
+1 week	common	nl	1 week
+13 (ntp)	admin	nl	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	nl	3 letters voor verkorte dagaanduiding
+3 number of chars for month-shortcut	jscalendar	nl	3 letters voor verkorte maandaanduiding
+80 (http)	admin	nl	80 (http)
+about	common	nl	Over
+about %1	common	nl	Over %1
+about egroupware	common	nl	Over eGroupWare
+about the calendar	jscalendar	nl	Over de agenda
+access	common	nl	Toegang
+access not permitted	common	nl	Toegang geweigerd
+account has been created	common	nl	Account is aangemaakt
+account has been deleted	common	nl	Account is verwijderd
+account has been updated	common	nl	Account is bijgewerkt
+account is expired	common	nl	Account is verlopen
+accounts	common	nl	Accounts
+acl	common	nl	ACL
+action	common	nl	Actie
+active	common	nl	Actief
+add	common	nl	Toevoegen
+add %1 category for	common	nl	%1 Categorie toevoegen voor
+add category	common	nl	Categorie toevoegen
+add shortcut	common	nl	Snelkoppeling toevoegen
+add sub	common	nl	Sub toevoegen
+addressbook	common	nl	Adresboek
+admin	common	nl	Beheer
+administration	common	nl	Beheer
+afghanistan	common	nl	AFGHANISTAN
+albania	common	nl	ALBANIË
+algeria	common	nl	ALGERIJE
+all	common	nl	Alles
+all fields	common	nl	alle velden
+all languages	common	nl	alle talen
+alphabet	common	nl	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	nl	Afwisselende style-sheet:
+american samoa	common	nl	AMERIKAANS SAMOA
+an error happened	common	nl	Een fout trad op
+an existing and by the webserver readable directory enables the image browser and upload.	common	nl	Een bestaande EN door de webserver leesbare directory maakt het mogelijk om door afbeeldingen te bladeren en te uploaden.
+andorra	common	nl	ANDORRA
+angola	common	nl	ANGOLA
+anguilla	common	nl	ANGUILLA
+antarctica	common	nl	ANTARTICA
+antigua and barbuda	common	nl	ANTIGUA EN BARBUDA
+application	common	nl	Toepassing
+apply	common	nl	Toepassen
+april	common	nl	April
+are you sure you want to delete these entries ?	common	nl	Weet u zeker dat uw deze records wilt verwijderen?
+are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit item wilt verwijderen?
+argentina	common	nl	ARGENTINIË
+armenia	common	nl	ARMENIË
+aruba	common	nl	ARUBA
+august	common	nl	Augustus
+australia	common	nl	AUSTRALIË
+austria	common	nl	OOSTENRIJK
+author	common	nl	Auteur
+autohide sidebox menu's	common	nl	Automatisch menu's in de zijlijn verbergen
+autohide sidebox menus	common	nl	Automatisch menu's in de zijlijn verbergen
+automatically hide the sidebox menu's?	common	nl	Automatisch de menu's in de zijlijn verbergen?
+automatically hide the sidebox menus?	common	nl	Automatisch de menu's in de zijlijn verbergen?
+autosave default category	common	nl	Automatisch standaard categorie opslaan
+azerbaijan	common	nl	AZERBEIDSJAN
+back	common	nl	Terug
+back to user login	common	nl	Terug naar gebruikers loginscherm
+background color:	common	nl	Achtergrondkleur:
+backupdir '%1' is not writeable by the webserver	common	nl	backupmap '%1' is niet schrijfbaar voor de webserver
+bad login or password	common	nl	Onjuist gebruikersnaam of wachtwoord
+bahamas	common	nl	BAHAMAS
+bahrain	common	nl	BAHREIN
+bangladesh	common	nl	BANGLADESH
+barbados	common	nl	BARBADOS
+bcc	common	nl	Bcc
+belarus	common	nl	WIT-RUSLAND
+belgium	common	nl	BELGIË
+belize	common	nl	BELIZE
+benin	common	nl	BENIN
+bermuda	common	nl	BERMUDA
+bhutan	common	nl	BHUTAN
+blocked, too many attempts	common	nl	Geblokkeerd, te veel pogingen
+bold	common	nl	Vet
+bolivia	common	nl	BOLIVIA
+border	common	nl	Rand
+bosnia and herzegovina	common	nl	BOSNIË-HERZEGOVINA
+botswana	common	nl	BOTSWANA
+bottom	common	nl	Onder
+bouvet island	common	nl	Centraal Afrikaanse Republiek
+brazil	common	nl	BRAZILIË
+british indian ocean territory	common	nl	BRITISH INDIAN OCEAN TERRITORY
+brunei darussalam	common	nl	BRUNEI DARUSSALAM
+bulgaria	common	nl	BULGARIJE
+bulgarian	common	nl	Bulgaars
+burkina faso	common	nl	BURKINA FASO
+burundi	common	nl	BURUNDI
+calendar	common	nl	Agenda
+cambodia	common	nl	CAMBODJA
+cameroon	common	nl	KAMEROEN
+canada	common	nl	CANADA
+cancel	common	nl	Annuleren
+cannot replace %1 because it is a directory	common	nl	Kan %1 niet vervangen omdat het een map is
+cant open '%1' for %2	common	nl	Kan '%1' niet openen voor %2
+cape verde	common	nl	KAAPVERDIË
+caption	common	nl	Opmerking
+categories	common	nl	Categorieën
+categories for	common	nl	categorieën voor
+category	common	nl	Categorie
+category %1 has been added !	common	nl	Categorie %1 is toegevoegd
+category %1 has been updated !	common	nl	Categorie %1 is bijgewerkt
+cayman islands	common	nl	KAAIMAN EILANDEN
+cc	common	nl	Cc
+centered	common	nl	gecentreerd
+central african republic	common	nl	CENTRAAL-AFRIKAANSE REPUBLIEK
+chad	common	nl	CHAD
+change	common	nl	Veranderen
+charset	common	nl	utf-8
+check installation	common	nl	Controleer installatie
+check now	common	nl	Nu controleren
+chile	common	nl	CHILI
+china	common	nl	CHINA
+choose a background color	common	nl	Kies een achtergrondkleur
+choose a background color for the icons	common	nl	Kies een achtergrondkleur voor de pictogrammen
+choose a background image.	common	nl	Kies een achtergrondafbeelding.
+choose a background style.	common	nl	Kies een achtergrondstijl.
+choose a text color for the icons	common	nl	KIes een tekstkleur voor de pictogrammen
+choose the category	common	nl	Kies de categorie
+choose the parent category	common	nl	Kies bovenliggende categorie
+christmas island	common	nl	CHRISTMASEILAND
+clear	common	nl	Wissen
+clear form	common	nl	Formulier wissen
+click	common	nl	Klik
+click here to resume your egroupware session.	common	nl	Klik hier om je eGroupWare sessie voort te zetten.
+click or mouse over to show menus	common	nl	Klik or Mouse Over om menus weer te geven
+click or mouse over to show menus?	common	nl	Klik or Mouse Over om menus weer te geven?
+click this image on the navbar: %1	common	nl	Klik deze afbeelding op de navigatiebalk: %1
+close	common	nl	Sluiten
+close sidebox	common	nl	Zijkant box sluiten
+cocos (keeling) islands	common	nl	COCOS (KEELING) EILANDEN
+colombia	common	nl	COLOMBIA
+common preferences	common	nl	Algemene voorkeuren
+comoros	common	nl	COMOROS
+company	common	nl	Bedrijf
+congo	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
+congo, the democratic republic of the	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
+contacting server...	common	nl	Verbinden met server...
+cook islands	common	nl	COOKEILANDEN
+copy	common	nl	Kopiëren
+costa rica	common	nl	COSTA RICA
+cote d ivoire	common	nl	IVOORKUST
+could not contact server. operation timed out!	common	nl	Kon geen verbinding met server maken. Bewerkingstijd is overschreden!
+create	common	nl	Maken
+created by	common	nl	Gemaakt door
+croatia	common	nl	KROATIË
+cuba	common	nl	CUBA
+currency	common	nl	Munteenheid
+current	common	nl	Huidig
+current users	common	nl	Huidig aantal gebruikers
+cyprus	common	nl	CYPRUS
+czech republic	common	nl	TSJECHIË
+database error	common	nl	Database fout
+database error!	common	nl	Database fout!
+date	common	nl	Datum
+date due	common	nl	Einddatum
+date selection:	jscalendar	nl	Datumselectie
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	Datetime poort<br />Indien poort 13 gebruikt wordt, pas dan s.v.p. de firewall regels eerst aan voordat u deze pagina verzendt.<br />(Port: 13 / Host: 129.6.15.28)
+december	common	nl	December
+default category	common	nl	Standaard Categorie
+default height for the windows	common	nl	Standaard hoogte voor de vensters
+default width for the windows	common	nl	Standaard breedte voor de vensters
+delete	common	nl	Verwijderen
+delete row	common	nl	Rij verwijderen
+denmark	common	nl	DENEMARKEN
+description	common	nl	Beschrijving
+detail	common	nl	Detail
+details	common	nl	Details
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	nl	Het bugfixscript uitschakelen dat dient om transparante PNG-afbeeldingen juist weer te geven in Internet Explorer 5.5 en hoger?
+direction left to right	common	nl	Richting links naar rechts
+directory	common	nl	Directory
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	nl	Directory bestaat niet, kan niet gelezen worden door de webserver of is geen relatief pad ten opzichte van de document root.
+disable internet explorer png-image-bugfix	common	nl	Internet Explorer png-image-bugfix  uitschakelen?
+disable slider effects	common	nl	Bewegende schuifeffecten uitschakelen
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	nl	Schakel de bewegende schuifeffecten uit wanneer een langzame computer gebruikt of problemen met de uitklapmenus ondervind.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	nl	Het uitvoeren van een bugfixscript voor Internet Explore 5.5 en hoger uitschakelen zodat transparantie in PNG-afbeeldingen zichtbaar wordt?
+disabled	common	nl	Uitgeschakeld
+display %s first	jscalendar	nl	%s eerst tonen
+djibouti	common	nl	DJIBOUTI
+do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategorieën wissen
+doctype:	common	nl	DOCTYPE:
+document properties	common	nl	Documenteigenschappen
+document title:	common	nl	Documenttitel:
+domain	common	nl	Domein
+domain name for mail-address, eg. "%1"	common	nl	domeinnaam voor emailadres, bijv. "%1"
+domestic	common	nl	thuis
+dominica	common	nl	DOMINICA
+dominican republic	common	nl	DOMINICAANSE REPUBLIEK
+done	common	nl	Gereed
+drag to move	jscalendar	nl	Sleep om te verplaatsen
+e-mail	common	nl	Email
+east timor	common	nl	OOST TIMOR
+eastern european	common	nl	Oost europees
+ecuador	common	nl	ECUADOR
+edit	common	nl	Bewerken
+edit %1 category for	common	nl	Bewerk %1 categorie voor
+edit categories	common	nl	Categorieën bewerken
+edit category	common	nl	Bewerk categorie
+egroupware	common	nl	eGroupWare
+egroupware api version	common	nl	eGroupWare API versie
+egroupware: login blocked for user '%1', ip %2	common	nl	eGroupWare: login geblokkeerd voor gebruiker '%1', IP %2
+egypt	common	nl	EGYPTE
+el salvador	common	nl	EL SALVADOR
+email	common	nl	Email
+email-address of the user, eg. "%1"	common	nl	emailadres van de gebruiker, bijv. "%1"
+enabled	common	nl	Geactiveerd
+end date	common	nl	Einddatum
+end time	common	nl	Eindtijd
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Vul de lokatie van de eGroupWare URL in.<br />Voorbeeld: http://www.domeinnaam.nl/egroupware of /egroupware.<br /><b>Geen afsluitende slash toevoegen</b>
+entry has been deleted sucessfully	common	nl	Item succesvol verwijderd
+entry not found!	common	nl	Item niet gevonden!
+entry updated sucessfully	common	nl	Item succesvol bijgewerkt
+equatorial guinea	common	nl	EQUATORIAAL GUINEA
+eritrea	common	nl	ERITREA
+error	common	nl	Fout
+error creating %1 %2 directory	common	nl	Error tijdens het creëren van %1 %2 directory
+error deleting %1 %2 directory	common	nl	Error tijdens het verwijderen van %1 %2 directory
+error renaming %1 %2 directory	common	nl	Error tijdens het hernoemen van %1 %2 directory
+estonia	common	nl	ESTONIA
+ethiopia	common	nl	ETHIOPIË
+everything	common	nl	Alles
+exact	common	nl	exact
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	nl	Verbinden met server is mislukt of een ongeldige reactie is ontvangen. Probeer opnieuw in te loggen. Neem contact op met de beheerder indien het mislukt.
+falkland islands (malvinas)	common	nl	FALKLAND EILANDEN
+faroe islands	common	nl	LAND EILANDEN
+fax number	common	nl	Faxnummer
+features of the editor?	common	nl	Functies van de tekstverwerker?
+february	common	nl	Februari
+fields	common	nl	Velden
+fiji	common	nl	FIJI
+files	common	nl	Bestanden
+filter	common	nl	Filter
+finland	common	nl	FINLAND
+first name	common	nl	Voornaam
+first name of the user, eg. "%1"	common	nl	Voornaam van de gebruiker, bijv. "%1"
+first page	common	nl	Eerste pagina
+firstname	common	nl	Voornaam
+fixme!	common	nl	FIXME!
+folder already exists.	common	nl	Map bestaat reeds.
+force selectbox	common	nl	Forceer Selectbox
+forever	common	nl	Voor altijd
+france	common	nl	FRANKRIJK
+french guiana	common	nl	FRANS GUYANA
+french polynesia	common	nl	FRANS POLYNESIË
+french southern territories	common	nl	FRANSE ZUIDELIJKE GEBIEDEN
+friday	common	nl	Vrijdag
+ftp	common	nl	FTP
+fullname	common	nl	Volledige naam
+fullscreen mode	common	nl	Volledig scherm modus
+gabon	common	nl	GABON
+gambia	common	nl	GAMBIA
+general menu	common	nl	Algemeen menu
+georgia	common	nl	HONGARIJ
+german	common	nl	Duits
+germany	common	nl	DUITSLAND
+ghana	common	nl	GHANA
+gibraltar	common	nl	GIBRALTAR
+global	common	nl	Globale
+global public	common	nl	Toegang Openbaar
+go today	jscalendar	nl	Ga naar vandaag
+grant access	common	nl	Geef toegang
+greece	common	nl	GRIEKENLAND
+greek	common	nl	Grieks
+greenland	common	nl	GROENLAND
+grenada	common	nl	GRENADA
+group	common	nl	Groep
+group access	common	nl	Groepstoegang
+group has been added	common	nl	Groep is toegevoegd
+group has been deleted	common	nl	Groep is verwijderd
+group has been updated	common	nl	Groep is bijgewerkt
+group name	common	nl	groepsnaam
+group public	common	nl	Toegang voor groep
+groups	common	nl	Groepen
+groups with permission for %1	common	nl	Groepen met toegangsrechten voor %1
+groups without permission for %1	common	nl	Groepen zonder toegangsrechten voor %1
+guadeloupe	common	nl	GUADELOUPE
+guam	common	nl	GUAM
+guatemala	common	nl	GUATEMALA
+guinea	common	nl	GUINEA
+guinea-bissau	common	nl	GUINEA-BISSAU
+guyana	common	nl	GUYANA
+haiti	common	nl	HAITI
+heard island and mcdonald islands	common	nl	HEARD EILAND EN MCDONALD EILANDEN
+height	common	nl	Hoogte
+help	common	nl	Help
+high	common	nl	Hoog
+highest	common	nl	Hoogste
+holy see (vatican city state)	common	nl	VATICAANSTAD
+home	common	nl	Start
+home email	common	nl	email thuis
+honduras	common	nl	HONDURAS
+hong kong	common	nl	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
+how to show the general egroupware menu ?	common	nl	Hoe moet het algemene eGroupWare menu weergegeven worden?
+hungary	common	nl	HONGARIJË
+iceland	common	nl	IJSLAND
+iespell not detected. click ok to go to download page.	common	nl	ieSpell is niet gevonden. Klik OK om naar de download pagina te gaan.
+if the clock is enabled would you like it to update it every second or every minute?	common	nl	Indien de klok is ingeschakeld, wilt u dan dat deze iedere seconde of iedere minuut wordt geactualiseerd?
+if there are some images in the background folder you can choose the one you would like to see.	common	nl	Indien er enkele afbeeldingen in de achtergrond map aanwezig zijn, kunt u er een kiezen die u wilt weergeven.
+image directory relative to document root (use / !), example:	common	nl	Afbeeldingen directory relatief ten opzichte van de document root (gebruik / !), bijvoorbeeld:
+image url	common	nl	Afbeelding URL
+india	common	nl	INDIA
+indonesia	common	nl	INDONESIË
+insert all %1 addresses of the %2 contacts in %3	common	nl	Voer alle %1 adressen in van de %2 contacten in %3
+insert column after	common	nl	Kolom invoegen achter
+insert column before	common	nl	Kolom invoegen voor
+insert row after	common	nl	Rij invoegen onder
+insert row before	common	nl	Rij invoegen boven
+international	common	nl	Internationaal
+invalid filename	common	nl	Ongelde bestandsnaam
+invalid ip address	common	nl	Ongeldig IP-adres
+invalid password	common	nl	Ongeldig wachtwoord
+iran, islamic republic of	common	nl	IRAN
+iraq	common	nl	IIRAK
+ireland	common	nl	IERLAND
+israel	common	nl	ISRAËL
+it has been more then %1 days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd.
+it is recommended that you run setup to upgrade your tables to the current version	common	nl	Het is aanbevolen dat u setup uitvoerd om uw tabellen bij te werken naar een actuele versie
+italic	common	nl	Cursief
+italy	common	nl	ITALIË
+jamaica	common	nl	JAMAICA
+january	common	nl	Januari
+japan	common	nl	JAPAN
+japanese	common	nl	Japans
+jordan	common	nl	JORDANIË
+july	common	nl	Juli
+jun	common	nl	Jun
+june	common	nl	Juni
+justify center	common	nl	Centreren
+justify full	common	nl	Uitvullen
+justify left	common	nl	Links uitlijnen
+justify right	common	nl	Rechts uitlijnen
+kazakstan	common	nl	KAZACHSTAN
+kenya	common	nl	KENIA
+keywords	common	nl	Trefwoorden
+kiribati	common	nl	KIRIBATI
+korea, democratic peoples republic of	common	nl	NOORD-KOREA
+korea, republic of	common	nl	ZUID-KOREA
+korean	common	nl	Koreaans
+kuwait	common	nl	KOEWEIT
+kyrgyzstan	common	nl	KIRGIZIË
+language	common	nl	Taal
+language_direction_rtl	common	nl	language_direction_rtl
+lao peoples democratic republic	common	nl	LAOS
+last name	common	nl	Achternaam
+last name of the user, eg. "%1"	common	nl	Achternaam van de gebruiker, bijv. "%1"
+last page	common	nl	laaste pagina
+lastname	common	nl	Achternaam
+latvia	common	nl	LETLAND
+ldap-mgr	common	nl	LDAP-beheerder
+lebanon	common	nl	LIBANON
+left	common	nl	Links
+lesotho	common	nl	LESOTHO
+liberia	common	nl	LIBERIE
+libyan arab jamahiriya	common	nl	LIBIË
+license	common	nl	Licentie
+liechtenstein	common	nl	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens bevat ##last-check-run## van tabel %3 ==> overgeslagen</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	nl	Regel %1: '%2'<br /><b>csv gegevens klopt niet met het aantal kolommen van tabel %3 ==> genegeerd</b>
+list	common	nl	Lijst
+list members	common	nl	Lijst van leden
+lithuania	common	nl	LITOUWEN
+local	common	nl	Lokaal
+login	common	nl	Aanmelden
+loginid	common	nl	Loginnaam
+logout	common	nl	Afmelden
+lost login id	common	nl	Vergeten Login ID
+lost password	common	nl	Vergeten wachtwoord
+low	common	nl	Laag
+lowest	common	nl	Laagste
+luxembourg	common	nl	LUXEMBURG
+macau	common	nl	MACAU
+macedonia, the former yugoslav republic of	common	nl	MACEDONIË
+madagascar	common	nl	MADAGASKAR
+mail domain, eg. "%1"	common	nl	emai domein, bijv. "%1"
+main category	common	nl	Hoofdcategorie
+main screen	common	nl	Hoofdscherm
+maintainer	common	nl	Beheerder
+malawi	common	nl	MALAWI
+malaysia	common	nl	MALEISIË
+maldives	common	nl	MALADIEVEN
+mali	common	nl	MALI
+malta	common	nl	MALTA
+march	common	nl	Maart
+marshall islands	common	nl	MARSHALL EILANDEN
+martinique	common	nl	MARTINIQUE
+mauritania	common	nl	MAURITANIË
+mauritius	common	nl	MAURITIUS
+max number of icons in navbar	common	nl	Max. aantal iconen in navigatiebalk?
+may	common	nl	Mei
+mayotte	common	nl	MAYOTTE
+medium	common	nl	Gemiddeld
+menu	common	nl	Menu
+message	common	nl	Bericht
+mexico	common	nl	MEXICO
+micronesia, federated states of	common	nl	MICRONESIË
+minute	common	nl	minuut
+moldova, republic of	common	nl	MOLDOVIË
+monaco	common	nl	MONACO
+monday	common	nl	Maandag
+mongolia	common	nl	MONGOLIË
+montenegro	common	nl	MONTENEGRO
+montserrat	common	nl	MONTSERRAT
+morocco	common	nl	MAROKKO
+mozambique	common	nl	MOZAMBIQUE
+multiple	common	nl	meerdere
+myanmar	common	nl	BIRMA (MYANMAR)
+name	common	nl	Naam
+name of the user, eg. "%1"	common	nl	naam van de gebruiker, bijv. "%1"
+namibia	common	nl	NAMIBIË
+nauru	common	nl	NAURU
+nepal	common	nl	NEPAL
+netherlands	common	nl	NEDERLAND
+netherlands antilles	common	nl	DE NEDERLANDSE ANTILLEN
+never	common	nl	Nooit
+new caledonia	common	nl	NIEUW-CALEDONIË
+new entry added sucessfully	common	nl	Nieuw item succesvol toegevoegd
+new main category	common	nl	Nieuwe hoofdcategorie
+new value	common	nl	Nieuwe waarde
+new zealand	common	nl	NIEUW ZEELAND
+next	common	nl	Volgende
+next month (hold for menu)	jscalendar	nl	Volgende maand (vasthouden voor menu)
+next page	common	nl	volgende pagina
+next year (hold for menu)	jscalendar	nl	Volgend jaar (vasthouden voor menu)
+nicaragua	common	nl	NICARAGUA
+niger	common	nl	NIGER
+nigeria	common	nl	NIGERIA
+niue	common	nl	NIUE
+no	common	nl	Nee
+no entries found, try again ...	common	nl	Geen items gevonden, probeer het nogmaals ...
+no history for this record	common	nl	Geen geschiedenis voor dit item
+no savant2 template directories were found in:	common	nl	Geen Savant2 template mappen gevonden in:
+no subject	common	nl	Geen onderwerp
+none	common	nl	Geen
+norfolk island	common	nl	NORFOLK EILAND
+normal	common	nl	Normaal
+northern mariana islands	common	nl	NOORDELIJKE MARIANA-EILANDEN
+norway	common	nl	NOORWEGEN
+not	common	nl	niet
+not a user yet? register now	common	nl	Nog geen gebruiker? Registreer nu
+not assigned	common	nl	Niet toegewezen
+not readable %1 entry of user %2	common	nl	Niet leesbaar item %1 van gebruiker %2
+note	common	nl	Notitie
+notes	common	nl	Notities
+notifications	common	nl	meldingen
+notify window	common	nl	Attentievenster
+notify your administrator to correct this situation	common	nl	Waarschuw uw beheerder om deze situatie te laten corrigeren
+november	common	nl	November
+october	common	nl	Oktober
+ok	common	nl	Oké
+old value	common	nl	Oude waarde
+oman	common	nl	OMAN
+on *nix systems please type: %1	common	nl	Op *nix systemen typt u: %1
+on mouse over	common	nl	Bij Mouse Over
+only private	common	nl	alleen privé
+only yours	common	nl	alleen eigen weergeven
+oops! you caught us in the middle of system maintainance.	common	nl	Oeps! Je treft ons aan terwijl wij midden in het systeem onderhoud zitten
+open notify window	common	nl	Attentievenster openen
+open popup window	common	nl	Popupvenster openen
+open sidebox	common	nl	Zijkant box openen
+ordered list	common	nl	Genummerde lijst
+original	common	nl	Origineel
+other	common	nl	Andere
+overview	common	nl	Overzicht
+owner	common	nl	Eigenaar
+page	common	nl	Pagina
+page was generated in %1 seconds	common	nl	Deze pagina werd gegenereerd in %1 seconden.
+pakistan	common	nl	PAKISTAN
+palau	common	nl	PALAU
+palestinian territory, occupied	common	nl	PALESTIJNSE BEZETTE GEBIEDEN
+panama	common	nl	PANAMA
+papua new guinea	common	nl	PAPUA NIEUW-GUINEA
+paraguay	common	nl	PARAGUAY
+parcel	common	nl	Pakketten
+parent category	common	nl	Bovenliggende categorie
+password	common	nl	Wachtwoord
+password could not be changed	common	nl	Wachtwoord kon niet worden gewijzigd
+password has been updated	common	nl	Wachtwoord is gewijzigd
+password must contain at least %1 lowercase letters	common	nl	Wachtwoord moet minstens %1 kleine letters bevatten
+password must contain at least %1 numbers	common	nl	Wachtwoord moet minstens %1 cijfers bevatten
+password must contain at least %1 special characters	common	nl	Wachtwoord moet minstens %1 bijzondere tekens bevatten
+password must contain at least %1 uppercase letters	common	nl	Wachtwoord moet minstens %1 hoofdletters bevatten
+password must have at least %1 characters	common	nl	Wachtwoord moet minstens %1  tekens bevatten
+path to user and group files has to be outside of the webservers document-root!!!	common	nl	Pad naar gebruikers- en groepsbestanden. Dit MOET BUITEN het pad liggen van de documentendirectorie van de webserver !!!
+permission denied!	common	nl	Toestemming geweigerd!
+permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
+personal	common	nl	Persoonlijk
+peru	common	nl	PERU
+philippines	common	nl	FILIPIJNEN
+phone number	common	nl	telefoonnummer
+phpgwapi	common	nl	eGroupWare API
+pitcairn	common	nl	PITCAIRN (EILAND)
+please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
+please enter a name	common	nl	Vul a.u.b. een naam in !
+please run setup to become current	common	nl	Voer a.u.b. de setup uit om een actuele versie te verkrijgen
+please select	common	nl	Selecteer a.u.b.
+please set your global preferences	common	nl	Stel a.u.b. uw persoonlijke voorkeuren in !
+please set your preferences for this application	common	nl	Stel a.u.b. uw voorkeuren in voor deze toepassing !
+please wait...	common	nl	Even geduld a.u.b.
+please, check back with us shortly.	common	nl	Kom svp spoedig bij ons terug.
+poland	common	nl	POLEN
+portugal	common	nl	PORTUGAL
+postal	common	nl	Post
+powered by	common	nl	Ondersteund door
+preferences	common	nl	Voorkeuren
+preferences for the idots template set	common	nl	Voorkeuren voor de idots template set
+prev. month (hold for menu)	jscalendar	nl	Vorige maand (vasthouden voor menu)
+prev. year (hold for menu)	jscalendar	nl	Vorig jaar (vasthouden voor menu)
+previous page	common	nl	Vorige pagina
+primary style-sheet:	common	nl	Primaire style-sheet:
+print	common	nl	Afdrukken
+priority	common	nl	Prioriteit
+private	common	nl	Privé
+programs	common	nl	Programma's
+project	common	nl	Project
+public	common	nl	publiek
+puerto rico	common	nl	PUERTO RICO
+qatar	common	nl	QATAR
+read	common	nl	Lezen
+read this list of methods.	common	nl	Lees deze lijst met methodes.
+reading	common	nl	leest
+register	common	nl	Registreer
+regular	common	nl	Regulier
+reject	common	nl	Afwijzen
+remember me	common	nl	Onthoud mij
+remove selected accounts	common	nl	verwijder geselecteerde accounts
+remove shortcut	common	nl	Snelkoppeling verwijderen
+rename	common	nl	Hernoemen
+replace	common	nl	Vervangen
+replace with	common	nl	Vervangen met
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
+returns an array of todo items	common	nl	Geef een serie van todo items
+returns struct of users application access	common	nl	Geeft de toegangsrechten van de gebruikers
+reunion	common	nl	RÉUNION (EILAND)
+right	common	nl	Rechts
+romania	common	nl	ROMANIË
+russian	common	nl	Russisch
+russian federation	common	nl	RUSLAND
+rwanda	common	nl	RWANDA
+saint helena	common	nl	SINT HELENA
+saint kitts and nevis	common	nl	SINT KITTS EN NEVIS
+saint lucia	common	nl	SINT LUCIA
+saint pierre and miquelon	common	nl	SINT PIERRE EN MIQUELON
+saint vincent and the grenadines	common	nl	SINT VINCENT EN DE GRENADINEN
+samoa	common	nl	SAMOA
+san marino	common	nl	SAN MARINO
+sao tome and principe	common	nl	SAO TOMÉ AND PRINCIPE
+saturday	common	nl	Zaterdag
+saudi arabia	common	nl	SAUDI ARABIË
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	nl	Savant2 versie verschilt van Savant2 wrapper.<br />Deze versie: %1<br />Savants versie: %2
+save	common	nl	Opslaan
+search	common	nl	Zoeken
+search %1 '%2'	common	nl	Zoek %1 '%2'
+search accounts	common	nl	Zoek accounts
+search or select accounts	common	nl	Zoek of selecteer accounts
+second	common	nl	seconde
+section	common	nl	Sectie
+select	common	nl	Selecteren
+select all %1 %2 for %3	common	nl	Selecteer alle %1 %2  voor %3
+select category	common	nl	Selecteer Categorie
+select date	common	nl	Selecteer datum
+select group	common	nl	Selecteer groep
+select home email address	common	nl	Selecteer emailadres thuis
+select multiple accounts	common	nl	selecteer meerdere accounts
+select one	common	nl	Selecteer een
+select the default height for the application windows	common	nl	Selecteer de standaard hoogte voor de toepassingsvensters
+select the default width for the application windows	common	nl	Selecteer de standaard breedte voor de toepassingsvensters
+select user	common	nl	Selecteer gebruiker
+select work email address	common	nl	Selecteer emailadres werk
+selection	common	nl	Selectie
+send	common	nl	Verzend
+senegal	common	nl	SENEGAL
+september	common	nl	September
+serbia	common	nl	Servië
+server %1 has been added	common	nl	Server %1 is toegevoegd
+server answered. processing response...	common	nl	Server heeft geantwoord. Reactie wordt verwerkt...
+server contacted. waiting for response...	common	nl	Server verbonden. Wacht op reactie...
+server name	common	nl	Servernaam
+session has been killed	common	nl	Sessie is beëindigd
+setup	common	nl	Setup
+setup main menu	common	nl	Setup hoofdmenu
+seychelles	common	nl	SEYCHELLEN
+show all	common	nl	laat alles zien
+show all categorys	common	nl	Alle categorieën weergegeven
+show as topmenu	common	nl	Toon als Topmenu
+show clock?	common	nl	Klok weergeven?
+show home and logout button in main application bar?	common	nl	Home en logout knop weergeven in de toepassingen balk?
+show in sidebox	common	nl	Toon in zijkant blok
+show logo's on the desktop.	common	nl	Logo's op het bureaublad weergeven.
+show menu	common	nl	toon menu
+show page generation time	common	nl	Verlooptijd van de pagina's weergeven?
+show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina?
+show page generation time?	common	nl	Verlooptijd pagina weergeven?
+show the logo's of egroupware and x-desktop on the desktop.	common	nl	Toont de logo's van eGroupWare en x-desktop op het bureaublad.
+show_more_apps	common	nl	Meer applicaties weergeven
+showing %1	common	nl	weergegeven: %1
+showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
+sierra leone	common	nl	SIERRA LEONE
+simple	common	nl	Eenvoudig
+singapore	common	nl	SINGAPORE
+site configuration	common	nl	Siteconfiguratie
+slovakia	common	nl	SLOWAKIJË
+slovenia	common	nl	SLOVENIË
+solomon islands	common	nl	SALOMOMEILANDEN
+somalia	common	nl	SOMALIË
+sorry, your login has expired	login	nl	Excuses, uw sessie is verlopen
+south africa	common	nl	ZUID AFRIKA
+south georgia and the south sandwich islands	common	nl	ZUID-GEORGIA EN DE ZUIDELIJKE SANDWICHEILANDEN
+spain	common	nl	SPANJE
+sri lanka	common	nl	SRI LANKA
+start date	common	nl	Startdatum
+start time	common	nl	Starttijd
+start with	common	nl	starten met
+starting up...	common	nl	Wordt opgestart...
+status	common	nl	Status
+stretched	common	nl	uitgerekt
+subject	common	nl	Onderwerp
+submit	common	nl	Verzenden
+substitutions and their meanings:	common	nl	Vervangingen en hun betekenissen:
+sudan	common	nl	SUDAN
+sunday	common	nl	Zondag
+suriname	common	nl	SURINAME
+svalbard and jan mayen	common	nl	SVALBARD EN JAN MAYEN (EILANDEN)
+swaziland	common	nl	SWAZILAND
+sweden	common	nl	ZWEDEN
+switzerland	common	nl	ZWITSERLAND
+syrian arab republic	common	nl	SYRIË
+table properties	common	nl	Tabel-eigenschappen
+taiwan	common	nl	TAIWAN/TAIPEI
+tajikistan	common	nl	TADZJIKISTAN
+tanzania, united republic of	common	nl	TANZANIA
+text color:	common	nl	Tekstkleur:
+thailand	common	nl	THAILAND
+the api is current	common	nl	De API is actueel
+the api requires an upgrade	common	nl	De API vereist een upgrade
+the following applications require upgrades	common	nl	De volgende toepassingen vereisen een upgrade
+the mail server returned	common	nl	De mailserver gaf als reactie
+this application is current	common	nl	Deze toepassing is actueel
+this application requires an upgrade	common	nl	Deze toepassing vereist een upgrade
+this name has been used already	common	nl	Deze naam is reeds in gebruik !
+thursday	common	nl	Donderdag
+tiled	common	nl	als tegels
+time	common	nl	Tijd
+time selection:	jscalendar	nl	Tijdselectie:
+time zone	common	nl	Tijdzone
+time zone offset	common	nl	Tijdzoneverschil
+title	common	nl	Titel
+to	common	nl	Aan
+to correct this error for the future you will need to properly set the	common	nl	Om deze fout in de toekomst te voorkomen moet u de juiste
+to go back to the msg list, click <a href= %1 >here</a>	common	nl	Klik <a href="%1">hier</a> om terug te gaan in de berichtenlijst.
+today	common	nl	Vandaag
+todays date, eg. "%1"	common	nl	datum vandaag, bijv. "%1"
+toggle first day of week	jscalendar	nl	(de)activeer eerste dag van de week
+togo	common	nl	TOGO
+tokelau	common	nl	TOKELAU
+tonga	common	nl	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	nl	De veel mislukte pogingen om in te loggen: %1 voor de gebruiker '%2', %3 voor het IP %4
+top	common	nl	Boven
+total	common	nl	Totaal
+transparant bg for the icons?	common	nl	Transparante achtergrond voor de pictogrammen?
+trinidad and tobago	common	nl	TRINIDAD EN TOBAGO
+tuesday	common	nl	Dinsdag
+tunisia	common	nl	TUNISIË
+turkey	common	nl	TURKIJË
+turkmenistan	common	nl	TURKMENISTAN
+turks and caicos islands	common	nl	TURKS EN CAICOSEILANDEN
+tuvalu	common	nl	TUVALU
+type	common	nl	Type
+uganda	common	nl	UGANDA
+ukraine	common	nl	OEKRAÏNE
+underline	common	nl	Onderstrepen
+united arab emirates	common	nl	VERENIGDE ARABISCHE EMIRATEN
+united kingdom	common	nl	VERENIGD KONINKRIJK
+united states	common	nl	VERENIGDE STATES
+united states minor outlying islands	common	nl	VERENIGDE STATES: KLEINE EILANDEN
+unknown	common	nl	Onbekend
+update	common	nl	Bijwerken
+update the clock per minute or per second	common	nl	De klok per minuut of per seconde actualiseren
+upload	common	nl	Upload
+upload directory does not exist, or is not writeable by webserver	common	nl	Upload map bestaat niet of is niet schrijfbaar voor de webserver
+upload requires the directory to be writable by the webserver!	common	nl	Upload vereist dat de directory door de webserver beschreven kan worden!
+url	common	nl	URL
+uruguay	common	nl	URUGUAY
+use button to search for	common	nl	Gebruik knop om te zoeken naar
+use button to search for address	common	nl	gebruik Knop om te zoeken naar Adressen
+use button to search for calendarevent	common	nl	gebruik Knop om te zoeken naar Agenda-afspraken
+use button to search for project	common	nl	gebruik Knop om te zoeken naar Projecten
+user	common	nl	Gebruiker
+user accounts	common	nl	Gebruikersaccounts
+user groups	common	nl	Gebruikersgroepen
+username	common	nl	Gebruikersnaam
+users	common	nl	gebruikers
+users choice	common	nl	Gebruikerskeuze
+uzbekistan	common	nl	OEZBEKISTAN
+vanuatu	common	nl	VANUATU
+venezuela	common	nl	VENEZUELA
+version	common	nl	Versie
+viet nam	common	nl	VIETNAM
+view	common	nl	Bekijken
+virgin islands, british	common	nl	BRITSE MAAGDENEILANDEN
+virgin islands, u.s.	common	nl	AMERIKAANSE MAAGDENEILANDEN
+wallis and futuna	common	nl	WALLIS EN FUTUNA
+wednesday	common	nl	Woensdag
+welcome	common	nl	Welkom
+western european	common	nl	West europees
+western sahara	common	nl	WESTELIJK SAHARA
+what color should all the blank space on the desktop have	common	nl	Welke kleur moet de blanko ruimte op het bureaublad hebben
+what style would you like the image to have?	common	nl	Welke stijl wilt u dat de afbeelding heeft?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	nl	Indien u ja antwoord worden de home en loguit knop gepresenteerd als toepassingen in de toepassingenbalk.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	nl	Waar en op welke manier moeten de eGroupWare links zoals voorkeuren, informatie en uitloggen getoond worden.
+which groups	common	nl	Welke groepen
+width	common	nl	Breedte
+wk	jscalendar	nl	wk
+work email	common	nl	email werk
+would you like to display the page generation time at the bottom of every window?	common	nl	Wilt u de pagina gerereer tijd onderaan iedere pagina laten weergeven?
+writing	common	nl	schrijft
+written by:	common	nl	Geschreven door:
+year	common	nl	Jaar
+yemen	common	nl	JEMEN
+yes	common	nl	Ja
+you are required to change your password during your first login	common	nl	U moet nadat u voor het eerst bent ingelogd uw wachtwoord wijzigen.
+you can customize how many icons and toolbars the editor shows.	common	nl	U kunt instellen hoeveel pictogrammen en taakbalken de editor moet tonen.
+you have been successfully logged out	login	nl	U bent succesvol afgemeld
+you have not entered a title	common	nl	U heeft geen titel ingevoerd !
+you have not entered a valid date	common	nl	U heeft geen geldige datum ingevoerd !
+you have not entered a valid time of day	common	nl	U heeft geen geldige tijd van de dag ingevoerd !
+you have not entered participants	common	nl	U heeft geen deelnemers opgegeven !
+you have selected an invalid date	common	nl	U heeft een ongeldige datum geselecteerd !
+you have selected an invalid main category	common	nl	U heeft een ongeldige hoofdcategorie geselecteerd !
+you have successfully logged out	common	nl	U bent succesvol afgemeld
+you need to add the webserver user '%1' to the group '%2'.	common	nl	Je moet de webserver user '%1' aan groep '%2' toevoegen.
+you need to be an egroupware administrator to access this functionality!	common	nl	U moet een eGroupWare beheerder zijn om deze functionaliteit te kunnen benaderen!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	nl	U heeft geprobeerd om de eGroupWare toepassing %1 te openen maar u heeft geen toestemming om deze toepassing te gebruiken.
+your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon <b>niet</b> worden verzonden!<br />
+your message has been sent	common	nl	Uw bericht is verzonden
+your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
+your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
+your session could not be verified.	login	nl	Uw sessie kon niet geverifieerd worden
+your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
+zambia	common	nl	ZAMBIA
+zimbabwe	common	nl	ZIMBABWE
+zoom	common	nl	Inzoemen

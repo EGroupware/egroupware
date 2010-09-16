@@ -1,0 +1,607 @@
+%1 email addresses inserted	common	lv	%1 e-pasta adreses pievienotas
+%1 is not executable by the webserver !!!	common	lv	%1 : Šo webserveris nevar palaist !!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	lv	%1eGroupWare%2 ir daudzlietotāju, caur tīmekļa pārlūkprogrammu lietojama GrupuWare ,kas programmēta %3PHP%4.
+(shift-)click or drag to change value	jscalendar	lv	(Shift-) Klikšķini un velc peli, lai mainītu lielumu
+- click on any of the time parts to increase it	jscalendar	lv	- Klikšķini uz jebkuras laika daļas, lai palielinātu to
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	lv	- Turi nospiestu peles pogu uz jebkuras no pogām ātrākai izvēlei
+- or click and drag for faster selection.	jscalendar	lv	- vai klikšķini un velc peli ātrākai izvēlei
+- or shift-click to decrease it	jscalendar	lv	- Shift-klikšķini, lai samazinātu to
+- use the %1, %2 buttons to select month	jscalendar	lv	- Spied %1, %2 pogas, lai izvēlētos mēnesi
+- use the %1, %2 buttons to select year	jscalendar	lv	- Spied %1, %2 pogas, lai izvēlētos gadu
+00 (disable)	admin	lv	00 (disable)
+13 (ntp)	admin	lv	3 (ntp)
+3 number of chars for day-shortcut	jscalendar	lv	3 simbolu dienas saisinājums
+3 number of chars for month-shortcut	jscalendar	lv	3 simbolu mēneša saisinājums
+80 (http)	admin	lv	80 (http)
+about	common	lv	Par
+about %1	common	lv	Par %1
+about the calendar	jscalendar	lv	Par kalendāru
+access	common	lv	Piekļuve
+access not permitted	common	lv	Piekļuve aizliegta
+account has been created	common	lv	Konts tika izveidots
+account has been deleted	common	lv	Konts tika dzēsts
+account has been updated	common	lv	Konts tika mainīts
+account is expired	common	lv	Konta termiņš beidzies
+acl	common	lv	ACL
+action	common	lv	Darbība
+active	common	lv	Aktīvs
+add	common	lv	Pievienot
+add %1 category for	common	lv	Pievienot %1 kategoriju priekš
+add category	common	lv	Pievienot kategoriju
+add sub	common	lv	Pievienot apakškategoriju
+addressbook	common	lv	Adrešu grāmata
+admin	common	lv	Administrators
+administration	common	lv	Administrēšana
+afghanistan	common	lv	AFGANISTĀNA
+albania	common	lv	ALBĀNIJA
+algeria	common	lv	ALŽĪRIJA
+all	common	lv	Visi
+all fields	common	lv	visi lauki
+alphabet	common	lv	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	lv	Alternatīvs stila-izklājums:
+american samoa	common	lv	AMERIKĀŅU SAMOA
+andorra	common	lv	ANDORA
+angola	common	lv	ANGOLA
+anguilla	common	lv	ANGILJA
+antarctica	common	lv	ANTARKTĪDA
+antigua and barbuda	common	lv	ANTIGVA UN BARBUDA
+apply	common	lv	Aktualizēt
+april	common	lv	Aprīlis
+are you sure you want to delete these entries ?	common	lv	Vai esi drošs, ka vēlies dzēst šos ierakstus ?
+are you sure you want to delete this entry ?	common	lv	Vai esi drošs, ka vēlies dzēst šo ierakstu ?
+argentina	common	lv	ARGENTĪNA
+armenia	common	lv	ARMĒNIJA
+aruba	common	lv	ARUBA
+august	common	lv	Augusts
+australia	common	lv	AUSTRĀLIJA
+austria	common	lv	AUSTRIJA
+author	common	lv	Autors
+autohide sidebox menus	common	lv	Slēpt izvēlnes automātiski
+automatically hide the sidebox menus?	common	lv	Slēpt izvēlnes automātiski?
+autosave default category	common	lv	Automātiski saglabāt  Noklusēto Kategoriju
+azerbaijan	common	lv	AZERBAIDŽĀNA
+back	common	lv	Atpakaļ
+back to user login	common	lv	Atpakaļ uz lietotāju izvēli
+background color:	common	lv	Fona krāsa:
+bad login or password	common	lv	Nezināms lietotājvārds vai nepareiza parole
+bahamas	common	lv	BAHAMU SALAS
+bahrain	common	lv	BAHREINA
+bangladesh	common	lv	BANGLADEŠA
+barbados	common	lv	BARBADOSA
+bcc	common	lv	Bcc
+belarus	common	lv	BALTKRIEVIJA
+belgium	common	lv	BEĻĢIJA
+belize	common	lv	BELIZA
+benin	common	lv	BENINA
+bermuda	common	lv	BERMUDU SALAS
+bhutan	common	lv	BUTĀNA
+blocked, too many attempts	common	lv	Bloķēts, pārāk daudz neveiksmīgu mēģinājumu.
+bolivia	common	lv	BOLĪVIJA
+bosnia and herzegovina	common	lv	BOSNIJA UN HERCOGOVINA
+botswana	common	lv	BOTSVĀNA
+bouvet island	common	lv	BUVĒ SALA
+brazil	common	lv	BRAZĪLIJA
+british indian ocean territory	common	lv	BRITU INDIJAS OKEĀNA TERITORIJA
+brunei darussalam	common	lv	BRUNEJA
+bulgaria	common	lv	BULGĀRIJA
+burkina faso	common	lv	BURKINAFASO
+burundi	common	lv	BURUNDI
+calendar	common	lv	Kalendārs
+cambodia	common	lv	KAMBODŽA
+cameroon	common	lv	KAMERŪNA
+canada	common	lv	KANĀDA
+cancel	common	lv	Atcelt
+cape verde	common	lv	KABOVERDE
+categories	common	lv	Kategorijas
+categories for	common	lv	Kategorijas priekš
+category	common	lv	Kategorija
+category %1 has been added !	common	lv	Kategorija %1 tika pievienota !
+category %1 has been updated !	common	lv	Kategorija %1 tika mainīta !
+cayman islands	common	lv	KAIMANU SALAS
+cc	common	lv	Cc
+central african republic	common	lv	CENTRĀLĀFRIKAS REPUBLIKA
+chad	common	lv	ČADA
+change	common	lv	Mainīt
+charset	common	lv	utf-8
+check installation	common	lv	Pārbaudīt installāciju
+check now	common	lv	Pārbaudīt tūlīt
+chile	common	lv	ČĪLE
+china	common	lv	ĶĪNA
+choose the category	common	lv	Izvēlies kategoriju
+choose the parent category	common	lv	Izvēlies tēva kategoriju
+christmas island	common	lv	ZIEMASSVĒTKU SALA
+clear	common	lv	Nodzēst
+clear form	common	lv	Nodzēst formu
+click	common	lv	Klikšķini
+click or mouse over to show menus	common	lv	Klikšķināt vai uzbraukt ar peli virsū, lai  redzētu izvēles
+click or mouse over to show menus?	common	lv	Klikšķināt vai uzbraukt ar peli virsū, lai  redzētu izvēles?
+close	common	lv	Aizvērt
+cocos (keeling) islands	common	lv	KOKOSU (KĪLINGA) SALAS
+colombia	common	lv	KOLUMBIJA
+comoros	common	lv	KOMORU SALAS
+company	common	lv	Organizācija
+congo	common	lv	KONGO
+congo, the democratic republic of the	common	lv	KONGO DEMOKRĀTISKĀ REPUBLIKA
+cook islands	common	lv	KUKA SALAS
+copy	common	lv	Kopēt
+costa rica	common	lv	KOSTARIKA
+cote d ivoire	common	lv	KOTDIVUĀRA
+create	common	lv	Izveidot
+created by	common	lv	Pateicoties
+croatia	common	lv	HORVĀTIJA
+cuba	common	lv	KUBA
+currency	common	lv	Valūta
+current	common	lv	Pašreizējais
+current users	common	lv	Pašreizējie lietotāji
+cyprus	common	lv	KIPRA
+czech republic	common	lv	ČEHIJAS REPUBLIKA
+date	common	lv	Datums
+date due	common	lv	Datums paredzēts
+date selection:	jscalendar	lv	Datuma izvēle:
+december	common	lv	Decembris
+default category	common	lv	Noklusētā Kategorija
+delete	common	lv	Dzēst
+denmark	common	lv	DĀNIJA
+description	common	lv	Izklāsts
+detail	common	lv	Detaļa
+details	common	lv	Detaļas
+disable internet explorer png-image-bugfix	common	lv	Izslēgt Internet Explorer png-image-bugfix
+disabled	common	lv	Izslēgts
+display %s first	jscalendar	lv	Rādīt %s pirmo
+djibouti	common	lv	DŽIBUTIJA
+do you also want to delete all subcategories ?	common	lv	Vai vēlies dzēst arī visas apakškategorijas?
+document properties	common	lv	Dokumenta rekvizīti
+document title:	common	lv	Dokumenta virsraksts:
+domain	common	lv	Domeins
+domain name for mail-address, eg. "%1"	common	lv	domeina vārs e-pasta adresēm, piem. "%1"
+dominica	common	lv	DOMINIKA
+dominican republic	common	lv	DOMINIKĀNA
+done	common	lv	Gatavs
+drag to move	jscalendar	lv	Velc lai pārvietotu
+e-mail	common	lv	E-pasts
+east timor	common	lv	AUSTRUMTIMORA
+ecuador	common	lv	EKVADORA
+edit	common	lv	Rediģēt
+edit %1 category for	common	lv	Rediģēt %1 kategoriju par
+edit categories	common	lv	Rediģēt Kategorijas
+edit category	common	lv	Rediģēt kategoriju
+egroupware api version %1	common	lv	eGroupWare API versija %1
+egroupware: login blocked for user '%1', ip %2	common	lv	eGroupWare: bloķēts lietotājvārds '%1', IP %2
+egypt	common	lv	ĒĢIPTE
+el salvador	common	lv	SALVADORA
+email	common	lv	E-Pasts
+email-address of the user, eg. "%1"	common	lv	lietotāja e-pasta adrese, piemēram, "%1"
+enabled	common	lv	Aktivizēts
+end date	common	lv	Beigu datums
+end time	common	lv	Beigu laiks
+entry has been deleted sucessfully	common	lv	Ieraksts tika veiksmīgi izdzēsts
+entry updated sucessfully	common	lv	Ieraksts veiksmīgi tika atjaunināts
+equatorial guinea	common	lv	EKVATORIĀLĀ GVINEJA
+eritrea	common	lv	ERITREJA
+error	common	lv	Kļūda
+error creating %1 %2 directory	common	lv	Kļūda veidojot %1 %2 direktoriju
+error deleting %1 %2 directory	common	lv	Kļūda dzēšot %1 %2 direktoriju
+error renaming %1 %2 directory	common	lv	Kļūda pārsaucot %1 %2 direktoriju
+estonia	common	lv	IGAUNIJA
+ethiopia	common	lv	ETIOPIJA
+exact	common	lv	tieši
+falkland islands (malvinas)	common	lv	FOLKLENDA (MELVINU)SALAS
+faroe islands	common	lv	FARĒRU(FĒRU) SALAS
+fax number	common	lv	faksa nummurs
+february	common	lv	Februāris
+fields	common	lv	Lauki
+fiji	common	lv	FIDŽI
+files	common	lv	Faili
+filter	common	lv	Filtrs
+finland	common	lv	SOMIJA
+first name	common	lv	Vārds
+first name of the user, eg. "%1"	common	lv	lietotāja vārds, piemēram, "%1"
+first page	common	lv	Pirmā lapa
+firstname	common	lv	Vārds
+fixme!	common	lv	SALABOMANI!
+france	common	lv	FRANCIJA
+french guiana	common	lv	FRANČU GVIĀNA
+french polynesia	common	lv	FRANČU POLINĒZIJA
+french southern territories	common	lv	FRANČU DIENVIDU ANTARKTISKĀS TERITORIJAS
+friday	common	lv	Piektdiena
+ftp	common	lv	FTP
+fullname	common	lv	Pilns vārds
+gabon	common	lv	GABONA
+gambia	common	lv	GAMBIJA
+general menu	common	lv	Galvenā Izvēlne
+georgia	common	lv	GRUZIJA
+germany	common	lv	Vācija
+ghana	common	lv	GANA
+gibraltar	common	lv	GIBRALTĀRS
+global	common	lv	Globāls
+go today	jscalendar	lv	Atvērt šodienu!
+grant access	common	lv	Atļaut Piekļuvi
+greece	common	lv	GRIEĶIJA
+greenland	common	lv	GRENLANDE
+grenada	common	lv	GRENĀDA
+group	common	lv	Grupa
+group access	common	lv	Grupas piekļuves tiesības
+group has been added	common	lv	Grupa tika pievienota
+group has been deleted	common	lv	Gruba tika izdzēsta
+group has been updated	common	lv	Grupa tika atjaunināta
+group name	common	lv	grupas nosaukums
+groups	common	lv	Grupas
+groups with permission for %1	common	lv	Grupas ar atļauju priekš %1
+groups without permission for %1	common	lv	Grupas bez atļauju priekš %1
+guadeloupe	common	lv	GVADELUPA
+guam	common	lv	GUAMA
+guatemala	common	lv	GVATEMALA
+guinea	common	lv	GVINEJA
+guinea-bissau	common	lv	GVINEJA-BISAVA
+guyana	common	lv	GAJANA
+haiti	common	lv	HAITI
+heard island and mcdonald islands	common	lv	HĒRDA UN MAKDONALDA SALAS
+help	common	lv	Palīdzība
+high	common	lv	Augsta
+highest	common	lv	Augstākā
+holy see (vatican city state)	common	lv	VATIKĀNS
+home	common	lv	Mājas
+home email	common	lv	e-pasts mājās
+honduras	common	lv	HONDURASA
+hong kong	common	lv	HONKONGA
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	lv	Cik daudz ikonas tiek rādītas rīku joslā (lapas augšpusē). Citas ikonas atrodas izvēlnē, kuru var atvērt uzspiežot uz ikonas, kas atrodas rīku joslas labajā malā.
+hungary	common	lv	UNGĀRIJA
+iceland	common	lv	ISLANDE
+india	common	lv	INDIJA
+indonesia	common	lv	INDONĒZIJA
+insert all %1 addresses of the %2 contacts in %3	common	lv	Ievietot visas %1adreses no %2 kontaktiem %3
+international	common	lv	Internacionāls
+invalid ip address	common	lv	Nederīga IP adrese
+invalid password	common	lv	Nederīga parole
+iran, islamic republic of	common	lv	IRĀNA, ISLAMA REPUBLIKA
+iraq	common	lv	IRĀKA
+ireland	common	lv	ĪRIJA
+israel	common	lv	IZRAĒLA
+it has been more then %1 days since you changed your password	common	lv	Ir pagājušas vairāk kā %1 dienas kopš Jūs nomainījāt savu paroli
+it is recommended that you run setup to upgrade your tables to the current version	common	lv	Būtu vēlams palaist setup programmu, lai pārveidotu datu bāzi (varbūt tabulas?) atbilstoši jaunākajai versijai.
+italic	common	lv	Slīpraksts
+italy	common	lv	ITĀLIJA
+jamaica	common	lv	JAMAIKA
+january	common	lv	Janvāris
+japan	common	lv	JAPĀNA
+jordan	common	lv	JORDĀNIJA
+july	common	lv	Jūlijs
+jun	common	lv	Jun
+june	common	lv	Jūnijs
+justify center	common	lv	Centra izlīdzināsana
+justify full	common	lv	Pilna izlīdzināšana
+justify left	common	lv	Kreisā izlīdzināšana
+justify right	common	lv	Labējā izlīdzināšana
+kazakstan	common	lv	KAZAHSTANA
+kenya	common	lv	KENIJA
+keywords	common	lv	Atslēgvārdi
+kiribati	common	lv	KIRIBATI
+korea, democratic peoples republic of	common	lv	KOREJAS TAUTAS DEMOKRĀTISKĀ REPUBLIKA
+korea, republic of	common	lv	KOREJEAS REPUBLIKA
+kuwait	common	lv	KUVEITA
+kyrgyzstan	common	lv	KIRGĪZIJA
+language	common	lv	Valoda
+lao peoples democratic republic	common	lv	LAOSAS TAUTAS DEMOKRĀTISKĀ REPUBLIKA
+last name	common	lv	Uzvārds
+last name of the user, eg. "%1"	common	lv	lietotāja uzvārds, piemēram, "%1"
+last page	common	lv	Pēdeja lapa
+lastname	common	lv	Uzvārds
+latvia	common	lv	LATVIJA
+lebanon	common	lv	LIBĀNA
+lesotho	common	lv	LESOTO
+liberia	common	lv	LIBĒRIJA
+libyan arab jamahiriya	common	lv	LĪBIJAS SOCIĀLISTISKĀ ARĀBU TAUTAS DŽAMAHĪRIJA
+license	common	lv	Licence
+liechtenstein	common	lv	LIHTENŠTEINA
+list	common	lv	Saraksts
+list members	common	lv	Saraksta dalībnieki
+lithuania	common	lv	LIETUVA
+local	common	lv	Vietējais
+login	common	lv	Pieteikties
+loginid	common	lv	Pieteikuma ID
+logout	common	lv	Beigt darbu
+low	common	lv	Zema
+lowest	common	lv	Viszemākais
+luxembourg	common	lv	LUKSEMBURGA
+macau	common	lv	MAKAO
+macedonia, the former yugoslav republic of	common	lv	MAĶEDONIJA
+madagascar	common	lv	MADAGASKARA
+mail domain, eg. "%1"	common	lv	pasta domēns, piemēram, "%1
+main category	common	lv	Galvenā kategorija
+main screen	common	lv	Galvenais logs
+maintainer	common	lv	Uzturētājs
+malawi	common	lv	MALĀVIJA
+malaysia	common	lv	MALAIZIJA
+maldives	common	lv	MALDĪVU SALAS
+mali	common	lv	MALI
+malta	common	lv	MALTA
+march	common	lv	Marts
+marshall islands	common	lv	MĀRŠALA SALAS
+martinique	common	lv	MARTINIKA
+mauritania	common	lv	MAURITĀNIJA
+mauritius	common	lv	MAURĪCIJA
+max number of icons in navbar	common	lv	Maksimālais ikonu skaits rīku joslā
+may	common	lv	Maijs
+mayotte	common	lv	MAJOTA
+medium	common	lv	Vidēja
+menu	common	lv	Izvēlne
+message	common	lv	Ziņa
+mexico	common	lv	MEKSIKA
+micronesia, federated states of	common	lv	MIKRONĒZIJAS FEDERATĪVĀS VALSTIS
+moldova, republic of	common	lv	MOLDOVAS REPUBLIKA
+monaco	common	lv	MONAKO
+monday	common	lv	Pirmdiena
+mongolia	common	lv	MONGOLIJA
+montserrat	common	lv	MONTSERRATA
+morocco	common	lv	MAROKA
+mozambique	common	lv	MOZAMBIKA
+myanmar	common	lv	MJANMA
+name	common	lv	Vārds
+name of the user, eg. "%1"	common	lv	lietotāja vārds, piemēram, "%1
+namibia	common	lv	NAMĪBIJA
+nauru	common	lv	NAURU
+nepal	common	lv	NEPĀLA
+netherlands	common	lv	NĪDERLANDE
+netherlands antilles	common	lv	NĪDERLANEDES ANTIĻAS
+never	common	lv	Nekad
+new caledonia	common	lv	JAUNKALEDONIJA
+new entry added sucessfully	common	lv	Jaunais ieraksts tika veiksmīgi pievienots
+new main category	common	lv	Jauna galvenā kategorija
+new value	common	lv	Jauna Vērtība
+new zealand	common	lv	JAUNZĒLANDE
+next	common	lv	Nākošais
+next month (hold for menu)	jscalendar	lv	Nākošais mēnesis (paturi ilgāk, lai būtu menu)
+next page	common	lv	Nākošā lapa
+next year (hold for menu)	jscalendar	lv	Nākošais gads (paturi ilgāk, lai būtu menu)
+nicaragua	common	lv	NIKARAGVA
+niger	common	lv	NIGĒRA
+nigeria	common	lv	NIGĒRIJA
+niue	common	lv	NIUE
+no	common	lv	Nē
+no entries found, try again ...	common	lv	neviens ieraksts netika atrasts, mēģiniet vēlreiz ...
+no history for this record	common	lv	nav pieejama šī ieraksta vēsture
+no subject	common	lv	Nav Tēmas
+none	common	lv	Neviens
+norfolk island	common	lv	NORFOLKAS SALA
+normal	common	lv	Normāla
+northern mariana islands	common	lv	ZIEMEĻU MARIANAS(ZIEMEĻU MARIANU SALU SADRAUDZĪBA)
+norway	common	lv	NORVĒĢIJA
+not assigned	common	lv	nav piešķirts
+note	common	lv	Piezīme
+notes	common	lv	Piezimes
+notify window	common	lv	Informācijas Logs
+november	common	lv	Novembris
+october	common	lv	Oktobris
+ok	common	lv	OK
+old value	common	lv	Iepriekšejā Vērtība
+oman	common	lv	OMĀNA
+on *nix systems please type: %1	common	lv	*nix sistēmās lūdzu rakstīt: %1
+on mouse over	common	lv	Kad uzbrauc ar peli
+only private	common	lv	tikai privātos
+only yours	common	lv	tikai Jūsu
+open notify window	common	lv	Atvērt informācijas logu
+open popup window	common	lv	Atvērt papildus logu
+original	common	lv	Orģināls
+other	common	lv	Citi
+overview	common	lv	Pārskats
+owner	common	lv	Īpašnieks
+page	common	lv	Lapa
+page was generated in %1 seconds	common	lv	Lapa tika ģenerēta %1 sekundes
+pakistan	common	lv	PAKISTĀNA
+palau	common	lv	PALAU
+palestinian territory, occupied	common	lv	PALESTĪNA
+panama	common	lv	PANAMA
+papua new guinea	common	lv	PAPUA-JAUNGVINEJA
+paraguay	common	lv	PARAGVAJA
+parcel	common	lv	Sūtījums
+parent category	common	lv	Vecāku kategorija
+password	common	lv	Parole
+password could not be changed	common	lv	Parole netika nomainīta
+password has been updated	common	lv	Parole tika atjaunināta
+path to user and group files has to be outside of the webservers document-root!!!	common	lv	Ceļam uz lietotāju un grupu failiem JĀBŪT ĀRPUS tīkla servera saknes dokumenta!!!
+pattern for search in addressbook	common	lv	Paraugs meklēšanai adrešu grāmatā
+pattern for search in calendar	common	lv	Paraugs meklēšanai kalendārā
+pattern for search in projects	common	lv	Paraugs meklēšanai projektos
+permissions to the files/users directory	common	lv	atļaujas datņu/lietotāju direktorijai
+personal	common	lv	Personīgs
+peru	common	lv	PERU
+philippines	common	lv	FILIPĪNAS
+phone number	common	lv	telefona nummurs
+pitcairn	common	lv	PITKERNA
+please %1 by hand	common	lv	Lūdzu, %1 ar roku
+please enter a name	common	lv	Lūdzu, ieraksti savu vārdu !
+please select	common	lv	Lūdzu izvēlies
+please set your global preferences	common	lv	Lūdzu ierakstiet galvenos datus par sevi !
+please set your preferences for this application	common	lv	Lūdzu uzstādi savas izvēles šai programmatūrai
+please wait...	common	lv	Lūdzu uzgaidi...
+poland	common	lv	POLIJA
+portugal	common	lv	PORTUGĀLE
+postal	common	lv	Pasta
+preferences	common	lv	Iestādījumi
+preferences for the idots template set	common	lv	iDots sagatavju iestatījumi
+prev. month (hold for menu)	jscalendar	lv	Iepr. mēnesis (paturi ilgāk, lai būtu menu)
+prev. year (hold for menu)	jscalendar	lv	Iepr. gads (paturi ilgāk, lai būtu menu)
+previous page	common	lv	Iepriekšējā lapa
+primary style-sheet:	common	lv	Primārā stilu lapa:
+print	common	lv	Drukāt
+priority	common	lv	Prioritāte
+private	common	lv	Privātos
+project	common	lv	Projekts
+public	common	lv	publisks
+puerto rico	common	lv	PUERTORIKO
+qatar	common	lv	KATARA
+read	common	lv	Lasīt
+read this list of methods.	common	lv	Izlasiet šo metožu sarakstu.
+reject	common	lv	Noraidīt
+remove selected accounts	common	lv	Likvidēt izvēlētos kontus
+rename	common	lv	Pārsaukt
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	lv	Atgriež pilnu sistēmas lietotāju kontu sarakstu. Uzmanību: saraksts var būt samērā liels
+returns an array of todo items	common	lv	Atgriež darāmo lietu sarakstu
+returns struct of users application access	common	lv	Atgriež lietotāju darbināto aplikāciju struktūru
+reunion	common	lv	REINJONA
+romania	common	lv	RUMĀNIJA
+russian federation	common	lv	KRIEVIJAS FEDERĀCIJA
+rwanda	common	lv	RUANDA
+saint helena	common	lv	SVĒTĀS HELĒNAS SALA
+saint kitts and nevis	common	lv	SENTKISA UN NEVISA
+saint lucia	common	lv	SENTLŪSIJIA
+saint pierre and miquelon	common	lv	SENPJĒRA UN MIKELONA
+saint vincent and the grenadines	common	lv	SENTVINSENTA UN GRENADINAS
+samoa	common	lv	SAMOA
+san marino	common	lv	SANMARĪNO
+sao tome and principe	common	lv	SANTOME UN PRINSIPI
+saturday	common	lv	Sestdiena
+saudi arabia	common	lv	SAŪDA ARĀBIJA
+save	common	lv	Saglabāt
+search	common	lv	Meklēt
+search %1 '%2'	common	lv	Meklēt %1 '%2'
+search or select accounts	common	lv	Meklēt vai izvēlēties kontus
+section	common	lv	Nodaļa
+select	common	lv	Iezīmēt
+select all %1 %2 for %3	common	lv	Iezīmēt visus %1 %2 priekš %3
+select category	common	lv	Izvēlēties Kategoriju
+select date	common	lv	Izvēlēties datumu
+select group	common	lv	Izvēlēties grupu
+select home email address	common	lv	Izvēlēties mājas e-pasta adresi
+select one	common	lv	Izvēlies vienu no
+select user	common	lv	Izvēlies personu
+select work email address	common	lv	Izvēlies e-pasta adresi darbā
+selection	common	lv	Izvēle
+send	common	lv	Sūtīt
+senegal	common	lv	SENEGĀLA
+september	common	lv	Septembris
+server %1 has been added	common	lv	Serveris %1 tika pievienots
+server name	common	lv	Servera vārds
+session has been killed	common	lv	Sesija tika nogalināta ;-)
+setup	common	lv	Iestatīšana
+setup main menu	common	lv	Iestatīšanas galvenā izvēlne
+seychelles	common	lv	SEIŠELU SALAS
+show all	common	lv	rādīt visus
+show all categorys	common	lv	Rādīt visas kategorijas
+show menu	common	lv	rādīt izvēlni
+show page generation time	common	lv	Parādīt lapas ģenerēšanas laiku
+show page generation time on the bottom of the page?	common	lv	Parādīt lapas ģenerēšanas laiku lapas apakšpusē?
+show_more_apps	common	lv	rādīt_vairāk_aplikācijas
+showing %1	common	lv	rādu %1
+showing %1 - %2 of %3	common	lv	rādu %1 - %2 no %3
+sierra leone	common	lv	SJERRALEONE
+singapore	common	lv	SINGAPŪRA
+slovakia	common	lv	SLOVĀKIJA
+slovenia	common	lv	SLOVĒNIJA
+solomon islands	common	lv	ZĀLAMANA SALAS
+somalia	common	lv	SOMĀLIJA
+sorry, your login has expired	login	lv	Atvainojiet, Jūsu lietotājvārda lietošnas laiks ir beidzies
+south africa	common	lv	DIENVIDĀFRIKA
+south georgia and the south sandwich islands	common	lv	DIENVIDDŽORDŽIJA UN DIENVIDSENDVIČU SALAS
+spain	common	lv	SPĀNIJA
+sri lanka	common	lv	ŠRILANKA
+start date	common	lv	Sākuma datums
+start time	common	lv	Sākuma laiks
+start with	common	lv	sākt ar
+status	common	lv	Stāvoklis
+subject	common	lv	Temats
+submit	common	lv	Saglabāt
+substitutions and their meanings:	common	lv	Substitūcijas un to nozīmes
+sudan	common	lv	SUDĀNA
+sunday	common	lv	Svētdiena
+suriname	common	lv	SURINAMA
+svalbard and jan mayen	common	lv	SVALBĀRA UN JANA MAJENA
+swaziland	common	lv	SVAZILENDA
+sweden	common	lv	ZVIEDRIJA
+switzerland	common	lv	ŠVEICE
+syrian arab republic	common	lv	SĪRIJAS ARĀBU REPUBLIKA
+taiwan	common	lv	TAIVANA/TAIPEJA
+tajikistan	common	lv	TADŽIKISTĀNA
+tanzania, united republic of	common	lv	TANZĀNIJA
+text color:	common	lv	Texta krāsa:
+thailand	common	lv	TAIZEME
+the api is current	common	lv	Pašreizējais API
+the api requires an upgrade	common	lv	API pieprasa jauninājumus
+the following applications require upgrades	common	lv	Sekojoša programmatūra pieprasa jauninajumus
+the mail server returned	common	lv	Pasta serveris atgrieza
+this application is current	common	lv	Pašreizējā aplikācija
+this application requires an upgrade	common	lv	Šai aplikāčijai ir nepieciešāma atjaunošana
+this name has been used already	common	lv	Šis vārds jau ir aizņemts  !
+thursday	common	lv	Ceturtdiena
+time	common	lv	Laiks
+time selection:	jscalendar	lv	Laika izvēle
+time zone	common	lv	Laika zona
+time zone offset	common	lv	Laika zonas nobīde
+title	common	lv	Nosaukums
+to	common	lv	Kam
+to correct this error for the future you will need to properly set the	common	lv	Lai izlabotu šo kļudu, Jums ir nepieciešms pareizi uzstādit
+to go back to the msg list, click <a href= %1 >here</a>	common	lv	Lai atgrieztos pie msg saraksta, klikšķini <a href="%1">šeit</a>
+today	common	lv	Šodien
+todays date, eg. "%1"	common	lv	šodienas datums, piemēram, "%1"
+togo	common	lv	TOGO
+tokelau	common	lv	TOKELAU
+tonga	common	lv	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	lv	Pārāk dzudz nevieksmīgi pieslēgšanās mēģinājumi: %1 lietotājam '%2', %3 ar IP %4
+total	common	lv	Kopā
+trinidad and tobago	common	lv	TRINIDĀDA UN TOBAGO
+tuesday	common	lv	Otrdiena
+tunisia	common	lv	TUNISIJA
+turkey	common	lv	TURCIJA
+turkmenistan	common	lv	TURKMENISTĀNA
+turks and caicos islands	common	lv	TĒRKSAS UN KAIKOSAS SALAS
+tuvalu	common	lv	TUVALU
+uganda	common	lv	UGANDA
+ukraine	common	lv	UKRAINA
+united arab emirates	common	lv	APVIENOTIE ARĀBU EMIRĀTI
+united kingdom	common	lv	APVIENOTĀ KARALISTE
+united states	common	lv	ASV
+united states minor outlying islands	common	lv	ASV MAZĀS AIZJŪRAS TERITORIJAS
+unknown	common	lv	Nezināms
+update	common	lv	Atjaunināt
+url	common	lv	URL
+uruguay	common	lv	URUGVAJA
+use button to search for	common	lv	izmantot Pogu lai meklētu
+use button to search for address	common	lv	izmantot Pogu lai meklētu Adresi
+use button to search for calendarevent	common	lv	izmantot Pogu lai meklētu Kalendāra ierakstu
+use button to search for project	common	lv	izmantot Pogu lai meklētu Projektu
+user	common	lv	Lietotājs
+user accounts	common	lv	lietotāju konti
+user groups	common	lv	lietotāju grupas
+username	common	lv	Lietotājvārds
+users	common	lv	lietotāji
+users choice	common	lv	Lietotāja Izvēle
+uzbekistan	common	lv	UZBEKIJA
+vanuatu	common	lv	VANUATU
+venezuela	common	lv	VENECUĒLA
+version	common	lv	Versija
+viet nam	common	lv	VJETNAMA
+view	common	lv	Rādīt
+virgin islands, british	common	lv	VIRDŽĪNU SALAS, BRITU
+virgin islands, u.s.	common	lv	VIRDŽĪNU SALAS
+wallis and futuna	common	lv	VOLISA SALAS UN FUTUNA
+wednesday	common	lv	Trešdiena
+welcome	common	lv	Laipni Lūdzam
+western sahara	common	lv	RIETUMSAHĀRA
+which groups	common	lv	Kuras grubas
+wk	jscalendar	lv	ned
+work email	common	lv	darba e-pasts
+written by:	common	lv	Autors:
+year	common	lv	Gads
+yemen	common	lv	JEMENA
+yes	common	lv	Jā
+you are required to change your password during your first login	common	lv	Jums jāsamaina parole pēc pirmās pieteikšanās
+you are running a newer version of phpgroupware than your database is setup for	common	lv	Jūs strādājat ar jaunāku phpGroupWare versiju nekā atbalsta Jūsu datubāze.
+you have been successfully logged out	login	lv	Veiksmīga darba beigšana
+you have not entered a title	common	lv	Jūs aizmirsāt uzrakstīt virsrakstu
+you have not entered a valid date	common	lv	Jūs ievadijāt kļudainu datumu
+you have not entered a valid time of day	common	lv	Jūs ievadījāt kļūdainu pulksteņa laiku
+you have not entered participants	common	lv	Jūs aizmirsāt pievienot dalībniekus
+you have selected an invalid date	common	lv	Jūs izvēlējāties nepareizu datumu !
+you have selected an invalid main category	common	lv	Jūs izvēlējāties nepareizu galveno katekoriju !
+you have successfully logged out	common	lv	Jūs veiksmīgi beidzāt darbu
+you need to add the webserver user '%1' to the group '%2'.	common	lv	Jums ir jāpievieno web servera lietotājs '%1' grupai '%2'.
+your message could <b>not</b> be sent!<br>	common	lv	Jūsu ziņa <b>netika<b> nosūtita!<br>
+your message has been sent	common	lv	Jūsu ziņa tika nosūtīta
+your search returned %1 matchs	common	lv	atradu %1 ierakstus
+your search returned 1 match	common	lv	atradu 1 ierakstu
+your session could not be verified.	login	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.
+your settings have been updated	common	lv	Iestādījumi tika saglabāti
+yugoslavia	common	lv	DIENVIDSLĀVIJA
+zambia	common	lv	ZAMBIJA
+zimbabwe	common	lv	ZIMBABVE
+site configuration	common	lv	Lapas konfigurācija

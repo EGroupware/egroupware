@@ -1,0 +1,615 @@
+%1 email addresses inserted	common	hr	unešeno %1 e-mail adresa
+%1 is not executable by the webserver !!!	common	hr	%1 webserver ne može izvršiti!!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hr	%1eGroupWare%2 je višekorisnički, web-bazirani groupware suite pisan u %3PHP%4.
+(shift-)click or drag to change value	jscalendar	hr	(Shift-)Click or drag to change value
+- click on any of the time parts to increase it	jscalendar	hr	- Click on any of the time parts to increase it
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	hr	- Hold mouse button on any of the above buttons for faster selection.
+- or click and drag for faster selection.	jscalendar	hr	- or click and drag for faster selection.
+- or shift-click to decrease it	jscalendar	hr	- or Shift-click to decrease it
+- use the %1, %2 buttons to select month	jscalendar	hr	- Use the %1, %2 buttons to select month
+- use the %1, %2 buttons to select year	jscalendar	hr	- Use the %1, %2 buttons to select year
+00 (disable)	admin	hr	00 (disable)
+13 (ntp)	admin	hr	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	hr	3 number of chars for day-shortcut
+3 number of chars for month-shortcut	jscalendar	hr	3 number of chars for month-shortcut
+80 (http)	admin	hr	80 (http)
+about	common	hr	O
+about %1	common	hr	O %1
+about the calendar	jscalendar	hr	O Kalendaru
+access	common	hr	Pristup
+access not permitted	common	hr	Pristup nije dozvoljen
+account has been created	common	hr	Račun je kreiran
+account has been deleted	common	hr	Račun je obrisan
+account has been updated	common	hr	Račun je ažuriran
+account is expired	common	hr	Račun je istekao
+acl	common	hr	ACL
+action	common	hr	Akcija
+active	common	hr	Aktivno
+add	common	hr	Dodaj
+add %1 category for	common	hr	Dodaj %1 kategoriju za
+add category	common	hr	Dodaj kategoriju
+add sub	common	hr	Dodaj pod
+addressbook	common	hr	Adresar
+admin	common	hr	Admin
+administration	common	hr	Administracija
+afghanistan	common	hr	AFGHANISTAN
+albania	common	hr	ALBANIA
+algeria	common	hr	ALGERIA
+all	common	hr	Sve
+all fields	common	hr	sva polja
+alphabet	common	hr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	hr	Alternativni style-sheet:
+american samoa	common	hr	AMERICAN SAMOA
+andorra	common	hr	ANDORRA
+angola	common	hr	ANGOLA
+anguilla	common	hr	ANGUILLA
+antarctica	common	hr	ANTARCTICA
+antigua and barbuda	common	hr	ANTIGUA AND BARBUDA
+apply	common	hr	Primjeni
+april	common	hr	Travanj
+are you sure you want to delete these entries ?	common	hr	Da li ste sigurni da želite obrisati ove stavke ?
+are you sure you want to delete this entry ?	common	hr	Da li ste sigurni da želite obrisati ove stavku ?
+argentina	common	hr	ARGENTINA
+armenia	common	hr	ARMENIA
+aruba	common	hr	ARUBA
+august	common	hr	Kolovoz
+australia	common	hr	AUSTRALIA
+austria	common	hr	AUSTRIA
+author	common	hr	Autor
+autohide sidebox menus	common	hr	Automatski sakrij izbornike sa strane
+automatically hide the sidebox menus?	common	hr	Automatski sakrij izbornike sa strane?
+autosave default category	common	hr	Autosave Default Category
+azerbaijan	common	hr	AZERBAIJAN
+back	common	hr	Povratak
+back to user login	common	hr	Natrag na prijavu korisnika
+background color:	common	hr	Pozadinska boja:
+bad login or password	common	hr	Krivo korisničko ime ili lozinka
+bahamas	common	hr	BAHAMAS
+bahrain	common	hr	BAHRAIN
+bangladesh	common	hr	BANGLADESH
+barbados	common	hr	BARBADOS
+bcc	common	hr	Bcc
+belarus	common	hr	BELARUS
+belgium	common	hr	BELGIUM
+belize	common	hr	BELIZE
+benin	common	hr	BENIN
+bermuda	common	hr	BERMUDA
+bhutan	common	hr	BHUTAN
+blocked, too many attempts	common	hr	Blokirano, previše pokušaja
+bolivia	common	hr	BOLIVIA
+bosnia and herzegovina	common	hr	BOSNIA AND HERZEGOVINA
+botswana	common	hr	BOTSWANA
+bouvet island	common	hr	BOUVET ISLAND
+brazil	common	hr	BRAZIL
+british indian ocean territory	common	hr	BRITISH INDIAN OCEAN TERRITORY
+brunei darussalam	common	hr	BRUNEI DARUSSALAM
+bulgaria	common	hr	BULGARIA
+burkina faso	common	hr	BURKINA FASO
+burundi	common	hr	BURUNDI
+calendar	common	hr	Kalendar
+cambodia	common	hr	CAMBODIA
+cameroon	common	hr	CAMEROON
+canada	common	hr	CANADA
+cancel	common	hr	Otkaži
+cape verde	common	hr	CAPE VERDE
+categories	common	hr	Kategorije
+categories for	common	hr	kategorije za
+category	common	hr	Kategorija
+category %1 has been added !	common	hr	Kategorija %1 je dodana !
+category %1 has been updated !	common	hr	Kategorija %1 je ažurirana !
+cayman islands	common	hr	CAYMAN ISLANDS
+cc	common	hr	Cc
+central african republic	common	hr	CENTRAL AFRICAN REPUBLIC
+chad	common	hr	CHAD
+change	common	hr	Promijeni
+charset	common	hr	utf-8
+check installation	common	hr	Provjeri instalaciju
+check now	common	hr	Check Now
+chile	common	hr	CHILE
+china	common	hr	CHINA
+choose the category	common	hr	Odaberi kategoriju
+choose the parent category	common	hr	Odaberi početnu kategoriju
+christmas island	common	hr	CHRISTMAS ISLAND
+clear	common	hr	Clear
+clear form	common	hr	Clear Form
+click	common	hr	Click
+click or mouse over to show menus	common	hr	Click or Mouse Over to show menus
+click or mouse over to show menus?	common	hr	Click or Mouse Over to show menus?
+close	common	hr	Zatvori
+cocos (keeling) islands	common	hr	COCOS (KEELING) ISLANDS
+colombia	common	hr	COLOMBIA
+comoros	common	hr	COMOROS
+company	common	hr	Tvrtka
+congo	common	hr	CONGO
+congo, the democratic republic of the	common	hr	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+cook islands	common	hr	COOK ISLANDS
+copy	common	hr	Kopiraj
+costa rica	common	hr	COSTA RICA
+cote d ivoire	common	hr	COTE D IVOIRE
+create	common	hr	Create
+created by	common	hr	Created By
+croatia	common	hr	CROATIA
+cuba	common	hr	CUBA
+currency	common	hr	Valuta
+current	common	hr	Trenutni
+current users	common	hr	Trenutni korisnici
+cyprus	common	hr	CYPRUS
+czech republic	common	hr	CZECH REPUBLIC
+date	common	hr	Datum
+date due	common	hr	Date Due
+date selection:	jscalendar	hr	Date selection:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hr	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	hr	Prosinac
+default category	common	hr	Default Category
+delete	common	hr	Obriši
+denmark	common	hr	DENMARK
+description	common	hr	Opis
+detail	common	hr	Detalj
+details	common	hr	Detalji
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	hr	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
+disable internet explorer png-image-bugfix	common	hr	Disable Internet Explorer png-image-bugfix
+disable slider effects	common	hr	Disable slider effects
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	hr	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
+disabled	common	hr	Onemogućeno
+display %s first	jscalendar	hr	Prikaži prvo %s
+djibouti	common	hr	DJIBOUTI
+do you also want to delete all subcategories ?	common	hr	Do you also want to delete all subcategories ?
+domain	common	hr	Domena
+domain name for mail-address, eg. "%1"	common	hr	domain name for mail-address, eg. "%1"
+domestic	common	hr	Domestic
+dominica	common	hr	DOMINICA
+dominican republic	common	hr	DOMINICAN REPUBLIC
+done	common	hr	Done
+drag to move	jscalendar	hr	Drag to move
+e-mail	common	hr	E-Mail
+east timor	common	hr	EAST TIMOR
+ecuador	common	hr	ECUADOR
+edit	common	hr	Uredi
+edit %1 category for	common	hr	Uredi %1 kategoriju za
+edit categories	common	hr	Uredi Kategorije
+edit category	common	hr	Uredi kategoriju
+egroupware api version %1	common	hr	eGroupWare API verzija %1
+egroupware: login blocked for user '%1', ip %2	common	hr	eGroupWare: login blokiran za korisnika '%1', IP %2
+egypt	common	hr	EGYPT
+el salvador	common	hr	EL SALVADOR
+email	common	hr	E-Mail
+email-address of the user, eg. "%1"	common	hr	email-address of the user, eg. "%1"
+enabled	common	hr	Omogućeno
+end date	common	hr	End date
+end time	common	hr	End time
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+entry has been deleted sucessfully	common	hr	Entry has been deleted sucessfully
+entry updated sucessfully	common	hr	Entry updated sucessfully
+equatorial guinea	common	hr	EQUATORIAL GUINEA
+eritrea	common	hr	ERITREA
+error	common	hr	Greška
+error creating %1 %2 directory	common	hr	Greška pri kreiranju %1 %2 mape
+error deleting %1 %2 directory	common	hr	Greška pri brisanju %1 %2 mape
+error renaming %1 %2 directory	common	hr	Greška pri preimenovanju %1 %2 mape
+estonia	common	hr	ESTONIA
+ethiopia	common	hr	ETHIOPIA
+exact	common	hr	exact
+falkland islands (malvinas)	common	hr	FALKLAND ISLANDS (MALVINAS)
+faroe islands	common	hr	FAROE ISLANDS
+fax number	common	hr	fax number
+february	common	hr	Veljača
+fields	common	hr	Polja
+fiji	common	hr	FIJI
+files	common	hr	Datoteke
+filter	common	hr	Filter
+finland	common	hr	FINLAND
+first name	common	hr	First name
+first name of the user, eg. "%1"	common	hr	first name of the user, eg. "%1"
+first page	common	hr	Početna stranica
+firstname	common	hr	Ime
+fixme!	common	hr	FIXME!
+force selectbox	common	hr	Force SelectBox
+france	common	hr	FRANCE
+french guiana	common	hr	FRENCH GUIANA
+french polynesia	common	hr	FRENCH POLYNESIA
+french southern territories	common	hr	FRENCH SOUTHERN TERRITORIES
+friday	common	hr	Petak
+ftp	common	hr	FTP
+fullname	common	hr	Puno ime
+gabon	common	hr	GABON
+gambia	common	hr	GAMBIA
+general menu	common	hr	General Menu
+georgia	common	hr	GEORGIA
+germany	common	hr	GERMANY
+ghana	common	hr	GHANA
+gibraltar	common	hr	GIBRALTAR
+global	common	hr	Global
+global public	common	hr	Global Public
+go today	jscalendar	hr	Go Today
+grant access	common	hr	Omogući pristup
+greece	common	hr	GREECE
+greenland	common	hr	GREENLAND
+grenada	common	hr	GRENADA
+group	common	hr	Grupa
+group access	common	hr	Grupni pristup
+group has been added	common	hr	Grupa je dodana
+group has been deleted	common	hr	Grupa je obrisana
+group has been updated	common	hr	Grupa je ažurirana
+group name	common	hr	group name
+group public	common	hr	Group Public
+groups	common	hr	Grupe
+groups with permission for %1	common	hr	Groups with permission for %1
+groups without permission for %1	common	hr	Groups without permission for %1
+guadeloupe	common	hr	GUADELOUPE
+guam	common	hr	GUAM
+guatemala	common	hr	GUATEMALA
+guinea	common	hr	GUINEA
+guinea-bissau	common	hr	GUINEA-BISSAU
+guyana	common	hr	GUYANA
+haiti	common	hr	HAITI
+heard island and mcdonald islands	common	hr	HEARD ISLAND AND MCDONALD ISLANDS
+help	common	hr	Help
+high	common	hr	High
+highest	common	hr	Highest
+holy see (vatican city state)	common	hr	HOLY SEE (VATICAN CITY STATE)
+home	common	hr	Početna stranica
+home email	common	hr	home email
+honduras	common	hr	HONDURAS
+hong kong	common	hr	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	hr	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
+hungary	common	hr	HUNGARY
+iceland	common	hr	ICELAND
+india	common	hr	INDIA
+indonesia	common	hr	INDONESIA
+insert all %1 addresses of the %2 contacts in %3	common	hr	Insert all %1 addresses of the %2 contacts in %3
+international	common	hr	International
+invalid ip address	common	hr	Invalid IP address
+invalid password	common	hr	Invalid password
+iran, islamic republic of	common	hr	IRAN, ISLAMIC REPUBLIC OF
+iraq	common	hr	IRAQ
+ireland	common	hr	IRELAND
+israel	common	hr	ISRAEL
+it has been more then %1 days since you changed your password	common	hr	It has been more then %1 days since you changed your password
+it is recommended that you run setup to upgrade your tables to the current version	common	hr	It is recommended that you run setup to upgrade your tables to the current version.
+italic	common	hr	Italic
+italy	common	hr	ITALY
+jamaica	common	hr	JAMAICA
+january	common	hr	January
+japan	common	hr	JAPAN
+jordan	common	hr	JORDAN
+july	common	hr	Srpanj
+jun	common	hr	Svibanj
+june	common	hr	Lipanj
+justify center	common	hr	Justify Center
+justify full	common	hr	Justify Full
+justify left	common	hr	Justify Left
+justify right	common	hr	Justify Right
+kazakstan	common	hr	KAZAKSTAN
+kenya	common	hr	KENYA
+keywords	common	hr	Keywords
+kiribati	common	hr	KIRIBATI
+korea, democratic peoples republic of	common	hr	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
+korea, republic of	common	hr	KOREA, REPUBLIC OF
+kuwait	common	hr	KUWAIT
+kyrgyzstan	common	hr	KYRGYZSTAN
+language	common	hr	Language
+lao peoples democratic republic	common	hr	LAO PEOPLES DEMOCRATIC REPUBLIC
+last name	common	hr	Prezime
+last name of the user, eg. "%1"	common	hr	last name of the user, eg. "%1"
+last page	common	hr	Last page
+lastname	common	hr	Lastname
+latvia	common	hr	LATVIA
+lebanon	common	hr	LEBANON
+lesotho	preferences	hr	LESOTHO
+liberia	common	hr	LIBERIA
+libyan arab jamahiriya	common	hr	LIBYAN ARAB JAMAHIRIYA
+license	common	hr	License
+liechtenstein	common	hr	LIECHTENSTEIN
+list	common	hr	List
+list members	common	hr	List members
+lithuania	common	hr	LITHUANIA
+local	common	hr	Local
+login	common	hr	Prijava
+loginid	common	hr	LoginID
+logout	common	hr	Odjava
+low	common	hr	Low
+lowest	common	hr	Lowest
+luxembourg	common	hr	LUXEMBOURG
+macau	common	hr	MACAU
+macedonia, the former yugoslav republic of	common	hr	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+madagascar	common	hr	MADAGASCAR
+mail domain, eg. "%1"	common	hr	mail domain, eg. "%1"
+main category	common	hr	Main category
+main screen	common	hr	Main screen
+maintainer	common	hr	Maintainer
+malawi	common	hr	MALAWI
+malaysia	common	hr	MALAYSIA
+maldives	common	hr	MALDIVES
+mali	common	hr	MALI
+malta	common	hr	MALTA
+march	common	hr	March
+marshall islands	common	hr	MARSHALL ISLANDS
+martinique	common	hr	MARTINIQUE
+mauritania	common	hr	MAURITANIA
+mauritius	common	hr	MAURITIUS
+max number of icons in navbar	common	hr	Max number of icons in navbar
+may	common	hr	May
+mayotte	common	hr	MAYOTTE
+medium	common	hr	Medium
+menu	common	hr	Izbornik
+message	common	hr	Poruka
+mexico	common	hr	MEXICO
+micronesia, federated states of	common	hr	MICRONESIA, FEDERATED STATES OF
+moldova, republic of	common	hr	MOLDOVA, REPUBLIC OF
+monaco	common	hr	MONACO
+monday	common	hr	Ponedjeljak
+mongolia	common	hr	MONGOLIA
+montserrat	common	hr	MONTSERRAT
+morocco	common	hr	MOROCCO
+mozambique	common	hr	MOZAMBIQUE
+myanmar	common	hr	MYANMAR
+name	common	hr	Naziv
+name of the user, eg. "%1"	common	hr	name of the user, eg. "%1"
+namibia	common	hr	NAMIBIA
+nauru	common	hr	NAURU
+nepal	common	hr	NEPAL
+netherlands	common	hr	NETHERLANDS
+netherlands antilles	common	hr	NETHERLANDS ANTILLES
+never	common	hr	Never
+new caledonia	common	hr	NEW CALEDONIA
+new entry added sucessfully	common	hr	New entry added sucessfully
+new main category	common	hr	New main category
+new value	common	hr	New Value
+new zealand	common	hr	NEW ZEALAND
+next	common	hr	Slijedeći
+next month (hold for menu)	jscalendar	hr	Next month (hold for menu)
+next page	common	hr	Next page
+next year (hold for menu)	jscalendar	hr	Next year (hold for menu)
+nicaragua	common	hr	NICARAGUA
+niger	common	hr	NIGER
+nigeria	common	hr	NIGERIA
+niue	common	hr	NIUE
+no	common	hr	Ne
+no entries found, try again ...	common	hr	no entries found, try again ...
+no history for this record	common	hr	No history for this record
+no subject	common	hr	No Subject
+none	common	hr	None
+norfolk island	common	hr	NORFOLK ISLAND
+normal	common	hr	Normal
+northern mariana islands	common	hr	NORTHERN MARIANA ISLANDS
+norway	common	hr	NORWAY
+not assigned	common	hr	not assigned
+note	common	hr	Note
+notes	common	hr	Notes
+notify window	common	hr	Notify Window
+november	common	hr	Studeni
+october	common	hr	Listopad
+ok	common	hr	Uredu
+old value	common	hr	Old Value
+oman	common	hr	OMAN
+on *nix systems please type: %1	common	hr	On *nix systems please type: %1
+on mouse over	common	hr	On Mouse Over
+only private	common	hr	only private
+only yours	common	hr	only yours
+open notify window	common	hr	Open notify window
+open popup window	common	hr	Open popup window
+original	common	hr	Original
+other	common	hr	Other
+overview	common	hr	Pregled
+owner	common	hr	Vlasnik
+page	common	hr	Stranica
+page was generated in %1 seconds	common	hr	Page was generated in %1 seconds
+pakistan	common	hr	PAKISTAN
+palau	common	hr	PALAU
+palestinian territory, occupied	common	hr	PALESTINIAN TERRITORY, OCCUPIED
+panama	common	hr	PANAMA
+papua new guinea	common	hr	PAPUA NEW GUINEA
+paraguay	common	hr	PARAGUAY
+parcel	common	hr	Parcel
+parent category	common	hr	Parent Category
+password	common	hr	Password
+password could not be changed	common	hr	Password could not be changed
+password has been updated	common	hr	Password has been updated
+path to user and group files has to be outside of the webservers document-root!!!	common	hr	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
+pattern for search in addressbook	common	hr	Pattern for Search in Addressbook
+pattern for search in calendar	common	hr	Pattern for Search in Calendar
+pattern for search in projects	common	hr	Pattern for Search in Projects
+permissions to the files/users directory	common	hr	permissions to the files/users directory
+personal	common	hr	Personal
+peru	common	hr	PERU
+philippines	common	hr	PHILIPPINES
+phone number	common	hr	phone number
+pitcairn	common	hr	PITCAIRN
+please %1 by hand	common	hr	Please %1 by hand
+please enter a name	common	hr	Please enter a name !
+please run setup to become current	common	hr	Please run setup to become current
+please select	common	hr	Please Select
+please set your global preferences	common	hr	Please set your global preferences !
+please set your preferences for this application	common	hr	Please set your preferences for this application !
+please wait...	common	hr	Please Wait...
+poland	common	hr	POLAND
+portugal	common	hr	PORTUGAL
+postal	common	hr	Postal
+preferences	common	hr	Postavke
+preferences for the idots template set	common	hr	Preferences for the idots template set
+prev. month (hold for menu)	jscalendar	hr	Prev. month (hold for menu)
+prev. year (hold for menu)	jscalendar	hr	Prev. year (hold for menu)
+previous page	common	hr	Previous page
+print	common	hr	Print
+priority	common	hr	Priority
+private	common	hr	Private
+project	common	hr	Project
+public	common	hr	public
+puerto rico	common	hr	PUERTO RICO
+qatar	common	hr	QATAR
+read	common	hr	Read
+read this list of methods.	common	hr	Read this list of methods.
+reject	common	hr	Reject
+remove selected accounts	common	hr	remove selected accounts
+rename	common	hr	Rename
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	hr	Returns a full list of accounts on the system.  Warning: This is return can be quite large
+returns an array of todo items	common	hr	Returns an array of todo items
+returns struct of users application access	common	hr	Returns struct of users application access
+reunion	common	hr	REUNION
+romania	common	hr	ROMANIA
+russian federation	common	hr	RUSSIAN FEDERATION
+rwanda	common	hr	RWANDA
+saint helena	common	hr	SAINT HELENA
+saint kitts and nevis	common	hr	SAINT KITTS AND NEVIS
+saint lucia	common	hr	SAINT LUCIA
+saint pierre and miquelon	common	hr	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	hr	SAINT VINCENT AND THE GRENADINES
+samoa	common	hr	SAMOA
+san marino	common	hr	SAN MARINO
+sao tome and principe	common	hr	SAO TOME AND PRINCIPE
+saturday	common	hr	Subota
+saudi arabia	common	hr	SAUDI ARABIA
+save	common	hr	Snimi
+search	common	hr	Search
+search %1 '%2'	common	hr	Search %1 '%2'
+search or select accounts	common	hr	Search or select accounts
+section	common	hr	Section
+select	common	hr	Select
+select all %1 %2 for %3	common	hr	Select all %1 %2 for %3
+select category	common	hr	Select Category
+select date	common	hr	Select date
+select group	common	hr	Select group
+select home email address	common	hr	Select home email address
+select one	common	hr	Select one
+select user	common	hr	Select user
+select work email address	common	hr	Select work email address
+selection	common	hr	Selection
+send	common	hr	Send
+senegal	common	hr	SENEGAL
+september	common	hr	September
+server %1 has been added	common	hr	Server %1 has been added
+server name	common	hr	Server Name
+session has been killed	common	hr	Session has been killed
+setup	common	hr	Setup
+setup main menu	common	hr	Setup Main Menu
+seychelles	common	hr	SEYCHELLES
+show all	common	hr	show all
+show all categorys	common	hr	Show all categorys
+show menu	common	hr	show menu
+show page generation time	common	hr	Show page generation time
+show page generation time on the bottom of the page?	common	hr	Show page generation time on the bottom of the page?
+show_more_apps	common	hr	show_more_apps
+showing %1	common	hr	showing %1
+showing %1 - %2 of %3	common	hr	showing %1 - %2 of %3
+sierra leone	common	hr	SIERRA LEONE
+singapore	common	hr	SINGAPORE
+slovakia	common	hr	SLOVAKIA
+slovenia	common	hr	SLOVENIA
+solomon islands	common	hr	SOLOMON ISLANDS
+somalia	common	hr	SOMALIA
+sorry, your login has expired	login	hr	Sorry, your login has expired
+south africa	common	hr	SOUTH AFRICA
+south georgia and the south sandwich islands	common	hr	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spain	common	hr	SPAIN
+sri lanka	common	hr	SRI LANKA
+start date	common	hr	Start date
+start time	common	hr	Start time
+start with	common	hr	start with
+status	common	hr	Status
+subject	common	hr	Tema
+submit	common	hr	Submit
+substitutions and their meanings:	common	hr	Substitutions and their meanings:
+sudan	common	hr	SUDAN
+sunday	common	hr	Sunday
+suriname	common	hr	SURINAME
+svalbard and jan mayen	common	hr	SVALBARD AND JAN MAYEN
+swaziland	common	hr	SWAZILAND
+sweden	common	hr	SWEDEN
+switzerland	common	hr	SWITZERLAND
+syrian arab republic	common	hr	SYRIAN ARAB REPUBLIC
+taiwan	common	hr	TAIWAN/TAIPEI
+tajikistan	common	hr	TAJIKISTAN
+tanzania, united republic of	common	hr	TANZANIA, UNITED REPUBLIC OF
+text color:	common	hr	Text color:
+thailand	common	hr	THAILAND
+the api is current	common	hr	The API is current
+the api requires an upgrade	common	hr	The API requires an upgrade
+the following applications require upgrades	common	hr	The following applications require upgrades
+the mail server returned	common	hr	The mail server returned
+this application is current	common	hr	This application is current
+this application requires an upgrade	common	hr	This application requires an upgrade
+this name has been used already	common	hr	This name has been used already !
+thursday	common	hr	Četvrtak
+time	common	hr	Vrijeme
+time selection:	jscalendar	hr	Odabir vremena:
+time zone	common	hr	Vremenska zona
+time zone offset	common	hr	Time zone offset
+title	common	hr	Naslov
+to	common	hr	To
+to correct this error for the future you will need to properly set the	common	hr	To correct this error for the future you will need to properly set the
+to go back to the msg list, click <a href= %1 >here</a>	common	hr	To go back to the msg list, click <a href="%1">here</a>
+today	common	hr	Danas
+todays date, eg. "%1"	common	hr	todays date, eg. "%1"
+toggle first day of week	jscalendar	hr	Toggle first day of week
+togo	common	hr	TOGO
+tokelau	common	hr	TOKELAU
+tonga	common	hr	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	hr	Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4
+total	common	hr	Ukupno
+trinidad and tobago	common	hr	TRINIDAD AND TOBAGO
+tuesday	common	hr	Utorak
+tunisia	common	hr	TUNISIA
+turkey	common	hr	TURKEY
+turkmenistan	common	hr	TURKMENISTAN
+turks and caicos islands	common	hr	TURKS AND CAICOS ISLANDS
+tuvalu	common	hr	TUVALU
+uganda	common	hr	UGANDA
+ukraine	common	hr	UKRAINE
+united arab emirates	common	hr	UNITED ARAB EMIRATES
+united kingdom	common	hr	UNITED KINGDOM
+united states	common	hr	UNITED STATES
+united states minor outlying islands	common	hr	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	hr	Unknown
+update	common	hr	Ažuriraj
+url	common	hr	URL
+uruguay	common	hr	URUGUAY
+use button to search for	common	hr	use Button to search for
+use button to search for address	common	hr	use Button to search for Address
+use button to search for calendarevent	common	hr	use Button to search for Calendarevent
+use button to search for project	common	hr	use Button to search for Project
+user	common	hr	Korisnik
+user accounts	common	hr	korisnički računi
+user groups	common	hr	korisničke grupe
+username	common	hr	Korisničko ime
+users	common	hr	korisnici
+users choice	common	hr	Users Choice
+uzbekistan	common	hr	UZBEKISTAN
+vanuatu	common	hr	VANUATU
+venezuela	common	hr	VENEZUELA
+version	common	hr	Verzija
+viet nam	common	hr	VIETNAM
+view	common	hr	Pogled
+virgin islands, british	common	hr	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	hr	VIRGIN ISLANDS, U.S.
+wallis and futuna	common	hr	WALLIS AND FUTUNA
+wednesday	common	hr	Srijeda
+welcome	common	hr	Dobrodošli
+western sahara	common	hr	WESTERN SAHARA
+which groups	common	hr	Koje grupe
+wk	jscalendar	hr	wk
+work email	common	hr	E-mail poslovni
+written by:	common	hr	Napisao:
+year	common	hr	Godina
+yemen	common	hr	YEMEN
+yes	common	hr	Da
+you are required to change your password during your first login	common	hr	You are required to change your password during your first login
+you are running a newer version of phpgroupware than your database is setup for	common	hr	You are running a newer version of phpGroupWare than your database is setup for.
+you have been successfully logged out	login	hr	Uspješno ste odjavljeni
+you have not entered a title	common	hr	You have not entered a title
+you have not entered a valid date	common	hr	You have not entered a valid date
+you have not entered a valid time of day	common	hr	You have not entered a valid time of day
+you have not entered participants	common	hr	You have not entered participants
+you have selected an invalid date	common	hr	You have selected an invalid date !
+you have selected an invalid main category	common	hr	You have selected an invalid main category !
+you have successfully logged out	common	hr	Uspješno ste se odjavili
+you need to add the webserver user '%1' to the group '%2'.	common	hr	You need to add the webserver user '%1' to the group '%2'.
+your message could <b>not</b> be sent!<br>	common	hr	Your message could <b>not</b> be sent!<br>
+your message has been sent	common	hr	Vaša poruka je poslana
+your search returned %1 matchs	common	hr	your search returned %1 matches
+your search returned 1 match	common	hr	Vaša pretraga je vratila 1 rezultat
+your session could not be verified.	login	hr	Vašu sesiju nije moguće potvrditi.
+your settings have been updated	common	hr	Vaše postavke su Ažurirane
+yugoslavia	common	hr	JUGOSLAVIJA
+zambia	common	hr	ZAMBIA
+zimbabwe	common	hr	ZIMBABWE
+site configuration	common	hr	Site configuration

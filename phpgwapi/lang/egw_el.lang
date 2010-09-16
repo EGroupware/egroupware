@@ -1,0 +1,712 @@
+%1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
+%1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver !!!
+%1 manual	common	el	%1 χειροκίνητα
+%1 start	common	el	%1 έναρξη
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br />ή κάντε %3 εγγράψιμο από τον webserver
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1eGroupWare%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
+(shift-)click or drag to change value	jscalendar	el	(Shift-)Click ή σύρετε για να αλλάξετε τιμή
+- click on any of the time parts to increase it	jscalendar	el	- Κάντε κλικ σε οποιοδήποτε τμήμα της ώρας για να το αυξήσετε
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	el	- Κάντε κλικ και κρατηστε πατημένο το κουμπί του ποντικιού πάνω από οποιοδήποτε από τα παραπάνω κουμπιά για γρηγορότερη επιλογή
+- or click and drag for faster selection.	jscalendar	el	- ή κάντε κλικ και σύρετε για γρηγορότερη επιλογή
+- or shift-click to decrease it	jscalendar	el	- ή κάντε shift-click gια να το αυξήσετε
+- use the %1, %2 buttons to select month	jscalendar	el	- Χρησιμοποιήστε τα κουμπιά %1, %2 για να επιλέξετε μήνα
+- use the %1, %2 buttons to select year	jscalendar	el	- Χρησιμοποιήστε τα κουμπιά %1, %2 για να επιλέξετε χρόνο
+00 (disable)	admin	el	00 (Απενεργοποίηση)
+13 (ntp)	admin	el	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	el	3 αριθμός διαγραμμάτων για καθημερινή-συντόμευση
+3 number of chars for month-shortcut	jscalendar	el	3 αριθμός διαγραμμάτων για μηνιαία-συντόμευση
+80 (http)	admin	el	80 (http)
+about	common	el	Πληροφορίες
+about %1	common	el	Πληροφορίες %1
+about egroupware	common	el	Πληροφορίες για το eGroupware
+about the calendar	jscalendar	el	Για το ημερολόγιο
+access	common	el	Πρόσβαση
+access not permitted	common	el	Απαγορεύεται η πρόσβαση
+account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί
+account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
+account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
+account is expired	common	el	Ο λογαριασμός έχει λήξει
+acl	common	el	ACL
+action	common	el	Ενέργεια
+active	common	el	Ενεργό
+add	common	el	Προσθήκη
+add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
+add category	common	el	Προσθήκη κατηγορίας
+add shortcut	common	el	Προσθήκη Συντόμευσης
+add sub	common	el	Προσθήκη υπo
+addressbook	common	el	Επαφές
+admin	common	el	Διαχειριστής
+administration	common	el	Διαχείριση
+afghanistan	common	el	ΑΦΓΑΝΙΣΤΑΝ
+albania	common	el	ΑΛΒΑΝΙΑ
+algeria	common	el	ΑΛΓΕΡΙΑ
+all	common	el	Ολα
+all fields	common	el	όλα τα πεδία
+alphabet	common	el	α,β,γ,δ,ε,ζ,η,θ,ι,κ,λ,μ,ν,ξ,ο,π,ρ,σ,τ,υ,φ,χ,ψ,ω,
+alternate style-sheet:	common	el	Εναλλακτικό στυλ-φύλλου
+american samoa	common	el	ΑΜΕΡΙΚΑΝΙΚΗ ΣΑΜΟΑ
+an existing and by the webserver readable directory enables the image browser and upload.	common	el	Ένας υπάρχον ΚΑΙ από τον webserver αναγνώσιμος κατάλογος ενεργοποιεί τον εικονικό browser και τον φορτώνει.
+andorra	common	el	ΑΝΔΟΡΡΑ
+angola	common	el	ΑΝΓΚΟΛΑ
+anguilla	common	el	ΑΝΓΚΟΥΙΛΛΑ
+antarctica	common	el	ΑΝΤΑΡΚΤΙΚΗ
+antigua and barbuda	common	el	ΑΝΤΙΓΚΟΥΑ & ΜΠΑΡΜΠΟΥΝΤΑ
+application	common	el	Εφαρμογή
+apply	common	el	Εφαρμογή
+april	common	el	Απρίλιος
+are you sure you want to delete these entries ?	common	el	Είστε σίγουροι ότι θέλετε να διαγράψετε αυτές τις καταχωρίσεις;
+are you sure you want to delete this entry ?	common	el	Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή την καταχωώριση;
+argentina	common	el	ΑΡΓΕΝΤΙΝΗ
+armenia	common	el	ΑΡΜΕΝΙΑ
+aruba	common	el	ΑΡΟΥΜΠΑ
+august	common	el	Αύγουστος
+australia	common	el	ΑΥΣΤΡΑΛΙΑ
+austria	common	el	ΑΥΣΤΡΙΑ
+author	common	el	Συγγραφέας
+autohide sidebox menu's	common	el	Αυτόματη απόκρυψη μενού
+autohide sidebox menus	common	el	Αυτόματη απόκρυψη μενού
+automatically hide the sidebox menu's?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
+automatically hide the sidebox menus?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
+autosave default category	common	el	Αυτόματη αποθήκευση της προεπιλεγμένης κατηγορίας
+azerbaijan	common	el	ΑΖΕΡΜΠΑΪΤΖΑΝ
+back	common	el	Επιστροφή
+back to user login	common	el	Επιστροφή στη σελίδα σύνδεσης
+background color:	common	el	Χρωματισμός φόντου:
+bad login or password	common	el	Λάθος όνομα χρήστη ή κωδικός
+bahamas	common	el	ΜΠΑΧΑΜΕΣ
+bahrain	common	el	ΜΠΑΧΡΕΪΝ
+bangladesh	common	el	ΜΠΑΓΚΛΑΝΤΕΣ
+barbados	common	el	ΜΠΑΡΜΠΑΝΤΟΣ
+bcc	common	el	Κρυφή Κοινοποίηση
+belarus	common	el	ΛΕΥΚΟΡΩΣΙΑ
+belgium	common	el	ΒΕΛΓΙΟ
+belize	common	el	ΜΠΕΛΙΖ
+benin	common	el	ΜΠΕΝΙΝ
+bermuda	common	el	ΒΕΡΜΟΥΔΑ
+bhutan	common	el	ΜΠΟΥΤΑΝ
+blocked, too many attempts	common	el	Μπλοκαρισμένο, πάρα πολλές προσπάθειες
+bold	common	el	Τονισμένα
+bolivia	common	el	ΒΟΛΙΒΙΑ
+border	common	el	Όριο
+bosnia and herzegovina	common	el	ΒΟΣΝΙΑ & ΕΡΖΕΓΟΒΙΝΗ
+botswana	common	el	ΜΠΟΤΣΟΥΑΝΑ
+bottom	common	el	Κάτω τμήμα
+bouvet island	common	el	ΝΗΣΟΙ ΜΠΟΥΒΕ
+brazil	common	el	ΒΡΑΖΙΛΙΑ
+british indian ocean territory	common	el	ΒΡΕΤΑΝΙΚΕΣ ΚΤΗΣΕΙΣ ΙΝΔΙΚΟΥ ΩΚΕΑΝΟΥ
+brunei darussalam	common	el	ΜΠΡΟΥΝΕΪ ΝΤΑΡΟΥΣΑΛΑΜ
+bulgaria	common	el	ΒΟΥΛΓΑΡΙΑ
+burkina faso	common	el	ΜΠΟΥΡΚΙΝΑ ΦΑΣΟ
+burundi	common	el	ΜΠΟΥΡΟΥΝΤΙ
+calendar	common	el	Ημερολόγιο
+cambodia	common	el	ΚΑΜΠΟΤΖΗ
+cameroon	common	el	ΚΑΜΕΡΟΥΝ
+canada	common	el	ΚΑΝΑΔΑΣ
+cancel	common	el	Ακύρωση
+cannot replace %1 because it is a directory	common	el	Δεν γίνεται η αντικατάσταση του %1 επειδή είναι  κατάλογος
+cant open '%1' for %2	common	el	Δεν μπορεί να ανοιχτεί το '%1' για το '%2'
+cape verde	common	el	ΠΡΑΣΙΝΟ ΑΚΡΩΤΗΡΙ
+caption	common	el	Κεφαλαία
+categories	common	el	Κατηγορίες
+categories for	common	el	Κατηγορίες για
+category	common	el	Κατηγορία
+category %1 has been added !	common	el	Η κατηγορία %1 προστέθηκε
+category %1 has been updated !	common	el	Η κατηγορία %1 ενημερώθηκε
+cayman islands	common	el	ΝΗΣΟΙ ΚΕΪΜΑΝ
+cc	common	el	Κοινοποίηση
+centered	common	el	κεντραρισμένο
+central african republic	common	el	ΔΗΜΟΚΡΑΤΙΑ ΚΕΝΤΡΙΚΗΣ ΑΦΡΙΚΗΣ
+chad	common	el	ΤΣΑΝΤ
+change	common	el	Αλλαγή
+charset	common	el	utf-8
+check installation	common	el	Ελεγχος εγκατάστασης
+check now	common	el	Έλεγχος τώρα
+chile	common	el	ΧΙΛΗ
+china	common	el	ΚΙΝΑ
+choose a background color	common	el	Επιλέξτε ένα χρώμα φόντου
+choose a background color for the icons	common	el	Επιλέξτε ένα χρώμα φόντου για τις εικόνες
+choose a background image.	common	el	Επιλέξτε μία εικόνα φόντου
+choose a background style.	common	el	Επιλέξτε ένα στυλ φόντου
+choose a text color for the icons	common	el	Επιλέξτε ένα χρώμα κειμένου για τις εικόνες
+choose the category	common	el	Επιλέξτε κατηγορία
+choose the parent category	common	el	Επιλέξτε γονική κατηγορία
+christmas island	common	el	ΝΗΣΟΙ ΧΡΙΣΤΟΥΓΕΝΝΩΝ
+clear	common	el	Εκκαθάριση
+clear form	common	el	Εκκαθάριση Φόρμας
+click	common	el	Κάντε κλικ
+click or mouse over to show menus	common	el	Κάντε κλικ ή τοποθετήστε επάνω το ποντίκι για εμφάνιση των μενού
+click or mouse over to show menus?	common	el	Κλικ ή mouse over για εμφάνιση των μενού;
+close	common	el	Κλείσιμο
+close sidebox	common	el	Κλείσιμο μενού
+cocos (keeling) islands	common	el	ΝΗΣΟΙ ΚΟΚΟΣ (ΚΙΛΙΓΚ)
+colombia	common	el	ΚΟΛΟΜΒΙΑ
+common preferences	common	el	Κοινές προτιμήσεις
+comoros	common	el	ΚΟΜΟΡΑ
+company	common	el	Εταιρεία
+congo	common	el	ΚΟΝΓΚΟ
+congo, the democratic republic of the	common	el	ΚΟΝΓΚΟ, ΟΜΟΣΠΟΝΔΙΑΚΗ ΔΗΜΟΚΡΑΤΙΑ
+contacting server...	common	el	Επικοινωνία με τον Server
+cook islands	common	el	ΝΗΣΟΙ ΚΟΥΚ
+copy	common	el	Αντιγραφή
+costa rica	common	el	ΚΟΣΤΑ ΡΙΚΑ
+cote d ivoire	common	el	ΑΚΤΗ ΕΛΕΦΑΝΤΟΣΤΟΥ
+could not contact server. operation timed out!	common	el	Δεν κατέστει δυνατή η επικοινωνία με τον Server.
+create	common	el	Δημιουργία
+created by	common	el	Δημιουργία από
+croatia	common	el	ΚΡΟΑΤΙΑ
+cuba	common	el	ΚΟΥΒΑ
+currency	common	el	Νόμισμα
+current	common	el	Τρέχων
+current users	common	el	Τρέχοντες Χρήστες
+cyprus	common	el	ΚΥΠΡΟΣ
+czech republic	common	el	ΤΣΕΧΙΑ
+date	common	el	Ημερομηνία
+date due	common	el	Ημερομηνία ολοκλήρωσης
+date selection:	jscalendar	el	Ημερομηνία επιλογής
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	el	Datetime port.<br> Aν χρησιμοποιείται τη θύρα 13, παρακαλώ ορίστε καταλλήλως τους κανόνες του firewall πριν υποβάλετε αυτή τη σελίδα.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	el	Δεκέμβριος
+default category	common	el	Προεπιλεγμένη Κατηγορία
+default height for the windows	common	el	Προεπιλεγμένο ύψος για τα παράθυρα
+default width for the windows	common	el	Προεπιλεγμένο πλάτος για τα παράθυρα
+delete	common	el	Διαγραφή
+delete row	common	el	Διαγραφή σειράς
+denmark	common	el	ΔΑΝΙΑ
+description	common	el	Περιγραφή
+detail	common	el	Λεπτομέρεια
+details	common	el	Λεπτομέρειες
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	el	Nα απενεργοποιηθεί η εκτέλεση του bugfixscript στον Internet Explorer 5.5 και μεγαλύτερο για να εμφανίζεται η διαφάνεια στις PNG-εικόνες;
+direction left to right	common	el	Κατεύθυνση από αριστερά προς τα δεξιά
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	el	Ο κατάλογος δεν υπάρχει, δεν είναι αναγνώσιμος από τον webserver ή δεν είναι σχετικός με την πορεία του εγγράφου!
+disable internet explorer png-image-bugfix	common	el	Απενεργοποίηση του Internet Explorer png-image-bugfix
+disable slider effects	common	el	Aπενεργοποίηση των εφέ της μπάρας κύλισης
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	el	Να απενεργοποιθούν τα εφέ της μπάρας κύλισης κατά την εμφάνιση ή απόκρυψη των μενού σ' αυτή τη σελίδα; Αυτό πιθανόν χρειάζεται για τους χρήστες των Opera και Konqueror.
+disabled	common	el	Απενεργοποιημένο
+display %s first	jscalendar	el	Προβολή % πρώτα
+djibouti	common	el	ΤΣΙΜΠΟΥΤΙ
+do you also want to delete all subcategories ?	common	el	Θέλετε να διαγράψετε και όλες τις υποκατηγορίες;
+document properties	common	el	Ιδιότητες εγγράφου
+document title:	common	el	Τίτλος εγγράφου:
+domain	common	el	Τομέας
+domain name for mail-address, eg. "%1"	common	el	Όνομα Τομέα για διεύθυνση ηλεκτρονικού ταχυδρομείου π.χ. "%1"
+domestic	common	el	Εσωτερικός
+dominica	common	el	ΔΟΜΙΝΙΚΗ
+dominican republic	common	el	ΔΟΜΙΝΙΚΑΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ
+done	common	el	Ολοκληρώθηκε
+drag to move	jscalendar	el	Σύρε για μετακίνηση
+e-mail	common	el	E-Mail
+east timor	common	el	ΑΝΑΤΟΛΙΚΟ ΤΙΜΟΡ
+ecuador	common	el	ΙΣΗΜΕΡΙΝΟΣ
+edit	common	el	Επεξεργασία
+edit %1 category for	common	el	Επεξεργασία της κατηγορίας 1% για
+edit categories	common	el	Επεξεργασία Κατηγοριών
+edit category	common	el	Επεξεργασία Κατηγορίας
+egroupware api version %1	common	el	eGroupWare API έκδοση %1
+egroupware: login blocked for user '%1', ip %2	common	el	eGroupWare: Είσοδος μπλοκαρισμένη για το χρήστη '%1', με ip %2
+egypt	common	el	ΑΙΓΥΠΤΟΣ
+el salvador	common	el	ΕΛ ΣΑΛΒΑΔΟΡ
+email	common	el	Ε-Μail
+email-address of the user, eg. "%1"	common	el	e-mail του χρήστη π.χ. "%1"
+enabled	common	el	Ενεργοποιημένο
+end date	common	el	Ημερομηνία παράδοσης
+end time	common	el	Ώρα παράδοσης
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του eGroupWare URL.<br>Παράδειγμα: http://www.domain.com/egroupware   or  /egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
+entry has been deleted sucessfully	common	el	Η καταχώρηση διαγράφηκε επιτυχώς
+entry updated sucessfully	common	el	Η καταχώρηση ενημερώθηκε επιτυχώς
+equatorial guinea	common	el	ΙΣΗΜΕΡΙΝΗ ΓΟΥΪΝΕΑ
+eritrea	common	el	ΕΡΥΘΡΑΙΑ
+error	common	el	Σφάλμα
+error creating %1 %2 directory	common	el	Σφάλμα κατά τη δημιουργία του καταλόγου %1 %2
+error deleting %1 %2 directory	common	el	Σφάλμα κατά τη διαγραφή του καταλόγου %1 %2
+error renaming %1 %2 directory	common	el	Σφάλμα κατά τη μετονομασία του καταλόγου %1 %2
+estonia	common	el	ΕΣΘΟΝΙΑ
+ethiopia	common	el	ΑΙΘΙΟΠΙΑ
+everything	common	el	Όλα
+exact	common	el	ακριβώς
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	el	Αποτυχία Σύνδεσης με τον Server ή Άκυρη Απάντηση από τον Server. Προσπαθήστε να εισέλθετε ξανά. Επικοινωνήστε με τον Admin σε περίπτωση αποτυχίας.
+falkland islands (malvinas)	common	el	ΝΗΣΟΙ ΦΩΚΛΑΝΤ (ΜΑΛΒΙΝΑΣ)
+faroe islands	common	el	ΝΗΣΟΙ ΦΕΡΟΕ
+fax number	common	el	Αριθμός Fax
+features of the editor?	common	el	Χαρακτηριστικά του συντάκτη
+february	common	el	Φεβρουάριος
+fields	common	el	Πεδία
+fiji	common	el	ΦΙΤΖΙ
+files	common	el	Αρχεία
+filter	common	el	Φίλτρο
+finland	common	el	ΦΙΛΑΝΔΙΑ
+first name	common	el	Ονομα
+first name of the user, eg. "%1"	common	el	Ονομα χρήστη, π.χ. "%1"
+first page	common	el	Αρχική σελίδα
+firstname	common	el	Ονομα
+fixme!	common	el	Διόρθωσέ με!
+folder already exists.	common	el	Ο φάκελος υπάρχει ήδη
+france	common	el	ΓΑΛΙΑ
+french guiana	common	el	ΓΑΛΛΙΚΗ ΓΟΥΪΑΝΑ
+french polynesia	common	el	ΓΑΛΛΙΚΗ ΠΟΛΥΝΗΣΙΑ
+french southern territories	common	el	ΝΟΤΙΕΣ ΓΑΛΛΙΚΕΣ ΚΤΗΣΕΙΣ
+friday	common	el	Παρασκευή
+ftp	common	el	FTP
+fullname	common	el	Ονοματεπώνυμο
+fullscreen mode	common	el	Πλήρης οθόνη
+gabon	common	el	ΓΚΑΜΠΟΝ
+gambia	common	el	ΓΚΑΜΠΙΑ
+general menu	common	el	Γενικό Μενού
+georgia	common	el	ΓΕΩΡΓΙΑ
+german	common	el	Γερμανικά
+germany	common	el	ΓΕΡΜΑΝΙΑ
+ghana	common	el	ΓΚΑΝΑ
+gibraltar	common	el	ΓΙΒΡΑΛΤΑΡ
+global	common	el	Παγκόσμιο
+global public	common	el	Παγκόσμιο Κοινό
+go today	jscalendar	el	Σήμερα
+grant access	common	el	Χορήγηση Πρόσβασης
+greece	common	el	ΕΛΛΑΔΑ
+greenland	common	el	ΓΡΟΙΛΑΝΔΙΑ
+grenada	common	el	ΓΡΑΝΑΔΑ
+group	common	el	Ομάδα
+group access	common	el	Πρόσβαση Ομάδας
+group has been added	common	el	Η ομάδα προστέθηκε
+group has been deleted	common	el	Η ομάδα διαγράφηκε
+group has been updated	common	el	Η ομάδα ανανεώθηκε
+group name	common	el	όνομα ομάδας
+group public	common	el	Δημόσια Ομάδα
+groups	common	el	Ομάδες
+groups with permission for %1	common	el	Ομάδες με άδεια για %1
+groups without permission for %1	common	el	Ομάδες χωρίς άδεια για %1
+guadeloupe	common	el	ΓΟΥΑΔΑΛΟΥΠΗ
+guam	common	el	ΓΚΟΥΑΜ
+guatemala	common	el	ΓΚΟΥΑΤΕΜΑΛΑ
+guinea	common	el	ΓΟΥΪΝΕΑ
+guinea-bissau	common	el	ΓΟΥΪΝΕΑ-ΜΠΙΣΩ
+guyana	common	el	ΓΟΥΪΑΝΑ
+haiti	common	el	ΑΪΤΗ
+heard island and mcdonald islands	common	el	ΝΗΣΟΙ ΧΕΡΝΤ & ΜΑΚΝΤΟΝΑΛΝΤ
+height	common	el	Ύψος
+help	common	el	Βοήθεια
+high	common	el	Ψηλά
+highest	common	el	Ψηλότερα
+holy see (vatican city state)	common	el	ΒΑΤΙΚΑΝΟ
+home	common	el	Αρχική Σελίδα
+home email	common	el	Email οικίας
+honduras	common	el	ΟΝΔΟΥΡΑ
+hong kong	common	el	ΧΟΝΓΚ ΚΟΝΓΚ
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	el	Πόσες εικόνες θα εμφανίζονται στη μπάρα πλοήγησης (κορυφή της σελίδας). Οι επιπλέον εικόνες μπαίνουν σ' ένα είδος pulldown menu, και ανακτώνται από το εικονίδιο στην τέρμα δεξιά πλευρά του μενού πλοήγησης.
+hungary	common	el	ΟΥΓΓΑΡΙΑ
+iceland	common	el	ΙΣΛΑΝΔΙΑ
+iespell not detected. click ok to go to download page.	common	el	ieSpell δεν βρέθηκε.Κλικ στο ΟΚ για να πάτε στη download page
+if the clock is enabled would you like it to update it every second or every minute?	common	el	Αν το ρολόι είναι ενεργοποιημένο θα θέλατε να το ενημερώνετε κάθε δευτερόλεπτο ή κάθε λεπτό;
+if there are some images in the background folder you can choose the one you would like to see.	common	el	Εάν υπάρχουν μερικές εικόνες στο φάκελο φόντου μπορείτε να επιλέξετε αυτές που θέλετε να δείτε.
+image directory relative to document root (use / !), example:	common	el	Κατάλογος εικόνας σχετικός με τη ρίζα εγγράφου (χρήση /!), π.χ.:
+image url	common	el	Εικόνα URL
+india	common	el	ΙΝΔΙΑ
+indonesia	common	el	ΙΝΔΟΝΗΣΙΑ
+insert all %1 addresses of the %2 contacts in %3	common	el	Εισαγωγή όλων των %1 διευθύνσεων των %2 επαφών στο %3
+insert column after	common	el	Εισαγωγή στήλης μετά
+insert column before	common	el	Εισαγωγή στήλης πριν
+insert row after	common	el	Εισαγωγή σειράς μετά
+insert row before	common	el	Εισαγωγή σειράς πριν
+international	common	el	Διεθνείς
+invalid filename	common	el	Άκυρο όνομα αρχείου
+invalid ip address	common	el	Ακυρη διεύθυνση ΙΡ
+invalid password	common	el	Άκυρος κωδικός
+iran, islamic republic of	common	el	ΙΡΑΝ
+iraq	common	el	ΙΡΑΚ
+ireland	common	el	ΙΡΛΑΝΔΙΑ
+israel	common	el	ΙΣΡΑΗΛ
+it has been more then %1 days since you changed your password	common	el	Πέρασαν πάνω από %1 μέρες από την τελευταία αλλαγή του κωδικού σας
+it is recommended that you run setup to upgrade your tables to the current version	common	el	Συνιστάται η εκτέλεση του setup για αναβάθμιση των πινάκων σας στην τρέχουσα έκδοση.
+italic	common	el	Πλάγια
+italy	common	el	ΙΤΑΛΙΑ
+jamaica	common	el	ΤΖΑΜΑΙΚΑ
+january	common	el	Ιανουάριος
+japan	common	el	ΙΑΠΩΝΙΑ
+jordan	common	el	ΙΟΡΔΑΝΙΑ
+july	common	el	Ιούλιος
+jun	common	el	Ιούν
+june	common	el	Ιούνιος
+justify center	common	el	Στοίχιση στο κέντρο
+justify full	common	el	Πλήρης στοίχιση
+justify left	common	el	Στοίχιση αριστερά
+justify right	common	el	Στοίχιση δεξιά
+kazakstan	common	el	ΚΑΖΑΚΣΤΑΝ
+kenya	common	el	ΚΕΝΥΑ
+keywords	common	el	Λέξεις κλειδιά
+kiribati	common	el	ΚΙΡΙΜΠΑΤΙ
+korea, democratic peoples republic of	common	el	ΚΟΡΕΑ, ΒΟΡΕΙΑ
+korea, republic of	common	el	ΚΟΡΕΑ, ΝΟΤΙΑ
+kuwait	common	el	ΚΟΥΒΕΪΤ
+kyrgyzstan	common	el	ΚΥΡΓΥΣΤΑΝ
+language	common	el	Γλώσσα
+language_direction_rtl	common	el	γλώσσα_κατεύθυνση_rtl
+lao peoples democratic republic	common	el	ΛΑΟΣ
+last name	common	el	Επίθετο
+last name of the user, eg. "%1"	common	el	επίθετο του χρήστη, π.χ. "%1"
+last page	common	el	Τελευταία σελίδα
+lastname	common	el	Επίθετο
+latvia	common	el	ΛΕΤΟΝΙΑ
+ldap-mgr	common	el	LDAP-Διαχειριστής
+lebanon	common	el	ΛΙΒΑΝΟΣ
+left	common	el	Αριστερά
+lesotho	common	el	ΛΕΣΟΤΟ
+liberia	common	el	ΛΙΒΕΡΙΑ
+libyan arab jamahiriya	common	el	ΛΙΒΥΚΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
+license	common	el	Αδεια
+liechtenstein	common	el	ΛΙΧΤΕΝΣΤΑΪΝ
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	el	Γραμμή 1: '%2'<br>csv δεδομένα δεν αντιστοιχούν με τη στήλη-αρίθμηση τραπεζιού %3 ==>αγνοήθηκε</b>
+list	common	el	Λίστα
+list members	common	el	Μέλη λίστας
+lithuania	common	el	ΛΙΘΟΥΑΝΙΑ
+local	common	el	Τοπικός
+login	common	el	Είσοδος
+loginid	common	el	Ταυτότητα εισόδου
+logout	common	el	Εξοδος
+low	common	el	Χαμηλό
+lowest	common	el	Ελάχιστο
+luxembourg	common	el	ΛΟΥΞΕΜΒΟΥΡΓΟ
+macau	common	el	ΜΑΚΑΟ
+macedonia, the former yugoslav republic of	common	el	Π.Γ.Δ. ΤΗΣ ΜΑΚΕΔΟΝΙΑΣ
+madagascar	common	el	ΜΑΔΑΓΑΣΚΑΡΗ
+mail domain, eg. "%1"	common	el	mail domain, π.χ. "%1"
+main category	common	el	Βασική κατηγορία
+main screen	common	el	Βασική οθόνη
+maintainer	common	el	Συντηρητής
+malawi	common	el	ΜΑΛΑΟΥΪ
+malaysia	common	el	ΜΑΛΑΙΣΙΑ
+maldives	common	el	ΜΑΛΔΙΒΕΣ
+mali	common	el	ΜΑΛΙ
+malta	common	el	ΜΑΛΤΑ
+march	common	el	Μάρτιος
+marshall islands	common	el	ΝΗΣΟΙ ΜΑΡΣΑΛ
+martinique	common	el	ΜΑΡΤΙΝΙΚΑ
+mauritania	common	el	ΜΑΥΡΙΤΑΝΙΑ
+mauritius	common	el	ΜΑΥΡΙΚΙΟΣ
+max number of icons in navbar	common	el	Μέγιστος αριθμός εικονιδίων στη μπάρα πλοήγησης
+may	common	el	Μάϊος
+mayotte	common	el	ΜΑΓΙΟΤΕ
+medium	common	el	Μεσαίο
+menu	common	el	Μενού
+message	common	el	Μήνυμα
+mexico	common	el	ΜΕΞΙΚΟ
+micronesia, federated states of	common	el	ΜΙΚΡΟΝΗΣΙΑ
+minute	common	el	λεπτό
+moldova, republic of	common	el	ΜΟΛΔΑΒΙΑ
+monaco	common	el	ΜΟΝΑΚΟ
+monday	common	el	Δευτέρα
+mongolia	common	el	ΜΟΓΓΟΛΙΑ
+montenegro	common	el	ΜΑΥΡΟΒΟΥΝΙΟ
+montserrat	common	el	ΜΟΝΣΕΡΑ
+morocco	common	el	ΜΑΡΟΚΟ
+mozambique	common	el	ΜΟΝΖΑΒΙΚΗ
+multiple	common	el	πολλαπλό
+myanmar	common	el	ΜΥΑΝΜΑΡ
+name	common	el	Όνομα
+name of the user, eg. "%1"	common	el	Ονομα χρήστη, π.χ. "%1"
+namibia	common	el	ΝΑΜΙΜΠΙΑ
+nauru	common	el	ΝΑΟΥΡΟΥ
+nepal	common	el	ΝΕΠΑΛ
+netherlands	common	el	ΟΛΛΑΝΔΙΑ
+netherlands antilles	common	el	ΟΛΛΑΝΔΙΚΕΣ ΑΝΤΙΛΛΕΣ
+never	common	el	Ποτέ
+new caledonia	common	el	ΝΕΑ ΚΑΛΗΔΟΝΙΑ
+new entry added sucessfully	common	el	Επιτυχής προσθήκη νέας εισαγωγής
+new main category	common	el	Νέα βασική κατηγορία
+new value	common	el	Νέα τιμή
+new zealand	common	el	ΝΕΑ ΖΗΛΑΝΔΙΑ
+next	common	el	Επόμενο
+next month (hold for menu)	jscalendar	el	Επόμενος μήνας (κρατήστε για μενού)
+next page	common	el	Επόμενη σελίδα
+next year (hold for menu)	jscalendar	el	Επόμενος χρόνος (κρατήστε για μενού)
+nicaragua	common	el	ΝΙΚΑΡΑΓΟΥΑ
+niger	common	el	ΝΙΓΗΡ
+nigeria	common	el	ΝΙΓΗΡΙΑ
+niue	common	el	ΝΙΟΥΕ
+no	common	el	Όχι
+no entries found, try again ...	common	el	δεν βρέθηκαν καταχωρήσεις, ξαναπροσπαθήστε...
+no history for this record	common	el	Δεν υπάρχει ιστορικό γι' αυτή την εγγραφή
+no savant2 template directories were found in:	common	el	Δεν βρέθηκαν ετικέτες καταλόγων Savant2 στο:
+no subject	common	el	Χωρίς θέμα
+none	common	el	Κανένα
+norfolk island	common	el	ΝΗΣΟΣ ΝΟΡΦΟΛΚ
+normal	common	el	Κανονικό
+northern mariana islands	common	el	ΝΗΣΟΙ ΝΟΤΙΑ ΜΑΡΙΑΝΑ
+norway	common	el	ΝΟΡΒΗΓΙΑ
+not assigned	common	el	χωρίς ανάθεση
+note	common	el	Σημείωση
+notes	common	el	Σημειώσεις
+notify window	common	el	Παράθυρο ειδοποίησης
+notify your administrator to correct this situation	common	el	Ενημερώστε τον Διαχειριστή ώστε να διορθωθεί αυτή η Κατάσταση
+november	common	el	Νοέμβριος
+october	common	el	Οκτώβριος
+ok	common	el	ΟΚ
+old value	common	el	Παλιά Τιμή
+oman	common	el	ΟΜΑΝ
+on *nix systems please type: %1	common	el	Σε *nix συστήματα πληκτρολογίστε: %1
+on mouse over	common	el	Με mouse over
+only private	common	el	μόνο ιδιωτικά
+only yours	common	el	μόνο δικά σας
+open notify window	common	el	Ανοιξε το παράθυρο ειδοποίησης
+open popup window	common	el	Ανοιξε το εκτινασσόμενο παράθυρο
+open sidebox	common	el	Άνοιγμα μενού
+original	common	el	Αρχικός
+other	common	el	Αλλο
+overview	common	el	Επισκόπηση
+owner	common	el	Ιδιοκτήτης
+page	common	el	Σελίδα
+page was generated in %1 seconds	common	el	Η σελίδα δημιουργήθηκε σε %1 δευτερόλεπτα
+pakistan	common	el	ΠΑΚΙΣΤΑΝ
+palau	common	el	ΠΑΛΑΟΥ
+palestinian territory, occupied	common	el	ΠΑΛΑΙΣΤΗΝΙΑΚΗ ΚΑΤΕΧΟΜΕΝΗ ΠΕΡΙΟΧΗ
+panama	common	el	ΠΑΝΑΜΑΣ
+papua new guinea	common	el	ΠΑΠΟΥΑ ΝΕΑ ΓΟΥΪΝΕΑ
+paraguay	common	el	ΠΑΡΑΓΟΥΑΗ
+parcel	common	el	Πακέτο
+parent category	common	el	Γονική Κατηγορία
+password	common	el	Κωδικός
+password could not be changed	common	el	Ο κωδικός δεν μπόρεσε να αλλαχθεί
+password has been updated	common	el	Ο κωδικός ενημερώθηκε
+password must contain at least %1 numbers	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 αριθμούς
+password must contain at least %1 special characters	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 ειδικούς χαρακτήρες
+password must have at least %1 characters	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 χαρακτήρες
+path to user and group files has to be outside of the webservers document-root!!!	common	el	Η διαδρομή του χρήστη και των αρχείων ομάδας ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ του webserver document-root!!!
+permissions to the files/users directory	common	el	δικαιώματα για τον κατάλογο αρχείων/χρηστών
+personal	common	el	Προσωπικό
+peru	common	el	ΠΕΡΟΥ
+philippines	common	el	ΦΙΛΙΠΠΙΝΕΣ
+phone number	common	el	Αριθμός τηλεφώνου
+phpgwapi	common	el	eGroupWare API
+pitcairn	common	el	ΠΙΤΚΕΡΝ
+please %1 by hand	common	el	Παρακαλώ %1 με το χέρι
+please enter a name	common	el	Παρακαλώ εισάγετε όνομα
+please run setup to become current	common	el	Παρακαλώ τρέξτε το setup για να γίνετε έγκυρος
+please select	common	el	Παρακαλώ επιλέξτε
+please set your global preferences	common	el	Παρακαλώ ορίστε τις παγκόσμιες ρυθμίσεις σας!
+please set your preferences for this application	common	el	Παρακαλώ ορίστε τις ρυθμίσεις σας γι' αυτή την εφαρμογή
+please wait...	common	el	Παρακαλώ περιμένετε
+poland	common	el	ΠΟΛΩΝΙΑ
+portugal	common	el	ΠΟΡΤΟΓΑΛΙΑ
+postal	common	el	Ταχυδρομικός
+preferences	common	el	Επιλογές
+preferences for the idots template set	common	el	Επιλογές συνόλων προτύπων για τα idots
+prev. month (hold for menu)	jscalendar	el	Προηγούμενος μήνας (κρατήστε για μενού)
+prev. year (hold for menu)	jscalendar	el	Προηγούμενος χρόνος (κρατήστε για μενού)
+previous page	common	el	Προηγούμενη σελίδα
+primary style-sheet:	common	el	Αρχικός τύπος φύλλου
+print	common	el	Εκτύπωση
+priority	common	el	Προτεραιότητα
+private	common	el	Προσωπικό
+programs	common	el	Προγράμματα
+project	common	el	Προβολή
+public	common	el	κοινόχρηστο
+puerto rico	common	el	ΠΟΥΕΡΤΟ ΡΙΚΟ
+qatar	common	el	ΚΑΤΑΡ
+read	common	el	Ανάγνωση
+read this list of methods.	common	el	Ανάγνωση λίστας μεθόδων
+reading	common	el	ανάγνωση
+regular	common	el	Κανονικό
+reject	common	el	Απόρριψη
+remove selected accounts	common	el	Αφαίρεση επιλεγμένων λογαριασμών
+remove shortcut	common	el	Αφαίρεση Συντόμευσης
+rename	common	el	Μετονομασία
+replace	common	el	Αντικατάσταση
+replace with	common	el	Αντικατάσταση με
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	el	Επιστρέφει πλήρη λίστα λογαριασμών στο σύστημα. Προειδοποίηση: η λίστα μπορεί να είναι αρκετά μεγάλη
+returns an array of todo items	common	el	Επιστρέφει μια σειρά ανειλημμένες εργασίες
+returns struct of users application access	common	el	Επιστρέφει τη δομή πρόσβασης των εφαρμογών χρήστη
+reunion	common	el	Επανένωση
+right	common	el	Δεξιά
+romania	common	el	ΡΟΥΜΑΝΙΑ
+russian federation	common	el	ΡΩΣΣΙΑ
+rwanda	common	el	ΡΟΥΑΝΤΑ
+saint helena	common	el	ΑΓΙΑ ΕΛΕΝΗ
+saint kitts and nevis	common	el	ΑΓΙΟΙ ΚΙΤΣ & ΝΕΒΙΣ
+saint lucia	common	el	ΑΓΙΑ ΛΟΥΚΙΑ
+saint pierre and miquelon	common	el	ΑΓΙΟΙ ΠΙΕΡ & ΜΙΚΕΛΟΝ
+saint vincent and the grenadines	common	el	ΑΓΙΟΣ ΒΙΝΣΕΝΤ & ΓΡΕΝΑΔΙΝΕΣ
+samoa	common	el	ΣΑΜΟΑ
+san marino	common	el	ΣΑΝ ΜΑΡΙΝΟ
+sao tome and principe	common	el	ΣΑΟ ΤΟΜΕ & ΠΡΙΝΣΙΠΕ
+saturday	common	el	Σάββατο
+saudi arabia	common	el	ΣΑΟΥΔΙΚΗ ΑΡΑΒΙΑ
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	el	Savant2 έκδοση διαφέρει από Savant2 περιτύλιγμα. <br/>Αυτή η έκδοση:%1 <br/>Έκδοση Savant:%2
+save	common	el	Αποθήκευση
+search	common	el	Αναζήτηση
+search %1 '%2'	common	el	Αναζήτηση %1 '%2'
+search accounts	common	el	Αναζήτηση λογαριασμών
+second	common	el	δευτερόλεπτο
+section	common	el	Τομέας
+select	common	el	Επιλογή
+select all %1 %2 for %3	common	el	Επιλογή όλων %1 %2 για %3
+select category	common	el	Επιλογή κατηγορίας
+select date	common	el	Επιλογή ημερομηνίας
+select group	common	el	Επιλογή ομάδας
+select home email address	common	el	Επιλογή διεύθυνσης email οικίας
+select multiple accounts	common	el	επιλογή πολλαπλών λογαριασμών
+select one	common	el	Επιλογή ενός
+select the default height for the application windows	common	el	Επιλογή του προεπιλεγμένου ύψους για τα παράθυρα των εφαρμογών
+select the default width for the application windows	common	el	Επιλογή του προεπιλεγμένου πλάτους για τα παράθυρα των εφαρμογών
+select user	common	el	Επιλογή χρήστη
+select work email address	common	el	Επιλογή διεύθυνσης email eργασίας
+selection	common	el	Επιλογή
+send	common	el	Αποστολή
+senegal	common	el	ΣΕΝΕΓΑΛΗ
+september	common	el	Σεπτέμβριος
+serbia	common	el	Σερβία
+server %1 has been added	common	el	Προστέθηκε ο διακομιστής %1
+server answered. processing response...	common	el	Ο Server απάντησε.Επεξεργασία απάντησης
+server contacted. waiting for response...	common	el	Ολοκλήρωση επικοινωνίας με τον Server. Αναμονή για απάντηση
+server name	common	el	Ονομα Διακομιστή
+session has been killed	common	el	H περίοδος εργασίας διεκόπηκε
+setup	common	el	Εγκατάσταση
+setup main menu	common	el	Βασικό μενού εγκατάστασης
+seychelles	common	el	ΣΕΫΧΕΛΛΕΣ
+show all	common	el	εμφάνιση όλων
+show all categorys	common	el	Εμφάνιση όλων των κατηγοριών
+show clock?	common	el	Εμφάνιση ρολογιού;
+show home and logout button in main application bar?	common	el	Εμφάνιση κουμπιού αρχικής σελίδας και εξόδου από το σύστημα στην μπάρα εφαρμογών;
+show logo's on the desktop.	common	el	Εμφάνιση λογότυπου στην επιφάνεια εργασίας
+show menu	common	el	Εμφάνιση του μενού
+show page generation time	common	el	Εμφάνιση χρόνου δημιουργίας σελίδας
+show page generation time on the bottom of the page?	common	el	Να εμφανισθεί ο χρόνος δημιουργίας της σελίδας στο τέλος της σελίδας;
+show page generation time?	common	el	Εμφάνιση σελίδας δημιουργίας ώρας;
+show the logo's of egroupware and x-desktop on the desktop.	common	el	Εμφάνιση των λογότυπων του eGroupware και της "πρώην" επιφάνειας εργασίας στην επιφάνεια εργασίας
+show_more_apps	common	el	show_more_apps
+showing %1	common	el	εμφάνιση %1
+showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3
+sierra leone	common	el	ΣΙΕΡΡΑ ΛΕΟΝΕ
+simple	common	el	Απλό
+singapore	common	el	ΣΙΓΚΑΠΟΥΡΗ
+slovakia	common	el	ΣΛΟΒΑΚΙΑ
+slovenia	common	el	ΣΛΟΒΕΝΙΑ
+solomon islands	common	el	ΝΗΣΟΙ ΣΟΛΟΜΩΝΤΑ
+somalia	common	el	ΣΟΜΑΛΙΑ
+sorry, your login has expired	login	el	Η σύνδεσή σας έχει λήξει
+south africa	common	el	ΝΟΤΙΑ ΑΦΡΙΚΗ
+south georgia and the south sandwich islands	common	el	ΝΟΤΙΑ ΓΕΩΡΓΙΑ & ΝΟΤΙΑ ΝΗΣΙΑ ΣΑΝΤΟΥΪΤΣ
+spain	common	el	ΙΣΠΑΝΙΑ
+sri lanka	common	el	ΣΡΙ ΛΑΝΚΑ
+start date	common	el	Hμερομηνία έναρξης
+start time	common	el	Ωρα έναρξης
+start with	common	el	έναρξη με
+starting up...	common	el	Εκκίνηση...
+status	common	el	Κατάσταση
+stretched	common	el	εκτεταμένο
+subject	common	el	Θέμα
+submit	common	el	Υποβολή
+substitutions and their meanings:	common	el	Αντικαταστάσεις και οι έννοιές τους:
+sudan	common	el	ΣΟΥΔΑΝ
+sunday	common	el	Κυριακή
+suriname	common	el	ΣΟΥΡΙΝΑΜ
+svalbard and jan mayen	common	el	ΣΒΑΛΜΠΑΡΝΤ & ΓΙΑΝ ΜΕΪΓΕΝ
+swaziland	common	el	ΖΟΥΑΖΙΛΑΝΔΗ
+sweden	common	el	ΣΟΥΗΔΙΑ
+switzerland	common	el	ΕΛΒΕΤΙΑ
+syrian arab republic	common	el	ΣΥΡΙΑ
+table properties	common	el	Ιδιότητες πίνακα
+taiwan	common	el	ΤΑΪΒΑΝ/ΤΑΪΠΕΪ
+tajikistan	common	el	ΤΑΖΙΚΙΣΤΑΝ
+tanzania, united republic of	common	el	ΤΑΝΖΑΝΙΑ
+text color:	common	el	Χρώμα κειμένου:
+thailand	common	el	ΤΑΪΛΑΝΔΗ
+the api is current	common	el	Το ΑΡΙ είναι το τρέχον
+the api requires an upgrade	common	el	Το ΑΡΙ χρειάζεται αναβάθμιση
+the following applications require upgrades	common	el	Οι παρακάτω εφαρμογές χρειάζονται αναβάθμιση
+the mail server returned	common	el	Ο διακομιστής email επέστρεψε
+this application is current	common	el	Η εφαρμογή είναι η τρέχουσα
+this application requires an upgrade	common	el	Η εφαρμογή χρειάζεται αναβάθμιση
+this name has been used already	common	el	Το όνομα ήδη χρησιμοποιείται
+thursday	common	el	Πέμπτη
+time	common	el	Ωρα
+time selection:	jscalendar	el	Επιλογή ώρας:
+time zone	common	el	Χρονική Ζώνη
+time zone offset	common	el	Μετακίνηση χρονικής ζώνης
+title	common	el	Τίτλος
+to	common	el	Προς:
+to correct this error for the future you will need to properly set the	common	el	Για να διορθωθεί αυτό το λάθος πρέπει να ορίσετε το
+to go back to the msg list, click <a href= %1 >here</a>	common	el	Για να επιστρέψετε στη λίστα μηνυμάτων, κάντε κλικ <a href="%1">εδώ</a>
+today	common	el	Σήμερα
+todays date, eg. "%1"	common	el	σημερινή ημερομηνία, π.χ. "%1"
+toggle first day of week	jscalendar	el	Εναλλαγή πρώτης ημέρας της εβδομάδας
+togo	common	el	ΤΟΓΚΟ
+tokelau	common	el	ΤΟΚΕΛΑΟΥ
+tonga	common	el	ΤΟΝΓΚΑ
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	el	Πολλές αποτυχημένες προσπάθειες για είσοδο: %1 από το χρήστη '%2', %3 με ΙΡ %4
+top	common	el	Κορυφή
+total	common	el	Σύνολο
+trinidad and tobago	common	el	ΤΡΙΝΙΤΑΝΤ & ΤΟΜΠΑΚΟ
+tuesday	common	el	Τρίτη
+tunisia	common	el	ΤΥΝΗΣΙΑ
+turkey	common	el	ΤΟΥΡΚΙΑ
+turkmenistan	common	el	ΤΟΥΡΚΜΕΝΙΣΤΑΝ
+turks and caicos islands	common	el	ΝΗΣΟΙ ΤΕΚΣ & ΚΑΪΚΟΣ
+tuvalu	common	el	ΤΟΥΒΑΛΟΥ
+type	common	el	Τύπος
+uganda	common	el	ΟΥΓΚΑΝΤΑ
+ukraine	common	el	ΟΥΚΡΑΝΙΑ
+underline	common	el	Υπογράμμιση
+united arab emirates	common	el	ΗΝΩΜΕΝΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
+united kingdom	common	el	ΗΝΩΜΕΝΟ ΒΑΣΙΛΕΙΟ
+united states	common	el	ΗΝΩΜΕΝΕΣ ΠΟΛΙΤΕΙΕΣ
+united states minor outlying islands	common	el	ΝΗΣΟΙ ΗΝΩΜΕΝΩΝ ΠΟΛΙΤΕΙΩΝ
+unknown	common	el	Αγνωστο
+update	common	el	Ανανέωση
+update the clock per minute or per second	common	el	Ενημέρωση του ρολογιού ανά λεπτό ή ανά δευτερόλεπτο
+upload	common	el	Φόρτωμα
+upload directory does not exist, or is not writeable by webserver	common	el	Ο κατάλογος φόρτωσης δεν υπάρχει, ή δεν είναι εγγράψιμος από τον webserver
+upload requires the directory to be writable by the webserver!	common	el	Η φόρτωση απαιτεί ο κατάλογος να είναι εγγράψιμος από τον webserver
+url	common	el	URL
+uruguay	common	el	ΟΥΡΟΥΓΟΥΑΗ
+use button to search for	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση
+use button to search for address	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση διευθύνσεων
+use button to search for calendarevent	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση γεγονότων ημερολογίου
+use button to search for project	common	el	χρησιμοποιήστε το κουμπί για αναζήτηση προβολής
+user	common	el	Χρήστης
+user accounts	common	el	λογαριασμοί χρηστών
+user groups	common	el	ομάδες χρηστών
+username	common	el	Ονομα χρήστη
+users	common	el	Χρήστες
+users choice	common	el	Επιλογή χρηστών
+uzbekistan	common	el	ΟΥΖΜΠΕΚΙΣΤΑΝ
+vanuatu	common	el	ΒΑΝΟΥΑΤΟΥ
+venezuela	common	el	ΒΕΝΕΖΟΥΕΛΑ
+version	common	el	Έκδοση
+viet nam	common	el	ΒΙΕΤΝΑΜ
+view	common	el	Προβολή
+virgin islands, british	common	el	ΝΗΣΟΙ ΒΕΡΤΖΙΝ, ΒΡΕΤΑΝΙΚΑ
+virgin islands, u.s.	common	el	ΝΗΣΟΙ ΒΕΡΤΖΙΝ, Η.Π.Α.
+wallis and futuna	common	el	ΓΟΥΟΛΙΣ & ΦΟΥΤΟΥΝΑ
+wednesday	common	el	Τετάρτη
+welcome	common	el	Καλώς ήρθατε
+western sahara	common	el	ΔΥΤΙΚΗ ΣΑΧΑΡΑ
+what color should all the blank space on the desktop have	common	el	Τι χρώμα θα έπρεπε όλα τα κενά στην επιφάνεια εργασίας να έχουν
+what style would you like the image to have?	common	el	Τι στυλ θα θέλατε να έχει η εικόνα;
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	el	Όταν λέτε ναι τα κουμπιά αρχικής σελίδας και εξόδου από το σύστημα εμφανίζονται ως εφαρμογές στην κύρια μπάρα εργασιών
+which groups	common	el	Ποιές ομάδες
+width	common	el	Πλάτος
+wk	jscalendar	el	εβ.
+work email	common	el	email εργασίας
+would you like to display the page generation time at the bottom of every window?	common	el	Θα θέλατε βα εμφανίζεται η σελίδα δημιουργίας της ώρας στο κάτω μέρος κάθε παραθύρου;
+writing	common	el	εγγραφή
+written by:	common	el	Γραμμένο από:
+year	common	el	Έτος
+yemen	common	el	ΥΕΜΕΝΗ
+yes	common	el	Ναι
+you are required to change your password during your first login	common	el	Απαιτείται η αλλαγή του κωδικού σας κατά την πρώτη είσοδο
+you can customize how many icons and toolbars the editor shows.	common	el	Μπορείτε να ρυθμίσετε πόσες εικόνες και μπάρες εργαλειών θα δείχνει ο εκδότης.
+you have been successfully logged out	login	el	Επιτυχής έξοδος
+you have not entered a title	common	el	Δεν έχετε εισάγει τίτλο
+you have not entered a valid date	common	el	Δεν έχετε εισάγει έγκυρη ημερομηνία
+you have not entered a valid time of day	common	el	Δεν έχετε εισάγει έγκυρη ώρα της ημέρας
+you have not entered participants	common	el	Δεν έχετε εισάγει συμμετέχοντες
+you have selected an invalid date	common	el	Επιλέξατε άκυρη ημερομηνία!
+you have selected an invalid main category	common	el	Επιλέξατε άκυρη βασική κατηγορία!
+you have successfully logged out	common	el	Επιτυχής έξοδος
+you need to add the webserver user '%1' to the group '%2'.	common	el	Πρέπει να προσθέσετε τον webserver χρήστη '%1' στην ομάδα '%2'.
+your message could <b>not</b> be sent!<br>	common	el	Το μήνυμά σας <b>δεν</b> μπόρεσε να σταλεί!<br>
+your message has been sent	common	el	To μήνυμά σας εστάλει
+your search returned %1 matchs	common	el	η αναζήτηση επέστρεψε %1 αποτελέσματα
+your search returned 1 match	common	el	η αναζήτηση επέστρεψε 1 αποτέλεσμα
+your session could not be verified.	login	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί
+your settings have been updated	common	el	Οι ρυθμίσεις σας έχουν ενημερωθεί
+zambia	common	el	ΖΑΜΠΙΑ
+zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ
+zoom	common	el	Εστίαση
+site configuration	common	el	Διαμόρφωση ιστιοσελίδας

@@ -1,0 +1,757 @@
+%1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
+%1 is not executable by the webserver !!!	common	pt-br	%1 não é executável pelo servidor web !!!
+%1 manual	common	pt-br	manual de %1
+%1 start	common	pt-br	%1 iniciar
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê ao servidor web permissão de escrita em %3
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
+(session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
+(shift-)click or drag to change value	jscalendar	pt-br	(Shift-) Clique ou arraste para alterar o valor
+- click on any of the time parts to increase it	jscalendar	pt-br	- Clique sobre as horas para alterá-las
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	pt-br	- Segure mouse clicado e use o comando seta acima para avançar mais rápido
+- or click and drag for faster selection.	jscalendar	pt-br	- ou clique e araste para uma seleção rápida.
+- or shift-click to decrease it	jscalendar	pt-br	- ou shift-clique para diminuir
+- use the %1, %2 buttons to select month	jscalendar	pt-br	- Use os botões %1, %2 para selecionar o mês
+- use the %1, %2 buttons to select year	jscalendar	pt-br	- Use os botões %1, %2 para selecionar o ano
+00 (disable)	admin	pt-br	00 (desabilitado)
+1 day	common	pt-br	1 Dia
+1 hour	common	pt-br	1 Hora
+1 month	common	pt-br	1 Mês
+1 week	common	pt-br	1 Semana
+13 (ntp)	admin	pt-br	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	pt-br	3 números para atalho-dia
+3 number of chars for month-shortcut	jscalendar	pt-br	3 números para atalho-mês
+80 (http)	admin	pt-br	80 (http)
+about	common	pt-br	Sobre
+about %1	common	pt-br	Sobre %1
+about egroupware	common	pt-br	Sobre eGroupWare
+about the calendar	jscalendar	pt-br	Sobre a Agenda
+access	common	pt-br	Acesso
+access not permitted	common	pt-br	Acesso não permitido
+account has been created	common	pt-br	A conta foi criada
+account has been deleted	common	pt-br	A conta foi removida
+account has been updated	common	pt-br	A conta foi atualizada
+account is expired	common	pt-br	A conta está expirada
+accounts	common	pt-br	Contas
+acl	common	pt-br	ACL
+action	common	pt-br	Ação
+active	common	pt-br	Ativo
+add	common	pt-br	Adicionar
+add %1 category for	common	pt-br	Adicionar categoria %1 para
+add category	common	pt-br	Adicionar categoria
+add shortcut	common	pt-br	Adicionar tecla de atalho
+add sub	common	pt-br	Adicionar sub-tarefa
+addressbook	common	pt-br	Contatos
+admin	common	pt-br	Administrador
+administration	common	pt-br	Administração
+afghanistan	common	pt-br	AFEGANISTÃO
+albania	common	pt-br	ALBANIA
+algeria	common	pt-br	ALGERIA
+all	common	pt-br	Todos
+all fields	common	pt-br	todos os campos
+alphabet	common	pt-br	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	pt-br	Estilo de folha alternativo
+american samoa	common	pt-br	SAMOA AMERICANA
+an error happened	common	pt-br	Um erro ocorreu
+an existing and by the webserver readable directory enables the image browser and upload.	common	pt-br	Um diretório existente e que o servidor web tenha direito de leitura habilita a navegação e upload de imagem.
+andorra	common	pt-br	ANDORRA
+angola	common	pt-br	ANGOLA
+anguilla	common	pt-br	ANGUILLA
+antarctica	common	pt-br	ANTARTICA
+antigua and barbuda	common	pt-br	ANTIGUA E BARBUDA
+application	common	pt-br	Aplicativo
+apply	common	pt-br	Aplicar
+april	common	pt-br	Abril
+are you sure you want to delete these entries ?	common	pt-br	Deseja remover estes registros?
+are you sure you want to delete this entry ?	common	pt-br	Deseja remover este registro?
+argentina	common	pt-br	ARGENTINA
+armenia	common	pt-br	ARMENIA
+aruba	common	pt-br	ARUBA
+august	common	pt-br	Agosto
+australia	common	pt-br	AUSTRALIA
+austria	common	pt-br	AUSTRIA
+author	common	pt-br	Autor
+autohide sidebox menu's	common	pt-br	Auto ocultar caixa de menus laterais
+autohide sidebox menus	common	pt-br	Auto ocultar caixa de menus laterais
+automatically hide the sidebox menu's?	common	pt-br	Ocultar automaticamente a caixa de menus laterais
+automatically hide the sidebox menus?	common	pt-br	Auto ocultar caixa de menus laterais ?
+autosave default category	common	pt-br	Salvar automaticamente categoria padrão
+azerbaijan	common	pt-br	AZERBAIJÃO
+back	common	pt-br	Voltar
+back to user login	common	pt-br	Voltar a tela de login
+background color:	common	pt-br	Cor de fundo:
+backupdir '%1' is not writeable by the webserver	common	pt-br	O servidor web não pode escrever no diretório de backup '%1'
+bad login or password	common	pt-br	Login ou senha incorretos
+bahamas	common	pt-br	BAHAMAS
+bahrain	common	pt-br	BAHRAIN
+bangladesh	common	pt-br	BANGLADESH
+barbados	common	pt-br	BARBADOS
+bcc	common	pt-br	Cópia Oculta
+belarus	common	pt-br	BIELO RÚSSIA
+belgium	common	pt-br	BÉLGICA
+belize	common	pt-br	BELIZE
+benin	common	pt-br	BENIN
+bermuda	common	pt-br	BERMUDA
+bhutan	common	pt-br	BUTÃO
+blocked, too many attempts	common	pt-br	Bloqueado, por excesso de tentativas!
+bold	common	pt-br	Negrito
+bolivia	common	pt-br	BOLÍVIA
+border	common	pt-br	Borda
+bosnia and herzegovina	common	pt-br	BOSNIA E HERZEGOVINA
+botswana	common	pt-br	BOTSWANA
+bottom	common	pt-br	Fundo
+bouvet island	common	pt-br	ILHA BOUVET
+brazil	common	pt-br	BRASIL
+british indian ocean territory	common	pt-br	TERRITÓRIO INGLÊS INDIANO
+brunei darussalam	common	pt-br	BRUNEI DARUSSALAM
+bulgaria	common	pt-br	BULGÁRIA
+burkina faso	common	pt-br	BURKINA FASO
+burundi	common	pt-br	BURUNDI
+calendar	common	pt-br	Agenda
+cambodia	common	pt-br	CAMBODIA
+cameroon	common	pt-br	CAMARÕES
+canada	common	pt-br	CANADÁ
+cancel	common	pt-br	Cancelar
+cannot replace %1 because it is a directory	common	pt-br	Não se pode trocar %1 porque ele é um diretório
+cant open '%1' for %2	common	pt-br	Não se pode abrir '%1' para '%2'
+cape verde	common	pt-br	CABO VERDE
+caption	common	pt-br	Rótulo
+categories	common	pt-br	Categorias
+categories for	common	pt-br	categorias para
+category	common	pt-br	Categoria
+category %1 has been added !	common	pt-br	Categoria %1 foi adicionada !
+category %1 has been updated !	common	pt-br	Categoria %1 foi atualizada !
+cayman islands	common	pt-br	ILHAS CAYMAN
+cc	common	pt-br	Com Cópia
+centered	common	pt-br	Centralizado
+central african republic	common	pt-br	REPÚBLICA CENTRO AFRICANA
+chad	common	pt-br	CHADE
+change	common	pt-br	Alterar
+charset	common	pt-br	utf-8
+check installation	common	pt-br	Verificar Instalação
+check now	common	pt-br	Checar agora
+chile	common	pt-br	CHILE
+china	common	pt-br	CHINA
+choose a background color	common	pt-br	Escolha uma cor de fundo
+choose a background color for the icons	common	pt-br	Escolha uma cor de fundo para os ícones
+choose a background image.	common	pt-br	Escolha uma imagem de fundo
+choose a background style.	common	pt-br	Escolha um estilo de fundo
+choose a text color for the icons	common	pt-br	Escolha uma cor de texto para os ícones
+choose the category	common	pt-br	Escolha a categoria
+choose the parent category	common	pt-br	Escolha a categoria pai
+christmas island	common	pt-br	CHRISTMAS ISLAND
+clear	common	pt-br	Limpar
+clear form	common	pt-br	Limpar Formulário
+click	common	pt-br	Clique
+click here to resume your egroupware session.	common	pt-br	Clique aqui para restaurar sua sessão eGroupWare
+click or mouse over to show menus	common	pt-br	Clique ou passe o mouse sobre os menús
+click or mouse over to show menus?	common	pt-br	Clicar ou passar o mouse sobre os menús?
+click this image on the navbar: %1	common	pt-br	Clique nesta imagem na barra de navegação: %1
+close	common	pt-br	Fechar
+close sidebox	common	pt-br	Fechar caixa lateral
+cocos (keeling) islands	common	pt-br	COCOS (KEELING) ISLANDS
+colombia	common	pt-br	COLÔMBIA
+common preferences	common	pt-br	Preferências comuns
+comoros	common	pt-br	COMOROS
+company	common	pt-br	Empresa
+congo	common	pt-br	CONGO
+congo, the democratic republic of the	common	pt-br	REPÚBLICA DEMOCRÁTICA DO CONGO
+contacting server...	common	pt-br	Contactando servidor...
+cook islands	common	pt-br	ILHAS COOK
+copy	common	pt-br	Copiar
+costa rica	common	pt-br	COSTA RICA
+cote d ivoire	common	pt-br	COTE D IVOIRE
+could not contact server. operation timed out!	common	pt-br	Tentativa de contactar servidor falhou. Tempo limite de operação estourou.
+create	common	pt-br	Criar
+created by	common	pt-br	Criado por
+croatia	common	pt-br	CROÁCIA
+cuba	common	pt-br	CUBA
+currency	common	pt-br	Moeda
+current	common	pt-br	Atualizado
+current users	common	pt-br	Usuários ativos
+cyprus	common	pt-br	CHIPRE
+czech republic	common	pt-br	REPÚBLICA CHECA
+database error	common	pt-br	Erro de banco de dados
+database error!	common	pt-br	Erro de banco de dados!
+date	common	pt-br	Data
+date due	common	pt-br	Até data
+date selection:	jscalendar	pt-br	Seleção da data:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt-br	Porta da Data e hora.<br>Quando usar a porta 13, por favor configure os filtros do firewall antes de submeter as alterações.<br>(Porta: 13 / Host: 129.6.15.28)
+december	common	pt-br	Dezembro
+default category	common	pt-br	Categoria padrão
+default height for the windows	common	pt-br	Altura padrão para as janelas
+default width for the windows	common	pt-br	Largura padrão para as janelas
+delete	common	pt-br	Remover
+delete row	common	pt-br	Remover linha
+denmark	common	pt-br	DINAMARCA
+description	common	pt-br	Descrição
+detail	common	pt-br	Detalhe
+details	common	pt-br	Detalhes
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt-br	Desativar a execução dos recursos de exibição de transparências de imagens PNG, para o Explorer 5.5 ou superior?
+direction left to right	common	pt-br	Direção: esquerda para direita
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pt-br	Diretório não existe, não pode ser lido pelo servidor web ou não é relativo à pasta raiz!
+disable internet explorer png-image-bugfix	common	pt-br	Desativar recursos para imagem-png no Internet Explorer
+disable slider effects	common	pt-br	Desativar efeitos de transição de slide
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pt-br	Desativar os efeitos de animação ao ocultar os menús da página? Os usuários dos navegadores Ópera ou Konqueror serão beneficiados com esta configuração.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt-br	Desabilitar a execução de um script de correção para o Internet Explorer 5.5 ou superior, para permitir exibição de transparência em imagens PNG?
+disabled	common	pt-br	Desabilitado
+display %s first	jscalendar	pt-br	Exibir %s primeiros
+djibouti	common	pt-br	DJIBOUTI
+do you also want to delete all subcategories ?	common	pt-br	Deseja remover também todas subcategorias ?
+doctype:	common	pt-br	TIPO DOCUMENTO:
+document properties	common	pt-br	Propriedades do documento
+document title:	common	pt-br	Título do documento
+domain	common	pt-br	Domínio
+domain name for mail-address, eg. "%1"	common	pt-br	Nome do domínio para endereços de e-mail, ex. "%1"
+domestic	common	pt-br	Doméstico
+dominica	common	pt-br	DOMINICA
+dominican republic	common	pt-br	REPÚBLICA DOMINICANA
+done	common	pt-br	Pronto
+drag to move	jscalendar	pt-br	Arraste para mover
+e-mail	common	pt-br	E-mail
+east timor	common	pt-br	TIMOR LESTE
+ecuador	common	pt-br	EQUADOR
+edit	common	pt-br	Editar
+edit %1 category for	common	pt-br	Editar para categoria %1
+edit categories	common	pt-br	Editar categorias
+edit category	common	pt-br	Editar categoria
+egroupware	common	pt-br	eGroupWare
+egroupware api version	common	pt-br	Versão da API eGroupWare
+egroupware api version %1	common	pt-br	API version %1
+egroupware: login blocked for user '%1', ip %2	common	pt-br	Extranet: login bloqueado para o usuário '%1', endereço IP %2
+egypt	common	pt-br	EGITO
+el salvador	common	pt-br	EL SALVADOR
+email	common	pt-br	E-mail
+email-address of the user, eg. "%1"	common	pt-br	Endereço de e-mail do usuário, ex. "%1"
+enabled	common	pt-br	Habilitado
+end date	common	pt-br	Data do término
+end time	common	pt-br	Hora do término
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Informe a localização da Extranet em um URL .<br>Exemplo: http://www.seudomínio.com.br/extranet   ou   /extranet<br><b>Não finalize com uma BARRA</b>
+entry has been deleted sucessfully	common	pt-br	Registro removido com sucesso
+entry not found!	common	pt-br	Registro não localizado!
+entry updated sucessfully	common	pt-br	Entrada atualizada com sucesso
+equatorial guinea	common	pt-br	GUINÉ EQUATORIAL
+eritrea	common	pt-br	ERITREA
+error	common	pt-br	Erro
+error creating %1 %2 directory	common	pt-br	Erro criando diretório %1 %2
+error deleting %1 %2 directory	common	pt-br	Erro removendo diretório %1 %2
+error renaming %1 %2 directory	common	pt-br	Erro renomeando diretório %1 %2
+estonia	common	pt-br	ESTONIA
+ethiopia	common	pt-br	ETIÓPIA
+everything	common	pt-br	Tudo
+exact	common	pt-br	exato(a)
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	pt-br	Contato com o servidor falhou ou resposta inválida do servidor. Tente relogar. Contacte o administrador em caso de falha novamente.
+falkland islands (malvinas)	common	pt-br	ILHAS FALKLAND (MALVINAS)
+faroe islands	common	pt-br	ILHAS FAROE
+fax number	common	pt-br	Número do FAX
+features of the editor?	common	pt-br	Funcionalidades do editor ?
+february	common	pt-br	Fevereiro
+fields	common	pt-br	Campos
+fiji	common	pt-br	FIJI
+files	common	pt-br	Arquivos
+filter	common	pt-br	Filtro
+finland	common	pt-br	FINLÂNDIA
+first name	common	pt-br	Primeiro Nome
+first name of the user, eg. "%1"	common	pt-br	Primeiro nome do usuário, ex. "%1"
+first page	common	pt-br	Página Inicial
+firstname	common	pt-br	Primeiro Nome
+fixme!	common	pt-br	ATUALIZE-ME!
+folder already exists.	common	pt-br	Pasta já existe.
+force selectbox	common	pt-br	Forçar caixa de seleção
+forever	common	pt-br	Para sempre
+france	common	pt-br	FRANÇA
+french guiana	common	pt-br	GUIANA FRANCESA
+french polynesia	common	pt-br	FRANÇA POLYNÉSIA
+french southern territories	common	pt-br	FRENCH SOUTHERN TERRITORIES
+friday	common	pt-br	Sexta
+ftp	common	pt-br	FTP
+fullname	common	pt-br	Nome completo
+fullscreen mode	common	pt-br	Modo tela cheia
+gabon	common	pt-br	GABÃO
+gambia	common	pt-br	GAMBIA
+general menu	common	pt-br	Menu Geral
+georgia	common	pt-br	GEORGIA
+german	common	pt-br	Alemão
+germany	common	pt-br	ALEMANHA
+ghana	common	pt-br	GANA
+gibraltar	common	pt-br	GIBRALTAR
+global	common	pt-br	Global
+global public	common	pt-br	Público a todos
+go today	jscalendar	pt-br	Ir para Hoje
+grant access	common	pt-br	Permitir acesso
+greece	common	pt-br	GRÉCIA
+greenland	common	pt-br	GREENLAND
+grenada	common	pt-br	GRANADA
+group	common	pt-br	Grupo
+group access	common	pt-br	Acesso ao Grupo
+group has been added	common	pt-br	Grupo adicionado
+group has been deleted	common	pt-br	Grupo removido
+group has been updated	common	pt-br	Grupo atualizado
+group name	common	pt-br	Nome do Grupo
+group public	common	pt-br	Grupo público
+groups	common	pt-br	Grupos
+groups with permission for %1	common	pt-br	Grupos permitidos para %1
+groups without permission for %1	common	pt-br	Grupos não permitidos para %1
+guadeloupe	common	pt-br	GUADALUPE
+guam	common	pt-br	GUAM
+guatemala	common	pt-br	GUATEMALA
+guinea	common	pt-br	GUINEA
+guinea-bissau	common	pt-br	GUINÉ BISSAU
+guyana	common	pt-br	GUYANA
+haiti	common	pt-br	HAITI
+heard island and mcdonald islands	common	pt-br	HEARD ISLAND AND MCDONALD ISLANDS
+height	common	pt-br	Altura
+help	common	pt-br	Ajuda
+high	common	pt-br	Alto
+highest	common	pt-br	Mais alto
+holy see (vatican city state)	common	pt-br	VATICANO
+home	common	pt-br	Página Inicial
+home email	common	pt-br	E-mail residencial
+honduras	common	pt-br	HONDURAS
+hong kong	common	pt-br	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt-br	Quantos ícones devem ser mostrados na barra de navegação (ao topo da página). Ícones adicionais serão colocados em um recurso adicional em forma de menú suspenso à direita da barra de navegação.
+how to show the general egroupware menu ?	common	pt-br	Como exibir o menu geral do eGroupWare ?
+hungary	common	pt-br	HUNGRIA
+iceland	common	pt-br	ISLÂNDIA
+iespell not detected. click ok to go to download page.	common	pt-br	ieSpell não detectado. Clique Ok para ir para a página de download.
+if the clock is enabled would you like it to update it every second or every minute?	common	pt-br	Se o relógio estiver habilitado, você gostaria de atualizá-lo a cada segundo ou minuto ?
+if there are some images in the background folder you can choose the one you would like to see.	common	pt-br	Se existirem algumas imagens na pasta de fundo, você poderá escolher uma que gostaria de ver.
+image directory relative to document root (use / !), example:	common	pt-br	Diretório de imagem relativo à pasta raiz (use / !), por exemplo:
+image url	common	pt-br	URL da imagem
+india	common	pt-br	INDIA
+indonesia	common	pt-br	INDONESIA
+insert all %1 addresses of the %2 contacts in %3	common	pt-br	Inserir todos %1 endereços para %2 contatos em %3
+insert column after	common	pt-br	Inserir coluna depois
+insert column before	common	pt-br	Inserir coluna antes
+insert row after	common	pt-br	Inserir linha depois
+insert row before	common	pt-br	Inserir linha antes
+international	common	pt-br	Internacional
+invalid filename	common	pt-br	Nome de arquivo inválido
+invalid ip address	common	pt-br	Endereço IP inválido
+invalid password	common	pt-br	Senha inválida
+iran, islamic republic of	common	pt-br	IRÃ
+iraq	common	pt-br	IRAQUE
+ireland	common	pt-br	IRLANDA
+israel	common	pt-br	ISRAEL
+it has been more then %1 days since you changed your password	common	pt-br	Já passaram mais de %1 dias desde que você mudou sua senha
+it is recommended that you run setup to upgrade your tables to the current version	common	pt-br	É recomendado que seja executada a Configuração para atualizar as tabelas para a versão atual.
+italic	common	pt-br	Itálico
+italy	common	pt-br	ITÁLIA
+jamaica	common	pt-br	JAMAICA
+january	common	pt-br	Janeiro
+japan	common	pt-br	JAPÃO
+jordan	common	pt-br	JORDÂNIA
+july	common	pt-br	Julho
+jun	common	pt-br	Jun
+june	common	pt-br	Junho
+justify center	common	pt-br	Centralizar
+justify full	common	pt-br	Justificar
+justify left	common	pt-br	Alinhar a esquerda
+justify right	common	pt-br	Alinha à direita
+kazakstan	common	pt-br	KAZAQUISTÃO
+kenya	common	pt-br	QUÊNIA
+keywords	common	pt-br	Palavras
+kiribati	common	pt-br	KIRIBATI
+korea, democratic peoples republic of	common	pt-br	CORÉIA DO NORTE
+korea, republic of	common	pt-br	CORÉIA DO SUL
+kuwait	common	pt-br	KUWAIT
+kyrgyzstan	common	pt-br	QUIRGUISTÃO
+language	common	pt-br	Idioma
+language_direction_rtl	common	pt-br	Direção rtl do idioma
+lao peoples democratic republic	common	pt-br	LAOS
+last name	common	pt-br	Último nome
+last name of the user, eg. "%1"	common	pt-br	Último nome do usuário, ex. "%1"
+last page	common	pt-br	Última página
+lastname	common	pt-br	Último nome
+latvia	common	pt-br	LETÔNIA
+ldap-mgr	common	pt-br	Gerenciador LDAP
+lebanon	common	pt-br	LÍBANO
+left	common	pt-br	Esquerda
+lesotho	common	pt-br	LESOTO
+liberia	common	pt-br	LIBERIA
+libyan arab jamahiriya	common	pt-br	LÍBIA
+license	common	pt-br	Licença
+liechtenstein	common	pt-br	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt-br	Linha %1: '%2'<br><b>dados csv não combinam com a quantidade de coluna da tabela %3 ==> ignorada</b>
+list	common	pt-br	Lista
+list members	common	pt-br	Listar membros
+lithuania	common	pt-br	LITUÂNIA
+local	common	pt-br	Local
+login	common	pt-br	Conectar
+loginid	common	pt-br	ID Login
+logout	common	pt-br	Desconectar
+lost login id	common	pt-br	Login perdido
+lost password	common	pt-br	Senha perdida
+low	common	pt-br	Baixo
+lowest	common	pt-br	Mais baixo
+luxembourg	common	pt-br	LUXEMBOURG
+macau	common	pt-br	MACAU
+macedonia, the former yugoslav republic of	common	pt-br	MACEDONIA
+madagascar	common	pt-br	MADAGASCAR
+mail domain, eg. "%1"	common	pt-br	Domínio do e-mail, ex. "%1"
+main category	common	pt-br	Cetegoria principal
+main screen	common	pt-br	Tela principal
+maintainer	common	pt-br	Administrador
+malawi	common	pt-br	MALAWI
+malaysia	common	pt-br	MALÁSIA
+maldives	common	pt-br	MALDIVAS
+mali	common	pt-br	MALI
+malta	common	pt-br	MALTA
+march	common	pt-br	Março
+marshall islands	common	pt-br	ILHAS MARSHALL
+martinique	common	pt-br	MARTINICA
+mauritania	common	pt-br	MAURITANIA
+mauritius	common	pt-br	MAURITIUS
+max number of icons in navbar	common	pt-br	Número máximo de íciones na barra de navegação
+may	common	pt-br	Maio
+mayotte	common	pt-br	MAYOTTE
+medium	common	pt-br	Média
+menu	common	pt-br	Menú
+message	common	pt-br	Mensagem
+mexico	common	pt-br	MÉXICO
+micronesia, federated states of	common	pt-br	MICRONESIA
+minute	common	pt-br	minuto
+moldova, republic of	common	pt-br	MOLDÁVIA
+monaco	common	pt-br	MÔNACO
+monday	common	pt-br	Segunda
+mongolia	common	pt-br	MONGÓLIA
+montenegro	common	pt-br	MONTENEGRO
+montserrat	common	pt-br	MONTSERRAT
+morocco	common	pt-br	MARROCOS
+mozambique	common	pt-br	MOÇAMBIQUE
+multiple	common	pt-br	múltiplo
+myanmar	common	pt-br	MYANMAR
+name	common	pt-br	Nome
+name of the user, eg. "%1"	common	pt-br	Nome do usuário, ex. "%1"
+namibia	common	pt-br	NAMIBIA
+nauru	common	pt-br	NAURU
+nepal	common	pt-br	NEPAL
+netherlands	common	pt-br	HOLANDA
+netherlands antilles	common	pt-br	ANTILHAS HOLANDESAS
+never	common	pt-br	Nunca
+new caledonia	common	pt-br	NOVA CALEDONIA
+new entry added sucessfully	common	pt-br	Entrada adicionada com sucesso
+new main category	common	pt-br	Nova categoria principal
+new value	common	pt-br	Novo Valor
+new zealand	common	pt-br	NOVA ZELÂNDIA
+next	common	pt-br	Próximo
+next month (hold for menu)	jscalendar	pt-br	Próximo Mês
+next page	common	pt-br	Próxima página
+next year (hold for menu)	jscalendar	pt-br	Próximo Ano
+nicaragua	common	pt-br	NICARAGUA
+niger	common	pt-br	NIGER
+nigeria	common	pt-br	NIGERIA
+niue	common	pt-br	NIUE
+no	common	pt-br	Não
+no entries found, try again ...	common	pt-br	Nenhum registro encontrado, tente novamente...
+no history for this record	common	pt-br	Nenhum histórico para este registro
+no savant2 template directories were found in:	common	pt-br	Nenhum diretório de modelo Savant2 encontrado em:
+no subject	common	pt-br	Sem assunto
+none	common	pt-br	Nenhum
+norfolk island	common	pt-br	ILHAS NORFOLK
+normal	common	pt-br	Normal
+northern mariana islands	common	pt-br	NORTHERN MARIANA ISLANDS
+norway	common	pt-br	NORUEGA
+not	common	pt-br	não
+not a user yet? register now	common	pt-br	Ainda não é um usuário? Registre-se agora
+not assigned	common	pt-br	Não atribuído
+not readable %1 entry of user %2	common	pt-br	Registro %1 do usuário %2 não pode ser lido
+note	common	pt-br	Nota
+notes	common	pt-br	Notas
+notifications	common	pt-br	notificações
+notify window	common	pt-br	Janela de notificação
+notify your administrator to correct this situation	common	pt-br	Notificar seu administrador para corrigir esta situação
+november	common	pt-br	Novembro
+october	common	pt-br	Outubro
+ok	common	pt-br	OK
+old value	common	pt-br	Valor antigo
+oman	common	pt-br	OMÃ
+on *nix systems please type: %1	common	pt-br	Sobre sistemas *nix tipo: %1
+on mouse over	common	pt-br	Passar o mouse
+only private	common	pt-br	Apenas particular
+only yours	common	pt-br	somente as suas
+oops! you caught us in the middle of system maintainance.	common	pt-br	Ôpa! Você nos pegou no meio de uma manutenção do sistema.
+open notify window	common	pt-br	Abrir janela de notificação
+open popup window	common	pt-br	Abrir janela
+open sidebox	common	pt-br	Abrir caixa lateral
+ordered list	common	pt-br	Lista Classificada
+original	common	pt-br	Original
+other	common	pt-br	Outro
+overview	common	pt-br	Visão geral
+owner	common	pt-br	Dono
+page	common	pt-br	Página
+page was generated in %1 seconds	common	pt-br	Página gerada em %1 segundos
+pakistan	common	pt-br	PAQUISTÃO
+palau	common	pt-br	PALAU
+palestinian territory, occupied	common	pt-br	PALESTINA
+panama	common	pt-br	PANAMÁ
+papua new guinea	common	pt-br	PAPUA NOVA GUINÉ
+paraguay	common	pt-br	PARAGUAI
+parcel	common	pt-br	Parcela
+parent category	common	pt-br	Categoria pai
+password	common	pt-br	Senha
+password could not be changed	common	pt-br	Senha não pode ser alterada
+password has been updated	common	pt-br	Senha foi alterada
+password must contain at least %1 lowercase letters	common	pt-br	Senha deve ter ao menos %1 caractere(s) minúsculo(s)
+password must contain at least %1 numbers	common	pt-br	Senha deve ter ao menos %1 número(s)
+password must contain at least %1 special characters	common	pt-br	Senha deve ter ao menos %1 caractere(s) especial(is)
+password must contain at least %1 uppercase letters	common	pt-br	Senha deve ter ao menos %1 caractere(s) maiúsculo(s)
+password must have at least %1 characters	common	pt-br	Senha deve ter ao menos %1 caractere(s)
+path to user and group files has to be outside of the webservers document-root!!!	common	pt-br	O caminho para usuários e grupos deve ser FORA do servidor da extranet.!!!
+permission denied!	common	pt-br	Permissão negada!
+permissions to the files/users directory	common	pt-br	Permissões do diretório para os arquivos/usuários
+permisson denied!	common	pt-br	Permissão negada!
+personal	common	pt-br	Pessoal
+peru	common	pt-br	PERU
+philippines	common	pt-br	FILIPINAS
+phone number	common	pt-br	Número de Telefone
+phpgwapi	common	pt-br	API eGroupWare
+pitcairn	common	pt-br	PITCAIRN
+please %1 by hand	common	pt-br	%1 pela mão
+please enter a name	common	pt-br	Por favor, digite um nome !
+please run setup to become current	common	pt-br	Por favor execute a configuração para atualizar o sistema
+please select	common	pt-br	Por favor selecione
+please set your global preferences	common	pt-br	Por favor configure suas preferências gerais
+please set your preferences for this application	common	pt-br	Configure suas preferências para este aplicativo
+please wait...	common	pt-br	Aguarde...
+please, check back with us shortly.	common	pt-br	Por favor, tente novamente mais tarde.
+poland	common	pt-br	POLÔNIA
+portugal	common	pt-br	PORTUGAL
+postal	common	pt-br	CEP
+powered by	common	pt-br	Desenvolvido por
+preferences	common	pt-br	Preferências
+preferences for the idots template set	common	pt-br	Preferências para o modelo de layout Idots
+prev. month (hold for menu)	jscalendar	pt-br	Mês anterior
+prev. year (hold for menu)	jscalendar	pt-br	Ano anterior
+previous page	common	pt-br	Página anterior
+primary style-sheet:	common	pt-br	Estilho de folha primário:
+print	common	pt-br	Imprimir
+priority	common	pt-br	Prioridade
+private	common	pt-br	Particular
+programs	common	pt-br	Programas
+project	common	pt-br	Projeto
+public	common	pt-br	público
+puerto rico	common	pt-br	PORTO RICO
+qatar	common	pt-br	QATAR
+read	common	pt-br	Leitura
+read this list of methods.	common	pt-br	Leia a lista de métodos.
+reading	common	pt-br	Lendo
+register	common	pt-br	Registrar
+regular	common	pt-br	Normal
+reject	common	pt-br	Rejeitar
+remember me	common	pt-br	Lembre-me
+remove selected accounts	common	pt-br	apagar contas selecionadas
+remove shortcut	common	pt-br	Remover tecla de atalho
+rename	common	pt-br	Renomear
+replace	common	pt-br	Substituir
+replace with	common	pt-br	Substituir por
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	pt-br	Retorna a lista complesta de usuários no sistema. Atenção: Isto pode causar lentidão dependendo da quantidade de registros.
+returns an array of todo items	common	pt-br	Retorna uma lista dos itens de Tarefas
+returns struct of users application access	common	pt-br	Retorna a estrutura de usuários e aplicativos para acesso
+reunion	common	pt-br	REUNION
+right	common	pt-br	Direita
+romania	common	pt-br	ROMÊNIA
+russian federation	common	pt-br	RÚSSIA
+rwanda	common	pt-br	RUANDA
+saint helena	common	pt-br	SANTA HELENA
+saint kitts and nevis	common	pt-br	SAINT KITTS AND NEVIS
+saint lucia	common	pt-br	SANTA LÚCIA
+saint pierre and miquelon	common	pt-br	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	pt-br	SÃO VICENTE E GRANADA
+samoa	common	pt-br	SAMOA
+san marino	common	pt-br	SAN MARINO
+sao tome and principe	common	pt-br	SÃO TOME AND PRINCIPE
+saturday	common	pt-br	Sábado
+saudi arabia	common	pt-br	ARÁBIA SAUDITA
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt-br	Versão do Savant2 difere do validador Savant2.<br/> Esta versão: %1 <br/> Versão do Savant: %2
+save	common	pt-br	Salvar
+search	common	pt-br	Procura
+search %1 '%2'	common	pt-br	Procura %1 '%2'
+search accounts	common	pt-br	Procurar contas
+search or select accounts	common	pt-br	procurar ou selecionar contas
+second	common	pt-br	segundo
+section	common	pt-br	Seção
+select	common	pt-br	Selecionar
+select all %1 %2 for %3	common	pt-br	Selecionar todos %1 %2 para %3
+select category	common	pt-br	Selecionar categoria
+select date	common	pt-br	Selecionar data
+select group	common	pt-br	Selecionar grupo
+select home email address	common	pt-br	Selecionar endereço de e-mail residencial
+select multiple accounts	common	pt-br	Selecionar múltimas contas
+select one	common	pt-br	Selecionar um
+select the default height for the application windows	common	pt-br	Selecione a altura padrão para a janela do aplicativo
+select the default width for the application windows	common	pt-br	Selecione a largura padrão para a janela do aplicativo
+select user	common	pt-br	Selecionar usuário
+select work email address	common	pt-br	Selecionar endereço de e-mail comercial
+selection	common	pt-br	Seleção
+send	common	pt-br	Enviar
+senegal	common	pt-br	SENEGAL
+september	common	pt-br	Setembro
+serbia	common	pt-br	SÉRVIA
+server %1 has been added	common	pt-br	Servidor %1 foi incluído
+server answered. processing response...	common	pt-br	Servidor respondeu. Processando resposta...
+server contacted. waiting for response...	common	pt-br	Servidor contactado. Aguardando resposta...
+server name	common	pt-br	Nome do Servidor
+session has been killed	common	pt-br	Sessão foi terminada
+setup	common	pt-br	Configurar
+setup main menu	common	pt-br	Menu principal de configurações
+seychelles	common	pt-br	SEYCHELLES
+show all	common	pt-br	Exibir tudo
+show all categorys	common	pt-br	Mostrar todas as Categorias
+show as topmenu	common	pt-br	Exibir como menu superior
+show clock?	common	pt-br	Exibir relógio
+show home and logout button in main application bar?	common	pt-br	Exibir Página Inicial e Desconectar na barra de aplicativos principais?
+show in sidebox	common	pt-br	Exibir como caixa lateral
+show logo's on the desktop.	common	pt-br	Exibir logotipo na tela.
+show menu	common	pt-br	Mostrar menu
+show page generation time	common	pt-br	Mostrar tempo de criação da página
+show page generation time on the bottom of the page?	common	pt-br	O tempo de criação da página deve ser mostrado no rodapé?
+show page generation time?	common	pt-br	Exibir tempo de geração da página?
+show the logo's of egroupware and x-desktop on the desktop.	common	pt-br	Exibir o logotipo do eGroupWare and X-Desktop na tela.
+show_more_apps	common	pt-br	Mostrar mais aplicativos
+showing %1	common	pt-br	Exibindo %1
+showing %1 - %2 of %3	common	pt-br	Exibindo %1 - %2 de %3
+sierra leone	common	pt-br	SERRA LEOA
+simple	common	pt-br	Simples
+singapore	common	pt-br	SINGAPURA
+site configuration	common	pt-br	Configuração do servidor
+slovakia	common	pt-br	ESLOVÁQUIA
+slovenia	common	pt-br	ESLOVÊNIA
+solomon islands	common	pt-br	ILHAS SOLOMON
+somalia	common	pt-br	SOMALIA
+sorry, your login has expired	login	pt-br	Desculpe, sua conta expirou
+south africa	common	pt-br	ÁFRICA DO SUL
+south georgia and the south sandwich islands	common	pt-br	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spain	common	pt-br	ESPANHA
+sri lanka	common	pt-br	SRI LANKA
+start date	common	pt-br	Data de início
+start time	common	pt-br	Hora de início
+start with	common	pt-br	iniciar com
+starting up...	common	pt-br	Iniciando...
+status	common	pt-br	Status
+stretched	common	pt-br	esticado
+subject	common	pt-br	Assunto
+submit	common	pt-br	Enviar
+substitutions and their meanings:	common	pt-br	Substituições e seus efeitos:
+sudan	common	pt-br	SUDÃO
+sunday	common	pt-br	Domingo
+suriname	common	pt-br	SURINAME
+svalbard and jan mayen	common	pt-br	SVALBARD AND JAN MAYEN
+swaziland	common	pt-br	SUAZILÂNDIA
+sweden	common	pt-br	SUÉCIA
+switzerland	common	pt-br	SUÍÇA
+syrian arab republic	common	pt-br	SÍRIA
+table properties	common	pt-br	Propriedades da tabela
+taiwan	common	pt-br	TAIWAN/TAIPEI
+tajikistan	common	pt-br	TAJIQUISTÃO
+tanzania, united republic of	common	pt-br	TANZÂNIA
+text color:	common	pt-br	Cor do texto:
+thailand	common	pt-br	TAILÂNDIA
+the api is current	common	pt-br	A API está atualizada
+the api requires an upgrade	common	pt-br	A API requer atualização
+the following applications require upgrades	common	pt-br	As seguintes aplicações requerem atualização
+the mail server returned	common	pt-br	O servidor de email retornou
+this application is current	common	pt-br	A aplicação está atualizada
+this application requires an upgrade	common	pt-br	Esta aplicação requer atualização
+this name has been used already	common	pt-br	Este nome já está em uso !
+thursday	common	pt-br	Quinta
+tiled	common	pt-br	mosaico
+time	common	pt-br	Hora
+time selection:	jscalendar	pt-br	Seleção da hora:
+time zone	common	pt-br	Fuso horário
+time zone offset	common	pt-br	Faixa de fuso horário
+title	common	pt-br	Título
+to	common	pt-br	Para
+to correct this error for the future you will need to properly set the	common	pt-br	Para corrigir este erro no futuro você deve ajustar as propriedades
+to go back to the msg list, click <a href= %1 >here</a>	common	pt-br	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
+today	common	pt-br	Hoje
+todays date, eg. "%1"	common	pt-br	Data de hoje, ex. "%1"
+toggle first day of week	jscalendar	pt-br	Utilizar como primeiro dia da semana
+togo	common	pt-br	TOGO
+tokelau	common	pt-br	TOKELAU
+tonga	common	pt-br	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pt-br	Houve tentativas em excesso de login para o usuário:: %1 para o cliente '%2', %3 a partir do endereço IP %4
+top	common	pt-br	Topo
+total	common	pt-br	Total
+transparant bg for the icons?	common	pt-br	Cor de fundo transparente para os ícones?
+trinidad and tobago	common	pt-br	TRINIDAD E TOBAGO
+tuesday	common	pt-br	Terça
+tunisia	common	pt-br	TUNISIA
+turkey	common	pt-br	TURQUIA
+turkmenistan	common	pt-br	TURCOMENISTÃO
+turks and caicos islands	common	pt-br	ILHAS TURKS E CAICOS
+tuvalu	common	pt-br	TUVALU
+type	common	pt-br	Tipo
+uganda	common	pt-br	UGANDA
+ukraine	common	pt-br	UCRÂNIA
+underline	common	pt-br	Sublinhado
+united arab emirates	common	pt-br	EMIRADOS ÁRABES UNIDOS
+united kingdom	common	pt-br	INGLATERRA
+united states	common	pt-br	ESTADOS UNIDOS
+united states minor outlying islands	common	pt-br	ILHAS MENORES EEUU
+unknown	common	pt-br	Desconhecido
+update	common	pt-br	Atualizar
+update the clock per minute or per second	common	pt-br	Atualizar o relógio por minuto ou por segundo.
+upload	common	pt-br	Carregar
+upload directory does not exist, or is not writeable by webserver	common	pt-br	Diretório de carregamento não existe ou o servidor web não tem direito de escrita nele.
+upload requires the directory to be writable by the webserver!	common	pt-br	Upload requer que o servidor web tenha poderes de gravação no diretório!
+url	common	pt-br	URL
+uruguay	common	pt-br	URUGUAI
+use button to search for	common	pt-br	Utilize o botão para buscar por
+use button to search for address	common	pt-br	Utilize o botão para procurar por endereços
+use button to search for calendarevent	common	pt-br	Utilize o botão para procurar por eventos na agenda
+use button to search for project	common	pt-br	Utilize o botão para procurar por projetos
+user	common	pt-br	Usuário
+user accounts	common	pt-br	Contas do usuário
+user groups	common	pt-br	Grupos do usuário
+user openinstance	common	pt-br	Instância do usuário aberta
+username	common	pt-br	Nome do usuário
+users	common	pt-br	Usuários
+users choice	common	pt-br	À escolha dos usuários
+uzbekistan	common	pt-br	UZBEQUIISTÃO
+vanuatu	common	pt-br	VANUATU
+venezuela	common	pt-br	VENEZUELA
+version	common	pt-br	Versão
+viet nam	common	pt-br	VIETNÃ
+view	common	pt-br	Exibir
+virgin islands, british	common	pt-br	ILHAS VIRGENS (ING)
+virgin islands, u.s.	common	pt-br	ILHAS VIRGENS (EUA)
+wallis and futuna	common	pt-br	WALLIS E FUTUNA
+wednesday	common	pt-br	Quarta
+welcome	common	pt-br	Bem Vindo
+western sahara	common	pt-br	WESTERN SAHARA
+what color should all the blank space on the desktop have	common	pt-br	Que cor todo espaço em branco deve ter na tela?
+what style would you like the image to have?	common	pt-br	Que estilo você quer que a imagem tenha?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Quando você escolhe sim, os botões Página Inicial e Desconectar são exibidos como aplicativos na barra de aplicativos principais.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	pt-br	Onde e como os links como Preferências, Sobre e Desconectar serão exibidos.
+which groups	common	pt-br	Qual grupo
+width	common	pt-br	Largura
+wk	jscalendar	pt-br	wk
+work email	common	pt-br	Endereço de e-mail comercial
+would you like to display the page generation time at the bottom of every window?	common	pt-br	Você gostaria de exibir o tempo de geração da página no rodapé de cada janela?
+writing	common	pt-br	gravando
+written by:	common	pt-br	Escrito por:
+year	common	pt-br	Ano
+yemen	common	pt-br	YEMEN
+yes	common	pt-br	Sim
+you are required to change your password during your first login	common	pt-br	Você foi solicitado a alterar a sua senha na primeira sessão.
+you can customize how many icons and toolbars the editor shows.	common	pt-br	Você pode personalizar quantos ícones e barras de tarefas o editor exibe.
+you have been successfully logged out	login	pt-br	Você foi desconectado com sucesso
+you have not entered a title	common	pt-br	Você não informou um título
+you have not entered a valid date	common	pt-br	Você não informou uma data válida
+you have not entered a valid time of day	common	pt-br	Você não informou um horário para o dia
+you have not entered participants	common	pt-br	Você não informou os participantes
+you have selected an invalid date	common	pt-br	Você selecionou uma data inválida !
+you have selected an invalid main category	common	pt-br	Você selecionou uma categoria principal inválida !
+you have successfully logged out	common	pt-br	Você encerrou a sessão corretamente.
+you need to add the webserver user '%1' to the group '%2'.	common	pt-br	Você precisa adicionar o usuário webserver '%1' ao grupo '%2'.
+you need to be an egroupware administrator to access this functionality!	common	pt-br	Você precisa ser um administrador do eGroupWare para acessar esta funcionalidade!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pt-br	Você tentou abrir a aplicação: %1, mas você não possui permissão para acessá-la.
+your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível enviar sua mensagem!<br>
+your message has been sent	common	pt-br	Sua mensagem foi enviada.
+your search returned %1 matchs	common	pt-br	Sua pesquisa retornou %1 ocorrências
+your search returned 1 match	common	pt-br	Sua pesquisa retornou 1 ocorrência
+your session could not be verified.	login	pt-br	Sua sessão não pôde ser verificada
+your settings have been updated	common	pt-br	Suas preferências foram atualizadas
+zambia	common	pt-br	ZÂMBIA
+zimbabwe	common	pt-br	ZIMBABUE
+zoom	common	pt-br	Zoom

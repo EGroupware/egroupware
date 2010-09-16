@@ -1,0 +1,222 @@
+ab	common	ja	ab
+accepted	common	ja	承諾済み
+access	common	ja	アクセス
+access not permitted	common	ja	アクセス権がありません
+access type	common	ja	アクセス権
+account has been created	common	ja	アカウントを作成しました
+account has been deleted	common	ja	アカウントを削除しました
+account has been updated	common	ja	アカウントを更新しました
+account must belong to at least 1 group	common	ja	所属グループを指定してください。
+account preferences	common	ja	アカウントユーザ設定
+acl	common	ja	許可設定
+active	common	ja	アクティブ
+add	common	ja	追加
+add category	common	ja	カテゴリ追加
+add %1 category for	common	ja	%1 カテゴリ追加
+admin	common	ja	環境設定
+administration	common	ja	環境設定
+all	common	ja	全て
+april	common	ja	４月
+are you sure you want to delete this category ?	common	ja	このカテゴリを削除してもよろしいですか。
+are you sure you want to delete this entry ?	common	ja	この項目を削除してもよろしいですか。
+august	common	ja	８月
+autosave default category	common	ja	デフォルトカテゴリを自動保存
+cancel	common	ja	取消
+categories	common	ja	カテゴリ
+category	common	ja	カテゴリ
+categories for	common	ja	カテゴリ
+category %1 has been added !	common	ja	カテゴリ %1 を追加しました。
+category %1 has been updated !	common	ja	カテゴリ %1 を訂正しました。
+cc	common	ja	ＣＣ
+change	common	ja	変更
+charset	common	ja	utf-8
+choose the category	common	ja	カテゴリ選択
+clear	common	ja	クリア
+clear form	common	ja	再入力
+compose	common	ja	新規作成
+copy	common	ja	コピー
+create	common	ja	作成
+created by	common	ja	作成者
+cron	common	ja	Cron
+currency	common	ja	通貨
+current users	common	ja	現在のユーザ
+custom	common	ja	カスタム
+date	common	ja	日
+december	common	ja	１２月
+default category	common	ja	既定のカテゴリ
+delete	common	ja	削除
+description	common	ja	詳細
+do you also want to delete all subcategories ?	common	ja	サブカテゴリも同時に削除しますか。
+domestic	common	ja	国内
+done	common	ja	終了
+download	common	ja	ダウンロード
+e-mail	common	ja	電子メール
+edit	common	ja	訂正
+edit categories	common	ja	カテゴリ訂正
+edit category	common	ja	カテゴリ訂正
+edit %1 category for	common	ja	%1 カテゴリ訂正
+email	common	ja	電子メール
+end date	common	ja	終了日
+end time	common	ja	終了時間
+entry has been deleted sucessfully	common	ja	削除しました。
+entry updated sucessfully	common	ja	訂正しました。
+error	common	ja	エラー
+exit	common	ja	閉じる
+extra	common	ja	追加
+february	common	ja	２月
+fields	common	ja	項目
+files	common	ja	ファイル
+filter	common	ja	選択
+first name	common	ja	姓
+firstname	common	ja	姓
+folders	common	ja	フォルダ
+forward	common	ja	転送
+friday	common	ja	金曜日
+from	common	ja	差出人
+ftp	common	ja	FTP
+full name	common	ja	名前
+global	common	ja	グローバル
+global public	common	ja	パブリック
+grant access	common	ja	利用許可設定
+group	common	ja	グループ
+group access	common	ja	グループ
+group has been added	common	ja	グループを追加しました。
+group has been deleted	common	ja	グループを削除しました。
+group has been updated	common	ja	グループを訂正しました。
+group public	common	ja	所属グループ
+groups	common	ja	グループ
+help	common	ja	ヘルプ
+high	common	ja	高
+home	common	ja	ホーム
+images	common	ja	Images
+inc	common	ja	Inc
+international	common	ja	国際
+it has been more then %1 days since you changed your password	common	ja	It has been more then %1 days since you changed your password
+january	common	ja	１月
+july	common	ja	７月
+june	common	ja	６月
+large	common	ja	大
+last name	common	ja	名
+lastname	common	ja	名
+last page	common	ja	last page
+login	common	ja	ログイン
+logout	common	ja	ログアウト
+low	common	ja	低
+main category	common	ja	メインカテゴリ
+main screen	common	ja	メイン画面
+march	common	ja	３月
+may	common	ja	５月
+medium	common	ja	中
+message	common	ja	メッセージ
+mobile phone	common	ja	携帯電話
+modem phone	common	ja	モデム
+monday	common	ja	月曜日
+monitor	common	ja	監視
+name	common	ja	名前
+new entry added sucessfully	common	ja	新しい項目を追加しました。
+new main category	common	ja	新規メインカテゴリ
+next	common	ja	次
+next page	common	ja	次ページ
+no	common	ja	いいえ
+none	common	ja	なし
+normal	common	ja	標準
+notes	common	ja	ノート
+notes preferences	common	ja	ノートユーザ設定
+november	common	ja	１１月
+october	common	ja	１０月
+ok	common	ja	OK
+on *nix systems please type: %1	common	ja	On *nix systems please type: %1
+only yours	common	ja	所有者
+original	common	ja	オリジナル
+other	common	ja	その他
+other phone	common	ja	その他番号
+outcharset	common	ja	ISO-2022-JP
+open notify window	common	ja	通知情報
+owner	common	ja	所有者
+parent category	common	ja	親カテゴリ
+password	common	ja	パスワード
+password has been updated	common	ja	パスワードを変更しました。
+permissions to the files/users directory	common	ja	permissions to the files/users directory
+personal	common	ja	個人
+please set your preferences for this application	common	ja	このアプリケーションのユーザ設定を行って下さい。
+please %1 by hand	common	ja	Please %1 by hand
+please, check your username and password, or contact your admin.	common	ja	ユーザとパスワードをチェックするか、管理者に問い合わせてください。
+pref	common	ja	優先
+prefer	common	ja	好み
+preferences	common	ja	ユーザ設定
+previous	common	ja	前
+previous page	common	ja	前ページ
+print	common	ja	印刷
+priority	common	ja	優先順位
+private	common	ja	プライベート
+public	common	ja	共有
+read	common	ja	表示
+rename	common	ja	名前の変更
+reply	common	ja	返信
+reply all	common	ja	全員に返信
+replyto	common	ja	リプライ
+saturday	common	ja	土曜日
+save	common	ja	保存
+search	common	ja	検索
+select	common	ja	選択
+select category	common	ja	カテゴリ選択
+select headline news sites	common	ja	ヘッドラインニュースサイトの選択
+select parent category	common	ja	親カテゴリ選択
+send	common	ja	送信
+send updates via email	common	ja	更新情報を電子メールで受取る
+september	common	ja	９月
+session has been killed	common	ja	セッションを削除しました。
+show all	common	ja	全て表示
+showing %1	common	ja	表示数 %1
+showing %1 - %2 of %3	common	ja	表示数 %1 - %2 of %3
+small	common	ja	小
+sorry, there was a problem processing your request.	common	ja	Sorry, there was a problem processing your request.
+squirrelmail	common	ja	Squirrelmail
+start date	common	ja	開始日
+start time	common	ja	開始時間
+status	common	ja	状態
+subject	common	ja	件名
+subject:	common	ja	件名：
+submit	common	ja	実行
+sunday	common	ja	日曜日
+that category name has been used already !	common	ja	カテゴリ名は既に存在しています。
+the two passwords are not the same	common	ja	２つのパスワードが等しくありません
+themes	common	ja	Themes
+there was an error trying to connect to your mail server.	common	ja	メールサーバに接続できませんでした。
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	common	ja	メールサーバに接続できませんでした。<BR>電子メールのユーザ名とパスワードを確認してください。
+this folder is empty	common	ja	メッセージはありません。
+thursday	common	ja	木曜日
+time	common	ja	時間
+time zone	common	ja	時差
+time zone offset	common	ja	時差
+title	common	ja	タイトル
+to correct this error for the future you will need to properly set the	common	ja	To correct this error for the future you will need to properly set the
+total	common	ja	合計
+tuesday	common	ja	火曜日
+updated	common	ja	更新日時
+users	common	ja	ユーザ
+view	common	ja	表示
+wednesday	common	ja	水曜日
+which groups	common	ja	グループ選択
+yes	common	ja	はい
+you are required to change your password during your first login	common	ja	初回ログイン時にパスワード変更
+you are required to change your password durring your first login	common	ja	初回ログイン時にパスワード変更
+you have 1 new message!	common	ja	新着メールが１通あります。
+you have messages!	common	ja	メッセージがあります。
+you have no new messages	common	ja	新着メールはありません。
+you have %1 new messages!	common	ja	新着メールが %1 通あります。
+you must enter a password	common	ja	パスワードを入力して下さい。
+your message has been sent	common	ja	メッセージを送信しました。
+your search has returned no matchs !	common	ja	見つかりません。
+your search returned 1 match	common	ja	１件見つかりました。
+your search returned %1 matchs	common	ja	%1 件見つかりました。
+your settings have been updated	common	ja	Your settings have been Updated
+bad login or password	common	ja	パスワードが誤っています
+login	login	ja	ログイン
+password	login	ja	パスワード
+sorry, your login has expired	login	ja	ログイン有効期限が切れました
+use cookies	login	ja	Cookie を使用
+username	login	ja	ユーザ名
+you have been successfully logged out	login	ja	ログアウトしました。
+your session could not be verified.	login	ja	Your session could not be verified.
+site configuration	common	ja	サイト環境設定

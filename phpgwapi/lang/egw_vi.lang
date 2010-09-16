@@ -1,0 +1,618 @@
+%1 email addresses inserted	common	vi	Có %1 &#273;&#7883;a ch&#7881; email &#273;&#432;&#7907;c thêm vào
+%1 is not executable by the webserver !!!	common	vi	%1 không th&#7875; th&#7921;c thi b&#7903;i máy ch&#7911; web !!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	vi	%1eGroupWare%2 là b&#7897; ph&#7847;n m&#7873;m nhóm d&#7841;ng Web h&#7895; tr&#7907; &#273;a ng&#432;&#7901;i dùng vi&#7871;t b&#7857;ng %3PHP%4.
+(shift-)click or drag to change value	jscalendar	vi	(Shift-)Click ho&#7863;c kéo và rê chu&#7897;t &#273;&#7875; thay &#273;&#7893;i giá tr&#7883;
+- click on any of the time parts to increase it	jscalendar	vi	- Click vào b&#7845;t k&#7923; ph&#7847;n th&#7901;i gian nào &#273;&#7875; t&#259;ng nó
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	vi	- Gi&#7919; phím trái chu&#7897;t trên b&#7845;t k&#7923; nút &#7845;n nào phía trên &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
+- or click and drag for faster selection.	jscalendar	vi	- ho&#7863;c click và kéo - rê chu&#7897;t &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
+- or shift-click to decrease it	jscalendar	vi	- ho&#7863;c Shift-Click chu&#7897;t &#273;&#7875; gi&#7843;m nó
+- use the %1, %2 buttons to select month	jscalendar	vi	- Dùng các nút &#7845;n %1, %2 &#273;&#7875; ch&#7885;n tháng
+- use the %1, %2 buttons to select year	jscalendar	vi	- Dùng các nút &#7845;n %1, %2 &#273;&#7875; ch&#7885;n n&#259;m
+00 (disable)	admin	vi	00 (t&#7855;t)
+13 (ntp)	admin	vi	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	vi	3 ký t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t ngày
+3 number of chars for month-shortcut	jscalendar	vi	3 ký t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t tháng
+80 (http)	admin	vi	80 (http)
+about	common	vi	Gi&#7899;i thi&#7879;u
+about %1	common	vi	Gi&#7899;i thi&#7879;u %1
+about the calendar	jscalendar	vi	Gi&#7899;i thi&#7879;u v&#7873; L&#7883;ch
+access	common	vi	Truy c&#7853;p
+access not permitted	common	vi	Truy c&#7853;p không &#273;&#432;&#7907;c phép
+account has been created	common	vi	Tài kho&#7843;n &#273;ã &#273;&#432;&#7907;c t&#7841;o
+account has been deleted	common	vi	Tài kho&#7843;n &#273;ã b&#7883; xóa
+account has been updated	common	vi	Tài kho&#7843;n &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+account is expired	common	vi	Tài kho&#7843;n h&#7871;t h&#7841;n
+acl	common	vi	Danh sách phân quy&#7873;n truy c&#7853;p
+action	common	vi	Hành &#273;&#7897;ng
+active	common	vi	Tích c&#7921;c
+add	common	vi	Thêm m&#7899;i
+add %1 category for	common	vi	Thêm m&#7899;i %1 nhóm cho
+add category	common	vi	Thêm m&#7899;i nhóm
+add sub	common	vi	Thêm nhóm con
+addressbook	common	vi	S&#7893; &#273;&#7883;a ch&#7881;
+admin	common	vi	Ng&#432;&#7901;i qu&#7843;n tr&#7883;
+administration	common	vi	Qu&#7843;n tr&#7883; h&#7879; th&#7889;ng
+afghanistan	common	vi	AFGHANISTAN
+albania	common	vi	ALBANIA
+algeria	common	vi	ALGERIA
+all	common	vi	T&#7845;t c&#7843;
+all fields	common	vi	t&#7845;t c&#7843; các tr&#432;&#7901;ng
+alphabet	common	vi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	vi	Style-sheet thay th&#7871;:
+american samoa	common	vi	AMERICAN SAMOA
+andorra	common	vi	ANDORRA
+angola	common	vi	ANGOLA
+anguilla	common	vi	ANGUILLA
+antarctica	common	vi	ANTARCTICA
+antigua and barbuda	common	vi	ANTIGUA AND BARBUDA
+apply	common	vi	Áp d&#7909;ng
+april	common	vi	Tháng T&#432;
+are you sure you want to delete these entries ?	common	vi	B&#7841;n có ch&#7855;c ch&#7855;n r&#7857;ng mình mu&#7889;n xóa các m&#7909;c này không ?
+are you sure you want to delete this entry ?	common	vi	B&#7841;n có ch&#7855;c ch&#7855;n r&#7857;ng mình mu&#7889;n xóa m&#7909;c này không ?
+argentina	common	vi	ARGENTINA
+armenia	common	vi	ARMENIA
+aruba	common	vi	ARUBA
+august	common	vi	Tháng Tám
+australia	common	vi	AUSTRALIA
+austria	common	vi	AUSTRIA
+author	common	vi	Tác gi&#7843;
+autohide sidebox menus	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu bên ph&#7843;i
+automatically hide the sidebox menus?	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu bên ph&#7843;i
+autosave default category	common	vi	T&#7921; &#273;&#7897;ng l&#432;u nhóm m&#7863;c &#273;&#7883;nh
+azerbaijan	common	vi	AZERBAIJAN
+back	common	vi	Quay tr&#7903; l&#7841;i
+back to user login	common	vi	Quay v&#7873; trang &#273;&#259;ng nh&#7853;p
+background color:	common	vi	Màu n&#7873;n:
+bad login or password	common	vi	Sai tên &#273;&#259;ng nh&#7853;p ho&#7863;c m&#7853;t kh&#7849;u
+bahamas	common	vi	BAHAMAS
+bahrain	common	vi	BAHRAIN
+bangladesh	common	vi	BANGLADESH
+barbados	common	vi	BARBADOS
+bcc	common	vi	G&#7917;i kín
+belarus	common	vi	BELARUS
+belgium	common	vi	BELGIUM
+belize	common	vi	BELIZE
+benin	common	vi	BENIN
+bermuda	common	vi	BERMUDA
+bhutan	common	vi	BHUTAN
+blocked, too many attempts	common	vi	B&#7883; khóa, &#273;&#259;ng nh&#7853;p sai quá nhi&#7873;u l&#7847;n
+bolivia	common	vi	BOLIVIA
+bosnia and herzegovina	common	vi	BOSNIA AND HERZEGOVINA
+botswana	common	vi	BOTSWANA
+bouvet island	common	vi	BOUVET ISLAND
+brazil	common	vi	BRAZIL
+british indian ocean territory	common	vi	BRITISH INDIAN OCEAN TERRITORY
+brunei darussalam	common	vi	BRUNEI DARUSSALAM
+bulgaria	common	vi	BULGARIA
+burkina faso	common	vi	BURKINA FASO
+burundi	common	vi	BURUNDI
+calendar	common	vi	L&#7883;ch
+cambodia	common	vi	CAMBODIA
+cameroon	common	vi	CAMEROON
+canada	common	vi	CANADA
+cancel	common	vi	H&#7911;y b&#7887;
+cape verde	common	vi	CAPE VERDE
+categories	common	vi	Các nhóm
+categories for	common	vi	Phân nhóm cho
+category	common	vi	Nhóm
+category %1 has been added !	common	vi	Nhóm %1 &#273;ã &#273;&#432;&#7907;c thêm m&#7899;i !
+category %1 has been updated !	common	vi	Nhóm %1 &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t !
+cayman islands	common	vi	CAYMAN ISLANDS
+cc	common	vi	&#272;&#7891;ng kính g&#7917;i
+central african republic	common	vi	CENTRAL AFRICAN REPUBLIC
+chad	common	vi	CHAD
+change	common	vi	Thay &#273;&#7893;i
+charset	common	vi	utf-8
+check installation	common	vi	Ki&#7875;m tra cài &#273;&#7863;t
+check now	common	vi	Ki&#7875;m tra ngay
+chile	common	vi	CHILE
+china	common	vi	CHINA
+choose the category	common	vi	Ch&#7885;n nhóm
+choose the parent category	common	vi	Ch&#7885;n nhóm cha
+christmas island	common	vi	CHRISTMAS ISLAND
+clear	common	vi	Xóa
+clear form	common	vi	Xóa bi&#7875;u m&#7851;u
+click	common	vi	Click
+click or mouse over to show menus	common	vi	Click ho&#7863;c kéo chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu
+click or mouse over to show menus?	common	vi	Click ho&#7863;c kéo chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu ?
+close	common	vi	&#272;óng
+cocos (keeling) islands	common	vi	COCOS (KEELING) ISLANDS
+colombia	common	vi	COLOMBIA
+comoros	common	vi	COMOROS
+company	common	vi	Công ty
+congo	common	vi	CONGO
+congo, the democratic republic of the	common	vi	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+cook islands	common	vi	COOK ISLANDS
+copy	common	vi	Sao chép
+costa rica	common	vi	COSTA RICA
+cote d ivoire	common	vi	COTE D IVOIRE
+create	common	vi	T&#7841;o
+created by	common	vi	T&#7841;o b&#7903;i
+croatia	common	vi	CROATIA
+cuba	common	vi	CUBA
+currency	common	vi	Lo&#7841;i ti&#7873;n
+current	common	vi	Hi&#7879;n hành
+current users	common	vi	Các ng&#432;&#7901;i s&#7917; d&#7909;ng hi&#7879;n hành
+cyprus	common	vi	CYPRUS
+czech republic	common	vi	CZECH REPUBLIC
+date	common	vi	Ngày
+date due	common	vi	Ngày &#273;&#7871;n h&#7841;n
+date selection:	jscalendar	vi	L&#7921;a ch&#7885;n ngày:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	vi	C&#7893;ng Datetime.<br>N&#7871;u dùng c&#7893;ng 13, vui lòng thi&#7871;t l&#7853;p các ch&#7871; &#273;&#7897; t&#432;&#7901;ng l&#7917;a tr&#432;&#7899;c khi g&#7917;i trang này.<br>(C&#7893;ng: 13 / &#272;&#7883;a ch&#7881; c&#7893;ng: 129.6.15.28)
+december	common	vi	Tháng M&#432;&#7901;i Hai
+default category	common	vi	Nhóm m&#7863;c &#273;&#7883;nh
+delete	common	vi	Xóa
+denmark	common	vi	DENMARK
+description	common	vi	Di&#7877;n gi&#7843;i
+detail	common	vi	Chi ti&#7871;t
+details	common	vi	Các kho&#7843;n chi ti&#7871;t
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	vi	T&#7855;t vi&#7879;c th&#7921;c thi các &#273;o&#7841;n script s&#7917;a l&#7895;i c&#7911;a trình duy&#7879;t Internet Explorer 5.5 và các phiên b&#7843;n cao h&#417;n &#273;&#7875; hi&#7875;n th&#7883; &#273;&#432;&#7907;c các &#7843;nh d&#7841;ng PNG ?
+disable internet explorer png-image-bugfix	common	vi	T&#7855;t ch&#7913;c n&#259;ng s&#7917;a l&#7895;i &#7843;nh png c&#7911;a Internet Explorer
+disable slider effects	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t &#273;&#7897;ng khi hi&#7875;n th&#7883; ho&#7863;c t&#7855;t các menu trong trang? Các ng&#432;&#7901;i s&#7917; d&#7909;ng trình duy&#7879;t Opera và Konqueror h&#7847;u nh&#432; c&#7847;n làm nh&#432; v&#7847;y.
+disabled	common	vi	&#272;ã t&#7855;t
+display %s first	jscalendar	vi	Hi&#7875;n th&#7883; %s &#273;&#7847;u tiên
+djibouti	common	vi	DJIBOUTI
+do you also want to delete all subcategories ?	common	vi	B&#7841;n c&#361;ng mu&#7889;n xóa luôn các nhóm con ph&#7843;i không ?
+doctype:	common	vi	DOCTYPE:
+document properties	common	vi	Thu&#7897;c tính document
+document title:	common	vi	Tiêu &#273;&#7873; document:
+domain	common	vi	Domain
+domain name for mail-address, eg. "%1"	common	vi	tên domain dùng cho &#273;&#7883;a ch&#7881; email, ví d&#7909;: "%1"
+domestic	common	vi	Vùng
+dominica	common	vi	DOMINICA
+dominican republic	common	vi	DOMINICAN REPUBLIC
+done	common	vi	&#272;ã xong
+drag to move	jscalendar	vi	Kéo và rê chu&#7897;t &#273;&#7875; di chuy&#7875;n
+e-mail	common	vi	E-Mail
+east timor	common	vi	EAST TIMOR
+ecuador	common	vi	ECUADOR
+edit	common	vi	Hi&#7879;u ch&#7881;nh
+edit %1 category for	common	vi	Hi&#7879;u ch&#7881;nh %1 nhóm cho
+edit categories	common	vi	Hi&#7879;u ch&#7881;nh các nhóm
+edit category	common	vi	Hi&#7879;u ch&#7881;nh nhóm
+egroupware api version %1	common	vi	eGroupWare API phiên b&#7843;n %1
+egroupware: login blocked for user '%1', ip %2	common	vi	eGroupWare: &#273;&#259;ng nh&#7853;p b&#7883; khóa &#273;&#7889;i v&#7899;i ng&#432;&#7901;i s&#7917; d&#7909;ng '%1', có &#273;&#7883;a ch&#7881; IP %2
+egypt	common	vi	EGYPT
+el salvador	common	vi	EL SALVADOR
+email	common	vi	E-Mail
+email-address of the user, eg. "%1"	common	vi	&#273;&#7883;a ch&#7881; email c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, ví d&#7909;: "%1"
+enabled	common	vi	&#272;&#432;&#7907;c b&#7853;t
+end date	common	vi	Ngày k&#7871;t thúc
+end time	common	vi	Gi&#7901; k&#7871;t thúc
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	vi	Nh&#7853;p vào URL c&#7911;a eGroupWare.<br>Ví d&#7909;: http://www.domain.com/egroupware   ho&#7863;c   /egroupware<br><b>Không có d&#7845;u slash &#7903; phía sau</b>
+entry has been deleted sucessfully	common	vi	&#272;ã xóa xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
+entry updated sucessfully	common	vi	C&#7853;p nh&#7853;t xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
+equatorial guinea	common	vi	EQUATORIAL GUINEA
+eritrea	common	vi	ERITREA
+error	common	vi	L&#7895;i
+error creating %1 %2 directory	common	vi	L&#7895;i t&#7841;o %1 %2 th&#432; m&#7909;c
+error deleting %1 %2 directory	common	vi	L&#7895;i xóa %1 %2 th&#432; m&#7909;c
+error renaming %1 %2 directory	common	vi	L&#7895;i &#273;&#7893;i tên %1 %2 th&#432; m&#7909;c
+estonia	common	vi	ESTONIA
+ethiopia	common	vi	ETHIOPIA
+exact	common	vi	chính xác
+falkland islands (malvinas)	common	vi	FALKLAND ISLANDS (MALVINAS)
+faroe islands	common	vi	FAROE ISLANDS
+fax number	common	vi	s&#7889; fax
+february	common	vi	Tháng Hai
+fields	common	vi	Các tr&#432;&#7901;ng
+fiji	common	vi	FIJI
+files	common	vi	Các t&#7853;p tin
+filter	common	vi	B&#7897; l&#7885;c
+finland	common	vi	FINLAND
+first name	common	vi	Tên
+first name of the user, eg. "%1"	common	vi	tên c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, ví d&#7909;: "%1"
+first page	common	vi	Trang &#273;&#7847;u tiên
+firstname	common	vi	Tên
+fixme!	common	vi	S&#7917;a tôi!
+force selectbox	common	vi	Ô ch&#7885;n b&#7855;t bu&#7897;c
+france	common	vi	FRANCE
+french guiana	common	vi	FRENCH GUIANA
+french polynesia	common	vi	FRENCH POLYNESIA
+french southern territories	common	vi	FRENCH SOUTHERN TERRITORIES
+friday	common	vi	Th&#7913; sáu
+ftp	common	vi	FTP
+fullname	common	vi	Tên &#273;&#7847;y &#273;&#7911;
+gabon	common	vi	GABON
+gambia	common	vi	GAMBIA
+general menu	common	vi	Menu chung
+georgia	common	vi	GEORGIA
+germany	common	vi	GERMANY
+ghana	common	vi	GHANA
+gibraltar	common	vi	GIBRALTAR
+global	common	vi	Chung
+global public	common	vi	Môi tr&#432;&#7901;ng chung
+go today	jscalendar	vi	Vào m&#7909;c Hôm nay
+grant access	common	vi	Phân quy&#7873;n truy c&#7853;p
+greece	common	vi	GREECE
+greenland	common	vi	GREENLAND
+grenada	common	vi	GRENADA
+group	common	vi	Nhóm
+group access	common	vi	Truy c&#7853;p Nhóm
+group has been added	common	vi	Nhóm &#273;ã &#273;&#432;&#7907;c thêm vào
+group has been deleted	common	vi	Nhóm &#273;ã b&#7883; xóa
+group has been updated	common	vi	Nhóm &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+group name	common	vi	tên nhóm
+group public	common	vi	Môi tr&#432;&#7901;ng Nhóm
+groups	common	vi	Các nhóm
+groups with permission for %1	common	vi	Các nhóm có quy&#7873;n là %1
+groups without permission for %1	common	vi	Các nhóm không có quy&#7873;n là %1
+guadeloupe	common	vi	GUADELOUPE
+guam	common	vi	GUAM
+guatemala	common	vi	GUATEMALA
+guinea	common	vi	GUINEA
+guinea-bissau	common	vi	GUINEA-BISSAU
+guyana	common	vi	GUYANA
+haiti	common	vi	HAITI
+heard island and mcdonald islands	common	vi	HEARD ISLAND AND MCDONALD ISLANDS
+help	common	vi	Tr&#7907; giúp
+high	common	vi	Cao
+highest	common	vi	Cao nh&#7845;t
+holy see (vatican city state)	common	vi	HOLY SEE (VATICAN CITY STATE)
+home	common	vi	Trang ch&#7911;
+home email	common	vi	email riêng
+honduras	common	vi	HONDURAS
+hong kong	common	vi	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	vi	Nên có bao nhiêu bi&#7875;u t&#432;&#7907;ng hi&#7875;n th&#7883; &#7903; menu ngang (&#273;&#7847;u trang). Các bi&#7875;u t&#432;&#7907;ng n&#7857;m sau không &#273;&#7911; ch&#7895; hi&#7875;n th&#7883; trên menu ngang s&#7869; &#273;&#432;&#7907;c d&#7891;n xu&#7889;ng menu d&#7885;c n&#7857;m bên ph&#7843;i. Menu này có th&#7875; &#273;&#432;&#7907;c kích ho&#7841;t b&#7857;ng bi&#7875;u t&#432;&#7907;ng n&#7857;m &#7903; c&#7841;nh ph&#7843;i c&#7911;a menu ngang.
+hungary	common	vi	HUNGARY
+iceland	common	vi	ICELAND
+india	common	vi	INDIA
+indonesia	common	vi	INDONESIA
+insert all %1 addresses of the %2 contacts in %3	common	vi	Chèn t&#7845;t c&#7843; %1 các &#273;&#7883;a ch&#7881; c&#7911;a %2 các thông tin liên h&#7879; trong %3
+international	common	vi	Qu&#7889;c t&#7871;
+invalid ip address	common	vi	&#272;&#7883;a ch&#7881; IP không h&#7907;p l&#7879;
+invalid password	common	vi	M&#7853;t kh&#7849;u không h&#7907;p l&#7879;
+iran, islamic republic of	common	vi	IRAN, ISLAMIC REPUBLIC OF
+iraq	common	vi	IRAQ
+ireland	common	vi	IRELAND
+israel	common	vi	ISRAEL
+it has been more then %1 days since you changed your password	common	vi	&#272;ã h&#417;n %1 ngày t&#7915; khi b&#7841;n &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n
+it is recommended that you run setup to upgrade your tables to the current version	common	vi	B&#7841;n nên ch&#7841;y setup &#273;&#7875; nâng c&#7845;p các b&#7843;ng c&#7911;a b&#7841;n lên phiên b&#7843;n hi&#7879;n hành.
+italic	common	vi	Nghiêng
+italy	common	vi	ITALY
+jamaica	common	vi	JAMAICA
+january	common	vi	Tháng Giêng
+japan	common	vi	JAPAN
+jordan	common	vi	JORDAN
+july	common	vi	Tháng B&#7843;y
+jun	common	vi	Tháng Sáu
+june	common	vi	Tháng Sáu
+justify center	common	vi	Canh gi&#7919;a &#273;&#7873;u
+justify full	common	vi	Canh &#273;&#7873;u toàn b&#7897;
+justify left	common	vi	Canh trái &#273;&#7873;u
+justify right	common	vi	Canh ph&#7843;i &#273;&#7873;u
+kazakstan	common	vi	KAZAKSTAN
+kenya	common	vi	KENYA
+keywords	common	vi	Các t&#7915; khóa
+kiribati	common	vi	KIRIBATI
+korea, democratic peoples republic of	common	vi	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
+korea, republic of	common	vi	KOREA, REPUBLIC OF
+kuwait	common	vi	KUWAIT
+kyrgyzstan	common	vi	KYRGYZSTAN
+language	common	vi	Ngôn ng&#7919;
+lao peoples democratic republic	common	vi	LAO PEOPLES DEMOCRATIC REPUBLIC
+last name	common	vi	H&#7885;
+last name of the user, eg. "%1"	common	vi	h&#7885; c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng,ví d&#7909;: "%1"
+last page	common	vi	Trang cu&#7889;i
+lastname	common	vi	H&#7885;
+latvia	common	vi	LATVIA
+lebanon	common	vi	LEBANON
+lesotho	common	vi	LESOTHO
+liberia	common	vi	LIBERIA
+libyan arab jamahiriya	common	vi	LIBYAN ARAB JAMAHIRIYA
+license	common	vi	C&#7845;p phép
+liechtenstein	common	vi	LIECHTENSTEIN
+list	common	vi	Danh sách
+list members	common	vi	Li&#7879;t kê các thành viên
+lithuania	common	vi	LITHUANIA
+local	common	vi	C&#7909;c b&#7897;
+login	common	vi	&#272;&#259;ng nh&#7853;p
+loginid	common	vi	Tên &#273;&#259;ng nh&#7853;p
+logout	common	vi	Thoát
+low	common	vi	Th&#7845;p
+lowest	common	vi	Th&#7845;p nh&#7845;t
+luxembourg	common	vi	LUXEMBOURG
+macau	common	vi	MACAU
+macedonia, the former yugoslav republic of	common	vi	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+madagascar	common	vi	MADAGASCAR
+mail domain, eg. "%1"	common	vi	mail domain, eg. "%1"
+main category	common	vi	Nhóm chính
+main screen	common	vi	Màn hình chính
+maintainer	common	vi	Ng&#432;&#7901;i duy trì
+malawi	common	vi	MALAWI
+malaysia	common	vi	MALAYSIA
+maldives	common	vi	MALDIVES
+mali	common	vi	MALI
+malta	common	vi	MALTA
+march	common	vi	Tháng Ba
+marshall islands	common	vi	MARSHALL ISLANDS
+martinique	common	vi	MARTINIQUE
+mauritania	common	vi	MAURITANIA
+mauritius	common	vi	MAURITIUS
+max number of icons in navbar	common	vi	S&#7889; l&#432;&#7907;ng nhi&#7873;u nh&#7845;t các bi&#7875;u t&#432;&#7907;ng trên menu ngang
+may	common	vi	Tháng N&#259;m
+mayotte	common	vi	MAYOTTE
+medium	common	vi	Trung bình
+menu	common	vi	Menu
+message	common	vi	Tin nh&#7855;n
+mexico	common	vi	MEXICO
+micronesia, federated states of	common	vi	MICRONESIA, FEDERATED STATES OF
+moldova, republic of	common	vi	MOLDOVA, REPUBLIC OF
+monaco	common	vi	MONACO
+monday	common	vi	Th&#7913; Hai
+mongolia	common	vi	MONGOLIA
+montserrat	common	vi	MONTSERRAT
+morocco	common	vi	MOROCCO
+mozambique	common	vi	MOZAMBIQUE
+myanmar	common	vi	MYANMAR
+name	common	vi	Tên
+name of the user, eg. "%1"	common	vi	tên c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, ví d&#7909;: "%1"
+namibia	common	vi	NAMIBIA
+nauru	common	vi	NAURU
+nepal	common	vi	NEPAL
+netherlands	common	vi	NETHERLANDS
+netherlands antilles	common	vi	NETHERLANDS ANTILLES
+never	common	vi	Không bao gi&#7901;
+new caledonia	common	vi	NEW CALEDONIA
+new entry added sucessfully	common	vi	M&#7909;c m&#7899;i &#273;ã &#273;&#432;&#7907;c thêm vào
+new main category	common	vi	Nhóm chính m&#7899;i
+new value	common	vi	Giá tr&#7883; m&#7899;i
+new zealand	common	vi	NEW ZEALAND
+next	common	vi	K&#7871; ti&#7871;p
+next month (hold for menu)	jscalendar	vi	Tháng k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
+next page	common	vi	Trang k&#7871; ti&#7871;p
+next year (hold for menu)	jscalendar	vi	N&#259;m k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
+nicaragua	common	vi	NICARAGUA
+niger	common	vi	NIGER
+nigeria	common	vi	NIGERIA
+niue	common	vi	NIUE
+no	common	vi	Không
+no entries found, try again ...	common	vi	không có m&#7909;c nào &#273;&#432;&#7907;c tìm th&#7845;y, th&#7917; l&#7841;i l&#7847;n n&#7919;a ...
+no history for this record	common	vi	Không có nh&#7853;t ký c&#7911;a m&#7849;u tin này
+no subject	common	vi	Không có ch&#7911; &#273;&#7873;
+none	common	vi	Không
+norfolk island	common	vi	NORFOLK ISLAND
+normal	common	vi	Bình th&#432;&#7901;ng
+northern mariana islands	common	vi	NORTHERN MARIANA ISLANDS
+norway	common	vi	NORWAY
+not assigned	common	vi	ch&#432;a gán
+note	common	vi	Ghi chú
+notes	common	vi	Các ghi chú
+notify window	common	vi	C&#7917;a s&#7893; thông báo
+november	common	vi	Tháng M&#432;&#7901;i M&#7897;t
+october	common	vi	Tháng M&#432;&#7901;i
+ok	common	vi	OK
+old value	common	vi	Giá tr&#7883; c&#361;
+oman	common	vi	OMAN
+on *nix systems please type: %1	common	vi	Trên các h&#7879; th&#7889;ng *nix vui lòng gõ vào: %1
+on mouse over	common	vi	Khi rê chu&#7897;t qua
+only private	common	vi	ch&#7881; dành cho cá nhân
+only yours	common	vi	ch&#7881; dành cho b&#7841;n
+open notify window	common	vi	M&#7903; c&#7917;a s&#7893; thông báo
+open popup window	common	vi	M&#7903; c&#7917;a s&#7893; pop-up
+original	common	vi	Nguyên g&#7889;c
+other	common	vi	Khác
+overview	common	vi	Khái quát
+owner	common	vi	Ng&#432;&#7901;i ch&#7911; trì
+page	common	vi	Trang
+page was generated in %1 seconds	common	vi	Trang &#273;&#432;&#7907;c sinh ra m&#7845;t %1 giây
+pakistan	common	vi	PAKISTAN
+palau	common	vi	PALAU
+palestinian territory, occupied	common	vi	PALESTINIAN TERRITORY, OCCUPIED
+panama	common	vi	PANAMA
+papua new guinea	common	vi	PAPUA NEW GUINEA
+paraguay	common	vi	PARAGUAY
+parcel	common	vi	B&#432;u ki&#7879;n
+parent category	common	vi	Nhóm cha
+password	common	vi	M&#7853;t kh&#7849;u
+password could not be changed	common	vi	M&#7853;t kh&#7849;u không th&#7875; thay &#273;&#7893;i
+password has been updated	common	vi	M&#7853;t kh&#7849;u &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+path to user and group files has to be outside of the webservers document-root!!!	common	vi	&#272;&#432;&#7901;ng d&#7851;n &#273;&#7871;n các t&#7853;p tin ng&#432;&#7901;i s&#7917; d&#7909;ng và nhóm PH&#7842;I N&#7856;M NGOÀI th&#432; m&#7909;c g&#7889;c c&#7911;a máy ch&#7911; Web.
+pattern for search in addressbook	common	vi	M&#7851;u dùng cho Tìm ki&#7871;n trong S&#7893; &#273;&#7883;a ch&#7881;
+pattern for search in calendar	common	vi	M&#7851;u dùng cho Tìm ki&#7871;m trong L&#7883;ch
+pattern for search in projects	common	vi	M&#7851;u dùng cho Tìm ki&#7871;m trong Qu&#7843;n lý D&#7921; án
+permissions to the files/users directory	common	vi	các quy&#7873;n truy c&#7853;p &#273;&#7871;n các t&#7853;p tin/ th&#432; m&#7909;c c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
+personal	common	vi	Cá nhân
+peru	common	vi	PERU
+philippines	common	vi	PHILIPPINES
+phone number	common	vi	s&#7889; &#273;i&#7879;n tho&#7841;i
+pitcairn	common	vi	PITCAIRN
+please %1 by hand	common	vi	Vui lòng %1 b&#7857;ng tay
+please enter a name	common	vi	Vui lòng &#273;i&#7873;n tên !
+please run setup to become current	common	vi	Vui lòng ch&#7841;y setup &#273;&#7875; tr&#7903; thành hi&#7879;n hành
+please select	common	vi	Vui lòng ch&#7885;n
+please set your global preferences	common	vi	Vui lòng thi&#7871;t l&#7853;p các tùy ch&#7885;n chung c&#7911;a b&#7841;n !
+please set your preferences for this application	common	vi	Vui lòng thi&#7871;t l&#7853;p các tùy ch&#7885;n c&#7911;a b&#7841;n cho &#7913;ng d&#7909;ng này !
+please wait...	common	vi	Vui lòng &#273;&#7907;i trong ch&#7889;c lát ...
+poland	common	vi	POLAND
+portugal	common	vi	PORTUGAL
+postal	common	vi	&#272;&#432;&#7901;ng b&#432;u &#273;i&#7879;n
+preferences	common	vi	Các tùy ch&#7885;n
+preferences for the idots template set	common	vi	Các tùy ch&#7885;n cho b&#7897; idots template
+prev. month (hold for menu)	jscalendar	vi	Tháng tr&#432;&#7899;c (&#273;&#432;a ra menu)
+prev. year (hold for menu)	jscalendar	vi	N&#259;m tr&#432;&#7899;c (&#273;&#432;a ra menu)
+previous page	common	vi	Trang tr&#432;&#7899;c
+primary style-sheet:	common	vi	Style-sheet chính:
+print	common	vi	In
+priority	common	vi	&#431;u tiên
+private	common	vi	Cá nhân
+project	common	vi	D&#7921; án
+public	common	vi	chung
+puerto rico	common	vi	PUERTO RICO
+qatar	common	vi	QATAR
+read	common	vi	&#272;&#7885;c
+read this list of methods.	common	vi	Li&#7879;t kê các ph&#432;&#417;ng th&#7913;c
+reject	common	vi	T&#7915; ch&#7889;i
+remove selected accounts	common	vi	xóa các tài kho&#7843;n &#273;ã ch&#7885;n
+rename	common	vi	&#272;&#7893;i tên
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	vi	Tr&#7843; v&#7873; m&#7897;t danh sách &#273;&#7847;y &#273;&#7911; các tài kho&#7843;n trong h&#7879; th&#7889;ng. C&#7843;nh báo: K&#7871;t qu&#7843; tr&#7843; v&#7873; có th&#7875; r&#7845;t l&#7899;n
+returns an array of todo items	common	vi	Tr&#7843; v&#7873; m&#7897;t m&#7843;ng các công vi&#7879;c c&#7847;n làm
+returns struct of users application access	common	vi	Tr&#7843; v&#7873; k&#7871;t c&#7845;u truy c&#7853;p &#7913;ng d&#7909;ng c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
+reunion	common	vi	LIÊN K&#7870;T L&#7840;I
+romania	common	vi	ROMANIA
+russian federation	common	vi	RUSSIAN FEDERATION
+rwanda	common	vi	RWANDA
+saint helena	common	vi	SAINT HELENA
+saint kitts and nevis	common	vi	SAINT KITTS AND NEVIS
+saint lucia	common	vi	SAINT LUCIA
+saint pierre and miquelon	common	vi	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	vi	SAINT VINCENT AND THE GRENADINES
+samoa	common	vi	SAMOA
+san marino	common	vi	SAN MARINO
+sao tome and principe	common	vi	SAO TOME AND PRINCIPE
+saturday	common	vi	Th&#7913; B&#7843;y
+saudi arabia	common	vi	SAUDI ARABIA
+save	common	vi	L&#432;u
+search	common	vi	Tìm ki&#7871;m
+search %1 '%2'	common	vi	Tìm ki&#7871;m %1 '%2'
+search or select accounts	common	vi	Tìm ki&#7871;m ho&#7863;c ch&#7885;n các tài kho&#7843;n
+section	common	vi	Phân vùng
+select	common	vi	Ch&#7885;n
+select all %1 %2 for %3	common	vi	Ch&#7885;n t&#7845;t c&#7843; %1 %2 cho %3
+select category	common	vi	Ch&#7885;n Nhóm
+select date	common	vi	Ch&#7885;n ngày
+select group	common	vi	Ch&#7885;n nhóm
+select home email address	common	vi	Ch&#7885;n &#273;&#7883;a ch&#7881; email riêng
+select one	common	vi	Ch&#7885;n m&#7897;t
+select user	common	vi	Ch&#7885;n ng&#432;&#7901;i s&#7917; d&#7909;ng
+select work email address	common	vi	Ch&#7885;n &#273;&#7883;a ch&#7881; email t&#7841;i C&#417; quan
+selection	common	vi	S&#7921; l&#7921;a ch&#7885;n
+send	common	vi	G&#7917;i
+senegal	common	vi	SENEGAL
+september	common	vi	Tháng Chín
+server %1 has been added	common	vi	Máy ch&#7911; %1 &#273;ã &#273;&#432;&#7907;c thêm vào
+server name	common	vi	Tên máy ch&#7911;
+session has been killed	common	vi	Phiên làm vi&#7879;c (session) &#273;ã b&#7883; h&#7911;y
+setup	common	vi	Cài &#273;&#7863;t
+setup main menu	common	vi	Menu chính c&#7911;a cài &#273;&#7863;t
+seychelles	common	vi	SEYCHELLES
+show all	common	vi	hi&#7879;n t&#7845;t c&#7843;
+show all categorys	common	vi	Hi&#7879;n t&#7845;t c&#7843; các nhóm
+show menu	common	vi	hi&#7879;n menu
+show page generation time	common	vi	Hi&#7879;n th&#7901;i gian sinh trang
+show page generation time on the bottom of the page?	common	vi	Hi&#7879;n th&#7901;i gian sinh trang &#7903; cu&#7889;i trang
+show_more_apps	common	vi	hi&#7879;n_thêm_các &#7913;ng d&#7909;ng
+showing %1	common	vi	&#273;ang hi&#7879;n %1
+showing %1 - %2 of %3	common	vi	&#273;ang hi&#7879;n %1 - %2 of %3
+sierra leone	common	vi	SIERRA LEONE
+singapore	common	vi	SINGAPORE
+slovakia	common	vi	SLOVAKIA
+slovenia	common	vi	SLOVENIA
+solomon islands	common	vi	SOLOMON ISLANDS
+somalia	common	vi	SOMALIA
+sorry, your login has expired	login	vi	R&#7845;t ti&#7871;c, tên &#273;&#259;ng nh&#7853;p c&#7911;a b&#7841;n &#273;ã h&#7871;t h&#7841;n
+south africa	common	vi	SOUTH AFRICA
+south georgia and the south sandwich islands	common	vi	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spain	common	vi	SPAIN
+sri lanka	common	vi	SRI LANKA
+start date	common	vi	Ngày b&#7855;t &#273;&#7847;u
+start time	common	vi	Gi&#7901; b&#7855;t &#273;&#7847;u
+start with	common	vi	b&#7855;t &#273;&#7847;u b&#7857;ng
+status	common	vi	Tr&#7841;ng thái
+subject	common	vi	Ch&#7911; &#273;&#7873;
+submit	common	vi	G&#7917;i lên
+substitutions and their meanings:	common	vi	Các thay th&#7871; và ý ngh&#297;a c&#7911;a chúng:
+sudan	common	vi	SUDAN
+sunday	common	vi	Ch&#7911; nh&#7853;t
+suriname	common	vi	SURINAME
+svalbard and jan mayen	common	vi	SVALBARD AND JAN MAYEN
+swaziland	common	vi	SWAZILAND
+sweden	common	vi	SWEDEN
+switzerland	common	vi	SWITZERLAND
+syrian arab republic	common	vi	SYRIAN ARAB REPUBLIC
+taiwan	common	vi	TAIWAN/TAIPEI
+tajikistan	common	vi	TAJIKISTAN
+tanzania, united republic of	common	vi	TANZANIA, UNITED REPUBLIC OF
+text color:	common	vi	Màu ch&#7919; v&#259;n b&#7843;n:
+thailand	common	vi	THAILAND
+the api is current	common	vi	Phiên b&#7843;n API hi&#7879;n hành
+the api requires an upgrade	common	vi	API c&#7847;n nâng c&#7845;p
+the following applications require upgrades	common	vi	Các &#7913;ng d&#7909;ng sau c&#7847;n &#273;&#432;&#7907;c nâng c&#7845;p
+the mail server returned	common	vi	Máy ch&#7911; Mail tr&#7843; v&#7873;
+this application is current	common	vi	Phiên b&#7843;n &#7913;ng d&#7909;ng hi&#7879;n hành
+this application requires an upgrade	common	vi	&#7912;ng d&#7909;ng này c&#7847;n &#273;&#432;&#7907;c nâng c&#7845;p
+this name has been used already	common	vi	Tên này &#273;ã &#273;&#432;&#7907;c s&#7917; d&#7909;ng !
+thursday	common	vi	Th&#7913; N&#259;m
+time	common	vi	Gi&#7901;
+time selection:	jscalendar	vi	Ch&#7885;n gi&#7901;
+time zone	common	vi	Múi gi&#7901;
+time zone offset	common	vi	&#272;&#7897; l&#7879;ch múi gi&#7901;
+title	common	vi	Tiêu &#273;&#7873;
+to	common	vi	&#272;&#7871;n
+to correct this error for the future you will need to properly set the	common	vi	&#272;&#7875; kh&#7855;c ph&#7909;c l&#7895;i này cho v&#7873; sau b&#7841;n s&#7869; c&#7847;n ph&#7843;i thi&#7871;t l&#7853;p &#273;úng
+to go back to the msg list, click <a href= %1 >here</a>	common	vi	&#272;&#7875; quay l&#7841;i danh sách tin nh&#7855;n, click <a href="%1">vào &#273;ây</a>
+today	common	vi	Hôm nay
+todays date, eg. "%1"	common	vi	ngày hôm nay, ví d&#7909;: "%1"
+toggle first day of week	jscalendar	vi	Chuy&#7875;n qua ngày &#273;&#7847;u tu&#7847;n
+togo	common	vi	TOGO
+tokelau	common	vi	TOKELAU
+tonga	common	vi	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	vi	Quá nhi&#7873;u l&#7847;n &#273;&#259;ng nh&#7853;p không thành công: %1 c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng '%2', %3 c&#7911;a &#273;&#7883;a ch&#7881; IP %4
+total	common	vi	T&#7893;ng c&#7897;ng
+trinidad and tobago	common	vi	TRINIDAD AND TOBAGO
+tuesday	common	vi	Th&#7913; Ba
+tunisia	common	vi	TUNISIA
+turkey	common	vi	TURKEY
+turkmenistan	common	vi	TURKMENISTAN
+turks and caicos islands	common	vi	TURKS AND CAICOS ISLANDS
+tuvalu	common	vi	TUVALU
+uganda	common	vi	UGANDA
+ukraine	common	vi	UKRAINE
+united arab emirates	common	vi	UNITED ARAB EMIRATES
+united kingdom	common	vi	UNITED KINGDOM
+united states	common	vi	UNITED STATES
+united states minor outlying islands	common	vi	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	vi	Ch&#432;a bi&#7871;t
+update	common	vi	C&#7853;p nh&#7853;t
+url	common	vi	URL
+uruguay	common	vi	URUGUAY
+use button to search for	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m
+use button to search for address	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m &#273;&#7883;a ch&#7881;
+use button to search for calendarevent	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m s&#7921; ki&#7879;n trên L&#7883;ch
+use button to search for project	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m d&#7921; án
+user	common	vi	Ng&#432;&#7901;i s&#7917; d&#7909;ng
+user accounts	common	vi	các tài kho&#7843;n ng&#432;&#7901;i s&#7917; d&#7909;ng
+user groups	common	vi	các nhóm ng&#432;&#7901;i s&#7917; d&#7909;ng
+username	common	vi	Tên ng&#432;&#7901;i s&#7917; d&#7909;ng
+users	common	vi	ng&#432;&#7901;i s&#7917; d&#7909;ng
+users choice	common	vi	S&#7921; l&#7921;a ch&#7885;n c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
+uzbekistan	common	vi	UZBEKISTAN
+vanuatu	common	vi	VANUATU
+venezuela	common	vi	VENEZUELA
+version	common	vi	Phiên b&#7843;n
+viet nam	common	vi	VIET NAM
+view	common	vi	Xem
+virgin islands, british	common	vi	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	vi	VIRGIN ISLANDS, U.S.
+wallis and futuna	common	vi	WALLIS AND FUTUNA
+wednesday	common	vi	Th&#7913; T&#432;
+welcome	common	vi	Chào m&#7915;ng
+western sahara	common	vi	WESTERN SAHARA
+which groups	common	vi	Các nhóm nào
+wk	jscalendar	vi	wk
+work email	common	vi	email t&#7841;i C&#417; quan
+written by:	common	vi	&#272;&#432;&#7907;c vi&#7871;t b&#7903;i
+year	common	vi	N&#259;m
+yemen	common	vi	YEMEN
+yes	common	vi	Vâng
+you are required to change your password during your first login	common	vi	B&#7841;n c&#7847;n thay &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n trong l&#7847;n &#273;&#259;ng nh&#7853;p &#273;&#7847;u tiên
+you are running a newer version of phpgroupware than your database is setup for	common	vi	B&#7841;n &#273;ang s&#7917; d&#7909;ng phiên b&#7843;n phpGroupware m&#7899;i h&#417;n cái mà c&#417; s&#7903; d&#7919; li&#7879;u b&#7841;n &#273;ã cài &#273;&#7863;t c&#7847;n.
+you have been successfully logged out	login	vi	B&#7841;n &#273;ã &#273;&#432;&#7907;c thoát ra ngoài h&#7879; th&#7889;ng thành công
+you have not entered a title	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n tiêu &#273;&#7873;
+you have not entered a valid date	common	vi	B&#7841;n &#273;i&#7873;n sai ngày
+you have not entered a valid time of day	common	vi	B&#7841;n &#273;i&#7873;n sai gi&#7901; trong ngày
+you have not entered participants	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n các thành viên
+you have selected an invalid date	common	vi	B&#7841;n &#273;ã ch&#7885;n m&#7897;t ngày không h&#7907;p l&#7879; !
+you have selected an invalid main category	common	vi	B&#7841;n &#273;ã ch&#7885;n nhóm chính không h&#7907;p l&#7879; !
+you have successfully logged out	common	vi	B&#7841;n &#273;ã thoát ra ngoài h&#7879; th&#7889;ng
+you need to add the webserver user '%1' to the group '%2'.	common	vi	B&#7841;n c&#7847;n thêm tên &#273;&#259;ng nh&#7853;p máy ch&#7911; Web '%1' vào trong nhóm '%2'.
+your message could <b>not</b> be sent!<br>	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n <b>không th&#7875;</b> &#273;&#432;&#7907;c g&#7917;i &#273;i!<br>
+your message has been sent	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n &#273;ã &#273;&#432;&#7907;c g&#7917;i &#273;i
+your search returned %1 matchs	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a b&#7841;n tìm th&#7845;y %1 k&#7871;t qu&#7843;
+your search returned 1 match	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a b&#7841;n tìm th&#7845;y 1 k&#7871;t qu&#7843;
+your session could not be verified.	login	vi	Phiên làm vi&#7879;c c&#7911;a b&#7841;n không th&#7875; xác minh &#273;&#432;&#7907;c
+your settings have been updated	common	vi	Các thi&#7871;t l&#7853;p c&#7911;a b&#7841;n &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+yugoslavia	common	vi	YUGOSLAVIA
+zambia	common	vi	ZAMBIA
+zimbabwe	common	vi	ZIMBABWE

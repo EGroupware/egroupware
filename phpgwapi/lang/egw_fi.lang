@@ -1,0 +1,722 @@
+%1 email addresses inserted	common	fi	%1 sähköpostiosoitetta lisätty
+%1 is not executable by the webserver !!!	common	fi	%1 ei ole www-palvelimen suoritettavissa !!!
+%1 manual	common	fi	%1 ohje
+%1 start	common	fi	%1 aloita
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	fi	%1Valitse muu hakemisto%2<bt />tai muokkaa %3 oikeudet niin että Web-palvelin voi kirjoittaa siihen (www-data)
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fi	%1eGroupWare%2 on %3PHP%4-kielellä kirjoitettu monen käyttäjän työryhmäohjelmisto.
+(shift-)click or drag to change value	jscalendar	fi	(Shift-)Napsauta tai vedä muuttaaksesi arvoa
+- click on any of the time parts to increase it	jscalendar	fi	- Napsauta mitä tahansa ajan osaa muuttaaksesi sitä suuremmaksi
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	fi	- Pidä hiiren painiketta painettuna allaolevissa painikkeissa, niin voit valita nopeammin.
+- or click and drag for faster selection.	jscalendar	fi	- tai vedä ja pudota.
+- or shift-click to decrease it	jscalendar	fi	- tai Shift-napsauta muuttaaksesi sitä suuremmaksi
+- use the %1, %2 buttons to select month	jscalendar	fi	- Käytä %1, %2 -painikkeita valitaksesi kuukauden
+- use the %1, %2 buttons to select year	jscalendar	fi	- Käytä %1, %2 -painikkeita valitaksesi vuoden
+00 (disable)	admin	fi	00 (ei käytössä)
+13 (ntp)	admin	fi	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	fi	3, just a number, don't translate -- RalfBecker 2006/03/14
+3 number of chars for month-shortcut	jscalendar	fi	3, just a number, don't translate -- RalfBecker 2006/03/14
+80 (http)	admin	fi	80 (http)
+about	common	fi	Tietoja
+about %1	common	fi	Tietoja sovelluksesta %1
+about egroupware	common	fi	Tietoja eGroupwaresta
+about the calendar	jscalendar	fi	Tietoja kalenterista
+access	common	fi	Käyttöoikeus
+access not permitted	common	fi	Ei pääsyä
+account has been created	common	fi	Käyttäjätili on luotu
+account has been deleted	common	fi	Käyttäjätili on poistettu
+account has been updated	common	fi	Käyttäjätili on päivitetty
+account is expired	common	fi	Käyttäjätili on vanhentunut
+acl	common	fi	ACL
+action	common	fi	Toimenpide
+active	common	fi	Aktiivinen
+add	common	fi	Lisää
+add %1 category for	common	fi	Lisää %1 luokkaa kohteelle
+add category	common	fi	Lisää luokka
+add shortcut	common	fi	Lisää pikakuvake
+add sub	common	fi	Lisää aliluokka
+addressbook	common	fi	Osoitekirja
+admin	common	fi	Ylläpito
+administration	common	fi	Ylläpito
+afghanistan	common	fi	AFGANISTAN
+albania	common	fi	ALBANIA
+algeria	common	fi	ALGERIA
+all	common	fi	Kaikki
+all fields	common	fi	kaikki kentät
+alphabet	common	fi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
+alternate style-sheet:	common	fi	Vaihtoehtoinen tyylisivu:
+american samoa	common	fi	AMERIKAN SAMOA
+an existing and by the webserver readable directory enables the image browser and upload.	common	fi	Olemassa oleva JA palvelimen lukuoikeudet omaava hakemisto sallii kuvien selaamisen ja lataamisen.
+andorra	common	fi	ANDORRA
+angola	common	fi	ANGOLA
+anguilla	common	fi	ANGUILLA
+antarctica	common	fi	ETELÄNAPAMANNER
+antigua and barbuda	common	fi	ANTIGUA JA BARBUDA
+application	common	fi	Sovellus
+apply	common	fi	Käytä
+april	common	fi	Huhtikuu
+are you sure you want to delete these entries ?	common	fi	Haluatko varmasti poistaa nämä tietueet?
+are you sure you want to delete this entry ?	common	fi	Haluatko varmasti poistaa tämän tietueen?
+argentina	common	fi	ARGENTIINA
+armenia	common	fi	ARMENIA
+aruba	common	fi	ARUBA
+august	common	fi	Elokuu
+australia	common	fi	AUSTRALIA
+austria	common	fi	ITÄVALTA
+author	common	fi	Tekijä
+autohide sidebox menu's	common	fi	Piilota sivupalkin valikot automaattisesti
+autohide sidebox menus	common	fi	Piilota sivupalkin valikot automaattisesti
+automatically hide the sidebox menu's?	common	fi	Piilotetaanko sivupalkin valikot automaattisesti?
+automatically hide the sidebox menus?	common	fi	Piilota sivupalkin valikot automaattisesti?
+autosave default category	common	fi	Tallenna oletusluokka automaattisesti
+azerbaijan	common	fi	AZERBAIJAN
+back	common	fi	Takaisin
+back to user login	common	fi	Kirjaudu sisään
+background color:	common	fi	Taustaväri:
+bad login or password	common	fi	Tunnus tai salasana ei kelpaa
+bahamas	common	fi	BAHAMA
+bahrain	common	fi	BAHRAIN
+bangladesh	common	fi	BANGLADESH
+barbados	common	fi	BARBADOS
+bcc	common	fi	Piilokopio
+belarus	common	fi	VALKOVENÄJÄ
+belgium	common	fi	BELGIA
+belize	common	fi	BELIZE
+benin	common	fi	BENIN
+bermuda	common	fi	BERMUDA
+bhutan	common	fi	BHUTAN
+blocked, too many attempts	common	fi	Pääsy estetty, liian monta yritystä
+bold	common	fi	Lihavoi
+bolivia	common	fi	BOLIVIA
+border	common	fi	Reuna
+bosnia and herzegovina	common	fi	BOSNIA AND HERZEGOVINA
+botswana	common	fi	BOTSWANA
+bottom	common	fi	Bottom
+bouvet island	common	fi	BOUVETSAARET
+brazil	common	fi	BRASILIA
+british indian ocean territory	common	fi	BRITTILÄISEN INTIAN VALTAMEREN ALUE
+brunei darussalam	common	fi	BRUNEI DARUSSALAM
+bulgaria	common	fi	BULGARIA
+burkina faso	common	fi	BURKINA FASO
+burundi	common	fi	BURUNDI
+calendar	common	fi	Kalenteri
+cambodia	common	fi	KAMPUTSEA
+cameroon	common	fi	KAMERUN
+canada	common	fi	KANADA
+cancel	common	fi	Peruuta
+cannot replace %1 because it is a directory	common	fi	Ei voida korvata %1 koska se on hakemisto
+cant open '%1' for %2	common	fi	Ei voida avata '%1' %2
+cape verde	common	fi	CAP VERDE
+caption	common	fi	Otsikko
+categories	common	fi	Kategoriat
+categories for	common	fi	kategoriat kohteelle
+category	common	fi	Kategoria
+category %1 has been added !	common	fi	Kategoria %1 on lisätty!
+category %1 has been updated !	common	fi	Kategoria %1 on päivitetty!
+cayman islands	common	fi	CAYMANSAARET
+cc	common	fi	Kopio
+centered	common	fi	keskitetty
+central african republic	common	fi	KESKI-AFRIKAN TASAVALTA
+chad	common	fi	TSAD
+change	common	fi	Muuta
+charset	common	fi	utf-8
+check installation	common	fi	Tarkista asennus
+check now	common	fi	Tarkista nyt
+chile	common	fi	CHILE
+china	common	fi	KIINA
+choose a background color	common	fi	Valitse taustaväri
+choose a background color for the icons	common	fi	Valitse taustaväri ikoneille
+choose a background image.	common	fi	Valitse taustakuva
+choose a background style.	common	fi	Valitse taustan tyyli
+choose a text color for the icons	common	fi	Valitse ikoneiden tekstien väri
+choose the category	common	fi	Valitse kategoria
+choose the parent category	common	fi	Valitse yläkategoria
+christmas island	common	fi	JOULUSAARI
+clear	common	fi	Tyhjennä
+clear form	common	fi	Tyhjennä lomake
+click	common	fi	Napsauta
+click or mouse over to show menus	common	fi	Napsauta tai näytä valikot kun osoitetaan hiirellä
+click or mouse over to show menus?	common	fi	Napsauta tai näytä valikot kun osoitetaan hiirellä?
+close	common	fi	Sulje
+close sidebox	common	fi	Sulje reunavalikko
+cocos (keeling) islands	common	fi	KOOKOSSAARET (KEELING)
+colombia	common	fi	KOLUMBIA
+common preferences	common	fi	Yleiset säädöt
+comoros	common	fi	KOMORIT
+company	common	fi	Yhtiö
+congo	common	fi	KONGO
+congo, the democratic republic of the	common	fi	KONGON DEMOKRAATTINEN KANSANTASAVALTA
+contacting server...	common	fi	Otetaan yhteyttä palvelimeen...
+cook islands	common	fi	COOKSAARET
+copy	common	fi	kopioi
+costa rica	common	fi	COSTA RICA
+cote d ivoire	common	fi	NORSUNLUURANNIKKO
+could not contact server. operation timed out!	common	fi	Palvelimeen ei saatu yhteyttä. Pyyntö aikakatkaistiin!
+create	common	fi	Luo
+created by	common	fi	Luonut
+croatia	common	fi	KROATIA
+cuba	common	fi	KUUBA
+currency	common	fi	Valuutta
+current	common	fi	Nykyinen
+current users	common	fi	Nykyiset käyttäjät
+cyprus	common	fi	KYPROS
+czech republic	common	fi	TSEKKI
+date	common	fi	Päivämäärä
+date due	common	fi	Takaraja
+date selection:	jscalendar	fi	Päivämäärän valinta:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fi	Datetime-portti.<br>Jos käytät porttia 13, määrittele palomuuriasetukset oikein ennen kuin lähetät tämän lomakkeen tiedot.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	fi	Joulukuu
+default category	common	fi	Oletuskategoria
+default height for the windows	common	fi	Ikkunan oletuskorkeus
+default width for the windows	common	fi	Ikkunan oletusleveys
+delete	common	fi	Poista
+delete row	common	fi	Poista rivi
+denmark	common	fi	TANSKA
+description	common	fi	Kuvaus
+detail	common	fi	Yksityiskohta
+details	common	fi	Yksityiskohdat
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Ota Internet Explorer 5.5 ja uudempien png-bugin korjausskripti pois käytöstä?
+direction left to right	common	fi	Suunta vasemmalta oikealle
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fi	Hakemistoa ei ole, siihen ei ole lukuoikeuksia tai se ei ole suhteellinen dokumentin juurihakemisto
+disable internet explorer png-image-bugfix	common	fi	Ota Internet Explorerin png-bugin korjausskripti pois käytöstä
+disable slider effects	common	fi	Ota liukuefektit pois käytöstä
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fi	Ota valikoiden näyttämisen ja piilottamisen liukuefekti pois käytöstä? Operan ja Konquerorin käyttäjät haluavat tämän yleensä pois.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Estä korjausskripti joka mahdollistaa PNG kuvien läpinäkyväntausta käytön Internet Explorer 5.5 ja uudemmissa selaimissa?
+disabled	common	fi	Ei käytössä
+display %s first	jscalendar	fi	Näytä %s ensimmäistä
+djibouti	common	fi	DJIBOUTI
+do you also want to delete all subcategories ?	common	fi	Haluatko poistaa myös aliluokat?
+doctype:	common	fi	Dokumentin muoto:
+document properties	common	fi	Asiakirjan ominaisuudet
+document title:	common	fi	Asiakirjan nimi:
+domain	common	fi	Toimialue
+domain name for mail-address, eg. "%1"	common	fi	sähköpostiosoitteen toimialue, esim. "%1"
+domestic	common	fi	Kotimainen
+dominica	common	fi	DOMINICA
+dominican republic	common	fi	DOMINIKAANINEN TASAVALTA
+done	common	fi	Valmis
+drag to move	jscalendar	fi	Vedä siirtääksesi
+e-mail	common	fi	Sähköposti
+east timor	common	fi	ITÄTIMORI
+ecuador	common	fi	ECUADOR
+edit	common	fi	Muokkaa
+edit %1 category for	common	fi	Muokkaa %1 kategoriaa
+edit categories	common	fi	Muokkaa kategorioita
+edit category	common	fi	Muokkaa kategoriaa
+egroupware api version %1	common	fi	eGroupWare API versio %1
+egroupware: login blocked for user '%1', ip %2	common	fi	eGroupWare: Käyttäjän '%1' pääsy estetty, IP %2
+egypt	common	fi	EGYPTI
+el salvador	common	fi	EL SALVADOR
+email	common	fi	Sähköposti
+email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. "%1"
+enabled	common	fi	Käytössä
+end date	common	fi	Loppumispäivä
+end time	common	fi	Loppumisaika
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna eGroupWaren URL.<br>Esimerkki: http://www.yritys.com/egroupware  tai  /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
+entry has been deleted sucessfully	common	fi	Kohde poistettu
+entry updated sucessfully	common	fi	Kohde päivitetty
+equatorial guinea	common	fi	PÄIVÄNTASAAJAN GUINEA
+eritrea	common	fi	ERITREA
+error	common	fi	Virhe
+error creating %1 %2 directory	common	fi	Virhe luotaessa hakemistoa %1 %2
+error deleting %1 %2 directory	common	fi	Virhe poistettaessa hakemistoa %1 %2
+error renaming %1 %2 directory	common	fi	Virhe nimettäessä hakemistoa uudelleen %1 %2
+estonia	common	fi	VIRO
+ethiopia	common	fi	ETIOPIA
+everything	common	fi	Kaikki
+exact	common	fi	täsmällinen
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fi	Yhteys palvelimeen epäonnistui, yritä uudestaan. Ota yhteyttä ylläpitäjään mikäli ongelma toistuu.
+falkland islands (malvinas)	common	fi	FALKLANDSAARET (MALVINAS)
+faroe islands	common	fi	FÄRSAARET
+fax number	common	fi	faksinumero
+features of the editor?	common	fi	Editorin ominaisuudet?
+february	common	fi	Helmikuu
+fields	common	fi	Kentät
+fiji	common	fi	FIDJI
+files	common	fi	Tiedostot
+filter	common	fi	Suodin
+finland	common	fi	SUOMI
+first name	common	fi	Etunimi
+first name of the user, eg. "%1"	common	fi	käyttäjän etunimi, esim. "%1"
+first page	common	fi	Ensimmäinen sivu
+firstname	common	fi	Etunimi
+fixme!	common	fi	KORJAA MINUT!
+folder already exists.	common	fi	Kansio on jo olemassa
+force selectbox	common	fi	Näytä valintaluettelo
+france	common	fi	RANSKA
+french guiana	common	fi	RANSKAN GUANA
+french polynesia	common	fi	RANSKAN POLYNEESIA
+french southern territories	common	fi	RANSKAN ETELÄISET SIIRTOMAAT
+friday	common	fi	Perjantai
+ftp	common	fi	FTP
+fullname	common	fi	Koko nimi
+fullscreen mode	common	fi	Kokonäytön asetus
+gabon	common	fi	GABON
+gambia	common	fi	GAMBIA
+general menu	common	fi	Päävalikko
+georgia	common	fi	GEORGIA
+german	common	fi	Saksaksi
+germany	common	fi	SAKSA
+ghana	common	fi	GHANA
+gibraltar	common	fi	GIBRALTAR
+global	common	fi	Yleinen
+global public	common	fi	Yleinen julkinen
+go today	jscalendar	fi	Siirry tähän päivään
+grant access	common	fi	Anna pääsy
+greece	common	fi	KREIKKA
+greenland	common	fi	GRÖNLANTI
+grenada	common	fi	GRENADA
+group	common	fi	Ryhmä
+group access	common	fi	Ryhmän oikeudet
+group has been added	common	fi	Ryhmä on lisätty
+group has been deleted	common	fi	Ryhmä on poistettu
+group has been updated	common	fi	Ryhmä on päivitetty
+group name	common	fi	ryhmän nimi
+group public	common	fi	Ryhmän julkinen
+groups	common	fi	Ryhmät
+groups with permission for %1	common	fi	Ryhmät, joilla on oikeus %1
+groups without permission for %1	common	fi	Ryhmät, joilla ei ole oikeutta %1
+guadeloupe	common	fi	GUADALUPE
+guam	common	fi	GUAM
+guatemala	common	fi	GUATEMALA
+guinea	common	fi	GUINEA
+guinea-bissau	common	fi	GUINEA-BISSAU
+guyana	common	fi	GUYANA
+haiti	common	fi	HAITI
+heard island and mcdonald islands	common	fi	HEARDSAARET JA MCDONALDIN SAARET
+height	common	fi	Korkeus
+help	common	fi	Apua
+high	common	fi	Korkea
+highest	common	fi	Korkein
+holy see (vatican city state)	common	fi	VATIKAANI
+home	common	fi	Koti
+home email	common	fi	kotisähköposti
+honduras	common	fi	HONDURAS
+hong kong	common	fi	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fi	Kuinka monta kuvaketta näytetään navigaatiopalkissa. Loput kuvakkeet saa näkyviin oikeasta reunasta avautuvasta alasvetovalikosta.
+hungary	common	fi	UNKARI
+iceland	common	fi	ISLANTI
+iespell not detected. click ok to go to download page.	common	fi	ieSpell:ä ei havaittu, paina Ok siirtyäksesi lataussivulle
+if the clock is enabled would you like it to update it every second or every minute?	common	fi	Jos kello on käytössä, päivitetäänkö se sekunnin vai minuutin välein?
+if there are some images in the background folder you can choose the one you would like to see.	common	fi	Jos taustakuvahakemistossa on kuvia, voit valita mitä kuvaa haluat käyttää.
+image directory relative to document root (use / !), example:	common	fi	Kuvahakemiston  suhteellinen dokumentin juurihakemisto (use / !), esimerkiksi:
+image url	common	fi	Kuvan URL
+india	common	fi	INTIA
+indonesia	common	fi	INDONEESIA
+insert all %1 addresses of the %2 contacts in %3	common	fi	Lisää kaikki %1 osoitetta %2 yhteystiedosta kohteeseen %3
+insert column after	common	fi	Lisää sarake jälkeen
+insert column before	common	fi	Lisää sarake edelle
+insert row after	common	fi	Lisää rivi jälkeen
+insert row before	common	fi	Lisää rivi edelle
+international	common	fi	Kansainvälinen
+invalid filename	common	fi	Virheellinen tiedostonnimi
+invalid ip address	common	fi	Virheellinen IP-osoite
+invalid password	common	fi	Virheellinen salasana
+iran, islamic republic of	common	fi	IRANIN ISLAMILAINEN TASAVALTA
+iraq	common	fi	IRAK
+ireland	common	fi	IRLANTI
+israel	common	fi	ISRAEL
+it has been more then %1 days since you changed your password	common	fi	Olet vaihtanut salasanasi viimeksi %1 päivää sitten
+it is recommended that you run setup to upgrade your tables to the current version	common	fi	On suositeltavaa päivittää tietokannan taulut nykyiseen versioon.
+italic	common	fi	Kursivoi
+italy	common	fi	ITALIA
+jamaica	common	fi	JAMAIKA
+january	common	fi	Tammikuu
+japan	common	fi	JAPANI
+jordan	common	fi	JORDANIA
+july	common	fi	Heinäkuu
+jun	common	fi	Kes
+june	common	fi	Kesäkuu
+justify center	common	fi	Keskitä
+justify full	common	fi	Tasaa molemmat reunat
+justify left	common	fi	Tasaa vasemmalle
+justify right	common	fi	Tasaa oikealle
+kazakstan	common	fi	KAZAKSTAN
+kenya	common	fi	KENIA
+keywords	common	fi	Avainsanat
+kiribati	common	fi	KIRIBATI
+korea, democratic peoples republic of	common	fi	KOREAN DEMOKRAATTINEN KANSANTASAVALTA
+korea, republic of	common	fi	KOREAN TASAVALTA
+kuwait	common	fi	KUWAIT
+kyrgyzstan	common	fi	KIRGISTAN
+language	common	fi	Kieli
+language_direction_rtl	common	fi	language_direction_rtl
+lao peoples democratic republic	common	fi	LAON DEMOKRAATTINEN KANSANTASAVALTA
+last name	common	fi	Sukunimi
+last name of the user, eg. "%1"	common	fi	käyttäjän sukunimi, esim. "%1"
+last page	common	fi	Viimeinen sivu
+lastname	common	fi	Sukunimi
+latvia	common	fi	LATVIA
+ldap-mgr	common	fi	LDAP hallinta
+lebanon	common	fi	LIBANON
+left	common	fi	Vasen
+lesotho	common	fi	LESOTHO
+liberia	common	fi	LIBERIA
+libyan arab jamahiriya	common	fi	LIBYAN ARAB JAMAHIRIYA
+license	common	fi	Lisenssi
+liechtenstein	common	fi	LICHTENSTEIN
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'<br><b>csv tiedot eivät täsmää taulukon laskettuihin sarakkeisiin %3 ==> ohita</b>
+list	common	fi	Luettelo
+list members	common	fi	Lista jäsenistä
+lithuania	common	fi	LIETTUIA
+local	common	fi	Paikallinen
+login	common	fi	Kirjaudu
+loginid	common	fi	Sisäänkirjautumistunnus
+logout	common	fi	Poistu
+low	common	fi	Matala
+lowest	common	fi	Matalin
+luxembourg	common	fi	LUXEMBOURG
+macau	common	fi	MACAU
+macedonia, the former yugoslav republic of	common	fi	MAKEDONIA, ENTINEN JUGOSLAVIAN TASAVALTA
+madagascar	common	fi	MADAGASCAR
+mail domain, eg. "%1"	common	fi	sähköpostin toimialue, esim. "%1"
+main category	common	fi	Pääkategoria
+main screen	common	fi	Päänäyttö
+maintainer	common	fi	Ylläpitäjä
+malawi	common	fi	MALAWI
+malaysia	common	fi	MALESIA
+maldives	common	fi	MALEDIIVIT
+mali	common	fi	MALI
+malta	common	fi	MALTA
+march	common	fi	Maaliskuu
+marshall islands	common	fi	MARSHALL-SAARET
+martinique	common	fi	MARTINIQUE
+mauritania	common	fi	MAURITANIA
+mauritius	common	fi	MAURITIUS
+max number of icons in navbar	common	fi	Navigaatiopalkin kuvakkeiden maksimimäärä
+may	common	fi	Toukokuu
+mayotte	common	fi	MAYOTTE
+medium	common	fi	Normaali
+menu	common	fi	Valikko
+message	common	fi	Viesti
+mexico	common	fi	MEKSIKO
+micronesia, federated states of	common	fi	MIKRONESIAN LIITTOVALTIO
+minute	common	fi	minuutti
+moldova, republic of	common	fi	MOLDOVAN TASAVALTA
+monaco	common	fi	MONACO
+monday	common	fi	Maanantai
+mongolia	common	fi	MONGOLIA
+montenegro	common	fi	MONTENEGRO
+montserrat	common	fi	MONTSERRAT
+morocco	common	fi	MAROKKO
+mozambique	common	fi	MOSAMBIK
+multiple	common	fi	monella
+myanmar	common	fi	MYANMAR
+name	common	fi	Nimi
+name of the user, eg. "%1"	common	fi	Käyttäjän nimi, esim. "%1"
+namibia	common	fi	NAMIBIA
+nauru	common	fi	NAURU
+nepal	common	fi	NEPAL
+netherlands	common	fi	ALANKOMAAT (HOLLANTI)
+netherlands antilles	common	fi	ALANKOMAIDEN ANTILLIT
+never	common	fi	Ei koskaan
+new caledonia	common	fi	UUSI KALEDONIA
+new entry added sucessfully	common	fi	Uusi tietue lisätty
+new main category	common	fi	Uusi pääluokka
+new value	common	fi	Uusi arvo
+new zealand	common	fi	UUSI SEELANTI
+next	common	fi	Seuraava
+next month (hold for menu)	jscalendar	fi	Seuraava kuukausi (odota, niin näet valikon)
+next page	common	fi	Seuraava sivu
+next year (hold for menu)	jscalendar	fi	Seuraava vuosi (odota, niin näet valikon)
+nicaragua	common	fi	NICARAGUA
+niger	common	fi	NIGER
+nigeria	common	fi	NIGERIA
+niue	common	fi	NIUE
+no	common	fi	Ei
+no entries found, try again ...	common	fi	ei tietueita, yritä uudelleen ...
+no history for this record	common	fi	Tällä tietueella ei ole historiatietoja
+no savant2 template directories were found in:	common	fi	Savant2 mallipohjan hakemistoa ei löydy:
+no subject	common	fi	Ei aihetta
+none	common	fi	Ei mitään
+norfolk island	common	fi	NORFOLKSAARET
+normal	common	fi	Normaali
+northern mariana islands	common	fi	POHJOISET MARIAANIEN SAARET
+norway	common	fi	NORJA
+not assigned	common	fi	ei osoitettu
+note	common	fi	Muistiinpano
+notes	common	fi	Muistiinpanot
+notify window	common	fi	Huomautusikkuna
+notify your administrator to correct this situation	common	fi	Ilmoita tästä ylläpitäjälle jotta tilanne voidaan korjata
+november	common	fi	Marraskuu
+october	common	fi	Lokakuu
+ok	common	fi	OK
+old value	common	fi	Vanha arvo
+oman	common	fi	OMAN
+on *nix systems please type: %1	common	fi	*nix-järjestelmissä voit kirjoittaa: %1
+on mouse over	common	fi	Hiiri osoittaa
+only private	common	fi	vain yksityiset
+only yours	common	fi	vain omat
+open notify window	common	fi	Avaa huomautusikkuna
+open popup window	common	fi	Avaa ponnahdusikkuna
+open sidebox	common	fi	Avaa reunavalikko
+ordered list	common	fi	Numeroitu lista
+original	common	fi	Alkuperäinen
+other	common	fi	Muu
+overview	common	fi	Yleiskuva
+owner	common	fi	Omistaja
+page	common	fi	Sivu
+page was generated in %1 seconds	common	fi	Sivun luominen kesti %1 sekuntia
+pakistan	common	fi	PAKISTAN
+palau	common	fi	PALAU
+palestinian territory, occupied	common	fi	PALESTIINA
+panama	common	fi	PANAMA
+papua new guinea	common	fi	PAPUA UUSI GUINEA
+paraguay	common	fi	PARAGUAY
+parcel	common	fi	Parcel
+parent category	common	fi	Yläkategoria
+password	common	fi	Salasana
+password could not be changed	common	fi	Salasanaa ei voitu muuttaa
+password has been updated	common	fi	Salasana on päivitetty
+password must contain at least %1 lowercase letters	common	fi	Salasanassa pitää olla vähintään %1 pientä kirjainta
+password must contain at least %1 numbers	common	fi	Salasanassa pitää olla vähintään %1 numeroa
+password must contain at least %1 special characters	common	fi	Salasanassa pitää olla vähintään %1 erikoismerkkiä
+password must contain at least %1 uppercase letters	common	fi	Salasanassa pitää olla vähintään %1 isoa kirjainta
+password must have at least %1 characters	common	fi	Salasanassa pitää olla vähintään %1 merkkiä
+path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA www-palvelimen asiakirjajuuren ulkopuolella!!!
+permissions to the files/users directory	common	fi	tiedostojen/käyttäjien hakemiston käyttöoikeudet
+personal	common	fi	Henkilökohtainen
+peru	common	fi	PERU
+philippines	common	fi	FILIPPIINIT
+phone number	common	fi	puhelinnumero
+phpgwapi	common	fi	eGroupWare API
+pitcairn	common	fi	PITCAIRN
+please %1 by hand	common	fi	Suorita %1 käsin
+please enter a name	common	fi	Anna nimi!
+please run setup to become current	common	fi	Aja asennus nykyiseen
+please select	common	fi	Valitse
+please set your global preferences	common	fi	Määrittele yleiset asetukset!
+please set your preferences for this application	common	fi	Määrittele tämän sovelluksen asetukset!
+please wait...	common	fi	Odota hetki...
+poland	common	fi	PUOLA
+portugal	common	fi	PORTUGALI
+postal	common	fi	Posti
+powered by	common	fi	Kehittänyt
+preferences	common	fi	Asetukset
+preferences for the idots template set	common	fi	idots-mallipohjan asetukset
+prev. month (hold for menu)	jscalendar	fi	Edellinen kuukausi (odota, niin näet valikon)
+prev. year (hold for menu)	jscalendar	fi	Edellinen vuosi (odota, niin näet valikon)
+previous page	common	fi	Edelliselle sivu
+primary style-sheet:	common	fi	Ensisijainen tyylisivu:
+print	common	fi	Tulosta
+priority	common	fi	Tärkeys
+private	common	fi	Yksityinen
+programs	common	fi	Ohjelmat
+project	common	fi	Projekti
+public	common	fi	julkinen
+puerto rico	common	fi	PUERTO RICO
+qatar	common	fi	QATAR
+read	common	fi	Lue
+read this list of methods.	common	fi	Lue metodien luettelo.
+reading	common	fi	luetaan
+regular	common	fi	Tavallinen
+reject	common	fi	Hylkää
+remove selected accounts	common	fi	poista valitut käyttäjätunnukset
+remove shortcut	common	fi	Poista pikakuvake
+rename	common	fi	Nimeä uudelleen
+replace	common	fi	Korvaa
+replace with	common	fi	Korvataan merkkijonolla:
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	fi	Palauttaa täyden käyttäjäluettelon järjestelmästä. Varoitus: palautus voi olla aika suuri
+returns an array of todo items	common	fi	Palauttaa tehtävien taulukon
+returns struct of users application access	common	fi	Palauttaa käyttäjien oikeudet sovelluksiin
+reunion	common	fi	REUNION
+right	common	fi	Oikea
+romania	common	fi	ROMANIA
+russian federation	common	fi	VENÄJÄN FEDERAATIO
+rwanda	common	fi	RUANDA
+saint helena	common	fi	SAINT HELENA
+saint kitts and nevis	common	fi	SAINT KITTS JA NEVIS
+saint lucia	common	fi	SAINT LUCIA
+saint pierre and miquelon	common	fi	SAINT PIERRE JA MIQUELON
+saint vincent and the grenadines	common	fi	SAINT VINCENT JA GRENADIINIT
+samoa	common	fi	SAMOA
+san marino	common	fi	SAN MARINO
+sao tome and principe	common	fi	SAO TOME JA PRINCIPE
+saturday	common	fi	Lauantai
+saudi arabia	common	fi	SAUDI ARABIA
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fi	Savant2 versio eroaa Savant2 wrapperista.<br>Tämä versio: %1 </br>Savantin versio: %2
+save	common	fi	Tallenna
+search	common	fi	Etsi
+search %1 '%2'	common	fi	Etsi %1 '%2'
+search accounts	common	fi	Etsi käyttäjätilejä
+second	common	fi	toinen
+section	common	fi	Osio
+select	common	fi	Valitse
+select all %1 %2 for %3	common	fi	Valitse kaikki %1 %2 for %3
+select category	common	fi	Valitse kategoria
+select date	common	fi	Valitse päivämäärä
+select group	common	fi	Valitse ryhmä
+select home email address	common	fi	Valitse kotisähköpostiosoite
+select multiple accounts	common	fi	Valitse useita käyttäjätunnuksia
+select one	common	fi	Valitse yksi
+select the default height for the application windows	common	fi	Valitse sovellusikkunan oletuskorkeus
+select the default width for the application windows	common	fi	Valitse sovellusikkunan oletusleveys
+select user	common	fi	Valitse käyttäjä
+select work email address	common	fi	Valitse työsähköpostiosoite
+selection	common	fi	Valinta
+send	common	fi	Lähetä
+senegal	common	fi	SENEGAL
+september	common	fi	Syyskuu
+serbia	common	fi	Serbia
+server %1 has been added	common	fi	Palvelin %1 on lisätty
+server answered. processing response...	common	fi	Palvelin vastaa, prosessoidaan vastausta...
+server contacted. waiting for response...	common	fi	Yhdistetään palvelimeen, odotetaan vastausta...
+server name	common	fi	Palvelimen nimi
+session has been killed	common	fi	Istunto on poistettu
+setup	common	fi	Asennus
+setup main menu	common	fi	Asennuksen päävalikko
+seychelles	common	fi	SEYCHELLIT
+show all	common	fi	näytä kaikki
+show all categorys	common	fi	Näytä kaikki kategoriat
+show clock?	common	fi	Näytä kello?
+show home and logout button in main application bar?	common	fi	Näytä etusivu- ja kirjautumispainike päävalikossa?
+show logo's on the desktop.	common	fi	Näytä logo työpöydällä
+show menu	common	fi	näytä valikko
+show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
+show page generation time on the bottom of the page?	common	fi	Näytä sivun tekemiseen kulunut aika sivun alareunassa?
+show page generation time?	common	fi	Näytä kauanko sivua luotiin?
+show the logo's of egroupware and x-desktop on the desktop.	common	fi	Näytä eGroupWaren ja X-Desktopin logot työpöydällä
+show_more_apps	common	fi	show_more_apps
+showing %1	common	fi	näytetään %1
+showing %1 - %2 of %3	common	fi	näytetään %1 - %2 of %3
+sierra leone	common	fi	SIERRA LEONE
+simple	common	fi	Yksinkertainen
+singapore	common	fi	SINGAPORE
+slovakia	common	fi	SLOVAKIA
+slovenia	common	fi	SLOVENIA
+solomon islands	common	fi	SALOMONSAARET
+somalia	common	fi	SOMALIA
+sorry, your login has expired	login	fi	Istuntosi on vanhentunut
+south africa	common	fi	ETELÄAFRIKKA
+south georgia and the south sandwich islands	common	fi	ETELÄ-GEORGIA JA ETELÄISET SANDWICH-SAARET
+spain	common	fi	ESPANJA
+sri lanka	common	fi	SRI LANKA
+start date	common	fi	Alkupäivä
+start time	common	fi	Alkuaika
+start with	common	fi	alkaa
+starting up...	common	fi	Aloitetaan
+status	common	fi	Tila
+stretched	common	fi	venytetty
+subject	common	fi	Aihe
+submit	common	fi	Lähetä
+substitutions and their meanings:	common	fi	Korvaukset ja niiden merkitykset:
+sudan	common	fi	SUDAN
+sunday	common	fi	Sunnuntai
+suriname	common	fi	SURINAMI
+svalbard and jan mayen	common	fi	SVALBARD JA JAN MAYEN
+swaziland	common	fi	SWAZIMAA
+sweden	common	fi	RUOTSI
+switzerland	common	fi	SVEITSI
+syrian arab republic	common	fi	SYYRIAN ARABITASAVALTA
+table properties	common	fi	Taulukon ominaisuudet
+taiwan	common	fi	TAIWAN / TAIPEI
+tajikistan	common	fi	TAJIKISTAN
+tanzania, united republic of	common	fi	TANSANIAN YHDISTYNYT TASAVALTA
+text color:	common	fi	Tekstin väri:
+thailand	common	fi	THAIMAA
+the api is current	common	fi	API on ajan tasalla
+the api requires an upgrade	common	fi	API tarvitsee päivityksen
+the following applications require upgrades	common	fi	Seuraavat sovellukset tarvitsevat päivityksen
+the mail server returned	common	fi	Sähköpostipalvelin palautti
+this application is current	common	fi	Tämä sovellus on ajan tasalla
+this application requires an upgrade	common	fi	Tämä sovellus tarvitsee päivityksen
+this name has been used already	common	fi	Nimi on jo käytössä!
+thursday	common	fi	Torstai
+tiled	common	fi	pinottu
+time	common	fi	Aika
+time selection:	jscalendar	fi	Ajan valinta:
+time zone	common	fi	Aikavyöhyke
+time zone offset	common	fi	Aikaero
+title	common	fi	Otsikko
+to	common	fi	Kenelle
+to correct this error for the future you will need to properly set the	common	fi	Korjataksesi tämän virheen jatkossa sinun täytyy määritellä
+to go back to the msg list, click <a href= %1 >here</a>	common	fi	Siirtyäksesi takaisin viestiluetteloon napsauta <a href="%1">tästä</a>
+today	common	fi	Tänään
+todays date, eg. "%1"	common	fi	tämä päivämäärä, esim. "%1"
+toggle first day of week	jscalendar	fi	Vaihda viikon alkupäivää
+togo	common	fi	TOGO
+tokelau	common	fi	TOKELAU
+tonga	common	fi	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjällä '%2', %3 IP-osoitteesta %4
+top	common	fi	Top
+total	common	fi	Yhteensä
+transparant bg for the icons?	common	fi	Ikoneilla on läpinäkyvä taustaväri?
+trinidad and tobago	common	fi	TRINIDAD JA TOBAGO
+tuesday	common	fi	Tiistai
+tunisia	common	fi	TUNISIA
+turkey	common	fi	TURKKI
+turkmenistan	common	fi	TURKMENISTAN
+turks and caicos islands	common	fi	TURKS JA CAICOSSAARET
+tuvalu	common	fi	TUVALU
+type	common	fi	Muoto
+uganda	common	fi	UGANDA
+ukraine	common	fi	UKRAINA
+underline	common	fi	Alleviivaa
+united arab emirates	common	fi	YHDISTYNEET ARABIEMIRAATIT
+united kingdom	common	fi	YHDISTYNYT KUNINGASKUNTA
+united states	common	fi	YHDYSVALLAT
+united states minor outlying islands	common	fi	YHDYSVALTOJEN SAARIOSAVALTIOT
+unknown	common	fi	Tuntematon
+update	common	fi	Lisää
+update the clock per minute or per second	common	fi	Päivitetään kello minuutin tai sekunnin välein
+upload	common	fi	Lataa
+upload directory does not exist, or is not writeable by webserver	common	fi	Lataus hakemistoa ei löydy tai palvelin ei voi kirjoittaa sinne.
+upload requires the directory to be writable by the webserver!	common	fi	Lataaminen edellyttää hakemistolta kirjoitusoikeuksia!
+url	common	fi	URL
+uruguay	common	fi	URUGUAY
+use button to search for	common	fi	käytä painiketta etsiäksesi
+use button to search for address	common	fi	käytä painiketta etsiäksesi osoitteita
+use button to search for calendarevent	common	fi	käytä painiketta etsiäksesi kalenteritapahtumaa
+use button to search for project	common	fi	käytä painiketta etsiäksesi projektia
+user	common	fi	Käyttäjä
+user accounts	common	fi	käyttäjätilit
+user groups	common	fi	käyttäjäryhmät
+user openinstance	common	fi	Käyttäjän avoininstanssi
+username	common	fi	Käyttäjänimi
+users	common	fi	käyttäjät
+users choice	common	fi	Käyttäjän valinta
+uzbekistan	common	fi	UZBEKISTAN
+vanuatu	common	fi	VANUATU
+venezuela	common	fi	VENEZUELA
+version	common	fi	Versio
+viet nam	common	fi	VIETNAM
+view	common	fi	Näytä
+virgin islands, british	common	fi	NEITSYSTSAARET, BRITTILÄISET
+virgin islands, u.s.	common	fi	NEITSYTSAARET, U.S.
+wallis and futuna	common	fi	WALLIS JA FUTUNA
+wednesday	common	fi	Keskiviikko
+welcome	common	fi	Tervetuloa
+western sahara	common	fi	LÄNSISAHARA
+what color should all the blank space on the desktop have	common	fi	Minkä värisinä kaikki työpöydän tyhjät kohdat näytetään
+what style would you like the image to have?	common	fi	Minkä tyylin haluat kuvaan?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fi	Kun vastaat Kylä, kotisivu- ja uloskirjautumispainike näkyvät yläreunan valikossa, kuten sovellukset.
+which groups	common	fi	mitkä ryhmät
+width	common	fi	Leveys
+wk	jscalendar	fi	vk
+work email	common	fi	työsähköposti
+would you like to display the page generation time at the bottom of every window?	common	fi	Näytetään sivun alalaidassa kuinka kauan sivua luotiin?
+writing	common	fi	kirjoitetaan
+written by:	common	fi	Kirjoittanut:
+year	common	fi	Vuosi
+yemen	common	fi	JEMEN
+yes	common	fi	Kyllä
+you are required to change your password during your first login	common	fi	Salasanasi on vaihdettava ensimmäisen sisäänkirjautumisen yhteydessä.
+you can customize how many icons and toolbars the editor shows.	common	fi	Voit määritellä montako ikonia ja työkaluriviä editoria näyttää.
+you have been successfully logged out	login	fi	Olet kirjautunut ulos
+you have not entered a title	common	fi	Et antanut otsikkoa
+you have not entered a valid date	common	fi	Olet määritellyt virheellisen päivämäärän
+you have not entered a valid time of day	common	fi	Olet määritellyt virheellisen kellonajan
+you have not entered participants	common	fi	Et ole määritellyt osallistujia
+you have selected an invalid date	common	fi	Olet valinnut virheellisen päivämäärän!
+you have selected an invalid main category	common	fi	Olet valinnut virheellisen pääluokan!
+you have successfully logged out	common	fi	Olet kirjautunut ulos
+you need to add the webserver user '%1' to the group '%2'.	common	fi	Lisää www-palvelimen käyttäjä '%1' ryhmään '%2'.
+your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
+your message has been sent	common	fi	Viesti on lähetetty
+your search returned %1 matchs	common	fi	haku palautti %1 osumaa
+your search returned 1 match	common	fi	haku palautti yhden osuman
+your session could not be verified.	login	fi	Istuntoasi ei voitu varmentaa.
+your settings have been updated	common	fi	Asetukset päivitetty
+zambia	common	fi	ZAMBIA
+zimbabwe	common	fi	ZIMBABWE
+zoom	common	fi	Zoomaa
+site configuration	common	fi	Palvelun asetukset

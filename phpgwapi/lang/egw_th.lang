@@ -1,0 +1,600 @@
+%1 email addresses inserted	common	th	แทรกที่อยู่อีเมลจำนวน %1 ที่อยู่
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	th	%1eGroupware%2 เป็นซอฟต์แวร์ผ่านเว็บที่รับผู้ใชในบริสัททั้งหลายได้้ เขียนโดยภาษา %3PHP%4
+(shift-)click or drag to change value	jscalendar	th	
+- click on any of the time parts to increase it	jscalendar	th	
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	th	
+- or click and drag for faster selection.	jscalendar	th	
+- or shift-click to decrease it	jscalendar	th	
+- use the %1, %2 buttons to select month	jscalendar	th	ใช้ปุ่ม %1 กับ %2 เพื่อเลือกเดือน
+- use the %1, %2 buttons to select year	jscalendar	th	ใช้ปุ่ม %1 กับ %2 เพื่อเลือกปี
+00 (disable)	admin	th	00 ปิดการใช้
+13 (ntp)	admin	th	13 (ntp)
+80 (http)	admin	th	80 (http)
+about	common	th	เรือง
+about %1	common	th	เรือง %1
+about the calendar	jscalendar	th	เรืองปฏิทิน
+access	common	th	
+access not permitted	common	th	
+account has been created	common	th	สร้างบัญชีเสร็จแล้ว
+account has been deleted	common	th	ลบบัญชีเสร็จแล้ว
+account has been updated	common	th	แก้ไขบัญชีเสร็จแล้ว
+account is expired	common	th	บัญชีหมกอายุ
+acl	common	th	
+action	common	th	การกระทำ
+active	common	th	
+add	common	th	เพิ่ม
+add %1 category for	common	th	เพิ่ม %1 ประเภทสำหรับ
+add category	common	th	เพิ่มประเภท
+add sub	common	th	เพิ่มประเภทอยู่ภายใต้
+addressbook	common	th	สมุดช่องทางการติดต่อ
+admin	common	th	บริหาร
+administration	common	th	การบริหาร
+afghanistan	common	th	อัฟกานิสถาน
+albania	common	th	
+algeria	common	th	แอลจีเรีย
+all	common	th	ทั้งหมด
+alphabet	common	th	
+american samoa	common	th	หมู่เกาะซามัวของสหรัฐฯ
+andorra	common	th	
+angola	common	th	
+anguilla	common	th	
+antarctica	common	th	บริเวณขั้วโลกใต้
+antigua and barbuda	common	th	
+apply	common	th	มีผล
+april	common	th	เมษายน
+are you sure you want to delete these entries ?	common	th	แน่ใจไหมว่าอยากลบข้อเหล่านี้
+are you sure you want to delete this entry ?	common	th	แน่ใจไหมว่าอยากลบข้อนี้
+argentina	common	th	อาร์เจนตินา
+armenia	common	th	
+aruba	common	th	
+august	common	th	สิงหาคม
+australia	common	th	
+austria	common	th	
+author	common	th	ผู้เขียน
+autohide sidebox menus	common	th	ให้เมนูข้างๆเก็บตัวอัตโนมัติ
+automatically hide the sidebox menus?	common	th	ให้เมนูข้างๆเก็บตัวอัตโนมัติไหม
+autosave default category	common	th	
+azerbaijan	common	th	
+back	common	th	กลับไป
+back to user login	common	th	กลับไปถึงหน้าเข้า
+bad login or password	common	th	รหัสผ่านหรือขื่อไม่ถูก
+bahamas	common	th	
+bahrain	common	th	
+bangladesh	common	th	
+barbados	common	th	
+bcc	common	th	
+belarus	common	th	
+belgium	common	th	
+belize	common	th	
+benin	common	th	
+bermuda	common	th	
+bhutan	common	th	
+blocked, too many attempts	common	th	
+bolivia	common	th	
+bosnia and herzegovina	common	th	
+botswana	common	th	
+bouvet island	common	th	
+brazil	common	th	
+british indian ocean territory	common	th	
+brunei darussalam	common	th	
+bulgaria	common	th	
+burkina faso	common	th	
+burundi	common	th	
+calendar	common	th	ปฏิทิน
+cambodia	common	th	
+cameroon	common	th	
+canada	common	th	
+cancel	common	th	ยกเลิก
+cape verde	common	th	
+categories	common	th	ประเภท
+categories for	common	th	ประเภทของ
+category	common	th	ประเภท
+category %1 has been added !	common	th	เพิ่มประเภท %1 เสร็จแล้
+category %1 has been updated !	common	th	แก้ไขประเภท %1 เสร็จแล้
+cayman islands	common	th	
+cc	common	th	
+central african republic	common	th	
+chad	common	th	
+change	common	th	เปลียน
+charset	common	th	UTF-8
+check installation	common	th	ตรวจการติตตั้ง
+chile	common	th	
+china	common	th	
+choose the category	common	th	เลือกประเภท
+choose the parent category	common	th	เลือกประเภทเป็นแม่
+christmas island	common	th	
+clear	common	th	ลบให้ว่าง
+clear form	common	th	ลบแบบฟอร์มให้ว่าง
+click	common	th	คลิก
+click or mouse over to show menus	common	th	
+click or mouse over to show menus?	common	th	
+close	common	th	ปิด
+cocos (keeling) islands	common	th	
+colombia	common	th	
+comoros	common	th	
+company	common	th	บริสัท
+congo	common	th	
+congo, the democratic republic of the	common	th	
+cook islands	common	th	
+copy	common	th	ถ่าย
+costa rica	common	th	
+cote d ivoire	common	th	
+create	common	th	สร้าง
+created by	common	th	สร้างโดย
+croatia	common	th	
+cuba	common	th	
+currency	common	th	เงินตรา
+current	common	th	ปัจจุบัน
+current users	common	th	ผู้ใช้ปัจจุบัน
+cyprus	common	th	
+czech republic	common	th	
+date	common	th	วันที่
+date due	common	th	วันที่กำหนด
+date selection:	jscalendar	th	
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	th	
+december	common	th	ธันวาคม
+default category	common	th	
+delete	common	th	ลบ
+denmark	common	th	
+description	common	th	คำอธิบาย
+detail	common	th	รายละเอียด
+details	common	th	รายละเอียด
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	th	
+disable internet explorer png-image-bugfix	common	th	
+disable slider effects	common	th	
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	th	
+disabled	common	th	
+display monday first	jscalendar	th	เริ่มตันที่วันจันทร์
+display sunday first	jscalendar	th	เริ่มตันที่วันอาทิตย์
+djibouti	common	th	
+do you also want to delete all subcategories ?	common	th	
+domain	common	th	โดเมน
+domain name for mail-address, eg. "%1"	common	th	
+domestic	common	th	
+dominica	common	th	
+dominican republic	common	th	
+done	common	th	เสร็จแลัว
+drag to move	jscalendar	th	
+e-mail	common	th	อีเมล
+east timor	common	th	
+ecuador	common	th	
+edit	common	th	แก้ไข
+edit %1 category for	common	th	แก้ไข %1 ประเภทสำหรับ
+edit categories	common	th	แก้ไขประเภท
+edit category	common	th	แก้ไขประเภท
+egroupware api version %1	common	th	
+egroupware: login blocked for user '%1', ip %2	common	th	
+egypt	common	th	
+el salvador	common	th	
+email	common	th	อีเมล
+email-address of the user, eg. "%1"	common	th	
+enabled	common	th	
+end date	common	th	วันที่เสร็จ
+end time	common	th	เวลาที่เสร็จ
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	th	
+entry has been deleted sucessfully	common	th	ลบขัอเสร็จแล้ว
+entry updated sucessfully	common	th	แก้ไขข้อเสร็จแล้ว
+equatorial guinea	common	th	
+eritrea	common	th	
+error	common	th	ผิดพลาด
+error creating %1 %2 directory	common	th	
+error deleting %1 %2 directory	common	th	
+error renaming %1 %2 directory	common	th	
+estonia	common	th	
+ethiopia	common	th	
+falkland islands (malvinas)	common	th	
+faroe islands	common	th	
+fax number	common	th	เบอร์แฟกซ์
+february	common	th	กุมภาพันธ์
+fields	common	th	
+fiji	common	th	
+files	common	th	
+filter	common	th	
+finland	common	th	
+first name	common	th	ขื่อ
+first name of the user, eg. "%1"	common	th	
+first page	common	th	หน้าแรก
+firstname	common	th	ขื่อ
+fixme!	common	th	นี่ผิด แก้ซิ
+force selectbox	common	th	
+france	common	th	
+french guiana	common	th	
+french polynesia	common	th	
+french southern territories	common	th	
+friday	common	th	วันศุกร์
+ftp	common	th	
+fullname	common	th	ชื่อนามสกุล
+gabon	common	th	
+gambia	common	th	
+general menu	common	th	เมนูทั่วไป
+georgia	common	th	
+germany	common	th	
+ghana	common	th	
+gibraltar	common	th	
+global	common	th	
+global public	common	th	
+go today	jscalendar	th	ไปวันนี้
+grant access	common	th	
+greece	common	th	
+greenland	common	th	
+grenada	common	th	
+group	common	th	กลุ่ม
+group access	common	th	
+group has been added	common	th	เพิ่มกลุมเสร็จแล้ว
+group has been deleted	common	th	ลบกลุมเสร็จแล้ว
+group has been updated	common	th	แก้กลุมเสร็จแล้ว
+group name	common	th	ชื่อกลุ่ม
+group public	common	th	
+groups	common	th	กลุ่ม
+groups with permission for %1	common	th	
+groups without permission for %1	common	th	
+guadeloupe	common	th	
+guam	common	th	
+guatemala	common	th	
+guinea	common	th	
+guinea-bissau	common	th	
+guyana	common	th	
+haiti	common	th	
+heard island and mcdonald islands	common	th	
+help	common	th	ช่วยเหลือ
+high	common	th	สูง
+highest	common	th	สูงสุด
+holy see (vatican city state)	common	th	
+home	common	th	โฮม
+home email	common	th	อีเมลบ้าน
+honduras	common	th	
+hong kong	common	th	
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	th	
+hungary	common	th	
+iceland	common	th	
+india	common	th	อินเดีย
+indonesia	common	th	อินโดนิเซีย
+insert all %1 addresses of the %2 contacts in %3	common	th	
+international	common	th	นานาชาติ
+invalid ip address	common	th	
+invalid password	common	th	รหัสผ่านไม่ถูก
+iran, islamic republic of	common	th	
+iraq	common	th	
+ireland	common	th	
+israel	common	th	
+it has been more then %1 days since you changed your password	common	th	
+it is recommended that you run setup to upgrade your tables to the current version	common	th	
+italic	common	th	เอียง
+italy	common	th	
+jamaica	common	th	
+january	common	th	มกราคม
+japan	common	th	
+jordan	common	th	
+july	common	th	กรกฎาคม
+june	common	th	มิถุนายน
+kazakstan	common	th	
+kenya	common	th	
+keywords	common	th	
+kiribati	common	th	
+korea, democratic peoples republic of	common	th	
+korea, republic of	common	th	
+kuwait	common	th	
+kyrgyzstan	common	th	
+language	common	th	ภาษา
+lao peoples democratic republic	common	th	
+last name	common	th	นามสกุล
+last name of the user, eg. "%1"	common	th	
+last page	common	th	หน้าสุดท้าย
+lastname	common	th	นามสกุล
+latvia	common	th	
+lebanon	common	th	
+lesotho	common	th	
+liberia	common	th	
+libyan arab jamahiriya	common	th	
+license	common	th	
+liechtenstein	common	th	
+list	common	th	รายการ
+lithuania	common	th	
+local	common	th	
+login	common	th	เข้าระบบ
+loginid	common	th	ชื่อเล่น
+logout	common	th	ออกจากระบบ
+low	common	th	ตำ่
+lowest	common	th	ตำ่สุด
+luxembourg	common	th	
+macau	common	th	
+macedonia, the former yugoslav republic of	common	th	
+madagascar	common	th	
+mail domain, eg. "%1"	common	th	
+main category	common	th	
+main screen	common	th	
+maintainer	common	th	ผู้ดูแล
+malawi	common	th	
+malaysia	common	th	
+maldives	common	th	
+mali	common	th	
+malta	common	th	
+manual	common	th	คู่มือ
+march	common	th	มีนาคม
+marshall islands	common	th	
+martinique	common	th	
+mauritania	common	th	
+mauritius	common	th	
+max number of icons in navbar	common	th	
+may	common	th	พฤษภาคม
+mayotte	common	th	
+medium	common	th	กลาง
+menu	common	th	เมนู
+message	common	th	ข้อความ
+mexico	common	th	
+micronesia, federated states of	common	th	
+moldova, republic of	common	th	
+monaco	common	th	
+monday	common	th	วันจันทร์
+mongolia	common	th	
+montserrat	common	th	
+morocco	common	th	
+mozambique	common	th	
+myanmar	common	th	
+name	common	th	ชื่อ
+name of the user, eg. "%1"	common	th	
+namibia	common	th	
+nauru	common	th	
+nepal	common	th	
+netherlands	common	th	
+netherlands antilles	common	th	
+never	common	th	ไม่มีวัน
+new caledonia	common	th	
+new entry added sucessfully	common	th	
+new main category	common	th	
+new value	common	th	
+new zealand	common	th	
+next	common	th	
+next month (hold for menu)	jscalendar	th	
+next page	common	th	
+next year (hold for menu)	jscalendar	th	
+nicaragua	common	th	
+niger	common	th	
+nigeria	common	th	
+niue	common	th	
+no	common	th	
+no entries found, try again ...	common	th	
+no history for this record	common	th	
+no subject	common	th	
+none	common	th	
+norfolk island	common	th	
+normal	common	th	
+northern mariana islands	common	th	
+norway	common	th	
+not assigned	common	th	
+note	common	th	
+notes	common	th	
+notify window	common	th	
+november	common	th	
+october	common	th	ดุลาคม
+ok	common	th	ตกลง
+old value	common	th	ค่าเก่า
+oman	common	th	
+on *nix systems please type: %1	common	th	
+on mouse over	common	th	
+only private	common	th	
+only yours	common	th	
+open notify window	common	th	
+open popup window	common	th	
+original	common	th	
+other	common	th	อื่นๆ
+overview	common	th	
+owner	common	th	เจ้าของ
+page was generated in %1 seconds	common	th	
+pakistan	common	th	
+palau	common	th	
+palestinian territory, occupied	common	th	
+panama	common	th	
+papua new guinea	common	th	
+paraguay	common	th	
+parcel	common	th	กลองไปรษณีย์
+parent category	common	th	
+password	common	th	รหัสผ่าน
+password could not be changed	common	th	เปลียนรหัสผ่านไม่ได้
+password has been updated	common	th	แก้รหัสผ่านแล้ว
+path to user and group files has to be outside of the webservers document-root!!!	common	th	
+pattern for search in addressbook	common	th	
+pattern for search in calendar	common	th	
+pattern for search in projects	common	th	
+permissions to the files/users directory	common	th	
+personal	common	th	ส่วนตัว
+peru	common	th	
+philippines	common	th	
+phone number	common	th	เบอร์โทร
+pitcairn	common	th	
+please %1 by hand	common	th	
+please enter a name	common	th	
+please run setup to become current	common	th	
+please select	common	th	
+please set your global preferences	common	th	
+please set your preferences for this application	common	th	
+please wait...	common	th	รอสักครู่
+poland	common	th	
+portugal	common	th	
+postal	common	th	ทางไปรษณีย
+preferences	common	th	ค่านิยม
+preferences for the idots template set	common	th	
+prev. month (hold for menu)	jscalendar	th	
+prev. year (hold for menu)	jscalendar	th	
+previous page	common	th	
+print	common	th	ปริ๊นต์
+priority	common	th	
+private	common	th	ส่วนตัว
+project	common	th	
+public	common	th	
+puerto rico	common	th	
+qatar	common	th	
+read	common	th	อ่าน
+read this list of methods.	common	th	
+reject	common	th	
+rename	common	th	ตั้งชื่อใหม่
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	th	
+returns an array of todo items	common	th	
+returns struct of users application access	common	th	
+reunion	common	th	
+romania	common	th	
+russian federation	common	th	
+rwanda	common	th	
+saint helena	common	th	
+saint kitts and nevis	common	th	
+saint lucia	common	th	
+saint pierre and miquelon	common	th	
+saint vincent and the grenadines	common	th	
+samoa	common	th	
+san marino	common	th	
+sao tome and principe	common	th	
+saturday	common	th	วันเสาร์
+saudi arabia	common	th	
+save	common	th	เก็บ
+search	common	th	ค้นหา
+section	common	th	
+select	common	th	เลือก
+select all %1 %2 for %3	common	th	
+select category	common	th	เลือกประเภท
+select date	common	th	เลือกวันที่
+select group	common	th	เลือกกลุ่ม
+select home email address	common	th	
+select one	common	th	เลือกข้อเดียว
+select user	common	th	เลือกผู้ใช้
+select work email address	common	th	
+send	common	th	ส่ง
+senegal	common	th	
+september	common	th	กันยายน
+server %1 has been added	common	th	
+server name	common	th	ชื่อเซอฟ์เวอร์
+session has been killed	common	th	
+setup	common	th	การติตตั้ง และ ตั้งค่า
+setup main menu	common	th	
+seychelles	common	th	
+show all	common	th	แสดงทั้งหมด
+show all categorys	common	th	แสดงทุกประเภท
+show menu	common	th	แสดงเมนู
+show page generation time	common	th	
+show page generation time on the bottom of the page?	common	th	
+show_more_apps	common	th	
+showing %1	common	th	
+showing %1 - %2 of %3	common	th	
+sierra leone	common	th	
+singapore	common	th	
+slovakia	common	th	
+slovenia	common	th	
+solomon islands	common	th	
+somalia	common	th	
+sorry, your login has expired	login	th	
+south africa	common	th	
+south georgia and the south sandwich islands	common	th	
+spain	common	th	
+sri lanka	common	th	
+start date	common	th	เริ่มวันที่
+start time	common	th	เริ่มเวลา
+status	common	th	
+subject	common	th	หัวข้อ
+submit	common	th	
+substitutions and their meanings:	common	th	
+sudan	common	th	
+sunday	common	th	วันอาทิตย์
+suriname	common	th	
+svalbard and jan mayen	common	th	
+swaziland	common	th	
+sweden	common	th	
+switzerland	common	th	
+syrian arab republic	common	th	
+taiwan	common	th	
+tajikistan	common	th	
+tanzania, united republic of	common	th	
+thailand	common	th	
+the api is current	common	th	
+the api requires an upgrade	common	th	
+the following applications require upgrades	common	th	
+the mail server returned	common	th	
+this application is current	common	th	
+this application requires an upgrade	common	th	
+this name has been used already	common	th	
+thursday	common	th	วันพฤหัสฯ
+time	common	th	เวลา
+time selection:	jscalendar	th	
+time zone	common	th	เขตเวลาของโลก
+time zone offset	common	th	เขตเวลาของโลกต่างกับของเซอรฟ์เวอร์
+title	common	th	หัวข้อ
+to	common	th	ถึง
+to correct this error for the future you will need to properly set the	common	th	
+to go back to the msg list, click <a href= %1?sessionid=230d75066f2518b9250fa1938bbdd8de >here</a>	common	th	
+to go back to the msg list, click <a href= %1?sessionid=230d75066f2518b9250fa1938bbdd8de&sessionid=230d75066f2518b9250fa1938bbdd8de >here</a>	common	th	
+to go back to the msg list, click <a href= %1?sessionid=839561c3067511c6e0e980212803fd66 >here</a>	common	th	
+to go back to the msg list, click <a href= %1?sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66 >here</a>	common	th	
+to go back to the msg list, click <a href= %1?sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66 >here</a>	common	th	
+to go back to the msg list, click <a href= %1?sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66 >here</a>	common	th	
+to go back to the msg list, click <a href= %1?sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66&sessionid=839561c3067511c6e0e980212803fd66 >here</a>	common	th	
+today	common	th	วันนี้
+todays date, eg. "%1"	common	th	วันนี้วันที่เท่าไหร่ เช่น "%1"
+toggle first day of week	jscalendar	th	
+togo	common	th	
+tokelau	common	th	
+tonga	common	th	
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	th	
+total	common	th	รวมทั้งหมด
+trinidad and tobago	common	th	
+tuesday	common	th	วันอังคาร
+tunisia	common	th	
+turkey	common	th	
+turkmenistan	common	th	
+turks and caicos islands	common	th	
+tuvalu	common	th	
+uganda	common	th	
+ukraine	common	th	
+united arab emirates	common	th	
+united kingdom	common	th	
+united states	common	th	
+united states minor outlying islands	common	th	
+unknown	common	th	
+update	common	th	แก้ไข
+url	common	th	
+uruguay	common	th	
+use button to search for	common	th	
+use button to search for address	common	th	
+use button to search for calendarevent	common	th	
+use button to search for project	common	th	
+user	common	th	ผู้ใช้
+user accounts	common	th	บัญชีผู้ใช้
+user groups	common	th	กลุ่มผู้ใช้
+username	common	th	ชื่อผู้ใช้
+users	common	th	ผู้ใช้
+users choice	common	th	ผู้ใช้เลือก
+uzbekistan	common	th	
+vanuatu	common	th	
+venezuela	common	th	
+version	common	th	
+viet nam	common	th	
+view	common	th	วิว
+virgin islands, british	common	th	
+virgin islands, u.s.	common	th	
+wallis and futuna	common	th	
+wednesday	common	th	วันพุธ
+welcome	common	th	ยินดีตอนรับ
+western sahara	common	th	
+which groups	common	th	กลุ่มไหนบ้าง
+wk	jscalendar	th	งาน
+work email	common	th	อีเมลบริสัท
+written by:	common	th	เขียนโดย
+year	common	th	ปี
+yemen	common	th	
+yes	common	th	ใช่
+you are required to change your password during your first login	common	th	
+you are running a newer version of egroupware than your database is setup for	common	th	
+you have been successfully logged out	login	th	
+you have not entered a title	common	th	
+you have not entered a valid date	common	th	
+you have not entered a valid time of day	common	th	
+you have not entered participants	common	th	
+you have selected an invalid date	common	th	
+you have selected an invalid main category	common	th	
+you have successfully logged out	common	th	
+your message could <b>not</b> be sent!<br>	common	th	
+your message has been sent	common	th	
+your search returned %1 matchs	common	th	
+your search returned 1 match	common	th	
+your session could not be verified.	login	th	
+your settings have been updated	common	th	
+yugoslavia	common	th	
+zambia	common	th	
+zimbabwe	common	th	

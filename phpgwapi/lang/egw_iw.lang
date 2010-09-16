@@ -1,0 +1,397 @@
+%1 email addresses inserted	common	iw	נקלטו %1 כתובות דואר אלקטרוני
+%1 is not executable by the webserver !!!	common	iw	!%1 אינו ניתן להרצה על יד שרת הווב
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	iw	%4PHP%3-הנו סוויטת תוכנה קבוצתית, רב-משתמשים, מבוססת ווב, התכובה ב %2 eGroupWare%1
+(shift-)click or drag to change value	jscalendar	iw	הקלק או גרור כדי לשנות ערך(-Shift)
+- click on any of the time parts to increase it	jscalendar	iw	הקלק על חלק כלשהו של השעון כדי לקדם אותו -
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	iw	- אחזק את כפתור העכבר על כל אחד מהכפתורים לעיל לבחירה מהירה יותר
+- or click and drag for faster selection.	jscalendar	iw	.או הקלק וגרור עבור בחירה מהירה יותר -
+- or shift-click to decrease it	jscalendar	iw	. הקלק כדי להוריד אותו-Shift או -
+- use the %1, %2 buttons to select month	jscalendar	iw	השתמש בכפתורי %1, %2 כדי לבחור חודש -
+- use the %1, %2 buttons to select year	jscalendar	iw	השתמש בכפתורי %1, %2 כדי לבחור שנה -
+00 (disable)	admin	iw	00 (בטל)
+3 number of chars for day-shortcut	jscalendar	iw	3 כמות התווים לקיצור של יום
+3 number of chars for month-shortcut	jscalendar	iw	3 כמות התווים לקיצור של חודש
+about	common	iw	אודות
+about %1	common	iw	אודות %1
+about the calendar	jscalendar	iw	אודות לוח השנה
+access	common	iw	גישה
+access not permitted	common	iw	הגישה אסורה
+account has been created	common	iw	החשבון נוצר
+account has been deleted	common	iw	החשבון הוסר
+account has been updated	common	iw	החשבון עודכן
+account is expired	common	iw	פג תוקפו של החשבון
+acl	common	iw	רשימות גישה
+action	common	iw	פעולה
+active	common	iw	פעיל
+add	common	iw	הוסף
+add %1 category for	common	iw	הוסף קטגוריה %1 עבור
+add category	common	iw	הוסף קטגוריה
+add sub	common	iw	הוסף תת קטגוריה
+addressbook	common	iw	ספר כתובות
+admin	common	iw	מנהל
+administration	common	iw	ניהול
+all	common	iw	הכל
+all fields	common	iw	כל השדות
+alphabet	common	iw	א,ב,ג,ד,ה,ו,ז,ח,ט,י,כ,ל,מ,נ,ס,ע,פ,צ,ק,ר,ש,ת
+alternate style-sheet:	common	iw	:דף סגנון חלופי
+apply	common	iw	בצע
+april	common	iw	אפריל
+are you sure you want to delete these entries ?	common	iw	?בטוח שהנך רוצה למחוק רשומות אילו
+are you sure you want to delete this entry ?	common	iw	?בטוח שהנך רוצה למחוק רשומה זו
+august	common	iw	אוגוסט
+author	common	iw	הכותב
+autohide sidebox menus	common	iw	הסתרה אוטומטית של תפריטי צד
+automatically hide the sidebox menus?	common	iw	?להסתיר אוטומטית תפריטים בתיבת צד אוטומטית
+autosave default category	common	iw	שמירה אוטומטית של קטגוריה ברירת מחדל
+back	common	iw	חזור
+back to user login	common	iw	חזור אל כניסת משתמש
+background color:	common	iw	:צבע רקע
+bad login or password	common	iw	שם כניסה או סיסמא שגויה
+bcc	common	iw	העתק מוסתר
+blocked, too many attempts	common	iw	חסום, יותר מדי נסיונות
+bold	common	iw	מודגש
+border	common	iw	גבול
+bottom	common	iw	תחתית
+calendar	common	iw	לוח שנה
+cancel	common	iw	בטל
+caption	common	iw	כותרת
+categories	common	iw	קטגוריות
+categories for	common	iw	קטגוריות עבור
+category	common	iw	קטגוריה
+category %1 has been added !	common	iw	!קטגוריה %1 נוספה
+category %1 has been updated !	common	iw	!קטגוריה %1 עודכנה
+cc	common	iw	העתק
+change	common	iw	שנה
+charset	common	iw	UTF-8
+check installation	common	iw	בדוק התקנה
+check now	common	iw	בדוק עכשיו
+choose the category	common	iw	בחר את הקטגוריה
+choose the parent category	common	iw	בחר את קטגורית אם
+clear	common	iw	נקה
+clear form	common	iw	נקה טופס
+click	common	iw	הקלק
+click or mouse over to show menus	common	iw	הקלק או העבר את העכבר מעל כדי לראות תפריטים
+click or mouse over to show menus?	common	iw	?הקלק או העבר את העכבר מעל כדי לראות תפריטים
+close	common	iw	סגור
+company	common	iw	חברה
+copy	common	iw	העתק
+create	common	iw	צור
+created by	common	iw	נוצר על ידי
+currency	common	iw	מטבע
+current	common	iw	נוכחי
+current users	common	iw	משתמשים נוכחיים
+date	common	iw	תאריך
+date due	common	iw	תאריך יעד
+date selection:	jscalendar	iw	:בחירת תאריך
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	iw	הפורט של תאריך/שעה
+december	common	iw	דצמבר
+default category	common	iw	קטגוריה ברירת מחדל
+delete	common	iw	מחק
+delete row	common	iw	מחק שורה
+description	common	iw	תיאור
+detail	common	iw	פירוט
+details	common	iw	פרטים
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	iw	?PNG וחדש יותר כדי להציג שקיפות בתמונות Internet Explorer 5.5-לבטל תיקון הבג ב
+disable internet explorer png-image-bugfix	common	iw	internet Explorer-ב PNG של תמונות bug-לבטל את תיקון ה
+disable slider effects	common	iw	בטל אפקט סליידר
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	iw	לבטל את אפקט האנימציה של הסליידר?<br>
+disabled	common	iw	מבוטל
+display %s first	jscalendar	iw	הצג %s קודם
+do you also want to delete all subcategories ?	common	iw	?האם למחוק גם את כל תתי הקטגוריה
+doctype:	common	iw	:סוג מסמך
+document properties	common	iw	תכונות המסמך
+document title:	common	iw	:כותרת המסמך
+domain	common	iw	דומיין
+domain name for mail-address, eg. "%1"	common	iw	שם הדומיין עבור כתובות דואר אלקטרוני, למשל "%1"
+domestic	common	iw	מקומי
+done	common	iw	בוצע
+drag to move	jscalendar	iw	גרור כדי להזיז
+e-mail	common	iw	דואר אלקטרוני
+edit	common	iw	ערוך
+edit %1 category for	common	iw	ערוך קטגוריה %1 עבור
+edit categories	common	iw	ערוך קטגוריות
+edit category	common	iw	ערוך קטגוריה
+egroupware api version %1	common	iw	גירסא %1 eGroupWare של API
+egroupware: login blocked for user '%1', ip %2	common	iw	eGroupWare: הכניסה נחסמה למשתמש '%1', IP %2
+email	common	iw	דואר אלקטרוני
+email-address of the user, eg. "%1"	common	iw	כתובת דוא"ל של המשתמש, לדוגמא "%1"
+enabled	common	iw	מאופשר
+end date	common	iw	תאריך סיום
+end time	common	iw	שעת סיום
+entry has been deleted sucessfully	common	iw	הרשומה נמחקה בהצלחה
+entry updated sucessfully	common	iw	הרשומה עודכנה בהצלחה
+error	common	iw	שגיאה
+error creating %1 %2 directory	common	iw	שגיאה אירע בעת יצירת סיפריה %1 %2
+error deleting %1 %2 directory	common	iw	שגיאה אירע בעת מחיקת סיפריה %1 %2
+error renaming %1 %2 directory	common	iw	שגיאה אירע בעת שינוי שם סיפריה %1 %2
+exact	common	iw	בדיוק
+fax number	common	iw	מספר פקס
+february	common	iw	פברואר
+fields	common	iw	שדות
+files	common	iw	קבצים
+filter	common	iw	מסנן
+first name	common	iw	שם פרטי
+first name of the user, eg. "%1"	common	iw	שם פרטי של המשתמש, לדוגמא "%1"
+first page	common	iw	עמוד ראשון
+firstname	common	iw	שם פרטי
+fixme!	common	iw	!תקן אותי
+force selectbox	common	iw	לחייב תיבת בחירה
+friday	common	iw	יום שישי
+fullname	common	iw	שם מלא
+general menu	common	iw	תפריט כללי
+global	common	iw	גלובלי
+global public	common	iw	ציבור גלובלי
+go today	jscalendar	iw	אל היום
+grant access	common	iw	לאפשר כניסה
+group	common	iw	קבוצה
+group access	common	iw	גישת קבוצה
+group has been added	common	iw	הקבוצה נוספה
+group has been deleted	common	iw	הקבוצה נמחקה
+group has been updated	common	iw	הקבוצה עודכנה
+group name	common	iw	שם הקבוצה
+group public	common	iw	קבוצה ציבורית
+groups	common	iw	קבוצות
+groups with permission for %1	common	iw	קבוצות בעלי הרשאות עבור %1
+groups without permission for %1	common	iw	קבוצות ללא הרשאות עבור %1
+height	common	iw	גובה
+help	common	iw	עזרה
+high	common	iw	גבוה
+highest	common	iw	הגבוה ביותר
+home	common	iw	בית
+home email	common	iw	דוא"ל בבית
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	iw	?(כמה צלמיות יש להציג בפס הניווט (בראש העמוד<br>
+image url	common	iw	של התמונה URL
+insert all %1 addresses of the %2 contacts in %3	common	iw	הוסף את כל %1 הכתובות של %2 אנשי הקשר בתוך %3
+insert column after	common	iw	הוסף עמודה אחרי
+insert column before	common	iw	הוסף עמודה לפני
+insert row after	common	iw	הוסף שורה אחרי
+insert row before	common	iw	הוסף שורה לפני
+international	common	iw	בינלאומי
+invalid ip address	common	iw	לא חוקית IP כתובת
+invalid password	common	iw	סיסמא לא חוקית
+israel	common	iw	ישראל
+it has been more then %1 days since you changed your password	common	iw	עברו יותר מ-%1 ימים מאז שינית את סיסמתך
+it is recommended that you run setup to upgrade your tables to the current version	common	iw	.מומלץ שתריץ "הגדרה" כדי לשדרג את הטבלאות שלך לגירסא הנוכחית
+italic	common	iw	נטוי
+january	common	iw	ינואר
+july	common	iw	יולי
+jun	common	iw	יוני
+june	common	iw	יוני
+justify center	common	iw	יישור למרכז
+justify full	common	iw	יישור מלא
+justify left	common	iw	יישור שמאלה
+justify right	common	iw	יישור ימינה
+keywords	common	iw	מלות מפתח
+language	common	iw	שפה
+last name	common	iw	שם משפחה
+last name of the user, eg. "%1"	common	iw	שם משפחה של המשתמש, לדוגמא "%1"
+last page	common	iw	עמוד אחרון
+lastname	common	iw	שם משפחה
+left	common	iw	שמאל
+license	common	iw	רשיון
+list	common	iw	רשימה
+list members	common	iw	חברים ברשימה
+local	common	iw	מקומי
+login	common	iw	כניסה
+loginid	common	iw	זיהוי כניסה
+logout	common	iw	יציאה
+low	common	iw	נמוך
+lowest	common	iw	הנמוך ביותר
+mail domain, eg. "%1"	common	iw	דומיין של הדואר, לדוגמא "%1"
+main category	common	iw	קטגוריה ראשית
+main screen	common	iw	מסך ראשי
+maintainer	common	iw	מתחזק
+march	common	iw	מרץ
+max number of icons in navbar	common	iw	כמות מירבית של צלמיות בפס ניווט
+may	common	iw	מאי
+medium	common	iw	בינוני
+menu	common	iw	תפריט
+message	common	iw	הודעה
+monday	common	iw	יום שני
+name	common	iw	שם
+name of the user, eg. "%1"	common	iw	שם המשתמש, לדוגמא "%1"
+never	common	iw	לעולם לא
+new entry added sucessfully	common	iw	רשומה חדשה נוספה בהצלחה
+new main category	common	iw	קטגוריה ראשית חדשה
+new value	common	iw	ערך חדש
+next	common	iw	הבאה
+next month (hold for menu)	jscalendar	iw	(החודש הבא (החזק לקבלת תפריט
+next page	common	iw	עמוד הבא
+next year (hold for menu)	jscalendar	iw	(השנה הבאה (החזק לקבלת תפריט
+no	common	iw	לא
+no entries found, try again ...	common	iw	...לא נמצאו רשומות, נסה שוב
+no history for this record	common	iw	אין היסטוריה לרשומה זו
+no subject	common	iw	אין נושא
+none	common	iw	ללא
+normal	common	iw	רגיל
+not assigned	common	iw	לא נקבע
+note	common	iw	הערה
+notes	common	iw	הערות
+notify window	common	iw	חלון הודעות
+november	common	iw	נובמבר
+october	common	iw	אוקטובר
+ok	common	iw	בסדר
+old value	common	iw	ערך קודם
+on *nix systems please type: %1	common	iw	במערכות 'ניקס יש לכתוב: %1
+on mouse over	common	iw	במעבר עכבר
+only private	common	iw	רק פרטיים
+only yours	common	iw	רק את שלך
+open notify window	common	iw	פתח חלון הודעות
+open popup window	common	iw	פתח חלון קופץ
+ordered list	common	iw	רשימה מסודרת
+original	common	iw	מקור
+other	common	iw	אחר
+overview	common	iw	סקירה כללית
+owner	common	iw	הבעלים
+page	common	iw	עמוד
+page was generated in %1 seconds	common	iw	עמוד נוצר ב-%1 שניות
+parcel	common	iw	חבילה
+parent category	common	iw	קטגורית האם
+password	common	iw	סיסמא
+password could not be changed	common	iw	לא הצלחתי לשנות את הסיסמא
+password has been updated	common	iw	הסיסמא עודכן
+path to user and group files has to be outside of the webservers document-root!!!	common	iw	!המסלול את קבצי משתמשים וקבותות חייב להיות מחוץ לבסיס של שרת הווב
+pattern for search in addressbook	common	iw	תבנית לחיפוש בספר כתובות
+pattern for search in calendar	common	iw	תבנית לחיפוש בלוח שנה
+pattern for search in projects	common	iw	תבנית לחיפוש בפרויקטים
+permissions to the files/users directory	common	iw	הרשאות לקבצים/סיפריות משתמשים
+personal	common	iw	אישי
+phone number	common	iw	מספר טלפון
+please %1 by hand	common	iw	נא ל%1 ידנית
+please enter a name	common	iw	!נא להקליד שם
+please run setup to become current	common	iw	נא להריץ הגדרה כדי להיות מעודכן
+please select	common	iw	נא לבחור
+please set your global preferences	common	iw	!נא לקבוע את עדיפויות הגלובלית שלך
+please set your preferences for this application	common	iw	!נא לקבוע את העדיפויות שלך ליישום זה
+please wait...	common	iw	...המתן בבקשה
+postal	common	iw	דואר
+preferences	common	iw	העדיפויות
+preferences for the idots template set	common	iw	idots עדיפויות לסט התבניות
+prev. month (hold for menu)	jscalendar	iw	(החודש הקודם (החזק לקבלת תפריט
+prev. year (hold for menu)	jscalendar	iw	(השנה הקודמת (החזק לקבלת תפריט
+previous page	common	iw	עמוד קודם
+primary style-sheet:	common	iw	:דף סגנון ראשי
+print	common	iw	הדפס
+priority	common	iw	עדיפות
+private	common	iw	פרטי
+project	common	iw	פרויקט
+public	common	iw	ציבורי
+read	common	iw	קרא
+read this list of methods.	common	iw	.קרא רשימת מטודות זו
+reject	common	iw	דחה
+remove selected accounts	common	iw	מחק חשבונות מובחרים
+rename	common	iw	שנה שם
+replace	common	iw	החלף
+replace with	common	iw	-החלף ב
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	iw	מחזיר רשימה מלאה של חשבונות במערכת. אזהרה: הרשימה עשויה להיות גדולה למדי
+returns an array of todo items	common	iw	מחזיר מערך של פרטי משימות
+returns struct of users application access	common	iw	מחזיר את מבנה הגישה של משתמשים ליישומים
+right	common	iw	ימין
+saturday	common	iw	יום שבת
+save	common	iw	שמור
+search	common	iw	חיפוש
+search %1 '%2'	common	iw	חיפוש %1 '%2'
+search or select accounts	common	iw	חפש או בחר חשבונות
+section	common	iw	חלק
+select	common	iw	בחר
+select all %1 %2 for %3	common	iw	בחר כל %1 %2 עבור %3
+select category	common	iw	בחר קטגוריה
+select date	common	iw	בחר תאריך
+select group	common	iw	בחר קבוצה
+select home email address	common	iw	בחר כתובת דוא"ל בבית
+select one	common	iw	בחר אחד
+select user	common	iw	בחר משתמש
+select work email address	common	iw	בחר כתובת דוא"ל בעבודה
+selection	common	iw	בחירה
+send	common	iw	שלח
+september	common	iw	ספטמבר
+server %1 has been added	common	iw	השרת %1 נוסף
+server name	common	iw	שם השרת
+session has been killed	common	iw	הרגתי את המושב
+setup	common	iw	הגדרה
+setup main menu	common	iw	הגדרת תפריט ראשי
+show all	common	iw	הצג הכל
+show all categorys	common	iw	הצג כל הקטגוריות
+show menu	common	iw	הצג תפריט
+show page generation time	common	iw	הצג זמן יצירת העמוד
+show page generation time on the bottom of the page?	common	iw	?להציג את זמן יצירת העמוד בתחתית העמוד
+show_more_apps	common	iw	הצג_עוד_יישומים
+showing %1	common	iw	מציג %1
+showing %1 - %2 of %3	common	iw	מציג %1 - %2 מתוך %3
+sorry, your login has expired	login	iw	מצטער, פג תוקפו של החשבון שלך
+start date	common	iw	תאריך התחלה
+start time	common	iw	שעת התחלה
+start with	common	iw	-התחל ב
+status	common	iw	סטאטוס
+subject	common	iw	נושא
+submit	common	iw	הגש
+substitutions and their meanings:	common	iw	:חלופות ופירושן
+sunday	common	iw	יום ראשון
+table properties	common	iw	תכונות טבלה
+text color:	common	iw	:צבע טקסט
+the api is current	common	iw	מעודכן API-ה
+the api requires an upgrade	common	iw	זקוק לעדכון API-ה
+the following applications require upgrades	common	iw	היישומים הבאים זקוקים לעדכונים
+the mail server returned	common	iw	שרת הדואר החזיר
+this application is current	common	iw	יישום זה מעודכן
+this application requires an upgrade	common	iw	יישום זה זקוק לעדכון
+this name has been used already	common	iw	!שם זה בשימוש כבר
+thursday	common	iw	יום חמישי
+time	common	iw	שעה
+time selection:	jscalendar	iw	:בחירת שעה
+time zone	common	iw	איזור שעון
+time zone offset	common	iw	סתיה של איזור שעון
+title	common	iw	כותרת
+to	common	iw	אל
+to correct this error for the future you will need to properly set the	common	iw	-כדי לתקן שגיאה זאת לעתיד, עליך לקבוע נכון את ה
+to go back to the msg list, click <a href= %1 >here</a>	common	iw	כדי לחזור אל רשימת ההודעות, לחץ <a href="%1">כאן</a>
+today	common	iw	היום
+todays date, eg. "%1"	common	iw	תאריך היום, לדוגמא "%1"
+toggle first day of week	jscalendar	iw	מתג את היום הראשון בשבוע
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	iw	%4 IP-יותר מידי נסיונות כניסה כושלים : %1 למשתמש %2, %3 לכתובת ה
+top	common	iw	עליון
+total	common	iw	סך הכל
+tuesday	common	iw	יום שלישי
+underline	common	iw	קו תחתי
+unknown	common	iw	לא מוכר
+update	common	iw	עדכן
+use button to search for	common	iw	השתמש בכפתור כדי לחפש
+use button to search for address	common	iw	השתמש בכפתור לחיפוש כתובת
+use button to search for calendarevent	common	iw	השתמש בכפתור לחפש אירוע בלוח שנה
+use button to search for project	common	iw	השתמש בכפתור לחפש פרויקט
+user	common	iw	משתמש
+user accounts	common	iw	חשבונות משתמשים
+user groups	common	iw	קבוצות משתמשים
+username	common	iw	שם משתמש
+users	common	iw	משתמשים
+users choice	common	iw	בחירת המשתמשים
+version	common	iw	גירסא
+view	common	iw	תצוגה
+wednesday	common	iw	יום רביעי
+welcome	common	iw	ברוך בואך
+which groups	common	iw	איזו קבוצות
+width	common	iw	רוחב
+wk	jscalendar	iw	שבוע
+work email	common	iw	דוא"ל בעבודה
+written by:	common	iw	:נכתב על ידי
+year	common	iw	שנה
+yes	common	iw	כן
+you are required to change your password during your first login	common	iw	עליך לשנות את סיסמתך בכניסה הראשונה שלך למערכת
+you have been successfully logged out	login	iw	יצאת מהמערכת בהצלחה
+you have not entered a title	common	iw	לא הקלדת כותרת
+you have not entered a valid date	common	iw	לא הקלדת תאריך חוקי
+you have not entered a valid time of day	common	iw	לא הקלדת שעת יום חוקי
+you have not entered participants	common	iw	לא הכנסת משתתפים
+you have selected an invalid date	common	iw	!בחרת תאריך לא חוקי
+you have selected an invalid main category	common	iw	!בחרת קטגוריה ראשית לא חוקית
+you have successfully logged out	common	iw	יצאת מהמערכת בהצלחה
+you need to add the webserver user '%1' to the group '%2'.	common	iw	.עליך להוסיף את שמ משתמש הווב '%1' לקבוצה '%2'
+your message could <b>not</b> be sent!<br>	common	iw	.לא הצלחתי לשלוח את ההודעה שלך
+your message has been sent	common	iw	ההודעה שלך נשלחה
+your search returned %1 matchs	common	iw	חיפושך מצא %1 התאמות
+your search returned 1 match	common	iw	החיפוש שלך מצא התאמה אחד
+your session could not be verified.	login	iw	.לא הצלחתי לשחזר את המושב
+your settings have been updated	common	iw	ההגדרות שלך עודכנו
+zambia	common	iw	זמביה
+zoom	common	iw	הגדל
+site configuration	common	iw	הגדרות אתר

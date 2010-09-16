@@ -1,0 +1,758 @@
+%1 email addresses inserted	common	sk	%1 E-mailových adries bolo vložených
+%1 file	common	sk	%1 súbor
+%1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spustiť!!!
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	sk	%1Vyberte iný adresár%2<br />alebo nastavte pre webserver právo zápisu do %3
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1eGroupWare%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v %3PHP%4.
+(session restored in %1 seconds)	common	sk	(relácia obnovená za %1 sekúnd)
+(shift-)click or drag to change value	jscalendar	sk	Ak chcete zmeniť hodnotu, použite (Shift-)klik alebo potiahnutie
+- click on any of the time parts to increase it	jscalendar	sk	- Ak kliknite na ktorúkoľvek časť času, zvýši sa
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	sk	- Ak chcete rýchlejší výber, podržte myšítko na ktoromkoľvek z horeuvedených tlačidiel.
+- or click and drag for faster selection.	jscalendar	sk	- alebo ak chcete rýchlejší výber, kliknite a potiahnite
+- or shift-click to decrease it	jscalendar	sk	- alebo ak chcete znížiť, Shift-kliknite
+- use the %1, %2 buttons to select month	jscalendar	sk	- Ak chcete vybrať mesiac, použite %1, %2 tlačítka
+- use the %1, %2 buttons to select year	jscalendar	sk	- Ak chcete vybrať rok, použite %1, %2 tlačítka
+00 (disable)	admin	sk	00 (vypnúť)
+1 day	common	sk	1 deň
+1 hour	common	sk	1 hodina
+1 month	common	sk	1 mesiac
+1 week	common	sk	1 týždeň
+13 (ntp)	admin	sk	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	sk	3 počet znakov skratky dňa
+3 number of chars for month-shortcut	jscalendar	sk	3 počet znakov skratky mesiaca
+80 (http)	admin	sk	80 (http)
+about	common	sk	O aplikácii
+about %1	common	sk	O aplikácii %1
+about egroupware	common	sk	Info o balíku eGroupWare
+about the calendar	jscalendar	sk	O aplikácii Kalendár
+access	common	sk	Prístup
+access not permitted	common	sk	Prístup bol odmietnutý
+account has been created	common	sk	Používateľský účet bol vytvorený
+account has been deleted	common	sk	Používateľský účet bol odstránený
+account has been updated	common	sk	Používateľský účet bol aktualizovaný
+account is expired	common	sk	Platnosť používateľského účtu vypršala
+accounts	common	sk	Účty
+acl	common	sk	ACL práva
+action	common	sk	Akcia
+active	common	sk	Aktívne
+add	common	sk	Pridať
+add %1 category for	common	sk	Pridať %1 kategóriu pre
+add category	common	sk	Pridať kategóriu
+add shortcut	common	sk	Pridať skratku
+add sub	common	sk	Pridať podkategóriu
+addressbook	common	sk	Adresár
+admin	common	sk	Správca
+administration	common	sk	Správa
+afghanistan	common	sk	AFGANISTAN
+albania	common	sk	ALBÁNSKO
+algeria	common	sk	ALŽÍRSKO
+all	common	sk	Všetko
+all fields	common	sk	všetky polia
+all languages	common	sk	všetky jazyky
+alphabet	common	sk	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+american samoa	common	sk	AMERICKÁ SAMOA
+an error happened	common	sk	Nastala nejaká chyba
+an existing and by the webserver readable directory enables the image browser and upload.	common	sk	Adresár, ktorý existuje a je čitateľný webserverom, umožňuje prehliadanie a odovzdávanie obrázkov.
+andorra	common	sk	ANDORA
+angola	common	sk	ANGOLA
+anguilla	common	sk	ANGUILLA
+antarctica	common	sk	ANTARKTÍDA
+antigua and barbuda	common	sk	ANTIQUA BARBUDA
+application	common	sk	Aplikácia
+apply	common	sk	Použiť
+april	common	sk	Apríl
+are you sure you want to delete these entries ?	common	sk	Ste si istí, chcete zmazať tieto záznamy?
+are you sure you want to delete this entry ?	common	sk	Ste si istí, chcete zmazať tento záznam?
+argentina	common	sk	ARGENTÍNA
+armenia	common	sk	ARMÉNSKO
+aruba	common	sk	ARUBA
+august	common	sk	August
+australia	common	sk	AUSTRÁLIA
+austria	common	sk	RAKÚSKO
+author	common	sk	Autor
+autohide sidebox menu's	common	sk	Automaticky skrývať ponuku bočného panelu
+autohide sidebox menus	common	sk	Automaticky skrývať ponuku bočného panelu
+automatically hide the sidebox menu's?	common	sk	Automaticky skrývať ponuku bočného panelu?
+automatically hide the sidebox menus?	common	sk	Automaticky skrývať ponuku bočného panelu?
+autosave default category	common	sk	Automaticky ukladať štandardnú kategóriu
+azerbaijan	common	sk	AZERBAJDŽÁN
+back	common	sk	Naspäť
+back to user login	common	sk	Naspäť na prihlásenie používateľa
+background color:	common	sk	Farba pozadia:
+backupdir '%1' is not writeable by the webserver	common	sk	Webserver nemá oprávnenia k zápisu do zálohovacieho adresára '%1'
+bad login or password	common	sk	Chybné meno alebo heslo
+bahamas	common	sk	BAHAMY
+bahrain	common	sk	BAHRAIN
+bangladesh	common	sk	BANGLADÉŠ
+barbados	common	sk	BARBADOS
+bcc	common	sk	Skrytá kópia
+belarus	common	sk	BIELORUSKO
+belgium	common	sk	BELGICKO
+belize	common	sk	BELIZE
+benin	common	sk	BENIN
+bermuda	common	sk	BERMUDY
+bhutan	common	sk	BHUTÁN
+blocked, too many attempts	common	sk	Zablokované, príliš veľa pokusov
+bold	common	sk	Tučné
+bolivia	common	sk	BOLÍVIA
+border	common	sk	Okraj
+bosnia and herzegovina	common	sk	BOSNA A HERCEGOVINA
+botswana	common	sk	BOTSWANA
+bottom	common	sk	Spodný okraj
+bouvet island	common	sk	BOUVETOV OSTROV
+brazil	common	sk	BRAZÍLIA
+british indian ocean territory	common	sk	BRITSKÉ INDICKOOCEÁNSKE TERITÓRIUM
+brunei darussalam	common	sk	BRUNEJ DARUSSALAM
+bulgaria	common	sk	BULHARSKO
+bulgarian	common	sk	bulharsky
+burkina faso	common	sk	BOURKINA FASSO
+burundi	common	sk	BURUNDI
+calendar	common	sk	Kalendár
+cambodia	common	sk	KAMBODŽA
+cameroon	common	sk	KAMERUN
+canada	common	sk	KANADA
+cancel	common	sk	Zrušiť
+cannot replace %1 because it is a directory	common	sk	Nemôžem prepísať %1 pretože je to adresár
+cant open '%1' for %2	common	sk	Nemôžem otvoriť '%1' pre %2
+cape verde	common	sk	KAPVERDY
+caption	common	sk	Titulok
+categories	common	sk	Kategórie
+categories for	common	sk	kategórie pre
+category	common	sk	Kategória
+category %1 has been added !	common	sk	Kategória %1 bola pridaná!
+category %1 has been updated !	common	sk	Kategória %1 bola aktualizovaná!
+cayman islands	common	sk	KAJMANSKÉ OSTROVY
+cc	common	sk	Kópia
+centered	common	sk	na stred
+central african republic	common	sk	STREDOAFRICKÁ REPUBLIKA
+chad	common	sk	ČAD
+change	common	sk	Zmeniť
+charset	common	sk	utf-8
+check installation	common	sk	Skontroluj inštaláciu
+check now	common	sk	Skontroluj - Teraz
+chile	common	sk	CHILE
+china	common	sk	ČÍNA
+choose a background color	common	sk	Vyberte farbu pozadia
+choose a background color for the icons	common	sk	Vyberte farbu pozadia ikoniek
+choose a background image.	common	sk	Vyberte obrázok pozadia.
+choose a background style.	common	sk	Vyberte štýl pozadia.
+choose a text color for the icons	common	sk	Vyberte farbu textu pre ikonky
+choose the category	common	sk	Vyberte kategóriu
+choose the parent category	common	sk	Vyberte rodičovskú kategóriu
+christmas island	common	sk	VIANOČNÉ OSTROVY
+clear	common	sk	Vyčistiť
+clear form	common	sk	Vyčistiť formulár
+click	common	sk	Klik
+click here to resume your egroupware session.	common	sk	Ak chcete obnoviť vašu reláciu eGroupWare, kliknite sem.
+click or mouse over to show menus	common	sk	Ak chcete zobraziť ponuku, kliknite alebo ukážte myšou
+click or mouse over to show menus?	common	sk	Ak chcete zobraziť ponuku, kliknete alebo ukážete myšou
+click this image on the navbar: %1	common	sk	Kliknite na tento obrázok v navigačnom paneli: %1
+close	common	sk	Zavrieť
+close sidebox	common	sk	Zavrieť Sidebox
+cocos (keeling) islands	common	sk	KOKOSOVÉ OSTROVY
+colombia	common	sk	KOLUMBIA
+common preferences	common	sk	Bežné predvoľby
+comoros	common	sk	KOMORY
+company	common	sk	Spoločnosť
+congo	common	sk	KONGO
+congo, the democratic republic of the	common	sk	KONGO, DEMOKRATICKÁ REPUBLIKA
+contacting server...	common	sk	Pripájam sa na Server...
+cook islands	common	sk	COOKOVE OSTROVY
+copy	common	sk	Kopírovať
+costa rica	common	sk	KOSTARIKA
+cote d ivoire	common	sk	POBREŽIE SLONOVINY
+could not contact server. operation timed out!	common	sk	Nedá sa pripojiť na server. Čas operácie vypršal!
+create	common	sk	Vytvoriť
+created by	common	sk	Vytvoril
+croatia	common	sk	CHORVÁTSKO
+cuba	common	sk	KUBA
+currency	common	sk	Mena
+current	common	sk	Aktuálne
+current users	common	sk	Súčasní používatelia
+cyprus	common	sk	CYPRUS
+czech republic	common	sk	ČESKÁ REPUBLIKA
+database error	common	sk	Chyba databázy
+database error!	common	sk	Chyba databázy!
+date	common	sk	Dátum
+date due	common	sk	Termín do
+date selection:	jscalendar	sk	Výber dátumu:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/čas.<br>Ak používate port 13, prosím nastavte korektne filtrovacie pravidlá na firewall-e ešte predtým, než potvrdíte túto stránku.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	sk	December
+default category	common	sk	Štandardná kategória
+default height for the windows	common	sk	Predvolená výška okien
+default width for the windows	common	sk	Predvolená šírka okien
+delete	common	sk	Odstrániť
+delete row	common	sk	Odstrániť Riadok
+denmark	common	sk	DÁNSKO
+description	common	sk	Popis
+detail	common	sk	Podrobnosti
+details	common	sk	Podrobnosti
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť spúšťanie opravného skriptu pre IE5.5 a vyšší, ktorý napráva zobrazovanie priesvitnosti v obrázkoch PNG?
+direction left to right	common	sk	Tok zľava doprava
+directory	common	sk	Priečinok
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sk	Adresár neexistuje, nie je čitateľný webserverom, alebo nesúvisí s koreňovým adresárom dokumentov!
+disable internet explorer png-image-bugfix	common	sk	Vypnúť opravu chyby pre obrázky PNG v Internet Explorer-i
+disable slider effects	common	sk	Vypnúť efekty posuvníka
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sk	Vypnúť animované efekty posuvníka, keď sa zobrazujú alebo skrývajú ponuky na stránke? Používatelia Opery a Konquerer-a to pravdepodobne musia zvoliť.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť opravný skript pre Internet Explorer 5.5 a novšie pre zobrazenie priesvitnosti v obrázkoch PNG?
+disabled	common	sk	Neaktívny
+display %s first	jscalendar	sk	Zobraziť %s najskôr
+djibouti	common	sk	DŽIBUTSKO
+do you also want to delete all subcategories ?	common	sk	Chcete odstrániť aj všetky podkategórie?
+document properties	common	sk	Vlastnosti dokumentu
+document title:	common	sk	Nadpis dokumentu
+domain	common	sk	Doména
+domain name for mail-address, eg. "%1"	common	sk	názov domény pre mailovú adresu, napr. "%1"
+domestic	common	sk	Domáce
+dominica	common	sk	DOMINIKA
+dominican republic	common	sk	DOMINIKÁNSKA REPUBLIKA
+done	common	sk	Hotovo
+drag to move	jscalendar	sk	Potiahni pre presun
+e-mail	common	sk	E-Mail
+east timor	common	sk	VÝCHODNÝ TIMOR
+eastern european	common	sk	Východoeurópske
+ecuador	common	sk	EKVÁDOR
+edit	common	sk	Upraviť
+edit %1 category for	common	sk	Uprav %1 kategóriu pre
+edit categories	common	sk	Upraviť kategórie
+edit category	common	sk	Upraviť kategóriu
+egroupware	common	sk	eGwoupWare
+egroupware api version	common	sk	eGroupWare API verzia
+egroupware: login blocked for user '%1', ip %2	common	sk	eGroupWare: prihlasovanie zablokované pre používateľa '%1', IP %2
+egypt	common	sk	EGYPT
+el salvador	common	sk	SALVADOR
+email	common	sk	E-Mail
+email-address of the user, eg. "%1"	common	sk	E-mailová adresa používateľa, napr. "%1"
+enabled	common	sk	Aktívny
+end date	common	sk	Dátum ukončenia
+end time	common	sk	Čas ukončenia
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre eGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
+entry has been deleted sucessfully	common	sk	Položka bola úspešne odstránená
+entry not found!	common	sk	Položka sa nenašla!
+entry updated sucessfully	common	sk	Položka bola úspešne upravená
+equatorial guinea	common	sk	ROVNÍKOVÁ GUINEA
+eritrea	common	sk	ERITREA
+error	common	sk	Chyba
+error creating %1 %2 directory	common	sk	Chyba počas vytvárania adresára %1 %2
+error deleting %1 %2 directory	common	sk	Chyba počas odstraňovania adresára %1 %2
+error renaming %1 %2 directory	common	sk	Chyba počas premenúvania adresára %1 %2
+estonia	common	sk	ESTÓNSKO
+ethiopia	common	sk	ETIÓPIA
+everything	common	sk	Všetko
+exact	common	sk	presne
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sk	Nepodarilo sa pripojiť na server, alebo je odpoveď servera neplatná. Skúste sa znovu prihlásiť. Ak sa nepodarí, kontaktujte správcu systému.
+falkland islands (malvinas)	common	sk	FALKLANDY
+faroe islands	common	sk	FAERSKÉ OSTROVY
+fax number	common	sk	číslo faxu
+features of the editor?	common	sk	Možnosti editora?
+february	common	sk	Február
+fields	common	sk	Polia
+fiji	common	sk	FIDŽI
+files	common	sk	Súbory
+filter	common	sk	Filter
+finland	common	sk	FÍNSKO
+first name	common	sk	Krstné meno
+first name of the user, eg. "%1"	common	sk	krstné meno používateľa, napr. "%1"
+first page	common	sk	Prvá strana
+firstname	common	sk	Krstné meno
+fixme!	common	sk	OPRAV MA!
+folder already exists.	common	sk	Priečinok už existuje.
+force selectbox	common	sk	Otvor výberovú ponuku
+forever	common	sk	Navždy
+france	common	sk	FRANCÚZSKO
+french guiana	common	sk	FRANCÚZSKA GUAYANA
+french polynesia	common	sk	FRANCÚZSKA POLYNÉZIA
+french southern territories	common	sk	FRANCÚZSKE JUŽNÉ ÚZEMIA
+friday	common	sk	Piatok
+ftp	common	sk	FTP
+fullname	common	sk	Plné meno
+fullscreen mode	common	sk	Celoobrazovkový režim
+gabon	common	sk	GABUN
+gambia	common	sk	GAMBIA
+general menu	common	sk	Základná ponuka
+georgia	common	sk	GRUZÍNSKO
+german	common	sk	Nemecké
+germany	common	sk	NEMECKO
+ghana	common	sk	GHANA
+gibraltar	common	sk	GIBRALTAR
+global	common	sk	Globálne
+global public	common	sk	Verejný pre všetkých
+go today	jscalendar	sk	Choď dnes
+grant access	common	sk	Povoliť prístup
+greece	common	sk	GRÉCKO
+greek	common	sk	grécky
+greenland	common	sk	GRÓNSKO
+grenada	common	sk	GRENADA
+group	common	sk	Skupina
+group access	common	sk	Skupinový prístup
+group has been added	common	sk	Skupina bola pridaná
+group has been deleted	common	sk	Skupina bola odstránená
+group has been updated	common	sk	Skupina bola aktualizovaná
+group name	common	sk	názov skupiny
+group public	common	sk	Verejný pre skupiny
+groups	common	sk	Skupiny
+groups with permission for %1	common	sk	Skupiny, kde máte prístup ku %1
+groups without permission for %1	common	sk	Skupiny, kde nemáte prístup ku %1
+guadeloupe	common	sk	GUADELOUPE
+guam	common	sk	GUAM
+guatemala	common	sk	GUATEMALA
+guinea	common	sk	GUINEA
+guinea-bissau	common	sk	GUINEA-BISSAU
+guyana	common	sk	GUAYANA
+haiti	common	sk	HAITI
+heard island and mcdonald islands	common	sk	HEARDOVE MCDONALDOVE OSTROVY
+height	common	sk	Výška
+help	common	sk	Pomocník
+high	common	sk	Vysoká
+highest	common	sk	Najvyššia
+holy see (vatican city state)	common	sk	VATIKÁN (MESTSKÝ ŠTÁT)
+home	common	sk	Domov
+home email	common	sk	domáci E-mail
+honduras	common	sk	HONDURAS
+hong kong	common	sk	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sk	Koľko ikoniek sa má zobraziť v navigačnom paneli (vrch stránky). Ostatné ikony budú umiestnené do rozbaľovacej ponuky, ktorá bude dostupná na celkom pravom okraji navigačného panelu.
+how to show the general egroupware menu ?	common	sk	Ako sa má zobrazovať základná ponuka eGroupWare?
+hungary	common	sk	MAĎARSKO
+iceland	common	sk	ISLAND
+iespell not detected. click ok to go to download page.	common	sk	ieSpell sa nenašiel. Kliknutím na OK sa presuniete na stránku, odkiaľ ho môžete stiahnuť.
+if the clock is enabled would you like it to update it every second or every minute?	common	sk	Ak sú hodiny zapnuté, chcete aby sa aktualizovali každú sekundu, alebo stačí každú minútu?
+if there are some images in the background folder you can choose the one you would like to see.	common	sk	Ak sú v priečinku pre pozadia nejaké obrázky, môžete si vybrať, ktorý chcete.
+image directory relative to document root (use / !), example:	common	sk	Adresár obrázkov vzťahujúci sa na koreňový adresár dokumentov (použite / !), príklad:
+image url	common	sk	URL adresa obrázka
+india	common	sk	INDIA
+indonesia	common	sk	INDONÉZIA
+insert all %1 addresses of the %2 contacts in %3	common	sk	Vložiť všetkých %1 adries z %2 kontaktov in %3
+insert column after	common	sk	Vložiť Stĺpec za
+insert column before	common	sk	Vložiť Stĺpec Pred
+insert row after	common	sk	Vložiť Riadok Za
+insert row before	common	sk	Vložiť Riadok Pred
+international	common	sk	Mezinárodný
+invalid filename	common	sk	Chybný názov súboru
+invalid ip address	common	sk	Chybná IP adresa
+invalid password	common	sk	Chybné heslo
+iran, islamic republic of	common	sk	IRÁN, ISLAMSKÁ REPUBLIKA
+iraq	common	sk	IRAK
+ireland	common	sk	ÍRSKO
+israel	common	sk	IZRAEL
+it has been more then %1 days since you changed your password	common	sk	Vaše heslo bolo zmenené pred vyše %1 dňami
+it is recommended that you run setup to upgrade your tables to the current version	common	sk	Odporúčam spustiť setup pre aktualizáciu databázových tabuliek na súčasnú verziu.
+italic	common	sk	Kurzíva
+italy	common	sk	TALIANSKO
+jamaica	common	sk	JAMAJKA
+january	common	sk	Január
+japan	common	sk	JAPONSKO
+japanese	common	sk	japonsky
+jordan	common	sk	JORDÁNSKO
+july	common	sk	Júl
+jun	common	sk	Jún
+june	common	sk	Jún
+justify center	common	sk	Zarovnať na Stred
+justify full	common	sk	Zarovnať do Bloku
+justify left	common	sk	Zarovnať vĽavo
+justify right	common	sk	Zarovnať vpRavo
+kazakstan	common	sk	KAZACHSTAN
+kenya	common	sk	KEŇA
+keywords	common	sk	Kľúčové slová
+kiribati	common	sk	KIRIBATI
+korea, democratic peoples republic of	common	sk	KÓREJSKÁ ĽUDOVODEMOKRATICKÁ REPUBLIKA
+korea, republic of	common	sk	KÓREJSKÁ REPUBLIKA
+korean	common	sk	kórejsky
+kuwait	common	sk	KUVAJT
+kyrgyzstan	common	sk	KIRGIZSKO
+language	common	sk	Jazyk
+language_direction_rtl	common	sk	orientácia_jazyka_sprava_doľava
+lao peoples democratic republic	common	sk	LAOS
+last name	common	sk	Priezvisko
+last name of the user, eg. "%1"	common	sk	priezvisko používateľa, napr. "%1"
+last page	common	sk	posledná stránka
+lastname	common	sk	Priezvisko
+latvia	common	sk	LOTYŠSKO
+ldap-mgr	common	sk	Správca LDAP
+lebanon	common	sk	LIBANON
+left	common	sk	Vľavo
+lesotho	common	sk	LESOTHO
+liberia	common	sk	LIBÉRIA
+libyan arab jamahiriya	common	sk	LÍBIA
+license	common	sk	Licencia
+liechtenstein	common	sk	LICHTENŠTAJNSKO
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><B>csv dáta nesúhlasia s počtom stĺpcov tabuľky %3 ==> ignorované</b>
+list	common	sk	Zoznam
+list members	common	sk	Zoznam členov
+lithuania	common	sk	LITVA
+local	common	sk	Lokálny
+login	common	sk	Prihlásiť
+loginid	common	sk	Prihlasovacie ID
+logout	common	sk	Odhlásenie
+lost login id	common	sk	Stratené ID prihlásenia
+lost password	common	sk	Stratené heslo
+low	common	sk	Nízka
+lowest	common	sk	Najnižšia
+luxembourg	common	sk	LUXEMBURSKO
+macau	common	sk	MACAO
+macedonia, the former yugoslav republic of	common	sk	MACEDÓNSKO
+madagascar	common	sk	MADAGASKAR
+mail domain, eg. "%1"	common	sk	mailová doména, napr. "%1"
+main category	common	sk	Hlavná kategória
+main screen	common	sk	Hlavná stránka
+maintainer	common	sk	Správca-údržbár
+malawi	common	sk	MALAWI
+malaysia	common	sk	MALAJZIA
+maldives	common	sk	MALEDIVY
+mali	common	sk	MALI
+malta	common	sk	MALTA
+march	common	sk	Marec
+marshall islands	common	sk	MARSHALLOVE OSTROVY
+martinique	common	sk	MARTINIK
+mauritania	common	sk	MAURETÁNIA
+mauritius	common	sk	MAURÍCIUS
+max number of icons in navbar	common	sk	Maximálny počet ikoniek v navigačnom paneli
+may	common	sk	Máj
+mayotte	common	sk	MAYOTTE
+medium	common	sk	Stredná
+menu	common	sk	Ponuka
+message	common	sk	Správa
+mexico	common	sk	MEXIKO
+micronesia, federated states of	common	sk	MIKRÓNÉZIA
+minute	common	sk	Minúta
+moldova, republic of	common	sk	MOLDAVSKÁ REPUBLIKA
+monaco	common	sk	MONAKO
+monday	common	sk	Pondelok
+mongolia	common	sk	MONGOLSKO
+montenegro	common	sk	ČIERNA HORA
+montserrat	common	sk	MONSERRAT
+morocco	common	sk	MAROKO
+mozambique	common	sk	MOZAMBIK
+multiple	common	sk	viacero
+myanmar	common	sk	MYANMAR
+name	common	sk	Meno
+name of the user, eg. "%1"	common	sk	meno používateľa, napr. "%1"
+namibia	common	sk	NAMÍBIA
+nauru	common	sk	NAURU
+nepal	common	sk	NEPÁL
+netherlands	common	sk	HOLANDSKO
+netherlands antilles	common	sk	HOLANDSKÉ ANTILY
+never	common	sk	Nikdy
+new caledonia	common	sk	NOVÁ KALEDÓNIA
+new entry added sucessfully	common	sk	Nový záznam bol úspešne pridaný
+new main category	common	sk	Nová hlavná kategória
+new value	common	sk	Nová hodnota
+new zealand	common	sk	NOVÝ ZÉLAND
+next	common	sk	Ďalší
+next month (hold for menu)	jscalendar	sk	Ďalší mesiac (podržaním zobrazíte ponuku)
+next page	common	sk	Ďalšia stránka
+next year (hold for menu)	jscalendar	sk	Ďalší rok (podržaním zobrazíte ponuku)
+nicaragua	common	sk	NIKARAGUA
+niger	common	sk	NIGER
+nigeria	common	sk	NIGÉRIA
+niue	common	sk	NIUE
+no	common	sk	Nie
+no entries found, try again ...	common	sk	nič som nenašiel, skúste znovu...
+no history for this record	common	sk	Žiadna história pre tento záznam
+no savant2 template directories were found in:	common	sk	Žiadne adresáre šablóny Savant2 sa nenašli v:
+no subject	common	sk	Nebol uvedený Predmet
+none	common	sk	Žiadne
+norfolk island	common	sk	NORFOLK
+normal	common	sk	Normálna
+northern mariana islands	common	sk	SEVERNÉ MARIÁNSKE OSTROVY
+norway	common	sk	NÓRSKO
+not	common	sk	nie
+not a user yet? register now	common	sk	Ešte nie ste používateľom? Zaregistrujte sa
+not assigned	common	sk	nepriradené
+not readable %1 entry of user %2	common	sk	Nečitateľná položka %1 používateľa %2
+note	common	sk	Poznámka
+notes	common	sk	Poznámky
+notifications	common	sk	Upozornenia
+notify window	common	sk	Upozorňujúce okno
+notify your administrator to correct this situation	common	sk	Upozornite svojho správcu, aby napravil vzniknutú situáciu
+november	common	sk	November
+october	common	sk	Október
+ok	common	sk	OK
+old value	common	sk	Stará hodnota
+oman	common	sk	OMÁN
+on *nix systems please type: %1	common	sk	Na *NIX systémoch prosím napíšte: %1
+on mouse over	common	sk	Pri namierení myši
+only private	common	sk	iba súkromné
+only yours	common	sk	iba vaše
+oops! you caught us in the middle of system maintainance.	common	sk	Ajajaj! Zastihli ste nás práve počas údržby systému.
+open notify window	common	sk	Otvor pripomínacie okno
+open popup window	common	sk	Otvor vyskakovacie okno
+open sidebox	common	sk	Otvor bočnú ponuku
+ordered list	common	sk	Zoradený zoznam
+original	common	sk	Originál
+other	common	sk	Iné
+overview	common	sk	Prehľad
+owner	common	sk	Vlastník
+page	common	sk	Stránka
+page was generated in %1 seconds	common	sk	Stránka bola vygenerovaná za %1 sekúnd
+pakistan	common	sk	PAKISTAN
+palau	common	sk	PALAU
+palestinian territory, occupied	common	sk	PALESTÍNSKE ÚZEMIE, OKUPOVANÉ
+panama	common	sk	PANAMA
+papua new guinea	common	sk	PAPUA NOVÁ GUINEA
+paraguay	common	sk	PARAGUAY
+parcel	common	sk	Parcela
+parent category	common	sk	Rodičovská kategória
+password	common	sk	Heslo
+password could not be changed	common	sk	Heslo sa nedalo zmeniť
+password has been updated	common	sk	Heslo bolo zmenené
+password must contain at least %1 lowercase letters	common	sk	Heslo musí obsahovať aspoň %1 malých písmen
+password must contain at least %1 numbers	common	sk	Heslo musí obsahovať aspoň %1 číslic
+password must contain at least %1 special characters	common	sk	Heslo musí obsahovať aspoň %1 špeciálnych znakov
+password must contain at least %1 uppercase letters	common	sk	Heslo musí obsahovať aspoň %1 veľkých písmen
+password must have at least %1 characters	common	sk	Heslo musí mať dĺžku aspoň %1 znakov
+path to user and group files has to be outside of the webservers document-root!!!	common	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!!!
+permission denied!	common	sk	Prístup bol odopretý!
+permissions to the files/users directory	common	sk	oprávnenia k adresáru pre súbory / používateľov
+personal	common	sk	Osobný
+peru	common	sk	PERU
+philippines	common	sk	FILIPÍNY
+phone number	common	sk	telefónne číslo
+phpgwapi	common	sk	eGroupWare API
+pitcairn	common	sk	PITCAIRNOVE OSTROVY
+please %1 by hand	common	sk	Prosím %1 ručne
+please enter a name	common	sk	Prosím zadajte meno!
+please run setup to become current	common	sk	Prosím spusťte setup pre aktualizáciu
+please select	common	sk	Prosím vyberte
+please set your global preferences	common	sk	Prosím upravte vaše globálne predvoľby!
+please set your preferences for this application	common	sk	Prosím upravte vaše predvoľby pre túto aplikáciu!
+please wait...	common	sk	Prosím čakajte...
+please, check back with us shortly.	common	sk	Prosím, ozvite sa čoskoro.
+poland	common	sk	POĽSKO
+portugal	common	sk	PORTUGALSKO
+postal	common	sk	Poštové
+powered by	common	sk	Používame
+preferences	common	sk	Predvoľby
+preferences for the idots template set	common	sk	Predvoľby pre idots šablónu boli nastavené
+prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podržaním zobrazíte ponuku)
+prev. year (hold for menu)	jscalendar	sk	Predch. rok (podržaním zobrazíte ponuku)
+previous page	common	sk	Predchádzajúca stránka
+print	common	sk	Tlač
+priority	common	sk	Priorita
+private	common	sk	Súkromné
+programs	common	sk	Programy
+project	common	sk	Projekt
+public	common	sk	Verejné
+puerto rico	common	sk	PORTORIKO
+qatar	common	sk	KATAR
+read	common	sk	Čítať
+read this list of methods.	common	sk	Čítaj tento zoznam metód.
+reading	common	sk	Načítavam
+register	common	sk	Registrácia
+regular	common	sk	Regulárne
+reject	common	sk	Odmietnuť
+remember me	common	sk	Zapamätaj si ma
+remove selected accounts	common	sk	Odstrániť vybrané účty
+remove shortcut	common	sk	Odstrániť skratku
+rename	common	sk	Premenovať
+replace	common	sk	Nahradiť
+replace with	common	sk	Zameniť za
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	sk	Vráti úplný zoznam účtov v systéme. Upozornenie: môže byť pomerne rozsiahly
+returns an array of todo items	common	sk	Vracia pole úloh
+returns struct of users application access	common	sk	Vracia štruktúru používateľského prístupu k aplikáciám
+reunion	common	sk	RÉUNION
+right	common	sk	Vpravo
+romania	common	sk	RUMUNSKO
+russian	common	sk	rusky
+russian federation	common	sk	RUSKÁ FEDERÁCIA
+rwanda	common	sk	RWANDA
+saint helena	common	sk	SVÄTÁ HELENA
+saint kitts and nevis	common	sk	SVÄTÝ KITTS A NEVIS
+saint lucia	common	sk	SVÄTÁ LUCIA
+saint pierre and miquelon	common	sk	SAINT PIERRE A MIQUELON
+saint vincent and the grenadines	common	sk	SVÄTÝ VINCENC A GRENADINY
+samoa	common	sk	ZÁPADNÁ SAMOA
+san marino	common	sk	SAN MARINO
+sao tome and principe	common	sk	SVÄTÝ TOMÁŠ A PRINCOV OSTROV
+saturday	common	sk	Sobota
+saudi arabia	common	sk	SAUDSKÁ ARÁBIA
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sk	Verzia Savant2 sa líši od wrappera Savant2. <br/>Táto verzia: %1 <br/>Verzia Savant: %2
+save	common	sk	Uložiť
+search	common	sk	Hľadať
+search %1 '%2'	common	sk	Hľadaj %1 '%2'
+search accounts	common	sk	Hľadať v účtoch
+search or select accounts	common	sk	hľadať alebo vyberať medzi účtami
+second	common	sk	sekunda
+section	common	sk	Sekcia
+select	common	sk	Výber
+select all %1 %2 for %3	common	sk	Vyberte všetky %1 %2 pre %3
+select category	common	sk	Vyberte kategóriu
+select date	common	sk	Vyberte dátum
+select group	common	sk	Vyberte skupinu
+select home email address	common	sk	Vyberte domácu E-mailovú adresu
+select multiple accounts	common	sk	Vyberte viacero účtov
+select one	common	sk	Vyberte
+select the default height for the application windows	common	sk	Vyberte predvolenú výšku okien aplikácií
+select the default width for the application windows	common	sk	Vyberte predvolenú šírku okien aplikácií
+select user	common	sk	Vyberte používateľa
+select work email address	common	sk	Vyberte pracovnú E-mailovú adresu
+selection	common	sk	Výber
+send	common	sk	Odoslať
+senegal	common	sk	SENEGAL
+september	common	sk	September
+serbia	common	sk	Srbsko
+server %1 has been added	common	sk	Server %1 bol pridaný
+server answered. processing response...	common	sk	Server odpovedal. Spracúvam odpoveď...
+server contacted. waiting for response...	common	sk	Pripájam sa na server. Čakám na odpoveď...
+server name	common	sk	Meno servera
+session has been killed	common	sk	Relácia bola ukončená
+setup	common	sk	Inštalácia
+setup main menu	common	sk	Hlavná inštalačná ponuka
+seychelles	common	sk	SEYCHELLY
+show all	common	sk	Ukázať všetko
+show all categorys	common	sk	Ukázať všetky kategórie
+show as topmenu	common	sk	Zobraziť ako Vrchnú ponuku
+show clock?	common	sk	Ukázať hodinky?
+show home and logout button in main application bar?	common	sk	Ukázať tlačítko Domovskej stránky a tlačítko Odhlásenia v hlavnom paneli aplikácií?
+show in sidebox	common	sk	Zobraziť ako bočnú ponuku
+show logo's on the desktop.	common	sk	Na desktope zobrazovať logá.
+show menu	common	sk	ukázať ponuku
+show page generation time	common	sk	Ukázať čas generovania stránky
+show page generation time on the bottom of the page?	common	sk	Ukázať čas generovania stránky na jej spodku?
+show page generation time?	common	sk	Ukázať čas generovania stránky?
+show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazovať na desktope logá eGroupWare a x-desktopu.
+show_more_apps	common	sk	ukázať viacero aplikácií
+showing %1	common	sk	zobrazujem %1
+showing %1 - %2 of %3	common	sk	zobrazujem %1 - %2 z %3
+sierra leone	common	sk	SIERRA LEONE
+simple	common	sk	Jednoduché
+singapore	common	sk	SINGAPUR
+site configuration	common	sk	Nastavenia stránky
+slovakia	common	sk	SLOVENSKO
+slovenia	common	sk	SLOVINSKO
+solomon islands	common	sk	ŠALAMÚNOVE OSTROVY
+somalia	common	sk	SOMÁLSKO
+sorry, your login has expired	login	sk	Prepáčte, platnost vášho prihlásenia už vypršala
+south africa	common	sk	JUŽNÁ AFRIKA
+south georgia and the south sandwich islands	common	sk	JUŽNÁ GEORGIA A JUŽNÉ SANDWICHOVE OSTROVY
+spain	common	sk	ŠPANIELSKO
+sri lanka	common	sk	SRÍ LANKA
+start date	common	sk	Dátum začatia
+start time	common	sk	Čas začatia
+start with	common	sk	začať s
+starting up...	common	sk	Štartujem...
+status	common	sk	Stav
+stretched	common	sk	natiahnuté
+subject	common	sk	Predmet
+submit	common	sk	Potvrdiť
+substitutions and their meanings:	common	sk	Substitúcie a ich významy:
+sudan	common	sk	SUDÁN
+sunday	common	sk	Nedeľa
+suriname	common	sk	SURINAM
+swaziland	common	sk	SVAZIJSKO
+sweden	common	sk	ŠVÉDSKO
+switzerland	common	sk	ŠVAJČIARSKO
+syrian arab republic	common	sk	SÝRIA
+table properties	common	sk	Nastavenia tabuľky
+taiwan	common	sk	TCHAJ-WAN
+tajikistan	common	sk	TADŽIKISTAN
+tanzania, united republic of	common	sk	TANZÁNIA
+text color:	common	sk	Farba písma:
+thailand	common	sk	THAJSKO
+the api is current	common	sk	API je aktuálne
+the api requires an upgrade	common	sk	API potrebuje aktualizáciu
+the following applications require upgrades	common	sk	Nasledujúce aplikácie vyžadujú aktualizáciu
+the mail server returned	common	sk	Poštový server vrátil
+this application is current	common	sk	Táto aplikácia je aktuálna
+this application requires an upgrade	common	sk	Táto aplikácia vyžaduje aktualizáciu
+this name has been used already	common	sk	Toto meno sa už používa!
+thursday	common	sk	Štvrtok
+tiled	common	sk	dlaždice
+time	common	sk	Čas
+time selection:	jscalendar	sk	Výber času
+time zone	common	sk	Časová zóna
+time zone offset	common	sk	Rozdiel časovej zóny
+title	common	sk	Titulok
+to	common	sk	Komu
+to correct this error for the future you will need to properly set the	common	sk	= Aby sa chyba neobjavovala v budúcnosti, musíte správne nastaviť
+to go back to the msg list, click <a href= %1 >here</a>	common	sk	<a href="%1">Naspäť na zoznam správ</a>
+today	common	sk	Dnes
+todays date, eg. "%1"	common	sk	dnešný dátum, napr. "%1"
+toggle first day of week	jscalendar	sk	Určiť prvý deň týždňa
+togo	common	sk	TOGO
+tokelau	common	sk	TOKELAU
+tonga	common	sk	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príliš veľa neúspešných pokusov o prihlásenie: %1 na používateľa '%2', %3 na IP %4
+top	common	sk	Vrch
+total	common	sk	celkovo
+transparant bg for the icons?	common	sk	Priesvitné pozadie ikon?
+trinidad and tobago	common	sk	TRINIDAD A TOBAGO
+tuesday	common	sk	Utorok
+tunisia	common	sk	TUNIS
+turkey	common	sk	TURECKO
+turkmenistan	common	sk	TURKMÉNSKO
+turks and caicos islands	common	sk	TURKS A CAICOS
+tuvalu	common	sk	TUVALU
+type	common	sk	Typ
+uganda	common	sk	UGANDA
+ukraine	common	sk	UKRAJINA
+underline	common	sk	Podčiarknuť
+united arab emirates	common	sk	SPOJENÉ ARABSKÉ EMIRÁTY
+united kingdom	common	sk	SPOJENÉ KRÁĽOVSTVO
+united states	common	sk	USA
+united states minor outlying islands	common	sk	MENŠIE ODĽAHLÉ OSTROVY USA
+unknown	common	sk	Neznámy
+update	common	sk	Aktualizácia
+update the clock per minute or per second	common	sk	Obnovovať hodinky po sekundách alebo po minútach
+upload	common	sk	Odoslať
+upload directory does not exist, or is not writeable by webserver	common	sk	Adresár pre odoslanie buď neexistuje, alebo doň webserver nemôže zapisovať.
+upload requires the directory to be writable by the webserver!	common	sk	Odoslanie vyžaduje, aby bol adresár zapisovateľný webserverom!
+url	common	sk	URL adresa
+uruguay	common	sk	URUGUAY
+use button to search for	common	sk	stlač Tlačidlo pre vyhľadanie
+use button to search for address	common	sk	stlač Tlačidlo pre vyhľadanie adresy
+use button to search for calendarevent	common	sk	stlač Tlačidlo pre vyhľadanie záznamu v Kalendári
+use button to search for project	common	sk	stlač Tlačidlo pre vyhľadanie projektu
+user	common	sk	Používateľ
+user accounts	common	sk	používateľské účty
+user groups	common	sk	používateľské skupiny
+username	common	sk	Používateľské meno
+users	common	sk	používatelia
+users choice	common	sk	Používateľská Voľba
+uzbekistan	common	sk	UZBEKISTAN
+vanuatu	common	sk	VANUATU
+venezuela	common	sk	VENEZUELA
+version	common	sk	Verzia
+viet nam	common	sk	VIETNAM
+view	common	sk	Zobraziť
+virgin islands, british	common	sk	PANENSKÉ OSTROVY, BRITSKÉ
+virgin islands, u.s.	common	sk	PANENSKÉ OSTROVY, AMERICKÉ
+wallis and futuna	common	sk	WALLISOVE OSTROVY
+wednesday	common	sk	Streda
+welcome	common	sk	Vitajte
+western european	common	sk	Západoeurópske
+western sahara	common	sk	ZÁPADNÁ SAHARA
+what color should all the blank space on the desktop have	common	sk	Akú farbu má mať všetok prázdny priestor na desktope
+what style would you like the image to have?	common	sk	Aký štýl má mať obrázok?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	sk	Kde a ako sa budú zobrazovať odkazy eGroupware, ako sú Nastavenia, O aplikácii a Odhlásiť.
+which groups	common	sk	Ktoré skupiny
+width	common	sk	Šírka
+wk	jscalendar	sk	Týž
+work email	common	sk	pracovný E-mail
+would you like to display the page generation time at the bottom of every window?	common	sk	Chcete, aby sa naspodku stránky zobrazoval čas jej generovania?
+writing	common	sk	zapisuje sa
+written by:	common	sk	Zapísal:
+year	common	sk	Rok
+yemen	common	sk	JEMEN
+yes	common	sk	Áno
+you are required to change your password during your first login	common	sk	Počas svojho prvého prihlásenia budete musieť zmeniť svoje heslo
+you can customize how many icons and toolbars the editor shows.	common	sk	Môžete si nastaviť, koľko ikoniek a nástrojových panelov má editor zobrazovať.
+you have been successfully logged out	login	sk	Boli ste úspešne odhlásení.
+you have not entered a title	common	sk	Nezadali ste názov
+you have not entered a valid date	common	sk	Nezadali ste správny dátum
+you have not entered a valid time of day	common	sk	Nezadali ste správny čas
+you have not entered participants	common	sk	Nezadali ste spolupracovníkov
+you have selected an invalid date	common	sk	Vybrali ste chybný dátum!
+you have selected an invalid main category	common	sk	Vybrali ste chybnú hlavnú kategóriu!
+you have successfully logged out	common	sk	Boli ste úspešne odhlásení.
+you need to add the webserver user '%1' to the group '%2'.	common	sk	Je potrebné, aby ste priradili webserverového používateľa '%1' do skupiny '%2'.
+you need to be an egroupware administrator to access this functionality!	common	sk	Iba správca eGroupWare má prístup k tejto funkcionalite!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sk	Pokúsili ste sa otvoriť aplikáciu eGroupWare: %1, ale nemáte na to oprávnenia.
+your message could <b>not</b> be sent!<br>	common	sk	Vašu správu sa <b>nepodarilo</b> odoslať!<br>
+your message has been sent	common	sk	Vaša správa bola odoslaná
+your search returned %1 matchs	common	sk	našiel som %1 záznamov
+your search returned 1 match	common	sk	našiel som 1 záznam
+your session could not be verified.	login	sk	Vašu reláciu sa nepodarilo overiť.
+your settings have been updated	common	sk	Vaše nastavenia boli upravené
+zambia	common	sk	ZAMBIA
+zimbabwe	common	sk	ZIMBABWE
+zoom	common	sk	Lupa

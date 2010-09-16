@@ -1,0 +1,765 @@
+%1 email addresses inserted	common	fr	%1 adresse(s) email a (ont) été insérée(s)
+%1 is not executable by the webserver !!!	common	fr	%1 n'est pas exécutable par le serveur web !!!
+%1 manual	common	fr	%1 manuel
+%1 start	common	fr	% départ
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	fr	%1Choisissez un autre répertoire%2<br />ou faites en sorte que le serveur web puisse écrire dans %3
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1eGroupWare%2 est un progiciel de collaboration multi-utilisateur basé sur le web et écrit en %3PHP%4.
+(shift-)click or drag to change value	jscalendar	fr	(Shift-)Cliquer ou glisser pour changer la valeur
+- click on any of the time parts to increase it	jscalendar	fr	- Cliquer sur les chiffres horaires pour les augmenter
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	fr	- Maintenir le bouton de la souris sur n'importe lequel des boutons ci-dessus pour une sélection plus rapide.
+- or click and drag for faster selection.	jscalendar	fr	- ou cliquer et glisser pour une sélection plus rapide
+- or shift-click to decrease it	jscalendar	fr	- ou Shift-cliquer pour la décrémenter
+- use the %1, %2 buttons to select month	jscalendar	fr	- Utiliser les boutons %1, %2 pour sélectionner le mois
+- use the %1, %2 buttons to select year	jscalendar	fr	- Utiliser les boutons %1, %2 pour sélectionner l'année
+00 (disable)	admin	fr	00 (non actif)
+1 day	common	fr	1 Jour
+1 hour	common	fr	1 Heure
+1 month	common	fr	1 Mois
+1 week	common	fr	1 Semaine
+13 (ntp)	admin	fr	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourci jour
+3 number of chars for month-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourci mois
+80 (http)	admin	fr	80 (http)
+about	common	fr	A propos de
+about %1	common	fr	A propos de %1
+about egroupware	common	fr	A propos d'eGroupware
+about the calendar	jscalendar	fr	A propos du Calendrier
+about this editor	common	fr	A propos de cet éditeur
+access	common	fr	Accès
+access not permitted	common	fr	Accès non permis
+account has been created	common	fr	Le compte a été créé
+account has been deleted	common	fr	Le compte a été supprimé
+account has been updated	common	fr	Le compte a été mis à jour
+account is expired	common	fr	Le compte a expiré
+acl	common	fr	Liste de Contrôle d'Accès
+action	common	fr	Action
+active	common	fr	Actif
+add	common	fr	Ajouter
+add %1 category for	common	fr	Ajouter la catégorie %1 pour
+add category	common	fr	Ajouter catégorie
+add shortcut	common	fr	Ajouter raccourci
+add sub	common	fr	Ajouter enfant
+addressbook	common	fr	Carnet d'adresses
+admin	common	fr	Admin
+administration	common	fr	Administration
+afghanistan	common	fr	AFGHANISTAN
+albania	common	fr	ALBANIE
+algeria	common	fr	ALGERIE
+all	common	fr	Tout
+all fields	common	fr	tous les champs
+alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	fr	Feuille de style alternative:
+american samoa	common	fr	SAMOA AMERICAINES
+andorra	common	fr	ANDORRE
+angola	common	fr	ANGOLA
+anguilla	common	fr	ANGUILLA
+antarctica	common	fr	ANTARCTIQUE
+antigua and barbuda	common	fr	ANTIGUE ET BARBADE
+application	common	fr	Application
+apply	common	fr	Appliquer
+april	common	fr	Avril
+are you sure you want to delete these entries ?	common	fr	Etes-vous sûr de vouloir supprimer ces entrées ?
+are you sure you want to delete this entry ?	common	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
+argentina	common	fr	ARGENTINE
+armenia	common	fr	ARMENIE
+aruba	common	fr	ARUBA
+august	common	fr	Août
+australia	common	fr	AUSTRALIE
+austria	common	fr	AUTRICHE
+author	common	fr	Auteur
+autohide sidebox menu's	common	fr	Cacher automatiquement la barre de menu latérale
+autohide sidebox menus	common	fr	Cacher automatiquement la barre de menu latérale
+automatically hide the sidebox menu's?	common	fr	Cacher automatiquement la barre de menu latérale ?
+automatically hide the sidebox menus?	common	fr	Cacher automatiquement la barre de menu latérale ?
+autosave default category	common	fr	Enregistrement automatique dans catégorie par défaut
+azerbaijan	common	fr	AZERBAIDJAN
+back	common	fr	Retour
+back to user login	common	fr	Retour au Login utilisateur
+background color	common	fr	Couleur de fond
+background color:	common	fr	Couleur de fond:
+backupdir '%1' is not writeable by the webserver	common	fr	Le serveur web ne peut pas écrire dans le répertoire de sauvegarde '%1'
+bad login or password	common	fr	Mauvais login ou mot de passe
+bahamas	common	fr	BAHAMAS
+bahrain	common	fr	BAHRAIN
+bangladesh	common	fr	BANGLADESH
+barbados	common	fr	BARBADE
+bcc	common	fr	Bcc
+belarus	common	fr	BIELORUSSIE
+belgium	common	fr	BELGIQUE
+belize	common	fr	BELIZE
+benin	common	fr	BENIN
+bermuda	common	fr	BERMUDES
+bhutan	common	fr	BOUTAN
+blocked, too many attempts	common	fr	Accès refusé car trop de tentatives infructueuses
+bold	common	fr	Gras
+bold.gif	common	fr	bold_fr.gif
+bolivia	common	fr	BOLIVIE
+border	common	fr	Bordure
+bosnia and herzegovina	common	fr	BOSNIE HERZEGOVINE
+botswana	common	fr	BOTSWANA
+bottom	common	fr	Bas
+bouvet island	common	fr	ILE BOUVET
+brazil	common	fr	BRESIL
+british indian ocean territory	common	fr	TERRITOIRES ANGLAIS DE L'OCEAN INDIEN
+brunei darussalam	common	fr	SULTANAT DE BRUNEI
+bulgaria	common	fr	BULGARIE
+bulleted list	common	fr	Liste à points
+burkina faso	common	fr	BURKINA FASO
+burundi	common	fr	BURUNDI
+calendar	common	fr	Calendrier
+cambodia	common	fr	CAMBODGE
+cameroon	common	fr	CAMEROUN
+canada	common	fr	CANADA
+cancel	common	fr	Annuler
+cannot replace %1 because it is a directory	common	fr	Impossible de remplacer %1 car est un répertoire
+cant open '%1' for %2	common	fr	Impossible d'ouvrir '%1' pour %2
+cape verde	common	fr	CAP VERT
+caption	common	fr	Légende
+categories	common	fr	Catégories
+categories for	common	fr	catégories pour
+category	common	fr	Catégorie
+category %1 has been added !	common	fr	La catégorie %1 a été ajoutée !
+category %1 has been updated !	common	fr	La catégorie %1 a été mise à jour !
+cayman islands	common	fr	ILES CAIMAN
+cc	common	fr	Cc
+centered	common	fr	centré
+central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
+chad	common	fr	TCHAD
+change	common	fr	Changer
+charset	common	fr	utf-8
+check installation	common	fr	Vérifier l'installation
+check now	common	fr	Vérifier maintenant
+chile	common	fr	CHILI
+china	common	fr	CHINE
+choose a background color	common	fr	Choisissez une couleur de fond
+choose a background color for the icons	common	fr	Choisissez une couleur de fond pour les icônes
+choose a background image.	common	fr	Choisissez une image de fond
+choose a background style.	common	fr	Choisissez un style de fond
+choose a text color for the icons	common	fr	Choisissez une couleur de texte pour les icônes
+choose the category	common	fr	Choisir la catégorie
+choose the parent category	common	fr	Choisir la catégorie parent
+christmas island	common	fr	ILE NOEL
+clear	common	fr	Effacer
+clear form	common	fr	Effacer le formulaire
+click	common	fr	Cliquer
+click or mouse over to show menus	common	fr	Cliquer ou passer la souris dessus pour voir les menus
+click or mouse over to show menus?	common	fr	Cliquer ou passer la souris dessus pour voir les menus?
+click this image on the navbar: %1	common	fr	Cliquez cette image sur la barre de navigation: %1
+close	common	fr	Fermer
+close sidebox	common	fr	Fermer la barre de menu latérale
+cocos (keeling) islands	common	fr	ILES COCOS (KEELING)
+colombia	common	fr	COLOMBIE
+common preferences	common	fr	Préférences communes
+comoros	common	fr	COMORRES
+company	common	fr	Société
+congo	common	fr	CONGO
+congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE DU
+contacting server...	common	fr	Connexion au serveur...
+cook islands	common	fr	ILES COOK
+copy	common	fr	Copier
+copy selection	common	fr	Copier la sélection
+costa rica	common	fr	COSTA RICA
+cote d ivoire	common	fr	COTE D IVOIRE
+could not contact server. operation timed out!	common	fr	Impossible de connecter au serveur. Le délai d'attente est dépassé!
+create	common	fr	Créer
+created by	common	fr	Créé par
+croatia	common	fr	CROATIE
+cuba	common	fr	CUBA
+currency	common	fr	Devise
+current	common	fr	Courant
+current style	common	fr	Style actuel
+current users	common	fr	Utilisateurs connectés
+cut selection	common	fr	Couper la sélection
+cyprus	common	fr	CHYPRE
+czech republic	common	fr	REPUBLIQUE TCHEQUE
+date	common	fr	Date
+date due	common	fr	Date butoire
+date selection:	jscalendar	fr	Sélection de la date :
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptez svp les règles de votre pare-feu avant de soumettre cette page.<br>(Port: 13 / Hôte: 129.6.15.28)
+december	common	fr	Décembre
+decrease indent	common	fr	Réduire l'indentation
+default category	common	fr	Catégorie par défaut
+default height for the windows	common	fr	Hauteur par défaut de la fenêtre
+default width for the windows	common	fr	Largeur par défaut de la fenêtre
+delete	common	fr	Supprimer
+delete row	common	fr	Supprimer ligne
+denmark	common	fr	DANEMARK
+description	common	fr	Description
+detail	common	fr	Détail
+details	common	fr	Détails
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script correcteur pour Internet Explorer 5.5 et plus récent pour montrer la transparence des images PNG?
+direction left to right	common	fr	Direction de gauche à droite
+disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
+disable slider effects	common	fr	Désactiver les effets de glisse
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? Les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script de déboguage visant à afficher la transparence dans les images PNG sous Internet Explorer 5.5 ou plus?
+disabled	common	fr	Désactivé
+display %s first	jscalendar	fr	Affiche %s en premier
+djibouti	common	fr	DJIBOUTI
+do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
+doctype:	common	fr	Type de document
+document properties	common	fr	Propriétés du document
+document title:	common	fr	Titre du document:
+domain	common	fr	Domaine
+domain name for mail-address, eg. "%1"	common	fr	Nom du domaine pour les adresses email, p.ex. "%1"
+domestic	common	fr	Intérieur
+dominica	common	fr	DOMINIQUE
+dominican republic	common	fr	REPUBLIQUE DOMINICAINE
+done	common	fr	Fait
+drag to move	jscalendar	fr	Glisser pour le déplacer
+e-mail	common	fr	email
+east timor	common	fr	TIMOR EST
+ecuador	common	fr	ECUADOR
+edit	common	fr	Modifier
+edit %1 category for	common	fr	Modifier la catégorie %1 pour
+edit categories	common	fr	Modifier les catégories
+edit category	common	fr	Modifier la catégorie
+egroupware api version %1	common	fr	eGroupWare version API %1
+egroupware: login blocked for user '%1', ip %2	common	fr	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
+egypt	common	fr	EGYPTE
+el salvador	common	fr	SALVADOR
+email	common	fr	E-mail
+email-address of the user, eg. "%1"	common	fr	Adresse e-mail de l'utilisateur, p.ex. "%1"
+en	common	fr	en
+enabled	common	fr	Activé
+end date	common	fr	Date de fin
+end time	common	fr	Heure de fin
+enlarge editor	common	fr	Agrandir l'Editeur
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´eGroupWare.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
+entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
+entry updated sucessfully	common	fr	Entrée mise à jour avec succès
+equatorial guinea	common	fr	GUINEE EQUATORIALE
+eritrea	common	fr	ERYTHREE
+error	common	fr	Erreur
+error creating %1 %2 directory	common	fr	Erreur à la création du répertoire %1 %2
+error deleting %1 %2 directory	common	fr	Erreur à la suppression du répertoire %1 %2
+error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
+estonia	common	fr	ESTONIE
+ethiopia	common	fr	ETHIOPIE
+exact	common	fr	exact
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fr	Impossible de contacter le serveur ou réponse invalide de ce dernier. Essayez de vous reconnecter. En cas de panne contactez votre administrateur.
+falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
+faroe islands	common	fr	ILES FAROE
+fax number	common	fr	Numéro de fax
+february	common	fr	Février
+fields	common	fr	Champs
+fiji	common	fr	FIDJI
+files	common	fr	Fichiers
+filter	common	fr	Filtrer
+finland	common	fr	FINLANDE
+first name	common	fr	Prénom
+first name of the user, eg. "%1"	common	fr	Prénom de l'utilisateur, p.ex. "%1"
+first page	common	fr	Première page
+firstname	common	fr	Prénom
+fixme!	common	fr	CORRIGEZ-MOI!
+folder already exists.	common	fr	Le dossier existe déjà.
+font color	common	fr	Couleur de la Police
+force selectbox	common	fr	Forcer la boîte de sélection
+forever	common	fr	Toujours
+france	common	fr	FRANCE
+french guiana	common	fr	GUYANNE FRANCAISE
+french polynesia	common	fr	POLYNESIE FRANCAISE
+french southern territories	common	fr	TERRITOIRES FRANCAIS DU SUD
+friday	common	fr	Vendredi
+ftp	common	fr	FTP
+fullname	common	fr	Nom complet
+fullscreen mode	common	fr	Mode plein écran
+gabon	common	fr	GABON
+gambia	common	fr	GAMBIE
+general menu	common	fr	Menu Général
+georgia	common	fr	GEORGIE
+german	common	fr	Allemand
+germany	common	fr	ALLEMAGNE
+ghana	common	fr	GHANA
+gibraltar	common	fr	GIBRALTAR
+global	common	fr	Global
+global public	common	fr	Public global
+go today	jscalendar	fr	Aller à aujourd'hui
+grant access	common	fr	Autoriser l'accès
+greece	common	fr	GRECE
+greenland	common	fr	GROENLANDE
+grenada	common	fr	GRENADE
+group	common	fr	Groupe
+group access	common	fr	Accès par groupe
+group has been added	common	fr	Le groupe a été ajouté
+group has been deleted	common	fr	Le groupe a été supprimé
+group has been updated	common	fr	Le groupe a été mis à jour
+group name	common	fr	Nom du groupe
+group public	common	fr	Public par groupe
+groups	common	fr	Groupes
+groups with permission for %1	common	fr	Groupes avec la permission pour %1
+groups without permission for %1	common	fr	Groupes sans la permission pour %1
+guadeloupe	common	fr	GUADELOUPE
+guam	common	fr	GUAM
+guatemala	common	fr	GUATEMALA
+guinea	common	fr	GUINEE
+guinea-bissau	common	fr	GUINEE-BISSAU
+guyana	common	fr	GUYANE
+haiti	common	fr	HAITI
+heard island and mcdonald islands	common	fr	ILE HEARD ET ILES MCDONALD
+height	common	fr	Hauteur
+help	common	fr	Aide
+help using editor	common	fr	Aide à l'utilisation de l'éditeur
+high	common	fr	Haut
+highest	common	fr	Plus haut
+holy see (vatican city state)	common	fr	VATICAN
+home	common	fr	Accueil
+home email	common	fr	email privé
+honduras	common	fr	HONDURAS
+hong kong	common	fr	HONG KONG
+horizontal rule	common	fr	Règle Horizontale
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fr	Combien d'icônes devraient être affichées sur la barre de navigation (haut de page). Les icônes suplémentaires seront placées dans une liste que l'on appellera via une icône à droite de la barre de navigation.
+how to show the general egroupware menu ?	common	fr	Comment afficher le menu général d'eGroupWare ?
+hungary	common	fr	HONGRIE
+iceland	common	fr	ISLANDE
+iespell not detected. click ok to go to download page.	common	fr	ieSpell non détecté. Cliquez sur Ok pour aller à la page de téléchargement.
+if the clock is enabled would you like it to update it every second or every minute?	common	fr	Si l'horloge est activée voulez-vous la mettre à jour toutes les secondes ou toutes les minutes?
+if there are some images in the background folder you can choose the one you would like to see.	common	fr	S'il y a des images dans le dossier d'arrière-plan vous pouvez choisir celle que vous voulez voir.
+image url	common	fr	URL de l'Image
+increase indent	common	fr	Augmenter le retrait
+india	common	fr	INDE
+indonesia	common	fr	INDONESIE
+insert 'return false'	common	fr	Insérer 'return false'
+insert all %1 addresses of the %2 contacts in %3	common	fr	Insérer toutes les %1 adresses des %2 contacts de %3
+insert column after	common	fr	Insérer  une colonne après
+insert column before	common	fr	Insérer une colonne avant
+insert image	common	fr	Insérer une image
+insert row after	common	fr	Insérer une ligne après
+insert row before	common	fr	Insérer une ligne avant
+insert table	common	fr	Insérer une table
+insert web link	common	fr	Insérer un lien web
+international	common	fr	International
+invalid filename	common	fr	Nom de fichier invalide
+invalid ip address	common	fr	Adresse IP invalide
+invalid password	common	fr	Mot de passe invalide
+iran, islamic republic of	common	fr	IRAN, REPUBLIQUE ISLAMIQUE D'
+iraq	common	fr	IRAK
+ireland	common	fr	IRLANDE
+israel	common	fr	ISRAEL
+it has been more then %1 days since you changed your password	common	fr	Cela fait plus de %1 jours que vous n'avez pas changé votre mot de passe
+it is recommended that you run setup to upgrade your tables to the current version	common	fr	Il vous est recommandé d'exécuter "setup" pour mettre à jour vos tables vers la version actuelle.
+italic	common	fr	Italique
+italic.gif	common	fr	italic.gif
+italy	common	fr	ITALIE
+jamaica	common	fr	JAMAIQUE
+january	common	fr	Janvier
+japan	common	fr	JAPON
+jordan	common	fr	JORDANIE
+july	common	fr	Juillet
+jun	common	fr	Jun
+june	common	fr	Juin
+justify center	common	fr	Centrer
+justify full	common	fr	Justifier
+justify left	common	fr	Aligner à Gauche
+justify right	common	fr	Aligner à Droite
+kazakstan	common	fr	KAZAKSTAN
+kenya	common	fr	KENYA
+keywords	common	fr	Mots-clés
+kiribati	common	fr	KIRIBATI
+korea, democratic peoples republic of	common	fr	COREE, REPUBLIQUE DEMOCRATIQUE DES PEUPLES DE
+korea, republic of	common	fr	COREE, REPUBLIQUE DE
+kuwait	common	fr	KOWAIT
+kyrgyzstan	common	fr	KYRGYZSTAN
+language	common	fr	Langue
+language_direction_rtl	common	fr	language_direction_rtl
+lao peoples democratic republic	common	fr	LAOS, REPUBLIQUE DEMOCRATIQUE DES PEUPLES DU
+last name	common	fr	Nom
+last name of the user, eg. "%1"	common	fr	Nom de l'utilisateur, p.ex. "%1"
+last page	common	fr	Dernière page
+lastname	common	fr	Nom
+latvia	common	fr	LATVIA
+ldap-mgr	common	fr	Gestionnaire-LDAP
+lebanon	common	fr	LIBAN
+left	common	fr	Gauche
+lesotho	common	fr	LESOTHO
+liberia	common	fr	LIBERIA
+libyan arab jamahiriya	common	fr	LIBYE
+license	common	fr	Licence
+liechtenstein	common	fr	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'<br><b>Les données csv ne correspondent pas au nombre de colonnes de la table %3 ==> ignoré</b>
+list	common	fr	Liste
+list members	common	fr	Liste les membres
+lithuania	common	fr	LITHUANIE
+local	common	fr	Local
+login	common	fr	Login
+loginid	common	fr	LoginID
+logout	common	fr	Déconnexion
+lost login id	common	fr	Identifiant oublié
+lost password	common	fr	Mot de passe oublié
+low	common	fr	Bas
+lowest	common	fr	Plus bas
+luxembourg	common	fr	LUXEMBOURG
+macau	common	fr	MACAU
+macedonia, the former yugoslav republic of	common	fr	MACEDONIE, PRECEDEMMENT REPUBLIQUE YOUGOSLAVE DE
+madagascar	common	fr	MADAGASCAR
+mail domain, eg. "%1"	common	fr	Domaine email, p.ex. "%1"
+main category	common	fr	Catégorie principale
+main screen	common	fr	Ecran principal
+maintainer	common	fr	Mainteneur
+malawi	common	fr	MALAWI
+malaysia	common	fr	MALAYSIE
+maldives	common	fr	MALDIVES
+mali	common	fr	MALI
+malta	common	fr	MALTE
+march	common	fr	Mars
+marshall islands	common	fr	ILES MARSHALL
+martinique	common	fr	MARTINIQUE
+mauritania	common	fr	MAURITANIE
+mauritius	common	fr	ILES MAURICE
+max number of icons in navbar	common	fr	Nombre maximum d'icônes dans la barre de navigation
+may	common	fr	Mai
+mayotte	common	fr	MAYOTTE
+medium	common	fr	Moyen
+menu	common	fr	Menu
+message	common	fr	Message
+mexico	common	fr	MEXIQUE
+micronesia, federated states of	common	fr	MICRONESIA, ETATS FEDERES DE
+minute	common	fr	minute
+moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
+monaco	common	fr	MONACO
+monday	common	fr	Lundi
+mongolia	common	fr	MONGOLIE
+montserrat	common	fr	MONTSERRAT
+morocco	common	fr	MAROC
+mozambique	common	fr	MOZAMBIQUE
+multiple	common	fr	multiple
+myanmar	common	fr	MYANMAR
+name	common	fr	Nom
+name of the user, eg. "%1"	common	fr	Nom de l'utilisateur, p.ex. "%1"
+namibia	common	fr	NAMIBIE
+nauru	common	fr	NAURU
+nepal	common	fr	NEPAL
+netherlands	common	fr	PAYS-BAS
+netherlands antilles	common	fr	ANTILLES HOLLANDAISES
+never	common	fr	Jamais
+new caledonia	common	fr	NOUVELLE CALEDONIE
+new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
+new main category	common	fr	Nouvelle catégorie principale
+new value	common	fr	Nouvelle valeur
+new zealand	common	fr	NOUVELLE ZELANDE
+next	common	fr	Suivant
+next month (hold for menu)	jscalendar	fr	Mois suivant (maintenir pour menu)
+next page	common	fr	Page suivante
+next year (hold for menu)	jscalendar	fr	Année suivante (maintenir pour menu)
+nicaragua	common	fr	NICARAGUA
+niger	common	fr	NIGER
+nigeria	common	fr	NIGERIA
+niue	common	fr	NIUE
+no	common	fr	Non
+no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
+no history for this record	common	fr	Pas d'historique pour cet enregistrement
+no savant2 template directories were found in:	common	fr	Pas de  dossier modèle Savant2 n'a été trouvé dans:
+no subject	common	fr	Sans objet
+none	common	fr	Aucun
+norfolk island	common	fr	ILE NORFOLK
+normal	common	fr	Normal
+northern mariana islands	common	fr	ILES MARIANA DU NORD
+norway	common	fr	NORVEGE
+not	common	fr	pas
+not a user yet? register now	common	fr	Pas encore identifié? Enregisrez-vous maintenant
+not assigned	common	fr	non assigné
+note	common	fr	Note
+notes	common	fr	Notes
+notify window	common	fr	Fenêtre de notification
+notify your administrator to correct this situation	common	fr	Demandez à votre administrateur de corriger la situation
+november	common	fr	Novembre
+october	common	fr	Octobre
+ok	common	fr	OK
+old value	common	fr	Ancienne valeur
+oman	common	fr	OMAN
+on *nix systems please type: %1	common	fr	Sur les systèmes *nix SVP tapez: %1
+on mouse over	common	fr	Sur le relâchement du clic de la souris
+only private	common	fr	seulement privés
+only yours	common	fr	seulement les vôtres
+oops! you caught us in the middle of system maintainance.	common	fr	Oups! Vous êtes arrivé en pleine maintenance système.
+open notify window	common	fr	Ouvrir une fenêtre de notification
+open popup window	common	fr	Ouvrir une fenêtre de popup
+open sidebox	common	fr	Ouvrir la barre de menu latérale
+ordered list	common	fr	Liste ordonnées (numéros)
+original	common	fr	Original
+other	common	fr	Autre
+overview	common	fr	Vue d'ensemble
+owner	common	fr	Propriétaire
+page	common	fr	Page
+page was generated in %1 seconds	common	fr	La page a été générée en %1 secondes
+pakistan	common	fr	PAKISTAN
+palau	common	fr	PALAU
+palestinian territory, occupied	common	fr	PALESTINE, TERRITOIRE OCCUPE
+panama	common	fr	PANAMA
+papua new guinea	common	fr	PAPOUASIE NOUVELLE GUINEE
+paraguay	common	fr	PARAGUAY
+parcel	common	fr	Colis
+parent category	common	fr	Catégorie parente
+password	common	fr	Mot de passe
+password could not be changed	common	fr	Le mot de passe n'a pas pu être modifié
+password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
+password must contain at least %1 lowercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères minuscules
+password must contain at least %1 numbers	common	fr	Le mot de passe doit contenir au moins %1 chiffres
+password must contain at least %1 special characters	common	fr	Le mot de passe doit contenir au moins %1 caractères spéciaux
+password must contain at least %1 uppercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères majuscules
+password must have at least %1 characters	common	fr	Le mot de passe doit contenir au moins %1 caractères
+paste from clipboard	common	fr	Coller depuis le presse-papiers
+path	common	fr	Chemin
+path to user and group files has to be outside of the webservers document-root!!!	common	fr	Le chemin vers les fichiers des utilisateurs et groupes DOIT ETRE EN DEHORS de la racine des documents du serveur web!!!
+pattern for search in addressbook	common	fr	Chaîne à rechercher dans le carnet d'adresses
+pattern for search in calendar	common	fr	Chaîne à rechercher dans le calendrier
+pattern for search in projects	common	fr	Chaîne à rechercher dans les projets
+permissions to the files/users directory	common	fr	Permissions sur le répertoire fichiers/utilisateurs
+personal	common	fr	Personnel
+peru	common	fr	PERU
+philippines	common	fr	PHILIPPINES
+phone number	common	fr	numéro de téléphone
+phpgwapi	common	fr	API eGroupWare
+pitcairn	common	fr	PITCAIRN
+please %1 by hand	common	fr	Veuillez %1 à la main
+please enter a name	common	fr	Veuillez saisir un nom !
+please run setup to become current	common	fr	Veuillez exécuter le setup pour vous mettre à jour
+please select	common	fr	Veuillez sélectionner
+please set your global preferences	common	fr	Veuillez définir vos préférences globales !
+please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
+please wait...	common	fr	Veuillez patienter...
+please, check back with us shortly.	common	fr	Veuillez revenir bientôt afin de vérifier avec nous.
+poland	common	fr	POLOGNE
+portugal	common	fr	PORTUGAL
+postal	common	fr	Code postal
+powered by	common	fr	Motorisé par
+preferences	common	fr	Préférences
+preferences for the idots template set	common	fr	Préférences pour l´application du modèle idots
+prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
+prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
+previous page	common	fr	Page précédente
+primary style-sheet:	common	fr	Feuille de style primaire:
+print	common	fr	Imprimer
+priority	common	fr	Priorité
+private	common	fr	Privé
+programs	common	fr	Programmes
+project	common	fr	Projet
+public	common	fr	public
+puerto rico	common	fr	PUERTO RICO
+qatar	common	fr	QATAR
+read	common	fr	Lire
+read this list of methods.	common	fr	Lisez cette liste de méthodes.
+reading	common	fr	Lecture
+redoes your last action	common	fr	Refait votre dernière action
+register	common	fr	S'enregistrer
+reject	common	fr	Rejeter
+remember me	common	fr	Se souvenir de moi
+remove selected accounts	common	fr	supprimer les comptes sélectionnés
+remove shortcut	common	fr	Supprimer le raccourci
+rename	common	fr	Renommer
+replace	common	fr	Remplacer
+replace with	common	fr	Remplacer par
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	fr	Retourne une liste complète des comptes sur le système. Attention: ceci peut être très long
+returns an array of todo items	common	fr	Retourne une liste d'actions à effectuer
+returns struct of users application access	common	fr	Retourne une structure d'accès aux applications des utilisateurs
+reunion	common	fr	REUNION
+right	common	fr	Droit
+romania	common	fr	ROUMANIE
+russian federation	common	fr	FEDERATION DE RUSSIE
+rwanda	common	fr	RWANDA
+saint helena	common	fr	SAINTE HELENE
+saint kitts and nevis	common	fr	SAINT KITTS ET NEVIS
+saint lucia	common	fr	SAINTE LUCIE
+saint pierre and miquelon	common	fr	SAINT PIERRE ET MIQUELON
+saint vincent and the grenadines	common	fr	SAINT VINCENT ET LES GRENADINES
+samoa	common	fr	SAMOA
+san marino	common	fr	SAN MARIN
+sao tome and principe	common	fr	SAO TOME ET PRINCIPE
+saturday	common	fr	Samedi
+saudi arabia	common	fr	ARABIE SAOUDITE
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fr	La version de Savant2 n'est pas identique à celle du package Savant2.
+save	common	fr	Enregistrer
+search	common	fr	Rechercher
+search %1 '%2'	common	fr	Rechercher %1 '%2'
+search or select accounts	common	fr	Rechercher ou sélectionner des comptes
+search or select multiple accounts	common	fr	Rechercher ou sélectionner des comptes multiples
+second	common	fr	seconde
+section	common	fr	Section
+select	common	fr	Sélectionner
+select all %1 %2 for %3	common	fr	Sélectionner tous les %11 %2 pour %3
+select category	common	fr	Sélectionner la catégorie
+select date	common	fr	Sélectionner la date
+select group	common	fr	Sélectionner le groupe
+select home email address	common	fr	Sélectionner l'email privé
+select multiple accounts	common	fr	Sélectionner des comptes multiples
+select one	common	fr	Sélectionner un(e)
+select the default height for the application windows	common	fr	Choisissez la hauteur par défaut de la fenêtre d'application
+select the default width for the application windows	common	fr	Choisissez la largeur par défaut de la fenêtre d'application
+select user	common	fr	Sélectionner l'utilisateur
+select work email address	common	fr	Sélectionner l'email professionnel
+selection	common	fr	Sélection
+send	common	fr	Envoyer
+senegal	common	fr	SENEGAL
+september	common	fr	Septembre
+server %1 has been added	common	fr	Le serveur %1 a été ajouté
+server answered. processing response...	common	fr	Le serveur a répondu. Traitement de la réponse...
+server contacted. waiting for response...	common	fr	Le serveur a été contacté. Attente de la réponse...
+server name	common	fr	Nom du serveur
+session has been killed	common	fr	La session a été interrompue
+setup	common	fr	Setup
+setup main menu	common	fr	Menu principal du Setup
+seychelles	common	fr	SEYCHELLES
+show all	common	fr	Afficher tous les éléments
+show all categorys	common	fr	Afficher toutes les catégories
+show as topmenu	common	fr	Afficher en tant que menu supérieur
+show clock?	common	fr	Afficher l'horloge?
+show home and logout button in main application bar?	common	fr	Afficher les boutons Accueil et Déconnexion dans la barre d'application principale?
+show in sidebox	common	fr	Afficher dans la barre de menu latérale
+show logo's on the desktop.	common	fr	Afficher le logo sur le bureau?
+show menu	common	fr	Afficher le menu
+show page generation time	common	fr	Afficher le temps de génération de la page
+show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page?
+show page generation time?	common	fr	Afficher le temps de génération de la page?
+show the logo's of egroupware and x-desktop on the desktop.	common	fr	Afficher les logos d'eGroupware et x-desktop sur le bureau?
+show_more_apps	common	fr	Voir plus d'applications
+showing %1	common	fr	Montre %1
+showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
+sierra leone	common	fr	SIERRA LEONE
+singapore	common	fr	SINGAPOUR
+slovakia	common	fr	SLOVAQUIE
+slovenia	common	fr	SLOVENIE
+solomon islands	common	fr	ILES SALOMON
+somalia	common	fr	SOMALIE
+sorry, your login has expired	login	fr	Désolé, votre login a expiré
+south africa	common	fr	AFRIQUE DU SUD
+south georgia and the south sandwich islands	common	fr	GEORGIE DU SUD ET LES ILES SANDWICH DU SUD
+spain	common	fr	ESPAGNE
+sri lanka	common	fr	SRI LANKA
+start date	common	fr	Date de début
+start time	common	fr	Heure de début
+start with	common	fr	commence par
+starting up...	common	fr	Démarrage...
+status	common	fr	Etat
+stretched	common	fr	étiré
+strikethrough	common	fr	Barré
+subject	common	fr	Objet
+submit	common	fr	Envoyer
+subscript	common	fr	Indice
+substitutions and their meanings:	common	fr	Substitutions et leurs sens:
+sudan	common	fr	SOUDAN
+sunday	common	fr	Dimanche
+superscript	common	fr	Exposant
+suriname	common	fr	SURINAM
+svalbard and jan mayen	common	fr	SVALBARD ETJAN MAYEN
+swaziland	common	fr	SWAZILAND
+sweden	common	fr	SUEDE
+switzerland	common	fr	SUISSE
+syrian arab republic	common	fr	SYRIE
+table properties	common	fr	Propriétés du tableau
+taiwan	common	fr	TAIWAN/TAIPEI
+tajikistan	common	fr	TAJIKISTAN
+tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE DE
+text color:	common	fr	Couleur du Texte:
+thailand	common	fr	THAILANDE
+the api is current	common	fr	L'API est à jour
+the api requires an upgrade	common	fr	L'API nécessite une mise à jour
+the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
+the mail server returned	common	fr	Le serveur email a renvoyé
+this application is current	common	fr	Cette application est à jour
+this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
+this name has been used already	common	fr	Ce nom est déjà utilisé !
+thursday	common	fr	Jeudi
+tiled	common	fr	mosaïque
+time	common	fr	Heure
+time selection:	jscalendar	fr	Sélection du temps:
+time zone	common	fr	Fuseau horaire
+time zone offset	common	fr	Décalage du fuseau horaire
+title	common	fr	Titre
+to	common	fr	Pour
+to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur dans le futur vous devrez définir correctement le/la
+to go back to the msg list, click <a href= %1 >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
+today	common	fr	Aujourd'hui
+todays date, eg. "%1"	common	fr	date d'aujourd'hui, p.ex. "%1"
+toggle first day of week	jscalendar	fr	Voir le premier jour de la semaine
+toggle html source	common	fr	Basculer en code HTML source
+togo	common	fr	TOGO
+tokelau	common	fr	TOKELAU
+tonga	common	fr	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fr	Trop de tentatives de connexion infructueuses: %1 pour l'utilisateur '%2', %3 pour l'IP %4
+top	common	fr	Haut
+total	common	fr	Total
+transparant bg for the icons?	common	fr	Fond transparent pour les icônes?
+trinidad and tobago	common	fr	TRINIDAD ET TOBAGO
+tuesday	common	fr	Mardi
+tunisia	common	fr	TUNISIE
+turkey	common	fr	TURQUIE
+turkmenistan	common	fr	TURKMENISTAN
+turks and caicos islands	common	fr	ILES TURKS ET CAICOS
+tuvalu	common	fr	TUVALU
+type	common	fr	Type
+uganda	common	fr	OUGANDA
+ukraine	common	fr	UKRAINE
+underline	common	fr	Souligné
+underline.gif	common	fr	underline.gif
+undoes your last action	common	fr	Annule votre dernière action
+united arab emirates	common	fr	EMIRATS ARABES UNIS
+united kingdom	common	fr	ROYAUME UNI
+united states	common	fr	ETATS-UNIS
+united states minor outlying islands	common	fr	ILES MINEURES RELIEES AUX ETATS-UNIS
+unknown	common	fr	Inconnu
+update	common	fr	Mettre à jour
+update the clock per minute or per second	common	fr	Mettre à jour l'horloge par minutes ou secondes
+upload	common	fr	Déposer
+upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire de dépôt n'existe pas ou le serveur web ne peut pas y écrire
+url	common	fr	Url
+uruguay	common	fr	URUGUAY
+use button to search for	common	fr	Utilisez le bouton pour rechercher
+use button to search for address	common	fr	Utilisez le bouton pour rechercher une adresse
+use button to search for calendarevent	common	fr	Utilisez le bouton pour rechercher un événement
+use button to search for project	common	fr	Utilisez le bouton pour rechercher un projet
+user	common	fr	Utilisateur
+user accounts	common	fr	Comptes utilisateurs
+user groups	common	fr	Groupes utilisateurs
+user openinstance	common	fr	Instance utilisateur ouverte
+username	common	fr	Nom d'utilisateur
+users	common	fr	Utilisateurs
+users choice	common	fr	Choix d'utilisateurs
+uzbekistan	common	fr	UZBEKISTAN
+vanuatu	common	fr	VANUATU
+venezuela	common	fr	VENEZUELA
+version	common	fr	version
+viet nam	common	fr	VIETNAM
+view	common	fr	Voir
+virgin islands, british	common	fr	ILES VIERGES ANGLAISES
+virgin islands, u.s.	common	fr	ILES VIERGES AMERICAINES
+wallis and futuna	common	fr	WALLIS ET FUTUNA
+wednesday	common	fr	Mercredi
+welcome	common	fr	Bienvenue
+western sahara	common	fr	SAHARA OUEST
+what color should all the blank space on the desktop have	common	fr	Quelle couleur l'espace vide du bureau doit-il avoir?
+what style would you like the image to have?	common	fr	Quel style  souhaitez-vous pour l'image?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fr	Si vous dites oui, les bouttons Accueil et Déconnexion sont affichés comme des applications dans la barre d'application principale.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	fr	Ou et comment seront affichés les liens comme Préférences, A propos de et Déconnexion.
+which groups	common	fr	Quels groupes
+width	common	fr	Largeur
+wk	jscalendar	fr	Sem.
+work email	common	fr	email professionnel
+would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre?
+writing	common	fr	écriture
+written by:	common	fr	Ecrit par:
+year	common	fr	Année
+yemen	common	fr	YEMEN
+yes	common	fr	Oui
+you are in text mode.  use the [<>] button to switch back to wysiwig.	common	fr	Vous êtes en MODE TEXTE. Utilisez le bouton [<>] pour revenir à WYSIWIG.
+you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
+you have been successfully logged out	login	fr	Déconnexion réussie
+you have not entered a title	common	fr	Vous n'avez pas entré de titre
+you have not entered a valid date	common	fr	Vous n'avez pas entré une date valide
+you have not entered a valid time of day	common	fr	Vous n'avez pas entré une heure du jour valide
+you have not entered participants	common	fr	Vous n'avez pas entré de participants
+you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
+you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
+you have successfully logged out	common	fr	Vous vous êtes correctement déconnecté
+you need to add the webserver user '%1' to the group '%2'.	common	fr	Vous devez ajouter l'utilisateur du serveur web '%1' au groupe '%2'.
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application eGroupWare: %1, mais vous n'avez aucune permission d'y accéder.
+your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé!<br>
+your message has been sent	common	fr	Votre message a été envoyé
+your search returned %1 matchs	common	fr	Votre recherche a retourné %1 résultats
+your search returned 1 match	common	fr	Votre recherche a retourné 1 résultat
+your session could not be verified.	login	fr	Votre session n'a pas pu être vérifiée.
+your settings have been updated	common	fr	Vos préférences ont été mises à jour
+yugoslavia	common	fr	YOUGOSLAVIE
+zambia	common	fr	ZAMBIE
+zimbabwe	common	fr	ZIMBABWE
+zoom	common	fr	Agrandissement
+site configuration	common	fr	Configuration du site

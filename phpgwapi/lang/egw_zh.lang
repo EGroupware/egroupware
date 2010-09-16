@@ -1,0 +1,757 @@
+%1 email addresses inserted	common	zh	已插入%1个电子邮件地址
+%1 is not executable by the webserver !!!	common	zh	Web 服务器无法执行%1！
+%1 manual	common	zh	%1用户指南
+%1 start	common	zh	%1开始
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	zh	%1选择另一个目录%2<br />或使得 Web 服务器可以写入%3
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1eGroupWare%2 是一个多用户、基于 Web 的以 %3PHP%4 为基础开发的工作组套件。
+(shift-)click or drag to change value	jscalendar	zh	(Shift+)点击或拖放修改其值
+- click on any of the time parts to increase it	jscalendar	zh	- 点击任何时间部分以增加它
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	zh	- 在任何一个按钮上保持按住鼠标键以加快选取。
+- or click and drag for faster selection.	jscalendar	zh	- 或点击拖放快速选择。
+- or shift-click to decrease it	jscalendar	zh	- 或 Shift+点击减少
+- use the %1, %2 buttons to select month	jscalendar	zh	- 使用 %1 、%2 按钮选择月份
+- use the %1, %2 buttons to select year	jscalendar	zh	- 使用 %1 、%2 按钮选择年份
+00 (disable)	admin	zh	00 (禁用)
+1 day	common	zh	1 天
+1 hour	common	zh	1 小时
+1 month	common	zh	1 个月
+1 week	common	zh	1 星期
+13 (ntp)	admin	zh	13 (NTP)
+3 number of chars for day-shortcut	jscalendar	zh	日期的简写
+3 number of chars for month-shortcut	jscalendar	zh	月份的简写
+80 (http)	admin	zh	80 (http)
+about	common	zh	关于
+about %1	common	zh	关于%1
+about egroupware	common	zh	关于 eGroupWare
+about the calendar	jscalendar	zh	关于该日历
+access	common	zh	访问
+access not permitted	common	zh	禁止访问
+account has been created	common	zh	账户创建成功
+account has been deleted	common	zh	账户已删除
+account has been updated	common	zh	账户已更新
+account is expired	common	zh	帐户已过有效期
+acl	common	zh	ACL
+action	common	zh	操作
+active	common	zh	活动的
+add	common	zh	添加
+add %1 category for	common	zh	添加类别为
+add category	common	zh	添加类别
+add shortcut	common	zh	添加快捷键
+add sub	common	zh	添加子类别
+addressbook	common	zh	通讯簿
+admin	common	zh	系统管理
+administration	common	zh	系统管理
+afghanistan	common	zh	阿富汗
+albania	common	zh	阿尔巴尼亚
+algeria	common	zh	阿尔及利亚
+all	common	zh	全部
+all fields	common	zh	所有字段
+alphabet	common	zh	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	zh	替代的样式表：
+american samoa	common	zh	东萨摩亚
+an error happened	common	zh	发生了错误
+an existing and by the webserver readable directory enables the image browser and upload.	common	zh	现有的和 Web 服务器可读取的目录可启用图片浏览与上传。
+andorra	common	zh	安道尔共和国
+angola	common	zh	安哥拉
+anguilla	common	zh	安圭拉岛
+antarctica	common	zh	南极洲
+antigua and barbuda	common	zh	安提瓜和巴布达·
+application	common	zh	应用程序
+apply	common	zh	应用
+april	common	zh	四月
+are you sure you want to delete these entries ?	common	zh	确定要删除这些条目吗？
+are you sure you want to delete this entry ?	common	zh	确定要删除该条目吗？
+argentina	common	zh	阿根廷
+armenia	common	zh	亚美尼亚
+aruba	common	zh	阿鲁巴岛
+august	common	zh	八月
+australia	common	zh	澳大利亚
+austria	common	zh	奥地利
+author	common	zh	作者
+autohide sidebox menu's	common	zh	自动隐藏侧栏菜单
+autohide sidebox menus	common	zh	自动隐藏侧边栏菜单
+automatically hide the sidebox menu's?	common	zh	是否自动隐藏侧栏菜单？
+automatically hide the sidebox menus?	common	zh	是否自动隐藏侧栏菜单？
+autosave default category	common	zh	自动保存为默认类别
+azerbaijan	common	zh	阿塞拜疆
+back	common	zh	返回
+back to user login	common	zh	返回登陆界面
+background color:	common	zh	背景颜色：
+backupdir '%1' is not writeable by the webserver	common	zh	备份目录'%1'对于 Web 服务器不可写
+bad login or password	common	zh	登录名或密码错误
+bahamas	common	zh	巴哈马群岛
+bahrain	common	zh	巴林群岛
+bangladesh	common	zh	孟加拉国
+barbados	common	zh	巴巴多斯岛
+bcc	common	zh	暗送
+belarus	common	zh	白俄罗斯
+belgium	common	zh	比利时
+belize	common	zh	伯利兹城
+benin	common	zh	贝宁湾
+bermuda	common	zh	百慕大群岛
+bhutan	common	zh	不丹
+blocked, too many attempts	common	zh	尝试次数过多，已封禁
+bold	common	zh	粗体
+bolivia	common	zh	玻利维亚
+border	common	zh	边框
+bosnia and herzegovina	common	zh	波黑
+botswana	common	zh	博茨瓦纳
+bottom	common	zh	底部
+bouvet island	common	zh	布维岛
+brazil	common	zh	巴西
+british indian ocean territory	common	zh	英属印度洋地区
+brunei darussalam	common	zh	文莱
+bulgaria	common	zh	保加利亚
+burkina faso	common	zh	布基纳法索
+burundi	common	zh	布隆迪
+calendar	common	zh	日历
+cambodia	common	zh	柬埔寨
+cameroon	common	zh	喀麦隆
+canada	common	zh	加拿大
+cancel	common	zh	取消
+cannot replace %1 because it is a directory	common	zh	不能替换%1，因为它是目录
+cant open '%1' for %2	common	zh	无法在%2打开'%1'
+cape verde	common	zh	佛得角
+caption	common	zh	标题
+categories	common	zh	类别
+categories for	common	zh	编辑类别. 当前用户
+category	common	zh	类别
+category %1 has been added !	common	zh	类别%1已添加！
+category %1 has been updated !	common	zh	类别%1已更新！
+cayman islands	common	zh	开曼群岛
+cc	common	zh	抄送
+centered	common	zh	居中
+central african republic	common	zh	中非共和国
+chad	common	zh	乍得湖
+change	common	zh	更改
+charset	common	zh	utf-8
+check installation	common	zh	检查安装
+check now	common	zh	立即检查
+chile	common	zh	智利
+china	common	zh	中国
+choose a background color	common	zh	选择背景颜色
+choose a background color for the icons	common	zh	选择图标背景颜色
+choose a background image.	common	zh	选择背景图片。
+choose a background style.	common	zh	选择背景风格。
+choose a text color for the icons	common	zh	选择图标文字颜色
+choose the category	common	zh	选择类别
+choose the parent category	common	zh	选择父类别
+christmas island	common	zh	圣诞岛
+clear	common	zh	清除
+clear form	common	zh	清除表单
+click	common	zh	点击
+click here to resume your egroupware session.	common	zh	点击这里恢复您的 eGroupWare 会话。
+click or mouse over to show menus	common	zh	点击或鼠标经过时显示菜单栏
+click or mouse over to show menus?	common	zh	点击或鼠标经过时显示菜单栏？
+click this image on the navbar: %1	common	zh	在导航条：%1上点击该图片
+close	common	zh	关闭
+close sidebox	common	zh	关闭侧边栏
+cocos (keeling) islands	common	zh	科科斯(基灵)群岛
+colombia	common	zh	哥伦比亚
+common preferences	common	zh	通用参数选择
+comoros	common	zh	科摩罗
+company	common	zh	公司
+congo	common	zh	刚果
+congo, the democratic republic of the	common	zh	刚果民主共和国
+contacting server...	common	zh	正在联系服务器...
+cook islands	common	zh	库克群岛
+copy	common	zh	复制
+costa rica	common	zh	哥斯达黎加
+cote d ivoire	common	zh	科特迪瓦
+could not contact server. operation timed out!	common	zh	无法连接服务器，操作超时！
+create	common	zh	创建
+created by	common	zh	创建者
+croatia	common	zh	克罗地亚
+cuba	common	zh	古巴
+currency	common	zh	货币
+current	common	zh	当前
+current users	common	zh	当前用户
+cyprus	common	zh	塞浦路斯
+czech republic	common	zh	捷克斯洛伐克共和国
+database error	common	zh	数据库错误
+database error!	common	zh	数据库错误！
+date	common	zh	日期
+date due	common	zh	到期日
+date selection:	jscalendar	zh	日期选择：
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh	日期时间端口。<br>如果使用端口13，请在提交前设置适当的防火墙规则。<br>(端口：13/主机：129.6.15.28)
+december	common	zh	十二月
+default category	common	zh	默认显示类别
+default height for the windows	common	zh	默认窗口高度
+default width for the windows	common	zh	默认窗口宽度
+delete	common	zh	删除
+delete row	common	zh	删除行
+denmark	common	zh	丹麦
+description	common	zh	描述
+detail	common	zh	详细信息
+details	common	zh	详细信息
+dhtml date/time selector	jscalendar	zh	DHTML 日期/时间选择器
+direction left to right	common	zh	由左到右
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	zh	目录不存在、对于Web服务器不可读或不是相对的文档根目录！
+disable internet explorer png-image-bugfix	common	zh	禁用 Internet Explorer 浏览器的 PNG 图片修正脚本
+disable slider effects	common	zh	禁用滑动效果
+disable the animated slider effects when showing or hiding menus in the page?  opera and konqueror users will probably must want this.	common	zh	是否禁用显示或隐藏菜单的滑动效果？建议 Opera 和 Konqueror 的用户选择禁用。
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh	在页面显示或隐藏菜单时禁用动画效果？Opera 和 Konqueror 用户也许必须这样做。
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh	禁用为使 Internet Explorer 5.5 或更高版本能够显示透明的 PNG 图片的修复脚本？
+disabled	common	zh	已禁用
+display %s first	jscalendar	zh	首先显示%s
+distributed under gnu lgpl.  see http://gnu.org/licenses/lgpl.html for details.	jscalendar	zh	在 GNU LGPL. 条款下分发，详见 http://gnu.org/licenses/lgpl.html。
+djibouti	common	zh	吉布提
+do you also want to delete all subcategories ?	common	zh	确定也要删除所有的子类别吗？
+doctype:	common	zh	文件类型：
+document properties	common	zh	文件属性
+document title:	common	zh	文件标题：
+domain	common	zh	域
+domain name for mail-address, eg. "%1"	common	zh	邮件地址的域名，例如："%1"
+domestic	common	zh	国内
+dominica	common	zh	多米尼加
+dominican republic	common	zh	多米尼加共和国
+done	common	zh	完成
+drag to move	jscalendar	zh	拖动
+e-mail	common	zh	电子邮件
+east timor	common	zh	东帝汶
+ecuador	common	zh	厄瓜多尔
+edit	common	zh	编辑
+edit %1 category for	common	zh	编辑类别%1为
+edit categories	common	zh	类别编辑
+edit category	common	zh	类别编辑
+egroupware api version	common	zh	eGroupWare API 版本
+egroupware api version %1	common	zh	eGroupWare API 版本 %1
+egroupware: login blocked for user '%1', ip %2	common	zh	eGroupWare：用户'%1'，IP地址%2已被禁止登录
+egypt	common	zh	埃及
+el salvador	common	zh	萨尔瓦多
+email	common	zh	电子邮件
+email-address of the user, eg. "%1"	common	zh	用户的电子邮件地址，例如："%1"
+emailadmin	common	zh	邮箱管理
+enabled	common	zh	已启用
+end date	common	zh	终止日期
+end time	common	zh	终止时间
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	输入eGroupWare 网址。<br>例如：http://www.domain.com/egroupware 或 /egroupware<br><b>结尾无斜线</b>
+entry has been deleted sucessfully	common	zh	条目已删除
+entry not found!	common	zh	条目没找到！
+entry updated sucessfully	common	zh	条目已更新
+equatorial guinea	common	zh	赤道几内亚
+eritrea	common	zh	厄立特里亚
+error	common	zh	错误
+error creating %1 %2 directory	common	zh	创建目录%1 %2时出错
+error deleting %1 %2 directory	common	zh	删除目录%1 %2时出错
+error renaming %1 %2 directory	common	zh	重命名目录%1 %2时出错
+estonia	common	zh	爱沙尼亚
+ethiopia	common	zh	埃塞俄比亚
+everything	common	zh	全部
+exact	common	zh	准确的
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	zh	未能连接服务器或由于服务器的错误回应。请重试或联系管理员。
+falkland islands (malvinas)	common	zh	福克兰群岛(马尔维纳斯)
+faroe islands	common	zh	法罗群岛
+fax number	common	zh	传真号码
+features of the editor?	common	zh	编辑器界面特征？
+february	common	zh	二月
+fields	common	zh	字段
+fiji	common	zh	斐济
+files	common	zh	文件
+filter	common	zh	筛选
+finland	common	zh	芬兰
+first name	common	zh	名
+first name of the user, eg. "%1"	common	zh	用户的‘名’，例如："%1"
+first page	common	zh	第一页
+firstname	common	zh	名
+fixme!	common	zh	FIXME！
+folder already exists.	common	zh	文件夹已存在。
+for latest version visit: http://dynarch.com/mishoo/calendar.epl	jscalendar	zh	了解最新版本请访问：http://dynarch.com/mishoo/calendar.epl
+force selectbox	common	zh	必选框
+forever	common	zh	始终
+france	common	zh	法国
+french guiana	common	zh	法属圭亚那地区
+french polynesia	common	zh	法属玻利尼西亚
+french southern territories	common	zh	法国南部地区
+friday	common	zh	星期五
+ftp	common	zh	FTP
+fullname	common	zh	全称
+fullscreen mode	common	zh	全屏模式
+gabon	common	zh	加蓬
+gambia	common	zh	冈比亚
+general menu	common	zh	常规菜单
+georgia	common	zh	乔治亚州
+german	common	zh	德国
+germany	common	zh	德国
+ghana	common	zh	加纳
+gibraltar	common	zh	直布罗陀
+global	common	zh	全局
+global public	common	zh	全局公有的
+go today	jscalendar	zh	转到今天
+grant access	common	zh	授权访问
+greece	common	zh	希腊
+greenland	common	zh	格陵兰
+grenada	common	zh	格林纳达
+group	common	zh	组
+group access	common	zh	组访问
+group has been added	common	zh	组已添加
+group has been deleted	common	zh	组已删除
+group has been updated	common	zh	组已更新
+group name	common	zh	组名
+group public	common	zh	组公有的
+groups	common	zh	组
+groups with permission for %1	common	zh	具有%1权限的组
+groups without permission for %1	common	zh	不具有%1权限的组
+guadeloupe	common	zh	瓜德罗普岛
+guam	common	zh	关岛
+guatemala	common	zh	危地马拉
+guinea	common	zh	几内亚
+guinea-bissau	common	zh	几内亚比绍首都
+guyana	common	zh	圭亚那
+haiti	common	zh	海地
+heard island and mcdonald islands	common	zh	赫德与麦克唐纳群岛
+height	common	zh	高度
+help	common	zh	显示提示信息
+high	common	zh	高
+highest	common	zh	最高
+holy see (vatican city state)	common	zh	罗马教廷(梵蒂冈)
+home	common	zh	首页
+home email	common	zh	家庭 EMail
+honduras	common	zh	洪都拉斯
+hong kong	common	zh	香港
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zh	将在导航栏(页面顶部)显示多少个图标。其它图标会放入一个下拉菜单中，通过点击导航栏最右侧的下拉图标可显示下拉菜单及其中的这些图标。
+how to show the general egroupware menu ?	common	zh	如何显示通用 eGroupWare 菜单
+hungary	common	zh	匈牙利
+iceland	common	zh	冰岛
+iespell not detected. click ok to go to download page.	common	zh	ieSpell 未找到，点击确认前往下载页面。
+if the clock is enabled would you like it to update it every second or every minute?	common	zh	如果使用时钟，每秒还是每分钟更新？
+if there are some images in the background folder you can choose the one you would like to see.	common	zh	如果背景文件夹中有一些图片的话，您可以选择其中的一个您希望的。
+image directory relative to document root (use / !), example:	common	zh	相对文档根目录的图片目录(使用：/)，例如：
+image url	common	zh	图片网址
+india	common	zh	印度
+indonesia	common	zh	印度尼西亚
+insert all %1 addresses of the %2 contacts in %3	common	zh	将%2个联系人的全部%1个地址插入%3
+insert column after	common	zh	在之后插入栏
+insert column before	common	zh	在之前插入栏
+insert row after	common	zh	在之后插入行
+insert row before	common	zh	在之前插入行
+international	common	zh	国际
+invalid filename	common	zh	文件名不正确
+invalid ip address	common	zh	IP地址无效
+invalid password	common	zh	密码无效
+iran, islamic republic of	common	zh	伊朗
+iraq	common	zh	伊拉克
+ireland	common	zh	爱尔兰
+israel	common	zh	以色列
+it has been more then %1 days since you changed your password	common	zh	您的密码已经%1天没有更改了
+it is recommended that you run setup to upgrade your tables to the current version	common	zh	建议您运行安装程序来升级您的数据表至当前版本。
+italic	common	zh	斜体
+italy	common	zh	意大利
+jamaica	common	zh	牙买加
+january	common	zh	一月
+japan	common	zh	日本
+jordan	common	zh	约旦
+july	common	zh	七月
+jun	common	zh	六月
+june	common	zh	六月
+justify center	common	zh	居中
+justify full	common	zh	两端对齐
+justify left	common	zh	左对齐
+justify right	common	zh	右对齐
+kazakstan	common	zh	哈萨克斯坦
+kenya	common	zh	肯尼亚
+keywords	common	zh	关键词
+kiribati	common	zh	基里巴斯
+korea democratic peoples republic of	common	zh	朝鲜
+korea republic of	common	zh	韩国
+kuwait	common	zh	科威特
+kyrgyzstan	common	zh	吉尔吉斯坦
+language	common	zh	语言
+language_direction_rtl	common	zh	language_direction_rtl
+lao peoples democratic republic	common	zh	老挝
+last name	common	zh	姓
+last name of the user, eg. "%1"	common	zh	用户的‘姓’，例如："%1"
+last page	common	zh	最后一页
+lastname	common	zh	姓
+latvia	common	zh	拉脱维亚
+ldap-mgr	common	zh	LDAP-管理
+lebanon	common	zh	黎巴嫩
+left	common	zh	左
+lesotho	common	zh	莱索托
+liberia	common	zh	利比里亚
+libyan arab jamahiriya	common	zh	利比亚
+license	common	zh	许可证
+liechtenstein	common	zh	列支敦士登
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh	第%1行：'%2'<br><b>csv 数据与数据表%3栏数不匹配 ==> 忽略</b>
+list	common	zh	列表
+list members	common	zh	会员列表
+lithuania	common	zh	立陶宛
+local	common	zh	本地
+login	common	zh	登录
+loginid	common	zh	登录名
+logout	common	zh	注销
+lost login id	common	zh	忘记登录帐户
+lost password	common	zh	忘记密码
+low	common	zh	低
+lowest	common	zh	最低
+luxembourg	common	zh	卢森堡
+macau	common	zh	澳门
+macedonia, the former yugoslav republic of	common	zh	马其顿王国
+madagascar	common	zh	马达加斯加岛
+mail domain, eg. "%1"	common	zh	邮件域，例如："%1"
+main category	common	zh	主分类
+maintainer	common	zh	维护人员
+malawi	common	zh	马拉维
+malaysia	common	zh	马来西亚
+maldives	common	zh	马尔代夫
+mali	common	zh	马里
+malta	common	zh	马耳他
+march	common	zh	三月
+marshall islands	common	zh	马歇尔群岛
+martinique	common	zh	马提尼克岛
+mauritania	common	zh	毛里塔尼亚
+mauritius	common	zh	毛里求斯
+max number of icons in navbar	common	zh	导航栏中图标的最大数目
+may	common	zh	五月
+mayotte	common	zh	马约特岛
+medium	common	zh	中间
+menu	common	zh	菜单
+message	common	zh	消息
+mexico	common	zh	墨西哥
+micronesia, federated states of	common	zh	密克罗尼西亚联邦
+minute	common	zh	分
+moldova, republic of	common	zh	摩尔多瓦共和国
+monaco	common	zh	摩纳哥
+monday	common	zh	星期一
+mongolia	common	zh	蒙古
+montenegro	common	zh	蒙地纳哥
+montserrat	common	zh	蒙特塞拉特岛
+morocco	common	zh	摩洛哥
+mozambique	common	zh	莫桑比克·
+multiple	common	zh	多重
+myanmar	common	zh	缅甸
+name	common	zh	名称
+name of the user, eg. "%1"	common	zh	用户名，例如："%1"
+namibia	common	zh	纳米比亚
+nauru	common	zh	瑙鲁岛
+nepal	common	zh	尼泊尔
+netherlands	common	zh	荷兰
+netherlands antilles	common	zh	荷兰属安的列斯群岛
+never	common	zh	从不
+new caledonia	common	zh	新克里多尼亚
+new entry added sucessfully	common	zh	新条目添加成功
+new main category	common	zh	新建主类别
+new value	common	zh	新值
+new zealand	common	zh	新西兰
+next	common	zh	下一个
+next month (hold for menu)	jscalendar	zh	下个月(保持按住菜单)
+next page	common	zh	下一页
+next year (hold for menu)	jscalendar	zh	明年(保持按住菜单)
+nicaragua	common	zh	尼加拉瓜
+niger	common	zh	尼日尔
+nigeria	common	zh	尼日利亚
+niue	common	zh	纽埃岛
+no	common	zh	否
+no entries found, try again ...	common	zh	条目找不到，请重试...
+no history for this record	common	zh	该记录无历史记录
+no savant2 template directories were found in:	common	zh	没没有找到 Savant2 模版目录：
+no subject	common	zh	无主题
+none	common	zh	无
+norfolk island	common	zh	诺福克岛
+normal	common	zh	普通
+northern mariana islands	common	zh	北马里亚纳群岛
+norway	common	zh	挪威
+not	common	zh	不
+not a user yet? register now	common	zh	还不是用户？现在注册
+not assigned	common	zh	未指定
+note	common	zh	备注
+notes	common	zh	附注
+notifications	common	zh	通知
+notify window	common	zh	通知窗口
+notify your administrator to correct this situation	common	zh	请通知管理员修复此情况
+november	common	zh	十一月
+october	common	zh	十月
+ok	common	zh	确定
+old value	common	zh	旧值
+oman	common	zh	阿曼
+on *nix systems please type: %1	common	zh	在 *UNIX类系统上，请输入： %1
+on mouse over	common	zh	鼠标移至上面时
+only private	common	zh	仅私有
+only yours	common	zh	只有您
+oops! you caught us in the middle of system maintainance.	common	zh	Oops! 您在系统维护中间捉住了我们。
+open notify window	common	zh	打开提示窗口
+open popup window	common	zh	打开弹出式窗口·
+open sidebox	common	zh	打开侧边栏
+ordered list	common	zh	排序列表
+original	common	zh	原来的
+other	common	zh	其它
+overview	common	zh	概览
+owner	common	zh	所有者
+page	common	zh	页
+page was generated in %1 seconds	common	zh	本页面生成耗时：%1秒
+pakistan	common	zh	巴基斯坦
+palau	common	zh	帕劳
+palestinian territory, occupied	common	zh	巴勒斯坦
+panama	common	zh	巴拿马
+papua new guinea	common	zh	巴布亚新几内亚
+paraguay	common	zh	巴拉圭
+parcel	common	zh	打包
+parent category	common	zh	父类别
+password	common	zh	密码
+password could not be changed	common	zh	无法更改密码
+password has been updated	common	zh	密码已更新
+password must contain at least %1 lowercase letters	common	zh	密码必须包含至少 %1 个小写英文字母
+password must contain at least %1 numbers	common	zh	密码必须包含至少 %1 个数字
+password must contain at least %1 special characters	common	zh	密码必须包含至少 %1 个特殊字符
+password must contain at least %1 uppercase letters	common	zh	密码必须包含至少 %1 个大写英文字母
+password must have at least %1 characters	common	zh	密码必须包含至少 %1 个字符
+path to user and group files has to be outside of the webservers document-root!!!	common	zh	用户和群组的文件路径必须在服务器根目录以外！
+permission denied!	common	zh	没有权限！
+permissions to the files/users directory	common	zh	文件/用户目录
+permisson denied!	common	zh	没有权限！
+personal	common	zh	个人
+peru	common	zh	秘鲁
+philippines	common	zh	菲律宾
+phone number	common	zh	电话号码
+phpgwapi	common	zh	[eGW-API]系统核心
+pitcairn	common	zh	皮特凯恩
+please %1 by hand	common	zh	请手动%1
+please enter a name	common	zh	请输入名称！
+please run setup to become current	common	zh	请运行安装程序以成为当前
+please select	common	zh	请选择
+please set your global preferences	common	zh	请设置您的全局参数！
+please set your preferences for this application	common	zh	请为该应用程序设置用户参数！
+please wait...	common	zh	请稍候...
+please, check back with us shortly.	common	zh	对不起，稍后回来与我们检查。
+poland	common	zh	波兰
+portugal	common	zh	葡萄牙
+postal	common	zh	邮政
+powered by	common	zh	Powered by
+preferences	common	zh	参数选择
+preferences for the idots template set	common	zh	Idots 模板的参数选择
+prev. month (hold for menu)	jscalendar	zh	上个月(hold for menu)
+prev. year (hold for menu)	jscalendar	zh	去年(hold for menu)
+previous page	common	zh	前一页
+primary style-sheet:	common	zh	主要样式表：
+print	common	zh	打印
+priority	common	zh	优先级
+private	common	zh	私有条目
+programs	common	zh	程序
+project	common	zh	项目
+public	common	zh	所有已授权者皆可访问
+puerto rico	common	zh	波多黎各
+qatar	common	zh	卡塔尔
+read	common	zh	读取
+read this list of methods.	common	zh	读取方法列表。
+reading	common	zh	读取中
+register	common	zh	注册
+regular	common	zh	常规
+reject	common	zh	拒绝
+remember me	common	zh	记住我
+remove selected accounts	common	zh	删除选取的账号
+remove shortcut	common	zh	移除快捷键
+rename	common	zh	重命名
+replace	common	zh	替换
+replace with	common	zh	替换与
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	zh	返回系统所有帐户的列表，注意：该列表可能很长
+returns an array of todo items	common	zh	返回一排待处理列表
+returns struct of users application access	common	zh	返回用户访问应用程序的结构
+reunion	common	zh	留尼旺
+right	common	zh	右
+romania	common	zh	罗马尼亚
+russian federation	common	zh	俄罗斯联邦
+rwanda	common	zh	卢旺达
+saint helena	common	zh	圣赫勒拿岛
+saint kitts and nevis	common	zh	圣基茨和尼维斯
+saint lucia	common	zh	圣卢西亚岛
+saint pierre and miquelon	common	zh	圣皮埃尔和密克隆
+saint vincent and the grenadines	common	zh	圣文森特和格林纳丁斯
+samoa	common	zh	西萨摩亚
+san marino	common	zh	圣马力诺
+sao tome and principe	common	zh	圣多美和普林西比
+saturday	common	zh	星期六
+saudi arabia	common	zh	沙特阿拉伯
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	zh	Savant2 版本不同于 Savant2 wrapper。<br/>这个版本：%1 <br/>Savants 版本：%2
+save	common	zh	保存
+search	common	zh	搜索
+search %1 '%2'	common	zh	搜索%1 '%2'
+search accounts	common	zh	搜索账户
+search or select accounts	common	zh	搜索或选择帐户
+second	common	zh	秒
+section	common	zh	部分
+select	common	zh	选择
+select all %1 %2 for %3	common	zh	为%3选择全部l%1%2
+select category	common	zh	选择分类
+select date	common	zh	选择日期
+select group	common	zh	选择组
+select home email address	common	zh	选择家庭邮件地址
+select multiple accounts	common	zh	选择多个账户
+select one	common	zh	选择一个
+select the default height for the application windows	common	zh	选择默认应用程序窗口高度
+select the default width for the application windows	common	zh	选择默认应用程序窗口宽度
+select user	common	zh	选择用户
+select work email address	common	zh	选择工作邮件地址
+selection	common	zh	选择
+send	common	zh	发送
+senegal	common	zh	塞内加尔
+september	common	zh	九月
+serbia	common	zh	瑟比雅
+server %1 has been added	common	zh	服务器%1已添加
+server answered. processing response...	common	zh	服务器已回应，正在处理中...
+server contacted. waiting for response...	common	zh	服务器已连接，等待回应...
+server name	common	zh	服务器名
+session has been killed	common	zh	会话已中止
+setup	common	zh	安装程序
+setup main menu	common	zh	安装主菜单
+seychelles	common	zh	塞舌尔
+show all	common	zh	全部显示
+show all categorys	common	zh	显示所有类别
+show as topmenu	common	zh	显示顶部菜单
+show clock?	common	zh	显示时钟？
+show home and logout button in main application bar?	common	zh	是否在应用程序导航栏显示主页和注销按钮？
+show in sidebox	common	zh	显示侧边栏
+show logo's on the desktop.	common	zh	在桌面显示标示。
+show menu	common	zh	显示菜单
+show page generation time	common	zh	显示页面的生成耗时
+show page generation time on the bottom of the page?	common	zh	是否在页面底部显示该页面生成所耗时间？
+show page generation time?	common	zh	显示页面的生成耗时？
+show the logo's of egroupware and x-desktop on the desktop.	common	zh	在桌面显示 eGroupware 和 x-desktop 的 logo。
+show_more_apps	common	zh	show_more_apps
+showing %1	common	zh	共有%1项
+showing %1 - %2 of %3	common	zh	显示%3的%1 - %2
+sierra leone	common	zh	塞拉利昂
+simple	common	zh	精简
+singapore	common	zh	新加坡
+slovakia	common	zh	斯洛伐克
+slovenia	common	zh	斯洛文尼亚
+solomon islands	common	zh	所罗门群岛
+somalia	common	zh	索马里
+sorry, your login has expired	login	zh	抱歉，您本次登录已终止
+south africa	common	zh	南非
+south georgia and the south sandwich islands	common	zh	南乔治亚和南桑德韦奇群岛
+spain	common	zh	西班牙
+sri lanka	common	zh	斯里兰卡
+start date	common	zh	起始日期
+start time	common	zh	起始时间
+start with	common	zh	起始于
+starting up...	common	zh	正在启动...
+status	common	zh	状态
+stretched	common	zh	拉伸
+subject	common	zh	主题
+submit	common	zh	提交
+substitutions and their meanings:	common	zh	替代及其含义：
+sudan	common	zh	苏丹
+sunday	common	zh	星期日
+suriname	common	zh	苏里南
+svalbard and jan mayen	common	zh	斯瓦尔巴特和扬马延
+swaziland	common	zh	斯威士兰
+sweden	common	zh	瑞典
+switzerland	common	zh	瑞士
+syrian arab republic	common	zh	叙利亚阿拉伯共和国
+table properties	common	zh	表属性
+taiwan	common	zh	台湾省/中国台北
+tajikistan	common	zh	塔吉克斯坦
+tanzania, united republic of	common	zh	坦桑尼亚联合共和国
+text color:	common	zh	文字颜色：
+thailand	common	zh	泰国
+the api is current	common	zh	当前的应用编程接口(API)
+the api requires an upgrade	common	zh	应用编程接口(API)需要升级
+the following applications require upgrades	common	zh	以下应用程序需要升级
+the mail server returned	common	zh	退回邮件
+this application is current	common	zh	该应用程序当前在用
+this application requires an upgrade	common	zh	该应用程序需要升级
+this name has been used already	common	zh	该名称已被使用！
+thursday	common	zh	星期四
+tiled	common	zh	平铺
+time	common	zh	时间
+time selection:	jscalendar	zh	时间选择：
+time zone	common	zh	时区
+time zone offset	common	zh	时差
+title	common	zh	标题
+to	common	zh	到
+to correct this error for the future you will need to properly set the	common	zh	为今后更正该错误，您需要适当地设置
+to go back to the msg list, click <a href= %1 >here</a>	common	zh	点击<a href="%1">此处</a>返回邮件列表
+today	common	zh	今天
+todays date, eg. "%1"	common	zh	当前日期，例如："%1"
+toggle first day of week	jscalendar	zh	更改一周起始日
+togo	common	zh	多哥
+tokelau	common	zh	托克劳群岛
+tonga	common	zh	汤加
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zh	登录失败次数过多：用户"%2" %1次，IP地址"%4" %3次
+top	common	zh	顶部
+total	common	zh	总计
+transparant bg for the icons?	common	zh	图标背景透明
+trinidad and tobago	common	zh	特立尼达和多巴哥
+tuesday	common	zh	星期二
+tunisia	common	zh	突尼斯
+turkey	common	zh	土耳其
+turkmenistan	common	zh	土库曼斯坦
+turks and caicos islands	common	zh	特克斯和凯科斯群岛
+tuvalu	common	zh	图瓦卢
+type	common	zh	类型
+uganda	common	zh	乌干达
+ukraine	common	zh	乌克兰
+underline	common	zh	下划线
+united arab emirates	common	zh	阿拉伯联合酋长国
+united kingdom	common	zh	英国
+united states	common	zh	美国
+united states minor outlying islands	common	zh	美属群岛
+unknown	common	zh	未知
+update	common	zh	更新
+update the clock per minute or per second	common	zh	按每秒或每分钟更新时钟
+upload	common	zh	上传
+upload directory does not exist, or is not writeable by webserver	common	zh	上传目录不存在，或不可写
+upload requires the directory to be writable by the webserver!	common	zh	上传目录必须为可写！
+url	common	zh	网址
+uruguay	common	zh	乌拉圭
+use button to search for	common	zh	使用按钮查找
+use button to search for address	common	zh	使用按钮查找地址
+use button to search for calendarevent	common	zh	使用按钮查找日记
+use button to search for project	common	zh	使用按钮查找项目
+user	common	zh	用户
+user accounts	common	zh	用户帐户
+user groups	common	zh	用户组
+user openinstance	common	zh	用户开放实例
+username	common	zh	用户名
+users	common	zh	用户
+users choice	common	zh	用户的选择
+uzbekistan	common	zh	乌兹别克斯坦
+vanuatu	common	zh	瓦努阿图
+venezuela	common	zh	委内瑞拉
+version	common	zh	版本
+viet nam	common	zh	越南
+view	common	zh	查看
+virgin islands, british	common	zh	英属维京群岛
+virgin islands, u.s.	common	zh	美属维京群岛
+wallis and futuna	common	zh	瓦利斯和富图纳群岛
+wednesday	common	zh	星期三
+welcome	common	zh	欢迎
+western sahara	common	zh	西撒哈拉
+what color should all the blank space on the desktop have	common	zh	桌面空白区域的颜色
+what style would you like the image to have?	common	zh	您喜欢什么样的图片风格？
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	zh	如果选择“是”，“首页”和“注销”图标将显示在应用程序工具条中。
+where and how will the egroupware links like preferences, about and logout be displayed.	common	zh	将在什么位置和如何以喜欢偏好显示 eGroupWare、关于及注销的链接。
+which groups	common	zh	哪一个组
+width	common	zh	宽度
+wk	jscalendar	zh	星期
+work email	common	zh	工作 EMail 地址
+would you like to display the page generation time at the bottom of every window?	common	zh	您是否要在每个窗口下边显示生成时间？
+writing	common	zh	写入
+written by:	common	zh	作者：
+year	common	zh	年
+yemen	common	zh	也门
+yes	common	zh	是
+you are required to change your password during your first login	common	zh	首次登录，您必须更改密码
+you can customize how many icons and toolbars the editor shows.	common	zh	您可以通过选项来定制编辑器显示多少个图标与工具栏。
+you have been successfully logged out	login	zh	注销成功
+you have not entered a title	common	zh	必须输入标题
+you have not entered a valid date	common	zh	输入的日期无效
+you have not entered a valid time of day	common	zh	输入的时间无效
+you have not entered participants	common	zh	必须输入参与者
+you have selected an invalid date	common	zh	选定的日期无效！
+you have selected an invalid main category	common	zh	选定的主类别无效！
+you have successfully logged out	common	zh	注销成功
+you need to add the webserver user '%1' to the group '%2'.	common	zh	您必须将Web服务器的用户'%1'添加到用户组'%2'。
+you need to be an egroupware administrator to access this functionality!	common	zh	您必须具备eGroupWare管理员身份才能访问此功能！
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	zh	你试图打开eGroupWare应用程序：%1，但您没有访问该应用程序的权限。
+your message could <b>not</b> be sent!<br>	common	zh	您的邮件<b>无法</b>发送！<br>
+your message has been sent	common	zh	您的邮件已发送
+your search returned %1 matchs	common	zh	您的搜索返回%1个匹配结果
+your search returned 1 match	common	zh	您的搜索返回1个匹配结果
+your session could not be verified.	login	zh	本次会话无法校验。
+your settings have been updated	common	zh	您的设置已更新
+yugoslavia	common	zh	南斯拉夫
+zambia	common	zh	赞比亚
+zimbabwe	common	zh	津巴布韦
+zoom	common	zh	缩放
+site configuration	common	zh	站点配置

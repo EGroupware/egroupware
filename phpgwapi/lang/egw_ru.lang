@@ -1,0 +1,757 @@
+%1 email addresses inserted	common	ru	Вставлен адрес e-mail: %1
+%1 is not executable by the webserver !!!	common	ru	%1 не может быть запущен Веб-сервером!!!
+%1 manual	common	ru	%1 руководство
+%1 start	common	ru	%1 запуск
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br />или дайте веб-серверу права на запись в %3
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1eGroupWare%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
+(session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
+(shift-)click or drag to change value	jscalendar	ru	(Shift-)Клик или перетащите для изменения значения
+- click on any of the time parts to increase it	jscalendar	ru	- Кликните на любой части времени для увеличения
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	ru	- Удерживайте клавишу мыши на любой из иконок вверху для более быстрого выбора.
+- or click and drag for faster selection.	jscalendar	ru	- или шелкните и перетащите для быстрого выбора.
+- or shift-click to decrease it	jscalendar	ru	- или Shift-клик для уменьшения
+- use the %1, %2 buttons to select month	jscalendar	ru	- Используйте кнопки %1, %2 для выбора месяца
+- use the %1, %2 buttons to select year	jscalendar	ru	- Используйте кнопки %1, %2 для выбора года
+00 (disable)	admin	ru	00 (выкл)
+1 day	common	ru	1 День
+1 hour	common	ru	1 Час
+1 month	common	ru	1 Месяц
+1 week	common	ru	1 Неделя
+13 (ntp)	admin	ru	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	ru	3 первых буквы сокращения дня недели
+3 number of chars for month-shortcut	jscalendar	ru	3 буквы сокращения месяца
+80 (http)	admin	ru	80 (http)
+about	common	ru	О программе
+about %1	common	ru	О %1
+about egroupware	common	ru	Об eGroupware
+about the calendar	jscalendar	ru	О Календаре
+access	common	ru	Доступ
+access not permitted	common	ru	Доступ не разрешен
+account has been created	common	ru	Учетная запись создана
+account has been deleted	common	ru	Учетная запись удалена
+account has been updated	common	ru	Учетная запись обновлена
+account is expired	common	ru	Учетная запись просрочена
+accounts	common	ru	Учетные записи
+acl	common	ru	ACL
+action	common	ru	Действие
+active	common	ru	Активно
+add	common	ru	Добавить
+add %1 category for	common	ru	Добавить %1 категорию для
+add category	common	ru	Добавить категорию
+add shortcut	common	ru	Добавить Сокращение
+add sub	common	ru	Добавить подпункт
+addressbook	common	ru	Адресная книга
+admin	common	ru	Администрирование
+administration	common	ru	Администрирование
+afghanistan	common	ru	Афганистан
+albania	common	ru	Албания
+algeria	common	ru	Алжир
+all	common	ru	Все
+all fields	common	ru	все поля
+alphabet	common	ru	а,б,в,г,д,е,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я
+alternate style-sheet:	common	ru	Альтернативная таблица стилей:
+american samoa	common	ru	Американское Самоа
+an error happened	common	ru	Произошла ошибка
+an existing and by the webserver readable directory enables the image browser and upload.	common	ru	Существующий И читаемый веб-сервером каталог разрешает просмотр картинок и выгрузку
+andorra	common	ru	Андорра
+angola	common	ru	Ангола
+anguilla	common	ru	Ангилья
+antarctica	common	ru	Антарктида
+antigua and barbuda	common	ru	Антигуа и Барбуда
+application	common	ru	Приложение
+apply	common	ru	Применить
+april	common	ru	Апрель
+are you sure you want to delete these entries ?	common	ru	Вы уверены, что хотите удалить эти записи ?
+are you sure you want to delete this entry ?	common	ru	Вы уверены, что хотите удалить эту запись ?
+argentina	common	ru	Аргентина
+armenia	common	ru	Армения
+aruba	common	ru	Аруба
+august	common	ru	Август
+australia	common	ru	Австралия
+austria	common	ru	АвстрияА
+author	common	ru	Автор
+autohide sidebox menu's	common	ru	Автоматически скрывать боковые меню
+autohide sidebox menus	common	ru	Автоматически скрывать боковые меню
+automatically hide the sidebox menu's?	common	ru	Автоматически скрывать боковые меню?
+automatically hide the sidebox menus?	common	ru	Автоматически скрывать боковые меню ?
+autosave default category	common	ru	Автоматически сохранять категорию по умолчанию
+azerbaijan	common	ru	Азербайджан
+back	common	ru	Назад
+back to user login	common	ru	Назад на Вход пользователя
+background color:	common	ru	Цвет фона:
+backupdir '%1' is not writeable by the webserver	common	ru	веб-сервер не может записывать в  папку резервного копирования '%1'
+bad login or password	common	ru	Неправильные Имя или Пароль
+bahamas	common	ru	Багамские о-ва
+bahrain	common	ru	Бахрейн
+bangladesh	common	ru	Бангладеш
+barbados	common	ru	Барбадос
+bcc	common	ru	Скрытая копия (Bcc)
+belarus	common	ru	Беларусь
+belgium	common	ru	Бельгия
+belize	common	ru	Белиз
+benin	common	ru	Бенин
+bermuda	common	ru	Бермудские острова
+bhutan	common	ru	Бутан
+blocked, too many attempts	common	ru	Заблокировано, слишком много попыток
+bold	common	ru	Полужирный
+bolivia	common	ru	Боливия
+border	common	ru	Граница
+bosnia and herzegovina	common	ru	Босния и Герцеговина
+botswana	common	ru	Ботсвана
+bottom	common	ru	Низ
+bouvet island	common	ru	О-в Бувет
+brazil	common	ru	Бразилия
+british indian ocean territory	common	ru	Британские территории бассейна Индийского океана
+brunei darussalam	common	ru	Бруней
+bulgaria	common	ru	Болгария
+burkina faso	common	ru	Буркина-Фассо
+burundi	common	ru	Бурунди
+calendar	common	ru	Календарь
+cambodia	common	ru	Камбоджа
+cameroon	common	ru	Камерун
+canada	common	ru	Канада
+cancel	common	ru	Отмена
+cannot replace %1 because it is a directory	common	ru	Не могу заменить %1, потому что это папка
+cant open '%1' for %2	common	ru	Не могу открыть '%1' для %2
+cape verde	common	ru	Кабо-Верде
+caption	common	ru	Заголовок
+categories	common	ru	Категории
+categories for	common	ru	категории для
+category	common	ru	Категория
+category %1 has been added !	common	ru	Добавлена категория %1!
+category %1 has been updated !	common	ru	Категория %1 обновлена!
+cayman islands	common	ru	Каймановы острова
+cc	common	ru	Копия (Cc)
+centered	common	ru	по центру
+central african republic	common	ru	Центральноафриканская Республика
+chad	common	ru	Чад
+change	common	ru	Изменить
+charset	common	ru	utf-8
+check installation	common	ru	Проверить установку
+check now	common	ru	Проверить сейчас
+chile	common	ru	Чили
+china	common	ru	Китай
+choose a background color	common	ru	Выбрать цвет фона
+choose a background color for the icons	common	ru	Выбрать цвет фона для пиктограмм
+choose a background image.	common	ru	Выбрать фоновое изображение.
+choose a background style.	common	ru	Выбрать стиль фона.
+choose a text color for the icons	common	ru	Выбрать цвет текста для пиктограмм
+choose the category	common	ru	Выберите категорию
+choose the parent category	common	ru	Выберите родительскую категорию
+christmas island	common	ru	О-в Рождества
+clear	common	ru	Очистить
+clear form	common	ru	Очистить Форму
+click	common	ru	Щелкнуть
+click here to resume your egroupware session.	common	ru	Щелкните здесь для восстановления вашей сессии в eGroupWare
+click or mouse over to show menus	common	ru	Кликните, или наведите мышь для показа меню
+click or mouse over to show menus?	common	ru	Кликнуть или навести мышь для показа меню?
+click this image on the navbar: %1	common	ru	Щелкните это изображение на панели навигации: %1
+close	common	ru	Закрыть
+close sidebox	common	ru	Закрыть боковую панель
+cocos (keeling) islands	common	ru	Кокосовые О-ва
+colombia	common	ru	Колумбия
+common preferences	common	ru	Общие настройки
+comoros	common	ru	Коморские О-ва
+company	common	ru	Организация
+congo	common	ru	Конго
+congo, the democratic republic of the	common	ru	Демократическая р-ка Конго
+contacting server...	common	ru	Соединение с Сервером...
+cook islands	common	ru	О-ва Кука
+copy	common	ru	Копировать
+costa rica	common	ru	Коста-Рика
+cote d ivoire	common	ru	Кот'д'Ивуар
+could not contact server. operation timed out!	common	ru	Невозможно соединиться с сервером. Прервано по таймауту!
+create	common	ru	Создать
+created by	common	ru	Создано
+croatia	common	ru	Хорватия
+cuba	common	ru	Куба
+currency	common	ru	Валюта
+current	common	ru	Текущий
+current users	common	ru	Текущие пользователи
+cyprus	common	ru	Кипр
+czech republic	common	ru	Чехия
+database error	common	ru	Ошибка Базы Данных
+database error!	common	ru	Ошибка Базы Данных!
+date	common	ru	Дата
+date due	common	ru	Дата до
+date selection:	jscalendar	ru	Выбор даты:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ru	Порт протокола точного времени (ntp).<br>Если используется порт 13, пожалуйста установите правила брандмауэра перед сохраниением данных этой страницы.<br>(Port: 13 / Host: 129.6.15.28)
+december	common	ru	Декабрь
+default category	common	ru	Категория по умолчанию
+default height for the windows	common	ru	Высота окна по умолчанию
+default width for the windows	common	ru	Ширина окна по умолчанию
+delete	common	ru	Удалить
+delete row	common	ru	Удалить строку
+denmark	common	ru	Дания
+description	common	ru	Описание
+detail	common	ru	Подробность
+details	common	ru	Подробности
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ru	Отключить обработку ошибок для Internet Explorer версии 5.5 и выше для показа прозрачности в PNG-картинках?
+direction left to right	common	ru	Направление слева направо
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	ru	Каталог не сущестует, не читаем веб-сервером или указан не относительно корня документов!
+disable internet explorer png-image-bugfix	common	ru	Отключить обработку ошибок изображений png для Internet Explorer
+disable slider effects	common	ru	Отключить эффекты выползания
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ru	Отключить эффекты анимации выпадающих меню на странице? Пользователи Opera и Konqueror возможно захотят это сделать.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ru	Отключить обработку ошибок для Internet Explorer версии 5.5 и выше для показа прозрачности в PNG-картинках?
+disabled	common	ru	Отключено
+display %s first	jscalendar	ru	Вначале отображать %s
+djibouti	common	ru	Джибути
+do you also want to delete all subcategories ?	common	ru	Хотите удалить также и все подкатегории?
+doctype:	common	ru	Тип документа:
+document properties	common	ru	Свойства документа
+document title:	common	ru	Заголовок документа:
+domain	common	ru	Домен
+domain name for mail-address, eg. "%1"	common	ru	Доменное имя для почтового адреса, напр. "%1"
+domestic	common	ru	Домашний
+dominica	common	ru	Доминика
+dominican republic	common	ru	Доминиканская республика
+done	common	ru	Готово
+drag to move	jscalendar	ru	Перетащите
+e-mail	common	ru	E-mail
+east timor	common	ru	Восточный Тимор
+ecuador	common	ru	Эквадор
+edit	common	ru	Редактировать
+edit %1 category for	common	ru	Редактировать %1 категорию для
+edit categories	common	ru	Редактировать Категории
+edit category	common	ru	Редактировать категорию
+egroupware	common	ru	eGroupWare
+egroupware api version	common	ru	Версия API eGroupWare
+egroupware api version %1	common	ru	eGroupWare API версии %1
+egroupware: login blocked for user '%1', ip %2	common	ru	eGroupWare: вход для пользователя '%1', IP %2 заблокирован
+egypt	common	ru	Египет
+el salvador	common	ru	Сальвадор
+email	common	ru	E-Mail
+email-address of the user, eg. "%1"	common	ru	Почтовый адрес для пользователя, напр. "%1"
+enabled	common	ru	Включено
+end date	common	ru	Дата окончания
+end time	common	ru	Время окончания
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите адрес Вашего сервера eGroupWare.<br>Например: http://www.domain.com/egroupware   или   /egroupware<br><b>Без слэша на конце</b>
+entry has been deleted sucessfully	common	ru	Запись успешно удалена
+entry not found!	common	ru	Запись не найдена!
+entry updated sucessfully	common	ru	Запись успешно обновлена
+equatorial guinea	common	ru	Экваториальная Гвинея
+eritrea	common	ru	Эритрея
+error	common	ru	Ошибка
+error creating %1 %2 directory	common	ru	Ошибка создания папки %1 %2
+error deleting %1 %2 directory	common	ru	Ошибка удаления папки %1 %2
+error renaming %1 %2 directory	common	ru	Ошибка переименования папки %1 %2
+estonia	common	ru	Эстония
+ethiopia	common	ru	Эфиопия
+everything	common	ru	Все
+exact	common	ru	точно
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	ru	Нет связи с сервером или неправильный ответ сервера. Попробуйте повторить вход. В случае неудачи свяжитесь с вашим системным администратором.
+falkland islands (malvinas)	common	ru	Фолклендские (Мальдивские) О-ва
+faroe islands	common	ru	Фарерские О-ва
+fax number	common	ru	номер факса
+features of the editor?	common	ru	Особенности редактора?
+february	common	ru	Февраль
+fields	common	ru	Поля
+fiji	common	ru	Фиджи
+files	common	ru	Файлы
+filter	common	ru	Фильтр
+finland	common	ru	Финляндия
+first name	common	ru	Имя
+first name of the user, eg. "%1"	common	ru	Имя пользователя, напр. "%1"
+first page	common	ru	Первая страница
+firstname	common	ru	Имя
+fixme!	common	ru	Исправить!
+folder already exists.	common	ru	Каталог уже существует.
+force selectbox	common	ru	Принудительно Список выбора
+forever	common	ru	Навсегда
+france	common	ru	Франция
+french guiana	common	ru	Французская Гвиана
+french polynesia	common	ru	Французская Полинезия
+french southern territories	common	ru	Французские южные территории
+friday	common	ru	Пятница
+ftp	common	ru	FTP
+fullname	common	ru	Полное имя
+fullscreen mode	common	ru	Полноэкранный режим
+gabon	common	ru	Габон
+gambia	common	ru	Гамбия
+general menu	common	ru	Общее Меню
+georgia	common	ru	Грузия
+german	common	ru	Немецкий
+germany	common	ru	Германия
+ghana	common	ru	Гана
+gibraltar	common	ru	Гибралтар
+global	common	ru	Общие
+global public	common	ru	Общедоступный
+go today	jscalendar	ru	Перейти на сегодня
+grant access	common	ru	Предоставить Доступ
+greece	common	ru	Греция
+greenland	common	ru	Гренландия
+grenada	common	ru	Гренада
+group	common	ru	Группа
+group access	common	ru	Доступ группы
+group has been added	common	ru	Группа добавлена
+group has been deleted	common	ru	Группа удалена
+group has been updated	common	ru	Группа обновлена
+group name	common	ru	имя группы
+group public	common	ru	Общая Группа
+groups	common	ru	Группы
+groups with permission for %1	common	ru	Группы с разрешением для %1
+groups without permission for %1	common	ru	Группы без разрешения для %1
+guadeloupe	common	ru	Гваделупа
+guam	common	ru	Гуам
+guatemala	common	ru	Гватемала
+guinea	common	ru	Гвинея
+guinea-bissau	common	ru	Гвинея-Биссау
+guyana	common	ru	Гайана
+haiti	common	ru	Гаити
+heard island and mcdonald islands	common	ru	О-ва Херд и Макдональд
+height	common	ru	Высота
+help	common	ru	Помощь
+high	common	ru	Высокий
+highest	common	ru	Наивысший
+holy see (vatican city state)	common	ru	Ватикан
+home	common	ru	Домой
+home email	common	ru	домашняя почта
+honduras	common	ru	Гондурас
+hong kong	common	ru	Гонконг
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ru	Сколько пиктограмм будет показываться на верхней панели. Дополнительные пиктограммы будут объединены в выпадающее меню, вызываемое пиктограммой в правом углу панели навигации.
+how to show the general egroupware menu ?	common	ru	Как показывать главное меню eGroupWare?
+hungary	common	ru	Венгрия
+iceland	common	ru	Исландия
+iespell not detected. click ok to go to download page.	common	ru	Словарь ieSpell не найден. Нажмите ОК для перехода на страницу загрузки.
+if the clock is enabled would you like it to update it every second or every minute?	common	ru	Если выбраны часы, хотели бы Вы обновлять их показания ежесекундно или ежеминутно?
+if there are some images in the background folder you can choose the one you would like to see.	common	ru	Если в папке имеются изображения, Вы можете выбрать нужное для просмотра.
+image directory relative to document root (use / !), example:	common	ru	Папка изображений относительно корня документов (используйте / !), пример:
+image url	common	ru	Ссылка на изображение
+india	common	ru	Индия
+indonesia	common	ru	Индонезия
+insert all %1 addresses of the %2 contacts in %3	common	ru	Вставить все адреса %1 контактов %2 в %3
+insert column after	common	ru	Вставить столбец после
+insert column before	common	ru	Вставить столбец перед
+insert row after	common	ru	Вставить строку после
+insert row before	common	ru	Вставить строку перед
+international	common	ru	Международный
+invalid filename	common	ru	Неправильное имя файла
+invalid ip address	common	ru	Неправильный IP-адрес
+invalid password	common	ru	Неправильный пароль
+iran, islamic republic of	common	ru	Иран
+iraq	common	ru	Ирак
+ireland	common	ru	Ирландия
+israel	common	ru	Израиль
+it has been more then %1 days since you changed your password	common	ru	Прошло более %1 дней с тех пор, как Вы изменили пароль
+it is recommended that you run setup to upgrade your tables to the current version	common	ru	Рекомендуется запустить установку для обновления таблиц до текущей версии.
+italic	common	ru	Курсив
+italy	common	ru	Италия
+jamaica	common	ru	Ямайка
+january	common	ru	Январь
+japan	common	ru	Япония
+jordan	common	ru	Иордания
+july	common	ru	Июль
+jun	common	ru	Июнь
+june	common	ru	Июнь
+justify center	common	ru	Выровнять по центру
+justify full	common	ru	Выровнять по ширине
+justify left	common	ru	Выровнять по левому краю
+justify right	common	ru	Выровнять по правому краю
+kazakstan	common	ru	Казахстан
+kenya	common	ru	Кения
+keywords	common	ru	Ключевые слова
+kiribati	common	ru	Кирибати
+korea, democratic peoples republic of	common	ru	КНДР
+korea, republic of	common	ru	Республика Корея
+kuwait	common	ru	Кувейт
+kyrgyzstan	common	ru	Кыргызстан
+language	common	ru	Язык
+language_direction_rtl	common	ru	language_direction_rtl
+lao peoples democratic republic	common	ru	Лаос
+last name	common	ru	Фамилия
+last name of the user, eg. "%1"	common	ru	Фамилия пользователя, напр. "%1"
+last page	common	ru	Последняя страница
+lastname	common	ru	Фамилия
+latvia	common	ru	Латвия
+ldap-mgr	common	ru	Менеджер LDAP
+lebanon	common	ru	Ливан
+left	common	ru	Левый
+lesotho	common	ru	Лесото
+liberia	common	ru	Либерия
+libyan arab jamahiriya	common	ru	Ливия
+license	common	ru	Лицензия
+liechtenstein	common	ru	Лихтенштейн
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ru	Строка %1: '%2'<br><b>данных CSV не соответствует количеству столбцов таблицы %3 ==> игнорируется</b>
+list	common	ru	Список
+list members	common	ru	Список участников
+lithuania	common	ru	Литва
+local	common	ru	Локальный
+login	common	ru	Вход
+loginid	common	ru	LoginID
+logout	common	ru	Выход
+lost login id	common	ru	Идентификатор (ID) утерянного имени входа
+lost password	common	ru	Утерянный пароль
+low	common	ru	Нижний
+lowest	common	ru	Низший
+luxembourg	common	ru	Люксембург
+macau	common	ru	Макао
+macedonia, the former yugoslav republic of	common	ru	Македония
+madagascar	common	ru	Мадагаскар
+mail domain, eg. "%1"	common	ru	почтовый домен, напр. "%1"
+main category	common	ru	Основная категория
+main screen	common	ru	Главный экран
+maintainer	common	ru	Ответственный
+malawi	common	ru	Малави
+malaysia	common	ru	Малазия
+maldives	common	ru	Мальдивские о-ва
+mali	common	ru	Мали
+malta	common	ru	Мальта
+march	common	ru	Март
+marshall islands	common	ru	Маршалловы о-ва
+martinique	common	ru	Мартиника
+mauritania	common	ru	Мавритания
+mauritius	common	ru	Маврикий
+max number of icons in navbar	common	ru	Макс. количество пиктограмм в панели навигации
+may	common	ru	Май
+mayotte	common	ru	О-в Мейот
+medium	common	ru	Средний
+menu	common	ru	Меню
+message	common	ru	Сообщение
+mexico	common	ru	Мексика
+micronesia, federated states of	common	ru	Микронезия
+minute	common	ru	минута
+moldova, republic of	common	ru	Республика Молдова
+monaco	common	ru	Монако
+monday	common	ru	Понедельник
+mongolia	common	ru	Монголия
+montenegro	common	ru	Черногория
+montserrat	common	ru	Монтсеррат
+morocco	common	ru	Марокко
+mozambique	common	ru	Мозамбик
+multiple	common	ru	умножьте
+myanmar	common	ru	Мьянма
+name	common	ru	Имя
+name of the user, eg. "%1"	common	ru	имя пользователя, напр. "%1"
+namibia	common	ru	Намибия
+nauru	common	ru	Науру
+nepal	common	ru	Непал
+netherlands	common	ru	Нидерланды
+netherlands antilles	common	ru	Нидерландские Антильские острова
+never	common	ru	Никогда
+new caledonia	common	ru	Новая Каледония
+new entry added sucessfully	common	ru	Новая запись успешно добавлена
+new main category	common	ru	Новая основная категория
+new value	common	ru	Новое Значение
+new zealand	common	ru	Новая Зеландия
+next	common	ru	Следующий
+next month (hold for menu)	jscalendar	ru	Следующий месяц (удерживается для меню)
+next page	common	ru	Следующая страница
+next year (hold for menu)	jscalendar	ru	Следующий год (удерживается для меню)
+nicaragua	common	ru	Никарагуа
+niger	common	ru	Нигер
+nigeria	common	ru	Нигерия
+niue	common	ru	Ниуэ
+no	common	ru	Нет
+no entries found, try again ...	common	ru	записей не найдено, попробуйте еще ...
+no history for this record	common	ru	Нет истории для этой записи
+no savant2 template directories were found in:	common	ru	Каталог с шаблонами Savant2 не найден в:
+no subject	common	ru	Нет темы
+none	common	ru	Ничего
+norfolk island	common	ru	О-в Норфолк
+normal	common	ru	Нормальный
+northern mariana islands	common	ru	Северные Марианские острова
+norway	common	ru	Норвегия
+not	common	ru	не
+not a user yet? register now	common	ru	Еще не пользователь? Зарегистрируйтесь сейчас
+not assigned	common	ru	не назначено
+not readable %1 entry of user %2	common	ru	Запись %1 не может быть прочитана пользователем %2
+note	common	ru	Заметка
+notes	common	ru	Заметки
+notifications	common	ru	уведомления
+notify window	common	ru	Окно извещения
+notify your administrator to correct this situation	common	ru	Свяжитесь с Вашеим системным администратором для исправления этой ситуации.
+november	common	ru	Ноябрь
+october	common	ru	Октябрь
+ok	common	ru	OK
+old value	common	ru	Старое значение
+oman	common	ru	Оман
+on *nix systems please type: %1	common	ru	В xNIX-системах пожалуйста наберите: %1
+on mouse over	common	ru	При наведенном курсоре
+only private	common	ru	только личные
+only yours	common	ru	только Ваши
+oops! you caught us in the middle of system maintainance.	common	ru	Опс! Вы застукали нас прямо во время обслуживания системы.
+open notify window	common	ru	Открыть окно извещения
+open popup window	common	ru	Открыть всплывающее окно
+open sidebox	common	ru	Открыть боковое меню
+ordered list	common	ru	Нумерованный список
+original	common	ru	Оригинал
+other	common	ru	Другие
+overview	common	ru	Просмотр
+owner	common	ru	Владелец
+page	common	ru	Страница
+page was generated in %1 seconds	common	ru	Страница создана за %1 сек.
+pakistan	common	ru	Пакистан
+palau	common	ru	Палау
+palestinian territory, occupied	common	ru	Палестина
+panama	common	ru	Панама
+papua new guinea	common	ru	Папуа и Новая Гвинея
+paraguay	common	ru	Парагвай
+parcel	common	ru	Партия (пачка?)
+parent category	common	ru	Родительская категория
+password	common	ru	Пароль
+password could not be changed	common	ru	Пароль нельзя изменить
+password has been updated	common	ru	Пароль обновлен
+password must contain at least %1 lowercase letters	common	ru	Пароль должен содержать не менее %1 строчных букв
+password must contain at least %1 numbers	common	ru	Пароль должен содержать не менее %1 цифр
+password must contain at least %1 special characters	common	ru	Пароль должен содержать минимум %1 спецсимволов
+password must contain at least %1 uppercase letters	common	ru	Пароль должен содержать не менее %1 прописных букв
+password must have at least %1 characters	common	ru	Пароль должен содержать не менее %1 символов
+path to user and group files has to be outside of the webservers document-root!!!	common	ru	Путь к файлам пользователя и группы ДОЛЖЕН НАХОДИТЬСЯ ВНЕ главного каталога Веб-сервера (document-root)!!!
+permission denied!	common	ru	Доступ запрещен!
+permissions to the files/users directory	common	ru	разрешения для папки файлов/пользователей
+permisson denied!	common	ru	Доступ запрещен!
+personal	common	ru	Личные
+peru	common	ru	Перу
+philippines	common	ru	Филиппины
+phone number	common	ru	номер телефона
+phpgwapi	common	ru	eGroupWare API
+pitcairn	common	ru	О-в Питкэрн
+please %1 by hand	common	ru	Пожалуйста %1 вручную
+please enter a name	common	ru	Пожалуйста введите имя !
+please run setup to become current	common	ru	Пожалуйста, запустите обновление.
+please select	common	ru	Пожалуйста Выберите
+please set your global preferences	common	ru	Пожалуйста, установите Ваши общие настройки!
+please set your preferences for this application	common	ru	Пожалуйста установите Ваши настройки для этого приложения !
+please wait...	common	ru	Пожалуйста подождите...
+please, check back with us shortly.	common	ru	Пожалуйста, заходите еще поскорее.
+poland	common	ru	Польша
+portugal	common	ru	Португалия
+postal	common	ru	Почтовый
+powered by	common	ru	Под управлением
+preferences	common	ru	Настройки
+preferences for the idots template set	common	ru	Настройки для набора тем idots
+prev. month (hold for menu)	jscalendar	ru	Предыдущий месяц
+prev. year (hold for menu)	jscalendar	ru	Предыдущий год
+previous page	common	ru	Предыдущая страница
+primary style-sheet:	common	ru	Основная таблица стилей:
+print	common	ru	Печать
+priority	common	ru	Приоритет
+private	common	ru	Личные
+programs	common	ru	Програмы
+project	common	ru	Проект
+public	common	ru	общий
+puerto rico	common	ru	Пуэрто-Рико
+qatar	common	ru	Катар
+read	common	ru	Читать
+read this list of methods.	common	ru	Читать этот список методов
+reading	common	ru	чтение
+register	common	ru	Зарегистрировать
+regular	common	ru	Периодический
+reject	common	ru	Отклонить
+remember me	common	ru	Запомнить меня
+remove selected accounts	common	ru	Удалить выбранные учетные записи
+remove shortcut	common	ru	Удалить Сокращение
+rename	common	ru	Переименовать
+replace	common	ru	Замена
+replace with	common	ru	Заменить на
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	ru	Показать список учетных записей пользователей в системе. ВНИМАНИЕ: Список может быть весьма большим.
+returns an array of todo items	common	ru	Возвращает массив Заданий
+returns struct of users application access	common	ru	Возвращает структуру доступа пользователей к приложениям
+reunion	common	ru	О-в Реунион
+right	common	ru	Правый
+romania	common	ru	Румыния
+russian federation	common	ru	Российская Федерация
+rwanda	common	ru	Руанда
+saint helena	common	ru	Остров Святой Елены
+saint kitts and nevis	common	ru	Сент-Китс и Невис
+saint lucia	common	ru	Сент-Люси
+saint pierre and miquelon	common	ru	Сен-Пьер и Микелон
+saint vincent and the grenadines	common	ru	Сент-Винсент и Гренадины
+samoa	common	ru	Самоа
+san marino	common	ru	Сан-Марино
+sao tome and principe	common	ru	Сан-Томе и Принсипи
+saturday	common	ru	Суббота
+saudi arabia	common	ru	Саудовская Аравия
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	ru	Версия Savant2 отличается от Savant2 обертки. <br/>Эта версия: %1 <br/>Версия Savant: %2
+save	common	ru	Сохранить
+search	common	ru	Поиск
+search %1 '%2'	common	ru	Поиск %1 '%2'
+search accounts	common	ru	Поиск учетных зписей (аккаунтов)
+search or select accounts	common	ru	поиск или выбор учетных записей
+second	common	ru	секунд(второй?)
+section	common	ru	Секция
+select	common	ru	Выбрать
+select all %1 %2 for %3	common	ru	Выберите все %1 %2 для %3
+select category	common	ru	Выберите Категорию
+select date	common	ru	Выберите дату
+select group	common	ru	Выберите группу
+select home email address	common	ru	Выберите домашний адрес электронной почты
+select multiple accounts	common	ru	выберите множество учетных записей
+select one	common	ru	Выберите один
+select the default height for the application windows	common	ru	Выберите высоту по умолчанию для окон приложений
+select the default width for the application windows	common	ru	Выберите ширину по умолчанию для окон приложений
+select user	common	ru	Выберите пользователя
+select work email address	common	ru	Выберите рабочий адрес электронной почты
+selection	common	ru	Выбор
+send	common	ru	Отправить
+senegal	common	ru	Сенегал
+september	common	ru	Сентябрь
+serbia	common	ru	Сербия
+server %1 has been added	common	ru	Добавлен Сервер %1
+server answered. processing response...	common	ru	Получен ответ Сервера.  Обработка ответа...
+server contacted. waiting for response...	common	ru	Контакт с Сервером. Ожидание ответа...
+server name	common	ru	Имя Сервера
+session has been killed	common	ru	Сессия уничтожена
+setup	common	ru	Установка
+setup main menu	common	ru	Главное меню установки
+seychelles	common	ru	Сейшельские о-ва
+show all	common	ru	показать все
+show all categorys	common	ru	Показать все категории
+show as topmenu	common	ru	Показать меню наверху
+show clock?	common	ru	Показать часы?
+show home and logout button in main application bar?	common	ru	Показывать кнопки "Домой" и "Выход" на главной панели приложений?
+show in sidebox	common	ru	Показать сбоку
+show logo's on the desktop.	common	ru	Показать логотипы на рабочем столе.
+show menu	common	ru	показать меню
+show page generation time	common	ru	Показать время генерации страницы
+show page generation time on the bottom of the page?	common	ru	Показать время генерации страницы внизу страницы?
+show page generation time?	common	ru	Отображать время генерации страницы?
+show the logo's of egroupware and x-desktop on the desktop.	common	ru	Показать логотипы eGroupware и Х-desktop на рабочем столе.
+show_more_apps	common	ru	показать_больше_приложений
+showing %1	common	ru	показ %1
+showing %1 - %2 of %3	common	ru	показ %1 - %2 из %3
+sierra leone	common	ru	Сьерра Леоне
+simple	common	ru	Простой
+singapore	common	ru	Сингапур
+site configuration	common	ru	Конфигурирование сайта
+slovakia	common	ru	Словакия
+slovenia	common	ru	Словения
+solomon islands	common	ru	Соломоновы о-ва
+somalia	common	ru	Сомали
+sorry, your login has expired	login	ru	Извините, Ваше допуск просрочен
+south africa	common	ru	Южная Африка
+south georgia and the south sandwich islands	common	ru	Южные Сандвичевы острова (Гавайи)
+spain	common	ru	Испания
+sri lanka	common	ru	Шри-Ланка
+start date	common	ru	Дата начала
+start time	common	ru	Время начала
+start with	common	ru	запуск с помощью
+starting up...	common	ru	Запуск...
+status	common	ru	Статус
+stretched	common	ru	растянутый
+subject	common	ru	Тема
+submit	common	ru	Послать
+substitutions and their meanings:	common	ru	Подстановки и их значения
+sudan	common	ru	Судан
+sunday	common	ru	Воскресенье
+suriname	common	ru	Суринам
+svalbard and jan mayen	common	ru	Сволборд и Ян Майен
+swaziland	common	ru	Свазиленд
+sweden	common	ru	Швеция
+switzerland	common	ru	Швейцария
+syrian arab republic	common	ru	Сирия
+table properties	common	ru	Свойства таблицы
+taiwan	common	ru	Тайвань
+tajikistan	common	ru	Таджикистан
+tanzania, united republic of	common	ru	Танзания
+text color:	common	ru	Цвет текста:
+thailand	common	ru	Таиланд
+the api is current	common	ru	Обновление API не требуется
+the api requires an upgrade	common	ru	API требует обновления
+the following applications require upgrades	common	ru	Следующие приложения требуют обновления
+the mail server returned	common	ru	Почтовый сервер возвращен
+this application is current	common	ru	Обновление не требуется
+this application requires an upgrade	common	ru	Приложение требует обновления
+this name has been used already	common	ru	Это имя уже используется !
+thursday	common	ru	Четверг
+tiled	common	ru	мозаика
+time	common	ru	Время
+time selection:	jscalendar	ru	Выбор времени :
+time zone	common	ru	Временная зона
+time zone offset	common	ru	Смещение временной зоны
+title	common	ru	Заголовок
+to	common	ru	Кому
+to correct this error for the future you will need to properly set the	common	ru	Для устранения этой ошибки в будущем, Вам необходимо правильно установить
+to go back to the msg list, click <a href= %1 >here</a>	common	ru	Для возврата к списку сообщений, нажмите <a href="%1">здесь</a>
+today	common	ru	Сегодня
+todays date, eg. "%1"	common	ru	Сегодняшняя дата, напр. "%1"
+toggle first day of week	jscalendar	ru	Изменить первый день недели
+togo	common	ru	Того
+tokelau	common	ru	Токелау
+tonga	common	ru	Тонга
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	ru	Слишком много попыток входа: %1 для пользователя '%2', %3 с IP адреса %4
+top	common	ru	Верх
+total	common	ru	Всего
+transparant bg for the icons?	common	ru	Использовать прозрачный фон для пиктограмм?
+trinidad and tobago	common	ru	Тринидад и Тобаго
+tuesday	common	ru	Вторник
+tunisia	common	ru	Тунис
+turkey	common	ru	Турция
+turkmenistan	common	ru	Туркменистан
+turks and caicos islands	common	ru	Острова Теркс и Каикос
+tuvalu	common	ru	о-ва Тувалу
+type	common	ru	Тип
+uganda	common	ru	Уганда
+ukraine	common	ru	Украина
+underline	common	ru	Подчеркивание
+united arab emirates	common	ru	ОАЭ
+united kingdom	common	ru	Англия
+united states	common	ru	США
+united states minor outlying islands	common	ru	Удаленные острова под юрисдикцией США
+unknown	common	ru	Неизвестный
+update	common	ru	Изменить
+update the clock per minute or per second	common	ru	Обновлять показания часов ежеминутно или ежесекундно
+upload	common	ru	Выгрузить
+upload directory does not exist, or is not writeable by webserver	common	ru	Каталог выгрузки не существует, или Веб-сервер не имеет достаточных полномочий для записи
+upload requires the directory to be writable by the webserver!	common	ru	Выгрузка требует, чтобы веб-сервер имел права на запись для каталога!
+url	common	ru	Ссылка (URL)
+uruguay	common	ru	Уругвай
+use button to search for	common	ru	используйте Кнопку для поиска
+use button to search for address	common	ru	используйте Кнопку для поиска Адреса
+use button to search for calendarevent	common	ru	используйте Кнопку для поиска События в Календаре
+use button to search for project	common	ru	используйте Кнопку для поиска Проекта
+user	common	ru	Пользователь
+user accounts	common	ru	учетные записи пользователей
+user groups	common	ru	группы пользователей
+user openinstance	common	ru	Экземпляр, открытый пользователем
+username	common	ru	Имя
+users	common	ru	пользователи
+users choice	common	ru	Выбор Пользователя
+uzbekistan	common	ru	Узбекистан
+vanuatu	common	ru	Ванату
+venezuela	common	ru	Венесуэлла
+version	common	ru	Версия
+viet nam	common	ru	Вьетнам
+view	common	ru	Просмотреть
+virgin islands, british	common	ru	Виргинские острова (Британская территория)
+virgin islands, u.s.	common	ru	Виргинские острова (территория США)
+wallis and futuna	common	ru	О-ва Уоллис и Футуна
+wednesday	common	ru	Среда
+welcome	common	ru	Добро пожаловать
+western sahara	common	ru	Западная Сахара
+what color should all the blank space on the desktop have	common	ru	Какого цвета должны быть все пустые места рабочего стола
+what style would you like the image to have?	common	ru	Выберите стиль отображения
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ru	Если Вы ответите "да", кнопки "Домой" и "Выход" будут представлены в виде иконок на верхней панели.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	ru	Где и как eGroupWare будет показывать такие ссылки как Настройки, О Нас и Выход.
+which groups	common	ru	Какие группы
+width	common	ru	Ширина
+wk	jscalendar	ru	нед.
+work email	common	ru	рабочий e-mail
+would you like to display the page generation time at the bottom of every window?	common	ru	Отображать время генерации страницы в нижней части окна?
+writing	common	ru	запись
+written by:	common	ru	Записано:
+year	common	ru	Год
+yemen	common	ru	Йемен
+yes	common	ru	Да
+you are required to change your password during your first login	common	ru	Вам необходимо изменить свой пароль при первом входе в систему
+you can customize how many icons and toolbars the editor shows.	common	ru	Вы можете указать как много пиктограмм и панелей инструментов показывает редактор.
+you have been successfully logged out	login	ru	Вы успешно вышли
+you have not entered a title	common	ru	Вы не ввели заголовок
+you have not entered a valid date	common	ru	Вы не ввели правильную дату
+you have not entered a valid time of day	common	ru	Вы не ввели правильное время
+you have not entered participants	common	ru	Вы не ввели участников
+you have selected an invalid date	common	ru	Вы выбрали неправильную дату !
+you have selected an invalid main category	common	ru	Вы выбрали неправильную основную категорию !
+you have successfully logged out	common	ru	Вы успешно вышли
+you need to add the webserver user '%1' to the group '%2'.	common	ru	Вам необходимо добавить пользователя Веб-сервера '%1' в группу '%2'.
+you need to be an egroupware administrator to access this functionality!	common	ru	Для доступа к этим функциям вы должны быть администратором eGroupWare!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	ru	Вы попытались открыть приложение eGroupWar: %1, но у вас нет прав на доступ к нему.
+your message could <b>not</b> be sent!<br>	common	ru	Ваше сообщение <b>не может</b> быть отправлено !<br>
+your message has been sent	common	ru	Ваше сообщение отправлено
+your search returned %1 matchs	common	ru	ваш поиск вернул %1 совпадений
+your search returned 1 match	common	ru	ваш поиск вернул 1 совпадение
+your session could not be verified.	login	ru	Ваш сеанс не может быть удостоверен.
+your settings have been updated	common	ru	Ваши установки обновлены
+zambia	common	ru	Замбия
+zimbabwe	common	ru	Зимбабве
+zoom	common	ru	Масштаб
