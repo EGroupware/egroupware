@@ -17,16 +17,16 @@ date_default_timezone_set('Europe/Berlin');	// to get ride of 5.3 warnings
 
 $verbose = 0;
 $config = array(
-	'packagename' => 'egroupware-epl',
-	'version' => '1.8.001',
-	'packaging' => date('Ymd'),
+	'packagename' => 'eGroupware',
+	'version' => '1.8',
+	'packaging' => '001-'.date('Ymd'),
 	'egwdir' => 'egroupware',
 	'svndir' => '/tmp/build_root/egw_1.8_buildroot-svn',
 	'egw_buildroot' => '/tmp/build_root/egw_1.8_buildroot',
-	//'sourcedir' => '/srv/obs/download/stylite-epl/egroupware-epl-10.1',
+	'sourcedir' => '/srv/obs/staging/egroupware/egroupware-1.8',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
 	'svnbranch' => 'branches/1.8',			// 'branches/1.8' or 'tags/1.6.001'
-	'svnalias' => 'default-ssh',			// default alias
+	'svnalias' => 'aliases/default-ssh',			// default alias
 	'aliasdir' => 'egroupware',			// directory created by the alias
 	'extra' => array('egw-pear','gallery','phpfreechat'),
 	'types' => array('tar.bz2','tar.gz','zip'),
