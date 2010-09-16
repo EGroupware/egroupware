@@ -199,6 +199,8 @@ foreach($dirs as $path => $id)
 	);
 	$GLOBALS['egw_setup']->db->insert('egw_sqlfs',$nrow,false,__LINE__,__FILE__,'phpgwapi');
 }
+// PostgreSQL seems to require to update the sequenz, after manually inserting id's
+$oProc->UpdateSequence('egw_sqlfs','fs_id');
 
 // Create Addressbook for Default group, by setting a group ACL from the group to itself for all rights: add, read, edit and delete
 $defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
