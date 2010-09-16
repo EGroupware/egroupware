@@ -31,10 +31,10 @@ class addressbook_hooks
 			$file = array(
 				'Add'             => "javascript:egw_openWindowCentered2('".
 					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit'),false).
-					"','_blank',850,440,'yes')",
+					"','_blank',870,480,'yes')",
 				'Advanced search' => "javascript:egw_openWindowCentered2('".
 					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.search'),false).
-					"','_blank',850,480,'yes')",
+					"','_blank',870,480,'yes')",
 				'CSV-Import'      => egw::link('/addressbook/csv_import.php')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
@@ -293,7 +293,7 @@ class addressbook_hooks
 			'description' => 'Addressbook',
 			'url'         => '/index.php',
 			'extradata'   => 'menuaction=addressbook.addressbook_ui.edit',
-			'options'     => "onclick=\"egw_openWindowCentered2(this,'_blank',850,440,'yes'); return false;\"".
+			'options'     => "onclick=\"egw_openWindowCentered2(this,'_blank',870,440,'yes'); return false;\"".
 				' title="'.htmlspecialchars(lang('Edit extra account-data in the addressbook')).'"',
 		);
 	}
@@ -320,7 +320,7 @@ class addressbook_hooks
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',
-			'add_popup'  => '850x440',
+			'add_popup'  => '870x440',
 			'file_access'=> 'addressbook.addressbook_bo.file_access',
 			'default_types' => array('n' => array('name' => 'contact', 'options' => array('icon' => 'navbar.png','template' => 'addressbook.edit'))),
 		);
