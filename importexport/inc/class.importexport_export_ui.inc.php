@@ -284,12 +284,12 @@ class importexport_export_ui {
 				$definition = new importexport_definition($identifier);
 				if ($title = $definition->get_title()) {
 					if (!$selected_plugin) $selected_plugin = $title;
-					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',$selected_plugin == $title);");
+					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',".($selected_plugin == $title ? 'true' : 'false').");");
 				}
 				unset($definition);
 		}
 		unset($definitions);
-		$response->addScript("selectbox_add_option('exec[definition]','" . lang('Expert options') . "', 'expert',$selected_plugin == $title);");
+		$response->addScript("selectbox_add_option('exec[definition]','" . lang('Expert options') . "', 'expert',".($selected_plugin == $title ? 'true' : 'false').");");
 		
 		if($selected_plugin == 'expert') {
 			$this->ajax_get_plugins($_appname, $response);
@@ -317,7 +317,7 @@ class importexport_export_ui {
 		$response->addScript("clear_options('exec[plugin]');");
 		foreach ($plugins[$_appname]['export'] as $plugin => $plugin_name) {
 			if (!$selected_plugin) $selected_plugin = $plugin;
-			$response->addScript("selectbox_add_option('exec[plugin]','$plugin_name', '$plugin',$selected_plugin == $plugin);");
+			$response->addScript("selectbox_add_option('exec[plugin]','$plugin_name', '$plugin',".($selected_plugin == $plugin ? 'true' : 'false').");");
 		}
 		
 		$this->ajax_get_plugin_description($selected_plugin,$response);
