@@ -269,8 +269,8 @@ class importexport_wizard_basic_import_csv
 
 			// Clear conditions that don't do anything
 			foreach($content['conditions'] as $key => $condition) {
-				if($condition['true']['action'] == 'none' && !$condition['true']['stop']
-					&& $condition['false']['action'] == 'none' && !$condition['false']['stop']) {
+				if(($condition['true']['action'] == 'none' || !$condition['true']['action'])  && !$condition['true']['stop']
+					&& ($condition['false']['action'] == 'none' || !$condition['false']['action']) && !$condition['false']['stop']) {
 					unset($content['conditions'][$key]);
 				}
 			}
