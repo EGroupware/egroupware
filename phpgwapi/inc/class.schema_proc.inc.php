@@ -201,12 +201,7 @@ class schema_proc
 			{
 				continue;	// is already created as primary key
 			}
-			if (is_numeric($name))
-			{
-				$name = $this->_index_name($sTableName,$mFields);
-			}
-			$aSql = $this->dict->CreateIndexSQL($name,$sTableName,$mFields,array('UNIQUE'));
-			if (!($retVal = $this->ExecuteSQLArray($aSql,2,'CreateIndexSql(%1,%2,%3,%4) sql=%5',False,$name,$sTableName,$mFields,array('UNIQUE'),$aSql)))
+			if (!($retVal = $this->CreateIndex($sTableName,$mFields,true,'',$name)))
 			{
 				return $retVal;
 			}
@@ -253,13 +248,7 @@ class schema_proc
 					}
 				}
 			}
-
-			if (is_numeric($name))
-			{
-				$name = $this->_index_name($sTableName,$mFields);
-			}
-			$aSql = $this->dict->CreateIndexSQL($name,$sTableName,$mFields,array($options));
-			if (!($retVal = $this->ExecuteSQLArray($aSql,2,'CreateIndexSql(%1,%2,%3,%4) sql=%5',False,$name,$sTableName,$mFields,$options,$aSql)))
+			if (!($retVal = $this->CreateIndex($sTableName,$mFields,false,$options,$name)))
 			{
 				return $retVal;
 			}
