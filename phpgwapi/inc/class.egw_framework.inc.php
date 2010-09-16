@@ -214,7 +214,9 @@ abstract class egw_framework
 			}
 			$var['page_generation_time'] .= '</span></div>';
 		}
-		$var['powered_by'] = lang('Powered by').' <a href="'.egw::link('/about.php','','about').'">EGroupware</a> '.lang('version').' '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'];
+		$var['powered_by'] = lang('Powered by').' <a href="http://www.stylite.de/" target="_blank">Stylite\'s</a>'.
+                        ' <a href="'.egw::link('/about.php','','about').'">EGroupware</a>'.
+			' Community Version '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'];
 
 		return $var;
 	}
