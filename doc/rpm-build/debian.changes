@@ -1,0 +1,533 @@
+egroupware (1.8.001.20100916) hardy; urgency=low
+
+  * 1.8.001 release candidate
+  * Inclusion of postinstall script from EPL (automatic install/update)
+  * full timezone support including recurring events
+  * visualisation of participant status of events, mark invitations
+  * email 3PaneView, folder tree in sidebox, import ical/vcard onclick, select all messages in folder
+  * Infolog: print and copy
+  * addressbook mergeprint supports now MS- and OpenOffice xml formats
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 16 Sep 2010 12:00:00 +0200
+
+egroupware (1.6.001+dfsg-2) unstable; urgency=low
+
+  * Upload to unstable (closes: #519566)
+
+  [ Jan Wagner ]
+  * add egroupware-notifications package, cause the application was missing
+    and it's needed by calendar application
+  * depend egroupware-calendar on egroupware-notifications (closes: #511913)
+
+  [ Peter Eisentraut ]
+  * Depend egroupware-tracker on egroupware-notifications (closes: #511704)
+  * Add newline after egw:Modules substitution variable; fixes FTBFS
+    (closes: #518840)  (This is caused by a change in debhelper 7.1.0.)
+  * Added ${misc:Depends} to all Depends lines, per lintian
+
+ -- Peter Eisentraut <petere@debian.org>  Fri, 13 Mar 2009 23:38:03 +0200
+
+egroupware (1.6.001+dfsg-1) experimental; urgency=low
+
+  * New upstream release
+  * Updated copyright notices
+  * Added php5-cli dependency to filemanager application, per lintian
+
+ -- Peter Eisentraut <petere@debian.org>  Sat, 06 Dec 2008 11:25:37 +0200
+
+egroupware (1.6~rc5-2+dfsg-1) experimental; urgency=low
+
+  * New upstream release candidate
+
+ -- Peter Eisentraut <petere@debian.org>  Tue, 18 Nov 2008 23:30:37 +0200
+
+egroupware (1.6~rc4+dfsg-1) experimental; urgency=low
+
+  * New upstream release candidate
+    - mydms application removed
+  * Changed watch file temporarily for RC versions
+
+ -- Peter Eisentraut <petere@debian.org>  Sat, 15 Nov 2008 12:35:17 +0200
+
+egroupware (1.4.004-2.dfsg-4) unstable; urgency=low
+
+  * Debconf translation updates (closes: #498957)
+
+ -- Peter Eisentraut <petere@debian.org>  Thu, 02 Oct 2008 01:02:49 +0300
+
+egroupware (1.4.004-2.dfsg-3) unstable; urgency=low
+
+  * Debconf translation updates (closes: #491763)
+
+ -- Peter Eisentraut <petere@debian.org>  Fri, 12 Sep 2008 15:49:05 +0300
+
+egroupware (1.4.004-2.dfsg-2) unstable; urgency=low
+
+  * Debconf translation updates (closes: #480979, #486531, #488573, #489940)
+  * Renamed README.maintainer to now standardized name README.source
+  * Updated standards version
+  * Reference .../doc/egroupware-core/README.Debian.gz with gz suffix
+    (closes: #489023)
+  * Removed obsolete lintian overrides
+  * Simplified setup code, obsoleting 06-egw-header-template.dpatch
+  * Removed obsolete 08-egw-checkinstall-symlink.dpatch and all of dpatch
+  * Replaced gawk by perl in debian/rules, simplified code a bit
+
+ -- Peter Eisentraut <petere@debian.org>  Mon, 14 Jul 2008 14:20:37 +0200
+
+egroupware (1.4.004-2.dfsg-1) unstable; urgency=low
+
+  * New upstream release (closes: #476977)
+    - Obsoletes 01-kses-security.dpatch
+  * Added Vcs-* control fields for move to collab-maint
+  * Made egw-sanitize-tarball compatible with uscan and updated watch file to
+    use it
+  * Debconf translation updates (closes: #472064, #475252)
+
+ -- Peter Eisentraut <petere@debian.org>  Fri, 09 May 2008 16:57:05 +0200
+
+egroupware (1.4.002.dfsg-2.1) unstable; urgency=high
+
+  * Non-maintainer upload by the Security Team.
+  * Fix multiple security issues in kses _bad_protocol_once function. Details
+    are under embargo for now (01-kses-security.dpatch; Closes: #471839).
+
+ -- Nico Golde <nion@debian.org>  Sat, 22 Mar 2008 16:26:39 +0100
+
+egroupware (1.4.002.dfsg-2) unstable; urgency=low
+
+  * Upload to unstable
+  * Updated standards version
+  * Converted copyright files to UTF-8
+  * Added information in egroupware-addressbook/NEWS.Debian about upgrading an
+    LDAP-based addressbook (closes: #445834)
+  * Switched back to integrated version of ttf-bitstream-vera, because the
+    package has been removed (closes: #433807, #447988, #461254)
+  * Debconf templates and package description review (closes: #464110)
+  * Debconf translation updates (closes: #465063, #465133, #465799, #467163,
+    #467173, #467479, #467497, #467536, #468479)
+  * Added Homepage control field
+
+ -- Peter Eisentraut <petere@debian.org>  Sat, 01 Mar 2008 19:22:24 +0100
+
+egroupware (1.4.002.dfsg-1) experimental; urgency=low
+
+  * New upstream release
+    - Fixes mishandling of empty web server docroot (closes: #439912)
+    - Includes fix for cross-site-scripting security problem
+      (CVE-2007-5091) (closes: #444351)
+  * Removed obsolete LDAP setup instructions from egroupware-core's
+    README.Debian (closes: #439323)
+
+ -- Peter Eisentraut <petere@debian.org>  Thu, 04 Oct 2007 23:22:14 +0200
+
+egroupware (1.4.001.dfsg-2) experimental; urgency=low
+
+  * Removed support for Apache 1 and PHP 4 (closes: #432236)
+  * Replaced ${Source-Version} by ${binary:Version}
+  * Fixed bugs in translations of debconf templates
+  * Reenabled outdated translations pt_BR and vi, because the really
+    outdated parts are now obsolete
+
+ -- Peter Eisentraut <petere@debian.org>  Mon, 09 Jul 2007 13:05:03 +0200
+
+egroupware (1.4.001.dfsg-1) experimental; urgency=low
+
+  * New upstream release
+  * Removed egroupware-ldap package
+  * Some installation cleanup
+
+ -- Peter Eisentraut <petere@debian.org>  Fri, 15 Jun 2007 11:25:39 +0200
+
+egroupware (1.3.023.dfsg-1) experimental; urgency=low
+
+  * New upstream release
+    - workflow application removed
+    - Obsoletes patch 04-egw-ldap-doc
+  * Added tracker application
+  * Updated Apache configuration with upstream recommendations
+  * Fixed ttf-bitstream-vera handling
+  * Disabled compression of *.php files installed as documentation
+  * Some installation cleanup
+
+ -- Peter Eisentraut <petere@debian.org>  Tue, 29 May 2007 15:18:00 +0200
+
+egroupware (1.3.022.dfsg-1) experimental; urgency=low
+
+  * New upstream release
+  * Updated egw-sanitize-tarball script to exclude debian/ directory
+    maintained by upstream
+
+ -- Peter Eisentraut <petere@debian.org>  Mon, 21 May 2007 10:30:53 +0200
+
+egroupware (1.2.106-2.dfsg-3) unstable; urgency=low
+
+  * New Galician translation of debconf templates by Jacobo Tarrio
+    (closes: #412187)
+  * Only change permissions on /var/lib/egroupware/ during initial
+    installation, in case someone wants a different setup
+    (closes: #419094)
+
+ -- Peter Eisentraut <petere@debian.org>  Fri, 11 May 2007 18:41:23 +0200
+
+egroupware (1.2.106-2.dfsg-2) unstable; urgency=low
+
+  * Fixed watch file to ignore beta versions
+  * New Portuguese translation of debconf templates by Carlos Lisboa
+    (closes: #409410)
+
+ -- Peter Eisentraut <petere@debian.org>  Fri,  9 Feb 2007 12:49:08 +0100
+
+egroupware (1.2.106-2.dfsg-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Peter Eisentraut <petere@debian.org>  Mon,  8 Jan 2007 14:43:34 +0100
+
+egroupware (1.2-106.dfsg-1) unstable; urgency=medium
+
+  * New upstream release
+  * Enabled installation with php5 >=5.2 (closes: #402405)
+  * Set php_flag display_errors to off to work around php5 bug
+  * New Spanish translation of debconf templates by César Gómez Martín
+    (closes: #402306)
+  * Added PEAR path to open_basedir (closes: #401892, #402720)
+
+ -- Peter Eisentraut <petere@debian.org>  Tue,  2 Jan 2007 13:38:05 +0100
+
+egroupware (1.2-105.dfsg-4) unstable; urgency=medium
+
+  * Disabled installation with php5 >=5.2 (closes: #399832)
+  * Changed some php_{flag|value} directives to php_admin_{flag|value}
+    as required
+  * Disabled outdated translations pt_BR and vi
+
+ -- Peter Eisentraut <petere@debian.org>  Sat,  2 Dec 2006 10:07:54 +0100
+
+egroupware (1.2-105.dfsg-3) unstable; urgency=low
+
+  * Placed php5 dependencies before php4 alternatives
+  * Raised php4 dependency to 4.3
+
+ -- Peter Eisentraut <petere@debian.org>  Sat,  4 Nov 2006 17:17:52 +0100
+
+egroupware (1.2-105.dfsg-2) unstable; urgency=medium
+
+  * New French translation of debconf templates by "Steve"
+    (closes: #390186)
+  * New Japanese translation of debconf templates by Hideki Yamane
+    (closes: #391806)
+
+ -- Peter Eisentraut <petere@debian.org>  Fri, 13 Oct 2006 23:36:56 +0200
+
+egroupware (1.2-105.dfsg-1) unstable; urgency=low
+
+  * New upstream release
+  * New Czech translation of debconf templates by Miroslav Kure
+    (closes: #389217)
+
+ -- Peter Eisentraut <petere@debian.org>  Sun, 24 Sep 2006 19:33:20 +0200
+
+egroupware (1.2-104.dfsg-3) unstable; urgency=medium
+
+  * New Dutch translation of debconf templates by Kurt De Bree
+    (closes: #387655)
+  * Added missing build dependency po-debconf
+  * Added note about tcpip_socket not enabled by default for PostgreSQL
+    7.4 (closes: #336930)
+  * Set all of /var/lib/egroupware/ owned by www-data:www-data
+  * Handle purging egroupware-core when debconf is not installed
+    (closes: #387980)
+
+ -- Peter Eisentraut <petere@debian.org>  Mon, 18 Sep 2006 13:40:16 +0200
+
+egroupware (1.2-104.dfsg-2) unstable; urgency=low
+
+  * Enhanced watch file
+  * Enable mod_actions for Apache 2 (closes: #381339)
+  * Removed recommendations of php5-mcal and php5-xslt, which don't exist
+  * Altered Debconf templates to fit recommendations in Developer's
+    Reference
+  * Code clean-up in maintainer scripts
+  * Updated setup instructions for new PostgreSQL packaging scheme
+  * Simplified documentation for LDAP setup
+  * Added php{4,5}-odbc as dependency alternative
+  * Updated for new fpdf path
+
+ -- Peter Eisentraut <petere@debian.org>  Mon, 28 Aug 2006 19:29:49 +0200
+
+egroupware (1.2-104.dfsg-1) unstable; urgency=low
+
+  * New upstream release (closes: #362295)
+  * Dropped 05-egw-projects-jpgraph-path patch because upstream clearly
+    believes this feature is relevant
+  * New stuff relative to previous unstable version ...
+    - New applications: mydms, projectmanager, resources, sambaadmin,
+      timesheet, workflow
+    - Dropped applications: backup, comic, email, forum, ftp, fudforum,
+      headlines, jinn, messenger, phpldapadmin, projects, stocks, tts
+      (closes: #271058, #271881, #347460, #365314)
+    - MySQL 5 support (closes: #347480, #372636, #378032)
+    - XMLRPC variable names fixed (closes: #355956)
+    - Added PHP5 dependencies as alternatives (closes: #328056, #367397)
+    - Language installation more robust (closes: #281762)
+    - IPv6 support (#330873)
+    - Calendar support for all-day events (closes: #292603)
+  * Fixed spelling mistake in package description (closes: #363386)
+  * New Dutch translation of debconf templates by Kurt De Bree
+    (closes: #363045)
+
+ -- Peter Eisentraut <petere@debian.org>  Fri, 28 Jul 2006 23:31:57 +0200
+
+egroupware (1.2-102.dfsg-2) experimental; urgency=low
+
+  * New upstream release
+  * Fixed php[45]-gd dependency (closes: #372779)
+
+ -- Peter Eisentraut <petere@debian.org>  Mon, 12 Jun 2006 10:04:54 +0200
+
+egroupware (1.2-2.dfsg-1) experimental; urgency=low
+
+  * New upstream release
+  * Added PHP5 dependencies as alternatives
+  * Added Subversion support to egw-sanitize-tarball
+  * Changed to Debhelper level 5
+  * Sorted out Build-Depends vs. Build-Depends-Indep
+  * Changes to default Apache configuration by Lars Kneschke:
+    - Added /usr/share/php to include_path
+    - Improved ical handling
+    - Improved rpc handling
+
+ -- Peter Eisentraut <petere@debian.org>  Wed, 31 May 2006 15:27:12 +0200
+
+egroupware (1.2-1.dfsg-1) experimental; urgency=low
+
+  * New upstream release
+    - New applications: mydms, projectmanager, resources, sambaadmin,
+      timesheet, workflow
+    - Dropped applications: backup, comic, email, forum, ftp, fudforum,
+      headlines, jinn, messenger, phpldapadmin, projects, stocks, tts
+  * Most patches obsoleted
+  * Calculate dependencies of meta package automatically
+
+ -- Peter Eisentraut <petere@debian.org>  Thu, 20 Apr 2006 17:37:44 +0200
+
+egroupware (1.0.0.009.dfsg-3-4) unstable; urgency=high
+
+  * Fixed fudforum arbitrary code execution security problem (CVE-2005-2781)
+    (closes: #340495)
+  * Fixed watch file to exclude RC versions
+
+ -- Peter Eisentraut <petere@debian.org>  Mon, 28 Nov 2005 14:01:13 +0100
+
+egroupware (1.0.0.009.dfsg-3-3) unstable; urgency=high
+
+  * Corrected fudforum fix
+  * Fixed cross-site-scripting [phpsysinfo/includes/system_footer.php,
+    phpsysinfo/includes/system_header.php,
+    debian/patches/22-egw-CVE-2005-0870-xss.dpatch]
+  * Backported parts of changes by Christopher Kunz to fix arbitrary file
+    inclusion [phpsysinfo/index.php,
+    debian/patches/23-egw-CVE-2005-3347-file.dpatch]
+  * Initialise charset variable to fix cross-site scripting
+    [phpsysinfo/index.php, debian/patches/24-egw-CVE-2005-3348-xss.dpatch]
+
+ -- Peter Eisentraut <petere@debian.org>  Tue, 15 Nov 2005 00:20:10 +0100
+
+egroupware (1.0.0.009.dfsg-3-2) unstable; urgency=low
+
+  * Fixed fudforum cross-site scripting security problem (CAN-2005-2600)
+    (closes: #323928)
+  * New Swedish translation of debconf templates by Daniel Nylander
+    (closes: #333750)
+
+ -- Peter Eisentraut <petere@debian.org>  Tue,  1 Nov 2005 23:47:36 +0100
+
+egroupware (1.0.0.009.dfsg-3-1) unstable; urgency=high
+
+  (The actual upstream release name is "1.0.0.009-3".)
+
+  * New upstream release (closes: #329597)
+    - Obsoletes patch 10-egw-xmlrpc-fix-fix
+
+ -- Peter Eisentraut <petere@debian.org>  Mon, 26 Sep 2005 11:11:11 +0200
+
+egroupware (1.0.0.009.dfsg-2) unstable; urgency=high
+
+  * Added upstream's fix for the previous fix
+
+ -- Peter Eisentraut <petere@debian.org>  Mon,  5 Sep 2005 11:11:11 +0200
+
+egroupware (1.0.0.009.dfsg-1) unstable; urgency=high
+
+  * New upstream release
+    - Includes fix for (another) XML-RPC remote execution security problem
+      (CAN-2005-2498) (closes: #323350)
+
+ -- Peter Eisentraut <petere@debian.org>  Thu,  1 Sep 2005 11:11:11 +0200
+
+egroupware (1.0.0.008-2.dfsg-1) unstable; urgency=low
+
+  * New upstream release
+  * New Czech translation of debconf templates by Miroslav Kure
+    (closes: #318156)
+  * Improved version recognition in watch file
+
+ -- Peter Eisentraut <petere@debian.org>  Fri, 29 Jul 2005 11:11:11 +0200
+
+egroupware (1.0.0.008-1.dfsg-1) unstable; urgency=high
+
+  * New upstream release
+    - Contains better fix for XML-RPC security problem (bug #317263)
+    - Obsoletes patches 09-egw-calendar-konqueror, 10-egw-pam-auth
+
+ -- Peter Eisentraut <petere@debian.org>  Sat,  9 Jul 2005 11:11:11 +0200
+
+egroupware (1.0.0.007-3.dfsg-1) unstable; urgency=high
+
+  * New upstream release
+    - Includes fix for XML-RPC remote execution security problem
+      (CAN-2005-1921) (closes: #317263)
+  * Updated standards version
+
+ -- Peter Eisentraut <petere@debian.org>  Thu,  7 Jul 2005 11:11:11 +0200
+
+egroupware (1.0.0.007-2.dfsg-4) unstable; urgency=low
+
+  * New Vietnamese translation of debconf templates by Clytie Siddall
+    (closes: #311614)
+  * Changed maintainer address
+
+ -- Peter Eisentraut <petere@debian.org>  Sat, 11 Jun 2005 11:11:11 +0200
+
+egroupware (1.0.0.007-2.dfsg-3) unstable; urgency=medium
+
+  * Fixed PAM authentication (closes: #306729)
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Tue, 24 May 2005 11:11:11 +0200
+
+egroupware (1.0.0.007-2.dfsg-2) unstable; urgency=medium
+
+  * Fixed calendar month display in Konqueror
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Thu, 12 May 2005 11:11:11 +0200
+
+egroupware (1.0.0.007-2.dfsg-1) unstable; urgency=high
+
+  * New upstream version
+    - fixes several security problems (closes: #304496, #305576)
+    - fixes SQL error in calendar matrix view (closes: #302341)
+    - skel application removed
+  * Added php4-cli to dependencies of -fudforum
+  * Made Apache 2 the preferred web server alternative in dependencies and
+    debconf question, adjusted debconf translations manually
+  * Added setup instructions for MySQL (thanks to Christian Motschke)
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Thu, 21 Apr 2005 11:11:11 +0200
+
+egroupware (1.0.00.006-1.dfsg-1) unstable; urgency=low
+
+  * New upstream version
+  * Adjusted patch egw-projects-jpgraph-path for upstream changes
+  * Removed patch egw-admin-save-email, obsoleted by upstream changes
+  * Added patch to ignore dangling symlinks in check_install.php;
+    phpldapadmin/config.php is initially a dangling symlink, so we don't
+    want to complain about that.
+  * Added perl to dependencies of -core (needed for postinst)
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Mon, 08 Nov 2004 11:11:11 +0100
+
+egroupware (1.0.00.005-1.dfsg-3) unstable; urgency=low
+
+  * Converted dpatch to use /usr/share/dpatch/dpatch-run
+  * No longer set php_flag display_errors off; this should be chosen by
+    the system administrator or the user.
+  * -calendar depends on -infolog (closes: #275871)
+  * New Japanese translation of debconf templates by Hideki Yamane
+    (closes: #278511)
+  * Added patch to save email addresses when creating new users
+    (closes: #270672)
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Mon, 01 Nov 2004 11:11:11 +0100
+
+egroupware (1.0.00.005-1.dfsg-2) unstable; urgency=low
+
+  * Removed PHP conditionals in apache.conf; besides having been
+    relatively useless, this also gets Apache 2 working.
+  * Symlinked to ttf-bitstream-vera instead of installing our own copy
+  * Symlinked to fpdf instead of installing our own copy (except
+    fpdf.php, which is patched by egroupware)
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Sat, 25 Sep 2004 11:11:11 +0200
+
+egroupware (1.0.00.005-1.dfsg-1) unstable; urgency=low
+
+  * New upstream version
+  * Added ".dfsg" to version name to make explicit that this is not the
+    original upstream tarball
+  * egroupware-infolog.remove now obsolete
+  * Removed new .htaccess file from installation
+  * Adjusted patch egw-ldap-doc for upstream changes
+  * Adjusted patch egw-projects-var-www for upstream changes and renamed
+    to egw-projects-jpgraph-path
+  * Added suggestions of php4-imap and php4-auth-pam to -core package
+  * Removed dependencies on php4-gd2 (see bug #261186)
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Sat, 11 Sep 2004 11:11:11 +0200
+
+egroupware (1.0.00.004-2+cvs20040825-2) unstable; urgency=low
+
+  * Added sitemgr-link symlink into the -sitemgr package
+  * New Brazilian Portuguese translation of debconf templates by
+    André Luís Lopes <andrelop@debian.org> (closes: #269531)
+  * Removed some obsolete files from -filemanager package
+  * phpldapadmin was by fault in debian/rules filtered from the list of
+    modules, so it did not get any files installed at all; fixed
+  * Added symlinks and instructions for setting up a phpldapadmin
+    configuration file
+  * Converted the executable dpatch 00template, which doesn't work, to
+    the nonexecutable variant
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Sat, 04 Sep 2004 11:11:11 +0200
+
+egroupware (1.0.00.004-2+cvs20040825-1) unstable; urgency=low
+
+  * New upstream release plus additional fixes (check out from CVS using
+    -r Version-1_0_0-branch -D '2004-08-25 00:00:00 UTC')
+  * Updated egw-ldap-doc patch for new translations
+  * Sorted out the web server and PHP dependencies:
+    - Support only Apache variants and PHP as module
+    - New Apache 2 support (experimental)
+    - Changed dependency on php4-cgi to php4-cli
+  * Use invoke-rc.d in maintainer scripts
+  * Ignore web server reload failures (closes: #267362)
+  * New French (fr) translation of debconf templates by Florent Usseil
+    (closes: #267828)
+  * Added more dependencies on PHP modules in the applications
+  * Force PHP mbstring overloading to be on
+  * Remove executable permission from installed PHP files
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Thu, 26 Aug 2004 11:11:11 +0200
+
+egroupware (1.0.00.003-2-1) unstable; urgency=low
+
+  * New upstream release (first stable upstream release, so it can go
+    into Debian unstable now)
+  * Patches now handled by dpatch
+  * More detailed copyright information added
+  * More careful selection of installed files
+  * More nonfree files removed from source package
+  * Dependencies revised
+  * debian/rules simplified
+  * Configuration adjusted for new upstream version, web server
+    selection changed in preparation for more supported servers
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Tue, 17 Aug 2004 11:11:11 +0200
+
+egroupware (0.9.99.015-1-1) experimental; urgency=low
+
+  * Initial release (closes: #237854)
+  * Removed calendar/doc/rfc2445.txt, because it is not free.
+  * Changed fudforum setup to work better in Debian directory structure.
+
+ -- Peter Eisentraut <peter_e@gmx.net>  Fri, 11 Jun 2004 22:37:12 +0200
