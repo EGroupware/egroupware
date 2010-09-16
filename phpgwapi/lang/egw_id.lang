@@ -423,7 +423,6 @@ poland	common	id	POLANDIA
 portugal	common	id	PORTUGAL
 postal	common	id	Pos
 powered by	common	id	Digerakan oleh
-powered by egroupware version %1	common	id	Digerakan oleh <a href="http://www.egroupware.org">eGroupWare</a> versi %1
 preferences	common	id	Kesukaan
 prev. month (hold for menu)	jscalendar	id	Bulan lalu (tekan, menu)
 prev. year (hold for menu)	jscalendar	id	Tahun lalu (tekan, menu)
