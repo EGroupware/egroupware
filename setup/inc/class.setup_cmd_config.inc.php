@@ -408,7 +408,8 @@ class setup_cmd_config extends setup_cmd
 		$defaults['backup_files'] = false;
 		$defaults['temp_dir'] = '/tmp';
 		$defaults['webserver_url'] = '/egroupware';
-		$defaults['smtp_server'] = $defaults['mail_server'] = 'localhost';
+		$defaults['smtp_server'] = 'localhost';
+		//$defaults['mail_server'] = 'localhost';
 		$defaults['mail_suffix'] = '$domain';
 		$defaults['imapAdminUsername'] = 'cyrus@$domain';
 		$defaults['imapAdminPW'] = self::randomstring();
