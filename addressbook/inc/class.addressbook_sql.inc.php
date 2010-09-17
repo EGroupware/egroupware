@@ -267,7 +267,7 @@ class addressbook_sql extends so_sql
 			// we have no private grants in addressbook at the moment, they have then to be added here too
 			if (isset($filter['owner']))
 			{
-				if (!$this->grants[(int) $filter['owner']]) return false;	// we have no access to that addressbook
+				if (!($filter['owner'] = array_intersect((array)$filter['owner'],array_keys($this->grants)))) return false;
 
 				// for an owner filter, which does NOT include current user, filter out private entries
 				if (!in_array($GLOBALS['egw_info']['user']['account_id'],$filter['owner']))
