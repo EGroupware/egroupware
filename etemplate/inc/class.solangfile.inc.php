@@ -184,7 +184,7 @@ class solangfile
 
 	function parse_php_app($app,$fd)
 	{
-		$reg_expr = '('.implode('|',array_keys($this->functions)).")[ \t]*\([ \t]*(.*)$";
+		$reg_expr = '/('.implode('|',array_keys($this->functions)).")[ \t]*\([ \t]*(.*)$/i";
 		define('SEP',filesystem_separator());
 		$d=dir($fd);
 		while ($fn=$d->read())
@@ -222,7 +222,7 @@ class solangfile
 				foreach($lines as $n => $line)
 				{
 					//echo "line='$line', lines[1+$n]='".$lines[1+$n]."'<br>\n";
-					while (eregi($reg_expr,$line,$parts))
+					while (preg_match($reg_expr,$line,$parts))
 					{
 						//echo "***func='$parts[1]', rest='$parts[2]'<br>\n";
 						$args = $this->functions[$parts[1]];
