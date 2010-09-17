@@ -270,7 +270,7 @@ foreach($setup_info as $app => $app_data)
 	}
 }
 $sorted_checks = array();
-foreach(array('php_version','php_ini_check','extension_check','pear_check','gd_check','permission_check') as $func)
+foreach(array('php_version','php_ini_check','extension_check','pear_check','gd_check','permission_check','jpgraph_check') as $func)
 {
 	foreach($checks as $name => $data)
 	{
@@ -737,6 +737,46 @@ function php_ini_check($name,$args)
 	return $result;
 }
 
+function jpgraph_check($name,array $args)
+{
+	global $passed_icon, $error_icon, $warning_icon;
+
+	$egw_path = defined(EGW_SERVER_ROOT) ? EGW_SERVER_ROOT : dirname(dirname(__FILE__));
+	$jpgraph_path = realpath($egw_path.'/..').SEP.'jpgraph';
+	
+	$min_version = isset($args['min_version']) ? $args['min_version'] : '1.13';
+
+	$available = false;
+	if (($check = file_exists($jpgraph_path) && is_dir($jpgraph_path)) && 
+		file_exists($jpgraph_path.'/src/jpgraph.php'))
+	{
+		if (file_exists($jpgraph_path.'/VERSION') && preg_match('/Version: v([0-9.]+)/',file_get_contents($jpgraph_path.'/VERSION'),$matches))
+		{
+			$version = $matches[1];
+			$available = version_compare($version,$min_version,'>=');
+		}
+		else
+		{
+			$version = 'unknown';
+		}
+	}
+	echo "<div>".($available ? $passed_icon : (isset($version) ? $warning_icon : $error_icon)).
+		' <span'.($available?'':' class="setup_warning"').'>'.
+		lang('Checking for JPGraph in %1',$jpgraph_path).': '.
+		(isset($version) ? lang('Version').' '.$version : lang('False'));
+		
+	if (!$available)
+	{
+		echo "<br />\n".lang('You dont have JPGraph version %1 or higher installed! It is needed from ProjectManager for Ganttcharts.',$min_version)."<br />\n";
+		echo lang('Please download a recent version from %1 and install it as %2.',
+			'<a href="http://jpgraph.net/download/" target="_blank">jpgraph.net/download/</a>',
+			$jpgraph_path);
+	}	
+	echo "</span></div>\n";
+
+	return $available;
+}
+
 function get_php_ini()
 {
 	ob_start();
@@ -831,7 +871,7 @@ if ($run_by_webserver)
 		{
 			echo lang('Please fix the above errors (%1) and warnings(%2)',$error_icon,$warning_icon).'. ';
 		}
-		echo '<br /><a href="'.str_replace('check_install.php','',$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
+		echo '<br /><a href="'.str_replace('check_install.php','',@$_SERVER['HTTP_REFERER']).'">'.lang('Return to Setup')."</a></h3>\n";
 	}
 	$setup_tpl->pparse('out','T_footer');
 	//echo "</body>\n</html>\n";
