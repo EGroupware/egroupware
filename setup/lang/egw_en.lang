@@ -137,6 +137,7 @@ check to backup and restore the files directory (may use a lot of space, make su
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
 checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file-permissions of %1 for %2 %3: %4
 checking for gd support...	setup	en	Checking for GD support...
+checking for jpgraph in %1	setup	en	Checking for JPGraph in %1
 checking function %1 exists	setup	en	Checking function %1 exists
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	en	Checking if php.ini setting session.save_path='%1' is writable by the webserver
 checking pear%1 is installed	setup	en	Checking PEAR%1 is installed
@@ -451,6 +452,7 @@ please check for sql scripts within the application's directory	setup	en	Please 
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 please configure egroupware for your environment	setup	en	Please configure eGroupWare for your environment
 please consult the %1.	setup	en	Please consult the %1.
+please download a recent version from %1 and install it as %2.	setup	en	Please download a recent version from %1 and install it as %2.
 please fix the above errors (%1) and warnings(%2)	setup	en	Please fix the above errors (%1) and warnings(%2)
 please install	setup	en	Please install
 please login	setup	en	Please login
@@ -567,6 +569,7 @@ the ctype extension is needed by htmlpurifier to check content of fckeditor agai
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	en	The db_type in defaults (%1) is not supported on this server. using first supported type.
 the file	setup	en	the file
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	en	The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.
+the following applications are not installed:	setup	en	The following applications are NOT installed:
 the following applications are required, but not installed:	setup	en	The following applications are required, but NOT installed:
 the following applications need to be upgraded:	setup	en	The following applications need to be upgraded:
 the function %1 is needed from: %2.	setup	en	The function %1 is needed from: %2.
@@ -670,6 +673,7 @@ you didn't enter a config username for domain %1	setup	en	You didn't enter a con
 you didn't enter a header admin password	setup	en	You didn't enter a header admin password
 you didn't enter a header admin username	setup	en	You didn't enter a header admin username
 you do not have any languages installed. please install one now <br />	setup	en	You do not have any languages installed. Please install one now <br />
+you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	en	You dont have JPGraph version %1 or higher installed! It is needed from ProjectManager for Ganttcharts.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	en	You have not created your header.inc.php yet!<br /> You can create it now.
 you have successfully logged out	setup	en	You have successfully logged out
 you must enter a username for the admin	setup	en	You must enter a username for the admin

@@ -137,6 +137,7 @@ check to backup and restore the files directory (may use a lot of space, make su
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
+checking for jpgraph in %1	setup	de	Überprüfe JPGraph in %1
 checking function %1 exists	setup	de	Überprüfe ob die Funktion %1 verfügbar ist
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	de	Überprüfe ob der Webserver auf die php.ini Einstellung session.save_path='%1' schreiben kann
 checking pear%1 is installed	setup	de	Überprüfe ob PEAR%1 installiert ist
@@ -449,6 +450,7 @@ please check for sql scripts within the application's directory	setup	de	Bitte s
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen Sie die Lese/Schreib-Rechte der Verzeichnisse oder gehen Sie zurück und benutzen eine andere Option.
 please configure egroupware for your environment	setup	de	Bitte konfigurieren Sie eGroupWare für Ihre Umgebung
 please consult the %1.	setup	de	Bitte konsultieren Sie das %1.
+please download a recent version from %1 and install it as %2.	setup	de	Bitte downloaden Sie die aktuelle Version von %1 und installieren Sie diese als %2.
 please fix the above errors (%1) and warnings(%2)	setup	de	Bitte beheben Sie die obigen Fehler (%1) und Warnungen (%2)
 please install	setup	de	Bitte installieren
 please login	setup	de	Bitte einloggen
@@ -565,6 +567,7 @@ the ctype extension is needed by htmlpurifier to check content of fckeditor agai
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
 the file	setup	de	der Datei
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	de	Der erste Schritt bei Installation von eGroupWare ist sicherzustellen, dass Ihre Umgebung die notwendigen Einstellungen hat, um die Anwendung korrekt auszuführen.
+the following applications are not installed:	setup	de	Die folgenden Anwendungen sind NICHT installiert:
 the following applications are required, but not installed:	setup	de	Die folgenden Anwendungen werden benötigt, sind aber NICHT installiert:
 the following applications need to be upgraded:	setup	de	Die folgenden Anwendungen müssen aktualisiert werden:
 the function %1 is needed from: %2.	setup	de	Die Funktion %1 wird benötigt von: %2.
@@ -668,6 +671,7 @@ you didn't enter a config username for domain %1	setup	de	Sie haben keinen Benut
 you didn't enter a header admin password	setup	de	Sie haben kein Passwort für die Headerverwaltung eingegeben
 you didn't enter a header admin username	setup	de	Sie haben keinen Benutzernamen für die Headerverwaltung eingegeben
 you do not have any languages installed. please install one now <br />	setup	de	Sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br />
+you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	de	Sie haben keine JPGraph Version %1 oder höher installiert! Diese wird vom Projektmanager für Ganttcharts benötigt.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br />Sie können sie jetzt anlegen.
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
 you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen für den Administrator eingeben!
