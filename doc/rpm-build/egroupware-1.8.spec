@@ -1,6 +1,6 @@
 Name: eGroupware
-Version: 1.8.001.20100916
-Release:
+Version: 1.8.001.20100917
+Release: 1
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
 License: GPLv2
@@ -318,7 +318,7 @@ Summary: The EGroupware projectmanager application
 Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version},
-#Requires: jpgraph-epl
+Requires: jpgraph >= 1.13
 %description projectmanager
 The projectmanager is EGroupware's new project management application.
 It's fully integrated into EGroupware and use the data of InfoLog and Calendar.

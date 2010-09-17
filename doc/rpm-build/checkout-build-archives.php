@@ -19,7 +19,7 @@ $verbose = 0;
 $config = array(
 	'packagename' => 'eGroupware',
 	'version' => '1.8',
-	'packaging' => '001-'.date('Ymd'),
+	'packaging' => '001.'.date('Ymd'),
 	'egwdir' => 'egroupware',
 	'svndir' => '/tmp/build_root/egw_1.8_buildroot-svn',
 	'egw_buildroot' => '/tmp/build_root/egw_1.8_buildroot',
@@ -35,14 +35,14 @@ $config = array(
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
 	'packager' => 'build@stylite.de',
-	'obs' => false,
+	'obs' => './obs',
 	'changelog' => false,	// eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'editsvnchangelog' => '* ',
 	'editor' => '/usr/bin/vi',
 	'svntag' => 'tags/$version.$packaging',	// eg. '$version.$packaging'
 	'skip' => array(),
-	'run' => array('svntag','checkout','copy','virusscan','create','sign')
+	'run' => array('svntag','checkout','copy','virusscan','create','sign','obs')
 );
 
 // process config from command line
@@ -295,7 +295,7 @@ function do_obs()
 		if (basename(dirname($path)) == '.osc') continue;
 		if (!preg_match('/\/'.preg_quote($config['packagename']).'[a-z-]*-'.preg_quote($config['version']).'/',$path)) continue;
 
-		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/',$path,$matches) &&
+		if (preg_match('/\/('.preg_quote($config['packagename']).'[a-z-]*)-'.preg_quote($config['version']).'\.[0-9.]+[0-9](\.tar\.(gz|bz2))$/',$path,$matches) &&
 			file_exists($new_name=$config['sourcedir'].'/'.$matches[1].'-'.$config['version'].'.'.$config['packaging'].$matches[2]))
 		{
 			if (basename($path) != basename($new_name))
@@ -315,18 +315,18 @@ function do_obs()
 
 			if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec')
 			{
-				$content = preg_replace('/^Version: '.preg_quote($config['version']).'\.[0-9]+/m','Version: '.$config['version'].'.'.$config['packaging'],$content);
+				$content = preg_replace('/^Version: '.preg_quote($config['version']).'\.[0-9.]+[0-9]/m','Version: '.$config['version'].'.'.$config['packaging'],$content);
 			}
 			if (substr($path,-4) == '.dsc')
 			{
 				$content = preg_replace('/^(Debtransform-Tar: '.preg_quote($config['packagename']).'[a-z-]*)-'.
-					preg_quote($config['version']).'\.[0-9]+(\.tar\.(gz|bz2))$/m',
+					preg_quote($config['version']).'\.[0-9.]+[0-9](\.tar\.(gz|bz2))$/m',
 					'\\1-'.$config['version'].'.'.$config['packaging'].'\\2',$content);
 			}
 			if (basename($path) == 'debian.changes' && strpos($content,$config['version'].'.'.$config['packaging']) === false)
 			{
 				list($new_header) = explode("\n",$content);
-				$new_header = preg_replace('/\('.preg_quote($config['version']).'.[0-9]+(.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
+				$new_header = preg_replace('/\('.preg_quote($config['version']).'\.[0-9.]+[0-9](.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
 				if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
 				$content = $new_header."\n\n".$config['changelog'].
 					"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
