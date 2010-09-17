@@ -3,10 +3,13 @@
 %1 created in %2.	setup	de	%1 in %2 angelegt.
 %1 database %2 on %3 already contains the following tables:	setup	de	%1 Datenbank %2 auf %3 enthält bereits die folgenden Tabellen:
 %1 does not exist !!!	setup	de	%1 existiert nicht!!!
+%1 entries modified.	setup	de	%1 Einträge geändert.
+%1 entries would have been modified.	setup	de	%1 Einträge wären geändert worden.
 %1 is %2%3 !!!	setup	de	%1 ist %2%3!!!
 %1 is needed by: %2.	setup	de	%1 wird von benötigt von: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	de	%1 ist auf %2 gesetzt, Sie werden KEINE Dateien größer als das hochladen oder anhängen können!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	de	%1 ist auf %2 gesetzt. Das ist für Produktionssysteme NICHT empfohlen, das Fehlermeldungen Passworte oder andere sensible Daten enthalten können!
+%1 users and %2 groups created, %3 errors	setup	de	%1 Benutzer und %2 Gruppen angelegt, %3 Fehler
 %1, %2 or %3 the configuration file.	setup	de	%1, %2 oder %3 der Konfigurationsdatei.
 '%1' is no valid domain name!	setup	de	'%1' ist kein gültiger Domainname!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	de	'%1' ist nicht erlaubt als %2. Parameter für die Option %3 !!!
@@ -18,6 +21,7 @@
 13 (ntp)	setup	de	13 (ntp)
 80 (http)	setup	de	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	de	<b>Zeichensatz</b> (benutzen sie utf-8 wenn sie planen Sprachen mit verschiedenen Zeichensätzen zu verwenden)
+==> different group '%1' under that gidnumber %2, not setting memberships!	setup	de	==> andere Gruppe '%1' unter der gidNumber %2, Mitgliedschaften wurden NICHT gesetzt!
 [header-password],[header-user],[new-password],[new-user]	setup	de	[Header-Passwort],[Header-Benutzer],[neues-Passwort],[neuer-Benutzer]
 access denied: wrong username or password for manage-header !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für die Headerverwaltung !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für Konfiguration der Domain '%1(%2)'  !!!
@@ -98,6 +102,7 @@ backup now	setup	de	jetzt sichern
 backup sets	setup	de	Datensicherungen
 backup skipped!	setup	de	Datensicherung ausgelassen!
 backup started, this might take a few minutes ...	setup	de	Datensicherung gestartet, das kann einige Minuten dauern ...
+base dn "%1" not found!	setup	de	Basis DN "%1" NICHT gefunden!
 because an application it depends upon was upgraded	setup	de	da eine Anwendung von der sie abhängt upgegradet wurde
 because it depends upon	setup	de	weil es abhängt von
 because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Anwendung ist, oder der Zugriff über ACL kontrolliert wird
@@ -114,6 +119,7 @@ can not connect to %1 database %2 on host %3 using user %4!	setup	de	Kann nicht 
 can not connect to ldap server on host %1 using dn %2!	setup	de	Kann nicht zu LDAP Server auf Rechner %1 als DN %2 verbinden!
 can not create %1 database %2 on %3 for user %4!	setup	de	Kann keine %1 Datenbank %2 auf Rechner %3 für Benutzer %4 anlegen!
 can not create dn %1!	setup	de	Kann DN %1 nicht anlegen!
+can not instancate accounts object for %1	setup	de	Kann Benutzerkonten-Object für %1 nicht instanzieren
 cancel	setup	de	Abbrechen
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br />Stattdessen können Sie die Datei %1 oder %2.
 cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	de	CAS Server Host Name: (z.B.: sso-cas-univ-rennes1.fr):
@@ -264,9 +270,12 @@ enter your http proxy server	setup	de	HTTP-Proxy-Server
 enter your http proxy server password	setup	de	Passwort des HTTP-Proxy-Servers
 enter your http proxy server port	setup	de	Port des HTTP-Proxy-Servers
 enter your http proxy server username	setup	de	Benutzername des HTTP-Proxy-Servers
+error deleting "dn=%1"!	setup	de	Fehler beim Löschen von "dn=%1"!
 error dropping user!	setup	de	Fehler beim Löschen des Benutzers!
 error in admin-creation !!!	setup	de	Fehler beim Anlegen des Admin-Kontos !!!
 error in group-creation !!!	setup	de	Fehler beim Anlegen der Gruppen !!!
+error listing "dn=%1"!	setup	de	Fehler beim Auflisten von "dn=%1"!
+error modifying dn=%1: %2='%3'!	setup	de	Fehler beim Ändern von dn=%1: %2='%3'!
 export has been completed!	setup	de	Export ist abgeschlossen!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	de	Fehler beim Schreiben der Konfigurationsdatei header.inc.php, bitte überprüfen Sie die Zugriffsrechte !!!
 false	setup	de	Falsch
@@ -343,6 +352,7 @@ ldap accounts context	setup	de	LDAP-Kontext für Benutzerkonten
 ldap config	setup	de	LDAP-Konfiguration
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	de	LDAP-Vorgabewert für Benutzerverzeichnisse (z.B. /home für /home/username)
 ldap default shell (e.g. /bin/bash)	setup	de	LDAP-Vorgabewert für Kommandointerpreter (shell) (z.B. /bin/bash)
+ldap dn="%1" with %2 entries deleted.	setup	de	LDAP dn="%1" mit %2 Einträgen gelöscht.
 ldap encryption type	setup	de	LDAP-Verschlüsselungstyp
 ldap groups context	setup	de	LDAP-Kontext für Gruppe
 ldap host	setup	de	LDAP-Host
@@ -461,6 +471,7 @@ re-enter password	setup	de	Passworteingabe wiederholen
 read translations from	setup	de	Lese Übersetzungen von
 readable by the webserver	setup	de	lesebar durch den Webserver
 really uninstall all applications	setup	de	WIRKLICH alle Anwendungen deinstallieren
+refusing to delete dn "%1"!	setup	de	Löschen von dn "%1" verweigert!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	de	register_globals ist eingeschaltet (On), eGroupWare benötigt das NICHT und es ist generell sicherer es auszuschalten (Off)
 registered	setup	de	registriert
 rejected lines	setup	de	Zurückgewiesende Zeilen
@@ -554,10 +565,11 @@ the ctype extension is needed by htmlpurifier to check content of fckeditor agai
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
 the file	setup	de	der Datei
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	de	Der erste Schritt bei Installation von eGroupWare ist sicherzustellen, dass Ihre Umgebung die notwendigen Einstellungen hat, um die Anwendung korrekt auszuführen.
-the following applications are not installed:	setup	de	Die folgenden Anwendungen sind NICHT installiert:
+the following applications are required, but not installed:	setup	de	Die folgenden Anwendungen werden benötigt, sind aber NICHT installiert:
 the following applications need to be upgraded:	setup	de	Die folgenden Anwendungen müssen aktualisiert werden:
 the function %1 is needed from: %2.	setup	de	Die Funktion %1 wird benötigt von: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	de	Die imagecreatefromjpeg Funktion wird bereitgestellt von der gd Erweiterung (compiliert mit jpeg Unterstützung!). Sie wird benötigt um Fotos für Kontakte hoch zu laden.
+the json extension is required by egroupware for ajax.	setup	de	Die json Erweiterung wird von EGroupware für AJAX benötigt.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	de	Die ldap Erweiterung (php extension) wird benötigt für LDAP as Benutzer oder Addressen Speicher, um gegen LDAP oder Aktive Directory zu authetifizieren. Es wird nicht benötigt für eine standard SQL Installation.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
@@ -665,6 +677,7 @@ you need to fix the above errors, before the configuration file header.inc.php c
 you need to save the settings you made here first!	setup	de	Sie müssen die hier vorgenommenen Einstellungen zuerst speichern!
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you need to specify a password!	setup	de	Sie müssen ein Passwort angegen!
+you should %1log out%2 and in again, to update your current session!	setup	de	Sie sollten sich %1ausloggen%2 und erneut einloggen, um ihre Sitzung zu aktualisieren!
 you should either install the sources or uninstall it, to get rid of the tables	setup	de	Sie sollten entweder die Quellen installieren oder die Anwendung deinstallieren, um die Tabellen los zu werden.
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	de	Sie werden sich NICHT mit PHP Sitzungen in die eGroupWare einlogen: "Ihre Sitzung konnte nicht verifiziert werden" !!!
