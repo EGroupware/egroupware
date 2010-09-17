@@ -512,8 +512,8 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 	case 10:
 		$setup_tpl->set_var('apps_status_img',$completed);
 		$setup_tpl->set_var('apps_status_alt',lang('completed'));
-		// check if we have apps to upgrade
-		$to_upgrade = array();
+		// check if we have apps to upgrade or essential apps not installed
+		$to_upgrade = $to_install = array();
 		foreach($setup_info as $app => $data)
 		{
 			if ($data['currentver'] && $data['version'] && $data['version'] != $data['currentver'])
@@ -522,9 +522,23 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 				$setup_tpl->set_var('apps_status_img',$incomplete);
 			}
 		}
+		// warn if essential apps are not installed
+		foreach(array('phpgwapi','etemplate','egw-pear','home','admin','preferences') as $app)
+		{
+			if (!isset($setup_info[$app]) || empty($setup_info[$app]['currentver']))
+			{
+				$to_install[] = $app;
+				$setup_tpl->set_var('apps_status_img',$incomplete);
+			}
+		}
+		$msg = '';
+		if ($to_upgrade || $to_install)
+		{
+			if ($to_upgrade) $msg = '<b>'.lang('The following applications need to be upgraded:').'</b> '.implode(', ',$to_upgrade);
+			if ($to_install) $msg .= ($msg?'<br />':'').'<b>'.lang('The following applications are required, but NOT installed:').'</b> '.implode(', ',$to_install);
+		}
 		$btn_manage_apps = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
-			count($to_upgrade) ? '<b>'.lang('The following applications need to be upgraded:').'</b> '.implode(', ',$to_upgrade) :
-			lang('This stage is completed<br />'),
+			$msg ? $msg : lang('This stage is completed<br />'),
 			'post','applications.php',
 			'submit',lang('Manage Applications'),
 			'');
