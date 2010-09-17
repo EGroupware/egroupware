@@ -138,8 +138,9 @@ class contacts extends addressbook_bo
 				{
 					if (isset($row[$new])) $rows[$n][$old] = $row[$new];
 
-					if (isset($row['bday']))
+					if (isset($row['bday']) || isset($row['contact_bday']))
 					{
+						$row['bday'] = egw_time::to((isset($row['bday'])?$row['bday']:$row['contact_bday']),"Y-m-d");
 						list($y,$m,$d) = explode('-',$row['bday']);
 						$rows[$n]['bday'] = sprintf('%d/%d/%04d',$m,$d,$y);
 					}

@@ -1552,13 +1552,15 @@ class calendar_bo
 			if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
 			{
 				$contacts = CreateObject('phpgwapi.contacts');
-				$bdays =& $contacts->read(0,0,array('id','n_family','n_given','n_prefix','n_middle','bday'),'',"bday=!'',n_family=!''",'ASC','bday');
+				// note: contact read/old_read transforms contact_bday to bday only
+				$bdays =& $contacts->read(0,0,array('id','n_family','n_given','n_prefix','n_middle','contact_bday'),'',"contact_bday=!'',n_family=!''",'ASC','contact_bday');
 				if ($bdays)
 				{
 					// sort by month and day only
 					usort($bdays,create_function('$a,$b','return (int) $a[\'bday\'] == (int) $b[\'bday\'] ? strcmp($a[\'bday\'],$b[\'bday\']) : (int) $a[\'bday\'] - (int) $b[\'bday\'];'));
 					foreach($bdays as $pers)
 					{
+						$pers['bday'] = egw_time::to($pers['bday'],"m/d/Y");
 						list($m,$d,$y) = explode('/',$pers['bday']);
 						if ($y > $year) continue; 	// not yet born
 						$this->cached_holidays[$year][sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
