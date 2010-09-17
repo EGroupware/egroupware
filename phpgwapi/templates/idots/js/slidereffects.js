@@ -104,7 +104,7 @@ function ypSlideOutMenu(id, dir, left, top, width, height,pos)
 
 
 			//temporarly hide all selectboxes to fix IE bug with z-index  
-			if(document.all)
+			if(document.all && document.all instanceof Array)
 			{
 				for (var i=0; i<document.all.length; i++) {
 					o = document.all(i)
@@ -114,7 +114,6 @@ function ypSlideOutMenu(id, dir, left, top, width, height,pos)
 						}
 				}
 			}
-
 
 		if (obj.container) {
 			obj.over = true
@@ -155,7 +154,7 @@ function ypSlideOutMenu(id, dir, left, top, width, height,pos)
 					if (obj.open && !obj.aniTimer) obj.startSlide(false)
 
 						//show all selectboxes again to fix IE bug with z-index  
-						if(document.all)
+						if(document.all && document.all instanceof Array)
 						{
 							for (var i=0; i<document.all.length; i++) {
 								o = document.all(i)
