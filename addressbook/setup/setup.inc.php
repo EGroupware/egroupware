@@ -55,7 +55,7 @@ $setup_info['addressbook']['depends'][] = array(
 );
 
 // installation checks for addresbook
-$setup_info['projectmanager']['check_install'] = array(
+$setup_info['addressbook']['check_install'] = array(
 	'gd' => array(
 		'func' => 'extension_check',
 	),
