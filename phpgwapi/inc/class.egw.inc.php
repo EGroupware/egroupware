@@ -356,6 +356,11 @@ class egw extends egw_minimal
 			if (!$GLOBALS['egw_info']['user']['apps'][$currentapp = $GLOBALS['egw_info']['flags']['currentapp']] ||
 				($GLOBALS['egw_info']['flags']['admin_only'] && !$GLOBALS['egw_info']['user']['apps']['admin']))
 			{
+				// present a login page, if anon user has no right for an application
+				if ($this->session->session_flags == 'A')
+				{
+					egw::redirect_link('/logout.php');
+				}
 				if ($currentapp == 'admin' || $GLOBALS['egw_info']['flags']['admin_only'])
 				{
 					throw new egw_exception_no_permission_admin();
