@@ -513,7 +513,7 @@ class infolog_groupdav extends groupdav_handler
 
 		$result =& $this->bo->search($query);
 		
-		if (empty($result)) return 'EGw-'.time().'-wGE';
+		if (empty($result)) return 'EGw-0-wGE';
 
 		$entry = array_shift($result);
 
