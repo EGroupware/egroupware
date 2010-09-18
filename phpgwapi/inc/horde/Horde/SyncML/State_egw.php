@@ -89,7 +89,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			$userItems = array();
 			foreach($readableItems as $guid)
 			{
-				if (preg_match('/'.$_appName.'-(\d+)(:(\d+))?/', $guid, $matches))
+				if (preg_match('/.*-(\d+)(:(\d+))?/', $guid, $matches))
 				{
 					// We use only the real items' ids
 					$userItems[] = $matches[1];
