@@ -1,8 +1,8 @@
 Index: egroupware/phpgwapi/inc/class.egw.inc.php
 ===================================================================
---- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 30699)
+--- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 32201)
 +++ egroupware/phpgwapi/inc/class.egw.inc.php	(Arbeitskopie)
-@@ -534,10 +534,12 @@
+@@ -539,10 +539,12 @@
  			}
  			// call the asyncservice check_run function if it is not explicitly set to cron-only
  			//
@@ -17,7 +17,7 @@ Index: egroupware/phpgwapi/inc/class.egw.inc.php
  	}
 Index: egroupware/admin/inc/class.uiasyncservice.inc.php
 ===================================================================
---- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 30699)
+--- egroupware/admin/inc/class.uiasyncservice.inc.php	(Revision 32201)
 +++ egroupware/admin/inc/class.uiasyncservice.inc.php	(Arbeitskopie)
 @@ -99,16 +99,20 @@
  			$config->save_repository();
