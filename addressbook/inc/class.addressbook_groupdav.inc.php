@@ -393,11 +393,11 @@ class addressbook_groupdav extends groupdav_handler
 		
 		if (empty($result))
 		{
-			$ctag = $result[0]['contact_modified'];
+			$ctag = 0;
 		}
 		else
 		{
-			$ctag = time();
+			$ctag = $result[0]['contact_modified'];
 		}
 				
 		return 'EGw-'.$ctag.'-wGE';
