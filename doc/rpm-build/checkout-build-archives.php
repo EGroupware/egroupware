@@ -32,18 +32,20 @@ $config = array(
 	'extra' => array('stylite','jdots','$egwbase/$svnbranch/egw-pear','$egwbase/$svnbranch/gallery','$egwbase/$svnbranch/phpfreechat','svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
+	'rsync' => 'rsync --progress -e "ssh -P 9922"',
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
 	'packager' => 'build@stylite.de',
-	'obs' => false,
+	'obs' => './obs',
 	'changelog' => false,	// eg. '* 1. Zeile\n* 2. Zeile' for debian.changes
 	'changelog_packager' => 'Ralf Becker <rb@stylite.de>',
 	'editsvnchangelog' => '* ',
 	'editor' => '/usr/bin/vi',
 	'svntag' => 'tags/Stylite-EPL-$version.$packaging',	// eg. '$version.$packaging'
+	'release' => 'root@download.stylite.de:/var/www/html/stylite-epl/stylite-epl-$version/',
 	'skip' => array(),
-	'run' => array('svntag','checkout','copy','virusscan','create','sign')
+	'run' => array('svntag','checkout','copy','virusscan','create','sign','obs')
 );
 
 // process config from command line
@@ -71,21 +73,22 @@ while(($arg = array_shift($argv)))
 			case 'run':
 				if ($value[0] == '+')
 				{
-					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',$value)));
+					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',substr($value,1))));
 				}
 				elseif ($value[0] == '-')
 				{
-					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',$value));
+					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',substr($value,1)));
 				}
 				else
 				{
-					$config[$name] = array_unique(split('[ ,]+',$value));
+					$config[$name] = array_unique(preg_split('/[ ,]+/',$value));
 				}
 				break;
 
 			case 'svntag':
+			case 'release':
 				$config[$name] = $value;
-				array_unshift($config['run'],'svntag');
+				array_unshift($config['run'],$name);
 				break;
 				
 			case 'editsvnchangelog':
@@ -122,7 +125,26 @@ $svn = $config['svn'];
 
 foreach(array_diff($config['run'],$config['skip']) as $func)
 {
+	chdir(dirname(__FILE__));	// make relative filenames work, if other command changes dir
 	call_user_func('do_'.$func);
+}
+
+/**
+ * Release sources by rsync'ing them to a distribution / download directory
+ */
+function do_release()
+{
+	global $config,$verbose;
+
+	$target = $config['release'];
+	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
+	{
+		$translate = array();
+		foreach($config as $name => $value) $translate['$'.$name] = $value;
+		$target = strtr($target,$translate);
+	}
+	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
+	run_cmd($cmd);
 }
 
 /**
