@@ -20,17 +20,17 @@ $config = array(
 	'packagename' => 'eGroupware',
 	'version' => '1.8',
 	'packaging' => '001.'.date('Ymd'),
-	'egwdir' => 'egroupware',
 	'svndir' => '/tmp/build_root/egw_1.8_buildroot-svn',
 	'egw_buildroot' => '/tmp/build_root/egw_1.8_buildroot',
 	'sourcedir' => '/srv/obs/staging/egroupware/egroupware-1.8',
 	'svnbase' => 'svn+ssh://svn@dev.egroupware.org/egroupware',
 	'svnbranch' => 'branches/1.8',			// 'branches/1.8' or 'tags/1.6.001'
-	'svnalias' => 'aliases/default-ssh',			// default alias
+	'svnalias' => 'aliases/default-ssh',		// default alias
 	'aliasdir' => 'egroupware',			// directory created by the alias
 	'extra' => array('egw-pear','gallery','phpfreechat'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
+	'rsync' => 'rsync --progress -e ssh',
 	'clamscan' => '/usr/bin/clamscan',
 	'freshclam' => '/usr/bin/freshclam',
 	'gpg' => '/usr/bin/gpg',
@@ -41,6 +41,7 @@ $config = array(
 	'editsvnchangelog' => '* ',
 	'editor' => '/usr/bin/vi',
 	'svntag' => 'tags/$version.$packaging',	// eg. '$version.$packaging'
+	'release' => 'ralfbecker,egroupware@frs.sourceforge.net:/home/frs/project/e/eg/egroupware/eGroupware-$version/eGroupware-$version.$packaging/',
 	'skip' => array(),
 	'run' => array('svntag','checkout','copy','virusscan','create','sign','obs')
 );
@@ -83,8 +84,9 @@ while(($arg = array_shift($argv)))
 				break;
 
 			case 'svntag':
+			case 'release':
 				$config[$name] = $value;
-				array_unshift($config['run'],'svntag');
+				array_unshift($config['run'],$name);
 				break;
 				
 			case 'editsvnchangelog':
@@ -121,7 +123,26 @@ $svn = $config['svn'];
 
 foreach(array_diff($config['run'],$config['skip']) as $func)
 {
+	chdir(dirname(__FILE__));	// make relative filenames work, if other command changes dir
 	call_user_func('do_'.$func);
+}
+
+/**
+ * Release sources by rsync'ing them to a distribution / download directory
+ */
+function do_release()
+{
+	global $config,$verbose;
+
+	$target = $config['release'];
+	if (strpos($target,'$') !== false)      // allow to use config vars like $svnbranch in module
+	{
+		$translate = array();
+		foreach($config as $name => $value) $translate['$'.$name] = $value;
+		$target = strtr($target,$translate);
+	}
+	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
+	run_cmd($cmd);
 }
 
 /**
