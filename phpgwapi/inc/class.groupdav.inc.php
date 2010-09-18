@@ -262,6 +262,14 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				$displayname = 'EGroupware (Cal|Card|Group)DAV server';
 			}
+			if ($user < 0)
+			{
+				$principalType = 'groups';
+			}
+			else
+			{
+				$principalType = 'users';
+			}
 			// self url
 			$props = array(
 					self::mkprop('displayname',$displayname),
@@ -274,7 +282,7 @@ class groupdav extends HTTP_WebDAV_Server
 					self::mkprop('current-user-principal',array(self::mkprop('href',$this->principalURL))),
 					self::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
 						self::mkprop('href','MAILTO:'.$account['account_email']),
-						self::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'),
+						self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account['account_lid'].'/'),
 						self::mkprop('href','urn:uuid:'.$account['account_lid']))),
 					self::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
 						self::mkprop(groupdav::CALENDARSERVER,'email-address',$GLOBALS['egw_info']['user']['email']))),
@@ -379,9 +387,19 @@ class groupdav extends HTTP_WebDAV_Server
 		$account = $this->accounts->read($account_lid);
 		$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
 				$GLOBALS['egw']->translation->charset(),'utf-8');
+				
+		if ($user < 0)
+		{
+			$principalType = 'groups';
+		}
+		else
+		{
+			$principalType = 'users';
+		}
+		
 		$props = array(
 			self::mkprop('current-user-principal',array(self::mkprop('href',$this->principalURL))),
-			self::mkprop('owner',array(self::mkprop('href',$this->base_uri.'/principals/users/'.$account_lid.'/'))),
+			self::mkprop('owner',array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/'))),
 			//self::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
 			self::mkprop('alternate-URI-set',array(
 				self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']))),
@@ -391,7 +409,7 @@ class groupdav extends HTTP_WebDAV_Server
 			self::mkprop('principal-URL',array(self::mkprop('href',$this->principalURL))),
 			self::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
 				self::mkprop('href','MAILTO:'.$GLOBALS['egw_info']['user']['email']),
-				self::mkprop('href',$this->base_uri.'/principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/'),
+				self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$GLOBALS['egw_info']['user']['account_lid'].'/'),
 				self::mkprop('href','urn:uuid:'.$GLOBALS['egw_info']['user']['account_lid']))),
 			self::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
 				self::mkprop(groupdav::CALENDARSERVER,'email-address',$GLOBALS['egw_info']['user']['email']))),		
