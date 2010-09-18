@@ -300,7 +300,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 				// use uploaded backup, instead installing from scratch
 				if ($_POST['upload'])
 				{
-					$db_backup =& CreateObject('phpgwapi.db_backup');
+					$db_backup = new db_backup();
 					if (is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
 						is_uploaded_file($_FILES['uploaded']['tmp_name']))
 					{
@@ -313,7 +313,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 						if (is_resource($f = $db_backup->fopen_backup($_FILES['uploaded']['tmp_name'],true)))
 						{
 							echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
-							$db_backup->restore($f,$_POST['convert_charset'],$_FILES['uploaded']['tmp_name']);
+							$db_backup->restore($f,$_POST['convert_charset'],$_FILES['uploaded']['tmp_name'],false);
 							fclose($f);
 							echo '<p align="center">'.lang('restore finished')."</p>\n";
 							unlink($_FILES['uploaded']['tmp_name']);
