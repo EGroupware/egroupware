@@ -71,11 +71,11 @@ while(($arg = array_shift($argv)))
 			case 'run':
 				if ($value[0] == '+')
 				{
-					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',$value)));
+					$config[$name] = array_unique(array_merge($config[$name],preg_split('/[ ,]+/',substr($value,1))));
 				}
 				elseif ($value[0] == '-')
 				{
-					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',$value));
+					$config[$name] = array_diff($config[$name],preg_split('/[ ,]+/',substr($value,1)));
 				}
 				else
 				{
