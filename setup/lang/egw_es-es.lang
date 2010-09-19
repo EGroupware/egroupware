@@ -3,10 +3,13 @@
 %1 created in %2.	setup	es-es	%1 creado en %2.
 %1 database %2 on %3 already contains the following tables:	setup	es-es	La base de datos %1 %2 en %3 ya contiene las siguientes tablas:
 %1 does not exist !!!	setup	es-es	¡¡%1 no existe!!
+%1 entries modified.	setup	es-es	Se han modificado %1 entradas.
+%1 entries would have been modified.	setup	es-es	Se habrían modificado %1 entradas.
 %1 is %2%3 !!!	setup	es-es	¡¡%1 %2 es %3!!
 %1 is needed by: %2.	setup	es-es	%1 es necesario para: %2
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	es-es	¡%1 está establecido a %2, NO podrá subir o adjuntar ficheros mayores de ese valor!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	es-es	%1 está establecido en %2. ¡Esto NO se recomienda para un sistema en producción, ya que los mensajes de error pueden contener contraseñas o alguna otra información sensible!
+%1 users and %2 groups created, %3 errors	setup	es-es	Se han creado %1 usuarios y %2 grupos, %3 errores
 %1, %2 or %3 the configuration file.	setup	es-es	%1, %2 o %3 el fichero de configuración.
 '%1' is no valid domain name!	setup	es-es	'%1' no es un nombre válido de dominio
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	es-es	¡¡'%1' no está permitido como %2. argumentos de la opción %3 !!
@@ -18,6 +21,7 @@
 13 (ntp)	setup	es-es	13 (ntp)
 80 (http)	setup	es-es	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	es-es	<b>juego de caracteres a usar</b> (usar utf-8 si se van a usar idiomas con distintos juegos de caracteres):
+==> different group '%1' under that gidnumber %2, not setting memberships!	setup	es-es	==> Hay un grupo distinto, '%1', bajo ese número, %2, por lo que NO se ponen los miembros
 [header-password],[header-user],[new-password],[new-user]	setup	es-es	[contraseña del encabezado],[usuario del encabezado],[nueva contraseña],[nuevo usuario]
 access denied: wrong username or password for manage-header !!!	setup	es-es	Acceso denegado: ¡usuario o contraseña incorrectas para el administrador de encabezados!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	es-es	Acceso denegado: ¡usuario o contraseña incorrectas para configurar el dominio '%1 (%2)'!
@@ -98,6 +102,7 @@ backup now	setup	es-es	hacer copia de seguridad ahora
 backup sets	setup	es-es	conjuntos de copia de seguridad
 backup skipped!	setup	es-es	¡Se ha omitido la copia de seguridad!
 backup started, this might take a few minutes ...	setup	es-es	copia de seguridad iniciada, puede tardar unos minutos...
+base dn "%1" not found!	setup	es-es	¡NO se ha encontrado el dn base "%1"!
 because an application it depends upon was upgraded	setup	es-es	porque se actualizó una aplicación de la que depende
 because it depends upon	setup	es-es	porque depende de
 because it is not a user application, or access is controlled via acl	setup	es-es	porque no es una aplicación de usuario, o el acceso está controlado por ACL
@@ -114,6 +119,7 @@ can not connect to %1 database %2 on host %3 using user %4!	setup	es-es	¡No se 
 can not connect to ldap server on host %1 using dn %2!	setup	es-es	¡No se puede conectar con LDAP en el servidor %1 usando el DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	es-es	¡No se puede crear la base de datos %1 %2 en %3 para el usuario %4!
 can not create dn %1!	setup	es-es	¡No se puede crear el DN %1!
+can not instancate accounts object for %1	setup	es-es	NO se pueden instanciar objetos de cuentas para %1
 cancel	setup	es-es	Cancelar
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	es-es	No se puede crear el fichero header.inc.php por problemas de permisos.<br />En su lugar, puede %1 o %2 el fichero.
 cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	es-es	Nombre del servidor de CAs:<br />ejemplo: sso-cas.univ-rennes1.fr
@@ -131,6 +137,7 @@ check to backup and restore the files directory (may use a lot of space, make su
 checking extension %1 is loaded or loadable	setup	es-es	Comprobando si se puede cargar o está cargada la extensión %1
 checking file-permissions of %1 for %2 %3: %4	setup	es-es	Comprobando si %1 %2 tiene permiso de %3: %4
 checking for gd support...	setup	es-es	Comprobando el soporte GD...
+checking for jpgraph in %1	setup	es-es	Comprobando JPGraph en %1
 checking function %1 exists	setup	es-es	Comprobando si existe la función %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	es-es	Comprobando si el valor de php.ini session.save_path='%1' tiene permiso de escritura para el servidor web
 checking pear%1 is installed	setup	es-es	Comprobando si PEAR %1 está instalado
@@ -264,9 +271,12 @@ enter your http proxy server	setup	es-es	Introduzca el servidor proxy HTTP
 enter your http proxy server password	setup	es-es	Introduzca la contraseña del servidor proxy HTTP
 enter your http proxy server port	setup	es-es	Introduzca el puerto del servidor proxy HTTP
 enter your http proxy server username	setup	es-es	Introduzca el usuario del servidor proxy HTTP
+error deleting "dn=%1"!	setup	es-es	¡Error al borrar "dn=%1"!
 error dropping user!	setup	es-es	¡Error al borrar el usuario!
 error in admin-creation !!!	setup	es-es	¡Error al crear administrador!
 error in group-creation !!!	setup	es-es	¡Error al crear grupo!
+error listing "dn=%1"!	setup	es-es	¡Error al listar "dn=%1"!
+error modifying dn=%1: %2='%3'!	setup	es-es	¡Error al modificar dn=%1: %2='%3'!
 export has been completed!	setup	es-es	¡La exportación se ha completado!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	es-es	Fallo al escribir el fichero de configuración header.inc.php. ¡Compruebe los permisos!
 false	setup	es-es	Falso
@@ -295,6 +305,7 @@ hooks deregistered	setup	es-es	Se borraron los "hooks" del registro
 hooks registered	setup	es-es	Se han registrado los "hooks"
 host information	setup	es-es	Información del servidor
 host,[smtp port],[smtp user],[smtp password]	setup	es-es	servidor, [puerto smtp], [usuario smtp], [contraseña smtp]
+host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	es-es	servidor,{imap | imaps },[dominio],[{standard(default)|vmailmgr = añadir dominio para la sesión del servidor de correro}]
 host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	es-es	servidor, {imap | pop3 | pop3s}, [dominio],[{standard(predeterminado)|vmailmgr = añadir dominio para la sesión con el servidor de correo}]
 host/ip domain controler	setup	es-es	Servidor/IP del controlador de dominio
 hostname/ip of database server	setup	es-es	Nombre del servidor o dirección IP del servidor de la base de datos
@@ -343,6 +354,7 @@ ldap accounts context	setup	es-es	Contexto de las cuentas LDAP
 ldap config	setup	es-es	Configuración LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	es-es	Prefijo del directorio personal predeterminado (p. ej. /home para /home/<usuario>)
 ldap default shell (e.g. /bin/bash)	setup	es-es	Shell LDAP predeterminada (p. ej. /bin/bash)
+ldap dn="%1" with %2 entries deleted.	setup	es-es	LDAP dn="%1" con %2 entradas borradas.
 ldap encryption type	setup	es-es	Tipo de cifrado LDAP
 ldap groups context	setup	es-es	Contexto de grupos LDAP
 ldap host	setup	es-es	Servidor LDAP
@@ -380,6 +392,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	es-es	Id mínimo para la cuenta
 minute	setup	es-es	minuto
 missing or uncomplete mailserver configuration	setup	es-es	La configuración del servidor de correo falta o está incompleta
 modifications have been completed!	setup	es-es	¡Se han completado las modificaciones!
+modified	setup	es-es	modificado
 modify	setup	es-es	Modificar
 month	setup	es-es	mes
 multi-language support setup	setup	es-es	Configuración del soporte multi-Idioma
@@ -439,6 +452,7 @@ please check for sql scripts within the application's directory	setup	es-es	Por 
 please check read/write permissions on directories, or back up and use another option.	setup	es-es	Por favor, compruebe los permisos de lectura y escritura en los directorios, o vuelva y use otra opción
 please configure egroupware for your environment	setup	es-es	Por favor, configure eGroupWare para su entorno
 please consult the %1.	setup	es-es	Por favor, consulte el %1
+please download a recent version from %1 and install it as %2.	setup	es-es	Por favor, descargue una versión reciente de %1 e instálela como %2.
 please fix the above errors (%1) and warnings(%2)	setup	es-es	Por favor, corrija los errores de arriba (%1) y avisos (%2)
 please install	setup	es-es	Por favor, instale
 please login	setup	es-es	Por favor, inicie la sesión
@@ -461,6 +475,7 @@ re-enter password	setup	es-es	Confirme la contraseña
 read translations from	setup	es-es	Leer traducciones de
 readable by the webserver	setup	es-es	lectura para el servidor web
 really uninstall all applications	setup	es-es	REALMENTE quiere desinstalar todas las aplicaciones
+refusing to delete dn "%1"!	setup	es-es	¡Se ha rechazado borrar dn "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	es-es	register_globals está activado, y eGroupWare NO lo necesita, así que es más seguro tenerlo en Off (desactivado).
 registered	setup	es-es	registrado
 rejected lines	setup	es-es	Líneas rechazadas
@@ -555,9 +570,11 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	es-es	el fichero
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	es-es	El primer paso al instalar eGroupWare es asegurarse que el entorno tiene la configuración necesaria para ejecutar la aplicación correctamente.
 the following applications are not installed:	setup	es-es	Las siguients aplicaciones NO están instaladas:
+the following applications are required, but not installed:	setup	es-es	Se requieren las siguientes aplicaciones, pero NO están instaladas:
 the following applications need to be upgraded:	setup	es-es	Las siguientes aplicaciones necesitan una actualización:
 the function %1 is needed from: %2.	setup	es-es	La función %1 se necesita para: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	es-es	La función imagecreatefromjpeg viene con la extensión gd (compilada con soporte jpeg). Se necesita para subir fotos para los contactos.
+the json extension is required by egroupware for ajax.	setup	es-es	Se requiere la extensión json para que funcione AJAX en EGroupware.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	es-es	La extension LDAP es necesaria si usa LDAP como almacenamiento de cuentas o contactos, identificarse en un servidor LDAP o directorio activo. No es necesaria para una instalación SQL estándar.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
@@ -656,6 +673,7 @@ you didn't enter a config username for domain %1	setup	es-es	No ha introducido u
 you didn't enter a header admin password	setup	es-es	No ha introducido una contraseña para administrar los encabezados
 you didn't enter a header admin username	setup	es-es	No ha introducido un nombre de usuario para administrar los encabezados
 you do not have any languages installed. please install one now <br />	setup	es-es	No tiene ningún idioma instalado. Por favor, instale uno ahora
+you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	es-es	¡No tiene la versión %1 de JPGraph o superior instalada! Se necesita para las gráficas Gantt en el Administrador de proyectos.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	es-es	¡No ha creado todavía el fichero header.inc.php!<br />Puede crearlo ahora.
 you have successfully logged out	setup	es-es	Ha cerrado la sesión correctamente
 you must enter a username for the admin	setup	es-es	Debe introducir un nombre de usuario para el administrador
@@ -665,6 +683,7 @@ you need to fix the above errors, before the configuration file header.inc.php c
 you need to save the settings you made here first!	setup	es-es	¡Necesita guardar la configuración que ha hecho primero!
 you need to select your current charset!	setup	es-es	¡Necesita seleccionar el juego de caracteres!
 you need to specify a password!	setup	es-es	¡Necesita especificar una contraseña!
+you should %1log out%2 and in again, to update your current session!	setup	es-es	¡Debe %1cerrar sesión%2 e iniciarla de nuevo, para actualizar su sesión actual!
 you should either install the sources or uninstall it, to get rid of the tables	setup	es-es	Tiene que instalar el código fuente o desinstalarlo para deshacerse de las tablas
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	es-es	Usted puede desinstalarla y volverla a instalar, o puede intentar una reparación manual
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	es-es	¡¡NO podrá iniciar sesión en eGroupWare usando sesiones PHP: "la sesión no se pudo verificar"!!

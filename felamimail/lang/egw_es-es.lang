@@ -242,6 +242,7 @@ imaps authentication	felamimail	es-es	Identificación IMAPS
 imaps encryption only	felamimail	es-es	Cifrado IMAPS solamente
 import	felamimail	es-es	importar
 import mail	felamimail	es-es	Importar correo
+import message	felamimail	es-es	importar mensaje
 in	felamimail	es-es	en
 inbox	felamimail	es-es	Bandeja de entrada
 incoming mail server(imap)	felamimail	es-es	servidor de correo entrante (IMAP)
@@ -344,6 +345,7 @@ outgoing mail server(smtp)	felamimail	es-es	servidor de correo de salida (SMTP)
 participants	felamimail	es-es	Participantes
 personal information	felamimail	es-es	Información personal
 please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	es-es	Por favor, pida al administrador que corrija la configuración del servidor IMAP.
+please configure access to an existing individual imap account.	felamimail	es-es	Por favor, configure el acceso a una cuenta individual IMAP existente.
 please select a address	felamimail	es-es	Por favor, seleccione una dirección
 please select the number of days to wait between responses	felamimail	es-es	Por favor, seleccione el número de días a esperar entre las respuestas
 please supply the message to send with auto-responses	felamimail	es-es	Por favor, indique el mensaje a enviar para respuestas automáticas
@@ -432,7 +434,7 @@ template folder	felamimail	es-es	Carpeta de plantillas
 templates	felamimail	es-es	Plantillas
 text only	felamimail	es-es	Sólo texto
 text/plain	felamimail	es-es	text/plain
-the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	es-es	La acción se aplicará a todos los mensajes de la carpeta actual.\n¿Desea proceder?
+the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	es-es	La acción se aplicará a todos los mensajes de la carpeta actual,\n¿Desea proceder?
 the connection to the imap server failed!!	felamimail	es-es	¡Ha fallado la conexión con el servidor IMAP!
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	es-es	El servidor IMAP no parece que soporte el método de identificación seleccionado. Por favor, póngase en contacto con su administrador del sistema.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	es-es	El remitente del mensaje ha solicitado una respuesta para indicar que usted ha leído este mensaje. ¿Desea enviar una confirmación?
