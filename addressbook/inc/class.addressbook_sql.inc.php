@@ -349,7 +349,7 @@ class addressbook_sql extends so_sql
 		$extra_filter = '';
 		foreach($filter as $name => $val)
 		{
-			if ($name[0] == '#')
+			if ($name[0] === '#')
 			{
 				if (!empty($val))	// empty -> dont filter
 				{
@@ -359,7 +359,7 @@ class addressbook_sql extends so_sql
 				}
 				unset($filter[$name]);
 			}
-			elseif($val[0] == '#')	// lettersearch: #cfname like 's%'
+			elseif($val[0] === '#')	// lettersearch: #cfname like 's%'
 			{
 				list($cf) = explode(' ',$val);
 				$join .= str_replace('extra_filter','extra_filter'.$extra_filter,$this->extra_join_filter.' AND extra_filter.contact_name='.$this->db->quote(substr($cf,1)).
@@ -399,16 +399,6 @@ class addressbook_sql extends so_sql
 						}
 					}
 					break;
-			}
-			if (isset($filter['owner']))
-			{
-				$filter[] = $this->table_name.'.contact_owner='.(int)$filter['owner'];
-				unset($filter['owner']);
-			}
-			if (isset($criteria['owner']))
-			{
-				$criteria[] = $this->table_name.'.contact_owner='.(int)$criteria['owner'];
-				unset($criteria['owner']);
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
 			if ($this->db->Type != 'mysql' && preg_match("/([a-zA-Z_.]+)<>''/",$order_by,$matches))
