@@ -1541,9 +1541,9 @@ class infolog_ui
 			//_debug_array($preferences);
 			//_debug_array($attachments);
 			$body = self::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
-				'TO'=>implode(',',$_to_emailAddress['to']),
-				'CC'=>implode(',',$_to_emailAddress['cc']),
-				'BCC'=>implode(',',$_to_emailAddress['bcc']),
+				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
+				'CC'=>(!empty($_to_emailAddress['cc'])?implode(',',$_to_emailAddress['cc']):null),
+				'BCC'=>(!empty($_to_emailAddress['bcc'])?implode(',',$_to_emailAddress['bcc']):null),
 				'SUBJECT'=>$_subject,
 				'DATE'=>bofelamimail::_strtotime($_date))).strip_tags($_body);
 			$this->edit($this->bo->import_mail(
