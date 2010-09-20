@@ -976,6 +976,8 @@
 			#error_log(print_r($identity,true));
 			// create the messages
 			$this->createMessage($mail, $_formData, $identity, $signature);
+			// remember the identity
+			if ($_formData['to_infolog'] == 'on') $fromAddress = $mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
 			#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
 			#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
 			#exit;
@@ -1097,14 +1099,15 @@
 			//error_log(print_r($this->sessionData['bcc'],true));
 			if (is_array($this->sessionData['to']))
 			{
-				$mailaddresses = $this->sessionData['to'];
+				$mailaddresses['to'] = $this->sessionData['to'];
 			}
 			else
 			{
 				$mailaddresses = array();
 			}
-			if (is_array($this->sessionData['cc'])) $mailaddresses = array_merge($mailaddresses,$this->sessionData['cc']);
-			if (is_array($this->sessionData['bcc'])) $mailaddresses = array_merge($mailaddresses,$this->sessionData['bcc']);
+			if (is_array($this->sessionData['cc'])) $mailaddresses['cc'] = $this->sessionData['cc'];
+			if (is_array($this->sessionData['bcc'])) $mailaddresses['bcc'] = $this->sessionData['bcc'];
+			if (!empty($mailaddresses)) $mailaddresses['from'] = $fromAddress;
 			// attention: we dont return from infolog. cleanups will be done there.
 			if ($_formData['to_infolog'] == 'on') {
 				$uiinfolog =& CreateObject('infolog.infolog_ui');
