@@ -320,7 +320,7 @@ class addressbook_sql extends so_sql_cf
 				case 'array':
 					foreach($only_keys as $key => $val)
 					{
-						switch($key)
+						switch($val)
 						{
 							case 'id': case 'contact_id':
 								$only_keys[$key] = $this->table_name.'.contact_id';
