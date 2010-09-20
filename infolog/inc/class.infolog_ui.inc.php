@@ -1496,8 +1496,8 @@ class infolog_ui
 				//echo __METHOD__.'<br>';
 				//_debug_array($_attachments);
 				$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-				$bopreferences =& $this->bofelamimail->bopreferences; //= CreateObject('felamimail.bopreferences');
-				$preferences  = $this->bopreferences->getPreferences();
+				//$bopreferences =& $bofelamimail->bopreferences; //= CreateObject('felamimail.bopreferences');
+				//$preferences  =& $bofelamimail->mailPreferences;
 				$bofelamimail->openConnection();
 				foreach ($_attachments as $attachment)
 				{
@@ -1538,7 +1538,6 @@ class infolog_ui
 			//_debug_array($_to_emailAddress);
 			$toaddr = array();
 			foreach(array('to','cc','bcc') as $x) if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x])) $toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
-			//_debug_array($preferences);
 			//_debug_array($attachments);
 			$body = self::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
 				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
@@ -1554,7 +1553,7 @@ class infolog_ui
 		elseif ($uid && $mailbox)
 		{
 			$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			$bopreferences =& $this->bofelamimail->bopreferences; //= CreateObject('felamimail.bopreferences');
+			//$bopreferences =& $bofelamimail->bopreferences; //= CreateObject('felamimail.bopreferences');
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
 
