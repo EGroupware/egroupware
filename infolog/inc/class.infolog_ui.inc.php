@@ -1496,7 +1496,8 @@ class infolog_ui
 				//echo __METHOD__.'<br>';
 				//_debug_array($_attachments);
 				$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-				$bopreferences = CreateObject('felamimail.bopreferences');
+				$bopreferences =& $this->bofelamimail->bopreferences; //= CreateObject('felamimail.bopreferences');
+				$preferences  = $this->bopreferences->getPreferences();
 				$bofelamimail->openConnection();
 				foreach ($_attachments as $attachment)
 				{
@@ -1534,17 +1535,26 @@ class infolog_ui
 				}
 				$bofelamimail->closeConnection();
 			}
+			//_debug_array($_to_emailAddress);
+			$toaddr = array();
+			foreach(array('to','cc','bcc') as $x) if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x])) $toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
+			//_debug_array($preferences);
 			//_debug_array($attachments);
-			$body = strip_tags($_body);
+			$body = self::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
+				'TO'=>implode(',',$_to_emailAddress['to']),
+				'CC'=>implode(',',$_to_emailAddress['cc']),
+				'BCC'=>implode(',',$_to_emailAddress['bcc']),
+				'SUBJECT'=>$_subject,
+				'DATE'=>bofelamimail::_strtotime($_date))).strip_tags($_body);
 			$this->edit($this->bo->import_mail(
-				implode(',',$_to_emailAddress),$_subject,$body,$attachments,$_date
+				implode(',',$toaddr),$_subject,$body,$attachments,$_date
 			));
 			exit;
 		}
 		elseif ($uid && $mailbox)
 		{
 			$bofelamimail = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			$bopreferences = CreateObject('felamimail.bopreferences');
+			$bopreferences =& $this->bofelamimail->bopreferences; //= CreateObject('felamimail.bopreferences');
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
 
@@ -1570,17 +1580,17 @@ class infolog_ui
 	static function get_mailcontent(&$bofelamimail,$uid,$partid='',$mailbox='')
 	{
 			//echo __METHOD__." called for $uid,$partid <br>";
-			$headers = $bofelamimail->getMessageHeader($uid,$partid);
+			$headers = $bofelamimail->getMessageHeader($uid,$partid,true);
 			// dont force retrieval of the textpart, let felamimail preferences decide
 			$bodyParts = $bofelamimail->getMessageBody($uid,'',$partid);
 			$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
 
-			if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $bofelamimail->decode_header($headers['TO']);
-			elseif (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);
-			elseif (isset($headers['SENDER'])) $mailaddress = $bofelamimail->decode_header($headers['SENDER']);
+			if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
+			elseif (isset($headers['FROM'])) $mailaddress = $headers['FROM'];
+			elseif (isset($headers['SENDER'])) $mailaddress = $headers['SENDER'];
 			if (isset($headers['CC'])) $mailaddress .= ','.$headers['CC'];
 			//_debug_array($headers);
-			$subject = $bofelamimail->decode_header($headers['SUBJECT']);
+			$subject = $headers['SUBJECT'];
 
 			$message = self::getdisplayableBody($bofelamimail, $bodyParts);
 			$headdata = self::createHeaderInfoSection($headers);
