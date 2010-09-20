@@ -1662,6 +1662,7 @@ class infolog_ui
 		if ($header['SENDER']) $headdata .= lang('sender').': '.$header['SENDER']."\n";
 		if ($header['TO']) $headdata .= lang('to').': '.$header['TO']."\n";
 		if ($header['CC']) $headdata .= lang('cc').': '.$header['CC']."\n";
+		if ($header['BCC']) $headdata .= lang('bcc').': '.$header['BCC']."\n";
 		if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE']."\n";
 		if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY']."\n";
 		if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE']."\n";
