@@ -18,7 +18,7 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 include('../header.inc.php');
-
+auth::check_password_age('infolog','index');
 include_once(EGW_INCLUDE_ROOT.'/infolog/setup/setup.inc.php');
 if ($setup_info['infolog']['version'] != $GLOBALS['egw_info']['apps']['infolog']['version'])
 {

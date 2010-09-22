@@ -260,7 +260,7 @@
 			{
 				return False;
 			}
-
+			//error_log(array2string($userData));
 			$accountPrefix = '';
 			if(isset($GLOBALS['egw_info']['server']['account_prefix']))
 			{
@@ -441,6 +441,7 @@
 		/* stores the userdata */
 		function save_user($_userData)
 		{
+			//error_log(__METHOD__.array2string($_userData));
 			$account =& CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
 			$account->update_data($_userData);
 			$account->save_repository();
@@ -458,6 +459,13 @@
 				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 					'location' => 'changepassword'
 				),False,True);	// called for every app now, not only enabled ones)
+				if ($_userData['account_lastpwd_change']==0)
+				{
+					// change password sets the shadow_timestamp/account_lastpwd_change timestamp
+					// so we need to reset that to 0 as Admin required the change of password upon next login
+					unset($_userData['account_passwd']);
+					$this->save_user($_userData);
+				}
 			}
 
 			$apps =& CreateObject('phpgwapi.applications',(int)$_userData['account_id']);

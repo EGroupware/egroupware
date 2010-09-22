@@ -232,6 +232,20 @@
    </tr>
 
    <tr class="row_off">
+    <td>{lang_Force_users_to_change_their_password_regularily?(empty_for_no,number_for_after_that_number_of_days}:</td>
+    <td>
+     <input name="newsettings[change_pwd_every_x_days]" value="{value_change_pwd_every_x_days}" size="5">
+    </td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Force_password_strength_(1-5,_default_empty: no check against rules for a strong password)?}:</td>
+    <td>
+     <input name="newsettings[force_pwd_strength]" value="{value_force_pwd_strength}" size="5">
+    </td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_Admin_email_addresses_(comma-separated)_to_be_notified_about_the_blocking_(empty_for_no_notify)}:</td>
     <td>
      <input name="newsettings[admin_mails]" value="{value_admin_mails}" size="40">

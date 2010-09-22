@@ -19,8 +19,8 @@
 	*/
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
-			'noheader'                => False,
-			'nonavbar'                => False,
+			'noheader'                => true,//False,
+			'nonavbar'                => true,//False,
 			'currentapp'              => 'home',
 			'enable_network_class'    => False,
 			'enable_contacts_class'   => False,
@@ -30,7 +30,9 @@
 	);
 
 	include('../header.inc.php');
-
+	auth::check_password_age('home','index');
+	$GLOBALS['egw_info']['flags']['nonavbar']=false;
+	common::egw_header();
 	/*
 	** Initializing the template
 	*/
@@ -288,4 +290,3 @@
 	//$GLOBALS['egw']->common->debug_phpgw_info();
 	//$GLOBALS['egw']->common->debug_list_core_functions();
 	$GLOBALS['egw']->common->egw_footer();
-?>
