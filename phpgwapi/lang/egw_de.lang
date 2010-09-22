@@ -51,6 +51,7 @@ all languages	common	de	Alle Sprachen
 alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
 alternate style-sheet:	common	de	Alternatives Style-sheet
 american samoa	common	de	AMERICANISCH SAMOA
+an admin required that you must change your password upon login.	common	de	Sie werden hiermit aufgefordert Ihr Passwort zu ändern. (Dies wurde von einem Administrator veranlasst.)
 an error happened	common	de	Ein Fehler ist aufgetreten.
 an existing and by the webserver readable directory enables the image browser and upload.	common	de	Ein existierendes, und vom Webserver lesbares Verzeichnis, schaltet den Bild Browser und Upload ein.
 and	common	de	und
@@ -773,6 +774,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versendet
+your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	de	Ihr gewähltes Passwort genügt nicht unseren Qualitätsansprüchen an ein Passwort <br> Sie müssen %1 Kriterien  erfüllen. Sie haben nur %2 Kriterien erfüllt.<br> Folgende Kriterien haben Sie nicht erfüllt. Erweitern Sie Ihr neues Passwort entsprechend.
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
