@@ -71,11 +71,17 @@ class auth
 		//echo $GLOBALS['egw_info']['user']['account_lastpwd_change'].'<br>';
 		//echo ($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).'<br>';
 		//echo egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).'<br>';
+		$alpwchange='account_lastpwd_change';
+		if ($GLOBALS['egw_info']['user']['account_lastpasswd_change'] && !$GLOBALS['egw_info']['user'][$alpwchange])
+		{
+			// old style names
+			$alpwchange='account_lastpasswd_change';
+		}
 		if  (!($app == 'preferences' && $class == 'uipassword' && $method=='change') &&
 			 (($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] &&
 			   ($GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['user']['apps']['password']) &&
-			   egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400)>$GLOBALS['egw_info']['user']['account_lastpwd_change']
-			  ) || $GLOBALS['egw_info']['user']['account_lastpwd_change']==0) 
+			   egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400)>$GLOBALS['egw_info']['user'][$alpwchange]
+			  ) || $GLOBALS['egw_info']['user'][$alpwchange]==0) 
 			)
 		{
 			error_log(__METHOD__.' Password of '.$GLOBALS['egw_info']['user']['account_lid'].' ('.$GLOBALS['egw_info']['user']['account_fullname'].') is of old age.'.array2string(array(
