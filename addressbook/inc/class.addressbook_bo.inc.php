@@ -1209,16 +1209,18 @@ class addressbook_bo extends addressbook_so
 		{
 			$criteria = is_array($pattern) ? $pattern['search'] : $pattern;
 		}
-		if($options['start'] || $options['num_rows']) {
+		if($options['start'] || $options['num_rows'])
+		{
 			$limit = array($options['start'], $options['num_rows']);
 		}
 		$filter = (array)$options['filter'];
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
-		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id','','%',false,'OR', $limit, $filter)))
+		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR', $limit, $filter)))
 		{
 			foreach($contacts as $contact)
 			{
-				$result[$contact['id']] = $this->link_title($contact);
+				$result[$contact['id']] = $this->link_title($contact).
+					($options['type'] === 'email' ? ' <'.$contact['email'].'>' : '');
 				// show category color
 				if ($contact['cat_id'] && ($color = etemplate::cats2color($contact['cat_id'])))
 				{
@@ -1234,6 +1236,27 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * Query for subtype email (returns only contacts with email address set)
+	 *
+	 * @param string|array $pattern
+	 * @param array $options
+	 * @return Ambigous <multitype:, string, multitype:Ambigous <multitype:, string> string >
+	 */
+	function link_query_email($pattern, Array &$options = array())
+	{
+		if (isset($options['filter']) && !is_array($options['filter']))
+		{
+			$options['filter'] = (array)$options['filter'];
+		}
+		// return only contacts with email set
+		$options['filter'][] = "contact_email LIKE '%@%'";
+		
+		// let link query know, to append email to list
+		$options['type'] = 'email';
+		
+		return $this->link_query($pattern,$options);
+	}
+	/**
 	 * Check access to the projects file store
 	 *
 	 * @param int $id id of entry
@@ -1244,7 +1267,7 @@ class addressbook_bo extends addressbook_so
 	{
 		return $this->check_perms($check,$id);
 	}
-
+	
 	/**
 	 * returns info about contacts for calender
 	 *

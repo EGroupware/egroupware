@@ -61,6 +61,11 @@
  *			),
  *			'edit_id' => 'app_id',
  *			'edit_popup' => '400x300',
+ *			'additional' => array(					// allow one app to register sub-types, 
+ *				'app-sub' => array(					// different from 'types' approach above
+ *					// every value defined above
+ *				)
+ *			)
  *	}
  * All entries are optional, thought you only get conected functionality, if you implement them ...
  *
@@ -142,6 +147,15 @@ class egw_link extends solink
 		{
 			foreach($search_link_hooks as $app => $data)
 			{
+				// allow apps to register additional types
+				if (isset($data['additional']))
+				{
+					foreach($data['additional'] as $name => $values)
+					{
+						self::$app_register[$name] = $values;
+					}
+					unset($data['additional']);
+				}
 				if (is_array($data))
 				{
 					self::$app_register[$app] = $data;
