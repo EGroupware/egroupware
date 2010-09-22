@@ -51,6 +51,7 @@ all languages	common	en	all languages
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style-sheet:
 american samoa	common	en	AMERICAN SAMOA
+an admin required that you must change your password upon login.	common	en	an admin required that you must change your password upon login.
 an error happened	common	en	An error happened
 an existing and by the webserver readable directory enables the image browser and upload.	common	en	An existing AND by the webserver readable directory enables the image browser and upload.
 and	common	en	and
@@ -774,6 +775,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You've tried to open the eGroupWare application: %1, but you have no permission to access this application.
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent
+your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	en	Your Password does not meet the required strength.<br> You must meet %1 criteria. You met only %2 criteria. <br>Your Password failed the following criteria:
 your search returned %1 matchs	common	en	your search returned %1 matches
 your search returned 1 match	common	en	your search returned 1 match
 your session could not be verified.	login	en	Your session could not be verified.
