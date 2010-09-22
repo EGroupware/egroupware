@@ -504,7 +504,7 @@ class accounts_ldap
 			// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp (int UTC!) / (24*60*60)
 			'account_status'    => isset($data['shadowexpire']) && $data['shadowexpire'][0]*24*3600+$utc_diff < time() ? false : 'A',
 			'account_expires'   => isset($data['shadowexpire']) && $data['shadowexpire'][0] ? $data['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC
-			'account_lastpasswd_change' => isset($data['shadowlastchange']) ? $data['shadowlastchange'][0]*24*3600+$utc_diff : null,
+			'account_lastpwd_change' => isset($data['shadowlastchange']) ? $data['shadowlastchange'][0]*24*3600+$utc_diff : null,
 			// lastlogin and lastlogin from are not availible via the shadowAccount object class
 			// 'account_lastlogin' => $data['phpgwaccountlastlogin'][0],
 			// 'account_lastloginfrom' => $data['phpgwaccountlastloginfrom'][0],
@@ -591,7 +591,7 @@ class accounts_ldap
 			unset($to_write['shadowexpire']);	// gives protocoll error otherwise
 		}
 
-		if ($data['account_lastpasswd_change']) $to_write['shadowlastchange'] = $data['lastpasswd_change']/(24*3600);
+		if ($data['account_lastpwd_change']) $to_write['shadowlastchange'] = $data['lastpwd_change']/(24*3600);
 
 		// lastlogin and lastlogin from are not availible via the shadowAccount object class
 		// $to_write['phpgwaccountlastlogin'] = $data['lastlogin'];

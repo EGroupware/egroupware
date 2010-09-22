@@ -573,6 +573,7 @@
 					'account_groups'        => $_POST['account_groups'],
 					'anonymous'             => $_POST['anonymous'],
 					'changepassword'        => $_POST['changepassword'],
+					'mustchangepassword'        => $_POST['mustchangepassword'],
 					'account_permissions'   => $_POST['account_permissions'],
 					'homedirectory'         => $_POST['homedirectory'],
 					'loginshell'            => $_POST['loginshell'],
@@ -580,7 +581,7 @@
 					'account_email'         => $email
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
-
+				if ($userData['mustchangpassword']) $userData['account_lastpwd_change']=0;
 				/* when does the account expire */
 				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
 				{
@@ -863,6 +864,7 @@
 					'account_primary_group'	=> $_POST['account_primary_group'],
 					'anonymous'             => $_POST['anonymous'],
 					'changepassword'        => $_POST['changepassword'],
+					'mustchangepassword'        => $_POST['mustchangepassword'],
 					'account_permissions'   => $_POST['account_permissions'],
 					'homedirectory'         => $_POST['homedirectory'],
 					'loginshell'            => $_POST['loginshell'],
@@ -870,6 +872,21 @@
 					'account_email'         => $email,
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
+				if ($userData['mustchangepassword']) 
+				{
+					$userData['account_lastpwd_change']=0;
+				}
+				else
+				{
+					$accountid = $account_id;
+					settype($account_id,'integer');
+					$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
+
+					//echo $account_id.'#<br>';
+					$prevVal =  $GLOBALS['egw']->accounts->id2name($account_id,'account_lastpwd_change').'#<br>';
+					//echo $prevVal.'#<br>'; // previous Value was force password change by admin 
+					if ($prevVal==0) $userData['account_lastpwd_change']=egw_time::to('now','ts');
+				}
 				if($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
 				{
 					$userData['account_groups'][] = (int)$userData['account_primary_group'];
@@ -965,6 +982,7 @@
 				'lang_groups'        => lang('Groups'),
 				'lang_anonymous'     => lang('Anonymous user (not shown in list sessions)'),
 				'lang_changepassword'=> lang('Can change password'),
+				'lang_mustchangepassword'=> lang('Must change password upon next login'),
 				'lang_firstname'     => lang('First Name'),
 				'lang_lastlogin'     => lang('Last login'),
 				'lang_lastloginfrom' => lang('Last login from'),
@@ -985,6 +1003,7 @@
 			$acl =& CreateObject('phpgwapi.acl',(int)$_GET['account_id']);
 			$var['anonymous']         = $acl->check('anonymous',1,'phpgwapi') ? '&nbsp;&nbsp;X' : '&nbsp;';
 			$var['changepassword']    = !$acl->check('nopasswordchange',1,'preferences') ? '&nbsp;&nbsp;X' : '&nbsp;';
+			$var['mustchangepassword']= $userData['account_lastpwd_change']==0 ? '&nbsp;&nbsp;X' : '&nbsp;';
 			unset($acl);
 
 			if ($userData['status'])
@@ -1286,6 +1305,7 @@
 
 		function create_edit_user($_account_id,$_userData='',$_errors='')
 		{
+			//_debug_array($_userData);
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 
 			$jscal =& CreateObject('phpgwapi.jscalendar');
@@ -1341,6 +1361,7 @@
 					$acl->read_repository();
 					$userData['anonymous'] = $acl->check('anonymous',1,'phpgwapi');
 					$userData['changepassword'] = !$acl->check('nopasswordchange',1,'preferences');
+					$userData['mustchangepassword'] = ($userData['account_lastpwd_change']==0?true:false);
 					unset($acl);
 				}
 				else
@@ -1351,6 +1372,7 @@
 					$userGroups = Array();
 					$userData['anonymous'] = False;
 					$userData['changepassword'] = True;
+					$userData['mustchangepassword'] = false;
 				}
 				$allGroups = $account->get_list('groups');
 			}
@@ -1380,6 +1402,7 @@
 				'lang_firstname' 		=> lang('First Name'),
 				'lang_anonymous' 		=> lang('Anonymous User (not shown in list sessions)'),
 				'lang_changepassword' 	=> lang('Can change password'),
+				'lang_mustchangepassword'=> lang('Must change password upon next login'),
 				'lang_button'    		=> ($_account_id?lang('Save'):lang('Add')),
 				'lang_passwds_unequal'  => lang('The two passwords are not the same'),
 			/* 'lang_file_space' 		=> lang('File Space') */
@@ -1449,6 +1472,7 @@
 				'loginshell'    	=> $loginshell,
 				'anonymous'     	=> '<input type="checkbox" name="anonymous" value="1"'.($userData['anonymous'] ? ' checked' : '').'>',
 				'changepassword'	=> '<input type="checkbox" name="changepassword" value="1"'.($userData['changepassword'] ? ' checked' : '').'>',
+				'mustchangepassword'    => '<input type="checkbox" name="mustchangepassword" value="1"'.($userData['mustchangepassword'] ? ' checked' : '').'>',
 				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['status']?' checked':'').'>',
 				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" maxlength="50" value="' . $userData['firstname'] . '">',
 				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" maxlength="50" value="' . $userData['lastname'] . '">',

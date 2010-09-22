@@ -11,12 +11,16 @@
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
+		'noheader'                => true,
+		'novavbar'                => true,
 		'currentapp' => 'preferences',
 		'disable_Template_class' => True,
 	),
 );
 include('../header.inc.php');
-
+auth::check_password_age('preferences','index');
+$GLOBALS['egw_info']['flags']['nonavbar']=false;
+common::egw_header();
 $pref_tpl =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 $templates = Array(
 	'pref' => 'index.tpl'

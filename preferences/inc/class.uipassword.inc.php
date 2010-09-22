@@ -23,6 +23,7 @@ class uipassword
 
 	function change()
 	{
+		//_debug_array($GLOBALS['egw_info']['user']);
 		$n_passwd   = $_POST['n_passwd'];
 		$n_passwd_2 = $_POST['n_passwd_2'];
 		$o_passwd_2 = $_POST['o_passwd_2'];
@@ -72,11 +73,23 @@ class uipassword
 				$errors[] = lang('The two passwords are not the same');
 			}
 
+			if($o_passwd == $n_passwd)
+			{
+				$errors[] = lang('Old password and new password are the same. This is invalid. You must enter a new password');
+			}
+
 			if(!$n_passwd)
 			{
 				$errors[] = lang('You must enter a password');
 			}
-			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $error_msg = $GLOBALS['egw']->auth->crackcheck($n_passwd))
+			$strength = ($GLOBALS['egw_info']['server']['force_pwd_strength']?$GLOBALS['egw_info']['server']['force_pwd_strength']:false);
+			//error_log(__METHOD__.__LINE__.' Strength:'.$strength);
+
+			if ($strength && $strength>5) $strength =5;
+			if ($strength && $strength<0) $strength = false; 
+			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $strength==false) $strength=5;//old behavior
+			//error_log(__METHOD__.__LINE__.' Strength:'.$strength);
+			if(($GLOBALS['egw_info']['server']['check_save_passwd'] || $strength) && $error_msg = $GLOBALS['egw']->auth->crackcheck($n_passwd,$strength))
 			{
 				$errors[] = $error_msg;
 			}
@@ -104,7 +117,10 @@ class uipassword
 			{
 				$GLOBALS['egw']->session->appsession('password','phpgwapi',base64_encode($n_passwd));
 				$GLOBALS['egw_info']['user']['passwd'] = $n_passwd;
+				$GLOBALS['egw_info']['user']['account_lastpwd_change'] = egw_time::to('now','ts');
+				accounts::cache_invalidate($GLOBALS['egw_info']['user']['account_id']);
 				egw::invalidate_session_cache();
+				//_debug_array( $GLOBALS['egw_info']['user']);
 				$GLOBALS['hook_values']['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
 				$GLOBALS['hook_values']['old_passwd'] = $o_passwd;
 				$GLOBALS['hook_values']['new_passwd'] = $n_passwd;

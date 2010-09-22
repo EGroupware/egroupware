@@ -362,15 +362,15 @@ abstract class egw_framework
 		$var['quick_add'] = $this->_get_quick_add();
 
 		$var['user_info'] = $this->_user_time_info();
-
-		if($GLOBALS['egw_info']['user']['lastpasswd_change'] == 0)
+		
+		if($GLOBALS['egw_info']['user']['account_lastpwd_change'] == 0)
 		{
 			$api_messages = lang('You are required to change your password during your first login').'<br />'.
 				lang('Click this image on the navbar: %1','<img src="'.common::image('preferences','navbar.gif').'">');
 		}
-		elseif($GLOBALS['egw_info']['user']['lastpasswd_change'] < time() - (86400*30))
+		elseif($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] && $GLOBALS['egw_info']['user']['account_lastpwd_change'] < time() - (86400*$GLOBALS['egw_info']['server']['change_pwd_every_x_days']))
 		{
-			$api_messages = lang('it has been more then %1 days since you changed your password',30);
+			$api_messages = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
 		}
 
 		// This is gonna change

@@ -61,6 +61,13 @@ function check_password(id)
 			    </tr>
 			
 			    {password_fields}
+
+				<tr class="row_on">
+					<td>{lang_mustchangepassword}</td>
+					<td>{mustchangepassword}</td>
+					<td></td>
+					<td></td>
+				</tr>
 			 
 			    <tr class="row_off">
 			     <td>{lang_changepassword}</td>

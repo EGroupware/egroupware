@@ -56,6 +56,46 @@ class auth
 	}
 
 	/**
+	 * check_password_age
+	 * check if users are supposed to change their password every x sdays, then check if password is of old age 
+	 * or the devil-admin reset the users password and forced the user to change his password on next login.
+	 * 
+	 * @param string $app to know where you are/ or where you want to go
+	 * @param string $class to know where you are/ or where you want to go
+	 * @param string $method to know where you are/ or where you want to go
+	 * @return boolean true if check determined, that you passed the test, otherwise void, as we get redirected
+	 */
+	static function check_password_age($app='', $class='', $method='')
+	{
+		//echo egw_time::to('now','ts').'<br>';
+		//echo $GLOBALS['egw_info']['user']['account_lastpwd_change'].'<br>';
+		//echo ($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).'<br>';
+		//echo egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).'<br>';
+		if  (!($app == 'preferences' && $class == 'uipassword' && $method=='change') &&
+			 (($GLOBALS['egw_info']['server']['change_pwd_every_x_days'] &&
+			   ($GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['user']['apps']['password']) &&
+			   egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400)>$GLOBALS['egw_info']['user']['account_lastpwd_change']
+			  ) || $GLOBALS['egw_info']['user']['account_lastpwd_change']==0) 
+			)
+		{
+			error_log(__METHOD__.' Password of '.$GLOBALS['egw_info']['user']['account_lid'].' ('.$GLOBALS['egw_info']['user']['account_fullname'].') is of old age.'.array2string(array(
+				'ts'=>$GLOBALS['egw_info']['user']['account_lastpwd_change'],
+				'date'=>egw_time::to($GLOBALS['egw_info']['user']['account_lastpwd_change']))));
+			if ($GLOBALS['egw_info']['user']['account_lastpwd_change']==0) 
+			{
+				$message = lang('an admin required that you must change your password upon login.');
+			}
+			else
+			{
+				$message = lang('it has been more then %1 days since you changed your password',$GLOBALS['egw_info']['server']['change_pwd_every_x_days']);
+			}
+			if ($GLOBALS['egw_info']['user']['apps']['password']) egw::redirect_link('/preferences/password.php',array('message'=>$message));
+			egw::redirect_link('/index.php',array('menuaction'=>'preferences.uipassword.change','message'=>$message));
+		}
+		return true;
+	}
+
+	/**
 	 * password authentication against password stored in sql datababse
 	 *
 	 * @param string $username username of account to authenticate
@@ -365,29 +405,58 @@ class auth
 	 * @author cornelius weiss <egw at von-und-zu-weiss.de>
 	 * @return mixed false if password is considered "safe" or a string $message if "unsafe"
 	 */
-	static function crackcheck($passwd)
+	static function crackcheck($passwd,$reqstrength=5)
 	{
 		if (!preg_match('/.{'. ($noc=7). ',}/',$passwd))
 		{
-			$message = lang('Password must have at least %1 characters',$noc). '<br>';
+			$message[] = lang('Password must have at least %1 characters',$noc). '<br>';
+		}
+		else
+		{
+			$strength++;
 		}
 		if(!preg_match('/(.*\d.*){'. ($non=1). ',}/',$passwd))
 		{
-			$message .= lang('Password must contain at least %1 numbers',$non). '<br>';
+			$message[] = lang('Password must contain at least %1 numbers',$non). '<br>';
+		}
+		else
+		{
+			$strength++;
 		}
 		if(!preg_match('/(.*[[:upper:]].*){'. ($nou=1). ',}/',$passwd))
 		{
-			$message .= lang('Password must contain at least %1 uppercase letters',$nou). '<br>';
+			$message[] = lang('Password must contain at least %1 uppercase letters',$nou). '<br>';
+		}
+		else
+		{
+			$strength++;
 		}
 		if(!preg_match('/(.*[[:lower:]].*){'. ($nol=1). ',}/',$passwd))
 		{
-			$message .= lang('Password must contain at least %1 lowercase letters',$nol). '<br>';
+			$message[] = lang('Password must contain at least %1 lowercase letters',$nol). '<br>';
+		}
+		else
+		{
+			$strength++;
 		}
 		if(!preg_match('/(.*[\\!"#$%&\'()*+,-.\/:;<=>?@\[\]\^_ {|}~`].*){'. ($nol=1). ',}/',$passwd))
 		{
-			$message .= lang('Password must contain at least %1 special characters',$nol). '<br>';
+			$message[] = lang('Password must contain at least %1 special characters',$nol). '<br>';
 		}
-		return $message ? $message : false;
+		else
+		{
+			$strength++;
+		}
+		if (count($message)>0 && $reqstrength>$strength)
+		{
+			$outmessage = lang('Your Password does not meet the required strength.<br> You must meet %1 criteria. You met only %2 criteria. <br>Your Password failed the following criteria:',$reqstrength,$strength);
+			$outmessage .= '<br>'.implode(' ',$message);
+		}
+		else
+		{
+			$outmessage =false;
+		}
+		return $outmessage ? $outmessage : false;
 	}
 
 	/**
