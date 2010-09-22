@@ -72,6 +72,11 @@ class auth
 		//echo ($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).'<br>';
 		//echo egw_time::to('now','ts')-($GLOBALS['egw_info']['server']['change_pwd_every_x_days']*86400).'<br>';
 		$alpwchange='account_lastpwd_change';
+		// if nether timestamp isset return true, nothing to do (exept this means the password is too old)
+		if (!isset($GLOBALS['egw_info']['user']['account_lastpasswd_change']) && 
+			!isset($GLOBALS['egw_info']['user'][$alpwchange]) &&
+			empty($GLOBALS['egw_info']['server']['change_pwd_every_x_days'])
+		) return true;
 		if ($GLOBALS['egw_info']['user']['account_lastpasswd_change'] && !$GLOBALS['egw_info']['user'][$alpwchange])
 		{
 			// old style names
@@ -84,6 +89,7 @@ class auth
 			  ) || $GLOBALS['egw_info']['user'][$alpwchange]==0) 
 			)
 		{
+			if ($GLOBALS['egw']->acl->check('nopasswordchange', 1)) return true; // user has no rights to change password
 			error_log(__METHOD__.' Password of '.$GLOBALS['egw_info']['user']['account_lid'].' ('.$GLOBALS['egw_info']['user']['account_fullname'].') is of old age.'.array2string(array(
 				'ts'=>$GLOBALS['egw_info']['user']['account_lastpwd_change'],
 				'date'=>egw_time::to($GLOBALS['egw_info']['user']['account_lastpwd_change']))));
