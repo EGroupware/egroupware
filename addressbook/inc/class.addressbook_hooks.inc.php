@@ -323,6 +323,12 @@ class addressbook_hooks
 			'add_popup'  => '870x440',
 			'file_access'=> 'addressbook.addressbook_bo.file_access',
 			'default_types' => array('n' => array('name' => 'contact', 'options' => array('icon' => 'navbar.png','template' => 'addressbook.edit'))),
+			// registers an addtional type 'addressbook-email', returning only contacts with email, title has email appended
+			'additional' => array(
+				'addressbook-email' => array(
+					'query' => 'addressbook.addressbook_bo.link_query_email',
+				),
+			)
 		);
 	}
 
