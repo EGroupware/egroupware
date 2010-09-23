@@ -1150,6 +1150,24 @@ class infolog_ui
 					}
 					break;
 
+				case 'tracker':
+					if ($action_id) {
+						egw_link::link('infolog',$content['link_to']['to_id'],$action,$action_id);
+						$content['blur_title']   = egw_link::title($action,$action_id);
+					}
+					$content['info_contact'] = $action.':'.$action_id;
+					$t_bo = new tracker_bo();
+					$tracker = $t_bo->read($action_id);
+					$content['info_subject'] = $tracker['tr_summary'];
+					$content['info_des'] = $tracker['tr_description'];
+					foreach($this->bo->customfields as $name => $value)
+					{
+						if(array_key_exists('#'.$name, $tracker)) {
+							$content['#'.$name] = $tracker['#'.$name];
+						}
+					}
+					break;
+
 				case 'projectmanager':
 					$pm_links = array($action_id);
 				case 'addressbook':
