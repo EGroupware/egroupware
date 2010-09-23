@@ -221,12 +221,20 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 				$changed = $this->tracking->changed_fields($_data, $old);
 				if(count($changed) == 0) {
 					return true;
-				} 
+				}
+				
+				// Make sure n_fn gets updated
+				unset($_data['n_fn']);
+
 				// Fall through
 			case 'insert' :
 				if($_action == 'insert') {
 					// Addressbook backend doesn't like inserting with ID specified, it screws up the owner & etag
 					unset($_data['id']);
+				}
+				if(!isset($_data['org_name'])) {
+					// org_name is a trigger to update n_fileas
+					$_data['org_name'] = '';
 				}
 				if ( $this->dry_run ) {
 					print_r($_data);
