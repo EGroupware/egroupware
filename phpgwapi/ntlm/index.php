@@ -36,7 +36,14 @@ function check_access(&$account)
 	}
 	if (!$sessionid)
 	{
-		header('Location: ../../login.php'.(isset($_REQUEST['phpgw_forward']) ? '?'.$_REQUEST['phpgw_forward'] : ''));
+		if (isset($_GET['forward']))
+		{
+			header('Location: '.$_GET['forward']);
+		}
+		else
+		{
+			header('Location: ../../login.php'.(isset($_REQUEST['phpgw_forward']) ? '?phpgw_forward='.$_REQUEST['phpgw_forward'] : ''));
+		}
 		exit;
 	}
 	return $sessionid;
@@ -50,12 +57,20 @@ $GLOBALS['egw_info']['flags'] = array(
 // if you move this file somewhere else, you need to adapt the path to the header!
 include(dirname(__FILE__).'/../../header.inc.php');
 
-if ($_REQUEST['phpgw_forward'])
+if (isset($_GET['forward']))
 {
-	$forward = '../../'.(isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward']);
+	$forward = $_GET['forward'];
+	$GLOBALS['egw']->session->appsession('referer', 'login', $forward);
+error_log('stored login-referer='.$forward);
+}
+elseif ($_REQUEST['phpgw_forward'])
+{
+	$forward = '../..'.(isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward']);
 }
 else
 {
 	$forward = '../../index.php';
 }
+// commiting the session, before redirecting might fix racecondition in session creation
+$GLOBALS['egw']->session->commit_session();
 header('Location: '.$forward);
