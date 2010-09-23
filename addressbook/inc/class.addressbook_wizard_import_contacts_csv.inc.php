@@ -57,6 +57,7 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 	function wizard_step60(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		if($this->debug) error_log('addressbook.importexport.addressbook_csv_import::wizard_step60->$content '.print_r($content,true));
+		unset($content['no_owner_map']);
 		// return from step60
 		if ($content['step'] == 'wizard_step60')
 		{
@@ -78,13 +79,21 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 		{
 			$content['msg'] = $this->steps['wizard_step60'];
 			$content['step'] = 'wizard_step60';
-
-			if(!$content['contact_owner'] && $content['plugin_options']) {
+			if(!array_key_exists($content['contact_owner']) && $content['plugin_options']) {
 				$content['contact_owner'] = $content['plugin_options']['contact_owner'];
+			}
+			if(!array_key_exists($content['owner_from_csv']) && $content['plugin_options']) {
+				$content['owner_from_csv'] = $content['plugin_options']['owner_from_csv'];
+			}
+			if(!array_key_exists($content['change_owner']) && $content['plugin_options']) {
+				$content['change_owner'] = $content['plugin_options']['change_owner'];
 			}
 
 			$bocontacts = new addressbook_bo();
 			$sel_options['contact_owner'] = $bocontacts->get_addressbooks(EGW_ACL_ADD);
+			if(!in_array('owner', $content['field_mapping'])) {
+				$content['no_owner_map'] = true;
+			}
 
 			$preserv = $content;
 			unset ($preserv['button']);

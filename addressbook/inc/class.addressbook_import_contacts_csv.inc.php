@@ -150,7 +150,19 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			$record['owner'] = $_definition->plugin_options['contact_owner'];
+			// Set owner, unless it's supposed to come from CSV file
+			if($_definition->plugin_options['owner_from_csv']) {
+				if(!is_numeric($record['owner'])) {
+					$this->errors[$import_csv->get_current_position()] = lang(
+						'Invalid addressbook ID: %1.  Might be a bad field translation.  Used %2 instead.', 
+						$record['owner'], 
+						$_definition->plugin_options['contact_owner']
+					);
+					$record['owner'] = $_definition->plugin_options['contact_owner'];
+				}
+			} else {
+				$record['owner'] = $_definition->plugin_options['contact_owner'];
+			}
 
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
@@ -213,6 +225,9 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 
 				// Don't change a user account into a contact
 				if($old['owner'] == 0) {
+					unset($_data['owner']);
+				} elseif(!$this->definition->plugin_options['change_owner']) {
+					// Don't change addressbook of an existing contact
 					unset($_data['owner']);
 				}
 
