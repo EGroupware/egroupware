@@ -100,7 +100,7 @@ class importexport_wizard_basic_import_csv
 			$content['step'] = 'wizard_step30';
 			$preserv = $content;
 			unset ($preserv['button']);
-			$GLOBALS['egw']->js->set_onload("xajax_eT_wrapper_init();");
+			//$GLOBALS['egw']->js->set_onload("xajax_eT_wrapper_init();");
 			return $this->step_templates[$content['step']];
 		}
 		
@@ -187,9 +187,10 @@ class importexport_wizard_basic_import_csv
 			unset($content['field_mapping'][0]);
 			if(is_array($content['field_conversion'])) unset($content['field_conversion'][0]);
 			foreach(array('field_mapping', 'field_conversion') as $field) {
+				ksort($content[$field]);
 				foreach($content[$field] as $key => $value)
 				{
-					if($value) {
+					if($value && $value != '--NONE--') {
 						$content[$field][$key-1] = $content[$field][$key];
 					}
 					unset($content[$field][$key]);
@@ -199,7 +200,6 @@ class importexport_wizard_basic_import_csv
 			foreach($content['field_conversion'] as $field => $convert) {
 				if(!trim($convert)) unset($content['field_conversion'][$field]);
 			}
-
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -248,7 +248,7 @@ class importexport_wizard_basic_import_csv
 				$content['field_mapping'][] = $content['field_conversion'][] = '';
 				$j++;
 			}
-			$sel_options['field_mapping'] = array('' => lang('none')) + $this->mapping_fields;
+			$sel_options['field_mapping'] = array('--NONE--' => lang('none')) + $this->mapping_fields;
 			$preserv = $content;
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
