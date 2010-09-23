@@ -285,6 +285,10 @@ class addressbook_ui extends addressbook_bo
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
 		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
 		{
+			if($content['nm']['col_filter']['tid'] == 'D')
+			{
+				$sel_options['action']['undelete'] = lang('Un-delete');
+			}
 			$sel_options['action'] += array(
 				'csv'    => lang('Export as CSV'),
 				'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
@@ -694,6 +698,14 @@ class addressbook_ui extends addressbook_bo
 						{
 							$Ok = false;
 						}
+					}
+					break;
+				case 'undelete':
+					$action_msg = lang('recovered');
+					if ($contact = $this->read($id))
+					{
+						$contact['tid'] = 'n';
+						$Ok = $this->save($contact);
 					}
 					break;
 
