@@ -418,62 +418,7 @@ class filemanager_ui
 				throw new egw_exception_assertion_failed('Implemented on clientside!');
 
 			case 'delete':
-				$dirs = $files = $errs = 0;
-				// we first delete all selected links (and files)
-				// feeding the links to dirs to egw_vfs::find() deletes the content of the dirs, not just the link!
-				foreach($selected as $key => $path)
-				{
-					if (!egw_vfs::is_dir($path) || egw_vfs::is_link($path))
-					{
-						if (egw_vfs::unlink($path))
-						{
-							++$files;
-						}
-						else
-						{
-							++$errs;
-						}
-						unset($selected[$key]);
-					}
-				}
-				if ($selected)	// somethings left to delete
-				{
-					// some precaution to never allow to (recursivly) remove /, /apps or /home
-					foreach((array)$selected as $path)
-					{
-						if (preg_match('/^\/?(home|apps|)\/*$/',$path))
-						{
-							return lang("Cautiously rejecting to remove folder '%1'!",urldecode($path));
-						}
-					}
-					// now we use find to loop through all files and dirs: (selected only contains dirs now)
-					// - depth=true to get first the files and then the dir containing it
-					// - hidden=true to also return hidden files (eg. Thumbs.db), as we cant delete non-empty dirs
-					foreach(egw_vfs::find($selected,array('depth'=>true,'hidden'=>true)) as $path)
-					{
-						if (($is_dir = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)) && egw_vfs::rmdir($path,0))
-						{
-							++$dirs;
-						}
-						elseif (!$is_dir && egw_vfs::unlink($path))
-						{
-							++$files;
-						}
-						else
-						{
-							++$errs;
-						}
-					}
-				}
-				if ($errs)
-				{
-					return lang('%1 errors deleteting (%2 directories and %3 files deleted)!',$errs,$dirs,$files);
-				}
-				if ($dirs)
-				{
-					return lang('%1 directories and %2 files deleted.',$dirs,$files);
-				}
-				return $files == 1 ? lang('File deleted.') : lang('%1 files deleted.',$files);
+				return self::do_delete($selected);
 
 			case 'add':
 				$files = egw_session::appsession('clipboard_files','filemanager');
@@ -575,6 +520,72 @@ class filemanager_ui
 				return $ret." egw_vfs::symlink('$to','$path')";
 		}
 		return "Unknown action '$action'!";
+	}
+	
+	/**
+	 * Delete selected files and return success or error message
+	 * 
+	 * @param array $selected
+	 * @return string
+	 */
+	public static function do_delete(array $selected)
+	{
+		$dirs = $files = $errs = 0;
+		// we first delete all selected links (and files)
+		// feeding the links to dirs to egw_vfs::find() deletes the content of the dirs, not just the link!
+		foreach($selected as $key => $path)
+		{
+			if (!egw_vfs::is_dir($path) || egw_vfs::is_link($path))
+			{
+				if (egw_vfs::unlink($path))
+				{
+					++$files;
+				}
+				else
+				{
+					++$errs;
+				}
+				unset($selected[$key]);
+			}
+		}
+		if ($selected)	// somethings left to delete
+		{
+			// some precaution to never allow to (recursivly) remove /, /apps or /home
+			foreach((array)$selected as $path)
+			{
+				if (preg_match('/^\/?(home|apps|)\/*$/',$path))
+				{
+					return lang("Cautiously rejecting to remove folder '%1'!",urldecode($path));
+				}
+			}
+			// now we use find to loop through all files and dirs: (selected only contains dirs now)
+			// - depth=true to get first the files and then the dir containing it
+			// - hidden=true to also return hidden files (eg. Thumbs.db), as we cant delete non-empty dirs
+			foreach(egw_vfs::find($selected,array('depth'=>true,'hidden'=>true)) as $path)
+			{
+				if (($is_dir = egw_vfs::is_dir($path) && !egw_vfs::is_link($path)) && egw_vfs::rmdir($path,0))
+				{
+					++$dirs;
+				}
+				elseif (!$is_dir && egw_vfs::unlink($path))
+				{
+					++$files;
+				}
+				else
+				{
+					++$errs;
+				}
+			}
+		}
+		if ($errs)
+		{
+			return lang('%1 errors deleteting (%2 directories and %3 files deleted)!',$errs,$dirs,$files);
+		}
+		if ($dirs)
+		{
+			return lang('%1 directories and %2 files deleted.',$dirs,$files);
+		}
+		return $files == 1 ? lang('File deleted.') : lang('%1 files deleted.',$files);
 	}
 
 	/**
@@ -898,12 +909,7 @@ class filemanager_ui
 					}
 				}
 			}
-			// refresh opender and close our window
-			$link = egw::link('/index.php',array(
-				'menuaction' => 'filemanager.filemanager_ui.index',
-				'msg' => $msg,
-			));
-			$js = "opener.location.href='".addslashes($link)."'; ";
+			$js = "opener.location.href=opener.location.href+'&msg=".urlencode($msg)."'; ";
 			if ($button == 'save') $js .= "window.close();";
 			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
 			if ($button == 'save') common::egw_exit();
