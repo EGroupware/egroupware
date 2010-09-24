@@ -1,5 +1,5 @@
-Steps to set up NTLM Single Sign On for eGroupWare 1.6
-======================================================
+Steps to set up NTLM Single Sign On for eGroupWare 1.6+
+=======================================================
 (Version: $Id$)
 
 NTLM SSO removes Windows users on a PC, which is a member of a Windows domain
@@ -7,9 +7,10 @@ and who are logged into that domain, from the need to explicitly log into eGW.
 They simply point IE to the eGW URL (eg. http://domain.com/egroupware/) and 
 start working. They can of cause explicitly log out and log in as an other user.
 
-As far as I tested, Firefox 3 only allows to enter user (including domain(!), eg. DOMAIN\user)
-and password in a popup, which then get's checked from apache via winbind. 
-It does NOT automatically log you in, if you're logged into the domain on your PC!
+Firefox (at least 3.6) requires to manually enable NTLM Auth via about:config:
+search for ntlm and set "network.automatic-ntlm-auth.trusted-uris" to the domain
+your EGroupware install is using. Otherwise you will only get a popup to enter
+username (with prepended windows domain eg. DOMAIN\username) and password.
 
 Here's in short what you need:
 -----------------------------
