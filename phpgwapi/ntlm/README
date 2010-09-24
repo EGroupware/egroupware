@@ -1,0 +1,41 @@
+Steps to set up NTLM Single Sign On for eGroupWare 1.6+
+=======================================================
+(Version: $Id$)
+
+NTLM SSO removes Windows users on a PC, which is a member of a Windows domain
+and who are logged into that domain, from the need to explicitly log into eGW. 
+They simply point IE to the eGW URL (eg. http://domain.com/egroupware/) and 
+start working. They can of cause explicitly log out and log in as an other user.
+
+Firefox (at least 3.6) requires to manually enable NTLM Auth via about:config:
+search for ntlm and set "network.automatic-ntlm-auth.trusted-uris" to the domain
+your EGroupware install is using. Otherwise you will only get a popup to enter
+username (with prepended windows domain eg. DOMAIN\username) and password.
+
+Here's in short what you need:
+-----------------------------
+1. eGW 1.6 running on Apache
+2. a fully working and configured winbind configuration (not described here)
+3. mod_ntlm_winbind (eg. for openSUSE from their package apache2-mod_auth_ntml_winbind)
+4. an Apache configuration with the egroupware.conf in this directory (expecting eGW
+   to be installed in it's default location /usr/share/egroupware) or port the necessary 
+   settings to your Apache configuration. 
+   --> You NEED to change the domain from "TEST" to your used domain name!
+5. Make the following changes in eGW's setup >> configuraition:
+   - HTTP auth types (comma-separated) to use without login-page, eg. "NTLM": NTLM
+   - Select which type of authentication you are using: ADS
+     This is not needed for NTLM authentication, but allows the users to use their windows
+     user and password to log into eGW, if they log in using an other browser or location.
+   - Host/IP Domain controler: ... <-- NEED to be filled out
+   - Domain name: ... <-- NEED to be filled out, same domain name as above
+6. If you use EMail, you have to explicitly specify user/pw to use for contacting the IMAP
+   (and SMTP) server, it's no longer available to eGW!
+
+Please note the DC has to be started before you start winbind!
+
+The eGW code should work with every Apache authentication, which sets REMOTE_USER and AUTH_TYPE.
+With slight modifications (different var names) it should work eg. with SSL client certificates.
+
+This feature was sponsored by Sponsored by Carl Knauber Holding GmbH und Co. KG.
+
+Ralf Becker
