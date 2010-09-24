@@ -2117,7 +2117,7 @@
 			$count = 0;
 			if (is_array($headersNew)) {
 				foreach((array)$headersNew as $headerObject) {
-					#if($count == 0) _debug_array($headerObject);
+					//if($count == 0) error_log(__METHOD__.array2string($headerObject));
 					if (empty($headerObject['UID'])) continue;
 					$uid = ($rByUid ? $headerObject['UID'] : $headerObject['MSG_NUM']);
 					// make dates like "Mon, 23 Apr 2007 10:11:06 UT" working with strtotime
@@ -2145,9 +2145,9 @@
 					}
 					if(is_array($headerObject['FROM']) && is_array($headerObject['FROM'][0])) {
 						if($headerObject['FROM'][0]['HOST_NAME'] != 'NIL') {
-							$retValue['header'][$sortOrder[$uid]]['sender_address'] = $headerObject['FROM'][0]['EMAIL'];
+							$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]['EMAIL']);
 						} else {
-							$retValue['header'][$sortOrder[$uid]]['sender_address'] = $headerObject['FROM'][0]['MAILBOX_NAME'];
+							$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]['MAILBOX_NAME']);
 						}
 						if($headerObject['FROM'][0]['PERSONAL_NAME'] != 'NIL') {
 							$retValue['header'][$sortOrder[$uid]]['sender_name'] = self::decode_header($headerObject['FROM'][0]['PERSONAL_NAME']);
@@ -2157,9 +2157,9 @@
 
 					if(is_array($headerObject['TO']) && is_array($headerObject['TO'][0])) {
 						if($headerObject['TO'][0]['HOST_NAME'] != 'NIL') {
-							$retValue['header'][$sortOrder[$uid]]['to_address'] = $headerObject['TO'][0]['EMAIL'];
+							$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]['EMAIL']);
 						} else {
-							$retValue['header'][$sortOrder[$uid]]['to_address'] = $headerObject['TO'][0]['MAILBOX_NAME'];
+							$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]['MAILBOX_NAME']);
 						}
 						if($headerObject['TO'][0]['PERSONAL_NAME'] != 'NIL') {
 							$retValue['header'][$sortOrder[$uid]]['to_name'] = self::decode_header($headerObject['TO'][0]['PERSONAL_NAME']);
