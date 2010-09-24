@@ -89,7 +89,7 @@ class auth
 			  ) || $GLOBALS['egw_info']['user'][$alpwchange]==0) 
 			)
 		{
-			if ($GLOBALS['egw']->acl->check('nopasswordchange', 1)) return true; // user has no rights to change password
+			if ($GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences')) return true; // user has no rights to change password
 			error_log(__METHOD__.' Password of '.$GLOBALS['egw_info']['user']['account_lid'].' ('.$GLOBALS['egw_info']['user']['account_fullname'].') is of old age.'.array2string(array(
 				'ts'=>$GLOBALS['egw_info']['user']['account_lastpwd_change'],
 				'date'=>egw_time::to($GLOBALS['egw_info']['user']['account_lastpwd_change']))));
