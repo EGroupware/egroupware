@@ -9,7 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
 $run_by_webserver = !!$_SERVER['PHP_SELF'];
 $is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 
@@ -44,6 +43,7 @@ else
 		return is_null($arg1) ? $msg : str_replace(array('%1','%2','%3','%4'),array($arg1,$arg2,$arg3,$arg4),$msg);
 	}
 }
+
 $checks = array(
 	'phpversion' => array(
 		'func' => 'php_version',
@@ -266,7 +266,7 @@ foreach($setup_info as $app => $app_data)
 	}
 }
 $sorted_checks = array();
-foreach(array('php_version','php_ini_check','extension_check','pear_check','gd_check','permission_check','jpgraph_check') as $func)
+foreach(array('php_version','php_ini_check','extension_check','pear_check','gd_check','permission_check') as $func)
 {
 	foreach($checks as $name => $data)
 	{
@@ -738,13 +738,17 @@ function jpgraph_check($name,array $args)
 	global $passed_icon, $error_icon, $warning_icon;
 
 	$egw_path = defined(EGW_SERVER_ROOT) ? EGW_SERVER_ROOT : dirname(dirname(__FILE__));
-	$jpgraph_path = realpath($egw_path.'/..').SEP.'jpgraph';
+	if (!($jpgraph_path = realpath($egw_path.'/..')))
+	{
+		$jpgraph_path = dirname($egw_path);	// realpath can fail because eg. open_basedir does NOT include ..
+	}
+	$jpgraph_path .= SEP.'jpgraph';
 	
 	$min_version = isset($args['min_version']) ? $args['min_version'] : '1.13';
 
 	$available = false;
 	if (($check = file_exists($jpgraph_path) && is_dir($jpgraph_path)) && 
-		file_exists($jpgraph_path.'/src/jpgraph.php'))
+		(file_exists($jpgraph_path.'/src/jpgraph.php') || file_exists($jpgraph_path.'/jpgraph.php')))
 	{
 		if (file_exists($jpgraph_path.'/VERSION') && preg_match('/Version: v([0-9.]+)/',file_get_contents($jpgraph_path.'/VERSION'),$matches))
 		{
