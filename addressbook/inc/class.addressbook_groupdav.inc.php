@@ -458,9 +458,8 @@ class addressbook_groupdav extends groupdav_handler
 	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
 	{
 		// addressbook description
-		$displayname = $GLOBALS['egw']->translation->convert(lang('Addressbook of') . ' ' .
-			$displayname,
-			$GLOBALS['egw']->translation->charset(),'utf-8');
+		$displayname = translation::convert(lang('Addressbook of') . ' ' .
+			$displayname,translation::charset(),'utf-8');
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-description',$displayname);
 		// supported reports (required property for CardDAV)
 		$props[] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(

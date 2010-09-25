@@ -10,6 +10,15 @@
  * @version $Id$
  */
 
+// support of Mac or iPhone trying to autodetect CalDAV or CardDAV support
+// if EGroupware is not installed in the docroot, you need either this code in the index.php there,
+// or an uncoditional redirect to this file or copy groupdav.htaccess to your docroot as .htaccess
+if ($_SERVER['REQUEST_METHOD'] == 'PROPFIND' || $_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+{
+        header('Location: groupdav.php/');
+        exit;
+}
+
 // forward for not existing or empty header to setup
 if(!file_exists('header.inc.php') || !filesize('header.inc.php'))
 {
