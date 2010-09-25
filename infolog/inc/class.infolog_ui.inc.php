@@ -1041,7 +1041,7 @@ class infolog_ui
 				{
 					continue;
 				}
-				$cont = split(' ', $content[$key]);
+				$cont = explode(' ', $content[$key]);
 				$ckarray = array();
 				foreach($cont as &$word)
 				{
