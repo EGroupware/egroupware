@@ -367,6 +367,16 @@ class addressbook_sql extends so_sql
 				++$extra_filter;
 				unset($filter[$name]);
 			}
+			switch($name)
+			{
+				case 'owner':
+				case 'contact_owner':
+					$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
+						'contact_owner' => $val,
+					));
+					unset($filter[$name]);
+					break;
+			}
 		}
 		if (isset($filter['list']))
 		{
