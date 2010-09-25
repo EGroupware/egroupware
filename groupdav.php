@@ -25,8 +25,9 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 // if you move this file somewhere else, you need to adapt the path to the header!
-require_once('phpgwapi/inc/class.egw_digest_auth.inc.php');
-include(dirname(__FILE__).'/header.inc.php');
+$egw_dir = dirname(__FILE__);
+require_once($egw_dir.'/phpgwapi/inc/class.egw_digest_auth.inc.php');
+include($egw_dir.'/header.inc.php');
 
 $GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 

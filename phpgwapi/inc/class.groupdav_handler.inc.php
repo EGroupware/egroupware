@@ -32,12 +32,6 @@ abstract class groupdav_handler
 	 */
 	var $egw_charset;
 	/**
-	 * Reference to the translation class
-	 *
-	 * @var translation
-	 */
-	var $translation;
-	/**
 	 * Reference to the accounts class
 	 *
 	 * @var accounts
@@ -110,8 +104,7 @@ abstract class groupdav_handler
 
 		$this->agent = self::get_agent();
 
-		$this->translation =& $GLOBALS['egw']->translation;
-		$this->egw_charset = $this->translation->charset();
+		$this->egw_charset = translation::charset();
 		$this->accounts = $GLOBALS['egw']->accounts;
 	}
 
@@ -341,14 +334,15 @@ abstract class groupdav_handler
 			// identify the agent (GroupDAV client) from the HTTP_USER_AGENT header
 			$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 			foreach(array(
-				'iphone'			=> 'iphone',	// Apple iPhone iCal
+				'iphone'            => 'iphone',	// Apple iPhone iCal
 				'davkit'            => 'davkit',	// Apple iCal
-				'cfnetwork'			=> 'cfnetwork', // Apple Addressbook
+				'dataaccess'        => 'dataaccess',	// Apple addressbook iPhone
+				'cfnetwork'         => 'cfnetwork', // Apple Addressbook
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
 				'zideone'           => 'zideone',	// zideone outlook plugin
 				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
 				'khtml'             => 'kde',		// KDE clients
-				'neon'				=> 'neon'
+				'neon'              => 'neon'
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)

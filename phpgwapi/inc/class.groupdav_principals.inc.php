@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare: GroupDAV access: groupdav/caldav/carddav principals handlers
+ * EGroupware: GroupDAV access: groupdav/caldav/carddav principals handlers
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -12,7 +12,7 @@
  */
 
 /**
- * eGroupWare: GroupDAV access: groupdav/caldav/carddav principals handlers
+ * EGroupware: GroupDAV access: groupdav/caldav/carddav principals handlers
  */
 class groupdav_principals extends groupdav_handler
 {
@@ -41,6 +41,12 @@ class groupdav_principals extends groupdav_handler
 	 */
 	function propfind($path,$options,&$files,$user)
 	{
+		// we do NOT support REPORTS on pricipals yet
+		// required for Apple Addressbook on Mac (addressbook-findshared REPORT)
+		if ($options['root']['name'] && $options['root']['name'] != 'propfind')
+		{
+			return '501 Not Implemented';
+		}
 		list(,$principals,$type,$name,$rest) = explode('/',$path,5);
 		// /principals/users/$name/
 		//            /users/$name/calendar-proxy-read/
@@ -82,8 +88,8 @@ class groupdav_principals extends groupdav_handler
 		}
 		foreach($id ? array($this->accounts->read($id)) : $this->accounts->search(array('type' => 'accounts')) as $account)
 		{
-			$displayname = $this->translation->convert($account['account_fullname'],
-				$this->translation->charset(),'utf-8');
+			$displayname = translation::convert($account['account_fullname'],
+				translation::charset(),'utf-8');
 			
 			$props = array(
 				HTTP_WebDAV_Server::mkprop('displayname',$displayname),
@@ -234,8 +240,8 @@ class groupdav_principals extends groupdav_handler
 	{
 		//echo "<p>".__METHOD__."(".array2string($account).")</p>\n";
 
-		$displayname = $this->translation->convert($account['account_fullname'],
-				$this->translation->charset(),'utf-8');
+		$displayname = translation::convert($account['account_fullname'],
+				translation::charset(),'utf-8');
 		$memberships = array();
 		foreach($this->accounts->memberships($account['account_id']) as $gid => $group)
 		{
@@ -291,8 +297,8 @@ class groupdav_principals extends groupdav_handler
 	 */
 	protected function add_group(array $account)
 	{
-		$displayname = $this->translation->convert(lang('Group').' '.$account['account_lid'],
-			$this->translation->charset(),'utf-8');
+		$displayname = translation::convert(lang('Group').' '.$account['account_lid'],
+			translation::charset(),'utf-8');
 		$members = array();
 		foreach($this->accounts->members($account['account_id']) as $gid => $user)
 		{

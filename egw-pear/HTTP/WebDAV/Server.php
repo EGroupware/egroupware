@@ -635,7 +635,7 @@ class HTTP_WebDAV_Server
                 return;
             }
         }
-
+        
         // now we generate the reply header ...
 		if ($retval === true)
 		{
@@ -672,7 +672,7 @@ class HTTP_WebDAV_Server
 
         // ... and payload
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-        echo ($this->crrnd?'<':'<D:')."multistatus xmlns:D=\"DAV:\">\n";
+        echo $this->crrnd ? "<multistatus xmlns=\"DAV:\">\n" : "<D:multistatus xmlns:D=\"DAV:\">\n";
 
         // using an ArrayIterator to prevent foreach from copying the array,
         // as we cant loop by reference, when an iterator is given in $files['files']

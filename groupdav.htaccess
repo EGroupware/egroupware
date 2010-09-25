@@ -1,0 +1,28 @@
+# EGroupware CalDav or CardDAV support
+#
+# $Id$
+#
+# This file can be copyied as .htaccess to your document root
+# to support Mac or iPhone clients to autodetec CalDAV and CardDAV
+# (currently Addressbook does NOT allow to specify our groupdav.php 
+#  URL manually).
+#
+# As alternative an EGroupware install directly in the docroot or
+# an unconditional redirect from the docroot to EGroupware's index.php 
+# will archive the same thing, as it redirects PROPFIND or OPTION 
+# requests to groupdav.php/ (many have such a redirect already in place).
+#
+# An other alternativ is to copy the PROPFIND/OPTION redirect from
+# the top of EGroupware's index.php into your index.php in the docroot.
+#
+# Please note: 
+# - your Apache web server needs to be setup to read .htaccess files and 
+#   allow use of the RewriteEngine directive (AllowOverride FileInfo). 
+# - you need to replace /egroupware with your EGroupware URL path eg. /egw
+
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^.well-known/(caldav|carddav)$ /egroupware/groupdav.php/ [R]
+RewriteCond %{REQUEST_METHOD}	^PROPFIND$
+RewriteRule ^/$ /egroupware/groupdav.php/

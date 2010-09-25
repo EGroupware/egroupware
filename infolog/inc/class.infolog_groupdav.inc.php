@@ -550,9 +550,8 @@ class infolog_groupdav extends groupdav_handler
 	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
 	{
 		// calendar description
-		$displayname = $GLOBALS['egw']->translation->convert(lang('Tasks of') . ' ' .
-			$displayname,
-			$GLOBALS['egw']->translation->charset(),'utf-8');
+		$displayname = translation::convert(lang('Tasks of') . ' ' .
+			$displayname,translation::charset(),'utf-8');
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		// email of the current user, see caldav-sheduling draft
 		$props[] =	HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
