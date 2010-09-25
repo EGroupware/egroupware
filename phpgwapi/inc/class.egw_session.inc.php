@@ -1207,7 +1207,7 @@ class egw_session
 	 */
 	public static function egw_setcookie($cookiename,$cookievalue='',$cookietime=0,$cookiepath=null)
 	{
-		if (!isset(self::$cookie_domain) || !isset(self::$cookie_path))
+		if (empty(self::$cookie_domain) || empty(self::$cookie_path))
 		{
 			self::set_cookiedomain();
 		}
