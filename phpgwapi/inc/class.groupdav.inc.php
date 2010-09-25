@@ -221,19 +221,6 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		if ($this->debug) error_log(__CLASS__."::$method(".array2string($options,true).')');
 
-
-		if (groupdav_handler::get_agent() == 'cfnetwork' && // Apple Addressbook
-			$options['root']['name'] == 'propfind')
-		{
-			foreach ($options['props'] as $props)
-			{
-				if ($props['name'] == 'current-user-privilege-set')
-				{
-					if ($this->debug > 2) error_log(__CLASS__."::$method: current-user-privilege-set not implemented!");
-					return '501 Not Implemented';
-				}
-			}
-		}
 		// parse path in form [/account_lid]/app[/more]
 		if (!self::_parse_path($options['path'],$id,$app,$user,$user_prefix) && $app && !$user)
 		{
