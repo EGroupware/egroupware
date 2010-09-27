@@ -1516,6 +1516,12 @@ class addressbook_ui extends addressbook_bo
 			'to_id'  => $content['link_to']['to_id'],
 		);
 
+		// Links for deleted entries
+		if($content['tid'] == addressbook_so::DELETED_TYPE)
+		{
+			$content['link_to']['show_deleted'] = true;
+		}
+
 		// Enable history
 		$this->setup_history($content, $sel_options);
 
@@ -1690,6 +1696,11 @@ class addressbook_ui extends addressbook_bo
 			'to_app' => 'addressbook',
 			'to_id'  => $content['id'],
 		);
+		// Links for deleted entries
+		if($content['tid'] == addressbook_so::DELETED_TYPE)
+		{
+			$content['link_to']['show_deleted'] = true;
+		}
 		$readonlys['link_to'] = $readonlys['customfields'] = $readonlys['fileas_type'] = true;
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['change_photo'] = true;
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);

@@ -724,6 +724,7 @@ class addressbook_bo extends addressbook_so
 					$delete = $old;
 					$delete['tid'] = addressbook_so::DELETED_TYPE;
 					$ok = $this->save($delete);
+					egw_link::unlink(0,'addressbook',$id,'','','',true);
 				}
 				elseif (($ok = parent::delete($id,$check_etag)))
 				{
@@ -847,6 +848,12 @@ class addressbook_bo extends addressbook_so
 			}
 			// Notify linked apps about changes in the contact data
 			egw_link::notify_update('addressbook',  $contact['id'], $contact);
+
+			// Check for restore of deleted contact, restore held links
+			if($old['tid'] == addressbook_so::DELETED_TYPE && $contact['tid'] != addressbook_so::DELETED_TYPE)
+			{
+				egw_link::restore('addressbook', $contact['id']);
+			}
 
 			// Record change history for sql - doesn't work for LDAP accounts
 			if(!$contact['account_id'] || $contact['account_id'] && $this->account_repository == 'sql') {
