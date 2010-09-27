@@ -41,6 +41,7 @@
  *   'to_id'        => // IO int id of the entry to link to, for new entries 0, returns the array with new links
  *	// the following params apply only for the link-to widget!
  *   'no_files'     => // I  boolean suppress attach-files, default no
+ *   'show_deleted' => // I  Show links that are marked as deleted, being held for purge
  *   'search_label' => // I  string label to use instead of search
  *   'link_label'   => // I  string label for the link button, default 'Link'
  *  // optional only for the link-add widget and link-entry widget
@@ -203,7 +204,7 @@ class link_widget
 			}
 			if ($value['to_id'] && $value['to_app'])
 			{
-				$value = egw_link::get_links($value['to_app'],$value['to_id'],$only_app = $value['only_app'],'link_lastmod DESC',true);
+				$value = egw_link::get_links($value['to_app'],$value['to_id'],$only_app = $value['only_app'],'link_lastmod DESC',true, $value['show_deleted']);
 				if ($only_app)
 				{
 					foreach($value as $key => $id)
@@ -280,7 +281,7 @@ class link_widget
 			{
 				$value['title'] = egw_link::title($app,$id);
 			}
-			$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true);
+			$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true, $value['show_deleted']);
 			$value['anz_links'] = count($links);
 			$extension_data = $value;
 
