@@ -318,11 +318,12 @@ $phpgw_baseline = array(
 			'link_id2' => array('type' => 'varchar','precision' => '50','nullable' => False),
 			'link_remark' => array('type' => 'varchar','precision' => '100'),
 			'link_lastmod' => array('type' => 'int','precision' => '8','nullable' => False),
-			'link_owner' => array('type' => 'int','precision' => '4','nullable' => False)
+			'link_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+			'deleted' => array('type' => 'timestamp')
 		),
 		'pk' => array('link_id'),
 		'fk' => array(),
-		'ix' => array(array('link_app1','link_id1','link_lastmod'),array('link_app2','link_id2','link_lastmod')),
+		'ix' => array('deleted',array('link_app1','link_id1','link_lastmod'),array('link_app2','link_id2','link_lastmod')),
 		'uc' => array()
 	),
 	'egw_addressbook' => array(

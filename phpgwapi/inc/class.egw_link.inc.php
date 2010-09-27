@@ -304,11 +304,12 @@ class egw_link extends solink
 	 * @param string $order='link_lastmod DESC' defaults to newest links first
 	 * @param boolean $cache_titles=false should all titles be queryed and cached (allows to query each link app only once!)
 	 * 	This option also removes links not viewable by current user from the result!
+	 * @param boolean $deleted Include links that have been flagged as deleted, waiting for purge.
 	 * @return array of links or empty array if no matching links found
 	 */
-	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC',$cache_titles=false )
+	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC',$cache_titles=false,$deleted=false )
 	{
-		if (self::DEBUG) echo "<p>egw_link::get_links(app='$app',id='$id',only_app='$only_app',order='$order')</p>\n";
+		if (self::DEBUG) echo "<p>egw_link::get_links(app='$app',id='$id',only_app='$only_app',order='$order',deleted='$deleted')</p>\n";
 
 		if (is_array($id) || !$id)
 		{
@@ -330,7 +331,7 @@ class egw_link extends solink
 			}
 			return $ids;
 		}
-		$ids = solink::get_links($app,$id,$only_app,$order);
+		$ids = solink::get_links($app,$id,$only_app,$order,$deleted);
 		if (empty($only_app) || $only_app == self::VFS_APPNAME ||
 		    ($only_app[0] == '!' && $only_app != '!'.self::VFS_APPNAME))
 		{
@@ -474,11 +475,12 @@ class egw_link extends solink
 	 * @param string/array $id='' id in $app or array with links, if 1. entry not yet created
 	 * @param string $app2='' app of second endpoint
 	 * @param string $id2='' id in $app2
+	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete
 	 * @return the number of links deleted
 	 */
-	static function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
+	static function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='',$hold_for_purge=false)
 	{
-		return self::unlink2($link_id,$app,$id,$owner,$app2,$id2);
+		return self::unlink2($link_id,$app,$id,$owner,$app2,$id2,$hold_for_purge);
 	}
 
 	/**
@@ -489,9 +491,10 @@ class egw_link extends solink
 	 * @param string/array &$id='' id in $app or array with links, if 1. entry not yet created
 	 * @param string $app2='' app of second endpoint, or !file (other !app are not yet supported!)
 	 * @param string $id2='' id in $app2
+	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete
 	 * @return the number of links deleted
 	 */
-	static function unlink2($link_id,$app,&$id,$owner='',$app2='',$id2='')
+	static function unlink2($link_id,$app,&$id,$owner='',$app2='',$id2='',$hold_for_purge=false)
 	{
 		if (self::DEBUG)
 		{
@@ -516,7 +519,7 @@ class egw_link extends solink
 				self::delete_attached($app,$id);	// deleting all attachments
 				self::delete_cache($app,$id);
 			}
-			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2);
+			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge);
 
 			// only notify on real links, not the one cached for writing or fileattachments
 			self::notify_unlink($deleted);

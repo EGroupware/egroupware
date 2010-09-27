@@ -114,13 +114,14 @@ class solink
 	 * @param string/array $id id(s) in $app
 	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 	 * @param string $order defaults to newest links first
+	 * @param boolean $deleted Include links that have been flagged as deleted, waiting for purge of linked record.
 	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
-	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
+	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC',$deleted )
 	{
 		if (self::DEBUG)
 		{
-			echo "<p>solink.get_links($app,".print_r($id,true).",$only_app,$order)</p>\n";
+			echo "<p>solink.get_links($app,".print_r($id,true).",$only_app,$order,$deleted)</p>\n";
 		}
 		if (($not_only = $only_app[0] == '!'))
 		{
@@ -128,13 +129,14 @@ class solink
 		}
 		#var_dump($not_only);echo "$only_app<br>";
 		$links = array();
-		foreach(self::$db->select(self::TABLE,'*',self::$db->expression(self::TABLE,'(',array(
+		foreach(self::$db->select(self::TABLE,'*',self::$db->expression(self::TABLE,'((',array(
 					'link_app1'	=> $app,
 					'link_id1'	=> $id,
 				),') OR (',array(
 					'link_app2'	=> $app,
 					'link_id2'	=> $id,
-				),')'
+				),'))',
+				$deleted ? '' : ' AND deleted IS NULL'
 			),__LINE__,__FILE__,False,$order ? " ORDER BY $order" : '') as $row)
 		{
 			// check if left side (1) is one of our targets --> add it
@@ -229,9 +231,10 @@ class solink
 	 * @param int $owner=0 account_id to delete all links of a given owner, or 0
 	 * @param string $app2='' appname of 2. endpoint of the link
 	 * @param string $id2='' id in $app2
+	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete of linked entry
 	 * @return array with deleted links
 	 */
-	static function &unlink($link_id,$app='',$id='',$owner=0,$app2='',$id2='')
+	static function &unlink($link_id,$app='',$id='',$owner=0,$app2='',$id2='',$hold_for_purge=false)
 	{
 		if (self::DEBUG)
 		{
@@ -282,10 +285,45 @@ class solink
 		foreach(self::$db->select(self::TABLE,'*',$where,__LINE__,__FILE__) as $row)
 		{
 			$deleted[] = $row;
-		}			
-		self::$db->delete(self::TABLE,$where,__LINE__,__FILE__);
+		}
+		if($hold_for_purge)
+		{
+			self::$db->update(self::TABLE,array('deleted'=> time()), $where, __LINE__,__FILE__);
+		}
+		else
+		{
+			self::$db->delete(self::TABLE,$where,__LINE__,__FILE__);
+		}
 
 		return $deleted;
+	}
+
+	/**
+	 * Restore links being held as deleted waiting for purge of linked record (un-delete)
+	 *
+	 * @param string $app='' app-name of links to remove
+	 * @param string $id='' id in $app or '' remove all links from $app
+	 */
+	static function restore($app, $id)
+	{
+		if (self::DEBUG)
+		{
+			echo "<p>solink.restore($app,$id)</p>\n";
+		}
+		if ($app == '')
+		{
+			return 0;
+		}
+
+		$check1 = array('link_app1' => $app);
+		$check2 = array('link_app2' => $app);
+		if ($id != '')
+		{
+			$check1['link_id1'] = $id;
+			$check2['link_id2'] = $id;
+		}
+		$where = self::$db->expression(self::TABLE,'((',$check1,') OR (',$check2,'))');
+		self::$db->update(self::TABLE,array('deleted'=> null), $where, __LINE__,__FILE__);
 	}
 
 	/**
