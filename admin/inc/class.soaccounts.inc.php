@@ -25,7 +25,7 @@
 			{
 				$userData['account_email'] = $userData['email'];
 			}
-
+			if ($userData['mustchangepassword'] == 1) $userData['account_lastpwd_change']=0;
 			if (!($userData['account_id'] = $GLOBALS['egw']->accounts->create($userData)))
 			{
 				return false;
