@@ -693,8 +693,8 @@ function php_ini_check($name,$args)
 			break;
 		case 'contain':
 			$check = lang('contain');
-			$sep = $is_windows ? '[; ]+' : '[: ]+';
-			$result = in_array($args['value'],split($sep,$ini_value));
+			$sep = $is_windows ? '/[; ]+/' : '/[: ]+/';
+			$result = in_array($args['value'],preg_split($sep,$ini_value));
 			break;
 		case '=':
 		default:
