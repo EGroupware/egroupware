@@ -626,7 +626,7 @@ class infolog_bo
 
 			$this->so->write($deleted);
 
-			egw_link::unlink(0,'infolog',$info_id,'','!file');	// keep the file attachments, only delete the rest
+			egw_link::unlink(0,'infolog',$info_id,'','!file','',true);	// keep the file attachments, hide the rest
 		}
 		else
 		{
@@ -874,6 +874,12 @@ class infolog_bo
 			}
 			// create (and remove) links in custom fields
 			customfields_widget::update_customfield_links('infolog',$values,$old,'info_id');
+
+			// Check for restore of deleted entry, restore held links
+			if($old['info_status'] == 'deleted' && $values['info_status'] != 'deleted')
+			{
+				egw_link::restore('infolog', $info_id);
+			}
 
 			// notify the link-class about the update, as other apps may be subscribt to it
 			egw_link::notify_update('infolog',$info_id,$values);
