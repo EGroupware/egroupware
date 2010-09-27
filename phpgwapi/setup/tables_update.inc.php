@@ -69,3 +69,18 @@ function phpgwapi_upgrade1_9_002()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.003';
 }
 
+
+function phpgwapi_upgrade1_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook','adr_one_countrycode',array(
+		'type' => 'varchar',
+		'precision' => '2'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_addressbook','adr_two_countrycode',array(
+		'type' => 'varchar',
+		'precision' => '2'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.004';
+}
+

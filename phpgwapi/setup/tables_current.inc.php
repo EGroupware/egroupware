@@ -388,7 +388,9 @@ $phpgw_baseline = array(
 			'contact_jpegphoto' => array('type' => 'blob'),
 			'account_id' => array('type' => 'int','precision' => '4'),
 			'contact_etag' => array('type' => 'int','precision' => '4','default' => '0'),
-			'contact_uid' => array('type' => 'varchar','precision' => '255')
+			'contact_uid' => array('type' => 'varchar','precision' => '255'),
+			'adr_one_countrycode' => array('type' => 'varchar','precision' => '2'),
+			'adr_two_countrycode' => array('type' => 'varchar','precision' => '2')
 		),
 		'pk' => array('contact_id'),
 		'fk' => array(),
