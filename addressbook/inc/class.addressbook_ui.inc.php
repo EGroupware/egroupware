@@ -1271,6 +1271,14 @@ class addressbook_ui extends addressbook_bo
 					{
 						unset($content['n_fn']);
 					}
+					// Country codes
+					foreach(array('adr_one', 'adr_two') as $c_prefix)
+					{
+						if ($content[$c_prefix.'_countrycode'] == '-custom-')
+						{
+							$content[$c_prefix.'_countrycode'] = null;
+						}
+					}
 					if ($this->save($content))
 					{
 						$content['msg'] = lang('Contact saved');
@@ -1458,6 +1466,8 @@ class addressbook_ui extends addressbook_bo
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
+		$GLOBALS['egw']->js->set_onload('show_custom_country(document.getElementById("exec[adr_one_countrycode]"));');
+		$GLOBALS['egw']->js->set_onload('show_custom_country(document.getElementById("exec[adr_two_countrycode]"));');
 
 		$content['disable_change_org'] = $view || !$content['org_name'];
 		//_debug_array($content);
@@ -2048,6 +2058,28 @@ class addressbook_ui extends addressbook_bo
 					selbox.form.submit();
 				}
 				selbox.value = "";
+			}
+
+		}
+
+		function show_custom_country(selectbox)
+		{
+			custom_field_name = selectbox.name.replace("countrycode", "countryname");
+			custom_field = document.getElementById(custom_field_name);
+			if(custom_field && selectbox.value == "-custom-") {
+				custom_field.style.display = "inline";
+			}
+			else if (custom_field)
+			{
+				if(selectbox.value == "" || selectbox.value == null)
+				{
+					selectbox.value = "-custom-";
+					custom_field.style.display = "inline";
+				}
+				else
+				{
+					custom_field.style.display = "none";
+				}
 			}
 		}
 </script>';
