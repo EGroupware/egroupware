@@ -169,6 +169,11 @@ class HTTP_WebDAV_Server
 	        // default uri is the complete request uri
 	        $uri = (@$this->_SERVER["HTTPS"] === "on" ? "https:" : "http:") . '//'.$this->_SERVER['HTTP_HOST'];
         }
+        // support for PHP running as (F)CGI
+        if (!isset($this->_SERVER['PATH_INFO']) && isset($this->_SERVER['ORIG_PATH_INFO']))
+        {
+        	$this->_SERVER['PATH_INFO'] = $this->_SERVER['ORIG_PATH_INFO'];
+        }
         // we cant use SCRIPT_NAME, because it fails, if there's any url rewriting
         //error_log("pathinfo:\n". $this->_urldecode($this->_SERVER['REQUEST_URI']).":\n".$this->_SERVER['PATH_INFO']);
         $uri .= substr($this->_urldecode($this->_SERVER['REQUEST_URI']),0,-strlen($this->_SERVER["PATH_INFO"]));

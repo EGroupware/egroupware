@@ -33,7 +33,7 @@ function check_access(&$account)
 }
 
 // if we are called with a /apps/$app path, use that $app as currentapp, to not require filemanager rights for the links
-$parts = explode('/',$_SERVER['PATH_INFO']);
+$parts = explode('/',isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : $_SERVER['ORIG_PATH_INFO']);
 //error_log("webdav: explode".print_r($parts,true));
 if(count($parts) == 1)
 {
