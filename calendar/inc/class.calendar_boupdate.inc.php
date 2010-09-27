@@ -352,6 +352,11 @@ class calendar_boupdate extends calendar_bo
 		$event = $this->read($cal_id);	// we re-read the event, in case only partial information was update and we need the full info for the notifies
 		//echo "new $cal_id="; _debug_array($event);
 
+		if($old_event['deleted'] && $event['deleted'] == null)
+		{
+			// Restored, bring back links
+			egw_link::restore('calendar', $cal_id);
+		}	
 		if ($this->log_file)
 		{
 			$this->log2file($event2save,$event,$old_event);
@@ -1241,6 +1246,9 @@ class calendar_boupdate extends calendar_bo
 			}
 			elseif ($config['calendar_delete_history'])
 			{
+				// mark all links to the event as deleted, but keep them
+				egw_link::unlink(0,'calendar',$cal_id,'','','',true);
+
 				$event['deleted'] = $this->now;
 				$this->save($event, $ignore_acl);
 				// Actually delete alarms
