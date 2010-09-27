@@ -156,7 +156,6 @@ class accounts_sql
 		//echo "<p>accounts_sql::save(".print_r($data,true).")</p>\n";
 		$to_write = $data;
 		unset($to_write['account_passwd']);
-
 		// encrypt password if given or unset it if not
 		if ($data['account_passwd'])
 		{
@@ -169,6 +168,7 @@ class accounts_sql
 			$to_write['account_pwd'] = $data['account_passwd'];
 			$to_write['account_lastpwd_change'] = time();
 		}
+		if ($data['mustchangepassword'] == 1) $to_write['account_lastpwd_change']=0;
 		if (!(int)$data['account_id'] || !$this->id2name($data['account_id']))
 		{
 			if ($to_write['account_id'] < 0) $to_write['account_id'] *= -1;
@@ -176,7 +176,7 @@ class accounts_sql
 			if (!isset($to_write['account_pwd'])) $to_write['account_pwd'] = '';	// is NOT NULL!
 			if (!isset($to_write['account_status'])) $to_write['account_status'] = '';	// is NOT NULL!
 
-			// postgres requires the auto-id field to be unset!
+			// postgres requires the auto-id field to be unset!	
 			if (isset($to_write['account_id']) && !$to_write['account_id']) unset($to_write['account_id']);
 
 			if (!in_array($to_write['account_type'],array('u','g')) ||
