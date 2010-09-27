@@ -258,7 +258,7 @@ class emailadmin_bo extends so_sql
 
 	var $imapClass;				// holds the imap/pop3 class
 	var $smtpClass;				// holds the smtp class
-
+	var $tracking;				// holds the tracking object
 
 	function __construct($_profileID=-1,$_restoreSesssion=true)
 	{
@@ -302,6 +302,34 @@ class emailadmin_bo extends so_sql
 			}
 			$this->smtpClass	= new $class;
 		}
+		$this->tracking =& new emailadmin_tracking($this);
+	}
+
+	function delete($profileid=null)
+	{
+		if (empty($profileid)) return 0;
+		$deleted = parent::delete(array('ea_profile_id' => $profileid));
+		if (!is_array($profileid)) $profileid = (array)$profileid;
+		foreach ($profileid as $tk => $pid)
+		{
+			self::$sessionData['profile'][$pid] = array();
+		}
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('emailadmin_profiles', $profileid, 'delete', time());
+		self::saveSessionData();
+		return $deleted;
+	}
+
+	function save()
+	{
+		$content = $this->data;
+		$old = $this->read($content);
+		$this->data = $content;
+		if (!($result = parent::save()))
+		{
+			$GLOBALS['egw']->contenthistory->updateTimeStamp('emailadmin_profiles', $this->data['ea_profile_id'], $old === false ? 'add' : 'modify', time());
+			$this->tracking->track($content,$old,null,false,null,true);
+		}
+		return $result;
 	}
 
 	function addAccount($_hookValues)

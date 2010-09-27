@@ -381,6 +381,15 @@ class emailadmin_ui extends emailadmin_bo
 		// Stationery settings
 		$bostationery = new felamimail_bostationery();
 		$sel_options['ea_stationery_active_templates'] = $bostationery->get_stored_templates();
+		// setup history
+		$content['history'] = array(
+			'id'	=>	$content['ea_profile_id'],
+			'app'	=>	'emailadmin'
+		);
+		//_debug_array($content);
+		foreach($this->tracking->field2label as $field => $label) {
+			$sel_options['status'][$field] = lang($label);
+		}
 		/*			
 		$content['stored_templates'] = html::checkbox_multiselect(
 			'ea_stationery_active_templates',$content['ea_stationery_active_templates']
@@ -407,14 +416,7 @@ class emailadmin_ui extends emailadmin_bo
 	{
 		$_profileID = ($profileid ? $profileid : (int)$_GET['profileid']);
 		if (empty($_profileID)) return 0;
-		$deleted = parent::delete(array('ea_profile_id' => $_profileID));
-		if (!is_array($_profileID)) $_profileID = (array)$_profileID;
-		foreach ($_profileID as $tk => $pid)
-		{
-			parent::$sessionData['profile'][$pid] = array();
-		}
-		parent::saveSessionData();
-		return $deleted;
+		return parent::delete($_profileID);
 	}
 
 	function listProfiles()
