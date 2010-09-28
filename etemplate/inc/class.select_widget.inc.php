@@ -139,15 +139,17 @@ class select_widget
 				);
 				break;
 
-			case 'select-country':	// #Row|Extralabel,1=use country name, 0=use 2 letter-code
-				$cell['sel_options'] = $GLOBALS['egw']->country->countries();
-
+			case 'select-country':	// #Row|Extralabel,1=use country name, 0=use 2 letter-code,custom country field name
+				$cell['sel_options'] = ($type == 0 && $type2 ? array('-custom-' => lang('Custom')) : array()) + $GLOBALS['egw']->country->countries();
 				if (($extension_data['country_use_name'] = $type) && $value)
 				{
 					$value = $GLOBALS['egw']->country->country_code($value);
 					if (!isset($cell['sel_options'][$value]))
 					{
-						$cell['sel_options'][$value] = $value;
+						if($type2)
+						{
+							$cell['sel_options'][$value] = $value;
+						}
 					}
 				}
 				$cell['no_lang'] = True;
