@@ -1847,7 +1847,7 @@ function open_edit(series)
 			$cat2sort = array();
 			foreach((array)$this->categories->return_array('all',0,false,'','','',true) as $data)
 			{
-				if ($data['parent'] == $this->cat_id || $data['id'] == $this->cat_id)	// cat is a direct sub of $this->cat_id
+				if (in_array($data['parent'], (array)$this->cat_id) || in_array($data['id'], (array)$this->cat_id))	// cat is a direct sub of $this->cat_id
 				{
 					$cat2sort[$data['id']] = $data['id'];
 					$sort2label[$data['id']] = stripslashes($data['name']);
