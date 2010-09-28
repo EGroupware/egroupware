@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -59,7 +59,7 @@ class groupdav extends HTTP_WebDAV_Server
 	/**
 	 * Apple iCal namespace (eg. for calendar color)
 	 */
-	 const ICAL = 'http://apple.com/ns/ical/';
+	const ICAL = 'http://apple.com/ns/ical/';
 	/**
 	 * Realm and powered by string
 	 */
@@ -141,6 +141,10 @@ class groupdav extends HTTP_WebDAV_Server
 			case 'neon':
 				$this->cnrnd = true; // neon clients like cadaver
 		}
+		// adding EGroupware version to X-Dav-Powered-By header eg. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
+		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],
+			$this->dav_powered_by);
+
 		parent::HTTP_WebDAV_Server();
 
 		$this->egw_charset = translation::charset();
