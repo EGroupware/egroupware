@@ -804,20 +804,22 @@ class addressbook_bo extends addressbook_so
 		}
 
 		// Update country codes
-		if($contact['adr_one_countryname'] && $code = $GLOBALS['egw']->country->country_code($contact['adr_one_countryname']))
-		{
-			if(strlen($code) == 2)
+		foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
+			if($contact[$c_prefix.'countryname'] && $code = $GLOBALS['egw']->country->country_code($contact[$c_prefix.'countryname']))
 			{
-				$contact['adr_one_countrycode'] = $code;
+				if(strlen($code) == 2)
+				{
+					$contact[$c_prefix.'countrycode'] = $code;
+				}
+				else
+				{
+					$contact[$c_prefix.'countrycode'] = null;
+				}
 			}
-			else
+			if($contact[$c_prefix.'countrycode'] != null)
 			{
-				$contact['adr_one_countrycode'] = null;
+				$contact[$c_prefix.'countryname'] = null;
 			}
-		}
-		if($contact['adr_one_countrycode'] != null)
-		{
-			$contact['adr_one_countryname'] = null;
 		}
 
 		// last modified
