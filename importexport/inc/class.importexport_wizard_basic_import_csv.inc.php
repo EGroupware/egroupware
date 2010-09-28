@@ -131,8 +131,13 @@ class importexport_wizard_basic_import_csv
 						// Try to match automatically
 						$english = array();
 						foreach($content['csv_fields'] as $index => $field) {
+							if($content['field_mapping'][$index]) continue;
+							if($content['plugin_options']['field_mapping'][$index]) {
+								# Copy already set, but allow new file to update
+								$content['field_mapping'][$index] = $content['plugin_options']['field_mapping'][$index];
+							}
 							foreach($this->mapping_fields as $key => $field_name) {
-								if(strcasecmp($field, $field_name) == 0) {
+								if(strcasecmp($field, $field_name) == 0 || strcasecmp($field,$key) == 0) {
 									$content['field_mapping'][$index] = $key;
 									continue;
 								}
