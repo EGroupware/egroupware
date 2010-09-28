@@ -553,14 +553,6 @@ class addressbook_sql extends so_sql_cf
 		}
 		$contact = parent::read($keys,$extra_cols,$join);
 
-		// Translate country code
-		if($contact['adr_one_countrycode'] != null) {
-			$contact['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($contact['adr_one_countrycode'], true);
-		}
-		if($contact['adr_two_countrycode'] != null) {
-			$contact['adr_two_countryname'] = $GLOBALS['egw']->country->get_full_name($contact['adr_two_countrycode'], true);
-		}
-
 		// Change autoinc_id to match $this->db_cols
 		$this->autoinc_id = $this->db_cols[$this->autoinc_id];
 		if(($id = (int)$this->data[$this->autoinc_id]) && $cfs = $this->read_customfields($keys)) {

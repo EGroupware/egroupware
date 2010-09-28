@@ -563,12 +563,6 @@ class addressbook_so
 		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 		//error_log("socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')");
 
-		// the nextmatch custom-filter-header country-select returns a 2 letter country-code
-		if (isset($filter['adr_one_countryname']) && strlen($filter['adr_one_countryname']) == 2)
-		{
-			$filter['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($filter['adr_one_countryname']);
-		}
-
 		// Hide deleted items unless type is specifically deleted
 		if(!is_array($filter)) $filter = $filter ? (array) $filter : array();
 		if($filter['tid'] !== self::DELETED_TYPE)

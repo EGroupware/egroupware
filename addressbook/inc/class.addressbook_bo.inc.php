@@ -802,6 +802,24 @@ class addressbook_bo extends addressbook_so
 		{
 			$contact['cat_id'] = implode(',',$contact['cat_id']);
 		}
+
+		// Update country codes
+		if($contact['adr_one_countryname'] && $code = $GLOBALS['egw']->country->country_code($contact['adr_one_countryname']))
+		{
+			if(strlen($code) == 2)
+			{
+				$contact['adr_one_countrycode'] = $code;
+			}
+			else
+			{
+				$contact['adr_one_countrycode'] = null;
+			}
+		}
+		if($contact['adr_one_countrycode'] != null)
+		{
+			$contact['adr_one_countryname'] = null;
+		}
+
 		// last modified
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
@@ -883,6 +901,14 @@ class addressbook_bo extends addressbook_so
 		}
 		// determine the file-as type
 		$data['fileas_type'] = $this->fileas_type($data);
+
+		// Update country name from code
+		if($data['adr_one_countrycode'] != null) {
+			$data['adr_one_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_one_countrycode'], true);
+		}
+		if($data['adr_two_countrycode'] != null) {
+			$data['adr_two_countryname'] = $GLOBALS['egw']->country->get_full_name($data['adr_two_countrycode'], true);
+		}
 
 		return $data;
 	}
