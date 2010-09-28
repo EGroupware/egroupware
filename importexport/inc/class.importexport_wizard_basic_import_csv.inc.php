@@ -127,6 +127,30 @@ class importexport_wizard_basic_import_csv
 					if (($handle = fopen($GLOBALS['egw']->session->appsession('csvfile'), "rb")) !== FALSE) {
 						$data = fgetcsv($handle, 8000, $content['fieldsep']);
 						$content['csv_fields'] = translation::convert($data,$content['charset']);
+
+						// Try to match automatically
+						$english = array();
+						foreach($content['csv_fields'] as $index => $field) {
+							foreach($this->mapping_fields as $key => $field_name) {
+								if(strcasecmp($field, $field_name) == 0) {
+									$content['field_mapping'][$index] = $key;
+									continue;
+								}
+								// Check english also
+								if($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != 'en' && !isset($english[$field_name])) {
+									$msg_id = translation::get_message_id($field_name, $content['application']);
+								}
+								if($msg_id) {
+									$english[$field_name] = translation::read('en', $content['application'], $msg_id);
+								} else {
+									$english[$field_name] = false;
+								}
+								if($english[$field_name] && strcasecmp($field, $english[$field_name]) == 0) {
+									$content['field_mapping'][$index] = $key;
+									continue;
+								}
+							}
+						}
 					} elseif($content['plugin_options']['csv_fields']) {
 						$content['csv_fields'] = $content['plugin_options']['csv_fields'];
 					}
