@@ -144,7 +144,7 @@ function do_release()
 		$target = strtr($target,$translate);
 	}
 	$cmd = $config['rsync'].' '.$config['sourcedir'].'/*'.$config['version'].'.'.$config['packaging'].'* '.$target;
-	run_cmd($cmd);
+	passthru($cmd);
 }
 
 /**
