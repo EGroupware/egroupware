@@ -40,7 +40,5 @@ $setup_info['password']['app_order'] = 1;
 $setup_info['password']['tables']    = array();
 $setup_info['password']['enable']    = 2;
 $setup_info['password']['index']     = '/preferences/password.php';
-$setup_info['password']['author']    = $setup_info['preferences']['author']; 
-$setup_info['password']['maintainer']= $setup_info['preferences']['maintainer'];
 $setup_info['password']['license']   = $setup_info['preferences']['license'];
 $setup_info['password']['depends']   = $setup_info['preferences']['depends'];
