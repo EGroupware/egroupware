@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="phpgwapi.about.index.general" template="" lang="" group="0" version="1.8.001">
+		<grid width="600" height="500" spacing="5" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<image src="logo"/>
+				</row>
+				<row>
+					<html id="apiVersion"/>
+				</row>
+				<row>
+					<hrule/>
+				</row>
+				<row>
+					<html id="text_content"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="phpgwapi.about.index.applications" template="" lang="" group="0" version="1.8.001">
+		<grid width="100%" height="500" border="0" spacing="5" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="&lt;strong&gt;This is a list of your available applications.&lt;/strong&gt;&lt;br /&gt;For a complete list of applications available for eGroupWare visit &lt;a href=&quot;http://www.egroupware.org/applications&quot; target=&quot;_blank&quot;&gt;www.egroupware.org/applications&lt;/a&gt;"/>
+				</row>
+				<row>
+					<grid id="applications">
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description rows="1" cols="1" id="applications"/>
+								<description value="name"/>
+								<description value="author"/>
+								<description value="maintainer"/>
+								<description value="version"/>
+								<description value="license"/>
+								<description value="details"/>
+							</row>
+							<row class="row" valign="top">
+								<html no_lang="1" id="${row}[appImage]" align="center"/>
+								<html no_lang="1" id="${row}[appName]"/>
+								<html no_lang="1" id="${row}[appAuthor]"/>
+								<html no_lang="1" id="${row}[appMaintainer]"/>
+								<description no_lang="1" id="${row}[appVersion]"/>
+								<html no_lang="1" id="${row}[appLicense]" align="center"/>
+								<html no_lang="1" align="center" id="${row}[appDetails]"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="phpgwapi.about.index.templates" template="" lang="" group="0" version="1.8.001">
+		<grid width="100%" height="500" spacing="5" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="&lt;strong&gt;This is a list of your available templates&lt;/strong&gt;&lt;br /&gt;For a complete list of templates available for eGroupWare visit &lt;a href=&quot;http://www.egroupware.org/templates&quot; target=&quot;_blank&quot;&gt;www.egroupware.org/templates&lt;/a&gt;"/>
+				</row>
+				<row>
+					<grid id="templates">
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description/>
+								<description value="name"/>
+								<description value="author"/>
+								<description value="maintainer"/>
+								<description value="version"/>
+								<description value="license"/>
+								<description value="details"/>
+							</row>
+							<row class="row" valign="top">
+								<html no_lang="1" id="${row}[templateImage]"/>
+								<description no_lang="1" id="${row}[templateName]"/>
+								<html no_lang="1" id="${row}[templateAuthor]"/>
+								<html no_lang="1" id="${row}[templateMaintainer]"/>
+								<description no_lang="1" id="${row}[templateVersion]"/>
+								<html no_lang="1" id="${row}[templateLicense]" align="center"/>
+								<html id="${row}[templateDetails]" align="center"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="phpgwapi.about.index.languages" template="" lang="" group="0" version="1.8.001">
+		<grid width="100%" height="500" spacing="5" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="&lt;b&gt;This is a list of your available languages&lt;/b&gt;&lt;br /&gt;For a complete list of languages available for eGroupWare visit &lt;a href=&quot;http://www.egroupware.org/languages&quot; target=&quot;_blank&quot;&gt;www.egroupware.org/languages&lt;/a&gt;"/>
+				</row>
+				<row>
+					<grid border="0" id="translations">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="language"/>
+							</row>
+							<row class="row">
+								<description no_lang="1" id="${row}[langName]"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="phpgwapi.about.index.changelog" template="" lang="" group="0" version="1.8.001">
+		<grid width="100%" height="500" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<textbox multiline="true" id="changelog" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="phpgwapi.about.index" template="" lang="" group="0" version="1.8.001">
+		<tabbox id="general|applications|templates|languages|changelog">
+			<tabs>
+				<tab label="General" statustext=""/>
+				<tab label="Applications" statustext=""/>
+				<tab label="Templates" statustext=""/>
+				<tab label="Languages" statustext=""/>
+				<tab label="Changelog" statustext=""/>
+			</tabs>
+			<tabpanels>
+				<template id="phpgwapi.about.index.general"/>
+				<template id="phpgwapi.about.index.applications"/>
+				<template id="phpgwapi.about.index.templates"/>
+				<template id="phpgwapi.about.index.languages"/>
+				<template id="phpgwapi.about.index.changelog"/>
+			</tabpanels>
+		</tabbox>
+		<grid id="rows">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description/>
+					<description value="name"/>
+					<description value="author"/>
+					<description value="maintainer"/>
+					<description value="version"/>
+					<description value="license"/>
+					<description value="details"/>
+				</row>
+				<row class="row">
+					<html id="${row}[appImage]" no_lang="1"/>
+					<description id="${row}[appName]" no_lang="1"/>
+					<html id="${row}[appAuthor]" no_lang="1"/>
+					<html id="${row}[appMaintainer]" no_lang="1"/>
+					<description id="${row}[appVersion]" no_lang="1"/>
+					<textbox id="${row}[appLicense]" no_lang="1"/>
+					<html align="center" id="${row}[appDetail]" no_lang="1"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

@@ -94,6 +94,24 @@ class about
 	 */
 	function _listView()
 	{
+		$text_content = str_replace('GPLLINK',self::$knownLicenses['GPL'],'
+<p><b>EGroupware is a <a href="GPLLINK" title="read more about open source and the GPL" target="_blank">free</a> 
+enterprise ready groupware software</b> for your network. It enables you to manage contacts, appointments, todos 
+and many more for your whole business.</p>
+<p><b>EGroupware is a groupware server.</b> It comes with a native web-interface which allowes to access your data 
+from any platform all over the planet. Moreover you also have the choice to access the EGroupware server with 
+your favorite groupware client (Kontact, Evolution, Outlook, iCal, Lightning) and also with your mobile or PDA 
+via SyncML.</p>
+<p><b>EGroupware is international.</b> At the time, it supports more than 
+<a href="http://www.egroupware.org/languages" target="_blank">25 languages</a> including rtl support.</p>
+<p><b>EGroupware is platform independent.</b> The server runs on Linux, Mac, Windows and many more other operating systems. 
+On the client side, all you need is a internet browser such as Firefox, Safari, Chrome, Konqueror or Internet Explorer 
+and many more.</p>
+<p><b>EGroupware is developed by <a href="http://www.stylite.de/" target="_blank">Stylite GmbH</a></b> with contributions
+from community developers.</p>
+<br />
+<p><b>For more information visit the <a href="http://www.egroupware.org" target="_blank">EGroupware Website</a></b></p>');
+		
 		// get informations about the applications
 		$apps = array();
 		$apps[] = ''; // first empty row for eTemplate
@@ -109,7 +127,7 @@ class about
 				'appVersion'	=> $info['version'],
 				'appLicense'	=> $this->_linkLicense($info['license']),
 				'appDetails'	=> '<a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php?app='.$app.'&nonavbar=true" onclick="egw_openWindowCentered2(this.href,this.target,750,410,'."'yes'".'); return false;"><img src="'.common::image('phpgwapi','view.png').'" /></a>'
-				);
+			);
 		}
 
 		// get informations about the templates
@@ -125,7 +143,7 @@ class about
 				'templateVersion'	=> $info['version'],
 				'templateLicense'	=> $this->_linkLicense($info['license']),
 				'templateDetails'	=> '<a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php?template='.$template.'&nonavbar=true" onclick="egw_openWindowCentered2(this.href,this.target,750,410,'."'yes'".'); return false;"><img src="'.common::image('phpgwapi','view.png').'" /></a>'
-				);
+			);
 		}
 
 		// get informations about installed languages
@@ -135,17 +153,19 @@ class about
 		foreach(translation::get_installed_langs() as $translation => $translationinfo) {
 			$translations[] = array(
 				'langName'	=>	$translationinfo.' ('.$translation.')'
-				);
+			);
 		}
 
-
+		$changelog = EGW_SERVER_ROOT.'/doc/rpm-build/debian.changes';
 		// fill content array for eTemplate
 		$content = array(
 			'apiVersion'	=> '<p>'.lang('eGroupWare API version').' '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].'</p>',
 			'applications'	=> $apps,
 			'templates'		=> $templates,
-			'translations'	=> $translations
-			);
+			'translations'	=> $translations,
+			'text_content'  => $text_content,
+			'changelog'     => file_exists($changelog) ? file_get_contents($changelog) : 'not available',
+		);
 
 		$tmpl = new etemplate('phpgwapi.about.index');
 		$tmpl->exec('phpgwapi.about.index', $content);
@@ -351,7 +371,15 @@ class about
 		return $s;
 	}
 
+	static public $knownLicenses = array(
+		'GPL'	=> 'http://opensource.org/licenses/gpl-2.0.php',
+		'LGPL'	=> 'http://opensource.org/licenses/lgpl-2.1.php',
+		'GPL3'	=> 'http://opensource.org/licenses/gpl-3.0.php',
+		'LGPL3'	=> 'http://opensource.org/licenses/lgpl-3.0.php',
+		'PHP'   => 'http://opensource.org/licenses/php.php',
+	);
 
+	
 	/**
 	 * surround license string with link to license if it is known
 	 *
@@ -363,19 +391,10 @@ class about
 	 */
 	function _linkLicense($license)
 	{
-		// toupper known licenses
-		$knownLicenses = array(
-			'GPL'	=> 'http://opensource.org/licenses/gpl-2.0.php',
-			'LGPL'	=> 'http://opensource.org/licenses/lgpl-2.1.php',
-			'GPL3'	=> 'http://opensource.org/licenses/gpl-3.0.php',
-			'LGPL3'	=> 'http://opensource.org/licenses/lgpl-3.0.php',
-			'PHP'   => 'http://opensource.org/licenses/php.php',
-		);
-
 		$name = is_array($license) ? $license['name'] : $license;
 		$url = is_array($license) && isset($license['url']) ? $license['url'] : '';
 
-		if (!$url && isset($knownLicenses[strtoupper($name)]))
+		if (!$url && isset(self::$knownLicenses[strtoupper($name)]))
 		{
 			$url = $knownLicenses[$name=strtoupper($name)];
 		}
