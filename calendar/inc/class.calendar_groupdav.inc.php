@@ -107,8 +107,8 @@ class calendar_groupdav extends groupdav_handler
 		// ToDo: add parameter to only return id & etag
 		$filter = array(
 			'users' => $user,
-			'start' => time()-100*24*3600,	// default one month back -30 breaks all sync recurrences
-			'end' => time()+365*24*3600,	// default one year into the future +365
+			'start' => $this->bo->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
+			'end' => $this->bo->now + 365*24*3600,	// default one year into the future +365
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
@@ -475,7 +475,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	function put(&$options,$id,$user=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-
+		
 		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 		if (!is_null($oldEvent) && !is_array($oldEvent))
@@ -484,7 +484,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			return $oldEvent;
 		}
 
-		if (is_null($oldEvent) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
+		if (is_null($oldEvent) && ($user >= 0) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
 		{
 			// we have no add permission on this user's calendar
 			if ($this->debug) error_log(__METHOD__."(,$user) we have not enough rights on this calendar");
@@ -895,6 +895,15 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
 	{
+		if (strlen($GLOBALS['egw_info']['user']['preferences']['calendar']['display_color']) == 9 &&
+			$GLOBALS['egw_info']['user']['preferences']['calendar']['display_color'][0] == '#')
+		{
+			$display_color = $GLOBALS['egw_info']['user']['preferences']['calendar']['display_color'];
+		}
+		else
+		{
+			$display_color = '#0040A0FF';
+		}
 		// calendar description
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		/*
@@ -931,7 +940,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-data',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/calendar', 'version'=> '2.0')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/x-calendar', 'version'=> '1.0'))));
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::ICAL,'calendar-color','#0040A0FF'); // TODO: make it configurable
+		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::ICAL,'calendar-color',$display_color);
 		//$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'publish-url',array(
 		//	HTTP_WebDAV_Server::mkprop('href',$base_uri.'/calendar/')));
 
@@ -948,7 +957,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	{
 		$handler = new calendar_ical();
 		$handler->setSupportedFields('GroupDAV',$this->agent);
-		if ($this->debug > 1) error_log("ical Handler called:" . $this->agent);
+		if ($this->debug > 1) error_log("ical Handler called: " . $this->agent);
 		return $handler;
 	}
 }
