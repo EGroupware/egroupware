@@ -408,6 +408,7 @@ no egroupware domains / database instances exist! use --edit-header --domain to 
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	de	Kein Passwort für die Headerverwaltung gesetzt! Benutzen Sie --edit-header Passwort[,Benutzer] um eines zu setzen (--usage gibt weitere Optionen).
 no modes available	setup	de	kein Modus verfügbar
 no update necessary, domain %1(%2) is up to date.	setup	de	Keine Aktualisierung notwendig, Domain %1(%2) ist aktuell.
+no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	de	Keine gültige Zeitzone gesetzt! ("%1" ist nicht ausreichend, Sie müssen eine Zeitzone wie "%2" verwenden, siehe %3Liste der gültigen Zeitzonen%4)
 no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. Abgeschaltet
 not	setup	de	nicht
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	de	Nicht alle MCrypt-Algorithmen und -Modi funktionieren mit eGroupWare. Wenn Sie Probleme feststellen, versuchen Sie es abzuschalten.
@@ -519,6 +520,7 @@ server root	setup	de	Server-Root
 session handler class used.	setup	de	Benutze Sitzunghandler Klasse.
 sessions handler	setup	de	Sitzunghandler
 set	setup	de	gesetzt
+set and not	setup	de	gesetzt und nicht
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	de	Den Systemzeichensatz auf UTF-8 (unicode) zu setzten, erlaubt die Koexistenz von Daten in Sprachen mit verschiedenen Zeichensätzen.
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
