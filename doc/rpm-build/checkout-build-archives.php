@@ -192,9 +192,14 @@ function do_editsvnchangelog()
 	{
 		die("\nChangelog must not be empty --> aborting\n\n");
 	}
-	file_put_contents(__DIR__.'/debian.changelog', $config['changelog']);
-	$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".__DIR__.'/debian.changelog';
-	run_cmd($cmd);
+	// commit changelog
+	$changelog = __DIR__.'/debian.changes';
+	if (file_exists($changelog))
+	{
+		file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
+		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
+		run_cmd($cmd);
+	}
 }
 
 /**
@@ -351,11 +356,7 @@ function do_obs()
 			}
 			if (basename($path) == 'debian.changes' && strpos($content,$config['version'].'.'.$config['packaging']) === false)
 			{
-				list($new_header) = explode("\n",$content);
-				$new_header = preg_replace('/\('.preg_quote($config['version']).'.[0-9]+(.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
-				if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
-				$content = $new_header."\n\n".$config['changelog'].
-					"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
+				$content = update_changelog($content);
 			}
 			if (!empty($config['changelog']) && substr($path,-5) == '.spec' &&
 				($pos_changelog = strpos($content,'%changelog')) !== false)
@@ -379,6 +380,25 @@ function do_obs()
 		run_cmd('osc addremove '.$config['obs'].'/*');
 		run_cmd('osc commit -m '.escapeshellarg('Version: '.$config['version'].'.'.$config['packaging'].":\n".$config['changelog']).' '.$config['obs']);
 	}
+}
+
+/**
+ * Update content of debian changelog file with new content from $config[changelog]
+ *
+ * @param string $content existing changelog content
+ * @return string updated changelog content
+ */
+function update_changelog($content)
+{
+	global $config,$verbose;
+	
+	list($new_header) = explode("\n",$content);
+	$new_header = preg_replace('/\('.preg_quote($config['version']).'\.[0-9.]+[0-9](.*)\)/','('.$config['version'].'.'.$config['packaging'].'\\1)',$new_header);
+	if (substr($config['changelog'],0,2) != '  ') $config['changelog'] = '  '.implode("\n  ",explode("\n",$config['changelog']));
+	$content = $new_header."\n\n".$config['changelog'].
+		"\n\n -- ".$config['changelog_packager'].'  '.date('r')."\n\n".$content;
+	
+	return $content;
 }
 
 /**
