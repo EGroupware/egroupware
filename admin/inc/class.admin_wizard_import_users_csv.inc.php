@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Wizard for Adressbook CSV import
+ * eGroupWare - Wizard for user CSV import
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package addressbook
