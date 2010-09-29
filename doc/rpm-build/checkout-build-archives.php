@@ -192,7 +192,7 @@ function do_editsvnchangelog()
 	}
 	file_put_contents(__DIR__.'/debian.changelog', $config['changelog']);
 	$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".__DIR__.'/debian.changelog';
-	die($cmd);
+	run_cmd($cmd);
 }
 
 /**
