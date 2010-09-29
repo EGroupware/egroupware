@@ -1,3 +1,31 @@
+egroupware (1.8.001.20100929) hardy; urgency=low
+
+  * fixed download module to cope with new direct download url option of filesystem stream wrapper
+  * added optional display of file comments in SiteMgr download block
+  * store referer when anon session get created, so logout (specially when called from egw::check_app_rights) redirects back to website
+  * Backport 32252 - Make sure n_fn and n_fileas get updated when importing
+  * Backport 32267 - Changes to be able to create an infolog entry from a tracker ticket.  Tracker subject, description and any matching custom fields are copied over.
+  * added info about firefox with NTLM and update EGroupware configuration
+  * allow for/expect encoded MAILBOX/EMAIL Parts of an RFC822 EMail in MessageList creation, and decode it
+  * adding target=_blank, to get eg. download of pictures NOT to replace current page
+  * fixed full index to showing only two level of categories and pages
+  * fixed unbalenced number of opening and closing div-tags in some types of the navigation module, also added commented code to debug the issue
+  * if user has filemanager rights, show Actions column allowing to delete or edit properties of files
+  * several fixes around jpgraph
+  * iPhone and Mac Addressbook support aka Apple CalDAV/CardDAV autodetection
+  * fixed SQL error: contact_owner is ambigous (addressbook other then all selected)
+  * fixed black window in IE or Opera, eg. when using "Add" or "Extended Search" from sidebox menu in addressbook
+  * added support for PHP running as (F)CGI (uses ORIG_PATH_INFO instead of PATH_INFO), also added basic digest auth support from trunk
+  * removing a vertical whitespace \v from header Content
+  * fix other PHP5.3 deprecated error
+  * make sure keywords of parameters/dparameters are stripped of leading and trailing whitespase, as this meets the expectation later on. Otherwise keys in the parameters/dparameters structure may not be found/identified
+  * adding EGroupware version to X-Dav-Powered-By header eg. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
+  * fixed addressbook "all" shows no contacts, reported on the lists
+  * added valid timezone set in php.ini check
+  * show package changelog inside EGroupware under about
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 29 Sep 2010 15:06:36 +0200
+
 egroupware (1.8.001.20100916) hardy; urgency=low
 
   * 1.8.001 release candidate
