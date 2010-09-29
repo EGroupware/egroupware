@@ -409,6 +409,7 @@ no egroupware domains / database instances exist! use --edit-header --domain to 
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	en	No header admin password set! Use --edit-header <password>[,<user>] to set one (--usage gives more options).
 no modes available	setup	en	no modes available
 no update necessary, domain %1(%2) is up to date.	setup	en	No update necessary, domain %1(%2) is up to date.
+no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	en	No VALID timezone set! ("%1" is NOT sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)
 no xml support found. disabling	setup	en	No XML support found. Disabling
 not	setup	en	not
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	en	Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.
@@ -521,6 +522,7 @@ server root	setup	en	Server Root
 session handler class used.	setup	en	Session handler class used.
 sessions handler	setup	en	Sessions Handler
 set	setup	en	set
+set and not	setup	en	set and not
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	en	Setting the system-charset to UTF-8 (unicode) allows the coexistens of data from languages of different charsets.
 settings	setup	en	Settings
 setup	setup	en	Setup

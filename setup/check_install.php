@@ -122,6 +122,14 @@ $checks = array(
 		'check' => 'contain',
 		'error' => lang('include_path need to contain "." - the current directory'),
 	),
+	'date.timezone' => array(
+		'func' => 'php_ini_check',
+		'value' => 'System/Localtime',
+		'verbose_value' => '"System/Localtime"',
+		'check' => '!=',
+		'error' => lang('No VALID timezone set! ("%1" is NOT sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)',
+			'System/Localtime','Europe/Berlin','<a href="http://www.php.net/manual/en/timezones.php" target="_blank">','</a>'),
+	),
 	'pdo' => array(
 		'func' => 'extension_check',
 		'error' => lang('The PDO extension plus a database specific driver is needed by the VFS (virtual file system)!'),
@@ -696,10 +704,24 @@ function php_ini_check($name,$args)
 			$sep = $is_windows ? '/[; ]+/' : '/[: ]+/';
 			$result = in_array($args['value'],preg_split($sep,$ini_value));
 			break;
+		case '!=':
+			$check = lang('set and not');
+			$result = !empty($ini_value) && $ini_value != $args['value'];
+			break;
 		case '=':
 		default:
 			$result = $ini_value == $args['value'];
 			break;
+	}
+	if ($name == 'date.timezone')
+	{
+		try {
+			$tz = new DateTimeZone($ini_value);
+			unset($tz);
+		}
+		catch(Exception $e) {
+			$result = false;	// no valid timezone
+		}
 	}
 	$msg = ' '.lang('Checking php.ini').": $name $check $verbose_value: <span class='setup_info'>ini_get('$name')='$ini_value'$ini_value_verbose</span>";
 
