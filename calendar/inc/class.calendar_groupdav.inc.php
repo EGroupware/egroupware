@@ -484,7 +484,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			return $oldEvent;
 		}
 
-		if (is_null($oldEvent) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
+		if (is_null($oldEvent) && ($user >= 0) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
 		{
 			// we have no add permission on this user's calendar
 			if ($this->debug) error_log(__METHOD__."(,$user) we have not enough rights on this calendar");
