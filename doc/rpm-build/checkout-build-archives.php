@@ -45,7 +45,7 @@ $config = array(
 	'svntag' => 'tags/Stylite-EPL-$version.$packaging',	// eg. '$version.$packaging'
 	'release' => 'root@download.stylite.de:/var/www/html/stylite-epl/stylite-epl-$version/',
 	'skip' => array(),
-	'run' => array('svntag','checkout','copy','virusscan','create','sign','obs')
+	'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs')
 );
 
 // process config from command line
@@ -192,6 +192,9 @@ function do_editsvnchangelog()
 	{
 		die("\nChangelog must not be empty --> aborting\n\n");
 	}
+	file_put_contents(__DIR__.'/debian.changelog', $config['changelog']);
+	$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".__DIR__.'/debian.changelog';
+	die($cmd);
 }
 
 /**
@@ -213,7 +216,7 @@ function get_changelog_from_svn($branch_url,$log_pattern=null,&$revision,$prefix
 	{
 		list($tags_url,$branch) = explode('/branches/',$branch_url);
 		$tags_url .= '/tags';
-		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.\d{8})/');
+		$pattern=str_replace('Stylite-EPL-10\.1',preg_quote($branch),'/tags\/(Stylite-EPL-10\.1\.[0-9.]+)/');
 		$revision = get_last_svn_tag($tags_url,$pattern,$matches);
 		$tag = $matches[1];
 	}
