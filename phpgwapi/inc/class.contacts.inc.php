@@ -140,9 +140,22 @@ class contacts extends addressbook_bo
 
 					if (isset($row['bday']) || isset($row['contact_bday']))
 					{
+						$bdayset=true;
+						if (isset($row['bday']) && ($row['bday']=='0000-00-00 0' || $row['bday']=='0000-00-00' || $row['bday']=='0.0.00'))
+						{
+							$rows[$n]['bday'] = $row['bday']=null;
+							$bdayset=false;
+						}
+						if (isset($row['contact_bday']) && ($row['contact_bday']=='0000-00-00 0' || $row['contact_bday']=='0000-00-00' || $row['contact_bday']=='0.0.00'))
+						{
+							$rows[$n]['contact_bday'] = $row['contact_bday']=null;
+							$bdayset=false;
+						}
+						if ($bdayset==false) continue; // dont try to make a date out of that
 						$row['bday'] = egw_time::to((isset($row['bday'])?$row['bday']:$row['contact_bday']),"Y-m-d");
 						list($y,$m,$d) = explode('-',$row['bday']);
 						$rows[$n]['bday'] = sprintf('%d/%d/%04d',$m,$d,$y);
+						
 					}
 				}
 			}
