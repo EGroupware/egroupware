@@ -231,6 +231,7 @@ class emailadmin_ui extends emailadmin_bo
 
 	static function getIMAPLoginTypes($serverclass='defaultimap')
 	{
+		if (empty($serverclass)) $serverclass = 'defaultimap';
 		//error_log(__METHOD__.' called with:'.$serverclass." with capabilities:".parent::$IMAPServerType[$serverclass]['imapcapabilities']);
 		$returnval = array(
 			'standard'	=> lang('username (standard)'),
