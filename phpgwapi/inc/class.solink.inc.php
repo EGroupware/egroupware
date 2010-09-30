@@ -117,7 +117,7 @@ class solink
 	 * @param boolean $deleted Include links that have been flagged as deleted, waiting for purge of linked record.
 	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
-	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC',$deleted )
+	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC',$deleted=false )
 	{
 		if (self::DEBUG)
 		{
