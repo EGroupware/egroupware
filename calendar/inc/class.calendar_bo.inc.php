@@ -1632,6 +1632,22 @@ class calendar_bo
 					usort($bdays,create_function('$a,$b','return (int) $a[\'bday\'] == (int) $b[\'bday\'] ? strcmp($a[\'bday\'],$b[\'bday\']) : (int) $a[\'bday\'] - (int) $b[\'bday\'];'));
 					foreach($bdays as $pers)
 					{
+						if (isset($pers['bday']) && ($pers['bday']=='0000-00-00 0' || $pers['bday']=='0000-00-00' || $pers['bday']=='0.0.00'))
+						{
+							//error_log(__METHOD__.__LINE__.' Entry with invalid birthday:'.array2string($pers));
+							$pers['bday']=null;
+						}
+						if (isset($pers['contact_bday']) && ($pers['contact_bday']=='0000-00-00 0' || $pers['contact_bday']=='0000-00-00' || $pers['contact_bday']=='0.0.00'))
+                        {
+							//error_log(__METHOD__.__LINE__.' Entry with invalid birthday:'.array2string($pers));
+							$pers['contact_bday']=null;
+						}
+						if (empty($pers['bday']) && !empty($pers['contact_bday'])) $pers['bday'] = $pers['contact_bday'];
+						if (empty($pers['bday'])) 
+						{
+							//error_log(__METHOD__.__LINE__.' Skipping entry for invalid birthday:'.array2string($pers));
+							continue;
+						}
 						$pers['bday'] = egw_time::to($pers['bday'],"m/d/Y");
 						list($m,$d,$y) = explode('/',$pers['bday']);
 						if ($y > $year) continue; 	// not yet born
