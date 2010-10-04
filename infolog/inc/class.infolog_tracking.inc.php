@@ -249,7 +249,7 @@ class infolog_tracking extends bo_tracking
 				}
 				$details['#'.$name] = array(
 					'label' => $field['label'],
-					'value' => $data['#'.$name],
+					'value' => (is_array($field['values']) && !empty($field['values']) && array_key_exists($data['#'.$name],$field['values']))?$field['values'][$data['#'.$name]] : $data['#'.$name],
 				);
 			}
 		}
