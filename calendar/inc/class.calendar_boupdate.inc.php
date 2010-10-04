@@ -1249,7 +1249,7 @@ class calendar_boupdate extends calendar_bo
 				// mark all links to the event as deleted, but keep them
 				egw_link::unlink(0,'calendar',$cal_id,'','','',true);
 
-				$event['deleted'] = $this->now;
+				$event['modified'] = $event['deleted'] = $this->now;
 				$this->save($event, $ignore_acl);
 				// Actually delete alarms
 				if (isset($event['alarm']) && is_array($event['alarm']))
