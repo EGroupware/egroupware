@@ -1005,11 +1005,13 @@ class Horde_SyncML_State {
 			$cvers = $deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentVersion'];
 			$cfrmt = $deviceInfo['dataStore'][$_sourceLocURI]['rxPreference']['contentFormat'];
 			$cprops = $deviceInfo['dataStore'][$_sourceLocURI]['properties'][$ctype][$cvers];
-			if (isset($deviceInfo['dataStore'][$_sourceLocURI]['maxGUIDSize'])) {
+			$cprops['UID']['NoTruncate'] = true;
+			/*
+			 if (isset($deviceInfo['dataStore'][$_sourceLocURI]['maxGUIDSize'])) { 
 				// get UID properties from maxGUIDSize
-				$cprops['UID']['Size'] = $deviceInfo['dataStore'][$_sourceLocURI]['maxGUIDSize'];
-				$cprops['UID']['NoTruncate'] = true;
+				$cprops['UID']['Size'] = $deviceInfo['dataStore'][$_sourceLocURI]['maxGUIDSize'];	
 			}
+			*/
 			$clientPrefs = array(
 				'ContentType'		=>	$ctype,
 				'ContentVersion'	=>	$cvers,
