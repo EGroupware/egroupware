@@ -1586,6 +1586,7 @@ class calendar_bo
 	 */
 	function recure2string($event)
 	{
+		if (!is_array($event)) return false;
 		return (string)calendar_rrule::event2rrule($event);
 	}
 
