@@ -324,6 +324,7 @@ class customfields_widget
 								$tmparray=array(
 									'size' => intval($shown > 0 ? $shown : $max).','.intval($max),
 									'maxlength'=>intval($max),
+									'no_lang' => True,
 								);
 								if (is_array($field['values']))
 								{
@@ -337,7 +338,8 @@ class customfields_widget
 							else
 							{//textarea
 								$tmparray=array(
-									'size' => $field['rows'].($field['len'] >0 ? ','.(int)$field['len'] : '')
+									'size' => $field['rows'].($field['len'] >0 ? ','.(int)$field['len'] : ''),
+									'no_lang' => True,
 								);
 								if (is_array($field['values']) && array_key_exists('readonly',$field['values']))
 								{
@@ -348,7 +350,7 @@ class customfields_widget
 						}
 						else
 						{
-							$input =& etemplate::empty_cell('label',$this->prefix.$lname);
+							$input =& etemplate::empty_cell('label',$this->prefix.$lname,array('no_lang' => True));
 						}
 						break;
 					case 'date':
