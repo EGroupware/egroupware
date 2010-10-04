@@ -42,6 +42,11 @@ class module_calendar_planner extends Module
 				'options' => array(),	// done by get_user_interface()
 				'multiple' => true,
 			),
+			'users' => array(
+				'type' => 'select',
+				'label' => lang('Group(s) or user(s) to show'),
+				'options' => array(),
+			),
 			'filter' => array(
 				'type' => 'select',
 				'label' => lang('Filter'),
@@ -70,7 +75,7 @@ class module_calendar_planner extends Module
 	}
 
 	/**
-	 * Reimplemented to fetch the cats
+	 * Reimplemented to fetch the cats, groups and resources
 	 */
 	function get_user_interface()
 	{
@@ -83,6 +88,75 @@ class module_calendar_planner extends Module
 		{
 			$this->arguments['cat_id']['multiple'] = 5;
 		}
+
+		if (!isset($GLOBALS['egw']->accounts))
+		{
+			$GLOBALS['egw']->accounts = new accounts();
+		}
+		$this->accounts =& $GLOBALS['egw']->accounts;
+		$search_params = array(
+			'type' => 'both',
+			'app' => 'calendar',
+		);
+		$accounts = $this->accounts->search($search_params);
+		$users = array();
+		$groups = array();
+		// sort users and groups separately.
+		$anon_user = $this->accounts->name2id($GLOBALS['Common_BO']->sites->current_site['anonymous_user'],'account_lid','u');
+		$anon_groups = $this->accounts->memberships($anon_user,true);
+		foreach ($accounts as $entry)
+		{
+			$is_group = false;
+			$has_read_permissions = false;
+			$acl = new acl($entry['account_id']);
+			$acl->read_repository();
+			// get the rights for each account to check whether the anon user has read permissions.
+			$rights = $acl->get_rights($anon_user,'calendar');
+			// also add the anon user if it's his own calendar.
+			if (($rights & EGW_ACL_READ) || ($entry['account_id'] == $anon_user))
+			{
+				$has_read_permissions = true;
+			}
+			else
+			{
+				// scan the groups which pass on permissions to the anon user group member
+				// or ass permissions if this is the anon group's calendar.
+				foreach ($anon_groups as $parent_group)
+				{
+					$rights = $acl->get_rights($parent_group,'calendar');
+					if (($rights & EGW_ACL_READ) || ($entry['account_id'] == $parent_group))
+					{
+						$has_read_permissions = true;
+						break;
+					}
+				}
+			}
+			if ($has_read_permissions)
+			{
+				// Separate groups from users for improved readability.
+				if ($is_group)
+				{
+					$groups[$entry['account_id']] = $entry['account_lid'];
+				}
+				else
+				{
+					$users[$entry['account_id']] = $GLOBALS['egw']->common->display_fullname($entry['account_lid'],$entry['account_firstname'],$entry['account_lastname']);
+				}
+			}
+		}
+		asort($groups);
+		asort($users);
+		// concat users and groups to the option array.
+		$this->arguments['users']['options'] = $groups + $users;
+		if (count($this->arguments['users']['options']) > 10)
+		{
+			$this->arguments['users']['multiple'] = 10;
+		}
+		else if (count($this->arguments['users']['options']) > 0)
+		{
+			$this->arguments['users']['multiple'] = true;
+		}
+		
 		return parent::get_user_interface();
 	}
 
@@ -96,6 +170,7 @@ class module_calendar_planner extends Module
 	{
 		translation::add_app('calendar');
 
+		//_debug_array($arguments);
 		$arguments['view'] = 'planner';
 		if (empty($arguments['date']))
 		{

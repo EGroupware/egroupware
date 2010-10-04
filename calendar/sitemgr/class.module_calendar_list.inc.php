@@ -152,6 +152,7 @@ class module_calendar_list extends Module
 
 	function get_user_interface()
 	{
+		//_debug_array($GLOBALS['Common_BO']->sites->current_site);
 		// copied from bookmarks module.
 		$cat = createobject('phpgwapi.categories','','calendar');
 		$cats = $cat->return_array('all',0,False,'','cat_name','',True);
@@ -165,12 +166,12 @@ class module_calendar_list extends Module
 			$this->arguments['category']['multiple'] = 5;
 		}
 
-		if (! isset($GLOBALS['egw']->accounts))
+		if (!isset($GLOBALS['egw']->accounts))
 		{
 			$GLOBALS['egw']->accounts = new accounts();
 		}
 		$this->accounts =& $GLOBALS['egw']->accounts;
-		$search_params=array(
+		$search_params = array(
 			'type' => 'both',
 			'app' => 'calendar',
 		);
@@ -178,39 +179,7 @@ class module_calendar_list extends Module
 		$users = array();
 		$groups = array();
 		// sort users and groups separately.
-		if (isset($GLOBALS['sitemgr_info']['anonymous_user']))
-		{
-			$anon_user = $this->accounts->name2id($GLOBALS['sitemgr_info']['anonymous_user'],'account_lid','u');
-		}
-		else
-		{
-			// sitemgr is not in global variables. Get it.
-			/*
-			 * Get possible sitemgr paths from the HTTP_REFERRER in order to unreveal the
-			 * anonymous user for the correct site.
-			 */
-			$sitemgr_path = preg_replace('/^[^\/]+:\/\/[^\/]+\/([^\?]*)(\?.*)*$/',"/\${1}",$_SERVER['HTTP_REFERER']);
-			// Remove the trailing file- / pathname if any
-			$sitemgr_path = preg_replace('/[^\/]*$/', '', $sitemgr_path);
-			// Add leading slash if it has been lost.
-			if (strncmp('/', $sitemgr_path, 1) != 0)
-			{
-				$sitemgr_path = '/'.$sitemgr_path;
-			}
-
-			// Code adapted from sitemgr-site/index.php
-			$site_urls = array();
-			$site_urls[] = $sitemgr_path;
-			$site_urls[] = ($_SERVER['HTTPS'] ? 'https://' : 'http://') . $_SERVER['SERVER_ADDR'] . $sitemgr_path;
-			$site_urls[] = $site_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . $sitemgr_path;
-
-			$GLOBALS['egw']->db->select('egw_sitemgr_sites','anonymous_user,anonymous_passwd,site_id',
-				array('site_url' => $site_urls),__LINE__,__FILE__,false,'','sitemgr');
-
-			$GLOBALS['egw']->db->next_record();
-			$anon_user = $this->accounts->name2id($GLOBALS['egw']->db->f('anonymous_user'),'account_lid','u');
-		}
-
+		$anon_user = $this->accounts->name2id($GLOBALS['Common_BO']->sites->current_site['anonymous_user'],'account_lid','u');
 		$anon_groups = $this->accounts->memberships($anon_user,true);
 		foreach ($accounts as $entry)
 		{
