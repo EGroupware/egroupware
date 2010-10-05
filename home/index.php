@@ -78,13 +78,16 @@
 	** Display the mainscreen message
 	*/
 	$GLOBALS['egw']->translation->add_app('mainscreen');
-	if(translation::translate('mainscreen_message',false,'') == 'mainscreen_message')
+	$greeting = translation::translate('mainscreen_message',false,'');
+
+	if($greeting == 'mainscreen_message'||empty($greeting))
 	{
 		translation::add_app('mainscreen','en');    // trying the en one
+		$greeting = translation::translate('mainscreen_message',false,'');
 	}
-	if(translation::translate('mainscreen_message',false,'') != 'mainscreen_message')
+	if(!($greeting == 'mainscreen_message'||empty($greeting)))
 	{
-		echo '<div style="text-align: center;">' . lang('mainscreen_message') . "</div>\n";
+		echo '<div style="text-align: center;">' . $greeting . "</div>\n";
 	}
 
 	/*
