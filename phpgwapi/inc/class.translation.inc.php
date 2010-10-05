@@ -935,7 +935,17 @@ class translation
 		),__LINE__,__FILE__);
 
 		// invalidate the cache
-		egw_cache::unsetCache(in_array($app,self::$instance_specific_translations) ? egw_cache::INSTANCE : egw_cache::TREE,__CLASS__,$app.':'.$lang);
+		if(!in_array($app,self::$instance_specific_translations))
+		{
+			egw_cache::unsetCache(egw_cache::TREE,__CLASS__,$app.':'.$lang);
+		}
+		else
+		{
+			foreach((array)self::get_installed_langs() as $key => $name)
+			{
+				egw_cache::unsetCache(egw_cache::INSTANCE,__CLASS__,$app.':'.$key);
+			}
+		}
 	}
 
 	/**
