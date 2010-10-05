@@ -393,18 +393,19 @@ else
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $lang;
 		}
 		#print 'LANG:' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'] . '<br>';
-
 		translation::init();	// this will set the language according to the (new) set prefs
 		translation::add_app('login');
 		translation::add_app('loginscreen');
-		if(translation::translate('loginscreen_message',false,'') == 'loginscreen_message')
+		$GLOBALS['loginscreenmessage'] = translation::translate('loginscreen_message',false,'');
+		if($GLOBALS['loginscreenmessage'] == 'loginscreen_message' || empty($GLOBALS['loginscreenmessage']))
 		{
-		   translation::add_app('loginscreen','en');	// trying the en one
+			translation::add_app('loginscreen','en');	// trying the en one
+			$GLOBALS['loginscreenmessage'] = translation::translate('loginscreen_message',false,'');
 		}
-		if(translation::translate('loginscreen_message',false,'') != 'loginscreen_message')
+		if($GLOBALS['loginscreenmessage'] == 'loginscreen_message' || empty($GLOBALS['loginscreenmessage']))
 		{
-		   // for now store login message in globals so it is available for the login.inc.php
-		   $GLOBALS['loginscreenmessage']=stripslashes(lang('loginscreen_message'));
+		   // remove the global var since the lang loginscreen message and its fallback (en) is empty or not set
+		   unset($GLOBALS['loginscreenmessage']);
 		}
 	}
 
