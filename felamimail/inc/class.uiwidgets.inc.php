@@ -672,7 +672,7 @@
 									<td style=\"width:20px;\" align=\"right\">
 										$image
 									</td>
-									<td style=\"width:250px;\" align=\"right\">
+									<td style=\"width:275px;\" align=\"right\">
 										<nobr>
 											".$this->navbarSeparator().$this->displayMessageActions($headerData, $_folderName, $_icServer,true)."
 										</nobr>
@@ -805,6 +805,16 @@
 			}
 			$to_infologURL = $GLOBALS['egw']->link('/index.php',$linkData);
 
+			$linkData = array(
+				'menuaction' => 'tracker.tracker_ui.import_mail',
+				'uid'    => $_headerData['uid'],
+				'mailbox' =>  base64_encode($_folderName)
+			);
+			if($_headerData['partid'] != '') {
+				$linkData['part'] = $_headerData['partid'];
+			}
+			$to_trackerURL = $GLOBALS['egw']->link('/index.php',$linkData);
+
 			// viewheader url
 			$linkData = array (
 				'menuaction'	=> 'felamimail.uidisplay.displayHeader',
@@ -845,7 +855,13 @@
 					'action'	=> "window.open('$to_infologURL','_blank','dependent=yes,width=".$i_width.",height=".$i_height.",scrollbars=yes,status=yes')",
 					'tooltip'	=> lang('save as infolog'));
 			}
-
+			if ($GLOBALS['egw_info']['user']['apps']['tracker'])
+			{
+				list($i_width,$i_height) = explode('x',egw_link::get_registry('tracker','add_popup'));
+				$navbarImages['to_tracker'] = array(
+					'action'    => "egw_openWindowCentered('$to_trackerURL','_blank',".$i_width.",".$i_height.")",
+					'tooltip'   => lang('save as tracker'));
+			}
 			// save email as
 			$navbarImages['fileexport'] = array(
 				'action'	=> ($_forceNewWindow ? "window.open('$saveMessageURL','_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')": "window.location.href = '$saveMessageURL'"),

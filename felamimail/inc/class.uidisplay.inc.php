@@ -974,12 +974,11 @@
 						$senderAddress .= 'undisclosed-recipients';
 						continue;
 					}
-
 					if($addressData['PERSONAL_NAME'] != 'NIL') {
 						$newSenderAddress = $addressData['RFC822_EMAIL'] != 'NIL' ? $addressData['RFC822_EMAIL'] : $addressData['EMAIL'];
 						if ($decode) $newSenderAddress = bofelamimail::decode_header($newSenderAddress);
 						$decodedPersonalName = ($decode ? bofelamimail::decode_header($addressData['PERSONAL_NAME']):$addressData['PERSONAL_NAME']);
-
+						if ($decode) $addressData['EMAIL'] = bofelamimail::decode_header($addressData['EMAIL']);
 						$realName =  $decodedPersonalName;
 						// add mailaddress
 						if ($allwaysShowMailAddress) {
@@ -1030,6 +1029,7 @@
 								lang('add to addressbook'));
 						}
 					} else {
+						if ($decode) $addressData['EMAIL'] = bofelamimail::decode_header($addressData['EMAIL']);
 						$linkData = array (
 							'menuaction'	=> 'felamimail.uicompose.compose',
 							'send_to'	=> base64_encode($addressData['EMAIL'])
@@ -1063,7 +1063,6 @@
 						}
 					}
 				}
-
 				return $senderAddress;
 			}
 
@@ -1229,6 +1228,7 @@
 				{
 					$singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
 				}
+				if ($singleBodyPart['charSet']===false) $singleBodyPart['charSet'] = bofelamimail::detect_encoding($singleBodyPart['body']);
 				$singleBodyPart['body'] = $GLOBALS['egw']->translation->convert(
 					$singleBodyPart['body'],
 					strtolower($singleBodyPart['charSet'])

@@ -38,6 +38,14 @@
 			alert("{lang_no_subject}");
 			return false;
 		}
+		// check to infolog/ to tracker. Only one can be checked.
+		var toinfolog = document.getElementById('to_infolog');
+		var totracker = document.getElementById('to_tracker');
+		if (toinfolog.checked==true && totracker.checked==true)
+		{
+			alert("{lang_infolog_tracker_not_both}");
+			return false;
+		}
 		return true;
 	}
 </script>
@@ -80,6 +88,12 @@
 									</td>
 									<td>
 										{infolog_checkbox}
+									</td>
+									<td>
+										<label for="to_infolog">{trackerImage}</label>
+									</td>
+									<td>
+										{tracker_checkbox}
 									</td>
 									<td>
 										<label for="disposition">{lang_receive_notification}</label>

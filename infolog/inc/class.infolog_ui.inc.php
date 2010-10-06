@@ -1523,7 +1523,7 @@ class infolog_ui
 					{
 						$bofelamimail->reopen($attachment['folder']);
 
-						$mailcontent = self::get_mailcontent($bofelamimail,$attachment['uid'],$attachment['partID'],$attachment['folder']);
+						$mailcontent = bofelamimail::get_mailcontent($bofelamimail,$attachment['uid'],$attachment['partID'],$attachment['folder']);
 						//_debug_array($mailcontent['attachments']);
 						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
 						{
@@ -1557,7 +1557,7 @@ class infolog_ui
 			$toaddr = array();
 			foreach(array('to','cc','bcc') as $x) if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x])) $toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
 			//_debug_array($attachments);
-			$body = self::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
+			$body = bofelamimail::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
 				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
 				'CC'=>(!empty($_to_emailAddress['cc'])?implode(',',$_to_emailAddress['cc']):null),
 				'BCC'=>(!empty($_to_emailAddress['bcc'])?implode(',',$_to_emailAddress['bcc']):null),
@@ -1575,7 +1575,7 @@ class infolog_ui
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($mailbox);
 
-			$mailcontent = self::get_mailcontent($bofelamimail,$uid,$partid,$mailbox);
+			$mailcontent = bofelamimail::get_mailcontent($bofelamimail,$uid,$partid,$mailbox);
 
 			return $this->edit($this->bo->import_mail(
 				$mailcontent['mailaddress'],
@@ -1591,150 +1591,6 @@ class infolog_ui
 		exit;
 	}
 
-	/**
-	 * fetches the actual mailcontent
-	 */
-	static function get_mailcontent(&$bofelamimail,$uid,$partid='',$mailbox='')
-	{
-			//echo __METHOD__." called for $uid,$partid <br>";
-			$headers = $bofelamimail->getMessageHeader($uid,$partid,true);
-			// dont force retrieval of the textpart, let felamimail preferences decide
-			$bodyParts = $bofelamimail->getMessageBody($uid,'',$partid);
-			$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
-
-			if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
-			elseif (isset($headers['FROM'])) $mailaddress = $headers['FROM'];
-			elseif (isset($headers['SENDER'])) $mailaddress = $headers['SENDER'];
-			if (isset($headers['CC'])) $mailaddress .= ','.$headers['CC'];
-			//_debug_array($headers);
-			$subject = $headers['SUBJECT'];
-
-			$message = self::getdisplayableBody($bofelamimail, $bodyParts);
-			$headdata = self::createHeaderInfoSection($headers);
-			$message = $headdata.$message;
-			//echo __METHOD__.'<br>';
-			//_debug_array($attachments);
-			if (is_array($attachments))
-			{
-				foreach ($attachments as $num => $attachment)
-				{
-					if ($attachment['mimeType'] == 'MESSAGE/RFC822')
-					{
-						//_debug_array($bofelamimail->getMessageHeader($uid, $attachment['partID']));
-						//_debug_array($bofelamimail->getMessageBody($uid,'', $attachment['partID']));
-						//_debug_array($bofelamimail->getMessageAttachments($uid, $attachment['partID']));
-						$mailcontent = self::get_mailcontent($bofelamimail,$uid,$attachment['partID']);
-						$headdata ='';
-						if ($mailcontent['headers'])
-						{
-							$headdata = self::createHeaderInfoSection($mailcontent['headers']);
-						}
-						if ($mailcontent['message'])
-						{
-							$tempname =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-							$attachedMessages[] = array(
-								'type' => 'TEXT/PLAIN',
-								'name' => $mailcontent['subject'].'.txt',
-								'tmp_name' => $tempname,
-							);
-							$tmpfile = fopen($tempname,'w');
-							fwrite($tmpfile,$headdata.$mailcontent['message']);
-							fclose($tmpfile);
-						}
-						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
-						{
-							$attachedMessages[] = $tmpval;
-						}
-						unset($attachments[$num]);
-					}
-					else
-					{
-						$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($uid, $attachment['partID']));
-						if (isset($attachments[$num]['charset'])) {
-							$GLOBALS['egw']->translation->convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
-						}
-						$attachments[$num]['type'] = $attachments[$num]['mimeType'];
-						$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-						$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
-						fwrite($tmpfile,$attachments[$num]['attachment']);
-						fclose($tmpfile);
-						unset($attachments[$num]['attachment']);
-					}
-				}
-				if (is_array($attachedMessages)) $attachments = array_merge($attachments,$attachedMessages);
-			}
-			return array(
-					'mailaddress'=>$mailaddress,
-					'subject'=>$subject,
-					'message'=>$message,
-					'attachments'=>$attachments,
-					'headers'=>$headers,
-					);
-	}
-
-	static function createHeaderInfoSection($header)
-	{
-		$headdata = null;
-		if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT']."\n";
-		if ($header['FROM']) $headdata .= lang('from').': '.$header['FROM']."\n";
-		if ($header['SENDER']) $headdata .= lang('sender').': '.$header['SENDER']."\n";
-		if ($header['TO']) $headdata .= lang('to').': '.$header['TO']."\n";
-		if ($header['CC']) $headdata .= lang('cc').': '.$header['CC']."\n";
-		if ($header['BCC']) $headdata .= lang('bcc').': '.$header['BCC']."\n";
-		if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE']."\n";
-		if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY']."\n";
-		if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE']."\n";
-		//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
-		if (!empty($headdata)) 
-		{
-			$headdata = "--------------------------------------------------------\n".$headdata;
-			$headdata .= "--------------------------------------------------------\n";
-		}
-		else
-		{
-			$headdata = "--------------------------------------------------------\n";
-		}
-		return $headdata;
-	}
-
-	static function &getdisplayableBody(&$bofelamimail, $bodyParts)
-	{
-		for($i=0; $i<count($bodyParts); $i++)
-		{
-			if (!isset($bodyParts[$i]['body'])) {
-				$bodyParts[$i]['body'] = self::getdisplayableBody($bofelamimail, $bodyParts[$i]);
-				$message .= $bodyParts[$i]['body'];
-				continue;
-			}
-
-			// add line breaks to $bodyParts
-			$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
-
-			if ($bodyParts[$i]['mimeType'] == 'text/html') {
-				// convert HTML to text, as we dont want HTML in infologs
-				$newBody = html::purify($newBody);
-				$newBody = $bofelamimail->convertHTMLToText($newBody,true);
-				$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
-				$message .= $newBody;
-				continue;
-			}
-			$newBody = strip_tags($newBody);
-			$newBody  = explode("\n",$newBody);
-			// create it new, with good line breaks
-			reset($newBody);
-			while(list($key,$value) = @each($newBody))
-			{
-				if (trim($value) != '') {
-					#if ($value != "\r") $value .= "\n";
-				} else {
-					// if you want to strip all empty lines uncomment the following
-					#continue;
-				}
-				$message .= $bofelamimail->wordwrap($value,75,"\n");
-			}
-		}
-		return $message;
-	}
 
 	/**
 	 * return javascript to open compose window to print the Infolog

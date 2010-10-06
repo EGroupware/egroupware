@@ -107,6 +107,7 @@
 			$formData['mimeType']	= $this->bocompose->stripSlashes($_POST['mimeType']);
 			$formData['disposition'] = (bool)$_POST['disposition'];
 			$formData['to_infolog'] = $_POST['to_infolog'];
+			$formData['to_tracker'] = $_POST['to_tracker'];
 			//$formData['mailbox']	= $_GET['mailbox'];
 			if((bool)$_POST['printit'] == true) {
 				$formData['printit'] = 1;
@@ -404,8 +405,18 @@
 				$this->t->set_var('lang_save_as_infolog','');
 				$this->t->set_var('infolog_checkbox','');
 			}
+			if ($GLOBALS['egw_info']['user']['apps']['tracker']) 
+			{
+				$this->t->set_var('trackerImage',html::image('felamimail','to_tracker',lang('Save as tracker'),'width="17px" height="17px" valign="middle"' ));
+				$this->t->set_var('lang_save_as_infolog',($GLOBALS['egw_info']['user']['apps']['infolog']?lang('Save:'):lang('Save as tracker')));
+				$this->t->set_var('tracker_checkbox','<input class="input_text" type="checkbox" id="to_tracker" name="to_tracker" />');
+			} else {
+				$this->t->set_var('trackerImage','');
+				$this->t->set_var('tracker_checkbox','');
+			}
 			$this->t->set_var('lang_no_recipient',lang('No recipient address given!'));
 			$this->t->set_var('lang_no_subject',lang('No subject given!'));
+			$this->t->set_var('lang_infolog_tracker_not_both',lang("You can either choose to save as infolog OR tracker, not both."));
 			$this->t->pparse("out","header");
 
 			// prepare signatures, the selected sig may be used on top of the body

@@ -344,6 +344,7 @@
 						#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body']);
 						$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 					}
+					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = bofelamimail::detect_encoding($bodyParts[$i]['body']);
 					$bodyParts[$i]['body'] = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 					$this->sessionData['body'] .= "<br>". $bodyParts[$i]['body'] ;
@@ -356,6 +357,7 @@
 					if($i>0) {
 						$this->sessionData['body'] .= "<hr>";
 					}
+					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = bofelamimail::detect_encoding($bodyParts[$i]['body']);
 					$bodyParts[$i]['body'] = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 					$this->sessionData['body'] .= "\r\n". $bodyParts[$i]['body'] ;
@@ -610,6 +612,7 @@
 						#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body'])."<br>";
 						$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 					}
+					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = bofelamimail::detect_encoding($bodyParts[$i]['body']);
 					$this->sessionData['body'] .= "<br>".self::_getCleanHTML($GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
 					#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 
@@ -632,6 +635,7 @@
 					}
 
 					// add line breaks to $bodyParts
+					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = bofelamimail::detect_encoding($bodyParts[$i]['body']);
 					$newBody	= $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 
@@ -950,6 +954,7 @@
 			$this->sessionData['disposition'] = $_formData['disposition'];
 			$this->sessionData['mimeType']	= $_formData['mimeType'];
 			$this->sessionData['to_infolog'] = $_formData['to_infolog'];
+			$this->sessionData['to_tracker'] = $_formData['to_tracker'];
 			// if the body is empty, maybe someone pasted something with scripts, into the message body
 			// this should not happen anymore, unless you call send directly, since the check was introduced with the action command
 			if(empty($this->sessionData['body']))
@@ -977,7 +982,7 @@
 			// create the messages
 			$this->createMessage($mail, $_formData, $identity, $signature);
 			// remember the identity
-			if ($_formData['to_infolog'] == 'on') $fromAddress = $mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
+			if ($_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') $fromAddress = $mail->FromName.($mail->FromName?' <':'').$mail->From.($mail->FromName?'>':'');
 			#print "<pre>". $mail->getMessageHeader() ."</pre><hr><br>";
 			#print "<pre>". $mail->getMessageBody() ."</pre><hr><br>";
 			#exit;
@@ -1108,7 +1113,7 @@
 			if (is_array($this->sessionData['cc'])) $mailaddresses['cc'] = $this->sessionData['cc'];
 			if (is_array($this->sessionData['bcc'])) $mailaddresses['bcc'] = $this->sessionData['bcc'];
 			if (!empty($mailaddresses)) $mailaddresses['from'] = $fromAddress;
-			// attention: we dont return from infolog. cleanups will be done there.
+			// attention: we dont return from infolog/trackere. You cannot check both. cleanups will be done there.
 			if ($_formData['to_infolog'] == 'on') {
 				$uiinfolog =& CreateObject('infolog.infolog_ui');
 				$uiinfolog->import_mail(
@@ -1118,6 +1123,16 @@
 					$this->sessionData['attachments']
 				);
 			}
+			if ($_formData['to_tracker'] == 'on') {
+				$uitracker =& CreateObject('tracker.tracker_ui');
+				$uitracker->import_mail(
+					$mailaddresses,
+					$this->sessionData['subject'],
+					$this->convertHTMLToText($this->sessionData['body']),
+					$this->sessionData['attachments']
+				);
+			}
+
 
 			if(is_array($this->sessionData['attachments'])) {
 				reset($this->sessionData['attachments']);

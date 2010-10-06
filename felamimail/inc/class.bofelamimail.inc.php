@@ -830,6 +830,8 @@
 			//$_html = str_replace("\r\n",' ',$_html);
 			//$_html = str_replace("\t",' ',$_html);
 			//error_log($_html);
+			//repair doubleencoded ampersands
+			$_html = str_replace('&amp;amp;','&amp;',$_html);
 			self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
 			self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head	
 			self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs	
@@ -1664,17 +1666,27 @@
 			}
 		}
 
+		/**
+		 * getMimePartCharset - fetches the charset mimepart if it exists
+		 * @params $_mimePartObject structure object
+		 * @returns mixed mimepart or false if no CHARSET is found, the missing charset has to be handled somewhere else, 
+		 *		as we cannot safely assume any charset as we did earlier
+		 */
 		function getMimePartCharset($_mimePartObject)
 		{
-			$charSet = 'iso-8859-1';
-
+			//$charSet = 'iso-8859-1';//self::$displayCharset; //'iso-8859-1'; // self::displayCharset seems to be asmarter fallback than iso-8859-1
+			$CharsetFound=false;
+			//echo "#".$_mimePartObject->encoding.'#<br>';
 			if(is_array($_mimePartObject->parameters)) {
 				if(isset($_mimePartObject->parameters['CHARSET'])) {
 					$charSet = $_mimePartObject->parameters['CHARSET'];
+					$CharsetFound=true;
 				}
 			}
-
-			return $charSet;
+			// this one is dirty, but until I find something that does the trick of detecting the encoding, ....
+			//if ($CharsetFound == false && $_mimePartObject->encoding == "QUOTED-PRINTABLE") $charSet = 'iso-8859-1'; //assume quoted-printable to be ISO
+			//if ($CharsetFound == false && $_mimePartObject->encoding == "BASE64") $charSet = 'utf-8'; // assume BASE64 to be UTF8
+			return ($CharsetFound ? $charSet : $CharsetFound);
 		}
 
 		function getMultipartAlternative($_uid, $_structure, $_htmlMode)
@@ -3112,6 +3124,24 @@
 			}
 			return preg_match("$needle",$string);
 		}
+
+		/**
+		 * detect_encoding - try to detect the encoding
+		 *    only to be used if the string in question has no structure that determines his encoding
+		 * @param string - to be evaluated
+		 * @returns mixed string/boolean (encoding or false
+		 */
+		static function detect_encoding($string) { 
+			static $list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
+ 
+			foreach ($list as $item) {
+			$sample = iconv($item, $item, $string);
+			if (md5($sample) == md5($string))
+				return $item;
+			}
+			return false; // we may choose to return iso-8859-1 as default at some point
+		}
+
 		static function detect_qp(&$sting) {
 			$needle = '/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/';
 			return preg_match("$needle",$string);
@@ -3140,5 +3170,177 @@
 				if ($test===null) $date2return = egw_time::to('now',$format);
 			}
 			return $date2return;
+		}
+
+		/**
+		 * functions to allow access to mails through other apps to fetch content
+		 * used in infolog, tracker
+		 */
+
+		/**
+		 * get_mailcontent - fetches the actual mailcontent, and returns it as well defined array
+		 * @param bofelamimail the bofelamimailobject to be used
+		 * @param uid the uid of the email to be processed
+		 * @param partid the partid of the email
+		 * @param mailbox the mailbox, that holds the message
+		 * @returns array with 'mailaddress'=>$mailaddress,
+		 *				'subject'=>$subject,
+		 *				'message'=>$message,
+		 *				'attachments'=>$attachments,
+		 *				'headers'=>$headers,
+		 */
+		static function get_mailcontent(&$bofelamimail,$uid,$partid='',$mailbox='')
+		{
+				//echo __METHOD__." called for $uid,$partid <br>";
+				$headers = $bofelamimail->getMessageHeader($uid,$partid,true);
+				// dont force retrieval of the textpart, let felamimail preferences decide
+				$bodyParts = $bofelamimail->getMessageBody($uid,'',$partid);
+				$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
+
+				if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
+				elseif (isset($headers['FROM'])) $mailaddress = $headers['FROM'];
+				elseif (isset($headers['SENDER'])) $mailaddress = $headers['SENDER'];
+				if (isset($headers['CC'])) $mailaddress .= ','.$headers['CC'];
+				//_debug_array($headers);
+				$subject = $headers['SUBJECT'];
+
+				$message = self::getdisplayableBody($bofelamimail, $bodyParts);
+				$headdata = self::createHeaderInfoSection($headers);
+				$message = $headdata.$message;
+				//echo __METHOD__.'<br>';
+				//_debug_array($attachments);
+				if (is_array($attachments))
+				{
+					foreach ($attachments as $num => $attachment)
+					{
+						if ($attachment['mimeType'] == 'MESSAGE/RFC822')
+						{
+							//_debug_array($bofelamimail->getMessageHeader($uid, $attachment['partID']));
+							//_debug_array($bofelamimail->getMessageBody($uid,'', $attachment['partID']));
+							//_debug_array($bofelamimail->getMessageAttachments($uid, $attachment['partID']));
+							$mailcontent = self::get_mailcontent($bofelamimail,$uid,$attachment['partID']);
+							$headdata ='';
+							if ($mailcontent['headers'])
+							{
+								$headdata = self::createHeaderInfoSection($mailcontent['headers']);
+							}
+							if ($mailcontent['message'])
+							{
+								$tempname =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+								$attachedMessages[] = array(
+									'type' => 'TEXT/PLAIN',
+									'name' => $mailcontent['subject'].'.txt',
+									'tmp_name' => $tempname,
+								);
+								$tmpfile = fopen($tempname,'w');
+								fwrite($tmpfile,$headdata.$mailcontent['message']);
+								fclose($tmpfile);
+							}
+							foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
+							{
+								$attachedMessages[] = $tmpval;
+							}
+							unset($attachments[$num]);
+						}
+						else
+						{
+							$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($uid, $attachment['partID']));
+							if (isset($attachments[$num]['charset'])) {
+								if ($attachments[$num]['charset']===false) $attachments[$num]['charset'] = self::detect_encoding($attachments[$num]['attachment']);
+								$GLOBALS['egw']->translation->convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
+							}
+							$attachments[$num]['type'] = $attachments[$num]['mimeType'];
+							$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+							$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
+							fwrite($tmpfile,$attachments[$num]['attachment']);
+							fclose($tmpfile);
+							unset($attachments[$num]['attachment']);
+						}
+					}
+					if (is_array($attachedMessages)) $attachments = array_merge($attachments,$attachedMessages);
+				}
+				return array(
+						'mailaddress'=>$mailaddress,
+						'subject'=>$subject,
+						'message'=>$message,
+						'attachments'=>$attachments,
+						'headers'=>$headers,
+						);
+		}
+
+		/**
+		 * createHeaderInfoSection - creates a textual headersection from headerobject
+		 * @params header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
+		 * @returns string a preformatted string with the information of the header worked into it
+		 */
+		static function createHeaderInfoSection($header,$headline='')
+		{
+			$headdata = null;
+			if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT']."\n";
+			if ($header['FROM']) $headdata .= lang('from').': '.$header['FROM']."\n";
+			if ($header['SENDER']) $headdata .= lang('sender').': '.$header['SENDER']."\n";
+			if ($header['TO']) $headdata .= lang('to').': '.$header['TO']."\n";
+			if ($header['CC']) $headdata .= lang('cc').': '.$header['CC']."\n";
+			if ($header['BCC']) $headdata .= lang('bcc').': '.$header['BCC']."\n";
+			if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE']."\n";
+			if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY']."\n";
+			if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE']."\n";
+			//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
+			if (!empty($headdata)) 
+			{
+				if (!empty($headline)) $headdata = "---------------------------- $headline ----------------------------\n".$headdata;
+				if (empty($headline)) $headdata = "--------------------------------------------------------\n".$headdata;
+				$headdata .= "--------------------------------------------------------\n";
+			}
+			else
+			{
+				$headdata = "--------------------------------------------------------\n";
+			}
+			return $headdata;
+		}
+
+		/**
+		 * getdisplayableBody - creates the bodypart of the email as textual representation
+		 * @param bofelamimail the bofelamimailobject to be used
+		 * @params bodyPorts array with the bodyparts
+		 * @returns string a preformatted string with the mails converted to text
+		 */
+		static function &getdisplayableBody(&$bofelamimail, $bodyParts)
+		{
+			for($i=0; $i<count($bodyParts); $i++)
+			{
+				if (!isset($bodyParts[$i]['body'])) {
+					$bodyParts[$i]['body'] = self::getdisplayableBody($bofelamimail, $bodyParts[$i]);
+					$message .= $bodyParts[$i]['body'];
+					continue;
+				}
+				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = self::detect_encoding($bodyParts[$i]['body']);
+				// add line breaks to $bodyParts
+				$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+
+				if ($bodyParts[$i]['mimeType'] == 'text/html') {
+					// convert HTML to text, as we dont want HTML in infologs
+					$newBody = html::purify($newBody);
+					$newBody = $bofelamimail->convertHTMLToText($newBody,true);
+					$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
+					$message .= $newBody;
+					continue;
+				}
+				$newBody = strip_tags($newBody);
+				$newBody  = explode("\n",$newBody);
+				// create it new, with good line breaks
+				reset($newBody);
+				while(list($key,$value) = @each($newBody))
+				{
+					if (trim($value) != '') {
+						#if ($value != "\r") $value .= "\n";
+					} else {
+						// if you want to strip all empty lines uncomment the following
+						#continue;
+					}
+					$message .= $bofelamimail->wordwrap($value,75,"\n");
+				}
+			}
+			return $message;
 		}
 	}
