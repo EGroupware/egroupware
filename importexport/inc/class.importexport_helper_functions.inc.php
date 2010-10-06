@@ -30,6 +30,14 @@ class importexport_helper_functions {
 			'class.news_admin_import.inc.php',
 		),
 	);
+
+	/**
+	* Class used to provide extra conversion functions
+	*
+	* Passed in as a param to conversion()
+	*/
+	protected static $cclass = null;
+
 	/**
 	 * nothing to construct here, only static functions!
 	 */
@@ -182,11 +190,13 @@ class importexport_helper_functions {
 	 *
 	 * @param array _record reference with record to do the conversion with
 	 * @param array _conversion array with conversion description
-	 * @param object &$cclass calling class to process the '@ evals' (not impelmeted yet)
+	 * @param object &$cclass calling class to process the '@ evals'
 	 * @return bool
 	 */
-	public static function conversion( $_record,  $_conversion, &$_cclass = null ) {
+	public static function conversion( &$_record,  $_conversion, &$_cclass = null ) {
 		if (empty( $_conversion ) ) return $_record;
+
+		self::$cclass =& $_cclass;
 
 		$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in conversion
 		$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -212,6 +222,16 @@ class importexport_helper_functions {
 			// conversion list may be longer than $_record aka (no_csv)
 			$val = array_key_exists( $idx, $_record ) ? $_record[$idx] : '';
 
+			$c_functions = array('cat', 'account', 'strtotime');
+			if($_cclass) {
+				// Add in additional methods
+				$reflection = new ReflectionClass(get_class($_cclass));
+				$methods = $reflection->getMethods(ReflectionMethod::IS_STATIC);
+				foreach($methods as $method) {
+					$c_functions[] = $method->name;
+				}
+			}
+			$c_functions = implode('|', $c_functions);
 			foreach ( $rvalues as $pattern => $replace ) {
 				if( ereg( (string)$pattern, $val) ) {
 
@@ -226,8 +246,7 @@ class importexport_helper_functions {
 							$val
 						);
 					}
-
-					$val = preg_replace_callback( "/(cat|account|strtotime)\(([^)]*)\)/i", array( self, 'c2_dispatcher') , $val );
+					$val = preg_replace_callback( "/($c_functions)\(([^)]*)\)/i", array( self, 'c2_dispatcher') , $val );
 				}
 			}
 			// clean each field
@@ -254,8 +273,17 @@ class importexport_helper_functions {
 				list( $string, $format ) = explode( ',', $data );
 				return self::custom_strtotime( trim( $string ), trim( $format ) );
 			default :
+				if(self::$cclass && method_exists(self::$cclass, $action)) {
+					$class = get_class(self::$cclass);
+					return call_user_func("$class::$action", $data);
+				}
 				$method = (string)$action. ( is_int( $data ) ? '_id2name' : '_name2id' );
-				return self::$method( $data );
+				if(self::$cclass && method_exists(self::$cclass, $method)) {
+					$class = get_class(self::$cclass);
+					return call_user_func("$class::$action", $data);
+				} else {
+					return self::$method( $data );
+				}
 		}
 	}
 
