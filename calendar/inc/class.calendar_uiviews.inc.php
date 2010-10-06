@@ -2122,7 +2122,7 @@ function open_edit(series)
 		if (!is_array($cat2sort))
 		{
 			$cat2sort = array();
-			foreach((array)$this->categories->return_array('all',0,false,'','','',true) as $data)
+			foreach((array)$this->categories->return_sorted_array(0,false,'','','',true) as $data)
 			{
 				if (in_array($data['parent'], (array)$this->cat_id) || in_array($data['id'], (array)$this->cat_id))	// cat is a direct sub of $this->cat_id
 				{
