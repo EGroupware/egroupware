@@ -830,8 +830,11 @@ class addressbook_bo extends addressbook_so
 		// maybe we need that for id and account_id as well.
 		if (is_array($old) && (!isset($old['owner']) || empty($old['owner'])))
 		{
-			error_log(__METHOD__.__LINE__." Trying to change account to owner:". $to_write['owner'].' Account affected:'.array2string($old).' Data send:'.array2string($to_write));
-			if (isset($to_write['owner']) && !empty($to_write['owner'])) unset($to_write['owner']);
+			if (isset($to_write['owner']) && !empty($to_write['owner']))
+			{
+				error_log(__METHOD__.__LINE__." Trying to change account to owner:". $to_write['owner'].' Account affected:'.array2string($old).' Data send:'.array2string($to_write));
+				unset($to_write['owner']);
+			}
 		}
 		// we dont update the content-history, if we run inside setup (admin-account-creation)
 		if(!($this->error = parent::save($to_write)) && is_object($GLOBALS['egw']->contenthistory))
