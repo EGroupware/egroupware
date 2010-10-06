@@ -835,6 +835,7 @@ class calendar_uiforms extends calendar_ui
 		case 'add_alarm':
 			$time = ($content['actual_date'] ? $content['actual_date'] : $content['start']);
 			$offset = DAY_s * $content['new_alarm']['days'] + HOUR_s * $content['new_alarm']['hours'] + 60 * $content['new_alarm']['mins'];
+			if($content['before_after']) $offset *= -1;
 			if ($event['recur_type'] != MCAL_RECUR_NONE &&
 				($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $offset, true)) &&
 				$time < $next_occurrence['start'])
@@ -1033,6 +1034,7 @@ class calendar_uiforms extends calendar_ui
 			'status'     => $this->bo->verbose_status,
 			'duration'   => $this->durations,
 			'role'       => $this->bo->roles,
+			'before_after'=>array(0 => lang('Before'), 1 => lang('After')),
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
@@ -1304,6 +1306,12 @@ function replace_eTemplate_onsubmit()
 						continue;	// no read rights to the calendar of the alarm-owner, dont show the alarm
 					}
 					$alarm['all'] = (int) $alarm['all'];
+					$after = false;
+					if($alarm['offset'] < 0)
+					{
+						$after = true;
+						$alarm['offset'] = -1 * $alarm['offset'];
+					}
 					$days = (int) ($alarm['offset'] / DAY_s);
 					$hours = (int) (($alarm['offset'] % DAY_s) / HOUR_s);
 					$minutes = (int) (($alarm['offset'] % HOUR_s) / 60);
@@ -1311,7 +1319,7 @@ function replace_eTemplate_onsubmit()
 					if ($days) $label[] = $days.' '.lang('days');
 					if ($hours) $label[] = $hours.' '.lang('hours');
 					if ($minutes) $label[] = $minutes.' '.lang('Minutes');
-					$alarm['offset'] = implode(', ',$label);
+					$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
 					$content['alarm'][] = $alarm;
 					
 					$readonlys['delete_alarm['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
