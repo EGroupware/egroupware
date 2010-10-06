@@ -126,6 +126,8 @@ class importexport_wizard_basic_import_csv
 					// Process sample file for fields
 					if (($handle = fopen($GLOBALS['egw']->session->appsession('csvfile'), "rb")) !== FALSE) {
 						$data = fgetcsv($handle, 8000, $content['fieldsep']);
+						fclose($handle);
+						unlink($GLOBALS['egw']->session->appsession('csvfile'));
 						$content['csv_fields'] = translation::convert($data,$content['charset']);
 
 						// Try to match automatically
