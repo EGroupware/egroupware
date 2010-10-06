@@ -34,6 +34,11 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	public $conversion = array();
 
 	/**
+	 * @var class with extra conversion functions
+	 */
+	public $conversion_class = null;
+
+	/**
 	 * @var array holding the current record
 	 */
 	protected $record = array();
@@ -232,7 +237,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	 * @return bool
 	 */
 	protected function do_conversions( ) {
-		if ( $record = importexport_helper_functions::conversion( $this->record, $this->conversion )) {
+		if ( $record = importexport_helper_functions::conversion( $this->record, $this->conversion, $this->conversion_class )) {
 			$this->record = $record;
 			return;
 		}
