@@ -44,131 +44,133 @@ class importexport_export_ui {
 	
 	public function export_dialog($_content=array()) {
 		$tabs = 'general_tab|selection_tab|options_tab';
-		$content = array();
 		$sel_options = array();
 		$readonlys = array();
 		$preserv = array();
 	
-		if(empty($_content)) {
-			$et = new etemplate(self::_appname. '.export_dialog');
-			$_appname = $_GET['appname'];
-			$_definition = $_GET['definition'];
-			$_plugin = $_GET['plugin']; // NOTE: definition _must_ be 'expert' if for plugin to be used!
-			$_selection = $_GET['selection'];
+		$et = new etemplate(self::_appname. '.export_dialog');
+		$_appname = $_content['appname'] ? $_content['appname'] : $_GET['appname'];
+		$_definition = $_content['definition'] ? $_content['definition'] : $_GET['definition'];
+		$_plugin = $_content['plugin'] ? $_content['plugin'] : $_GET['plugin']; 
+		$_selection = $_content['selection'] ? $_content['selection'] : $_GET['selection'];
 			
 			//error_log(__FILE__.__FUNCTION__. '::$_GET[\'appname\']='. $_appname. ',$_GET[\'definition\']='. $_definition. ',$_GET[\'plugin\']='.$_plugin. ',$_GET[\'selection\']='.$_selection);
-			// if appname is given and valid, list available definitions (if no definition is given)
-			if (!empty($_appname) && $GLOBALS['egw']->acl->check('run',1,$_appname)) {
-				$content['appname'] = $_appname;
-				$preserv['appname'] = $_appname;
-				$readonlys['appname'] = true;
-				$this->js->set_onload("export_dialog.appname = '$_appname';");
-				$this->js->set_onload("set_style_by_class('tr','select_appname','display','none');");
-
-				// fill definitions
-				$sel_options['definition'] = array();
-				$definitions = new importexport_definitions_bo(array(
-					'type' => 'export',
-					'application' => isset($content['appname']) ? $content['appname'] : '%'
-				));
-				foreach ((array)$definitions->get_definitions() as $identifier) {
-						$definition = new importexport_definition($identifier);
-						if ($title = $definition->get_title()) {
-							$sel_options['definition'][$title] = $title;
-						}
-						unset($definition);
-				}
-				unset($definitions);
-				$sel_options['definition']['expert'] = lang('Expert options');
-
-				
-				if(isset($_definition) && array_key_exists($_definition,$sel_options['definition'])) {
-					$content['definition'] = $_definition;
-				}
-				else {
-					$defdescs = array_keys($sel_options['definition']);
-					$content['definition'] = $sel_options['definition'][$defdescs[0]];
-					unset($defdescs);
-				}
-				
-				// fill plugins
-				$sel_options['plugin'] = $this->export_plugins[$_appname]['export'];
-				
-				// show definitions or plugins in ui?
-				if($content['definition'] == 'expert') {
-					if(isset($_plugin) && array_key_exists($_plugin,$sel_options['plugin'])) {
-						$content['plugin'] = $_plugin;
-						$selected_plugin = $_plugin;
-					}
-					else {
-/*
-						$plugins_classnames = array_keys($sel_options['plugin']);
-						$selected_plugin = $plugins_classnames[0];
-						$sel_options['plugin'] = $plugins;
-*/
-					}
-					$this->js->set_onload("set_style_by_class('tr','select_definition','display','none');");
-				}
-				else {
-
-					$this->js->set_onload("set_style_by_class('tr','select_plugin','display','none');");
-					$this->js->set_onload("set_style_by_class('tr','save_definition','display','none');");
-					
-					$definition = new importexport_definition($content['definition']);
-					$selected_plugin = $definition->plugin;
-					$content['description'] = $definition->description;
-				}
-				
-				// handle selector
-				if($selected_plugin) {
-					$plugin_object = new $selected_plugin;
-					
-					$content['description'] = $plugin_object->get_description();
-					
-					// fill options tab
-					// TODO: do we need all options templates online?
-					// NO, we can manipulate the session array of template id on xajax request
-					// however, there might be other solutions... we solve this in 1.3
-					$content['plugin_options_html'] = $plugin_object->get_options_etpl();
-				}
-				
-				// fill selection tab
-				if ($_selection) {
-					$readonlys[$tabs]['selection_tab'] = true;
-					$content['selection'] = $_selection;
-					$preserv['selection'] = $_selection;
-				}
-				elseif ($plugin_object) {
-					// ToDo: I need to think abaout it...
-					// are selectors abstracted in the iface_egw_record_entity ?
-					// if so, we might not want to have html here ?
-					$content['plugin_selectors_html'] = $plugin_object->get_selectors_html();
-				}
-				unset ($plugin_object);
-			}
-			// if no appname is supplied, list apps which can export
-			else {
-				(array)$apps = importexport_helper_functions::get_apps('export');
-				$sel_options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
-				$this->js->set_onload("set_style_by_class('tr','select_plugin','display','none');");
-				$content['plugin_selectors_html'] = $content['plugin_options_html'] = 
-					lang('You need to select an app and format first!');
-				$this->js->set_onload("document.getElementById('importexport.export_dialog.options_tab-tab').style.visibility='hidden';");
-				$this->js->set_onload("document.getElementById('importexport.export_dialog.selection_tab-tab').style.visibility='hidden';");
-			}
-			
-			if (!$_selection) {
-				$this->js->set_onload("
-					disable_button('exec[preview]');
-					disable_button('exec[export]');
-				");
-			}
-						
-			// disable preview box
-			$this->js->set_onload("set_style_by_class('tr','preview-box','display','none');");
+		// if appname is given and valid, list available definitions (if no definition is given)
+		$readonlys['appname'] = (!empty($_appname) && $GLOBALS['egw']->acl->check('run',1,$_appname));
+		$content['appname'] = $_appname;
+		$preserv['appname'] = $_appname;
+		if(empty($_appname)) {
+			$this->js->set_onload("set_style_by_class('tr','select_definition','display','none');");
 		}
+
+		// fill definitions
+		$sel_options['definition'] = array('' => lang('Select'));
+		$definitions = new importexport_definitions_bo(array(
+			'type' => 'export',
+			'application' => isset($content['appname']) ? $content['appname'] : '%'
+		));
+		foreach ((array)$definitions->get_definitions() as $identifier) {
+				$definition = new importexport_definition($identifier);
+				if ($title = $definition->get_title()) {
+					$sel_options['definition'][$title] = $title;
+				}
+				unset($definition);
+		}
+		unset($definitions);
+		$sel_options['definition']['expert'] = lang('Expert options');
+
+		if(isset($_definition) && array_key_exists($_definition,$sel_options['definition'])) {
+			$content['definition'] = $_definition;
+		}
+		
+		// fill plugins
+		$sel_options['plugin'] = $this->export_plugins[$_appname]['export'];
+			
+		// show definitions or plugins in ui?
+		if($content['definition'] == 'expert') {
+			if(isset($_plugin) && array_key_exists($_plugin,$sel_options['plugin'])) {
+				$content['plugin'] = $_plugin;
+				$selected_plugin = $_plugin;
+			}
+			else {
+/*
+					$plugins_classnames = array_keys($sel_options['plugin']);
+					$selected_plugin = $plugins_classnames[0];
+					$sel_options['plugin'] = $plugins;
+*/
+			}
+			//$this->js->set_onload("set_style_by_class('tr','select_definition','display','none');");
+		}
+		else {
+
+			$this->js->set_onload("set_style_by_class('tr','select_plugin','display','none');");
+			$this->js->set_onload("set_style_by_class('tr','save_definition','display','none');");
+			
+			$definition = new importexport_definition($content['definition']);
+			if($definition) {
+				$content += (array)$definition->plugin_options;
+				$selected_plugin = $definition->plugin;
+				$content['description'] = $definition->description;
+			}
+		}
+			
+		// handle selector
+		if($selected_plugin) {
+			$plugin_object = new $selected_plugin;
+			
+			$content['description'] = $plugin_object->get_description();
+			
+			// fill options tab
+			// TODO: do we need all options templates online?
+			// NO, we can manipulate the session array of template id on xajax request
+			// however, there might be other solutions... we solve this in 1.3
+ 			if(method_exists($plugin_object, 'get_selectors_html')) {
+				$content['plugin_options_html'] = $plugin_object->get_options_html();
+			} else {
+				$content['plugin_options_template'] = $plugin_object->get_options_etpl();
+			}
+		}
+			
+		// fill selection tab
+		if($definition && $definition->plugin_options['selection']) {
+			$_selection = $definition->plugin_options['selection'];
+		}
+		if ($_selection) {
+			$readonlys[$tabs]['selection_tab'] = true;
+			$content['selection'] = $_selection;
+			$preserv['selection'] = $_selection;
+		}
+		elseif ($plugin_object) {
+			// ToDo: I need to think abaout it...
+			// are selectors abstracted in the iface_egw_record_entity ?
+			// if so, we might not want to have html here ?
+ 			if(method_exists($plugin_object, 'get_selectors_html')) {
+				$content['plugin_selectors_html'] = $plugin_object->get_selectors_html();
+			} else {
+				$content['plugin_selectors_template'] = $plugin_object->get_selectors_etpl();
+			}
+		} elseif (!$_selection) {
+			$this->js->set_onload("
+				disable_button('exec[preview]');
+				disable_button('exec[export]');
+			");
+		}
+		unset ($plugin_object);
+		(array)$apps = importexport_helper_functions::get_apps('export');
+		$sel_options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
+		$this->js->set_onload("set_style_by_class('tr','select_plugin','display','none');");
+		if(!$_application && !$selected_plugin) {
+			$content['plugin_selectors_html'] = $content['plugin_options_html'] = 
+					lang('You need to select an app and format first!');
+			$this->js->set_onload("document.getElementById('importexport.export_dialog.options_tab-tab').style.visibility='hidden';");
+			$this->js->set_onload("document.getElementById('importexport.export_dialog.selection_tab-tab').style.visibility='hidden';");
+		}
+		
+		// disable preview box
+		$this->js->set_onload("set_style_by_class('tr','preview-box','display','none');");
+
 		//xajax_eT_wrapper submit
-		elseif(class_exists('xajaxResponse'))
+		if(class_exists('xajaxResponse'))
 		{
 			//error_log(__LINE__.__FILE__.'$_content: '.print_r($_content,true));
 			$response = new xajaxResponse();
@@ -192,15 +194,10 @@ class importexport_export_ui {
 					'mapping'	=>	array()
 				);
 			}
-			if (isset($definition->plugin_options['selection'])) {
-				//$definition->plugin_options		= parse(...)
-			}
-			else {
-				$definition->plugin_options = array_merge(
-					$definition->plugin_options,
-					array('selection' => $_content['selection'])
-				);
-			}
+			$definition->plugin_options = array_merge(
+				$definition->plugin_options,
+				$_content
+			);
 		
 			if(!$definition->plugin_options['selection']) {
 				$response->addScript('alert("' . lang('No records selected') . '");');
@@ -246,10 +243,9 @@ class importexport_export_ui {
 					$GLOBALS['egw']->translation->charset()
 				);
 				
-				$response->addAssign('exec[preview-box]','innerHTML',$preview);
-				//$response->addAssign('divPoweredBy','style.display','none');
-				$response->addAssign('exec[preview-box]','style.display','inline');
-				$response->addAssign('exec[preview-box-buttons]','style.display','inline');
+				$response->addAssign('exec[preview-box]','innerHTML',nl2br($preview));
+				$response->jquery('.preview-box','show');
+				$response->jquery('.preview-box-buttons','show');
 				
 				$response->addScript("xajax_eT_wrapper();");
 				return $response->getXML();
@@ -355,6 +351,9 @@ class importexport_export_ui {
 			$description = $plugin_object->get_description();
 			$_response->addAssign('exec[plugin_description]','innerHTML',$description);
 
+			if (isset($definition->plugin_options['selection'])) {
+				$_response->addScript("document.getElementById('importexport.export_dialog.selection_tab-tab').style.visibility='hidden';");
+			}
 			$this->ajax_get_plugin_options($_plugin, $_response);
 		}
 		unset ($plugin_object);
@@ -426,12 +425,17 @@ class importexport_export_ui {
 		if (is_a($plugin_object, 'importexport_iface_export_plugin')) {
 			$options = $plugin_object->get_selectors_etpl();
 			ob_start();
+			etemplate::$name_vars='exec';
 			$template = new etemplate($options);
-			$template->exec('importexport.importexport_export_ui.dialog', array(), array(), array(), array(), 2);
-			$html = ob_get_clean();
+			$html = $template->exec('importexport.importexport_export_ui.dialog', array(), array(), array(), array(), 1);
+			//$html = ob_get_clean();
 			ob_end_clean();
-			$html = preg_replace('|<input.+id="etemplate_exec_id".*/>|',
-				'',
+			$pattern = array(
+				'|<input.+id="etemplate_exec_id".*/>|',
+				'|<input(.+)name="exec[0-9]*\[|'
+			);
+			$html = preg_replace($pattern,
+				array('', '<input\\1name="exec['),
 				$html
 			);
 			$response->addAssign('importexport.export_dialog.selection_tab', 'innerHTML', $html);

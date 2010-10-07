@@ -355,7 +355,7 @@ class importexport_definitions_ui
 					// There's no real reason the plugin has to come from any of these, as long as it has a $steps variable
 					if($this->plugin instanceof importexport_iface_import_plugin || $this->plugin instanceof importexport_wizard_basic_import_csv) {
 						$content['type'] = 'import';
-					} elseif($this->plugin instanceof importexport_iface_export_plugin) {
+					} elseif($this->plugin instanceof importexport_iface_export_plugin || $this->plugin instanceof importexport_wizard_basic_export_csv) {
 						$content['type'] = 'export';
 					} else {
 						throw new egw_exception('Invalid plugin');
