@@ -246,7 +246,9 @@ file space must be an integer	admin	fi	Tallennustila on oltava kokonaisluku
 find and register all application hooks	admin	fi	Etsi ja rekisteröi kaikki sovelluskoukut
 for the times above	admin	fi	Näinä aikoina
 for the times below (empty values count as '*', all empty = every minute)	admin	fi	Yläpuolella määritettyinä aikoina (tyhjä tarkoittaa '*', kaikki tyhjää = joka minuutti)
+force password strength (1-5, default empty: no check against rules for a strong password)?	admin	fi	Salasanan vahvuus 1-5. Oletus tyhjä= ei tarkisteta salasanan vahvuutta
 force selectbox	admin	fi	Pakota valitsemaan
+force users to change their password regularily?(empty for no,number for after that number of days	admin	fi	Kuinka usein käyttäjien on vaihdettava salasana? Tyhjä=ei koskaan, muutoin asteta päivien lukumäärä.
 forward also to	admin	fi	Välitä eteenpäin myös
 forward emails to	admin	fi	Eteenpäin välitetyt sähköpostit
 forward only	admin	fi	Välitä vain eteenpäin
@@ -340,6 +342,7 @@ mode	admin	fi	Tila
 modified	admin	fi	Muokattu
 month	admin	fi	Kuukausi
 more secure	admin	fi	Lisää turvallisuutta
+must change password upon next login	admin	fi	Salasana vaihdettava seuraavan kirjautumisen yhteydessä
 name must not be empty !!!	admin	fi	Nimi ei saa olla tyhjä !!!
 name of the egroupware instance, eg. default	admin	fi	Palvelun nimi esim. yrityksesi nimi
 new group name	admin	fi	Uuden ryhmän nimi

@@ -203,6 +203,7 @@ field %1 has been updated !	addressbook	fi	Kenttä %1 on päivitetty!
 field name	addressbook	fi	Kentän nimi
 fields for the csv export	addressbook	fi	Kentät CSV -vientiä varten
 fields the user is allowed to edit himself	admin	fi	Kentät, joita käyttäjä voi itse muuttaa
+fields to copy when copying an address?	admin	fi	Mitkä kentät kopiodaan osoitteesta?
 fields to show in address list	addressbook	fi	Kentät, jotka näkyvät osoitelistassa
 fieldseparator	addressbook	fi	Kenttäerotin
 fieldseperator	addressbook	fi	Kenttäerotin

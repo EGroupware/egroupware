@@ -102,6 +102,7 @@ deleted	felamimail	fi	Poistettu
 deleted folder successfully!	felamimail	fi	Kansio poistettu!
 deleting messages	felamimail	fi	Poistetaan viestejä
 disable	felamimail	fi	Poista valinta
+disable ruler for separation of mailbody and signature when adding signature to composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	felamimail	fi	Ota tekstin ja allekirjoituksen välissä oleva eroitin pois käytöstä. Jos käytät mallipohjia, tämä koskee ainoastaan viestin tekstiosaa.
 discard	felamimail	fi	Hylkää
 discard message	felamimail	fi	Hylkää viesti
 display message in new window	felamimail	fi	Näytä viesti uudessa ikkunassa
@@ -167,6 +168,7 @@ error	felamimail	fi	VIRHE
 error connecting to imap serv	felamimail	fi	Virhe yhdistettäessä IMAP palvelimeen
 error connecting to imap server. %s : %s.	felamimail	fi	Virhe yhdistettäessä IMAP palvelimeen. %s : %s.
 error connecting to imap server: [%s] %s.	felamimail	fi	Virhe yhdistettäessä IMAP palvelimeen: [%s] %s.
+error creating rule while trying to use forward/redirect.	felamimail	fi	Virhe suodatussääntöjen luomisessa edelleenlähetykseen.
 error opening	felamimail	fi	Virhe avattaessa
 error saving %1!	felamimail	fi	Virhe tallennettaessa %1!
 error:	felamimail	fi	Virhe:
@@ -253,6 +255,7 @@ inbox	felamimail	fi	Saapuneet
 incoming mail server(imap)	felamimail	fi	Saapuvan sähköpostin palvelin (IMAP)
 index order	felamimail	fi	Indeksijärjestys
 info	felamimail	fi	Info
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	fi	Aseta allekirjoitus oman viestisi alapuolelle vastatessasi sähköpostiin.
 invalid user name or password	felamimail	fi	Virheellinen käyttäjänimi tai salasana
 javascript	felamimail	fi	JavaScript
 jumping to end	felamimail	fi	Siirry loppuun
@@ -440,7 +443,7 @@ template folder	felamimail	fi	Mallipohjat -kansio
 templates	felamimail	fi	Mallipohjat
 text only	felamimail	fi	Vain tekstiä
 text/plain	felamimail	fi	Pelkkä teksti
-the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	fi	Toiminto on kaikille tämän kansion viesteille. Haluatko jatkaa?
+the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	fi	Toiminto koskee kaikkeja viestejä tässä kansiossa. Haluatko varmasti jatkaa?
 the connection to the imap server failed!!	felamimail	fi	Yhteys IMAP palvelimeen epäonnistui!!
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	fi	IMAP palvelin ei tue valittua tunnistustapaa. Ota yhteyttä järjestelmän ylläpitäjään.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	fi	Viestin lähettäjä haluaa vahvistuksen, että olet saanut tämän viestin. Haluatko lähettää sen?

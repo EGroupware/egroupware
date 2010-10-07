@@ -7,6 +7,7 @@
 %1 weeks	calendar	fi	%1 viikkoa
 (%1 events in %2 seconds)	calendar	fi	(%1 tapahtumaa %2:ssa sekunnissa)
 , exceptions preserved	calendar	fi	, poikeukset säilytetty
+, stati of participants reset	calendar	fi	, osallistujien Tila tyhjennetty
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	fi	<b>Huom<b>: Kalenteri käyttää lomapäiviä, jotka on asetettu %1. Voit vaihtaa ne kohdasta %2.<br/>Lomapäivät ovat %3 automaattisesti asennettuja %4:sta. Voit vaihtaa sen kohdassa %5.
 a non blocking event will not conflict with other events	calendar	fi	Joustava tapahtuma ei aiheita päällekkäisyyttä muiden tapahtumien kanssa
 accept or reject an invitation	calendar	fi	Hyväksy tai kieltäydy kutsusta
@@ -323,6 +324,7 @@ repetitiondetails (or empty)	calendar	fi	Toiston yksityiskohdat (tai tyhjä)
 requested	calendar	fi	Vaaditut
 require an acl grant to invite other users and groups	admin	fi	Muiden käyttäjien ja ryhmien kutsut/kutsumiset vaativat ACL-oikeudet.
 reset	calendar	fi	Tyhjennä
+reset participant stati on event shifts	calendar	fi	Tyhjennä osallistujien Tila kun tapahtumia siirretään
 resources	calendar	fi	Resurssit
 resources except conflicting ones	calendar	fi	Resurssit, paitsi konfliktit
 resources with conflict detection	calendar	fi	Resurssit, konfliktihuomautuksella
@@ -342,6 +344,7 @@ select an action	calendar	fi	Valitse toiminto
 select an action...	calendar	fi	Valitse toiminto
 select multiple contacts for a further action	calendar	fi	Valitse useampi yhteystieto jatkaaksesi
 select resources	calendar	fi	Valitse resurssit
+select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	fi	Asetetaanko osallistujien Tilaksi "Ei vastausta", jos tapahtumaa siirretään?
 select who should get the alarm	calendar	fi	Valitse kuka saa hälytyksen
 selected range	calendar	fi	Valittu aikaväli
 series deleted	calendar	fi	Sarja poistettu
@@ -378,6 +381,7 @@ single event	calendar	fi	Yksittäinen tapahtuma
 specify where url of the day links to	calendar	fi	Määrittele mihin päivämäärän URL linkittää
 start	calendar	fi	Aloita
 start date/time	calendar	fi	Aloituspäivä/-aika
+start of series event changed	calendar	fi	Sarjan aloituspäivä muutettu
 startdate / -time	calendar	fi	Aloituspäivä/-aika
 startdate and -time of the search	calendar	fi	Haun aloituspäivä ja -aika
 startdate of the export	calendar	fi	Viennin alkamispäivä

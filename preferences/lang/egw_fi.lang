@@ -54,11 +54,12 @@ max matches per page	preferences	fi	Osumien maksimimäärä sivulla
 max number of icons in navbar	preferences	fi	Kuvakkeiden maksimimäärä navigaatiopalkissa
 no default	preferences	fi	Ei oletusta
 no user-selection at all	common	fi	Ei ollenkaan käyttäjävalintaa
-note: this feature does *not* change your email password. this will	preferences	fi	Huom: tämä asetus EI muuta sähköpostin salasanaa. Sähköpostin salasana on vaihdetaan muuta kautta.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fi	Huom! Tämä asetus EI muuta sähköpostin salasanaa. Sähköpostin salasana on vaihdetaan muuta kautta.
 number format	preferences	fi	Numeroiden muoto
 office 2003 theme	preferences	fi	Office 2003 teema
+old password and new password are the same. this is invalid. you must enter a new password	preferences	fi	Vanha ja uusi salasana ovat samanlaiset. Valitse uusi salasana.
 p: paragraph	preferences	fi	p: Kappale
+password changed	preferences	fi	Salasana vaihdettu!
 permanent time zone selection	preferences	fi	Vaihtoehtoisten aikavyöhykkeiden valinta
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fi	Valitse kaikki aikavyöhykkeet, joiden haluat näkyvän pudotusvalikossa sivun yläreunassa. Valitse vähintään kaksi aikavyöhykettä toiminnon varmistamiseksi.
 please select your timezone.	preferences	fi	Valitse aikavyöhykkeesi
