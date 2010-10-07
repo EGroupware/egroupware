@@ -30,7 +30,6 @@ class admin_wizard_import_users_csv extends importexport_wizard_basic_import_csv
 			'account_lastname'	=> lang('Last Name'),
 			'account_email'		=> lang('email'),
 			'account_passwd'	=> lang('Password'),
-			'account_passwd_2'	=> lang('Re-Enter Password'),
 			'account_active'	=> lang('Account active'),
 			'account_primary_group'	=> lang('primary Group'),
 			'account_groups'	=> lang('Groups'),
