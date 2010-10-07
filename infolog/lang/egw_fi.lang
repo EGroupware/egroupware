@@ -100,6 +100,7 @@ default filter for infolog	infolog	fi	InfoLogin oletussuodatin
 default status for a new log entry	infolog	fi	Uuden merkinnän oletustila
 delegated	infolog	fi	Delegoidut
 delegated open	infolog	fi	Delegoidut avoimet
+delegated open and upcoming	infolog	fi	Delegoidut avoimet ja tulevat
 delegated overdue	infolog	fi	Delegoidut myöhästyneet
 delegated upcomming	infolog	fi	Delegoidut tulevat
 delegation	infolog	fi	Delegointi
@@ -126,6 +127,7 @@ do you want to receive notifications as html-mails or plain text?	infolog	fi	Hal
 don't show infolog	infolog	fi	Älä näytä InfoLogia
 done	infolog	fi	Valmis
 download	infolog	fi	Lataa
+due %1	infolog	fi	Erääntyy %1
 duration	infolog	fi	Kesto
 e-mail:	infolog	fi	Sähköposti:
 each value is a line like <id>[=<label>]	infolog	fi	Jokainen arvo on rivillä kuten <id>[=<label>]
@@ -138,6 +140,8 @@ edit this entry	infolog	fi	Muokkaa tätä merkintää
 empty for all	infolog	fi	Tyhjä kaikille
 enddate	infolog	fi	Erääntymispäivä
 enddate can not be before startdate	infolog	fi	Erääntymispäivä ei voi olla ennen alkamispäivää
+enter a custom contact, leave empty if linked entry should be used	infolog	fi	Syötä kontakti, jätä tyhjäsi jos linkitettyä kontaktia käytetään
+enter a custom phone/email, leave empty if linked entry should be used	infolog	fi	Syötä puhelinnumero/sähköposti, jätä tyhjäsi jos linkitettyä yhteystietoa käytetään
 enter a textual description of the log-entry	infolog	fi	Syötä tekstimuotoinen kuvaus merkintään
 enter the query pattern	infolog	fi	Anna tiedustelun malli
 entry and all files	infolog	fi	Merkintä ja kaikki tiedostot
@@ -198,8 +202,6 @@ location	infolog	fi	Sijainti
 longer textual description	infolog	fi	Pitempi tekstikuvaus
 low	infolog	fi	Matala
 max length of the input [, length of the inputfield (optional)]	infolog	fi	Kentän tekstin maksimipituus [, kentän maksimi pituus(vaihtoehtoinen)]
-modifier	infolog	fi	Muokkaaja
-modifierer	infolog	fi	Muokkaaja
 name must not be empty !!!	infolog	fi	Nimikenttä ei saa olla tyhjä !!!
 name of new type to create	infolog	fi	Luotavan tyypin nimi
 never hide search and filters	infolog	fi	Hakua ja suodattimia ei piiloiteta koskaan
@@ -231,15 +233,17 @@ only for details	infolog	fi	Vain lisätiedot
 only if i get assigned or removed	infolog	fi	Vain jos minulle delegoidaan tai minut poistetaan vastuusta
 only the attachments	infolog	fi	Vain liitteet
 only the links	infolog	fi	Vain linkit
-open	infolog	fi	Avoin
+open	infolog	fi	Avoimet
+open and upcoming	infolog	fi	Avoimet ja tulevat
 optional note to the link	infolog	fi	Vapaaehtoinen muistiinpano linkkiin
 order	infolog	fi	Järjestä
 organization	infolog	fi	Organisaatio
 overdue	infolog	fi	Myöhästynyt
-own	infolog	fi	Oma
-own open	infolog	fi	Oma avoin
-own overdue	infolog	fi	Oma myöhästynyt
-own upcoming	infolog	fi	Oma tuleva
+own	infolog	fi	Omat
+own open	infolog	fi	Omat avoimet
+own open and upcoming	infolog	fi	Omat avoimet ja tulevat
+own overdue	infolog	fi	Omat myöhästyneet
+own upcoming	infolog	fi	Omat tulevat
 parent	infolog	fi	Päämerkintä
 parent infolog	infolog	fi	Päämerkintä
 path on (web-)serverside<br>eg. /var/samba/share	infolog	fi	Polku (web-)palvelimella<br>esim. /var/samba/Share
@@ -279,6 +283,7 @@ remark	infolog	fi	Merkitse uudelleen
 remove this link (not the entry itself)	infolog	fi	Poista tämä linkki (ei poista itse merkintää)
 responsible	infolog	fi	Vastuuhenkilö
 responsible open	infolog	fi	Vastuuhenkilö, avoimet
+responsible open and upcoming	infolog	fi	Vastuuhenkilö, avoimet ja tulevat
 responsible overdue	infolog	fi	Vastuuhenkilö, myöhästyneet
 responsible upcoming	infolog	fi	Vastuuhenkilö, tulevat
 responsible user, priority	infolog	fi	Vastuuhenkilö, tärkeysaste
@@ -325,6 +330,7 @@ start a new search, cancel this link	infolog	fi	Aloita uusi haku
 startdate	infolog	fi	Aloituspäivä
 startdate enddate	infolog	fi	Aloituspäivä, Erääntymispäivä
 startdate for new entries	infolog	fi	Aloituspäivä uusille merkinnöille
+starting %1	infolog	fi	Alkaa %1
 startrecord	infolog	fi	Startrecord
 status	infolog	fi	Tila
 status ...	infolog	fi	Tila...
