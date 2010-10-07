@@ -26,8 +26,8 @@ function export_dialog() {
 			xajax_doXMLHTTP('importexport.importexport_export_ui.ajax_get_definition_description',sel_obj.value);
 			set_style_by_class('tr','select_plugin','display','none');
 			set_style_by_class('tr','save_definition','display','none');
-			document.getElementById('importexport.export_dialog.selection_tab-tab').style.visibility='hidden';
-			document.getElementById('importexport.export_dialog.options_tab-tab').style.visibility='hidden';
+		//	document.getElementById('importexport.export_dialog.selection_tab-tab').style.visibility='hidden';
+		//	document.getElementById('importexport.export_dialog.options_tab-tab').style.visibility='hidden';
 			enable_button('exec[export]');
 			enable_button('exec[preview]');
 		}
