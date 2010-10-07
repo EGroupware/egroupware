@@ -51,6 +51,7 @@ all languages	common	fi	Kaikki kielet
 alphabet	common	fi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
 alternate style-sheet:	common	fi	Vaihtoehtoinen tyylisivu:
 american samoa	common	fi	AMERIKAN SAMOA
+an admin required that you must change your password upon login.	common	fi	Salasana täytyy vaihtaa sisäänkirjautumisen yhteydessä!
 an error happened	common	fi	Virheellinen toiminto
 an existing and by the webserver readable directory enables the image browser and upload.	common	fi	Olemassa oleva JA palvelimen lukuoikeudet omaava hakemisto sallii kuvien selaamisen ja lataamisen.
 and	common	fi	ja
@@ -642,6 +643,7 @@ south georgia and the south sandwich islands	common	fi	ETELÄ-GEORGIA JA ETELÄI
 spain	common	fi	ESPANJA
 sri lanka	common	fi	SRI LANKA
 start date	common	fi	Aloituspäivä
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	fi	Tiedostonhallinnan oletuskansio editorissa.
 start time	common	fi	Aloitusaika
 start with	common	fi	Alkaa
 starting up...	common	fi	Aloitetaan
@@ -731,6 +733,7 @@ value	common	fi	Arvo
 vanuatu	common	fi	VANUATU
 venezuela	common	fi	VENEZUELA
 version	common	fi	Versio
+vfs upload directory	common	fi	VFS kansio
 viet nam	common	fi	VIETNAM
 view	common	fi	Näytä
 virgin islands, british	common	fi	NEITSYSTSAARET, BRITTILÄISET
@@ -770,6 +773,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fi	Sinulla ei ole käyttöoikeutta sovellukseen %1!
 your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
 your message has been sent	common	fi	Viesti on lähetetty
+your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	fi	Salasanasi ei ole riittävän vahva. Sen pitää täyttää vähintään %1 kriteeriä, mutta salasanasi täytti ainoastaan %2 kriteeriä.<br>Salasanassasi täytyy olla vähintään (täytä vaadittavien kriteerien määrä):
 your search returned %1 matchs	common	fi	Haku palautti %1 osumaa
 your search returned 1 match	common	fi	Haku palautti yhden osuman
 your session could not be verified.	login	fi	Istuntoasi ei voitu varmentaa.
