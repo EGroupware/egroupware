@@ -913,7 +913,7 @@ class infolog_ui
 						$content['info_link_id'] = 0;	// as field has to be int
 					}
 					$active_tab = $content[$tabs];
-					if (!($info_id = $this->bo->write($content)))
+					if (!($info_id = $this->bo->write($content, true, true, true, $content['no_notifications'])))
 					{
 						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
 							lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
