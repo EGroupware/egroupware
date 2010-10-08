@@ -382,7 +382,7 @@ class solink
 			),
 			// retrieve the type of links, where the relation is realized as timesheet->infolog/tracker and projectmanager->timesheet
 			array('table'=>self::TABLE,
-				'cols'=>'b.link_id, b.link_app2 as app1, b.link_id2 as id1, b.link_app1 as app2, b.link_id1 as id2, b.link_remark,b.link_lastmod,b.link_owner,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
+				'cols'=>'b.link_id, b.link_app2 as app1, b.link_id2 as id1, b.link_app1 as app2, b.link_id1 as id2, b.link_remark,b.link_lastmod,b.link_owner,b.deleted,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
                        		'where'=>'a.link_app1='.self::$db->quote($app).' AND b.link_app1='.self::$db->quote($target_app).
                         		(!$target_id ? '' : self::$db->expression(self::TABLE,' AND b.',array('link_id1' => $target_id))),
                         	'join'=>" a 
