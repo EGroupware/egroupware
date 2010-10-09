@@ -1528,6 +1528,7 @@ class calendar_bo
 	function _list_cals_add($id,&$users,&$groups)
 	{
 		$name = $GLOBALS['egw']->common->grab_owner_name($id);
+		$egw_name = $GLOBALS['egw']->accounts->id2name($id);
 		if (($type = $GLOBALS['egw']->accounts->get_type($id)) == 'g')
 		{
 			$arr = &$groups;
@@ -1539,7 +1540,8 @@ class calendar_bo
 		$arr[$name] = Array(
 			'grantor' => $id,
 			'value'   => ($type == 'g' ? 'g_' : '') . $id,
-			'name'    => $name
+			'name'    => $name,
+			'sname'	  => $egw_name
 		);
 	}
 
@@ -1568,6 +1570,13 @@ class calendar_bo
 						$this->_list_cals_add($id,$users,$groups);
 					}
 				}
+			}
+		}
+		foreach ($groups as $name => $group)
+		{
+			foreach ($users as $user)
+			{
+				if ($user['sname'] == $group['sname']) unset($groups[$name]);
 			}
 		}
 		uksort($users,'strnatcasecmp');
