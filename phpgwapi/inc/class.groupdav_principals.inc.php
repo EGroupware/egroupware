@@ -251,6 +251,38 @@ class groupdav_principals extends groupdav_handler
 					$this->base_uri.'/principals/groups/'.$group);
 			}
 		}
+		$addressbooks = array();
+		$calendars = array();
+		if ($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$addr_bo = new addressbook_bo();
+			foreach ($addr_bo->get_addressbooks() as $id => $label)
+			{
+				if ($id && is_numeric($id))
+				{
+					$owner = $GLOBALS['egw']->accounts->id2name($id);
+					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
+						$this->base_uri.'/'.$owner.'/');
+				}
+			}
+			$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
+						$this->base_uri.'/DAB/');
+			$cal_bo = new calendar_bo();
+			foreach ($cal_bo->list_cals() as $label => $entry)
+			{
+				$id = $entry['grantor'];
+				$owner = $GLOBALS['egw']->accounts->id2name($id);
+				$calendars[] = HTTP_WebDAV_Server::mkprop('href',
+					$this->base_uri.'/'.$owner.'/');
+			}
+		}
+		else
+		{
+			$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
+						$this->base_uri.'/'.$account['account_lid'].'/');
+			$calendars[] = HTTP_WebDAV_Server::mkprop('href',
+				$this->base_uri.'/'.$account['account_lid'].'/');
+		}
 		$props = array(
 			HTTP_WebDAV_Server::mkprop('displayname',$displayname),
 			HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($account)),
@@ -260,8 +292,7 @@ class groupdav_principals extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']))),
 			HTTP_WebDAV_Server::mkprop('principal-URL',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'))),
-			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
+			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',$calendars),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']),
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'),
@@ -274,8 +305,7 @@ class groupdav_principals extends groupdav_handler
 			HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'first-name',$account['account_firstname']),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','user'),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
-			HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
+			HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
 			HTTP_WebDAV_Server::mkprop('group-member-ship', $memberships),
 			HTTP_WebDAV_Server::mkprop('supported-report-set',array(
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
