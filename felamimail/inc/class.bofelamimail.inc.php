@@ -3133,11 +3133,13 @@
 		 */
 		static function detect_encoding($string) { 
 			static $list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
- 
-			foreach ($list as $item) {
-			$sample = iconv($item, $item, $string);
-			if (md5($sample) == md5($string))
-				return $item;
+			if (function_exists('iconv'))
+			{ 
+				foreach ($list as $item) {
+				$sample = iconv($item, $item, $string);
+				if (md5($sample) == md5($string))
+					return $item;
+				}
 			}
 			return false; // we may choose to return iso-8859-1 as default at some point
 		}
