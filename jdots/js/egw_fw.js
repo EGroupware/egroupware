@@ -117,6 +117,11 @@ egw_fw.prototype.print = function()
 	}
 }
 
+egw_fw.prototype.redirect = function(_url)
+{
+	window.location = _url;
+}
+
 /**
  * Function called whenever F1 is pressed inside the framework
  * @returns boolean true if the call manual function could be called, false if the manual is not available

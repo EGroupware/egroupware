@@ -301,6 +301,10 @@ class jdots_framework extends egw_framework
 		$this->tpl->set_var('sidebox_width', self::get_global_sidebar_width());
 		$this->tpl->set_var('sidebox_min_width', self::MIN_SIDEBAR_WIDTH);
 
+		// logout button
+		$this->tpl->set_var('title_logout', lang("Logout"));
+		$this->tpl->set_var('link_logout', egw::link('/logout.php'));
+
 		//Print button title
 		$this->tpl->set_var('title_print', lang("Print current view"));
 
