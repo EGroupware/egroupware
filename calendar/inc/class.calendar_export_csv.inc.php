@@ -1,0 +1,101 @@
+<?php
+/**
+ * eGroupWare
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package calendar
+ * @subpackage importexport
+ * @link http://www.egroupware.org
+ * @author Nathan Gray
+ * @copyright Nathan Gray
+ * @version $Id$
+ */
+
+/**
+ * export CSV plugin of calendar
+ */
+class calendar_export_csv implements importexport_iface_export_plugin {
+
+	/**
+	 * Exports records as defined in $_definition
+	 *
+	 * @param egw_record $_definition
+	 */
+	public function export( $_stream, importexport_definition $_definition) {
+		$options = $_definition->plugin_options;
+		$this->bo = new calendar_bo();
+		$events =& $this->bo->search(array(
+			'start' => $options['selection']['start'],
+			'end'   => $options['selection']['end'],
+			'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
+			'enum_recuring' => false,
+			'daywise'       => false,
+			'owner'         => $options['owner'],
+			'date_format'   => $options['date_format'],
+		));
+
+		$export_object = new importexport_export_csv($_stream, (array)$options);
+		$export_object->set_mapping($options['mapping']);
+
+		// $options['selection'] is array of identifiers as this plugin doesn't
+		// support other selectors atm.
+		$record = new calendar_egw_record();
+		foreach ($events as $event) {
+			$record->set_record($event);
+			$export_object->export_record($record);
+		}
+		unset($record);
+	}
+
+	/**
+	 * returns translated name of plugin
+	 *
+	 * @return string name
+	 */
+	public static function get_name() {
+		return lang('Calendar CSV export');
+	}
+
+	/**
+	 * returns translated (user) description of plugin
+	 *
+	 * @return string descriprion
+	 */
+	public static function get_description() {
+		return lang("Exports events from your Calendar into a CSV File.");
+	}
+
+	/**
+	 * retruns file suffix for exported file
+	 *
+	 * @return string suffix
+	 */
+	public static function get_filesuffix() {
+		return 'csv';
+	}
+
+	public static function get_mimetype() {
+		return 'text/csv';
+	}
+
+	/**
+	 * return html for options.
+	 *
+	 */
+	public function get_options_etpl() {
+	}
+
+	/**
+	 * returns selectors of this plugin
+	 *
+	 */
+	public function get_selectors_etpl() {
+		return array(
+			'name'		=> 'calendar.export_csv_select',
+			'content'	=> array(
+				'start'		=> time(),
+				'end'		=> time()
+			)
+		);
+	}
+}
