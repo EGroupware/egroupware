@@ -20,6 +20,7 @@ add alarm	calendar	de	Alarm zufügen
 add timesheet entry	calendar	de	Zeitnachweis anfügen
 added	calendar	de	Neuer Termin
 added by synchronisation	calendar	de	Durch Synchronisation hinzugefügt
+after	calendar	de	nach
 after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum
 alarm	calendar	de	Alarm
@@ -45,6 +46,7 @@ automatically purge old events after	admin	de	Bereinigt bzw. löschet alte Termi
 back half a month	calendar	de	einen halben Monat zurück
 back one month	calendar	de	einen Monat zurück
 back one year	calendar	de	ein Jahr zurück
+before	calendar	de	vor
 before %1	calendar	de	Vor dem %1
 before current date	calendar	de	Vor dem aktuellen Datum
 before the event	calendar	de	vor dem Termin
@@ -117,7 +119,7 @@ deny ressources reservation for private events	calendar	de	Verbiete die Reservie
 disinvited	calendar	de	Ausgeladen
 display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Soll die ausgewählte Kalender-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
+displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	de	Zeigt diese Ansicht auf der Startseite (Seite die Sie bekommen wenn Sie EGroupware starten oder das Home Icon anklicken)?
 do not include events of group members	calendar	de	Zeige nicht die Termine der Gruppenmitglieder
 do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	de	Wollen Sie wirklich den Beginn dieses Serientermins ändern? Wenn Sie das tun, so wird die bestehende Serie heute beendet und für die Zukunft ein neuer Wiederholungstermin mit Ihren Änderungen erzeugt.
 do you want a weekview with or without weekend?	calendar	de	Möchten Sie eine Wochenansicht mit oder ohne Wochenende?
@@ -181,6 +183,7 @@ forward one year	calendar	de	ein Jahr weiter
 four days view	calendar	de	Vier-Tagesansicht
 freebusy	common	de	frei / belegt
 freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	de	Free/Busy: Unbekannter Benutzer '%1', oder Daten ohne Authentisierung nicht verfügbar!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Free/Busy: Unbekannter Benutzer '%1', falsches Passwort oder Daten ohne Authentisierung nicht verfügbar!
 freetime search	calendar	de	Terminsuche
 fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
@@ -192,6 +195,7 @@ global public only	calendar	de	nur Global öffentlich
 group invitation	calendar	de	Gruppeneinladung
 group planner	calendar	de	Gruppenplaner
 group public only	calendar	de	Gruppen-öffentlich
+group(s) or user(s) to show	calendar	de	Gruppen oder Benutzer zum Anzeigen
 group(s) or user(s) whose calendars to show (if acl exists)	calendar	de	Anzeigen von Gruppen oder Benutzer, deren ACL existiert
 groupmember(s) %1 not included, because you have no access.	calendar	de	Gruppenmitglied(er) %1 nicht enthalten, da Sie keinen Zugriff haben.
 groups: other users can allways be invited, only groups require an invite grant	admin	de	Gruppen: andere Benutzer können immer eingeladen werden, nur Gruppen benötigen eine Freigabe
@@ -313,6 +317,8 @@ re-edit event	calendar	de	Termin erneut bearbeiten
 receive email updates	calendar	de	Empfange E-Mail-Updates
 receive notifications about events you created/modified/deleted	calendar	de	Empfange Benachrichtigungen über eigene Änderungen (Erstellung/Modifikation/Löschung)
 receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
+recover	calendar	de	Wiederherstellen
+recovered	calendar	de	wieder hergestellt
 recurrence	calendar	de	Wiederholung
 recurring event	calendar	de	Wiederholender Termin
 rejected	calendar	de	Abgesagt
@@ -341,6 +347,7 @@ saves the event ignoring the conflict	calendar	de	Speichert den Konflikt ignorie
 scheduling conflict	calendar	de	Terminüberschneidung
 search string for the events	calendar	de	Suchtext für Termine
 select a %1	calendar	de	%1 auswählen
+select a color for this calendar	calendar	de	Wählen Sie eine Farbe für diesen Kalender
 select a time	calendar	de	eine Zeit auswählen
 select an action	calendar	de	Befehl auswählen
 select an action...	calendar	de	Aktion auswählen...
@@ -397,6 +404,7 @@ submit to repository	calendar	de	Übertragen zu EGroupware.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
+the apple ical apps use this color to display events from this calendar.	calendar	de	Die Apple iCal Anwendung benutzt diese Farbe zur Anzeige von Terminen dieses Kalenders.
 the exceptions are deleted together with the series.	calendar	de	Die Ausnahmen werden mit der Terminserie gelöscht.
 the original series will be terminated today and a new series be created.	calendar	de	Der bestehende Serietermin wird heute beendet und eine neue Terminserie erstellt.
 the resource you selected is already overbooked:	calendar	de	Die Ressource, die Sie buchen möchten, ist bereits überbucht.
@@ -461,8 +469,7 @@ weeks offset (for multi-column display)	calendar	de	Wochen Anfangswert (für Meh
 weekview	calendar	de	Wochenansicht
 weekview with weekend	calendar	de	Wochenansicht mit Wochenende
 weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
-which events do you want to see when you enter the calendar.	calendar	de	Welche Termine möchten Sie angezeigt bekommen wenn Sie den Kalender öffnen?
-which of calendar view do you want to see, when you start calendar ?	calendar	de	Welche der möglichen Ansichten des Kalenders möchten Sie als Standard sehen, wenn der Kalender geöffnet wird?
+which view to show on home page	calendar	de	Welche Ansicht soll auf der Startseite angezeigt werden
 whole day	calendar	de	ganztägig
 whole query	calendar	de	Ganze Abfrage
 with credentials included	calendar	de	Mit Zugangsdaten im URL

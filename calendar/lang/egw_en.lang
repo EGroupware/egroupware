@@ -20,6 +20,7 @@ add alarm	calendar	en	Add alarm
 add timesheet entry	calendar	en	Add timesheet entry
 added	calendar	en	Added
 added by synchronisation	calendar	en	Added by synchronisation
+after	calendar	en	after
 after %1	calendar	en	After %1
 after current date	calendar	en	After current date
 alarm	calendar	en	Alarm
@@ -45,6 +46,7 @@ automatically purge old events after	admin	en	Automatically purge old events aft
 back half a month	calendar	en	back half a month
 back one month	calendar	en	back one month
 back one year	calendar	en	back one year
+before	calendar	en	before
 before %1	calendar	en	Before %1
 before current date	calendar	en	Before current date
 before the event	calendar	en	Before the event
@@ -117,7 +119,7 @@ deny ressources reservation for private events	calendar	en	Deny Resources reserv
 disinvited	calendar	en	Disinvited
 display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	en	Displays the selected calendar view on the start page (page you get when you enter eGroupWare or click on the homepage icon)?
+displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	en	Displays this calendar view on the home page (page you get when you enter EGroupware or click on the home page icon)?
 do not include events of group members	calendar	en	Do not include events of group members
 do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	en	Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
@@ -181,6 +183,7 @@ forward one year	calendar	en	forward one year
 four days view	calendar	en	Four days view
 freebusy	common	en	Free/Busy
 freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	en	freebusy: Unknow user '%1', or not available for unauthenticated users!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
@@ -192,6 +195,7 @@ global public only	calendar	en	global public only
 group invitation	calendar	en	Group invitation
 group planner	calendar	en	Group planner
 group public only	calendar	en	group public only
+group(s) or user(s) to show	calendar	en	Group(s) or user(s) to show
 group(s) or user(s) whose calendars to show (if acl exists)	calendar	en	Group(s) or user(s) whose calendars to show (if ACL exists)
 groupmember(s) %1 not included, because you have no access.	calendar	en	Group member(s) %1 not included, because of you have no access.
 groups: other users can allways be invited, only groups require an invite grant	admin	en	Groups: other users can always be invited, only groups require an invite grant.
@@ -314,6 +318,7 @@ receive email updates	calendar	en	Receive email updates
 receive notifications about events you created/modified/deleted	calendar	en	Receive notifications about events you created/modified/deleted
 receive summary of appointments	calendar	en	Receive summary of appointments
 recover	calendar	en	Recover
+recovered	calendar	en	recovered
 recurrence	calendar	en	Recurrence
 recurring event	calendar	en	Recurring event
 rejected	calendar	en	Rejected
@@ -342,6 +347,7 @@ saves the event ignoring the conflict	calendar	en	Saves the event ignoring the c
 scheduling conflict	calendar	en	Scheduling conflict
 search string for the events	calendar	en	Search string for the events
 select a %1	calendar	en	Select a %1
+select a color for this calendar	calendar	en	Select a color for this calendar
 select a time	calendar	en	Select a time
 select an action	calendar	en	Select an action
 select an action...	calendar	en	Select an action...
@@ -398,6 +404,7 @@ submit to repository	calendar	en	Submit to Repository
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	en	Test Import (show importable records <u>only</u> in browser)
+the apple ical apps use this color to display events from this calendar.	calendar	en	The Apple iCal Apps use this color to display events from this calendar.
 the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.
 the original series will be terminated today and a new series be created.	calendar	en	The original series will be terminated today and a new series be created.
 the resource you selected is already overbooked:	calendar	en	The resource you selected is already overbooked:
@@ -462,8 +469,7 @@ weeks offset (for multi-column display)	calendar	en	Weeks offset (for multi-colu
 weekview	calendar	en	Weekview
 weekview with weekend	calendar	en	Weekview with weekend
 weekview without weekend	calendar	en	Weekview without weekend
-which events do you want to see when you enter the calendar.	calendar	en	Which events do you want to see when you enter the calendar.
-which of calendar view do you want to see, when you start calendar ?	calendar	en	Which of calendar views do you want to see, when you start calendar ?
+which view to show on home page	calendar	en	Which view to show on home page
 whole day	calendar	en	Whole day
 whole query	calendar	en	whole query
 with credentials included	calendar	en	With credentials included
