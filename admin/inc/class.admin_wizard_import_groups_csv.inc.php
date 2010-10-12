@@ -25,8 +25,8 @@ class admin_wizard_import_groups_csv extends importexport_wizard_basic_import_cs
 
 		// Field mapping
 		$this->mapping_fields = array(
-			'account_lid'		=> lang('Account ID'),
-			'account_name'		=> lang('Group Name'),
+			'account_id'		=> lang('Account ID'),
+			'account_lid'		=> lang('Group Name'),
 			'account_members'	=> lang('Members'),
 		);
 
