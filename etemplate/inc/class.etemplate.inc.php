@@ -1052,7 +1052,7 @@ class etemplate extends boetemplate
 		if ((int) $cell['tabindex']) $options .= ' tabindex="'.(int)$cell['tabindex'].'"';
 		if ($cell['accesskey']) $options .= ' accesskey="'.html::htmlspecialchars($cell['accesskey']).'"';
 
-		if (strchr($cell['size'],'$') || $cell['size'][0] == '@')	// expand cell['size'] for the button-disabled-check now
+		if (is_string($cell['size']) && (strchr($cell['size'],'$') || $cell['size'][0] == '@'))	// expand cell['size'] for the button-disabled-check now
 		{
 			$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
@@ -1077,7 +1077,7 @@ class etemplate extends boetemplate
 		while ((!self::$types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
 		{
 			//echo "<p>pre_process($cell[name]/$cell[type])</p>\n";
-			if (strchr($cell['size'],'$') || $cell['size'][0] == '@')
+			if (is_string($cell['size']) && (strchr($cell['size'],'$') || $cell['size'][0] == '@'))
 			{
 				$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
