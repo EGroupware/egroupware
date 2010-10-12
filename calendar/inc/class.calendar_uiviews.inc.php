@@ -2091,7 +2091,7 @@ function open_edit(series)
 				foreach((array) $GLOBALS['egw']->accounts->member($user) as $data)
 				{
 					$user = $data['account_id'];
-					if ($this->bo->check_perms(EGW_ACL_READ,0,$user))
+					if ($this->bo->check_perms(EGW_ACL_READ | EGW_ACL_FREEBUSY,0,$user))
 					{
 						$users[$user] = $this->bo->participant_name($user);
 					}
