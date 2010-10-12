@@ -121,13 +121,22 @@ class importexport_export_ui {
 			$content['description'] = $plugin_object->get_description();
 			
 			// fill options tab
-			// TODO: do we need all options templates online?
-			// NO, we can manipulate the session array of template id on xajax request
-			// however, there might be other solutions... we solve this in 1.3
  			if(method_exists($plugin_object, 'get_selectors_html')) {
 				$content['plugin_options_html'] = $plugin_object->get_options_html();
 			} else {
-				$content['plugin_options_template'] = $plugin_object->get_options_etpl();
+				$options = $plugin_object->get_options_etpl();
+				if(is_array($options)) {
+					$content['plugin_options_template'] = $options['name'];
+					$content += (array)$options['content'];
+					$sel_options += (array)$options['sel_options'];
+					$readonlys += (array)$options['readonlys'];
+					$preserv += (array)$options['preserv'];
+				} else {
+					$content['plugin_options_template'] = $options;
+				}
+			}
+			if(!$content['plugin_options_html'] && !$content['plugin_options_template']) {
+				$readonlys[$tabs]['options_tab'] = true;
 			}
 		}
 			
@@ -141,13 +150,15 @@ class importexport_export_ui {
 			$preserv['selection'] = $_selection;
 		}
 		elseif ($plugin_object) {
-			// ToDo: I need to think abaout it...
-			// are selectors abstracted in the iface_egw_record_entity ?
-			// if so, we might not want to have html here ?
  			if(method_exists($plugin_object, 'get_selectors_html')) {
 				$content['plugin_selectors_html'] = $plugin_object->get_selectors_html();
 			} else {
-				$content['plugin_selectors_template'] = $plugin_object->get_selectors_etpl();
+				$options = $plugin_object->get_selectors_etpl();
+				$content['selection'] = (array)$options['content'];
+				$sel_options += (array)$options['sel_options'];
+				$readonlys['selection'] = (array)$options['readonlys'];
+				$preserv['selection'] = (array)$options['preserv'];
+				$content['plugin_selectors_template'] = $options['name'];
 			}
 		} elseif (!$_selection) {
 			$this->js->set_onload("
