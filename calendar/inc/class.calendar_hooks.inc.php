@@ -147,10 +147,11 @@ class calendar_hooks
 		{
 			ExecMethod('calendar.calendar_bo.check_set_default_prefs');
 		}
-		$default = array(
+		$mainscreen = array(
+			'0'            => lang('None'),
 			'day'          => lang('Dayview'),
 			'day4'         => lang('Four days view'),
-			'week'         => lang('Weekview'),
+			'1'            => lang('Weekview'),
 			'weekN'        => lang('Multiple week view'),
 			'month'        => lang('Monthview'),
 			'planner_cat'  => lang('Planner by category'),
@@ -168,10 +169,7 @@ class calendar_hooks
 			'5' => lang('Weekview without weekend'),
 			'7' => lang('Weekview with weekend'),
 		);
-		$mainpage = $yesno = array(
-			'1' => lang('Yes'),
-			'0' => lang('No'),
-		);
+
 		$updates = array(
 			'no'             => lang('Never'),
 			'add_cancel'     => lang('on invitation / cancelation only'),
@@ -263,18 +261,6 @@ class calendar_hooks
 		}
 
 		return array(
-/* not longer used, as we store whole state in prefs
- 			'defaultcalendar' => array(
-				'type'   => 'select',
-				'label'  => 'default calendar view',
-				'name'   => 'defaultcalendar',
-				'values' => $default,
-				'help'   => 'Which of calendar view do you want to see, when you start calendar ?',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'week',
-			),
-*/
 			'days_in_weekview' => array(
 				'type'   => 'select',
 				'label'  => 'default week view',
@@ -297,13 +283,13 @@ class calendar_hooks
 			),
 			'mainscreen_showevents' => array(
 				'type'   => 'select',
-				'label'  => 'show default view on main screen',
+				'label'  => 'Which view to show on home page',
 				'name'   => 'mainscreen_showevents',
-				'values' => $mainpage+$default,
-				'help'   => 'Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?',
+				'values' => $mainscreen,
+				'help'   => 'Displays this calendar view on the home page (page you get when you enter EGroupware or click on the home page icon)?',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> '1',
+				'default'=> '1',	// 1 = week
 			),
 			'weekdaystarts' => array(
 				'type'   => 'select',
