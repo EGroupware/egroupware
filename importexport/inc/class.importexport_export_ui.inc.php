@@ -154,11 +154,18 @@ class importexport_export_ui {
 				$content['plugin_selectors_html'] = $plugin_object->get_selectors_html();
 			} else {
 				$options = $plugin_object->get_selectors_etpl();
-				$content['selection'] = (array)$options['content'];
-				$sel_options += (array)$options['sel_options'];
-				$readonlys['selection'] = (array)$options['readonlys'];
-				$preserv['selection'] = (array)$options['preserv'];
-				$content['plugin_selectors_template'] = $options['name'];
+				if(is_array($options)) {
+					$content['selection'] = (array)$options['content'];
+					$sel_options += (array)$options['sel_options'];
+					$readonlys['selection'] = (array)$options['readonlys'];
+					$preserv['selection'] = (array)$options['preserv'];
+					$content['plugin_selectors_template'] = $options['name'];
+				} else {
+					$content['plugin_selectors_template'] = $options;
+				}
+			}
+			if(!$content['plugin_selectors_html'] && !$content['plugin_selectors_template']) {
+				$readonlys[$tabs]['selection_tab'] = true;
 			}
 		} elseif (!$_selection) {
 			$this->js->set_onload("
@@ -226,7 +233,7 @@ class importexport_export_ui {
 			if($_content['export'] == 'pressed') {
 				fclose($file);
 				$response->addScript("xajax_eT_wrapper();");
-				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_export_ui.download&_filename='. $tmpfname.'&_appname='. $definition->application). "&_suffix=". $plugin_object->get_filesuffix(). "';");
+				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_export_ui.download&_filename='. $tmpfname.'&_appname='. $definition->application). "&_suffix=". $plugin_object->get_filesuffix(). "&_type=".$plugin_object->get_mimetype() ."';");
 				$response->addScript('window.setTimeout("window.close();", 100);');
 				return $response->getXML();
 			}
@@ -413,9 +420,9 @@ class importexport_export_ui {
 		if (!is_readable($tmpfname)) die();
 		
 		$appname = $_GET['_appname'];
-		$nicefname = 'egw_export_'.$appname.'-'.date('y-m-d');
+		$nicefname = 'egw_export_'.$appname.'-'.date('Y-m-d');
 
-		header('Content-type: application/text');
+		header('Content-type: ' . $_GET['_type'] ? $_GET['_type'] : 'application/text');
 		header('Content-Disposition: attachment; filename="'.$nicefname.'.'.$_GET['_suffix'].'"');
 		$file = fopen($tmpfname,'r');
 		while(!feof($file))
