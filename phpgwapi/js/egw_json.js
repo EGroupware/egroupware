@@ -622,7 +622,7 @@ function _egw_json_getFormValue(serialized, child)
 {
 	//Return if the child doesn't have a name, is disabled, or is a radio-/checkbox and not checked
 	if ((typeof child.name == "undefined") || (child.disabled && child.disabled == true) ||				
-		(child.type && (child.type == 'radio' || child.type == 'checkbox') && (!child.checked)))
+		(child.type && (child.type == 'radio' || child.type == 'checkbox' || child.type == 'button' || child.type == 'submit') && (!child.checked)))
 	{
 		return;
 	}
