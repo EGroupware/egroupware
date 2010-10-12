@@ -1035,13 +1035,16 @@ class egw_link extends solink
 	 */
 	static function list_attached($app,$id)
 	{
-		$path = self::vfs_path($app,$id,'',true);
+		$path = self::vfs_path($app,$id);
 		//error_log(__METHOD__."($app,$id) url=$url");
 
 		if (!($extra = self::get_registry($app,'find_extra'))) $extra = array();
 
+		// always use regular links stream wrapper here: extended one is unnecessary (slow) for just listing attachments
+		if (substr($path,0,13) == 'stylite.links') $path = substr($path,8);
+
 		$attached = array();
-		if (($url2stats = egw_vfs::find($path,array('need_mime'=>true,'type'=>'F')+$extra,true)))
+		if (($url2stats = egw_vfs::find($path,array('need_mime'=>true,'type'=>'F','url'=>true)+$extra,true)))
 		{
 			$props = egw_vfs::propfind(array_keys($url2stats));	// get the comments
 			foreach($url2stats as $url => &$fileinfo)
@@ -1059,7 +1062,6 @@ class egw_link extends solink
 					}
 				}
 				$attached[$link['link_id']] = $link;
-				$urls[] = $url;
 			}
 		}
 		return $attached;

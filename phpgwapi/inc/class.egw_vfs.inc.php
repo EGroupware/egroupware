@@ -276,9 +276,10 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string $url=null url of the filesystem to mount, eg. oldvfs://default/
 	 * @param string $path=null path to mount the filesystem in the vfs, eg. /
+	 * @param boolean $check_url = true check if url is an existing directory, before mounting it
 	 * @return array/boolean array with fstab, if called without parameter or true on successful mount
 	 */
-	static function mount($url=null,$path=null)
+	static function mount($url=null,$path=null,$check_url=true)
 	{
 		if (!isset($GLOBALS['egw_info']['server']['vfs_fstab']))	// happens eg. in setup
 		{
@@ -306,7 +307,7 @@ class egw_vfs extends vfs_stream_wrapper
 		}
 		self::load_wrapper(parse_url($url,PHP_URL_SCHEME));
 
-		if (!file_exists($url) || opendir($url) === false)
+		if ($check_url && (!file_exists($url) || opendir($url) === false))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__.'('.array2string($url).','.array2string($path).') url does NOT exist!');
 			return false;	// url does not exist
@@ -578,7 +579,7 @@ class egw_vfs extends vfs_stream_wrapper
 
 		if ($options['url'])
 		{
-			$stat = lstat($path);
+			$stat = @lstat($path);
 		}
 		else
 		{
