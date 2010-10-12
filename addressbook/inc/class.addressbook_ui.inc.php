@@ -1744,15 +1744,24 @@ class addressbook_ui extends addressbook_bo
 	 */
 	function search($_content=array())
 	{
-		if(!empty($_content)) {
+		if(!empty($_content))
+		{
+			$do_email = $_content['do_email'];
 			$response = new xajaxResponse();
 
 			$query = egw_session::appsession($do_email ? 'email' : 'index','addressbook');
 
-			$query['advanced_search'] = array_intersect_key($_content,array_flip(array_merge($this->get_contact_columns(),array('operator','meth_select'))));
-			foreach ($query['advanced_search'] as $key => $value)
+			if ($_content['button']['cancel'])
 			{
-				if(!$value) unset($query['advanced_search'][$key]);
+				unset($query['advanced_search']);
+			}
+			else
+			{
+				$query['advanced_search'] = array_intersect_key($_content,array_flip(array_merge($this->get_contact_columns(),array('operator','meth_select'))));
+				foreach ($query['advanced_search'] as $key => $value)
+				{
+					if(!$value) unset($query['advanced_search'][$key]);
+				}
 			}
 			$query['start'] = 0;
 			$query['search'] = '';
@@ -1768,18 +1777,22 @@ class addressbook_ui extends addressbook_bo
 				opener.location.href=link.replace(/\#/,'');
 				xajax_eT_wrapper();
 			");
+			if ($_content['button']['cancel']) $response->addScript('window.close();');
+
 			return $response->getXML();
 		}
-		else {
-
+		else
+		{
+			$do_email = strpos($_SERVER['HTTP_REFERER'],'emailpopup') !== false;
 		}
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.focus()</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 
 		// initialize etemplate arrays
-		$sel_options = $readonlys = $preserv = array();
+		$sel_options = $readonlys = array();
 		$content = egw_session::appsession('advanced_search','addressbook');
+		$content['n_fn'] = $this->fullname($content);
 
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
@@ -1825,7 +1838,9 @@ class addressbook_ui extends addressbook_bo
 		$content['disable_change_org'] = true;
 
 		$this->tmpl->read('addressbook.search');
-		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,$preserv,2);
+		return $this->tmpl->exec('addressbook.addressbook_ui.search',$content,$sel_options,$readonlys,array(
+			'do_email' => $do_email,
+		),2);
 	}
 
 	/**
