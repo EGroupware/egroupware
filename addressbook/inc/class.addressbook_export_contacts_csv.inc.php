@@ -78,6 +78,10 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		return 'csv';
 	}
 
+	public static function get_mimetype() {
+		return 'text/csv';
+	}
+
 	/**
 	 * return html for options.
 	 * this way the plugin has all opertunities for options tab
