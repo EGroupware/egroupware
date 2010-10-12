@@ -73,7 +73,8 @@ interface importexport_iface_export_plugin {
 	 * @return array (
 	 * 		name 		=> string,
 	 * 		content		=> array,
-	 * 		sel_options => array,
+	 * 		sel_options	=> array,
+	 * 		readonlys	=> array,
 	 * 		preserv		=> array,
 	 * )
 	 */
@@ -82,7 +83,13 @@ interface importexport_iface_export_plugin {
 	/**
 	 * returns etemplate name for slectors of this plugin
 	 *
-	 * @return string etemplate name
+	 * @return array (
+	 * 		name 		=> string,
+	 * 		content		=> array,
+	 * 		sel_options	=> array,
+	 * 		readonlys	=> array,
+	 * 		preserv		=> array,
+	 * )
 	 */
 	public function get_selectors_etpl();
 
