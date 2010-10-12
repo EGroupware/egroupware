@@ -117,7 +117,7 @@ deny ressources reservation for private events	calendar	en	Deny Resources reserv
 disinvited	calendar	en	Disinvited
 display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	en	Displays your default calendar view on the start page (page you get when you enter eGroupWare or click on the homepage icon)?
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	en	Displays the selected calendar view on the start page (page you get when you enter eGroupWare or click on the homepage icon)?
 do not include events of group members	calendar	en	Do not include events of group members
 do you really want to change the start of this series? if you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.	calendar	en	Do you really want to change the start of this series? If you do, the original series will be terminated as of today and a new series for the future reflecting your changes will be created.
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
@@ -368,7 +368,7 @@ show all status incl. rejected events	calendar	en	Show all status incl. rejected
 show all status, but rejected	calendar	en	Show all status, but rejected
 show also events just owned by selected user	calendar	en	Show also events just owned by selected user
 show birthdays from addressbook	admin	en	Show birthdays from addressbook
-show default view on main screen	calendar	en	Show default view on main screen
+show default view on main screen	calendar	en	Show calendar on main screen
 show empty rows in planner	calendar	en	Show empty rows in Planner
 show events that have been deleted	calendar	en	Show events that have been deleted
 show list of upcoming events	calendar	en	Show list of upcoming events
