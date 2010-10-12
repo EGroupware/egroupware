@@ -271,7 +271,7 @@ class calendar_ui
 			'save_owner' => 0,
 			'sortby'     => 'category',
 			'planner_days'=> 0,	// full month
-			'view'       => $this->bo->cal_prefs['defaultcalendar'],
+			'view'       => ($this->bo->cal_prefs['defaultcalendar']?$this->bo->cal_prefs['defaultcalendar']:'day'), // use pref, if exists else use the dayview
 			'listview_days'=> '',	// no range
 		) as $state => $default)
 		{

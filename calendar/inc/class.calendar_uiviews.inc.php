@@ -196,10 +196,10 @@ class calendar_uiviews extends calendar_ui
 			'date'       => $this->bo->date2string($this->bo->now_su),
 			'cat_id'     => 0,
 			'filter'     => 'all',
-			'owner'      => substr($this->cal_prefs['defaultcalendar'],0,7) == 'planner' && $this->cal_prefs['planner_start_with_group'] ?
+			'owner'      => substr($this->cal_prefs['mainscreen_showevents'],0,7) == 'planner' && $this->cal_prefs['planner_start_with_group'] ?
 				$this->cal_prefs['planner_start_with_group'] : $this->user,
 			'multiple'   => 0,
-			'view'       => $this->bo->cal_prefs['defaultcalendar'],
+			'view'       => $this->bo->cal_prefs['mainscreen_showevents'],
 		));
 
 		if (($error = $this->check_owners_access()))
@@ -210,7 +210,7 @@ class calendar_uiviews extends calendar_ui
 		{
 			$group_warning = '<p class="redItalic" align="center">'.$this->group_warning."</p>\n";
 		}
-		switch($this->cal_prefs['defaultcalendar'])
+		switch($this->cal_prefs['mainscreen_showevents'])
 		{
 			case 'planner_user':
 			case 'planner_cat':
@@ -229,6 +229,8 @@ class calendar_uiviews extends calendar_ui
 
 			case 'day':
 				return $group_warning.$this->day(true);
+			case 'day4':
+				return $group_warning.$this->week(4,true);
 		}
 	}
 
