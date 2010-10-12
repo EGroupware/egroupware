@@ -178,6 +178,10 @@ class timesheet_export_openoffice implements importexport_iface_export_plugin {
 		return 'ods';
 	}
 
+	public static function get_mimetype() {
+		return 'application/vnd.oasis.opendocument.spreadsheet';
+	}
+
 	/**
 	 * return html for options.
 	 * this way the plugin has all opertunities for options tab
