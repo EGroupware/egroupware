@@ -315,7 +315,6 @@ class importexport_helper_functions {
 		);
 		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
 		$types = $_type == 'all' ? array('import','export') : (array)$_type;
-		$plugins = self::_get_plugins($appnames, $types);
 
 		foreach($plugins as $appname => $types) {
 			if(!in_array($appname, $appnames)) unset($plugins['appname']);
