@@ -66,6 +66,13 @@ interface importexport_iface_export_plugin {
 	public static function get_filesuffix();
 	
 	/**
+	 * returns mime type for exported file
+	 *
+	 * @return string mimetype
+	 */
+	public static function get_mimetype();
+
+	/**
 	 * return etemplate components for options.
 	 * @abstract We can't deal with etemplate objects here, as an uietemplate
 	 * objects itself are scipt orientated and not "dialog objects"

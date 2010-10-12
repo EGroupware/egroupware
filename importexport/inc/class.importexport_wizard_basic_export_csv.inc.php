@@ -153,7 +153,7 @@ class importexport_wizard_basic_export_csv
 			if(!$content['charset'] && $content['plugin_options']['charset']) {
 				$content['charset'] = $content['plugin_options']['charset'];
 			}
-			if(!array_key_exists($content, 'begin_with_fieldnames') && array_key_exists($content['plugin_options'], 'begin_with_fieldnames')) {
+			if(!array_key_exists('begin_with_fieldnames', $content) && array_key_exists('begin_with_fieldnames', $content['plugin_options'])) {
 				$content['begin_with_fieldnames'] = $content['plugin_options']['begin_with_fieldnames'];
 			}
 
