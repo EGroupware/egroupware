@@ -80,7 +80,7 @@ class calendar_uilist extends calendar_ui
 			'filter'     => 'all',
 			'owner'      => $this->user,
 			'multiple'   => 0,
-			'view'       => $this->bo->cal_prefs['defaultcalendar'],
+			'view'       => $this->bo->cal_prefs['mainscreen_showevents'],
 		));
 		egw_session::appsession('calendar_list','calendar','');	// in case there's already something set
 

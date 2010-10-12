@@ -53,7 +53,7 @@ class calendar_hooks
 
 			$save_app_header = $GLOBALS['egw_info']['flags']['app_header'];
 
-			if ($GLOBALS['egw_info']['user']['preferences']['calendar']['defaultcalendar'] == 'listview')
+			if ($GLOBALS['egw_info']['user']['preferences']['calendar']['mainscreen_showevents'] == 'listview')
 			{
 				if (!file_exists(EGW_SERVER_ROOT.($et_css_file ='/etemplate/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/app.css')))
 				{
@@ -300,7 +300,7 @@ class calendar_hooks
 				'type'   => 'select',
 				'label'  => 'show default view on main screen',
 				'name'   => 'mainscreen_showevents',
-				'values' => $mainpage,
+				'values' => $mainpage+$default,
 				'help'   => 'Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?',
 				'xmlrpc' => True,
 				'admin'  => False,
