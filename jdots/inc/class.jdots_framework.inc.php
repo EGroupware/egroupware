@@ -138,9 +138,13 @@ class jdots_framework extends egw_framework
 	{
 		if (is_null($link_app)) $link_app = self::$link_app;
 		$link = parent::link($url,$extravars);
+		
 		// $link_app === true --> detect application, otherwise use given application
 		if ($link_app && (is_string($link_app) || ($link_app = self::app_from_url($link))))
 		{
+			// Link gets handled in JS, so quotes need slashes as well as url-encoded
+			$link = str_replace('%27', '\%27', $link);
+
 			$link = "javascript:egw_link_handler('$link','$link_app');";
 		}
 		return $link;		
