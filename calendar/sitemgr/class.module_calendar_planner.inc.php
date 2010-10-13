@@ -42,9 +42,14 @@ class module_calendar_planner extends Module
 				'options' => array(),	// done by get_user_interface()
 				'multiple' => true,
 			),
-			'users' => array(
+			'owner' => array(
 				'type' => 'select',
 				'label' => lang('Group(s) or user(s) to show'),
+				'options' => array(),
+			),
+			'resources' => array(
+				'type' => 'select',
+				'label' => lang('Resources'),
 				'options' => array(),
 			),
 			'filter' => array(
@@ -75,7 +80,7 @@ class module_calendar_planner extends Module
 	}
 
 	/**
-	 * Reimplemented to fetch the cats, groups and resources
+	 * Reimplemented to fetch the cats, users/groups and resources
 	 */
 	function get_user_interface()
 	{
@@ -147,16 +152,29 @@ class module_calendar_planner extends Module
 		asort($groups);
 		asort($users);
 		// concat users and groups to the option array.
-		$this->arguments['users']['options'] = $groups + $users;
-		if (count($this->arguments['users']['options']) > 10)
+		$this->arguments['owner']['options'] = $groups + $users;
+		if (count($this->arguments['owner']['options']) > 10)
 		{
-			$this->arguments['users']['multiple'] = 10;
+			$this->arguments['owner']['multiple'] = 10;
 		}
-		else if (count($this->arguments['users']['options']) > 0)
+		else if (count($this->arguments['owner']['options']) > 0)
 		{
-			$this->arguments['users']['multiple'] = true;
+			$this->arguments['owner']['multiple'] = true;
 		}
-		
+
+		$calendar_bo = new calendar_bo();
+ 		foreach ($calendar_bo->resources as $resource)
+		{
+			if(!is_array($resource['cal_sidebox'])) continue;
+			$this->arguments['resources']['options'] = array_merge($this->arguments['resources']['options'],
+				ExecMethod($resource['cal_sidebox']['file'],array(
+					'menuaction' => $_GET['menuaction'],
+					'block_id' => $_GET['block_id'],
+					'return_array' => true,
+				)));
+		}
+		$this->arguments['resources']['multiple'] = count($this->arguments['resources']['options']) ? 4 : 0;
+
 		return parent::get_user_interface();
 	}
 
@@ -183,22 +201,48 @@ class module_calendar_planner extends Module
 		}
 		if (isset($_GET['date'])) $arguments['date'] = $_GET['date'];
 		if (empty($arguments['cat_id'])) $arguments['cat_id'] = 0;
+		if(isset($arguments['resources']) && in_array('r0', $arguments['resources']))
+		{
+			foreach($arguments['resources'] as $index => $value)
+			{
+				if($value == 'r0')
+				{
+					unset($arguments['resources'][$index]);
+				}
+			}	
+		}
 
-		$uiviews = new calendar_uiviews($arguments);
-		$uiviews->allowEdit = false;	// switches off all edit popups
+		$params = $arguments;
+		if (isset($params['resources']) && count($params['resources']))
+		{
+			$params['owner'] = array_merge((array)$params['owner'], (array)$params['resources']);
+			unset($params['resources']);
+		}
 
 		$html = '<style type="text/css">'."\n";
 		$html .= '@import url('.$GLOBALS['egw_info']['server']['webserver_url'].self::CALENDAR_CSS.");\n";
 		$html .= '</style>'."\n";
 
-		// Initialize Tooltips
-		static $wz_tooltips;
-		if (!$wz_tooltips++) $html .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js"></script>'."\n";
+		if (is_array($params['owner']))
+		{
+			$params['owner'] = implode(',', $params['owner']);
 
-		// replacing egw-urls with sitemgr ones, allows to use navigation links
-		$html .= str_replace($GLOBALS['egw_info']['server']['webserver_url'].'/index.php?',
-			$this->link().'&',
-			$uiviews->planner(true));
+			$uiviews = new calendar_uiviews($params);
+			$uiviews->allowEdit = false;	// switches off all edit popups
+
+			// Initialize Tooltips
+			static $wz_tooltips;
+			if (!$wz_tooltips++) $html .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js"></script>'."\n";
+
+			// replacing egw-urls with sitemgr ones, allows to use navigation links
+			$html .= str_replace($GLOBALS['egw_info']['server']['webserver_url'].'/index.php?',
+				$this->link().'&',
+				$uiviews->planner(true));
+		}
+		else
+		{
+			$html .= '<div class="redItalic" align="center">'.lang('No owner selected').'</div>';
+		}
 
 		return $html;
 	}
