@@ -479,13 +479,19 @@ class ui_resources
 	 * get data für calendar sidebox
 	 *
 	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
-	 * @param array $param with keys menuaction, owner and optional date
+	 * @param array $param with keys menuaction, owner and optional date and return_array
 	 * @return array with: label=>link or array with text
 	 */
 	function get_calendar_sidebox($param)
 	{
 		$cats = $this->bo->acl->get_cats(EGW_ACL_READ);
 		if (!$cats) return array();
+
+		if(array_key_exists('return_array', $param))
+		{
+			$return_array = $param['return_array'];
+			unset($param['return_array']);
+		}
 
 		$owners = explode(',',$param['owner']);
 		unset($param['owner']);
@@ -529,22 +535,29 @@ class ui_resources
 				$resources['r'.$data['res_id']] = $data['name'];
 			}
 		}
-		$selectbox = html::select(
-			'owner',
-			$selected,
-			array_merge($resources,$res_cats),
-			$no_lang=true,
-			$options='style="width: 100%;" onchange="load_cal(\''.
-				egw::link('/index.php',$param,false).'\',\'uical_select_resource\');" id="uical_select_resource"',
-			$multiple=count($selected) ? 4 : 0
-		);
-		return array(
-			array(
-				'text' => $selectbox,
-				'no_lang' => True,
-				'link' => False
-			)
-		);
+		if(!isset($return_array))
+		{
+			$selectbox = html::select(
+				'owner',
+				$selected,
+				array_merge($resources,$res_cats),
+				$no_lang=true,
+				$options='style="width: 100%;" onchange="load_cal(\''.
+					egw::link('/index.php',$param,false).'\',\'uical_select_resource\');" id="uical_select_resource"',
+				$multiple=count($selected) ? 4 : 0
+			);
+			return array(
+				array(
+					'text' => $selectbox,
+					'no_lang' => True,
+					'link' => False
+				)
+			);
+		}
+		else
+		{
+			return array_merge($resources,$res_cats);
+		}
 	}
 }
 
