@@ -2,6 +2,48 @@ egroupware-epl (10.1.20101013-1) hardy; urgency=low
 
   * allow bcc in header print (may be set on outgoing mails)
   * allow to pick CC of tickets from addressbook
+  * Feature: to allow admins a) to set an allowed password age, to require all users to change their password regularily; b) force password change for a given user on the users next login; c) better control about the password strength required; Funded by Cricket
+  * added optional display of file comments in SiteMgr download block
+  * Add action to undelete selected addresses.  Only visible when viewing deleted addresses.
+  * Add ability to create infolog entry from tracker ticket
+  * fixed unbalenced number of opening and closing div-tags in some types of the navigation module, also added commented code to debug the issue
+  * if user has filemanager rights, show Actions column allowing to delete or edit properties of files
+  * iPhone and Mac Addressbook support aka Apple CalDAV/CardDAV autodetection
+  * added support for PHP running as (F)CGI (uses ORIG_PATH_INFO instead of PATH_INFO)
+  * colored calendar list view
+  * history for emailadmin
+  * adding EGroupware version to X-Dav-Powered-By header eg. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
+  * fixed not working delete in download block using IE
+  * Add basic support for importing users from CSV using admin_cmds
+  * added valid timezone set in php.ini check
+  * show package changelog inside EGroupware under about
+  * feature to show contact_id in list and editview; ability to sort by contact_id, ability to search for contact_id (or parts of it), so beware if you search for a contact by id, you may find more than one, since the number you search for may be part of the content of more than one field and contacts, as numbers can occur also in eg.: phonenumber, roomnumber, ZIP-Code, ...
+  * Allow new events in group calendars via CalDAV
+  * Basic support for importing groups from CSV
+  * improving birthday integration into calendar
+  * wiki: make makro showemptypages [[! ~]] work
+  * wiki: feature to be able to expunge wikipages for a given wiki, page and language from ui; save summary as comment
+  * enable the fallback to english mainscreen_message as default/fallback, if there is no mainscreen_message defined for your language. Make sure there is one, if you want that. You may have to clear the egw_cache, to get this thing working, as caching languages as we do, makes this one a hard case
+  * SyncML: Don't use MaxGUIDSize as maximum UID length
+  * infolog: fix startdate filter for infolog, if you select a single day for start and enddate, and if your infologs start at 00:00 of that day (no time specified)
+  * eMail: feature to be able to import an email recieved or while sending as a tracker item; (that includes the move of some functions from infolog to bofelamimail, to make it available to more than one app); better charset detection on message body parts that do not carry a charset information (e.g.: base64 and quoted-printable messages, seem not to carry that info)
+  * Add ability to set an alarm for after the appointment [starts]
+  * Add wizard for creating export definitions
+  * Add a 'No notifications' checkbox to infolog edit dialog to avoid sending notifications
+  * calendar: allow to set/choose the view to be displayed in home-view
+  * fixed not shown bugdet in project-list, if user has no explicit role, eg. the creator
+  * ACL (default to noone) to set ticket creator
+  * calendar sitemgr integration: planner module now able to preselect resources to; prevent planner with no owner preselected
+  * additional logout button and new theme with more contrast (bold) for topmenu items in Stylite template
+  * merged Nathans commit including my fix, as it fixes not working filemanager favorites to dirs with single quotes: only quote urlencoded single quotes, if we use egw_link_handler, if not quoting destroys the links!!!
+  * Stylite template: only send admin sidebox, for admin index url (when clicked on admin)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 13 Oct 2010 14:13:30 +0200
+
+egroupware-epl (10.1.20101013-1) hardy; urgency=low
+
+  * allow bcc in header print (may be set on outgoing mails)
+  * allow to pick CC of tickets from addressbook
   * missing translation and added span="all" for search
   * Feature: to allow admins a) to set an allowed password age, to require all users to change their password regularily; b) force password change for a given user on the users next login; c) better control about the password strength required; Funded by Cricket
   * some more translations for password feature
