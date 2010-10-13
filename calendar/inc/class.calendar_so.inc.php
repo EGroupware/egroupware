@@ -912,7 +912,7 @@ ORDER BY cal_user_type, cal_usre_id
 			// event (without uid), not strong enough uid
 			$event['cal_uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$cal_id);
 			$this->db->update($this->cal_table, array('cal_uid' => $event['cal_uid']),
-				array('cal_id' => $event['cal_id']),__LINE__,__FILE__,'calendar');
+				array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 		}
 		
 		if ($event['recur_type'] == MCAL_RECUR_NONE)
