@@ -829,7 +829,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			));
 			foreach($events as $k => &$recurrence)
 			{
-				if ($recurrence['reference'])	// ignore series master
+				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
 				{
 					$etag .= ':'.substr($this->get_etag($recurrence),4,-4);
 				}
