@@ -435,8 +435,16 @@ class jdots_framework extends egw_framework
 	function navbar()
 	{
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
-		$md5_session =& egw_cache::getSession(__CLASS__,'sidebox_md5');
 		
+		// only send admin sidebox, for admin index url (when clicked on admin),
+		// not for other admin pages, called eg. from sidebox menu of other apps
+		// --> that way we always stay in the app, and NOT open admin sidebox for an app tab!!! 
+		if ($app == 'admin' && substr($_SERVER['PHP_SELF'],-16) != '/admin/index.php')
+		{
+			return '';
+		}
+		$md5_session =& egw_cache::getSession(__CLASS__,'sidebox_md5');
+
 		//Set the sidebox content
 		$sidebox = json_encode($this->get_sidebox($app));
 		$md5 = md5($sidebox);
@@ -451,8 +459,8 @@ class jdots_framework extends egw_framework
 		return '<script type="text/javascript">
 	if (typeof window.parent.framework != "undefined")
 	{
-		var app = window.parent.framework.getApplicationByName("'.$app.'");
-		window.parent.framework.setSidebox(app,'.$sidebox.',"'.$md5.'");
+		var napp = window.parent.framework.getApplicationByName("'.$app.'");
+		window.parent.framework.setSidebox(napp,'.$sidebox.',"'.$md5.'");
 	}
 </script>';
 	}
