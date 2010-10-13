@@ -1,5 +1,135 @@
 egroupware-epl (10.1.20101013-1) hardy; urgency=low
 
+  * allow bcc in header print (may be set on outgoing mails)
+  * allow to pick CC of tickets from addressbook
+  * missing translation and added span="all" for search
+  * Feature: to allow admins a) to set an allowed password age, to require all users to change their password regularily; b) force password change for a given user on the users next login; c) better control about the password strength required; Funded by Cricket
+  * some more translations for password feature
+  * password-feature accounts_ldap form
+  * allow old name for account_lastpwd_change (account_lastpassword_change)
+  * password-feature ldap specific stuff
+  * check if the user is allowed to change its password, before redirecting
+  * fixed download module to cope with new direct download url option of filesystem stream wrapper
+  * added optional display of file comments in SiteMgr download block
+  * fixed not working links to directories in download module after last commit, also fixed not display path in error message
+  * store referer when anon session get created, so logout (specially when called from egw::check_app_rights) redirects back to website
+  * Backport 32252 - Make sure n_fn and n_fileas get updated when importing
+  * explicit redirect target for NTLM auth and reverted unnecessary commit r32251
+  * Backport 32258 - Fix bug preventing unsetting a field mapping
+  * Backport 32261 - Add option to change addressbook for record on a per-record basis, with fallback to owner
+  * Backport 32264 - Add action to undelete selected addresses.  Only visible when viewing deleted addresses.
+  * Backport 32267 - Changes to be able to create an infolog entry from a tracker ticket.  Tracker subject, description and any matching custom fields are copied over.
+  * Backport 32268 - Add ability to create infolog entry from tracker ticket
+  * Backport 32272 - Add config option to hide or display button to create infolog from tracker ticket
+  * added info about firefox with NTLM and update EGroupware configuration
+  * fixing ACL check for nopasswordchange; fixing setting of shadowlastchange by using the correct data with propper format
+  * check auth / password age in wiki and bookmarks too
+  * allow for/expect encoded MAILBOX/EMAIL Parts of an RFC822 EMail in MessageList creation, and decode it
+  * fixed full index to showing only two level of categories and pages
+  * adding target=_blank, to get eg. download of pictures NOT to replace current page
+  * fix spelling in translation
+  * fixed unbalenced number of opening and closing div-tags in some types of the navigation module, also added commented code to debug the issue
+  * if user has filemanager rights, show Actions column allowing to delete or edit properties of files
+  * several fixes around jpgraph:
+  * an other fix for NTLM and SiteMgr
+  * PHP5.3 deprecated function fix
+  * iPhone and Mac Addressbook support aka Apple CalDAV/CardDAV autodetection
+  * create preference for start directory of image browser in rich text editor in EGroupware VFS (filemanager), instead of old FCK editor configuration
+  * Improve Mac OS Addressbook.App CardDAV support as far as reasonable
+  * allow for forced passwordchange on next login at account creation time
+  * added support for PHP running as (F)CGI (uses ORIG_PATH_INFO instead of PATH_INFO)
+  * colored calendar list view
+  * fix an other PHP5.3 deprecated error
+  * fix an other PHP5.3 deprecated error
+  * history for emailadmin, by Chr.Fueller
+  * make sure keywords of parameters/dparameters are stripped of leading and trailing whitespase, as this meets the expectation later on. Otherwise keys in the parameters/dparameters structure may not be found/identified
+  * allow cats for planner to be an array
+  * adding EGroupware version to X-Dav-Powered-By header eg. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
+  * removing reference to not langer current table column ea_imapoldcclient
+  * fixed not working delete in download block using IE
+  * Backport 32359 - Add a feature to try to auto-detect the field mapping
+  * Backport 32361 - Add basic support for importing users from CSV using admin_cmds
+  * Backport 32362 - Allow auto-map from file to update existing mapping
+  * removed not set author and maintainer, as it gives an notice in check_install
+  * added valid timezone set in php.ini check
+  * fixed editsvnchangelog to work with community version and committing changelog before checkout, so it will be included in the archives too
+  * show package changelog inside EGroupware under about
+  * replaced debug output of command with running it
+  * feature to show contact_id in list and editview; ability to sort by contact_id, ability to search for contact_id (or parts of it), so beware if you search for a contact by id, you may find more than one, since the number you search for may be part of the content of more than one field and contacts, as numbers can occur also in eg.: phonenumber, roomnumber, ZIP-Code, ...
+  * fixing changelog stuff, need to update changelog
+  * display rsync progress
+  * fixed PHP 5.3 deprecated warning
+  * Allow new events in group calendars via CalDAV
+  * Backport 32394 - Basic support for importing groups from CSV
+  * preventing invalid birthdays stored with the datastore such as 0000-00-00 or 0.0.00 to transform to a birthday
+  * add a fieldmapping to enable the query for contact_bday
+  * catching empty serverclass in getIMAPLogin Times; taking care of new entrys while tracking changes
+  * *wiki: make makro showemptypages [[! ~]] work
+  * *wiki: feature to be able to expunge wikipages for a given wiki, page and language from ui; save summary as comment
+  * enable the fallback to english mainscreen_message as default/fallback, if there is no mainscreen_message defined for your language. Make sure there is one, if you want that. You may have to clear the egw_cache, to get this thing working, as caching languages as we do, makes this one a hard case
+  * *calendar: feature/fix to allow to preselect the group and category for sitemgr plannerview; by Chr.Fueller
+  * calendar: handle catchable fatal error while trying to build rule
+  * dont try to translate text from textfields when in listview
+  * *infolog, notification: allow the values of select fields to show, actually everything that has an array as value-range and the key saved is found in that range will be shown, else the saved key will be displayed
+  * Backport 32423 - Update modified time when deleting
+  * Don't use MaxGUIDSize as maximum UID length
+  * fix for Stylite Ticket#8044 -Message on loginscreen and home doesent have a default lang fallback as all other egroupware translations
+  * *infolog: fix startdate filter for infolog, if you select a single day for start and enddate, and if your infologs start at 00:00 of that day (no time specified)
+  * *eMail: feature to be able to import an email recieved or while sending as a tracker item; (that includes the move of some functions from infolog to bofelamimail, to make it available to more than one app); better charset detection on message body parts that do not carry a charset information (e.g.: base64 and quoted-printable messages, seem not to carry that info)
+  * prevent the change of owner, if the entry to be changed is an account
+  * preserve accountstatus: only write to errorlog if condition is met
+  * Backport 32440 - Sort categories alphabetically in planner by category view
+  * Backport 32442 - Add ability to set an alarm for after the appointment [starts]
+  * Backport 32445 - Close and delete sample CSV file when done with it
+  * Backport 32447 - Implement conversion class so the app's plugin can provide extra conversion functions
+  * finnish/suomi translations provided by mkk
+  * email/phpmailer: fix for bug regarding the sending of the charset information reported by stefan.helzle-at-oscons.de
+  * finnish/suomi translations provided by mkk
+  * Backport 32456 - Make before/after column on alarm tab a little wider
+  * Backport 32458 - Don't need 2nd password field when importing
+  * Backport 32460 - Mess with export dialog so it actually works with definitions
+  * Backport 32461 - Add wizard for creating export definitions
+  * Backport 32464 - Fix for invalid SQL reported by Massimo 676 on the pERP dev list
+  * Backport 32466 - Add a 'No notifications' checkbox to infolog edit dialog to avoid sending notifications
+  * Announce all available addressbooks and calendars of the current user with GroupDAV
+  * revert backport r32465 as the deleted flag is not introduced into 10.1 yet.
+  * detect if function iconv exists before trying to use it while detecting charset
+  * quiten warning if $cell[size] is an array
+  * *calendar: allow to set/choose the view to be displayed in home-view
+  * changed translations for mainscreen preferences, as they are for main (home) screen only, and not for default
+  * remove "Yes" from available views for homepage and missing translations
+  * fixed now shown bugdet in project-list, if user has no explicit role, eg. the creator
+  * do NOT return buttons, unless they are pressed
+  * - fix for egw.org bug #2729: extended search for recipients filtered by categories does not work
+  * fix for mystylite bug #818: planner by user only with read rights (should work with freebusy rights too)
+  * Backport 32498 - Add span to bottom left hbox so 'Do not notify ...' doesn't get squished
+  * Backport 32501 - Change field mapping for groups to make more sense
+  * Backport 32503 - Allow tracker admins to change the ticket creator
+  * Backport 32505 - Display user names for creator in history
+  * Backport 32507 - Allow plugins to supply complete info for selections
+  * Backport 32510 - Add ability for plugin to specify mimetype
+  * Backport 32513 - Add mimetype to export plugin
+  * Backport 32515 - Add mimetype to export plugins
+  * resources: allow to retrieve the elements of the resources sidebox calendar elements only and not as full html, by Chr.Fueller
+  * *calendar sitemgr integration: planner module now able to preselect resources to; prevent planner with no owner preselected
+  * phpgwapi: call hooks of apps after deleting of categories to enable apps to clean up their use of affected categories; by Chr.Fueller
+  * *knowledgebase: make use of the new ability to react on category deletion. Implement hook delete_category. You must register hooks to make use of that on existing installations; by Chr.Fueller
+  * quiten warning, because init is called by so_sql constructor, when $this->trackers is not yet defined
+  * Changelog for 10.1.20101013
+  * Changelog for 10.1.20101013
+  * do NOT destroy session, if there's no EGroupware session data, eg. it
+  * Backport 1357 - Stylite #8205: Make multi-day infologs display using small view at top (non-blocking, whole day)
+  * Backport 1359 - Fix previous commit for single day infologs
+  * convert domain and domain_base to lowercase
+  * convert/force domain to be lowercase
+  * better visibility of menu items (home/preferences/Help/Logout);  provide additional logout button; present that as new theme (by ralf), so users may choose which theme  they want
+  * merged Nathans commit including my fix, as it fixes not working filemanager favorites to dirs with single quotes: only quote urlencoded single quotes, if we use egw_link_handler, if not quoting destroys the links!!!
+  * only send admin sidebox, for admin index url (when clicked on admin),
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 13 Oct 2010 13:54:28 +0200
+
+egroupware-epl (10.1.20101013-1) hardy; urgency=low
+
   * allow to pick CC of tickets from addressbook
   * added optional display of file comments in SiteMgr download block
   * iPhone and Mac Addressbook support aka Apple CalDAV/CardDAV autodetection
