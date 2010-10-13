@@ -561,13 +561,33 @@ class categories
 		}
 		if ($drop_subs)
 		{
-			$where = array('cat_id='.(int)$cat_id.' OR cat_parent='.(int)$cat_id.' OR cat_main='.(int)$cat_id);
+			//$where = array('cat_id='.(int)$cat_id.' OR cat_parent='.(int)$cat_id.' OR cat_main='.(int)$cat_id);
+			$all_cats = $this->return_all_children($cat_id);
+			$where = array("cat_id='".implode("' OR cat_id='", $all_cats)."'");
 		}
 		else
 		{
 			$where['cat_id'] = $cat_id;
 		}
 		$where['cat_appname'] = $this->app_name;
+
+		$GLOBALS['hook_values'] = array(
+			'cat_id'  => $cat_id,
+			'cat_name' => $this->id2name($cat_id),
+			'drop_subs' => $drop_subs,
+			'modify_subs' => $modify_subs,
+			'location'    => 'delete_category'
+		);
+		if($this->is_global($cat_id))
+		{
+			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values'],False,True);  // called for every app now, not only enabled ones)
+		}
+		else
+		{
+			$cat = self::read($cat_id);
+			$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'], $cat['appname']);
+			unset($cat);
+		}
 
 		$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);
 
@@ -587,7 +607,9 @@ class categories
 	{
 		if (isset($values['old_parent']) && (int)$values['old_parent'] != (int)$values['parent'])
 		{
-			$this->delete($values['id'],False,True);
+			// as far as add is implemented it is done as INSERT or UPDATE, so a delete should not be needed,
+			// since we loose the original cat_id, while doing so
+			//$this->delete($values['id'],False,True);
 
 			return $this->add($values);
 		}
