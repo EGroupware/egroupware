@@ -134,7 +134,7 @@ class importexport_wizard_basic_import_csv
 						$english = array();
 						foreach($content['csv_fields'] as $index => $field) {
 							if($content['field_mapping'][$index]) continue;
-							if($content['plugin_options']['field_mapping'][$index]) {
+							if(is_array($content['plugin_options']['field_mapping']) && $content['plugin_options']['field_mapping'][$index]) {
 								# Copy already set, but allow new file to update
 								$content['field_mapping'][$index] = $content['plugin_options']['field_mapping'][$index];
 							}
