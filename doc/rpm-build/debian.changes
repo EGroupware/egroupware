@@ -1,3 +1,21 @@
+egroupware (1.8.001.20101013) hardy; urgency=low
+
+  * Allow new events in group calendars via CalDAV
+  * preventing invalid birthdays stored with the datastore such as 0000-00-00 or 0.0.00 to transform to a birthday
+  * add a fieldmapping to enable the query for contact_bday
+  * wiki: make makro showemptypages [[! ~]] work
+  * backport of forgotten servertime time var now, as reportet in developerlist
+  * calendar: handle catchable fatal error while trying to build rule
+  * Don't use MaxGUIDSize as maximum UID length
+  * infolog: fix startdate filter for infolog, if you select a single day for start and enddate, and if your infologs start at 00:00 of that day (no time specified)
+  * email/phpmailer: fix for bug regarding the sending of the charset information reported by stefan.helzle-at-oscons.de
+  * Announce all available addressbooks and calendars of the current user with GroupDAV
+  * fixed now shown bugdet in project-list, if user has no explicit role, eg. the creator
+  * fix for egw.org bug #2729: extended search for recipients filtered by categories does not work
+  * fix for mystylite bug #818: planner by user only with read rights (should work with freebusy rights too)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 13 Oct 2010 17:24:26 +0200
+
 egroupware (1.8.001.20100929) hardy; urgency=low
 
   * fixed download module to cope with new direct download url option of filesystem stream wrapper
