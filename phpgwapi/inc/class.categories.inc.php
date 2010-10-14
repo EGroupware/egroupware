@@ -414,6 +414,10 @@ class categories
 			$values['level'] = $this->id2name($values['parent'],'level')+1;
 			$values['main'] = $this->id2name($values['parent'],'main');
 		}
+		else
+		{
+			$values['level'] = 0;
+		}
 		$this->db->insert(self::TABLE,array(
 			'cat_parent'  => $values['parent'],
 			'cat_owner'   => $this->account_id,
@@ -596,33 +600,94 @@ class categories
 	}
 
 	/**
+	 * adapt_level_in_subtree of a category
+	 *
+	 * Owner and appname are set from the values used to instanciate the class!
+	 *
+	 * @param array $values array with cat-data (it need to be complete, as everything get's written)
+	 * @return void
+	 */
+	function adapt_level_in_subtree($values)
+	{
+		foreach ((array) $this->return_sorted_array('',False,'','','',False, $values['id']) as $cat)
+		{
+			if ($cat['parent'] == $values['id'])
+			{
+				$this->db->update(self::TABLE,array(
+					'cat_level' => $values['level']+1,
+					'last_mod' => time(),
+				),array(
+					'cat_id' => $cat['id'],
+					'cat_appname' => $this->app_name,
+				),__LINE__,__FILE__);
+				$cat['level'] = $values['level'] + 1;
+				self::invalidate_cache($cat['id']);
+				$this->adapt_level_in_subtree($cat);
+			}
+			else
+			{
+				continue;
+			}
+		}
+	}
+
+	/**
+	 * check_consistency4update - for edit
+	 *
+	 * @param array $values array with cat-data (it need to be complete, as everything get's written)
+	 * @return mixed string/boolean errorstring if consitency check failed / true if the consistency check did not fail
+	 */
+	function check_consistency4update($values)
+	{
+		// check if we try to move an element down its own subtree, which will fail
+		foreach ($this->return_sorted_array('',False,'','','',False, $values['id']) as $cat) if ($cat['id'] == $values['parent']) return lang('Cannot set a category as parent, which is part of this categorys subtree!');
+		// check if we try to be our own parent
+		if ($values['parent']==$values['id']) return lang('Cannot set this cat as its own parent!'); // deny to be our own parent
+		// check if parent still exists
+		if ((int)$values['parent']>0 && !$this->read($values['parent'])) return lang('Chosen parent category no longer exists');
+		return true;
+	}
+
+	/**
 	 * edit / update a category
 	 *
 	 * Owner and appname are set from the values used to instanciate the class!
 	 *
 	 * @param array $values array with cat-data (it need to be complete, as everything get's written)
-	 * @return int cat-id
+	 * @return int cat-id or false if it failed
 	 */
 	function edit($values)
 	{
 		if (isset($values['old_parent']) && (int)$values['old_parent'] != (int)$values['parent'])
 		{
-			$this->delete($values['id'],False,True);
-
+			$ret = $this->check_consistency4update($values);
+			if ($ret !== true) throw new egw_exception_wrong_userinput($ret);
+			// everything seems in order -> proceed
+			$values['level'] = ($values['parent'] ? $this->id2name($values['parent'],'level')+1:0);
+			$this->adapt_level_in_subtree($values);
+			
 			return $this->add($values);
 		}
 		else
 		{
+			//echo "old parent not set <br>";
 			if ($values['parent'] > 0)
 			{
+				$ret = $this->check_consistency4update($values);
+				if ($ret !== true) throw new egw_exception_wrong_userinput($ret);
+
+				// everything seems in order -> proceed
 				$values['main']  = $this->id2name($values['parent'],'main');
 				$values['level'] = $this->id2name($values['parent'],'level') + 1;
 			}
 			else
 			{
+				//echo "new parent not set <br>";
 				$values['main']  = $values['id'];
 				$values['level'] = 0;
 			}
+			// adapt the level info in each child
+			$this->adapt_level_in_subtree($values);
 		}
 		$this->db->update(self::TABLE,array(
 			'cat_name' => $values['name'],
