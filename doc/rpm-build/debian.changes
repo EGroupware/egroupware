@@ -1,3 +1,9 @@
+egroupware-epl (10.1.20101014-1) hardy; urgency=low
+
+  * reverted bugfix in categories introducing new bug with category levels when changing parent
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 14 Oct 2010 10:21:42 +0200
+
 egroupware-epl (10.1.20101013-1) hardy; urgency=low
 
   * allow bcc in header print (may be set on outgoing mails)
