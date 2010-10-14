@@ -2289,7 +2289,7 @@ class addressbook_ui extends addressbook_bo
 					$content['history']['status-widgets']['#'.$name] = $settings['type'];
 				} elseif($settings['values']['@']) {
 					$content['history']['status-widgets']['#'.$name] = customfields_widget::_get_options_from_file($settings['values']['@']);
-				} else {
+				} elseif(count($settings['values'])) {
 					$content['history']['status-widgets']['#'.$name] = $settings['values'];
 				}
 			}
