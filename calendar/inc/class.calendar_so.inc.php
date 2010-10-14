@@ -274,7 +274,7 @@ class calendar_so
 	}
 
 	/**
-	 * generate SQL to filter after a given category (evtl. incl. subcategories)
+	 * generate SQL to filter after a given category (incl. subcategories)
 	 *
 	 * @param array|int $cat_id cat-id or array of cat-ids, or !$cat_id for none
 	 * @return string SQL to include in the query
@@ -284,14 +284,7 @@ class calendar_so
 		$sql = '';
 		if ($cat_id)
 		{
-			if (!is_array($cat_id) && !@$GLOBALS['egw_info']['user']['preferences']['common']['cats_no_subs'])
-			{
-				$cats = $GLOBALS['egw']->categories->return_all_children($cat_id);
-			}
-			else
-			{
-				$cats = is_array($cat_id) ? $cat_id : array($cat_id);
-			}
+			$cats = $GLOBALS['egw']->categories->return_all_children($cat_id);
 			array_walk($cats,create_function('&$val,$key','$val = (int) $val;'));
 
 			$sql = '(cal_category'.(count($cats) > 1 ? " IN ('".implode("','",$cats)."')" : '='.$this->db->quote((int)$cat_id));
@@ -310,8 +303,7 @@ class calendar_so
 	 * @param int $start startdate of the search/list (servertime)
 	 * @param int $end enddate of the search/list (servertime)
 	 * @param int|array $users user-id or array of user-id's, !$users means all entries regardless of users
-	 * @param int $cat_id=0 mixed category-id or array of cat-id's, default 0 = all
-	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
+	 * @param int|array $cat_id=0 mixed category-id or array of cat-id's (incl. all sub-categories), default 0 = all
 	 * @param string $filter='all' string filter-name: all (not rejected), accepted, unknown, tentative, rejected or hideprivate (handled elsewhere!)
 	 * @param int|boolean $offset=False offset for a limited query or False (default)
 	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
