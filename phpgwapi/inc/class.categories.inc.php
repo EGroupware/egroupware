@@ -607,9 +607,7 @@ class categories
 	{
 		if (isset($values['old_parent']) && (int)$values['old_parent'] != (int)$values['parent'])
 		{
-			// as far as add is implemented it is done as INSERT or UPDATE, so a delete should not be needed,
-			// since we loose the original cat_id, while doing so
-			//$this->delete($values['id'],False,True);
+			$this->delete($values['id'],False,True);
 
 			return $this->add($values);
 		}
