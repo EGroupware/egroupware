@@ -1233,10 +1233,15 @@ class Horde_iCalendar {
 		            case 'B':
 		            case 'BASE64':
 			            $params_str .= ';ENCODING=' . $params['ENCODING'];
+			            // using native php wordwrap to speed up encoding of images
+			            $result .= wordwrap($name . $params_str . ':' . $this->_newline . ' ' . 
+			            	$this->_base64Encode($value),75,$this->_newline . ' ',true) . $this->_newline;
+			            /*
 			            $attr_string = $name . $params_str . ':' . $this->_newline . ' ' . $this->_base64Encode($value);
 			            $attr_string = String::wordwrap($attr_string, 75, $this->_newline . ' ',
 				            true, 'utf-8', true); // charset does not matter
 			            $result .= $attr_string . $this->_newline;
+			            */
 			            if ($this->isOldFormat()) {
 				            $result .= $this->_newline; // Append an empty line
 			            }
