@@ -136,8 +136,14 @@ class admin_categories
 				case 'apply':
 					if ($content['id'] && self::$acl_edit)
 					{
-						$cats->edit($content);
-						$msg = lang('Category saved.');
+						try {
+							$cats->edit($content);
+							$msg = lang('Category saved.');
+						}
+						catch (egw_exception_wrong_userinput $e)
+						{
+							$msg = lang('Unwilling to save category with current settings. Check for inconsistency:').$e->getMessage();	// display conflicts etc.
+						}
 					}
 					elseif (!$content['id'] && (
 						$content['parent'] && self::$acl_add_sub ||
