@@ -472,4 +472,20 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	{
 		return egw_vfs::checkLock($path);
 	}
+	
+	/**
+	 * GET method handler for directories
+	 *
+	 * Reimplemented to send content type header with charset
+	 *
+	 * @param  string  directory path
+	 * @return void    function has to handle HTTP response itself
+	 */
+    function GetDir($fspath, &$options)
+    {
+		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
+		header('Content-type: text/html; charset='.translation::charset());
+
+		parent::GetDir($fspath, $options);
+    }
 }
