@@ -1030,6 +1030,10 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			$img = $GLOBALS['egw']->common->image('etemplate',$icon='mime'.$size.'_unknown');
 		}
+		if ($et_image === 'url')
+		{
+			return $img;
+		}
 		if ($et_image)
 		{
 			return 'etemplate/'.$icon;
