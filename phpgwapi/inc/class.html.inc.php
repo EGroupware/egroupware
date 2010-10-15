@@ -1184,49 +1184,71 @@ class html
 	}
 
 	/**
-	* tree widget using dhtmlXtree
-	*
-	* Code inspired by Lars's Felamimail uiwidgets::createFolderTree()
-	*
-	* @author Lars Kneschke <lars-AT-kneschke.de> original code in felamimail
-	* @param array $_folders array of folders: pairs path => node (string label or array with keys: label, (optional) image, (optional) title, (optional) checked)
-	* @param string $_selected path of selected folder
-	* @param mixed $_topFolder=false node of topFolder or false for none
-	* @param string $_onNodeSelect='alert' js static function to call if node gets selected
-	* @param string $_tree='foldertree' id of the div and name of the variable containing the tree object
-	* @param string $_divClass='' css class of the div
-	* @param string $_leafImage='' default image of a leaf-node, ''=default of foldertree, set it eg. 'folderClosed.gif' to show leafs as folders
-	* @param boolean/string $_onCheckHandler=false string with handler-name to display a checkbox for each folder, or false (default), 'null' switches checkboxes on without an handler!
-	* @param string $delimiter='/' path-delimiter, default /
-	* @param mixed $folderImageDir=null string path to the tree menu images, null uses default path
-	*
-	* @return string the html code, to be added into the template
-	*/
-	static function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$tree='foldertree',$_divClass='',$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null)
+	 * tree widget using dhtmlXtree
+	 *
+	 * Code inspired by Lars's Felamimail uiwidgets::createFolderTree()
+	 *
+	 * @author Lars Kneschke <lars-AT-kneschke.de> original code in felamimail
+	 * @param array $_folders array of folders: pairs path => node (string label or array with keys: label, (optional) image, (optional) title, (optional) checked)
+	 * @param string $_selected path of selected folder
+	 * @param mixed $_topFolder=false node of topFolder or false for none
+	 * @param string $_onNodeSelect='alert' js static function to call if node gets selected
+	 * @param string $_tree='foldertree' id of the div and name of the variable containing the tree object
+	 * @param string $_divClass='' css class of the div
+	 * @param string $_leafImage='' default image of a leaf-node, ''=default of foldertree, set it eg. 'folderClosed.gif' to show leafs as folders
+	 * @param boolean|string $_onCheckHandler=false string with handler-name to display a checkbox for each folder, or false (default), 'null' switches checkboxes on without an handler!
+	 * @param string $delimiter='/' path-delimiter, default /
+	 * @param string $folderImageDir=null string path to the tree menu images, null uses default path
+	 * @param string|array $autoLoading=null EGw relative path or array with get parameter, both send through egw::link
+	 * @param string $dataMode='JSON' data type for autoloading: XML, JSON, CSV
+	 *
+	 * @return string the html code, to be added into the template
+	 */
+	static function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$tree='foldertree',$_divClass='',
+		$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null,$autoLoading=null,$dataMode='JSON')
 	{
 		if(is_null($folderImageDir))
 		{
-			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
+			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images';
 		}
 
 		static $tree_initialised=false;
 		if (!$tree_initialised)
 		{
-			$html .= '<link rel="STYLESHEET" type="text/css" href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css" />'."\n";
-			$html .= "<script type='text/javascript' src='{$GLOBALS['egw_info']['server']['webserver_url']}/phpgwapi/js/dhtmlxtree/js/dhtmlXCommon.js'></script>\n";
-			$html .= "<script type='text/javascript' src='{$GLOBALS['egw_info']['server']['webserver_url']}/phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js'></script>\n";
+			egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/dhtmlxTree/codebase/dhtmlxtree.css');
+			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/codebase/dhtmlxcommon');
+			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/codebase/dhtmlxtree');
+			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('dhtmlxtree','dhtmlxTree/codebase/ext/dhtmlxtree_json');
 			$tree_initialised = true;
-			if (!$_folders) return $html;
+			if (!$_folders && !$autoLoading) return $html;
 		}
 		$html = self::div("\n",'id="'.$tree.'"',$_divClass).$html;
 		$html .= "<script type='text/javascript'>\n";
 		$html .= "var $tree = new dhtmlXTreeObject('$tree','100%','100%',0);\n";
+		if (translation::charset() == 'utf-8') $html .= "if ($tree.setEscapingMode) $tree.setEscapingMode('utf8');\n";
 		$html .= "$tree.setImagePath('$folderImageDir/dhtmlxtree/');\n";
-
+		
 		if($_onCheckHandler)
 		{
 			$html .= "$tree.enableCheckBoxes(1);\n";
 			$html .= "$tree.setOnCheckHandler('$_onCheckHandler');\n";
+		}
+
+		if ($autoLoading)
+		{
+			$autoLoading = is_array($autoLoading) ? 
+				egw::link('/index.php',$autoLoading) : egw::link($autoLoading);
+			$html .= "$tree.setXMLAutoLoading('$autoLoading');\n";
+			if ($dataMode != 'XML') $html .= "$tree.setDataMode('$dataMode');\n";
+			
+			// if no folders given, use xml url to load root, incl. setting of selected folder
+			if (!$_folders)
+			{
+				if ($_selected) $autoLoading .= '&selected='.urlencode($_selected);
+				unset($_selected);
+				$html .= "$tree.loadXML('$autoLoading');\n";
+				return $html."</script>\n";
+			}
 		}
 
 		$top = 0;
@@ -1253,48 +1275,78 @@ class html
 				$html .= "$tree.setItemText('$top','".addslashes($label)."','".addslashes($_topFolder['title'])."');\n";
 			}
 		}
-		// evtl. remove leading delimiter
-		if ($_selected[0] == $delimiter) $_selected = substr($_selected,1);
-		foreach($_folders as $path => $data)
+		if (is_string($_folders))
 		{
-			if (!is_array($data))
+			switch($dataMode)
 			{
-				$data = array('label' => $data);
+				case 'JSON':
+					$html .= "$tree.loadJSONObject($_folders);\n"; break;
+				case 'XML':
+					$html .= "$tree.loadXMLString('$_folders');\n"; break;
 			}
-			$image1 = $image2 = $image3 = '0';
-			if (isset($data['image']))
-			{
-				$image1 = $image2 = $image3 = "'".$data['image']."'";
-			}
+		}
+		else
+		{
 			// evtl. remove leading delimiter
-			if ($path[0] == $delimiter) $path = substr($path,1);
-			$folderParts = explode($delimiter,$path);
-
-			//get rightmost folderpart
-			$label = array_pop($folderParts);
-			if (isset($data['label'])) $label = $data['label'];
-
-			// the rest of the array is the name of the parent
-			$parentName = implode((array)$folderParts,$delimiter);
-			if(empty($parentName)) $parentName = $top;
-
-			$entryOptions = 'CHILD';
-			if ($_onCheckHandler && $_selected)	// check selected items on multi selection
+			if ($_selected[0] == $delimiter) $_selected = substr($_selected,1);
+			
+			$n = 0;
+			foreach($_folders as $path => $data)
 			{
-				if (!is_array($_selected)) $_selected = explode(',',$_selected);
-				if (in_array($path,$_selected,!is_numeric($path))) $entryOptions .= ',CHECKED';
-				//echo "<p>path=$path, _selected=".print_r($_selected,true).": $entryOptions</p>\n";
-			}
-			// highlight current item
-			elseif ((string)$_selected === (string)$path)
-			{
-				$entryOptions .= ',SELECT';
-			}
-			$html .= "$tree.insertNewItem('".addslashes($parentName)."','".addslashes($path)."','".addslashes($label).
-				"',$_onNodeSelect,$image1,$image2,$image3,'$entryOptions');\n";
-			if (isset($data['title']))
-			{
-				$html .= "$tree.setItemText('".addslashes($path)."','".addslashes($label)."','".addslashes($data['title'])."');\n";
+				if (!is_array($data))
+				{
+					$data = array('label' => $data);
+				}
+				$image1 = $image2 = $image3 = '0';
+	
+				// if _leafImage given, set it only for leaves, not for folders containing children
+				if ($_leafImage)
+				{
+					$image1 = $image2 = $image3 = "'".$_leafImage."'";
+					if ($next_item = array_slice($_folders, $n+1, 1, true))
+					{
+						list($next_path) = each($next_item);
+						if (substr($next_path,0,strlen($path)+1) == $path.'/')
+						{
+							$image1 = $image2 = $image3 = '0';
+						}
+					}
+				}
+				if (isset($data['image']))
+				{
+					$image1 = $image2 = $image3 = "'".$data['image']."'";
+				}
+				// evtl. remove leading delimiter
+				if ($path[0] == $delimiter) $path = substr($path,1);
+				$folderParts = explode($delimiter,$path);
+	
+				//get rightmost folderpart
+				$label = array_pop($folderParts);
+				if (isset($data['label'])) $label = $data['label'];
+	
+				// the rest of the array is the name of the parent
+				$parentName = implode((array)$folderParts,$delimiter);
+				if(empty($parentName)) $parentName = $top;
+	
+				$entryOptions = !isset($data['child']) || $data['child'] ? 'CHILD' : '';
+				if ($_onCheckHandler && $_selected)	// check selected items on multi selection
+				{
+					if (!is_array($_selected)) $_selected = explode(',',$_selected);
+					if (in_array($path,$_selected,!is_numeric($path))) $entryOptions .= ',CHECKED';
+					//echo "<p>path=$path, _selected=".print_r($_selected,true).": $entryOptions</p>\n";
+				}
+				// highlight current item
+				elseif ((string)$_selected === (string)$path)
+				{
+					$entryOptions .= ',SELECT';
+				}
+				$html .= "$tree.insertNewItem('".addslashes($parentName)."','".addslashes($path)."','".addslashes($label).
+					"',$_onNodeSelect,$image1,$image2,$image3,'$entryOptions');\n";
+				if (isset($data['title']))
+				{
+					$html .= "$tree.setItemText('".addslashes($path)."','".addslashes($label)."','".addslashes($data['title'])."');\n";
+				}
+				++$n;
 			}
 		}
 		$html .= "$tree.closeAllItems(0);\n";
