@@ -24,6 +24,16 @@ class filemanager_ui
 		'index' => true,
 		'file' => true,
 	);
+	
+	/**
+	 * Views available from plugins
+	 * 
+	 * @var array
+	 */
+	public static $views = array(
+		'filemanager_ui::listview' => 'Listview',
+	);
+	public static $views_init = false;
 
 	/**
 	 * Constructor
@@ -41,36 +51,51 @@ class filemanager_ui
 		{
 			egw_vfs::$is_root = true;
 		}
+		
+		self::init_views();
+	}
+	
+	/**
+	 * Initialise and return available views
+	 * 
+	 * @return array with method => label pairs
+	 */
+	public static function init_views()
+	{
+		if (!self::$views_init)
+		{
+			// translate our labels
+			foreach(self::$views as $method => &$label)
+			{
+				$label = lang($label);
+			}
+			// search for plugins with additional filemanager views
+			foreach($GLOBALS['egw']->hooks->process('filemanager_views') as $app => $views)
+			{
+				if ($views) self::$views += $views;
+			}
+			self::$views_init = true;
+		}
+		return self::$views;
 	}
 
 	/**
-	 * Make the current user (vfs) root
+	 * Get active view
 	 *
-	 * The user/pw is either the setup config user or a specially configured vfs_root user
-	 *
-	 * @param string $user='' setup config user to become root or '' to log off as root
-	 * @param string $password=null setup config password to become root
-	 * @param boolean &$is_setup=null on return true if authenticated user is setup config user, false otherwise
-	 * @return boolean true is root user given, false otherwise (including logout / empty $user)
+	 * @return string
 	 */
-	protected function sudo($user='',$password=null,&$is_setup=null)
+	function get_view()
 	{
-		if (!$user)
+		$view =& egw_cache::getSession('filemanager', 'view');
+		if (isset($_GET['view']))
 		{
-			$is_root = $is_setup = false;
+			$view = $_GET['view'];
 		}
-		else
+		if (!isset(self::$views[$view]))
 		{
-			// config user & password
-			$is_setup = egw_session::user_pw_hash($user,$password) === $GLOBALS['egw_info']['server']['config_hash'];
-			// or vfs root user from setup >> configuration
-			$is_root = $is_setup ||	$GLOBALS['egw_info']['server']['vfs_root_user'] &&
-				in_array($user,preg_split('/, */',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
-				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
+			$view = key(self::$views);
 		}
-		//echo "<p>".__METHOD__."('$user','$password',$is_setup) user_pw_hash(...)='".egw_session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
-		egw_session::appsession('is_setup','filemanager',$is_setup);
-		return egw_session::appsession('is_root','filemanager',egw_vfs::$is_root = $is_root);
+		return $view;
 	}
 
 	/**
@@ -81,10 +106,6 @@ class filemanager_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
-		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-
-		$tpl = new etemplate('filemanager.index');
-
 		if (!is_array($content))
 		{
 			$content = array(
@@ -140,6 +161,53 @@ class filemanager_ui
 				if (!$content['nm']['filter']) $content['nm']['filter'] = '1';
 			}
 		}
+		$view = self::get_view();
+
+		call_user_func($view,$content,$msg);
+	}
+
+	/**
+	 * Make the current user (vfs) root
+	 *
+	 * The user/pw is either the setup config user or a specially configured vfs_root user
+	 *
+	 * @param string $user='' setup config user to become root or '' to log off as root
+	 * @param string $password=null setup config password to become root
+	 * @param boolean &$is_setup=null on return true if authenticated user is setup config user, false otherwise
+	 * @return boolean true is root user given, false otherwise (including logout / empty $user)
+	 */
+	protected function sudo($user='',$password=null,&$is_setup=null)
+	{
+		if (!$user)
+		{
+			$is_root = $is_setup = false;
+		}
+		else
+		{
+			// config user & password
+			$is_setup = egw_session::user_pw_hash($user,$password) === $GLOBALS['egw_info']['server']['config_hash'];
+			// or vfs root user from setup >> configuration
+			$is_root = $is_setup ||	$GLOBALS['egw_info']['server']['vfs_root_user'] &&
+				in_array($user,preg_split('/, */',$GLOBALS['egw_info']['server']['vfs_root_user'])) &&
+				$GLOBALS['egw']->auth->authenticate($user, $password, 'text');
+		}
+		//echo "<p>".__METHOD__."('$user','$password',$is_setup) user_pw_hash(...)='".egw_session::user_pw_hash($user,$password)."', config_hash='{$GLOBALS['egw_info']['server']['config_hash']}' --> returning ".array2string($is_root)."</p>\n";
+		egw_session::appsession('is_setup','filemanager',$is_setup);
+		return egw_session::appsession('is_root','filemanager',egw_vfs::$is_root = $is_root);
+	}
+
+	/**
+	 * Filemanager listview
+	 *
+	 * @param array $content=null
+	 * @param string $msg=null
+	 */
+	function listview(array $content=null,$msg=null)
+	{
+		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+
+		$tpl = new etemplate('filemanager.index');
+
 		$content['nm']['msg'] = $msg;
 
 		if ($content['action'] || $content['nm']['rows'])

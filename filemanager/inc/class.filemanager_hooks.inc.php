@@ -35,21 +35,34 @@ class filemanager_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$title = $GLOBALS['egw_info']['apps'][self::$appname]['title'] . ' '. lang('Menu');
-			$file = array(
-				'Your home directory' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath)),
-				'Users and groups' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
+			$file = array();
+			// add selection for available views, if we have more then one
+			if (count(filemanager_ui::init_views()) > 1)
+			{
+				$index_url = egw::link('/index.php',array('menuaction' => 'filemanager.filemanager_ui.index'),false);
+				$file[] = array(
+					'text' => html::select('filemanager_view',filemanager_ui::get_view(),filemanager_ui::$views,false,
+						' onchange="'."egw_appWindow('filemanager').location='$index_url&view='+this.value;".
+						'" style="width: 100%;"'),
+					'no_lang' => True,
+					'link' => False
+				);
+			}
+			$file += array(
+				'Your home directory' => egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath)),
+				'Users and groups' => egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
 			);
 			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes')
 			{
-				$file['Basedirectory'] = $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath));
+				$file['Basedirectory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath));
 			}
-			if (!empty($file_prefs['startfolder'])) $file['Startfolder']= $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder']));
+			if (!empty($file_prefs['startfolder'])) $file['Startfolder']= egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$file_prefs['startfolder']));
 			for ($i=1; $i<=self::$foldercount; $i++)
 			{
 				if (!empty($file_prefs['folderlink'.$i]))
 				{
 					$foldername = array_pop(explode('/',$file_prefs['folderlink'.$i]));
-					$file[lang('Link %1: %2',$i,$foldername)]= $GLOBALS['egw']->link('/index.php',array(
+					$file[lang('Link %1: %2',$i,$foldername)]= egw::link('/index.php',array(
 						'menuaction' => self::$appname.'.filemanager_ui.index',
 						'path'       => $file_prefs['folderlink'.$i],
 						'nolang'     => true,
@@ -72,8 +85,8 @@ class filemanager_hooks
 		if (is_array($location)) $location = $location['location'];
 
         $file = Array(
-            'Site Configuration' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
-            'Custom fields' => $GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname='.self::$appname),
+            'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname='.self::$appname),
+            'Custom fields' => egw::link('/index.php','menuaction=admin.customfields.edit&appname='.self::$appname),
         );
         // add other administration links, eg. of filesystem backends like versioning
         if (($other = $GLOBALS['egw']->hooks->process('filemanager_admin',array(),true)))
@@ -103,7 +116,7 @@ class filemanager_hooks
 		if (is_array($location)) $location = $location['location'];
 
 		$file = array(
-			'Preferences' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname='.self::$appname),
+			'Preferences' => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.self::$appname),
 		);
 		if ($location == 'preferences')
 		{
