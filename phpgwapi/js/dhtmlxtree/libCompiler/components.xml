@@ -1,0 +1,635 @@
+<tree id="0">
+	<item id="dhtmlxcomponents" open="1">
+		<itemtext>dhtmlx components</itemtext>
+
+		<item id="dhtmlxgrid">
+			<itemtext>dhtmlxGrid</itemtext>
+			<item id="grid_core" path="./dhtmlxGrid/codebase/dhtmlxgrid.js;./dhtmlxGrid/codebase/dhtmlxgridcell.js;./dhtmlxGrid/codebase/dhtmlxgrid.css">
+				<itemtext>core</itemtext>
+				<userdata name="details"><![CDATA[ Core functionality <br/> Excells - ed,edn,edtxt,ro,ron,rotxt]]></userdata>
+			</item>
+			
+			<item id="grid_base">
+				<itemtext>Base functionality</itemtext>
+				
+			
+				<item id="grid_hidden" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="column_hidden" depends="grid_core">
+					<itemtext>hidden cells</itemtext><userdata name="details">allow to hide columns|rows by API</userdata>
+				</item>
+				<item id="grid_colspan" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="colspan" depends="grid_core">
+					<itemtext>colspans</itemtext><userdata name="details">allow to use colspans in data</userdata>
+				</item>
+				<item id="grid_lrow" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="locked_row" depends="grid_core">
+					<itemtext>locked rows</itemtext><userdata name="details">ability to lock rows</userdata>
+				</item>
+				<item id="grid_csort" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="custom_sort" depends="grid_sorting;grid_core">
+					<itemtext>custom sorting</itemtext><userdata name="details">ability to use custom sorting functions</userdata>
+				</item>
+				<item id="grid_serial" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="serialization" depends="grid_core">
+					<itemtext>serialization</itemtext><userdata name="details">serialization to XML</userdata>
+				</item>
+				<item id="grid_dparsin" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="distrb_parsing" depends="grid_xml_data;grid_core">
+					<itemtext>parsing</itemtext><userdata name="details">ability to use distributed parsing</userdata>
+				</item>
+				<item id="grid_dformat" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="data_format" depends="grid_core">
+					<itemtext>formats</itemtext><userdata name="details">ability to use date and number formatting</userdata>
+				</item>
+				<item id="grid_hxml" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="config_from_xml" depends="grid_xml_data;grid_core">
+					<itemtext>config in xml</itemtext><userdata name="details">ability to load grid  configuration from XML</userdata>
+				</item>
+				<item id="grid_footer" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="header_footer" depends="grid_core">
+					<itemtext>headers</itemtext><userdata name="details">ability to create multiline headers or footers</userdata>
+				</item>
+				<item id="grid_ctypes" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="dyn_cell_types" depends="grid_core">
+					<itemtext>cell types</itemtext><userdata name="details">ability to change cell types on the fly</userdata>
+				</item>
+				
+				<item id="grid_hovering" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="hovering" depends="grid_core">
+					<itemtext>hovering </itemtext><userdata name="details">hovering and light mouse navigation </userdata>
+				</item>
+				<item id="grid_altercss" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="alter_css" depends="grid_core">
+					<itemtext>alter css </itemtext><userdata name="details"> alter css</userdata>
+				</item>
+				<item id="grid_moving_rows" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="moving_rows" depends="grid_core">
+					<itemtext> moving rows</itemtext><userdata name="details"> moving rows up and down</userdata>
+				</item>
+				<item id="grid_sorting" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="sorting" depends="grid_core">
+					<itemtext> sorting</itemtext><userdata name="details"> sorting</userdata>
+				</item>
+				<item id="grid_column_resize" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="column_resize" depends="grid_core">
+					<itemtext>column_resize </itemtext><userdata name="details">column resize </userdata>
+				</item>
+				<item id="grid_update_from_xml" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="update_from_xml" depends="grid_xml_data;grid_core">
+					<itemtext> update from xml</itemtext><userdata name="details"> update from xml</userdata>
+				</item>
+				<item id="grid_xml_data" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="xml_data" depends="grid_core">
+					<itemtext> xml data</itemtext><userdata name="details"> ability to load from XML</userdata>
+				</item>
+				<item id="grid_non_xml_data" path="./dhtmlxGrid/codebase/dhtmlxgrid.js;./dhtmlxGrid/codebase/ext/dhtmlxgrid_json.js" chunk="non_xml_data" depends="grid_core">
+					<itemtext> non xml data</itemtext><userdata name="details"> ability to load from jsarray, json, csv </userdata>
+				</item>
+				
+				<item id="grid_tooltips" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="tooltips" depends="grid_core">
+					<itemtext>tooltips </itemtext><userdata name="details"> tooltips</userdata>
+				</item>
+				<item id="grid_context_menu" path="./dhtmlxGrid/codebase/dhtmlxgrid.js" chunk="context_menu" depends="grid_core">
+					<itemtext>context menu </itemtext><userdata name="details"> context menu</userdata>
+				</item>
+			</item>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<item id="grid_exts">
+				<itemtext>Extensions</itemtext>
+				
+			
+				<item id="grid_filters" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_filter.js" depends="grid_core">
+					<itemtext>filtering</itemtext><userdata name="details">Ability to filter data in grid, by using predefined UI or API calls</userdata>
+				</item>	
+				<item id="grid_grouping" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_group.js" depends="grid_core">
+					<itemtext>grouping</itemtext><userdata name="details">Ability to group data in grid</userdata>
+				</item>	
+				<item id="grid_dnd" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_drag.js" depends="grid_core;dhx_dnd">
+					<itemtext>drag-and-drop</itemtext><userdata name="details">Ability to drag and drop rows in grid</userdata>
+				</item>	
+				<item id="grid_exml" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_data.js" depends="grid_core">
+					<itemtext>extra XML types</itemtext><userdata name="details">Support of xmlA and xmlB datasource types</userdata>
+				</item>	
+				<item id="grid_form" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_form.js" depends="grid_core">
+					<itemtext>form integration</itemtext><userdata name="details">integration with HTML form</userdata>
+				</item>	
+				<item id="grid_header" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_hmenu.js;./dhtmlxGrid/codebase/ext/dhtmlxgrid_hmenu.css" depends="grid_core;grid_hidden">
+					<itemtext>header menu</itemtext><userdata name="details">Ability to use context menu for header</userdata>
+				</item>	
+				<item id="grid_math" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_math.js" depends="grid_core;grid_e_evn">
+					<itemtext>math</itemtext><userdata name="details">Ability to use math formulas in grid</userdata>
+				</item>	
+				<item id="grid_mcol" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_mcol.js" depends="grid_core">
+					<itemtext>column move</itemtext><userdata name="details">Ability to move column, or dynamically add|delete them</userdata>
+				</item>	
+				<item id="grid_csv" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_nxml.js" depends="grid_core;grid_non_xml_data">
+					<itemtext>csv</itemtext><userdata name="details">Support of CSV serialization</userdata>
+				</item>	
+				<item id="grid_clipboard" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_nxml.js" depends="grid_core">
+					<itemtext>clipboard</itemtext><userdata name="details">Ability to operate with clipboard</userdata>
+				</item>
+				<item id="grid_block" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_selection.js" depends="grid_clipboard;grid_csv;grid_core">
+					<itemtext>block selection</itemtext><userdata name="details">Ability to use block selection in grid</userdata>
+				</item>	
+				<item id="grid_paging" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_pgn.js;./dhtmlxGrid/codebase/ext/dhtmlxgrid_pgn_bricks.css" depends="grid_core">
+					<itemtext>paging</itemtext><userdata name="details">Ability to use paging in grid</userdata>
+				</item>
+				<item id="grid_pivot" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_pivot.js" depends="grid_core">
+					<itemtext>pivot</itemtext><userdata name="details">Ability to create pivot table from dhtmlxgrid</userdata>
+				</item>
+				<item id="grid_rspan" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_rowspan.js" depends="grid_core">
+					<itemtext>rowspan</itemtext><userdata name="details">Ability to use rowspans in grid</userdata>
+				</item>
+				<item id="grid_splt" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_splt.js" depends="grid_core;grid_e_evn">
+					<itemtext>frozen columns</itemtext><userdata name="details">Ability to split grid in two separate areas</userdata>
+				</item>
+				<item id="grid_srnd" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_srnd.js" depends="grid_core">
+					<itemtext>smart rendering</itemtext><userdata name="details">Ability to operate with big datasets</userdata>
+				</item>
+				<item id="grid_ssc" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_ssc.js" depends="grid_core;grid_hidden">
+					<itemtext>state saving</itemtext><userdata name="details">Ability to save current state of grid in cookies</userdata>
+				</item>
+				<item id="grid_html" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_start.js" depends="grid_core">
+					<itemtext>init from HTML</itemtext><userdata name="details">Ability to filter data in grid, by using predefined UI or API calls</userdata>
+				</item>
+				<item id="grid_undo" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_undo.js" depends="grid_core">
+					<itemtext>undo|redo</itemtext><userdata name="details">Ability to use undo|redo functionality against edit operation</userdata>
+				</item>
+				<item id="grid_sub_row" path="./dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_sub_row.js" depends="grid_core;grid_e_evn">
+					<itemtext>sub row|grid</itemtext><userdata name="details">Ability to use expandable rows with static content or sub grids</userdata>
+				</item>
+				<item id="grid_validation" path="./dhtmlxGrid/codebase/ext/dhtmlxgrid_validation.js" depends="grid_core">
+					<itemtext>validation</itemtext><userdata name="details"> data validation in the grid</userdata>
+				</item>
+			</item>
+			<item id="grid_extra">
+				<itemtext>Excells</itemtext>
+				
+				<item id="grid_e_met" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="excell_methods">
+					<itemtext>excell methods</itemtext><userdata name="details">additional methods of excell - getFont, setFont, getTextColor, getTextColor, getHorAlign, getWidth, setTextColor, setTextColor, setHorAlign</userdata>
+				</item>	
+				<item id="grid_e_evn" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="on_cell_changed">
+					<itemtext>onCellChanged</itemtext><userdata name="details">onCellChanged event support (-5% of loading performance) </userdata>
+				</item>	
+				<item id="grid_e_ch" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="ch_excell">
+					<itemtext>ch excell</itemtext><userdata name="details">support of ch excell</userdata>
+				</item>	
+				<item id="grid_e_ra" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="ra_excell">
+					<itemtext>ra excell</itemtext><userdata name="details">support of ra excell</userdata>
+				</item>	
+				<item id="grid_e_price" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="price_excell">
+					<itemtext>price excell</itemtext><userdata name="details">support of price excell</userdata>
+				</item>	
+				<item id="grid_calendar" path="./dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_dhxcalendar.js" depends="grid_core;calendar_core">
+					<itemtext>calendar excell</itemtext><userdata name="details">support of calendar excell</userdata>
+				</item>	
+				<item id="grid_e_dyn" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="dyn_excells">
+					<itemtext>dyn excell</itemtext><userdata name="details">support of dyn excell</userdata>
+				</item>	
+				<item id="grid_e_cp" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="cp_excell">
+					<itemtext>cp excell</itemtext><userdata name="details">support of cp excell</userdata>
+				</item>	
+				<item id="grid_e_txt" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="txt_excell">
+					<itemtext>txt excell</itemtext><userdata name="details">support of txt excell</userdata>
+				</item>	
+				<item id="grid_e_co" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="co_excell">
+					<itemtext>co excell</itemtext><userdata name="details">support of co|coro excell</userdata>
+				</item>	
+				<item id="grid_e_img" path="./dhtmlxGrid/codebase/dhtmlxgridcell.js" depends="grid_core" chunk="img_excell">
+					<itemtext>img excell</itemtext><userdata name="details">support of img excell</userdata>
+				</item>					
+				<item id="grid_e_cntr" path="./dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_cntr.js" depends="grid_core">
+					<itemtext>counter</itemtext><userdata name="details">auto increment cell</userdata>
+				</item>	
+				<item id="grid_e_link" path="./dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_link.js" depends="grid_core">
+					<itemtext>link</itemtext><userdata name="details">HTML link</userdata>
+				</item>	
+				<item id="grid_e_clist" path="./dhtmlxGrid/codebase/excells/dhtmlxgrid_excell_clist.js" depends="grid_core">
+					<itemtext>clist</itemtext><userdata name="details">list of checkboxes</userdata>
+				</item>	
+			</item>
+		</item>	
+		
+				
+		
+		<item id="dhtmlxtree">
+			<itemtext>dhtmlxTree</itemtext>
+			<item id="dhtmlxtree_core" path="./dhtmlxTree/codebase/dhtmlxtree.js;./dhtmlxTree/codebase/dhtmlxtree.css">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxtree</userdata>
+			</item>
+			<item id="dhtmlxtree_advanced">
+				<itemtext>advanced</itemtext><userdata name="details">some advanced features</userdata>					
+					<item id="dhtmlxtree_child_calc" path="./dhtmlxTree/codebase/dhtmlxtree.js" depends="dhtmlxtree_core" chunk="child_calc">
+						<itemtext>calck</itemtext><userdata name="details">ability to use child counters in tree</userdata>
+					</item>
+					<item id="dhtmlxtree_distributed_load" path="./dhtmlxTree/codebase/dhtmlxtree.js" depends="dhtmlxtree_core" chunk="distributed_load">
+						<itemtext>distributed</itemtext><userdata name="details">ability to use distributed parsing in tree</userdata>
+					</item>
+					<item id="dhtmlxtree_smart_parsing" path="./dhtmlxTree/codebase/dhtmlxtree.js" depends="dhtmlxtree_core" chunk="smart_parsing">
+						<itemtext>smart parsing</itemtext><userdata name="details">ability to use smart parsing in tree</userdata>
+					</item>
+					<item id="dhtmlxtree_context_menu" path="./dhtmlxTree/codebase/dhtmlxtree.js" depends="dhtmlxtree_core" chunk="context_menu">
+						<itemtext>context</itemtext><userdata name="details">ability to use context menu in tree</userdata>
+					</item>
+					<item id="dhtmlxtree_multiselect" path="./dhtmlxTree/codebase/dhtmlxtree.js" depends="dhtmlxtree_core" chunk="multiselect">
+						<itemtext>multiselect</itemtext><userdata name="details">ability to select multiple items in same time</userdata>
+					</item>
+					<item id="dhtmlxtree_find_item" path="./dhtmlxTree/codebase/dhtmlxtree.js" depends="dhtmlxtree_core" chunk="find_item">
+						<itemtext>find</itemtext><userdata name="details">ability to find item by text</userdata>
+					</item>
+					<item id="dhtmlxtree_complex_move" path="./dhtmlxTree/codebase/dhtmlxtree.js" depends="dhtmlxtree_core;dhx_dnd" chunk="complex_move">
+						<itemtext>d-n-d</itemtext><userdata name="details">moving item as child and sibling in tree ( d-n-d ) </userdata>
+					</item>																														
+				</item>
+				
+	
+					
+					<item id="dhtmlxtree_exts">  
+						<itemtext>Extensions</itemtext>
+						
+						<item id="dhtmlxtree_attrs" path="./dhtmlxTree/codebase/ext/dhtmlxtree_attrs.js" depends="dhtmlxtree_core">
+							<itemtext>attributes</itemtext><userdata name="details">custom attributes in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_dragin" path="./dhtmlxTree/codebase/ext/dhtmlxtree_dragin.js" depends="dhtmlxtree_core">
+							<itemtext>drag in</itemtext><userdata name="details">helpers to create custom drag in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_ed" path="./dhtmlxTree/codebase/ext/dhtmlxtree_ed.js" depends="dhtmlxtree_core">
+							<itemtext>editor </itemtext><userdata name="details">allows in tree edit</userdata>
+						</item>
+						<item id="dhtmlxtree_json" path="./dhtmlxTree/codebase/ext/dhtmlxtree_json.js" depends="dhtmlxtree_core">
+							<itemtext>json</itemtext><userdata name="details">support of JSON as datasource in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_kn" path="./dhtmlxTree/codebase/ext/dhtmlxtree_kn.js" depends="dhtmlxtree_core">
+							<itemtext>Navigation</itemtext><userdata name="details">keyboard navigation in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_lf" path="./dhtmlxTree/codebase/ext/dhtmlxtree_lf.js" depends="dhtmlxtree_core">
+							<itemtext>loading flag</itemtext><userdata name="details">loading flag for dynamical loading modes</userdata>
+						</item>
+						<item id="dhtmlxtree_li" path="./dhtmlxTree/codebase/ext/dhtmlxtree_li.js" depends="dhtmlxtree_core">
+							<itemtext>locking</itemtext><userdata name="details">locked items in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_path" path="./dhtmlxTree/codebase/ext/dhtmlxtree_path.js" depends="dhtmlxtree_core">
+							<itemtext>routes</itemtext><userdata name="details">marked routes in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_rl" path="./dhtmlxTree/codebase/ext/dhtmlxtree_rl.js" depends="dhtmlxtree_core">
+							<itemtext>RTL</itemtext><userdata name="details">aupport of RTL in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_sb" path="./dhtmlxTree/codebase/ext/dhtmlxtree_sb.js" depends="dhtmlxtree_core">
+							<itemtext>sorting</itemtext><userdata name="details">allows sorting in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_srnd" path="./dhtmlxTree/codebase/ext/dhtmlxtree_srnd.js" depends="dhtmlxtree_core">
+							<itemtext>SRND </itemtext><userdata name="details"> smart rendering in tree</userdata>
+						</item>
+						<item id="dhtmlxtree_start" path="./dhtmlxTree/codebase/ext/dhtmlxtree_start.js" depends="dhtmlxtree_core">
+							<itemtext>HTML </itemtext><userdata name="details"> init tree from HTML</userdata>
+						</item>
+						<item id="dhtmlxtree_xw" path="./dhtmlxTree/codebase/ext/dhtmlxtree_xw.js" depends="dhtmlxtree_core">
+							<itemtext>serialization</itemtext><userdata name="details">serialization to XML</userdata>
+						</item>
+						<item id="dhtmlxtree_xw2" path="./dhtmlxTree/codebase/ext/dhtmlxtree_xw.js" depends="dhtmlxtree_core">
+							<itemtext>cookies</itemtext><userdata name="details">additional dynamic loading features</userdata>
+						</item>
+			</item>
+			
+		</item>
+		
+		
+		<item id="dhtmlxtreegrid">
+			<itemtext>dhtmlxTreeGrid</itemtext>
+			<item id="dhtmlxtreegrid_core" path="./dhtmlxTreeGrid/codebase/dhtmlxtreegrid.js" depends="grid_core">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxtreegrid</userdata>
+			</item>
+				<item id="dhtmlxtreegrid_exts">  
+					<itemtext>Extensions</itemtext>
+					
+					<item id="dhtmlxtreegrid_line" path="./dhtmlxTreeGrid/codebase/ext/dhtmlxtreegrid_lines.js" depends="dhtmlxtreegrid_core">
+						<itemtext>lines</itemtext><userdata name="details">lines in treegrid</userdata>
+					</item>
+					<item id="dhtmlxtreegrid_filter" path="./dhtmlxTreeGrid/codebase/ext/dhtmlxtreegrid_filter.js" depends="dhtmlxtreegrid_core;grid_filters">
+						<itemtext>filter</itemtext><userdata name="details">filtration in treegrid</userdata>
+					</item>
+			</item>
+		</item>
+		<item id="dhtmlxlayout">
+			<itemtext>dhtmlxLayout</itemtext>
+			<item id="dhtmlxlayout_core" path="./dhtmlxLayout/codebase/dhtmlxlayout.js;./dhtmlxLayout/codebase/dhtmlxlayout.css" depends="dhx_container">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxlayout</userdata>
+			</item>
+		</item>
+		<item id="dhtmlxmenu">
+			<itemtext>dhtmlxMenu</itemtext>
+			<item id="dhtmlxmenu_core" path="./dhtmlxMenu/codebase/dhtmlxmenu.js" >
+				<itemtext>core</itemtext><userdata name="details">just a dhtmlxmenu</userdata>
+			</item>
+			<item id="dhtmlxmenu_extf" path="./dhtmlxMenu/codebase/ext/dhtmlxmenu_ext.js" >
+				<itemtext>extra functionality</itemtext><userdata name="details">different aligns, extra  methods</userdata>
+			</item>
+			<item id="dhtmlxmenu_exts">  	
+					<itemtext>extensions</itemtext>			
+					
+					<item id="menu_scroll" depends="dhtmlxmenu_core" chunk="menu_overflow">
+							<itemtext>scrolls</itemtext><userdata name="details">inner scrollers in menu</userdata>
+					</item>
+					<item id="menu_checks" depends="dhtmlxmenu_core" chunk="menu_checks">
+							<itemtext>checkboxes</itemtext><userdata name="details">checkboxes in menu</userdata>
+					</item>
+					<item id="menu_radio" depends="dhtmlxmenu_core" chunk="menu_radio">
+							<itemtext>radios</itemtext><userdata name="details">radio buttons in menu</userdata>
+					</item>
+					<item id="menu_hotkey" depends="dhtmlxmenu_core" chunk="menu_hotkey">
+							<itemtext>hotkeys</itemtext><userdata name="details">hotkeys in menu ( useless )</userdata>
+					</item>
+					<item id="menu_userdata" depends="dhtmlxmenu_core" chunk="menu_userdata">
+							<itemtext>usedata</itemtext><userdata name="details">userdata in menu ( useless )</userdata>
+					</item>
+					<item id="menu_context" depends="dhtmlxmenu_core" chunk="menu_context">
+							<itemtext>context menu</itemtext><userdata name="details">menu as context element</userdata>
+					</item>
+					
+					
+					
+
+			</item>
+					<item id="dhtmlxmenu_skins">  
+						<itemtext>skins</itemtext>
+						
+						<item id="dhtmlxmenu_aquadark" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_aqua_dark.css;" depends="dhtmlxmenu_core">
+							<itemtext>aquadark</itemtext><userdata name="details">aquadark skin for dhtmlxmenu</userdata>
+						</item>
+						<item id="dhtmlxmenu_aquaorange" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_aqua_orange.css;" depends="dhtmlxmenu_core">
+							<itemtext>aquaorange</itemtext><userdata name="details">aquaorange skin for dhtmlxmenu</userdata>
+						</item>
+						<item id="dhtmlxmenu_aquasky" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_aqua_sky.css;" depends="dhtmlxmenu_core">
+							<itemtext>aquasky</itemtext><userdata name="details">aquasky skin for dhtmlxmenu</userdata>
+						</item>
+						<item id="dhtmlxmenu_clearblue" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_clear_blue.css;" depends="dhtmlxmenu_core">
+							<itemtext>clearblue</itemtext><userdata name="details">clearblue skin for dhtmlxmenu</userdata>
+						</item>
+						<item id="dhtmlxmenu_cleargreen" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_clear_green.css;" depends="dhtmlxmenu_core">
+							<itemtext>cleargreen</itemtext><userdata name="details">cleargreen skin for dhtmlxmenu</userdata>
+						</item>
+						<item id="dhtmlxmenu_clearsilver" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_clear_silver.css;" depends="dhtmlxmenu_core">
+							<itemtext>clearsilver</itemtext><userdata name="details">clearsilver skin for dhtmlxmenu</userdata>
+						</item>
+						<item id="dhtmlxmenu_modernblack" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_modern_black.css;" depends="dhtmlxmenu_core">
+							<itemtext>modernblack</itemtext><userdata name="details">modernblack skin for dhtmlxmenu</userdata>
+						</item>
+						<item id="dhtmlxmenu_modernblue" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_modern_blue.css;" depends="dhtmlxmenu_core">
+							<itemtext>modernblue</itemtext><userdata name="details">modernblue skin for dhtmlxmenu</userdata>
+						</item>
+						<item id="dhtmlxmenu_modernred" path="./dhtmlxMenu/codebase/skins/dhtmlxmenu_modern_red.css;" depends="dhtmlxmenu_core">
+							<itemtext>modernred</itemtext><userdata name="details">modernred skin for dhtmlxmenu</userdata>
+						</item>
+					</item>	
+		</item>
+		
+				<item id="dhtmlxtoolbar">
+			<itemtext>dhtmlxToolbar</itemtext>
+			<item id="dhtmlxtoolbar_core" path="./dhtmlxToolbar/codebase/dhtmlxtoolbar.js">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxtoolbar ( include text, and image buttons support )</userdata>
+			</item>
+			<item id="dhtmlxtoolbar_exts">  	
+						<itemtext>extensions</itemtext>								
+					<item id="tool_list" depends="dhtmlxtoolbar_core" chunk="tool_list">
+							<itemtext>select</itemtext><userdata name="details">select like button</userdata>
+					</item>
+					<item id="tool_input" depends="dhtmlxtoolbar_core" chunk="tool_input">
+							<itemtext>input</itemtext><userdata name="details">input button</userdata>
+					</item>
+					<item id="tool_2state" depends="dhtmlxtoolbar_core" chunk="tool_2state">
+							<itemtext>2-state</itemtext><userdata name="details">two state button</userdata>
+					</item>
+					<item id="tool_slider" depends="dhtmlxtoolbar_core" chunk="tool_slider">
+							<itemtext>slider</itemtext><userdata name="details">slider button</userdata>
+					</item>
+					
+					
+					
+					
+			</item>
+			<item id="dhtmlxtoolbar_skins">  
+						<itemtext>skins</itemtext>
+						
+						<item id="dhtmlxtoolbar_aquadark" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_aquadark.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>aquadark</itemtext><userdata name="details">aquadark skin for dhtmlxtoolbar</userdata>
+						</item>
+						<item id="dhtmlxtoolbar_aquaorange" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_aquaorange.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>aquaorange</itemtext><userdata name="details">aquaorange skin for dhtmlxtoolbar</userdata>
+						</item>
+						<item id="dhtmlxtoolbar_aquasky" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_aquasky.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>aquasky</itemtext><userdata name="details">aquasky skin for dhtmlxtoolbar</userdata>
+						</item>
+						<item id="dhtmlxtoolbar_clearblue" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_clearblue.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>clearblue</itemtext><userdata name="details">clearblue skin for dhtmlxtoolbar</userdata>
+						</item>
+						<item id="dhtmlxtoolbar_cleargreen" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_cleargreen.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>cleargreen</itemtext><userdata name="details">cleargreen skin for dhtmlxtoolbar</userdata>
+						</item>
+						<item id="dhtmlxtoolbar_clearsilver" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_clearsilver.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>clearsilver</itemtext><userdata name="details">clearsilver skin for dhtmlxtoolbar</userdata>
+						</item>
+						<item id="dhtmlxtoolbar_modernblack" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_modernblack.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>modernblack</itemtext><userdata name="details">modernblack skin for dhtmlxtoolbar</userdata>
+						</item>
+						<item id="dhtmlxtoolbar_modernblue" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_modernblue.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>modernblue</itemtext><userdata name="details">modernblue skin for dhtmlxtoolbar</userdata>
+						</item>
+						<item id="dhtmlxtoolbar_modernred" path="./dhtmlxToolbar/codebase/skins/dhtmlxtoolbar_modernred.css;" depends="dhtmlxtoolbar_core">
+							<itemtext>modernred</itemtext><userdata name="details">modernred skin for dhtmlxtoolbar</userdata>
+						</item>
+					</item>
+		</item>
+		
+		<item id="dhtmlxwindows">
+			<itemtext>dhtmlxWindows</itemtext>
+			<item id="dhtmlxwindows_core" depends="dhx_container"  path="./dhtmlxWindows/codebase/dhtmlxwindows.js;./dhtmlxWindows/codebase/dhtmlxwindows.css">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxwindows</userdata>
+				</item>
+					
+			<item id="dhtmlxwindows_advanced">
+					<itemtext>advanced</itemtext><userdata name="details">some advanced features</userdata>
+					
+					<item id="wind_uber" chunk="wind_uber" depends="dhtmlxwindows_core">
+							<itemtext>rare</itemtext><userdata name="details">rare used functionality ( findByText, forEachWindow, getBottommostWindow )</userdata>
+					</item>
+					<item id="wind_buttons" chunk="wind_buttons" depends="dhtmlxwindows_core">
+							<itemtext>buttons</itemtext><userdata name="details">buttons in dhtmlxwindow</userdata>
+					</item>
+					<item id="wind_comps" chunk="wind_comps" depends="dhtmlxwindows_core">
+							<itemtext>integration</itemtext><userdata name="details">ability to create tree|grid|folders|layout|accordeon in dhtmlxwindow</userdata>
+					</item>
+					<item id="wind_move" chunk="wind_move" depends="dhtmlxwindows_core">
+							<itemtext>move</itemtext><userdata name="details">ability to move dhtmlxwindow</userdata>
+					</item>
+					<item id="wind_park" chunk="wind_park" depends="dhtmlxwindows_core">
+							<itemtext>park</itemtext><userdata name="details">ability to park dhtmlxwindow</userdata>
+					</item>
+					
+			</item>
+			<item id="dhtmlxwindows_exts">  
+					<itemtext>Extensions</itemtext>
+					<item id="dhtmlxwindows_sb" path="./dhtmlxWindows/codebase/ext/dhtmlxwindows_sb.js" depends="dhtmlxwindows_core">
+						<itemtext>status</itemtext><userdata name="details">status bar in window</userdata>
+					</item>
+					<item id="dhtmlxwindows_wmn" path="./dhtmlxWindows/codebase/ext/dhtmlxwindows_wmn.js" depends="dhtmlxwindows_core">
+						<itemtext>menu</itemtext><userdata name="details">menu in window</userdata>
+					</item>
+					<item id="dhtmlxwindows_wtb" path="./dhtmlxWindows/codebase/ext/dhtmlxwindows_wtb.js" depends="dhtmlxwindows_core">
+						<itemtext>toolbar</itemtext><userdata name="details">toolbar in window</userdata>
+					</item>
+				</item>
+		</item>
+		
+		<item id="dhtmlxcommon" topoffset="50">
+			<itemtext>common</itemtext>
+			<item id="dhx_dnd" path="/dhtmlxcommon.js" chunk="base_dnd_support">
+				<itemtext>d-n-d</itemtext><userdata name="details">ability to use drag and drop</userdata>
+			</item>
+			<item id="dhx_xslt" path="/dhtmlxcommon.js" chunk="base_xslt_support">
+				<itemtext>XSLT support</itemtext><userdata name="details">ability to use XSLT on client side</userdata>
+			</item>
+			<item id="dhx_old" path="/dhtmlxcommon.js" chunk="base_xmlsafari2">
+				<itemtext>XML for Safari 2.x</itemtext><userdata name="details">ability to use XML parsing routines in Safari 2.x</userdata>
+			</item>
+			<item id="dhx_container" path="/dhtmlxcontainer.js" >
+				<itemtext>Container of layout</itemtext><userdata name="details"></userdata>
+			</item>
+		</item>
+		
+		<item id="dhtmlxdataprocessor">
+			<itemtext>dhtmlxDataProcessor</itemtext>
+			<item id="dp_core" path="./dhtmlxDataProcessor/codebase/dhtmlxdataprocessor.js">
+					<itemtext>core</itemtext><userdata name="details">Ability to sync changes in tree or grid with remote DB</userdata>
+			</item>
+		</item>	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<item id="dhtmlxcalendar">
+			<itemtext>dhtmlxCalendar</itemtext>
+			<item id="calendar_core" path="./dhtmlxCalendar/codebase/dhtmlxcalendar.js;./dhtmlxCalendar/codebase/dhtmlxcalendar.css">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxcalendar</userdata>
+			</item>
+		</item>
+		
+		
+		
+		<item id="dhtmlxcolorpicker">
+			<itemtext>dhtmlxColorPicker</itemtext>
+			<item id="colorpicker_core" path="./dhtmlxColorPicker/codebase/dhtmlxcolorpicker.js;./dhtmlxColorPicker/codebase/dhtmlxcolorpicker.css">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxcolorpicker</userdata>
+			</item>
+		</item>
+		
+		<item id="dhtmlxcombo">
+			<itemtext>dhtmlxCombo</itemtext>
+			<item id="dhtmlxcombo_core" path="./dhtmlxCombo/codebase/dhtmlxcombo.js;./dhtmlxCombo/codebase/dhtmlxcombo.css">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxcombo</userdata>
+			</item>
+			<item id="dhtmlxcombo_extra" path="./dhtmlxCombo/codebase/ext/dhtmlxcombo_extra.js" depends="dhtmlxcombo_core">
+					<itemtext>option types</itemtext><userdata name="details">ability to use checkboxes and images inside dhtmlxcombo</userdata>
+			</item>
+			<item id="dhtmlxcombo_whp" path="./dhtmlxCombo/codebase/ext/dhtmlxcombo_whp.js" depends="dhtmlxcombo_core">
+					<itemtext>auto-size</itemtext><userdata name="details">auto-width and auot-height of dhtmlxcombo</userdata>
+			</item>
+			<item id="dhtmlxcombo_group" path="./dhtmlxCombo/codebase/ext/dhtmlxcombo_group.js" depends="dhtmlxcombo_core">
+					<itemtext>grouping</itemtext><userdata name="details">grouping dhtmlxcombo</userdata>
+			</item>
+		</item>
+		
+		
+		<item id="dhtmlxfolders">
+			<itemtext>dhtmlxFolders</itemtext>
+			<item id="dhtmlxfolders_core" path="./dhtmlxFolders/codebase/dhtmlxfolders.js;./dhtmlxFolders/codebase/dhtmlxfolders.css" depends="dhx_xslt">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxfolders</userdata>
+			</item>
+			<item id="dhtmlxfolders_drag" path="./dhtmlxFolders/codebase/ext/dhtmlxfolders_drag.js" depends="dhx_dnd;dhtmlxfolders_core">
+					<itemtext>d-n-d</itemtext><userdata name="details">d-n-d in dhtmlxfolders</userdata>
+			</item>
+		</item>
+		<item id="dhtmlxtabbar">
+			<itemtext>dhtmlxTabbar</itemtext>
+			<item id="dhtmlxtabbar_core" path="./dhtmlxTabbar/codebase/dhtmlxtabbar.js;./dhtmlxTabbar/codebase/dhtmlxtabbar.css">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxtabbar</userdata>
+					<item id="dhtmlxtabbar_4DTabs" path="./dhtmlxTabbar/codebase/dhtmlxtabbar.js" depends="dhtmlxtabbar_core;dhx_container" chunk="4DTabs">
+						<itemtext>all sides</itemtext><userdata name="details">ability to have tabs on rigth,left,bottom sides</userdata>
+					</item>			
+					<item id="dhtmlxtabbar_size_adjust" path="./dhtmlxTabbar/codebase/dhtmlxtabbar.js" depends="dhtmlxtabbar_core" chunk="size_adjust">
+						<itemtext>sizes</itemtext><userdata name="details">ability to adjust size to inner or outer content</userdata>
+					</item>			
+					<item id="dhtmlxtabbar_scrollers" path="./dhtmlxTabbar/codebase/dhtmlxtabbar.js" depends="dhtmlxtabbar_core" chunk="scrollers">
+						<itemtext>scrolls</itemtext><userdata name="details">ability to use scrollers in tabbar</userdata>
+					</item>			
+					<item id="dhtmlxtabbar_multiline" path="./dhtmlxTabbar/codebase/dhtmlxtabbar.js" depends="dhtmlxtabbar_core" chunk="multiline">
+						<itemtext>lines</itemtext><userdata name="details">ability ot have multiple lines of tabs</userdata>
+					</item>			
+					<item id="dhtmlxtabbar_href_support" path="./dhtmlxTabbar/codebase/dhtmlxtabbar.js" depends="dhtmlxtabbar_core" chunk="href_support">
+						<itemtext>ajax|iframe</itemtext><userdata name="details">ability to work in ajax and frame based modes</userdata>
+					</item>			
+					
+					
+
+
+
+																											
+			</item>
+			<item id="dhtmlxtabbar_start" path="./dhtmlxTabbar/codebase/dhtmlxtabbar_start.js">
+					<itemtext>HTML</itemtext><userdata name="details">allows to init dhtmlxtabbar from HTML markup</userdata>
+			</item>
+		</item>
+		
+		
+		<item id="dhtmlxaccordion">
+			<itemtext>dhtmlxAccordion</itemtext>
+			<item depends="dhx_container" id="dhtmlxAccordion_core" path="./dhtmlxAccordion/codebase/dhtmlxaccordion.js">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxAccordion</userdata>
+			</item>
+		</item>		
+		
+		<item id="dhtmlxslider">
+			<itemtext>dhtmlxSlider</itemtext>
+			<item id="dhtmlxSlider_core" path="./dhtmlxSlider/codebase/dhtmlxslider.js;./dhtmlxSlider/codebase/dhtmlxslider.css">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxSlider</userdata>
+			</item>
+		</item>		
+		
+		<item id="dhtmlxeditor">
+			<itemtext>dhtmlxEditor</itemtext>
+			<item depends="dhx_container" id="dhtmlxEditor_core" path="./dhtmlxEditor/codebase/dhtmlxeditor.js;./dhtmlxEditor/codebase/dhtmlxeditor.js">
+					<itemtext>core</itemtext><userdata name="details">just a dhtmlxEditor</userdata>
+			</item>
+			<item id="dhtmlxEditor_ext" path="./dhtmlxEditor/codebase/ext/dhtmlxeditor_ext.js" depends="dhtmlxEditor_core">
+					<itemtext>extended init</itemtext><userdata name="details">ability to use toolbar in editor header with all possible buttons</userdata>
+			</item>
+		</item>		
+		<item id="dhtmlxform">
+			<itemtext>dhtmlXForm</itemtext>
+			<item id="dhtmlxForm_core" path="./dhtmlxForm/codebase/dhtmlxform.js;./dhtmlxForm/codebase/dhtmlxform.css">
+					<itemtext>core</itemtext><userdata name="details">All functionality of dhtmlxForm</userdata>
+			</item>
+		</item>		
+		<item id="dhtmlxchart">
+			<itemtext>dhtmlXChart</itemtext>
+			<item id="dhtmlXChart_core" corefile="true" path="./dhtmlxChart/codebase/dhtmlxchart.js;./dhtmlxChart/codebase/dhtmlxchart.css">
+					<itemtext>core</itemtext><userdata name="details">all functionality of dhtmlXChart</userdata>
+			</item>
+		</item>		
+		<item id="dhtmlxdataview">
+			<itemtext>dhtmlXDataView</itemtext>
+			<item id="dhtmlXDataView_core" corefile="true" path="./dhtmlxDataView/codebase/dhtmlxdataview.js;./dhtmlxDataView/codebase/dhtmlxdataview.css">
+					<itemtext>core</itemtext><userdata name="details">all functionality of dhtmlXForm</userdata>
+			</item>
+		</item>		
+		
+
+		
+		
+
+		
+		
+		
+	</item>
+</tree>

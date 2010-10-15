@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxconnector:file_system    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxconnector:file_system</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:file_system" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:file_system" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxconnector:file_system" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxconnector:file_system"  class="breadcrumbs" title="dhtmlxconnector:file_system">file_system</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___connector.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxconnector:toc">dhtmlxconnector</a></div><div class='arrow'></div><div class='backlink'><a href="dhtmlxconnector___toc_what_is_dhtmlxconnector.html" class="wikilink1" title="dhtmlxconnector:toc_what_is_dhtmlxconnector">Usage Guide</a></div></div>
+</p>
+
+
+
+<h3><a name="using_file_system_as_datasource" id="using_file_system_as_datasource">Using File System as datasource</a></h3>
+<div class="level3">
+
+<p>
+
+Connector 1.x allows to use FileSystem as datasouce. It can be used with any client side component, but more common use-case is the grid and tree
+</p>
+<pre class="code php">&nbsp;
+	<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;./codebase/connector/db_filesystem.php&quot;</span><span class="br0">&#41;</span>;
+	<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;./codebase/connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+	<span class="re0">$grid</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="st0">&quot;&quot;</span><span class="sy0">,</span> <span class="st0">&quot;FileSystem&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;../&quot;</span><span class="sy0">,</span><span class="st0">&quot;safe_name&quot;</span><span class="sy0">,</span><span class="st0">&quot;filename,full_filename,size,name,extention,date,is_folder&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+<img src="dhtmlxconnector___file_system.png"  class="media" alt="" />
+</p>
+
+<p>
+Above code will fill grid with info about files in d:/www folder
+</p>
+
+<p>
+Parameters of render_table
+
+</p>
+<ul>
+<li class="level1"><div class="li"> folder, for which data listing is required</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> id field, leave it empty of use safe_name as ID of file</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> list of fields, possible values are</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> filename - name of file</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> full_filename - full path to file</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> size - size of file in bytes</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> name - name part of file name</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> extension - extension part of file name</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> date - timestamp of file</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> is_folder - file|folder flag</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="limiting_files_in_output" id="limiting_files_in_output">Limiting files in output</a></h5>
+<div class="level5">
+
+<p>
+
+You can limit files by extension type 
+</p>
+<pre class="code php">&nbsp;
+	<span class="re0">$fileTypes</span> <span class="sy0">=</span> FileSystemTypes<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+	<span class="re0">$fileTypes</span><span class="sy0">-&gt;</span><span class="me1">addExtention</span><span class="br0">&#40;</span><span class="st_h">'png'</span><span class="br0">&#41;</span>;</pre>
+<p>
+or by meta-type
+</p>
+<pre class="code php">&nbsp;
+	<span class="re0">$fileTypes</span> <span class="sy0">=</span> FileSystemTypes<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+	<span class="re0">$fileTypes</span><span class="sy0">-&gt;</span><span class="me1">setType</span><span class="br0">&#40;</span><span class="st_h">'web'</span><span class="br0">&#41;</span>;</pre><ul>
+<li class="level1"><div class="li"> image - image files</div>
+</li>
+<li class="level1"><div class="li"> document - doc, xls, txt, rtf</div>
+</li>
+<li class="level1"><div class="li"> web - php, html, js, css</div>
+</li>
+<li class="level1"><div class="li"> audio - mp3, wav, ogg</div>
+</li>
+<li class="level1"><div class="li"> video - avi, mpg, mpeg, mp4</div>
+</li>
+<li class="level1"><div class="li"> only_dir - folders</div>
+</li>
+</ul>
+
+<p>
+
+or by regexp pattern
+</p>
+<pre class="code php">&nbsp;
+	<span class="re0">$fileTypes</span> <span class="sy0">=</span> FileSystemTypes<span class="sy0">::</span><span class="me2">getInstance</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+	<span class="re0">$fileTypes</span><span class="sy0">-&gt;</span><span class="me1">addPattern</span><span class="br0">&#40;</span><span class="st_h">'/^.+\..*$/'</span><span class="br0">&#41;</span>;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="101-" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:file_system" /><input type="submit" value="Edit" class="button" title="Using File System as datasource" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxconnector/file_system.txt &middot; Last modified: 2010/07/13 17:27 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:file_system" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:file_system" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxconnector:file_system" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxconnector%3Afile_system&amp;1279804812" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:file_system" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

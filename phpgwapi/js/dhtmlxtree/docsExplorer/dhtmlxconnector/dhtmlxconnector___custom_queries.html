@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxconnector:custom_queries    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxconnector:custom_queries</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxconnector:custom_queries"  class="breadcrumbs" title="dhtmlxconnector:custom_queries">custom_queries</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#using_connector_for_db_operation" class="toc">Using connector for DB operation</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#sql_queries" class="toc">SQL queries</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#operation_through_connector" class="toc">Operation through connector</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#creating_addtional_output-less_connectors" class="toc">Creating addtional output-less connectors</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___connector.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxconnector:toc">dhtmlxconnector</a></div><div class='arrow'></div><div class='backlink'><a href="dhtmlxconnector___toc_what_is_dhtmlxconnector.html" class="wikilink1" title="dhtmlxconnector:toc_what_is_dhtmlxconnector">Usage Guide</a></div></div>
+
+</p>
+
+<h2><a name="using_connector_for_db_operation" id="using_connector_for_db_operation">Using connector for DB operation</a></h2>
+<div class="level2">
+
+<p>
+
+When implementing custom queries , it may be necessary to execute some custom update against DB. 
+It possible to use connector&#039;s code, which will provide abstraction from underline DB
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="98-329" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Edit" class="button" title="Using connector for DB operation" /></div></form></div>
+<h3><a name="sql_queries" id="sql_queries">SQL queries</a></h3>
+<div class="level3">
+
+<p>
+
+You can access DBWrapper object as 
+
+</p>
+<pre class="code php">	<span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">sql</span></pre>
+<p>
+
+and use it for custom queries
+
+</p>
+<pre class="code php">	<span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">sql</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">&#40;</span><span class="st0">&quot;DELETE FROM some_table WHERE ID=1&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+or
+
+</p>
+<pre class="code php">	<span class="re0">$res</span> <span class="sy0">=</span> <span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">sql</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">&#40;</span><span class="st0">&quot;SELECT * FROM some_table WHERE ID=1&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$data</span> <span class="sy0">=</span>  <span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">sql</span><span class="sy0">-&gt;</span><span class="me1">get_next</span><span class="br0">&#40;</span><span class="re0">$res</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+or
+
+</p>
+<pre class="code php">	<span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">sql</span><span class="sy0">-&gt;</span><span class="me1">query</span><span class="br0">&#40;</span><span class="st0">&quot;INSERT INTO some_table(type) VALUES('simple')&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$id</span> <span class="sy0">=</span> <span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">sql</span><span class="sy0">-&gt;</span><span class="me1">get_new_id</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="330-806" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Edit" class="button" title="SQL queries" /></div></form></div>
+<h3><a name="operation_through_connector" id="operation_through_connector">Operation through connector</a></h3>
+<div class="level3">
+
+<p>
+
+Connector object has 3 methods for manipulation with underline table
+</p>
+<pre class="code php">	<span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+parameter - value of ID field, for which record need to be deleted
+</p>
+<pre class="code php">	<span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">update</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span>
+		<span class="st0">&quot;type_id&quot;</span> <span class="sy0">=&gt;</span> <span class="st_h">'1'</span>
+		<span class="st0">&quot;type&quot;</span> <span class="sy0">=&gt;</span> <span class="st_h">'simple'</span>
+	<span class="br0">&#41;</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+parameter - has of values, it must contain ID field for successfull result. 
+</p>
+<pre class="code php">	<span class="re0">$id</span> <span class="sy0">=</span> <span class="re0">$connector</span><span class="sy0">-&gt;</span><span class="me1">insert</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span>
+		<span class="st0">&quot;type&quot;</span> <span class="sy0">=&gt;</span> <span class="st0">&quot;simple&quot;</span><span class="sy0">,</span>
+	<span class="br0">&#41;</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+parameter - has of values
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="807-1303" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Edit" class="button" title="Operation through connector" /></div></form></div>
+<h3><a name="creating_addtional_output-less_connectors" id="creating_addtional_output-less_connectors">Creating addtional output-less connectors</a></h3>
+<div class="level3">
+
+<p>
+
+You can create an extra connector object on the fly and use it for DB operations
+</p>
+<pre class="code php">&nbsp;
+	<span class="re0">$temp</span> <span class="sy0">=</span> <span class="kw2">new</span> Connector<span class="br0">&#40;</span><span class="re0">$db_connection</span><span class="br0">&#41;</span>;
+	<span class="re0">$temp</span><span class="sy0">-&gt;</span><span class="me1">configure</span><span class="br0">&#40;</span><span class="st0">&quot;some_table&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+	<span class="re0">$temp</span><span class="sy0">-&gt;</span><span class="me1">insert</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span>
+		<span class="st0">&quot;some1&quot;</span> <span class="sy0">=&gt;</span> <span class="st0">&quot;value 1&quot;</span><span class="sy0">,</span>
+		<span class="st0">&quot;some2&quot;</span> <span class="sy0">=&gt;</span> <span class="st0">&quot;value 2&quot;</span>
+	<span class="br0">&#41;</span><span class="br0">&#41;</span>;
+	<span class="re0">$temp</span><span class="sy0">-&gt;</span><span class="me1">delete</span><span class="br0">&#40;</span><span class="st0">&quot;2&quot;</span><span class="br0">&#41;</span>;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1304-" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Edit" class="button" title="Creating addtional output-less connectors" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxconnector/custom_queries.txt &middot; Last modified: 2010/07/13 17:27 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxconnector%3Acustom_queries&amp;1279804811" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:custom_queries" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

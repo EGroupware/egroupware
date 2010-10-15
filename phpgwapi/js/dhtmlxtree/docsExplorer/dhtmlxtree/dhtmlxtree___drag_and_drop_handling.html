@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxtree:drag_and_drop_handling    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxtree:drag_and_drop_handling</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxtree:drag_and_drop_handling"  class="breadcrumbs" title="dhtmlxtree:drag_and_drop_handling">drag_and_drop_handling</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#drag-and-drop_handling" class="toc">Drag-and-Drop Handling</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#enabling_disabling_drag-and-drop" class="toc">Enabling/Disabling Drag-and-Drop</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#setting_drag-and-drop_mode" class="toc">Setting Drag-and-Drop Mode</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#copy_with_drag-and-drop" class="toc">Copy with Drag-and-Drop</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#dragging_into_tree" class="toc">Dragging Into Tree</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#dragging_between_frames_iframes" class="toc">Dragging between Frames/Iframes</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#enabling_custom_drag_out" class="toc">Enabling Custom Drag Out</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#enabling_auto_scrolling" class="toc">Enabling Auto Scrolling</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___tree.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxtree:toc">dhtmlxtree</a></div></div>
+
+</p>
+
+<h2><a name="drag-and-drop_handling" id="drag-and-drop_handling">Drag-and-Drop Handling</a></h2>
+<div class="level2">
+
+<p>
+dhtmlxTree has extended drag-and-drop functionality (within one tree, between trees). Using this functionality, it is easy to reorder nodes in a tree view, edit the tree by dragging nodes within one tree, between trees, or even to another object.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-339" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit" class="button" title="Drag-and-Drop Handling" /></div></form></div>
+<h3><a name="enabling_disabling_drag-and-drop" id="enabling_disabling_drag-and-drop">Enabling/Disabling Drag-and-Drop</a></h3>
+<div class="level3">
+
+<p>
+The user can switch d-n-d functionality on|off with the help of enableDragAndDrop() method:
+
+</p>
+<pre class="code javascript">        tree.<span class="me1">enableDragAndDrop</span><span class="br0">&#40;</span>mode<span class="sy0">,</span> rmode<span class="br0">&#41;</span>;</pre>
+<p>
+
+The parameters here are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  mode - the possible variants are:</div>
+<ul>
+<li class="level2"><div class="li">  true - d-n-d is enabled in the tree;</div>
+</li>
+<li class="level2"><div class="li">  false - d-n-d is disabled in the tree;</div>
+</li>
+<li class="level2"><div class="li">  “temporary_disabled” - d-n-d is disabled temporarily.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  rmode(true|false) - allows to enable|disable drop an item on an empty space in the tree, making this item the child of the top level tree node. This is enabled (true) by default. If disabled (false), the user won&#039;t be able to drop an item on an empty space in the tree.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="340-1051" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit" class="button" title="Enabling/Disabling Drag-and-Drop" /></div></form></div>
+<h3><a name="setting_drag-and-drop_mode" id="setting_drag-and-drop_mode">Setting Drag-and-Drop Mode</a></h3>
+<div class="level3">
+
+<p>
+There is a simple method that allows the user to set d-n-d mode - setDragBehavior():
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setDragBehavior</span><span class="br0">&#40;</span>mode<span class="sy0">,</span> select<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Dragging mode should be indicated as the parameter of this method. The parameters are the following:
+</p>
+<ul>
+<li class="level1"><div class="li">  mode - the following modes are available:</div>
+<ul>
+<li class="level2"><div class="li">  child - drop as a child;</div>
+</li>
+<li class="level2"><div class="li">  sibling - drop as a sibling;</div>
+</li>
+<li class="level2"><div class="li">  complex - both previous modes are active;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  select - select the dropped item after drag-n-drop; it is set to true by default.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1052-1629" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit" class="button" title="Setting Drag-and-Drop Mode" /></div></form></div>
+<h3><a name="copy_with_drag-and-drop" id="copy_with_drag-and-drop">Copy with Drag-and-Drop</a></h3>
+<div class="level3">
+
+<p>
+There is also the possibility to enable “mercy” drag mode. In this case, the copy of the dragged item will be moved to another place, leaving the source item intact (copy instead move):
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableMercyDrag</span><span class="br0">&#40;</span><span class="kw2">true</span>|false<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1630-1950" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit" class="button" title="Copy with Drag-and-Drop" /></div></form></div>
+<h3><a name="dragging_into_tree" id="dragging_into_tree">Dragging Into Tree</a></h3>
+<div class="level3">
+
+<p>
+Objects from page can be easily dragged into the tree. There are the following ways of making object draggable:
+</p>
+<ul>
+<li class="level1"><div class="li">  Using makeDraggable() method which parameter is the id of the object that the user wants to make draggable:</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;a0&quot;</span><span class="sy0">&gt;</span>Some text<span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;a1&quot;</span> text<span class="sy0">=</span><span class="st0">&quot;Tomb&quot;</span> image<span class="sy0">=</span><span class="st0">&quot;tombs.gif&quot;</span><span class="sy0">&gt;</span>Some complex HTML<span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        ...
+        <span class="me1">tree</span>.<span class="me1">makeDraggable</span><span class="br0">&#40;</span><span class="st0">&quot;a0&quot;</span><span class="br0">&#41;</span>;
+        tree.<span class="me1">makeDraggable</span><span class="br0">&#40;</span><span class="st0">&quot;a1&quot;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre><ul>
+<li class="level1"><div class="li">  Using makeDraggable() method which parameters are: id of the object and the function that will be activated on d-n-d to add the element into the tree:</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;a2&quot;</span> text<span class="sy0">=</span><span class="st0">&quot;Green&quot;</span><span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>div style<span class="sy0">=</span><span class="st0">'width:50px; height:20px; background-color:green;'</span><span class="sy0">&gt;&lt;/</span>div<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">makeDraggable</span><span class="br0">&#40;</span><span class="st0">&quot;a2&quot;</span><span class="sy0">,</span><span class="kw2">function</span><span class="br0">&#40;</span>drop_obj<span class="sy0">,</span>source_id<span class="sy0">,</span>target_on<span class="sy0">,</span>target_before<span class="br0">&#41;</span><span class="br0">&#123;</span>
+            drop_obj.<span class="me1">insertNewItem</span><span class="br0">&#40;</span>target_on<span class="sy0">,</span>source_id<span class="sy0">,</span><span class="st0">&quot;Green 1&quot;</span><span class="br0">&#41;</span>;
+            drop_obj.<span class="me1">insertNewItem</span><span class="br0">&#40;</span>target_on<span class="sy0">,</span>source_id<span class="sy0">,</span><span class="st0">&quot;Green 2&quot;</span><span class="br0">&#41;</span>;
+            drop_obj.<span class="me1">insertNewItem</span><span class="br0">&#40;</span>target_on<span class="sy0">,</span>source_id<span class="sy0">,</span><span class="st0">&quot;Green 3&quot;</span><span class="br0">&#41;</span>;
+        <span class="br0">&#125;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre><ul>
+<li class="level1"><div class="li">  Using makeAllDraggable() method without any input parameters:</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>div dragInDhtmlXTree<span class="sy0">=</span><span class="st0">&quot;true&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;a3&quot;</span> text<span class="sy0">=</span><span class="st0">&quot;Blue&quot;</span> <span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>div dragInDhtmlXTree<span class="sy0">=</span><span class="st0">&quot;true&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;a4&quot;</span> image<span class="sy0">=</span><span class="st0">&quot;open2.gif&quot;</span> text<span class="sy0">=</span><span class="st0">&quot;Open&quot;</span><span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>div dragInDhtmlXTree<span class="sy0">=</span><span class="st0">&quot;true&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;a5&quot;</span> image<span class="sy0">=</span><span class="st0">&quot;tombs.gif&quot;</span> text<span class="sy0">=</span><span class="st0">&quot;Tomb&quot;</span><span class="sy0">&gt;</span>...<span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span>
+&nbsp;
+&nbsp;
+&nbsp;
+    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">makeAllDraggable</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1951-3467" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit" class="button" title="Dragging Into Tree" /></div></form></div>
+<h3><a name="dragging_between_frames_iframes" id="dragging_between_frames_iframes">Dragging between Frames/Iframes</a></h3>
+<div class="level3">
+
+<p>
+Drag-and-drop between frames|iframes is enabled by default (works in <acronym title="Internet Explorer">IE</acronym> and FireFox), so no additional code is required except:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableDragAndDrop</span><span class="br0">&#40;</span><span class="kw2">true</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+All you need to do additionally is to insert the following code into the frame/iframe containing no tree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">new</span> dhtmlDragAndDropObject<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="3468-3934" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit" class="button" title="Dragging between Frames/Iframes" /></div></form></div>
+<h3><a name="enabling_custom_drag_out" id="enabling_custom_drag_out">Enabling Custom Drag Out</a></h3>
+<div class="level3">
+
+<p>
+Dragging a node from the tree to some input control on page is also possible with dhtmlxTree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">dragger</span>.<span class="me1">addDragLanding</span><span class="br0">&#40;</span>sinput<span class="sy0">,</span> <span class="br0">&#123;</span>
+            _drag <span class="sy0">:</span> <span class="kw2">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span><span class="sy0">,</span>
+            _dragIn <span class="sy0">:</span> <span class="kw2">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span><span class="sy0">,</span>
+            _dragOut <span class="sy0">:</span> <span class="kw2">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span> ... <span class="br0">&#125;</span>
+        <span class="br0">&#125;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;</span>acript<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters of addDragLanding() method are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  sinput - the element that will act as a dragging area;</div>
+</li>
+<li class="level1"><div class="li">  object - the object containing 3 functions:</div>
+<ul>
+<li class="level2"><div class="li">  _drag - will be called when the element is put on the dragging area;</div>
+</li>
+<li class="level2"><div class="li">  _dragIn - will be called when the element is over the dragging area;</div>
+</li>
+<li class="level2"><div class="li">  _dragOut - will be called when the element was over the dragging area but was moved outside it.</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+The first function is responsible for the action itself, while the other two are used for its visualization.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="3935-4832" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit" class="button" title="Enabling Custom Drag Out" /></div></form></div>
+<h3><a name="enabling_auto_scrolling" id="enabling_auto_scrolling">Enabling Auto Scrolling</a></h3>
+<div class="level3">
+
+<p>
+Auto scrolling is very useful in the process of d-n-d. This functionality is enabled by default, but it can be easily disabled in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableDragAndDropScrolling</span><span class="br0">&#40;</span><span class="kw2">false</span><span class="br0">&#41;</span>; <span class="co1">// true to enable again</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="4833-" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit" class="button" title="Enabling Auto Scrolling" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxtree/drag_and_drop_handling.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxtree%3Adrag_and_drop_handling&amp;1279804935" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:drag_and_drop_handling" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

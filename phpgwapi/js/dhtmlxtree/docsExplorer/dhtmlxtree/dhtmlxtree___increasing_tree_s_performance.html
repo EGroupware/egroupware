@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxtree:increasing_tree_s_performance    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxtree:increasing_tree_s_performance</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxtree:increasing_tree_s_performance"  class="breadcrumbs" title="dhtmlxtree:increasing_tree_s_performance">increasing_tree_s_performance</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#increasing_tree_s_performance" class="toc">Increasing Tree&#039;s Performance</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#dynamical_loading" class="toc">Dynamical Loading</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#smart_xml_parsing" class="toc">Smart XML Parsing</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#distributed_parsing" class="toc">Distributed Parsing</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#smart_rendering" class="toc">Smart Rendering</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___tree.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxtree:toc">dhtmlxtree</a></div></div>
+
+</p>
+
+<h2><a name="increasing_tree_s_performance" id="increasing_tree_s_performance">Increasing Tree&#039;s Performance</a></h2>
+<div class="level2">
+
+<p>
+The following ways of increasing performance were introduced in dhtmlxTree (when working with huge data sets):
+</p>
+<ul>
+<li class="level1"><div class="li">  Dynamical Loading;</div>
+</li>
+<li class="level1"><div class="li">  Smart <acronym title="Extensible Markup Language">XML</acronym> Parsing;</div>
+</li>
+<li class="level1"><div class="li">  Distributed Parsing;</div>
+</li>
+<li class="level1"><div class="li">  Smart Rendering.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-306" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Edit" class="button" title="Increasing Tree's Performance" /></div></form></div>
+<h3><a name="dynamical_loading" id="dynamical_loading">Dynamical Loading</a></h3>
+<div class="level3">
+
+<p>
+In case the tree contains large amount of nodes (or the user doesn&#039;t want to waste time on loading hidden nodes), it would be better to load them on request, not all at once. The functionality to load tree levels dynamically using <acronym title="Extensible Markup Language">XML</acronym> was introduced for this purpose. Dynamical loading of items from <acronym title="Extensible Markup Language">XML</acronym> stream gives the possibility to create <acronym title="Dynamic HyperText Markup Language">DHTML</acronym> trees with unlimited number of nodes.
+</p>
+
+</div>
+
+<h4><a name="activating_dynamical_loading" id="activating_dynamical_loading">Activating Dynamical Loading</a></h4>
+<div class="level4">
+
+<p>
+First, in <acronym title="Extensible Markup Language">XML</acronym> the user should indicate the nodes that will be loaded dynamically this way: add the parameter child=“1” to all nodes that have child items. The items containing this parameter will be objects for dynamical loading.
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;?</span>xml version<span class="sy0">=</span><span class="st0">&quot;1.0&quot;</span> encoding<span class="sy0">=</span><span class="st0">&quot;iso-8859-1&quot;</span> <span class="sy0">?&gt;</span>
+        <span class="sy0">&lt;</span>tree id<span class="sy0">=</span><span class="st0">&quot;0&quot;</span><span class="sy0">&gt;</span>
+            <span class="sy0">&lt;</span>item  text<span class="sy0">=</span><span class="st0">&quot;Surveillance&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;a1&quot;</span> im0<span class="sy0">=</span><span class="st0">&quot;book.gif&quot;</span> … child<span class="sy0">=</span><span class="st0">&quot;1&quot;</span><span class="sy0">/&gt;</span>
+            <span class="sy0">&lt;</span>item …<span class="sy0">/&gt;</span>
+            …
+        <span class="sy0">&lt;/</span>tree<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The method setXMLAutoLoading() switches the dynamical loading on in the tree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setXMLAutoLoading</span><span class="br0">&#40;</span>url<span class="br0">&#41;</span>;
+        tree.<span class="me1">loadXML</span><span class="br0">&#40;</span>file<span class="br0">&#41;</span>; <span class="co1">// load the first level of the tree</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The above mentioned snippet is useful in case of a tree with large amount of data. The system will first load the data indicated by loadXML() method. The script specified in setXMLAutoLoading() method will be called when the user clicks the tree to expand any of the parent nodes (which child nodes were not loaded). The script will get the id of the node to open, and return the <acronym title="Extensible Markup Language">XML</acronym> with description of the child items.
+</p>
+
+<p>
+It should be noted that when the tree is switched on dynamical loading, script methods work only for those items that are loaded at the moment.
+</p>
+
+</div>
+
+<h4><a name="setting_auto_loading_behavior" id="setting_auto_loading_behavior">Setting Auto Loading Behavior</a></h4>
+<div class="level4">
+
+<p>
+The following method is responsible for specifying the way server side <acronym title="Uniform Resource Locator">URL</acronym> is constructed during dynamical loading calls:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setXMLAutoLoadingBehaviour</span><span class="br0">&#40;</span>mode<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The following modes variants are available here:
+</p>
+<ul>
+<li class="level1"><div class="li">  id - some_script?id=[item_id]</div>
+</li>
+<li class="level1"><div class="li">  name - some_script[item_id]</div>
+</li>
+<li class="level1"><div class="li">  xmlname  - some_script[item_id].xml</div>
+</li>
+<li class="level1"><div class="li">  function - is used for calling user-defined handler that should be set as the first parameter of setXMLAutoLoading() method.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="setting_escaping_mode" id="setting_escaping_mode">Setting Escaping Mode</a></h4>
+<div class="level4">
+
+<p>
+Mode setEscapingMode() is responsible for setting escaping mode (used for escaping id in requests). This method sets the mode for transferring itree item information to the server:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setEscapingMode</span><span class="br0">&#40;</span>mode<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The following modes are available:
+</p>
+<ul>
+<li class="level1"><div class="li">  default - uses native escape functionality of the browser;</div>
+</li>
+<li class="level1"><div class="li">  utf8 - is used for UTF escaping;</div>
+</li>
+<li class="level1"><div class="li">  none - data is not escaped.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="307-3069" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Edit" class="button" title="Dynamical Loading" /></div></form></div>
+<h3><a name="smart_xml_parsing" id="smart_xml_parsing">Smart XML Parsing</a></h3>
+<div class="level3">
+
+<p>
+The idea of Smart <acronym title="Extensible Markup Language">XML</acronym> Parsing is simple: the entire tree structure is loaded on the client side, but only nodes that should be displayed are rendered. This helps to decrease loading time
+and general performance of large trees greatly. Plus, the entire tree structure is available for most of script methods (for example, searching is performed against all nodes, not only rendered ones).
+</p>
+
+</div>
+
+<h4><a name="activating_smart_xml_parsing" id="activating_smart_xml_parsing">Activating Smart XML Parsing</a></h4>
+<div class="level4">
+
+<p>
+To activate Smart <acronym title="Extensible Markup Language">XML</acronym> Parsing, the user should apply the following method:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableSmartXMLParsing</span><span class="br0">&#40;</span><span class="kw2">true</span><span class="br0">&#41;</span>; <span class="co1">// false is used to disable</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Please, pay your attention to the fact that Smart <acronym title="Extensible Markup Language">XML</acronym> Parsing does not work in case of loading fully expanded tree.
+</p>
+
+</div>
+
+<h4><a name="getting_parsing_state" id="getting_parsing_state">Getting Parsing State</a></h4>
+<div class="level4">
+
+<p>
+Parsing state can be got using getItemParsingState() method which takes item id as parameter:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> state <span class="sy0">=</span> tree.<span class="me1">getItemParsingState</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The method returns:
+</p>
+<ul>
+<li class="level1"><div class="li">  1 - item is already parsed;</div>
+</li>
+<li class="level1"><div class="li">  0 - item is not parsed yet;</div>
+</li>
+<li class="level1"><div class="li">  -1 - item&#039;s parsing is in process.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="3070-4215" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Edit" class="button" title="Smart XML Parsing" /></div></form></div>
+<h3><a name="distributed_parsing" id="distributed_parsing">Distributed Parsing</a></h3>
+<div class="level3">
+
+<p>
+Another way to increase performance of the tree with some levels containing more than 100-200 nodes per level was introduced. This functionality is called Distributed Parsing. The main
+advantage of it lies in making the level visible and ready to use before it is completely parsed. Thus, items are loaded portion by portion with some timeouts.
+</p>
+
+</div>
+
+<h4><a name="activating_distributed_parsing" id="activating_distributed_parsing">Activating Distributed Parsing</a></h4>
+<div class="level4">
+
+<p>
+To enable this functionality, the user should make use of the following <acronym title="JavaScript">JS</acronym> command:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableDistributedParsing</span><span class="br0">&#40;</span>mode<span class="sy0">,</span>count<span class="sy0">,</span>delay<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Parameters of this method are:
+</p>
+<ul>
+<li class="level1"><div class="li">  mode - true|false meaning enable|disable Distributed Parsing;</div>
+</li>
+<li class="level1"><div class="li">  count - number of nodes per portion (optional parameter);</div>
+</li>
+<li class="level1"><div class="li">  delay - delay between portions parsing, set in milliseconds (optional parameter).</div>
+</li>
+</ul>
+
+<p>
+This functionaity is fully compatible with Smart <acronym title="Extensible Markup Language">XML</acronym> Parsing.
+
+</p>
+
+</div>
+
+<h4><a name="getting_parsing_state1" id="getting_parsing_state1">Getting Parsing State</a></h4>
+<div class="level4">
+
+<p>
+Current state of Distributed Parsing can be easily got in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+    <span class="kw2">var</span> state <span class="sy0">=</span> tree.<span class="me1">getDistributedParsingState</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// returns true|false</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+This method returns either true (meaning that parsing is still in process) or false (meaning that parsing is already finished).
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="4216-5515" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Edit" class="button" title="Distributed Parsing" /></div></form></div>
+<h3><a name="smart_rendering" id="smart_rendering">Smart Rendering</a></h3>
+<div class="level3">
+
+<p>
+In case the tree contains a lot of items per level (for instance, 500 and more), the user can increase overall performance using Smart Rendering mode. This mode allows loading big, not
+well-formed trees. There is no need for any changes in data structure to switch this mode on. It&#039;s just enableSmartRendering() method that should be used before loading data in tree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableSmartRendering</span><span class="br0">&#40;</span><span class="kw2">true</span><span class="br0">&#41;</span>; <span class="co1">// false is used to switch the mode off</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The important thing that should be taken into account is that this mode is incompatible with Distributed Parsing and Three-state checkboxes.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="5516-" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Edit" class="button" title="Smart Rendering" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxtree/increasing_tree_s_performance.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxtree%3Aincreasing_tree_s_performance&amp;1279804934" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:increasing_tree_s_performance" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

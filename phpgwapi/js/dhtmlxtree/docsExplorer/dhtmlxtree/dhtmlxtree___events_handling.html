@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxtree:events_handling    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxtree:events_handling</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxtree:events_handling"  class="breadcrumbs" title="dhtmlxtree:events_handling">events_handling</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#events_handling" class="toc">Events Handling</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#available_events" class="toc">Available Events</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#attaching_removing_event_handlers" class="toc">Attaching/Removing Event Handlers</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___tree.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxtree:toc">dhtmlxtree</a></div></div>
+
+</p>
+
+<h2><a name="events_handling" id="events_handling">Events Handling</a></h2>
+<div class="level2">
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-84" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Edit" class="button" title="Events Handling" /></div></form></div>
+<h3><a name="available_events" id="available_events">Available Events</a></h3>
+<div class="level3">
+
+<p>
+The following events are available in dhtmlxTree:
+</p>
+<ul>
+<li class="level1"><div class="li">  Drag-and-Drop Events:</div>
+<ul>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onbeforedrag.html" class="wikilink1" title="dhtmlxtree:event_onbeforedrag">onBeforeDrag</a> - occurs when item&#039;s dragging starts (the item is selected and the mouse is moving);</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_ondrag.html" class="wikilink1" title="dhtmlxtree:event_ondrag">onDrag</a> - occurs when the item was dragged and dropped on some other item, but before item&#039;s moving is processed;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_ondragin.html" class="wikilink1" title="dhtmlxtree:event_ondragin">onDragIn</a> - occurs when the item is dragged over some target the item can be dropped to;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_ondrop.html" class="wikilink1" title="dhtmlxtree:event_ondrop">onDrop</a> - occurs when drag-and-drop had already been processed; also occurs when the nodes are moved programmatically;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Editing Events:</div>
+<ul>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onedit.html" class="wikilink1" title="dhtmlxtree:event_onedit">onEdit</a> - occurs on 4 different stages of edit process: before starting of editing (can be canceled), after starting of editing, before editor&#039;s closing (can be canceled), after editor&#039;s closing;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onbeforecheck.html" class="wikilink1" title="dhtmlxtree:event_onbeforecheck">onBeforeCheck</a> - occurs before an item is checked|unchecked;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_oncheck.html" class="wikilink1" title="dhtmlxtree:event_oncheck">onCheck</a> - occurs immediately after an item in the tree was checked|unchecked;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Loading Events:</div>
+<ul>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onxls.html" class="wikilink1" title="dhtmlxtree:event_onxls">onXLS</a> - occurs when <acronym title="Extensible Markup Language">XML</acronym> parsing starts;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onxle.html" class="wikilink1" title="dhtmlxtree:event_onxle">onXLE</a> - occurs when <acronym title="Extensible Markup Language">XML</acronym> parsing is over, new items are already available in the tree;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Mouse Events:</div>
+<ul>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onmousein.html" class="wikilink1" title="dhtmlxtree:event_onmousein">onMouseIn</a> - occurs when the mouse pointer is hovered over an item;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onmouseout.html" class="wikilink1" title="dhtmlxtree:event_onmouseout">onMouseOut</a> - occurs when the mouse pointer is moved out of item&#039;s area;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Opening Events:</div>
+<ul>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onopenstart.html" class="wikilink1" title="dhtmlxtree:event_onopenstart">onOpenStart</a> - occurs right when an item in the tree starts to open, but before this item opens. This event is also available for “unclosable” nodes and nodes without open|close functionality - in that case result of the function will be ignored;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onopenend.html" class="wikilink1" title="dhtmlxtree:event_onopenend">onOpenEnd</a> - occurs right when an item in the tree has already become open. Event also raised for “unclosable” nodes and nodes without open/close functionality - in that case result of function will be ignored.</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_ondblclick.html" class="wikilink1" title="dhtmlxtree:event_ondblclick">onDblClick</a> - occurs right when a tree item was double clicked, but before default onDblClick functionality is processed;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onopendynamicend.html" class="wikilink1" title="dhtmlxtree:event_onopendynamicend">onOpenDynamicEnd</a> - occurs when openItemsDynamic() method loads and opens the required hierarchy of items;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Right Click Events</div>
+<ul>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onrightclick.html" class="wikilink1" title="dhtmlxtree:event_onrightclick">onRightClick</a>- occurs when the user clicks the right mouse button;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Selection Events</div>
+<ul>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onclick.html" class="wikilink1" title="dhtmlxtree:event_onclick">onClick</a> - occurs when the text part of a tree item was clicked, but after default onClick functionality was processed;</div>
+</li>
+<li class="level2"><div class="li">  <a href="dhtmlxtree___event_onselect.html" class="wikilink1" title="dhtmlxtree:event_onselect">onSelect</a> - occurs when the selection in the tree was changed.</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="85-2768" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Edit" class="button" title="Available Events" /></div></form></div>
+<h3><a name="attaching_removing_event_handlers" id="attaching_removing_event_handlers">Attaching/Removing Event Handlers</a></h3>
+<div class="level3">
+
+<p>
+The user can add any user-defined handler to available events. To do this he can use attachEvent() method with the following parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  evName - name of the event;</div>
+</li>
+<li class="level1"><div class="li">  evHandler - user-defined event handler.</div>
+</li>
+</ul>
+<pre class="code javascript">              tree.<span class="me1">attachEvent</span><span class="br0">&#40;</span>evName<span class="sy0">,</span> evHandler<span class="br0">&#41;</span>;
+&nbsp;</pre>
+<p>
+
+Several handlers can be attached to one and the same event, and all of them will be executed.<br/>
+
+Note: the names of the events are case-sensitive.
+</p>
+
+<p>
+There is a simple way of removing an event-handler:
+
+</p>
+<pre class="code javascript">          tree.<span class="me1">detachEvent</span><span class="br0">&#40;</span>id<span class="br0">&#41;</span>; <span class="co1">// unique id of the event handler</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="2769-" /><input type="hidden" name="rev" value="1279031295" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Edit" class="button" title="Attaching/Removing Event Handlers" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxtree/events_handling.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxtree%3Aevents_handling&amp;1279804932" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:events_handling" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

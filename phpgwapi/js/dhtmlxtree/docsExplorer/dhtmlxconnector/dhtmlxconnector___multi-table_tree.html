@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxconnector:multi-table_tree    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxconnector:multi-table_tree</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:multi-table_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:multi-table_tree" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxconnector:multi-table_tree" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxconnector:multi-table_tree"  class="breadcrumbs" title="dhtmlxconnector:multi-table_tree">multi-table_tree</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___connector.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxconnector:toc">dhtmlxconnector</a></div><div class='arrow'></div><div class='backlink'><a href="dhtmlxconnector___toc_what_is_dhtmlxconnector.html" class="wikilink1" title="dhtmlxconnector:toc_what_is_dhtmlxconnector">Usage Guide</a></div></div>
+</p>
+
+
+
+<h3><a name="multi-table_tree_and_treegrid" id="multi-table_tree_and_treegrid">Multi-table tree and treegrid</a></h3>
+<div class="level3">
+
+<p>
+
+In many cases, tree or treegrid need to be built from multiple tables. Each table represent separate level of tree or treegrid. For tree it can be done as
+</p>
+<pre class="code php">	<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;../../codebase/treemultitable_connector.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+&nbsp;
+	<span class="re0">$tree</span> <span class="sy0">=</span> <span class="kw2">new</span> TreeMultitableConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="br0">&#41;</span>;
+	<span class="re0">$tree</span><span class="sy0">-&gt;</span><span class="me1">setMaxLevel</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span>;
+	<span class="re0">$level</span> <span class="sy0">=</span> <span class="re0">$tree</span><span class="sy0">-&gt;</span><span class="me1">get_level</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+	<span class="kw1">switch</span> <span class="br0">&#40;</span><span class="re0">$level</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+		<span class="kw1">case</span> <span class="nu19">0</span><span class="sy0">:</span>
+			<span class="re0">$tree</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;projects2&quot;</span><span class="sy0">,</span><span class="st0">&quot;project_id&quot;</span><span class="sy0">,</span><span class="st0">&quot;project_name&quot;</span><span class="sy0">,</span><span class="st0">&quot;&quot;</span><span class="sy0">,</span><span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>;
+			<span class="kw1">break</span>;
+		<span class="kw1">case</span> <span class="nu0">1</span><span class="sy0">:</span>
+			<span class="re0">$tree</span><span class="sy0">-&gt;</span><span class="me1">render_sql</span><span class="br0">&#40;</span><span class="st0">&quot;SELECT teams2.team_id, teams2.team_name, project_team2.project_id FROM teams2 INNER JOIN project_team2 ON teams2.team_id=project_team2.team_id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;team_id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;team_name&quot;</span><span class="sy0">,</span> <span class="st0">&quot;&quot;</span><span class="sy0">,</span> <span class="st0">&quot;project_id&quot;</span><span class="br0">&#41;</span>;
+			<span class="kw1">break</span>;
+		<span class="kw1">case</span> <span class="nu0">2</span><span class="sy0">:</span>
+			<span class="re0">$tree</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;developers2&quot;</span><span class="sy0">,</span> <span class="st0">&quot;developer_id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;developer_name&quot;</span><span class="sy0">,</span> <span class="st0">&quot;&quot;</span><span class="sy0">,</span> <span class="st0">&quot;developer_team&quot;</span><span class="br0">&#41;</span>;
+			<span class="kw1">break</span>;
+		<span class="kw1">case</span> <span class="nu0">3</span><span class="sy0">:</span>
+			<span class="re0">$tree</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;phones2&quot;</span><span class="sy0">,</span> <span class="st0">&quot;phone_id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;phone&quot;</span><span class="sy0">,</span> <span class="st0">&quot;&quot;</span><span class="sy0">,</span> <span class="st0">&quot;phone_developer&quot;</span><span class="br0">&#41;</span>;
+			<span class="kw1">break</span>;
+	<span class="br0">&#125;</span></pre>
+<p>
+<img src="dhtmlxconnector___multitable_tree.png"  class="media" alt="" />
+</p>
+
+<p>
+<strong>Multi-table connector will work only for tree|treegrid with dyn. loading mode enabled</strong>
+</p>
+
+<p>
+Similar code can be used for treegrid , the only difference in the connector class
+</p>
+<pre class="code php">	<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;../../codebase/treegridmultitable_connector.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+	<span class="re0">$treegrid</span> <span class="sy0">=</span> <span class="kw2">new</span> TreeGridMultitableConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="br0">&#41;</span>;
+	<span class="re0">$treegrid</span><span class="sy0">-&gt;</span><span class="me1">setMaxLevel</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span>;
+	<span class="re0">$level</span> <span class="sy0">=</span> <span class="re0">$treegrid</span><span class="sy0">-&gt;</span><span class="me1">get_level</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+        <span class="sy0">...</span></pre>
+<p>
+<img src="dhtmlxconnector___treegrid_multitable.png"  class="media" alt="" />
+
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="99-" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:multi-table_tree" /><input type="submit" value="Edit" class="button" title="Multi-table tree and treegrid" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxconnector/multi-table_tree.txt &middot; Last modified: 2010/07/13 17:27 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:multi-table_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:multi-table_tree" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxconnector:multi-table_tree" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxconnector%3Amulti-table_tree&amp;1279804812" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:multi-table_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

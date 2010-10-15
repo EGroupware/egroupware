@@ -1,0 +1,38 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+
+<body>
+
+	<link rel="STYLESHEET" type="text/css" href="../../../codebase/dhtmlxtree.css">
+	
+	<script  src="../../../codebase/dhtmlxcommon.js"></script>
+	<script  src="../../../codebase/dhtmlxtree.js"></script>	
+	<table>
+		<tr>
+			<td>
+				<div id="treeboxbox_tree" style="width:260; height:260;background-color:#f5f5f5;border :1px solid Silver;; overflow:auto;"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td valign="top">
+			<iframe frameborder="2" name="frm71" id="frm71" src="pro_drag_frame_f2.html" width="300" height="300" style="border:3px outset red;"></iframe>
+
+			</td>
+		</tr>
+	</table>
+
+	<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setSkin("dhx_skyblue")
+			tree.setImagePath("../../../codebase/imgs/csh_bluefolders/");
+			tree.enableDragAndDrop(true);			
+			tree.loadXML("../../common/tree_a.xml")
+		
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+
+<body>
+	
+	<link rel="STYLESHEET" type="text/css" href="../../../codebase/dhtmlxtree.css">
+	
+	<script  src="../../../codebase/dhtmlxcommon.js"></script>
+	<script  src="../../../codebase/dhtmlxtree.js"></script>	
+	
+				<div id="treeboxbox_tree" style="width:260px; height:260px;background-color:#f5f5f5;border :1px solid Silver;; overflow:auto;"/>
+			
+
+	<script>
+			tree=new dhtmlXTreeObject("treeboxbox_tree","100%","100%",0);
+			tree.setSkin("dhx_skyblue")
+			tree.setImagePath("../../../codebase/imgs/csh_bluebooks/");
+			tree.enableDragAndDrop(true);			
+			tree.loadXML("../../common/tree_05_drag_n_drop.xml")
+		
+	</script>
+<br><br>
+
+</body>
+</html>

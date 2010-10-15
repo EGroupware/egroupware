@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxtree:simultaneous_server_update    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxtree:simultaneous_server_update</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxtree:simultaneous_server_update"  class="breadcrumbs" title="dhtmlxtree:simultaneous_server_update">simultaneous_server_update</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#simultaneous_server_update" class="toc">Simultaneous Server Update</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#dataprocessor_module" class="toc">dataProcessor Module</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#enabling_dataprocessor_module" class="toc">Enabling dataProcessor Module</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#server-side_dataprocessor_handling" class="toc">Server-Side dataProcessor Handling</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___tree.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxtree:toc">dhtmlxtree</a></div></div>
+
+</p>
+
+<h2><a name="simultaneous_server_update" id="simultaneous_server_update">Simultaneous Server Update</a></h2>
+<div class="level2">
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-95" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Edit" class="button" title="Simultaneous Server Update" /></div></form></div>
+<h3><a name="dataprocessor_module" id="dataprocessor_module">dataProcessor Module</a></h3>
+<div class="level3">
+
+<p>
+Common tree manipulations, like drag-n-drop (including d-n-d between trees), removing item, inserting item, or updating item&#039;s label, can be simultaneously reflected in server database now (since v.1.3) using dataProcessor module.
+</p>
+
+<p>
+Main features of this module are:
+</p>
+<ul>
+<li class="level1"><div class="li">  An updated/inserted item is marked with bold text, a deleted one - with line-through;</div>
+</li>
+<li class="level1"><div class="li">  You can define the mode for data processing (automatic|manual).</div>
+</li>
+</ul>
+
+<p>
+Updated|deleted items&#039; data is sent to the server to the specified <acronym title="Uniform Resource Locator">URL</acronym> (we call it serverProcessor). serverProcessor should return simple <acronym title="Extensible Markup Language">XML</acronym> of the specified format to let the tree know about successful or not successful processing. All necessary after-save procedures will be done automatically.
+
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="96-856" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Edit" class="button" title="dataProcessor Module" /></div></form></div>
+<h3><a name="enabling_dataprocessor_module" id="enabling_dataprocessor_module">Enabling dataProcessor Module</a></h3>
+<div class="level3">
+
+<p>
+To enable this feature, the user should do the following:
+</p>
+<ul>
+<li class="level1"><div class="li">  Include dhtmlxdataprocessor.js file to the page;</div>
+</li>
+<li class="level1"><div class="li">  Create dataProcessor object for the tree;</div>
+</li>
+<li class="level1"><div class="li">  Initialize dataProcessor.</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;../codebase/dhtmlxdataprocessor.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        ...
+        <span class="me1">tree</span>.<span class="me1">init</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+        myDataProcessor <span class="sy0">=</span> <span class="kw2">new</span> dataProcessor<span class="br0">&#40;</span>serverProcessorURL<span class="br0">&#41;</span>;
+        myDataProcessor.<span class="me1">init</span><span class="br0">&#40;</span>treeObj<span class="br0">&#41;</span>; <span class="co1">// tree object to assign dataProcessor to, mandatory</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The mandatory parameter for dataProcessor is:
+</p>
+<ul>
+<li class="level1"><div class="li">  serverProcessorURL - <acronym title="Uniform Resource Locator">URL</acronym> of the file that will process incoming data. If our server-side routines is used, “dhtmlxDataProcessor/server_code/<acronym title="Hypertext Preprocessor">PHP</acronym>/update.php?ctrl=tree” should be indicated.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="857-1641" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Edit" class="button" title="Enabling dataProcessor Module" /></div></form></div>
+<h3><a name="server-side_dataprocessor_handling" id="server-side_dataprocessor_handling">Server-Side dataProcessor Handling</a></h3>
+<div class="level3">
+
+<p>
+Using server-side dataProcessor, the user should bare in mind the following:
+</p>
+<ul>
+<li class="level1"><div class="li">  All data comes in GET scope:</div>
+<ul>
+<li class="level2"><div class="li">  tr_id - node id;</div>
+</li>
+<li class="level2"><div class="li">  tr_order - node sequense on the level;</div>
+</li>
+<li class="level2"><div class="li">  tr_pid - parent id;</div>
+</li>
+<li class="level2"><div class="li">  tr_text - node text(label);</div>
+</li>
+<li class="level2"><div class="li">  Userdata blocks - are passed with their names.</div>
+</li>
+<li class="level2"><div class="li">  !nativeeditor_status - values can be as follows:</div>
+<ul>
+<li class="level3"><div class="li">  “inserted” - item is inserted;</div>
+</li>
+<li class="level3"><div class="li">  “deleted” - item is deleted;</div>
+</li>
+<li class="level3"><div class="li">  “updated” or item doesn&#039;t exist - item is updated.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  serverProcessor should return valid <acronym title="Extensible Markup Language">XML</acronym> of the following format:</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>data<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>action type<span class="sy0">=</span><span class="st0">'insert/delete/update'</span> sid<span class="sy0">=</span><span class="st0">'incomming_node_ID'</span> tid<span class="sy0">=</span><span class="st0">'outgoing_node_ID'</span><span class="sy0">/&gt;</span>
+    <span class="sy0">&lt;/</span>data<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+In the above mentioned snippet, incomming_node_ID and outgoing_node_ID may be different for insert action only, but they are equal for other actions.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1642-" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Edit" class="button" title="Server-Side dataProcessor Handling" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxtree/simultaneous_server_update.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxtree%3Asimultaneous_server_update&amp;1279804932" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:simultaneous_server_update" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

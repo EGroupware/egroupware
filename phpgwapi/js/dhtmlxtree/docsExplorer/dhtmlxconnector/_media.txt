@@ -1,0 +1,7 @@
+icons___file.gif
+icons___connector.gif
+dhtmlxconnector___file_system.png
+dhtmlxconnector___multitable_tree.png
+dhtmlxconnector___treegrid_multitable.png
+dhtmlxconnector___tree_group.png
+dhtmlxconnector___defining_header_server.png

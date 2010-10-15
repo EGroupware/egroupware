@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxtree:initialization_of_dhtmlxtree    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxtree:initialization_of_dhtmlxtree</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxtree:initialization_of_dhtmlxtree"  class="breadcrumbs" title="dhtmlxtree:initialization_of_dhtmlxtree">initialization_of_dhtmlxtree</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#initialization_of_dhtmlxtree" class="toc">Initialization of dhtmlxTree</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#setting_image_path" class="toc">Setting Image Path</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#object-based_initialization" class="toc">Object-Based Initialization</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#initialization_from_html" class="toc">Initialization from HTML</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#data_loading" class="toc">Data Loading</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#data_transfer_mode" class="toc">Data Transfer Mode</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___tree.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxtree:toc">dhtmlxtree</a></div></div>
+
+</p>
+
+<h2><a name="initialization_of_dhtmlxtree" id="initialization_of_dhtmlxtree">Initialization of dhtmlxTree</a></h2>
+<div class="level2">
+
+<p>
+dhtmlxTree can be initialized on page using one of the following initialization schemes:
+</p>
+<ul>
+<li class="level1"><div class="li">  Object-based initialization;</div>
+</li>
+<li class="level1"><div class="li">  Initialization from <acronym title="HyperText Markup Language">HTML</acronym>.</div>
+</li>
+</ul>
+
+<p>
+Complete the following steps for any type of dhtmlxTree&#039;s initialization:
+</p>
+<ul>
+<li class="level1"><div class="li">  Download the dhtmlxTree package from the server and place it in a folder;</div>
+</li>
+<li class="level1"><div class="li">  Create an html file;</div>
+</li>
+<li class="level1"><div class="li">  Place the full paths to dhtmlxTree&#039;s <acronym title="Cascading Style Sheets">CSS</acronym> and <acronym title="JavaScript">JS</acronym> files into the header of the created html file.</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>head<span class="sy0">&gt;</span>  
+        <span class="sy0">&lt;</span>link rel<span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> type<span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;[full path to this file]/dhtmlxtree.css&quot;</span><span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;[full path to this file]/dhtmlxcommon.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;[full path to this file]/dhtmlxtree.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span>   
+    <span class="sy0">&lt;/</span>head<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-827" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit" class="button" title="Initialization of dhtmlxTree" /></div></form></div>
+<h3><a name="setting_image_path" id="setting_image_path">Setting Image Path</a></h3>
+<div class="level3">
+
+<p>
+Full path to tree&#039;s images can be set in dhtmlxTree with the help of method setImagePath():
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setImagePath</span><span class="br0">&#40;</span><span class="st0">&quot;[full path to this category]/codebase/imgs/&quot;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The above mentioned method should be used after creation of new dhtmlXTreeObject, but before any of data loading methods.
+</p>
+
+<p>
+The following predefined icon sets are available in dhtmlxTree:
+</p>
+<ul>
+<li class="level1"><div class="li">  default</div>
+</li>
+</ul>
+
+<p>
+<img src="dhtmlxtree___dgr5rjkf_220gbgmh9gf_b.gif"  class="media" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li">  scbrblue</div>
+</li>
+</ul>
+
+<p>
+<img src="dhtmlxtree___dgr5rjkf_221cf28k8ff_b.gif"  class="media" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li">  yellowbooks</div>
+</li>
+</ul>
+
+<p>
+<img src="dhtmlxtree___dgr5rjkf_222gz6tpsdc_b.gif"  class="media" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li">  bluefolders</div>
+</li>
+</ul>
+
+<p>
+<img src="dhtmlxtree___dgr5rjkf_223fnxr7chh_b.gif"  class="media" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li">  books</div>
+</li>
+</ul>
+
+<p>
+<img src="dhtmlxtree___dgr5rjkf_224ggpqf8gx_b.gif"  class="media" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li">  vista</div>
+</li>
+</ul>
+
+<p>
+<img src="dhtmlxtree___dgr5rjkf_225fpw796gk_b.gif"  class="media" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li">  winstyle</div>
+</li>
+</ul>
+
+<p>
+<img src="dhtmlxtree___dgr5rjkf_226c3td7kc7_b.gif"  class="media" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li">  bluebooks</div>
+</li>
+</ul>
+
+<p>
+<img src="dhtmlxtree___dgr5rjkf_227f8jk4hd8_b.gif"  class="media" alt="" />
+
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="828-1750" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit" class="button" title="Setting Image Path" /></div></form></div>
+<h3><a name="object-based_initialization" id="object-based_initialization">Object-Based Initialization</a></h3>
+<div class="level3">
+
+<p>
+The user needs to create an <acronym title="HyperText Markup Language">HTML</acronym> container where dhtmlxTree will be placed later. In this example the container is a &lt;div&gt; element on page which is placed in the &lt;body&gt; tag:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;treeBox&quot;</span> style<span class="sy0">=</span><span class="st0">&quot;width:200;height:200&quot;</span><span class="sy0">&gt;&lt;/</span>div<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The next step is to create a new dhtmlXTreeObject and place it after the &lt;div&gt; element (container) that we&#039;ve just created:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> tree <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXTreeObject<span class="br0">&#40;</span><span class="st0">&quot;treeBox&quot;</span><span class="sy0">,</span><span class="st0">&quot;100%&quot;</span><span class="sy0">,</span><span class="st0">&quot;100%&quot;</span><span class="sy0">,</span>0<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Parameters passed to the constructor are the following:
+</p>
+<ul>
+<li class="level1"><div class="li">  Object to attach the tree to (should be loaded before the constructor is called);</div>
+</li>
+<li class="level1"><div class="li">  Width of the tree;</div>
+</li>
+<li class="level1"><div class="li">  Height of the tree;</div>
+</li>
+<li class="level1"><div class="li">  Identifier of the tree root level (super root).</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1751-2544" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit" class="button" title="Object-Based Initialization" /></div></form></div>
+<h3><a name="initialization_from_html" id="initialization_from_html">Initialization from HTML</a></h3>
+<div class="level3">
+
+<p>
+This type of initialization includes two sub-types:
+</p>
+<ul>
+<li class="level1"><div class="li">  Initialization from an <acronym title="HyperText Markup Language">HTML</acronym> list;</div>
+</li>
+<li class="level1"><div class="li">  Initialization from inline <acronym title="Extensible Markup Language">XML</acronym>.</div>
+</li>
+</ul>
+
+<p>
+The user can create the tree based on an <acronym title="HyperText Markup Language">HTML</acronym> list or inline <acronym title="Extensible Markup Language">XML</acronym>. In both casesб the list or <acronym title="Extensible Markup Language">XML</acronym> should be placed into the DIV element that will be act as a container for the tree. <acronym title="Extensible Markup Language">XML</acronym> should also be included into XMP tag.
+It should be noted that any of tree methods starting with set or enable can be used as attributes of this DIV element to set/enable different tree properties.
+</p>
+
+</div>
+
+<h4><a name="conversion" id="conversion">Conversion</a></h4>
+<div class="level4">
+
+<p>
+
+The following two types of conversion (of <acronym title="HyperText Markup Language">HTML</acronym> data into the tree) are available:
+</p>
+<ul>
+<li class="level1"><div class="li">  Automatic conversion - presupposes setting dhtmlxTree class for the top div element;</div>
+</li>
+<li class="level1"><div class="li">  Script conversion - calling dhtmlXTreeFromHTML() command with id of the div element to convert as the first argument.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="initialization_from_an_html_list" id="initialization_from_an_html_list">Initialization from an HTML list</a></h4>
+<div class="level4">
+
+<p>
+
+This type of initialization presupposes the following actions from user&#039;s side:
+</p>
+<ul>
+<li class="level1"><div class="li">  Add dhtmlxtree_start.js file into the page;</div>
+</li>
+<li class="level1"><div class="li">  Choose type of conversion to use;</div>
+</li>
+<li class="level1"><div class="li">  Set some attributes defining tree-specific properties of the top div element:</div>
+<ul>
+<li class="level2"><div class="li">  setImagePath - sets path to tree&#039;s image files;</div>
+</li>
+<li class="level2"><div class="li">  id - name of a <acronym title="JavaScript">JS</acronym> variable referenced to the tree object;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Use simple <acronym title="HyperText Markup Language">HTML</acronym> list tags.</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>head<span class="sy0">&gt;</span>
+        ...
+        <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;[full path to this file]/dhtmlxtree_start.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>head<span class="sy0">&gt;</span>
+&nbsp;
+&nbsp;
+&nbsp;
+    <span class="sy0">&lt;</span>div <span class="kw2">class</span><span class="sy0">=</span><span class="st0">&quot;dhtmlxTree&quot;</span> <span class="co1">// for automatic conversion</span>
+        id<span class="sy0">=</span><span class="st0">&quot;treeboxbox_tree&quot;</span>
+        setImagePath<span class="sy0">=</span><span class="st0">&quot;[full path to this category]/imgs/&quot;</span>
+        style<span class="sy0">=</span><span class="st0">&quot;width:250px; height:218px;overflow:auto;&quot;</span><span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>ul<span class="sy0">&gt;</span>
+            <span class="sy0">&lt;</span>li<span class="sy0">&gt;</span>Root
+                <span class="sy0">&lt;</span>ul<span class="sy0">&gt;</span>
+                    <span class="sy0">&lt;</span>li<span class="sy0">&gt;</span>Child1
+                <span class="sy0">&lt;</span>ul<span class="sy0">&gt;</span>
+                    <span class="sy0">&lt;</span>li<span class="sy0">&gt;</span>Child <span class="nu0">1</span><span class="sy0">-</span><span class="nu0">1</span><span class="sy0">&lt;/</span>li<span class="sy0">&gt;</span>
+                    <span class="sy0">&lt;/</span>ul<span class="sy0">&gt;</span>
+                    <span class="sy0">&lt;</span>li<span class="sy0">&gt;</span>Child2<span class="sy0">&lt;/</span>li<span class="sy0">&gt;</span>
+                    <span class="sy0">&lt;</span>li<span class="sy0">&gt;&lt;</span>b<span class="sy0">&gt;</span>Bold<span class="sy0">&lt;/</span>b<span class="sy0">&gt;</span> <span class="sy0">&lt;</span>i<span class="sy0">&gt;</span>Italic<span class="sy0">&lt;/</span>i<span class="sy0">&gt;&lt;/</span>li<span class="sy0">&gt;</span>
+                <span class="sy0">&lt;/</span>ul<span class="sy0">&gt;</span>
+            <span class="sy0">&lt;/</span>li<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;/</span>ul<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> myTree <span class="sy0">=</span> dhtmlXTreeFromHTML<span class="br0">&#40;</span><span class="st0">&quot;treeboxbox_tree&quot;</span><span class="br0">&#41;</span>; <span class="co1">// for script conversion</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="initialization_from_inline_xml" id="initialization_from_inline_xml">Initialization from Inline XML</a></h4>
+<div class="level4">
+
+<p>
+
+Initialization of this kind allows the user to apply standard dhtmlxTree&#039;s <acronym title="Extensible Markup Language">XML</acronym> structure enclosed into XMP tag inside the div element (the tree container).
+The sequence of actions is as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  Add dhtmlxtree_start.js file into the page;</div>
+</li>
+<li class="level1"><div class="li">  Choose type of conversion to use;</div>
+</li>
+<li class="level1"><div class="li">  Set some attributes defining tree-specific properties of the top div element:</div>
+<ul>
+<li class="level2"><div class="li">  setImagePath - sets path to tree&#039;s image files;</div>
+</li>
+<li class="level2"><div class="li">  id - name of <acronym title="JavaScript">JS</acronym> variable referenced to еру tree object;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  Apply <acronym title="Extensible Markup Language">XML</acronym> structure in &lt;xmp&gt; tag.</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;treeboxbox_tree&quot;</span>
+        setImagePath<span class="sy0">=</span><span class="st0">&quot;[full path to this category]/imgs/&quot;</span>
+        <span class="kw2">class</span><span class="sy0">=</span><span class="st0">&quot;dhtmlxTree&quot;</span><span class="sy0">&gt;</span> <span class="co1">// for automatic conversion </span>
+    <span class="sy0">&lt;</span>xmp<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>item text<span class="sy0">=</span><span class="st0">&quot;Root&quot;</span> <span class="kw3">open</span><span class="sy0">=</span><span class="st0">&quot;1&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;11&quot;</span><span class="sy0">&gt;</span>
+            <span class="sy0">&lt;</span>item text<span class="sy0">=</span><span class="st0">&quot;Child1&quot;</span> select<span class="sy0">=</span><span class="st0">&quot;1&quot;</span> <span class="kw3">open</span><span class="sy0">=</span><span class="st0">&quot;1&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;12&quot;</span><span class="sy0">&gt;</span>
+                <span class="sy0">&lt;</span>item text<span class="sy0">=</span><span class="st0">&quot;Child1-1&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;13&quot;</span><span class="sy0">/&gt;</span>
+            <span class="sy0">&lt;/</span>item<span class="sy0">&gt;</span>
+            <span class="sy0">&lt;</span>item text<span class="sy0">=</span><span class="st0">&quot;Child2&quot;</span> id<span class="sy0">=</span><span class="st0">&quot;14&quot;</span><span class="sy0">/&gt;</span>
+            <span class="sy0">&lt;</span>item id<span class="sy0">=</span><span class="st0">&quot;15&quot;</span> text<span class="sy0">=</span><span class="st0">&quot;Text&quot;</span><span class="sy0">/&gt;</span>
+        <span class="sy0">&lt;/</span>item<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>xmp<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>div<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="2545-5693" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit" class="button" title="Initialization from HTML" /></div></form></div>
+<h3><a name="data_loading" id="data_loading">Data Loading</a></h3>
+<div class="level3">
+
+<p>
+The next step of initialization of dhtmlxTree component is Data Loading. The user can choose one of the following data loading possibilities:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Extensible Markup Language">XML</acronym>;</div>
+</li>
+<li class="level1"><div class="li"> JSON;</div>
+</li>
+<li class="level1"><div class="li"> CSV;</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="JavaScript">JS</acronym> array.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="data_loading_from_xml" id="data_loading_from_xml">Data Loading from XML</a></h4>
+<div class="level4">
+
+<p>
+
+loadXML() and loadXMLString() methods load menu data from <acronym title="Extensible Markup Language">XML</acronym>:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">loadXML</span><span class="br0">&#40;</span>file<span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#41;</span>; <span class="co1">// loading from a file</span>
+        tree.<span class="me1">loadXMLString</span><span class="br0">&#40;</span>xmlString<span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#41;</span>; <span class="co1">// loading from an XML string</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+These methods have the following parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  file/xmlString- full path to the <acronym title="Extensible Markup Language">XML</acronym> file/string containing tree data;</div>
+</li>
+<li class="level1"><div class="li">  function (optional parameter) - function that will be called when data is loaded (if specified).</div>
+</li>
+</ul>
+
+<p>
+It should be noted that when using loadXML() without parameters, the system will load the <acronym title="Uniform Resource Locator">URL</acronym> specified in setXMLAutoLoading() method.
+</p>
+
+<p>
+getXMLState() method should be used to get the current state of <acronym title="Extensible Markup Language">XML</acronym> loading:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> xmlSate <span class="sy0">=</span> tree.<span class="me1">getXMLState</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// returns true if XML is being loaded at the moment</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+See <a href="dhtmlxtree___syntax_templates.html" class="wikilink1" title="dhtmlxtree:syntax_templates">here</a> for <acronym title="Extensible Markup Language">XML</acronym> Syntax Template.
+</p>
+
+</div>
+
+<h4><a name="data_loading_from_json" id="data_loading_from_json">Data Loading from JSON</a></h4>
+<div class="level4">
+
+<p>
+
+To load the tree from JSON, the user needs to have a JSON object or a file and load it using the following methods:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">loadJSONObject</span><span class="br0">&#40;</span>json_object<span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#41;</span>; <span class="co1">// loading from a script object</span>
+        tree.<span class="me1">loadJSON</span><span class="br0">&#40;</span>file<span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#41;</span>; <span class="co1">// loading from a file</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Both methods have the following parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  json_object/file - object or file containing tree data;</div>
+</li>
+<li class="level1"><div class="li">  function (optional parameter) - function that will be called when data is loaded (if specified).</div>
+</li>
+</ul>
+
+<p>
+See <a href="dhtmlxtree___syntax_templates.html" class="wikilink1" title="dhtmlxtree:syntax_templates">here</a> for JSON Format Template.
+</p>
+
+</div>
+
+<h4><a name="data_loading_from_csv" id="data_loading_from_csv">Data Loading from CSV</a></h4>
+<div class="level4">
+
+<p>
+
+This type of loading tree data presupposes that the user should have CSV represented as a string or a file. There are two methods that can be used in this case:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">loadCSV</span><span class="br0">&#40;</span>file<span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#41;</span>; <span class="co1">// loading from a file</span>
+        tree.<span class="me1">loadCSVString</span><span class="br0">&#40;</span>csvstring<span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#41;</span>; <span class="co1">// loading from a string</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Both methods have the following parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  file/csvstring - file or string containing tree data;</div>
+</li>
+<li class="level1"><div class="li">  function (optional parameter) - function that will be called when data is loaded (if specified).</div>
+</li>
+</ul>
+
+<p>
+See <a href="dhtmlxtree___syntax_templates.html" class="wikilink1" title="dhtmlxtree:syntax_templates">here</a> for CSV Format Template.
+</p>
+
+</div>
+
+<h4><a name="data_loading_from_js_array" id="data_loading_from_js_array">Data Loading from JS Array</a></h4>
+<div class="level4">
+
+<p>
+
+The tree can be loaded from a <acronym title="JavaScript">JS</acronym> Array. The array as an object or as a file should be specified in the following methods:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">loadJSArrayFile</span><span class="br0">&#40;</span>file<span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#41;</span>; <span class="co1">// loading from a file</span>
+        tree.<span class="me1">loadJSArray</span><span class="br0">&#40;</span>array<span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#41;</span>; <span class="co1">// loading from an array object</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Both methods have the following parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  file/array - file or array object containing tree data;</div>
+</li>
+<li class="level1"><div class="li">  function (optional parameter) - function that will be called when data is loaded (if specified).</div>
+</li>
+</ul>
+
+<p>
+See <a href="dhtmlxtree___syntax_templates.html" class="wikilink1" title="dhtmlxtree:syntax_templates">here</a> for <acronym title="JavaScript">JS</acronym> Array Format Template.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="5694-8867" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit" class="button" title="Data Loading" /></div></form></div>
+<h3><a name="data_transfer_mode" id="data_transfer_mode">Data Transfer Mode</a></h3>
+<div class="level3">
+
+<p>
+The user can set default data transfer mode in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setDataMode</span><span class="br0">&#40;</span>mode<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The following mode variants are available:
+</p>
+<ul>
+<li class="level1"><div class="li">  JSON - sets JSON data transfer mode;</div>
+</li>
+<li class="level1"><div class="li">  <acronym title="Extensible Markup Language">XML</acronym> - sets <acronym title="Extensible Markup Language">XML</acronym> data transfer mode;</div>
+</li>
+<li class="level1"><div class="li">  CSV - sets CSV data transfer mode.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="8868-" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit" class="button" title="Data Transfer Mode" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxtree/initialization_of_dhtmlxtree.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxtree%3Ainitialization_of_dhtmlxtree&amp;1279804935" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:initialization_of_dhtmlxtree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

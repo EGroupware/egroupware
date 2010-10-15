@@ -1,0 +1,1420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxtree:nodes_manipulation    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxtree:nodes_manipulation</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxtree:nodes_manipulation"  class="breadcrumbs" title="dhtmlxtree:nodes_manipulation">nodes_manipulation</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#nodes_manipulation" class="toc">Nodes Manipulation</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#adding_removing_items" class="toc">Adding/Removing Items</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#collapsing_expanding_items" class="toc">Collapsing/Expanding Items</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#editing_item" class="toc">Editing Item</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#integration_with_cookies" class="toc">Integration with Cookies</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#item_text_tooltip_color_manipulation" class="toc">Item Text, Tooltip, Color Manipulation</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#refreshing_and_updating_items" class="toc">Refreshing and Updating Items</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#items_ids_manipulation" class="toc">Items Ids Manipulation</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#items_position_manipulation" class="toc">Items Position Manipulation</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#calculating_items" class="toc">Calculating Items</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#user_data_manipulation" class="toc">User Data Manipulation</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#using_link-like_functionality_in_tree" class="toc">Using Link-Like Functionality in Tree</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___tree.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxtree:toc">dhtmlxtree</a></div></div>
+
+</p>
+
+<h2><a name="nodes_manipulation" id="nodes_manipulation">Nodes Manipulation</a></h2>
+<div class="level2">
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-87" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Nodes Manipulation" /></div></form></div>
+<h3><a name="adding_removing_items" id="adding_removing_items">Adding/Removing Items</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="adding_parent_item" id="adding_parent_item">Adding Parent Item</a></h4>
+<div class="level4">
+
+<p>
+
+Parent tree nodes can be easily added to the tree from script with the help of insertNewNext() method. The following incoming parameters should be indicated in this method:
+</p>
+<ul>
+<li class="level1"><div class="li">  siblingId - id of the item after which the new one will be created;</div>
+</li>
+<li class="level1"><div class="li">  itemId - id of the new item;</div>
+</li>
+<li class="level1"><div class="li">  label - text of the new item;</div>
+</li>
+<li class="level1"><div class="li">  action - 0 in most cases, but can be a custom function;</div>
+</li>
+<li class="level1"><div class="li">  imageClosed - image for a collapsed item; if 0 is indicated - the default one is used;</div>
+</li>
+<li class="level1"><div class="li">  imageOpen - image for an expanded item; if 0 is indicated - the default one is used;</div>
+</li>
+<li class="level1"><div class="li">  imageLeaf - image for a leaf item; if 0 is indicated - the default one is used;</div>
+</li>
+<li class="level1"><div class="li">  additional options - a comma delimited string of the following possible values (upper case only):</div>
+<ul>
+<li class="level2"><div class="li">  SELECT - move selection to this item after its creation;</div>
+</li>
+<li class="level2"><div class="li">  CALL - call a function on select;</div>
+</li>
+<li class="level2"><div class="li">  TOP - add this item to the top position;</div>
+</li>
+<li class="level2"><div class="li">  CHILD - the node contains child items;</div>
+</li>
+<li class="level2"><div class="li">  CHECKED - the checkbox is checked (if exists).</div>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">insertNewNext</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="st0">&quot;New Node 2&quot;</span><span class="sy0">,</span>0<span class="sy0">,</span>0<span class="sy0">,</span>0<span class="sy0">,</span>0<span class="sy0">,</span><span class="st0">&quot;CHILD,CHECKED&quot;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="adding_child_node" id="adding_child_node">Adding Child Node</a></h4>
+<div class="level4">
+
+<p>
+
+Method insertNewChild() allows to add a new child item for the chosen tree node. The parameters the user should indicate are:
+</p>
+<ul>
+<li class="level1"><div class="li">  parentId - id of the parent item in which the new child will be created;</div>
+</li>
+<li class="level1"><div class="li">  itemId - id of the new item;</div>
+</li>
+<li class="level1"><div class="li">  label - text of the new item;</div>
+</li>
+<li class="level1"><div class="li">  action - 0 in most cases, but can be a custom function;</div>
+</li>
+<li class="level1"><div class="li">  imageClosed - image for a collapsed item; if 0 is indicated - the default one is used;</div>
+</li>
+<li class="level1"><div class="li">  imageOpen - image for an expanded item; if 0 is indicated - the default one is used;</div>
+</li>
+<li class="level1"><div class="li">  imageLeaf - image for a leaf item; if 0 is indicated - the default one is used;</div>
+</li>
+<li class="level1"><div class="li">  additional options - a comma delimited string of the following possible values (upper case only):</div>
+<ul>
+<li class="level2"><div class="li">  SELECT - move selection to this item after its creation;</div>
+</li>
+<li class="level2"><div class="li">  CALL - call a function on item&#039;s select;</div>
+</li>
+<li class="level2"><div class="li">  TOP - add this item to the top position;</div>
+</li>
+<li class="level2"><div class="li">  CHILD - the node contains child items;</div>
+</li>
+<li class="level2"><div class="li">  CHECKED - the checkbox is checked (if exists).</div>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">insertNewChild</span><span class="br0">&#40;</span>0<span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="st0">&quot;New Node 1&quot;</span><span class="sy0">,</span>0<span class="sy0">,</span>0<span class="sy0">,</span>0<span class="sy0">,</span>0<span class="sy0">,</span><span class="st0">&quot;SELECT,CALL,TOP,CHILD,CHECKED&quot;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The item added as a child will be created always the last among other child items for the specified parent.
+</p>
+
+</div>
+
+<h4><a name="removing_item" id="removing_item">Removing Item</a></h4>
+<div class="level4">
+
+<p>
+
+Any item can be easily removed from the tree in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>t
+        tree.<span class="me1">deleteItem</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span> selectParent<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters the user should specify are:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  selectParent(true|false) - if set to true, the parent item of the removed one becomes selected when the removal is done, while false means that no other item will be selected in the tree after removal of the indicated item.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="removing_all_child_items" id="removing_all_child_items">Removing All Child Items</a></h4>
+<div class="level4">
+
+<p>
+
+The following method allows the user to remove all child items of a certain node very easily:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">deleteChildItems</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="88-3262" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Adding/Removing Items" /></div></form></div>
+<h3><a name="collapsing_expanding_items" id="collapsing_expanding_items">Collapsing/Expanding Items</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="expanding_parent_item_on_child_adding" id="expanding_parent_item_on_child_adding">Expanding Parent Item on Child Adding</a></h4>
+<div class="level4">
+
+<p>
+
+There is a possibility in dhtmlxTree to set whether a parent item will be expanded or not when a child item is added to it.
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">openOnItemAdded</span><span class="br0">&#40;</span>mode<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The method can be set either to true (the parent item will be expanded on child adding) or to false (the parent item won&#039;t be expanded).
+</p>
+
+</div>
+
+<h4><a name="collapsing_expanding_item" id="collapsing_expanding_item">Collapsing/Expanding Item</a></h4>
+<div class="level4">
+
+<p>
+
+There is the possibility to expand/collapse any node in dhtmlxTree from script. The only value that the user should indicate, is the id of the item in question:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">openItem</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// expand the indicated item</span>
+        tree.<span class="me1">closeItem</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// collapse the indicated item</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="collapsing_expanding_all_items" id="collapsing_expanding_all_items">Collapsing/Expanding All Items</a></h4>
+<div class="level4">
+
+<p>
+
+The user can also expand/collapse all items in the tree. The optional parameter here is the id of the item starting from which all items will be expanded/collapsed:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">openAllItems</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// expand all items</span>
+        tree.<span class="me1">closeAllItems</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// collapse all items</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The method to expand all tree items that is similar to the above mentioned one but that works in dynamical trees:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">openAllItemsDynamic</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// expands all items in a dynamical tree</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="expanding_item_s_list" id="expanding_item_s_list">Expanding Item&#039;s List</a></h4>
+<div class="level4">
+
+<p>
+
+The method to expand a list of tree items in dynamical tree (items are expanded one by one, the next item will be opened only when the previous one is loaded):
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">openItemsDynamic</span><span class="br0">&#40;</span>list<span class="sy0">,</span>flag<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters are:
+</p>
+<ul>
+<li class="level1"><div class="li">  list - list of nodes ids that will be expanded;</div>
+</li>
+<li class="level1"><div class="li">  flag (true|false) - indicates whether the last node in the list will be selected (true) or not (false).</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="prevent_item_from_collapsing" id="prevent_item_from_collapsing">Prevent Item from Collapsing</a></h4>
+<div class="level4">
+
+<p>
+
+There is a method that can prevent the item from collapsing:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setItemCloseable</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span>flag<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters here are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the node;</div>
+</li>
+<li class="level1"><div class="li">  flag(true|false) - if set to false, prevents the item from collapsing.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="getting_item_state" id="getting_item_state">Getting Item State</a></h4>
+<div class="level4">
+
+<p>
+
+Item&#039;s state (expanded|collapsed) can be got in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+         <span class="kw2">var</span> state <span class="sy0">=</span> tree.<span class="me1">getOpenState</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The method returns true if the item in question is expanded, and false if the item is collapsed.
+</p>
+
+</div>
+
+<h4><a name="locking_tree_item" id="locking_tree_item">Locking Tree/Item</a></h4>
+<div class="level4">
+
+<p>
+
+By locking the tree, the user denies expanding|collapsing tree nodes. By default the tree isn&#039;t locked (false). To lock the tree, lockTree() method should be set to true:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">lockTree</span><span class="br0">&#40;</span><span class="kw2">true</span><span class="br0">&#41;</span>; <span class="co1">// false to unlock the tree</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Any item, whether it is a parent or a child one, can be also locked by method lockItem():
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">lockItem</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// id of the item as the input parameter</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="getting_locking_state" id="getting_locking_state">Getting Locking State</a></h4>
+<div class="level4">
+
+<p>
+
+To get the state (locked|unlocked) of any item in the tree, the user should apply the following method:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> itemState <span class="sy0">=</span> tree.<span class="me1">isLocked</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// returns current item's state</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+If the item in question is locked, the method returns true, if it is unlocked, false is returned.
+
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="3263-6730" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Collapsing/Expanding Items" /></div></form></div>
+<h3><a name="editing_item" id="editing_item">Editing Item</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="making_items_editable" id="making_items_editable">Making Items Editable</a></h4>
+<div class="level4">
+
+<p>
+
+Any item in the tree can be made editable - double click on the item allows to edit its title text. By default all items in the tree are not editable (false). To make them so, the user should write the following code line:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableItemEditor</span><span class="br0">&#40;</span><span class="kw2">true</span><span class="br0">&#41;</span>; <span class="co1">// false to deny items editing</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="activating_editor_for_item" id="activating_editor_for_item">Activating Editor for Item</a></h4>
+<div class="level4">
+
+<p>
+
+The user can activate the editor for a specified item from script with the help of method editItem(). The only parameter that should be specified is id of this item:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">editItem</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="deactivating_editor_for_item" id="deactivating_editor_for_item">Deactivating Editor for Item</a></h4>
+<div class="level4">
+
+<p>
+
+Item&#039;s editor can be easily deactivated from script bringing the item back to its normal view:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">stopEdit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="defining_editing_event" id="defining_editing_event">Defining Editing Event</a></h4>
+<div class="level4">
+
+<p>
+The event that starts item&#039;s editing can be defined from script in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setEditStartAction</span><span class="br0">&#40;</span>click<span class="sy0">,</span> dblclick<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters define the following:
+</p>
+<ul>
+<li class="level1"><div class="li">  click(true|false) - item&#039;s editing will be activated by a click on the selected item;</div>
+</li>
+<li class="level1"><div class="li">  dblclick(true|false) - item&#039;s editing will be activated by a double click on the selected item.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="6731-8096" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Editing Item" /></div></form></div>
+<h3><a name="integration_with_cookies" id="integration_with_cookies">Integration with Cookies</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="saving_items_states_to_cookies" id="saving_items_states_to_cookies">Saving Items&#039; States to Cookies</a></h4>
+<div class="level4">
+
+<p>
+
+The user has the possibility to store states of items to cookies in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">saveOpenStates</span><span class="br0">&#40;</span>cookie_name<span class="sy0">,</span>cookie_param<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters of this method are:
+</p>
+<ul>
+<li class="level1"><div class="li">  cookie_name - name of the cookie (optional parameter);</div>
+</li>
+<li class="level1"><div class="li">  cookie_param - additional parameters added to cookie.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="restoring_items_states_from_cookies" id="restoring_items_states_from_cookies">Restoring Items&#039; States from Cookies</a></h4>
+<div class="level4">
+
+<p>
+
+There is a method that restores items&#039; states (expanded|collapsed) from cookie&#039;s information:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">loadOpenStates</span><span class="br0">&#40;</span>cookie_name<span class="br0">&#41;</span>; <span class="co1">// the parameter is optional</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="saving_selection_to_cookies" id="saving_selection_to_cookies">Saving Selection to Cookies</a></h4>
+<div class="level4">
+
+<p>
+
+Item&#039;s selection can be also stored in cookies in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">saveSelectedItem</span><span class="br0">&#40;</span>cookie_name<span class="sy0">,</span>cookie_param<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters of this method are:
+</p>
+<ul>
+<li class="level1"><div class="li">  cookie_name - name of the cookie (optional parameter);</div>
+</li>
+<li class="level1"><div class="li">  cookie_param - additional parameters added to cookie.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="restoring_selection_from_cookies" id="restoring_selection_from_cookies">Restoring Selection from Cookies</a></h4>
+<div class="level4">
+
+<p>
+
+Item&#039;s selection can be restored from cookie in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">restoreSelectedItem</span><span class="br0">&#40;</span>cookie_name<span class="br0">&#41;</span>; <span class="co1">// the parameter is optional</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="saving_tree_to_cookies" id="saving_tree_to_cookies">Saving Tree to Cookies</a></h4>
+<div class="level4">
+
+<p>
+
+Method saveState() stores the whole tree to cookies:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">saveState</span><span class="br0">&#40;</span>cookie_name<span class="sy0">,</span>cookie_param<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters of this method are:
+</p>
+<ul>
+<li class="level1"><div class="li">  cookie_name - name of the cookie (optional parameter);</div>
+</li>
+<li class="level1"><div class="li">  cookie_param - additional parameters added to cookie</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="restoring_tree_from_cookies" id="restoring_tree_from_cookies">Restoring Tree from Cookies</a></h4>
+<div class="level4">
+
+<p>
+
+Method loadState() restores the whole tree from cookies:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">loadState</span><span class="br0">&#40;</span>cookie_name<span class="br0">&#41;</span>; <span class="co1">// the parameter is optional</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="enabling_item_s_auto_saving" id="enabling_item_s_auto_saving">Enabling Item&#039;s Auto Saving</a></h4>
+<div class="level4">
+
+<p>
+
+dhtmlxTree allows its users to save the selected node automatically in cookies. Method enableAutoSavingSelected() is used to switch this on|off in the tree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableAutoSavingSelected</span><span class="br0">&#40;</span>mode<span class="sy0">,</span>cookieName<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters are:
+</p>
+<ul>
+<li class="level1"><div class="li">  mode(true|false) - indicates whether the auto saving is on|off;</div>
+</li>
+<li class="level1"><div class="li">  cookieName - name of the cookie.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="8097-10416" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Integration with Cookies" /></div></form></div>
+<h3><a name="item_text_tooltip_color_manipulation" id="item_text_tooltip_color_manipulation">Item Text, Tooltip, Color Manipulation</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="setting_item_s_label" id="setting_item_s_label">Setting Item&#039;s Label</a></h4>
+<div class="level4">
+
+<p>
+
+The user can set the label (text) of a tree node in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setItemText</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span> newLabel<span class="sy0">,</span> newTooltip<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  newLabel - new text for item&#039;s label;</div>
+</li>
+<li class="level1"><div class="li">  newTooltip - the text indicated in this parameter will be used as item&#039;s tooltip text (optional parameter).</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="getting_item_s_label" id="getting_item_s_label">Getting Item&#039;s Label</a></h4>
+<div class="level4">
+
+<p>
+
+The user has the possibility to get text of item&#039;s label indicating item&#039;s id in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> text <span class="sy0">=</span> tree.<span class="me1">getItemText</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The user can also get the text of the currently selected item in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> textSelected <span class="sy0">=</span> tree.<span class="me1">getSelectedItemText</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="setting_item_s_color" id="setting_item_s_color">Setting Item&#039;s Color</a></h4>
+<div class="level4">
+
+<p>
+
+The following line of code is responsible for node&#039;s color (text color) in the tree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setItemColor</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span> defaultColor<span class="sy0">,</span> selectedColor<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters the user should specify are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  defaultColor - item&#039;s color;</div>
+</li>
+<li class="level1"><div class="li">  selectedColor - item&#039;s color for a selected state.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="getting_item_s_color" id="getting_item_s_color">Getting Item&#039;s Color</a></h4>
+<div class="level4">
+
+<p>
+
+Item&#039;s color can be easily got by item id in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        car color <span class="sy0">=</span> tree.<span class="me1">getItemColor</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The object returned by the above mentioned method has parameters { acolor:“value”, scolor:“value” } where:
+</p>
+<ul>
+<li class="level1"><div class="li">  acolor - means color for the normal state of the item;</div>
+</li>
+<li class="level1"><div class="li">  scolor - means color for the selected state of the item.</div>
+</li>
+</ul>
+
+<p>
+The format of the color will be the same as it was set in setItemColor() method.
+</p>
+
+</div>
+
+<h4><a name="setting_item_s_tooltip" id="setting_item_s_tooltip">Setting Item&#039;s Tooltip</a></h4>
+<div class="level4">
+
+<p>
+
+There are three ways to set tooltip for an item in dhtmlxTree:
+</p>
+<ul>
+<li class="level1"><div class="li">  Using node&#039;s text (“label” attribute of a node) as tooltip. In this case the following method should be used:</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableAutoTooltips</span><span class="br0">&#40;</span><span class="kw2">true</span>|false<span class="br0">&#41;</span>; <span class="co1">// false by default</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre><ul>
+<li class="level1"><div class="li">  Using “tooltip” attribute of a node in <acronym title="Extensible Markup Language">XML</acronym> (it is used by default if this attribute was specified);</div>
+</li>
+<li class="level1"><div class="li">  Using setItemText method specifying its third parameter.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="getting_item_s_tooltip" id="getting_item_s_tooltip">Getting Item&#039;s Tooltip</a></h4>
+<div class="level4">
+
+<p>
+
+Item&#039;s tooltip is also easy to get with the help of getItemTooltip() method indicating item id:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> tooltip <span class="sy0">=</span> tree.<span class="me1">getItemTooltip</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="10417-13017" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Item Text, Tooltip, Color Manipulation" /></div></form></div>
+<h3><a name="refreshing_and_updating_items" id="refreshing_and_updating_items">Refreshing and Updating Items</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="refreshing_item_items" id="refreshing_item_items">Refreshing Item/Items</a></h4>
+<div class="level4">
+
+<p>
+
+The following method is used to refresh data for the specified node:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">refreshItem</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// if item id is not indicated, id of the top tree item will be used</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The code string mentioned above presupposes that all the child items of the indicated node are removed, an <acronym title="Extensible Markup Language">XML</acronym> file (indicated in setXMLAutoLoading(); auto loading should be activated) is loaded from the server. The data from this file is used for creating new child items of the node in question.
+</p>
+
+<p>
+The following method is used to refresh data for several nodes:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">refreshItems</span><span class="br0">&#40;</span>itemIdList<span class="sy0">,</span> source<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters of this method include the list of items that should be refreshed, and the path to the <acronym title="Extensible Markup Language">XML</acronym> file from which new data will be loaded.
+In this case, the data is refreshed only for nodes indicated in itemIdList (not their children).
+</p>
+
+</div>
+
+<h4><a name="smart_branch_refreshing" id="smart_branch_refreshing">Smart Branch Refreshing</a></h4>
+<div class="level4">
+
+<p>
+
+There is one more possibility to refresh tree data. smartRefreshBranch() method is able to load <acronym title="Extensible Markup Language">XML</acronym> from the server and refresh data for the specified branch (text, icons, items). It should be noted that the current position and all changes introduced by the user stay the same in this case.
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">smartRefreshBranch</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span>source<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters here are responsible for:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the item from which the refreshing starts in the branch;</div>
+</li>
+<li class="level1"><div class="li">  source - server side script, optional parameter. If it is not set, the system will use the source indicated in setXMLAutoLoading().</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="smart_item_refreshing" id="smart_item_refreshing">Smart Item Refreshing</a></h4>
+<div class="level4">
+
+<p>
+
+Method smartRefreshItem() is responsible for loading <acronym title="Extensible Markup Language">XML</acronym> which data is used for refreshing the specified item in the tree. As with the previous method, this one keeps the current position of the item and all other changes introduced by the user.
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">smartRefreshItem</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span>source<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  source - server side script, optional parameter. If it is not set, the system will use the source indicated in setXMLAutoLoading().</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="updating_item" id="updating_item">Updating Item</a></h4>
+<div class="level4">
+
+<p>
+
+There is a simple way of updating items in dhmlxTree - updateItem() method. The used should indicate the id of the item that is going to be updated, and parameters that are going to be updated:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">updateItem</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span><span class="kw3">name</span><span class="sy0">,</span>im0<span class="sy0">,</span>im1<span class="sy0">,</span>im2<span class="sy0">,</span>achecked<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters of this method are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  name - title text of the item;</div>
+</li>
+<li class="level1"><div class="li">  im0 - the icon for a leaf node;</div>
+</li>
+<li class="level1"><div class="li">  im1 - the icon for an expanded parent node;</div>
+</li>
+<li class="level1"><div class="li">  im2 - the icon for a collapsed parent node;</div>
+</li>
+<li class="level1"><div class="li">  achecked(true|false) - whether the checkbox is checked (true) or not (false).</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="13018-15989" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Refreshing and Updating Items" /></div></form></div>
+<h3><a name="items_ids_manipulation" id="items_ids_manipulation">Items Ids Manipulation</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="getting_list_of_parent_items_ids" id="getting_list_of_parent_items_ids">Getting List of Parent Items Ids</a></h4>
+<div class="level4">
+
+<p>
+
+The following methods allow the user to get ids of all parent tree nodes:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> parents <span class="sy0">=</span> tree.<span class="me1">getAllItemsWithKids</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// returns the array of nodes ids</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="getting_list_of_leaf_items_ids" id="getting_list_of_leaf_items_ids">Getting List of Leaf Items Ids</a></h4>
+<div class="level4">
+
+<p>
+
+The user can get the list of ids of all tree items that do not have child nodes (childless items):
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> childless <span class="sy0">=</span> tree.<span class="me1">getAllChildless</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// returns the array of nodes ids</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="getting_list_of_sub-items_ids" id="getting_list_of_sub-items_ids">Getting List of Sub-Items Ids</a></h4>
+<div class="level4">
+
+<p>
+
+The user can easily get ids of all sub-items starting from the item which id is indicated in this method:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> subItems <span class="sy0">=</span> tree.<span class="me1">getAllSubItems</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Getting the list of all sub-items ids for the specified item is quite easy. This parent item id should be specified:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">getSubItems</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="changing_item_id" id="changing_item_id">Changing Item Id</a></h4>
+<div class="level4">
+
+<p>
+
+The user can change any node&#039;s id if there&#039;s such a need in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">changeItemId</span><span class="br0">&#40;</span>itemCurrentId<span class="sy0">,</span>itemNewId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="getting_child_item_id" id="getting_child_item_id">Getting Child Item Id</a></h4>
+<div class="level4">
+
+<p>
+
+The user can get any child item id by its index (sequence number) and the id of its parent:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> childId <span class="sy0">=</span> tree.<span class="me1">getItemIdByIndex</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span>index<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters are:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the parent item;</div>
+</li>
+<li class="level1"><div class="li">  index - sequence number of the child item (starting with 0).</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="getting_child_item_index" id="getting_child_item_index">Getting Child Item Index</a></h4>
+<div class="level4">
+
+<p>
+
+Child item&#039;s index (sequence number) can be easily got by its id:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> childIndex <span class="sy0">=</span> tree.<span class="me1">getIndexById</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameter is id of the child item which index the user wants to get.
+</p>
+
+</div>
+
+<h4><a name="getting_item_s_parent_id" id="getting_item_s_parent_id">Getting Item&#039;s Parent Id</a></h4>
+<div class="level4">
+
+<p>
+
+getParentId() method can be used to get item&#039;s parent id:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> parent <span class="sy0">=</span> tree.<span class="me1">getParentId</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The id of the item should be indicated as the parameter.
+</p>
+
+</div>
+
+<h4><a name="getting_ids_list_of_checked_unchecked_tree_items" id="getting_ids_list_of_checked_unchecked_tree_items">Getting Ids List of Checked/Unchecked Tree Items</a></h4>
+<div class="level4">
+
+<p>
+
+The ids of all checked/unchecked items in the tree can be easily got by getAllChecked() method:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> list <span class="sy0">=</span> tree.<span class="me1">getAllChecked</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// returns the array of all checked items ids</span>
+            <span class="co1">// or</span>
+        <span class="kw2">var</span> list <span class="sy0">=</span> tree.<span class="me1">getAllUnchecked</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// returns the array of all unchecked items ids</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="getting_ids_list_of_partially_checked_items" id="getting_ids_list_of_partially_checked_items">Getting Ids List of Partially Checked Items</a></h4>
+<div class="level4">
+
+<p>
+
+The method, similar to the above mentioned ones, exists for getting the ids of all partially checked items in the tree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> list <span class="sy0">=</span> tree.<span class="me1">getAllPartiallyChecked</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// returns the array of all checked items ids</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="getting_ids_list_of_checked_branches" id="getting_ids_list_of_checked_branches">Getting Ids List of Checked Branches</a></h4>
+<div class="level4">
+
+<p>
+
+Ids of all checked branches in the tree can be got like this:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> list <span class="sy0">=</span> tree.<span class="me1">getAllCheckedBranches</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// returns the array of all checked branches ids</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="getting_selected_item_id" id="getting_selected_item_id">0 Getting Selected Item Id</a></h4>
+<div class="level4">
+
+<p>
+
+Selected item&#039;s id is easy to get through getSelectedItemId() method which takes item id as the parameter:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> selectId <span class="sy0">=</span> tree.<span class="me1">getSelectedItemId</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span> 
+&nbsp;</pre>
+</div>
+
+<h4><a name="setting_list_separator" id="setting_list_separator">1 Setting List Separator</a></h4>
+<div class="level4">
+
+<p>
+
+There is a simple way of setting list separator in dhtmlxTree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setListDelimeter</span><span class="br0">&#40;</span>separator<span class="br0">&#41;</span>; <span class="co1">// by default the separator is &quot;,&quot;</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+There is only one parameter here - separator - char or string used for separating items in lists. 
+
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="15990-19725" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Items Ids Manipulation" /></div></form></div>
+<h3><a name="items_position_manipulation" id="items_position_manipulation">Items Position Manipulation</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="moving_items" id="moving_items">Moving Items</a></h4>
+<div class="level4">
+
+<p>
+
+Any item in the tree can be moved with the help of moveItem() method.
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">moveItem</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span> mode<span class="sy0">,</span> targetId<span class="sy0">,</span> targetTree<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The following parameters should be specified for this method:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  mode - one of the moving modes available:</div>
+<ul>
+<li class="level2"><div class="li">  left - the item will be moved to the left of node&#039;s current position;</div>
+</li>
+<li class="level2"><div class="li">  up - the item will be moved one level up in the hierarchy;</div>
+</li>
+<li class="level2"><div class="li">  up_strict - the item will be moved one position up, but will remain in the same level of the hierarchy;</div>
+</li>
+<li class="level2"><div class="li">  down - the item will be moved one level down in the hierarchy;</div>
+</li>
+<li class="level2"><div class="li">  down_strict - the item will be moved one position down, but will remain in the same level of the hierarchy;</div>
+</li>
+<li class="level2"><div class="li">  item_child - the item will be made child of the target item;</div>
+</li>
+<li class="level2"><div class="li">  item_sibling - the item will be made sibling of the target item, and will be placed before the target item;</div>
+</li>
+<li class="level2"><div class="li">  item_sibling_next - the item will be made sibling of the target item, and will be placed after the target item;</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li">  targetId - id of the item relative to which the item in question will be moved;</div>
+</li>
+<li class="level1"><div class="li">  targetTree (optonal) - the object of some other tree the item in question is moved into.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="cutting_pasting_items" id="cutting_pasting_items">Cutting/Pasting Items</a></h4>
+<div class="level4">
+
+<p>
+
+One more way of nodes moving is through doCut() and doPaste() commands. But they work only with selected items:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">doCut</span><span class="br0">&#40;</span><span class="br0">&#41;</span>; <span class="co1">// marks the selected item as cut</span>
+        tree.<span class="me1">doPaste</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>; <span class="co1">// id of a new parent node</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The cut item will be made a child node of the item indicated in the method doPaste().
+</p>
+
+</div>
+
+<h4><a name="clearing_cut_mark" id="clearing_cut_mark">Clearing Cut Mark</a></h4>
+<div class="level4">
+
+<p>
+
+To clear the mark made by doCut() method, the user is advised to use clearCut() one:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">clearCut</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="getting_item_s_level" id="getting_item_s_level">Getting Item&#039;s Level</a></h4>
+<div class="level4">
+
+<p>
+
+There is a method in dhtmlxTree that allows the user to get item&#039;s current level (position in hierarchy) indicating this item&#039;s id:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> level <span class="sy0">=</span> getLevel<span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="setting_item_top_offset" id="setting_item_top_offset">Setting Item Top Offset</a></h4>
+<div class="level4">
+
+<p>
+
+There is the possibility to set top offset for a tree item using the following method:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setItemTopOffset</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span>value<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters are:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  value - offset value.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="19726-22217" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Items Position Manipulation" /></div></form></div>
+<h3><a name="calculating_items" id="calculating_items">Calculating Items</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="setting_calculation_mode" id="setting_calculation_mode">Setting Calculation Mode</a></h4>
+<div class="level4">
+
+<p>
+
+The user can set calculation mode for the tree in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setChildCalcMode</span><span class="br0">&#40;</span>mode<span class="br0">&#41;</span>; <span class="co1">// disabled by default</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+There are the following mode variants available:
+</p>
+<ul>
+<li class="level1"><div class="li">  child - direct child items, no recursive;</div>
+</li>
+<li class="level1"><div class="li">  leafs - direct child items without sub-items, no recursive;</div>
+</li>
+<li class="level1"><div class="li">  childrec - child items (leaf items and those with their own child items), recursive;</div>
+</li>
+<li class="level1"><div class="li">  leafsrec - child items without sub-items, recursive;</div>
+</li>
+<li class="level1"><div class="li">  disabled - disable this mode.</div>
+</li>
+</ul>
+
+<p>
+All tree child nodes will be calculated in this mode.
+</p>
+
+</div>
+
+<h4><a name="setting_calculation_html" id="setting_calculation_html">Setting Calculation HTML</a></h4>
+<div class="level4">
+
+<p>
+
+Along with setting the calculation mode for child items, the user can specify calculation <acronym title="HyperText Markup Language">HTML</acronym> like this:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setChildCalcHTML</span><span class="br0">&#40;</span>htmlA<span class="sy0">,</span>htmlB<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters here are:
+</p>
+<ul>
+<li class="level1"><div class="li">  htmlA - prefix of the calculator (”[” by default);</div>
+</li>
+<li class="level1"><div class="li">  htmlB - postfix of the calculator (”]” by default).</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="getting_number_of_child_items" id="getting_number_of_child_items">Getting Number of Child Items</a></h4>
+<div class="level4">
+
+<p>
+
+The number of child items of a certain parent can be got in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> childItems <span class="sy0">=</span> tree.<span class="me1">hasChildren</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="22218-23479" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Calculating Items" /></div></form></div>
+<h3><a name="user_data_manipulation" id="user_data_manipulation">User Data Manipulation</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="setting_user_data" id="setting_user_data">Setting User Data</a></h4>
+<div class="level4">
+
+<p>
+User data can be set for any tree item in dhtmlxTree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setUserData</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span><span class="kw3">name</span><span class="sy0">,</span>value<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters of this method are:
+</p>
+<ul>
+<li class="level1"><div class="li">  iteId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  name - name of user data;</div>
+</li>
+<li class="level1"><div class="li">  value - value of user data.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="getting_user_data" id="getting_user_data">Getting User Data</a></h4>
+<div class="level4">
+
+<p>
+
+User data set for a tree node can be got in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> userData <span class="sy0">=</span> tree.<span class="me1">getUserData</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span><span class="kw3">name</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters of this method are:
+</p>
+<ul>
+<li class="level1"><div class="li">  iteId - id of the item in question;</div>
+</li>
+<li class="level1"><div class="li">  name - name of user data.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="23480-24149" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="User Data Manipulation" /></div></form></div>
+<h3><a name="using_link-like_functionality_in_tree" id="using_link-like_functionality_in_tree">Using Link-Like Functionality in Tree</a></h3>
+<div class="level3">
+
+<p>
+Any node if the tree can have link-like functionality specified for it. The link for an item can be set by user in <acronym title="Extensible Markup Language">XML</acronym>. The user should also specify <a href="dhtmlxtree___event_onclick.html" class="wikilink1" title="dhtmlxtree:event_onclick">onClick event</a> for the item with link-like functionality.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="24150-" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit" class="button" title="Using Link-Like Functionality in Tree" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxtree/nodes_manipulation.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxtree%3Anodes_manipulation&amp;1279804935" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:nodes_manipulation" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxconnector:excel_file    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxconnector:excel_file</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:excel_file" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:excel_file" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxconnector:excel_file" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxconnector:excel_file"  class="breadcrumbs" title="dhtmlxconnector:excel_file">excel_file</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___connector.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxconnector:toc">dhtmlxconnector</a></div><div class='arrow'></div><div class='backlink'><a href="dhtmlxconnector___toc_what_is_dhtmlxconnector.html" class="wikilink1" title="dhtmlxconnector:toc_what_is_dhtmlxconnector">Usage Guide</a></div></div>
+</p>
+
+
+
+<h3><a name="loading_data_from_excel_file" id="loading_data_from_excel_file">Loading data from Excel file</a></h3>
+<div class="level3">
+
+<p>
+
+Connector 1.0+ allows to use MsExcel file as datasource, you can load data from excel file in any component ( grid, chart, dataview, combo , scheduler )
+</p>
+
+<p>
+To start using this feature you need to download libExcel - which is standalone project and not included in the connector&#039;s package
+You can grab it from here <a href="http://support.dhtmlx.com/x-files/connector/phpExcel.zip" class="urlextern" title="http://support.dhtmlx.com/x-files/connector/phpExcel.zip"  rel="nofollow">http://support.dhtmlx.com/x-files/connector/phpExcel.zip</a> or from author&#039;s site <a href="http://www.codeplex.com/PHPExcel" class="urlextern" title="http://www.codeplex.com/PHPExcel"  rel="nofollow">http://www.codeplex.com/PHPExcel</a> - unzip lib to the connector&#039;s folder. 
+</p>
+
+<p>
+Connector file will look as
+</p>
+<pre class="code php"><span class="co1">//files from ligExcel package</span>
+<span class="kw1">require_once</span><span class="br0">&#40;</span><span class="st_h">'lib/PHPExcel.php'</span><span class="br0">&#41;</span>;
+<span class="kw1">require_once</span><span class="br0">&#40;</span><span class="st_h">'lib/PHPExcel/IOFactory.php'</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="co1">//connectors</span>
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;../../codebase/db_excel.php&quot;</span><span class="br0">&#41;</span>;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;../../codebase/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$grid</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="st0">&quot;../some.xls&quot;</span><span class="sy0">,</span> <span class="st0">&quot;ExcelDBDataWrapper&quot;</span><span class="br0">&#41;</span>;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;A18:F83&quot;</span><span class="sy0">,</span> <span class="st0">&quot;id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;A,B,C,D,E,F&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Constructor
+</p>
+<ul>
+<li class="level1"><div class="li"> first parameter - name of excel file, absolute path or path related to the php file</div>
+</li>
+</ul>
+
+<p>
+  
+render_table
+</p>
+<ul>
+<li class="level1"><div class="li"> first parameter can be </div>
+<ul>
+<li class="level2"><div class="li"> range of cells in the spreadsheet, for example A18:F83</div>
+</li>
+<li class="level2"><div class="li"> number of the top row, from which output need to be started, for example A4</div>
+</li>
+<li class="level2"><div class="li"> “*” , which means include all not empty rows</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> second parameter is the field , which will be used as id, you can use “id” for auto id generation</div>
+</li>
+<li class="level1"><div class="li"> third parameter list of columns, which will be used as columns in the grid</div>
+</li>
+</ul>
+<pre class="code php"><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;A18:F83&quot;</span><span class="sy0">,</span> <span class="st0">&quot;id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;A,B,C,D,E,F&quot;</span><span class="br0">&#41;</span>;</pre><pre class="code php"><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;A1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;A,B,C,D,E,F&quot;</span><span class="br0">&#41;</span>;</pre><pre class="code php"><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;*&quot;</span><span class="sy0">,</span> <span class="st0">&quot;id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;A,B,C,D,E,F&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+If you want to load both data and header from excel file, it can be done by using GridConfiguration
+</p>
+<pre class="code php">	<span class="re0">$grid</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$excel_file</span><span class="sy0">,</span> <span class="st0">&quot;Excel&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+		<span class="re0">$config</span><span class="sy0">=</span><span class="kw2">new</span> GridConfiguration<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+		<span class="co1">//array of cells, with labels for grid's header</span>
+		<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setHeader</span><span class="br0">&#40;</span><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">sql</span><span class="sy0">-&gt;</span><span class="me1">excel_data</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st0">&quot;A3&quot;</span><span class="sy0">,</span><span class="st0">&quot;B3&quot;</span><span class="sy0">,</span><span class="st0">&quot;F13&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+		<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">set_config</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#41;</span>;
+&nbsp;
+	<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;A18&quot;</span><span class="sy0">,</span> <span class="st0">&quot;id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;A,B,F&quot;</span><span class="br0">&#41;</span>;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="99-" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:excel_file" /><input type="submit" value="Edit" class="button" title="Loading data from Excel file" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxconnector/excel_file.txt &middot; Last modified: 2010/07/13 17:27 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:excel_file" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:excel_file" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxconnector:excel_file" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxconnector%3Aexcel_file&amp;1279804811" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:excel_file" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

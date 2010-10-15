@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    others:toc_libcompiler    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">others:toc_libcompiler</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=others:toc_libcompiler"  class="breadcrumbs" title="others:toc_libcompiler">toc_libcompiler</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#libcomplier" class="toc">libComplier</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#libcomplier_s_interface" class="toc">libComplier&#039;s Interface</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#how_libcomplier_works" class="toc">How libComplier Works</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><a href="/dhtmlx/docs/doku.php?id=others:toc" class="media" title="others:toc"></a><a href="/dhtmlx/docs/doku.php?id=others:toc" class="wikilink2" title="others:toc" rel="nofollow">others</a></div></div>
+
+</p>
+
+<h2><a name="libcomplier" id="libcomplier">libComplier</a></h2>
+<div class="level2">
+
+<p>
+libComplier is a utility that is created for those users who intend to use dhtmlx components. This tool is designed to make the work of developers much easier. There&#039;s no need to set paths to different <acronym title="JavaScript">JS</acronym> and <acronym title="Cascading Style Sheets">CSS</acronym> files required for every single dhtmlx component. libComplier generates one <acronym title="JavaScript">JS</acronym> and one <acronym title="Cascading Style Sheets">CSS</acronym> files out of them all that the user can download and use. So, instead of a pack of different files, we get only two that contain all necessary code (including styles definition). What&#039;s more, the tool also provides users with all the necessary image files for the chosen component/components, stored in one archive.
+</p>
+
+<p>
+
+This utility provides users with the possibility to:
+</p>
+<ul>
+<li class="level1"><div class="li">  Choose the necessary component/components and desired set of functionality;</div>
+</li>
+<li class="level1"><div class="li">  Choose the necessary skin;</div>
+</li>
+<li class="level1"><div class="li">  Generate a <acronym title="JavaScript">JS</acronym> and a <acronym title="Cascading Style Sheets">CSS</acronym> files containing compilation of all the <acronym title="JavaScript">JS</acronym> and <acronym title="Cascading Style Sheets">CSS</acronym> files needed for the chosen component/components;</div>
+</li>
+<li class="level1"><div class="li">  Generate an archive containing a compiled <acronym title="JavaScript">JS</acronym> file and all necessary images.</div>
+</li>
+</ul>
+
+<p>
+Note: two last actions mentioned are done at the same time by one button click.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="49-1154" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Edit" class="button" title="libComplier" /></div></form></div>
+<h3><a name="libcomplier_s_interface" id="libcomplier_s_interface">libComplier&#039;s Interface</a></h3>
+<div class="level3">
+
+<p>
+libComplier&#039;s interface is quite simple, intuitive, and user-friendly. The program is displayed with the help of “3J” Layout view with a Toolbar attached to it. Each item in this Layout can be collapsed or expanded; the dimensions of each them can be easily changed by dragging one of its sides with a mouse.
+</p>
+
+<p>
+<img src="others___complier-interface2.png"  class="media" alt="" />
+</p>
+
+</div>
+
+<h4><a name="tree" id="tree">Tree</a></h4>
+<div class="level4">
+
+<p>
+The Tree is displayed in the left upper item of Compiler&#039;s layout. The main parent tree node is called “dhtmlxComponents”. Its child branch items represent dhtmlx components. Leaf items stand for the main functionality of a certain component.
+</p>
+
+<p>
+When the user checks any leaf item, all its parent items become checked as well. On startup none of tree items is checked, and only the main parent node is expanded. There is the possibility to expand or collapse all tree nodes using toolbar buttons. Also the user can check or uncheck all tree nodes by one button click.
+</p>
+
+</div>
+
+<h5><a name="features" id="features">Features</a></h5>
+<div class="level5">
+
+<p>
+There is also a drop-down list called “Features” in the functional panel of the left upper item of Compiler&#039;s layout. This drop-down list contains ready-made presets for the most commonly used dhtmlx components or their combinations.
+</p>
+
+<p>
+The available ready-made presets are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  Custom Set - it&#039;s not a preset, it&#039;s the possibility for the user to return the tree to its initial state - when nothing is checked;</div>
+</li>
+<li class="level1"><div class="li">  Grid Basic - this preset includes basic grid functionality: data loading, sorting, resizing, editing (ed,ro,txt), data serialization, <acronym title="Application Programming Interface">API</acronym> for selection and rows adding;</div>
+</li>
+<li class="level1"><div class="li">  Grid Full - this preset contains all grid functionality - grouping, filtering, math, d-n-d, additional excell types;</div>
+</li>
+<li class="level1"><div class="li">  Tree Basic - here the user will find basic tree functionality: data loading from <acronym title="Extensible Markup Language">XML</acronym>, ability to add|delete rows, d-n-d, checkboxes;</div>
+</li>
+<li class="level1"><div class="li">  Tree Full - all tree functionality is included into this preset (sorting, loading from json, serialization, operation with cookies);</div>
+</li>
+<li class="level1"><div class="li">  TreeGrid Basic - this preset contains basic treegrid functionality, which is loading and <acronym title="Application Programming Interface">API</acronym>, plus basic grid functionality;</div>
+</li>
+<li class="level1"><div class="li">  TreeGrid Full - in this preset the user will find basic treegrid functionality + filtering in treegrid + ability to show tree lines, as well as full grid functionality; </div>
+</li>
+<li class="level1"><div class="li">  Suite Basic - this preset includes grid, tree, treegrid, combo, and tabbar components with their basic functionality;</div>
+</li>
+<li class="level1"><div class="li">  Suite Full - all functionality of all components is added to this preset;</div>
+</li>
+<li class="level1"><div class="li">  Explorer Base - this preset is a base set to use the layout and the main components (tree and grid).</div>
+</li>
+</ul>
+
+<p>
+When the user chooses one of the preset from the list, the utility checks the necessary tree nodes, which files will be compiled, and shows the details of the chosen preset.
+On startup Custom Set preset is chosen from the drop-down list.
+
+</p>
+
+</div>
+
+<h4><a name="details" id="details">Details</a></h4>
+<div class="level4">
+
+<p>
+The Details part is situated right under the tree, in the left lower part of Complier&#039;s layout. It shows brief description for leaf items and for some of the branch items. The details are used to give the user general information on the chosen item.
+
+</p>
+
+</div>
+
+<h4><a name="used_skin" id="used_skin">Used Skin</a></h4>
+<div class="level4">
+
+<p>
+This part of Compiler&#039;s layout allows the user to choose the skin he wants to apply to his project. The only thing the user should do is to choose one of the available skins displayed by clicking the radio button near the skin name. Each available skin is backed up by a picture that can be viewed full size by clicking it. The picture then will be opened in a new window.
+</p>
+
+<p>
+On startup dhx_blue skin is chosen.
+
+</p>
+
+</div>
+
+<h4><a name="toolbar" id="toolbar">Toolbar</a></h4>
+<div class="level4">
+
+<p>
+The toolbar contains the following buttons:
+</p>
+<ul>
+<li class="level1"><div class="li">  Expand all - a click on this button expands all nodes in the Tree;</div>
+</li>
+<li class="level1"><div class="li">  Collapse all - a click on this button collapses all <a href="../dhtmlxtree/index.html" style="font-weight:bold;" class="wikilink1" title="dhtmlxtree:toc">Tree</a> nodes;</div>
+</li>
+<li class="level1"><div class="li">  Check all - a click on this button checks all <a href="../dhtmlxtree/index.html" style="font-weight:bold;" class="wikilink1" title="dhtmlxtree:toc">Tree</a> nodes (branch and leaf ones);</div>
+</li>
+<li class="level1"><div class="li">  Uncheck all - a click on this button uncheks all <a href="../dhtmlxtree/index.html" style="font-weight:bold;" class="wikilink1" title="dhtmlxtree:toc">Tree</a> nodes (branch and leaf ones);</div>
+</li>
+<li class="level1"><div class="li">  Generate - a click on this button generates a compiled <acronym title="JavaScript">JS</acronym> and a <acronym title="Cascading Style Sheets">CSS</acronym> files in an archive, a link to which is displayed in a popup “Generated code” window.</div>
+</li>
+</ul>
+
+<p>
+
+Note: “Generated code” window will be displayed only if the user has already chosen a skin and a component/components in the Tree.
+</p>
+
+</div>
+
+<h5><a name="generated_code_window" id="generated_code_window">Generated Code Window</a></h5>
+<div class="level5">
+
+<p>
+This popup window appears when the user clicks “Generate” toolbar button. The window contains the progress text while the system generates the necessary data.
+When the data is generated, the window displays the following:
+</p>
+<ul>
+<li class="level1"><div class="li">  Text: “Ready code stored at [path to the directory the code is stored];</div>
+</li>
+<li class="level1"><div class="li">  Archive link: “Get all as zip” - a link to the generated archive containing a <acronym title="JavaScript">JS</acronym> file, a <acronym title="Cascading Style Sheets">CSS</acronym> file, and all necessary images. The user can download the archive by clicking the link.</div>
+</li>
+</ul>
+
+<p>
+The user should close the window after the download is finished.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1155-6006" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Edit" class="button" title="libComplier's Interface" /></div></form></div>
+<h3><a name="how_libcomplier_works" id="how_libcomplier_works">How libComplier Works</a></h3>
+<div class="level3">
+
+<p>
+All files (<acronym title="JavaScript">JS</acronym> and <acronym title="Cascading Style Sheets">CSS</acronym> ones) are compressed and compiled into one <acronym title="JavaScript">JS</acronym> and one <acronym title="Cascading Style Sheets">CSS</acronym> files, which is put into an archive together with all the necessary image files.
+</p>
+
+<p>
+The only parameter in get_files.php file, that the user can indicate, is the following:
+
+</p>
+<pre class="code javascript">      define<span class="br0">&#40;</span><span class="st0">&quot;YUI&quot;</span><span class="sy0">,</span><span class="kw2">true</span><span class="br0">&#41;</span>;
+&nbsp;</pre>
+<p>
+
+Here true means that YUI compressor will be used for files compression. While false stands for more simple files compression.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="6007-" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Edit" class="button" title="How libComplier Works" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        others/toc_libcompiler.txt &middot; Last modified: 2010/03/31 11:54 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=others%3Atoc_libcompiler&amp;1279804955" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="others:toc_libcompiler" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

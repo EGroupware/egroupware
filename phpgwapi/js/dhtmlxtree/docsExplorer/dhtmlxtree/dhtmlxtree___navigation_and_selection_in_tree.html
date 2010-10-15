@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxtree:navigation_and_selection_in_tree    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxtree:navigation_and_selection_in_tree</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxtree:navigation_and_selection_in_tree"  class="breadcrumbs" title="dhtmlxtree:navigation_and_selection_in_tree">navigation_and_selection_in_tree</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#navigation_and_selection_in_tree" class="toc">Navigation and Selection in Tree</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#navigation_manipulation" class="toc">Navigation Manipulation</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#selection_manipulation" class="toc">Selection Manipulation</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___tree.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxtree:toc">dhtmlxtree</a></div></div>
+
+</p>
+
+<h2><a name="navigation_and_selection_in_tree" id="navigation_and_selection_in_tree">Navigation and Selection in Tree</a></h2>
+<div class="level2">
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-101" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Edit" class="button" title="Navigation and Selection in Tree" /></div></form></div>
+<h3><a name="navigation_manipulation" id="navigation_manipulation">Navigation Manipulation</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="enabling_keyboard_navigation" id="enabling_keyboard_navigation">Enabling Keyboard Navigation</a></h4>
+<div class="level4">
+
+<p>
+
+There is the possibility to enable keyboard navigation in dhtmlxTree. Using keyboard navigation, the user can select any item in the tree and use the following keys:
+</p>
+<ul>
+<li class="level1"><div class="li">  Up arrow - selects the item above the currently selected one;</div>
+</li>
+<li class="level1"><div class="li">  Down arrow - selects the item below the currently selected one;</div>
+</li>
+<li class="level1"><div class="li">  Right arrow - opens the item;</div>
+</li>
+<li class="level1"><div class="li">  Left arrow - closes the item;</div>
+</li>
+<li class="level1"><div class="li">  Enter - calls item&#039;s action;</div>
+</li>
+<li class="level1"><div class="li">  F2 - edits the selected item;</div>
+</li>
+<li class="level1"><div class="li">  Esc - closes the editor.</div>
+</li>
+</ul>
+
+<p>
+Keyboard navigation in the tree can be enabled/disabled in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableKeyboardNavigation</span><span class="br0">&#40;</span><span class="kw2">true</span>|false<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+This method should be called before any of the data loading methods.
+</p>
+
+</div>
+
+<h4><a name="assigning_navigation_keys" id="assigning_navigation_keys">Assigning Navigation Keys</a></h4>
+<div class="level4">
+
+<p>
+
+The user can also set new navigation keys using assignKeys() method:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">assignKeys</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="br0">&#91;</span><span class="st0">&quot;up&quot;</span><span class="sy0">,</span><span class="nu0">104</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="st0">&quot;down&quot;</span><span class="sy0">,</span><span class="nu0">98</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="st0">&quot;open&quot;</span><span class="sy0">,</span><span class="nu0">102</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="st0">&quot;close&quot;</span><span class="sy0">,</span><span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="st0">&quot;call&quot;</span><span class="sy0">,</span><span class="nu0">101</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>; <span class="co1">// should be called when keyboard navigation is already switched on</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The first parameter is the name of the action, the second one indicates the key code.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="102-1315" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Edit" class="button" title="Navigation Manipulation" /></div></form></div>
+<h3><a name="selection_manipulation" id="selection_manipulation">Selection Manipulation</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="focusing_item" id="focusing_item">Focusing Item</a></h4>
+<div class="level4">
+
+<p>
+
+The method below allows to scroll to the indicated item from script:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">focusItem</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+In this case the item is not selected/highlighted.
+</p>
+
+</div>
+
+<h4><a name="selecting_item" id="selecting_item">Selecting Item</a></h4>
+<div class="level4">
+
+<p>
+
+To select an item from script, the user should call the following command:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">selectItem</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span>mode<span class="sy0">,</span>preserve<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters here are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  itemId - item id;</div>
+</li>
+<li class="level1"><div class="li">  mode(true|false) - if set to true, script function for the selected item will be called;</div>
+</li>
+<li class="level1"><div class="li">  preserve(true|false) - preserve earlier selected items, it is set to false by default.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="clearing_selection" id="clearing_selection">Clearing Selection</a></h4>
+<div class="level4">
+
+<p>
+
+Method clearSelection() removes the selection of the specified item in the tree:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">clearSelection</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+
+<h4><a name="enabling_multiselection" id="enabling_multiselection">Enabling Multiselection</a></h4>
+<div class="level4">
+
+<p>
+
+Multiselection in the tree allows the user to select multiple items using Ctrl+click. Drag-and-drop is also supported in multiselection mode, as well as Cut and Paste functionality.
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableMultiselection</span><span class="br0">&#40;</span>mode<span class="sy0">,</span> strict<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  mode(true|false) - this parameter is responsible for enabling|disabling multiselection;</div>
+</li>
+<li class="level1"><div class="li">  strict(true|false) - whether the strict mode is on/off; the strict mode presupposes that only items on the same level can be objects of multiselection.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="enable_item_highlighting" id="enable_item_highlighting">Enable Item Highlighting</a></h4>
+<div class="level4">
+
+<p>
+
+There is the possibility to switch on item&#039;s highlighting feature - when it is on, item&#039;s label will be highlighted when the mouse pointer is over it. This feature is operated like this:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">enableHighlighting</span><span class="br0">&#40;</span><span class="kw2">true</span>|false<span class="br0">&#41;</span>; <span class="co1">// is switched off by default</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+When this method is set to false, it is switched off, while setting it to true, switches this feature on.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1316-" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Edit" class="button" title="Selection Manipulation" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxtree/navigation_and_selection_in_tree.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxtree%3Anavigation_and_selection_in_tree&amp;1279804934" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:navigation_and_selection_in_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

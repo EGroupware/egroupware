@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlx_overall_logic_en    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlx_overall_logic_en</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlx_overall_logic_en"  class="breadcrumbs" title="dhtmlx_overall_logic_en">dhtmlx_overall_logic_en</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#why_should_you_read_this" class="toc">Why Should You Read This ?</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#usage_guidelinesthe_entire_package_or_separate_components" class="toc">Usage Guidelines: the Entire Package or Separate Components?</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#dhtmlxsuite_location" class="toc">dhtmlxSuite Location</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#documentation_location" class="toc">Documentation Location</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#required_development_files" class="toc">Required Development Files</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#files_size" class="toc">Files Size</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#starting_from_html" class="toc">Starting from html</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#allocating_components_on_page" class="toc">Allocating Components on Page</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#how_to_initialize_components" class="toc">How to Initialize Components</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#how_to_set_parameters_configuration" class="toc">How to Set Parameters (Configuration)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#event_handlers" class="toc">Event Handlers</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#how_to_create_interface_completely" class="toc">How to Create Interface Completely</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#how_to_go_on_working_with_components" class="toc">How to Go On Working with Components</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+
+
+<h3><a name="why_should_you_read_this" id="why_should_you_read_this">Why Should You Read This ?</a></h3>
+<div class="level3">
+
+<p>
+Before working with library, scavenging information from the documentation, checking examples and making up conclusions - consolatory or not – you should read this article. It will take less than 10 minutes, but will save considerably more of your time in the near future. This article is aimed to explain the working logic of library and to provide the basic code examples. In case you intend to go deep into the matter and jump to creating applications you can be sure this article meets your needs. Well, let’s come down to practice:
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1-581" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="Why Should You Read This ?" /></div></form></div>
+<h3><a name="usage_guidelinesthe_entire_package_or_separate_components" id="usage_guidelinesthe_entire_package_or_separate_components">Usage Guidelines: the Entire Package or Separate Components?</a></h3>
+<div class="level3">
+
+<p>
+Dhtmlx library consists of different components, which can be used separately – for example, you are allowed to insert grid into your application for data output in table mode, tree and menu – for navigation purposes. As well, you can use the entire library to get necessary functionality and structure interface.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="582-973" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="Usage Guidelines: the Entire Package or Separate Components?" /></div></form></div>
+<h3><a name="dhtmlxsuite_location" id="dhtmlxsuite_location">dhtmlxSuite Location</a></h3>
+<div class="level3">
+
+<p>
+To start working with library you should download dhtmlxSuite<a href="http://dhtmlx.com/docs/download.shtml" style="text-decoration:underline;" class="urlextern" title="http://dhtmlx.com/docs/download.shtml"  rel="nofollow">here</a>. Package contains 15 (or 16 for professional edition) components. All components are listed on download page.
+</p>
+
+<p>
+Package content:
+</p>
+<ol>
+<li class="level1"><div class="li"> Folders with separate components;</div>
+</li>
+<li class="level1"><div class="li"> Folder with the tool that allows to integrate all necessary items in one script file - libCompiler;</div>
+</li>
+<li class="level1"><div class="li"> dhtmlx_std_full.zip – this is all you need for quick start. The archive contains all available components with all available functionality.<br/>
+ dhtmlx_pro_full.zip – the same for Professional Edition;</div>
+</li>
+<li class="level1"><div class="li"> index.html - file starting Docs and Samples Explorer.</div>
+</li>
+</ol>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="974-1659" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="dhtmlxSuite Location" /></div></form></div>
+<h3><a name="documentation_location" id="documentation_location">Documentation Location</a></h3>
+<div class="level3">
+
+<p>
+When you unpack the entire archive you will find index.html file (see point 4 in the paragraph above) and only after starting this file you will be able to see all components documentation. Thus, the archive file doesn&#039;t contain documentation. It is distributed within component folders, if you need to have access to all documentation files you can find it in dhtmlx Docs and Samples Explorer. By the way, you can avoid unpacking procedure and local working, there is an opportunity to check documentation on our site, all necessary documentation and samples are here: <a href="http://dhtmlx.com/docs/products/docsExplorer/index.shtml" style="text-decoration:underline;" class="urlextern" title="http://dhtmlx.com/docs/products/docsExplorer/index.shtml"  rel="nofollow">http://dhtmlx.com/docs/products/docsExplorer/index.shtml</a> 
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1660-2323" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="Documentation Location" /></div></form></div>
+<h3><a name="required_development_files" id="required_development_files">Required Development Files</a></h3>
+<div class="level3">
+
+<p>
+ To start working immediately, you should unpack dhtmlx_std_full.zip (dhtmlx_pro_full.zip) archive in the place from where you are going to load scripts (Note:  the folder must be available through web-server, otherwise some functionality will not be able to work). In any case, you are creating a web-application, so a web-server involvement is mandatory.
+</p>
+
+<p>
+Except script file, archive contains styles file and all necessary images. So, let&#039;s unpack it in /codebase for example. The structure looks approximately as follows: 
+
+</p>
+<pre class="code">  [codebase]
+      [imgs]
+      dhtmlx.js
+      dhtmlx.css
+  index.html</pre>
+
+<p>
+The last file indicates where we will create the interface of the application and make it work. 
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="2324-3071" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="Required Development Files" /></div></form></div>
+<h3><a name="files_size" id="files_size">Files Size</a></h3>
+<div class="level3">
+
+<p>
+
+Don&#039;t be confused with the size of the script file - 900 Kbytes. First, it contains the entire functionality, including specific one. When it comes to your application release, you will be able to leave just necessary functionality using the attached tool (see point 2). Secondly, all modern browsers support operating with the packed scripts, as for gzip format, here the maximum bundling weighs less than 200 Kbyts, so, browser successfully caches it as well as external content.
+</p>
+
+<p>
+Also, you can use files only with necessary functionality. But in this case it&#039;s required permanent synchronization with documentation (to know which file has to be pasted to make work certain functionality). For more details about files required for component initialization and functionality support (extensions usage), see  separate components documentation. 
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="3072-3941" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="Files Size" /></div></form></div>
+<h3><a name="starting_from_html" id="starting_from_html">Starting from html</a></h3>
+<div class="level3">
+
+<p>
+Let&#039;s return to index.html file.
+</p>
+<pre class="code html4strict"><span class="sc0">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span>
+<span class="sc2">&lt;<a href="http://december.com/html/4/element/html.html" style="text-decoration:underline;"><span class="kw2">html</span></a>&gt;</span>
+<span class="sc2">&lt;<a href="http://december.com/html/4/element/head.html" style="text-decoration:underline;"><span class="kw2">head</span></a>&gt;</span>
+    <span class="sc2">&lt;<a href="http://december.com/html/4/element/title.html" style="text-decoration:underline;"><span class="kw2">title</span></a>&gt;</span>My Application<span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/title.html" style="text-decoration:underline;"><span class="kw2">title</span></a>&gt;</span>
+    <span class="sc2">&lt;<a href="http://december.com/html/4/element/link.html" style="text-decoration:underline;"><span class="kw2">link</span></a> <span class="kw3">rel</span><span class="sy0">=</span><span class="st0">&quot;STYLESHEET&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;codebase/dhtmlx.css&quot;</span>&gt;</span>
+    <span class="sc2">&lt;<a href="http://december.com/html/4/element/script.html" style="text-decoration:underline;"><span class="kw2">script</span></a> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;codebase/dhtmlx.js&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span>&gt;&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html" style="text-decoration:underline;"><span class="kw2">script</span></a>&gt;</span>
+    <span class="sc2">&lt;<a href="http://december.com/html/4/element/script.html" style="text-decoration:underline;"><span class="kw2">script</span></a>&gt;</span>
+        function buildInterface(){
+            //entire code for interface init will go here
+        }
+        dhtmlxEvent(window,&quot;load&quot;, buildInterface);
+    <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html" style="text-decoration:underline;"><span class="kw2">script</span></a>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/head.html" style="text-decoration:underline;"><span class="kw2">head</span></a>&gt;</span>
+<span class="sc2">&lt;<a href="http://december.com/html/4/element/body.html" style="text-decoration:underline;"><span class="kw2">body</span></a>&gt;</span>
+&nbsp;
+<span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html" style="text-decoration:underline;"><span class="kw2">body</span></a>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/html.html" style="text-decoration:underline;"><span class="kw2">html</span></a>&gt;</span></pre>
+<p>
+The main conclusion you should make up is that interface creation has to be started from the full page loading. Why do we use dhtmlxEvent? Because it makes event setting available for any browser.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="3942-4740" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="Starting from html" /></div></form></div>
+<h3><a name="allocating_components_on_page" id="allocating_components_on_page">Allocating Components on Page</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Attaching to <acronym title="HyperText Markup Language">HTML</acronym>-item.<br/>
+ During components creation, the major part of them are already attached to certain place on page through parent <acronym title="HyperText Markup Language">HTML</acronym>-item. In most cases, div-item is used for this purpose. Item&#039;s identifier or link are passed to component constructor. Some components allow to change parent item after initialization. Another way to relocate component within document structure is relocating its parent item. </div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;mygrid&quot;</span><span class="sy0">&gt;&lt;/</span>div<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        myGrid <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXGridObject<span class="br0">&#40;</span><span class="st0">&quot;mygrid&quot;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre><ul>
+<li class="level1"><div class="li"> Placing inside dhtmlxLayout.<br/>
+ If at the beginning, you place dhtmlxLayout on page (on empty page, you can attach it just to document.body), after that you can allocate components inside its cells.  You are allowed to do the same with dhtmlxTabbar, dhtmlxWindows. For these components, items from items, windows and tabs collections, accordingly, are used as container with the same capabilities.</div>
+</li>
+</ul>
+<pre class="code javascript">    myLayout <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXLayout<span class="br0">&#40;</span>document.<span class="me1">body</span><span class="sy0">,</span><span class="st0">&quot;3E&quot;</span><span class="br0">&#41;</span>;
+    myGrid <span class="sy0">=</span> myLayout.<span class="me1">items</span><span class="br0">&#40;</span>0<span class="br0">&#41;</span>.<span class="me1">attachGrid</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre>
+<p>
+For more details about allocating dhtmlx and other items inside Layout, Tabbar and Window, see <a href="http://docs.dhtmlx.com/doku.php?id=dhtmlxlayout:attaching_dhtmlx_components" style="text-decoration:underline;" class="wikilink1" title="dhtmlxlayout:attaching_dhtmlx_components"> here</a>.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="4741-6016" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="Allocating Components on Page" /></div></form></div>
+<h3><a name="how_to_initialize_components" id="how_to_initialize_components">How to Initialize Components</a></h3>
+<div class="level3">
+
+<p>
+
+There are three ways to initialize any component of the suite: 
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Through constructor function.<br/>
+ This way of initialization is valid for all components. The names of all component constructors coincide with the names of components (since version 2.5). The major part of components are initialized with a certain set of parameters, we will go into details of this later. So, below you can see an example of windows system initialization through the constructor:</div>
+</li>
+</ul>
+<pre class="code javascript">myWindows <span class="sy0">=</span> <span class="kw2">new</span> dhtmlxWindows<span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre><ul>
+<li class="level1"><div class="li"> Through appropriated methods of dhtmlxLayout component: attachTree, attachGrid, attachMenu и т.д. (for Layout <acronym title="Application Programming Interface">API</acronym> documentation, see here api_toc_alpha). The procedure is almost the same, there is only one difference, instead of constructor function you should write layout method (or more exactly, the method of separate layout panel). As result the component is initialized directly into the appropriate panel.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Directly from <acronym title="HyperText Markup Language">HTML</acronym> objects, their class attribute (name of css class) is set in the value corresponding to component name: for tree - dhtmlxTree, for grid - dhtmlxGrid, for tabbar - dhtmlxTabbar. If you need this way of initialization, see documentation for more details.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="6017-7285" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="How to Initialize Components" /></div></form></div>
+<h3><a name="how_to_set_parameters_configuration" id="how_to_set_parameters_configuration">How to Set Parameters (Configuration)</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Through methods.<br/>
+ In most cases, methods which allow to set parameters start with “set”, “enable” (setInitWidth, enableMathSerialization). The list of basic and optional methods required for component initialization is located in constructor function section of <acronym title="Application Programming Interface">API</acronym> documentation of each component.  (part “Original Way of Initialization”).</div>
+</li>
+</ul>
+<pre class="code javascript">    myGrid <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXGridObject<span class="br0">&#40;</span><span class="st0">&quot;grid_container&quot;</span><span class="br0">&#41;</span>;
+    myGrid.<span class="me1">setImagePath</span><span class="br0">&#40;</span><span class="st0">&quot;codebase/imgs/&quot;</span><span class="br0">&#41;</span>;
+    myGrid.<span class="me1">setHeader</span><span class="br0">&#40;</span><span class="st0">&quot;Model,Qty,Price&quot;</span><span class="br0">&#41;</span>;
+    myGrid.<span class="me1">setInitWidths</span><span class="br0">&#40;</span><span class="st0">&quot;*,150,150&quot;</span><span class="br0">&#41;</span>;
+    myGrid.<span class="me1">setColAlign</span><span class="br0">&#40;</span><span class="st0">&quot;left,right,right&quot;</span><span class="br0">&#41;</span>;
+    myGrid.<span class="me1">setSkin</span><span class="br0">&#40;</span><span class="st0">&quot;light&quot;</span><span class="br0">&#41;</span>;
+    myGrid.<span class="me1">init</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    myGrid.<span class="me1">loadXML</span><span class="br0">&#40;</span><span class="st0">&quot;some_url.php&quot;</span><span class="br0">&#41;</span>;</pre><ul>
+<li class="level1"><div class="li"> Through objects properties (since version 2.5, there is extension for object initialization/configuration).<br/>
+ The list of basic and optional properties required for component initialization is located in constructor function section of <acronym title="Application Programming Interface">API</acronym> documentation of each component.  (part “Original Way of Initialization”).</div>
+</li>
+</ul>
+<pre class="code javascript">    myGrid <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXGridObject<span class="br0">&#40;</span><span class="br0">&#123;</span>
+        parent<span class="sy0">:</span> <span class="st0">&quot;grid_container&quot;</span><span class="sy0">,</span>
+        image_path<span class="sy0">:</span> <span class="st0">&quot;codebase/imgs/&quot;</span><span class="sy0">,</span>
+        skin<span class="sy0">:</span> <span class="st0">&quot;light&quot;</span><span class="sy0">,</span>
+        columns<span class="sy0">:</span> <span class="br0">&#91;</span>
+             <span class="br0">&#123;</span>
+                 label<span class="sy0">:</span> <span class="st0">&quot;Model&quot;</span><span class="sy0">,</span>
+                 width<span class="sy0">:</span> <span class="st0">&quot;*&quot;</span><span class="sy0">,</span>
+                 align<span class="sy0">:</span> <span class="st0">&quot;left&quot;</span><span class="sy0">,</span>
+             <span class="br0">&#125;</span><span class="sy0">,</span><span class="br0">&#123;</span>
+                 label<span class="sy0">:</span> <span class="st0">&quot;Qty&quot;</span><span class="sy0">,</span>
+                 width<span class="sy0">:</span> <span class="nu0">150</span><span class="sy0">,</span>
+                 align<span class="sy0">:</span> <span class="st0">&quot;right&quot;</span><span class="sy0">,</span>
+             <span class="br0">&#125;</span><span class="sy0">,</span><span class="br0">&#123;</span>
+                 label<span class="sy0">:</span> <span class="st0">&quot;Price&quot;</span><span class="sy0">,</span>
+                 width<span class="sy0">:</span> <span class="nu0">150</span><span class="sy0">,</span>
+                 align<span class="sy0">:</span> <span class="st0">&quot;right&quot;</span><span class="sy0">,</span>
+             <span class="br0">&#125;</span>
+        <span class="br0">&#93;</span>
+    <span class="br0">&#125;</span><span class="br0">&#41;</span>;
+    myGrid.<span class="me1">loadXML</span><span class="br0">&#40;</span><span class="st0">&quot;some_url.php&quot;</span><span class="br0">&#41;</span>;</pre><ul>
+<li class="level1"><div class="li"> Through <acronym title="Extensible Markup Language">XML</acronym>.<br/>
+ Grid supports this way of initialization. Grid and columns parameters are indicated in special partition of <acronym title="Extensible Markup Language">XML</acronym>-document, which can be loaded from server with all data for rows (or without it). For more details see <a href="http://docs.dhtmlx.com/doku.php?id=dhtmlxgrid:configuration_from_xml" style="text-decoration:underline;" class="wikilink1" title="dhtmlxgrid:configuration_from_xml"> here</a>.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="setting_parameters_for_the_entire_dhtmlxsuite" id="setting_parameters_for_the_entire_dhtmlxsuite">Setting Parameters for the Entire dhtmlxSuite</a></h4>
+<div class="level4">
+
+<p>
+
+There are some parameters which can be set for all components on page at once. Currently they are: skin name and path to images.  <img src="/dhtmlx/docs/lib/images/smileys/fixme.gif" class="middle" alt="FIXME" />
+
+</p>
+<ul>
+<li class="level1"><div class="li"> through global dhtmlx object;</div>
+</li>
+<li class="level1"><div class="li"> through parameters of dhtmlxLayout object, which contains used components.</div>
+</li>
+</ul>
+
+<p>
+
+If these parameters are set for concrete objects later, they will have priority status.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="7286-9587" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="How to Set Parameters (Configuration)" /></div></form></div>
+<h3><a name="event_handlers" id="event_handlers">Event Handlers</a></h3>
+<div class="level3">
+
+<p>
+
+<em>attachEvent(event_name,handler_function)</em> allows to set event handlers for any components of dhtmlxSuite. For lists of events see Script <acronym title="Application Programming Interface">API</acronym> Reference partition, which is located at the foot of generic page of any component documentation. Note: names of events are case-insensitive.
+</p>
+
+<p>
+Nearly every event passes to function-handler some parameters which can be used in this function. Such parameters are listed in documentation. This is an example:
+</p>
+<pre class="code javascript">myGrid.<span class="me1">attachEvent</span><span class="br0">&#40;</span><span class="st0">&quot;onRowSelect&quot;</span><span class="sy0">,</span><span class="kw2">function</span><span class="br0">&#40;</span>rowId<span class="sy0">,</span>cellInd<span class="br0">&#41;</span><span class="br0">&#123;</span>
+    <span class="kw3">alert</span><span class="br0">&#40;</span><span class="st0">&quot;Row was selected. It's id is &quot;</span><span class="sy0">+</span> rowId <span class="sy0">+</span><span class="st0">&quot;. Index of clicked cell is &quot;</span><span class="sy0">+</span> cellInd<span class="br0">&#41;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span>;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="9588-10247" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="Event Handlers" /></div></form></div>
+<h3><a name="how_to_create_interface_completely" id="how_to_create_interface_completely">How to Create Interface Completely</a></h3>
+<div class="level3">
+
+<p>
+There is the main approach to interface creation by using dhtmlx library capabilities:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Let&#039;s create interface structure which will be set by layout. The whole page (document.body), some block <acronym title="HyperText Markup Language">HTML</acronym> item (for example, DIV-item or table cell), cell of other layout, tabbar, window or accordion can be used as container for layout. Layout structure can be set in two ways:<br/>
+ by choosing appropriate structure from existing ones,<br/>
+ or by creating any other structure by means of combining with existing ones (in this case you should use the capability to create layouts within cells of other layout).</div>
+</li>
+</ul>
+<pre class="code javascript">myLayout1 <span class="sy0">=</span> <span class="kw2">new</span> dhtmlxLayout<span class="br0">&#40;</span><span class="br0">&#123;</span>
+    parent<span class="sy0">:</span>document.<span class="me1">body</span>;
+    schema<span class="sy0">:</span> <span class="st0">&quot;3J&quot;</span>;
+&nbsp;
+<span class="br0">&#125;</span><span class="br0">&#41;</span>
+myLayout1.<span class="me1">cells</span><span class="br0">&#40;</span><span class="st0">&quot;c&quot;</span><span class="br0">&#41;</span>.<span class="me1">hideHeader</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+myLayout2 <span class="sy0">=</span> <span class="kw2">new</span> dhtmlxLayout<span class="br0">&#40;</span><span class="br0">&#123;</span>
+    parent<span class="sy0">:</span> myLayout1.<span class="me1">cells</span><span class="br0">&#40;</span><span class="st0">&quot;c&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    schema<span class="sy0">:</span> <span class="st0">&quot;3E&quot;</span>
+<span class="br0">&#125;</span><span class="br0">&#41;</span></pre>
+<p>
+Here we get the sum of 2 layouts and 5 cells (2 cells are taken from the first layout, 3 others - from the second one) for items placement. You should call them accordingly to the following logic:
+</p>
+
+<p>
+myLayout1.cells(“a”), myLayout1.cells(“b”), myLayout2.cells(“a”), myLayout2.cells(“b”),myLayout2.cells(“c”). 
+</p>
+
+<p>
+<img src="layout2_sum_trans.gif"  class="media" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li"> Global items. Layout already contains windows system which can be used for popup windows (see<a href="/dhtmlx/docs/doku.php?id=attaching_dhtmlx_components#using_dhtmlxlayout_and_dhtmlxwindows_together" class="wikilink2" title="attaching_dhtmlx_components" rel="nofollow"> details</a>), also you are allowed to set menu and toolbar over a cell (any cell can have its menu and toolbar, as well). For the detailed description, see<a href="http://docs.dhtmlx.com/doku.php?id=dhtmlxlayout:global_items" style="text-decoration:underline;" class="wikilink1" title="dhtmlxlayout:global_items"> here</a>.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Let&#039;s place items inside layout panels. As it was described in the second way of initialization paragraph, you have an opportunity to create components inside layout panels by using layout cells methods which begin with the word attach (attachGrid, attachTree etc). In the same way you can place <acronym title="HyperText Markup Language">HTML</acronym> objects in layout cells and load external page. Otherwise components can be placed in cell after initialization by means of attachObject method. Menu and toolbar can be placed in cell at once with the main item. For details see <a href="http://docs.dhtmlx.com/doku.php?id=dhtmlxlayout:global_items" style="text-decoration:underline;" class="wikilink1" title="dhtmlxlayout:global_items"> here</a>.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="10248-12423" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="How to Create Interface Completely" /></div></form></div>
+<h3><a name="how_to_go_on_working_with_components" id="how_to_go_on_working_with_components">How to Go On Working with Components</a></h3>
+<div class="level3">
+
+<p>
+
+After initializing components, properties of them (to be more precise, most of them) can be changed dynamically - by using <acronym title="Application Programming Interface">API</acronym> methods. Generally, such methods start with <em>set</em> or <em>enable</em>. To call subobjects (rows and columns in grid, item in tree, windows in window system, cells in layout, buttons in toolbar, items in menu etc) you should use ID.
+Besides correcting properties through <acronym title="Application Programming Interface">API</acronym>, you are allowed to achieve any desired functionality of components. For more information see <a href="index.html" class="wikilink1" title="start"> Documentation</a> (search is enabled) or<a href="http://www.dhtmlx.com/docs/products/kb/index.shtml" style="text-decoration:underline;" class="urlextern" title="http://www.dhtmlx.com/docs/products/kb/index.shtml"  rel="nofollow">Knowlege Base</a>, or contact our support team.
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="12424-" /><input type="hidden" name="rev" value="1270025685" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit" class="button" title="How to Go On Working with Components" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlx_overall_logic_en.txt &middot; Last modified: 2010/03/31 11:54 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlx_overall_logic_en&amp;1279804956" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlx_overall_logic_en" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

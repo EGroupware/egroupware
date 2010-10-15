@@ -1,0 +1,8 @@
+<toolbar id="0">
+<item id="expand" type="button" img="imgs/expand-all.gif" text="expand all"/>
+<item id="collapse" type="button" img="imgs/collapse-all.gif" text="collapse all"/>
+<item id="check" img="imgs/check-all.gif" type="button" text="check all"/>
+<item id="uncheck" img="imgs/uncheck-all.gif" type="button" text="uncheck all"/>
+<item id="14" type="separator"/>
+<item id="generate" img="imgs/generate.gif" type="button" text="generate"/>
+</toolbar>

@@ -1,0 +1,10 @@
+<?xml version='1.0' ?>
+<menu id="0">
+		<item text="Red" img="red.gif"  id="edit_Red"/>	
+		<item text="Green" img="green.gif"  id="edit_Green"/>	
+		<item text="Blue" img="blue.gif"  id="edit_Blue"/>	
+	<item text="Other..." img="" id="outher">
+		<item text="Yellow" img="yellow.gif"  id="edit_Yellow"/>	
+		<item text="White" img="white.gif"  id="edit_White"/>	
+	</item>
+</menu>

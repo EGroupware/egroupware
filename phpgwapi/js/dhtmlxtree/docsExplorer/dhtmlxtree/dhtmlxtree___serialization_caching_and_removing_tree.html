@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxtree:serialization_caching_and_removing_tree    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxtree:serialization_caching_and_removing_tree</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxtree:serialization_caching_and_removing_tree"  class="breadcrumbs" title="dhtmlxtree:serialization_caching_and_removing_tree">serialization_caching_and_removing_tree</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#serialization_caching_and_removing_tree" class="toc">Serialization, Caching and Removing Tree</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#serializing_tree" class="toc">Serializing Tree</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#setting_serialization_level" class="toc">Setting Serialization Level</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#preventing_caching_in_ie" class="toc">Preventing Caching in IE</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#registering_xml_entity" class="toc">Registering XML Entity</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#removing_tree" class="toc">Removing Tree</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___tree.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxtree:toc">dhtmlxtree</a></div></div>
+
+</p>
+
+<h2><a name="serialization_caching_and_removing_tree" id="serialization_caching_and_removing_tree">Serialization, Caching and Removing Tree</a></h2>
+<div class="level2">
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-109" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit" class="button" title="Serialization, Caching and Removing Tree" /></div></form></div>
+<h3><a name="serializing_tree" id="serializing_tree">Serializing Tree</a></h3>
+<div class="level3">
+
+<p>
+The user can get an <acronym title="Extensible Markup Language">XML</acronym> representation (as a string) of the tree using method serializeTree():
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">serializeTree</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+Also there is the possibility to return the tree as a JSON string like this:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">serializeTreeToJSON</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="110-488" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit" class="button" title="Serializing Tree" /></div></form></div>
+<h3><a name="setting_serialization_level" id="setting_serialization_level">Setting Serialization Level</a></h3>
+<div class="level3">
+
+<p>
+<acronym title="Extensible Markup Language">XML</acronym> serialization can be easily configured in the following way:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">setSerializationLevel</span><span class="br0">&#40;</span>userData<span class="sy0">,</span>fullXML<span class="sy0">,</span>escapeEntities<span class="sy0">,</span>userDataAsCData<span class="sy0">,</span>DTD<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+
+The parameters are as follows:
+</p>
+<ul>
+<li class="level1"><div class="li">  userData - enable/disable user data serialization;</div>
+</li>
+<li class="level1"><div class="li">  fullXML - enable/disable full <acronym title="Extensible Markup Language">XML</acronym> serialization;</div>
+</li>
+<li class="level1"><div class="li">  escapeEntities - convert tag brackets to related html entities;</div>
+</li>
+<li class="level1"><div class="li">  userDataAsCData - output user data in CDATA sections;</div>
+</li>
+<li class="level1"><div class="li">  <acronym title="Document Type Definition">DTD</acronym> - if specified, then set as <acronym title="Extensible Markup Language">XML</acronym>&#039;s <acronym title="Document Type Definition">DTD</acronym>.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="489-1057" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit" class="button" title="Setting Serialization Level" /></div></form></div>
+<h3><a name="preventing_caching_in_ie" id="preventing_caching_in_ie">Preventing Caching in IE</a></h3>
+<div class="level3">
+
+<p>
+The user can prevent caching in <acronym title="Internet Explorer">IE</acronym> by adding random value to <acronym title="Uniform Resource Locator">URL</acronym> string with the help of method preventIECaching():
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">preventIECaching</span><span class="br0">&#40;</span><span class="kw2">true</span>|false<span class="br0">&#41;</span>; <span class="co1">// false by default</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1058-1330" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit" class="button" title="Preventing Caching in IE" /></div></form></div>
+<h3><a name="registering_xml_entity" id="registering_xml_entity">Registering XML Entity</a></h3>
+<div class="level3">
+
+<p>
+There is the possibility in dhtmlxTree to register an <acronym title="Extensible Markup Language">XML</acronym> entity for replacement of special symbols while initialization of the tree (default ones are: ampersand, “less then” and “greater then” symbols):
+
+</p>
+<pre class="code javascript">&nbsp;
+      <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+          tree.<span class="me1">registerXMLEntity</span><span class="br0">&#40;</span>rChar<span class="sy0">,</span>rEntity<span class="br0">&#41;</span>;
+      <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;
+&nbsp;</pre>
+<p>
+
+The parameters are the following:
+</p>
+<ul>
+<li class="level1"><div class="li">  rChar - source char;</div>
+</li>
+<li class="level1"><div class="li">  rEntity - target entity.</div>
+</li>
+</ul>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1331-1780" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit" class="button" title="Registering XML Entity" /></div></form></div>
+<h3><a name="removing_tree" id="removing_tree">Removing Tree</a></h3>
+<div class="level3">
+
+<p>
+There is a simple method that allows the user to remove the tree completely and to clear memory:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        tree.<span class="me1">destructor</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1781-" /><input type="hidden" name="rev" value="1279031296" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit" class="button" title="Removing Tree" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxtree/serialization_caching_and_removing_tree.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxtree%3Aserialization_caching_and_removing_tree&amp;1279804934" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxtree:serialization_caching_and_removing_tree" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

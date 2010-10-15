@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxconnector:server_side_others    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxconnector:server_side_others</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:server_side_others" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:server_side_others" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxconnector:server_side_others" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxconnector:server_side_others"  class="breadcrumbs" title="dhtmlxconnector:server_side_others">server_side_others</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+The init code are similar for all components and DB types
+</p>
+
+<h4><a name="db_types" id="db_types">DB types</a></h4>
+<div class="level4">
+
+<p>
+
+MySQL ( php_mysql )
+
+</p>
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$res</span><span class="sy0">=</span><a href="http://www.php.net/mysql_connect"><span class="kw3">mysql_connect</span></a><span class="br0">&#40;</span><span class="st0">&quot;localhost&quot;</span><span class="sy0">,</span><span class="st0">&quot;root&quot;</span><span class="sy0">,</span><span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>;
+<a href="http://www.php.net/mysql_select_db"><span class="kw3">mysql_select_db</span></a><span class="br0">&#40;</span><span class="st0">&quot;myDatabase&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$gridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+MySQLi ( php_mysqli )
+
+</p>
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/db_mysqli.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$mysqli</span> <span class="sy0">=</span> <span class="kw2">new</span> mysqli<span class="br0">&#40;</span><span class="re0">$server</span><span class="sy0">,</span> <span class="re0">$user</span><span class="sy0">,</span> <span class="re0">$pass</span><span class="sy0">,</span> <span class="re0">$mysql_db</span><span class="br0">&#41;</span>; 
+<span class="re0">$gridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$mysqli</span><span class="sy0">,</span><span class="st0">&quot;MySQLi&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+PostgreSQL ( php_pg )
+
+</p>
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/db_postgre.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$res</span> <span class="sy0">=</span> <a href="http://www.php.net/pg_connect"><span class="kw3">pg_connect</span></a><span class="br0">&#40;</span><span class="st0">&quot;host=localhost port=5432 dbname=mary&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$gridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;Postgre&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Oracle ( php_oci )
+
+</p>
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/db_oracle.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$res</span> <span class="sy0">=</span> oci_connect<span class="br0">&#40;</span><span class="st0">&quot;scott&quot;</span><span class="sy0">,</span> <span class="st0">&quot;tiger&quot;</span><span class="sy0">,</span> <span class="re0">$db</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$gridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;Oracle&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+MSSQL ( php_mssql )
+
+</p>
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/db_mssql.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$res</span><span class="sy0">=</span>mssql_connect<span class="br0">&#40;</span><span class="st_h">'.\SQLEXPRESS'</span><span class="sy0">,</span><span class="st0">&quot;sa&quot;</span><span class="sy0">,</span><span class="st0">&quot;1&quot;</span><span class="sy0">,</span><span class="kw2">false</span><span class="br0">&#41;</span>;
+mssql_select_db<span class="br0">&#40;</span><span class="st0">&quot;sampleDB&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$gridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MsSQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+PDO ( php_pdo ) 
+
+</p>
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/db_pdo.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$res</span> <span class="sy0">=</span> <span class="kw2">new</span> PDO<span class="br0">&#40;</span><span class="st_h">'mysql:host=localhost;dbname=test'</span><span class="sy0">,</span> <span class="re0">$user</span><span class="sy0">,</span> <span class="re0">$pass</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$gridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;PDO&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+File System
+
+</p>
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/db_pdo.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$gridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="st0">&quot;/var/www/test&quot;</span><span class="sy0">,</span><span class="st0">&quot;FileSystem&quot;</span><span class="br0">&#41;</span>;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;./&quot;</span><span class="sy0">,</span> <span class="st0">&quot;id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;A,B,C,D,E,F&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Excel file
+
+</p>
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/db_excel.php&quot;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$res</span> <span class="sy0">=</span> <span class="kw2">new</span> PDO<span class="br0">&#40;</span><span class="st_h">'mysql:host=localhost;dbname=test'</span><span class="sy0">,</span> <span class="re0">$user</span><span class="sy0">,</span> <span class="re0">$pass</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$grid</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="st0">&quot;some.xls&quot;</span><span class="sy0">,</span> <span class="st0">&quot;ExcelDBDataWrapper&quot;</span><span class="br0">&#41;</span>;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;A18:F83&quot;</span><span class="sy0">,</span> <span class="st0">&quot;id&quot;</span><span class="sy0">,</span> <span class="st0">&quot;A,B,C,D,E,F&quot;</span><span class="br0">&#41;</span>;</pre>
+</div>
+
+<h4><a name="component_types" id="component_types">Component types</a></h4>
+<div class="level4">
+
+<p>
+For other components syntax of constructor exactly the same, except, the “Grid” in object name replaced with component&#039;s name
+</p>
+
+<p>
+Grid
+
+</p>
+<pre class="code php">     <span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+     <span class="co1">//...</span>
+     <span class="re0">$gridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+TreeGrid <sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup>
+
+</p>
+<pre class="code php">     <span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/treegrid_connector.php&quot;</span><span class="br0">&#41;</span>;
+     <span class="co1">//...</span>
+     <span class="re0">$treeGridConn</span> <span class="sy0">=</span> <span class="kw2">new</span> TreeGridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Tree <sup><a href="#fn__2" name="fnt__2" id="fnt__2" class="fn_top">2)</a></sup>
+
+</p>
+<pre class="code php">     <span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/tree_connector.php&quot;</span><span class="br0">&#41;</span>;
+     <span class="co1">//...</span>
+     <span class="re0">$treeConn</span> <span class="sy0">=</span> <span class="kw2">new</span> TreeConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Combo
+
+</p>
+<pre class="code php">     <span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/combo_connector.php&quot;</span><span class="br0">&#41;</span>;
+     <span class="co1">//...</span>
+     <span class="re0">$comboConn</span> <span class="sy0">=</span> <span class="kw2">new</span> ComboConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Scheduler
+
+</p>
+<pre class="code php">     <span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/scheduler_connector.php&quot;</span><span class="br0">&#41;</span>;
+     <span class="co1">//...</span>
+     <span class="re0">$schedulerConn</span> <span class="sy0">=</span> <span class="kw2">new</span> SchedulerConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Form
+
+</p>
+<pre class="code php">     <span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/form_connector.php&quot;</span><span class="br0">&#41;</span>;
+     <span class="co1">//...</span>
+     <span class="re0">$formConn</span> <span class="sy0">=</span> <span class="kw2">new</span> FormConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+DataView
+
+</p>
+<pre class="code php">     <span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/dataview_connector.php&quot;</span><span class="br0">&#41;</span>;
+     <span class="co1">//...</span>
+     <span class="re0">$dataConn</span> <span class="sy0">=</span> <span class="kw2">new</span> DataViewConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Chart 
+
+</p>
+<pre class="code php">     <span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;connector/chart_connector.php&quot;</span><span class="br0">&#41;</span>;
+     <span class="co1">//...</span>
+     <span class="re0">$chartConn</span> <span class="sy0">=</span> <span class="kw2">new</span> ChartConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="sy0">,</span><span class="st0">&quot;MySQL&quot;</span><span class="br0">&#41;</span>; <span class="co1">// (!!!)</span></pre>
+</div>
+<div class="footnotes">
+<div class="fn"><sup><a href="#fnt__1" id="fn__1" name="fn__1" class="fn_bot">1)</a></sup> 
+, <sup><a href="#fnt__2" id="fn__2" name="fn__2" class="fn_bot">2)</a></sup> 
+check <a href="dhtmlxconnector___loading_editing_data.html" class="wikilink1" title="dhtmlxconnector:loading_editing_data">configuration</a> details </div>
+</div>
+
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxconnector/server_side_others.txt &middot; Last modified: 2010/07/13 17:27 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:server_side_others" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:server_side_others" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxconnector:server_side_others" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxconnector%3Aserver_side_others&amp;1279804812" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:server_side_others" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

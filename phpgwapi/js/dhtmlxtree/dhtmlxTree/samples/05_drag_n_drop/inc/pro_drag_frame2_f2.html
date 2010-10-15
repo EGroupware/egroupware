@@ -1,0 +1,78 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+
+<body onload="onLoad()">
+	
+	<link rel="STYLESHEET" type="text/css" href="../../../codebase/dhtmlxtree.css">
+	
+	<script  src="../../../codebase/dhtmlxcommon.js"></script>
+	
+    <style>
+        div.alfa{
+            margin-top:10px;
+            margin-left:50px;
+        }
+
+    </style>
+    <script>
+        var dragger;
+        var dropper;
+        function onLoad(){
+            dragger=new dhtmlDragAndDropObject();
+            dropper=new  dragImageInTree();
+
+            var zone=document.getElementById("dragZone");
+            zone.onmousedown= dropper._preventNsDrag;
+        	zone.onselectstart=new Function("return false;");
+
+        for (var i=1; i<5; i++){
+            var item=document.getElementById("a"+i);
+            dragger.addDraggableItem(item,dropper);
+            item.dragLanding=null;
+            //item.onmousedown=dropper._preventNsDrag;
+            item.ondragstart=dropper._preventNsDrag;
+            item.parentObject=new Object;
+            item.parentObject.img=item;
+            item.parentObject.treeNod=dropper;
+            }
+
+        }
+        function dragImageInTree(){
+
+            this.lWin=window;
+             this._createDragNode=function(node){        //   alert(1);
+                  	var dragSpan=document.createElement('div');
+        			dragSpan.style.position="absolute";
+                    dragSpan.innerHTML="<img src=\""+node.getAttribute("src")+"\">";
+                    dragSpan.style.zIndex=12;
+			return dragSpan;
+             };
+             this._preventNsDrag=function(e){
+                (e||window.event).cancelBubble=true;
+            	if ((e)&&(e.preventDefault)) { e.preventDefault(); return false; }
+            	return false;
+             }
+             this._nonTrivialNode=function(tree,item,bitem,source){
+                var image=source.img.getAttribute("src2");
+                if (bitem)
+                    tree.insertNewNext(bitem.id,"new_ID",image,"",image,image,image);
+                else
+                    tree.insertNewItem(item.id,"new_ID",image,"",image,image,image);
+
+             }
+        }
+    </script>
+
+<br><br>
+    <div id="dragZone" style=" position:relative; top:0; ">
+    <div id="a1" class="alfa" src2="close2.gif" src="<img src="../../../codebase/imgs/csh_bluebooks/close2.gif" style="background-image:url(../../../codebase/imgs/2_bluebooks/close2.gif); width:40px; height:40px;">&nbsp;</div>
+    <div id="a2" class="alfa" src2="item.gif" src="../../../codebase/imgs/csh_bluebooks/item.gif" style="background-image:url(../../../codebase/imgs/2_bluebooks/item.gif); width:40px; height:40px; ">&nbsp;</div>
+    <div id="a3" class="alfa" src2="item2.gif" src="../../../codebase/imgs/csh_bluebooks/item2.gif" style="background-image:url(../../../codebase/imgs/2_bluebooks/item2.gif); width:40px; height:40px;">&nbsp;</div>
+    <div id="a4" class="alfa" src2="tombs.gif" src="../../../codebase/imgs/csh_bluebooks/tombs.gif" style="background-image:url(../../../codebase/imgs/2_bluebooks/tombs.gif); width:40px; height:40px;">&nbsp;</div>
+    </div>
+
+</body>
+</html>

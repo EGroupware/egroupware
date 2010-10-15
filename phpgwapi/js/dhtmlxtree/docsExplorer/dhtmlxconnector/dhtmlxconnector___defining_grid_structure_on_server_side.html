@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxconnector:defining_grid_structure_on_server_side    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxconnector:defining_grid_structure_on_server_side</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxconnector:defining_grid_structure_on_server_side"  class="breadcrumbs" title="dhtmlxconnector:defining_grid_structure_on_server_side">defining_grid_structure_on_server_side</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    <!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#defining_grid_structure_on_server_side" class="toc">Defining grid structure on server side</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#automatic_mode" class="toc">Automatic mode</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#manual_mode" class="toc">Manual mode</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___connector.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxconnector:toc">dhtmlxconnector</a></div><div class='arrow'></div><div class='backlink'><a href="dhtmlxconnector___toc_what_is_dhtmlxconnector.html" class="wikilink1" title="dhtmlxconnector:toc_what_is_dhtmlxconnector">Usage Guide</a></div></div>
+</p>
+
+
+
+<h2><a name="defining_grid_structure_on_server_side" id="defining_grid_structure_on_server_side">Defining grid structure on server side</a></h2>
+<div class="level2">
+
+<p>
+
+Starting from version 1.0 , connectors can be used to define header of grid, it can be done in automatic and detailed modes
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="99-277" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Edit" class="button" title="Defining grid structure on server side" /></div></form></div>
+<h3><a name="automatic_mode" id="automatic_mode">Automatic mode</a></h3>
+<div class="level3">
+<pre class="code php"><span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;../../codebase/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="re0">$grid</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">set_config</span><span class="br0">&#40;</span><span class="kw2">new</span> GridConfiguration<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;grid50000&quot;</span><span class="sy0">,</span><span class="st0">&quot;item_id&quot;</span><span class="sy0">,</span><span class="st0">&quot;item_nm,item_cd&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+Grid will use list of fields - as labels for the columns. 
+It can be combined with short render_table form as
+</p>
+<pre class="code php"><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">set_config</span><span class="br0">&#40;</span><span class="kw2">new</span> GridConfiguration<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;grid50000&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+In such case grid headers will be created for all columns in the related table
+</p>
+
+<p>
+
+If you want to have automatic server side sorting and filtering for all columns , you can use 
+
+</p>
+<pre class="code php"><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">set_config</span><span class="br0">&#40;</span><span class="kw2">new</span> GridConfiguration<span class="br0">&#40;</span><span class="kw2">true</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;grid50000&quot;</span><span class="sy0">,</span><span class="st0">&quot;item_id&quot;</span><span class="sy0">,</span><span class="st0">&quot;item_nm,item_cd&quot;</span><span class="br0">&#41;</span>;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="278-1025" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Edit" class="button" title="Automatic mode" /></div></form></div>
+<h3><a name="manual_mode" id="manual_mode">Manual mode</a></h3>
+<div class="level3">
+
+<p>
+
+In manual mode you need to define headers and their parameters by php command. Names of commands mimic names of js commands, with similar functionality. 
+</p>
+<pre class="code php"><span class="re0">$config</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConfiguration<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setHeader</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st0">&quot;column 1&quot;</span><span class="sy0">,</span><span class="st0">&quot;column 2&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setColTypes</span><span class="br0">&#40;</span><a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st0">&quot;ro&quot;</span><span class="sy0">,</span><span class="st0">&quot;ed&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">set_config</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;grid50000&quot;</span><span class="sy0">,</span><span class="st0">&quot;item_id&quot;</span><span class="sy0">,</span><span class="st0">&quot;item_nm,item_cd&quot;</span><span class="br0">&#41;</span>;</pre>
+</div>
+
+<h5><a name="commands_which_can_be_used" id="commands_which_can_be_used">Commands which can be used</a></h5>
+<div class="level5">
+
+<p>
+
+For all below commands, parameter is an array of values or comma separated string, delimited by headerDelimiter (default is ,).
+</p>
+<pre class="code php"><span class="co1">// column labels</span>
+<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setHeader</span><span class="br0">&#40;</span><span class="re0">$names</span><span class="br0">&#41;</span>;
+<span class="co1">// column types</span>
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setColTypes</span><span class="br0">&#40;</span><span class="re0">$typeStr</span><span class="br0">&#41;</span>;
+<span class="co1">// column IDs</span>
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setColIds</span><span class="br0">&#40;</span><span class="re0">$idsStr</span><span class="br0">&#41;</span>;
+<span class="co1">// column width, int values, will be processed as size in pixels</span>
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setInitWidths</span><span class="br0">&#40;</span><span class="re0">$widths</span><span class="br0">&#41;</span>;
+<span class="co1">// column width, int value, will be threated as size in percents</span>
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setInitWidthsP</span><span class="br0">&#40;</span><span class="re0">$widths</span><span class="br0">&#41;</span>;
+<span class="co1">// column align</span>
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setColAlign</span><span class="br0">&#40;</span><span class="re0">$alStr</span><span class="br0">&#41;</span>;
+<span class="co1">// column sorting type</span>
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setColSorting</span><span class="br0">&#40;</span><span class="re0">$sortStr</span><span class="br0">&#41;</span>;
+<span class="co1">// column color</span>
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setColColor</span><span class="br0">&#40;</span><span class="re0">$colorStr</span><span class="br0">&#41;</span>;
+<span class="co1">// visibility of column </span>
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setColHidden</span><span class="br0">&#40;</span><span class="re0">$hidStr</span><span class="br0">&#41;</span>;</pre>
+<p>
+For setColHidden command values must be 
+</p>
+<ul>
+<li class="level1"><div class="li"> true if column should be hidden</div>
+</li>
+<li class="level1"><div class="li"> false otherwise</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="headers_and_footers" id="headers_and_footers">Headers and Footers</a></h5>
+<div class="level5">
+<pre class="code php"><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">attachHeader</span><span class="br0">&#40;</span><span class="re0">$values</span><span class="sy0">,</span> <span class="re0">$styles</span> <span class="sy0">=</span> <span class="kw2">null</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+The parameters of this method are: 
+</p>
+<ul>
+<li class="level1"><div class="li"> array of header names or string of header names, delimited by headerDelimiter (default is ,)</div>
+</li>
+<li class="level1"><div class="li"> array of header styles or string of header styles, delimited by headerDelimiter (default is ,)</div>
+</li>
+</ul>
+<pre class="code php"><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">attachFooter</span><span class="br0">&#40;</span><span class="re0">$values</span><span class="sy0">,</span> <span class="re0">$styles</span> <span class="sy0">=</span> <span class="kw2">null</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+The parameters of this method are:
+</p>
+<ul>
+<li class="level1"><div class="li"> array of footer names or string of footer names, delimited by headerDelimiter (default is ,)</div>
+</li>
+<li class="level1"><div class="li"> array of footer styles or string of footer styles, delimited by headerDelimiter (default is ,)</div>
+</li>
+</ul>
+
+</div>
+
+<h5><a name="setting_delimiter" id="setting_delimiter">Setting delimiter</a></h5>
+<div class="level5">
+
+<p>
+Sets symbol or several symbols which will be used as delimiter in string arguments.
+
+</p>
+<pre class="code php"><span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">setHeaderDelimiter</span><span class="br0">&#40;</span><span class="re0">$headerDelimiter</span><span class="br0">&#41;</span>;</pre>
+</div>
+
+<h4><a name="example" id="example">Example</a></h4>
+<div class="level4">
+<pre class="code php"><span class="kw1">require_once</span><span class="br0">&#40;</span><span class="st0">&quot;../config.php&quot;</span><span class="br0">&#41;</span>;
+<span class="re0">$res</span><span class="sy0">=</span><a href="http://www.php.net/mysql_connect"><span class="kw3">mysql_connect</span></a><span class="br0">&#40;</span><span class="re0">$mysql_server</span><span class="sy0">,</span><span class="re0">$mysql_user</span><span class="sy0">,</span><span class="re0">$mysql_pass</span><span class="br0">&#41;</span>;
+<a href="http://www.php.net/mysql_select_db"><span class="kw3">mysql_select_db</span></a><span class="br0">&#40;</span><span class="re0">$mysql_db</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="kw1">require</span><span class="br0">&#40;</span><span class="st0">&quot;../../codebase/grid_connector.php&quot;</span><span class="br0">&#41;</span>;
+<span class="re0">$grid</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConnector<span class="br0">&#40;</span><span class="re0">$res</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$config</span> <span class="sy0">=</span> <span class="kw2">new</span> GridConfiguration<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+&nbsp;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setHeader</span><span class="br0">&#40;</span><span class="st0">&quot;Item Name,Item CD&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">attachHeader</span><span class="br0">&#40;</span><span class="st0">&quot;Item Name Test,#rspan&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">attachFooter</span><span class="br0">&#40;</span><span class="st0">&quot;Item Name,Item CD&quot;</span><span class="sy0">,</span> <a href="http://www.php.net/array"><span class="kw3">Array</span></a><span class="br0">&#40;</span><span class="st0">&quot;background-color: #ff0000;&quot;</span><span class="sy0">,</span> <span class="st0">&quot;background-color: #00ff00;&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">attachFooter</span><span class="br0">&#40;</span><span class="st0">&quot;Item Name Test,#rspan&quot;</span><span class="sy0">,</span> <span class="st0">&quot;background-color: #0000ff;color:white;&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setColIds</span><span class="br0">&#40;</span><span class="st0">&quot;col1,col2&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setInitWidths</span><span class="br0">&#40;</span><span class="st_h">'120,*'</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setColSorting</span><span class="br0">&#40;</span><span class="st0">&quot;connector,connector&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setColColor</span><span class="br0">&#40;</span><span class="st0">&quot;null,#dddddd&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setColHidden</span><span class="br0">&#40;</span><span class="st0">&quot;false,false&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setColTypes</span><span class="br0">&#40;</span><span class="st0">&quot;ro,ed&quot;</span><span class="br0">&#41;</span>;
+	<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">setColAlign</span><span class="br0">&#40;</span><span class="st_h">'center,center'</span><span class="br0">&#41;</span>;
+&nbsp;
+<span class="re0">$grid</span><span class="sy0">-&gt;</span><span class="me1">set_config</span><span class="br0">&#40;</span><span class="re0">$config</span><span class="br0">&#41;</span>;
+<span class="re0">$config</span><span class="sy0">-&gt;</span><span class="me1">render_table</span><span class="br0">&#40;</span><span class="st0">&quot;grid50000&quot;</span><span class="sy0">,</span><span class="st0">&quot;item_id&quot;</span><span class="sy0">,</span><span class="st0">&quot;item_nm,item_cd&quot;</span><span class="br0">&#41;</span>;</pre>
+<p>
+This example initializes the following structure:
+</p>
+
+<p>
+<img src="dhtmlxconnector___defining_header_server.png"  class="media" alt="" />
+
+</p>
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="1026-" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Edit" class="button" title="Manual mode" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxconnector/defining_grid_structure_on_server_side.txt &middot; Last modified: 2010/07/13 17:27 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxconnector%3Adefining_grid_structure_on_server_side&amp;1279804813" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:defining_grid_structure_on_server_side" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxconnector:dataaction_object    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxconnector:dataaction_object</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:dataaction_object" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:dataaction_object" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxconnector:dataaction_object" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxconnector:dataaction_object"  class="breadcrumbs" title="dhtmlxconnector:dataaction_object">dataaction_object</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___connector.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxconnector:toc">dhtmlxconnector</a></div></div>
+
+</p>
+
+<h2><a name="dataaction_object" id="dataaction_object">DataAction Object</a></h2>
+<div class="level2">
+
+</div>
+
+<h4><a name="get_value" id="get_value">get_value</a></h4>
+<div class="level4">
+
+<p>
+method - returns value of named field ( name of column or alias):
+
+</p>
+<pre class="code php">  <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">get_value</span><span class="br0">&#40;</span><span class="re0">$name</span><span class="br0">&#41;</span></pre>
+<p>
+
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li"> name of column or alias.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="set_value" id="set_value">set_value</a></h4>
+<div class="level4">
+
+<p>
+method sets value of named field:
+
+</p>
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">set_value</span><span class="br0">&#40;</span><span class="re0">$name</span><span class="sy0">,</span><span class="re0">$value</span><span class="br0">&#41;</span></pre>
+<p>
+
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  $name - name or alias of the field</div>
+</li>
+<li class="level1"><div class="li">  $value - value of the field in question</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="get_status" id="get_status">get_status</a></h4>
+<div class="level4">
+
+<p>
+method returns action type of the item:
+
+</p>
+<pre class="code php">      <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">get_status</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+</div>
+
+<h4><a name="set_status" id="set_status">set_status</a></h4>
+<div class="level4">
+
+<p>
+method allows to set the status of operation - do not use it if you need to avoid using custom status:
+
+</p>
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">set_status</span><span class="br0">&#40;</span><span class="re0">$value</span><span class="br0">&#41;</span></pre>
+<p>
+
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  $value- status of operation</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="get_id" id="get_id">get_id</a></h4>
+<div class="level4">
+
+<p>
+method returns id of the current record:
+
+</p>
+<pre class="code php">      <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">get_id</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+</div>
+
+<h4><a name="get_data" id="get_data">get_data</a></h4>
+<div class="level4">
+
+<p>
+method  returns hash of values:
+
+</p>
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">get_data</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+</div>
+
+<h4><a name="set_response_text" id="set_response_text">set_response_text</a></h4>
+<div class="level4">
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">set_response_text</span><span class="br0">&#40;</span><span class="re0">$text</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  $text - any text value , which will be returned on client side with related action structure</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="set_response_xml" id="set_response_xml">set_response_xml</a></h4>
+<div class="level4">
+
+<p>
+method allows to set xml-string , which will be included in response ( if you need to provide just a text - use the method mentioned above ): 
+
+</p>
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">set_response_xml</span><span class="br0">&#40;</span><span class="re0">$text</span><span class="br0">&#41;</span></pre>
+<p>
+
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  $text - any text value , which will be returned on client side with related action structure</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="set_response_attribute" id="set_response_attribute">set_response_attribute</a></h4>
+<div class="level4">
+
+<p>
+method allows to define custom attribute, which will be added to the related action tag in <acronym title="Extensible Markup Language">XML</acronym> response
+
+</p>
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">set_response_attribute</span><span class="br0">&#40;</span><span class="re0">$name</span><span class="sy0">,</span><span class="re0">$value</span><span class="br0">&#41;</span></pre>
+</div>
+
+<h4><a name="invalid" id="invalid">invalid</a></h4>
+<div class="level4">
+
+<p>
+method marks provided data as invalid and cancels default update operation:
+
+</p>
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">invalid</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre>
+</div>
+
+<h4><a name="error" id="error">error</a></h4>
+<div class="level4">
+
+<p>
+method marks operation as invalid and stops in further processing
+
+</p>
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">error</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre>
+</div>
+
+<h4><a name="success" id="success">success</a></h4>
+<div class="level4">
+
+<p>
+method confirms that operation has been executed correctly and cancels default update operation:
+
+</p>
+<pre class="code php">    <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">success</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre>
+<p>
+in case of Insert operation, method can receive one parameter - new ID of element ( which will be updated on client side )
+
+</p>
+<pre class="code php">  <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">success</span><span class="br0">&#40;</span><span class="re0">$id</span><span class="br0">&#41;</span>;</pre>
+</div>
+
+<h4><a name="add_field" id="add_field">add_field</a></h4>
+<div class="level4">
+
+<p>
+method allows to register field for usage during update|insert|delete operation:
+
+</p>
+<pre class="code php">        <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">add_field</span><span class="br0">&#40;</span><span class="re0">$name</span><span class="sy0">,</span><span class="re0">$value</span><span class="br0">&#41;</span>;</pre>
+<p>
+
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  $name - name or alias of the field</div>
+</li>
+<li class="level1"><div class="li">  $value - value of the field in question</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="remove_field" id="remove_field">remove_field</a></h4>
+<div class="level4">
+
+<p>
+method allows to remove one of default fields from db operation:
+
+</p>
+<pre class="code php">        <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">remove_field</span><span class="br0">&#40;</span><span class="re0">$name</span><span class="sy0">,</span><span class="re0">$value</span><span class="br0">&#41;</span></pre>
+<p>
+
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li">  $name - name or alias of the field</div>
+</li>
+<li class="level1"><div class="li">  $value - value of the field in question</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="get_new_id" id="get_new_id">get_new_id</a></h4>
+<div class="level4">
+
+<p>
+method returns ID, received after insert operation ( valid for afterProcessing event only )
+
+</p>
+<pre class="code php">       <span class="re0">$action</span><span class="sy0">-&gt;</span><span class="me1">get_new_id</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="58-" /><input type="hidden" name="rev" value="1279031279" /><input type="hidden" name="id" value="dhtmlxconnector:dataaction_object" /><input type="submit" value="Edit" class="button" title="DataAction Object" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxconnector/dataaction_object.txt &middot; Last modified: 2010/07/13 17:27 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:dataaction_object" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxconnector:dataaction_object" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxconnector:dataaction_object" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxconnector%3Adataaction_object&amp;1279804809" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxconnector:dataaction_object" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>
