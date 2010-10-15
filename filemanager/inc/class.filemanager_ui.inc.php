@@ -163,6 +163,10 @@ class filemanager_ui
 		}
 		$view = self::get_view();
 
+		if (strpos($view,'::') !== false && version_compare(PHP_VERSION,'5.3.0','<'))
+		{
+			$view = explode('::',$view);
+		}
 		call_user_func($view,$content,$msg);
 	}
 
