@@ -84,7 +84,7 @@ class filemanager_ui
 	 *
 	 * @return string
 	 */
-	function get_view()
+	public function get_view()
 	{
 		$view =& egw_cache::getSession('filemanager', 'view');
 		if (isset($_GET['view']))
@@ -93,6 +93,7 @@ class filemanager_ui
 		}
 		if (!isset(self::$views[$view]))
 		{
+			reset(self::$views);
 			$view = key(self::$views);
 		}
 		return $view;
