@@ -265,8 +265,6 @@ class groupdav_principals extends groupdav_handler
 						$this->base_uri.'/'.$owner.'/');
 				}
 			}
-			$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
-						$this->base_uri.'/DAB/');
 			$cal_bo = new calendar_bo();
 			foreach ($cal_bo->list_cals() as $label => $entry)
 			{
