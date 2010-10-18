@@ -178,9 +178,10 @@ class admin_import_users_csv implements importexport_iface_import_plugin  {
 			case 'disable':
 			case 'enable':
 				$_data['account_expires'] = $_action == 'disable' ? 'already' : '';
-			case 'update' :
 			case 'create' :
-				$command = new admin_cmd_edit_user($_data['account_lid'], $_data);
+				$newaccount=true;
+			case 'update' :
+				$command = new admin_cmd_edit_user(($newaccount?null:$_data['account_lid']), $_data);
 				if($this->dry_run) {
 					$this->results[$_action]++;
 					return true;
