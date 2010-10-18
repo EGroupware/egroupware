@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<menu>
+	<item id="file" text="File">
+		<item id="new" text="New" img="new.gif" imgdis="new_dis.gif"/>
+		<item id="file_sep_1" type="separator"/>
+		<item id="open" text="Open" img="open.gif" imgdis="open_dis.gif"/>
+		<item id="save" text="Save" img="save.gif" imgdis="save_dis.gif"/>
+		<item id="saveAs" text="Save As..." img="save_as.gif" imgdis="save_as_dis.gif" enabled="false"/>
+		<item id="file_sep_2" type="separator"/>
+		<item id="print" text="Print" img="print.gif" imgdis="print_dis.gif"/>
+		<item id="pageSetup" text="Page Setup" img="page_setup.gif" imgdis="page_setup_dis.gif" enabled="false"/>
+		<item id="file_sep_3" type="separator"/>
+		<item id="close" text="Close" img="close.gif" imgdis="close_dis.gif"/>
+	</item>
+	<item id="sep_top_1" type="separator"/>
+	<item id="edit" text="Edit">
+		<item id="undo" text="Undo" img="undo.gif" imgdis="undo_dis.gif"/>
+		<item id="redo" text="Redo" img="redo.gif" imgdis="redo_dis.gif"/>
+		<item id="edit_sep_1" type="separator"/>
+		<item id="selectAll" text="Select All" img="select_all.gif" imgdis="select_all_dis.gif"/>
+		<item id="edit_sep_2" type="separator"/>
+		<item id="cut" text="Cut" img="cut.gif" imgdis="cut_dis.gif"/>
+		<item id="copy" text="Copy" img="copy.gif" imgdis="copy_dis.gif"/>
+		<item id="paste" text="Paste" img="paste.gif" imgdis="paste_dis.gif"/>
+	</item>
+	<item id="help" text="Help">
+		<item id="about" text="About..." img="about.gif" imgdis="about_dis.gif"/>
+		<item id="needhelp" text="Help" img="help.gif" imgdis="help_dis.gif"/>
+		<item id="bugReporting" text="Bug Reporting" img="bug_reporting.gif" imgdis="bug_reporting_dis.gif"/>
+	</item>
+</menu>

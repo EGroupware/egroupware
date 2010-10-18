@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxmenu:xml_format_template    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxmenu:xml_format_template</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:xml_format_template" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxmenu:xml_format_template" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxmenu:xml_format_template" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxmenu:xml_format_template"  class="breadcrumbs" title="dhtmlxmenu:xml_format_template">xml_format_template</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___menu.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxmenu:toc">dhtmlxmenu</a></div></div>
+
+</p>
+
+<h2><a name="xml_format_template" id="xml_format_template">XML Format Template</a></h2>
+<div class="level2">
+
+<p>
+This section is created in order to give the user the idea of <acronym title="Extensible Markup Language">XML</acronym> Format Template. It aims at helping users in creating <acronym title="Extensible Markup Language">XML</acronym> files for dhtmlxMenu initialization.
+</p>
+
+</div>
+
+<h4><a name="basic" id="basic">Basic</a></h4>
+<div class="level4">
+<pre class="code xml">      <span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span><span class="re2">?&gt;</span></span>
+      <span class="sc3"><span class="re1">&lt;menu<span class="re2">&gt;</span></span></span> // a top xml tag, mandatory
+          <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;file&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;File&quot;</span><span class="re2">&gt;</span></span> // a top-level item, each item must have a unique ID
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;new&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;New&quot;</span><span class="re2">/&gt;</span></span> // a sub-level item
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;ms1&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;separator&quot;</span><span class="re2">/&gt;</span></span> // a sub-level separator item
+              ...
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;export&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;Export&quot;</span><span class="re2">&gt;</span></span>
+                  <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;export_pdf&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;PDF&quot;</span><span class="re2">/&gt;</span></span> // a sub-level item
+                  ...
+              <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+              ...
+          <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;/menu<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<h4><a name="advanced" id="advanced">Advanced</a></h4>
+<div class="level4">
+<pre class="code xml">      <span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span><span class="re2">?&gt;</span></span>
+      <span class="sc3"><span class="re1">&lt;menu<span class="re2">&gt;</span></span></span>
+          <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;file&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;File&quot;</span><span class="re2">&gt;</span></span>
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;new&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;New&quot;</span> <span class="re0">img</span>=<span class="st0">&quot;new.gif&quot;</span> <span class="re0">imgdis</span>=<span class="st0">&quot;new_dis.gif&quot;</span><span class="re2">/&gt;</span></span> // a sub-level item with images for enabled/disabled states
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;ms1&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;separator&quot;</span><span class="re2">/&gt;</span></span>
+              ...
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;export&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;Export&quot;</span><span class="re2">&gt;</span></span>
+                  <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;export_pdf&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;PDF&quot;</span> <span class="re0">enabled</span>=<span class="st0">&quot;false&quot;</span><span class="re2">/&gt;</span></span> // a sub-level item disabled by default
+                  ...
+              <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+              ...
+          <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;/menu<span class="re2">&gt;</span></span></span></pre>
+</div>
+
+<h4><a name="full" id="full">Full</a></h4>
+<div class="level4">
+<pre class="code xml">      <span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span><span class="re2">?&gt;</span></span>
+      <span class="sc3"><span class="re1">&lt;menu<span class="re2">&gt;</span></span></span>
+          <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;file&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;File&quot;</span><span class="re2">&gt;</span></span>
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;new&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;New&quot;</span> <span class="re0">img</span>=<span class="st0">&quot;new.gif&quot;</span> <span class="re0">imgdis</span>=<span class="st0">&quot;new_dis.gif&quot;</span><span class="re2">&gt;</span></span>
+                  <span class="sc3"><span class="re1">&lt;hotkey<span class="re2">&gt;</span></span></span>Ctrl+N<span class="sc3"><span class="re1">&lt;/hotkey<span class="re2">&gt;</span></span></span> // a hotkey (just a text) to a menu item
+              <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;ms1&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;separator&quot;</span><span class="re2">/&gt;</span></span>
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;udf&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;UDF&quot;</span><span class="re2">&gt;</span></span>
+                  <span class="sc3"><span class="re1">&lt;userdata</span> <span class="re0">name</span>=<span class="st0">&quot;align&quot;</span><span class="re2">&gt;</span></span>left<span class="sc3"><span class="re1">&lt;/userdata<span class="re2">&gt;</span></span></span> // userdata
+              <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+              ...
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;export&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;Export&quot;</span><span class="re2">&gt;</span></span>
+                  <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;export_pdf&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;PDF&quot;</span> <span class="re0">enabled</span>=<span class="st0">&quot;false&quot;</span><span class="re2">/&gt;</span></span>
+                  ...
+              <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+              ...
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;eol&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;End Of Line&quot;</span><span class="re2">&gt;</span></span>
+                  <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;eol_u&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;Unix (\n)&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;radio&quot;</span> <span class="re0">group</span>=<span class="st0">&quot;eol&quot;</span> <span class="re0">checked</span>=<span class="st0">&quot;true&quot;</span><span class="re2">/&gt;</span></span> // a radiobutton, group &quot;eol&quot;, checked by default
+                  <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;eol_w&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;DOS/Windows (\r\n)&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;radio&quot;</span> <span class="re0">group</span>=<span class="st0">&quot;eol&quot;</span><span class="re2">/&gt;</span></span> // a radiobutton, group &quot;eol&quot;
+                  <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;eol_m&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;MacOS (\r)&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;radio&quot;</span> <span class="re0">group</span>=<span class="st0">&quot;eol&quot;</span><span class="re2">/&gt;</span></span> // a radiobutton, group &quot;eol&quot;
+                  <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;eol_m&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;MacOS (\r)&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;radio&quot;</span> <span class="re0">group</span>=<span class="st0">&quot;eol&quot;</span><span class="re2">/&gt;</span></span> // a radiobutton, group &quot;eol&quot;, disabled
+                  // we got a radiogroup &quot;eol&quot; with 4 buttons, 1 disabled
+              <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;ms2&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;separator&quot;</span><span class="re2">/&gt;</span></span>
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;ignorecase&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;Ignore Case&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;checkbox&quot;</span> <span class="re0">checked</span>=<span class="st0">&quot;true&quot;</span> <span class="re0">enabled</span>=<span class="st0">&quot;false&quot;</span><span class="re2">/&gt;</span></span> // a disabled checked checkbox
+              <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;checkspelling&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;Check Spelling&quot;</span> <span class="re0">type</span>=<span class="st0">&quot;checkbox&quot;</span><span class="re2">/&gt;</span></span> // an unchecked checkbox
+          <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+          <span class="sc3"><span class="re1">&lt;item</span> <span class="re0">id</span>=<span class="st0">&quot;company&quot;</span> <span class="re0">text</span>=<span class="st0">&quot;Company&quot;</span><span class="re2">&gt;</span></span>
+              <span class="sc3"><span class="re1">&lt;href</span> <span class="re0">target</span>=<span class="st0">&quot;blank&quot;</span><span class="re2">&gt;</span></span><span class="sc2">&lt;![CDATA[http://dhtmlx.com/docs/company.shtml]]&gt;</span><span class="sc3"><span class="re1">&lt;/href<span class="re2">&gt;</span></span></span>
+              // link, page will opened in new window
+          <span class="sc3"><span class="re1">&lt;/item<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;/menu<span class="re2">&gt;</span></span></span></pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-" /><input type="hidden" name="rev" value="1279031290" /><input type="hidden" name="id" value="dhtmlxmenu:xml_format_template" /><input type="submit" value="Edit" class="button" title="XML Format Template" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxmenu/xml_format_template.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:xml_format_template" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxmenu:xml_format_template" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxmenu:xml_format_template" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxmenu%3Axml_format_template&amp;1279804900" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:xml_format_template" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

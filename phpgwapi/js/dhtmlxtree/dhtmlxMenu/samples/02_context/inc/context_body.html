@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>Context Menu on Body</title>
+	<link rel="stylesheet" type="text/css" href="../../../codebase/skins/dhtmlxmenu_dhx_skyblue.css">
+	<script src="../../../codebase/dhtmlxcommon.js"></script>
+	<script src="../../../codebase/dhtmlxmenu.js"></script>
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0px;
+			overflow: hidden;
+		}
+	</style>
+</head>
+<body onload="initMenu();">
+<script>
+	var menu;
+	function initMenu() {
+		menu = new dhtmlXMenuObject();
+		menu.setIconsPath("../../common/imgs/");
+		menu.renderAsContextMenu();
+		menu.addContextZone(document.body);
+		menu.loadXML("../../common/dhxmenu.xml?e="+new Date().getTime());
+	}
+</script>
+</body>
+</html>

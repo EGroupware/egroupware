@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml"  class="breadcrumbs" title="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml">api_method_dhtmlxmenuobject_loadfromhtml</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___menu.gif"  class="media" alt="" /><a href=index.html class="wikilink1" title="dhtmlxmenu:toc">dhtmlxmenu</a></div><div class='arrow'></div><div class='backlink'><a href="dhtmlxmenu___api_toc_alpha.html" class="wikilink1" title="dhtmlxmenu:api_toc_alpha">API Methods</a></div></div>
+
+</p>
+
+<h3><a name="loadfromhtml_objid_clearafteradd_onloadfunction" id="loadfromhtml_objid_clearafteradd_onloadfunction">loadFromHTML(objId, clearAfterAdd, onLoadFunction)</a></h3>
+<div class="level3">
+
+<p>
+
+<em>Required library edition:</em> <img src="common___any_ed.gif"  class="media" title="This method works with any edition of DHTMLX library" alt="This method works with any edition of DHTMLX library" /><br/>
+ <em>Required library file: dhtmlxmenu_ext.js</em>
+</p>
+
+<p>
+loads menu data from an html and calls onLoadFunction when loading is done
+
+</p>
+<ul>
+<li class="level1"><div class="li"> object - html data container</div>
+</li>
+<li class="level1"><div class="li"> clearAfterAdd - true|false, removes the container object after the data is loaded</div>
+</li>
+<li class="level1"><div class="li"> onLoadFunction - is called after the data is loaded (but before clearing html content if clear is set to true)</div>
+</li>
+</ul>
+
+<p>
+
+for example, div on the page
+</p>
+<pre class="code html4strict">    <span class="sc2">&lt;<a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span> 
+        <span class="sc2">&lt;<a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;menuData&quot;</span> <span class="kw3">style</span><span class="sy0">=</span><span class="st0">&quot;display: none;&quot;</span>&gt;</span>  
+            <span class="sc2">&lt;<a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;m1&quot;</span> <span class="kw3">text</span><span class="sy0">=</span><span class="st0">&quot;File&quot;</span>&gt;</span> // the first top menu item
+               <span class="sc2">&lt;<a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;m11&quot;</span> <span class="kw3">text</span><span class="sy0">=</span><span class="st0">&quot;New&quot;</span> &lt;hotkey&gt;</span>Ctrl+N<span class="sc2">&lt;<span class="sy0">/</span>hotkey&gt;&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a>&gt;</span>// the first child item
+               <span class="sc2">&lt;<a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;ms1&quot;</span> <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;separator&quot;</span>&gt;&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a>&gt;</span> // a separator	
+               <span class="sc2">&lt;<a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;m12&quot;</span> <span class="kw3">text</span><span class="sy0">=</span><span class="st0">&quot;Open&quot;</span>&gt;&lt;hotkey&gt;</span>Ctrl+O<span class="sc2">&lt;<span class="sy0">/</span>hotkey&gt;&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a>&gt;</span> // the second child item  
+            <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a>&gt;</span>    
+        <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a>&gt;</span>
+    <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span></pre>
+<p>
+initing menu
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">loadFromHTML</span><span class="br0">&#40;</span><span class="st0">&quot;menuData&quot;</span><span class="sy0">,</span> <span class="kw2">true</span><span class="sy0">,</span> <span class="kw2">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span><span class="br0">&#125;</span><span class="br0">&#41;</span>;
+        <span class="co1">// od</span>
+        <span class="kw2">function</span> doOnLoad<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+            <span class="co1">// code here</span>
+        <span class="br0">&#125;</span>
+        menu.<span class="me1">loadFromHTML</span><span class="br0">&#40;</span><span class="st0">&quot;menuData&quot;</span><span class="sy0">,</span> <span class="kw2">true</span><span class="sy0">,</span> doOnLoad<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+
+
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="79-" /><input type="hidden" name="rev" value="1279031290" /><input type="hidden" name="id" value="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml" /><input type="submit" value="Edit" class="button" title="loadFromHTML(objId, clearAfterAdd, onLoadFunction)" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxmenu/api_method_dhtmlxmenuobject_loadfromhtml.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxmenu%3Aapi_method_dhtmlxmenuobject_loadfromhtml&amp;1279804899" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:api_method_dhtmlxmenuobject_loadfromhtml" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

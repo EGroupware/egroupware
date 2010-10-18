@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<title>Adding First Item</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="featured" content="yes"><meta name="title" content="Samples" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<link rel="icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="../common/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="../common/css/style.css" type="text/css" media="screen" />
+
+	</head>
+	<body onload="doOnLoad();">
+        <div class="header">
+            <a class="logo" href="http://www.dhtmlx.com" title="DHTMLX homepage"></a>
+            <div class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</div>
+            <div class="search-field">
+                <form action="http://docs.dhtmlx.com/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit">Search</button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>
+            </div>
+            <div class="buttons">
+                <a class="doc_inact" href="../../../docsExplorer/index.html" title="DHTMLX Documentation homepage"></a>
+                <a class="sample"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="navigation-div">
+                <a href="../../../docsExplorer/samples.html" class="navigation"><img src="../common/icons/file.gif" alt="" >All components</a>
+                <div class="arrow"></div>
+                <a href="../index.html" class="navigation"><img height="22" src="../common/icons/menu.gif" alt="" >dhtmlxMenu</a>
+                <div class="arrow"></div>
+                <a href="./index.html" class="navigation"><img src="../common/icons/none.gif" alt="" >Contextual Menu</a>
+            </div>
+            <div style="display:block;">
+                <h3>Adding First Item</h3>
+            </div>
+            <div class="navigation-div">
+                <a href="#code" class="navigation view-source"><img src="../common/icons/source.gif" alt="" >View page source</a>
+            </div>
+            <link rel="stylesheet" type="text/css" href="../../codebase/skins/dhtmlxmenu_dhx_skyblue.css">
+	<script src="../../codebase/dhtmlxcommon.js"></script>
+	<script src="../../codebase/dhtmlxmenu.js"></script>
+	<script src="../../codebase/ext/dhtmlxmenu_ext.js"></script>
+
+
+	<div style="height: 400px; position: relative;">
+		<div id="contextZone_A" style="position: absolute; left: 100px; top: 100px; width: 100px; height: 60px; border: #C1C1C1 1px solid; background-color: #E7F4FF;">Items</div>
+		<div id="contextZone_B" style="position: absolute; left: 220px; top: 100px; width: 100px; height: 60px; border: #C1C1C1 1px solid; background-color: #E7F4FF;">Checkboxes</div>
+		<div id="contextZone_C" style="position: absolute; left: 340px; top: 100px; width: 100px; height: 60px; border: #C1C1C1 1px solid; background-color: #E7F4FF;">Radios</div>
+	</div>
+
+
+
+<br>
+
+<script>
+	var menu1, menu2, menu3;
+	function doOnLoad() {
+		// items
+		menu1 = new dhtmlXMenuObject();
+		menu1.renderAsContextMenu();
+		menu1.addContextZone("contextZone_A");
+		menu1.setIconsPath("../common/imgs/");
+		menu1.addNewChild(menu1.topId, 0, "open", "Open", false, "open.gif");
+		menu1.addNewChild(menu1.topId, 1, "save", "Save", false, "save.gif");
+		menu1.addNewChild(menu1.topId, 3, "close", "Close", false, "close.gif");
+		// checkboxes
+		menu2 = new dhtmlXMenuObject();
+		menu2.renderAsContextMenu();
+		menu2.addContextZone("contextZone_B");
+		menu2.addCheckbox("child", menu2.topId, 0, "ignore_case", "Ignore Case", true);
+		menu2.addCheckbox("child", menu2.topId, 1, "search_everywhere", "Search Everywhere");
+		// radios
+		menu3 = new dhtmlXMenuObject();
+		menu3.renderAsContextMenu();
+		menu3.addContextZone("contextZone_C");
+		menu3.addRadioButton("child", menu3.topId, 0, "red", "Red", "color", true);
+		menu3.addRadioButton("child", menu3.topId, 1, "green", "Green", "color");
+		menu3.addRadioButton("child", menu3.topId, 2, "blue", "Blue", "color");
+	}
+</script>
+			
+			
+         </div>
+    <div class="source">
+        <div class="teg">Source</div>
+        <div class="code" id="code">
+		<div class="hl-main"><pre><span class="hl-brackets">&lt;</span><span class="hl-reserved">link</span><span class="hl-code"> </span><span class="hl-var">rel</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">stylesheet</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">type</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">text/css</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">href</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/skins/dhtmlxmenu_dhx_skyblue.css</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxcommon.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/dhtmlxmenu.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-code"> </span><span class="hl-var">src</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">../../codebase/ext/dhtmlxmenu_ext.js</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+ 
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">height: 400px; position: relative;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">contextZone_A</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">position: absolute; left: 100px; top: 100px; width: 100px; height: 60px; border: #C1C1C1 1px solid; background-color: #E7F4FF;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">Items</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">contextZone_B</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">position: absolute; left: 220px; top: 100px; width: 100px; height: 60px; border: #C1C1C1 1px solid; background-color: #E7F4FF;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">Checkboxes</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">div</span><span class="hl-code"> </span><span class="hl-var">id</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">contextZone_C</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-var">style</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">position: absolute; left: 340px; top: 100px; width: 100px; height: 60px; border: #C1C1C1 1px solid; background-color: #E7F4FF;</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">Radios</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">div</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+ 
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">br</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span><span class="hl-code"><div class="hl-main"><pre><span class="hl-reserved">var</span><span class="hl-code"> </span><span class="hl-identifier">menu1</span><span class="hl-code">,
+</span><span class="hl-identifier">menu2</span><span class="hl-code">,
+</span><span class="hl-identifier">menu3</span><span class="hl-code">;
+</span><span class="hl-reserved">function</span><span class="hl-code"> </span><span class="hl-identifier">doOnLoad</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code"> </span><span class="hl-brackets">{</span><span class="hl-code">
+    </span><span class="hl-comment">//</span><span class="hl-comment"> items;</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">menu1</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXMenuObject</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">renderAsContextMenu</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">addContextZone</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">contextZone_A</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">setIconsPath</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">../common/imgs/</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">addNewChild</span><span class="hl-brackets">(</span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">topId</span><span class="hl-code">, </span><span class="hl-number">0</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">open</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Open</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">false</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">open.gif</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">addNewChild</span><span class="hl-brackets">(</span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">topId</span><span class="hl-code">, </span><span class="hl-number">1</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">save</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Save</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">false</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">save.gif</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">addNewChild</span><span class="hl-brackets">(</span><span class="hl-identifier">menu1</span><span class="hl-code">.</span><span class="hl-identifier">topId</span><span class="hl-code">, </span><span class="hl-number">3</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">close</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Close</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">false</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">close.gif</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-comment">//</span><span class="hl-comment"> checkboxes;</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">menu2</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXMenuObject</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu2</span><span class="hl-code">.</span><span class="hl-identifier">renderAsContextMenu</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu2</span><span class="hl-code">.</span><span class="hl-identifier">addContextZone</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">contextZone_B</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu2</span><span class="hl-code">.</span><span class="hl-identifier">addCheckbox</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">child</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-identifier">menu2</span><span class="hl-code">.</span><span class="hl-identifier">topId</span><span class="hl-code">, </span><span class="hl-number">0</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">ignore_case</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Ignore Case</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">true</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu2</span><span class="hl-code">.</span><span class="hl-identifier">addCheckbox</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">child</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-identifier">menu2</span><span class="hl-code">.</span><span class="hl-identifier">topId</span><span class="hl-code">, </span><span class="hl-number">1</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">search_everywhere</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Search Everywhere</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-comment">//</span><span class="hl-comment"> radios;</span><span class="hl-comment"></span><span class="hl-code">
+    </span><span class="hl-identifier">menu3</span><span class="hl-code"> = </span><span class="hl-reserved">new</span><span class="hl-code"> </span><span class="hl-identifier">dhtmlXMenuObject</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu3</span><span class="hl-code">.</span><span class="hl-identifier">renderAsContextMenu</span><span class="hl-brackets">(</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu3</span><span class="hl-code">.</span><span class="hl-identifier">addContextZone</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">contextZone_C</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu3</span><span class="hl-code">.</span><span class="hl-identifier">addRadioButton</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">child</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-identifier">menu3</span><span class="hl-code">.</span><span class="hl-identifier">topId</span><span class="hl-code">, </span><span class="hl-number">0</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">red</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Red</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">color</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-reserved">true</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu3</span><span class="hl-code">.</span><span class="hl-identifier">addRadioButton</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">child</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-identifier">menu3</span><span class="hl-code">.</span><span class="hl-identifier">topId</span><span class="hl-code">, </span><span class="hl-number">1</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">green</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Green</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">color</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+    </span><span class="hl-identifier">menu3</span><span class="hl-code">.</span><span class="hl-identifier">addRadioButton</span><span class="hl-brackets">(</span><span class="hl-quotes">&quot;</span><span class="hl-string">child</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-identifier">menu3</span><span class="hl-code">.</span><span class="hl-identifier">topId</span><span class="hl-code">, </span><span class="hl-number">2</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">blue</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">Blue</span><span class="hl-quotes">&quot;</span><span class="hl-code">, </span><span class="hl-quotes">&quot;</span><span class="hl-string">color</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">)</span><span class="hl-code">;
+</span><span class="hl-brackets">}</span></pre></div></span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">script</span><span class="hl-brackets">&gt;</span></pre></div>
+        </div>
+    <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright &copy; 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+    </div>
+	</body>
+</html>

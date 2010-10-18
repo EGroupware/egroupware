@@ -127,7 +127,8 @@ function dhtmlXTreeObject(htmlObject, width, height, rootId){
    var self=this;
    this.allTree.onselectstart=new Function("return false;");
    if (_isMacOS)
-		this.allTree.oncontextmenu = function(e){ return self._doContClick(e||window.event); };   
+		this.allTree.oncontextmenu = function(e){ return self._doContClick(e||window.event); };
+else	// chrom on Mac does NOT work otherwise
    this.allTree.onmousedown = function(e){ return self._doContClick(e||window.event); };  
    
    this.XMLLoader=new dtmlXMLLoaderObject(this._parseXMLTree,this,true,this.no_cashe);

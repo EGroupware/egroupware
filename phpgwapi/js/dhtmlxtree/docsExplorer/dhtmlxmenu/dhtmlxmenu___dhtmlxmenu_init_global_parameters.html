@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxmenu:dhtmlxmenu_init_global_parameters    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxmenu:dhtmlxmenu_init_global_parameters</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_global_parameters" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_global_parameters" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_global_parameters" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxmenu:dhtmlxmenu_init_global_parameters"  class="breadcrumbs" title="dhtmlxmenu:dhtmlxmenu_init_global_parameters">dhtmlxmenu_init_global_parameters</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___menu.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxmenu:toc">dhtmlxmenu</a></div></div>
+
+</p>
+
+<h2><a name="global_parameters" id="global_parameters">Global Parameters</a></h2>
+<div class="level2">
+
+</div>
+
+<h4><a name="setting_menu_open_mode" id="setting_menu_open_mode">Setting Menu Open Mode</a></h4>
+<div class="level4">
+
+<p>
+
+The user can choose what mode to set for the top-level items of the new menu object. There are two modes available:
+</p>
+<ul>
+<li class="level1"><div class="li">  win - In this mode the user should click any complex item in the top-level polygon to expand it. The item will be expanded until the user clicks any top-level open item in the menu, or any other place on the page;</div>
+</li>
+<li class="level1"><div class="li">  web (the default one) - In this mode items in the top-level polygon are expanded immediately, when the user hovers the mouse over any of them. When the mouse is moved outside the menu area, the open item collapses.</div>
+</li>
+</ul>
+
+<p>
+setOpenMode() method is used to set the menu mode:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">setOpenMode</span><span class="br0">&#40;</span><span class="st0">&quot;win&quot;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+<p>
+Note: setting of the web mode from the script is not required because it&#039;s already set by default.
+</p>
+
+<p>
+When the Menu is set to the web mode, there is an opportunity to set the period of time, during which the menu will be held expanded, even if the user moves the mouse outside the menu area. By default this time is set to 400 msec.
+To set this time period the user should use setWebModeTimeout() method:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">setWebModeTimeout</span><span class="br0">&#40;</span>time<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+
+<h4><a name="setting_visible_area" id="setting_visible_area">Setting Visible Area</a></h4>
+<div class="level4">
+
+<p>
+
+setVisibleArea() method sets the rectangle area in which sub-level polygon items will be able to appear. If this area is not set, sub-level polygon items can occupy any available visible space.
+</p>
+
+<p>
+The parameters are:
+</p>
+<ul>
+<li class="level1"><div class="li">  x1, x2 - int, leftmost and rightmost coordinates by x axis;</div>
+</li>
+<li class="level1"><div class="li">  y1, y2 - int, topmost and bottommost coordinates by y axis.</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">setVisibleArea</span><span class="br0">&#40;</span>x1<span class="sy0">,</span>x2<span class="sy0">,</span>y1<span class="sy0">,</span>y2<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+<p>
+Usage example
+</p>
+
+<p>
+When using dhtmlxGrid with Contextual menu you often meet some inconveniences. For example you need to read contextual menu of the record placed at the bottom of the grid, but the appearing of browser&#039;s scrollbars will disturb the impementation of this task. To avoid scrolling appearence set visible area and define menu position. (set grid&#039;s coordinates to acheive this).
+</p>
+
+<p>
+<img src="dhtmlxmenu___ddvbbsvw_7fsjpsffw_b.png"  class="media" alt="" />
+</p>
+
+<p>
+Note: in dhtmlxMenu from 2.5 version visible area is automatically calculated and occupy just visible area in browser. If menu opens to bottom, but at bottom not enough space to open menu, it will automatically opened on top (even if scroll allows to open menu top bottom).
+</p>
+
+</div>
+
+<h4><a name="hiding_open_polygons" id="hiding_open_polygons">Hiding Open Polygons</a></h4>
+<div class="level4">
+
+<p>
+
+There is the possibility to hide all open polygons in a menu from script with the help of hide() method:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>    
+        menu.<span class="me1">hide</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+
+<h4><a name="setting_overflow_height" id="setting_overflow_height">Setting Overflow Height</a></h4>
+<div class="level4">
+
+<p>
+
+By default there is no limits on the number of visible menu items in any sub-level polygon. However, the user can limit the number of visible items in a sub-level polygon using setOverflowHeight() method.
+</p>
+
+<p>
+This method adds scroll-arrows to a sub-level polygon, if there are more visible menu items than it is allowed by setOverflowHeight() method. The following example shows how this method should be used as a function with any of data loading methods:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">setOverflowHeight</span><span class="br0">&#40;</span><span class="nu0">4</span><span class="br0">&#41;</span>;
+        menu.<span class="me1">loadXML</span><span class="br0">&#40;</span><span class="st0">&quot;dhtmlxMenu/codebase/dhtmlxmenu.xml&quot;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+
+<h4><a name="setting_rtl_mode" id="setting_rtl_mode">Setting RTL mode</a></h4>
+<div class="level4">
+
+<p>
+
+By default text direction in menu is set as left to right. For languages with right to left text direction the user can set RTL mode using setRTL() method:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">setRTL</span><span class="br0">&#40;</span><span class="kw2">true</span><span class="br0">&#41;</span>; <span class="co1">// false will set menu mode to LTR</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+
+<h4><a name="setting_aligning_direction" id="setting_aligning_direction">Setting aligning direction</a></h4>
+<div class="level4">
+
+<p>
+
+The user is allowed to set left or right aligning direction in menu with the help of setAlign() method as follows:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>  
+        menu.<span class="me1">setAlign</span><span class="br0">&#40;</span><span class="st0">&quot;right&quot;</span><span class="br0">&#41;</span>; 
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+
+<h4><a name="setting_top_text" id="setting_top_text">Setting top text</a></h4>
+<div class="level4">
+
+<p>
+
+There is a possibility to place text at the top of the menu using steTopText() method:
+
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">setTopText</span><span class="br0">&#40;</span><span class="st0">&quot;dhtmlxMenu 2.0&quot;</span><span class="br0">&#41;</span>; 
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+
+<h4><a name="adding_clearing_links" id="adding_clearing_links">Adding/Clearing links</a></h4>
+<div class="level4">
+
+<p>
+
+setHref() method allows users to add link to menu bar. In order to clear current links users should call clearHref() method:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">setHref</span><span class="br0">&#40;</span>itemId<span class="sy0">,</span> href<span class="sy0">,</span> target<span class="br0">&#41;</span>; 
+        menu.<span class="me1">clearHref</span><span class="br0">&#40;</span>itemId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-" /><input type="hidden" name="rev" value="1279031290" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_global_parameters" /><input type="submit" value="Edit" class="button" title="Global Parameters" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxmenu/dhtmlxmenu_init_global_parameters.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_global_parameters" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_global_parameters" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_global_parameters" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxmenu%3Adhtmlxmenu_init_global_parameters&amp;1279804901" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_global_parameters" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>

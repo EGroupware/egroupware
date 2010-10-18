@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<menu>
+	<item id="text" text="Text">
+		<item id="lineNumbering" text="Line Numbering" type="checkbox" checked="true"/>
+		<item id="Ignore Case" text="Ignore Case" type="checkbox"/>
+		<item id="textSeparator" type="separator"/>
+		<item id="endOfLine" text="End Of Line">
+			<item id="endOfLineAuto" text="Auto" type="radio" group="eol" checked="true"/>
+			<item id="endOfLineSeparator" type="separator"/>
+			<item id="endOfLineUnix" text="Unix (\n)" type="radio" group="eol"/>
+			<item id="endOfLineDos" text="DOS/Windows (\r\n)" type="radio" group="eol"/>
+			<item id="endOfLineMac" text="MacOS (\r)" type="radio" group="eol"/>
+		</item>
+		<item id="syntax" text="Syntax">
+			<item id="syntaxAuto" text="Auto" type="radio" group="hlm" checked="true"/>
+			<item id="syntaxSeparator" type="separator"/>
+			<item id="syntaxHTML" text="HTML/JS" type="radio" group="hlm"/>
+			<item id="syntaxPHP" text="PHP/ASP/JSP" type="radio" group="hlm"/>
+			<item id="syntaxJava" text="Java" type="radio" group="hlm"/>
+		</item>
+	</item>
+	<item id="color" text="Color">
+		<item id="colorizeText" text="Colorize Text" type="checkbox" checked="true"/>
+		<item id="colosSeparator1" type="separator"/>
+		<item id="fontColor" text="Font Color">
+			<item id="fontColorBlack" text="Black" type="radio" group="fontcolor" checked="true"/>
+			<item id="fontColorBrown" text="Brown" type="radio" group="fontcolor"/>
+			<item id="fontColorRed" text="Red" type="radio" group="fontcolor"/>
+			<item id="fontColorBlue" text="Blue" type="radio" group="fontcolor"/>
+		</item>
+		<item id="p14" text="Background Color">
+			<item id="p41" text="Transparent" type="radio" group="bgcolor" checked="true"/>
+			<item id="ps3" type="separator"/>
+			<item id="p42" text="White" type="radio" group="bgcolor"/>
+			<item id="p43" text="Yellow" type="radio" group="bgcolor"/>
+			<item id="p44" text="Cyan" type="radio" group="bgcolor"/>
+			<item id="p45" text="Magenta" type="radio" group="bgcolor"/>
+			<item id="p46" text="Black" type="radio" group="bgcolor"/>
+		</item>
+	</item>
+</menu>

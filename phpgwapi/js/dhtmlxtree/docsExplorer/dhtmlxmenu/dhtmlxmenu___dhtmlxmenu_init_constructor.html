@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="stylesheet" href="../codebase/default.css" type="text/css" media="screen" title="no title" charset="utf-8"><title>
+    dhtmlxmenu:dhtmlxmenu_init_constructor    [DHX documentation]
+  </title></head>
+
+<body>
+<div class="dokuwiki">
+  
+  <div class="stylehead">
+
+    <div class="header">
+    <a class="logo" href="http://dhtmlx.com" title="DHTMLX Home Page"></a>
+    <span class="tittle-dhtmlx">DHTMLX Docs & Samples Explorer</span>
+
+    <div class="search-field">
+        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>    </div>
+        <div class="buttons">
+                <a class="doc"></a>
+                <a title="DHTMLX Samples homepage" href="../samples.html" class="sample"/></a>
+        </div>
+     <!-- <div class="pagename">
+        [[<a href="#"  title="Backlinks">dhtmlxmenu:dhtmlxmenu_init_constructor</a>]]
+      </div>
+      <div class="logo">
+        <a href="/dhtmlx/docs/doku.php"  name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[H]">DHX documentation</a>      </div>
+
+      <div class="clearer"></div>-->
+        
+    </div>
+
+    
+<!--   <div class="bar" id="bar__top">
+      <div class="bar-left" id="bar__topleft">
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_constructor" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>        <form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_constructor" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>      </div>
+
+      <div class="bar-right" id="bar__topright">
+        <form class="button btn_recent" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="recent" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_constructor" /><input type="submit" value="Recent changes" class="button" accesskey="r" title="Recent changes [R]" /></div></form>        <form action="/dhtmlx/docs/doku.php" accept-charset="utf-8" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" title="Search" /><button type="submit"></button><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>&nbsp;
+      </div>
+
+      <div class="clearer"></div>
+    </div> -->
+
+<!--        <div class="breadcrumbs">
+      <span class="bchead">Trace:</span> <span class="bcsep">&raquo;</span> <span class="curid"><a href="/dhtmlx/docs/doku.php?id=dhtmlxmenu:dhtmlxmenu_init_constructor"  class="breadcrumbs" title="dhtmlxmenu:dhtmlxmenu_init_constructor">dhtmlxmenu_init_constructor</a></span>    </div>
+    -->
+
+    
+  </div>
+  
+  
+  <div class="page">
+    <!-- wikipage start -->
+    
+<p>
+<div class='backlinks'><div class='backlink last_backlink'><img src="icons___file.gif"  class="media" alt="" /><a href="../index.html" class="wikilink1" title="start">Index</a></div><div class='arrow'></div><div class='backlink last_backlink'><img src="icons___menu.gif"  class="media" alt="" /><a href="index.html" class="wikilink1" title="dhtmlxmenu:toc">dhtmlxmenu</a></div></div>
+
+</p>
+
+<h2><a name="dhtmlxmenu_constructor" id="dhtmlxmenu_constructor">dhtmlxMenu constructor</a></h2>
+<div class="level2">
+
+</div>
+
+<h4><a name="general" id="general">General</a></h4>
+<div class="level4">
+
+<p>
+
+The first steps that need to be taken for dhtmlxMenu&#039;s initialization are the following:
+</p>
+<ul>
+<li class="level1"><div class="li">  Download dhtmlxMenu package from the server and place it in a folder;</div>
+</li>
+<li class="level1"><div class="li">  Create an index.html file;</div>
+</li>
+<li class="level1"><div class="li">  Place a full path to the <acronym title="Cascading Style Sheets">CSS</acronym> file into the &lt;head&gt; tag of html file. This file determines menu appearance according to the chosen skin (in this example we use dhx_blue skin, as it&#039;s the default one). That&#039;s why, we recommend our users to make up their mind on which skin they are going to apply right on this very step;</div>
+</li>
+<li class="level1"><div class="li">  Place the full paths to <acronym title="JavaScript">JS</acronym> files into the &lt;head&gt; tag of html file.</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>head<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;[full path to this file]/dhtmlxcommon.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>script src<span class="sy0">=</span><span class="st0">&quot;[full path to this file]/dhtmlxmenu.js&quot;</span><span class="sy0">&gt;&lt;/</span>script<span class="sy0">&gt;</span>
+        <span class="sy0">&lt;</span>link rel<span class="sy0">=</span><span class="st0">&quot;stylesheet&quot;</span> type<span class="sy0">=</span><span class="st0">&quot;text/css&quot;</span> href<span class="sy0">=</span><span class="st0">&quot;[full path to this file]/dhtmlxmenu_dhx_blue.css&quot;</span><span class="sy0">&gt;</span>
+    <span class="sy0">&lt;/</span>head<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+From this point further steps the user should take are different for creating a usual menu and a contextual menu.
+</p>
+
+</div>
+
+<h4><a name="usual_menu" id="usual_menu">Usual Menu</a></h4>
+<div class="level4">
+
+<p>
+The user needs to create an object where dhtmlxMenu will be placed later. In this example the object is a &lt;div&gt; element on page, which is placed in the &lt;body&gt; tag:
+</p>
+<pre class="code html4strict">     <span class="sc2">&lt;<a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;menuObj&quot;</span>&gt;&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/div.html"><span class="kw2">div</span></a>&gt;</span></pre>
+<p>
+The next step is to create a new dhtmlXMenuObject and place it after the &lt;div&gt; element (object) that we&#039;ve just created:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+         <span class="kw2">var</span> menu <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXMenuObject<span class="br0">&#40;</span><span class="st0">&quot;menuObj&quot;</span><span class="sy0">,</span> skin<span class="br0">&#41;</span>;
+         <span class="co1">// or</span>
+         <span class="kw2">var</span> parentObj <span class="sy0">=</span> document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">&quot;menuObj&quot;</span><span class="br0">&#41;</span>;
+         <span class="kw2">var</span> menu <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXMenuObject<span class="br0">&#40;</span>parentObj<span class="sy0">,</span> skin<span class="br0">&#41;</span>;
+     <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+<p>
+
+The first parameter defines an <acronym title="HyperText Markup Language">HTML</acronym> object on page to which the menu is attached (the main menu container in the code mentioned above).
+The second argument is optional, and it indicates the name of the skin chosen for the Menu. If this argument is not indicated, the component will be created with the default skin (dhx_skyblue).
+</p>
+
+<p>
+It should be noted that with the way of menu creating described above, the system will first clear the menu container (&lt;div&gt;), and then create the menu.
+</p>
+
+</div>
+
+<h4><a name="contextual_menu" id="contextual_menu">Contextual Menu</a></h4>
+<div class="level4">
+
+<p>
+
+Contextual menu is attached to context zone. Context zone is an html object. In this example the object is a &lt;div&gt; element on page, which is placed in the &lt;body&gt; tag.
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;contextArea&quot;</span><span class="sy0">&gt;&lt;/</span>div<span class="sy0">&gt;</span></pre>
+<p>
+Note, that for right menu positioning &lt;div&gt; used as context zone should have position relative or absolute.
+</p>
+
+<p>
+For a contextual menu the user should:
+</p>
+<ul>
+<li class="level1"><div class="li">  Create a new dhtmlxMenuObject attached to “contextArea” (or attach it later);</div>
+</li>
+<li class="level1"><div class="li">  Set the name of the necessary skin as the second argument for dhtmlXMenuObject (optional; if the name of the skin is not indicated, the default one will be used); </div>
+</li>
+<li class="level1"><div class="li">  Use renderAsContextMenu() method.</div>
+</li>
+</ul>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> menu <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXMenuObject<span class="br0">&#40;</span><span class="st0">&quot;contextArea&quot;</span><span class="br0">&#41;</span>;
+        menu.<span class="me1">renderAsContextMenu</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+<p>
+It should be noted that with the way of menu creating described above, the system will first clear the menu container (&lt;div&gt;), and then create the contextual menu. To prevent container data from clearing, the user should use the method described in Contextual menu zones section.
+</p>
+
+</div>
+
+<h4><a name="contextual_menu_zones" id="contextual_menu_zones">Contextual Menu Zones</a></h4>
+<div class="level4">
+
+<p>
+
+A contextual menu zone is the area the user needs to click to make appear contextual menu. The previous snippet shows us initialization of a contextual menu with the predefined contextual zone: when the user indicates contextual zone id while creating a new menu object, it means that this area is set to be a contextual menu zone automatically by script.
+</p>
+
+<p>
+In other way, the user can initialize a contextual menu without indicating a contextual zone initially. And use addContextZone() method later, which parameter is id of the object that will act as a contextual zone:
+
+</p>
+<pre class="code javascript">      <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+          <span class="kw2">var</span> menu <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXMenuObject<span class="br0">&#40;</span><span class="br0">&#41;</span>;
+          menu.<span class="me1">renderAsContextMenu</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;
+          menu.<span class="me1">addContextZone</span><span class="br0">&#40;</span>contextZoneId<span class="br0">&#41;</span>;
+      <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+<p>
+A contextual zone can be easily removed with the help of the following method:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">removeContextZone</span><span class="br0">&#40;</span>contextZoneId<span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&nbsp;</pre>
+<p>
+There is also the possibility to check whether an object is a contextual menu zone:
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        <span class="kw2">var</span> isZone <span class="sy0">=</span> menu.<span class="me1">isContextZone</span><span class="br0">&#40;</span>objectId<span class="br0">&#41;</span>;  <span class="co1">// returns true|false</span>
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+<p>
+Note, that for right menu positioning object used as context zone should have position relative or absolute.
+</p>
+
+</div>
+
+<h4><a name="initialization_recommendation" id="initialization_recommendation">Initialization Recommendation</a></h4>
+<div class="level4">
+
+<p>
+
+The recommended way of menu initialization is the following:
+
+</p>
+<pre class="code javascript">      <span class="sy0">&lt;</span>html<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>head<span class="sy0">&gt;</span>
+          <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+              <span class="kw2">var</span> menu;
+              <span class="kw2">function</span> doOnLoad<span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+                  menu <span class="sy0">=</span> <span class="kw2">new</span> dhtmlXMenuObject<span class="br0">&#40;</span><span class="st0">&quot;parentId&quot;</span><span class="br0">&#41;</span>;
+              <span class="br0">&#125;</span>
+          <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+          ...
+      <span class="sy0">&lt;/</span>head<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;</span>body <span class="kw3">onload</span><span class="sy0">=</span><span class="st0">&quot;doOnLoad();&quot;</span><span class="sy0">&gt;</span>
+          <span class="sy0">&lt;</span>div id<span class="sy0">=</span><span class="st0">&quot;parentId&quot;</span><span class="sy0">&gt;&lt;/</span>div<span class="sy0">&gt;</span>
+          ...
+      <span class="sy0">&lt;/</span>body<span class="sy0">&gt;</span>
+      <span class="sy0">&lt;/</span>html<span class="sy0">&gt;</span></pre>
+</div>
+
+<h4><a name="setting_icons_path" id="setting_icons_path">Setting Icons Path</a></h4>
+<div class="level4">
+
+<p>
+
+In dhtmlxMenu 2.0-2.1 there was setImagePath method to set path for images, needed to render menu. From 2.5 version this method hasn&#039;t been supported any more, but for the back compatability it is present in menu. If you have any links to it in your code, please remove them.
+</p>
+
+<p>
+By means of this setIconsPath method the user is able to set path to the directory, where menu icons images are stored.
+</p>
+<pre class="code javascript">    <span class="sy0">&lt;</span>script<span class="sy0">&gt;</span>
+        menu.<span class="me1">setIconsPath</span><span class="br0">&#40;</span><span class="st0">&quot;path/to/icons/&quot;</span><span class="br0">&#41;</span>;
+    <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span></pre>
+</div>
+<div class="secedit"><form class="button btn_secedit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="lines" value="53-" /><input type="hidden" name="rev" value="1279031290" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_constructor" /><input type="submit" value="Edit" class="button" title="dhtmlxMenu constructor" /></div></form></div>
+    <!-- wikipage stop -->
+  </div>
+
+  <div class="clearer">&nbsp;</div>
+
+  
+  <div class="stylefoot">
+
+    <div class="meta">
+      <div class="user">
+              </div>
+     <!-- <div class="doc">
+        dhtmlxmenu/dhtmlxmenu_init_constructor.txt &middot; Last modified: 2010/07/13 17:28 (external edit)      </div>
+    </div>-->
+
+   
+    <!--<div class="bar" id="bar__bottom">-->
+      <!--<div class="bar-left" id="bar__bottomleft">-->
+        <!--<form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_constructor" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>-->
+        <!--<form class="button btn_revs" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="revisions" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_constructor" /><input type="submit" value="Old revisions" class="button" accesskey="o" title="Old revisions [O]" /></div></form>-->
+      <!--</div>-->
+      <!--<div class="bar-right" id="bar__bottomright">-->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!--<form class="button btn_index" method="get" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="index" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_constructor" /><input type="submit" value="Index" class="button" accesskey="x" title="Index [X]" /></div></form>-->
+        <!--<a class="nolink" href="#dokuwiki__top"><input type="button" class="button" value="Back to top" onclick="window.scrollTo(0, 0)" title="Back to top" /></a>&nbsp;-->
+      <!--</div>-->
+      <!--<div class="clearer"></div>-->
+    <!--</div>-->
+
+  </div>
+
+  
+
+</div>
+
+<div class="footerinc">
+
+
+</div>
+
+<div class="no"><img src="/dhtmlx/docs/lib/exe/indexer.php?id=dhtmlxmenu%3Adhtmlxmenu_init_constructor&amp;1279804902" width="1" height="1" alt=""  /></div>
+     <div class="footer">
+        <div class="footer-logo"></div>
+        <div class="copyright">Copyright © 1998-2009 DHTMLX LTD.<br />All rights reserved.</div>
+        <form class="button btn_edit" method="post" action="/dhtmlx/docs/doku.php"><div class="no"><input type="hidden" name="do" value="edit" /><input type="hidden" name="rev" value="" /><input type="hidden" name="id" value="dhtmlxmenu:dhtmlxmenu_init_constructor" /><input type="submit" value="Edit this page" class="button" accesskey="e" title="Edit this page [E]" /></div></form>    	    </div>
+</body>
+</html>
