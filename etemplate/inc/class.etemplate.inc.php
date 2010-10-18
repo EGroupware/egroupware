@@ -320,8 +320,6 @@ class etemplate extends boetemplate
 					$GLOBALS['egw_info']['flags']['css'] .= "\n\t\t</style>\n\t\t".'<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
 						$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type="text/css" rel="StyleSheet" />'."\n\t\t<style>\n\t\t\t";
 				}
-
-				$GLOBALS['egw']->common->egw_header();
 			}
 			elseif (!isset(self::$previous_content))
 			{
@@ -345,10 +343,11 @@ class etemplate extends boetemplate
 			{
 				if((int) $output_mode != 2)
 				{
-					echo parse_navbar();
+					echo $GLOBALS['egw']->framework->navbar();	// do header too
 				}
 				else
 				{
+					echo $GLOBALS['egw']->framework->header();
 					echo '<div id="popupMainDiv">'."\n";
 					if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 					{

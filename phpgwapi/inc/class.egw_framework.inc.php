@@ -154,6 +154,9 @@ abstract class egw_framework
 
 	/**
 	 * Returns the html from the body-tag til the main application area (incl. opening div tag)
+	 * 
+	 * If header has NOT been called, also return header content!
+	 * No need to manually call header, this allows to postpone header so navbar / sidebox can include JS or CSS.
 	 *
 	 * @return string with html
 	 */
@@ -1233,7 +1236,7 @@ if (!function_exists('parse_navbar'))
 	/**
 	 * echo's out the navbar
 	 *
-	 * @deprecated use $GLOBALS['egw']->framework::navbar() or $GLOBALS['egw']->framework::render()
+	 * @deprecated use $GLOBALS['egw']->framework->navbar() or $GLOBALS['egw']->framework::render()
 	 */
 	function parse_navbar()
 	{

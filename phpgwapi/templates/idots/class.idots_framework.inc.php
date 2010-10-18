@@ -97,7 +97,7 @@ class idots_framework extends egw_framework
 
 		// the instanciation of the template has to be here and not in the constructor,
 		// as the old Template class has problems if restored from the session (php-restore)
-		$this->tpl = new Template(EGW_TEMPLATE_DIR,'keep');
+		if (!is_object($this->tpl)) $this->tpl = new Template(EGW_TEMPLATE_DIR,'keep');
 		$this->tpl->set_file(array('_head' => 'head.tpl'));
 		$this->tpl->set_block('_head','head');
 
@@ -121,6 +121,7 @@ class idots_framework extends egw_framework
 		self::$navbar_done = true;
 
 		// the navbar
+		if (!is_object($this->tpl)) $this->tpl = new Template(EGW_TEMPLATE_DIR,'keep');
 		$this->tpl->set_file(array('navbar' => 'navbar.tpl'));
 
 		$this->tpl->set_block('navbar','extra_blocks_header','extra_block_header');
@@ -260,6 +261,9 @@ class idots_framework extends egw_framework
 		// hook after navbar
 		$content .= $this->_get_after_navbar();
 
+		// make sure header is output (not explicitly calling header, allows to put validate calls eg. in sidebox)
+		if (!self::$header_done) $content = $this->header() . $content;
+		
 		return $content;
 	}
 
