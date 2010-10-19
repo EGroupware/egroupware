@@ -7,7 +7,7 @@
 %1 weeks	calendar	en	%1 weeks
 (%1 events in %2 seconds)	calendar	en	(%1 events in %2 seconds)
 , exceptions preserved	calendar	en	, exceptions preserved
-, stati of participants reset	calendar	en	, stati of participants reset
+, stati of participants reset	calendar	en	, status of participants reset
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	en	<b>Please note</b>: The calendar use the holidays of your country, which is set to %1. You can change it in your %2.<br />Holidays are %3 automatic installed from %4. You can change it in %5.
 a non blocking event will not conflict with other events	calendar	en	A non blocking event will not conflict with other events
 accept or reject an invitation	calendar	en	Accept or reject an invitation
@@ -332,7 +332,7 @@ repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
 requested	calendar	en	Requested
 require an acl grant to invite other users and groups	admin	en	Require an ACL grant to invite other users and groups
 reset	calendar	en	Reset
-reset participant stati on event shifts	calendar	en	Reset participant stati on event shifts
+reset participant stati on event shifts	calendar	en	Reset participant status on event shifts
 resources	calendar	en	Resources
 resources except conflicting ones	calendar	en	Resources except conflicting ones
 resources with conflict detection	calendar	en	Resources with conflict detection
@@ -353,7 +353,7 @@ select an action	calendar	en	Select an action
 select an action...	calendar	en	Select an action...
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
-select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	en	Select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.
+select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	en	Select whether you want the pariticpant status reset to unkown, if an event is shifted later on.
 select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
 series deleted	calendar	en	Series deleted

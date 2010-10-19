@@ -7,7 +7,7 @@
 %1 weeks	calendar	de	%1 Wochen
 (%1 events in %2 seconds)	calendar	de	(%1 Termine in %2 Sekunden
 , exceptions preserved	calendar	de	und Ausnahmen erhalten
-, stati of participants reset	calendar	de	, Stati der Teilnehmer zurückgesetzt
+, stati of participants reset	calendar	de	, Status der Teilnehmer zurückgesetzt
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	de	<b>Bitte beachten</b>: Der Kalender verwendet die Feiertages des Landes, welches auf %1 eingestellt ist. Das können Sie in Ihren %2 ändern.<br />Feiertage werden %3 automatisch von %4 installiert, was in %5 änderbar ist.
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keine Konflikt mit anderen Terminen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
@@ -332,7 +332,7 @@ repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 requested	calendar	de	Erforderlich
 require an acl grant to invite other users and groups	admin	de	Freigabe um andere Benutzer oder Gruppen einzuladen erforderlich
 reset	calendar	de	Zurücksetzen
-reset participant stati on event shifts	calendar	de	Rücksetzen der Teilnehmerstati beim Verschieben von Terminen
+reset participant stati on event shifts	calendar	de	Rücksetzen der Teilnehmerstatus beim Verschieben von Terminen
 resources	calendar	de	Ressourcen
 resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
 resources with conflict detection	calendar	de	Ressourcen mit bereits gebuchten
@@ -353,7 +353,7 @@ select an action	calendar	de	Befehl auswählen
 select an action...	calendar	de	Aktion auswählen...
 select multiple contacts for a further action	calendar	de	mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
-select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall die Teilnehmerstati zurückgesetzt werden sollen, wenn ein Termin verschoben wird.
+select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall die Teilnehmerstatus zurückgesetzt werden sollen, wenn ein Termin verschoben wird.
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum
 series deleted	calendar	de	Serientermin wurde gelöscht
