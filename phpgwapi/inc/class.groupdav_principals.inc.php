@@ -251,20 +251,43 @@ class groupdav_principals extends groupdav_handler
 					$this->base_uri.'/principals/groups/'.$group);
 			}
 		}
-		$addressbooks = array();
-		$calendars = array();
+		$addressbooks = $calendars = array();
 		if ($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
 		{
-			$addr_bo = new addressbook_bo();
-			foreach ($addr_bo->get_addressbooks() as $id => $label)
+			$prefs = $GLOBALS['egw_info']['user']['preferences']['groupdav'];
+			$addressbook_home_set = $prefs['addressbook-home-set'];
+			if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
+
+			if (strpos($addressbook_home_set,'A') !== false)
 			{
-				if ($id && is_numeric($id))
+				$addressbook_home_set = array_keys(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ));
+			}
+			else
+			{
+				$addressbook_home_set = explode(',',$addressbook_home_set);
+			}
+			foreach($addressbook_home_set as $id)
+			{
+				switch($id)
 				{
-					$owner = $GLOBALS['egw']->accounts->id2name($id);
+					case 'P':
+						$id = $GLOBALS['egw_info']['user']['account_id'];
+						break;
+					case 'G':
+						$id = $GLOBALS['egw_info']['user']['account_primary_group'];
+						break;
+					case 'O':	// "all in one" from groupdav.php/addressbook/
+						$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
+							$this->base_uri.'/');
+						continue 2;	
+				}
+				if (is_numeric($id) && ($owner = $GLOBALS['egw']->accounts->id2name($id)))
+				{
 					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
 						$this->base_uri.'/'.$owner.'/');
 				}
 			}
+
 			$cal_bo = new calendar_bo();
 			foreach ($cal_bo->list_cals() as $label => $entry)
 			{
@@ -277,7 +300,7 @@ class groupdav_principals extends groupdav_handler
 		else
 		{
 			$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
-						$this->base_uri.'/'.$account['account_lid'].'/');
+				$this->base_uri.'/'.$account['account_lid'].'/');
 			$calendars[] = HTTP_WebDAV_Server::mkprop('href',
 				$this->base_uri.'/'.$account['account_lid'].'/');
 		}
