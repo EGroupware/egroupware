@@ -102,7 +102,7 @@
 					$data['message'] = lang('Schedule not found');
 				}
 			} else {
-				$data['type'] = 'import';
+				$data['type'] = $content['type'] ? $content['type'] : 'import';
 			}
 
 			if($data['target'] && $data['type']) {
@@ -230,17 +230,51 @@
 
 		/**
 		* Check that the target is valid for the type (readable or writable)
+		* and that they're not trying to write directly to the filesystem
+		* 
 		* $data should contain target & type
 		*/
 		public static function check_target(Array $data) {
+			$scheme = parse_url($data['target'], PHP_URL_SCHEME);
+			if($scheme == '' || $scheme == 'file') {
+				return 'Direct file access not allowed';
+			}
+			if($scheme == vfs_stream_wrapper::SCHEME && !in_array(vfs_stream_wrapper::SCHEME, stream_get_wrappers())) {
+				stream_wrapper_register(vfs_stream_wrapper::SCHEME, 'vfs_stream_wrapper', STREAM_IS_URL);
+			}
+
 			if ($data['type'] == 'import' && !is_readable($data['target']))
 			{
 				return $data['target']. ' is not readable';
 			} 
-			elseif ($data['type'] == 'export' && !is_writable($data['target'])) {
+			elseif ($data['type'] == 'export' && !self::is__writable($data['target'])) {
 				return $data['target']. ' is not writable';
 			}
 
+			return true;
+		}
+
+		/**
+		* Writable that checks the folder too, in case the file does not exist yet
+		* http://ca3.php.net/manual/en/function.is-writable.php#73596
+		*
+		* @param path Path to check
+		*/
+		private static function is__writable($path) {
+			if ($path{strlen($path)-1}=='/') // recursively return a temporary file path
+				return is__writable($path.uniqid(mt_rand()).'.tmp');
+			else if (is_dir($path))
+				return is__writable($path.'/'.uniqid(mt_rand()).'.tmp');
+			// check tmp file for read/write capabilities
+			$rm = file_exists($path);
+			$f = fopen($path, 'a');
+
+			if ($f===false)
+				return false;
+
+			fclose($f);
+			if (!$rm)
+				unlink($path);
 			return true;
 		}
 
