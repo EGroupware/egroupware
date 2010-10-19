@@ -58,7 +58,7 @@ self.focus();
 <!-- BEGIN message_navbar -->
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr class="navbarBackground">
-		<td width="250px">
+		<td width="267px">
 			<div class="parentDIV">
 				{navbarButtonsLeft}
 			</div>
