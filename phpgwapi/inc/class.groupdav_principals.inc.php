@@ -530,6 +530,9 @@ class groupdav_principals extends groupdav_handler
 		{
 			$account = $this->read($account);
 		}
-		return 'EGw-'.$account['account_id'].':'.md5(serialize($account)).'-wGE';
+		return 'EGw-'.$account['account_id'].':'.md5(serialize($account)).
+			// as the pricipal of current user is influenced by GroupDAV prefs, we have to include them in the etag
+			($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'] ? 
+				':'.md5(serialize($GLOBALS['egw_info']['user']['preferences']['groupdav'])) : '').'-wGE';
 	}
 }
