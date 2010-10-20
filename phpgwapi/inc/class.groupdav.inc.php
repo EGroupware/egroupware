@@ -82,6 +82,9 @@ class groupdav extends HTTP_WebDAV_Server
 			'resourcetype' => array(self::GROUPDAV => 'vtodo-collection', self::CALDAV => 'calendar'),
 			'component-set' => array(self::GROUPDAV => 'VTODO'),
 		),
+		'principals' => array(
+			'resourcetype' => array(self::DAV => 'principal'),
+		)
 	);
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, 3 = complete $_SERVER array
@@ -135,12 +138,14 @@ class groupdav extends HTTP_WebDAV_Server
 				break;
 			case 'davkit':	// iCal app in OS X 10.6 created wrong request, if full url given
 				$this->client_require_href_as_url = false;
+				$this->cnrnd = true;
 				break;
 			case 'cfnetwork_old':
 				$this->crrnd = true; // Older Apple Addressbook.app does not cope with namespace redundancy
 				break;
 			case 'neon':
 				$this->cnrnd = true; // neon clients like cadaver
+				break;
 		}
 		// adding EGroupware version to X-Dav-Powered-By header eg. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
 		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],
@@ -337,7 +342,7 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			return true;
 		}
-		if (!in_array($app,array('principals','groups')) && !$GLOBALS['egw_info']['user']['apps'][$app])
+		if ($app != 'principals' && !$GLOBALS['egw_info']['user']['apps'][$app])
 		{
 			if ($this->debug) error_log(__CLASS__."::$method(path=$options[path]) 403 Forbidden: no app rights for '$app'");
 			return "403 Forbidden: no app rights for '$app'";	// no rights for the given app

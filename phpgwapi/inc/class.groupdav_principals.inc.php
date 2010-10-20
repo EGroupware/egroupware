@@ -284,6 +284,10 @@ class groupdav_principals extends groupdav_handler
 					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.urlencode($owner).'/');
 				}
 			}
+			$calendars[] = HTTP_WebDAV_Server::mkprop('href',
+				$this->base_uri.'/'.$account['account_lid'].'/');
+
+/* iCal send propfind to wrong url (concatinated href's), if we return multiple href in calendar-home-set
 			$cal_bo = new calendar_bo();
 			foreach ($cal_bo->list_cals() as $label => $entry)
 			{
@@ -292,6 +296,7 @@ class groupdav_principals extends groupdav_handler
 				$calendars[] = HTTP_WebDAV_Server::mkprop('href',
 					$this->base_uri.'/'.$owner.'/');
 			}
+*/
 		}
 		else
 		{
