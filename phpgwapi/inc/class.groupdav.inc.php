@@ -732,13 +732,13 @@ class groupdav extends HTTP_WebDAV_Server
 		
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
-		if (!$this->_parse_path($options['path'],$id,$app,$user))
+		if (!$this->_parse_path($options['path'],$id,$app,$user,$prefix))
 		{
 			return '404 Not Found';
 		}
 		if (($handler = self::app_handler($app)))
 		{
-			$status = $handler->put($options,$id,$user);
+			$status = $handler->put($options,$id,$user,$prefix);
 			// set default stati: true --> 204 No Content, false --> should be already handled
 			if (is_bool($status)) $status = $status ? '204 No Content' : '400 Something went wrong';
 			return $status;
@@ -946,7 +946,7 @@ class groupdav extends HTTP_WebDAV_Server
 			list($id) = explode('.',$id);		// remove evtl. .ics extension
 		}
 
-		$ok = $id && $user && in_array($app,array('addressbook','calendar','infolog','principals','groups'));
+		$ok = $id && $user && in_array($app,array('addressbook','calendar','infolog','principals'));
 		if ($this->debug)
 		{
 			error_log(__METHOD__."('$path') returning " . ($ok ? 'true' : 'false') . ": id='$id', app='$app', user='$user', user_prefix='$user_prefix'");

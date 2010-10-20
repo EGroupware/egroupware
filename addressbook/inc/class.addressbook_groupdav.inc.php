@@ -299,9 +299,10 @@ class addressbook_groupdav extends groupdav_handler
 	 * @param array &$options
 	 * @param int $id
 	 * @param int $user=null account_id of owner, default null
+	 * @param string $prefix=null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null)
+	function put(&$options,$id,$user=null,$prefix=null)
 	{
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).",$id,$user)");
 
@@ -383,12 +384,21 @@ class addressbook_groupdav extends groupdav_handler
 			$contact['id'] = $oldContact['id'];
 			// dont allow the client to overwrite certain values
 			$contact['uid'] = $oldContact['uid'];
-			//$contact['owner'] = $oldContact['owner'];
+			$contact['owner'] = $oldContact['owner'];
 			$contact['private'] = $oldContact['private'];
 		}
-		
-		$contact['owner'] = $user;
-
+		// only set owner, if user is explicitly specified in URL (check via prefix, NOT for /addressbook/ !)
+		if ($prefix)
+		{
+			// check for modified owners, if user has an add right for the new addressbook and 
+			// delete rights for the old addressbook (_common_get_put_delete checks for PUT only EGW_ACL_EDIT)
+			if ($oldContact && $user != $oldContact['owner'] && !($this->bo->grants[$user] & EGW_ACL_ADD) &&
+				(!$this->bo->grants[$oldContact['owner']] & EGW_ACL_DELETE))
+			{
+				return '403 Forbidden';
+			}
+			$contact['owner'] = $user;
+		}
 		if ($this->http_if_match) $contact['etag'] = self::etag2value($this->http_if_match);
 
 		if (!($save_ok = $this->bo->save($contact)))
