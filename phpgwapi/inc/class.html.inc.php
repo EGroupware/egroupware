@@ -273,23 +273,22 @@ class html
 	/**
 	 * escapes chars with special meaning in html as entities
 	 *
-	 * Allows to use and char in the html-output and prefents XSS attacks.
-	 * Some entities are allowed and get NOT escaped:
-	 * - &# some translations (AFAIK the arabic ones) need this
-	 * - &nbsp; &lt; &gt; for convinience
+	 * Allows to use and char in the html-output and prevents XSS attacks.
+	 * Some entities are allowed and get NOT escaped: -> prevented by 4th param = doubleencode=false 
+	 * - &# some translations (AFAIK: the arabic ones) need this;
+	 * - &nbsp; &lt; &gt; for convenience -> should not happen anymore, as we do not doubleencode anymore (20101020)
 	 *
 	 * @param string $str string to escape
 	 * @return string
 	 */
 	static function htmlspecialchars($str)
 	{
-		// add @ by lkneschke to supress warning about unknown charset
-		$str = @htmlspecialchars($str,ENT_COMPAT,self::$charset);
+		// as EGroupware supports only utf-8 we should not need to worry about wrong charsets
+		return htmlspecialchars($str,ENT_COMPAT,self::$charset,false);
+		// we need '&#' unchanged, so we translate it back -> this is provided by 4th param = false -> do not doubleencode
+		//$str = str_replace(array('&amp;#','&amp;nbsp;','&amp;lt;','&amp;gt;'),array('&#','&nbsp;','&lt;','&gt;'),$str);
 
-		// we need '&#' unchanged, so we translate it back
-		$str = str_replace(array('&amp;#','&amp;nbsp;','&amp;lt;','&amp;gt;'),array('&#','&nbsp;','&lt;','&gt;'),$str);
-
-		return $str;
+		//return $str;
 	}
 
 	/**
