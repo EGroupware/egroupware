@@ -32,6 +32,7 @@ require_once('HTTP/WebDAV/Server.php');
  * Calling one of the above collections with a GET request / regular browser generates an automatic index
  * from the data of a allprop PROPFIND, allow to browse CalDAV/CardDAV/GroupDAV tree with a regular browser.
  *
+ * @todo All principal urls should either contain no account_lid (eg. base64 of it) or use urlencode($account_lid)
  * @link http://www.groupdav.org GroupDAV spec
  */
 class groupdav extends HTTP_WebDAV_Server
@@ -920,7 +921,8 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		$parts = explode('/', $this->_unslashify($path));
 
-		if (($account_id = $this->accounts->name2id($parts[0], 'account_lid')))
+		if (($account_id = $this->accounts->name2id($parts[0], 'account_lid')) || 
+			($account_id = $this->accounts->name2id($parts[0]=urldecode($parts[0]))))
 		{
 			// /$user/$app/...
 			$user = array_shift($parts);

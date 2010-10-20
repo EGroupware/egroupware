@@ -13,6 +13,8 @@
 
 /**
  * EGroupware: GroupDAV access: groupdav/caldav/carddav principals handlers
+ * 
+ * @todo All principal urls should either contain no account_lid (eg. base64 of it) or use urlencode($account_lid)
  */
 class groupdav_principals extends groupdav_handler
 {
@@ -279,7 +281,7 @@ class groupdav_principals extends groupdav_handler
 				if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
 					is_numeric($id) && ($owner = $GLOBALS['egw']->accounts->id2name($id)))
 				{
-					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$owner.'/');
+					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.urlencode($owner).'/');
 				}
 			}
 			$cal_bo = new calendar_bo();
