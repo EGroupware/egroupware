@@ -257,37 +257,31 @@ class groupdav_principals extends groupdav_handler
 			$prefs = $GLOBALS['egw_info']['user']['preferences']['groupdav'];
 			$addressbook_home_set = $prefs['addressbook-home-set'];
 			if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
-
-			if (strpos($addressbook_home_set,'A') !== false)
+			$addressbook_home_set = explode(',',$addressbook_home_set);
+			// replace symbolic id's with real nummeric id's
+			foreach(array(
+				'P' => $GLOBALS['egw_info']['user']['account_id'],
+				'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+				'U' => '0',
+			) as $sym => $id)
 			{
-				$addressbook_home_set = array_keys(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ));
-			}
-			else
-			{
-				$addressbook_home_set = explode(',',$addressbook_home_set);
-			}
-			foreach($addressbook_home_set as $id)
-			{
-				switch($id)
+				if (($key = array_search($sym, $addressbook_home_set)) !== false)
 				{
-					case 'P':
-						$id = $GLOBALS['egw_info']['user']['account_id'];
-						break;
-					case 'G':
-						$id = $GLOBALS['egw_info']['user']['account_primary_group'];
-						break;
-					case 'O':	// "all in one" from groupdav.php/addressbook/
-						$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
-							$this->base_uri.'/');
-						continue 2;	
-				}
-				if (is_numeric($id) && ($owner = $GLOBALS['egw']->accounts->id2name($id)))
-				{
-					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
-						$this->base_uri.'/'.$owner.'/');
+					$addressbook_home_set[$key] = $id;
 				}
 			}
-
+			if (in_array('O',$addressbook_home_set))	// "all in one" from groupdav.php/addressbook/
+			{
+				$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/');
+			}
+			foreach(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ) as $id => $label)
+			{
+				if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
+					is_numeric($id) && ($owner = $GLOBALS['egw']->accounts->id2name($id)))
+				{
+					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$owner.'/');
+				}
+			}
 			$cal_bo = new calendar_bo();
 			foreach ($cal_bo->list_cals() as $label => $entry)
 			{
