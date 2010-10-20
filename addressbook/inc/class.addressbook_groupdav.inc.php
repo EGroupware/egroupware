@@ -408,7 +408,7 @@ class addressbook_groupdav extends groupdav_handler
 			{
 				return '412 Precondition Failed';
 			}
-			return false;
+			return '403 Forbidden';	// happens when writing new entries in AB's without ADD rights
 		}
 
 		if (!isset($contact['etag']))
