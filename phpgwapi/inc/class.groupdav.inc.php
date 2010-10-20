@@ -252,8 +252,8 @@ class groupdav extends HTTP_WebDAV_Server
 				$user_prefix = '/'; //.$GLOBALS['egw_info']['user']['account_lid'].'/';
 			}
 			$calendar_user_address_set = array(
-						self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account['account_lid'].'/'),
-						self::mkprop('href','urn:uuid:'.$account['account_lid']));
+				self::mkprop('href','urn:uuid:'.$account['account_lid']),
+			);
 			if ($user < 0)
 			{
 				$principalType = 'groups';
@@ -265,6 +265,8 @@ class groupdav extends HTTP_WebDAV_Server
 				$displayname = $account['account_fullname'];
 				$calendar_user_address_set[] = self::mkprop('href','MAILTO:'.$account['account_email']);
 			}
+			$calendar_user_address_set[] = self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account['account_lid'].'/');
+
 			if ($options['depth'] && $user_prefix == '/')
 			{
 				$displayname = 'EGroupware (Cal|Card|Group)DAV server';
