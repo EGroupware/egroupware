@@ -1282,8 +1282,8 @@ class PHPMailer {
   /**
    * Returns the specified message boundary.
    *  boundary is set only after CreateHeader was called
-   * @params integer the boundary to fetch
-   * @returns string/boolean - the boundary or false if not set (yet)
+   * @param integer the boundary to fetch
+   * @return string/boolean - the boundary or false if not set (yet)
    */
   public function FetchBoundary($num)
   {
