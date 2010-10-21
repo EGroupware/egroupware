@@ -1083,6 +1083,10 @@ class calendar_bo
 			$private = !$event['public'];
 		}
 		$grants = $this->grants[$owner];
+		
+		// now any ACL rights implicate FREEBUSY rights (at least READ has to include FREEBUSY)
+		if ($grants) $grants |= EGW_ACL_FREEBUSY;
+		
 		if (is_array($event) && ($needed == EGW_ACL_READ || $needed == EGW_ACL_FREEBUSY))
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
@@ -1132,6 +1136,7 @@ class calendar_bo
 		{
 			$this->debug_message('bocal::check_perms(%1,%2,%3)=%4',True,ACL_TYPE_IDENTIFER.$needed,$event,$other,$access);
 		}
+		//error_log(__METHOD__."($needed,".array2string($event).",$other) returning ".array2string($access));
 		return $access;
 	}
 
