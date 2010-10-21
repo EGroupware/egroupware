@@ -1,4 +1,4 @@
-# EGroupware CalDav or CardDAV support
+# EGroupware CalDav or CardDAV support for Apple apps (incl. iPhone)
 #
 # $Id$
 #
@@ -12,8 +12,22 @@
 # will archive the same thing, as it redirects PROPFIND or OPTION 
 # requests to groupdav.php/ (many have such a redirect already in place).
 #
-# An other alternativ is to copy the PROPFIND/OPTIONS redirect from
-# the top of EGroupware's index.php into your index.php in the docroot.
+# iCal app does NOT allow multiple redirects, therefore it must be redirected
+# directly to groupdav.php/ eg. by the following index.php in the docroot:
+#
+# <?php
+# if ($_SERVER['REQUEST_METHOD'] == 'PROPFIND' || $_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+# {
+#     header("Location: /egroupware/groupdav.php/\n\n");
+# }
+# else
+# {
+# 	  header("Location: /egroupware/\n\n");
+# }
+# exit;
+#
+# An other alternativ is to copy the above PROPFIND/OPTIONS redirect 
+# into your index.php in the docroot.
 #
 # Please note: 
 # - your Apache web server needs to be setup to read .htaccess files and 
