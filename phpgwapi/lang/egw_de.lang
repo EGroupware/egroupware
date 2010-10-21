@@ -40,6 +40,8 @@ add category	common	de	Kategorie hinzufügen
 add shortcut	common	de	Abkürzung hinzufügen
 add sub	common	de	Untergeordnete hinzufügen
 addressbook	common	de	Adressbuch
+addressbooks for carddav attribute "addressbook-home-set".	common	de	Adressbücher für CardDAV Attribut "addressbook-home-set".
+addressbooks to sync with apple clients	common	de	Adressbücher zum Synchronisieren mit Apple Programmen
 admin	common	de	Admin
 administration	common	de	Administration
 afghanistan	common	de	AFGHANISTAN
@@ -298,6 +300,7 @@ group has been deleted	common	de	Gruppe wurde  gelöscht
 group has been updated	common	de	Gruppe wurde  aktualisiert
 group name	common	de	Gruppenname
 group public	common	de	Group Public
+groupdav	common	de	CalDAV, CardDAV und GroupDAV Server
 groups	common	de	Gruppen
 groups with permission for %1	common	de	Gruppen mit Berechtigung für %1
 groups without permission for %1	common	de	Gruppen ohne Berechtigung für %1

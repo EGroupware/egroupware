@@ -86,7 +86,7 @@ class groupdav_hooks
 			'type'   => 'multiselect',
 			'label'  => 'Addressbooks to sync with Apple clients',
 			'name'   => 'addressbook-home-set',
-			'help'   => 'Only read when a new account get created on the client! CardDAV attribute addressbook-home-set.',
+			'help'   => 'Addressbooks for CardDAV attribute "addressbook-home-set".',
 			'values' => $addressbooks,
 			'xmlrpc' => True,
 			'admin'  => False,
