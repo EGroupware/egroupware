@@ -19,6 +19,6 @@ $GLOBALS['egw_info'] = array(
 include('../header.inc.php');
 
 $GLOBALS['egw']->template = new Template(common::get_tpl_dir('preferences'));
-
+translation::add_app('preferences');
 ExecMethod('preferences.uipassword.change');
 common::egw_footer();
