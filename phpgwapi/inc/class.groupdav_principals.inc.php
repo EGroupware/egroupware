@@ -13,6 +13,8 @@
 
 /**
  * EGroupware: GroupDAV access: groupdav/caldav/carddav principals handlers
+ * 
+ * @todo All principal urls should either contain no account_lid (eg. base64 of it) or use urlencode($account_lid)
  */
 class groupdav_principals extends groupdav_handler
 {
@@ -251,20 +253,41 @@ class groupdav_principals extends groupdav_handler
 					$this->base_uri.'/principals/groups/'.$group);
 			}
 		}
-		$addressbooks = array();
-		$calendars = array();
+		$addressbooks = $calendars = array();
 		if ($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
 		{
-			$addr_bo = new addressbook_bo();
-			foreach ($addr_bo->get_addressbooks() as $id => $label)
+			$prefs = $GLOBALS['egw_info']['user']['preferences']['groupdav'];
+			$addressbook_home_set = $prefs['addressbook-home-set'];
+			if (empty($addressbook_home_set)) $addressbook_home_set = 'P';	// personal addressbook
+			$addressbook_home_set = explode(',',$addressbook_home_set);
+			// replace symbolic id's with real nummeric id's
+			foreach(array(
+				'P' => $GLOBALS['egw_info']['user']['account_id'],
+				'G' => $GLOBALS['egw_info']['user']['account_primary_group'],
+				'U' => '0',
+			) as $sym => $id)
 			{
-				if ($id && is_numeric($id))
+				if (($key = array_search($sym, $addressbook_home_set)) !== false)
 				{
-					$owner = $GLOBALS['egw']->accounts->id2name($id);
-					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
-						$this->base_uri.'/'.$owner.'/');
+					$addressbook_home_set[$key] = $id;
 				}
 			}
+			if (in_array('O',$addressbook_home_set))	// "all in one" from groupdav.php/addressbook/
+			{
+				$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/');
+			}
+			foreach(ExecMethod('addressbook.addressbook_bo.get_addressbooks',EGW_ACL_READ) as $id => $label)
+			{
+				if ((in_array('A',$addressbook_home_set) || in_array((string)$id,$addressbook_home_set)) &&
+					is_numeric($id) && ($owner = $GLOBALS['egw']->accounts->id2name($id)))
+				{
+					$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.urlencode($owner).'/');
+				}
+			}
+			$calendars[] = HTTP_WebDAV_Server::mkprop('href',
+				$this->base_uri.'/'.$account['account_lid'].'/');
+
+/* iCal send propfind to wrong url (concatinated href's), if we return multiple href in calendar-home-set
 			$cal_bo = new calendar_bo();
 			foreach ($cal_bo->list_cals() as $label => $entry)
 			{
@@ -273,11 +296,12 @@ class groupdav_principals extends groupdav_handler
 				$calendars[] = HTTP_WebDAV_Server::mkprop('href',
 					$this->base_uri.'/'.$owner.'/');
 			}
+*/
 		}
 		else
 		{
 			$addressbooks[] = HTTP_WebDAV_Server::mkprop('href',
-						$this->base_uri.'/'.$account['account_lid'].'/');
+				$this->base_uri.'/'.$account['account_lid'].'/');
 			$calendars[] = HTTP_WebDAV_Server::mkprop('href',
 				$this->base_uri.'/'.$account['account_lid'].'/');
 		}
@@ -507,6 +531,9 @@ class groupdav_principals extends groupdav_handler
 		{
 			$account = $this->read($account);
 		}
-		return 'EGw-'.$account['account_id'].':'.md5(serialize($account)).'-wGE';
+		return 'EGw-'.$account['account_id'].':'.md5(serialize($account)).
+			// as the pricipal of current user is influenced by GroupDAV prefs, we have to include them in the etag
+			($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'] ? 
+				':'.md5(serialize($GLOBALS['egw_info']['user']['preferences']['groupdav'])) : '').'-wGE';
 	}
 }
