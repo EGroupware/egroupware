@@ -239,13 +239,20 @@
    </tr>
 
    <tr class="row_on">
+    <td>{lang_Warn_users_about_the_need_to_change_their_password?_The_number_set_here_should_be_lower_than_the_value_used_to_enforce_the_change_of_passwords_every_X_days._Only_effective_when_enforcing_of_password_change_is_enabled._(empty_for_no,number_for_number_of_days_before_they_must_change)}:</td>
+    <td>
+     <input name="newsettings[warn_about_upcoming_pwd_change]" value="{value_warn_about_upcoming_pwd_change}" size="5">
+    </td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_Force_password_strength_(1-5,_default_empty: no check against rules for a strong password)?}:</td>
     <td>
      <input name="newsettings[force_pwd_strength]" value="{value_force_pwd_strength}" size="5">
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Admin_email_addresses_(comma-separated)_to_be_notified_about_the_blocking_(empty_for_no_notify)}:</td>
     <td>
      <input name="newsettings[admin_mails]" value="{value_admin_mails}" size="40">
@@ -262,7 +269,7 @@
     </td>
    </tr>
 -->
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enable_the_xmlrpc_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
     <td>
       <select name="newsettings[xmlrpc_enabled]">
@@ -272,7 +279,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Enable_the_soap_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
     <td>
       <select name="newsettings[soap_enabled]">
@@ -281,16 +288,16 @@
        </select>
     </td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:</td>
     <td><input name="newsettings[export_limit]" value="{value_export_limit}" size="5"></td>
    </tr>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Allow_remote_administration_from_following_install_ID's_(comma_separated)}:<br />{lang_Own_install_ID:_}{value_install_id}</td>
     <td><input name="newsettings[allow_remote_admin]" value="{value_allow_remote_admin}" size="40"></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Should_exceptions_contain_a_trace_(including_function_arguments)}:</td>
     <td>
       <select name="newsettings[exception_show_trace]">

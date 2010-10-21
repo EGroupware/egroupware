@@ -49,6 +49,7 @@ albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
 all	common	en	All
 all fields	common	en	all fields
+all in one	common	en	All in one
 all languages	common	en	all languages
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style-sheet:
@@ -117,6 +118,8 @@ cameroon	common	en	CAMEROON
 canada	common	en	CANADA
 cancel	common	en	Cancel
 cannot replace %1 because it is a directory	common	en	Cannot replace %1 because it is a directory
+cannot set a category as parent, which is part of this categorys subtree!	common	en	Cannot set a category as parent, which is part of this categorys subtree!
+cannot set this cat as its own parent!	common	en	Cannot set this cat as its own parent!
 cant open %1, needs ziparchive	common	en	Cant open %1, needs ZipArchive
 cant open '%1' for %2	common	en	Cant open '%1' for %2
 cape verde	common	en	CAPE VERDE
@@ -144,6 +147,7 @@ choose a background style.	common	en	Choose a background style.
 choose a text color for the icons	common	en	Choose a text color for the icons
 choose the category	common	en	Choose the category
 choose the parent category	common	en	Choose the parent category
+chosen parent category no longer exists	common	en	Chosen parent category no longer exists
 christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
 clear form	common	en	Clear Form
@@ -542,6 +546,7 @@ preferences for the %1 template set	preferences	en	Preferences for the %1 templa
 prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
 prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
 previous page	common	en	Previous page
+primary group	common	en	Primary Group
 primary style-sheet:	common	en	Primary style-sheet:
 print	common	en	Print
 priority	common	en	Priority
@@ -779,6 +784,7 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent
 your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	en	Your Password does not meet the required strength.<br> You must meet %1 criteria. You met only %2 criteria. <br>Your Password failed the following criteria:
+your password is about to expire in %1 days, you may change your password now	common	en	your password is about to expire in %1 days, you may change your password now
 your search returned %1 matchs	common	en	your search returned %1 matches
 your search returned 1 match	common	en	your search returned 1 match
 your session could not be verified.	login	en	Your session could not be verified.
