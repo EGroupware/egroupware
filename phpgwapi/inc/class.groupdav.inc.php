@@ -32,6 +32,7 @@ require_once('HTTP/WebDAV/Server.php');
  * Calling one of the above collections with a GET request / regular browser generates an automatic index
  * from the data of a allprop PROPFIND, allow to browse CalDAV/CardDAV/GroupDAV tree with a regular browser.
  *
+ * @todo All principal urls should either contain no account_lid (eg. base64 of it) or use urlencode($account_lid)
  * @link http://www.groupdav.org GroupDAV spec
  */
 class groupdav extends HTTP_WebDAV_Server
@@ -81,6 +82,9 @@ class groupdav extends HTTP_WebDAV_Server
 			'resourcetype' => array(self::GROUPDAV => 'vtodo-collection', self::CALDAV => 'calendar'),
 			'component-set' => array(self::GROUPDAV => 'VTODO'),
 		),
+		'principals' => array(
+			'resourcetype' => array(self::DAV => 'principal'),
+		)
 	);
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, 3 = complete $_SERVER array
@@ -134,12 +138,14 @@ class groupdav extends HTTP_WebDAV_Server
 				break;
 			case 'davkit':	// iCal app in OS X 10.6 created wrong request, if full url given
 				$this->client_require_href_as_url = false;
+				$this->cnrnd = true;
 				break;
 			case 'cfnetwork_old':
 				$this->crrnd = true; // Older Apple Addressbook.app does not cope with namespace redundancy
 				break;
 			case 'neon':
 				$this->cnrnd = true; // neon clients like cadaver
+				break;
 		}
 		// adding EGroupware version to X-Dav-Powered-By header eg. "EGroupware 1.8.001 CalDAV/CardDAV/GroupDAV server"
 		$this->dav_powered_by = str_replace('EGroupware','EGroupware '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'],
@@ -252,8 +258,8 @@ class groupdav extends HTTP_WebDAV_Server
 				$user_prefix = '/'; //.$GLOBALS['egw_info']['user']['account_lid'].'/';
 			}
 			$calendar_user_address_set = array(
-						self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account['account_lid'].'/'),
-						self::mkprop('href','urn:uuid:'.$account['account_lid']));
+				self::mkprop('href','urn:uuid:'.$account['account_lid']),
+			);
 			if ($user < 0)
 			{
 				$principalType = 'groups';
@@ -265,6 +271,8 @@ class groupdav extends HTTP_WebDAV_Server
 				$displayname = $account['account_fullname'];
 				$calendar_user_address_set[] = self::mkprop('href','MAILTO:'.$account['account_email']);
 			}
+			$calendar_user_address_set[] = self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account['account_lid'].'/');
+
 			if ($options['depth'] && $user_prefix == '/')
 			{
 				$displayname = 'EGroupware (Cal|Card|Group)DAV server';
@@ -334,7 +342,7 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 			return true;
 		}
-		if (!in_array($app,array('principals','groups')) && !$GLOBALS['egw_info']['user']['apps'][$app])
+		if ($app != 'principals' && !$GLOBALS['egw_info']['user']['apps'][$app])
 		{
 			if ($this->debug) error_log(__CLASS__."::$method(path=$options[path]) 403 Forbidden: no app rights for '$app'");
 			return "403 Forbidden: no app rights for '$app'";	// no rights for the given app
@@ -729,13 +737,13 @@ class groupdav extends HTTP_WebDAV_Server
 		
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
-		if (!$this->_parse_path($options['path'],$id,$app,$user))
+		if (!$this->_parse_path($options['path'],$id,$app,$user,$prefix))
 		{
 			return '404 Not Found';
 		}
 		if (($handler = self::app_handler($app)))
 		{
-			$status = $handler->put($options,$id,$user);
+			$status = $handler->put($options,$id,$user,$prefix);
 			// set default stati: true --> 204 No Content, false --> should be already handled
 			if (is_bool($status)) $status = $status ? '204 No Content' : '400 Something went wrong';
 			return $status;
@@ -918,7 +926,8 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		$parts = explode('/', $this->_unslashify($path));
 
-		if (($account_id = $this->accounts->name2id($parts[0], 'account_lid')))
+		if (($account_id = $this->accounts->name2id($parts[0], 'account_lid')) || 
+			($account_id = $this->accounts->name2id($parts[0]=urldecode($parts[0]))))
 		{
 			// /$user/$app/...
 			$user = array_shift($parts);
@@ -942,7 +951,7 @@ class groupdav extends HTTP_WebDAV_Server
 			list($id) = explode('.',$id);		// remove evtl. .ics extension
 		}
 
-		$ok = $id && $user && in_array($app,array('addressbook','calendar','infolog','principals','groups'));
+		$ok = $id && $user && in_array($app,array('addressbook','calendar','infolog','principals'));
 		if ($this->debug)
 		{
 			error_log(__METHOD__."('$path') returning " . ($ok ? 'true' : 'false') . ": id='$id', app='$app', user='$user', user_prefix='$user_prefix'");

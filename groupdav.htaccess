@@ -25,4 +25,4 @@ RewriteBase /
 
 RewriteRule ^.well-known/(caldav|carddav)$ /egroupware/groupdav.php/ [R]
 RewriteCond %{REQUEST_METHOD}	^(PROPFIND|OPTIONS)$
-RewriteRule ^/$ /egroupware/groupdav.php/
+RewriteRule ^/$ /egroupware/groupdav.php/ [R]

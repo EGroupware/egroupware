@@ -268,10 +268,12 @@ class hooks
 		foreach($GLOBALS['egw_info']['apps'] as $appname => $app)
 		{
 			$f = EGW_SERVER_ROOT . $SEP . $appname . $SEP . 'setup' . $SEP . 'setup.inc.php';
-			if(@file_exists($f))
+			$setup_info = array($appname => array());
+			if(@file_exists($f)) include($f);
+			// some apps have setup_info for more then themselfs (eg. phpgwapi for groupdav)
+			foreach($setup_info as $appname => $data)
 			{
-				include($f);
-				$this->register_hooks($appname,$setup_info[$appname]['hooks']);
+				if ($data['hooks']) $this->register_hooks($appname,$data['hooks']);
 			}
 		}
 	}

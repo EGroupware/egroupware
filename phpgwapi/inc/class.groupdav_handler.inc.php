@@ -235,7 +235,7 @@ abstract class groupdav_handler
 	 */
 	function _common_get_put_delete($method,&$options,$id,&$return_no_access=false)
 	{
-		if (!in_array($this->app,array('principals','groups')) && !$GLOBALS['egw_info']['user']['apps'][$this->app])
+		if ($this->app != 'principals' && !$GLOBALS['egw_info']['user']['apps'][$this->app])
 		{
 			if ($this->debug) error_log(__METHOD__."($method,,$id) 403 Forbidden: no app rights for '$this->app'");
 			return '403 Forbidden';		// no app rights
