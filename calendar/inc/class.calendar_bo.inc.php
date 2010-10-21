@@ -296,9 +296,8 @@ class calendar_bo
 	 * @param array $params array with the following keys
 	 *	start date startdate of the search/list, defaults to today
 	 *	end   date enddate of the search/list, defaults to start + one day
-	 *	users  mixed integer user-id or array of user-id's to use, defaults to the current user
-	 *	cat_id mixed category-id or array of cat-id's, defaults to all if unset, 0 or False
-	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
+	 *	users  int|array integer user-id or array of user-id's to use, defaults to the current user
+	 *  cat_id int|array category-id or array of cat-id's (incl. all sub-categories), default 0 = all
 	 *	filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
@@ -306,7 +305,7 @@ class calendar_bo
 	 *		(events spanning multiple days are returned each day again (!)) otherwise it returns one array with
 	 *		the events (default), not honored in a search ==> always returns an array of events!
 	 *	date_format string date-formats: 'ts'=timestamp (default), 'array'=array, or string with format for date
-	 *  offset boolean/int false (default) to return all entries or integer offset to return only a limited result
+	 *  offset boolean|int false (default) to return all entries or integer offset to return only a limited result
 	 *  enum_recuring boolean if true or not set (default) or daywise is set, each recurence of a recuring events is returned,
 	 *		otherwise the original recuring event (with the first start- + enddate) is returned
 	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
