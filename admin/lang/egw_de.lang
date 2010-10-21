@@ -128,6 +128,8 @@ country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
 created	admin	de	Erstellt
 created with id #%1	admin	de	erstellt mit der ID #%1
+creates / updates user accounts from csv file	admin	de	Erstellt / aktualisiert Benutzerkonten durch Import von Daten aus einer CSV Datei
+creates / updates user groups from csv file	admin	de	Erstellt / aktualisiert Benutzergruppen durch Import von Daten aus einer CSV Datei
 creates a new field	admin	de	erstellt ein neues Feld
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
 custom fields	admin	de	Benutzerdefinierte Felder
@@ -175,6 +177,7 @@ deny all users access to grant other users access to their entries ?	admin	de	Al
 deny all users access to preferences ?	admin	de	Allen Benutzer Zugriff auf die Einstellungen verbieten?
 description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein!
 determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge der angezeigten Felder
+disable	admin	de	abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
@@ -208,6 +211,7 @@ egroupware version	admin	de	EGroupware Version
 either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Install ID UND das Konfigurationspasswort ODER den Remote Hash!
 email account active	admin	de	E-Mail-Konto aktiv
 email address	admin	de	E-Mail-Adresse
+enable	admin	de	einschalten
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enable the soap service	admin	de	soap Service einschalten
 enable the spellcheck in the ritch text editor ?	admin	de	Aktiviere die Rechtschreibprüfung im RichText Editor
@@ -250,6 +254,7 @@ error saving to db:	admin	de	Fehler beim Speichern in der Datenbank:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Test-Jobs, falsche Syntax oder es läuft schon einer!!!
 error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!!!
+exists	admin	de	existiert
 expires	admin	de	abgelaufen
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
@@ -271,6 +276,7 @@ go directly to admin menu, returning here the next time you click on administrat
 governmental: incl. state or municipal authorities or services	admin	de	Öffentlicher Dienst: Bundes-, Länder- oder stättische Behörden und Dienstleistungen
 grant	admin	de	Berechtigungen
 group ?	admin	de	Gruppe ?
+group csv import	admin	de	CSV Import von Gruppen
 group has been added	common	de	Gruppe wurde hinzugefügt
 group has been deleted	common	de	Gruppe wurde gelöscht
 group has been updated	common	de	Gruppe wurde aktualisiert
@@ -348,10 +354,12 @@ logoutime	admin	de	Abmeldezeit
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Stamm-E-Mail-Adresse
 main screen message	admin	de	Nachricht der Startseite
+manage mapping	admin	de	Feldzuordnung verwalten
 manager	admin	de	Manager
 max length of the input [, length of the inputfield (optional)]	admin	de	maximale Länge für die Ausgabe [. Länge des Feldes (optional)]
 maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
 maximum entries in click path history	admin	de	Max. Anzahl Einträge in der Click-Path-Historie
+members	admin	de	Mitglieder
 message has been updated	admin	de	Nachricht wurde geändert
 method	admin	de	Methode
 minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer ID (z.B. 500 oder 100)
@@ -534,6 +542,7 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unknown account: %1 !!!	admin	de	Unbekanntes Benutzerkonto: %1 !!!
 unknown command %1!	admin	de	Unbekannter Befehl %1 !
 unknown option %1	admin	de	Unbekannte Option %1
+unwilling to save category with current settings. check for inconsistency:	admin	de	Kategorie kann mit den aktuellen Einstellungen nicht gespeichert werden. Bitte überprüfen sie die Einstellungen auf Ungereimtheiten
 updated	admin	de	aktualisiert
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware
 usage	admin	de	Einsatz
@@ -541,6 +550,7 @@ use cookies to pass sessionid	admin	de	Sitzungs-ID in einem Cookie speichern
 use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 use theme	admin	de	Benutztes Farbschema
 user accounts	admin	de	Benutzerkonten
+user csv import	admin	de	CSV Import von Benutzern
 user data	common	de	Benutzerdaten
 user for smtp-authentication (leave it empty if no auth required)	admin	de	Benutzer für SMTP Authentifizierung (leer lassen falls keine Authentifizierung nötig)
 user groups	admin	de	Benutzergruppen
@@ -554,6 +564,7 @@ view error log	admin	de	Fehlerprotokoll anzeigen
 view sessions	admin	de	Sitzungen anzeigen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
+warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	de	Warne Benutzer, dass Ihr Passwort in X Tagen abläuft? Der Wert hier gibt an, ab wieviel Tagen vorher die Benutzer einmal pro Sitzung gewarnt werden. Die hier eingetragene Zahl sollte kleiner sein, als der Wert der für das Erzwingen des Änderns von Passwörtern alle Y Tage verwendet wird. Diese Option ist nur wirksam, wenn das Erzwingen von Passwortänderungen alle Y Tage aktiviert ist. (leer für nein, eine positive Zahl für Warnung ab X Tagen bevor das Passwort abläuft)
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	de	Wir erheben diese Daten zu auschliesslich statistischen Zwecken, um einen Überblick über den weltweiten Einsatz von EGroupware zu gewinnen.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	de	Wir speichern keine Herkunftsdaten oder Informationen, die einen Rückschluss auf Ihre Identität ermöglichen würden.
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?

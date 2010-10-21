@@ -117,6 +117,8 @@ cameroon	common	de	KAMERUN
 canada	common	de	KANADA
 cancel	common	de	Abbrechen
 cannot replace %1 because it is a directory	common	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
+cannot set a category as parent, which is part of this categorys subtree!	common	de	Eine Kategorie, die ein Element der eignen Unterelemente ist, kann nicht als neues Elternelement ausgewählt werden.
+cannot set this cat as its own parent!	common	de	Eine Kategorie kann nicht als Ihr eigenes Elternelement ausgewählt werden.
 cant open %1, needs ziparchive	common	de	Kann die %1 nicht öffnen, benötigt ZipAchive
 cant open '%1' for %2	common	de	Kann '%1' nicht zum %2 öffnen
 cape verde	common	de	KAP VERDE
@@ -144,6 +146,7 @@ choose a background style.	common	de	Wählen Sie einen Hintergrundstil.
 choose a text color for the icons	common	de	Wählen Sie eine Textfarbe für die Symbole
 choose the category	common	de	Kategorie auswählen
 choose the parent category	common	de	Wählen der übergeordneten Kategorie
+chosen parent category no longer exists	common	de	Die ausgewählte Elternkategorie existiert nicht (mehr).
 christmas island	common	de	WEIHNACHTS INSEL
 clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
@@ -541,6 +544,7 @@ preferences for the %1 template set	preferences	de	Einstellungen für das %1 Tem
 prev. month (hold for menu)	jscalendar	de	Vorheriger Monat (halten für Menü)
 prev. year (hold for menu)	jscalendar	de	Vorheriges Jahr (halten für Menü)
 previous page	common	de	Vorherige Seite
+primary group	common	de	Hauptgruppe
 primary style-sheet:	common	de	Haupt-Stylesheet:
 print	common	de	Drucken
 priority	common	de	Priorität
@@ -778,6 +782,7 @@ you've tried to open the egroupware application: %1, but you have no permission 
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versendet
 your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	de	Ihr gewähltes Passwort genügt nicht unseren Qualitätsansprüchen an ein Passwort <br> Sie müssen %1 Kriterien  erfüllen. Sie haben nur %2 Kriterien erfüllt.<br> Folgende Kriterien haben Sie nicht erfüllt. Erweitern Sie Ihr neues Passwort entsprechend.
+your password is about to expire in %1 days, you may change your password now	common	de	Ihr Passwort läuft in %1 Tagen ab. Sie können nun hier Ihr Passwort ändern, oder warten bis Sie es ändern müssen.
 your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
