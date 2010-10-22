@@ -1,50 +1,20 @@
 <?php
-	/***************************************************************************\
-	* eGroupWare - FeLaMiMail                                                   *
-	* http://www.egroupware.org                                                 *
-	* Written by : Lars Kneschke [lkneschke@linux-at-work.de]                   *
-	* -------------------------------------------------                         *
-	* Copyright (c) 2004, Lars Kneschke					    *
-	* All rights reserved.							    *
-	*									    *
-	* Redistribution and use in source and binary forms, with or without	    *
-	* modification, are permitted provided that the following conditions are    *
-	* met:									    *
-	*									    *
-	*	* Redistributions of source code must retain the above copyright    *
-	*	notice, this list of conditions and the following disclaimer.	    *
-	*	* Redistributions in binary form must reproduce the above copyright *
-	*	notice, this list of conditions and the following disclaimer in the *
-	*	documentation and/or other materials provided with the distribution.*
-	*	* Neither the name of the FeLaMiMail organization nor the names of  *
-	*	its contributors may be used to endorse or promote products derived *
-	*	from this software without specific prior written permission.	    *
-	*									    *
-	* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 	    *
-	* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED *
-	* TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR*
-	* PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR 	    *
-	* CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,	    *
-	* EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 	    *
-	* PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 	    *
-	* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF    *
-	* LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 	    *
-	* NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 	    *
-	* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.		    *
-	\***************************************************************************/
+/**
+ * EGroupware - FeLaMiMail - user interface widgets
+ *
+ * @link http://www.egroupware.org
+ * @package felamimail
+ * @author Lars Kneschke [lkneschke@linux-at-work.de]
+ * @author Klaus Leithoff [kl@stylite.de]
+ * @copyright (c) 2004 by Lars Kneschke <lkneschke-AT-linux-at-work.de>
+ * @copyright (c) 2009-10 by Klaus Leithoff <kl-AT-stylite.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
-	/* $Id$ */
-
-	/**
-	* a class containing javascript enhanced html widgets
-	*
-	* @package FeLaMiMail
-	* @author Lars Kneschke
-	* @maintainer Klaus Leithoff
-	* @version 1.7.
-	* @copyright Lars Kneschke 2004
-	* @license http://www.opensource.org/licenses/bsd-license.php BSD
-	*/
+/**
+ * a class containing javascript enhanced html widgets
+ */
 	class uiwidgets
 	{
 		var $charset;
@@ -371,12 +341,26 @@
 
 				//_debug_array($header);
 				if($header['mimetype'] == 'multipart/mixed' ||
+					$header['mimetype'] == 'multipart/signed' ||
 					$header['mimetype'] == 'multipart/related' ||
 					$header['mimetype'] == 'text/calendar' ||
 					substr($header['mimetype'],0,11) == 'application' ||
 					substr($header['mimetype'],0,5) == 'audio' ||
-					substr($header['mimetype'],0,5) == 'video') {
+					substr($header['mimetype'],0,5) == 'video') 
+				{
 					$image = html::image('felamimail','attach');
+					if ($header['mimetype'] != 'multipart/mixed' &&
+						$header['mimetype'] != 'multipart/signed'
+					)
+					{
+						if ($this->bofelamimail->icServer->_connected != 1) 
+						{
+							$this->bofelamimail->openConnection(0); // connect to the current server
+							$this->bofelamimail->reopen($_folderName);
+						}
+						$attachments = $this->bofelamimail->getMessageAttachments($header['uid']);
+						if (count($attachments)<1) $image = '&nbsp;';
+					}
 					$this->t->set_var('attachment_image', $image);
 				} else {
 					$this->t->set_var('attachment_image', '&nbsp;');
@@ -636,16 +620,25 @@
 				);
 				$windowName =  'displayMessage_'.$headerData['uid'];
 				if($headerData['mimetype'] == 'multipart/mixed' ||
+					$headerData['mimetype'] == 'multipart/signed' ||
 					$headerData['mimetype'] == 'multipart/related' ||
 					$headerData['mimetype'] == 'text/calendar' ||
 					substr($headerData['mimetype'],0,11) == 'application' ||
 					substr($headerData['mimetype'],0,5) == 'audio' ||
-					substr($headerData['mimetype'],0,5) == 'video') {
+					substr($headerData['mimetype'],0,5) == 'video') 
+				{
 					$image = html::image('felamimail','attach');
 
 					$image = "<a name=\"subject_url\" href=\"#\" 
 						onclick=\"fm_readAttachments('".$GLOBALS['egw']->link('/index.php',$linkDataAttachments)."', '".$windowName."', this); return false;\" 
 						title=\"".$headerData['subject']."\">".$image."</a>";
+					if ($headerData['mimetype'] != 'multipart/mixed' &&
+						$header['mimetype'] != 'multipart/signed'
+					)
+					{
+						$attachments = $this->bofelamimail->getMessageAttachments($headerData['uid']);
+						if (count($attachments)<1) $image = '&nbsp;';
+					}
 
 					$windowName = ($_readInNewWindow == 1 ? 'displayMessage' : 'displayMessage_'.$header['uid']);
 				} else {
