@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
+
 /**
  * eGroupWare: GroupDAV access: calendar handler
  */
@@ -22,7 +24,14 @@ class calendar_groupdav extends groupdav_handler
 	 * @var calendar_boupdate
 	 */
 	var $bo;
-
+	
+	/**
+	 * vCalendar Instance for parsing
+	 *
+	 * @var array
+	 */
+	var $vCalendar;
+	
 	var $filter_prop2cal = array(
 		'SUMMARY' => 'cal_title',
 		'UID' => 'cal_uid',
@@ -65,6 +74,7 @@ class calendar_groupdav extends groupdav_handler
 		parent::__construct($app,$debug,$base_uri,$principalURL);
 
 		$this->bo = new calendar_boupdate();
+		$this->vCalendar = new Horde_iCalendar;
 	}
 
 	/**
@@ -295,8 +305,14 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 						break;
 					case 'time-range':
 				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($options[path],...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
-						$cal_filters['start'] = $filter['attrs']['start'];
-						$cal_filters['end']   = $filter['attrs']['end'];
+				 		if (!empty($filter['attrs']['start']))
+				 		{
+					 		$cal_filters['start'] = $this->vCalendar->_parseDateTime($filter['attrs']['start']);
+				 		}
+				 		if (!empty($filter['attrs']['end']))
+				 		{
+					 		$cal_filters['end']   = $this->vCalendar->_parseDateTime($filter['attrs']['end']);
+				 		}
 						break;
 					default:
 						if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown filter --> ignored");
