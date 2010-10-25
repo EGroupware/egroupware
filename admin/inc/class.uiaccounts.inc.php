@@ -882,10 +882,10 @@
 					settype($account_id,'integer');
 					$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
 
-					//echo $account_id.'#<br>';
-					$prevVal =  $GLOBALS['egw']->accounts->id2name($account_id,'account_lastpwd_change').'#<br>';
-					//echo $prevVal.'#<br>'; // previous Value was force password change by admin 
-					if ($prevVal==0) $userData['account_lastpwd_change']=egw_time::to('now','ts');
+					//echo '<br>#'.$account_id.'#<br>';
+					$prevVal =  $GLOBALS['egw']->accounts->id2name($account_id,'account_lastpwd_change');
+					//echo '<br>#'.$prevVal.'#<br>'; // previous Value was forced password change by admin 
+					if (isset($prevVal) && $prevVal==0) $userData['account_lastpwd_change']=egw_time::to('now','ts');
 				}
 				if($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
 				{
