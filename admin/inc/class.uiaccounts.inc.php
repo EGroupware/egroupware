@@ -1003,7 +1003,7 @@
 			$acl =& CreateObject('phpgwapi.acl',(int)$_GET['account_id']);
 			$var['anonymous']         = $acl->check('anonymous',1,'phpgwapi') ? '&nbsp;&nbsp;X' : '&nbsp;';
 			$var['changepassword']    = !$acl->check('nopasswordchange',1,'preferences') ? '&nbsp;&nbsp;X' : '&nbsp;';
-			$var['mustchangepassword']= $userData['account_lastpwd_change']==0 ? '&nbsp;&nbsp;X' : '&nbsp;';
+			$var['mustchangepassword']= isset($userData['account_lastpwd_change']) && $userData['account_lastpwd_change']==0 ? '&nbsp;&nbsp;X' : '&nbsp;';
 			unset($acl);
 
 			if ($userData['status'])
@@ -1361,7 +1361,7 @@
 					$acl->read_repository();
 					$userData['anonymous'] = $acl->check('anonymous',1,'phpgwapi');
 					$userData['changepassword'] = !$acl->check('nopasswordchange',1,'preferences');
-					$userData['mustchangepassword'] = ($userData['account_lastpwd_change']==0?true:false);
+					$userData['mustchangepassword'] = (isset($userData['account_lastpwd_change']) && $userData['account_lastpwd_change']==0?true:false);
 					unset($acl);
 				}
 				else
