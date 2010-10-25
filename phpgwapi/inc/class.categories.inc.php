@@ -384,7 +384,7 @@ class categories
 	 *
 	 * We use a shared cache together with id2name
 	 * 
-	 * Data array get automatically unserialized!
+	 * Data array get automatically unserialized, if it was serialized!
 	 *
 	 * @param int $id id of category
 	 * @return array|boolean array with cat-data or false if cat not found
@@ -394,7 +394,8 @@ class categories
 		if (!isset(self::$cache[$id])) return false;
 		
 		$cat = self::$cache[$id];
-		$cat['data'] = $cat['data'] ? unserialize($cat['data']) : array();
+		$cat['data'] = $cat['data'] ? (($arr=unserialize($cat['data']) !== false && $cat['data'] !== 'b:0;') ? 
+			$arr : $cat['data']) : array();
 
 		return $cat;
 	}
