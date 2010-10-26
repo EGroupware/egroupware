@@ -260,6 +260,7 @@ class mime_magic
 		'dot'	=> 'application/msword',//added by skwashd
 		'dvi'	=> 'application/x-dvi',
 		'dxr'	=> 'application/x-director',
+		'eml'	=> 'message/rfc822', // thunderbird single mail export format
 		'eps'	=> 'application/postscript',
 		'etx'	=> 'text/x-setext',
 		'exe'	=> 'application/octet-stream',
