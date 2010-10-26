@@ -1,3 +1,11 @@
+egroupware (1.8.001.20101026) hardy; urgency=low
+
+  * Allow SyncML-synchronization of addressbooks with R/O access as well
+  * CardDAV pref which addressbooks to sync and many fixes for iPhone OS 4.0, 4.1, 4.2beta and Mac iCal and contact app
+  * InfoLog/*DAV: do NOT set current user for PUT in /infolog/ and do not allow to change owner of existing entries
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 26 Oct 2010 15:36:19 +0200
+
 egroupware (1.8.001.20101013) hardy; urgency=low
 
   * Allow new events in group calendars via CalDAV
