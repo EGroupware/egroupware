@@ -337,9 +337,10 @@ class infolog_groupdav extends groupdav_handler
 	 * @param array &$options
 	 * @param int $id
 	 * @param int $user=null account_id of owner, default null
+	 * @param string $prefix=null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null)
+	function put(&$options,$id,$user=null,$prefix=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
 
@@ -381,7 +382,29 @@ class infolog_groupdav extends groupdav_handler
 				$retval = '201 Created';
 			}
 		}
-
+		if ($user)
+		{
+			if (!$prefix)		// for everything in /infolog/
+			{
+				$user = null;	// do NOT set current user (infolog_bo->write() set it for new entries anyway)
+			}
+			elseif($oldTask)	// existing entries
+			{
+				if ($oldTask['info_owner'] != $user)
+				{
+					if ($this->debug) error_log(__METHOD__."(,$id,$user,$prefix) changing owner of existing entries is forbidden!");
+					return '403 Forbidden';		// changing owner of existing entries is generally forbidden
+				}
+				$user = null;
+			}
+			else	// new entries in /$user/infolog
+			{
+				// ACL is checked in infolog_bo->write() called by infolog_ical->importVTODO().
+				// Not sure if it's a good idea to set a different owner, as GUI does NOT allow that,
+				// thought there's an ACL for it and backend (infolog_bo) checks it.
+				// More like the GUI would be to add it for current user and delegate it to $user.
+			}
+		}
 		if (!($infoId = $handler->importVTODO($vTodo, $taskId, false, $user)))
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
@@ -512,7 +535,7 @@ class infolog_groupdav extends groupdav_handler
 		);
 
 		$result =& $this->bo->search($query);
-		
+
 		if (empty($result)) return 'EGw-0-wGE';
 
 		$entry = array_shift($result);
