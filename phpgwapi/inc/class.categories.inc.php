@@ -394,9 +394,9 @@ class categories
 		if (!isset(self::$cache[$id])) return false;
 		
 		$cat = self::$cache[$id];
-		$cat['data'] = $cat['data'] ? (($arr=unserialize($cat['data']) !== false && $cat['data'] !== 'b:0;') ? 
+		$cat['data'] = $cat['data'] ? ((($arr=unserialize($cat['data'])) !== false || $cat['data'] === 'b:0;') ? 
 			$arr : $cat['data']) : array();
-
+			
 		return $cat;
 	}
 
