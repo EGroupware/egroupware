@@ -261,24 +261,24 @@ class infolog_tracking extends bo_tracking
 	 *
 	 * Overrides parent to log the modified date in the history, but not to send a notification
 	 *
-         * @param array $data current entry
-         * @param array $old=null old/last state of the entry or null for a new entry
-         * @param int $user=null user who made the changes, default to current user
-         * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undeleted
-         * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
-         * @param boolean $skip_notification=false do NOT send any notification
-         * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
-         */
-        public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null,$skip_notification=false)
-        {
-                $this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
+	 * @param array $data current entry
+	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param int $user=null user who made the changes, default to current user
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undeleted
+	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @param boolean $skip_notification=false do NOT send any notification
+	 * @return int|boolean false on error, integer number of changes logged or true for new entries ($old == null)
+	 */
+	public function track(array $data,array $old=null,$user=null,$deleted=null,array $changed_fields=null,$skip_notification=false)
+	{
+		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
 
-                $changes = true;
+		$changes = true;
 
-                if ($old && $this->field2history)
-                {
-                        $changes = $this->save_history($data,$old,$deleted,$changed_fields);
-                }
+		if ($old && $this->field2history)
+		{
+			$changes = $this->save_history($data,$old,$deleted,$changed_fields);
+		}
 
 		// Don't notify if the only change was to the modified date
 		if(is_null($changed_fields))
