@@ -486,11 +486,11 @@ class nextmatch_widget
 
 	/**
 	 * Calling our callback
-	 * 
+	 *
 	 * Signature of get_rows callback is either:
 	 * a) int get_rows($query,&$rows,&$readonlys)
 	 * b) int get_rows(&$query,&$rows,&$readonlys)
-	 * 
+	 *
 	 * If get_rows is called static (and php >= 5.2.3), it is always b) independent on how it's defined!
 	 *
 	 * @param array &$value
@@ -586,7 +586,7 @@ class nextmatch_widget
 
 		if ($this->selectcols)
 		{
-			foreach(explode(',',$this->selectcols) as $col)
+			foreach(is_array($this->selectcols) ? $this->selectcols : explode(',',$this->selectcols) as $col)
 			{
 				if ($col[0] == self::CF_PREFIX) $allowed[] = $col;
 			}
@@ -975,8 +975,8 @@ class nextmatch_widget
 					if($value_in[self::CF_PREFIX.$name]['id'] != '' && $value_in[self::CF_PREFIX.$name]['id'] != $old_id)  {
 						$nm_global['filter'][self::CF_PREFIX.$name] = $value_in[self::CF_PREFIX.$name]['id'];
 					}
-					
-				} 
+
+				}
 				elseif ((string)$value_in[self::CF_PREFIX.$name] != (string)$extension_data['old_value'][self::CF_PREFIX.$name])
 				{
 					$nm_global['filter'][self::CF_PREFIX.$name] = $value_in[self::CF_PREFIX.$name]['id'];
