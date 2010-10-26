@@ -486,12 +486,15 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 * @param array &$options
 	 * @param int $id
 	 * @param int $user=null account_id of owner, default null
+	 * @param string $prefix=null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null)
+	function put(&$options,$id,$user=null,$prefix=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-		
+
+		if (!$prefix) $user = null;	// /infolog/ does not imply setting the current user (for new entries it's done anyway)
+
 		$return_no_access = true;	// as handled by importVCal anyway and allows it to set the status for participants
 		$oldEvent = $this->_common_get_put_delete('PUT',$options,$id,$return_no_access);
 		if (!is_null($oldEvent) && !is_array($oldEvent))
@@ -503,7 +506,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		if (is_null($oldEvent) && ($user >= 0) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
 		{
 			// we have no add permission on this user's calendar
-			if ($this->debug) error_log(__METHOD__."(,$user) we have not enough rights on this calendar");
+			// ToDo: create event in current users calendar and invite only $user
+			if ($this->debug) error_log(__METHOD__."(,,$user) we have not enough rights on this calendar");
 			return '403 Forbidden';
 		}
 
@@ -526,7 +530,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 							$charset = strtoupper(substr($value,1,-1));
 					}
 				}
-			} 
+			}
 		}
 
 		if (is_array($oldEvent))
@@ -571,7 +575,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		if (!($cal_id = $handler->importVCal($vCalendar, $eventId,
 			self::etag2value($this->http_if_match), false, 0, $this->principalURL, $user, $charset)))
 		{
-			if ($this->debug) error_log(__METHOD__."(,$id) importVCal($options[content]) returned false");
+			if ($this->debug) error_log(__METHOD__."(,$id) eventId=$eventId: importVCal('$options[content]') returned false");
 			if ($eventId && $cal_id === false)
 			{
 				// ignore import failures
@@ -606,7 +610,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	function post(&$options,$id,$user=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-		
+
 		if (preg_match('/^METHOD:(PUBLISH|REQUEST)(\r\n|\r|\n)(.*)^BEGIN:VEVENT/ism', $options['content']))
 		{
 			$handler = $this->_get_handler();
@@ -628,14 +632,14 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 								$charset = strtoupper(substr($value,1,-1));
 						}
 					}
-				} 
+				}
 			}
-			
+
 			if (($foundEvents = $handler->search($vCalendar, null, false, $charset)))
 			{
 				$eventId = array_shift($foundEvents);
 				list($eventId) = explode(':', $eventId);
-				
+
 				if (!($cal_id = $handler->importVCal($vCalendar, $eventId, null,
 					false, 0, $this->principalURL, $user, $charset)))
 				{
@@ -755,13 +759,18 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function read($id)
 	{
-		if ($this->debug > 1) error_log("bo-ical read  :$id:");
 		$event = $this->bo->read($id, null, true, 'server');
-		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY, $event, 0, 'server'))) return $retval;
+		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY,$event, 0, 'server')))
+		{
+			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));
+			return $retval;
+		}
 		if (!$this->bo->check_perms(EGW_ACL_READ, $event, 0, 'server'))
 		{
 			$this->bo->clear_private_infos($event, array($this->bo->user, $event['owner']));
 		}
+		if ($this->debug > 1) error_log(__METHOD__."($id) returning ".array2string($event));
+
 		return $event;
 	}
 
@@ -781,7 +790,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 			'date_format' => 'server',
 			'cols'		=> array('egw_cal.cal_id', 'cal_start', 'cal_modified'),
 		);
-		
+
 		if ($path == '/calendar/')
 		{
 			$filter['filter'] = 'owner';
@@ -790,9 +799,9 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		{
 			$filter['filter'] = 'default'; // not rejected
 		}
-		
+
 		$ctag = 0;
-		
+
 		if (($events =& $this->bo->search($filter)))
 		{
 			foreach ($events as $event)
@@ -803,7 +812,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		}
 
 		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
-		
+
 		return 'EGw-'.$ctag.'-wGE';
 	}
 
@@ -825,7 +834,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
 		if (isset($entry['max_user_modified']))
 		{
-			$modified = max($entry['max_user_modified'], $entry['modified']);			
+			$modified = max($entry['max_user_modified'], $entry['modified']);
 		}
 		else
 		{
