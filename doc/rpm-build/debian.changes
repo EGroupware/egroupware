@@ -1,3 +1,14 @@
+egroupware-epl (10.1.20101026-1) hardy; urgency=low
+
+  * Fix for Addressbook History NOT showing old or new value for some custom fields (Stylite #8230)
+  * Allow SyncML-synchronization of addressbooks with R/O access as well
+  * CardDAV pref which addressbooks to sync and many fixes for iPhone OS 4.0, 4.1, 4.2beta and Mac iCal and contact app
+  * API/Passwordmanagement: option enable a warning for users to inform them, that their password is about to expire
+  * InfoLog/*DAV: do NOT set current user for PUT in /infolog/ and do not allow to change owner of existing entries
+  * other bugfixes in many apps
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 26 Oct 2010 13:26:19 +0200
+
 egroupware-epl (10.1.20101014-1) hardy; urgency=low
 
   * reverted bugfix in categories introducing new bug with category levels when changing parent
