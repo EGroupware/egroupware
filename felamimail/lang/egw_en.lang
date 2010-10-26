@@ -68,6 +68,8 @@ configure a valid imap server in emailadmin for the profile you are using.	felam
 connection dropped by imap server.	felamimail	en	Connection dropped by IMAP server.
 contact not found!	felamimail	en	Contact not found!
 contains	felamimail	en	contains
+copy or move messages?	felamimail	en	Copy or Move Messages?
+copying messages to	felamimail	en	copying messages to
 could not complete request. reason given: %s	felamimail	en	Could not complete request. Reason Given: %s
 could not import message:	felamimail	en	Could not import Message:
 could not open secure connection to the imap server. %s : %s.	felamimail	en	Could not open secure connection to the IMAP server. %s : %s.
@@ -115,6 +117,7 @@ do not validate certificate	felamimail	en	do not validate certificate
 do you really want to delete the '%1' folder?	felamimail	en	Do you really want to delete the '%1' folder?
 do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	en	Do you really want to delete the selected Account settings and the associated Identity.
 do you really want to delete the selected signatures?	felamimail	en	Do you really want to delete the selected signatures?
+do you really want to move or copy the selected messages to folder:	felamimail	en	Do you really want to move or copy the selected messages to folder:
 do you really want to move the selected messages to folder:	felamimail	en	Do you really want to move the selected messages to folder:
 do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	en	Do you want to be asked for confirmation before moving selected messages to another folder?
 do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	en	Do you want to prevent the editing/setup for forwarding of mails via settings (, even if SIEVE is enabled)?
@@ -164,10 +167,12 @@ error	felamimail	en	ERROR
 error connecting to imap serv	felamimail	en	Error connecting to IMAP serv
 error connecting to imap server. %s : %s.	felamimail	en	Error connecting to IMAP server. %s : %s.
 error connecting to imap server: [%s] %s.	felamimail	en	Error connecting to IMAP server: [%s] %s.
+error creating rule while trying to use forward/redirect.	felamimail	en	Error creating rule while trying to use forward/redirect.
 error opening	felamimail	en	Error opening
 error saving %1!	felamimail	en	Error saving %1!
 error:	felamimail	en	Error:
 error: could not save message as draft	felamimail	en	Error: Could not save Message as Draft
+error: could not save rule	felamimail	en	Error: Could not save rule
 error: message could not be displayed.	felamimail	en	ERROR: Message could not be displayed.
 every	felamimail	en	every
 every %1 days	felamimail	en	every %1 days
@@ -291,6 +296,7 @@ mon	felamimail	en	Mon
 move	felamimail	en	move
 move folder	felamimail	en	move folder
 move messages	felamimail	en	move messages
+move messages?	felamimail	en	Move Messages?
 move selected to	felamimail	en	move selected to
 move to trash	felamimail	en	Move to trash
 moving messages to	felamimail	en	moving messages to
@@ -345,7 +351,7 @@ outgoing mail server(smtp)	felamimail	en	outgoing mail server(SMTP)
 participants	felamimail	en	Participants
 personal information	felamimail	en	Personal Information
 please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	en	Please ask the administrator to correct the emailadmin IMAP Server Settings for you.
-please configure access to an existing individual IMAP account.	felamimail	en	please configure access to an existing individual IMAP account.
+please configure access to an existing individual imap account.	felamimail	en	please configure access to an existing individual IMAP account.
 please select a address	felamimail	en	Please select a address
 please select the number of days to wait between responses	felamimail	en	Please select the number of days to wait between responses
 please supply the message to send with auto-responses	felamimail	en	Please supply the message to send with auto-responses
@@ -403,6 +409,7 @@ sent	felamimail	en	Sent
 sent folder	felamimail	en	Sent Folder
 server supports mailfilter(sieve)	felamimail	en	server supports mailfilter (sieve)
 set as default	felamimail	en	Set as default
+show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	en	show all Folders (subscribed AND unsubscribed) in Main Screen Folder Pane
 show header	felamimail	en	show header
 show new messages on main screen	felamimail	en	Show new messages on main screen
 sieve script name	felamimail	en	sieve script name
@@ -500,6 +507,7 @@ with message "%1"	felamimail	en	with message "%1"
 wrap incoming text at	felamimail	en	Wrap incoming text at
 writing	felamimail	en	writing
 wrote	felamimail	en	wrote
+yes, offer copy option	felamimail	en	yes, offer copy option
 you can use %1 for the above start-date and %2 for the end-date.	felamimail	en	You can use %1 for the above start-date and %2 for the end-date.
 you have received a new message on the	felamimail	en	You have received a new message on the
 your message to %1 was displayed.	felamimail	en	Your message to %1 was displayed.
