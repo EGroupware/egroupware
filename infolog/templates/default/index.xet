@@ -1,0 +1,337 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="infolog.index.header_left" template="" lang="" group="0" version="1.0.1.001">
+		<description class="headertext bold" value="InfoLog"/>
+		<styles>.bold { font-weight: bold; }</styles>
+	</template>
+	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.7.001">
+		<hbox>
+			<description class="headertext" value="Add:"/>
+			<button image="task" label="ToDo" id="add[task]" statustext="Add a new ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+		</hbox>
+	</template>
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.7.005">
+		<grid>
+			<columns>
+				<column width="2%"/>
+				<column/>
+				<column disabled="@no_customfields"/>
+				<column width="120"/>
+				<column/>
+				<column disabled="@no_info_used_time_info_planned_time"/>
+				<column width="8%" disabled="@no_info_onwer_info_responsible"/>
+				<column width="12%" disabled="@no_info_datemodified"/>
+				<column width="3%" disabled="@no_actions"/>
+				<column width="3%" disabled="@no_actions"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox options="0,0">
+						<description value="Type"/>
+						<description value="Status" align="center"/>
+						<description value="Completed" align="right"/>
+					</vbox>
+					<vbox rows="2" cols="1" options="2">
+						<description value="Subject"/>
+						<description value="Description"/>
+					</vbox>
+					<vbox options="0,0">
+						<description id="customfields" options="Custom fields"/>
+						<grid spacing="0" padding="0">
+							<columns>
+								<column disabled="@no_customfields"/>
+							</columns>
+							<rows>
+								<row>
+									<description no_lang="1" id="customfields[$row][label]" options="Custom fields"/>
+								</row>
+							</rows>
+						</grid>
+					</vbox>
+					<vbox options="0,0">
+						<description value="Startdate"/>
+						<description value="Enddate"/>
+						<description value="Date completed"/>
+					</vbox>
+					<vbox>
+						<description value="Times"/>
+						<description class="planned" value="planned"/>
+					</vbox>
+					<vbox options="0,0">
+						<description value="Times"/>
+						<description class="planned" value="planned"/>
+						<description class="replanned" value="Re-planned"/>
+					</vbox>
+					<vbox>
+						<description value="Owner"/>
+						<description value="Responsible"/>
+					</vbox>
+					<description value="last changed"/>
+					<description value="Sub" class="noPrint"/>
+					<description value="Action" class="noPrint"/>
+				</row>
+				<row class="row" valign="top">
+					<hbox options="5" align="center">
+						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
+						<button image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+					</hbox>
+					<vbox options="0,0" class="fullWidth">
+						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
+						<hbox options="0,0">
+							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
+							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
+						</hbox>
+						<description options=",,1" no_lang="1" id="${row}[info_des]"/>
+						<link-string id="${row}[filelinks]"/>
+					</vbox>
+					<customfields-list class="customfields" id="$row" readonly="true"/>
+					<vbox options="0,0,1" rows="3" cols="1">
+						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="fixedHeight"/>
+						<date class="$row_cont[end_class] fixedHeight" id="${row}[info_enddate]" readonly="true"/>
+						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
+					</vbox>
+					<vbox rows="3" cols="1">
+						<hbox readonly="true" options="1,0">
+							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+						</hbox>
+						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+					</vbox>
+					<vbox rows="3" cols="1" options="0,0">
+						<hbox options="1,0" id="l_used_time">
+							<image label="Times" src="timesheet"/>
+							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+						</hbox>
+						<hbox options="1,0" id="lplanified">
+							<image label="planned time" src="k_alarm.png"/>
+							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+						</hbox>
+						<hbox options="1,0" id="replanified">
+							<image label="Re-planned time" src="agt_reload.png"/>
+							<date-duration id="${row}[info_replanned_time]" span="all" class="replanned" readonly="true" options="@duration_format"/>
+						</hbox>
+					</vbox>
+					<vbox options="0,0">
+						<menulist>
+							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
+						</menulist>
+						<listbox type="select-account" id="${row}[info_responsible]" readonly="true" rows="5"/>
+					</vbox>
+					<vbox options="0" orient="0">
+						<date-time id="${row}[info_datemodified]" readonly="true"/>
+						<menulist>
+							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
+						</menulist>
+					</vbox>
+					<vbox options="0" align="center" class="noPrint" orient="0">
+						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
+						<button image="parent.gif" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
+						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
+					</vbox>
+					<vbox class="noPrint">
+						<hbox options="0,0" class="noPrint" orient="0">
+							<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+							<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
+						</hbox>
+						<hbox options="0,0" class="noPrint" orient="0">
+							<button image="done" label="Set status to done" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
+							<button image="done_all" label="Set status to done for all entries" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
+							<description/>
+							<description/>
+						</hbox>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.7.005">
+		<grid>
+			<columns>
+				<column width="2%"/>
+				<column/>
+				<column disabled="@no_customfields"/>
+				<column/>
+				<column width="120"/>
+				<column/>
+				<column/>
+				<column width="8%" disabled="@no_info_owner_info_responsible"/>
+				<column width="12%"/>
+				<column width="3%" disabled="@no_actions"/>
+				<column width="3%" disabled="@no_actions"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox options="0,0">
+						<nextmatch-filterheader options="Type" id="info_type" no_lang="1"/>
+						<nextmatch-filterheader options="Status" id="info_status" align="center"/>
+						<nextmatch-sortheader label="Completed" id="info_percent" align="right"/>
+					</vbox>
+					<grid width="100%" spacing="0" padding="0">
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<nextmatch-customfilter options="link-entry" id="linked" onchange="1"/>
+								<nextmatch-sortheader label="Priority" align="right" id="info_priority" options="DESC" class="noPrint"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Subject" id="info_subject"/>
+								<nextmatch-sortheader label="Creation" align="right" id="info_id" options="DESC" class="noPrint"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Description" id="info_des"/>
+								<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC" class="noPrint" align="right"/>
+							</row>
+						</rows>
+					</grid>
+					<nextmatch-customfields id="customfields"/>
+					<nextmatch-header label="Category" id="cat_id"/>
+					<vbox options="0,0">
+						<nextmatch-sortheader label="Startdate" id="info_startdate"/>
+						<nextmatch-sortheader label="Enddate" id="info_enddate"/>
+						<nextmatch-sortheader id="info_datecompleted" label="Date completed"/>
+					</vbox>
+					<vbox rows="2" cols="1">
+						<nextmatch-sortheader label="Times" id="info_used_time"/>
+						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
+					</vbox>
+					<vbox rows="2" cols="1" options="0,0">
+						<nextmatch-sortheader label="Times" id="info_used_time"/>
+						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
+						<nextmatch-sortheader id="info_replanned_time" class="replanned" label="Re-planned"/>
+					</vbox>
+					<vbox options="0,0">
+						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner" class="user_filter"/>
+						<nextmatch-accountfilter id="info_responsible" options="Responsible,both" statustext="Select to filter by responsible" class="user_filter"/>
+					</vbox>
+					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
+					<description value="Sub" class="noPrint"/>
+					<description value="Action" class="noPrint"/>
+				</row>
+				<row class="row" valign="top">
+					<hbox options="5" align="center">
+						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
+						<button image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+					</hbox>
+					<vbox options="0,0" class="fullWidth">
+						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
+						<hbox options="0,0">
+							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
+							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
+						</hbox>
+						<box class="infoDes">
+							<description no_lang="1" id="${row}[info_des]" options=",,1"/>
+						</box>
+						<link-string id="${row}[filelinks]"/>
+					</vbox>
+					<customfields-list class="customfields" id="$row"/>
+					<menulist>
+						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
+					</menulist>
+					<vbox options="0,0,1" rows="3" cols="1">
+						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="fixedHeight"/>
+						<date class="$row_cont[end_class] fixedHeight" id="${row}[info_enddate]" readonly="true"/>
+						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
+					</vbox>
+					<vbox rows="3" cols="1" options="0,0">
+						<hbox readonly="true">
+							<hbox readonly="true" options="1,0">
+								<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+								<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+							</hbox>
+							<description/>
+						</hbox>
+						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+					</vbox>
+					<vbox rows="3" cols="1" options="0,0">
+						<hbox options="1,0" id="r_used_time">
+							<image label="Times" src="timesheet"/>
+							<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+						</hbox>
+						<hbox options="1,0" id="planified">
+							<image label="planned time" src="k_alarm.png"/>
+							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+						</hbox>
+						<hbox options="1,0" id="replanified">
+							<image label="Re-planned time" src="agt_reload.png"/>
+							<date-duration id="${row}[info_replanned_time]" span="all" class="replanned" readonly="true" options="@duration_format"/>
+						</hbox>
+					</vbox>
+					<vbox options="0,0">
+						<menulist>
+							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
+						</menulist>
+						<listbox type="select-account" id="${row}[info_responsible]" readonly="true" rows="5"/>
+					</vbox>
+					<vbox options="0" orient="0">
+						<date-time id="${row}[info_datemodified]" readonly="true"/>
+						<menulist>
+							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
+						</menulist>
+					</vbox>
+					<vbox options="0" align="center" class="noPrint" orient="0">
+						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="view" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
+						<button image="parent" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
+						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit&amp;link_app[]=infolog&amp;cat_id=$row_cont[info_cat]&amp;link_id[]=$row_cont[info_id]$row_cont[extra_links]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
+					</vbox>
+					<vbox options="0" class="noPrint" orient="0">
+						<hbox options="0,0" class="noPrint" orient="0">
+							<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+							<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
+						</hbox>
+						<hbox options="0,0" class="noPrint" orient="0">
+							<button image="done" label="Set status to done" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
+							<button image="done_all" label="Set status to done for all entries" id="close_all[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
+						</hbox>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.index" template="" lang="" group="0" version="1.7.003">
+		<grid width="100%" border="0" spacing="0" padding="0">
+			<columns>
+				<column width="90%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@css">
+					<html span="all" id="css"/>
+				</row>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
+					<description/>
+				</row>
+				<row disabled="1">
+					<template id="header_left"/>
+					<template id="header_right"/>
+				</row>
+				<row disabled="!@main">
+					<template content="main" span="all" id="infolog.index.rows-noheader"/>
+				</row>
+				<row>
+					<nextmatch options="infolog.index.rows" span="all" id="nm"/>
+				</row>
+				<row class="noPrint">
+					<hbox span="all">
+						<button label="Add" id="add[note]" statustext="Add a new Entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id={$cont[nm][cat_id]}'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Cancel" id="cancel" statustext="Back to main list"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
