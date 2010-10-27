@@ -38,6 +38,24 @@ class addressbook_contactform
 	 */
 	function display(array $content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false,$sel_options=array())
 	{
+		return $this->display_var($content,$addressbook,$fields,$msg,$email,$tpl_name,$subject,$copytoreceiver,$sel_options);
+	}
+
+	/**
+	 * Shows the contactform and stores the submitted data ($content is a var parameter, eg. for extending classes)
+	 *
+	 * @param array &$content=null submitted eTemplate content
+	 * @param int $addressbook=null int owner-id of addressbook to save contacts too
+	 * @param array $fields=null field-names to show
+	 * @param string $msg=null message to show after submitting the form
+	 * @param string $email=null comma-separated email addresses
+	 * @param string $tpl_name=null custom etemplate to use
+	 * @param string $subject=null subject for email
+	 * @param string $copytoreceiver=false send a copy of notification to receiver
+	 * @return string html content
+	 */
+	function display_var(array &$content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false,$sel_options=array())
+	{
 		#error_log( "<p>addressbook_contactform::display(".print_r($content,true).",$addressbook,".print_r($fields,true).",$msg,$tpl_name)</p>\n");
 		if (empty($tpl_name) && !empty($content['tpl_form_name'])) $tpl_name =$content['tpl_form_name'];
 		$tpl = new etemplate($tpl_name ? $tpl_name : 'addressbook.contactform');
