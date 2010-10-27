@@ -261,6 +261,27 @@ abstract class bo_merge
 			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
 		}
+		// fix application/msword mimetype for rtf files
+		if ($mimetype == 'application/msword' && strtolower(substr($document,-4)) == '.rtf')
+		{
+			$mimetype = 'application/rtf';
+		}
+		return $this->merge_string($content,$ids,$err,$mimetype,$fix);
+	}
+
+	/**
+	 * Merges a given document with contact data
+	 *
+	 * @param string $content
+	 * @param array $ids array with contact id(s)
+	 * @param string &$err error-message on error
+	 * @param string $mimetype mimetype of complete document, eg. text/*, application/vnd.oasis.opendocument.text, application/rtf
+	 * @param array $fix=null regular expression => replacement pairs eg. to fix garbled placeholders
+	 * @param string $document=null path/url of document, if applicable
+	 * @return string|boolean merged document or false on error
+	 */
+	public function &merge_string($content,$ids,&$err,$mimetype,array $fix=null)
+	{
 		if ($mimetype == 'application/xml' &&
 			preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches))
 		{
@@ -413,8 +434,6 @@ abstract class bo_merge
 
 			switch($mimetype)
 			{
-				case 'application/msword':
-					if (strtolower(substr($document,-4)) != '.rtf') break;	// no binary word documents
 				case 'application/rtf':
 				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
@@ -434,8 +453,6 @@ abstract class bo_merge
 		{
 			switch($mimetype)
 			{
-				case 'application/msword':
-					if (strtolower(substr($document,-4)) != '.rtf') break;	// no binary word documents
 				case 'application/rtf':
 				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrep).$contentend;
