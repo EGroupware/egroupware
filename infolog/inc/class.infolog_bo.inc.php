@@ -776,7 +776,7 @@ class infolog_bo
 			$values['info_owner'] = $this->group_owners[$values['info_type']];
 			if (!($this->grants[$this->group_owners[$values['info_type']]] & EGW_ACL_EDIT))
 			{
-				return false;	// no edit rights from the group-owner
+				if (!$this->check_access($values['info_id'],EGW_ACL_EDIT)) return false;	// no edit rights from the group-owner and no implicit rights (delegated and sufficient rights)
 			}
 		}
 		elseif (!$values['info_id'] && !$values['info_owner'] || $GLOBALS['egw']->accounts->get_type($values['info_owner']) == 'g')
