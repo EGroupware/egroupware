@@ -18,7 +18,7 @@ class addressbook_contactform
 {
 	/**
 	 * Callback as variable for easier extending
-	 * 
+	 *
 	 * @var string
 	 */
 	var $callback = 'addressbook.addressbook_contactform.display';
@@ -36,7 +36,7 @@ class addressbook_contactform
 	 * @param string $copytoreceiver=false send a copy of notification to receiver
 	 * @return string html content
 	 */
-	function display(array &$content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false,$sel_options=array())
+	function display(array $content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null,$copytoreceiver=false,$sel_options=array())
 	{
 		#error_log( "<p>addressbook_contactform::display(".print_r($content,true).",$addressbook,".print_r($fields,true).",$msg,$tpl_name)</p>\n");
 		if (empty($tpl_name) && !empty($content['tpl_form_name'])) $tpl_name =$content['tpl_form_name'];
@@ -145,7 +145,7 @@ class addressbook_contactform
 			$preserv['start_time'] = time();
 			$content['lang'] = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		}
-		elseif ($submitted == 'truebutfalse') 
+		elseif ($submitted == 'truebutfalse')
 		{
 			$preserv['tpl_form_name'] = $tpl_name;
 			unset($content['submitit']);
