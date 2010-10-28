@@ -78,8 +78,8 @@ class auth
 		// current style name for account last password change timestamp
 		$alpwchange='account_lastpwd_change';
 		// some debug output and develop options to move the horizons and warn levels around
-		//$GLOBALS['egw_info']['server']['change_pwd_every_x_days'] = 30;
-		//$GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change']=43;
+		//$GLOBALS['egw_info']['server']['change_pwd_every_x_days'] =35;
+		//$GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change']=5;
 		//echo egw_time::to('now','ts').'<br>';
 		//echo "User changed password at:".egw_time::to($GLOBALS['egw_info']['user'][$alpwchange]).'<br>';
 		//echo "User password is ".((egw_time::to('now','ts')-$GLOBALS['egw_info']['user'][$alpwchange])/86400)." days old<br>";
@@ -134,7 +134,8 @@ class auth
 			elseif (($passwordAgeBorder < $alpwchange_val) ||
 					(
 					 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] &&
-					 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] > $daysLeftUntilChangeReq
+					 $GLOBALS['egw_info']['server']['warn_about_upcoming_pwd_change'] > $daysLeftUntilChangeReq &&
+					 $daysLeftUntilChangeReq > 0
 					)
 				   )
 			{
