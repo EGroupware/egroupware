@@ -610,7 +610,7 @@ class egw_minimal
 	function __get($name)
 	{
 		//error_log(__METHOD__."($name)".function_backtrace());
-		
+
 		if ($name == 'js') $name = 'framework';	// javascript class is integrated now into framework
 
 		if (isset($this->$name))
@@ -635,6 +635,13 @@ class egw_minimal
 					{
 						$_SESSION['egw_required_files'][] = $file;	// automatic load the used framework class, when the object get's restored
 					}
+				}
+				// fall back to idots if a template does NOT support current user-agent
+				if ($class != 'idots_framework' && method_exists($class,'is_supported_user_agent') &&
+					!call_user_func(array($class,'is_supported_user_agent')))
+				{
+					$GLOBALS['egw_info']['server']['template_set'] = 'idots';
+					return $this->__get('framework');
 				}
 				break;
 			case 'template':	// need to be instancated for the current app
