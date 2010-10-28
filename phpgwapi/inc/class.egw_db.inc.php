@@ -1251,7 +1251,7 @@ class egw_db
 			case 'mssql':
 				return "DATEDIFF(second,'1970-01-01',($expr))";
 		}
-		
+
 	}
 
 	/**
@@ -1312,10 +1312,10 @@ class egw_db
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Cast a column or sql expression to integer, necessary at least for postgreSQL
-	 * 
+	 *
 	 * @param string $expr
 	 * @return string
 	 */
@@ -1325,6 +1325,22 @@ class egw_db
 		{
 			case 'pgsql':
 				return $expr.'::integer';
+		}
+		return $expr;
+	}
+
+	/**
+	 * Cast a column or sql expression to varchar, necessary at least for postgreSQL
+	 *
+	 * @param string $expr
+	 * @return string
+	 */
+	function to_varchar($expr)
+	{
+		switch($this->Type)
+		{
+			case 'pgsql':
+				return 'CAST('.$expr.' AS varchar)';
 		}
 		return $expr;
 	}
