@@ -326,7 +326,9 @@ class calendar_so
 	{
 		//error_log('*** '.__METHOD__.'('.($start ? date('Y-m-d H:i',$start) : '').','.($end ? date('Y-m-d H:i',$end) : '').','.array2string($users).','.array2string($cat_id).",'$filter',".array2string($offset).",$num_rows,".array2string($params).') '.function_backtrace());
 
-		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date";
+		$cols = self::get_columns('calendar', $this->cal_table);
+		$cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
+		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,$this->repeats_table.recur_exception,".implode(',',$cols).",cal_start,cal_end,cal_recur_date";
 
 		$where = array();
 		if (is_array($params['query']))
@@ -430,7 +432,7 @@ class calendar_so
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 
 		if (!preg_match('/^[a-z_ ,]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
-		
+
 		if ($useUnionQuery)
 		{
 			// allow apps to supply participants and/or icons
@@ -498,7 +500,7 @@ class calendar_so
 				$countSelects = count($selects);
 				foreach(array_keys($selects) as $key)
 				{
-					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
+					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,$this->repeats_table.recur_exception,".$this->db->to_varchr($this->cal_table.'.cal_id').",cal_start,cal_end,cal_recur_date";
 					//$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
 				}
 				if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
@@ -524,7 +526,7 @@ class calendar_so
 				$selects = $selections;
 			}
 			if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);
-			
+
 			$rs = $this->db->union($selects,__LINE__,__FILE__,$params['order'],$offset,$num_rows);
 		}
 		else	// MsSQL oder MySQL 3.23
@@ -906,18 +908,18 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->db->update($this->cal_table, array('cal_uid' => $event['cal_uid']),
 				array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 		}
-		
+
 		if ($event['recur_type'] == MCAL_RECUR_NONE)
 		{
 			$this->db->delete($this->dates_table,array(
 				'cal_id' => $cal_id),
 				__LINE__,__FILE__,'calendar');
-			
+
 			// delete all user-records, with recur-date != 0
 			$this->db->delete($this->user_table,array(
 				'cal_id' => $cal_id, 'cal_recur_date != 0'),
 				__LINE__,__FILE__,'calendar');
-			
+
 			$this->db->delete($this->repeats_table,array(
 				'cal_id' => $cal_id),
 				__LINE__,__FILE__,'calendar');
@@ -1081,7 +1083,7 @@ ORDER BY cal_user_type, cal_usre_id
 				{
 					$alarm['time'] = $event['cal_start'] - $alarm['offset'];
 				}
-				
+
 				$start = (int)time() + $alarm['offset'];
 				if ($alarm['time'] < $start)
 				{
