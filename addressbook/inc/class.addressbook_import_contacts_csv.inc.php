@@ -225,7 +225,10 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			case 'update' :
 				// Only update if there are changes
 				$old = $this->bocontacts->read($_data['id']);
-
+				// if we get countrycodes as countryname, try to translate them -> the rest should be handled by bo classes.
+				foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
+					if (strlen(trim($_data[$c_prefix.'countryname']))==2) $_data[$c_prefix.'countryname'] = $GLOBALS['egw']->country->get_full_name(trim($_data[$c_prefix.'countryname']),$translated=true);
+				}
 				// Don't change a user account into a contact
 				if($old['owner'] == 0) {
 					unset($_data['owner']);
@@ -239,6 +242,8 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 				$changed = $this->tracking->changed_fields($_data, $old);
 				if(count($changed) == 0) {
 					return true;
+				} else {
+					//error_log(__METHOD__.__LINE__.array2string($changed).' Old:'.$old['adr_one_countryname'].' ('.$old['adr_one_countrycode'].') New:'.$_data['adr_one_countryname'].' ('.$_data['adr_one_countryname'].')');
 				}
 				
 				// Make sure n_fn gets updated
