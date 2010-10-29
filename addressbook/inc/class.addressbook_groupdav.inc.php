@@ -314,11 +314,8 @@ class addressbook_groupdav extends groupdav_handler
 
 		$handler = self::_get_handler();
 		$vCard = htmlspecialchars_decode($options['content']);
-		if ($this->agent == 'cfnetwork')
-		{
-			// Apple Addressbook
-			$vCard = preg_replace('/item\d\.(ADR|TEL)/', '\1', $vCard);
-		}
+		// Fix for Apple Addressbook
+		$vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1', $vCard);
 		$charset = null;
 		if (!empty($options['content_type']))
 		{
