@@ -641,11 +641,20 @@ class Horde_iCalendar {
                         $paramValue = $param_parts[4][$key];
                         if ($paramName == 'TYPE') {
                             $paramValue = preg_split('/(?<!\\\\),/', $paramValue);
-                            if (count($paramValue) == 1) {
-                                $paramValue = $paramValue[0];
-                            }
+                            if (isset($params[$paramName])) {
+                        		if (!is_array($params[$paramName])) {
+                        			$params[$paramName] = array($params[$paramName]);
+                        		}
+                        		$params[$paramName] = array_merge($params[$paramName], $paramValue);
+                        	} else {
+                        		if (count($paramValue) == 1) {
+                                	$paramValue = $paramValue[0];
+                            	}
+                            	$params[$paramName] = $paramValue;
+                        	}
+                        } else {
+                        	$params[$paramName] = $paramValue;
                         }
-                        $params[$paramName] = $paramValue;
                     }
                 }
 
