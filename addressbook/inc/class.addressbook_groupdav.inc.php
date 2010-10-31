@@ -67,8 +67,8 @@ class addressbook_groupdav extends groupdav_handler
 			'X-ASSISTANT'		=> array('assistent'),
 			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
 			'UID'				=> array('uid'),
-		); 
-	
+		);
+
 	/**
 	 * Charset for exporting data, as some clients ignore the headers specifying the charset
 	 *
@@ -333,7 +333,7 @@ class addressbook_groupdav extends groupdav_handler
 							$charset = strtoupper(substr($value,1,-1));
 					}
 				}
-			} 
+			}
 		}
 
 		if (is_array($oldContact))
@@ -387,7 +387,7 @@ class addressbook_groupdav extends groupdav_handler
 		// only set owner, if user is explicitly specified in URL (check via prefix, NOT for /addressbook/ !)
 		if ($prefix)
 		{
-			// check for modified owners, if user has an add right for the new addressbook and 
+			// check for modified owners, if user has an add right for the new addressbook and
 			// delete rights for the old addressbook (_common_get_put_delete checks for PUT only EGW_ACL_EDIT)
 			if ($oldContact && $user != $oldContact['owner'] && !($this->bo->grants[$user] & EGW_ACL_ADD) &&
 				(!$this->bo->grants[$oldContact['owner']] & EGW_ACL_DELETE))
@@ -438,16 +438,15 @@ class addressbook_groupdav extends groupdav_handler
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 
 		$result = $this->bo->search(array(),'MAX(contact_modified) AS contact_modified','','','',false,'AND',false,$filter);
-		
+
 		if (empty($result))
 		{
 			$ctag = 0;
 		}
 		else
 		{
-			$ctag = $result[0]['contact_modified'];
+			$ctag = $result[0]['modified'];
 		}
-				
 		return 'EGw-'.$ctag.'-wGE';
 	}
 
