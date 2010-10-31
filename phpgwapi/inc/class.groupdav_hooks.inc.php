@@ -18,7 +18,7 @@ class groupdav_hooks
 {
 	/**
 	 * Show GroupDAV preferences link in preferences
-	 * 
+	 *
 	 * @param string|array $args
 	 */
 	public static function menus($args)
@@ -41,7 +41,7 @@ class groupdav_hooks
 			}
 		}
 	}
-	
+
 	/**
 	 * populates $settings for the preferences
 	 *
@@ -71,7 +71,7 @@ class groupdav_hooks
 			'O' => lang('All in one'),
 			'A'	=> lang('All'),
 		) + $addressbooks;
-		
+
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
 		if (!isset($addressbooks[0]))
 		{
@@ -82,7 +82,7 @@ class groupdav_hooks
 			unset($addressbooks[0]);
 		}
 
-		$settings['add_default'] = array(
+		$settings['addressbook-home-set'] = array(
 			'type'   => 'multiselect',
 			'label'  => 'Addressbooks to sync with Apple clients',
 			'name'   => 'addressbook-home-set',
@@ -91,6 +91,22 @@ class groupdav_hooks
 			'xmlrpc' => True,
 			'admin'  => False,
 			'default' => 'P',
+		);
+
+		$settings['debug_level'] = array(
+			'type'   => 'select',
+			'label'  => 'Debug level for Apache/PHP error-log',
+			'name'   => 'debug_level',
+			'help'   => 'Enables debug-messages to Apache/PHP error-log, allowing to diagnose problems on a per user basis.',
+			'values' => array(
+				'0' => '0 - off',
+				'1' => '1 - function calls',
+				'2' => '2 - more info',
+				'3' => '3 - complete $_SERVER array',
+			),
+			'xmlrpc' => true,
+			'admin'  => false,
+			'default' => '0',
 		);
 		return $settings;
 	}

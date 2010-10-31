@@ -89,6 +89,8 @@ class groupdav extends HTTP_WebDAV_Server
 	/**
 	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, 3 = complete $_SERVER array
 	 *
+	 * Can now be enabled on a per user basis in GroupDAV prefs, if it is set here to 0!
+	 *
 	 * The debug messages are send to the apache error_log
 	 *
 	 * @var integer
@@ -123,6 +125,8 @@ class groupdav extends HTTP_WebDAV_Server
 
 	function __construct()
 	{
+		if (!$this->debug) $this->debug = (int)$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level'];
+
 		if ($this->debug > 2) error_log('groupdav: $_SERVER='.array2string($_SERVER));
 
 		// identify clients, which do NOT support path AND full url in <D:href> of PROPFIND request
@@ -164,7 +168,7 @@ class groupdav extends HTTP_WebDAV_Server
 				'//' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] . '/';
 		}
 		$this->principalURL .= 'principals/users/'.$GLOBALS['egw_info']['user']['account_lid'].'/';
-		
+
 		// if client requires pathes instead of URLs
 		if ($this->client_require_href_as_url === false)
 		{
@@ -277,7 +281,7 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				$displayname = 'EGroupware (Cal|Card|Group)DAV server';
 			}
-			
+
 			$displayname = translation::convert($displayname, translation::charset(),'utf-8');
 			// self url
 			$props = array(
@@ -354,18 +358,15 @@ class groupdav extends HTTP_WebDAV_Server
 				$files['files'][0] = array(
 		        	'path'  => $path.$app.'/',
 					// KAddressbook doubles the folder, if the self URL contains the GroupDAV/CalDAV resourcetypes
-		        	'props' => $this->_properties($app,$app=='addressbook'&&strpos($_SERVER['HTTP_USER_AGENT'],'KHTML') !== false,$user,$path),
+		        	'props' => $this->_properties($app,$app=='addressbook'&&$handler->get_agent()=='kde',$user,$path),
 		        );
-			}
-			if ($method != 'REPORT' && isset($options['depth']) && !$options['depth'] && !$id)
-			{
 				// add ctag if handler implements it (only for depth 0)
 				if (method_exists($handler,'getctag'))
 				{
 					$files['files'][0]['props'][] = HTTP_WebDAV_Server::mkprop(
 						groupdav::CALENDARSERVER,'getctag',$handler->getctag($options['path'],$user));
 				}
-				return true;	// depth 0 --> show only the self url
+				if (!$options['depth']) return true;	// depth 0 --> show only the self url
 			}
 			return $handler->propfind($this->_slashify($options['path']),$options,$files,$user,$id);
 		}
@@ -383,7 +384,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function _properties($app,$no_extra_types=false,$user=null,$path='/')
 	{
-		if ($this->debug) error_log(__CLASS__."::$method: user='$user', app='$app'");
+		if ($this->debug) ;error_log(__CLASS__."::$method(app='$app', no_extra_types=$no_extra_types, user='$user', path='$path')");
 		if ($user)
 		{
 			$account_lid = $this->accounts->id2name($user);
@@ -395,7 +396,7 @@ class groupdav extends HTTP_WebDAV_Server
 		$account = $this->accounts->read($account_lid);
 		$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
 				$GLOBALS['egw']->translation->charset(),'utf-8');
-				
+
 		if ($user < 0)
 		{
 			$principalType = 'groups';
@@ -404,7 +405,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			$principalType = 'users';
 		}
-		
+
 		$props = array(
 			self::mkprop('current-user-principal',array(self::mkprop('href',$this->principalURL))),
 			self::mkprop('owner',array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/'))),
@@ -421,7 +422,7 @@ class groupdav extends HTTP_WebDAV_Server
 				self::mkprop('href','urn:uuid:'.$GLOBALS['egw_info']['user']['account_lid']))),
 			self::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
 				self::mkprop(groupdav::CALENDARSERVER,'email-address',$GLOBALS['egw_info']['user']['email']))),
-			self::mkprop('getetag','EGw-no-etag-wGE'),	// iPhone addressbook requires an etag here!		
+			self::mkprop('getetag','EGw-no-etag-wGE'),	// iPhone addressbook requires an etag here!
 		);
 
 		switch ($app)
@@ -707,16 +708,16 @@ class groupdav extends HTTP_WebDAV_Server
 			}
 		}
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
-		
+
 		$this->_parse_path($options['path'],$id,$app,$user);
-		
+
 		if (($handler = self::app_handler($app)) &&	method_exists($handler, 'post'))
 		{
 			return $handler->post($options,$id,$user);
 		}
 		return '501 Not Implemented';
 	}
-	
+
 	/**
 	 * PUT method handler
 	 *
@@ -734,7 +735,7 @@ class groupdav extends HTTP_WebDAV_Server
 				$options['content'] .= fread($options['stream'],8192);
 			}
 		}
-		
+
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
 		if (!$this->_parse_path($options['path'],$id,$app,$user,$prefix))
@@ -926,7 +927,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		$parts = explode('/', $this->_unslashify($path));
 
-		if (($account_id = $this->accounts->name2id($parts[0], 'account_lid')) || 
+		if (($account_id = $this->accounts->name2id($parts[0], 'account_lid')) ||
 			($account_id = $this->accounts->name2id($parts[0]=urldecode($parts[0]))))
 		{
 			// /$user/$app/...
