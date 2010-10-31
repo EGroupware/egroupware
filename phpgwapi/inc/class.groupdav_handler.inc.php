@@ -246,7 +246,7 @@ abstract class groupdav_handler
 		{
 			if ($return_no_access && !is_null($entry))
 			{
-				if ($this->debug) error_log(__METHOD__."($method,,$id,$return_no_access) is_null(\$entry)=".(int)is_null($entry).", set to false");
+				if ($this->debug) error_log(__METHOD__."($method,,$id,$return_no_access) \$entry=".array2string($entry).", \$return_no_access set to false");
 				$return_no_access = false;
 			}
 			else
@@ -277,7 +277,7 @@ abstract class groupdav_handler
 						if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 304 Not Modified");
 						return '304 Not Modified';
 					}
-				}	
+				}
 			}
 			if (isset($_SERVER['HTTP_IF_NONE_MATCH']))
 			{
@@ -341,8 +341,10 @@ abstract class groupdav_handler
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
 				'zideone'           => 'zideone',	// zideone outlook plugin
 				'lightning'         => 'lightning',	// Lighting (SOGo connector for addressbook)
+				'webkit'			=> 'webkit',	// Webkit Browser (also reports KHTML!)
 				'khtml'             => 'kde',		// KDE clients
-				'neon'              => 'neon'
+				'neon'              => 'neon',
+				'ical4ol'			=> 'ical4ol',	// iCal4OL client
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)
@@ -364,12 +366,13 @@ abstract class groupdav_handler
 						{
 							if ((int)$matches[1] < 868) $agent .= '_old';
 						}
+						break;
 				}
 			}
 		}
-		
+
 		if ($debug) error_log(__METHOD__."GroupDAV client: $agent");
-		
+
 		return $agent;
 	}
 }
