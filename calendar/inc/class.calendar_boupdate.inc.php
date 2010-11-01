@@ -576,7 +576,7 @@ class calendar_boupdate extends calendar_bo
 			$GLOBALS['egw']->preferences->__construct($user);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 		}
-		$senderid = $GLOBALS['egw_info']['user']['account_id'];
+		$senderid = $this->user;
 		$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
 
 		switch($msg_type)
@@ -662,6 +662,10 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
+		$startdate = new egw_time($event['start']);
+		$enddate = new egw_time($event['start']);
+		$modified = new egw_time($event['modified']);
+		if ($old_event != False) $olddate = new egw_time($old_event['start']);
 		foreach($to_notify as $userid => $statusid)
 		{
 			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid");
@@ -692,17 +696,35 @@ class calendar_boupdate extends calendar_bo
 				$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
 				$details['to-fullname'] = $GLOBALS['egw']->common->display_fullname('',$details['to-firstname'],$details['to-lastname']);
 
-				$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
-				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
-				$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] = $part_prefs['common']['dateformat'];
-
-				$GLOBALS['egw']->datetime->tz_offset = 3600 * (int) $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
-				$tz_diff = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] - $this->common_prefs['tz_offset'];
-				if($old_event != False) $details['olddate'] = $this->format_date($old_event['start']+$tz_diff);
-				$details['startdate'] = $this->format_date($event['start']+$tz_diff);
-				$details['enddate']   = $this->format_date($event['end']+$tz_diff);
+				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
+				$timezone = new DateTimeZone($part_prefs['common']['tz']);
+				$timeformat = $part_prefs['common']['timeformat'];
+				switch($timeformat)
+				{
+			  		case '24':
+						$timeformat = 'H:i';
+						break;
+					case '12':
+						$timeformat = 'h:i a';
+						break;
+				}
+				$timeformat = $part_prefs['common']['dateformat'] . ', ' . $timeformat;
+				
+				$startdate->setTimezone($timezone);
+				$details['startdate'] = $startdate->format($timeformat);
+				
+				$enddate->setTimezone($timezone);
+				$details['enddate'] = $enddate->format($timeformat);
+				
+				$modified->setTimezone($timezone);
+				$details['updated'] = $modified->format($timeformat) . ', ' . common::grab_owner_name($event['modifier']);
+				
+				if ($old_event != False)
+				{
+					$olddate->setTimezone($timezone);
+					$details['olddate'] = $olddate->format($timeformat);
+				}
 
 				list($subject,$body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
 
@@ -760,7 +782,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		// restore the enviroment (preferences->read_repository() sets the timezone!)
 		$GLOBALS['egw_info']['user'] = $temp_user;
-		if ($GLOBALS['egw']->preferences->account_id != $temp_user['account_id'] || isset($preferences))
+		if ($GLOBALS['egw']->preferences->account_id != $temp_user['account_id'])
 		{
 			$GLOBALS['egw']->preferences->__construct($temp_user['account_id']);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
@@ -1374,12 +1396,12 @@ class calendar_boupdate extends calendar_bo
 
 		$var['owner'] = Array(
 			'field'	=> lang('Owner'),
-			'data'	=> $GLOBALS['egw']->common->grab_owner_name($event['owner'])
+			'data'	=> common::grab_owner_name($event['owner'])
 		);
 
 		$var['updated'] = Array(
 			'field'	=> lang('Updated'),
-			'data'	=> $this->format_date($event['modtime']).', '.$GLOBALS['egw']->common->grab_owner_name($event['modifier'])
+			'data'	=> $this->format_date($event['modtime']).', '.common::grab_owner_name($event['modifier'])
 		);
 
 		$var['access'] = Array(
