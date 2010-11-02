@@ -1,8 +1,13 @@
+%1 is not writable by you!	felamimail	fr	%1 n'est pas accessible en écriture!
 (no subject)	felamimail	fr	(pas de sujet)
 (only cc/bcc)	felamimail	fr	(seulement Cc/Bcc)
-(unknown sender)	felamimail	fr	(envoyeur inconnu)
+(separate multiple addresses by comma)	felamimail	fr	(séparer les adresses multiples par des virgules)
+(unknown sender)	felamimail	fr	(expéditeur inconnu)
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	fr	3PaneView: Si vous voulez voir un aperçu d'un email par simple clic sur le sujet, régler la hauteur de la liste des messages et de la zone d'aperçu (300 semble être une bonne valeur). La visualisation sera affichée à la fin de la liste des messages sur demande (en cliquant).
+aborted	felamimail	fr	annulé
 activate	felamimail	fr	Activer
 activate script	felamimail	fr	Activer le script
+activating by date requires a start- and end-date!	felamimail	fr	Activation par date nécessite une date de début ET de fin!
 add acl	felamimail	fr	ajouter acl
 add address	felamimail	fr	Ajouter l'adresse
 add rule	felamimail	fr	Ajouter une règle
@@ -10,22 +15,24 @@ add script	felamimail	fr	Ajouter un script
 add to %1	felamimail	fr	Ajouter à %1
 add to address book	felamimail	fr	Ajouter au carnet d'adresses
 add to addressbook	felamimail	fr	Ajouter au carnet d'adresses
-adding file to message. please wait!	felamimail	fr	Ajout fichier au message. Veuillez patienter!
+adding file to message. please wait!	felamimail	fr	Ajout du fichier au message. Veuillez patienter!
 additional info	felamimail	fr	Informations additionnelles
 address book	felamimail	fr	Carnet d'adresses
 address book search	felamimail	fr	Recherche dans le carnet d'adresses
 after message body	felamimail	fr	Après le corps du message
 all address books	felamimail	fr	Tous les carnets d'adresses
 all folders	felamimail	fr	Tous les dossiers
+all messages in folder	felamimail	fr	Tous les messages du dossier
 all of	felamimail	fr	tous de
-allow images from external sources in html emails	felamimail	fr	Autoriser les images de sources externes dans les emails HTML
-allways a new window	felamimail	fr	toujours une nouvelle fenêtre
-always show html emails	felamimail	fr	Toujours affecher les messages HTML
+allow images from external sources in html emails	felamimail	fr	Autoriser les images de sources externes dans les emails HTML ?
+allways a new window	felamimail	fr	Toujours une nouvelle fenêtre
+always show html emails	felamimail	fr	Toujours afficher les messages HTML
 and	felamimail	fr	et
 any of	felamimail	fr	un de
 any status	felamimail	fr	n'importe quel statut
 anyone	felamimail	fr	N'importe qui
 as a subfolder of	felamimail	fr	Comme un sous-dossier de
+attach	felamimail	fr	Joindre
 attachments	felamimail	fr	Attachements
 authentication required	felamimail	fr	authentification requise
 auto refresh folder list	felamimail	fr	Auto-rafraîchir la liste des dossiers
@@ -38,13 +45,14 @@ bcc	felamimail	fr	Copie cachée
 before headers	felamimail	fr	Avant les entêtes
 between headers and message body	felamimail	fr	Entre les entêtes et le corps du message
 body part	felamimail	fr	Corps du message
+by date	felamimail	fr	par date
 can not send message. no recipient defined!	felamimail	fr	Impossible d'envoyer le message, il n'y a pas de destinataire
 can't connect to inbox!!	felamimail	fr	Impossible de se connecter au serveur!
 cc	felamimail	fr	Copie à
 change folder	felamimail	fr	Changer de dossier
 check message against next rule also	felamimail	fr	vérifiez le message avec la prochaine règle également
 checkbox	felamimail	fr	Case à cocher
-clear search	felamimail	fr	réinitialiser termes de la recherche
+clear search	felamimail	fr	réinitialiser les termes de la recherche
 click here to log back in.	felamimail	fr	Cliquez ici pour vous reconnecter
 click here to return to %1	felamimail	fr	Cliquez ici pour retourner à %1
 close all	felamimail	fr	Tout fermer
@@ -52,12 +60,18 @@ close this page	felamimail	fr	Fermer cette page
 close window	felamimail	fr	Fermer la fenêtre
 color	felamimail	fr	Couleur
 compose	felamimail	fr	Composer
+compose as new	felamimail	fr	composer comme nouveau
 compress folder	felamimail	fr	Compresser le dossier
 condition	felamimail	fr	condition
 configuration	felamimail	fr	Configuration
+configure a valid imap server in emailadmin for the profile you are using.	felamimail	fr	Configurer dans emailadmin un serveur IMAP valide pour le profil que vous utilisez.
 connection dropped by imap server.	felamimail	fr	Connexion annulée par le serveur IMAP
+contact not found!	felamimail	fr	Contact introuvable!
 contains	felamimail	fr	contient
+copy or move messages?	felamimail	fr	Copier ou Déplacer les messages?
+copying messages to	felamimail	fr	Copier le message pour
 could not complete request. reason given: %s	felamimail	fr	Requête non achevée. Raison invoquée: %s
+could not import message:	felamimail	fr	Impossible d'importer le message:
 could not open secure connection to the imap server. %s : %s.	felamimail	fr	Impossible d'avoir une connexion sécurisée avec le serveur IMAP. %s : %s.
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	fr	CRAM-MD5 ou DIGEST-MD5 requièrent l'installation du paquetage Auth_SASL.
 create	felamimail	fr	Créer
@@ -82,7 +96,7 @@ default sorting order	felamimail	fr	Ordre de tri par défaut
 delete all	felamimail	fr	Effacer tous
 delete folder	felamimail	fr	Effacer le dossier
 delete script	felamimail	fr	Effacer le script
-delete selected	felamimail	fr	Effacer sélectionnés
+delete selected	felamimail	fr	Effacer la sélection
 delete selected messages	felamimail	fr	Effacer les messages sélectionnés
 deleted	felamimail	fr	Effacés
 deleted folder successfully!	felamimail	fr	Dossier effacé avec succès!
@@ -91,38 +105,52 @@ disable	felamimail	fr	Désactiver
 discard	felamimail	fr	annuler
 discard message	felamimail	fr	annuler les modifications
 display message in new window	felamimail	fr	Afficher le message dans une nouvelle fenêtre
-display messages in multiple windows	felamimail	fr	afficher les messages dans plusieurs fenêtres
+display messages in multiple windows	felamimail	fr	Faut-il afficher les messages dans plusieurs fenêtres ?
 display of html emails	felamimail	fr	Afficher les messages HTML
 display only when no plain text is available	felamimail	fr	Afficher seulement quand le format texte n'est pas disponible
 display preferences	felamimail	fr	Afficher les préférences
-displaying html messages is disabled	felamimail	fr	l'affichage des messages html est désactivé
+displaying html messages is disabled	felamimail	fr	l'affichage des messages HTML est désactivé
 do it!	felamimail	fr	Fais-le!
 do not use sent	felamimail	fr	Ne pas utiliser Sent (envoyés)
 do not use trash	felamimail	fr	Ne pas utiliser la corbeille
 do not validate certificate	felamimail	fr	ne pas valider le certificat
 do you really want to delete the '%1' folder?	felamimail	fr	Voulez-vous vraiment effacer le dossier '%1'?
+do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	fr	Voulez-vous vraiment effacer le Compte sélectionné ainsi que son Identité associée?
 do you really want to delete the selected signatures?	felamimail	fr	Voulez-vous vraiment supprimer les signatures sélectionnées?
+do you really want to move or copy the selected messages to folder:	felamimail	fr	Voulez-vous vraiment déplacer ou copier les messages sélectionnés dans le dossier:
+do you really want to move the selected messages to folder:	felamimail	fr	Voulez-vous vraiment déplacer les messages sélectionnés dans le dossier:
+do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	fr	Voulez-vous recevoir une notification de confirmation avant de déplacer les messages sélectionnés dans un autre dossier ?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	fr	Voulez-vous prévenir l'édition/configuration du transfert des mails par règles (même si SIEVE est activé) ?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	fr	Voulez-vous prévenir l'édition/configuration des règles de filtrages (même si SIEVE est activé) ?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	fr	Voulez-vous prévenir l'édition/configuration de la notification par email à d'autres adresses emails si des emails arrivent (même si SIEVE est activé) ?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	fr	Voulez-vous prévenir l'édition/configuration de la notification d'absences/vacances (même si SIEVE est activé) ?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	fr	Voulez-vous prévenir la gestion des dossiers (création, gestion des droits d'accès et abonnement) ?
 does not contain	felamimail	fr	ne contient pas
+does not exist on imap server.	felamimail	fr	n'existe pas sur le serveur IMAP
 does not match	felamimail	fr	ne correspond pas
 does not match regexp	felamimail	fr	ne correspond pas à la regexp
 don't use draft folder	felamimail	fr	Ne pas utiliser un dossier brouillon
 don't use sent	felamimail	fr	Ne pas utiliser Eléments envoyés
+don't use template folder	felamimail	fr	Ne pas utiliser le dossier des modèles
 don't use trash	felamimail	fr	Ne pas utiliser la Corbeille
+dont strip any tags	felamimail	fr	ne pas supprimer toutes les balises
 down	felamimail	fr	bas
 download	felamimail	fr	Télécharger
 download this as a file	felamimail	fr	Télécharger en tant que fichier
-draft folder	felamimail	fr	dossier brouillon
-drafts	felamimail	fr	Projets
-e-mail	felamimail	fr	EMail
+draft folder	felamimail	fr	Dossier brouillon
+drafts	felamimail	fr	Brouillons
+e-mail	felamimail	fr	email
 e-mail address	felamimail	fr	Adresse de messagerie
-e-mail folders	felamimail	fr	Dossiers EMail
+e-mail folders	felamimail	fr	Dossiers email
 edit email forwarding address	felamimail	fr	Editer l'adresse de transfert d'email
 edit filter	felamimail	fr	Modifier le filtre
 edit rule	felamimail	fr	Modifier la règle
 edit selected	felamimail	fr	Modifier sélectionné
 edit vacation settings	felamimail	fr	Editer les paramètre de vacances
+editor type	felamimail	fr	Type d'éditeur
 email address	felamimail	fr	Adresse de messagerie
 email forwarding address	felamimail	fr	Adresse mail de transfert
+email notification update failed	felamimail	fr	la mise à jour de la notification par email a échoué
 email signature	felamimail	fr	Signature de messagerie
 emailaddress	felamimail	fr	adresse email
 empty trash	felamimail	fr	Vider la Corbeille
@@ -134,17 +162,25 @@ enter your sieve server hostname or ip address	admin	fr	Entrez le nom de votre s
 enter your sieve server port	admin	fr	Entrez le port de votre serveur SIEVE
 enter your smtp server hostname or ip address	admin	fr	Entrez le nom ou l'adresse IP de votre serveur SMTP
 enter your smtp server port	admin	fr	Entrez le port SMTP
+entry saved	felamimail	fr	Entrée enregistrée
 error	felamimail	fr	ERREUR
 error connecting to imap serv	felamimail	fr	Erreur lors de la connexion au serveur IMAP
 error connecting to imap server. %s : %s.	felamimail	fr	Erreur lors de connexion au serveur IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	felamimail	fr	Erreur lors de connexion au serveur IMAP: [%s] %s.
+error creating rule while trying to use forward/redirect.	felamimail	fr	Erreur de création de règle, durant le transfert/redirection.
 error opening	felamimail	fr	Erreur à l'ouverture
+error saving %1!	felamimail	fr	Erreur durant l'enregistrement de %1
+error:	felamimail	fr	Erreur:
+error: could not save message as draft	felamimail	fr	Erreur: Impossible d'enregistrer le message comme brouillon
+error: could not save rule	felamimail	fr	Erreur: Impossible d'enregistrer la règle
+error: message could not be displayed.	felamimail	fr	ERREUR: Impossible d'afficher le message.
 every	felamimail	fr	tous
 every %1 days	felamimail	fr	tous les %1 jours
 expunge	felamimail	fr	Purger
 extended	felamimail	fr	étendu
 felamimail	common	fr	Messagerie
 file into	felamimail	fr	Fichier dans
+filemanager	felamimail	fr	Gestionnaire de fichiers
 files	felamimail	fr	Fichiers
 filter active	felamimail	fr	Filtre actif
 filter name	felamimail	fr	Nom du filtre
@@ -152,6 +188,7 @@ filter rules	common	fr	Règles de filtrage
 first name	felamimail	fr	Prénom
 flagged	felamimail	fr	Marqué
 flags	felamimail	fr	Drapeaux
+folder	felamimail	fr	dossier
 folder acl	felamimail	fr	Droits sur le dossier
 folder name	felamimail	fr	Nom du dossier
 folder path	felamimail	fr	Chemin du dossier
@@ -166,6 +203,9 @@ follow	felamimail	fr	Suivre
 for mail to be send - not functional yet	felamimail	fr	Pour le mail à envoyer - pas encore fonctionnel
 for received mail	felamimail	fr	Pour le mail reçu
 forward	felamimail	fr	Transférer
+forward as attachment	felamimail	fr	Transférer en pièce jointe
+forward inline	felamimail	fr	Transférer intégré
+forward messages to	felamimail	fr	Transférer les messages à
 forward to	felamimail	fr	transférer à
 forward to address	felamimail	fr	Tranférer à l'adresse
 forwarding	felamimail	fr	Transfert
@@ -180,6 +220,7 @@ have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.
 header lines	felamimail	fr	Lignes d'Entête
 hide header	felamimail	fr	Cacher l'entête
 hostname / address	felamimail	fr	nom d'hôte / adresse
+how to forward messages	felamimail	fr	Comment les messages doivent-ils être transférés ?
 html	felamimail	fr	HTML
 icons and text	felamimail	fr	Icônes et texte
 icons only	felamimail	fr	Icônes seulement
@@ -189,6 +230,7 @@ if	felamimail	fr	SI
 if from contains	felamimail	fr	Si l'expéditeur contient
 if mail header	felamimail	fr	Si l'en-tête de courrier
 if message size	felamimail	fr	Si la taille du message
+if shown, which folders should appear on main screen	felamimail	fr	Indiquer quels dossiers doivent apparaître sur l'écran principal :
 if subject contains	felamimail	fr	Si le sujet contient
 if to contains	felamimail	fr	Si A contient
 if using ssl or tls, you must have the php openssl extension loaded.	felamimail	fr	Si vous utilisez SSL ou TLS, l'extension PHP openssl doit être chargée.
@@ -203,6 +245,9 @@ imap server type	felamimail	fr	Type de serveur IMAP
 imap server username	felamimail	fr	utilisateur du serveur imap
 imaps authentication	felamimail	fr	Authentification IMAPS
 imaps encryption only	felamimail	fr	Chiffrement IMAPS seulement
+import	felamimail	fr	importation
+import mail	felamimail	fr	Importation d'email
+import message	felamimail	fr	Importation de message
 in	felamimail	fr	Dans
 inbox	felamimail	fr	Boîte de réception
 incoming mail server(imap)	felamimail	fr	serveur de courier entrant (IMAP)
@@ -212,9 +257,9 @@ invalid user name or password	felamimail	fr	Nom d'utilisateur ou mot de passe in
 javascript	felamimail	fr	JavaScript
 jumping to end	felamimail	fr	saut à la fin
 jumping to start	felamimail	fr	saut au début
+junk	felamimail	fr	Indésirables
 keep a copy of the message in your inbox	felamimail	fr	Garder une copie du message dans votre courrier entrant
-junk	felamimail	fr	Déchet
-keep local copy of email	felamimail	fr	Garder un copie local de votre email
+keep local copy of email	felamimail	fr	Garder une copie locale de votre email
 kilobytes	felamimail	fr	kilo-octets
 language	felamimail	fr	Langue
 last name	felamimail	fr	Nom de famille
@@ -228,7 +273,8 @@ location of buttons when composing	felamimail	fr	Emplacement des boutons lors de
 mail server login type	admin	fr	Type d'authentification de messagerie
 mail settings	felamimail	fr	Réglages EMail
 mainmessage	felamimail	fr	Message principal
-manage emailaccounts	preferences	fr	Gérer les comptes email
+manage email accounts and identities	common	fr	Gérer les Comptes email et les Identités
+manage emailaccounts	common	fr	Gérer les comptes email
 manage emailfilter / vacation	preferences	fr	Gérer les filtres / les vacances
 manage folders	common	fr	Gérer les dossiers
 manage sieve	common	fr	Gérer les scripts SIEVE
@@ -248,7 +294,9 @@ message list	felamimail	fr	Liste des messages
 messages	felamimail	fr	Messages
 mon	felamimail	fr	Lun
 move	felamimail	fr	Déplacer
+move folder	felamimail	fr	déplacer les dosssiers
 move messages	felamimail	fr	Déplacer les messages
+move messages?	felamimail	fr	Déplacer les messages?
 move selected to	felamimail	fr	Déplacer le choix vers
 move to trash	felamimail	fr	Déplacer vers la Corbeille
 moving messages to	felamimail	fr	Déplacer les messages vers
@@ -259,22 +307,33 @@ new filter	felamimail	fr	Nouveau filtre
 next	felamimail	fr	Suivant
 next message	felamimail	fr	Message suivant
 no active imap server found!!	felamimail	fr	Aucun serveur IMAP trouvé!!
+no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	fr	Aucune adresse POUR/CC/BCC n'a été fournie et aucun répertoire pour sauvegarder le message a été indiqué.
 no encryption	felamimail	fr	pas de chiffrement
 no filter	felamimail	fr	Pas de filtre
+no folders	felamimail	fr	Pas de dossiers
 no folders found	felamimail	fr	Aucun dossier trouvé
 no folders were found to subscribe to!	felamimail	fr	Aucun dossier auquel s'inscrire n'a été trouvé!
 no folders were found to unsubscribe from!	felamimail	fr	Aucun dossier auquel se désinscrire n'a été trouvé!
 no highlighting is defined	felamimail	fr	Aucune mise en évidence n'est définie
+no imap server host configured!!	felamimail	fr	Aucun hôte de serveur IMAP configuré!!
 no message returned.	felamimail	fr	Aucun message retourné.
 no messages found...	felamimail	fr	Aucuns messages trouvés...
+no messages selected, or lost selection. changing to folder	felamimail	fr	Aucun message sélectionné, ou sélection perdue. Changer de dossier
 no messages were selected.	felamimail	fr	Aucun message n'a été choisi.
 no plain text part found	felamimail	fr	aucune section texte plein trouvée
 no previous message	felamimail	fr	Pas de message précédent
 no recipient address given!	felamimail	fr	Il n'a pas d'adresse de destinataire
 no signature	felamimail	fr	pas de signature
+no stationery	felamimail	fr	aucun entrepôt
+no subject given!	felamimail	fr	Votre message n'a pas de sujet!
 no supported imap authentication method could be found.	felamimail	fr	Aucune méthode d'authentification IMAP n'a été trouvée.
+no valid data to create mailprofile!!	felamimail	fr	Aucune donnée valide pour créer le profil email
 no valid emailprofile selected!!	felamimail	fr	Aucun profil de messagerie selectionné!
 none	felamimail	fr	Aucun
+none, create all	felamimail	fr	aucun, créer tous
+not allowed	felamimail	fr	pas autorisé
+notify when new mails arrive on these folders	felamimail	fr	Me notifier lors de l'arrivée de nouveaux mails sur ces dossiers :
+on	felamimail	fr	sur
 on behalf of	felamimail	fr	sur la base de
 one address is not valid	felamimail	fr	Une adresse n'est pas valide
 only inbox	felamimail	fr	Seulement INBOX
@@ -283,21 +342,26 @@ only unseen	felamimail	fr	Seulement les non-vus
 open all	felamimail	fr	Tout ouvrir
 options	felamimail	fr	Options
 or	felamimail	fr	ou
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	felamimail	fr	ou configurer une connexion à un serveur IMAP valide à l'aide des préférences de Gestion des comptes/Identités  dans le menu Sidebox.
 organisation	felamimail	fr	Entreprise
 organization	felamimail	fr	Entreprise
 organization name	admin	fr	Nom de l'entreprise
+original message	felamimail	fr	message d'origine
 outgoing mail server(smtp)	felamimail	fr	serveur de courrier sortant (SMTP)
 participants	felamimail	fr	Participants
 personal information	felamimail	fr	Informations personnelles
+please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	fr	Veuillez demander à votre administrateur système de corriger les paramètres emailadmin de votre serveur IMAP.
+please configure access to an existing individual imap account.	felamimail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
 please select a address	felamimail	fr	Sélectionner une adresse
 please select the number of days to wait between responses	felamimail	fr	Sélectionner le nombre de jours pour attendre entre les réponses
-please supply the message to send with auto-responses	felamimail	fr	Ecriver le message pour envoyer en réponse automatique
+please supply the message to send with auto-responses	felamimail	fr	Écrire le message qui sera envoyé en réponse automatique
 port	felamimail	fr	port
 posting	felamimail	fr	Poster
 previous	felamimail	fr	Précédent
 previous message	felamimail	fr	Message précédent
 print it	felamimail	fr	Imprimes-la
 print this page	felamimail	fr	Imprimer cette page
+printview	felamimail	fr	aperçu avant impression
 quicksearch	felamimail	fr	Recherche Rapide
 read	felamimail	fr	lu
 reading	felamimail	fr	Lire
@@ -321,10 +385,11 @@ respond to mail sent to	felamimail	fr	Répondre au courrier envoyé à
 return	felamimail	fr	Retourner
 return to options page	felamimail	fr	Retourner à la page des options
 right	felamimail	fr	Droit
-row order style	felamimail	fr	style d'ordonnancement de ligne
+row order style	felamimail	fr	Style d'ordonnancement de ligne
 rule	felamimail	fr	Règle
 sat	felamimail	fr	Sa
 save	felamimail	fr	Sauver
+save all	felamimail	fr	Tout sauvegarder
 save as draft	felamimail	fr	enregistrer comme brouillon
 save as infolog	felamimail	fr	enregistrer comme infolog
 save changes	felamimail	fr	enregistrer les modifications
@@ -340,13 +405,16 @@ select folder	felamimail	fr	Sélectionner un dossier
 select your mail server type	admin	fr	Sélectionner votre type de serveur de messagerie
 send	felamimail	fr	Envoyer
 send a reject message	felamimail	fr	envoyez un message de rejet
-sent	felamimail	fr	Envoyer
+sent	felamimail	fr	Envoyés
 sent folder	felamimail	fr	Dossier contenant les messages envoyés
 server supports mailfilter(sieve)	felamimail	fr	le serveur support les filtres de messages (sieve)
+set as default	felamimail	fr	Définir par défaut
+show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	fr	Afficher tous les dossiers (avec ET sans abonnement) dans le volet Dossier de l'écran principal ?
 show header	felamimail	fr	Montrer les entêtes
-show new messages on main screen	felamimail	fr	Afficher les nouveaux messages sur l'écran principal
-sieve script name	felamimail	fr	nom du script sieve
+show new messages on main screen	felamimail	fr	Afficher les nouveaux messages sur l'écran principal ?
+sieve script name	felamimail	fr	Nom du script SIEVE
 sieve settings	admin	fr	Réglages SIEVE
+signatur	felamimail	fr	Signature
 signature	felamimail	fr	Signature
 simply click the target-folder	felamimail	fr	Cliquer sur le dossier de destination
 size	felamimail	fr	Taille
@@ -357,6 +425,8 @@ skipping forward	felamimail	fr	saut en avant
 skipping previous	felamimail	fr	saut en arrière
 small view	felamimail	fr	Affichage réduit
 smtp settings	admin	fr	Réglages SMTP
+start new messages with mime type plain/text or html?	felamimail	fr	Créer les nouveaux messages au format plain/text ou HTML ?
+stationery	felamimail	fr	Entrepôt
 subject	felamimail	fr	Sujet
 subject(a->z)	felamimail	fr	Sujet (A->Z)
 subject(z->a)	felamimail	fr	Sujet (Z->A)
@@ -367,12 +437,16 @@ subscribed successfully!	felamimail	fr	Souscrit avec succès!
 sun	felamimail	fr	Di
 system signature	felamimail	fr	signature systéme
 table of contents	felamimail	fr	Table des contenus
-templates	felamimail	fr	Templates
+template folder	felamimail	fr	Dossier de modèles
+templates	felamimail	fr	Modèles
 text only	felamimail	fr	Texte seulement
+text/plain	felamimail	fr	text/plain
 the connection to the imap server failed!!	felamimail	fr	La connexion au serveur IMAP a échoué!!
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	fr	Le serveur IMAP ne supporte pas la méthode d'authentification choisie. Veuillez contacter votre administrateur système.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	fr	L'expéditeur du message a demandé une réponse pour indiquer que vous avez lu ce message. Souhaitez-vous envoyer un accusé de réception?
 the mimeparser can not parse this message.	felamimail	fr	L'analyseur mime ne peut pas décoder ce message.
 then	felamimail	fr	ALORS
+there is no imap server configured.	felamimail	fr	Il n'ya pas de serveur IMAP configuré.
 this folder is empty	felamimail	fr	CE DOSSIER EST VIDE
 this php has no imap support compiled in!!	felamimail	fr	PHP n'est pas compilé avec le support IMAP!
 thu	felamimail	fr	Jeu
@@ -382,6 +456,7 @@ to use a tls connection, you must be running a version of php 5.1.0 or higher.	f
 translation preferences	felamimail	fr	Préférences de traduction
 translation server	felamimail	fr	Serveur de traduction
 trash	felamimail	fr	Corbeille
+trash fold	felamimail	fr	Corbeille
 trash folder	felamimail	fr	Dossier Corbeille
 tue	felamimail	fr	Ma
 type	felamimail	fr	Type
@@ -407,23 +482,31 @@ use <a href="%1">emailadmin</a> to create profiles	felamimail	fr	utiliser <a hre
 use a signature	felamimail	fr	Utiliser une signature
 use a signature?	felamimail	fr	Utiliser une signature?
 use addresses	felamimail	fr	Utiliser les adresses
+use custom identities	felamimail	fr	utiliser des identités personnalisées
 use custom settings	felamimail	fr	Utiliser les préférences personnelles
 use regular expressions	felamimail	fr	Utiliser des expressions régulières
 use smtp auth	admin	fr	Utiliser l'authentification SMTP
 users can define their own emailaccounts	admin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
 vacation notice	common	fr	Notification de vacances
 vacation notice is active	felamimail	fr	La notice d'absence est activée
+vacation start-date must be before the end-date!	felamimail	fr	La date de début de la notice d'absence doit être ANTERIEURE à la date de fin.
 validate certificate	felamimail	fr	valider le certificat
 view full header	felamimail	fr	Voir l'entête complet
 view header lines	felamimail	fr	voir les lignes d'entête
 view message	felamimail	fr	Voir message
-viewing full header	felamimail	fr	Visualise toutes les entêtes
+viewing full header	felamimail	fr	Visualiser tous les entêtes
 viewing message	felamimail	fr	Visualise le message
 viewing messages	felamimail	fr	Visualise les messages
-wed	felamimail	fr	Me
+wed	felamimail	fr	Mer
 when deleting messages	felamimail	fr	Quand j'efface les messages
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	fr	Quels dossiers (en plus du dossier Envoyés) doivent être affichés en utilisant le Schéma des Éléments Envoyés ?
+which folders - in general - should not be automatically created, if not existing	felamimail	fr	Quels dossiers - en général - NE doivent PAS être automatiquement créés, s'il n'existent pas au préalable ?
 with message	felamimail	fr	avec message
 with message "%1"	felamimail	fr	avec message "%1"
 wrap incoming text at	felamimail	fr	Couper le texte entrant à
 writing	felamimail	fr	Ecrire
 wrote	felamimail	fr	Ecrivait
+yes, offer copy option	felamimail	fr	oui, proposer une option de copie
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	fr	Vous pouvez utiliser %1 pour la date de début et 2% pour la date de fin.
+you have received a new message on the	felamimail	fr	Vous avez reçu un nouveau message sur le
+your message to %1 was displayed.	felamimail	fr	Votre message pour %1 a été affiché.
