@@ -61,7 +61,7 @@
 		 * foldernames are subject to translation, keep that in mind too, if you change names here.
 		 * @var array
 		 */
-		var $autoFolders = array('Drafts', 'Junk', 'Sent', 'Trash', 'Templates');
+		static $autoFolders = array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk');
 
 		/**
 		* Autoload classes from emailadmin, 'til they get autoloading conform names
@@ -1277,7 +1277,7 @@
 				$retValue['shortDisplayName']	= lang('INBOX');
 			}
 			// translate the automatic Folders (Sent, Drafts, ...) like the INBOX
-			elseif (in_array($retValue['shortName'],$this->autoFolders))
+			elseif (in_array($retValue['shortName'],self::$autoFolders))
 			{
 				$retValue['displayName'] = $retValue['shortDisplayName'] = lang($retValue['shortName']);
 			}
@@ -1350,7 +1350,7 @@
 				$_subscribedOnly = false;
 			} 
 			#$inboxData->attributes = 64;
-			$folders = array('INBOX' => $inboxData);
+			$inboxFolderObject = array('INBOX' => $inboxData);
 			#_debug_array($folders);
 
 			$nameSpace = $this->icServer->getNameSpaces();
@@ -1458,9 +1458,9 @@
 					}
 					if ($this->mailPreferences->preferences['notavailableautofolders'] && !empty($this->mailPreferences->preferences['notavailableautofolders']))
 					{
-						$foldersToCheck = array_diff($this->autoFolders,explode(',',$this->mailPreferences->preferences['notavailableautofolders']));
+						$foldersToCheck = array_diff(self::$autoFolders,explode(',',$this->mailPreferences->preferences['notavailableautofolders']));
 					} else {
-						$foldersToCheck = $this->autoFolders;
+						$foldersToCheck = self::$autoFolders;
 					}
 					#echo "foldersToCheck:";_debug_array($foldersToCheck);
 					foreach($foldersToCheck as $personalFolderName) {
@@ -1550,8 +1550,9 @@
 							$folderObject->displayName	= lang('INBOX');
 							$folderObject->shortDisplayName = lang('INBOX');
 							$folderObject->subscribed	= true;
+
 						// translate the automatic Folders (Sent, Drafts, ...) like the INBOX
-						} elseif (in_array($shortName,$this->autoFolders)) {
+						} elseif (in_array($shortName,self::$autoFolders)) {
 							$tmpfolderparts = explode($delimiter,$folderObject->folderName);
 							array_pop($tmpfolderparts);
 							$folderObject->displayName = $this->encodeFolderName(implode($delimiter,$tmpfolderparts).$delimiter.lang($shortName));
@@ -1562,19 +1563,36 @@
 							$folderObject->shortDisplayName = $this->encodeFolderName($shortName);
 						}
 						$folderName = $folderName;
-						$folders[$folderName] = $folderObject;
+						if (in_array($shortName,self::$autoFolders)) {
+							$autoFolderObjects[$folderName] = $folderObject;
+						} else {
+							$folders[$folderName] = $folderObject;
+						}
 					}
 				}
 			}
-			uasort($folders,array($this,"sortByDisplayName"));
-			//_debug_array($folders); #exit;
-			return $folders;
+			if (is_array($autoFolderObjects)) {
+				uasort($autoFolderObjects,array($this,"sortByAutoFolderPos"));
+			}
+			if (is_array($folders)) uasort($folders,array($this,"sortByDisplayName"));
+			$folders2return = array_merge($autoFolderObjects,$folders);
+			//_debug_array($folders2return); #exit;
+			return array_merge($inboxFolderObject,(array)$autoFolderObjects,(array)$folders);
 		}
 
 		function sortByDisplayName($a,$b)
 		{
 			// 0, 1 und -1
 			return strcasecmp($a->displayName,$b->displayName);
+		}
+
+		function sortByAutoFolderPos($a,$b)
+		{
+			// 0, 1 und -1
+			$pos1 = array_search($a->shortFolderName,self::$autoFolders);
+			$pos2 = array_search($b->shortFolderName,self::$autoFolders);
+			if ($pos1 == $pos2) return 0;
+			return ($pos1 < $pos2) ? -1 : 1;
 		}
 
 		function getMailBoxCounters($folderName)

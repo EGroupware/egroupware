@@ -147,9 +147,23 @@
 			#_debug_array($allFolders);
 			foreach($allFolders as $longName => $obj) {
 				$messageCount = '';
-				$image1 = "'folderClosed.gif'";
-				$image2 = "0";
-				$image3 = "0";
+
+				if (in_array($obj->shortFolderName,bofelamimail::$autoFolders)) 
+				{
+					//echo $obj->shortFolderName.'<br>';
+					$image1 = $image2 = $image3 = "'MailFolder".$obj->shortFolderName.".png'";
+					//$image2 = "'MailFolderPlain.png'";
+					//$image3 = "'MailFolderPlain.png'";
+				}
+				elseif (in_array($longName,$userDefinedFunctionFolders))
+				{
+					$key = array_search($longName,$userDefinedFunctionFolders);
+					$image1 = $image2 = $image3 = "'MailFolder".$key.".png'";
+				}
+				else
+				{
+					$image1 = $image2 = $image3 = "'folderClosed.gif'";
+				}
 
 				$folderParts = explode($obj->delimiter, $longName);
 

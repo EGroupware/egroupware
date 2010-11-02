@@ -56,7 +56,7 @@ class felamimail_hooks
 			}
 
 			$availableAutoFolders['none'] = lang('none, create all');
-			foreach($bofelamimail->autoFolders as $aname) {
+			foreach(bofelamimail::$autoFolders as $aname) {
 				$availableAutoFolders[$aname] = lang($aname);
 			}
 
