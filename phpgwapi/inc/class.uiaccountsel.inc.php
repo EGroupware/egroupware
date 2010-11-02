@@ -433,7 +433,9 @@ function addOption(id,label,value,do_onchange)
 			$app_groups = $this->accounts->split_accounts($app,'groups');
 		}
 		$all_groups = $this->accounts->search(array(
-			'type' => 'groups',
+			'type'  => 'groups',
+			'order' => 'account_lid',
+			'sort'  => 'ASC',
 		));
 		foreach($all_groups as $group)
 		{
