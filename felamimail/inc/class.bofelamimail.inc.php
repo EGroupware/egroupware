@@ -2016,7 +2016,7 @@
 
 					$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 					$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
-					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE']);
+					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts');
 					$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
 					$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
 					$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
