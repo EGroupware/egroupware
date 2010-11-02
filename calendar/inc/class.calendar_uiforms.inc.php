@@ -641,23 +641,26 @@ class calendar_uiforms extends calendar_ui
 							$old_event['end'] != $event['end'] ||
 							$event['whole_day'] != $old_event['whole_day'])
 						{
-							switch ($this->bo->cal_prefs['reset_stati'])
+							$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
+							foreach((array)$event['participants'] as $uid => $status)
 							{
-								case 'no':
-									break;
-								case 'startday':
-									if (date('Ymd', $old_event['start']) == date('Ymd', $event['start'])) break;
-								default:
-									$status_reset_to_unknown = true;
-									foreach((array)$event['participants'] as $uid => $status)
+								calendar_so::split_status($status,$q,$r);
+								if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
+								{
+									$preferences = CreateObject('phpgwapi.preferences',$uid);
+									$part_prefs = $preferences->read_repository();
+									switch ($part_prefs['calendar']['reset_stati'])
 									{
-										calendar_so::split_status($status,$q,$r);
-										if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->bo->user && $status != 'U')
-										{
+										case 'no':
+											break;
+										case 'startday':
+											if ($sameday) break;
+										default:
+											$status_reset_to_unknown = true;	
 											$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
 											// todo: report reset status to user
-										}
 									}
+								}
 							}
 						}
 					}

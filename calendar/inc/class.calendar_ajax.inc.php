@@ -50,23 +50,26 @@ class calendar_ajax {
 		$event['start'] = $this->calendar->date2ts($targetDateTime);
 		$event['end'] = $event['start']+$duration;
 		$status_reset_to_unknown = false;
-		switch ($this->calendar->cal_prefs['reset_stati'])
+		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
+		foreach((array)$event['participants'] as $uid => $status)
 		{
-			case 'no':
-				break;
-			case 'startday':
-				if (date('Ymd', $old_event['start']) == date('Ymd', $event['start'])) break;
-			default:
-				$status_reset_to_unknown = true;
-				foreach((array)$event['participants'] as $uid => $status)
+			calendar_so::split_status($status,$q,$r);
+			if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->calendar->user && $status != 'U')
+			{
+				$preferences = CreateObject('phpgwapi.preferences',$uid);
+				$part_prefs = $preferences->read_repository();
+				switch ($part_prefs['calendar']['reset_stati'])
 				{
-					//error_log("participant {$GLOBALS['egw']->accounts->id2name($uid)} ($status)");
-					calendar_so::split_status($status,$q,$r);
-					if ($uid[0] != 'c' && $uid[0] != 'e' && $uid != $this->calendar->user && $status != 'U')
-					{
+					case 'no':
+						break;
+					case 'startday':
+						if ($sameday) break;
+					default:
+						$status_reset_to_unknown = true;	
 						$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
-					}
+						// todo: report reset status to user
 				}
+			}
 		}
 
 		$conflicts=$this->calendar->update($event);
