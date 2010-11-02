@@ -339,7 +339,7 @@ function addOption(id,label,value,do_onchange)
 
 		//echo "<p>uiaccountsel::popup(): app='$app', use='$use', multiple='$multiple', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
 
-		$this->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
+		$nextmatchs = new nextmatchs();
 
 		$GLOBALS['egw']->template->set_root(common::get_tpl_dir('phpgwapi'));
 
@@ -410,9 +410,9 @@ function addOption(id,label,value,do_onchange)
 		);
 
 // -------------- list header variable template-declaration ------------------------
-		$GLOBALS['egw']->template->set_var('sort_lid',$this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('LoginID'),$link_data));
-		$GLOBALS['egw']->template->set_var('sort_firstname',$this->nextmatchs->show_sort_order($sort,'account_firstname',$order,'/index.php',lang('Firstname'),$link_data));
-		$GLOBALS['egw']->template->set_var('sort_lastname',$this->nextmatchs->show_sort_order($sort,'account_lastname',$order,'/index.php',lang('Lastname'),$link_data));
+		$GLOBALS['egw']->template->set_var('sort_lid',$nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('LoginID'),$link_data));
+		$GLOBALS['egw']->template->set_var('sort_firstname',$nextmatchs->show_sort_order($sort,'account_firstname',$order,'/index.php',lang('Firstname'),$link_data));
+		$GLOBALS['egw']->template->set_var('sort_lastname',$nextmatchs->show_sort_order($sort,'account_lastname',$order,'/index.php',lang('Lastname'),$link_data));
 
 // ------------------------- end header declaration --------------------------------
 
@@ -437,6 +437,7 @@ function addOption(id,label,value,do_onchange)
 			'order' => 'account_lid',
 			'sort'  => 'ASC',
 		));
+		$tr_color_app_groups = $tr_color_all_groups = 'row_off';
 		foreach($all_groups as $group)
 		{
 			$link_data['group_id'] = $group['account_id'];
@@ -447,7 +448,7 @@ function addOption(id,label,value,do_onchange)
 
 			if (!$app || in_array($group['account_id'],$app_groups))
 			{
-				$GLOBALS['egw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
+				$GLOBALS['egw']->template->set_var('tr_color',$tr_color_app_groups=$nextmatchs->alternate_row_color($tr_color_app_groups,True));
 				$GLOBALS['egw']->template->set_var('link_user_group',egw::link('/index.php',$link_data));
 				$GLOBALS['egw']->template->set_var('name_user_group',common::grab_owner_name($group['account_id']));
 
@@ -455,7 +456,7 @@ function addOption(id,label,value,do_onchange)
 				{
 					$GLOBALS['egw']->template->fp('cal','group_cal',True);
 					$GLOBALS['egw']->template->set_var('js_addAllGroups',"addOption('$element_id','".
-						$GLOBALS['egw']->common->grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
+						common::grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
 						(!$multiple ? '; window.close();' : ';'));
 					$GLOBALS['egw']->template->fp('selectAllGroups','group_selectAll',True);
 				}
@@ -466,6 +467,7 @@ function addOption(id,label,value,do_onchange)
 			}
 			else
 			{
+				$GLOBALS['egw']->template->set_var('tr_color',$tr_color_all_groups=$nextmatchs->alternate_row_color($tr_color_all_groups,True));
 				$GLOBALS['egw']->template->set_var('link_all_group',egw::link('/index.php',$link_data));
 				$GLOBALS['egw']->template->set_var('name_all_group',common::grab_owner_name($group['account_id']));
 				$GLOBALS['egw']->template->set_var('accountid',$group['account_id']);
@@ -486,18 +488,18 @@ function addOption(id,label,value,do_onchange)
 		));
 
 		$GLOBALS['egw']->template->set_var(array(
-			'left'  => $this->nextmatchs->left('/index.php',$start,$this->accounts->total,$link_data+array('query'=>$query)),
-			'right' => $this->nextmatchs->right('/index.php',$start,$this->accounts->total,$link_data+array('query'=>$query)),
+			'left'  => $nextmatchs->left('/index.php',$start,$this->accounts->total,$link_data+array('query'=>$query)),
+			'right' => $nextmatchs->right('/index.php',$start,$this->accounts->total,$link_data+array('query'=>$query)),
 			'lang_showing' => ($group_id ? common::grab_owner_name($group_id).': ' : '').
 				($query ? lang("Search %1 '%2'",lang($this->accounts->query_types[$query_type]),$query).': ' : '')
-				.$this->nextmatchs->show_hits($this->accounts->total,$start),
+				.$nextmatchs->show_hits($this->accounts->total,$start),
 		));
 
 // -------------------------- end nextmatch ------------------------------------
 
 		$GLOBALS['egw']->template->set_var('search_action',egw::link('/index.php',$link_data));
 		$GLOBALS['egw']->template->set_var('prev_query', $query);
-		$GLOBALS['egw']->template->set_var('search_list',$this->nextmatchs->search(array('query' => $query, 'search_obj' => 1)));
+		$GLOBALS['egw']->template->set_var('search_list',$nextmatchs->search(array('query' => $query, 'search_obj' => 1)));
 		$GLOBALS['egw']->template->set_var('lang_firstname', lang("firstname"));
 		$GLOBALS['egw']->template->set_var('lang_lastname', lang("lastname"));
 
@@ -506,9 +508,10 @@ function addOption(id,label,value,do_onchange)
 			$GLOBALS['egw']->template->fp('multipleAccounts','accounts_multiple',True);
 		}
 
+		$tr_color = 'row_off';
 		foreach($users as $user)
 		{
-			$GLOBALS['egw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
+			$GLOBALS['egw']->template->set_var('tr_color',$tr_color=$nextmatchs->alternate_row_color($tr_color,True));
 
 // ---------------- template declaration for list records --------------------------
 
@@ -522,7 +525,7 @@ function addOption(id,label,value,do_onchange)
 			));
 			$GLOBALS['egw']->template->fp('list','accounts_list',True);
 			$GLOBALS['egw']->template->set_var('js_addAllAccounts',"addOption('$element_id','".
-					$GLOBALS['egw']->common->grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
+					common::grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
 					(!$multiple ? '; window.close()' : ';'));
 			$GLOBALS['egw']->template->fp('selectAllAccounts','accounts_selectAll',True);
 		}
