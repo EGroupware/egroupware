@@ -159,6 +159,10 @@ class calendar_hooks
 			'planner_user' => lang('Planner by user'),
 			'listview'     => lang('Listview'),
 		);
+		$yesno = array(
+			'1' => lang('Yes'),
+			'0' => lang('No'),
+		);
 		$grid_views = array(
 			'all' => lang('all'),
 			'day_week' => lang('Dayview').', '.lang('Four days view').' &amp; '.lang('Weekview'),
