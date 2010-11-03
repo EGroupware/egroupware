@@ -321,7 +321,9 @@
 				$replace = '';
 
 				$header['subject'] = preg_replace($search,$replace,$header['subject']);
-				$header['subject'] = @htmlspecialchars($header['subject'],ENT_QUOTES,$this->displayCharset);
+				$headerSubject = @htmlentities($header['subject'],ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+				if (empty($headerSubject)) $headerSubject = @htmlentities($GLOBALS['egw']->translation->convert($header['subject'], bofelamimail::detect_encoding($header['subject']), $this->charset),ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+				$header['subject'] = $headerSubject;
 				// curly brackets get messed up by the template!
 				$header['subject'] = str_replace(array('{','}'),array('&#x7B;','&#x7D;'),$header['subject']);
 
@@ -336,7 +338,7 @@
 					#$this->t->set_var('attachments', $header['attachment']);
 					$this->t->set_var('full_subject', $fullSubject);
 				} else {
-					$this->t->set_var('header_subject', @htmlspecialchars('('. lang('no subject') .')', ENT_QUOTES, $this->displayCharset));
+					$this->t->set_var('header_subject', @htmlspecialchars('('. lang('no subject') .')', ENT_QUOTES, $this->charset));
 				}
 
 				//_debug_array($header);
@@ -377,7 +379,14 @@
 
 				if ($_folderType > 0) {
 					// sent or drafts or template folder
+					$header2add = @htmlentities($header['to_address'],ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+					if (empty($header2add)) $header2add = @htmlentities($GLOBALS['egw']->translation->convert($header['to_address'], bofelamimail::detect_encoding($header['to_address']), $this->charset),ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+					$header['to_address'] = $header2add;
 					if (!empty($header['to_name'])) {
+						$header2name = @htmlentities($header['to_name'],ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+						if (empty($header2name)) $header2name = @htmlentities($GLOBALS['egw']->translation->convert($header['to_name'], bofelamimail::detect_encoding($header['to_name']), $this->charset),ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+						$header['to_name'] = $header2name;
+
 						$sender_name	= $header['to_name'];
 						$full_address	= $header['to_name'].' <'.$header['to_address'].'>';
 					} else {
@@ -385,7 +394,14 @@
 						$full_address	= $header['to_address'];
 					}
 				} else {
+					$header2add = @htmlentities($header['sender_address'],ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+					if (empty($header2add)) $header2add = @htmlentities($GLOBALS['egw']->translation->convert($header['sender_address'], bofelamimail::detect_encoding($header['sender_address']), $this->charset),ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+					$header['sender_address'] = $header2add;
 					if (!empty($header['sender_name'])) {
+						$header2name = @htmlentities($header['sender_name'],ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+						if (empty($header2name)) $header2name = @htmlentities($GLOBALS['egw']->translation->convert($header['sender_name'], bofelamimail::detect_encoding($header['sender_name']), $this->charset),ENT_QUOTES | ENT_IGNORE,$this->charset,false);
+						$header['sender_name'] = $header2name;
+
 						$sender_name	= $header['sender_name'];
 						$full_address	= $header['sender_name'].' <'.$header['sender_address'].'>';
 					} else {
@@ -394,8 +410,8 @@
 					}
 				}
 
-				$this->t->set_var('sender_name', @htmlspecialchars($sender_name, ENT_QUOTES, $this->charset));
-				$this->t->set_var('full_address', @htmlspecialchars($full_address, ENT_QUOTES, $this->charset));
+				$this->t->set_var('sender_name', @htmlspecialchars($sender_name, ENT_QUOTES | ENT_IGNORE, $this->charset,false));
+				$this->t->set_var('full_address', @htmlspecialchars($full_address, ENT_QUOTES | ENT_IGNORE, $this->charset,false));
 
 				$this->t->set_var('message_counter', $i);
 				$this->t->set_var('message_uid', $header['uid']);
@@ -572,6 +588,7 @@
 						$full_address	= $headerData['sender_address'];
 					}
 				}
+
 				//$fromAddress   = uidisplay::emailAddressToHTML(array('PERSONAL_NAME'=>$sender_name,'EMAIL'=>$sender_address,'RFC822_EMAIL'=>$full_address),'');
 				if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 					$addresslinkData = array (
@@ -619,6 +636,7 @@
 					'id'		=> $headerData['id'],
 				);
 				$windowName =  'displayMessage_'.$headerData['uid'];
+
 				if($headerData['mimetype'] == 'multipart/mixed' ||
 					$headerData['mimetype'] == 'multipart/signed' ||
 					$headerData['mimetype'] == 'multipart/related' ||
