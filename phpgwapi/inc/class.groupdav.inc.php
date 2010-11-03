@@ -384,7 +384,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function _properties($app,$no_extra_types=false,$user=null,$path='/')
 	{
-		if ($this->debug) ;error_log(__CLASS__."::$method(app='$app', no_extra_types=$no_extra_types, user='$user', path='$path')");
+		if ($this->debug) error_log(__METHOD__."(app='$app', no_extra_types=$no_extra_types, user='$user', path='$path')");
 		if ($user)
 		{
 			$account_lid = $this->accounts->id2name($user);
