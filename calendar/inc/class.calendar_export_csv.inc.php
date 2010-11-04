@@ -36,12 +36,23 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
+		$convert_fields = importexport_export_csv::$types;
+		$convert_fields['date-time'][] = 'start';
+		$convert_fields['date-time'][] = 'end';
+
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
 		$record = new calendar_egw_record();
 		foreach ($events as $event) {
+			// Add in participants
+			if($options['mapping']['participants']) {
+				$event['participants'] = implode(", ",$this->bo->participants($event,true));
+			}
+
 			$record->set_record($event);
+			// Standard stuff
+			importexport_export_csv::convert($record, $convert_fields, 'calendar');
 			$export_object->export_record($record);
 		}
 		unset($record);
