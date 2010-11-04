@@ -1220,9 +1220,11 @@ class addressbook_ui extends addressbook_bo
 				case 'apply':
 					if ($content['delete_photo']) $content['jpegphoto'] = null;
 					if (is_array($content['upload_photo']) && !empty($content['upload_photo']['tmp_name']) &&
-						$content['upload_photo']['tmp_name'] != 'none')
+						$content['upload_photo']['tmp_name'] != 'none' &&
+						($f = fopen($content['upload_photo']['tmp_name'],'r')))
 					{
-						$content['jpegphoto'] = $this->resize_photo($content['upload_photo']);
+						$content['jpegphoto'] = $this->resize_photo($f);
+						fclose($f);
 						unset($content['upload_photo']);
 					}
 					$links = false;
@@ -1551,50 +1553,6 @@ class addressbook_ui extends addressbook_bo
 		$response->addScript("setOptions('".addslashes(implode("\b",$this->fileas_options($names)))."');");
 
 		return $response->getXML();
-	}
-
-	/**
-	 * resizes the uploaded photo to 60*80 pixel and returns it
-	 *
-	 * @param array $file info uploaded file
-	 * @return string with resized jpeg photo
-	 */
-	function resize_photo($file)
-	{
-		switch($file['type'])
-		{
-			case 'image/gif':
-				$upload = imagecreatefromgif($file['tmp_name']);
-				break;
-			case 'image/jpeg':
-			case 'image/pjpeg':
-				$upload = imagecreatefromjpeg($file['tmp_name']);
-				break;
-			case 'image/png':
-			case 'image/x-png':
-				$upload = imagecreatefrompng($file['tmp_name']);
-				break;
-			default:
-				return null;
-		}
-		if (!$upload) return null;
-
-		list($src_w,$src_h) = getimagesize($file['tmp_name']);
-
-		// scale the image to a width of 60 and a height according to the proportion of the source image
-		$photo = imagecreatetruecolor($dst_w = 60,$dst_h = round($src_h * 60 / $src_w));
-		imagecopyresized($photo,$upload,0,0,0,0,$dst_w,$dst_h,$src_w,$src_h);
-		//echo "<p>imagecopyresized(\$photo,\$upload,0,0,0,0,$dst_w,$dst_h,$src_w,$src_h);</p>\n";
-
-		ob_start();
-		imagejpeg($photo,'',90);
-		$jpeg = ob_get_contents();
-		ob_end_clean();
-
-		imagedestroy($photo);
-		imagedestroy($upload);
-
-		return $jpeg;
 	}
 
 	function view($content=null)
