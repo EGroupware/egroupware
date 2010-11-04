@@ -61,6 +61,16 @@ class importexport_export_csv implements importexport_iface_export_record
 		'delimiter' => ';',
 		'enclosure' => '"',
 	);
+
+	/**
+	 * List of fields for data conversion
+	 */
+	public static $types = array(
+		'select-account' => array('creator', 'modifier'),
+		'date-time'	=> array('modified', 'created'),
+		'date'		=> array(),
+		'select-cat'	=> array('cat_id')
+	);
 	
 	/**
 	 * constructor
@@ -147,6 +157,68 @@ class importexport_export_csv implements importexport_iface_export_record
 	 */
 	public function get_num_of_records() {
 		return $this->num_of_records;
+	}
+
+	/**
+	 * Convert system info into a format with a little more transferrable meaning
+	 *
+	 * Uses the static variable $types to convert various datatypes.
+	 *
+	 * @param record Record to be converted
+	 * @parem fields List of field types => field names to be converted
+	 * @param appname Current appname if you want to do custom fields too
+	 */
+	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null) {
+		if($appname) {
+			$custom = config::get_customfields($appname);
+			foreach($custom as $name => $c_field) {
+				$name = '#' . $name;
+				switch($c_field['type']) {
+					case 'date':
+						$fields['date'][] = $name;
+						break;
+					case 'date-time':
+						$fields['date-time'][] = $name;
+						break;
+					case 'select-account':
+						$fields['select-account'][] = $name;
+						break;
+				}
+			}
+		}
+		foreach($fields['select-account'] as $name) {
+			if ($record->$name) {
+				if(is_array($record->$name)) {
+					$names = array();
+					foreach($record->$name as $_name) {
+						$names[] = $GLOBALS['egw']->common->grab_owner_name($_name);
+					}
+					$record->$name = implode(', ', $names);
+				} else {
+					$record->$name = $GLOBALS['egw']->common->grab_owner_name($record->$name);
+				}
+			}
+		}
+		foreach($fields['date-time'] as $name) {
+			//if ($record->$name) $record->$name = date('Y-m-d H:i:s',$record->$name); // Standard date format
+			if ($record->$name) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' '.
+				($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '24' ? 'H' : 'h').':m:s',$record->$name); // User date format
+		}
+		foreach($fields['date'] as $name) {
+			//if ($record->$name) $record->$name = date('Y-m-d',$record->$name); // Standard date format
+			if ($record->$name) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], $record->$name); // User date format
+		}
+
+		foreach($fields['select-cat'] as $name) {
+			if($record->$name) {
+				$cats = array();
+				$ids = is_array($record->$name) ? $record->$name : explode(',', $record->$name);
+				foreach($ids as $n => $cat_id) {
+					if ($cat_id) $cats[] = $GLOBALS['egw']->categories->id2name($cat_id);
+				}
+				$record->$name = implode(', ',$cats);
+			}
+		}
 	}
 
 	/**
