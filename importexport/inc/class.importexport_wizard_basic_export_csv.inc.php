@@ -66,7 +66,7 @@ class importexport_wizard_basic_export_csv
 	*/
 	function wizard_step30(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
-		if($this->debug || true) error_log(get_class($this) . '::wizard_step30->$content '.print_r($content,true));
+		if($this->debug) error_log(get_class($this) . '::wizard_step30->$content '.print_r($content,true));
 		// return from step30
 		if ($content['step'] == 'wizard_step30')
 		{
