@@ -97,13 +97,21 @@ class egw_time extends DateTime
 			case 'string':
 				if (!(is_numeric($time) && ($time > 21000000 || $time < 19000000)))
 				{
-					if (is_numeric($time) && strlen($time) == 8) $time .= 'T000000';	// 'Ymd' string used in calendar to represent a date
+					$t_str = $time;
+					if (is_numeric($time) && strlen($time) == 8) $t_str .= 'T000000';	// 'Ymd' string used in calendar to represent a date
 					// $time ending in a Z (Zulu or UTC time), is unterstood by DateTime class itself
-					parent::__construct($time,$tz);
-					break;
+					try {
+						parent::__construct($t_str,$tz);
+						break;
+					}
+					catch(Exception $e) {
+						// if string is nummeric, ignore the exception and treat string as timestamp
+						if (!is_numeric($time)) throw $e;
+					}
 				}
 				$type = 'integer';
 				// fall through for timestamps
+			case 'double':	// 64bit integer (timestamps > 2038) are treated on 32bit systems as double
 			case 'integer':
 				/* ToDo: Check if PHP5.3 setTimestamp does the same, or always expects UTC timestamp
 				if (PHP_VERSION >= 5.3)
