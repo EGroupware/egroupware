@@ -70,7 +70,7 @@ class calendar_bo
 	 * @var int $now timestamp in server-time
 	 */
 	var $now;
-	
+
 	/**
 	 * @var int $now_su timestamp of actual user-time
 	 */
@@ -740,7 +740,10 @@ class calendar_bo
 	}
 
 	/**
-	 * convert data read from the db, eg. convert server to user-time
+	 * Convert data read from the db, eg. convert server to user-time
+	 *
+	 * Also make sure all timestamps comming from DB as string are converted to integer,
+	 * to avoid misinterpretation by egw_time as Ymd string.
 	 *
 	 * @param array &$events array of event-arrays (reference)
 	 * @param $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
@@ -755,26 +758,31 @@ class calendar_bo
 			{
 				$event['tzid'] = egw_time::$server_timezone->getName();
 			}
+			// database returns timestamps as string, convert them to integer
+			// to avoid misinterpretation by egw_time as Ymd string
+			// (this will fail on 32bit systems for times > 2038!)
+			$event['start'] = (int)$event['start'];	// this is for isWholeDay(), which also calls egw_time
+			$event['end'] = (int)$event['end'];
 			$event['whole_day'] = $this->isWholeDay($event);
 			if ($event['whole_day'] && $date_format != 'server')
 			{
 				// Adjust dates to user TZ
-				$time = new egw_time($event['start'], egw_time::$server_timezone);
+				$time = new egw_time((int)$event['start'], egw_time::$server_timezone);
 				$time =& $this->so->startOfDay($time, $event['tzid']);
 				$event['start'] = egw_time::to($time, $date_format);
-				$time = new egw_time($event['end'], egw_time::$server_timezone);
+				$time = new egw_time((int)$event['end'], egw_time::$server_timezone);
 				$time =& $this->so->startOfDay($time, $event['tzid']);
 				$time->setTime(23, 59, 59);
 				$event['end'] = egw_time::to($time, $date_format);
 				if (!empty($event['recurrence']))
 				{
-					$time = new egw_time($event['recurrence'], egw_time::$server_timezone);
+					$time = new egw_time((int)$event['recurrence'], egw_time::$server_timezone);
 					$time =& $this->so->startOfDay($time, $event['tzid']);
 					$event['recurrence'] = egw_time::to($time, $date_format);
 				}
 				if (!empty($event['recur_enddate']))
 				{
-					$time = new egw_time($event['recur_enddate'], egw_time::$server_timezone);
+					$time = new egw_time((int)$event['recur_enddate'], egw_time::$server_timezone);
 					$time =& $this->so->startOfDay($time, $event['tzid']);
 					$time->setTime(23, 59, 59);
 					$event['recur_enddate'] = egw_time::to($time, $date_format);
@@ -790,7 +798,7 @@ class calendar_bo
 			{
 				if (!empty($event[$ts]))
 				{
-					$event[$ts] = $this->date2usertime($event[$ts],$date_format);
+					$event[$ts] = $this->date2usertime((int)$event[$ts],$date_format);
 				}
 			}
 			// same with the recur exceptions
@@ -801,13 +809,13 @@ class calendar_bo
 					if ($event['whole_day'] && $date_format != 'server')
 					{
 						// Adjust dates to user TZ
-						$time = new egw_time($date, egw_time::$server_timezone);
+						$time = new egw_time((int)$date, egw_time::$server_timezone);
 						$time =& $this->so->startOfDay($time, $event['tzid']);
 						$date = egw_time::to($time, $date_format);
 					}
 					else
 					{
-						$date = $this->date2usertime($date,$date_format);
+						$date = $this->date2usertime((int)$date,$date_format);
 					}
 				}
 			}
@@ -816,7 +824,7 @@ class calendar_bo
 			{
 				foreach($event['alarm'] as &$alarm)
 				{
-					$alarm['time'] = $this->date2usertime($alarm['time'],$date_format);
+					$alarm['time'] = $this->date2usertime((int)$alarm['time'],$date_format);
 				}
 			}
 		}
@@ -1083,10 +1091,10 @@ class calendar_bo
 			$private = !$event['public'];
 		}
 		$grants = $this->grants[$owner];
-		
+
 		// now any ACL rights implicate FREEBUSY rights (at least READ has to include FREEBUSY)
 		if ($grants) $grants |= EGW_ACL_FREEBUSY;
-		
+
 		if (is_array($event) && ($needed == EGW_ACL_READ || $needed == EGW_ACL_FREEBUSY))
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
@@ -1657,7 +1665,7 @@ class calendar_bo
 							$pers['contact_bday']=null;
 						}
 						if (empty($pers['bday']) && !empty($pers['contact_bday'])) $pers['bday'] = $pers['contact_bday'];
-						if (empty($pers['bday'])) 
+						if (empty($pers['bday']))
 						{
 							//error_log(__METHOD__.__LINE__.' Skipping entry for invalid birthday:'.array2string($pers));
 							continue;
@@ -1700,7 +1708,7 @@ class calendar_bo
 		{
 			list($id, $recur) = explode('-', $event, 2);
 			$event = $this->read($id, $recur);
-		} 
+		}
 		else if (!is_array($event) && (int) $event > 0)
 		{
 			$event = $this->read($event);
@@ -1810,9 +1818,9 @@ class calendar_bo
 	static function freebusy_url($user='',$pw=null)
 	{
 		if (is_numeric($user)) $user = $GLOBALS['egw']->accounts->id2name($user);
-		
+
 		$credentials = '';
-		
+
 		if ($pw)
 		{
 			$credentials = '&password='.urlencode($pw);
