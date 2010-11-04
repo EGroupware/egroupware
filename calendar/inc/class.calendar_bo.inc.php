@@ -443,7 +443,7 @@ class calendar_bo
 		{
 			if (isset($start) && $event['end'] < $start)
 			{
-				unset($events[$id]);	// remove former events (e.g. whole day) 
+				unset($events[$id]);	// remove former events (e.g. whole day)
 				$this->total--;
 				continue;
 			}
@@ -715,7 +715,10 @@ class calendar_bo
 	}
 
 	/**
-	 * convert data read from the db, eg. convert server to user-time
+	 * Convert data read from the db, eg. convert server to user-time
+	 *
+	 * Also make sure all timestamps comming from DB as string are converted to integer,
+	 * to avoid misinterpretation by egw_time as Ymd string.
 	 *
 	 * @param array &$events array of event-arrays (reference)
 	 * @param $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
@@ -723,26 +726,72 @@ class calendar_bo
 	function db2data(&$events,$date_format='ts')
 	{
 		if (!is_array($events)) echo "<p>bocal::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
-		foreach($events as &$event)
+		foreach ($events as &$event)
 		{
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
 			if (!$event['tz_id'] || !($event['tzid'] = calendar_timezones::id2tz($event['tz_id'])))
 			{
 				$event['tzid'] = egw_time::$server_timezone->getName();
 			}
-			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
-			foreach(array('start','end','modified','created','recur_enddate','recurrence') as $ts)
+			// database returns timestamps as string, convert them to integer
+			// to avoid misinterpretation by egw_time as Ymd string
+			// (this will fail on 32bit systems for times > 2038!)
+			$event['start'] = (int)$event['start'];	// this is for isWholeDay(), which also calls egw_time
+			$event['end'] = (int)$event['end'];
+			$event['whole_day'] = $this->isWholeDay($event);
+			if ($event['whole_day'] && $date_format != 'server')
 			{
-				if (empty($event[$ts])) continue;
-
-				$event[$ts] = $this->date2usertime($event[$ts],$date_format);
+				// Adjust dates to user TZ
+				$time = new egw_time((int)$event['start'], egw_time::$server_timezone);
+				$time =& $this->so->startOfDay($time, $event['tzid']);
+				$event['start'] = egw_time::to($time, $date_format);
+				$time = new egw_time((int)$event['end'], egw_time::$server_timezone);
+				$time =& $this->so->startOfDay($time, $event['tzid']);
+				$time->setTime(23, 59, 59);
+				$event['end'] = egw_time::to($time, $date_format);
+				if (!empty($event['recurrence']))
+				{
+					$time = new egw_time((int)$event['recurrence'], egw_time::$server_timezone);
+					$time =& $this->so->startOfDay($time, $event['tzid']);
+					$event['recurrence'] = egw_time::to($time, $date_format);
+				}
+				if (!empty($event['recur_enddate']))
+				{
+					$time = new egw_time((int)$event['recur_enddate'], egw_time::$server_timezone);
+					$time =& $this->so->startOfDay($time, $event['tzid']);
+					$time->setTime(23, 59, 59);
+					$event['recur_enddate'] = egw_time::to($time, $date_format);
+				}
+				$timestamps = array('modified','created');
+			}
+			else
+			{
+				$timestamps = array('start','end','modified','created','recur_enddate','recurrence');
+			}
+			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
+			foreach ($timestamps as $ts)
+			{
+				if (!empty($event[$ts]))
+				{
+					$event[$ts] = $this->date2usertime((int)$event[$ts],$date_format);
+				}
 			}
 			// same with the recur exceptions
 			if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 			{
 				foreach($event['recur_exception'] as &$date)
 				{
-					$date = $this->date2usertime($date,$date_format);
+					if ($event['whole_day'] && $date_format != 'server')
+					{
+						// Adjust dates to user TZ
+						$time = new egw_time((int)$date, egw_time::$server_timezone);
+						$time =& $this->so->startOfDay($time, $event['tzid']);
+						$date = egw_time::to($time, $date_format);
+					}
+					else
+					{
+						$date = $this->date2usertime((int)$date,$date_format);
+					}
 				}
 			}
 			// same with the alarms
@@ -750,7 +799,7 @@ class calendar_bo
 			{
 				foreach($event['alarm'] as &$alarm)
 				{
-					$alarm['time'] = $this->date2usertime($alarm['time'],$date_format);
+					$alarm['time'] = $this->date2usertime((int)$alarm['time'],$date_format);
 				}
 			}
 		}
@@ -782,7 +831,7 @@ class calendar_bo
 	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
 	{
 		if ($date) $date = $this->date2ts($date);
-		
+
 		$return = null;
 
 		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))
@@ -1017,10 +1066,10 @@ class calendar_bo
 			$private = !$event['public'];
 		}
 		$grants = $this->grants[$owner];
-		
+
 		// now any ACL rights implicate FREEBUSY rights (at least READ has to include FREEBUSY)
 		if ($grants) $grants |= EGW_ACL_FREEBUSY;
-		
+
 		if (is_array($event) && ($needed == EGW_ACL_READ || $needed == EGW_ACL_FREEBUSY))
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
@@ -1591,7 +1640,7 @@ class calendar_bo
 							$pers['contact_bday']=null;
 						}
 						if (empty($pers['bday']) && !empty($pers['contact_bday'])) $pers['bday'] = $pers['contact_bday'];
-						if (empty($pers['bday'])) 
+						if (empty($pers['bday']))
 						{
 							//error_log(__METHOD__.__LINE__.' Skipping entry for invalid birthday:'.array2string($pers));
 							continue;
