@@ -1468,7 +1468,7 @@ function _egw_log_exception(Exception $e,&$headline=null)
 	}
 	// log exception to error log, if not running as cli,
 	// which outputs the error_log to stderr and therefore output it twice to the user
-	if(!isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] == 'cli')
+	if(isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] !== 'cli')
 	{
 		error_log($headline.': '.$e->getMessage());
 		foreach(explode("\n",$e->getTraceAsString()) as $line) error_log($line);
