@@ -630,7 +630,7 @@ class addressbook_bo extends addressbook_so
 	function db2data($data, $date_format='ts')
 	{
 		static $fb_url = false;
-		
+
 		// convert timestamps from server-time in the db to user-time
 		foreach ($this->timestamps as $name)
 		{
@@ -796,6 +796,11 @@ class addressbook_bo extends addressbook_so
 			$this->error = 'access denied';
 			return false;
 		}
+		// resize image to 60px width
+		if (!empty($contact['jpegphoto']))
+		{
+//			$contact['jpegphoto'] = $this->resize_photo($contact['jpegphoto']);
+		}
 		// convert categories
 		if (is_array($contact['cat_id']))
 		{
@@ -865,6 +870,48 @@ class addressbook_bo extends addressbook_so
 		}
 
 		return $this->error ? false : $contact['id'];
+	}
+
+	/**
+	 * Resizes photo to 60*80 pixel and returns it
+	 *
+	 * @param string|FILE $photo string with image or open filedescribtor
+	 * @param int $dst_w=60 max width to resize to
+	 * @return string with resized jpeg photo, null on error
+	 */
+	public static function resize_photo($photo,$dst_w=60)
+	{
+		if (is_resource($photo))
+		{
+			$photo = stream_get_contents($photo);
+		}
+		if (empty($photo) || !($image = imagecreatefromstring($photo)))
+		{
+			error_log(__METHOD__."() invalid image!");
+			return null;
+		}
+		$src_w = imagesx($image);
+		$src_h = imagesy($image);
+		//error_log(__METHOD__."() got image $src_w * $src_h, is_jpeg=".array2string(substr($photo,0,2) === "\377\330"));
+
+		// if $photo is to width or not a jpeg image --> resize it
+		if ($src_w > $dst_w || substr($photo,0,2) !== "\377\330")
+		{
+			// scale the image to a width of 60 and a height according to the proportion of the source image
+			$resized = imagecreatetruecolor($dst_w,$dst_h = round($src_h * $dst_w / $src_w));
+			imagecopyresized($resized,$image,0,0,0,0,$dst_w,$dst_h,$src_w,$src_h);
+
+			ob_start();
+			imagejpeg($resized,'',90);
+			$photo = ob_get_contents();
+			ob_end_clean();
+
+			imagedestroy($resized);
+			//error_log(__METHOD__."() resized image $src_w*$src_h to $dst_w*$dst_h");
+		}
+		imagedestroy($image);
+
+		return $photo;
 	}
 
 	/**
@@ -1259,10 +1306,10 @@ class addressbook_bo extends addressbook_so
 		}
 		// return only contacts with email set
 		$options['filter'][] = "contact_email LIKE '%@%'";
-		
+
 		// let link query know, to append email to list
 		$options['type'] = 'email';
-		
+
 		return $this->link_query($pattern,$options);
 	}
 	/**
@@ -1276,7 +1323,7 @@ class addressbook_bo extends addressbook_so
 	{
 		return $this->check_perms($check,$id);
 	}
-	
+
 	/**
 	 * returns info about contacts for calender
 	 *

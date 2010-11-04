@@ -46,7 +46,7 @@ class addressbook_ui extends addressbook_bo
 
 	/**
 	 * Fields to copy, default if nothing specified in config
-	 * 
+	 *
 	 * @var array
 	 */
 	static public $copy_fields = array(
@@ -990,7 +990,7 @@ class addressbook_ui extends addressbook_bo
 				$wildcard = $query['advanced_search']['meth_select'];
 				unset($query['advanced_search']['meth_select']);
 			}
-			//if ($do_email ) $email_only = array('id','owner','tid','n_fn','n_family','n_given','org_name','email','email_home'); 
+			//if ($do_email ) $email_only = array('id','owner','tid','n_fn','n_family','n_given','org_name','email','email_home');
 
 			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
@@ -1254,9 +1254,11 @@ class addressbook_ui extends addressbook_bo
 				case 'apply':
 					if ($content['delete_photo']) $content['jpegphoto'] = null;
 					if (is_array($content['upload_photo']) && !empty($content['upload_photo']['tmp_name']) &&
-						$content['upload_photo']['tmp_name'] != 'none')
+						$content['upload_photo']['tmp_name'] != 'none' &&
+						($f = fopen($content['upload_photo']['tmp_name'],'r')))
 					{
-						$content['jpegphoto'] = $this->resize_photo($content['upload_photo']);
+						$content['jpegphoto'] = $this->resize_photo($f);
+						fclose($f);
 						unset($content['upload_photo']);
 					}
 					$links = false;
@@ -1270,7 +1272,7 @@ class addressbook_ui extends addressbook_bo
 						$old_org_entry = $this->read($content['id']);
 						$old_fullname = ($old_org_entry['n_fn'] ? $old_org_entry['n_fn'] : parent::fullname($old_org_entry));
 					}
-					if ( $content['n_fn'] != $fullname ||  $fullname != $old_fullname) 
+					if ( $content['n_fn'] != $fullname ||  $fullname != $old_fullname)
 					{
 						unset($content['n_fn']);
 					}
@@ -1596,50 +1598,6 @@ class addressbook_ui extends addressbook_bo
 		$response->addScript("setOptions('".addslashes(implode("\b",$this->fileas_options($names)))."');");
 
 		return $response->getXML();
-	}
-
-	/**
-	 * resizes the uploaded photo to 60*80 pixel and returns it
-	 *
-	 * @param array $file info uploaded file
-	 * @return string with resized jpeg photo
-	 */
-	function resize_photo($file)
-	{
-		switch($file['type'])
-		{
-			case 'image/gif':
-				$upload = imagecreatefromgif($file['tmp_name']);
-				break;
-			case 'image/jpeg':
-			case 'image/pjpeg':
-				$upload = imagecreatefromjpeg($file['tmp_name']);
-				break;
-			case 'image/png':
-			case 'image/x-png':
-				$upload = imagecreatefrompng($file['tmp_name']);
-				break;
-			default:
-				return null;
-		}
-		if (!$upload) return null;
-
-		list($src_w,$src_h) = getimagesize($file['tmp_name']);
-
-		// scale the image to a width of 60 and a height according to the proportion of the source image
-		$photo = imagecreatetruecolor($dst_w = 60,$dst_h = round($src_h * 60 / $src_w));
-		imagecopyresized($photo,$upload,0,0,0,0,$dst_w,$dst_h,$src_w,$src_h);
-		//echo "<p>imagecopyresized(\$photo,\$upload,0,0,0,0,$dst_w,$dst_h,$src_w,$src_h);</p>\n";
-
-		ob_start();
-		imagejpeg($photo,'',90);
-		$jpeg = ob_get_contents();
-		ob_end_clean();
-
-		imagedestroy($photo);
-		imagedestroy($upload);
-
-		return $jpeg;
 	}
 
 	function view($content=null)
