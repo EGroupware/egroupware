@@ -133,7 +133,9 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			}
 		}
 		foreach(self::$types['date-time'] as $name) {
-			if ($record->$name) $record->$name = date('Y-m-d H:i:s',$record->$name);
+			//if ($record->$name) $record->$name = date('Y-m-d H:i:s',$record->$name);
+			if ($record->$name) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' '.
+				($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '24' ? 'H' : 'h').':m:s',$record->$name); // User date format
 		}
 		if ($record->tel_prefer) {
 			$field = $record->tel_prefer;
