@@ -316,7 +316,10 @@ class addressbook_bo extends addressbook_so
 			asort($to_sort);
 			$addressbooks += $to_sort;
 		}
-		if (($this->grants[0] & $required) == $required && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		if (!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] && (
+				($this->grants[0] & $required) == $required ||
+				$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
+				$this->account_repository != 'ldap' && ($required & EGW_ACL_READ)))
 		{
 			$addressbooks[0] = lang('Accounts');
 		}
@@ -338,7 +341,7 @@ class addressbook_bo extends addressbook_so
 		{
 			$addressbooks[$this->user.'p'] = lang('Private');
 		}
-		//_debug_array($addressbooks);
+		//echo "<p>".__METHOD__."($required,'$extra_label')"; _debug_array($addressbooks);
 		return $addressbooks;
 	}
 
@@ -965,6 +968,13 @@ class addressbook_bo extends addressbook_so
 		if (!$owner && $needed == EGW_ACL_DELETE && ($deny_account_delete || $contact['account_id'] == $this->user))
 		{
 			return false;
+		}
+		// for reading accounts (owner == 0) and account_selection == groupmembers, check if current user and contact are groupmembers
+		if ($owner == 0 && $needed == EGW_ACL_READ &&
+			$GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers')
+		{
+			return !!array_intersect($GLOBALS['egw']->accounts->memberships($this->user,true),
+				$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
 		}
 		return ($this->grants[$owner] & $needed) &&
 			(!$contact['private'] || ($this->grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$this->memberships));
