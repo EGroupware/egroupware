@@ -264,13 +264,34 @@ class addressbook_sql extends so_sql
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if (isset($this->grants) && !(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
 		{
+			// add read ACL for groupmembers (they have no
+			if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
+				(!isset($filter['owner']) || in_array('0',(array)$filter['owner'])))
+			{
+				$groupmembers = array();
+				foreach($GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $group_id)
+				{
+					if (($members = $GLOBALS['egw']->accounts->members($group_id,true)))
+					{
+						$groupmembers = array_merge($groupmembers,$members);
+					}
+				}
+				$groupmember_sql = $this->db->expression($this->table_name, ' OR '.$this->table_name.'.',array(
+					'account_id' => array_unique($groupmembers),
+				));
+			}
 			// we have no private grants in addressbook at the moment, they have then to be added here too
 			if (isset($filter['owner']))
 			{
-				if (!($filter['owner'] = array_intersect((array)$filter['owner'],array_keys($this->grants)))) return false;
-
+				// no grants for selected owner/addressbook
+				if (!($filter['owner'] = array_intersect((array)$filter['owner'],array_keys($this->grants))))
+				{
+					if (!isset($groupmember_sql)) return false;
+					$filter[] = substr($groupmember_sql,4);
+					unset($filter['owner']);
+				}
 				// for an owner filter, which does NOT include current user, filter out private entries
-				if (!in_array($GLOBALS['egw_info']['user']['account_id'],$filter['owner']))
+				elseif (!in_array($GLOBALS['egw_info']['user']['account_id'],$filter['owner']))
 				{
 					$filter['private'] = 0;
 				}
@@ -279,7 +300,7 @@ class addressbook_sql extends so_sql
 				{
 					$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 						" OR contact_private=0 AND $this->table_name.contact_owner IN (".
-						implode(',',array_keys($this->grants)).") OR $this->table_name.contact_owner IS NULL)";
+						implode(',',array_keys($this->grants)).") $groupmember_sql OR $this->table_name.contact_owner IS NULL)";
 				}
 			}
 			else	// search all addressbooks, incl. accounts
@@ -290,7 +311,7 @@ class addressbook_sql extends so_sql
 				}
 				$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR contact_private=0 AND $this->table_name.contact_owner IN (".
-					implode(',',array_keys($this->grants)).") OR $this->table_name.contact_owner IS NULL)";
+					implode(',',array_keys($this->grants)).") $groupmember_sql OR $this->table_name.contact_owner IS NULL)";
 			}
 		}
 		$search_customfields = isset($criteria['contact_value']) && !empty($criteria['contact_value']);
