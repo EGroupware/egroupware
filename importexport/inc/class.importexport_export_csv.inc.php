@@ -171,6 +171,8 @@ class importexport_export_csv implements importexport_iface_export_record
 	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null) {
 		if($appname) {
 			$custom = config::get_customfields($appname);
+			$selects = array();
+			$links = array();
 			foreach($custom as $name => $c_field) {
 				$name = '#' . $name;
 				switch($c_field['type']) {
@@ -183,8 +185,24 @@ class importexport_export_csv implements importexport_iface_export_record
 					case 'select-account':
 						$fields['select-account'][] = $name;
 						break;
+					case 'select':
+						$fields['select'][] = $name;
+						$selects[$name] = $c_field['values'];
+						break;
+					default:
+						if(in_array($c_field['type'], array_keys($GLOBALS['egw_info']['apps']))) {
+							$fields['links'][] = $name;
+							$links[$name] = $c_field['type'];
+						}
+						break;
 				}
 			}
+		}
+		foreach($fields['select'] as $name) {
+			if($record->$name && $selects[$name]) $record->$name = $selects[$name][$record->$name];
+		}
+		foreach($fields['links'] as $name) {
+			if($record->$name && $links[$name]) $record->$name = egw_link::title($links[$name], $record->$name);
 		}
 		foreach($fields['select-account'] as $name) {
 			if ($record->$name) {
