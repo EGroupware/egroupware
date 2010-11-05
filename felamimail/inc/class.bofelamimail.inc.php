@@ -1126,6 +1126,15 @@
 			$filename = self::getFileNameFromStructure($structure);
 			$attachment = $this->icServer->getBodyPart($_uid, $_partID, true);
 
+			if (PEAR::isError($attachment))
+			{
+				error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
+				return array('type' => 'text/plain',
+							 'filename' => 'error.txt',
+							 'attachment' =>__METHOD__.' failed:'.$attachment->message
+						);
+			}
+
 			switch ($structure->encoding) {
 				case 'BASE64':
 					// use imap_base64 to decode
@@ -1187,6 +1196,15 @@
 			$structure = $this->_getSubStructure($structure, $partID);
 			$filename = self::getFileNameFromStructure($structure);
 			$attachment = $this->icServer->getBodyPart($_uid, $partID, true);
+
+			if (PEAR::isError($attachment))
+			{
+				error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
+				return array('type' => 'text/plain',
+							 'filename' => 'error.txt',
+							 'attachment' =>__METHOD__.' failed:'.$attachment->message
+						);
+			}
 
 			switch ($structure->encoding) {
 				case 'BASE64':
@@ -1801,8 +1819,13 @@
 			#_debug_array($_structure);
 			$partID = $_structure->partID;
 			$mimePartBody = $this->icServer->getBodyPart($_uid, $partID, true);
-			#_debug_array($mimePartBody);
-			#_debug_array(preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding)));
+			if (PEAR::isError($mimePartBody))
+			{
+				error_log(__METHOD__.__LINE__.' failed:'.$mimePartBody->message);
+				return false;
+			}
+			//_debug_array($mimePartBody);
+			//_debug_array(preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding)));
 			if($_structure->subType == 'HTML' && $_htmlMode != 'always_display'  && $_htmlMode != 'only_if_no_text') {
 				$bodyPart = array(
 					'body'		=> lang("displaying html messages is disabled"),
@@ -2432,6 +2455,11 @@
 				$body = $this->icServer->getBody($_uid, true);
 			} else {
 				$body = $this->icServer->getBodyPart($_uid, $_partID, true);
+			}
+			if (PEAR::isError($body))
+			{
+				error_log(__METHOD__.__LINE__.' failed:'.$body->message);
+				return false;
 			}
 
 			return $body;
