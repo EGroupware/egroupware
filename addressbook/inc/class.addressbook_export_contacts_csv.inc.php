@@ -53,8 +53,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		// support other selectors atm.
 		foreach ($selection as $identifier) {
 			$contact = new addressbook_egw_record($identifier);
-
 			// Some conversion
+			importexport_export_csv::convert($contact, self::$types, 'addressbook');
 			$this->convert($contact);
 			$export_object->export_record($contact);
 			unset($contact);
@@ -116,35 +116,10 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	* Dates, times, user IDs, category IDs
 	*/
 	public static function convert(addressbook_egw_record &$record) {
-		$custom = config::get_customfields('addressbook');
-		foreach($custom as $name => $c_field) {
-			$name = '#' . $name;
-			if($c_field['type'] == 'date') {
-				self::$types['date-time'][] = $name;
-			} elseif ($c_field['type'] == 'select-account')	{
-				self::$types['select-account'][] = $name;
-			}
-		}
-		foreach(self::$types['select-account'] as $name) {
-			if ($record->$name) {
-				$record->$name = $GLOBALS['egw']->common->grab_owner_name($record->$name);
-			} elseif ($name == 'owner') {
-				$record->$name = lang('Accounts');
-			}
-		}
-		foreach(self::$types['date-time'] as $name) {
-			if ($record->$name) $record->$name = date('Y-m-d H:i:s',$record->$name);
-		}
+		
 		if ($record->tel_prefer) {
 			$field = $record->tel_prefer;
 			$record->tel_prefer = $record->$field;
 		}
-
-		$cats = array();
-		foreach(explode(',',$record->cat_id) as $n => $cat_id) {
-			if ($cat_id) $cats[] = $GLOBALS['egw']->categories->id2name($cat_id);
-		}
-
-		$record->cat_id = implode(', ',$cats);
 	}
 }
