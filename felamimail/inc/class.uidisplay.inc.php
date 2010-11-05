@@ -953,7 +953,7 @@
 		}
 
 		static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true) {
-			_debug_array($_emailAddress);
+			//_debug_array($_emailAddress);
 			// create some nice formated HTML for senderaddress
 			#if($_emailAddress['EMAIL'] == 'undisclosed-recipients: ;')
 			#	return $_emailAddress['EMAIL'];
