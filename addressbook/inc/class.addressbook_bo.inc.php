@@ -800,7 +800,7 @@ class addressbook_bo extends addressbook_so
 		// resize image to 60px width
 		if (!empty($contact['jpegphoto']))
 		{
-//			$contact['jpegphoto'] = $this->resize_photo($contact['jpegphoto']);
+			$contact['jpegphoto'] = $this->resize_photo($contact['jpegphoto']);
 		}
 		// convert categories
 		if (is_array($contact['cat_id']))
