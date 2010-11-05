@@ -755,7 +755,8 @@
 				'',
 				$_messageID
 			);
-			$headerData = $headerData['header'][0];
+			$headerData = $this->bofelamimail->decode_header($headerData['header'][0]);
+			$headerData['subject'] = $this->bofelamimail->decode_subject($headerData['subject'],false);
 			$this->sessionData['previewMessage'] = $headerData['uid'];
 			$this->saveSessionData();
 			//error_log(print_r($headerData,true));
