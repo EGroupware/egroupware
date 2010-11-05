@@ -1206,7 +1206,7 @@
 			$body = '';
 
 			//error_log(__METHOD__.array2string($bodyParts)); //exit;
-
+			if (empty($bodyParts)) return "";
 			foreach((array)$bodyParts as $singleBodyPart) {
 				if (!isset($singleBodyPart['body'])) {
 					$singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart);
