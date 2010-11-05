@@ -173,7 +173,7 @@
 			$sessionData = $this->bocompose->getSessionData();
 			if (is_array($_REQUEST['preset']))
 			{
-				#_debug_array($_REQUEST);
+				//_debug_array($_REQUEST);
 				if ($_REQUEST['preset']['mailto']) {
 					// handle mailto strings such as
 					// mailto:larry,dan?cc=mike&bcc=sue&subject=test&body=type+your&body=message+here
@@ -241,6 +241,7 @@
 			{
 				$sessionData['to'] = base64_decode($_REQUEST['send_to']);
 			}
+
 			//is the MimeType set/requested
 			if (!empty($_REQUEST['mimeType']))
 			{
@@ -369,7 +370,8 @@
 				foreach((array)$sessionData[$destination] as $key => $value) {
 					$selectDestination = html::select('destination[]', $destination, $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
 					$this->t->set_var('select_destination', $selectDestination);
-					$this->t->set_var('address', @htmlentities($value, ENT_QUOTES, $this->displayCharset));
+					$address = bofelamimail::htmlentities($value, $this->displayCharset);
+					$this->t->set_var('address', $address);
 					$this->t->parse('destinationRows','destination_row',True);
 					$destinationRows++;
 				}
@@ -388,7 +390,10 @@
 			$this->t->set_var('address', '');
 			$this->t->parse('destinationRows','destination_row',True);
 
-			$this->t->set_var("subject",@htmlentities($sessionData['subject'],ENT_QUOTES,$this->displayCharset));
+			// handle subject
+			$subject = bofelamimail::htmlentities($sessionData['subject'],$this->displayCharset);
+			$this->t->set_var("subject",$subject);
+
 			if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 				$this->t->set_var('addressbookButton','<button class="menuButton" type="button" onclick="addybook();" title="'.lang('addressbook').'">
                     <img src="'.$GLOBALS['egw']->common->image('phpgwapi/templates/phpgw_website','users').'">

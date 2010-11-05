@@ -65,60 +65,21 @@
 		 */
 		function addAttachment($_formData)
 		{
-#echo "addattachment<br>";
-#_debug_array($_formData);
+			$attachfailed = false;
 			// to gard against exploits the file must be either uploaded or be in the temp_dir
-			if ($_formData['size'] != 0 && (is_uploaded_file($_formData['file']) ||
-				realpath(dirname($_formData['file'])) == realpath($GLOBALS['egw_info']['server']['temp_dir'])) ||
-				parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
+			// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+			try
 			{
-				// ensure existance of eGW temp dir
-				// note: this is different from apache temp dir,
-				// and different from any other temp file location set in php.ini
-				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
-				{
-					@mkdir($GLOBALS['egw_info']['server']['temp_dir'],0700);
-				}
+				$tmpFileName = bofelamimail::checkFileBasics($_formData,$this->composeID,false);
+			}
+			catch (egw_exception_wrong_userinput $e)
+			{
+				$attachfailed = true;
+				$alert_msg = $e->getMessage();
+			}
 
-				// if we were NOT able to create this temp directory, then make an ERROR report
-				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
-				{
-					$alert_msg .= 'Error:'.'<br>'
-						.'Server is unable to access phpgw tmp directory'.'<br>'
-						.$GLOBALS['egw_info']['server']['temp_dir'].'<br>'
-						.'Please check your configuration'.'<br>'
-						.'<br>';
-				}
-
-				// sometimes PHP is very clue-less about MIME types, and gives NO file_type
-				// rfc default for unknown MIME type is:
-				$mime_type_default = 'application/octet-stream';
-				// so if PHP did not pass any file_type info, then substitute the rfc default value
-				if (trim($_formData['type']) == '')
-				{
-					$_formData['type'] = $mime_type_default;
-				}
-
-				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
-					SEP.
-					md5(time().$GLOBALS['egw_info']['user']['account_id'].$this->composeID.basename($_formData['file']));
-
-				if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
-				{
-					$tmpFileName = $_formData['file'];	// no need to store it somewhere
-				}
-				elseif (is_uploaded_file($_formData['file']))
-				{
-					//error_log(__METHOD__." Uploaded File:".$_formData['file']." with filesize:".filesize($_formData['file']));
-					move_uploaded_file($_formData['file'],$tmpFileName);	// requirement for safe_mode!
-					//error_log(__METHOD__." copy to :".$tmpFileName." with filesize:".filesize($tmpFileName));
-				}
-				else
-				{
-					rename($_formData['file'],$tmpFileName);
-				}
-				//$attachmentID = $this->getRandomString();
-				//error_log(__METHOD__." add Attachment with ID (random String):".$attachmentID);
+			if ($attachfailed === false)
+			{
 				$buffer = array(
 					'name'	=> $_formData['name'],
 					'type'	=> $_formData['type'],
@@ -130,6 +91,10 @@
 				//error_log(__METHOD__." add Attachment with ID:".$attachmentID." (md5 of serialized array)");
 				$this->sessionData['attachments'][$attachmentID] = $buffer;
 				unset($buffer);
+			}
+			else
+			{
+				error_log(__METHOD__.__LINE__.array2string($alert_msg));
 			}
 
 			$this->saveSessionData();
@@ -582,24 +547,33 @@
 			$bodyParts = $bofelamimail->getMessageBody($_uid, $this->preferencesArray['always_display'], $_partID);
 			//_debug_array($bodyParts);
 
-			$fromAddress = ($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL'];
+			$fromAddress = bofelamimail::htmlspecialchars($bofelamimail->decode_header(($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL']));
+
 			$toAddressA = array();
 			$toAddress = '';
 			foreach ($headers['TO'] as $mailheader) {
 				$toAddressA[] =  ($mailheader['PERSONAL_NAME'] != 'NIL') ? $mailheader['RFC822_EMAIL'] : $mailheader['EMAIL'];
 			}
-			if (count($toAddressA)>0) $toAddress = @htmlspecialchars(lang("to").": ".$bofelamimail->decode_header(implode(', ', $toAddressA)),ENT_QUOTES).($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
+			if (count($toAddressA)>0)
+			{
+				$toAddress = bofelamimail::htmlspecialchars($bofelamimail->decode_header(implode(', ', $toAddressA)));
+				$toAddress = @htmlspecialchars(lang("to")).": ".$toAddress.($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");;
+			}
 			$ccAddressA = array();
 			$ccAddress = '';
 			foreach ($headers['CC'] as $mailheader) {
 				$ccAddressA[] =  ($mailheader['PERSONAL_NAME'] != 'NIL') ? $mailheader['RFC822_EMAIL'] : $mailheader['EMAIL'];
 			}
-			if (count($ccAddressA)>0) $ccAddress = @htmlspecialchars(lang("cc").": ".$bofelamimail->decode_header(implode(', ', $ccAddressA)),ENT_QUOTES).($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
+			if (count($ccAddressA)>0) 
+			{
+				$ccAddress = bofelamimail::htmlspecialchars($bofelamimail->decode_header(implode(', ', $ccAddressA)));
+				$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddressA.($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
+			}
 			if($bodyParts['0']['mimeType'] == 'text/html') {
 				$this->sessionData['body']	= "<br>&nbsp;\r\n<p>".'----------------'.lang("original message").'-----------------'."\r\n".'<br>'.
-					@htmlspecialchars(lang("from").": ".$bofelamimail->decode_header($fromAddress),ENT_QUOTES)."\r\n<br>".
+					@htmlspecialchars(lang("from")).": ".$fromAddress."\r\n<br>".
 					$toAddress.$ccAddress.
-					@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES)."\r\n<br>".
+					@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES | ENT_IGNORE,bofelamimail::$displayCharset, false)."\r\n<br>".
 					'----------------------------------------------------------'."\r\n</p>";
 				$this->sessionData['mimeType'] 	= 'html';
 				$this->sessionData['body']	.= '<blockquote type="cite">';
@@ -622,9 +596,9 @@
 			} else {
 				#$this->sessionData['body']	= @htmlspecialchars(lang("on")." ".$headers['DATE']." ".$bofelamimail->decode_header($fromAddress), ENT_QUOTES) . " ".lang("wrote").":\r\n";
                 $this->sessionData['body']  = " \r\n \r\n".'----------------'.lang("original message").'-----------------'."\r\n".
-                    @htmlspecialchars(lang("from").": ".$bofelamimail->decode_header($fromAddress),ENT_QUOTES)."\r\n".
+                    @htmlspecialchars(lang("from")).": ".$fromAddress."\r\n".
 					$toAddress.$ccAddress.
-					@htmlspecialchars(lang("date").": ".$headers['DATE'], ENT_QUOTES)."\r\n".
+					@htmlspecialchars(lang("date").": ".$headers['DATE'], ENT_QUOTES | ENT_IGNORE,bofelamimail::$displayCharset, false)."\r\n".
                     '-------------------------------------------------'."\r\n \r\n ";
 
 				$this->sessionData['mimeType']	= 'plain';

@@ -273,7 +273,7 @@
 			#_debug_array($rawheaders);exit;
 			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid, $partID);
 			#_debug_array($attachments); exit;
-			$envelope	= $this->bofelamimail->getMessageEnvelope($this->uid, $partIDi,true);
+			$envelope	= $this->bofelamimail->getMessageEnvelope($this->uid, $partID,true);
 			#_debug_array($envelope); exit;
 			// if not using iFrames, we need to retrieve the messageBody here
 			// by now this is a fixed value and controls the use/loading of the template and how the vars are set.
@@ -454,10 +454,10 @@
 			$this->t->set_var("date_received",
 				@htmlspecialchars(bofelamimail::_strtotime($headers['DATE'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' - '.bofelamimail::_strtotime($headers['DATE'],'H:i:s'),
 				ENT_QUOTES,$this->displayCharset));
-
-			$this->t->set_var("subject_data",
-				@htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
-				ENT_QUOTES,$this->displayCharset));
+			//echo 'Envelope:'.preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']).'#0<br>';
+			$subject = bofelamimail::htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
+                $this->displayCharset);
+			$this->t->set_var("subject_data",$subject);
 
 			$this->t->parse("header","message_header",True);
 
@@ -720,7 +720,7 @@
 			// (regis) seems to be necessary to reopen...
 			$this->bofelamimail->reopen($this->mailbox);
 			$headers	= $this->bofelamimail->getMessageHeader($this->uid, $partID);
-			$envelope   = $this->bofelamimail->getMessageEnvelope($this->uid, $partID);
+			$envelope   = $this->bofelamimail->getMessageEnvelope($this->uid, $partID,true);
 			if (PEAR::isError($headers)) {
 				print lang("ERROR: Message could not be displayed.")."<br>";
 				print "In Mailbox: $this->mailbox, with ID: $this->uid, and PartID: $partID<br>";
@@ -741,9 +741,9 @@
 			$this->t->egroupware_hack = False;
 
 			$this->translate();
-            $this->t->set_var("subject_data",
-                @htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT'])),
-                ENT_QUOTES,$this->displayCharset));
+			$subject = bofelamimail::htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
+                $this->displayCharset);
+            $this->t->set_var("subject_data",$subject);
 
 			// attachments
 			if(is_array($attachments) && count($attachments) > 0) {
@@ -953,7 +953,7 @@
 		}
 
 		static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true) {
-			#_debug_array($_emailAddress);
+			_debug_array($_emailAddress);
 			// create some nice formated HTML for senderaddress
 			#if($_emailAddress['EMAIL'] == 'undisclosed-recipients: ;')
 			#	return $_emailAddress['EMAIL'];
@@ -975,18 +975,24 @@
 						continue;
 					}
 					if($addressData['PERSONAL_NAME'] != 'NIL') {
-						$newSenderAddress = $addressData['RFC822_EMAIL'] != 'NIL' ? $addressData['RFC822_EMAIL'] : $addressData['EMAIL'];
-						if ($decode) $newSenderAddress = bofelamimail::decode_header($newSenderAddress);
-						$decodedPersonalName = ($decode ? bofelamimail::decode_header($addressData['PERSONAL_NAME']):$addressData['PERSONAL_NAME']);
-						if ($decode) $addressData['EMAIL'] = bofelamimail::decode_header($addressData['EMAIL']);
+						$newSenderAddressORG = $newSenderAddress = $addressData['RFC822_EMAIL'] != 'NIL' ? $addressData['RFC822_EMAIL'] : $addressData['EMAIL'];
+						$decodedPersonalNameORG = $decodedPersonalName = $addressData['PERSONAL_NAME'];
+						if ($decode) 
+						{
+							$newSenderAddress = bofelamimail::decode_header($newSenderAddressORG);
+							$decodedPersonalName = bofelamimail::decode_header($decodedPersonalName);
+							$addressData['EMAIL'] = bofelamimail::decode_header($addressData['EMAIL']);
+						}
 						$realName =  $decodedPersonalName;
 						// add mailaddress
 						if ($allwaysShowMailAddress) {
 							$realName .= ' <'.$addressData['EMAIL'].'>';
+							$decodedPersonalNameORG .= ' <'.$addressData['EMAIL'].'>';
 						}
 						// add organization
 						if(!empty($_organisation)) {
 							$realName .= ' ('. $_organisation . ')';
+							$decodedPersonalNameORG .= ' ('. $_organisation . ')';
 						}
 
 						$linkData = array (
@@ -994,10 +1000,14 @@
 							'send_to'	=> base64_encode($newSenderAddress)
 						);
 						$link = $GLOBALS['egw']->link('/index.php',$linkData);
+
+						$newSenderAddress = bofelamimail::htmlentities($newSenderAddress);
+						$realName = bofelamimail::htmlentities($realName);
+
 						$senderAddress .= sprintf('<a href="%s" title="%s">%s</a>',
 									$link,
-									@htmlentities($newSenderAddress,ENT_QUOTES,bofelamimail::$displayCharset),
-									@htmlentities($realName, ENT_QUOTES, bofelamimail::$displayCharset));
+									$newSenderAddress,
+									$realName);
 
 						$linkData = array (
 							'menuaction'		=> 'addressbook.addressbook_ui.edit',
@@ -1005,6 +1015,8 @@
 							'presets[org_name]'	=> $_organisation,
 							'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
 						);
+
+						$decodedPersonalName = $realName;
 						if (!empty($decodedPersonalName)) {
 							if($spacePos = strrpos($decodedPersonalName, ' ')) {
 								$linkData['presets[n_family]']	= substr($decodedPersonalName, $spacePos+1);
@@ -1014,6 +1026,7 @@
 							}
 							$linkData['presets[n_fn]']	= $decodedPersonalName;
 						}
+
 						if ($showAddToAdrdessbookLink && $GLOBALS['egw_info']['user']['apps']['addressbook']) {
 							$urlAddToAddressbook = $GLOBALS['egw']->link('/index.php',$linkData);
 							$onClick = "window.open(this,this.target,'dependent=yes,width=850,height=440,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;";
@@ -1029,20 +1042,22 @@
 								lang('add to addressbook'));
 						}
 					} else {
-						if ($decode) $addressData['EMAIL'] = bofelamimail::decode_header($addressData['EMAIL']);
+						$addrEMailORG = $addrEMail = $addressData['EMAIL'];
+						if ($decode) $addrEMail = bofelamimail::decode_header($addrEMail);
 						$linkData = array (
 							'menuaction'	=> 'felamimail.uicompose.compose',
 							'send_to'	=> base64_encode($addressData['EMAIL'])
 						);
 						$link = $GLOBALS['egw']->link('/index.php',$linkData);
+						$senderEMail = bofelamimail::htmlentities($addrEMail);
 						$senderAddress .= sprintf('<a href="%s">%s</a>',
-									$link,@htmlentities($addressData['EMAIL'], ENT_QUOTES, bofelamimail::$displayCharset));
+									$link,$senderEMail);
 						//TODO: This uses old addressbook code, which should be removed in Version 1.4
 						//Please use addressbook.addressbook_ui.edit with proper paramenters
 						$linkData = array
 						(
 							'menuaction'		=> 'addressbook.addressbook_ui.edit',
-							'presets[email]'	=> $addressData['EMAIL'],
+							'presets[email]'	=> $senderEMail, //$addressData['EMAIL'],
 							'presets[org_name]'	=> $_organisation,
 							'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
 						);
@@ -1443,9 +1458,8 @@
 			}
 			$this->t->set_var("date_data",
 				@htmlspecialchars(bofelamimail::_strtotime($headers['DATE'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' - '.bofelamimail::_strtotime($headers['DATE'],'H:i:s'), ENT_QUOTES,$this->displayCharset));
-
 			// link to go back to the message view. the link differs if the print was called from a normal viewing window, or from compose
-			$subject = @htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters, '', $envelope['SUBJECT']),false), ENT_QUOTES, $this->displayCharset);
+			$subject = bofelamimail::htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters, '', $envelope['SUBJECT']),false), $this->displayCharset);
 			$this->t->set_var("subject_data", $subject);
 			$this->t->set_var("full_subject_data", $subject);
 			$linkData = array (

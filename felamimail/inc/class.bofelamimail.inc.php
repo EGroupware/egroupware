@@ -3126,6 +3126,38 @@
 		}
 
 		/**
+		 * htmlspecialchars 
+		 * helperfunction to cope with wrong encoding in strings
+		 * @param string $_string  input to be converted
+		 * @return string 
+		 */
+		static function htmlspecialchars($_string, $_charset=false)
+		{
+			//setting the charset (if not given)
+			if ($_charset===false) $_charset = bofelamimail::$displayCharset;
+			$_stringORG = $_string;
+			$_string = @htmlspecialchars($_string,ENT_QUOTES,$_charset, false);
+			if (empty($_string) && !empty($_stringORG)) $_string = @htmlspecialchars($GLOBALS['egw']->translation->convert($_stringORG,bofelamimail::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
+			return $_string;
+		}
+
+		/**
+		 * htmlentities
+		 * helperfunction to cope with wrong encoding in strings
+		 * @param string $_string  input to be converted
+		 * @return string 
+		 */
+		static function htmlentities($_string, $_charset=false)
+		{
+			//setting the charset (if not given)
+			if ($_charset===false) $_charset = bofelamimail::$displayCharset;
+			$_stringORG = $_string;
+			$_string = @htmlentities($_string,ENT_QUOTES,$_charset, false);
+			if (empty($_string) && !empty($_stringORG)) $_string = @htmlentities($GLOBALS['egw']->translation->convert($_stringORG,bofelamimail::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
+			return $_string;
+		}
+
+		/**
 		 * detect_encoding - try to detect the encoding
 		 *    only to be used if the string in question has no structure that determines his encoding
 		 * @param string - to be evaluated
@@ -3172,6 +3204,125 @@
 				if ($test===null) $date2return = egw_time::to('now',$format);
 			}
 			return $date2return;
+		}
+
+		/**
+		 * checkFileBasics
+		 *	check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+		 *
+		 * @param array $_formData passed by reference Array with information of name, type, file and size, mimetype may be adapted
+		 * @param string $IDtoAddToFileName id to enrich the returned tmpfilename
+		 * @param string $reqMimeType /(default message/rfc822, if set to false, mimetype check will not be performed
+		 * @return mixed $fullPathtoFile or exception
+		 */
+		static function checkFileBasics(&$_formData, $IDtoAddToFileName='', $reqMimeType='message/rfc822')
+		{
+			//error_log(__METHOD__.__FILE__.array2string($_formData).' Id:'.$IDtoAddToFileName.' ReqMimeType:'.$reqMimeType);
+			$importfailed = $tmpFileName = false;
+			if ($_formData['size'] != 0 && (is_uploaded_file($_formData['file']) || 
+				realpath(dirname($_formData['file'])) == realpath($GLOBALS['egw_info']['server']['temp_dir']) ||
+				parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs'))
+			{
+				// ensure existance of eGW temp dir
+				// note: this is different from apache temp dir, 
+				// and different from any other temp file location set in php.ini
+				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					@mkdir($GLOBALS['egw_info']['server']['temp_dir'],0700);
+				}
+				
+				// if we were NOT able to create this temp directory, then make an ERROR report
+				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					$alert_msg .= 'Error:'.'<br>'
+						.'Server is unable to access phpgw tmp directory'.'<br>'
+						.$GLOBALS['egw_info']['server']['temp_dir'].'<br>'
+						.'Please check your configuration'.'<br>'
+						.'<br>';
+				}
+				
+				// sometimes PHP is very clue-less about MIME types, and gives NO file_type
+				// rfc default for unknown MIME type is:
+				if ($reqMimeType == 'message/rfc822') 
+				{
+					$mime_type_default = 'message/rfc';
+				}
+				else
+				{
+					$mime_type_default = $reqMimeType;
+				}
+				if (trim($_formData['type']) == '')
+				{
+					$_formData['type'] = 'application/octet-stream';
+				}
+				// if reqMimeType is set to false do not test for that
+				if ($reqMimeType)
+				{
+					// so if PHP did not pass any file_type info, then substitute the rfc default value
+					if (substr(strtolower(trim($_formData['type'])),0,strlen($mime_type_default)) != $mime_type_default)
+					{
+						// maybe its application/octet-stream -> this may mean that we could not determine the type
+						// so we check for the suffix too
+						$buff = explode('.',$_formData['name']);
+						$suffix = '';
+						if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+						if (!(strtolower(trim($_formData['type'])) == "application/octet-stream" && mime_magic::ext2mime($suffix)== $reqMimeType))
+						{
+							//error_log("Message rejected, no message/rfc. Is:".$_formData['type']);
+							$importfailed = true;
+							$alert_msg .= lang("File rejected, no %2. Is:%1",$_formData['type'],$reqMimeType);
+						}
+						if ((strtolower(trim($_formData['type'])) != $reqMimeType && mime_magic::ext2mime($suffix)== $reqMimeType))
+						{
+							$_formData['type'] = mime_magic::ext2mime($suffix);
+						}
+					}
+				}
+				
+				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
+					SEP.
+					$GLOBALS['egw_info']['user']['account_id'].
+					trim($IDtoAddToFileName).basename($_formData['file']);
+				
+				if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
+				{
+					$tmpFileName = $_formData['file'];	// no need to store it somewhere
+				}
+				elseif (is_uploaded_file($_formData['file']))
+				{
+					move_uploaded_file($_formData['file'],$tmpFileName);	// requirement for safe_mode!
+				}
+				else
+				{
+					rename($_formData['file'],$tmpFileName);
+				}
+			} else {
+				//error_log("Import of message ".$_formData['file']." failes to meet basic restrictions");
+				$importfailed = true;
+				$alert_msg .= lang("Processing of file %1 failed. Failed to meet basic restrictions.",$_formData['name']);
+			}
+			if ($importfailed == true)
+			{
+				throw new egw_exception_wrong_userinput($alert_msg);
+			}
+			else
+			{
+				if (parse_url($tmpFileName,PHP_URL_SCHEME) == 'vfs')
+				{
+					egw_vfs::load_wrapper('vfs');
+				}
+				return $tmpFileName;
+			}			
+		}
+
+		/**
+		 * getRandomString - function to be used to fetch a random string and md5 encode that one
+		 * @param none
+		 * @return string - a random number which is md5 encoded
+		 */
+		static function getRandomString() {
+			mt_srand((float) microtime() * 1000000);
+			return md5(mt_rand (100000, 999999));
 		}
 
 		/**
