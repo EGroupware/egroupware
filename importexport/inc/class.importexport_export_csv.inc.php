@@ -191,11 +191,11 @@ class importexport_export_csv implements importexport_iface_export_record
 				if(is_array($record->$name)) {
 					$names = array();
 					foreach($record->$name as $_name) {
-						$names[] = $GLOBALS['egw']->common->grab_owner_name($_name);
+						$names[] = common::grab_owner_name($_name);
 					}
 					$record->$name = implode(', ', $names);
 				} else {
-					$record->$name = $GLOBALS['egw']->common->grab_owner_name($record->$name);
+					$record->$name = common::grab_owner_name($record->$name);
 				}
 			}
 		}
