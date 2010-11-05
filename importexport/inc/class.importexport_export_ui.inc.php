@@ -222,7 +222,7 @@ class importexport_export_ui {
 				return $response->getXML();
 			}
 
-			$tmpfname = tempnam('/tmp','export');
+			$tmpfname = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'export');
 			$file = fopen($tmpfname, "w+");
 			if (! $charset = $definition->plugin_options['charset']) {
 				$charset = $GLOBALS['egw']->translation->charset();
@@ -232,8 +232,9 @@ class importexport_export_ui {
 
 			if($_content['export'] == 'pressed') {
 				fclose($file);
+				$filename = pathinfo($tmpfname, PATHINFO_FILENAME);
 				$response->addScript("xajax_eT_wrapper();");
-				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_export_ui.download&_filename='. $tmpfname.'&_appname='. $definition->application). "&_suffix=". $plugin_object->get_filesuffix(). "&_type=".$plugin_object->get_mimetype() ."';");
+				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_export_ui.download&_filename='. $filename.'&_appname='. $definition->application). "&_suffix=". $plugin_object->get_filesuffix(). "&_type=".$plugin_object->get_mimetype() ."';");
 				$response->addScript('window.setTimeout("window.close();", 100);');
 				return $response->getXML();
 			}
@@ -417,17 +418,19 @@ class importexport_export_ui {
 	 */
 	public function download($_tmpfname = '') {
 		$tmpfname = $_tmpfname ? $_tmpfname : $_GET['_filename'];
+		$tmpfname = $GLOBALS['egw_info']['server']['temp_dir'] .'/'. $tmpfname;
 		if (!is_readable($tmpfname)) die();
 		
 		$appname = $_GET['_appname'];
 		$nicefname = 'egw_export_'.$appname.'-'.date('Y-m-d');
 
+		// Turn off all output buffering
+		while (@ob_end_clean());
+
 		header('Content-type: ' . $_GET['_type'] ? $_GET['_type'] : 'application/text');
 		header('Content-Disposition: attachment; filename="'.$nicefname.'.'.$_GET['_suffix'].'"');
-		$file = fopen($tmpfname,'r');
-		while(!feof($file))
-			echo fgets($file,1024);
-		fclose($file);
+		$file = fopen($tmpfname,'rb');
+		fpassthru($file);
 
 		unlink($tmpfname);
 	}
