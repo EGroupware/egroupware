@@ -276,11 +276,14 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string $url=null url of the filesystem to mount, eg. oldvfs://default/
 	 * @param string $path=null path to mount the filesystem in the vfs, eg. /
-	 * @param boolean $check_url = true check if url is an existing directory, before mounting it
-	 * @return array/boolean array with fstab, if called without parameter or true on successful mount
+	 * @param boolean $check_url=null check if url is an existing directory, before mounting it
+	 * 	default null only checks if url does not contain a $ as used in $user or $pass
+	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
 	 */
 	static function mount($url=null,$path=null,$check_url=true)
 	{
+		if (is_null($check_url)) $check_url = strpos($url,'$') === false;
+
 		if (!isset($GLOBALS['egw_info']['server']['vfs_fstab']))	// happens eg. in setup
 		{
 			$api_config = config::read('phpgwapi');
@@ -703,10 +706,11 @@ class egw_vfs extends vfs_stream_wrapper
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
 	 * @param string $path
-	 * @param int $check=4 mode to check: 4 = read, 2 = write, 1 = executable
+	 * @param int $check mode to check: one or more or'ed together of: 4 = egw_vfs::READABLE,
+	 * 	2 = egw_vfs::WRITABLE, 1 = egw_vfs::EXECUTABLE
 	 * @return boolean
 	 */
-	static function is_readable($path,$check = 4)
+	static function is_readable($path,$check = self::READABLE)
 	{
 		return self::check_access($path,$check);
 	}
@@ -716,7 +720,8 @@ class egw_vfs extends vfs_stream_wrapper
 	 * which is wrong in case of our vfs, as we use the current users id and memberships
 	 *
 	 * @param array/string $path stat array or path
-	 * @param int $check mode to check: one or more or'ed together of: 4 = read, 2 = write, 1 = executable
+	 * @param int $check mode to check: one or more or'ed together of: 4 = egw_vfs::READABLE,
+	 * 	2 = egw_vfs::WRITABLE, 1 = egw_vfs::EXECUTABLE
 	 * @param array $stat=null stat array, to not query it again
 	 * @return boolean
 	 */
@@ -743,6 +748,20 @@ class egw_vfs extends vfs_stream_wrapper
 		{
 			//error_log(__METHOD__."(path=$path||stat[name]={$stat['name']},stat[mode]=".sprintf('%o',$stat['mode']).",$check) no stat array!");
 			return false;	// file not found
+		}
+		// check if we use an EGroupwre stream wrapper, or a stock php one
+		// if it's not an EGroupware one, we can NOT use uid, gid and mode!
+		if (($scheme = parse_url($stat['url'],PHP_URL_SCHEME)) && !(class_exists(self::scheme2class($scheme))))
+		{
+			switch($check)
+			{
+				case self::READABLE:
+					return is_readable($stat['url']);
+				case self::WRITABLE:
+					return is_writable($stat['url']);
+				case self::EXECUTABLE:
+					return is_executable($stat['url']);
+			}
 		}
 		// check if other rights grant access
 		if (($stat['mode'] & $check) == $check)
@@ -786,7 +805,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function is_writable($path)
 	{
-		return self::is_readable($path,2);
+		return self::is_readable($path,self::WRITABLE);
 	}
 
 	/**
@@ -798,7 +817,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 */
 	static function is_executable($path)
 	{
-		return self::is_readable($path,1);
+		return self::is_readable($path,self::EXECUTABLE);
 	}
 
 	/**
