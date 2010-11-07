@@ -280,7 +280,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * 	default null only checks if url does not contain a $ as used in $user or $pass
 	 * @return array|boolean array with fstab, if called without parameter or true on successful mount
 	 */
-	static function mount($url=null,$path=null,$check_url=true)
+	static function mount($url=null,$path=null,$check_url=null)
 	{
 		if (is_null($check_url)) $check_url = strpos($url,'$') === false;
 
