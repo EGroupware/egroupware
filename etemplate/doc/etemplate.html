@@ -16,7 +16,7 @@
 <h1>eTemplate - Templates and Dialog-Editor for eGroupWare</h1>
 <h3>by Ralf Becker <a href="#" onclick="document.location='mai'+'lto:RalfBecker'+unescape('%40')+'outdoor-training'+unescape('%2E')+'de'; return false;">RalfBecker
 AT outdoor-training DOT de</a></h3>
-<h3>Updated by Raphael Alla <a href="#" onclick="document.location='mai'+'lto:raphael'+unescape('%40')+'olineopensolutions'+unescape('%2E')+'com'; return false;">>raphael AT olineopensolutions
+<h3>Updated by Raphael Alla <a href="#" onclick="document.location='mai'+'lto:raphael'+unescape('%40')+'olineopensolutions'+unescape('%2E')+'com'; return false;">raphael AT olineopensolutions
 DOT com</a></h3>
 <p>A developers tutorial how to write an application with the new eTemplates.<br />
 It is also an introduction how to write a eGW- and setup(3)-compatible app.</p>
@@ -28,13 +28,13 @@ It is also an introduction how to write a eGW- and setup(3)-compatible app.</p>
 	<li>consist out of rows and cols with input-fields of several types</li>
 	<li>there is a dialog-editor (one part of the etemplate-app) to create the eTemplate</li>
 	<li>eTemplates can be (and are usually) nested, eg. a template-field can contain an other eTemplate</li>
-	<li>each field / cell of the template can have a label which is automaticaly run through lang() (the
+	<li>each field / cell of the template can have a label which is automatically run through lang() (the
 		content of the field can be run through lang() too)</li>
-	<li>the dialog editor can write all labels in a lang-file (mergeing it with the existing ones)</li>
+	<li>the dialog editor can write all labels in a lang-file (merging it with the existing ones)</li>
 	<li>eTemplates have a name of the form app.function[.subtemplate] which is used to call them up</li>
 	<li>they can have further keys, on loading the class picks the most appropriate one for a user: 
 		<ol>
-			<li>group: the id of a group if the template is just for that group (that allows admin to show differnt
+			<li>group: the id of a group if the template is just for that group (that allows admin to show different
 			views to each group)</li>
 			<li>lang: the 2 or 5 letter language code (or empty for a non-language specific template)</li>
 			<li>template set: they belong too (if the template-set key is empty it is an default-template)</li>
@@ -43,9 +43,9 @@ It is also an introduction how to write a eGW- and setup(3)-compatible app.</p>
 	</li>
 	<li>they are stored in an array and in serialized form in the db-table 'egw_etemplate' </li>
 	<li>the dialog editor can dump all templates of an app for distribution (so they can be in the CVS too)</li>
-	<li><p>they encapsulate differnt UI (User Interface) types from the app: at the moment only a HTML one is ready,
+	<li><p>they encapsulate different UI (User Interface) types from the app: at the moment only a HTML one is ready,
 	but a GTK one (using <a href="http://gtk.php.net/" target="_blank">php-gtk</a>, <b>running
-	as native app under linux and win32</b>) and XUL is under development.<br>Here is a first screenshot of the DB-Tools as native
+	as native app under Linux and win32</b>) and XUL is under development.<br>Here is a first screenshot of the DB-Tools as native
 	Linux Application:</li>
 </ul>
 <img src="gtk.png" name="Graphic1" align="bottom" border="0" height="575" width="1049">
@@ -58,20 +58,20 @@ classes from the eTemplate app: db-tools and class.so_sql.inc.php.</p>
 <p>Out media database should have the usual fields: name, author,
 description, type: BOOK, CD, VIDEO and should be able to edit records
 and search for them.</p>
-<p>As a preaquistion you need to get / checkout the etemplate app,
+<p>As a pre-acquistion you need to get / checkout the etemplate app,
 install the app via setup/manage applications and enable your account
 for using the app (Admin/User account: check eTemplates).</p>
 <h2>1. Creating a new eGW app directory</h2>
 <p>Each app need a name, eg. 'et_media'. We now need to create the
-following directory structur above the eGroupWare dir: 
+following directory structure above the eGroupWare dir: 
 </p>
-<pre>et_media                                that has to be identical to our app-name
-        + setup                         files necessary for the setup Programm, give the webserver write-permission to that dir
+<pre>et_media                           that has to be identical to our app-name
+        + setup                         files necessary for the setup program, give the webserver write-permission to that dir
         + inc                           class-files
-        + templates                     templates, still needed to store the images and get around a lot of complains from the api
+        + templates                     templates, still needed to store the images and get around a lot of complains from the API
                 + default
                         + images        here goes our images / icons</pre><h2>
-2. creating et_media/setup/setup.inc.php</h2>
+2. Creating et_media/setup/setup.inc.php</h2>
 <p>That files contains the necessary information for setup to install
 the app. 
 </p>
@@ -92,7 +92,7 @@ the app.
                  'appname' =&gt; 'etemplate',
                  'versions' =&gt; Array('1.2','1.3','1.4')
         );</pre><h2>
-3. setting up the db-table with the db_tools and setup</h2>
+3. Setting up the db-table with the db_tools and setup</h2>
 <p>To enable setup to create a db-table for us and to supply the
 <b>so_sql</b>-class with the necessary information, we need to define
 the type and size of the fields / columns in our db-table.</p>
@@ -106,23 +106,23 @@ file for us:
 	<li>start the etemplate app and click on the button up, right which says db-Tools</li>
 	<li>select Application: eT-Media</li>
 	<li>type 'egw_et_media' in the field in front of the [Add Table] button and click on the button</li>
-	<li>now use [Add Column] to create thenecessary fields as shown on the screenshot</li>
+	<li>now use [Add Column] to create the necessary fields as shown on the screenshot</li>
 	<li>Click on [Write Table] (you need to give the webserver write-permission to the setup-dir of et_media
 		or you will get an error message, leave the write-permission as it is necessary later on too, click on write again)</li>
 	<li>log out and log into setup and start manage applications</li>
-	<li>eT-Media is shown as not installed and only install is offerd, check it and submit</li>
+	<li>eT-Media is shown as not installed and only install is offered, check it and submit</li>
 	<li><p>you can now log out from setup, the db-table is now created</li>
 	<li><p>In order to be able to use your eT-Media application, do not forget to give yourself access to it 
 		(Admin/User account: check eT-Media)</li>
 </ol>
-<h2>4. creating an eTemplates for the edit-dialog</h2>
+<h2>4. Creating an eTemplates for the edit-dialog</h2>
 <p>Now we need a nice edit dialog and use the eTemplate editor to set
 it up: 
 </p>
 <ol>
 	<li>start the etemplate app and type <b>'et_media.edit'</b> in the name field. Save the template in order
 		to create it</li>
-	<li>an empty template is displayed. An eTemplate can be thought off as a “grid”. The first cell may be
+	<li>an empty template is displayed. An eTemplate can be thought off as a &quot;grid&quot;. The first cell may be
 		a bit tricky to find, but will be highlighted when moving the mouse
 		over it. On my computer this cell appears in pink as illustrated below:</li>
 	<li><img src="step0.jpg" name="Graphic3" align="left" border="0" height="509" width="922"><br clear="left">Double
@@ -136,20 +136,20 @@ it up:
 <br>
 </p>
 <ol start="6">
-	<li>In the top right cell, we will create a user entry and call it “name”: this is the same name as thee column in our
+	<li>In the top right cell, we will create a user entry and call it &quot;name&quot;: this is the same name as thee column in our
 		egw_et_media table. This is important as those fields will be populated automatically for us by eGroupWare:</li>
 	<li><img src="step3.jpg" name="Graphic9" align="left" border="0" height="560" width="852"><br clear="left">
-		<p>Complete the template as follows. The widget used for “type” is a
-		Selectbox, the one used for “description” is a textarea. Note
-		that the name of the input is “descr” and not description, as
+		<p>Complete the template as follows. The widget used for &quot;type&quot; is a
+		Selectbox, the one used for &quot;description&quot; is a textarea. Note
+		that the name of the input is &quot;descr&quot; and not description, as
 		this is the name of the column in the table. Finally on the last row
-		we have two widgets of type “Submitbutton” of names “read”
-		and “save” and of corresponding label.</p>
+		we have two widgets of type &quot;Submitbutton&quot; of names &quot;read&quot;
+		and &quot;save&quot; and of corresponding label.</p>
 		<p><img src="step4.jpg" name="Graphic4" align="left" border="0" height="380" width="922"><br clear="left"></p>
 	</li>
 </ol>
 <p>Then before moving to the next stage save the template as an XML 
-file by clicking on “Export XML”. Once again the server must have
+file by clicking on &quot;Export XML&quot;. Once again the server must have
 write permissions on the directory.</p>
 <h2>5. Setting up the index page</h2>
 <p>The index page is only used if someone clicks on the navbar icon
@@ -164,30 +164,30 @@ the file <b>/et_media/index.php</b> with the following content:</p>
         include('../header.inc.php');
         $GLOBALS['egw']-&gt;redirect_link('/index.php', 'menuaction=et_media.ui_et_media.edit');
 </pre>
-<h2>6. The code for our application</h2>
-<p>An eGroupWare application is organised around 3 application
+<h2>6. The code for our Application</h2>
+<p>An eGroupWare application is organized around 3 application
 layers:</p>
 <ul>
 	<li>
-		the storage layer, managed by a “Storage Object” (so).
+		the storage layer, managed by a &quot;Storage Object&quot; (so).
 		This object is responsible for handling all access to the storage
 		engine. We use the "stock" so_sql class for this, so we
 		need no extra so-object for the moment.
 	</li>
 	<li>
-		the business layer, managed by a “Business Ojbect” (bo).
+		the business layer, managed by a &quot;Business Object&quot; (bo).
 		This object is responsible for all the business logic.
 		The business object can extend the storage object,
 		to avoid passing the so-methods as stubs to the ui layer.
 	</li>
 	<li>
-		the user interface layer, managed by a “User Interface”
+		the user interface layer, managed by a &quot;User Interface&quot;
 		(ui) object. This object is responsible for all interaction with the
 		user, including displaying and gathering data to and from the user.
 		The ui object can extend the bo-object.
 	</li>
 </ul>
-<p>For this, we create 2 files in the “inc” directory, called
+<p>For this, we create 2 files in the &quot;inc&quot; directory, called
 class.bo_et_media.inc.php and class.ui_et_media.inc.php. 
 In this simple application, the bo layer will be fairly minimal, 
 this said it is a good idea to create the application using the 
@@ -214,7 +214,7 @@ include_once(EGW_INCLUDE_ROOT . '/etemplate/inc/class.so_sql.inc.php');
 class bo_et_media extends so_sql
 {
 	<span>/**
-	 * Availible media types
+	 * Available media types
 	 *
 	 * @var array
 	 */</span>
@@ -226,7 +226,7 @@ class bo_et_media extends so_sql
 		'video' =&gt; 'Video Tape'
 	);
 	<span>/**
-	 * Constructor initialising so_sql
+	 * Constructor initializing so_sql
 	 *
 	 * @return so_et_media
 	 */</span>
@@ -273,7 +273,7 @@ class ui_et_media extends bo_et_media
 	{
 		$this-&gt;bo_et_media();		<span>// calling the constructor of the extended bo object</span>
 
-		$this-&gt;tmpl =& CreateObject('etemplate.etemplate','et_media.edit');
+		$this-&gt;tmpl =&amp; CreateObject('etemplate.etemplate','et_media.edit');
 	}
 
 	<span>/**
@@ -300,7 +300,7 @@ class ui_et_media extends bo_et_media
 			}
 		}
 
-		<span>// now we filling the content array for the next call to etemplate.exec</span>
+		<span>// now we fill in the content array for the next call to etemplate.exec</span>
 
 		$content = $this-&gt;data + array(
 			'msg' =&gt; $msg
@@ -317,7 +317,7 @@ class ui_et_media extends bo_et_media
 The edit function is called from our index.php file or as callback
 for this form / dialog. In that case $content is an array with the
 content the user put into the fields of the dialog.</p>
-<p>Let first have a look what happend if we called the first time (or
+<p>Let first have a look what happened if we called the first time (or
 what we do to show the dialog again with the changed data):</p>
 <ol>
 	<li>the $content array is set up with our internal data-array (which is empty on the first call) and the message</li>
@@ -326,7 +326,7 @@ what we do to show the dialog again with the changed data):</p>
 		selectbox shows to the user. As we can have more than one selectbox
 		in a dialog, the key in $sel_options need to be the same as the name
 		of the selectbox.</li>
-	<li>$readonlys: if a fieldname is set in $readonlys to True, its content is showed readonly 
+	<li>$readonlys: if a field name is set in $readonlys to True, its content is showed readonly 
 		(for regular fields like type Text) or left out for buttons (we use this later to
 		show the delete-button only when an entry is loaded)</li>
 	<li>the array $preserv is preserved, which means its stored in the app's session-data and is delivered
@@ -352,7 +352,7 @@ and our callback is called:
 		search for a pattern has to be performed and the matches are shown
 		to the user. In this case the callback is NOT called. The same is
 		true if an int field contains letters or is not within the minimum
-		or maximum set. <i>Not all of the is allready working, it will
+		or maximum set. <i>Not all of the is already working, it will
 		follow in the next days/weeks.</i><br>For the specialist
 		process_exec uses $_POST and ignores $_GET set as query in the url.</li>
 	<li>the so_sql function data_merge, copies all values from $content, which are columns in the db-table,
@@ -365,39 +365,39 @@ and our callback is called:
 		entries. The user can use wildcards to perform a search on all
 		field. The wildcards are '*' and '?', so_sql translates them into sql-wildcards.</li>
 	<li>if the search return False we just set our message var.</li>
-	<li>if something is found we use so_sql's init-function to set the data of the first match. Lateron
+	<li>if something is found we use so_sql's init-function to set the data of the first match. Later on
 		we will show a list if more than one entry is found.</li>
-	<li><p>after that the content array is filled again as discriped above.</li>
+	<li><p>after that the content array is filled again as described above.</li>
 </ol>
-<p>Now we are able to store entries in the db and retrive them by
+<p>Now we are able to store entries in the db and retrieve them by
 searching the database for patterns in the different fields. You can
 try your new application now. You can create new records and save
 them. By just entering the name or author, the database will find the
 corresponding match and populate the form for you.</p>
 <p><br>We are only lacking some way to show if we get more than one
 match on a search, that's what we are going to implement next:</p>
-<h2>7. adding a list-dialog for the search-function</h2>
+<h2>7. Adding a list-dialog for the search-function</h2>
 <p>First we need to create an other eTemplate to show the list:
 <b>'et_media.show'</b> as follows. This is made of a label of name
-“msg” (to display messages), an HorizontalRule widget, and a
-Template widget: we will use a “sub template” called
+&quot;msg&quot; (to display messages), an HorizontalRule widget, and a
+Template widget: we will use a &quot;sub template&quot; called
 et_media.show.rows to display the rows of the search function. I have
-set the option of the template widget to  “entry” as this is the
+set the option of the template widget to  &quot;entry&quot; as this is the
 name we will use to access to the data in the sub-template. 
 </p>
 <p style=""><img src="step5.jpg" name="Graphic5" align="left" border="0" height="561" width="843"><br clear="left"><br><br>
 </p>
 <p style="">The 'et_media.show.rows' template is
-created as a 3x2 table. On the header row, two labels “Name” and
-“Author” and one empty cell.</p>
+created as a 3x2 table. On the header row, two labels &quot;Name&quot; and
+&quot;Author&quot; and one empty cell.</p>
 <p>ond row, two labels of name ${row}[name] and ${row}[author]. In the last cell a
-submitButton of label “Edit” and of name “edit[$row_cont[id]]”
+submitButton of label &quot;Edit&quot; and of name &quot;edit[$row_cont[id]]&quot;
 </p>
 <p><img src="step6.jpg" name="Graphic6" align="left" border="0" height="515" width="847"><br clear="left"><br><br>
 </p>
-<p>The class of the header row is “th” and the class of the
-content row is “row”. eTemplate will automatically vary the
-colors of the “row” class to provide a nice visual effect.</p>
+<p>The class of the header row is &quot;th&quot; and the class of the
+content row is &quot;row&quot;. eTemplate will automatically vary the
+colors of the &quot;row&quot; class to provide a nice visual effect.</p>
 <p>Here is a view of the et_media.show template once the two
 templates have been created:</p>
 <p><img src="step7.jpg" name="Graphic10" align="left" border="0" height="419" width="950"><br clear="left"><br><br>
@@ -436,17 +436,17 @@ This function is called by edit with the matches of a search:</p>
 		'${row}[name]'. Variable expansion is performed on each name and
 		expands that for the first row to '1[name]' which addresses the name
 		in the first match.</li>
-	<li>$content contains again 'msg' which we set to the number of entris found and the above array with
+	<li>$content contains again 'msg' which we set to the number of entries found and the above array with
 		the data of all rows under the key 'entry', as we put that in
 		Options for the field loading the sub-template 'et_media.show.rows'.
 		It not necessary to put something in Options-field / use a sub-array
 		for a sub-template, but it can be very helpful to organize a complex
-		content-array. (As an exercice you can remove 'entry' from the
-		Options-field and change the function arrcordingly).</li>
-	<li>we now explizitly read the template 'et_media.show' (the constructor reed 'et_media.edit') and
+		content-array. (As an exercise you can remove 'entry' from the
+		Options-field and change the function accordingly).</li>
+	<li>we now explicitly read the template 'et_media.show' (the constructor reed 'et_media.edit') and
 		execute it again with the edit function as callback (because of
 		that, show does NOT need to be listed in public_functions)</li>
-	<li>as 'et_media.show.rows' contains only one data-row, but fieldnames with variables to expand, that row is autorepeated for as
+	<li>as 'et_media.show.rows' contains only one data-row, but field names with variables to expand, that row is auto-repeated for as
 	many data we put into the content array (or the sub-array if we used the Options-field).</li>
 </ol>
 <p>To call the show function, we need to make some changes to the
@@ -454,7 +454,7 @@ edit-function too:</p>
 <pre>
 			elseif (isset($content['read']))
 			{
-				unset($content['id']);					<span>// not set by user, so dont use for seach</span>
+				unset($content['id']);					<span>// not set by user, so don't use for search</span>
 				unset($content['read']);
 				$found = $this-&gt;search($content,False,'name,author');	<span>// searches by using the no-empty fields</span>
 
@@ -489,10 +489,10 @@ edit-function too:</p>
 		is pressed $content['entry']['edit'] is set to the id of the entry
 		of that row. We use that id to read the whole entry.</li>
 </ol>
-<p>This is what the new “show” template looks like:</p>
+<p>This is what the new &quot;show&quot; template looks like:</p>
 <p><img src="step8.jpg" name="Graphic11" align="left" border="0" height="349" width="950"><br clear="left"><br><br>
 </p>
-<p>While makeing this changes we can add a [Cancel] and [Delete]
+<p>While making these changes we can add a [Cancel] and [Delete]
 button too:</p>
 <pre>
 			elseif (isset($content['cancel']))
@@ -511,39 +511,57 @@ button too:</p>
 </pre>
 <ol>
 	<li>on cancel we just clear the internal data-array with so_sql's init function.</li>
-	<li>on delete we have to call so_sql's delete before (it deletes the db-row coresponding 
+	<li>on delete we have to call so_sql's delete before (it deletes the db-row corresponding 
 		with our internal data-array)</li>
 	<li><p>the last block checks if the id field is set (it can only be
 		set by a read or save) and disables the [Delete] button if not
 		($this-&gt;db_key_cols[$this-&gt;autoinc_id] == 'id').</li>
 </ol>
 <p>Of course we have to add this buttons to the template
-'et_media.edit'. I trust you can add 2 Submitbuttons with the names
-'cancel' and 'delete', a Label and a nice helpmessages by now without
+'et_media.edit'. I trust you can add 2 submit buttons with the names
+'cancel' and 'delete', a Label and a nice help messages by now without
 looking at a screenshot ;-).</p>
-<h2>8. creating the english lang-file</h2>
+<p>The eTemplate is saved in the eGroupware database. If changes done to the
+eTemplate should be reverted, a eTemplate setup file is
+required, see section <a href="#etFile">Dumping the eTemplate to a File for Distribution</a>.
+Note that reverting only works if
+a valid version has previously been dumped to a distribution file or if a new
+revision identifier of the template has been used to save the changes.</p>
+<h2>8. Creating the English lang-file</h2>
 <p>To get rid of the stars '*' behind each Label and to be able to
 translate the app in other languages we need to create a
-lang-file<br>There are 2 possibilties to create it automaticaly:</p>
+lang-file<br>There are 2 possibilities to create it automatically:</p>
 <ol>
 	<li>Use the [Write Langfile] button in the eTemplate editor (put the app-name 'et_media' in the name-field
 		first)<br />That will NOT write the messages in the classes!!!</li>
 	<li>We can use the TranslationTools to scans our sources for lang('...') calls ([search new phrases] button).</li>
 	<li>Other phrases like the media types can be added manually via [Add] button in the Translation Tools.</li>
 </ol>
-<h2>9. dumping the eTemplate to a file for distribution</h2>
+<a name="etFile" /><h2>9. Dumping the eTemplate to a File for Distribution</h2>
 <p>To be able to put the eTemplates in CVS and to ship them with your
 app, you need to dump them in a file first. 
 </p>
 <p>This is done in the eTemplate editor by putting the app-name or an
 template-name in the Name field and clicking on the button
 [Dump4Setup]. This creates the file
-<b>et_media/setup/etemplates.inc.php</b>. The etemplate-class loads
-this file whenever it finds a new version automaticaly.</p>
-<h2>10. further information</h2>
-<p><b>Please note:</b> <i>all files of the et_media example can be found in the et_media sub-direcotry of
+<b>et_media/setup/etemplates.inc.php</b>. The eTemplate-class loads
+this file whenever it finds a new version automatically.</p>
+<p>To recover a changed eTemplate to the state saved in the distribution file, the following
+steps need to be performed:</p>
+<ul>
+	<li>Remove the modified template (or the modified version of the template)
+		in the eTemplate application</li>
+	<li>Touch the setup/etemplates.inc.php file in the application directory
+	(update it's timestamp).</li>
+</ul>
+<p>In case the modification was done in a sub-template, e.g. the
+definition of the rows in a list view, the correct (sub-) template name and
+version needs to be chosen for deletion. It is visible in the edit window of the
+elements modified.</p>
+<h2>10. Further information</h2>
+<p><b>Please note:</b> <i>All files of the et_media example can be found in the et_media sub-directory of
 etemplate's doc directory. Symlinking or coping to the eGroupWare install directory, allows to 
-immediatly install it via setup.</i></p>
+immediately install it via setup.</i></p>
 <ol>
 	<li>the <a href="reference.html">reference-documentation</a> of the eTemplates</li>
 	<li>for all functions and parameters of the <b>etemplate</b>-class(es) look in the 
@@ -561,10 +579,11 @@ immediatly install it via setup.</i></p>
 	<li>for all functions and parameters of the <b>so_sql</b>-class look in the comments of the file
 		<a href="http://www.egroupware.org/egwdoc/etemplate/api/so_sql.html" target="_blank">class.so_sql.inc.php</a></li>
 	<li><p>for setup, the necessary files of an app or the format of
-		tables_current.inc.php look at the exelent <a href="../../setup/doc/setup3.html">docu
+		tables_current.inc.php look at the excellent <a href="../../setup/doc/setup3.html">docu
 		of setup3</a> in the doc-dir of the setup app. </li>
 </ol>
-<h2><i>That's it</i> - please write to our <a href="#" onclick="document.location='mai'+'lto:egroupware-developer'+unescape('%40')+'lists'+unescape('%2E')+'sf.net'; return false;">developers list</a> 
-or <a href="http://forum.egroupware.org/" target="_blank">developer forum</a>, 
+<h2><i>That's it</i> - please write to our <a href="#"
+onclick="document.location='mai'+'lto:egroupware-developer'+unescape('%40')+'lists'+unescape('%2E')+'sf.net'; return false;">developers
+list</a> or <a href="http://forum.egroupware.org/" target="_blank">developer forum</a>, 
 if you have further questions or comments about the tutorial or eTemplate.</h2>
 </body></html>
