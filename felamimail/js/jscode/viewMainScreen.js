@@ -1,3 +1,6 @@
+if (typeof CopyOrMove == 'undefined') var CopyOrMove = window.CopyOrMove;
+if (typeof prefAskForMove == 'undefined') var prefAskForMove = window.prefAskForMove; 
+
 function parentRefreshListRowStyle(oldID, newID)
 {
 	var trElement;
@@ -175,6 +178,7 @@ function callNodeSelect(_nodeIDfc, mode) {
 function onNodeSelect(_nodeID) {
 //alert(_nodeID)
 	if (typeof CopyOrMove == 'undefined') CopyOrMove = window.CopyOrMove;
+	if (typeof prefAskForMove == 'undefined') prefAskForMove = window.prefAskForMove; 
 	var Check = CopyOrMove;
 	var actionPending = false;
 	if(top.tree.getUserData(_nodeID, 'folderName')) {
