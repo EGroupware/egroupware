@@ -73,6 +73,11 @@ class importexport_export_csv implements importexport_iface_export_record
 	);
 	
 	/**
+	 * Cache of parsed custom field parameters
+	 */
+	protected static $cf_parse_cache = array();
+
+	/**
 	 * constructor
 	 *
 	 * @param stram $_stream resource where records are exported to.
@@ -160,6 +165,57 @@ class importexport_export_csv implements importexport_iface_export_record
 	}
 
 	/**
+	 * Parse custom fields for an app, so a more human friendly value can be exported
+	 *
+	 * @param appname Name of the app to fetch the custom fields for
+	 * @param selects Lookup values for select boxes
+	 * @param links Appnames for links to fetch the title
+	 * @param methods Method will be called with the record's value
+	 * 
+	 * @return Array of fields to be added to list of fields needing conversion
+	 */
+	public static function convert_parse_custom_fields($appname, &$selects = array(), &$links = array(), &$methods = array()) {
+		if(!$appname) return;
+
+		$custom = config::get_customfields($appname);
+		foreach($custom as $name => $c_field) {
+			$name = '#' . $name;
+			switch($c_field['type']) {
+				case 'date':
+					$fields['date'][] = $name;
+					break;
+				case 'date-time':
+					$fields['date-time'][] = $name;
+					break;
+				case 'select-account':
+					$fields['select-account'][] = $name;
+					break;
+				case 'ajax_select':
+					if($c_field['values']['get_title']) {
+						$methods[$name] = $c_field['values']['get_title'];
+						break;
+					}
+					// Fall through for other settings
+				case 'select':
+					if (count($c_field['values']) == 1 && isset($c_field['values']['@']))
+					{
+						$c_field['values'] = ExecMethod('etemplate.customfields_widget._get_options_from_file', $c_field['values']['@']);
+					}
+					$fields['select'][] = $name;
+					$selects[$name] = $c_field['values'];
+					break;
+				default:
+					if(in_array($c_field['type'], array_keys($GLOBALS['egw_info']['apps']))) {
+						$fields['links'][] = $name;
+						$links[$name] = $c_field['type'];
+					}
+					break;
+			}
+		}
+		return $fields;
+	}
+
+	/**
 	 * Convert system info into a format with a little more transferrable meaning
 	 *
 	 * Uses the static variable $types to convert various datatypes.
@@ -170,42 +226,31 @@ class importexport_export_csv implements importexport_iface_export_record
 	 */
 	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null) {
 		if($appname) {
-			$custom = config::get_customfields($appname);
-			$selects = array();
-			$links = array();
-			foreach($custom as $name => $c_field) {
-				$name = '#' . $name;
-				switch($c_field['type']) {
-					case 'date':
-						$fields['date'][] = $name;
-						break;
-					case 'date-time':
-						$fields['date-time'][] = $name;
-						break;
-					case 'select-account':
-						$fields['select-account'][] = $name;
-						break;
-					case 'select':
-						$fields['select'][] = $name;
-						$selects[$name] = $c_field['values'];
-						break;
-					default:
-						if(in_array($c_field['type'], array_keys($GLOBALS['egw_info']['apps']))) {
-							$fields['links'][] = $name;
-							$links[$name] = $c_field['type'];
-						}
-						break;
+			if(!self::$cf_parse_cache[$appname]) {
+				$fields = self::convert_parse_custom_fields($appname, $selects, $links, $methods);
+				self::$cf_parse_cache[$appname] = array($fields, $selects, $links, $methods);
+			}
+			list($c_fields, $selects, $links, $methods) = self::$cf_parse_cache[$appname];
+			$fields = array_merge($c_fields, $fields);
+		}
+		foreach((array)$fields['select'] as $name) {
+			if($record->$name && $selects[$name]) $record->$name = $selects[$name][$record->$name];
+		}
+		foreach((array)$fields['links'] as $name) {
+			if($record->$name) {
+				if(is_numeric($record->$name) && !$links[$name]) {
+					$link = egw_link::get_link($record->$name);
+					$links[$name] = ($link['link_app1'] == $appname ? $link['link_app2'] : $link['link_app1']);
+					$record->$name = ($link['link_app1'] == $appname ? $link['link_id2'] : $link['link_id1']);
+				}
+				if($links[$name]) {
+					$record->$name = egw_link::title($links[$name], $record->$name);
 				}
 			}
 		}
-		foreach($fields['select'] as $name) {
-			if($record->$name && $selects[$name]) $record->$name = $selects[$name][$record->$name];
-		}
-		foreach($fields['links'] as $name) {
-			if($record->$name && $links[$name]) $record->$name = egw_link::title($links[$name], $record->$name);
-		}
-		foreach($fields['select-account'] as $name) {
-			if ($record->$name) {
+		foreach((array)$fields['select-account'] as $name) {
+			// Compare against null to deal with empty arrays
+			if ($record->$name !== null) {
 				if(is_array($record->$name)) {
 					$names = array();
 					foreach($record->$name as $_name) {
@@ -217,17 +262,22 @@ class importexport_export_csv implements importexport_iface_export_record
 				}
 			}
 		}
-		foreach($fields['date-time'] as $name) {
+		foreach((array)$fields['date-time'] as $name) {
 			//if ($record->$name) $record->$name = date('Y-m-d H:i:s',$record->$name); // Standard date format
 			if ($record->$name) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' '.
 				($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '24' ? 'H' : 'h').':m:s',$record->$name); // User date format
 		}
-		foreach($fields['date'] as $name) {
+		foreach((array)$fields['date'] as $name) {
 			//if ($record->$name) $record->$name = date('Y-m-d',$record->$name); // Standard date format
 			if ($record->$name) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], $record->$name); // User date format
 		}
 
-		foreach($fields['select-cat'] as $name) {
+		// Some custom methods for conversion
+		foreach((array)$methods as $name => $method) {
+			if($record->$name) $record->$name = ExecMethod($method, $record->$name);
+		}
+
+		foreach((array)$fields['select-cat'] as $name) {
 			if($record->$name) {
 				$cats = array();
 				$ids = is_array($record->$name) ? $record->$name : explode(',', $record->$name);
