@@ -755,7 +755,11 @@
 				'',
 				$_messageID
 			);
-			$headerData = $this->bofelamimail->decode_header($headerData['header'][0]);
+			$headerData = $headerData['header'][0];
+			foreach ($headerData as $key => $val)
+			{
+				$headerData[$key] = bofelamimail::htmlentities($val);
+			}
 			$headerData['subject'] = $this->bofelamimail->decode_subject($headerData['subject'],false);
 			$this->sessionData['previewMessage'] = $headerData['uid'];
 			$this->saveSessionData();
