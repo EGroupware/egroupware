@@ -3024,6 +3024,60 @@
 			}
 			return preg_match("$needle",$string);
 		}
+
+		/**
+		 * htmlspecialchars 
+		 * helperfunction to cope with wrong encoding in strings
+		 * @param string $_string  input to be converted
+		 * @param mixed $charset false or string -> Target charset, if false bofelamimail displayCharset will be used
+		 * @return string 
+		 */
+		static function htmlspecialchars($_string, $_charset=false)
+		{
+			//setting the charset (if not given)
+			if ($_charset===false) $_charset = bofelamimail::$displayCharset;
+			$_stringORG = $_string;
+			$_string = @htmlspecialchars($_string,ENT_QUOTES,$_charset, false);
+			if (empty($_string) && !empty($_stringORG)) $_string = @htmlspecialchars($GLOBALS['egw']->translation->convert($_stringORG,bofelamimail::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
+			return $_string;
+		}
+
+		/**
+		 * htmlentities
+		 * helperfunction to cope with wrong encoding in strings
+		 * @param string $_string  input to be converted
+		 * @param mixed $charset false or string -> Target charset, if false bofelamimail displayCharset will be used
+		 * @return string 
+		 */
+		static function htmlentities($_string, $_charset=false)
+		{
+			//setting the charset (if not given)
+			if ($_charset===false) $_charset = bofelamimail::$displayCharset;
+			$_stringORG = $_string;
+			$_string = @htmlentities($_string,ENT_QUOTES,$_charset, false);
+			if (empty($_string) && !empty($_stringORG)) $_string = @htmlentities($GLOBALS['egw']->translation->convert($_stringORG,bofelamimail::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
+			return $_string;
+		}
+
+		/**
+		 * detect_encoding - try to detect the encoding
+		 *    only to be used if the string in question has no structure that determines his encoding
+		 * @param string - to be evaluated
+		 * @returns mixed string/boolean (encoding or false
+		 */
+		static function detect_encoding($string) { 
+			static $list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
+			if (function_exists('iconv'))
+			{ 
+				foreach ($list as $item) {
+				$sample = iconv($item, $item, $string);
+				if (md5($sample) == md5($string))
+					return $item;
+				}
+			}
+			return false; // we may choose to return iso-8859-1 as default at some point
+		}
+
 		static function detect_qp(&$sting) {
 			$needle = '/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/';
 			return preg_match("$needle",$string);
@@ -3052,5 +3106,296 @@
 				if ($test===null) $date2return = egw_time::to('now',$format);
 			}
 			return $date2return;
+		}
+
+		/**
+		 * checkFileBasics
+		 *	check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+		 *
+		 * @param array $_formData passed by reference Array with information of name, type, file and size, mimetype may be adapted
+		 * @param string $IDtoAddToFileName id to enrich the returned tmpfilename
+		 * @param string $reqMimeType /(default message/rfc822, if set to false, mimetype check will not be performed
+		 * @return mixed $fullPathtoFile or exception
+		 */
+		static function checkFileBasics(&$_formData, $IDtoAddToFileName='', $reqMimeType='message/rfc822')
+		{
+			//error_log(__METHOD__.__FILE__.array2string($_formData).' Id:'.$IDtoAddToFileName.' ReqMimeType:'.$reqMimeType);
+			$importfailed = $tmpFileName = false;
+			if ($_formData['size'] != 0 && (is_uploaded_file($_formData['file']) || 
+				realpath(dirname($_formData['file'])) == realpath($GLOBALS['egw_info']['server']['temp_dir']) ||
+				parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs'))
+			{
+				// ensure existance of eGW temp dir
+				// note: this is different from apache temp dir, 
+				// and different from any other temp file location set in php.ini
+				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					@mkdir($GLOBALS['egw_info']['server']['temp_dir'],0700);
+				}
+				
+				// if we were NOT able to create this temp directory, then make an ERROR report
+				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
+				{
+					$alert_msg .= 'Error:'.'<br>'
+						.'Server is unable to access phpgw tmp directory'.'<br>'
+						.$GLOBALS['egw_info']['server']['temp_dir'].'<br>'
+						.'Please check your configuration'.'<br>'
+						.'<br>';
+				}
+				
+				// sometimes PHP is very clue-less about MIME types, and gives NO file_type
+				// rfc default for unknown MIME type is:
+				if ($reqMimeType == 'message/rfc822') 
+				{
+					$mime_type_default = 'message/rfc';
+				}
+				else
+				{
+					$mime_type_default = $reqMimeType;
+				}
+				if (trim($_formData['type']) == '')
+				{
+					$_formData['type'] = 'application/octet-stream';
+				}
+				// if reqMimeType is set to false do not test for that
+				if ($reqMimeType)
+				{
+					// so if PHP did not pass any file_type info, then substitute the rfc default value
+					if (substr(strtolower(trim($_formData['type'])),0,strlen($mime_type_default)) != $mime_type_default)
+					{
+						// maybe its application/octet-stream -> this may mean that we could not determine the type
+						// so we check for the suffix too
+						$buff = explode('.',$_formData['name']);
+						$suffix = '';
+						if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+						if (!(strtolower(trim($_formData['type'])) == "application/octet-stream" && mime_magic::ext2mime($suffix)== $reqMimeType))
+						{
+							//error_log("Message rejected, no message/rfc. Is:".$_formData['type']);
+							$importfailed = true;
+							$alert_msg .= lang("File rejected, no %2. Is:%1",$_formData['type'],$reqMimeType);
+						}
+						if ((strtolower(trim($_formData['type'])) != $reqMimeType && mime_magic::ext2mime($suffix)== $reqMimeType))
+						{
+							$_formData['type'] = mime_magic::ext2mime($suffix);
+						}
+					}
+				}
+				
+				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
+					SEP.
+					$GLOBALS['egw_info']['user']['account_id'].
+					trim($IDtoAddToFileName).basename($_formData['file']);
+				
+				if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
+				{
+					$tmpFileName = $_formData['file'];	// no need to store it somewhere
+				}
+				elseif (is_uploaded_file($_formData['file']))
+				{
+					move_uploaded_file($_formData['file'],$tmpFileName);	// requirement for safe_mode!
+				}
+				else
+				{
+					rename($_formData['file'],$tmpFileName);
+				}
+			} else {
+				//error_log("Import of message ".$_formData['file']." failes to meet basic restrictions");
+				$importfailed = true;
+				$alert_msg .= lang("Processing of file %1 failed. Failed to meet basic restrictions.",$_formData['name']);
+			}
+			if ($importfailed == true)
+			{
+				throw new egw_exception_wrong_userinput($alert_msg);
+			}
+			else
+			{
+				if (parse_url($tmpFileName,PHP_URL_SCHEME) == 'vfs')
+				{
+					egw_vfs::load_wrapper('vfs');
+				}
+				return $tmpFileName;
+			}			
+		}
+
+		/**
+		 * getRandomString - function to be used to fetch a random string and md5 encode that one
+		 * @param none
+		 * @return string - a random number which is md5 encoded
+		 */
+		static function getRandomString() {
+			mt_srand((float) microtime() * 1000000);
+			return md5(mt_rand (100000, 999999));
+		}
+
+		/**
+		 * functions to allow access to mails through other apps to fetch content
+		 * used in infolog, tracker
+		 */
+
+		/**
+		 * get_mailcontent - fetches the actual mailcontent, and returns it as well defined array
+		 * @param bofelamimail the bofelamimailobject to be used
+		 * @param uid the uid of the email to be processed
+		 * @param partid the partid of the email
+		 * @param mailbox the mailbox, that holds the message
+		 * @returns array with 'mailaddress'=>$mailaddress,
+		 *				'subject'=>$subject,
+		 *				'message'=>$message,
+		 *				'attachments'=>$attachments,
+		 *				'headers'=>$headers,
+		 */
+		static function get_mailcontent(&$bofelamimail,$uid,$partid='',$mailbox='')
+		{
+				//echo __METHOD__." called for $uid,$partid <br>";
+				$headers = $bofelamimail->getMessageHeader($uid,$partid,true);
+				// dont force retrieval of the textpart, let felamimail preferences decide
+				$bodyParts = $bofelamimail->getMessageBody($uid,'',$partid);
+				$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
+
+				if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
+				elseif (isset($headers['FROM'])) $mailaddress = $headers['FROM'];
+				elseif (isset($headers['SENDER'])) $mailaddress = $headers['SENDER'];
+				if (isset($headers['CC'])) $mailaddress .= ','.$headers['CC'];
+				//_debug_array($headers);
+				$subject = $headers['SUBJECT'];
+
+				$message = self::getdisplayableBody($bofelamimail, $bodyParts);
+				$headdata = self::createHeaderInfoSection($headers);
+				$message = $headdata.$message;
+				//echo __METHOD__.'<br>';
+				//_debug_array($attachments);
+				if (is_array($attachments))
+				{
+					foreach ($attachments as $num => $attachment)
+					{
+						if ($attachment['mimeType'] == 'MESSAGE/RFC822')
+						{
+							//_debug_array($bofelamimail->getMessageHeader($uid, $attachment['partID']));
+							//_debug_array($bofelamimail->getMessageBody($uid,'', $attachment['partID']));
+							//_debug_array($bofelamimail->getMessageAttachments($uid, $attachment['partID']));
+							$mailcontent = self::get_mailcontent($bofelamimail,$uid,$attachment['partID']);
+							$headdata ='';
+							if ($mailcontent['headers'])
+							{
+								$headdata = self::createHeaderInfoSection($mailcontent['headers']);
+							}
+							if ($mailcontent['message'])
+							{
+								$tempname =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+								$attachedMessages[] = array(
+									'type' => 'TEXT/PLAIN',
+									'name' => $mailcontent['subject'].'.txt',
+									'tmp_name' => $tempname,
+								);
+								$tmpfile = fopen($tempname,'w');
+								fwrite($tmpfile,$headdata.$mailcontent['message']);
+								fclose($tmpfile);
+							}
+							foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
+							{
+								$attachedMessages[] = $tmpval;
+							}
+							unset($attachments[$num]);
+						}
+						else
+						{
+							$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($uid, $attachment['partID']));
+							if (isset($attachments[$num]['charset'])) {
+								if ($attachments[$num]['charset']===false) $attachments[$num]['charset'] = self::detect_encoding($attachments[$num]['attachment']);
+								$GLOBALS['egw']->translation->convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
+							}
+							$attachments[$num]['type'] = $attachments[$num]['mimeType'];
+							$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+							$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
+							fwrite($tmpfile,$attachments[$num]['attachment']);
+							fclose($tmpfile);
+							unset($attachments[$num]['attachment']);
+						}
+					}
+					if (is_array($attachedMessages)) $attachments = array_merge($attachments,$attachedMessages);
+				}
+				return array(
+						'mailaddress'=>$mailaddress,
+						'subject'=>$subject,
+						'message'=>$message,
+						'attachments'=>$attachments,
+						'headers'=>$headers,
+						);
+		}
+
+		/**
+		 * createHeaderInfoSection - creates a textual headersection from headerobject
+		 * @params header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
+		 * @returns string a preformatted string with the information of the header worked into it
+		 */
+		static function createHeaderInfoSection($header,$headline='')
+		{
+			$headdata = null;
+			if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT']."\n";
+			if ($header['FROM']) $headdata .= lang('from').': '.$header['FROM']."\n";
+			if ($header['SENDER']) $headdata .= lang('sender').': '.$header['SENDER']."\n";
+			if ($header['TO']) $headdata .= lang('to').': '.$header['TO']."\n";
+			if ($header['CC']) $headdata .= lang('cc').': '.$header['CC']."\n";
+			if ($header['BCC']) $headdata .= lang('bcc').': '.$header['BCC']."\n";
+			if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE']."\n";
+			if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY']."\n";
+			if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE']."\n";
+			//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
+			if (!empty($headdata)) 
+			{
+				if (!empty($headline)) $headdata = "---------------------------- $headline ----------------------------\n".$headdata;
+				if (empty($headline)) $headdata = "--------------------------------------------------------\n".$headdata;
+				$headdata .= "--------------------------------------------------------\n";
+			}
+			else
+			{
+				$headdata = "--------------------------------------------------------\n";
+			}
+			return $headdata;
+		}
+
+		/**
+		 * getdisplayableBody - creates the bodypart of the email as textual representation
+		 * @param bofelamimail the bofelamimailobject to be used
+		 * @params bodyPorts array with the bodyparts
+		 * @returns string a preformatted string with the mails converted to text
+		 */
+		static function &getdisplayableBody(&$bofelamimail, $bodyParts)
+		{
+			for($i=0; $i<count($bodyParts); $i++)
+			{
+				if (!isset($bodyParts[$i]['body'])) {
+					$bodyParts[$i]['body'] = self::getdisplayableBody($bofelamimail, $bodyParts[$i]);
+					$message .= $bodyParts[$i]['body'];
+					continue;
+				}
+				if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = self::detect_encoding($bodyParts[$i]['body']);
+				// add line breaks to $bodyParts
+				$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+
+				if ($bodyParts[$i]['mimeType'] == 'text/html') {
+					// convert HTML to text, as we dont want HTML in infologs
+					$newBody = html::purify($newBody);
+					$newBody = $bofelamimail->convertHTMLToText($newBody,true);
+					$bofelamimail->getCleanHTML($newBody); // new Body passed by reference
+					$message .= $newBody;
+					continue;
+				}
+				$newBody = strip_tags($newBody);
+				$newBody  = explode("\n",$newBody);
+				// create it new, with good line breaks
+				reset($newBody);
+				while(list($key,$value) = @each($newBody))
+				{
+					if (trim($value) != '') {
+						#if ($value != "\r") $value .= "\n";
+					} else {
+						// if you want to strip all empty lines uncomment the following
+						#continue;
+					}
+					$message .= $bofelamimail->wordwrap($value,75,"\n");
+				}
+			}
+			return $message;
 		}
 	}
