@@ -637,7 +637,7 @@ class db_backup
 				}
 				$arr[$key] = str_replace(self::BACKSLASH_TOKEN,'\\',str_replace(array('\\\\','\\n','\\r','\\"'),array(self::BACKSLASH_TOKEN,"\n","\r",'"'),substr($field,1,-1)));
 			}
-			elseif ($keys && strlen($field) > 24)
+			elseif ($keys && strlen($field) > 26)
 			{
 				$arr[$key] = base64_decode($field);
 			}
