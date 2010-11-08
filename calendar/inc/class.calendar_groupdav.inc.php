@@ -24,14 +24,14 @@ class calendar_groupdav extends groupdav_handler
 	 * @var calendar_boupdate
 	 */
 	var $bo;
-	
+
 	/**
 	 * vCalendar Instance for parsing
 	 *
 	 * @var array
 	 */
 	var $vCalendar;
-	
+
 	var $filter_prop2cal = array(
 		'SUMMARY' => 'cal_title',
 		'UID' => 'cal_uid',
@@ -354,7 +354,16 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 					if ($option['name'] == 'href')
 					{
 						$parts = explode('/',$option['data']);
-						if (is_numeric($id = basename(array_pop($parts),'.ics'))) $ids[] = $id;
+						if (!($id = basename(array_pop($parts),'.ics'))) continue;
+
+						if (is_numeric($id))
+						{
+							$ids[] = $id;
+						}
+						else	// eg. lightning uses multiget after a PUT on the PUT url, which is the uid
+						{
+							$cal_filters['query']['cal_uid'][] = $id;
+						}
 					}
 				}
 			}
@@ -363,7 +372,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 				$cal_filters['query'][] = 'egw_cal.cal_id IN ('.implode(',',array_map(create_function('$n','return (int)$n;'),$ids)).')';
 			}
 
-			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids));
+			if ($this->debug > 1) error_log(__FILE__ . __METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',',$ids).', cal_filters='.array2string($cal_filters));
 		}
 		return true;
 	}
