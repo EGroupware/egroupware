@@ -1573,7 +1573,7 @@
 						} elseif (in_array($shortName,self::$autoFolders)) {
 							$tmpfolderparts = explode($delimiter,$folderObject->folderName);
 							array_pop($tmpfolderparts);
-							$folderObject->displayName = $this->encodeFolderName(implode($delimiter,$tmpfolderparts).$delimiter.lang($shortName));
+							$folderObject->displayName = implode($delimiter,$tmpfolderparts).$delimiter.lang($shortName);
 							$folderObject->shortDisplayName = lang($shortName);
 							unset($tmpfolderparts);
 						} else {
