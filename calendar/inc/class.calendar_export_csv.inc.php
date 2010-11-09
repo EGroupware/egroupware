@@ -31,12 +31,12 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			'enum_recuring' => false,
 			'daywise'       => false,
 			'owner'         => $options['owner'],
-			'date_format'   => $options['date_format'],
 		));
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
 		$convert_fields = importexport_export_csv::$types;
+		$convert_fields['select-account'][] = 'owner';
 		$convert_fields['date-time'][] = 'start';
 		$convert_fields['date-time'][] = 'end';
 
