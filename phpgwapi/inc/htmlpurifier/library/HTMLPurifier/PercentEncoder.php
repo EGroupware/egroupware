@@ -49,13 +49,15 @@ class HTMLPurifier_PercentEncoder
      */
     public function encode($string) {
         $ret = '';
+        //error_log(__METHOD__.__LINE__.$string);
         for ($i = 0, $c = strlen($string); $i < $c; $i++) {
-            if ($string[$i] !== '%' && !isset($this->preserve[$int = ord($string[$i])]) ) {
+            if (substr($string,$i,1) !== '%' && !isset($this->preserve[$int = ord(substr($string,$i,1))]) ) {
                 $ret .= '%' . sprintf('%02X', $int);
             } else {
-                $ret .= $string[$i];
+                $ret .= substr($string,$i,1);
             }
         }
+        //error_log(__METHOD__.__LINE__.$ret);
         return $ret;
     }
 
