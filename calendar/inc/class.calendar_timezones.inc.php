@@ -186,7 +186,15 @@ class calendar_timezones
 			throw new egw_exception_assertion_failed(__METHOD__."('$file') required SQLite support (PHP extension pdo_sqlite) missing!");
 		}
 		$pdo = new PDO('sqlite:'.$path);
-		if ($pdo->query('SELECT version FROM tz_schema_version')->fetchColumn() != 1)
+		// some PHP pdo_sqlite can for whatever reason NOT read the timezones database (reported eg. on Gentu)
+		// not much we can do, but give an good error message, with a download link to the MySQL dump
+		if (!($rs = $pdo->query('SELECT version FROM tz_schema_version')))
+		{
+			return lang('Your PHP extension pdo_sqlite is broken!').'<br />'.lang('It can NOT read timezones from sqlite database %1!',$path).'<br />'.
+				lang('As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.',
+					'<a href="http://dev.egroupware.org/other/egw_cal_timezones.sql.bz2">','</a>');
+		}
+		if ($rs->fetchColumn() != 1)
 		{
 			throw new egw_exception_wrong_parameter(__METHOD__."('$file') only schema version 1 supported!");
 		}
