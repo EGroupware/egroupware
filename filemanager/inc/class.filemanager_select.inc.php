@@ -134,12 +134,12 @@ class filemanager_select
 						// encode chars which special meaning in url/vfs (some like / get removed!)
 						$content['name'] = egw_vfs::encodePathComponent($content['file_upload']['name']);
 						$to_path = egw_vfs::concat($content['path'],$content['name']);
-					
+
 						$copy_result = (egw_vfs::is_writable($content['path']) || egw_vfs::is_writable($to)) &&
 							copy($content['file_upload']['tmp_name'],egw_vfs::PREFIX.$to_path);
 					}
 
-					//Break on an error condition					
+					//Break on an error condition
 					if ((($content['mode'] == 'open' || $content['mode'] == 'saveas') && ($content['name'] == '')) || ($copy_result === false))
 					{
 						if ($copy_result === false)
@@ -220,7 +220,11 @@ class filemanager_select
 		{
 			$content['path'] = filemanager_ui::get_home_dir();
 		}
-		if (!($d = egw_vfs::opendir($content['path'])))
+		if (!($files = egw_vfs::find($content['path'],array(
+			'order' => 'name',
+			'sort' => 'ASC',
+			'maxdepth' => 1,
+		))))
 		{
 			$content['msg'] = lang("Can't open directory %1!",$content['path']);
 		}
@@ -228,10 +232,10 @@ class filemanager_select
 		{
 			$n = 0;
 			$content['dir'] = array('mode' => $content['mode']);
-			while (($name = readdir($d)))
+			array_shift($files);	// remove directory itself
+			foreach($files as $path)
 			{
-				if ($name[0] == '.' || $name == 'Thumbs.db') continue;	// ignore hidden files
-				$path = egw_vfs::concat($content['path'],$name);
+				$name = egw_vfs::basename($path);
 				$is_dir = egw_vfs::is_dir($path);
 				if ($content['mime'] && !$is_dir && egw_vfs::mime_content_type($path) != $content['mime'])
 				{
@@ -251,7 +255,6 @@ class filemanager_select
 				++$n;
 			}
 			if (!$n) $readonlys['selected[]'] = true;	// remove checkbox from empty line
-			closedir($d);
 		}
 
 		$content['js'] = '<script type="text/javascript">
