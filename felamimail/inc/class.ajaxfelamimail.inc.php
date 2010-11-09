@@ -1,21 +1,22 @@
 <?php
-	/***************************************************************************\
-	* eGroupWare - FeLaMiMail                                                   *
-	* http://www.linux-at-work.de                                               *
-	* http://www.phpgw.de                                                       *
-	* http://www.egroupware.org                                                 *
-	* Written by : Lars Kneschke [lkneschke@linux-at-work.de]                   *
-	* maintained by Klaus Leithoff												*
-	* -------------------------------------------------                         *
-	* This program is free software; you can redistribute it and/or modify it   *
-	* under the terms of the GNU General Public License as published by the     *
-	* Free Software Foundation; either version 2 of the License, or (at your    *
-	* option) any later version.                                                *
-	\***************************************************************************/
+/**
+ * EGroupware - FeLaMiMail - xajax actions
+ *
+ * @link http://www.egroupware.org
+ * @package felamimail
+ * @author Lars Kneschke [lkneschke@linux-at-work.de]
+ * @author Klaus Leithoff [kl@stylite.de]
+ * @copyright (c) 2004 by Lars Kneschke <lkneschke-AT-linux-at-work.de>
+ * @copyright (c) 2009-10 by Klaus Leithoff <kl-AT-stylite.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
-	/* $Id$ */
-
-	class ajaxfelamimail {
+/**
+ * a class containing / implementing the xajax actions triggered by javascript
+ */
+class ajaxfelamimail 
+{
 		// which profile to use(currently only 0 is supported)
 		var $imapServerID=0;
 
@@ -768,7 +769,7 @@
 
 			if ($this->_connectionStatus === true) {
 				$folderName = $this->sessionData['mailbox'];
-
+				//error_log(array2string($this->bofelamimail->getFolderStatus($folderName)));
 				if ($folderStatus = $this->bofelamimail->getFolderStatus($folderName)) {
 					if ($folderStatus['unseen'] > 0) {
 						$response->addScript("tree.setItemText('$folderName', '<b>". $folderStatus['shortDisplayName'] ." (". $folderStatus['unseen'] .")</b>');");
@@ -790,30 +791,30 @@
 			$response = new xajaxResponse();
 			if(!($this->_connectionStatus === true)) $this->_connectionStatus = $this->bofelamimail->openConnection();
 			if($this->_connectionStatus === true) {
-				#error_log("connected");
+				//error_log("connected");
 				if (is_array($activeFolders)) {
 					foreach ($activeFolders as $key => $name) {
-						#error_log($key."=>".$name);
+						//error_log($key."=>".$name);
 						switch($name) {
 							case "0": break;
 							case "--topfolder--": break;
 							default:
-								$folders[$name] = $name;
-								#error_log("check folder $name");
+								$folders[html_entity_decode($name,ENT_COMPAT)] = $name;
+								//error_log("check folder $name");
 						}
 					}
 					if (!(is_array($folders) && count($folders)>0)) $folders = $this->bofelamimail->getFolderObjects(true);
 				} else {
-					#error_log("check/get all folders");
+					//error_log("check/get all folders");
 					$folders = $this->bofelamimail->getFolderObjects(true);
 				}
 				foreach($folders as $folderName => $folderData) {
-					#error_log("checking $folderName");
+					//error_log(__METHOD__.__LINE__."checking $folderName -> ".array2string($this->bofelamimail->getFolderStatus($folderName)));
 					if($folderStatus = $this->bofelamimail->getFolderStatus($folderName)) {
 						if($folderStatus['unseen'] > 0) {
-							$response->addScript("tree.setItemText('$folderName', '<b>". $folderStatus['shortDisplayName'] ." (". $folderStatus['unseen'] .")</b>');");
+							$response->addScript("tree.setItemText('".@htmlspecialchars($folderName,ENT_QUOTES, bofelamimail::$displayCharset,false)."', '<b>". $folderStatus['shortDisplayName'] ." (". $folderStatus['unseen'] .")</b>');");
 						} else {
-							$response->addScript("tree.setItemText('$folderName', '". $folderStatus['shortDisplayName'] ."');");
+							$response->addScript("tree.setItemText('".@htmlspecialchars($folderName,ENT_QUOTES, bofelamimail::$displayCharset,false)."', '". $folderStatus['shortDisplayName'] ."');");
 						}
 					}
 				}
@@ -1201,5 +1202,5 @@
 			return str_replace($search, $replace, $folderName);
 		}
 
-	}
+}
 ?>
