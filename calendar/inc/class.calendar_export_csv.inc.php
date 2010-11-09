@@ -40,6 +40,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		$convert_fields['date-time'][] = 'start';
 		$convert_fields['date-time'][] = 'end';
 
+		$recurrence = $this->bo->recur_types;
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
@@ -51,8 +52,14 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			}
 
 			$record->set_record($event);
+			if($options['mapping']['recurrence']) {
+				$record->recurrence = $recurrence[$record->recur_type];
+				if($record->recur_type != MCAL_RECUR_NONE) $record->recurrence .= ' / '. $record->recur_interval;
+			}
+
 			// Standard stuff
 			importexport_export_csv::convert($record, $convert_fields, 'calendar');
+
 			$export_object->export_record($record);
 		}
 		unset($record);
