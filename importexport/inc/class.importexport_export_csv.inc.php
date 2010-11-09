@@ -227,11 +227,18 @@ class importexport_export_csv implements importexport_iface_export_record
 	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null) {
 		if($appname) {
 			if(!self::$cf_parse_cache[$appname]) {
-				$fields = self::convert_parse_custom_fields($appname, $selects, $links, $methods);
-				self::$cf_parse_cache[$appname] = array($fields, $selects, $links, $methods);
+				$c_fields = self::convert_parse_custom_fields($appname, $selects, $links, $methods);
+				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
 			}
 			list($c_fields, $selects, $links, $methods) = self::$cf_parse_cache[$appname];
-			$fields = array_merge($c_fields, $fields);
+			// Not quite a recursive merge, since only one level
+			foreach($fields as $type => &$list) {
+				if($c_fields[$type]) {
+					$list += $c_fields[$type];
+					unset($c_fields[$type]);
+				}
+			}
+			$fields += $c_fields;
 		}
 		foreach((array)$fields['select'] as $name) {
 			if($record->$name && is_array($selects) && $selects[$name]) $record->$name = $selects[$name][$record->$name];
@@ -264,12 +271,12 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 		foreach((array)$fields['date-time'] as $name) {
 			//if ($record->$name) $record->$name = date('Y-m-d H:i:s',$record->$name); // Standard date format
-			if ($record->$name) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' '.
-				($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '24' ? 'H' : 'h').':m:s',$record->$name); // User date format
+			if ($record->$name && is_numeric($record->$name)) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ', '.
+				($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '24' ? 'H' : 'h').':i:s',$record->$name); // User date format
 		}
 		foreach((array)$fields['date'] as $name) {
 			//if ($record->$name) $record->$name = date('Y-m-d',$record->$name); // Standard date format
-			if ($record->$name) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], $record->$name); // User date format
+			if ($record->$name && is_numeric($record->$name)) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], $record->$name); // User date format
 		}
 
 		// Some custom methods for conversion
