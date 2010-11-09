@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.list.rows" template="" lang="" group="0" version="1.7.003">
+	<template id="calendar.list.rows" template="" lang="" group="0" version="1.7.004">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -46,12 +46,12 @@
 						<button label="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right" id="check_all" image="check" statustext="Check all"/>
 					</hbox>
 				</row>
-				<row class="row" valign="top">
+				<row class="$row_cont[category]" valign="top">
 					<vbox id="start">
 						<date-time readonly="true" id="${row}[start]" options=",$cont[format]" class="noWrap"/>
 						<date-time readonly="true" id="${row}[end]" options=",$cont[format]" class="noWrap"/>
 					</vbox>
-					<vbox>
+					<vbox class="listVbox">
 						<description readonly="true" no_lang="1" id="${row}[title]" options="b"/>
 						<box no_lang="1" class="listDescription">
 							<description no_lang="1" id="${row}[description]"/>
@@ -124,6 +124,10 @@
 
 .image16 img {
   height: 16px;
+}
+
+.listVbox {
+  width: 100%;
 }
 		</styles>
 	</template>
