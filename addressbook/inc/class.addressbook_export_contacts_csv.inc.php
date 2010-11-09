@@ -193,7 +193,6 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	 * @return string html
 	 */
 	public function get_options_etpl() {
-		return 'addressbook.export_csv_options';
 	}
 
 	/**
