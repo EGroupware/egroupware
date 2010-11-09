@@ -396,6 +396,7 @@ class egw_vfs extends vfs_stream_wrapper
 		$dirs_last = $options['depth'];	// put content of dirs before the dir itself
 		// show dirs on top by default, if no recursive listing (allways disabled if $type specified, as unnecessary)
 		$dirsontop = !$type && (isset($options['dirsontop']) ? (boolean)$options['dirsontop'] : isset($options['maxdepth'])&&$options['maxdepth']>0);
+		if ($dirsontop) $options['need_mime'] = true;	// otherwise dirsontop can NOT work
 
 		// process some of the options (need to be done only once)
 		if (isset($options['name']) && !isset($options['name_preg']))	// change from simple *,? wildcards to preg regular expression once
@@ -507,7 +508,7 @@ class egw_vfs extends vfs_stream_wrapper
 					$code = $dirsfirst.$sort.'($a[\''.$options['order'].'\']-$b[\''.$options['order'].'\']);';
 					// always use name as second sort criteria
 					$code = '$cmp = '.$code.' return $cmp ? $cmp : strcasecmp($a[\'name\'],$b[\'name\']);';
-					uasort($result,create_function('$a,$b',$code));
+					$ok = uasort($result,create_function('$a,$b',$code));
 					break;
 
 				// sort alphanumerical
@@ -526,10 +527,10 @@ class egw_vfs extends vfs_stream_wrapper
 					{
 						$code = 'return '.$code;
 					}
-					uasort($result,create_function('$a,$b',$code));
+					$ok = uasort($result,create_function('$a,$b',$code));
 					break;
 			}
-			//echo "order='$options[order]', sort='$options[sort]' --> '$c'<br>\n";
+			//echo "<p>order='$options[order]', sort='$options[sort]' --> uasort($result,create_function(,'$code'))=".array2string($ok)."</p>>\n";
 		}
 		// limit resultset
 		self::$find_total = count($result);
