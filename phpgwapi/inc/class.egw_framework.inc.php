@@ -232,6 +232,11 @@ abstract class egw_framework
 			</script>
 			<![endif]-->';
 		}
+		// tell IE > 7 to use it's own mode, not old compatibility mode eg. IE=7 for IE8
+		if (html::$user_agent == 'msie' && html::$ua_version > 7)
+		{
+			$pngfix .= "\n\t\t".'<meta http-equiv="X-UA-Compatible" content="IE='.(int)html::$ua_version.'" />';
+		}
 
 		if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_slider_effects'])
 		{
