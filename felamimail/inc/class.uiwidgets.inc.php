@@ -15,8 +15,8 @@
 /**
  * a class containing javascript enhanced html widgets
  */
-	class uiwidgets
-	{
+class uiwidgets
+{
 		var $charset;
 		var $bofelamimail;
 		/**
@@ -162,9 +162,9 @@
 
 				if($_useDisplayCharset == true) {
 					$folderName	= $GLOBALS['egw']->translation->convert($obj->folderName, 'UTF7-IMAP', $this->charset);
-					$folderName	= @htmlspecialchars($folderName, ENT_QUOTES, $this->charset);
+					$folderName	= @htmlspecialchars($folderName, ENT_QUOTES, $this->charset,false);
 				} else {
-					$folderName	= @htmlspecialchars($obj->folderName, ENT_QUOTES, $this->charset);
+					$folderName	= @htmlspecialchars($obj->folderName, ENT_QUOTES, $this->charset,false);
 				}
 				// give INBOX a special foldericon
 				if ($folderName == 'INBOX') {
@@ -1067,5 +1067,5 @@
 			$this->t->parse('out','quota_block');
 			return $this->t->get('out','quota_block');
 		}
-	}
+}
 ?>
