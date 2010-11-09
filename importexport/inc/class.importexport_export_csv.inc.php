@@ -234,7 +234,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			$fields = array_merge($c_fields, $fields);
 		}
 		foreach((array)$fields['select'] as $name) {
-			if($record->$name && $selects[$name]) $record->$name = $selects[$name][$record->$name];
+			if($record->$name && is_array($selects) && $selects[$name]) $record->$name = $selects[$name][$record->$name];
 		}
 		foreach((array)$fields['links'] as $name) {
 			if($record->$name) {

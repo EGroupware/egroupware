@@ -93,9 +93,9 @@ class importexport_wizard_basic_export_csv
 			$sel_options['field'] = $this->export_fields;
 			$preserv = $content;
 			unset ($preserv['button']);
-			$content['fields'] = array();
+			$content['fields'] = array('');
 			if(!$content['mapping']) $content['mapping'] = $content['plugin_options']['mapping'];
-			$row = 0;
+			$row = 1;
 			foreach($this->export_fields as $field => $name) {
 				$content['fields'][] = array(
 					'field'	=>	$field,
@@ -126,6 +126,11 @@ class importexport_wizard_basic_export_csv
 		if($this->debug) error_log(get_class($this) . '::wizard_step40->$content '.print_r($content,true));
 		// return from step40
 		if ($content['step'] == 'wizard_step40') {
+			if($content['begin_with_fieldnames'] == 'label') {
+				foreach($content['mapping'] as $field => &$label) {
+					$label = $this->export_fields[$field];
+				}
+			}
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -157,6 +162,11 @@ class importexport_wizard_basic_export_csv
 				$content['begin_with_fieldnames'] = $content['plugin_options']['begin_with_fieldnames'];
 			}
 
+			$sel_options['begin_with_fieldnames'] = array(
+				0	=> lang('No'),
+				1	=> lang('Field names'),
+				'label'	=> lang('Field labels')
+			);
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
 				array('utf-8' => 'utf-8 (Unicode)');
 			$preserv = $content;
