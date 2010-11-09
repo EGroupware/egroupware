@@ -94,7 +94,7 @@ abstract class egw_framework
 	{
 		self::__construct($template);
 	}
-	
+
 	/**
 	 * Link url generator
 	 *
@@ -275,6 +275,11 @@ abstract class egw_framework
 			</script>
 			<![endif]-->';
 		}
+		// tell IE > 7 to use it's own mode, not old compatibility mode eg. IE=7 for IE8
+		if (html::$user_agent == 'msie' && html::$ua_version > 7)
+		{
+			$pngfix .= "\n\t\t".'<meta http-equiv="X-UA-Compatible" content="IE='.(int)html::$ua_version.'" />';
+		}
 
 		if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_slider_effects'])
 		{
@@ -360,7 +365,7 @@ abstract class egw_framework
 		$var['quick_add'] = $this->_get_quick_add();
 
 		$var['user_info'] = $this->_user_time_info();
-		
+
 		if($GLOBALS['egw_info']['user']['account_lastpwd_change'] == 0)
 		{
 			$api_messages = lang('You are required to change your password during your first login').'<br />'.
@@ -772,7 +777,7 @@ abstract class egw_framework
 	 * List available themes
 	 *
 	 * Themes are css file in the template directory
-	 * 
+	 *
 	 * @param string $themes_dir='css'
 	 */
 	function list_themes()
@@ -811,7 +816,7 @@ abstract class egw_framework
 				if (file_exists ($f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php'))
 				{
 					include($f);
-					$list[$entry] = $full_data ? $GLOBALS['egw_info']['template'][$entry] : 
+					$list[$entry] = $full_data ? $GLOBALS['egw_info']['template'][$entry] :
 						$GLOBALS['egw_info']['template'][$entry]['title'];
 				}
 				else
@@ -834,7 +839,7 @@ abstract class egw_framework
 				include($f);
 				if (isset($GLOBALS['egw_info']['template'][$entry]))
 				{
-					$list[$entry] = $full_data ? $GLOBALS['egw_info']['template'][$entry] : 
+					$list[$entry] = $full_data ? $GLOBALS['egw_info']['template'][$entry] :
 						$GLOBALS['egw_info']['template'][$entry]['title'];
 				}
 			}
@@ -863,7 +868,7 @@ abstract class egw_framework
 		{
 			$this->_add_topmenu_item($apps['preferences']);
 		}
-		elseif(($pw_app = $GLOBALS['egw_info']['user']['apps']['password']) && 
+		elseif(($pw_app = $GLOBALS['egw_info']['user']['apps']['password']) &&
 			!$GLOBALS['egw']->acl->check('nopasswordchange', 1))
 		{
 			$this->_add_topmenu_item(array(
@@ -872,7 +877,7 @@ abstract class egw_framework
 				'icon'  => common::image($pw_app['icon'],$pw_app['icon_app']),
 			));
 		}
-		
+
 		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
 		{
 			$this->_add_topmenu_item($apps['manual']);
@@ -953,7 +958,7 @@ abstract class egw_framework
 
 	/**
 	 * Call and return content of 'after_navbar' hook
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function _get_after_navbar()
@@ -965,25 +970,25 @@ abstract class egw_framework
 
 		return $content;
 	}
-	
+
 	/**
 	 * Return javascript (eg. for onClick) to open manual with given url
-	 * 
+	 *
 	 * @param string $url
 	 */
 	abstract function open_manual_js($url);
-	
+
 	/**
 	 * Methods to add javascript to framework
 	 */
 
 	/**
 	 * Body tags for onLoad, onUnload and onResize
-	 * 
+	 *
 	 * @var array
 	 */
 	protected static $body_tags = array();
-	
+
 	/**
 	 * Sets an onLoad action for a page
 	 *
@@ -1061,10 +1066,10 @@ abstract class egw_framework
 		}
 		return $js;
 	}
-	
+
 	/**
 	 * Content from validate_file calls plus preloaded files
-	 * 
+	 *
 	 * @var array
 	 */
 	protected static $js_include_files = array(
@@ -1081,7 +1086,7 @@ abstract class egw_framework
 	* @param string $package package to be included
 	* @param string $file file to be included - no ".js" on the end
 	* @param string $app application directory to search - default = phpgwapi
-	* @param boolean $append=true should the file be added 
+	* @param boolean $append=true should the file be added
 	*
 	* @discuss The browser specific option loads the file which is in the correct
 	*          browser folder. Supported folder are those supported by class.browser.inc.php
@@ -1102,10 +1107,10 @@ abstract class egw_framework
 		}
 		return False;
 	}
-	
+
 	/**
 	 * Set or return all javascript files set via validate_file
-	 * 
+	 *
 	 * @param array $files=null array with pathes relative to EGW_SERVER_ROOT, eg. /phpgwapi/js/jquery/jquery.js
 	 * @return array with pathes relative to EGW_SERVER_ROOT
 	 */
@@ -1117,7 +1122,7 @@ abstract class egw_framework
 		}
 		return self::$js_include_files;
 	}
-	
+
 	/**
 	* Used for generating the list of external js files to be included in the head of a page
 	*
