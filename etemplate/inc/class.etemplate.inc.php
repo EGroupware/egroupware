@@ -1601,7 +1601,7 @@ class etemplate extends boetemplate
 				break;
 			case 'image':	// size: [link],[link_target],[imagemap],[link_popup],[id]
 				$image = $value != '' ? $value : $name;
-				if (!is_array($image)) list($app,$img) = explode('/',$image,2);
+				if (is_string($image)) list($app,$img) = explode('/',$image,2);
 				if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
 				{
 					$img = $image;
@@ -2136,7 +2136,7 @@ class etemplate extends boetemplate
 				$value = '';	// blur-values is equal to emtpy
 			}
 			//echo "<p>process_show($this->name) loop was ".self::$loop.", $type: $form_name = ".array2string($value)."</p>\n";
-			list($type,$sub) = explode('-',$type);
+			if (is_string($type)) list($type,$sub) = explode('-',$type);
 			switch ($type)
 			{
 				case 'ext':
