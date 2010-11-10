@@ -1,5 +1,49 @@
 if (typeof CopyOrMove == 'undefined') var CopyOrMove = window.CopyOrMove;
 if (typeof prefAskForMove == 'undefined') var prefAskForMove = window.prefAskForMove; 
+if (typeof sURL == 'undefined') var sURL = window.sURL;
+
+// some translations needed for javascript functions
+if (typeof movingMessages == 'undefined') var movingMessages		= window.movingMessages;
+if (typeof copyingMessages == 'undefined') var copyingMessages		= window.copyingMessages;
+if (typeof lang_askformove == 'undefined') var lang_askformove			= window.lang_askformove;
+if (typeof lang_MoveCopyTitle == 'undefined') var lang_MoveCopyTitle = window.lang_MoveCopyTitle;
+if (typeof lang_copy == 'undefined') var lang_copy = window.lang_copy;
+if (typeof lang_move == 'undefined') var lang_move = window.lang_move;
+if (typeof lang_cancel == 'undefined') var lang_cancel = window.lang_cancel;
+
+if (typeof lang_emptyTrashFolder == 'undefined') var lang_emptyTrashFolder	= window.lang_emptyTrashFolder;
+if (typeof lang_compressingFolder == 'undefined') var lang_compressingFolder	= window.lang_compressingFolder;
+if (typeof lang_select_target_folder == 'undefined') var lang_select_target_folder	= window.lang_select_target_folder;
+if (typeof lang_updating_message_status == 'undefined') var lang_updating_message_status = window.lang_updating_message_status;
+if (typeof lang_loading == 'undefined') var lang_loading 		= window.lang_loading;
+if (typeof lang_deleting_messages == 'undefined') var lang_deleting_messages 	= window.lang_deleting_messages;
+if (typeof lang_skipping_forward == 'undefined') var lang_skipping_forward 	= window.lang_skipping_forward;
+if (typeof lang_skipping_previous == 'undefined') var lang_skipping_previous 	= window.lang_skipping_previous;
+if (typeof lang_jumping_to_end == 'undefined') var lang_jumping_to_end 	= window.lang_jumping_to_end;
+if (typeof lang_jumping_to_start == 'undefined') var lang_jumping_to_start 	= window.lang_jumping_to_start;
+if (typeof lang_updating_view == 'undefined') var lang_updating_view 		= window.lang_updating_view;
+if (typeof lang_mark_all_messages == 'undefined') var lang_mark_all_messages 	= window.lang_mark_all_messages;
+if (typeof lang_confirm_all_messages == 'undefined') var lang_confirm_all_messages = window.lang_confirm_all_messages;
+if (typeof lang_sendnotify == 'undefined') var lang_sendnotify = window.lang_sendnotify;
+
+if (typeof copyingMessages == 'undefined') var MessageBuffer;
+// global vars to store server and active folder info
+//var activeServerID			= '{activeServerID}';
+if (typeof activeFolder == 'undefined') var activeFolder			= window.activeFolder;
+if (typeof activeFolderB64 == 'undefined') var activeFolderB64			= window.activeFolderB64;
+if (typeof activityImagePath == 'undefined') var activityImagePath		= window.activityImagePath;
+
+// how many row are selected currently
+if (typeof checkedCounter == 'undefined') var checkedCounter=window.checkedCounter;
+
+// the refreshtimer objects
+if (typeof aktiv == 'undefined') var aktiv = window.aktiv;
+if (typeof fm_timerFolderStatus == 'undefined') var fm_timerFolderStatus = window.fm_timerFolderStatus;
+if (typeof fm_previewMessageID == 'undefined') var fm_previewMessageID = window.fm_previewMessageID;
+if (typeof fm_previewMessageFolderType == 'undefined') var fm_previewMessageFolderType = window.fm_previewMessageFolderType;
+
+// refresh time for mailboxview
+if (typeof refreshTimeOut == 'undefined') var refreshTimeOut = window.refreshTimeOut;
 
 function parentRefreshListRowStyle(oldID, newID)
 {
