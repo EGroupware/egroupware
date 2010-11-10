@@ -213,7 +213,7 @@ class addressbook_ui extends addressbook_bo
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
 				'do_email'       => $do_email,
-				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list',
+				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id',
 				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 			);
