@@ -224,17 +224,19 @@
 		*/
 		function addAccount($_hookValues)
 		{
-			$icServer = $this->mailPreferences->getIncomingServer(0);
-			if(is_a($icServer,'defaultimap')) {
-				// if not connected, try opening an admin connection
-				if (!$icServer->_connected) $this->openConnection(0,true);
-				$icServer->addAccount($_hookValues);
-				if ($icServer->_connected) $this->closeConnection(); // close connection afterwards
-			}
+			if ($this->mailPreferences) {
+				$icServer = $this->mailPreferences->getIncomingServer(0);
+				if(is_a($icServer,'defaultimap')) {
+					// if not connected, try opening an admin connection
+					if (!$icServer->_connected) $this->openConnection(0,true);
+					$icServer->addAccount($_hookValues);
+					if ($icServer->_connected) $this->closeConnection(); // close connection afterwards
+				}
 
-			$ogServer = $this->mailPreferences->getOutgoingServer(0);
-			if(is_a($ogServer,'defaultsmtp')) {
-				$ogServer->addAccount($_hookValues);
+				$ogServer = $this->mailPreferences->getOutgoingServer(0);
+				if(is_a($ogServer,'defaultsmtp')) {
+					$ogServer->addAccount($_hookValues);
+				}
 			}
 		}
 
@@ -529,17 +531,19 @@
 
 		function deleteAccount($_hookValues)
 		{
-			$icServer = $this->mailPreferences->getIncomingServer(0);
-			if(is_a($icServer,'defaultimap')) {
-				//try to connect with admin rights, when not connected
-				if (!$icServer->_connected) $this->openConnection(0,true);
-				$icServer->deleteAccount($_hookValues);
-				if ($icServer->_connected) $this->closeConnection(); // close connection
-			}
+			if ($this->mailPreferences) {
+				$icServer = $this->mailPreferences->getIncomingServer(0);
+				if(is_a($icServer,'defaultimap')) {
+					//try to connect with admin rights, when not connected
+					if (!$icServer->_connected) $this->openConnection(0,true);
+					$icServer->deleteAccount($_hookValues);
+					if ($icServer->_connected) $this->closeConnection(); // close connection
+				}
 
-			$ogServer = $this->mailPreferences->getOutgoingServer(0);
-			if(is_a($ogServer,'defaultsmtp')) {
-				$ogServer->deleteAccount($_hookValues);
+				$ogServer = $this->mailPreferences->getOutgoingServer(0);
+				if(is_a($ogServer,'defaultsmtp')) {
+					$ogServer->deleteAccount($_hookValues);
+				}
 			}
 		}
 
