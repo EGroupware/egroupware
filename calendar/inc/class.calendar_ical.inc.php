@@ -1900,6 +1900,7 @@ class calendar_ical extends calendar_boupdate
 
 		$defaultFields['s60'] = $defaultFields['basic'] + array(
 			'category'			=> 'category',
+			'recurrence'			=> 'recurrence',
 			'uid'				=> 'uid',
 		);
 
