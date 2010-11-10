@@ -189,17 +189,14 @@ class addressbook_hooks
 				'forced' => false,
 			);
 		}
+		$fileas_options = ExecMethod('addressbook.addressbook_bo.fileas_options');
 		$settings['link_title'] = array(
 			'type'   => 'select',
 			'label'  => 'Link title for contacts show',
 			'name'   => 'link_title',
 			'values' => array(
 				'n_fileas' => lang('own sorting').' ('.lang('default').': '.lang('Company').': '.lang('lastname').', '.lang('firstname').')',
-				'org_name: n_family, n_given' => lang('Company').': '.lang('lastname').', '.lang('firstname'),
-				'org_name, org_unit: n_family, n_given' => lang('Company').', '.lang('Department').': '.lang('lastname').', '.lang('firstname'),
-				'org_name, adr_one_locality: n_family, n_given' => lang('Company').', '.lang('City').': '.lang('lastname').', '.lang('firstname'),
-				'org_name, org_unit, adr_one_locality: n_family, n_given' => lang('Company').', '.lang('Department').', '.lang('City').': '.lang('lastname').', '.lang('firstname'),
-			),
+			)+$fileas_options,	// plus all fileas types
 			'help'   => 'What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!',
 			'xmlrpc' => True,
 			'admin'  => false,
@@ -222,7 +219,7 @@ class addressbook_hooks
 			'type'   => 'select',
 			'label'  => 'Default file as format',
 			'name'   => 'fileas_default',
-			'values' => ExecMethod('addressbook.addressbook_bo.fileas_options'),
+			'values' => $fileas_options,
 			'help'   => 'Default format for fileas, eg. for new entries.',
 			'xmlrpc' => True,
 			'admin'  => false,
