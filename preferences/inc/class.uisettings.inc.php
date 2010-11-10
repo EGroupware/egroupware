@@ -536,7 +536,6 @@
 						$extra = array('**NULL**' => lang('Users choice'));
 						break;
 				}
-				#if ($extra) $values = $extra + $values;
 				if (is_array($extra)) $values = $extra + (is_array($values)?$values:array($values));
 
 				$select = html::select($GLOBALS['type'].'['.$name.']',$default,$values,true);
@@ -558,8 +557,10 @@
 						$values += $val;
 					}
 				}
+				$default_value = $GLOBALS['egw']->preferences->default[$_appname][$name];
+				if ($multiple) $default_value = explode(',',$default_value);
 				$defs = array();
-				foreach(explode(',',$GLOBALS['egw']->preferences->default[$_appname][$name]) as $def)
+				foreach((array)$default_value as $def)
 				{
 					if ($values[$def]) $defs[] = $values[$def];
 				}
