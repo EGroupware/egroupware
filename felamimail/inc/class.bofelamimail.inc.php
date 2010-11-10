@@ -222,14 +222,16 @@
 		*/
 		function addAccount($_hookValues)
 		{
-			$icServer = $this->mailPreferences->getIncomingServer(0);
-			if(is_a($icServer,'defaultimap')) {
-				$icServer->addAccount($_hookValues);
-			}
+			if ($this->mailPreferences) {
+				$icServer = $this->mailPreferences->getIncomingServer(0);
+				if(is_a($icServer,'defaultimap')) {
+					$icServer->addAccount($_hookValues);
+				}
 
-			$ogServer = $this->mailPreferences->getOutgoingServer(0);
-			if(is_a($ogServer,'defaultsmtp')) {
-				$ogServer->addAccount($_hookValues);
+				$ogServer = $this->mailPreferences->getOutgoingServer(0);
+				if(is_a($ogServer,'defaultsmtp')) {
+					$ogServer->addAccount($_hookValues);
+				}
 			}
 		}
 
@@ -524,14 +526,16 @@
 
 		function deleteAccount($_hookValues)
 		{
-			$icServer = $this->mailPreferences->getIncomingServer(0);
-			if(is_a($icServer,'defaultimap')) {
-				$icServer->deleteAccount($_hookValues);
-			}
+			if ($this->mailPreferences) {
+				$icServer = $this->mailPreferences->getIncomingServer(0);
+				if(is_a($icServer,'defaultimap')) {
+					$icServer->deleteAccount($_hookValues);
+				}
 
-			$ogServer = $this->mailPreferences->getOutgoingServer(0);
-			if(is_a($ogServer,'defaultsmtp')) {
-				$ogServer->deleteAccount($_hookValues);
+				$ogServer = $this->mailPreferences->getOutgoingServer(0);
+				if(is_a($ogServer,'defaultsmtp')) {
+					$ogServer->deleteAccount($_hookValues);
+				}
 			}
 		}
 
