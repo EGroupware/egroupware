@@ -186,7 +186,7 @@ class solangfile
 	{
 		$reg_expr = '/('.implode('|',array_keys($this->functions)).")[ \t]*\([ \t]*(.*)$/i";
 		define('SEP',filesystem_separator());
-		$d=dir($fd);
+		if (!($d=dir($fd))) return;
 		while ($fn=$d->read())
 		{
 			if (@is_dir($fd.$fn.SEP))
