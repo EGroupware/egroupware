@@ -270,20 +270,23 @@ abstract class egw_framework
 		{
 			$lang_code = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		}
-		//pngfix defaults to yes
-		if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])
+		// IE specific fixes
+		if (html::$user_agent == 'msie')
 		{
-			$pngfix_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
-			$pngfix ='<!-- This solves the Internet Explorer PNG-transparency bug, but only for IE 5.5 - 6.0 and higher -->
-			<!--[if lt IE 7.0]>
-			<script src="'.$pngfix_src.'" type="text/javascript">
-			</script>
-			<![endif]-->';
-		}
-		// tell IE > 7 to use it's own mode, not old compatibility mode eg. IE=7 for IE8
-		if (html::$user_agent == 'msie' && html::$ua_version > 7)
-		{
-			$pngfix .= "\n\t\t".'<meta http-equiv="X-UA-Compatible" content="IE='.(int)html::$ua_version.'" />';
+			// tell IE to use it's own mode, not old compatibility modes (set eg. via group policy for all intranet sites)
+			// has to be before any other header tags, but meta and title!!!
+			$pngfix = '<meta http-equiv="X-UA-Compatible" content="IE=edge" />'."\n";
+
+			// pngfix for IE6 defaults to yes
+			if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'] && html::$ua_version < 7)
+			{
+				$pngfix_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
+				$pngfix .= '<!-- This solves the Internet Explorer PNG-transparency bug, but only for IE 5.5 - 6.0 and higher -->
+				<!--[if lt IE 7.0]>
+				<script src="'.$pngfix_src.'" type="text/javascript">
+				</script>
+				<![endif]-->';
+			}
 		}
 
 		if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_slider_effects'])
