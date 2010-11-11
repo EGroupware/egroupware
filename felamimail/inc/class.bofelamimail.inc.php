@@ -604,13 +604,17 @@
 						if (self::$debug) error_log(implode(' : ', $_messageUID));
 						if (self::$debug) error_log("$trashFolder <= ". $this->sessionData['mailbox']);
 						// copy messages
-						if ( PEAR::isError($this->icServer->copyMessages($trashFolder, $_messageUID, $_folder, true)) ) {
+						$retValue = $this->icServer->copyMessages($trashFolder, $_messageUID, $_folder, true);
+						if ( PEAR::isError($retValue) ) {
 							if (self::$debug) error_log(__METHOD__." failed to copy Message(s) to $trashFolder: ".implode(',',$_messageUID));
+							throw new egw_exception("failed to copy Message(s) to $trashFolder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
 							return false;
 						}
 						// mark messages as deleted
-						if ( PEAR::isError($this->icServer->deleteMessages($_messageUID, true))) {
-							if (self::$debug) error_log(__METHOD__." failed to delete Message(s): ".implode(',',$_messageUID));
+						$retValue = $this->icServer->deleteMessages($_messageUID, true);
+						if ( PEAR::isError($retValue)) {
+							if (self::$debug) error_log(__METHOD__." failed to delete Message(s): ".implode(',',$_messageUID).' due to:'.$retValue->message);
+							throw new egw_exception("failed to delete Message(s): ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
 							return false;
 						}
 						// delete the messages finaly
@@ -620,16 +624,20 @@
 
 				case "mark_as_deleted":
 					// mark messages as deleted
-					if ( PEAR::isError($this->icServer->deleteMessages($_messageUID, true))) {
+					$retValue = PEAR::isError($this->icServer->deleteMessages($_messageUID, true));
+					if ( PEAR::isError($retValue)) {
 						if (self::$debug) error_log(__METHOD__." failed to mark as deleted for Message(s): ".implode(',',$_messageUID));
+						throw new egw_exception("failed to mark as deleted for Message(s): ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
 						return false;
 					}
 					break;
 
 				case "remove_immediately":
 					// mark messages as deleted
-					if ( PEAR::isError($this->icServer->deleteMessages($_messageUID, true))) {
+					$retValue = $this->icServer->deleteMessages($_messageUID, true);
+					if ( PEAR::isError($retValue)) {
 						if (self::$debug) error_log(__METHOD__." failed to remove immediately Message(s): ".implode(',',$_messageUID));
+						throw new egw_exception("failed to remove immediately Message(s): ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
 						return false;
 					}
 					// delete the messages finaly
@@ -2728,14 +2736,19 @@
 			$msglist = '';
 
 			$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["felamimail"]["deleteOptions"];
-
-			if ( PEAR::isError($this->icServer->copyMessages($_foldername, $_messageUID, $this->sessionData['mailbox'], true)) ) {
+			$retValue = $this->icServer->copyMessages($_foldername, $_messageUID, $this->sessionData['mailbox'], true);
+			if ( PEAR::isError($retValue) ) {
+				error_log(__METHOD__.__LINE__."Copying to Folder $_foldername failed! PEAR::Error:".array2string($retValue->message));
+				throw new egw_exception("Copying to Folder $_foldername failed! PEAR::Error:".array2string($retValue->message));
 				return false;
 			}
 			if ($deleteAfterMove === true)
 			{
-				if ( PEAR::isError($this->icServer->deleteMessages($_messageUID, true))) 
+				$retValue = $this->icServer->deleteMessages($_messageUID, true);
+				if ( PEAR::isError($retValue)) 
 				{
+					error_log(__METHOD__.__LINE__."Delete After Move PEAR::Error:".array2string($retValue->message));
+					throw new egw_exception("Delete After Move PEAR::Error:".array2string($retValue->message));
 					return false;
 				}
 
