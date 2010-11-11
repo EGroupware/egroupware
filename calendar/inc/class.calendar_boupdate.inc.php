@@ -99,10 +99,22 @@ class calendar_boupdate extends calendar_bo
 	 * @param array &$messages=null messages about because of missing ACL removed participants or categories
 	 * @return mixed on success: int $cal_id > 0, on error false or array with conflicting events (only if $check_conflicts)
 	 * 		Please note: the events are not garantied to be readable by the user (no read grant or private)!
+	 *
+	 * @ToDo current conflict checking code does NOT cope quantity-wise correct with multiple non-overlapping
+	 * 	events overlapping the event to store: the quantity sum is used, even as the events dont overlap!
+	 *
+	 * ++++++++ ++++++++
+	 * +      + +  B   +	If A get checked for conflicts, the check used for resource quantity is
+	 * +      + ++++++++
+	 * +  A   +				quantity(A,resource)+quantity(B,resource)+quantity(C,resource) > maxBookable(resource)
+	 * +      + ++++++++
+	 * +      + +  C   +	which is clearly wrong for everything with a maximum quantity > 1
+	 * ++++++++ ++++++++
 	 */
 	function update(&$event,$ignore_conflicts=false,$touch_modified=true,$ignore_acl=false,$updateTS=true,&$messages=null)
 	{
 		//error_log(__METHOD__."(".array2string($event).",$ignore_conflicts,$touch_modified,$ignore_acl)");
+
 		if ($this->debug > 1 || $this->debug == 'update')
 		{
 			$this->debug_message('calendar_boupdate::update(%1,ignore_conflict=%2,touch_modified=%3,ignore_acl=%4)',
@@ -263,7 +275,9 @@ class calendar_boupdate extends calendar_bo
 				$common_parts = array_intersect($users,array_keys($overlap['participants']));
 				foreach($common_parts as $n => $uid)
 				{
-					if ($overlap['participants'][$uid][0] == 'R')
+					$status = $overlap['participants'][$uid];
+					calendar_so::split_status($status, $q, $r);
+					if ($status == 'R')
 					{
 						unset($common_parts[$n]);
 						continue;
@@ -277,7 +291,7 @@ class calendar_boupdate extends calendar_bo
 						$res_info = $this->resource_info($uid);
 						$max_quantity[$uid] = $res_info[$this->resources[$uid[0]]['max_quantity']];
 					}
-					$quantity[$uid] += max(1,(int) substr($overlap['participants'][$uid],2));
+					$quantity[$uid] += $q;
 					if ($quantity[$uid] <= $max_quantity[$uid])
 					{
 						$possible_quantity_conflicts[$uid][] =& $overlapping_events[$k];	// an other event can give the conflict
@@ -708,16 +722,16 @@ class calendar_boupdate extends calendar_bo
 						break;
 				}
 				$timeformat = $part_prefs['common']['dateformat'] . ', ' . $timeformat;
-				
+
 				$startdate->setTimezone($timezone);
 				$details['startdate'] = $startdate->format($timeformat);
-				
+
 				$enddate->setTimezone($timezone);
 				$details['enddate'] = $enddate->format($timeformat);
-				
+
 				$modified->setTimezone($timezone);
 				$details['updated'] = $modified->format($timeformat) . ', ' . common::grab_owner_name($event['modifier']);
-				
+
 				if ($old_event != False)
 				{
 					$olddate->setTimezone($timezone);
@@ -850,8 +864,8 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function save($event,$ignore_acl=false,$updateTS=true)
 	{
-		//echo '<p>'.__METHOD__.'('.array2string($event).",$ignore_acl)</p>\n";
 		//error_log(__METHOD__.'('.array2string($event).",$etag)");
+
 		// check if user has the permission to update / create the event
 		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
 			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']) &&
@@ -1521,7 +1535,7 @@ class calendar_boupdate extends calendar_bo
 			$query[] = 'recur_type!='. MCAL_RECUR_NONE;
 			$query['cal_recurrence'] = 0;
 		}
-		
+
 		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
 
 		if ($event['id'])
@@ -1710,7 +1724,7 @@ class calendar_boupdate extends calendar_bo
 				error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 					'[FOUND]: ' . array2string($egwEvent)."\n",3,$this->logfile);
 			}
-			
+
 			if (in_array($egwEvent['id'], $matchingEvents)) continue;
 
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
@@ -1738,8 +1752,8 @@ class calendar_boupdate extends calendar_bo
 					// We found the master
 					$matchingEvents = array($egwEvent['id']);;
 					break;
-				}	
-				if ($filter == 'exact') 
+				}
+				if ($filter == 'exact')
 				{
 					// UID found
 					if (empty($event['recurrence']))
@@ -1749,7 +1763,7 @@ class calendar_boupdate extends calendar_bo
 						$dtstart = new egw_time($event['start'], egw_time::$server_timezone);
 						$dtstart->setTimezone(self::$tz_cache[$event['tzid']]);
 						if ($egwEvent['recur_type'] == MCAL_RECUR_NONE &&
-							$event['recur_type'] == MCAL_RECUR_NONE ||	
+							$event['recur_type'] == MCAL_RECUR_NONE ||
 								$egwEvent['recur_type'] != MCAL_RECUR_NONE &&
 									$event['recur_type'] != MCAL_RECUR_NONE)
 						{
@@ -1763,7 +1777,7 @@ class calendar_boupdate extends calendar_bo
 							}
 							else
 							{
-								$matchingEvents[] = $egwEvent['id'];	
+								$matchingEvents[] = $egwEvent['id'];
 							}
 						}
 						continue;
@@ -1984,7 +1998,7 @@ class calendar_boupdate extends calendar_bo
 			}
 			$matchingEvents = array();
 		}
-		
+
 		// append pseudos as last entries
 		$matchingEvents = array_merge($matchingEvents, $pseudos);
 

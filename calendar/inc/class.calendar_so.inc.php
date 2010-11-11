@@ -685,7 +685,6 @@ ORDER BY cal_user_type, cal_usre_id
 
 		$old_min = $old_duration = 0;
 
-		//echo '<p>'.__METHOD__.'('.array2string($event).",$change_since) event="; _debug_array($event);
 		//error_log(__METHOD__.'('.array2string($event).",$set_recurrences,$change_since,$etag)");
 
 		$cal_id = (int) $event['id'];
@@ -1099,6 +1098,8 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function participants($cal_id,$participants,$change_since=0,$add_only=false)
 	{
+		//error_log(__METHOD__."($cal_id,".array2string($participants).",$change_since,$add_only");
+
 		$recurrences = array();
 
 		// remove group-invitations, they are NOT stored in the db
@@ -1149,8 +1150,15 @@ ORDER BY cal_user_type, cal_usre_id
 				}
 			}
 
-			// only keep added participants for further steps - we do not touch existing ones
-			$participants = array_diff_key($participants,$old_participants);
+			// only keep added OR status (incl. quantity!) changed participants for further steps
+			// we do not touch unchanged (!) existing ones
+			foreach($participants as $uid => $status)
+			{
+				if ($old_participants[$uid] === $status)
+				{
+					unset($participants[$uid]);
+				}
+			}
 
 			// delete participants tagged for delete
 			if ($add_only === false && count($deleted))
