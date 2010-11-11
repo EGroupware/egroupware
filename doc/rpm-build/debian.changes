@@ -1,3 +1,24 @@
+egroupware (1.8.001.20101111) hardy; urgency=low
+
+  * Infolog:  Fix problem Delegated user was not able to edit infolog entrys owned by Groups, if he was not member of that group, and had no grouprights. Implicit rights where not applied; reported in Stylite Tracker#8255; 
+  * fixed empty getctag, causing eg. Sogo connector not to update in EGroupware modified addressbooks under 1.8
+  * Calendar: Fix notification timezone issues (#2746)
+  * eMail: fixing problem with double converted date/time strings for certain DateTime Settings (reported with the user-list)
+  * email: Icons for eMail FunctionFolders
+  * email: Sort FunctionFolders to the top of the FolderTree in MainView (all MailBox FolderTree Views are affected)
+  * exceptions get now logged to Apache error_log again
+  * scaling now addressbook images uploaded via CardDAV or SyncML to 60 pixel width like already done for web GUI
+  * read access to groupmembers for account-selection "groupmembers" (only for account_repository sql!)
+  * support multiget report on url with uid, as lightning uses multiget after a PUT on the PUT url, which is the uid
+  * email: fix for Stylite Ticket#608: folders with umlauts (specialchars) did not display the count of unread mail
+  * sorting fileselection popup always by directory on top and then name
+  * core: myStylite Ticket#987: fixing a problem regarding chopped off urls when URI in question contains umlauts AND mbstring.func_overload is activated
+  * fix for Nokia S60: enabling X-RECURRENCE-ID and make sure series master is synced before exceptions
+  * telling IE via X-UA-Compatible IE=edge never to use compatibility modes with old versions (if set eg. via group policy for whole intranet zone)
+  * fixed conflict check of resource quantity and storage of changed quantity in existing events
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 11 Nov 2010 11:05:32 +0100
+
 egroupware (1.8.001.20101026) hardy; urgency=low
 
   * Allow SyncML-synchronization of addressbooks with R/O access as well
