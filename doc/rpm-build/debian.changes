@@ -1,3 +1,9 @@
+egroupware-epl (10.1.20101112-1) hardy; urgency=low
+
+  * check quantity of resource to book against maximum, as conflict check only fails if other events are involved
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 11 Nov 2010 14:35:47 +0100
+
 egroupware-epl (10.1.20101111-1) hardy; urgency=low
 
   * Infolog:  Fix problem Delegated user was not able to edit infolog entrys owned by Groups, if he was not member of that group, and had no grouprights. Implicit rights where not applied; reported in Stylite Tracker#8255; 
