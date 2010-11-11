@@ -1,7 +1,7 @@
 Name: egroupware-epl
-Version: 10.1.20100630
+Version: 10.1.20101111
 Release:
-Summary: EGroupware is a web-based groupware suite written in php.
+Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
 License: GPLv2 with exception of stylite module, which is proprietary
 URL: http://www.stylite.de/EPL
@@ -66,6 +66,7 @@ Source5: %{name}-jdots-%{version}.tar.bz2
 Source6: phpfreechat_data_public.tar.gz
 Source7: debian.changes
 Source8: %{name}-rpmlintrc
+Source9: %{name}-gallery-%{version}.tar.bz2
 Patch0: class.uiasyncservice.inc.php.patch
 #Patch1: stylite-postfix-suse.patch
 #Patch2: mandriva_upload_tmp_dir.patch
@@ -77,34 +78,34 @@ BuildRequires: unzip sed
 Buildarch: noarch
 AutoReqProv: no
 
-Requires: %{name}-core            >= %{version}
-Requires: %{name}-egw-pear        >= %{version}
-Requires: %{name}-stylite         >= %{version}
-#Requires: %{name}-addressbook    >= %{version}
-Requires: %{name}-bookmarks       >= %{version}
-Requires: %{name}-calendar        >= %{version}
-Requires: %{name}-developer_tools >= %{version}
-Requires: %{name}-emailadmin      >= %{version}
-Requires: %{name}-felamimail      >= %{version}
-Requires: %{name}-filemanager     >= %{version}
-Requires: %{name}-infolog         >= %{version}
-Requires: %{name}-importexport    >= %{version}
-Requires: %{name}-jdots           >= %{version}
-Requires: %{name}-manual          >= %{version}
-Requires: %{name}-news_admin      >= %{version}
-Requires: %{name}-notifications   >= %{version}
-Requires: %{name}-phpbrain        >= %{version}
-Requires: %{name}-phpsysinfo      >= %{version}
-Requires: %{name}-polls           >= %{version}
-Requires: %{name}-projectmanager  >= %{version}
-Requires: %{name}-registration    >= %{version}
-Requires: %{name}-resources       >= %{version}
-Requires: %{name}-sambaadmin      >= %{version}
-Requires: %{name}-sitemgr         >= %{version}
-Requires: %{name}-syncml          >= %{version}
-Requires: %{name}-timesheet       >= %{version}
-Requires: %{name}-tracker         >= %{version}
-Requires: %{name}-wiki            >= %{version}
+Requires: %{name}-core            = %{version}
+Requires: %{name}-egw-pear        = %{version}
+Requires: %{name}-stylite         = %{version}
+#Requires: %{name}-addressbook    = %{version}
+Requires: %{name}-bookmarks       = %{version}
+Requires: %{name}-calendar        = %{version}
+Requires: %{name}-developer_tools = %{version}
+Requires: %{name}-emailadmin      = %{version}
+Requires: %{name}-felamimail      = %{version}
+Requires: %{name}-filemanager     = %{version}
+Requires: %{name}-infolog         = %{version}
+Requires: %{name}-importexport    = %{version}
+Requires: %{name}-jdots           = %{version}
+Requires: %{name}-manual          = %{version}
+Requires: %{name}-news_admin      = %{version}
+Requires: %{name}-notifications   = %{version}
+Requires: %{name}-phpbrain        = %{version}
+Requires: %{name}-phpsysinfo      = %{version}
+Requires: %{name}-polls           = %{version}
+Requires: %{name}-projectmanager  = %{version}
+Requires: %{name}-registration    = %{version}
+Requires: %{name}-resources       = %{version}
+Requires: %{name}-sambaadmin      = %{version}
+Requires: %{name}-sitemgr         = %{version}
+Requires: %{name}-syncml          = %{version}
+Requires: %{name}-timesheet       = %{version}
+Requires: %{name}-tracker         = %{version}
+Requires: %{name}-wiki            = %{version}
 Obsoletes: %{egw_packagename}
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-egw-pear
@@ -267,15 +268,15 @@ Obsoletes: %{egw_packagename}-filemanager
 %description filemanager
 This is the filemanager app for EGroupware.
 
-#%package gallery
-#Version: %{version}
-#Summary: The EGroupware gallery application
-#Group: Web/Database
-#AutoReqProv: no
-#Requires: egw-core >= %{version}
-#Obsoletes: %{egw_packagename}-gallery
-#%description gallery
-#An embedded Gallery2 for EGroupware.
+%package gallery
+Version: %{version}
+Summary: The EGroupware gallery application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}
+Obsoletes: %{egw_packagename}-gallery
+%description gallery
+An embedded Gallery2 for EGroupware.
 
 %package infolog
 Version: %{version}
@@ -517,6 +518,7 @@ for Thomson-Reuters.
 %setup4 -T -D -a 4 -n %{egwdirname}
 %setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
+%setup9 -T -D -a 9 -n %{egwdirname}
 %patch0 -p 0
 #%patch1 -p 0
 #%patch2 -p 0
@@ -571,9 +573,9 @@ install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %{egwdir}/set_box.php
 %{egwdir}/soap.php
 %{egwdir}/svn-helper.php
-%{egwdir}/xajax.php
 %{egwdir}/xmlrpc.php
 %{egwdir}/groupdav.php
+%{egwdir}/groupdav.htaccess
 %{egwdir}/webdav.php
 %{egwdir}/addressbook
 %{egwdir}/admin
@@ -630,9 +632,9 @@ install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %defattr(-,root,root)
 %{egwdir}/filemanager
 
-#%files gallery
-#%defattr(-,root,root)
-#%{egwdir}/gallery
+%files gallery
+%defattr(-,root,root)
+%{egwdir}/gallery
 
 %files infolog
 %defattr(-,root,root)
