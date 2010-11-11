@@ -318,7 +318,20 @@ class ajaxfelamimail
 			if($this->_debug) error_log(__METHOD__." called with Messages ".print_r($_messageList,true));
 			$messageCount = 0;
 			if(is_array($_messageList) && count($_messageList['msg']) > 0) $messageCount = count($_messageList['msg']);
-			$this->bofelamimail->deleteMessages(($_messageList == 'all'? 'all':$_messageList['msg']));
+			try
+			{
+				$this->bofelamimail->deleteMessages(($_messageList == 'all'? 'all':$_messageList['msg']));
+			}
+			catch (egw_exception $e)
+			{
+				$error = str_replace('"',"'",$e->getMessage());
+				$response = new xajaxResponse();
+				$response->addScript('resetMessageSelect();');
+				$response->addScript('tellUser("'.$error.'");');
+				$response->addScript('onNodeSelect("'.$this->sessionData['mailbox'].'");');
+				return $response->getXML();
+			}
+
 
 			return $this->generateMessageList($this->sessionData['mailbox'],($_messageList=='all'?0:(-1*$messageCount)));
 		}
@@ -671,7 +684,19 @@ class ajaxfelamimail
 			$folderName = $this->_decodeEntityFolderName($_folderName);
 			if ($_selectedMessages == 'all' || !empty( $_selectedMessages['msg']) && !empty($folderName)) {
 				if ($this->sessionData['mailbox'] != $folderName) {
-					$this->bofelamimail->moveMessages($folderName, ($_selectedMessages == 'all'? null:$_selectedMessages['msg']));
+					try
+					{
+						$this->bofelamimail->moveMessages($folderName, ($_selectedMessages == 'all'? null:$_selectedMessages['msg']));
+					}
+					catch (egw_exception $e)
+					{
+						$error = str_replace('"',"'",$e->getMessage());
+						$response = new xajaxResponse();
+						$response->addScript('resetMessageSelect();');
+						$response->addScript('tellUser("'.$error.' '.lang('Folder').':'.'","'.$_folderName.'");');
+						$response->addScript('onNodeSelect("'.$this->sessionData['mailbox'].'");');
+						return $response->getXML();
+					}
 				} else {
 					  if($this->_debug) error_log("ajaxfelamimail::moveMessages-> same folder than current selected");
 				}
@@ -699,13 +724,26 @@ class ajaxfelamimail
 		{
 			if($this->_debug) error_log(__METHOD__." called with Messages ".print_r($_selectedMessages,true));
 			$messageCount = 0;
+			$error = false;
 			if(is_array($_selectedMessages) && count($_selectedMessages['msg']) > 0) $messageCount = count($_selectedMessages['msg']);
 			$folderName = $this->_decodeEntityFolderName($_folderName);
 			if ($_selectedMessages == 'all' || !empty( $_selectedMessages['msg']) && !empty($folderName)) {
 				if ($this->sessionData['mailbox'] != $folderName) 
 				{
 					$deleteAfterMove = false;
-					$this->bofelamimail->moveMessages($folderName, ($_selectedMessages == 'all'? null:$_selectedMessages['msg']),$deleteAfterMove);
+					try
+					{
+						$this->bofelamimail->moveMessages($folderName, ($_selectedMessages == 'all'? null:$_selectedMessages['msg']),$deleteAfterMove);
+					}
+					catch (egw_exception $e)
+					{
+						$error = str_replace('"',"'",$e->getMessage());
+						$response = new xajaxResponse();
+						$response->addScript('resetMessageSelect();');
+						$response->addScript('tellUser("'.$error.' '.lang('Folder').':'.'","'.$_folderName.'");');
+						$response->addScript('onNodeSelect("'.$this->sessionData['mailbox'].'");');
+						return $response->getXML();
+					}
 				} 
 				else 
 				{
