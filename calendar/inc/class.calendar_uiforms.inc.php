@@ -156,6 +156,7 @@ class calendar_uiforms extends calendar_ui
 	 * Process the edited event and evtl. call edit to redisplay it
 	 *
 	 * @param array $content posted eTemplate content
+	 * @ToDo add conflict check / available quantity of resources when adding participants
 	 */
 	function process_edit($content)
 	{
@@ -252,11 +253,11 @@ class calendar_uiforms extends calendar_ui
 			{
 				$event['recur_data'] = 1 << (int)date('w',$event['start']);
 			}
-			if (isset($content['participants']))	
+			if (isset($content['participants']))
 			{
-				
+
 				$event['participants'] = $event['participant_types'] = array();
-				
+
 				foreach($content['participants'] as $key => $data)
 				{
 					switch($key)
@@ -267,7 +268,7 @@ class calendar_uiforms extends calendar_ui
 						case 'cal_resources':
 						case 'status_date':
 							break;
-							
+
 						case 'add':
 							// email or rfc822 addresse (eg. "Ralf Becker <ralf@domain.com>") in the search field
 							// ToDo: get eTemplate to return that field
@@ -297,7 +298,7 @@ class calendar_uiforms extends calendar_ui
 								$msg = lang('You need to select an account, contact or resource first!');
 							}
 							break;
-							
+
 						case 'resource':
 							if (is_array($data) && isset($data['current']) )
 							{
@@ -317,8 +318,21 @@ class calendar_uiforms extends calendar_ui
 									$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 									if ($status)
 									{
-										$event['participants'][$uid] = $event['participant_types'][$type][$id] =
-											calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+										$res_info = $this->bo->resource_info($uid);
+										// todo check real availability = maximum - already booked quantity
+										if (isset($res_info['useable']) && $content['participants']['quantity'] > $res_info['useable'])
+										{
+											$msg .= lang('Maximum available quantity of %1 exceeded!',$res_info['useable']);
+											foreach(array('quantity','resource','role') as $n)
+											{
+												$event['participants'][$n] = $content['participants'][$n];
+											}
+										}
+										else
+										{
+											$event['participants'][$uid] = $event['participant_types'][$type][$id] =
+												calendar_so::combine_status($status,$content['participants']['quantity'],$content['participants']['role']);
+										}
 									}
 									elseif(!$msg_permission_denied_added)
 									{
@@ -332,79 +346,79 @@ class calendar_uiforms extends calendar_ui
 						case 'account':
 							foreach(is_array($data) ? $data : explode(',',$data) as $uid)
 							{
-							if ($uid && $this->bo->check_acl_invite($uid))
-							{
-								$event['participants'][$uid] = $event['participant_types']['u'][$uid] =
-									calendar_so::combine_status($uid == $this->bo->user ? 'A' : 'U',1,$content['participants']['role']);
-							}
-							elseif($uid && !$msg_permission_denied_added)
-							{
-								$msg .= lang('Permission denied!');
-								$msg_permission_denied_added = true;
-							}
+								if ($uid && $this->bo->check_acl_invite($uid))
+								{
+									$event['participants'][$uid] = $event['participant_types']['u'][$uid] =
+										calendar_so::combine_status($uid == $this->bo->user ? 'A' : 'U',1,$content['participants']['role']);
+								}
+								elseif($uid && !$msg_permission_denied_added)
+								{
+									$msg .= lang('Permission denied!');
+									$msg_permission_denied_added = true;
+								}
 							}
 							break;
-							
+
 						default:		// existing participant row
 							foreach(array('uid','status','quantity','role') as $name)
 							{
-							$$name = $data[$name];
+								$$name = $data[$name];
 							}
-						if ($content['participants']['delete'][$uid] || $content['participants']['delete'][md5($uid)])
-						{
-							$uid = false;	// entry has been deleted
-						}
-						else
-						{
-							if (is_numeric($uid))
+							if ($content['participants']['delete'][$uid] || $content['participants']['delete'][md5($uid)])
 							{
-								$id = $uid;
-								$type = 'u';
+								$uid = false;	// entry has been deleted
 							}
 							else
 							{
-								$id = substr($uid,1);
-								$type = $uid[0];
-							}
-							if ($data['old_status'] != $status && !(!$data['old_status'] && $status == 'G'))
-							{
-								//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
-								$new_status = calendar_so::combine_status($status, $quantity, $role);
-								if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0))
+								if (is_numeric($uid))
 								{
-									// refreshing the calendar-view with the changed participant-status
-									if($event['recur_type'] != MCAL_RECUR_NONE)
+									$id = $uid;
+									$type = 'u';
+								}
+								else
+								{
+									$id = substr($uid,1);
+									$type = $uid[0];
+								}
+								if ($data['old_status'] != $status && !(!$data['old_status'] && $status == 'G'))
+								{
+									//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
+									$new_status = calendar_so::combine_status($status, $quantity, $role);
+									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0))
 									{
-										$msg = lang('Status for all future scheduled days changed');
-									}
-									else
-									{
-										if(isset($content['edit_single']))
+										// refreshing the calendar-view with the changed participant-status
+										if($event['recur_type'] != MCAL_RECUR_NONE)
 										{
-											$msg = lang('Status for this particular day changed');
-											// prevent accidentally creating a real exception afterwards
-											$view = true;
-											$hide_delete = true;
+											$msg = lang('Status for all future scheduled days changed');
 										}
 										else
 										{
-											$msg = lang('Status changed');
+											if(isset($content['edit_single']))
+											{
+												$msg = lang('Status for this particular day changed');
+												// prevent accidentally creating a real exception afterwards
+												$view = true;
+												$hide_delete = true;
+											}
+											else
+											{
+												$msg = lang('Status changed');
+											}
+										}
+										if (!$content['no_popup'])
+										{
+											$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
+												addslashes($msg)."';";
 										}
 									}
-									if (!$content['no_popup'])
-									{
-										$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
-											addslashes($msg)."';";
-									}
+								}
+								if ($uid && $status != 'G')
+								{
+									$event['participants'][$uid] = $event['participant_types'][$type][$id] =
+										calendar_so::combine_status($status,$quantity,$role);
 								}
 							}
-							if ($uid && $status != 'G')
-							{
-								$event['participants'][$uid] = $event['participant_types'][$type][$id] =
-									calendar_so::combine_status($status,$quantity,$role);
-							}
-						}
-						break;
+							break;
 					}
 				}
 			}
@@ -421,11 +435,11 @@ class calendar_uiforms extends calendar_ui
 			'template'      => $content['template'],
 		);
 		$noerror=true;
-		
+
 		//error_log(__METHOD__.$button.'#'.array2string($content['edit_single']).'#');
-		
+
 		$ignore_conflicts = $edit_series_confirmed = $status_reset_to_unknown = false;
-		
+
 		switch((string)$button)
 		{
 			case 'ignore':
@@ -433,13 +447,13 @@ class calendar_uiforms extends calendar_ui
 				$button = $event['button_was'];	// save or apply
 				unset($event['button_was']);
 				break;
-				
+
 			case 'confirm_edit_series':
 				$edit_series_confirmed = true;
 				$button = $event['button_was'];	// save or apply
-				unset($event['button_was']);		
+				unset($event['button_was']);
 		}
-		
+
 		switch((string)$button)
 		{
 		case 'exception':	// create an exception in a recuring event
@@ -566,7 +580,7 @@ class calendar_uiforms extends calendar_ui
 							if ($edit_series_confirmed)
 							{
 								$orig_event = $event;
-								
+
 								$offset = $event['start'] - $old_event['start'];
 								$event['start'] = $next_occurrence['start'] + $offset;
 								$event['end'] = $next_occurrence['end'] + $offset;
@@ -656,7 +670,7 @@ class calendar_uiforms extends calendar_ui
 										case 'startday':
 											if ($sameday) break;
 										default:
-											$status_reset_to_unknown = true;	
+											$status_reset_to_unknown = true;
 											$event['participants'][$uid] = calendar_so::combine_status('U',$q,$r);
 											// todo: report reset status to user
 									}
@@ -707,7 +721,7 @@ class calendar_uiforms extends calendar_ui
 						if (($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $alarm['offset'], true)) &&
 							$alarm['time'] < $next_occurrence['start'])
 						{
-							$alarm['time'] =  $next_occurrence['start'] - $alarm['offset'];					
+							$alarm['time'] =  $next_occurrence['start'] - $alarm['offset'];
 						}
 						$this->bo->save_alarm($event['id'], $alarm);
 					}
@@ -739,7 +753,7 @@ class calendar_uiforms extends calendar_ui
 						}
 					}
 				}
-				
+
 				$message = lang('Event saved');
 				if ($status_reset_to_unknown)
 				{
@@ -754,7 +768,7 @@ class calendar_uiforms extends calendar_ui
 					}
 					$message .= lang(', stati of participants reset');
 				}
-				
+
 				$msg = $message . ($msg ? ', ' . $msg : '');
 
 				// writing links for new entry, existing ones are handled by the widget itself
@@ -1195,6 +1209,11 @@ function replace_eTemplate_onsubmit()
 
 		$row = 2;
 		$readonlys = $content['participants'] = $preserv['participants'] = array();
+		// preserve some ui elements, if set eg. under error-conditions
+		foreach(array('quantity','resource','role') as $n)
+		{
+			if (isset($event['participants'][$n])) $content['participants'][$n] = $event['participants'][$n];
+		}
 		foreach($event['participant_types'] as $type => $participants)
 		{
 			$name = 'accounts';
@@ -1324,7 +1343,7 @@ function replace_eTemplate_onsubmit()
 					if ($minutes) $label[] = $minutes.' '.lang('Minutes');
 					$alarm['offset'] = implode(', ',$label) . ' ' . ($after ? lang('after') : lang('before'));
 					$content['alarm'][] = $alarm;
-					
+
 					$readonlys['delete_alarm['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $event : 0,$alarm['owner']);
 				}
 			}
@@ -1332,7 +1351,7 @@ function replace_eTemplate_onsubmit()
 			{
 				// hide the alarm tab for newly created exceptions
 				$readonlys['tabs']['alarms'] = true;
-				
+
 				// disable the alarm tab functionality
 				$readonlys['button[add_alarm]'] = true;
 				$readonlys['new_alarm[days]'] = true;
@@ -1545,7 +1564,7 @@ function replace_eTemplate_onsubmit()
 
 		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,false,false,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
 	}
-	
+
 	/**
 	 * displays a confirmation window for changed start dates of series events
 	 *
