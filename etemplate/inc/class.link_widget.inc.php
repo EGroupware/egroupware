@@ -357,6 +357,7 @@ class link_widget
 					if (isset($value['current']))
 					{
 						list($app,$id) = explode(':',$value['current'], 2);
+						if ($app) unset($value['default_sel']);	// would overwrite $app!
 					}
 				}
 				else
@@ -415,7 +416,7 @@ class link_widget
 				'no_app_sel' => !!$extension_data['app'],
 				'id'         => is_array($value) ? $value['current'] : $id,
 				'query'      => is_array($value) ? $value['query'] : '',
-				'blur'       => $cell['blur'] ? lang($cell['blur']) : 
+				'blur'       => $cell['blur'] ? lang($cell['blur']) :
 					(count($options) == 1 ? lang($app) : lang('Search')),
 				'extra'      => $cell['onchange'] ? ','.self::AJAX_NEED_ONCHANGE : null,	// store flang for ajax_search, to display extra_line required by onchange
 			);
@@ -466,7 +467,7 @@ class link_widget
 
 	/**
 	 * return a_href to view a linked entry
-	 * 
+	 *
 	 * @param array $link array with values for keys 'id' and 'app'
 	 * @param string $help=''
 	 * @return string
@@ -613,7 +614,7 @@ class link_widget
 					else
 					{
 						$value['remark'] = '';
-	
+
 						if (isset($value['primary']) && !$value['anz_links'] )
 						{
 							$value['primary'] = $link_id;
@@ -799,9 +800,9 @@ class link_widget
 		//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("',\n'",$args)."')\n calling link->query( $app , $search )" );
 		//$args = func_get_args(); error_log(__METHOD__."('".implode("','",$args)."')");
 
-		
+
 		$script = "var select = document.getElementById('$id_res');\nselect.options.length=0;\n";
-		if(is_array(egw_link::$app_register[$app]['types'])) 
+		if(is_array(egw_link::$app_register[$app]['types']))
 		{
 			$found = egw_link::$app_register[$app]['types'];
 			foreach(egw_link::$app_register[$app]['types'] as $id => $option)
@@ -817,8 +818,8 @@ class link_widget
 				}
 			}
 			$script .= "document.getElementById('$id_res').parentNode.style.display='inline';\n";
-		} 
-		else 
+		}
+		else
 		{
 			$script .= "document.getElementById('$id_res').parentNode.style.display='none';\n";
 		}
