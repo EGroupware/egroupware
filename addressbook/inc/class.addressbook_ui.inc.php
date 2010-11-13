@@ -1491,7 +1491,8 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['tabs']['custom'] = !$this->customfields;
 		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
-		$readonlys['tabs']['history'] = $this->account_repository == 'ldap' && $content['account_id'];
+		$readonlys['tabs']['history'] = $this->contact_repository == 'ldap' || !$content['id'] ||
+			$this->account_repository == 'ldap' && $content['account_id'];
 		$readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
@@ -1699,6 +1700,8 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['tabs']['custom'] = !$this->customfields;
 		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
+		$readonlys['tabs']['history'] = $this->contact_repository == 'ldap' || !$content['id'] ||
+			$this->account_repository == 'ldap' && $content['account_id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
 		// last and next calendar date
@@ -2179,7 +2182,13 @@ class addressbook_ui extends addressbook_bo
 	/**
 	* Set up history log widget
 	*/
-	protected function setup_history(&$content, &$sel_options) {
+	protected function setup_history(&$content, &$sel_options)
+	{
+		if ($this->contact_repository == 'ldap' || !$content['id'] ||
+			$this->account_repository == 'ldap' && $content['account_id'])
+		{
+			return;	// no history for ldap as history table only allows integer id's
+		}
 		$content['history'] = array(
 			'id'	=>	$content['id'],
 			'app'	=>	'addressbook',
@@ -2189,23 +2198,32 @@ class addressbook_ui extends addressbook_bo
 			),
 		);
 
-		foreach($this->content_types as $id => $settings) {
+		foreach($this->content_types as $id => $settings)
+		{
 			$content['history']['status-widgets']['tid'][$id] = $settings['name'];
 		}
 		$sel_options['status'] = $this->contact_fields;
-		foreach($this->tracking->field2label as $field => $label) {
+		foreach($this->tracking->field2label as $field => $label)
+		{
 			$sel_options['status'][$field] = lang($label);
 		}
 
 		// Get custom field options
 		$custom = config::get_customfields('addressbook', true);
-		if(is_array($custom)) {
-			foreach($custom as $name => $settings) {
-				if(!is_array($settings['values'])) {
+		if(is_array($custom))
+		{
+			foreach($custom as $name => $settings)
+			{
+				if(!is_array($settings['values']))
+				{
 					$content['history']['status-widgets']['#'.$name] = $settings['type'];
-				} elseif($settings['values']['@']) {
+				}
+				elseif($settings['values']['@'])
+				{
 					$content['history']['status-widgets']['#'.$name] = customfields_widget::_get_options_from_file($settings['values']['@']);
-				} elseif(count($settings['values'])) {
+				}
+				elseif(count($settings['values']))
+				{
 					$content['history']['status-widgets']['#'.$name] = $settings['values'];
 				}
 			}
