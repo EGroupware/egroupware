@@ -657,10 +657,24 @@ class jdots_framework extends egw_framework
 	 *
 	 * @param $appname
 	 */
-	public function ajax_sidebox($appname)
+	public function ajax_sidebox($appname, $md5)
 	{
 		$response = egw_json_response::get();
-		$response->data($this->get_sidebox($appname));
+		$sidebox = $this->get_sidebox($appname);
+		$encoded = json_encode($sidebox);
+		$new_md5 = md5($encoded);
+
+		$response_array = array();
+		$response_array['md5'] = $new_md5;
+
+		if ($new_md5 != $md5)
+		{
+			//TODO: Add some proper solution to be able to attach the already
+			//JSON data to the response in order to gain some performace improvements.
+			$response_array['data'] = $sidebox;
+		}
+
+		$response->data($response_array);
 	}
 
 	/**

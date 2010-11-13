@@ -177,6 +177,22 @@ egw_fw.prototype.setActiveApp = function(_app)
 			{
 				this.sidemenuUi.open(_app.sidemenuEntry);
 			}
+			else
+			{
+				//Probalby the sidemenu data just got lost along the way. This
+				//for example happens, when a user double clicks on a menu item
+				var req = new egw_json_request('home.jdots_framework.ajax_sidebox',
+					[_app.appName, _app.sidebox_md5]);
+				_app.sidemenuEntry.showAjaxLoader();
+				req.sendRequest(false, function(data) {
+						if ((typeof data.md5 != 'undefined') &&
+						    (typeof data.data != 'undefined'))
+						{
+							this.fw.setSidebox(this.app, data.data,  data.md5);
+							this.app.sidemenuEntry.hideAjaxLoader();
+						}
+				}, {'app' : _app, 'fw' : this});		
+			}
 		}
 		else
 		{
@@ -510,7 +526,7 @@ egw_fw.prototype.categoryOpenCloseCallback = function(_opened)
 	//	[this.tag.appName, this.catName, _opened]);
 	//req.sendRequest(true);
 
-	/* Store the state of the category lokaly */	
+	/* Store the state of the category localy */	
 	this.tag.parentFw.categoryOpenCache[this.tag.appName + '#' + this.catName] = _opened;
 //	this.tag.parentFw.scrollAreaUi.update();
 }
