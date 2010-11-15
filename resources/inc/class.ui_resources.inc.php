@@ -111,6 +111,7 @@ class ui_resources
 		$content['nm']['bottom_too']	= true;
 		$content['nm']['order']		= 'name';
 		$content['nm']['sort']		= 'ASC';
+		$content['nm']['store_state']	= 'get_rows';
 
 		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 		if($nm_session_data)
