@@ -203,6 +203,7 @@ class addressbook_bo extends addressbook_so
 			'adr_one_region'       => lang('state').' ('.lang('business').')',
 			'adr_one_postalcode'   => lang('zip code').' ('.lang('business').')',
 			'adr_one_countryname'  => lang('country').' ('.lang('business').')',
+			'adr_one_countrycode'  => lang('country').' ('.lang('business').')',
 			'label'                => lang('label'),
 			'adr_two_street'       => lang('street').' ('.lang('private').')',
 			'adr_two_street2'      => lang('address line 2').' ('.lang('private').')',
@@ -210,6 +211,7 @@ class addressbook_bo extends addressbook_so
 			'adr_two_region'       => lang('state').' ('.lang('private').')',
 			'adr_two_postalcode'   => lang('zip code').' ('.lang('private').')',
 			'adr_two_countryname'  => lang('country').' ('.lang('private').')',
+			'adr_two_countrycode'  => lang('country').' ('.lang('private').')',
 			'tel_work'             => lang('work phone'),
 			'tel_cell'             => lang('mobile phone'),
 			'tel_fax'              => lang('fax').' ('.lang('business').')',
@@ -816,7 +818,8 @@ class addressbook_bo extends addressbook_so
 
 		// Update country codes
 		foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
-			if($contact[$c_prefix.'countryname'] && $code = $GLOBALS['egw']->country->country_code($contact[$c_prefix.'countryname']))
+			if($contact[$c_prefix.'countryname'] && !$contact[$c_prefix.'countrycode'] && 
+				$code = $GLOBALS['egw']->country->country_code($contact[$c_prefix.'countryname']))
 			{
 				if(strlen($code) == 2)
 				{

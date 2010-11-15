@@ -2237,6 +2237,8 @@ class addressbook_ui extends addressbook_bo
 			'status-widgets'	=>	array(
 				'owner'		=>	'select-account',
 				'cat_id'	=>	'select-cat',
+				'adr_one_countrycode' => 'select-country',
+				'adr_two_countrycode' => 'select-country',
 			),
 		);
 

@@ -134,6 +134,46 @@ class addressbook_tracking extends bo_tracking
 	}
 
 	/**
+	 * Override changes to do some special handling of the text country field vs the country code
+	 *
+	 * If the country name was changed at all, use the translated name from the country code as the other value.
+	 * Otherwise, use country code.
+	 *
+	 * @internal use only track($data,$old)
+	 * @param array $data current entry
+	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @param array $changed_fields=null changed fields from ealier call to $this->changed_fields($data,$old), to not compute it again
+	 * @return int number of log-entries made
+	 */
+	protected function save_history(array $data,array $old=null,$deleted=null,array $changed_fields=null)
+	{
+                if (is_null($changed_fields))
+                {
+                        $changed_fields = self::changed_fields($data,$old);
+                }
+                if (!$changed_fields) return 0;
+		foreach(array('adr_one_countryname' => 'adr_one_countrycode', 'adr_two_countryname' => 'adr_two_countrycode') as $name => $code)
+		{
+			// Only codes involved, but old text name is automatically added when loaded
+			if($old[$code] && $data[$code]) {
+				unset($changed_fields[array_search($name, $changed_fields)]);
+				continue;
+			}
+
+			// Code and a text name
+			if(in_array($name, $changed_fields) && in_array($code, $changed_fields))
+			{
+				if($data[$code]) {
+					$data[$name] = $GLOBALS['egw']->country->get_full_name($data[$code], true);
+				}
+				unset($changed_fields[array_search($code, $changed_fields)]);
+			}
+		}
+		parent::save_history($data,$old,$deleted,$changed_fields);
+	}
+
+	/**
 	 * Get the modified / new message (1. line of mail body) for a given entry, can be reimplemented
 	 *
 	 * @param array $data
