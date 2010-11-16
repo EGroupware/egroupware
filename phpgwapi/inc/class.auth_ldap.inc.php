@@ -20,6 +20,12 @@
 class auth_ldap implements auth_backend
 {
 	var $previous_login = -1;
+	/**
+	 * Switch this on to get messages in Apache error_log, why authtication fails
+	 *
+	 * @var boolean
+	 */
+	var $debug = false;
 
 	/**
 	 * authentication against LDAP
@@ -44,6 +50,7 @@ class auth_ldap implements auth_backend
 		/* Login with the LDAP Admin. User to find the User DN.  */
 		if(!@ldap_bind($ldap, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']))
 		{
+			if ($this->debug) error_log(__METHOD__."('$username',\$password) can NOT bind with ldap_root_dn to search!");
 			return False;
 		}
 		/* find the dn for this uid, the uid is not always in the dn */
@@ -64,11 +71,13 @@ class auth_ldap implements auth_backend
 			if ($GLOBALS['egw_info']['server']['case_sensitive_username'] == true &&
 				$allValues[0]['uid'][0] != $username)
 			{
+				if ($this->debug) error_log(__METHOD__."('$username',\$password) wrong case in username!");
 				return false;
 			}
 			if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
 				isset($allValues[0]['shadowexpire']) && $allValues[0]['shadowexpire'][0]*24*3600 < time())
 			{
+				if ($this->debug) error_log(__METHOD__."('$username',\$password) account is expired!");
 				return false;	// account is expired
 			}
 			$userDN = $allValues[0]['dn'];
@@ -95,12 +104,15 @@ class auth_ldap implements auth_backend
 						}
 						return True;
 					}
-					return ($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')) &&
+					$ret = ($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')) &&
 						$GLOBALS['egw']->accounts->id2name($id,'account_status') == 'A';
+					if ($this->debug && !$ret) error_log(__METHOD__."('$username',\$password) account NOT active!");
+					return $ret;
 				}
 				return True;
 			}
 		}
+		if ($this->debug) error_log(__METHOD__."('$username','$password') dn not found or password wrong!");
 		// dn not found or password wrong
 		return False;
 	}
