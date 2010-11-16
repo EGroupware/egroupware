@@ -677,7 +677,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
 		$startdate = new egw_time($event['start']);
-		$enddate = new egw_time($event['start']);
+		$enddate = new egw_time($event['end']);
 		$modified = new egw_time($event['modified']);
 		if ($old_event != False) $olddate = new egw_time($old_event['start']);
 		foreach($to_notify as $userid => $statusid)
