@@ -239,6 +239,7 @@ last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervalls
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	de	Anzahl Zeilen der Beschreibung in der Listenansicht (voreingestellt 5, 0 für alle)
+link	calendar	de	Termin-URL
 link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
 links	calendar	de	Verknüpfungen
 links, attachments	calendar	de	Verknüpfungen, Datei-Anhänge
@@ -282,6 +283,7 @@ number of weeks to show	calendar	de	Anzahl Wochen anzuzeigen
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
 old startdate	calendar	de	Altes Startdatum
+olddate	calendar	de	Ursprüngliches Datum
 on %1 %2 %3 your meeting request for %4	calendar	de	Am %1 hat %2 Ihre Einladung für den %4 %3
 on all modification, but responses	calendar	de	bei allen Änderungen, außer Antworten
 on any time change too	calendar	de	auch jede zeitliche Veränderung
@@ -392,6 +394,7 @@ specify where url of the day links to	calendar	de	Gegen Sie an, wohin die URL de
 start	calendar	de	Start
 start date/time	calendar	de	Startdatum/ -zeit
 start of series event changed	calendar	de	Starttermin der Serie wurde geändert
+startdate	calendar	de	Startdatum
 startdate / -time	calendar	de	Startdatum / -zeit
 startdate and -time of the search	calendar	de	Startdatum und -zeit der Suche
 startdate of the export	calendar	de	Startdatum des Exports
@@ -438,6 +441,9 @@ timezone of event ical file import/export	calendar	de	Zeitzone für iCal Import/
 timezones updated to version %1 (%2 records updated).	calendar	de	Zeitzonen aktualisiert zu Version %1 (%2 Datensätze aktualisiert).
 title of the event	calendar	de	Titel des Termin
 to many might exceed your execution-time-limit	calendar	de	zu viele können Ihre Laufzeitbeschränkung überschreiten
+to-firstname	calendar	de	An Vorname
+to-fullname	calendar	de	An Vor- und Nachname
+to-lastname	calendar	de	An Nachname
 tomorrow	calendar	de	Morgen
 translation	calendar	de	Übersetzung
 tue	calendar	de	Di
