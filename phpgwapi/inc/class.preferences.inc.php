@@ -716,6 +716,9 @@ class preferences
 			$this->db->transaction_commit();
 
 			// no need to invalidate session cache, if we write the prefs to the session too
+			$egw = unserialize($_SESSION[egw_session::EGW_OBJECT_CACHE]);
+			$egw->preferences = $this;
+			$_SESSION[egw_session::EGW_OBJECT_CACHE] = serialize($egw);
 		}
 		$_SESSION[egw_session::EGW_INFO_CACHE]['user']['preferences'] = $GLOBALS['egw_info']['user']['preferences'] = $this->data;
 
