@@ -239,6 +239,7 @@ last	calendar	en	Last
 lastname of person to notify	calendar	en	Last name of a person to notify
 length of the time interval	calendar	en	Length of the time interval
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	en	Limit number of description lines in list view (default 5, 0 for no limit)
+link	calendar	en	Link to event
 link to view the event	calendar	en	Link to view the event
 links	calendar	en	Links
 links, attachments	calendar	en	Links, Attachments
@@ -282,6 +283,7 @@ number of weeks to show	calendar	en	Number of weeks to show
 observance rule	calendar	en	Observance Rule
 occurence	calendar	en	Occurence
 old startdate	calendar	en	Old Start date
+olddate	calendar	en	Original date
 on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
 on all modification, but responses	calendar	en	On all modification, but responses
 on any time change too	calendar	en	On any time change too
@@ -392,6 +394,7 @@ specify where url of the day links to	calendar	en	Specify where URL of the day l
 start	calendar	en	Start
 start date/time	calendar	en	Start Date/Time
 start of series event changed	calendar	en	Start of Series Event Changed
+startdate	calendar	en	Startdate
 startdate / -time	calendar	en	Start date / -time
 startdate and -time of the search	calendar	en	Start date and -time of the search
 startdate of the export	calendar	en	Start date of the export
@@ -438,6 +441,9 @@ timezone of event ical file import/export	calendar	en	Timezone of event iCal fil
 timezones updated to version %1 (%2 records updated).	calendar	en	Timezones updated to version %1 (%2 records updated).
 title of the event	calendar	en	Title of the event
 to many might exceed your execution-time-limit	calendar	en	too many might exceed your execution-time-limit
+to-firstname	calendar	en	To first name
+to-fullname	calendar	en	To fullname
+to-lastname	calendar	en	To last name
 tomorrow	calendar	en	Tomorrow
 translation	calendar	en	Translation
 tue	calendar	en	Tue
