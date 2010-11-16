@@ -661,13 +661,13 @@ class preferences
 	}
 
 	/**
-	 * save the the preferences to the repository
+	 * Save the the preferences to the repository
 	 *
 	 * User prefs for saveing are in $this->user not in $this->data, which are the effectiv prefs only!
 	 *
-	 * @param boolean $update_session_info=false old param, seems not to be used
+	 * @param boolean $update_session_info=false old param, seems not to be used (not used anymore)
 	 * @param string $type='user' which prefs to update: user/default/forced
-	 * @param boolean $invalid_cache=true should we invalidate the cache, default true
+	 * @param boolean $invalid_cache=true should we invalidate the cache, default true (not used anymore)
 	 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 	 */
 	function save_repository($update_session_info = False,$type='user',$invalid_cache=true)
@@ -715,15 +715,10 @@ class preferences
 			}
 			$this->db->transaction_commit();
 
-			if ($invalid_cache && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
-			{
-				$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
-			}
+			// no need to invalidate session cache, if we write the prefs to the session too
 		}
-		else
-		{
-			$_SESSION[egw_session::EGW_INFO_CACHE]['user']['preferences'] = $GLOBALS['egw_info']['user']['preferences'] = $this->data;
-		}
+		$_SESSION[egw_session::EGW_INFO_CACHE]['user']['preferences'] = $GLOBALS['egw_info']['user']['preferences'] = $this->data;
+
 		return $this->data;
 	}
 
