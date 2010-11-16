@@ -40,6 +40,9 @@ function egw_fw(_sidemenuId, _tabsId, _splitterId, _webserverUrl, _sideboxSizeCa
 	this.sideboxSizeCallback = _sideboxSizeCallback;
 	window.egw_webserverUrl = _webserverUrl;
 
+	this.serializedTabState = '';
+	this.notifyTabChangeEnabled = false;
+
 	this.sidemenuUi = null;
 	this.tabsUi = null;
 
@@ -209,6 +212,9 @@ egw_fw.prototype.setActiveApp = function(_app)
 		if (_app.tab)
 		{
 			this.tabsUi.showTab(_app.tab);
+
+			//Going to a new tab changes the tab state
+			this.notifyTabChange(_app.tab);
 		}
 
 		//Resize the scroll area...
@@ -274,6 +280,8 @@ egw_fw.prototype.tabCloseClickCallback = function(_sender)
 	//At least one tab must stay open
 	if (tabsUi.tabs.length > 1)
 	{
+		this.tag.parentFw.notifyTabChangeEnabled = false;
+
 		tabsUi.removeTab(this);
 		app.tab = null;
 		app.browser = null;
@@ -283,6 +291,10 @@ egw_fw.prototype.tabCloseClickCallback = function(_sender)
 
 		//Set the active application to the application of the currently active tab
 		app.parentFw.setActiveApp(tabsUi.activeTab.tag);
+
+		this.tag.parentFw.notifyTabChangeEnabled = true;
+
+		this.tag.parentFw.notifyTabChange();
 	}
 
 	tabsUi.setCloseable(tabsUi.tabs.length > 1);
@@ -336,6 +348,45 @@ egw_fw.prototype.applicationClickCallback = function(_sender)
 	this.tag.parentFw.applicationTabNavigate(this.tag, this.tag.indexUrl);
 }
 
+
+/**
+ * Creates an ordered list with all opened tabs and whether the tab is currently active
+ */
+egw_fw.prototype.assembleTabList = function()
+{
+	var result = new Array;
+	for (var i = 0; i < this.tabsUi.tabs.length; i++)
+	{
+		var tab = this.tabsUi.tabs[i];
+		result[i] = {
+			'appName': tab.tag.appName,
+			'active': tab == this.tabsUi.activeTab
+		}
+	}
+
+	return result;
+}
+
+egw_fw.prototype.notifyTabChange = function()
+{
+	if (this.notifyTabChangeEnabled)
+	{
+		//Send the current tab list to the server
+		var data = this.assembleTabList();
+
+		//Serialize the tab list and check whether it really has changed since the last
+		//submit
+		var serialized = egw_json_encode(data);
+		if (serialized != this.serializedTabState)
+		{
+			this.serializedTabState = serialized;
+
+			var request = new egw_json_request("home.jdots_framework.ajax_tab_changed_state", [data]);
+			request.sendRequest();
+		}
+	}
+}
+
 /**
  * Checks whether the application already owns a tab and creates one if it doesn't exist
  */
@@ -358,16 +409,18 @@ egw_fw.prototype.createApplicationTab = function(_app)
  * 
  * @param egw_fw_class_application _app
  * @param string _url optional url, default index page of app
+ * @param bool _hidden specifies, whether the application should be set active
+ *   after opening the tab
  */
-egw_fw.prototype.applicationTabNavigate = function(_app, _url, _useIframe)
+egw_fw.prototype.applicationTabNavigate = function(_app, _url, _useIframe, _hidden)
 {
 	//Create the tab for that application
 	this.createApplicationTab(_app);
 
-	if (typeof _url == 'undefined')
+	if (typeof _url == 'undefined' || _url == null)
 		_url = _app.indexUrl;
 
-	if (typeof _useIframe == 'undefined')
+	if (typeof _useIframe == 'undefined' || _useIframe == null)
 	{
 		if (!_url.match(/menuaction=/))
 		{
@@ -389,7 +442,15 @@ egw_fw.prototype.applicationTabNavigate = function(_app, _url, _useIframe)
 
 	_app.browser.browse(_url, true);//_useIframe);
 
-	this.setActiveApp(_app);
+	//
+	if (typeof _hidden == 'undefined' || !_hidden)
+	{
+		this.setActiveApp(_app);
+	}
+	else
+	{
+		this.notifyTabChange();
+	}
 }
 
 /**
@@ -436,6 +497,8 @@ egw_fw.prototype.parseAppFromUrl = function(_url)
 egw_fw.prototype.loadApplicationsCallback = function(apps)
 {
 	var defaultApp = null;
+	var restore = [];
+	var activeTabIdx = 0;
 
 	//Iterate through the application array returned
 	for (var i = 0; i < apps.length; i++)
@@ -459,9 +522,18 @@ egw_fw.prototype.loadApplicationsCallback = function(apps)
 		}
 
 		//If this entry is the default entry, show it using the click callback
-		if (app.isDefault && (app.isDefault === true))
+		if (app.isDefault && (app.isDefault === true) && (restore.length == 0))
 		{
 			defaultApp = appData;
+		}
+
+		//If the opened field is set, add the application to the restore array.
+		if ((typeof app.opened != 'undefined') && (app.opened !== false))
+		{			
+			defaultApp = null;
+			restore[app.opened] = appData;
+			if (app.active)
+				activeTabIdx = app.opened;
 		}
 
 		this.applications[appData.appName] = appData;
@@ -480,7 +552,19 @@ egw_fw.prototype.loadApplicationsCallback = function(apps)
 		this.applicationTabNavigate(defaultApp);
 	}
 
+	// restore the already opened tabs
+	if (restore.length > 0)
+	{
+		for (var i = 0; i < restore.length; i++)
+			//The last parameter is the so called "hidden" parameter
+			this.applicationTabNavigate(restore[i], null, null, i != activeTabIdx);
+	}
+
 	this.scrollAreaUi.update();
+
+	//Set the current state of the tabs and activate TabChangeNotification.
+	this.serializedTabState = egw_json_encode(this.assembleTabList());
+	this.notifyTabChangeEnabled = true;
 }
 
 /**

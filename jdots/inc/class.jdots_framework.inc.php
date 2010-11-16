@@ -441,6 +441,7 @@ class jdots_framework extends egw_framework
 	{
 		egw_time::setUserPrefs($tz);	// throws exception, if tz is invalid
 
+		$GLOBALS['egw']->preferences->read_repository();
 		$GLOBALS['egw']->preferences->add('common','tz',$tz);
 		$GLOBALS['egw']->preferences->save_repository();
 	}
@@ -638,6 +639,34 @@ class jdots_framework extends egw_framework
 	}
 
 	/**
+	 * Ajax callback which is called whenever a previously opened tab is closed or
+	 * opened.
+	 *
+	 * @param $tablist is an array which contains each tab as an associative array
+	 *   with the keys 'appName' and 'active'
+	 */
+	public function ajax_tab_changed_state($tablist)
+	{
+		$tabs = array();
+		foreach($tablist as $data)
+		{
+			$tabs[] = $data['appName'];
+			if ($data['active']) $active = $data['appName'];
+		}
+		$tabs = implode(',',$tabs);
+
+		if ($tabs != $GLOBALS['egw_info']['user']['preferences']['common']['open_tabs'] ||
+			$active != $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'])
+		{
+			error_log(__METHOD__.'('.array2string($tablist).") storing common prefs: open_tabs='$tabs', active_tab='$active'");
+			$GLOBALS['egw']->preferences->read_repository();
+			$GLOBALS['egw']->preferences->change('common', 'open_tabs', $tabs);
+			$GLOBALS['egw']->preferences->change('common', 'active_tab', $active);
+			$GLOBALS['egw']->preferences->save_repository(true);
+		}
+	}
+
+	/**
 	 * Ajax callback to store opened/closed status of menu's within one apps sidebox
 	 *
 	 * @param string $app
@@ -751,6 +780,20 @@ class jdots_framework extends egw_framework
 		{
 			unset($apps['sitemgr-link']);
 		}
+
+		// Restore Tabs
+		foreach(explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['open_tabs']) as $n => $app)
+		{
+			if (isset($apps[$app]))		// user might no longer have app rights
+			{
+				$apps[$app]['opened'] = $n;
+				if ($GLOBALS['egw_info']['user']['preferences']['common']['active_tab'] == $app)
+				{
+					$apps[$app]['active'] = true;
+				}
+			}
+		}
+
 		if (!($default_app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app']))
 		{
 			$default_app = 'home';
