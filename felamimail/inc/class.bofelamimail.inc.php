@@ -2061,7 +2061,7 @@
 
 					$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 					$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
-					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts');
+					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts',true);
 					$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
 					$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
 					$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
@@ -3093,10 +3093,10 @@
 		 * @param string format string, if none is passed, use the users common dateformat supplemented by the time hour:minute:second
 		 * @return string returns the date as it is parseable by strtotime, or current timestamp if everything failes
 		 */
-		static function _strtotime($date='',$format=NULL)
+		static function _strtotime($date='',$format=NULL,$convert2usertime=false)
 		{
-			if ($format==NULL) $format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.'H:i:s';
-			$date2return = egw_time::to($date,$format);
+			if ($format==NULL) $format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s');
+			$date2return = ($convert2usertime ? egw_time::server2user($date,$format) : egw_time::to($date,$format));
 			if ($date2return==null)
 			{
 				$dtarr = explode(' ',$date);
@@ -3104,7 +3104,7 @@
 				while ($test===null && count($dtarr)>=1) 
 				{
 					array_pop($dtarr);
-					$test= egw_time::to(implode(' ',$dtarr),$format);
+					$test= ($convert2usertime ? egw_time::server2user(implode(' ',$dtarr),$format): egw_time::to(implode(' ',$dtarr),$format));
 					if ($test) $date2return = $test; 
 				}
 				if ($test===null) $date2return = egw_time::to('now',$format);
