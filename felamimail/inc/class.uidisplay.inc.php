@@ -452,7 +452,7 @@
 				$this->t->set_var("bcc_data_part",'');
 			}
 			$this->t->set_var("date_received",
-				@htmlspecialchars(bofelamimail::_strtotime($headers['DATE'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' - '.bofelamimail::_strtotime($headers['DATE'],'H:i:s'),
+				@htmlspecialchars(bofelamimail::_strtotime($headers['DATE'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],true).' - '.bofelamimail::_strtotime($headers['DATE'],($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s'),true),
 				ENT_QUOTES,$this->displayCharset));
 			//echo 'Envelope:'.preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']).'#0<br>';
 			$subject = bofelamimail::htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
@@ -1457,7 +1457,7 @@
 				$this->t->set_var("cc_data_part",'');
 			}
 			$this->t->set_var("date_data",
-				@htmlspecialchars(bofelamimail::_strtotime($headers['DATE'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' - '.bofelamimail::_strtotime($headers['DATE'],'H:i:s'), ENT_QUOTES,$this->displayCharset));
+				@htmlspecialchars(bofelamimail::_strtotime($headers['DATE'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],true).' - '.bofelamimail::_strtotime($headers['DATE'],($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s'),true), ENT_QUOTES,$this->displayCharset));
 			// link to go back to the message view. the link differs if the print was called from a normal viewing window, or from compose
 			$subject = bofelamimail::htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters, '', $envelope['SUBJECT']),false), $this->displayCharset);
 			$this->t->set_var("subject_data", $subject);

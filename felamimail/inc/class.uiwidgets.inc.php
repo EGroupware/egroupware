@@ -417,12 +417,12 @@ class uiwidgets
 				$this->t->set_var('message_uid', $header['uid']);
  
 				if ($dateToday == bofelamimail::_strtotime($header['date'],'Y-m-d')) {
- 				    $this->t->set_var('date', bofelamimail::_strtotime($header['date'],'H:i:s')); //$GLOBALS['egw']->common->show_date($header['date'],'H:i:s'));
+ 				    $this->t->set_var('date', bofelamimail::_strtotime($header['date'],($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s'))); //$GLOBALS['egw']->common->show_date($header['date'],'H:i:s'));
 				} else {
 					$this->t->set_var('date', bofelamimail::_strtotime($header['date'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']));
 				}
 				$this->t->set_var('datetime', bofelamimail::_strtotime($header['date'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).
-												' - '.bofelamimail::_strtotime($header['date'],'H:i:s')); 
+												' - '.bofelamimail::_strtotime($header['date'],($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s'))); 
 
 				$this->t->set_var('size', $this->show_readable_size($header['size']));
 				if ($firstuid === null)
@@ -677,7 +677,7 @@ class uiwidgets
 									<TD nowrap valign=\"top\" style=\"overflow:hidden;\">
 										".($_folderType > 0?lang('to'):lang('from')).':<b>'.$full_address.' '.($fromAddress?$fromAddress:'') .'</b><br> '.
 										lang('date').':<b>'.bofelamimail::_strtotime($headerData['date'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).
-                                                ' - '.bofelamimail::_strtotime($headerData['date'],'H:i:s')."</b><br>
+                                                ' - '.bofelamimail::_strtotime($headerData['date'],($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s'))."</b><br>
 										".lang('subject').":<b>".$subject."</b>
 									</TD>
 									<td style=\"width:20px;\" align=\"right\">
