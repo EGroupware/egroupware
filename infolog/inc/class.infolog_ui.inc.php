@@ -181,7 +181,7 @@ class infolog_ui
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 		if (($show_links != 'none' && $show_links != 'no_describtion' ||
 			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id'],'link_lastmod DESC',true))))
+			(isset($info['links']) || ($info['links'] = egw_link::get_links('infolog',$info['info_id'],'','link_lastmod DESC',true))))
 		{
 			$timesheets = array();
 			foreach ($info['links'] as $link)
