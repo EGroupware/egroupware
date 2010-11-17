@@ -149,7 +149,7 @@ class auth_ldap implements auth_backend
 		$allValues = ldap_get_entries($ds, $sri);
 
 		$entry['userpassword'] = auth::encrypt_password($new_passwd);
-		$entry['shadowLastChange'] = round((time()-date('Z')) / (24*3600));
+		$entry['shadowlastchange'] = round((time()-date('Z')) / (24*3600));
 
 		$dn = $allValues[0]['dn'];
 

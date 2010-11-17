@@ -572,7 +572,7 @@ class accounts_ldap
 				$data['account_passwd'] = auth::encrypt_ldap($data['account_passwd']);
 			}
 			$to_write['userpassword'] = $data['account_passwd'];
-			$to_write['shadowLastChange'] = round((time()-$utc_diff) / (24*3600));
+			$to_write['shadowlastchange'] = round((time()-$utc_diff) / (24*3600));
 		}
 		// both status and expires are encoded in the single shadowexpire value in LDAP
 		// - if it's unset an account is enabled AND does never expire
@@ -592,7 +592,7 @@ class accounts_ldap
 		}
 		//error_log(__METHOD__.__LINE__.$data['account_lid'].'#'.$data['account_lastpwd_change'].'#');
 		if ($data['account_lastpwd_change']) $to_write['shadowlastchange'] = round(($data['account_lastpwd_change']-$utc_diff)/(24*3600));
-		if (isset($data['account_lastpwd_change']) && $data['account_lastpwd_change']==0) $to_write['shadowLastChange'] = 0;
+		if (isset($data['account_lastpwd_change']) && $data['account_lastpwd_change']==0) $to_write['shadowlastchange'] = 0;
 		// lastlogin and lastlogin from are not availible via the shadowAccount object class
 		// $to_write['phpgwaccountlastlogin'] = $data['lastlogin'];
 		// $to_write['phpgwaccountlastloginfrom'] = $data['lastloginfrom'];
