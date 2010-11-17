@@ -119,7 +119,7 @@
 					$this->settings = array_merge($this->settings,$GLOBALS['settings']);
 				}
 			}
-			// check if we have a default/forced value from the settings hook, 
+			// check if we have a default/forced value from the settings hook,
 			// which is NOT stored as default currently
 			// --> store it as default, to allow to propagate defaults to existing installations
 			if ($appname == 'preferences') $appname = 'common';
@@ -250,6 +250,12 @@
 			}
 
 			$GLOBALS['egw']->preferences->save_repository(True,$type);
+
+			// certain common prefs (language, template, ...) require the session to be re-created
+			if ($appname == 'common')
+			{
+				egw::invalidate_session_cache();
+			}
 
 			return $this->prefs;
 		}
