@@ -664,6 +664,7 @@ class idots_framework extends egw_framework
 			// this closes the application area AND renders the closing body- and html-tag
 			if (self::$navbar_done)
 			{
+				if (!is_a($this->tpl,'Template')) $this->tpl = new Template(EGW_TEMPLATE_DIR);
 				$this->tpl->set_file(array('footer' => 'footer.tpl'));
 				$this->tpl->set_var($this->_get_footer());
 				$content .= $this->tpl->fp('out','footer');
