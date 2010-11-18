@@ -198,13 +198,17 @@
 		{
 			if (!$email || $email == '' || $email == ' ') return '';
 			if (!$text) $text = $email;
+			//error_log( __METHOD__." email:".$email.'#<br>');
+			//error_log( __METHOD__." text:".$text.'#<br>');
 			// create links for email addresses
 			$linkData = array
 			(
-				'menuaction'    => 'felamimail.uicompose.compose'
+				'menuaction'    => 'felamimail.uicompose.compose',
+				'send_to'	=> base64_encode($email)
 			);
 			$link = $GLOBALS['egw']->link('/index.php',$linkData);
-			return '<a href="'.$link.'&send_to='.base64_encode($email).'" target="_top"><font color="blue">'.$text.'</font></a>';
+			//error_log(__METHOD__." link:".$link.'#<br>');
+			return "<a href='#' onclick='egw_openWindowCentered(\"$link\",\"compose\",700,egw_getWindowOuterHeight());' ><font color=\"blue\">".$text."</font></a>";
 		}
 
 		function highlightQuotes($text, $level = 5)
@@ -1296,9 +1300,9 @@
 					// removes stuff between http and ?http
 					$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
 					$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
-					// spamsaver emailaddress, needed to be able to apply email compose links later
+					// TRANSFORM MAILTO LINKS TO EMAILADDRESS ONLY, WILL BE SUBSTITUTED BY parseEmail TO CLICKABLE LINK
 					$newBody = preg_replace('/(?<!"|href=|href\s=\s|href=\s|href\s=)'.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
-						'<a href="#" onclick="document.location=\'mai\'+\'lto:\\1\'+unescape(\'%40\')+\'\\2.\\3\'; return false;">\\1 AT \\2 DOT \\3</a>',
+						"\\1@\\2.\\3",
 						$newBody);
 
 					// redirect links for websites if you use no cookies
@@ -1321,15 +1325,12 @@
 					}
 
 					// create links for email addresses
-					$linkData = array
-					(
-						'menuaction'    => 'felamimail.uicompose.compose'
-					);
-					$link = $GLOBALS['egw']->link('/index.php',$linkData);
+					$link = $GLOBALS['egw']->link('/index.php',array('menuaction'    => 'felamimail.uicompose.compose'));
 					$newBody = preg_replace("/href=(\"|\')mailto:([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)(\"|\')/ie",
-						"'href=\"$link&send_to='.base64_encode('$2').'\"'", $newBody);
-					#print "<pre>".htmlentities($newBody)."</pre><hr>";
-
+						"'href=\"#\"'.' onclick=\"egw_openWindowCentered(\'$link&send_to='.base64_encode('$2').'\',\'compose\',700,egw_getWindowOuterHeight());\"'", $newBody);
+//						"'href=\"$link&send_to='.base64_encode('$2').'\"'", $newBody);
+					//print "<pre>".htmlentities($newBody)."</pre><hr>";
+					
 					// replace emails within the text with clickable links.
 					$this->parseEmail($newBody);
 				}
