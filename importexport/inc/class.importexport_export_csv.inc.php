@@ -177,6 +177,7 @@ class importexport_export_csv implements importexport_iface_export_record
 	public static function convert_parse_custom_fields($appname, &$selects = array(), &$links = array(), &$methods = array()) {
 		if(!$appname) return;
 
+		$fields = array();
 		$custom = config::get_customfields($appname);
 		foreach($custom as $name => $c_field) {
 			$name = '#' . $name;
@@ -234,7 +235,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			// Not quite a recursive merge, since only one level
 			foreach($fields as $type => &$list) {
 				if($c_fields[$type]) {
-					$list += $c_fields[$type];
+					$list = array_merge($c_fields[$type], $list);;
 					unset($c_fields[$type]);
 				}
 			}
@@ -267,6 +268,11 @@ class importexport_export_csv implements importexport_iface_export_record
 				} else {
 					$record->$name = common::grab_owner_name($record->$name);
 				}
+			}
+		}
+		foreach((array)$fields['select-bool'] as $name) {
+			if($record->$name != null) {
+				$record->$name = $record->$name ? lang('Yes') : lang('No');
 			}
 		}
 		foreach((array)$fields['date-time'] as $name) {
