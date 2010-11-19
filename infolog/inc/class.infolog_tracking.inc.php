@@ -75,11 +75,14 @@ class infolog_tracking extends bo_tracking
 	/**
 	 * Translate field-names to labels
 	 *
+	 * @note The order of these fields is used to determine the order for CSV export
 	 * @var array
 	 */
 	var $field2label = array(
 		'info_type'      => 'Type',
 		'info_from'      => 'Contact',
+		'info_subject'   => 'Subject',
+		'info_des'       => 'Description',
 		'info_addr'      => 'Phone/Email',
 		'info_link_id'   => 'primary link',
 		'info_cat'       => 'Category',
@@ -94,8 +97,6 @@ class infolog_tracking extends bo_tracking
 		'info_startdate' => 'Startdate',
 		'info_enddate'   => 'Enddate',
 		'info_responsible' => 'Responsible',
-		'info_subject'   => 'Subject',
-		'info_des'       => 'Description',
 		// PM fields
 		'info_planned_time'  => 'planned time',
 		'info_used_time'     => 'used time',
