@@ -33,7 +33,9 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	public function __construct( $_identifier='' ){
 		$this->identifier = $_identifier;
 		$this->bocontacts = new addressbook_bo();
-		$this->contact = $this->bocontacts->read($this->identifier);
+		if($_identifier) {
+			$this->contact = $this->bocontacts->read($this->identifier);
+		}
 	}
 
 	/**

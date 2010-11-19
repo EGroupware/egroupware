@@ -41,11 +41,16 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		$uicontacts = new addressbook_ui();
 		$selection = array();
+
+		// Need to switch the app to get the same results
+		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
+
 		if ($options['selection'] == 'use_all') {
 			// uicontacts selection with checkbox 'use_all'
 			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 			$query['num_rows'] = -1;	// all
-			$uicontacts->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
+			$uicontacts->get_rows($query,$selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all_contacts' ) {
 			$selection = ExecMethod('addressbook.addressbook_bo.search',array());
@@ -53,6 +58,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		} else {
 			$selection = explode(',',$options['selection']);
 		}
+		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
 		if($options['explode_multiselects']) {
 			$customfields = config::get_customfields('addressbook');
@@ -68,18 +74,30 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 								'label' => $settings['name'],
 								'subs' => array(),
 							);
-							$subs = $cat_obj->return_array('subs', 0, false, '', 'ASC','', True, $settings['id']);
+							$subs = $cat_obj->return_sorted_array(0, False, '', 'ASC', 'cat_name', True, $settings['id']);
 							foreach($subs as $sub) {
-								$additional_fields[$field][$settings['id']]['subs'][$sub['id']] = $sub['name'];
+								$name = $sub['name'];
+								$path = $sub;
+								while($path['parent'] != $settings['id']) {
+									$path = $cat_obj->read($path['parent']);
+									$name = $path['name'] . '/' . $name;
+								}
+								$additional_fields[$field][$settings['id']]['subs'][$sub['id']] = $name;
 							}
 						}
 						break;
 					case self::EACH_CAT:
 						$cats = $cat_obj->return_array('all', 0, false);
 						foreach($cats as $settings) {
+							$name = $settings['name'];
+							$path = $settings;
+							while($path['level'] != 0) {
+								$path = $cat_obj->read($path['parent']);
+								$name = $path['name'] . '/' . $name;
+							}
 							$additional_fields[$field][$settings['id']] = array(
 								'count' => 0,
-								'label' => $settings['name']
+								'label' => $name
 							);
 						}
 						break;
@@ -96,9 +114,14 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				}
 			}
 
-			// Check records to see if additional fields are acutally used
-			foreach ($selection as $identifier) {
-				$contact = new addressbook_egw_record($identifier);
+			// Check records to see if additional fields are actually used
+			foreach ($selection as $_contact) {
+				if(is_array($_contact) && $_contact['id']) {
+					$contact = new addressbook_egw_record();
+					$contact->set_record($_contact);
+				} else {
+					$contact = new addressbook_egw_record($_contact);
+				}
 				foreach($additional_fields as $field => &$values) {
 					if(!$contact->$field) continue;
 					foreach($values as $value => &$settings) {
@@ -108,6 +131,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 						if(is_array($contact->$field) && in_array($value, $contact->$field)) {
 							$settings['count']++;
 						} elseif($contact->$field == $value) {
+							$settings['count']++;
+						} elseif($options['explode_multiselects'][$field]['explode'] == self::MAIN_CATS && array_intersect($contact->$field, array_keys($settings['subs']))) {
 							$settings['count']++;
 						}
 					}
@@ -145,8 +170,13 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
-		foreach ($selection as $identifier) {
-			$contact = new addressbook_egw_record($identifier);
+		foreach ($selection as $_contact) {
+			if(is_array($_contact) && $_contact['id']) {
+				$contact = new addressbook_egw_record();
+				$contact->set_record($_contact);
+			} else {
+				$contact = new addressbook_egw_record($_contact);
+			}
 			// Some conversion
 			$this->convert($contact, $options);
 			importexport_export_csv::convert($contact, self::$types, 'addressbook');
