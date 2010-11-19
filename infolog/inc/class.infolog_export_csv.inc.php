@@ -111,7 +111,6 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	 * @return string html
 	 */
 	public function get_options_etpl() {
-		return 'infolog.export_csv_options';
 	}
 
 	/**
