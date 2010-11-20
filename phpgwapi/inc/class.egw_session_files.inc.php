@@ -54,16 +54,20 @@ class egw_session_files
 			return $values;
 		}
 		if (!($max_session_size = ini_get('memory_limit'))) $max_session_size = '16M';
-		switch(strtoupper(substr($max_session_size,-1)))
+		if($max_session_size > 0)
 		{
-			case 'M': $max_session_size *= 1024*1024; break;
-			case 'K': $max_session_size *= 1024; break;
+			switch(strtoupper(substr($max_session_size,-1)))
+			{
+				case 'M': $max_session_size *= 1024*1024; break;
+				case 'K': $max_session_size *= 1024; break;
+			}
+			$max_session_size /= 4;	// use at max 1/4 of the memory_limit to read sessions, the others get ignored
 		}
-		$max_session_size /= 4;	// use at max 1/4 of the memory_limit to read sessions, the others get ignored
 
 		while (($file = readdir($dir)))
 		{
-			if ($file{0} == '.' || filesize($path.'/'.$file) >= $max_session_size) continue;
+			if ($file{0} == '.') continue;
+			if ($max_session_size > 0 && filesize($path.'/'.$file) >= $max_session_size) continue;
 
 			if (substr($file,0,5) != 'sess_' || $session_cache[$file] === false)
 			{
