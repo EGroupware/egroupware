@@ -197,7 +197,7 @@ class module_calendar_planner extends Module
 		if ($arguments['sortby'] == 'yearly')
 		{
 			$arguments['sortby'] = 'month';
-			$arguments['date'] = date('Y0101');
+			$arguments['date'] = substr($arguments['date'],0,4).'0101';
 		}
 		if (isset($_GET['date'])) $arguments['date'] = $_GET['date'];
 		if (empty($arguments['cat_id'])) $arguments['cat_id'] = 0;
@@ -209,7 +209,7 @@ class module_calendar_planner extends Module
 				{
 					unset($arguments['resources'][$index]);
 				}
-			}	
+			}
 		}
 
 		$params = $arguments;
