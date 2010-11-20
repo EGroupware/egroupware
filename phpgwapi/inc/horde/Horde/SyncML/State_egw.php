@@ -686,20 +686,16 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
 		if ($GLOBALS['egw']->db->select('egw_syncmldeviceowner', 'owner_devid', $where,
 			__LINE__, __FILE__, false, '', 'syncml')->fetchColumn()) {
-			$data = array (
-				'owner_devid'		=> $deviceID,
-			);
-			$GLOBALS['egw']->db->update('egw_syncmldeviceowner', $data, $where,
-				__LINE__, __FILE__, 'syncml');
-		} else {
-			$data = array (
-				'owner_locname'		=> $this->_locName,
-				'owner_deviceid'	=> $this->_sourceURI,
-				'owner_devid'		=> $deviceID,
-			);
-			$GLOBALS['egw']->db->insert('egw_syncmldeviceowner', $data, $where,
+			$GLOBALS['egw']->db->delete('egw_syncmldeviceowner', $where,
 				__LINE__, __FILE__, 'syncml');
 		}
+		$data = array (
+			'owner_locname'		=> $this->_locName,
+			'owner_deviceid'	=> $this->_sourceURI,
+			'owner_devid'		=> $deviceID,
+		);
+		$GLOBALS['egw']->db->insert('egw_syncmldeviceowner', $data, $where,
+			__LINE__, __FILE__, 'syncml');
 	}
 
 	/**
