@@ -645,7 +645,7 @@ abstract class egw_framework
 		// We handle this here becuase its special
 		$apps['about']['title'] = lang('About %1','EGroupware');
 
-		$apps['about']['url']   = egw::link('/about.php','app='.$app);
+		$apps['about']['url']   = egw::link('/about.php');
 		$apps['about']['icon']  = common::image('phpgwapi',Array('about','nonav'));
 		$apps['about']['icon_hover']  = common::image_on('phpgwapi',Array('about','nonav'),'-over');
 		$apps['about']['name'] = 'about';
