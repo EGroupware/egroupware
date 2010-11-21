@@ -458,7 +458,7 @@ class Horde_SyncML_State {
     function setClientDeviceInfo($clientDeviceInfo)
     {
     	$this->_clientDeviceInfo = $clientDeviceInfo;
-    	$this->_clientDeviceInfo['persistent'] = false;
+    	unset($this->_clientDeviceInfo['persistent']);
     }
 
     function setDeletedItems($_type, $_deletedItems)
