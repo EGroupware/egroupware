@@ -238,7 +238,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				'tzid'						=> $syncml_prefs[$deviceTimezone],
 				'charset'					=> $syncml_prefs[$deviceCharSet],
 				'devId'						=> $deviceID,
-				'persistent'				=> true,
+				'persistent'				=> $deviceID,
 				'dataStore'					=> unserialize($row['dev_datastore']),
 			);
 			return $this->_clientDeviceInfo;
@@ -635,7 +635,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			return false;
 		}
 		
-		if (empty($this->_clientDeviceInfo['persistent'])) {
+		if (!isset($this->_clientDeviceInfo['persistent'])) {
 			// the device information was updated 
 			
 			if(!isset($this->size_dev_hwversion)) {
@@ -683,7 +683,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				$deviceID = $GLOBALS['egw']->db->get_last_insert_id('egw_syncmldevinfo', 'dev_id');
 			}
 			
-			$this->_clientDeviceInfo['persistent'] = true;
+			$this->_clientDeviceInfo['persistent'] = $deviceID;
 		}
 
 		$data = $where = array (
@@ -694,7 +694,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		$GLOBALS['egw']->db->delete('egw_syncmldeviceowner', $where,
 			__LINE__, __FILE__, 'syncml');
 			
-		$data['owner_devid'] = $deviceID;
+		$data['owner_devid'] = $this->_clientDeviceInfo['persistent'];
 
 		$GLOBALS['egw']->db->insert('egw_syncmldeviceowner', $data, $where,
 			__LINE__, __FILE__, 'syncml');
