@@ -238,6 +238,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				'tzid'						=> $syncml_prefs[$deviceTimezone],
 				'charset'					=> $syncml_prefs[$deviceCharSet],
 				'devId'						=> $deviceID,
+				'persistent'				=> true,
 				'dataStore'					=> unserialize($row['dev_datastore']),
 			);
 			return $this->_clientDeviceInfo;
@@ -633,67 +634,68 @@ class EGW_SyncML_State extends Horde_SyncML_State
 				|| !is_array($this->_clientDeviceInfo)) {
 			return false;
 		}
-
-		if(!isset($this->size_dev_hwversion)) {
-			$tableDefDevInfo = $GLOBALS['egw']->db->get_table_definitions('syncml',$this->table_devinfo);
-			$this->size_dev_hwversion = $tableDefDevInfo['fd']['dev_hwversion']['precision'];
-			unset($tableDefDevInfo);
+		
+		if (empty($this->_clientDeviceInfo['persistent'])) {
+			// the device information was updated 
+			
+			if(!isset($this->size_dev_hwversion)) {
+				$tableDefDevInfo = $GLOBALS['egw']->db->get_table_definitions('syncml',$this->table_devinfo);
+				$this->size_dev_hwversion = $tableDefDevInfo['fd']['dev_hwversion']['precision'];
+				unset($tableDefDevInfo);
+			}
+			
+			$softwareVersion = !empty($this->_clientDeviceInfo['softwareVersion']) ? $this->_clientDeviceInfo['softwareVersion'] : '';
+			$hardwareVersion = !empty($this->_clientDeviceInfo['hardwareVersion']) ? substr($this->_clientDeviceInfo['hardwareVersion'], 0, $this->size_dev_hwversion) : '';
+			$firmwareVersion = !empty($this->_clientDeviceInfo['firmwareVersion']) ? $this->_clientDeviceInfo['firmwareVersion'] : '';
+			
+			$where = array(
+				'dev_model'		=> $this->_clientDeviceInfo['model'],
+				'dev_manufacturer'	=> $this->_clientDeviceInfo['manufacturer'],
+				'dev_swversion'		=> $softwareVersion,
+				'dev_hwversion'		=> $hardwareVersion,
+				'dev_fwversion'		=> $firmwareVersion,
+			);
+			
+			if (($deviceID = $GLOBALS['egw']->db->select('egw_syncmldevinfo', 'dev_id', $where,
+				__LINE__, __FILE__, false, '', 'syncml')->fetchColumn())) {
+				$data = array (
+					'dev_datastore'		=> serialize($this->_clientDeviceInfo['dataStore']),
+				);
+				$GLOBALS['egw']->db->update('egw_syncmldevinfo', $data, $where,
+					__LINE__, __FILE__, 'syncml');
+			} else {
+				$data = array (
+					'dev_dtdversion' 		=> $this->_clientDeviceInfo['DTDVersion'],
+					'dev_numberofchanges'	=> ($this->_clientDeviceInfo['supportNumberOfChanges'] ? true : false),
+					'dev_largeobjs'			=> ($this->_clientDeviceInfo['supportLargeObjs'] ? true : false),
+					'dev_utc'				=> ($this->_clientDeviceInfo['UTC'] ? true : false),
+					'dev_swversion'			=> $softwareVersion,
+					'dev_hwversion'			=> $hardwareVersion,
+					'dev_fwversion'			=> $firmwareVersion,
+					'dev_oem'				=> $this->_clientDeviceInfo['oem'],
+					'dev_model'				=> $this->_clientDeviceInfo['model'],
+					'dev_manufacturer'		=> $this->_clientDeviceInfo['manufacturer'],
+					'dev_devicetype'		=> $this->_clientDeviceInfo['deviceType'],
+					'dev_datastore'			=> serialize($this->_clientDeviceInfo['dataStore']),
+				);
+				$GLOBALS['egw']->db->insert('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__, 'syncml');
+				
+				$deviceID = $GLOBALS['egw']->db->get_last_insert_id('egw_syncmldevinfo', 'dev_id');
+			}
+			
+			$this->_clientDeviceInfo['persistent'] = true;
 		}
 
-		$softwareVersion = !empty($this->_clientDeviceInfo['softwareVersion']) ? $this->_clientDeviceInfo['softwareVersion'] : '';
-		$hardwareVersion = !empty($this->_clientDeviceInfo['hardwareVersion']) ? substr($this->_clientDeviceInfo['hardwareVersion'], 0, $this->size_dev_hwversion) : '';
-		$firmwareVersion = !empty($this->_clientDeviceInfo['firmwareVersion']) ? $this->_clientDeviceInfo['firmwareVersion'] : '';
-
-		$where = array(
-			'dev_model'		=> $this->_clientDeviceInfo['model'],
-			'dev_manufacturer'	=> $this->_clientDeviceInfo['manufacturer'],
-			'dev_swversion'		=> $softwareVersion,
-			'dev_hwversion'		=> $hardwareVersion,
-			'dev_fwversion'		=> $firmwareVersion,
-		);
-
-		if (($deviceID = $GLOBALS['egw']->db->select('egw_syncmldevinfo', 'dev_id', $where,
-			__LINE__, __FILE__, false, '', 'syncml')->fetchColumn())) {
-			$data = array (
-				'dev_datastore'		=> serialize($this->_clientDeviceInfo['dataStore']),
-			);
-			$GLOBALS['egw']->db->update('egw_syncmldevinfo', $data, $where,
-				__LINE__, __FILE__, 'syncml');
-		} else {
-			$data = array (
-				'dev_dtdversion' 		=> $this->_clientDeviceInfo['DTDVersion'],
-				'dev_numberofchanges'	=> ($this->_clientDeviceInfo['supportNumberOfChanges'] ? true : false),
-				'dev_largeobjs'			=> ($this->_clientDeviceInfo['supportLargeObjs'] ? true : false),
-				'dev_utc'				=> ($this->_clientDeviceInfo['UTC'] ? true : false),
-				'dev_swversion'			=> $softwareVersion,
-				'dev_hwversion'			=> $hardwareVersion,
-				'dev_fwversion'			=> $firmwareVersion,
-				'dev_oem'				=> $this->_clientDeviceInfo['oem'],
-				'dev_model'				=> $this->_clientDeviceInfo['model'],
-				'dev_manufacturer'		=> $this->_clientDeviceInfo['manufacturer'],
-				'dev_devicetype'		=> $this->_clientDeviceInfo['deviceType'],
-				'dev_datastore'			=> serialize($this->_clientDeviceInfo['dataStore']),
-			);
-			$GLOBALS['egw']->db->insert('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__, 'syncml');
-
-			$deviceID = $GLOBALS['egw']->db->get_last_insert_id('egw_syncmldevinfo', 'dev_id');
-		}
-
-		$where = array (
+		$data = $where = array (
 			'owner_locname'		=> $this->_locName,
 			'owner_deviceid'	=> $this->_sourceURI,
 		);
 
-		if ($GLOBALS['egw']->db->select('egw_syncmldeviceowner', 'owner_devid', $where,
-			__LINE__, __FILE__, false, '', 'syncml')->fetchColumn()) {
-			$GLOBALS['egw']->db->delete('egw_syncmldeviceowner', $where,
-				__LINE__, __FILE__, 'syncml');
-		}
-		$data = array (
-			'owner_locname'		=> $this->_locName,
-			'owner_deviceid'	=> $this->_sourceURI,
-			'owner_devid'		=> $deviceID,
-		);
+		$GLOBALS['egw']->db->delete('egw_syncmldeviceowner', $where,
+			__LINE__, __FILE__, 'syncml');
+			
+		$data['owner_devid'] = $deviceID;
+
 		$GLOBALS['egw']->db->insert('egw_syncmldeviceowner', $data, $where,
 			__LINE__, __FILE__, 'syncml');
 	}
