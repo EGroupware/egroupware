@@ -142,6 +142,11 @@ class jdots_framework extends egw_framework
 		{
 			return $matches[1];
 		}
+		if (strlen($GLOBALS['egw_info']['server']['webserver_url']) > 1)
+		{
+			list(,$url) = explode(parse_url($GLOBALS['egw_info']['server']['webserver_url'],PHP_URL_PATH),
+				parse_url($url,PHP_URL_PATH),2);
+		}
 		if (preg_match('/\/([^\/]+)\/([^\/]+\.php)?(\?|\/|$)/',$url,$matches))
 		{
 			return $matches[1];
@@ -273,7 +278,7 @@ class jdots_framework extends egw_framework
 	if (typeof window.parent.framework != "undefined")
 	{
 		var app = window.parent.framework.getApplicationByName("'.$app.'");
-		window.parent.framework.setWebsiteTitle(app,"'.htmlspecialchars($vars['website_title']).'");
+		window.parent.framework.setWebsiteTitle(app,"'.htmlspecialchars($vars['website_title']).'","'.$app_header.'");
 	}';
 
 			//Register the global key press handler
@@ -723,8 +728,10 @@ class jdots_framework extends egw_framework
 
 	/**
 	 * Stores the user defined sorting of the applications inside the preferences
-	*/
-	public function ajax_appsort($apps)
+	 *
+	 * @param array $apps
+	 */
+	public function ajax_appsort(array $apps)
 	{
 		$order = array();
 		$i = 0;
@@ -749,6 +756,10 @@ class jdots_framework extends egw_framework
 	/**
 	 * Prepare an array with apps used to render the navbar
 	 *
+	 * @param string $url contains the current url on the client side. It is used to
+	 *  determine whether the default app/home should be opened on the client
+	 *  or whether a specific application-url has been given.
+	 *
 	 * @return array of array(
 	 *  'name'  => app / directory name
 	 * 	'title' => translated application title
@@ -757,9 +768,12 @@ class jdots_framework extends egw_framework
 	 *  'icon_app' => application of icon
 	 *  'icon_hover' => hover-icon, if used by template
 	 *  'target'=> ' target="..."' attribute fragment to open url in target, popup or ''
+	 *  'opened' => unset or false if the tab should not be opened, otherwise the numeric position in the tab list
+	 *  'active' => true if this tab should be the active one when it is restored, otherwise unset or false
+	 *  'openOnce' => unset or the url which will be opened when the tab is restored
 	 * )
 	 */
-	public function ajax_navbar_apps()
+	public function ajax_navbar_apps($url)
 	{
 		$apps = parent::_get_navbar_apps();
 
@@ -781,13 +795,43 @@ class jdots_framework extends egw_framework
 			unset($apps['sitemgr-link']);
 		}
 
+		// check if user called a specific url --> open it as active tab
+		$last_direct_url =& egw_cache::getSession(__CLASS__, 'last_direct_url');
+		if ($url !== $last_direct_url)
+		{
+			$active_tab = $url_tab = self::app_from_url($url);
+			$last_direct_url = $url;
+		}
+		if ($active_tab)
+		{
+			$apps[$active_tab]['openOnce'] = str_replace('&cd=yes','',$url);
+			$store_prefs = true;
+		}
+		else
+		{
+			$active_tab = $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'];
+		}
+		$open_tabs = explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['open_tabs']);
+		if (!in_array($active_tab,$open_tabs))
+		{
+			$open_tabs[] = $active_tab;
+			$store_prefs = true;
+		}
+		if ($store_prefs)
+		{
+			$GLOBALS['egw']->preferences->read_repository();
+			$GLOBALS['egw']->preferences->change('common', 'open_tabs', implode(',',$open_tabs));
+			$GLOBALS['egw']->preferences->change('common', 'active_tab', $active_tab);
+			$GLOBALS['egw']->preferences->save_repository(true);
+		}
+		//error_log(__METHOD__."('$url') url_tab='$url_tab', active_tab=$active_tab, open_tabs=".array2string($open_tabs));
 		// Restore Tabs
-		foreach(explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['open_tabs']) as $n => $app)
+		foreach($open_tabs as $n => $app)
 		{
 			if (isset($apps[$app]))		// user might no longer have app rights
 			{
 				$apps[$app]['opened'] = $n;
-				if ($GLOBALS['egw_info']['user']['preferences']['common']['active_tab'] == $app)
+				if ($app == $active_tab)
 				{
 					$apps[$app]['active'] = true;
 				}

@@ -22,6 +22,9 @@ function egw_fw_class_application(_parentFw, _appName, _displayName, _icon,
 	this.legacyApp = _legacyApp;
 	this.hasPrerequisites;
 
+	this.website_title = '';
+	this.app_header = '';
+
 	this.sideboxWidth = _sideboxWidth;
 
 	//Setup a link to the parent framework class

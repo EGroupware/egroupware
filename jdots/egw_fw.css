@@ -489,3 +489,18 @@ body {
 
 .egw_fw_content_browser_iframe {
 }
+
+.egw_fw_ui_app_header_container {
+	border-width: 0px 1px 0px 1px;
+	border-style: solid;
+	border-color: #D5DDE6;
+}
+
+.egw_fw_ui_app_header {
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+	border-color: #D5DDE6;
+	padding: 5px 2px 4px 15px;
+	font-size: 9pt;
+	font-weight: bold;
+}

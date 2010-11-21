@@ -194,7 +194,7 @@ egw_fw.prototype.setActiveApp = function(_app)
 							this.fw.setSidebox(this.app, data.data,  data.md5);
 							this.app.sidemenuEntry.hideAjaxLoader();
 						}
-				}, {'app' : _app, 'fw' : this});		
+				}, {'app' : _app, 'fw' : this});
 			}
 		}
 		else
@@ -203,10 +203,7 @@ egw_fw.prototype.setActiveApp = function(_app)
 		}
 
 		//Set the website title
-		if (_app.website_title)
-		{
-			document.title = _app.website_title;
-		}
+		this.refreshAppTitle();
 
 		//Show the application tab
 		if (_app.tab)
@@ -390,13 +387,17 @@ egw_fw.prototype.notifyTabChange = function()
 /**
  * Checks whether the application already owns a tab and creates one if it doesn't exist
  */
-egw_fw.prototype.createApplicationTab = function(_app)
+egw_fw.prototype.createApplicationTab = function(_app, _pos)
 {
+	//Default the pos parameter to -1
+	if (typeof _pos == 'undefined')
+		_pos = -1;
+
 	if (_app.tab == null)
 	{
 		//Create the tab
 		_app.tab = this.tabsUi.addTab(_app.icon, this.tabClickCallback, this.tabCloseClickCallback,
-			_app);
+			_app, _pos);
 		_app.tab.setTitle(_app.displayName);
 
 		//Set the tab closeable if there's more than one tab
@@ -412,10 +413,14 @@ egw_fw.prototype.createApplicationTab = function(_app)
  * @param bool _hidden specifies, whether the application should be set active
  *   after opening the tab
  */
-egw_fw.prototype.applicationTabNavigate = function(_app, _url, _useIframe, _hidden)
+egw_fw.prototype.applicationTabNavigate = function(_app, _url, _useIframe, _hidden, _pos)
 {
+	//Default the post parameter to -1
+	if (typeof _pos == 'undefined')
+		_pos = -1;
+
 	//Create the tab for that application
-	this.createApplicationTab(_app);
+	this.createApplicationTab(_app, _pos);
 
 	if (typeof _url == 'undefined' || _url == null)
 		_url = _app.indexUrl;
@@ -442,7 +447,6 @@ egw_fw.prototype.applicationTabNavigate = function(_app, _url, _useIframe, _hidd
 
 	_app.browser.browse(_url, true);//_useIframe);
 
-	//
 	if (typeof _hidden == 'undefined' || !_hidden)
 	{
 		this.setActiveApp(_app);
@@ -497,8 +501,17 @@ egw_fw.prototype.parseAppFromUrl = function(_url)
 egw_fw.prototype.loadApplicationsCallback = function(apps)
 {
 	var defaultApp = null;
-	var restore = [];
-	var activeTabIdx = 0;
+	var restore = new Object;
+	var restore_count = 0;
+
+	var mkRestoreEntry = function(_app, _pos, _url, _active) {
+		return {
+			'app': _app,
+			'position': _pos,
+			'url': _url,
+			'active': _active
+		}
+	}
 
 	//Iterate through the application array returned
 	for (var i = 0; i < apps.length; i++)
@@ -531,34 +544,62 @@ egw_fw.prototype.loadApplicationsCallback = function(apps)
 		if ((typeof app.opened != 'undefined') && (app.opened !== false))
 		{			
 			defaultApp = null;
-			restore[app.opened] = appData;
-			if (app.active)
-				activeTabIdx = app.opened;
+
+			var url = null;
+			if (typeof app.openOnce != 'undefined' && app.openOnce)
+				url = app.openOnce;
+
+			restore[appData.appName] = mkRestoreEntry(appData, app.opened,
+				url, app.active ? 1 : 0);
+			restore_count += 1;
 		}
 
 		this.applications[appData.appName] = appData;
 	}
 
-	// check if a menuaction or app is specified in the url --> display that
+	//Processing of the url or the defaultApp is now deactivated. 
+
+/*	// check if a menuaction or app is specified in the url --> display that
 	var _app = this.parseAppFromUrl(window.location.href);
 	if (_app)
 	{
-		_url = window.location.href.replace(/&?cd=yes/,'');
-		this.applicationTabNavigate(_app, _url);
-	}
+		//If this app is already opened, don't change its position. Otherwise
+		//add it to the end of the tab list
+		var appPos = restore_count;
+		if (typeof restore[_app.appName] != 'undefined')
+			appPos = restore[_app.appName].position;
+		
+		restore[_app.appName] = mkRestoreEntry(_app, appPos,
+			window.location.href.replace(/&?cd=yes/,''), 2);
+	}*/
+
 	// else display the default application
-	else if (defaultApp)
+	if (defaultApp && restore_count == 0)
 	{
-		this.applicationTabNavigate(defaultApp);
+		restore[defaultApp.appName] = mkRestoreEntry(defaultApp, 0, null, 1);
 	}
 
-	// restore the already opened tabs
-	if (restore.length > 0)
-	{
-		for (var i = 0; i < restore.length; i++)
-			//The last parameter is the so called "hidden" parameter
-			this.applicationTabNavigate(restore[i], null, null, i != activeTabIdx);
-	}
+	//Generate an array with all tabs which shall be restored sorted in by
+	//their active state
+
+	//Fill in the sorted_restore array...
+	var sorted_restore = [];
+	for (appName in restore)
+		sorted_restore[sorted_restore.length] = restore[appName];
+
+	//...and sort it
+	sorted_restore.sort(function (a, b) {
+		return ((a.active < b.active) ? 1 : ((a.active == b.active) ? 0 : -1));
+	});
+
+	//Now actually restore the tabs by passing the application, the url, whether
+	//this is an legacyApp (null triggers the application default), whether the
+	//application is hidden (only the active tab is shown) and its position
+	//in the tab list.
+	for (var i = 0; i < sorted_restore.length; i++)
+		this.applicationTabNavigate(
+			sorted_restore[i].app, sorted_restore[i].url, null, i != 0,
+			sorted_restore[i].position);
 
 	this.scrollAreaUi.update();
 
@@ -581,7 +622,7 @@ egw_fw.prototype.loadApplications = function(_menuaction)
 	this.tabsUi.clean();
 
 	//Perform an AJAX request loading all available applications
-	var req = new egw_json_request(_menuaction)
+	var req = new egw_json_request(_menuaction, [window.location.href])
 	req.sendRequest(true, this.loadApplicationsCallback, this);
 }
 
@@ -714,10 +755,14 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
 		}
 
 		_app.hasSideboxMenuContent = true;
-		_app.sidemenuEntry.parent.open(_app.sidemenuEntry);
 
-		_app.parentFw.scrollAreaUi.update();
-		_app.parentFw.scrollAreaUi.setScrollPos(0);
+		//Only view the sidemenu content if this is really the active application
+		if (_app == _app.parentFw.activeApp)
+		{
+			_app.sidemenuEntry.parent.open(_app.sidemenuEntry);
+			_app.parentFw.scrollAreaUi.update();
+			_app.parentFw.scrollAreaUi.setScrollPos(0);
+		}
 	}
 }
 
@@ -726,10 +771,24 @@ egw_fw.prototype.setSidebox = function(_app, _data, _md5)
  * @param object _app the application whose title should be set.
  * @param string _title title to set
  */
-egw_fw.prototype.setWebsiteTitle = function(_app,_title)
+egw_fw.prototype.setWebsiteTitle = function(_app, _title, _header)
 {
-	document.title = _title;
-	if (_app) _app.website_title = _title;
+	if (_app) {
+		_app.website_title = _title;
+		_app.app_header = _header;
+
+		if (_app == this.activeApp)
+			this.refreshAppTitle();
+	}
+}
+
+egw_fw.prototype.refreshAppTitle = function()
+{
+	if (this.activeApp)
+	{
+		this.tabsUi.setAppHeader(this.activeApp.app_header);
+		document.title = this.activeApp.website_title;
+	}
 }
 
 /**
