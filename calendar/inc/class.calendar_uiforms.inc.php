@@ -582,8 +582,8 @@ class calendar_uiforms extends calendar_ui
 								$orig_event = $event;
 
 								$offset = $event['start'] - $old_event['start'];
-								$event['start'] = $next_occurrence['start'] + $offset;
-								$event['end'] = $next_occurrence['end'] + $offset;
+								//$event['start'] = $next_occurrence['start'] + $offset;
+								//$event['end'] = $next_occurrence['end'] + $offset;
 								$event['participants'] = $old_event['participants'];
 								foreach ($old_event['recur_exception'] as $key => $exdate)
 								{
