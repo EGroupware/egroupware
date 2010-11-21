@@ -458,6 +458,7 @@ class Horde_SyncML_State {
     function setClientDeviceInfo($clientDeviceInfo)
     {
     	$this->_clientDeviceInfo = $clientDeviceInfo;
+    	$this->_clientDeviceInfo['persistent'] = false;
     }
 
     function setDeletedItems($_type, $_deletedItems)
@@ -1131,13 +1132,16 @@ class Horde_SyncML_State {
      */
     function writeClientDeviceInfo()
     {
-        if (!isset($this->_clientDeviceInfo) || !is_array($this->_clientDeviceInfo)) {
+        if (!isset($this->_clientDeviceInfo) ||
+        	!is_array($this->_clientDeviceInfo) ||
+        	!empty($this->_clientDeviceInfo['persistent'])) {
             return;
         }
 
         $dt = &$this->getDataTree();
 
         $s = $this->_locName . $this->_sourceURI . 'deviceInfo';
+        $this->_clientDeviceInfo['persistent'] = true;
 
         // Set $locid.
         $info = new DataTreeObject($s);
