@@ -1,3 +1,16 @@
+egroupware-epl (10.1.20101122-1) hardy; urgency=low
+
+  * eMail: better error handling/information to the user if copy/move/delete of messages fails
+  * Projectmanager: general price-list items can now be bookable or billable for all projects
+  * eMail: timezone and timeformat issues as reported in egroupware.org Tracker#2755
+  * Fix 'Shift Calendar Series' issue (Stylite #8273)
+  * Implemented deleteaccount hook for SyncML
+  * making opend tabs and active tab persistent over sessions and reloads
+  * Stylite template got an application header again
+  * EventMgr: changing omse numbers to varchar 32
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 22 Nov 2010 08:03:08 +0100
+
 egroupware-epl (10.1.20101112-1) hardy; urgency=low
 
   * check quantity of resource to book against maximum, as conflict check only fails if other events are involved
