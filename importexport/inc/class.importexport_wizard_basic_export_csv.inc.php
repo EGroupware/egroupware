@@ -161,6 +161,10 @@ class importexport_wizard_basic_export_csv
 			if(!array_key_exists('begin_with_fieldnames', $content) && array_key_exists('begin_with_fieldnames', $content['plugin_options'])) {
 				$content['begin_with_fieldnames'] = $content['plugin_options']['begin_with_fieldnames'];
 			}
+			if(!array_key_exists('convert', $content) && array_key_exists('convert', $content['plugin_options'])) {
+				$content['convert'] = $content['plugin_options']['convert'];
+			}
+
 
 			$sel_options['begin_with_fieldnames'] = array(
 				0	=> lang('No'),
