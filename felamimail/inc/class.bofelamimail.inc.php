@@ -2825,7 +2825,8 @@
 						$cnt = strlen($v);
 						// only break long words within the wordboundaries,
 						// but it may destroy links, so we check for href and dont it if we find one
-						if($cnt > $allowedLength && stripos($v,'href=')===false) {
+						if($cnt > $allowedLength && stripos($v,'href=')===false && stripos($v,'onclick=')===false) 
+						{
 							$v=wordwrap($v, $allowedLength, $cut, true);
 						}
 						// the rest should be broken at the start of the new word that exceeds the limit
