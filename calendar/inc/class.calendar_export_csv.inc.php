@@ -58,7 +58,9 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			}
 
 			// Standard stuff
-			importexport_export_csv::convert($record, $convert_fields, 'calendar');
+			if($options['convert']) {
+				importexport_export_csv::convert($record, $convert_fields, 'calendar');
+			}
 
 			$export_object->export_record($record);
 		}
