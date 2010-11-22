@@ -502,6 +502,39 @@ class infolog_ui
 				$GLOBALS['egw']->session->appsession('own_session','infolog',$own_referer);
 			}
 		}
+		if (is_array($values) && isset($values['multi_action']) && $values['multi_action'] !== '')
+		{
+			if (!count($values['nm']['rows']['checked']) && !$values['use_all'])
+			{
+				$msg = lang('You need to select some entries first');
+			}
+			else
+			{
+				// Some processing to add values in for links and cats
+				if($values['multi_action'] == 'link')
+				{
+					$values['multi_action'] = 'link_' . key($values['link_action']) . '_'.$values['action_link'];
+					unset($values['action_link']);
+					unset($values['link_action']);
+				}
+				elseif ($values['multi_action'] == 'cat')
+				{
+					$values['multi_action'] = 'cat_' . $values['cat'];
+				}
+				if ($this->action($values['multi_action'],$values['nm']['rows']['checked'],$values['use_all'],
+					$success,$failed,$action_msg,false,$msg))
+				{
+					$msg .= lang('%1 entries %2',$success,$action_msg);
+				}
+				elseif(is_null($msg))
+				{
+					$msg .= lang('%1 entries %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
+				}
+				unset($values['multi_action']);
+				unset($values['use_all']);
+			}
+			$values['msg'] = $msg;
+		}
 		if (!$action)
 		{
 			$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
@@ -699,8 +732,170 @@ class infolog_ui
 		$sel_options = array(
 		'info_type'     => $this->bo->enums['type'],
 		'pm_id'      => array(lang('No project')),
+		'multi_action'	=> array(
+			'close'		=> lang('Close'),
+			'cat'		=> lang('Change category'),
+			'link'		=> lang('Add or delete links'),
+		)
 		);
+
+		// Add in multi-infolog actions
+		// Types
+		foreach($this->bo->enums['type'] as $type => $label)
+		{
+			$types['type_'.$type] = $label;
+		}
+		$sel_options['multi_action'][lang('Change type:')] = $types;
+
+		// if filtered by type, show only the stati of the filtered type
+		if ($values['nm']['col_filter']['info_type'] && isset($this->bo->status[$values['nm']['col_filter']['info_type']]))
+		{
+			$statis = $this->bo->status[$values['nm']['col_filter']['info_type']];
+		}
+		else	// show all stati
+		{
+			$statis = array();
+			foreach($this->bo->status as $typ => $stati)
+			{
+				$statis += $stati;
+			}
+			$statis = array_unique($statis);
+		}
+		foreach($statis as $id => $label) 
+		{
+			$change_status['status_'.$id] = $label;
+		}
+		$sel_options['multi_action'][lang('Change status:')] = $change_status;
+		egw_framework::validate_file('.','index','infolog');
+
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
+	}
+
+	/**
+	 * Handles actions on multiple infologs
+	 *
+	 * @param action 
+	 * @param array $checked contact id's to use if !$use_all
+         * @param boolean $use_all if true use all entries of the current selection (in the session)
+         * @param int &$success number of succeded actions
+         * @param int &$failed number of failed actions (not enought permissions)
+         * @param string &$action_msg translated verb for the actions, to be used in a message like '%1 entries deleted'
+         * @param string/array $session_name 'index', or array with session-data depending
+         * @return boolean true if all actions succeded, false otherwise
+         */
+        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name = false,&$msg)
+	{
+		//echo "<p>infolog_ui::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
+		$success = $failed = 0;
+		if ($use_all)
+		{
+			// get the whole selection
+			if($session_name) {
+				$query = is_array($session_name) ? $session_name : egw_session::appsession($session_name,'infolog');
+			} else {
+				$query = $this->read_sessiondata();
+			}
+
+			if ($use_all)
+			{
+				@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
+				$query['num_rows'] = -1;        // all
+				$this->get_rows($query,$checked,$readonlys,true);       // true = only return the id's
+			}
+		}
+		
+		// Actions with options in the selectbox
+		list($action, $settings) = explode('_', $action, 2);
+
+		// Actions that can handle a list of IDs
+		switch($action)
+		{
+			case 'link':
+				list($add_remove, $link) = explode('_', $settings, 2);
+				list($app, $link_id) = explode(':', $link);
+				if(!$link_id)
+				{
+					$action_msg = 'linked';
+					$msg = lang('You need to select an entry for linking.  ');
+					break;
+				}
+				$title = egw_link::title($app, $link_id);
+				foreach($checked as $id)
+				{
+					if($add_remove == 'add') {
+						$action_msg = lang('linked to %1', $title);
+						if(egw_link::link('infolog', $id, $app, $link_id))
+						{
+							$success++;
+						}
+						else
+						{
+							$failed++;
+						}
+					} else {
+						$action_msg = lang('unlinked from %1', $title);
+						$count = egw_link::unlink(0, 'infolog', $id, '', $app, $link_id);
+						$success += $count;
+					}
+				}
+				break;
+		}
+
+		// Actions that need to loop
+		foreach($checked as $id)
+                {
+			if(!$entry = $this->bo->read($id))
+			{
+				$failed++;
+				continue;
+			}
+                        switch($action)
+                        {
+				case 'close':
+					$action_msg = lang('closed');
+					$this->close($id);
+					$success++;
+					break;
+				case 'delete':
+					$action_msg = lang('deleted');
+					$this->delete($id);
+					$success++;
+					break;
+				case 'type':
+					$action_msg = lang('changed type');
+					$entry['info_type'] = $settings;
+					$this->bo->write($entry);
+					$success++;
+					break;
+
+				case 'status':
+					if(in_array($settings, $this->bo->status[$entry['info_type']])) {
+						$action_msg = lang('changed status to %1', lang($this->bo->status[$entry['info_type']][$settings]));
+						$entry['info_status'] = $settings;
+						if($this->bo->write($entry)) {
+							$success++;
+						}
+					} else {
+						$msg .= lang('Invalid status for entry type %1. ', lang($this->bo->enums['type'][$entry['info_type']]));
+						$failed++;
+					}
+					break;
+				case 'cat':
+					$cat_name = categories::id2name($settings);
+					$action_msg = lang('changed category to %1', $cat_name);
+					$entry['info_cat'] = $settings;
+					if($this->bo->write($entry))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+					break;
+			}
+		}
+		return ($failed == 0);
 	}
 
 	/**
