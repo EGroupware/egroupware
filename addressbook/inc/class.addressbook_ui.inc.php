@@ -1739,7 +1739,8 @@ class addressbook_ui extends addressbook_bo
 
 		// set id for automatic linking via quick add
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
-
+		// Load JS for infolog actions
+		egw_framework::validate_file('.','index','infolog');
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 
 		$GLOBALS['egw']->hooks->process(array(
