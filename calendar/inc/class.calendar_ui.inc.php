@@ -723,7 +723,7 @@ class calendar_ui
 
 		// Add in deleted for admins
 		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history'] && $GLOBALS['egw_info']['user']['apps']['admin']) {
+		if($config['calendar_delete_history']) {
 			$options .= '<option value="deleted"'.($this->filter == 'deleted' ? ' selected="selected"' : '').' title="'.lang('Show events that have been deleted').'">'.lang('Deleted').'</options>'."\n";
 		}
 

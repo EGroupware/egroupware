@@ -1470,11 +1470,15 @@ function replace_eTemplate_onsubmit()
 
 		// Allow admins to restore deleted events
 		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history'] && $event['deleted'] && $GLOBALS['egw_info']['user']['apps']['admin'])
+		if($config['calendar_delete_history'] && $event['deleted'] )
 		{
 			$content['deleted'] = $preserv['deleted'] = null;
 			$etpl->set_cell_attribute('button[save]', 'label', 'Recover');
 			$etpl->set_cell_attribute('button[apply]', 'disabled', true);
+			if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['calendar_delete_history'] != 'user_purge')
+			{
+				$readonlys['button[delete]'] = true;
+			}
 		}
 
 		// Setup history tab

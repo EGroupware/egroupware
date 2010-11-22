@@ -173,9 +173,14 @@ class calendar_uilist extends calendar_ui
 		}
 		// Add in deleted for admins
 		$config = config::read('phpgwapi');
-		if($config['calendar_delete_history'] && $GLOBALS['egw_info']['user']['apps']['admin'])
+		if($config['calendar_delete_history'])
 		{
 			$sel_options['action']['undelete'] = array('label' => 'Un-Delete', 'title' => 'Recover this event');
+			if(!$GLOBALS['egw_info']['user']['apps']['admin'] && $config['calendar_delete_history'] != 'user_purge')
+			{
+				unset($sel_options['action']['delete']);
+				$content['nm']['no_delete'] = true;
+			}
 		}
 		foreach($this->bo->verbose_status as $key => $value)
 		{
@@ -351,7 +356,7 @@ class calendar_uilist extends calendar_ui
 		{
 			$readonlys['view['.$event['id'].']'] = !($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event));
 			// Delete disabled for other applications
-			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']);
+			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event) || !is_numeric($event['id']) || $params['no_delete'];
 			// Filemanager disabled for other applications
 			$readonlys['filemanager['.$event['id'].']'] = !is_numeric($event['id']);
 
