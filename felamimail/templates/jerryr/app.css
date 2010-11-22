@@ -535,6 +535,14 @@ DIV.divButton {
 	border-top: 1px solid silver; 
 	overflow:auto;
 }
+
+pre {
+ white-space: pre-wrap; /* Mozilla, since 1999 */
+ white-space: -pre-wrap; /* Opera 4-6 */
+ white-space: -o-pre-wrap; /* Opera 7 */
+ width: 99%; 
+}
+
 /*
 * new dialog style definitions
 */
