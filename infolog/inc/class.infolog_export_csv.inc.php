@@ -66,8 +66,10 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			}
 
 			// Some conversion
-			importexport_export_csv::convert($record, self::$types, 'infolog');
-			$this->convert($record);
+			if($options['convert']) {
+				importexport_export_csv::convert($record, self::$types, 'infolog');
+				$this->convert($record);
+			}
 			$export_object->export_record($record);
 			unset($record);
 		}
