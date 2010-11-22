@@ -179,7 +179,9 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			}
 			// Some conversion
 			$this->convert($contact, $options);
-			importexport_export_csv::convert($contact, self::$types, 'addressbook');
+			if($options['convert']) {
+				importexport_export_csv::convert($contact, self::$types, 'addressbook');
+			}
 			$export_object->export_record($contact);
 			unset($contact);
 		}
@@ -252,8 +254,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				$record->$field_name = array();
 				if(is_array($record->$field) && in_array($value, $record->$field) || $record->$field == $value) {
 					if($explode_settings['explode'] != self::MAIN_CATS) {
-						$record->$field_name = lang('Yes');
-					} else {
+						$record->$field_name = $options['convert'] ? lang('Yes') : true;
+					} elseif($options['convert']) {
 						// 3 part assign due to magic get method
 						$record_value = $record->$field_name;
 						$record_value[] = $settings['label'];
@@ -264,7 +266,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 					// 3 part assign due to magic get method
 					$record_value = $record->$field_name;
 					foreach(array_intersect($record->$field, array_keys($settings['subs'])) as $sub_id) {
-						$record_value[] = $settings['subs'][$sub_id];
+						$record_value[] = $options['convert'] ? $settings['subs'][$sub_id] : $sub_id;
 					}
 					$record->$field_name = $record_value;
 				}
