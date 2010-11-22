@@ -938,8 +938,9 @@ class uiwidgets
 		{
 			$image = $GLOBALS['egw']->common->image('felamimail',$_imageName);
 			$float = $_float == 'right' ? 'right' : 'left';
+			$_toolTip = bofelamimail::htmlentities($_toolTip);
 
-			return "<div class='navButton' style='float:$float;' onmousedown='this.className=\"navButtonActive\";' onmouseup='this.className=\"navButtonHover\";' onmouseout='this.className=\"navButton\";' onclick=\"$_imageAction\"><img style='width:16px; height:16px;' class=\"sideboxstar\" title='$_toolTip' src='$image' ></div>";
+			return "<div class='navButton' style='float:$float;' onmousedown='this.className=\"navButtonActive\";' onmouseup='this.className=\"navButtonHover\";' onmouseout='this.className=\"navButton\";'".( $_imageAction=='#'?"":"onclick=\"$_imageAction\"")."><img style='width:16px; height:16px;' class=\"sideboxstar\" title='$_toolTip' src='$image' ></div>";
 		}
 
 		function navbarSeparator()
