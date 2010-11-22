@@ -1475,7 +1475,7 @@ function replace_eTemplate_onsubmit()
 			$content['deleted'] = $preserv['deleted'] = null;
 			$etpl->set_cell_attribute('button[save]', 'label', 'Recover');
 			$etpl->set_cell_attribute('button[apply]', 'disabled', true);
-			if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['calendar_delete_history'] != 'user_purge')
+			if(!$GLOBALS['egw_info']['user']['apps']['admin'] && $config['calendar_delete_history'] != 'user_purge')
 			{
 				$readonlys['button[delete]'] = true;
 			}
