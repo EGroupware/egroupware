@@ -53,7 +53,9 @@ class resources_export_csv implements importexport_iface_export_plugin {
 
 			$resource = new resources_egw_record();
 			$resource->set_record($record);
-			importexport_export_csv::convert($resource, $types, 'resources');
+			if($options['convert']) {
+				importexport_export_csv::convert($resource, $types, 'resources');
+			}
 			$export_object->export_record($resource);
 			unset($resource);
 		}
