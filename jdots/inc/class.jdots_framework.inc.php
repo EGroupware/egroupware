@@ -795,6 +795,16 @@ class jdots_framework extends egw_framework
 			unset($apps['sitemgr-link']);
 		}
 
+		// open tab for default app, if no other tab is set
+		if (!($default_app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app']))
+		{
+			$default_app = 'home';
+		}
+		if (isset($apps[$default_app]))
+		{
+			$apps[$default_app]['isDefault'] = true;
+		}
+
 		// check if user called a specific url --> open it as active tab
 		$last_direct_url =& egw_cache::getSession(__CLASS__, 'last_direct_url');
 		if ($url !== $last_direct_url)
@@ -810,9 +820,11 @@ class jdots_framework extends egw_framework
 		else
 		{
 			$active_tab = $GLOBALS['egw_info']['user']['preferences']['common']['active_tab'];
+			if (!$active_tab) $active_tab = $default_app;
 		}
-		$open_tabs = explode(',',$GLOBALS['egw_info']['user']['preferences']['common']['open_tabs']);
-		if (!in_array($active_tab,$open_tabs))
+		$open_tabs = $GLOBALS['egw_info']['user']['preferences']['common']['open_tabs'];
+		$open_tabs = $open_tabs ? explode(',',$open_tabs) : array();
+		if ($active_tab && !in_array($active_tab,$open_tabs))
 		{
 			$open_tabs[] = $active_tab;
 			$store_prefs = true;
@@ -838,14 +850,6 @@ class jdots_framework extends egw_framework
 			}
 		}
 
-		if (!($default_app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app']))
-		{
-			$default_app = 'home';
-		}
-		if (isset($apps[$default_app]))
-		{
-			$apps[$default_app]['isDefault'] = true;
-		}
 		$response = egw_json_response::get();
 		$response->data(array_values($apps));
 	}
