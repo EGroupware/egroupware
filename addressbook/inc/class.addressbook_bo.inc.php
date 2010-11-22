@@ -141,7 +141,7 @@ class addressbook_bo extends addressbook_so
 	/**
 	* Keep deleted addresses, or really delete them
 	* Set in Admin -> Addressbook -> Site Configuration
-	* ''=really delete, 'history'=keep, only admins delete
+	* ''=really delete, 'history'=keep, only admins delete, 'userpurge'=keep, users delete
  	*
 	* @var string
  	*/

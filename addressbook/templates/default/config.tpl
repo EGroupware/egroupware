@@ -82,6 +82,7 @@
      <select name="newsettings[history]">
       <option value="">{lang_No}</option>
       <option value="history"{selected_history_history}>{lang_Yes,_only_admins_can_purge_deleted_items}</option>
+      <option value="userpurge"{selected_history_userpurge}>{lang_Yes,_users_can_purge_their_deleted_items}</option>
      </select>
     </td>
    <tr class="th">

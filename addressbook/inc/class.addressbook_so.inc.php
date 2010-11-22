@@ -324,8 +324,10 @@ class addressbook_so
 			)));
 		}
 
-		// Add in deleted type for admins
-		if($this->is_admin()) {
+		// Add in deleted type, if holding deleted contacts
+		$config = config::read('phpgwapi');
+		if($config['history'])
+		{
 			$this->content_types[self::DELETED_TYPE] = array(
 				'name'	=>	lang('Deleted'),
 				'options' =>	array(

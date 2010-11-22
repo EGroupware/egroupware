@@ -282,6 +282,12 @@ class addressbook_ui extends addressbook_bo
 		$sel_options['action'] += array(
 			'delete' => lang('Delete'),
 		);
+		if($content['nm']['col_filter']['tid'] == 'D' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge')
+		{
+			// User not allowed to purge 
+			unset($sel_options['action']['delete']);
+		}
+
 		// check if user is an admin or the export is not generally turned off (contact_export_limit is non-numerical, eg. no)
 		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) || !$this->config['contact_export_limit'] || (int)$this->config['contact_export_limit'])
 		{
@@ -1089,7 +1095,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].' &#9829;';
 				}
-				$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row);
+				$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge');
 				$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
 
 				if ($row['photo']) $photos = true;
@@ -1534,6 +1540,10 @@ class addressbook_ui extends addressbook_bo
 		if($content['tid'] == addressbook_so::DELETED_TYPE)
 		{
 			$content['link_to']['show_deleted'] = true;
+			if(!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge')
+			{
+				$readonlys['button[delete]'] = true;
+			}
 		}
 
 		// Enable history
