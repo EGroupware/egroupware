@@ -26,6 +26,24 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 		unset($this->export_fields['jpegphoto']);        // can't cvs export that
 	}
 
+	/**
+	* Overridden to be able to skip the next step
+	*/
+	function wizard_step40(&$content, &$sel_options, &$readonlys, &$preserv) {
+
+		if ($content['step'] == 'wizard_step40' && array_search('pressed', $content['button']) == 'next') {
+			$result = parent::wizard_step40($content, $sel_options, $readonlys, $preserv);
+			$field_list = $this->get_field_list($content);
+			if(count($field_list)) {
+				return $result;
+			} else {
+				return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],2);
+			}
+		} else {
+			return parent::wizard_step40($content, $sel_options, $readonlys, $preserv);
+		}
+	}
+
         /**
         * Choose how to export multi-selects (includes categories)
         */
@@ -62,21 +80,8 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 			$content['msg'] = $this->steps['wizard_step50'];
 			$content['step'] = 'wizard_step50';
 			unset ($preserv['button']);
-			$field_list = array();
+			$field_list = $this->get_field_list($content);
 			
-			// Category gets special handling
-			if(in_array('cat_id', array_keys($content['mapping']))) {
-				$field_list['cat_id'] = $this->export_fields['cat_id'];
-			}
-
-			// Add any multi-select custom fields
-			$custom = config::get_customfields('addressbook');
-			foreach($custom as $name => $c_field) {
-				if($c_field['type'] = 'select' && $c_field['rows'] > 1 && in_array('#'.$name, array_keys($content['mapping']))) {
-					$field_list['#'.$name] = $c_field['label'];
-				}
-			}
-
 			$settings = $content['explode_multiselects'] ? $content['explode_multiselects'] : $content['plugin_options']['explode_multiselects'];
 
 			// Skip this step if no fields applicable
@@ -112,5 +117,26 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 	//_debug_array($content['explode_multiselects']);
 			return $this->step_templates[$content['step']];
 		}
+	}
+
+	/**
+	* Get a list of multi-select fields
+	*/
+	protected function get_field_list($content) {
+		$field_list = array();
+		
+		// Category gets special handling
+		if(in_array('cat_id', array_keys($content['mapping']))) {
+			$field_list['cat_id'] = $this->export_fields['cat_id'];
+		}
+
+		// Add any multi-select custom fields
+		$custom = config::get_customfields('addressbook');
+		foreach($custom as $name => $c_field) {
+			if($c_field['type'] = 'select' && $c_field['rows'] > 1 && in_array('#'.$name, array_keys($content['mapping']))) {
+				$field_list['#'.$name] = $c_field['label'];
+			}
+		}
+		return $field_list;
 	}
 }
