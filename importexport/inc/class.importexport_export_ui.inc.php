@@ -173,7 +173,7 @@ class importexport_export_ui {
 				disable_button('exec[export]');
 			");
 		}
-		$content = array_merge($content,$GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]);
+		$content = array_merge($content,(array)$GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]);
 		unset ($plugin_object);
 		(array)$apps = importexport_helper_functions::get_apps('export');
 		$sel_options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
