@@ -24,10 +24,11 @@
 			'compressFolder'	=> True,
 			'importMessage'		=> True,
 			'deleteMessage'		=> True,
-			'handleButtons'		=> True,
 			'hookAdmin'		=> True,
 			'toggleFilter'		=> True,
-			'viewMainScreen'	=> True
+			'viewMainScreen'	=> True,
+			'redirectToPreferences' => True,
+			'redirectToEmailadmin' => True,
 		);
 		
 		var $mailbox;		// the current folder in use
@@ -82,6 +83,33 @@
 			$this->dataRowColor[0] = $GLOBALS['egw_info']["theme"]["bg01"];
 			$this->dataRowColor[1] = $GLOBALS['egw_info']["theme"]["bg02"];
 			#print __LINE__ . ': ' . (microtime(true) - $this->timeCounter) . '<br>';
+		}
+
+		function redirectToPreferences ()
+		{
+			$this->display_app_header();
+			//appname is a $_GET parameter, so the passing as function parameter does not work 
+			ExecMethod('preferences.uisettings.index',array('appname'=>'felamimail'));
+			exit;
+		}
+
+		function redirectToEmailadmin ()
+		{
+			//$GLOBALS['egw_info']['flags']['currentapp'] = 'emailadmin';
+			$this->display_app_header(false);
+			if (!file_exists(EGW_SERVER_ROOT.($et_css_file ='/etemplate/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/app.css')))
+			{
+				$et_css_file = '/etemplate/templates/default/app.css';
+			}
+			echo '
+<style type="text/css">
+<!--
+    @import url('.$GLOBALS['egw_info']['server']['webserver_url'].$et_css_file.');
+-->
+</style>';
+
+			ExecMethod2('emailadmin.emailadmin_ui.index');
+			exit;
 		}
 
 		function addVcard()
@@ -307,62 +335,20 @@
 			window.close();</script>";
 		}
 		
-		function display_app_header()
+		function display_app_header($includeFMStuff=true)
 		{
-			#$GLOBALS['egw']->js->validate_file('foldertree','foldertree');
-			$GLOBALS['egw']->js->validate_file('dhtmlxtree','js/dhtmlXCommon');
-			$GLOBALS['egw']->js->validate_file('dhtmlxtree','js/dhtmlXTree');
-			$GLOBALS['egw']->js->validate_file('jscode','viewMainScreen','felamimail');
-			$GLOBALS['egw_info']['flags']['include_xajax'] = True;
-
+			if ($includeFMStuff)
+			{
+				// this call loads js and css for the treeobject
+				html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
+				egw_framework::validate_file('jscode','viewMainScreen','felamimail');
+				$GLOBALS['egw_info']['flags']['include_xajax'] = True;
+			}
 			$GLOBALS['egw']->common->egw_header();
-
-			echo parse_navbar();
-		}
+			
+			echo $GLOBALS['egw']->framework->navbar();
+		}	
 	
-		function handleButtons()
-		{
-			error_log(__METHOD__." called from:".function_backtrace());
-			if($this->moveNeeded == "1")
-			{
-				$this->bofelamimail->moveMessages($_POST["mailbox"],
-									$_POST["msg"]);
-			}
-			
-			elseif(!empty($_POST["mark_deleted"]) &&
-				is_array($_POST["msg"]))
-			{
-				$this->bofelamimail->deleteMessages($_POST["msg"]);
-			}
-			
-			elseif(!empty($_POST["mark_unread"]) &&
-				is_array($_POST["msg"]))
-			{
-				$this->bofelamimail->flagMessages("unread",$_POST["msg"]);
-			}
-			
-			elseif(!empty($_POST["mark_read"]) &&
-				is_array($_POST["msg"]))
-			{
-				$this->bofelamimail->flagMessages("read",$_POST["msg"]);
-			}
-			
-			elseif(!empty($_POST["mark_unflagged"]) &&
-				is_array($_POST["msg"]))
-			{
-				$this->bofelamimail->flagMessages("unflagged",$_POST["msg"]);
-			}
-			
-			elseif(!empty($_POST["mark_flagged"]) &&
-				is_array($_POST["msg"]))
-			{
-				$this->bofelamimail->flagMessages("flagged",$_POST["msg"]);
-			}
-			
-
-			$this->viewMainScreen();
-		}
-
 		function hookAdmin()
 		{
 			if(!$GLOBALS['egw']->acl->check('run',1,'admin'))

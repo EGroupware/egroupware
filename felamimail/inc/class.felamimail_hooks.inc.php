@@ -479,8 +479,11 @@ class felamimail_hooks
 		$bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
 		$preferences = $bofelamimail->mailPreferences;
 		$showMainScreenStuff = false;
-		if($_GET['menuaction'] == 'felamimail.uifelamimail.viewMainScreen' ||
-			$_GET['menuaction'] == 'felamimail.uifelamimail.changeFolder') {
+		if(($_GET['menuaction'] == 'felamimail.uifelamimail.viewMainScreen' ||
+			$_GET['menuaction'] == 'felamimail.uifelamimail.changeFolder' ||
+			stripos($_GET['menuaction'],'ajax_sidebox') !== false) &&
+			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToPreferences' &&
+			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToEmailadmin') {
 			/* seems to be, its not needed here, as viewMainScreen does it anyway
 			$GLOBALS['egw']->js->validate_file('dhtmlxtree','js/dhtmlXCommon');
 			$GLOBALS['egw']->js->validate_file('dhtmlxtree','js/dhtmlXTree');
@@ -691,7 +694,8 @@ class felamimail_hooks
 			#$mailPreferences = ExecMethod('felamimail.bopreferences.getPreferences');
 			$menu_title = lang('Preferences');
 			$file = array(
-				'Preferences'		=> egw::link('/index.php','menuaction=preferences.uisettings.index&appname=felamimail'),
+				//'Preferences'		=> egw::link('/index.php','menuaction=preferences.uisettings.index&appname=felamimail'),
+				'Preferences'	=> egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToPreferences&appname=felamimail'),
 			);
 
 			if($preferences->userDefinedAccounts || $preferences->userDefinedIdentities) {
@@ -759,7 +763,8 @@ class felamimail_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.index'),
+				//'Site Configuration' => egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.index'),
+				'Site Configuration' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}
