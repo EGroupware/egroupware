@@ -22,6 +22,12 @@ function do_infolog_action(selbox) {
 				popup.style.display = 'block';
 			}
 			return;
+		case "completion":
+			var popup = document.getElementById(prefix+'[completion_popup]');
+			if(popup) {
+				popup.style.display = 'block';
+			}
+			return;
 	}
 	selbox.form.submit();
 	selbox.value = "";

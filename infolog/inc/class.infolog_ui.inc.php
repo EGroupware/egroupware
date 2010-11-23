@@ -521,6 +521,10 @@ class infolog_ui
 				{
 					$values['multi_action'] = 'cat_' . $values['cat'];
 				}
+				elseif ($values['multi_action'] == 'completion')
+				{
+					$values['multi_action'] = 'completion_' . $values['completion'];
+				}
 				if ($this->action($values['multi_action'],$values['nm']['rows']['checked'],$values['use_all'],
 					$success,$failed,$action_msg,false,$msg))
 				{
@@ -736,6 +740,7 @@ class infolog_ui
 			'close'		=> lang('Close'),
 			'cat'		=> lang('Change category'),
 			'link'		=> lang('Add or delete links'),
+			'completion'	=> lang('Change completion'),
 		)
 		);
 
@@ -744,6 +749,17 @@ class infolog_ui
 		foreach($this->bo->enums['type'] as $type => $label)
 		{
 			$types['type_'.$type] = $label;
+		} 
+		if ($this->bo->group_owners)
+		{
+			// remove types owned by groups the user has no edit grant
+			foreach($this->bo->group_owners as $type => $group)
+			{
+				if (!($this->bo->grants[$group] & EGW_ACL_EDIT))
+				{
+					unset($types['type_'.$type]);
+				}
+			}
 		}
 		$sel_options['multi_action'][lang('Change type:')] = $types;
 
@@ -757,6 +773,7 @@ class infolog_ui
 			$statis = array();
 			foreach($this->bo->status as $typ => $stati)
 			{
+				if($typ == 'defaults') continue;
 				$statis += $stati;
 			}
 			$statis = array_unique($statis);
@@ -800,7 +817,15 @@ class infolog_ui
 			{
 				@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
 				$query['num_rows'] = -1;        // all
-				$this->get_rows($query,$checked,$readonlys,true);       // true = only return the id's
+				$this->get_rows($query,$result,$readonlys);
+				$checked = array();
+				foreach($result as $key => $info)
+				{
+					if(is_numeric($key))
+					{
+						$checked[] = $info['info_id'];
+					}
+				}
 			}
 		}
 		
@@ -822,6 +847,10 @@ class infolog_ui
 				$title = egw_link::title($app, $link_id);
 				foreach($checked as $id)
 				{
+					if(!$this->bo->check_access($id, EGW_ACL_EDIT)) {
+						$failed++;
+						continue;
+					}
 					if($add_remove == 'add') {
 						$action_msg = lang('linked to %1', $title);
 						if(egw_link::link('infolog', $id, $app, $link_id))
@@ -846,7 +875,6 @@ class infolog_ui
                 {
 			if(!$entry = $this->bo->read($id))
 			{
-				$failed++;
 				continue;
 			}
                         switch($action)
@@ -868,7 +896,30 @@ class infolog_ui
 					$success++;
 					break;
 
+				case 'completion':
+					$action_msg = lang('changed completion to %1%', $settings);
+					$entry['info_percent'] = $settings;
+					// Done entries will get changed right back if we don't change the status too
+					if($entry['info_status'] == 'done') {
+						$entry['info_status'] = 'ongoing';
+					}
+					if($this->bo->write($entry))
+					{
+						$success++;
+					}
+					else 
+					{
+						$failed++;
+					}
+					break;
+
 				case 'status':
+					if($settings != 'done' && $entry['info_status'] == 'done' && $entry['info_percent'] == 100)
+					{
+						$msg .= lang('Unable to change status from done because of completion. ') . "\n";
+						$failed++;
+						break;
+					}
 					if(in_array($settings, $this->bo->status[$entry['info_type']])) {
 						$action_msg = lang('changed status to %1', lang($this->bo->status[$entry['info_type']][$settings]));
 						$entry['info_status'] = $settings;
