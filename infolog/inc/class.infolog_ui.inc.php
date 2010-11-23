@@ -914,14 +914,13 @@ class infolog_ui
 					break;
 
 				case 'status':
-					if($settings != 'done' && $entry['info_status'] == 'done' && $entry['info_percent'] == 100)
-					{
-						$msg .= lang('Unable to change status from done because of completion. ') . "\n";
-						$failed++;
-						break;
-					}
 					if(in_array($settings, $this->bo->status[$entry['info_type']])) {
 						$action_msg = lang('changed status to %1', lang($this->bo->status[$entry['info_type']][$settings]));
+						if($settings != 'done' && $entry['info_status'] == 'done' && $entry['info_percent'] == 100)
+						{
+							// Done entries will get changed right back if we don't change the completion too
+							$entry['info_percent'] == 99;
+						}
 						$entry['info_status'] = $settings;
 						if($this->bo->write($entry)) {
 							$success++;
