@@ -45,12 +45,23 @@ class resources_export_csv implements importexport_iface_export_plugin {
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
 
+		// Check if we need to load the custom fields
+		$need_custom = false;
+		foreach(config::get_customfields('resources') as $field => $settings) {
+			if($options['mapping']['#'.$field]) {
+				$need_custom = true;
+				break;
+			}
+		}
 		$types = importexport_export_csv::$types;
 		$types['select-bool'] = array('bookable');
 
 		foreach ($selection as $record) {
 			if(!is_array($record) || !$record['res_id']) continue;
 
+			if($need_custom) {
+				$record = $bo->read($record['res_id']);
+			}
 			$resource = new resources_egw_record();
 			$resource->set_record($record);
 			if($options['convert']) {
