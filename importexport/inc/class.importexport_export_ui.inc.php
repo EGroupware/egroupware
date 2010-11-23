@@ -173,6 +173,7 @@ class importexport_export_ui {
 				disable_button('exec[export]');
 			");
 		}
+		$content = array_merge($content,$GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]);
 		unset ($plugin_object);
 		(array)$apps = importexport_helper_functions::get_apps('export');
 		$sel_options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
@@ -229,6 +230,13 @@ class importexport_export_ui {
 			}
 			$plugin_object = new $definition->plugin;
 			$plugin_object->export( $file, $definition );
+
+			// Keep settings
+			$keep = array_diff_key($_content, array_flip(array('appname', 'definition', 'plugin', 'preview', 'export', $tabs)));
+			$GLOBALS['egw']->preferences->add('importexport',$definition->definition_id,$keep);
+			// save prefs, but do NOT invalid the cache (unnecessary)
+			$GLOBALS['egw']->preferences->save_repository(false,'user',false);
+
 
 			if($_content['export'] == 'pressed') {
 				fclose($file);
