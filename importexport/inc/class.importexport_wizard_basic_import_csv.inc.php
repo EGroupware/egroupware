@@ -221,6 +221,9 @@ class importexport_wizard_basic_import_csv
 		// return from step50
 		if ($content['step'] == 'wizard_step50')
 		{
+			for($i = 0; $i <= count($content['csv_fields']); $i++) {
+				unset($content[$i]);
+			}
 			array_shift($content['csv_fields']);
 			// Need to move everything down 1 to remove header, but shift will re-key
 			unset($content['field_mapping'][0]);
@@ -277,8 +280,10 @@ class importexport_wizard_basic_import_csv
 			}
 
 			$j = 1;
+			$i = 0;
 			foreach ($content['csv_fields'] as $field)
 			{
+				$content[++$i]['index'] = $i - 1;
 				if(strstr($field,'no_csv_')) $j++;
 			}
 			while ($j <= 3) 
