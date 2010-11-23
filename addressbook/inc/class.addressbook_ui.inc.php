@@ -1095,7 +1095,7 @@ class addressbook_ui extends addressbook_bo
 				{
 					$row['tel_prefered'] = $row[$row['tel_prefer']].' &#9829;';
 				}
-				$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge');
+				$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE);
 				$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
 
 				if ($row['photo']) $photos = true;
