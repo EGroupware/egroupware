@@ -919,7 +919,7 @@ class infolog_ui
 						if($settings != 'done' && $entry['info_status'] == 'done' && $entry['info_percent'] == 100)
 						{
 							// Done entries will get changed right back if we don't change the completion too
-							$entry['info_percent'] == 99;
+							$entry['info_percent'] = 99;
 						}
 						$entry['info_status'] = $settings;
 						if($this->bo->write($entry)) {
