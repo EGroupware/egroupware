@@ -340,7 +340,8 @@
 			if ($includeFMStuff)
 			{
 				// this call loads js and css for the treeobject
-				html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
+				egw_framework::validate_file('dhtmlxtree','js/dhtmlXCommon');
+				egw_framework::validate_file('dhtmlxtree','js/dhtmlXTree');
 				egw_framework::validate_file('jscode','viewMainScreen','felamimail');
 				$GLOBALS['egw_info']['flags']['include_xajax'] = True;
 			}
