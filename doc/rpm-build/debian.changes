@@ -1,3 +1,9 @@
+egroupware-epl (10.1.20101123-1) hardy; urgency=low
+
+  * FMail: fix for sometimes not displayed folderlist in sidebox menu
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 23 Nov 2010 16:28:03 +0100
+
 egroupware-epl (10.1.20101122-1) hardy; urgency=low
 
   * eMail: better error handling/information to the user if copy/move/delete of messages fails
