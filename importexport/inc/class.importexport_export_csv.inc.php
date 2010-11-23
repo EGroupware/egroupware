@@ -242,7 +242,18 @@ class importexport_export_csv implements importexport_iface_export_record
 			$fields += $c_fields;
 		}
 		foreach((array)$fields['select'] as $name) {
-			if($record->$name && is_array($selects) && $selects[$name]) $record->$name = $selects[$name][$record->$name];
+			if($record->$name != null && is_array($selects) && $selects[$name]) {
+				$record->$name = explode(',', $record->$name);
+				if(is_array($record->$name)) {
+					$names = array();
+					foreach($record->$name as $_name) {
+						$names[] = $selects[$name][$_name];
+					}
+					$record->$name = implode(', ', $names);
+				} else {
+					$record->$name = $selects[$name][$record->$name];
+				}
+			}
 		}
 		foreach((array)$fields['links'] as $name) {
 			if($record->$name) {
