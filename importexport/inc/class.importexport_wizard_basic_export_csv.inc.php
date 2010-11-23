@@ -173,6 +173,10 @@ class importexport_wizard_basic_export_csv
 			);
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
 				array('utf-8' => 'utf-8 (Unicode)');
+			$sel_options['convert'] = array(
+				0	=> lang('Database values'),
+				1	=> lang('Human friendly values')
+			);
 			$preserv = $content;
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
