@@ -83,9 +83,9 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	protected $errors = array();
 
 	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
+	 * List of actions, and how many times that action was taken
+	 */
+	protected $results = array();
 
 	/**
 	 * imports entries according to given definition object.
