@@ -195,6 +195,14 @@ class importexport_wizard_basic_import_csv
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
 				array('utf-8' => 'utf-8 (Unicode)');
 			$preserv = $content;
+			if($this->mapping_fields['cat_id']) {
+				$sel_options['update_cats'] = array(
+					'add'   => lang('Add'),
+					'replace'=> lang('Replace')
+				);
+			} else {
+				$content['no_cats'] = true;
+			}
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
 		}
