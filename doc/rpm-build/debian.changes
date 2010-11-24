@@ -1,3 +1,10 @@
+egroupware-epl (10.1.20101124-1) hardy; urgency=low
+
+  * Stylite Template: Issue regarding horizontal scrollbar (Bug#8279)
+  * ImportExport: fix option to choose how to handle categories per imported dataset
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 24 Nov 2010 13:31:21 +0100
+
 egroupware-epl (10.1.20101123-1) hardy; urgency=low
 
   * FMail: fix for sometimes not displayed folderlist in sidebox menu
