@@ -249,7 +249,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		foreach((array)$options['explode_multiselects'] as $field => $explode_settings) {
 			if(!is_array($record->$field)) $record->$field = explode(',', $record->$field);
-			foreach($explode_settings['values'] as $value => $settings) {
+			foreach((array)$explode_settings['values'] as $value => $settings) {
 				$field_name = "$field-$value";
 				$record->$field_name = array();
 				if(is_array($record->$field) && in_array($value, $record->$field) || $record->$field == $value) {
