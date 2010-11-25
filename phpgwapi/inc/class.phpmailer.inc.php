@@ -1512,8 +1512,7 @@ class PHPMailer {
 	}
 	if (PHP_VERSION < 6) 
 	{
-		$magic_quotes = get_magic_quotes_runtime();
-		set_magic_quotes_runtime(0);
+		if (function_exists('get_magic_quotes_runtime') && ($magic_quotes = get_magic_quotes_runtime())) set_magic_quotes_runtime(0);
 	}
 	try {
 		if ((@$file_buffer  = file_get_contents($path))===false)
@@ -1523,13 +1522,13 @@ class PHPMailer {
 		$file_buffer  = $this->EncodeString($file_buffer, $encoding);
 		if (PHP_VERSION < 6) 
 		{
-			set_magic_quotes_runtime($magic_quotes);
+			if ($magic_quotes) set_magic_quotes_runtime($magic_quotes);
 		}		
 		return $file_buffer;
 	} catch (Exception $e) {
 		if (PHP_VERSION < 6) 
 		{
-			set_magic_quotes_runtime($magic_quotes);
+			if ($magic_quotes) set_magic_quotes_runtime($magic_quotes);
 		}
 		$this->SetError($e->getMessage());
 		return '';
