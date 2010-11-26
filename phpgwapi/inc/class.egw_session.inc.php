@@ -1213,7 +1213,10 @@ class egw_session
 		}
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($cookiename,$cookievalue,$cookietime,$cookiepath,".self::$cookie_domain.")");
 
-		$rv = setcookie($cookiename,$cookievalue,$cookietime,is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain);
+		if(!headers_sent())	// gives only a warning, but can not send the cookie anyway
+		{
+			$rv = setcookie($cookiename,$cookievalue,$cookietime,is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain);
+		}
 		//error_log(__METHOD__." $cookiename->$cookievalue".' returned:'.print_r($rv,true).print_r($_COOKIE,true));
 	}
 
