@@ -1850,4 +1850,53 @@ class calendar_bo
 
 		return !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
 	}
+
+	/**
+	 * Get the etag for an entry, reimplemented to include the participants and stati in the etag
+	 *
+	 * @param array|int $event array with event or cal_id
+	 * @param boolean $client_share_uid_excpetions Does client understand exceptions to be included in VCALENDAR component of series master sharing its UID
+	 * @return string|boolean string with etag or false
+	 */
+	function get_etag($entry,$client_share_uid_excpetions=true)
+	{
+		if (!is_array($entry))
+		{
+			if (!$this->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
+			$entry = $this->read($entry, null, true, 'server');
+		}
+		$etag = $entry['id'].':'.$entry['etag'];
+
+		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
+		if (isset($entry['max_user_modified']))
+		{
+			$modified = max($entry['max_user_modified'], $entry['modified']);
+		}
+		else
+		{
+			$modified = max($this->so->max_user_modified($entry['id']), $entry['modified']);
+		}
+		$etag .= ':' . $modified;
+		// include exception etags into our own etag, if exceptions are included
+		if ($client_shared_uid_exceptions && !empty($entry['uid']) &&
+			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
+		{
+			$events =& $this->search(array(
+				'query' => array('cal_uid' => $entry['uid']),
+				'filter' => 'owner',  // return all possible entries
+				'daywise' => false,
+				'enum_recuring' => false,
+				'date_format' => 'server',
+			));
+			foreach($events as $k => &$recurrence)
+			{
+				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
+				{
+					$etag .= ':'.substr($this->get_etag($recurrence),4,-4);
+				}
+			}
+		}
+		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
+		return $etag;
+	}
 }

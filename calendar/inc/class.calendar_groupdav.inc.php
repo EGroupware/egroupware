@@ -833,42 +833,8 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	function get_etag($entry)
 	{
-		if (!is_array($entry))
-		{
-			if (!$this->bo->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
-			$entry = $this->read($entry, null, true, 'server');
-		}
-		$etag = $entry['id'].':'.$entry['etag'];
+		$etag = $this->bo->get_etag($entry,$this->client_shared_uid_exceptions);
 
-		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
-		if (isset($entry['max_user_modified']))
-		{
-			$modified = max($entry['max_user_modified'], $entry['modified']);
-		}
-		else
-		{
-			$modified = max($this->bo->so->max_user_modified($entry['id']), $entry['modified']);
-		}
-		$etag .= ':' . $modified;
-		// include exception etags into our own etag, if exceptions are included
-		if ($this->client_shared_uid_exceptions && !empty($entry['uid']) &&
-			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
-		{
-			$events =& $this->bo->search(array(
-				'query' => array('cal_uid' => $entry['uid']),
-				'filter' => 'owner',  // return all possible entries
-				'daywise' => false,
-				'enum_recuring' => false,
-				'date_format' => 'server',
-			));
-			foreach($events as $k => &$recurrence)
-			{
-				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
-				{
-					$etag .= ':'.substr($this->get_etag($recurrence),4,-4);
-				}
-			}
-		}
 		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
 		return 'EGw-'.$etag.'-wGE';
 	}
