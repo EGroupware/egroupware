@@ -67,7 +67,7 @@ class calendar_activesync implements activesync_plugin_read
 				'parent'=>	'0',
 			);
 		};
-		error_log(__METHOD__."() returning ".array2string($folderlist));
+		//error_log(__METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
 
@@ -84,15 +84,16 @@ class calendar_activesync implements activesync_plugin_read
 		$folderObj = new SyncFolder();
 		$folderObj->serverid = $id;
 		$folderObj->parentid = '0';
-		$folderObj->displayname = $GLOBALS['egw']->accounts->id2name($owner);
+		$folderObj->displayname = $GLOBALS['egw']->accounts->id2name($owner,'account_fullname');
 		if ($owner == $GLOBALS['egw_info']['user']['account_id'])
-		{
-			$folderObj->type = SYNC_FOLDER_TYPE_USER_APPOINTMENT;
-		}
-		else
 		{
 			$folderObj->type = SYNC_FOLDER_TYPE_APPOINTMENT;
 		}
+		else
+		{
+			$folderObj->type = SYNC_FOLDER_TYPE_USER_APPOINTMENT;
+		}
+		//error_log(__METHOD__."('$id') folderObj=".array2string($folderObj));
 		return $folderObj;
 	}
 
@@ -123,7 +124,8 @@ class calendar_activesync implements activesync_plugin_read
 		return $stat;
 	}
 
-	/* Should return a list (array) of messages, each entry being an associative array
+	/**
+	 * Should return a list (array) of messages, each entry being an associative array
      * with the same entries as StatMessage(). This function should return stable information; ie
      * if nothing has changed, the items in the array must be exactly the same. The order of
      * the items within the array is not important though.
@@ -132,18 +134,41 @@ class calendar_activesync implements activesync_plugin_read
      * This cutoffdate is determined by the user's setting of getting 'Last 3 days' of e-mail, etc. If
      * you ignore the cutoffdate, the user will not be able to select their own cutoffdate, but all
      * will work OK apart from that.
+     *
+     * @param string $id folder id
+     * @param int $cutoffdate=null
+     * @return array
   	 */
 	function GetMessageList($id, $cutoffdate=NULL)
 	{
-		error_log (__METHOD__);
+		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
+
+		debugLog (__METHOD__."('$id',$cutoffdate)");
+		$this->backend->splitID($id,$type,$user);
+
+		if (!$cutoffdate) $cutoffdate = $this->bo->now - 100*24*3600;	// default three month back -30 breaks all sync recurrences
+
+		// todo return only etag relevant information
+		$filter = array(
+			'users' => $user,
+			'start' => $cutoffdate,	// default one month back -30 breaks all sync recurrences
+			'enum_recuring' => false,
+			'daywise' => false,
+			'date_format' => 'server',
+			'filter' => 'default',	// not rejected
+		);
+
 		$messagelist = array();
-
-		return ($messagelist);
-
+		foreach ($this->calendar->search($filter) as $k => $event)
+		{
+			$messagelist[] = $this->StatMessage($id, $event);
+		}
+		return $messagelist;
 	}
 
 	/**
 	 * Get specified item from specified folder.
+	 *
 	 * @param string $folderid
 	 * @param string $id
 	 * @param int $truncsize
@@ -153,29 +178,83 @@ class calendar_activesync implements activesync_plugin_read
 	*/
 	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
 	{
-		debugLog (__METHOD__);
-		$message = new SyncAppointment();
-/*		$message->dtstamp;
-		$message->starttime;
-		$message->subject;
-		$message->uid;
-		$message->organizername;
-		$message->organizeremail;
-		$message->location;
-		$message->endtime;
-		$message->recurrence;		// SYNC RECURRENCE;
-		$message->sensitivity;
-		$message->busystatus;
-		$message->alldayevent;
-		$message->reminder;
-		$message->meetingstatus;
-		$message->attendees;	// SYNC ATTENDEE
-		$message->exceptions;	// SYNC APPOINTMENTS;
-		$message->deleted;
-		$message->exceptionstarttime;
-		$message->categories;
+		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		if(isset($protocolversion) && $protocolversion < 12.0) {
+		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
+		$this->backend->splitID($folderid, $type, $account);
+		if ($type != 'calendar' || !($event = $this->calendar->read($id)))	// || !in_array($account,$event['participants']))
+		{
+			return false;
+		}
+		$message = new SyncAppointment();
+		// copying timestamps
+		foreach(array(
+			'start' => 'starttime',
+			'end'   => 'endtime',
+			'created' => 'dtstamp',
+			'modified' => 'dtstamp',
+		) as $key => $attr)
+		{
+			if (!empty($event[$key])) $message->$attr = date('Ymd\THis\Z',$event[$key]);
+		}
+		// copying strings
+		foreach(array(
+			'title' => 'subject',
+			'uid'   => 'uid',
+			'location' => 'location',
+		) as $key => $attr)
+		{
+			if (!empty($event[$key])) $message->$attr = $event[$key];
+		}
+		$message->organizername  = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_fullname');
+		$message->organizeremail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
+		$message->location;
+
+		$message->sensitivity = $event['public'] ? 0 : 2;	// 0=normal, 1=personal, 2=private, 3=confidential
+		$message->alldayevent = (int)$this->calendar->isWholeDay($event);
+
+		$message->attendees = array();
+		foreach($event['participants'] as $uid => $status)
+		{
+			static $status2as = array(
+				'u' => 0,	// unknown
+				't' => 2,	// tentative
+				'a' => 3,	// accepted
+				'r' => 4,	// decline
+				// 5 = not responded
+			);
+			static $role2as = array(
+				'REQ-PARTICIPANT' => 1,	// required
+				'CHAIR' => 1,			// required
+				'OPT-PARTICIPANT' => 2,	// optional
+				'NON-PARTICIPANT' => 2,
+				// 3 = ressource
+			);
+			calendar_so::split_status($status, $quantity, $role);
+			$attendee = new SyncAttendee();
+			if (is_numeric($uid))
+			{
+				$attendee->name = $GLOBALS['egw']->accounts->id2name($uid,'account_fullname');
+				$attendee->email = $GLOBALS['egw']->accounts->id2name($uid,'account_email');
+				$attendee->status = (int)$status2as[$status];
+				$attendee->type = (int)$role2as[$role];
+			}
+			$message->attendees[] = $attendee;
+		}
+		$message->categories = array();
+		foreach($event['catgory'] ? explode(',',$event['category']) : array() as $cat_id)
+		{
+			$message->categories[] = categories::id2name($cat_id);
+		}
+		//$message->recurrence;		// SYNC RECURRENCE;
+		//$message->busystatus;
+		//$message->reminder;
+		//$message->meetingstatus;
+		//$message->exceptions;	// SYNC APPOINTMENTS;
+		//$message->deleted;
+		//$message->exceptionstarttime;
+/*
+		if (isset($protocolversion) && $protocolversion < 12.0) {
 			$message->body;
 			$message->bodytruncated;
 			$message->rtf;
@@ -189,7 +268,45 @@ class calendar_activesync implements activesync_plugin_read
 		return $message;
 	}
 
-	public function StatMessage($folderid, $id) {
-		debugLog (__METHOD__);
+	/**
+	 * StatMessage should return message stats, analogous to the folder stats (StatFolder). Entries are:
+     * 'id'     => Server unique identifier for the message. Again, try to keep this short (under 20 chars)
+     * 'flags'     => simply '0' for unread, '1' for read
+     * 'mod'    => modification signature. As soon as this signature changes, the item is assumed to be completely
+     *             changed, and will be sent to the PDA as a whole. Normally you can use something like the modification
+     *             time for this field, which will change as soon as the contents have changed.
+     *
+     * @param string $folderid
+     * @param int|array $id event id or array
+     * @return array
+     */
+	public function StatMessage($folderid, $id)
+	{
+		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
+
+		if (!($etag = $this->calendar->get_etag($id)))
+		{
+			$stat = false;
+		}
+		else
+		{
+list(,,$etag) = explode(':',$etag);
+			$stat = array(
+				'mod' => $etag,
+				'id' => is_array($id) ? $id['id'] : $id,
+				'flags' => 1,
+			);
+		}
+		debugLog (__METHOD__."('$folderid',".array2string($id).") returning ".array2string($stat));
+
+		return $stat;
+	}
+
+	/**
+	 * @todo implement using ctag
+	 */
+	function AlterPingChanges($folderid, &$syncstate)
+	{
+		return false;
 	}
 }
