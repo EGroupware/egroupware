@@ -77,8 +77,8 @@ class common
 	 */
 	static function cmp_version($str1,$str2,$debug=False)
 	{
-		ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
-		ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str2,$regs2);
+		preg_match("/([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)/",$str1,$regs);
+		preg_match("/([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)/",$str2,$regs2);
 		if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
 
 		for($i=1;$i<5;$i++)
@@ -108,8 +108,8 @@ class common
 	 */
 	static function cmp_version_long($str1,$str2,$debug=False)
 	{
-		ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str1,$regs);
-		ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str2,$regs2);
+		preg_match("/([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)/",$str1,$regs);
+		preg_match("/([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)/",$str2,$regs2);
 		if($debug) { echo "<br>$regs[0] - $regs2[0]"; }
 
 		for($i=1;$i<6;$i++)
