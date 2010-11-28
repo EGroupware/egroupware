@@ -186,7 +186,7 @@ class calendar_bo
 	 */
 	function __construct()
 	{
-		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',True,$param);
+		if ($this->debug > 0) $this->debug_message('calendar_bo::bocal() started',True,$param);
 
 		$this->so = new calendar_so();
 		$this->datetime = $GLOBALS['egw']->datetime;
@@ -422,7 +422,7 @@ class calendar_bo
 		$offset = isset($params['offset']) && $params['offset'] !== false ? (int) $params['offset'] : false;
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
 		{
-			$this->debug_message('bocal::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, sql_filter=%11)',
+			$this->debug_message('calendar_bo::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, sql_filter=%11)',
 				True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$params['sql_filter']);
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
@@ -539,7 +539,7 @@ class calendar_bo
 		}
 		if ($this->debug && ($this->debug > 0 || $this->debug == 'search'))
 		{
-			$this->debug_message('bocal::search(%1)=%2',True,$params,$events);
+			$this->debug_message('calendar_bo::search(%1)=%2',True,$params,$events);
 		}
 		return $events;
 	}
@@ -635,13 +635,13 @@ class calendar_bo
 	{
 		if ((int) $this->debug >= 2 || $this->debug == 'check_move_horizont')
 		{
-			$this->debug_message('bocal::check_move_horizont(%1) horizont=%2',true,$new_horizont,$this->config['horizont']);
+			$this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2',true,$new_horizont,$this->config['horizont']);
 		}
 		$new_horizont = $this->date2ts($new_horizont,true);	// now we are in server-time, where this function operates
 
 		if ($new_horizont <= $this->config['horizont'])	// no move necessary
 		{
-			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,$this->config['horizont']);
+			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,$this->config['horizont']);
 			return;
 		}
 		if (!empty($GLOBALS['egw_info']['server']['calendar_horizont']))
@@ -651,7 +651,7 @@ class calendar_bo
 		if (empty($maxdays)) $maxdays = 1000; // old default
 		if ($new_horizont > time()+$maxdays*DAY_s)		// some user tries to "look" more then the maximum number of days in the future
 		{
-			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 new horizont more then 1000 days from now --> ignoring it',true,$new_horizont,$this->config['horizont']);
+			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 new horizont more then 1000 days from now --> ignoring it',true,$new_horizont,$this->config['horizont']);
 			$new_horizont = time()+$maxdays*DAY_s;
 		}
 		if ($new_horizont < time()+31*DAY_s)
@@ -668,7 +668,7 @@ class calendar_bo
 			{
 				if ($this->debug == 'check_move_horizont')
 				{
-					$this->debug_message('bocal::check_move_horizont(%1): calling set_recurrences(%2,%3)',true,$new_horizont,$event,$old_horizont);
+					$this->debug_message('calendar_bo::check_move_horizont(%1): calling set_recurrences(%2,%3)',true,$new_horizont,$event,$old_horizont);
 				}
 				// insert everything behind max(cal_start), which can be less then $old_horizont because of bugs in the past
 				$this->set_recurrences($event,egw_time::server2user($recuring[$cal_id]+1));	// set_recurences operates in user-time!
@@ -678,7 +678,7 @@ class calendar_bo
 		$config = CreateObject('phpgwapi.config','calendar');
 		$config->save_value('horizont',$this->config['horizont'],'calendar');
 
-		if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) new horizont=%2, exiting',true,$new_horizont,$this->config['horizont']);
+		if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) new horizont=%2, exiting',true,$new_horizont,$this->config['horizont']);
 	}
 
 	/**
@@ -693,7 +693,7 @@ class calendar_bo
 	{
 		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
 		{
-			$this->debug_message('bocal::set_recurrences(%1,%2)',true,$event,$start);
+			$this->debug_message('calendar_bo::set_recurrences(%1,%2)',true,$event,$start);
 		}
 		// check if the caller gave us enough information and if not read it from the DB
 		if (!isset($event['participants']) || !isset($event['start']) || !isset($event['end']))
@@ -750,7 +750,7 @@ class calendar_bo
 	 */
 	function db2data(&$events,$date_format='ts')
 	{
-		if (!is_array($events)) echo "<p>bocal::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
+		if (!is_array($events)) echo "<p>calendar_bo::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
 		foreach ($events as &$event)
 		{
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
@@ -891,7 +891,7 @@ class calendar_bo
 		}
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'read'))
 		{
-			$this->debug_message('bocal::read(%1,%2,%3,%4)=%5',True,$ids,$date,$ignore_acl,$date_format,$return);
+			$this->debug_message('calendar_bo::read(%1,%2,%3,%4)=%5',True,$ids,$date,$ignore_acl,$date_format,$return);
 		}
 		return $return;
 	}
@@ -997,7 +997,7 @@ class calendar_bo
 
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'add_adjust_event'))
 		{
-			$this->debug_message('bocal::add_adjust_event(,%1,%2) as %3',True,$event_in,$date_ymd,$event);
+			$this->debug_message('calendar_bo::add_adjust_event(,%1,%2) as %3',True,$event_in,$date_ymd,$event);
 		}
 	}
 
@@ -1041,7 +1041,7 @@ class calendar_bo
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'resource_info'))
 		{
-			$this->debug_message('bocal::resource_info(%1) = %2',True,$uid,$res_info_cache[$uid]);
+			$this->debug_message('calendar_bo::resource_info(%1) = %2',True,$uid,$res_info_cache[$uid]);
 		}
 		return $res_info_cache[$uid];
 	}
@@ -1142,7 +1142,7 @@ class calendar_bo
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'check_perms'))
 		{
-			$this->debug_message('bocal::check_perms(%1,%2,%3)=%4',True,ACL_TYPE_IDENTIFER.$needed,$event,$other,$access);
+			$this->debug_message('calendar_bo::check_perms(%1,%2,%3)=%4',True,ACL_TYPE_IDENTIFER.$needed,$event,$other,$access);
 		}
 		//error_log(__METHOD__."($needed,".array2string($event).",$other) returning ".array2string($access));
 		return $access;
@@ -1274,7 +1274,9 @@ class calendar_bo
 			}
 			$msg = str_replace('%'.($i-1),$param,$msg);
 		}
-		echo '<p>'.$msg."<br>\n".($backtrace ? 'Backtrace: '.function_backtrace(1)."</p>\n" : '').str_repeat(' ',4096);
+		//echo '<p>'.$msg."<br>\n".($backtrace ? 'Backtrace: '.function_backtrace(1)."</p>\n" : '').str_repeat(' ',4096);
+		error_log($msg);
+		if ($backtrace) error_log(function_backtrace(1));
 	}
 
 	/**
@@ -1689,7 +1691,7 @@ class calendar_bo
 		}
 		if ((int) $this->debug >= 2 || $this->debug == 'read_holidays')
 		{
-			$this->debug_message('bocal::read_holidays(%1)=%2',true,$year,$this->cached_holidays[$year]);
+			$this->debug_message('calendar_bo::read_holidays(%1)=%2',true,$year,$this->cached_holidays[$year]);
 		}
 		return $this->cached_holidays[$year];
 	}
@@ -1892,7 +1894,7 @@ class calendar_bo
 			{
 				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
 				{
-					$etag .= ':'.substr($this->get_etag($recurrence),4,-4);
+					$etag .= ':'.$this->get_etag($recurrence);
 				}
 			}
 		}

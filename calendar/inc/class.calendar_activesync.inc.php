@@ -287,6 +287,11 @@ class calendar_activesync implements activesync_plugin_read
 		if (!($etag = $this->calendar->get_etag($id)))
 		{
 			$stat = false;
+			// error_log why access is denied (should nevery happen for everything returned by calendar_bo::search)
+			$backup = $this->calendar->debug;
+			$this->calendar->debug = 2;
+			$this->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server');
+			$this->calendar->debug = $backup;
 		}
 		else
 		{
