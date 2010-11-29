@@ -1367,6 +1367,8 @@ class addressbook_bo extends addressbook_so
 	function merge($ids)
 	{
 		$this->error = false;
+		$custom_fields = config::get_customfields('addressbook', true);
+		$custom_field_list = $this->read_customfields($ids);
 		foreach(parent::search(array('id'=>$ids),false) as $contact)	// $this->search calls the extended search from ui!
 		{
 			if ($contact['account_id'])
@@ -1379,6 +1381,11 @@ class addressbook_bo extends addressbook_so
 				$account = $contact;
 				continue;
 			}
+			// Add in custom fields
+			foreach($custom_field_list[$contact['id']] as $field => $value) {
+				$contact['#'.$field] = $value;
+			}
+
 			$pos = array_search($contact['id'],$ids);
 			$contacts[$pos] = $contact;
 		}
@@ -1418,6 +1425,14 @@ class addressbook_bo extends addressbook_so
 						break;
 
 					default:
+						// Multi-select custom fields can also be merged
+						if($name[0] == '#') {
+							$c_name = substr($name, 1);
+							if($custom_fields[$c_name]['type'] == 'select' && $custom_fields[$c_name]['rows'] > 1) {
+								if (!is_array($target[$name])) $target[$name] = $target[$name] ? explode(',',$target[$name]) : array();
+								$target[$name] = implode(',',array_unique(array_merge($target[$name],is_array($value)?$value:explode(',',$value))));
+							}
+						}
 						if (!$target[$name]) $target[$name] = $value;
 						break;
 				}
