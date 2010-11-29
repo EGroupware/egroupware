@@ -45,19 +45,20 @@ $GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['cale
 $cal = new calendar_boupdate(true);
 $GLOBALS['egw']->common->egw_header();
 
-$GLOBALS['egw']->template->set_file(array('import_t' => 'csv_import.tpl'));
-$GLOBALS['egw']->template->set_block('import_t','filename','filenamehandle');
-$GLOBALS['egw']->template->set_block('import_t','fheader','fheaderhandle');
-$GLOBALS['egw']->template->set_block('import_t','fields','fieldshandle');
-$GLOBALS['egw']->template->set_block('import_t','ffooter','ffooterhandle');
-$GLOBALS['egw']->template->set_block('import_t','imported','importedhandle');
-$GLOBALS['egw']->template->set_block('import_t','import','importhandle');
+$template = CreateObject('phpgwapi.Template',common::get_tpl_dir('calendar'));
+$template->set_file(array('import_t' => 'csv_import.tpl'));
+$template->set_block('import_t','filename','filenamehandle');
+$template->set_block('import_t','fheader','fheaderhandle');
+$template->set_block('import_t','fields','fieldshandle');
+$template->set_block('import_t','ffooter','ffooterhandle');
+$template->set_block('import_t','imported','importedhandle');
+$template->set_block('import_t','import','importhandle');
 
 if(($_POST['action'] == 'download' || $_POST['action'] == 'continue') && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 {
 	$_POST['action'] = '';
 }
-$GLOBALS['egw']->template->set_var("action_url",$GLOBALS['egw']->link("/calendar/csv_import.php"));
+$template->set_var("action_url",$GLOBALS['egw']->link("/calendar/csv_import.php"));
 
 $PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
 $ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -134,17 +135,17 @@ if ($_POST['next']) $_POST['action'] = 'next';
 switch ($_POST['action'])
 {
 case '':	// Start, ask Filename
-	$GLOBALS['egw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
-	$GLOBALS['egw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
-	$GLOBALS['egw']->template->set_var('lang_charset',lang('Charset of file'));
-	$GLOBALS['egw']->template->set_var('lang_help',lang('Please note: You can configure the field assignments AFTER you uploaded the file.'));
-	$GLOBALS['egw']->template->set_var('select_charset',
+	$template->set_var('lang_csvfile',lang('CSV-Filename'));
+	$template->set_var('lang_fieldsep',lang('Fieldseparator'));
+	$template->set_var('lang_charset',lang('Charset of file'));
+	$template->set_var('lang_help',lang('Please note: You can configure the field assignments AFTER you uploaded the file.'));
+	$template->set_var('select_charset',
 		html::select('charset','',translation::get_installed_charsets(),True));
-	$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ';');
-	$GLOBALS['egw']->template->set_var('submit',lang('Import'));
-	$GLOBALS['egw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
+	$template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ';');
+	$template->set_var('submit',lang('Import'));
+	$template->set_var('enctype','ENCTYPE="multipart/form-data"');
 
-	$GLOBALS['egw']->template->parse('rows','filename');
+	$template->parse('rows','filename');
 	break;
 
 case 'continue':
@@ -155,14 +156,14 @@ case 'download':
 	{
 		$defaults = array();
 	}
-	$GLOBALS['egw']->template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
-	$GLOBALS['egw']->template->set_var('lang_info_fieldname',lang('calendar-Fieldname'));
-	$GLOBALS['egw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
-	$GLOBALS['egw']->template->set_var('submit',
+	$template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
+	$template->set_var('lang_info_fieldname',lang('calendar-Fieldname'));
+	$template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
+	$template->set_var('submit',
 		html::submit_button('convert','Import') . '&nbsp;'.
 		html::submit_button('cancel','Cancel'));
-	$GLOBALS['egw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
-	$GLOBALS['egw']->template->parse('rows','fheader');
+	$template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
+	$template->parse('rows','fheader');
 
 	$cal_names = array(
 		'title'		=> 'Title varchar(80)',
@@ -207,29 +208,29 @@ case 'download':
 	$csv_fields[] = 'no CSV 3';
 	foreach($csv_fields as $csv_idx => $csv_field)
 	{
-		$GLOBALS['egw']->template->set_var('csv_field',$csv_field);
-		$GLOBALS['egw']->template->set_var('csv_idx',$csv_idx);
+		$template->set_var('csv_field',$csv_field);
+		$template->set_var('csv_idx',$csv_idx);
 		if ($def = $defaults[$csv_field])
 		{
 			list( $info,$trans ) = explode($PSep,$def,2);
-			$GLOBALS['egw']->template->set_var('trans',$trans);
-			$GLOBALS['egw']->template->set_var('cal_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$cal_name_options));
+			$template->set_var('trans',$trans);
+			$template->set_var('cal_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$cal_name_options));
 		}
 		else
 		{
-			$GLOBALS['egw']->template->set_var('trans','');
-			$GLOBALS['egw']->template->set_var('cal_fields',$cal_name_options);
+			$template->set_var('trans','');
+			$template->set_var('cal_fields',$cal_name_options);
 		}
-		$GLOBALS['egw']->template->parse('rows','fields',True);
+		$template->parse('rows','fields',True);
 	}
-	$GLOBALS['egw']->template->set_var('lang_start',lang('Startrecord'));
-	$GLOBALS['egw']->template->set_var('start',get_var('start',array('POST'),1));
+	$template->set_var('lang_start',lang('Startrecord'));
+	$template->set_var('start',get_var('start',array('POST'),1));
 	$msg = ($safe_mode = ini_get('safe_mode') == 'On') ? lang('to many might exceed your execution-time-limit'):
 		lang('empty for all');
-	$GLOBALS['egw']->template->set_var('lang_max',lang('Number of records to read (%1)',$msg));
-	$GLOBALS['egw']->template->set_var('max',get_var('max',array('POST'),$safe_mode ? 200 : ''));
-	$GLOBALS['egw']->template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
-	$GLOBALS['egw']->template->parse('rows','ffooter',True);
+	$template->set_var('lang_max',lang('Number of records to read (%1)',$msg));
+	$template->set_var('max',get_var('max',array('POST'),$safe_mode ? 200 : ''));
+	$template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
+	$template->parse('rows','ffooter',True);
 	fclose($fp);
 
 	$hiddenvars = html::input_hidden(array(
@@ -269,7 +270,7 @@ case 'download':
 		"will be automaticaly added. This function is automaticaly called if the category is not numerical!<p>".
 		"I hope that helped to understand the features, if not <a href='mailto:egroupware-users@lists.sf.net'>ask</a>.";
 
-	$GLOBALS['egw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
+	$template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
 	break;
 
 case 'next':
@@ -525,17 +526,17 @@ case 'import':
 	}
 	$log .= "</table>\n";
 
-	$GLOBALS['egw']->template->set_var('anz_imported',($_POST['debug'] ?
+	$template->set_var('anz_imported',($_POST['debug'] ?
 		lang('%1 records read (not yet imported, you may go back and uncheck Test Import)',
 		$anz,'','') :
 		lang('%1 records imported',$anz)). '&nbsp;'.
 		(!$_POST['debug'] && $fields ? html::submit_button('next','Import next set') . '&nbsp;':'').
 		html::submit_button('continue','Back') . '&nbsp;'.
 		html::submit_button('cancel','Cancel'));
-	$GLOBALS['egw']->template->set_var('log',$log);
-	$GLOBALS['egw']->template->parse('rows','imported');
+	$template->set_var('log',$log);
+	$template->parse('rows','imported');
 	break;
 }
-$GLOBALS['egw']->template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
-$GLOBALS['egw']->template->pfp('phpgw_body','import');
+$template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
+$template->pfp('phpgw_body','import');
 $GLOBALS['egw']->common->egw_footer();
