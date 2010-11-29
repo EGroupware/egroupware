@@ -44,19 +44,20 @@ $GLOBALS['egw']->common->egw_header();
 
 $bocontacts = new addressbook_bo();
 
-//$GLOBALS['egw']->template->set_unknowns('keep');
-$GLOBALS['egw']->template->set_file(array('import' => 'csv_import.tpl'));
-$GLOBALS['egw']->template->set_block('import','filename','filenamehandle');
-$GLOBALS['egw']->template->set_block('import','fheader','fheaderhandle');
-$GLOBALS['egw']->template->set_block('import','fields','fieldshandle');
-$GLOBALS['egw']->template->set_block('import','ffooter','ffooterhandle');
-$GLOBALS['egw']->template->set_block('import','imported','importedhandle');
+$template = CreateObject('phpgwapi.Template',common::get_tpl_dir('addressbook'));
+//$template->set_unknowns('keep');
+$template->set_file(array('import' => 'csv_import.tpl'));
+$template->set_block('import','filename','filenamehandle');
+$template->set_block('import','fheader','fheaderhandle');
+$template->set_block('import','fields','fieldshandle');
+$template->set_block('import','ffooter','ffooterhandle');
+$template->set_block('import','imported','importedhandle');
 
 if(($_POST['action'] == 'download' || $_POST['action'] == 'continue') && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 {
 	$_POST['action'] = '';
 }
-$GLOBALS['egw']->template->set_var('action_url',$GLOBALS['egw']->link('/addressbook/csv_import.php'));
+$template->set_var('action_url',$GLOBALS['egw']->link('/addressbook/csv_import.php'));
 
 $PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
 $ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -121,17 +122,17 @@ if ($_POST['next']) $_POST['action'] = 'next';
 switch($_POST['action'])
 {
 	case '':	// Start, ask Filename
-		$GLOBALS['egw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
-		$GLOBALS['egw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
-		$GLOBALS['egw']->template->set_var('lang_charset',lang('Charset of file'));
-		$GLOBALS['egw']->template->set_var('select_charset',
+		$template->set_var('lang_csvfile',lang('CSV-Filename'));
+		$template->set_var('lang_fieldsep',lang('Fieldseparator'));
+		$template->set_var('lang_charset',lang('Charset of file'));
+		$template->set_var('select_charset',
 			html::select('charset','',translation::get_installed_charsets(),True));
-		$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ';');
-		$GLOBALS['egw']->template->set_var('submit',lang('Import'));
-		$GLOBALS['egw']->template->set_var('csvfile',$csvfile);
-		$GLOBALS['egw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
+		$template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ';');
+		$template->set_var('submit',lang('Import'));
+		$template->set_var('csvfile',$csvfile);
+		$template->set_var('enctype','ENCTYPE="multipart/form-data"');
 
-		$GLOBALS['egw']->template->parse('filenamehandle','filename');
+		$template->parse('filenamehandle','filename');
 		break;
 
 	case 'continue':
@@ -143,14 +144,14 @@ switch($_POST['action'])
 		{
 			$defaults = array();
 		}
-		$GLOBALS['egw']->template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
-		$GLOBALS['egw']->template->set_var('lang_addr_fieldname',lang('Addressbook-Fieldname'));
-		$GLOBALS['egw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
-		$GLOBALS['egw']->template->set_var('submit',
+		$template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
+		$template->set_var('lang_addr_fieldname',lang('Addressbook-Fieldname'));
+		$template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
+		$template->set_var('submit',
 			html::submit_button('convert','Import') . '&nbsp;'.
 			html::submit_button('cancel','Cancel'));
-		$GLOBALS['egw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
-		$GLOBALS['egw']->template->parse('fheaderhandle','fheader');
+		$template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
+		$template->parse('fheaderhandle','fheader');
 
 		$addr_names = $bocontacts->contact_fields;
 		$addr_names['cat_id']  .= ': id or name, comma separated list';
@@ -177,23 +178,23 @@ switch($_POST['action'])
 		$csv_fields[] = 'no CSV 3';
 		foreach($csv_fields as $csv_idx => $csv_field)
 		{
-			$GLOBALS['egw']->template->set_var('csv_field',$csv_field);
-			$GLOBALS['egw']->template->set_var('csv_idx',$csv_idx);
+			$template->set_var('csv_field',$csv_field);
+			$template->set_var('csv_idx',$csv_idx);
 			if($def = $defaults[$csv_field])
 			{
 				list($addr,$_POST['trans']) = explode($PSep,$def,2);
-				$GLOBALS['egw']->template->set_var('trans',$_POST['trans']);
-				$GLOBALS['egw']->template->set_var('addr_fields',str_replace('="'.$addr.'">','="'.$addr.'" selected>',$addr_name_options));
+				$template->set_var('trans',$_POST['trans']);
+				$template->set_var('addr_fields',str_replace('="'.$addr.'">','="'.$addr.'" selected>',$addr_name_options));
 			}
 			else
 			{
-				$GLOBALS['egw']->template->set_var('trans','');
-				$GLOBALS['egw']->template->set_var('addr_fields',$addr_name_options);
+				$template->set_var('trans','');
+				$template->set_var('addr_fields',$addr_name_options);
 			}
-			$GLOBALS['egw']->template->parse('fieldshandle','fields',True);
+			$template->parse('fieldshandle','fields',True);
 		}
-		$GLOBALS['egw']->template->set_var('lang_unique_id',lang('Unique ID<br />(to update existing records)'));
-		$GLOBALS['egw']->template->set_var('unique_id',html::select('unique_id',$unique_id,array(
+		$template->set_var('lang_unique_id',lang('Unique ID<br />(to update existing records)'));
+		$template->set_var('unique_id',html::select('unique_id',$unique_id,array(
 			'id' => $addr_names['id'],
 			'uid' => $addr_names['uid'],
 			'account_id' => $addr_names['account_id'],
@@ -204,14 +205,14 @@ switch($_POST['action'])
 			'addr_id' => lang('two of: %1',$addr_names['org_name'].', '.$addr_names['n_family'].', '.$addr_names['n_given']),
 		)+$cfs));
 
-		$GLOBALS['egw']->template->set_var('lang_start',lang('Startrecord'));
-		$GLOBALS['egw']->template->set_var('start',get_var('start',array('POST'),1));
+		$template->set_var('lang_start',lang('Startrecord'));
+		$template->set_var('start',get_var('start',array('POST'),1));
 		$msg = ($safe_mode = ini_get('safe_mode') == 'On') ? lang('to many might exceed your execution-time-limit'):
 			lang('empty for all');
-		$GLOBALS['egw']->template->set_var('lang_max',lang('Number of records to read (%1)',$msg));
-		$GLOBALS['egw']->template->set_var('max',get_var('max',array('POST'),$safe_mode ? 200 : ''));
-		$GLOBALS['egw']->template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
-		$GLOBALS['egw']->template->parse('ffooterhandle','ffooter');
+		$template->set_var('lang_max',lang('Number of records to read (%1)',$msg));
+		$template->set_var('max',get_var('max',array('POST'),$safe_mode ? 200 : ''));
+		$template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
+		$template->parse('ffooterhandle','ffooter');
 		fclose($fp);
 
 		$hiddenvars = html::input_hidden(array(
@@ -249,7 +250,7 @@ switch($_POST['action'])
 			"will be automaticaly added.<p>".
 			"I hope that helped to understand the features, if not <a href='mailto:egroupware-users@lists.sf.net'>ask</a>.";
 
-		$GLOBALS['egw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
+		$template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
 		break;
 
 	case 'next':
@@ -508,18 +509,18 @@ switch($_POST['action'])
 		}
 		$log .= "\t</tr>\n</table>\n";
 
-		$GLOBALS['egw']->template->set_var('anz_imported',($_POST['debug'] ?
+		$template->set_var('anz_imported',($_POST['debug'] ?
 			lang('%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)',
 			$anz,'','') :
 			lang('%1 records imported',$anz)). '&nbsp;'.
 			(!$_POST['debug'] && $fields ? html::submit_button('next','Import next set') . '&nbsp;':'').
 			html::submit_button('continue','Back') . '&nbsp;'.
 			html::submit_button('cancel','Cancel'));
-		$GLOBALS['egw']->template->set_var('log',$log);
-		$GLOBALS['egw']->template->parse('importedhandle','imported');
+		$template->set_var('log',$log);
+		$template->parse('importedhandle','imported');
 		break;
 }
 
-$GLOBALS['egw']->template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
-$GLOBALS['egw']->template->pfp('out','import',True);
+$template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
+$template->pfp('out','import',True);
 $GLOBALS['egw']->common->egw_footer();
