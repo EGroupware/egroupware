@@ -90,6 +90,7 @@ file or directory not found!	filemanager	en	File or directory not found!
 file successful uploaded.	filemanager	en	File successful uploaded.
 filemanager	common	en	Filemanager
 filemanager configuration	admin	en	filemanager configuration
+filename must not be empty!	filemanager	en	Filename must not be empty!
 files from subdirectories	filemanager	en	Files from subdirectories
 files in this directory	filemanager	en	Files in this directory
 folder up	filemanager	en	Folder Up
@@ -154,6 +155,7 @@ select action...	filemanager	en	Select action...
 select file to upload in current directory	filemanager	en	Select file to upload in current directory
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files
+show link "%1" in side box menu?	filemanager	en	Show link "%1" in side box menu?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side box menu?
 size	filemanager	en	Size
 start search	filemanager	en	start search

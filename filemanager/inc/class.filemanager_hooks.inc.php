@@ -35,10 +35,15 @@ class filemanager_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$title = $GLOBALS['egw_info']['apps'][self::$appname]['title'] . ' '. lang('Menu');
-			$file = array(
-				'Your home directory' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath)),
-				'Users and groups' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath)),
-			);
+			$file = array();
+			if ($file_prefs['showhome'] != 'no')
+			{
+				$file['Your home directory'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$homepath));
+			}
+			if ($file_prefs['showusers'] != 'no')
+			{
+				$file['Users and groups'] = egw::link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$basepath));
+			}
 			if (!empty($file_prefs['showbase']) && $file_prefs['showbase']=='yes')
 			{
 				$file['Basedirectory'] = $GLOBALS['egw']->link('/index.php',array('menuaction'=>self::$appname.'.filemanager_ui.index','path'=>$rootpath));
@@ -131,16 +136,6 @@ class filemanager_hooks
 		);
 
         $settings = array(
-			'showbase'	=> array(
-				'type'		=> 'select',
-				'name'		=> 'showbase',
-				'values'	=> $yes_no,
-				'label' 	=> 'Show link to filemanagers basedirectory (/) in side box menu?',
-				'help'		=> 'Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.',
-				'xmlrpc'	=> True,
-				'admin'		=> False,
-				'default'   => 'no',
-			),
 			'startfolder'	=> array(
 				'type'		=> 'input',
 				'name'		=> 'startfolder',
@@ -164,6 +159,37 @@ class filemanager_hooks
 				'admin'		=> False
 			);
 		}
+
+		$settings += array(
+			'showbase'	=> array(
+				'type'		=> 'select',
+				'name'		=> 'showbase',
+				'values'	=> $yes_no,
+				'label' 	=> 'Show link to filemanagers basedirectory (/) in side box menu?',
+				'help'		=> 'Default behavior is NO. The link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.',
+				'xmlrpc'	=> True,
+				'admin'		=> False,
+				'default'   => 'no',
+			),
+			'showhome'		=> array(
+				'type'		=> 'select',
+				'name'		=> 'showhome',
+				'values'	=> $yes_no,
+				'label' 	=> lang('Show link "%1" in side box menu?',lang('Your home directory')),
+				'xmlrpc'	=> True,
+				'admin'		=> False,
+				'forced'   => 'yes',
+			),
+			'showusers'		=> array(
+				'type'		=> 'select',
+				'name'		=> 'showusers',
+				'values'	=> $yes_no,
+				'label' 	=> lang('Show link "%1" in side box menu?',lang('Users and groups')),
+				'xmlrpc'	=> True,
+				'admin'		=> False,
+				'forced'   => 'yes',
+			),
+		);
 		return $settings;
 	}
 }

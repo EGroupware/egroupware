@@ -90,6 +90,7 @@ file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunde
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen.
 filemanager	common	de	Dateimanager
 filemanager configuration	admin	de	Dateimanager Konfiguration
+filename must not be empty!	filemanager	de	Dateinamen darf nicht leer sein!
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 folder up	filemanager	de	darüberliegendes Verzeichnis
@@ -154,7 +155,8 @@ select action...	filemanager	de	Befehl auswählen...
 select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen
 show	filemanager	de	Zeige
 show hidden files	filemanager	de	Zeige versteckte Dateien
-show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenu?
+show link "%1" in side box menu?	filemanager	de	Zeige die Verknüpfung "%1" im Seitenmenü?
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
 start search	filemanager	de	Suche starten
 startfolder	filemanager	de	Anfangsordner

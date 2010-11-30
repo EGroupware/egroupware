@@ -144,11 +144,11 @@ class filemanager_select
 					{
 						if ($copy_result === false)
 						{
-							$content['msg'] = lang("Error while processing your upload request.");
+							$content['msg'] = lang('Error uploading file!');
 						}
 						else
 						{
-							$content['msg'] = lang("The name field may not be empty.");
+							$content['msg'] = lang('Filename must not be empty!');
 						}
 						$content['name'] = '';
 
