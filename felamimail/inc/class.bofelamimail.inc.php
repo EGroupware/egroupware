@@ -85,8 +85,9 @@
 			}
 		}
 
-		function bofelamimail($_displayCharset='iso-8859-1',$_restoreSession=true)
+		function bofelamimail($_displayCharset='iso-8859-1',$_restoreSession=true, $_profileID=0)
 		{
+			$this->profileID = $_profileID;
 			if ($_restoreSession) 
 			{
 				//error_log(__METHOD__." Session restore ".function_backtrace());
@@ -112,8 +113,8 @@
 
 			$this->mailPreferences	= $this->bopreferences->getPreferences();
 			if ($this->mailPreferences) {
-				$this->icServer = $this->mailPreferences->getIncomingServer(0);
-				$this->ogServer = $this->mailPreferences->getOutgoingServer(0);
+				$this->icServer = $this->mailPreferences->getIncomingServer($this->profileID);
+				$this->ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
 				$this->htmlOptions  = $this->mailPreferences->preferences['htmlOptions'];
 			}
 			#_debug_array($this->mailPreferences->preferences);
@@ -129,6 +130,8 @@
 			{
 				// this should be under user preferences
 				// sessionData empty
+				// store active profileID
+				$this->sessionData['profileID']	= $_profileID;
 				// no filter active
 				$this->sessionData['activeFilter']	= "-1";
 				// default mailbox INBOX
@@ -220,7 +223,7 @@
 		* this function is a wrapper function for emailadmin
 		*
 		* @param _hookValues contains the hook values as array
-		* @returns nothing
+		* @return nothing
 		*/
 		function addAccount($_hookValues)
 		{
@@ -268,7 +271,7 @@
 		* @param string _body the body of the message
 		* @param string _flags the imap flags to set for the saved message
 		*
-		* @returns the id of the message appended or false
+		* @return the id of the message appended or false
 		*/
 		function appendMessage($_folderName, $_header, $_body, $_flags)
 		{
@@ -291,7 +294,7 @@
 		* remove any messages from the trashfolder
 		*
 		* @param string _folderName the foldername
-		* @returns nothing
+		* @return nothing
 		*/
 		function compressFolder($_folderName = false)
 		{
@@ -316,7 +319,7 @@
 		* @param string _folderName the new foldername
 		* @param bool _subscribe subscribe to the new folder
 		*
-		* @returns mixed name of the newly created folder or false on error
+		* @return mixed name of the newly created folder or false on error
 		*/
 		function createFolder($_parent, $_folderName, $_subscribe=false)
 		{
@@ -412,7 +415,7 @@
 		*
 		* @param string _folderName the foldername
 		*
-		* @returns string the converted foldername
+		* @return string the converted foldername
 		*/
 		function decodeFolderName($_folderName)
 		{
@@ -444,7 +447,7 @@
 		 * decode header (or envelope information
 		 * if array given, note that only values will be converted 
 		 * @param $_string mixed input to be converted, if array call decode_header recursively on each value
-		 * @returns mixed - based on the input type
+		 * @return mixed - based on the input type
 		 */
 		static function decode_header($_string)
 		{
@@ -552,7 +555,7 @@
 		*
 		* @param string _folderName the name of the folder to be deleted
 		*
-		* @returns bool true on success, false on failure
+		* @return bool true on success, false on failure
 		*/
 		function deleteFolder($_folderName)
 		{
@@ -657,7 +660,7 @@
 		*
 		* @param string _folderName the foldername
 		*
-		* @returns string the converted string
+		* @return string the converted string
 		*/
 		function encodeFolderName($_folderName)
 		{
@@ -1137,7 +1140,7 @@
 		* @param string _partID the id of the part, which holds the attachment
 		* @param int _winmail_nr winmail.dat attachment nr.
 		*
-		* @returns array
+		* @return array
 		*/
 		function getAttachment($_uid, $_partID, $_winmail_nr=0)
 		{
@@ -1255,6 +1258,34 @@
 			return $attachmentData;
 		}
 
+		/**
+		 * getIdentitiesWithAccounts
+		 *
+		 * @param array reference to pass all identities back
+		 * @return the default Identity (active) or 0
+		 */
+		function getIdentitiesWithAccounts(&$identities)
+		{
+			// account select box
+			$selectedID = 0;
+			if($this->mailPreferences->userDefinedAccounts) $allAccountData = $this->bopreferences->getAllAccountData($this->mailPreferences);
+
+			if ($allAccountData) {
+				foreach ($allAccountData as $tmpkey => $accountData)
+				{
+					$identity =& $accountData['identity'];
+					$icServer =& $accountData['icServer'];
+					//_debug_array($identity);
+					//_debug_array($icServer);
+					if (empty($icServer->host)) continue;
+					$identities[$identity->id]=$identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
+					if (!empty($identity->default)) $selectedID = $identity->id;
+				}
+			}
+
+			return $selectedID;
+		}
+
 		function getEMailProfile()
 		{
 			$config = CreateObject('phpgwapi.config','felamimail');
@@ -1282,7 +1313,7 @@
 		*
 		* @param _folderName string the foldername
 		*
-		* @returns array
+		* @return array
 		*/
 		function getFolderStatus($_folderName)
 		{
@@ -1355,7 +1386,7 @@
 		* @param _subscribedOnly boolean get subscribed or all folders
 		* @param _getCounters    boolean get get messages counters
 		*
-		* @returns array with folder objects. eg.: INBOX => {inbox object}
+		* @return array with folder objects. eg.: INBOX => {inbox object}
 		*/
 		function getFolderObjects($_subscribedOnly=false, $_getCounters=false)
 		{
@@ -1698,8 +1729,8 @@
 
 		/**
 		 * getMimePartCharset - fetches the charset mimepart if it exists
-		 * @params $_mimePartObject structure object
-		 * @returns mixed mimepart or false if no CHARSET is found, the missing charset has to be handled somewhere else, 
+		 * @param $_mimePartObject structure object
+		 * @return mixed mimepart or false if no CHARSET is found, the missing charset has to be handled somewhere else, 
 		 *		as we cannot safely assume any charset as we did earlier
 		 */
 		function getMimePartCharset($_mimePartObject)
@@ -2547,7 +2578,7 @@
 		/**
 		 * normalizeBodyParts - function to gather and normalize all body Information
 		 * @param _bodyParts - Body Array
-		 * @returns array - a normalized Bodyarray
+		 * @return array - a normalized Bodyarray
 		 */
 		static function normalizeBodyParts($_bodyParts) 
 		{
@@ -2803,7 +2834,7 @@
 		* @param string _parent the parent foldername
 		* @param string _folderName the new foldername
 		*
-		* @returns mixed name of the newly created folder or false on error
+		* @return mixed name of the newly created folder or false on error
 		*/
 		function renameFolder($_oldFolderName, $_parent, $_folderName)
 		{
@@ -2987,7 +3018,7 @@
 		* convert the foldername from display charset to UTF-7
 		*
 		* @param string _parent the parent foldername
-		* @returns ISO-8859-1 / UTF7-IMAP encoded string
+		* @return ISO-8859-1 / UTF7-IMAP encoded string
 		*/
 		function _encodeFolderName($_folderName) {
 			return $GLOBALS['egw']->translation->convert($_folderName, self::$displayCharset, 'ISO-8859-1');
@@ -2998,7 +3029,7 @@
 		* convert the foldername from UTF-7 to display charset
 		*
 		* @param string _parent the parent foldername
-		* @returns ISO-8859-1 / self::$displayCharset encoded string
+		* @return ISO-8859-1 / self::$displayCharset encoded string
 		*/
 		function _decodeFolderName($_folderName) {
 			return $GLOBALS['egw']->translation->convert($_folderName, self::$displayCharset, 'ISO-8859-1');
@@ -3009,7 +3040,7 @@
 		* convert the sort value from the gui(integer) into a string
 		*
 		* @param int _sort the integer sort order
-		* @returns the ascii sort string
+		* @return the ascii sort string
 		*/
 		function _getSortString($_sort)
 		{
@@ -3207,7 +3238,7 @@
 		 * detect_encoding - try to detect the encoding
 		 *    only to be used if the string in question has no structure that determines his encoding
 		 * @param string - to be evaluated
-		 * @returns mixed string/boolean (encoding or false
+		 * @return mixed string/boolean (encoding or false
 		 */
 		static function detect_encoding($string) { 
 			static $list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
@@ -3382,7 +3413,7 @@
 		 * @param uid the uid of the email to be processed
 		 * @param partid the partid of the email
 		 * @param mailbox the mailbox, that holds the message
-		 * @returns array with 'mailaddress'=>$mailaddress,
+		 * @return array with 'mailaddress'=>$mailaddress,
 		 *				'subject'=>$subject,
 		 *				'message'=>$message,
 		 *				'attachments'=>$attachments,
@@ -3469,8 +3500,8 @@
 
 		/**
 		 * createHeaderInfoSection - creates a textual headersection from headerobject
-		 * @params header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
-		 * @returns string a preformatted string with the information of the header worked into it
+		 * @param header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
+		 * @return string a preformatted string with the information of the header worked into it
 		 */
 		static function createHeaderInfoSection($header,$headline='')
 		{
@@ -3501,8 +3532,8 @@
 		/**
 		 * getdisplayableBody - creates the bodypart of the email as textual representation
 		 * @param bofelamimail the bofelamimailobject to be used
-		 * @params bodyPorts array with the bodyparts
-		 * @returns string a preformatted string with the mails converted to text
+		 * @param bodyPorts array with the bodyparts
+		 * @return string a preformatted string with the mails converted to text
 		 */
 		static function &getdisplayableBody(&$bofelamimail, $bodyParts)
 		{

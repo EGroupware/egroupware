@@ -57,8 +57,22 @@
 
 			$this->bofilter		= CreateObject('felamimail.bofilter',false);
 			$this->bopreferences	=& $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
-			$this->preferences	= $this->bopreferences->getPreferences();
+			$this->preferences	=& $this->bofelamimail->mailPreferences;
 
+			if (is_object($this->preferences))
+			{
+				// account select box
+				$selectedID = $this->bofelamimail->getIdentitiesWithAccounts($identities);
+				// if nothing valid is found return to user defined account definition
+				if (empty($this->bofelamimail->icServer->host) && count($identities)==0 && $this->preferences->userDefinedAccounts)
+				{
+					// redirect to new personal account
+					egw::redirect_link('/index.php',array('menuaction'=>'felamimail.uipreferences.editAccountData',
+						'accountID'=>"new",
+						'msg'   => lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
+					));
+				}
+			}
 			$this->bofelamimail->saveSessionData();
 
 			$this->mailbox 		= $this->bofelamimail->sessionData['mailbox'];

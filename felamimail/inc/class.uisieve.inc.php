@@ -61,16 +61,31 @@
 			$this->displayCharset	= $GLOBALS['egw']->translation->charset();
 
 			$this->t 		=& CreateObject('phpgwapi.Template',EGW_APP_TPL);
- 			$this->botranslation	= $GLOBALS['egw']->translation;
+ 			$this->botranslation	=& $GLOBALS['egw']->translation;
 
-			$this->bopreferences    =& CreateObject('felamimail.bopreferences');
-			$this->mailPreferences  = $this->bopreferences->getPreferences();
+			$this->bofelamimail	= CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+			if (is_object($this->bofelamimail->mailPreferences))
+			{
+				// account select box
+				$selectedID = $this->bofelamimail->getIdentitiesWithAccounts($identities);
+				// if nothing valid is found return to user defined account definition
+				if (empty($this->bofelamimail->icServer->host) && count($identities)==0 && $this->bofelamimail->mailPreferences->userDefinedAccounts)
+				{
+					// redirect to new personal account
+					egw::redirect_link('/index.php',array('menuaction'=>'felamimail.uipreferences.editAccountData',
+						'accountID'=>"new",
+						'msg'   => lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
+					));
+				}
+			}						
+
+			$this->mailPreferences  =& $this->bofelamimail->mailPreferences;
 
 			$this->felamimailConfig	= config::read('felamimail');
 
 			$this->restoreSessionData();
 
-			$icServer = $this->mailPreferences->getIncomingServer(0);
+			$icServer = $this->bofelamimail->icServer;
 
 			if(is_a($icServer,'defaultimap') && $icServer->enableSieve) {
 				$this->bosieve		= $icServer;
@@ -320,9 +335,9 @@
 			else
 				$editMode	= 'filter';
 
-			$GLOBALS['egw']->js->validate_file('tabs','tabs');
-			$GLOBALS['egw']->js->validate_file('jscode','editProfile','felamimail');
-			$GLOBALS['egw']->js->validate_file('jscode','listSieveRules','felamimail');
+			egw_framework::validate_file('tabs','tabs');
+			egw_framework::validate_file('jscode','editProfile','felamimail');
+			egw_framework::validate_file('jscode','listSieveRules','felamimail');
 			$GLOBALS['egw']->js->set_onload("javascript:initAll('$editMode');");
 			if($_GET['menuaction'] == 'felamimail.uisieve.editRule') {
 				$GLOBALS['egw']->js->set_onunload('opener.fm_sieve_cancelReload();');
@@ -334,13 +349,13 @@
 				case 'felamimail.uisieve.editRule':
 					break;
 				default:
-					echo parse_navbar();
+					echo $GLOBALS['egw']->framework->navbar();
 					break;
 			}
 		}
 
 		function displayRule($_ruleID, $_ruleData, $msg='') {
-			$preferences = $this->mailPreferences;
+			$preferences =& $this->mailPreferences;
 			// display the header
 			$this->display_app_header();
 			$msg = html::purify($msg);
@@ -414,7 +429,7 @@
 
 		function editRule()
 		{
-			$preferences = $this->mailPreferences;
+			$preferences =& $this->mailPreferences;
 			$msg = '';
 			$error = 0;
 			$this->getRules();	/* ADDED BY GHORTH */
@@ -519,7 +534,7 @@
 		}
 
 		function editVacation() {
-			$preferences = $this->mailPreferences;
+			$preferences =& $this->mailPreferences;
 			if(!(empty($preferences->preferences['prefpreventabsentnotice']) || $preferences->preferences['prefpreventabsentnotice'] == 0))
 			{
 				die('You should not be here!');
@@ -698,7 +713,7 @@
 		}
 
 		function editEmailNotification() {
-			$preferences = ExecMethod('felamimail.bopreferences.getPreferences');
+			$preferences =& $this->mailPreferences;
 			if(!(empty($preferences->preferences['prefpreventnotificationformailviaemail']) || $preferences->preferences['prefpreventnotificationformailviaemail'] == 0))
 				die('You should not be here!');
 
@@ -785,7 +800,7 @@
 
 		function listRules()
 		{
-			$preferences = ExecMethod('felamimail.bopreferences.getPreferences');
+			$preferences =& $this->mailPreferences;
 			if(!(empty($preferences->preferences['prefpreventeditfilterrules']) || $preferences->preferences['prefpreventeditfilterrules'] == 0))
 				die('You should not be here!');
 	
@@ -911,12 +926,12 @@
 
 		function selectFolder()
 		{
-			$GLOBALS['egw']->js->validate_file('dhtmlxtree','js/dhtmlXCommon');
-			$GLOBALS['egw']->js->validate_file('dhtmlxtree','js/dhtmlXTree');
-			$GLOBALS['egw']->js->validate_file('jscode','editSieveRule','felamimail');
+			egw_framework::validate_file('dhtmlxtree','js/dhtmlXCommon');
+			egw_framework::validate_file('dhtmlxtree','js/dhtmlXTree');
+			egw_framework::validate_file('jscode','editSieveRule','felamimail');
 			$GLOBALS['egw']->common->egw_header();
 
-			$bofelamimail		=& CreateObject('felamimail.bofelamimail',$this->displayCharset);
+			$bofelamimail		=& $this->bofelamimail;
 			$uiwidgets		=& CreateObject('felamimail.uiwidgets');
 			$connectionStatus	= $bofelamimail->openConnection();
 

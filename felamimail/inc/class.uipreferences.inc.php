@@ -1,20 +1,21 @@
 <?php
-	/***************************************************************************\
-	* eGroupWare - FeLaMiMail                                                   *
-	* http://www.linux-at-work.de                                               *
-	* http://www.phpgw.de                                                       *
-	* http://www.egroupware.org                                                 *
-	* Written by : Lars Kneschke [lkneschke@linux-at-work.de]                   *
-	* -------------------------------------------------                         *
-	* This program is free software; you can redistribute it and/or modify it   *
-	* under the terms of the GNU General Public License as published by the     *
-	* Free Software Foundation; either version 2 of the License, or (at your    *
-	* option) any later version.                                                *
-	\***************************************************************************/
+/**
+ * EGroupware - FeLaMiMail - preference user interface
+ *
+ * @link http://www.egroupware.org
+ * @package felamimail
+ * @author Lars Kneschke [lkneschke@linux-at-work.de]
+ * @author Klaus Leithoff [kl@stylite.de]
+ * @copyright (c) 2009-10 by Klaus Leithoff <kl-AT-stylite.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
-	/* $Id$ */
-
-	require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc.php');
+/**
+ * FeLaMiMail preference user interface class, provides UI functionality for preferences/actions like
+ * managing folders, acls, signatures, rules
+ */
+require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc.php');
 
 	class uipreferences
 	{
@@ -37,13 +38,26 @@
 		{
 			$this->t = $GLOBALS['egw']->template;
 			$this->charset = $GLOBALS['egw']->translation->charset();
-
 			$this->bofelamimail	= CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-			$this->bopreferences	= $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
+			$this->bopreferences	=& $this->bofelamimail->bopreferences; //CreateObject('felamimail.bopreferences');
+
 			$this->uiwidgets	= CreateObject('felamimail.uiwidgets');
+
+			if (is_object($this->bofelamimail->mailPreferences))
+			{
+				// account select box
+				$selectedID = $this->bofelamimail->getIdentitiesWithAccounts($identities);
+				// if nothing valid is found return to user defined account definition
+				if (empty($this->bofelamimail->icServer->host) && count($identities)==0 && $this->bofelamimail->mailPreferences->userDefinedAccounts)
+				{
+					// redirect to new personal account
+					$this->editAccountData(lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."), 'new');
+					exit;
+				}
+			}						
+
 			$this->bofelamimail->openConnection();
-			
-			
+
 			$this->rowColor[0] = $GLOBALS['egw_info']["theme"]["bg01"];
 			$this->rowColor[1] = $GLOBALS['egw_info']["theme"]["bg02"];
 		}
@@ -68,30 +82,30 @@
 			switch($_GET['menuaction'])
 			{
 				case 'felamimail.uipreferences.editSignature':
-					$GLOBALS['egw']->js->validate_file('jscode','listSignatures','felamimail');
+					egw_framework::validate_file('jscode','listSignatures','felamimail');
 					egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
 					#$GLOBALS['egw']->js->set_onload('fm_initEditLayout();');
 					break;
 				case 'felamimail.uipreferences.listAccountData':
 				case 'felamimail.uipreferences.editAccountData':
-					$GLOBALS['egw']->js->validate_file('tabs','tabs');
-					$GLOBALS['egw']->js->validate_file('jscode','editAccountData','felamimail');
+					egw_framework::validate_file('tabs','tabs');
+					egw_framework::validate_file('jscode','editAccountData','felamimail');
 					$GLOBALS['egw']->js->set_onload('javascript:initEditAccountData();');
 					$GLOBALS['egw']->js->set_onload('javascript:initTabs();');
 					break;
 
 				case 'felamimail.uipreferences.listSignatures':
-					$GLOBALS['egw']->js->validate_file('jscode','listSignatures','felamimail');
+					egw_framework::validate_file('jscode','listSignatures','felamimail');
 					#$GLOBALS['egw']->js->set_onload('javascript:initEditAccountData();');
 					break;
 
 				case 'felamimail.uipreferences.listFolder':
 				case 'felamimail.uipreferences.addACL':
 				case 'felamimail.uipreferences.listSelectFolder':
-					$GLOBALS['egw']->js->validate_file('tabs','tabs');
-					$GLOBALS['egw']->js->validate_file('dhtmlxtree','js/dhtmlXCommon');
-					$GLOBALS['egw']->js->validate_file('dhtmlxtree','js/dhtmlXTree');
-					$GLOBALS['egw']->js->validate_file('jscode','listFolder','felamimail');
+					egw_framework::validate_file('tabs','tabs');
+					egw_framework::validate_file('dhtmlxtree','js/dhtmlXCommon');
+					egw_framework::validate_file('dhtmlxtree','js/dhtmlXTree');
+					egw_framework::validate_file('jscode','listFolder','felamimail');
 					$GLOBALS['egw']->js->set_onload('javascript:initAll();');
 					break;
 			}
@@ -100,7 +114,7 @@
 						
 			$GLOBALS['egw']->common->egw_header();
 			if($_displayNavbar == TRUE)
-				echo parse_navbar();
+				echo $GLOBALS['egw']->framework->navbar();
 		}
 		
 		function editForwardingAddress()
@@ -175,7 +189,7 @@
 				$this->t->set_var('tinymce',html::fckEditorQuick(
 					'signature', 'advanced', 
 					$signatureData->fm_signature, 
-					$height)
+					$height,'100%',false)
 				);
 
 				$this->t->set_var('checkbox_isDefaultSignature',html::checkbox(
@@ -187,7 +201,7 @@
 				);
 			} else {
 				$this->t->set_var('description','');
-				$this->t->set_var('tinymce',html::fckEditorQuick('signature', 'advanced', '', $height));
+				$this->t->set_var('tinymce',html::fckEditorQuick('signature', 'advanced', '', $height,'100%',false));
 
 				$this->t->set_var('checkbox_isDefaultSignature',html::checkbox(
 					'isDefaultSignature', false, 'true', 'id="isDefaultSignature"'
@@ -198,7 +212,7 @@
 			$this->t->pparse("out","main");
 		}
 		
-		function editAccountData($msg='')
+		function editAccountData($msg='', $account2retrieve='active')
 		{
 			if ($_GET['msg']) $msg = html::purify($_GET['msg']);
 			if (!isset($this->bofelamimail)) $this->bofelamimail    = CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
@@ -276,7 +290,7 @@
 			if($this->bofelamimail->openConnection()) {
 				$folderObjects = $this->bofelamimail->getFolderObjects();
 				foreach($folderObjects as $folderName => $folderInfo) {
-					#_debug_array($folderData);
+					//_debug_array($folderInfo);
 					$folderList[$folderName] = $folderInfo->displayName;
 				}
 				$this->bofelamimail->closeConnection();
@@ -290,7 +304,6 @@
 			$this->translate();
 
 			// if there is no accountID with the call of the edit method, retrieve an active account
-			$account2retrieve = 'active';
 			if ((int)$_GET['accountID']) {
 				$account2retrieve = $_GET['accountID'];
 			}

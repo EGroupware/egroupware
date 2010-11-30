@@ -477,11 +477,13 @@ class felamimail_hooks
 		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
 		$file = array();
 		$bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
-		$preferences = $bofelamimail->mailPreferences;
+		$preferences =& $bofelamimail->mailPreferences;
 		$showMainScreenStuff = false;
+		//error_log(__METHOD__.__LINE__.$_GET['menuaction']);
 		if(($_GET['menuaction'] == 'felamimail.uifelamimail.viewMainScreen' ||
 			$_GET['menuaction'] == 'felamimail.uifelamimail.changeFolder' ||
 			stripos($_GET['menuaction'],'ajax_sidebox') !== false) &&
+			$_GET['menuaction'] != 'felamimail.uipreferences.editAccountData' &&
 			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToPreferences' &&
 			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToEmailadmin') {
 			/* seems to be, its not needed here, as viewMainScreen does it anyway
@@ -593,43 +595,26 @@ class felamimail_hooks
 				'no_lang' => true,
 		);
 */
-		// select account box, treeview
-		if($showMainScreenStuff) {
+		// select account box, treeview, we use a whileloop as we may want to break out
+		while($showMainScreenStuff) {
 			$bofelamimail->restoreSessionData();
 			$mailbox 		= $bofelamimail->sessionData['mailbox'];;
 			//_debug_array($mailbox);
 
-			$icServerID = 0;
+			$icServerID = $bofelamimail->profileID;
 			if (is_object($preferences))
 			{
 				// gather profile data
-				$imapServer =& $preferences->getIncomingServer($icServerID);
+				$imapServer =& $bofelamimail->icServer;
 				// account select box
-				$selectedID = 0;
-				if($preferences->userDefinedAccounts) $allAccountData = $bofelamimail->bopreferences->getAllAccountData($preferences);
-				if ($allAccountData) {
-					foreach ($allAccountData as $tmpkey => $accountData)
-					{
-						$identity =& $accountData['identity'];
-						$icServer =& $accountData['icServer'];
-						//_debug_array($identity);
-						//_debug_array($icServer);
-						if (empty($icServer->host)) continue;
-						$identities[$identity->id]=$identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
-						if (!empty($identity->default)) $selectedID = $identity->id;
-					}
-				}
+				$selectedID = $bofelamimail->getIdentitiesWithAccounts($identities);
+
 				// if nothing valid is found return to user defined account definition
-// todo klaus: can you move this redirect out of the sidebox on felamimail/index.php
 				if (empty($imapServer->host) && count($identities)==0 && $preferences->userDefinedAccounts)
 				{
-					// redirect to new personal account
-					egw::redirect_link('/index.php',array('menuaction'=>'felamimail.uipreferences.editAccountData',
-						'accountID'=>"new",
-						'msg'   => lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
-					));
+					$showMainScreenStuff= false;
+					break;
 				}
-
 				$activeIdentity =& $preferences->getIdentity($icServerID);
 				if ($imapServer->_connected != 1) $connectionStatus = $bofelamimail->openConnection($icServerID);
 				$folderObjects = $bofelamimail->getFolderObjects(true, false);
@@ -685,6 +670,7 @@ class felamimail_hooks
 					'icon' => False,
 				);
 			}
+			break; // kill the while loop as we need only one go
 		}
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
