@@ -1,3 +1,18 @@
+egroupware (1.8.001.20101201) hardy; urgency=low
+
+  * Final EGroupware 1.8.001 release:
+  * eMail: timezone and timeformat issues as reported in egroupware.org Tracker#2755
+  * Implemented deleteaccount hook for SyncML
+  * Joomla! 1.5 template support (including ja_purity template)
+  * got html in rss export working again
+  * creating a default news category and an automatic import of RSS feed from egroupware.org
+  * SiteMgr: if moving pages between categories, contained blocks need to change category too
+  * new English and German default website
+  * fixed not working automatic install (stalls after installing core apps, because existing tables get NOT refreshed)
+  * WiKi: fix broken rename, (links in other pages, that refered to the given wiki page, did not get updated, as the reference list in egw_wiki_links did not get updated since Rev16219 (7th Aug 2004)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 01 Dec 2010 15:03:28 +0100
+
 egroupware (1.8.001.20101111) hardy; urgency=low
 
   * Infolog:  Fix problem Delegated user was not able to edit infolog entrys owned by Groups, if he was not member of that group, and had no grouprights. Implicit rights where not applied; reported in Stylite Tracker#8255; 
