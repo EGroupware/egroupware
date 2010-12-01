@@ -58,8 +58,7 @@
 			}
 			$this->t 		= CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->bofelamimail	= CreateObject('felamimail.bofelamimail',$this->displayCharset);
-			$this->mailPreferences  = ExecMethod('felamimail.bopreferences.getPreferences');
-
+			$this->mailPreferences  =& $this->bofelamimail->mailPreferences;// ExecMethod('felamimail.bopreferences.getPreferences');
 			$this->t->set_unknowns('remove');
 
 			$this->rowColor[0] = $GLOBALS['egw_info']["theme"]["bg01"];
@@ -129,10 +128,22 @@
 				// save as draft
 				$messageUid = $this->bocompose->saveAsDraft($formData);
 				if (!$messageUid) {
-					print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")."');</script>";
+					print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")." ".lang("Trying to recover from session data")."');</script>";
+					//try to reopen the mail from session data
+					$this->compose();
+					return;
 				}
+				// saving as draft, does not mean closing the message
+				unset($_POST['composeid']);
+				unset($_GET['composeid']);
+				$uicompose   = CreateObject('felamimail.uicompose');
+				$folder = ($uicompose->mailPreferences->ic_server[0]->draftfolder ? $uicompose->mailPreferences->ic_server[0]->draftfolder : $uicompose->mailPreferences->preferences['draftFolder']);
+				$uicompose->bocompose->getDraftData($uicompose->bofelamimail->icServer, $folder, $messageUid);
+				$uicompose->compose();
+				return;
 			} else {
 				if(!$this->bocompose->send($formData)) {
+					print "<script type=\"text/javascript\">alert('".lang("Error: Could not send Message.")." ".lang("Trying to recover from session data")."');</script>";
 					$this->compose();
 					return;
 				}
