@@ -3185,11 +3185,12 @@
 						}
 					}
 				}
-				
+				// as FreeBSD seems to have problems with the generated temp names we append some more random stuff
+				$randomString = chr(rand(65,90)).chr(rand(48,57)).chr(rand(65,90)).chr(rand(48,57)).chr(rand(65,90));
 				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
 					SEP.
 					$GLOBALS['egw_info']['user']['account_id'].
-					trim($IDtoAddToFileName).basename($_formData['file']);
+					trim($IDtoAddToFileName).basename($_formData['file']).'_'.$randomString;
 				
 				if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
 				{
