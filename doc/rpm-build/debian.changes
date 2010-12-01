@@ -1,3 +1,19 @@
+egroupware-epl (10.1.20101201-1) hardy; urgency=low
+
+  * Joomla! 1.5 template support (including ja_purity template)
+  * eMail: improvements regarding the handling of no emailprofile available
+  * new preference to disable "Your home directory" or "Users and groups" in sidebox menu
+  * fixed ACL wise not working assignment to groups, gave a "Permission denied"
+  * got html in rss export working again
+  * creating a default news category and an automatic import of RSS feed from egroupware.org
+  * SiteMgr: if moving pages between categories, contained blocks need to change category too
+  * new English and German default website (requires re-install of SiteMgr)
+  * WiKi: fix broken rename, (links in other pages, that refered to the given wiki page, did not get updated, as the reference list in egw_wiki_links did not get updated since Rev16219 (7th Aug 2004)
+  * eMail: Saving as draft reopens the saved message: thus giving you full control wether saving the message as draft has succeeded, and giving you the opportunity to continue your work
+  * eMail: fix for a problem reported with FreeBSD regarding the generation of random strings for temp-filenames
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 01 Dec 2010 15:57:10 +0100
+
 egroupware-epl (10.1.20101124-1) hardy; urgency=low
 
   * Stylite Template: Issue regarding horizontal scrollbar (Bug#8279)
