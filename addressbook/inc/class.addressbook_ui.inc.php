@@ -29,12 +29,6 @@ class addressbook_ui extends addressbook_bo
 		'admin_set_all_cleanup' => True,
 		'cat_add' => True,
 	);
-	/**
-	 * use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
-	 *
-	 * @var boolean
-	 */
-	protected $private_addressbook = false;
 	protected $org_views;
 
 	/**
@@ -74,8 +68,6 @@ class addressbook_ui extends addressbook_bo
 		parent::__construct($contact_app);
 
 		$this->tmpl = new etemplate();
-
-		$this->private_addressbook = $this->contact_repository == 'sql' && $this->prefs['private_addressbook'];
 
 		$this->org_views = array(
 			'org_name'                  => lang('Organisations'),
@@ -284,7 +276,7 @@ class addressbook_ui extends addressbook_bo
 		);
 		if($content['nm']['col_filter']['tid'] == 'D' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge')
 		{
-			// User not allowed to purge 
+			// User not allowed to purge
 			unset($sel_options['action']['delete']);
 		}
 

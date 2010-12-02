@@ -125,6 +125,12 @@ class addressbook_bo extends addressbook_so
 	 */
 	var $default_private;
 	/**
+	 * Use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
+	 *
+	 * @var boolean
+	 */
+	var $private_addressbook = false;
+	/**
 	 * Categories object
 	 *
 	 * @var object
@@ -176,6 +182,7 @@ class addressbook_bo extends addressbook_so
 		{
 			$this->default_addressbook = $this->user;	// admin set a default or forced pref for personal addressbook
 		}
+		$this->private_addressbook = $this->contact_repository == 'sql' && $this->prefs['private_addressbook'];
 
 		$this->contact_fields = array(
 			'id'                   => lang('Contact ID'),
@@ -818,7 +825,7 @@ class addressbook_bo extends addressbook_so
 
 		// Update country codes
 		foreach(array('adr_one_', 'adr_two_') as $c_prefix) {
-			if($contact[$c_prefix.'countryname'] && !$contact[$c_prefix.'countrycode'] && 
+			if($contact[$c_prefix.'countryname'] && !$contact[$c_prefix.'countrycode'] &&
 				$code = $GLOBALS['egw']->country->country_code($contact[$c_prefix.'countryname']))
 			{
 				if(strlen($code) == 2)
