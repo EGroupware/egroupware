@@ -182,7 +182,7 @@ class calendar_activesync implements activesync_plugin_read
 
 		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
 		$this->backend->splitID($folderid, $type, $account);
-		if ($type != 'calendar' || !($event = $this->calendar->read($id,'ts',false,$account)))
+		if ($type != 'calendar' || !($event = $this->calendar->read($id,null,'ts',false,$account)))
 		{
 			return false;
 		}

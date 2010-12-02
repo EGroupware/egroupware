@@ -898,7 +898,7 @@ class calendar_bo
 		}
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'read'))
 		{
-			$this->debug_message('calendar_bo::read(%1,%2,%3,%4)=%5',True,$ids,$date,$ignore_acl,$date_format,$return);
+			$this->debug_message('calendar_bo::read(%1,%2,%3,%4,%5)=%6',True,$ids,$date,$ignore_acl,$date_format,$clear_private_infos_users,$return);
 		}
 		return $return;
 	}
