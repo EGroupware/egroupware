@@ -12,163 +12,24 @@
  * @version $Id$
  */
 
-
 /**
  * Addressbook activesync plugin
- *
- *
  */
-class addressbook_activesync implements activesync_plugin_read, activesync_plugin_write
+class addressbook_activesync implements activesync_plugin_write
 {
 	/**
-	 * var BackendEGW
+	 * @var BackendEGW
 	 */
 	private $backend;
 
 	/**
 	 * Instance of addressbook_bo
 	 *
-	 * @var addressbook
+	 * @var addressbook_bo
 	 */
 	private $addressbook;
 
-	/**
-	 * Constructor
-	 *
-	 * @param BackendEGW $backend
-	 */
-	public function __construct(BackendEGW $backend)
-	{
-		$this->backend = $backend;
-	}
-
-
-	/**
-	 *  This function is analogous to GetMessageList.
-	 *
-	 *  @ToDo implement preference, include own private calendar
-	 */
-	public function GetFolderList()
-	{
-		unset($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook']);
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
-
-		// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
-
-		foreach ($this->addressbook->get_addressbooks(EGW_ACL_READ) as $label => $entry)
-		{
-		$folderlist[] = $f = array(
-				'id'	=>	$this->backend->createID('addressbook',$label),
-				'mod'	=>	$label,
-				'parent'=>	'0',
-			);
-		};
-		//error_log(__METHOD__."() returning ".array2string($folderlist));
-		return $folderlist;
-	}
-
-	/**
-	 * Get Information about a folder
-	 *
-	 * @param string $id
-	 * @return SyncFolder|boolean false on error
-	 */
-	public function GetFolder($id)
-	{
-		$this->backend->splitID($id, $type, $owner);
-
-		$folderObj = new SyncFolder();
-		$folderObj->serverid = $id;
-		$folderObj->parentid = '0';
-		$folderObj->displayname = $GLOBALS['egw']->accounts->id2name($owner,'account_fullname'); //@TODO: Name for owner == 0;
-		if ($owner == $GLOBALS['egw_info']['user']['account_id'])
-		{
-			$folderObj->type = SYNC_FOLDER_TYPE_CONTACT;
-		}
-		else
-		{
-			$folderObj->type = SYNC_FOLDER_TYPE_USER_CONTACT;
-		}
-		// error_log(__METHOD__."('$id') folderObj=".array2string($folderObj));
-		return $folderObj;
-	}
-
-	/**
-	 * Return folder stats. This means you must return an associative array with the
-	 * following properties:
-	 *
-	 * "id" => The server ID that will be used to identify the folder. It must be unique, and not too long
-	 *		 How long exactly is not known, but try keeping it under 20 chars or so. It must be a string.
-	 * "parent" => The server ID of the parent of the folder. Same restrictions as 'id' apply.
-	 * "mod" => This is the modification signature. It is any arbitrary string which is constant as long as
-	 *		  the folder has not changed. In practice this means that 'mod' can be equal to the folder name
-	 *		  as this is the only thing that ever changes in folders. (the type is normally constant)
-	 *
-	 * @return array with values for keys 'id', 'mod' and 'parent'
-	 */
-	public function StatFolder($id)
-	{
-		$folder = $this->GetFolder($id);
-		$this->backend->splitID($id, $type, $owner);
-
-		$stat = array(
-			'id'     => $id,
-			'mod'    => $GLOBALS['egw']->accounts->id2name($owner),
-			'parent' => '0',
-		);
-		// error_log(__METHOD__."('$id')");
-
-		return $stat;
-	}
-
-	/**
-	 * Should return a list (array) of messages, each entry being an associative array
-     * with the same entries as StatMessage(). This function should return stable information; ie
-     * if nothing has changed, the items in the array must be exactly the same. The order of
-     * the items within the array is not important though.
-     *
-     * The cutoffdate is a date in the past, representing the date since which items should be shown.
-     * This cutoffdate is determined by the user's setting of getting 'Last 3 days' of e-mail, etc. If
-     * you ignore the cutoffdate, the user will not be able to select their own cutoffdate, but all
-     * will work OK apart from that.
-     *
-     * @param string $id folder id
-     * @param int $cutoffdate=null
-     * @return array
-  	 */
-	function GetMessageList($id, $cutoffdate=NULL)
-	{
-		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
-
-		$this->backend->splitID($id,$type,$user);
-		$filter['owner'] = $user;
-
-		$items = $this->addressbook->search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='');
-
-		$messagelist = array();
-		foreach ($items as $k => $event)
-		{
-			$messagelist[] = $this->StatMessage($id, $event['id']);
-		}
-		//error_log(print_r($messagelist,true));
-		return $messagelist;
-		//return array();
-	}
-
-	/**
-	 * Get specified item from specified folder.
-	 *
-	 * @param string $folderid
-	 * @param string $id
-	 * @param int $truncsize
-	 * @param int $bodypreference
-	 * @param bool $mimesupport
-	 * @return $messageobject|boolean false on error
-	*/
-	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
-	{
-
-		$mapping = array(
+	static public $mapping = array(
 	    'anniversary'	=> '',
     	'assistantname'	=> 'assistent',
     	'assistnamephonenumber'	=> 'tel_assistent',
@@ -224,8 +85,166 @@ class addressbook_activesync implements activesync_plugin_read, activesync_plugi
     	'rtf'	=> '',
     	'picture'	=> 'jpegphoto',
     	'nickname'	=>	'',
-    	'airsyncbasebody'	=>	'' );
+    	'airsyncbasebody'	=>	'',
+	);
 
+	/**
+	 * Constructor
+	 *
+	 * @param BackendEGW $backend
+	 */
+	public function __construct(BackendEGW $backend)
+	{
+		$this->backend = $backend;
+	}
+
+	/**
+	 * Get addressbooks (no extra private one and do some caching)
+	 *
+	 * @param int $account=null account_id of addressbook or null to get array of all addressbooks
+	 * @return string|array addressbook name of array with int account_id => label pairs
+	 */
+	private function get_addressbooks($account=null)
+	{
+		static $abs;
+
+		if (!isset($abs))
+		{
+			translation::add_app('addressbook');	// we need the addressbook translations
+
+			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook'])
+			{
+				unset($GLOBALS['egw_info']['user']['preferences']['addressbook']['private_addressbook']);
+				if (isset($this->addressbook)) $this->addressbook->private_addressbook = false;
+			}
+			if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+
+			$abs = $this->addressbook->get_addressbooks(EGW_ACL_READ);
+		}
+		return is_null($account) ? $abs : $abs[$account];
+	}
+
+	/**
+	 *  This function is analogous to GetMessageList.
+	 *
+	 *  @ToDo implement preference, include own private calendar
+	 */
+	public function GetFolderList()
+	{
+		// error_log(print_r($this->addressbook->get_addressbooks(EGW_ACL_READ),true));
+
+		foreach ($this->get_addressbooks() as $account => $label)
+		{
+			$folderlist[] = array(
+				'id'	=>	$this->backend->createID('addressbook',$account),
+				'mod'	=>	$label,
+				'parent'=>	'0',
+			);
+		};
+		error_log(__METHOD__."() returning ".array2string($folderlist));
+		return $folderlist;
+	}
+
+	/**
+	 * Get Information about a folder
+	 *
+	 * @param string $id
+	 * @return SyncFolder|boolean false on error
+	 */
+	public function GetFolder($id)
+	{
+		$this->backend->splitID($id, $type, $owner);
+
+		$folderObj = new SyncFolder();
+		$folderObj->serverid = $id;
+		$folderObj->parentid = '0';
+		$folderObj->displayname = $this->get_addressbooks($owner);
+
+		if ($owner == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$folderObj->type = SYNC_FOLDER_TYPE_CONTACT;
+		}
+		else
+		{
+			$folderObj->type = SYNC_FOLDER_TYPE_USER_CONTACT;
+		}
+		error_log(__METHOD__."('$id') returning ".array2string($folderObj));
+		return $folderObj;
+	}
+
+	/**
+	 * Return folder stats. This means you must return an associative array with the
+	 * following properties:
+	 *
+	 * "id" => The server ID that will be used to identify the folder. It must be unique, and not too long
+	 *		 How long exactly is not known, but try keeping it under 20 chars or so. It must be a string.
+	 * "parent" => The server ID of the parent of the folder. Same restrictions as 'id' apply.
+	 * "mod" => This is the modification signature. It is any arbitrary string which is constant as long as
+	 *		  the folder has not changed. In practice this means that 'mod' can be equal to the folder name
+	 *		  as this is the only thing that ever changes in folders. (the type is normally constant)
+	 *
+	 * @return array with values for keys 'id', 'mod' and 'parent'
+	 */
+	public function StatFolder($id)
+	{
+		$folder = $this->GetFolder($id);
+		$this->backend->splitID($id, $type, $owner);
+
+		$stat = array(
+			'id'     => $id,
+			'mod'    => $this->get_addressbooks($owner),
+			'parent' => '0',
+		);
+		error_log(__METHOD__."('$id') returning ".array2string($stat));
+		return $stat;
+	}
+
+	/**
+	 * Should return a list (array) of messages, each entry being an associative array
+     * with the same entries as StatMessage(). This function should return stable information; ie
+     * if nothing has changed, the items in the array must be exactly the same. The order of
+     * the items within the array is not important though.
+     *
+     * The cutoffdate is a date in the past, representing the date since which items should be shown.
+     * This cutoffdate is determined by the user's setting of getting 'Last 3 days' of e-mail, etc. If
+     * you ignore the cutoffdate, the user will not be able to select their own cutoffdate, but all
+     * will work OK apart from that.
+     *
+     * @param string $id folder id
+     * @param int $cutoffdate=null
+     * @return array
+  	 */
+	function GetMessageList($id, $cutoffdate=NULL)
+	{
+		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+
+		$this->backend->splitID($id,$type,$user);
+		$filter = array('owner' => $user);
+
+		$items = $this->addressbook->search($criteria,$only_keys=false,$order_by='',$extra_cols='',$wildcard='',
+			$empty=false,$op='AND',$start=false,$filter);
+
+		$messagelist = array();
+		foreach ($items as $k => $event)
+		{
+			$messagelist[] = $this->StatMessage($id, $event['id']);
+		}
+		//error_log(print_r($messagelist,true));
+		return $messagelist;
+	}
+
+	/**
+	 * Get specified item from specified folder.
+	 *
+	 * @param string $folderid
+	 * @param string $id
+	 * @param int $truncsize
+	 * @param int $bodypreference
+	 * @param bool $mimesupport
+	 * @return $messageobject|boolean false on error
+	*/
+	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
+	{
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
 		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
@@ -236,7 +255,7 @@ class addressbook_activesync implements activesync_plugin_read, activesync_plugi
 			return false;
 		}
 		$message = new SyncContact();
-		foreach($mapping as $key => $attr)
+		foreach(self::$mapping as $key => $attr)
 		{
 			switch ($attr)
 			{
@@ -292,13 +311,13 @@ class addressbook_activesync implements activesync_plugin_read, activesync_plugi
 						{
         					$message->airsyncbasebody->data = " ";
 						}
+					}
 					break;
-					}
+
 				case 'jpegphoto':
-					{
-						if (!empty($contact[$attr])) $message->$key = base64_encode($contact[$attr]);
-						break;
-					}
+					if (!empty($contact[$attr])) $message->$key = base64_encode($contact[$attr]);
+					break;
+
 				default:
 					if (!empty($contact[$attr])) $message->$key = $contact[$attr];
 			}
@@ -316,22 +335,24 @@ class addressbook_activesync implements activesync_plugin_read, activesync_plugi
      *             time for this field, which will change as soon as the contents have changed.
      *
      * @param string $folderid
-     * @param int|array $id event id or array
+     * @param int|array $contact contact id or array
      * @return array
      */
-	public function StatMessage($folderid, $id)
+	public function StatMessage($folderid, $contact)
 	{
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
-		if (!($data = $this->addressbook->read($id)))
+		if (!is_array($contact)) $contact = $this->addressbook->read($contact);
+
+		if (!$contact)
 		{
 			$stat = false;
 		}
 		else
 		{
 			$stat = array(
-				'mod' => $data['etag'],
-				'id' => is_array($id) ? $id['id'] : $id,
+				'mod' => $contact['etag'],
+				'id' => $contact['id'],
 				'flags' => 1,
 			);
 		}
@@ -389,64 +410,6 @@ class addressbook_activesync implements activesync_plugin_read, activesync_plugi
      */
     public function ChangeMessage($folderid, $id, $message)
     {
-    	$mapping = array(
-	    'anniversary'	=> '',
-    	'assistantname'	=> 'assistent',
-    	'assistnamephonenumber'	=> 'tel_assistent',
-    	'birthday'	=>	'bday',
-    	'body'	=> 'note',
-    	'bodysize'	=> '',
-    	'bodytruncated'	=> '',
-    	'business2phonenumber'	=> '',
-    	'businesscity'	=>	'adr_one_locality',
-    	'businesscountry'	=> 'adr_one_countryname',
-    	'businesspostalcode'	=> 'adr_one_postalcode',
-    	'businessstate'	=> '',
-    	'businessstreet'	=> 'adr_one_street',
-    	'businessfaxnumber'	=> 'tel_fax',
-    	'businessphonenumber'	=> 'tel_work',
-    	'carphonenumber'	=> 'tel_car',
-    	'categories'	=> '',
-    	'children'	=> '',
-    	'companyname'	=> 'org_name',
-    	'department'	=>	'org_unit',
-    	'email1address'	=> 'email',
-    	'email2address'	=> 'email_home',
-    	'email3address'	=> '',
-    	'fileas'	=>	'n_fileas',
-    	'firstname'	=>	'n_given',
-    	'home2phonenumber'	=> '',
-    	'homecity'	=> 'adr_two_locality',
-    	'homecountry'	=> 'adr_two_countryname',
-    	'homepostalcode'	=> 'adr_two_postalcode',
-    	'homestate'	=> '',
-    	'homestreet'	=>	'adr_two_street',
-    	'homefaxnumber'	=> 'tel_fax_home',
-    	'homephonenumber'	=>	'tel_home',
-    	'jobtitle'	=>	'role',
-    	'lastname'	=> 'n_family',
-    	'middlename'	=> 'n_middle',
-    	'mobilephonenumber'	=> 'tel_cell',
-    	'officelocation'	=> 'room',
-    	'othercity'	=> '',
-    	'othercountry'	=> '',
-    	'otherpostalcode'	=> '',
-    	'otherstate'	=> '',
-    	'otherstreet'	=> '',
-    	'pagernumber'	=> 'tel_pager',
-    	'radiophonenumber'	=> '',
-    	'spouse'	=> '',
-    	'suffix'	=>	'n_suffix',
-    	'title'	=> 'title',	// @TODO: check if n_prefix
-    	'webpage'	=> 'url',
-    	'yomicompanyname'	=> '',
-    	'yomifirstname'	=>	'',
-    	'yomilastname'	=>	'',
-    	'rtf'	=> '',
-    	'picture'	=> 'jpegphoto',
-    	'nickname'	=>	'',
-    	'airsyncbasebody'	=>	'' );
-
     	if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
     	$this->backend->splitID($folderid, $type, $account);
@@ -460,26 +423,22 @@ class addressbook_activesync implements activesync_plugin_read, activesync_plugi
 		{
 			$contact = array();
 			debugLog (__METHOD__." creating new contact");
-			foreach ($mapping as $key => $attr)
+			foreach (self::$mapping as $key => $attr)
 			{
 				switch ($attr)
 				{
 					case 'note':
-						{
-							error_log ("Note !");
-							break;
-						}
+						error_log ("Note !");
+						break;
+
 					case 'jpegphoto':
-						{
-							error_log("jpegphoto");
-							if (!empty($message->$key) && (!empty($mapping[$key])) )  $contact[$attr] = base64_decode($message->$key);
-							break;
-						}
+						error_log("jpegphoto");
+						if (!empty($message->$key) && (!empty(self::$mapping[$key])) )  $contact[$attr] = base64_decode($message->$key);
+						break;
+
 					default:
-						{
-							if (!empty($message->$key) && (!empty($mapping[$key])) )  $contact[$attr] = $message->$key;
-							break;
-						}
+						if (!empty($message->$key) && (!empty(self::$mapping[$key])) )  $contact[$attr] = $message->$key;
+						break;
 				}
 			}
 
