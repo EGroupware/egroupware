@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware: ActiveSync access: FMail plugin
+ * EGroupware: ActiveSync access: Calendar plugin
  *
  * @link http://www.egroupware.org
  * @package calendar
@@ -9,7 +9,7 @@
  * @author Klaus Leithoff <kl@stylite.de>
  * @author Philip Herbert <philip@knauber.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.calendar_activesync.inc.php  $
+ * @version $Id$
  */
 
 
