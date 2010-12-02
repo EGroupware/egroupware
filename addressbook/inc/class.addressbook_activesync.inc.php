@@ -9,7 +9,7 @@
  * @author Klaus Leithoff <kl@stylite.de>
  * @author Philip Herbert <philip@knauber.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.addressbook_activesync.inc.php  $
+ * @version $Id$
  */
 
 
