@@ -567,7 +567,9 @@ class addressbook_so
 
 		// Hide deleted items unless type is specifically deleted
 		if(!is_array($filter)) $filter = $filter ? (array) $filter : array();
-		if($filter['tid'] !== self::DELETED_TYPE)
+
+		// if no tid set or tid==='' do NOT return deleted entries ($tid === null returns all entries incl. deleted)
+		if(!array_key_exists('tid', $filter) || $filter['tid'] === '')
 		{
 			if ($join && strpos($join,'RIGHT JOIN') !== false)	// used eg. to search for groups
 			{
@@ -577,6 +579,10 @@ class addressbook_so
 			{
 				$filter[] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
 			}
+		}
+		elseif(is_null($filter['tid']))
+		{
+			unset($filter['tid']);	// return all entries incl. deleted
 		}
 
 		$backend =& $this->get_backend(null,$filter['owner']);
@@ -596,16 +602,16 @@ class addressbook_so
 			{
 				$cols = $this->account_cols_to_search;
 			}
-			if($backend instanceof addressbook_sql) 
+			if($backend instanceof addressbook_sql)
 			{
 				// Keep a string, let the parent handle it
 				$criteria = $search;
 
-				foreach($cols as $key => &$col) 
+				foreach($cols as $key => &$col)
 				{
-					if(!array_key_exists($col, $backend->db_cols)) 
+					if(!array_key_exists($col, $backend->db_cols))
 					{
-						if(!($col = array_search($col, $backend->db_cols))) 
+						if(!($col = array_search($col, $backend->db_cols)))
 						{
 							// Can't search this column, it will error if we try
 							unset($cols[$key]);
@@ -615,7 +621,7 @@ class addressbook_so
 				}
 
 				$backend->columns_to_search = $cols;
-			} 
+			}
 			else
 			{
 				foreach($cols as $col)
@@ -750,7 +756,7 @@ class addressbook_so
 		if (!$new_owner)
 		{
 			$this->somain->delete(array('owner' => $account_id));
-			if(!($this->somain instanceof addressbook_sql)) 
+			if(!($this->somain instanceof addressbook_sql))
 			{
 				$this->soextra->delete_customfields(array($this->extra_owner => $account_id));
 			}

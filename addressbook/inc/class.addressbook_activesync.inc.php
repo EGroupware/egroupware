@@ -46,7 +46,7 @@ class addressbook_activesync implements activesync_plugin_write
     	'businessfaxnumber'	=> 'tel_fax',
     	'businessphonenumber'	=> 'tel_work',
     	'carphonenumber'	=> 'tel_car',
-    	'categories'	=> '',
+    	'categories'	=> 'cat_id',
     	'children'	=> '',
     	'companyname'	=> 'org_name',
     	'department'	=>	'org_unit',
@@ -141,7 +141,7 @@ class addressbook_activesync implements activesync_plugin_write
 				'parent'=>	'0',
 			);
 		};
-		error_log(__METHOD__."() returning ".array2string($folderlist));
+		//error_log(__METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
 
@@ -168,7 +168,7 @@ class addressbook_activesync implements activesync_plugin_write
 		{
 			$folderObj->type = SYNC_FOLDER_TYPE_USER_CONTACT;
 		}
-		error_log(__METHOD__."('$id') returning ".array2string($folderObj));
+		//error_log(__METHOD__."('$id') returning ".array2string($folderObj));
 		return $folderObj;
 	}
 
@@ -195,7 +195,7 @@ class addressbook_activesync implements activesync_plugin_write
 			'mod'    => $this->get_addressbooks($owner),
 			'parent' => '0',
 		);
-		error_log(__METHOD__."('$id') returning ".array2string($stat));
+		//error_log(__METHOD__."('$id') returning ".array2string($stat));
 		return $stat;
 	}
 
@@ -230,7 +230,7 @@ class addressbook_activesync implements activesync_plugin_write
 				$messagelist[] = $this->StatMessage($id, $contact);
 			}
 		}
-		error_log(__METHOD__."('$id') returning ".count($messagelist).' entries');
+		//error_log(__METHOD__."('$id') returning ".count($messagelist).' entries');
 		return $messagelist;
 	}
 
@@ -284,7 +284,7 @@ class addressbook_activesync implements activesync_plugin_write
 									'<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'.
 									'</head>'.
 									'<body>'.
-									str_replace("\n","<BR>",str_replace("\r","<BR>", str_replace("\r\n","<BR>",$contact[$attr]))).
+									str_replace(array("\n","\r","\r\n"),"<br />",$contact[$attr]).
 									'</body>'.
 									'</html>';
 									if (isset($bodypreference[2]["TruncationSize"]) && strlen($html) > $bodypreference[2]["TruncationSize"])
@@ -317,6 +317,18 @@ class addressbook_activesync implements activesync_plugin_write
 
 				case 'jpegphoto':
 					if (!empty($contact[$attr])) $message->$key = base64_encode($contact[$attr]);
+					break;
+
+				case 'bday':
+					if (!empty($contact[$attr])) $message->$key = egw_time::to($contact[$attr],'ts');
+					break;
+
+				case 'cat_id':
+					/*$message->$key = array();
+					foreach($contact[$attr] ? explode(',',$contact[$attr]) : array() as $cat_id)
+					{
+						$message->categories[] = categories::id2name($cat_id);
+					}*/
 					break;
 
 				default:
@@ -358,7 +370,7 @@ class addressbook_activesync implements activesync_plugin_write
 			);
 		}
 		//debugLog (__METHOD__."('$folderid',".array2string($id).") returning ".array2string($stat));
-		error_log(__METHOD__."('$folderid',$contact) returning ".array2string($stat));
+		//error_log(__METHOD__."('$folderid',$contact) returning ".array2string($stat));
 		return $stat;
 	}
 
@@ -375,7 +387,7 @@ class addressbook_activesync implements activesync_plugin_write
      */
     public function ChangeFolder($id, $oldid, $displayname, $type)
     {
-    	debugLog(__METHOD_." not implemented");
+    	debugLog(__METHOD__." not implemented");
     }
 
     /**
@@ -489,18 +501,33 @@ class addressbook_activesync implements activesync_plugin_write
     	error_log (__METHOD__);
     }
 
-
-
 	/**
-	 * @todo implement using ctag
+	 * Return a changes array
+	 *
+     * if changes occurr default diff engine computes the actual changes
+	 *
+	 * @param string $folderid
+	 * @param string &$syncstate on call old syncstate, on return new syncstate
+	 * @return array|boolean false if $folderid not found, array() if no changes or array(array("type" => "fakeChange"))
 	 */
 	function AlterPingChanges($folderid, &$syncstate)
 	{
-		debugLog (__METHOD__." should not see this -not yet implemented");
-		return false;
+		$this->backend->splitID($folderid, $type, $owner);
+
+		if ($type != 'addressbook') return false;
+
+    	if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		$ctag = $this->addressbook->get_ctag($owner);
+
+		$changes = array();	// no change
+		$syncstate_was = $syncstate;
+
+		if ($ctag !== $syncstate)
+		{
+			$syncstate = $ctag;
+			$changes = array(array('type' => 'fakeChange'));
+		}
+		//error_log(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
+		return $changes;
 	}
 }
-
-
-
-
