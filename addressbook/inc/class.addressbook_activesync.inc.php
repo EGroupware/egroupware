@@ -41,7 +41,7 @@ class addressbook_activesync implements activesync_plugin_write
     	'businesscity'	=>	'adr_one_locality',
     	'businesscountry'	=> 'adr_one_countryname',
     	'businesspostalcode'	=> 'adr_one_postalcode',
-    	'businessstate'	=> '',
+    	'businessstate'	=> 'adr_one_region',
     	'businessstreet'	=> 'adr_one_street',
     	'businessfaxnumber'	=> 'tel_fax',
     	'businessphonenumber'	=> 'tel_work',
@@ -59,7 +59,7 @@ class addressbook_activesync implements activesync_plugin_write
     	'homecity'	=> 'adr_two_locality',
     	'homecountry'	=> 'adr_two_countryname',
     	'homepostalcode'	=> 'adr_two_postalcode',
-    	'homestate'	=> '',
+    	'homestate'	=> 'adr_two_region',
     	'homestreet'	=>	'adr_two_street',
     	'homefaxnumber'	=> 'tel_fax_home',
     	'homephonenumber'	=>	'tel_home',
@@ -221,15 +221,16 @@ class addressbook_activesync implements activesync_plugin_write
 		$this->backend->splitID($id,$type,$user);
 		$filter = array('owner' => $user);
 
-		$items = $this->addressbook->search($criteria,$only_keys=false,$order_by='',$extra_cols='',$wildcard='',
-			$empty=false,$op='AND',$start=false,$filter);
-
 		$messagelist = array();
-		foreach ($items as $k => $event)
+		if (($contacts =& $this->addressbook->search($criteria,$only_keys=false,$order_by='',$extra_cols='',$wildcard='',
+			$empty=false,$op='AND',$start=false,$filter)))
 		{
-			$messagelist[] = $this->StatMessage($id, $event['id']);
+			foreach($contacts as $contact)
+			{
+				$messagelist[] = $this->StatMessage($id, $contact);
+			}
 		}
-		//error_log(print_r($messagelist,true));
+		error_log(__METHOD__."('$id') returning ".count($messagelist).' entries');
 		return $messagelist;
 	}
 
@@ -251,7 +252,7 @@ class addressbook_activesync implements activesync_plugin_write
 		$this->backend->splitID($folderid, $type, $account);
 		if ($type != 'addressbook' || !($contact = $this->addressbook->read($id)))
 		{
-			debugLog(__METHOD__." Folder wrong or contact not existing");
+			error_log(__METHOD__."('$folderid',$id,...) Folder wrong (type=$type, account=$account) or contact not existing (read($id)=".array2string($contact).")! returning false");
 			return false;
 		}
 		$message = new SyncContact();
@@ -322,7 +323,7 @@ class addressbook_activesync implements activesync_plugin_write
 					if (!empty($contact[$attr])) $message->$key = $contact[$attr];
 			}
 		}
-		//error_log("MessageObject exporting" . print_r($message,true));
+		//error_log(__METHOD__."(folder='$folderid',$id,...) returning ".array2string($message));
 		return $message;
 	}
 
@@ -357,6 +358,7 @@ class addressbook_activesync implements activesync_plugin_write
 			);
 		}
 		//debugLog (__METHOD__."('$folderid',".array2string($id).") returning ".array2string($stat));
+		error_log(__METHOD__."('$folderid',$contact) returning ".array2string($stat));
 		return $stat;
 	}
 
