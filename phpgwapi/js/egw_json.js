@@ -220,7 +220,7 @@ egw_json_request.prototype.jsonError = function(_msg, _e)
 	var msg = 'EGW JSON Error: '._msg;
 
 	//Log and show the error message
-	_egw_json_bebug_log(msg, _e);
+	_egw_json_debug_log(msg, _e);
 	this.alertHandler(msg);
 }
 
