@@ -308,10 +308,32 @@ list(,,$etag) = explode(':',$etag);
 	}
 
 	/**
-	 * @todo implement using ctag
+	 * Return a changes array
+	 *
+     * if changes occurr default diff engine computes the actual changes
+	 *
+	 * @param string $folderid
+	 * @param string &$syncstate on call old syncstate, on return new syncstate
+	 * @return array|boolean false if $folderid not found, array() if no changes or array(array("type" => "fakeChange"))
 	 */
 	function AlterPingChanges($folderid, &$syncstate)
 	{
-		return false;
+		$this->backend->splitID($folderid, $type, $owner);
+
+		if ($type != 'calendar') return false;
+
+    	if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
+		$ctag = $this->calendar->get_ctag($owner);
+
+		$changes = array();	// no change
+		$syncstate_was = $syncstate;
+
+		if ($ctag !== $syncstate)
+		{
+			$syncstate = $ctag;
+			$changes = array(array('type' => 'fakeChange'));
+		}
+		//error_log(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
+		return $changes;
 	}
 }

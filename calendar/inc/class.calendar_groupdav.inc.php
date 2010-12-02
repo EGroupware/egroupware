@@ -790,35 +790,7 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	public function getctag($path,$user)
 	{
-		$filter = array(
-			'users' => $user,
-			'start' => $this->bo->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
-			'end' => $this->bo->now + 365*24*3600,	// default one year into the future +365
-			'enum_recuring' => false,
-			'daywise' => false,
-			'date_format' => 'server',
-			'cols'		=> array('egw_cal.cal_id', 'cal_start', 'cal_modified'),
-		);
-
-		if ($path == '/calendar/')
-		{
-			$filter['filter'] = 'owner';
-		}
-		else
-		{
-			$filter['filter'] = 'default'; // not rejected
-		}
-
-		$ctag = 0;
-
-		if (($events =& $this->bo->search($filter)))
-		{
-			foreach ($events as $event)
-			{
-				$modified = max($this->bo->so->max_user_modified($event['cal_id']), $event['cal_modified']);
-				if ($ctag < $modified) $ctag = $modified;
-			}
-		}
+		$ctag = $this->bo->get_ctag($user,$path == '/calendar/' ? 'owner' : 'default'); // default = not rejected
 
 		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
 

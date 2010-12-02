@@ -1908,4 +1908,40 @@ class calendar_bo
 		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
 		return $etag;
 	}
+
+	/**
+	 * Query ctag for calendar
+	 *
+	 * @param $user
+	 * @param $filter='owner'
+	 * @return string
+	 * @todo use MAX(modified) to query everything in one sql query, currently we do one query per event (more then the search)
+	 */
+	public function get_ctag($user,$filter='owner')
+	{
+		$filter = array(
+			'users' => $user,
+			'start' => $this->bo->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
+			'end' => $this->bo->now + 365*24*3600,	// default one year into the future +365
+			'enum_recuring' => false,
+			'daywise' => false,
+			'date_format' => 'server',
+			'cols' => array('egw_cal.cal_id', 'cal_start', 'cal_modified'),
+			'filter' => $filter,
+		);
+
+		$ctag = 0;
+		if (($events =& $this->bo->search($filter)))
+		{
+			foreach ($events as $event)
+			{
+				$modified = max($this->bo->so->max_user_modified($event['cal_id']), $event['cal_modified']);
+				if ($ctag < $modified) $ctag = $modified;
+			}
+		}
+
+		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
+
+		return $ctag;
+	}
 }
