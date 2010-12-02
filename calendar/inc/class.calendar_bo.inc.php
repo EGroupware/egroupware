@@ -851,15 +851,18 @@ class calendar_bo
 	 * @param mixed $date=null date to specify a single event of a series
 	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
+	 * @param array|init $clear_privat_infos_users=null if not null, return events with EGW_ACL_FREEBUSY too,
+	 * 	but call clear_private_infos() with the given users
 	 * @return boolean|array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
-	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
+	function read($ids,$date=null,$ignore_acl=False,$date_format='ts',$clear_private_infos_users=null)
 	{
 		if ($date) $date = $this->date2ts($date);
 
 		$return = null;
 
-		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))
+		$check = $clear_private_infos_users ? EGW_ACL_FREEBUSY : EGW_ACL_READ;
+		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms($check,$ids,0,$date_format,$date)))
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
 				self::$cached_event_date_format != $date_format ||
@@ -880,7 +883,7 @@ class calendar_bo
 						self::$cached_event = array_shift($events);
 						self::$cached_event_date_format = $date_format;
 						self::$cached_event_date = $date;
-						$return =& self::$cached_event;
+						$return = self::$cached_event;
 					}
 				}
 			}
@@ -888,6 +891,10 @@ class calendar_bo
 			{
 				$return = self::$cached_event;
 			}
+		}
+		if ($clear_private_infos_users && !is_array($ids) && !$this->check_perms(EGW_ACL_READ,$return))
+		{
+			$this->clear_private_infos($return, (array)$clear_private_infos_users);
 		}
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'read'))
 		{
