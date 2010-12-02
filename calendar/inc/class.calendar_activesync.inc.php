@@ -195,7 +195,7 @@ class calendar_activesync implements activesync_plugin_read
 			'modified' => 'dtstamp',
 		) as $key => $attr)
 		{
-			if (!empty($event[$key])) $message->$attr = date('Ymd\THis\Z',$event[$key]);
+			if (!empty($event[$key])) $message->$attr = $event[$key];
 		}
 		// copying strings
 		foreach(array(
