@@ -812,7 +812,10 @@ class jdots_framework extends egw_framework
 			$active_tab = $url_tab = self::app_from_url($url);
 			$last_direct_url = $url;
 		}
-		if ($active_tab)
+		//self::app_from_url might return an application the user has no rights
+		//for or may return an application that simply does not exist. So check first
+		//whether the $active_tab really exists in the $apps array.
+		if ($active_tab && array_key_exists($active_tab, $apps))
 		{
 			$apps[$active_tab]['openOnce'] = str_replace('&cd=yes','',$url);
 			$store_prefs = true;
