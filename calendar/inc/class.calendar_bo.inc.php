@@ -1931,11 +1931,11 @@ class calendar_bo
 		);
 
 		$ctag = 0;
-		if (($events =& $this->bo->search($filter)))
+		if (($events =& $this->search($filter)))
 		{
 			foreach ($events as $event)
 			{
-				$modified = max($this->bo->so->max_user_modified($event['cal_id']), $event['cal_modified']);
+				$modified = max($this->so->max_user_modified($event['cal_id']), $event['cal_modified']);
 				if ($ctag < $modified) $ctag = $modified;
 			}
 		}
