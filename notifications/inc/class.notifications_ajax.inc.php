@@ -112,7 +112,7 @@ class notifications_ajax {
 	 * @return xajax response
 	 */
 	public function get_notifications() {
-		$this->check_mailbox();
+		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])  $this->check_mailbox();
 		$this->get_egwpopup();
 
 		return $this->response->getXML();
@@ -124,7 +124,8 @@ class notifications_ajax {
 	 * @return boolean true or false
 	 */
 	private function check_mailbox() {
-		if(!isset($this->preferences[self::_mailappname]['notify_folders'])) {
+		//error_log(__METHOD__.__LINE__.array2string($this->preferences[self::_mailappname]['notify_folders']));
+		if(!isset($this->preferences[self::_mailappname]['notify_folders'])||$this->preferences[self::_mailappname]['notify_folders']=='none') {
 			return true; //no pref set for notifying - exit
 		}
 		$notify_folders = explode(',', $this->preferences[self::_mailappname]['notify_folders']);
