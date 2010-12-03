@@ -63,7 +63,7 @@ class calendar_activesync implements activesync_plugin_read
 		{
 			$folderlist[] = $f = array(
 				'id'	=>	$this->backend->createID('calendar',$entry['grantor']),
-				'mod'	=>	$label,
+				'mod'	=>	$GLOBALS['egw']->accounts->id2name($entry['grantor'],'account_fullname'),
 				'parent'=>	'0',
 			);
 		};
@@ -117,7 +117,7 @@ class calendar_activesync implements activesync_plugin_read
 
 		$stat = array(
 			'id'     => $id,
-			'mod'    => $GLOBALS['egw']->accounts->id2name($owner),
+			'mod'    => $GLOBALS['egw']->accounts->id2name($owner,'account_fullname'),
 			'parent' => '0',
 		);
 
