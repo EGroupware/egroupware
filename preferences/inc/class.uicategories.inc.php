@@ -37,6 +37,7 @@
 		function uicategories()
 		{
 			$cats_app			= get_var('cats_app',array('GET','POST'));
+			translation::add_app($cats_app);
 
 			$this->bo			=& CreateObject('preferences.bocategories',$cats_app);
 			$this->nextmatchs	=& CreateObject('phpgwapi.nextmatchs');
@@ -180,7 +181,7 @@
 
 // ------------------------------ end nextmatch ------------------------------------------
 
-//------------------- list header variable template-declarations ------------------------- 
+//------------------- list header variable template-declarations -------------------------
 
 			$GLOBALS['egw']->template->set_var('sort_name',$this->nextmatchs->show_sort_order($this->sort,'cat_name',$this->order,'/index.php',lang('Name'),$link_data));
 			$GLOBALS['egw']->template->set_var('sort_description',$this->nextmatchs->show_sort_order($this->sort,'cat_description',$this->order,'/index.php',lang('Description'),$link_data));
