@@ -727,7 +727,7 @@ class addressbook_ui extends addressbook_bo
 						}
 						if($email)
 						{
-							$contact['n_fn'] = str_replace(',',' ',$contact['n_fn']);
+							$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
 							egw_framework::set_onload("addEmail('".addslashes(
 								$contact['n_fn'] ? $contact['n_fn'].' <'.trim($email).'>' : trim($email))."');");
 							//error_log(__METHOD__.__LINE__."addEmail('".addslashes(
