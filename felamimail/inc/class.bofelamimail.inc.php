@@ -1597,7 +1597,7 @@
 				uasort($autoFolderObjects,array($this,"sortByAutoFolderPos"));
 			}
 			if (is_array($folders)) uasort($folders,array($this,"sortByDisplayName"));
-			$folders2return = array_merge($autoFolderObjects,$folders);
+			//$folders2return = array_merge($autoFolderObjects,$folders);
 			//_debug_array($folders2return); #exit;
 			return array_merge($inboxFolderObject,(array)$autoFolderObjects,(array)$folders);
 		}
