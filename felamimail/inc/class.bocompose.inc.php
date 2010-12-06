@@ -712,40 +712,44 @@
 			foreach((array)$_formData['to'] as $address) {
 				$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address), '');
 				foreach((array)$address_array as $addressObject) {
+					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
 					#$_mailObject->AddAddress($emailAddress, $emailName);
-					$_mailObject->AddAddress($emailAddress, $addressObject->personal);
+					$_mailObject->AddAddress($emailAddress, str_replace(array('@'),' ',$addressObject->personal));
 				}
 			}
 
 			foreach((array)$_formData['cc'] as $address) {
 				$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {
+					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
 					#$_mailObject->AddCC($emailAddress, $emailName);
-					$_mailObject->AddCC($emailAddress, $addressObject->personal);
+					$_mailObject->AddCC($emailAddress, str_replace(array('@'),' ',$addressObject->personal));
 				}
 			}
 
 			foreach((array)$_formData['bcc'] as $address) {
 				$address_array	= imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {
+				if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
 					#$_mailObject->AddBCC($emailAddress, $emailName);
-					$_mailObject->AddBCC($emailAddress, $addressObject->personal);
+					$_mailObject->AddBCC($emailAddress, str_replace(array('@'),' ',$addressObject->personal));
 				}
 			}
 
 			foreach((array)$_formData['replyto'] as $address) {
 				$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {
+					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
 					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
 					#$_mailObject->AddBCC($emailAddress, $emailName);
-					$_mailObject->AddReplyto($emailAddress, $addressObject->personal);
+					$_mailObject->AddReplyto($emailAddress, str_replace(array('@'),' ',$addressObject->personal));
 				}
 			}
 
@@ -980,6 +984,7 @@
 			//$mail->SMTPDebug = 10;
 			//error_log("Folder:".count(array($this->sessionData['folder']))."To:".count((array)$this->sessionData['to'])."CC:". count((array)$this->sessionData['cc']) ."bcc:".count((array)$this->sessionData['bcc']));
 			if(count((array)$this->sessionData['to']) > 0 || count((array)$this->sessionData['cc']) > 0 || count((array)$this->sessionData['bcc']) > 0) {
+error_log(__METHOD__.__LINE__.array2string($mail));
 				try {
 					$mail->Send();
 				}
