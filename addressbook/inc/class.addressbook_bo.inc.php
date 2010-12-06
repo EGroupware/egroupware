@@ -1329,7 +1329,7 @@ class addressbook_bo extends addressbook_so
 		}
 		$filter = (array)$options['filter'];
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
-		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR', $limit, $filter)))
+		if (($contacts =& parent::search($criteria,false,'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR', $limit, $filter)))
 		{
 			foreach($contacts as $contact)
 			{

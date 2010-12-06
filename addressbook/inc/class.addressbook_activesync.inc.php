@@ -15,7 +15,7 @@
 /**
  * Addressbook activesync plugin
  */
-class addressbook_activesync implements activesync_plugin_write
+class addressbook_activesync implements activesync_plugin_write, activesync_plugin_search_gal
 {
 	/**
 	 * @var BackendEGW
@@ -29,15 +29,20 @@ class addressbook_activesync implements activesync_plugin_write
 	 */
 	private $addressbook;
 
+	/**
+	 * Mapping of ActiveSync SyncContact attributes to EGroupware contact array-keys
+	 *
+	 * @var array
+	 */
 	static public $mapping = array(
-	    'anniversary'	=> '',
+	    //'anniversary'	=> '',
     	'assistantname'	=> 'assistent',
     	'assistnamephonenumber'	=> 'tel_assistent',
     	'birthday'	=>	'bday',
     	'body'	=> 'note',
-    	'bodysize'	=> '',
-    	'bodytruncated'	=> '',
-    	'business2phonenumber'	=> '',
+    	//'bodysize'	=> '',
+    	//'bodytruncated'	=> '',
+    	//'business2phonenumber'	=> '',
     	'businesscity'	=>	'adr_one_locality',
     	'businesscountry'	=> 'adr_one_countryname',
     	'businesspostalcode'	=> 'adr_one_postalcode',
@@ -47,15 +52,15 @@ class addressbook_activesync implements activesync_plugin_write
     	'businessphonenumber'	=> 'tel_work',
     	'carphonenumber'	=> 'tel_car',
     	'categories'	=> 'cat_id',
-    	'children'	=> '',
+    	//'children'	=> '',
     	'companyname'	=> 'org_name',
     	'department'	=>	'org_unit',
     	'email1address'	=> 'email',
     	'email2address'	=> 'email_home',
-    	'email3address'	=> '',
+    	//'email3address'	=> '',
     	'fileas'	=>	'n_fileas',
     	'firstname'	=>	'n_given',
-    	'home2phonenumber'	=> '',
+    	//'home2phonenumber'	=> '',
     	'homecity'	=> 'adr_two_locality',
     	'homecountry'	=> 'adr_two_countryname',
     	'homepostalcode'	=> 'adr_two_postalcode',
@@ -68,24 +73,24 @@ class addressbook_activesync implements activesync_plugin_write
     	'middlename'	=> 'n_middle',
     	'mobilephonenumber'	=> 'tel_cell',
     	'officelocation'	=> 'room',
-    	'othercity'	=> '',
-    	'othercountry'	=> '',
-    	'otherpostalcode'	=> '',
-    	'otherstate'	=> '',
-    	'otherstreet'	=> '',
+    	//'othercity'	=> '',
+    	//'othercountry'	=> '',
+    	//'otherpostalcode'	=> '',
+    	//'otherstate'	=> '',
+    	//'otherstreet'	=> '',
     	'pagernumber'	=> 'tel_pager',
-    	'radiophonenumber'	=> '',
-    	'spouse'	=> '',
+    	//'radiophonenumber'	=> '',
+    	//'spouse'	=> '',
     	'suffix'	=>	'n_suffix',
     	'title'	=> 'title',	// @TODO: check if n_prefix
     	'webpage'	=> 'url',
-    	'yomicompanyname'	=> '',
-    	'yomifirstname'	=>	'',
-    	'yomilastname'	=>	'',
-    	'rtf'	=> '',
+    	//'yomicompanyname'	=> '',
+    	//'yomifirstname'	=>	'',
+    	//'yomilastname'	=>	'',
+    	//'rtf'	=> '',
     	'picture'	=> 'jpegphoto',
-    	'nickname'	=>	'',
-    	'airsyncbasebody'	=>	'',
+    	//'nickname'	=>	'',
+    	//'airsyncbasebody'	=>	'',
 	);
 
 	/**
@@ -141,6 +146,7 @@ class addressbook_activesync implements activesync_plugin_write
 				'parent'=>	'0',
 			);
 		};
+		debugLog(__METHOD__."() returning ".array2string($folderlist));
 		//error_log(__METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
@@ -187,7 +193,6 @@ class addressbook_activesync implements activesync_plugin_write
 	 */
 	public function StatFolder($id)
 	{
-		$folder = $this->GetFolder($id);
 		$this->backend->splitID($id, $type, $owner);
 
 		$stat = array(
@@ -196,6 +201,7 @@ class addressbook_activesync implements activesync_plugin_write
 			'parent' => '0',
 		);
 		//error_log(__METHOD__."('$id') returning ".array2string($stat));
+		debugLog(__METHOD__."('$id') returning ".array2string($stat));
 		return $stat;
 	}
 
@@ -222,7 +228,7 @@ class addressbook_activesync implements activesync_plugin_write
 		$filter = array('owner' => $user);
 
 		$messagelist = array();
-		if (($contacts =& $this->addressbook->search($criteria,$only_keys=false,$order_by='',$extra_cols='',$wildcard='',
+		if (($contacts =& $this->addressbook->search($criteria,'contact_id,contact_etag',$order_by='',$extra_cols='',$wildcard='',
 			$empty=false,$op='AND',$start=false,$filter)))
 		{
 			foreach($contacts as $contact)
@@ -529,5 +535,42 @@ class addressbook_activesync implements activesync_plugin_write
 		}
 		//error_log(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
 		return $changes;
+	}
+
+	/**
+	 * Search global address list for a given pattern
+	 *
+	 * @param string $searchquery
+	 * @return array with just rows (no values for keys rows, status or global_search_status!)
+	 * @todo search range not verified, limits might be a good idea
+	 */
+	function getSearchResultsGAL($searchquery)
+	{
+    	if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+
+		$items = array();
+		if (($contacts =& $this->addressbook->search($searchquery, false, false, '', '%', false, 'OR')))
+		{
+			foreach($contacts as $contact)
+			{
+			  	$item['username'] = $contact['n_family'];
+				$item['fullname'] = $contact['n_fn'];
+				if (!trim($item['fullname'])) $item['fullname'] = $item['username'];
+				$item['emailaddress'] = $contact['email'] ? $contact['email'] : (string)$contact['email_private'] ;
+				$item['nameid'] = $searchquery;
+				$item['phone'] = (string)$contact['tel_work'];
+				$item['homephone'] = (string)$contact['tel_home'];
+				$item['mobilephone'] = (string)$contact['tel_cell'];
+				$item['company'] = (string)$contact['org_name'];
+				$item['office'] = $contact['room'];
+				$item['title'] = $contact['title'];
+
+			  	//do not return users without email
+				if (!trim($item['emailaddress'])) continue;
+
+				$items[] = $item;
+			}
+		}
+		return $items;
 	}
 }
