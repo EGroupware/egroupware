@@ -1648,33 +1648,24 @@ class calendar_bo
 			// search for birthdays
 			if ($GLOBALS['egw_info']['server']['hide_birthdays'] != 'yes')
 			{
-				$contacts = CreateObject('phpgwapi.contacts');
-				// note: contact read/old_read transforms contact_bday to bday only
-				$bdays =& $contacts->read(0,0,array('id','n_family','n_given','n_prefix','n_middle','contact_bday'),'',"contact_bday=!'',n_family=!''",'ASC','contact_bday');
+				$contacts = new addressbook_bo();
+				$filter = array(
+					'n_family' => "!''",
+					'bday' => "!''",
+				);
+				$bdays =& $contacts->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter);
 				if ($bdays)
 				{
 					// sort by month and day only
 					usort($bdays,create_function('$a,$b','return (int) $a[\'bday\'] == (int) $b[\'bday\'] ? strcmp($a[\'bday\'],$b[\'bday\']) : (int) $a[\'bday\'] - (int) $b[\'bday\'];'));
 					foreach($bdays as $pers)
 					{
-						if (isset($pers['bday']) && ($pers['bday']=='0000-00-00 0' || $pers['bday']=='0000-00-00' || $pers['bday']=='0.0.00'))
-						{
-							//error_log(__METHOD__.__LINE__.' Entry with invalid birthday:'.array2string($pers));
-							$pers['bday']=null;
-						}
-						if (isset($pers['contact_bday']) && ($pers['contact_bday']=='0000-00-00 0' || $pers['contact_bday']=='0000-00-00' || $pers['contact_bday']=='0.0.00'))
-                        {
-							//error_log(__METHOD__.__LINE__.' Entry with invalid birthday:'.array2string($pers));
-							$pers['contact_bday']=null;
-						}
-						if (empty($pers['bday']) && !empty($pers['contact_bday'])) $pers['bday'] = $pers['contact_bday'];
-						if (empty($pers['bday']))
+						if (empty($pers['bday']) || $pers['bday']=='0000-00-00 0' || $pers['bday']=='0000-00-00' || $pers['bday']=='0.0.00')
 						{
 							//error_log(__METHOD__.__LINE__.' Skipping entry for invalid birthday:'.array2string($pers));
 							continue;
 						}
-						$pers['bday'] = egw_time::to($pers['bday'],"m/d/Y");
-						list($m,$d,$y) = explode('/',$pers['bday']);
+						list($y,$m,$d) = explode('-',$pers['bday']);
 						if ($y > $year) continue; 	// not yet born
 						$this->cached_holidays[$year][sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
 							'day'       => $d,
