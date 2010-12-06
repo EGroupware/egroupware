@@ -159,7 +159,6 @@ class addressbook_ldap
 		# categories(deprecated)
 		'evolutionperson' => array(
 			'bday'			=> 'birthdate',
-			'contact_bday'	=> 'birthdate', // birthday may be requested as either bday or contact_bday
 			'note'			=> 'note',
 			'tel_car'		=> 'carphone',
 			'tel_prefer'	=> 'primaryphone',
