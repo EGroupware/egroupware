@@ -984,7 +984,6 @@
 			//$mail->SMTPDebug = 10;
 			//error_log("Folder:".count(array($this->sessionData['folder']))."To:".count((array)$this->sessionData['to'])."CC:". count((array)$this->sessionData['cc']) ."bcc:".count((array)$this->sessionData['bcc']));
 			if(count((array)$this->sessionData['to']) > 0 || count((array)$this->sessionData['cc']) > 0 || count((array)$this->sessionData['bcc']) > 0) {
-error_log(__METHOD__.__LINE__.array2string($mail));
 				try {
 					$mail->Send();
 				}
