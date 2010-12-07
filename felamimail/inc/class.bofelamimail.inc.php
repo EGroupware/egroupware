@@ -1371,6 +1371,11 @@
 				$retValue['uidnext']		= $folderStatus['UIDNEXT'];
 				$retValue['uidvalidity']	= $folderStatus['UIDVALIDITY'];
 				$retValue['unseen']		= $folderStatus['UNSEEN'];
+				if ($retValue['unseen']==0) // some servers dont serve the UNSEEN information
+				{
+					$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>'UNSEEN'));
+					$retValue['unseen'] = count($sortResult);
+				}
 			}
 
 			return $retValue;
