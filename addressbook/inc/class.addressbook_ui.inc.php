@@ -374,6 +374,11 @@ class addressbook_ui extends addressbook_bo
 	function addEmail(email)
 	{
 		var to = 'to';
+		splitter = email.indexOf(' <');
+		namepart = email.substring(0,splitter);
+		emailpart = email.substring(splitter);
+		email = namepart.replace(/@/g,' ')+emailpart;
+		
 		if (document.getElementById('exec[nm][to][cc]').checked == true)
 		{
 			to = 'cc';
