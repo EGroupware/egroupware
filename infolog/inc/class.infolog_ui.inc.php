@@ -527,7 +527,7 @@ class infolog_ui
 					$values['multi_action'] .= '_' . $values[$multi_action];
 				}
 				if ($this->action($values['multi_action'],$values['nm']['rows']['checked'],$values['use_all'],
-					$success,$failed,$action_msg,false,$msg))
+					$success,$failed,$action_msg,false,$msg, $values['no_notifications']))
 				{
 					$msg .= lang('%1 entries %2',$success,$action_msg);
 				}
@@ -802,7 +802,7 @@ class infolog_ui
          * @param string/array $session_name 'index', or array with session-data depending
          * @return boolean true if all actions succeded, false otherwise
          */
-        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name = false,&$msg, $notifications = true)
+        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name = false,&$msg, $skip_notifications = false)
 	{
 		//echo "<p>infolog_ui::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
@@ -883,12 +883,12 @@ class infolog_ui
                         {
 				case 'close':
 					$action_msg = lang('closed');
-					$this->close($id);
+					$this->close($id, '', false, $skip_notifications);
 					$success++;
 					break;
 				case 'delete':
 					$action_msg = lang('deleted');
-					$this->delete($id);
+					$this->delete($id, '', '', $skip_notifications);
 					$success++;
 					break;
 				case 'type':
@@ -900,7 +900,7 @@ class infolog_ui
 						break;
 					}
 					$entry['info_type'] = $settings;
-					$this->bo->write($entry);
+					$this->bo->write($entry, true,true,true,$skip_notifications);
 					$success++;
 					break;
 
@@ -911,7 +911,7 @@ class infolog_ui
 					if($entry['info_status'] == 'done') {
 						$entry['info_status'] = 'ongoing';
 					}
-					if($this->bo->write($entry))
+					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{
 						$success++;
 					}
@@ -930,7 +930,8 @@ class infolog_ui
 							$entry['info_percent'] = 99;
 						}
 						$entry['info_status'] = $settings;
-						if($this->bo->write($entry)) {
+						if($this->bo->write($entry, true,true,true,$skip_notifications))
+						{
 							$success++;
 						}
 					} else {
@@ -942,7 +943,7 @@ class infolog_ui
 					$cat_name = categories::id2name($settings);
 					$action_msg = lang('changed category to %1', $cat_name);
 					$entry['info_cat'] = $settings;
-					if($this->bo->write($entry))
+					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{
 						$success++;
 					}
@@ -962,7 +963,7 @@ class infolog_ui
 					$action_msg .= implode(', ', $names);
 					$function = $add_remove == 'add' ? 'array_merge' : 'array_diff';
 					$entry['info_responsible'] = array_unique($function($entry['info_responsible'], $users));
-					if($this->bo->write($entry))
+					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{
 						$success++;
 					}
@@ -983,7 +984,7 @@ class infolog_ui
 	 * @param string $referer=''
 	 * @param boolean $closesingle=false
 	 */
-	function close($values=0,$referer='',$closesingle=false)
+	function close($values=0,$referer='',$closesingle=false,$skip_notification = false)
 	{
 		//echo "<p>".__METHOD__."($values,$referer,$closeall)</p>\n";
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
@@ -1010,7 +1011,7 @@ class infolog_ui
 				'info_percent'=> 100,
 				'info_datecompleted' => $this->bo->now_su,
 			);
-			$this->bo->write($values);
+			$this->bo->write($values, true,true,true,$skip_notification);
 
 			$query = array('action'=>'sp','action_id'=>$info_id);
 			if (!$closesingle) {
@@ -1018,7 +1019,7 @@ class infolog_ui
 				{
 					if ($info['info_id_parent'] == $info_id)	// search also returns linked entries!
 					{
-						$this->close($info['info_id'],$referer,$closeall);	// we call ourselfs recursive to process subs from subs too
+						$this->close($info['info_id'],$referer,$closeall,$skip_notification);	// we call ourselfs recursive to process subs from subs too
 					}
 				}
 			}
@@ -1032,8 +1033,9 @@ class infolog_ui
 	 * @param array|int $values=0 info_id (default _GET[info_id])
 	 * @param string $referer=''
 	 * @param string $called_by=''
+	 * @param boolean $skip_notification Do not send notification of deletion
 	 */
-	function delete($values=0,$referer='',$called_by='')
+	function delete($values=0,$referer='',$called_by='',$skip_notification=False)
 	{
 		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
 		$referer = is_array($values) ? $values['referer'] : $referer;
@@ -1048,7 +1050,7 @@ class infolog_ui
 		{
 			if (($values['delete'] || $values['delete_subs']) && $info_id > 0 && $this->bo->check_access($info_id,EGW_ACL_DELETE))
 			{
-				$deleted = $this->bo->delete($info_id,$values['delete_subs'],$values['info_id_parent']);
+				$deleted = $this->bo->delete($info_id,$values['delete_subs'],$values['info_id_parent'], $skip_notification);
 			}
 			if ($called_by)		// direct call from the same request
 			{

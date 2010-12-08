@@ -578,9 +578,10 @@ class infolog_bo
 	 * @param int|array $info_id int id
 	 * @param boolean $delete_children should the children be deleted
 	 * @param int|boolean $new_parent parent to use for not deleted children if > 0
+	 * @param boolean $skip_notification Do not send notification of delete
 	 * @return boolean True if delete was successful, False otherwise ($info_id does not exist or no rights)
 	 */
-	function delete($info_id,$delete_children=False,$new_parent=False)
+	function delete($info_id,$delete_children=False,$new_parent=False, $skip_notification=False)
 	{
 		if (is_array($info_id))
 		{
@@ -601,7 +602,7 @@ class infolog_bo
 			{
 				if ($delete_children && $this->so->grants[$owner] & EGW_ACL_DELETE)
 				{
-					$this->delete($id,$delete_children,$new_parent);	// call ourself recursive to delete the child
+					$this->delete($id,$delete_children,$new_parent,$skip_notification);	// call ourself recursive to delete the child
 				}
 				else	// dont delete or no rights to delete the child --> re-parent it
 				{
@@ -639,11 +640,14 @@ class infolog_bo
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
 
 			// send email notifications and do the history logging
-			if (!is_object($this->tracking))
+			if(!$skip_notification)
 			{
-				$this->tracking = new infolog_tracking($this);
+				if (!is_object($this->tracking))
+				{
+					$this->tracking = new infolog_tracking($this);
+				}
+				$this->tracking->track($deleted,$info,$this->user,true);
 			}
-			$this->tracking->track($deleted,$info,$this->user,true);
 		}
 		return True;
 	}
