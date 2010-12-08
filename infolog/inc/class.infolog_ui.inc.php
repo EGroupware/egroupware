@@ -511,19 +511,20 @@ class infolog_ui
 			else
 			{
 				// Some processing to add values in for links and cats
-				if($values['multi_action'] == 'link')
+				$multi_action = $values['multi_action'];
+				// Action has an additional action - add / delete, etc.  Buttons named <multi-action>_action[action_name]
+				if(in_array($multi_action, array('link', 'responsible')))
 				{
-					$values['multi_action'] = 'link_' . key($values['link_action']) . '_'.$values['action_link'];
-					unset($values['action_link']);
-					unset($values['link_action']);
+					$values['multi_action'] .= '_' . key($values[$multi_action . '_action']);
 				}
-				elseif ($values['multi_action'] == 'cat')
+				// Action has a parameter - cat_id, percent, etc
+				if (in_array($multi_action, array('link', 'cat', 'completion', 'responsible')))
 				{
-					$values['multi_action'] = 'cat_' . $values['cat'];
-				}
-				elseif ($values['multi_action'] == 'completion')
-				{
-					$values['multi_action'] = 'completion_' . $values['completion'];
+					if(is_array($values[$multi_action]))
+					{
+						$values[$multi_action] = implode(',',$values[$multi_action]);
+					}
+					$values['multi_action'] .= '_' . $values[$multi_action];
 				}
 				if ($this->action($values['multi_action'],$values['nm']['rows']['checked'],$values['use_all'],
 					$success,$failed,$action_msg,false,$msg))
@@ -741,6 +742,7 @@ class infolog_ui
 			'cat'		=> lang('Change category'),
 			'link'		=> lang('Add or delete links'),
 			'completion'	=> lang('Change completion'),
+			'responsible'	=> lang('Change responsible'),
 		)
 		);
 
@@ -940,6 +942,26 @@ class infolog_ui
 					$cat_name = categories::id2name($settings);
 					$action_msg = lang('changed category to %1', $cat_name);
 					$entry['info_cat'] = $settings;
+					if($this->bo->write($entry))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+					break;
+				case 'responsible':
+					list($add_remove, $users) = explode('_', $settings, 2);
+					$action_msg = lang('changed responsible') . ' - ' . ($add_remove == 'add' ? lang('added') : lang('removed')) . ' ';
+					$users = explode(',', $users);
+					$names = array();
+					foreach($users as $account_id) {
+						$names[] = common::display_fullname($GLOBALS['egw']->accounts->id2name($account_id));
+					}
+					$action_msg .= implode(', ', $names);
+					$function = $add_remove == 'add' ? 'array_merge' : 'array_diff';
+					$entry['info_responsible'] = array_unique($function($entry['info_responsible'], $users));
 					if($this->bo->write($entry))
 					{
 						$success++;

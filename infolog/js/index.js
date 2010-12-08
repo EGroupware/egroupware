@@ -9,25 +9,10 @@
 function do_infolog_action(selbox) {
 	if(selbox.value == "") return;
 	var prefix = selbox.id.substring(0,selbox.id.indexOf('['));
-	switch(selbox.value) {
-		case "link":
-			var popup = document.getElementById(prefix+'[link_popup]');
-			if(popup) {
-				popup.style.display = 'block';
-			}
-			return;
-		case "cat":
-			var popup = document.getElementById(prefix+'[cat_popup]');
-			if(popup) {
-				popup.style.display = 'block';
-			}
-			return;
-		case "completion":
-			var popup = document.getElementById(prefix+'[completion_popup]');
-			if(popup) {
-				popup.style.display = 'block';
-			}
-			return;
+	var popup = document.getElementById(prefix + '[' + selbox.value + '_popup]');
+	if(popup) {
+		popup.style.display = 'block';
+		return;
 	}
 	selbox.form.submit();
 	selbox.value = "";
