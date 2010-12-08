@@ -891,6 +891,12 @@ class infolog_ui
 					break;
 				case 'type':
 					$action_msg = lang('changed type');
+					// Dont allow to change the type, if user has no delete rights from the group-owner
+					if ($id && !($this->bo->grants[$entry['info_owner']] & EGW_ACL_DELETE))
+					{
+						$failed++;
+						break;
+					}
 					$entry['info_type'] = $settings;
 					$this->bo->write($entry);
 					$success++;
