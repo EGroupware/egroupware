@@ -312,6 +312,7 @@ view this linked entry in its application	infolog	ca	Veure aquesta entrada vincu
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ca	Quan s'han d'iniciar les Tasques Pendents o les Trucades Telefòniques. Es mostra a la data del filtre o en obrir manualment a la plana d'inici
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	ca	Quins camps adicionals pot editar el responsable sense tenir drets per editar?<br />,Estat, percentatge i data complerta sempre estan permesos.
 which implicit acl rights should the responsible get?	infolog	ca	Quins drets ACL implícits ha de tenir el responsable?
+whole query	infolog	ca	consulta sencera
 will-call	infolog	ca	trucarà
 write (add or update) a record by passing its fields.	infolog	ca	Escriu (afegeix o actualitza) un registre, introduïnt els seus camps.
 yes - delete	infolog	ca	Sí - Esborrar

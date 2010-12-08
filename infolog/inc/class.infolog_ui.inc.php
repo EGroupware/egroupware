@@ -802,7 +802,7 @@ class infolog_ui
          * @param string/array $session_name 'index', or array with session-data depending
          * @return boolean true if all actions succeded, false otherwise
          */
-        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name = false,&$msg)
+        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name = false,&$msg, $notifications = true)
 	{
 		//echo "<p>infolog_ui::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;

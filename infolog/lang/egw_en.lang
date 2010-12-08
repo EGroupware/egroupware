@@ -383,6 +383,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	en	Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.
 which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get?
 which types should the calendar show	infolog	en	Which types should the calendar show
+whole query	infolog	en	whole query
 will-call	infolog	en	will call
 write (add or update) a record by passing its fields.	infolog	en	Write (add or update) a record by passing its fields.
 yes - close	infolog	en	Yes - Close

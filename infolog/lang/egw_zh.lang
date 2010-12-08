@@ -269,6 +269,7 @@ view subs	infolog	zh	查看子任务
 view the parent of this entry and all his subs	infolog	zh	查看该条目的父任务及所有子任务
 view this linked entry in its application	infolog	zh	查看该关联
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	zh	事项的起始日期, 仅对任务和函电有效.it shows up from that date in the filter open or own open (startpage)
+whole query	infolog	zh	完整查询
 will-call	infolog	zh	将致电
 write (add or update) a record by passing its fields.	infolog	zh	通过事项的字段写入(新增或更新)一个记录
 yes - delete	infolog	zh	是

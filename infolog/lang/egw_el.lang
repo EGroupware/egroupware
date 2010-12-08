@@ -331,6 +331,7 @@ view this linked entry in its application	infolog	el	εμφάνιση αυτής
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	el	πότε θα έπρεπε οι Εργασίες ή Κλήση τηλεφώνου να αρχίζουν,εμφανίζεται από εκείνη την ημερομηνία στο άνοιγμα φίλτρου ή δικά μου άνοιγμα (αρχική σελίδα)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	el	Ποια επιπλέον πεδία πρέπει ο υπεύθυνος να έχει άδεια να επιμεληθεί χωρίς να έχει δικαιώματα επιμέλειας;<br/>Κατάσταση, ποσοστό και ημερομηνία ολοκλήρωσης είναι πάντοτε επιτρεπτά.
 which implicit acl rights should the responsible get?	infolog	el	Ποια αυτονόητα ACL δικαιώματα πρέπει ο υπεύθυνος να έχει;
+whole query	infolog	el	ολόκληρη απορία
 will-call	infolog	el	θα τηλεφωνήσει
 write (add or update) a record by passing its fields.	infolog	el	Καταγραφή (προσθήκη ή ενημέρωση) μιας εγγραφής διαβαίνοντας από τα πεδία της.
 yes - delete	infolog	el	Ναι- Διαγραφή

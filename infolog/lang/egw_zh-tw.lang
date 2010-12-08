@@ -343,6 +343,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	zh-tw	哪些額外欄位即使負責人沒有編輯權限也能夠編輯？<br />狀態、比率與完成日期預設都會允許。
 which implicit acl rights should the responsible get?	infolog	zh-tw	負責人可以取得哪個隱含的權限？
 which types should the calendar show	infolog	zh-tw	行事曆要顯示哪些類型
+whole query	infolog	zh-tw	整個查詢
 will-call	infolog	zh-tw	將連絡
 write (add or update) a record by passing its fields.	infolog	zh-tw	透過傳遞它的欄位來寫入(新增或更新)一筆記錄
 yes - delete	infolog	zh-tw	確定 - 刪除

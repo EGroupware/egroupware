@@ -259,6 +259,7 @@ urgent	infolog	id	mendesak
 used time	infolog	id	waktu yang dihabiskan
 view parent	infolog	id	Lihat leluhur
 view subs	infolog	id	view Subs
+whole query	infolog	id	seluruh query
 will-call	infolog	id	will call
 yes - close	infolog	id	Ya - Tutup
 yes - close including sub-entries	infolog	id	Ya - Tutup berikut sub-entrinya

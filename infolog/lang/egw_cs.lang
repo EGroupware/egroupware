@@ -382,6 +382,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	cs	Které dodatečné položky má mít odpovědná osoba možnost editovat bez toho, že by měla práva k editaci?<br>Stav, procento a datum dokončení může vždy.
 which implicit acl rights should the responsible get?	infolog	cs	Jaká implicitní ACL práva má odpovědná osoba dostat?
 which types should the calendar show	infolog	cs	Které typy má kalendář zobrazovat
+whole query	infolog	cs	celý dotaz
 will-call	infolog	cs	zavolá
 write (add or update) a record by passing its fields.	infolog	cs	Zapsat (přidat nebo smazat) záznam zadáním jeho položek.
 yes - close	infolog	cs	Ano - uzavřít

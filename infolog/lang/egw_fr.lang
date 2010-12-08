@@ -305,6 +305,7 @@ view this linked entry in its application	infolog	fr	Voir cette entrée liée da
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	fr	Quand le A-faire ou l'appel téléphonique devrait être démarré, il s'affiche depuis cette date dans le filtre ouvert ou propre ouvert (page de démarrage)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	fr	Quels champs supplémentaires le responsable devrait être autorisé à modifier sans avoir à modifier les droits d'édition??<br />Statuts, pourcentage et date de fin sont toujours permis.
 which implicit acl rights should the responsible get?	infolog	fr	Quels droits ACL implicites le responsable devrait obtenir?
+whole query	infolog	fr	requête entière
 will-call	infolog	fr	Va appeler
 write (add or update) a record by passing its fields.	infolog	fr	Ecrit (ajoute ou met à jour) un enregistrement en passant ses champs.
 yes - delete	infolog	fr	Oui - Supprimer

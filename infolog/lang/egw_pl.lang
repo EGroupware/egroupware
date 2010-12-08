@@ -305,6 +305,7 @@ view this linked entry in its application	infolog	pl	zoabcz podlinkowany wpis w 
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pl	kiedy zadanie lub telefon powinno wystartować, to pokazuje z tej daty w filtrze otwartym lub  jego otwartym (strona startowa)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pl	Które dodatkowe pola powinna móc edytować osoba odpowiedzialna nie posiadając praw edycji? <br />Status, stopień zaawansowania oraz data wykonania są zawsze możliwe do edycji.
 which implicit acl rights should the responsible get?	infolog	pl	Które prawa ACL powinna otrzymać niejawnie osoba odpowiedzialna?
+whole query	infolog	pl	Całe zapytanie
 will-call	infolog	pl	zadzwoni
 write (add or update) a record by passing its fields.	infolog	pl	Zapisz (dodaj lub uaktualnij) zapis przez przechodzenie po jego polach
 yes - delete	infolog	pl	Tak - Usuń

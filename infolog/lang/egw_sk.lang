@@ -368,6 +368,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	sk	Ktoré prídavné položky majú byť zodpovednej osobe prístupné pre úpravy, a to aj bez pridelených práv na úpravy?<br />Stav, percentuálny stav vybavenia a dátum dokončenia sú prístupné vždy.
 which implicit acl rights should the responsible get?	infolog	sk	Ktoré implicitné ACL oprávnenia má zodpovedná osoba obdržať automaticky?
 which types should the calendar show	infolog	sk	Aké typy má kalendár ukazovať
+whole query	infolog	sk	Celý dopyt
 will-call	infolog	sk	Zavolá
 write (add or update) a record by passing its fields.	infolog	sk	Zapísať (pridať alebo upraviť) záznam použitím príslušných položiek.
 yes - close	infolog	sk	Áno - Zavrieť

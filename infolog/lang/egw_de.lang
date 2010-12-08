@@ -384,6 +384,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
 which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
 which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
+whole query	infolog	de	gesamte Abfrage
 will-call	infolog	de	ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
 yes - close	infolog	de	Ja schließen

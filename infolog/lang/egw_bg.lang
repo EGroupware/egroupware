@@ -346,6 +346,7 @@ view this linked entry in its application	infolog	bg	показва свърза
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	bg	Кои допълнителни полета да бъдат достъпни за редакция от отговорника, без да има съответните права?<br />Статус, степен на изпълнение и датата на приключване винаги са достъпни.
 which implicit acl rights should the responsible get?	infolog	bg	Какви права от Списъка за контрол на достъпа (ACL) да получава отговорника при назначаването си?
 which types should the calendar show	infolog	bg	Кои типове да се показват в Календара
+whole query	infolog	bg	всички резултати
 will-call	infolog	bg	ще телефонира
 write (add or update) a record by passing its fields.	infolog	bg	Запис (добавяне или актуализация) на запис чрез подаване на полетата му
 yes - delete	infolog	bg	Да - Изтриване

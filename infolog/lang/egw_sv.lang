@@ -303,6 +303,7 @@ view this linked entry in its application	infolog	sv	Visa den länkade posten i 
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sv	När Uppgift och Samtal ska påbörjas visas de från aktuellt datum i Mina eller Mina öppna (Startsidan)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	sv	Vilka övriga fält ska ansvariga kunna ändra utan ändringsrättigheter?<br />Status, procent och datum är alltid tillåtna.
 which implicit acl rights should the responsible get?	infolog	sv	Vilka ACL rättigheter ska den ansvarigefå?
+whole query	infolog	sv	Hela frågan
 will-call	infolog	sv	Ska ringa
 write (add or update) a record by passing its fields.	infolog	sv	Fyll i fälten för att skapa eller uppdatera post
 yes - delete	infolog	sv	Ja - Radera

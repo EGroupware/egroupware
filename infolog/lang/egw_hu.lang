@@ -373,6 +373,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	hu	A bejegyzés felelőse mely mezőket szerkesztheti anélkül, hogy egyébként szerkesztési jogosultságai lennének?<br/>A Státusz, százalékos készültség és dátum mindig szerkeszthető!<br/>(például ha az alapértelmezett csoportjogosultság nem tenné lehetővé, hogy a leírást módosítsa a felelős).
 which implicit acl rights should the responsible get?	infolog	hu	Mely értelemszerűen felmerülő ACL jogosultságokat kapjon a felelős?
 which types should the calendar show	infolog	hu	Mely típust mutasson a naptár
+whole query	infolog	hu	teljes lekérdezés
 will-call	infolog	hu	hívni fog
 write (add or update) a record by passing its fields.	infolog	hu	Kiír (hozzáad vagy módosít) egy bejegyzést a mezők átadásával.
 yes - close	infolog	hu	Igen - lezárni

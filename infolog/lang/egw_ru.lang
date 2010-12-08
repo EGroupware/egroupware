@@ -353,6 +353,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	ru	Какие дополнительные поля должен мочь редактировать ответственный, не имея прав на редактирование?<br/>Состояние, процент и дата завершения уже разрешены.
 which implicit acl rights should the responsible get?	infolog	ru	Какие подразумеваемые права ACL должен получить ответственный?
 which types should the calendar show	infolog	ru	Какие типы календарь должен показывать
+whole query	infolog	ru	весь запрос
 will-call	infolog	ru	позвонит
 write (add or update) a record by passing its fields.	infolog	ru	Запишите (добавьте или обновите) запись прохождением её полей.
 yes - delete	infolog	ru	Да - Удалить

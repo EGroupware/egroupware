@@ -359,6 +359,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	nl	Welke additionele velden moet de verantwoordelijke kunnen bewerken zonder daarvoor speciale bewerk rechten te moeten krijgen?<br />Status, percentage en datum voltooid zijn altijd toegestaan.
 which implicit acl rights should the responsible get?	infolog	nl	Welke impliciete ACL rechten moet de verantwoordelijke krijgen?
 which types should the calendar show	infolog	nl	Welke types moet de kalender weergeven
+whole query	infolog	nl	gehele query
 will-call	infolog	nl	zal bellen
 write (add or update) a record by passing its fields.	infolog	nl	Schrijf (toevoegen of bijwerken) een record door de velden mee te geven.
 yes - delete	infolog	nl	Ja - Verwijderen
