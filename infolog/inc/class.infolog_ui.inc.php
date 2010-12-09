@@ -739,6 +739,7 @@ class infolog_ui
 		'pm_id'      => array(lang('No project')),
 		'multi_action'	=> array(
 			'close'		=> lang('Close'),
+			'delete'	=> lang('Delete'),
 			'cat'		=> lang('Change category'),
 			'link'		=> lang('Add or delete links'),
 			'completion'	=> lang('Change completion'),
@@ -888,8 +889,15 @@ class infolog_ui
 					break;
 				case 'delete':
 					$action_msg = lang('deleted');
-					$this->delete($id, '', '', $skip_notifications);
-					$success++;
+					$result = $this->delete($id, '', 'multi-action', $skip_notifications);
+					if($result != '')
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
 					break;
 				case 'type':
 					$action_msg = lang('changed type');
