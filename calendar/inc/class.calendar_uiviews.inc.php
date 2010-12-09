@@ -58,6 +58,13 @@ class calendar_uiviews extends calendar_ui
 	var $extraRows = 2;
 
 	/**
+	 * removes n extra rows below the workday
+	 *
+	 * @var int
+	 */
+	var $remBotExtraRows = 0;
+
+	/**
 	 * extra rows original (save original value even if it gets changed in the class)
 	 *
 	 * @var int
@@ -750,7 +757,7 @@ function open_edit(series)
 		// time after workday => condensed in the last row
 		elseif ($this->wd_end < 24*60 && $time > $this->wd_end+1*$this->granularity_m)
 		{
-			$pos = 100 - ($this->extraRows * $this->rowHeight * (1 - ($time - $this->wd_end) / (24*60 - $this->wd_end)));
+			$pos = 100 - (($this->extraRows - $this->remBotExtraRows) * $this->rowHeight * (1 - ($time - $this->wd_end) / (24*60 - $this->wd_end)));
 		}
 		// time during the workday => 2. row on (= + granularity)
 		else
@@ -811,15 +818,16 @@ function open_edit(series)
 		if ($this->scroll_to_wdstart)
 		{
 			$this->extraRows = 0;	// no extra rows necessary
+			$this->remBotExtraRows = 0;
 			$overflow = 'overflow: scroll;';
 		}
 		$this->granularity_m = $granularity_m;
 		$this->display_start = $this->wd_start - ($this->extraRows * $this->granularity_m);
-		$this->display_end	= $this->wd_end + ($this->extraRows * $this->granularity_m);
+		$this->display_end	= $this->wd_end + (($this->extraRows - $this->remBotExtraRows) * $this->granularity_m);
 
 		if (!$this->wd_end) $this->wd_end = 1440;
 		$totalDisplayMinutes	= $this->wd_end - $this->wd_start;
-		$this->rowsToDisplay	= ($totalDisplayMinutes/$granularity_m)+2+2*$this->extraRows;
+		$this->rowsToDisplay	= ($totalDisplayMinutes/$granularity_m)+2+2*$this->extraRows-$this->remBotExtraRows;
 		$this->rowHeight		= round(100/$this->rowsToDisplay,1);
 
 		// ensure a minimum height of each row
@@ -2375,6 +2383,7 @@ function open_edit(series)
 	function tagWholeDayOnTop($dayEvents)
 	{
 		$this->extraRows = $this->extraRowsOriginal;
+		$this->remBotExtraRows = 0;
 
 		if (is_array($dayEvents))
 		{
@@ -2402,6 +2411,7 @@ function open_edit(series)
 				// check after every day if we have to increase $this->extraRows
 				if(($this->extraRowsOriginal+$extraRowsToAdd) > $this->extraRows)
 				{
+					$this->remBotExtraRows = $extraRowsToAdd;
 					$this->extraRows = ($this->extraRowsOriginal+$extraRowsToAdd);
 				}
 			}
