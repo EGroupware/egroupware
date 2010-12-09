@@ -1002,6 +1002,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		$vars = array(
 			'menuaction'      => 'felamimail.uicompose.compose',
+			'mimeType'		  => 'plain', // force type to plain as thunderbird seems to try to be smart while parsing html messages with ics attachments
 			'preset[to]'      => $to,
 			'preset[subject]' => $subject,
 			'preset[body]'    => $body,
