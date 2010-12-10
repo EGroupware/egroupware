@@ -783,6 +783,16 @@ class timesheet_ui extends timesheet_bo
 			}
 			else
 			{
+				// Action has a parameter - cat_id, percent, etc
+				$multi_action = $content['action'];
+				if (in_array($multi_action, array('cat')))
+				{
+					if(is_array($content[$multi_action]))
+					{
+						$content[$multi_action] = implode(',',$content[$multi_action]);
+					}
+					$content['action'] .= '_' . $content[$multi_action];
+				}
 				if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
 				$success,$failed,$action_msg,'index',$msg))
 				{
@@ -837,6 +847,7 @@ class timesheet_ui extends timesheet_bo
 
 		$status =array();
 		$sel_options['action'] ['delete']= lang('Delete Timesheet');
+		$sel_options['action']['cat'] = lang('Change category');
 		foreach ($this->status_labels as $status_id => $label_status)
 		{
 			$status['to_status_'.$status_id] = $label_status;
@@ -889,6 +900,11 @@ class timesheet_ui extends timesheet_bo
 			$to_status = (int)substr($action,10);
 			$action = 'to_status';
 		}
+		else
+		{
+			// Dialogs to get options
+			list($action, $settings) = explode('_', $action, 2);
+		}
 
 		switch($action)
 		{
@@ -920,6 +936,23 @@ class timesheet_ui extends timesheet_bo
 					}
 				}
 				break;
+			case 'cat':
+				$cat_name = categories::id2name($settings);
+				$action_msg = lang('changed category to %1', $cat_name);
+				foreach((array)$checked as $n => $id) {
+					$entry = $this->read($id);
+					$entry['cat_id'] = $settings;
+					if($this->save($entry) == 0)
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+				}
+				break;
+
 		}
 
 		return !$failed;
@@ -1022,14 +1055,32 @@ class timesheet_ui extends timesheet_bo
 			return false;
 		}
 
+		/**
+		 * Javascript handling for multiple entry actions
+		 */
 		function do_action(selbox)
 		{
-			if (selbox.value != "") {
-				selbox.form.submit();
-				selbox.value = "";
+			if(selbox.value == "") return;
+			var prefix = selbox.id.substring(0,selbox.id.indexOf("["));
+			var popup = document.getElementById(prefix + "[" + selbox.value + "_popup]");
+			if(popup) {
+				popup.style.display = "block";
+				return;
 			}
+			selbox.form.submit();
+			selbox.value = "";
 		}
 
+		/**
+		 * Hide popup and clear values
+		 */
+		function hide_popup(element, div_id) {
+			var prefix = element.id.substring(0,element.id.indexOf("["));
+			var popup = document.getElementById(prefix+"["+div_id+"]");
+			if(popup) {
+				popup.style.display = "none";
+			}
+		}
 		</script>';
 	}
 }
