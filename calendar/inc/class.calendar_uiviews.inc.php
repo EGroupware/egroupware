@@ -759,7 +759,7 @@ class calendar_uiviews extends calendar_ui
 		$users = $this->search_params['users'];
 		if (!is_array($users)) $users = array($users);
 
-		if (count($users) == 1 || count($users) > 5)	// for more then 3 users, show all in one row
+		if (count($users) == 1 || count($users) > $this->bo->calview_no_consolidate)	// for more then X users, show all in one row
 		{
 			$content = $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),$this->cal_prefs['interval']);
 		}
@@ -812,8 +812,8 @@ class calendar_uiviews extends calendar_ui
 			$users = $this->search_params['users'];
 			if (!is_array($users)) $users = array($users);
 
-			// for more then 5 users, show all in one row
-			if (count($users) == 1 || count($users) > 5)
+			// for more then X users, show all in one row
+			if (count($users) == 1 || count($users) > $this->bo->calview_no_consolidate)
 			{
 				$dayEvents =& $this->bo->search($this->search_params);
 				$owner = 0;
