@@ -66,7 +66,13 @@ class resources_export_csv implements importexport_iface_export_plugin {
 			$resource->set_record($record);
 			if($options['convert']) {
 				importexport_export_csv::convert($resource, $types, 'resources');
-			}
+			} else {
+				// Implode arrays, so they don't say 'Array'
+				foreach($resource->get_record_array() as $key => $value) {
+					if(is_array($value)) $resource->$key = implode(',', $value);
+				}
+ 			}
+
 			$export_object->export_record($resource);
 			unset($resource);
 		}
