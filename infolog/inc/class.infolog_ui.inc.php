@@ -796,14 +796,14 @@ class infolog_ui
 	 *
 	 * @param action 
 	 * @param array $checked contact id's to use if !$use_all
-         * @param boolean $use_all if true use all entries of the current selection (in the session)
-         * @param int &$success number of succeded actions
-         * @param int &$failed number of failed actions (not enought permissions)
-         * @param string &$action_msg translated verb for the actions, to be used in a message like '%1 entries deleted'
-         * @param string/array $session_name 'index', or array with session-data depending
-         * @return boolean true if all actions succeded, false otherwise
-         */
-        function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name = false,&$msg, $skip_notifications = false)
+	 * @param boolean $use_all if true use all entries of the current selection (in the session)
+	 * @param int &$success number of succeded actions
+	 * @param int &$failed number of failed actions (not enought permissions)
+	 * @param string &$action_msg translated verb for the actions, to be used in a message like '%1 entries deleted'
+	 * @param string/array $session_name 'index', or array with session-data depending
+	 * @return boolean true if all actions succeded, false otherwise
+	 */
+	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name = false,&$msg, $skip_notifications = false)
 	{
 		//echo "<p>infolog_ui::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
