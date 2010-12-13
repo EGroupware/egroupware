@@ -38,7 +38,7 @@
  * - boolean egw_vfs::umount($path) to unmount a path or url
  *
  * The stream wrapper interface allows to access hugh files in junks to not be limited by the
- * memory_limit setting of php. To do you should path a resource to the opened file and not the content:
+ * memory_limit setting of php. To do you should pass the opened file as resource and not the content:
  *
  * 		$file = egw_vfs::fopen('/home/user/somefile','r');
  * 		$content = fread($file,1024);
@@ -180,20 +180,60 @@ class egw_vfs extends vfs_stream_wrapper
 	{
 		$ret = false;
 
+		$old_props = self::file_exists($to) ? self::propfind($to,null) : array();
+
 		if (($from_fp = self::fopen($from,'r')) &&
 			($to_fp = self::fopen($to,'w')))
 		{
 			$ret = stream_copy_to_stream($from_fp,$to_fp) !== false;
 		}
- 		if ($from_fp)
- 		{
- 			fclose($from_fp);
- 		}
- 		if ($to_fp)
- 		{
- 			fclose($to_fp);
- 		}
- 		return $ret;
+		if ($from_fp)
+		{
+			fclose($from_fp);
+		}
+		if ($to_fp)
+		{
+			fclose($to_fp);
+
+			if ($ret)	// successful copyied file
+			{
+				// copy properties (eg. file comment), if there are any and evtl. existing old properties
+				$props = self::propfind($from,null);
+
+				foreach($old_props as $prop)
+				{
+					if (!self::find_prop($props,$prop))
+					{
+						$prop['val'] = null;	// null = delete prop
+						$props[] = $prop;
+					}
+				}
+				if ($props) self::proppatch($to, $props);
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 * Find a specific property in an array of properties (eg. returned by propfind)
+	 *
+	 * @param array &$props
+	 * @param array|string $name property array or name
+	 * @param string $ns=self::DEFAULT_PROP_NAMESPACE namespace, only if $prop is no array
+	 * @return &array reference to property in $props or null if not found
+	 */
+	static function &find_prop(array &$props,$name,$ns=self::DEFAULT_PROP_NAMESPACE)
+	{
+		if (is_array($name))
+		{
+			$ns = $name['ns'];
+			$name = $name['name'];
+		}
+		foreach($props as &$prop)
+		{
+			if ($prop['name'] == $name && $prop['ns'] == $ns) return $prop;
+		}
+		return null;
 	}
 
 	/**
@@ -864,7 +904,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 * Store properties for a single ressource (file or dir)
 	 *
 	 * @param string $path string with path
-	 * @param array $props array or array with values for keys 'name', 'ns', 'val' (null to delete the prop)
+	 * @param array $props array of array with values for keys 'name', 'ns', 'val' (null to delete the prop)
 	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
 	 */
 	static function proppatch($path,array $props)

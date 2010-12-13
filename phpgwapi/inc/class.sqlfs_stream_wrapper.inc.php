@@ -1709,7 +1709,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 * Store properties for a single ressource (file or dir)
 	 *
 	 * @param string|int $path string with path or integer fs_id
-	 * @param array $props array or array with values for keys 'name', 'ns', 'val' (null to delete the prop)
+	 * @param array $props array of array with values for keys 'name', 'ns', 'val' (null to delete the prop)
 	 * @return boolean true if props are updated, false otherwise (eg. ressource not found)
 	 */
 	static function proppatch($path,array $props)
@@ -1812,7 +1812,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		}
 		if (!is_array($path_ids))
 		{
-			$props = $props[$row['fs_id']];
+			$props = $props[$row['fs_id']] ? $props[$row['fs_id']] : array();	// return empty array for no props
 		}
 		elseif ($props && isset($stat))	// need to map fs_id's to pathes
 		{
