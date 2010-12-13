@@ -466,7 +466,7 @@ switch($_POST['action'])
 			if (!isset($values['owner']) || isset($values['owner']) && (string)$values['owner'] === '')
 			{
 				// use default addressbook for new contacts (user preferences), if no owner specified
-				if(!($values['owner'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default']))
+				if(!($values['owner'] = $bocontacts->default_addressbook))
 				{
 					$values['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 				}
