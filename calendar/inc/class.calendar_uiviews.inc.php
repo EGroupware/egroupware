@@ -716,11 +716,18 @@ function open_edit(series)
 							$icons .= ($icons?' ':'').$GLOBALS['egw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"');
 						}
 						$class = $class == 'row_on' ? 'row_off' : 'row_on';
-
+						if($todo['edit']) {
+							list($width, $height) = explode('x', $todo['edit']['size']);
+							unset($todo['edit']['size']);
+							$edit_icon_href = html::a_href( $icons, $todo['edit'],'',' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width='.$width.',height='.$height.',scrollbars=yes,status=yes\'); return false;"');
+							$edit_href = html::a_href( $todo['title'], $todo['edit'],'',' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=590,scrollbars=yes,status=yes\'); return false;"');
+						}
+						$icon_href = html::a_href($icons,$todo['view']);
+						$href = html::a_href($todo['title'], $todo['view']);
 						$content .= " <tr class=\"$class\">\n  <td valign=\"top\" width=\"15%\" nowrap>".
-							($this->bo->printer_friendly?$icons:$GLOBALS['egw']->html->a_href($icons,$todo['view'])).
+							($this->bo->printer_friendly?$icons:($edit_icon_href ? $edit_icon_href : $icon_href)).
 							"</td>\n  <td>".($this->printer_friendly?$todo['title']:
-							$GLOBALS['egw']->html->a_href($todo['title'],$todo['view']))."</td>\n </tr>\n";
+							$href)."</td>\n </tr>\n";
 						/**
 						 * ToDo: add delete and closing action
 						 */

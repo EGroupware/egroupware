@@ -1226,6 +1226,8 @@ class infolog_bo
 				$title = ($do_events?common::formattime($start->format('H'),$start->format('i')).' ':'').
 					$info['info_subject'];
 				$view = egw_link::view('infolog',$info['info_id']);
+				$edit = egw_link::edit('infolog',$info['info_id'], $size);
+				$edit['size'] = $size;
 				$content=array();
 				foreach ($icons = array(
 					$info['info_type']   => 'infolog',
@@ -1242,6 +1244,7 @@ class infolog_bo
 					'endtime'   => ($info['info_enddate'] ? $info['info_enddate'] : $info['info_startdate']),
 					'title'     => $title,
 					'view'      => $view,
+					'edit'      => $edit,
 					'icons'     => $icons,
 					'content'   => $content
 				);
