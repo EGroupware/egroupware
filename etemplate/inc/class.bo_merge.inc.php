@@ -309,10 +309,10 @@ abstract class bo_merge
 		{
 			// textdocuments are simple, they do not hold start and end, but they may have content before and after the $$pagerepeat$$ tag
 			// header and footer should not hold any $$ tags; if we find $$ tags with the header, we assume it is the pagerepeatcontent
+			$nohead = false;
 			if (stripos($contentstart,'$$') !== false) $nohead = true;
 			if ($nohead)
 			{
-				error_log(__METHOD__.__LINE__.' no head');
 				$contentend = $contentrepeat;
 				$contentrepeat = $contentstart;
 				$contentstart = '';
