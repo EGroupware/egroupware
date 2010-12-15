@@ -60,7 +60,12 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			// Standard stuff
 			if($options['convert']) {
 				importexport_export_csv::convert($record, $convert_fields, 'calendar');
-			}
+			} else {
+				// Implode arrays, so they don't say 'Array'
+				foreach($record->get_record_array() as $key => $value) {
+					if(is_array($value)) $record->$key = implode(',', $value);
+				}
+ 			}
 
 			$export_object->export_record($record);
 		}
