@@ -335,7 +335,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		$writeDelimiter = false;
 		foreach($dataArray as $dataElement) {
 			if($writeDelimiter) $string .= $delimiter;
-			$string .= $enclosure . str_replace("\r\n", "\r", $dataElement) . $enclosure;
+			$string .= $enclosure . $dataElement . $enclosure;
 			$writeDelimiter = true;
 		} 
 		$string .= "\n";
