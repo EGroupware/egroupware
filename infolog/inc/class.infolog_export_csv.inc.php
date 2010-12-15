@@ -69,6 +69,11 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			if($options['convert']) {
 				importexport_export_csv::convert($record, self::$types, 'infolog');
 				$this->convert($record);
+			} else {
+				// Implode arrays, so they don't say 'Array'
+				foreach($record->get_record_array() as $key => $value) {
+					if(is_array($value)) $record->$key = implode(',', $value);
+				}
 			}
 			$export_object->export_record($record);
 			unset($record);
