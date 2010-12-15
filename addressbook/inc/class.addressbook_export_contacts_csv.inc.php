@@ -181,7 +181,13 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			$this->convert($contact, $options);
 			if($options['convert']) {
 				importexport_export_csv::convert($contact, self::$types, 'addressbook');
-			}
+			} else {
+                                // Implode arrays, so they don't say 'Array'
+                                foreach($contact->get_record_array() as $key => $value) {
+                                        if(is_array($value)) $contact->$key = implode(',', $value);
+                                }
+                        }
+
 			$export_object->export_record($contact);
 			unset($contact);
 		}
