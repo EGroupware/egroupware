@@ -1,3 +1,17 @@
+egroupware-epl (10.1.20101215-1) hardy; urgency=low
+
+  * Notifications: fix dont try to notify when none is set/forced for folders to check for new mails; dont try to notify when email as module is not enabled for the particular user
+  * eMail: remove invalid -at- when occurring in full name, when adding address to email; skip addresses that produce a parse error while parsed with imap_rfc822_parse_adrlist
+  * eMail: some servers do not correctly report the UNSEEN counter (they report 0->imap.strato.de), so we count ourself by filtering for UNSEEN Messages; 
+  * eMail: improving Information on failed send passed on to UI
+  * Calendar, MailToAllParticipants: force type to plain as thunderbird (with lightning attached) seems to try to be smart while parsing html messages 
+  *        with ics attachments, but fails with a parse error, resulting in a not displayed message in thunderbird
+  * Calendar: make configurable the number of users, until day- or weekview are consolidated; 5 is set as default
+  * Filemanager/Versioning: copying (or reinstating earlier versions) of files now also copies the properties (MyStylite #975)
+  * Calendar: dayview allow edit popup for task pane by clicking on icon/status icon of particular infolog line.
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 15 Dec 2010 11:16:32 +0100
+
 egroupware-epl (10.1.20101201-1) hardy; urgency=low
 
   * Joomla! 1.5 template support (including ja_purity template)
