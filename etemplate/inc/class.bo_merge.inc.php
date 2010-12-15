@@ -305,6 +305,20 @@ abstract class bo_merge
 			//die("<pre>".htmlspecialchars($content)."</pre>\n");
 		}
 		list($contentstart,$contentrepeat,$contentend) = preg_split('/\$\$pagerepeat\$\$/',$content,-1, PREG_SPLIT_NO_EMPTY);  //get differt parts of document, seperatet by Pagerepeat
+		if ($mimetype == 'text/plain' && count($ids) > 1)
+		{
+			// textdocuments are simple, they do not hold start and end, but they may have content before and after the $$pagerepeat$$ tag
+			// header and footer should not hold any $$ tags; if we find $$ tags with the header, we assume it is the pagerepeatcontent
+			if (stripos($contentstart,'$$') !== false) $nohead = true;
+			if ($nohead)
+			{
+				error_log(__METHOD__.__LINE__.' no head');
+				$contentend = $contentrepeat;
+				$contentrepeat = $contentstart;
+				$contentstart = '';
+			}
+ 
+		}
 		if ($mimetype == 'application/vnd.oasis.opendocument.text' && count($ids) > 1)
 		{
 			//for odt files we have to split the content and add a style for page break to  the style area
@@ -444,6 +458,8 @@ abstract class bo_merge
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
+				case 'text/plain':
+					return $contentstart.implode("\r\n",$contentrep).$contentend;
 			}
 			$err = lang('%1 not implemented for %2!','$$labelplacement$$',$mimetype);
 			return false;
@@ -463,6 +479,8 @@ abstract class bo_merge
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrep).$contentend;
+				case 'text/plain':
+					return $contentstart.implode("\r\n",$contentrep).$contentend;
 			}
 			$err = lang('%1 not implemented for %2!','$$pagerepeat$$',$mimetype);
 			return false;
