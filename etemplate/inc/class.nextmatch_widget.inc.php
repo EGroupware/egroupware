@@ -1117,7 +1117,6 @@ class nextmatch_widget
 		foreach($fields as $field => $label)
 		{
 			$value = (array)$data[$field];
-
 			if ($use_type && is_array($label) && in_array($label['type'],array('select-account','select-cat','date-time','date','select','int','float')))
 			{
 				foreach($value as $key => $val)
@@ -1176,6 +1175,7 @@ class nextmatch_widget
 			if (strpos($value,$separator) !== false || strpos($value,"\n") !== false || strpos($value,"\r") !== false)
 			{
 				$value = '"'.str_replace(array('\\','"'),array('\\\\','\\"'),$value).'"';
+				$value = str_replace("\r\n", "\n", $value); // to avoid early linebreak by Excel
 			}
 			$out[] = $value;
 		}
