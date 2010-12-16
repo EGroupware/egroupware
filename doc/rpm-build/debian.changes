@@ -1,3 +1,12 @@
+egroupware-epl (10.1.20101216-1) hardy; urgency=low
+
+  * WiKi: Edit permissions now do imply read permissions
+  * ImportExport: Replace CRLF with LF so excel does not break lines early (myStylite#974)
+  * CSV Export: Replace CRLF with LF so excel does not break lines early (myStylite#974)
+  * Eventmanager: storing currency in main-table as 3 char string (not id) plus update script for exiting data
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 16 Dec 2010 16:28:44 +0100
+
 egroupware-epl (10.1.20101215-1) hardy; urgency=low
 
   * Notifications: fix dont try to notify when none is set/forced for folders to check for new mails; dont try to notify when email as module is not enabled for the particular user
