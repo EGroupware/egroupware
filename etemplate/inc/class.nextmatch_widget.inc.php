@@ -1175,7 +1175,8 @@ class nextmatch_widget
 			if (strpos($value,$separator) !== false || strpos($value,"\n") !== false || strpos($value,"\r") !== false)
 			{
 				$value = '"'.str_replace(array('\\','"'),array('\\\\','\\"'),$value).'"';
-				$value = str_replace("\r\n", "\n", $value); // to avoid early linebreak by Excel
+				// to avoid early linebreak by Excel, escape double quotes in text
+				$value = str_replace(array("\r\n", '"'), array("\n",'""'), $value); 
 			}
 			$out[] = $value;
 		}
