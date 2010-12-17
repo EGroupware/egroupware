@@ -345,6 +345,7 @@ class uiwidgets
 				if($header['mimetype'] == 'multipart/mixed' ||
 					$header['mimetype'] == 'multipart/signed' ||
 					$header['mimetype'] == 'multipart/related' ||
+					$header['mimetype'] == 'multipart/report' ||
 					$header['mimetype'] == 'text/calendar' ||
 					substr($header['mimetype'],0,11) == 'application' ||
 					substr($header['mimetype'],0,5) == 'audio' ||
@@ -640,6 +641,7 @@ class uiwidgets
 				if($headerData['mimetype'] == 'multipart/mixed' ||
 					$headerData['mimetype'] == 'multipart/signed' ||
 					$headerData['mimetype'] == 'multipart/related' ||
+					$headerData['mimetype'] == 'multipart/report' ||
 					$headerData['mimetype'] == 'text/calendar' ||
 					substr($headerData['mimetype'],0,11) == 'application' ||
 					substr($headerData['mimetype'],0,5) == 'audio' ||
