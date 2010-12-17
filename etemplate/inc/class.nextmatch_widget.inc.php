@@ -1172,11 +1172,14 @@ class nextmatch_widget
 			}
 			$value = implode(', ',$value);
 
+			if (strpos($value,'"') !== false)
+			{
+				$value = '"'.str_replace('"', '""', $value).'"'; // Escape double quotes
+			}
 			if (strpos($value,$separator) !== false || strpos($value,"\n") !== false || strpos($value,"\r") !== false)
 			{
 				$value = '"'.str_replace(array('\\','"'),array('\\\\','\\"'),$value).'"';
-				// to avoid early linebreak by Excel, escape double quotes in text
-				$value = str_replace(array("\r\n", '"'), array("\n",'""'), $value); 
+				$value = str_replace("\r\n", "\n", $value); // to avoid early linebreak by Excel
 			}
 			$out[] = $value;
 		}
