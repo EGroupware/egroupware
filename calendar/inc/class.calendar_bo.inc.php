@@ -142,7 +142,7 @@ class calendar_bo
 		'NON-PARTICIPANT' => 'None',
 	);
 	/**
-	 * @var array $resources registered scheduling resources of the calendar (gets chached in the session for performance reasons)
+	 * @var array $resources registered scheduling resources of the calendar (gets cached in the session for performance reasons)
 	 */
 	var $resources;
 	/**
