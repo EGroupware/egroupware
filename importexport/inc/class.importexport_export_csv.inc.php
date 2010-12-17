@@ -225,13 +225,13 @@ class importexport_export_csv implements importexport_iface_export_record
 	 * @parem fields List of field types => field names to be converted
 	 * @param appname Current appname if you want to do custom fields too
 	 */
-	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null) {
+	public static function convert(importexport_iface_egw_record &$record, Array $fields = array(), $appname = null, $selects = array()) {
 		if($appname) {
 			if(!self::$cf_parse_cache[$appname]) {
 				$c_fields = self::convert_parse_custom_fields($appname, $selects, $links, $methods);
 				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
 			}
-			list($c_fields, $selects, $links, $methods) = self::$cf_parse_cache[$appname];
+			list($c_fields, $c_selects, $links, $methods) = self::$cf_parse_cache[$appname];
 			// Not quite a recursive merge, since only one level
 			foreach($fields as $type => &$list) {
 				if($c_fields[$type]) {
@@ -240,6 +240,7 @@ class importexport_export_csv implements importexport_iface_export_record
 				}
 			}
 			$fields += $c_fields;
+			$selects += $c_selects;
 		}
 		foreach((array)$fields['select'] as $name) {
 			if($record->$name != null && is_array($selects) && $selects[$name]) {
@@ -335,7 +336,7 @@ class importexport_export_csv implements importexport_iface_export_record
 		$writeDelimiter = false;
 		foreach($dataArray as $dataElement) {
 			if($writeDelimiter) $string .= $delimiter;
-			$string .= $enclosure . str_replace("\r\n", "\n", $dataElement) . $enclosure;
+			$string .= $enclosure . str_replace(array("\r\n", '"'), array("\n",'""'), $dataElement) . $enclosure;
 			$writeDelimiter = true;
 		} 
 		$string .= "\n";
