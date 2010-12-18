@@ -857,7 +857,7 @@ class calendar_bo
 	 * @param mixed $date=null date to specify a single event of a series
 	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
-	 * @param array|init $clear_privat_infos_users=null if not null, return events with EGW_ACL_FREEBUSY too,
+	 * @param array|int $clear_privat_infos_users=null if not null, return events with EGW_ACL_FREEBUSY too,
 	 * 	but call clear_private_infos() with the given users
 	 * @return boolean|array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
