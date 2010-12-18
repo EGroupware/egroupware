@@ -439,34 +439,73 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			debugLog(__METHOD__." Folder wrong or contact not existing");
 			return false;
 		}
-		if (empty($id))
+		if ($account == 0) return false;			//no changing of accounts
+		$contact = array();
+		if ((empty($id) && ($this->addressbook->grants[$account] & EGW_ACL_EDIT)) || ( $contact = $this->addressbook->read($id) && $this->addressbook->check_perms(EGW_ACL_EDIT, $id)))
 		{
 			$contact = array();
-			debugLog (__METHOD__." creating new contact");
 			foreach (self::$mapping as $key => $attr)
 			{
 				switch ($attr)
 				{
 					case 'note':
 						error_log ("Note !");
-						break;
 
+						// Since in >=AS12.1 we have the airsyncbasebody object
+						// By doing this hack we can continue using our current functions...
+						if (isset($message->airsyncbasebody))
+						{
+							switch($message->airsyncbasebody->type)
+							{
+								case '3' :	$message->rtf = $message->airsyncbasebody->data;
+											error_log("Airsyncbase RTF Body");
+											break;
+								case '1' :	$message->body = $message->airsyncbasebody->data;
+											error_log("Airsyncbase Plain Body");
+											break;
+	    					}
+						}
+						if (isset($message->rtf))
+						{
+							// Nokia MfE 2.9.158 sends contact notes with RTF and Body element.
+							// The RTF is empty, the body contains the note therefore we need to unpack the rtf
+							// to see if it is realy empty and in case not, take the appointment body.
+							error_log("RTF Body");
+							$rtf_body = new rtf ();
+							$rtf_body->loadrtf(base64_decode($message->rtf));
+							$rtf_body->output("ascii");
+							$rtf_body->parse();
+							if (isset($message->body) && isset($rtf_body->out) && $rtf_body->out == "" && $message->body != "")
+							{
+	        					unset($message->rtf);
+	    					}
+
+	    					$rtf_body = new rtf ();
+	    					$rtf_body->loadrtf(base64_decode($message->rtf));
+							$rtf_body->output("ascii");
+							$rtf_body->parse();
+							//put rtf into body
+							if($rtf_body->out <> "") $message->body=$rtf_body->out;
+						}
+						if (!empty(self::$mapping[$key])) $contact[$attr] = $message->body;
+						break;
 					case 'jpegphoto':
-						error_log("jpegphoto");
-						if (!empty($message->$key) && (!empty(self::$mapping[$key])) )  $contact[$attr] = base64_decode($message->$key);
+						if (!empty(self::$mapping[$key])) $contact[$attr] = base64_decode($message->$key);
 						break;
 
 					default:
-						if (!empty($message->$key) && (!empty(self::$mapping[$key])) )  $contact[$attr] = $message->$key;
+						if  (!empty(self::$mapping[$key])) $contact[$attr] = $message->$key;
 						break;
 				}
 			}
 
 			$contact['owner'] = $account;
+			if (!empty($id)) $contact['id'] = $id;
 			$this->addressbook->fixup_contact($contact);
-			error_log (print_r($contact,true));
-			//$this->addressbook->save($contact);
+			$newid = $this->addressbook->save($contact);
+			return $this->StatMessage($folderid, $newid);
 		}
+		return false;
     }
 
     /**
