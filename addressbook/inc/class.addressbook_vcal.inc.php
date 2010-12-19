@@ -175,23 +175,6 @@ class addressbook_vcal extends addressbook_bo
 			{
 				$contact['cat_id'] = implode(',',$this->find_or_add_categories($contact['cat_id'], -1));
 			}
-			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']))
-    		{
-	    		$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
-	    		switch ($owner)
-				{
-					case 'G':
-						$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
-					break;
-					case 'P':
-					case 'N':
-					case  0:
-						$contact['owner'] = $this->user;
-						break;
-					default:
-						$contact['owner'] = (int)$owner;
-				}
-    		}
     	}
     	if (isset($contact['owner']) && $contact['owner'] != $this->user)
     	{
