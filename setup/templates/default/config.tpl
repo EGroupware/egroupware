@@ -209,7 +209,7 @@
     <td colspan="2"><b>{lang_Authentication_/_Accounts}</b></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
@@ -218,7 +218,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Authentication_type_for_application}: <b>SyncML</b></td>
     <td>
      <select name="newsettings[auth_type_syncml]">
@@ -228,7 +228,7 @@
     </td>
    </tr>
 
-    <tr class="row_off">
+    <tr class="row_on">
     <td>{lang_Authentication_type_for_application}: <b>GroupDAV/CalDAV/CardDAV</b></td>
     <td>
      <select name="newsettings[auth_type_groupdav]">
@@ -238,14 +238,14 @@
     </td>
    </tr>
 
-  <tr class="row_on">
+  <tr class="row_off">
     <td>{lang_HTTP_auth_types_(comma-separated)_to_use_without_login-page, eg. "NTLM"}:</td>
     <td>
       <input name="newsettings[http_auth_types]" value="{value_http_auth_types}" size="20" />
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Select_where_you_want_to_store/retrieve_user_accounts}:</td>
     <td>
      <select name="newsettings[account_repository]">
@@ -256,14 +256,14 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_sql_encryption_type}:</td>
     <td>
      <select name="newsettings[sql_encryption_type]">{hook_sql_passwdhashes}</select>
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
      <td>{lang_Activate_safe_password_check}:</td>
      <td>
       <select name="newsettings[check_save_passwd]">
