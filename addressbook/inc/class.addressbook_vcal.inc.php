@@ -175,23 +175,6 @@ class addressbook_vcal extends addressbook_bo
 			{
 				$contact['cat_id'] = implode(',',$this->find_or_add_categories($contact['cat_id'], -1));
 			}
-			if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook']))
-    		{
-	    		$owner = $GLOBALS['egw_info']['user']['preferences']['syncml']['filter_addressbook'];
-	    		switch ($owner)
-				{
-					case 'G':
-						$contact['owner'] = $GLOBALS['egw_info']['user']['account_primary_group'];
-					break;
-					case 'P':
-					case 'N':
-					case  0:
-						$contact['owner'] = $this->user;
-						break;
-					default:
-						$contact['owner'] = (int)$owner;
-				}
-    		}
     	}
     	if (isset($contact['owner']) && $contact['owner'] != $this->user)
     	{
@@ -612,11 +595,13 @@ class addressbook_vcal extends addressbook_bo
 		foreach($vcardValues as $key => $vcardRow)
 		{
 			$rowName  = strtoupper($vcardRow['name']);
+			/*
 			if ($vcardRow['value'] == ''  && implode('', $vcardRow['values']) == '')
 			{
 				unset($vcardRow);
 				continue;
 			}
+			*/
 			$rowTypes = array();
 
 			$vcardRow['uparams'] = array();
@@ -625,8 +610,7 @@ class addressbook_vcal extends addressbook_bo
 				$pname = strtoupper($pname);
 				$vcardRow['uparams'][$pname] = $params;
 			}
-
-
+				
 			// expand 3.0 TYPE paramters to 2.1 qualifiers
 			$vcardRow['tparams'] = array();
 			foreach ($vcardRow['uparams'] as $pname => $params)
@@ -680,7 +664,7 @@ class addressbook_vcal extends addressbook_bo
 
 			$vcardRow['uparams'] += $vcardRow['tparams'];
 			ksort($vcardRow['uparams']);
-
+			
 			foreach ($vcardRow['uparams'] as $pname => $params)
 			{
 				switch ($pname)
