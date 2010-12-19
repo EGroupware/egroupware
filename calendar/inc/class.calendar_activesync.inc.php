@@ -17,7 +17,7 @@
  *
  * Plugin to make EGroupware calendar data available via Active Sync
  */
-class calendar_activesync //implements activesync_plugin_read
+class calendar_activesync implements activesync_plugin_write
 {
 	/**
 	 * var BackendEGW
@@ -157,6 +157,217 @@ class calendar_activesync //implements activesync_plugin_read
 		return $messagelist;
 	}
 
+	static $status2as = array(
+		'U' => 0,	// unknown
+		'T' => 2,	// tentative
+		'A' => 3,	// accepted
+		'R' => 4,	// decline
+		// 5 = not responded
+	);
+	static $role2as = array(
+		'REQ-PARTICIPANT' => 1,	// required
+		'CHAIR' => 1,			// required
+		'OPT-PARTICIPANT' => 2,	// optional
+		'NON-PARTICIPANT' => 2,
+		// 3 = ressource
+	);
+
+	/**
+	 * Changes or adds a message on the server
+	 *
+	 * @param string $folderid
+	 * @param int $id for change | empty for create new
+	 * @param SyncAppointment $message object to SyncObject to create
+	 *
+	 * @return array $stat whatever would be returned from StatMessage
+	 *
+	 * This function is called when a message has been changed on the PDA. You should parse the new
+	 * message here and save the changes to disk. The return value must be whatever would be returned
+	 * from StatMessage() after the message has been saved. This means that both the 'flags' and the 'mod'
+	 * properties of the StatMessage() item may change via ChangeMessage().
+	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
+	 * can only set them as 'read'.
+	 */
+	public function ChangeMessage($folderid, $id, $message)
+	{
+		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
+
+		$event = array();
+		$this->backend->splitID($folderid, $type, $account);
+
+		debugLog (__METHOD__."('$folderid', $id, ".array2string($message).") type='$type', account=$account");
+
+		if ($type != 'calendar' || $id && !($event = $this->calendar->read($id,null,false,'server')))
+		{
+			debugLog(__METHOD__."('$folderid',$id,...) Folder wrong or event does not existing");
+			return false;
+		}
+		if (!$this->calendar->check_perms($id ? EGW_ACL_EDIT : EGW_ACL_ADD,$event ? $event : 0,$account))
+		{
+			debugLog(__METHOD__."('$folderid',$id,...) no rights to add/edit event!");
+			return false;
+		}
+		// timestamps (created & modified are updated automatically)
+		foreach(array(
+			'start' => 'starttime',
+			'end' => 'endtime',
+		) as $key => $attr)
+		{
+			$event[$key] = egw_time::server2user($message->$attr);
+		}
+		if (!$id) $event['owner'] = $account;	// we do NOT allow to change the owner of existing events
+
+		// copying strings
+		foreach(array(
+			'title' => 'subject',
+			'uid'   => 'uid',
+			'location' => 'location',
+		) as $key => $attr)
+		{
+			if (isset($message->$attr)) $event[$key] = $message->$attr;
+		}
+
+		$event['public'] = (int)$message->sensitivity < 1;	// 0=normal, 1=personal, 2=private, 3=confidential
+		$event['whole_day'] = $message->alldayevent;
+
+		$participants = array();
+		foreach((array)$message->attendees as $attendee)
+		{
+			if (!($uid = $GLOBALS['egw']->accounts->name2id($attendee->email,'account_email')))
+			{
+				// todo check for other resource types
+				$uid = 'e'.$attendee->name.' <'.$attendee->email.'>';
+			}
+			if (!($status = array_search($attendee->status,self::$status2as))) $status = 'U';
+			if ($attendee->email == $message->organizeremail)
+			{
+				$role = 'CHAIR';
+				$chair_set = true;
+			}
+			elseif (!($role = array_search($attendee->type,self::$role2as)))
+			{
+				$role = 'REQ-PARTICIPANT';
+			}
+			$quantitiy = 1;
+			// if old role gives same type, use old role, as we have a lot more roles then AS
+			if ($id && isset($event['participants'][$uid]))
+			{
+				calendar_so::split_status($status, $quantity, $old_role);
+				if ((int)self::$role2as[$old_role] == $attendee->type)
+				{
+					$role = $old_role;
+				}
+			}
+			$participants[$uid] = calendar_so::combine_status($status,$quantitiy,$role);
+		}
+		// if organizer is not already participant, add him as chair
+		if (($uid = $GLOBALS['egw']->accounts->name2id($message->organizeremail,'account_email')) && !isset($participants[$uid]))
+		{
+			$participants[$uid] = calendar_so::combine_status($uid == $GLOBALS['egw_info']['user']['account_id'] ?
+				'A' : 'U',1,'CHAIR');
+			$chair_set = true;
+		}
+		// add calendar owner as participant, as otherwise event will NOT be in his calendar, in which it was posted
+		if (!$id && !isset($participants[$account]))
+		{
+			$participants[$account] = calendar_so::combine_status($account == $GLOBALS['egw_info']['user']['account_id'] ?
+				'A' : 'U',1,!$chair_set ? 'CHAIR' : 'REQ-PARTICIPANT');
+		}
+		$event['participants'] = $participants;
+
+		foreach((array)$message->categories as $name)
+		{
+			// todo: categories
+		}
+
+		// check if event is recurring and import recur information (incl. timezone)
+		if ($message->recurrence)
+		{
+			if ($message->timezone && !$id)	// dont care for timezone, if no new and recurring event
+			{
+				$event['tzid'] = self::as2tz(self::_getTZFromSyncBlob($message->timezone));
+			}
+			// todo: recurrence information
+		}
+
+		if (!($id = $this->calendar->save($event)))
+		{
+			debugLog(__METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
+			return false;
+		}
+		debugLog(__METHOD__."('$folderid',$id,...) SUCESS saving event=".array2string($event).", id=$id");
+		return $this->StatMessage($folderid, $id);
+	}
+
+	/**
+	 *  Creates or modifies a folder
+	 *
+	 * @param $id of the parent folder
+	 * @param $oldid => if empty -> new folder created, else folder is to be renamed
+	 * @param $displayname => new folder name (to be created, or to be renamed to)
+	 * @param type => folder type, ignored in IMAP
+	 *
+	 * @return stat | boolean false on error
+	 */
+	public function ChangeFolder($id, $oldid, $displayname, $type)
+	{
+		debugLog(__METHOD__."('$id', '$oldid', '$displayname', $type) NOT implemented!");
+		return false;
+	}
+
+	/**
+	 * Deletes (really delete) a Folder
+	 *
+	 * @param $parentid of the folder to delete
+	 * @param $id of the folder to delete
+	 *
+	 * @return
+	 * @TODO check what is to be returned
+	 */
+	public function DeleteFolder($parentid, $id)
+	{
+		debugLog(__METHOD__."('$parentid', '$id') NOT implemented!");
+		return false;
+	}
+
+	/**
+	 * Moves a message from one folder to another
+	 *
+	 * @param $folderid of the current folder
+	 * @param $id of the message
+	 * @param $newfolderid
+	 *
+	 * @return $newid as a string | boolean false on error
+	 *
+	 * After this call, StatMessage() and GetMessageList() should show the items
+	 * to have a new parent. This means that it will disappear from GetMessageList() will not return the item
+	 * at all on the source folder, and the destination folder will show the new message
+	 */
+	public function MoveMessage($folderid, $id, $newfolderid)
+	{
+		debugLog(__METHOD__."('$folderid', $id, '$newfolderid') NOT implemented!");
+		return false;
+	}
+
+	/**
+	 * Delete (really delete) a message in a folder
+	 *
+	 * @param $folderid
+	 * @param $id
+	 *
+	 * @TODO check what is to be returned
+	 *
+	 * @DESC After this call has succeeded, a call to
+	 * GetMessageList() should no longer list the message. If it does, the message will be re-sent to the PDA
+	 * as it will be seen as a 'new' item. This means that if you don't implement this function, you will
+	 * be able to delete messages on the PDA, but as soon as you sync, you'll get the item back
+	 */
+	public function DeleteMessage($folderid, $id)
+	{
+		debugLog(__METHOD__."('$folderid', $id) NOT implemented!");
+		return false;
+	}
+
 	/**
 	 * Get specified item from specified folder.
 	 *
@@ -169,7 +380,7 @@ class calendar_activesync //implements activesync_plugin_read
 	 * @param int $truncsize
 	 * @param int $bodypreference
 	 * @param bool $mimesupport
-	 * @return $messageobject|boolean false on error
+	 * @return SyncAppointment|boolean false on error
 	 */
 	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
 	{
@@ -220,24 +431,10 @@ class calendar_activesync //implements activesync_plugin_read
 		$message->attendees = array();
 		foreach($event['participants'] as $uid => $status)
 		{
-			static $status2as = array(
-				'u' => 0,	// unknown
-				't' => 2,	// tentative
-				'a' => 3,	// accepted
-				'r' => 4,	// decline
-				// 5 = not responded
-			);
-			static $role2as = array(
-				'REQ-PARTICIPANT' => 1,	// required
-				'CHAIR' => 1,			// required
-				'OPT-PARTICIPANT' => 2,	// optional
-				'NON-PARTICIPANT' => 2,
-				// 3 = ressource
-			);
 			calendar_so::split_status($status, $quantity, $role);
 			$attendee = new SyncAttendee();
-			$attendee->status = (int)$status2as[$status];
-			$attendee->type = (int)$role2as[$role];
+			$attendee->status = (int)self::$status2as[$status];
+			$attendee->type = (int)self::$role2as[$role];
 			if (is_numeric($uid))
 			{
 				$attendee->name = $GLOBALS['egw']->accounts->id2name($uid,'account_fullname');
@@ -525,27 +722,27 @@ END:VTIMEZONE
 	 *
 	 * Array
 	 * (
-	 *     [VTIMEZONE] => Array
-	 *         (
-	 *             [TZID] => Europe/Berlin
-	 *             [X-LIC-LOCATION] => Europe/Berlin
-	 *             [DAYLIGHT] => Array
-	 *                 (
-	 *                     [TZOFFSETFROM] => +0100
-	 *                     [TZOFFSETTO] => +0200
-	 *                     [TZNAME] => CEST
-	 *                     [DTSTART] => 19700329T020000
-	 *                     [RRULE] => FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
-	 *                 )
-	 *             [STANDARD] => Array
-	 *                 (
-	 *                     [TZOFFSETFROM] => +0200
-	 *                     [TZOFFSETTO] => +0100
-	 *                     [TZNAME] => CET
-	 *                     [DTSTART] => 19701025T030000
-	 *                     [RRULE] => FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10
-	 *                 )
-	 *         )
+	 *	 [VTIMEZONE] => Array
+	 *		 (
+	 *			 [TZID] => Europe/Berlin
+	 *			 [X-LIC-LOCATION] => Europe/Berlin
+	 *			 [DAYLIGHT] => Array
+	 *				 (
+	 *					 [TZOFFSETFROM] => +0100
+	 *					 [TZOFFSETTO] => +0200
+	 *					 [TZNAME] => CEST
+	 *					 [DTSTART] => 19700329T020000
+	 *					 [RRULE] => FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
+	 *				 )
+	 *			 [STANDARD] => Array
+	 *				 (
+	 *					 [TZOFFSETFROM] => +0200
+	 *					 [TZOFFSETTO] => +0100
+	 *					 [TZNAME] => CET
+	 *					 [DTSTART] => 19701025T030000
+	 *					 [RRULE] => FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10
+	 *				 )
+	 *		 )
 	 * )
 	 *
 	 * @param string|array $ical lines of ical file
