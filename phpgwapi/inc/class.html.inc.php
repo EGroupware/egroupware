@@ -393,7 +393,7 @@ class html
 	 */
 	static function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true,$style='')
 	{
-		//echo "<p align=right>checkbox_multiselect('$name',".print_r($key,true).",".print_r($arr,true).",$no_lang,'$options',$multiple,$selected_first,'$style')</p>\n";
+		//echo "<p align=right>checkbox_multiselect('$name',".array2string($key).",".array2string($arr).",$no_lang,'$options',$multiple,$selected_first,'$style')</p>\n";
 		if (!is_array($arr))
 		{
 			$arr = array('no','yes');
@@ -446,7 +446,7 @@ class html
 
 			if (strlen($label) > $max_len) $max_len = strlen($label);
 
-			$html .= self::label(self::checkbox($name,in_array($val,$key),$val,$options_no_id.
+			$html .= self::label(self::checkbox($name,in_array($val,$key,!$val),$val,$options_no_id.
 				' id="'.$base_name.'['.$val.']'.'"').self::htmlspecialchars($label),
 				$base_name.'['.$val.']','',($title ? 'title="'.self::htmlspecialchars($title).'" ':''))."<br />\n";
 		}
