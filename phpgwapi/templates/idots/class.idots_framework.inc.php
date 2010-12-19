@@ -263,7 +263,7 @@ class idots_framework extends egw_framework
 
 		// make sure header is output (not explicitly calling header, allows to put validate calls eg. in sidebox)
 		if (!self::$header_done) $content = $this->header() . $content;
-		
+
 		return $content;
 	}
 
@@ -398,8 +398,8 @@ class idots_framework extends egw_framework
 		{
 			$tmpl->set_block('login_form','remember_me_selection');
 			$tmpl->set_var('lang_remember_me',lang('Remember me'));
-			$tmpl->set_var('select_remember_me',html::select('remember_me', 'forever', array(
-				false => lang('not'),
+			$tmpl->set_var('select_remember_me',html::select('remember_me', '', array(
+				'' => lang('not'),
 				'1hour' => lang('1 Hour'),
 				'1day' => lang('1 Day'),
 				'1week'=> lang('1 Week'),
@@ -600,7 +600,7 @@ class idots_framework extends egw_framework
 		$this->tplsav2->menuinfoitems = array();
 
 		parent::topmenu($vars,$apps);
-		
+
 		$this->tplsav2->assign('info_icons',$this->topmenu_icon_arr);
 
 		return $this->tplsav2->fetch('topmenu.tpl.php');
@@ -755,10 +755,10 @@ class idots_framework extends egw_framework
 		}
 		return $this->tpl->parse('out',$block);
 	}
-	
+
 	/**
 	 * Return javascript (eg. for onClick) to open manual with given url
-	 * 
+	 *
 	 * @param string $url
 	 * @return string
 	 */
