@@ -12,13 +12,12 @@
  * @version $Id$
  */
 
-
 /**
  * Calendar activesync plugin
  *
- * Plugin creates a device specific file to map alphanumeric folder names to nummeric id's.
+ * Plugin to make EGroupware calendar data available via Active Sync
  */
-class calendar_activesync implements activesync_plugin_read
+class calendar_activesync //implements activesync_plugin_read
 {
 	/**
 	 * var BackendEGW
@@ -33,13 +32,6 @@ class calendar_activesync implements activesync_plugin_read
 	private $calendar;
 
 	/**
-	 * Integer id of current mail account / connection
-	 *
-	 * @var int
-	 */
-	private $account;
-
-	/**
 	 * Constructor
 	 *
 	 * @param BackendEGW $backend
@@ -48,7 +40,6 @@ class calendar_activesync implements activesync_plugin_read
 	{
 		$this->backend = $backend;
 	}
-
 
 	/**
 	 *  This function is analogous to GetMessageList.
@@ -169,28 +160,38 @@ class calendar_activesync implements activesync_plugin_read
 	/**
 	 * Get specified item from specified folder.
 	 *
+	 * Timezone wise we supply zpush with timestamps in servertime (!), which it "converts" in streamer::formatDate($ts)
+	 * via gmstrftime("%Y%m%dT%H%M%SZ", $ts) to UTC times.
+	 * Timezones are only used to get correct recurring events!
+	 *
 	 * @param string $folderid
 	 * @param string $id
 	 * @param int $truncsize
 	 * @param int $bodypreference
 	 * @param bool $mimesupport
 	 * @return $messageobject|boolean false on error
-	*/
+	 */
 	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
 		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
 		$this->backend->splitID($folderid, $type, $account);
-		if ($type != 'calendar' || !($event = $this->calendar->read($id,null,'ts',false,$account)))
+		if ($type != 'calendar' || !($event = $this->calendar->read($id,null,false,'server',$account)))
 		{
+			error_log(__METHOD__."('$folderid', $id, ...) read($id,null,false,'server',$account) returned false");
 			return false;
 		}
 		$message = new SyncAppointment();
 
-		// set timezones (Todo: timestamps have to be in that timezone)
-		//$message->timezone = base64_encode(self::_getSyncBlobFromTZ(self::tz2as($event['tzid'])));
-
+		// set timezone
+		try {
+			$as_tz = self::tz2as($event['tzid']);
+			$message->timezone = base64_encode(self::_getSyncBlobFromTZ($as_tz));
+		}
+		catch(Exception $e) {
+			// ignore exception, simply set no timezone, as it is optional
+		}
 		// copying timestamps
 		foreach(array(
 			'start' => 'starttime',
@@ -244,21 +245,18 @@ class calendar_activesync implements activesync_plugin_read
 			}
 			else
 			{
-				// ToDo: ressources, eg. contacts
-				continue;
-
 				list($info) = $this->calendar->resources[$uid[0]]['info'] ?
 					ExecMethod($this->resources[$uid[0]]['info'],substr($uid,1)) : array(false);
-				if ($info)
+
+				if (!$info) continue;
+
+				if (!$info['email'] && $info['responsible'])
 				{
-					if (!$info['email'] && $info['responsible'])
-					{
-						$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'],'account_email');
-					}
-					$attendee->name = empty($info['cn']) ? $info['name'] : $info['cn'];
-					$attendee->email = $info['email'];
-					if ($uid[0] == 'r') $attendee->type = 3;	// 3 = resource
+					$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'],'account_email');
 				}
+				$attendee->name = empty($info['cn']) ? $info['name'] : $info['cn'];
+				$attendee->email = $info['email'];
+				if ($uid[0] == 'r') $attendee->type = 3;	// 3 = resource
 			}
 			$message->attendees[] = $attendee;
 		}
@@ -355,12 +353,11 @@ class calendar_activesync implements activesync_plugin_read
 			// error_log why access is denied (should nevery happen for everything returned by calendar_bo::search)
 			$backup = $this->calendar->debug;
 			$this->calendar->debug = 2;
-			$this->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server');
+			$this->calendar->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server');
 			$this->calendar->debug = $backup;
 		}
 		else
 		{
-//list(,,$etag) = explode(':',$etag);
 			$stat = array(
 				'mod' => $etag,
 				'id' => is_array($id) ? $id['id'] : $id,
@@ -410,23 +407,24 @@ class calendar_activesync implements activesync_plugin_read
 	 * Just given the exact time of the next transition, which is available via DateTimeZone::getTransistions(),
 	 * will fail for recurring events longer then a year, as the transition date/time changes!
 	 *
-	 * We could use the RRule given in the iCal timezone defintion available via calendar_timezones::tz2id($tz,'component').
+	 * We use now the RRule given in the iCal timezone defintion available via calendar_timezones::tz2id($tz,'component').
 	 *
 	 * Not every timezone uses DST, in which case only bias matters and dstbias=0
 	 * (probably all other values should be 0, as MapiMapping::_getGMTTZ() in backend/ics.php does it).
 	 *
-	 * @param string|DateTimeZone $tz
+	 * @param string|DateTimeZone $tz timezone, timezone name (eg. "Europe/Berlin") or ical with VTIMEZONE
 	 * @param int|string|DateTime $ts=null time for which active sync timezone data is requested, default current time
 	 * @return array with values for keys:
 	 * - "bias": timezone offset from UTC in minutes for NO DST
 	 * - "dstendmonth", "dstendday", "dstendweek", "dstendhour", "dstendminute", "dstendsecond", "dstendmillis"
 	 * - "stdbias": seems not to be used
 	 * - "dststartmonth", "dststartday", "dststartweek", "dststarthour", "dststartminute", "dststartsecond", "dststartmillis"
-	 * - "dstbias": offset in minutes for no DST --> DST, usually 1
+	 * - "dstbias": offset in minutes for no DST --> DST, usually 60 or 0 for no DST
 	 *
 	 * @link http://download.microsoft.com/download/5/D/D/5DD33FDF-91F5-496D-9884-0A0B0EE698BB/%5BMS-ASDTYPE%5D.pdf
+	 * @throws egw_exception_assertion_failed if no vtimezone data found for given timezone
 	 */
-	function tz2as($tz,$ts=null)
+	static public function tz2as($tz,$ts=null)
 	{
 /*
 BEGIN:VTIMEZONE
@@ -440,7 +438,7 @@ TZOFFSETTO:+0200
 TZNAME:CEST
 DTSTART:19700329T020000
 RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
---> dststart: month: 3, day: SU(0???), week: 5, hour: 2, minute, second, millis: 0
+--> dststart: month: 3, day: SU(0???), week: -1|5, hour: 2, minute, second, millis: 0
 END:DAYLIGHT
 BEGIN:STANDARD
 TZOFFSETFROM:+0200
@@ -462,31 +460,36 @@ END:VTIMEZONE
 			'dstendhour' => 0, 'dstendminute' => 0, 'dstendsecond' => 0, 'dstendmillis' => 0,
 		);
 
-		$name = is_a($tz,'DateTimeZone') ? $tz->getName() : $tz;
-		$component = calendar_timezones::tz2id($name,'component');
+		$name = $component = is_a($tz,'DateTimeZone') ? $tz->getName() : $tz;
+		if (strpos($component, 'VTIMEZONE') === false) $component = calendar_timezones::tz2id($name,'component');
+		// parse ical timezone defintion
+		$ical = self::ical2array($ical=$component);
+		$standard = $ical['VTIMEZONE']['STANDARD'];
+		$daylight = $ical['VTIMEZONE']['DAYLIGHT'];
 
-		if (!preg_match("/BEGIN:STANDARD\nTZOFFSETFROM:([+-]?\d{4})\nTZOFFSETTO:([+-]?\d{4})\n(.*)\nEND:STANDARD\n/m",$component,$matches))
+		if (!isset($standard))
 		{
 			throw new egw_exception_assertion_failed("NO standard component for '$name' in '$component'!");
 		}
-		// get bias and dstbias, should be present in all tz
-		$data['bias'] = 60 * substr($matches[2],0,-2) + substr($matches[2],-2);		// TZOFFSETTO
-		$data['dstbias'] = 60 * substr($matches[1],0,-2) + substr($matches[1],-2);	// TZOFFSETFROM
+		// get bias and dstbias from standard component, which is present in all tz's
+		// (dstbias is relative to bias and almost always 60 or 0)
+		$data['bias'] = 60 * substr($standard['TZOFFSETTO'],0,-2) + substr($standard['TZOFFSETTO'],-2);
+		$data['dstbias'] = 60 * substr($standard['TZOFFSETFROM'],0,-2) + substr($standard['TZOFFSETFROM'],-2) - $data['bias'];
 
-		// check if we have a RRULE and a BEGIN:DAYLIGHT component
-		if (($end=$matches[3]) &&
-			preg_match("/BEGIN:DAYLIGHT\nTZOFFSETFROM:([+-]?\d{4})\nTZOFFSETTO:([+-]?\d{4})\n(.*)\nEND:DAYLIGHT\n/m",$component,$matches))
+		// check if we have an additional DAYLIGHT component and both have a RRULE component --> tz uses daylight saving
+		if (isset($standard['RRULE']) && isset($daylight) && isset($daylight['RRULE']))
 		{
-			foreach(array('dststart' => $matches[3],'dstend' => $end) as $prefix => $comp)
+			foreach(array('dststart' => $daylight,'dstend' => $standard) as $prefix => $comp)
 			{
-				if (pregmatch('/RRULE:FREQ=YEARLY;BYDAY=(.*);BYMONTH=(\d+)/',$comp,$matches))
+				if (preg_match('/FREQ=YEARLY;BYDAY=(.*);BYMONTH=(\d+)/',$comp['RRULE'],$matches))
 				{
 					$data[$prefix.'month'] = (int)$matches[2];
 					$data[$prefix.'week'] = (int)$matches[1];
+					if ($data[$prefix.'week'] < 0) $data[$prefix.'week'] = 5; // -1 for last week might be 5 for as as in recuring events definition
 					static $day2int = array('SU'=>0,'MO'=>1,'TU'=>2,'WE'=>3,'TH'=>4,'FR'=>5,'SA'=>6);
 					$data[$prefix.'day'] = (int)$day2int[substr($matches[1],-2)];
 				}
-				if (pregmatch('/DTSTART:\d{8}T(\d{6})/',$comp,$matches))
+				if (preg_match('/^\d{8}T(\d{6})$/',$comp['DTSTART'],$matches))
 				{
 					$data[$prefix.'hour'] = (int)substr($matches[1],0,2);
 					$data[$prefix.'minute'] = (int)substr($matches[1],2,2);
@@ -494,25 +497,121 @@ END:VTIMEZONE
 				}
 			}
 		}
-		error_log(__METHOD__."('$name') returning ".array2string($data));
+		//error_log(__METHOD__."('$name') returning ".array2string($data));
 		return $data;
+	}
+
+	/**
+	 * Simple iCal parser:
+	 *
+	 * BEGIN:VTIMEZONE
+	 * TZID:Europe/Berlin
+	 * X-LIC-LOCATION:Europe/Berlin
+	 * BEGIN:DAYLIGHT
+	 * TZOFFSETFROM:+0100
+	 * TZOFFSETTO:+0200
+	 * TZNAME:CEST
+	 * DTSTART:19700329T020000
+	 * RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
+	 * END:DAYLIGHT
+	 * BEGIN:STANDARD
+	 * TZOFFSETFROM:+0200
+	 * TZOFFSETTO:+0100
+	 * TZNAME:CET
+	 * DTSTART:19701025T030000
+	 * RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10
+	 * END:STANDARD
+	 * END:VTIMEZONE
+	 *
+	 * Array
+	 * (
+	 *     [VTIMEZONE] => Array
+	 *         (
+	 *             [TZID] => Europe/Berlin
+	 *             [X-LIC-LOCATION] => Europe/Berlin
+	 *             [DAYLIGHT] => Array
+	 *                 (
+	 *                     [TZOFFSETFROM] => +0100
+	 *                     [TZOFFSETTO] => +0200
+	 *                     [TZNAME] => CEST
+	 *                     [DTSTART] => 19700329T020000
+	 *                     [RRULE] => FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
+	 *                 )
+	 *             [STANDARD] => Array
+	 *                 (
+	 *                     [TZOFFSETFROM] => +0200
+	 *                     [TZOFFSETTO] => +0100
+	 *                     [TZNAME] => CET
+	 *                     [DTSTART] => 19701025T030000
+	 *                     [RRULE] => FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10
+	 *                 )
+	 *         )
+	 * )
+	 *
+	 * @param string|array $ical lines of ical file
+	 * @param string $component=null
+	 * @return array with parsed ical components
+	 */
+	static public function ical2array(&$ical,$component=null)
+	{
+		$arr = array();
+		if (!is_array($ical)) $ical = preg_split("/[\r\n]+/m", $ical);
+		while (($line = array_shift($ical)))
+		{
+			list($name,$value) = explode(':',$line,2);
+			if ($name == 'BEGIN')
+			{
+				$arr[$value] = self::ical2array($ical,$value);
+			}
+			elseif($name == 'END')
+			{
+				break;
+			}
+			else
+			{
+				$arr[$name] = $value;
+			}
+		}
+		return $arr;
 	}
 
 	/**
 	 * Get timezone from AS timezone data
 	 *
-	 * Here we can only loop through all available timezones (possibly starting with the users timezone) and
+	 * Here we can only loop through all available timezones (starting with the users timezone) and
 	 * try to find a timezone matching the change data and offsets specified in $data.
 	 * This conversation is not unique, as multiple timezones can match the given data or none!
 	 *
-	 * Maybe returning the users timezone, if no match found makes more sense.
+	 * Maybe returning the users timezone, if no match found, might makes more sense.
 	 *
 	 * @param array $data
 	 * @return string|boolean timezone name, eg. "Europe/Berlin" or false if no matching timezone found
 	 */
-	function as2tz(array $data)
+	public static function as2tz(array $data)
 	{
-		return false;
+		static $cache;	// some caching withing the request
+
+		$key = serialize($data);
+
+		for($n = 0; !isset($cache[$key]); ++$n)
+		{
+			if (!$n)	// check users timezone first
+			{
+				$tz = egw_time::$user_timezone->getName();
+			}
+			elseif (!($tz = calendar_timezones::id2tz($n)))	// no further timezones to check
+			{
+				$cache[$key] = false;
+				error_log(__METHOD__.'('.array2string($data).') NO matching timezone found!');
+				break;
+			}
+			if (self::tz2as($tz) == $data)
+			{
+				$cache[$key] = $tz;
+				break;
+			}
+		}
+		return $cache[$key];
 	}
 
 	/**
@@ -520,7 +619,8 @@ END:VTIMEZONE
 	 *
 	 * copied from backend/ics.php
 	 */
-	static private function _getTZFromSyncBlob($data) {
+	static private function _getTZFromSyncBlob($data)
+	{
 		$tz = unpack(	"lbias/a64name/vdstendyear/vdstendmonth/vdstendday/vdstendweek/vdstendhour/vdstendminute/vdstendsecond/vdstendmillis/" .
 						"lstdbias/a64name/vdststartyear/vdststartmonth/vdststartday/vdststartweek/vdststarthour/vdststartminute/vdststartsecond/vdststartmillis/" .
 						"ldstbias", $data);
@@ -533,7 +633,8 @@ END:VTIMEZONE
 	 *
 	 * copied from backend/ics.php
 	 */
-	static private function _getSyncBlobFromTZ($tz) {
+	static private function _getSyncBlobFromTZ($tz)
+	{
 		$packed = pack("la64vvvvvvvv" . "la64vvvvvvvv" . "l",
 				$tz["bias"], "", 0, $tz["dstendmonth"], $tz["dstendday"], $tz["dstendweek"], $tz["dstendhour"], $tz["dstendminute"], $tz["dstendsecond"], $tz["dstendmillis"],
 				$tz["stdbias"], "", 0, $tz["dststartmonth"], $tz["dststartday"], $tz["dststartweek"], $tz["dststarthour"], $tz["dststartminute"], $tz["dststartsecond"], $tz["dststartmillis"],
@@ -542,3 +643,26 @@ END:VTIMEZONE
 		return $packed;
 	}
 }
+
+/**
+ * Testcode for active sync timezone stuff
+ *
+$GLOBALS['egw_info'] = array(
+	'flags' => array(
+		'currentapp' => 'login'
+	)
+);
+require_once('../../header.inc.php');
+
+// get as timezone data for agive timezone
+$tz = 'Europe/Zurich';//'America/New_York';//'Australia/Darwin';//'Europe/Berlin';
+$ical = calendar_timezones::tz2id($tz,'component');
+echo "<pre>".print_r($ical,true)."</pre>\n";
+$ical_arr = calendar_activesync::ical2array($ical_tz=$ical);
+echo "<pre>".print_r($ical_arr,true)."</pre>\n";
+$as_tz = calendar_activesync::tz2as($tz);
+echo "<pre>".print_r($as_tz,true)."</pre>\n";
+
+// find matching timezone from as data
+echo array2string(calendar_activesync::as2tz($as_tz));
+*/
