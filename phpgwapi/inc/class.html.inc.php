@@ -274,7 +274,7 @@ class html
 	 * escapes chars with special meaning in html as entities
 	 *
 	 * Allows to use and char in the html-output and prevents XSS attacks.
-	 * Some entities are allowed and get NOT escaped: -> prevented by 4th param = doubleencode=false 
+	 * Some entities are allowed and get NOT escaped: -> prevented by 4th param = doubleencode=false
 	 * - &# some translations (AFAIK: the arabic ones) need this;
 	 * - &nbsp; &lt; &gt; for convenience -> should not happen anymore, as we do not doubleencode anymore (20101020)
 	 *
@@ -386,7 +386,7 @@ class html
 	 */
 	static function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true,$style='')
 	{
-		//echo "<p align=right>checkbox_multiselect('$name',".print_r($key,true).",".print_r($arr,true).",$no_lang,'$options',$multiple,$selected_first,'$style')</p>\n";
+		//echo "<p align=right>checkbox_multiselect('$name',".array2string($key).",".array2string($arr).",$no_lang,'$options',$multiple,$selected_first,'$style')</p>\n";
 		if (!is_array($arr))
 		{
 			$arr = array('no','yes');
@@ -439,7 +439,7 @@ class html
 
 			if (strlen($label) > $max_len) $max_len = strlen($label);
 
-			$html .= self::label(self::checkbox($name,in_array($val,$key),$val,$options_no_id.
+			$html .= self::label(self::checkbox($name,in_array($val,$key,!$val),$val,$options_no_id.
 				' id="'.$base_name.'['.$val.']'.'"').self::htmlspecialchars($label),
 				$base_name.'['.$val.']','',($title ? 'title="'.self::htmlspecialchars($title).'" ':''))."<br />\n";
 		}
@@ -600,7 +600,7 @@ class html
 		//Get the height in pixels from the pixels parameter
 		$pxheight = (strpos('px', $_height) === false) ?
 			(empty($_height) ? 400 : $_height) : str_replace('px', '', $_height);
-		
+
 		return '
 <textarea name="'.$_name.'">'.htmlspecialchars($_content).'</textarea>
 <script type="text/javascript">
@@ -1227,7 +1227,7 @@ class html
 		$html .= "$tree.parentObject.style.overflow='auto';\n";	// dhtmlXTree constructor has hidden hardcoded
 		if (translation::charset() == 'utf-8') $html .= "if ($tree.setEscapingMode) $tree.setEscapingMode('utf8');\n";
 		$html .= "$tree.setImagePath('$folderImageDir/dhtmlxtree/');\n";
-		
+
 		if($_onCheckHandler)
 		{
 			$html .= "$tree.enableCheckBoxes(1);\n";
@@ -1236,11 +1236,11 @@ class html
 
 		if ($autoLoading)
 		{
-			$autoLoading = is_array($autoLoading) ? 
+			$autoLoading = is_array($autoLoading) ?
 				egw::link('/index.php',$autoLoading) : egw::link($autoLoading);
 			$html .= "$tree.setXMLAutoLoading('$autoLoading');\n";
 			if ($dataMode != 'XML') $html .= "$tree.setDataMode('$dataMode');\n";
-			
+
 			// if no folders given, use xml url to load root, incl. setting of selected folder
 			if (!$_folders)
 			{
@@ -1289,7 +1289,7 @@ class html
 		{
 			// evtl. remove leading delimiter
 			if ($_selected[0] == $delimiter) $_selected = substr($_selected,1);
-			
+
 			$n = 0;
 			foreach($_folders as $path => $data)
 			{
@@ -1298,7 +1298,7 @@ class html
 					$data = array('label' => $data);
 				}
 				$image1 = $image2 = $image3 = '0';
-	
+
 				// if _leafImage given, set it only for leaves, not for folders containing children
 				if ($_leafImage)
 				{
@@ -1319,15 +1319,15 @@ class html
 				// evtl. remove leading delimiter
 				if ($path[0] == $delimiter) $path = substr($path,1);
 				$folderParts = explode($delimiter,$path);
-	
+
 				//get rightmost folderpart
 				$label = array_pop($folderParts);
 				if (isset($data['label'])) $label = $data['label'];
-	
+
 				// the rest of the array is the name of the parent
 				$parentName = implode((array)$folderParts,$delimiter);
 				if(empty($parentName)) $parentName = $top;
-	
+
 				$entryOptions = !isset($data['child']) || $data['child'] ? 'CHILD' : '';
 				if ($_onCheckHandler && $_selected)	// check selected items on multi selection
 				{
@@ -1500,7 +1500,7 @@ class html
 	 * split html by PRE tag, return array with all content pre-sections isolated in array elements
 	 * @author Leithoff, Klaus
 	 * @param string html
-	 * @return mixed array of parts or unaffected html 
+	 * @return mixed array of parts or unaffected html
 	 */
 	static function splithtmlByPRE($html)
 	{
