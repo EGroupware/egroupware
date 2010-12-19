@@ -355,7 +355,7 @@ class calendar_activesync implements activesync_plugin_write
 	 * @param $folderid
 	 * @param $id
 	 *
-	 * @TODO check what is to be returned
+	 * @return boolean true on success, false on error, diffbackend does NOT use the returnvalue
 	 *
 	 * @DESC After this call has succeeded, a call to
 	 * GetMessageList() should no longer list the message. If it does, the message will be re-sent to the PDA
@@ -364,8 +364,11 @@ class calendar_activesync implements activesync_plugin_write
 	 */
 	public function DeleteMessage($folderid, $id)
 	{
-		debugLog(__METHOD__."('$folderid', $id) NOT implemented!");
-		return false;
+		if (!isset($this->caledar)) $this->calendar = new calendar_boupdate();
+
+		$ret = $this->calendar->delete($id);
+		debugLog(__METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
+		return $ret;
 	}
 
 	/**
