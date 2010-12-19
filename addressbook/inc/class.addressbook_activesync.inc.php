@@ -35,62 +35,62 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	 * @var array
 	 */
 	static public $mapping = array(
-	    //'anniversary'	=> '',
-    	'assistantname'	=> 'assistent',
-    	'assistnamephonenumber'	=> 'tel_assistent',
-    	'birthday'	=>	'bday',
-    	'body'	=> 'note',
-    	//'bodysize'	=> '',
-    	//'bodytruncated'	=> '',
-    	//'business2phonenumber'	=> '',
-    	'businesscity'	=>	'adr_one_locality',
-    	'businesscountry'	=> 'adr_one_countryname',
-    	'businesspostalcode'	=> 'adr_one_postalcode',
-    	'businessstate'	=> 'adr_one_region',
-    	'businessstreet'	=> 'adr_one_street',
-    	'businessfaxnumber'	=> 'tel_fax',
-    	'businessphonenumber'	=> 'tel_work',
-    	'carphonenumber'	=> 'tel_car',
-    	'categories'	=> 'cat_id',
-    	//'children'	=> '',
-    	'companyname'	=> 'org_name',
-    	'department'	=>	'org_unit',
-    	'email1address'	=> 'email',
-    	'email2address'	=> 'email_home',
-    	//'email3address'	=> '',
-    	'fileas'	=>	'n_fileas',
-    	'firstname'	=>	'n_given',
-    	//'home2phonenumber'	=> '',
-    	'homecity'	=> 'adr_two_locality',
-    	'homecountry'	=> 'adr_two_countryname',
-    	'homepostalcode'	=> 'adr_two_postalcode',
-    	'homestate'	=> 'adr_two_region',
-    	'homestreet'	=>	'adr_two_street',
-    	'homefaxnumber'	=> 'tel_fax_home',
-    	'homephonenumber'	=>	'tel_home',
-    	'jobtitle'	=>	'role',
-    	'lastname'	=> 'n_family',
-    	'middlename'	=> 'n_middle',
-    	'mobilephonenumber'	=> 'tel_cell',
-    	'officelocation'	=> 'room',
-    	//'othercity'	=> '',
-    	//'othercountry'	=> '',
-    	//'otherpostalcode'	=> '',
-    	//'otherstate'	=> '',
-    	//'otherstreet'	=> '',
-    	'pagernumber'	=> 'tel_pager',
-    	//'radiophonenumber'	=> '',
-    	//'spouse'	=> '',
-    	'suffix'	=>	'n_suffix',
-    	'title'	=> 'title',	// @TODO: check if n_prefix
-    	'webpage'	=> 'url',
-    	//'yomicompanyname'	=> '',
-    	//'yomifirstname'	=>	'',
-    	//'yomilastname'	=>	'',
-    	//'rtf'	=> '',
-    	'picture'	=> 'jpegphoto',
-    	//'nickname'	=>	'',
-    	//'airsyncbasebody'	=>	'',
+		//'anniversary'	=> '',
+		'assistantname'	=> 'assistent',
+		'assistnamephonenumber'	=> 'tel_assistent',
+		'birthday'	=>	'bday',
+		'body'	=> 'note',
+		//'bodysize'	=> '',
+		//'bodytruncated'	=> '',
+		//'business2phonenumber'	=> '',
+		'businesscity'	=>	'adr_one_locality',
+		'businesscountry'	=> 'adr_one_countryname',
+		'businesspostalcode'	=> 'adr_one_postalcode',
+		'businessstate'	=> 'adr_one_region',
+		'businessstreet'	=> 'adr_one_street',
+		'businessfaxnumber'	=> 'tel_fax',
+		'businessphonenumber'	=> 'tel_work',
+		'carphonenumber'	=> 'tel_car',
+		'categories'	=> 'cat_id',
+		//'children'	=> '',
+		'companyname'	=> 'org_name',
+		'department'	=>	'org_unit',
+		'email1address'	=> 'email',
+		'email2address'	=> 'email_home',
+		//'email3address'	=> '',
+		'fileas'	=>	'n_fileas',
+		'firstname'	=>	'n_given',
+		//'home2phonenumber'	=> '',
+		'homecity'	=> 'adr_two_locality',
+		'homecountry'	=> 'adr_two_countryname',
+		'homepostalcode'	=> 'adr_two_postalcode',
+		'homestate'	=> 'adr_two_region',
+		'homestreet'	=>	'adr_two_street',
+		'homefaxnumber'	=> 'tel_fax_home',
+		'homephonenumber'	=>	'tel_home',
+		'jobtitle'	=>	'role',
+		'lastname'	=> 'n_family',
+		'middlename'	=> 'n_middle',
+		'mobilephonenumber'	=> 'tel_cell',
+		'officelocation'	=> 'room',
+		//'othercity'	=> '',
+		//'othercountry'	=> '',
+		//'otherpostalcode'	=> '',
+		//'otherstate'	=> '',
+		//'otherstreet'	=> '',
+		'pagernumber'	=> 'tel_pager',
+		//'radiophonenumber'	=> '',
+		//'spouse'	=> '',
+		'suffix'	=>	'n_suffix',
+		'title'	=> 'title',	// @TODO: check if n_prefix
+		'webpage'	=> 'url',
+		//'yomicompanyname'	=> '',
+		//'yomifirstname'	=>	'',
+		//'yomilastname'	=>	'',
+		//'rtf'	=> '',
+		'picture'	=> 'jpegphoto',
+		//'nickname'	=>	'',
+		//'airsyncbasebody'	=>	'',
 	);
 
 	/**
@@ -196,8 +196,8 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 		$this->backend->splitID($id, $type, $owner);
 
 		$stat = array(
-			'id'     => $id,
-			'mod'    => $this->get_addressbooks($owner),
+			'id'	 => $id,
+			'mod'	=> $this->get_addressbooks($owner),
 			'parent' => '0',
 		);
 		//error_log(__METHOD__."('$id') returning ".array2string($stat));
@@ -207,18 +207,18 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 
 	/**
 	 * Should return a list (array) of messages, each entry being an associative array
-     * with the same entries as StatMessage(). This function should return stable information; ie
-     * if nothing has changed, the items in the array must be exactly the same. The order of
-     * the items within the array is not important though.
-     *
-     * The cutoffdate is a date in the past, representing the date since which items should be shown.
-     * This cutoffdate is determined by the user's setting of getting 'Last 3 days' of e-mail, etc. If
-     * you ignore the cutoffdate, the user will not be able to select their own cutoffdate, but all
-     * will work OK apart from that.
-     *
-     * @param string $id folder id
-     * @param int $cutoffdate=null
-     * @return array
+	 * with the same entries as StatMessage(). This function should return stable information; ie
+	 * if nothing has changed, the items in the array must be exactly the same. The order of
+	 * the items within the array is not important though.
+	 *
+	 * The cutoffdate is a date in the past, representing the date since which items should be shown.
+	 * This cutoffdate is determined by the user's setting of getting 'Last 3 days' of e-mail, etc. If
+	 * you ignore the cutoffdate, the user will not be able to select their own cutoffdate, but all
+	 * will work OK apart from that.
+	 *
+	 * @param string $id folder id
+	 * @param int $cutoffdate=null
+	 * @return array
   	 */
 	function GetMessageList($id, $cutoffdate=NULL)
 	{
@@ -249,7 +249,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	 * @param int $bodypreference
 	 * @param bool $mimesupport
 	 * @return $messageobject|boolean false on error
-	*/
+	 */
 	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $mimesupport = 0)
 	{
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
@@ -270,16 +270,16 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 					if (empty($contact[$attr])) break;
 					if ($bodypreference == false)
 					{
-    			    	$message->body = $contact[$attr];
-			    		$message->bodysize = strlen($message->body);
-        		    	$message->bodytruncated = 0;
+						$message->body = $contact[$attr];
+						$message->bodysize = strlen($message->body);
+						$message->bodytruncated = 0;
 					}
 					else
 					{
 						$message->airsyncbasebody = new SyncAirSyncBaseBody();
-			    		debugLog("airsyncbasebody!");
-			    		$message->airsyncbasenativebodytype=1;
-			    		$message->airsyncbasebody = new SyncAirSyncBaseBody();
+						debugLog("airsyncbasebody!");
+						$message->airsyncbasenativebodytype=1;
+						$message->airsyncbasebody = new SyncAirSyncBaseBody();
 						if (isset($bodypreference[2]))
 						{
 							//debugLog("HTML Body");
@@ -295,7 +295,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 									'</html>';
 									if (isset($bodypreference[2]["TruncationSize"]) && strlen($html) > $bodypreference[2]["TruncationSize"])
 									{
-        	        	    			$html = utf8_truncate($html,$bodypreference[2]["TruncationSize"]);
+										$html = utf8_truncate($html,$bodypreference[2]["TruncationSize"]);
 										$message->airsyncbasebody->truncated = 1;
 									}
 									$message->airsyncbasebody->data = $html;
@@ -310,13 +310,13 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 							{
 								$note = utf8_truncate($note, $bodypreference[1]["TruncationSize"]);
 								$message->airsyncbasebody->truncated = 1;
-    	    		        }
+							}
 							$message->airsyncbasebody->estimateddatasize = strlen($note);
 							$message->airsyncbasebody->data = $note;
 						}
 						if ($message->airsyncbasebody->type != 3 && (!isset($message->airsyncbasebody->data) || strlen($message->airsyncbasebody->data) == 0))
 						{
-        					$message->airsyncbasebody->data = " ";
+							$message->airsyncbasebody->data = " ";
 						}
 					}
 					break;
@@ -347,16 +347,16 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 
 	/**
 	 * StatMessage should return message stats, analogous to the folder stats (StatFolder). Entries are:
-     * 'id'     => Server unique identifier for the message. Again, try to keep this short (under 20 chars)
-     * 'flags'     => simply '0' for unread, '1' for read
-     * 'mod'    => modification signature. As soon as this signature changes, the item is assumed to be completely
-     *             changed, and will be sent to the PDA as a whole. Normally you can use something like the modification
-     *             time for this field, which will change as soon as the contents have changed.
-     *
-     * @param string $folderid
-     * @param int|array $contact contact id or array
-     * @return array
-     */
+	 * 'id'	 => Server unique identifier for the message. Again, try to keep this short (under 20 chars)
+	 * 'flags'	 => simply '0' for unread, '1' for read
+	 * 'mod'	=> modification signature. As soon as this signature changes, the item is assumed to be completely
+	 *			 changed, and will be sent to the PDA as a whole. Normally you can use something like the modification
+	 *			 time for this field, which will change as soon as the contents have changed.
+	 *
+	 * @param string $folderid
+	 * @param int|array $contact contact id or array
+	 * @return array
+	 */
 	public function StatMessage($folderid, $contact)
 	{
 		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
@@ -382,59 +382,58 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 
 	/**
 	 *  Creates or modifies a folder
-     *
-     * @param $id of the parent folder
-     * @param $oldid => if empty -> new folder created, else folder is to be renamed
-     * @param $displayname => new folder name (to be created, or to be renamed to)
-     * @param type => folder type, ignored in IMAP
-     *
-     * @return stat | boolean false on error
-     *
-     */
-    public function ChangeFolder($id, $oldid, $displayname, $type)
-    {
-    	debugLog(__METHOD__." not implemented");
-    }
+	 *
+	 * @param $id of the parent folder
+	 * @param $oldid => if empty -> new folder created, else folder is to be renamed
+	 * @param $displayname => new folder name (to be created, or to be renamed to)
+	 * @param type => folder type, ignored in IMAP
+	 *
+	 * @return stat | boolean false on error
+	 *
+	 */
+	public function ChangeFolder($id, $oldid, $displayname, $type)
+	{
+		debugLog(__METHOD__." not implemented");
+	}
 
-    /**
-     * Deletes (really delete) a Folder
-     *
-     * @param $parentid of the folder to delete
-     * @param $id of the folder to delete
-     *
-     * @return
-     * @TODO check what is to be returned
-     *
-     */
-    public function DeleteFolder($parentid, $id)
-    {
-    	debugLog(__METHOD__." not implemented");
-    }
+	/**
+	 * Deletes (really delete) a Folder
+	 *
+	 * @param $parentid of the folder to delete
+	 * @param $id of the folder to delete
+	 *
+	 * @return
+	 * @TODO check what is to be returned
+	 *
+	 */
+	public function DeleteFolder($parentid, $id)
+	{
+		debugLog(__METHOD__." not implemented");
+	}
 
+	/**
+	 * Changes or adds a message on the server
+	 *
+	 * @param string $folderid
+	 * @param int $id for change | empty for create new
+	 * @param SyncContact $message object to SyncObject to create
+	 *
+	 * @return array $stat whatever would be returned from StatMessage
+	 *
+	 * This function is called when a message has been changed on the PDA. You should parse the new
+	 * message here and save the changes to disk. The return value must be whatever would be returned
+	 * from StatMessage() after the message has been saved. This means that both the 'flags' and the 'mod'
+	 * properties of the StatMessage() item may change via ChangeMessage().
+	 * Note that this function will never be called on E-mail items as you can't change e-mail items, you
+	 * can only set them as 'read'.
+	 */
+	public function ChangeMessage($folderid, $id, $message)
+	{
+		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
-    /**
-     * Changes or adds a message on the server
-     *
-     * @param $folderid
-     * @param $id for change | empty for create new
-     * @param $message object to SyncObject to create
-     *
-     * @return $stat whatever would be returned from StatMessage
-     *
-     * This function is called when a message has been changed on the PDA. You should parse the new
-     * message here and save the changes to disk. The return value must be whatever would be returned
-     * from StatMessage() after the message has been saved. This means that both the 'flags' and the 'mod'
-     * properties of the StatMessage() item may change via ChangeMessage().
-     * Note that this function will never be called on E-mail items as you can't change e-mail items, you
-     * can only set them as 'read'.
-     */
-    public function ChangeMessage($folderid, $id, $message)
-    {
-    	if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
-
-    	$this->backend->splitID($folderid, $type, $account);
-    	// error_log(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
-    	if ($type != 'addressbook') // || !($contact = $this->addressbook->read($id)))
+		$this->backend->splitID($folderid, $type, $account);
+		// error_log(__METHOD__. " Id " .$id. " Account ". $account . " FolderID " . $folderid);
+		if ($type != 'addressbook') // || !($contact = $this->addressbook->read($id)))
 		{
 			debugLog(__METHOD__." Folder wrong or contact not existing");
 			return false;
@@ -463,7 +462,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 								case '1' :	$message->body = $message->airsyncbasebody->data;
 											error_log("Airsyncbase Plain Body");
 											break;
-	    					}
+							}
 						}
 						if (isset($message->rtf))
 						{
@@ -477,11 +476,11 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 							$rtf_body->parse();
 							if (isset($message->body) && isset($rtf_body->out) && $rtf_body->out == "" && $message->body != "")
 							{
-	        					unset($message->rtf);
-	    					}
+								unset($message->rtf);
+							}
 
-	    					$rtf_body = new rtf ();
-	    					$rtf_body->loadrtf(base64_decode($message->rtf));
+							$rtf_body = new rtf ();
+							$rtf_body->loadrtf(base64_decode($message->rtf));
 							$rtf_body->output("ascii");
 							$rtf_body->parse();
 							//put rtf into body
@@ -506,50 +505,54 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			return $this->StatMessage($folderid, $newid);
 		}
 		return false;
-    }
+	}
 
-    /**
-     * Moves a message from one folder to another
-     *
-     * @param $folderid of the current folder
-     * @param $id of the message
-     * @param $newfolderid
-     *
-     * @return $newid as a string | boolean false on error
-     *
-     * After this call, StatMessage() and GetMessageList() should show the items
-     * to have a new parent. This means that it will disappear from GetMessageList() will not return the item
-     * at all on the source folder, and the destination folder will show the new message
-     *
-     */
-    public function MoveMessage($folderid, $id, $newfolderid)
-    {
-    	error_log(__METHOD__);
-    }
+	/**
+	 * Moves a message from one folder to another
+	 *
+	 * @param $folderid of the current folder
+	 * @param $id of the message
+	 * @param $newfolderid
+	 *
+	 * @return $newid as a string | boolean false on error
+	 *
+	 * After this call, StatMessage() and GetMessageList() should show the items
+	 * to have a new parent. This means that it will disappear from GetMessageList() will not return the item
+	 * at all on the source folder, and the destination folder will show the new message
+	 *
+	 */
+	public function MoveMessage($folderid, $id, $newfolderid)
+	{
+		error_log(__METHOD__);
+	}
 
 
-    /**
-     * Delete (really delete) a message in a folder
-     *
-     * @param $folderid
-     * @param $id
-     *
-     * @TODO check what is to be returned
-     *
-     * @DESC After this call has succeeded, a call to
-     * GetMessageList() should no longer list the message. If it does, the message will be re-sent to the PDA
-     * as it will be seen as a 'new' item. This means that if you don't implement this function, you will
-     * be able to delete messages on the PDA, but as soon as you sync, you'll get the item back
-     */
-    public function DeleteMessage($folderid, $id)
-    {
-    	error_log (__METHOD__);
-    }
+	/**
+	 * Delete (really delete) a message in a folder
+	 *
+	 * @param $folderid
+	 * @param $id
+	 *
+	 * @return boolean true on success, false on error, diffbackend does NOT use the returnvalue
+	 *
+	 * @DESC After this call has succeeded, a call to
+	 * GetMessageList() should no longer list the message. If it does, the message will be re-sent to the PDA
+	 * as it will be seen as a 'new' item. This means that if you don't implement this function, you will
+	 * be able to delete messages on the PDA, but as soon as you sync, you'll get the item back
+	 */
+	public function DeleteMessage($folderid, $id)
+	{
+		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+
+		$ret = $this->addressbook->delete($id);
+		debugLog(__METHOD__."('$folderid', $id) delete($id) returned ".array2string($ret));
+		return $ret;
+	}
 
 	/**
 	 * Return a changes array
 	 *
-     * if changes occurr default diff engine computes the actual changes
+	 * if changes occurr default diff engine computes the actual changes
 	 *
 	 * @param string $folderid
 	 * @param string &$syncstate on call old syncstate, on return new syncstate
@@ -561,7 +564,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 
 		if ($type != 'addressbook') return false;
 
-    	if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 		$ctag = $this->addressbook->get_ctag($owner);
 
 		$changes = array();	// no change
@@ -585,7 +588,7 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 	 */
 	function getSearchResultsGAL($searchquery)
 	{
-    	if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
+		if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 
 		$items = array();
 		if (($contacts =& $this->addressbook->search($searchquery, false, false, '', '%', false, 'OR')))
