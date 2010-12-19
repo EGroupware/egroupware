@@ -111,7 +111,7 @@ class calendar_rrule implements Iterator
 	 *
 	 * @var int
 	 */
-	protected $monthly_byday_num;
+	public $monthly_byday_num;
 
 	/**
 	 * Number for monthly bymonthday: 1, ..., 31, -1=last day of month
@@ -120,7 +120,7 @@ class calendar_rrule implements Iterator
 	 *
 	 * @var int
 	 */
-	protected $monthly_bymonthday;
+	public $monthly_bymonthday;
 
 	/**
 	 * Enddate of recurring event or null, if not ending
