@@ -139,7 +139,7 @@ class calendar_activesync implements activesync_plugin_write
 
 		if (!$cutoffdate) $cutoffdate = $this->bo->now - 100*24*3600;	// default three month back -30 breaks all sync recurrences
 
-		// todo return only etag relevant information
+		// @todo return only etag relevant information
 		$filter = array(
 			'users' => $user,
 			'start' => $cutoffdate,	// default one month back -30 breaks all sync recurrences
@@ -157,6 +157,11 @@ class calendar_activesync implements activesync_plugin_write
 		return $messagelist;
 	}
 
+	/**
+	 * Conversation to AS status
+	 *
+	 * @var array
+	 */
 	static $status2as = array(
 		'U' => 0,	// unknown
 		'T' => 2,	// tentative
@@ -164,6 +169,11 @@ class calendar_activesync implements activesync_plugin_write
 		'R' => 4,	// decline
 		// 5 = not responded
 	);
+	/**
+	 * Conversation to AS "roles", not really the same thing
+	 *
+	 * @var array
+	 */
 	static $role2as = array(
 		'REQ-PARTICIPANT' => 1,	// required
 		'CHAIR' => 1,			// required
@@ -171,9 +181,25 @@ class calendar_activesync implements activesync_plugin_write
 		'NON-PARTICIPANT' => 2,
 		// 3 = ressource
 	);
+	/**
+	 * Conversation to AS recurrence types
+	 *
+	 * @var array
+	 */
+	static $recur_type2as = array(
+		calendar_rrule::DAILY => 0,
+		calendar_rrule::WEEKLY => 1,
+		calendar_rrule::MONTHLY_MDAY => 2,	// monthly
+		calendar_rrule::MONTHLY_WDAY => 3,	// monthly on nth day
+		calendar_rrule::YEARLY => 5,
+		// 6 = yearly on nth day (same as 5 on non-leapyears or before March on leapyears)
+	);
 
 	/**
 	 * Changes or adds a message on the server
+	 *
+	 * Timestamps from z-push are in servertime and need to get converted to user-time, as bocalendar_update::save()
+	 * expects user-time!
 	 *
 	 * @param string $folderid
 	 * @param int $id for change | empty for create new
@@ -204,6 +230,7 @@ class calendar_activesync implements activesync_plugin_write
 		}
 		if (!$this->calendar->check_perms($id ? EGW_ACL_EDIT : EGW_ACL_ADD,$event ? $event : 0,$account))
 		{
+			// @todo: write in users calendar and make account only a participant
 			debugLog(__METHOD__."('$folderid',$id,...) no rights to add/edit event!");
 			return false;
 		}
@@ -227,15 +254,19 @@ class calendar_activesync implements activesync_plugin_write
 			if (isset($message->$attr)) $event[$key] = $message->$attr;
 		}
 
-		$event['public'] = (int)$message->sensitivity < 1;	// 0=normal, 1=personal, 2=private, 3=confidential
-		$event['whole_day'] = $message->alldayevent;
+		$event['public'] = (int)($message->sensitivity < 1);	// 0=normal, 1=personal, 2=private, 3=confidential
+
+		if (($event['whole_day'] = $message->alldayevent))
+		{
+			$event['end']--;	// otherwise our whole-day event code in save makes it one more day!
+		}
 
 		$participants = array();
 		foreach((array)$message->attendees as $attendee)
 		{
 			if (!($uid = $GLOBALS['egw']->accounts->name2id($attendee->email,'account_email')))
 			{
-				// todo check for other resource types
+				// @todo check for other resource types
 				$uid = 'e'.$attendee->name.' <'.$attendee->email.'>';
 			}
 			if (!($status = array_search($attendee->status,self::$status2as))) $status = 'U';
@@ -273,11 +304,12 @@ class calendar_activesync implements activesync_plugin_write
 			$participants[$account] = calendar_so::combine_status($account == $GLOBALS['egw_info']['user']['account_id'] ?
 				'A' : 'U',1,!$chair_set ? 'CHAIR' : 'REQ-PARTICIPANT');
 		}
+		// @todo: preserve all resource types not account, contact or email (eg. resources) for existing events
 		$event['participants'] = $participants;
 
-		foreach((array)$message->categories as $name)
+		if (isset($message->categories))
 		{
-			// todo: categories
+			$event['categories'] = $this->calendar->find_or_add_categories($message->categories, $id);
 		}
 
 		// check if event is recurring and import recur information (incl. timezone)
@@ -285,10 +317,52 @@ class calendar_activesync implements activesync_plugin_write
 		{
 			if ($message->timezone && !$id)	// dont care for timezone, if no new and recurring event
 			{
-				$event['tzid'] = self::as2tz(self::_getTZFromSyncBlob($message->timezone));
+				$event['tzid'] = self::as2tz(self::_getTZFromSyncBlob(base64_decode($message->timezone)));
 			}
-			// todo: recurrence information
+			$event['recur_type'] = $message->recurrence->type == 6 ? calendar_rrule::YEARLY :
+				array_search($message->recurrence->type, self::$recur_type2as);
+			$event['recur_interval'] = $message->recurrence->interval;
+
+			switch ($event['recur_type'])
+			{
+				case calendar_rrule::MONTHLY_WDAY:
+					// $message->recurrence->weekofmonth is not explicitly stored in egw, just taken from start date
+					// fall throught
+				case calendar_rrule::WEEKLY:
+					$event['recur_data'] = $message->recurrence->dayofweek;	// 1=Su, 2=Mo, 4=Tu, .., 64=Sa
+					break;
+				case calendar_rrule::MONTHLY_MDAY:
+					// $message->recurrence->dayofmonth is not explicitly stored in egw, just taken from start date
+					break;
+				case calendar_rrule::YEARLY:
+					// $message->recurrence->(dayofmonth|monthofyear) is not explicitly stored in egw, just taken from start date
+					break;
+			}
+			if ($message->recurrence->until)
+			{
+				$event['recur_enddate'] = $message->recurrence->until;
+			}
+			$event['recur_exceptions'] = array();
+			if ($message->exceptions)
+			{
+				foreach($message->exceptions as $exception)
+				{
+					$event['recur_exceptions'][] = $exception->starttime;	// exceptions seems to be full SyncAppointments, with only starttime required
+				}
+			}
+			if ($message->recurrence->occurrences > 0)
+			{
+				// calculate enddate from occurences count, as we only support enddate
+				$count = $message->recurrence->occurrences;
+				foreach(calendar_rrule::event2rrule($event,false) as $time)	// false = timestamps in servertime
+				{
+					if (--$count <= 0) break;
+				}
+				$event['recur_enddate'] = $rtime->format('ts');
+			}
 		}
+
+		// @todo: body or description
 
 		if (!($id = $this->calendar->save($event)))
 		{
@@ -311,7 +385,7 @@ class calendar_activesync implements activesync_plugin_write
 	 */
 	public function ChangeFolder($id, $oldid, $displayname, $type)
 	{
-		debugLog(__METHOD__."('$id', '$oldid', '$displayname', $type) NOT implemented!");
+		debugLog(__METHOD__."('$id', '$oldid', '$displayname', $type) NOT supported!");
 		return false;
 	}
 
@@ -326,7 +400,7 @@ class calendar_activesync implements activesync_plugin_write
 	 */
 	public function DeleteFolder($parentid, $id)
 	{
-		debugLog(__METHOD__."('$parentid', '$id') NOT implemented!");
+		debugLog(__METHOD__."('$parentid', '$id') NOT supported!");
 		return false;
 	}
 
@@ -345,7 +419,7 @@ class calendar_activesync implements activesync_plugin_write
 	 */
 	public function MoveMessage($folderid, $id, $newfolderid)
 	{
-		debugLog(__METHOD__."('$folderid', $id, '$newfolderid') NOT implemented!");
+		debugLog(__METHOD__."('$folderid', $id, '$newfolderid') NOT supported!");
 		return false;
 	}
 
@@ -406,7 +480,7 @@ class calendar_activesync implements activesync_plugin_write
 		catch(Exception $e) {
 			// ignore exception, simply set no timezone, as it is optional
 		}
-		// copying timestamps
+		// copying timestamps (they are already read in servertime, so non tz conversation)
 		foreach(array(
 			'start' => 'starttime',
 			'end'   => 'endtime',
@@ -467,19 +541,11 @@ class calendar_activesync implements activesync_plugin_write
 		}
 
 		// recurring information
-		if ($event['recur_type'] != RECUR_NONE)
+		if ($event['recur_type'] != calendar_rrule::NONE)
 		{
 			$message->recurrence = $recurrence = new SyncRecurrence();
-			$rrule = calendar_rrule::event2rrule($event);
-			static $recur_type2as = array(
-				calendar_rrule::DAILY => 0,
-				calendar_rrule::WEEKLY => 1,
-				calendar_rrule::MONTHLY_MDAY => 2,	// monthly
-				calendar_rrule::MONTHLY_WDAY => 3,	// monthly on nth day
-				calendar_rrule::YEARLY => 5,
-				// 6 = yearly on nth day
-			);
-			$recurrence->type = (int)$recur_type2as[$rrule->type];
+			$rrule = calendar_rrule::event2rrule($event,false);	// false = timestamps in $event are servertime
+			$recurrence->type = (int)self::$recur_type2as[$rrule->type];
 			$recurrence->interval = $rrule->interval;
 			switch ($rrule->type)
 			{
@@ -499,7 +565,7 @@ class calendar_activesync implements activesync_plugin_write
 					$recurrence->monthofyear = (int)$rrule->time->format('m');	// 1..12
 					break;
 			}
-			if ($rrule->enddate) $recurrence->until = $rrule->enddate->format('ts');	// Timezone?
+			if ($rrule->enddate) $recurrence->until = $rrule->enddate->format('server');
 
 			if ($rrule->exceptions)
 			{
@@ -507,7 +573,7 @@ class calendar_activesync implements activesync_plugin_write
 				foreach($rrule->exceptions as $exception_time)
 				{
 					$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
-					$exception->starttime = $exception_time->format('ts');	// Timezone?
+					$exception->starttime = $exception_time->format('server');
 					$message->exceptions[] = $exception;
 				}
 			}
@@ -528,6 +594,8 @@ class calendar_activesync implements activesync_plugin_write
 		 	$message->airsyncbasebody;	// SYNC SyncAirSyncBaseBody
 		}
 */
+		// @todo: body or description
+
 		return $message;
 	}
 
@@ -550,7 +618,7 @@ class calendar_activesync implements activesync_plugin_write
 		if (!($etag = $this->calendar->get_etag($id)))
 		{
 			$stat = false;
-			// error_log why access is denied (should nevery happen for everything returned by calendar_bo::search)
+			// error_log why access is denied (should never happen for everything returned by calendar_bo::search)
 			$backup = $this->calendar->debug;
 			$this->calendar->debug = 2;
 			$this->calendar->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server');
@@ -564,7 +632,7 @@ class calendar_activesync implements activesync_plugin_write
 				'flags' => 1,
 			);
 		}
-		debugLog (__METHOD__."('$folderid',".array2string($id).") returning ".array2string($stat));
+		debugLog (__METHOD__."('$folderid',".array2string(is_array($id) ? $id['id'] : $id).") returning ".array2string($stat));
 
 		return $stat;
 	}
@@ -612,6 +680,12 @@ class calendar_activesync implements activesync_plugin_write
 	 * Not every timezone uses DST, in which case only bias matters and dstbias=0
 	 * (probably all other values should be 0, as MapiMapping::_getGMTTZ() in backend/ics.php does it).
 	 *
+	 * For southern hermisphere DST in southern winter (eg. January), Active Sync implementation of iPhone
+	 * uses a negative dstbias (eg. -60) and an accordingly moved start- and end-time.
+	 * For Pacific/Auckland TZ iPhone AS implementation uses -720=-12h instead of 720=+12h.
+	 * Both are corrected now in our Active Sync timezone generation, as we can not find
+	 * matching timezones for incomming timezone data. iPhone seems not to care on receiving about the above.
+	 *
 	 * @param string|DateTimeZone $tz timezone, timezone name (eg. "Europe/Berlin") or ical with VTIMEZONE
 	 * @param int|string|DateTime $ts=null time for which active sync timezone data is requested, default current time
 	 * @return array with values for keys:
@@ -654,9 +728,9 @@ END:VTIMEZONE
 			'bias' => 0,
 			'stdbias' => 0,
 			'dstbias' => 0,
-			'dststartmonth' => 0, 'dststartday' => 0, 'dststartweek' => 0,
+			'dststartyear' => 0, 'dststartmonth' => 0, 'dststartday' => 0, 'dststartweek' => 0,
 			'dststarthour' => 0, 'dststartminute' => 0, 'dststartsecond' => 0, 'dststartmillis' => 0,
-			'dstendmonth' => 0, 'dstendday' => 0, 'dstendweek' => 0,
+			'dstendyear' => 0, 'dstendmonth' => 0, 'dstendday' => 0, 'dstendweek' => 0,
 			'dstendhour' => 0, 'dstendminute' => 0, 'dstendsecond' => 0, 'dstendmillis' => 0,
 		);
 
@@ -675,6 +749,12 @@ END:VTIMEZONE
 		// (dstbias is relative to bias and almost always 60 or 0)
 		$data['bias'] = 60 * substr($standard['TZOFFSETTO'],0,-2) + substr($standard['TZOFFSETTO'],-2);
 		$data['dstbias'] = 60 * substr($standard['TZOFFSETFROM'],0,-2) + substr($standard['TZOFFSETFROM'],-2) - $data['bias'];
+
+		// at least Active Sync implementation on iPhone uses -720=-12h for Pacific/Auckland, not 720=+12h
+		if ($data['bias'] == 720)
+		{
+			$data['bias'] = -720;
+		}
 
 		// check if we have an additional DAYLIGHT component and both have a RRULE component --> tz uses daylight saving
 		if (isset($standard['RRULE']) && isset($daylight) && isset($daylight['RRULE']))
@@ -695,6 +775,16 @@ END:VTIMEZONE
 					$data[$prefix.'minute'] = (int)substr($matches[1],2,2);
 					$data[$prefix.'second'] = (int)substr($matches[1],4,2);
 				}
+			}
+			// for southern hermisphere, were DST is in January, Active Sync (at least iPhone implementation)
+			// sends a negative dstbias and a accordingly moved start- and endtime
+			if ($data['dststartmonth'] > $data['dstendmonth'])
+			{
+				$data['dststarthour']   += $data['dstbias'] / 60;
+				$data['dststartminute'] += $data['dstbias'] % 60;
+				$data['dstendhour']     -= $data['dstbias'] / 60;
+				$data['dstendminute']   -= $data['dstbias'] % 60;
+				$data['dstbias'] = -$data['dstbias'];
 			}
 		}
 		//error_log(__METHOD__."('$name') returning ".array2string($data));
@@ -782,14 +872,14 @@ END:VTIMEZONE
 	 * try to find a timezone matching the change data and offsets specified in $data.
 	 * This conversation is not unique, as multiple timezones can match the given data or none!
 	 *
-	 * Maybe returning the users timezone, if no match found, might makes more sense.
-	 *
 	 * @param array $data
-	 * @return string|boolean timezone name, eg. "Europe/Berlin" or false if no matching timezone found
+	 * @return string timezone name, eg. "Europe/Berlin" or 'UTC' if NO matching timezone found
 	 */
 	public static function as2tz(array $data)
 	{
 		static $cache;	// some caching withing the request
+
+		unset($data['name']);	// not used, but can stall the match
 
 		$key = serialize($data);
 
@@ -801,8 +891,8 @@ END:VTIMEZONE
 			}
 			elseif (!($tz = calendar_timezones::id2tz($n)))	// no further timezones to check
 			{
-				$cache[$key] = false;
-				error_log(__METHOD__.'('.array2string($data).') NO matching timezone found!');
+				$cache[$key] = 'UTC';
+				error_log(__METHOD__.'('.array2string($data).') NO matching timezone found --> using UTC now!');
 				break;
 			}
 			if (self::tz2as($tz) == $data)
@@ -819,7 +909,7 @@ END:VTIMEZONE
 	 *
 	 * copied from backend/ics.php
 	 */
-	static private function _getTZFromSyncBlob($data)
+	static public function _getTZFromSyncBlob($data)
 	{
 		$tz = unpack(	"lbias/a64name/vdstendyear/vdstendmonth/vdstendday/vdstendweek/vdstendhour/vdstendminute/vdstendsecond/vdstendmillis/" .
 						"lstdbias/a64name/vdststartyear/vdststartmonth/vdststartday/vdststartweek/vdststarthour/vdststartminute/vdststartsecond/vdststartmillis/" .
@@ -833,7 +923,7 @@ END:VTIMEZONE
 	 *
 	 * copied from backend/ics.php
 	 */
-	static private function _getSyncBlobFromTZ($tz)
+	static public function _getSyncBlobFromTZ($tz)
 	{
 		$packed = pack("la64vvvvvvvv" . "la64vvvvvvvv" . "l",
 				$tz["bias"], "", 0, $tz["dstendmonth"], $tz["dstendday"], $tz["dstendweek"], $tz["dstendhour"], $tz["dstendminute"], $tz["dstendsecond"], $tz["dstendmillis"],
@@ -847,22 +937,34 @@ END:VTIMEZONE
 /**
  * Testcode for active sync timezone stuff
  *
-$GLOBALS['egw_info'] = array(
-	'flags' => array(
-		'currentapp' => 'login'
-	)
-);
-require_once('../../header.inc.php');
+ * You need to comment implements activesync_plugin_write
+ */
+if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)	// some tests
+{
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => 'login'
+		)
+	);
+	require_once('../../header.inc.php');
+	ini_set('display_errors',1);
+	error_reporting(E_ALL & ~E_NOTICE);
 
-// get as timezone data for agive timezone
-$tz = 'Europe/Zurich';//'America/New_York';//'Australia/Darwin';//'Europe/Berlin';
-$ical = calendar_timezones::tz2id($tz,'component');
-echo "<pre>".print_r($ical,true)."</pre>\n";
-$ical_arr = calendar_activesync::ical2array($ical_tz=$ical);
-echo "<pre>".print_r($ical_arr,true)."</pre>\n";
-$as_tz = calendar_activesync::tz2as($tz);
-echo "<pre>".print_r($as_tz,true)."</pre>\n";
+	// get as timezone data for agive timezone
+	$tz = 'Pacific/Auckland';//'Europe/Zurich';//'America/New_York';//'Australia/Darwin';//'Europe/Berlin';
+	$ical = calendar_timezones::tz2id($tz,'component');
+	echo "<pre>".print_r($ical,true)."</pre>\n";
+	$ical_arr = calendar_activesync::ical2array($ical_tz=$ical);
+	echo "<pre>".print_r($ical_arr,true)."</pre>\n";
+	$as_tz = calendar_activesync::tz2as($tz);
+	echo "<pre>".print_r($as_tz,true)."</pre>\n";
 
-// find matching timezone from as data
-echo array2string(calendar_activesync::as2tz($as_tz));
-*/
+	// this is what iPhone sends as TZ for New Zealand (eg. Pacific/Auckland)
+	$sync_blob = 'MP3//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAABAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAFAAMAAAAAAAAAxP///w==';
+	$as_tz = calendar_activesync::_getTZFromSyncBlob(base64_decode($sync_blob));
+	echo "<pre>".print_r($as_tz,true)."</pre>\n";
+
+	// find matching timezone from as data
+	// this returns the FIRST match, which is in case of Pacific/Auckland eg. Antarctica/McMurdo ;-)
+	echo array2string(calendar_activesync::as2tz($as_tz));
+}
