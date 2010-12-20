@@ -391,6 +391,10 @@ class filemanager_ui
 			{
 				open_mail(ids);
 			}
+			else if (selbox.value == 'delete')
+			{
+				if (confirm('".lang('Delete these files or directories?')."')) selbox.form.submit();
+			}
 			else
 			{
 				selbox.form.submit();
