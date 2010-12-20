@@ -447,7 +447,7 @@ class importexport_export_ui {
 		unlink($tmpfname);
 
 		// Try to avoid any extra finishing output
-		exit;
+		common::egw_exit();
 	}
 
 	public function ajax_get_plugin_selectors($_plugin,&$response=false, $definition = '') {
