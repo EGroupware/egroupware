@@ -540,7 +540,7 @@ class infolog_ui
 			}
 			$values['msg'] = $msg;
 		}
-		unset($values['nm']['rows']['checked']); // Can cause problems lower, no longer needed
+		if(isset($values['nm']['rows'])) unset($values['nm']['rows']['checked']); // Can cause problems lower, no longer needed
 		if (!$action)
 		{
 			$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
