@@ -392,8 +392,8 @@ class idots_framework extends egw_framework
 		{
 			$tmpl->set_block('login_form','remember_me_selection');
 			$tmpl->set_var('lang_remember_me',lang('Remember me'));
-			$tmpl->set_var('select_remember_me',html::select('remember_me', 'forever', array(
-				false => lang('not'),
+			$tmpl->set_var('select_remember_me',html::select('remember_me', '', array(
+				'' => lang('not'),
 				'1hour' => lang('1 Hour'),
 				'1day' => lang('1 Day'),
 				'1week'=> lang('1 Week'),
