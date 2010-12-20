@@ -413,6 +413,9 @@ class importexport_export_ui {
 		fclose($file);
 
 		unlink($tmpfname);
+
+		// Try to avoid any extra finishing output
+		exit;
 	}
 	
 	public function ajax_get_plugin_selectors($_plugin,&$response=false, $definition = '') {
