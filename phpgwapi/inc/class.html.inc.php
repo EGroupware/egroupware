@@ -412,7 +412,7 @@ class html
 			$selected = $not_selected = array();
 			foreach($arr as $val => $label)
 			{
-				if (in_array($val,$key,!$val))
+				if (in_array((string)$val,$key))
 				{
 					$selected[$val] = $label;
 				}
@@ -439,7 +439,7 @@ class html
 
 			if (strlen($label) > $max_len) $max_len = strlen($label);
 
-			$html .= self::label(self::checkbox($name,in_array($val,$key,!$val),$val,$options_no_id.
+			$html .= self::label(self::checkbox($name,in_array((string)$val,$key),$val,$options_no_id.
 				' id="'.$base_name.'['.$val.']'.'"').self::htmlspecialchars($label),
 				$base_name.'['.$val.']','',($title ? 'title="'.self::htmlspecialchars($title).'" ':''))."<br />\n";
 		}
