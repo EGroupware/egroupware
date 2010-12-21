@@ -769,7 +769,7 @@ class calendar_bo
 			// (this will fail on 32bit systems for times > 2038!)
 			$event['start'] = (int)$event['start'];	// this is for isWholeDay(), which also calls egw_time
 			$event['end'] = (int)$event['end'];
-			$event['whole_day'] = $this->isWholeDay($event);
+			$event['whole_day'] = self::isWholeDay($event);
 			if ($event['whole_day'] && $date_format != 'server')
 			{
 				// Adjust dates to user TZ
@@ -1857,19 +1857,19 @@ class calendar_bo
 	 * @param array $event event
 	 * @return boolean true if whole day event, false othwerwise
 	 */
-	function isWholeDay($event)
+	public static function isWholeDay($event)
 	{
 		// check if the event is the whole day
-		$start = $this->date2array($event['start']);
-		$end = $this->date2array($event['end']);
+		$start = self::date2array($event['start']);
+		$end = self::date2array($event['end']);
 
 		return !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
 	}
 
 	/**
-	 * Get the etag for an entry, reimplemented to include the participants and stati in the etag
+	 * Get the etag for an entry
 	 *
-	 * @param array|int $event array with event or cal_id
+	 * @param array|int|string $event array with event or cal_id, or cal_id:recur_date for virtual exceptions
 	 * @param boolean $client_share_uid_excpetions Does client understand exceptions to be included in VCALENDAR component of series master sharing its UID
 	 * @return string|boolean string with etag or false
 	 */
@@ -1877,8 +1877,9 @@ class calendar_bo
 	{
 		if (!is_array($entry))
 		{
+			list($entry,$recur_date) = explode(':',$entry);
 			if (!$this->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
-			$entry = $this->read($entry, null, true, 'server');
+			$entry = $this->read($entry, $recur_date, true, 'server');
 		}
 		$etag = $entry['id'].':'.$entry['etag'];
 

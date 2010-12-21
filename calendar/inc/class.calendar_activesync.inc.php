@@ -16,6 +16,22 @@
  * Calendar activesync plugin
  *
  * Plugin to make EGroupware calendar data available via Active Sync
+ *
+ * Handling of (virtual) exceptions of recurring events:
+ * ----------------------------------------------------
+ * Virtual exceptions are exceptions caused by recurcences with just different participant status
+ * compared to regular series (master). Real exceptions usually have different dates and/or other data.
+ * EGroupware calendar data model does NOT store virtual exceptions as exceptions,
+ * as participant status is stored per recurrence date and not just per event!
+ * GetMessageList reports virtual exceptions with an id like cal_id:recur_date, which
+ * is understood bei StatMessage, GetMessage and ChangeMessage (implementation is currently missing!).
+ * Real exceptions have there own calendar id, under which they are reported by GetMessageList.
+ *
+ * @todo alarms / reminders (currently they are not reported to and not changed by the device)
+ * We probably want to report only alarms of the current user (which should ring on the device)
+ * and save alarms set on the device only for the current user, if not yet there (preserving all other alarms).
+ * How to deal with multiple alarms allowed in EGroupware: report earliest one to the device
+ * (and hope it resyncs before next one is due, thought we do NOT report that as change currently!).
  */
 class calendar_activesync implements activesync_plugin_write
 {
@@ -139,7 +155,6 @@ class calendar_activesync implements activesync_plugin_write
 
 		if (!$cutoffdate) $cutoffdate = $this->bo->now - 100*24*3600;	// default three month back -30 breaks all sync recurrences
 
-		// @todo return only etag relevant information
 		$filter = array(
 			'users' => $user,
 			'start' => $cutoffdate,	// default one month back -30 breaks all sync recurrences
@@ -147,12 +162,26 @@ class calendar_activesync implements activesync_plugin_write
 			'daywise' => false,
 			'date_format' => 'server',
 			'filter' => 'default',	// not rejected
+			// @todo return only etag relevant information (seems not to work ...)
+			//'cols'		=> array('egw_cal.cal_id', 'cal_start',	'recur_type', 'cal_modified', 'cal_uid', 'cal_etag'),
 		);
 
 		$messagelist = array();
-		foreach ($this->calendar->search($filter) as $k => $event)
+		foreach ($this->calendar->search($filter) as $event)
 		{
 			$messagelist[] = $this->StatMessage($id, $event);
+
+			// add virtual exceptions for recuring events too
+			// (we need to read event, as get_recurrence_exceptions need all infos!)
+/*			if ($event['recur_type'] != calendar_rrule::NONE)// && ($event = $this->calendar->read($event['id'],0,true,'server')))
+			{
+
+				foreach($this->calendar->so->get_recurrence_exceptions($event,
+					egw_time::$server_timezone->getName(), $cutoffdate, 0, 'all') as $recur_date)
+				{
+					$messagelist[] = $this->StatMessage($id, $event['id'].':'.$recur_date);
+				}
+			}*/
 		}
 		return $messagelist;
 	}
@@ -223,15 +252,24 @@ class calendar_activesync implements activesync_plugin_write
 
 		debugLog (__METHOD__."('$folderid', $id, ".array2string($message).") type='$type', account=$account");
 
-		if ($type != 'calendar' || $id && !($event = $this->calendar->read($id,null,false,'server')))
+		list($id,$recur_date) = explode(':',$id);
+
+		if ($type != 'calendar' || $id && !($event = $this->calendar->read($id, $recur_date, false, 'server')))
 		{
 			debugLog(__METHOD__."('$folderid',$id,...) Folder wrong or event does not existing");
 			return false;
+		}
+		if ($recur_date)	// virtual exception
+		{
+			// @todo check if virtual exception needs to be saved as real exception, or only stati need to be changed
+			debutLog(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
+			error_log(__METHOD__."('$folderid',$id:$recur_date,".array2string($message).") handling of virtual exception not yet implemented!");
 		}
 		if (!$this->calendar->check_perms($id ? EGW_ACL_EDIT : EGW_ACL_ADD,$event ? $event : 0,$account))
 		{
 			// @todo: write in users calendar and make account only a participant
 			debugLog(__METHOD__."('$folderid',$id,...) no rights to add/edit event!");
+			error_log(__METHOD__."('$folderid',$id,".array2string($message).") no rights to add/edit event!");
 			return false;
 		}
 		// timestamps (created & modified are updated automatically)
@@ -264,10 +302,27 @@ class calendar_activesync implements activesync_plugin_write
 		$participants = array();
 		foreach((array)$message->attendees as $attendee)
 		{
+			if ($attendee->type == 3) continue;	// we can not identify resources and re-add them anyway later
+
 			if (!($uid = $GLOBALS['egw']->accounts->name2id($attendee->email,'account_email')))
 			{
-				// @todo check for other resource types
-				$uid = 'e'.$attendee->name.' <'.$attendee->email.'>';
+				$search = array(
+					'email' => $attendee->email,
+					'email_home' => $attendee->email,
+					//'n_fn' => $attendee->name,	// not sure if we want matches without email
+				);
+				// search addressbook for participant
+				if ((list($data) = $this->addressbook->search($search,
+					array('id','egw_addressbook.account_id as account_id','n_fn'),
+					'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC',
+					'','',false,'OR')))
+				{
+					$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
+				}
+				else	// store just the email
+				{
+					$uid = 'e'.$attendee->name.' <'.$attendee->email.'>';
+				}
 			}
 			if (!($status = array_search($attendee->status,self::$status2as))) $status = 'U';
 			if ($attendee->email == $message->organizeremail)
@@ -304,7 +359,19 @@ class calendar_activesync implements activesync_plugin_write
 			$participants[$account] = calendar_so::combine_status($account == $GLOBALS['egw_info']['user']['account_id'] ?
 				'A' : 'U',1,!$chair_set ? 'CHAIR' : 'REQ-PARTICIPANT');
 		}
-		// @todo: preserve all resource types not account, contact or email (eg. resources) for existing events
+		// preserve all resource types not account, contact or email (eg. resources) for existing events
+		foreach((array)$event['participant_types'] as $type => $parts)
+		{
+			if (in_array($type,array('u','c','e'))) continue;	// they are correctly representable in AS
+			foreach($parts as $id => $status)
+			{
+				$uid = calendar_so::combine_user($type, $id);
+				if (!isset($participants[$uid]))
+				{
+					$participants[$uid] = $status;
+				}
+			}
+		}
 		$event['participants'] = $participants;
 
 		if (isset($message->categories))
@@ -340,21 +407,21 @@ class calendar_activesync implements activesync_plugin_write
 			}
 			if ($message->recurrence->until)
 			{
-				$event['recur_enddate'] = $message->recurrence->until;
+				$event['recur_enddate'] = egw_time::server2user($message->recurrence->until);
 			}
 			$event['recur_exceptions'] = array();
 			if ($message->exceptions)
 			{
 				foreach($message->exceptions as $exception)
 				{
-					$event['recur_exceptions'][] = $exception->starttime;	// exceptions seems to be full SyncAppointments, with only starttime required
+					$event['recur_exceptions'][] = egw_time::server2user($exception->starttime);	// exceptions seems to be full SyncAppointments, with only starttime required
 				}
 			}
 			if ($message->recurrence->occurrences > 0)
 			{
 				// calculate enddate from occurences count, as we only support enddate
 				$count = $message->recurrence->occurrences;
-				foreach(calendar_rrule::event2rrule($event,false) as $time)	// false = timestamps in servertime
+				foreach(calendar_rrule::event2rrule($event, true) as $time)	// true = timestamps are user time here, because of save!
 				{
 					if (--$count <= 0) break;
 				}
@@ -370,6 +437,7 @@ class calendar_activesync implements activesync_plugin_write
 			return false;
 		}
 		debugLog(__METHOD__."('$folderid',$id,...) SUCESS saving event=".array2string($event).", id=$id");
+		error_log(__METHOD__."('$folderid',$id,".array2string($message).") SUCESS saving event=".array2string($event).", id=$id");
 		return $this->StatMessage($folderid, $id);
 	}
 
@@ -465,7 +533,8 @@ class calendar_activesync implements activesync_plugin_write
 
 		debugLog (__METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
 		$this->backend->splitID($folderid, $type, $account);
-		if ($type != 'calendar' || !($event = $this->calendar->read($id,null,false,'server',$account)))
+		list($id,$recur_date) = explode(':',$id);
+		if ($type != 'calendar' || !($event = $this->calendar->read($id,$recur_date,false,'server',$account)))
 		{
 			error_log(__METHOD__."('$folderid', $id, ...) read($id,null,false,'server',$account) returned false");
 			return false;
@@ -503,7 +572,7 @@ class calendar_activesync implements activesync_plugin_write
 		$message->organizeremail = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 
 		$message->sensitivity = $event['public'] ? 0 : 2;	// 0=normal, 1=personal, 2=private, 3=confidential
-		$message->alldayevent = (int)$this->calendar->isWholeDay($event);
+		$message->alldayevent = (int)calendar_bo::isWholeDay($event);
 
 		$message->attendees = array();
 		foreach($event['participants'] as $uid => $status)
@@ -540,8 +609,8 @@ class calendar_activesync implements activesync_plugin_write
 			$message->categories[] = categories::id2name($cat_id);
 		}
 
-		// recurring information
-		if ($event['recur_type'] != calendar_rrule::NONE)
+		// recurring information, only if not a single recurrence eg. virtual exception (!$recur_date)
+		if ($event['recur_type'] != calendar_rrule::NONE && !$recur_date)
 		{
 			$message->recurrence = $recurrence = new SyncRecurrence();
 			$rrule = calendar_rrule::event2rrule($event,false);	// false = timestamps in $event are servertime
@@ -577,6 +646,15 @@ class calendar_activesync implements activesync_plugin_write
 					$message->exceptions[] = $exception;
 				}
 			}
+			// add virtual exceptions here too (get_recurrence_exceptions should be able to return real-exceptions too!)
+			foreach($this->calendar->so->get_recurrence_exceptions($event,
+				egw_time::$server_timezone->getName(), $cutoffdate, 0, 'all') as $virtual_exception_time)
+			{
+				$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
+				$exception->starttime = $virtual_exception_time;
+				$message->exceptions[] = $exception;
+			}
+
 		}
 		//$message->busystatus;
 		//$message->reminder;
@@ -608,19 +686,20 @@ class calendar_activesync implements activesync_plugin_write
 	 *			 time for this field, which will change as soon as the contents have changed.
 	 *
 	 * @param string $folderid
-	 * @param int|array $id event id or array
+	 * @param int|array $id event id or array or cal_id:recur_date for virtual exception
 	 * @return array
 	 */
 	public function StatMessage($folderid, $id)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
-		if (!($etag = $this->calendar->get_etag($id)))
+		if (!($etag = $this->calendar->get_etag($id,false)))	// false: do NOT include exceptions into master etag
 		{
 			$stat = false;
 			// error_log why access is denied (should never happen for everything returned by calendar_bo::search)
 			$backup = $this->calendar->debug;
 			$this->calendar->debug = 2;
+			list($id) = explode(':',$id);
 			$this->calendar->check_perms(EGW_ACL_FREEBUSY, $id, 0, 'server');
 			$this->calendar->debug = $backup;
 		}
