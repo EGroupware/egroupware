@@ -129,6 +129,11 @@ class calendar_uiviews extends calendar_ui
 	 */
 	var $allowEdit = true;
 
+	var $display_holiday_event_types = array(
+		'bdays' => false,
+		'hdays' => false
+	);
+
 	/**
 	 * Constructor
 	 *
@@ -165,6 +170,14 @@ class calendar_uiviews extends calendar_ui
 		$this->holidays = $this->bo->read_holidays($this->year);
 
 		$this->check_owners_access();
+
+		//Load the ""show holiday as event" preference here and set the event
+		//types mask accordingly.
+		$display_holidays_event = $GLOBALS['egw_info']['user']['preferences']['calendar']['display_holidays_event'];
+		$this->display_holiday_event_types = array(
+			'bdays' => ((int)$display_holidays_event & 1) != 0,
+			'hdays' => ((int)$display_holidays_event & 2) != 0
+		);
 
 		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'])
 		{
@@ -830,6 +843,12 @@ class calendar_uiviews extends calendar_ui
 				}
 			}
 			$cols = array();
+
+			//Add the holiday events
+			$dayEvents[$this->date] = array_merge(
+				$dayEvents[$this->date],
+				$this->_get_holiday_events($this->date, $this->display_holiday_event_types));
+
 			$cols[0] =& $this->timeGridWidget($this->tagWholeDayOnTop($dayEvents),$this->cal_prefs['interval'],450,'','',$owner);
 
 			$cols[0] .= $this->edit_series();
@@ -1400,13 +1419,25 @@ function open_edit(series)
 					if ($show_bdays)
 					{
 						$bday = true;
-						$h[] = $holiday['name'];
+
+						//If the birthdays are already displayed as event, don't
+						//show them in the caption
+						if (!$this->display_holiday_event_types['bdays'])
+						{
+							$h[] = $holiday['name'];
+						}
 					}
 				}
 				else
 				{
 					$class = 'calHoliday';
-					$h[] = $holiday['name'];
+
+					//If the birthdays are already displayed as event, don't
+					//show them in the caption
+					if (!$this->display_holiday_event_types['hdays'])
+					{
+						$h[] = $holiday['name'];
+					}
 				}
 			}
 			$holidays = implode(', ',$h);
@@ -1727,10 +1758,12 @@ function open_edit(series)
 			$style = 'position: relative; margin-top: 3px;';
 		}
 
+		$prefix_icon = isset($event['prepend_icon']) ? $event['prepend_icon'] : '';
+
 		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: 20;"'.
 			$popup.' '.html::tooltip($tooltip,False,$ttip_options).
-			'>'."\n".$ie_fix.$html."\n".
+			'>'.$prefix_icon."\n".$ie_fix.$html."\n".
 			$indent."</div>"."\n";
 
 		// ATM we do not support whole day events or recurring events for dragdrop
@@ -2703,4 +2736,100 @@ function open_edit(series)
 		}
 		return $dayEvents;
  	}
+
+	/**
+	 *
+	 * Returns the special icon html code for holidays
+	 *
+	 * @param string $type is the type of the holiday, currently either 'hday' or
+	 *    'bday'
+	 */
+	function _get_holiday_icon($type)
+	{
+		//Set the special icon which will be prepended to the event
+		switch ($type) {
+			case "bday":
+				return html::image('calendar', 'cake', '', "style=\"float:left; padding: 1px 2px 0px 2px;\"");
+			case "hday":
+				return html::image('calendar', 'date', '', "style=\"float:left; padding: 1px 2px 0px 2px;\"");
+		}
+	}
+
+	/**
+	 *
+	 * Creates a dummy holiday event. This event is shown in the day view, when
+	 * added to the event list.
+	 *
+	 * @param int $day_start is a unix timestamp which contains the start of the day
+	 *    when the event occurs.
+	 * @param string $title is the title of the dummy event which will be shown
+	 * @param string $description is the long description of the event which will
+	 *    be shown in the event tooltip
+	 */
+	function _make_holiday_event($day_start, $title, $description, $type = 'bday')
+	{
+		//Calculate the end of the day by adding 23h:59min seconds
+		$day_end = $day_start + 24 * 3600 - 60;
+
+		//Setup the event data
+		$event = array(
+			'title' => $title,
+			'description' => $description,
+			'participants' => array(
+				'-1' => 'U'
+			),
+			'whole_day_on_top' => true,
+			'public' => true,
+			'start' => $day_start,
+			'end' => $day_end,
+			'non_blocking' => true,
+			'prepend_icon' => $this->_get_holiday_icon($type)
+		);
+
+		return $event;
+	}
+
+	/**
+	 *
+	 * Collects all holidays/birthdays corresponding to the given day and creates
+	 * an array containing all this events.
+	 *
+	 * @param string $day_ymd contains the Ymd of the day
+	 * @param array $types is an array which determines which types of events should
+	 *    be added to the holiday list. May contain the indices "bdays" and "hdays".
+	 *    The default is "bdays => true"
+	 */
+	function _get_holiday_events($day_ymd, $types = array("bdays" => true, "hdays" => false))
+	{
+		//Check whether there are any holidays set for the current day_ymd
+		$events = array();
+		if (isset($this->holidays[$day_ymd]))
+		{
+			//Translate the day_ymd to a timestamp
+			$day_start = $this->bo->date2ts((string)$day_ymd);
+
+			//Iterate over the holidays array and add those the the events list
+			foreach($this->holidays[$day_ymd] as $holiday)
+			{
+				if (isset($holiday['birthyear']))
+				{
+					if (array_key_exists("bdays", $types) && $types['bdays'])
+					{
+						$events[] = $this->_make_holiday_event(
+							$day_start, $holiday['name'],
+							lang('Age:').(date('Y') - $holiday['birthyear']));
+					}
+				}
+				else
+				{
+					if (array_key_exists("hdays", $types) && $types['hdays'])
+					{
+						$events[] = $this->_make_holiday_event($day_start, $holiday['name'], '', 'hday');
+					}
+				}
+			}
+		}
+
+		return $events;
+	}
 }

@@ -23,6 +23,7 @@ added by synchronisation	calendar	en	Added by synchronisation
 after	calendar	en	after
 after %1	calendar	en	After %1
 after current date	calendar	en	After current date
+age:	calendar	en	Age:
 alarm	calendar	en	Alarm
 alarm added	calendar	en	Alarm added
 alarm deleted	calendar	en	Alarm deleted
@@ -52,6 +53,8 @@ before current date	calendar	en	Before current date
 before the event	calendar	en	Before the event
 birthday	calendar	en	Birthday
 birthdays	admin	en	Birthdays
+birthdays only	calendar	en	Birthdays only
+both, holidays and birthdays	calendar	en	Both, holidays and birthdays
 busy	calendar	en	busy
 by	calendar	en	by
 calendar - list	calendar	en	Calendar - List
@@ -117,6 +120,8 @@ delete this series of recuring events	calendar	en	Delete this series of recuring
 deleted	calendar	en	Deleted
 deny ressources reservation for private events	calendar	en	Deny Resources reservation for private events
 disinvited	calendar	en	Disinvited
+display holidays or birthdays as events	calendar	en	Display holidays or birthdays as events
+display in header	calendar	en	Display in header
 display status of events	calendar	en	Display status of events
 displayed view	calendar	en	Displayed view
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	en	Displays this calendar view on the home page (page you get when you enter EGroupware or click on the home page icon)?
@@ -209,6 +214,7 @@ history logging	admin	en	History logging
 holiday	calendar	en	Holiday
 holiday management	calendar	en	Holiday Management
 holidays	calendar	en	Holidays
+holidays only	calendar	en	Holidays only
 hours	calendar	en	hours
 how far to search (from startdate)	calendar	en	How far to search (from start date)
 how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	en	How many describtion lines should be directly visible. Further lines are available via a scrollbar.
@@ -475,6 +481,7 @@ weeks offset (for multi-column display)	calendar	en	Weeks offset (for multi-colu
 weekview	calendar	en	Weekview
 weekview with weekend	calendar	en	Weekview with weekend
 weekview without weekend	calendar	en	Weekview without weekend
+when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	en	When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appereance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.
 which view to show on home page	calendar	en	Which view to show on home page
 whole day	calendar	en	Whole day
 whole query	calendar	en	whole query

@@ -563,7 +563,22 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => ''
-			)
+			),
+			'display_holidays_event' => array(
+                'type'   => 'select',
+                'label'  => 'Display holidays or birthdays as events',
+                'name'   => 'display_holidays_event',
+                'values' => array(
+					'0'	 => lang('Display in header'), //Please note that these values are a binary mask
+					'1' => lang('Birthdays only'),
+					'2' => lang('Holidays only'),
+					'3' => lang('Both, holidays and birthdays')
+				),
+                'help'   => "When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appereance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.",
+                'xmlrpc' => True,
+                'admin'  => False,
+                'default'=> '0',
+			),
 		);
 	}
 
