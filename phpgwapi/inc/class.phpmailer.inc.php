@@ -97,6 +97,12 @@ class PHPMailer {
   public $Sender            = '';
 
   /**
+   * Sets the Date of a mail if set
+   * @var string
+   */
+  public $RFCDateToSet		= '';
+
+  /**
    * Sets the Subject of the message.
    * @var string
    */
@@ -1114,7 +1120,7 @@ class PHPMailer {
     $this->boundary[1] = 'b1_' . $uniq_id;
     $this->boundary[2] = 'b2_' . $uniq_id;
 
-    $result .= $this->HeaderLine('Date', self::RFCDate());
+    $result .= $this->HeaderLine('Date', (!empty($this->RFCDateToSet)?$this->RFCDateToSet:self::RFCDate()));
     if($this->Sender == '') {
       $result .= $this->HeaderLine('Return-Path', trim($this->From));
     } else {
@@ -1357,7 +1363,7 @@ class PHPMailer {
    * @access private
    * @return void
    */
-  private function SetMessageType() {
+  public function SetMessageType() {
     if(count($this->attachment) < 1 && strlen($this->AltBody) < 1) {
       $this->message_type = 'plain';
     } else {
