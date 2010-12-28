@@ -114,6 +114,41 @@ function egw_appWindow(_app)
 	return window;
 }
 
+/**
+ * Refresh given application _app display of entry _id, incl. outputting _msg
+ * 
+ * Default implementation here only reloads window with it's current url with an added msg=_msg attached
+ * 
+ * @param string _msg message (already translated) to show, eg. 'Entry deleted'
+ * @param string _app application name
+ * @param string|int _id=null id of entry to refresh
+ * @param _type=null either 'edit', 'delete', 'add' or null
+ */
+function egw_refresh(_msg, _app, _id, _type)
+{
+	//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
+	var win = egw_appWindow(_app);
+
+	// if window defines an app_refresh method, just call it
+	if (typeof win.app_refresh != 'undefined')
+	{
+		win.app_refresh(_msg, _app, _id, _type);
+		return;
+	}
+	var href = win.location.href;
+	
+	if (href.indexOf('msg=') != -1)
+	{
+		href.replace(/msg=[^&]*/,'msg='+encodeURIComponent(_msg));
+	}
+	else if (_msg)
+	{
+		href += (href.indexOf('?') != -1 ? '&' : '?') + 'msg=' + encodeURIComponent(_msg);
+	}
+	//alert('egw_refresh() about to call '+href);
+	win.location.href = href;
+}
+
 window.egw_getFramework = function()
 {
 	if (typeof window.framework != 'undefined')
