@@ -24,10 +24,10 @@ class filemanager_ui
 		'index' => true,
 		'file' => true,
 	);
-	
+
 	/**
 	 * Views available from plugins
-	 * 
+	 *
 	 * @var array
 	 */
 	public static $views = array(
@@ -51,13 +51,13 @@ class filemanager_ui
 		{
 			egw_vfs::$is_root = true;
 		}
-		
+
 		self::init_views();
 	}
-	
+
 	/**
 	 * Initialise and return available views
-	 * 
+	 *
 	 * @return array with method => label pairs
 	 */
 	public static function init_views()
@@ -479,9 +479,12 @@ class filemanager_ui
 	 * @param string $action
 	 * @param array $selected selected pathes
 	 * @param mixed $dir=null current directory
+	 * @param int &$errs=null on return number of errors
+	 * @param int &$dirs=null on return number of dirs deleted
+	 * @param int &$files=null on return number of files deleted
 	 * @return string success or failure message displayed to the user
 	 */
-	static private function action($action,$selected,$dir=null)
+	static private function action($action,$selected,$dir=null,&$errs=null,&$files=null,&$dirs=null)
 	{
 		//echo '<p>'.__METHOD__."($action,array(".implode(', ',$selected).",$dir)</p>\n";
 		if (!count($selected))
@@ -495,7 +498,7 @@ class filemanager_ui
 				throw new egw_exception_assertion_failed('Implemented on clientside!');
 
 			case 'delete':
-				return self::do_delete($selected);
+				return self::do_delete($selected,$errs,$files,$dirs);
 
 			case 'add':
 				$files = egw_session::appsession('clipboard_files','filemanager');
@@ -556,10 +559,13 @@ class filemanager_ui
 				}
 				return $dirs ? lang('%1 directories and %2 files copied.',$dirs,$files) : lang('%1 files copied.',$files);
 
+			case 'move':
+				if (!isset($dir)) $dir = array_pop($selected);
+				// fall throught
 			case 'cut_paste':
 				foreach($selected as $path)
 				{
-					$to = egw_vfs::concat($dir,egw_vfs::basename($path));
+					$to = egw_vfs::is_dir($dir) || count($selected) > 1 ? egw_vfs::concat($dir,egw_vfs::basename($path)) : $dir;
 					if ($path != $to && egw_vfs::rename($path,$to))
 					{
 						++$files;
@@ -569,7 +575,7 @@ class filemanager_ui
 						++$errs;
 					}
 				}
-				egw_session::appsession('clipboard_files','filemanager',false);	// cant move again
+				if ($action == 'cut_paste') egw_session::appsession('clipboard_files','filemanager',false);	// cant move again
 				if ($errs)
 				{
 					return lang('%1 errors moving (%2 files moved)!',$errs,$files);
@@ -598,14 +604,17 @@ class filemanager_ui
 		}
 		return "Unknown action '$action'!";
 	}
-	
+
 	/**
 	 * Delete selected files and return success or error message
-	 * 
+	 *
 	 * @param array $selected
+	 * @param int &$errs=null on return number of errors
+	 * @param int &$dirs=null on return number of dirs deleted
+	 * @param int &$files=null on return number of files deleted
 	 * @return string
 	 */
-	public static function do_delete(array $selected)
+	public static function do_delete(array $selected, &$errs=null, &$dirs=null, &$files=null)
 	{
 		$dirs = $files = $errs = 0;
 		// we first delete all selected links (and files)
@@ -632,6 +641,7 @@ class filemanager_ui
 			{
 				if (preg_match('/^\/?(home|apps|)\/*$/',$path))
 				{
+					$errs++;
 					return lang("Cautiously rejecting to remove folder '%1'!",urldecode($path));
 				}
 			}
@@ -739,7 +749,7 @@ class filemanager_ui
 			{
 				$readonlys["delete[$path_quoted]"] = true;	// no rights to delete the file
 			}
-			if (egw_vfs::is_dir($path) || !egw_vfs::is_readable($path) || 
+			if (egw_vfs::is_dir($path) || !egw_vfs::is_readable($path) ||
 				!$GLOBALS['egw_info']['user']['apps']['felamimail'])
 			{
 				$readonlys["mail[$path_quoted]"] = true;
@@ -884,6 +894,7 @@ class filemanager_ui
 								$content['old']['name'] = $content[$name];
 								$path = $to;
 								$content['mime'] = mime_magic::filename2mime($path);	// recheck mime type
+								$refresh_path = egw_vfs::dirname($path);	// for renames, we have to refresh the parent
 							}
 							else
 							{
@@ -986,7 +997,8 @@ class filemanager_ui
 					}
 				}
 			}
-			$js = "opener.location.href=opener.location.href+'&msg=".urlencode($msg)."'; ";
+			$js = "opener.egw_refresh('".str_replace("'","\\'",$msg)."','filemanager','".
+				str_replace("'","\\'",$refresh_path ? $refresh_path : $path)."','edit');";
 			if ($button == 'save') $js .= "window.close();";
 			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
 			if ($button == 'save') common::egw_exit();
@@ -1101,6 +1113,29 @@ class filemanager_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.urldecode($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
+	}
+
+	/**
+	 * Run given action on given path(es) and return array/object with values for keys 'msg', 'errs', 'dirs', 'files'
+	 *
+	 * @param string $action eg. 'delete', ...
+	 * @param string $path
+	 * @see self::action()
+	 */
+	public static function ajax_action($action,$path)
+	{
+		$response = egw_json_response::get();
+		$arr = array(
+			'msg' => '',
+			'errs' => 0,
+			'dirs' => 0,
+			'files' => 0,
+		);
+		$selected = func_get_args();
+		$action = array_shift($selected);
+		$arr['msg'] = self::action($action,$selected,null,$arr['errs'],$arr['dirs'],$arr['files']);
+		$response->data($arr);
+		error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));
 	}
 
 	/**
