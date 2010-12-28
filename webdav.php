@@ -13,6 +13,8 @@
  * @version $Id$
  */
 
+error_reporting(0);
+
 $starttime = microtime(true);
 
 /**
