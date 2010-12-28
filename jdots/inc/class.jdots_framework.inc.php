@@ -570,6 +570,9 @@ class jdots_framework extends egw_framework
 	 */
 	public function get_sidebox($appname)
 	{
+		//Add the requested application to the translation table
+		translation::add_app($appname);
+
 		if (!isset($this->sideboxes[$appname]))
 		{
 			self::$link_app = $appname;
