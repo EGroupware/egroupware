@@ -1200,11 +1200,13 @@ class html
 	 * @param string $folderImageDir=null string path to the tree menu images, null uses default path
 	 * @param string|array $autoLoading=null EGw relative path or array with get parameter, both send through egw::link
 	 * @param string $dataMode='JSON' data type for autoloading: XML, JSON, CSV
+	 * @param boolean $dragndrop=false true to enable drag-n-drop (must be before autoloading get enabled!)
 	 *
 	 * @return string the html code, to be added into the template
 	 */
 	static function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$tree='foldertree',$_divClass='',
-		$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null,$autoLoading=null,$dataMode='JSON')
+		$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null,$autoLoading=null,$dataMode='JSON',
+		$dragndrop=false)
 	{
 		if(is_null($folderImageDir))
 		{
@@ -1233,6 +1235,8 @@ class html
 			$html .= "$tree.enableCheckBoxes(1);\n";
 			$html .= "$tree.setOnCheckHandler('$_onCheckHandler');\n";
 		}
+
+		if ($dragndrop) $html .= "$tree.enableDragAndDrop(true);\n";
 
 		if ($autoLoading)
 		{
