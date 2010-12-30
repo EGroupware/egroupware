@@ -320,7 +320,8 @@ class vfs_widget
 					{
 						$path = parse_url(egw_vfs::resolve_url_symlinks($path),PHP_URL_PATH);
 					}
-					$value = $GLOBALS['egw']->link('/etemplate/thumbnail.php',array('path' => $path));
+					// Append the "thsize" option, which will only create 16x16 thumbnails
+					$value = $GLOBALS['egw']->link('/etemplate/thumbnail.php',array('path' => $path, 'thsize' => '16'));
 				}
 				else
 				{
