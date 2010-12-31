@@ -275,7 +275,14 @@ class vfs_widget
 				$extension_data = array('type' => $type,'allowPath' => $allowPath);
 				break;
 
-			case 'vfs-mime':
+			case 'vfs-mime':  // size: [thsize] (thumbnail size)
+				//Read the thumbnail size
+				list($thsize) = explode(',', $cell['size']);
+				if (!is_numeric($thsize))
+				{
+					$thsize = NULL;
+				}
+
 				if (!$value)
 				{
 					$cell = etemplate::empty_cell();
@@ -320,8 +327,16 @@ class vfs_widget
 					{
 						$path = parse_url(egw_vfs::resolve_url_symlinks($path),PHP_URL_PATH);
 					}
-					// Append the "thsize" option, which will only create 16x16 thumbnails
-					$value = $GLOBALS['egw']->link('/etemplate/thumbnail.php',array('path' => $path, 'thsize' => '16'));
+
+					//Assemble the thumbnail parameters
+					$thparams = array('path' => $path);
+
+					if ($thsize)
+					{
+						$thparams['thsize'] = $thsize;
+					}
+
+					$value = $GLOBALS['egw']->link('/etemplate/thumbnail.php', $thparams);
 				}
 				else
 				{

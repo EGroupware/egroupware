@@ -221,6 +221,7 @@ class filemanager_select
 			$content['path'] = filemanager_ui::get_home_dir();
 		}
 		if (!($files = egw_vfs::find($content['path'],array(
+			'dirsontop' => true,
 			'order' => 'name',
 			'sort' => 'ASC',
 			'maxdepth' => 1,
