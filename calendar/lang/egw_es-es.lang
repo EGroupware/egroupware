@@ -197,6 +197,7 @@ invite	calendar	es-es	invitar
 last	calendar	es-es	último
 lastname of person to notify	calendar	es-es	Apellido de la persona a la que notificar
 length of the time interval	calendar	es-es	Longitud del intervalo de tiempo
+link	calendar	es-es	Vincular al evento
 link to view the event	calendar	es-es	Vínculo para ver el evento
 links	calendar	es-es	Enlaces
 links, attachments	calendar	es-es	Enlaces, adjuntos
@@ -236,6 +237,7 @@ number of weeks to show	calendar	es-es	Número de semanas a mostrar
 observance rule	calendar	es-es	Regla de observación
 occurence	calendar	es-es	Ocurrencia
 old startdate	calendar	es-es	Fecha de inicio antigua
+olddate	calendar	es-es	Fecha original
 on %1 %2 %3 your meeting request for %4	calendar	es-es	El %1 %2 %3 su solicitud de reunión para %4
 on all modification, but responses	calendar	es-es	en todas las modificaciones, excepto las respuestas
 on any time change too	calendar	es-es	también en cualquier cambio de hora
@@ -326,6 +328,7 @@ show this week	calendar	es-es	Mostrar esta semana
 single event	calendar	es-es	evento simple
 start	calendar	es-es	Inicio
 start date/time	calendar	es-es	Fecha/Hora inicio
+startdate	calendar	es-es	Fecha de inicio
 startdate / -time	calendar	es-es	Fecha de incio / -hora
 startdate and -time of the search	calendar	es-es	Fecha de inicio y -hora de la búsqueda
 startdate of the export	calendar	es-es	Fecha de inicio de la exportación
@@ -364,6 +367,9 @@ timezone of event exports	calendar	es-es	Zona horaria de los eventos exportados
 timezones updated to version %1 (%2 records updated).	calendar	es-es	Las zonas horarias se han actualizado a la versión %1 (%2 registros actualizados)
 title of the event	calendar	es-es	Título del evento
 to many might exceed your execution-time-limit	calendar	es-es	límite de ejecución
+to-firstname	calendar	es-es	Para nombre
+to-fullname	calendar	es-es	Para nombre completo
+to-lastname	calendar	es-es	Para apellido
 tomorrow	calendar	es-es	Mañana
 translation	calendar	es-es	Traducción
 tue	calendar	es-es	Mar

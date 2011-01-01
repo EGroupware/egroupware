@@ -27,7 +27,6 @@ basedirectory	filemanager	es-es	Directorio base
 can't open directory %1!	filemanager	es-es	¡No se puede abrir el directorio %1!
 cancel editing %1 without saving	filemanager	es-es	Cancelar la edición %1 sin guardar
 cannot create directory because it begins or ends in a space	filemanager	es-es	No se puede crear el directorio porque empieza o acaba en un espacio
-cautiously rejecting to remove folder '%1'!	filemanager	es-es	Por precaución, se rechaza el borrado de la carpeta '%1'
 check all	filemanager	es-es	Comprobar todo
 clear search	filemanager	es-es	Limpiar búsqueda
 comment	filemanager	es-es	Comentario
@@ -80,7 +79,6 @@ enter the complete vfs path to specify your desired start folder.	filemanager	es
 error adding the acl!	filemanager	es-es	¡Error al añadir la ACL!
 error creating symlink to target %1!	filemanager	es-es	¡Error al crear el enlace simbólico al destino %1!
 error deleting the acl entry!	filemanager	es-es	¡Error al borrar la entrada de la ACL!
-error uploading file!	filemanager	es-es	¡Error al subir el fichero!
 executable	filemanager	es-es	Ejecutable
 extended access control list	filemanager	es-es	Listas de control de acceso extendidas
 extended acl	filemanager	es-es	ACL extendida

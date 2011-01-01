@@ -409,6 +409,7 @@ no egroupware domains / database instances exist! use --edit-header --domain to 
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	es-es	¡No se ha indicado ninguna contraseña para el administrador de encabezados! Use --edit-header <contraseña>[,<usuario>] para poner una (--usage da más opciones).
 no modes available	setup	es-es	No hay modos disponibles
 no update necessary, domain %1(%2) is up to date.	setup	es-es	No hace falta actualizar. El dominio %1(%2) está actualizado.
+no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	es-es	¡No se ha indicado una zona horaria válida! ("%1" NO es suficiente, tiene que usar un identificador de zona horaria como "%2". Vea la %3lista completa de identificadores válidos%4)
 no xml support found. disabling	setup	es-es	No se encontró soporte para XML. Desactivando.
 not	setup	es-es	no
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	es-es	No todos los algoritmos y modos de mcrypt funcionan con eGroupWare. Si tiene problemas, intente desactivarlo.
@@ -521,6 +522,7 @@ server root	setup	es-es	Raíz del servidor
 session handler class used.	setup	es-es	Clase utilizada para el manejador de sesiones
 sessions handler	setup	es-es	Manejador de sesiones
 set	setup	es-es	establecer
+set and not	setup	es-es	establecido y no
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	es-es	Poner el juego de caracteres del sistema en UTF-8 (unicode) permite coexistir datos de juegos de caracteres distintos.
 settings	setup	es-es	Configuración
 setup	setup	es-es	Instalación

@@ -1,8 +1,38 @@
+%1 records processed	importexport	pl	%1 przetworzonych rekordów
 allowed users	importexport	pl	Użytkownicy z dostępem
+automatically created by importexport	importexport	pl	Automatycznie stworzony przez Import/Export
+basic csv import	importexport	pl	Podstawowy import CSV
 choose a name for this definition	importexport	pl	Wybierz nazwę dla tej definicji
 choose a plugin	importexport	pl	Wybierz wtyczkę
 choose an application	importexport	pl	Wybierz aplikację
+choose seperator and charset	importexport	pl	Wybierz separator oraz zestaw znaków
+define imports|exports	common	pl	Definiuj import/export
+delete all selected definitions	importexport	pl	usuń wszystkie zaznaczone definicje
+edit conditions	importexport	pl	Edytuj warunki
+expert options	importexport	pl	Opcje zaawansowane
+export	importexport	pl	Export
+export all selected definitions	importexport	pl	eksportuj wszystkie zaznaczone definicje
 finish	importexport	pl	zakończ
+import	importexport	pl	import
+import definitions	common	pl	Definicje importu
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	pl	Definicje importu (Uwaga: Istniejące definicje o tej samej nazwie zostaną nadpisane!!!)
+importexport	common	pl	Import/Export
+importexport wizard finished successfully!	importexport	pl	Działanie kreatora importu/exportu zakończyło się powodzeniem.
+load sample file	importexport	pl	Wczytaj przykładowy plik
+manage mapping	importexport	pl	Zarządzaj mapowaniem
 next	importexport	pl	następny
+no records selected	importexport	pl	Brak wybranych rekordów
+preview	importexport	pl	Podgląd
 previous	importexport	pl	poprzedni
+save as definition	importexport	pl	Zapisz jako definicję
+schedule	common	pl	Harmonogram
+schedule import / export	common	pl	Planuj import / export
+schedule not found	importexport	pl	Nie znaleziono harmonogramu
+select definition	importexport	pl	Wybierz definicję
+select plugin	importexport	pl	Wybierz wtyczkę
+some nice text	importexport	pl	jakiś fajny tekst
+unable to import:	importexport	pl	Nie można zaimportować:
+unable to schedule	importexport	pl	Niemożliwe zaplanowanie
 which useres are allowed for this definition	importexport	pl	Którzy użytkownicy mają dostęp do tej definicji?
+which users are allowed to use this definition	importexport	pl	Którzy użytkownicy mogą używać tej definicji?
+you need to select an app and format first!	importexport	pl	Najpierw musisz wybrać aplikację oraz format!

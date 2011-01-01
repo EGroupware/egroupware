@@ -102,7 +102,9 @@ cancel testjob!	admin	es-es	Cancelar trabajo de prueba
 cancel this scheduled command	admin	es-es	Cancelar este comando programado
 categories list	admin	es-es	Lista de categorías
 category %1 has been saved !	admin	es-es	La categoría %1 ha sido guardada
+category deleted.	admin	es-es	Se ha borrado la categoría
 category list	admin	es-es	Lista de categorías
+category saved.	admin	es-es	Se ha guardado la categoria
 change account_id	admin	es-es	Cambiar el campo account_id
 change acl rights	admin	es-es	cambiar permisos de ACL
 change config settings	admin	es-es	Cambiar opciones de configuración
@@ -499,6 +501,7 @@ the text displayed to the user	admin	es-es	el texto mostrado al usuario
 the two passwords are not the same	admin	es-es	Las dos contraseñas no son iguales
 the users bellow are still members of group %1	admin	es-es	Los usuarios siguientes todavía son miembros del grupo %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	es-es	Ya hay un grupo con este nombre. El id de usuario no puede tener el mismo nombre que el id de un grupo.
+there already is a system-user with this name. user's should not have the same name as a systemuser	admin	es-es	Ya hay un usuario del sistema con este nombre. Los usuarios no deben tener el mismo nombre que un usuario del sistema.
 they must be removed before you can continue	admin	es-es	Deben ser eliminados para poder continuar
 this application is current	admin	es-es	Esta aplicación está al día
 this application requires an upgrade	admin	es-es	Esta aplicación necesita ser actualizada
@@ -555,6 +558,7 @@ wrong account type: %1 is no %2 !!!	admin	es-es	Tipo de cuenta incorrecta: ¡%1 
 wrong admin-account or -password !!!	admin	es-es	¡La cuenta de administración o la contraseña son incorrectas!
 xml-rpc	admin	es-es	XML-RPC
 you have entered an invalid expiration date	admin	es-es	Ha introducido una fecha de expiración que no es válida
+you have no email address for your user set !!!	admin	es-es	¡No se ha establecido todavía una dirección de correo para su usuario!
 you have to enter a name, to create a new field!!!	admin	es-es	Tiene que introducir un nombre para crear un nuevo campo
 you have to enter a name, to create a new type!!!	admin	es-es	¡Tiene que introducir un nombre para crear un tipo nuevo!
 you must add at least 1 permission or group to this account	admin	es-es	Debe añadir al menos 1 permiso o grupo para esta cuenta
