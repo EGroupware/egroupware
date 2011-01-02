@@ -447,6 +447,7 @@ class accounts_ldap
 			'account_type'      => 'g',
 			'account_firstname' => $data['cn'][0],
 			'account_lastname'  => lang('Group'),
+			'account_fullname'  => lang('Group').' '.$data['cn'][0],
 			'groupOfNames'      => in_array('groupOfNames',$data['objectclass']),
 			'account_email'     => $data['mail'][0],
 		);
@@ -716,20 +717,20 @@ class accounts_ldap
 					{
 						if ($key !== 'count') $fullSet[$entry['uid'][0]] = $entry[$order][0];
 					}
-	
+
 					if (is_numeric($param['type'])) // return only group-members
 					{
 						$relevantAccounts = array();
 						$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=" . abs($param['type']) . "))",array('memberuid'));
 						$group = ldap_get_entries($this->ds, $sri);
-	
+
 						if (isset($group[0]['memberuid']))
 						{
 							$fullSet = array_intersect_key($fullSet, array_flip($group[0]['memberuid']));
 						}
 					}
 					$totalcount = count($fullSet);
-	
+
 					$sortFn = $param['sort'] == 'DESC' ? 'arsort' : 'asort';
 					$sortFn($fullSet);
 					$relevantAccounts = is_numeric($start) ? array_slice(array_keys($fullSet), $start, $offset) : array_keys($fullSet);
@@ -1095,7 +1096,7 @@ class accounts_ldap
 			$forward = $this->group_mail_classes[$objectclass];
 			if (is_array($forward)) list($forward,$extra_attr) = $forward;
 			if ($extra_attr && ($uid = $this->id2name($gid))) $to_write[$extra_attr] = $uid;
-			
+
 			$to_write[$forward] = array();
 			foreach($members as $key => $member)
 			{
