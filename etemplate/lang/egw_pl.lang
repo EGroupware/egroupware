@@ -1,0 +1,425 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	pl	%1 (z czego %2 nowych) Komunikatów zapisanych dla Aplikacji '%3' i Języków '%4'
+%1 entries found, select one ...	etemplate	pl	Znaleziono %1 wpisów, wybierz jeden ...
+%1 etemplates deleted	etemplate	pl	Usunięto %1 e-Szablonów
+%1 etemplates for application '%2' dumped to '%3'	etemplate	pl	Zrzucono %1 e-Szablonów dla aplikacji '%2' do '%3'
+%1 etemplates found	etemplate	pl	Znaleziono %1 e-Szablonów
+%1 matches on search criteria	etemplate	pl	%1 spełniających kryteria wyszukiwania
+%1 more...	etemplate	pl	%1 więcej
+%1 new etemplates imported for application '%2'	etemplate	pl	Zaimportowano %1 nowych e-Szablonów dla aplikacji '%2'
+%s disabled	etemplate	pl	%s wyłączono
+%s needed	etemplate	pl	%s wymagane
+%s notranslation	etemplate	pl	%s bez tłumaczenia
+%s onchange	etemplate	pl	%s onChange (JS)
+%s readonly	etemplate	pl	%s tylko do odczytu
+'%1' has an invalid format !!!	etemplate	pl	'%1' jest w nieprawidłowym formacie!
+'%1' is no php file in the egw server root (%2)!	etemplate	pl	'%1' to nie plik php w katalogu głównym serwera (%2)
+'%1' is not a valid date !!!	etemplate	pl	'%1' nie jest datą w poprawnym formacie!
+'%1' is not a valid floatingpoint number !!!	etemplate	pl	'%1' nie jest poprawną liczbą zmiennoprzecinkową!
+'%1' is not a valid integer !!!	etemplate	pl	'%1' nie jest poprawną liczbą całkowitą!
+'%1' is not allowed ('%2')!	etemplate	pl	'%1' nie jest dopuszczony ('%2')!
+a pattern to be searched for	etemplate	pl	wzorzec do wyszukania
+accesskey	etemplate	pl	Klawisz dostępu
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	pl	Klawisz dostępu może być również określony przez znak '&' w etykiecie (np. &Nazwa)
+account contactdata	etemplate	pl	Dane kontakowe dla konta
+add a new column (after the existing ones)	etemplate	pl	Dodaj nową kolumnę (za istniejącymi)
+add a new entry of the selected application	etemplate	pl	Dodaj nowy wpis dla wybranej aplikacji
+add a new multi-column index	etemplate	pl	Dodaj nowy indeks wielokolumnowy
+add column	etemplate	pl	Dodaj kolumnę
+add index	etemplate	pl	Dodaj indeks
+add new	etemplate	pl	Dodaj nowy
+add table	etemplate	pl	Dodaj tablicę
+advanced search	etemplate	pl	Wyszukiwanie zaawansowane
+align	etemplate	pl	Wyrównanie
+alignment of label and input-field in table-cell	etemplate	pl	wyrównanie etykiety i pola wprowadzania w komórce tabeli
+alignment of the v/hbox containing table-cell	etemplate	pl	wyrównanie V/H Box, który zawiera komórkę tabeli
+all days	etemplate	pl	wszystkie dni
+all operations save the template!	etemplate	pl	wszystkie operacje prowadzą do zapisu wzorca
+allowed file type: %1	etemplate	pl	Dopuszczony typ pliku: %1
+am	etemplate	pl	przed południem
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	pl	kolumna indeksowana przyspiesza wyszukiwanie na tej kolumnie (zabiera przestrzeń dyskową!)
+application	etemplate	pl	Aplikacja
+application name needed to write a langfile or dump the etemplates !!!	etemplate	pl	Nazwa aplikacji, potrzebna w celu zapisania pliku językowego lub zrzucenia e-Szablonów!
+applies the changes made	etemplate	pl	zatwierdza wykonane zmiany
+applies the changes to the given version of the template	etemplate	pl	zatwierdza wykonane zmiany dla podanej wersji szablonu
+as default	etemplate	pl	jako domyślny
+attach	etemplate	pl	Dołącz
+attach file	etemplate	pl	dołącz plik
+baseline	etemplate	pl	Baseline
+blurtext	etemplate	pl	blurTExt
+border	etemplate	pl	Ramka
+border-line-thickness for the table-tag	etemplate	pl	Grubość ramki dla tagu table
+bottom	etemplate	pl	Dół
+box	etemplate	pl	Pudełko
+box...	etemplate	pl	Pudełko...
+can not have special sql-value null	etemplate	pl	nie może mieć wartości specjalnej SQL NULL
+cancel	etemplate	pl	Anuluj
+cant delete a single widget from a grid !!!	etemplate	pl	nie można usunąć pojedynczego obiektu z siatki!
+cant delete the only column of a grid !!!	etemplate	pl	Nie można usunąć jedynej kolumny z siatki!
+cant delete the only row in a grid !!!	etemplate	pl	Nie można usunąć jedynego wiersza z siatki!
+category	etemplate	pl	Kategoria
+category tree	etemplate	pl	Drzewo kategorii
+cellpadding for the table-tag	etemplate	pl	Cellpadding dla tagu tabeli
+cells	etemplate	pl	Komórki
+cellspacing for the table-tag	etemplate	pl	Cellspacing dla tagu tabeli
+center	etemplate	pl	Wyśrodkowanie
+changed	etemplate	pl	Zmieniono
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	pl	zaznacz, jeżeli zawartość ma być wyświetlana, ale nie zmieniana (nie jest wtedy odsyłana z powrotem do przeglądarki)
+check if field has to be filled by user	etemplate	pl	zaznacz, jeżeli pole musi być wypełnione przez użytkownika
+checkbox	etemplate	pl	Checkbox
+class	etemplate	pl	Klasa
+class, valign	etemplate	pl	klasa, w pionie
+click here to attach the file	etemplate	pl	kliknij tutaj, aby dołączyć plik
+click here to create the link	etemplate	pl	kliknij tutaj, aby stworzyć odnośnik
+click here to start the search	etemplate	pl	kliknij tutaj, aby rozpocząć wyszukiwanie
+click here to upload the file	etemplate	pl	kliknij tutaj, aby przesłać plik
+click to order after that criteria	etemplate	pl	kliknij, aby uporządkować dane według tego kryterium
+clickable path	etemplate	pl	ścieżka możliwa do kliknięcia
+closes the window without saving the changes	etemplate	pl	zamyka okno bez zachowywania zmian
+column...	etemplate	pl	Kolumna...
+columnname	etemplate	pl	Nazwa kolumny
+comment	etemplate	pl	Komentarz
+confirm	etemplate	pl	zatwierdź
+confirmation message or custom javascript (returning true or false)	etemplate	pl	wiadomość potwierdzenia lub własny skrypt JS (zwracający 'true' lub 'false')
+confirmation necesary or custom java-script	etemplate	pl	potwierdzenie konieczne lub skrypt JS
+contact	etemplate	pl	Kontakt
+contact field to show	etemplate	pl	Pole kontaktu do wyświetlenia
+contact fields	etemplate	pl	Pola kontaktu
+contains	etemplate	pl	zawiera
+create a new table for the application	etemplate	pl	Tworzy nową tabelę dla aplikacji
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pl	tworzy angielski plik językowy ('en') z etykiet i tekstów pomocy (dla aplikacji z pola 'Name')
+css class for the table-tag	etemplate	pl	klasa CSS dla znacznika tablicy
+css properties	etemplate	pl	ustawienia CSS
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	pl	Klasa CSS dla tego rzędu, wbudowane: 'nmh', 'nmr'
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	pl	Klasa CSS dla tego rzędu, wbudowane: 'th','row'
+css-styles	etemplate	pl	style CSS
+custom	etemplate	pl	niestandardowy
+custom fields	etemplate	pl	pola niestandardowe
+custom javascript for onchange	etemplate	pl	niestandardowy kod JS dla zdarzenia onChange
+cut	etemplate	pl	Wytnij
+date+time	etemplate	pl	Data+Czas
+datum	etemplate	pl	Data
+day	etemplate	pl	Dzień
+days	etemplate	pl	dni
+db ensures that every row has a unique value in that column	etemplate	pl	DBMS (baza danych) zapewnia, że każdy wiersz będzie posiadał unikalną wartość w tej kolumnie
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	pl	Opcje indeksu specyficzne dla bazy danych, np. mysql(FULLTEXT) lub mysql(100)
+db-tools	etemplate	pl	Narzędzia bazodanowe
+deck	etemplate	pl	Pokład (wewnętrzny)
+default	etemplate	pl	Domyślnie
+delete a single entry by passing the id.	etemplate	pl	Usuń jeden wpis według podanego id.
+delete all selected etemplates, without further inquiry	etemplate	pl	usuń WSZYSTKIE wybrane eSzablony, BEZ dalszych pytań
+delete and cut save the template!	etemplate	pl	usuń zawartość i zapisz szablon!
+delete column	etemplate	pl	Usuń kolumnę
+delete index	etemplate	pl	Usuń indeks
+delete the spezified etemplate	etemplate	pl	Usuń wskazny e-Szablon
+delete this column	etemplate	pl	usuń tą kolumnę
+delete this etemplate	etemplate	pl	usuń ten e-Szablon
+delete this file	etemplate	pl	Usuń ten plik
+delete this row	etemplate	pl	Usuń ten wierwsz
+delete whole column (can not be undone!!!)	etemplate	pl	Usuń całą kolumnę (nie można cofnąć!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	pl	usuwa wybrany eSzablon z bazy danych, nie może być cofnięte
+deletes the etemplate spez. above	etemplate	pl	Usuwa e-Szablon wskazany powyżej
+deletes this column	etemplate	pl	Usuń tą kolumnę
+deletes this index	etemplate	pl	Usuń ten indeks
+discard changes	etemplate	pl	porzuć zmiany
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	pl	wyświetlane przed polami input lub wstawiany jest input w miejsce '%s' w etykiecie
+displayed in statusline of browser if input-field gets focus	etemplate	pl	wyświetlane w pasku statusu przeglądarki jeśli wybrany zostanie input
+displayed in the top line of the groupbox (legend)	etemplate	pl	wyświetlany w górnej linii groupboxa (legenda)
+do you want to save the changes you made in table %s?	etemplate	pl	Czy chcesz zachować zmiany wykonane w tablicy %s?
+documentation	etemplate	pl	Dokumentacja
+doesn't matter	etemplate	pl	bez znaczenia
+drop a table - this can not be undone	etemplate	pl	Usuń tabelę - czynność nie może być cofnięta!
+drop table	etemplate	pl	Usuń tabelę
+dump4setup	etemplate	pl	ZrzućDoSetup
+duration	etemplate	pl	Czas trwania
+edit	etemplate	pl	Edytuj
+edit embeded css styles or of the applications app.css file	etemplate	pl	edycja osadzonych stylów CSS lub pliku app.css aplikacji
+edit the etemplate spez. above	etemplate	pl	Edytuj e-Szablon wskazany powyżej
+edit...	etemplate	pl	Edytuj...
+editable templates - db-tools	etemplate	pl	Edytor Szablonów - narzędzia bazodanowe
+editable templates - delete template	etemplate	pl	Edytor Szablonów - usuń szablon
+editable templates - editor	etemplate	pl	Edytor Szablonów - edytor
+editable templates - search	etemplate	pl	Edytor Szablonów - wyszukiwanie
+editable templates - show template	etemplate	pl	Edytor Szablonów - pokaż szablon
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	pl	osadzone style CSS, np. '.red { background: red; }'
+enable javascript onchange submit	etemplate	pl	aktywuj przesłanie formularza poprzez JS na onChange
+enter '' for an empty default, nothing mean no default	etemplate	pl	wprowadź ciąg '' dla pustej wartości domyślnej, jeżeli nic nie wpiszesz
+enter a search pattern	etemplate	pl	Podaje wzorzec wyszukiwania
+enter filename to upload and attach, use [browse...] to search for it	etemplate	pl	Podaj nazwę pliku do załadowania i dołączenia, użyj [Przeglądaj...] aby go wyszukać
+enter the new version number here (> old_version), empty for no update-file	etemplate	pl	Podaj nowy numer wersji (musi być większy niż aktualny), pusta wartość jeżeli nie chcesz aktualizować pliku
+enter the new version number here (has to be > old_version)	etemplate	pl	Podaj nowy numer wersji (musi być większy niż aktualny)
+entry saved	etemplate	pl	Wpis zachowany
+error copying uploaded file to vfs!	etemplate	pl	Błąd przy kopiowaniu załadowanego pliku do systemu plików!
+error create parent directory %1!	etemplate	pl	Błąd przy tworzeniu katalogu nadrzędnego %1!
+error deleting %1!	etemplate	pl	Błąd przy usuwaniu %1!
+error uploading file!	filemanager	pl	Błąd przy ładowaniu pliku!
+error: template not found !!!	etemplate	pl	Błąd: wzorzec nie znaleziony!
+error: webserver is not allowed to write into '%1' !!!	etemplate	pl	Błąd: demon serwera WWW nie może zapisywać do katalogu '%1'!
+error: while saving !!!	etemplate	pl	Błąd: podczas zapisywania!
+error: writing file (no write-permission for the webserver) !!!	etemplate	pl	Błąd: zapisywanie pliku nie powiodło się (brak uprawnień zapisu dla serwera WWW)!
+etemplate	common	pl	e-Szablon
+etemplate '%1' imported, use save to put it in the database	etemplate	pl	e-Szablon '%1' zaimportowano, użyj 'Zapisz' aby umieścić go w bazie danych
+etemplate '%1' written to '%2'	etemplate	pl	e-Szablon '%1' zapisano do '%2'
+etemplate editor	etemplate	pl	e-Szablon - edytor
+etemplate reference	etemplate	pl	e-Szablon - informator
+etemplate tutorial	etemplate	pl	e-Szablon - samouczek
+exchange this row with the one above	etemplate	pl	zamień ten wiersz z jego poprzednikiem
+exchange this two columns	etemplate	pl	zamień te dwie kolumny
+export the loaded etemplate into a xml-file	etemplate	pl	eksportuj załadowany e-Szablon do pliku XML
+export xml	etemplate	pl	Eksportuj do XML
+extensions loaded:	etemplate	pl	Załadowano rozszerzenia:
+field	etemplate	pl	Pole
+field must not be empty !!!	etemplate	pl	Powyższe pole nie może być puste!
+file	etemplate	pl	Plik
+file '%1' not found!	etemplate	pl	Plik '%1' nie odnaleziony!
+file contains more than one etemplate, last one is shown !!!	etemplate	pl	Plik zawiera więcej niż jeden e-Szablon - pokazany jest ostatni z nich!
+file is of wrong type (%1 != %2)!	etemplate	pl	Zły typ pliku (%1 != %2)!
+file writen	etemplate	pl	Plik został zapisany
+fileupload	etemplate	pl	Przesłanie Pliku
+first	etemplate	pl	Pierwszy
+floating point	etemplate	pl	Liczba zmiennoprzecinkowa
+foreign key	etemplate	pl	Klucz obcy
+formatted text (html)	etemplate	pl	Tekst sformatowany (HTML)
+go to the first entry	etemplate	pl	idź do pierwszego wpisu
+go to the last entry	etemplate	pl	idź do ostatniego wpisu
+go to the next page of entries	etemplate	pl	idź do następnej strony wpisów
+go to the previous page of entries	etemplate	pl	idź do poprzedniej strony wpisów
+grid	etemplate	pl	Siatka
+grid column attributes	etemplate	pl	Atrybuty kolumn siatki
+grid row attributes	etemplate	pl	Atrybuty wierszy siatki
+groupbox	etemplate	pl	GroupBox
+hbox	etemplate	pl	HBox
+height	etemplate	pl	Wysokość
+height of row (in % or pixel)	etemplate	pl	wysokość wiersza (w % lub pikselach)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	pl	wysokość wiersza (w % lub pikselach), wyłącz wiersz: [! = nie]<wartość>[=<test>], np. '!@data' wyłącz wiersz jeśli pole 'data' jest puste
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	pl	Wysokość tabeli w % lub pikselach dla tabeli lub (opcjonalnie) div
+height, disabled	etemplate	pl	Wysokość, wyłączono
+help	etemplate	pl	Pomoc
+history log	etemplate	pl	Zapis Historii
+horizontal rule	etemplate	pl	Linia pozioma
+hour	etemplate	pl	Godzina
+hours	etemplate	pl	godziny
+how many entries should the list show	etemplate	pl	Jak dużo wpisów powinna pokazywać lista
+html	etemplate	pl	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	pl	jeżeli pole jest wyłączone, pojawia się pusta komórka tabeli - dla (tymczasowego) usunięcia pola lub komórki
+image	etemplate	pl	Obrazek
+import	etemplate	pl	Importuj
+import an etemplate from a xml-file	etemplate	pl	Importuj e-Szablon z pliku XML
+import table-definitions from existing db-table	etemplate	pl	Importuj definicję tabel z istniejących tabel bazy danych
+import xml	etemplate	pl	Importuj z XML
+increment version to not overwrite the existing template	etemplate	pl	powiększ numer wersji, aby nie nadpisać istniejącego szablonu
+index/name of returned content (name of the template, link / method for image)	etemplate	pl	index/name zwróconej zawartości (nazwa sablonu, linku / metody dla obrazka)
+indexed	etemplate	pl	Indeksowana
+indexoptions	etemplate	pl	Opcje indeksu
+insert a column before	etemplate	pl	wstaw kolumnę przed
+insert a column behind	etemplate	pl	wstaw kolumnę po
+insert a row above	etemplate	pl	wstaw wiersz przed
+insert a row below	etemplate	pl	wstaw wierwsz po
+insert a widget before	etemplate	pl	wstaw element przed
+insert a widget behind	etemplate	pl	wstaw element po
+insert new column behind this one	etemplate	pl	wstaw nową kolumnę za bieżącą
+insert new column in front of all	etemplate	pl	wstaw nową kolumnę na początku
+insert new row after this one	etemplate	pl	wstaw nowy wiersz za bieżącym
+insert new row in front of first line	etemplate	pl	wstaw nowy wiersz na początku
+integer	etemplate	pl	Liczba całkowita
+key	etemplate	pl	Klucz
+label	etemplate	pl	Etykieta
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	pl	Etykieta:[bold][italic] Tekst:[len][,max] Numery:[min][,[max][,len]] Text area:[rows][,cols] Radiobutton:value Linia pozioma:[width] Szablon.:[IndexInContent] Select:[multiselect] Data:[values: eg. 'Y-m-d']
+lang	etemplate	pl	Język
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	pl	skrótowa nazwa języka (np. 'pl' dla polskiego) dla szablonów zależnych od języka
+last	etemplate	pl	Ostatni
+left	etemplate	pl	Lewy
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	pl	długość dla char+varchar, precyzja int: 2, 4, 8 i float: 4, 8
+link	etemplate	pl	Odnośnik
+linkapps	etemplate	pl	LinkAplikacji
+linkentry	etemplate	pl	LinkWpisu
+linklist	etemplate	pl	LinkListy
+linkstring	etemplate	pl	LinkCiąguZnaków
+linkto	etemplate	pl	LinkDo
+load this template into the editor	etemplate	pl	załaduj ten szablon do edytora
+maximum size for uploads	filemanager	pl	Maksymalny rozmiar przy przesyłaniu plików
+message ...	etemplate	pl	Wiadomość ...
+middle	etemplate	pl	Wyśrodkowany
+minute	etemplate	pl	Minuta
+minutes	etemplate	pl	minuty
+month	etemplate	pl	miesiąc
+more than 1 match for '%1'	etemplate	pl	Więcej niż 1 pasujący dla '%1'
+multicolumn indices	etemplate	pl	Indeksy wielokolumnowe
+name	etemplate	pl	Nazwa
+name of other table where column is a key from	etemplate	pl	nazwa innej tabeli, w której kolumna jest kluczem
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	pl	nazwa zestawu szablonów phpgw (np. verdilak), puste = domyślne
+name of table to add	etemplate	pl	Nazwa tabeli do dodania
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	pl	nazwa e-Szablonu powinna być w formie: application.function[.subTemplate]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	pl	musi być unikatowy w tabeli i nie być zarezerwowanym słowem SQL, najlepiej poprzedzić wszystkie jednakowym, 2 literowym skrótem nazwy aplikacji
+new search	common	pl	Nowe wyszukiwanie
+new table created	etemplate	pl	Utworzono nową tabelę
+newer version '%1' exists !!!	etemplate	pl	nowsza wersja '%1' istnieje!
+nextmatch	etemplate	pl	Następny pasujący
+nextmatch accountfilter	etemplate	pl	Następny pasujący - filtr konta
+nextmatch custom filterheader	etemplate	pl	Następny pasujący - Własny nagłówek filtra
+nextmatch filterheader	etemplate	pl	Następny pasujący - Nagłówek filtra
+nextmatch header	etemplate	pl	Następny pasujący - Nagłówek
+nextmatch sortheader	etemplate	pl	Następny pasujący - Nagłówek sortowania
+no column to swap with !!!	etemplate	pl	brak kolumny do zamiany!!!
+no file	etemplate	pl	brak pliku
+no filename given or selected via browse...	etemplate	pl	nie podano nazwy pliku i nie wybrano jej
+no matches found	etemplate	pl	Nie znaleziono zgodnych
+no row to swap with !!!	etemplate	pl	brak rzędu do zamiany!!!
+not null	etemplate	pl	NOT NULL
+nothing	etemplate	pl	nic
+nothing found - try again !!!	etemplate	pl	Nic nie znaleziono - spróbuj ponownie.
+nothing in clipboard to paste !!!	etemplate	pl	Schowek pusty - nie można wkleić.
+nothing matched search criteria !!!	etemplate	pl	Brak elementów spełniających kryteria.
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	pl	liczba kolumn jakie komórka powinna zajmować, lib 'all' dla wszystkich kolumn, nazwa klasy css dla tagu td
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	pl	liczba wierszy/kolumn w V/HBox, cellpadding, cellspacing
+of	etemplate	pl	z
+onchange	etemplate	pl	onChange (JS)
+onclick	etemplate	pl	onClick (JS)
+only an other version found !!!	etemplate	pl	znaleziono tylko inną wersję !!!
+open the online help.	etemplate	pl	Otwórz pomoc online.
+operator	etemplate	pl	Operator
+optional note about the link	etemplate	pl	opcjonalna notatka związana z odnośnikiem
+options	etemplate	pl	Opcje
+order to navigating by tab key through the form	etemplate	pl	Porządek nawigacji klawiszem 'TAB' w formularzu
+overflow	etemplate	pl	Przepełnienie
+padding	etemplate	pl	Wypełnienie
+parent is a '%1' !!!	etemplate	pl	nadrzędny jest '%1'!
+paste	etemplate	pl	Wklej
+path	etemplate	pl	Ścieżka
+please enter table-name first !!!	etemplate	pl	Proszę wpierw wprowadzić nazwę tabeli!
+pm	etemplate	pl	po południu
+popup	etemplate	pl	Okno pop-up
+precision	etemplate	pl	Dokładność (długość)
+primary key	etemplate	pl	Klucz główny
+primary key for the table, gets automaticaly indexed	etemplate	pl	Klucz główny dla tabeli, zostaje automatycznie indeksowany
+radiobutton	etemplate	pl	Radiobutton
+read	etemplate	pl	Odczytaj
+read a list of entries.	etemplate	pl	Odczytaj lstę wpisów.
+read a single entry by passing the id and fieldlist.	etemplate	pl	Odczytaj pojedynczy wpis, podając ID oraz listę pól
+read etemplate from database (for the keys above)	etemplate	pl	odczytaj e-Szablon z bazy danych (dla powyższych kluczy)
+readonly	etemplate	pl	tylko do odczytu
+remove row (can not be undone!!!)	etemplate	pl	usuń wiersz (nie można cofnąć!)
+remove this link (not the entry itself)	etemplate	pl	usuń ten odnośnik (ale nie wpis)
+required	etemplate	pl	Wymagany
+returns savely, without deleting	etemplate	pl	powraca zapisując, bez usuwania
+right	etemplate	pl	Prawy
+row...	etemplate	pl	Wiersz...
+save selected columns as default preference for all users.	etemplate	pl	Zachowaj wybrane kolumny w formie domyślnej preferencji dla wszystkich użytkowników.
+save the changes made and close the window	etemplate	pl	Zachowuje zmiany i zamyka okno
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	pl	zapisz eSzablon pod następującymi kluczami (nazwa, ...), zmień je aby zapisać pod inną nazwą
+saves changes to tables_current.inc.php	etemplate	pl	zapisz zmiany do pliku tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	pl	zapisuje szablon z podanym numerem wersji i zamyka okno
+scale	etemplate	pl	Skala
+scale for float	etemplate	pl	skala dla float
+search	etemplate	pl	Szukaj
+select a category	etemplate	pl	wybierz kategorię
+select a primary contact, to show in the list	etemplate	pl	Wybierz podstawowy kontakt, który będzie pokazywany na liście
+select access	etemplate	pl	Wybierz rodzaj dostępu
+select account	etemplate	pl	Wybierz konto
+select an app first !!!	etemplate	pl	Wybierz najpierw aplikację !
+select an app to search in	etemplate	pl	Wybierz Aplikację aby w niej szukać
+select an application	etemplate	pl	Wybierz aplikację
+select an application, (*) = uninstalled	etemplate	pl	Wybierz aplikację, (*) = odinstalowana
+select an entry to link with	etemplate	pl	Wybierz wpis z którym połączysz
+select an table of the application	etemplate	pl	Wybierz tabelę aplikacji
+select application	etemplate	pl	Wybierz aplikację
+select application to search	etemplate	pl	Wybierz aplikację do przeszukania
+select category	etemplate	pl	Wybierz kategorię
+select columns	etemplate	pl	Wybierz kolumny
+select country	etemplate	pl	Wybierz kraj
+select day	etemplate	pl	Wybierz dzień
+select day of week	etemplate	pl	wybierz dzień tygodnia
+select entry	etemplate	pl	Wybierz wpis
+select hour	etemplate	pl	Wybierz godzinę
+select if content of field should not be translated (label gets always translated)	etemplate	pl	wybiesz, jeśli zawartość pola nie powinna być tłumaczona (etykieta jest tłumaczona zawsze)
+select language	etemplate	pl	Wybierz język
+select month	etemplate	pl	Wybierz miesiąc
+select number	etemplate	pl	Wybierz numer
+select one ...	etemplate	pl	Wybierz jeden...
+select percentage	etemplate	pl	Wybierz procent
+select priority	etemplate	pl	Wybierz priorytet
+select state	etemplate	pl	Wybierz stan
+select the columns to display in the list	etemplate	pl	Wybierz kolumny wyświetlane w liście
+select the indexed columns in their desired order	etemplate	pl	Wybierz kol
+select this etemplate to delete it	etemplate	pl	wybierz ten eSzablon aby go usunąć
+select which accounts to show	etemplate	pl	wybierz konta, które mają być pokazane
+select which values to show	etemplate	pl	wybierz wartości, które mają być pokazane
+select year	etemplate	pl	Wybierz rok
+selectbox	etemplate	pl	Selectbox
+sets today as date	etemplate	pl	ustaw "dzisiaj" jako datę
+should the form be submitted or any custom javascript be executed	etemplate	pl	Czy formularz powinien być przesłany czy będzie wykonywany kod JavaScript?
+show	etemplate	pl	Pokaż
+show (no save)	etemplate	pl	Pokaż (bez zapisu)
+show all / cancel filter	etemplate	pl	Pokaż wszystko / anuluj filtr
+show values	etemplate	pl	Pokaż wartości
+showing	etemplate	pl	Wyświetlono
+shows / allows you to enter values into the etemplate for testing	etemplate	pl	pokazuje / zezwala na wprowadzenie zmian do eSzablonu w celach testowych
+shows/displays etemplate for testing, does not save it before	etemplate	pl	wyświetla eSzablon do testów, NIE zapisuje przed wyświetleniem
+spacing	etemplate	pl	Rozdzielenie
+span	etemplate	pl	Span
+span, class	etemplate	pl	Span, Class
+stack	etemplate	pl	Stos
+start a new search, cancel this link	etemplate	pl	zacznij nowe wyszukiwanie, anuluj ten link
+start new search for the above pattern	etemplate	pl	zacznij nowe wyszukiwanie dla powyższego schematu
+submit form	etemplate	pl	prześlij formularz
+submitbutton	etemplate	pl	Przycisk przesłania formularza
+swap	etemplate	pl	zamień
+swap widget with next one	etemplate	pl	zamień obiekt z kolejnym
+swap with next column	etemplate	pl	zamień z następną kolumną
+swap with next row	etemplate	pl	zamień z następnym wierszem
+switch to a parent widget	etemplate	pl	skocz to obiektu nadrzędnego
+switch to an other widgets of that container	etemplate	pl	skocz do innych obiektów z tego kontenera
+tabindex	etemplate	pl	Indeks porządku (TAB)
+table unchanged, no write necessary !!!	etemplate	pl	Tabale nie została zmieniona, zapis nie jest wymagany!
+tablename	etemplate	pl	Nazwa tabeli
+tabs	etemplate	pl	Zakładki
+template	etemplate	pl	Szablon
+template deleted	etemplate	pl	Szablon usunięto
+template saved	etemplate	pl	Szablon zapisano
+text	etemplate	pl	Tekst
+textarea	etemplate	pl	Textarea
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	pl	Ten tekst jest wyświetlany jeśli pole input jest puste i nie zostało wybrane
+time	etemplate	pl	Czas
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	pl	aby wyłączyć: [! = nie]<wartość>[=<test>], np. '!@data' - wyłącz kolumnę jeśli pole 'data' jest puste
+to start the db-tools	etemplate	pl	aby uruchomić narzędzie bazodanowe
+to start the etemplate editor	etemplate	pl	aby uruchomić edytor e-Szablonów
+to start the search	etemplate	pl	aby uruchomić wyszukiwanie
+today	etemplate	pl	Dzisiaj
+top	etemplate	pl	Góra
+tree	etemplate	pl	Drzewo
+type	etemplate	pl	Typ
+type of the column	etemplate	pl	typ kolumny
+type of the field (select label if field should be empty)	etemplate	pl	typ pola (wybierz Etykieta jeśli pole powinno być puste)
+unique	etemplate	pl	Unikalna
+unlink	etemplate	pl	Odlinkuj
+update a single entry by passing the fields.	etemplate	pl	Uaktualnij pojedynczy wpis przez przekazanie pól.
+update from version '%s' to	etemplate	pl	Uaktualnij z wersji '%s' do
+upload	etemplate	pl	Załaduj
+valign	etemplate	pl	w pionie
+value	etemplate	pl	Wartość
+value has to be at least '%1' !!!	etemplate	pl	Wartość musi być przynajmniej '%1'!
+value has to be at maximum '%1' !!!	etemplate	pl	Wartość musi być co najwyżej '%1'!
+vbox	etemplate	pl	VBox
+version	etemplate	pl	Wersja
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	pl	numer wersji, powinien być w formie: główna.pomniejsza.rewizja.numer (np. 0.9.13.001, wszystkie numery powinny być wypełnione zerami)
+vertical alignment of row	etemplate	pl	pionowe porządkowanie wiersza
+view this etemplate	etemplate	pl	wyświetl ten eSzablon
+view this linked entry in its application	etemplate	pl	wyświetl ten podlinkowany wpis w aplikacji z której pochodzi
+weekend	etemplate	pl	weekend
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	pl	co dzieje się z przepełnioną zawartością (overflow): visible (domyślne), hidden, scroll, auto
+widget copied into clipboard	etemplate	pl	Obiekt skopiowano do schowka
+width	etemplate	pl	Szerokość
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	pl	szerokość kolumny (w % lub pikselach), wyłącz kolumnę: [! = nie]<wartość>[=<test>], np. '!@data' - wyłącz kolumnę jeśli pole 'data' jest puste
+width of column (in % or pixel)	etemplate	pl	szerokość kolumny (w procentach lub pikselach)
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	pl	Szerokość tabeli w % lub pikselach dla tagu tabeli i (opcjonalnie) div
+width, disabled	etemplate	pl	Szerokość, Wyłączono
+working days	etemplate	pl	dni robocze
+write <app>/setup/tables_current.inc.php	etemplate	pl	Zapisz <aplikacja>/setup/tables_current.inc.php
+write langfile	etemplate	pl	Zapisz plik języka
+write tables	etemplate	pl	Zapisz tabele
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	pl	zapisuje 'etemplates.inc.php' (dla aplikacji w polu Nazwa) w katalogu setup aplikacji
+xml-file to import	etemplate	pl	plik xml do zaimportowania
+xslt template	etemplate	pl	Szablon XSLT
+year	etemplate	pl	Rok
+you are not allowed to export more then %1 entries!	etemplate	pl	Nie masz zezwolenia na eksport więcej niż %1 wpisów!
+you can respond by visiting:	etemplate	pl	Możesz odpowiedzieć odwiedzając:
+you need to select a file first!	etemplate	pl	Musisz najpierw wybrać plik!

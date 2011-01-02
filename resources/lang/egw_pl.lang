@@ -22,6 +22,7 @@ configure access permissions	admin	pl	Konfiguruj Prawa Dostępu
 conflict	resources	pl	konflikt
 create new accessory for this resource	resources	pl	Utwórz nowe akcesoriu dla tego zasobu
 create new links	resources	pl	Utwórz nowe odsyłacze
+custom fields	resources	pl	Pole niestandardowe
 delete selected resources	resources	pl	usuń wybrane zasoby
 delete this entry	resources	pl	Usuń ten wpis
 description (short)	resources	pl	Opis (krótki)
@@ -32,6 +33,7 @@ existing links	resources	pl	Istniejące odsyłacze
 general	resources	pl	Ogólnie
 general informations about resource	resources	pl	Ogólne informacje o zasobie
 gernal resource	resources	pl	ogólne zasony
+global categories	resources	pl	Kategorie globalne
 how many of the resources are useable?	resources	pl	jaka ilość zasobów jest do użytku?
 how many of them are useable?	resources	pl	Ile z nich jest do użytku?
 how many of this resource are usable	resources	pl	Jaka ilość tego zasobu jest do użytku?
@@ -96,7 +98,7 @@ web-site for this resource	resources	pl	Serwis internetowy tego zasobu
 where to find this resource?	resources	pl	Gdzie znaleść ten zasób?
 which category does this resource belong to?	resources	pl	Do jakiej kategori należy ten zasób?
 write permissions	resources	pl	Pozwolenie zapisu
-you are not permitted to delete this reource!	resources	pl	Nie posiadasz zezwolenia na skasowanie tego zasobu!
-you are not permitted to edit this reource!	resources	pl	Nie posiadasz zezwolenia na edycję tego zasobu!
-you are not permitted to get information about this resource!	resources	pl	Nie posiadasz zezwolenia aby otrzymać informację na temat tego zasobu!
+you are not permitted to delete this reource!	resources	pl	Nie masz praw do usuwania tego zasobu!
+you are not permitted to edit this reource!	resources	pl	Nie masz zezwolenia na edycję tego zasobu!
+you are not permitted to get information about this resource!	resources	pl	Nie masz zezwolenia by otrzymać informację na temat tego zasobu!
 you chose more resources than available	resources	pl	Wybrałeś więcej zasobów niż jest dostępnych

@@ -1,0 +1,113 @@
+%1 timesheets(s) %2	timesheet	pl	%1 arkuszów czasu pracy %2
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	pl	%1 arkuszów czasu pracy %2, %3 nie powiodło się z powodu nie wystarczających uprawnień !
+--> enter new name	timesheet	pl	--> podaj nową nazwę
+2 month ago	timesheet	pl	2 miesiące temu
+2 years ago	timesheet	pl	2 lata temu
+3 years ago	timesheet	pl	2 lata temu
+actions	timesheet	pl	Działania
+all projects	timesheet	pl	Wszystkie projekty
+all status	timesheet	pl	Wszystkie statusy
+and its members	timesheet	pl	i jego członków
+applies the changes	timesheet	pl	zastosuje zmiany
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	pl	Zastosuj akcję na całym zapytaniu, nie tylko na wyświetlonych arkuszach!
+both: allow to use projectmanager and free project-names	admin	pl	Częściowa: zezwalaj na używanie Menadżera Projektów jak również dowolnych nazw projektów
+by	timesheet	pl	przez
+changed status	timesheet	pl	zmieniło status
+check all	timesheet	pl	Sprawdź wszystkie
+comment by %1 at %2:	timesheet	pl	Komentarz %1 z %2:
+create new links	timesheet	pl	Utwórz nowe odsyłacze
+creates a new field	timesheet	pl	tworzy nowe pole
+creating new entry	timesheet	pl	Tworzenie nowego wpisu
+custom fields	timesheet	pl	Własne pola
+delete this entry	timesheet	pl	Usuń ten wpis
+delete this status	timesheet	pl	Usuń wskazany status
+delete timesheet	timesheet	pl	Usuń arkusz czasu pracy
+deleted	timesheet	pl	usunięto
+deletes this field	timesheet	pl	usuwa to pole
+determines the order the fields are displayed	timesheet	pl	decyduje o kolejności, w jakiej pola zostaną pokazane
+each value is a line like <id>[=<label>]	timesheet	pl	każda wartość to linia w stylu <id>[=<label>]
+edit status	timesheet	pl	Edytuj status
+edit this entry	timesheet	pl	Edytuj ten wpis
+empty if identical to duration	timesheet	pl	pusty jesli identyczny jak czas trwania
+end	timesheet	pl	Koniec
+entry deleted	timesheet	pl	Wpis usunięty
+entry saved	timesheet	pl	Wpis zachowany
+error deleting the entry!!!	timesheet	pl	Błąd przy usuwaniu wpisu !!!
+error saving the entry!!!	timesheet	pl	Błąd przy zachowywaniu wpisu !!!
+existing links	timesheet	pl	Istniejące odsyłacze
+export	timesheet	pl	Eksport
+export to openoffice spreadsheet	timesheet	pl	Eksportuj do arkusza OpenOffice
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	pl	Exportuj wpisy ze swojego Czasu Pracy do pliku CSV (CSV - wpisy rozdzielane przecinkiem). W opcjach możesz wybrać własny separator wpisów.
+field must not be empty !!!	timesheet	pl	Pole nie może być puste !
+full: use only projectmanager	admin	pl	Pełna: zezwalaj tylko na nazwy z Menadżera Projektów
+general	timesheet	pl	Ogólnie
+global categories	timesheet	pl	Kategorie Globalne
+history	timesheet	pl	Historia
+id	timesheet	pl	ID
+last modified	timesheet	pl	Ostatnio zmodyfikowany
+last month	timesheet	pl	Ostatni miesiąc
+last week	timesheet	pl	Ostatni tydzień
+last year	timesheet	pl	Ostatni rok
+leave it empty for a full week	timesheet	pl	Pozostaw pusty na cały tydzień
+leaves without saveing	timesheet	pl	porzuca bez zapisania
+length<br>rows	timesheet	pl	Długość<br>Wiersze
+links	timesheet	pl	Odsyłacze
+max length of the input [, length of the inputfield (optional)]	timesheet	pl	maksymalna długość wpisu [, długość pola wpisu (opcjonalnie)]
+modify the status of the timesheet	timesheet	pl	Zmodyfikuj status arkuszu Czasu Pracy
+new ticket submitted by %1 at %2	timesheet	pl	Nowy ticket przesłany przez %1 , %2
+new timesheet submitted by %1 at %2	timesheet	pl	Nowy arkusz przesłany przez %1, %2
+no details	timesheet	pl	bez szczegółów
+no project	timesheet	pl	Żaden projekt
+no status	timesheet	pl	Brak statusu
+none: use only free project-names	admin	pl	Żadna: używaj nazw niezależnych od Menadżera Projektów
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	pl	numer wiersza dla wielo-liniowego pola lub linia multi-select boxa
+only admin	timesheet	pl	Tylko administrator
+only admin can edit this status	timesheet	pl	tylko administrator może edytować ten status
+or endtime	timesheet	pl	lub czas zakończenia
+order	timesheet	pl	Porządek
+parent	timesheet	pl	Nadrzędny
+permission denied!!!	timesheet	pl	Dostęp zabroniony !!!
+price	timesheet	pl	Cena
+projectmanager integration	admin	pl	Integracja z Menadżerem projektów
+quantity	timesheet	pl	Ilość
+save & new	timesheet	pl	Zapisz & Nowy
+saves the changes made	timesheet	pl	Zapisz poczynione zmiany
+saves the changes made and leaves	timesheet	pl	zapisuje zmiany i wychodzi
+saves this entry and add a new one	timesheet	pl	Zachowaj ten wpis i dodaj nowy
+select a price	timesheet	pl	Wybierz ceną
+select a project	timesheet	pl	Wybierz projekt
+select a status of the timesheet	timesheet	pl	wybierz status dla arkusza czasu pracy
+select action	timesheet	pl	Wybierz akcję
+select infolog	timesheet	pl	wybierz Dziennik
+select multiple timeshhets for a further action	timesheet	pl	wybierz wiele arkuszy czasu pracy dla dalszego przetwarzania
+select the predefined status, whan creating a new timesheet	timesheet	pl	Wybierz predefiniowany status nadawany nowym arkuszom
+show a quantity sum (eg. to sum up negative overtime)	admin	pl	Pokaż sumę ilości (np. aby podsumować negatywne nadgodziny)
+start	timesheet	pl	Początek
+starttime	timesheet	pl	Czas rozpoczęcia
+starttime has to be before endtime !!!	timesheet	pl	Czas rozpoczęcia musi być wcześniejszy niż czas zakończenia!
+status deleted.	timesheet	pl	Status usunięty
+status of created timesheets	timesheet	pl	Status utworzonych arkuszy czasu pracy
+status updated.	timesheet	pl	Status zaktualizowany
+sum %1:	timesheet	pl	Suma %1:
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	pl	nazwa używana wewnętrznie (<= 20 znaków), zmiana jej spowoduje utratę dostępu do aktualnych danych
+the text displayed to the user	timesheet	pl	tekst wyświetlany użytkownikowi
+this month	timesheet	pl	Bieżący miesiąc
+this week	timesheet	pl	Bieżący tydzień
+this year	timesheet	pl	Bieżący rok
+ticket modified by %1 at %2	timesheet	pl	Ticket zmodyfikowany przez %1, %2
+timesheet	common	pl	Czas Pracy
+timesheet csv export	timesheet	pl	Eksport czasu pracy do pliku CSV
+timesheet modified by %1 at %2	timesheet	pl	Arkusz zmodyfikowany przez %1, %2
+timesheet openoffice export	timesheet	pl	Eksport czasu pracy do arkusza OpenOffice
+timesheet status-%1 '%2' added.	timesheet	pl	Status arkusza - %1, '%2' dodano
+timesheet-%1 '%2' updated.	timesheet	pl	Arkusz - %1 '%2' zaktualizowany.
+timesheet-%1 deleted.	timesheet	pl	Arkusz - %1 usunięty.
+tracker	timesheet	pl	Traker
+unitprice	timesheet	pl	Cena jednostkowa
+values for selectbox	timesheet	pl	Wartości dla pola wyboru
+view this entry	timesheet	pl	Pokaż ten wpis
+week	timesheet	pl	Tydzień
+whole query	timesheet	pl	całe zapytanie
+yesterday	timesheet	pl	Wczoraj
+you need to select some timesheets first	timesheet	pl	Musisz najpierw wybrać jakieś arkusze
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pl	Twoja baza danych jest NIEAKTUALNA (%1 vs. %2), proszę uruchom %3setup%4 by zaktualizować Twoją bazę.

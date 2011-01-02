@@ -1,0 +1,46 @@
+all possible notification backends	notifications	pl	wszystkie możliwe backendy powiadomień
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	pl	Sprawdź oba (najpierw spróbuj wykorzystać dane z konta użytkownika, jeśli nie ma użyj profilu Administratora Poczty)
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pl	Wybierz łańcuch modyfikacji. Będziesz powiadomiony przez backendy zawarte w łancuchu.<br />Uwaga: Jeśli łańcuch jest oznaczony jako "wyłączony" twój administrator nie zezwala na użycie jednego lub większej ilości backendów w łancuchu i domyślnie korzysta z poczty email do wysyłania powiadomień.
+choose from mailsettings used for notification	admin	pl	wybierz ustawienia poczty dla powiadomień
+common chains	notifications	pl	Typowe łańcuchy
+disabled chains	notifications	pl	Wyłączone łańcuchy
+do not notify me at all	notifications	pl	nie powiadamiaj wcale
+e-mail only	notifications	pl	Tylko E-Mail
+egroupware has notifications for you	notifications	pl	eGroupware ma dla ciebie powiadomienia
+egroupware-popup and e-mail	notifications	pl	Popup eGroupware i e-mail
+egroupware-popup and windows-popup	notifications	pl	Popop eGroupware i windows
+egroupware-popup backend	admin	pl	backend eGroupware-popup
+egroupware-popup first, if that fails notify me by e-mail	notifications	pl	Najpierw popup eGroupware, jeśli to zawiedzie powiadom przez email
+egroupware-popup first, if that fails notify me by sms	notifications	pl	Najpierw popup eGroupware, jeśli to zawiedzie powiadom przez SMS
+egroupware-popup only	notifications	pl	Popup eGroupware
+egroupware-popup verbosity	notifications	pl	ilość informacji w eGroupware-popup
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	pl	Tylko profil Administratora Poczty (nie używaj profilów użytkowników do powiadomień)
+enable egroupware-popup backend	admin	pl	Włącz backend eGroupware-popup
+enable sms backend	admin	pl	Włącz backend SMS
+enable windows-popup backend	admin	pl	Włącz backend Windows-popup
+enabled chains	notifications	pl	Włączone łańcuchy
+folder	notifications	pl	folder
+from	notifications	pl	od
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	pl	Jak szczegółowy powinien być popup egroupware:<br/>low - wyświetl sygnał powiadomienia w menu górnym (górne menu musi być włączone)<br/>medium - wyświetl powiadomienie na wierzchu<br/>high - wyświetl powiadomienie na wierzchu i zezwól przeglądarce na zwrócenie uwagi użytkownika
+if set, embedded links get rendered special for external clients	notifications	pl	Jeśli opcja zostanie skonfigurowana, załączone linki będą renderowane specjalnie dla klientów zewnętrznych
+linked entries:	common	pl	Powiązane wpisy:
+mail backend	admin	pl	Backend Pocztowy
+maximum sms messages per notification	admin	pl	Maksymalna ilość wiadomości SMS użytych na powiadomienie?
+message from	notifications	pl	Wiadomość od
+minutes	notifications	pl	minuty
+notification	common	pl	Powiadomienie
+notify me by	notifications	pl	Powiadom mnie przez
+optimize e-mails for external mail client	notifications	pl	Optymalizuj emaile dla zewnętrznego klienta poczty
+poll interval	notifications	pl	okres odpytywania
+preferences for notification	notifications	pl	preferencje powiadomień
+received	notifications	pl	odebrano
+sms backend	admin	pl	Backend SMS
+sms only	notifications	pl	Tylko SMS
+this egroupware notification has been sent to you by mail because your	notifications	pl	To powiadomienie zostało wysłane przez email ponieważ twój
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	pl	To powiadomienie zostało wysłane do ciebie przez email ponieważ twój wybrany łańcuch powiadomień został zablokowany przez administratora. Proszę wybrać inny łańcuch w opcjach.
+windows-popup and e-mail	notifications	pl	Popup windows i email
+windows-popup backend	admin	pl	Backend Windows-popup
+windows-popup first, if that fails notify me by e-mail	notifications	pl	Najpierw popup Windows, jeśli to zawiedzie powiadom przez email
+windows-popup first, if that fails notify me by sms	notifications	pl	Najpierw popup Windows, jeśli to zawiedzie powiadom przez SMS
+windows-popup only	notifications	pl	Popup Windows
+you've got new mail	notifications	pl	Masz nową pocztę

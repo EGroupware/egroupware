@@ -1,0 +1,115 @@
+$label	preferences	pl	$label
+%1 - preferences	preferences	pl	%1 - Ustawienia
+%1 hours	preferences	pl	%1 godzin
+12 hour	preferences	pl	12 godzinny
+24 hour	preferences	pl	24 godzinny
+a template defines the layout of egroupware and it contains icons for each application.	preferences	pl	Szablony określają wygląd eGroupWare i zawierają ikonki dla wszystkich aplikacji
+a theme defines the colors and fonts used by the template.	preferences	pl	Tematy służą do określenia kolorów i czcionek używanych w szablonie
+acl grants have been updated	preferences	pl	Uprawniena dostępu (ACL) zostały odnowione
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w eGroupWare będą wyświetlać tutaj ustawioną liczbę wierszy na stronę.<br />Za wiele spowolni dość znacznie wyświetlanie stron, za mało spowoduje utratę przejrzystości informacji.
+are you sure you want to delete this category ?	preferences	pl	Napewno skasować tę kategorie ?
+br	preferences	pl	br
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pl	Zmień hasło użytkownika podając stare i nowe hasło. Odpowiedź TRUE oznacza poprawną zmianę, podczas gdy FALSE związane jest z błędem.
+change your password	preferences	pl	Zmień swoje hasło
+change your profile	preferences	pl	Zmień swój profil
+change your settings	preferences	pl	Zmień swoje ustawienia
+charset for the csv export	addressbook	pl	strona kodowa dla eksportu CSV
+click to select a color	preferences	pl	Kliknij w celu wyboru koloru
+color	preferences	pl	Kolor
+country	preferences	pl	Państwo
+date format	preferences	pl	Format daty
+default	preferences	pl	domyślne
+default application	preferences	pl	Domyślna aplikacja
+default preferences	preferences	pl	Ustawienia domyślne
+default theme	preferences	pl	Domyślna kompozycja
+delete categories	preferences	pl	Kategorie domyślne
+description can not exceed 255 characters in length !	preferences	pl	Opis nie może przekraczać 255 znaków!
+display thumbnails for linked images	preferences	pl	Wyświetlaj miniatury linkowanych obrazków
+div	preferences	pl	div
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pl	Czy preferujesz wyświetlanie godziny w formacie 24 godzinnym czy w 12 godzinnym z dołączeniem przed południem/po południu?
+edit custom fields	preferences	pl	Edytuj pola użytkownika
+enable drag and drop functionality (experimental)	preferences	pl	Włącz funkcjonalność przeciągnij i upuść (eksperymentalne)
+enable selectbox dropdown resizing for ie (experimental)	preferences	pl	Aktywuj skalowanie pola rozwijanego dla IE
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pl	Włącza obsługę przeciągnij i upuść we wszystkich aplikacjach. Jeśli przeglądarka tego nie wspiera zostanie automatycznie wyłączone. To funkcja eksperymentalna.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola rozwijanego dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola wyboru dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
+enter your new password	preferences	pl	Wprowadź nowe hasło
+enter your old password	preferences	pl	Wprowadź stare hasło
+failed to change password.  please contact your administrator.	preferences	pl	Zmiana hasła nieudana. Proszę skontaktować się z administratorem.
+forced preferences	preferences	pl	Ustawienia wymuszone
+help off	preferences	pl	Wyłącz wyświetlanie pomocy
+hours	preferences	pl	godzin
+how do you like to display accounts	preferences	pl	Jak mają być wyświetlane konta użytkowników
+how do you like to select accounts	preferences	pl	Jak chciałbyś wybierać/zaznaczać konta użytkowników
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	pl	Jaka jest różnica czasowa między Twoją strefą czasową a strefą serwera eGroupWare?<br />Jeżeli znajdujesz się w tej samej strefie czasowej co serwer, ustaw 0 godzin, w innym wypadku ustaw według Twojego lokalnego czasu i daty.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	pl	Ile ikon aplikacji wyświetlać w głównym pasku na górze ekranu? Dodatkowe aplikacje będą dostępne z menu rozwijalnego, które wywołuje się klikając ikonę strzałki znajdującą się na prawym końcu menu.
+how should egroupware display dates for you.	preferences	pl	W jaki spsób eGroupWare powinien wyświetlać datę
+icon	preferences	pl	Ikona
+icons and text	preferences	pl	Ikony i tekst
+icons only	preferences	pl	Tylko ikony
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	pl	Obrazy podłączone do wpisu będą wyświetlane jako miniatury. Możesz to wyłączyć aby przyspieszyć wyświetlanie strony.
+in which country are you. this is used to set certain defaults for you.	preferences	pl	W jakim państwie się znajdujesz? eGroupWare użyje tego ustawienia do wyboru pewnych konfiguracji domyślnych.
+interface/template selection	preferences	pl	Wybór interfejsu/szablonu
+language	preferences	pl	Język
+max matches per page	preferences	pl	Maksymalna liczba trafień na stronie
+max number of icons in navbar	preferences	pl	Maksymalna liczba ikonek w pasku nawigacji
+no default	preferences	pl	Bez domyślnego
+no user-selection at all	common	pl	Bez sekcji użytkownika
+note: this feature does *not* change your email password. this will	preferences	pl	Zauważ: To ustawienie nie zmieni Twojego hasła konta poczty elektronicznej. Ono tylko
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia hasła do twojej skrzynki pocztowej! Należy to zrobić ręcznie.
+number format	preferences	pl	Format liczbowy
+office 2003 theme	preferences	pl	Temat Office 2003
+p: paragraph	preferences	pl	p: Paragraf
+permanent time zone selection	preferences	pl	Wybór stałej strefy czasowej
+please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	pl	Wybierz strefę czasową, będziesz mógł szybko przełączać się między strefami. Przełączanie nie jest możliwe jeśli mniej niż dwie strefy są wskazane.
+please select your timezone.	preferences	pl	Wybierz strefę czasową
+please, select a new theme	preferences	pl	Proszę wybrać nowy temat
+popup with search	preferences	pl	Okno popup do szukania
+re-enter your password	preferences	pl	Wpisz hasło ponownie
+read prefs for the specified application.	preferences	pl	Odczytaj preferencje dla wybranej aplikacji.
+rich text editor enter mode	preferences	pl	Tryb edytora zaawansowanego
+rich text editor theme	preferences	pl	Kompozycja edytora zaawansowanego
+select different theme	preferences	pl	Wybierz inny temat
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	pl	Wybierz w jaki sposób zaawansowany edytor wygeneruje znak nowej linii.
+select one	preferences	pl	Wybierz jeden
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pl	Wybierz język tekstów i komunikatów wewnątrz eGroupWare.<br />Niektóre języki nie zawierają wszelkich komunikatów. W takich wypadkach wyświetlane będą komunikaty w języku angielskim.
+select the language of the spellchecker integrated into the rich text editor.	preferences	pl	Wybierz język sprawdzania pisowni.
+select the theme (visualization) of the rich text editor.	preferences	pl	Wybierz kompozycje (wizualizację) edytora zaawansowanego.
+selectbox	preferences	pl	Lista rozwijana
+selectbox with groupmembers	common	pl	Lista rozwijana z członkami grup
+selectbox with primary group and search	preferences	pl	Lista rozwijana z członkami grupy domyślnej i wyszukiwaniem
+set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pl	Ustaw to według własnych upodobań. Ze względów bezpieczeństwa Twoich danych możesz nie chcieć pokazywać publicznie Twojej nazwy użytkownika.
+should the number of active sessions be displayed for you all the time.	preferences	pl	Czy wyświetlać liczbę aktywnych sesji?
+should this help messages shown up always, when you enter the preferences or only on request.	preferences	pl	Czy wyświetlać komunikaty i teksty pomocy przy każdym wywołaniu ustawień domyślnie czy wyłącznie na żądanie.
+show helpmessages by default	preferences	pl	Wyświetlaj pomoc domyślnie
+show links between egroupware aps as	addressbook	pl	Pokaż linki pomiędzy aplikacjami eGroupware jako
+show navigation bar as	preferences	pl	Wyświetlaj pasek nawigacji jako
+show number of current users	preferences	pl	Wyświetlaj liczbe zalogowanych użytkowników
+show text on navigation icons	preferences	pl	Wyświetlaj tekst na ikonach nawigacji
+show_more_apps	common	pl	Wyświetl wiecej aplikacji
+silver theme	preferences	pl	Temat srebrny
+spellchecker language	addressbook	pl	Język sprawdzania pisowni
+text only	preferences	pl	Tylko tekst
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pl	Aplikacja domyślna będzie wywoływana za każdym razem kiedy będziesz się rejestrował do eGroupWare lub wybierzesz ikonę strony głównej.<br>Możesz także wyświetlać dane z kilku aplikacji na stronie głównej jeżeli nie wybierzesz żadnej domyślnej aplikacji w tym polu (wyświetlanie na stronie głównej jest ustawiane dla każdej aplikacji w jej menu ustawień oddzielnie).
+the old password is not correct	preferences	pl	Wprowadzone stare hasło nie jest poprawne
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub grupie.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć nie-administratorów.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub grupie. Ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć NIE-administratorów.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub grupie. Ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć NIE-administratorów. Pomimo tego ich ustawienie nie powinno być wymuszane i stosowane dla ADMINISTRATORÓW.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	pl	Ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć NIE-administratorów.
+the two passwords are not the same	preferences	pl	Te dwa hasła nie są identyczne
+theme (colors/fonts) selection	preferences	pl	Wybór tematu (kolory/czcionki)
+this server is located in the %1 timezone	preferences	pl	Ten serwer znajduje się w strefie czasowej %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	pl	Separator tysięcy służy tylko do wyświetlania, a nie do edycji liczb.
+time format	preferences	pl	Format czasu
+use default	preferences	pl	Domyślne
+users choice	preferences	pl	Wybierają użytkownicy
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	pl	Jeśli wybierzesz "tak" przyciski Strony domowej i wylogowania są prezentowane jako aplikacje w głównym pasku narzędziowym.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji eGroupWare.
+which currency symbol or name should be used in egroupware.	preferences	pl	Który symbol waluty powinien być użyty w eGroupWare
+write prefs for the specified application.	preferences	pl	Zapisz ustawienia wybranej aplikacji.
+you can show the applications as icons only, icons with app-name or both.	preferences	pl	Możesz wybrać wyświetlanie aplikacji w formie ikon, tekstów lub obydwojga.
+you can show the linked entries with icons only, icons with app-name or both.	addressbook	pl	Możesz pokazać podlinkowane wpisy jako ikony lub ikony z nazwą aplikacji.
+you do not have permission to set acl's in this mode!	preferences	pl	Nie posiadasz uprawnień do usawianie uprawnień dostępowych (ACL) w tym trybie!
+you must enter a password	preferences	pl	Musisz wprowadzić hasło
+your current theme is: %1	preferences	pl	Twój bieżący temat to: %1
+your preferences	preferences	pl	Twoje ustawienia
