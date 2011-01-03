@@ -117,7 +117,9 @@ class importexport_definitions_ui
 
 		foreach ($bodefinitions->get_definitions() as $identifier) {
 			$definition = new importexport_definition($identifier);
-			$definitions[] = $definition->get_record_array();
+			$array = $definition->get_record_array();
+			$array['menuaction'] = $array['type'] == 'import' ? 'importexport.importexport_import_ui.import_dialog':'importexport.importexport_export_ui.export_dialog';
+			$definitions[] = $array;
 			unset($definition);
 		}
 		$content = $definitions;
