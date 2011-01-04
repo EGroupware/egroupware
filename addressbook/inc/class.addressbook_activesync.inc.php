@@ -325,8 +325,8 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 					if (!empty($contact[$attr])) $message->$key = base64_encode($contact[$attr]);
 					break;
 
-				case 'bday':
-					if (!empty($contact[$attr])) $message->$key = egw_time::to($contact[$attr],'ts');
+				case 'bday':	// zpush uses timestamp in servertime
+					if (!empty($contact[$attr])) $message->$key = egw_time::to($contact[$attr],'server');
 					break;
 
 				case 'cat_id':
@@ -486,14 +486,19 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 							//put rtf into body
 							if($rtf_body->out <> "") $message->body=$rtf_body->out;
 						}
-						if (!empty(self::$mapping[$key])) $contact[$attr] = $message->body;
+						$contact[$attr] = $message->body;
 						break;
+
+					case 'bday':	// zpush uses timestamp in servertime
+						$contact[$attr] = $message->$key ? date('Y-m-d',$message->$key) : null;
+						break;
+
 					case 'jpegphoto':
-						if (!empty(self::$mapping[$key])) $contact[$attr] = base64_decode($message->$key);
+						$contact[$attr] = base64_decode($message->$key);
 						break;
 
 					default:
-						if  (!empty(self::$mapping[$key])) $contact[$attr] = $message->$key;
+						$contact[$attr] = $message->$key;
 						break;
 				}
 			}
