@@ -1100,8 +1100,8 @@ class calendar_bo
 		}
 		$grants = $this->grants[$owner];
 
-		// now any ACL rights implicate FREEBUSY rights (at least READ has to include FREEBUSY)
-		if ($grants) $grants |= EGW_ACL_FREEBUSY;
+		// now any ACL rights (but invite rights!) implicate FREEBUSY rights (at least READ has to include FREEBUSY)
+		if ($grants & ~EGW_ACL_INVITE) $grants |= EGW_ACL_FREEBUSY;
 
 		if (is_array($event) && ($needed == EGW_ACL_READ || $needed == EGW_ACL_FREEBUSY))
 		{
