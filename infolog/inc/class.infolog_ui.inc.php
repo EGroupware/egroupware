@@ -728,13 +728,15 @@ class infolog_ui
 		{
 			$values['css'] = '<style type="text/css">@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/infolog/templates/default/app.css);'."</style>";
 		}
-		// add scrollbar to long describtion, if user choose so in his prefs
-		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
+		// add scrollbar to long description, if user choose so in his prefs
+		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '');
 		{
-			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  max-height: '.
+			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  '.
+				($this->prefs['limit_des_width']?'max-width:'.$this->prefs['limit_des_width'].'em;':'').' max-height: '.
 				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	// dono why em is not real lines
 				'em; overflow: auto; }}</style>';
 		}
+
 		$sel_options = array(
 		'info_type'     => $this->bo->enums['type'],
 		'pm_id'      => array(lang('No project')),

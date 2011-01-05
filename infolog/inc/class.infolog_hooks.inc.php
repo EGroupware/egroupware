@@ -250,6 +250,15 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> 5,
 			),
+			'limit_des_width' => array(
+				'type'   => 'input',
+				'size'   => 5,
+				'label'  => 'Limit width of description column ((effective only if lines limit is set), 0 for no limit)',
+				'name'   => 'limit_des_width',
+				'help'   => 'How wide should the description area be. This value is numeric and interpreted as em; 60 works reasonably well.',
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
 			'set_start' => array(
 				'type'   => 'select',
 				'label'  => 'Startdate for new entries',
