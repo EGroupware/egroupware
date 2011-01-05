@@ -191,20 +191,24 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Calculate iso8601 week-number, which is defined for Monday as first day of week only
 	 *
-	 * @param int|string|DateTime $weekstart
+	 * We addjust the day, if user prefs want a different week-start-day
+	 *
+	 * @param int|string|DateTime $time
 	 * @return string
 	 */
-	public function week_number($weekstart)
+	public function week_number($time)
 	{
-		$time = new egw_time($weekstart);
-		switch($this->cal_prefs['weekdaystarts'])
+		if (!is_a($time,'DateTime')) $time = new egw_time($time);
+
+		// if week does not start Monday and $time is Sunday --> add one day
+		if ($this->cal_prefs['weekdaystarts'] != 'Monday' && !($wday = $time->format('w')))
 		{
-			case 'Sunday':
-				$time->modify('+1day');
-				break;
-			case 'Saturday':
-				$time->modify('+2days');
-				break;
+			$time->modify('+1day');
+		}
+		// if week does start Saturday and $time is Saturday --> add two days
+		elseif ($this->cal_prefs['weekdaystarts'] == 'Saturday' && $wday == 6)
+		{
+			$time->modify('+2days');
 		}
 		return $time->format('W');
 	}
