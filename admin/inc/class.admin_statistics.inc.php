@@ -276,8 +276,13 @@ return true;";
 		);
 		if (($table = $app2table[$app]))
 		{
-			$entries = (int)$GLOBALS['egw']->db->query('SELECT COUNT(*) FROM '.$table)->fetchColumn();
-			//echo "$app ($table): $entries<br />\n";
+			try {
+				$entries = (int)$GLOBALS['egw']->db->query('SELECT COUNT(*) FROM '.$table)->fetchColumn();
+				//echo "$app ($table): $entries<br />\n";
+			}
+			catch(egw_exception_db $e) {
+				$entries = null;
+			}
 		}
 		return $entries;
 	}
