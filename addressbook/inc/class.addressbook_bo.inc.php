@@ -2066,4 +2066,40 @@ class addressbook_bo extends addressbook_so
 		}
 		return $matchingContacts;
 	}
+
+	/**
+	 * Get a ctag (collection tag) for one addressbook or all addressbooks readable by a user
+	 *
+	 * Currently implemented as maximum modification date (1 seconde granularity!)
+	 *
+	 * We have to include deleted entries, as otherwise the ctag will not change if an entry gets deleted!
+	 * (Only works if tracking of deleted entries / history is switched on!)
+	 *
+	 * @param int $owner=null 0=accounts, null=all addressbooks or integer account_id of user or group
+	 * @return string
+	 */
+	public function get_ctag($owner=null)
+	{
+		$filter = array('tid' => null);	// tid=null --> use all entries incl. deleted (tid='D')
+		// show addressbook of a single user?
+		if (!is_null($owner)) $filter['contact_owner'] = $owner;
+
+		// should we hide the accounts addressbook
+		if (!$owner && $GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		{
+			$filter['account_id'] = null;
+		}
+		$result = $this->search(array(),'MAX(contact_modified) AS contact_modified','','','',false,'AND',false,$filter);
+
+		if (!$result || !isset($result[0]['contact_modified']))
+		{
+			$ctag = 'empty';	// ctag for empty addressbook
+		}
+		else
+		{
+			$ctag = $result[0]['contact_modified'];
+		}
+		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($ctag));
+		return $ctag;
+	}
 }
