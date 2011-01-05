@@ -174,6 +174,31 @@ class calendar_uiviews extends calendar_ui
 	}
 
 	/**
+	 * Calculate iso8601 week-number, which is defined for Monday as first day of week only
+	 *
+	 * We addjust the day, if user prefs want a different week-start-day
+	 *
+	 * @param int|string|DateTime $time
+	 * @return string
+	 */
+	public function week_number($time)
+	{
+		if (!is_a($time,'DateTime')) $time = new egw_time($time);
+
+		// if week does not start Monday and $time is Sunday --> add one day
+		if ($this->cal_prefs['weekdaystarts'] != 'Monday' && !($wday = $time->format('w')))
+		{
+			$time->modify('+1day');
+		}
+		// if week does start Saturday and $time is Saturday --> add two days
+		elseif ($this->cal_prefs['weekdaystarts'] == 'Saturday' && $wday == 6)
+		{
+			$time->modify('+2days');
+		}
+		return $time->format('W');
+	}
+
+	/**
 	 * Show the last view or the default one, if no last
 	 */
 	function index()
@@ -281,7 +306,7 @@ class calendar_uiviews extends calendar_ui
 			$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
 			unset($this->last['raw']);
 			$this->last = $this->bo->date2ts($this->last);
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
 		else // dayview
 		{
@@ -373,7 +398,7 @@ class calendar_uiviews extends calendar_ui
 				'menuaction' => 'calendar.calendar_uiviews.week',
 				'date' => $this->bo->date2string($week_start),
 			);
-			$title = lang('Wk').' '.adodb_date('W',$week_start);
+			$title = lang('Wk').' '.$this->week_number($week_start);
 			if ($this->allowEdit)
 			{
 				$title = html::a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
@@ -480,7 +505,7 @@ class calendar_uiviews extends calendar_ui
 				}
 			}
 			$this->last = strtotime("+$days days",$this->first) - 1;
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.$this->week_number($this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
 
         #	temporarly disabled, because it collides with the title for the website
@@ -1997,7 +2022,7 @@ function open_edit(series)
 		$content .= $indent.'<div class="plannerScale">'."\n";
 		for($t = $start,$left = 0,$i = 0; $i < $days; $t += 7*DAY_s,$left += $week_width,$i += 7)
 		{
-			$title = lang('Week').' '.date('W',$t);
+			$title = lang('Week').' '.$this->week_number($t);
 			if ($days > 7)
 			{
 				$title = html::a_href($title,array(

@@ -43,7 +43,7 @@ class calendar_ui
 	/**
 	 * Reference to global datetime class
 	 *
-	 * @var datetime
+	 * @var egw_datetime
 	 */
 	var $datetime;
 	/**
