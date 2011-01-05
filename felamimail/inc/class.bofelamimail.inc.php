@@ -3562,7 +3562,8 @@
 					$message .= $newBody;
 					continue;
 				}
-				$newBody = strip_tags($newBody);
+				$newBody = strip_tags(self::htmlspecialchars($newBody));
+				$newBody = htmlspecialchars_decode($newBody,ENT_QUOTES);
 				$newBody  = explode("\n",$newBody);
 				// create it new, with good line breaks
 				reset($newBody);
