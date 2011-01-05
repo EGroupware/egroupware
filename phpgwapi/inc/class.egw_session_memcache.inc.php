@@ -240,6 +240,8 @@ class egw_session_memcache
 		if (self::DEBUG > 1) error_log("\n memcache in cutbyte mb $id:$n:".print_r(mb_substr($data,$offset,$len,'ascii'),true));
 		if (self::DEBUG > 1) error_log("\n memcache in cutbyte norm $id:$n:".print_r(substr($data,$offset,$len),true));
 
+		if (is_null($len)) $len = self::_bytes($data) - $offset;
+
 		return self::$mbstring_func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
 	}
 
