@@ -1111,7 +1111,7 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 		var cell = row.firstChild;
 		if (this.weekNumbers) {
 			cell.className = "day wn";
-			Calendar._setCellText(cell,date.getWeekNumber());
+			//Calendar._setCellText(cell,date.getWeekNumber());
 			if (this.hasWeekHandler) cell.caldate = new Date(date);
 			cell = cell.nextSibling;
 		}
@@ -1120,6 +1120,9 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 		for (var j = 0; j < 7; ++j, cell = cell.nextSibling, date.setDate(date.getDate() + 1)) {
 			var iday = date.getDate();
 			var wday = date.getDay();
+			if (this.weekNumbers && wday == 1) {	// iso8601 week number are defined for weeks starting on monday (wday=1)
+				Calendar._setCellText(row.firstChild,date.getWeekNumber());
+			}
 			cell.className = "day";
 			var current_month = (date.getMonth() == month);
 			if (!current_month) {
