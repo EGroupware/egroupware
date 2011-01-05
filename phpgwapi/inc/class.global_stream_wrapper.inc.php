@@ -125,8 +125,10 @@ class global_stream_wrapper
 	 */
 	private static function _cut_bytes(&$data,$offset,$len=null)
 	{
-		if (is_null($len)) $len = self::_bytes($data) - $offset;
-
+		if (is_null($len))
+		{
+			return self::$mbstring_func_overload ? mb_substr($data,$offset,self::_bytes($data),'ascii') : substr($data,$offset);
+		}
 		return self::$mbstring_func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
 	}
 
