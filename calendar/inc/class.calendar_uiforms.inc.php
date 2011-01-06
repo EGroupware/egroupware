@@ -839,7 +839,7 @@ class calendar_uiforms extends calendar_ui
 				{
 					$msg = lang('Event deleted');
 				}
-				$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
+				$js = "opener.location += (opener.location.search?'&msg=':'?msg=')+'".
 					addslashes($msg)."';";
 			}
 			break;
