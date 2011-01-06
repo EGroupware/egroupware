@@ -577,7 +577,7 @@ class addressbook_sql extends so_sql_cf
 		// Change autoinc_id to match $this->db_cols
 		$this->autoinc_id = $this->db_cols[$this->autoinc_id];
 		if(($id = (int)$this->data[$this->autoinc_id]) && $cfs = $this->read_customfields($keys)) {
-			$contact = array_merge($contact,$cfs[$id]);
+			if (is_array($cfs[$id])) $contact = array_merge($contact,$cfs[$id]);
 		}
 		$this->autoinc_id = array_search($this->autoinc_id, $this->db_cols);
 

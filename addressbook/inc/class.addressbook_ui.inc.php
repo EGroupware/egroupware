@@ -1449,7 +1449,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			else
 			{
-				$content['link_to']['to_id'] = $contact_id;
+				if (is_int($contact_id)) $content['link_to']['to_id'] = $contact_id;
 			}
 			// automatic link new entries to entries specified in the url
 			if (!$contact_id && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']) && !is_array($content['link_to']['to_id']))
