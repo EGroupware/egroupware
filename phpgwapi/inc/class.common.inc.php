@@ -986,7 +986,7 @@ class common
 	/**
 	* Used by template headers for including CSS in the header
 	*
-	* @deprecated use framework::_get_css()
+	* @deprecated use $GLOBALS['egw']->framework->_get_css()
 	* @return string
 	*/
 	static function get_css()
@@ -997,23 +997,23 @@ class common
 	/**
 	* Used by the template headers for including javascript in the header
 	*
-	* @deprecated use framework::_get_js()
+	* @deprecated use egw_framework::_get_js()
 	* @return string the javascript to be included
 	*/
 	static function get_java_script()
 	{
-		return $GLOBALS['egw']->framework->_get_js();
+		return egw_framework::_get_js();
 	}
 
 	/**
 	* Returns on(Un)Load attributes from js class
 	*
-	* @deprecated use framework::_get_js()
+	* @deprecated use egw_framework::_get_js()
 	* @returns string body attributes
 	*/
 	static function get_body_attribs()
 	{
-		return $GLOBALS['egw']->framework->_get_body_attribs();
+		return egw_framework::_get_body_attribs();
 	}
 
 	static function hex2bin($data)

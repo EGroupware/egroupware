@@ -674,7 +674,7 @@ abstract class egw_framework
 	 * @author Dave Hall (*based* on verdilak? css inclusion code)
 	 * @return array with keys 'app_css' from the css method of the menuaction-class and 'file_css' (app.css file of the application)
 	 */
-	protected function _get_css()
+	public function _get_css()
 	{
 		$app_css = '';
 		if(isset($_GET['menuaction']))
@@ -1053,7 +1053,7 @@ abstract class egw_framework
 	 *
 	 * @returns string the attributes to be used
 	 */
-	static protected function _get_body_attribs()
+	static public function _get_body_attribs()
 	{
 		$js = '';
 		foreach(self::$body_tags as $what => $data)
