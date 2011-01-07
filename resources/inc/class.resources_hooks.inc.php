@@ -117,4 +117,57 @@ class resources_hooks
 			)
 		);
 	}
+
+	/**
+	 * Handle deleted category
+	 *
+	 * Resources' ACL _requires_ a category.
+	 * Moves all resources to parent, if it exists.  If it doesn't, another category is created.
+	 */
+	function delete_category($args) 
+	{
+		$cat = categories::read($args['cat_id']);
+
+		if(!$cat) return; // Can't find current cat?
+
+		if($cat['parent'] == 0)
+		{
+			// No parent, try the default cat from setup
+			$categories = new categories('', 'resources');
+			$default = $categories->name2id('General resources');
+			if($default)
+			{
+				$new_cat_id = $default;
+			}
+			else
+			{
+				// Default missing, look for 'No category'
+				$new_cat_id = $categories->name2id('No category');
+				if($new_cat_id == 0) {
+					// No category not there, add it
+					$new_cat_id = $categories->add(array(
+						'name'		=> 'No category',
+						'description'	=> 'This category has been added to rescue resources whose category was deleted.',
+						'parent'	=> 0
+					));
+					$admin = -2;
+					ExecMethod2('resources.bo_acl.set_rights', $new_cat_id, array($admin), array($admin), array($admin), array($admin),array($admin));
+				}
+			}
+		}
+		else
+		{
+			$new_cat_id = $cat['parent'];
+		}
+
+		// Get any resources affected
+		$query = array('filter' => $args['cat_id']);
+		$bo = CreateObject('resources.bo_resources');
+		$bo->get_rows($query, $resources, $readonly);
+		foreach($resources as $resource)
+		{
+			$resource['cat_id'] = $new_cat_id;
+			$bo->save($resource);
+		}
+	}
 }
