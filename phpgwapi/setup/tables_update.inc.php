@@ -84,3 +84,54 @@ function phpgwapi_upgrade1_9_003()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.004';
 }
 
+
+/**
+ * Update script to populate country codes
+ *
+ * Sets country code for any recognized country in any installed language, then clears the country name
+ * to avoid conflicts / confusion.
+ */
+function phpgwapi_upgrade1_9_004()
+{
+	// Get all installed translations for names
+	$country = new country();
+	$country_query = 'SELECT DISTINCT message_id, content 
+		FROM ' . translation::LANG_TABLE . ' 
+		WHERE message_id IN ("' . implode('","', array_values($country->countries())) . '")
+		ORDER BY message_id';
+	$result = $GLOBALS['egw_setup']->oProc->query($country_query, __LINE__, __FILE__);
+
+	$country_list = array();
+	$current_name = null;
+	$id = null;
+	foreach($result as $row) {
+		if($row['message_id'] != $current_name) {
+			$current_name = $row['message_id'];
+			$id = array_search(strtoupper($current_name), $country->countries());
+			if(!$id) continue;
+		}
+		$country_list[$id][] = $row['content'];
+	}
+
+	// Build conversion 
+	$case = 'CASE UPPER(adr_%1$s_countryname)';
+	foreach($country_list as $key => $names) {
+		foreach($names as $name) {
+			$case .= "\n" . "WHEN UPPER(\"$name\") THEN '$key'";
+		}
+	}
+	$case .= ' END';
+
+	$sql = 'UPDATE egw_addressbook SET ';
+	$sql .= "adr_one_countrycode = (" . sprintf($case, 'one') . '),';
+	$sql .= "adr_two_countrycode = (" . sprintf($case, 'two') . ')';
+
+	// Change names
+	$GLOBALS['egw_setup']->oProc->query($sql,__LINE__,__FILE__);
+
+	// Clear text names
+	$GLOBALS['egw_setup']->oProc->query('UPDATE egw_addressbook SET adr_one_countryname = NULL WHERE adr_one_countrycode IS NOT NULL',__LINE__,__FILE__);
+	$GLOBALS['egw_setup']->oProc->query('UPDATE egw_addressbook SET adr_two_countryname = NULL WHERE adr_two_countrycode IS NOT NULL',__LINE__,__FILE__);
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.005';
+}
+
