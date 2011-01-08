@@ -69,9 +69,10 @@ abstract class bo_merge
 	 *
 	 * @param int $id id of entry
 	 * @param string &$content=null content to create some replacements only if they are use
+	 * @param array $eroles=null element roles with keys app, app_id and erole_id
 	 * @return array|boolean array with replacements or false if entry not found
 	 */
-	abstract protected function get_replacements($id,&$content=null);
+	abstract protected function get_replacements($id,&$content=null,$eroles=null);
 
 	/**
 	 * Return if merge-print is implemented for given mime-type (and/or extension)
@@ -123,7 +124,7 @@ abstract class bo_merge
 	 * Return replacements for a contact
 	 *
 	 * @param int|string|array $contact contact-array or id
-	 * @param string $prefix='' prefix like eg. 'user'
+	 * @param string $prefix='' prefix like eg. 'user' or 'erole'
 	 * @return array
 	 */
 	public function contact_replacements($contact,$prefix='')
@@ -252,9 +253,10 @@ abstract class bo_merge
 	 * @param string &$err error-message on error
 	 * @param string $mimetype mimetype of complete document, eg. text/*, application/vnd.oasis.opendocument.text, application/rtf
 	 * @param array $fix=null regular expression => replacement pairs eg. to fix garbled placeholders
+	 * @param array $eroles=null element roles with keys app, app_id and erole_id
 	 * @return string|boolean merged document or false on error
 	 */
-	public function &merge($document,$ids,&$err,$mimetype,array $fix=null)
+	public function &merge($document,$ids,&$err,$mimetype,array $fix=null,array $eroles=null)
 	{
 		if (!($content = file_get_contents($document)))
 		{
@@ -266,7 +268,7 @@ abstract class bo_merge
 		{
 			$mimetype = 'application/rtf';
 		}
-		return $this->merge_string($content,$ids,$err,$mimetype,$fix);
+		return $this->merge_string($content,$ids,$err,$mimetype,$fix,$eroles);
 	}
 
 	/**
@@ -277,10 +279,10 @@ abstract class bo_merge
 	 * @param string &$err error-message on error
 	 * @param string $mimetype mimetype of complete document, eg. text/*, application/vnd.oasis.opendocument.text, application/rtf
 	 * @param array $fix=null regular expression => replacement pairs eg. to fix garbled placeholders
-	 * @param string $document=null path/url of document, if applicable
+	 * @param array $eroles=null element roles with keys app, app_id and erole_id
 	 * @return string|boolean merged document or false on error
 	 */
-	public function &merge_string($content,$ids,&$err,$mimetype,array $fix=null)
+	public function &merge_string($content,$ids,&$err,$mimetype,array $fix=null,array $eroles=null)
 	{
 		if ($mimetype == 'application/xml' &&
 			preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches))
@@ -356,11 +358,11 @@ abstract class bo_merge
 			if ($lableprint) $content = $Labelrepeat;
 
 			// generate replacements
-			if (!($replacements = $this->get_replacements($id,$content)))
+			if(!($replacements = $this->get_replacements($id,$content,is_array($eroles) ? $eroles : null)))
 			{
 				$err = lang('Entry not found!');
 				return false;
-			}
+			}		
 			// some general replacements: current user, date and time
 			if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 			{
@@ -635,9 +637,10 @@ abstract class bo_merge
 	 *
 	 * @param string $document vfs-path of document
 	 * @param array $ids array with contact id(s)
+	 * @param array $eroles=null element roles with keys app, app_id and erole_id
 	 * @return string with error-message on error, otherwise it does NOT return
 	 */
-	public function download($document,$ids)
+	public function download($document,$ids,$eroles=null)
 	{
 		$content_url = egw_vfs::PREFIX.$document;
 		switch (($mimetype = egw_vfs::mime_content_type($document)))
@@ -684,7 +687,7 @@ abstract class bo_merge
 				$content_url = 'zip://'.$archive.'#'.($content_file = 'xl/sharedStrings.xml');
 				break;
 		}
-		if (!($merged =& $this->merge($content_url,$ids,$err,$mimetype,$fix)))
+		if (!($merged =& $this->merge($content_url,$ids,$err,$mimetype,$fix,$eroles)))
 		{
 			return $err;
 		}

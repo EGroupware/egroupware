@@ -28,7 +28,7 @@ class select_widget
 		'post_process' => True,
 	);
 	/**
-	 * availible extensions and there names for the editor
+	 * availible extensions and their names for the editor
 	 * @var array
 	 */
 	var $human_name = array(
@@ -38,6 +38,7 @@ class select_widget
 		'select-country'  => 'Select Country',
 		'select-state'    => 'Select State',	// US-states
 		'select-cat'      => 'Select Category',	// Category-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
+		'select-erole'	  => 'Select Element role',
 		'select-account'  => 'Select Account',	// label=accounts(default),groups,both
 												// size: -1=Single+not assigned, 0=Single, >0=Multiple
 		'select-year'     => 'Select Year',
@@ -212,6 +213,43 @@ class select_widget
 				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 				$cell['no_lang'] = True;
 				break;
+				
+			case 'select-erole': // $type2: extraStyleMultiselect
+				$eroles = new projectmanager_eroles_so();
+				if ($readonly)
+				{
+					$cell['no_lang'] = True;
+					if ($value)
+					{
+						if (!is_array($value)) $value = explode(',',$value);
+						foreach($value as $key => $id)
+						{
+							if ($id && ($name = $eroles->id2title($id)))
+							{
+								$cell['sel_options'][$id] = $name;
+							}
+							else
+							{
+								unset($value[$key]);	// remove not (longer) existing or inaccessible eroles
+							}
+						}
+					}
+					break;
+				}
+				
+				foreach($eroles->get_free_eroles() as $id => $data)
+				{
+					$global = $data['pm_id'] == 0 ? ' ('.lang('Global').')' : '';
+					$cell['sel_options'][$data['role_id']] = array(
+						'label' => $data['role_title'] . $global,
+						'title' => $data['role_description'],
+					);
+				}
+				
+				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
+				$cell['no_lang'] = True;
+				break;
+
 
 			case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
 				//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
@@ -507,8 +545,6 @@ class select_widget
 	 * will return no data (if it has a preprocessing method). The framework insures that
 	 * the post-processing of all contained widget has been done before.
 	 *
-	 * Only used by select-dow so far
-	 *
 	 * @param string $name form-name of the widget
 	 * @param mixed &$value the extension returns here it's input, if there's any
 	 * @param mixed &$extension_data persistent storage between calls or pre- and post-process
@@ -535,6 +571,11 @@ class select_widget
 						$value = $extension_data['unavailible'][0];
 					}
 				}
+				break;
+				
+			case 'select-erole':
+				$value = null;
+				if(is_array($value_in)) $value = implode(',',$value_in);
 				break;
 
 			case 'select-dow':
