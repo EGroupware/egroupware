@@ -488,7 +488,7 @@ class boetemplate extends soetemplate
 	 */
 	public function widgetExists($type)
 	{
-		return isset(self::$types[$tpye]) || $this->haveExtension($type);
+		return isset(self::$types[$type]) || $this->haveExtension($type);
 	}
 
 	/**
