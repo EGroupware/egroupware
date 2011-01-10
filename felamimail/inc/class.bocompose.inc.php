@@ -565,7 +565,7 @@
 			if (count($ccAddressA)>0) 
 			{
 				$ccAddress = bofelamimail::htmlspecialchars($bofelamimail->decode_header(implode(', ', $ccAddressA)));
-				$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddressA.($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
+				$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddress.($bodyParts['0']['mimeType'] == 'text/html'?"\r\n<br>":"\r\n");
 			}
 			if($bodyParts['0']['mimeType'] == 'text/html') {
 				$this->sessionData['body']	= "<br>&nbsp;\r\n<p>".'----------------'.lang("original message").'-----------------'."\r\n".'<br>'.
