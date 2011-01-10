@@ -74,7 +74,7 @@ class ajax_captcha_widget
 		$value = array('captcha'=>'','captcha_code'=>'');
 		
 		//set needed onload for refresh JS
-		$GLOBALS['egw']->js->set_onload('"document.getElementById(\'show_image\').src = \''.$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=etemplate.ajax_captcha_widget.show_image&sid=\' + Math.random(); return false"'
+		egw_framework::set_onload('document.getElementById(\'show_image\').src = \''.$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=etemplate.ajax_captcha_widget.show_image&sid=\' + Math.random(); return false'
 		);
 		
 		// sets audio icon link properties
@@ -1026,7 +1026,7 @@ $count=0;
         
 		//print($count);
 		//if($count!=4){$count++;continue;} 
-		$fname=$this->audio_path . strtoupper($letter) . '.wav';
+		$fname=$this->audio_path . strtolower($letter) . '.wav';
 		$fp     = fopen($fname,'rb');
         $header = fread($fp,36);
         $info   = unpack($fields,$header);
