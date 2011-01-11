@@ -101,13 +101,16 @@
 		exit(INVALID_OPTION); 
 	}
 	
+	// Can't change domain once header is loaded
+	$_REQUEST['domain'] = $domain;
+
 	$GLOBALS['egw_info']['flags'] = array(
 		'disable_Template_class' => True,
 		'noheader'  => True,
 		'nonavbar' => True,
 		'currentapp' => 'importexport',
 		'autocreate_session_callback' => 'import_export_access',
-		'login' => $user,
+		'login' => $user . '@' . $domain,
 		'passwd' => $password,
 		'noapi'      => True,
 	);
@@ -136,7 +139,7 @@
 		fwrite(STDERR,"importexport_cli: ". $file. ' is not readable'."\n"); 
 		exit(INVALID_OPTION); 
 	}
-	
+
 	$definition = new importexport_definition($definition);
 	if( $definition->get_identifier() < 1 ) {
 		fwrite(STDERR,"importexport_cli: Definition not found! \n"); 
