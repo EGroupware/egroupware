@@ -99,7 +99,7 @@ class importexport_wizard_basic_export_csv
 			foreach($this->export_fields as $field => $name) {
 				$content['fields'][] = array(
 					'field'	=>	$field,
-					'name'	=>	$name,
+					'name'	=>	lang($name),
 				);
 				if($content['mapping'][$field]) {
 					$content['fields']['export'][$row] = $field;

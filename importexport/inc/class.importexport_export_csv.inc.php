@@ -129,6 +129,11 @@ class importexport_export_csv implements importexport_iface_export_record
 		
 		// begin with fieldnames ?
 		if ($this->num_of_records == 0 && $this->csv_options['begin_with_fieldnames'] ) {
+			if($this->csv_options['begin_with_fieldnames'] == 'label') {
+				foreach($this->mapping as $field => &$label) {
+					$label = lang($label);
+				}
+			}
 			$mapping = ! empty( $this->mapping ) ? $this->mapping : array_keys ( $this->record );
 			$mapping = $this->translation->convert( $mapping, $this->translation->charset(), $this->csv_charset );
 			fputcsv( $this->handle ,$mapping ,$this->csv_options['delimiter'], $this->csv_options['enclosure'] );
