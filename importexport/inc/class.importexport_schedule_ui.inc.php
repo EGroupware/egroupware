@@ -309,7 +309,7 @@
 				fwrite(STDERR,'importexport_schedule: ' . date('c') . ": Definition not found! \n");
 			}
 
-			if($po->get_errors()) {
+			if(method_exists($po, 'get_errors') && $po->get_errors()) {
 				$data['errors'] = $po->get_errors();
 				fwrite(STDERR, 'importexport_schedule: ' . date('c') . ": Import errors:\n#\tError\n");
 				foreach($po->get_errors() as $record => $error) {
