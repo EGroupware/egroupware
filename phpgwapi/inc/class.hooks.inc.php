@@ -254,6 +254,20 @@ class hooks
 			// some apps have setup_info for more then themselfs (eg. phpgwapi for groupdav)
 			foreach($setup_info as $appname => $data)
 			{
+				if ($data['hooks']) 
+				{
+					if ($hdata[$appname]) 
+					{
+						$hdata[$appname]['hooks'] = array_merge($hdata[$appname]['hooks'],$data['hooks']);
+					}
+					else
+					{
+						$hdata[$appname]['hooks'] = $data['hooks'];
+					}
+				}
+			}
+			foreach((array)$hdata as $appname => $data)
+			{
 				if ($data['hooks']) $this->register_hooks($appname,$data['hooks']);
 			}
 		}
