@@ -59,6 +59,9 @@ class importexport_wizard_basic_export_csv
 			'wizard_step30' => lang('Choose fields to export'),
 			'wizard_step40' => lang('Choose seperator and charset'),
 		);
+		list($appname, $part2) = explode('_', get_class($this));
+		if(!$GLOBALS['egw_info']['apps'][$appname]) $appname .= $part2; // Handle apps with _ in the name
+		translation::add_app($appname);
 	}
 
 	/**
