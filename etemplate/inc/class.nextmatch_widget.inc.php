@@ -1172,6 +1172,10 @@ class nextmatch_widget
 			}
 			$value = implode(', ',$value);
 
+			if (strpos($value,'"') !== false)
+			{
+				$value = '"'.str_replace('"', '""', $value).'"'; // Escape double quotes
+			}
 			if (strpos($value,$separator) !== false || strpos($value,"\n") !== false || strpos($value,"\r") !== false)
 			{
 				$value = '"'.str_replace(array('\\','"'),array('\\\\','\\"'),$value).'"';
