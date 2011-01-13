@@ -268,7 +268,7 @@ class jdots_framework extends egw_framework
 		}
 		$this->tpl->set_var('app_header',(string)$app_header);
 		$this->tpl->set_var($vars = $this->_get_header());
-		$content .= $this->tpl->fp('out','head').$content;
+		$content = $this->tpl->fp('out','head').$content;
 
 		if (!$do_framework)
 		{
