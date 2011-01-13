@@ -489,7 +489,16 @@ class jdots_framework extends egw_framework
 		return '<script type="text/javascript">
 	if (typeof window.parent.framework != "undefined")
 	{
-		var napp = window.parent.framework.getApplicationByName("'.$app.'");
+		var napp = null;
+		if (typeof window.egw_app != "undefined")
+		{
+			napp = window.egw_app;
+		}
+		else
+		{
+			napp = window.parent.framework.getApplicationByName("'.$app.'");
+		}
+
 		window.parent.framework.setSidebox(napp,'.$sidebox.',"'.$md5.'");
 	}
 </script>';
@@ -820,7 +829,7 @@ class jdots_framework extends egw_framework
 		//whether the $active_tab really exists in the $apps array.
 		if ($active_tab && array_key_exists($active_tab, $apps))
 		{
-			$apps[$active_tab]['openOnce'] = str_replace('&cd=yes','',$url);
+			$apps[$active_tab]['openOnce'] = preg_replace('/[&?]cd=yes/','',$url);
 			$store_prefs = true;
 		}
 		else
