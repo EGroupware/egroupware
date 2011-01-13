@@ -694,7 +694,11 @@ abstract class bo_merge
 		if (isset($archive))
 		{
 			$zip = new ZipArchive;
-			if ($zip->open($archive,ZIPARCHIVE::CHECKCONS) !== true) throw new Exception("!ZipArchive::open('$archive',ZIPARCHIVE::OVERWRITE)");
+			if ($zip->open($archive,ZIPARCHIVE::CHECKCONS) !== true) 
+			{
+				error_log(__METHOD__.__LINE__." !ZipArchive::open('$archive',ZIPARCHIVE::CHECKCONS) failed. Trying open without validating");
+				if ($zip->open($archive) !== true) throw new Exception("!ZipArchive::open('$archive',|ZIPARCHIVE::CHECKCONS)");
+			}
 			if ($zip->addFromString($content_file,$merged) !== true) throw new Exception("!ZipArchive::addFromString('$content_file',\$merged)");
 			if ($zip->close() !== true) throw new Exception("!ZipArchive::close()");
 			unset($zip);
