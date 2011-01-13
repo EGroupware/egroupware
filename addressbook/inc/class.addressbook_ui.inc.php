@@ -1422,6 +1422,7 @@ class addressbook_ui extends addressbook_bo
 				$content['created'] = $this->now_su;
 				unset($state);
 			}
+
 			if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);	// dont allow HTML!
 
 			if($content && $_GET['makecp'])	// copy the contact
@@ -1449,7 +1450,7 @@ class addressbook_ui extends addressbook_bo
 			}
 			else
 			{
-				if (is_int($contact_id)) $content['link_to']['to_id'] = $contact_id;
+				if (is_numeric($contact_id)) $content['link_to']['to_id'] = $contact_id;
 			}
 			// automatic link new entries to entries specified in the url
 			if (!$contact_id && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']) && !is_array($content['link_to']['to_id']))
