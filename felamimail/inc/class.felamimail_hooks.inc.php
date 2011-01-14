@@ -664,7 +664,13 @@ class felamimail_hooks
 	        	    'text' => "<div id=\"divFolderTree\" class=\"dtree\" style=\"overflow:auto; max-width:400px; width:100%; max-height:450px; margin-bottom: 0px;padding-left: 0px; padding-right: 0px; padding-top:0px; z-index:100; \">
 					$folderTree
 					</div>
-					<script>egw_appWindow('".$appname."').refreshFolderStatus();</script>",
+					<script>
+						var wnd = egw_appWindow('".$appname."');
+						if (wnd && typeof wnd.refreshFolderStatus != 'undefined')
+						{
+							wnd.refreshFolderStatus();
+						}
+					</script>",
 					'no_lang' => True,
 					'link' => False,
 					'icon' => False,
