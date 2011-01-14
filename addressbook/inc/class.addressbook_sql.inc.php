@@ -437,6 +437,12 @@ class addressbook_sql extends so_sql
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 				$extra_cols[] = $matches[1];
 				$extra_cols[] = $matches[1]."<>''";
+				//_debug_array($matches[1]);
+				if (!empty($order_by) && $matches[1] != 'extra_order.contact_value' && stripos($matches[1],'.')===false) // postgres requires explizit order by
+				{
+					$order_by = str_replace($matches[1],'egw_addressbook.'.$matches[1],$order_by);
+				}
+				//_debug_array($order_by);
 			}
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
