@@ -334,6 +334,11 @@ class addressbook_ui extends addressbook_bo
 		// be a bit more sophisticated asbout it
 		$content['nm']['header_right'] = 'addressbook.index.right_add';
 		$availabletypes = array_keys($this->content_types);
+		if ($content['nm']['col_filter']['tid'] && !in_array($content['nm']['col_filter']['tid'],$availabletypes))
+		{
+			//_debug_array(array('Typefilter:'=> $content['nm']['col_filter']['tid'],'Available Types:'=>$availabletypes,'action:'=>'remove invalid filter'));
+			unset($content['nm']['col_filter']['tid']);
+		} 
 		if (!isset($content['nm']['col_filter']['tid'])) $content['nm']['col_filter']['tid'] = $availabletypes[0];
 		if (count($this->content_types) > 1)
 		{
