@@ -1,3 +1,26 @@
+egroupware-epl (10.1.20110117-1) hardy; urgency=low
+
+  * eMail: -allow recognition of multipart/report as mails with attachments
+  *        -email to infolog -> fix for not decoded senderinformation; fix for stripping too much text when strip_tags stumbles over assumed broken tags ( stuff like: <1 USD/p)
+  *        -not filtering own(ed) emailaddresses out of drafts while reopening them for continued processing
+  *        -fix for possible error while saving as draft (mime message could not be opened): some servers do not return the uid of the saved message, in this case reopening for continued editing failes; 
+  *        -avoid adding/showing NIL@NIL and the chosen identity as replyto (it will be set while sending anyway) as addressline, upon opening drafted messages
+  * Sync: Allow SyncML synchronization of EGw accounts
+  * SiteMgr: filecontents block uses now EGroupware proxy config and checks allow_url_fopen On, also added more info about Zend Framework install for css queries to grab only partial data of a site
+  * ProjectManager: config allow non-admin to change working times was not working
+  * Calendar: -invite rights, should NOT implicate a freebusy rights (users with invite rights could see freebusy times of other users);
+  *           -Weeknumbers in calendar views, were wrong for week-start-day other then Monday
+  *           -JSCalendar -> fixed week containing 4th Jan is shown as 52th instead 1st week, if week starts on sunday is selected
+  * Statistics: dont give sql error in gathering statistic data, if table does not exists (eg. Gallery is not installed)
+  * addressbook: -fix for attempt to remove non existing link; happens when addressbook read returns nothing, that may be caused by trying to merge an addressbook-entry with nonexisting customfields array
+  *              -fix for Stylite Tracker bug#1152; Links for Addressbook where not shown anymore
+  *              -check if typefilter is valid (type available), if not remove it
+  *              -postgres compatibility for distributionlists
+  * tracker: -fix for ACL Bug; If technician in more than one tracker-queue on select all queues you see more tickets than suposedly allowed in list
+  *          -Any change to a ticket (status, resolution) marks it as unread, not just replies
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 17 Jan 2011 12:48:02 +0100
+
 egroupware-epl (10.1.20101216-1) hardy; urgency=low
 
   * WiKi: Edit permissions now do imply read permissions
