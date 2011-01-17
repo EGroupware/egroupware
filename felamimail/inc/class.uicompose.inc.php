@@ -369,7 +369,7 @@
 			}
 			$selectFrom = html::select('identity', ($presetId ? $presetId : $defaultIdentity), $identities, true, "style='width:100%;' onchange='changeIdentity(this);'");
 			$this->t->set_var('select_from', $selectFrom);
-
+			//error_log(__METHOD__.__LINE__.' DefaultIdentity:'.array2string($identities[($presetId ? $presetId : $defaultIdentity)]));
 			// navbar(, kind of)
 			$this->t->set_var('img_clear_left', $GLOBALS['egw']->common->image('felamimail','clear_left'));
 			$this->t->set_var('img_fileopen', $GLOBALS['egw']->common->image('phpgwapi','fileopen'));
@@ -385,6 +385,9 @@
 			$destinationRows = 0;
 			foreach(array('to','cc','bcc','replyto','folder') as $destination) {
 				foreach((array)$sessionData[$destination] as $key => $value) {
+					if ($value=="NIL@NIL") continue;
+					if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
+					//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
 					$selectDestination = html::select('destination[]', $destination, $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
 					$this->t->set_var('select_destination', $selectDestination);
 					$address = bofelamimail::htmlentities($value, $this->displayCharset);
