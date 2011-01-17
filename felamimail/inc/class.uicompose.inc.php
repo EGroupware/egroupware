@@ -126,6 +126,11 @@
 			if((bool)$_POST['saveAsDraft'] == true) {
 				$formData['isDraft'] = 1;
 				// save as draft
+				$folder = ($this->mailPreferences->ic_server[0]->draftfolder ? $this->mailPreferences->ic_server[0]->draftfolder : $this->mailPreferences->preferences['draftFolder']);
+				$this->bofelamimail->reopen($folder);
+				$status = $this->bofelamimail->getFolderStatus($folder);
+				//error_log(__METHOD__.__LINE__.array2string($status));
+				$uidNext = $status['uidnext']; // we may need that, if the server does not return messageUIDs of saved/appended messages
 				$messageUid = $this->bocompose->saveAsDraft($formData);
 				if (!$messageUid) {
 					print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")." ".lang("Trying to recover from session data")."');</script>";
@@ -137,7 +142,8 @@
 				unset($_POST['composeid']);
 				unset($_GET['composeid']);
 				$uicompose   = CreateObject('felamimail.uicompose');
-				$folder = ($uicompose->mailPreferences->ic_server[0]->draftfolder ? $uicompose->mailPreferences->ic_server[0]->draftfolder : $uicompose->mailPreferences->preferences['draftFolder']);
+				$messageUid = ($messageUid===true ? $uidNext : $messageUid);
+				//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder); 
 				$uicompose->bocompose->getDraftData($uicompose->bofelamimail->icServer, $folder, $messageUid);
 				$uicompose->compose();
 				return;
