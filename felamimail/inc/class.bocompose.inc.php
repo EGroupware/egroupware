@@ -199,12 +199,15 @@
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($_folder);
 
-			$userEMailAddresses = $this->preferences->getUserEMailAddresses();
+			// the array $userEMailAddresses was used for filtering out emailaddresses that are owned by the user, for draft data we should not do this
+			//$userEMailAddresses = $this->preferences->getUserEMailAddresses();
+			//error_log(__METHOD__.__LINE__.array2string($userEMailAddresses));
 
 			// get message headers for specified message
 			#$headers	= $bofelamimail->getMessageHeader($_folder, $_uid);
 			$headers	= $bofelamimail->getMessageEnvelope($_uid, $_partID);
 			$addHeadInfo = $bofelamimail->getMessageHeader($_uid, $_partID);
+			//error_log(__METHOD__.__LINE__.array2string($headers));
 			if (!empty($addHeadInfo['X-MAILFOLDER'])) {
 				foreach ( explode('|',$addHeadInfo['X-MAILFOLDER']) as $val ) {
 					$this->sessionData['folder'][] = $val;
@@ -227,9 +230,9 @@
 					continue;
 				}
 
-				if($userEMailAddresses[$val['EMAIL']]) {
-					continue;
-				}
+				//if($userEMailAddresses[$val['EMAIL']]) {
+				//	continue;
+				//}
 
 				if(!$foundAddresses[$val['EMAIL']]) {
 					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
@@ -244,9 +247,9 @@
 					continue;
 				}
 
-				if($userEMailAddresses[$val['EMAIL']]) {
-					continue;
-				}
+				//if($userEMailAddresses[$val['EMAIL']]) {
+				//	continue;
+				//}
 
 				if(!$foundAddresses[$val['EMAIL']]) {
 					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
@@ -261,9 +264,9 @@
 					continue;
 				}
 
-				if($userEMailAddresses[$val['EMAIL']]) {
-					continue;
-				}
+				//if($userEMailAddresses[$val['EMAIL']]) {
+				//	continue;
+				//}
 
 				if(!$foundAddresses[$val['EMAIL']]) {
 					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
@@ -278,9 +281,9 @@
 					continue;
 				}
 
-				if($userEMailAddresses[$val['EMAIL']]) {
-					continue;
-				}
+				//if($userEMailAddresses[$val['EMAIL']]) {
+				//	continue;
+				//}
 
 				if(!$foundAddresses[$val['EMAIL']]) {
 					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
@@ -296,7 +299,6 @@
 			$this->sessionData['subject'] = preg_replace($searchfor,'',$this->sessionData['subject']);
 			$bodyParts = $bofelamimail->getMessageBody($_uid, $this->preferencesArray['always_display'], $_partID);
 			//_debug_array($bodyParts);
-
 			#$fromAddress = ($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL'];
 			if($bodyParts['0']['mimeType'] == 'text/html') {
 				$this->sessionData['mimeType'] 	= 'html';
@@ -898,6 +900,7 @@
 			if (  !empty($_formData['printit']) && $_formData['printit'] == 0 ) $savingDestination = ($this->preferences->ic_server[0]->draftfolder ? $this->preferences->ic_server[0]->draftfolder : $this->preferencesArray['draftFolder']);
 
 			if (count($mailAddr)>0) $BCCmail = $mail->AddrAppend("Bcc",$mailAddr);
+			//error_log(__METHOD__.__LINE__.$BCCmail.$mail->getMessageHeader().$mail->getMessageBody());
 			$bofelamimail->openConnection();
 			if ($bofelamimail->folderExists($savingDestination,true)) {
 				$messageUid = $bofelamimail->appendMessage($savingDestination,
