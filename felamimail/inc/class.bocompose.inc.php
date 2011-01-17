@@ -199,7 +199,8 @@
 			$bofelamimail->openConnection();
 			$bofelamimail->reopen($_folder);
 
-			$userEMailAddresses = $this->preferences->getUserEMailAddresses();
+			// the array $userEMailAddresses was used for filtering out emailaddresses that are owned by the user, for draft data we should not do this
+			//$userEMailAddresses = $this->preferences->getUserEMailAddresses();
 
 			// get message headers for specified message
 			#$headers	= $bofelamimail->getMessageHeader($_folder, $_uid);
@@ -227,9 +228,9 @@
 					continue;
 				}
 
-				if($userEMailAddresses[$val['EMAIL']]) {
-					continue;
-				}
+				//if($userEMailAddresses[$val['EMAIL']]) {
+				//	continue;
+				//}
 
 				if(!$foundAddresses[$val['EMAIL']]) {
 					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
@@ -244,9 +245,9 @@
 					continue;
 				}
 
-				if($userEMailAddresses[$val['EMAIL']]) {
-					continue;
-				}
+				//if($userEMailAddresses[$val['EMAIL']]) {
+				//	continue;
+				//}
 
 				if(!$foundAddresses[$val['EMAIL']]) {
 					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
@@ -261,9 +262,9 @@
 					continue;
 				}
 
-				if($userEMailAddresses[$val['EMAIL']]) {
-					continue;
-				}
+				//if($userEMailAddresses[$val['EMAIL']]) {
+				//	continue;
+				//}
 
 				if(!$foundAddresses[$val['EMAIL']]) {
 					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
@@ -278,9 +279,9 @@
 					continue;
 				}
 
-				if($userEMailAddresses[$val['EMAIL']]) {
-					continue;
-				}
+				//if($userEMailAddresses[$val['EMAIL']]) {
+				//	continue;
+				//}
 
 				if(!$foundAddresses[$val['EMAIL']]) {
 					$address = $val['PERSONAL_NAME'] != 'NIL' ? $val['RFC822_EMAIL'] : $val['EMAIL'];
