@@ -565,6 +565,12 @@ class addressbook_so
 		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 		//error_log("socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')");
 
+		// Handle 'None' country option
+		if(is_array($filter) && $filter['adr_one_countrycode'] == '-custom-')
+		{
+			$filter[] = 'adr_one_countrycode IS NULL';
+			unset($filter['adr_one_countrycode']);
+		}
 		// Hide deleted items unless type is specifically deleted
 		if(!is_array($filter)) $filter = $filter ? (array) $filter : array();
 
