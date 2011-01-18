@@ -141,7 +141,15 @@ class select_widget
 				break;
 
 			case 'select-country':	// #Row|Extralabel,1=use country name, 0=use 2 letter-code,custom country field name
-				$cell['sel_options'] = ($type == 0 && $type2 ? array('-custom-' => lang('Custom')) : array()) + $GLOBALS['egw']->country->countries();
+				if($type == 0 && $type2)
+				{
+					$custom_label = is_numeric($type2) ? 'Custom' : $type2;
+					$cell['sel_options'] = array('-custom-' => lang($custom_label)) + $GLOBALS['egw']->country->countries();
+				}
+				else
+				{
+					$cell['sel_options'] = $GLOBALS['egw']->country->countries();
+				}
 				if (($extension_data['country_use_name'] = $type) && $value)
 				{
 					$value = $GLOBALS['egw']->country->country_code($value);
