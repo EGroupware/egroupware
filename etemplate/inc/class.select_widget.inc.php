@@ -234,7 +234,7 @@ class select_widget
 						{
 							if ($id && ($name = $eroles->id2title($id)))
 							{
-								$cell['sel_options'][$id] = $name;
+								$cell['sel_options'][$id] = $name.($eroles->is_global($id) ? ' ('.lang('Global').')' : '');
 							}
 							else
 							{
@@ -247,9 +247,8 @@ class select_widget
 				
 				foreach($eroles->get_free_eroles() as $id => $data)
 				{
-					$global = $data['pm_id'] == 0 ? ' ('.lang('Global').')' : '';
 					$cell['sel_options'][$data['role_id']] = array(
-						'label' => $data['role_title'] . $global,
+						'label' => $data['role_title'].($eroles->is_global($data['role_id']) ? ' ('.lang('Global').')' : ''),
 						'title' => $data['role_description'],
 					);
 				}
