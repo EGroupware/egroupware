@@ -1547,7 +1547,7 @@ class addressbook_bo extends addressbook_so
 				continue;
 			}
 			// Add in custom fields
-			$contact = array_merge($contact, $custom_field_list[$contact['id']]);
+			if (is_array($custom_field_list[$contact['id']])) $contact = array_merge($contact, $custom_field_list[$contact['id']]);
 
 			$pos = array_search($contact['id'],$ids);
 			$contacts[$pos] = $contact;
