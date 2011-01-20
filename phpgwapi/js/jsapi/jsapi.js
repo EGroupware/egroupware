@@ -115,6 +115,27 @@ function egw_appWindow(_app)
 }
 
 /**
+ * Returns the current egw application
+ * @param string _name is only used for fallback, if an onlder version of jdots is used.
+ */
+function egw_getApp(_name)
+{
+	var napp = null;
+	if (typeof window.frameElement != "undefined" &&
+	    window.frameElement != null &&
+	    typeof window.frameElement.egw_app != "undefined")
+	{
+		napp = window.frameElement.egw_app;
+	}
+	else
+	{
+		napp = window.parent.framework.getApplicationByName(_name);
+	}
+
+	return napp;
+}
+
+/**
  * Refresh given application _app display of entry _id, incl. outputting _msg
  * 
  * Default implementation here only reloads window with it's current url with an added msg=_msg attached

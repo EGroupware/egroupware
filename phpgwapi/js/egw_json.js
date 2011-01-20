@@ -166,14 +166,15 @@ function _egw_json_plugin_handle(_type, _response) {
 }
 
 /** The constructor of the egw_json_request class.
- * @param string _menuaction the menuaction function which should be called and which handles the actual request
+ *
+ * @param string _menuaction the menuaction function which should be called and
+ *   which handles the actual request. If the menuaction is a full featured
+ *   url, this one will be used instead.
  * @param array _parameters which should be passed to the menuaction function.
+ * @param object _context is the context which will be used for the callback function 
  */
 function egw_json_request(_menuaction, _parameters, _context)
 {
-	//Copy the supplied parameters
-	this.menuaction = _menuaction;
-
 	this.context = window.document;
 	if (typeof _context != 'undefined')
 		this.context = _context;
@@ -187,15 +188,18 @@ function egw_json_request(_menuaction, _parameters, _context)
 		this.parameters = new Array;
 	}
 
-	var url = window.egw_webserverUrl;
-
-	// Search up to parent if the current window is in a frame
-	if(typeof url == "undefined")
+	// Check whether the supplied menuaction parameter is a full featured url
+	// or just a menuaction
+	if (_menuaction.match(/json.php\?menuaction=[a-z_0-9]*\.[a-z_0-9]*\.[a-z_0-9]*/i))
 	{
-		url = top.egw_webserverUrl;
+		// Menuaction is a full featured url
+		this.url = _menuaction
 	}
-
-	this.url = url + '/json.php';
+	else
+	{
+		// We only got a menu action, assemble the url manually.
+		this.url = this._assembleAjaxUrl(_menuaction);
+	}
 
 	this.request = null;
 	this.sender = null;
@@ -210,7 +214,24 @@ function egw_json_request(_menuaction, _parameters, _context)
 	}
 }
 
-/* Sends the AJAX JSON request.
+egw_json_request.prototype._assembleAjaxUrl = function(_menuaction)
+{
+	// Retrieve the webserver url
+	var webserver_url = egw_topWindow().egw_webserverUrl;
+
+	// Check whether the webserver_url is really set	
+	if (!webserver_url)
+	{
+		throw "Internal JS error, top window not found, webserver url could not be retrieved.";
+	}
+
+	// Add the ajax relevant parts
+	return webserver_url + '/json.php?menuaction=' + _menuaction;
+}
+
+/**
+ * Sends the AJAX JSON request.
+ *
  * @param boolean _async specifies whether the request should be handeled asynchronously (true, the sendRequest function immediately returns to the caller) or asynchronously (false, the sendRequest function waits until the request is received)
  * @param _callback is an additional callback function which should be called upon a "data" response is received
  * @param _sender is the reference object the callback function should get
@@ -238,14 +259,14 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 	};
 
 	//Send the request via the jquery AJAX interface to the server
-	this.request = $.ajax({url: this.url + '?menuaction=' + this.menuaction,
+	this.request = $.ajax({url: this.url,
 		async: is_async,
 		context: this,
 		data: request_obj,
 		dataType: 'json',
 		type: 'POST', 
 		success: this.handleResponse,
-		error: function(_xmlhttp,_err) { alert('Ajax request to '+this.url+'?menuaction='+this.menuaction+' failed: '+_err); }
+		error: function(_xmlhttp,_err) { alert('Ajax request to ' + this.url + ' failed: ' + _err); }
 	});
 }
 
@@ -367,8 +388,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							typeof res.data.global == 'boolean')
 						{
 							//Special handling for framework reload
-							if (res.data.url.indexOf("?cd=10") > 0)
-								res.data.global = true;
+							res.data.global |= (res.data.url.indexOf("?cd=10") > 0);
 
 							if (res.data.global)
 							{

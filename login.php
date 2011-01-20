@@ -336,7 +336,10 @@ else
 			else
 			{
 				list($forward,$extra_vars) = explode('?',$forward,2);
-				$extra_vars .= ($extra_vars ? '&' : '').'cd=yes';
+				if (!isset($_GET['suppress_cd']))
+				{
+					$extra_vars .= ($extra_vars ? '&' : '').'cd=yes';
+				}
 			}
 
 			if(strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
