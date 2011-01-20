@@ -27,6 +27,7 @@ if (!is_object(@$GLOBALS['egw']))	// called from outside eGW ==> setup
 
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$self = 'db_backup.php';
+	$is_setup = true;
 }
 $db_backup = new db_backup();
 $asyncservice = new asyncservice();
@@ -77,19 +78,15 @@ if ($_POST['save_backup_settings'])
 	$matches = array();
 	preg_match('/^[1-9][0-9]*$/', $_POST['backup_mincount'], $matches);
 	$minCount = $matches[0];
-	$filesBackup =false;
-	if ($_POST['backup_files']==='backup_files') $filesBackup = true;
+	$filesBackup = $_POST['backup_files'] === 'backup_files';
 	if (empty($minCount))
 	{
 		$minCount = 0;
 		$setup_tpl->set_var('error_msg',htmlspecialchars(lang("'%1' must be integer", lang("backup min count"))));
 	}
-	$configValues = array(
-			'backup_mincount'=>$minCount,
-			'backup_files' =>$filesBackup,
-	);
-	$db_backup->saveConfig($configValues);
-	if (is_int($minCount) && $minCount>0)
+	$db_backup->saveConfig($minCount,$is_setup ? (boolean)$filesBackup : null);
+
+	if (is_int($minCount) && $minCount > 0)
 	{
 		$cleaned_files = array();
 		/* Remove old backups. */
@@ -128,7 +125,10 @@ $setup_tpl->set_var('backup_now_button','<input type="submit" name="backup" titl
 $setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 	'<input type="submit" name="upload" value="'.htmlspecialchars(lang('upload backup')).'" title="'.htmlspecialchars(lang("uploads a backup to the backup-dir, from where you can restore it")).'" />');
 $setup_tpl->set_var('backup_mincount','<input type="text" name="backup_mincount" value="'.$db_backup->backup_mincount.'" size="3" maxlength="3"/>');
-$setup_tpl->set_var('backup_files','<input type="checkbox" name="backup_files" value="backup_files"'.((bool)$db_backup->backup_files ? 'checked':'').'/>');
+$setup_tpl->set_var('backup_files','<input type="checkbox" name="backup_files" value="backup_files"'.
+	($db_backup->backup_files ? ' checked="true"':'').
+// do NOT allow to change "backup files" outside of setup
+	($is_setup ? '' : ' disabled="true" title="'.htmlspecialchars(lang('Can only be change via Setup!')).'"').'/>');
 $setup_tpl->set_var('backup_save_settings','<input type="submit" name="save_backup_settings" value="'.htmlspecialchars(lang('save')).'" />');
 
 if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
