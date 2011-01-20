@@ -1,3 +1,11 @@
+egroupware-epl (10.1.20110120-1) hardy; urgency=low
+
+  * eMail: fix stripping too much text, extending of a previous fix to infolog and tracker, when mail is converted while/after sending
+  * Sitemgr/WebSite: rework of fix for broken Navtype TOC
+  * Tracker: sort groups alphabeticaly in applicable views
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 20 Jan 2011 13:41:58 +0100
+
 egroupware-epl (10.1.20110117-1) hardy; urgency=low
 
   * eMail: -allow recognition of multipart/report as mails with attachments
