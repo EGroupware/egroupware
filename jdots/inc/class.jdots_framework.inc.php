@@ -277,7 +277,8 @@ class jdots_framework extends egw_framework
 			$content .= '<script type="text/javascript">
 	if (typeof window.parent.framework != "undefined")
 	{
-		window.parent.framework.setWebsiteTitle(egw_getApp("'.$app.'"),"'.htmlspecialchars($vars['website_title']).'","'.$app_header.'");
+		var app = window.parent.framework.getApplicationByName("'.$app.'");
+		window.parent.framework.setWebsiteTitle(app,"'.htmlspecialchars($vars['website_title']).'","'.$app_header.'");
 	}';
 
 			//Register the global key press handler
@@ -488,7 +489,17 @@ class jdots_framework extends egw_framework
 		return '<script type="text/javascript">
 	if (typeof window.parent.framework != "undefined")
 	{
-		window.parent.framework.setSidebox(egw_getApp("'.$app.'"),'.$sidebox.',"'.$md5.'");
+		var napp = null;
+		if (typeof window.egw_app != "undefined")
+		{
+			napp = window.egw_app;
+		}
+		else
+		{
+			napp = window.parent.framework.getApplicationByName("'.$app.'");
+		}
+
+		window.parent.framework.setSidebox(napp,'.$sidebox.',"'.$md5.'");
 	}
 </script>';
 	}
