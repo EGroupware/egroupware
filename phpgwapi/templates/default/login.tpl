@@ -6,7 +6,7 @@
 	<div id="centerBox">
 		<div id="loginScreenMessage">{lang_message}</div>
 		<div id="loginCdMessage">{cd}</div>
-		<form name="login_form" id="login_form" method="post" action="{login_url}">
+		<form name="login_form" method="post" action="{login_url}">
 			<table class="divLoginbox divSideboxEntry" cellspacing="0" cellpadding="2" border="0" align="center">
 				<tr class="divLoginboxHeader">
 					<td colspan="3">{website_title}</td>
@@ -63,21 +63,5 @@
 <!-- END registration -->
 			</table>
 		</form>
-		<script type="text/javascript">
-			//Check whether the loginpage is displayed from within the jdots framework
-			//if yes, supress the "cd=yes" being appended to the page loaded
-			if (typeof window.frameElement != 'undefined' &&
-			    window.frameElement &&
-				typeof window.frameElement.egw_app != 'undefined' &&
-				typeof window.frameElement.egw_app.isRemote != 'undefined' &&
-				window.frameElement.egw_app.isRemote())
-			{
-				loginForm = document.getElementById('login_form');
-				if (loginForm && loginForm.action.indexOf('phpgw_forward') > 0)
-				{
-					loginForm.action += '&suppress_cd=1';
-				}
-			}
-		</script>
 	</div>
 </div>
