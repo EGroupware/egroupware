@@ -1843,12 +1843,14 @@ class infolog_ui
 			$toaddr = array();
 			foreach(array('to','cc','bcc') as $x) if (is_array($_to_emailAddress[$x]) && !empty($_to_emailAddress[$x])) $toaddr = array_merge($toaddr,$_to_emailAddress[$x]);
 			//_debug_array($attachments);
+			$_body = strip_tags(bofelamimail::htmlspecialchars($_body)); //we need to fix broken tags (or just stuff like "<800 USD/p" ) 
+			$_body = htmlspecialchars_decode($_body,ENT_QUOTES);
 			$body = bofelamimail::createHeaderInfoSection(array('FROM'=>$_to_emailAddress['from'],
 				'TO'=>(!empty($_to_emailAddress['to'])?implode(',',$_to_emailAddress['to']):null),
 				'CC'=>(!empty($_to_emailAddress['cc'])?implode(',',$_to_emailAddress['cc']):null),
 				'BCC'=>(!empty($_to_emailAddress['bcc'])?implode(',',$_to_emailAddress['bcc']):null),
 				'SUBJECT'=>$_subject,
-				'DATE'=>bofelamimail::_strtotime($_date))).strip_tags($_body);
+				'DATE'=>bofelamimail::_strtotime($_date))).$_body;
 			$this->edit($this->bo->import_mail(
 				implode(',',$toaddr),$_subject,$body,$attachments,$_date
 			));
