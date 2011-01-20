@@ -299,47 +299,29 @@ class db_backup
 	/**
 	 * Save the housekeeping configuration in the database and update the local variables.
 	 *
-	 * @param mincount Minimum number of backups to keep.
+	 * @param int $mincount Minimum number of backups to keep.
+	 * @param boolean $backup_files include files in backup or not, default dont change!
 	 */
-	function saveConfig($config_values)
+	function saveConfig($minCount,$backupFiles=null)
 	{
-		if (!is_array($config_values))
+		config::save_value('backup_mincount',$this->backup_mincount=(int)$minCount,'phpgwapi');
+
+		if (!is_null($backupFiles))
 		{
-			error_log(__METHOD__." unable to save backup config values, wrong type of parameter passed.");
-			return false;
+			config::save_value('backup_files',$this->backup_files=(boolean)$backupFiles,'phpgwapi');
 		}
-		//_debug_array($config_values);
-		$minCount = $config_values['backup_mincount'];
-		$backupFiles = (int)$config_values['backup_files'];
-		/* minCount */
-		$this->db->insert(
-			self::TABLE,
-			array(
-				'config_value' => $minCount,
-			),
-			array(
-				'config_app' => 'phpgwapi',
-				'config_name' => 'backup_mincount',
-			),
-			__LINE__,
-			__FILE__);
-		/* backup files flag */
-		$this->db->insert(self::TABLE,array('config_value' => $backupFiles),array('config_app' => 'phpgwapi','config_name' => 'backup_files'),__LINE__,__FILE__);
-		$this->backup_mincount = $minCount;
-		$this->backup_files = (bool)$backupFiles;
-		// Update session cache
-		if (is_a($GLOBALS['egw'],'egw')) $GLOBALS['egw']->invalidate_session_cache();
 	}
-	
+
 	/**
 	 * Certain config settings NOT to restore (because they break a working system)
-	 * 
+	 *
 	 * @var array
 	 */
 	static $system_config = array(
 		'files_dir',
 		'temp_dir',
 		'backup_dir',
+		'backup_files',
 		'webserver_url',
 		'aspell_path',
 		'hostname',
@@ -364,9 +346,9 @@ class db_backup
 	{
 		@set_time_limit(0);
 		ini_set('auto_detect_line_endings',true);
-		
+
 		$convert_to_system_charset = true;	// enforce now utf-8 as system charset restores of old backups
-		
+
 		if ($protect_system_config)
 		{
 			$system_config = array();
@@ -756,7 +738,7 @@ class db_backup
 				fwrite($f,implode(',',$row)."\n");
 			}
 		}
-		if(!$zippresent)  // save without files 
+		if(!$zippresent)  // save without files
 		{
 			if ($this->backup_files)
 			{
