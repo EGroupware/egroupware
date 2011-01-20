@@ -312,8 +312,7 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							typeof res.data.global == 'boolean')
 						{
 							//Special handling for framework reload
-							if (res.data.url.indexOf("?cd=10") > 0)
-								res.data.global = true;
+							res.data.global |= (res.data.url.indexOf("?cd=10") > 0);
 
 							if (res.data.global)
 							{
