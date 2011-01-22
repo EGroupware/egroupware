@@ -38,7 +38,6 @@ class select_widget
 		'select-country'  => 'Select Country',
 		'select-state'    => 'Select State',	// US-states
 		'select-cat'      => 'Select Category',	// Category-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
-		'select-erole'	  => 'Select Element role',
 		'select-account'  => 'Select Account',	// label=accounts(default),groups,both
 												// size: -1=Single+not assigned, 0=Single, >0=Multiple
 		'select-year'     => 'Select Year',
@@ -218,41 +217,6 @@ class select_widget
 				{
 					$extension_data['unavailible'] = $unavailible;
 				}
-				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
-				$cell['no_lang'] = True;
-				break;
-				
-			case 'select-erole': // $type2: extraStyleMultiselect
-				$eroles = new projectmanager_eroles_so();
-				if ($readonly)
-				{
-					$cell['no_lang'] = True;
-					if ($value)
-					{
-						if (!is_array($value)) $value = explode(',',$value);
-						foreach($value as $key => $id)
-						{
-							if ($id && ($name = $eroles->id2title($id)))
-							{
-								$cell['sel_options'][$id] = $name.($eroles->is_global($id) ? ' ('.lang('Global').')' : '');
-							}
-							else
-							{
-								unset($value[$key]);	// remove not (longer) existing or inaccessible eroles
-							}
-						}
-					}
-					break;
-				}
-				
-				foreach($eroles->get_free_eroles() as $id => $data)
-				{
-					$cell['sel_options'][$data['role_id']] = array(
-						'label' => $data['role_title'].($eroles->is_global($data['role_id']) ? ' ('.lang('Global').')' : ''),
-						'title' => $data['role_description'],
-					);
-				}
-				
 				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 				$cell['no_lang'] = True;
 				break;
@@ -579,12 +543,6 @@ class select_widget
 					}
 				}
 				break;
-				
-			case 'select-erole':
-				$value = null;
-				if(is_array($value_in)) $value = implode(',',$value_in);
-				break;
-
 			case 'select-dow':
 				$value = 0;
 				if (!is_array($value_in)) $value_in = explode(',',$value_in);
