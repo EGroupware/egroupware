@@ -314,23 +314,23 @@ class idots_framework extends egw_framework
 
 		$config_reg = config::read('registration');
 
-		if($config_reg['enable_registration'] == 'True')
+		if($config_reg['enable_registration'])
 		{
-			if ($config_reg['register_link'] == 'True')
+			if ($config_reg['register_link'])
 			{
 				$reg_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','lang_code='.$_GET['lang']). '">'.lang('Not a user yet? Register now').'</a><br/>';
 			}
-			if ($config_reg['lostpassword_link'] == 'True')
+			if ($config_reg['lostpassword_link'])
 			{
-				$lostpw_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.uireg.lostpw_step1_ask_login&lang_code='.$_GET['lang']). '">'.lang('Lost password').'</a><br/>';
+				$lostpw_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.registration_ui.lost_password&lang_code='.$_GET['lang']). '">'.lang('Lost password').'</a><br/>';
 			}
-			if ($config_reg['lostid_link'] == 'True')
+			if ($config_reg['lostid_link'])
 			{
-				$lostid_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.uireg.lostid_step1_ask_email&lang_code='.$_GET['lang']). '">'.lang('Lost Login Id').'</a><br/>';
+				$lostid_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.registration_ui.lost_username&lang_code='.$_GET['lang']). '">'.lang('Lost Login Id').'</a><br/>';
 			}
 
 			/* if at least one option of "registration" is activated display the registration section */
-			if($config_reg['register_link'] == 'True' || $config_reg['lostpassword_link'] == 'True' || $config_reg['lostid_link'] == 'True')
+			if($config_reg['register_link'] || $config_reg['lostpassword_link'] || $config_reg['lostid_link'] )
 			{
 				$tmpl->set_var(array(
 				'register_link'     => $reg_link,
