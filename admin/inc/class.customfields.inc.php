@@ -160,6 +160,15 @@ class customfields
 			{
 				$content['content_types']['non_deletable'] = true;
 			}
+			if ($this->content_types['']['no_add'])
+			{
+				$content['content_types']['no_add'] = true;
+			}
+			if ($content['content_types']['non_deletable'] && $content['content_types']['no_add'])
+			{
+				// Hide the whole line if you can't add or delete
+				$content['content_types']['no_edit_types'] = true;
+			}
 		}
 		//echo 'customfields=<pre style="text-align: left;">'; print_r($this->fields); echo "</pre>\n";
 		$content['fields'] = array('use_private' => $content['use_private']);
