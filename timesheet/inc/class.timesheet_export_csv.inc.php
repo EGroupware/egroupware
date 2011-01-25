@@ -8,7 +8,7 @@
  * @link http://www.egroupware.org
  * @author Knut Moeller <k.moeller@metaways.de>
  * @copyright Knut Moeller <k.moeller@metaways.de>
- * @version $Id: $
+ * @version $Id$
  */
 
 /**
@@ -27,10 +27,15 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		$uitimesheet = new timesheet_ui();
 		$selection = array();
 
-		$query = $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP);
-		$query['num_rows'] = -1;	// all
+		if($options['selection'] == 'selected') {
+			$query = $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP);
+			$query['num_rows'] = -1;	// all records
+			$uitimesheet->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
+		} elseif($options['selection'] == 'all') {
+			$query = array('num_rows' => -1);
+			$uitimesheet->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
+		} 
 
-		$uitimesheet->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
 
 		$options['begin_with_fieldnames'] = true;
 		$export_object = new importexport_export_csv($_stream, (array)$options);
@@ -67,7 +72,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 	 * @return string descriprion
 	 */
 	public static function get_description() {
-		return lang("Exports entries from your Timesheet into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.");
+		return lang("Exports entries from your Timesheet into a CSV File. ");
 	}
 
 	/**
@@ -90,7 +95,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 	 * @return string html
 	 */
 	public function get_options_etpl() {
-		return 'timesheet.export_csv_options';
+		return false;
 	}
 
 	/**
@@ -98,6 +103,6 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 	 *
 	 */
 	public function get_selectors_etpl() {
-		return '<b>Selectors:</b>';
+		return 'timesheet.export_csv_selectors';
 	}
 }
