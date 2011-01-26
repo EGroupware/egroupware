@@ -1,0 +1,55 @@
+charset	utf-8
+
+regular (year=0):
+PA	Año Nuevo	1	1	0	0	0
+PA	Día de los Mártires	9	1	0	0	0
+PA	Día Internacional del Trabajo	1	5	0	0	0
+PA	Aniversario de la Separación de Colombia	3	11	0	0	0
+PA	Primer grito de Independencia de Panamá de España	10	11	0	0	0
+PA	Independencia de España	28	11	0	0	0
+PA	Día de la Madre	8	12	0	0	0
+PA	Navidad	25	12	0	0	0
+
+2005:
+PA	Martes de Carnaval	8	2	2005	0	0
+PA	Viernes Santo	25	3	2005	0	0
+
+2006:
+PA	Martes de Carnaval	28	2	2006	0	0
+PA	Viernes Santo	14	4	2006	0	0
+
+2007:
+PA	Martes de Carnaval	20	2	2007	0	0
+PA	Viernes Santo	6	4	2007	0	0
+
+2008:
+PA	Martes de Carnaval	5	2	2008	0	0
+PA	Viernes Santo	21	3	2008	0	0
+
+2009:
+PA	Martes de Carnaval	24	2	2009	0	0
+PA	Viernes Santo	10	4	2009	0	0
+
+2010:
+PA	Martes de Carnaval	16	2	2010	0	0
+PA	Viernes Santo	2	4	2010	0	0
+
+2011:
+PA	Martes de Carnaval	8	3	2011	0	0
+PA	Viernes Santo	22	4	2011	0	0
+
+2012:
+PA	Martes de Carnaval	21	2	2012	0	0
+PA	Viernes Santo	6	4	2012	0	0
+
+2013:
+PA	Martes de Carnaval	12	2	2013	0	0
+PA	Viernes Santo	29	3	2013	0	0
+
+2014:
+PA	Martes de Carnaval	4	3	2014	0	0
+PA	Viernes Santo	18	4	2014	0	0
+
+2015:
+PA	Martes de Carnaval	17	2	2015	0	0
+PA	Viernes Santo	3	4	2015	0	0
