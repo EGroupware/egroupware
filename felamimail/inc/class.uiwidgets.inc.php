@@ -426,12 +426,14 @@ class uiwidgets
 												' - '.bofelamimail::_strtotime($header['date'],($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s'))); 
 
 				$this->t->set_var('size', $this->show_readable_size($header['size']));
-				if ($firstuid === null)
+				// selecting the first message by default for preview
+				if ($firstuid === null) // only use preview if there is a message selected, so selecting the first message by default is not used anymore
 				{
 					//_debug_array($header);
-					$firstuid = $selecteduid = $header['uid'];
-					$firstheader = $header;
+					//$firstuid = $selecteduid = $header['uid'];
+					//$firstheader = $header;
 				}
+				// preview the message with the requested (messageToBePreviewed) uid
 				if ($messageToBePreviewed>0 
 					&& $GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0 
 					&& $messageToBePreviewed == $header['uid']) 
@@ -525,14 +527,43 @@ class uiwidgets
 						break;
 				}
 			}
+					
 			if ($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0)
 			{
 				$this->t->set_var('selected_style'.$selecteduid,'style="background-color:#ddddFF;"');
 			} else {
 				$this->t->set_var('selected_style'.$selecteduid,'');
 			}
-
-			$IFRAMEBody =  $this->updateMessagePreview($firstheader,$_folderType,$_folderName);
+			if ($firstheader && 
+				$GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0 &&
+				($_folderType==0 || $_folderType==1)) // only if not  drafts or template folder
+			{
+				$IFRAMEBody =  $this->updateMessagePreview($firstheader,$_folderType,$_folderName);
+			}
+			else
+			{
+				if ($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0)
+				{
+					$IFRAMEBody = "<TABLE BORDER=\"1\" rules=\"rows\" style=\"table-layout:fixed;width:100%;\">
+								<TR class=\"th\" style=\"width:100%;\">
+									<TD nowrap valign=\"top\">
+										".'<b><br> '.
+										"<center><font color='red'>".(!($_folderType == 2 || $_folderType == 3)?lang("Select a message to switch on its preview (click on subject)"):lang("Preview disabled for Folder: ").$_folderName)."</font></center><br>
+										</b>"."
+									</TD>
+								</TR>
+								<TR>
+									<TD nowrap id=\"tdmessageIFRAME\" valign=\"top\" height=\"".$GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']."\">
+										&nbsp;
+									</TD>
+								</TR>
+							   </TABLE>";
+				}
+				else
+				{
+					$IFRAMEBody = '';
+				}
+			}
 
 			$this->t->set_var('IFrameForPreview',$IFRAMEBody);
 			$this->t->set_var('messagelist_height',($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']>0 ? ($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight']).'px':'auto'));
