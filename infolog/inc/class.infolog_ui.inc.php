@@ -502,6 +502,13 @@ class infolog_ui
 				$GLOBALS['egw']->session->appsession('own_session','infolog',$own_referer);
 			}
 		}
+		
+		if (is_array($values) && isset($values['nm']['rows']['document']))  // handle insert in default document button like an action
+		{
+			list($id) = @each($values['nm']['rows']['document']);
+			$values['multi_action'] = 'document';
+			$values['nm']['rows']['checked'] = array($id);
+		}
 		if (is_array($values) && isset($values['multi_action']) && $values['multi_action'] !== '')
 		{
 			if (!count($values['nm']['rows']['checked']) && !$values['use_all'])
@@ -789,6 +796,12 @@ class infolog_ui
 			$change_status['status_'.$id] = $label;
 		}
 		$sel_options['multi_action'][lang('Change status:')] = $change_status;
+
+		// Merge print
+		if ($this->prefs['document_dir'])
+                {
+                        $sel_options['multi_action'][lang('Insert in document').':'] = $this->get_document_actions();
+                }
 		egw_framework::validate_file('.','index','infolog');
 
 		return $this->tmpl->exec('infolog.infolog_ui.index',$values,$sel_options,$readonlys,$persist,$return_html ? -1 : 0);
@@ -873,7 +886,11 @@ class infolog_ui
 						$success += $count;
 					}
 				}
-				break;
+				return ($failed == 0);
+			case 'document':
+				$msg = $this->download_document($checked,$settings);
+				$failed = count($checked);
+                                return false;
 		}
 
 		// Actions that need to loop
@@ -2003,5 +2020,59 @@ class infolog_ui
 			);
 		}
 		return $fields;
+	}
+
+	/**
+	 * Returning document actions / files from the document_dir
+	 *
+	 * @return array
+	 */
+	function get_document_actions()
+	{
+		if (!$this->prefs['document_dir']) return array();
+
+		//if (!is_array($actions = egw_session::appsession('document_actions','infolog')))
+		//{
+			$actions = array();
+			if (($files = egw_vfs::find($this->prefs['document_dir'],array('need_mime'=>true),true)))
+			{
+				foreach($files as $file)
+				{
+					// return only the mime-types we support
+					if (!infolog_merge::is_implemented($file['mime'],substr($file['name'],-4))) continue;
+
+					$actions['document_'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
+				}
+			}
+			egw_session::appsession('document_actions','infolog',$actions);
+		//}
+		return $actions;
+	}
+
+	/**
+	 * Download a document with inserted entries
+	 *
+	 * @param array $ids infolog-ids
+	 * @param string $document vfs-path of document
+	 * @return string error-message or error, otherwise the function does NOT return!
+	 */
+	function download_document($ids,$document='')
+	{
+		if (!$document)
+		{
+			$document = $this->prefs['default_document'];
+		}
+		else
+		{
+			$document = $this->prefs['document_dir'].'/'.$document;
+		}
+		if (!@egw_vfs::stat($document))
+		{
+			return lang("Document '%1' does not exist or is not readable for you!",$document);
+		}
+		require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_merge.inc.php');
+		$document_merge = new infolog_merge();
+
+		return $document_merge->download($document,$ids);
 	}
 }
