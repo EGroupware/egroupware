@@ -38,6 +38,35 @@ class addressbook_hooks
 				'CSV-Import'      => egw::link('/addressbook/csv_import.php')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
+
+			if($GLOBALS['egw_info']['user']['apps']['importexport'] && importexport_helper_functions::get_plugins($appname)) {
+				$file = array();
+				if(importexport_helper_functions::get_plugins($appname, 'import'))
+				{
+					$file['Import'] = array('link' => "javascript:egw_openWindowCentered2('".
+						egw::link('/index.php',array(
+							'menuaction' => 'importexport.importexport_import_ui.import_dialog',
+							'appname'=>$appname
+						),false)."','_blank',500,220,'yes')",
+						'icon' => 'import',
+						'app' => 'importexport',
+						'text' => 'import'
+					);
+				}
+				if(importexport_helper_functions::get_plugins($appname, 'export'))
+				{
+					$file['Export'] = array('link' => "javascript:egw_openWindowCentered2('".
+						egw::link('/index.php',array(
+							'menuaction' => 'importexport.importexport_export_ui.export_dialog',
+							'appname'=>$appname
+						),false)."','_blank',850,440,'yes')",
+						'icon' => 'export',
+						'app' => 'importexport',
+						'text' => 'export'
+					);
+				}
+				if($file) display_sidebox($appname,lang('importexport'),$file);
+			}
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
