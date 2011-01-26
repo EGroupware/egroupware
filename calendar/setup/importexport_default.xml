@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entry type="array" name="importExportDefinitions">
+  <entry type="array" name="metainfo">
+    <entry type="string" name="type">importexport definitions</entry>
+    <entry type="string" name="charset">utf-8</entry>
+    <entry type="integer" name="entries">2</entry>
+  </entry>
+  <entry type="array" name="definitions">
+    <entry type="array" name="export-calendar-csv">
+      <entry type="string" name="name">export-calendar-csv</entry>
+      <entry type="string" name="application">calendar</entry>
+      <entry type="string" name="plugin">calendar_export_csv</entry>
+      <entry type="string" name="type">export</entry>
+      <entry type="array" name="allowed_users">
+        <entry type="string" name="0">Default</entry>
+        <entry type="string" name="1">Admins</entry>
+      </entry>
+      <entry type="array" name="plugin_options">
+        <entry type="array" name="mapping">
+          <entry type="string" name="owner">owner</entry>
+          <entry type="string" name="category">category</entry>
+          <entry type="string" name="priority">priority</entry>
+          <entry type="string" name="public">public</entry>
+          <entry type="string" name="title">title</entry>
+          <entry type="string" name="description">description</entry>
+          <entry type="string" name="location">location</entry>
+          <entry type="string" name="reference">reference</entry>
+          <entry type="string" name="modifier">modifier</entry>
+          <entry type="string" name="non_blocking">non_blocking</entry>
+          <entry type="string" name="special">special</entry>
+          <entry type="string" name="creator">creator</entry>
+          <entry type="string" name="recurrence">recurrence</entry>
+          <entry type="string" name="tz_id">tz_id</entry>
+          <entry type="string" name="start">start</entry>
+          <entry type="string" name="end">end</entry>
+          <entry type="string" name="participants">participants</entry>
+          <entry type="string" name="participants-c">participants-c</entry>
+        </entry>
+        <entry type="string" name="delimiter">;</entry>
+        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="begin_with_fieldnames">1</entry>
+        <entry type="string" name="convert">0</entry>
+      </entry>
+      <entry type="NULL" name="description"/>
+      <entry type="string" name="user_timezone_read">America/Edmonton</entry>
+    </entry>
+    <entry type="array" name="import-calendar-csv">
+      <entry type="string" name="name">import-calendar-csv</entry>
+      <entry type="string" name="application">calendar</entry>
+      <entry type="string" name="plugin">calendar_import_csv</entry>
+      <entry type="string" name="type">import</entry>
+      <entry type="array" name="allowed_users">
+        <entry type="string" name="0">Default</entry>
+        <entry type="string" name="1">Admins</entry>
+      </entry>
+      <entry type="array" name="plugin_options">
+        <entry type="string" name="fieldsep">;</entry>
+        <entry type="string" name="charset">utf-8</entry>
+        <entry type="string" name="num_header_lines">1</entry>
+        <entry type="array" name="csv_fields">
+          <entry type="string" name="0">owner</entry>
+          <entry type="string" name="1">category</entry>
+          <entry type="string" name="2">priority</entry>
+          <entry type="string" name="3">public</entry>
+          <entry type="string" name="4">title</entry>
+          <entry type="string" name="5">description</entry>
+          <entry type="string" name="6">location</entry>
+          <entry type="string" name="7">reference</entry>
+          <entry type="string" name="8">modifier</entry>
+          <entry type="string" name="9">non_blocking</entry>
+          <entry type="string" name="10">special</entry>
+          <entry type="string" name="11">creator</entry>
+          <entry type="string" name="12">recurrence</entry>
+          <entry type="string" name="13">tz_id</entry>
+          <entry type="string" name="14">start</entry>
+          <entry type="string" name="15">end</entry>
+          <entry type="string" name="16">participants</entry>
+          <entry type="string" name="17">participants-c</entry>
+          <entry type="string" name="18">no_csv_1</entry>
+          <entry type="string" name="19">no_csv_2</entry>
+          <entry type="string" name="20">no_csv_3</entry>
+        </entry>
+        <entry type="array" name="field_mapping">
+          <entry type="string" name="0">owner</entry>
+          <entry type="string" name="1">category</entry>
+          <entry type="string" name="2">priority</entry>
+          <entry type="string" name="3">public</entry>
+          <entry type="string" name="4">title</entry>
+          <entry type="string" name="5">description</entry>
+          <entry type="string" name="6">location</entry>
+          <entry type="string" name="7">reference</entry>
+          <entry type="string" name="8">modifier</entry>
+          <entry type="string" name="9">non_blocking</entry>
+          <entry type="string" name="10">special</entry>
+          <entry type="string" name="11">creator</entry>
+          <entry type="string" name="12">recurrence</entry>
+          <entry type="string" name="13">tz_id</entry>
+          <entry type="string" name="14">start</entry>
+          <entry type="string" name="15">end</entry>
+          <entry type="string" name="16">participants</entry>
+          <entry type="string" name="17">participants-c</entry>
+        </entry>
+        <entry type="string" name="field_conversion"/>
+      </entry>
+      <entry type="NULL" name="description"/>
+    </entry>
+  </entry>
+</entry>
