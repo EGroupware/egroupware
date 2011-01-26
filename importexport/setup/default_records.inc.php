@@ -22,7 +22,7 @@ $GLOBALS['egw_setup']->setup_account_object();
 // step through every source code intstalled app
 $egwdir = dir(EGW_INCLUDE_ROOT);
 while (false !== ($appdir = $egwdir->read())) {
-	$defdir = EGW_INCLUDE_ROOT. "/$appdir/importexport/definitions";
+	$defdir = EGW_INCLUDE_ROOT. "/$appdir/setup/";
 	if ( !is_dir( $defdir ) ) continue;
 
 		// step through each file in defdir of app
