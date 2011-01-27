@@ -188,6 +188,15 @@ class felamimail_hooks
 		        'admin'  => False,
 		        'forced' => '1',
 		    ),
+		   'prefaskformultipleforward' => array(
+		        'type'   => 'select',
+		        'label'  => 'Do you want to be asked for confirmation before attaching selected messages to new mail?',
+		        'name'   => 'prefaskformultipleforward',
+		        'values' => $no_yes,
+		        'xmlrpc' => True,
+		        'admin'  => False,
+		        'forced' => '1',
+		    ),
 		   'prefpreventmanagefolders' => array(
 		        'type'   => 'select',
 		        'label'  => 'Do you want to prevent the managing of folders (creation, accessrights AND subscribtion)?',

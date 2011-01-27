@@ -1,5 +1,6 @@
 if (typeof CopyOrMove == 'undefined') var CopyOrMove = egw_appWindow('felamimail').CopyOrMove;
 if (typeof prefAskForMove == 'undefined') var prefAskForMove = egw_appWindow('felamimail').prefAskForMove; 
+if (typeof prefAskForMultipleForward == 'undefined') var prefAskForMultipleForward = egw_appWindow('felamimail').prefAskForMove; 
 if (typeof sURL == 'undefined') var sURL = window.sURL;
 
 if (typeof copyingMessages == 'undefined') var MessageBuffer;
@@ -487,36 +488,60 @@ function refreshView() {
 }
 
 function openComposeWindow(_url) {
-    var Check=true;
-    var _messageList;
-    var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
-    egw_appWindow('felamimail').resetMessageSelect();
-    if (cbAllMessages == true) Check = confirm(egw_appWindow('felamimail').lang_confirm_all_messages);
-    if (cbAllMessages == true && Check == true)
-    {
-        _messageList = 'all';
-    } else {
-        _messageList = egw_appWindow('felamimail').xajax.getFormValues('formMessageList');
-    }
-	sMessageList='';
-	for (var i in _messageList['msg']) {
-		//alert('eigenschaft:'+_messageList['msg'][i]);
-		sMessageList=sMessageList+_messageList['msg'][i]+',';
-		//sMessageList.concat(',');
+	var Check=true;
+	var alreadyAsked=false;
+	var _messageList;
+	var sMessageList='';
+	var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
+	var cbAllVisibleMessages = document.getElementById('messageCheckBox').checked;
+	if (typeof prefAskForMultipleForward == 'undefined') prefAskForMultipleForward = egw_appWindow('felamimail').prefAskForMultipleForward;
+	egw_appWindow('felamimail').resetMessageSelect();
+	// ask anyway if a whole page is selected
+	//if (cbAllMessages == true || cbAllVisibleMessages == true) Check = confirm(egw_appWindow('felamimail').lang_confirm_all_messages); // not supported
+	if (cbAllMessages == true || cbAllVisibleMessages == true)
+	{
+		Check = confirm(egw_appWindow('felamimail').lang_multipleforward);
+		alreadyAsked=true;
 	}
-	if (sMessageList.length >0) {
-		sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
+
+	if ((cbAllMessages == true || cbAllVisibleMessages == true ) && Check == true)
+	{
+		//_messageList = 'all'; // all is not supported by now, only visibly selected messages are chosen
+		_messageList = egw_appWindow('felamimail').xajax.getFormValues('formMessageList');
 	}
-	//alert(sMessageList);
-    if (Check == true)
-    {
+	else
+	{
+		if (Check == true) _messageList = egw_appWindow('felamimail').xajax.getFormValues('formMessageList');
+	}
+	if (typeof _messageList != 'undefined')
+	{
+		for (var i in _messageList['msg']) {
+			//alert('eigenschaft:'+_messageList['msg'][i]);
+			sMessageList=sMessageList+_messageList['msg'][i]+',';
+			//sMessageList.concat(',');
+		}
+	}
+	if (prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0)
+	{
+		askme = egw_appWindow('felamimail').lang_multipleforward;
+		//if (cbAllMessages == true || cbAllVisibleMessages == true) askme = egw_appWindow('felamimail').lang_confirm_all_messages; // not supported
+		Check = confirm(askme);
+	}
+	//alert("Check:"+Check+" MessageList:"+sMessageList+"#");
+	if (Check != true) sMessageList=''; // deny the appending off selected messages to new compose -> reset the sMessageList
+	if (Check == true || sMessageList=='')
+	{
+		if (sMessageList.length >0) {
+			sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
+		}
+		//alert(sMessageList);
 		egw_openWindowCentered(_url+sMessageList,'compose',700,egw_getWindowOuterHeight());
-    }
-    for(i=0; i< document.forms.formMessageList.elements.length; i++) {
-        if(document.forms.formMessageList.elements[i].checked) {
-            document.forms.formMessageList.elements[i].checked = false;
-        }
-    }
+	}
+	for(i=0; i< document.forms.formMessageList.elements.length; i++) {
+		if(document.forms.formMessageList.elements[i].checked) {
+			document.forms.formMessageList.elements[i].checked = false;
+		}
+	}
 }
 
 // timer functions

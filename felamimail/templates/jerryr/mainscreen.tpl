@@ -8,10 +8,12 @@ var movingMessages		= '{lang_moving_messages_to}';
 var copyingMessages		= '{lang_copying_messages_to}';
 var lang_askformove		= '{lang_askformove}';
 var prefAskForMove		= '{prefaskformove}';
+var prefAskForMultipleForward = '{prefaskformultipleforward}';
 var CopyOrMove                         = true;
 var lang_MoveCopyTitle = '{lang_MoveCopyTitle}';
 var lang_copy = '{lang_copy}';
 var lang_move = '{lang_move}';
+var lang_multipleforward = '{lang_multipleforward}';
 var lang_cancel = '{lang_cancel}';
  
 var lang_emptyTrashFolder	= '{lang_empty_trash}';

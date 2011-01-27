@@ -52,6 +52,7 @@ cc	felamimail	de	Kopie
 change folder	felamimail	de	Ordner wechseln
 check message against next rule also	felamimail	de	Nachricht auch gegen nächste Regel prüfen
 checkbox	felamimail	de	Auswahlbox
+choose from vfs	felamimail	de	aus dem VFS auswählen
 clear search	felamimail	de	Suche zurücksetzen
 click here to log back in.	felamimail	de	Hier klicken um sich wieder einzulogen.
 click here to return to %1	felamimail	de	Hier klicken um zu %1 zurückzukehren
@@ -70,6 +71,7 @@ contact not found!	felamimail	de	Kontakt nicht gefunden!
 contains	felamimail	de	enthält
 copy or move messages?	felamimail	de	Nachrichten kopieren oder Verschieben?
 copying messages to	felamimail	de	kopiere Nachrichten in folgenden Ordner
+could not append message:	felamimail	de	Konnte die Nachricht nicht hinzufügen:
 could not complete request. reason given: %s	felamimail	de	Konnte Anfrage nicht beenden. Grund: %s
 could not import message:	felamimail	de	Konnte diese Nachricht nicht importieren:
 could not open secure connection to the imap server. %s : %s.	felamimail	de	Konnte sichere Verbindung zum IMAP Server nicht öffnen. %s : %s.
@@ -115,11 +117,13 @@ do it!	felamimail	de	Mach es!
 do not use sent	felamimail	de	Gesendete Objekte (Sent) nicht verwenden
 do not use trash	felamimail	de	Gelöschte Objekte (Trash) nicht verwenden
 do not validate certificate	felamimail	de	Zertifikat nicht überprüfen
+do you really want to attach the selected messages to the new mail?	felamimail	de	Wollen Sie die ausgewählten Nachrichten wirklich an eine neue Mail anhängen?
 do you really want to delete the '%1' folder?	felamimail	de	Wollen Sie wirklich den '%1' Ordner löschen?
 do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	de	Wollen Sie die ausgewählten Konteneinstellungen und die damit verbundenen Identitäten wirklich löschen?
 do you really want to delete the selected signatures?	felamimail	de	Möchten Sie die ausgewählte Signatur wirklich löschen?
 do you really want to move or copy the selected messages to folder:	felamimail	de	Wollen sie die ausgewählten Nachrichten in folgenden Ordner verschieben oder kopieren:
 do you really want to move the selected messages to folder:	felamimail	de	Wollen sie die ausgewählten Nachrichten in folgenden Ordner verschieben:
+do you want to be asked for confirmation before attaching selected messages to new mail?	felamimail	de	Wollen Sie vor dem Anhängen von einer oder mehreren (ausgewählten) Mails an eine neue eMail gefragt werden?
 do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	de	Wollen Sie vor dem Verschieben von Mails in andere Ordner gefragt werden?
 do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen einer Mailweiterleitung (via SIEVE) unterbinden.
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden.
@@ -172,6 +176,7 @@ error opening	felamimail	de	Fehler beim Öffnen
 error saving %1!	felamimail	de	Fehler beim Speichern von %1!
 error:	felamimail	de	FEHLER:
 error: could not save message as draft	felamimail	de	FEHLER: Die Nachricht konnte nicht als Entwurf gespeichert werden.
+error: could not send message.	felamimail	de	FEHLER: Die Nachricht konnte nicht versendet werden.
 error: message could not be displayed.	felamimail	de	FEHLER: Die Nachricht kann nicht angezeigt werden.
 event details follow	felamimail	de	Termindetails folgend
 every	felamimail	de	alle
@@ -210,7 +215,6 @@ forward to	felamimail	de	weiterleiten an
 forward to address	felamimail	de	weiterleiten an Adresse
 forwarding	felamimail	de	Weiterleitung
 found	felamimail	de	Gefunden
-fri	felamimail	de	Fr
 from	felamimail	de	Von
 from(a->z)	felamimail	de	Von (A->Z)
 from(z->a)	felamimail	de	Von (Z->A)
@@ -247,6 +251,7 @@ imaps authentication	felamimail	de	IMAPS Authetifizierung
 imaps encryption only	felamimail	de	IMAPS nur Verschlüsselung
 import	felamimail	de	Importieren
 import mail	felamimail	de	Mail Importieren
+importance	felamimail	de	Wichtigkeit
 in	felamimail	de	In
 inbox	felamimail	de	Posteingang
 incoming mail server(imap)	felamimail	de	eingehender Mailserver (IMAP)
@@ -292,7 +297,6 @@ max uploadsize	felamimail	de	maximal Dateigröße
 message highlighting	felamimail	de	Nachrichtenhervorhebung
 message list	felamimail	de	Nachrichtenliste
 messages	felamimail	de	Nachrichten
-mon	felamimail	de	Mo
 move	felamimail	de	Verschieben
 move folder	felamimail	de	Ordner verschieben
 move messages	felamimail	de	Nachrichten verschieben
@@ -357,6 +361,7 @@ please select the number of days to wait between responses	felamimail	de	Bitte w
 please supply the message to send with auto-responses	felamimail	de	Bitte geben Sie eine Nachricht eine die mit der automatischen Antwort gesendet werden soll
 port	felamimail	de	Port
 posting	felamimail	de	sende
+preview disabled for folder:	felamimail	de	Die Vorschau für eMails wird in dem ausgewählten Ordner nicht unterstützt:
 previous	felamimail	de	vorherige
 previous message	felamimail	de	vorherige Nachricht
 print it	felamimail	de	E-Mail drucken
@@ -380,6 +385,7 @@ reply	felamimail	de	Antworten
 reply all	felamimail	de	allen Antworten
 reply to	felamimail	de	Antwort an
 replyto	felamimail	de	Antwort an
+required pear class mail/mimedecode.php not found.	felamimail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 respond	felamimail	de	Antworte
 respond to mail sent to	felamimail	de	Antworte auf E-Mails die gesendet werden an
 return	felamimail	de	Zurück
@@ -387,18 +393,20 @@ return to options page	felamimail	de	zurück zu Einstellungen
 right	felamimail	de	Rechts
 row order style	felamimail	de	Spaltenanordnung
 rule	felamimail	de	Regel
-sat	felamimail	de	Sa
 save	felamimail	de	Speichern
 save all	felamimail	de	Alle speichern
 save as draft	felamimail	de	als Entwurf speichern
 save as infolog	felamimail	de	Als Infolog speichern
 save changes	felamimail	de	Änderungen speichern
 save message to disk	felamimail	de	Nachricht speichern
+save of message %1 failed. could not save message to folder %2 due to: %3	felamimail	de	Das speichern der Nachricht %1 schlug fehl. Sie konnte nicht im Ordner %2 abgelegt werden. Grund: %3
+save:	felamimail	de	Speichern:
 script name	felamimail	de	Skriptname
 script status	felamimail	de	Skriptstatus
 search	felamimail	de	Suchen
 search for	felamimail	de	Suchen nach
 select	felamimail	de	Auswählen
+select a message to switch on its preview (click on subject)	felamimail	de	Wählen Sie eine Nachricht durch einen Mausklick auf den Betreff aus, um den Vorschaumodus für diese zu aktivieren.
 select all	felamimail	de	alle auswählen
 select emailprofile	felamimail	de	E-Mail-Profil auswählen
 select folder	felamimail	de	Ordner auswählen
@@ -434,7 +442,6 @@ submit	felamimail	de	Absenden
 subscribe	felamimail	de	Bestellen
 subscribed	felamimail	de	abonniert
 subscribed successfully!	felamimail	de	Erfolgreich abonniert
-sun	felamimail	de	So
 system signature	felamimail	de	System Signatur
 table of contents	felamimail	de	Inhaltsverzeichnis
 template folder	felamimail	de	Vorlagen Ordner
@@ -451,7 +458,6 @@ then	felamimail	de	dann
 there is no imap server configured.	felamimail	de	Es ist kein IMAP Server Konfiguriert
 this folder is empty	felamimail	de	DIESER ORDNER IST LEER
 this php has no imap support compiled in!!	felamimail	de	Dieses PHP hat keine IMAP Unterstützung!!
-thu	felamimail	de	Do
 to	felamimail	de	An
 to mail sent to	felamimail	de	Mail an senden an
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	de	Für eine TLS Verbindung, benötigen Sie PHP 5.1.0 oder neuer.
@@ -460,8 +466,9 @@ translation server	felamimail	de	Übersetzungsserver
 trash	felamimail	de	Papierkorb
 trash fold	felamimail	de	Abfall Ordner
 trash folder	felamimail	de	Ordner für gelöschte Nachrichten
-tue	felamimail	de	Di
+trying to recover from session data	felamimail	de	Versuch der Wiederherstellung aus den gespeicherten Session-Daten.
 type	felamimail	de	Typ
+undelete	felamimail	de	wiederherstellen
 unexpected response from server to authenticate command.	felamimail	de	Unerwartete Antwort vom Server auf das AUTHENTICATE Kommando.
 unexpected response from server to digest-md5 response.	felamimail	de	Unerwartete Antwort vom Server auf die Digest-MD5 Antwort.
 unexpected response from server to login command.	felamimail	de	Unerwartete Antwort vom Server auf das LOGIN Kommando.
@@ -499,7 +506,6 @@ view message	felamimail	de	zeige Nachricht
 viewing full header	felamimail	de	zeige alle Kopfzeilen
 viewing message	felamimail	de	zeige Nachricht
 viewing messages	felamimail	de	zeige Nachrichten
-wed	felamimail	de	Mi
 when deleting messages	felamimail	de	wenn Nachrichten gelöscht werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden.
 which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren

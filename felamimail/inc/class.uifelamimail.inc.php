@@ -614,6 +614,8 @@
 			// other settings
 			$prefaskformove = intval($userPreferences['prefaskformove']) ? intval($userPreferences['prefaskformove']) : 0;
 			$this->t->set_var('prefaskformove',$prefaskformove);	
+			$prefaskformultipleforward = intval($userPreferences['prefaskformultipleforward']) ? intval($userPreferences['prefaskformultipleforward']) : 0;
+			$this->t->set_var('prefaskformultipleforward',$prefaskformultipleforward);	
 			#// set the url to open when refreshing
 			#$linkData = array
 			#(
@@ -971,6 +973,7 @@
 			$this->t->set_var('lang_MoveCopyTitle',($GLOBALS['egw_info']['user']['preferences']['felamimail']['prefaskformove']==2?lang('Copy or Move Messages?'):lang('Move Messages?')));
 			$this->t->set_var('lang_askformove',($GLOBALS['egw_info']['user']['preferences']['felamimail']['prefaskformove']==2?lang('Do you really want to move or copy the selected messages to folder:'):lang('Do you really want to move the selected messages to folder:')));
 			$this->t->set_var('lang_move',lang("Move"));
+			$this->t->set_var('lang_multipleforward',lang("Do you really want to attach the selected messages to the new mail?"));
 			$this->t->set_var('lang_copy',lang("Copy"));
 			$this->t->set_var('lang_cancel',lang("Cancel"));
 			$this->t->set_var('lang_mark_all_messages',lang('all messages in folder'));
