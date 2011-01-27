@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.select" template="" lang="" group="0" version="1.7.002">
+	<template id="filemanager.select" template="" lang="" group="0" version="1.7.004">
+		<description id="msg" class="error" align="center"/>
 		<grid width="600">
 			<columns>
 				<column width="32"/>
@@ -47,7 +48,7 @@
 									</columns>
 									<rows>
 										<row class="row">
-											<vfs-mime id="${row}[path]" class="selectIcon" align="center"/>
+											<vfs-mime id="${row}[path]" class="selectIcon" align="center" options="16"/>
 											<vfs id="$row" onclick="$row_cont[onclick]"/>
 											<checkbox options="&quot;$row_cont[name]&quot;" id="selected[]" align="right"/>
 										</row>
@@ -55,12 +56,19 @@
 								</grid>
 							</row>
 							<row disabled="@mode=/(open-multiple|select-dir)/">
-								<textbox id="name" class="selectName" needed="1"/>
+								<textbox id="name" class="selectName"/>
 							</row>
 							<row disabled="!@options-mime">
 								<menulist class="selectMime">
 									<menupopup options="All files" id="mime" onchange="1"/>
 								</menulist>
+							</row>
+							<row disabled="@no_upload">
+								<groupbox id="upload_groupbox">
+									<caption label="File upload"/>
+									<description value="Choose a file for uploading"/>
+									<file id="file_upload"/>
+								</groupbox>
 							</row>
 							<row>
 								<hbox align="right">
@@ -73,5 +81,8 @@
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			.error{color:red; font-style:italic;}
+		</styles>
 	</template>
 </overlay>

@@ -5,23 +5,15 @@
 * @link http://www.egroupware.org
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @author Nathan Gray
+* @author Andreas Stöckel
 * @package etemplate
 * @version $Id$
 */
 
-if (isset($_GET['app']))
-{
-	$app = $_GET['app'];
-}
-elseif(isset($_GET['path']))
-{
-	list(,$apps,$app) = explode('/',$_GET['path']);
-	if ($apps !== 'apps') $app = 'filemanager';
-}
-if (!preg_match('/^[a-z0-9_-]+$/i',$app)) die('Stop');	// just to prevent someone doing nasty things
 
+//Set all necessary info and fire up egroupware
 $GLOBALS['egw_info']['flags'] = array(
-	'currentapp'	=>	$app,
+	'currentapp'	=>	get_app(),
 	'noheader'	=>	true,
 	'nonavbar'	=>	true
 );
@@ -36,125 +28,300 @@ if (get_magic_quotes_gpc() && $_GET)
 // no need to keep the session open (it stops other parallel calls)
 $GLOBALS['egw']->session->commit_session();
 
-if (isset($_GET['path']))
+if (!read_thumbnail(get_srcfile()))
 {
-	$g_srcfile = $_GET['path'];
-}
-else
-{
-	$g_srcfile = egw_link::vfs_path($_GET['app'],$_GET['id'],$_GET['file'],true);
-}
-$g_dstfile = $GLOBALS['egw_info']['server']['temp_dir'] . '/egw-thumbs'.$g_srcfile;
-$g_srcfile = egw_vfs::PREFIX.$g_srcfile;
-
-if (!file_exists($g_srcfile) || !egw_vfs::is_readable($g_srcfile))
-{
-	//error_log("file_exists('$g_srcfile')=".(int)file_exists($g_srcfile).", egw_vfs::is_readable('$g_srcfile')=".(int)egw_vfs::is_readable($g_srcfile));
 	header('404 Not found');
-	exit;
-}
-
-// Check for existing thumbnail
-if(file_exists($g_dstfile) && filemtime($g_dstfile) >= filemtime($g_srcfile)) {
-	header('Content-Type: image/png');
-	readfile($g_dstfile);
-	return;
-}
-
-$thumbnail = get_thumbnail($file, true);
-
-if($thumbnail) {
-	header('Content-Type: image/png');
-	imagepng( $thumbnail );
-	imagedestroy($thumbnail);
 }
 
 /**
-* Private function to get a thumbnail image for a linked image file.
-*
-* This function creates a thumbnail of the given image, if possible, and stores it in $GLOBALS['egw_info']['server']['temp_dir'].
-* Returns the image, or false if the file could not be thumbnailed.  Thumbnails are PNGs.
-*
-* @param array $file VFS File array to thumbnail
-* @return image or false
-*
-* @author Nathan Gray
-*/
-function get_thumbnail($file, $return_data = true)
+ * Reads the source file from the path parameters
+ */
+function get_srcfile()
 {
-	global $g_srcfile,$g_dstfile;
+	if (isset($_GET['path']))
+	{
+		$g_srcfile = $_GET['path'];
+	}
+	else
+	{
+		$g_srcfile = egw_link::vfs_path($_GET['app'], $_GET['id'], $_GET['file'], true);		
+	}
 
-	$max_width = $max_height = (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] == '' ? 32 :
+	return egw_vfs::PREFIX.$g_srcfile;
+}
+
+/**
+ * Returns the currently active app.
+ */
+function get_app()
+{
+	if (isset($_GET['app']))
+	{
+		$app = $_GET['app'];
+	}
+	elseif (isset($_GET['path']))
+	{
+		list(, $apps, $app) = explode('/', $_GET['path']);
+		if ($apps !== 'apps')
+		{
+			$app = 'filemanager';
+		}
+	}
+
+	if (!preg_match('/^[a-z0-9_-]+$/i',$app))
+	{
+		die('Stop');	// just to prevent someone doing nasty things
+	}
+
+	return $app;
+}
+
+/**
+ * Returns the maximum width/height of a thumbnail
+ */
+function get_maxsize()
+{
+	$preset = (string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] == '' ? 32 :
 		$GLOBALS['egw_info']['server']['link_list_thumbnail'];
 
-	//error_log(__METHOD__."() src=$g_srcfile, dst=$g_dstfile, size=$max_width");
+	// Another maximum size may be passed if thumbnails are turned on
+	if ($preset != 0 && isset($_GET['thsize']) && is_numeric($_GET['thsize']))
+	{
+		$preset = (int)$_GET['thsize'];
+	}
 
-	if($max_width == 0) {
-		// thumbnailing disabled
-		return false;
-	} elseif( !gdVersion() ) {
-		// GD disabled or not installed
+	return $preset;
+}
+
+/**
+ * Either loads the thumbnail for the given file form cache or generates a new
+ * one
+ *
+ * @param string $file is the file of which a thumbnail should be created
+ * @returns false if the file doesn't exist or any other error occured.
+ */
+function read_thumbnail($src)
+{
+	//Check whether the source file is readable and exists
+	if (!file_exists($src) || !egw_vfs::is_readable($src))
+	{
 		return false;
 	}
 
-	// Quality
-	$g_imgcomp=55;
+	// Get the maxsize of an thumbnail. If thumbnailing is turned off, the value
+	// will be 0
+	$maxsize = get_maxsize();
 
-	$dst_dir = dirname($g_dstfile);
-	// files dont exist, if you have no access permission
-	if((file_exists($dst_dir) || mkdir($dst_dir, 0700, true)) && file_exists($g_srcfile)) {
-		$g_is=getimagesize($g_srcfile);
-		if($g_is[0] < $max_width && $g_is[1] < $max_height) {
-			$g_iw = $g_is[0];
-			$g_ih = $g_is[1];
-		} elseif(($g_is[0]-$max_width)>=($g_is[1]-$max_height)) {
-			$g_iw=$max_width;
-			$g_ih=($max_width/$g_is[0])*$g_is[1];
-		} else {
-			$g_ih=$max_height;
-			$g_iw=($g_ih/$g_is[1])*$g_is[0];
+	// Check whether the destination directory exists, if not, create it. If this
+	// process failes, dont' return an image.
+	$dst = gen_dstfile($src, $maxsize);
+	$dst_dir = dirname($dst);
+	if(file_exists($dst_dir) || mkdir($dst_dir, 0700, true))
+	{
+		// Check whether the destination file already exists and is newer than
+		// the source file. Assume the file doesn't exist if thumbnailing is turned off.
+		$exists = ($maxsize > 0) && (file_exists($dst) && filemtime($dst) >= filemtime($src));
+
+		// Only generate the thumbnail if the destination file does not match the
+		// conditions mentioned above. Abort if $maxsize is 0.
+		$gen_thumb = ($maxsize > 0) && (!$exists);
+		if ($gen_thumb && ($thumb = gd_image_thumbnail($src, $maxsize, $maxsize)))
+		{
+			// Save the file to disk...
+			imagepng($thumb, $dst);
+
+			// Previous versions generated a new copy of the png to output it -
+			// as encoding pngs is quite cpu-intensive I think it might
+			// be better to just read it from the temp dir again - as it is probably
+			// still in the fs-cache
+			$exists = true;
+
+			imagedestroy($thumb);
 		}
 
-		// Get mime type
-		list($type, $image_type) = explode('/',egw_vfs::mime_content_type($g_srcfile));
-		if($type != 'image') {
-			return false;
+		$output_mime = 'image/png';
+
+		// If some error occured during thumbnail generation or thumbnailing is turned off,
+		// simply output the mime type icon
+		if (!$exists)
+		{
+			$mime = egw_vfs::mime_content_type($src);
+			list($app, $icon) = explode('/', egw_vfs::mime_icon($mime), 2);
+			list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
+				$GLOBALS['egw']->common->image($app, $icon), 2);
+			$dst = EGW_SERVER_ROOT.$path;
+			$output_mime = mime_content_type($dst);
 		}
 
-		switch ($image_type) {
+		if ($dst)
+		{
+			header('Content-Type: '.$output_mime);
+			readfile($dst);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function gen_dstfile($src, $maxsize)
+{
+	// Previous versions of this code didn't use an md5-sum of $src but appended
+	// it directly - this might have been an security issue as thumbnails from
+	// multiple instances might get mixed up.
+	return $GLOBALS['egw_info']['server']['temp_dir'] . '/egw-thumbs/thumb_' . 
+		md5($src . $GLOBALS['egw_info']['server']['webserver_url'] . $maxsize).'.png';
+}
+
+/**
+ * Function which calculates the sizes of an image with the width w and the height
+ * h, which should be scaled to an thumbnail of the maximum dimensions maxw and
+ * maxh
+ *
+ * @param int $w original width of the image
+ * @param int $h original height of the image
+ * @param int $maxw maximum width of the image
+ * @param int $maxh maximum height of the image
+ * @returns an array with two elements, w, h or "false" if the original dimensions
+ *   of the image are that "odd", that one of the output sizes is smaller than one pixel.
+ *
+ * TODO: As this is a general purpose function, it might probably be moved
+ *   to some other php file or an "image utils" class.
+ */
+function get_scaled_image_size($w, $h, $maxw, $maxh)
+{
+	//Set the output width to zero
+	$wout = 0.0;
+	$hout = 0.0;
+
+	//Scale will contain the factor by which the image has to be scaled down
+	$scale = 1.0;
+
+	//Select the constraining dimension
+	if ($w > $h) //The constraining factor will be $maxw
+	{
+		$scale = $maxw / $w;
+	}
+	else //The constraning factor will be $maxh
+	{
+		$scale = $maxh / $h;
+	}
+
+	// Don't scale images up
+	if ($scale > 1.0)
+	{
+		$scale = 1.0;
+	}
+
+	$wout = $w * $scale;
+	$hout = $h * $scale;
+
+	//Return the calculated values
+	if ($wout < 1 || $hout < 1)
+	{
+		return false;
+	}
+	else
+	{
+		return array(round($wout), round($hout));
+	}
+}
+
+/**
+ * Loads the given imagefile - returns "false" if the file wasn't an image,
+ * otherwise the gd-image is returned.
+ *
+ * @param string $file the file which to load
+ * @returns false or a gd_image
+ */
+function gd_image_load($file)
+{
+	// Get mime type
+	list($type, $image_type) = explode('/', egw_vfs::mime_content_type($file));
+
+	// Call the according gd constructor depending on the file type
+	if($type == 'image')
+	{
+		switch ($image_type)
+		{
 			case 'png':
-				$img_src = imagecreatefrompng($g_srcfile);
-				break;
+				return imagecreatefrompng($file);
 			case 'jpg':
 			case 'jpeg':
-				$img_src = imagecreatefromjpeg($g_srcfile);
-				break;
+				return imagecreatefromjpeg($file);
 			case 'gif':
-				$img_src = imagecreatefromgif($g_srcfile);
-				break;
+				return imagecreatefromgif($file);
 			case 'bmp':
-				$img_src = imagecreatefromwbmp($g_srcfile);
-				break;
-			default:
-				return false;
+				return imagecreatefromwbmp($file);
 		}
-		if(!($gdVersion = gdVersion())) {
-			return false;
-		} elseif ($gdVersion >= 2) {
-			$img_dst=imagecreatetruecolor($g_iw,$g_ih);
-			imageSaveAlpha($img_dst, true);
-			$trans_color = imagecolorallocatealpha($img_dst, 0, 0, 0, 127);
-			imagefill($img_dst, 0, 0, $trans_color);
-		} else {
-			$img_dst = imagecreate($g_iw, $g_ih);
-		}
+	}
 
-		imagecopyresampled($img_dst, $img_src, 0, 0, 0, 0, $g_iw, $g_ih, $g_is[0], $g_is[1]);
-		imagepng($img_dst, $g_dstfile);
-		return $return_data ? $img_dst : $g_dstfile;
-	} else {
+	return false;
+}
+
+/**
+ * Create an gd_image with transparent background.
+ *
+ * @param int $w the width of the resulting image
+ * @param int $h the height of the resutling image
+ */
+function gd_create_transparent_image($w, $h)
+{
+	if (!($gdVersion = gdVersion()))
+	{
+		//Looking up the gd version failed, return false
 		return false;
 	}
+	elseif ($gdVersion >= 2)
+	{
+		//Create an 32-bit image and fill it with transparency.
+		$img_dst = imagecreatetruecolor($w, $h);
+		imageSaveAlpha($img_dst, true);
+		$trans_color = imagecolorallocatealpha($img_dst, 0, 0, 0, 127);
+		imagefill($img_dst, 0, 0, $trans_color);
+
+		return $img_dst;
+	}
+	else
+	{
+		//Just crate a simple image
+		return imagecreate($w, $h);
+	}
+}
+
+/**
+ * Creates a scaled version of the given image - returns the gd-image or false if the
+ * process failed.
+ *
+ * @param string $file the filename of the file
+ * @param int $maxw the maximum width of the thumbnail
+ * @param int $maxh the maximum height of the thumbnail
+ * @return the gd_image or false if one of the steps taken to produce the thumbnail
+ *   failed.
+ */
+function gd_image_thumbnail($file, $maxw, $maxh)
+{
+	//Load the image
+	if (($img_src = gd_image_load($file)) !== false)
+	{
+		//Get the constraints of the image
+		$w = imagesx($img_src);
+		$h = imagesy($img_src);
+
+		//Calculate the actual size of the thumbnail
+		$scaled = get_scaled_image_size($w, $h, $maxw, $maxh);
+		if ($scaled !== false)
+		{
+			list($sw, $sh) = $scaled;
+
+			//Now scale it down
+			$img_dst = gd_create_transparent_image($sw, $sh);
+			imagecopyresampled($img_dst, $img_src, 0, 0, 0, 0, $sw, $sh, $w, $h);
+			return $img_dst;
+		}
+	}
+
+	return false;
 }
 
 /**

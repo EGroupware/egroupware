@@ -122,7 +122,7 @@
 	height: 16px;
 }
 .vfsFilename {
-	white-space: nowrap;
+/*	white-space: nowrap; << deactivated as images may be scaled strangely */
 }
 /**
  * mark a file (icon) as link
