@@ -2,37 +2,43 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="importexport.export_dialog.general_tab_content" template="" lang="" group="0" version="">
-		<grid height="200px">
+		<grid>
 			<columns>
 				<column/>
 				<column/>
 			</columns>
 			<rows>
 				<row>
-					<description span="all" value="some nice text"/>
+					<description span="all"/>
 				</row>
 				<row class="select_appname">
 					<description value="Select application"/>
 					<menulist>
-						<menupopup no_lang="1" id="appname" onchange="xajax_doXMLHTTP('importexport.uiexport.ajax_get_plugins',this.value);"/>
+						<menupopup no_lang="1" id="appname" onchange="1"/>
+					</menulist>
+				</row>
+				<row class="select_definition">
+					<description value="Select definition"/>
+					<menulist>
+						<menupopup no_lang="1" id="definition" onchange="1"/>
 					</menulist>
 				</row>
 				<row class="select_plugin">
-					<description value="Select format"/>
+					<description value="Select plugin"/>
 					<menulist>
-						<menupopup no_lang="1" id="plugin" onchange="xajax_doXMLHTTP('importexport.uiexport.ajax_get_plugin_options',this.value);"/>
+						<menupopup onchange="1" no_lang="1" id="plugin"/>
 					</menulist>
 				</row>
 				<row>
 					<box span="all" id="plugin_description" needed="1">
-						<description span="all" needed="1" id="plugin_description" no_lang="1"/>
+						<description span="all" needed="1" id="description" no_lang="1"/>
 					</box>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="importexport.export_dialog.general_tab" template="" lang="" group="0" version="">
-		<grid>
+		<grid height="200px">
 			<columns>
 				<column/>
 				<column/>
@@ -51,8 +57,11 @@
 				<column/>
 			</columns>
 			<rows>
-				<row valign="top">
+				<row valign="top" disabled="@plugin_selectors_template">
 					<html id="plugin_selectors_html" no_lang="1"/>
+				</row>
+				<row>
+					<template id="@plugin_selectors_template"/>
 				</row>
 			</rows>
 		</grid>
@@ -63,37 +72,16 @@
 				<column/>
 			</columns>
 			<rows>
-				<row valign="top">
-					<html id="plugin_options_html" no_lang="1"/>
+				<row valign="top" disabled="@plugin_options_template">
+					<html no_lang="1" id="plugin_options_html"/>
+				</row>
+				<row>
+					<template id="@plugin_options_template"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="importexport.export_dialog.templates_tab" template="" lang="" group="0" version="">
-		<grid>
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<description value="Select a template"/>
-				</row>
-				<row>
-					<listbox no_lang="1" id="templates" rows="5"/>
-				</row>
-				<row>
-					<description value="Description"/>
-				</row>
-				<row>
-					<description id="description"/>
-				</row>
-				<row>
-					<button label="Load" id="load"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="importexport.export_dialog" template="" lang="" group="0" version="">
+	<template id="importexport.export_dialog" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -103,23 +91,21 @@
 					<description id="msg"/>
 				</row>
 				<row>
-					<tabbox>
+					<tabbox id="general_tab|selection_tab|options_tab">
 						<tabs>
 							<tab label="General" statustext=""/>
 							<tab label="Selection" statustext=""/>
 							<tab label="Options" statustext=""/>
-							<tab label="Templates" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="importexport.export_dialog.general_tab"/>
 							<template id="importexport.export_dialog.selection_tab"/>
 							<template id="importexport.export_dialog.options_tab"/>
-							<template id="importexport.export_dialog.templates_tab"/>
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row>
-					<checkbox label="Save as template" id="save_as_template"/>
+				<row class="save_definition">
+					<checkbox label="Save as definition" id="save_as_definition"/>
 				</row>
 				<row>
 					<hbox span="all">
@@ -137,7 +123,7 @@
 				</row>
 				<row>
 					<box class="preview-box-buttons" id="preview-box-buttons" needed="1" align="center">
-						<button label="OK" align="center" onclick="document.getElementById('divPoweredBy').style.display='block'; document.getElementById(form::name('preview-box')).style.display='none'; document.getElementById(form::name('preview-box-buttons')).style.display='none'; return false;"/>
+						<button label="OK" align="center" onclick="document.getElementById(form::name('preview-box')).style.display='none'; document.getElementById(form::name('preview-box-buttons')).style.display='none'; return false;"/>
 					</box>
 				</row>
 			</rows>
