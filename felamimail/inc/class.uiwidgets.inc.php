@@ -352,7 +352,7 @@ class uiwidgets
 					substr($header['mimetype'],0,5) == 'video') 
 				{
 					$image = html::image('felamimail','attach');
-					if ($header['mimetype'] != 'multipart/mixed' &&
+					if (//$header['mimetype'] != 'multipart/mixed' &&
 						$header['mimetype'] != 'multipart/signed'
 					)
 					{
@@ -683,7 +683,7 @@ class uiwidgets
 					$image = "<a name=\"subject_url\" href=\"#\" 
 						onclick=\"fm_readAttachments('".$GLOBALS['egw']->link('/index.php',$linkDataAttachments)."', '".$windowName."', this); return false;\" 
 						title=\"".$headerData['subject']."\">".$image."</a>";
-					if ($headerData['mimetype'] != 'multipart/mixed' &&
+					if (//$headerData['mimetype'] != 'multipart/mixed' &&
 						$header['mimetype'] != 'multipart/signed'
 					)
 					{
