@@ -44,10 +44,9 @@ class infolog_merge extends bo_merge
 	 *
 	 * @param int $id id of entry
 	 * @param string &$content=null content to create some replacements only if they are use
-	 * @param array $eroles=null element roles with keys app, app_id and erole_id
 	 * @return array|boolean
 	 */
-	protected function get_replacements($id,&$content=null,$eroles=null)
+	protected function get_replacements($id,&$content=null)
 	{
 		if (!($replacements = $this->infolog_replacements($id)))
 		{
