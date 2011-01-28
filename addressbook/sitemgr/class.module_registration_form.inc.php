@@ -1,43 +1,42 @@
 <?php
 /**
- * Addressbook - Sitemgr contact form
+ * Registration - Sitemgr registration form
  *
  * @link http://www.egroupware.org
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @package addressbook
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Nathan Gray
+ * @package registration
+ * @copyright (c) 2010 Nathan Gray
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
 
 /**
- * SiteMgr contact form for the addressbook
- *
+ * SiteMgr registration form
  */
-class module_addressbook_contactform extends sitemgr_module
+class module_registration_form extends sitemgr_module
 {
 	/**
 	 * Constructor
 	 *
-	 * @return module_addressbook_contactform
 	 */
 	function __construct()
 	{
+		$this->i18n = true;
 		$this->arguments = array();	// get's set in get_user_interface
-		$this->title = lang('Contactform');
-		$this->description = lang('This module displays a contactform, that stores direct into the addressbook.');
+		$this->title = lang('Registration');
+		$this->description = lang('This module displays a registration form, and sends a confirmation email.');
 
-		$this->etemplate_method = 'addressbook.addressbook_contactform.display';
+		$this->etemplate_method = 'registration.registration_sitemgr.display';
 	}
 
 	/**
-	 * Reimplemented to add the addressbook translations and fetch the addressbooks only if needed for the user-interface
+	 * Reimplemented to add the registration translations 
 	 *
 	 * @return array
 	 */
 	function get_user_interface()
 	{
-		$GLOBALS['egw']->translation->add_app('addressbook');
+		$GLOBALS['egw']->translation->add_app('registration');
 
 		$uicontacts = new addressbook_ui();
 
@@ -46,7 +45,7 @@ class module_addressbook_contactform extends sitemgr_module
 			'org_unit'             => lang('Department'),
 			'n_fn'                 => lang('Prefix').', '.lang('Firstname').' + '.lang('Lastname'),
 			'sep1'                 => '----------------------------',
-			'email'                => lang('email'),
+		//	'email'                => lang('email'), // Required, so don't even make it optional
 			'tel_work'             => lang('work phone'),
 			'tel_cell'             => lang('mobile phone'),
 			'tel_fax'              => lang('fax'),
@@ -68,26 +67,40 @@ class module_addressbook_contactform extends sitemgr_module
 			'sep5'                 => '----------------------------',
 			'captcha'              => lang('Verification'),
 		);
+
+		$register_for = registration_bo::register_apps_list();
+		// Only real (not sitemgr) admins can select account
+		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			unset($register_for['admin']);
+		}
 		$this->arguments = array(
-			'arg1' => array(
+			'register_for' => array(
 				'type' => 'select',
-				'label' => lang('Addressbook the contact should be saved to').' ('.lang('The anonymous user needs add rights for it!').')',
+				'label'	=> 'What are they registering for',
+				'options'=> $register_for
+			),
+			'pending_addressbook' => array(
+				'type' => 'select',
+				'label' => lang('Addressbook the contacts should be saved to before they are confirmed.').' ('.lang('The anonymous user needs add rights for it!').')',
 				'options' => array(
 					'' => lang('None'),
-				)+$uicontacts->get_addressbooks(EGW_ACL_ADD)	// add to not show the accounts!
+				)+registration_bo::get_allowed_addressbooks(registration_bo::PENDING)
 			),
-			'arg4' => array(
+			'confirmed_addressbook' => array(
+				'type' => 'select',
+				'label' => lang('Confirmed addressbook.').' ('.lang('The anonymous user needs add rights for it!').')',
+				'options' => array(
+					'' => lang('None'),
+				)+registration_bo::get_allowed_addressbooks(registration_bo::CONFIRMED)
+			),
+			'expiry' => array(
 				'type' => 'textfield',
-				'label' => lang('Email addresses (comma separated) to send the contact data'),
-				'params' => array('size' => 80),
+				'label' => lang('How long to confirm before registration expires? (hours)'),
+				'params' => array('size' => 5),
+				'default' => 2,
 			),
-			'arg6' => array(
-				'type' => 'textfield',
-				'label' => lang('Subject for email'),
-				'params' => array('size' => 80),
-				'default' => lang('Contactform'),
-			),
-			'arg2' => array(
+			'fields' => array(
 				'type' => 'select',
 				'label' => lang('Contact fields to show'),
 				'multiple' => true,
@@ -95,24 +108,19 @@ class module_addressbook_contactform extends sitemgr_module
 				'default' => $default,
 				'params' => array('size' => 9),
 			),
-			'arg3' => array(
-				'type' => 'textfield',
-				'label' => lang('Message after submitting the form'),
-				'params' => array('size' => 80),
-				'default' => lang('Thank you for contacting us.'),
-			),
-			'arg5' => array(
+			'etemplate' => array(
 				'type' => 'textfield',
 				'label' => lang('Custom eTemplate for the contactform'),
 				'params' => array('size' => 40),
-				'default' => 'addressbook.contactform',
-			),
-			'arg7' => array(
-				'type' => 'checkbox',
-				'label' => lang('Send emailcopy to receiver'),
-				'params' => array('size' => 1),
+				'default' => 'registration.registration_form',
 			),
 		);
 		return parent::get_user_interface();
 	}
+        function get_content(&$arguments, $properties) {
+		$arguments['link'] = $this->link();
+		$args['arg1'] = $this->block;
+		$args['arg2'] = $properties;
+		return parent::get_content($args, $properties);
+        }
 }
