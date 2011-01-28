@@ -83,18 +83,12 @@ class importexport_definitions_bo {
 	 * @return bool
 	 */
 	static public function is_permitted($_definition) {
-		$allowed_user = explode(',',$_definition['allowed_users']);
-		$this_user_id = $GLOBALS['egw_info']['user']['userid'];
-		$this_membership = $GLOBALS['egw']->accounts->membership($this_user_id);
-		$this_membership[] = array('account_id' => $this_user_id);
-		//echo $this_user_id;
-		//echo ' '.$this_membership;
-		foreach ((array)$this_membership as $account)
-		{
-			$this_membership_array[] =  $account['account_id'];
-		}
-		$alluser = array_intersect($allowed_user,$this_membership_array);
-		return in_array($this_user_id,$alluser) ? true : false;
+		$allowed_user = is_array($_definition['allowed_users']) ? $_definition['allowed_users'] : explode(',',$_definition['allowed_users']);
+		$this_user_id = $GLOBALS['egw_info']['user']['account_id'];
+		$this_membership = $GLOBALS['egw']->accounts->memberships($this_user_id, true);
+		$this_membership[] = $this_user_id;
+		$alluser = array_intersect($allowed_user,$this_membership);
+		return count($alluser) > 0 ? true : false;
 	}
 
 	/**

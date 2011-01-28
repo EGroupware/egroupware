@@ -316,8 +316,8 @@ class importexport_helper_functions {
 		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
 		$types = $_type == 'all' ? array('import','export') : (array)$_type;
 
-		foreach($plugins as $appname => $types) {
-			if(!in_array($appname, $appnames)) unset($plugins['appname']);
+		foreach($plugins as $appname => $_types) {
+			if(!in_array($appname, $appnames)) unset($plugins[$appname]);
 		}
 		foreach($plugins as $appname => $types) {
 			$plugins[$appname] = array_intersect_key($plugins[$appname], $types);
@@ -377,5 +377,46 @@ class importexport_helper_functions {
 
 	public static function guess_filetype( $_file ) {
 
+	}
+
+	/**
+	 * returns if the given app has importexport definitions for the current user
+	 *
+	 * @param string $_appname {<appname> | all}
+	 * @param string $_type {import | export | all}
+	 * @return boolean
+	 */
+	public static function has_definitions( $_appname = 'all', $_type = 'all' ) {
+		$definitions = egw_cache::getSession(
+			__CLASS__,
+			'has_definitions',
+			array('importexport_helper_functions','_has_definitions'),
+			array(array_keys($GLOBALS['egw_info']['apps']), array('import', 'export')),
+			self::CACHE_EXPIRATION
+		);
+		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
+		$types = $_type == 'all' ? array('import','export') : (array)$_type;
+
+		foreach($definitions as $appname => $_types) {
+			if(!in_array($appname, $appnames)) unset($definitions[$appname]);
+		}
+		foreach($definitions as $appname => $_types) {
+			$definitions[$appname] = array_intersect_key($definitions[$appname], array_flip($types));
+		}
+		return count($definitions[$appname]) > 0;
+	}
+
+	// egw_cache needs this public
+	public static function _has_definitions(Array $appnames, Array $types) {
+		$def = new importexport_definitions_bo(array('application'=>$appnames, 'type' => $types));
+		$list = array();
+		foreach($def->get_definitions() as $id) {
+			$definition = new importexport_definition($id);
+			if($def->is_permitted($definition->get_record_array())) {
+				$list[$definition->application][$definition->type] = $id;
+			}
+			$definition = null;
+		}
+		return $list;
 	}
 } // end of importexport_helper_functions

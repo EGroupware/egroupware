@@ -80,7 +80,7 @@ class importexport_export_ui {
 			$content['definition'] = end($sel_options['definition']);
 		}
 		unset($definitions);
-		$sel_options['definition']['expert'] = lang('Expert options');
+		//$sel_options['definition']['expert'] = lang('Expert options');
 
 		if(isset($_definition) && array_key_exists($_definition,$sel_options['definition'])) {
 			$content['definition'] = $_definition;
