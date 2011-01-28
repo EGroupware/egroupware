@@ -773,21 +773,6 @@ function load_cal(url,id) {
 				'link' => False
 			);
 		}
-		// Import & Export
-		$file[] = array(
-			'text' => lang('Export').': '.html::a_href(lang('iCal'),'calendar.calendar_uiforms.export',$this->first ? array(
-				'start' => $this->bo->date2string($this->first),
-				'end'   => $this->bo->date2string($this->last),
-			) : false),
-			'no_lang' => True,
-			'link' => False,
-		);
-		$file[] = array(
-			'text' => lang('Import').': '.html::a_href(lang('iCal'),'calendar.calendar_uiforms.import').
-				' &amp; '.html::a_href(lang('CSV'),'/calendar/csv_import.php'),
-			'no_lang' => True,
-			'link' => False,
-		);
 /*
 		$print_functions = array(
 			'calendar.calendar_uiviews.day'	=> 'calendar.pdfcal.day',
