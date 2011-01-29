@@ -22,7 +22,10 @@ class infolog_merge extends bo_merge
 	 *
 	 * @var array
 	 */
-	var $public_functions = array('show_replacements' => true);
+	var $public_functions = array(
+		'show_replacements'		=> true,
+		'infolog_replacements'	=> true,
+	);
 
 	/**
 	 * Business object to pull records from
@@ -63,9 +66,10 @@ class infolog_merge extends bo_merge
 	 * Get infolog replacements
 	 *
 	 * @param int $id id of entry
+	 * @param string $prefix='' prefix like eg. 'erole'
 	 * @return array|boolean
 	 */
-	protected function infolog_replacements($id) 
+	public function infolog_replacements($id,$prefix='') 
 	{
 		$record = new infolog_egw_record($id);
 		$info = array();
@@ -93,7 +97,7 @@ class infolog_merge extends bo_merge
 		// Add markers
 		foreach($array as $key => $value)
 		{
-			$info['$$' . $key . '$$'] = $value;
+			$info['$$'.($prefix ? $prefix.'/':'').$key.'$$'] = $value;
 		}
 		return $info;
 	}
