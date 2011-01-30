@@ -1,13 +1,32 @@
+%1 timesheets(s) %2	timesheet	sk	%1 harmonogram(y) %2
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	sk	%1 harmonogram(y) %2, %3 zlyhali kvôli nedostatočným právam !!!
+--> enter new name	timesheet	sk	--> zadajte nové meno
 2 month ago	timesheet	sk	2 mesiace späť
 2 years ago	timesheet	sk	2 roky späť
 3 years ago	timesheet	sk	3 roky späť
 actions	timesheet	sk	Akcie
 all projects	timesheet	sk	Všetky projekty
+all status	timesheet	sk	Všetky stavy
+and its members	timesheet	sk	a jeho členovia
+applies the changes	timesheet	sk	Uplatní zmeny
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	sk	Vykonať akciu pre celý dopyt, NIE len pre zobrazené harmonogramy!!!
 both: allow to use projectmanager and free project-names	admin	sk	Obidvoje: povoliť používanie Projektovníka a voľné názvy projektov
 by	timesheet	sk	(kým)
+changed status	timesheet	sk	zmenený stav
+check all	timesheet	sk	Označiť všetko
+comment by %1 at %2:	timesheet	sk	Poznámka od %1 ku %2:
 create new links	timesheet	sk	Vytvoriť nové odkazy
+creates a new field	timesheet	sk	vytvorí nové pole
 creating new entry	timesheet	sk	vytvára sa nová položka
-delete this entry	timesheet	sk	odstrániť túto položku
+custom fields	timesheet	sk	Používateľské polia
+delete this entry	timesheet	sk	Odstrániť túto položku
+delete this status	timesheet	sk	Odstrániť tento stav
+delete timesheet	timesheet	sk	Odstrániť harmonogram
+deleted	timesheet	sk	odstránené
+deletes this field	timesheet	sk	odstráni toto pole
+determines the order the fields are displayed	timesheet	sk	určuje poradie zobrazenia polí
+each value is a line like <id>[=<label>]	timesheet	sk	každá hodnota je v takomto riadku <id>[=<label>]
+edit status	timesheet	sk	Upraviť stav
 edit this entry	timesheet	sk	Upraviť túto položku
 empty if identical to duration	timesheet	sk	prázdne, ak sa zhoduje dĺžka trvania
 end	timesheet	sk	Koniec
@@ -16,43 +35,80 @@ entry saved	timesheet	sk	Položka bola uložená
 error deleting the entry!!!	timesheet	sk	Chyba pri odstraňovaní položky!!!
 error saving the entry!!!	timesheet	sk	Chyba pri ukladaní položky!!!
 existing links	timesheet	sk	Existujúce odkazy
+export	timesheet	sk	Export
 export to openoffice spreadsheet	timesheet	sk	Exportovať do zošita OpenOffice
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	sk	THIS IS JUST A TEST FOR TRACKER #2121 PLEASE RETRANSLATE
 field must not be empty !!!	timesheet	sk	Pole nesmie byť prázdne!!!
 full: use only projectmanager	admin	sk	Plné: použiť iba Projektovník
 general	timesheet	sk	Hlavné
+global categories	timesheet	sk	Globálne kategórie
+history	timesheet	sk	História
+id	timesheet	sk	ID
 last modified	timesheet	sk	Naposledy upravené
 last month	timesheet	sk	Posledný mesiac
 last week	timesheet	sk	Posledný týždeň
 last year	timesheet	sk	Posledný rok
 leave it empty for a full week	timesheet	sk	Ponechajte prázdne ak chcete plný týždeň
+leaves without saveing	timesheet	sk	uzavrieť bez uloženia zmien
+length<br>rows	timesheet	sk	Dĺžka<br>Riadkov
 links	timesheet	sk	Odkazy
+max length of the input [, length of the inputfield (optional)]	timesheet	sk	maximálna dĺžka vstupu [, dĺžka vstupného poľa (voliteľné)]
+modify the status of the timesheet	timesheet	sk	Upraviť stav harmonogramu
+new ticket submitted by %1 at %2	timesheet	sk	Novú záležitosť odoslal %1 o %2
+new timesheet submitted by %1 at %2	timesheet	sk	Nový harmonogram odoslal %1 o %2
 no details	timesheet	sk	žiadne podrobnosti
 no project	timesheet	sk	Žiadny projekt
+no status	timesheet	sk	Bez stavu
 none: use only free project-names	admin	sk	Žiadne: použiť iba voľné názvy projektov
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	sk	číslo riadku pre viacriadkové vstupné pole alebo riadku v multi-výberovom tlačidle
+only admin	timesheet	sk	Iba správca
+only admin can edit this status	timesheet	sk	iba správca môže upraviť tento stav
 or endtime	timesheet	sk	alebo Čas skončenia
+order	timesheet	sk	Poradie
+parent	timesheet	sk	Rodič
 permission denied!!!	timesheet	sk	Prístup bol odmietnutý !!!
 price	timesheet	sk	Cena
 projectmanager integration	admin	sk	integrácia s Projektovníkom
 quantity	timesheet	sk	Množstvo
 save & new	timesheet	sk	Uložiť & Nové
 saves the changes made	timesheet	sk	Uloží vykonané zmeny
+saves the changes made and leaves	timesheet	sk	uloží vykonané zmeny a uzavrie
 saves this entry and add a new one	timesheet	sk	Uloží túto položku a pridá novú
 select a price	timesheet	sk	Vyberte cenu
 select a project	timesheet	sk	Vyberte projekt
+select a status of the timesheet	timesheet	sk	Vyberte stav tohto harmonogramu
+select action	timesheet	sk	Vyberte akciu
+select infolog	timesheet	sk	Vyberte záznamník
+select multiple timeshhets for a further action	timesheet	sk	Vyberte viacero harmonogramov pre budúcu akciu
+select the predefined status, whan creating a new timesheet	preferences	sk	Vyberte prednastavený stav, pri vytváraní harmonogramu
+select the predefined status, when creating a new timesheet	preferences	sk	Vyberte prednastavený stav, pri vytváraní harmonogramu
 show a quantity sum (eg. to sum up negative overtime)	admin	sk	Zobraziť kvantitatívnu sumu (napríklad na spočítanie negatívneho meškania)
 start	timesheet	sk	Začiatok
 starttime	timesheet	sk	Čas začiatku
 starttime has to be before endtime !!!	timesheet	sk	Čas začiatku musí byť skôr než čas konca !!!
+status deleted.	timesheet	sk	Stav bol vymazaný.
+status of created timesheets	timesheet	sk	Stav vytvorených harmonogramov
+status updated.	timesheet	sk	Stav bol aktualizovaný.
 sum %1:	timesheet	sk	Súčet %1:
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	sk	Meno, ktoré sa používa vnútorne (<= 20 znakov), ak ho zmeníte, súčasné údaje sa zneprístupnia
+the text displayed to the user	timesheet	sk	Text zobrazený používateľovi
 this month	timesheet	sk	Tento mesiac
 this week	timesheet	sk	Tento týždeň
 this year	timesheet	sk	Tento rok
+ticket modified by %1 at %2	timesheet	sk	Záležitosť zmenil %1 ku %2
 timesheet	common	sk	Harmonogram
 timesheet csv export	timesheet	sk	Harmonogram - export do CSV
+timesheet modified by %1 at %2	timesheet	sk	Harmonogram zmenil %1 ku %2
 timesheet openoffice export	timesheet	sk	Harmonogram - export do OpenOffice
+timesheet status-%1 '%2' added.	timesheet	sk	Stav harmonogramu-%1 '%2' bol pridaný.
+timesheet-%1 '%2' updated.	timesheet	sk	Harmonogram-%1 '%2' bol aktualizovaný.
+timesheet-%1 deleted.	timesheet	sk	Harmonogram-%1 bol odstránený.
+tracker	timesheet	sk	Sledovač
 unitprice	timesheet	sk	Jednotková cena
+values for selectbox	timesheet	sk	Hodnoty pre výberové tlačidlo
 view this entry	timesheet	sk	Zobraziť položku
 week	timesheet	sk	Týždeň
+whole query	timesheet	sk	Celý dopyt
 yesterday	timesheet	sk	Včera
+you need to select some timesheets first	timesheet	sk	Je potrebné, aby ste najprv označili niektoré harmonogramy.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sk	Vaša databáza NIE je aktuálna (%1 oproti %2), prosím spustite %3setup%4 kvôli aktualizácii vašej databázy.

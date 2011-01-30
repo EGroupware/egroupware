@@ -19,8 +19,10 @@ check all	resources	sk	Označ všetko
 choose categories admin	resources	sk	Vyberte správcu kategórií
 clear selection	resources	sk	Zrušiť výber
 configure access permissions	admin	sk	Nastaviť prístupové práva
+conflict	resources	sk	konflikt
 create new accessory for this resource	resources	sk	Vytvoriť novú kategóriu pre tento zdroj
 create new links	resources	sk	Vytvoriť nové odkazy
+custom fields	resources	sk	Vlastné polia
 delete selected resources	resources	sk	Odstrániť vybrané zdroje
 delete this entry	resources	sk	Odstrániť túto položku
 description (short)	resources	sk	Popis (stručný)
@@ -31,6 +33,7 @@ existing links	resources	sk	Existujúce odkazy
 general	resources	sk	Hlavné
 general informations about resource	resources	sk	Hlavné informácie o zdroji
 gernal resource	resources	sk	Hlavný zdroj
+global categories	resources	sk	Globálne kategórie
 how many of the resources are useable?	resources	sk	Koľko zdrojov je použíteľných?
 how many of them are useable?	resources	sk	Koľko z nich je použiteľných?
 how many of this resource are usable	resources	sk	Koľko kusov tohto zdroja je použiteľných

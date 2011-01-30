@@ -2,7 +2,7 @@
 %1 file	common	sk	%1 súbor
 %1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spustiť!!!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sk	%1Vyberte iný adresár%2<br />alebo nastavte pre webserver právo zápisu do %3
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1eGroupWare%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1EGroupware%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v %3PHP%4.
 (session restored in %1 seconds)	common	sk	(relácia obnovená za %1 sekúnd)
 (shift-)click or drag to change value	jscalendar	sk	Ak chcete zmeniť hodnotu, použite (Shift-)klik alebo potiahnutie
 - click on any of the time parts to increase it	jscalendar	sk	- Ak kliknite na ktorúkoľvek časť času, zvýši sa
@@ -22,7 +22,7 @@
 80 (http)	admin	sk	80 (http)
 about	common	sk	O aplikácii
 about %1	common	sk	O aplikácii %1
-about egroupware	common	sk	Info o balíku eGroupWare
+about egroupware	common	sk	Info o balíku EGroupware
 about the calendar	jscalendar	sk	O aplikácii Kalendár
 access	common	sk	Prístup
 access not permitted	common	sk	Prístup bol odmietnutý
@@ -50,8 +50,10 @@ all fields	common	sk	všetky polia
 all languages	common	sk	všetky jazyky
 alphabet	common	sk	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	sk	AMERICKÁ SAMOA
+an admin required that you must change your password upon login.	common	sk	Správca žiada, aby ste si pri prihlásení zmenili heslo.
 an error happened	common	sk	Nastala nejaká chyba
 an existing and by the webserver readable directory enables the image browser and upload.	common	sk	Adresár, ktorý existuje a je čitateľný webserverom, umožňuje prehliadanie a odovzdávanie obrázkov.
+and	common	sk	a
 andorra	common	sk	ANDORA
 angola	common	sk	ANGOLA
 anguilla	common	sk	ANGUILLA
@@ -112,6 +114,7 @@ cameroon	common	sk	KAMERUN
 canada	common	sk	KANADA
 cancel	common	sk	Zrušiť
 cannot replace %1 because it is a directory	common	sk	Nemôžem prepísať %1 pretože je to adresár
+cant open %1, needs ziparchive	common	sk	Nemôžem otvoriť %1, je potrebný ZipArchív
 cant open '%1' for %2	common	sk	Nemôžem otvoriť '%1' pre %2
 cape verde	common	sk	KAPVERDY
 caption	common	sk	Titulok
@@ -142,7 +145,7 @@ christmas island	common	sk	VIANOČNÉ OSTROVY
 clear	common	sk	Vyčistiť
 clear form	common	sk	Vyčistiť formulár
 click	common	sk	Klik
-click here to resume your egroupware session.	common	sk	Ak chcete obnoviť vašu reláciu eGroupWare, kliknite sem.
+click here to resume your egroupware session.	common	sk	Ak chcete obnoviť vašu reláciu EGroupware, kliknite sem.
 click or mouse over to show menus	common	sk	Ak chcete zobraziť ponuku, kliknite alebo ukážte myšou
 click or mouse over to show menus?	common	sk	Ak chcete zobraziť ponuku, kliknete alebo ukážete myšou
 click this image on the navbar: %1	common	sk	Kliknite na tento obrázok v navigačnom paneli: %1
@@ -156,6 +159,7 @@ company	common	sk	Spoločnosť
 congo	common	sk	KONGO
 congo, the democratic republic of the	common	sk	KONGO, DEMOKRATICKÁ REPUBLIKA
 contacting server...	common	sk	Pripájam sa na Server...
+content type	common	sk	Typ obsahu
 cook islands	common	sk	COOKOVE OSTROVY
 copy	common	sk	Kopírovať
 costa rica	common	sk	KOSTARIKA
@@ -215,9 +219,9 @@ edit	common	sk	Upraviť
 edit %1 category for	common	sk	Uprav %1 kategóriu pre
 edit categories	common	sk	Upraviť kategórie
 edit category	common	sk	Upraviť kategóriu
-egroupware	common	sk	eGwoupWare
-egroupware api version	common	sk	eGroupWare API verzia
-egroupware: login blocked for user '%1', ip %2	common	sk	eGroupWare: prihlasovanie zablokované pre používateľa '%1', IP %2
+egroupware	common	sk	EGwoupware
+egroupware api version	common	sk	EGroupware API verzia
+egroupware: login blocked for user '%1', ip %2	common	sk	EGroupware: prihlasovanie zablokované pre používateľa '%1', IP %2
 egypt	common	sk	EGYPT
 el salvador	common	sk	SALVADOR
 email	common	sk	E-Mail
@@ -225,7 +229,7 @@ email-address of the user, eg. "%1"	common	sk	E-mailová adresa používateľa, 
 enabled	common	sk	Aktívny
 end date	common	sk	Dátum ukončenia
 end time	common	sk	Čas ukončenia
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre eGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre EGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
 entry has been deleted sucessfully	common	sk	Položka bola úspešne odstránená
 entry not found!	common	sk	Položka sa nenašla!
 entry updated sucessfully	common	sk	Položka bola úspešne upravená
@@ -236,6 +240,7 @@ error creating %1 %2 directory	common	sk	Chyba počas vytvárania adresára %1 %
 error deleting %1 %2 directory	common	sk	Chyba počas odstraňovania adresára %1 %2
 error renaming %1 %2 directory	common	sk	Chyba počas premenúvania adresára %1 %2
 estonia	common	sk	ESTÓNSKO
+etag	common	sk	EZnačka
 ethiopia	common	sk	ETIÓPIA
 everything	common	sk	Všetko
 exact	common	sk	presne
@@ -310,7 +315,7 @@ home email	common	sk	domáci E-mail
 honduras	common	sk	HONDURAS
 hong kong	common	sk	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sk	Koľko ikoniek sa má zobraziť v navigačnom paneli (vrch stránky). Ostatné ikony budú umiestnené do rozbaľovacej ponuky, ktorá bude dostupná na celkom pravom okraji navigačného panelu.
-how to show the general egroupware menu ?	common	sk	Ako sa má zobrazovať základná ponuka eGroupWare?
+how to show the general egroupware menu ?	common	sk	Ako sa má zobrazovať základná ponuka EGroupware?
 hungary	common	sk	MAĎARSKO
 iceland	common	sk	ISLAND
 iespell not detected. click ok to go to download page.	common	sk	ieSpell sa nenašiel. Kliknutím na OK sa presuniete na stránku, odkiaľ ho môžete stiahnuť.
@@ -361,6 +366,7 @@ kyrgyzstan	common	sk	KIRGIZSKO
 language	common	sk	Jazyk
 language_direction_rtl	common	sk	orientácia_jazyka_sprava_doľava
 lao peoples democratic republic	common	sk	LAOS
+last modified	common	sk	Naposledy zmenené
 last name	common	sk	Priezvisko
 last name of the user, eg. "%1"	common	sk	priezvisko používateľa, napr. "%1"
 last page	common	sk	posledná stránka
@@ -425,6 +431,7 @@ multiple	common	sk	viacero
 myanmar	common	sk	MYANMAR
 name	common	sk	Meno
 name of the user, eg. "%1"	common	sk	meno používateľa, napr. "%1"
+namespace	common	sk	Menný priestor
 namibia	common	sk	NAMÍBIA
 nauru	common	sk	NAURU
 nepal	common	sk	NEPÁL
@@ -476,6 +483,7 @@ oops! you caught us in the middle of system maintainance.	common	sk	Ajajaj! Zast
 open notify window	common	sk	Otvor pripomínacie okno
 open popup window	common	sk	Otvor vyskakovacie okno
 open sidebox	common	sk	Otvor bočnú ponuku
+or	common	sk	alebo
 ordered list	common	sk	Zoradený zoznam
 original	common	sk	Originál
 other	common	sk	Iné
@@ -502,11 +510,12 @@ password must have at least %1 characters	common	sk	Heslo musí mať dĺžku asp
 path to user and group files has to be outside of the webservers document-root!!!	common	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!!!
 permission denied!	common	sk	Prístup bol odopretý!
 permissions to the files/users directory	common	sk	oprávnenia k adresáru pre súbory / používateľov
+permisson denied!	common	sk	Prístup bol odopretý!
 personal	common	sk	Osobný
 peru	common	sk	PERU
 philippines	common	sk	FILIPÍNY
 phone number	common	sk	telefónne číslo
-phpgwapi	common	sk	eGroupWare API
+phpgwapi	common	sk	EGroupware API
 pitcairn	common	sk	PITCAIRNOVE OSTROVY
 please %1 by hand	common	sk	Prosím %1 ručne
 please enter a name	common	sk	Prosím zadajte meno!
@@ -521,7 +530,7 @@ portugal	common	sk	PORTUGALSKO
 postal	common	sk	Poštové
 powered by	common	sk	Používame
 preferences	common	sk	Predvoľby
-preferences for the idots template set	common	sk	Predvoľby pre idots šablónu boli nastavené
+preferences for the %1 template set	preferences	sk	Predvoľby pre šablónu %1 nastavené
 prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podržaním zobrazíte ponuku)
 prev. year (hold for menu)	jscalendar	sk	Predch. rok (podržaním zobrazíte ponuku)
 previous page	common	sk	Predchádzajúca stránka
@@ -530,6 +539,7 @@ priority	common	sk	Priorita
 private	common	sk	Súkromné
 programs	common	sk	Programy
 project	common	sk	Projekt
+properties	common	sk	Vlastnosti
 public	common	sk	Verejné
 puerto rico	common	sk	PORTORIKO
 qatar	common	sk	KATAR
@@ -545,6 +555,8 @@ remove shortcut	common	sk	Odstrániť skratku
 rename	common	sk	Premenovať
 replace	common	sk	Nahradiť
 replace with	common	sk	Zameniť za
+resource type	common	sk	Typ zdroja
+restore failed	common	sk	Obnova zlyhala
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sk	Vráti úplný zoznam účtov v systéme. Upozornenie: môže byť pomerne rozsiahly
 returns an array of todo items	common	sk	Vracia pole úloh
 returns struct of users application access	common	sk	Vracia štruktúru používateľského prístupu k aplikáciám
@@ -608,7 +620,7 @@ show menu	common	sk	ukázať ponuku
 show page generation time	common	sk	Ukázať čas generovania stránky
 show page generation time on the bottom of the page?	common	sk	Ukázať čas generovania stránky na jej spodku?
 show page generation time?	common	sk	Ukázať čas generovania stránky?
-show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazovať na desktope logá eGroupWare a x-desktopu.
+show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazovať na desktope logá EGroupware a x-desktopu.
 show_more_apps	common	sk	ukázať viacero aplikácií
 showing %1	common	sk	zobrazujem %1
 showing %1 - %2 of %3	common	sk	zobrazujem %1 - %2 z %3
@@ -616,6 +628,7 @@ sierra leone	common	sk	SIERRA LEONE
 simple	common	sk	Jednoduché
 singapore	common	sk	SINGAPUR
 site configuration	common	sk	Nastavenia stránky
+size	common	sk	Veľkosť
 slovakia	common	sk	SLOVENSKO
 slovenia	common	sk	SLOVINSKO
 solomon islands	common	sk	ŠALAMÚNOVE OSTROVY
@@ -626,6 +639,7 @@ south georgia and the south sandwich islands	common	sk	JUŽNÁ GEORGIA A JUŽNÉ
 spain	common	sk	ŠPANIELSKO
 sri lanka	common	sk	SRÍ LANKA
 start date	common	sk	Dátum začatia
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	sk	Úvodný adresár pre prehliadač obrázkov v bohatom textovom editore v EGroupware VFS (správca súborov).
 start time	common	sk	Čas začatia
 start with	common	sk	začať s
 starting up...	common	sk	Štartujem...
@@ -641,6 +655,7 @@ swaziland	common	sk	SVAZIJSKO
 sweden	common	sk	ŠVÉDSKO
 switzerland	common	sk	ŠVAJČIARSKO
 syrian arab republic	common	sk	SÝRIA
+table %1 is excluded from backup and restore. data will not be restored.	common	sk	Tabuľka %1 je vyňatá zo zálohovania a obnovy. Údaje nebudú obnovené.
 table properties	common	sk	Nastavenia tabuľky
 taiwan	common	sk	TCHAJ-WAN
 tajikistan	common	sk	TADŽIKISTAN
@@ -651,6 +666,7 @@ the api is current	common	sk	API je aktuálne
 the api requires an upgrade	common	sk	API potrebuje aktualizáciu
 the following applications require upgrades	common	sk	Nasledujúce aplikácie vyžadujú aktualizáciu
 the mail server returned	common	sk	Poštový server vrátil
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	sk	Systémový používateľ s takýmto menom už existuje. Používatelia nemôžu mať rovnaké meno ako systémoví používatelia.
 this application is current	common	sk	Táto aplikácia je aktuálna
 this application requires an upgrade	common	sk	Táto aplikácia vyžaduje aktualizáciu
 this name has been used already	common	sk	Toto meno sa už používa!
@@ -708,9 +724,11 @@ username	common	sk	Používateľské meno
 users	common	sk	používatelia
 users choice	common	sk	Používateľská Voľba
 uzbekistan	common	sk	UZBEKISTAN
+value	common	sk	Hodnota
 vanuatu	common	sk	VANUATU
 venezuela	common	sk	VENEZUELA
 version	common	sk	Verzia
+vfs upload directory	common	sk	VFS adresár pre odovzdanie
 viet nam	common	sk	VIETNAM
 view	common	sk	Zobraziť
 virgin islands, british	common	sk	PANENSKÉ OSTROVY, BRITSKÉ
@@ -723,7 +741,7 @@ western sahara	common	sk	ZÁPADNÁ SAHARA
 what color should all the blank space on the desktop have	common	sk	Akú farbu má mať všetok prázdny priestor na desktope
 what style would you like the image to have?	common	sk	Aký štýl má mať obrázok?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	sk	Kde a ako sa budú zobrazovať odkazy eGroupware, ako sú Nastavenia, O aplikácii a Odhlásiť.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	sk	Kde a ako sa budú zobrazovať odkazy EGroupware, ako sú Nastavenia, O aplikácii a Odhlásiť.
 which groups	common	sk	Ktoré skupiny
 width	common	sk	Šírka
 wk	jscalendar	sk	Týž
@@ -744,11 +762,13 @@ you have not entered participants	common	sk	Nezadali ste spolupracovníkov
 you have selected an invalid date	common	sk	Vybrali ste chybný dátum!
 you have selected an invalid main category	common	sk	Vybrali ste chybnú hlavnú kategóriu!
 you have successfully logged out	common	sk	Boli ste úspešne odhlásení.
+you need to %1set your timezone preference%2.	common	sk	Je potrebné, aby ste %1nastavili svoju časovú zónu%2.
 you need to add the webserver user '%1' to the group '%2'.	common	sk	Je potrebné, aby ste priradili webserverového používateľa '%1' do skupiny '%2'.
-you need to be an egroupware administrator to access this functionality!	common	sk	Iba správca eGroupWare má prístup k tejto funkcionalite!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sk	Pokúsili ste sa otvoriť aplikáciu eGroupWare: %1, ale nemáte na to oprávnenia.
+you need to be an egroupware administrator to access this functionality!	common	sk	Iba správca EGroupware má prístup k tejto funkcionalite!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	sk	Pokúsili ste sa otvoriť aplikáciu EGroupware: %1, ale nemáte na to oprávnenia.
 your message could <b>not</b> be sent!<br>	common	sk	Vašu správu sa <b>nepodarilo</b> odoslať!<br>
 your message has been sent	common	sk	Vaša správa bola odoslaná
+your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	sk	Vaše heslo nespĺňa požiadavky na kvalitu hesla.<br> Musíte splniť %1 kritérium %1. Splnili ste iba %2 kritériá. <br>Vaše heslo nesplnilo nasledovné kritériá:
 your search returned %1 matchs	common	sk	našiel som %1 záznamov
 your search returned 1 match	common	sk	našiel som 1 záznam
 your session could not be verified.	login	sk	Vašu reláciu sa nepodarilo overiť.

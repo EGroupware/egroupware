@@ -1,22 +1,40 @@
+%1 records processed	importexport	es-es	%1 registros procesados
 allowed users	importexport	es-es	Usuarios permitidos
 automatically created by importexport	importexport	es-es	Creados automáticamente por importexport
+basic csv import	importexport	es-es	Importación CSV básica
 choose a name for this definition	importexport	es-es	Elija un nombre para esta definición
 choose a plugin	importexport	es-es	Elija un plugin
 choose an application	importexport	es-es	Elija una aplicación
+choose seperator and charset	importexport	es-es	Elija separador y juego de caracteres
+define imports|exports	common	es-es	Definir importaciones|exportaciones
 delete all selected definitions	importexport	es-es	Borrar TODAS las definiciones seleccionadas
+edit conditions	importexport	es-es	Editar condiciones
 expert options	importexport	es-es	Opciones de experto
 export	importexport	es-es	Exportar
 export all selected definitions	importexport	es-es	Exportar TODAS las definiciones seleccionadas
 finish	importexport	es-es	Terminar
 general	importexport	es-es	General
+import	importexport	es-es	importar
+import definitions	common	es-es	Importar definiciones
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	es-es	Importar definiciones (¡¡Atención: se sobreescribirán las definiciones existentes con el mismo nombre!!)
+importexport	common	es-es	importar/exportar
 importexport wizard finished successfully!	importexport	es-es	¡El asistente de Importar-Exportar finalizó correctamente!
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	es-es	Importa información de un fichero CSV. Esto sólo es una clase base, y no hace nada por sí misma.
+load sample file	importexport	es-es	Cargar un fichero de ejemplo
+manage mapping	importexport	es-es	Gestionar mapeo
 next	importexport	es-es	Siguiente
+no records selected	importexport	es-es	No se seleccionaron registros
 preview	importexport	es-es	Vista previa
 previous	importexport	es-es	Anterior
 save as definition	importexport	es-es	Guardar como definición
+schedule	common	es-es	Planificar
+schedule import / export	common	es-es	Planificar importación/exportación
+schedule not found	importexport	es-es	No se encontró la planificación
 select definition	importexport	es-es	Seleccionar definición
 select plugin	importexport	es-es	Seleccionar plugin
 some nice text	importexport	es-es	Algún texto agradable
+unable to import:	importexport	es-es	No se pudo importar:
+unable to schedule	importexport	es-es	No se pudo planificar
 which useres are allowed for this definition	importexport	es-es	Qué usuarios pueden usar esta definición
+which users are allowed to use this definition	importexport	es-es	Qué usuarios pueden usar esta definición
 you need to select an app and format first!	importexport	es-es	¡Necesita seleccionar una aplicación y un formato antes!

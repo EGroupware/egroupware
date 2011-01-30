@@ -2,10 +2,10 @@
 %1 hours	preferences	sk	%1 hodín
 12 hour	preferences	sk	12 hodinový
 24 hour	preferences	sk	24 hodinový
-a template defines the layout of egroupware and it contains icons for each application.	preferences	sk	Šablóna definuje vzhľad eGroupWare a obsahuje ikony pre jednotlivé aplikácie.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	sk	Šablóna definuje vzhľad EGroupware a obsahuje ikony pre jednotlivé aplikácie.
 a theme defines the colors and fonts used by the template.	preferences	sk	Téma určuje farby a písma použité šablónou.
 acl grants have been updated	preferences	sk	Práva ACL boli aktualizované
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoľvek zoznam v eGroupWare zobrazí tento počet riadkov na stránku.<br>Ak dáte priveľa, stránka sa bude zobrazovať pomaly. Ak dáte málo, zúži sa Váš rozhľad.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoľvek zoznam v EGroupware zobrazí tento počet riadkov na stránku.<br>Ak dáte priveľa, stránka sa bude zobrazovať pomaly. Ak dáte málo, zúži sa Váš rozhľad.
 are you sure you want to delete this category ?	preferences	sk	Skutočne chcete odstrániť túto kategóriu?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sk	Zmeniť používateľské heslo zadaním starého a nového hesla. Vráti TRUE v prípade úspechu a FALSE v prípade neúspechu.
 change your password	preferences	sk	Zmeniť vaše heslo
@@ -22,11 +22,14 @@ default preferences	preferences	sk	Predvolené nastavenia
 default theme	preferences	sk	Predvolená téma
 delete categories	preferences	sk	Zmazať kategórie
 description can not exceed 255 characters in length !	preferences	sk	Dĺžka opisu nesmie prekročiť 255 znakov!
-display thumbnails for linked images	addressbook	sk	Zobraziť náhľady pre odkazované obrázky
+display thumbnails for linked images	preferences	sk	Zobraziť náhľady pre odkazované obrázky
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sk	Chcete čas zobrazovať ako 24 hodín, alebo ako 12 hodín s príponami am(dopoludnia) a pm(popoludní).
 edit custom fields	preferences	sk	upraviť vlastné polia
-enable drag and drop functionality (experimental)	addressbook	sk	Povoliť funkcionalitu ťahaj-a-pusť (experimentálna!)
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	sk	Povolí alebo zakáže funkcie ťahaj-a-pusť vo všetkých aplikáciách. Ak váš prehliadač nepodporuje ťahaj-a-pusť, automaticky sa zakáže. Táto funkcia je v súčasnosti iba na experimentálnej úrovni.
+enable drag and drop functionality (experimental)	preferences	sk	Povoliť funkcionalitu ťahaj-a-pusť (experimentálna!)
+enable selectbox dropdown resizing for ie (experimental)	preferences	sk	Povoliť zmenu veľkosti pre výberovú roletovú ponuku v prehliadači IE (experimentálne)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže funkcie ťahaj-a-pusť vo všetkých aplikáciách. Ak váš prehliadač nepodporuje ťahaj-a-pusť, automaticky sa zakáže. Táto funkcia je v súčasnosti iba na experimentálnej úrovni.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletovú ponuku v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní. Táto funkcia je v súčasnosti experimentálna.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletu v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní. Táto funkcia je v súčasnosti experimentálna.
 enter your new password	preferences	sk	Zadajte vaše heslo
 enter your old password	preferences	sk	Zadajte staré heslo
 failed to change password.  please contact your administrator.	preferences	sk	Nepodarilo sa zmeniť heslo. Prosím kontaktujte správcu systému.
@@ -37,11 +40,11 @@ how do you like to display accounts	preferences	sk	Ako sa majú zobrazovať pou�
 how do you like to select accounts	preferences	sk	Ako sa majú vyberať používateľské účty
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sk	O kolľko hodín sa Vaša časová zóna líši od času serveru.<br>Ak ste v rovnakej zóne ako server, zvoľte 0, inak zvoľte Váš miestny čas.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	sk	Koľko ikoniek sa má zobrazovať v navigačnom paneli navrchu stránky. Nadbytočné ikony sa skryjú do rozbaľovacej ponuky na pravej strane navigačného panelu.
-how should egroupware display dates for you.	preferences	sk	Ako má eGroupWare zobrazovať dátumy.
+how should egroupware display dates for you.	preferences	sk	Ako má EGroupware zobrazovať dátumy.
 icon	preferences	sk	Ikona
 icons and text	preferences	sk	Ikony s textom
 icons only	preferences	sk	Len ikony
-images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	addressbook	sk	Obrázky, na ktoré sa v zázname odkazuje, sa dajú zobrazovať ako náhľady. Ak chcete zrýchliť zobrazovanie, tak to vypnite.
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	sk	Obrázky, na ktoré sa v zázname odkazuje, sa dajú zobrazovať ako náhľady. Ak chcete zrýchliť zobrazovanie, tak to vypnite.
 in which country are you. this is used to set certain defaults for you.	preferences	sk	V akej krajine sa nachádzate. Informácia sa použije na nastavenie niektorých predvolieb.
 interface/template selection	preferences	sk	Výber vzhľadu rozhrania / šablóny
 language	preferences	sk	Jazyk
@@ -49,21 +52,26 @@ max matches per page	preferences	sk	Maximum záznamov na stránku
 max number of icons in navbar	preferences	sk	Maximálny počet ikoniek v navigačnom paneli
 no default	preferences	sk	Bez predvolených nastavení
 no user-selection at all	common	sk	Žiadny výber používateľov
-note: this feature does *not* change your email password. this will	preferences	sk	upozornenie: Táto funkcia NEZMENÍ vaše E-mailové heslo. Len
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sk	Poznámka: Týmto *nezmeníte* vaše E-mailové heslo. To sa dá urobiť len ručne.
+number format	preferences	sk	Formát čísla
 office 2003 theme	preferences	sk	Téma Office 2003
+old password and new password are the same. this is invalid. you must enter a new password	preferences	sk	Staré a nové heslo sú rovnaké. Toto je nesprávne. Musíte zadať nové heslo.
+password changed	preferences	sk	Heslo zmenené
+permanent time zone selection	preferences	sk	Výber trvalého časového pásma
+please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	sk	Prosím, vyberte časové pásma, medzi ktorými chcete mať možnosť rýchleho prepínania. Prepínač sa NEZOBRAZÍ, ak vyberiete menej než dve.
+please select your timezone.	preferences	sk	Prosím, vyberte svoje časové pásmo.
 please, select a new theme	preferences	sk	Prosím, vyberte novú farebnú tému
 popup with search	preferences	sk	Vyhľadaním
 re-enter your password	preferences	sk	Zadajte heslo znovu
 read prefs for the specified application.	preferences	sk	Načítať predvoľby pre vybranú aplikáciu.
-rich text editor enter mode	addressbook	sk	Režim ukončenia riadku v textovom editore
-rich text editor theme	addressbook	sk	Téma textového editora
+rich text editor enter mode	preferences	sk	Režim ukončenia riadku v textovom editore
+rich text editor theme	preferences	sk	Téma textového editora
 select different theme	preferences	sk	Vybrať inú farebnú tému
-select how the rich text editor will generate the enter (linebreak) tag.	addressbook	sk	Vyberte, ako má textový editor generovať značku enter (zalomenie riadku).
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	sk	Vyberte, ako má textový editor generovať značku enter (zalomenie riadku).
 select one	preferences	sk	Vyberte si jeden
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sk	Vyberte jazyk pre texty a správy v rámci eGroupWare.<br>Niektoré jazyky nemusia zahŕňať preklad všetkých hlášok - v takých prípadoch sa zobrazí hláška v angličtine.
-select the language of the spellchecker integrated into the rich text editor.	addressbook	sk	Vyberte jazyk kontroly pravopisu v textovom editore.
-select the theme (visualization) of the rich text editor.	addressbook	sk	Vyberte tému (vzhľad) textového editora.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sk	Vyberte jazyk pre texty a správy v rámci EGroupware.<br>Niektoré jazyky nemusia zahŕňať preklad všetkých hlášok - v takých prípadoch sa zobrazí hláška v angličtine.
+select the language of the spellchecker integrated into the rich text editor.	preferences	sk	Vyberte jazyk kontroly pravopisu v textovom editore.
+select the theme (visualization) of the rich text editor.	preferences	sk	Vyberte tému (vzhľad) textového editora.
 selectbox	preferences	sk	Výberom
 selectbox with groupmembers	common	sk	Výberom s členmi skupiny
 selectbox with primary group and search	preferences	sk	Výberom s primárnou skupinou a vyhľadaním
@@ -71,7 +79,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	sk	Má sa stále zobrazovať počet aktívnych relácií (pripojených používateľov)?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	sk	Chcete vidieť pomocné texty pri každej zmene nastavení, alebo iba na požiadanie?
 show helpmessages by default	preferences	sk	Vždy zobraziť pomocné texty
-show links between egroupware aps as	addressbook	sk	Zobraziť odkazy medzi aplikáciami eGroupWare ako
+show links between egroupware aps as	common	sk	Zobraziť odkazy medzi aplikáciami EGroupware ako
 show navigation bar as	preferences	sk	Ako zobraziť navigačný panel
 show number of current users	preferences	sk	Zobraziť počet pripojených používateľov
 show text on navigation icons	preferences	sk	Zobrazovať text na navigačných ikonách
@@ -79,23 +87,25 @@ show_more_apps	common	sk	Zobraziť ďalšie aplikácie
 silver theme	preferences	sk	Strieborná téma
 spellchecker language	addressbook	sk	Jazyk kontroly pravopisu
 text only	preferences	sk	Iba text
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do eGroupWare alebo kliknutí na ikonku Domovskej stránky.<br>Naraz môžete mať na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete žiadnu. Musíte si to však ponastavovať v nastaveniach jednotlivých aplikácií.
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do EGroupware alebo kliknutí na ikonku Domovskej stránky.<br>Naraz môžete mať na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete žiadnu. Musíte si to však ponastavovať v nastaveniach jednotlivých aplikácií.
 the old password is not correct	preferences	sk	Staré heslo bolo zadané chybne
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sk	Ponuka pre výber zobrazí všetkých dostupných používateľov (môže to veľmi spomaľovať, ak ich máte v systéme väčšie množstvo). Vyhľadávanie umožňuje nájsť používateľa podľa mena alebo skupiny.
-the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	sk	Posledné 2 voľby obmedzujú viditeľnosť iných používateľov. Preto by mali byť vynucované a NIKDY nie aplikované na správcov.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	sk	Toto výberové tlačidlo zobrazuje všetkých dostupných používateľov (môže byť veľmi pomalé na veľkých inštaláciách s veľkým množstvom používateľov). Vyskakovacie okno dokáže vyhľadať používateľov pomocou mena alebo skupiny. Posledné dve možnosti obmedzujú viditeľnosť ostatných používateľov. Preto by mali byť vynútené a nemali by sa vzťahovať na správcov.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	sk	Posledné 2 voľby obmedzujú viditeľnosť iných používateľov. Preto by mali byť vynucované a NIKDY nie aplikované na správcov.
 the two passwords are not the same	preferences	sk	Heslá sa nezhodujú
 theme (colors/fonts) selection	preferences	sk	Výber témy (farby / písma)
 this server is located in the %1 timezone	preferences	sk	Tento server je v časovej zóne %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	sk	Oddeľovač tisícok sa používa len pri zobrazovaní, nie pri úprave čísiel.
 time format	preferences	sk	Formát času
 use default	preferences	sk	Použiť predvolené
 users choice	preferences	sk	Používateľova voľba
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sk	Ak odpoviete [ Áno ], tlačítka [ Domov ] a [ Odhlásiť ] budú vyzerať rovnako ako aplikácie v hlavnom paneli aplikácií navrchu stránky.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii eGroupWare.
-which currency symbol or name should be used in egroupware.	preferences	sk	Ktorý symbol alebo názov meny sa má používať v eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii EGroupware.
+which currency symbol or name should be used in egroupware.	preferences	sk	Ktorý symbol alebo názov meny sa má používať v EGroupware.
 write prefs for the specified application.	preferences	sk	Zapísať predvoľby pre vybranú aplikáciu.
 you can show the applications as icons only, icons with app-name or both.	preferences	sk	Aplikácie môžu byť zobrazované ako ikonky, ikonky s názvami alebo obidvoje.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	sk	Odkazované záznamy sa dajú zobrazovať ako ikony, ikony s názvom aplikácie alebo oboje.
+you can show the linked entries with icons only, icons with app-name or both.	common	sk	Odkazované záznamy sa dajú zobrazovať ako ikony, ikony s názvom aplikácie alebo oboje.
 you do not have permission to set acl's in this mode!	preferences	sk	Nemáte oprávnenia na zmenu ACL v tomto režime!
 you must enter a password	preferences	sk	Musíte zadať heslo
 your current theme is: %1	preferences	sk	Vaša súčasná farebná téma je: <b>%1</b>
-your preferences	preferences	sk	Vaše predvoľby
+your preferences	preferences	sk	Vaše nastavenia

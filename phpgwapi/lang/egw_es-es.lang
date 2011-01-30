@@ -51,6 +51,7 @@ all languages	common	es-es	todos los idiomas
 alphabet	common	es-es	a,b,c,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	es-es	Hola de estilo alternativa:
 american samoa	common	es-es	AMERICAN SAMOA
+an admin required that you must change your password upon login.	common	es-es	un administrador le ha solicitado que cambie su contraseña al iniciar la sesión.
 an error happened	common	es-es	Ha ocurrido un error
 an existing and by the webserver readable directory enables the image browser and upload.	common	es-es	Un directorio existente Y donde el servidor web pueda leer activa el navegar por imágenes, y también subirlas al servidor.
 and	common	es-es	y
@@ -175,7 +176,7 @@ currency	common	es-es	Cambio
 current	common	es-es	Actual
 current users	common	es-es	Usuarios actuales
 cyprus	common	es-es	CHIPRE
-czech republic	common	es-es	REPUBLICA CHECHA
+czech republic	common	es-es	REPUBLICA CHECA
 database error	common	es-es	Error en la base de datos
 database error!	common	es-es	¡Error en la base de datos!
 date	common	es-es	Fecha
@@ -643,6 +644,7 @@ south georgia and the south sandwich islands	common	es-es	SOUTH GEORGIA AND THE 
 spain	common	es-es	ESPAÑA
 sri lanka	common	es-es	SRI LANKA
 start date	common	es-es	Fecha de inicio
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	es-es	Directorio inicial para el navegador de imágenes del editor de texto enriquecido en EGroupware VFS (administrador de ficheros).
 start time	common	es-es	Hora de inicio
 start with	common	es-es	empieza por
 starting up...	common	es-es	Iniciando...
@@ -732,6 +734,7 @@ value	common	es-es	Valor
 vanuatu	common	es-es	VANUATU
 venezuela	common	es-es	VENEZUELA
 version	common	es-es	Versión
+vfs upload directory	common	es-es	Directorio de subida de ficheros VFS
 viet nam	common	es-es	VIETNAM
 view	common	es-es	Ver
 virgin islands, british	common	es-es	VIRGIN ISLANDS, BRITISH
@@ -771,6 +774,7 @@ you need to be an egroupware administrator to access this functionality!	common	
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	es-es	Ha intentado abrir la aplicación de eGroupWare %1, pero no tiene permiso para acceder a esta aplicación.
 your message could <b>not</b> be sent!<br>	common	es-es	Su mensaje <b>no</b> se pudo enviar<br>
 your message has been sent	common	es-es	Su mensaje ha sido enviado
+your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	es-es	Su contraseña no cumple la fortaleza requerida.<br>Debe cumplir %1 criterios. Sólo ha cumplido %2 criterios.<br>Su contraseña falló en los siguientes criterios:
 your search returned %1 matchs	common	es-es	su búsqueda devolvió %1 resultados
 your search returned 1 match	common	es-es	su búsqueda devolvió 1 resultado
 your session could not be verified.	login	es-es	Su sesión no pudo ser verificada.

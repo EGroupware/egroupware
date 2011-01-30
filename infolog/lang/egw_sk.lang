@@ -26,6 +26,7 @@ a short subject for the entry	infolog	sk	Krátky predmet záznamu
 abort without deleting	infolog	sk	Zrušiť bez odstránenia
 accept	infolog	sk	Prijať
 action	infolog	sk	Akcia
+actions...	infolog	sk	Akcie...
 actual date and time	infolog	sk	Aktuálny dátum a čas
 add	infolog	sk	Pridať
 add a file	infolog	sk	Pridať súbor
@@ -40,6 +41,7 @@ add timesheet entry	infolog	sk	Pridať záznam do Harmonogramu
 add:	infolog	sk	Pridať:
 all	infolog	sk	Všetko
 all links and attachments	infolog	sk	Všetky odkazy a prílohy
+all projects	infolog	sk	Všetky projekty
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sk	umožňuje nastaviť stav záznamu, napr. nastaviť Úlohu ktorá sa má vykonať po ukončení (hodnoty závisia na type záznamu)
 alternatives	infolog	sk	Alternatívy
 apply the changes	infolog	sk	Uplatniť zmeny
@@ -73,6 +75,7 @@ completed	infolog	sk	Stav vybavenia
 configuration	infolog	sk	Konfigurácia
 confirm	infolog	sk	Potvrdiť
 contact	infolog	sk	Kontakt
+copy of:	infolog	sk	Kópia z:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	sk	Skopírujte zmeny do schránky, %1znovunačítajte záznam%2 a zlúčte ich.
 create new links	infolog	sk	Vytvoriť nové odkazy
 creates a new field	infolog	sk	vytvorí nové pole
@@ -101,6 +104,7 @@ default filter for infolog	infolog	sk	Predvolený filter pre Záznamník
 default status for a new log entry	infolog	sk	Predvolený stav pre nový záznam
 delegated	infolog	sk	Delegované
 delegated open	infolog	sk	Delegované - otvorené
+delegated open and upcoming	infolog	sk	Delegované - otvorené a blížiace sa
 delegated overdue	infolog	sk	Delegované - meškajúce
 delegated upcomming	infolog	sk	Delegované - blížiace sa
 delegation	infolog	sk	Delegovať
@@ -127,6 +131,7 @@ do you want to receive notifications as html-mails or plain text?	infolog	sk	E-m
 don't show infolog	infolog	sk	NEzobrazovať Záznamník
 done	infolog	sk	Hotovo
 download	infolog	sk	Stiahnuť
+due %1	infolog	sk	Termín %1
 duration	infolog	sk	Trvanie
 e-mail:	infolog	sk	E-mail:
 each value is a line like <id>[=<label>]	infolog	sk	každá hodnota je riadok v tvare <id>[=<label>]
@@ -167,6 +172,7 @@ if a type has a group owner, all entries of that type will be owned by the given
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sk	Ak nie je nastavené, riadok vyhľadávania a filtrov je skrytý pre menej záznamov než "maximálny počet záznamov zobrazených na stránke" (ako je definované v bežných nastaveniach).
 import	infolog	sk	Import
 import next set	infolog	sk	Importovať ďalšiu sadu
+importance	infolog	sk	Dôležitosť
 info log	common	sk	Záznamník
 infolog	common	sk	Záznamník
 infolog - delete	infolog	sk	Záznamník - Odstrániť
@@ -175,6 +181,7 @@ infolog - import csv-file	infolog	sk	Záznamník - Importovať súbor CSV
 infolog - new	infolog	sk	Záznamník - Nové
 infolog - new subproject	infolog	sk	Záznamník - Nový podprojekt
 infolog - subprojects from	infolog	sk	Záznamník - Podprojekty od
+infolog copied - the copy can now be edited	infolog	sk	Záznamník skopírovaný - kópia sa už môže upravovať
 infolog entry deleted	infolog	sk	Záznam bol odstránený
 infolog entry saved	infolog	sk	Záznam bol uložený
 infolog filter for the main screen	infolog	sk	Filter Záznamníka pre hlavnú stránku
@@ -200,7 +207,6 @@ location	infolog	sk	Umiestnenie
 longer textual description	infolog	sk	Dlhší opisný text
 low	infolog	sk	Nízka
 max length of the input [, length of the inputfield (optional)]	infolog	sk	maximálna dĺžka vstupu [, dĺžka vstupného poľa (voliteľné)]
-modifierer	infolog	sk	Upravil
 name must not be empty !!!	infolog	sk	Názov nemôže byť prázdny!
 name of new type to create	infolog	sk	Názov novovytvoreného typu
 never hide search and filters	infolog	sk	Neschovávať hľadanie a filtre
@@ -214,6 +220,7 @@ no details	infolog	sk	Žiadne podrobnosti
 no entries found, try again ...	infolog	sk	Nenašiel som také záznamy, skúste znovu...
 no filter	infolog	sk	Žiadny filter
 no links or attachments	infolog	sk	Žiadne odkazy alebo prílohy
+no project	infolog	sk	Žiadny projekt
 nonactive	infolog	sk	Neaktívne
 none	infolog	sk	Žiadne
 normal	infolog	sk	Normálna
@@ -232,11 +239,14 @@ only if i get assigned or removed	infolog	sk	Iba ak mi je to priradené alebo od
 only the attachments	infolog	sk	Iba prílohy
 only the links	infolog	sk	Iba odkazy
 open	infolog	sk	Otvorené
+open and upcoming	infolog	sk	Otvorené a blížiace sa
 optional note to the link	infolog	sk	Voliteľná poznámka k odkazu
 order	infolog	sk	Triedenie
+organization	infolog	sk	Organizácia
 overdue	infolog	sk	Meškajúce
 own	infolog	sk	Vlastné
 own open	infolog	sk	Vlastné - otvorené
+own open and upcoming	infolog	sk	Vlastné - otvorené a blížiace sa
 own overdue	infolog	sk	Vlastné - meškajúce
 own upcoming	infolog	sk	Vlastné - blížiace sa
 parent	infolog	sk	Rodič
@@ -278,6 +288,7 @@ remark	infolog	sk	Poznámka
 remove this link (not the entry itself)	infolog	sk	Odstrániť tento odkaz (nie záznam samotný)
 responsible	infolog	sk	Zodpovednosť
 responsible open	infolog	sk	Zodpovednosť - otvorené
+responsible open and upcoming	infolog	sk	Zodpovednosť - otvorené a blížiace sa
 responsible overdue	infolog	sk	Zodpovednosť - meškajúce
 responsible upcoming	infolog	sk	Zodpovednosť - blížiace sa
 responsible user, priority	infolog	sk	Zodpovedný používateľ, priorita
@@ -300,6 +311,9 @@ select an app to search in	infolog	sk	Vyberte, v ktorej aplikácii chcete hľada
 select an entry to link with	infolog	sk	Vyberte záznam na ktorý chcete vytvoriť odkaz
 select to filter by owner	infolog	sk	Filtrovanie podľa vlastníka
 select to filter by responsible	infolog	sk	Filtrovanie podľa zodpovedného
+sender	infolog	sk	Odosielateľ
+set status to done	infolog	sk	Nastaviť stav na hotovo
+set status to done for all entries	infolog	sk	Nastaviť stav na hotovo pre všetky položky
 sets the status of this entry and its subs to done	infolog	sk	Nastaví stav záznamu a jeho podzáznamov na Hotovo
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sk	Má Záznamník zobrazovať Podúlohy, Podhovory alebo Podpoznámky v normálnom zobrazení alebo nie? Vždy ešte môžete zobraziť Podradené záznamy cez ich rodičovský záznam.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	sk	Má Záznamník zobrazovať v zozname odkazy na iné aplikácie a/alebo súbory v prílohe (v normálnom pohľade, keď otvoríte Záznamník)?
@@ -321,6 +335,7 @@ start a new search, cancel this link	infolog	sk	Spustiť nové vyhľadávanie, z
 startdate	infolog	sk	Dátum začatia
 startdate enddate	infolog	sk	Dátum začatia Termín splnenia
 startdate for new entries	infolog	sk	Dátum začatia pre nové záznamy
+starting %1	infolog	sk	Začiatok %1
 startrecord	infolog	sk	Prvý záznam
 status	infolog	sk	Stav
 status ...	infolog	sk	Stav...
@@ -329,6 +344,7 @@ sub-entries become subs of the parent or main entries, if there's no parent	info
 subject	infolog	sk	Predmet
 sum	infolog	sk	Suma
 task	infolog	sk	Úloha
+tasks of	infolog	sk	Úlohy pre
 template	infolog	sk	Šablóna
 test import (show importable records <u>only</u> in browser)	infolog	sk	Test importu (zobraz importovateľné záznamy <u>iba</u> v prehliadači)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sk	vnútorne používané meno (<= 10 znakov), jeho zmena zneprístupní existujúce údaje

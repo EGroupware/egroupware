@@ -260,7 +260,9 @@ file space must be an integer	admin	es-es	El espacio del fichero debe ser un ent
 find and register all application hooks	admin	es-es	Encontrar y registrar todos los "hooks" de las aplicaciones
 for the times above	admin	es-es	durante las horas indicadas arriba
 for the times below (empty values count as '*', all empty = every minute)	admin	es-es	para las horas indicadas debajo (los valores vacíos cuentan como '*', todos vacío = cada minuto)
+force password strength (1-5, default empty: no check against rules for a strong password)?	admin	es-es	¿Forzar robustez de la contraseña (1-5, vacío: no comprobar reglas para comprobar la debilidad)?
 force selectbox	admin	es-es	Forzar cuadro de selección
+force users to change their password regularily?(empty for no,number for after that number of days	admin	es-es	¿Forzar a que los usuarios cambien su contraseña regularmente (en blanco es no, o un número para ese número de días)?
 forward also to	admin	es-es	reenviar también a
 forward emails to	admin	es-es	reenviar correos a
 forward only	admin	es-es	reenviar solamente
@@ -358,6 +360,7 @@ mode	admin	es-es	Modo
 modified	admin	es-es	Modificado
 month	admin	es-es	Mes
 more secure	admin	es-es	más seguro
+must change password upon next login	admin	es-es	Debe cambiar la contraseña la próxima vez que inicie la sesión
 name must not be empty !!!	admin	es-es	El nombre no debe estar vacío
 name of the egroupware instance, eg. default	admin	es-es	Nombre de la instancia de eGroupWare, p. ej., default
 new group name	admin	es-es	Nuevo nombre de grupo
@@ -409,7 +412,7 @@ please enter a name for that server !	admin	es-es	Por favor, introduzca un nombr
 please run setup to become current	admin	es-es	Por favor ejecute setup para estar al día
 please select	admin	es-es	Por favor, seleccione
 postfix with ldap	admin	es-es	Postfix con LDAP
-postpone for	admin	es-es	Posponer para
+postpone for	admin	es-es	Posponer durante
 preferences	admin	es-es	Preferencias
 primary group	admin	es-es	Grupo principal
 qmaildotmode	admin	es-es	qmaildotmode

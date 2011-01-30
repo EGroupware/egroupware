@@ -3,6 +3,7 @@
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sk	%1 kontakt(ov) %2, %3 sa nepodarilo z dôvodu nedostatočných práv !!!
 %1 contacts updated (%2 errors).	addressbook	sk	%1 kontaktov bolo zaktualizovaných (%2 chýb).
 %1 fields in %2 other organisation member(s) changed	addressbook	sk	%1 položiek u %2 členov iných organizácií sa zmenilo
+%1 not implemented for %2!	addressbook	sk	%1 nebolo implementované pre %2!
 %1 records imported	addressbook	sk	Bolo naimportovaných %1 záznamov
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sk	Bolo prečítaných %1 záznamov (zatiaľ neimportované, môžete se vrátit %2späť%3 a odznačit Test importu)
 %1 starts with '%2'	addressbook	sk	%1 začína na '%2'
@@ -11,6 +12,7 @@
 (empty = use global limit, no = no export at all)	admin	sk	(prázdne = použiť globálny limit, nie = žiadny export)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sk	<b>Nevybrali ste žiadny typ prevodu.</b> Prosím, vyberte ho zo zoznamu.
 @-eval() is only availible to admins!!!	addressbook	sk	Iba správci môžu použiť @-eval() !!!
+account id	addressbook	sk	ID účtu
 account repository	admin	sk	Zdroj pre účty
 accounts	addressbook	sk	Účty
 actions	addressbook	sk	Akcie
@@ -36,8 +38,10 @@ address line 2	addressbook	sk	Adresa riadok 2
 address type	addressbook	sk	Typ adresy
 addressbook	common	sk	Adresár
 addressbook csv export	addressbook	sk	CSV export Adresára
+addressbook csv import	addressbook	sk	CSV import Adresára
 addressbook field	addressbook	sk	Pole Adresára
 addressbook menu	addressbook	sk	Ponuka Adresára
+addressbook of	addressbook	sk	Adresár pre
 addressbook preferences	addressbook	sk	Predvoľby Adresára
 addressbook the contact should be saved to	addressbook	sk	Adresár -tento kontakt uložiť do
 addressbook the contact should be shown	addressbook	sk	Adresár, v ktorom sa má kontakt zobrazovať
@@ -80,6 +84,7 @@ category tree	admin	sk	Strom kategórie
 cell phone	addressbook	sk	Mobil
 change all organisation members	addressbook	sk	zmeniť všetkých členov organizácie
 charset for the csv export	addressbook	sk	Znaková sada pre export CSV
+charset for the vcard export	addressbook	sk	Znaková sada pre export vCard
 charset of file	addressbook	sk	Znaková sada súboru
 check all	addressbook	sk	Označiť všetko
 choose an icon for this contact type	admin	sk	Zvoľte ikonu pre tento typ kontaktu
@@ -87,6 +92,7 @@ choose owner of imported data	addressbook	sk	Vyberte vlastníka naimportovaných
 choose seperator and charset	addressbook	sk	Vyberte oddeľovač a znakovú sadu
 chosse an etemplate for this contact type	admin	sk	Zvoľte eŠablónu pre tento typ kontaktu
 city	common	sk	Mesto
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	sk	Vyčistiť polia adresára (uplatní sa ak synchronizácia vyrobí duplikáty)
 company	common	sk	Spoločnosť
 company name	addressbook	sk	Názov firmy
 configuration	common	sk	Konfigurácia
@@ -97,6 +103,8 @@ contact deleted	addressbook	sk	Kontakt bol odstránený
 contact fields to show	addressbook	sk	Ktoré polia kontaktu zobraziť
 contact fields:	addressbook	sk	Polia Kontaktu:
 contact id	addressbook	sk	ID kontaktu
+contact id cannot be changed by import	addressbook	sk	ID kontaktu sa nedá zmeniť importom
+contact maintenance	admin	sk	Údržba kontaktu
 contact modified by %1 at %2	addressbook	sk	Kontakt upravil(a) %1 %2
 contact not found!	addressbook	sk	Kontakt sa nenašiel!
 contact repository	admin	sk	Zdroj kontaktov
@@ -140,7 +148,7 @@ department	common	sk	Oddelenie
 departments	addressbook	sk	Oddelenia
 directory with documents to insert contacts	addressbook	sk	Adresár s dokumentami pre vloženie kontaktov
 display contact	addressbook	sk	Zobraziť kontakt
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sk	Zobrazí pripomienku o narodeninách na úvodnej stránke (to je tá, ktorá sa zobrazí hneď po prihlásení do eGroupWare, alebo po kliknutí na ikonu Domov).
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sk	Zobrazí pripomienku o narodeninách na úvodnej stránke (to je tá, ktorá sa zobrazí hneď po prihlásení do EGroupware, alebo po kliknutí na ikonu Domov).
 distribution list deleted	addressbook	sk	Distribučný zoznam bol odstránený
 distribution lists	addressbook	sk	Distribučné zoznamy
 distribution lists, ...	addressbook	sk	Distribučné zoznamy, ...
@@ -171,6 +179,7 @@ error deleting the contact !!!	addressbook	sk	Chyba pri odstraňovaní kontaktu 
 error saving the contact !!!	addressbook	sk	Chyba pri ukladaní kontaktu !!!
 error: the entry has been updated since you opened it for editing!	addressbook	sk	Chyba: táto položka bola aktualizovaná v čase, kým ste ju mali otvorenú pre úpravy!
 existing links	addressbook	sk	Existujúce odkazy
+exists	addressbook	sk	existuje
 export	addressbook	sk	Export
 export as csv	addressbook	sk	Exportovať ako CSV
 export as vcard	addressbook	sk	Exportovať ako vizitku VCard
@@ -190,6 +199,7 @@ field %1 has been updated !	addressbook	sk	Pole %1 bolo aktualizované
 field name	addressbook	sk	Názov poľa
 fields for the csv export	addressbook	sk	Polia pre CSV export
 fields the user is allowed to edit himself	admin	sk	Polia, ktoré smie používateľ upravovať
+fields to copy when copying an address?	admin	sk	Ktoré polia kopírovať pri kopírovaní adresy?
 fields to show in address list	addressbook	sk	Viditeľné polia v zozname
 fieldseparator	addressbook	sk	Oddeľovač polí
 fieldseperator	addressbook	sk	Oddeľovač polí
@@ -207,6 +217,7 @@ group %1	addressbook	sk	Skupina %1
 h	addressbook	sk	h
 hide accounts from addressbook	addressbook	sk	Skryť účty z Adresára
 hides accounts completly from the adressbook.	addressbook	sk	Úplne skryje účty z Adresára.
+history logging	admin	sk	Zaznamenávanie histórie
 home address	addressbook	sk	Domov - Adresa
 home address, birthday, ...	addressbook	sk	Adresa domov, sviatky,...
 home city	addressbook	sk	Domov - Mesto
@@ -237,6 +248,7 @@ imports contacts into your addressbook from a csv file. csv means 'comma seperat
 in %1 days (%2) is %3's birthday.	addressbook	sk	O %1 dní (%2) bude mať narodeniny %3.
 income	addressbook	sk	Príjem
 infolog	addressbook	sk	Záznamník
+insert	addressbook	sk	Vložiť
 insert in document	addressbook	sk	Vložiť do dokumentu
 insufficent rights to delete this list!	addressbook	sk	Nemáte dostatočné práva k odstráneniu tohto zoznamu!
 international	addressbook	sk	Mezinárodný
@@ -311,6 +323,7 @@ preferred email address to use in distribution lists	addressbook	sk	Predvolená 
 preferred phone	addressbook	sk	Uprednostňovaný telefón
 preferred type of email address to add for distribution lists	addressbook	sk	Predvolený typ E-mailovej adresy pridaný pre distribučné zoznamy
 prefix	addressbook	sk	Titul
+prevent deleting of contacts	admin	sk	Zabrániť odstráneniu kontaktu
 private custom fields	addressbook	sk	Súkromné užívateľské polia
 public key	addressbook	sk	Verejný kľúč
 publish into groups:	addressbook	sk	Publikovať do skupín:
@@ -342,7 +355,10 @@ select the type of conversion	addressbook	sk	Vyberte typ prevodu
 select the type of conversion:	addressbook	sk	Vyberte typ prevodu:
 select where you want to store / retrieve contacts	admin	sk	Vyberte, kde chcete ukladať / získavať kontakty
 selected contacts	addressbook	sk	vybrané kontakty
+send emailcopy to receiver	addressbook	sk	Poslať kópiu e-mailu adresátovi
 seperator	addressbook	sk	Oddeľovač
+set full name and file as field in contacts of all users (either all or only empty values)	admin	sk	Nastaviť plné meno a súbor ako pole v kontaktoch všetkých používateľov (buď všetky alebo len prázdne hodnoty)
+set only full name	addressbook	sk	Nastaviť len plné meno
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	sk	Majú sa stĺpce pre fotku a adresu domov zobrazovať vždy, aj keď sú prázdne?
 show	addressbook	sk	Ukázať
 show birthday reminders on main screen	addressbook	sk	Pripomínať narodeniny na hlavnej stránke
@@ -356,6 +372,7 @@ street	common	sk	Ulica
 subject for email	addressbook	sk	Predmet E-mailu
 successfully imported %1 records into your addressbook.	addressbook	sk	Do adresára bolo úspešne naimportovaných %1 záznamov.
 suffix	addressbook	sk	Prípona
+tag to mark positions for address labels	addressbook	sk	Značka pre označenie pozícií pre označenie adresy
 tel home	addressbook	sk	tel domov
 telephony integration	admin	sk	Integrovanie telefónie
 test import (show importable records <u>only</u> in browser)	addressbook	sk	Otestovať import (importované záznamy sa zobrazia <u>len</u> v prehliadači)
@@ -365,17 +382,22 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	sk	Anonymný používateľ by na to potreboval pridať práva!
 the anonymous user needs read it!	addressbook	sk	Anonymný používateľ by to potreboval čítať!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	sk	Dokument môže obsahovať premenné ako $$n_fn$$, ktorý bude nahradený kontaktnými údajmi (%1plný zoznam názvov premenných%2).
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	sk	Aby bolo možné vložiť kontaktné údaje v dokumentoch OpenOffice alebo MSOffice, je potrebná prípona zip.
 there was an error saving your data :-(	addressbook	sk	Pri ukladaní Vašich údajov nastala chyba :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	sk	Tento modul zobrazuje formulár kontaktu, ktorý ukladá priamo do adresára.
 this module displays block from a adddressbook group.	addressbook	sk	Tento modul zobrazuje Blok zo skupiny Adresára.
 this person's first name was not in the address book.	addressbook	sk	Takéto meno sa v adresári nenachádza.
 this person's last name was not in the address book.	addressbook	sk	Takéto priezvisko sa v adresári nenachádza.
 timezone	addressbook	sk	Časové pásmo
+title	addressbook	sk	titul
 to many might exceed your execution-time-limit	addressbook	sk	Príliš veľa záznamov môže spôsobiť prekročenie povoleného časového limitu
 today is %1's birthday!	common	sk	Dnes má narodeniny %1!
 tomorrow is %1's birthday.	common	sk	Zajtra má narodeniny %1.
 translation	addressbook	sk	Preklad
+two of: %1	addressbook	sk	dva z: %1
 type	addressbook	sk	Typ
+unique id (uid)	addressbook	sk	Jedinečné ID (UID)
+unique id<br />(to update existing records)	addressbook	sk	Jedinečné ID<br />(pre aktualizáciu existujúcich záznamov)
 update a single entry by passing the fields.	addressbook	sk	Aktualizovať jednotlivý záznam podľa zadaných polí
 update fields by edited organisations?	admin	sk	Aktualizovať polia podľa upravených organizácií?
 updated	addressbook	sk	Aktualizované
@@ -385,6 +407,7 @@ use an extra category tab?	addressbook	sk	Použiť extra kartu kategórie?
 use an extra tab for private custom fields?	admin	sk	Použiť extra kartu pre súkromné vlastné polia?
 use country list	addressbook	sk	Použiť zoznam krajín
 use setup for a full account-migration	admin	sk	Pre plnú migráciu účtov použite Setup
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	sk	Použiť túto značku pre označenie adries. Vložte obsah, ktorý chcete, medzi dve značky.
 used for links and for the own sorting of the list	addressbook	sk	Používa sa pre odkazy a vlastné spôsoby triedenia zoznamu
 vcard	common	sk	Vizitka VCard
 vcards require a first name entry.	addressbook	sk	Vizitky potrebujú zadané krstné meno.
@@ -399,7 +422,8 @@ what should links to the addressbook display in other applications. empty values
 where to add the email address	addressbook	sk	Kde pridať E-mailovú adresu
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	sk	Aký formát adries sa má použiť pre krajiny, u ktorých formát nie je známy? Pozn. Ak formát tej-ktorej krajiny známy JE, tak sa použije, nezávisle od tohto nastavenia.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sk	Ktorý adresár sa má použiť, keď pridávate nový kontakt A PRITOM nemáte právo pridať ho do aktuálneho adresára.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii eGroupWare.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii EGroupware.
+which charset should be used for the vcard export.	addressbook	sk	Znaková sada, ktorá sa má použiť pre export vCard.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	sk	Ktoré položky sa majú exportovať. "Všetko" znamená každé pole uložené v Adresári, vrátane používateľských položiek. Pracovná alebo domáca adresa obsahuje iba meno, firmu a vybrané adresy.
 whole query	addressbook	sk	Celý dopyt
 work email if given, else home email	addressbook	sk	Práca - E-mail, ak je zadaný. Ináč Domov - E-mail
@@ -410,6 +434,7 @@ yes, for the next three days	addressbook	sk	Áno, pre nasledujúce 3 dni
 yes, for the next two weeks	addressbook	sk	Áno, pre nasledujúce 2 týždne
 yes, for the next week	addressbook	sk	Áno, pre nasledujúci týždeň
 yes, for today and tomorrow	addressbook	sk	Áno, pre dnešok a zajtrajšok
+yes, only admins can purge deleted items	admin	sk	Áno, iba správci môžu vymazať odstránené položky
 you are not permitted to delete contact %1	addressbook	sk	Nemáte oprávnenie k odstráneniu kontaktu %1
 you are not permittet to delete this contact	addressbook	sk	Nemáte oprávnenie odstrániť tento kontakt
 you are not permittet to edit this contact	addressbook	sk	Nemáte oprávnenie upraviť tento kontakt

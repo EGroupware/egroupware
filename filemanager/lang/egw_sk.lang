@@ -19,6 +19,7 @@ accessrights	filemanager	sk	Prístupové oprávnenia
 acl added.	filemanager	sk	ACL bolo pridané.
 acl deleted.	filemanager	sk	ACL bolo odstránené.
 actions	filemanager	sk	Akcie
+add to current clipboard	filemanager	sk	Pridať do súčasnej schránky
 all files	common	sk	Všetky súbory
 allow a maximum of the above configured folderlinks to be configured in settings	admin	sk	povoliť, aby bolo maximum z vyššienastavených priečinkov možné konfigurovať pomocou nastavení
 and all it's childeren	filemanager	sk	a všetkých jeho potomkov
@@ -27,30 +28,26 @@ basedirectory	filemanager	sk	Základný priečinok
 can't open directory %1!	filemanager	sk	Nepodarilo sa otvoriť priečinok %1!
 cancel editing %1 without saving	filemanager	sk	Zrušiť úpravy %1 bez uloženia
 cannot create directory because it begins or ends in a space	filemanager	sk	Nemôžem vytvoriť priečinok lebo začína alebo končí medzerou
+cautiously rejecting to remove folder '%1'!	filemanager	sk	Z opatrnosti odmietam odstrániť priečinok '%1'!
 check all	filemanager	sk	Označiť všetko
 clear search	filemanager	sk	vyčistiť hľadanie
 comment	filemanager	sk	Poznámka
-comments cannot contain "%1"	filemanager	sk	Poznámky nemôžu obsahovať "%1"
 copied	filemanager	sk	skopírované
 copied %1 to %2	filemanager	sk	Skopírované %1 do %2
 copy	filemanager	sk	Kopírovať
 copy to	filemanager	sk	Kopírovať (kam)
 copy to clipboard	filemanager	sk	Kopírovať do schránky
 could not copy %1 to %2	filemanager	sk	Nepodarilo sa skopírovať %1 do %2
-could not copy file because no destination directory is given	filemanager	sk	Nepodarilo sa skopírovať súbor pretože nebol zadaný cieľový priečinok
 could not create %1	filemanager	sk	Nepodarilo sa vytvoriť %1
 could not delete %1	filemanager	sk	Nepodarilo sa odstrániť %1
 could not move %1 to %2	filemanager	sk	Nepodarilo sa presunúť %1 do %2
-could not move file because no destination directory is given	filemanager	sk	Nepodarilo sa presunúť súbor pretože nebol zadaný cieľový priečinok
 could not rename %1 to %2	filemanager	sk	Nepodarilo sa premenovať %1 na %2
-could not save %1	filemanager	sk	Nepodarilo sa uložiť %1
 create a link	filemanager	sk	Vytvoriť odkaz
 create directory	filemanager	sk	Vytvoriť adresár
 create file	filemanager	sk	Vytvoriť súbor
 create folder	filemanager	sk	Vytvoriť priečinok
 created	filemanager	sk	vytvorené
 created %1,%2	filemanager	sk	Vytvorené %1, %2
-created between	filemanager	sk	vytvorené medzi
 created directory %1	filemanager	sk	Vytvorený priečinok %1
 current directory	filemanager	sk	Súčasný adresár
 custom fields	filemanager	sk	Používateľské polia
@@ -63,7 +60,6 @@ directories sorted in	filemanager	sk	Priečinky zoradené v
 directory	filemanager	sk	Adresár
 directory %1 already exists	filemanager	sk	Priečinok %1 už existuje
 directory %1 does not exist	filemanager	sk	Priečinok %1 neexistuje
-directory names cannot contain "%1"	filemanager	sk	Názov priečinku nemôže obsahovať "%1"
 directory not found or no permission to access it!	filemanager	sk	Adresár sa nenašiel alebo nemáme k nemu prístupové práva!
 display and modification of content	filemanager	sk	Zobrazenie a úprava obsahu
 display of content	filemanager	sk	Zobrazenie obsahu
@@ -74,11 +70,11 @@ edit settings	filemanager	sk	Upraviť nastavenia
 enter setup user and password	filemanager	sk	Zadajte používateľa a heslo inštalácie
 enter setup user and password to get root rights	filemanager	sk	Ak chcete získať administrátorské oprávnenia, zadajte používateľa a heslo inštalácie
 enter the complete vfs path to specify a fast access link to a folder	filemanager	sk	Zadajte úplnú cestu VFS pre odkaz pre rýchly prístup do priečinku
-enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	sk	Zadajte úplnú cestu VFS pre odkaz pre rýchly prístup do priečinku (1).
 enter the complete vfs path to specify your desired start folder.	filemanager	sk	Zadajte úplnú cestu VFS pre váš štartovací priečinok.
 error adding the acl!	filemanager	sk	Chyba počas pridávania ACL!
 error creating symlink to target %1!	filemanager	sk	Chyba pri vytváraní symbolického odkazu na cieľ %1!
 error deleting the acl entry!	filemanager	sk	Chyba počas odstraňovania záznamu ACL!
+error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
 executable	filemanager	sk	Spustiteľný
 extended access control list	filemanager	sk	Rozšírený zoznam prístupových oprávnení (ACL)
 extended acl	filemanager	sk	Rozšírený ACL
@@ -86,7 +82,6 @@ failed to change permissions of %1!	filemanager	sk	Nepodarilo sa zmeniť oprávn
 failed to create directory!	filemanager	sk	Vytvorenie adresára sa nepodarilo!
 favorites	filemanager	sk	Obľúbené
 file	filemanager	sk	Súbor
-file %1 already exists. please edit it or delete it first.	filemanager	sk	Súbor %1 už existuje. Prosím, najprv ho upravte alebo odstráňte.
 file %1 could not be created.	filemanager	sk	Súbor %1 sa nepodarilo vytvoriť.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	sk	Súbor %1 je zrejme priveľký. Kontaktujte svojho správcu systému.
 file deleted.	filemanager	sk	Súbor bol odstránený.
@@ -160,6 +155,7 @@ show hidden files	filemanager	sk	Ukázať skryté súbory
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	sk	Ukázať odkaz na základný priečinok správcu súborov (/) v postrannej ponuke?
 size	filemanager	sk	Veľkosť
 start search	filemanager	sk	Hľadaj
+startfolder	filemanager	sk	Štartovací priečinok
 superuser	filemanager	sk	Supervízor
 symlink to %1 created.	filemanager	sk	Symbolický odkaz na %1 vytvorený.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	sk	Predvolený štartovací priečinok vo vašom osobnom priečinku. Používa sa predvolený, ak ponecháte prázdne, cesta neexistuje alebo ak nemáte potrebné prístupové oprávnenia.
@@ -171,14 +167,18 @@ total files	filemanager	sk	Súborov celkovo
 unused space	filemanager	sk	Nevyužitý priestor
 up	filemanager	sk	Hore
 updated comment for %1	filemanager	sk	Aktualizovaná poznámka ku %1
+upload fields	filemanager	sk	Odovzdať polia
+upload files	filemanager	sk	Odovzdať súbory
 used space	filemanager	sk	Použitý priestor
 users and groups	filemanager	sk	Používatelia a skupiny
+versioning	filemanager	sk	Verziovanie
 wrong username or password!	filemanager	sk	Chybné meno alebo heslo!
 you are not allowed to upload a script!	filemanager	sk	Nemáte dovolené odovzdávať skript!
+you can only grant additional rights, you can not take rights away!	filemanager	sk	Môžete len pridať ďalšie práva, nemôžete práva odobrať!
 you do not have access to %1	filemanager	sk	Nemáte prístup ku %1
 you need to select an owner!	filemanager	sk	Najprv musíte vybrať vlastníka!
 you need to select some files first!	filemanager	sk	Najprv musíte vybrať nejaké súbory!
 you will be redirected to your home directory.	filemanager	sk	Budete presmerovaní do vášho Domovského priečinka.
 you will be redirected to your start folder.	filemanager	sk	Budete presmerovaní do vášho Štartovacieho priečinka.
-your home dir did not exist, egroupware created a new one.	filemanager	sk	Váš Domovský priečinok neexistoval, eGroupWare vytvoril nový.
+your home dir did not exist, egroupware created a new one.	filemanager	sk	Váš Domovský priečinok neexistoval, EGroupware vytvoril nový.
 your home directory	filemanager	sk	Váš domovský priečinok
