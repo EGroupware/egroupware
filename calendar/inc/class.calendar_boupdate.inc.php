@@ -408,7 +408,7 @@ class calendar_boupdate extends calendar_bo
 			$old_event = $this->read($event['id']);
 		}
 		$removed = array();
-		foreach($event['participants'] as $uid => $status)
+		foreach((array)$event['participants'] as $uid => $status)
 		{
 			if ((is_null($old_event) || !isset($old_event['participants'][$uid])) && !$this->check_acl_invite($uid))
 			{
