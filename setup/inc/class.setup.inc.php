@@ -659,6 +659,8 @@ class setup
 
 		// Remove categories
 		$this->db->delete(categories::TABLE, array('cat_appname'=>$appname),__LINE__,__FILE__);
+		// Remove config
+		$this->db->delete(config::TABLE, array('config_app'=>$appname),__LINE__,__FILE__);
 		//echo 'DELETING application: ' . $appname;
 		$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
 		$this->clear_session_cache();
