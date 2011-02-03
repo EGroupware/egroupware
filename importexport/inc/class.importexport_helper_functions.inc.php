@@ -371,8 +371,14 @@ class importexport_helper_functions {
 	 * @param string $_type
 	 * @return array $num => $appname
 	 */
-	public static function get_apps($_type) {
-		return array_keys(self::get_plugins('all',$_type));
+	public static function get_apps($_type, $ignore_acl = false) {
+		$apps = array_keys(self::get_plugins('all',$_type));
+		if($ignore_acl) return $apps;
+
+		foreach($apps as $key => $app) {
+			if(!self::has_definitions($app, $_type)) unset($apps[$key]);
+		}
+		return $apps;
 	}
 
 	public static function guess_filetype( $_file ) {
