@@ -168,7 +168,7 @@ function check_header_form()
 	// setting the domain settings from the posted content
 	foreach($_POST['domains'] as $key => $domain)
 	{
-		if ($_POST['deletedomain'][$key]) 
+		if ($_POST['deletedomain'][$key])
 		{
 			// Need to actually remove the domain.  Drop the DB manually.
 			unset($GLOBALS['egw_domain'][$domain]);
@@ -211,7 +211,7 @@ function show_header_form($validation_errors)
 
 	if(!get_var('ConfigLang',array('POST','COOKIE')))
 	{
-		$setup_tpl->set_var('lang_select','<tr><td colspan="2"><form action="manageheader.php" method="post">Please Select your language '.lang_select(True,'en')."</form></td></tr>");
+		$setup_tpl->set_var('lang_select','<tr><td colspan="2"><form action="manageheader.php" method="post">Please Select your language '.setup_html::lang_select(True,'en')."</form></td></tr>");
 	}
 
 	$setup_tpl->set_var('pagemsg',$GLOBALS['egw_info']['setup']['PageMSG']);
