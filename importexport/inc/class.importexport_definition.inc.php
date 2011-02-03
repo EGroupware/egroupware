@@ -33,6 +33,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		'plugin_options' => 'array',
 		'owner' => 'int',
 		'description' => 'string',
+		'modified' => 'timestamp'
 	);
 	
 	/**
@@ -234,6 +235,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		
 		$this->so_sql->data = $this->definition;
 		$this->so_sql->data['plugin_options'] = importexport_arrayxml::array2xml( $this->definition['plugin_options'] );
+		$this->so_sql->data['modified'] = time();
 		if ($this->so_sql->save( array( 'definition_id' => $_dst_identifier ))) {
 			throw new Exception('Error: so_sql was not able to save definition: '.$this->get_identifier());
 		}

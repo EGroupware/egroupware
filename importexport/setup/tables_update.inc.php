@@ -41,3 +41,17 @@ function importexport_upgrade1_7_001()
 {
 	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.8';
 }
+
+function importexport_upgrade1_8()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_importexport_definitions','definition_id',array(
+		'type' => 'auto',
+		'nullable' => False
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_importexport_definitions','modified',array(
+		'type' => 'timestamp'
+	));
+
+	return $GLOBALS['setup_info']['importexport']['currentver'] = '1.9.001';
+}
+

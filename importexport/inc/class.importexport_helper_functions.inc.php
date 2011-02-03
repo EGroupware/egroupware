@@ -316,6 +316,8 @@ class importexport_helper_functions {
 		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
 		$types = $_type == 'all' ? array('import','export') : (array)$_type;
 
+		// Testing: comment out egw_cache call, use this
+		//$plugins = self::_get_plugins($appnames, $types);
 		foreach($plugins as $appname => $_types) {
 			if(!in_array($appname, $appnames)) unset($plugins[$appname]);
 		}
@@ -357,6 +359,25 @@ class importexport_helper_functions {
 						$plugins[$appname][$type][$classname] = $plugin_object->get_name();
 						unset ($plugin_object);
 					}
+				}
+			}
+			$d->close();
+
+			// Check for new definitions to import from $appname/setup/*.xml
+			$appdir = EGW_INCLUDE_ROOT. "/$appname/setup";
+			if(!is_dir($appdir)) continue;
+			$d = dir($appdir);
+
+			// step through each file in app's setup
+			while (false !== ($entry = $d->read())) {
+				$file = $appdir. '/'. $entry;
+				list( $filename, $extension) = explode('.',$entry);
+				if ( $extension != 'xml' ) continue;
+				try {
+					// import will skip invalid files
+					importexport_definitions_bo::import( $file );
+				} catch (Exception $e) {
+					error_log(__CLASS__.__FUNCTION__. " import $appname definitions: " . $e->getMessage());
 				}
 			}
 			$d->close();

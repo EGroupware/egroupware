@@ -159,10 +159,15 @@ class importexport_definitions_bo {
 			$definition_data['owner'] = importexport_helper_functions::account_name2id( $definition_data['owner'] );
 
 			$definition = new importexport_definition( $definition_data['name'] );
-			$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
 
-			$definition->set_record( $definition_data );
-			$definition->save( $definition_id );
+			// Only update if the imported is newer
+			if($definition->modified < $definition_data['modified'] || $definition->modified == 0)
+			{
+				$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
+
+				$definition->set_record( $definition_data );
+				$definition->save( $definition_id );
+			}
 		}
 	}
 

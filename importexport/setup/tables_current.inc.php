@@ -13,22 +13,23 @@
 	/* $Id$ */
 
 
-	$phpgw_baseline = array(
-		'egw_importexport_definitions' => array(
-			'fd' => array(
-				'definition_id' => array('type' => 'auto'),
-				'name' => array('type' => 'varchar','precision' => '255'),
-				'application' => array('type' => 'varchar','precision' => '50'),
-				'plugin' => array('type' => 'varchar','precision' => '100'),
-				'type' => array('type' => 'varchar','precision' => '20'),
-				'allowed_users' => array('type' => 'varchar','precision' => '255'),
-				'plugin_options' => array('type' => 'longtext'),
-				'owner' => array('type' => 'int','precision' => '20'),
-				'description' => array('type' => 'varchar','precision' => '255')
-			),
-			'pk' => array('definition_id'),
-			'fk' => array(),
-			'ix' => array('name'),
-			'uc' => array('name')
-		)
-	);
+$phpgw_baseline = array(
+	'egw_importexport_definitions' => array(
+		'fd' => array(
+			'definition_id' => array('type' => 'auto','nullable' => False),
+			'name' => array('type' => 'varchar','precision' => '255'),
+			'application' => array('type' => 'varchar','precision' => '50'),
+			'plugin' => array('type' => 'varchar','precision' => '100'),
+			'type' => array('type' => 'varchar','precision' => '20'),
+			'allowed_users' => array('type' => 'varchar','precision' => '255'),
+			'plugin_options' => array('type' => 'longtext'),
+			'owner' => array('type' => 'int','precision' => '20'),
+			'description' => array('type' => 'varchar','precision' => '255'),
+			'modified' => array('type' => 'timestamp')
+		),
+		'pk' => array('definition_id'),
+		'fk' => array(),
+		'ix' => array('name'),
+		'uc' => array('name')
+	)
+);
