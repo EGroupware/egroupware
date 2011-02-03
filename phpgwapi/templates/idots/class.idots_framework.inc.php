@@ -188,39 +188,11 @@ class idots_framework extends egw_framework
 		// calling the old hook
 		$GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
 
+		// allow other apps to hook into sidebox menu of every app: sidebox_all
+		$GLOBALS['egw']->hooks->process('sidebox_all',array($GLOBALS['egw_info']['flags']['currentapp']),true);	
+
 		if($this->sidebox_content)
 		{
-			// Add in import / export, if available
-			if($GLOBALS['egw_info']['user']['apps']['importexport']) {
-				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-				$file = array();
-				if(importexport_helper_functions::has_definitions($appname, 'import')) 
-				{
-					$file['Import'] = array('link' => "javascript:egw_openWindowCentered2('".
-						egw::link('/index.php',array(
-							'menuaction' => 'importexport.importexport_import_ui.import_dialog',
-							'appname'=>$appname
-						),false)."','_blank',500,220,'yes')",
-						'icon' => 'import',
-						'app' => 'importexport',
-						'text' => 'import'
-					);
-				}
-				if(importexport_helper_functions::has_definitions($appname, 'export')) 
-				{
-					$file['Export'] = array('link' => "javascript:egw_openWindowCentered2('".
-						egw::link('/index.php',array(
-							'menuaction' => 'importexport.importexport_export_ui.export_dialog',
-							'appname'=>$appname
-						),false)."','_blank',850,440,'yes')",
-						'icon' => 'export',
-						'app' => 'importexport',
-						'text' => 'export'
-					);
-				}
-				if($file) display_sidebox($appname,lang('importexport'),$file);
-			}
-
 			if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox'])
 			{
 				$this->tpl->set_var('lang_show_menu',lang('show menu'));
