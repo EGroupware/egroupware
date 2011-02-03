@@ -77,7 +77,7 @@ class importexport_definitions_ui
 	 */
 	function index($content = null,$msg='')
 	{
-		$bodefinitions = new importexport_definitions_bo(array('name' => '*'));
+		$bodefinitions = new importexport_definitions_bo(array('name' => '*'), true);
 		if (is_array($content))
 		{
 			if (isset($content['delete']))

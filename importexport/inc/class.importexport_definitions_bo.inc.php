@@ -29,13 +29,13 @@ class importexport_definitions_bo {
 	 */
 	private $definitions;
 
-	public function __construct($_query=false)
+	public function __construct($_query=false, $ignore_acl = false)
 	{
 		$this->so_sql = new so_sql(self::_appname, self::_defintion_table );
 		if ($_query) {
-			$definitions = $this->so_sql->search($_query, true);
+			$definitions = $this->so_sql->search($_query, false);
 			foreach ((array)$definitions as $definition) {
-				$this->definitions[] = $definition['definition_id'];
+				if(self::is_permitted($definition) || $ignore_acl) $this->definitions[] = $definition['definition_id'];
 			}
 		}
 	}
