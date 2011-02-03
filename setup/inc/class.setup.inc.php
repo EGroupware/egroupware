@@ -210,7 +210,7 @@ class setup
 		{
 			return $ConfigLang;
 		}
-		return 'en';
+		return null;	// not returning 'en', as it suppresses the language selection in check_install and manageheader
 	}
 
 	/**
