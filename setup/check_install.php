@@ -769,11 +769,11 @@ function jpgraph_check($name,array $args)
 		$jpgraph_path = dirname($egw_path);	// realpath can fail because eg. open_basedir does NOT include ..
 	}
 	$jpgraph_path .= SEP.'jpgraph';
-	
+
 	$min_version = isset($args['min_version']) ? $args['min_version'] : '1.13';
 
 	$available = false;
-	if (($check = file_exists($jpgraph_path) && is_dir($jpgraph_path)) && 
+	if (($check = file_exists($jpgraph_path) && is_dir($jpgraph_path)) &&
 		(file_exists($jpgraph_path.'/src/jpgraph.php') || file_exists($jpgraph_path.'/jpgraph.php')))
 	{
 		if (file_exists($jpgraph_path.'/VERSION') && preg_match('/Version: v([0-9.]+)/',file_get_contents($jpgraph_path.'/VERSION'),$matches))
@@ -790,14 +790,14 @@ function jpgraph_check($name,array $args)
 		' <span'.($available?'':' class="setup_warning"').'>'.
 		lang('Checking for JPGraph in %1',$jpgraph_path).': '.
 		(isset($version) ? lang('Version').' '.$version : lang('False'));
-		
+
 	if (!$available)
 	{
 		echo "<br />\n".lang('You dont have JPGraph version %1 or higher installed! It is needed from ProjectManager for Ganttcharts.',$min_version)."<br />\n";
 		echo lang('Please download a recent version from %1 and install it as %2.',
 			'<a href="http://jpgraph.net/download/" target="_blank">jpgraph.net/download/</a>',
 			$jpgraph_path);
-	}	
+	}
 	echo "</span></div>\n";
 
 	return $available;
@@ -846,7 +846,7 @@ if ($run_by_webserver)
 		echo '<h1>'.lang('Welcome to the eGroupWare Installation')."</h1>\n";
 		if(!$ConfigLang)
 		{
-			echo '<p><form action="check_install.php?intro=1" method="Post">Please Select your language '.lang_select(True,'en')."</form></p>\n";
+			echo '<p><form action="check_install.php?intro=1" method="Post">Please Select your language '.setup_html::lang_select(True,'en')."</form></p>\n";
 		}
 		echo '<p>'.lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.').'</p>';
 		echo '<p>'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.').'</p>';

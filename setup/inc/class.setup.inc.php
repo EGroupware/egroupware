@@ -210,7 +210,7 @@ class setup
 		{
 			return $ConfigLang;
 		}
-		return 'en';
+		return null;	// not returning 'en', as it suppresses the language selection in check_install and manageheader
 	}
 
 	/**
@@ -1060,7 +1060,7 @@ class setup
 			if ($primary_group)
 			{
 				vfs_home_hooks::addAccount($account);
-/*				
+/*
  				$GLOBALS['hook_values'] = $account + array('new_passwd' => $account['account_passwd']);
 				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 					'location' => 'addaccount'
@@ -1070,7 +1070,7 @@ class setup
 			else
 			{
 				vfs_home_hooks::addGroup($account+array('account_name' => $account['account_lid']));
-/*				
+/*
 				$GLOBALS['hook_values'] = $account+(array('account_name' => $account['account_lid']));
 				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 					'location' => 'addgroup'
