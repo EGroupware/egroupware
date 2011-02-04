@@ -340,19 +340,7 @@ class egw extends egw_minimal
 			// do NOT redirect, but set top.location, as this works in framed template too
 			$redirect = $GLOBALS['egw_info']['server']['webserver_url'].$redirect;
 
-			echo "<html>\n<head>\n<script type='text/javascript'>
-	if (typeof window.frameElement != 'undefined' &&
-	    window.frameElement &&
-	    typeof window.frameElement.egw_app != 'undefined' &&
-	    typeof window.frameElement.egw_app.isRemote != 'undefined')
-	{
-		window.location='$redirect';
-	}
-	else
-	{
-		top.location='$redirect';
-	}
-</script>\n</head>\n";
+			echo "<html>\n<head>\n<script type='text/javascript'>top.location='$redirect';</script>\n</head>\n";
 			exit;
 		}
 	}

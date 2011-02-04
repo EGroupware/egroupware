@@ -219,8 +219,10 @@ egw_json_request.prototype._assembleAjaxUrl = function(_menuaction)
 	// Retrieve the webserver url
 	var webserver_url = egw_topWindow().egw_webserverUrl;
 
-	// Check whether the webserver_url is really set	
-	if (!webserver_url)
+	// Check whether the webserver_url is really set
+	// Don't check for !webserver_url as it might be empty.
+	// Thank you to Ingo Ratsdorf for reporting this.
+	if (typeof webserver_url == "undefined")
 	{
 		throw "Internal JS error, top window not found, webserver url could not be retrieved.";
 	}

@@ -120,19 +120,7 @@ function egw_appWindow(_app)
  */
 function egw_getApp(_name)
 {
-	var napp = null;
-	if (typeof window.frameElement != "undefined" &&
-	    window.frameElement != null &&
-	    typeof window.frameElement.egw_app != "undefined")
-	{
-		napp = window.frameElement.egw_app;
-	}
-	else
-	{
-		napp = window.parent.framework.getApplicationByName(_name);
-	}
-
-	return napp;
+	return window.parent.framework.getApplicationByName(_name);
 }
 
 /**
