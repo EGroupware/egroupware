@@ -719,6 +719,7 @@ class timesheet_ui extends timesheet_bo
 					}
 				}
 			}
+			$readonlys["document[{$row['ts_id']}]"] = !$GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'];
 			if (!$query['filter2'])
 			{
 				unset($row['ts_description']);
@@ -773,6 +774,12 @@ class timesheet_ui extends timesheet_bo
 			{
 				$msg = lang('Error deleting the entry!!!');
 			}
+		}
+		if (is_array($content) && isset($content['nm']['rows']['document']))  // handle insert in default document button like an action
+		{
+			list($id) = @each($content['nm']['rows']['document']);
+			$content['action'] = 'document';
+			$content['nm']['rows']['checked'] = array($id);
 		}
 		if ($content['action'] != '')
 		{
@@ -854,6 +861,12 @@ class timesheet_ui extends timesheet_bo
 		}
 		$sel_options['action'][lang('Modify the Status of the Timesheet')] = $status;
 		unset($status);
+		
+		// Merge print
+		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'])
+                {
+                        $sel_options['action'][lang('Insert in document').':'] = timesheet_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir']);
+                }
 
 		if ($this->pm_integration != 'full')
 		{
@@ -953,6 +966,10 @@ class timesheet_ui extends timesheet_bo
 				}
 				break;
 
+			case 'document':
+				$msg = $this->download_document($checked,$settings);
+				$failed = count($checked);
+                                return false;
 		}
 
 		return !$failed;
@@ -1082,5 +1099,32 @@ class timesheet_ui extends timesheet_bo
 			}
 		}
 		</script>';
+	}
+
+	/**
+	 * Download a document with inserted entries
+	 *
+	 * @param array $ids timesheet-ids
+	 * @param string $document vfs-path of document
+	 * @return string error-message or error, otherwise the function does NOT return!
+	 */
+	function download_document($ids,$document='')
+	{
+		if (!$document)
+		{
+			$document = $GLOBALS['egw_info']['user']['preferences']['timesheet']['default_document'];
+		}
+		else
+		{
+			$document = $GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'].'/'.$document;
+		}
+		if (!@egw_vfs::stat($document))
+		{
+			return lang("Document '%1' does not exist or is not readable for you!",$document);
+		}
+		require_once(EGW_INCLUDE_ROOT.'/timesheet/inc/class.timesheet_merge.inc.php');
+		$document_merge = new timesheet_merge();
+
+		return $document_merge->download($document,$ids);
 	}
 }
