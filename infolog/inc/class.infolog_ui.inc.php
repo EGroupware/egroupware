@@ -412,6 +412,7 @@ class infolog_ui
 				}
 			}
 			$rows[] = $info;
+			$readonlys["document[{$info['info_id']}]"] = !$this->prefs['default_document'];
 		}
 		unset($links);
 
