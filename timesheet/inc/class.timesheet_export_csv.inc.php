@@ -16,6 +16,14 @@
  */
 class timesheet_export_csv implements importexport_iface_export_plugin {
 
+	// Used in conversions
+	static $types = array(
+		'select-account' => array('ts_owner','ts_modifier'),
+		'date-time' => array('ts_start', 'ts_modified'),
+		'select-cat' => array('cat_id'),
+		'links' => array('pl_id'),
+	);
+
 	/**
 	 * Exports records as defined in $_definition
 	 *
