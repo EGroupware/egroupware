@@ -42,7 +42,7 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	 * @param string $_attribute_name
 	 */
 	public function __get($_attribute_name) {
-
+		return $this->timesheetentry[$_attribute_name];
 	}
 
 	/**
@@ -52,7 +52,7 @@ class timesheet_egw_record implements importexport_iface_egw_record
 	 * @param data $data
 	 */
 	public function __set($_attribute_name, $data) {
-
+		$this->timesheetentry[$_attribute_name] = $data;
 	}
 
 	/**
