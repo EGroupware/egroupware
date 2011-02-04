@@ -779,6 +779,20 @@ class addressbook_so
 	}
 
 	/**
+	 * Remove deleted category from addresses
+	 */
+	function delete_category($data)
+	{
+		// Get addresses that use the category
+		$ids = $this->search(array('cat_id' => $data['cat_id']), array('contact_id', 'cat_id'));
+		foreach($ids as &$info)
+		{
+			$info['cat_id'] = implode(',',array_diff(explode(',',$info['cat_id']), array($data['cat_id'])));
+			$this->save($info);
+		}
+	}
+
+	/**
 	 * return the backend, to be used for the given $contact_id
 	 *
 	 * @param mixed $contact_id=null

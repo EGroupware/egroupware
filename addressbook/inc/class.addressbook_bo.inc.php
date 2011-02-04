@@ -1505,6 +1505,15 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * Called by delete_category hook, when a category gets deleted.
+	 * Removes the category from addresses
+	 */
+	function delete_category($data)
+	{
+		parent::delete_category($data);
+	}
+
+	/**
 	 * Called by edit-account hook, when an account get edited --> not longer used
 	 *
 	 * This function is still there, to not give a fatal error, if the hook still exists.
