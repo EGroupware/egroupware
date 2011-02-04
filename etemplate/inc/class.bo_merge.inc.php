@@ -725,4 +725,28 @@ abstract class bo_merge
 		}
 		common::egw_exit();
 	}
+
+	/**
+	 * Get a list of document actions / files from the given directory
+	 *
+	 * @param dir Directory to search
+	 *
+	 * @return List of documents, suitable for a selectbox.  The key is document_<filename>.
+	 */
+	public static function get_documents($dir) {
+		if (!$dir) return array();
+
+		$list = array();
+		if (($files = egw_vfs::find($dir,array('need_mime'=>true),true)))
+		{
+			foreach($files as $file)
+			{
+				// return only the mime-types we support
+				if (!self::is_implemented($file['mime'],substr($file['name'],-4))) continue;
+
+				$list['document_'.$file['name']] = /*lang('Insert in document').': '.*/$file['name'];
+			}
+		}
+		return $list;
+	}
 }
