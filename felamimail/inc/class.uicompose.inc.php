@@ -143,10 +143,13 @@
 				unset($_GET['composeid']);
 				$uicompose   = CreateObject('felamimail.uicompose');
 				$messageUid = ($messageUid===true ? $uidNext : $messageUid);
-				//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder); 
-				$uicompose->bocompose->getDraftData($uicompose->bofelamimail->icServer, $folder, $messageUid);
-				$uicompose->compose();
-				return;
+				if ($this->bofelamimail->getMessageHeader($messageUid))
+				{
+					//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder); 
+					$uicompose->bocompose->getDraftData($uicompose->bofelamimail->icServer, $folder, $messageUid);
+					$uicompose->compose();
+					return;
+				}
 			} else {
 				if(!$this->bocompose->send($formData)) {
 					print "<script type=\"text/javascript\">alert('".lang("Error: Could not send Message.")." ".lang("Trying to recover from session data")."');</script>";
