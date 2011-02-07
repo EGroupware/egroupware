@@ -52,6 +52,7 @@ cc	felamimail	de	Kopie
 change folder	felamimail	de	Ordner wechseln
 check message against next rule also	felamimail	de	Nachricht auch gegen nächste Regel prüfen
 checkbox	felamimail	de	Auswahlbox
+choose from vfs	felamimail	de	aus dem VFS auswählen
 clear search	felamimail	de	Suche zurücksetzen
 click here to log back in.	felamimail	de	Hier klicken um sich wieder einzulogen.
 click here to return to %1	felamimail	de	Hier klicken um zu %1 zurückzukehren
@@ -205,7 +206,6 @@ forward to	felamimail	de	weiterleiten an
 forward to address	felamimail	de	weiterleiten an Adresse
 forwarding	felamimail	de	Weiterleitung
 found	felamimail	de	Gefunden
-fri	felamimail	de	Fr
 from	felamimail	de	Von
 from(a->z)	felamimail	de	Von (A->Z)
 from(z->a)	felamimail	de	Von (Z->A)
@@ -286,7 +286,6 @@ max uploadsize	felamimail	de	maximal Dateigröße
 message highlighting	felamimail	de	Nachrichtenhervorhebung
 message list	felamimail	de	Nachrichtenliste
 messages	felamimail	de	Nachrichten
-mon	felamimail	de	Mo
 move	felamimail	de	verschieben
 move folder	felamimail	de	Ordner verschieben
 move messages	felamimail	de	Nachrichten verschieben
@@ -350,6 +349,7 @@ please select the number of days to wait between responses	felamimail	de	Bitte w
 please supply the message to send with auto-responses	felamimail	de	Bitte geben Sie eine Nachricht eine die mit der automatischen Antwort gesendet werden soll
 port	felamimail	de	Port
 posting	felamimail	de	sende
+preview disabled for folder:	felamimail	de	Die Vorschau für eMails wird in dem ausgewählten Ordner nicht unterstützt:
 previous	felamimail	de	vorherige
 previous message	felamimail	de	vorherige Nachricht
 print it	felamimail	de	E-Mail drucken
@@ -380,7 +380,6 @@ return to options page	felamimail	de	zurück zu Einstellungen
 right	felamimail	de	Rechts
 row order style	felamimail	de	Spaltenanordnung
 rule	felamimail	de	Regel
-sat	felamimail	de	Sa
 save	felamimail	de	Speichern
 save all	felamimail	de	Alle speichern
 save as draft	felamimail	de	als Entwurf speichern
@@ -392,6 +391,7 @@ script status	felamimail	de	Skriptstatus
 search	felamimail	de	Suchen
 search for	felamimail	de	Suchen nach
 select	felamimail	de	Auswählen
+select a message to switch on its preview (click on subject)	felamimail	de	Wählen Sie eine Nachricht durch einen Mausklick auf den Betreff aus, um den Vorschaumodus für diese zu aktivieren.
 select all	felamimail	de	alle auswählen
 select emailprofile	felamimail	de	E-Mail-Profil auswählen
 select folder	felamimail	de	Ordner auswählen
@@ -426,7 +426,6 @@ submit	felamimail	de	Absenden
 subscribe	felamimail	de	Bestellen
 subscribed	felamimail	de	abonniert
 subscribed successfully!	felamimail	de	Erfolgreich abonniert
-sun	felamimail	de	So
 system signature	felamimail	de	System Signatur
 table of contents	felamimail	de	Inhaltsverzeichnis
 template folder	felamimail	de	Vorlagen Ordner
@@ -443,7 +442,6 @@ then	felamimail	de	dann
 there is no imap server configured.	felamimail	de	Es ist kein IMAP Server Konfiguriert
 this folder is empty	felamimail	de	DIESER ORDNER IST LEER
 this php has no imap support compiled in!!	felamimail	de	Dieses PHP hat keine IMAP Unterstützung!!
-thu	felamimail	de	Do
 to	felamimail	de	An
 to mail sent to	felamimail	de	Mail an senden an
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	de	Für eine TLS Verbindung, benötigen Sie PHP 5.1.0 oder neuer.
@@ -452,7 +450,6 @@ translation server	felamimail	de	Übersetzungsserver
 trash	felamimail	de	Papierkorb
 trash fold	felamimail	de	Abfall Ordner
 trash folder	felamimail	de	Ordner für gelöschte Nachrichten
-tue	felamimail	de	Di
 type	felamimail	de	Typ
 unexpected response from server to authenticate command.	felamimail	de	Unerwartete Antwort vom Server auf das AUTHENTICATE Kommando.
 unexpected response from server to digest-md5 response.	felamimail	de	Unerwartete Antwort vom Server auf die Digest-MD5 Antwort.
@@ -491,7 +488,6 @@ view message	felamimail	de	zeige Nachricht
 viewing full header	felamimail	de	zeige alle Kopfzeilen
 viewing message	felamimail	de	zeige Nachricht
 viewing messages	felamimail	de	zeige Nachrichten
-wed	felamimail	de	Mi
 when deleting messages	felamimail	de	wenn Nachrichten gelöscht werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden.
 which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren

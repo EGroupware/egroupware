@@ -52,6 +52,7 @@ cc	felamimail	en	CC
 change folder	felamimail	en	Change folder
 check message against next rule also	felamimail	en	check message against next rule also
 checkbox	felamimail	en	Checkbox
+choose from vfs	felamimail	en	choose from VFS
 clear search	felamimail	en	clear search
 click here to log back in.	felamimail	en	Click here to log back in.
 click here to return to %1	felamimail	en	Click here to return to %1
@@ -210,7 +211,6 @@ forward to	felamimail	en	forward to
 forward to address	felamimail	en	forward to address
 forwarding	felamimail	en	Forwarding
 found	felamimail	en	Found
-fri	felamimail	en	Fri
 from	felamimail	en	From
 from(a->z)	felamimail	en	From (A->Z)
 from(z->a)	felamimail	en	From (Z->A)
@@ -292,7 +292,6 @@ max uploadsize	felamimail	en	max uploadsize
 message highlighting	felamimail	en	Message Highlighting
 message list	felamimail	en	Message List
 messages	felamimail	en	messages
-mon	felamimail	en	Mon
 move	felamimail	en	move
 move folder	felamimail	en	move folder
 move messages	felamimail	en	move messages
@@ -357,6 +356,7 @@ please select the number of days to wait between responses	felamimail	en	Please 
 please supply the message to send with auto-responses	felamimail	en	Please supply the message to send with auto-responses
 port	felamimail	en	port
 posting	felamimail	en	posting
+preview disabled for folder:	felamimail	en	Preview disabled for Folder:
 previous	felamimail	en	Previous
 previous message	felamimail	en	previous message
 print it	felamimail	en	print it
@@ -387,7 +387,6 @@ return to options page	felamimail	en	Return to options page
 right	felamimail	en	Right
 row order style	felamimail	en	Row order style
 rule	felamimail	en	Rule
-sat	felamimail	en	Sat
 save	felamimail	en	Save
 save all	felamimail	en	Save all
 save as draft	felamimail	en	save as draft
@@ -399,6 +398,7 @@ script status	felamimail	en	script status
 search	felamimail	en	Search
 search for	felamimail	en	Search for
 select	felamimail	en	Select
+select a message to switch on its preview (click on subject)	felamimail	en	Select a message to switch on its preview (click on subject)
 select all	felamimail	en	Select All
 select emailprofile	felamimail	en	Select Email Profile
 select folder	felamimail	en	select folder
@@ -434,7 +434,6 @@ submit	felamimail	en	Submit
 subscribe	felamimail	en	Subscribe
 subscribed	felamimail	en	Subscribed
 subscribed successfully!	felamimail	en	Subscribed successfully!
-sun	felamimail	en	Sun
 system signature	felamimail	en	system signature
 table of contents	felamimail	en	Table of Contents
 template folder	felamimail	en	Template folder
@@ -450,7 +449,6 @@ then	felamimail	en	THEN
 there is no imap server configured.	felamimail	en	There is no IMAP Server configured.
 this folder is empty	felamimail	en	THIS FOLDER IS EMPTY
 this php has no imap support compiled in!!	felamimail	en	This PHP has no IMAP support compiled in!!
-thu	felamimail	en	Thu
 to	felamimail	en	To
 to mail sent to	felamimail	en	to mail sent to
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
@@ -459,7 +457,6 @@ translation server	felamimail	en	Translation server
 trash	felamimail	en	Trash
 trash fold	felamimail	en	Trash Fold
 trash folder	felamimail	en	Trash Folder
-tue	felamimail	en	Tue
 type	felamimail	en	type
 unexpected response from server to authenticate command.	felamimail	en	Unexpected response from server to AUTHENTICATE command.
 unexpected response from server to digest-md5 response.	felamimail	en	Unexpected response from server to Digest-MD5 response.
@@ -498,7 +495,6 @@ view message	felamimail	en	View message
 viewing full header	felamimail	en	Viewing full header
 viewing message	felamimail	en	Viewing message
 viewing messages	felamimail	en	Viewing messages
-wed	felamimail	en	Wed
 when deleting messages	felamimail	en	When deleting messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	en	Which folders (additional to the Sent Folder) should be displayed using the Sent Folder View Schema
 which folders - in general - should not be automatically created, if not existing	felamimail	en	Which folders - in general - should NOT be automatically created, if not existing
