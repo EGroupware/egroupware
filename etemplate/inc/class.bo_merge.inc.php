@@ -381,7 +381,7 @@ abstract class bo_merge
 					$repeats = '';
 					if (isset($callback))
 					{
-						for($n = 0; ($row_replacements = ExecMethod2($callback,$plugin,$id,$n)); ++$n)
+						for($n = 0; ($row_replacements = $this->$callback($plugin,$id,$n,$repeat)); ++$n)
 						{
 							$repeats .= $this->replace($repeat,$row_replacements,$mimetype,$mso_application_progid);
 						}
