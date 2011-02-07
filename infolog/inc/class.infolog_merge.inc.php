@@ -101,6 +101,7 @@ class infolog_merge extends bo_merge
 		// Add markers
 		foreach($array as $key => &$value)
 		{
+			if($key == 'info_link') continue; // not used for merge
 			if(!$value) $value = '';
 			$info['$$'.($prefix ? $prefix.'/':'').$key.'$$'] = $value;
 		}
