@@ -437,7 +437,7 @@ class importexport_helper_functions {
 	public static function _has_definitions(Array $appnames, Array $types) {
 		$def = new importexport_definitions_bo(array('application'=>$appnames, 'type' => $types));
 		$list = array();
-		foreach($def->get_definitions() as $id) {
+		foreach((array)$def->get_definitions() as $id) {
 			$definition = new importexport_definition($id);
 			if($def->is_permitted($definition->get_record_array())) {
 				$list[$definition->application][$definition->type] = $id;
