@@ -208,7 +208,6 @@
 					if ($_REQUEST['preset'][$name]) $sessionData[$name] = $_REQUEST['preset'][$name];
 				}
 			}
-
 			// is the to address set already?
 			if (!empty($_REQUEST['send_to']))
 			{
@@ -338,10 +337,17 @@
 				foreach((array)$sessionData[$destination] as $key => $value) {
 					$selectDestination = html::select('destination[]', $destination, $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
 					$this->t->set_var('select_destination', $selectDestination);
-					$address = bofelamimail::htmlentities($value, $this->displayCharset);
-					$this->t->set_var('address', $address);
-					$this->t->parse('destinationRows','destination_row',True);
-					$destinationRows++;
+					$value = htmlspecialchars_decode($value,ENT_COMPAT);
+					$value = str_replace("\"\"",'"',$value);
+					$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
+					foreach((array)$address_array as $addressObject) {
+						if ($addressObject->host == '.SYNTAX-ERROR.') continue;
+						$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
+						$address = bofelamimail::htmlentities($address, $this->displayCharset);
+						$this->t->set_var('address', $address);
+						$this->t->parse('destinationRows','destination_row',True);
+						$destinationRows++;
+					}
 				}
 			}
 			while($destinationRows < 3) {
