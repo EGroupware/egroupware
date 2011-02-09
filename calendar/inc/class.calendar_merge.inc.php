@@ -90,7 +90,7 @@ class calendar_merge extends bo_merge
 	 * @param boolean $last_event_too=false also include information about the last event
 	 * @return array
 	 */
-	protected function calendar_replacements($id,$prefix = '')
+	public function calendar_replacements($id,$prefix = '')
 	{
 		$replacements = array();
 		if(!is_array($id) || !$id['start']) {

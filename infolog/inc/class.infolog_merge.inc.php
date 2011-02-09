@@ -24,7 +24,6 @@ class infolog_merge extends bo_merge
 	 */
 	var $public_functions = array(
 		'show_replacements'		=> true,
-		'infolog_replacements'	=> true,
 	);
 
 	/**
