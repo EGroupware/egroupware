@@ -111,6 +111,12 @@ class calendar_uilist extends calendar_ui
 			$content['action'] = 'timesheet-add';
 			$content['nm']['rows']['checked'] = array($id);
 		}
+		if (is_array($content) && isset($content['nm']['rows']['document']))  // handle insert in default document button like an action
+		{
+			list($id) = @each($content['nm']['rows']['document']);
+			$content['action'] = 'document';
+			$content['nm']['rows']['checked'] = array($id);
+		}
 	
 		// Handle actions
 		if ($content['action'] != '')
@@ -187,6 +193,11 @@ class calendar_uilist extends calendar_ui
 			if($key == 'G') continue;
 			$sel_options['action'][lang('Change your participant status')]['status-'.$key] = $value;
 		}
+		// Merge print
+		if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
+                {
+                        $sel_options['action'][lang('Insert in document').':'] = calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
+                }
 		// add scrollbar to long describtion, if user choose so in his prefs
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
 		{
@@ -470,6 +481,8 @@ class calendar_uilist extends calendar_ui
 		// Split out combined values
 		if(strpos($action, 'status') !== false) {
 			list($action, $status) = explode('-', $action);
+		} elseif (strpos($action, '_') !== false) {
+			list($action, $settings) = explode('_', $action,2);
 		}
 
                 if ($use_all) 
@@ -502,7 +515,10 @@ class calendar_uilist extends calendar_ui
                                 echo $ical;
                                 common::egw_exit();
 				break;
-			
+			case 'document':
+				$msg = $this->download_document($checked,$settings);
+				$failed = count($checked);
+                                return false;
 		}
 
 		// Actions where the action is applied to each entry
@@ -656,5 +672,31 @@ class calendar_uilist extends calendar_ui
 				selbox.value = "";
 		}
 		</script>';
+	}
+
+	/**
+	 * Download a document with inserted entries
+	 *
+	 * @param array $ids timesheet-ids
+	 * @param string $document vfs-path of document
+	 * @return string error-message or error, otherwise the function does NOT return!
+	 */
+	function download_document($ids,$document='')
+	{
+		if (!$document)
+		{
+			$document = $GLOBALS['egw_info']['user']['preferences']['calendar']['default_document'];
+		}
+		else
+		{
+			$document = $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'].'/'.$document;
+		}
+		if (!@egw_vfs::stat($document))
+		{
+			return lang("Document '%1' does not exist or is not readable for you!",$document);
+		}
+		require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_merge.inc.php');
+		$document_merge = new calendar_merge();
+		return $document_merge->download($document,$ids);
 	}
 }
