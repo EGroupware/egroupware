@@ -523,11 +523,17 @@ abstract class bo_merge
 		}
 		if ($is_xml)	// zip'ed xml document (eg. OO)
 		{
-			// clean replacements from html or html-entities, which mess up xml
+			// clean replacements from array values and html or html-entities, which mess up xml
 			foreach($replacements as $name => &$value)
 			{
+				// set unresolved array values to empty string
+				if(is_array($value))
+				{
+					$value = '';
+					continue;
+				}
 				// decode html entities back to utf-8
-				if (strpos($value,'&') !== false)
+				if (is_string($value) && (strpos($value,'&') !== false))
 				{
 					$value = html_entity_decode($value,ENT_QUOTES,$charset);
 
@@ -538,7 +544,7 @@ abstract class bo_merge
 					}
 				}
 				// remove all html tags, evtl. included
-				if (strpos($value,'<') !== false)
+				if (is_string($value) && (strpos($value,'<') !== false))
 				{
 					// replace </p> and <br /> with CRLF (remove <p> and CRLF)
 					$value = str_replace(array("\r","\n",'<p>','</p>','<br />'),array('','','',"\r\n","\r\n"),$value);
