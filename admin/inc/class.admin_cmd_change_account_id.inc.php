@@ -171,6 +171,9 @@ class admin_cmd_change_account_id extends admin_cmd
 			'gallery' => array(
 				'g2_ExternalIdMap' => array(array('g_externalId',"g_entityType='GalleryUser'")),
 			),
+			'eventmgr' => array(
+				'egw_eventmgr' => array('event_creator', 'event_modifier', 'event_wpm_inhouse', 'event_sales_engineer')
+			),
 			// MyDMS	ToDo!!!
 			// VFS2		ToDo!!!
 		);
