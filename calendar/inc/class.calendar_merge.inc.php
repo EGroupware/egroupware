@@ -61,23 +61,24 @@ class calendar_merge extends bo_merge
 		$prefix = '';
 
 		// List events ?
-		if(is_array($id) && !$id['id'] && strpos($content,'$$calendar') !== false)
+		if(is_array($id) && !$id['id'] && strpos($content,'$$calendar/') !== false)
 		{
 			$events = $this->bo->search($id + array(
 				'offset' => 0,
 				'order' => 'cal_start',
 			));
 			array_unshift($events,false); unset($events[0]);	// renumber the array to start with key 1, instead of 0
-			$prefix = 'calendar/%d/';
+			$prefix = 'calendar/%d';
 		}
 		else
 		{
 			$events = array($id);
 		}
 		$replacements = array();
-		foreach($events as $n => $event)
+		$n = 0;
+		foreach($events as $event)
 		{
-			$values = $this->calendar_replacements($event,sprintf($prefix,$n));
+			$values = $this->calendar_replacements($event,sprintf($prefix,++$n));
 			$replacements += $values;
 		}
 		return $replacements;
@@ -101,7 +102,7 @@ class calendar_merge extends bo_merge
 		foreach($this->bo->event2array($event) as $name => $data)
 		{
 			if (substr($name,-4) == 'date') $name = substr($name,0,-4);
-			$replacements['$$' . ($prefix ? $prefix . '/' : '') . $name . '$$'] = is_array($data['data']) ? implode(', ',$data['data']) : $data['data'];
+			$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_'.$name . '$$'] = is_array($data['data']) ? implode(', ',$data['data']) : $data['data'];
 		}
 		foreach(array('start','end') as $what)
 		{
@@ -113,11 +114,11 @@ class calendar_merge extends bo_merge
 			{
 				$value = date($format,$event[$what]);
 				if ($format == 'l') $value = lang($value);
-				$replacements['$$' .($prefix ? $prefix.'/':'').$what.$name.'$$'] = $value;
+				$replacements['$$' .($prefix ? $prefix.'/':'').'calendar_'.$what.$name.'$$'] = $value;
 			}
 		}
 		$duration = ($event['end'] - $event['start'])/60;
-		$replacements['$$'.($prefix?$prefix.'/':'').'duration$$'] = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
+		$replacements['$$'.($prefix?$prefix.'/':'').'calendar_duration$$'] = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
 
 		$custom = config::get_customfields('calendar');
 		foreach($custom as $name => $field)
@@ -167,10 +168,9 @@ class calendar_merge extends bo_merge
 		$replacements = array();
 		foreach($events as $day => $list) 
 		{
-			$i = 0;
 			foreach($list as $key => $event)
 			{
-				$days[date('Ymd',$_date)][date('l',$event['start'])][$i++] = $this->calendar_replacements($event);
+				$days[date('Ymd',$_date)][date('l',$event['start'])][] = $this->calendar_replacements($event);
 			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
@@ -274,25 +274,25 @@ class calendar_merge extends bo_merge
 		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')."</h3></td></tr>";
 
 		foreach(array(
-			'title' => lang('Title'),
-			'description' => lang('Description'),
-			'participants' => lang('Participants'),
-			'location' => lang('Location'),
-			'start'    => lang('Start').': '.lang('Date').'+'.lang('Time'),
-			'startday' => lang('Start').': '.lang('Weekday'),
-			'startdate'=> lang('Start').': '.lang('Date'),
-			'starttime'=> lang('Start').': '.lang('Time'),
-			'end'      => lang('End').': '.lang('Date').'+'.lang('Time'),
-			'endday'   => lang('End').': '.lang('Weekday'),
-			'enddate'  => lang('End').': '.lang('Date'),
-			'endtime'  => lang('End').': '.lang('Time'),
-			'duration' => lang('Duration'),
-			'category' => lang('Category'),
-			'priority' => lang('Priority'),
-			'updated'  => lang('Updated'),
-			'recur_type' => lang('Repetition'),
-			'access'   => lang('Access').': '.lang('public').', '.lang('private'),
-			'owner'    => lang('Owner'),
+			'calendar_title' => lang('Title'),
+			'calendar_description' => lang('Description'),
+			'calendar_participants' => lang('Participants'),
+			'calendar_location' => lang('Location'),
+			'calendar_start'    => lang('Start').': '.lang('Date').'+'.lang('Time'),
+			'calendar_startday' => lang('Start').': '.lang('Weekday'),
+			'calendar_startdate'=> lang('Start').': '.lang('Date'),
+			'calendar_starttime'=> lang('Start').': '.lang('Time'),
+			'calendar_end'      => lang('End').': '.lang('Date').'+'.lang('Time'),
+			'calendar_endday'   => lang('End').': '.lang('Weekday'),
+			'calendar_enddate'  => lang('End').': '.lang('Date'),
+			'calendar_endtime'  => lang('End').': '.lang('Time'),
+			'calendar_duration' => lang('Duration'),
+			'calendar_category' => lang('Category'),
+			'calendar_priority' => lang('Priority'),
+			'calendar_updated'  => lang('Updated'),
+			'calendar_recur_type' => lang('Repetition'),
+			'calendar_access'   => lang('Access').': '.lang('public').', '.lang('private'),
+			'calendar_owner'    => lang('Owner'),
 		) as $name => $label)
 		{
 			if (in_array($name,array('start','end')) && $n&1)		// main values, which should be in the first column
