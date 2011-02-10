@@ -438,9 +438,14 @@ class importexport_helper_functions {
 		$def = new importexport_definitions_bo(array('application'=>$appnames, 'type' => $types));
 		$list = array();
 		foreach((array)$def->get_definitions() as $id) {
-			$definition = new importexport_definition($id);
-			if($def->is_permitted($definition->get_record_array())) {
-				$list[$definition->application][$definition->type] = $id;
+			// Need to instanciate it to check, but if the user doesn't have permission, it throws an exception
+			try {
+				$definition = new importexport_definition($id);
+				if($def->is_permitted($definition->get_record_array())) {
+					$list[$definition->application][$definition->type] = $id;
+				}
+			} catch (Exception $e) {
+				// That one doesn't work, keep going
 			}
 			$definition = null;
 		}
