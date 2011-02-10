@@ -121,6 +121,10 @@ class calendar_uilist extends calendar_ui
 		// Handle actions
 		if ($content['action'] != '')
 		{
+			// Allow merge using the date range filter
+			if(strpos($content['action'],'document') !== false && !count($content['nm']['rows']['checked']) && !$content['use_all']) {
+				$content['nm']['rows']['checked'][] = $this->get_merge_range($content['nm']);
+			}
 			if (!count($content['nm']['rows']['checked']) && !$content['use_all']) {
 				$msg = lang('You need to select some events first');
 			}
@@ -324,8 +328,8 @@ class calendar_uilist extends calendar_ui
 					unset($this->last['raw']);
 					$this->last = $this->bo->date2ts($this->last);
 					$this->date_filters['fixed'] = $label = lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
-					$search_params['start'] = $this->first;
-					$search_params['end'] = $this->last;
+					$params['startdate'] = $search_params['start'] = $this->first;
+					$params['enddate'] = $search_params['end'] = $this->last;
 					break;
 				}
 				elseif ((string)$this->listview_days === '0')	// monthview
@@ -339,8 +343,8 @@ class calendar_uilist extends calendar_ui
 					$this->last = $this->bo->date2ts($this->last);
 					$this->last--;
 					$this->date_filters['fixed'] = $label = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
-					$search_params['start'] = $this->first;
-					$search_params['end'] = $this->last;
+					$params['startdate'] = $search_params['start'] = $this->first;
+					$params['enddate'] = $search_params['end'] = $this->last;
 					break;
 				}
 				// fall through to after given date
@@ -353,6 +357,7 @@ class calendar_uilist extends calendar_ui
 		if ($label)
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$label;
+			$params['options-filter'][$params['filter']] = $label; // Add it in, or it will be cleared
 		}
 		if ((int) $params['col_filter']['participant'])
 		{
@@ -496,11 +501,15 @@ class calendar_uilist extends calendar_ui
 			// Pull the date for recurring events
 			$split = array();
 			foreach($checked as $key) {
-				list($id, $recur_date) = explode(':', $key);
-				$split[] = array(
-					'id'	=>	$id,
-					'recur_date'	=>	$recur_date
-				);
+				if(!is_array($key) && strpos($key,':') !== false) {
+					list($id, $recur_date) = explode(':', $key);
+					$split[] = array(
+						'id'	=>	$id,
+						'recur_date'	=>	$recur_date
+					);
+				} else {
+					$split[] = $key;
+				}
 			}
 			$checked = $split;
 		}
@@ -672,6 +681,39 @@ class calendar_uilist extends calendar_ui
 				selbox.value = "";
 		}
 		</script>';
+	}
+
+	/**
+	 * Get date ranges to select for merging instead of individual events
+	 *
+	 * @param $nm nextmatch array from submit
+	 *
+	 * @return array of ranges
+	 */
+	protected function get_merge_range($nm) 
+	{
+		$checked = array();
+		if($nm['filter'] == 'fixed') 
+		{
+			$checked['start'] = $nm['startdate'];
+			$last = $this->bo->date2array($nm['enddate']);
+			$last['hour'] = '23'; $last['minute'] = $last['sec'] = '59';
+			$checked['end'] = $this->bo->date2ts($last);
+		} else {
+			switch($nm['filter']) {
+				case 'after':
+					$checked['start'] = $nm['startdate'] ? $nm['startdate'] : strtotime('today');
+					break;
+				case 'before':
+					$checked['end'] = $nm['enddate'] ? $nm['enddate'] : strtotime('tomorrow');
+					break;
+				case 'custom':
+					$checked['start'] = $nm['startdate'];
+					$checked['end'] = $nm['enddate'];
+					break;
+			}
+		}
+		return $checked;
 	}
 
 	/**
