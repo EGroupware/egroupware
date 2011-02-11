@@ -74,7 +74,7 @@ class importexport_definition implements importexport_iface_egw_record {
 			if ( empty( $this->definition ) ) {
 				throw new Exception('Error: No such definition with identifier :"'.$_identifier.'"!');
 			}
-			if ( !( in_array( $this->user, $this->get_allowed_users() ) || $this->definition['owner'] == $this->user || $this->is_admin)) {
+			if ( !( importexport_definitions_bo::is_permitted($this->get_record_array()) || $this->is_admin)) {
 				throw new Exception('Error: User "'.$this->user.'" is not permitted to get definition with identifier "'.$_identifier.'"!');
 			}
 			$options_data = importexport_arrayxml::xml2array( $this->definition['plugin_options'] );

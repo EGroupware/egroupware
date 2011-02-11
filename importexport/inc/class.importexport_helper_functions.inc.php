@@ -442,7 +442,7 @@ class importexport_helper_functions {
 			try {
 				$definition = new importexport_definition($id);
 				if($def->is_permitted($definition->get_record_array())) {
-					$list[$definition->application][$definition->type] = $id;
+					$list[$definition->application][$definition->type][] = $id;
 				}
 			} catch (Exception $e) {
 				// That one doesn't work, keep going
