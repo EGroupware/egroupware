@@ -1127,9 +1127,20 @@ function open_edit(series)
 			// equal sized columns
 			$width = 95.0 / count($eventCols);
 			$left = 2.5 + $n * $width;
-
+			// alternative overlapping columns
+			if (count($eventCols) == 1)
+			{
+				$width = 95;
+				$left = 2.5;
+			}
+			else
+			{
+				$width = !$n ? 80 : 50;
+				$left = $n * (100.0 / count($eventCols));
+			}
+			if ($left + $width > 100.0) $width = 100.0 - $left;
 			$html .= $this->eventColWidget($eventCol,$left,$width,$indent."\t",
-				$owner ? $owner : $this->user);
+				$owner ? $owner : $this->user);//,20+10*$n);
 		}
 		$html .= $indent."</div>\n";	// calDayCol
 
