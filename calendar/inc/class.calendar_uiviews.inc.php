@@ -1409,8 +1409,11 @@ function open_edit(series)
 		// displaying all event columns of the day
 		foreach($eventCols as $n => $eventCol)
 		{
-			$html .= $this->eventColWidget($eventCol,!$n ? 0 : 60-10*(count($eventCols)-$n),
-				count($eventCols) == 1 ? 100 : (!$n ? 80 : 50),$indent."\t",
+			// equal sized columns
+			$width = 95.0 / count($eventCols);
+			$left = 2.5 + $n * $width;
+
+			$html .= $this->eventColWidget($eventCol,$left,$width,$indent."\t",
 				$owner ? $owner : $this->user);
 		}
 		$html .= $indent."</div>\n";	// calDayCol
@@ -1501,11 +1504,12 @@ function open_edit(series)
 	 * @param string $indent string for correct indention
 	 * @param int $owner owner of the eventCol
 	 */
-	function eventColWidget($events,$left,$width,$indent,$owner)
+	function eventColWidget($events,$left,$width,$indent,$owner,$z_index=null)
 	{
 		if ($this->debug > 1 || $this->debug==='eventColWidget') $this->bo->debug_message('uiviews::eventColWidget(%1,left=%2,width=%3,)',False,$events,$left,$width);
 
 		$html = $indent.'<div class="calEventCol" style="left: '.$left.'%; width:'.$width.'%;'.
+			(!is_null($z_index) ? ' z-index:'.$z_index.';' : '').
 			(!$this->use_time_grid ? ' top: '.$this->rowHeight.'%;' : '').'">'."\n";
 		foreach($events as $event)
 		{
