@@ -197,7 +197,6 @@ function callNodeSelect(_nodeIDfc, mode) {
 }
 
 function onNodeSelect(_nodeID) {
-//alert(_nodeID)
 	if (typeof CopyOrMove == 'undefined') CopyOrMove = egw_appWindow('felamimail').CopyOrMove;
 	if (typeof prefAskForMove == 'undefined') prefAskForMove = egw_appWindow('felamimail').prefAskForMove; 
 	var Check = CopyOrMove;
