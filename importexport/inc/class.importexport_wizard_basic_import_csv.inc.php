@@ -259,6 +259,7 @@ class importexport_wizard_basic_import_csv
 		{
 			$content['msg'] = $this->steps['wizard_step50'];
 			$content['step'] = 'wizard_step50';
+			$preserv = $content;
 
 			if(!$content['field_mapping'] && $content['plugin_options']) {
 				$content['field_mapping'] = $content['plugin_options']['field_mapping'];
@@ -293,7 +294,6 @@ class importexport_wizard_basic_import_csv
 				$j++;
 			}
 			$sel_options['field_mapping'] = array('--NONE--' => lang('none')) + $this->mapping_fields;
-			$preserv = $content;
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
 		}
