@@ -385,14 +385,32 @@ class groupdav extends HTTP_WebDAV_Server
 	function _properties($app,$no_extra_types=false,$user=null,$path='/')
 	{
 		if ($this->debug) error_log(__METHOD__."(app='$app', no_extra_types=$no_extra_types, user='$user', path='$path')");
+		$user_preferences = $GLOBALS['egw_info']['user']['preferences'];
 		if ($user)
 		{
 			$account_lid = $this->accounts->id2name($user);
+			if ($user >= 0 && $GLOBALS['egw']->preferences->account_id != $user)
+			{
+				$GLOBALS['egw']->preferences->__construct($user);
+				$user_preferences = $GLOBALS['egw']->preferences->read_repository();
+				$GLOBALS['egw']->preferences->__construct($GLOBALS['egw_info']['user']['account_lid']);
+			}
 		}
 		else
 		{
 			$account_lid = $GLOBALS['egw_info']['user']['account_lid'];
 		}
+		
+		if (strlen($user_preferences['calendar']['display_color']) == 9 &&
+			$user_preferences['calendar']['display_color'][0] == '#')
+		{
+			$display_color = $user_preferences['calendar']['display_color'];
+		}
+		else
+		{
+			$display_color = '#0040A0FF';
+		}
+		
 		$account = $this->accounts->read($account_lid);
 		$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
 				$GLOBALS['egw']->translation->charset(),'utf-8');
@@ -433,6 +451,7 @@ class groupdav extends HTTP_WebDAV_Server
 				// OUTBOX URLs of the current user
 				$props[] =	self::mkprop(groupdav::CALDAV,'schedule-outbox-URL',
 					array(self::mkprop(groupdav::DAV,'href',$this->base_uri.'/calendar/')));
+				$props[] = self::mkprop(groupdav::ICAL,'calendar-color',$display_color);
 				break;
 			case 'infolog':
 				$props[] = self::mkprop(groupdav::CALDAV,'calendar-home-set',array(
