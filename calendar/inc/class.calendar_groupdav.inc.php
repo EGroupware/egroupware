@@ -920,15 +920,6 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 	 */
 	static function extra_properties(array $props=array(), $displayname, $base_uri=null)
 	{
-		if (strlen($GLOBALS['egw_info']['user']['preferences']['calendar']['display_color']) == 9 &&
-			$GLOBALS['egw_info']['user']['preferences']['calendar']['display_color'][0] == '#')
-		{
-			$display_color = $GLOBALS['egw_info']['user']['preferences']['calendar']['display_color'];
-		}
-		else
-		{
-			$display_color = '#0040A0FF';
-		}
 		// calendar description
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-description',$displayname);
 		/*
@@ -965,7 +956,6 @@ error_log(__METHOD__."($path,,".array2string($start).") filter=".array2string($f
 		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-data',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/calendar', 'version'=> '2.0')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/x-calendar', 'version'=> '1.0'))));
-		$props[] = HTTP_WebDAV_Server::mkprop(groupdav::ICAL,'calendar-color',$display_color);
 		//$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'publish-url',array(
 		//	HTTP_WebDAV_Server::mkprop('href',$base_uri.'/calendar/')));
 
