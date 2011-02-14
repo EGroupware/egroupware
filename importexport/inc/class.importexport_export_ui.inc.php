@@ -70,7 +70,12 @@ class importexport_export_ui {
 			'application' => isset($content['appname']) ? $content['appname'] : '%'
 		));
 		foreach ((array)$definitions->get_definitions() as $identifier) {
+			try {
 				$definition = new importexport_definition($identifier);
+			} catch (Exception $e) {
+				// permission error
+				continue;
+			}
 				if ($title = $definition->get_title()) {
 					$sel_options['definition'][$title] = $title;
 				}
@@ -311,7 +316,12 @@ class importexport_export_ui {
 		));
 		$response->addScript("clear_options('exec[definition]');");
 		foreach ((array)$definitions->get_definitions() as $identifier) {
+			try {
 				$definition = new importexport_definition($identifier);
+			} catch (Exception $e) {
+				// Permission error
+				continue;
+			}
 				if ($title = $definition->get_title()) {
 					if (!$selected_plugin) $selected_plugin = $title;
 					$response->addScript("selectbox_add_option('exec[definition]','$title', '$value',".($selected_plugin == $title ? 'true' : 'false').");");

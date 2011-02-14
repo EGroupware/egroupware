@@ -104,11 +104,19 @@
 					'application' => $data['appname']
 				));
 				foreach ((array)$definitions->get_definitions() as $identifier) {
+					try
+					{
 						$definition = new importexport_definition($identifier);
-						if ($title = $definition->get_title()) {
-							$options['definition'][$title] = $title;
-						}
-						unset($definition);
+					}
+					catch (Exception $e)
+					{
+						// Permission error
+						continue;
+					}
+					if ($title = $definition->get_title()) {
+						$options['definition'][$title] = $title;
+					}
+					unset($definition);
 				}
 				unset($definitions);
 			}

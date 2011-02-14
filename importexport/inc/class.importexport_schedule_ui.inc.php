@@ -167,11 +167,16 @@
 			if($data['plugin']) $query['plugin'] = $data['plugin'];
 			$definitions = new importexport_definitions_bo($query);
 			foreach ((array)$definitions->get_definitions() as $identifier) {
+				try {
 					$definition = new importexport_definition($identifier);
-					if ($title = $definition->get_title()) {
-						$options['definition'][$title] = $title;
-					}
-					unset($definition);
+				} catch (Exception $e) {
+					// permission error
+					continue;
+				}
+				if ($title = $definition->get_title()) {
+					$options['definition'][$title] = $title;
+				}
+				unset($definition);
 			}
 			unset($definitions);
 
