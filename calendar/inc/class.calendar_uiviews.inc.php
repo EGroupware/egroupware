@@ -1498,36 +1498,46 @@ function open_edit(series)
 		
 		$z_index = is_null($z_index) ? 20 : (int)$z_index;
 
+		// ATM we do not support whole day events or recurring events for dragdrop
+		$dd_emulation = "";
+		if (is_object($this->dragdrop) &&
+			$this->use_time_grid &&
+			(int)$event['id'] && $this->bo->check_perms(EGW_ACL_EDIT,$event))
+		{
+			if (!$event['whole_day_on_top'] &&
+				!$event['whole_day'] &&
+				!$event['recur_type'])
+			{
+				// register event as draggable
+				$this->dragdrop->addDraggable(
+						$draggableID,
+						array(
+							'eventId'=>$event['id'],
+							'eventOwner'=>$event['owner'],
+							'calendarOwner'=>$owner,
+							'errorImage'=>addslashes(html::image('phpgwapi','dialog_error',false,'style="width: 16px;"')),
+							'loaderImage'=>addslashes(html::image('phpgwapi','ajax-loader')),
+						),
+						'calendar.dragDropFunctions.dragEvent',
+						'calendar.dragDropFunctions.dropEvent',
+						'top center 2'
+				);
+			}
+			else
+			{
+				// If a event isn't drag-dropable, the drag drop event handling has to be fully disabled
+				// for that object. Clicking on it - however - should still bring it to the foreground.
+				$dd_emulation = ' onmousedown="dd.z++; this.style.zIndex = dd.z; event.cancelBubble=true;"'
+					.'onmouseup="event.cancelBubble=true;"'
+					.'onmousemove="event.cancelBubble=true;"';
+			}
+		}
+
 		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: '.$z_index.';"'.
 			$popup.' '.html::tooltip($tooltip,False,$ttip_options).
-			'>'."\n".$ie_fix.$html."\n".
+			$dd_emulation.'>'.$prefix_icon."\n".$ie_fix.$html."\n".
 			$indent."</div>"."\n";
-
-		// ATM we do not support whole day events or recurring events for dragdrop
-		if (is_object($this->dragdrop) &&
-			$this->use_time_grid &&
-			(int)$event['id'] && $this->bo->check_perms(EGW_ACL_EDIT,$event) &&
-			!$event['whole_day_on_top'] &&
-			!$event['whole_day'] &&
-			!$event['recur_type']
-		)
-		{
-			// register event as draggable
-			$this->dragdrop->addDraggable(
-					$draggableID,
-					array(
-						'eventId'=>$event['id'],
-						'eventOwner'=>$event['owner'],
-						'calendarOwner'=>$owner,
-						'errorImage'=>addslashes(html::image('phpgwapi','dialog_error',false,'style="width: 16px;"')),
-						'loaderImage'=>addslashes(html::image('phpgwapi','ajax-loader')),
-					),
-					'calendar.dragDropFunctions.dragEvent',
-					'calendar.dragDropFunctions.dropEvent',
-					'top center 2'
-			);
-		}
 
 		return $html;
 	}
