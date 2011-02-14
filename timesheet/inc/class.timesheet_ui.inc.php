@@ -669,6 +669,7 @@ class timesheet_ui extends timesheet_bo
 			{
 				$readonlys["view[$row[ts_id]]"] = $readonlys["edit[$row[ts_id]]"] = $readonlys["delete[$row[ts_id]]"] = true;
 				$readonlys["checked[{$row[ts_id]}]"] = true;
+				$readonlys["document[{$row[ts_id]}]"] = true;
 				if ($query['sort'] == 'ASC') $row['ts_start'] -= 7200;	// fix for DSL change
 				switch($row['ts_id'])
 				{
