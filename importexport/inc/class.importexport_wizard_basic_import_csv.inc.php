@@ -191,6 +191,9 @@ class importexport_wizard_basic_import_csv
 			if(!$content['num_header_lines'] && $content['plugin_options']['num_header_lines']) {
 				$content['num_header_lines'] = $content['plugin_options']['num_header_lines'];
 			}
+			if(!$content['update_cats'] && $content['plugin_options']['update_cats']) {
+				$content['update_cats'] = $content['plugin_options']['update_cats'];
+			}
 
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
 				array('utf-8' => 'utf-8 (Unicode)');
