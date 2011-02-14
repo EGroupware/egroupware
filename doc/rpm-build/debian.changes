@@ -1,3 +1,29 @@
+egroupware (1.8.001.20110214) hardy; urgency=low
+
+  * eMail: fix for a problem reported with FreeBSD regarding the generation of random strings for temp-filenames
+  * Notifications: fix dont try to notify when none is set/forced for folders to check for new mails; dont try to notify when email as module is not enabled for the particular user
+  * eMail: remove invalid -at- when occurring in full name, when adding address to email; skip addresses that produce a parse error while parsed with imap_rfc822_parse_adrlist
+  * eMail: fixed error reported with the user-list: Warning on Felamimail, error array_merge in line 1600
+  * fixed birthday of contacts/accounts in LDAP could not be modified in addressbook
+  * WiKi: Edit permissions now do imply read permissions
+  * ImportExport: Replace CRLF with LF so excel does not break lines early (myStylite#974)
+  * CSV Export: Replace CRLF with LF so excel does not break lines early (myStylite#974)
+  * ProjectManager config allow non-admin to change working times was not working
+  * Calendar: invite rights, should NOT implicate a freebusy rights (users with invite rights could see freebusy times of other users)
+  * JSCalendar: fixed week containing 4th Jan is shown as 52th instead 1st week, if week starts on sunday is selected
+  * dont give sql error in gathering statistic data, if table does not exists (eg. Gallery is not installed)
+  * Weeknumbers in calendar views, were wrong for week-start-day other then Monday
+  * addressbook: check if typefilter is valid (type available), if not remove it
+  * addressbook: postgres compatibility for distributionlists
+  * eMail: not filtering own(ed) emailaddresses out of drafts while reopening them for continued processing
+  * calendar: PANAMA holidays provided by rafael chacon
+  * eMail: preview now requires user action (click on)
+  * fixed "undefined function lang_select" issue, if no cookies are allowed, also showing again language selection for new installs
+  * Calendar: fixed overlapping columns to result in equally wide visible parts for unlimited number of columns
+  * SambaAdmin: try binded as $accountDN with $_newPassword, in case root DN has no rights to modify anything
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 14 Feb 2011 15:04:52 +0100
+
 egroupware (1.8.001.20101201) hardy; urgency=low
 
   * Final EGroupware 1.8.001 release:
