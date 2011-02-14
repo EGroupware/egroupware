@@ -1376,7 +1376,7 @@ function open_edit(series)
 			}
 			if ($left + $width > 100.0) $width = 100.0 - $left;
 			$html .= $this->eventColWidget($eventCol,$left,$width,$indent."\t",
-				$owner ? $owner : $this->user);//,20+10*$n);
+				$owner ? $owner : $this->user, 20+10*$n);
 		}
 		$html .= $indent."</div>\n";	// calDayCol
 
@@ -1459,11 +1459,15 @@ function open_edit(series)
 		if ($this->debug > 1 || $this->debug==='eventColWidget') $this->bo->debug_message('uiviews::eventColWidget(%1,left=%2,width=%3,)',False,$events,$left,$width);
 
 		$html = $indent.'<div class="calEventCol" style="left: '.$left.'%; width:'.$width.'%;'.
-			(!is_null($z_index) ? ' z-index:'.$z_index.';' : '').
+			// the "calEventCol" spans across a whole column (as the name suggests) - setting the
+			// z-index here would give the whole invisible column a z-index and thus the underlying
+			// regions are not clickable anymore. The z_index has now moved the the eventWidget
+			// function.
+			//(!is_null($z_index) ? ' z-index:'.$z_index.';' : '').
 			(!$this->use_time_grid ? ' top: '.$this->rowHeight.'%;' : '').'">'."\n";
 		foreach($events as $event)
 		{
-			$html .= $this->eventWidget($event,$width,$indent."\t",$owner);
+			$html .= $this->eventWidget($event,$width,$indent."\t",$owner,false,'event_widget',$z_index);
 		}
 		$html .= $indent."</div>\n";
 
@@ -1481,9 +1485,10 @@ function open_edit(series)
 	 * @param int $owner owner of the calendar the event is in
 	 * @param boolean $return_array=false should an array with keys(tooltip,popup,html) be returned or the complete widget as string
 	 * @param string $block='event_widget' template used the render the widget
+	 * @param int $z_index is the z-index of the drag-drobable outer box of the event.
 	 * @return string/array
 	 */
-	function eventWidget($event,$width,$indent,$owner,$return_array=false,$block='event_widget')
+	function eventWidget($event,$width,$indent,$owner,$return_array=false,$block='event_widget',$z_index=null)
 	{
 		if ($this->debug > 1 || $this->debug==='eventWidget') $this->bo->debug_message('uiviews::eventWidget(%1,width=%2)',False,$event,$width);
 
@@ -1710,8 +1715,12 @@ function open_edit(series)
 			$style = 'position: relative; margin-top: 3px;';
 		}
 
+		$prefix_icon = isset($event['prepend_icon']) ? $event['prepend_icon'] : '';
+		
+		$z_index = is_null($z_index) ? 20 : (int)$z_index;
+
 		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').' '.$status_class.
-			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: 20;"'.
+			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: '.$z_index.';"'.
 			$popup.' '.html::tooltip($tooltip,False,$ttip_options).
 			'>'."\n".$ie_fix.$html."\n".
 			$indent."</div>"."\n";
