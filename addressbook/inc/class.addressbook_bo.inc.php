@@ -1567,7 +1567,24 @@ class addressbook_bo extends addressbook_so
 			}
 			foreach(egw_link::get_links('addressbook',$contact['id']) as $data)
 			{
-				egw_link::link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
+				//_debug_array(array('function'=>__METHOD__,'line'=>__LINE__,'app'=>'addressbook','id'=>$contact['id'],'data:'=>$data,'target'=>$target['id']));
+				// info_from and info_link_id (main link)
+				$newlinkID = egw_link::link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
+				//_debug_array(array('newLinkID'=>$newlinkID));
+				if ($newlinkID) 
+				{
+					// update egw_infolog set info_link_id=$newlinkID where info_id=$data['id'] and info_link_id=$data['link_id']
+					if ($data['app']=='infolog') 
+					{
+						$this->db->update('egw_infolog',array(
+								'info_link_id' => $newlinkID
+							),array(
+								'info_id' => $data['id'],
+								'info_link_id' => $data['link_id']
+							),__LINE__,__FILE__,'infolog');
+					}
+					unset($newlinkID);
+				}
 			}
 			if ($this->delete($contact['id'])) $success++;
 		}
