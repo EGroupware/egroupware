@@ -179,9 +179,9 @@ class addressbook_so
 	var $total;
 
 	/**
-	 * storage object: sql (socontacts_sql) or ldap (so_ldap) backend class
+	 * storage object: sql (addressbook_sql) or ldap (addressbook_ldap) backend class
 	 *
-	 * @var socontacts_sql
+	 * @var addressbook_sql
 	 */
 	var $somain;
 	/**
@@ -199,7 +199,7 @@ class addressbook_so
 	/**
 	 * custom fields backend
 	 *
-	 * @var so_sql
+	 * @var addressbook_sql
 	 */
 	var $soextra;
 	var $sodistrib_list;
@@ -512,11 +512,6 @@ class addressbook_so
 		}
 		if($error_nr) return $error_nr;
 
-		// save customfields, if not already done by somain->save();
-		if(!($this->somain instanceof addressbook_sql))
-		{
-			$this->soextra->save_customfields($this->data2db($contact));
-		}
 		return false;	// no error
 	}
 
