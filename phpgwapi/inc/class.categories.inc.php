@@ -23,15 +23,15 @@
  * Categories are read now once from the database into a static cache variable (by the static init_cache method).
  * The egw object fills that cache ones per session, stores it in a private var, from which it restores it for each
  * request of that session.
- * 
+ *
  * $cat['data'] array:
  * ------------------
  * $cat['data'] array is stored serialized in the database to allow applications to simply add all
  * sorts of values there (without the hassel of a DB schema change).
- * Static methods categories::read($cat_id) and categories::id2name now returns data already unserialized 
- * and add() or edit() methods automatically serialize $cat['data'], if it's not yet serialized. 
+ * Static methods categories::read($cat_id) and categories::id2name now returns data already unserialized
+ * and add() or edit() methods automatically serialize $cat['data'], if it's not yet serialized.
  * return*() methods still return $cat['data'] serialized by default, but have a parameter to return
- * it as array(). That default might change in future too, so better check if it's 
+ * it as array(). That default might change in future too, so better check if it's
  * not already an array, before unserialize!
  *
  * @ToDo The cache now contains a backlink from the parent to it's children. Use that link to simplyfy return_all_children
@@ -88,21 +88,21 @@ class categories
 	 * Appname for global categories
 	 */
 	const GLOBAL_APPNAME = 'phpgw';
-	
+
 	/**
 	 * account_id for global categories
 	 */
 	const GLOBAL_ACCOUNT = 0;
-	
+
 	/**
 	 * Owners for global accounts
-	 * 
+	 *
 	 * Usually the users group memberships and self::GLOBAL_ACCOUNT
-	 * 
+	 *
 	 * @var array
 	 */
 	private $global_owners = array(self::GLOBAL_ACCOUNT);
-	
+
 	/**
 	 * constructor for categories class
 	 *
@@ -232,13 +232,13 @@ class categories
 			{
 				continue;
 			}
-			
+
 			// check for read permission
 			if(!$this->check_perms(EGW_ACL_READ, $cat))
 			{
 				continue;
 			}
-			
+
 			// check if we have the correct type
 			switch ($type)
 			{
@@ -383,7 +383,7 @@ class categories
 	 * Read a category
 	 *
 	 * We use a shared cache together with id2name
-	 * 
+	 *
 	 * Data array get automatically unserialized, if it was serialized!
 	 *
 	 * @param int $id id of category
@@ -392,11 +392,11 @@ class categories
 	static function read($id)
 	{
 		if (!isset(self::$cache[$id])) return false;
-		
+
 		$cat = self::$cache[$id];
-		$cat['data'] = $cat['data'] ? ((($arr=unserialize($cat['data'])) !== false || $cat['data'] === 'b:0;') ? 
+		$cat['data'] = $cat['data'] ? ((($arr=unserialize($cat['data'])) !== false || $cat['data'] === 'b:0;') ?
 			$arr : $cat['data']) : array();
-			
+
 		return $cat;
 	}
 
@@ -443,7 +443,7 @@ class categories
 
 		return $id;
 	}
-	
+
 	/**
 	 * Checks category permissions for a given list of commaseparated category ids
 	 * and truncates it by the ones the user does not have the requested permission on
@@ -455,7 +455,7 @@ class categories
 	function check_list($needed, $cat_list)
  	{
 		if (empty($cat_list)) return $cat_list;
-		
+
 		$cat_arr = explode(',',$cat_list);
 		if (!empty($cat_arr) && is_array($cat_arr) && count($cat_arr) > 0)
 		{
@@ -468,10 +468,10 @@ class categories
 			}
 			$cat_list = implode(',',$cat_arr);
 		}
-		
+
 		return $cat_list;
 	}
-	
+
 	/**
 	 * Checks if the current user has the necessary ACL rights
 	 *
@@ -495,7 +495,7 @@ class categories
 			//echo "<p>".__METHOD__."($needed,$category[name]) access because class instanciated for GLOBAL ACCOUNT</p>\n";
 			return true;
 		}
-		
+
 		// Read access to global categories
 		if ($needed == EGW_ACL_READ && in_array($category['owner'],$this->global_owners) &&
 			($category['appname'] == self::GLOBAL_APPNAME || $category['appname'] == $this->app_name))
@@ -503,19 +503,19 @@ class categories
 			//echo "<p>".__METHOD__."($needed,$category[name]) access because global via memberships</p>\n";
 			return true;
 		}
-		
+
 		// Full access to own categories
 		if ($category['appname'] == $this->app_name && $category['owner'] == $this->account_id)
 		{
 			return true;
 		}
-		
+
 		// Load the application grants
 		if ($category['appname'] == $this->app_name && is_null($this->grants))
 		{
 			$this->grants = $GLOBALS['egw']->acl->get_grants($this->app_name);
 		}
-		
+
 		// Check for ACL granted access, the self::GLOBAL_ACCOUNT user must not get access by ACL to keep old behaviour
 		return ($this->account_id != self::GLOBAL_ACCOUNT && $category['appname'] == $this->app_name && ($this->grants[$category['owner']] & $needed) &&
 					($category['access'] == 'public' ||  ($this->grants[$category['owner']] & EGW_ACL_PRIVATE)));
@@ -566,7 +566,6 @@ class categories
 		}
 		if ($drop_subs)
 		{
-			//$where = array('cat_id='.(int)$cat_id.' OR cat_parent='.(int)$cat_id.' OR cat_main='.(int)$cat_id);
 			$all_cats = $this->return_all_children($cat_id);
 			$where = array("cat_id='".implode("' OR cat_id='", $all_cats)."'");
 		}
@@ -578,20 +577,18 @@ class categories
 
 		$GLOBALS['hook_values'] = array(
 			'cat_id'  => $cat_id,
-			'cat_name' => $this->id2name($cat_id),
+			'cat_name' => self::id2name($cat_id),
 			'drop_subs' => $drop_subs,
 			'modify_subs' => $modify_subs,
 			'location'    => 'delete_category'
 		);
-		if($this->is_global($cat_id))
+		if($this->is_global($cat_id, true))	// true = application global (otherwise eg. global addressbook categories call all apps)
 		{
 			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values'],False,True);  // called for every app now, not only enabled ones)
 		}
 		else
 		{
-			$cat = self::read($cat_id);
-			$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'], $cat['appname']);
-			unset($cat);
+			$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'], self::id2name($cat_id,'appname'));
 		}
 
 		$this->db->delete(self::TABLE,$where,__LINE__,__FILE__);
@@ -666,7 +663,7 @@ class categories
 			// everything seems in order -> proceed
 			$values['level'] = ($values['parent'] ? $this->id2name($values['parent'],'level')+1:0);
 			$this->adapt_level_in_subtree($values);
-			
+
 			return $this->add($values);
 		}
 		else
@@ -767,18 +764,19 @@ class categories
 		}
 		return $cache[$cat['cat_name']] = (int) $cats[0]['id'];
 	}
-	
+
 	/**
-	 * Check if catgory is global (owner <= 0 || appname == 'phpgw')
-	 * 
+	 * Check if category is global (owner <= 0 || appname == 'phpgw')
+	 *
 	 * @param int|array $cat
+	 * @param boolean $application_global=false true check for application global categories only (appname == 'phpgw')
 	 * @return boolean
 	 */
-	static function is_global($cat)
+	static function is_global($cat,$application_global=false)
 	{
 		if (!is_array($cat) && !($cat = self::read($cat))) return null;	// cat not found
-		
-		return $cat['owner'] <= self::GLOBAL_ACCOUNT || $cat['appname'] == self::GLOBAL_APPNAME;
+
+		return $cat['owner'] <= self::GLOBAL_ACCOUNT && !$application_global || $cat['appname'] == self::GLOBAL_APPNAME;
 	}
 
 	/**
@@ -964,7 +962,7 @@ class categories
 	{
 		return isset(self::$cache[$id]) ? array(self::$cache[$id]) : false;
 	}
-	
+
 	/**
 	 * return into a select box, list or other formats
 	 *
