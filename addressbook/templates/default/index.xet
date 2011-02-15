@@ -6,15 +6,14 @@
 			<menupopup rows="1" cols="1" id="org_view" no_lang="1" statustext="Select a view" onchange="1" options="All contacts"/>
 		</menulist>
 	</template>
-	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.5.001">
+	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
 		<hbox>
 			<buttononly id="search" label="Advanced search" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.search'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 			<buttononly id="add" label="Add" statustext="Add a new contact" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="rightPadAdd"/>
-			<description id="manual" class="rightPadAdd"/>
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.7.002">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -28,14 +27,17 @@
 				<column/>
 				<column/>
 				<column disabled="@no_customfields"/>
+				<column disabled="@no_note"/>
 				<column disabled="@no_distribution_list"/>
+				<column/>
+				<column/>
 				<column/>
 				<column/>
 				<column width="75"/>
 			</columns>
 			<rows>
 				<row class="th">
-					<description/>
+					<description options="1"/>
 					<grid spacing="0" padding="0">
 						<columns>
 							<column/>
@@ -71,7 +73,7 @@
 					<nextmatch-header id="bday" label="Birthday"/>
 					<vbox options="0,0">
 						<nextmatch-header label="Business address" id="business"/>
-						<nextmatch-customfilter id="adr_one_countryname" options="select-country,Country,1" class="countrySelect"/>
+						<nextmatch-customfilter id="adr_one_countrycode" options="select-country,Country,0,No country selected" class="countrySelect"/>
 						<nextmatch-sortheader id="adr_one_postalcode" label="zip code"/>
 					</vbox>
 					<nextmatch-header label="Home address" id="home"/>
@@ -87,7 +89,10 @@
 						<nextmatch-header id="email_home" label="Home email"/>
 					</vbox>
 					<nextmatch-customfields id="customfields"/>
+					<nextmatch-header label="Note" id="note"/>
 					<nextmatch-header label="Distribution lists" id="distribution_list"/>
+					<nextmatch-header label="Addressbook" id="owner"/>
+					<nextmatch-sortheader label="ID" id="contact_id"/>
 					<vbox options="0,0">
 						<nextmatch-header label="Last date" id="calendar"/>
 						<nextmatch-header label="Next date" id="calendar"/>
@@ -118,6 +123,9 @@
 					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
 					<vbox options="0,0">
 						<description id="${row}[adr_one_countryname]" no_lang="1"/>
+						<menulist>
+							<menupopup type="select-country" id="${row}[adr_one_countrycode]" readonly="true"/>
+						</menulist>
 						<hbox options="0,0" orient="0">
 							<description no_lang="1" id="${row}[adr_one_locality]"/>
 							<description class="leftPad5" no_lang="1" id="${row}[adr_one_region]"/>
@@ -128,6 +136,9 @@
 					</vbox>
 					<vbox options="0,0">
 						<description id="${row}[adr_two_countryname]" no_lang="1"/>
+						<menulist>
+							<menupopup type="select-country" id="${row}[adr_two_countrycode]" readonly="true"/>
+						</menulist>
 						<hbox options="0,0">
 							<description no_lang="1" id="${row}[adr_two_locality]"/>
 							<description no_lang="1" id="${row}[adr_two_region]" class="leftPad5"/>
@@ -149,7 +160,12 @@
 						<url-email class="fixedHeight" id="${row}[email_home]" readonly="true"/>
 					</vbox>
 					<customfields-list rows="1" cols="1" id="$row" class="customfields"/>
+					<textbox multiline="true" no_lang="1" id="${row}[note]" readonly="true"/>
 					<description id="${row}[distrib_lists]"/>
+					<menulist>
+						<menupopup id="${row}[owner]" readonly="true"/>
+					</menulist>
+					<description class="contactid" id="${row}[id]"/>
 					<vbox options="0,0">
 						<link id="${row}[last_link]"/>
 						<link id="${row}[next_link]"/>
@@ -167,13 +183,14 @@
 					<vbox options="0,0" class="noPrint">
 						<hbox options="0">
 							<image options="addressbook.addressbook_ui.view&amp;contact_id=$row_cont[id]" label="View" src="view"/>
-							<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=460,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>
+							<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=870,height=460,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>
 							<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this contact" onclick="return confirm('Delete this contact');"/>
 							<checkbox id="checked[]" options="$row_cont[id]" statustext="Select multiple contacts for a further action" align="right"/>
 						</hbox>
 						<hbox options="0">
-							<button id="document[$row_cont[id]]" image="new" label="Insert in document"/>
+							<button id="document[$row_cont[id]]" image="etemplate/merge" label="Insert in document" class="image16"/>
 							<image src="filemanager/navbar" options="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/addressbook/$row_cont[id]" class="image16" label="Filemanager"/>
+							<button image="calendar/navbar" label="Add appointment" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=c$row_cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" id="calendar" class="image16"/>
 						</hbox>
 					</vbox>
 				</row>

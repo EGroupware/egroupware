@@ -338,7 +338,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			//_debug_array(array('Typefilter:'=> $content['nm']['col_filter']['tid'],'Available Types:'=>$availabletypes,'action:'=>'remove invalid filter'));
 			unset($content['nm']['col_filter']['tid']);
-		} 
+		}
 		if (!isset($content['nm']['col_filter']['tid'])) $content['nm']['col_filter']['tid'] = $availabletypes[0];
 		if (count($this->content_types) > 1)
 		{
@@ -410,7 +410,7 @@ class addressbook_ui extends addressbook_bo
 		namepart = email.substring(0,splitter);
 		emailpart = email.substring(splitter);
 		email = namepart.replace(/@/g,' ')+emailpart;
-		
+
 		if (document.getElementById('exec[nm][to][cc]').checked == true)
 		{
 			to = 'cc';
@@ -1162,6 +1162,7 @@ class addressbook_ui extends addressbook_bo
 
 		// disable filemanger icon if user has no access to filemanager
 		$readonlys['filemanager/navbar'] = !isset($GLOBALS['egw_info']['user']['apps']['filemanager']);
+		$readonlys['calendar'] = !isset($GLOBALS['egw_info']['user']['apps']['calendar']);
 
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
