@@ -325,8 +325,14 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 					if (!empty($contact[$attr])) $message->$key = base64_encode($contact[$attr]);
 					break;
 
-				case 'bday':	// zpush uses timestamp in servertime
-					if (!empty($contact[$attr])) $message->$key = egw_time::to($contact[$attr],'server');
+				case 'bday':	// zpush seems to use a timestamp in utc (at least vcard backend does)
+					if (!empty($contact[$attr]))
+					{
+            			$tz = date_default_timezone_get();
+            			date_default_timezone_set('UTC');
+            			$message->birthday = strtotime($contact[$attr]);
+            			date_default_timezone_set($tz);
+					}
 					break;
 
 				case 'cat_id':
