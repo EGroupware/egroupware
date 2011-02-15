@@ -188,6 +188,7 @@ class calendar_uiviews extends calendar_ui
 		}
 	}
 
+
 	/**
 	 * Calculate iso8601 week-number, which is defined for Monday as first day of week only
 	 *
@@ -338,6 +339,9 @@ class calendar_uiviews extends calendar_ui
 				$this->bo->long_date($this->first,$this->planner_days > 1 ? $this->last : 0);
 		}
 
+		$merge = $this->merge();
+		if($merge) return $merge;
+
 		$search_params = $this->search_params;
 		$search_params['daywise'] = false;
 		$search_params['start'] = $this->first;
@@ -389,6 +393,9 @@ class calendar_uiviews extends calendar_ui
 		$this->_month_align_year($this->first,$this->last);
 
 		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$this->year;
+
+		$merge = $this->merge();
+		if($merge) return $merge;
 
 		$days =& $this->bo->search(array(
 			'start'   => $this->first,
@@ -609,6 +616,28 @@ class calendar_uiviews extends calendar_ui
 
 		$this->use_time_grid = !$this->cal_prefs['use_time_grid'] || $this->cal_prefs['use_time_grid'] == 'all';	// all views
 
+		// Merge print
+		if($weeks)
+		{
+			// Split up span into multiple weeks
+			$timespan = array();
+			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
+			for($i = 0; $i < $weeks; $i++)
+			{
+				$timespan[] = array(
+					'start' => strtotime("+$i weeks", $this->first),
+					'end' => strtotime('+' . ($i+1).' weeks', $this->first) -1
+				);
+			}
+		} else {
+			$timespan[] = array(
+				'start' => mktime(0,0,0,$this->month,1,$this->year),
+				'end' => mktime(0,0,0,$this->month+1,1,$this->year)-1
+			);
+		}
+		$merge = $this->merge($timespan);
+		if($merge) return $merge;
+
 		if ($weeks)
 		{
 			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
@@ -789,6 +818,9 @@ class calendar_uiviews extends calendar_ui
 		#		$class = $class == 'row_on' ? 'th' : 'row_on';
 		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
 
+		$merge = $this->merge();
+		if($merge) return $merge;
+
 		$search_params = array(
 				'start'   => $this->first,
 				'end'     => $this->last,
@@ -842,6 +874,9 @@ class calendar_uiviews extends calendar_ui
 		$this->use_time_grid = true;    // day-view always uses a time-grid, independent what's set in the prefs!
 
 		$this->search_params['end'] = $this->last = $this->first+DAY_s-1;
+
+		$merge = $this->merge();
+		if($merge) return $merge;
 
 		if (!$home)
 		{

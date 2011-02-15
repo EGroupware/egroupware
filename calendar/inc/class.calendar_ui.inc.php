@@ -773,23 +773,21 @@ function load_cal(url,id) {
 				'link' => False
 			);
 		}
-/*
-		$print_functions = array(
-			'calendar.calendar_uiviews.day'	=> 'calendar.pdfcal.day',
-			'calendar.calendar_uiviews.week'	=> 'calendar.pdfcal.week',
-		);
-		if (isset($print_functions[$_GET['menuaction']]))
-		{
-			$file[] = array(
-				'text'	=> 'pdf-export / print',
-				'link'	=> egw::link('/index.php',array(
-					'menuaction' => $print_functions[$_GET['menuaction']],
-					'date' => $this->date,
-				)),
-				'target' => '_blank',
-			);
+
+		// Merge print
+                if ($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir'])
+                {
+			$options = '';
+			foreach(calendar_merge::get_documents($GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']) as $key => $value)
+			{
+				$options .= '<option value="'.$key.'">'.html::htmlspecialchars($value)."</option>\n";
+			}
+			if($options != '') {
+				$options = '<option value="">'.lang('Insert in document')."</option>\n" . $options;
+				$file[] = $this->_select_box('merge document...','merge',$options,$baseurl ? $baseurl.'&merge=' : '');
+			}
 		}
-*/
+
 		$appname = 'calendar';
 		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
@@ -828,5 +826,23 @@ function load_cal(url,id) {
 			);
 			display_sidebox($appname,$menu_title,$file);
 		}
+	}
+
+	public function merge($timespan = array())
+	{
+		// Merge print
+		if($_GET['merge'])
+		{
+			if(!$timespan)
+			{
+				$timespan = array(array(
+					'start' => is_array($this->first) ? $this->bo->date2ts($this->first) : $this->first, 
+					'end' => is_array($this->last) ? $this->bo->date2ts($this->last) : $this->last
+				));
+			}
+			list($document, $filename) = explode('_',$_GET['merge'], 2);
+			return calendar_uilist::download_document($timespan, $filename);
+		}
+		return false;
 	}
 }

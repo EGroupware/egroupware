@@ -33,6 +33,25 @@ class calendar_merge extends bo_merge
 	protected static $resources;
 
 	/**
+	 * Recognised relative days - used as a day table, like day_<n>
+	 */
+	protected static $relative = array(
+		'today',
+		'tomorrow',
+		'yesterday',
+	);
+
+	/**
+	 * If you use a range, these extra tags are available
+	 */
+	protected static $range_tags = array(
+		'start'	=> 'Y-m-d',
+		'end'	=> 'Y-m-d',
+		'month'	=> 'm',
+		'year'	=> 'Y'
+	);
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -41,11 +60,22 @@ class calendar_merge extends bo_merge
 
 		$this->bo = new calendar_boupdate();
 
+		self::$range_tags += array(
+			'start'	=> $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
+			'end'	=> $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
+		);
+
 		// Register table plugins
 		$this->table_plugins['participant'] = 'participant';
 		for($i = 0; $i < 7; $i++)
 		{
 			$this->table_plugins[date('l', strtotime("+$i days"))] = 'day_plugin';
+		}
+		for($i = 1; $i <= 31; $i++) {
+			$this->table_plugins['day_'.$i] = 'day'; // Numerically by day number (1-31)
+		}
+		foreach(self::$relative as $day) {
+			$this->table_plugins[$day] = 'day'; // Current day
 		}
 	}
 
@@ -61,7 +91,7 @@ class calendar_merge extends bo_merge
 		$prefix = '';
 
 		// List events ?
-		if(is_array($id) && !$id['id'] && strpos($content,'$$calendar/') !== false)
+		if(is_array($id) && !$id['id'] && strpos($content,'$$calendar/') !== false || strpos($content, '$$table/day') !== false)
 		{
 			$events = $this->bo->search($id + array(
 				'offset' => 0,
@@ -79,6 +109,13 @@ class calendar_merge extends bo_merge
 		foreach($events as $event)
 		{
 			$values = $this->calendar_replacements($event,sprintf($prefix,++$n));
+			if(is_array($id) && $id['start'])
+			{
+				foreach(self::$range_tags as $key => $format)
+				{
+					$values["$\$range/$key$$"] = date($format, $key == 'end' ? $id['end'] : $id['start']);
+				}
+			}
 			$replacements += $values;
 		}
 		return $replacements;
@@ -174,6 +211,69 @@ class calendar_merge extends bo_merge
 			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
+	}
+
+	/**
+	* Table plugin for a certain date
+	*
+	* Can be either a particular date (2011-02-15) or a day of the month (15)
+	*
+	* @param string $plugin
+	* @param int $id
+	* @param int $n
+	* @return array
+	*/
+	public function day($plugin,$id,$n)
+	{
+		static $days;
+
+		// Figure out which day
+		list($type, $which) = explode('_',$plugin);
+		if($type == 'day' && $which)
+		{
+			$date = $this->bo->date2array($id['start']);
+			$date['day'] = $which;
+			$date = $this->bo->date2ts($date);
+			if(is_array($id) && $id['start'] && ($date < $id['start'] || $date > $id['end'])) return array();
+		}
+		else
+		{
+			$date = strtotime($plugin);
+		}
+		if($type == 'day' && is_array($id) && !$id['start']) {
+			$event = $this->bo->read(is_array($id) ? $id['id'] : $id, is_array($id) ? $id['recur_date'] : null);
+			if($which && date('d',$event['start']) != $which) return array();
+			if(date('Ymd',$date) != date('Ymd', $event['start'])) return array();
+			return $n == 0 ? $this->calendar_replacements($event) : array();
+		}
+		
+		// Use start for cache, in case of multiple months
+		$_date = $id['start'] ? $id['start'] : $date;
+		if($days[date('Ymd',$_date)][$plugin]) return $days[date('Ymd',$_date)][$plugin][$n];
+
+		$events = $this->bo->search(array(
+			'start' => $date,
+			'end' => mktime(23,59,59,date('m',$date),date('d',$date),date('Y',$date)),
+			'offset' => 0,
+			'num_rows' => 20,
+			'order' => 'cal_start',
+			'daywise' => true
+		));
+
+		$replacements = array();
+		foreach($events as $day => $list) 
+		{
+			foreach($list as $key => $event)
+			{
+				$days[date('Ymd',$_date)][$plugin][] = $this->calendar_replacements($event);
+			}
+		}
+//_debug_array($days);
+		return $days[date('Ymd',$_date)][$plugin][0];
+	}
+
+	/**
+	* Table plugin for a certain date
 	}
 
 	/**
@@ -306,6 +406,12 @@ class calendar_merge extends bo_merge
 			$n++;
 		}
 
+		echo '<tr><td colspan="4"><h3>'.lang('Range fields').":</h3></td></tr>";
+		echo '<tr><td colspan="4">'.lang('If you select a range (month, week, etc) instead of a list of entries, these extra fields are available').'</td></tr>';
+		foreach(self::$range_tags as $name => $format)
+		{
+			echo '<tr><td>$$range/'.$name.'$$</td><td>'.lang($name)."</td></tr>\n";
+		}
 		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
 		$custom = config::get_customfields('calendar');
 		foreach($custom as $name => $field)
@@ -314,13 +420,15 @@ class calendar_merge extends bo_merge
 		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('Participant table').":</h3></td></tr>";
-		echo '<tr><td colspan="4">$$table/participant$$ ... $$endtable$$</td></tr>';
-		echo '<tr><td>$$name$$</td></tr>';
-		echo '<tr><td>$$role$$</td></tr>';
-		echo '<tr><td>$$quantity$$</td></tr>';
-		echo '<tr><td>$$status$$</td></tr>';
+		echo '<tr><td colspan="4">$$table/participant$$ ... </td></tr>';
+		echo '<tr><td>$$name$$</td><td>'.lang('name').'</td></tr>';
+		echo '<tr><td>$$role$$</td><td>'.lang('role').'</td></tr>';
+		echo '<tr><td>$$quantity$$</td><td>'.lang('quantity').'</td></tr>';
+		echo '<tr><td>$$status$$</td><td>'.lang('status').'</td></tr>';
+		echo '<tr><td colspan="4">$$endtable$$</td></tr>';
 		
-		echo '<tr><td colspan="4"><h3>'.lang('Day of week tables').":</h3></td></tr>";
+		echo '<tr style="vertical-align:top"><td colspan="2"><table >';
+		echo '<tr><td><h3>'.lang('Day of week tables').":</h3></td></tr>";
 		$days = array();
 		for($i = 0; $i < 7; $i++)
 		{
@@ -329,8 +437,15 @@ class calendar_merge extends bo_merge
 		ksort($days);
 		foreach($days as $day)
 		{
-			echo '<tr><td colspan="4">$$table/'.$day. '$$ ... $$endtable$$</td></tr>';
+			echo '<tr><td>$$table/'.$day. '$$ ... $$endtable$$</td></tr>';
 		}
+		echo '</table></td><td><table >';
+		echo '<tr><td><h3>'.lang('Daily tables').":</h3></td></tr>";
+		foreach(self::$relative as $key => $value) {
+			echo '<tr><td>$$table/'.$value. '$$ ... $$endtable$$</td></tr>';
+		}
+		echo '<tr><td>$$table/day_n$$ ... $$endtable$$</td><td>1 <= n <= 31</td></tr>';
+		echo '</table></td></tr>';
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
