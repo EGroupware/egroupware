@@ -774,37 +774,6 @@ class addressbook_so
 	}
 
 	/**
-	 * Remove deleted category from addresses
-	 */
-	function delete_category($data)
-	{
-		// get all cats if you want to drop sub cats
-		$drop_subs = ($data['drop_subs'] && !$data['modify_subs']);
-		if($drop_subs)
-		{
-			$cats = new categories('', 'addressbook');
-			$cat_ids = $cats->return_all_children($data['cat_id']);
-		}
-		else
-		{
-			$cat_ids = array($data['cat_id']);
-		}
-
-		// Get addresses that use the category
-		@set_time_limit( 0 );
-		$ids = array();
-		foreach($cat_ids as $cat_id)
-		{
-			$ids = $this->search(array('cat_id' => $cat_id), array('contact_id', 'cat_id'));
-			foreach($ids as &$info)
-			{
-				$info['cat_id'] = implode(',',array_diff(explode(',',$info['cat_id']), $cat_ids));
-				$this->save($info);
-			}
-		}
-	}
-
-	/**
 	 * return the backend, to be used for the given $contact_id
 	 *
 	 * @param mixed $contact_id=null
