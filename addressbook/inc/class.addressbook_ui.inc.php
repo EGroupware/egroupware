@@ -311,7 +311,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			//_debug_array(array('Typefilter:'=> $content['nm']['col_filter']['tid'],'Available Types:'=>$availabletypes,'action:'=>'remove invalid filter'));
 			unset($content['nm']['col_filter']['tid']);
-		} 
+		}
 		if (!isset($content['nm']['col_filter']['tid'])) $content['nm']['col_filter']['tid'] = $availabletypes[0];
 		if (count($this->content_types) > 1)
 		{
@@ -383,7 +383,7 @@ class addressbook_ui extends addressbook_bo
 		namepart = email.substring(0,splitter);
 		emailpart = email.substring(splitter);
 		email = namepart.replace(/@/g,' ')+emailpart;
-		
+
 		if (document.getElementById('exec[nm][to][cc]').checked == true)
 		{
 			to = 'cc';
@@ -1397,7 +1397,7 @@ class addressbook_ui extends addressbook_bo
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
 				// create a new contact with the content of the old
-				foreach(array('id','modified','modifier','account_id','uid','cat_id','etag') as $key)
+				foreach(array('id','modified','modifier','account_id','uid','etag') as $key)
 				{
 					unset($content[$key]);
 				}
