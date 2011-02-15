@@ -126,6 +126,15 @@ class calendar_uiforms extends calendar_ui
 			}
 			elseif (is_array($this->bo->resources[$uid[0]]))
 			{
+				// if contact is a user, use the user instead (as the GUI)
+				if ($uid[0] == 'c' && ($account_id = $GLOBALS['egw']->accounts->name2id(substr($uid,1),'person_id')))
+				{
+					$uid = $account_id;
+					$participants[$uid] = $participant_types['u'][$uid] =
+						calendar_so::combine_status($uid == $this->user ? 'A' : 'U',1,
+						($uid == $this->user || ($uid == $owner && $this->bo->check_perms(EGW_ACL_ADD,0,$owner))) ? 'CHAIR' : 'REQ-PARTICIPANT');
+					continue;
+				}
 				$res_data = $this->bo->resources[$uid[0]];
 				list($id,$quantity) = explode(':',substr($uid,1));
 				if (($status = $res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U'))
