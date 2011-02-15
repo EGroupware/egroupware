@@ -22,6 +22,7 @@ add a new contact	addressbook	de	Neuen Kontakt anlegen
 add a new infolog	addressbook	de	Neuen Infolog Eintrag hinzufügen
 add a new list	addressbook	de	Neuen Verteiler hinzufügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
+add appointment	addressbook	de	Termin hinzufügen
 add business email of whole distribution list?	addressbook	de	E-Mail geschäftl. der kompletten Liste hinzufügen?
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 add emails of whole distribution list?	addressbook	de	E-Mails der gesamten Verteilerliste hinzufügen?
