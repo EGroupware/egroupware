@@ -29,10 +29,10 @@ class admin_categories
 	 * Path where the icons are stored (relative to webserver_url)
 	 */
 	const ICON_PATH = '/phpgwapi/images';
-	
+
 	/**
 	 * Stupid old admin ACL - dont think anybody uses or understands it ;-)
-	 * 
+	 *
 	 * @var boolean
 	 */
 	private static $acl_search;
@@ -57,7 +57,7 @@ class admin_categories
 		}
 		self::init_static();
 	}
-	
+
 	/**
 	 * Init static vars (static constructor)
 	 */
@@ -73,10 +73,10 @@ class admin_categories
 			self::$acl_add_sub= !$GLOBALS['egw']->acl->check('global_categories_access',64,'admin');
 		}
 	}
-	
+
 	/**
 	 * Edit / add a category
-	 * 
+	 *
 	 * @param array $content=null
 	 * @param string $msg=''
 	 */
@@ -88,7 +88,7 @@ class admin_categories
 		unset($session);
 		if (!isset($content))
 		{
-			if (!(isset($_GET['cat_id']) && $_GET['cat_id'] > 0 && 
+			if (!(isset($_GET['cat_id']) && $_GET['cat_id'] > 0 &&
 				($content = categories::read($_GET['cat_id']))))
 			{
 				$content = array('data' => array());
@@ -196,10 +196,10 @@ class admin_categories
 			'old_parent' => $content['old_parent'] ? $content['old_parent'] : $content['parent'],
 		),2);
 	}
-	
+
 	/**
 	 * Return URL of an icon, or base url with trailing slash
-	 * 
+	 *
 	 * @param string $icon='' filename
 	 * @return string url
 	 */
@@ -207,10 +207,10 @@ class admin_categories
 	{
 		return $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$icon;
 	}
-	
+
 	/**
 	 * Return icons from /phpgwapi/images
-	 * 
+	 *
 	 * @return array filename => label
 	 */
 	static function get_icons()
@@ -226,7 +226,7 @@ class admin_categories
 		}
 		$dir->close();
 		asort($icons);
-		
+
 		return $icons;
 	}
 
@@ -259,13 +259,13 @@ class admin_categories
 		foreach($rows as &$row)
 		{
 			$row['level_spacer'] = str_repeat('&nbsp; &nbsp; ',$row['level']);
-			
+
 			if ($row['data']['icon']) $row['icon_url'] = self::icon_url($row['data']['icon']);
-			
+
 			$row['subs'] = count($row['children']);
-			
+
 			$row['class'] = 'level'.$row['level'];
-			
+
 			$readonlys["edit[$row[id]]"]   = !self::$acl_edit;
 			$readonlys["add[$row[id]]"]    = !self::$acl_add_sub;
 			$readonlys["delete[$row[id]]"] = !self::$acl_delete;
@@ -332,9 +332,9 @@ class admin_categories
 		}
 		else
 		{
-			if($content['delete']['delete'])
+			if($content['delete']['delete'] && ($cat = categories::read($content['delete']['cat_id'])))
 			{
-				$cats = new categories(categories::GLOBAL_ACCOUNT,$content['nm']['appname']);
+				$cats = new categories(categories::GLOBAL_ACCOUNT,$cat['appname']);
 				$cats->delete($content['delete']['cat_id'],$content['delete']['subs'],!$content['delete']['subs']);
 				$msg = lang('Category deleted.');
 			}
