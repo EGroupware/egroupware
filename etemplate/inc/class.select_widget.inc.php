@@ -234,7 +234,8 @@ class select_widget
 				if ($readonly)
 				{
 					$cell['no_lang'] = True;
-					foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
+					if (!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
+					foreach(is_array($value) ? $value : array($value) as $id)
 					{
 						$cell['sel_options'][$id] = !$id && !is_numeric($rows) ? lang($rows) :
 							$this->accountInfo($id,$acc,$type2,$type=='both');
