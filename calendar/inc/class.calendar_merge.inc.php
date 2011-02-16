@@ -83,6 +83,7 @@ class calendar_merge extends bo_merge
 			$this->table_plugins[$day] = 'day'; // Current day
 		}
 		$this->query = $GLOBALS['egw']->session->appsession('session_data','calendar');
+		$this->query['users'] = explode(',', $this->query['owner']);
 	}
 
 	/**
