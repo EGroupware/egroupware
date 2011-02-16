@@ -1919,17 +1919,17 @@ class calendar_bo
 	/**
 	 * Query ctag for calendar
 	 *
-	 * @param $user
+	 * @param int|array $user integer user-id or array of user-id's to use, defaults to the current user
 	 * @param $filter='owner'
-	 * @return string
+	 * @return string $filter='owner' all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 * @todo use MAX(modified) to query everything in one sql query, currently we do one query per event (more then the search)
 	 */
 	public function get_ctag($user,$filter='owner')
 	{
-		$filter = array(
+		$params = array(
 			'users' => $user,
-			'start' => $this->bo->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
-			'end' => $this->bo->now + 365*24*3600,	// default one year into the future +365
+			'start' => $this->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
+			'end' => $this->now + 365*24*3600,	// default one year into the future +365
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
@@ -1938,7 +1938,7 @@ class calendar_bo
 		);
 
 		$ctag = 0;
-		if (($events =& $this->search($filter)))
+		if (($events =& $this->search($params)))
 		{
 			foreach ($events as $event)
 			{
@@ -1947,7 +1947,7 @@ class calendar_bo
 			}
 		}
 
-		if ($this->debug > 1) error_log(__FILE__.'['.__LINE__.'] '.__METHOD__. "($path)[$user] = $ctag");
+		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter') params=".array2string($params)." --> $ctag = ".date('Y-m-d H:i:s',$ctag));
 
 		return $ctag;
 	}
