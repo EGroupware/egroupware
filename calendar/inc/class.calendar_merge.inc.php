@@ -52,6 +52,11 @@ class calendar_merge extends bo_merge
 	);
 
 	/**
+	 * Base query for all event searches
+	 */
+	protected $query = array();
+
+	/**
 	 * Constructor
 	 */
 	function __construct()
@@ -77,6 +82,7 @@ class calendar_merge extends bo_merge
 		foreach(self::$relative as $day) {
 			$this->table_plugins[$day] = 'day'; // Current day
 		}
+		$this->query = $GLOBALS['egw']->session->appsession('session_data','calendar');
 	}
 
 	/**
@@ -91,14 +97,17 @@ class calendar_merge extends bo_merge
 		$prefix = '';
 
 		// List events ?
-		if(is_array($id) && !$id['id'] && strpos($content,'$$calendar/') !== false || strpos($content, '$$table/day') !== false)
+		if(is_array($id) && !$id['id'])
 		{
-			$events = $this->bo->search($id + array(
+			$events = $this->bo->search($this->query + $id + array(
 				'offset' => 0,
 				'order' => 'cal_start',
 			));
-			array_unshift($events,false); unset($events[0]);	// renumber the array to start with key 1, instead of 0
-			$prefix = 'calendar/%d';
+			if(strpos($content,'$$calendar/') !== false || strpos($content, '$$table/day') !== false)
+			{
+				array_unshift($events,false); unset($events[0]);	// renumber the array to start with key 1, instead of 0
+				$prefix = 'calendar/%d';
+			}
 		}
 		else
 		{
@@ -194,7 +203,7 @@ class calendar_merge extends bo_merge
 
 		if($days[date('Ymd',$_date)][$plugin]) return $days[date('Ymd',$_date)][$plugin][$n];
 
-		$events = $this->bo->search(array(
+		$events = $this->bo->search($this->query + array(
 			'start' => $date['end'] ? $date['start'] : mktime(0,0,0,date('m',$_date),date('d',$_date),date('Y',$_date)),
 			'end' => $date['end'] ? $date['end'] : mktime(23,59,59,date('m',$_date),date('d',$_date),date('Y',$_date)),
 			'offset' => 0,
@@ -251,7 +260,7 @@ class calendar_merge extends bo_merge
 		$_date = $id['start'] ? $id['start'] : $date;
 		if($days[date('Ymd',$_date)][$plugin]) return $days[date('Ymd',$_date)][$plugin][$n];
 
-		$events = $this->bo->search(array(
+		$events = $this->bo->search($this->query + array(
 			'start' => $date,
 			'end' => mktime(23,59,59,date('m',$date),date('d',$date),date('Y',$date)),
 			'offset' => 0,
@@ -270,10 +279,6 @@ class calendar_merge extends bo_merge
 		}
 //_debug_array($days);
 		return $days[date('Ymd',$_date)][$plugin][0];
-	}
-
-	/**
-	* Table plugin for a certain date
 	}
 
 	/**
