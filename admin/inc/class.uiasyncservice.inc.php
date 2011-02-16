@@ -100,20 +100,16 @@ class uiasyncservice
 			$config->save_repository();
 			unset($config);
 		}
-/*
 		if (!$async->only_fallback)
 		{
 			$installed = $async->installed();
 			if (is_array($installed) && isset($installed['cronline']))
 			{
-*/
 				$async_use['cron'] = lang('crontab only (recomended)');
-/*
 			}
 		}
 		$async_use['']    = lang('fallback (after each pageview)');
 		$async_use['off'] = lang('disabled (not recomended)');
-*/
 		echo '<p><b>'.lang('Run Asynchronous services').'</b>'.
 			' <select name="asyncservice" onChange="this.form.submit();">';
 		foreach ($async_use as $key => $label)
@@ -135,9 +131,8 @@ class uiasyncservice
 		}
 		else
 		{
-			echo '<p>'.lang('Installed crontab').": /etc/cron.d/egroupware\n";
+			echo '<p>'.lang('Installed crontab').": \n";
 
-/*
 			if (is_array($installed) && isset($installed['cronline']))
 			{
 				echo "$installed[cronline]</p>";
@@ -152,7 +147,6 @@ class uiasyncservice
 			}
 			echo '<p><input type="submit" name="install" value="'.lang('Install crontab')."\">\n".
 				lang("for the times below (empty values count as '*', all empty = every minute)")."</p>\n";
-*/
 		}
 
 		echo "<hr><table border=0><tr>\n";
