@@ -232,10 +232,16 @@ abstract class bo_merge
 		foreach(is_array($contact['cat_id']) ? $contact['cat_id'] : explode(',',$contact['cat_id']) as $cat_id)
 		{
 			if(!$cat_id) continue;
-			$cats[] = $GLOBALS['egw']->categories->id2name($cat_id,'path');
+			$cats[$GLOBALS['egw']->categories->id2name($cat_id,'main')] = array();
+			if($GLOBALS['egw']->categories->id2name($cat_id,'main') != $cat_id)
+			{
+				$cats[$GLOBALS['egw']->categories->id2name($cat_id,'main')][] = $GLOBALS['egw']->categories->id2name($cat_id,'name');
+			}
 		}
-		$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] = implode("\n",$cats);
-
+		foreach($cats as $main => $cat) {
+			$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] .= $GLOBALS['egw']->categories->id2name($main,'name')
+				. (count($cat) > 0 ? ': ' : '') . implode(', ', $cats[$main]) . "\n";
+		}
 		return $replacements;
 	}
 
