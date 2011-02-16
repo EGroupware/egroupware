@@ -144,6 +144,12 @@ class addressbook_merge extends bo_merge
 			}
 			if (!($n&1)) echo '<tr>';
 			echo '<td>$$'.$name.'$$</td><td>'.$label.'</td>';
+			if($name == 'cat_id')
+			{
+				if ($n&1) echo "</tr>\n";
+				echo '<td>$$categories$$</td><td>'.lang('Category path').'</td>';
+				$n++;
+			}
 			if ($n&1) echo "</tr>\n";
 			$n++;
 		}
