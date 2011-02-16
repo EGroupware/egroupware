@@ -1,3 +1,11 @@
+egroupware (1.8.001.20110216) hardy; urgency=low
+
+  * fixed not working delete of application-global categories via "admin >> global categories" in applications
+  * WiKi: Admin functionality to rebuild wiki internal link table to enable the rework of links on connected pages, when renaming a page
+  * removed accidently commited rpm patch, causing admin >> async service no longer to display correct cronline and to choose
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 16 Feb 2011 11:11:53 +0100
+
 egroupware (1.8.001.20110214) hardy; urgency=low
 
   * eMail: fix for a problem reported with FreeBSD regarding the generation of random strings for temp-filenames
