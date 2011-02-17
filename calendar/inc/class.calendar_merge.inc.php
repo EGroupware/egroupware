@@ -210,6 +210,7 @@ class calendar_merge extends bo_merge
 			'order' => 'cal_start',
 			'daywise' => true
 		));
+		$days = array();
 		$replacements = array();
 		foreach($events as $day => $list) 
 		{
@@ -269,6 +270,7 @@ class calendar_merge extends bo_merge
 		));
 
 		$replacements = array();
+		$days = array();
 		foreach($events as $day => $list) 
 		{
 			foreach($list as $key => $event)
@@ -276,7 +278,6 @@ class calendar_merge extends bo_merge
 				$days[date('Ymd',$_date)][$plugin][] = $this->calendar_replacements($event);
 			}
 		}
-//_debug_array($days);
 		return $days[date('Ymd',$_date)][$plugin][0];
 	}
 
