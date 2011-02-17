@@ -474,13 +474,13 @@ class calendar_bo
 			}
 			if ($is_private || (!$event['public'] && $filter == 'hideprivate'))
 			{
-				if($params['query'] && !$this->check_perms(EGW_ACL_FREEBUSY,$event))
+				if($params['query'])
 				{
 					unset($events[$id]);
 					$this->total--;
 					continue;
 				}
-				else
+				elseif($this->check_perms(EGW_ACL_FREEBUSY,$event))
 				{
 					$this->clear_private_infos($events[$id],$users);
 				}
