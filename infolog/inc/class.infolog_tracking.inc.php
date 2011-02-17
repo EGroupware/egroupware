@@ -56,7 +56,6 @@ class infolog_tracking extends bo_tracking
 		'info_status'        => 'St',
 		'info_percent'       => 'Pe',
 		'info_datecompleted' => 'Co',
-		'info_datemodified'  => 'Mo',
 		'info_location'      => 'Lo',
 		'info_startdate'     => 'st',
 		'info_enddate'       => 'En',

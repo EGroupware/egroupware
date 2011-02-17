@@ -1624,6 +1624,7 @@ class infolog_ui
 					'Pe' => 'select-percent',
 					'Co' => 'date-time',
 					'st' => 'date-time',
+					'Mo' => 'date-time',
 					'En' => 'date',
 					'Re' => 'select-account',
 					// PM fields, ToDo: access control!!!
@@ -1640,6 +1641,8 @@ class infolog_ui
 			{
 				$history_stati[$history] = $tracking->field2label[$field];
 			}
+			// Modified date removed from field2history, we don't need that in the history
+			$history_stati['Mo'] = $tracking->field2label['info_datemodified'];
 			unset($tracking);
 		}
 		else
