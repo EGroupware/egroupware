@@ -185,7 +185,7 @@ class calendar_merge extends bo_merge
 	*
 	* @param string $plugin (Monday-Sunday)
 	* @param int/array date or date range
-	* @param int $n
+	* @param int $n Row number
 	* @param string $repeat Text being repeated for each entry
 	* @return array
 	*/
@@ -218,6 +218,14 @@ class calendar_merge extends bo_merge
 			{
 				$days[date('Ymd',$_date)][date('l',$event['start'])][] = $this->calendar_replacements($event);
 			}
+			if(strpos($repeat, '$$day/date$$') !== false) {
+				$date_marker = array('$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)));
+				if(!is_array($days[date('Ymd',$_date)][date('l',strtotime($day))])) {
+					 $days[date('Ymd',$_date)][date('l',strtotime($day))] = array($date_marker);
+				} else {
+					 $days[date('Ymd',$_date)][date('l',strtotime($day))][0] += $date_marker;
+				}
+			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
 	}
@@ -228,11 +236,12 @@ class calendar_merge extends bo_merge
 	* Can be either a particular date (2011-02-15) or a day of the month (15)
 	*
 	* @param string $plugin
-	* @param int $id
-	* @param int $n
+	* @param int $id ID for this record
+	* @param int $n Repeated row number
+	* @param string $repeat Text being repeated for each entry
 	* @return array
 	*/
-	public function day($plugin,$id,$n)
+	public function day($plugin,$id,$n,$repeat)
 	{
 		static $days;
 
@@ -276,6 +285,14 @@ class calendar_merge extends bo_merge
 			foreach($list as $key => $event)
 			{
 				$days[date('Ymd',$_date)][$plugin][] = $this->calendar_replacements($event);
+			}
+			if(strpos($repeat, '$$day/date$$') !== false) {
+				$date_marker = array('$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)));
+				if(!is_array($days[date('Ymd',$_date)][$plugin])) {
+					 $days[date('Ymd',$_date)][$plugin] = array($date_marker);
+				} else {
+					 $days[date('Ymd',$_date)][$plugin][0] += $date_marker;
+				}
 			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
@@ -444,13 +461,14 @@ class calendar_merge extends bo_merge
 		{
 			echo '<tr><td>$$table/'.$day. '$$ ... $$endtable$$</td></tr>';
 		}
-		echo '</table></td><td><table >';
+		echo '</table></td><td colspan="2"><table >';
 		echo '<tr><td><h3>'.lang('Daily tables').":</h3></td></tr>";
 		foreach(self::$relative as $key => $value) {
 			echo '<tr><td>$$table/'.$value. '$$ ... $$endtable$$</td></tr>';
 		}
 		echo '<tr><td>$$table/day_n$$ ... $$endtable$$</td><td>1 <= n <= 31</td></tr>';
 		echo '</table></td></tr>';
+		echo '<tr><td>$$day/date$$</td><td>'.lang('Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.').'</td></tr>';
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
