@@ -1727,6 +1727,10 @@ class addressbook_ui extends addressbook_bo
 			$content['owner'] .= 'p';
 		}
 
+		// Prevent double countries - invalid code blanks it, disabling doesn't work
+		$content['adr_one_countrycode'] = '-';
+		$content['adr_two_countrycode'] = '-';
+
 		// Enable history
 		$this->setup_history($content, $sel_options);
 
