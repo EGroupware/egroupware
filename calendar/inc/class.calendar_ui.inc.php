@@ -784,7 +784,17 @@ function load_cal(url,id) {
 			}
 			if($options != '') {
 				$options = '<option value="">'.lang('Insert in document')."</option>\n" . $options;
-				$file[] = $this->_select_box('merge document...','merge',$options,$baseurl ? $baseurl.'&merge=' : '');
+				$name = 'merge';
+				$onchange="var win=egw_appWindow('calendar'); win.location=win.location+(win.location.search.length ? '&' : '?')+'".$name."='+this.value;this.value='';";
+				$select = ' <select style="width: 100%;" name="'.$name.'" onchange="'.$onchange.'" title="'.
+					lang('Select a %1',lang('merge document...')).'">'.
+					$options."</select>\n";
+
+				$file[] = array(
+					'text' => $select,
+					'no_lang' => True,
+					'link' => False
+				);
 			}
 		}
 
