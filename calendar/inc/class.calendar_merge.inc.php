@@ -65,10 +65,8 @@ class calendar_merge extends bo_merge
 
 		$this->bo = new calendar_boupdate();
 
-		self::$range_tags += array(
-			'start'	=> $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
-			'end'	=> $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
-		);
+		self::$range_tags['start'] = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+		self::$range_tags['end'] = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
 		// Register table plugins
 		$this->table_plugins['participant'] = 'participant';
