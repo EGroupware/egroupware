@@ -221,10 +221,11 @@ class calendar_merge extends bo_merge
 			if(strpos($repeat, '$$day/date$$') !== false) {
 				$date_marker = array('$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)));
 				if(!is_array($days[date('Ymd',$_date)][date('l',strtotime($day))])) {
-					 $days[date('Ymd',$_date)][date('l',strtotime($day))] = array($date_marker);
-				} else {
-					 $days[date('Ymd',$_date)][date('l',strtotime($day))][0] += $date_marker;
+					$blank = $this->calendar_replacements(array());
+					foreach($blank as &$value) $value = '';
+					$days[date('Ymd',$_date)][date('l',strtotime($day))][] = $blank;
 				}
+				$days[date('Ymd',$_date)][date('l',strtotime($day))][0] += $date_marker;
 			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
@@ -289,10 +290,11 @@ class calendar_merge extends bo_merge
 			if(strpos($repeat, '$$day/date$$') !== false) {
 				$date_marker = array('$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)));
 				if(!is_array($days[date('Ymd',$_date)][$plugin])) {
-					 $days[date('Ymd',$_date)][$plugin] = array($date_marker);
-				} else {
-					 $days[date('Ymd',$_date)][$plugin][0] += $date_marker;
+					$blank = $this->calendar_replacements(array());
+					foreach($blank as &$value) $value = '';
+					$days[date('Ymd',$_date)][$plugin][] = $blank;
 				}
+				$days[date('Ymd',$_date)][$plugin][0] += $date_marker;
 			}
 		}
 		return $days[date('Ymd',$_date)][$plugin][0];
