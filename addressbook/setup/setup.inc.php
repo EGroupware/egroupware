@@ -38,6 +38,7 @@ $setup_info['addressbook']['hooks']['sidebox_menu'] = 'addressbook_hooks::all_ho
 $setup_info['addressbook']['hooks']['settings'] = 'addressbook_hooks::settings';
 $setup_info['addressbook']['hooks'][] = 'home';
 $setup_info['addressbook']['hooks']['deleteaccount'] = 'addressbook.addressbook_bo.deleteaccount';
+$setup_info['addressbook']['hooks']['delete_category'] = 'addressbook.addressbook_bo.delete_category';
 $setup_info['addressbook']['hooks']['search_link'] = 'addressbook_hooks::search_link';
 $setup_info['addressbook']['hooks']['calendar_resources'] = 'addressbook_hooks::calendar_resources';
 $setup_info['addressbook']['hooks']['edit_user']    = 'addressbook_hooks::edit_user';
