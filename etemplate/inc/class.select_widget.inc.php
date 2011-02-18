@@ -102,7 +102,7 @@ class select_widget
 	 */
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
-		list($rows,$type,$type2,$type3,$type4,$type5) = explode(',',$cell['size']);
+		list($rows,$type,$type2,$type3,$type4,$type5,$type6) = explode(',',$cell['size']);
 
 		$extension_data['type'] = $cell['type'];
 
@@ -168,7 +168,7 @@ class select_widget
 				$cell['no_lang'] = True;
 				break;
 
-			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global)
+			case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
 				if ($readonly)	// for readonly we dont need to fetch all cat's, nor do we need to indent them by level
 				{
 					$cell['no_lang'] = True;
@@ -183,7 +183,14 @@ class select_widget
 							}
 							else
 							{
-								unset($value[$key]);	// remove not (longer) existing or inaccessible cats
+								if(!$type6)
+								{
+									unset($value[$key]);	// remove not (longer) existing or inaccessible cats
+								}
+								elseif ($id) // Display id of no longer existing cat
+								{
+									$cell['sel_options'][$id] = lang('Missing: %1',$id);
+								}
 							}
 						}
 					}

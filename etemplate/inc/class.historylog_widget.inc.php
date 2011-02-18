@@ -74,6 +74,12 @@ class historylog_widget
 			{
 				list($type,$options) = explode(':',$type,2);
 			}
+			// For all select-cats, show missing entries as IDs
+			if($type == 'select-cat') {
+				list($rows,$type1,$type2,$type3,$type4,$type5,$type6) = explode(',',(array)$options);
+				$type6 = true;
+				$options = implode(',',array($rows,$type1,$type2,$type3,$type4,$type5,$type6));
+			}
 			$cell = etemplate::empty_cell($type,$cell['name'],array('readonly' => true,'size' => $options));
 			if (is_array($type))
 			{
