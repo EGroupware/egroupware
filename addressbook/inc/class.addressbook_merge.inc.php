@@ -143,11 +143,11 @@ class addressbook_merge extends bo_merge
 				$n++;
 			}
 			if (!($n&1)) echo '<tr>';
-			echo '<td>$$'.$name.'$$</td><td>'.$label.'</td>';
+			echo '<td>{{'.$name.'}}</td><td>'.$label.'</td>';
 			if($name == 'cat_id')
 			{
 				if ($n&1) echo "</tr>\n";
-				echo '<td>$$categories$$</td><td>'.lang('Category path').'</td>';
+				echo '<td>{{categories}}</td><td>'.lang('Category path').'</td>';
 				$n++;
 			}
 			if ($n&1) echo "</tr>\n";
@@ -157,7 +157,7 @@ class addressbook_merge extends bo_merge
 		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
 		foreach($this->contacts->customfields as $name => $field)
 		{
-			echo '<tr><td>$$#'.$name.'$$</td><td colspan="3">'.$field['label']."</td></tr>\n";
+			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
 		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
@@ -168,14 +168,14 @@ class addressbook_merge extends bo_merge
 			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
 			'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
 			'labelplacement' => lang('Tag to mark positions for address labels'),
-			'IF fieldname' => lang('Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
-			'NELF' => lang('Example $$NELF role$$ - if field role is not empty, you will get a new line with the value of field role'),
-			'NENVLF' => lang('Example $$NELFNV role$$ - if field role is not empty, set a LF without any value of the field'),
-			'LETTERPREFIX' => lang('Example $$LETTERPREFIX$$ - Gives a letter prefix without double spaces, if the title is emty for  example'),
-			'LETTERPREFIXCUSTOM' => lang('Example $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Example: Mr Dr. James Miller'),
+			'IF fieldname' => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
+			'NELF' => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
+			'NENVLF' => lang('Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field'),
+			'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example'),
+			'LETTERPREFIXCUSTOM' => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
 			) as $name => $label)
 		{
-			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";
+			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
 		}
 
 		$GLOBALS['egw']->translation->add_app('calendar');
@@ -208,7 +208,7 @@ class addressbook_merge extends bo_merge
 				$n++;
 			}
 			if (!($n&1)) echo '<tr>';
-			echo '<td>$$calendar/#/'.$name.'$$</td><td>'.$label.'</td>';
+			echo '<td>{{calendar/#/'.$name.'}}</td><td>'.$label.'</td>';
 			if ($n&1) echo "</tr>\n";
 			$n++;
 		}
