@@ -433,7 +433,7 @@ class calendar_merge extends bo_merge
 				$n++;
 			}
 			if (!($n&1)) echo '<tr>';
-			echo '<td>$$'.$name.'$$</td><td>'.$label.'</td>';
+			echo '<td>{{'.$name.'}}</td><td>'.$label.'</td>';
 			if ($n&1) echo "</tr>\n";
 			$n++;
 		}
@@ -442,22 +442,22 @@ class calendar_merge extends bo_merge
 		echo '<tr><td colspan="4">'.lang('If you select a range (month, week, etc) instead of a list of entries, these extra fields are available').'</td></tr>';
 		foreach(self::$range_tags as $name => $format)
 		{
-			echo '<tr><td>$$range/'.$name.'$$</td><td>'.lang($name)."</td></tr>\n";
+			echo '<tr><td>{{range/'.$name.'}}</td><td>'.lang($name)."</td></tr>\n";
 		}
 		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
 		$custom = config::get_customfields('calendar');
 		foreach($custom as $name => $field)
 		{
-			echo '<tr><td>$$#'.$name.'$$</td><td colspan="3">'.$field['label']."</td></tr>\n";
+			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
 		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('Participant table').":</h3></td></tr>";
-		echo '<tr><td colspan="4">$$table/participant$$ ... </td></tr>';
-		echo '<tr><td>$$name$$</td><td>'.lang('name').'</td></tr>';
-		echo '<tr><td>$$role$$</td><td>'.lang('role').'</td></tr>';
-		echo '<tr><td>$$quantity$$</td><td>'.lang('quantity').'</td></tr>';
-		echo '<tr><td>$$status$$</td><td>'.lang('status').'</td></tr>';
-		echo '<tr><td colspan="4">$$endtable$$</td></tr>';
+		echo '<tr><td colspan="4">{{table/participant}} ... </td></tr>';
+		echo '<tr><td>{{name}}</td><td>'.lang('name').'</td></tr>';
+		echo '<tr><td>{{role}}</td><td>'.lang('role').'</td></tr>';
+		echo '<tr><td>{{quantity}}</td><td>'.lang('quantity').'</td></tr>';
+		echo '<tr><td>{{status}}</td><td>'.lang('status').'</td></tr>';
+		echo '<tr><td colspan="4">{{endtable}}</td></tr>';
 		
 		echo '<tr style="vertical-align:top"><td colspan="2"><table >';
 		echo '<tr><td><h3>'.lang('Day of week tables').":</h3></td></tr>";
@@ -469,16 +469,16 @@ class calendar_merge extends bo_merge
 		ksort($days);
 		foreach($days as $day)
 		{
-			echo '<tr><td>$$table/'.$day. '$$ ... $$endtable$$</td></tr>';
+			echo '<tr><td>{{table/'.$day. '}} ... {{endtable}}</td></tr>';
 		}
 		echo '</table></td><td colspan="2"><table >';
 		echo '<tr><td><h3>'.lang('Daily tables').":</h3></td></tr>";
 		foreach(self::$relative as $key => $value) {
-			echo '<tr><td>$$table/'.$value. '$$ ... $$endtable$$</td></tr>';
+			echo '<tr><td>{{table/'.$value. '}} ... {{endtable}}</td></tr>';
 		}
-		echo '<tr><td>$$table/day_n$$ ... $$endtable$$</td><td>1 <= n <= 31</td></tr>';
+		echo '<tr><td>{{table/day_n}} ... {{endtable}}</td><td>1 <= n <= 31</td></tr>';
 		echo '</table></td></tr>';
-		echo '<tr><td>$$day/date$$</td><td>'.lang('Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.').'</td></tr>';
+		echo '<tr><td>{{day/date}}</td><td>'.lang('Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.').'</td></tr>';
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
@@ -488,14 +488,14 @@ class calendar_merge extends bo_merge
 			'pagerepeat' => lang('For serial letter use this tag. Put the content, you want to repeat between two Tags.'),
 			'label' => lang('Use this tag for addresslabels. Put the content, you want to repeat, between two tags.'),
 			'labelplacement' => lang('Tag to mark positions for address labels'),
-			'IF fieldname' => lang('Example $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
-			'NELF' => lang('Example $$NELF role$$ - if field role is not empty, you will get a new line with the value of field role'),
-			'NENVLF' => lang('Example $$NELFNV role$$ - if field role is not empty, set a LF without any value of the field'),
-			'LETTERPREFIX' => lang('Example $$LETTERPREFIX$$ - Gives a letter prefix without double spaces, if the title is emty for  example'),
-			'LETTERPREFIXCUSTOM' => lang('Example $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Example: Mr Dr. James Miller'),
+			'IF fieldname' => lang('Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.'),
+			'NELF' => lang('Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role'),
+			'NENVLF' => lang('Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field'),
+			'LETTERPREFIX' => lang('Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example'),
+			'LETTERPREFIXCUSTOM' => lang('Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller'),
 			) as $name => $label)
 		{
-			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";
+			echo '<tr><td>{{'.$name.'}}</td><td colspan="3">'.$label."</td></tr>\n";
 		}
 
 		echo "</table>\n";
