@@ -2256,6 +2256,8 @@ class addressbook_ui extends addressbook_bo
 			'app'	=>	'addressbook',
 			'status-widgets'	=>	array(
 				'owner'		=>	'select-account',
+				'creator'	=>	'select-account',
+				'created'	=>	'date-time',
 				'cat_id'	=>	'select-cat',
 				'adr_one_countrycode' => 'select-country',
 				'adr_two_countrycode' => 'select-country',
