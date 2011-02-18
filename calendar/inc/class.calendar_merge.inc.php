@@ -82,6 +82,7 @@ class calendar_merge extends bo_merge
 		}
 		$this->query = $GLOBALS['egw']->session->appsession('session_data','calendar');
 		$this->query['users'] = explode(',', $this->query['owner']);
+		$this->query['num_rows'] = -1;
 	}
 
 	/**
@@ -216,7 +217,14 @@ class calendar_merge extends bo_merge
 		{
 			foreach($list as $key => $event)
 			{
-				$days[date('Ymd',$_date)][date('l',$event['start'])][] = $this->calendar_replacements($event);
+				$start = egw_time::to($event['start'], 'array');
+				$end = egw_time::to($event['end'], 'array');
+				if($start['year'] == $end['year'] && $start['month'] == $end['month'] && $start['day'] == $end['day']) {
+					$dow = date('l',$event['start']);
+				} else {
+					$dow = date('l', strtotime($day));
+				}
+				$days[date('Ymd',$_date)][$dow][] = $this->calendar_replacements($event);
 			}
 			if(strpos($repeat, '$$day/date$$') !== false) {
 				$date_marker = array('$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)));
