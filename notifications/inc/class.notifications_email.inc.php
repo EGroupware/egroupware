@@ -74,6 +74,11 @@ class notifications_email implements notifications_iface {
 		{
 			$this->mail = new send();
 		}
+		else
+		{
+			unset($this->mail);
+			$this->mail = new send();
+		}
 	}
 
 	/**
