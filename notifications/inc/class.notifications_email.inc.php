@@ -70,15 +70,11 @@ class notifications_email implements notifications_iface {
 		$this->recipient = $_recipient;
 		$this->config = $_config;
 		$this->preferences = $_preferences;
-		if(!is_object($this->mail))
-		{
-			$this->mail = new send();
-		}
-		else
+		if(is_object($this->mail))
 		{
 			unset($this->mail);
-			$this->mail = new send();
 		}
+		$this->mail = new send();
 	}
 
 	/**
