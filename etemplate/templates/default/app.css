@@ -119,7 +119,8 @@
 	font-family: monospace; font-weight: bold;
 }
 .vfsMimeIcon img {
-/*	height: 16px; << deactivated as images may be scaled strangely */
+	max-height: 16px;
+	max-width: 16px;
 }
 .vfsFilename {
 	white-space: nowrap;
