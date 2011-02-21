@@ -112,11 +112,11 @@ function read_thumbnail($src)
 	// will be 0
 	$maxsize = get_maxsize();
 
-	// Check whether the destination directory exists, if not, create it. If this
-	// process failes, dont' return an image.
+	// Generate the destination filename and check whether the destination directory
+	// had been successfully created (the cache class used in gen_dstfile does that).
 	$dst = gen_dstfile($src, $maxsize);
 	$dst_dir = dirname($dst);
-	if(file_exists($dst_dir) || mkdir($dst_dir, 0700, true))
+	if(file_exists($dst_dir))
 	{
 		// Check whether the destination file already exists and is newer than
 		// the source file. Assume the file doesn't exist if thumbnailing is turned off.
@@ -166,11 +166,11 @@ function read_thumbnail($src)
 
 function gen_dstfile($src, $maxsize)
 {
-	// Previous versions of this code didn't use an md5-sum of $src but appended
-	// it directly - this might have been an security issue as thumbnails from
-	// multiple instances might get mixed up.
-	return $GLOBALS['egw_info']['server']['temp_dir'] . '/egw-thumbs/thumb_' . 
-		md5($src . $GLOBALS['egw_info']['server']['webserver_url'] . $maxsize).'.png';
+	// Use the egroupware file cache to store the thumbnails on a per instance
+	// basis
+	$cachefile = new egw_cache_files(array());
+	return $cachefile->filename(egw_cache::keys(egw_cache::INSTANCE, 'etemplate',
+		'thumb_'.md5($src.$maxsize).'.png'), true);
 }
 
 /**

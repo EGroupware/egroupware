@@ -135,7 +135,7 @@ class egw_cache_files implements egw_cache_provider
 	 * @param boolean $mkdir=false should we create the directory
 	 * @return string
 	 */
-	private function filename(array $keys,$mkdir=false)
+	function filename(array $keys,$mkdir=false)
 	{
 		$fname = $this->base_path.'/'.str_replace(array(':','*'),'-',implode('/',$keys));
 

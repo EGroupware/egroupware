@@ -479,7 +479,7 @@ class egw_cache
 	 * @param string $location
 	 * @return array
 	 */
-	static protected function keys($level,$app,$location)
+	static public function keys($level,$app,$location)
 	{
 		static $bases = array();
 
