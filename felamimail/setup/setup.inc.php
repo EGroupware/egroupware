@@ -72,4 +72,7 @@ $setup_info['felamimail']['check_install'] = array(
 		'value' => 0,
 		'verbose_value' => 'Off',
 	),
+	'tnef' => array(
+		'func' => 'tnef_check',
+	),
 );

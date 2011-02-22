@@ -667,6 +667,41 @@ function mk_value($value)
 	return (strtolower($matches[2]) == 'm' ? 1024*1024 : 1024) * (int) $matches[1];
 }
 
+function tnef_check($name,$args)
+{
+	global $passed_icon, $error_icon, $warning_icon;
+
+	$available = false;
+	$tnef = array();
+
+	if (file_exists('/usr/bin/tnef'))
+	{
+		$available = true;
+		$tnef[] = '/usr/bin/tnef';
+	}
+	elseif (exec("which tnef", $tnef))
+	{
+		$available = true;
+	}
+	elseif (exec("which ytnef", $tnef))
+	{
+		$available = true;
+	}
+
+	echo "<div>".($available ? $passed_icon : $warning_icon).
+		' <span'.($available?'':' class="setup_warning"').'>'.
+		lang('Checking for tnef application').': '.
+		($available ? $tnef[0] : lang('False'));
+
+	if (!$available)
+	{
+		echo "<br />\n".lang('You dont have tnef or ytnef installed! It is needed to decode winmail.dat attachments in felamimail.')."\n";
+	}
+	echo "</span></div>\n";
+
+	return $available;
+}
+
 function php_ini_check($name,$args)
 {
 	global $passed_icon, $error_icon, $warning_icon, $is_windows;
