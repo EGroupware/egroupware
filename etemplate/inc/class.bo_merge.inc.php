@@ -238,6 +238,8 @@ abstract class bo_merge
 				$path = explode(' / ', $path);
 				unset($path[0]); // Drop main
 				$cats[$GLOBALS['egw']->categories->id2name($cat_id,'main')][] = implode(' / ', $path);
+			} elseif($cat_id) {
+				$cats[$cat_id] = array();
 			}
 		}
 		foreach($cats as $main => $cat) {
