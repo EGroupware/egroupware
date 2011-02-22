@@ -80,12 +80,19 @@ class importexport_definitions_ui
 	{
 		$filter = array('name' => '*');
 
-		// Filter private definitions
 		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+			// Filter private definitions
 			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+			
+			$config = config::read('phpgwapi');
+			if($config['export_limit'] == 'no') {
+				$filter['type'] = 'import';
+			}
 		} else {
 			$filter[] = '!owner || owner IS NULL';
 		}
+
+
 
 		$bodefinitions = new importexport_definitions_bo($filter, true);
 		if (is_array($content))
@@ -400,7 +407,9 @@ class importexport_definitions_ui
 		else
 		{
 			$content['msg'] = $this->steps['wizard_step20'];
+			$config = config::read('phpgwapi');
 			foreach ($this->plugins[$content['application']] as $type => $plugins) {
+				if($config['export_limit'] == 'no' && !$GLOBALS['egw_info']['user']['apps']['admin'] && $type == 'export') continue;
 				foreach($plugins as $plugin => $name) {
 					$sel_options['plugin'][$plugin] = $name;
 				}

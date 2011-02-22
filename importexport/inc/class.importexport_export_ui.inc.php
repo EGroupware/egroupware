@@ -48,6 +48,13 @@ class importexport_export_ui {
 		$readonlys = array();
 		$preserv = array();
 
+		// Check global setting
+		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+			$config = config::read('phpgwapi');
+			if($config['export_limit'] == 'no') {
+				die(lang('Admin disabled exporting'));
+			}
+		}
 		$et = new etemplate(self::_appname. '.export_dialog');
 		$_appname = $_content['appname'] ? $_content['appname'] : $_GET['appname'];
 		$_definition = $_content['definition'] ? $_content['definition'] : $_GET['definition'];

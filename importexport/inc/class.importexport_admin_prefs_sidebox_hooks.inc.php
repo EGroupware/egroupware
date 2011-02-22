@@ -31,14 +31,18 @@ class importexport_admin_prefs_sidebox_hooks
 						"','_blank',850,440,'yes')",
 					'icon' => 'import'
 				),
-				array(
+			);
+			$config = config::read('phpgwapi');
+			if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['export_limit'] !== 'no')
+			{
+				$file[] = array(
 					'text' => 'Export',
 					'link' => "javascript:egw_openWindowCentered2('".
 						egw::link('/index.php','menuaction=importexport.importexport_export_ui.export_dialog',false).
 						"','_blank',850,440,'yes')",
 					'icon' => 'export'
-				),
-			);
+				);
+			}
 			if($GLOBALS['egw']->acl->check('definition', EGW_ACL_EDIT, $appname))
 			{
 				$file['Define imports|exports']	= egw::link('/index.php',array(
