@@ -35,7 +35,6 @@ class addressbook_hooks
 				'Advanced search' => "javascript:egw_openWindowCentered2('".
 					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.search'),false).
 					"','_blank',870,480,'yes')",
-				'CSV-Import'      => egw::link('/addressbook/csv_import.php')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
 		}
