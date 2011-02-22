@@ -50,6 +50,11 @@ class importexport_export_csv implements importexport_iface_export_record
 	protected $num_of_records = 0;
 	
 	/**
+	 * @var int holds max. number of records allowed to be exported
+	 */
+	protected $export_limit = 0;
+
+	/**
 	 * @var stream stream resource of csv file
 	 */
 	protected  $handle;
@@ -93,6 +98,12 @@ class importexport_export_csv implements importexport_iface_export_record
 		$this->csv_charset = $_options['charset'] ? $_options['charset'] : 'utf-8';
 		if ( !empty( $_options ) ) {
 			$this->csv_options = array_merge( $this->csv_options, $_options );
+		}
+
+		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+			$config = config::read('phpgwapi');
+			if($config['export_limit'] == 'no') throw new egw_exception_no_permission_admin('Export disabled');
+			$this->export_limit = (int)$config['export_limit'];
 		}
 	}
 	
@@ -141,6 +152,11 @@ class importexport_export_csv implements importexport_iface_export_record
 			$mapping = ! empty( $this->mapping ) ? $this->mapping : array_keys ( $this->record );
 			$mapping = $this->translation->convert( $mapping, $this->translation->charset(), $this->csv_charset );
 			fputcsv( $this->handle ,$mapping ,$this->csv_options['delimiter'], $this->csv_options['enclosure'] );
+		}
+
+		// Check for limit
+		if($this->export_limit && $this->num_of_records > $this->export_limit) {
+			return;
 		}
 		
 		// do conversions
