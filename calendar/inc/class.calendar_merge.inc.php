@@ -47,7 +47,7 @@ class calendar_merge extends bo_merge
 	protected static $range_tags = array(
 		'start'	=> 'Y-m-d',
 		'end'	=> 'Y-m-d',
-		'month'	=> 'm',
+		'month'	=> 'F',
 		'year'	=> 'Y'
 	);
 
@@ -122,7 +122,9 @@ class calendar_merge extends bo_merge
 			{
 				foreach(self::$range_tags as $key => $format)
 				{
-					$values["$\$range/$key$$"] = date($format, $key == 'end' ? $id['end'] : $id['start']);
+					$value = date($format, $key == 'end' ? $id['end'] : $id['start']);
+					if($key == 'month') $value = lang($value);
+					$values["$\$range/$key$$"] = $value;
 				}
 			}
 			$replacements += $values;
@@ -226,8 +228,11 @@ class calendar_merge extends bo_merge
 				}
 				$days[date('Ymd',$_date)][$dow][] = $this->calendar_replacements($event);
 			}
-			if(strpos($repeat, '$$day/date$$') !== false) {
-				$date_marker = array('$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)));
+			if(strpos($repeat, '$$day/date$$') !== false || strpos($repeat, '$$day/name$$') !== false) {
+				$date_marker = array(
+					'$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)),
+					'$$day/name$$' => lang(date('l', strtotime($day)))
+				);
 				if(!is_array($days[date('Ymd',$_date)][date('l',strtotime($day))])) {
 					$blank = $this->calendar_replacements(array());
 					foreach($blank as &$value) $value = '';
@@ -295,8 +300,11 @@ class calendar_merge extends bo_merge
 			{
 				$days[date('Ymd',$_date)][$plugin][] = $this->calendar_replacements($event);
 			}
-			if(strpos($repeat, '$$day/date$$') !== false) {
-				$date_marker = array('$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)));
+			if(strpos($repeat, '$$day/date$$') !== false || strpos($repeat, '$$day/name$$') !== false) {
+				$date_marker = array(
+					'$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)),
+					'$$day/name$$' => lang(date('l', strtotime($day)))
+				);
 				if(!is_array($days[date('Ymd',$_date)][$plugin])) {
 					$blank = $this->calendar_replacements(array());
 					foreach($blank as &$value) $value = '';
@@ -478,7 +486,8 @@ class calendar_merge extends bo_merge
 		}
 		echo '<tr><td>{{table/day_n}} ... {{endtable}}</td><td>1 <= n <= 31</td></tr>';
 		echo '</table></td></tr>';
-		echo '<tr><td>{{day/date}}</td><td>'.lang('Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.').'</td></tr>';
+		echo '<tr><td>{{day/date}}</td><td colspan="3">'.lang('Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.').'</td></tr>';
+		echo '<tr><td>{{day/name}}</td><td colspan="3">'.lang('Name of the week (ex: Monday), available for the first entry inside each day of week or daily table inside the selected range.').'</td></tr>';
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
