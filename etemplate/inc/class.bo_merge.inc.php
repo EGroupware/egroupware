@@ -773,4 +773,11 @@ abstract class bo_merge
 		}
 		return $list;
 	}
+
+	/**
+	 * Get a list of supported extentions
+	 */
+	public static function get_file_extensions() {
+		return array('txt', 'rtf', 'odt', 'ods', 'docx', 'xml');
+	}
 }
