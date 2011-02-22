@@ -26,6 +26,7 @@ class importexport_definitions_ui
 		'index' => true,
 		'wizard' => true,
 		'import_definition' => true,
+		'site_config' => true,
 	);
 
 	/**
@@ -77,7 +78,16 @@ class importexport_definitions_ui
 	 */
 	function index($content = null,$msg='')
 	{
-		$bodefinitions = new importexport_definitions_bo(array('name' => '*'), true);
+		$filter = array('name' => '*');
+
+		// Filter private definitions
+		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		} else {
+			$filter[] = '!owner || owner IS NULL';
+		}
+
+		$bodefinitions = new importexport_definitions_bo($filter, true);
 		if (is_array($content))
 		{
 			if (isset($content['delete']))
@@ -140,6 +150,7 @@ class importexport_definitions_ui
 		$definition = array('name' => $_definition);
 		$bodefinitions = new importexport_definitions_bo();
 		$definition = $bodefinitions->read($definition);
+
 		$definition['edit'] = true;
 		$this->wizard($definition);
 	}
@@ -338,7 +349,12 @@ class importexport_definitions_ui
 		else
 		{
 			$content['msg'] = $this->steps['wizard_step10'];
-			foreach ($this->plugins as $appname => $options) $sel_options['application'][$appname] = lang($appname);
+			foreach ($this->plugins as $appname => $options)
+			{
+				if($GLOBALS['egw_info']['user']['apps'][$appname] || $GLOBALS['egw_info']['user']['apps']['admin']) {
+					$sel_options['application'][$appname] = lang($appname);
+				}
+			}
 			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][previous]');");
 			$content['step'] = 'wizard_step10';
 			$preserv = $content;
@@ -475,6 +491,10 @@ class importexport_definitions_ui
 		unset($content['button']);
 
 		$bodefinitions = new importexport_definitions_bo();
+		// Set owner for non-admins
+		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+			$content['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+		}
 		$bodefinitions->save($content);
 		// This message is displayed if browser cant close window
 		$content['msg'] = lang('ImportExport wizard finished successfully!');
@@ -496,5 +516,45 @@ class importexport_definitions_ui
 			$etpl = new etemplate(self::_appname.'.import_definition');
 			return $etpl->exec(self::_appname.'.importexport_definitions_ui.import_definition',$content,array(),$readonlys,$preserv);
 		}
+	}
+
+	/**
+	 * Site configuration
+	 */
+	public function site_config($content = array())
+	{
+		if(!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			egw::redirect_link('/home');
+		}
+		if($content['save'])
+		{
+			unset($content['save']);
+
+			// ACL
+			$GLOBALS['egw']->acl->delete_repository(self::_appname, 'definition',false);
+			if($content['create_definition_users'])
+			{
+				$GLOBALS['egw']->acl->add_repository(self::_appname, 'definition', $content['create_definition_users'], 
+					EGW_ACL_ADD | EGW_ACL_EDIT
+				);
+			}
+			unset($content['create_definition_users']);
+
+			// Other config
+			foreach($content as $key=>$value)
+			{
+				config::save_value($key, $value, 'importexport');
+			}
+		} elseif (isset($content['cancel'])) {
+			$GLOBALS['egw']->redirect_link('/admin/index.php');
+		}
+
+		$data = config::read(self::_appname);
+		$data['create_definition_users'] = $GLOBALS['egw']->acl->get_ids_for_location('definition', EGW_ACL_ADD | EGW_ACL_EDIT, self::_appname);
+
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Site configuration') . ' - ' . lang(self::_appname);
+		$etpl = new etemplate(self::_appname.'.config');
+		$etpl->exec(self::_appname.'.importexport_definitions_ui.site_config',$data,$sel_options,$readonlys,$preserv);
 	}
 }

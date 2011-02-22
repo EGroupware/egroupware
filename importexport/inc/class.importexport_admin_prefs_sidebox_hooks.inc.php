@@ -39,6 +39,12 @@ class importexport_admin_prefs_sidebox_hooks
 					'icon' => 'export'
 				),
 			);
+			if($GLOBALS['egw']->acl->check('definition', EGW_ACL_EDIT, $appname))
+			{
+				$file['Define imports|exports']	= egw::link('/index.php',array(
+						'menuaction' => 'importexport.importexport_definitions_ui.index',
+				));
+			}
 			if ($location == 'preferences')
 			{
 				display_section($appname,$file);
@@ -52,6 +58,7 @@ class importexport_admin_prefs_sidebox_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
+				'Site Configuration' => egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.site_config'),
 				'Import definitions' => egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.import_definition'),
 				'Define imports|exports'  => egw::link('/index.php',array(
 					'menuaction' => 'importexport.importexport_definitions_ui.index',

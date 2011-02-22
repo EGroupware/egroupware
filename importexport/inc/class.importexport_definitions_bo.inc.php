@@ -88,7 +88,7 @@ class importexport_definitions_bo {
 		$this_membership = $GLOBALS['egw']->accounts->memberships($this_user_id, true);
 		$this_membership[] = $this_user_id;
 		$alluser = array_intersect($allowed_user,$this_membership);
-		return count($alluser) > 0 ? true : false;
+		return ($this_user_id == $_definition['owner'] || count($alluser) > 0);
 	}
 
 	/**
