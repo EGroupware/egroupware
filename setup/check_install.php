@@ -678,7 +678,12 @@ function tnef_check($name,$args)
 	$available = false;
 	$tnef = array();
 
-	if (exec("which tnef", $tnef))
+	if (file_exists('/usr/bin/tnef'))
+	{
+		$available = true;
+		$tnef[] = '/usr/bin/tnef';
+	}
+	elseif (exec("which tnef", $tnef))
 	{
 		$available = true;
 	}
