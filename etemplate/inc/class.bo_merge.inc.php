@@ -226,6 +226,26 @@ abstract class bo_merge
 			}
 			$replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
 		}
+
+		// Add in extra cat field
+		$cats = array();
+		foreach(is_array($contact['cat_id']) ? $contact['cat_id'] : explode(',',$contact['cat_id']) as $cat_id)
+		{
+			if(!$cat_id) continue;
+			if($GLOBALS['egw']->categories->id2name($cat_id,'main') != $cat_id)
+			{
+				$path = $GLOBALS['egw']->categories->id2name($cat_id,'path');
+				$path = explode(' / ', $path);
+				unset($path[0]); // Drop main
+				$cats[$GLOBALS['egw']->categories->id2name($cat_id,'main')][] = implode(' / ', $path);
+			} elseif($cat_id) {
+				$cats[$cat_id] = array();
+			}
+		}
+		foreach($cats as $main => $cat) {
+			$replacements['$$'.($prefix ? $prefix.'/':'').'categories$$'] .= $GLOBALS['egw']->categories->id2name($main,'name')
+				. (count($cat) > 0 ? ': ' : '') . implode(', ', $cats[$main]) . "\n";
+		}
 		return $replacements;
 	}
 
