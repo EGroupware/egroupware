@@ -1,0 +1,187 @@
+<html>
+	<head>
+		<title>Test page for the egw menu</title>
+		<link rel="stylesheet" type="text/css" href="skins/dhtmlxmenu_egw.css">
+		<script src="js/dhtmlxcommon.js"></script>
+		<script src="js/dhtmlxmenu.js"></script>
+		<script src="js/dhtmlxmenu_ext.js"></script>
+		<script src="../egw_menu.js"></script>
+		<script src="../egw_menu_dhtmlx.js"></script>
+	</head>
+	<body style="width:95%; height:95%; font-family: sans-serif">
+		<script>
+
+var menu = new egwMenu();
+
+menu.loadStructure(
+[
+    {
+        "id": "file_menu",
+        "caption": "Test1",
+        "children": [
+            {
+                "id": "file_open",
+                "caption": "Open file...",
+                "iconUrl": "imgs/folder.png",
+                "default": true
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "id": "file_save",
+                "caption": "Save",
+                "enabled": false,
+                "iconUrl": "imgs/disk.png"
+            },
+            {
+                "id": "file_save_as",
+                "caption": "Save as..."
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Recently loaded",
+                "children": [
+                    {
+                        "id": "rec1",
+                        "caption": "file1.txt",
+                        "iconUrl": "imgs/page.png",
+                    },
+                    {
+                        "id": "rec2",
+                        "caption": "file2.txt",
+                        "iconUrl": "imgs/page.png",
+                    },
+                    {
+                        "id": "rec3",
+                        "caption": "file3.txt",
+                        "iconUrl": "imgs/page.png",
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "caption": "Test2",
+        "children": [
+            {
+                "caption": "Use speed enhancer",
+                "checkbox": true,
+                "groupIndex": 0,
+                "checked": true
+            },
+            {
+                "caption": "Reduce memory impact",
+                "checkbox": true,
+                "groupIndex": 0
+            }
+        ]
+    },
+    {
+        "caption": "Test3",
+        "children": [
+            {
+                "caption": "Option1.1",
+                "checkbox": true,
+                "groupIndex": 1,
+                "checked": true
+            },
+            {
+                "caption": "Option1.2",
+                "checkbox": true,
+                "groupIndex": 1
+            },
+            {
+                "caption": "Option1.3",
+                "checkbox": true,
+                "groupIndex": 1
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Option2.1",
+                "checkbox": true,
+                "groupIndex": 2
+            },
+            {
+                "caption": "Option2.2",
+                "checkbox": true,
+                "groupIndex": 2,
+                "checked": true
+            },
+            {
+                "caption": "Option2.3",
+                "checkbox": true,
+                "groupIndex": 2
+            },
+            {
+                "caption": "-"
+            },
+            {
+                "caption": "Extra options",
+                "iconUrl": "imgs/wrench.png",
+                "children": [
+                    {
+                        "caption": "Option1.1",
+                        "checkbox": true,
+                        "groupIndex": 1
+                    },
+                    {
+                        "caption": "Option1.2",
+                        "checkbox": true,
+                        "groupIndex": 1
+                    },
+                    {
+                        "caption": "Option1.3",
+                        "checkbox": true,
+                        "groupIndex": 1,
+                        "checked": true
+                    }
+                ]
+            }
+        ]
+    }
+]
+);
+
+menu.setGlobalOnClick(alertCaption);
+
+function alertCaption(elem)
+{
+	if (console && console.log)
+		console.log(elem);
+}
+
+function getPageXY(event)
+{
+	// document.body.scrollTop does not work in IE
+	var scrollTop = document.body.scrollTop ? document.body.scrollTop :
+		document.documentElement.scrollTop;
+	var scrollLeft = document.body.scrollLeft ? document.body.scrollLeft :
+		document.documentElement.scrollLeft;
+
+	// hide the menu first to avoid an "up-then-over" visual effect
+	return {'x': (event.clientX + scrollLeft), 'y': (event.clientY + scrollTop)};
+}
+
+document.body.oncontextmenu = function(e)
+{
+	if (!e)
+		e = window.event;
+
+	var pos = getPageXY(e);
+	show_menu(pos.x, pos.y);
+
+	return false;
+}
+
+function show_menu(_x, _y)
+{
+	menu.showAt(_x, _y);
+}
+		</script>
+	</body>
+</html>
