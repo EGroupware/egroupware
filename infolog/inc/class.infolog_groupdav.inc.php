@@ -11,6 +11,8 @@
  * @version $Id$
  */
 
+require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
+
 /**
  * eGroupWare: GroupDAV access: infolog handler
  */
@@ -22,6 +24,13 @@ class infolog_groupdav extends groupdav_handler
 	 * @var infolog_bo
 	 */
 	var $bo;
+
+	/**
+	 * vCalendar Instance for parsing
+	 *
+	 * @var array
+	 */
+	var $vCalendar;
 
 	var $filter_prop2infolog = array(
 		'SUMMARY'	=> 'info_subject',
@@ -47,6 +56,7 @@ class infolog_groupdav extends groupdav_handler
 		parent::__construct($app,$debug,$base_uri,$principalURL);
 
 		$this->bo = new infolog_bo();
+		$this->vCalendar = new Horde_iCalendar;
 	}
 
 	const PATH_ATTRIBUTE = 'info_id';
@@ -264,8 +274,14 @@ class infolog_groupdav extends groupdav_handler
 						break;
 					case 'time-range':
 				 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__."($options[path],...) time-range={$filter['attrs']['start']}-{$filter['attrs']['end']}");
-						$cal_filters[] = 'info_startdate >= ' . $filter['attrs']['start'];
-						$cal_filters[] = 'info_startdate <= ' . $filter['attrs']['end'];
+				 		if (!empty($filter['attrs']['start']))
+				 		{
+					 		$cal_filters[] = 'info_startdate >= ' . (int)$this->vCalendar->_parseDateTime($filter['attrs']['start']);
+				 		}
+				 		if (!empty($filter['attrs']['end']))
+				 		{
+					 		$cal_filters[]   = 'info_startdate <= ' . (int)$this->vCalendar->_parseDateTime($filter['attrs']['end']);
+				 		}
 						break;
 					default:
 						if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown filter --> ignored");
