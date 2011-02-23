@@ -1,25 +1,31 @@
 %1 records processed	importexport	de	%1 Einträge ausgeführt
+admin disabled exporting	importexport	de	Ihr Adminisrator hat den Export deaktiviert
 allowed users	importexport	de	Erlaubte Benutzer
 automatically created by importexport	importexport	de	Wurde automatisch vom Import/Export Modul erstellt
 basic csv import	importexport	de	Basis CSV Import
 choose a name for this definition	importexport	de	Wählen sie einen Namen für diese Definition.
 choose a plugin	importexport	de	Wählen sie ein Plugin.
 choose an application	importexport	de	Wählen sei eine Anwendung.
+choose fields to export	importexport	de	Wählen Sie die Felder für den Export aus.
 choose seperator and charset	importexport	de	Wählen Sie das Trennzeichen und den Zeichensatz aus
+database values	importexport	de	Werte der Datenbank
 define imports|exports	common	de	Profil definieren
 delete all selected definitions	importexport	de	Alle ausgewählten Definitionen löschen
 edit conditions	importexport	de	Einstellmöglichkeiten bearbeiten
 expert options	importexport	de	Export Optionen
 export	importexport	de	Exportieren
 export all selected definitions	importexport	de	Alle ausgewählten Definitionen exportieren
+field labels	importexport	de	Feld Beschreibung
+field names	importexport	de	Feld Name
 finish	importexport	de	Fertig
 general	importexport	de	Generell
+human friendly values	importexport	de	Verwendet die Beschreibungen, anstatt der Internen Bezeichnungen
 import	importexport	de	Import
 import definitions	common	de	Import von Definitionsdateien
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	de	Definitionen importieren (Achtung: Alle gleichnamigen existierenden Definitionen werden überschrieben!)
 importexport	common	de	Import/Export
 importexport wizard finished successfully!	importexport	de	Der ImportExport Assistent wurde erfolgreich beendet
-imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	de	Importiert Infomationen aus einem CSV Datei. Dies ist nur eine Basis Klasse.
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	de	Importiert Informationen aus einem CSV Datei. Dies ist nur eine Basis Klasse.
 load sample file	importexport	de	Beispieldatei laden
 manage mapping	importexport	de	Zuordnung bearbeiten
 next	importexport	de	Weiter

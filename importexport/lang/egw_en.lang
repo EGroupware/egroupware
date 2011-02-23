@@ -1,19 +1,25 @@
 %1 records processed	importexport	en	%1 records processed
+admin disabled exporting	importexport	en	Admin disabled exporting
 allowed users	importexport	en	Allowed users
 automatically created by importexport	importexport	en	Automatically created by importexport
 basic csv import	importexport	en	Basic CSV import
 choose a name for this definition	importexport	en	Choose a name for this definition
 choose a plugin	importexport	en	Choose a plugin
 choose an application	importexport	en	Choose an application
+choose fields to export	importexport	en	Choose fields to export
 choose seperator and charset	importexport	en	Choose seperator and charset
+database values	importexport	en	Database values
 define imports|exports	common	en	Define imports|exports
 delete all selected definitions	importexport	en	delete ALL selected definitions
 edit conditions	importexport	en	Edit conditions
 expert options	importexport	en	Expert options
 export	importexport	en	Export
 export all selected definitions	importexport	en	export ALL selected definitions
+field labels	importexport	en	Field labels
+field names	importexport	en	Field names
 finish	importexport	en	finish
 general	importexport	en	General
+human friendly values	importexport	en	Human friendly values
 import	importexport	en	import
 import definitions	common	en	Import definitions
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	en	Import definitions (Attension: Existing definitions with equal names will be overwritten!!!)
