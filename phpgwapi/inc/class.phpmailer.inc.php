@@ -1782,7 +1782,7 @@ class PHPMailer {
   */
   public function EncodeQP($string, $line_max = 76, $space_conv = false) {
     if (function_exists('quoted_printable_encode')) { //Use native function if it's available (>= PHP5.3)
-      return quoted_printable_encode($string);
+      //return quoted_printable_encode($string);
     }
     $filters = stream_get_filters();
     if (!in_array('convert.*', $filters)) { //Got convert stream filter?
