@@ -403,6 +403,7 @@ abstract class bo_merge
 					{
 						for($n = 0; ($row_replacements = $this->$callback($plugin,$id,$n,$repeat)); ++$n)
 						{
+							$repeat = $this->process_commands($repeat, $row_replacements);
 							$repeats .= $this->replace($repeat,$row_replacements,$mimetype,$mso_application_progid);
 						}
 					}
@@ -411,35 +412,8 @@ abstract class bo_merge
 			}
 			$content = $this->replace($content,$replacements,$mimetype,$mso_application_progid);
 
-			if (strpos($content,'$$IF'))
-			{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
-				$this->replacements =& $replacements;
-				$content = preg_replace_callback('/\$\$IF ([0-9a-z_-]+)~(.*)~(.*)~(.*)\$\$/imU',Array($this,'replace_callback'),$content);
-				unset($this->replacements);
-			}
-			if (strpos($content,'$$NELF'))
-			{	//Example: $$NEPBR org_unit$$ sets a LF and value of org_unit, only if there is a value
-				$this->replacements =& $replacements;
-				$content = preg_replace_callback('/\$\$NELF ([0-9a-z_-]+)\$\$/imU',Array($this,'replace_callback'),$content);
-				unset($this->replacements);
-			}
-			if (strpos($content,'$$NENVLF'))
-			{	//Example: $$NEPBRNV org_unit$$ sets only a LF if there is a value for org_units, but did not add any value
-				$this->replacements =& $replacements;
-				$content = preg_replace_callback('/\$\$NENVLF ([0-9a-z_-]+)\$\$/imU',Array($this,'replace_callback'),$content);
-				unset($this->replacements);
-			}
-			if (strpos($content,'$$LETTERPREFIX$$'))
-			{	//Example use to use: $$LETTERPREFIX$$
-				$LETTERPREFIXCUSTOM = '$$LETTERPREFIXCUSTOM n_prefix title n_family$$';
-				$content = str_replace('$$LETTERPREFIX$$',$LETTERPREFIXCUSTOM,$content);
-			}
-			if (strpos($content,'$$LETTERPREFIXCUSTOM'))
-			{	//Example use to use for a custom Letter Prefix: $$LETTERPREFIX n_prefix title n_family$$
-				$this->replacements =& $replacements;
-				$content = preg_replace_callback('/\$\$LETTERPREFIXCUSTOM ([0-9a-z_-]+)(.*)\$\$/imU',Array($this,'replace_callback'),$content);
-				unset($this->replacements);
-			}
+			$content = $this->process_commands($content, $replacements);
+
 			// remove not existing replacements (eg. from calendar array)
 			if (strpos($content,'$$') !== null)
 			{
@@ -604,6 +578,48 @@ abstract class bo_merge
 			$replacements = str_replace(array('&','<','>',"\r","\n"),array('&amp;','&lt;','&gt;','',$break),$replacements);
 		}
 		return str_replace(array_keys($replacements),array_values($replacements),$content);
+	}
+
+	/**
+	 * Process special flags, such as IF or NELF
+	 * 
+	 * @param content Text to be examined and changed
+	 * @param replacements array of markers => replacement
+	 *
+	 * @return changed content
+	 */
+	private function process_commands($content, $replacements)
+	{
+		if (strpos($content,'$$IF'))
+		{	//Example use to use: $$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$
+			$this->replacements =& $replacements;
+			$content = preg_replace_callback('/\$\$IF ([0-9a-z_\/-]+)~(.*)~(.*)~(.*)\$\$/imU',Array($this,'replace_callback'),$content);
+			unset($this->replacements);
+		}
+		if (strpos($content,'$$NELF'))
+		{	//Example: $$NEPBR org_unit$$ sets a LF and value of org_unit, only if there is a value
+			$this->replacements =& $replacements;
+			$content = preg_replace_callback('/\$\$NELF ([0-9a-z_\/-]+)\$\$/imU',Array($this,'replace_callback'),$content);
+			unset($this->replacements);
+		}
+		if (strpos($content,'$$NENVLF'))
+		{	//Example: $$NEPBRNV org_unit$$ sets only a LF if there is a value for org_units, but did not add any value
+			$this->replacements =& $replacements;
+			$content = preg_replace_callback('/\$\$NENVLF ([0-9a-z_\/-]+)\$\$/imU',Array($this,'replace_callback'),$content);
+			unset($this->replacements);
+		}
+		if (strpos($content,'$$LETTERPREFIX$$'))
+		{	//Example use to use: $$LETTERPREFIX$$
+			$LETTERPREFIXCUSTOM = '$$LETTERPREFIXCUSTOM n_prefix title n_family$$';
+			$content = str_replace('$$LETTERPREFIX$$',$LETTERPREFIXCUSTOM,$content);
+		}
+		if (strpos($content,'$$LETTERPREFIXCUSTOM'))
+		{	//Example use to use for a custom Letter Prefix: $$LETTERPREFIX n_prefix title n_family$$
+			$this->replacements =& $replacements;
+			$content = preg_replace_callback('/\$\$LETTERPREFIXCUSTOM ([0-9a-z_-]+)(.*)\$\$/imU',Array($this,'replace_callback'),$content);
+			unset($this->replacements);
+		}
+		return $content;
 	}
 
 	/**
