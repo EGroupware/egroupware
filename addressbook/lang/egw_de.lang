@@ -5,7 +5,7 @@
 %1 fields in %2 other organisation member(s) changed	addressbook	de	%1 Felder in %2 Mitglied(ern) der Organisation geändert
 %1 not implemented for %2!	addressbook	de	%1 nicht implementiert für %2!
 %1 records imported	addressbook	de	%1 Datensätze importiert
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import auschalten)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import ausschalten)A
 %1 starts with '%2'	addressbook	de	%1 beginnt mit '%2'
 %s please calculate the result	addressbook	de	%s Bitte berechnen Sie das Ergebnis
 (e.g. 1969)	addressbook	de	(z.B. 1969)
@@ -50,6 +50,7 @@ addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
 all contacts	addressbook	de	Alle Kontakte
+all in one field	addressbook	de	Alle einem einem Adressbuch ausgeben
 allow users to maintain their own account-data	admin	de	Erlaube Benutzern ihre eigenen Benutzerdaten zu verwalten
 alt. csv import	addressbook	de	Alt. CSV Import
 always	addressbook	de	immer
@@ -81,6 +82,7 @@ categorie	addressbook	de	Kategorie
 categorie added	addressbook	de	Kategorie (n) hinzugefügt
 categorie delete	addressbook	de	Kategorie (n) gelöscht
 categories, notes, ...	addressbook	de	Kategorien, Notizen, ...
+category path	addressbook	de	Kategorien Pfad
 category tree	admin	de	Kategoriebaum
 cell phone	addressbook	de	Mobiltelefon
 change all organisation members	addressbook	de	Alle Mitglieder der Organisation ändern
@@ -89,6 +91,7 @@ charset for the vcard export	addressbook	de	Zeichensatz für den vCard Export
 charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
+choose export options	addressbook	de	Wählen Sie die Export Optionen
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
 choose seperator and charset	addressbook	de	Wählen Sie ein Trennzeichen und den Zeichensatz
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
@@ -163,6 +166,8 @@ download	addressbook	de	Herunterladen
 download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
 download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei herunterladen
 duration	addressbook	de	Dauer
+each category in its own field	addressbook	de	Jede Kategorie in einem eigenen Feld
+each option in its own field	addressbook	de	Jede Option in einem eigenen Feld
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 edit extra account-data in the addressbook	admin	de	Zusätzliche Benutzerdaten im Adressbuch bearbeiten.
@@ -179,11 +184,10 @@ enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad
 error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts !!!
 error saving the contact !!!	addressbook	de	Fehler beim Speichern des Kontakts !!!
 error: the entry has been updated since you opened it for editing!	addressbook	de	Fehler: der Eintrag wurde geändert, seit Sie ihn zum Bearbeiten geöffnet haben!
-example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	de	Beispiel: "$$IF n_prefix~Herr~Sehr geehrter~Sehr geehrte$$" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel(Land wird nur dann angezeit, denn es nicht DEUTSCHLAND ist: $$IFadr_one_countryname~DEUTSCHLAND~~adr_one_countryname$$
-example $$letterprefix$$ - gives a letter prefix without double spaces, if the title is emty for  example	addressbook	de	Beispiel $$LETTERPREFIX$$ - Erzeugt die Briefanrede ohne doppelten Leerzeichen, wenn z.B. der Titel nicht vorhanden ist.
-example $$letterprefixcustom n_prefix title n_family$$ - example: mr dr. james miller	addressbook	de	Besipiel für $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Beispiel: Herr Dr. James Miller
-example $$nelf role$$ - if field role is not empty, you will get a new line with the value of field role	addressbook	de	Beispiel $$NELF role$$ - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role nach dem Zeilenumbruch ausgegeben.
-example $$nelfnv role$$ - if field role is not empty, set a lf without any value of the field	addressbook	de	Beispiel $$NELFNV role$$ -Erzeugt einen Zeilenumbruch, wenn das Feld role einen Wert besitzt. Der Wert role wird auch bei vorhandensein des Feldes role nicht ausgegeben.
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	addressbook	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 existing links	addressbook	de	Bestehende Verknüpfungen
 exists	addressbook	de	besteht bereits
 export	addressbook	de	Export
@@ -194,6 +198,7 @@ export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
 export selection	addressbook	de	Auswahl exportieren
 exported	addressbook	de	exportiert
+exports contacts from your addressbook into a csv file.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
 extra	addressbook	de	Extra
 extra private	addressbook	de	Extra Privat
@@ -259,6 +264,7 @@ insert in document	addressbook	de	Einfügen in Dokument
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!
 international	addressbook	de	International
 internet	addressbook	de	Internet
+invalid addressbook id: %1.  might be a bad field translation.  used %2 instead.	addressbook	de	Ungültige Adressbuch ID: %1. Eine Mögliche Ursache könnte eine falsche Feld Trennung  oder Feld Übersetzung sein. %2 in anstelle verwendet.
 label	addressbook	de	Adressetikett
 last date	addressbook	de	Letzter Termin
 last modified	addressbook	de	Letzte Änderung
@@ -279,6 +285,7 @@ load sample file	addressbook	de	Beispieldatei laden
 load vcard	addressbook	de	VCard laden
 location	addressbook	de	Standort
 locations	addressbook	de	Standorte
+main categories in their own field	addressbook	de	Haupkategorien in einem eigenen Feld
 manage mapping	addressbook	de	Zuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen !
@@ -340,6 +347,7 @@ read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen 
 read only	addressbook	de	nur lesend
 record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
+recovered	addressbook	de	Wiederhergestellt
 region	addressbook	de	Region
 remove selected contacts from distribution list	addressbook	de	Ausgewählte Kontakte vom Verteiler löschen
 removed from distribution list	addressbook	de	vom Verteiler gelöscht
@@ -404,6 +412,7 @@ tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
 translation	addressbook	de	Übersetzung
 two of: %1	addressbook	de	Zwei von: %1
 type	addressbook	de	Typ
+un-delete	addressbook	de	Gelöschte Adressen wieder  herstellen
 unique id (uid)	addressbook	de	Eindeutige ID (UID)
 unique id<br />(to update existing records)	addressbook	de	Eindeutige ID<br />(um existierende Datensätze zu aktualisieren)
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
@@ -430,7 +439,7 @@ what should links to the addressbook display in other applications. empty values
 where to add the email address	addressbook	de	wo soll die E-Mailadresse hinzugefügt werden
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden, deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhängig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll beim Hinzufügen von Kontakten ausgewählt sein, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der EGroupware Installation.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die Systemweite Vorgabe ist der Zeichensatz der EGroupware Installation.
 which charset should be used for the vcard export.	addressbook	de	Welcher Zeichensatz soll für den vCard Export verwendet werden?
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. 'Alle' bedeutet jedes Feld, welches im Adressbuch gespeichert ist, einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.
 whole query	addressbook	de	gesamte Abfrage
@@ -443,6 +452,7 @@ yes, for the next two weeks	addressbook	de	Ja, für die nächsten zwei Wochen
 yes, for the next week	addressbook	de	Ja, für die nächste Woche
 yes, for today and tomorrow	addressbook	de	Ja, für heute und morgen
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
+yes, users can purge their deleted items	admin	de	Benutzer können Ihre eigenen Datensätze wieder herstellen (z.B. persönliches Adressbuch)
 you are not permitted to delete contact %1	addressbook	de	Sie haben keine Berechtigungen um den Kontakt %1 zu löschen
 you are not permittet to delete this contact	addressbook	de	Sie haben keine Berechtigung diesen Kontakt zu löschen
 you are not permittet to edit this contact	addressbook	de	Sie haben keine Berechtigung diesen Kontakt zu bearbeiten
