@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definiert das Layout von eGroupWare und enthält die Icons (Symbole) der Anwendungen.
 a theme defines the colors and fonts used by the template.	preferences	de	Das Thema definiert die Farben und Schriftarten der Benutzeroberfläche.
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde upgedatet
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in eGroupWare zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass sie diese Kategorie löschen wollen ?
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
@@ -41,7 +41,7 @@ hours	preferences	de	Stunden
 how do you like to display accounts	preferences	de	Wie sollen Benutzer angezeigt werden
 how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wieviele Stunden beträgt die Abweichung Ihrer Zeitzone von der Zeitzone des Servers?<br> Wenn Sie sich in derselben Zeitzone befinden, wählen Sie 0 Stunden, sonst wählen Sie Ihre lokalen Datum-/Zeiteinstellungen
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wieviele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldownmenü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wie viele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldownmenü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
 how should egroupware display dates for you.	preferences	de	Wie soll eGroupWare das Datum für Sie anzeigen?
 icon	preferences	de	Icon
 icons and text	preferences	de	Icons und Text
@@ -54,6 +54,7 @@ max matches per page	preferences	de	maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
 no default	preferences	de	Keine Vorgabe
 no user-selection at all	common	de	Überhaupt keine Benutzerauswahl
+note: this feature does *not* change your email password. this will	preferences	de	Anmerkung: Diese Funktion ändert nicht Ihr E-Mail Passwort.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail-Server. Dies müssen Sie separat tun.
 number format	preferences	de	Format von Zahlen
 office 2003 theme	preferences	de	Office 2003
@@ -72,7 +73,7 @@ rich text editor theme	preferences	de	Farbschema des Editors
 select different theme	preferences	de	anderes Schema wählen
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	de	Auswählen welches Tag der Editor bei einem Zeilenumbruch verwendet.
 select one	preferences	de	Bitte wählen
-select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der eGroupWare.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der EGroupware.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
 select the language of the spellchecker integrated into the rich text editor.	preferences	de	Sprache der integrierten Rechtschreibprüfung des Editors.
 select the theme (visualization) of the rich text editor.	preferences	de	Farbschema (Aussehen) des Editors auswählen.
 selectbox	preferences	de	Auswahlfeld
@@ -90,7 +91,7 @@ show_more_apps	common	de	Mehr Anwendungen anzeigen
 silver theme	preferences	de	Silbern
 spellchecker language	addressbook	de	Sprache Rechtschreibprüfung
 text only	preferences	de	nur Text
-the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie eGroupWare neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf Ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie EGroupware neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf Ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
 the old password is not correct	preferences	de	Das alte Passwort ist nicht korrekt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Popup ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Popup ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann. Die beiden letzten Optionen begrenzen die Sichtbarkeit von Benutzern. Aus diesem Grund sollten diese erzwungen werden, werden aber nicht auf Administratoren angewendet.
@@ -103,7 +104,7 @@ time format	preferences	de	Zeitformat
 use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die Systemweite Vorgabe ist der Zeichensatz der EGroupware Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in eGroupWare verwendet werden.
 write prefs for the specified application.	preferences	de	Schreibt die Einstellungen für die jeweilige Anwendung.
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.

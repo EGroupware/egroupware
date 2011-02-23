@@ -55,6 +55,7 @@ max matches per page	preferences	en	Max matches per page
 max number of icons in navbar	preferences	en	Max number of icons in navigation bar
 no default	preferences	en	No default
 no user-selection at all	common	en	No user-selection at all
+note: this feature does *not* change your email password. this will	preferences	en	note: This feature does *not* change your email password. This will
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
 number format	preferences	en	Number format
 office 2003 theme	preferences	en	Office 2003 theme
