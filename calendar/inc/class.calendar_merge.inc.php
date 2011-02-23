@@ -228,7 +228,7 @@ class calendar_merge extends bo_merge
 				}
 				$days[date('Ymd',$_date)][$dow][] = $this->calendar_replacements($event);
 			}
-			if(strpos($repeat, '$$day/date$$') !== false || strpos($repeat, '$$day/name$$') !== false) {
+			if(strpos($repeat, 'day/date') !== false || strpos($repeat, 'day/name') !== false) {
 				$date_marker = array(
 					'$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)),
 					'$$day/name$$' => lang(date('l', strtotime($day)))
@@ -300,7 +300,7 @@ class calendar_merge extends bo_merge
 			{
 				$days[date('Ymd',$_date)][$plugin][] = $this->calendar_replacements($event);
 			}
-			if(strpos($repeat, '$$day/date$$') !== false || strpos($repeat, '$$day/name$$') !== false) {
+			if(strpos($repeat, 'day/date') !== false || strpos($repeat, 'day/name') !== false) {
 				$date_marker = array(
 					'$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)),
 					'$$day/name$$' => lang(date('l', strtotime($day)))
