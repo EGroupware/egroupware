@@ -105,7 +105,7 @@ datum	etemplate	de	Datum
 day	etemplate	de	Tag
 days	etemplate	de	Tage
 db ensures that every row has a unique value in that column	etemplate	de	die Datenbank stelt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	de	DB-spezifische Index-Optionen (Komma-getrennt), zB. mysql(FULLTEXT) oder mysql(100) für die indizierte Länge der Spalte
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	de	DB-spezifische Index-Optionen (Komma-getrennt), z.B. mysql(FULLTEXT) oder mysql(100) für die indizierte Länge der Spalte
 db-tools	etemplate	de	DB-Tools
 deck	etemplate	de	Deck (intern)
 default	etemplate	de	Vorgabe
@@ -126,7 +126,7 @@ deletes this column	etemplate	de	Löscht diese Spalte
 deletes this index	etemplate	de	Löscht diesen Index
 discard changes	etemplate	de	verwirft Änderungen
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
-displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeit, wenn das Eingabefeld angesprochen wird
+displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeigt, wenn das Eingabefeld angesprochen wird
 displayed in the top line of the groupbox (legend)	etemplate	de	wird oben in der Umrandung der Gruppierung angezeigt (Legende)
 do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
 document '%1' does not exist or is not readable for you!	etemplate	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
@@ -145,7 +145,7 @@ editable templates - delete template	etemplate	de	eTemplates - Löschen
 editable templates - editor	etemplate	de	eTemplates - Bearbeiten
 editable templates - search	etemplate	de	eTemplates - Suchen
 editable templates - show template	etemplate	de	eTemplates - Anzeigen
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	de	eingebette CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) or '@import url(...)' (Angaben gelten für die gesamte Seite!)
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	de	eingebette CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
 enable javascript onchange submit	etemplate	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enter '' for an empty default, nothing mean no default	etemplate	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	etemplate	de	Suchmuster eingeben
@@ -222,6 +222,7 @@ insert a row above	etemplate	de	eine Zeile darüber einfügen
 insert a row below	etemplate	de	eine Zeile darunter einfügen
 insert a widget before	etemplate	de	ein Widget davor einfügen
 insert a widget behind	etemplate	de	ein Widget dahinter einfügen
+insert in document	etemplate	de	In ein Dokument einfügen
 insert new column behind this one	etemplate	de	Neue Spalte hinter dieser einfügen
 insert new column in front of all	etemplate	de	Neue Spalte vor dieser einfüben
 insert new row after this one	etemplate	de	Neue Zeile nach dieser einfügen
@@ -231,7 +232,7 @@ key	etemplate	de	Schlüssel
 label	etemplate	de	Beschriftung
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	de	Beschriftung:[bold][italic] Text:[len][,max] Zahlen:[min][,[max][,len]] mehrz.Text:[Zeilen][,Spalten] Radiok.:Wert Templ.:[IndexInContent] Auswahl:[mehrzeilig] Datum:[Format: zB. 'Y-m-d']
 lang	etemplate	de	Sprache
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhänige Template ('' ließt die bevorzugte Sprache, benutze 'default' für das standard Template '')
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	de	Kürzel der Sprache (zb. 'en' für Englisch) für sprachabhängige Templates ('' ließt die bevorzugte Sprache, benutze 'default' für das Standard Template '')
 last	etemplate	de	Letzte
 left	etemplate	de	Links
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	de	Länge für char+varchar, Genauigkeit für int: 2, 4, 8 und float: 4, 8
@@ -247,15 +248,16 @@ message ...	etemplate	de	Nachricht ...
 middle	etemplate	de	Mittig
 minute	etemplate	de	Minute
 minutes	etemplate	de	Minuten
+missing: %1	etemplate	de	nicht vorhanden: %1
 month	etemplate	de	Monat
 more than 1 match for '%1'	etemplate	de	Mehr als 1 trift für '%1' zu
 multicolumn indices	etemplate	de	Mehrspaltige Indices
 name	etemplate	de	Name
 name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des eGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des eGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das Standard Layout '' zu lesen)
 name of table to add	etemplate	de	Name der zuzufügenden Tabelle
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsamen Kürzel der Anwendung beginnen: z.b. 'et_'
 new search	common	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
@@ -301,7 +303,7 @@ primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Pr
 radiobutton	etemplate	de	Radioknopf
 read	etemplate	de	Lesen
 read a list of entries.	etemplate	de	Liest eine Liste von Einträgen.
-read a single entry by passing the id and fieldlist.	etemplate	de	Liste einen einzelnen Eintrag durch übergabe seiner Id und Feldliste.
+read a single entry by passing the id and fieldlist.	etemplate	de	Liste einen einzelnen Eintrag durch Übergabe seiner Id und Feldliste.
 read etemplate from database (for the keys above)	etemplate	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
 readonly	etemplate	de	nur lesen
 remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgängig zu machen)

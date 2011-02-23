@@ -222,6 +222,7 @@ insert a row above	etemplate	en	insert a row above
 insert a row below	etemplate	en	insert a row below
 insert a widget before	etemplate	en	insert a widget before
 insert a widget behind	etemplate	en	insert a widget behind
+insert in document	etemplate	en	Insert in document
 insert new column behind this one	etemplate	en	insert new column behind this one
 insert new column in front of all	etemplate	en	insert new column in front of all
 insert new row after this one	etemplate	en	insert new row after this one
@@ -247,6 +248,7 @@ message ...	etemplate	en	Message ...
 middle	etemplate	en	Middle
 minute	etemplate	en	Minute
 minutes	etemplate	en	Minutes
+missing: %1	etemplate	en	Missing: %1
 month	etemplate	en	Month
 more than 1 match for '%1'	etemplate	en	More than 1 match for '%1'
 multicolumn indices	etemplate	en	Multicolumn Indices
