@@ -33,7 +33,7 @@ class importexport_admin_prefs_sidebox_hooks
 				),
 			);
 			$config = config::read('phpgwapi');
-			if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['export_limit'] !== 'no')
+			if($config['export_limit'] !== 'no')
 			{
 				$file[] = array(
 					'text' => 'Export',

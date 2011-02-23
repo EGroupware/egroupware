@@ -83,16 +83,13 @@ class importexport_definitions_ui
 		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
 			// Filter private definitions
 			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-			
-			$config = config::read('phpgwapi');
-			if($config['export_limit'] == 'no') {
-				$filter['type'] = 'import';
-			}
 		} else {
 			$filter[] = '!owner || owner IS NULL';
 		}
-
-
+		$config = config::read('phpgwapi');
+		if($config['export_limit'] == 'no') {
+			$filter['type'] = 'import';
+		}
 
 		$bodefinitions = new importexport_definitions_bo($filter, true);
 		if (is_array($content))
