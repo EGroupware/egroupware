@@ -24,14 +24,27 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 		$this->bo = new calendar_bo();
-		$events =& $this->bo->search(array(
+
+		// Custom fields need to be specifically requested
+		$cfs = array();
+		foreach($options['mapping'] as $key => $label) {
+			if($key[0] == '#') $cfs[] = substr($key,1);
+		}
+		$query = array(
 			'start' => $options['selection']['start'],
 			'end'   => $options['selection']['end'],
 			'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
 			'enum_recuring' => false,
 			'daywise'       => false,
 			'owner'         => $options['owner'],
-		));
+			'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
+		);
+		$config = config::read('phpgwapi');
+		if($config['export_limit']) {
+			$query['offset'] = 0;
+			$query['num_rows'] = (int)$config['export_limit'];
+		}
+		$events =& $this->bo->search($query);
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
