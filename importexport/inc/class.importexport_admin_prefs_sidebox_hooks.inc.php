@@ -43,7 +43,8 @@ class importexport_admin_prefs_sidebox_hooks
 					'icon' => 'export'
 				);
 			}
-			if($GLOBALS['egw']->acl->check('definition', EGW_ACL_EDIT, $appname))
+			$config = config::read($appname);
+			if($config['users_create_definitions'])
 			{
 				$file['Define imports|exports']	= egw::link('/index.php',array(
 						'menuaction' => 'importexport.importexport_definitions_ui.index',

@@ -10,7 +10,11 @@
 			<rows>
 				<row>
 					<description value="Users allowed to create their own definitions"/>
-					<listbox type="select-account" rows="5" options="both" id="create_definition_users"/>
+					<checkbox id="users_create_definitions"/>
+				</row>
+				<row valign="top">
+					<description value="Users allowed to share their own definitions"/>
+					<listbox type="select-account" rows="5" options="both" id="share_definition"/>
 				</row>
 				<row>
 					<hbox span="all">

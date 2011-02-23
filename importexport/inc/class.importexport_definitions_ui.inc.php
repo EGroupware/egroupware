@@ -80,11 +80,12 @@ class importexport_definitions_ui
 	{
 		$filter = array('name' => '*');
 
-		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+		if($GLOBALS['egw_info']['user']['apps']['admin']) {
+			// Any public definition
+			$filter[] = '!owner OR owner IS NULL OR allowed_users IS NOT NULL';
+		} else {
 			// Filter private definitions
 			$filter['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-		} else {
-			$filter[] = '!owner || owner IS NULL';
 		}
 		$config = config::read('phpgwapi');
 		if($config['export_limit'] == 'no') {
@@ -154,7 +155,6 @@ class importexport_definitions_ui
 		$definition = array('name' => $_definition);
 		$bodefinitions = new importexport_definitions_bo();
 		$definition = $bodefinitions->read($definition);
-
 		$definition['edit'] = true;
 		$this->wizard($definition);
 	}
@@ -459,7 +459,11 @@ class importexport_definitions_ui
 		// return from step90
 		if ($content['step'] == 'wizard_step90')
 		{
-			$content['allowed_users'] = implode(',',$content['allowed_users']);
+			$content['owner'] = $content['just_me'] || !$GLOBALS['egw']->acl->check('share_definitions', EGW_ACL_READ,'importexport') ? 
+				($content['owner'] ? $content['owner'] : $GLOBALS['egw_info']['user']['account_id']) : 
+				null;
+			$content['allowed_users'] = $content['just_me'] ? '' : implode(',',$content['allowed_users']);
+			unset($content['just_me']);
 
 			// workaround for some ugly bug related to readonlys;
 			switch (array_search('pressed', $content['button']))
@@ -479,6 +483,17 @@ class importexport_definitions_ui
 			$content['msg'] = $this->steps['wizard_step90'];
 			$content['step'] = 'wizard_step90';
 			$preserv = $content;
+
+			// Set owner for non-admins
+			$content['just_me'] = ((!$content['allowed_users'] || !$content['allowed_users'][0] && count($content['allowed_users']) ==1) && $content['owner']);
+			//if(!$GLOBALS['egw_info']['user']['apps']['admin'] && !$GLOBALS['egw']->acl->check('share_definition', EGW_ACL_READ, 'importexport')) {
+			if(!$GLOBALS['egw']->acl->check('share_definition', EGW_ACL_READ, 'importexport') && !$GLOBALS['egw_info']['user']['apps']['admin']) {
+				$content['allowed_users'] = array();
+				$readonlys['allowed_users'] = true;
+				$readonlys['just_me'] = true;
+				$content['just_me'] = true;
+			}
+
 			unset ($preserv['button']);
 			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][next]');");
 			if(is_object($this->response)) {
@@ -497,10 +512,6 @@ class importexport_definitions_ui
 		unset($content['button']);
 
 		$bodefinitions = new importexport_definitions_bo();
-		// Set owner for non-admins
-		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
-			$content['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-		}
 		$bodefinitions->save($content);
 		// This message is displayed if browser cant close window
 		$content['msg'] = lang('ImportExport wizard finished successfully!');
@@ -539,13 +550,14 @@ class importexport_definitions_ui
 
 			// ACL
 			$GLOBALS['egw']->acl->delete_repository(self::_appname, 'definition',false);
-			if($content['create_definition_users'])
+			$GLOBALS['egw']->acl->delete_repository(self::_appname, 'share_definition',false);
+			if($content['share_definition'])
 			{
-				$GLOBALS['egw']->acl->add_repository(self::_appname, 'definition', $content['create_definition_users'], 
-					EGW_ACL_ADD | EGW_ACL_EDIT
+				$GLOBALS['egw']->acl->add_repository(self::_appname, 'share_definition', $content['share_definition'], 
+					EGW_ACL_READ
 				);
 			}
-			unset($content['create_definition_users']);
+			unset($content['share_definition']);
 
 			// Other config
 			foreach($content as $key=>$value)
@@ -557,7 +569,7 @@ class importexport_definitions_ui
 		}
 
 		$data = config::read(self::_appname);
-		$data['create_definition_users'] = $GLOBALS['egw']->acl->get_ids_for_location('definition', EGW_ACL_ADD | EGW_ACL_EDIT, self::_appname);
+		$data['share_definition'] = $GLOBALS['egw']->acl->get_ids_for_location('share_definition', EGW_ACL_READ, self::_appname);
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Site configuration') . ' - ' . lang(self::_appname);
 		$etpl = new etemplate(self::_appname.'.config');
