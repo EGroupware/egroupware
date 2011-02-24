@@ -286,6 +286,11 @@ abstract class bo_merge
 		{
 			$mimetype = 'application/rtf';
 		}
+
+		$config = config::read('phpgwapi');
+		if($config['export_limit']) {
+			$ids = array_slice($ids, 0, (int)$config['export_limit']);
+		}
 		return $this->merge_string($content,$ids,$err,$mimetype,$fix);
 	}
 
