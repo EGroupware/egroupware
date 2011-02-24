@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<title>Test page for the egw action stuff</title>
+		<script src="../egw_action.js"></script>
+		<script src="../egw_action_common.js"></script>
+		<script src="js/jquery.js"></script>
+		<style>
+			body, table {
+				font-family: Arial, sans-serif;
+				font-size: 10pt;
+			}
+			.listbox {
+				width: 250px;
+				border: 1px solid gray;
+				margin: 5px;
+				border-collapse: collapse;
+			}
+
+			.listbox tr {
+				-moz-user-select: none;
+				-khtml-user-select: none;
+				user-select: none;
+				cursor: default;
+				padding: 2px;
+			}
+
+			.listbox .selected {
+				background-color: #2b5d9b;
+				color: white;
+			}
+
+			.listbox .focused {
+				border: 1px dashed white;
+				padding: 1px;
+			}
+		</style>
+	</head>
+	<body>
+			<table class="listbox" id="lb1">
+				<tr id="le1">
+					<td><img src="imgs/page.png"/></td>
+					<td style="width: 200px">File 1</td>
+					<td><input id="le1_chk" type="checkbox"></td>
+				</tr>
+				<tr id="le2">
+					<td><img src="imgs/page.png"/></td>
+					<td style="width: 200px">File 2</td>
+					<td><input id="le2_chk" type="checkbox"></td>
+				</tr>
+				<tr id="le3">
+					<td><img src="imgs/page.png"/></td>
+					<td style="width: 200px">File 3</td>
+					<td><input id="le3_chk" type="checkbox"></td>
+				</tr>
+			</table>
+		<script>
+			var actionManager = null;
+
+			$(document).ready(function() {
+				init();
+			});
+
+
+			function init()
+			{
+				//Initialize the action manager and add some actions to it
+				actionManager = new egwActionManager();
+
+				actionManager.updateActions(
+					[
+						{
+							"id": "file_view",
+							"icon": "imgs/view.png",
+							"allowOnMultiple": false,
+							"caption": "Datei anzeigen"
+						},
+						{
+							"id": "file_delete",
+							"icon": "imgs/delete.png",
+							"caption": "Datei löschen"
+						}
+					]
+				);
+
+				$('#lb1 tr').each(function(index, elem) {
+					// Create an action object and attach it to an interface
+					console.log(index, elem);
+				})
+			}
+		</script>
+	</body>
+</html>

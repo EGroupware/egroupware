@@ -9,8 +9,6 @@
  * @version $Id$
  */
 
-// XXX WARNING: UNTESTED, UNFINISHED, NOT (YET) WORKING CODE! XXX
-
 /** egwActionHandler Interface **/
 
 /**
@@ -97,7 +95,7 @@ egwAction.prototype.execute = function(_senders)
  * 	1. A reference to this action
  * 	2. The senders, an array of all objects (JS)/object ids (PHP) which evoked the event
  */ 
-egwAction.prototype.set_onExecute(_value)
+egwAction.prototype.set_onExecute = function(_value)
 {
 	//Reset the onExecute handlers
 	this.execJSFnct = null;
@@ -130,17 +128,17 @@ egwAction.prototype.set_onExecute(_value)
 	}
 }
 
-egwAction.prototype.set_caption(_value)
+egwAction.prototype.set_caption = function(_value)
 {
 	this.caption = _value;
 }
 
-egwAction.prototype.set_icon(_value)
+egwAction.prototype.set_icon = function(_value)
 {
 	this.icon = _value;
 }
 
-egwAction.prototype.set_allowOnMultiple(_value)
+egwAction.prototype.set_allowOnMultiple = function(_value)
 {
 	this.allowOnMultiple = _value;
 }
@@ -340,9 +338,12 @@ const EGW_AO_STATE_FOCUSED = 0x02;
 const EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
 const EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
 
+// No shift key is pressed
 const EGW_AO_SHIFT_STATE_NONE = 0x00;
+// A shift key, which allows multiselection is pressed (usually CTRL on a PC keyboard)
 const EGW_AO_SHIFT_STATE_MULTI = 0x01;
-const EGW_AO_SHIFT_STATE_LIST = 0x02;
+// A shift key is pressed, which forces blockwise selection (SHIFT on a PC keyboard)
+const EGW_AO_SHIFT_STATE_BLOCK = 0x02;
 
 // If this flag is set, this object will not be returned as "focused". If this
 // flag is not applied to container objects, it may lead to some strange behaviour.
@@ -356,22 +357,124 @@ const EGW_AO_FLAG_IS_CONTAINER = 0x01;
  *
  * @param string _id is the identifier of the object which
  * @param object _parent is the parent object in the hirachy. This may be set to NULL
+ * @param object _iface is the egwActionObjectInterface which connects the object
+ * 	to the outer world.
  * @param object _manager is the action manager this object is connected to
- * @param object _iface is the egwActionObjectInterface which connects
- * 	this object to the DOM tree.
- * @param boolean _flags a set of additional flags being applied to the object
+ * 	this object to the DOM tree. If the _manager isn't supplied, the parent manager
+ * 	is taken.
+ * @param int _flags a set of additional flags being applied to the object,
+ * 	defaults to 0
  */
-function egwActionObject(_id, _parent, _manager, _iface, _flagss)
+function egwActionObject(_id, _parent, _iface, _manager, _flags)
 {
+	//Preset some parameters
+	if (typeof _manager == "undefined" && typeof _parent == "object" && _parent)
+		_manager = _parent.manager;
+	if (typeof _flags == "undefined")
+		_flags = 0;
+
 	this.id = _id;
 	this.parent = _parent;
 	this.children = [];
 	this.actionLinks = [];
 	this.manager = _manager;
-	this.selectBehaviour = _selectBehaviour;
+	this.flags = _flags;
 
 	this.iface = _iface;
 	this.iface.setStateChangeCallback(this._ifaceCallback, this)
+}
+
+/**
+ * Returns the object from the tree with the given ID
+ */
+//TODO: Add "ByID"-Suffix to all other of those functions.
+//TODO: Add search function to egw_action_commons.js
+egwActionObject.prototype.getObjectById = function(_id)
+{
+	if (this.id == _id)
+	{
+		return this;
+	}
+
+	for (var i = 0; i < this.children.length; i++)
+	{
+		var obj = this.children[i].getObjectById(_id);
+		if (obj)
+		{
+			return obj;
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Adds an object as child to the actionObject and returns it - if the supplied
+ * parameter is a object, the object will be added directly, otherwise an object
+ * with the given id will be created.
+ *
+ * @param string/object _id Id of the object which will be created or the object
+ * 	that will be added.
+ * @param object if _id was an string, _interface defines the interface which
+ * 	will be connected to the newly generated object.
+ * @param int _flags are the flags will which be supplied to the newly generated
+ * 	object. May be omitted.
+ * @returns object the generated object
+ */
+egwActionObject.prototype.addObject = function(_id, _interface, _flags)
+{
+	return this.insertObject(false, _id, _interface, _flags);
+}
+
+/**
+ * Inserts an object as child to the actionObject and returns it - if the supplied
+ * parameter is a object, the object will be added directly, otherwise an object
+ * with the given id will be created.
+ *
+ * @param int _index Position where the object will be inserted, "false" will add it
+ * 	to the end of the list.
+ * @param string/object _id Id of the object which will be created or the object
+ * 	that will be added.
+ * @param object _iface if _id was an string, _iface defines the interface which
+ * 	will be connected to the newly generated object.
+ * @param int _flags are the flags will which be supplied to the newly generated
+ * 	object. May be omitted.
+ * @returns object the generated object
+ */
+egwActionObject.prototype.insertObject = function(_index, _id, _iface, _flags)
+{
+	if (_index === false)
+		_index = this.children.length;
+
+	var obj = null;
+
+	if (typeof _id == "object")
+	{
+		obj = _id;
+
+		// Set the parent to null and reset the focus of the object
+		obj.parent = null;
+		obj.setFocused(false);
+
+		// Set the parent to this object
+		obj.parent = this;
+	}
+	else if (typeof _id == "string")
+	{
+		obj = new egwActionObject(_id, this, _iface, this.manager, _flags)
+	}
+
+	if (obj)
+	{
+		// Add the element to the children
+		this.children.splice(_index, 0, obj);
+	}
+	else
+	{
+		throw "Error while adding new element to the ActionObjects!"
+	}
+
+	return obj;
 }
 
 /**
@@ -433,7 +536,7 @@ egwActionObject.prototype.flatList = function(_obj)
 	if (typeof(_obj) == "undefined")
 	{
 		_obj = {
-			"elements": [];
+			"elements": []
 		}
 	}
 
@@ -518,6 +621,15 @@ egwActionObject.prototype.getFocusedObject = function()
 	return null;
 }
 
+/**
+ * Internal function which is connected to the ActionObjectInterface associated
+ * with this object in the constructor. It gets called, whenever the object
+ * gets (de)selected.
+ *
+ * @param int _newState is the new state of the object
+ * @param int _shiftState is the status of extra keys being pressed during the
+ * 	selection process.
+ */
 egwActionObject.prototype._ifaceCallback = function(_newState, _shiftState)
 {
 	// Remove the focus from all children on the same level
@@ -547,7 +659,7 @@ egwActionObject.prototype._ifaceCallback = function(_newState, _shiftState)
 
 			// If the LIST state is active, get all objects inbetween this one and the focused one
 			// and set their select state.
-			if (egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_LIST))
+			if (egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_BLOCK))
 			{
 				var focused = this.getRootObject().getFocusedObject();
 				if (focused)
@@ -562,75 +674,101 @@ egwActionObject.prototype._ifaceCallback = function(_newState, _shiftState)
 
 			// If the focused element didn't belong to this container, or the "list"
 			// shift-state isn't active, set the focus to this element.
-			if (objs.length == 0 || !egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_LIST))
+			if (objs.length == 0 || !egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_BLOCK))
 			{
-				this.getRootObject().setFocused(false);
 				this.setFocused(true);
 			}
 		}
 	}
 }
 
+/**
+ * Returns whether the object is currently selected.
+ */
 egwActionObject.prototype.getSelected = function()
 {
 	return egwBitIsSet(this.getState(), EGW_AO_STATE_SELECTED);
 }
 
+/**
+ * Returns whether the object is currently focused.
+ */
 egwActionObject.prototype.getFocused = function()
 {
-	
+	return egwBitIsSet(this.getState(), EGW_AO_STATE_FOCUSED);
 }
 
+/**
+ * Returns the complete state of the object.
+ */
 egwActionObject.prototype.getState = function()
 {
+	return this.iface.getState();
 }
 
-egwActionObject.prototype.setSelected = function(_selected, _applyToSelf,
-	_applyToChildren, _applyToParent)
+
+/**
+ * Sets the focus of the element. The formerly focused element in the tree will
+ * be de-focused.
+ *
+ * @param boolean _focused - whether to remove or set the focus. Defaults to true
+ * @param boolean _recPrev is internally used to prevent infinit recursion. Do not touch.
+ */
+egwActionObject.prototype.setFocused = function(_focused, _recPrev)
 {
-	if (typeof _applyToSelf == "undefined")
-		_applyToSelf = true;
-	if (typeof _applyToChildren == "undefined")
-		_applyToChildren = true;
-	if (typeof _applyToParent == "undefined")
-		_applyToParent = false;
+	if (typeof _focused == "undefined")
+		_focused = true;
 
-	if (_applyToSelf)
+	//TODO: When deleting and moving objects is implemented, don't forget to update
+	//	the selection and the focused element!!
+
+	if (typeof _recPrev == "undefined")
+		_recPrev = false;
+
+	//Check whether the focused state has changed
+	if (_focused != this.getFocused())
 	{
-		var state = this.iface.getState();
-
-		if (_selected)
+		//Reset the focus of the formerly focused element
+		if (!_recPrev)
 		{
-			state &= ~EGW_AO_STATE_SELECTED;
+			var focused = this.getRootObject.getFocusedObject();
+			if (focused)
+			{
+				focused.setFocused(false, true);
+			}
+		}
+
+		if (!_focused)
+		{
+			//If the object is not focused, reset the focus state of all children
+			for (var i = 0; i < this.children.length; i++)
+			{
+				this.children[i].setFocused(false, true);
+			}
 		}
 		else
 		{
-			state |=  EGW_AO_STATE_SELECTED;
+			//Otherwise set the focused state of the parent to true
+			if (this.parent)
+			{
+				this.parent.setFocused(true, true);
+			}
 		}
 
-		this.iface.setState(state, true);
-	}
-
-	if (_applyToChildren)
-	{
-		for (var i = 0; i < this.children.length; i++)
-		{
-			this.children[i].setFocused(true, true, false);
-		}
-	}
-
-	if (_applyToParent)
-	{
-		for (var i = 0; i < this.children.length; i++)
-		{
-			this.children[i].setFocused(true, false, true);
-		}
+		//No perform the actual change in the interface state.
+		this.iface.setState(egwSetBit(this.iface.getState(), EGW_AO_STATE_FOCUSED,
+			_focused));
 	}
 }
 
-egwActionObject.prototype.setFocused = function(_focused, _applyToSelf,
-	_applyToChildren, _applyToParent)
+/**
+ * Sets the selected state of the element.
+ * TODO: Callback
+ */
+egwActionObject.prototype.setSelected = function(_selected)
 {
+	this.iface.setState(egwSetBit(this.iface.getState(), EGW_AO_STATE_SELECTED,
+		_selected));
 }
 
 /**
@@ -783,7 +921,7 @@ function egwActionObjectInterface()
  * Sets the callback function which will be called when a user interaction changes
  * state of the object.
  */
-egwActionObjectInterface.prototype.setStateChangeCallback(_callback, _context)
+egwActionObjectInterface.prototype.setStateChangeCallback = function(_callback, _context)
 {
 	this.stateChangeCallback = _callback;
 	this.stateChangeContext = _context;
@@ -796,7 +934,7 @@ egwActionObjectInterface.prototype.setStateChangeCallback(_callback, _context)
  *
  * @param boolean _selected Whether the object is selected or not.
  */
-egwActionObjectInterface.prototype._selectChange(_selected)
+egwActionObjectInterface.prototype._selectChange = function(_selected)
 {
 	// Check whether the selected bit has actually changed - the callback may
 	// perform expensive operations, and we don't want those to happen without
@@ -839,7 +977,6 @@ egwActionObjectInterface.prototype.setState = function(_state)
 	}
 }
 
-
 /**
  * Returns the current state of the object. The state is maintained by the 
  * egwActionObjectInterface and implementations do not have to overwrite this
@@ -848,5 +985,18 @@ egwActionObjectInterface.prototype.setState = function(_state)
 egwActionObjectInterface.prototype.getState = function()
 {
 	return this._state;
+}
+
+
+/** egwActionObjectManager Object **/
+
+/**
+ * The egwActionObjectManager is a dummy class which only contains a dummy
+ * AOI. It may be used as root object or as object containers.
+ */
+function egwActionObjectManager(_id, _manager)
+{
+	return new egwActionObject(_id, null, _manager,
+		new egwActionObjectInterface(), EGW_AO_FLAG_IS_CONTAINER);
 }
 
