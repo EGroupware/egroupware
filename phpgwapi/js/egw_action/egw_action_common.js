@@ -37,3 +37,27 @@ function egwActionStoreJSON(_data, _obj, _setterOnly)
 	}
 }
 
+/**
+ * Switches the given bit in the set on or off.
+ *
+ * @param int _set is the current set
+ * @param int _bit is the position of the bit which should be switched on/off
+ * @param boolean _state is whether the bit should be switched on or off
+ * @returns the new set
+ */
+function egwSetBit(_set, _bit, _state)
+{
+	if (_state)
+		return _set |= _bit;
+	else
+		return _set &= ~_bit;
+}
+
+/**
+ * Returns whether the given bit is set in the set.
+ */
+function egwBitIsSet(_set, _bit)
+{
+	return (_set & _bit) > 0;
+}
+
