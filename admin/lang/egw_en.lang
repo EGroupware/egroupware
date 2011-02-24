@@ -523,6 +523,7 @@ they must be removed before you can continue	admin	en	They must be removed befor
 this application is current	admin	en	This application is current
 this application requires an upgrade	admin	en	This application requires an upgrade
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
+this controls exports and merging.	admin	en	This controls exports and merging.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds (default 86400 = 1 day)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds (default 14400 = 4 hours)
 times	admin	en	Times

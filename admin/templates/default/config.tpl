@@ -289,7 +289,7 @@
     </td>
    </tr>
    <tr class="row_off">
-    <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:</td>
+    <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:<br />{lang_This_controls_exports_and_merging.}</td>
     <td><input name="newsettings[export_limit]" value="{value_export_limit}" size="5"></td>
    </tr>
    </tr>
