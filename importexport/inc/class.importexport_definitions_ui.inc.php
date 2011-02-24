@@ -274,7 +274,9 @@ class importexport_definitions_ui
 				$this->response->addScript($onload); 	 
 			}			
 			$this->response->addAssign('picturebox', 'style.display', 'none');
-			$this->response->addScript("set_style_by_class('div','popupManual','display','inline');");
+			$this->response->addScript("set_style_by_class('div','popupManual','display','inline');
+				popup_resize();
+			");
 
 			return $this->response->getXML();
 		}
