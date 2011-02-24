@@ -166,11 +166,18 @@ class calendar_rrule implements Iterator
 	public $weekdays;
 
 	/**
-	 * Array of exception dates
+	 * Array of exception dates (Ymd strings)
 	 *
 	 * @var array
 	 */
-	public $exceptions;
+	public $exceptions=array();
+
+	/**
+	 * Array of exceptions as DateTime/egw_time objects
+	 *
+	 * @var array
+	 */
+	public $exceptions_objs=array();
 
 	/**
 	 * Starttime of series
@@ -300,6 +307,7 @@ class calendar_rrule implements Iterator
 				$exception->setTimezone($this->time->getTimezone());
 				$this->exceptions[] = $exception->format('Ymd');
 			}
+			$this->exceptions_objs = $exceptions;
 		}
 	}
 

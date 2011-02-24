@@ -48,6 +48,13 @@ class calendar_activesync implements activesync_plugin_write
 	private $calendar;
 
 	/**
+	 * Instance of addressbook_bo
+	 *
+	 * @var addressbook_bo
+	 */
+	private $addressbook;
+
+	/**
 	 * Constructor
 	 *
 	 * @param BackendEGW $backend
@@ -68,6 +75,8 @@ class calendar_activesync implements activesync_plugin_write
 
 		foreach ($this->calendar->list_cals() as $label => $entry)
 		{
+			// uncomment next line to get only own calendar
+			//if ($entry['grantor'] != $GLOBALS['egw_info']['user']['account_id']) continue;
 			$folderlist[] = $f = array(
 				'id'	=>	$this->backend->createID('calendar',$entry['grantor']),
 				'mod'	=>	$GLOBALS['egw']->accounts->id2name($entry['grantor'],'account_fullname'),
@@ -75,6 +84,7 @@ class calendar_activesync implements activesync_plugin_write
 			);
 		};
 		//error_log(__METHOD__."() returning ".array2string($folderlist));
+		debugLog(__METHOD__."() returning ".array2string($folderlist));
 		return $folderlist;
 	}
 
@@ -101,6 +111,7 @@ class calendar_activesync implements activesync_plugin_write
 			$folderObj->type = SYNC_FOLDER_TYPE_USER_APPOINTMENT;
 		}
 		//error_log(__METHOD__."('$id') folderObj=".array2string($folderObj));
+		debugLog(__METHOD__."('$id') folderObj=".array2string($folderObj));
 		return $folderObj;
 	}
 
@@ -127,7 +138,8 @@ class calendar_activesync implements activesync_plugin_write
 			'mod'	=> $GLOBALS['egw']->accounts->id2name($owner,'account_fullname'),
 			'parent' => '0',
 		);
-
+		//error_log(__METHOD__."('$id') folderObj=".array2string($stat));
+		debugLog(__METHOD__."('$id') folderObj=".array2string($stat));
 		return $stat;
 	}
 
@@ -304,7 +316,11 @@ class calendar_activesync implements activesync_plugin_write
 		{
 			if ($attendee->type == 3) continue;	// we can not identify resources and re-add them anyway later
 
-			if (!($uid = $GLOBALS['egw']->accounts->name2id($attendee->email,'account_email')))
+			if (preg_match('/^noreply-(.*)-uid@egroupware.org$/',$attendee->email,$matches))
+			{
+				$uid = $matches[1];
+			}
+			elseif (!($uid = $GLOBALS['egw']->accounts->name2id($attendee->email,'account_email')))
 			{
 				$search = array(
 					'email' => $attendee->email,
@@ -312,6 +328,7 @@ class calendar_activesync implements activesync_plugin_write
 					//'n_fn' => $attendee->name,	// not sure if we want matches without email
 				);
 				// search addressbook for participant
+				if (!isset($this->addressbook)) $this->addressbook = new addressbook_bo();
 				if ((list($data) = $this->addressbook->search($search,
 					array('id','egw_addressbook.account_id as account_id','n_fn'),
 					'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC',
@@ -353,24 +370,29 @@ class calendar_activesync implements activesync_plugin_write
 				'A' : 'U',1,'CHAIR');
 			$chair_set = true;
 		}
-		// add calendar owner as participant, as otherwise event will NOT be in his calendar, in which it was posted
-		if (!$id && !isset($participants[$account]))
-		{
-			$participants[$account] = calendar_so::combine_status($account == $GLOBALS['egw_info']['user']['account_id'] ?
-				'A' : 'U',1,!$chair_set ? 'CHAIR' : 'REQ-PARTICIPANT');
-		}
 		// preserve all resource types not account, contact or email (eg. resources) for existing events
+		// $account is also preserved, as AS does not add him as participant!
 		foreach((array)$event['participant_types'] as $type => $parts)
 		{
-			if (in_array($type,array('u','c','e'))) continue;	// they are correctly representable in AS
+			if (in_array($type,array('c','e'))) continue;	// they are correctly representable in AS
+
 			foreach($parts as $id => $status)
 			{
+				// accounts are represented correctly, but the event owner which is no participant in AS
+				if ($type == 'u' && $id != $account) continue;
+
 				$uid = calendar_so::combine_user($type, $id);
 				if (!isset($participants[$uid]))
 				{
 					$participants[$uid] = $status;
 				}
 			}
+		}
+		// add calendar owner as participant, as otherwise event will NOT be in his calendar, in which it was posted
+		if (!$id || !$participants || !isset($participants[$account]))
+		{
+			$participants[$account] = calendar_so::combine_status($account == $GLOBALS['egw_info']['user']['account_id'] ?
+				'A' : 'U',1,!$chair_set ? 'CHAIR' : 'REQ-PARTICIPANT');
 		}
 		$event['participants'] = $participants;
 
@@ -431,7 +453,7 @@ class calendar_activesync implements activesync_plugin_write
 
 		// @todo: body or description
 
-		if (!($id = $this->calendar->save($event)))
+		if (!($id = $this->calendar->update($event,true)))	// true = ignore conflicts
 		{
 			debugLog(__METHOD__."('$folderid',$id,...) error saving event=".array2string($event)."!");
 			return false;
@@ -577,6 +599,9 @@ class calendar_activesync implements activesync_plugin_write
 		$message->attendees = array();
 		foreach($event['participants'] as $uid => $status)
 		{
+			// AS does NOT want calendar owner as participant
+			if ($uid == $account) continue;
+
 			calendar_so::split_status($status, $quantity, $role);
 			$attendee = new SyncAttendee();
 			$attendee->status = (int)self::$status2as[$status];
@@ -601,6 +626,9 @@ class calendar_activesync implements activesync_plugin_write
 				$attendee->email = $info['email'];
 				if ($uid[0] == 'r') $attendee->type = 3;	// 3 = resource
 			}
+			// email must NOT be empy, but MAY be an arbitrary text
+			if (empty($attendee->email)) $attendee->email = 'noreply-'.$uid.'-uid@egroupware.org';
+
 			$message->attendees[] = $attendee;
 		}
 		$message->categories = array();
@@ -639,7 +667,7 @@ class calendar_activesync implements activesync_plugin_write
 			if ($rrule->exceptions)
 			{
 				$message->exceptions = array();
-				foreach($rrule->exceptions as $exception_time)
+				foreach($rrule->exceptions_objs as $exception_time)
 				{
 					$exception = new SyncAppointment();	// exceptions seems to be full SyncAppointments, with only starttime required
 					$exception->starttime = $exception_time->format('server');
@@ -728,6 +756,7 @@ class calendar_activesync implements activesync_plugin_write
 	function AlterPingChanges($folderid, &$syncstate)
 	{
 		$this->backend->splitID($folderid, $type, $owner);
+		debugLog(__METHOD__."('$folderid','$syncstate') type='$type', owner=$owner");
 
 		if ($type != 'calendar') return false;
 
@@ -743,6 +772,7 @@ class calendar_activesync implements activesync_plugin_write
 			$changes = array(array('type' => 'fakeChange'));
 		}
 		//error_log(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
+		debugLog(__METHOD__."('$folderid','$syncstate_was') syncstate='$syncstate' returning ".array2string($changes));
 		return $changes;
 	}
 
