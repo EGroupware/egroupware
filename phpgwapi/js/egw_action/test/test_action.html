@@ -30,8 +30,8 @@
 			}
 
 			.listbox .focused {
-				border: 1px dashed white;
-				padding: 1px;
+				border: 1px dashed black;
+				padding: 2px;
 			}
 		</style>
 	</head>
@@ -40,31 +40,84 @@
 				<tr id="le1">
 					<td><img src="imgs/page.png"/></td>
 					<td style="width: 200px">File 1</td>
-					<td><input id="le1_chk" type="checkbox"></td>
+					<td><input type="checkbox"></td>
 				</tr>
 				<tr id="le2">
 					<td><img src="imgs/page.png"/></td>
 					<td style="width: 200px">File 2</td>
-					<td><input id="le2_chk" type="checkbox"></td>
+					<td><input type="checkbox"></td>
 				</tr>
 				<tr id="le3">
 					<td><img src="imgs/page.png"/></td>
 					<td style="width: 200px">File 3</td>
-					<td><input id="le3_chk" type="checkbox"></td>
+					<td><input type="checkbox"></td>
 				</tr>
 			</table>
 		<script>
 			var actionManager = null;
+			var objectManager = null;
 
 			$(document).ready(function() {
 				init();
 			});
+
+			// An action object interface for the listbox - "inherits" from 
+			// egwActionObjectInterface
+			function listboxItemAOI(_node)
+			{
+				var aoi = new egwActionObjectInterface();
+
+				aoi.node = _node;
+				aoi.checkBox = ($(":checkbox", aoi.node))[0];
+
+				aoi.doGetDOMNode = function() {
+					return self.node;
+				}
+
+				aoi.doSetState = function(_state, _outerCall, _shiftState) {
+					var selected = egwBitIsSet(_state, EGW_AO_STATE_SELECTED);
+					this.checkBox.checked = selected;
+					$(this.node).toggleClass('focused',
+						egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
+					$(this.node).toggleClass('selected',
+						selected);
+					if (! _outerCall)
+					{
+						this._selectChange(egwBitIsSet(_state,
+							EGW_AO_STATE_SELECTED), _shiftState);
+					}
+				}
+
+				// Now append some action code to the node
+				$(_node).click(function(e) {
+					if (e.target != aoi.checkBox)
+					{
+//						"Normal" Listbox behaviour
+//						aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
+//							true), false, EGW_AO_SHIFT_STATE_NONE);
+
+//						"PHPMyAdmin" Listbox behaviour
+						var selected = egwBitIsSet(aoi.getState(), EGW_AO_STATE_SELECTED);
+						aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
+							!selected), false, EGW_AO_SHIFT_STATE_MULTI);
+					}
+				});
+
+				$(aoi.checkBox).change(function() {
+					aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
+						this.checked), false, EGW_AO_SHIFT_STATE_MULTI);
+				});
+
+
+				return aoi;
+			}
 
 
 			function init()
 			{
 				//Initialize the action manager and add some actions to it
 				actionManager = new egwActionManager();
+				objectManager = new egwActionObjectManager("", actionManager);
 
 				actionManager.updateActions(
 					[
@@ -83,8 +136,7 @@
 				);
 
 				$('#lb1 tr').each(function(index, elem) {
-					// Create an action object and attach it to an interface
-					console.log(index, elem);
+					objectManager.addObject(elem.id, new listboxItemAOI(elem));
 				})
 			}
 		</script>

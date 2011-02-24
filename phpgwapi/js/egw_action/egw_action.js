@@ -605,7 +605,7 @@ egwActionObject.prototype.getFocusedObject = function()
 	//Search for the focused object in the children
 	for (var i = 0; i < this.children.length; i++)
 	{
-		var obj = this.children[i].getFocused()
+		var obj = this.children[i].getFocusedObject()
 		if (obj)
 		{
 			return obj;
@@ -632,16 +632,18 @@ egwActionObject.prototype.getFocusedObject = function()
  */
 egwActionObject.prototype._ifaceCallback = function(_newState, _shiftState)
 {
+	if (typeof _shiftState == "undefined")
+		_shiftState = EGW_AO_SHIFT_STATE_NONE;
 	// Remove the focus from all children on the same level
 	if (this.parent)
 	{
 		var selected = egwBitIsSet(_newState, EGW_AO_STATE_SELECTED);
+		var objs = [];
 
 		if (selected)
 		{
 			// Search the index of this object
 			var id = this.parent.children.indexOf(this);
-			var objs = [];
 
 			// Deselect all other objects inside this container, if the "MULTI" shift-
 			// state is not set
@@ -671,13 +673,13 @@ egwActionObject.prototype._ifaceCallback = function(_newState, _shiftState)
 					}
 				}
 			}
+		}
 
-			// If the focused element didn't belong to this container, or the "list"
-			// shift-state isn't active, set the focus to this element.
-			if (objs.length == 0 || !egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_BLOCK))
-			{
-				this.setFocused(true);
-			}
+		// If the focused element didn't belong to this container, or the "list"
+		// shift-state isn't active, set the focus to this element.
+		if (objs.length == 0 || !egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_BLOCK))
+		{
+			this.setFocused(true);
 		}
 	}
 }
@@ -712,7 +714,7 @@ egwActionObject.prototype.getState = function()
  * be de-focused.
  *
  * @param boolean _focused - whether to remove or set the focus. Defaults to true
- * @param boolean _recPrev is internally used to prevent infinit recursion. Do not touch.
+ * @param object _recPrev is internally used to prevent infinit recursion. Do not touch.
  */
 egwActionObject.prototype.setFocused = function(_focused, _recPrev)
 {
@@ -731,10 +733,10 @@ egwActionObject.prototype.setFocused = function(_focused, _recPrev)
 		//Reset the focus of the formerly focused element
 		if (!_recPrev)
 		{
-			var focused = this.getRootObject.getFocusedObject();
+			var focused = this.getRootObject().getFocusedObject();
 			if (focused)
 			{
-				focused.setFocused(false, true);
+				focused.setFocused(false, this);
 			}
 		}
 
@@ -743,7 +745,10 @@ egwActionObject.prototype.setFocused = function(_focused, _recPrev)
 			//If the object is not focused, reset the focus state of all children
 			for (var i = 0; i < this.children.length; i++)
 			{
-				this.children[i].setFocused(false, true);
+//				if (this.children[i] != _recPrev)
+//				{
+					this.children[i].setFocused(false, _recPrev);
+//				}
 			}
 		}
 		else
@@ -751,7 +756,7 @@ egwActionObject.prototype.setFocused = function(_focused, _recPrev)
 			//Otherwise set the focused state of the parent to true
 			if (this.parent)
 			{
-				this.parent.setFocused(true, true);
+				this.parent.setFocused(true, _recPrev);
 			}
 		}
 
@@ -933,20 +938,17 @@ egwActionObjectInterface.prototype.setStateChangeCallback = function(_callback, 
  * the object and call the stateChangeCallback (if it has been set)
  *
  * @param boolean _selected Whether the object is selected or not.
+ * @param int _shiftState special keys which change how the state change will
+ * 	be treated.
  */
-egwActionObjectInterface.prototype._selectChange = function(_selected)
+egwActionObjectInterface.prototype._selectChange = function(_selected, _shiftState)
 {
-	// Check whether the selected bit has actually changed - the callback may
-	// perform expensive operations, and we don't want those to happen without
-	// a reason.
-	if (egwBitIsSet(this._state, EGW_AO_STATE_SELECTED) != _selected)
+	//Set the EGW_AO_STATE_SELECTED bit accordingly and call the callback
+	this._state = egwSetBit(this._state, EGW_AO_STATE_SELECTED, _selected);
+	if (this.stateChangeCallback)
 	{
-		//Set the EGW_AO_STATE_SELECTED bit accordingly and call the callback
-		this._state = egwBitSet(this._state, EGW_AO_STATE_SELECTED, _selected);
-		if (this.stateChangeCallback)
-		{
-			this.stateChangeCallback.call(this.stateChangeContext, this._state);
-		}
+		this.stateChangeCallback.call(this.stateChangeContext,
+			this._state, _shiftState);
 	}
 }
 
@@ -996,7 +998,7 @@ egwActionObjectInterface.prototype.getState = function()
  */
 function egwActionObjectManager(_id, _manager)
 {
-	return new egwActionObject(_id, null, _manager,
-		new egwActionObjectInterface(), EGW_AO_FLAG_IS_CONTAINER);
+	return new egwActionObject(_id, null, new egwActionObjectInterface(),
+		_manager, EGW_AO_FLAG_IS_CONTAINER);
 }
 
