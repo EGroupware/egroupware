@@ -49,9 +49,11 @@ class importexport_export_ui {
 		$preserv = array();
 
 		// Check global setting
-		$config = config::read('phpgwapi');
-		if($config['export_limit'] == 'no') {
-			die(lang('Admin disabled exporting'));
+		if(!$GLOBALS['egw_info']['user']['apps']['admin']) {
+			$config = config::read('phpgwapi');
+			if($config['export_limit'] == 'no') {
+				die(lang('Admin disabled exporting'));
+			}
 		}
 
 		$et = new etemplate(self::_appname. '.export_dialog');
