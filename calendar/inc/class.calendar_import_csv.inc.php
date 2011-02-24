@@ -145,6 +145,10 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 		// Failures
 		$this->errors = array();
 
+		// Used for participants
+		$status_map = array_flip($this->bo->verbose_status);
+		$role_map = array_flip($this->bo->roles);
+
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
 
@@ -165,6 +169,26 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 				$record['owner'] = $_definition->plugin_options['owner'];
 			}
 
+			if ($record['participants'] && !is_array($record['participants'])) {
+				// Importing participants in human friendly format
+				preg_match_all('/(([^(]+?)( \(([0-9]+)\))? \((.+?)\) ([^,]+)),?/',$record['participants'],$participants);
+				$record['participants'] = array();
+				list($lines, $p, $names, $q, $quantity, $status, $role) = $participants;
+				foreach($names as $key => $name) {
+					$id = $GLOBALS['egw']->accounts->name2id($name, 'account_fullname');
+					if(!$id) {
+						$contacts = ExecMethod2('addressbook.addressbook_bo.search', $name,array('contact_id','account_id'),'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR',array(0,1));
+						if($contacts) $id = $contacts[0]['account_id'] ? $contacts[0]['account_id'] : 'c'.$contacts[0]['id'];
+					}
+					if($id) {
+						$record['participants'][$id] = calendar_so::combine_status(
+							$status_map[lang($status[$key])] ? $status_map[lang($status[$key])] : $status[$key][0],
+							$quantity[$key] ? $quantity[$key] : 1,
+							$role_map[lang($role[$key])] ? $role_map[lang($role[$key])] : $role[$key]
+						);
+					}
+				}
+			}
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
