@@ -37,11 +37,10 @@ if ($_POST['download'])
 {
 	list($file) = each($_POST['download']);
 	$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
-	ob_end_clean();
+	while (@ob_end_clean()) ;       // end all active output buffering
+	ini_set('zlib.output_compression',0);   // switch off zlib.output_compression, as this would limit downloads in size to memory_limit
 	html::content_header(basename($file));
-	$f = fopen($file,'rb');
-	fpassthru($f);
-	fclose($f);
+	readfile($file);
 	exit;
 }
 $setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
