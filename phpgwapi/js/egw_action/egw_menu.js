@@ -18,15 +18,15 @@ var _egw_active_menu = null;
  * in e.g. the egwMenu.addItem function.
  */
 //TODO Icons: write PHP GD script which is cabable of generating the menu icons in various states (disabled, highlighted)
-function _egwGenMenuItem(_parent, _id, _label, _iconUrl, _onClick)
+function _egwGenMenuItem(_parent, _id, _caption, _iconUrl, _onClick)
 {
 	//Preset the parameters
 	if (typeof _parent == "undefined")
 		_parent = null;
 	if (typeof _id == "undefined")
 		_id = "";
-	if (typeof _label == "undefined")
-		_label = "";
+	if (typeof _caption == "undefined")
+		_caption = "";
 	if (typeof _iconUrl == "undefined")
 		_iconUrl = "";
 	if (typeof _onClick == "undefined")
@@ -34,7 +34,7 @@ function _egwGenMenuItem(_parent, _id, _label, _iconUrl, _onClick)
 
 	//Create a menu item with no parent (null) and set the given parameters
 	var item = new egwMenuItem(_parent, _id);
-	item.set_caption(_label);
+	item.set_caption(_caption);
 	item.set_iconUrl(_iconUrl);
 	item.set_onClick(_onClick);
 
@@ -217,7 +217,7 @@ egwMenu.prototype.hide = function()
  * 	the getItem function to search a specific menu item inside the menu tree. The
  * 	id may also be false, null or "", which makes sense for items like seperators,
  * 	which you don't want to access anymore after adding them to the menu tree.
- * @param string _label is the label of the newly generated menu item. Set the label
+ * @param string _caption is the caption of the newly generated menu item. Set the caption
  * 	to "-" in order to create a sperator.
  * @param string _iconUrl is the URL of the icon which should be prepended to the
  * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
@@ -226,10 +226,10 @@ egwMenu.prototype.hide = function()
  * @returns egwMenuItem the newly generated menu item, which had been appended to the
  * 	menu item list.
  */
-egwMenu.prototype.addItem = function(_id, _label, _iconUrl, _onClick)
+egwMenu.prototype.addItem = function(_id, _caption, _iconUrl, _onClick)
 {
 	//Append the item to the list
-	var item = _egwGenMenuItem(this, _id, _label, _iconUrl, _onClick);
+	var item = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
 	this.children.push(item);
 
 	return item;
@@ -287,7 +287,8 @@ function egwMenuItem(_parent, _id)
 	this.enabled = true;
 	this.iconUrl = "";
 	this.onClick = null;
-	this.default = false;
+	this["default"] = false;
+	this.data = null;
 
 	this.children = [];
 	this.parent = _parent;
@@ -313,6 +314,32 @@ egwMenuItem.prototype.setGlobalOnClick = function(_onClick)
 	this.onClick = _onClick;
 	_egwSetMenuOnClick(this.children, _onClick);
 }
+
+/**
+ * Adds a new menu item to the list and returns a reference to that object.
+ *
+ * @param string _id is a unique identifier of the menu item. You can use the
+ * 	the getItem function to search a specific menu item inside the menu tree. The
+ * 	id may also be false, null or "", which makes sense for items like seperators,
+ * 	which you don't want to access anymore after adding them to the menu tree.
+ * @param string _caption is the caption of the newly generated menu item. Set the caption
+ * 	to "-" in order to create a sperator.
+ * @param string _iconUrl is the URL of the icon which should be prepended to the
+ * 	menu item. It may be false, null or "" if you don't want a icon to be displayed.
+ * @param function _onClick is the JS function which is being executed when the
+ * 	menu item is clicked.
+ * @returns egwMenuItem the newly generated menu item, which had been appended to the
+ * 	menu item list.
+ */
+egwMenuItem.prototype.addItem = function(_id, _caption, _iconUrl, _onClick)
+{
+	//Append the item to the list
+	var item = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
+	this.children.push(item);
+
+	return item;
+}
+
 
 //Setter functions for the menuitem properties
 
@@ -371,7 +398,11 @@ egwMenuItem.prototype.set_iconUrl = function(_value)
 
 egwMenuItem.prototype.set_default = function(_value)
 {
-	this.default = _value;
+	this["default"] = _value;
 }
 
+egwMenuItem.prototype.set_data = function(_value)
+{
+	this.data = _value;
+}
 

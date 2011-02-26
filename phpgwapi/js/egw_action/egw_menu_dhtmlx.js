@@ -101,7 +101,7 @@ egwMenuImpl.prototype._translateStructure = function(_structure, _parentId, _idC
 			else
 			{
 				var caption = elem.caption;
-				if (elem.default)
+				if (elem["default"])
 					caption = "<b>" + caption + "</b>"
 				this.dhtmlxmenu.addNewChild(_parentId, i, id, caption, !elem.enabled,
 					elem.iconUrl, elem.iconUrl);

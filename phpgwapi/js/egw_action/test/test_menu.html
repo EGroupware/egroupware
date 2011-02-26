@@ -163,7 +163,6 @@ function getPageXY(event)
 	var scrollLeft = document.body.scrollLeft ? document.body.scrollLeft :
 		document.documentElement.scrollLeft;
 
-	// hide the menu first to avoid an "up-then-over" visual effect
 	return {'x': (event.clientX + scrollLeft), 'y': (event.clientY + scrollTop)};
 }
 

@@ -1,9 +1,21 @@
 <html>
 	<head>
 		<title>Test page for the egw action stuff</title>
+
+		<!-- Basic action stuff -->
 		<script src="../egw_action.js"></script>
 		<script src="../egw_action_common.js"></script>
 		<script src="js/jquery.js"></script>
+
+		<!-- Popup stuff -->
+		<link rel="stylesheet" type="text/css" href="skins/dhtmlxmenu_egw.css">
+		<script src="js/dhtmlxcommon.js"></script>
+		<script src="js/dhtmlxmenu.js"></script>
+		<script src="js/dhtmlxmenu_ext.js"></script>
+		<script src="../egw_action_popup.js"></script>
+		<script src="../egw_menu.js"></script>
+		<script src="../egw_menu_dhtmlx.js"></script>
+
 		<style>
 			body, table {
 				font-family: Arial, sans-serif;
@@ -11,7 +23,7 @@
 			}
 			.listbox {
 				width: 250px;
-				border: 1px solid gray;
+				border: 2px groove gray;
 				margin: 5px;
 				border-collapse: collapse;
 			}
@@ -24,35 +36,34 @@
 				padding: 2px;
 			}
 
-			.listbox .selected {
+			.listbox tr.odd {
+				background-color: #eeeeee;
+			}
+
+			.listbox tr.selected {
 				background-color: #2b5d9b;
 				color: white;
 			}
 
+			.listbox tr.odd.selected {
+				background-color: #234b7d !important;
+			}
+
 			.listbox .focused {
-				border: 1px dashed black;
-				padding: 2px;
+				border: 1px dotted black;
+				padding: 1px;
 			}
 		</style>
 	</head>
 	<body>
-			<table class="listbox" id="lb1">
-				<tr id="le1">
-					<td><img src="imgs/page.png"/></td>
-					<td style="width: 200px">File 1</td>
-					<td><input type="checkbox"></td>
-				</tr>
-				<tr id="le2">
-					<td><img src="imgs/page.png"/></td>
-					<td style="width: 200px">File 2</td>
-					<td><input type="checkbox"></td>
-				</tr>
-				<tr id="le3">
-					<td><img src="imgs/page.png"/></td>
-					<td style="width: 200px">File 3</td>
-					<td><input type="checkbox"></td>
-				</tr>
-			</table>
+		<table class="listbox" id="lb1">
+			<tr id="folder1"><td><img src="imgs/folder.png"/></td><td style="width: 200px">Folder 1</td><td><input type="checkbox"></td></tr>
+			<tr id="file1"><td><img src="imgs/page.png"/></td><td style="width: 200px">File 1</td><td><input type="checkbox"></td></tr>
+			<tr id="file2"><td><img src="imgs/page.png"/></td><td style="width: 200px">File 2</td><td><input type="checkbox"></td></tr>
+			<tr id="file3"><td><img src="imgs/page.png"/></td><td style="width: 200px">File 3</td><td><input type="checkbox"></td></tr>
+			<tr id="file4"><td><img src="imgs/page.png"/></td><td style="width: 200px">File 4</td><td><input type="checkbox"></td></tr>
+			<tr id="file5"><td><img src="imgs/page.png"/></td><td style="width: 200px">File 5</td><td><input type="checkbox"></td></tr>
+		</table>
 		<script>
 			var actionManager = null;
 			var objectManager = null;
@@ -69,10 +80,42 @@
 
 				aoi.node = _node;
 				aoi.checkBox = ($(":checkbox", aoi.node))[0];
+				aoi.checkBox.checked = false;
 
 				aoi.doGetDOMNode = function() {
-					return self.node;
+					return aoi.node;
 				}
+
+				function getShiftState(e)
+				{
+					var state = EGW_AO_SHIFT_STATE_NONE;
+					state = egwSetBit(state, EGW_AO_SHIFT_STATE_MULTI, e.ctrkKey || e.metaKey);
+					state = egwSetBit(state, EGW_AO_SHIFT_STATE_BLOCK, e.shiftKey);
+					return state;
+				}
+
+				// Now append some action code to the node
+				$(_node).click(function(e) {
+					if (e.target != aoi.checkBox)
+					{
+						var selected = egwBitIsSet(aoi.getState(), EGW_AO_STATE_SELECTED);
+						var state = getShiftState(e);
+
+//						"Normal" Listbox behaviour
+						aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
+							!egwBitIsSet(state, EGW_AO_SHIFT_STATE_MULTI) || !selected),
+							false, state);
+
+//						"PHPMyAdmin" Listbox behaviour
+//						aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
+//							!selected), false, EGW_AO_SHIFT_STATE_MULTI);
+					}
+				});
+
+				$(aoi.checkBox).change(function() {
+					aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
+						this.checked), false, EGW_AO_SHIFT_STATE_MULTI);
+				});
 
 				aoi.doSetState = function(_state, _outerCall, _shiftState) {
 					var selected = egwBitIsSet(_state, EGW_AO_STATE_SELECTED);
@@ -88,30 +131,18 @@
 					}
 				}
 
-				// Now append some action code to the node
-				$(_node).click(function(e) {
-					if (e.target != aoi.checkBox)
-					{
-//						"Normal" Listbox behaviour
-//						aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
-//							true), false, EGW_AO_SHIFT_STATE_NONE);
-
-//						"PHPMyAdmin" Listbox behaviour
-						var selected = egwBitIsSet(aoi.getState(), EGW_AO_STATE_SELECTED);
-						aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
-							!selected), false, EGW_AO_SHIFT_STATE_MULTI);
-					}
-				});
-
-				$(aoi.checkBox).change(function() {
-					aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
-						this.checked), false, EGW_AO_SHIFT_STATE_MULTI);
-				});
-
-
 				return aoi;
 			}
 
+			function alertClicked(_action, _senders)
+			{
+				var ids = "";
+				for (var i = 0; i < _senders.length; i++)
+					ids += _senders[i].id + ((i < _senders.length - 1) ? ", " : "");
+
+				alert("Action '" + _action.caption + "' executed on elements '"
+					+ ids + "'");
+			}
 
 			function init()
 			{
@@ -122,21 +153,109 @@
 				actionManager.updateActions(
 					[
 						{
+							"id": "folder_open",
+							"iconUrl": "imgs/folder.png",
+							"caption": "Open folder",
+							"onExecute": alertClicked,
+//							"allowOnMultiple": false,
+							"type": "popup",
+							"default": true
+						},
+						{
 							"id": "file_view",
-							"icon": "imgs/view.png",
+							"iconUrl": "imgs/view.png",
+							"caption": "View",
+							"onExecute": alertClicked,
 							"allowOnMultiple": false,
-							"caption": "Datei anzeigen"
+							"type": "popup",
+							"default": true
+						},
+						{
+							"id": "file_preview",
+							"iconUrl": "imgs/preview.png",
+							"caption": "Preview",
+							"onExecute": alertClicked,
+							"allowOnMultiple": false,
+							"type": "popup",
+							"default": true
 						},
 						{
 							"id": "file_delete",
-							"icon": "imgs/delete.png",
-							"caption": "Datei löschen"
+							"iconUrl": "imgs/delete.png",
+							"caption": "Delete",
+							"onExecute": alertClicked,
+							"type": "popup",
+							"group": 2
+						},
+						{
+							"id": "file_edit",
+							"iconUrl": "imgs/edit.png",
+							"caption": "Edit file",
+							"onExecute": alertClicked,
+							"allowOnMultiple": false,
+							"type": "popup"
+						},
+						{
+							"id": "file_compress",
+							"iconUrl": "imgs/compress.png",
+							"caption": "Create ZIP archive",
+							"onExecute": alertClicked,
+							"type": "popup",
+							"group": 1,
+							"order": 1
+						},
+						{
+							"id": "file_email",
+							"iconUrl": "imgs/email.png",
+							"caption": "E-Mail",
+							"onExecute": alertClicked,
+							"allowOnMultiple": false,
+							"type": "popup",
+							"group": 1,
+							"order": 0
+						},
+						{
+							"id": "file_compress_email",
+							"caption": "Create ZIP and E-Mail",
+							"onExecute": alertClicked,
+							"type": "popup",
+							"group": 1,
+							"order": 2
 						}
 					]
 				);
 
+				//Links which will be assigned to each listbox item
+				var listboxFileLinks = [
+					{"actionId": "file_view", "enabled": true},
+					{"actionId": "file_preview", "enabled": true},
+					{"actionId": "file_edit", "enabled": true},
+					{"actionId": "file_email", "enabled": true},
+					{"actionId": "file_compress_email", "enabled": true},
+					{"actionId": "file_compress", "enabled": true},
+					{"actionId": "file_delete", "enabled": true}
+				];
+
+				var listboxFolderLinks = [
+					{"actionId": "folder_open", "enabled": true},
+					{"actionId": "file_compress_email", "enabled": true},
+					{"actionId": "file_compress", "enabled": true},
+					{"actionId": "file_delete", "enabled": true}
+				];
+
+				$('#lb1 tr:odd').addClass('odd');
+
+				//Create an object representation for each listbox-row and append
+				//each to its own listboxItemAOI
 				$('#lb1 tr').each(function(index, elem) {
-					objectManager.addObject(elem.id, new listboxItemAOI(elem));
+					var obj = objectManager.addObject(elem.id, new listboxItemAOI(elem));
+					//Apply the links to the actions
+					if (elem.id.substr(0,4) == "file")
+						obj.updateActionLinks(listboxFileLinks);
+					else
+						obj.updateActionLinks(listboxFolderLinks);
+
+					obj.registerActions();
 				})
 			}
 		</script>

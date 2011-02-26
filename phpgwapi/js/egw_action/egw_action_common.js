@@ -61,3 +61,25 @@ function egwBitIsSet(_set, _bit)
 	return (_set & _bit) > 0;
 }
 
+function egwObjectLength(_obj)
+{
+	var len = 0;
+	for (k in _obj) len++;
+	return len;
+}
+
+/**
+ * IE Fix for array.indexOf
+ */
+if (typeof Array.prototype.indexOf == "undefined")
+{
+	Array.prototype.indexOf = function(_elem) {
+		for (var i = 0; i < this.length; i++)
+		{
+			if (this[i] === _elem)
+				return i;
+		}
+		return -1;
+	};
+}
+

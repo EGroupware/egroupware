@@ -91,8 +91,8 @@ function egw_json_encode(input)
 				var buf = [];
 				for (var k in input)
 				{
-					//Filter the remove function, which is added to arrays in egw_fw_classes
-					if (k != 'remove')
+					//Filter non numeric entries
+					if (!isNaN(k))
 						buf.push(egw_json_encode(input[k]));
 				}
 				return '[' + buf.join(',') + ']';

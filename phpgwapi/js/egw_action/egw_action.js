@@ -27,16 +27,15 @@ function egwActionHandler(_executeEvent)
 /**
  * Associative array where action classes may register themselves
  */
-var _egwActionClasses =
-	{
-		"default":
-		{
-			"actionConstructor": egwAction,
-			"implementationConstructor": null
-		}
-	}
+if (typeof window._egwActionClasses == "undefined")
+	window._egwActionClasses = {}
 
-function egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
+_egwActionClasses["default"] = {
+	"actionConstructor": egwAction,
+	"implementation": null
+};
+
+function egwAction(_id, _handler, _caption, _iconUrl, _onExecute, _allowOnMultiple)
 {
 	//Default and check the values
 	if (typeof _id != "string" || !_id)
@@ -45,8 +44,8 @@ function egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 		this.handler = null;
 	if (typeof _label == "undefined")
 		_label = "";
-	if (typeof _icon == "undefined")
-		_icon = "";
+	if (typeof _iconUrl == "undefined")
+		_iconUrl = "";
 	if (typeof _onExecute == "undefined")
 		_onExecute = null;
 	if (typeof _allowOnMultiple == "undefined")
@@ -54,7 +53,7 @@ function egwAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
 
 	this.id = _id;
 	this.caption = _caption;
-	this.icon = _icon;
+	this.iconUrl = _iconUrl;
 	this.allowOnMultiple = _allowOnMultiple;
 	this.type = "default"; //All derived classes have to override this!
 
@@ -133,15 +132,21 @@ egwAction.prototype.set_caption = function(_value)
 	this.caption = _value;
 }
 
-egwAction.prototype.set_icon = function(_value)
+egwAction.prototype.set_iconUrl = function(_value)
 {
-	this.icon = _value;
+	this.iconUrl = _value;
 }
 
 egwAction.prototype.set_allowOnMultiple = function(_value)
 {
 	this.allowOnMultiple = _value;
 }
+
+egwAction.prototype.updateAction = function(_data)
+{
+	egwActionStoreJSON(_data, this, true);
+}
+
 
 
 /** egwActionManager Object **/
@@ -160,7 +165,7 @@ function egwActionManager(_handler)
 	this.actions = [];
 }
 
-egwActionManager.prototype.addAction = function(_type, _id, _caption, _icon,
+egwActionManager.prototype.addAction = function(_type, _id, _caption, _iconUrl,
 	_onExecute, _allowOnMultiple)
 {
 	//Get the constructor for the given action type
@@ -170,7 +175,7 @@ egwActionManager.prototype.addAction = function(_type, _id, _caption, _icon,
 
 	if (typeof constructor == "function")
 	{
-		var action = new constructor(_id, this.handler, _caption, _icon, _onExecute,
+		var action = new constructor(_id, this.handler, _caption, _iconUrl, _onExecute,
 			_allowOnMultiple);
 		this.actions.push[action];
 
@@ -196,22 +201,20 @@ egwActionManager.prototype.updateActions = function(_actions)
 				if (typeof elem.type == "undefined")
 					elem.type = "default";
 
-				var constructor = _egwActionClasses[elem.type].actionConstructor;
+				var constructor = null;
 
-				if (typeof constructor == "function")
+				if (typeof _egwActionClasses[elem.type] != "undefined")
+					constructor = _egwActionClasses[elem.type].actionConstructor;
+
+				if (typeof constructor == "function" && constructor)
 					action = new constructor(elem.id, this.handler);
 				else
-					throw "Given action type not registered.";
+					throw "Given action type \"" + elem.type + "\" not registered.";
 
 				this.actions.push(action);
 			}
 
-			//Update the actions by calling the corresponding setter functions
-			//TODO: Hirachical actions will need a reference to their parent -
-			//      this parent is has to be translated to a js object
-			//TODO: Maby the setter, JSON, update stuff should somehow be moved
-			//      to a own base class.
-			egwActionStoreJSON(elem, action, true);
+			action.updateAction(elem);
 		}
 	}
 }
@@ -239,34 +242,34 @@ egwActionManager.prototype.getAction = function(_id)
  * which replaces "this" with a "new egwActionImplementation" and implement your
  * code in "doRegisterAction" und "doUnregisterAction".
  * Register your own implementation within the _egwActionClasses object.
- *
- * @param object _action is the parent egwAction object for that instance.
  */
-function egwActionImplementation(_action)
+function egwActionImplementation()
 {
-	this.action = _action;
-
-	this.doRegisterAction = null;
-	this.doUnregisterAction = null;
+	this.doRegisterAction = function() {throw "Abstract function call: registerAction"};
+	this.doUnregisterAction = function() {throw "Abstract function call: unregisterAction"};
+	this.doExecuteImplementation = function() {throw "Abstract function call: executeImplementation"};
+	this.type = "";
 }
 
 /**
  * Injects the implementation code into the DOM tree by using the supplied 
  * actionObjectInterface.
  *
+ * @param object _actionObjectInterface is the AOI in which the implementation
+ * 	should be registered.
+ * @param function _triggerCallback is the callback function which will be triggered
+ * 	when the user triggeres this action implementatino (e.g. starts a drag-drop or
+ * 	right-clicks on an object.)
+ * @param object context in which the triggerCallback should get executed.
  * @returns true if the Action had been successfully registered, false if it
  * 	had not.
  */
-egwActionImplementation.registerAction = function(_actionObjectInterface)
+egwActionImplementation.prototype.registerAction = function(_actionObjectInterface, _triggerCallback, _context)
 {
-	if (this.doRegisterAction == null)
-	{
-		throw "Abstract function call: registerAction";
-	}
-	else
-	{
-		return this.doRegisterAction(_action, _actionObjectInterface);
-	}
+	if (typeof _context == "undefined")
+		_context = null;
+
+	return this.doRegisterAction(_actionObjectInterface, _triggerCallback, _context);
 }
 
 /**
@@ -277,16 +280,14 @@ egwActionImplementation.registerAction = function(_actionObjectInterface)
  * @returns true if the Action had been successfully unregistered, false if it
  * 	had not.
  */
-egwActionImplementation.unregisterAction = function(_actionObjectInterface)
+egwActionImplementation.prototype.unregisterAction = function(_actionObjectInterface)
 {
-	if (this.doUnregisterAction == null)
-	{
-		throw "Abstract function call: unregisterAction";
-	}
-	else
-	{
-		return this.doUnregisterAction(_action, _actionObjectInterface);
-	}
+	return this.doUnregisterAction(_actionObjectInterface);
+}
+
+egwActionImplementation.prototype.executeImplementation = function(_context, _selected, _links)
+{
+	return this.doExecuteImplementation(_context, _selected, _links);
 }
 
 
@@ -303,6 +304,7 @@ egwActionImplementation.unregisterAction = function(_actionObjectInterface)
 function egwActionLink(_manager)
 {
 	this.enabled = true;
+	this.visible = true;
 	this.actionId = "";
 	this.actionObj = null;
 	this.manager = _manager;
@@ -318,6 +320,11 @@ egwActionLink.prototype.set_enabled = function(_value)
 	this.enabled = _value;
 }
 
+egwActionLink.prototype.set_visible = function(_value)
+{
+	this.visible = _value;
+}
+
 egwActionLink.prototype.set_actionId = function(_value)
 {
 	this.actionId = _value;
@@ -327,27 +334,26 @@ egwActionLink.prototype.set_actionId = function(_value)
 		throw "Given action object does not exist!"
 }
 
-
 /** egwActionObject Object **/
 
 //State bitmask (only use powers of two for new states!)
-const EGW_AO_STATE_NORMAL = 0x00;
-const EGW_AO_STATE_SELECTED = 0x01;
-const EGW_AO_STATE_FOCUSED = 0x02;
+var EGW_AO_STATE_NORMAL = 0x00;
+var EGW_AO_STATE_SELECTED = 0x01;
+var EGW_AO_STATE_FOCUSED = 0x02;
 
-const EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
-const EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
+var EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
+var EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
 
 // No shift key is pressed
-const EGW_AO_SHIFT_STATE_NONE = 0x00;
+var EGW_AO_SHIFT_STATE_NONE = 0x00;
 // A shift key, which allows multiselection is pressed (usually CTRL on a PC keyboard)
-const EGW_AO_SHIFT_STATE_MULTI = 0x01;
+var EGW_AO_SHIFT_STATE_MULTI = 0x01;
 // A shift key is pressed, which forces blockwise selection (SHIFT on a PC keyboard)
-const EGW_AO_SHIFT_STATE_BLOCK = 0x02;
+var EGW_AO_SHIFT_STATE_BLOCK = 0x02;
 
 // If this flag is set, this object will not be returned as "focused". If this
 // flag is not applied to container objects, it may lead to some strange behaviour.
-const EGW_AO_FLAG_IS_CONTAINER = 0x01;
+var EGW_AO_FLAG_IS_CONTAINER = 0x01;
 
 /**
  * The egwActionObject represents an abstract object to which actions may be
@@ -524,6 +530,26 @@ egwActionObject.prototype.getContainerRoot = function()
 	}
 }
 
+/**
+ * Returns all selected objects which are in the current container.
+ */
+egwActionObject.prototype.getSelectedObjects = function(_test)
+{
+	if (typeof _test == "undefined")
+		_test = null;
+
+	var result = [];
+	var list = this.getContainerRoot().flatList();
+	for (var i = 0; i < list.length; i++)
+	{
+		if (list[i].getSelected() && (!_test || _test(list[i])))
+		{
+			result.push(list[i]);
+		}
+	}
+
+	return result;
+}
 
 /**
  * Creates a list which contains all items of the element tree.
@@ -564,8 +590,8 @@ egwActionObject.prototype.traversePath = function(_to)
 		// Get a flat list of all the hncp elements and search for this object
 		// and the object supplied in the _to parameter.
 		var flatList = contRoot.flatList();
-		var thisId = contRoot.indexOf(this);
-		var toId = contRoot.indexOf(_to);
+		var thisId = flatList.indexOf(this);
+		var toId = flatList.indexOf(_to);
 
 		// Check whether both elements have been found in this part of the tree,
 		// return the slice of that list.
@@ -574,7 +600,7 @@ egwActionObject.prototype.traversePath = function(_to)
 			var from = Math.min(thisId, toId);
 			var to = Math.max(thisId, toId);
 
-			return this.slice(from, to + 1);
+			return flatList.slice(from, to + 1);
 		}
 	}
 
@@ -745,10 +771,10 @@ egwActionObject.prototype.setFocused = function(_focused, _recPrev)
 			//If the object is not focused, reset the focus state of all children
 			for (var i = 0; i < this.children.length; i++)
 			{
-//				if (this.children[i] != _recPrev)
-//				{
+				if (this.children[i] != _recPrev)
+				{
 					this.children[i].setFocused(false, _recPrev);
-//				}
+				}
 			}
 		}
 		else
@@ -805,11 +831,12 @@ egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive,
 		var elem = _actionLinks[i];
 		if (typeof elem.actionId != "undefined" && elem.actionId)
 		{
-			//Get the action link object, if it doesn't exists yet, create it
+			//Get the action link object, if it doesn't exist yet, create it
 			var actionLink = this.getActionLink(elem.actionId);
 			if (!actionLink && _doCreate)
 			{
 				actionLink = new egwActionLink(this.manager);
+				this.actionLinks.push(actionLink);
 			}
 
 			//Set the supplied data
@@ -826,6 +853,131 @@ egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive,
 		{
 			this.children[i].updateActionLinks(_actionLinks, true, _doCreate);
 		}
+	}
+}
+
+egwActionObject.prototype.registerActions = function()
+{
+	var groups = this.getActionImplementationGroups();
+
+	for (group in groups)
+	{
+		// Get the action implementation for each group
+		if (typeof _egwActionClasses[group] != "undefined" &&
+		    _egwActionClasses[group].implementation &&
+		    this.iface)
+		{
+			var impl = _egwActionClasses[group].implementation();
+
+			// Register a handler for that action with the interface of that object,
+			// the callback and this object as context for the callback
+			impl.registerAction(this.iface, this.executeActionImplementation, this);
+		}
+	}
+}
+
+egwActionObject.prototype.triggerCallback = function()
+{
+	if (this.onBeforeTrigger)
+	{
+		return this.onBeforeTrigger();
+	}
+	return true;
+}
+
+egwActionObject.prototype.executeActionImplementation = function(_implContext, _implType)
+{
+	if (typeof _implType == "string")
+		_implType = _egwActionClasses[_implType].implementation();
+
+	if (typeof _implType == "object" && _implType)
+	{
+		var selectedActions = this.getSelectedLinks(_implType.type, true);
+		if (selectedActions.selected.length > 0 && egwObjectLength(selectedActions.links) > 0)
+		{
+			_implType.executeImplementation(_implContext,
+				selectedActions.selected, selectedActions.links);
+		}
+	}
+}
+
+/**
+ * Returns all selected objects, which returned true in their triggerCallback and
+ * all action links of those objects, which are of the given implementation type,
+ * wheras actionLink properties such as "enabled" and "visible" are accumuleted.
+ */
+egwActionObject.prototype.getSelectedLinks = function(_implType, _includeThis)
+{
+	// Get all objects in this container which are currently selected
+	var selected = this.getSelectedObjects();
+
+	if (_includeThis)
+	{
+		var thisInList = false;
+		for (var i = 0; i < selected.length; i++)
+		{
+			if (selected[i] == this)
+			{
+				thisInList = true;
+				break;
+			}
+		}
+
+		if (!thisInList)
+		{
+			this.setSelected(true);
+			this._ifaceCallback(egwSetBit(this.getState(), EGW_AO_STATE_SELECTED, true),
+				EGW_AO_SHIFT_STATE_NONE);
+			selected = [this];
+		}
+	}
+
+	var actionLinks = {};
+	var testedSelected = [];
+	for (var i = 0; i < selected.length; i++)
+	{
+		var obj = selected[i];
+		if (obj.triggerCallback())
+		{
+			testedSelected.push(obj);
+
+			for (var j = 0; j < obj.actionLinks.length; j++)
+			{
+				var olink = obj.actionLinks[j]; //object link
+
+				// Test whether the action type is of the given implementation type
+				if (olink.actionObj.type == _implType)
+				{
+					if (typeof actionLinks[olink.actionId] == "undefined")
+					{
+						actionLinks[olink.actionId] = {
+							"actionObj": olink.actionObj,
+							"enabled": i == 0 && (olink.actionObj.allowOnMultiple || selected.length == 1),
+							"visible": false,
+							"cnt": 0
+						}
+					}
+
+					var llink = actionLinks[olink.actionId];
+					llink.enabled = llink.enabled && olink.enabled && olink.visible;
+					llink.visible = llink.visible || olink.visible;
+					llink.cnt++;
+				}
+			}
+		}
+	}
+
+	for (k in actionLinks)
+	{
+		actionLinks[k].enabled = actionLinks[k].enabled && (actionLinks[k].cnt >= selected.length);
+	}
+
+
+	// Return an object which contains the accumulated actionLinks and all selected
+	// objects.
+	return {
+		"selected": testedSelected,
+		"links": actionLinks
 	}
 }
 
@@ -867,7 +1019,7 @@ egwActionObject.prototype.getActionImplementationGroups = function(_test, _group
 
 	for (var i = 0; i < this.actionLinks.length; i++)
 	{
-		var action = this.actionsLink[i].actionObj;
+		var action = this.actionLinks[i].actionObj;
 		if (typeof action != "undefined" && _test(this))
 		{
 			if (typeof _groups[action.type] == "undefined")
