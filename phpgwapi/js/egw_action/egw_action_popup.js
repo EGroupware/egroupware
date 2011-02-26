@@ -58,17 +58,6 @@ function egwPopupActionImplementation()
 
 	ai.type = "popup";
 
-	ai.getPageXY = function getPageXY(event)
-	{
-		// document.body.scrollTop does not work in IE
-		var scrollTop = document.body.scrollTop ? document.body.scrollTop :
-			document.documentElement.scrollTop;
-		var scrollLeft = document.body.scrollLeft ? document.body.scrollLeft :
-			document.documentElement.scrollLeft;
-
-		return {'x': (event.clientX + scrollLeft), 'y': (event.clientY + scrollTop)};
-	}
-
 	ai.doRegisterAction = function(_aoi, _callback, _context)
 	{
 		var node = _aoi.getDOMNode();
@@ -78,7 +67,9 @@ function egwPopupActionImplementation()
 			node.oncontextmenu = function(e) {
 				//Obtain the event object
 				if (!e)
+				{
 					e = window.event;
+				}
 
 				if (_egw_active_menu)
 				{
@@ -86,13 +77,15 @@ function egwPopupActionImplementation()
 				}
 				else
 				{
-					_xy = ai.getPageXY(e);
+					_xy = ai._getPageXY(e);
 					_callback.call(_context, _xy, ai);
 				}
 
 				e.cancelBubble = true;
 				if (e.stopPropagation)
+				{
 					e.stopPropagation();
+				}
 				return false;
 			}
 		}
@@ -103,12 +96,34 @@ function egwPopupActionImplementation()
 		//
 	}
 
+
+	/**
+	 * Builds the context menu and shows it at the given position/DOM-Node.
+	 */
 	ai.doExecuteImplementation = function(_context, _selected, _links)
 	{
+		//Check whether the 
+		if ((typeof _context.posx != "number" || typeof _context.posy != "number") &&
+		    typeof _context.id != "undefined")
+		{
+			// Calculate context menu position from the given DOM-Node
+			var node = _context;
+
+			x = node.offsetLeft;
+			y = node.offsetTop;
+
+			_context = {"posx": x, "posy": y}
+		}
+
 		var menu = ai._buildMenu(_links, _selected);
-		menu.showAt(_context.x, _context.y);
+		menu.showAt(_context.posx, _context.posy);
+
+		return true;
 	}
 
+	/**
+	 * Builds the context menu from the given action links
+	 */
 	ai._buildMenu = function(_links, _selected)
 	{
 		var menu = new egwMenu();
@@ -185,6 +200,17 @@ function egwPopupActionImplementation()
 		}
 
 		return menu;
+	}
+
+	ai._getPageXY = function getPageXY(event)
+	{
+		// document.body.scrollTop does not work in IE
+		var scrollTop = document.body.scrollTop ? document.body.scrollTop :
+			document.documentElement.scrollTop;
+		var scrollLeft = document.body.scrollLeft ? document.body.scrollLeft :
+			document.documentElement.scrollLeft;
+
+		return {'posx': (event.clientX + scrollLeft), 'posy': (event.clientY + scrollTop)};
 	}
 
 	return ai;

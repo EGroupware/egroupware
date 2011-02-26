@@ -5,6 +5,9 @@
 		<!-- Basic action stuff -->
 		<script src="../egw_action.js"></script>
 		<script src="../egw_action_common.js"></script>
+
+		<!-- JQuery is just used in this example. The egw_action scripts do not
+		     need JQuery! -->
 		<script src="js/jquery.js"></script>
 
 		<!-- Popup stuff -->
@@ -64,6 +67,7 @@
 			<tr id="file4"><td><img src="imgs/page.png"/></td><td style="width: 200px">File 4</td><td><input type="checkbox"></td></tr>
 			<tr id="file5"><td><img src="imgs/page.png"/></td><td style="width: 200px">File 5</td><td><input type="checkbox"></td></tr>
 		</table>
+		<button id="performAction">Perform action...</button><button id="selectAll">Select All</button>
 		<script>
 			var actionManager = null;
 			var objectManager = null;
@@ -256,7 +260,17 @@
 						obj.updateActionLinks(listboxFolderLinks);
 
 					obj.registerActions();
-				})
+				});
+
+				$("#selectAll").click(function() {
+					objectManager.toggleAllSelected();
+				});
+
+				$("#performAction").click(function(e) {
+					if (!objectManager.executeActionImplementation(this, "popup"))
+						alert("Please select one or more objects.");
+					return false;
+				});
 			}
 		</script>
 	</body>

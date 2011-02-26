@@ -552,6 +552,45 @@ egwActionObject.prototype.getSelectedObjects = function(_test)
 }
 
 /**
+ * Returns whether all objects in this tree are selected
+ */
+egwActionObject.prototype.getAllSelected = function()
+{
+	if (this.getSelected())
+	{
+		for (var i = 0; i < this.children.length; i++)
+		{
+			if (!this.children[i].getAllSelected())
+				return false;
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Toggles the selection of all objects.
+ *
+ * @param _select boolean specifies whether the objects should get selected or not.
+ * 	If this parameter is not supplied, the selection will be toggled.
+ */
+egwActionObject.prototype.toggleAllSelected = function(_select)
+{
+	if (typeof _select == "undefined")
+	{
+		_select = !this.getAllSelected();
+	}
+
+	this.setSelected(_select);
+	for (var i = 0; i < this.children.length; i++)
+	{
+		this.children[i].toggleAllSelected(_select);
+	}
+}
+
+/**
  * Creates a list which contains all items of the element tree.
  *
  * @param object _obj is used internally to pass references to the array inside
@@ -856,6 +895,9 @@ egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive,
 	}
 }
 
+/**
+ * Registers the action implementations inside the DOM-Tree.
+ */
 egwActionObject.prototype.registerActions = function()
 {
 	var groups = this.getActionImplementationGroups();
@@ -876,6 +918,9 @@ egwActionObject.prototype.registerActions = function()
 	}
 }
 
+/**
+ * Calls the onBeforeTrigger function - if it is set - or returns false.
+ */
 egwActionObject.prototype.triggerCallback = function()
 {
 	if (this.onBeforeTrigger)
@@ -885,6 +930,15 @@ egwActionObject.prototype.triggerCallback = function()
 	return true;
 }
 
+/**
+ * Executes the action implementation which is associated to the given action type.
+ *
+ * @param object _implContext is data which should be delivered to the action implementation.
+ * 	E.g. in case of the popup action implementation, the x and y coordinates where the
+ * 	menu should open are transmitted.
+ * @param string _implType is the action type for which the implementation should be
+ * 	executed.
+ */
 egwActionObject.prototype.executeActionImplementation = function(_implContext, _implType)
 {
 	if (typeof _implType == "string")
@@ -892,45 +946,55 @@ egwActionObject.prototype.executeActionImplementation = function(_implContext, _
 
 	if (typeof _implType == "object" && _implType)
 	{
-		var selectedActions = this.getSelectedLinks(_implType.type, true);
+		this.forceSelection();
+		var selectedActions = this.getSelectedLinks(_implType.type);
 		if (selectedActions.selected.length > 0 && egwObjectLength(selectedActions.links) > 0)
 		{
-			_implType.executeImplementation(_implContext,
+			return _implType.executeImplementation(_implContext,
 				selectedActions.selected, selectedActions.links);
 		}
+	}
+
+	return false;
+}
+
+/**
+ * Forces the object to be inside the currently selected objects. If this is
+ * not the case, the object will select itself and deselect all other objects.
+ */
+egwActionObject.prototype.forceSelection = function()
+{
+	var selected = this.getSelectedObjects();
+
+	// Check whether this object is in the list
+	var thisInList = selected.indexOf(this) != -1;
+
+	// If not, select it
+	if (!thisInList)
+	{
+		this.setSelected(true);
+		this._ifaceCallback(egwSetBit(this.getState(), EGW_AO_STATE_SELECTED, true),
+			EGW_AO_SHIFT_STATE_NONE);
+		selected = [this];
 	}
 }
 
 /**
- * Returns all selected objects, which returned true in their triggerCallback and
- * all action links of those objects, which are of the given implementation type,
- * wheras actionLink properties such as "enabled" and "visible" are accumuleted.
+ * Returns all selected objects, and all action links of those objects, which are
+ * of the given implementation type, wheras actionLink properties such as
+ * "enabled" and "visible" are accumulated.
+ *
+ * Objects have the chance to change their action links or to deselect themselves
+ * in the onBeforeTrigger event, which is evaluated by the triggerCallback function.
+ *
+ * @param _actionType is the action type for which the actionLinks should be collected.
+ * @returns object An object which contains a "links" and a "selected" section with
+ * 	an array of links/selected objects-
  */
-egwActionObject.prototype.getSelectedLinks = function(_implType, _includeThis)
+egwActionObject.prototype.getSelectedLinks = function(_actionType)
 {
 	// Get all objects in this container which are currently selected
 	var selected = this.getSelectedObjects();
-
-	if (_includeThis)
-	{
-		var thisInList = false;
-		for (var i = 0; i < selected.length; i++)
-		{
-			if (selected[i] == this)
-			{
-				thisInList = true;
-				break;
-			}
-		}
-
-		if (!thisInList)
-		{
-			this.setSelected(true);
-			this._ifaceCallback(egwSetBit(this.getState(), EGW_AO_STATE_SELECTED, true),
-				EGW_AO_SHIFT_STATE_NONE);
-			selected = [this];
-		}
-	}
 
 	var actionLinks = {};
 	var testedSelected = [];
@@ -946,20 +1010,22 @@ egwActionObject.prototype.getSelectedLinks = function(_implType, _includeThis)
 				var olink = obj.actionLinks[j]; //object link
 
 				// Test whether the action type is of the given implementation type
-				if (olink.actionObj.type == _implType)
+				if (olink.actionObj.type == _actionType)
 				{
 					if (typeof actionLinks[olink.actionId] == "undefined")
 					{
 						actionLinks[olink.actionId] = {
 							"actionObj": olink.actionObj,
-							"enabled": i == 0 && (olink.actionObj.allowOnMultiple || selected.length == 1),
+							"enabled": (testedSelected.length == 1),
 							"visible": false,
 							"cnt": 0
 						}
 					}
 
+					// Accumulate the action link properties
 					var llink = actionLinks[olink.actionId];
-					llink.enabled = llink.enabled && olink.enabled && olink.visible;
+					llink.enabled = llink.enabled && olink.enabled &&
+						olink.visible;
 					llink.visible = llink.visible || olink.visible;
 					llink.cnt++;
 				}
@@ -967,11 +1033,14 @@ egwActionObject.prototype.getSelectedLinks = function(_implType, _includeThis)
 		}
 	}
 
+	// Check whether all objects supported the action
 	for (k in actionLinks)
 	{
-		actionLinks[k].enabled = actionLinks[k].enabled && (actionLinks[k].cnt >= selected.length);
+		actionLinks[k].enabled = actionLinks[k].enabled &&
+			(actionLinks[k].cnt >= testedSelected.length) &&
+			(actionLinks[k].actionObj.allowOnMultiple || 
+			 actionLinks[k].cnt == 1);
 	}
-
 
 	// Return an object which contains the accumulated actionLinks and all selected
 	// objects.
@@ -1150,7 +1219,12 @@ egwActionObjectInterface.prototype.getState = function()
  */
 function egwActionObjectManager(_id, _manager)
 {
-	return new egwActionObject(_id, null, new egwActionObjectInterface(),
+	var ao = new egwActionObject(_id, null, new egwActionObjectInterface(),
 		_manager, EGW_AO_FLAG_IS_CONTAINER);
+
+	// The object manager doesn't allow selections and cannot perform actions
+	ao.triggerCallback = function() {return false;};
+
+	return ao;
 }
 
