@@ -408,8 +408,8 @@ abstract class bo_merge
 					{
 						for($n = 0; ($row_replacements = $this->$callback($plugin,$id,$n,$repeat)); ++$n)
 						{
-							$repeat = $this->process_commands($repeat, $row_replacements);
-							$repeats .= $this->replace($repeat,$row_replacements,$mimetype,$mso_application_progid);
+							$_repeat = $this->process_commands($repeat, $row_replacements);
+							$repeats .= $this->replace($_repeat,$row_replacements,$mimetype,$mso_application_progid);
 						}
 					}
 					$content = str_replace($match[0],$repeats,$content);
