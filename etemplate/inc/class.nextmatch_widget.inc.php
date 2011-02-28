@@ -53,8 +53,9 @@
  * 	'default_cols'   => 	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
  * 	'options-selectcols' => // I  array with name/label pairs for the column-selection, this gets autodetected by default. A name => false suppresses a column completly.
  *  'return'         =>     // IO allows to return something from the get_rows function if $query is a var-param!
- *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
- * or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
+ *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames or preferred importexport definition,
+ * 		array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
+ *		or name of import/export definition
  * );
  */
 class nextmatch_widget
@@ -472,6 +473,24 @@ class nextmatch_widget
 				unset($value['default_prefs']);
 			}
 		}
+
+		// Check for preferred import/export definition
+		if(!$value['no_csv_export'] && ($value['csv_fields'] && !is_array($value['csv_fields']) || !array_key_exists('csv_fields', $value))) {
+			$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
+			list($app) = explode('.',$name);
+			$key = $extension_data['csv_fields'] === true ? 'nextmatch-export-definition' : $extension_data['csv_fields'];
+			if($GLOBALS['egw_info']['user']['preferences'][$app][$key]) {
+				$nextmatch->set_cell_attribute('export', 'onclick', 
+					"egw_openWindowCentered2('". egw::link('/index.php', array(
+						'menuaction' => 'importexport.importexport_export_ui.export_dialog',
+						'appname' => $app,
+						'definition' => $GLOBALS['egw_info']['user']['preferences'][$app][$key]
+					)) . 
+					"', '_blank', 850, 440, 'yes'); return false;"
+				);
+			}
+		}
+		if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 		$cell['type'] = 'template';
 		$cell['label'] = $cell['help'] = '';
 
