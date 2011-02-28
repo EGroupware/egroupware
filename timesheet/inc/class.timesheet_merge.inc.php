@@ -100,8 +100,12 @@ class timesheet_merge extends bo_merge
 		}
 		importexport_export_csv::convert($record, $types, 'timesheet', $selects);
 
-		// Set any missing custom fields, or the marker will stay
 		$array = $record->get_record_array();
+		foreach(array('ts_duration','ts_quantity','ts_unitprice') as $key)
+		{
+			$array[$key] = self::number_format($array[$key],2,$this->mimetype);
+		}
+		// Set any missing custom fields, or the marker will stay
 		foreach($this->bo->customfields as $name => $field)
 		{
 			if(!$array['#'.$name]) $array['#'.$name] = '';
