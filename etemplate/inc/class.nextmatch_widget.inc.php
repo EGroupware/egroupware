@@ -478,13 +478,13 @@ class nextmatch_widget
 		if(!$value['no_csv_export'] && ($value['csv_fields'] && !is_array($value['csv_fields']) || !array_key_exists('csv_fields', $value))) {
 			$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
 			list($app) = explode('.',$name);
-			$key = $extension_data['csv_fields'] === true ? 'nextmatch-export-definition' : $extension_data['csv_fields'];
-			if($GLOBALS['egw_info']['user']['apps']['importexport'] && $GLOBALS['egw_info']['user']['preferences'][$app][$key]) {
+			$definition = $value['csv_fields'] === true ? $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-export-definition'] : $value['csv_fields'];
+			if($GLOBALS['egw_info']['user']['apps']['importexport'] && $definition) {
 				$nextmatch->set_cell_attribute('export', 'onclick', 
 					"egw_openWindowCentered2('". egw::link('/index.php', array(
 						'menuaction' => 'importexport.importexport_export_ui.export_dialog',
 						'appname' => $app,
-						'definition' => $GLOBALS['egw_info']['user']['preferences'][$app][$key]
+						'definition' => $definition
 					)) . 
 					"', '_blank', 850, 440, 'yes'); return false;"
 				);
