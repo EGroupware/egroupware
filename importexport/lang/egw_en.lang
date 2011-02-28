@@ -15,11 +15,13 @@ edit conditions	importexport	en	Edit conditions
 expert options	importexport	en	Expert options
 export	importexport	en	Export
 export all selected definitions	importexport	en	export ALL selected definitions
+export definition to use for nextmatch export	preferences	en	Export definition to use for nextmatch export
 field labels	importexport	en	Field labels
 field names	importexport	en	Field names
 finish	importexport	en	finish
 general	importexport	en	General
 human friendly values	importexport	en	Human friendly values
+if you specify an export definition, it will be used when you export	preferences	en	If you specify an export definition, it will be used when you export
 import	importexport	en	import
 import definitions	common	en	Import definitions
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	en	Import definitions (Attension: Existing definitions with equal names will be overwritten!!!)
