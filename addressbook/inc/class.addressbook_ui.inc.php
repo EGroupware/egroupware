@@ -210,7 +210,9 @@ class addressbook_ui extends addressbook_bo
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 			);
 			$csv_export = new addressbook_csv($this);
-			$content['nm']['csv_fields'] = $csv_export->csv_fields(null,true);
+			$content['nm']['csv_fields'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] ? 
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] :
+				$csv_export->csv_fields(null,true);
 
 			if ($do_email)
 			{
