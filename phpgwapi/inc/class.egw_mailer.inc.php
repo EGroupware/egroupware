@@ -131,8 +131,22 @@ class egw_mailer extends PHPMailer
 	{
 		foreach($addr as $data)
 		{
-			$this->addresses[$type] .= ($this->addresses[$type] ? ', ' : '').$data[0];
+			$this->addresses[$type][] = $data[0];
 		}
 		return parent::AddrAppend($type, $addr);
+	}
+
+	/**
+	 * Adds a "Bcc" address.
+	 *
+	 * Reimplemented as AddrAppend() for Bcc get's NOT called for SMTP!
+	 *
+	 * @param string $address
+	 * @param string $name
+	 * @return boolean true on success, false if address already used
+	 */
+	public function AddBCC($address, $name = '')
+	{
+		$this->AddrAppend('Bcc', array(array($address,$name)));
 	}
 }
