@@ -803,4 +803,26 @@ abstract class bo_merge
 	public static function get_file_extensions() {
 		return array('txt', 'rtf', 'odt', 'ods', 'docx', 'xml');
 	}
+
+	/**
+	 * Format a number according to user prefs with decimal and thousands separator
+	 *
+	 * Reimplemented from etemplate to NOT use user prefs for Excel 2003, which gives an xml error
+	 *
+	 * @param int|float|string $number
+	 * @param int $num_decimal_places=2
+	 * @param string $_mimetype=''
+	 * @return string
+	 */
+	static public function number_format($number,$num_decimal_places=2,$_mimetype='')
+	{
+		if ((string)$number === '') return '';
+		//error_log(__METHOD__.$_mimetype);
+		switch($_mimetype)
+		{
+			case 'application/xml':	// Excel 2003
+				return number_format(str_replace(' ','',$number),$num_decimal_places,'.','');
+		}
+		return etemplate::number_format($number,$num_decimal_places);
+	}
 }
