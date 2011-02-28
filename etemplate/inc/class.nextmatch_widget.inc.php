@@ -479,7 +479,7 @@ class nextmatch_widget
 			$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
 			list($app) = explode('.',$name);
 			$key = $extension_data['csv_fields'] === true ? 'nextmatch-export-definition' : $extension_data['csv_fields'];
-			if($GLOBALS['egw_info']['user']['preferences'][$app][$key]) {
+			if($GLOBALS['egw_info']['user']['apps']['importexport'] && $GLOBALS['egw_info']['user']['preferences'][$app][$key]) {
 				$nextmatch->set_cell_attribute('export', 'onclick', 
 					"egw_openWindowCentered2('". egw::link('/index.php', array(
 						'menuaction' => 'importexport.importexport_export_ui.export_dialog',
