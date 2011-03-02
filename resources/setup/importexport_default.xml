@@ -13,28 +13,29 @@
       <entry type="string" name="type">export</entry>
       <entry type="array" name="allowed_users">
         <entry type="string" name="0">Default</entry>
-        <entry type="string" name="1">Admins</entry>
       </entry>
       <entry type="array" name="plugin_options">
         <entry type="array" name="mapping">
-          <entry type="string" name="res_id">res_id</entry>
-          <entry type="string" name="name">name</entry>
-          <entry type="string" name="short_description">short_description</entry>
-          <entry type="string" name="cat_id">cat_id</entry>
-          <entry type="string" name="quantity">quantity</entry>
+          <entry type="string" name="res_id">ID</entry>
+          <entry type="string" name="name">Name</entry>
+          <entry type="string" name="short_description">Short description</entry>
+          <entry type="string" name="cat_id">Category</entry>
+          <entry type="string" name="quantity">Quantity</entry>
           <entry type="string" name="useable">useable</entry>
-          <entry type="string" name="location">location</entry>
-          <entry type="string" name="bookable">bookable</entry>
-          <entry type="string" name="buyable">buyable</entry>
-          <entry type="string" name="prize">prize</entry>
-          <entry type="string" name="long_description">long_description</entry>
-          <entry type="string" name="inventory_number">inventory_number</entry>
+          <entry type="string" name="location">Location</entry>
+          <entry type="string" name="bookable">Bookable</entry>
+          <entry type="string" name="buyable">Buyable</entry>
+          <entry type="string" name="prize">Prize</entry>
+          <entry type="string" name="long_description">Long description</entry>
+          <entry type="string" name="inventory_number">Inventory number</entry>
+          <entry type="string" name="all_custom_fields">resources</entry>
         </entry>
         <entry type="string" name="delimiter">;</entry>
         <entry type="string" name="charset">utf-8</entry>
-        <entry type="string" name="begin_with_fieldnames">1</entry>
-        <entry type="string" name="convert">0</entry>
+        <entry type="string" name="begin_with_fieldnames">label</entry>
+        <entry type="string" name="convert">1</entry>
       </entry>
+      <entry type="string" name="modified">2011-03-02 10:17:41</entry>
     </entry>
     <entry type="array" name="import-resources">
       <entry type="string" name="name">import-resources</entry>
@@ -43,7 +44,6 @@
       <entry type="string" name="type">import</entry>
       <entry type="array" name="allowed_users">
         <entry type="string" name="0">Default</entry>
-        <entry type="string" name="1">Admins</entry>
       </entry>
       <entry type="array" name="plugin_options">
         <entry type="string" name="fieldsep">;</entry>
@@ -51,21 +51,20 @@
         <entry type="string" name="num_header_lines">1</entry>
         <entry type="string" name="update_cats">add</entry>
         <entry type="array" name="csv_fields">
-          <entry type="string" name="0">res_id</entry>
-          <entry type="string" name="1">name</entry>
-          <entry type="string" name="2">short_description</entry>
-          <entry type="string" name="3">cat_id</entry>
-          <entry type="string" name="4">quantity</entry>
-          <entry type="string" name="5">useable</entry>
-          <entry type="string" name="6">location</entry>
-          <entry type="string" name="7">bookable</entry>
-          <entry type="string" name="8">buyable</entry>
-          <entry type="string" name="9">prize</entry>
-          <entry type="string" name="10">long_description</entry>
-          <entry type="string" name="11">inventory_number</entry>
-          <entry type="string" name="12">no_csv_1</entry>
-          <entry type="string" name="13">no_csv_2</entry>
-          <entry type="string" name="14">no_csv_3</entry>
+          <entry type="string" name="0">name</entry>
+          <entry type="string" name="1">short_description</entry>
+          <entry type="string" name="2">cat_id</entry>
+          <entry type="string" name="3">quantity</entry>
+          <entry type="string" name="4">useable</entry>
+          <entry type="string" name="5">location</entry>
+          <entry type="string" name="6">bookable</entry>
+          <entry type="string" name="7">buyable</entry>
+          <entry type="string" name="8">prize</entry>
+          <entry type="string" name="9">long_description</entry>
+          <entry type="string" name="10">inventory_number</entry>
+          <entry type="string" name="11">no_csv_1</entry>
+          <entry type="string" name="12">no_csv_2</entry>
+          <entry type="string" name="13">no_csv_3</entry>
         </entry>
         <entry type="array" name="field_mapping">
           <entry type="string" name="0">res_id</entry>
@@ -97,6 +96,7 @@
           </entry>
         </entry>
       </entry>
+      <entry type="string" name="modified">2011-03-02 10:16:33</entry>
     </entry>
   </entry>
 </entry>
