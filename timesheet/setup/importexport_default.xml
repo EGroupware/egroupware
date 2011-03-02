@@ -13,30 +13,30 @@
       <entry type="string" name="type">export</entry>
       <entry type="array" name="allowed_users">
         <entry type="string" name="0">Default</entry>
-        <entry type="string" name="1">Admins</entry>
       </entry>
       <entry type="array" name="plugin_options">
-        <entry type="string" name="user_timezone_read">America/Edmonton</entry>
         <entry type="array" name="mapping">
-          <entry type="string" name="ts_id">ts_id</entry>
-          <entry type="string" name="ts_project">ts_project</entry>
-          <entry type="string" name="ts_title">ts_title</entry>
-          <entry type="string" name="cat_id">cat_id</entry>
-          <entry type="string" name="ts_description">ts_description</entry>
-          <entry type="string" name="ts_start">ts_start</entry>
-          <entry type="string" name="ts_duration">ts_duration</entry>
-          <entry type="string" name="ts_quantity">ts_quantity</entry>
-          <entry type="string" name="ts_unitprice">ts_unitprice</entry>
-          <entry type="string" name="ts_owner">ts_owner</entry>
-          <entry type="string" name="ts_modifier">ts_modifier</entry>
-          <entry type="string" name="ts_status">ts_status</entry>
-          <entry type="string" name="pm_id">pm_id</entry>
+          <entry type="string" name="ts_id">Timesheet ID</entry>
+          <entry type="string" name="ts_project">Project</entry>
+          <entry type="string" name="ts_title">Title</entry>
+          <entry type="string" name="cat_id">Category</entry>
+          <entry type="string" name="ts_description">Description</entry>
+          <entry type="string" name="ts_start">Start</entry>
+          <entry type="string" name="ts_duration">Duration</entry>
+          <entry type="string" name="ts_quantity">Quantity</entry>
+          <entry type="string" name="ts_unitprice">Unitprice</entry>
+          <entry type="string" name="ts_owner">Owner</entry>
+          <entry type="string" name="ts_modifier">Modifier</entry>
+          <entry type="string" name="ts_status">Status</entry>
+          <entry type="string" name="pm_id">Projectid</entry>
+          <entry type="string" name="all_custom_fields">timesheet</entry>
         </entry>
         <entry type="string" name="delimiter">;</entry>
         <entry type="string" name="charset">utf-8</entry>
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
+      <entry type="string" name="modified">2011-03-02 10:23:32</entry>
     </entry>
     <entry type="array" name="import-timesheet">
       <entry type="string" name="name">import-timesheet</entry>
@@ -45,7 +45,6 @@
       <entry type="string" name="type">import</entry>
       <entry type="array" name="allowed_users">
         <entry type="string" name="0">Default</entry>
-        <entry type="string" name="1">Admins</entry>
       </entry>
       <entry type="array" name="plugin_options">
         <entry type="string" name="fieldsep">;</entry>
@@ -53,24 +52,23 @@
         <entry type="string" name="num_header_lines">1</entry>
         <entry type="string" name="update_cats">add</entry>
         <entry type="array" name="csv_fields">
-          <entry type="string" name="0">ts_id</entry>
-          <entry type="string" name="1">ts_project</entry>
-          <entry type="string" name="2">ts_title</entry>
-          <entry type="string" name="3">ts_description</entry>
-          <entry type="string" name="4">ts_start</entry>
-          <entry type="string" name="5">ts_duration</entry>
-          <entry type="string" name="6">ts_quantity</entry>
-          <entry type="string" name="7">ts_unitprice</entry>
-          <entry type="string" name="8">cat_id</entry>
-          <entry type="string" name="9">ts_owner</entry>
-          <entry type="string" name="10">ts_modified</entry>
-          <entry type="string" name="11">ts_modifier</entry>
-          <entry type="string" name="12">pl_id</entry>
-          <entry type="string" name="13">ts_status</entry>
-          <entry type="string" name="14">user_timezone_read</entry>
-          <entry type="string" name="15">no_csv_1</entry>
-          <entry type="string" name="16">no_csv_2</entry>
-          <entry type="string" name="17">no_csv_3</entry>
+          <entry type="string" name="0">ts_project</entry>
+          <entry type="string" name="1">ts_title</entry>
+          <entry type="string" name="2">ts_description</entry>
+          <entry type="string" name="3">ts_start</entry>
+          <entry type="string" name="4">ts_duration</entry>
+          <entry type="string" name="5">ts_quantity</entry>
+          <entry type="string" name="6">ts_unitprice</entry>
+          <entry type="string" name="7">cat_id</entry>
+          <entry type="string" name="8">ts_owner</entry>
+          <entry type="string" name="9">ts_modified</entry>
+          <entry type="string" name="10">ts_modifier</entry>
+          <entry type="string" name="11">pl_id</entry>
+          <entry type="string" name="12">ts_status</entry>
+          <entry type="string" name="13">user_timezone_read</entry>
+          <entry type="string" name="14">no_csv_1</entry>
+          <entry type="string" name="15">no_csv_2</entry>
+          <entry type="string" name="16">no_csv_3</entry>
         </entry>
         <entry type="array" name="field_mapping">
           <entry type="string" name="0">ts_id</entry>
@@ -105,7 +103,11 @@
         </entry>
         <entry type="string" name="change_owner">0</entry>
         <entry type="string" name="owner_from_csv">1</entry>
+        <entry type="string" name="creator"/>
+        <entry type="string" name="creator_from_csv"/>
+        <entry type="string" name="change_creator"/>
       </entry>
+      <entry type="string" name="modified">2011-03-02 10:18:47</entry>
     </entry>
   </entry>
 </entry>

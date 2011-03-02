@@ -47,6 +47,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 
 		$options['begin_with_fieldnames'] = true;
 		$export_object = new importexport_export_csv($_stream, (array)$options);
+		$export_object->set_mapping($options['mapping']);
 
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
