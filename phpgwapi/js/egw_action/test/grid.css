@@ -1,0 +1,94 @@
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body, td, th {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 11px;
+}
+
+.grid {
+	width: 100%;
+	border-spacing: 0px;
+}
+
+.grid tr.hidden {
+	display: none;
+}
+
+.grid td, .grid th {
+	border: 1px solid white;
+}
+
+.grid tr.focused td {
+	border: 1px dotted black;
+}
+
+.grid tr.selected td {
+	background-image: url(imgs/select_overlay.png);
+	background-position: center;
+	background-repeat: repeat-x;
+}
+
+.grid span.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	width: 8px;
+	height: 8px;
+	background-repeat: no-repeat;
+	margin-right: 2px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}
+
+.grid span.arrow.opened {
+	cursor: pointer;
+	background-image: url(imgs/arrows.png);
+	background-position: -8px 0;
+}
+
+.grid span.arrow.closed {
+	cursor: pointer;
+	background-image: url(imgs/arrows.png);
+	background-position: 0 0;
+}
+
+.grid tr.odd {
+	background-color: #F1F1F1;
+}
+
+.grid th {
+	background-color: #E0E0E0;
+	font-weight: normal;
+	padding: 5px;
+	text-align: left;
+}
+
+.grid td {
+	padding: 0 5px 0 5px;
+	vertical-align: middle;
+}
+
+.grid th.front {
+	font-weight: bold;
+}
+
+.grid span.caption {
+	vertical-align: middle;
+}
+
+.grid span.indentation {
+	display: inline-block;
+}
+
+.grid img.icon {
+	vertical-align: middle;
+	margin: 2px 5px 2px 2px;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	user-select: none;
+}

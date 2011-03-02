@@ -83,3 +83,30 @@ if (typeof Array.prototype.indexOf == "undefined")
 	};
 }
 
+/**
+ * Isolates the shift state from an event object
+ */
+function egwGetShiftState(e)
+{
+	var state = EGW_AO_SHIFT_STATE_NONE;
+	state = egwSetBit(state, EGW_AO_SHIFT_STATE_MULTI, e.ctrkKey || e.metaKey);
+	state = egwSetBit(state, EGW_AO_SHIFT_STATE_BLOCK, e.shiftKey);
+	return state;
+}
+
+function egwPreventSelect(e)
+{
+	if (egwGetShiftState(e) > EGW_AO_SHIFT_STATE_NONE)
+	{
+		this.onselectstart = function() {
+			return false;
+		}
+
+		return false;
+	}
+}
+
+function egwResetPreventSelect(elem)
+{
+}
+

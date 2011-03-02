@@ -106,9 +106,9 @@
 						var state = getShiftState(e);
 
 //						"Normal" Listbox behaviour
-						aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
-							!egwBitIsSet(state, EGW_AO_SHIFT_STATE_MULTI) || !selected),
-							false, state);
+						aoi.updateState(EGW_AO_STATE_SELECTED,
+							!egwBitIsSet(state, EGW_AO_SHIFT_STATE_MULTI) || !selected,
+							state);
 
 //						"PHPMyAdmin" Listbox behaviour
 //						aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
@@ -117,22 +117,16 @@
 				});
 
 				$(aoi.checkBox).change(function() {
-					aoi.doSetState(egwSetBit(aoi.getState(), EGW_AO_STATE_SELECTED,
-						this.checked), false, EGW_AO_SHIFT_STATE_MULTI);
+					aoi.updateState(EGW_AO_STATE_SELECTED, this.checked, EGW_AO_SHIFT_STATE_MULTI);
 				});
 
-				aoi.doSetState = function(_state, _outerCall, _shiftState) {
+				aoi.doSetState = function(_state) {
 					var selected = egwBitIsSet(_state, EGW_AO_STATE_SELECTED);
 					this.checkBox.checked = selected;
 					$(this.node).toggleClass('focused',
 						egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
 					$(this.node).toggleClass('selected',
 						selected);
-					if (! _outerCall)
-					{
-						this._selectChange(egwBitIsSet(_state,
-							EGW_AO_STATE_SELECTED), _shiftState);
-					}
 				}
 
 				return aoi;
@@ -258,8 +252,6 @@
 						obj.updateActionLinks(listboxFileLinks);
 					else
 						obj.updateActionLinks(listboxFolderLinks);
-
-					obj.registerActions();
 				});
 
 				$("#selectAll").click(function() {

@@ -340,6 +340,7 @@ egwActionLink.prototype.set_actionId = function(_value)
 var EGW_AO_STATE_NORMAL = 0x00;
 var EGW_AO_STATE_SELECTED = 0x01;
 var EGW_AO_STATE_FOCUSED = 0x02;
+var EGW_AO_STATE_VISIBLE = 0x04;  //< Can only be set by the AOI, means that the object is attached to the DOM-Tree and visible
 
 var EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
 var EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
@@ -386,14 +387,22 @@ function egwActionObject(_id, _parent, _iface, _manager, _flags)
 	this.manager = _manager;
 	this.flags = _flags;
 
+	this.registeredImpls = [];
+
+	// Two variables which help fast travelling through the object tree, when
+	// searching for the selected/focused object.
+	this.selectedChildren = [];
+	this.focusedChild = null;
+
 	this.iface = _iface;
-	this.iface.setStateChangeCallback(this._ifaceCallback, this)
+	this.iface.setStateChangeCallback(this._ifaceCallback, this);
+	this.iface.setReconnectActionsCallback(this._reconnectCallback, this);
 }
 
 /**
  * Returns the object from the tree with the given ID
  */
-//TODO: Add "ByID"-Suffix to all other of those functions.
+//TODO: Add "ById"-Suffix to all other of those functions.
 //TODO: Add search function to egw_action_commons.js
 egwActionObject.prototype.getObjectById = function(_id)
 {
@@ -531,24 +540,35 @@ egwActionObject.prototype.getContainerRoot = function()
 }
 
 /**
- * Returns all selected objects which are in the current container.
+ * Returns all selected objects which are in the current subtree.
+ *
+ * @param function _test is a function, which gets an object and checks whether
+ * 	it will be added to the list.
+ * @param array _list is internally used to fetch all selected elements, please
+ * 	omit this parameter when calling the function.
  */
-egwActionObject.prototype.getSelectedObjects = function(_test)
+egwActionObject.prototype.getSelectedObjects = function(_test, _list)
 {
 	if (typeof _test == "undefined")
 		_test = null;
 
-	var result = [];
-	var list = this.getContainerRoot().flatList();
-	for (var i = 0; i < list.length; i++)
+	if (typeof _list == "undefined")
 	{
-		if (list[i].getSelected() && (!_test || _test(list[i])))
+		_list = {"elements": []}
+	}
+
+	if ((!_test || _test(this)) && this.getSelected())
+		_list.elements.push(this);
+
+	if (this.selectedChildren)
+	{
+		for (var i = 0; i < this.selectedChildren.length; i++)
 		{
-			result.push(list[i]);
+			this.selectedChildren[i].getSelectedObjects(_test, _list)
 		}
 	}
 
-	return result;
+	return _list.elements;
 }
 
 /**
@@ -556,7 +576,7 @@ egwActionObject.prototype.getSelectedObjects = function(_test)
  */
 egwActionObject.prototype.getAllSelected = function()
 {
-	if (this.getSelected())
+	if (this.children.length == this.selectedChildren.length)
 	{
 		for (var i = 0; i < this.children.length; i++)
 		{
@@ -583,11 +603,7 @@ egwActionObject.prototype.toggleAllSelected = function(_select)
 		_select = !this.getAllSelected();
 	}
 
-	this.setSelected(_select);
-	for (var i = 0; i < this.children.length; i++)
-	{
-		this.children[i].toggleAllSelected(_select);
-	}
+	this.setAllSelected(_select);
 }
 
 /**
@@ -620,6 +636,7 @@ egwActionObject.prototype.flatList = function(_obj)
  * and this one. The operation returns an empty list, if a container object is
  * found on the way.
  */
+//TODO: Remove flatList here!
 egwActionObject.prototype.traversePath = function(_to)
 {
 	var contRoot = this.getContainerRoot();
@@ -667,23 +684,8 @@ egwActionObject.prototype.getIndex = function()
  */
 egwActionObject.prototype.getFocusedObject = function()
 {
-	//Search for the focused object in the children
-	for (var i = 0; i < this.children.length; i++)
-	{
-		var obj = this.children[i].getFocusedObject()
-		if (obj)
-		{
-			return obj;
-		}
-	}
-
-	//One of the child objects hasn't been focused, probably this object is
-	if (!egwBitIsSet(this.flags, EGW_AO_FLAG_IS_CONTAINER) && this.getFocused())
-	{
-		return this;
-	}
-
-	return null;
+	var cr = this.getContainerRoot();
+	return cr ? cr.focusedChild : null;
 }
 
 /**
@@ -695,12 +697,33 @@ egwActionObject.prototype.getFocusedObject = function()
  * @param int _shiftState is the status of extra keys being pressed during the
  * 	selection process.
  */
-egwActionObject.prototype._ifaceCallback = function(_newState, _shiftState)
+egwActionObject.prototype._ifaceCallback = function(_newState, _changedBit, _shiftState)
 {
 	if (typeof _shiftState == "undefined")
 		_shiftState = EGW_AO_SHIFT_STATE_NONE;
+
+	var selected = egwBitIsSet(_newState, EGW_AO_STATE_SELECTED);
+	var visible = egwBitIsSet(_newState, EGW_AO_STATE_VISIBLE);
+
+	// Check whether the visibility of the object changed
+	if (_changedBit == EGW_AO_STATE_VISIBLE && visible != this.getVisible())
+	{
+		// Deselect the object
+		if (!visible)
+		{
+			this.setSelected(false);
+			this.setFocused(false);
+			return EGW_AO_STATE_NORMAL;
+		}
+		else
+		{
+			// Auto-register the actions attached to this object
+			this.registerActions();
+		}
+	}
+
 	// Remove the focus from all children on the same level
-	if (this.parent)
+	if (this.parent && visible && _changedBit == EGW_AO_STATE_SELECTED)
 	{
 		var selected = egwBitIsSet(_newState, EGW_AO_STATE_SELECTED);
 		var objs = [];
@@ -714,14 +737,7 @@ egwActionObject.prototype._ifaceCallback = function(_newState, _shiftState)
 			// state is not set
 			if (!egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_MULTI))
 			{
-				var lst = this.getContainerRoot().flatList();
-				for (var i = 0; i < lst.length; i++)
-				{
-					if (lst[i] != this)
-					{
-						lst[i].setSelected(false);
-					}
-				}
+				var lst = this.getContainerRoot().setAllSelected(false);
 			}
 
 			// If the LIST state is active, get all objects inbetween this one and the focused one
@@ -745,8 +761,13 @@ egwActionObject.prototype._ifaceCallback = function(_newState, _shiftState)
 		if (objs.length == 0 || !egwBitIsSet(_shiftState, EGW_AO_SHIFT_STATE_BLOCK))
 		{
 			this.setFocused(true);
+			_newState = egwSetBit(EGW_AO_STATE_FOCUSED, _newState, true);
 		}
+
+		this.setSelected(selected);
 	}
+
+	return _newState;
 }
 
 /**
@@ -766,6 +787,15 @@ egwActionObject.prototype.getFocused = function()
 }
 
 /**
+ * Returns whether the object currently is visible - visible means, that the
+ * AOI has a dom node and is visible.
+ */
+egwActionObject.prototype.getVisible = function()
+{
+	return egwBitIsSet(this.getState(), EGW_AO_STATE_VISIBLE);
+}
+
+/**
  * Returns the complete state of the object.
  */
 egwActionObject.prototype.getState = function()
@@ -779,55 +809,28 @@ egwActionObject.prototype.getState = function()
  * be de-focused.
  *
  * @param boolean _focused - whether to remove or set the focus. Defaults to true
- * @param object _recPrev is internally used to prevent infinit recursion. Do not touch.
  */
-egwActionObject.prototype.setFocused = function(_focused, _recPrev)
+egwActionObject.prototype.setFocused = function(_focused)
 {
 	if (typeof _focused == "undefined")
 		_focused = true;
 
-	//TODO: When deleting and moving objects is implemented, don't forget to update
-	//	the selection and the focused element!!
+	var state = this.iface.getState();
 
-	if (typeof _recPrev == "undefined")
-		_recPrev = false;
-
-	//Check whether the focused state has changed
-	if (_focused != this.getFocused())
+	if (egwBitIsSet(state, EGW_AO_STATE_FOCUSED) != _focused)
 	{
-		//Reset the focus of the formerly focused element
-		if (!_recPrev)
+		// Un-focus the currently focused object
+		var currentlyFocused = this.getFocusedObject();
+		if (currentlyFocused && currentlyFocused != this)
 		{
-			var focused = this.getRootObject().getFocusedObject();
-			if (focused)
-			{
-				focused.setFocused(false, this);
-			}
+			currentlyFocused.setFocused(false);
 		}
 
-		if (!_focused)
+		this.iface.setState(egwSetBit(state, EGW_AO_STATE_FOCUSED, _focused));
+		if (this.parent)
 		{
-			//If the object is not focused, reset the focus state of all children
-			for (var i = 0; i < this.children.length; i++)
-			{
-				if (this.children[i] != _recPrev)
-				{
-					this.children[i].setFocused(false, _recPrev);
-				}
-			}
+			this.parent.updateFocusedChild(this, _focused);
 		}
-		else
-		{
-			//Otherwise set the focused state of the parent to true
-			if (this.parent)
-			{
-				this.parent.setFocused(true, _recPrev);
-			}
-		}
-
-		//No perform the actual change in the interface state.
-		this.iface.setState(egwSetBit(this.iface.getState(), EGW_AO_STATE_FOCUSED,
-			_focused));
 	}
 }
 
@@ -837,8 +840,103 @@ egwActionObject.prototype.setFocused = function(_focused, _recPrev)
  */
 egwActionObject.prototype.setSelected = function(_selected)
 {
-	this.iface.setState(egwSetBit(this.iface.getState(), EGW_AO_STATE_SELECTED,
-		_selected));
+	var state = this.iface.getState();
+
+	if ((egwBitIsSet(state, EGW_AO_STATE_SELECTED) != _selected) &&
+	    egwBitIsSet(state, EGW_AO_STATE_VISIBLE))
+	{
+		this.iface.setState(egwSetBit(state, EGW_AO_STATE_SELECTED, _selected));
+		if (this.parent)
+		{
+			this.parent.updateSelectedChildren(this, _selected || this.selectedChildren.length > 0);
+		}
+	}
+}
+
+/**
+ * Sets the selected state of all elements, including children
+ */
+egwActionObject.prototype.setAllSelected = function(_selected, _informParent)
+{
+	if (typeof _informParent == "undefined")
+		_informParent = true;
+
+	var state = this.iface.getState();
+
+	// Update this element
+	if (egwBitIsSet(state, EGW_AO_STATE_SELECTED) != _selected)
+	{
+		this.iface.setState(egwSetBit(state, EGW_AO_STATE_SELECTED, _selected));
+		if (_informParent && this.parent)
+		{
+			this.parent.updateSelectedChildren(this, _selected);
+		}
+	}
+
+	// Update the children if the should be selected or if they should be
+	// deselected and there are selected children.
+	if (_selected || this.selectedChildren.length > 0)
+	{
+		for (var i = 0; i < this.children.length; i++)
+		{
+			this.children[i].setAllSelected(_selected, false);
+		}
+	}
+
+	// Copy the selected children list
+	this.selectedChildren = _selected ? this.children : [];
+}
+
+
+/**
+ * Updates the selectedChildren array each actionObject has in order to determine
+ * all selected children in a very fast manner.
+ * TODO: Has also to be updated, if an child is added/removed!
+ */
+egwActionObject.prototype.updateSelectedChildren = function(_child, _selected)
+{
+	var id = this.selectedChildren.indexOf(_child);
+ 	var wasEmpty = this.selectedChildren.length == 0;
+
+	// Add or remove the given child from the selectedChildren list
+	if (_selected && id == -1)
+	{
+		this.selectedChildren.push(_child);
+	}
+	else if (!_selected && id != -1)
+	{
+		this.selectedChildren.splice(id, 1);
+	}
+
+	// If the emptieness of the selectedChildren array has changed, update the
+	// parent selected children array.
+	if (wasEmpty != this.selectedChildren.length == 0 && this.parent)
+	{
+		this.parent.updateSelectedChildren(this, wasEmpty);
+	}
+}
+
+/**
+ * Updates the focusedChild up to the container boundary.
+ */
+egwActionObject.prototype.updateFocusedChild = function(_child, _focused)
+{
+	if (_focused)
+	{
+		this.focusedChild = _child;
+	}
+	else
+	{
+		if (this.focusedChild = _child)
+		{
+			this.focusedChild = null;
+		}
+	}
+
+	if (this.parent && !egwBitIsSet(this.flags, EGW_AO_FLAG_IS_CONTAINER))
+	{
+		this.parent.updateFocusedChild(_child, _focused);
+	}
 }
 
 /**
@@ -893,6 +991,20 @@ egwActionObject.prototype.updateActionLinks = function(_actionLinks, _recursive,
 			this.children[i].updateActionLinks(_actionLinks, true, _doCreate);
 		}
 	}
+
+	if (this.getVisible())
+	{
+		this.registerActions();
+	}
+}
+
+/**
+ * Reconnects the actions.
+ */
+egwActionObject.prototype._reconnectCallback = function()
+{
+	this.registeredImpls = [];
+	this.registerActions;
 }
 
 /**
@@ -911,9 +1023,15 @@ egwActionObject.prototype.registerActions = function()
 		{
 			var impl = _egwActionClasses[group].implementation();
 
-			// Register a handler for that action with the interface of that object,
-			// the callback and this object as context for the callback
-			impl.registerAction(this.iface, this.executeActionImplementation, this);
+			if (this.registeredImpls.indexOf(impl) == -1)
+			{
+				// Register a handler for that action with the interface of that object,
+				// the callback and this object as context for the callback
+				if (impl.registerAction(this.iface, this.executeActionImplementation, this))
+				{
+					this.registeredImpls.push(impl);
+				}
+			}
 		}
 	}
 }
@@ -964,7 +1082,7 @@ egwActionObject.prototype.executeActionImplementation = function(_implContext, _
  */
 egwActionObject.prototype.forceSelection = function()
 {
-	var selected = this.getSelectedObjects();
+	var selected = this.getContainerRoot().getSelectedObjects();
 
 	// Check whether this object is in the list
 	var thisInList = selected.indexOf(this) != -1;
@@ -972,11 +1090,11 @@ egwActionObject.prototype.forceSelection = function()
 	// If not, select it
 	if (!thisInList)
 	{
+		this.getContainerRoot().setAllSelected(false);
 		this.setSelected(true);
-		this._ifaceCallback(egwSetBit(this.getState(), EGW_AO_STATE_SELECTED, true),
-			EGW_AO_SHIFT_STATE_NONE);
-		selected = [this];
 	}
+
+	this.setFocused(true);
 }
 
 /**
@@ -994,7 +1112,7 @@ egwActionObject.prototype.forceSelection = function()
 egwActionObject.prototype.getSelectedLinks = function(_actionType)
 {
 	// Get all objects in this container which are currently selected
-	var selected = this.getSelectedObjects();
+	var selected = this.getContainerRoot().getSelectedObjects();
 
 	var actionLinks = {};
 	var testedSelected = [];
@@ -1138,9 +1256,12 @@ function egwActionObjectInterface()
 	// or not.
 	this.doSetState = function(_state, _outerCall) {};
 
-	this.doTriggerEvent = function(_event) {};
+	this._state = EGW_AO_STATE_NORMAL || EGW_AO_STATE_VISIBLE;
 
-	this._state = EGW_AO_STATE_NORMAL;
+	this.stateChangeCallback = null;
+	this.stateChangeContext = null;
+	this.reconnectActionsCallback = null;
+	this.reconnectActionsContext = null;
 }
 
 /**
@@ -1154,22 +1275,49 @@ egwActionObjectInterface.prototype.setStateChangeCallback = function(_callback, 
 }
 
 /**
+ * Sets the reconnectActions callback, which will be called by the AOI if its
+ * DOM-Node has been replaced and the actions have to be re-registered.
+ */
+egwActionObjectInterface.prototype.setReconnectActionsCallback = function(_callback, _context)
+{
+	this.reconnectActionsCallback = _callback;
+	this.reconnectActionsContext = _context;
+}
+
+/**
+ * Will be called by the aoi if the actions have to be re-registered due to a
+ * DOM-Node exchange.
+ */
+egwActionObjectInterface.prototype.reconnectActions = function()
+{
+	if (this.reconnectActionsCallback)
+	{
+		this.reconnectActionsCallback.call(this.reconnectActionsContext);
+	}
+}
+
+/**
  * Internal function which should be used whenever the select status of the object
  * has been changed by the user. This will automatically calculate the new state of
  * the object and call the stateChangeCallback (if it has been set)
  *
- * @param boolean _selected Whether the object is selected or not.
- * @param int _shiftState special keys which change how the state change will
- * 	be treated.
+ * @param int _stateBit is the bit in the state bit which should be changed
+ * @param boolean _set specifies whether the state bit should be set or not
  */
-egwActionObjectInterface.prototype._selectChange = function(_selected, _shiftState)
+egwActionObjectInterface.prototype.updateState = function(_stateBit, _set, _shiftState)
 {
-	//Set the EGW_AO_STATE_SELECTED bit accordingly and call the callback
-	this._state = egwSetBit(this._state, EGW_AO_STATE_SELECTED, _selected);
+	// Calculate the new state
+	var newState = egwSetBit(this._state, _stateBit, _set);
+
+	// Call the stateChangeCallback if the state really changed
 	if (this.stateChangeCallback)
 	{
-		this.stateChangeCallback.call(this.stateChangeContext,
-			this._state, _shiftState);
+		this._state = this.stateChangeCallback.call(this.stateChangeContext, newState,
+			_stateBit, _shiftState);
+	}
+	else
+	{
+		this._state = newState;
 	}
 }
 
@@ -1196,7 +1344,7 @@ egwActionObjectInterface.prototype.setState = function(_state)
 	if (_state != this._state)
 	{
 		this._state = _state;
-		this.doSetState(_state, true);
+		this.doSetState(_state);
 	}
 }
 
@@ -1209,7 +1357,6 @@ egwActionObjectInterface.prototype.getState = function()
 {
 	return this._state;
 }
-
 
 /** egwActionObjectManager Object **/
 

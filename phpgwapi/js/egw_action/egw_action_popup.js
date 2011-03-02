@@ -88,7 +88,10 @@ function egwPopupActionImplementation()
 				}
 				return false;
 			}
+
+			return true;
 		}
+		return false;
 	}
 
 	ai.doUnregisterAction = function(_aoi)
