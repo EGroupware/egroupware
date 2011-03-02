@@ -13,7 +13,6 @@
       <entry type="string" name="type">export</entry>
       <entry type="array" name="allowed_users">
         <entry type="string" name="0">Default</entry>
-        <entry type="string" name="1">Admins</entry>
       </entry>
       <entry type="array" name="plugin_options">
         <entry type="array" name="mapping">
@@ -26,20 +25,20 @@
           <entry type="string" name="location">location</entry>
           <entry type="string" name="reference">reference</entry>
           <entry type="string" name="modifier">modifier</entry>
-          <entry type="string" name="non_blocking">non_blocking</entry>
+          <entry type="string" name="non_blocking">non blocking</entry>
           <entry type="string" name="special">special</entry>
           <entry type="string" name="creator">creator</entry>
           <entry type="string" name="recurrence">recurrence</entry>
           <entry type="string" name="tz_id">tz_id</entry>
           <entry type="string" name="start">start</entry>
           <entry type="string" name="end">end</entry>
-          <entry type="string" name="participants">participants</entry>
-          <entry type="string" name="participants-c">participants-c</entry>
+          <entry type="string" name="participants">Participants: User, Status, Role</entry>
+          <entry type="string" name="participants-c">Participants: User, Status, Quantity, Role</entry>
         </entry>
         <entry type="string" name="delimiter">;</entry>
         <entry type="string" name="charset">utf-8</entry>
-        <entry type="string" name="begin_with_fieldnames">1</entry>
-        <entry type="string" name="convert">0</entry>
+        <entry type="string" name="begin_with_fieldnames">label</entry>
+        <entry type="string" name="convert">1</entry>
       </entry>
     </entry>
     <entry type="array" name="import-calendar-csv">
