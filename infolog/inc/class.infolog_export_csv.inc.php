@@ -37,6 +37,9 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		$selection = array();
 		$query = array();
 
+		$export_object = new importexport_export_csv($_stream, (array)$options);
+		$export_object->set_mapping($options['mapping']);
+
 		// do we need to query the cf's
 		foreach($options['mapping'] as $field => $map) {
 			if($field[0] == '#') $query['custom_fields'][] = $field;
@@ -54,9 +57,6 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			$selection = explode(',',$options['selection']);
 		}
 
-		$export_object = new importexport_export_csv($_stream, (array)$options);
-		$export_object->set_mapping($options['mapping']);
-
 		foreach ($selection as $_identifier) {
 			if(!is_array($_identifier)) {
 				$record = new infolog_egw_record($_identifier);
@@ -64,7 +64,6 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				$record = new infolog_egw_record();
 				$record->set_record($_identifier);
 			}
-
 			// Some conversion
 			if($options['convert']) {
 				importexport_export_csv::convert($record, self::$types, 'infolog');
