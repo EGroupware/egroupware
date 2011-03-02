@@ -10,6 +10,24 @@
  * @version $Id$
  */
 
+$apps = $no_navbar_apps = array();
+if (!$hook_data['setup'])	// does not work on setup time
+{
+	foreach(ExecMethod('jdots.jdots_framework.navbar_apps') as $app => $data)
+	{
+		if (!$data['noNavbar'])
+		{
+			$apps[$app] = $data['title'];
+		}
+		else
+		{
+			$no_navbar_apps[$app] = $data['title'];
+		}
+	}
+	$apps += $no_navbar_apps;
+	unset($app); unset($data);
+}
+
 /**
  * Stylite jdots template
  */
@@ -39,5 +57,16 @@ $GLOBALS['settings'] = array(
 		'admin'  => false,
 		'default'=> '0',
 	),
+	'open_tabs' => array(
+		'type'   => 'multiselect',
+		'label'  => 'Open application tabs',
+		'name'   => 'open_tabs',
+		'values' => $apps,
+		'help'   => 'Allows to set a default or force the open application tabs.',
+		'xmlrpc' => True,
+		'admin'  => False,
+		'default' => 'addressbook,calendar',
+	),
 	'navbar_format' => false,	// not used in JDots (defined in common prefs)
 );
+unset($apps);

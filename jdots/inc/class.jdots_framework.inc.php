@@ -768,10 +768,6 @@ class jdots_framework extends egw_framework
 	/**
 	 * Prepare an array with apps used to render the navbar
 	 *
-	 * @param string $url contains the current url on the client side. It is used to
-	 *  determine whether the default app/home should be opened on the client
-	 *  or whether a specific application-url has been given.
-	 *
 	 * @return array of array(
 	 *  'name'  => app / directory name
 	 * 	'title' => translated application title
@@ -780,12 +776,9 @@ class jdots_framework extends egw_framework
 	 *  'icon_app' => application of icon
 	 *  'icon_hover' => hover-icon, if used by template
 	 *  'target'=> ' target="..."' attribute fragment to open url in target, popup or ''
-	 *  'opened' => unset or false if the tab should not be opened, otherwise the numeric position in the tab list
-	 *  'active' => true if this tab should be the active one when it is restored, otherwise unset or false
-	 *  'openOnce' => unset or the url which will be opened when the tab is restored
 	 * )
 	 */
-	public function ajax_navbar_apps($url)
+	public function navbar_apps()
 	{
 		$apps = parent::_get_navbar_apps();
 
@@ -806,6 +799,32 @@ class jdots_framework extends egw_framework
 		{
 			unset($apps['sitemgr-link']);
 		}
+		return $apps;
+	}
+
+	/**
+	 * Prepare an array with apps used to render the navbar
+	 *
+	 * @param string $url contains the current url on the client side. It is used to
+	 *  determine whether the default app/home should be opened on the client
+	 *  or whether a specific application-url has been given.
+	 *
+	 * @return array of array(
+	 *  'name'  => app / directory name
+	 * 	'title' => translated application title
+	 *  'url'   => url to call for index
+	 *  'icon'  => icon name
+	 *  'icon_app' => application of icon
+	 *  'icon_hover' => hover-icon, if used by template
+	 *  'target'=> ' target="..."' attribute fragment to open url in target, popup or ''
+	 *  'opened' => unset or false if the tab should not be opened, otherwise the numeric position in the tab list
+	 *  'active' => true if this tab should be the active one when it is restored, otherwise unset or false
+	 *  'openOnce' => unset or the url which will be opened when the tab is restored
+	 * )
+	 */
+	public function ajax_navbar_apps($url)
+	{
+		$apps = $this->navbar_apps();
 
 		// open tab for default app, if no other tab is set
 		if (!($default_app = $GLOBALS['egw_info']['user']['preferences']['common']['default_app']))
