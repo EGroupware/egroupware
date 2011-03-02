@@ -60,7 +60,7 @@ class importexport_wizard_basic_export_csv
 			'wizard_step40' => lang('Choose seperator and charset'),
 		);
 		list($appname, $part2) = explode('_', get_class($this));
-		if(!$GLOBALS['egw_info']['apps'][$appname]) $appname .= $part2; // Handle apps with _ in the name
+		if(!$GLOBALS['egw_info']['apps'][$appname]) $appname .= '_'.$part2; // Handle apps with _ in the name
 		translation::add_app($appname);
 	}
 
@@ -74,6 +74,16 @@ class importexport_wizard_basic_export_csv
 		if ($content['step'] == 'wizard_step30')
 		{
 			$content['mapping'] = array_combine($content['fields']['export'], $content['fields']['export']);
+			if($content['mapping']['all_custom_fields']) {
+				// Need the appname during actual export, to fetch the fields
+				$parts = explode('_', get_class($this));
+				$appname = $parts[0];
+				foreach($parts as $name_part) {
+					if($GLOBALS['egw_info']['apps'][$appname]) break;
+					$appname .= '_'.$name_part; // Handle apps with _ in the name
+				}
+				$content['mapping']['all_custom_fields'] = $appname;
+			}
 			unset($content['mapping']['']);
 			unset($content['fields']);
 			switch (array_search('pressed', $content['button']))
@@ -93,11 +103,14 @@ class importexport_wizard_basic_export_csv
 		{
 			$content['msg'] = $this->steps['wizard_step30'];
 			$content['step'] = 'wizard_step30';
+			$this->export_fields += array('all_custom_fields' => 'All custom fields');
 			$sel_options['field'] = $this->export_fields;
 			$preserv = $content;
 			unset ($preserv['button']);
+			unset ($preserv['fields']);
 			$content['fields'] = array('');
 			if(!$content['mapping']) $content['mapping'] = $content['plugin_options']['mapping'];
+		
 			$row = 1;
 			foreach($this->export_fields as $field => $name) {
 				$content['fields'][] = array(
@@ -131,7 +144,8 @@ class importexport_wizard_basic_export_csv
 		if ($content['step'] == 'wizard_step40') {
 			if($content['begin_with_fieldnames'] == 'label') {
 				foreach($content['mapping'] as $field => &$label) {
-					$label = $this->export_fields[$field];
+					// Check first, to avoid clearing any pseudo-columns (ex: All custom fields)
+					$label = $this->export_fields[$field] ? $this->export_fields[$field] : $label;
 				}
 			}
 			switch (array_search('pressed', $content['button']))

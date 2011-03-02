@@ -112,9 +112,17 @@ class importexport_export_csv implements importexport_iface_export_record
 	 *
 	 * @param array $_mapping egw_field_name => csv_field_name
 	 */
-	public function set_mapping( array $_mapping) {
+	public function set_mapping( array &$_mapping) {
 		if ($this->num_of_records > 0) {
 			throw new Exception('Error: Field mapping can\'t be set during ongoing export!');
+		}
+		if($_mapping['all_custom_fields']) {
+			// Field value is the appname, so we can pull the fields
+			$custom = config::get_customfields($_mapping['all_custom_fields']);
+			unset($_mapping['all_custom_fields']);
+			foreach($custom as $field => $info) {
+				$_mapping['#'.$field] = $this->csv_options['begin_with_fieldnames'] == 'label' ? $info['label'] : $field;
+			}
 		}
 		$this->mapping = $_mapping;
 	}
