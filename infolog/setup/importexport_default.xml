@@ -42,8 +42,8 @@
         </entry>
         <entry type="string" name="delimiter">;</entry>
         <entry type="string" name="charset">utf-8</entry>
-        <entry type="string" name="begin_with_fieldnames">1</entry>
-        <entry type="string" name="convert">0</entry>
+        <entry type="string" name="begin_with_fieldnames">label</entry>
+        <entry type="string" name="convert">1</entry>
       </entry>
       <entry type="NULL" name="description"/>
       <entry type="string" name="user_timezone_read">America/Edmonton</entry>
