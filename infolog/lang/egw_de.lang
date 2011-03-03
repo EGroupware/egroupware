@@ -140,6 +140,7 @@ description	infolog	de	Beschreibung
 determines the order the fields are displayed	infolog	de	legt die Reihenfolge fest in der die Felder angezeigt werden
 directory with documents to insert entries	infolog	de	Verzeichnis mit Dokumenten zum Einfügen von Infologs
 disables a status without deleting it	infolog	de	deaktiviert einen Status ohne ihn zu löschen
+do not notify of these changes	infolog	de	Nicht über diese Änderungen benachrichtigen
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	de	Wollen Sie eine Bestätigung des Verantwortlichen bei: Annahme, Beendigung der Aufgabe oder bei beidem
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge Ihnen zugewiesen werden oder zugewiesene Einträge geändert werden?
 do you want a notification, if items you are responsible for are about to start?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge für die Sie verantwortlich sind beginnen sollen?
@@ -253,6 +254,7 @@ manage mapping	infolog	de	Verwaltung der Zuordnung
 max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
 modifier	infolog	de	Geändert von
 name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
+name of current user, all other contact fields are valid too	infolog	de	Name des aktiven Benutzers, all anderen Kontakt Felder sind weiterhin gültig
 name of new type to create	infolog	de	Name des neu anzulegenden Typs
 never hide search and filters	infolog	de	Suche und Filter niemals ausblenden
 new %1	infolog	de	Neue %1
