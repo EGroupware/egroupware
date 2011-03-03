@@ -1365,7 +1365,7 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * Not all chars get encoded, slashes '/' are silently removed!
 	 *
-	 * To reverse the encoding, eg. to display a filename to the user, you can use urldecode()
+	 * To reverse the encoding, eg. to display a filename to the user, you have to use egw_vfs::decodePath()
 	 *
 	 * @param string|array $component
 	 * @return string|array
@@ -1378,7 +1378,7 @@ class egw_vfs extends vfs_stream_wrapper
 	/**
 	 * Encode a path: replacing certain chars with their urlencoded counterparts
 	 *
-	 * To reverse the encoding, eg. to display a filename to the user, you can use urldecode()
+	 * To reverse the encoding, eg. to display a filename to the user, you have to use egw_vfs::decodePath()
 	 *
 	 * @param string $path
 	 * @return string
@@ -1386,6 +1386,19 @@ class egw_vfs extends vfs_stream_wrapper
 	static public function encodePath($path)
 	{
 		return implode('/',self::encodePathComponent(explode('/',$path)));
+	}
+
+	/**
+	 * Decode a path: rawurldecode(): mostly urldecode(), but do NOT decode '+', as we're NOT encoding it!
+	 *
+	 * Used eg. to translate a path for displaying to the User.
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	static public function decodePath($path)
+	{
+		return rawurldecode($path);
 	}
 
 	/**

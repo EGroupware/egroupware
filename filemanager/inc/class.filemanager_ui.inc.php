@@ -127,7 +127,7 @@ class filemanager_ui
 				}
 				else
 				{
-					$msg .= lang('The requested path %1 is not available.',urldecode($path));
+					$msg .= lang('The requested path %1 is not available.',egw_vfs::decodePath($path));
 				}
 				// reset lettersearch as it confuses users (they think the dir is empty)
 				$content['nm']['searchletter'] = false;
@@ -205,11 +205,11 @@ class filemanager_ui
 					$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($content['nm']['path'],$target);
 					if (!egw_vfs::stat($abs_target))
 					{
-						$content['nm']['msg'] = lang('Link target %1 not found!',urldecode($abs_target));
+						$content['nm']['msg'] = lang('Link target %1 not found!',egw_vfs::decodePath($abs_target));
 						break;
 					}
 					$content['nm']['msg'] = egw_vfs::symlink($target,$link) ?
-						lang('Symlink to %1 created.',$target) : lang('Error creating symlink to target %1!',urldecode($target));
+						lang('Symlink to %1 created.',$target) : lang('Error creating symlink to target %1!',egw_vfs::decodePath($target));
 					break;
 				case 'paste':
 					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
@@ -244,7 +244,7 @@ class filemanager_ui
 					if ($upload_success)
 					{
 						$content['nm']['msg'] = count($upload_success) == 1 && !$upload_failure ? lang('File successful uploaded.') :
-							lang('%1 successful uploaded.',urldecode(implode(', ',$upload_success)));
+							lang('%1 successful uploaded.',implode(', ',$upload_success));
 					}
 					if ($upload_failure)
 					{
@@ -262,9 +262,9 @@ class filemanager_ui
 			$dir_is_writable = egw_vfs::is_writable($content['nm']['path']);
 		}
 		$content['paste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
-			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.urldecode(implode('<br />',$clipboard_files)).'</p>' : '';
+			$clipboard_type=='copy'?lang('Copy'):lang('Move')).':</b><br />'.egw_vfs::decodePath(implode('<br />',$clipboard_files)).'</p>' : '';
 		$content['linkpaste_tooltip'] = $clipboard_files ? '<p><b>'.lang('%1 the following files into current directory',
-			lang('link')).':</b><br />'.urldecode(implode('<br />',$clipboard_files)).'</p>' : '';
+			lang('link')).':</b><br />'.egw_vfs::decodePath(implode('<br />',$clipboard_files)).'</p>' : '';
 		$content['upload_size'] = etemplate::max_upload_size_message();
 		//_debug_array($content);
 
@@ -320,7 +320,7 @@ class filemanager_ui
 			}
 			else
 			{
-				$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',urldecode($path)))."')) document.getElementById('$id').value='';");
+				$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',egw_vfs::decodePath($path)))."')) document.getElementById('$id').value='';");
 			}
 		}
 		else
@@ -498,7 +498,7 @@ class filemanager_ui
 			{
 				if (preg_match('/^\/?(home|apps|)\/*$/',$path))
 				{
-					return lang("Cautiously rejecting to remove folder '%1'!",urldecode($path));
+					return lang("Cautiously rejecting to remove folder '%1'!",egw_vfs::decodePath($path));
 				}
 			}
 			// now we use find to loop through all files and dirs: (selected only contains dirs now)
@@ -558,7 +558,7 @@ class filemanager_ui
 			// an appropriate message
 			egw::redirect_link('/index.php',array('menuaction'=>'filemanager.filemanager_ui.index',
 				'path' => self::get_home_dir(),
-				'msg' => lang('The requested path %1 is not available.',urldecode($query['path'])),
+				'msg' => lang('The requested path %1 is not available.',egw_vfs::decodePath($query['path'])),
 			));
 		}
 		$rows = $dir_is_writable = array();
@@ -639,7 +639,7 @@ class filemanager_ui
 		}
 		else
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('Filemanager').': '.urldecode($query['path']);
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Filemanager').': '.egw_vfs::decodePath($query['path']);
 		}
 		return egw_vfs::$find_total;
 	}
@@ -737,14 +737,14 @@ class filemanager_ui
 							}
 							if (egw_vfs::rename($path,$to))
 							{
-								$msg .= lang('Renamed %1 to %2.',urldecode(basename($path)),urldecode(basename($to))).' ';
+								$msg .= lang('Renamed %1 to %2.',egw_vfs::decodePath(basename($path)),egw_vfs::decodePath(basename($to))).' ';
 								$content['old']['name'] = $content[$name];
 								$path = $to;
 								$content['mime'] = mime_magic::filename2mime($path);	// recheck mime type
 							}
 							else
 							{
-								$msg .= lang('Rename of %1 to %2 failed!',urldecode(basename($path)),urldecode(basename($to))).' ';
+								$msg .= lang('Rename of %1 to %2 failed!',egw_vfs::decodePath(basename($path)),egw_vfs::decodePath(basename($to))).' ';
 								if (egw_vfs::deny_script($to))
 								{
 									$msg .= lang('You are NOT allowed to upload a script!').' ';
@@ -942,7 +942,7 @@ class filemanager_ui
 			));
 		}
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.urldecode($path);
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.egw_vfs::decodePath($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
 	}
