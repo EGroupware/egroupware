@@ -180,7 +180,7 @@ class timesheet_ui extends timesheet_bo
 					if (!$this->data['ts_title'])
 					{
 						$this->data['ts_title'] = $this->data['ts_title_blur'] ?
-						$this->data['ts_title_blur'] : $this->data['ts_project_blur'];
+							$this->data['ts_title_blur'] : $this->data['ts_project_blur'];
 
 						if (!$this->data['ts_title'])
 						{
@@ -296,30 +296,27 @@ class timesheet_ui extends timesheet_bo
 				{
 					switch ($link_app)
 					{
+						case 'calendar':
+							if (!$n)	// only if calendar is first link_app (clicked on ts icon in calendar)!
+							{
+								$calendar_bo = new calendar_bo();
+								list($link_id, $recurrence) = explode(':', $link_id);
+								$event = $calendar_bo->read($link_id, $recurrence);
+								$content['ts_start'] = $event['start'];
+								$content['ts_title'] = $calendar_bo->link_title($event);
+								$content['start_time'] = egw_time::to($event['start'],'H:i');
+								$content['ts_description'] = $event['description'];
+								$content['ts_duration']	= ($event['end'] - $event['start']) / 60;
+								$content['ts_quantity'] = ($event['end'] - $event['start']) / 3600;
+								unset($content['end_time']);
+							}
+							break;
 						case 'projectmanager':
 							$links[] = $link_id;
-							break;
-						case 'infolog':
-							// a preserved title blur is only set for other (non-project) links, it stays with Save&New!
-							$preserv['ts_title_blur'] = egw_link::title('infolog',$link_id);
-							break;
-						case 'calendar':
-							$calendar_bo = new calendar_bo();
-							list($link_id, $recurrence) = explode(':', $link_id);
-							$event = $calendar_bo->read($link_id, $recurrence);
-							$content['ts_start'] = $event['start'];
-							$content['start_time'] = egw_time::to($event['start'],'H:i');
-							$content['ts_title'] = $calendar_bo->link_title($event);
-							$content['ts_description'] = $event['description'];
-							$content['ts_duration']	= ($event['end'] - $event['start']) / 60;
-							$content['ts_quantity'] = ($event['end'] - $event['start']) / 3600;
-							unset($content['end_time']);
-							break;
+							// fall-through;
 						default:
-							if(!$preserv['ts_title_blur'])
-							{
-								$preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
-							}
+							// get title from first linked app
+							if(!$n) $preserv['ts_title_blur'] = egw_link::title($link_app,$link_id);
 							break;
 					}
 					egw_link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
@@ -862,7 +859,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		$sel_options['action'][lang('Modify the Status of the Timesheet')] = $status;
 		unset($status);
-		
+
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'])
                 {
