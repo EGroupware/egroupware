@@ -552,7 +552,23 @@ abstract class bo_merge
 				// replace all control chars (C0+C1) but CR (\015), LF (\012) and TAB (\011) (eg. vertical tabulators) with space
 				// as they are not allowed in xml
 				$value = preg_replace('/[\000-\010\013\014\016-\037\177-\237]/u',' ',$value);
+
+				if(is_numeric($value)) 	$names[] = preg_quote($name,'/');
 			}
+			// Look for numbers, set their value if needed
+			$format = $replacement = '';
+			switch($mimetype.$mso_application_progid)
+			{
+				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+					$format = '/<table:table-cell([^>]+?)office:value-type="([^"]+)"([^>]*?)>.?<([a-z].*?)[^>]*>('.implode('|',$names).')<\/\4>.?<\/table:table-cell>/s';
+					$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$3>$5</table:table-cell>';
+					break;
+			}
+			if($format && $names)
+			{
+				$content = preg_replace($format, $replacement, $content);
+			}
+
 			// replace CRLF with linebreak tag of given type
 			switch($mimetype.$mso_application_progid)
 			{
