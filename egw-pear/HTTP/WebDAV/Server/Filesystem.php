@@ -403,7 +403,7 @@ class HTTP_WebDAV_Server_Filesystem extends HTTP_WebDAV_Server
                 printf($format,
                        number_format(filesize($fullpath)),
                        strftime("%Y-%m-%d %H:%M:%S", filemtime($fullpath)),
-                       "<a href='$name'>$name</a>");
+                       '<a href="'.$name.'">'.$name.'</a>');
             }
         }
 

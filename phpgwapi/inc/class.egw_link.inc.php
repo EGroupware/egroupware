@@ -61,7 +61,7 @@
  *			),
  *			'edit_id' => 'app_id',
  *			'edit_popup' => '400x300',
- *			'additional' => array(					// allow one app to register sub-types, 
+ *			'additional' => array(					// allow one app to register sub-types,
  *				'app-sub' => array(					// different from 'types' approach above
  *					// every value defined above
  *				)
@@ -656,7 +656,7 @@ class egw_link extends solink
 			if (is_array($id) && $link)
 			{
 				$link = $id;
-				$title = $link['name'];
+				$title = egw_vfs::decodePath($link['name']);
 			}
 			else
 			{
@@ -669,7 +669,7 @@ class egw_link extends solink
 				$title .= ': '.$link['type'] . ' '.egw_vfs::hsize($link['size']);
 			}*/
 			if (self::DEBUG) echo '<p>'.__METHOD__."('$app','$id')='$title' (file)</p>\n";
-			return urldecode($title);
+			return $title;
 		}
 		if ($app == '' || !is_array($reg = self::$app_register[$app]) || !isset($reg['title']))
 		{

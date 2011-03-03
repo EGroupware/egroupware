@@ -153,7 +153,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		}
 
 		// open the "real" file
-		if (!($this->opened_stream = fopen($path=urldecode(parse_url($url,PHP_URL_PATH)),$mode,$options)))
+		if (!($this->opened_stream = fopen($path=egw_vfs::decodePath(parse_url($url,PHP_URL_PATH)),$mode,$options)))
 		{
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url,$mode,$options) fopen('$path','$mode',$options) returned false!");
 			return false;
@@ -295,7 +295,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function unlink ( $url )
 	{
-		$path = urldecode(parse_url($url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(parse_url($url,PHP_URL_PATH));
 
 		// check access rights (file need to exist and directory need to be writable
 		if (!file_exists($path) || is_dir($path) || !egw_vfs::check_access(egw_vfs::dirname($url),egw_vfs::WRITABLE))
@@ -355,7 +355,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 			if (self::LOG_LEVEL) error_log(__METHOD__."($url_to,$url_from) can't unlink existing $url_to!");
 			return false;
 		}
-		return rename(urldecode($from['path']),urldecode($to['path']));
+		return rename(egw_vfs::decodePath($from['path']),egw_vfs::decodePath($to['path']));
 	}
 
 	/**
@@ -371,7 +371,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function mkdir ( $url, $mode, $options )
 	{
-		$path = urldecode(parse_url($url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(parse_url($url,PHP_URL_PATH));
 		$recursive = (bool)($options & STREAM_MKDIR_RECURSIVE);
 
 		// find the real parent (might be more then one level if $recursive!)
@@ -403,7 +403,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function rmdir ( $url, $options )
 	{
-		$path = urldecode(parse_url($url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(parse_url($url,PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
@@ -425,7 +425,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function touch($url,$time=null,$atime=null)
 	{
-		$path = urldecode(parse_url($url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(parse_url($url,PHP_URL_PATH));
 		$parent = dirname($path);
 
 		// check access rights (in real filesystem AND by mount perms)
@@ -492,7 +492,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 
 		$this->opened_dir = null;
 
-		$path = urldecode(parse_url($this->opened_dir_url = $url,PHP_URL_PATH));
+		$path = egw_vfs::decodePath(parse_url($this->opened_dir_url = $url,PHP_URL_PATH));
 
 		// ToDo: check access rights
 
@@ -533,7 +533,7 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 	static function url_stat ( $url, $flags )
 	{
 		$parts = parse_url($url);
-		$path = urldecode($parts['path']);
+		$path = egw_vfs::decodePath($parts['path']);
 
 		$stat = @stat($path);	// suppressed the stat failed warnings
 
@@ -733,20 +733,20 @@ class filesystem_stream_wrapper implements iface_stream_wrapper
 		list(,$query) = explode('?',$url,2);
 		parse_str($query,$get);
 		if (empty($get['url'])) return false;	// no download url given for this mount-point
-		
+
 		if (!($mount_url = egw_vfs::mount_url($url))) return false;	// no mount url found, should not happen
 		list($mount_url) = explode('?',$mount_url);
-		
+
 		list($url,$query) = explode('?',$url,2);
 		$relpath = substr($url,strlen($mount_url));
-		
+
 		$download_url = egw_vfs::concat($get['url'],$relpath);
 		if ($download_url[0] == '/')
 		{
 			$download_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').
 				$_SERVER['HTTP_HOST'].$download_url;
 		}
-		
+
 		//die(__METHOD__."('$url') --> relpath = $relpath --> $download_url");
 		return $download_url;
 	}

@@ -85,7 +85,7 @@ class vfs_widget
 		{
 			if (!$value || !($stat = egw_vfs::stat($value)))
 			{
-				if ($value) $value = lang("File '%1' not found!",urldecode($value));
+				if ($value) $value = lang("File '%1' not found!",egw_vfs::decodePath($value));
 				$cell = etemplate::empty_cell();
 				return true;	// allow extra value;
 			}
@@ -208,7 +208,7 @@ class vfs_widget
 						soetemplate::add_child($cell,$sep);
 						unset($sep);
 					}
-					$value['c'.$n] = $component !== '' ? urldecode($component) : '/';
+					$value['c'.$n] = $component !== '' ? egw_vfs::decodePath($component) : '/';
 					$path .= ($path != '/' ? '/' : '').$component;
 					// replace id's in /apps again with human readable titles
 					$path_parts = explode('/',$path);
@@ -271,7 +271,7 @@ class vfs_widget
 				list($length,$maxLength,$allowPath) = $options = explode(',',$cell['size']);
 				$preg = $allowPath ? '' : '/[^\\/]/';	// no slash '/' allowed, if not allowPath set
 				$cell['size'] = "$length,$maxLength,$preg";
-				$value = urldecode($value);
+				$value = egw_vfs::decodePath($value);
 				$extension_data = array('type' => $type,'allowPath' => $allowPath);
 				break;
 
@@ -349,7 +349,7 @@ class vfs_widget
 					list($span,$class) = explode(',',$cell['span'],2);
 					$class .= ($class ? ' ' : '') . ($broken ? 'vfsIsBrokenLink' : 'vfsIsLink');
 					$cell['span'] = $span.','.$class;
-					$cell['label'] = ($broken ? lang('Broken link') : lang('Link')).': '.urldecode(egw_vfs::readlink($path)).
+					$cell['label'] = ($broken ? lang('Broken link') : lang('Link')).': '.egw_vfs::decodePath(egw_vfs::readlink($path)).
 						(!$broken ? ' ('.$cell['label'].')' : '');
 				}
 				break;
@@ -371,7 +371,7 @@ class vfs_widget
 	 */
 	static function file_widget(&$value,$path,$name,$label=null)
 	{
-		$value = empty($label) ? urldecode(egw_vfs::basename($path)) : lang($label);	// display (translated) Label or filename (if label empty)
+		$value = empty($label) ? egw_vfs::decodePath(egw_vfs::basename($path)) : lang($label);	// display (translated) Label or filename (if label empty)
 
 		$vfs_link = etemplate::empty_cell('label',$name,array(
 			'size' => ','.egw_vfs::download_url($path).',,,_blank,,'.$path,
@@ -478,7 +478,7 @@ class vfs_widget
 					{
 						if (!egw_vfs::unlink($extension_data['path'].$file))
 						{
-							etemplate::set_validation_error($name,lang('Error deleting %1!',urldecode($extension_data['path'].$file)));
+							etemplate::set_validation_error($name,lang('Error deleting %1!',egw_vfs::decodePath($extension_data['path'].$file)));
 						}
 						break;
 					}
@@ -486,7 +486,7 @@ class vfs_widget
 			}
 			elseif (!egw_vfs::unlink($extension_data['path']))
 			{
-				etemplate::set_validation_error($name,lang('Error deleting %1!',urldecode($extension_data['path'])));
+				etemplate::set_validation_error($name,lang('Error deleting %1!',egw_vfs::decodePath($extension_data['path'])));
 			}
 			$loop = true;
 			return false;
@@ -539,7 +539,7 @@ class vfs_widget
 		}
 		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir,null,STREAM_MKDIR_RECURSIVE))
 		{
-			etemplate::set_validation_error($name,lang('Error create parent directory %1!',urldecode($dir)));
+			etemplate::set_validation_error($name,lang('Error create parent directory %1!',egw_vfs::decodePath($dir)));
 			return false;
 		}
 		if (!copy($tmp_name,egw_vfs::PREFIX.$path))
