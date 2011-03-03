@@ -662,7 +662,7 @@ abstract class bo_merge
 					break;
 				case 'application/vnd.oasis.opendocument.text':
 				case 'application/vnd.oasis.opendocument.spreadsheet':
-					$LF ='</text:span></text:p><text:p><text:span>';  //span is needed here
+					$LF ='<text:line-break/>';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
