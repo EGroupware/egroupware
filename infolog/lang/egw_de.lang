@@ -31,6 +31,7 @@ action	infolog	de	Befehle
 actions...	infolog	de	Befehle...
 actual date and time	infolog	de	aktuelles Datum und Uhrzeit
 add	infolog	de	Hinzufügen
+add / remove link	infolog	de	Hinzufügen / Entfernen von Verknüpfungen
 add a file	infolog	de	Datei anhängen
 add a new entry	infolog	de	einen neuen Eintrag anlegen
 add a new note	infolog	de	eine neue Notiz anlegen
@@ -48,6 +49,7 @@ all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
 all projects	infolog	de	Alle Projekte
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	de	erlaubt den Status eines Eintrags zu setzen, zB. eine Aufgabe auf erledigt wenn sie beendet ist (Werte hängen vom Type des Eintrags ab)
 alternatives	infolog	de	Alternativen
+apply the action on the whole query, not only the shown entries!!!	infolog	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur auf die angezeigten Datensätze !!
 apply the changes	infolog	de	Übernimmt die Änderungen
 archive	infolog	de	Archiviert
 are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den Infolog schliessen?
@@ -66,8 +68,10 @@ cancelled	infolog	de	abgesagt
 categories	infolog	de	Kategorien
 category	infolog	de	Kategorie
 change category	infolog	de	Kategorie ändern
+change completed	infolog	de	Änderungen duchgeführt
 change completion	infolog	de	Bearbeitungsstatus ändern
 change history	infolog	de	Änderungsverlauf
+change owner when updating	infolog	de	Ändert den Benutzer bei bei diesem Änderungsvorgang
 change responsible	infolog	de	Zuständigkeit ändern
 change status:	infolog	de	Status ändern
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, z.B. Ihn als erledigt markieren
@@ -78,6 +82,7 @@ changed responsible	infolog	de	Zuständigkeit ändern
 changed status to %1	infolog	de	Typ geändert zu %1
 changed type	infolog	de	Typ ändern
 charset of file	infolog	de	Zeichensatz der Datei
+check all	infolog	de	Alle marktieren
 check to set startday	infolog	de	ankreuzen um Startdatum zu setzen
 check to specify custom contact	infolog	de	Ankreuzen um einen eigenen Kontakt anzugeben
 choose owner of imported data	infolog	de	Wählen Sie den Eigentümer der Importierten Daten
@@ -87,12 +92,16 @@ close	infolog	de	Schließen
 close all	infolog	de	Alle schließen
 close this entry and all listed sub-entries	infolog	de	Diesen Eintrag und alle Untereinträge schliessen
 closed	infolog	de	geschlossen
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	de	Spalte (:) Liste von Feldnamen, die für eine Summierung verwendet werden können
 comment	infolog	de	Kommentar
+compare	infolog	de	vergleichen
 completed	infolog	de	Erledigt
 configuration	infolog	de	Konfiguration
 confirm	infolog	de	Bestätigung
 contact	infolog	de	Kontakt
+contact cf	infolog	de	Kontakt CF
 contact fields	infolog	de	Kontaktfelder
+contactfield	infolog	de	Kontaktfelder
 copy of:	infolog	de	Kopie von:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 create new links	infolog	de	Neue Verknüpfung erzeugen
@@ -129,6 +138,7 @@ delegated upcomming	infolog	de	delegiert zukünftig
 delegation	infolog	de	Delegation
 delete	infolog	de	Löschen
 delete one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id löschen.
+delete selected entries?	infolog	de	Sollen die ausgewählen Datensätze gelöscht werden?
 delete the entry	infolog	de	Eintrag löschen
 delete this entry	infolog	de	diesen Eintrag löschen
 delete this entry and all listed sub-entries	infolog	de	Diesen Eintrag und all aufgelisteten Untereinträge löschen
@@ -151,7 +161,7 @@ do you want a notification, if items you delegated are due?	infolog	de	Wollen Si
 do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML Mail oder reinen Text empfangen?
 document '%1' does not exist or is not readable for you!	infolog	de	Dokument '%1' existiert nicht, oder ist nicht lesbar für Sie!
 don't show infolog	infolog	de	InfoLog NICHT anzeigen
-done	infolog	de	erledigt
+done	common	de	erledigt
 download	infolog	de	Datei laden
 due %1	infolog	de	%1 fällig
 duration	infolog	de	Dauer
@@ -164,6 +174,7 @@ edit status	infolog	de	Status ändern
 edit the entry	infolog	de	Eintrag bearbeiten
 edit this entry	infolog	de	diesen Eintrag bearbeiten
 empty for all	infolog	de	leer für alle
+end	infolog	de	Ende
 enddate	infolog	de	Fällig am
 enddate can not be before startdate	infolog	de	Das Fälligkeitsdatum kann nicht vor dem Startdatum liegen
 enter a custom contact, leave empty if linked entry should be used	infolog	de	benutzerdefinierter Kontakt, leer lassen um die Daten der Verknüpfung zu verwenden
@@ -177,6 +188,7 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
+execute a further action for this entry	infolog	de	Eine weitere Aktion für diesen Eintrag ausführen
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
 exports infolog entries into a csv file.	infolog	de	Exportiert Infolog Einträge in einen CSV Datei.
@@ -184,6 +196,7 @@ fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
 fieldseparator	infolog	de	Feldbegrenzer
 finish	infolog	de	wenn erledigt
+first argument for preg_replace	infolog	de	Ersten Argument für pre_replace
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	de	Für Serienbriefe benutzen Sie folgenden Platzhalter. Fügen die den Inhalt zwischen diese beiden Platzhalter ein.
 for which types should this field be used	infolog	de	für welche Typen soll dieses Feld benutzt werden
 from	infolog	de	Von
@@ -236,6 +249,7 @@ last changed	infolog	de	letzte Änderung
 last modified	infolog	de	zuletzt geändert
 leave blank to get the used time calculated by timesheet entries	infolog	de	Leer lassen um die Zeit nach den Stundenzetteln zu bekommen
 leave it empty	infolog	de	leer lassen
+leave it empty for a full week	infolog	de	leer lassen, für eine gesamte Woche
 leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
 leaves without saveing	infolog	de	Abbruch ohne speichern
 length<br>rows	infolog	de	Länge<br />Zeilen
@@ -331,11 +345,11 @@ receive notifications about own items	infolog	de	Benachrichtigungen über eigene
 receive notifications about starting entries you are responsible for	infolog	de	Benachrichtigungen über zu startende Einträge für die Sie verantwortlich sind
 receive notifications about starting entries you delegated	infolog	de	Benachrichtigungen über zu startende Einträge die Sie delegiert haben
 receive notifications as html-mails	infolog	de	Benachrichtigungen als HTML Mails
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
+regular expression	infolog	de	Reguläre Ausdrücke
 remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
 removed	infolog	de	Entfernt
+replacement	infolog	de	Platzhalter
 replacements for inserting entries into documents	infolog	de	Platzhalter für das Einfügen in Dokumente
 responsible	infolog	de	verantwortlich
 responsible open	infolog	de	verantwortlich offen
@@ -351,6 +365,7 @@ saves the changes made and leaves	infolog	de	speichert die Änderungen und beend
 saves this entry	infolog	de	diesen Eintrag speichern
 search	infolog	de	Suchen
 search for:	infolog	de	Suchen nach:
+second parameter for preg_replace	infolog	de	2. Paramter für preg_replace
 select	infolog	de	Auswählen
 select a category for this entry	infolog	de	eine Kategorie für diesen Eintrag auswählen
 select a price	infolog	de	Preis auswählen
@@ -358,14 +373,21 @@ select a priority for this task	infolog	de	eine Priorität für diesen Eintrag a
 select a project	infolog	de	Projekt auswählen
 select a responsible user: a person you want to delegate this task	infolog	de	Verantwortlichen auswählen: Person(en) der Sie diese Aufgabe delegieren wollen
 select a typ to edit it's status-values or delete it	infolog	de	einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
+select an action	infolog	de	Befehl oder Aktion auswählen
+select an action...	infolog	de	Befehl oder Aktion auswählen...
 select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	einen Eintrag zum Verknüpfen auswählen
+select multiple contacts for a further action	infolog	de	Wählen Sie mehrere Konatkte für eine weitere Aktion aus.
+select new category	infolog	de	Wählen Sie eine Kategory
 select to filter by owner	infolog	de	Besitzer zum Filtern auswählen
 select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
+select users or groups	infolog	de	Wählen Sie Benutzer oder Gruppen aus
+selection cf	infolog	de	Auswahl für CF
 sender	infolog	de	Absender
 set status to done	infolog	de	Status auf erledigt setzen
 set status to done for all entries	infolog	de	Status für alle Einträge auf erledigt setzen
 sets the status of this entry and its subs to done	infolog	de	Setzt den Status dieses Eintrags und seiner Untereinträge auf erledigt
+sets the status of this entry to done	infolog	de	Setzt den Status für diesen Infolog auf erledigt
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
 should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog auf der Startseite angezeigt werden und mit welchem Filter. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
@@ -375,6 +397,7 @@ should the infolog list show the column "last modified".	infolog	de	Soll die Inf
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	de	Soll die InfoLog Liste Prozent erledigt nur für den Status "in Arbeit" anzeigen oder zwei separate Icons.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
 show a column for used and planned times in the list.	infolog	de	Zeige eine Spalte für benutzte und geplante Zeiten in der List.
+show a x if content equals this compare value, otherwise show nothing	infolog	de	zeigt ein X an, wenn der Inhalt mit dem  Vergleichswert übereinstimmt, ansonsten erfolgt keine Anzeige.
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
 show in the infolog list	infolog	de	In der InfoLog Liste anzeigen
 show last modified	infolog	de	Zuletzt geändert anzeigen
@@ -382,6 +405,7 @@ show status and percent done separate	infolog	de	Status und Prozent erledigt sep
 show ticket id	infolog	de	Ticketnummer anzeigen
 show times	infolog	de	Zeiten anzeigen
 small view	infolog	de	schmale Ansicht
+start	infolog	de	Start
 start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
 startdate	infolog	de	Startdatum
 startdate enddate	infolog	de	Startdatum Fälligkeitsdatum
@@ -392,6 +416,7 @@ status	infolog	de	Status
 status ...	infolog	de	Status ...
 sub	infolog	de	Unter-<br />einträge
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	de	Untereinträge gehören dann zum übergeordneten Eintrag oder werden Haupteinträge wenn es keinen übergeordneten gibt.
+sub-entries will not be closed	infolog	de	Untereinträge werden nicht geschlossen
 subject	infolog	de	Titel
 sum	infolog	de	Summe
 tag to mark positions for address labels	infolog	de	Platzhalter, um die Position der Adresslabels festzulegen
@@ -422,10 +447,11 @@ unlinked from %1	infolog	de	Verknüpfung entfernt von %1
 upcoming	infolog	de	zukünftig
 urgency	infolog	de	Priorität
 urgent	infolog	de	Dringend
+use all	infolog	de	Alle Einträge
+use field from csv if possible	infolog	de	Verwendet die Felder vom CSV, wenn möglich
+use search results	infolog	de	Verwendet die Sucherbegnisse
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	de	Benutzern Sie diesen Platzhalter für Adressetiketten. Fügen Sie den Inhalt, den Sie wiederholen möchten zwischen zwei Platzhalter ein.
 used time	infolog	de	benötigte Zeit
-valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 valid path on clientside<br>eg. servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen

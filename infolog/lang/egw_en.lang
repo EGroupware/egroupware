@@ -31,6 +31,7 @@ action	infolog	en	Action
 actions...	infolog	en	Actions...
 actual date and time	infolog	en	actual date and time
 add	infolog	en	Add
+add / remove link	infolog	en	Add / Remove link
 add a file	infolog	en	Add a file
 add a new entry	infolog	en	Add a new Entry
 add a new note	infolog	en	Add a new Note
@@ -48,6 +49,7 @@ all links and attachments	infolog	en	all links and attachments
 all projects	infolog	en	All projects
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	Allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-type)
 alternatives	infolog	en	Alternatives
+apply the action on the whole query, not only the shown entries!!!	infolog	en	Apply the action on the whole query, NOT only the shown entries!!!
 apply the changes	infolog	en	Apply the changes
 archive	infolog	en	archive
 are you shure you want to close this entry ?	infolog	en	Are you shure you want to close this entry ?
@@ -66,8 +68,10 @@ cancelled	infolog	en	cancelled
 categories	infolog	en	Categories
 category	infolog	en	Category
 change category	infolog	en	Change category
+change completed	infolog	en	Change completed
 change completion	infolog	en	Change completion
 change history	infolog	en	Change history
+change owner when updating	infolog	en	Change owner when updating
 change responsible	infolog	en	Change responsible
 change status:	infolog	en	Change status:
 change the status of an entry, eg. close it	infolog	en	Change the status of an entry, eg. close it
@@ -78,6 +82,7 @@ changed responsible	infolog	en	changed responsible
 changed status to %1	infolog	en	changed status to %1
 changed type	infolog	en	changed type
 charset of file	infolog	en	Charset of file
+check all	infolog	en	Check all
 check to set startday	infolog	en	check to set startday
 check to specify custom contact	infolog	en	Check to specify custom contact
 choose owner of imported data	infolog	en	Choose owner of imported data
@@ -87,12 +92,16 @@ close	infolog	en	Close
 close all	infolog	en	Close all
 close this entry and all listed sub-entries	infolog	en	Close this entry and all listed sub-entries
 closed	infolog	en	closed
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	en	colon (:) separated list of field names to use if value is empty or to sum up
 comment	infolog	en	Comment
+compare	infolog	en	Compare
 completed	infolog	en	Completed
 configuration	infolog	en	Configuration
 confirm	infolog	en	Confirm
 contact	infolog	en	Contact
+contact cf	infolog	en	contact CF
 contact fields	infolog	en	Contact fields
+contactfield	infolog	en	Contactfield
 copy of:	infolog	en	Copy of:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
 create new links	infolog	en	Create new links
@@ -129,6 +138,7 @@ delegated upcomming	infolog	en	delegated upcomming
 delegation	infolog	en	Delegation
 delete	infolog	en	Delete
 delete one record by passing its id.	infolog	en	Delete one record by passing its id.
+delete selected entries?	infolog	en	Delete selected entries?
 delete the entry	infolog	en	Delete the entry
 delete this entry	infolog	en	delete this entry
 delete this entry and all listed sub-entries	infolog	en	Delete this entry and all listed sub-entries
@@ -151,7 +161,7 @@ do you want a notification, if items you delegated are due?	infolog	en	Do you wa
 do you want to receive notifications as html-mails or plain text?	infolog	en	Do you want to receive notifications as html-mails or plain text?
 document '%1' does not exist or is not readable for you!	infolog	en	Document '%1' does not exist or is not readable for you!
 don't show infolog	infolog	en	DON'T show InfoLog
-done	infolog	en	done
+done	common	en	done
 download	infolog	en	Download
 due %1	infolog	en	Due %1
 duration	infolog	en	Duration
@@ -164,6 +174,7 @@ edit status	infolog	en	Edit status
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
 empty for all	infolog	en	empty for all
+end	infolog	en	End
 enddate	infolog	en	Due date
 enddate can not be before startdate	infolog	en	Due date can not be before start date
 enter a custom contact, leave empty if linked entry should be used	infolog	en	Enter a custom contact, leave empty if linked entry should be used
@@ -177,6 +188,7 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
+execute a further action for this entry	infolog	en	Execute a further action for this entry
 existing links	infolog	en	Existing links
 exists	infolog	en	exists
 exports infolog entries into a csv file.	infolog	en	Exports Infolog entries into a CSV File.
@@ -184,6 +196,7 @@ fax	infolog	en	Fax
 field must not be empty !!!	infolog	en	Field must not be empty !!!
 fieldseparator	infolog	en	Fieldseparator
 finish	infolog	en	finish
+first argument for preg_replace	infolog	en	first argument for preg_replace
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 for which types should this field be used	infolog	en	for which types should this field be used
 from	infolog	en	From
@@ -236,6 +249,7 @@ last changed	infolog	en	Last changed
 last modified	infolog	en	Last modified
 leave blank to get the used time calculated by timesheet entries	infolog	en	Leave blank to get the used time calculated by time sheet entries
 leave it empty	infolog	en	leave it empty
+leave it empty for a full week	infolog	en	Leave it empty for a full week
 leave without saveing the entry	infolog	en	leave without saveing the entry
 leaves without saveing	infolog	en	leaves without saveing
 length<br>rows	infolog	en	Length<br>Rows
@@ -331,11 +345,12 @@ receive notifications about own items	infolog	en	Receive notifications about own
 receive notifications about starting entries you are responsible for	infolog	en	Receive notifications about starting entries you are responsible for
 receive notifications about starting entries you delegated	infolog	en	Receive notifications about starting entries you delegated
 receive notifications as html-mails	infolog	en	Receive notifications as html-mails
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
+regular expression	infolog	en	Regular expression
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
 removed	infolog	en	removed
+replacement	infolog	en	Replacement
 replacements for inserting entries into documents	infolog	en	Replacements for inserting entries into documents
 responsible	infolog	en	responsible
 responsible open	infolog	en	responsible open
@@ -351,6 +366,7 @@ saves the changes made and leaves	infolog	en	saves the changes made and leaves
 saves this entry	infolog	en	Saves this entry
 search	infolog	en	Search
 search for:	infolog	en	Search for:
+second parameter for preg_replace	infolog	en	second parameter for preg_replace
 select	infolog	en	Select
 select a category for this entry	infolog	en	select a category for this entry
 select a price	infolog	en	Select a price
@@ -358,14 +374,21 @@ select a priority for this task	infolog	en	select a priority for this task
 select a project	infolog	en	Select a project
 select a responsible user: a person you want to delegate this task	infolog	en	Select a responsible user: a person you want to delegate this task
 select a typ to edit it's status-values or delete it	infolog	en	Select a type to edit it's status-values or delete it
+select an action	infolog	en	Select an action
+select an action...	infolog	en	Select an action...
 select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
+select multiple contacts for a further action	infolog	en	Select multiple contacts for a further action
+select new category	infolog	en	Select new category
 select to filter by owner	infolog	en	select to filter by owner
 select to filter by responsible	infolog	en	select to filter by responsible
+select users or groups	infolog	en	Select users or groups
+selection cf	infolog	en	Selection CF
 sender	infolog	en	Sender
 set status to done	infolog	en	Set status to done
 set status to done for all entries	infolog	en	Set status to done for all entries
 sets the status of this entry and its subs to done	infolog	en	Sets the status of this entry and its subs to done
+sets the status of this entry to done	infolog	en	Sets the status of this entry to done
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
 should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog show up on the main screen and with which filter. Works only if you didn't select an application for the main screen (in your preferences).
@@ -375,6 +398,7 @@ should the infolog list show the column "last modified".	infolog	en	Should the I
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	en	Should the InfoLog list show the percent done only for status ongoing or two separate icons.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant private access via the ACL
 show a column for used and planned times in the list.	infolog	en	Show a column for used and planned times in the list.
+show a x if content equals this compare value, otherwise show nothing	infolog	en	show a X if content equals this compare value, otherwise show nothing
 show full usernames	infolog	en	Show full usernames
 show in the infolog list	infolog	en	Show in the InfoLog list
 show last modified	infolog	en	Show last modified
@@ -382,6 +406,7 @@ show status and percent done separate	infolog	en	Show status and percent done se
 show ticket id	infolog	en	Show ticket Id
 show times	infolog	en	Show times
 small view	infolog	en	small view
+start	infolog	en	Start
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
 startdate	infolog	en	Start Date
 startdate enddate	infolog	en	Start Date Due Date
@@ -392,6 +417,7 @@ status	infolog	en	Status
 status ...	infolog	en	Status ...
 sub	infolog	en	Sub
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	en	Sub-entries become subs of the parent or main entries, if there's no parent
+sub-entries will not be closed	infolog	en	Sub-entries will not be closed
 subject	infolog	en	Subject
 sum	infolog	en	Sum
 tag to mark positions for address labels	infolog	en	Tag to mark positions for address labels
@@ -422,10 +448,12 @@ unlinked from %1	infolog	en	unlinked from %1
 upcoming	infolog	en	upcoming
 urgency	infolog	en	urgency
 urgent	infolog	en	urgent
+use all	infolog	en	Use all
+use field from csv if possible	infolog	en	Use field from CSV if possible
+use search results	infolog	en	Use search results
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used time	infolog	en	used time
 valid path on clientside<br>eg. \\server\share or e:\	infolog	en	valid path on clientside<br>eg. \\Server\Share or e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	en	valid path on client side<br>e.g. \\Server\Share or e:\
 values for selectbox	infolog	en	Values for selectbox
 view all subs of this entry	infolog	en	View all subs of this entry
 view other subs	infolog	en	view other Subs
