@@ -15,17 +15,20 @@ edit conditions	importexport	de	Einstellmöglichkeiten bearbeiten
 expert options	importexport	de	Export Optionen
 export	importexport	de	Exportieren
 export all selected definitions	importexport	de	Alle ausgewählten Definitionen exportieren
+export definition to use for nextmatch export	preferences	de	Export Definition für den Export über die Benutzeroberfläche (nextmatch)
 field labels	importexport	de	Feld Beschreibung
 field names	importexport	de	Feld Name
 finish	importexport	de	Fertig
 general	importexport	de	Generell
 human friendly values	importexport	de	Verwendet die Beschreibungen, anstatt der Internen Bezeichnungen
+if you specify an export definition, it will be used when you export	preferences	de	Wenn Sie  Export Definition erfassen , wird dieses Profil für den Export verwendet.
 import	importexport	de	Import
 import definitions	common	de	Import von Definitionsdateien
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	de	Definitionen importieren (Achtung: Alle gleichnamigen existierenden Definitionen werden überschrieben!)
 importexport	common	de	Import/Export
 importexport wizard finished successfully!	importexport	de	Der ImportExport Assistent wurde erfolgreich beendet
 imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	de	Importiert Informationen aus einem CSV Datei. Dies ist nur eine Basis Klasse.
+just me	importexport	de	Nur von mir zu verwenden
 load sample file	importexport	de	Beispieldatei laden
 manage mapping	importexport	de	Zuordnung bearbeiten
 next	importexport	de	Weiter
