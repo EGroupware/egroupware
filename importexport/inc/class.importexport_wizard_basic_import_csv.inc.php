@@ -227,20 +227,24 @@ class importexport_wizard_basic_import_csv
 			for($i = 0; $i <= count($content['csv_fields']); $i++) {
 				unset($content[$i]);
 			}
-			array_shift($content['csv_fields']);
+			if(!$content['csv_fields'][0]) {
+				array_shift($content['csv_fields']);
+			}
 			// Need to move everything down 1 to remove header, but shift will re-key
-			unset($content['field_mapping'][0]);
-			if(is_array($content['field_conversion'])) unset($content['field_conversion'][0]);
-			foreach(array('field_mapping', 'field_conversion') as $field) {
-				ksort($content[$field]);
-				foreach($content[$field] as $key => $value)
-				{
-					if($value && $value != '--NONE--') {
-						$content[$field][$key-1] = $content[$field][$key];
+			if(!$content['field_mapping'][0] || $content['field_mapping'][0] == $content['field_mapping'][1]) {
+				unset($content['field_mapping'][0]);
+				if(is_array($content['field_conversion'])) unset($content['field_conversion'][0]);
+				foreach(array('field_mapping', 'field_conversion') as $field) {
+					ksort($content[$field]);
+					foreach($content[$field] as $key => $value)
+					{
+						if($value && $value != '--NONE--') {
+							$content[$field][$key-1] = $content[$field][$key];
+						}
+						unset($content[$field][$key]);
 					}
-					unset($content[$field][$key]);
+					ksort($content[$field]);
 				}
-				ksort($content[$field]);
 			}
 			foreach($content['field_conversion'] as $field => $convert) {
 				if(!trim($convert)) unset($content['field_conversion'][$field]);
