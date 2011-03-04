@@ -247,6 +247,7 @@ class importexport_helper_functions {
 						);
 					}
 					$val = preg_replace_callback( "/($c_functions)\(([^)]*)\)/i", array( self, 'c2_dispatcher') , $val );
+					break;
 				}
 			}
 			// clean each field
