@@ -164,6 +164,9 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 				$record['owner'] = $_definition->plugin_options['contact_owner'];
 			}
 
+			// Automatically handle text categories without explicit translation
+			$record['cat_id'] = importexport_helper_functions::cat_name2id($record['cat_id']);
+
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
