@@ -228,6 +228,7 @@ class importexport_helper_functions {
 					}
 
 					$val = preg_replace_callback( "/(cat|account|strtotime)\(([^)]*)\)/i", array( self, 'c2_dispatcher') , $val );
+					break;
 				}
 			}
 			// clean each field
