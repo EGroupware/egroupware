@@ -276,9 +276,10 @@ class addressbook_groupdav extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
+	 * @param int $user=null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function get(&$options,$id)
+	function get(&$options,$id,$user=null)
 	{
 		if (!is_array($contact = $this->_common_get_put_delete('GET',$options,$id)))
 		{

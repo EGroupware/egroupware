@@ -400,7 +400,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			$account_lid = $GLOBALS['egw_info']['user']['account_lid'];
 		}
-		
+
 		if (strlen($user_preferences['calendar']['display_color']) == 9 &&
 			$user_preferences['calendar']['display_color'][0] == '#')
 		{
@@ -410,7 +410,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			$display_color = '#0040A0FF';
 		}
-		
+
 		$account = $this->accounts->read($account_lid);
 		$displayname = $GLOBALS['egw']->translation->convert($account['account_fullname'],
 				$GLOBALS['egw']->translation->charset(),'utf-8');
@@ -548,7 +548,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if (($handler = self::app_handler($app)))
 		{
-			return $handler->get($options,$id);
+			return $handler->get($options,$id,$user);
 		}
 		error_log(__METHOD__."(".array2string($options).") 501 Not Implemented");
 		return '501 Not Implemented';

@@ -13,7 +13,7 @@
 
 /**
  * EGroupware: GroupDAV access: groupdav/caldav/carddav principals handlers
- * 
+ *
  * @todo All principal urls should either contain no account_lid (eg. base64 of it) or use urlencode($account_lid)
  */
 class groupdav_principals extends groupdav_handler
@@ -92,7 +92,7 @@ class groupdav_principals extends groupdav_handler
 		{
 			$displayname = translation::convert($account['account_fullname'],
 				translation::charset(),'utf-8');
-			
+
 			$props = array(
 				HTTP_WebDAV_Server::mkprop('displayname',$displayname),
 				HTTP_WebDAV_Server::mkprop('getetag',$this->get_etag($account)),
@@ -105,7 +105,7 @@ class groupdav_principals extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
 					HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
 			);
-			
+
 			foreach($this->accounts->memberships($account['account_id']) as $gid => $group)
 			{
 				$props[] = HTTP_WebDAV_Server::mkprop('group-membership',$this->base_uri.'/groups/'.$group);
@@ -440,9 +440,10 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @param array &$options
 	 * @param int $id
+	 * @param int $user=null account_id
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function get(&$options,$id)
+	function get(&$options,$id,$user=null)
 	{
 		if (!is_array($account = $this->_common_get_put_delete('GET',$options,$id)))
 		{
@@ -533,7 +534,7 @@ class groupdav_principals extends groupdav_handler
 		}
 		return 'EGw-'.$account['account_id'].':'.md5(serialize($account)).
 			// as the pricipal of current user is influenced by GroupDAV prefs, we have to include them in the etag
-			($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'] ? 
+			($account['account_id'] == $GLOBALS['egw_info']['user']['account_id'] ?
 				':'.md5(serialize($GLOBALS['egw_info']['user']['preferences']['groupdav'])) : '').'-wGE';
 	}
 }
